@@ -5,6 +5,7 @@ import { setupApplicationTest } from 'frontend/tests/helpers';
 import page from 'frontend/tests/pages/learner-groups';
 import learnerGroupPage from 'frontend/tests/pages/learner-group';
 import percySnapshot from '@percy/ember';
+import { getUniqueName } from '../helpers/percy-snapshot-name';
 
 module('Acceptance | Learner Groups', function (hooks) {
   setupApplicationTest(hooks);
@@ -470,9 +471,9 @@ module('Acceptance | Learner Groups', function (hooks) {
     await page.list.items[0].copy();
     assert.ok(page.list.confirmCopy.canCopyWithoutLearners);
     assert.ok(page.list.confirmCopy.canCopyWithLearners);
-    await percySnapshot(assert);
+    await percySnapshot(getUniqueName(assert, 'canCopyWithLearners'));
     await page.list.confirmCopy.copyWithoutLearners();
-    await percySnapshot(assert);
+    await percySnapshot(getUniqueName(assert, 'copyWithoutLearners'));
 
     assert.strictEqual(page.list.items.length, 2);
     assert.strictEqual(page.list.items[0].title, 'learner group 0');
@@ -535,9 +536,9 @@ module('Acceptance | Learner Groups', function (hooks) {
     await page.list.items[0].copy();
     assert.ok(page.list.confirmCopy.canCopyWithoutLearners);
     assert.ok(page.list.confirmCopy.canCopyWithLearners);
-    await percySnapshot(assert);
+    await percySnapshot(getUniqueName(assert, 'canCopyWithLearners'));
     await page.list.confirmCopy.copyWithLearners();
-    await percySnapshot(assert);
+    await percySnapshot(getUniqueName(assert, 'copyWithLearners'));
 
     assert.strictEqual(page.list.items.length, 2);
     assert.strictEqual(page.list.items[0].title, 'learner group 0');

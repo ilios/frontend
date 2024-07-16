@@ -5,6 +5,7 @@ import { setupApplicationTest } from 'frontend/tests/helpers';
 import page from 'frontend/tests/pages/programs';
 import detailPage from 'frontend/tests/pages/program';
 import percySnapshot from '@percy/ember';
+import { getUniqueName } from '../helpers/percy-snapshot-name';
 
 module('Acceptance | Programs', function (hooks) {
   setupApplicationTest(hooks);
@@ -33,10 +34,10 @@ module('Acceptance | Programs', function (hooks) {
 
       await visit(url);
       await click(expandButton);
-      await percySnapshot(assert);
+      await percySnapshot(getUniqueName(assert, 'expandButton'));
       await fillIn(input, 'Test Title');
       await click(saveButton);
-      await percySnapshot(assert);
+      await percySnapshot(getUniqueName(assert, 'saveButton'));
       function getContent(i) {
         return find(`tbody tr td:nth-of-type(${i + 1})`).textContent.trim();
       }

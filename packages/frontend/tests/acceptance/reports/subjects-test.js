@@ -5,6 +5,7 @@ import page from 'frontend/tests/pages/reports';
 import subjectReportPage from 'frontend/tests/pages/reports-subject';
 import { setupApplicationTest } from 'frontend/tests/helpers';
 import percySnapshot from '@percy/ember';
+import { getUniqueName } from '../../helpers/percy-snapshot-name';
 
 module('Acceptance | Reports - Subject Reports', function (hooks) {
   setupApplicationTest(hooks);
@@ -96,9 +97,9 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
     await page.root.list.newSubject.objects.choose('course');
     await page.root.list.newSubject.course.input('cour');
     await page.root.list.newSubject.course.results[1].click();
-    await percySnapshot(assert);
+    await percySnapshot(getUniqueName(assert, 'pre-save form'));
     await page.root.list.newSubject.save();
-    await percySnapshot(assert);
+    await percySnapshot(getUniqueName(assert, 'post-save form'));
     assert.strictEqual(page.root.list.table.reports.length, 3);
     assert.strictEqual(page.root.list.table.reports[0].title, 'aardvark');
     assert.strictEqual(

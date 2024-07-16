@@ -1,6 +1,7 @@
 import { click, fillIn, currentURL, triggerEvent, visit, waitFor } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupAuthentication } from 'ilios-common';
+import { getUniqueName } from '../helpers/percy-snapshot-name';
 
 const url = '/admin';
 
@@ -36,10 +37,10 @@ module('Acceptance | Admin', function (hooks) {
     const name = '.user-display-name';
 
     await visit(url);
-    await percySnapshot(assert);
+    await percySnapshot(getUniqueName(assert, 'default'));
     await fillIn(userSearch, 'son');
     await triggerEvent(userSearch, 'keyup');
-    await percySnapshot(assert);
+    await percySnapshot(getUniqueName(assert, 'search results dropdown'));
     assert.dom(secondResultUsername).hasText('1 guy M. Mc1son', 'user name is correct');
     assert.dom(secondResultEmail).hasText('user@example.edu', 'user email is correct');
 

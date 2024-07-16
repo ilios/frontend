@@ -5,6 +5,7 @@ import { setupApplicationTest } from 'frontend/tests/helpers';
 import { a11yAudit } from 'ember-a11y-testing/test-support';
 import page from 'ilios-common/page-objects/dashboard-materials';
 import percySnapshot from '@percy/ember';
+import { getUniqueName } from '../../helpers/percy-snapshot-name';
 
 module('Acceptance | Dashboard Materials', function (hooks) {
   setupApplicationTest(hooks);
@@ -534,7 +535,7 @@ module('Acceptance | Dashboard Materials', function (hooks) {
       };
     });
     await page.visit();
-    await percySnapshot(assert);
+    await percySnapshot(getUniqueName(assert, 'default'));
 
     const materials = page.materials.table.rows;
     assert.strictEqual(materials.length, 6);
@@ -551,7 +552,7 @@ module('Acceptance | Dashboard Materials', function (hooks) {
     await materials[4].status.click();
     await materials[4].status.click();
     await materials[5].status.click();
-    await percySnapshot(assert);
+    await percySnapshot(getUniqueName(assert, 'checkbox status'));
 
     assert.ok(materials[0].status.isChecked);
     assert.notOk(materials[1].status.isChecked);
