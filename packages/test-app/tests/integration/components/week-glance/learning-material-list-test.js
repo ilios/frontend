@@ -4,7 +4,7 @@ import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import { component } from 'ilios-common/page-objects/components/week-glance/learning-material-list';
 import createTypedLearningMaterialProxy from 'ilios-common/utils/create-typed-learning-material-proxy';
-import { setupMirage } from 'ember-cli-mirage/test-support';
+import { setupMirage } from 'test-app/tests/test-support/mirage';
 
 module('Integration | Component | week-glance/learning-material-list', function (hooks) {
   setupRenderingTest(hooks);

@@ -3,7 +3,7 @@ import {
   setupRenderingTest as upstreamSetupRenderingTest,
   setupTest as upstreamSetupTest,
 } from 'ember-qunit';
-import { setupMirage } from 'ember-cli-mirage/test-support';
+import { setupMirage } from 'frontend/tests/test-support/mirage';
 import { setupIntl } from 'ember-intl/test-support';
 
 // This file exists to provide wrappers around ember-qunit's
@@ -26,7 +26,7 @@ function setupApplicationTest(hooks, options) {
   // from other addons:
 
   setupIntl(hooks, 'en-us'); // ember-intl
-  setupMirage(hooks); // ember-cli-mirage
+  setupMirage(hooks); // ember-mirage
 }
 
 function setupRenderingTest(hooks, options) {

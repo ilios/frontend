@@ -3,7 +3,7 @@ import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import { component } from 'frontend/tests/pages/components/user-list';
-import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
+import { setupMirage } from 'frontend/tests/test-support/mirage';
 
 module('Integration | Component | user list', function (hooks) {
   setupRenderingTest(hooks);

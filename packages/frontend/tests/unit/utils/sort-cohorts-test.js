@@ -2,7 +2,7 @@ import sortCohorts from 'frontend/utils/sort-cohorts';
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
 
-import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
+import { setupMirage } from 'frontend/tests/test-support/mirage';
 
 module('Unit | Utility | sort-cohorts', function (hooks) {
   setupTest(hooks);

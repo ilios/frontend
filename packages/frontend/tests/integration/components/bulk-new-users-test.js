@@ -14,7 +14,7 @@ import {
 import { hbs } from 'ember-cli-htmlbars';
 import { DateTime } from 'luxon';
 import { Response } from 'miragejs';
-import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
+import { setupMirage } from 'frontend/tests/test-support/mirage';
 
 module('Integration | Component | bulk new users', function (hooks) {
   setupRenderingTest(hooks);

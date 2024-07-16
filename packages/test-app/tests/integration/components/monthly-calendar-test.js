@@ -5,7 +5,7 @@ import { hbs } from 'ember-cli-htmlbars';
 import { DateTime } from 'luxon';
 import { component } from 'ilios-common/page-objects/components/monthly-calendar';
 import { a11yAudit } from 'ember-a11y-testing/test-support';
-import { setupMirage } from 'ember-cli-mirage/test-support';
+import { setupMirage } from 'test-app/tests/test-support/mirage';
 import { setLocale } from 'ember-intl/test-support';
 
 module('Integration | Component | monthly-calendar', function (hooks) {

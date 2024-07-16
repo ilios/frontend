@@ -5,7 +5,7 @@ import { hbs } from 'ember-cli-htmlbars';
 import { DateTime } from 'luxon';
 import { a11yAudit } from 'ember-a11y-testing/test-support';
 import { component } from 'ilios-common/page-objects/components/week-glance-event';
-import { setupMirage } from 'ember-cli-mirage/test-support';
+import { setupMirage } from 'test-app/tests/test-support/mirage';
 
 const today = DateTime.fromObject({ hour: 8 });
 

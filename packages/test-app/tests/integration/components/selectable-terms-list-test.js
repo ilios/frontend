@@ -2,7 +2,7 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
-import { setupMirage } from 'ember-cli-mirage/test-support';
+import { setupMirage } from 'test-app/tests/test-support/mirage';
 import { component } from 'ilios-common/page-objects/components/selectable-terms-list';
 
 module('Integration | Component | selectable terms list', function (hooks) {

@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupTest } from 'frontend/tests/helpers';
-import { setupMirage } from 'ember-cli-mirage/test-support';
+import { setupMirage } from 'frontend/tests/test-support/mirage';
 import { Response } from 'miragejs';
 import config from 'frontend/config/environment';
 

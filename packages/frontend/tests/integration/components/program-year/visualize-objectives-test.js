@@ -2,7 +2,7 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render, waitFor } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
-import { setupMirage } from 'ember-cli-mirage/test-support';
+import { setupMirage } from 'frontend/tests/test-support/mirage';
 import { component } from 'frontend/tests/pages/components/program-year/visualize-objectives';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
 

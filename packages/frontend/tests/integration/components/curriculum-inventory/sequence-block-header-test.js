@@ -3,7 +3,7 @@ import { render } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { hbs } from 'ember-cli-htmlbars';
 import { component } from 'frontend/tests/pages/components/curriculum-inventory/sequence-block-header';
-import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
+import { setupMirage } from 'frontend/tests/test-support/mirage';
 
 module('Integration | Component | curriculum-inventory/sequence-block-header', function (hooks) {
   setupRenderingTest(hooks);

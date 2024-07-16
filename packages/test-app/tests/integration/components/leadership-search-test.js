@@ -2,7 +2,7 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render, find, click, fillIn } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
-import { setupMirage } from 'ember-cli-mirage/test-support';
+import { setupMirage } from 'test-app/tests/test-support/mirage';
 
 module('Integration | Component | leadership search', function (hooks) {
   setupRenderingTest(hooks);

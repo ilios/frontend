@@ -3,7 +3,7 @@ import { render, click, find } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { hbs } from 'ember-cli-htmlbars';
 import { DateTime } from 'luxon';
-import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
+import { setupMirage } from 'frontend/tests/test-support/mirage';
 import Service from '@ember/service';
 import { component } from 'frontend/tests/pages/components/curriculum-inventory/report-details';
 
