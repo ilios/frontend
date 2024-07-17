@@ -14,6 +14,7 @@ export default class CourseVisualizeSessionTypesGraph extends Component {
   @service intl;
   @tracked tooltipContent = null;
   @tracked tooltipTitle = null;
+  @tracked sortBy = 'minutes';
 
   @cached
   get sessionsData() {
@@ -29,6 +30,10 @@ export default class CourseVisualizeSessionTypesGraph extends Component {
     return new TrackedAsyncData(this.getData(this.sessions));
   }
 
+  get isLoaded() {
+    return this.outputData.isResolved;
+  }
+
   get data() {
     return this.outputData.isResolved ? this.outputData.value : [];
   }
@@ -40,6 +45,29 @@ export default class CourseVisualizeSessionTypesGraph extends Component {
       return this.data.filter(({ label }) => label.match(exp));
     }
     return this.data;
+  }
+
+  get tableData() {
+    return this.filteredData.map((obj) => {
+      const rhett = {};
+      rhett.minutes = obj.data;
+      rhett.sessions = obj.meta.sessions;
+      rhett.sessionType = obj.meta.sessionType.title;
+      rhett.sessionTitles = mapBy(rhett.sessions, 'title').join(', ');
+      return rhett;
+    });
+  }
+
+  get sortedAscending() {
+    return this.sortBy.search(/desc/) === -1;
+  }
+
+  @action
+  setSortBy(prop) {
+    if (this.sortBy === prop) {
+      prop += ':desc';
+    }
+    this.sortBy = prop;
   }
 
   async getData(sessions) {
