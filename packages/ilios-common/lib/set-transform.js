@@ -45,7 +45,7 @@ module.exports = class SetTransform {
   }
 
   transformNode(node) {
-    if (node.path.original === 'set') {
+    if (node.path.type === 'PathExpression' && node.path.original === 'set') {
       if (!node.params[0] || node.params[0].type !== 'PathExpression') {
         throw new Error(
           'the (set) helper requires a path to be passed in as its first parameter, received: ' +
