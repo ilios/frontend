@@ -7,12 +7,14 @@ import { service } from '@ember/service';
 import { cached, tracked } from '@glimmer/tracking';
 import { TrackedAsyncData } from 'ember-async-data';
 import { findById, mapBy } from 'ilios-common/utils/array-helpers';
+import { action } from '@ember/object';
 
 export default class CourseVisualizeSessionTypeGraph extends Component {
   @service router;
   @service intl;
   @tracked tooltipContent = null;
   @tracked tooltipTitle = null;
+  @tracked sortBy = 'minutes';
 
   @cached
   get sessionsData() {
@@ -39,6 +41,33 @@ export default class CourseVisualizeSessionTypeGraph extends Component {
 
   get data() {
     return this.outputData.isResolved ? this.outputData.value : [];
+  }
+
+  get isLoaded() {
+    return this.outputData.isResolved;
+  }
+
+  get tableData() {
+    return this.data.map((obj) => {
+      const rhett = {};
+      rhett.minutes = obj.data;
+      rhett.sessions = obj.meta.sessions;
+      rhett.vocabularyTerm = `${obj.meta.vocabulary.title} - ${obj.meta.term.title}`;
+      rhett.sessionTitles = mapBy(rhett.sessions, 'title').join(', ');
+      return rhett;
+    });
+  }
+
+  get sortedAscending() {
+    return this.sortBy.search(/desc/) === -1;
+  }
+
+  @action
+  setSortBy(prop) {
+    if (this.sortBy === prop) {
+      prop += ':desc';
+    }
+    this.sortBy = prop;
   }
 
   get sessionsAndSessionTypeSessions() {
@@ -121,10 +150,6 @@ export default class CourseVisualizeSessionTypeGraph extends Component {
           first.data - second.data
         );
       });
-  }
-
-  get isLoaded() {
-    return this.outputData.isResolved;
   }
 
   barHover = restartableTask(async (obj) => {
