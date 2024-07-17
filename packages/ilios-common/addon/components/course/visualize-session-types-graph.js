@@ -34,18 +34,12 @@ export default class CourseVisualizeSessionTypesGraph extends Component {
   }
 
   get filteredData() {
-    if (!this.data) {
-      return [];
-    }
-    let data = this.data;
     const q = cleanQuery(this.args.filter);
     if (q) {
       const exp = new RegExp(q, 'gi');
-      data = this.data.filter(({ label }) => label.match(exp));
+      return this.data.filter(({ label }) => label.match(exp));
     }
-    return data.sort((first, second) => {
-      return first.data - second.data;
-    });
+    return this.data;
   }
 
   async getData(sessions) {
@@ -101,9 +95,10 @@ export default class CourseVisualizeSessionTypesGraph extends Component {
       this.tooltipContent = null;
       return;
     }
-    const { data , meta } = obj;
+    const { data, meta } = obj;
 
-    const title = htmlSafe(`${meta.sessionType.title} &bull; ${data} ${this.intl.t('general.minutes')}`,
+    const title = htmlSafe(
+      `${meta.sessionType.title} &bull; ${data} ${this.intl.t('general.minutes')}`,
     );
     const content = uniqueValues(mapBy(meta.sessions, 'title')).sort().join(', ');
 
