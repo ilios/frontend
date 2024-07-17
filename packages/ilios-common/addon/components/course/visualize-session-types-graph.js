@@ -7,7 +7,7 @@ import { action } from '@ember/object';
 import { cleanQuery } from 'ilios-common/utils/query-utils';
 import { map } from 'rsvp';
 import { TrackedAsyncData } from 'ember-async-data';
-import { findBy, mapBy, uniqueValues } from 'ilios-common/utils/array-helpers';
+import { findById, mapBy, uniqueValues } from 'ilios-common/utils/array-helpers';
 
 export default class CourseVisualizeSessionTypesGraph extends Component {
   @service router;
@@ -58,43 +58,35 @@ export default class CourseVisualizeSessionTypesGraph extends Component {
       const minutes = Math.round(hours * 60);
       const sessionType = await session.sessionType;
       return {
-        sessionTitle: session.title,
-        sessionTypeTitle: sessionType.title,
-        sessionTypeId: sessionType.get('id'),
+        session,
+        sessionType,
         minutes,
       };
     });
 
-    const mappedSessionTypes = dataMap.reduce((set, obj) => {
-      let existing = findBy(set, 'label', obj.sessionTypeTitle);
-      if (!existing) {
-        existing = {
-          data: 0,
-          label: obj.sessionTypeTitle,
-          meta: {
-            sessionType: obj.sessionTypeTitle,
-            sessionTypeId: obj.sessionTypeId,
-            sessions: [],
-          },
-        };
-        set.push(existing);
-      }
-      existing.data += obj.minutes;
-      existing.meta.sessions.push(obj.sessionTitle);
+    return dataMap
+      .reduce((set, obj) => {
+        const id = obj.sessionType.id;
+        let existing = findById(set, id);
+        if (!existing) {
+          existing = {
+            id,
+            data: 0,
+            label: obj.sessionType.title,
+            meta: {
+              sessionType: obj.sessionType,
+              sessions: [],
+            },
+          };
+          set.push(existing);
+        }
+        existing.data += obj.minutes;
+        existing.meta.sessions.push(obj.session);
 
-      return set;
-    }, []);
-
-    const totalMinutes = mapBy(mappedSessionTypes, 'data').reduce(
-      (total, minutes) => total + minutes,
-      0,
-    );
-    return mappedSessionTypes
+        return set;
+      }, [])
       .map((obj) => {
-        const percent = ((obj.data / totalMinutes) * 100).toFixed(1);
-        obj.label = `${obj.meta.sessionType}: ${obj.data} ${this.intl.t('general.minutes')}`;
-        obj.meta.totalMinutes = totalMinutes;
-        obj.meta.percent = percent;
+        delete obj.id;
         return obj;
       })
       .sort((first, second) => {
@@ -109,13 +101,14 @@ export default class CourseVisualizeSessionTypesGraph extends Component {
       this.tooltipContent = null;
       return;
     }
-    const { label, meta } = obj;
+    const { data , meta } = obj;
 
-    const title = htmlSafe(label);
-    const sessions = uniqueValues(meta.sessions).sort().join(', ');
+    const title = htmlSafe(`${meta.sessionType.title} &bull; ${data} ${this.intl.t('general.minutes')}`,
+    );
+    const content = uniqueValues(mapBy(meta.sessions, 'title')).sort().join(', ');
 
     this.tooltipTitle = title;
-    this.tooltipContent = sessions;
+    this.tooltipContent = content;
   });
 
   @action
