@@ -4,7 +4,7 @@
   ...attributes
 >
   {{#if this.isLoaded}}
-    {{#if (or @isIcon this.data.length)}}
+    {{#if (or @isIcon this.filteredData.length)}}
       <SimpleChart
         @name="horz-bar"
         @isIcon={{@isIcon}}
