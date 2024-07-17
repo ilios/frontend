@@ -19,8 +19,7 @@
         {{/if}}
       </SimpleChart>
     {{/if}}
-  {{/if}}
-  {{#if (and (not @isIcon) @showDataTable)}}
+    {{#if (and (not @isIcon) @showDataTable)}}
     <div class="data-table" data-test-data-table>
       <table>
         <thead>
@@ -70,5 +69,6 @@
         </tbody>
       </table>
     </div>
+  {{/if}}
   {{/if}}
 </div>
