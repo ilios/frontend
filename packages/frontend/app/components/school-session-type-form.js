@@ -1,11 +1,10 @@
 import Component from '@glimmer/component';
-import { cached, tracked } from '@glimmer/tracking';
+import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
 import { dropTask } from 'ember-concurrency';
 import { validatable, IsHexColor, Length, NotBlank } from 'ilios-common/decorators/validation';
 import { findById, sortBy } from 'ilios-common/utils/array-helpers';
-import { TrackedAsyncData } from 'ember-async-data';
 
 @validatable
 export default class SchoolSessionTypeFormComponent extends Component {
@@ -17,26 +16,12 @@ export default class SchoolSessionTypeFormComponent extends Component {
   @tracked selectedAssessmentOptionId = this.args.selectedAssessmentOptionId || null;
   @tracked @NotBlank() @Length(1, 100) title = this.args.title || '';
 
-  @cached
-  get assessmentOptionsData() {
-    return new TrackedAsyncData(this.store.findAll('assessment-option'));
-  }
-
   get assessmentOptions() {
-    return this.assessmentOptionsData.isResolved ? this.assessmentOptionsData.value : [];
-  }
-
-  @cached
-  get aamcMethodData() {
-    return new TrackedAsyncData(this.store.findAll('aamc-method'));
+    return this.store.peekAll('assessment-option');
   }
 
   get aamcMethods() {
-    return this.aamcMethodData.isResolved ? this.aamcMethodData.value : [];
-  }
-
-  get isLoaded() {
-    return this.assessmentOptionsData.isResolved && this.aamcMethodData.isResolved;
+    return this.store.peekAll('aamc-method');
   }
 
   get filteredAamcMethods() {

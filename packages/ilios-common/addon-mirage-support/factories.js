@@ -1,3 +1,4 @@
+import aamcMethod from './factories/aamc-method';
 import aamcPcrs from './factories/aamc-pcrs';
 import academicYear from './factories/academic-year';
 import authentication from './factories/authentication';
@@ -40,6 +41,7 @@ import userevent from './factories/userevent';
 import vocabulary from './factories/vocabulary';
 
 export default {
+  aamcMethod,
   aamcPcrs,
   academicYear,
   authentication,

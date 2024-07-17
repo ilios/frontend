@@ -1,11 +1,11 @@
 import Route from '@ember/routing/route';
-import { hash } from 'rsvp';
 import { service } from '@ember/service';
 
 export default class SchoolRoute extends Route {
   @service permissionChecker;
   @service session;
   @service store;
+  @service dataLoader;
 
   canUpdateSchool = false;
   canUpdateCompetency = false;
@@ -22,29 +22,34 @@ export default class SchoolRoute extends Route {
   canCreateSessionType = false;
   canUpdateSchoolConfig = false;
 
+  #preloadPromise;
+
   beforeModel(transition) {
     this.session.requireAuthentication(transition, 'login');
   }
 
   model(params) {
-    return this.store.findRecord('school', params.school_id);
+    return this.dataLoader.loadSchoolForSchool(params.school_id);
   }
 
   async afterModel(school) {
-    await this.loadPermissions(school);
+    return Promise.all([
+      this.loadPermissions(school),
+      this.dataLoader.loadSchoolForSchool(school.id),
+      this.getPreloadPromise(),
+    ]);
+  }
 
-    //preload relationships to improve the user experience
-    return hash(
-      school.getProperties(
-        'administrators',
-        'competencies',
-        'configurations',
-        'directors',
-        'sessionTypes',
-        'vocabularies',
-        'curriculumInventoryInstitution',
-      ),
-    );
+  getPreloadPromise() {
+    if (!this.#preloadPromise) {
+      this.#preloadPromise = Promise.all([
+        this.store.findAll('aamc-method'),
+        this.store.findAll('assessment-option'),
+        this.store.findAll('aamc-pcrs'),
+      ]);
+    }
+
+    return this.#preloadPromise;
   }
 
   setupController(controller, model) {

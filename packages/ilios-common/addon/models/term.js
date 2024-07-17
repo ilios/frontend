@@ -44,12 +44,12 @@ export default class Term extends Model {
 
   get associatedLengths() {
     return [
-      this.programYears.length,
-      this.courses.length,
-      this.sessions.length,
-      this.programYearObjectives.length,
-      this.courseObjectives.length,
-      this.sessionObjectives.length,
+      this.hasMany('programYears').ids().length,
+      this.hasMany('courses').ids().length,
+      this.hasMany('sessions').ids().length,
+      this.hasMany('programYearObjectives').ids().length,
+      this.hasMany('courseObjectives').ids().length,
+      this.hasMany('sessionObjectives').ids().length,
     ];
   }
 

@@ -8,6 +8,7 @@ export default class DataLoaderService extends CommonDataLoaderService {
   #loadedUserProfiles = new Map();
   #loadedInstructorGroup = new Map();
   #loadedReportsForUser = new Map();
+  #schoolSchools = new Map();
 
   async loadCoursesForLearnerGroup(learnerGroupId) {
     if (!this.#loadedLearnerGroupWithCourses.has(learnerGroupId)) {
@@ -136,5 +137,26 @@ export default class DataLoaderService extends CommonDataLoaderService {
     }
 
     return this.#loadedUserProfiles.get(id);
+  }
+
+  async loadSchoolForSchool(id) {
+    if (!(id in this.#schoolSchools)) {
+      const relationships = [
+        'administrators',
+        'competencies',
+        'configurations',
+        'directors',
+        'sessionTypes',
+        'vocabularies.terms.children.children.children',
+        'curriculumInventoryInstitution',
+        'programs.programYears.programYearObjectives',
+      ];
+      const include = relationships.join(',');
+      this.#schoolSchools[id] = this.store.findRecord('school', id, {
+        include,
+        reload: true,
+      });
+    }
+    return this.#schoolSchools[id];
   }
 }
