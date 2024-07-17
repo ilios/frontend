@@ -4,19 +4,15 @@ import { restartableTask, timeout } from 'ember-concurrency';
 import { service } from '@ember/service';
 import { cached, tracked } from '@glimmer/tracking';
 import { TrackedAsyncData } from 'ember-async-data';
-import {
-  findBy,
-  findById,
-  mapBy,
-  uniqueById,
-  uniqueValues,
-} from 'ilios-common/utils/array-helpers';
+import { findById, mapBy } from 'ilios-common/utils/array-helpers';
+import { action } from '@ember/object';
 
 export default class CourseVisualizeTermGraph extends Component {
   @service router;
   @service intl;
   @tracked tooltipContent = null;
   @tracked tooltipTitle = null;
+  @tracked sortBy = 'minutes';
 
   @cached
   get sessionsData() {
@@ -24,72 +20,89 @@ export default class CourseVisualizeTermGraph extends Component {
   }
 
   get sessions() {
-    return this.sessionsData.isResolved ? this.sessionsData.value : null;
-  }
-
-  @cached
-  get sessionTypesData() {
-    if (!this.sessionsData.isResolved) {
-      return null;
-    }
-    return new TrackedAsyncData(Promise.all(this.sessionsData.value.map((s) => s.sessionType)));
-  }
-
-  get sessionTypes() {
-    return this.sessionTypesData?.isResolved ? uniqueById(this.sessionTypesData.value) : null;
-  }
-
-  get isLoaded() {
-    return !!this.sessionTypes;
+    return this.sessionsData.isResolved ? this.sessionsData.value : [];
   }
 
   get termSessionIds() {
     return this.args.term.hasMany('sessions').ids();
   }
 
-  get termSessionsInCourse() {
-    return this.sessions.filter((session) => this.termSessionIds.includes(session.id));
+  @cached
+  get outputData() {
+    return new TrackedAsyncData(this.getDataObjects(this.sessions, this.termSessionIds));
   }
 
   get data() {
-    const sessionTypeData = this.termSessionsInCourse.map((session) => {
+    return this.outputData.isResolved ? this.outputData.value : [];
+  }
+
+  get isLoaded() {
+    return this.outputData.isResolved;
+  }
+
+  get tableData() {
+    return this.data.map((obj) => {
+      const rhett = {};
+      rhett.minutes = obj.data;
+      rhett.sessions = obj.meta.sessions;
+      rhett.sessionType = obj.meta.sessionType.title;
+      rhett.sessionTitles = mapBy(rhett.sessions, 'title').join(', ');
+      return rhett;
+    });
+  }
+
+  get sortedAscending() {
+    return this.sortBy.search(/desc/) === -1;
+  }
+
+  @action
+  setSortBy(prop) {
+    if (this.sortBy === prop) {
+      prop += ':desc';
+    }
+    this.sortBy = prop;
+  }
+
+  async getDataObjects(sessions, termIds) {
+    const filteredSessions = sessions.filter((session) => termIds.includes(session.id));
+    const sessionTypes = await Promise.all(filteredSessions.map((s) => s.sessionType));
+    const sessionTypeData = filteredSessions.map((session) => {
       const minutes = Math.round(session.totalSumDuration * 60);
-      const sessionType = findById(this.sessionTypes, session.belongsTo('sessionType').id());
+      const sessionType = findById(sessionTypes, session.belongsTo('sessionType').id());
       return {
-        sessionTitle: session.title,
-        sessionTypeTitle: sessionType.title,
+        session,
+        sessionType,
         minutes,
       };
     });
 
-    const data = sessionTypeData.reduce((set, obj) => {
-      let existing = findBy(set, 'label', obj.sessionTypeTitle);
-      if (!existing) {
-        existing = {
-          data: 0,
-          label: obj.sessionTypeTitle,
-          meta: {
-            sessionTypeTitle: obj.sessionTypeTitle,
-            sessions: [],
-          },
-        };
-        set.push(existing);
-      }
-      existing.data += obj.minutes;
-      existing.meta.sessions.push(obj.sessionTitle);
-
-      return set;
-    }, []);
-
-    const totalMinutes = mapBy(data, 'data').reduce((total, minutes) => total + minutes, 0);
-
-    return data.map((obj) => {
-      const percent = ((obj.data / totalMinutes) * 100).toFixed(1);
-      obj.label = `${obj.meta.sessionTypeTitle} ${percent}%`;
-      obj.meta.totalMinutes = totalMinutes;
-      obj.meta.percent = percent;
-      return obj;
-    });
+    return sessionTypeData
+      .reduce((set, obj) => {
+        const id = obj.sessionType.id;
+        let existing = findById(set, id);
+        if (!existing) {
+          existing = {
+            id,
+            data: 0,
+            label: obj.sessionType.title,
+            meta: {
+              sessionType: obj.sessionType,
+              sessions: [],
+            },
+          };
+          set.push(existing);
+        }
+        existing.data += obj.minutes;
+        existing.meta.sessions.push(obj.session);
+        return set;
+      }, [])
+      .map((obj) => {
+        delete obj.id;
+        return obj;
+      })
+      .sort((first, second) => {
+        return first.data - second.data;
+      });
   }
 
   barHover = restartableTask(async (obj) => {
@@ -99,9 +112,10 @@ export default class CourseVisualizeTermGraph extends Component {
       this.tooltipContent = null;
       return;
     }
-    const { label, data, meta } = obj;
-
-    this.tooltipTitle = htmlSafe(`${label} ${data} ${this.intl.t('general.minutes')}`);
-    this.tooltipContent = uniqueValues(meta.sessions).sort().join(', ');
+    const { data, meta } = obj;
+    this.tooltipTitle = htmlSafe(
+      `${meta.sessionType.title} &bull; ${data} ${this.intl.t('general.minutes')}`,
+    );
+    this.tooltipContent = mapBy(meta.sessions, 'title').sort().join(', ');
   });
 }
