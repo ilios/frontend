@@ -33,10 +33,6 @@ export default class CourseVisualizeSessionTypesGraph extends Component {
     return this.outputData.isResolved ? this.outputData.value : [];
   }
 
-  get chartType() {
-    return this.args.chartType || 'horz-bar';
-  }
-
   get filteredData() {
     if (!this.data) {
       return [];
