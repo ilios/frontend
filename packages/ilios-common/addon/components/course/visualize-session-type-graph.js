@@ -6,7 +6,7 @@ import { restartableTask, timeout } from 'ember-concurrency';
 import { service } from '@ember/service';
 import { cached, tracked } from '@glimmer/tracking';
 import { TrackedAsyncData } from 'ember-async-data';
-import { findBy, mapBy, uniqueValues } from 'ilios-common/utils/array-helpers';
+import { findById, mapBy } from 'ilios-common/utils/array-helpers';
 
 export default class CourseVisualizeSessionTypeGraph extends Component {
   @service router;
@@ -73,9 +73,9 @@ export default class CourseVisualizeSessionTypeGraph extends Component {
       return map(terms, async (term) => {
         const vocabulary = await term.vocabulary;
         return {
-          sessionTitle: session.title,
-          termTitle: term.title,
-          vocabularyTitle: vocabulary.title,
+          session,
+          term,
+          vocabulary,
           minutes,
         };
       });
@@ -86,37 +86,38 @@ export default class CourseVisualizeSessionTypeGraph extends Component {
         return [...flattened, ...arr];
       }, [])
       .reduce((set, obj) => {
-        const label = obj.vocabularyTitle + ' - ' + obj.termTitle;
-        let existing = findBy(set, 'label', label);
+        const label = obj.vocabulary.title + ' - ' + obj.term.title;
+        const id = obj.term.id;
+        let existing = findById(set, id);
         if (!existing) {
           existing = {
+            id,
             data: 0,
             label,
             meta: {
-              vocabularyTitle: obj.vocabularyTitle,
+              vocabulary: obj.vocabulary,
+              term: obj.term,
               sessions: [],
             },
           };
           set.push(existing);
         }
         existing.data += obj.minutes;
-        existing.meta.sessions.push(obj.sessionTitle);
+        existing.meta.sessions.push(obj.session);
         return set;
       }, []);
 
-    const totalMinutes = mapBy(data, 'data').reduce((total, minutes) => total + minutes, 0);
-
     return data
       .map((obj) => {
-        const percent = ((obj.data / totalMinutes) * 100).toFixed(1);
-        obj.label = `${obj.label}: ${obj.data} ${this.intl.t('general.minutes')}`;
-        obj.meta.totalMinutes = totalMinutes;
-        obj.meta.percent = percent;
+        delete obj.id;
         return obj;
+      })
+      .filter((obj) => {
+        return obj.data > 0;
       })
       .sort((first, second) => {
         return (
-          first.meta.vocabularyTitle.localeCompare(second.meta.vocabularyTitle) ||
+          first.meta.vocabulary.title.localeCompare(second.meta.vocabulary.title) ||
           first.data - second.data
         );
       });
@@ -133,9 +134,15 @@ export default class CourseVisualizeSessionTypeGraph extends Component {
       this.tooltipContent = null;
       return;
     }
-    const { label, meta } = obj;
 
-    this.tooltipTitle = htmlSafe(label);
-    this.tooltipContent = uniqueValues(meta.sessions).sort().join(', ');
+    const { data, meta } = obj;
+
+    const title = htmlSafe(
+      `${meta.vocabulary.title} - ${meta.term.title} &bull; ${data} ${this.intl.t('general.minutes')}`,
+    );
+    const content = mapBy(meta.sessions, 'title').sort().join(', ');
+
+    this.tooltipTitle = title;
+    this.tooltipContent = content;
   });
 }
