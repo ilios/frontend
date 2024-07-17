@@ -43,7 +43,7 @@ module.exports = class GetErrorsForTransform {
   }
 
   transformNode(node) {
-    if (node.path.original === 'get-errors-for') {
+    if (node.path.type === 'PathExpression' && node.path.original === 'get-errors-for') {
       if (!node.params[0] || node.params[0].type !== 'PathExpression') {
         throw new Error(
           'the (get-errors-for) helper requires a path to be passed in as its first parameter, received: ' +
