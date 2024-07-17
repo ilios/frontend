@@ -5,9 +5,7 @@ import { htmlSafe } from '@ember/template';
 import { restartableTask, timeout } from 'ember-concurrency';
 import { service } from '@ember/service';
 import { cached, tracked } from '@glimmer/tracking';
-import { use } from 'ember-could-get-used-to-this';
 import { TrackedAsyncData } from 'ember-async-data';
-import AsyncProcess from 'ilios-common/classes/async-process';
 import { findBy, mapBy, uniqueValues } from 'ilios-common/utils/array-helpers';
 
 export default class CourseVisualizeSessionTypeGraph extends Component {
@@ -34,10 +32,14 @@ export default class CourseVisualizeSessionTypeGraph extends Component {
     return this.sessionTypeSessionsData.isResolved ? this.sessionTypeSessionsData.value : [];
   }
 
-  @use dataObjects = new AsyncProcess(() => [
-    this.getDataObjects.bind(this),
-    this.sessionsAndSessionTypeSessions,
-  ]);
+  @cached
+  get outputData() {
+    return new TrackedAsyncData(this.getDataObjects(this.sessionsAndSessionTypeSessions));
+  }
+
+  get data() {
+    return this.outputData.isResolved ? this.outputData.value : [];
+  }
 
   get sessionsAndSessionTypeSessions() {
     const rhett = {
@@ -79,33 +81,31 @@ export default class CourseVisualizeSessionTypeGraph extends Component {
       });
     });
 
-    return termData.reduce((flattened, arr) => {
-      return [...flattened, ...arr];
-    }, []);
-  }
-
-  get data() {
-    const data = this.dataObjects.reduce((set, obj) => {
-      const label = obj.vocabularyTitle + ' - ' + obj.termTitle;
-      let existing = findBy(set, 'label', label);
-      if (!existing) {
-        existing = {
-          data: 0,
-          label,
-          meta: {
-            vocabularyTitle: obj.vocabularyTitle,
-            sessions: [],
-          },
-        };
-        set.push(existing);
-      }
-      existing.data += obj.minutes;
-      existing.meta.sessions.push(obj.sessionTitle);
-
-      return set;
-    }, []);
+    const data = termData
+      .reduce((flattened, arr) => {
+        return [...flattened, ...arr];
+      }, [])
+      .reduce((set, obj) => {
+        const label = obj.vocabularyTitle + ' - ' + obj.termTitle;
+        let existing = findBy(set, 'label', label);
+        if (!existing) {
+          existing = {
+            data: 0,
+            label,
+            meta: {
+              vocabularyTitle: obj.vocabularyTitle,
+              sessions: [],
+            },
+          };
+          set.push(existing);
+        }
+        existing.data += obj.minutes;
+        existing.meta.sessions.push(obj.sessionTitle);
+        return set;
+      }, []);
 
     const totalMinutes = mapBy(data, 'data').reduce((total, minutes) => total + minutes, 0);
+
     return data
       .map((obj) => {
         const percent = ((obj.data / totalMinutes) * 100).toFixed(1);
@@ -123,7 +123,7 @@ export default class CourseVisualizeSessionTypeGraph extends Component {
   }
 
   get isLoaded() {
-    return !!this.dataObjects;
+    return this.outputData.isResolved;
   }
 
   barHover = restartableTask(async (obj) => {
