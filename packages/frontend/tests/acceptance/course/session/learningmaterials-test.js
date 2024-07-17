@@ -43,35 +43,36 @@ module('Acceptance | Session - Learning Materials', function (hooks) {
         copyrightPermission: false,
         copyrightRationale: 'reason is thus',
         filename: 'filename',
-        absoluteFileUri: 'http://example.com/file',
+        title: 'http://example.com/subdir1/subdir2/long_file_name.pdf',
+        absoluteFileUri: 'http://example.com/subdir1/subdir2/long_file_name.pdf',
         uploadDate: DateTime.fromObject({ year: 2011, month: 3, day: 14, hour: 8 }).toJSDate(),
       });
       this.server.create('learning-material', {
         originalAuthor: 'Hunter Pence',
-        link: 'www.example.com',
-        statusId: 1,
         owningUserId: this.user.id,
+        statusId: 1,
         userRoleId: 1,
+        link: 'www.example.com',
         uploadDate: today.toJSDate(),
       });
       this.server.create('learning-material', {
         originalAuthor: 'Willie Mays',
-        citation: 'a citation',
+        owningUserId: this.user.id,
         statusId: 1,
         userRoleId: 1,
-        owningUserId: this.user.id,
+        citation: 'a citation',
         uploadDate: DateTime.fromObject({ year: 2016, month: 12, day: 12, hour: 8 }).toJSDate(),
       });
-      this.server.create('learning-material', {
-        title: 'Letter to Doc Brown',
+      this.server.create('learningMaterial', {
         originalAuthor: 'Marty McFly',
         owningUserId: this.user.id,
         statusId: 1,
         userRoleId: 1,
+        filename: 'letter.txt',
+        title: 'Letter to Doc Brown',
+        absoluteFileUri: 'http://bttf.com/letter.txt',
         copyrightPermission: true,
         uploadDate: DateTime.fromObject({ year: 2016, month: 3, day: 3, hour: 8 }).toJSDate(),
-        filename: 'letter.txt',
-        absoluteFileUri: 'http://bttf.com/letter.txt',
       });
       const course = this.server.create('course', {
         year: 2013,
@@ -130,7 +131,10 @@ module('Acceptance | Session - Learning Materials', function (hooks) {
       );
       assert.strictEqual(page.details.learningMaterials.current[0].status, 'status 0');
 
-      assert.strictEqual(page.details.learningMaterials.current[1].title, 'learning material 1');
+      assert.strictEqual(
+        page.details.learningMaterials.current[1].title,
+        'http://example.com/subdir1/subdir2/long_file_name.pdf',
+      );
       assert.strictEqual(
         page.details.learningMaterials.current[1].userNameInfo.fullName,
         'Clem Chowder',
@@ -298,7 +302,10 @@ module('Acceptance | Session - Learning Materials', function (hooks) {
       assert.strictEqual(page.details.learningMaterials.current.length, 4);
       await page.details.learningMaterials.current[1].details();
 
-      assert.strictEqual(page.details.learningMaterials.manager.nameValue, 'learning material 1');
+      assert.strictEqual(
+        page.details.learningMaterials.manager.nameValue,
+        'http://example.com/subdir1/subdir2/long_file_name.pdf',
+      );
       assert.strictEqual(page.details.learningMaterials.manager.author, 'Jennifer Johnson');
       assert.strictEqual(
         page.details.learningMaterials.manager.description.value,
@@ -320,7 +327,10 @@ module('Acceptance | Session - Learning Materials', function (hooks) {
       assert.strictEqual(page.details.learningMaterials.current.length, 4);
       await page.details.learningMaterials.current[1].details();
 
-      assert.strictEqual(page.details.learningMaterials.manager.nameValue, 'learning material 1');
+      assert.strictEqual(
+        page.details.learningMaterials.manager.nameValue,
+        'http://example.com/subdir1/subdir2/long_file_name.pdf',
+      );
       assert.strictEqual(page.details.learningMaterials.manager.author, 'Jennifer Johnson');
       assert.strictEqual(
         page.details.learningMaterials.manager.description.value,
@@ -331,7 +341,7 @@ module('Acceptance | Session - Learning Materials', function (hooks) {
       assert.strictEqual(page.details.learningMaterials.manager.downloadText, 'filename');
       assert.strictEqual(
         page.details.learningMaterials.manager.downloadUrl,
-        'http://example.com/file',
+        'http://example.com/subdir1/subdir2/long_file_name.pdf',
       );
       assert.notOk(page.details.learningMaterials.manager.hasLink);
       assert.notOk(page.details.learningMaterials.manager.hasCitation);
