@@ -141,8 +141,8 @@ export default class CourseVisualizeSessionTypesGraph extends Component {
     }
     this.router.transitionTo(
       'course-visualize-session-type',
-      this.args.course.get('id'),
-      obj.meta.sessionTypeId,
+      this.args.course.id,
+      obj.meta.sessionType.id,
     );
   }
 }
