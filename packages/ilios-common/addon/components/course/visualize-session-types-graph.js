@@ -6,9 +6,7 @@ import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { cleanQuery } from 'ilios-common/utils/query-utils';
 import { map } from 'rsvp';
-import { use } from 'ember-could-get-used-to-this';
 import { TrackedAsyncData } from 'ember-async-data';
-import AsyncProcess from 'ilios-common/classes/async-process';
 import { findBy, mapBy, uniqueValues } from 'ilios-common/utils/array-helpers';
 
 export default class CourseVisualizeSessionTypesGraph extends Component {
@@ -26,7 +24,14 @@ export default class CourseVisualizeSessionTypesGraph extends Component {
     return this.sessionsData.isResolved ? this.sessionsData.value : null;
   }
 
-  @use loadedData = new AsyncProcess(() => [this.getData.bind(this), this.sessions]);
+  @cached
+  get outputData() {
+    return new TrackedAsyncData(this.getData(this.sessions));
+  }
+
+  get data() {
+    return this.outputData.isResolved ? this.outputData.value : [];
+  }
 
   get chartType() {
     return this.args.chartType || 'horz-bar';
@@ -45,13 +50,6 @@ export default class CourseVisualizeSessionTypesGraph extends Component {
     return data.sort((first, second) => {
       return first.data - second.data;
     });
-  }
-
-  get data() {
-    if (!this.loadedData) {
-      return [];
-    }
-    return this.loadedData;
   }
 
   async getData(sessions) {
