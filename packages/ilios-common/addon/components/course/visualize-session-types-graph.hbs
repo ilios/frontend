@@ -5,7 +5,7 @@
 >
   {{#if (or @isIcon this.data.length)}}
     <SimpleChart
-      @name={{this.chartType}}
+      @name="horz-bar"
       @isIcon={{@isIcon}}
       @data={{this.filteredData}}
       @onClick={{this.barClick}}
