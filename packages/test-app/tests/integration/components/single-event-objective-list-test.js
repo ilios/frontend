@@ -96,7 +96,7 @@ module('Integration | Component | ilios calendar single event objective list', f
 `);
 
     assert.notOk(component.title.displayModeSwitcher.isVisible);
-    assert.ok(component.tree.domains.length, 2);
+    assert.strictEqual(component.tree.domains.length, 2);
   });
 
   test('collapsed by default', async function (assert) {

@@ -171,13 +171,13 @@ module('Integration | Component | taxonomy manager', function (hooks) {
     assert.strictEqual(component.vocabulary.options[1].value, '2');
     assert.strictEqual(component.vocabulary.options[1].text, 'Bar (Medicine)');
 
-    assert.ok(component.availableTerms.length, 2);
+    assert.strictEqual(component.availableTerms.length, 2);
     assert.strictEqual(component.availableTerms[0].name, 'Alpha');
     assert.strictEqual(component.availableTerms[1].name, 'Beta');
 
     await component.vocabulary.set('2');
 
-    assert.ok(component.availableTerms.length, 1);
+    assert.strictEqual(component.availableTerms.length, 1);
     assert.strictEqual(component.availableTerms[0].name, 'Gamma');
   });
 
@@ -231,7 +231,7 @@ module('Integration | Component | taxonomy manager', function (hooks) {
     assert.strictEqual(component.vocabulary.options.length, 2);
     assert.notOk(component.vocabulary.options[0].isSelected);
     assert.ok(component.vocabulary.options[1].isSelected);
-    assert.ok(component.availableTerms.length, 1);
+    assert.strictEqual(component.availableTerms.length, 1);
     assert.strictEqual(component.availableTerms[0].name, 'Gamma');
   });
 });
