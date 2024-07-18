@@ -1,4 +1,4 @@
-import { currentRouteName, visit } from '@ember/test-helpers';
+import { currentRouteName, currentURL, visit } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupAuthentication } from 'ilios-common';
 import { setupApplicationTest } from 'frontend/tests/helpers';
@@ -31,11 +31,21 @@ module('Acceptance | FourOhFour', function (hooks) {
 
   test('visiting missing course', async function (assert) {
     await visit('/courses/1337');
+    assert.strictEqual(currentURL(), '/courses/1337');
     assert
       .dom('.full-screen-error')
       .hasText(
         "Rats! I couldn't find that. Please check your page address, and try again. Back to Dashboard",
       );
+  });
+
+  test('visiting existing course does not trigger', async function (assert) {
+    this.school = this.server.create('school');
+    this.course = this.server.create('course', { school: this.school });
+
+    await visit('/courses/1');
+    assert.strictEqual(currentURL(), '/courses/1');
+    assert.dom('.full-screen-error').doesNotExist();
   });
 
   test('visiting missing report #5127', async function (assert) {
