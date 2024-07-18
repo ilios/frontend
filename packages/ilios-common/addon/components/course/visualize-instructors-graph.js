@@ -30,6 +30,10 @@ export default class CourseVisualizeInstructorsGraph extends Component {
     return new TrackedAsyncData(this.getData(this.sessions));
   }
 
+  get isLoaded() {
+    return this.outputData.isResolved;
+  }
+
   get data() {
     return this.outputData.isResolved ? this.outputData.value : [];
   }
@@ -39,16 +43,12 @@ export default class CourseVisualizeInstructorsGraph extends Component {
   }
 
   get filteredData() {
-    let data = this.data;
     const q = cleanQuery(this.args.filter);
     if (q) {
       const exp = new RegExp(q, 'gi');
-      data = this.data.filter(({ label }) => label.match(exp));
+      return this.data.filter(({ label }) => label.match(exp));
     }
-
-    return data.sort((first, second) => {
-      return first.data - second.data;
-    });
+    return this.data;
   }
   async getData(sessions) {
     const sessionsWithInstructors = await map(sessions.slice(), async (session) => {
@@ -95,13 +95,17 @@ export default class CourseVisualizeInstructorsGraph extends Component {
       (total, minutes) => total + minutes,
       0,
     );
-    return instructorData.map((obj) => {
-      const percent = ((obj.data / totalMinutes) * 100).toFixed(1);
-      obj.label = `${obj.label}: ${obj.data} ${this.intl.t('general.minutes')}`;
-      obj.meta.totalMinutes = totalMinutes;
-      obj.meta.percent = percent;
-      return obj;
-    });
+    return instructorData
+      .map((obj) => {
+        const percent = ((obj.data / totalMinutes) * 100).toFixed(1);
+        obj.label = `${obj.label}: ${obj.data} ${this.intl.t('general.minutes')}`;
+        obj.meta.totalMinutes = totalMinutes;
+        obj.meta.percent = percent;
+        return obj;
+      })
+      .sort((first, second) => {
+        return first.data - second.data;
+      });
   }
 
   barHover = restartableTask(async (obj) => {
