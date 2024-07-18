@@ -96,7 +96,7 @@ jobs:
       - name: install dependencies
         run: pnpm install
       - name: Build
-        run: pnpm run --filter ${{matrix.workspace}} build
+        run: pnpm --filter ${{matrix.workspace}} run build
 
   browserstack-test:
     name: Browser Stack Test
@@ -234,8 +234,6 @@ jobs:
           cache: pnpm
       - name: Install Dependencies
         run: pnpm install
-      - name: Run Tests
-        run: pnpm run --filter frontend build
       - name: Build
         run: pnpm --filter ${{matrix.workspace}} run build
 
