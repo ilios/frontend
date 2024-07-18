@@ -117,7 +117,6 @@
     "ember-cli-dependency-checker": "^3.3.2",
     "ember-cli-inject-live-reload": "^2.1.0",
     "ember-cli-sass": "11.0.1",
-    "ember-cli-sri": "^2.1.1",
     "ember-cli-terser": "^4.0.2",
     "ember-load-initializers": "^2.1.2",
     "ember-page-title": "^8.2.3",
