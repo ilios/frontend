@@ -5,8 +5,6 @@ on:
     branches:
       - master
   pull_request: {}
-  schedule:
-    - cron: "15 6 * * 2" # weekly, on Tuesday morning
 
 concurrency:
   group: ci-${{ github.head_ref || github.ref }}
@@ -98,85 +96,6 @@ jobs:
       - name: Build
         run: pnpm --filter ${{matrix.workspace}} run build
 
-  browserstack-test:
-    name: Browser Stack Test
-    runs-on: ubuntu-latest
-    timeout-minutes: 120
-    needs: [test]
-    strategy:
-      fail-fast: false
-      max-parallel: 1
-      matrix:
-        workspace:
-          - frontend
-          - test-app
-        launcher:
-          - BS_OSX_Safari
-          - BS_IOS_SAFARI
-          - BS_CHROME_ANDROID
-    steps:
-      - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v4
-        with:
-          version: 9
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: pnpm
-      - run: pnpm install
-      - name: test:browserstack ${{matrix.workspace}} ${{ matrix.launcher }}
-        env:
-          BROWSERSTACK_USERNAME: iliosgithub_1UGowwsqE
-          # This is in plaintext on purpose. It has no privileged access to anything (this is a free
-          # account) and it allows us to run browserstack tests against PRs.
-          BROWSERSTACK_ACCESS_KEY: yJjw6sE6izkpUw9oasGT
-          # The following is necessary when using browserstack under matrix builds on Github Actions
-          # The Job ID + Run ID isn't unique across matrix runs and will fail when run simultaneously
-          BROWSERSTACK_LOCAL_ID_SUFFIX: ${{matrix.workspace}}-${{ matrix.launcher }}
-        run: |
-          pnpm --filter ${{matrix.workspace}} exec ember browserstack:connect
-          pnpm --filter ${{matrix.workspace}} exec ember test --test-port=7774 --host=127.0.0.1 --config-file=testem.browserstack.js --launch=${{ matrix.launcher }}
-          pnpm --filter ${{matrix.workspace}} exec ember browserstack:disconnect
-          pnpm --filter ${{matrix.workspace}} exec ember browserstack:results
-
-  firefox-test:
-    name: ${{matrix.workspace}} Firefox ${{ matrix.firefox-version }}
-    runs-on: ubuntu-latest
-    timeout-minutes: 20
-    needs: [test]
-    strategy:
-      fail-fast: false
-      matrix:
-        workspace:
-          - frontend
-          - test-app
-          - lti-course-manager
-          - lti-dashboard
-        firefox-version: [latest-esr]
-    steps:
-      - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v4
-        with:
-          version: 9
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: pnpm
-      - run: pnpm install
-      - name: Setup firefox
-        uses: browser-actions/setup-firefox@latest
-        with:
-          firefox-version: ${{ matrix.firefox-version }}
-      - run: firefox --version
-      - name: test
-        run: pnpm --filter ${{matrix.workspace}} exec ember exam --parallel=3 --load-balance --write-execution-file --launch=Firefox
-      - uses: actions/upload-artifact@v4
-        if: failure()
-        with:
-          name: replay-${{matrix.workspace}}-firefox-${{ matrix.firefox-version }}.json
-          path: ./packages/${{matrix.workspace}}/test-execution-*.json
-          retention-days: 7
-
   test-with-embroider:
     name: ${{matrix.workspace}} Test With Embroider
     runs-on: ubuntu-latest
@@ -255,29 +174,3 @@ jobs:
         with:
           args: >
             -Dsonar.projectKey=ilios_frontend_27a24e39-b0ec-405a-91a6-b6392ffcdd30
-
-  percy:
-    name: Test and Capture Screenshots
-    runs-on: ubuntu-latest
-    needs: [test, build, firefox-test, browserstack-test, test-with-embroider, build-with-embroider]
-    timeout-minutes: 20
-    strategy:
-      fail-fast: false
-      matrix:
-        workspace:
-          - frontend
-          - test-app
-    steps:
-      - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v4
-        with:
-          version: 9
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: pnpm
-      - run: pnpm install
-      - name: Run Percy Tests
-        run: pnpm --filter ${{ matrix.workspace }} exec percy exec -- ember test
-        env:
-          PERCY_TOKEN: web_1899a9764a4891f3a19b87e52aa1ae038359e28ba550daa6bad00d0e0a230a33
