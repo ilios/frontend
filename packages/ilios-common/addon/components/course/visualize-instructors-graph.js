@@ -88,12 +88,11 @@ export default class CourseVisualizeInstructorsGraph extends Component {
       });
       return {
         session,
-        totalInstructionalTime: Math.round(totalInstructionalTime * 60),
         instructorsWithInstructionalTime,
       };
     });
 
-    const instructorData = sessionsWithInstructors
+    return sessionsWithInstructors
       .reduce((set, obj) => {
         obj.instructorsWithInstructionalTime.forEach((instructorWithInstructionalTime) => {
           const id = instructorWithInstructionalTime.instructor.id;
@@ -117,18 +116,6 @@ export default class CourseVisualizeInstructorsGraph extends Component {
       }, [])
       .map((obj) => {
         delete obj.id;
-        return obj;
-      });
-
-    const totalMinutes = mapBy(sessionsWithInstructors, 'totalInstructionalTime').reduce(
-      (total, minutes) => total + minutes,
-      0,
-    );
-    return instructorData
-      .map((obj) => {
-        const percent = ((obj.data / totalMinutes) * 100).toFixed(1);
-        obj.meta.totalMinutes = totalMinutes;
-        obj.meta.percent = percent;
         return obj;
       })
       .sort((first, second) => {
