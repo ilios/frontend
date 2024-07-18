@@ -124,14 +124,10 @@ export default class CourseVisualizeSessionTypesGraph extends Component {
       return;
     }
     const { data, meta } = obj;
-
-    const title = htmlSafe(
+    this.tooltipTitle = htmlSafe(
       `${meta.sessionType.title} &bull; ${data} ${this.intl.t('general.minutes')}`,
     );
-    const content = uniqueValues(mapBy(meta.sessions, 'title')).sort().join(', ');
-
-    this.tooltipTitle = title;
-    this.tooltipContent = content;
+    this.tooltipContent = htmlSafe(uniqueValues(mapBy(meta.sessions, 'title')).sort().join(', '));
   });
 
   @action

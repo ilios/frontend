@@ -8,13 +8,14 @@ import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { cleanQuery } from 'ilios-common/utils/query-utils';
 import { TrackedAsyncData } from 'ember-async-data';
-import { findBy, mapBy, uniqueValues } from 'ilios-common/utils/array-helpers';
+import { findById, mapBy, uniqueValues } from 'ilios-common/utils/array-helpers';
 
 export default class CourseVisualizeInstructorsGraph extends Component {
   @service router;
   @service intl;
   @tracked tooltipContent = null;
   @tracked tooltipTitle = null;
+  @tracked sortBy = 'minutes';
 
   @cached
   get sessionsData() {
@@ -38,6 +39,29 @@ export default class CourseVisualizeInstructorsGraph extends Component {
     return this.outputData.isResolved ? this.outputData.value : [];
   }
 
+  get tableData() {
+    return this.filteredData.map((obj) => {
+      const rhett = {};
+      rhett.minutes = obj.data;
+      rhett.sessions = obj.meta.sessions;
+      rhett.instructor = obj.meta.user.fullName;
+      rhett.sessionTitles = mapBy(rhett.sessions, 'title').join(', ');
+      return rhett;
+    });
+  }
+
+  get sortedAscending() {
+    return this.sortBy.search(/desc/) === -1;
+  }
+
+  @action
+  setSortBy(prop) {
+    if (this.sortBy === prop) {
+      prop += ':desc';
+    }
+    this.sortBy = prop;
+  }
+
   get chartType() {
     return this.args.chartType || 'horz-bar';
   }
@@ -50,6 +74,7 @@ export default class CourseVisualizeInstructorsGraph extends Component {
     }
     return this.data;
   }
+
   async getData(sessions) {
     const sessionsWithInstructors = await map(sessions.slice(), async (session) => {
       const instructors = await session.getAllInstructors();
@@ -62,34 +87,38 @@ export default class CourseVisualizeInstructorsGraph extends Component {
         };
       });
       return {
-        sessionTitle: session.title,
+        session,
         totalInstructionalTime: Math.round(totalInstructionalTime * 60),
         instructorsWithInstructionalTime,
       };
     });
 
-    const instructorData = sessionsWithInstructors.reduce((set, obj) => {
-      obj.instructorsWithInstructionalTime.forEach((instructorWithInstructionalTime) => {
-        const name = instructorWithInstructionalTime.instructor.get('fullName');
-        const id = instructorWithInstructionalTime.instructor.get('id');
-        let existing = findBy(set, 'label', name);
-        if (!existing) {
-          existing = {
-            data: 0,
-            label: name,
-            meta: {
-              userId: id,
-              sessions: [],
-            },
-          };
-          set.push(existing);
-        }
-        existing.data += instructorWithInstructionalTime.minutes;
-        existing.meta.sessions.push(obj.sessionTitle);
+    const instructorData = sessionsWithInstructors
+      .reduce((set, obj) => {
+        obj.instructorsWithInstructionalTime.forEach((instructorWithInstructionalTime) => {
+          const id = instructorWithInstructionalTime.instructor.id;
+          let existing = findById(set, id);
+          if (!existing) {
+            existing = {
+              id,
+              data: 0,
+              label: instructorWithInstructionalTime.instructor.fullName,
+              meta: {
+                user: instructorWithInstructionalTime.instructor,
+                sessions: [],
+              },
+            };
+            set.push(existing);
+          }
+          existing.data += instructorWithInstructionalTime.minutes;
+          existing.meta.sessions.push(obj.session);
+        });
+        return set;
+      }, [])
+      .map((obj) => {
+        delete obj.id;
+        return obj;
       });
-
-      return set;
-    }, []);
 
     const totalMinutes = mapBy(sessionsWithInstructors, 'totalInstructionalTime').reduce(
       (total, minutes) => total + minutes,
@@ -98,7 +127,6 @@ export default class CourseVisualizeInstructorsGraph extends Component {
     return instructorData
       .map((obj) => {
         const percent = ((obj.data / totalMinutes) * 100).toFixed(1);
-        obj.label = `${obj.label}: ${obj.data} ${this.intl.t('general.minutes')}`;
         obj.meta.totalMinutes = totalMinutes;
         obj.meta.percent = percent;
         return obj;
@@ -115,10 +143,12 @@ export default class CourseVisualizeInstructorsGraph extends Component {
       this.tooltipContent = null;
       return;
     }
-    const { label, meta } = obj;
-    const sessions = uniqueValues(meta.sessions).sort().join(', ');
-    this.tooltipTitle = htmlSafe(label);
-    this.tooltipContent = htmlSafe(sessions + '<br /><br />' + this.intl.t('general.clickForMore'));
+    this.tooltipTitle = htmlSafe(
+      `${obj.meta.user.fullName} &bull; ${obj.data} ${this.intl.t('general.minutes')}`,
+    );
+    this.tooltipContent = htmlSafe(
+      uniqueValues(mapBy(obj.meta.sessions, 'title')).sort().join(', '),
+    );
   });
 
   @action
@@ -127,10 +157,6 @@ export default class CourseVisualizeInstructorsGraph extends Component {
       return;
     }
 
-    this.router.transitionTo(
-      'course-visualize-instructor',
-      this.args.course.get('id'),
-      obj.meta.userId,
-    );
+    this.router.transitionTo('course-visualize-instructor', this.args.course.id, obj.meta.user.id);
   }
 }

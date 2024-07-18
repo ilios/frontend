@@ -43,7 +43,11 @@
       >
     </div>
     <div class="visualizations">
-      <Course::VisualizeInstructorsGraph @filter={{this.name}} @course={{@model}} />
+      <Course::VisualizeInstructorsGraph
+        @filter={{this.name}}
+        @course={{@model}}
+        @showDataTable={{true}}
+      />
     </div>
   {{/unless}}
 </section>
