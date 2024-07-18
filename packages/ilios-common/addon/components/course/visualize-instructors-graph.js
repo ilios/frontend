@@ -96,6 +96,9 @@ export default class CourseVisualizeInstructorsGraph extends Component {
       .reduce((set, obj) => {
         obj.instructorsWithInstructionalTime.forEach((instructorWithInstructionalTime) => {
           const id = instructorWithInstructionalTime.instructor.id;
+          if (!instructorWithInstructionalTime.minutes) {
+            return;
+          }
           let existing = findById(set, id);
           if (!existing) {
             existing = {
