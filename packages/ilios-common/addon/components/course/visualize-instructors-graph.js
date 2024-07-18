@@ -7,9 +7,7 @@ import { service } from '@ember/service';
 import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { cleanQuery } from 'ilios-common/utils/query-utils';
-import { use } from 'ember-could-get-used-to-this';
 import { TrackedAsyncData } from 'ember-async-data';
-import AsyncProcess from 'ilios-common/classes/async-process';
 import { findBy, mapBy, uniqueValues } from 'ilios-common/utils/array-helpers';
 
 export default class CourseVisualizeInstructorsGraph extends Component {
@@ -24,20 +22,23 @@ export default class CourseVisualizeInstructorsGraph extends Component {
   }
 
   get sessions() {
-    return this.sessionsData.isResolved ? this.sessionsData.value : null;
+    return this.sessionsData.isResolved ? this.sessionsData.value : [];
   }
 
-  @use loadedData = new AsyncProcess(() => [this.getData.bind(this), this.sessions]);
+  @cached
+  get outputData() {
+    return new TrackedAsyncData(this.getData(this.sessions));
+  }
+
+  get data() {
+    return this.outputData.isResolved ? this.outputData.value : [];
+  }
 
   get chartType() {
     return this.args.chartType || 'horz-bar';
   }
 
   get filteredData() {
-    if (!this.data) {
-      return [];
-    }
-
     let data = this.data;
     const q = cleanQuery(this.args.filter);
     if (q) {
@@ -49,20 +50,8 @@ export default class CourseVisualizeInstructorsGraph extends Component {
       return first.data - second.data;
     });
   }
-
-  get data() {
-    if (!this.loadedData) {
-      return [];
-    }
-    return this.loadedData;
-  }
-
-  async getData() {
-    if (!this.sessions) {
-      return [];
-    }
-
-    const sessionsWithInstructors = await map(this.sessions.slice(), async (session) => {
+  async getData(sessions) {
+    const sessionsWithInstructors = await map(sessions.slice(), async (session) => {
       const instructors = await session.getAllInstructors();
       const totalInstructionalTime = await session.getTotalSumOfferingsDuration();
       const instructorsWithInstructionalTime = await map(instructors, async (instructor) => {
