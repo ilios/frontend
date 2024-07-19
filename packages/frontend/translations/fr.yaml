@@ -418,6 +418,7 @@ general:
   termsBySessionType: Termes par Type de Seance
   termXappliedToYSessionsWithSessionTypeZ: 'Le terme "{term}" du vocabulaire "{vocabulary}" s''applique à {sessionsCount, plural, =1 {1 session} other {# sessions}} avec le type de session "{sessionType}".'
   thereAreXTerms: "{count, plural, =1 {Il y a 1 terme} other {Il y a # termes}}"
+  thereAreXTypes: "{count, plural, =1 {Il y a 1 type} other {Il y a # types}}"
   thisReportIsNoLongerAvailable: "Ce rapport n'est plus disponsible."
   thisTermHasSubTerms: Ce terme a des sous-termes.
   tokenInfo: "Jetons de l’API sont utilisés d’y accèder les données de Ilios.  Votre jeton comme un mot de passe: quiconque l’obtenu pouvent apporter des modifications en votre nom.  Lire plus dans les documentation à {apiDocsLink}."

@@ -35,7 +35,7 @@
           </td>
           <td class="summary-highlight" data-test-assessment-count>
             {{#if this.isLoaded}}
-              {{this.assessmentMethods.length}}
+              {{t "general.thereAreXTypes" count=this.assessmentMethods.length}}
             {{/if}}
           </td>
         </tr>
@@ -45,7 +45,7 @@
           </td>
           <td class="summary-highlight" data-test-instructional-count>
             {{#if this.isLoaded}}
-              {{this.instructionalMethods.length}}
+              {{t "general.thereAreXTypes" count=this.instructionalMethods.length}}
             {{/if}}
           </td>
         </tr>
