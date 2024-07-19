@@ -173,9 +173,7 @@
             {{t "general.link"}}:
           </label>
           <span class="link">
-            <a href={{this.link}} target="_blank" rel="noopener noreferrer">
-              {{this.link}}
-            </a>
+            <a href={{this.link}} target="_blank" rel="noopener noreferrer">{{this.link}}</a>
             <CopyButton @clipboardText={{this.link}} @success={{perform this.textCopied}}>
               <FaIcon @icon="copy" @title={{t "general.copyLink"}} />
             </CopyButton>
@@ -189,9 +187,7 @@
           </label>
           <span class="downloadurl">
             {{#if (eq this.mimetype "application/pdf")}}
-              <a href="{{this.absoluteFileUri}}?inline">
-                {{this.filename}}
-              </a>
+              <a href="{{this.absoluteFileUri}}?inline">{{this.filename}}</a>
               <a href={{this.absoluteFileUri}} target="_blank" rel="noopener noreferrer">
                 <FaIcon @icon="download" @title={{t "general.download"}} />
               </a>
