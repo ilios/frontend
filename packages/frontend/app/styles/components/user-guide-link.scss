@@ -1,0 +1,30 @@
+@use "../ilios-common/mixins" as cm;
+@use "../ilios-common/colors" as c;
+
+.user-guide-link {
+  margin-left: 0.5rem;
+
+  @include cm.for-tablet-and-up {
+    margin-left: 0.25rem;
+    margin-right: 0.5rem;
+  }
+
+  a {
+    svg {
+      align-items: center;
+      color: c.$white;
+      display: flex;
+      height: 30px;
+      width: 30px;
+    }
+  }
+
+  @include cm.for-phone-only {
+    a {
+      svg {
+        height: 24px;
+        width: 24px;
+      }
+    }
+  }
+}

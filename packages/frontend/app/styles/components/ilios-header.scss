@@ -22,12 +22,12 @@
     display: grid;
     justify-content: end;
     grid-template-areas:
-      ". locale user"
-      "search search search";
+      ". locale user guide"
+      "search search search search";
     row-gap: 0.25rem;
 
     @include m.for-tablet-and-up {
-      grid-template-areas: "search locale user";
+      grid-template-areas: "search locale user guide";
     }
 
     .locale-chooser {
@@ -35,6 +35,10 @@
     }
     .user-menu {
       grid-area: user;
+    }
+    .user-guide-link {
+      grid-area: guide;
+      height: 100%;
     }
 
     .global-search-box {
