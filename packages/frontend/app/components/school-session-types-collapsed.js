@@ -13,6 +13,10 @@ export default class SchoolSessionTypesCollapseComponent extends Component {
     return this.sessionTypesData.isResolved;
   }
 
+  get sessionTypes() {
+    return this.sessionTypesData.isResolved ? this.sessionTypesData.value : [];
+  }
+
   get instructionalMethods() {
     return filterBy(this.sessionTypesData.value, 'assessment', false);
   }
