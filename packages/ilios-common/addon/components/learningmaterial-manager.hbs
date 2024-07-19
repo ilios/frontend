@@ -200,7 +200,7 @@
                 {{this.filename}}
               </a>
             {{/if}}
-            <CopyButton @clipboardText={{this.absoluteFileUri}}>
+            <CopyButton @clipboardText={{this.absoluteFileUri}} @success={{perform this.textCopied}}>
               <FaIcon @icon="copy" @title={{t "general.copyLink"}} />
             </CopyButton>
           </span>

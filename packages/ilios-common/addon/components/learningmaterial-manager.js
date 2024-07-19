@@ -10,6 +10,7 @@ import { findById } from 'ilios-common/utils/array-helpers';
 @validatable
 export default class LearningMaterialManagerComponent extends Component {
   @service store;
+  @service flashMessages;
 
   @tracked notes;
   @tracked learningMaterial;
@@ -183,5 +184,9 @@ export default class LearningMaterialManagerComponent extends Component {
     await this.args.learningMaterial.save();
     await this.parentMaterial.save();
     this.args.closeManager();
+  });
+
+  textCopied = restartableTask(async () => {
+    this.flashMessages.success('general.copiedSuccessfully');
   });
 }
