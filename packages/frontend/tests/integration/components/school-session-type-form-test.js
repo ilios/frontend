@@ -9,6 +9,10 @@ module('Integration | Component | school session type form', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
+  hooks.beforeEach(async function () {
+    this.store = this.owner.lookup('service:store');
+  });
+
   test('it renders', async function (assert) {
     this.server.create('aamc-method', {
       id: 'AM001',
@@ -34,6 +38,8 @@ module('Integration | Component | school session type form', function (hooks) {
     this.set('assessmentOptionId', summative.id);
     this.set('title', 'one');
     this.set('calendarColor', '#ffffff');
+    await this.store.findAll('aamc-method');
+    await this.store.findAll('assessment-option');
     await render(hbs`<SchoolSessionTypeForm
       @canEditTitle={{true}}
       @canEditAamcMethod={{true}}
@@ -89,7 +95,8 @@ module('Integration | Component | school session type form', function (hooks) {
     this.server.create('assessment-option', {
       name: 'summative',
     });
-    const assessmentOptions = await this.owner.lookup('service:store').findAll('assessment-option');
+    const assessmentOptions = await this.store.findAll('assessment-option');
+    await this.store.findAll('aamc-method');
 
     this.set('assessmentOption', assessmentOptions[1]);
     this.set('assessmentOptions', assessmentOptions);
@@ -124,6 +131,8 @@ module('Integration | Component | school session type form', function (hooks) {
   });
 
   test('assessment option hidden when assessment is false', async function (assert) {
+    await this.store.findAll('aamc-method');
+    await this.store.findAll('assessment-option');
     await render(hbs`<SchoolSessionTypeForm
       @assessment={{false}}
       @assessmentOption={{null}}
@@ -176,12 +185,8 @@ module('Integration | Component | school session type form', function (hooks) {
     const formative = this.server.create('assessment-option', {
       name: 'formative',
     });
-    const aamcMethodModel = await this.owner
-      .lookup('service:store')
-      .findRecord('aamc-method', method.id);
-    const assessmentOptionModel = await this.owner
-      .lookup('service:store')
-      .findRecord('assessment-option', formative.id);
+    const aamcMethodModel = await this.store.findRecord('aamc-method', method.id);
+    const assessmentOptionModel = await this.store.findRecord('assessment-option', formative.id);
 
     this.set('save', (title, calendarColor, assessment, assessmentOption, aamcMethod, isActive) => {
       assert.strictEqual(title, 'new title', 'title is correct');
@@ -232,6 +237,8 @@ module('Integration | Component | school session type form', function (hooks) {
       name: 'formative',
     });
 
+    await this.store.findAll('aamc-method');
+    await this.store.findAll('assessment-option');
     await render(hbs`<SchoolSessionTypeForm
       @canEditTitle={{false}}
       @canEditAamcMethod={{false}}
@@ -276,6 +283,8 @@ module('Integration | Component | school session type form', function (hooks) {
       name: 'formative',
     });
 
+    await this.store.findAll('aamc-method');
+    await this.store.findAll('assessment-option');
     await render(hbs`<SchoolSessionTypeForm
       @canEditAamcMethod={{true}}
       @selectedAamcMethodId="AM001"
@@ -301,6 +310,8 @@ module('Integration | Component | school session type form', function (hooks) {
       name: 'formative',
     });
 
+    await this.store.findAll('aamc-method');
+    await this.store.findAll('assessment-option');
     this.set('aamcMethodId', aamcMethodId);
     await render(hbs`<SchoolSessionTypeForm
       @canEditAamcMethod={{false}}

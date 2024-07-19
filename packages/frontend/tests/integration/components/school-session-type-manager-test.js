@@ -9,13 +9,14 @@ module('Integration | Component | school session type manager', function (hooks)
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
-  hooks.beforeEach(function () {
+  hooks.beforeEach(async function () {
     this.server.create('assessment-option', {
       name: 'formative',
     });
     this.summative = this.server.create('assessment-option', {
       name: 'summative',
     });
+    await this.owner.lookup('service:store').findAll('assessment-option');
   });
 
   test('it renders', async function (assert) {

@@ -8,8 +8,7 @@ import { TrackedAsyncData } from 'ember-async-data';
 
 export default class SchoolVocabulariesExpandedComponent extends Component {
   @service store;
-
-  #loadedSchools = {};
+  @service dataLoader;
 
   get isManaging() {
     return !!this.args.managedVocabularyId;
@@ -19,20 +18,9 @@ export default class SchoolVocabulariesExpandedComponent extends Component {
     return this.schoolVocabularies?.length && !this.isManaging;
   }
 
-  async loadSchool(schoolId) {
-    if (!(schoolId in this.#loadedSchools)) {
-      this.#loadedSchools[schoolId] = this.store.findRecord('school', schoolId, {
-        include: 'vocabularies.terms',
-        reload: true,
-      });
-    }
-
-    return this.#loadedSchools[schoolId];
-  }
-
   @cached
   get schoolData() {
-    return new TrackedAsyncData(this.loadSchool(this.args.school.id));
+    return new TrackedAsyncData(this.dataLoader.loadSchoolForSchool(this.args.school.id));
   }
 
   @cached

@@ -8,6 +8,7 @@ export default class DataLoaderService extends Service {
   #learnerGroupCohorts = {};
   #courses = {};
   #courseSessions = {};
+
   async loadSchoolForCalendar(id) {
     if (!(id in this.#calendarSchools)) {
       const relationships = [

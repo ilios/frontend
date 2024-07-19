@@ -1,29 +1,21 @@
 import Component from '@glimmer/component';
 import { service } from '@ember/service';
 import { dropTask } from 'ember-concurrency';
-import { cached } from '@glimmer/tracking';
-import { TrackedAsyncData } from 'ember-async-data';
 
 export default class SchoolSessionTypeManagerComponent extends Component {
   @service store;
 
-  @cached
-  get assessmentOptionsData() {
-    return new TrackedAsyncData(this.store.findAll('assessment-option'));
+  get assessmentOptions() {
+    return this.store.peekAll('assessment-option');
   }
 
-  @cached
-  get aamcMethodData() {
-    return new TrackedAsyncData(this.store.findAll('aamc-method'));
-  }
-
-  get isLoaded() {
-    return this.assessmentOptionsData.isResolved && this.aamcMethodData.isResolved;
+  get aamcMethods() {
+    return this.store.peekAll('aaamc-method');
   }
 
   get readonlySessionType() {
     const { title, calendarColor, assessment, active: isActive } = this.args.sessionType;
-    const assessmentOption = this.assessmentOptionsData.value.find(
+    const assessmentOption = this.assessmentOptions.find(
       ({ id }) => id === this.args.sessionType.belongsTo('assessmentOption').id(),
     );
     const selectedAssessmentOptionId = assessmentOption?.id;

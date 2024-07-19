@@ -100,4 +100,57 @@ module('Acceptance | School - Session Types', function (hooks) {
     assert.strictEqual(e.list.sessionTypes[0].aamcMethod, 'Celebration');
     assert.strictEqual(e.list.sessionTypes[0].calendarColor, 'background-color: #cc0000');
   });
+
+  test('new session type', async function (assert) {
+    assert.expect(8);
+    this.server.create('aamc-method', { id: 'IM001', active: true });
+    this.server.create('aamc-method', { id: 'IM002', active: true });
+    this.server.create('aamc-method', { id: 'AM001', active: true });
+    this.server.create('aamc-method', { id: 'AM002', active: true });
+    await page.visit({ schoolId: this.school.id, schoolSessionTypeDetails: true });
+    const { schoolSessionTypesExpanded: e } = page.manager;
+
+    assert.strictEqual(e.list.sessionTypes.length, 0);
+    await e.createNew();
+    assert.deepEqual(e.newSessionType.aamcMethod.options.length, 3);
+    await e.newSessionType.title.set('lorem ipsum');
+    await e.newSessionType.aamcMethod.select('IM002');
+    await e.newSessionType.calendarColor.set('#cc6699');
+    await e.newSessionType.submit.click();
+    assert.strictEqual(currentURL(), '/schools/1?schoolSessionTypeDetails=true');
+
+    assert.strictEqual(e.list.sessionTypes[0].title.text, 'lorem ipsum');
+    assert.strictEqual(e.list.sessionTypes[0].sessionCount, '0');
+    assert.notOk(e.list.sessionTypes[0].isAssessment);
+    assert.strictEqual(e.list.sessionTypes[0].aamcMethod, 'aamc method 1');
+    assert.strictEqual(e.list.sessionTypes[0].calendarColor, 'background-color: #cc6699');
+  });
+
+  test('new session type - assessment', async function (assert) {
+    assert.expect(9);
+    this.server.create('aamc-method', { id: 'IM001', active: true });
+    this.server.create('aamc-method', { id: 'IM002', active: true });
+    this.server.create('aamc-method', { id: 'AM001', active: true });
+    this.server.create('aamc-method', { id: 'AM002', active: true });
+    await page.visit({ schoolId: this.school.id, schoolSessionTypeDetails: true });
+    const { schoolSessionTypesExpanded: e } = page.manager;
+
+    assert.strictEqual(e.list.sessionTypes.length, 0);
+    await e.createNew();
+    assert.deepEqual(e.newSessionType.aamcMethod.options.length, 3);
+    await e.newSessionType.title.set('lorem ipsum');
+    await e.newSessionType.assessment.yesNoToggle.handle.click();
+    await e.newSessionType.aamcMethod.select('AM002');
+    await e.newSessionType.calendarColor.set('#ccff00');
+    await e.newSessionType.assessmentSelector.select(this.summative.id);
+    await e.newSessionType.submit.click();
+    assert.strictEqual(currentURL(), '/schools/1?schoolSessionTypeDetails=true');
+
+    assert.strictEqual(e.list.sessionTypes[0].title.text, 'lorem ipsum');
+    assert.strictEqual(e.list.sessionTypes[0].sessionCount, '0');
+    assert.ok(e.list.sessionTypes[0].isAssessment);
+    assert.strictEqual(e.list.sessionTypes[0].assessmentOption, 'summative');
+    assert.strictEqual(e.list.sessionTypes[0].aamcMethod, 'aamc method 3');
+    assert.strictEqual(e.list.sessionTypes[0].calendarColor, 'background-color: #ccff00');
+  });
 });
