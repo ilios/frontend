@@ -23,7 +23,7 @@ export default class SchoolCompetenciesListItemComponent extends Component {
 
   @cached
   get allPcrsesData() {
-    return new TrackedAsyncData(this.store.findAll('aamcPcrs'));
+    return new TrackedAsyncData(this.store.findAll('aamc-pcrs'));
   }
 
   get allPcrses() {

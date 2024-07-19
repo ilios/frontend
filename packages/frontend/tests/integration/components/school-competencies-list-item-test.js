@@ -23,8 +23,6 @@ module('Integration | Component | school-competencies-list-item', function (hook
     const competency = this.server.create('competency', {
       parent: domain,
     });
-    this.pcrsModel1 = await this.owner.lookup('service:store').findRecord('aamc-pcrs', pcrs1.id);
-    this.pcrsModel2 = await this.owner.lookup('service:store').findRecord('aamc-pcrs', pcrs2.id);
     this.competencyModel = await this.owner
       .lookup('service:store')
       .findRecord('competency', competency.id);
@@ -60,6 +58,47 @@ module('Integration | Component | school-competencies-list-item', function (hook
     assert.notOk(component.title.isDomain);
     assert.strictEqual(component.pcrs.items.length, 1);
     assert.strictEqual(component.pcrs.items[0].text, 'Click to edit');
+    await a11yAudit(this.element);
+    assert.ok(true, 'no a11y errors found!');
+  });
+
+  test('manage - no pre-selected PCRS', async function (assert) {
+    this.set('competency', this.competencyModel);
+    await render(hbs`<SchoolCompetenciesListItem
+      @competency={{this.competency}}
+      @isDomain={{false}}
+      @canUpdate={{true}}
+    />`);
+    assert.strictEqual(component.title.text, 'competency 1');
+    assert.strictEqual(component.pcrs.items.length, 1);
+    assert.strictEqual(component.pcrs.items[0].text, 'Click to edit');
+    assert.notOk(component.mapper.isVisible);
+    await component.pcrs.items[0].edit();
+    assert.ok(component.mapper.isVisible);
+    assert.strictEqual(component.mapper.pcrs.length, 2);
+    assert.notOk(component.mapper.pcrs[0].isChecked);
+    assert.notOk(component.mapper.pcrs[1].isChecked);
+    await a11yAudit(this.element);
+    assert.ok(true, 'no a11y errors found!');
+  });
+
+  test('manage - pre-selected PCRS', async function (assert) {
+    this.set('competency', this.domainModel);
+    await render(hbs`<SchoolCompetenciesListItem
+      @competency={{this.competency}}
+      @isDomain={{false}}
+      @canUpdate={{true}}
+    />`);
+    assert.strictEqual(component.title.text, 'competency 0');
+    assert.strictEqual(component.pcrs.items.length, 2);
+    assert.strictEqual(component.pcrs.items[0].text, '1 Zylinder');
+    assert.strictEqual(component.pcrs.items[1].text, '2 Alfons');
+    assert.notOk(component.mapper.isVisible);
+    await component.pcrs.items[0].edit();
+    assert.ok(component.mapper.isVisible);
+    assert.strictEqual(component.mapper.pcrs.length, 2);
+    assert.ok(component.mapper.pcrs[0].isChecked);
+    assert.ok(component.mapper.pcrs[1].isChecked);
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
   });
