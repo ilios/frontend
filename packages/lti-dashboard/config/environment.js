@@ -19,6 +19,11 @@ module.exports = function (environment) {
       authorizationPrefix: 'Token ',
       refreshLeeway: 300,
     },
+    'ember-local-storage': {
+      namespace: true,
+      keyDelimiter: '/',
+      includeEmberDataSupport: false,
+    },
     i18n: {
       defaultLocale: 'en',
     },

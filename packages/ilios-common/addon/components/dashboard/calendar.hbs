@@ -3,8 +3,8 @@
   data-test-dashboard-calendar
 >
   <div class="dashboard-calendar-content">
-    <section class="calendar-controls">
-      <div class="calendar-options-control togglemyschedule">
+    <section class="calendar-controls" data-test-dashboard-calendar-controls>
+      <div class="calendar-options-control togglemyschedule" data-test-myschedule>
         <ToggleButtons
           @firstOptionSelected={{@mySchedule}}
           @firstLabel={{t "general.mySchedule"}}
@@ -12,7 +12,7 @@
           @toggle={{@toggleMySchedule}}
         />
       </div>
-      <div class="calendar-options-control showfilters">
+      <div class="calendar-options-control showfilters" data-test-showfilters>
         <ToggleButtons
           @firstOptionSelected={{not @showFilters}}
           @firstLabel={{t "general.hideFilters"}}
@@ -21,7 +21,7 @@
         />
       </div>
       {{#if @showFilters}}
-        <div class="calendar-options-control togglecoursefilters">
+        <div class="calendar-options-control togglecoursefilters" data-test-showcoursefilters>
           <ToggleButtons
             @firstOptionSelected={{@courseFilters}}
             @firstLabel={{t "general.courseOrSessionType"}}
@@ -29,22 +29,18 @@
             @toggle={{@toggleCourseFilters}}
           />
         </div>
-        {{#if this.showClearFilters}}
-          <button
-            id="calendar-clear-filters"
-            class="calendar-clear-filters"
-            type="button"
-            {{on "click" @clearFilters}}
-          >
-            {{t "general.clearFilters"}}
-          </button>
-        {{/if}}
       {{/if}}
-      {{#unless @mySchedule}}
-        <div class="calendar-options-control calendar-school-picker">
+      {{#if @mySchedule}}
+        {{#if this.showUserContextFilters}}
+          <div class="calendar-options-control toggle-user-context-filters" data-test-usercontexts>
+            <Dashboard::UserContextFilter @setUserContext={{this.setUserContext}} @userContext={{this.userContext}}/>
+          </div>
+        {{/if}}
+      {{else}}
+        <div class="calendar-options-control calendar-school-picker" data-test-school-picker>
           <FaIcon @icon="building-columns" />
           {{#if this.hasMoreThanOneSchool}}
-            <select aria-label={{t "general.schools"}} {{on "change" this.changeSchool}}>
+            <select aria-label={{t "general.schools"}} {{on "change" this.changeSchool}} data-test-select-school>
               {{#each (sort-by "title" @allSchools) as |school|}}
                 <option
                   value={{school.id}}
@@ -58,32 +54,31 @@
             {{get this.bestSelectedSchool "title"}}
           {{/if}}
         </div>
-      {{/unless}}
-      <div class="calendar-filters">
-        {{#if (and @showFilters this.bestSelectedSchool)}}
-          <Dashboard::CalendarFilters
-            @school={{this.bestSelectedSchool}}
-            @courseFilters={{@courseFilters}}
-            @toggleCourseFilters={{@toggleCourseFilters}}
-            @selectedCohortIds={{@selectedCohortIds}}
-            @addCohortId={{@addCohortId}}
-            @removeCohortId={{@removeCohortId}}
-            @selectedCourseLevels={{@selectedCourseLevels}}
-            @addCourseLevel={{@addCourseLevel}}
-            @removeCourseLevel={{@removeCourseLevel}}
-            @selectedCourseIds={{@selectedCourseIds}}
-            @addCourseId={{@addCourseId}}
-            @removeCourseId={{@removeCourseId}}
-            @selectedSessionTypeIds={{@selectedSessionTypeIds}}
-            @addSessionTypeId={{@addSessionTypeId}}
-            @removeSessionTypeId={{@removeSessionTypeId}}
-            @selectedTermIds={{@selectedTermIds}}
-            @addTermId={{@addTermId}}
-            @removeTermId={{@removeTermId}}
-            @cohortProxies={{this.cohortProxies}}
-          />
-        {{/if}}
-      </div>
+      {{/if}}
+      {{#if (and @showFilters this.bestSelectedSchool)}}
+        <Dashboard::CalendarFilters
+          @school={{this.bestSelectedSchool}}
+          @courseFilters={{@courseFilters}}
+          @toggleCourseFilters={{@toggleCourseFilters}}
+          @selectedCohortIds={{@selectedCohortIds}}
+          @addCohortId={{@addCohortId}}
+          @removeCohortId={{@removeCohortId}}
+          @selectedCourseLevels={{@selectedCourseLevels}}
+          @addCourseLevel={{@addCourseLevel}}
+          @removeCourseLevel={{@removeCourseLevel}}
+          @selectedCourseIds={{@selectedCourseIds}}
+          @addCourseId={{@addCourseId}}
+          @removeCourseId={{@removeCourseId}}
+          @selectedSessionTypeIds={{@selectedSessionTypeIds}}
+          @addSessionTypeId={{@addSessionTypeId}}
+          @removeSessionTypeId={{@removeSessionTypeId}}
+          @selectedTermIds={{@selectedTermIds}}
+          @addTermId={{@addTermId}}
+          @removeTermId={{@removeTermId}}
+          @cohortProxies={{this.cohortProxies}}
+          class="calendar-filters"
+        />
+      {{/if}}
     </section>
     {{#if (is-array this.cohortProxies)}}
       <Dashboard::FilterTags
@@ -101,12 +96,9 @@
         @clearFilters={{@clearFilters}}
       />
     {{/if}}
-    <section class="fullwidth ilios-calendar-container"
-      {{did-insert (perform this.loadEvents) this.bestSelectedSchool this.fromTimeStamp this.toTimeStamp @mySchedule}}
-      {{did-update (perform this.loadEvents) this.bestSelectedSchool this.fromTimeStamp this.toTimeStamp @mySchedule}}
-    >
+    <section class="fullwidth ilios-calendar-container">
       <IliosCalendar
-        @isLoadingEvents={{this.loadEvents.isRunning}}
+        @isLoadingEvents={{this.isLoadingEvents}}
         @calendarEvents={{this.filteredEvents}}
         @selectedDate={{@selectedDate}}
         @selectedView={{@selectedView}}

@@ -1,13 +1,13 @@
 import Component from '@glimmer/component';
 import { service } from '@ember/service';
-import { tracked } from '@glimmer/tracking';
+import { cached } from '@glimmer/tracking';
 import { action } from '@ember/object';
-import { dropTask, restartableTask } from 'ember-concurrency';
 import { DateTime } from 'luxon';
 import { map } from 'rsvp';
 import { mapBy, sortBy } from 'ilios-common/utils/array-helpers';
-import { use } from 'ember-could-get-used-to-this';
-import AsyncProcess from 'ilios-common/classes/async-process';
+import { TrackedAsyncData } from 'ember-async-data';
+import { storageFor } from 'ember-local-storage';
+
 export default class DashboardCalendarComponent extends Component {
   @service userEvents;
   @service schoolEvents;
@@ -18,15 +18,29 @@ export default class DashboardCalendarComponent extends Component {
   @service dataLoader;
   @service localeDays;
 
-  @tracked usersPrimarySchool;
-  @tracked absoluteIcsUri;
+  @storageFor('dashboard') dashboardStorage;
 
-  @tracked ourEvents = [];
+  get userContext() {
+    return this.dashboardStorage?.get('userContext');
+  }
 
-  @use cohortProxies = new AsyncProcess(() => [
-    this.getCohortProxies.bind(this),
-    this.bestSelectedSchool,
-  ]);
+  @action
+  setUserContext(userContext) {
+    this.dashboardStorage?.set('userContext', userContext);
+  }
+
+  @cached
+  get cohortProxiesData() {
+    return new TrackedAsyncData(this.getCohortProxies(this.bestSelectedSchool));
+  }
+
+  get cohortProxies() {
+    return this.cohortProxiesData.isResolved ? this.cohortProxiesData.value : [];
+  }
+
+  get showUserContextFilters() {
+    return this.currentUser.performsNonLearnerFunction;
+  }
 
   get fromTimeStamp() {
     if ('week' === this.args.selectedView) {
@@ -58,32 +72,63 @@ export default class DashboardCalendarComponent extends Component {
     return 1;
   }
 
-  constructor() {
-    super(...arguments);
-    this.setup.perform();
+  @cached
+  get userData() {
+    return new TrackedAsyncData(this.currentUser.getModel());
   }
 
-  setup = dropTask(async () => {
-    const user = await this.currentUser.getModel();
-    this.usersPrimarySchool = await user.school;
+  get user() {
+    return this.userData.isResolved ? this.userData.value : null;
+  }
 
-    const icsFeedKey = user.icsFeedKey;
+  @cached
+  get usersPrimarySchoolData() {
+    return new TrackedAsyncData(this.user?.school);
+  }
+
+  get usersPrimarySchool() {
+    return this.usersPrimarySchoolData.isResolved ? this.usersPrimarySchoolData.value : null;
+  }
+
+  get icsFeedKey() {
+    return this.user?.icsFeedKey;
+  }
+
+  get absoluteIcsUri() {
+    if (!this.icsFeedKey) {
+      return '';
+    }
     const apiHost = this.iliosConfig.apiHost;
     const loc = window.location.protocol + '//' + window.location.hostname;
     const server = apiHost ? apiHost : loc;
-    this.absoluteIcsUri = server + '/ics/' + icsFeedKey;
-  });
+    return server + '/ics/' + this.icsFeedKey;
+  }
 
-  loadEvents = restartableTask(async (event, [school, fromTimeStamp, toTimeStamp]) => {
+  @cached
+  get eventsData() {
+    return new TrackedAsyncData(
+      this.loadEvents(this.bestSelectedSchool, this.fromTimeStamp, this.toTimeStamp),
+    );
+  }
+
+  get events() {
+    return this.eventsData.isResolved ? this.eventsData.value : [];
+  }
+
+  get isLoadingEvents() {
+    return this.eventsData.isPending;
+  }
+
+  async loadEvents(school, fromTimeStamp, toTimeStamp) {
     if (!school || !fromTimeStamp || !toTimeStamp) {
-      return;
+      return [];
     }
     if (this.args.mySchedule) {
-      this.ourEvents = await this.userEvents.getEvents(fromTimeStamp, toTimeStamp);
+      return this.userEvents.getEvents(fromTimeStamp, toTimeStamp);
     } else {
-      this.ourEvents = await this.schoolEvents.getEvents(school.id, fromTimeStamp, toTimeStamp);
+      return this.schoolEvents.getEvents(school.id, fromTimeStamp, toTimeStamp);
     }
-  });
+  }
 
   async getCohortProxies(school) {
     if (!school) {
@@ -130,12 +175,13 @@ export default class DashboardCalendarComponent extends Component {
       'eventsWithSelectedCohorts',
       'eventsWithSelectedCourses',
       'eventsWithSelectedTerms',
+      'eventsWithSelectedUserContext',
     ];
     const allFilteredEvents = eventTypes.map((name) => {
       return this[name];
     });
 
-    return this.ourEvents.filter((event) => {
+    return this.events.filter((event) => {
       return allFilteredEvents.every((arr) => {
         return arr.includes(event);
       });
@@ -156,30 +202,30 @@ export default class DashboardCalendarComponent extends Component {
 
   get eventsWithSelectedSessionTypes() {
     if (!this.args.selectedSessionTypeIds?.length) {
-      return this.ourEvents;
+      return this.events;
     }
     const selectedIds = this.args.selectedSessionTypeIds.map(Number);
-    return this.ourEvents.filter((event) => {
+    return this.events.filter((event) => {
       return selectedIds.includes(event.sessionTypeId);
     });
   }
 
   get eventsWithSelectedCourseLevels() {
     if (!this.args.selectedCourseLevels?.length) {
-      return this.ourEvents;
+      return this.events;
     }
     const levels = this.args.selectedCourseLevels.map(Number);
-    return this.ourEvents.filter((event) => {
+    return this.events.filter((event) => {
       return levels.includes(event.courseLevel);
     });
   }
 
   get eventsWithSelectedCohorts() {
     if (!this.args.selectedCohortIds?.length) {
-      return this.ourEvents;
+      return this.events;
     }
     const selectedIds = this.args.selectedCohortIds.map(Number);
-    return this.ourEvents.filter((event) => {
+    return this.events.filter((event) => {
       const matchingCohorts = event.cohorts.filter(({ id }) => selectedIds.includes(id));
       return matchingCohorts.length > 0;
     });
@@ -187,23 +233,43 @@ export default class DashboardCalendarComponent extends Component {
 
   get eventsWithSelectedCourses() {
     if (!this.args.selectedCourseIds?.length) {
-      return this.ourEvents;
+      return this.events;
     }
     const selectedIds = this.args.selectedCourseIds.map(Number);
-    return this.ourEvents.filter((event) => {
+    return this.events.filter((event) => {
       return selectedIds.includes(event.course);
     });
   }
 
   get eventsWithSelectedTerms() {
     if (!this.args.selectedTermIds?.length) {
-      return this.ourEvents;
+      return this.events;
     }
     const selectedIds = this.args.selectedTermIds.map(Number);
-    return this.ourEvents.filter((event) => {
+    return this.events.filter((event) => {
       const allTerms = mapBy([].concat(event.sessionTerms || [], event.courseTerms || []), 'id');
       const matchingTerms = allTerms.filter((id) => selectedIds.includes(id));
       return matchingTerms.length > 0;
+    });
+  }
+
+  get eventsWithSelectedUserContext() {
+    if (!this.userContext) {
+      return this.events;
+    }
+
+    return this.events.filter((event) => {
+      if ('administrator' === this.userContext) {
+        // TODO: Replace this with Set.intersect() once that becomes
+        //   available in all browsers, or polyfill it. [ST 2024/06/20].
+        // See https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set/intersection
+        return (
+          event.userContexts.includes('course administrator') ||
+          event.userContexts.includes('course director') ||
+          event.userContexts.includes('session administrator')
+        );
+      }
+      return event.userContexts.includes(this.userContext);
     });
   }
 

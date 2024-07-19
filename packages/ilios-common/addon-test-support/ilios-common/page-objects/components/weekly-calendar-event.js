@@ -1,4 +1,4 @@
-import { attribute, create, hasClass, isPresent, text } from 'ember-cli-page-object';
+import { attribute, create, hasClass, isPresent, text, triggerable } from 'ember-cli-page-object';
 
 const definition = {
   scope: '[data-test-weekly-calendar-event]',
@@ -15,6 +15,11 @@ const definition = {
   isScheduled: isPresent('[data-test-scheduled-icon]'),
   isDraft: isPresent('[data-test-draft-icon]'),
   wasRecentlyUpdated: isPresent('[data-test-recently-updated-icon]'),
+  mouseOver: triggerable('mouseover'),
+  tooltip: {
+    scope: '[data-test-ilios-calendar-event-tooltip]',
+    resetScope: true,
+  },
 };
 
 export default definition;

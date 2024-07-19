@@ -1,19 +1,10 @@
-import {
-  click,
-  findAll,
-  find,
-  currentURL,
-  currentRouteName,
-  visit,
-  triggerEvent,
-} from '@ember/test-helpers';
-import { isEmpty } from '@ember/utils';
+import { currentURL, currentRouteName } from '@ember/test-helpers';
 import { DateTime } from 'luxon';
 import { module, test } from 'qunit';
 import { setupAuthentication, freezeDateAt, unfreezeDate } from 'ilios-common';
 import { setupApplicationTest } from 'frontend/tests/helpers';
-import { map } from 'rsvp';
 import page from 'ilios-common/page-objects/dashboard-calendar';
+import resetStorages from 'ember-local-storage/test-support/reset-storage';
 import percySnapshot from '@percy/ember';
 
 module('Acceptance | Dashboard Calendar', function (hooks) {
@@ -89,6 +80,10 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
 
   hooks.afterEach(() => {
     unfreezeDate();
+    if (window.localStorage) {
+      window.localStorage.clear();
+    }
+    resetStorages();
   });
 
   test('load month calendar', async function (assert) {
@@ -117,11 +112,10 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
       endDate: endOfMonth.plus({ hour: 1 }).toJSDate(),
       lastModified: today.minus({ year: 1 }),
     });
-    await visit('/dashboard/calendar?view=month');
+    await page.visit({ view: 'month' });
     await percySnapshot(assert);
     assert.strictEqual(currentRouteName(), 'dashboard.calendar');
-    const events = findAll('[data-test-ilios-calendar-event]');
-    assert.strictEqual(events.length, 2);
+    assert.strictEqual(page.calendar.calendar.monthly.events.length, 2);
     const startOfMonthStartFormat = this.intl.formatTime(startOfMonth.toJSDate(), {
       hour: '2-digit',
       minute: '2-digit',
@@ -130,9 +124,10 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
       hour: '2-digit',
       minute: '2-digit',
     });
-    assert
-      .dom(events[0])
-      .hasText(`${startOfMonthStartFormat} - ${startOfMonthEndFormat} : start of month`);
+    assert.strictEqual(
+      page.calendar.calendar.monthly.events[0].text,
+      `${startOfMonthStartFormat} - ${startOfMonthEndFormat} : start of month`,
+    );
     const endOfMonthStartFormat = this.intl.formatTime(endOfMonth.toJSDate(), {
       hour: 'numeric',
       minute: 'numeric',
@@ -141,9 +136,10 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
       hour: 'numeric',
       minute: 'numeric',
     });
-    assert
-      .dom(events[1])
-      .hasText(`${endOfMonthStartFormat} - ${endOfMonthEndFormat} : end of month`);
+    assert.strictEqual(
+      page.calendar.calendar.monthly.events[1].text,
+      `${endOfMonthStartFormat} - ${endOfMonthEndFormat} : end of month`,
+    );
   });
 
   test('load week calendar', async function (assert) {
@@ -187,18 +183,18 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
     await percySnapshot(assert);
     assert.strictEqual(currentRouteName(), 'dashboard.calendar');
 
-    assert.strictEqual(page.calendar.weeklyCalendar.dayHeadings.length, 7);
-    assert.ok(page.calendar.weeklyCalendar.dayHeadings[0].isFirstDayOfWeek);
+    assert.strictEqual(page.calendar.calendar.weekly.dayHeadings.length, 7);
+    assert.ok(page.calendar.calendar.weekly.dayHeadings[0].isFirstDayOfWeek);
     assert.strictEqual(
-      page.calendar.weeklyCalendar.dayHeadings[0].text,
+      page.calendar.calendar.weekly.dayHeadings[0].text,
       `Sunday Sun ${longDayHeading} ${shortDayHeading}`,
     );
 
-    assert.strictEqual(page.calendar.weeklyCalendar.events.length, 2);
-    assert.ok(page.calendar.weeklyCalendar.events[0].isFirstDayOfWeek);
-    assert.strictEqual(page.calendar.weeklyCalendar.events[0].name, 'start of week');
-    assert.ok(page.calendar.weeklyCalendar.events[1].isSeventhDayOfWeek);
-    assert.strictEqual(page.calendar.weeklyCalendar.events[1].name, 'end of week');
+    assert.strictEqual(page.calendar.calendar.weekly.events.length, 2);
+    assert.ok(page.calendar.calendar.weekly.events[0].isFirstDayOfWeek);
+    assert.strictEqual(page.calendar.calendar.weekly.events[0].name, 'start of week');
+    assert.ok(page.calendar.calendar.weekly.events[1].isSeventhDayOfWeek);
+    assert.strictEqual(page.calendar.calendar.weekly.events[1].name, 'end of week');
   });
 
   test('load week calendar on Sunday', async function (assert) {
@@ -242,22 +238,22 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
     await page.visit({ show: 'calendar' });
     assert.strictEqual(currentRouteName(), 'dashboard.calendar');
 
-    assert.strictEqual(page.calendar.weeklyCalendar.dayHeadings.length, 7);
-    assert.ok(page.calendar.weeklyCalendar.dayHeadings[0].isFirstDayOfWeek);
+    assert.strictEqual(page.calendar.calendar.weekly.dayHeadings.length, 7);
+    assert.ok(page.calendar.calendar.weekly.dayHeadings[0].isFirstDayOfWeek);
     assert.strictEqual(
-      page.calendar.weeklyCalendar.dayHeadings[0].text,
+      page.calendar.calendar.weekly.dayHeadings[0].text,
       `Sunday Sun ${longDayHeading} ${shortDayHeading}`,
     );
 
     assert.strictEqual(
-      page.calendar.weeklyCalendar.title.longWeekOfYear,
+      page.calendar.calendar.weekly.title.longWeekOfYear,
       'Week of October 9, 2022',
     );
-    assert.strictEqual(page.calendar.weeklyCalendar.events.length, 2);
-    assert.ok(page.calendar.weeklyCalendar.events[0].isFirstDayOfWeek);
-    assert.strictEqual(page.calendar.weeklyCalendar.events[0].name, 'start of week');
-    assert.ok(page.calendar.weeklyCalendar.events[1].isSeventhDayOfWeek);
-    assert.strictEqual(page.calendar.weeklyCalendar.events[1].name, 'end of week');
+    assert.strictEqual(page.calendar.calendar.weekly.events.length, 2);
+    assert.ok(page.calendar.calendar.weekly.events[0].isFirstDayOfWeek);
+    assert.strictEqual(page.calendar.calendar.weekly.events[0].name, 'start of week');
+    assert.ok(page.calendar.calendar.weekly.events[1].isSeventhDayOfWeek);
+    assert.strictEqual(page.calendar.calendar.weekly.events[1].name, 'end of week');
   });
 
   test('load day calendar', async function (assert) {
@@ -293,12 +289,12 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
       endDate: yesterday.plus({ hour: 1 }).toJSDate(),
       lastModified: today.minus({ year: 1 }),
     });
-    await visit('/dashboard/calendar?view=day');
+    await page.visit({ view: 'day' });
     await percySnapshot(assert);
     assert.strictEqual(currentRouteName(), 'dashboard.calendar');
 
-    assert.strictEqual(page.calendar.dailyCalendar.events.length, 1);
-    assert.strictEqual(page.calendar.dailyCalendar.events[0].name, 'today');
+    assert.strictEqual(page.calendar.calendar.daily.events.length, 1);
+    assert.strictEqual(page.calendar.calendar.daily.events[0].name, 'today');
   });
 
   test('invalid date loads today #5342', async function (assert) {
@@ -310,9 +306,9 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
         day: 24,
       }).toJSDate(),
     );
-    await visit('/dashboard/calendar?view=day&date=somethinginvalid');
+    await page.visit({ view: 'day', date: 'somethinginvalid' });
     assert.strictEqual(currentRouteName(), 'dashboard.calendar');
-    assert.strictEqual(page.calendar.dailyCalendar.title.longDayOfWeek, 'Friday, June 24, 2005');
+    assert.strictEqual(page.calendar.calendar.daily.title.longDayOfWeek, 'Friday, June 24, 2005');
   });
 
   test('click month day number and go to day', async function (assert) {
@@ -323,8 +319,8 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
       startDate: aDayInTheMonth.toJSDate(),
       endDate: aDayInTheMonth.plus({ hour: 1 }).toJSDate(),
     });
-    await visit('/dashboard/calendar?view=month');
-    await click(`[data-test-day-button="${aDayInTheMonth.day}"]`);
+    await page.visit({ view: 'month' });
+    await page.calendar.calendar.monthly.days[aDayInTheMonth.day - 1].selectDay();
     assert.strictEqual(
       currentURL(),
       '/dashboard/calendar?date=' + aDayInTheMonth.toFormat('y-MM-dd') + '&view=day',
@@ -346,11 +342,11 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
       endDate: june24th2005.plus({ hour: 1 }).toJSDate(),
     });
     await page.visit({ show: 'calendar', view: 'week' });
-    assert.strictEqual(page.calendar.weeklyCalendar.dayHeadings.length, 7);
-    await page.calendar.weeklyCalendar.dayHeadings[0].selectDay();
+    assert.strictEqual(page.calendar.calendar.weekly.dayHeadings.length, 7);
+    await page.calendar.calendar.weekly.dayHeadings[0].selectDay();
     assert.strictEqual(currentURL(), '/dashboard/calendar?date=2005-06-19&view=day');
     await page.visit({ show: 'calendar', view: 'week' });
-    await page.calendar.weeklyCalendar.dayHeadings[5].selectDay();
+    await page.calendar.calendar.weekly.dayHeadings[5].selectDay();
     assert.strictEqual(currentURL(), '/dashboard/calendar?date=2005-06-24&view=day');
   });
 
@@ -362,8 +358,8 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
       startDate: today.toJSDate(),
       endDate: today.plus({ hour: 1 }).toJSDate(),
     });
-    await visit('/dashboard/calendar?view=day');
-    await click('.calendar-time-picker li:nth-of-type(3) a');
+    await page.visit({ view: 'day' });
+    await page.calendar.calendar.goForward.click();
     assert.strictEqual(
       currentURL(),
       '/dashboard/calendar?date=' + today.plus({ day: 1 }).toFormat('y-MM-dd') + '&view=day',
@@ -378,8 +374,8 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
       startDate: today.toJSDate(),
       endDate: today.plus({ hour: 1 }).toJSDate(),
     });
-    await visit('/dashboard/calendar?view=week');
-    await click('.calendar-time-picker li:nth-of-type(3) a');
+    await page.visit({ view: 'week' });
+    await page.calendar.calendar.goForward.click();
     assert.strictEqual(
       currentURL(),
       '/dashboard/calendar?date=' + today.plus({ week: 1 }).toFormat('y-MM-dd'),
@@ -394,9 +390,8 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
       startDate: today.toJSDate(),
       endDate: today.plus({ hour: 1 }).toJSDate(),
     });
-    await visit('/dashboard/calendar?view=month');
-    await click('.calendar-time-picker li:nth-of-type(3) a');
-    await click(findAll('.calendar-time-picker li')[2]);
+    await page.visit({ view: 'month' });
+    await page.calendar.calendar.goForward.click();
     assert.strictEqual(
       currentURL(),
       '/dashboard/calendar?date=' + today.plus({ month: 1 }).toFormat('y-MM-dd') + '&view=month',
@@ -411,8 +406,8 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
       startDate: today.toJSDate(),
       endDate: today.plus({ hour: 1 }).toJSDate(),
     });
-    await visit('/dashboard/calendar?view=day');
-    await click('.calendar-time-picker li:nth-of-type(1) a');
+    await page.visit({ view: 'day' });
+    await page.calendar.calendar.goBack.click();
     assert.strictEqual(
       currentURL(),
       '/dashboard/calendar?date=' + today.minus({ day: 1 }).toFormat('y-MM-dd') + '&view=day',
@@ -427,8 +422,8 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
       startDate: today.toJSDate(),
       endDate: today.plus({ hour: 1 }).toJSDate(),
     });
-    await visit('/dashboard/calendar?view=week');
-    await click('.calendar-time-picker li:nth-of-type(1) a');
+    await page.visit({ view: 'week' });
+    await page.calendar.calendar.goBack.click();
     assert.strictEqual(
       currentURL(),
       '/dashboard/calendar?date=' + today.minus({ week: 1 }).toFormat('y-MM-dd'),
@@ -443,8 +438,8 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
       startDate: today.toJSDate(),
       endDate: today.plus({ hour: 1 }).toJSDate(),
     });
-    await visit('/dashboard/calendar?view=month');
-    await click('.calendar-time-picker li:nth-of-type(1) a');
+    await page.visit({ view: 'month' });
+    await page.calendar.calendar.goBack.click();
     assert.strictEqual(
       currentURL(),
       '/dashboard/calendar?date=' + today.minus({ month: 1 }).toFormat('y-MM-dd') + '&view=month',
@@ -476,12 +471,9 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
     });
     await page.visit({ show: 'calendar' });
     await percySnapshot(assert);
-    assert.strictEqual(page.calendar.weeklyCalendar.events.length, 2);
+    assert.strictEqual(page.calendar.calendar.weekly.events.length, 2);
   });
 
-  const chooseSchoolEvents = async function () {
-    return await click(find(findAll('.togglemyschedule label')[1]));
-  };
   test('show school events', async function (assert) {
     assert.expect(1);
     const day = DateTime.fromObject({
@@ -506,18 +498,164 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
       offering: 2,
     });
     await page.visit();
-    await chooseSchoolEvents();
+    await page.calendar.controls.mySchedule.toggle.secondLabel.click();
     await percySnapshot(assert);
-    assert.strictEqual(page.calendar.weeklyCalendar.events.length, 2);
+    assert.strictEqual(page.calendar.calendar.weekly.events.length, 2);
   });
 
-  const showFilters = async function () {
-    return await click('.showfilters label:nth-of-type(2)');
-  };
+  test('user context filters are not present on student-only user calendar', async function (assert) {
+    assert.expect(1);
+    await page.visit({ show: 'calendar' });
+    assert.notOk(page.calendar.controls.userContextFilter.isPresent);
+  });
 
-  const pickSessionType = async function (i) {
-    return await click(find(`.sessiontypefilter li:nth-of-type(${i}) [data-test-target]`));
-  };
+  test('user context filters are present on user calendar for privileged users', async function (assert) {
+    assert.expect(1);
+    await setupAuthentication({ school: this.school }, true);
+    await page.visit({ show: 'calendar' });
+    await percySnapshot(assert);
+    assert.ok(page.calendar.controls.userContextFilter.isPresent);
+  });
+
+  test('user context filters are not present on school calendar', async function (assert) {
+    assert.expect(2);
+    await setupAuthentication({ school: this.school }, true);
+    await page.visit({ show: 'calendar' });
+    assert.ok(page.calendar.controls.userContextFilter.isPresent);
+    await page.calendar.controls.mySchedule.toggle.secondLabel.click();
+    await percySnapshot(assert);
+    assert.notOk(page.calendar.controls.userContextFilter.isPresent);
+  });
+
+  test('test user context filters', async function (assert) {
+    assert.expect(11);
+    this.user = await setupAuthentication({ school: this.school }, true);
+    const day = DateTime.fromObject({
+      month: 4,
+      day: 4,
+      year: 2004,
+      hour: 4,
+      minute: 0,
+      second: 7,
+    });
+    freezeDateAt(day.toJSDate());
+    this.server.create('userevent', {
+      user: this.user.id,
+      startDate: day.toJSDate(),
+      endDate: day.plus({ hour: 1 }).toJSDate(),
+      offering: 1,
+      userContexts: ['learner'],
+    });
+    this.server.create('userevent', {
+      user: this.user.id,
+      startDate: day.plus({ hour: 1 }).toJSDate(),
+      endDate: day.plus({ hour: 2 }).toJSDate(),
+      offering: 2,
+      userContexts: ['instructor'],
+    });
+    this.server.create('userevent', {
+      user: this.user.id,
+      startDate: day.plus({ hour: 2 }).toJSDate(),
+      endDate: day.plus({ hour: 3 }).toJSDate(),
+      offering: 3,
+      userContexts: ['course director'],
+    });
+    await page.visit({ show: 'calendar' });
+    assert.strictEqual(page.calendar.calendar.weekly.events.length, 3);
+    assert.strictEqual(page.calendar.calendar.weekly.events[0].text, '04:00 AM event 0');
+    assert.strictEqual(page.calendar.calendar.weekly.events[1].text, '05:00 AM event 1');
+    assert.strictEqual(page.calendar.calendar.weekly.events[2].text, '06:00 AM event 2');
+    await page.calendar.controls.userContextFilter.learning.toggle();
+    assert.strictEqual(page.calendar.calendar.weekly.events.length, 1);
+    assert.strictEqual(page.calendar.calendar.weekly.events[0].text, '04:00 AM event 0');
+    await page.calendar.controls.userContextFilter.instructing.toggle();
+    assert.strictEqual(page.calendar.calendar.weekly.events.length, 1);
+    assert.strictEqual(page.calendar.calendar.weekly.events[0].text, '05:00 AM event 1');
+    await page.calendar.controls.userContextFilter.admin.toggle();
+    assert.strictEqual(page.calendar.calendar.weekly.events.length, 1);
+    assert.strictEqual(page.calendar.calendar.weekly.events[0].text, '06:00 AM event 2');
+    await page.calendar.controls.userContextFilter.admin.toggle();
+    assert.strictEqual(page.calendar.calendar.weekly.events.length, 3);
+  });
+
+  test('user context filter selections persist across page reloads', async function (assert) {
+    assert.expect(27);
+    this.user = await setupAuthentication({ school: this.school }, true);
+    const day = DateTime.fromObject({
+      month: 4,
+      day: 4,
+      year: 2004,
+      hour: 4,
+      minute: 0,
+      second: 7,
+    });
+    freezeDateAt(day.toJSDate());
+    this.server.create('userevent', {
+      user: this.user.id,
+      startDate: day.toJSDate(),
+      endDate: day.plus({ hour: 1 }).toJSDate(),
+      offering: 1,
+      userContexts: ['learner'],
+    });
+    this.server.create('userevent', {
+      user: this.user.id,
+      startDate: day.plus({ hour: 1 }).toJSDate(),
+      endDate: day.plus({ hour: 2 }).toJSDate(),
+      offering: 2,
+      userContexts: ['instructor'],
+    });
+    this.server.create('userevent', {
+      user: this.user.id,
+      startDate: day.plus({ hour: 2 }).toJSDate(),
+      endDate: day.plus({ hour: 3 }).toJSDate(),
+      offering: 3,
+      userContexts: ['course director'],
+    });
+    await page.visit({ show: 'calendar' });
+    assert.ok(page.calendar.controls.userContextFilter.learning.isActive);
+    assert.ok(page.calendar.controls.userContextFilter.instructing.isActive);
+    assert.ok(page.calendar.controls.userContextFilter.admin.isActive);
+
+    await page.calendar.controls.userContextFilter.learning.toggle();
+    assert.ok(page.calendar.controls.userContextFilter.learning.isActive);
+    assert.notOk(page.calendar.controls.userContextFilter.instructing.isActive);
+    assert.notOk(page.calendar.controls.userContextFilter.admin.isActive);
+
+    await page.visit({ show: 'calendar' });
+    assert.ok(page.calendar.controls.userContextFilter.learning.isActive);
+    assert.notOk(page.calendar.controls.userContextFilter.instructing.isActive);
+    assert.notOk(page.calendar.controls.userContextFilter.admin.isActive);
+
+    await page.calendar.controls.userContextFilter.instructing.toggle();
+    assert.notOk(page.calendar.controls.userContextFilter.learning.isActive);
+    assert.ok(page.calendar.controls.userContextFilter.instructing.isActive);
+    assert.notOk(page.calendar.controls.userContextFilter.admin.isActive);
+
+    await page.visit({ show: 'calendar' });
+    assert.notOk(page.calendar.controls.userContextFilter.learning.isActive);
+    assert.ok(page.calendar.controls.userContextFilter.instructing.isActive);
+    assert.notOk(page.calendar.controls.userContextFilter.admin.isActive);
+
+    await page.calendar.controls.userContextFilter.admin.toggle();
+    assert.notOk(page.calendar.controls.userContextFilter.learning.isActive);
+    assert.notOk(page.calendar.controls.userContextFilter.instructing.isActive);
+    assert.ok(page.calendar.controls.userContextFilter.admin.isActive);
+
+    await page.visit({ show: 'calendar' });
+    assert.notOk(page.calendar.controls.userContextFilter.learning.isActive);
+    assert.notOk(page.calendar.controls.userContextFilter.instructing.isActive);
+    assert.ok(page.calendar.controls.userContextFilter.admin.isActive);
+
+    await page.calendar.controls.userContextFilter.admin.toggle();
+    assert.ok(page.calendar.controls.userContextFilter.learning.isActive);
+    assert.ok(page.calendar.controls.userContextFilter.instructing.isActive);
+    assert.ok(page.calendar.controls.userContextFilter.admin.isActive);
+
+    await page.visit({ show: 'calendar' });
+    assert.ok(page.calendar.controls.userContextFilter.learning.isActive);
+    assert.ok(page.calendar.controls.userContextFilter.instructing.isActive);
+    assert.ok(page.calendar.controls.userContextFilter.admin.isActive);
+  });
 
   test('test session type filter', async function (assert) {
     const today = DateTime.fromObject({ hour: 8, minute: 8, second: 8 });
@@ -534,26 +672,18 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
       sessionTypeId: 2,
     });
     await page.visit({ show: 'calendar', view: 'week' });
-    await showFilters();
-    assert.strictEqual(page.calendar.weeklyCalendar.events.length, 2);
-    await pickSessionType(1);
-    assert.strictEqual(page.calendar.weeklyCalendar.events.length, 1);
-    await pickSessionType(2);
-    assert.strictEqual(page.calendar.weeklyCalendar.events.length, 2);
+    await page.calendar.controls.showFilters.toggle.secondLabel.click();
+    assert.strictEqual(page.calendar.calendar.weekly.events.length, 2);
+    await page.calendar.controls.filters.sessionTypesFilter.sessionTypes[0].click();
+    assert.strictEqual(page.calendar.calendar.weekly.events.length, 1);
+    await page.calendar.controls.filters.sessionTypesFilter.sessionTypes[1].click();
+    assert.strictEqual(page.calendar.calendar.weekly.events.length, 2);
 
-    await pickSessionType(1);
-    await pickSessionType(2);
-    await pickSessionType(3);
-    assert.strictEqual(page.calendar.weeklyCalendar.events.length, 0);
+    await page.calendar.controls.filters.sessionTypesFilter.sessionTypes[0].click();
+    await page.calendar.controls.filters.sessionTypesFilter.sessionTypes[1].click();
+    await page.calendar.controls.filters.sessionTypesFilter.sessionTypes[2].click();
+    assert.strictEqual(page.calendar.calendar.weekly.events.length, 0);
   });
-
-  const pickCourseLevel = async function (i) {
-    return await click(find(`.courselevelfilter li:nth-of-type(${i}) [data-test-target]`));
-  };
-  const clearCourseLevels = async function () {
-    const selected = findAll('.courselevelfilter [data-test-checked]');
-    await map(selected, (e) => click(e));
-  };
 
   test('test course level filter', async function (assert) {
     const today = DateTime.fromObject({ hour: 8, minute: 8, second: 8 });
@@ -570,21 +700,15 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
       courseLevel: 1,
     });
     await page.visit({ show: 'calendar', view: 'week' });
-    await showFilters();
-    await chooseDetailFilter();
-    assert.strictEqual(page.calendar.weeklyCalendar.events.length, 2);
-    await pickCourseLevel(1);
-    assert.strictEqual(page.calendar.weeklyCalendar.events.length, 2);
-    await clearCourseLevels();
-    await pickCourseLevel(3);
-    assert.strictEqual(page.calendar.weeklyCalendar.events.length, 0);
+    await page.calendar.controls.showFilters.toggle.secondLabel.click();
+    await page.calendar.controls.showCourseFilters.toggle.secondLabel.click();
+    assert.strictEqual(page.calendar.calendar.weekly.events.length, 2);
+    await page.calendar.controls.filters.courseLevelsFilter.courseLevels[0].click();
+    assert.strictEqual(page.calendar.calendar.weekly.events.length, 2);
+    await page.calendar.filterTags.clearAll.click();
+    await page.calendar.controls.filters.courseLevelsFilter.courseLevels[1].click();
+    assert.strictEqual(page.calendar.calendar.weekly.events.length, 0);
   });
-
-  const pickCohort = async function (i) {
-    return await click(
-      find(`[data-test-cohort-calendar-filter] li:nth-of-type(${i}) [data-test-target]`),
-    );
-  };
 
   test('test cohort filter', async function (assert) {
     const today = DateTime.fromObject({ hour: 8, minute: 8, second: 8 });
@@ -601,30 +725,17 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
       cohorts: [{ id: 1 }],
     });
     await page.visit({ show: 'calendar', view: 'week' });
-    await showFilters();
-    await chooseDetailFilter();
-    assert.strictEqual(page.calendar.weeklyCalendar.events.length, 2);
-    await pickCohort(2);
-    assert.strictEqual(page.calendar.weeklyCalendar.events.length, 2);
+    await page.calendar.controls.showFilters.toggle.secondLabel.click();
+    await page.calendar.controls.showCourseFilters.toggle.secondLabel.click();
+    assert.strictEqual(page.calendar.calendar.weekly.events.length, 2);
 
-    await pickCohort(1);
-    await pickCohort(2);
-    assert.strictEqual(page.calendar.weeklyCalendar.events.length, 0);
+    await page.calendar.controls.filters.cohortsFilter.cohorts[1].toggle();
+    assert.strictEqual(page.calendar.calendar.weekly.events.length, 2);
+
+    await page.calendar.controls.filters.cohortsFilter.cohorts[0].toggle();
+    await page.calendar.controls.filters.cohortsFilter.cohorts[1].toggle();
+    assert.strictEqual(page.calendar.calendar.weekly.events.length, 0);
   });
-
-  const chooseDetailFilter = async function () {
-    return await click(find(findAll('.togglecoursefilters label')[1]));
-  };
-
-  const pickCourse = async function (i) {
-    return await click(
-      find(`[data-test-courses-calendar-filter] li:nth-of-type(${i}) [data-test-target]`),
-    );
-  };
-  const clearCourses = async function () {
-    const selected = findAll('[data-test-courses-calendar-filter] [data-test-checked]');
-    await map(selected, (e) => click(e));
-  };
 
   test('test course filter', async function (assert) {
     const today = DateTime.fromObject({ hour: 8, minute: 8, second: 8 });
@@ -647,13 +758,13 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
       course: 1,
     });
     await page.visit({ show: 'calendar', view: 'week' });
-    await showFilters();
-    assert.strictEqual(page.calendar.weeklyCalendar.events.length, 3);
-    await pickCourse(1);
-    assert.strictEqual(page.calendar.weeklyCalendar.events.length, 2);
-    await clearCourses();
-    await pickCourse(2);
-    assert.strictEqual(page.calendar.weeklyCalendar.events.length, 1);
+    await page.calendar.controls.showFilters.toggle.secondLabel.click();
+    assert.strictEqual(page.calendar.calendar.weekly.events.length, 3);
+    await page.calendar.controls.filters.coursesFilter.years[0].courses[0].toggle();
+    assert.strictEqual(page.calendar.calendar.weekly.events.length, 2);
+    await page.calendar.controls.filters.coursesFilter.years[0].courses[0].toggle();
+    await page.calendar.controls.filters.coursesFilter.years[0].courses[1].toggle();
+    assert.strictEqual(page.calendar.calendar.weekly.events.length, 1);
   });
 
   test('test course and session type filter together', async function (assert) {
@@ -680,19 +791,19 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
       sessionTypeId: 2,
     });
     await page.visit({ show: 'calendar', view: 'week' });
-    await showFilters();
+    await page.calendar.controls.showFilters.toggle.secondLabel.click();
 
-    assert.strictEqual(page.calendar.weeklyCalendar.events.length, 3);
-    await pickCourse(1);
-    assert.strictEqual(page.calendar.weeklyCalendar.events.length, 2);
-    await clearCourses();
-    await pickCourse(1);
-    await pickSessionType(1);
-    assert.strictEqual(page.calendar.weeklyCalendar.events.length, 1);
+    assert.strictEqual(page.calendar.calendar.weekly.events.length, 3);
+    await page.calendar.controls.filters.coursesFilter.years[0].courses[0].toggle();
+    assert.strictEqual(page.calendar.calendar.weekly.events.length, 2);
+    await page.calendar.controls.filters.coursesFilter.years[0].courses[0].toggle();
+    await page.calendar.controls.filters.coursesFilter.years[0].courses[0].toggle();
+    await page.calendar.controls.filters.sessionTypesFilter.sessionTypes[0].click();
+    assert.strictEqual(page.calendar.calendar.weekly.events.length, 1);
   });
 
   test('clear all filters', async function (assert) {
-    assert.expect(9);
+    assert.expect(18);
     const vocabulary = this.server.create('vocabulary', {
       school: this.school,
     });
@@ -700,98 +811,116 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
       vocabulary,
     });
 
-    const clearFilter = '.filters-clear-filters';
-    const sessiontype = '.sessiontypefilter li:nth-of-type(1) input';
-    const course = '[data-test-courses-calendar-filter] li:nth-of-type(1) input';
-    const term = '.vocabularyfilter li:nth-of-type(1) input';
-
     await page.visit({ show: 'calendar', view: 'week' });
-    await showFilters();
-    assert.ok(isEmpty(find(clearFilter)), 'clear filter button is inactive');
+    await page.calendar.controls.showFilters.toggle.secondLabel.click();
+    assert.notOk(page.calendar.filterTags.clearAll.isPresent);
+    assert.strictEqual(page.calendar.filterTags.tags.length, 0);
 
-    await click(sessiontype);
-    await click(course);
-    await click(term);
+    await page.calendar.controls.filters.sessionTypesFilter.sessionTypes[0].click();
+    assert.strictEqual(page.calendar.filterTags.tags.length, 1);
+    await page.calendar.controls.filters.coursesFilter.years[0].courses[0].toggle();
+    assert.strictEqual(page.calendar.filterTags.tags.length, 2);
+    await page.calendar.controls.filters.vocabularyFilter.vocabularies[0].selectedTermTree.checkboxes[0].click();
+    assert.strictEqual(page.calendar.filterTags.tags.length, 3);
 
-    assert.dom(clearFilter).hasText('Clear Filters', 'clear filter button is active');
-    assert.dom(sessiontype).isChecked('filter is checked');
-    assert.dom(course).isChecked('filter is checked');
-    assert.dom(term).isChecked('filter is checked');
+    assert.ok(page.calendar.filterTags.clearAll.isPresent);
+    assert.strictEqual(page.calendar.filterTags.clearAll.text, 'Clear Filters');
+    assert.strictEqual(page.calendar.filterTags.tags[0].text, '2015 course 0');
+    assert.strictEqual(page.calendar.filterTags.tags[1].text, 'session type 0');
+    assert.strictEqual(page.calendar.filterTags.tags[2].text, 'Vocabulary 1 > term 0');
+    assert.ok(page.calendar.controls.filters.sessionTypesFilter.sessionTypes[0].isChecked);
+    assert.ok(page.calendar.controls.filters.coursesFilter.years[0].courses[0].isChecked);
+    assert.ok(
+      page.calendar.controls.filters.vocabularyFilter.vocabularies[0].selectedTermTree.checkboxes[0]
+        .isChecked,
+    );
 
-    await click(clearFilter);
-    assert.ok(isEmpty(find(clearFilter)), 'clear filter button is inactive');
-    assert.dom(sessiontype).isNotChecked('filter is unchecked');
-    assert.dom(course).isNotChecked('filter is unchecked');
-    assert.dom(term).isNotChecked('filter is unchecked');
+    await page.calendar.filterTags.clearAll.click();
+
+    assert.notOk(page.calendar.filterTags.clearAll.isPresent);
+    assert.strictEqual(page.calendar.filterTags.tags.length, 0);
+    assert.notOk(page.calendar.controls.filters.sessionTypesFilter.sessionTypes[0].isChecked);
+    assert.notOk(page.calendar.controls.filters.coursesFilter.years[0].courses[0].isChecked);
+    assert.notOk(
+      page.calendar.controls.filters.vocabularyFilter.vocabularies[0].selectedTermTree.checkboxes[0]
+        .isChecked,
+    );
   });
 
   test('clear all detail filters', async function (assert) {
-    const clearFilter = '.filters-clear-filters';
-    const sessiontype = '.sessiontypefilter li:nth-of-type(1) input';
-    const courselevel = '.courselevelfilter li:nth-of-type(1) input';
-    const cohort = '[data-test-cohort-calendar-filter] li:nth-of-type(1) input';
-
     await page.visit({ show: 'calendar', view: 'week' });
-    await showFilters();
-    await chooseDetailFilter();
-    assert.ok(isEmpty(find(clearFilter)), 'clear filter button is inactive');
+    await page.calendar.controls.showFilters.toggle.secondLabel.click();
+    await page.calendar.controls.showCourseFilters.toggle.secondLabel.click();
+    assert.notOk(page.calendar.filterTags.clearAll.isPresent);
 
-    await click(sessiontype);
-    await click(courselevel);
-    await click(cohort);
+    await page.calendar.controls.filters.sessionTypesFilter.sessionTypes[0].click();
+    assert.strictEqual(page.calendar.filterTags.tags.length, 1);
+    await page.calendar.controls.filters.courseLevelsFilter.courseLevels[0].click();
+    assert.strictEqual(page.calendar.filterTags.tags.length, 2);
+    await page.calendar.controls.filters.cohortsFilter.cohorts[0].toggle();
+    assert.strictEqual(page.calendar.filterTags.tags.length, 3);
 
-    assert.dom(clearFilter).hasText('Clear Filters', 'clear filter button is active');
-    assert.dom(sessiontype).isChecked('filter is checked');
-    assert.dom(courselevel).isChecked('filter is checked');
-    assert.dom(cohort).isChecked('filter is checked');
+    assert.ok(page.calendar.filterTags.clearAll.isPresent);
+    assert.strictEqual(page.calendar.filterTags.tags[0].text, 'cohort 1 program 0');
+    assert.strictEqual(page.calendar.filterTags.tags[1].text, 'Course Level 1');
+    assert.strictEqual(page.calendar.filterTags.tags[2].text, 'session type 0');
+    assert.ok(page.calendar.controls.filters.sessionTypesFilter.sessionTypes[0].isChecked);
+    assert.ok(page.calendar.controls.filters.courseLevelsFilter.courseLevels[0].isChecked);
+    assert.ok(page.calendar.controls.filters.cohortsFilter.cohorts[0].isChecked);
 
-    await click(clearFilter);
-    assert.ok(isEmpty(find(clearFilter)), 'clear filter button is inactive');
-    assert.dom(sessiontype).isNotChecked('filter is unchecked');
-    assert.dom(courselevel).isNotChecked('filter is unchecked');
-    assert.dom(cohort).isNotChecked('filter is unchecked');
+    await page.calendar.filterTags.clearAll.click();
+
+    assert.notOk(page.calendar.filterTags.clearAll.isPresent);
+    assert.notOk(page.calendar.controls.filters.sessionTypesFilter.sessionTypes[0].isChecked);
+    assert.notOk(page.calendar.controls.filters.courseLevelsFilter.courseLevels[0].isChecked);
+    assert.notOk(page.calendar.controls.filters.cohortsFilter.cohorts[0].isChecked);
   });
 
   test('filter tags work properly', async function (assert) {
-    const sessiontype = '.sessiontypefilter li:nth-of-type(1) [data-test-target]';
-    const courselevel = '.courselevelfilter li:nth-of-type(1) [data-test-target]';
-    const cohort = '[data-test-cohort-calendar-filter] li:nth-of-type(2) [data-test-target]';
-
-    const filtersList = '.filters-list';
-    const clearFilter = '.filters-clear-filters';
-
-    function getTagText(n) {
-      return find(`.filter-tag:nth-of-type(${n + 1})`).textContent.trim();
-    }
-
-    async function clickTag(n) {
-      return await click(`.filter-tag:nth-of-type(${n + 1})`);
-    }
-
     await page.visit({ show: 'calendar', view: 'week' });
-    await showFilters();
-    await chooseDetailFilter();
-    assert.ok(isEmpty(find(filtersList)), 'filter tags list is inactive');
+    await page.calendar.controls.showFilters.toggle.secondLabel.click();
+    await page.calendar.controls.showCourseFilters.toggle.secondLabel.click();
+    assert.notOk(page.calendar.filterTags.clearAll.isPresent);
 
-    await click(sessiontype);
-    await click(courselevel);
-    await click(cohort);
-    assert.strictEqual(getTagText(0), 'cohort 0 program 0', 'filter tag is active');
-    assert.strictEqual(getTagText(1), 'Course Level 1', 'filter tag is active');
-    assert.strictEqual(getTagText(2), 'session type 0', 'filter tag is active');
+    await page.calendar.controls.filters.sessionTypesFilter.sessionTypes[0].click();
+    await page.calendar.controls.filters.courseLevelsFilter.courseLevels[0].click();
+    await page.calendar.controls.filters.cohortsFilter.cohorts[0].toggle();
 
-    await clickTag(1);
-    assert.dom(courselevel).isNotChecked('filter is unchecked');
-    assert.strictEqual(getTagText(0), 'cohort 0 program 0', 'filter tag is active');
-    assert.strictEqual(getTagText(1), 'session type 0', 'filter tag is active');
+    assert.ok(page.calendar.filterTags.clearAll.isPresent);
+    assert.strictEqual(page.calendar.filterTags.tags.length, 3);
+    assert.strictEqual(page.calendar.filterTags.tags[0].text, 'cohort 1 program 0');
+    assert.strictEqual(page.calendar.filterTags.tags[1].text, 'Course Level 1');
+    assert.strictEqual(page.calendar.filterTags.tags[2].text, 'session type 0');
+    assert.ok(page.calendar.controls.filters.sessionTypesFilter.sessionTypes[0].isChecked);
+    assert.ok(page.calendar.controls.filters.courseLevelsFilter.courseLevels[0].isChecked);
+    assert.ok(page.calendar.controls.filters.cohortsFilter.cohorts[0].isChecked);
 
-    await clickTag(0);
-    assert.strictEqual(getTagText(0), 'session type 0', 'filter tag is active');
+    await page.calendar.filterTags.tags[0].click();
 
-    await click(clearFilter);
-    assert.ok(isEmpty(find(filtersList)), 'filter tags list is inactive');
-    assert.dom(sessiontype).isNotChecked('filter is unchecked');
-    assert.dom(cohort).isNotChecked('filter is unchecked');
+    assert.ok(page.calendar.filterTags.clearAll.isPresent);
+    assert.strictEqual(page.calendar.filterTags.tags.length, 2);
+    assert.strictEqual(page.calendar.filterTags.tags[0].text, 'Course Level 1');
+    assert.strictEqual(page.calendar.filterTags.tags[1].text, 'session type 0');
+    assert.ok(page.calendar.controls.filters.sessionTypesFilter.sessionTypes[0].isChecked);
+    assert.ok(page.calendar.controls.filters.courseLevelsFilter.courseLevels[0].isChecked);
+    assert.notOk(page.calendar.controls.filters.cohortsFilter.cohorts[0].isChecked);
+
+    await page.calendar.filterTags.tags[0].click();
+
+    assert.ok(page.calendar.filterTags.clearAll.isPresent);
+    assert.strictEqual(page.calendar.filterTags.tags.length, 1);
+    assert.strictEqual(page.calendar.filterTags.tags[0].text, 'session type 0');
+    assert.ok(page.calendar.controls.filters.sessionTypesFilter.sessionTypes[0].isChecked);
+    assert.notOk(page.calendar.controls.filters.courseLevelsFilter.courseLevels[0].isChecked);
+    assert.notOk(page.calendar.controls.filters.cohortsFilter.cohorts[0].isChecked);
+
+    await page.calendar.filterTags.tags[0].click();
+
+    assert.notOk(page.calendar.filterTags.clearAll.isPresent);
+    assert.strictEqual(page.calendar.filterTags.tags.length, 0);
+    assert.notOk(page.calendar.controls.filters.sessionTypesFilter.sessionTypes[0].isChecked);
+    assert.notOk(page.calendar.controls.filters.courseLevelsFilter.courseLevels[0].isChecked);
+    assert.notOk(page.calendar.controls.filters.cohortsFilter.cohorts[0].isChecked);
   });
 
   test('calendar is active in dashboard navigation', async function (assert) {
@@ -800,53 +929,6 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
     assert.notOk(page.navigation.materials.isActive);
     assert.notOk(page.navigation.week.isActive);
   });
-
-  test('week summary displays the whole week', async function (assert) {
-    assert.expect(3);
-    const startOfTheWeek = DateTime.fromJSDate(
-      this.owner.lookup('service:locale-days').firstDayOfThisWeek,
-    ).set({ minute: 2 });
-    const endOfTheWeek = DateTime.fromJSDate(
-      this.owner.lookup('service:locale-days').lastDayOfThisWeek,
-    ).set({ hour: 22, minute: 5 });
-
-    this.server.create('userevent', {
-      user: this.user.id,
-      startDate: startOfTheWeek.toJSDate(),
-      endDate: startOfTheWeek.plus({ hour: 1 }).toJSDate(),
-      offering: 1,
-      isPublished: true,
-    });
-    this.server.create('userevent', {
-      user: this.user.id,
-      startDate: endOfTheWeek.toJSDate(),
-      endDate: endOfTheWeek.plus({ hour: 1 }).toJSDate(),
-      offering: 2,
-      isPublished: true,
-    });
-    const dashboard = '.dashboard-week';
-    const events = `${dashboard} .event`;
-
-    await visit('/dashboard/week');
-
-    const eventBLocks = findAll(events);
-    assert.strictEqual(eventBLocks.length, 2);
-    const options = {
-      weekday: 'long',
-      hour: 'numeric',
-      minute: 'numeric',
-    };
-    assert
-      .dom(eventBLocks[0])
-      .hasText('event 0 ' + this.intl.formatTime(startOfTheWeek.toJSDate(), options));
-    assert
-      .dom(eventBLocks[1])
-      .hasText('event 1 ' + this.intl.formatTime(endOfTheWeek.toJSDate(), options));
-  });
-
-  const pickTerm = async function (i) {
-    return await click(find(`.vocabularyfilter [data-test-filter-checkbox-target-id="${i}"]`));
-  };
 
   test('test term filter', async function (assert) {
     const vocabulary = this.server.create('vocabulary', {
@@ -873,13 +955,13 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
       sessionTerms: [{ id: 1 }],
     });
     await page.visit({ show: 'calendar', view: 'week' });
-    await showFilters();
-    assert.strictEqual(page.calendar.weeklyCalendar.events.length, 2);
-    await pickTerm(1);
-    assert.strictEqual(page.calendar.weeklyCalendar.events.length, 2);
-    await pickTerm(1);
-    await pickTerm(2);
-    assert.strictEqual(page.calendar.weeklyCalendar.events.length, 0);
+    await page.calendar.controls.showFilters.toggle.secondLabel.click();
+    assert.strictEqual(page.calendar.calendar.weekly.events.length, 2);
+    await page.calendar.controls.filters.vocabularyFilter.vocabularies[0].selectedTermTree.checkboxes[0].click();
+    assert.strictEqual(page.calendar.calendar.weekly.events.length, 2);
+    await page.calendar.controls.filters.vocabularyFilter.vocabularies[0].selectedTermTree.checkboxes[0].click();
+    await page.calendar.controls.filters.vocabularyFilter.vocabularies[0].selectedTermTree.checkboxes[1].click();
+    assert.strictEqual(page.calendar.calendar.weekly.events.length, 0);
   });
 
   test('clear vocab filter #3450', async function (assert) {
@@ -903,23 +985,21 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
       endDate: today.plus({ hour: 1 }).toJSDate(),
       sessionTerms: [],
     });
-    const filters = '.filter-tags .filter-tag';
-    const filter = `${filters}:nth-of-type(1)`;
 
     await page.visit({ show: 'calendar', view: 'week' });
-    await showFilters();
-    assert.strictEqual(page.calendar.weeklyCalendar.events.length, 2);
-    await pickTerm(1);
-    assert.strictEqual(page.calendar.weeklyCalendar.events.length, 1);
+    await page.calendar.controls.showFilters.toggle.secondLabel.click();
+    assert.strictEqual(page.calendar.calendar.weekly.events.length, 2);
+    await page.calendar.controls.filters.vocabularyFilter.vocabularies[0].selectedTermTree.checkboxes[0].click();
+    assert.strictEqual(page.calendar.calendar.weekly.events.length, 1);
 
-    assert.dom(filters).exists({ count: 1 });
-    await click(filter);
-    assert.dom(filters).doesNotExist();
-    assert.strictEqual(page.calendar.weeklyCalendar.events.length, 2);
+    assert.strictEqual(page.calendar.filterTags.tags.length, 1);
+    await page.calendar.filterTags.tags[0].click();
+    assert.strictEqual(page.calendar.filterTags.tags.length, 0);
+    assert.strictEqual(page.calendar.calendar.weekly.events.length, 2);
   });
 
   test('test tooltip', async function (assert) {
-    assert.expect(1);
+    assert.expect(2);
     const november11th = DateTime.fromObject({ month: 11, day: 11, hour: 8, minute: 8, second: 8 });
     this.server.create('userevent', {
       user: this.user.id,
@@ -928,9 +1008,11 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
       offering: 1,
     });
     await page.visit({ show: 'calendar', view: 'week', date: november11th.toFormat('yyyy-LL-dd') });
-    await triggerEvent('[data-test-weekly-calendar-event]', 'mouseover');
+    assert.notOk(page.calendar.calendar.weekly.events[0].tooltip.isPresent);
+
+    await page.calendar.calendar.weekly.events[0].mouseOver();
     await percySnapshot(assert);
-    assert.dom('[data-test-ilios-calendar-event-tooltip]').exists();
+    assert.ok(page.calendar.calendar.weekly.events[0].tooltip.isPresent);
   });
 
   test('visit with course filters open #5098', async function (assert) {
@@ -947,7 +1029,7 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
       showFilters: 'true',
       courseFilters: 'true',
     });
-    assert.strictEqual(page.calendar.weeklyCalendar.events.length, 1);
+    assert.strictEqual(page.calendar.calendar.weekly.events.length, 1);
   });
 
   test('visit with detail filters open #5098', async function (assert) {
@@ -964,7 +1046,7 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
       showFilters: 'true',
       courseFilters: 'false',
     });
-    assert.strictEqual(page.calendar.weeklyCalendar.events.length, 1);
+    assert.strictEqual(page.calendar.calendar.weekly.events.length, 1);
   });
 
   test('transition from weekly calendar to day calendar when multi-event is clicked', async function (assert) {
@@ -985,13 +1067,13 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
       offering: 1,
     });
     await page.visit({ show: 'calendar', view: 'week' });
-    assert.strictEqual(page.calendar.weeklyCalendar.events.length, 1);
-    await page.calendar.weeklyCalendar.events[0].click();
+    assert.strictEqual(page.calendar.calendar.weekly.events.length, 1);
+    await page.calendar.calendar.weekly.events[0].click();
     assert.strictEqual(
       currentURL(),
       `/dashboard/calendar?date=${today.toFormat('yyyy-MM-dd')}&view=day`,
     );
-    assert.strictEqual(page.calendar.dailyCalendar.events.length, 2);
+    assert.strictEqual(page.calendar.calendar.daily.events.length, 2);
   });
 
   test('transition from monthly calendar to day calendar when multi-event is clicked', async function (assert) {
@@ -1012,12 +1094,12 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
       offering: 1,
     });
     await page.visit({ show: 'calendar', view: 'month' });
-    assert.strictEqual(page.calendar.monthlyCalendar.events.length, 1);
-    await page.calendar.monthlyCalendar.events[0].click();
+    assert.strictEqual(page.calendar.calendar.monthly.events.length, 1);
+    await page.calendar.calendar.monthly.events[0].click();
     assert.strictEqual(
       currentURL(),
       `/dashboard/calendar?date=${today.toFormat('yyyy-MM-dd')}&view=day`,
     );
-    assert.strictEqual(page.calendar.dailyCalendar.events.length, 2);
+    assert.strictEqual(page.calendar.calendar.daily.events.length, 2);
   });
 });

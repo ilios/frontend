@@ -4,6 +4,7 @@ general:
   activeFilters: Active Filters
   add: Add
   addNew: Add New
+  admin: Admin
   administratorCount: "There {count, plural, =1 {is 1 administrator} other {are # administrators}}"
   administrators: Administrators
   advancedOptions: Advanced Options
@@ -156,6 +157,7 @@ general:
   independentLearning: Independent Learning
   independentLearningActivities: Independent Learning Activities
   inProgress: In Progress
+  instructing: Instructing
   instructionalNotes: Instructional Notes
   instructor: Instructor
   instructorGroupMembers: Instructor Group Members
@@ -171,6 +173,7 @@ general:
   learnerGroupsManageTitle: Manage Learner Groups
   learners: Learners
   learnersAndLearnerGroups: Learners and Learner Groups
+  learning: Learning
   learnersAndLearnerGroupsWithCount: "Learners ({learnerCount}) and Learner Groups ({learnerGroupCount})"
   learningMaterialManageTitle: Manage Learning Material
   learningMaterials: Learning Materials
@@ -310,6 +313,7 @@ general:
   sessionType: Session Type
   sessionTypes: Session Types
   sessionTypesFor: "Session Types for {subject}"
+  showAllMyActivities: Show all my activities
   showCalendar: Show Calendar
   showCourseMaterials: Show course materials
   showFilters: Show Filters
@@ -318,6 +322,9 @@ general:
   showMore: Show more
   showNotesToStudents: Show Notes to Students
   showObjectives: Show objectives
+  showOnlyMyAdminActivities: Show only my admin activities
+  showOnlyMyInstructorActivities: Show only my instructor activities
+  showOnlyMyLearnerActivities: Show only my learner activities
   showSessionEvents: "Show all other '<em>'{sessionTitle}'</em>' events"
   showSessionMaterials: Show session materials
   smallGroupMessage: 'Please select at least one learner group to attach to your small group offering. If you wish to schedule this offering without groups, please select the "offering" button above.'
