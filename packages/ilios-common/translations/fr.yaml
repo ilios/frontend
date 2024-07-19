@@ -59,6 +59,7 @@ general:
   confirmRemove: "Êtes-vous sûr vous voulez supprimer cette offre avec {learnerGroupCount} groupes d'apprenants?  Ça action ne peut pas être défait."
   confirmSessionRemoval: Êtes vous sûr de vouloir supprimer cette séance?
   contentAuthor: Auteur
+  copiedIcsFeedUrl: Copié mon lien ICS avec succès
   copiedSuccessfully: Copié avec succès
   copyIcsFeedUrl: Copier mon lien ICS
   copyLink: Copier le lien

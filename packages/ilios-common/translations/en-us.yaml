@@ -59,6 +59,7 @@ general:
   confirmRemove: "Are you sure you want to delete this offering with {learnerGroupCount} learner groups? This action cannot be undone."
   confirmSessionRemoval: Are you sure you want to delete this session?
   contentAuthor: Content Author
+  copiedIcsFeedUrl: Copied My ICS Link successfully
   copiedSuccessfully: Copied Successfully
   copyIcsFeedUrl: Copy My ICS Link
   copyLink: Copy link

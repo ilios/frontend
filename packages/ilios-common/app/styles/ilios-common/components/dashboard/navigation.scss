@@ -7,6 +7,7 @@
   margin: 0.5rem 0 0 0.5rem;
 
   ul {
+    align-items: center;
     display: flex;
     justify-content: space-around;
     list-style-type: none;
@@ -15,6 +16,23 @@
 
     li {
       margin: 0;
+
+      .ilios-calendar-ics-feed {
+        padding: 0;
+        text-align: center;
+        width: 90%;
+
+        .highlight {
+          @include m.for-phone-only {
+            /* stylelint-disable property-disallowed-list */
+            width: 7vw;
+          }
+          align-items: center;
+          display: flex;
+          color: c.$orange;
+          @include m.font-size("large");
+        }
+      }
     }
 
     @include m.for-tablet-and-up {
@@ -22,6 +40,10 @@
 
       li {
         margin-right: 3em;
+
+        &:nth-of-type(3) {
+          margin-right: 0.5em;
+        }
       }
     }
   }
