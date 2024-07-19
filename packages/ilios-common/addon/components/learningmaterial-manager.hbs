@@ -176,7 +176,7 @@
             <a href={{this.link}} target="_blank" rel="noopener noreferrer">
               {{this.link}}
             </a>
-            <CopyButton @clipboardText={{this.link}}>
+            <CopyButton @clipboardText={{this.link}} @success={{perform this.textCopied}}>
               <FaIcon @icon="copy" @title={{t "general.copyLink"}} />
             </CopyButton>
           </span>
