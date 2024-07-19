@@ -8,7 +8,7 @@
       class="title link-button"
       type="button"
       aria-expanded="false"
-      data-test-expand
+      data-test-title
       {{on "click" @expand}}
     >
       {{t "general.sessionTypes"}} ({{this.sessionTypes.length}})
@@ -29,21 +29,21 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
+        <tr data-test-session-type-methods>
           <td>
             {{t "general.assessmentMethods"}}
           </td>
-          <td class="summary-highlight" data-test-assessment-count>
+          <td class="summary-highlight">
             {{#if this.isLoaded}}
               {{t "general.thereAreXTypes" count=this.assessmentMethods.length}}
             {{/if}}
           </td>
         </tr>
-        <tr>
+        <tr data-test-session-type-methods>
           <td>
             {{t "general.instructionalMethods"}}
           </td>
-          <td class="summary-highlight" data-test-instructional-count>
+          <td class="summary-highlight">
             {{#if this.isLoaded}}
               {{t "general.thereAreXTypes" count=this.instructionalMethods.length}}
             {{/if}}

@@ -11,15 +11,25 @@ module('Integration | Component | school session types collapsed', function (hoo
 
   test('it renders', async function (assert) {
     const school = this.server.create('school');
-    this.server.create('session-type', { school, assessment: true });
-    this.server.create('session-type', { school, assessment: false });
+    this.server.createList('session-type', 2, {
+      school,
+      assessment: true,
+    });
+    this.server.create('session-type', {
+      school,
+      assessment: false,
+    });
     const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
     this.set('school', schoolModel);
 
     await render(hbs`<SchoolSessionTypesCollapsed @school={{this.school}} @expand={{(noop)}} />`);
 
-    assert.strictEqual(parseInt(component.assessmentCount, 10), 1);
-    assert.strictEqual(parseInt(component.instructionalCount, 10), 1);
+    assert.strictEqual(component.title, 'Session Types (3)');
+    assert.strictEqual(component.sessionTypeMethods.length, 2);
+    assert.strictEqual(component.sessionTypeMethods[0].title, 'Assessment Methods');
+    assert.strictEqual(component.sessionTypeMethods[0].summary, 'There are 2 types');
+    assert.strictEqual(component.sessionTypeMethods[1].title, 'Instructional Methods');
+    assert.strictEqual(component.sessionTypeMethods[1].summary, 'There is 1 type');
   });
 
   test('expand', async function (assert) {
