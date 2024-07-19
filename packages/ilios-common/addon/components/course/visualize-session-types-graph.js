@@ -87,6 +87,7 @@ export default class CourseVisualizeSessionTypesGraph extends Component {
     });
 
     return dataMap
+      .filter((obj) => obj.minutes > 0)
       .reduce((set, obj) => {
         const id = obj.sessionType.id;
         let existing = findById(set, id);
