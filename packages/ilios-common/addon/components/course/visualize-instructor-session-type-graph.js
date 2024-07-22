@@ -1,18 +1,19 @@
 import Component from '@glimmer/component';
 import { filter, map } from 'rsvp';
-import { isEmpty } from '@ember/utils';
 import { htmlSafe } from '@ember/template';
 import { restartableTask, timeout } from 'ember-concurrency';
 import { service } from '@ember/service';
 import { cached, tracked } from '@glimmer/tracking';
 import { TrackedAsyncData } from 'ember-async-data';
-import { findBy, mapBy, uniqueValues } from 'ilios-common/utils/array-helpers';
+import { findById, mapBy, uniqueValues } from 'ilios-common/utils/array-helpers';
+import { action } from '@ember/object';
 
 export default class CourseVisualizeInstructorSessionTypeGraph extends Component {
   @service router;
   @service intl;
   @tracked tooltipContent = null;
   @tracked tooltipTitle = null;
+  @tracked sortBy = 'minutes';
 
   @cached
   get sessionsData() {
@@ -28,8 +29,35 @@ export default class CourseVisualizeInstructorSessionTypeGraph extends Component
     return new TrackedAsyncData(this.getData(this.sessions));
   }
 
+  get isLoaded() {
+    return this.outputData.isResolved;
+  }
+
   get data() {
     return this.outputData.isResolved ? this.outputData.value : [];
+  }
+
+  get tableData() {
+    return this.data.map((obj) => {
+      const rhett = {};
+      rhett.minutes = obj.data;
+      rhett.sessions = obj.meta.sessions;
+      rhett.sessionType = obj.meta.sessionType.title;
+      rhett.sessionTitles = mapBy(rhett.sessions, 'title').join(', ');
+      return rhett;
+    });
+  }
+
+  get sortedAscending() {
+    return this.sortBy.search(/desc/) === -1;
+  }
+
+  @action
+  setSortBy(prop) {
+    if (this.sortBy === prop) {
+      prop += ':desc';
+    }
+    this.sortBy = prop;
   }
 
   async getData(sessions) {
@@ -53,55 +81,54 @@ export default class CourseVisualizeInstructorSessionTypeGraph extends Component
     const dataMap = await map(sessionsWithSessionType, async ({ session, sessionType }) => {
       const minutes = await session.getTotalSumDurationByInstructor(this.args.user);
       return {
-        sessionTitle: session.title,
-        sessionTypeTitle: sessionType.title,
+        session,
+        sessionType,
         minutes,
       };
     });
 
-    const sessionTypeData = dataMap.reduce((set, obj) => {
-      const name = obj.sessionTypeTitle;
-      let existing = findBy(set, 'label', name);
-      if (!existing) {
-        existing = {
-          data: 0,
-          label: name,
-          meta: {
-            sessions: [],
-          },
-        };
-        set.push(existing);
-      }
-      existing.data += obj.minutes;
-      existing.meta.sessions.push(obj.sessionTitle);
+    return dataMap
+      .filter((obj) => obj.minutes > 0)
+      .reduce((set, obj) => {
+        const id = obj.sessionType.id;
+        let existing = findById(set, id);
+        if (!existing) {
+          existing = {
+            id,
+            data: 0,
+            label: obj.sessionType.title,
+            meta: {
+              sessions: [],
+              sessionType: obj.sessionType,
+            },
+          };
+          set.push(existing);
+        }
+        existing.data += obj.minutes;
+        existing.meta.sessions.push(obj.session);
 
-      return set;
-    }, []);
-
-    const totalMinutes = mapBy(sessionTypeData, 'data').reduce(
-      (total, minutes) => total + minutes,
-      0,
-    );
-
-    return sessionTypeData.map((obj) => {
-      const percent = ((obj.data / totalMinutes) * 100).toFixed(1);
-      obj.label = `${obj.label} ${percent}%`;
-      obj.meta.totalMinutes = totalMinutes;
-      obj.meta.percent = percent;
-      return obj;
-    });
+        return set;
+      }, [])
+      .map((obj) => {
+        delete obj.id;
+        return obj;
+      })
+      .sort((first, second) => {
+        return first.data - second.data;
+      });
   }
 
   donutHover = restartableTask(async (obj) => {
     await timeout(100);
-    if (this.args.isIcon || isEmpty(obj) || obj.empty) {
+    if (this.args.isIcon || !obj || obj.empty) {
       this.tooltipTitle = null;
       this.tooltipContent = null;
       return;
     }
-    const { label, data, meta } = obj;
-
-    this.tooltipTitle = htmlSafe(`${label} ${data} ${this.intl.t('general.minutes')}`);
-    this.tooltipContent = uniqueValues(meta.sessions).sort().join(', ');
+    const { data, meta } = obj;
+    this.tooltipTitle = htmlSafe(
+      `${meta.sessionType.title} &bull; ${data} ${this.intl.t('general.minutes')}`,
+    );
+    this.tooltipContent = htmlSafe(uniqueValues(mapBy(meta.sessions, 'title')).sort().join(', '));
   });
 }

@@ -6,13 +6,15 @@ import { restartableTask, timeout } from 'ember-concurrency';
 import { service } from '@ember/service';
 import { cached, tracked } from '@glimmer/tracking';
 import { TrackedAsyncData } from 'ember-async-data';
-import { findBy, mapBy, uniqueValues } from 'ilios-common/utils/array-helpers';
+import { findById, mapBy } from 'ilios-common/utils/array-helpers';
+import { action } from '@ember/object';
 
 export default class CourseVisualizeInstructorTermGraph extends Component {
   @service router;
   @service intl;
   @tracked tooltipContent = null;
   @tracked tooltipTitle = null;
+  @tracked sortBy = 'minutes';
 
   @cached
   get sessionsData() {
@@ -32,6 +34,33 @@ export default class CourseVisualizeInstructorTermGraph extends Component {
     return this.outputData.isResolved ? this.outputData.value : [];
   }
 
+  get isLoaded() {
+    return this.outputData.isResolved;
+  }
+
+  get tableData() {
+    return this.data.map((obj) => {
+      const rhett = {};
+      rhett.minutes = obj.data;
+      rhett.sessions = obj.meta.sessions;
+      rhett.vocabularyTerm = `${obj.meta.vocabulary.title} - ${obj.meta.term.title}`;
+      rhett.sessionTitles = mapBy(rhett.sessions, 'title').join(', ');
+      return rhett;
+    });
+  }
+
+  get sortedAscending() {
+    return this.sortBy.search(/desc/) === -1;
+  }
+
+  @action
+  setSortBy(prop) {
+    if (this.sortBy === prop) {
+      prop += ':desc';
+    }
+    this.sortBy = prop;
+  }
+
   async getData(sessions) {
     if (!sessions.length) {
       return [];
@@ -46,8 +75,8 @@ export default class CourseVisualizeInstructorTermGraph extends Component {
       const terms = await map((await session.terms).slice(), async (term) => {
         const vocabulary = await term.vocabulary;
         return {
-          termTitle: term.title,
-          vocabularyTitle: vocabulary.title,
+          term,
+          vocabulary,
         };
       });
 
@@ -57,59 +86,54 @@ export default class CourseVisualizeInstructorTermGraph extends Component {
       };
     });
 
-    const totalMinutes = (
-      await map(sessionsWithTerms, async ({ session }) => {
-        return await session.getTotalSumOfferingsDurationByInstructor(this.args.user);
-      })
-    ).reduce((total, mins) => total + mins, 0);
-
     const dataMap = await map(sessionsWithTerms, async ({ session, terms }) => {
       const minutes = await session.getTotalSumDurationByInstructor(this.args.user);
-      return terms.map(({ termTitle, vocabularyTitle }) => {
+      return terms.map(({ term, vocabulary }) => {
         return {
-          sessionTitle: session.title,
-          termTitle,
-          vocabularyTitle,
+          session,
+          term,
+          vocabulary,
           minutes,
         };
       });
     });
 
-    const flat = dataMap.reduce((flattened, arr) => {
-      return [...flattened, ...arr];
-    }, []);
+    return dataMap
+      .reduce((flattened, arr) => {
+        return [...flattened, ...arr];
+      }, [])
+      .reduce((set, { term, session, vocabulary, minutes }) => {
+        const label = vocabulary.title + ' - ' + term.title;
+        const id = term.id;
+        let existing = findById(set, id);
+        if (!existing) {
+          existing = {
+            id,
+            data: 0,
+            label,
+            meta: {
+              term,
+              vocabulary,
+              sessions: [],
+            },
+          };
+          set.push(existing);
+        }
+        existing.data += minutes;
+        existing.meta.sessions.push(session);
 
-    const sessionTermData = flat.reduce((set, obj) => {
-      const name = `${obj.vocabularyTitle} > ${obj.termTitle}`;
-      let existing = findBy(set, 'label', name);
-      if (!existing) {
-        existing = {
-          data: 0,
-          label: name,
-          meta: {
-            sessions: [],
-            vocabularyTitle: obj.vocabularyTitle,
-          },
-        };
-        set.push(existing);
-      }
-      existing.data += obj.minutes;
-      existing.meta.sessions.push(obj.sessionTitle);
-
-      return set;
-    }, []);
-
-    return sessionTermData
+        return set;
+      }, [])
       .map((obj) => {
-        const percent = ((obj.data / totalMinutes) * 100).toFixed(1);
-        obj.meta.totalMinutes = totalMinutes;
-        obj.meta.percent = percent;
-        obj.label = `${obj.label}: ${obj.data} ${this.intl.t('general.minutes')}`;
+        delete obj.id;
         return obj;
+      })
+      .filter((obj) => {
+        return obj.data > 0;
       })
       .sort((first, second) => {
         return (
-          first.meta.vocabularyTitle.localeCompare(second.meta.vocabularyTitle) ||
+          first.meta.vocabulary.title.localeCompare(second.meta.vocabulary.title) ||
           second.data - first.data
         );
       });
@@ -122,9 +146,15 @@ export default class CourseVisualizeInstructorTermGraph extends Component {
       this.tooltipContent = null;
       return;
     }
-    const { label, meta } = obj;
 
-    this.tooltipTitle = htmlSafe(label);
-    this.tooltipContent = uniqueValues(meta.sessions).sort().join(', ');
+    const { data, meta } = obj;
+
+    const title = htmlSafe(
+      `${meta.vocabulary.title} - ${meta.term.title} &bull; ${data} ${this.intl.t('general.minutes')}`,
+    );
+    const content = mapBy(meta.sessions, 'title').sort().join(', ');
+
+    this.tooltipTitle = title;
+    this.tooltipContent = content;
   });
 }
