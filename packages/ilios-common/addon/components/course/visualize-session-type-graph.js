@@ -27,7 +27,7 @@ export default class CourseVisualizeSessionTypeGraph extends Component {
   }
 
   get sessions() {
-    return this.sessionsData.isResolved ? this.sessionsData.value : [];
+    return this.sessionsData.isResolved ? this.sessionsData.value.slice() : [];
   }
 
   get sessionTypeSessions() {
@@ -36,7 +36,7 @@ export default class CourseVisualizeSessionTypeGraph extends Component {
 
   @cached
   get outputData() {
-    return new TrackedAsyncData(this.getDataObjects(this.sessionsAndSessionTypeSessions));
+    return new TrackedAsyncData(this.getDataObjects(this.sessions, this.sessionTypeSessions));
   }
 
   get data() {
@@ -70,21 +70,7 @@ export default class CourseVisualizeSessionTypeGraph extends Component {
     this.sortBy = prop;
   }
 
-  get sessionsAndSessionTypeSessions() {
-    const rhett = {
-      sessions: [],
-      sessionTypeSessions: [],
-    };
-    if (this.sessions && this.sessionTypeSessions) {
-      rhett.sessions = this.sessions.slice();
-      rhett.sessionTypeSessions = this.sessionTypeSessions.slice();
-    }
-    return rhett;
-  }
-
-  async getDataObjects(sessionsAndSessionTypeSessions) {
-    const sessions = sessionsAndSessionTypeSessions.sessions;
-    const sessionTypeSessions = sessionsAndSessionTypeSessions.sessionTypeSessions;
+  async getDataObjects(sessions, sessionTypeSessions) {
     const courseSessionsWithSessionType = sessions.filter((session) =>
       sessionTypeSessions.includes(session),
     );

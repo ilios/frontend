@@ -22,7 +22,7 @@ export default class CourseVisualizeSessionTypesGraph extends Component {
   }
 
   get sessions() {
-    return this.sessionsData.isResolved ? this.sessionsData.value : null;
+    return this.sessionsData.isResolved ? this.sessionsData.value.slice() : [];
   }
 
   @cached
@@ -71,11 +71,11 @@ export default class CourseVisualizeSessionTypesGraph extends Component {
   }
 
   async getData(sessions) {
-    if (!sessions) {
+    if (!sessions.length) {
       return [];
     }
 
-    const dataMap = await map(sessions.slice(), async (session) => {
+    const dataMap = await map(sessions, async (session) => {
       const hours = await session.getTotalSumDuration();
       const minutes = Math.round(hours * 60);
       const sessionType = await session.sessionType;

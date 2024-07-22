@@ -5,9 +5,7 @@ import { htmlSafe } from '@ember/template';
 import { restartableTask, timeout } from 'ember-concurrency';
 import { service } from '@ember/service';
 import { cached, tracked } from '@glimmer/tracking';
-import { use } from 'ember-could-get-used-to-this';
 import { TrackedAsyncData } from 'ember-async-data';
-import AsyncProcess from 'ilios-common/classes/async-process';
 import { findBy, mapBy, uniqueValues } from 'ilios-common/utils/array-helpers';
 
 export default class CourseVisualizeInstructorSessionTypeGraph extends Component {
@@ -22,24 +20,24 @@ export default class CourseVisualizeInstructorSessionTypeGraph extends Component
   }
 
   get sessions() {
-    return this.sessionsData.isResolved ? this.sessionsData.value : null;
+    return this.sessionsData.isResolved ? this.sessionsData.value.slice() : [];
   }
 
-  @use loadedData = new AsyncProcess(() => [this.getData.bind(this), this.sessions]);
+  @cached
+  get outputData() {
+    return new TrackedAsyncData(this.getData(this.sessions));
+  }
 
   get data() {
-    if (!this.loadedData) {
-      return [];
-    }
-    return this.loadedData;
+    return this.outputData.isResolved ? this.outputData.value : [];
   }
 
   async getData(sessions) {
-    if (!sessions) {
+    if (!sessions.length) {
       return [];
     }
 
-    const sessionsWithUser = await filter(sessions.slice(), async (session) => {
+    const sessionsWithUser = await filter(sessions, async (session) => {
       const allInstructors = await session.getAllOfferingInstructors();
       return mapBy(allInstructors, 'id').includes(this.args.user.id);
     });

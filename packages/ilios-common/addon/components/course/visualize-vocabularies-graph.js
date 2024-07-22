@@ -21,7 +21,7 @@ export default class CourseVisualizeVocabulariesGraph extends Component {
   }
 
   get sessions() {
-    return this.sessionsData.isResolved ? this.sessionsData.value : [];
+    return this.sessionsData.isResolved ? this.sessionsData.value.slice() : [];
   }
 
   @cached
@@ -65,7 +65,7 @@ export default class CourseVisualizeVocabulariesGraph extends Component {
       return [];
     }
 
-    const sessionsWithMinutes = await map(sessions.slice(), async (session) => {
+    const sessionsWithMinutes = await map(sessions, async (session) => {
       const hours = await session.getTotalSumDuration();
       return {
         session,
