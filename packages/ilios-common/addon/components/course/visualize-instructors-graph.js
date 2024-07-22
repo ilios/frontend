@@ -23,7 +23,7 @@ export default class CourseVisualizeInstructorsGraph extends Component {
   }
 
   get sessions() {
-    return this.sessionsData.isResolved ? this.sessionsData.value : [];
+    return this.sessionsData.isResolved ? this.sessionsData.value.slice() : [];
   }
 
   @cached
@@ -76,9 +76,8 @@ export default class CourseVisualizeInstructorsGraph extends Component {
   }
 
   async getData(sessions) {
-    const sessionsWithInstructors = await map(sessions.slice(), async (session) => {
+    const sessionsWithInstructors = await map(sessions, async (session) => {
       const instructors = await session.getAllInstructors();
-      const totalInstructionalTime = await session.getTotalSumOfferingsDuration();
       const instructorsWithInstructionalTime = await map(instructors, async (instructor) => {
         const minutes = await session.getTotalSumOfferingsDurationByInstructor(instructor);
         return {

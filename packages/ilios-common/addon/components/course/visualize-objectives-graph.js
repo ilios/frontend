@@ -5,9 +5,7 @@ import { service } from '@ember/service';
 import { htmlSafe } from '@ember/template';
 import { filter, map } from 'rsvp';
 import { restartableTask, timeout } from 'ember-concurrency';
-import { use } from 'ember-could-get-used-to-this';
 import { TrackedAsyncData } from 'ember-async-data';
-import AsyncProcess from 'ilios-common/classes/async-process';
 import { mapBy, sortBy, uniqueValues } from 'ilios-common/utils/array-helpers';
 
 export default class CourseVisualizeObjectivesGraph extends Component {
@@ -20,32 +18,29 @@ export default class CourseVisualizeObjectivesGraph extends Component {
   @tracked sortBy = 'percentage:desc';
 
   @cached
-  get courseSessionsData() {
+  get sessionsData() {
     return new TrackedAsyncData(this.args.course.sessions);
   }
 
-  get courseSessions() {
-    return this.courseSessionsData.isResolved ? this.courseSessionsData.value : null;
+  get sessions() {
+    return this.sessionsData.isResolved ? this.sessionsData.value.slice() : [];
   }
 
-  @use dataObjects = new AsyncProcess(() => [this.getDataObjects.bind(this), this.sessions]);
+  @cached
+  get outputData() {
+    return new TrackedAsyncData(this.getDataObjects(this.sessions));
+  }
+
+  get data() {
+    return this.outputData.isResolved ? this.outputData.value : [];
+  }
 
   get sortedAscending() {
     return this.sortBy.search(/desc/) === -1;
   }
 
-  get sessions() {
-    if (!this.courseSessions) {
-      return [];
-    }
-    return this.courseSessions.slice();
-  }
-
   get tableData() {
-    if (!this.dataObjects) {
-      return [];
-    }
-    return this.dataObjects.map((obj) => {
+    return this.data.map((obj) => {
       const rhett = {};
       rhett.minutes = obj.data;
       // KLUDGE!
@@ -64,15 +59,15 @@ export default class CourseVisualizeObjectivesGraph extends Component {
   }
 
   get objectiveWithMinutes() {
-    return this.dataObjects?.filter((obj) => obj.data !== 0);
+    return this.data.filter((obj) => obj.data !== 0);
   }
 
   get objectiveWithoutMinutes() {
-    return this.dataObjects?.filter((obj) => obj.data === 0);
+    return this.data.filter((obj) => obj.data === 0);
   }
 
   get isLoaded() {
-    return !!this.dataObjects;
+    return this.outputData.isResolved;
   }
 
   @action
@@ -84,10 +79,6 @@ export default class CourseVisualizeObjectivesGraph extends Component {
   }
 
   async getDataObjects(sessions) {
-    if (!sessions) {
-      return [];
-    }
-
     const sessionsWithMinutes = sessions.map(async (session) => {
       const hours = await session.getTotalSumDuration();
       return {
