@@ -1,10 +1,13 @@
-import { clickable, create, text } from 'ember-cli-page-object';
+import { collection, clickable, create, text } from 'ember-cli-page-object';
 
 const definition = {
   scope: '[data-test-school-session-types-collapsed]',
-  expand: clickable('[data-test-expand]'),
-  assessmentCount: text('[data-test-assessment-count]'),
-  instructionalCount: text('[data-test-instructional-count]'),
+  title: text('[data-test-title]'),
+  expand: clickable('[data-test-title]'),
+  sessionTypeMethods: collection('[data-test-session-type-methods]', {
+    title: text('td:nth-of-type(1)'),
+    summary: text('td:nth-of-type(2)'),
+  }),
 };
 
 export default definition;

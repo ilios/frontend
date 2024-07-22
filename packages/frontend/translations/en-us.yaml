@@ -417,6 +417,7 @@ general:
   termsBySessionType: Terms by Session Type
   termXappliedToYSessionsWithSessionTypeZ: 'The term "{term}" from the "{vocabulary}" vocabulary is applied to {sessionsCount, plural, =1 {1 session} other {# sessions}} with session-type "{sessionType}".'
   thereAreXTerms: "{count, plural, =1 {There is 1 term} other {There are # terms}}"
+  thereAreXTypes: "{count, plural, =1 {There is 1 type} other {There are # types}}"
   thisReportIsNoLongerAvailable: This report is no longer available.
   thisTermHasSubTerms: This term has sub-terms.
   tokenInfo: "API Tokens are used to programmatically access Ilios data.  Your token is like a password - anyone who has it can make changes on your behalf.  Read more in the documentation at {apiDocsLink}."

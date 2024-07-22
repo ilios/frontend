@@ -417,6 +417,7 @@ general:
   termsBySessionType: Términos por Tipo de Sesión
   termXappliedToYSessionsWithSessionTypeZ: 'El término "{term}" del vocabulario "{vocabulary}" se aplica a {sessionsCount, plural, =1 {1 sesión} other {# sesiones}} con el tipo de sesión "{sessionType}".'
   thereAreXTerms: "{count, plural, =1 {Hay 1 término} other {Hay # términos}}"
+  thereAreXTypes: "{count, plural, =1 {Hay 1 tipo} other {Hay # tipos}}"
   thisReportIsNoLongerAvailable: Este informe ya no está disponible.
   thisTermHasSubTerms: Este término tiene subtérminos.
   tokenInfo: "Tokens de la API se utilizan para obtener acceso a datos de Ilios. Su símbolo (token) es como una contraseña. - cualquier persona que lo tiene puede hacer cambios en su nombre. Lea más en la documentación en {apiDocsLink}."
