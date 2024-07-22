@@ -62,10 +62,6 @@ export default class CourseVisualizeInstructorsGraph extends Component {
     this.sortBy = prop;
   }
 
-  get chartType() {
-    return this.args.chartType || 'horz-bar';
-  }
-
   get filteredData() {
     const q = cleanQuery(this.args.filter);
     if (q) {
