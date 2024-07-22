@@ -64,23 +64,25 @@
         <label for="associated-{{templateId}}">
           {{t "general.associatedWith"}}
         </label>
-        <select
-          id="associated-{{templateId}}"
-          {{on "change" (pick "target.value" this.changePrepositionalObject)}}
-        >
-          <option value="" selected={{eq null this.prepositionalObject}}>
-            {{t "general.anything"}}
-          </option>
-          {{#each (sort-by "label" this.prepositionalObjectList) as |o|}}
-            <option
-              value={{o.value}}
-              selected={{eq o.value this.prepositionalObject}}
-            >
-              {{o.label}}
+        <div>
+          <select
+            id="associated-{{templateId}}"
+            {{on "change" (pick "target.value" this.changePrepositionalObject)}}
+          >
+            <option value="" selected={{eq null this.prepositionalObject}}>
+              {{t "general.anything"}}
             </option>
-          {{/each}}
-        </select>
-        <ValidationError @errors={{get-errors-for this.prepositionalObject}} />
+            {{#each (sort-by "label" this.prepositionalObjectList) as |o|}}
+              <option
+                value={{o.value}}
+                selected={{eq o.value this.prepositionalObject}}
+              >
+                {{o.label}}
+              </option>
+            {{/each}}
+          </select>
+          <ValidationError @errors={{get-errors-for this.prepositionalObject}} />
+        </div>
       </p>
       <this.newPrepositionalObjectComponent
         @school={{this.currentSchool}}
