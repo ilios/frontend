@@ -77,23 +77,23 @@ export default class CourseVisualizeTermGraph extends Component {
     });
 
     return sessionTypeData
-      .reduce((set, obj) => {
-        const id = obj.sessionType.id;
+      .reduce((set, { sessionType, session, minutes }) => {
+        const id = sessionType.id;
         let existing = findById(set, id);
         if (!existing) {
           existing = {
             id,
             data: 0,
-            label: obj.sessionType.title,
+            label: sessionType.title,
             meta: {
-              sessionType: obj.sessionType,
+              sessionType: sessionType,
               sessions: [],
             },
           };
           set.push(existing);
         }
-        existing.data += obj.minutes;
-        existing.meta.sessions.push(obj.session);
+        existing.data += minutes;
+        existing.meta.sessions.push(session);
         return set;
       }, [])
       .map((obj) => {
@@ -116,6 +116,6 @@ export default class CourseVisualizeTermGraph extends Component {
     this.tooltipTitle = htmlSafe(
       `${meta.sessionType.title} &bull; ${data} ${this.intl.t('general.minutes')}`,
     );
-    this.tooltipContent = mapBy(meta.sessions, 'title').sort().join(', ');
+    this.tooltipContent = htmlSafe(mapBy(meta.sessions, 'title').sort().join(', '));
   });
 }

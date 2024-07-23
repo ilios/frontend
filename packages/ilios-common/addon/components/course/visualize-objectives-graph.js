@@ -130,14 +130,14 @@ export default class CourseVisualizeObjectivesGraph extends Component {
         .filter((title) => !!title)
         .sort();
       const minutes = sessionCourseObjectiveMap.map((obj) => {
-        if (obj.objectives.includes(courseObjective.get('id'))) {
+        if (obj.objectives.includes(courseObjective.id)) {
           return obj.minutes;
         } else {
           return 0;
         }
       });
       const sessionObjectives = sessionCourseObjectiveMap.filter((obj) =>
-        obj.objectives.includes(courseObjective.get('id')),
+        obj.objectives.includes(courseObjective.id),
       );
       const meta = {
         competencies: uniqueValues(competencyTitles).join(', '),
@@ -178,11 +178,9 @@ export default class CourseVisualizeObjectivesGraph extends Component {
       objectiveTitle += `(${meta.competencies})`;
     }
 
-    const title = htmlSafe(`${objectiveTitle} &bull; ${data} ${this.intl.t('general.minutes')}`);
-    const sessionTitles = mapBy(meta.sessionObjectives, 'sessionTitle');
-    const content = sessionTitles.sort().join(', ');
-
-    this.tooltipTitle = title;
-    this.tooltipContent = content;
+    this.tooltipTitle = htmlSafe(
+      `${objectiveTitle} &bull; ${data} ${this.intl.t('general.minutes')}`,
+    );
+    this.tooltipContent = htmlSafe(mapBy(meta.sessionObjectives, 'sessionTitle').sort().join(', '));
   });
 }

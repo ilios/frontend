@@ -88,23 +88,23 @@ export default class CourseVisualizeSessionTypesGraph extends Component {
 
     return dataMap
       .filter((obj) => obj.minutes > 0)
-      .reduce((set, obj) => {
-        const id = obj.sessionType.id;
+      .reduce((set, { sessionType, session, minutes }) => {
+        const id = sessionType.id;
         let existing = findById(set, id);
         if (!existing) {
           existing = {
             id,
             data: 0,
-            label: obj.sessionType.title,
+            label: sessionType.title,
             meta: {
-              sessionType: obj.sessionType,
+              sessionType,
               sessions: [],
             },
           };
           set.push(existing);
         }
-        existing.data += obj.minutes;
-        existing.meta.sessions.push(obj.session);
+        existing.data += minutes;
+        existing.meta.sessions.push(session);
 
         return set;
       }, [])
