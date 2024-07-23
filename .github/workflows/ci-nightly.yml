@@ -2,7 +2,7 @@ name: Continuous Integration Nightly
 
 on:
   schedule:
-    - cron: "15 6 * * 1-5" # nightly, M-F
+    - cron: "15 9 * * 1-5" # nightly, M-F
 
 env:
   SW_DISABLED: true
