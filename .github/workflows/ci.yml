@@ -35,7 +35,7 @@ jobs:
         run: pnpm run lint
 
   test:
-    name: ${{matrix.workspace}} Test (${{ matrix.node-version }})
+    name: Test
     runs-on: ubuntu-latest
     timeout-minutes: 15
     needs: [lint]
@@ -70,7 +70,7 @@ jobs:
           retention-days: 7
 
   build:
-    name: ${{matrix.workspace}} Build (${{ matrix.node-version }})
+    name: Build
     runs-on: ubuntu-latest
     timeout-minutes: 10
     strategy:
@@ -97,7 +97,7 @@ jobs:
         run: pnpm --filter ${{matrix.workspace}} run build
 
   test-with-embroider:
-    name: ${{matrix.workspace}} Test With Embroider
+    name: Test With Embroider
     runs-on: ubuntu-latest
     timeout-minutes: 15
     strategy:
@@ -130,7 +130,7 @@ jobs:
           retention-days: 7
 
   build-with-embroider:
-    name: ${{matrix.workspace}} Build With Embroider
+    name: Build With Embroider
     runs-on: ubuntu-latest
     timeout-minutes: 10
     strategy:
