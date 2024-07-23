@@ -81,7 +81,7 @@
     "luxon": ">= 3.0.0",
     "miragejs": ">= 0.1.45",
     "prettier": "^3.3.1",
-    "query-string": ">= 9.0.0",
+    "query-string": ">= 9.1.0",
     "qunit": "^2.21.0",
     "qunit-dom": "^2.0.0",
     "qunit-theme-ember": "^1.0.0",

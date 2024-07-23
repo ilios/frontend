@@ -298,8 +298,8 @@ importers:
         specifier: ^3.3.1
         version: 3.3.3
       query-string:
-        specifier: ^9.0.0
-        version: 9.0.0
+        specifier: ^9.1.0
+        version: 9.1.0
       qunit:
         specifier: ^2.21.0
         version: 2.21.1
@@ -487,8 +487,8 @@ importers:
         specifier: ^8.0.1
         version: 8.0.1
       query-string:
-        specifier: '>= 9.0.0'
-        version: 9.0.0
+        specifier: '>= 9.1.0'
+        version: 9.1.0
       scroll-into-view:
         specifier: '>= 1.16.0'
         version: 1.16.2
@@ -1283,8 +1283,8 @@ importers:
         specifier: ^3.3.1
         version: 3.3.3
       query-string:
-        specifier: '>= 9.0.0'
-        version: 9.0.0
+        specifier: '>= 9.1.0'
+        version: 9.1.0
       qunit:
         specifier: ^2.21.0
         version: 2.21.1
@@ -8223,8 +8223,8 @@ packages:
     resolution: {integrity: sha512-AWJm14H1vVaO/iNZ4/hO+HyaTehuy9nRqVdkTqlJt0HWvBiBIEXFmb4C0DGeYo3Xes9rrEW+TxHsaigCbN5ICQ==}
     engines: {node: '>=0.6'}
 
-  query-string@9.0.0:
-    resolution: {integrity: sha512-4EWwcRGsO2H+yzq6ddHcVqkCQ2EFUSfDMEjF8ryp8ReymyZhIuaFRGLomeOQLkrzacMHoyky2HW0Qe30UbzkKw==}
+  query-string@9.1.0:
+    resolution: {integrity: sha512-t6dqMECpCkqfyv2FfwVS1xcB6lgXW/0XZSaKdsCNGYkqMO76AFiJEg4vINzoDKcZa6MS7JX+OHIjwh06K5vczw==}
     engines: {node: '>=18'}
 
   querystring-es3@0.2.1:
@@ -20156,7 +20156,7 @@ snapshots:
     dependencies:
       side-channel: 1.0.6
 
-  query-string@9.0.0:
+  query-string@9.1.0:
     dependencies:
       decode-uri-component: 0.4.1
       filter-obj: 5.1.0
