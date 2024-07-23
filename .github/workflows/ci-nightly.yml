@@ -1,0 +1,34 @@
+name: Continuous Integration Nightly
+
+on:
+  schedule:
+    - cron: "15 6 * * 1-5" # nightly, M-F
+
+env:
+  SW_DISABLED: true
+  COVERAGE: false
+
+jobs:
+  percy:
+    name: Update Base Build On Percy
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        workspace:
+          - frontend
+          - test-app
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+      - run: pnpm install
+      - name: Run Percy Tests
+        run: pnpm --filter ${{ matrix.workspace }} exec percy exec -- ember test
+        env:
+          PERCY_TOKEN: ${{ vars.PERCY_TOKEN }}
