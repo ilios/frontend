@@ -96,13 +96,13 @@ export default class CourseVisualizeSessionTypeGraph extends Component {
       });
     });
 
-    const data = termData
+    return termData
       .reduce((flattened, arr) => {
         return [...flattened, ...arr];
       }, [])
-      .reduce((set, obj) => {
-        const label = obj.vocabulary.title + ' - ' + obj.term.title;
-        const id = obj.term.id;
+      .reduce((set, { vocabulary, term, session, minutes }) => {
+        const label = vocabulary.title + ' - ' + term.title;
+        const id = term.id;
         let existing = findById(set, id);
         if (!existing) {
           existing = {
@@ -110,19 +110,17 @@ export default class CourseVisualizeSessionTypeGraph extends Component {
             data: 0,
             label,
             meta: {
-              vocabulary: obj.vocabulary,
-              term: obj.term,
+              vocabulary,
+              term,
               sessions: [],
             },
           };
           set.push(existing);
         }
-        existing.data += obj.minutes;
-        existing.meta.sessions.push(obj.session);
+        existing.data += minutes;
+        existing.meta.sessions.push(session);
         return set;
-      }, []);
-
-    return data
+      }, [])
       .map((obj) => {
         delete obj.id;
         return obj;

@@ -149,12 +149,9 @@ export default class CourseVisualizeInstructorTermGraph extends Component {
 
     const { data, meta } = obj;
 
-    const title = htmlSafe(
+    this.tooltipTitle = htmlSafe(
       `${meta.vocabulary.title} - ${meta.term.title} &bull; ${data} ${this.intl.t('general.minutes')}`,
     );
-    const content = mapBy(meta.sessions, 'title').sort().join(', ');
-
-    this.tooltipTitle = title;
-    this.tooltipContent = content;
+    this.tooltipContent = htmlSafe(mapBy(meta.sessions, 'title').sort().join(', '));
   });
 }

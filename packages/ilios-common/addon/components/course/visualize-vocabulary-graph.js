@@ -129,13 +129,10 @@ export default class CourseVisualizeVocabularyGraph extends Component {
       return;
     }
     const { data, meta } = obj;
-
-    const title = htmlSafe(`${meta.term.title} &bull; ${data} ${this.intl.t('general.minutes')}`);
-    const sessionTitles = mapBy(meta.sessions, 'title');
-    const content = sessionTitles.sort().join(', ');
-
-    this.tooltipTitle = title;
-    this.tooltipContent = content;
+    this.tooltipTitle = htmlSafe(
+      `${meta.term.title} &bull; ${data} ${this.intl.t('general.minutes')}`,
+    );
+    this.tooltipContent = htmlSafe(mapBy(meta.sessions, 'title').sort().join(', '));
   });
 
   @action

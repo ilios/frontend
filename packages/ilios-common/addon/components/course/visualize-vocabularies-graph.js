@@ -87,8 +87,8 @@ export default class CourseVisualizeVocabulariesGraph extends Component {
     );
 
     return sessionWithMinutesAndVocabs
-      .reduce((set, obj) => {
-        obj.vocabularies.forEach((vocabulary) => {
+      .reduce((set, { session, vocabularies, minutes }) => {
+        vocabularies.forEach((vocabulary) => {
           const id = vocabulary.id;
           let existing = findById(set, id);
           if (!existing) {
@@ -103,8 +103,8 @@ export default class CourseVisualizeVocabulariesGraph extends Component {
             };
             set.push(existing);
           }
-          existing.data += obj.minutes;
-          existing.meta.sessions.push(obj.session);
+          existing.data += minutes;
+          existing.meta.sessions.push(session);
         });
 
         return set;
@@ -126,15 +126,10 @@ export default class CourseVisualizeVocabulariesGraph extends Component {
       return;
     }
     const { data, meta } = obj;
-
-    const title = htmlSafe(
+    this.tooltipTitle = htmlSafe(
       `${meta.vocabulary.title} &bull; ${data} ${this.intl.t('general.minutes')}`,
     );
-    const sessionTitles = mapBy(meta.sessions, 'title');
-    const content = sessionTitles.sort().join(', ');
-
-    this.tooltipTitle = title;
-    this.tooltipContent = content;
+    this.tooltipContent = htmlSafe(mapBy(meta.sessions, 'title').sort().join(', '));
   });
 
   @action

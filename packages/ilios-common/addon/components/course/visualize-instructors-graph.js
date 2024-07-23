@@ -88,10 +88,10 @@ export default class CourseVisualizeInstructorsGraph extends Component {
     });
 
     return sessionsWithInstructors
-      .reduce((set, obj) => {
-        obj.instructorsWithInstructionalTime.forEach((instructorWithInstructionalTime) => {
-          const id = instructorWithInstructionalTime.instructor.id;
-          if (!instructorWithInstructionalTime.minutes) {
+      .reduce((set, { session, instructorsWithInstructionalTime }) => {
+        instructorsWithInstructionalTime.forEach(({ instructor, minutes }) => {
+          const id = instructor.id;
+          if (!minutes) {
             return;
           }
           let existing = findById(set, id);
@@ -99,16 +99,16 @@ export default class CourseVisualizeInstructorsGraph extends Component {
             existing = {
               id,
               data: 0,
-              label: instructorWithInstructionalTime.instructor.fullName,
+              label: instructor.fullName,
               meta: {
-                user: instructorWithInstructionalTime.instructor,
+                user: instructor,
                 sessions: [],
               },
             };
             set.push(existing);
           }
-          existing.data += instructorWithInstructionalTime.minutes;
-          existing.meta.sessions.push(obj.session);
+          existing.data += minutes;
+          existing.meta.sessions.push(session);
         });
         return set;
       }, [])
