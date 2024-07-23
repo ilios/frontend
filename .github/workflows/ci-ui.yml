@@ -1,0 +1,144 @@
+name: User Interface Tests
+
+on:
+  pull_request:
+    types: [labeled, ready_for_review, synchronize]
+  pull_request_review:
+    types: [submitted]
+
+concurrency:
+  group: ui-${{ github.head_ref || github.ref }}
+  cancel-in-progress: true
+
+env:
+  SW_DISABLED: true
+  COVERAGE: false
+
+jobs:
+  checkReviews:
+    runs-on: ubuntu-latest
+    outputs:
+      reviewState: ${{ steps.reviews.outputs.reviewState }}
+    steps:
+      - id: reviews
+        run: |
+          reviewState=$(gh pr view  ${{ github.event.pull_request.number }} \
+              --repo ${{ github.repository }} \
+              --json reviewDecision \
+              --jq '.reviewDecision')
+          echo "reviewState=$reviewState" >> "$GITHUB_OUTPUT"
+        env:
+          GH_TOKEN: ${{ github.token }}
+  browserstack-test:
+    name: Browser Stack Test
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    needs: [checkReviews]
+    if: |
+      github.event.pull_request.draft == false &&
+      needs.checkReviews.outputs.reviewState == 'APPROVED'
+    strategy:
+      fail-fast: false
+      max-parallel: 1
+      matrix:
+        workspace:
+          - frontend
+          - test-app
+        launcher:
+          - BS_OSX_Safari
+          - BS_IOS_SAFARI
+          - BS_CHROME_ANDROID
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+      - run: pnpm install
+      - name: test:browserstack ${{matrix.workspace}} ${{ matrix.launcher }}
+        env:
+          BROWSERSTACK_USERNAME: iliosgithub_1UGowwsqE
+          # This is in plaintext on purpose. It has no privileged access to anything (this is a free
+          # account) and it allows us to run browserstack tests against PRs.
+          BROWSERSTACK_ACCESS_KEY: yJjw6sE6izkpUw9oasGT
+          # The following is necessary when using browserstack under matrix builds on Github Actions
+          # The Job ID + Run ID isn't unique across matrix runs and will fail when run simultaneously
+          BROWSERSTACK_LOCAL_ID_SUFFIX: ${{matrix.workspace}}-${{ matrix.launcher }}
+        run: |
+          pnpm --filter ${{matrix.workspace}} exec ember browserstack:connect
+          pnpm --filter ${{matrix.workspace}} exec ember test --test-port=7774 --host=127.0.0.1 --config-file=testem.browserstack.js --launch=${{ matrix.launcher }}
+          pnpm --filter ${{matrix.workspace}} exec ember browserstack:disconnect
+          pnpm --filter ${{matrix.workspace}} exec ember browserstack:results
+
+  firefox-test:
+    name: Firefox Tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    needs: [checkReviews]
+    if: |
+      github.event.pull_request.draft == false &&
+      needs.checkReviews.outputs.reviewState == 'APPROVED'
+    strategy:
+      fail-fast: false
+      matrix:
+        workspace:
+          - frontend
+          - test-app
+          - lti-course-manager
+          - lti-dashboard
+        firefox-version: [latest-esr]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+      - run: pnpm install
+      - name: Setup firefox
+        uses: browser-actions/setup-firefox@latest
+        with:
+          firefox-version: ${{ matrix.firefox-version }}
+      - run: firefox --version
+      - name: test
+        run: pnpm --filter ${{matrix.workspace}} exec ember exam --parallel=3 --load-balance --write-execution-file --launch=Firefox
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: replay-${{matrix.workspace}}-firefox-${{ matrix.firefox-version }}.json
+          path: ./packages/${{matrix.workspace}}/test-execution-*.json
+          retention-days: 7
+
+  percy:
+    name: Test and Capture Screenshots
+    runs-on: ubuntu-latest
+    needs: [firefox-test, browserstack-test, checkReviews]
+    timeout-minutes: 20
+    if: |
+      github.event.pull_request.draft == false &&
+      needs.checkReviews.outputs.reviewState == 'APPROVED'
+    strategy:
+      fail-fast: false
+      matrix:
+        workspace:
+          - frontend
+          - test-app
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+      - run: pnpm install
+      - name: Run Percy Tests
+        run: pnpm --filter ${{ matrix.workspace }} exec percy exec -- ember test
+        env:
+          PERCY_TOKEN: ${{ vars.PERCY_TOKEN }}
