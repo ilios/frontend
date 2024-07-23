@@ -44,7 +44,7 @@ export default class CourseVisualizeSessionTypeGraph extends Component {
   }
 
   get isLoaded() {
-    return this.outputData.isResolved;
+    return this.sessionsData.isResolved && this.outputData.isResolved;
   }
 
   get tableData() {
