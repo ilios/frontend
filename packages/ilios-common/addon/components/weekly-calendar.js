@@ -4,7 +4,6 @@ import { restartableTask, timeout } from 'ember-concurrency';
 import { action, set } from '@ember/object';
 import { DateTime } from 'luxon';
 import { sortBy } from 'ilios-common/utils/array-helpers';
-import scrollIntoView from 'scroll-into-view';
 
 export default class WeeklyCalendarComponent extends Component {
   @service intl;
@@ -19,7 +18,11 @@ export default class WeeklyCalendarComponent extends Component {
     if (earliestHour < 24 && earliestHour > 2) {
       hourElement = this[`hour${earliestHour}`];
     }
-    scrollIntoView(hourElement, { align: { top: 0 } });
+    const { offsetTop } = hourElement;
+    calendarElement.scrollTo({
+      top: offsetTop,
+      behavior: 'instant',
+    });
   });
 
   get firstDayOfWeek() {
