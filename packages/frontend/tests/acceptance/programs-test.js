@@ -1,4 +1,4 @@
-import { click, fillIn, find, currentURL, currentRouteName, visit } from '@ember/test-helpers';
+import { currentURL, currentRouteName } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupAuthentication } from 'ilios-common';
 import { setupApplicationTest } from 'frontend/tests/helpers';
@@ -25,26 +25,20 @@ module('Acceptance | Programs', function (hooks) {
 
     test('add new program', async function (assert) {
       this.user.update({ administeredSchools: [this.school] });
-      assert.expect(3);
-      const url = '/programs';
-      const expandButton = '.expand-button';
-      const input = '.new-program input';
-      const saveButton = '.new-program .done';
-      const savedLink = '.saved-result a';
+      assert.expect(6);
+      await page.visit();
 
-      await visit(url);
-      await click(expandButton);
+      assert.ok(page.root.toggleNewProgramFormExists);
+      await page.root.toggleNewProgramForm();
       await percySnapshot(getUniqueName(assert, 'expandButton'));
-      await fillIn(input, 'Test Title');
-      await click(saveButton);
+      await page.root.newProgramForm.title.set('Test Title');
+      await page.root.newProgramForm.done.click();
       await percySnapshot(getUniqueName(assert, 'saveButton'));
-      function getContent(i) {
-        return find(`tbody tr td:nth-of-type(${i + 1})`).textContent.trim();
-      }
-
-      assert.dom(savedLink).hasText('Test Title', 'link is visisble');
-      assert.strictEqual(getContent(0), 'Test Title', 'program is correct');
-      assert.strictEqual(getContent(1), 'school 0', 'school is correct');
+      assert.strictEqual(this.server.db.programs.length, 1);
+      assert.strictEqual(page.root.list.items.length, 1);
+      assert.dom('.flash-messages').exists({ count: 1 });
+      assert.strictEqual(page.root.list.items[0].title, 'Test Title');
+      assert.strictEqual(page.root.list.items[0].school, 'school 0');
     });
 
     test('remove program', async function (assert) {
