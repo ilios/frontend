@@ -25,6 +25,7 @@ export default class CompetencyTitleEditorComponent extends Component {
       return false;
     }
     this.args.competency.set('title', this.title);
+    await this.args.competency.save();
     this.removeErrorDisplayFor('title');
   });
 }
