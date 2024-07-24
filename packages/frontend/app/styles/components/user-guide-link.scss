@@ -1,29 +1,36 @@
 @use "../ilios-common/mixins" as cm;
 @use "../ilios-common/colors" as c;
 
+@use "sass:color";
+
+$header-menu-background-color: color.adjust(c.$slightWhite, $lightness: -3%);
+
 .user-guide-link {
-  margin-left: 0.5rem;
+  margin-right: 0.5rem;
 
-  @include cm.for-tablet-and-up {
-    margin-left: 0.25rem;
-    margin-right: 0.5rem;
-  }
+  button {
+    background-color: $header-menu-background-color;
+    border: 1px solid $header-menu-background-color;
+    border-radius: 0.2rem;
+    color: c.$raisinBlack;
+    font-weight: normal;
+    margin-left: 0.5rem;
+    padding: 0.25em;
 
-  a {
-    svg {
-      align-items: center;
-      color: c.$white;
-      display: flex;
-      height: 30px;
-      width: 30px;
+    &:hover,
+    &:focus {
+      background-color: c.$white;
     }
-  }
 
-  @include cm.for-phone-only {
-    a {
+    @include cm.for-tablet-and-up {
+      display: inline;
+      margin-left: 0;
+    }
+
+    @include cm.for-phone-only {
       svg {
-        height: 24px;
-        width: 24px;
+        height: 4.25vw;
+        width: 4.25vw;
       }
     }
   }
