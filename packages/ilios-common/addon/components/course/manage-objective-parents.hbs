@@ -34,8 +34,14 @@
           >
             <h4
               class="competency-title"
+              data-test-competency-title
             >
               {{competency.title}}
+              {{#if competency.parent}}
+                <span class="domain-title">
+                ({{competency.parent.title}})
+                </span>
+              {{/if}}
             </h4>
             <ul>
               {{#each (sort-by "title" competency.objectives) as |objective|}}

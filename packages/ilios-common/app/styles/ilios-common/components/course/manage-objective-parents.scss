@@ -15,7 +15,12 @@
       .competency-title {
         margin: 0.5rem 0 0 0.5rem;
         padding: 0;
+
+        .domain-title {
+          @include m.ilios-heading-h5;
+        }
       }
+
       &.selected {
         border-left: 10px solid c.$orange;
 
