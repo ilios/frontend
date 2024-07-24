@@ -62,15 +62,23 @@ export default class WeeklyGlance extends Component {
       return '';
     }
 
-    const from = this.midnightAtTheStartOfTheWeekDateTime.toFormat('MMMM d');
+    const from =
+      this.intl.formatDate(this.midnightAtTheStartOfTheWeekDateTime, { month: 'long' }) +
+      ' ' +
+      this.midnightAtTheStartOfTheWeekDateTime.toFormat('d');
+
     let to = this.midnightAtTheEndOfTheWeekDateTime.toFormat('d');
+
     if (
       !this.midnightAtTheStartOfTheWeekDateTime.hasSame(
         this.midnightAtTheEndOfTheWeekDateTime,
         'month',
       )
     ) {
-      to = this.midnightAtTheEndOfTheWeekDateTime.toFormat('MMMM d');
+      to =
+        this.intl.formatDate(this.midnightAtTheEndOfTheWeekDateTime, { month: 'long' }) +
+        ' ' +
+        this.midnightAtTheEndOfTheWeekDateTime.toFormat('d');
       return `${from} - ${to}`;
     }
     return `${from}-${to}`;
