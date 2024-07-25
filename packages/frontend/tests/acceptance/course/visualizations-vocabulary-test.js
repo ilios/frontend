@@ -54,8 +54,7 @@ module('Acceptance | course visualizations - vocabulary', function (hooks) {
   });
 
   test('it renders', async function (assert) {
-    assert.expect(17);
-
+    assert.expect(21);
     await page.visit({ courseId: this.course.id, vocabularyId: this.vocabulary.id });
     assert.strictEqual(currentURL(), '/data/courses/1/vocabularies/1');
     assert.strictEqual(page.root.vocabularyTitle, 'Vocabulary 1');
@@ -74,10 +73,14 @@ module('Acceptance | course visualizations - vocabulary', function (hooks) {
     await waitFor('svg .bars');
     await percySnapshot(assert);
     assert.strictEqual(page.root.termsChart.chart.bars.length, 3);
+    assert.strictEqual(page.root.termsChart.chart.bars[0].description, 'term 1 - 30 Minutes');
+    assert.strictEqual(page.root.termsChart.chart.bars[1].description, 'term 0 - 60 Minutes');
+    assert.strictEqual(page.root.termsChart.chart.bars[2].description, 'term 2 - 150 Minutes');
     assert.strictEqual(page.root.termsChart.chart.labels.length, 3);
-    assert.strictEqual(page.root.termsChart.chart.labels[0].text, 'term 1: 30 Minutes');
-    assert.strictEqual(page.root.termsChart.chart.labels[1].text, 'term 0: 60 Minutes');
-    assert.strictEqual(page.root.termsChart.chart.labels[2].text, 'term 2: 150 Minutes');
+    assert.strictEqual(page.root.termsChart.chart.labels[0].text, 'term 1');
+    assert.strictEqual(page.root.termsChart.chart.labels[1].text, 'term 0');
+    assert.strictEqual(page.root.termsChart.chart.labels[2].text, 'term 2');
+    assert.strictEqual(page.root.termsChart.dataTable.rows.length, 3);
   });
 
   test('clicking chart transitions user to term visualization', async function (assert) {
@@ -86,7 +89,7 @@ module('Acceptance | course visualizations - vocabulary', function (hooks) {
     // wait for charts to load
     await waitFor('.loaded');
     await waitFor('svg .bars');
-    assert.strictEqual(page.root.termsChart.chart.labels[0].text, 'term 1: 30 Minutes');
+    assert.strictEqual(page.root.termsChart.chart.labels[0].text, 'term 1');
     await page.root.termsChart.chart.bars[0].click();
     assert.strictEqual(currentURL(), '/data/courses/1/terms/2');
   });

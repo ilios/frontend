@@ -13,7 +13,7 @@ module('Acceptance | course visualizations - session-type', function (hooks) {
   });
 
   test('it renders', async function (assert) {
-    assert.expect(16);
+    assert.expect(19);
     const sessionType = this.server.create('session-type');
     const vocabulary1 = this.server.create('vocabulary');
     const vocabulary2 = this.server.create('vocabulary');
@@ -70,18 +70,21 @@ module('Acceptance | course visualizations - session-type', function (hooks) {
     await percySnapshot(assert);
     assert.strictEqual(page.root.title, 'course 0 2022');
     assert.strictEqual(page.root.sessionTypeChart.chart.bars.length, 3);
+    assert.strictEqual(
+      page.root.sessionTypeChart.chart.bars[0].description,
+      'Vocabulary 1 - term 1 - 30 Minutes',
+    );
+    assert.strictEqual(
+      page.root.sessionTypeChart.chart.bars[1].description,
+      'Vocabulary 1 - term 0 - 60 Minutes',
+    );
+    assert.strictEqual(
+      page.root.sessionTypeChart.chart.bars[2].description,
+      'Vocabulary 2 - term 2 - 30 Minutes',
+    );
     assert.strictEqual(page.root.sessionTypeChart.chart.labels.length, 3);
-    assert.strictEqual(
-      page.root.sessionTypeChart.chart.labels[0].text,
-      'Vocabulary 1 - term 1: 30 Minutes',
-    );
-    assert.strictEqual(
-      page.root.sessionTypeChart.chart.labels[1].text,
-      'Vocabulary 1 - term 0: 60 Minutes',
-    );
-    assert.strictEqual(
-      page.root.sessionTypeChart.chart.labels[2].text,
-      'Vocabulary 2 - term 2: 30 Minutes',
-    );
+    assert.strictEqual(page.root.sessionTypeChart.chart.labels[0].text, 'Vocabulary 1 - term 1');
+    assert.strictEqual(page.root.sessionTypeChart.chart.labels[1].text, 'Vocabulary 1 - term 0');
+    assert.strictEqual(page.root.sessionTypeChart.chart.labels[2].text, 'Vocabulary 2 - term 2');
   });
 });

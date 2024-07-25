@@ -65,7 +65,7 @@ module('Acceptance | course visualizations - instructors', function (hooks) {
   });
 
   test('it renders', async function (assert) {
-    assert.expect(12);
+    assert.expect(15);
     await page.visit({ courseId: this.course.id });
     assert.strictEqual(currentURL(), '/data/courses/1/instructors');
     assert.strictEqual(page.root.title, 'course 0 2022');
@@ -80,15 +80,18 @@ module('Acceptance | course visualizations - instructors', function (hooks) {
     await waitFor('svg .bars');
     await percySnapshot(assert);
     assert.strictEqual(page.root.instructorsChart.chart.bars.length, 2);
+    assert.strictEqual(
+      page.root.instructorsChart.chart.bars[0].description,
+      '1 guy M. Mc1son - 75 Minutes',
+    );
+    assert.strictEqual(
+      page.root.instructorsChart.chart.bars[1].description,
+      '2 guy M. Mc2son - 90 Minutes',
+    );
     assert.strictEqual(page.root.instructorsChart.chart.labels.length, 2);
-    assert.strictEqual(
-      page.root.instructorsChart.chart.labels[0].text,
-      '1 guy M. Mc1son: 75 Minutes',
-    );
-    assert.strictEqual(
-      page.root.instructorsChart.chart.labels[1].text,
-      '2 guy M. Mc2son: 90 Minutes',
-    );
+    assert.strictEqual(page.root.instructorsChart.chart.labels[0].text, '1 guy M. Mc1son');
+    assert.strictEqual(page.root.instructorsChart.chart.labels[1].text, '2 guy M. Mc2son');
+    assert.strictEqual(page.root.instructorsChart.dataTable.rows.length, 2);
   });
 
   test('clicking chart transitions user to instructor visualization', async function (assert) {
@@ -98,10 +101,7 @@ module('Acceptance | course visualizations - instructors', function (hooks) {
     // wait for charts to load
     await waitFor('.loaded');
     await waitFor('svg .bars');
-    assert.strictEqual(
-      page.root.instructorsChart.chart.labels[0].text,
-      '1 guy M. Mc1son: 75 Minutes',
-    );
+    assert.strictEqual(page.root.instructorsChart.chart.labels[0].text, '1 guy M. Mc1son');
     await page.root.instructorsChart.chart.bars[0].click();
     assert.strictEqual(currentURL(), '/data/courses/1/instructors/2');
   });

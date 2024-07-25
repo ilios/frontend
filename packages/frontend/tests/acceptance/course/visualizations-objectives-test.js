@@ -12,7 +12,7 @@ module('Acceptance | course visualizations - objectives', function (hooks) {
   });
 
   test('it renders', async function (assert) {
-    assert.expect(14);
+    assert.expect(17);
     const school = this.server.create('school');
     const course = this.server.create('course', { year: 2021, school });
     const courseObjectives = this.server.createList('course-objective', 3, {
@@ -72,13 +72,22 @@ module('Acceptance | course visualizations - objectives', function (hooks) {
     await waitFor('svg .chart');
     await percySnapshot(assert);
     assert.strictEqual(page.root.objectivesChart.chart.slices.length, 2);
-    assert.strictEqual(page.root.objectivesChart.chart.slices[0].text, '77.8%');
-    assert.strictEqual(page.root.objectivesChart.chart.slices[1].text, '22.2%');
+    assert.strictEqual(page.root.objectivesChart.chart.slices[0].label, '77.8%');
+    assert.strictEqual(
+      page.root.objectivesChart.chart.slices[0].description,
+      'course objective 0 - 630 Minutes',
+    );
+    assert.strictEqual(page.root.objectivesChart.chart.slices[1].label, '22.2%');
+    assert.strictEqual(
+      page.root.objectivesChart.chart.slices[1].description,
+      'course objective 1 - 180 Minutes',
+    );
     assert.notOk(page.root.objectivesChart.unlinkedObjectives.isPresent);
     assert.strictEqual(page.root.objectivesChart.untaughtObjectives.items.length, 1);
     assert.strictEqual(
       page.root.objectivesChart.untaughtObjectives.items[0].text,
       'course objective 2',
     );
+    assert.strictEqual(page.root.objectivesChart.dataTable.rows.length, 3);
   });
 });
