@@ -3,11 +3,14 @@ import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import { component } from 'ilios-common/page-objects/components/weekly-events';
+import { setLocale, setupIntl } from 'ember-intl/test-support';
 
 module('Integration | Component | weekly events', function (hooks) {
   setupRenderingTest(hooks);
+  setupIntl(hooks, 'en-us');
 
   test('it renders', async function (assert) {
+    this.intl = this.owner.lookup('service:intl');
     this.set('year', 2017);
     await render(hbs`<WeeklyEvents
       @year={{this.year}}
@@ -23,6 +26,14 @@ module('Integration | Component | weekly events', function (hooks) {
     assert.strictEqual(component.bottomNavigation.previousYear.title, 'Go to previous year');
     assert.strictEqual(component.bottomNavigation.nextYear.title, 'Go to next year');
     assert.strictEqual(component.weeks.length, 52);
+
+    assert.strictEqual(component.weeks[0].title, 'January 1-7');
+
+    await setLocale('es');
+    assert.strictEqual(component.weeks[0].title, 'enero 2-8');
+
+    await setLocale('fr');
+    assert.strictEqual(component.weeks[0].title, 'janvier 2-8');
   });
 
   test('top navigation - go to next year', async function (assert) {
