@@ -6,15 +6,17 @@
 $header-menu-background-color: color.adjust(c.$slightWhite, $lightness: -3%);
 
 .user-guide-link {
-  margin-right: 0.5rem;
+  margin-right: 0.75rem;
 
-  button {
+  a {
+    @include cm.ilios-link-button;
     background-color: $header-menu-background-color;
     border: 1px solid $header-menu-background-color;
     border-radius: 0.2rem;
     color: c.$raisinBlack;
+    @include cm.font-size("small");
     font-weight: normal;
-    margin-left: 0.5rem;
+    margin-left: 0.8rem;
     padding: 0.25em;
 
     &:hover,
@@ -24,14 +26,12 @@ $header-menu-background-color: color.adjust(c.$slightWhite, $lightness: -3%);
 
     @include cm.for-tablet-and-up {
       display: inline;
-      margin-left: 0;
+      margin-left: 0.5rem;
     }
 
     @include cm.for-phone-only {
-      svg {
-        height: 4.25vw;
-        width: 4.25vw;
-      }
+      /* stylelint-disable property-disallowed-list */
+      font-size: 2.75vw;
     }
   }
 }

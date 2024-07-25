@@ -1,9 +1,9 @@
 <div class="user-guide-link" data-test-user-guide-link>
-  <button
-    type="button"
-    aria-haspopup="false"
+  <a
+    href="https://iliosproject.gitbook.io/ilios-user-guide"
+    target="_blank"
     aria-labelledby="user-guide-link-icon"
-    {{on "click" this.openUserGuide}}
+    rel="noopener noreferrer"
   >
     <FaIcon
       @icon="question"
@@ -11,5 +11,5 @@
       id="user-guide-link-icon"
       data-test-user-guide-link-icon
     />
-  </button>
+  </a>
 </div>
