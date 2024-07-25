@@ -7,10 +7,13 @@ import { hbs } from 'ember-cli-htmlbars';
 import { setupMirage } from 'test-app/tests/test-support/mirage';
 import { component } from 'ilios-common/page-objects/components/week-glance';
 import { a11yAudit } from 'ember-a11y-testing/test-support';
+import { setLocale, setupIntl } from 'ember-intl/test-support';
 
 module('Integration | Component | week glance', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
+  setupIntl(hooks, 'en-us');
+
   const testDate = DateTime.fromObject({
     year: 2017,
     month: 1,
@@ -79,22 +82,26 @@ module('Integration | Component | week glance', function (hooks) {
     });
 
     this.getTitle = function (fullTitle) {
+      this.intl = this.owner.lookup('service:intl');
       const ld = this.owner.lookup('service:locale-days');
       const startOfWeek = DateTime.fromJSDate(ld.firstDayOfDateWeek(testDate.toJSDate()));
       const endOfWeek = DateTime.fromJSDate(ld.lastDayOfDateWeek(testDate.toJSDate()));
 
       let expectedTitle;
       if (startOfWeek.month != endOfWeek.month) {
-        const from = startOfWeek.toFormat('MMMM d');
-        const to = endOfWeek.toFormat('MMMM d');
+        const from =
+          this.intl.formatDate(startOfWeek, { month: 'long' }) + ' ' + startOfWeek.toFormat('d');
+        const to =
+          this.intl.formatDate(endOfWeek, { month: 'long' }) + ' ' + endOfWeek.toFormat('d');
         expectedTitle = `${from} - ${to}`;
       } else {
-        const from = startOfWeek.toFormat('MMMM d');
+        const from =
+          this.intl.formatDate(startOfWeek, { month: 'long' }) + ' ' + startOfWeek.toFormat('d');
         const to = endOfWeek.toFormat('d');
         expectedTitle = `${from}-${to}`;
       }
       if (fullTitle) {
-        expectedTitle += ' Week at a Glance';
+        expectedTitle += ' ' + this.intl.t('general.weekAtAGlance');
       }
 
       return expectedTitle;
@@ -316,5 +323,25 @@ module('Integration | Component | week glance', function (hooks) {
     this.set('year', nextYear.year);
 
     return settled();
+  });
+
+  test('title month is properly translated', async function (assert) {
+    this.set('today', testDate.toJSDate());
+    this.set('week', testDate.weekNumber);
+    await render(hbs`<WeekGlance
+      @collapsible={{true}}
+      @collapsed={{true}}
+      @showFullTitle={{true}}
+      @year={{format-date this.today year="numeric"}}
+      @week={{this.week}}
+    />`);
+
+    assert.strictEqual(component.title, this.getTitle(true));
+
+    await setLocale('es');
+    assert.strictEqual(component.title, this.getTitle(true));
+
+    await setLocale('fr');
+    assert.strictEqual(component.title, this.getTitle(true));
   });
 });
