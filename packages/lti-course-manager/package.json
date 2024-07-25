@@ -17,6 +17,7 @@
     "lint:js": "eslint . --cache",
     "lint:js:fix": "eslint . --fix",
     "deploy:staging": "ember deploy staging --activate",
+    "deploy:test": "ember deploy development",
     "preinstall": "npx only-allow pnpm",
     "lint:deps": "ember dependency-lint"
   },
