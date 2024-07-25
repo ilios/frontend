@@ -10,16 +10,18 @@ module('Integration | Component | user-guide-link', function (hooks) {
   setupIntl(hooks, 'en-us');
 
   test('it renders', async function (assert) {
+    this.intl = this.owner.lookup('service:intl');
+
     await render(hbs`<UserGuideLink />`);
 
     assert.ok(component);
     assert.ok(component.icon);
-    assert.strictEqual(component.icon.title, 'Ilios User Guide');
+    assert.strictEqual(component.icon.title, this.intl.t('general.iliosUserGuide'));
 
     await setLocale('es');
-    assert.strictEqual(component.icon.title, 'Ilios Guía de usuario');
+    assert.strictEqual(component.icon.title, this.intl.t('general.iliosUserGuide'));
 
     await setLocale('fr');
-    assert.strictEqual(component.icon.title, "Ilios Guide d'utilisation");
+    assert.strictEqual(component.icon.title, this.intl.t('general.iliosUserGuide'));
   });
 });
