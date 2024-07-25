@@ -53,6 +53,7 @@
     grid-template-rows: repeat($minute-rows, $hour-height);
     max-height: 90%;
     overflow-y: scroll;
+    position: relative;
 
     .events {
       @include m.ilios-list-reset;
