@@ -13,7 +13,7 @@ module('Acceptance | course visualizations - vocabularies', function (hooks) {
   });
 
   test('it renders', async function (assert) {
-    assert.expect(12);
+    assert.expect(16);
     const sessionType = this.server.create('session-type');
     const vocabulary1 = this.server.create('vocabulary');
     const vocabulary2 = this.server.create('vocabulary');
@@ -67,10 +67,20 @@ module('Acceptance | course visualizations - vocabularies', function (hooks) {
     assert.strictEqual(page.root.breadcrumb.crumbs[2].text, 'Vocabularies');
     // wait for charts to load
     await waitFor('.loaded');
-    await waitFor('svg .chart');
+    await waitFor('svg .bars');
     await percySnapshot(assert);
-    assert.strictEqual(page.root.vocabulariesChart.chart.slices.length, 2);
-    assert.strictEqual(page.root.vocabulariesChart.chart.slices[0].text, 'Vocabulary 1');
-    assert.strictEqual(page.root.vocabulariesChart.chart.slices[1].text, 'Vocabulary 2');
+    assert.strictEqual(page.root.vocabulariesChart.chart.bars.length, 2);
+    assert.strictEqual(
+      page.root.vocabulariesChart.chart.bars[0].description,
+      'Vocabulary 2 - 30 Minutes',
+    );
+    assert.strictEqual(
+      page.root.vocabulariesChart.chart.bars[1].description,
+      'Vocabulary 1 - 90 Minutes',
+    );
+    assert.strictEqual(page.root.vocabulariesChart.chart.labels.length, 2);
+    assert.strictEqual(page.root.vocabulariesChart.chart.labels[0].text, 'Vocabulary 2');
+    assert.strictEqual(page.root.vocabulariesChart.chart.labels[1].text, 'Vocabulary 1');
+    assert.strictEqual(page.root.vocabulariesChart.dataTable.rows.length, 2);
   });
 });

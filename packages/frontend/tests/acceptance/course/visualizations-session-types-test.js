@@ -13,7 +13,7 @@ module('Acceptance | course visualizations - session-types', function (hooks) {
   });
 
   test('it renders', async function (assert) {
-    assert.expect(14);
+    assert.expect(18);
     const sessionType1 = this.server.create('session-type');
     const sessionType2 = this.server.create('session-type');
     const sessionType3 = this.server.create('session-type');
@@ -72,18 +72,22 @@ module('Acceptance | course visualizations - session-types', function (hooks) {
     await percySnapshot(assert);
     assert.strictEqual(page.root.title, 'course 0 2022');
     assert.strictEqual(page.root.sessionTypesChart.chart.bars.length, 3);
+    assert.strictEqual(
+      page.root.sessionTypesChart.chart.bars[0].description,
+      'session type 1 - 30 Minutes',
+    );
+    assert.strictEqual(
+      page.root.sessionTypesChart.chart.bars[1].description,
+      'session type 0 - 60 Minutes',
+    );
+    assert.strictEqual(
+      page.root.sessionTypesChart.chart.bars[2].description,
+      'session type 2 - 120 Minutes',
+    );
     assert.strictEqual(page.root.sessionTypesChart.chart.labels.length, 3);
-    assert.strictEqual(
-      page.root.sessionTypesChart.chart.labels[0].text,
-      'session type 1: 30 Minutes',
-    );
-    assert.strictEqual(
-      page.root.sessionTypesChart.chart.labels[1].text,
-      'session type 0: 60 Minutes',
-    );
-    assert.strictEqual(
-      page.root.sessionTypesChart.chart.labels[2].text,
-      'session type 2: 120 Minutes',
-    );
+    assert.strictEqual(page.root.sessionTypesChart.chart.labels[0].text, 'session type 1');
+    assert.strictEqual(page.root.sessionTypesChart.chart.labels[1].text, 'session type 0');
+    assert.strictEqual(page.root.sessionTypesChart.chart.labels[2].text, 'session type 2');
+    assert.strictEqual(page.root.sessionTypesChart.dataTable.rows.length, 3);
   });
 });
