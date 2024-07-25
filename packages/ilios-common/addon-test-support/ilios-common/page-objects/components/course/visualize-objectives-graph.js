@@ -5,7 +5,10 @@ const definition = {
   isIcon: notHasClass('no-icon'),
   chart: {
     scope: '.simple-chart',
-    slices: collection('svg .slice'),
+    slices: collection('svg .slice', {
+      label: text('text'),
+      description: text('desc'),
+    }),
   },
   unlinkedObjectives: {
     scope: '[data-test-with-hours]',

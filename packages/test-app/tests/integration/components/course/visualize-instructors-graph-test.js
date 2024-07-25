@@ -45,58 +45,165 @@ module('Integration | Component | course/visualize-instructors-graph', function 
       instructors: [instructor1, instructor2, instructor3, instructor4],
     });
 
-    this.courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
+    this.course = await this.owner.lookup('service:store').findRecord('course', course.id);
   });
 
   test('it renders', async function (assert) {
-    this.set('course', this.courseModel);
-
-    await render(hbs`<Course::VisualizeInstructorsGraph @course={{this.course}} @isIcon={{false}} />
+    this.set('course', this.course);
+    await render(hbs`<Course::VisualizeInstructorsGraph @course={{this.course}} @isIcon={{false}} @showDataTable={{true}}/>
 `);
     //let the chart animations finish
     await waitFor('.loaded');
     await waitFor('svg .bars');
-
     assert.strictEqual(component.chart.bars.length, 4);
+    assert.strictEqual(component.chart.bars[0].description, 'Daisy - 180 Minutes');
+    assert.strictEqual(component.chart.bars[1].description, 'Duke - 180 Minutes');
+    assert.strictEqual(component.chart.bars[2].description, 'William - 510 Minutes');
+    assert.strictEqual(component.chart.bars[3].description, 'Marie - 810 Minutes');
     assert.strictEqual(component.chart.labels.length, 4);
-    assert.strictEqual(component.chart.labels[0].text, 'Daisy: 180 Minutes');
-    assert.strictEqual(component.chart.labels[1].text, 'Duke: 180 Minutes');
-    assert.strictEqual(component.chart.labels[2].text, 'William: 510 Minutes');
-    assert.strictEqual(component.chart.labels[3].text, 'Marie: 810 Minutes');
+    assert.strictEqual(component.chart.labels[0].text, 'Daisy');
+    assert.strictEqual(component.chart.labels[1].text, 'Duke');
+    assert.strictEqual(component.chart.labels[2].text, 'William');
+    assert.strictEqual(component.chart.labels[3].text, 'Marie');
+    assert.strictEqual(component.dataTable.rows.length, 4);
+    assert.strictEqual(component.dataTable.rows[0].instructor, 'Daisy');
+    assert.strictEqual(component.dataTable.rows[0].sessions.links.length, 1);
+    assert.strictEqual(
+      component.dataTable.rows[0].sessions.links[0].text,
+      'The San Leandro Horror',
+    );
+    assert.strictEqual(component.dataTable.rows[0].sessions.links[0].url, '/courses/1/sessions/2');
+    assert.strictEqual(component.dataTable.rows[0].minutes, '180');
+    assert.strictEqual(component.dataTable.rows[1].instructor, 'Duke');
+    assert.strictEqual(component.dataTable.rows[1].sessions.links.length, 1);
+    assert.strictEqual(
+      component.dataTable.rows[1].sessions.links[0].text,
+      'The San Leandro Horror',
+    );
+    assert.strictEqual(component.dataTable.rows[1].sessions.links[0].url, '/courses/1/sessions/2');
+    assert.strictEqual(component.dataTable.rows[1].minutes, '180');
+    assert.strictEqual(component.dataTable.rows[2].instructor, 'William');
+    assert.strictEqual(component.dataTable.rows[2].sessions.links.length, 2);
+    assert.strictEqual(
+      component.dataTable.rows[2].sessions.links[0].text,
+      'Berkeley Investigations',
+    );
+    assert.strictEqual(component.dataTable.rows[2].sessions.links[0].url, '/courses/1/sessions/1');
+
+    assert.strictEqual(
+      component.dataTable.rows[2].sessions.links[1].text,
+      'The San Leandro Horror',
+    );
+    assert.strictEqual(component.dataTable.rows[2].sessions.links[1].url, '/courses/1/sessions/2');
+    assert.strictEqual(component.dataTable.rows[2].minutes, '510');
+    assert.strictEqual(component.dataTable.rows[3].instructor, 'Marie');
+    assert.strictEqual(component.dataTable.rows[3].sessions.links.length, 2);
+    assert.strictEqual(
+      component.dataTable.rows[3].sessions.links[0].text,
+      'Berkeley Investigations',
+    );
+    assert.strictEqual(component.dataTable.rows[3].sessions.links[0].url, '/courses/1/sessions/1');
+
+    assert.strictEqual(
+      component.dataTable.rows[3].sessions.links[1].text,
+      'The San Leandro Horror',
+    );
+    assert.strictEqual(component.dataTable.rows[3].sessions.links[1].url, '/courses/1/sessions/2');
+    assert.strictEqual(component.dataTable.rows[3].minutes, '810');
   });
 
   test('filter applies', async function (assert) {
     this.set('name', 'Marie');
-    this.set('course', this.courseModel);
-
+    this.set('course', this.course);
     await render(
-      hbs`<Course::VisualizeInstructorsGraph @course={{this.course}} @filter={{this.name}} @isIcon={{false}} />
+      hbs`<Course::VisualizeInstructorsGraph @course={{this.course}} @filter={{this.name}} @isIcon={{false}} @showDataTable={{true}}/>
 `,
     );
     //let the chart animations finish
     await waitFor('.loaded');
     await waitFor('svg .bars');
-
     assert.strictEqual(component.chart.bars.length, 1);
     assert.strictEqual(component.chart.labels.length, 1);
-    assert.strictEqual(component.chart.labels[0].text, 'Marie: 810 Minutes');
+    assert.strictEqual(component.chart.labels[0].text, 'Marie');
+    assert.strictEqual(component.dataTable.rows.length, 1);
+    assert.strictEqual(component.dataTable.rows[0].instructor, 'Marie');
   });
 
-  test('it renders as donut chart', async function (assert) {
-    this.set('course', this.courseModel);
+  test('sort data-table by instructor', async function (assert) {
+    this.set('course', this.course);
+    await render(hbs`<Course::VisualizeInstructorsGraph @course={{this.course}} @isIcon={{false}} @showDataTable={{true}}/>
+`);
+    assert.strictEqual(component.dataTable.rows[0].instructor, 'Daisy');
+    assert.strictEqual(component.dataTable.rows[1].instructor, 'Duke');
+    assert.strictEqual(component.dataTable.rows[2].instructor, 'William');
+    assert.strictEqual(component.dataTable.rows[3].instructor, 'Marie');
+    await component.dataTable.header.instructor.toggle();
+    assert.strictEqual(component.dataTable.rows[0].instructor, 'Daisy');
+    assert.strictEqual(component.dataTable.rows[1].instructor, 'Duke');
+    assert.strictEqual(component.dataTable.rows[2].instructor, 'Marie');
+    assert.strictEqual(component.dataTable.rows[3].instructor, 'William');
+    await component.dataTable.header.instructor.toggle();
+    assert.strictEqual(component.dataTable.rows[0].instructor, 'William');
+    assert.strictEqual(component.dataTable.rows[1].instructor, 'Marie');
+    assert.strictEqual(component.dataTable.rows[2].instructor, 'Duke');
+    assert.strictEqual(component.dataTable.rows[3].instructor, 'Daisy');
+  });
 
-    await render(
-      hbs`<Course::VisualizeInstructorsGraph @course={{this.course}} @isIcon={{false}} @chartType="donut" />
-`,
+  test('sort data-table by sessions', async function (assert) {
+    this.set('course', this.course);
+    await render(hbs`<Course::VisualizeInstructorsGraph @course={{this.course}} @isIcon={{false}} @showDataTable={{true}}/>
+`);
+    assert.strictEqual(component.dataTable.rows[0].sessions.text, 'The San Leandro Horror');
+    assert.strictEqual(component.dataTable.rows[1].sessions.text, 'The San Leandro Horror');
+    assert.strictEqual(
+      component.dataTable.rows[2].sessions.text,
+      'Berkeley Investigations, The San Leandro Horror',
     );
-    //let the chart animations finish
-    await waitFor('.loaded');
-    await waitFor('svg .slice');
+    assert.strictEqual(
+      component.dataTable.rows[3].sessions.text,
+      'Berkeley Investigations, The San Leandro Horror',
+    );
+    await component.dataTable.header.sessions.toggle();
+    assert.strictEqual(
+      component.dataTable.rows[0].sessions.text,
+      'Berkeley Investigations, The San Leandro Horror',
+    );
+    assert.strictEqual(
+      component.dataTable.rows[1].sessions.text,
+      'Berkeley Investigations, The San Leandro Horror',
+    );
+    assert.strictEqual(component.dataTable.rows[2].sessions.text, 'The San Leandro Horror');
+    assert.strictEqual(component.dataTable.rows[3].sessions.text, 'The San Leandro Horror');
+    await component.dataTable.header.sessions.toggle();
+    assert.strictEqual(component.dataTable.rows[0].sessions.text, 'The San Leandro Horror');
+    assert.strictEqual(component.dataTable.rows[1].sessions.text, 'The San Leandro Horror');
+    assert.strictEqual(
+      component.dataTable.rows[2].sessions.text,
+      'Berkeley Investigations, The San Leandro Horror',
+    );
+    assert.strictEqual(
+      component.dataTable.rows[3].sessions.text,
+      'Berkeley Investigations, The San Leandro Horror',
+    );
+  });
 
-    assert.strictEqual(component.chart.slices.length, 4);
-    assert.strictEqual(component.chart.slices[0].text, 'Daisy: 180 Minutes');
-    assert.strictEqual(component.chart.slices[1].text, 'Duke: 180 Minutes');
-    assert.strictEqual(component.chart.slices[2].text, 'William: 510 Minutes');
-    assert.strictEqual(component.chart.slices[3].text, 'Marie: 810 Minutes');
+  test('sort data-table by minutes', async function (assert) {
+    this.set('course', this.course);
+    await render(hbs`<Course::VisualizeInstructorsGraph @course={{this.course}} @isIcon={{false}} @showDataTable={{true}}/>
+`);
+    assert.strictEqual(component.dataTable.rows[0].minutes, '180');
+    assert.strictEqual(component.dataTable.rows[1].minutes, '180');
+    assert.strictEqual(component.dataTable.rows[2].minutes, '510');
+    assert.strictEqual(component.dataTable.rows[3].minutes, '810');
+    await component.dataTable.header.minutes.toggle();
+    assert.strictEqual(component.dataTable.rows[0].minutes, '810');
+    assert.strictEqual(component.dataTable.rows[1].minutes, '510');
+    assert.strictEqual(component.dataTable.rows[2].minutes, '180');
+    assert.strictEqual(component.dataTable.rows[3].minutes, '180');
+    await component.dataTable.header.minutes.toggle();
+    assert.strictEqual(component.dataTable.rows[0].minutes, '180');
+    assert.strictEqual(component.dataTable.rows[1].minutes, '180');
+    assert.strictEqual(component.dataTable.rows[2].minutes, '510');
+    assert.strictEqual(component.dataTable.rows[3].minutes, '810');
   });
 });

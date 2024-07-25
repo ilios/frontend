@@ -113,6 +113,7 @@ export default class CourseVisualizeVocabularyGraph extends Component {
         return set;
       }, [])
       .map((obj) => {
+        obj.description = `${obj.meta.term.title} - ${obj.data} ${this.intl.t('general.minutes')}`;
         delete obj.id;
         return obj;
       })

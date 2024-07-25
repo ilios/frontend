@@ -14,7 +14,7 @@ export default class CourseVisualizeSessionTypeGraph extends Component {
   @service intl;
   @tracked tooltipContent = null;
   @tracked tooltipTitle = null;
-  @tracked sortBy = 'minutes';
+  @tracked sortBy = 'vocabularyTerm';
 
   @cached
   get sessionsData() {
@@ -121,12 +121,11 @@ export default class CourseVisualizeSessionTypeGraph extends Component {
         existing.meta.sessions.push(session);
         return set;
       }, [])
+      .filter((obj) => obj.data > 0)
       .map((obj) => {
+        obj.description = `${obj.meta.vocabulary.title} - ${obj.meta.term.title} - ${obj.data} ${this.intl.t('general.minutes')}`;
         delete obj.id;
         return obj;
-      })
-      .filter((obj) => {
-        return obj.data > 0;
       })
       .sort((first, second) => {
         return (

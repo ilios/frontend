@@ -159,7 +159,12 @@ export default class CourseVisualizeObjectivesGraph extends Component {
 
     return mappedObjectives.map((obj) => {
       const percent = totalMinutes ? ((obj.data / totalMinutes) * 100).toFixed(1) : 0;
+      let objectiveTitle = obj.meta.courseObjective.title;
+      if (obj.meta.competencies) {
+        objectiveTitle += ` (${obj.meta.competencies})`;
+      }
       obj.label = `${percent}%`;
+      obj.description = `${objectiveTitle} - ${obj.data} ${this.intl.t('general.minutes')}`;
       obj.percentage = percent;
       return obj;
     });

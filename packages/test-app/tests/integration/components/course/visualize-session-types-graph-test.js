@@ -43,54 +43,103 @@ module('Integration | Component | course/visualize-session-types-graph', functio
       endDate: new Date('2019-12-05T21:00:00'),
     });
 
-    this.courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
+    this.course = await this.owner.lookup('service:store').findRecord('course', course.id);
   });
 
-  test('it renders as bar chart by default', async function (assert) {
-    this.set('course', this.courseModel);
-
-    await render(hbs`<Course::VisualizeSessionTypesGraph @course={{this.course}} @isIcon={{false}} />
+  test('it renders', async function (assert) {
+    this.set('course', this.course);
+    await render(hbs`<Course::VisualizeSessionTypesGraph @course={{this.course}} @isIcon={{false}} @showDataTable={{true}} />
 `);
     //let the chart animations finish
     await waitFor('.loaded');
     await waitFor('svg .bars');
-
     assert.strictEqual(component.chart.bars.length, 2);
+    assert.strictEqual(component.chart.bars[0].description, 'Campaign - 180 Minutes');
+    assert.strictEqual(component.chart.bars[1].description, 'Standalone - 630 Minutes');
     assert.strictEqual(component.chart.labels.length, 2);
-    assert.strictEqual(component.chart.labels[0].text, 'Campaign: 180 Minutes');
-    assert.strictEqual(component.chart.labels[1].text, 'Standalone: 630 Minutes');
-  });
-
-  test('it renders as donut chart', async function (assert) {
-    this.set('course', this.courseModel);
-
-    await render(
-      hbs`<Course::VisualizeSessionTypesGraph @course={{this.course}} @isIcon={{false}} @chartType="donut" />
-`,
+    assert.strictEqual(component.chart.labels[0].text, 'Campaign');
+    assert.strictEqual(component.chart.labels[1].text, 'Standalone');
+    assert.strictEqual(component.dataTable.rows.length, 2);
+    assert.strictEqual(component.dataTable.rows[0].sessionType, 'Campaign');
+    assert.strictEqual(component.dataTable.rows[0].sessions.links.length, 1);
+    assert.strictEqual(
+      component.dataTable.rows[0].sessions.links[0].text,
+      'The San Leandro Horror',
     );
-    //let the chart animations finish
-    await waitFor('.loaded');
-    await waitFor('svg .slice');
-
-    assert.strictEqual(component.chart.slices.length, 2);
-    assert.strictEqual(component.chart.slices[0].text, 'Campaign: 180 Minutes');
-    assert.strictEqual(component.chart.slices[1].text, 'Standalone: 630 Minutes');
+    assert.strictEqual(component.dataTable.rows[0].sessions.links[0].url, '/courses/1/sessions/2');
+    assert.strictEqual(component.dataTable.rows[0].minutes, '180');
+    assert.strictEqual(component.dataTable.rows[1].sessionType, 'Standalone');
+    assert.strictEqual(component.dataTable.rows[1].sessions.links.length, 1);
+    assert.strictEqual(
+      component.dataTable.rows[1].sessions.links[0].text,
+      'Berkeley Investigations',
+    );
+    assert.strictEqual(component.dataTable.rows[1].sessions.links[0].url, '/courses/1/sessions/1');
+    assert.strictEqual(component.dataTable.rows[1].minutes, '630');
   });
 
   test('filter applies', async function (assert) {
     this.set('title', 'Campaign');
-    this.set('course', this.courseModel);
-
+    this.set('course', this.course);
     await render(
-      hbs`<Course::VisualizeSessionTypesGraph @course={{this.course}} @filter={{this.title}} @isIcon={{false}} />
+      hbs`<Course::VisualizeSessionTypesGraph @course={{this.course}} @filter={{this.title}} @isIcon={{false}} @showDataTable={{true}}/>
 `,
     );
     //let the chart animations finish
     await waitFor('.loaded');
     await waitFor('svg .bars');
-
     assert.strictEqual(component.chart.bars.length, 1);
     assert.strictEqual(component.chart.labels.length, 1);
-    assert.strictEqual(component.chart.labels[0].text, 'Campaign: 180 Minutes');
+    assert.strictEqual(component.chart.labels[0].text, 'Campaign');
+    assert.strictEqual(component.dataTable.rows.length, 1);
+    assert.strictEqual(component.dataTable.rows[0].sessionType, 'Campaign');
+  });
+
+  test('sort data-table by session type', async function (assert) {
+    this.set('course', this.course);
+    await render(hbs`<Course::VisualizeSessionTypesGraph @course={{this.course}} @isIcon={{false}} @showDataTable={{true}} />
+`);
+    assert.strictEqual(component.dataTable.rows[0].sessionType, 'Campaign');
+    assert.strictEqual(component.dataTable.rows[1].sessionType, 'Standalone');
+    await component.dataTable.header.sessionType.toggle();
+    assert.strictEqual(component.dataTable.rows[0].sessionType, 'Campaign');
+    assert.strictEqual(component.dataTable.rows[1].sessionType, 'Standalone');
+    await component.dataTable.header.sessionType.toggle();
+    assert.strictEqual(component.dataTable.rows[0].sessionType, 'Standalone');
+    assert.strictEqual(component.dataTable.rows[1].sessionType, 'Campaign');
+    await component.dataTable.header.sessionType.toggle();
+    assert.strictEqual(component.dataTable.rows[0].sessionType, 'Campaign');
+    assert.strictEqual(component.dataTable.rows[1].sessionType, 'Standalone');
+  });
+
+  test('sort data-table by sessions', async function (assert) {
+    this.set('course', this.course);
+    await render(hbs`<Course::VisualizeSessionTypesGraph @course={{this.course}} @isIcon={{false}} @showDataTable={{true}} />
+`);
+    assert.strictEqual(component.dataTable.rows[0].sessions.text, 'The San Leandro Horror');
+    assert.strictEqual(component.dataTable.rows[1].sessions.text, 'Berkeley Investigations');
+    await component.dataTable.header.sessions.toggle();
+    assert.strictEqual(component.dataTable.rows[0].sessions.text, 'Berkeley Investigations');
+    assert.strictEqual(component.dataTable.rows[1].sessions.text, 'The San Leandro Horror');
+    await component.dataTable.header.sessions.toggle();
+    assert.strictEqual(component.dataTable.rows[0].sessions.text, 'The San Leandro Horror');
+    assert.strictEqual(component.dataTable.rows[1].sessions.text, 'Berkeley Investigations');
+    await component.dataTable.header.sessions.toggle();
+    assert.strictEqual(component.dataTable.rows[0].sessions.text, 'Berkeley Investigations');
+    assert.strictEqual(component.dataTable.rows[1].sessions.text, 'The San Leandro Horror');
+  });
+
+  test('sort data-table by minutes', async function (assert) {
+    this.set('course', this.course);
+    await render(hbs`<Course::VisualizeSessionTypesGraph @course={{this.course}} @isIcon={{false}} @showDataTable={{true}} />
+`);
+    assert.strictEqual(component.dataTable.rows[0].minutes, '180');
+    assert.strictEqual(component.dataTable.rows[1].minutes, '630');
+    await component.dataTable.header.minutes.toggle();
+    assert.strictEqual(component.dataTable.rows[0].minutes, '630');
+    assert.strictEqual(component.dataTable.rows[1].minutes, '180');
+    await component.dataTable.header.minutes.toggle();
+    assert.strictEqual(component.dataTable.rows[0].minutes, '180');
+    assert.strictEqual(component.dataTable.rows[1].minutes, '630');
   });
 });
