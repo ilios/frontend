@@ -213,7 +213,7 @@ module('Integration | Component | week glance', function (hooks) {
     assert.ok(true, 'no a11y errors found!');
   });
 
-  test('click to expend', async function (assert) {
+  test('click to expand', async function (assert) {
     assert.expect(1);
     this.owner.register('service:user-events', this.blankEventsMock);
     this.userEvents = this.owner.lookup('service:user-events');
