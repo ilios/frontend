@@ -1,7 +1,7 @@
 import { attribute, clickable, collection, create, notHasClass, text } from 'ember-cli-page-object';
 
 const definition = {
-  scope: '[data-test-course-visualize-instructor-session-type-graph]',
+  scope: '[data-test-course-visualize-term-graph]',
   isIcon: notHasClass('no-icon'),
   chart: {
     scope: '.simple-chart',

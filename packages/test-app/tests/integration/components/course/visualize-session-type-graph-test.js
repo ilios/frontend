@@ -9,7 +9,7 @@ module('Integration | Component | course/visualize-session-type-graph', function
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
-  test('it renders', async function (assert) {
+  hooks.beforeEach(async function () {
     const vocabulary1 = this.server.create('vocabulary');
     const vocabulary2 = this.server.create('vocabulary');
     const term1 = this.server.create('term', {
@@ -50,25 +50,107 @@ module('Integration | Component | course/visualize-session-type-graph', function
       endDate: new Date('2019-12-05T21:00:00'),
     });
 
-    const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
-    const sessionTypeModel = await this.owner
+    this.course = await this.owner.lookup('service:store').findRecord('course', course.id);
+    this.sessionType = await this.owner
       .lookup('service:store')
       .findRecord('session-type', sessionType.id);
+  });
 
-    this.set('course', courseModel);
-    this.set('type', sessionTypeModel);
-
+  test('it renders', async function (assert) {
+    this.set('course', this.course);
+    this.set('type', this.sessionType);
     await render(
-      hbs`<Course::VisualizeSessionTypeGraph @course={{this.course}} @sessionType={{this.type}} @isIcon={{false}} />
+      hbs`<Course::VisualizeSessionTypeGraph @course={{this.course}} @sessionType={{this.type}} @isIcon={{false}} @showDataTable={{true}} />
 `,
     );
     //let the chart animations finish
     await waitFor('.loaded');
     await waitFor('svg .bars');
-
     assert.strictEqual(component.chart.bars.length, 2);
+    assert.strictEqual(
+      component.chart.bars[0].description,
+      'Vocabulary 1 - Standalone - 630 Minutes',
+    );
+    assert.strictEqual(
+      component.chart.bars[1].description,
+      'Vocabulary 2 - Campaign - 180 Minutes',
+    );
     assert.strictEqual(component.chart.labels.length, 2);
-    assert.strictEqual(component.chart.labels[0].text, 'Vocabulary 1 - Standalone: 630 Minutes');
-    assert.strictEqual(component.chart.labels[1].text, 'Vocabulary 2 - Campaign: 180 Minutes');
+    assert.strictEqual(component.chart.labels[0].text, 'Vocabulary 1 - Standalone');
+    assert.strictEqual(component.chart.labels[1].text, 'Vocabulary 2 - Campaign');
+    assert.strictEqual(component.dataTable.rows.length, 2);
+    assert.strictEqual(component.dataTable.rows[0].vocabularyTerm, 'Vocabulary 1 - Standalone');
+    assert.strictEqual(component.dataTable.rows[0].sessions.links.length, 1);
+    assert.strictEqual(
+      component.dataTable.rows[0].sessions.links[0].text,
+      'Berkeley Investigations',
+    );
+    assert.strictEqual(component.dataTable.rows[0].sessions.links[0].url, '/courses/1/sessions/1');
+    assert.strictEqual(component.dataTable.rows[0].minutes, '630');
+    assert.strictEqual(component.dataTable.rows[1].vocabularyTerm, 'Vocabulary 2 - Campaign');
+    assert.strictEqual(component.dataTable.rows[1].sessions.links.length, 1);
+    assert.strictEqual(
+      component.dataTable.rows[1].sessions.links[0].text,
+      'The San Leandro Horror',
+    );
+    assert.strictEqual(component.dataTable.rows[1].sessions.links[0].url, '/courses/1/sessions/2');
+    assert.strictEqual(component.dataTable.rows[1].minutes, '180');
+  });
+
+  test('sort data-table by vocabulary term', async function (assert) {
+    this.set('course', this.course);
+    this.set('type', this.sessionType);
+    await render(
+      hbs`<Course::VisualizeSessionTypeGraph @course={{this.course}} @sessionType={{this.type}} @isIcon={{false}} @showDataTable={{true}} />
+`,
+    );
+    assert.strictEqual(component.dataTable.rows[0].vocabularyTerm, 'Vocabulary 1 - Standalone');
+    assert.strictEqual(component.dataTable.rows[1].vocabularyTerm, 'Vocabulary 2 - Campaign');
+    await component.dataTable.header.vocabularyTerm.toggle();
+    assert.strictEqual(component.dataTable.rows[0].vocabularyTerm, 'Vocabulary 2 - Campaign');
+    assert.strictEqual(component.dataTable.rows[1].vocabularyTerm, 'Vocabulary 1 - Standalone');
+    await component.dataTable.header.vocabularyTerm.toggle();
+    assert.strictEqual(component.dataTable.rows[0].vocabularyTerm, 'Vocabulary 1 - Standalone');
+    assert.strictEqual(component.dataTable.rows[1].vocabularyTerm, 'Vocabulary 2 - Campaign');
+  });
+
+  test('sort data-table by sessions', async function (assert) {
+    this.set('course', this.course);
+    this.set('type', this.sessionType);
+    await render(
+      hbs`<Course::VisualizeSessionTypeGraph @course={{this.course}} @sessionType={{this.type}} @isIcon={{false}} @showDataTable={{true}} />
+`,
+    );
+    assert.strictEqual(component.dataTable.rows[0].sessions.text, 'Berkeley Investigations');
+    assert.strictEqual(component.dataTable.rows[1].sessions.text, 'The San Leandro Horror');
+    await component.dataTable.header.sessions.toggle();
+    assert.strictEqual(component.dataTable.rows[0].sessions.text, 'Berkeley Investigations');
+    assert.strictEqual(component.dataTable.rows[1].sessions.text, 'The San Leandro Horror');
+    await component.dataTable.header.sessions.toggle();
+    assert.strictEqual(component.dataTable.rows[0].sessions.text, 'The San Leandro Horror');
+    assert.strictEqual(component.dataTable.rows[1].sessions.text, 'Berkeley Investigations');
+    await component.dataTable.header.sessions.toggle();
+    assert.strictEqual(component.dataTable.rows[0].sessions.text, 'Berkeley Investigations');
+    assert.strictEqual(component.dataTable.rows[1].sessions.text, 'The San Leandro Horror');
+    await component.dataTable.header.sessions.toggle();
+    assert.strictEqual(component.dataTable.rows[0].sessions.text, 'The San Leandro Horror');
+    assert.strictEqual(component.dataTable.rows[1].sessions.text, 'Berkeley Investigations');
+  });
+
+  test('sort data-table by minutes', async function (assert) {
+    this.set('course', this.course);
+    this.set('type', this.sessionType);
+    await render(
+      hbs`<Course::VisualizeSessionTypeGraph @course={{this.course}} @sessionType={{this.type}} @isIcon={{false}} @showDataTable={{true}} />
+`,
+    );
+    assert.strictEqual(component.dataTable.rows[0].minutes, '630');
+    assert.strictEqual(component.dataTable.rows[1].minutes, '180');
+    await component.dataTable.header.minutes.toggle();
+    assert.strictEqual(component.dataTable.rows[0].minutes, '180');
+    assert.strictEqual(component.dataTable.rows[1].minutes, '630');
+    await component.dataTable.header.minutes.toggle();
+    assert.strictEqual(component.dataTable.rows[0].minutes, '630');
+    assert.strictEqual(component.dataTable.rows[1].minutes, '180');
   });
 });

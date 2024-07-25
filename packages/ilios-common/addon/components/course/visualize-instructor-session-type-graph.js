@@ -110,6 +110,7 @@ export default class CourseVisualizeInstructorSessionTypeGraph extends Component
         return set;
       }, [])
       .map((obj) => {
+        obj.description = `${obj.meta.sessionType.title} - ${obj.data} ${this.intl.t('general.minutes')}`;
         delete obj.id;
         return obj;
       })

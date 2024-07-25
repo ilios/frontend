@@ -91,7 +91,7 @@ module('Integration | Component | course/visualize-vocabulary', function (hooks)
     await waitFor('svg .bars');
     assert.strictEqual(component.termsChart.chart.bars.length, 2);
     assert.strictEqual(component.termsChart.chart.labels.length, 2);
-    assert.strictEqual(component.termsChart.chart.labels[0].text, 'term 1: 60 Minutes');
-    assert.strictEqual(component.termsChart.chart.labels[1].text, 'term 0: 150 Minutes');
+    assert.strictEqual(component.termsChart.chart.labels[0].text, 'term 1');
+    assert.strictEqual(component.termsChart.chart.labels[1].text, 'term 0');
   });
 });

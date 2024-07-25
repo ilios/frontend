@@ -45,11 +45,11 @@ module('Integration | Component | course/visualize-session-types', function (hoo
       startDate: new Date('2019-12-05T18:00:00'),
       endDate: new Date('2019-12-05T21:00:00'),
     });
-    this.courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
+    this.course = await this.owner.lookup('service:store').findRecord('course', course.id);
   });
 
   test('it renders', async function (assert) {
-    this.set('course', this.courseModel);
+    this.set('course', this.course);
     await render(hbs`<Course::VisualizeSessionTypes @model={{this.course}} />
 `);
     assert.strictEqual(component.title, 'course 0 2021');
@@ -58,8 +58,8 @@ module('Integration | Component | course/visualize-session-types', function (hoo
     await waitFor('svg .bars');
     assert.strictEqual(component.sessionTypesChart.chart.bars.length, 2);
     assert.strictEqual(component.sessionTypesChart.chart.labels.length, 2);
-    assert.strictEqual(component.sessionTypesChart.chart.labels[0].text, 'Campaign: 180 Minutes');
-    assert.strictEqual(component.sessionTypesChart.chart.labels[1].text, 'Standalone: 630 Minutes');
+    assert.strictEqual(component.sessionTypesChart.chart.labels[0].text, 'Campaign');
+    assert.strictEqual(component.sessionTypesChart.chart.labels[1].text, 'Standalone');
   });
 
   test('course year is shown as range if applicable by configuration', async function (assert) {
@@ -70,14 +70,14 @@ module('Integration | Component | course/visualize-session-types', function (hoo
         },
       };
     });
-    this.set('course', this.courseModel);
+    this.set('course', this.course);
     await render(hbs`<Course::VisualizeSessionTypes @model={{this.course}} />
 `);
     assert.strictEqual(component.title, 'course 0 2021 - 2022');
   });
 
   test('filter works', async function (assert) {
-    this.set('course', this.courseModel);
+    this.set('course', this.course);
     await render(hbs`<Course::VisualizeSessionTypes @model={{this.course}} />
 `);
     //let the chart animations finish
@@ -86,16 +86,16 @@ module('Integration | Component | course/visualize-session-types', function (hoo
     assert.strictEqual(component.title, 'course 0 2021');
     assert.strictEqual(component.sessionTypesChart.chart.bars.length, 2);
     assert.strictEqual(component.sessionTypesChart.chart.labels.length, 2);
-    assert.strictEqual(component.sessionTypesChart.chart.labels[0].text, 'Campaign: 180 Minutes');
-    assert.strictEqual(component.sessionTypesChart.chart.labels[1].text, 'Standalone: 630 Minutes');
+    assert.strictEqual(component.sessionTypesChart.chart.labels[0].text, 'Campaign');
+    assert.strictEqual(component.sessionTypesChart.chart.labels[1].text, 'Standalone');
     await component.filter.set('Campaign');
     assert.strictEqual(component.sessionTypesChart.chart.bars.length, 1);
     assert.strictEqual(component.sessionTypesChart.chart.labels.length, 1);
-    assert.strictEqual(component.sessionTypesChart.chart.labels[0].text, 'Campaign: 180 Minutes');
+    assert.strictEqual(component.sessionTypesChart.chart.labels[0].text, 'Campaign');
   });
 
   test('breadcrumb', async function (assert) {
-    this.set('course', this.courseModel);
+    this.set('course', this.course);
 
     await render(hbs`<Course::VisualizeSessionTypes @model={{this.course}} />
 `);

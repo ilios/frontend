@@ -91,9 +91,6 @@ export default class CourseVisualizeInstructorsGraph extends Component {
       .reduce((set, { session, instructorsWithInstructionalTime }) => {
         instructorsWithInstructionalTime.forEach(({ instructor, minutes }) => {
           const id = instructor.id;
-          if (!minutes) {
-            return;
-          }
           let existing = findById(set, id);
           if (!existing) {
             existing = {
@@ -112,7 +109,9 @@ export default class CourseVisualizeInstructorsGraph extends Component {
         });
         return set;
       }, [])
+      .filter((obj) => obj.data > 0)
       .map((obj) => {
+        obj.description = `${obj.meta.user.fullName} - ${obj.data} ${this.intl.t('general.minutes')}`;
         delete obj.id;
         return obj;
       })

@@ -125,7 +125,8 @@ export default class CourseVisualizeInstructorTermGraph extends Component {
         return set;
       }, [])
       .map((obj) => {
-        delete obj.id;
+        (obj.description = `${obj.meta.vocabulary.title} - ${obj.meta.term.title} - ${obj.data} ${this.intl.t('general.minutes')}`),
+          delete obj.id;
         return obj;
       })
       .filter((obj) => {

@@ -46,18 +46,17 @@ module('Integration | Component | course/visualize-vocabulary-graph', function (
       endDate: new Date('2019-12-05T21:00:00'),
     });
 
-    this.courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
-    this.vocabularyModel = await this.owner
+    this.course = await this.owner.lookup('service:store').findRecord('course', course.id);
+    this.vocabulary = await this.owner
       .lookup('service:store')
       .findRecord('vocabulary', vocabulary.id);
   });
 
   test('it renders', async function (assert) {
-    this.set('course', this.courseModel);
-    this.set('vocabulary', this.vocabularyModel);
-
+    this.set('course', this.course);
+    this.set('vocabulary', this.vocabulary);
     await render(
-      hbs`<Course::VisualizeVocabularyGraph @course={{this.course}} @vocabulary={{this.vocabulary}} @isIcon={{false}} />
+      hbs`<Course::VisualizeVocabularyGraph @course={{this.course}} @vocabulary={{this.vocabulary}} @isIcon={{false}} @showDataTable={{true}} />
 `,
     );
     //let the chart animations finish
@@ -65,8 +64,81 @@ module('Integration | Component | course/visualize-vocabulary-graph', function (
     await waitFor('svg .bars');
 
     assert.strictEqual(component.chart.bars.length, 2);
+    assert.strictEqual(component.chart.bars[0].description, 'Campaign - 180 Minutes');
+    assert.strictEqual(component.chart.bars[1].description, 'Standalone - 630 Minutes');
     assert.strictEqual(component.chart.labels.length, 2);
-    assert.strictEqual(component.chart.labels[0].text, 'Campaign: 180 Minutes');
-    assert.strictEqual(component.chart.labels[1].text, 'Standalone: 630 Minutes');
+    assert.strictEqual(component.chart.labels[0].text, 'Campaign');
+    assert.strictEqual(component.chart.labels[1].text, 'Standalone');
+    assert.strictEqual(component.dataTable.rows.length, 2);
+    assert.strictEqual(component.dataTable.rows[0].term, 'Campaign');
+    assert.strictEqual(component.dataTable.rows[0].sessions.links.length, 1);
+    assert.strictEqual(
+      component.dataTable.rows[0].sessions.links[0].text,
+      'The San Leandro Horror',
+    );
+    assert.strictEqual(component.dataTable.rows[0].sessions.links[0].url, '/courses/1/sessions/2');
+    assert.strictEqual(component.dataTable.rows[0].minutes, '180');
+    assert.strictEqual(component.dataTable.rows[1].term, 'Standalone');
+    assert.strictEqual(component.dataTable.rows[1].sessions.links.length, 1);
+    assert.strictEqual(
+      component.dataTable.rows[1].sessions.links[0].text,
+      'Berkeley Investigations',
+    );
+    assert.strictEqual(component.dataTable.rows[1].sessions.links[0].url, '/courses/1/sessions/1');
+    assert.strictEqual(component.dataTable.rows[1].minutes, '630');
+  });
+
+  test('sort data-table by term', async function (assert) {
+    this.set('course', this.course);
+    this.set('vocabulary', this.vocabulary);
+    await render(
+      hbs`<Course::VisualizeVocabularyGraph @course={{this.course}} @vocabulary={{this.vocabulary}} @isIcon={{false}} @showDataTable={{true}} />`,
+    );
+    assert.strictEqual(component.dataTable.rows[0].term, 'Campaign');
+    assert.strictEqual(component.dataTable.rows[1].term, 'Standalone');
+    await component.dataTable.header.term.toggle();
+    assert.strictEqual(component.dataTable.rows[0].term, 'Campaign');
+    assert.strictEqual(component.dataTable.rows[1].term, 'Standalone');
+    await component.dataTable.header.term.toggle();
+    assert.strictEqual(component.dataTable.rows[0].term, 'Standalone');
+    assert.strictEqual(component.dataTable.rows[1].term, 'Campaign');
+    await component.dataTable.header.term.toggle();
+    assert.strictEqual(component.dataTable.rows[0].term, 'Campaign');
+    assert.strictEqual(component.dataTable.rows[1].term, 'Standalone');
+  });
+
+  test('sort data-table by sessions', async function (assert) {
+    this.set('course', this.course);
+    this.set('vocabulary', this.vocabulary);
+    await render(
+      hbs`<Course::VisualizeVocabularyGraph @course={{this.course}} @vocabulary={{this.vocabulary}} @isIcon={{false}} @showDataTable={{true}} />`,
+    );
+    assert.strictEqual(component.dataTable.rows[0].sessions.text, 'The San Leandro Horror');
+    assert.strictEqual(component.dataTable.rows[1].sessions.text, 'Berkeley Investigations');
+    await component.dataTable.header.sessions.toggle();
+    assert.strictEqual(component.dataTable.rows[0].sessions.text, 'Berkeley Investigations');
+    assert.strictEqual(component.dataTable.rows[1].sessions.text, 'The San Leandro Horror');
+    await component.dataTable.header.sessions.toggle();
+    assert.strictEqual(component.dataTable.rows[0].sessions.text, 'The San Leandro Horror');
+    assert.strictEqual(component.dataTable.rows[1].sessions.text, 'Berkeley Investigations');
+    await component.dataTable.header.sessions.toggle();
+    assert.strictEqual(component.dataTable.rows[0].sessions.text, 'Berkeley Investigations');
+    assert.strictEqual(component.dataTable.rows[1].sessions.text, 'The San Leandro Horror');
+  });
+
+  test('sort data-table by minutes', async function (assert) {
+    this.set('course', this.course);
+    this.set('vocabulary', this.vocabulary);
+    await render(
+      hbs`<Course::VisualizeVocabularyGraph @course={{this.course}} @vocabulary={{this.vocabulary}} @isIcon={{false}} @showDataTable={{true}} />`,
+    );
+    assert.strictEqual(component.dataTable.rows[0].minutes, '180');
+    assert.strictEqual(component.dataTable.rows[1].minutes, '630');
+    await component.dataTable.header.minutes.toggle();
+    assert.strictEqual(component.dataTable.rows[0].minutes, '630');
+    assert.strictEqual(component.dataTable.rows[1].minutes, '180');
+    await component.dataTable.header.minutes.toggle();
+    assert.strictEqual(component.dataTable.rows[0].minutes, '180');
+    assert.strictEqual(component.dataTable.rows[1].minutes, '630');
   });
 });

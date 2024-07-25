@@ -87,7 +87,6 @@ export default class CourseVisualizeSessionTypesGraph extends Component {
     });
 
     return dataMap
-      .filter((obj) => obj.minutes > 0)
       .reduce((set, { sessionType, session, minutes }) => {
         const id = sessionType.id;
         let existing = findById(set, id);
@@ -108,7 +107,9 @@ export default class CourseVisualizeSessionTypesGraph extends Component {
 
         return set;
       }, [])
+      .filter((obj) => obj.data > 0)
       .map((obj) => {
+        obj.description = `${obj.meta.sessionType.title} - ${obj.data} ${this.intl.t('general.minutes')}`;
         delete obj.id;
         return obj;
       })

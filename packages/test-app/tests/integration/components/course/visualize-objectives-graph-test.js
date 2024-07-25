@@ -91,8 +91,16 @@ module('Integration | Component | course/visualize-objectives-graph', function (
     await waitFor('svg .slice');
 
     assert.strictEqual(component.chart.slices.length, 2);
-    assert.strictEqual(component.chart.slices[0].text, '77.8%');
-    assert.strictEqual(component.chart.slices[1].text, '22.2%');
+    assert.strictEqual(component.chart.slices[0].label, '77.8%');
+    assert.strictEqual(
+      component.chart.slices[0].description,
+      'course objective 0 (competency 0, competency 1) - 630 Minutes',
+    );
+    assert.strictEqual(component.chart.slices[1].label, '22.2%');
+    assert.strictEqual(
+      component.chart.slices[1].description,
+      'course objective 1 (competency 1) - 180 Minutes',
+    );
     assert.notOk(component.unlinkedObjectives.isPresent);
     assert.strictEqual(component.untaughtObjectives.items.length, 1);
     assert.strictEqual(component.untaughtObjectives.items[0].text, 'course objective 2');
