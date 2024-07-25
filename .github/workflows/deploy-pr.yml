@@ -11,6 +11,7 @@ jobs:
   deploy:
     name: Deploy PR Preview
     runs-on: ubuntu-latest
+    timeout-minutes: 60
     if: contains(github.event.pull_request.labels.*.name, 'safe to deploy')
     steps:
       - uses: actions/checkout@v4
@@ -25,6 +26,7 @@ jobs:
           cache: pnpm
       - run: pnpm install
       - name: Ember CLI Deploy
+        timeout-minutes: 30
         run: pnpm --filter frontend exec ember deploy pr-preview
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
