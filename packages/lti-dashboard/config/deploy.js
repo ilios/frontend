@@ -30,6 +30,13 @@ module.exports = function (deployTarget) {
     ENV.s3.bucket = 'ilios-lti-app-production';
     ENV.cloudfront.distribution = 'E33FMSW7332DVL';
   }
+  if (deployTarget === 'development') {
+    ENV.build.environment = 'production';
+    ENV.pipeline.disabled = {
+      s3: true,
+      cloudfront: true,
+    };
+  }
 
   // Note: if you need to build some configuration asynchronously, you can return
   // a promise that resolves with the ENV object instead of returning the
