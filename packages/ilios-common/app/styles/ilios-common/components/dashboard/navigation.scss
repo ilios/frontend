@@ -17,20 +17,26 @@
     li {
       margin: 0;
 
+      &:nth-of-type(3) {
+        align-items: center;
+        display: flex;
+        gap: 5px;
+      }
+
       .ilios-calendar-ics-feed {
         padding: 0;
         text-align: center;
         width: 90%;
 
         .highlight {
-          @include m.for-phone-only {
-            /* stylelint-disable property-disallowed-list */
-            width: 7vw;
-          }
           align-items: center;
           display: flex;
           color: c.$orange;
           @include m.font-size("large");
+
+          @include m.for-phone-only {
+            @include m.font-size("medium");
+          }
         }
       }
     }
