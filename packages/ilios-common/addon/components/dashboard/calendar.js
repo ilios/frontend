@@ -175,8 +175,10 @@ export default class DashboardCalendarComponent extends Component {
       'eventsWithSelectedCohorts',
       'eventsWithSelectedCourses',
       'eventsWithSelectedTerms',
-      'eventsWithSelectedUserContext',
     ];
+    if (this.args.mySchedule) {
+      eventTypes.push('eventsWithSelectedUserContext');
+    }
     const allFilteredEvents = eventTypes.map((name) => {
       return this[name];
     });
