@@ -527,6 +527,42 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
     assert.notOk(page.calendar.controls.userContextFilter.isPresent);
   });
 
+  test('user context filters do not apply to school calendar', async function (assert) {
+    assert.expect(2);
+    this.user = await setupAuthentication({ school: this.school }, true);
+    const day = DateTime.fromObject({
+      month: 7,
+      day: 7,
+      year: 2007,
+      hour: 8,
+      minute: 8,
+      second: 8,
+    });
+    freezeDateAt(day.toJSDate());
+    this.server.create('schoolevent', {
+      school: 1,
+      startDate: day.toJSDate(),
+      endDate: day.plus({ hour: 1 }).toJSDate(),
+      offering: 1,
+    });
+    this.server.create('schoolevent', {
+      school: 1,
+      startDate: day.toJSDate(),
+      endDate: day.plus({ hour: 1 }).toJSDate(),
+      offering: 2,
+    });
+    await page.visit({ show: 'calendar' });
+    // switch to the school calendar and verify that events are present
+    await page.calendar.controls.mySchedule.toggle.secondLabel.click();
+    assert.strictEqual(page.calendar.calendar.weekly.events.length, 2);
+    // switch to the user calendar and apply a user context filter
+    await page.calendar.controls.mySchedule.toggle.firstLabel.click();
+    await page.calendar.controls.userContextFilter.learning.toggle();
+    // switch to the school calendar and verify that nothing has changed
+    await page.calendar.controls.mySchedule.toggle.secondLabel.click();
+    assert.strictEqual(page.calendar.calendar.weekly.events.length, 2);
+  });
+
   test('test user context filters', async function (assert) {
     assert.expect(11);
     this.user = await setupAuthentication({ school: this.school }, true);
