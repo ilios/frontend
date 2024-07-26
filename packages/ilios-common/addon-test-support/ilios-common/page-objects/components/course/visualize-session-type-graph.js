@@ -38,6 +38,9 @@ const definition = {
       minutes: text('[data-test-minutes]'),
     }),
   },
+  noData: {
+    scope: '[data-test-no-data]',
+  },
 };
 
 export default definition;

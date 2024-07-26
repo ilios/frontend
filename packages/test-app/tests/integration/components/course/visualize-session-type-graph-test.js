@@ -64,6 +64,7 @@ module('Integration | Component | course/visualize-session-type-graph', function
 `,
     );
     //let the chart animations finish
+    assert.notOk(component.noData.isVisible);
     await waitFor('.loaded');
     await waitFor('svg .bars');
     assert.strictEqual(component.chart.bars.length, 2);
@@ -152,5 +153,23 @@ module('Integration | Component | course/visualize-session-type-graph', function
     await component.dataTable.header.minutes.toggle();
     assert.strictEqual(component.dataTable.rows[0].minutes, '630');
     assert.strictEqual(component.dataTable.rows[1].minutes, '180');
+  });
+
+  test('no data', async function (assert) {
+    const emptyCourse = await this.owner
+      .lookup('service:store')
+      .findRecord('course', this.server.create('course').id);
+    this.set('course', emptyCourse);
+    this.set('type', this.sessionType);
+    await render(
+      hbs`<Course::VisualizeSessionTypeGraph @course={{this.course}} @sessionType={{this.type}} @isIcon={{false}} @showDataTable={{true}} />
+`,
+    );
+    assert.notOk(component.chart.isVisible);
+    assert.notOk(component.dataTable.isVisible);
+    assert.strictEqual(
+      component.noData.text,
+      'No vocabulary terms have been linked to any session type 0 sessions in this course.',
+    );
   });
 });

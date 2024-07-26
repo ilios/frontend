@@ -17,34 +17,20 @@ export default class CourseVisualizeSessionTypeGraph extends Component {
   @tracked sortBy = 'vocabularyTerm';
 
   @cached
-  get sessionsData() {
-    return new TrackedAsyncData(this.args.course.sessions);
-  }
-
-  @cached
-  get sessionTypeSessionsData() {
-    return new TrackedAsyncData(this.args.sessionType.sessions);
-  }
-
-  get sessions() {
-    return this.sessionsData.isResolved ? this.sessionsData.value.slice() : [];
-  }
-
-  get sessionTypeSessions() {
-    return this.sessionTypeSessionsData.isResolved ? this.sessionTypeSessionsData.value : [];
-  }
-
-  @cached
   get outputData() {
-    return new TrackedAsyncData(this.getDataObjects(this.sessions, this.sessionTypeSessions));
+    return new TrackedAsyncData(this.getDataObjects(this.args.course, this.args.sessionType));
   }
 
   get data() {
     return this.outputData.isResolved ? this.outputData.value : [];
   }
 
+  get hasData() {
+    return this.data.length;
+  }
+
   get isLoaded() {
-    return this.sessionsData.isResolved && this.outputData.isResolved;
+    return this.outputData.isResolved;
   }
 
   get tableData() {
@@ -70,7 +56,10 @@ export default class CourseVisualizeSessionTypeGraph extends Component {
     this.sortBy = prop;
   }
 
-  async getDataObjects(sessions, sessionTypeSessions) {
+  async getDataObjects(course, sessionType) {
+    const sessions = (await course.sessions).slice();
+    const sessionTypeSessions = (await sessionType.sessions).slice();
+
     const courseSessionsWithSessionType = sessions.filter((session) =>
       sessionTypeSessions.includes(session),
     );

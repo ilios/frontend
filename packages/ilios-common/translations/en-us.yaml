@@ -87,6 +87,7 @@ general:
   courseTitle: Course Title
   courseTitlePlaceholder: Enter a title for this course
   courseVisualizations: Course Visualizations
+  courseVisualizationsSessionTypeGraphNoData: "No vocabulary terms have been linked to any {sessionType} sessions in this course."
   currentlySearchingPrompt: searching...
   dashboardNavigation: Dashboard navigation
   date: Date
