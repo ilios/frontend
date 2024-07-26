@@ -38,10 +38,10 @@
     }
     .user-guide-link {
       grid-area: guide;
-      height: 66%;
+      height: 72%;
 
       @include m.for-phone-only {
-        height: 90%;
+        height: 100%;
       }
     }
 
