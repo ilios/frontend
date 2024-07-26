@@ -3,24 +3,25 @@ import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import { setLocale, setupIntl } from 'ember-intl/test-support';
+import { component } from 'frontend/tests/pages/components/user-guide-link';
 
 module('Integration | Component | user-guide-link', function (hooks) {
   setupRenderingTest(hooks);
   setupIntl(hooks, 'en-us');
 
   test('it renders', async function (assert) {
+    this.intl = this.owner.lookup('service:intl');
+
     await render(hbs`<UserGuideLink />`);
 
-    assert.dom('[data-test-user-guide-link]').exists();
-    assert.dom('[data-test-user-guide-link-icon]').exists();
-    assert.dom('[data-test-user-guide-link-icon]').hasText('Ilios User Guide');
+    assert.ok(component);
+    assert.ok(component.icon);
+    assert.strictEqual(component.icon.title, this.intl.t('general.iliosUserGuide'));
 
     await setLocale('es');
-
-    assert.dom('[data-test-user-guide-link-icon]').hasText('Ilios Guía de usuario');
+    assert.strictEqual(component.icon.title, this.intl.t('general.iliosUserGuide'));
 
     await setLocale('fr');
-
-    assert.dom('[data-test-user-guide-link-icon]').hasText("Ilios Guide d'utilisation");
+    assert.strictEqual(component.icon.title, this.intl.t('general.iliosUserGuide'));
   });
 });
