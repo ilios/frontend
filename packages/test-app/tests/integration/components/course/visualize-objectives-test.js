@@ -112,8 +112,16 @@ module('Integration | Component | course/visualize-objectives', function (hooks)
     await waitFor('svg .slice');
 
     assert.strictEqual(component.objectivesChart.chart.slices.length, 2);
-    assert.strictEqual(component.objectivesChart.chart.slices[0].text, '77.8%');
-    assert.strictEqual(component.objectivesChart.chart.slices[1].text, '22.2%');
+    assert.strictEqual(component.objectivesChart.chart.slices[0].label, '77.8%');
+    assert.strictEqual(
+      component.objectivesChart.chart.slices[0].description,
+      'course objective 0 - 630 Minutes',
+    );
+    assert.strictEqual(component.objectivesChart.chart.slices[1].label, '22.2%');
+    assert.strictEqual(
+      component.objectivesChart.chart.slices[1].description,
+      'course objective 1 - 180 Minutes',
+    );
     assert.notOk(component.objectivesChart.unlinkedObjectives.isPresent);
     assert.strictEqual(component.objectivesChart.untaughtObjectives.items.length, 1);
     assert.strictEqual(
