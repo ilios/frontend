@@ -6,7 +6,7 @@
 $header-menu-background-color: color.adjust(c.$slightWhite, $lightness: -3%);
 
 .user-guide-link {
-  margin-right: 0.75rem;
+  margin-right: 0.85rem;
 
   a {
     @include cm.ilios-link-button;
