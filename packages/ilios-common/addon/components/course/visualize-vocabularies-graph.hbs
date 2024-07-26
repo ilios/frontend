@@ -4,11 +4,11 @@
   ...attributes
 >
   {{#if this.isLoaded}}
-    {{#if (or @isIcon this.data.length)}}
+    {{#if (or @isIcon this.hasChartData)}}
       <SimpleChart
         @name="horz-bar"
         @isIcon={{@isIcon}}
-        @data={{this.data}}
+        @data={{this.chartData}}
         @onClick={{this.barClick}}
         @hover={{perform this.barHover}}
         @leave={{perform this.barHover}} as |chart|
@@ -20,15 +20,20 @@
         {{/if}}
       </SimpleChart>
     {{/if}}
-    {{#if (and (not @isIcon) @showDataTable)}}
+    {{#if (and (not @isIcon) (not this.hasData))}}
+      <div class="no-data" data-test-no-data>
+        {{t "general.courseVisualizationsNoSessions"}}
+      </div>
+    {{/if}}
+    {{#if (and (not @isIcon) this.hasData @showDataTable)}}
       <div class="data-table" data-test-data-table>
         <table>
           <thead>
           <tr>
             <SortableTh
               @sortedAscending={{this.sortedAscending}}
-              @sortedBy={{or (eq this.sortBy "vocabulary") (eq this.sortBy "vocabulary:desc")}}
-              @onClick={{fn this.setSortBy "vocabulary"}}
+              @sortedBy={{or (eq this.sortBy "vocabularyTitle") (eq this.sortBy "vocabularyTitle:desc")}}
+              @onClick={{fn this.setSortBy "vocabularyTitle"}}
               data-test-vocabulary
             >
               {{t "general.vocabulary"}}
@@ -56,7 +61,11 @@
           <tbody>
           {{#each (sort-by this.sortBy this.tableData) as |row|}}
             <tr>
-              <td data-test-vocabulary>{{row.vocabulary}}</td>
+              <td data-test-vocabulary>
+                <LinkTo @route="course-visualize-vocabulary" @models={{array @course.id row.vocabulary.id}}>
+                  {{row.vocabularyTitle}}
+                </LinkTo>
+              </td>
               <td colspan="2" data-test-sessions>
                 {{#each row.sessions as |session index|}}
                   <LinkTo @route="session" @models={{array @course session}}>
@@ -71,5 +80,7 @@
         </table>
       </div>
     {{/if}}
+  {{else}}
+    <LoadingSpinner />
   {{/if}}
 </div>

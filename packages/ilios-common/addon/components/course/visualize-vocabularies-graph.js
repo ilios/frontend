@@ -16,21 +16,24 @@ export default class CourseVisualizeVocabulariesGraph extends Component {
   @tracked sortBy = 'minutes';
 
   @cached
-  get sessionsData() {
-    return new TrackedAsyncData(this.args.course.sessions);
-  }
-
-  get sessions() {
-    return this.sessionsData.isResolved ? this.sessionsData.value.slice() : [];
-  }
-
-  @cached
   get outputData() {
-    return new TrackedAsyncData(this.getDataObjects(this.sessions));
+    return new TrackedAsyncData(this.getDataObjects(this.args.course));
   }
 
   get data() {
     return this.outputData.isResolved ? this.outputData.value : [];
+  }
+
+  get hasData() {
+    return this.data.length;
+  }
+
+  get chartData() {
+    return this.data.filter((obj) => obj.data);
+  }
+
+  get hasChartData() {
+    return this.chartData.length;
   }
 
   get tableData() {
@@ -38,7 +41,9 @@ export default class CourseVisualizeVocabulariesGraph extends Component {
       const rhett = {};
       rhett.minutes = obj.data;
       rhett.sessions = obj.meta.sessions;
-      rhett.vocabulary = obj.meta.vocabulary.title;
+      rhett.vocabulary = obj.meta.vocabulary;
+      rhett.vocabularyTitle = obj.meta.vocabulary.title;
+      rhett.sessionTitles = mapBy(rhett.sessions, 'title').join(', ');
       rhett.sessionTitles = mapBy(rhett.sessions, 'title').join(', ');
       return rhett;
     });
@@ -60,7 +65,8 @@ export default class CourseVisualizeVocabulariesGraph extends Component {
     this.sortBy = prop;
   }
 
-  async getDataObjects(sessions) {
+  async getDataObjects(course) {
+    const sessions = (await course.sessions).slice();
     if (!sessions.length) {
       return [];
     }

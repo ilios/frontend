@@ -4,11 +4,11 @@
   ...attributes
 >
   {{#if this.isLoaded}}
-    {{#if (or @isIcon this.filteredData.length)}}
+    {{#if (or @isIcon this.hasChartData)}}
       <SimpleChart
         @name="horz-bar"
         @isIcon={{@isIcon}}
-        @data={{this.filteredData}}
+        @data={{this.filteredChartData}}
         @onClick={{this.barClick}}
         @hover={{perform this.barHover}}
         @leave={{perform this.barHover}} as |chart|
@@ -20,15 +20,20 @@
         {{/if}}
       </SimpleChart>
     {{/if}}
-    {{#if (and (not @isIcon) @showDataTable)}}
+    {{#if (and (not @isIcon) (not this.hasData))}}
+      <div class="no-data" data-test-no-data>
+        {{t "general.courseVisualizationsNoSessions"}}
+      </div>
+    {{/if}}
+    {{#if (and (not @isIcon) this.hasData @showDataTable)}}
       <div class="data-table" data-test-data-table>
         <table>
           <thead>
           <tr>
             <SortableTh
               @sortedAscending={{this.sortedAscending}}
-              @sortedBy={{or (eq this.sortBy "sessionType") (eq this.sortBy "sessionType:desc")}}
-              @onClick={{fn this.setSortBy "sessionType"}}
+              @sortedBy={{or (eq this.sortBy "sessionTypeTitle") (eq this.sortBy "sessionTypeTitle:desc")}}
+              @onClick={{fn this.setSortBy "sessionTypeTitle"}}
               data-test-session-type
             >
               {{t "general.sessionType"}}
@@ -56,7 +61,11 @@
           <tbody>
           {{#each (sort-by this.sortBy this.tableData) as |row|}}
             <tr>
-              <td data-test-session-type>{{row.sessionType}}</td>
+              <td data-test-session-type>
+                <LinkTo @route="course-visualize-session-type" @models={{array @course.id row.sessionType.id}}>
+                  {{row.sessionTypeTitle}}
+                </LinkTo>
+              </td>
               <td colspan="2" data-test-sessions>
                 {{#each row.sessions as |session index|}}
                   <LinkTo @route="session" @models={{array @course session}}>
@@ -71,5 +80,7 @@
         </table>
       </div>
     {{/if}}
+  {{else}}
+    <LoadingSpinner />
   {{/if}}
 </div>

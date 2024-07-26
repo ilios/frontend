@@ -10,6 +10,9 @@ const definition = {
     }),
     labels: collection('.bars text'),
   },
+  noData: {
+    scope: '[data-test-no-data]',
+  },
   dataTable: {
     scope: '[data-test-data-table]',
     header: {
@@ -37,9 +40,6 @@ const definition = {
       },
       minutes: text('[data-test-minutes]'),
     }),
-  },
-  noData: {
-    scope: '[data-test-no-data]',
   },
 };
 

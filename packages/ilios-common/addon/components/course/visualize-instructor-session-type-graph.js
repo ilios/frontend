@@ -16,25 +16,24 @@ export default class CourseVisualizeInstructorSessionTypeGraph extends Component
   @tracked sortBy = 'minutes';
 
   @cached
-  get sessionsData() {
-    return new TrackedAsyncData(this.args.course.sessions);
-  }
-
-  get sessions() {
-    return this.sessionsData.isResolved ? this.sessionsData.value.slice() : [];
-  }
-
-  @cached
   get outputData() {
-    return new TrackedAsyncData(this.getData(this.sessions));
-  }
-
-  get isLoaded() {
-    return this.outputData.isResolved;
+    return new TrackedAsyncData(this.getData(this.args.course, this.args.user));
   }
 
   get data() {
     return this.outputData.isResolved ? this.outputData.value : [];
+  }
+
+  get hasData() {
+    return this.data.length;
+  }
+
+  get chartData() {
+    return this.data.filter((obj) => obj.data);
+  }
+
+  get hasChartData() {
+    return this.chartData.length;
   }
 
   get tableData() {
@@ -46,6 +45,10 @@ export default class CourseVisualizeInstructorSessionTypeGraph extends Component
       rhett.sessionTitles = mapBy(rhett.sessions, 'title').join(', ');
       return rhett;
     });
+  }
+
+  get isLoaded() {
+    return this.outputData.isResolved;
   }
 
   get sortedAscending() {
@@ -60,14 +63,15 @@ export default class CourseVisualizeInstructorSessionTypeGraph extends Component
     this.sortBy = prop;
   }
 
-  async getData(sessions) {
+  async getData(course, user) {
+    const sessions = (await course.sessions).slice();
     if (!sessions.length) {
       return [];
     }
 
     const sessionsWithUser = await filter(sessions, async (session) => {
       const allInstructors = await session.getAllOfferingInstructors();
-      return mapBy(allInstructors, 'id').includes(this.args.user.id);
+      return mapBy(allInstructors, 'id').includes(user.id);
     });
 
     const sessionsWithSessionType = await map(sessionsWithUser.slice(), async (session) => {
@@ -88,7 +92,6 @@ export default class CourseVisualizeInstructorSessionTypeGraph extends Component
     });
 
     return dataMap
-      .filter((obj) => obj.minutes > 0)
       .reduce((set, obj) => {
         const id = obj.sessionType.id;
         let existing = findById(set, id);

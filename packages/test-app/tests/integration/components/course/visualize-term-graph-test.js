@@ -12,24 +12,34 @@ module('Integration | Component | course/visualize-term-graph', function (hooks)
   hooks.beforeEach(async function () {
     const vocabulary = this.server.create('vocabulary');
     const term = this.server.create('term', { vocabulary });
-    const course = this.server.create('course');
+    const linkedCourseWithTime = this.server.create('course');
+    const linkedCourseWithoutTime = this.server.create('course');
     const sessionType1 = this.server.create('session-type', {
       title: 'Standalone',
     });
     const sessionType2 = this.server.create('session-type', {
       title: 'Campaign',
     });
+    const sessionType3 = this.server.create('session-type', {
+      title: 'Prelude',
+    });
     const session1 = this.server.create('session', {
       title: 'Berkeley Investigations',
-      course,
+      course: linkedCourseWithTime,
       terms: [term],
       sessionType: sessionType1,
     });
     const session2 = this.server.create('session', {
       title: 'The San Leandro Horror',
-      course,
+      course: linkedCourseWithTime,
       terms: [term],
       sessionType: sessionType2,
+    });
+    this.server.create('session', {
+      title: 'Two Slices of Pizza',
+      course: linkedCourseWithoutTime,
+      terms: [term],
+      sessionType: sessionType3,
     });
     this.server.create('offering', {
       session: session1,
@@ -46,19 +56,26 @@ module('Integration | Component | course/visualize-term-graph', function (hooks)
       startDate: new Date('2019-12-05T18:00:00'),
       endDate: new Date('2019-12-05T21:00:00'),
     });
-
-    this.course = await this.owner.lookup('service:store').findRecord('course', course.id);
+    this.emptyCourse = await this.owner
+      .lookup('service:store')
+      .findRecord('course', this.server.create('course').id);
+    this.linkedCourseWithTime = await this.owner
+      .lookup('service:store')
+      .findRecord('course', linkedCourseWithTime.id);
+    this.linkedCourseWithoutTime = await this.owner
+      .lookup('service:store')
+      .findRecord('course', linkedCourseWithoutTime.id);
     this.term = await this.owner.lookup('service:store').findRecord('term', term.id);
   });
 
   test('it renders', async function (assert) {
-    this.set('course', this.course);
+    this.set('course', this.linkedCourseWithTime);
     this.set('term', this.term);
-
     await render(
       hbs`<Course::VisualizeTermGraph @course={{this.course}} @term={{this.term}} @isIcon={{false}} @showDataTable={{true}} />
 `,
     );
+    assert.notOk(component.noData.isVisible);
     //let the chart animations finish
     await waitFor('.loaded');
     await waitFor('svg .bars');
@@ -88,7 +105,7 @@ module('Integration | Component | course/visualize-term-graph', function (hooks)
   });
 
   test('sort data-table by session type', async function (assert) {
-    this.set('course', this.course);
+    this.set('course', this.linkedCourseWithTime);
     await render(
       hbs`<Course::VisualizeTermGraph @course={{this.course}} @term={{this.term}} @isIcon={{false}} @showDataTable={{true}} />
 `,
@@ -107,7 +124,7 @@ module('Integration | Component | course/visualize-term-graph', function (hooks)
   });
 
   test('sort data-table by sessions', async function (assert) {
-    this.set('course', this.course);
+    this.set('course', this.linkedCourseWithTime);
     await render(
       hbs`<Course::VisualizeTermGraph @course={{this.course}} @term={{this.term}} @isIcon={{false}} @showDataTable={{true}} />
 `,
@@ -126,7 +143,7 @@ module('Integration | Component | course/visualize-term-graph', function (hooks)
   });
 
   test('sort data-table by minutes', async function (assert) {
-    this.set('course', this.course);
+    this.set('course', this.linkedCourseWithTime);
     await render(
       hbs`<Course::VisualizeTermGraph @course={{this.course}} @term={{this.term}} @isIcon={{false}} @showDataTable={{true}} />
 `,
@@ -139,5 +156,37 @@ module('Integration | Component | course/visualize-term-graph', function (hooks)
     await component.dataTable.header.minutes.toggle();
     assert.strictEqual(component.dataTable.rows[0].minutes, '180');
     assert.strictEqual(component.dataTable.rows[1].minutes, '630');
+  });
+
+  test('no data', async function (assert) {
+    this.set('course', this.emptyCourse);
+    this.set('term', this.term);
+    await render(
+      hbs`<Course::VisualizeTermGraph @course={{this.course}} @term={{this.term}} @isIcon={{false}} @showDataTable={{true}} />
+`,
+    );
+    assert.notOk(component.chart.isVisible);
+    assert.notOk(component.dataTable.isVisible);
+    assert.strictEqual(
+      component.noData.text,
+      'The vocabulary term term 0 has not been linked to any sessions in this course.',
+    );
+  });
+
+  test('only zero time data', async function (assert) {
+    this.set('course', this.linkedCourseWithoutTime);
+    this.set('term', this.term);
+    await render(
+      hbs`<Course::VisualizeTermGraph @course={{this.course}} @term={{this.term}} @isIcon={{false}} @showDataTable={{true}} />
+`,
+    );
+    assert.notOk(component.chart.isVisible);
+    assert.notOk(component.noData.isVisible);
+    assert.strictEqual(component.dataTable.rows.length, 1);
+    assert.strictEqual(component.dataTable.rows[0].sessionType, 'Prelude');
+    assert.strictEqual(component.dataTable.rows[0].sessions.links.length, 1);
+    assert.strictEqual(component.dataTable.rows[0].sessions.links[0].text, 'Two Slices of Pizza');
+    assert.strictEqual(component.dataTable.rows[0].sessions.links[0].url, '/courses/2/sessions/3');
+    assert.strictEqual(component.dataTable.rows[0].minutes, '0');
   });
 });

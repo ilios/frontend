@@ -29,6 +29,14 @@ export default class CourseVisualizeSessionTypeGraph extends Component {
     return this.data.length;
   }
 
+  get chartData() {
+    return this.data.filter((obj) => obj.data);
+  }
+
+  get hasChartData() {
+    return this.chartData.length;
+  }
+
   get isLoaded() {
     return this.outputData.isResolved;
   }
@@ -110,7 +118,6 @@ export default class CourseVisualizeSessionTypeGraph extends Component {
         existing.meta.sessions.push(session);
         return set;
       }, [])
-      .filter((obj) => obj.data > 0)
       .map((obj) => {
         obj.description = `${obj.meta.vocabulary.title} - ${obj.meta.term.title} - ${obj.data} ${this.intl.t('general.minutes')}`;
         delete obj.id;

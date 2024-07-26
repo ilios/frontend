@@ -10,6 +10,9 @@ const definition = {
     }),
     labels: collection('.bars text'),
   },
+  noData: {
+    scope: '[data-test-no-data]',
+  },
   dataTable: {
     scope: '[data-test-data-table]',
     header: {
@@ -28,7 +31,10 @@ const definition = {
       },
     },
     rows: collection('tbody tr', {
-      term: text('[data-test-term]'),
+      term: {
+        scope: '[data-test-term]',
+        url: attribute('href', 'a'),
+      },
       sessions: {
         scope: '[data-test-sessions]',
         links: collection('a', {

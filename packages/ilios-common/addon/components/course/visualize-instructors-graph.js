@@ -18,17 +18,8 @@ export default class CourseVisualizeInstructorsGraph extends Component {
   @tracked sortBy = 'minutes';
 
   @cached
-  get sessionsData() {
-    return new TrackedAsyncData(this.args.course.sessions);
-  }
-
-  get sessions() {
-    return this.sessionsData.isResolved ? this.sessionsData.value.slice() : [];
-  }
-
-  @cached
   get outputData() {
-    return new TrackedAsyncData(this.getData(this.sessions));
+    return new TrackedAsyncData(this.getData(this.args.course));
   }
 
   get isLoaded() {
@@ -39,12 +30,33 @@ export default class CourseVisualizeInstructorsGraph extends Component {
     return this.outputData.isResolved ? this.outputData.value : [];
   }
 
+  get hasData() {
+    return this.data.length;
+  }
+
+  get chartData() {
+    return this.data.filter((obj) => obj.data);
+  }
+
+  get filteredChartData() {
+    return this.filterData(this.chartData);
+  }
+
+  get hasChartData() {
+    return this.filteredChartData.length;
+  }
+
+  get filteredData() {
+    return this.filterData(this.data);
+  }
+
   get tableData() {
     return this.filteredData.map((obj) => {
       const rhett = {};
       rhett.minutes = obj.data;
       rhett.sessions = obj.meta.sessions;
-      rhett.instructor = obj.meta.user.fullName;
+      rhett.instructor = obj.meta.user;
+      rhett.instructorName = obj.meta.user.fullName;
       rhett.sessionTitles = mapBy(rhett.sessions, 'title').join(', ');
       return rhett;
     });
@@ -62,16 +74,17 @@ export default class CourseVisualizeInstructorsGraph extends Component {
     this.sortBy = prop;
   }
 
-  get filteredData() {
+  filterData(data) {
     const q = cleanQuery(this.args.filter);
     if (q) {
       const exp = new RegExp(q, 'gi');
-      return this.data.filter(({ label }) => label.match(exp));
+      return data.filter(({ label }) => label.match(exp));
     }
-    return this.data;
+    return data;
   }
 
-  async getData(sessions) {
+  async getData(course) {
+    const sessions = (await course.sessions).slice();
     const sessionsWithInstructors = await map(sessions, async (session) => {
       const instructors = await session.getAllInstructors();
       const instructorsWithInstructionalTime = await map(instructors, async (instructor) => {
@@ -109,7 +122,6 @@ export default class CourseVisualizeInstructorsGraph extends Component {
         });
         return set;
       }, [])
-      .filter((obj) => obj.data > 0)
       .map((obj) => {
         obj.description = `${obj.meta.user.fullName} - ${obj.data} ${this.intl.t('general.minutes')}`;
         delete obj.id;
