@@ -87,6 +87,7 @@ general:
   courseTitle: Titulo de Curso
   courseTitlePlaceholder: Entre en un título para este curso
   courseVisualizations: Visualizaciones de Cursos
+  courseVisualizationsSessionTypeGraphNoData: "No se han vinculado términos de vocabulario a ninguna sesión {sessionType} en este curso."
   currentlySearchingPrompt: buscando...
   dashboardNavigation: Panel de navegación
   date: Fecha
