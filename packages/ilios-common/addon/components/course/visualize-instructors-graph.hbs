@@ -4,11 +4,11 @@
   ...attributes
 >
   {{#if this.isLoaded}}
-    {{#if (or @isIcon this.data.length)}}
+    {{#if (or @isIcon this.hasChartData)}}
       <SimpleChart
         @name="horz-bar"
         @isIcon={{@isIcon}}
-        @data={{this.filteredData}}
+        @data={{this.filteredChartData}}
         @onClick={{this.barClick}}
         @hover={{perform this.barHover}}
         @leave={{perform this.barHover}} as |chart|
@@ -20,15 +20,20 @@
         {{/if}}
       </SimpleChart>
     {{/if}}
-    {{#if (and (not @isIcon) @showDataTable)}}
+    {{#if (and (not @isIcon) (not this.hasData))}}
+      <div class="no-data" data-test-no-data>
+        {{t "general.courseVisualizationsInstructorsGraphNoData"}}
+      </div>
+    {{/if}}
+    {{#if (and (not @isIcon) this.hasData @showDataTable)}}
         <div class="data-table" data-test-data-table>
           <table>
             <thead>
             <tr>
               <SortableTh
                 @sortedAscending={{this.sortedAscending}}
-                @sortedBy={{or (eq this.sortBy "instructor") (eq this.sortBy "instructor:desc")}}
-                @onClick={{fn this.setSortBy "instructor"}}
+                @sortedBy={{or (eq this.sortBy "instructorName") (eq this.sortBy "instructorName:desc")}}
+                @onClick={{fn this.setSortBy "instructorName"}}
                 data-test-instructor
               >
                 {{t "general.instructor"}}
@@ -56,7 +61,11 @@
             <tbody>
             {{#each (sort-by this.sortBy this.tableData) as |row|}}
               <tr>
-                <td data-test-instructor>{{row.instructor}}</td>
+                <td data-test-instructor>
+                  <LinkTo @route="course-visualize-instructor" @models={{array @course.id row.instructor.id}}>
+                    {{row.instructorName}}
+                  </LinkTo>
+                </td>
                 <td colspan="2" data-test-sessions>
                   {{#each row.sessions as |session index|}}
                     <LinkTo @route="session" @models={{array @course session}}>
@@ -71,5 +80,7 @@
           </table>
         </div>
     {{/if}}
+  {{else}}
+    <LoadingSpinner />
   {{/if}}
 </div>

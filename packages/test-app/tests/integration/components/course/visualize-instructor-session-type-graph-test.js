@@ -19,16 +19,25 @@ module(
       const sessionType2 = this.server.create('session-type', {
         title: 'Campaign',
       });
-      const course = this.server.create('course');
+      const sessionType3 = this.server.create('session-type', {
+        title: 'Prelude',
+      });
+      const linkedCourseWithTime = this.server.create('course');
+      const linkedCourseWithoutTime = this.server.create('course');
       const session1 = this.server.create('session', {
         title: 'Berkeley Investigations',
-        course,
+        course: linkedCourseWithTime,
         sessionType: sessionType1,
       });
       const session2 = this.server.create('session', {
         title: 'The San Leandro Horror',
-        course,
+        course: linkedCourseWithTime,
         sessionType: sessionType2,
+      });
+      const session3 = this.server.create('session', {
+        title: 'Two Slices of Pizza',
+        course: linkedCourseWithoutTime,
+        sessionType: sessionType3,
       });
       this.server.create('offering', {
         session: session1,
@@ -48,32 +57,69 @@ module(
         endDate: new Date('2019-12-05T21:00:00'),
         instructors: [instructor],
       });
-
-      this.course = await this.owner.lookup('service:store').findRecord('course', course.id);
+      this.server.create('offering', {
+        session: session3,
+        startDate: new Date('2019-12-05T18:00:00'),
+        endDate: new Date('2019-12-05T18:00:00'),
+        instructors: [instructor],
+      });
+      this.emptyCourse = await this.owner
+        .lookup('service:store')
+        .findRecord('course', this.server.create('course').id);
+      this.linkedCourseWithTime = await this.owner
+        .lookup('service:store')
+        .findRecord('course', linkedCourseWithTime.id);
+      this.linkedCourseWithoutTime = await this.owner
+        .lookup('service:store')
+        .findRecord('course', linkedCourseWithoutTime.id);
       this.instructor = await this.owner.lookup('service:store').findRecord('user', instructor.id);
     });
 
     test('it renders', async function (assert) {
-      this.set('course', this.course);
+      this.set('course', this.linkedCourseWithTime);
       this.set('instructor', this.instructor);
       await render(
         hbs`<Course::VisualizeInstructorSessionTypeGraph @course={{this.course}} @user={{this.instructor}} @isIcon={{false}} @showDataTable={{true}}/>
 `,
       );
+      assert.notOk(component.noData.isVisible);
       //let the chart animations finish
       await waitFor('.loaded');
       await waitFor('svg .bars');
-
       assert.strictEqual(component.chart.bars.length, 2);
       assert.strictEqual(component.chart.bars[0].description, 'Campaign - 180 Minutes');
       assert.strictEqual(component.chart.bars[1].description, 'Standalone - 630 Minutes');
       assert.strictEqual(component.chart.labels.length, 2);
       assert.strictEqual(component.chart.labels[0].text, 'Campaign');
       assert.strictEqual(component.chart.labels[1].text, 'Standalone');
+      assert.strictEqual(component.dataTable.rows.length, 2);
+      assert.strictEqual(component.dataTable.rows[0].sessionType, 'Campaign');
+      assert.strictEqual(component.dataTable.rows[0].sessions.links.length, 1);
+      assert.strictEqual(
+        component.dataTable.rows[0].sessions.links[0].text,
+        'The San Leandro Horror',
+      );
+      assert.strictEqual(
+        component.dataTable.rows[0].sessions.links[0].url,
+        '/courses/1/sessions/2',
+      );
+      assert.strictEqual(component.dataTable.rows[0].minutes, '180');
+      assert.strictEqual(component.dataTable.rows[1].sessionType, 'Standalone');
+      assert.strictEqual(component.dataTable.rows[1].sessions.links.length, 1);
+      assert.strictEqual(
+        component.dataTable.rows[1].sessions.links[0].text,
+        'Berkeley Investigations',
+      );
+      assert.strictEqual(
+        component.dataTable.rows[1].sessions.links[0].url,
+        '/courses/1/sessions/1',
+      );
+      assert.strictEqual(component.dataTable.rows[1].minutes, '630');
     });
 
     test('sort data-table by session type', async function (assert) {
-      this.set('course', this.course);
+      this.set('course', this.linkedCourseWithTime);
+      this.set('instructor', this.instructor);
       await render(
         hbs`<Course::VisualizeInstructorSessionTypeGraph @course={{this.course}} @user={{this.instructor}} @isIcon={{false}} @showDataTable={{true}}/>
 `,
@@ -92,7 +138,8 @@ module(
     });
 
     test('sort data-table by sessions', async function (assert) {
-      this.set('course', this.course);
+      this.set('course', this.linkedCourseWithTime);
+      this.set('instructor', this.instructor);
       await render(
         hbs`<Course::VisualizeInstructorSessionTypeGraph @course={{this.course}} @user={{this.instructor}} @isIcon={{false}} @showDataTable={{true}}/>
 `,
@@ -111,7 +158,8 @@ module(
     });
 
     test('sort data-table by minutes', async function (assert) {
-      this.set('course', this.course);
+      this.set('course', this.linkedCourseWithTime);
+      this.set('instructor', this.instructor);
       await render(
         hbs`<Course::VisualizeInstructorSessionTypeGraph @course={{this.course}} @user={{this.instructor}} @isIcon={{false}} @showDataTable={{true}}/>
 `,
@@ -124,6 +172,41 @@ module(
       await component.dataTable.header.minutes.toggle();
       assert.strictEqual(component.dataTable.rows[0].minutes, '180');
       assert.strictEqual(component.dataTable.rows[1].minutes, '630');
+    });
+
+    test('no data', async function (assert) {
+      this.set('course', this.emptyCourse);
+      this.set('instructor', this.instructor);
+      await render(
+        hbs`<Course::VisualizeInstructorSessionTypeGraph @course={{this.course}} @user={{this.instructor}} @isIcon={{false}} @showDataTable={{true}}/>
+`,
+      );
+      assert.notOk(component.chart.isVisible);
+      assert.notOk(component.dataTable.isVisible);
+      assert.strictEqual(
+        component.noData.text,
+        '0 guy M. Mc0son is not instructing any sessions in this this course.',
+      );
+    });
+
+    test('only zero time data', async function (assert) {
+      this.set('course', this.linkedCourseWithoutTime);
+      this.set('instructor', this.instructor);
+      await render(
+        hbs`<Course::VisualizeInstructorSessionTypeGraph @course={{this.course}} @user={{this.instructor}} @isIcon={{false}} @showDataTable={{true}}/>
+`,
+      );
+      assert.notOk(component.chart.isVisible);
+      assert.notOk(component.noData.isVisible);
+      assert.strictEqual(component.dataTable.rows.length, 1);
+      assert.strictEqual(component.dataTable.rows[0].sessionType, 'Prelude');
+      assert.strictEqual(component.dataTable.rows[0].sessions.links.length, 1);
+      assert.strictEqual(component.dataTable.rows[0].sessions.links[0].text, 'Two Slices of Pizza');
+      assert.strictEqual(
+        component.dataTable.rows[0].sessions.links[0].url,
+        '/courses/2/sessions/3',
+      );
+      assert.strictEqual(component.dataTable.rows[0].minutes, '0');
     });
   },
 );

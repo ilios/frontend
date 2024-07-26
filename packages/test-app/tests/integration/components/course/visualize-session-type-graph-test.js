@@ -20,19 +20,36 @@ module('Integration | Component | course/visualize-session-type-graph', function
       vocabulary: vocabulary2,
       title: 'Campaign',
     });
+    const term3 = this.server.create('term', {
+      vocabulary: vocabulary2,
+      title: 'Prelude',
+    });
     const sessionType = this.server.create('session-type');
-    const course = this.server.create('course');
+    const linkedCourseWithTime = this.server.create('course');
+    const linkedCourseWithoutTime = this.server.create('course');
     const session1 = this.server.create('session', {
       title: 'Berkeley Investigations',
-      course,
+      course: linkedCourseWithTime,
       terms: [term1],
-      sessionType: sessionType,
+      sessionType,
     });
     const session2 = this.server.create('session', {
       title: 'The San Leandro Horror',
-      course,
+      course: linkedCourseWithTime,
       terms: [term2],
-      sessionType: sessionType,
+      sessionType,
+    });
+    this.server.create('session', {
+      title: 'Two Slices of Pizza',
+      course: linkedCourseWithTime,
+      terms: [term3],
+      sessionType,
+    });
+    this.server.create('session', {
+      title: 'Peanut Butter Stout',
+      course: linkedCourseWithoutTime,
+      terms: [term2],
+      sessionType,
     });
     this.server.create('offering', {
       session: session1,
@@ -49,15 +66,22 @@ module('Integration | Component | course/visualize-session-type-graph', function
       startDate: new Date('2019-12-05T18:00:00'),
       endDate: new Date('2019-12-05T21:00:00'),
     });
-
-    this.course = await this.owner.lookup('service:store').findRecord('course', course.id);
+    this.emptyCourse = await this.owner
+      .lookup('service:store')
+      .findRecord('course', this.server.create('course').id);
+    this.linkedCourseWithoutTime = await this.owner
+      .lookup('service:store')
+      .findRecord('course', linkedCourseWithoutTime.id);
+    this.linkedCourseWithTime = await this.owner
+      .lookup('service:store')
+      .findRecord('course', linkedCourseWithTime.id);
     this.sessionType = await this.owner
       .lookup('service:store')
       .findRecord('session-type', sessionType.id);
   });
 
   test('it renders', async function (assert) {
-    this.set('course', this.course);
+    this.set('course', this.linkedCourseWithTime);
     this.set('type', this.sessionType);
     await render(
       hbs`<Course::VisualizeSessionTypeGraph @course={{this.course}} @sessionType={{this.type}} @isIcon={{false}} @showDataTable={{true}} />
@@ -79,7 +103,7 @@ module('Integration | Component | course/visualize-session-type-graph', function
     assert.strictEqual(component.chart.labels.length, 2);
     assert.strictEqual(component.chart.labels[0].text, 'Vocabulary 1 - Standalone');
     assert.strictEqual(component.chart.labels[1].text, 'Vocabulary 2 - Campaign');
-    assert.strictEqual(component.dataTable.rows.length, 2);
+    assert.strictEqual(component.dataTable.rows.length, 3);
     assert.strictEqual(component.dataTable.rows[0].vocabularyTerm, 'Vocabulary 1 - Standalone');
     assert.strictEqual(component.dataTable.rows[0].sessions.links.length, 1);
     assert.strictEqual(
@@ -96,10 +120,14 @@ module('Integration | Component | course/visualize-session-type-graph', function
     );
     assert.strictEqual(component.dataTable.rows[1].sessions.links[0].url, '/courses/1/sessions/2');
     assert.strictEqual(component.dataTable.rows[1].minutes, '180');
+    assert.strictEqual(component.dataTable.rows[2].sessions.links.length, 1);
+    assert.strictEqual(component.dataTable.rows[2].sessions.links[0].text, 'Two Slices of Pizza');
+    assert.strictEqual(component.dataTable.rows[2].sessions.links[0].url, '/courses/1/sessions/3');
+    assert.strictEqual(component.dataTable.rows[2].minutes, '0');
   });
 
   test('sort data-table by vocabulary term', async function (assert) {
-    this.set('course', this.course);
+    this.set('course', this.linkedCourseWithTime);
     this.set('type', this.sessionType);
     await render(
       hbs`<Course::VisualizeSessionTypeGraph @course={{this.course}} @sessionType={{this.type}} @isIcon={{false}} @showDataTable={{true}} />
@@ -107,16 +135,19 @@ module('Integration | Component | course/visualize-session-type-graph', function
     );
     assert.strictEqual(component.dataTable.rows[0].vocabularyTerm, 'Vocabulary 1 - Standalone');
     assert.strictEqual(component.dataTable.rows[1].vocabularyTerm, 'Vocabulary 2 - Campaign');
+    assert.strictEqual(component.dataTable.rows[2].vocabularyTerm, 'Vocabulary 2 - Prelude');
     await component.dataTable.header.vocabularyTerm.toggle();
-    assert.strictEqual(component.dataTable.rows[0].vocabularyTerm, 'Vocabulary 2 - Campaign');
-    assert.strictEqual(component.dataTable.rows[1].vocabularyTerm, 'Vocabulary 1 - Standalone');
+    assert.strictEqual(component.dataTable.rows[0].vocabularyTerm, 'Vocabulary 2 - Prelude');
+    assert.strictEqual(component.dataTable.rows[1].vocabularyTerm, 'Vocabulary 2 - Campaign');
+    assert.strictEqual(component.dataTable.rows[2].vocabularyTerm, 'Vocabulary 1 - Standalone');
     await component.dataTable.header.vocabularyTerm.toggle();
     assert.strictEqual(component.dataTable.rows[0].vocabularyTerm, 'Vocabulary 1 - Standalone');
     assert.strictEqual(component.dataTable.rows[1].vocabularyTerm, 'Vocabulary 2 - Campaign');
+    assert.strictEqual(component.dataTable.rows[2].vocabularyTerm, 'Vocabulary 2 - Prelude');
   });
 
   test('sort data-table by sessions', async function (assert) {
-    this.set('course', this.course);
+    this.set('course', this.linkedCourseWithTime);
     this.set('type', this.sessionType);
     await render(
       hbs`<Course::VisualizeSessionTypeGraph @course={{this.course}} @sessionType={{this.type}} @isIcon={{false}} @showDataTable={{true}} />
@@ -124,22 +155,27 @@ module('Integration | Component | course/visualize-session-type-graph', function
     );
     assert.strictEqual(component.dataTable.rows[0].sessions.text, 'Berkeley Investigations');
     assert.strictEqual(component.dataTable.rows[1].sessions.text, 'The San Leandro Horror');
+    assert.strictEqual(component.dataTable.rows[2].sessions.text, 'Two Slices of Pizza');
     await component.dataTable.header.sessions.toggle();
     assert.strictEqual(component.dataTable.rows[0].sessions.text, 'Berkeley Investigations');
     assert.strictEqual(component.dataTable.rows[1].sessions.text, 'The San Leandro Horror');
+    assert.strictEqual(component.dataTable.rows[2].sessions.text, 'Two Slices of Pizza');
     await component.dataTable.header.sessions.toggle();
-    assert.strictEqual(component.dataTable.rows[0].sessions.text, 'The San Leandro Horror');
-    assert.strictEqual(component.dataTable.rows[1].sessions.text, 'Berkeley Investigations');
+    assert.strictEqual(component.dataTable.rows[0].sessions.text, 'Two Slices of Pizza');
+    assert.strictEqual(component.dataTable.rows[1].sessions.text, 'The San Leandro Horror');
+    assert.strictEqual(component.dataTable.rows[2].sessions.text, 'Berkeley Investigations');
     await component.dataTable.header.sessions.toggle();
     assert.strictEqual(component.dataTable.rows[0].sessions.text, 'Berkeley Investigations');
     assert.strictEqual(component.dataTable.rows[1].sessions.text, 'The San Leandro Horror');
+    assert.strictEqual(component.dataTable.rows[2].sessions.text, 'Two Slices of Pizza');
     await component.dataTable.header.sessions.toggle();
-    assert.strictEqual(component.dataTable.rows[0].sessions.text, 'The San Leandro Horror');
-    assert.strictEqual(component.dataTable.rows[1].sessions.text, 'Berkeley Investigations');
+    assert.strictEqual(component.dataTable.rows[0].sessions.text, 'Two Slices of Pizza');
+    assert.strictEqual(component.dataTable.rows[1].sessions.text, 'The San Leandro Horror');
+    assert.strictEqual(component.dataTable.rows[2].sessions.text, 'Berkeley Investigations');
   });
 
   test('sort data-table by minutes', async function (assert) {
-    this.set('course', this.course);
+    this.set('course', this.linkedCourseWithTime);
     this.set('type', this.sessionType);
     await render(
       hbs`<Course::VisualizeSessionTypeGraph @course={{this.course}} @sessionType={{this.type}} @isIcon={{false}} @showDataTable={{true}} />
@@ -147,19 +183,19 @@ module('Integration | Component | course/visualize-session-type-graph', function
     );
     assert.strictEqual(component.dataTable.rows[0].minutes, '630');
     assert.strictEqual(component.dataTable.rows[1].minutes, '180');
+    assert.strictEqual(component.dataTable.rows[2].minutes, '0');
     await component.dataTable.header.minutes.toggle();
-    assert.strictEqual(component.dataTable.rows[0].minutes, '180');
-    assert.strictEqual(component.dataTable.rows[1].minutes, '630');
+    assert.strictEqual(component.dataTable.rows[0].minutes, '0');
+    assert.strictEqual(component.dataTable.rows[1].minutes, '180');
+    assert.strictEqual(component.dataTable.rows[2].minutes, '630');
     await component.dataTable.header.minutes.toggle();
     assert.strictEqual(component.dataTable.rows[0].minutes, '630');
     assert.strictEqual(component.dataTable.rows[1].minutes, '180');
+    assert.strictEqual(component.dataTable.rows[2].minutes, '0');
   });
 
   test('no data', async function (assert) {
-    const emptyCourse = await this.owner
-      .lookup('service:store')
-      .findRecord('course', this.server.create('course').id);
-    this.set('course', emptyCourse);
+    this.set('course', this.emptyCourse);
     this.set('type', this.sessionType);
     await render(
       hbs`<Course::VisualizeSessionTypeGraph @course={{this.course}} @sessionType={{this.type}} @isIcon={{false}} @showDataTable={{true}} />
@@ -171,5 +207,22 @@ module('Integration | Component | course/visualize-session-type-graph', function
       component.noData.text,
       'No vocabulary terms have been linked to any session type 0 sessions in this course.',
     );
+  });
+
+  test('only zero time data', async function (assert) {
+    this.set('course', this.linkedCourseWithoutTime);
+    this.set('type', this.sessionType);
+    await render(
+      hbs`<Course::VisualizeSessionTypeGraph @course={{this.course}} @sessionType={{this.type}} @isIcon={{false}} @showDataTable={{true}} />
+`,
+    );
+    assert.notOk(component.chart.isVisible);
+    assert.notOk(component.noData.isVisible);
+    assert.strictEqual(component.dataTable.rows.length, 1);
+    assert.strictEqual(component.dataTable.rows[0].vocabularyTerm, 'Vocabulary 2 - Campaign');
+    assert.strictEqual(component.dataTable.rows[0].sessions.links.length, 1);
+    assert.strictEqual(component.dataTable.rows[0].sessions.links[0].text, 'Peanut Butter Stout');
+    assert.strictEqual(component.dataTable.rows[0].sessions.links[0].url, '/courses/2/sessions/4');
+    assert.strictEqual(component.dataTable.rows[0].minutes, '0');
   });
 });

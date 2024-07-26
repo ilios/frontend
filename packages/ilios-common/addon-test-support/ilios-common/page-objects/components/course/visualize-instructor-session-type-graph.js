@@ -10,6 +10,9 @@ const definition = {
     }),
     labels: collection('.bars text'),
   },
+  noData: {
+    scope: '[data-test-no-data]',
+  },
   dataTable: {
     scope: '[data-test-data-table]',
     header: {

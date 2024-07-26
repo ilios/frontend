@@ -4,11 +4,11 @@
   ...attributes
 >
   {{#if this.isLoaded}}
-    {{#if (or @isIcon this.hasData)}}
+    {{#if (or @isIcon this.hasChartData)}}
       <SimpleChart
         @name="horz-bar"
         @isIcon={{@isIcon}}
-        @data={{this.data}}
+        @data={{this.chartData}}
         @hover={{perform this.barHover}}
         @leave={{perform this.barHover}} as |chart|
       >

@@ -17,25 +17,24 @@ export default class CourseVisualizeInstructorTermGraph extends Component {
   @tracked sortBy = 'minutes';
 
   @cached
-  get sessionsData() {
-    return new TrackedAsyncData(this.args.course.sessions);
-  }
-
-  get sessions() {
-    return this.sessionsData.isResolved ? this.sessionsData.value.slice() : [];
-  }
-
-  @cached
   get outputData() {
-    return new TrackedAsyncData(this.getData(this.sessions));
+    return new TrackedAsyncData(this.getData(this.args.course, this.args.user));
   }
 
   get data() {
     return this.outputData.isResolved ? this.outputData.value : [];
   }
 
-  get isLoaded() {
-    return this.outputData.isResolved;
+  get hasData() {
+    return this.data.length;
+  }
+
+  get chartData() {
+    return this.data.filter((obj) => obj.data);
+  }
+
+  get hasChartData() {
+    return this.chartData.length;
   }
 
   get tableData() {
@@ -47,6 +46,10 @@ export default class CourseVisualizeInstructorTermGraph extends Component {
       rhett.sessionTitles = mapBy(rhett.sessions, 'title').join(', ');
       return rhett;
     });
+  }
+
+  get isLoaded() {
+    return this.outputData.isResolved;
   }
 
   get sortedAscending() {
@@ -61,14 +64,14 @@ export default class CourseVisualizeInstructorTermGraph extends Component {
     this.sortBy = prop;
   }
 
-  async getData(sessions) {
+  async getData(course, user) {
+    const sessions = (await course.sessions).slice();
     if (!sessions.length) {
       return [];
     }
-
     const sessionsWithUser = await filter(sessions, async (session) => {
       const allInstructors = await session.getAllOfferingInstructors();
-      return mapBy(allInstructors, 'id').includes(this.args.user.id);
+      return mapBy(allInstructors, 'id').includes(user.id);
     });
 
     const sessionsWithTerms = await map(sessionsWithUser, async (session) => {
@@ -128,9 +131,6 @@ export default class CourseVisualizeInstructorTermGraph extends Component {
         (obj.description = `${obj.meta.vocabulary.title} - ${obj.meta.term.title} - ${obj.data} ${this.intl.t('general.minutes')}`),
           delete obj.id;
         return obj;
-      })
-      .filter((obj) => {
-        return obj.data > 0;
       })
       .sort((first, second) => {
         return (

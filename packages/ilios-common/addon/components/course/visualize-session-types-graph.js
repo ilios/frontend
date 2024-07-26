@@ -17,17 +17,8 @@ export default class CourseVisualizeSessionTypesGraph extends Component {
   @tracked sortBy = 'minutes';
 
   @cached
-  get sessionsData() {
-    return new TrackedAsyncData(this.args.course.sessions);
-  }
-
-  get sessions() {
-    return this.sessionsData.isResolved ? this.sessionsData.value.slice() : [];
-  }
-
-  @cached
   get outputData() {
-    return new TrackedAsyncData(this.getData(this.sessions));
+    return new TrackedAsyncData(this.getData(this.args.course));
   }
 
   get isLoaded() {
@@ -38,13 +29,24 @@ export default class CourseVisualizeSessionTypesGraph extends Component {
     return this.outputData.isResolved ? this.outputData.value : [];
   }
 
+  get hasData() {
+    return this.data.length;
+  }
+
+  get chartData() {
+    return this.data.filter((obj) => obj.data);
+  }
+
+  get filteredChartData() {
+    return this.filterData(this.chartData);
+  }
+
+  get hasChartData() {
+    return this.filteredChartData.length;
+  }
+
   get filteredData() {
-    const q = cleanQuery(this.args.filter);
-    if (q) {
-      const exp = new RegExp(q, 'gi');
-      return this.data.filter(({ label }) => label.match(exp));
-    }
-    return this.data;
+    return this.filterData(this.data);
   }
 
   get tableData() {
@@ -52,7 +54,8 @@ export default class CourseVisualizeSessionTypesGraph extends Component {
       const rhett = {};
       rhett.minutes = obj.data;
       rhett.sessions = obj.meta.sessions;
-      rhett.sessionType = obj.meta.sessionType.title;
+      rhett.sessionType = obj.meta.sessionType;
+      rhett.sessionTypeTitle = obj.meta.sessionType.title;
       rhett.sessionTitles = mapBy(rhett.sessions, 'title').join(', ');
       return rhett;
     });
@@ -70,7 +73,18 @@ export default class CourseVisualizeSessionTypesGraph extends Component {
     this.sortBy = prop;
   }
 
-  async getData(sessions) {
+  filterData(data) {
+    const q = cleanQuery(this.args.filter);
+    if (q) {
+      const exp = new RegExp(q, 'gi');
+      return data.filter(({ label }) => label.match(exp));
+    }
+    return data;
+  }
+
+  async getData(course) {
+    const sessions = (await course.sessions).slice();
+
     if (!sessions.length) {
       return [];
     }
@@ -107,7 +121,6 @@ export default class CourseVisualizeSessionTypesGraph extends Component {
 
         return set;
       }, [])
-      .filter((obj) => obj.data > 0)
       .map((obj) => {
         obj.description = `${obj.meta.sessionType.title} - ${obj.data} ${this.intl.t('general.minutes')}`;
         delete obj.id;

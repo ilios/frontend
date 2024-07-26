@@ -16,25 +16,24 @@ export default class CourseVisualizeTermGraph extends Component {
   @tracked sortBy = 'minutes';
 
   @cached
-  get sessionsData() {
-    return new TrackedAsyncData(this.args.course.sessions);
-  }
-
-  get sessions() {
-    return this.sessionsData.isResolved ? this.sessionsData.value : [];
-  }
-
-  get termSessionIds() {
-    return this.args.term.hasMany('sessions').ids();
-  }
-
-  @cached
   get outputData() {
-    return new TrackedAsyncData(this.getDataObjects(this.sessions, this.termSessionIds));
+    return new TrackedAsyncData(this.getDataObjects(this.args.course, this.args.term));
   }
 
   get data() {
     return this.outputData.isResolved ? this.outputData.value : [];
+  }
+
+  get hasData() {
+    return this.data.length;
+  }
+
+  get chartData() {
+    return this.data.filter((obj) => obj.data);
+  }
+
+  get hasChartData() {
+    return this.chartData.length;
   }
 
   get isLoaded() {
@@ -64,8 +63,10 @@ export default class CourseVisualizeTermGraph extends Component {
     this.sortBy = prop;
   }
 
-  async getDataObjects(sessions, termIds) {
-    const filteredSessions = sessions.filter((session) => termIds.includes(session.id));
+  async getDataObjects(course, term) {
+    const sessions = (await course.sessions).slice();
+    const sessionIds = term.hasMany('sessions').ids();
+    const filteredSessions = sessions.filter((session) => sessionIds.includes(session.id));
     const sessionTypes = await Promise.all(filteredSessions.map((s) => s.sessionType));
     const sessionTypeData = await map(filteredSessions, async (session) => {
       const hours = await session.getTotalSumDuration();
@@ -97,7 +98,6 @@ export default class CourseVisualizeTermGraph extends Component {
         existing.meta.sessions.push(session);
         return set;
       }, [])
-      .filter((obj) => obj.data)
       .map((obj) => {
         obj.description = `${obj.meta.sessionType.title} - ${obj.data} ${this.intl.t('general.minutes')}`;
         delete obj.id;

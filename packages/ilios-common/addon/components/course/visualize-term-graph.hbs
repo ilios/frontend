@@ -4,11 +4,11 @@
   ...attributes
 >
   {{#if this.isLoaded}}
-    {{#if (or @isIcon this.data.length)}}
+    {{#if (or @isIcon this.hasChartData)}}
       <SimpleChart
         @name="horz-bar"
         @isIcon={{@isIcon}}
-        @data={{this.data}}
+        @data={{this.chartData}}
         @hover={{perform this.barHover}}
         @leave={{perform this.barHover}} as |chart|
       >
@@ -19,7 +19,12 @@
         {{/if}}
       </SimpleChart>
     {{/if}}
-    {{#if (and (not @isIcon) @showDataTable)}}
+    {{#if (and (not @isIcon) (not this.hasData))}}
+      <div class="no-data" data-test-no-data>
+        {{t "general.courseVisualizationsTermGraphNoData" term=@term.title}}
+      </div>
+    {{/if}}
+    {{#if (and (not @isIcon) this.hasData @showDataTable)}}
       <div class="data-table" data-test-data-table>
         <table>
           <thead>
@@ -70,5 +75,7 @@
         </table>
       </div>
     {{/if}}
+  {{else}}
+    <LoadingSpinner />
   {{/if}}
 </div>
