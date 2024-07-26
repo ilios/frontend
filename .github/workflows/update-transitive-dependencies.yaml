@@ -8,7 +8,8 @@ on:
 jobs:
   update:
     runs-on: macos-latest
-
+    permissions:
+      pull-requests: write
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4
@@ -37,10 +38,13 @@ jobs:
             [1]: https://github.com/peter-evans/create-pull-request
           branch: auto-update-dependencies
           labels: dependencies,run percy tests
+      - name: Approve Pull Request
+        if: steps.cpr.outputs.pull-request-operation == 'created'
+        run: gh pr review --approve -b "Auto Approved" ${{ steps.cpr.outputs.pull-request-number }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Enable Pull Request Automerge
         if: steps.cpr.outputs.pull-request-operation == 'created'
-        run: |
-          gh pr review --approve -b "Auto Approved by Zorgbort" ${{ steps.cpr.outputs.pull-request-number }}
-          gh pr merge --merge --auto ${{ steps.cpr.outputs.pull-request-number }}
+        run: gh pr merge --merge --auto ${{ steps.cpr.outputs.pull-request-number }}
         env:
           GH_TOKEN: ${{ secrets.ZORGBORT_TOKEN }}
