@@ -61,9 +61,6 @@ module.exports = async function (defaults) {
       enabled: false,
     },
   };
-  if (!process.env.BUILD_WITH_EMBROIDER) {
-    config.babel.plugins.push(require('ember-auto-import/babel-plugin'));
-  }
 
   const app = new EmberApp(defaults, config);
 
@@ -72,61 +69,57 @@ module.exports = async function (defaults) {
     ___legacy_support: true,
   });
 
-  if (process.env.BUILD_WITH_EMBROIDER) {
-    return require('@embroider/compat').compatBuild(app, Webpack, {
-      staticAddonTestSupportTrees: true,
-      staticAddonTrees: true,
-      staticHelpers: true,
-      staticComponents: true,
-      splitAtRoutes: [
-        //temporarily disabled route splitting for https://github.com/ilios/ilios/issues/4508
-        /admin[a-z-]*/,
-        'assign-students',
-        /course[a-z-]*/,
-        /curriculum[a-z-]*/,
-        'dashboard.activities',
-        'dashboard.calendar',
-        'dashboard.materials',
-        // 'error', don't ever split the error route, it will break error handling
-        'events',
-        'four-oh-four',
-        /instructor[a-z-]*/,
-        /learner[a-z-]*/,
-        'login',
-        'logout',
-        'myprofile',
-        'pending-user-updates',
-        'print-course',
-        /program[a-z-]*/,
-        /report[a-z-]*/,
-        /school[a-z-]*/,
-        'search',
-        /session[a-z-]*/,
-        /user[a-z-]*/,
-        'verification-preview',
-        'weeklyevents',
-      ],
-      packagerOptions: {
-        webpackConfig: {
-          plugins: [new RetryChunkLoadPlugin() /*, new BundleAnalyzerPlugin()*/],
-          optimization: {
-            minimize: true,
-            minimizer: [
-              new TerserPlugin({
-                terserOptions: {
-                  compress: {
-                    passes: 6, // slow, but worth it
-                    inline: 5,
-                    reduce_funcs: false,
-                  },
+  return require('@embroider/compat').compatBuild(app, Webpack, {
+    staticAddonTestSupportTrees: true,
+    staticAddonTrees: true,
+    staticHelpers: true,
+    staticComponents: true,
+    splitAtRoutes: [
+      //temporarily disabled route splitting for https://github.com/ilios/ilios/issues/4508
+      /admin[a-z-]*/,
+      'assign-students',
+      /course[a-z-]*/,
+      /curriculum[a-z-]*/,
+      'dashboard.activities',
+      'dashboard.calendar',
+      'dashboard.materials',
+      // 'error', don't ever split the error route, it will break error handling
+      'events',
+      'four-oh-four',
+      /instructor[a-z-]*/,
+      /learner[a-z-]*/,
+      'login',
+      'logout',
+      'myprofile',
+      'pending-user-updates',
+      'print-course',
+      /program[a-z-]*/,
+      /report[a-z-]*/,
+      /school[a-z-]*/,
+      'search',
+      /session[a-z-]*/,
+      /user[a-z-]*/,
+      'verification-preview',
+      'weeklyevents',
+    ],
+    packagerOptions: {
+      webpackConfig: {
+        plugins: [new RetryChunkLoadPlugin() /*, new BundleAnalyzerPlugin()*/],
+        optimization: {
+          minimize: true,
+          minimizer: [
+            new TerserPlugin({
+              terserOptions: {
+                compress: {
+                  passes: 6, // slow, but worth it
+                  inline: 5,
+                  reduce_funcs: false,
                 },
-              }),
-            ],
-          },
+              },
+            }),
+          ],
         },
       },
-    });
-  } else {
-    return app.toTree();
-  }
+    },
+  });
 };

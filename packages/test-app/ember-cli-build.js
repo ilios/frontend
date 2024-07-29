@@ -30,14 +30,10 @@ module.exports = async function (defaults) {
   setConfig(app, __dirname, {
     ___legacy_support: true,
   });
-  if (process.env.BUILD_WITH_EMBROIDER) {
-    return require('@embroider/compat').compatBuild(app, Webpack, {
-      staticAddonTestSupportTrees: true,
-      staticAddonTrees: true,
-      staticHelpers: true,
-      staticComponents: true,
-    });
-  } else {
-    return app.toTree();
-  }
+  return require('@embroider/compat').compatBuild(app, Webpack, {
+    staticAddonTestSupportTrees: true,
+    staticAddonTrees: true,
+    staticHelpers: true,
+    staticComponents: true,
+  });
 };
