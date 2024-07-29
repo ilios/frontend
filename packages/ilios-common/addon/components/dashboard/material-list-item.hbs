@@ -68,11 +68,14 @@
       {{/if}}
     {{/if}}
   </td>
-  <td colspan="6" data-test-session-title>
+  <td class="hide-from-small-screen" colspan="6" data-test-session-title>
     {{@lm.sessionTitle}}
   </td>
-  <td colspan="6" data-test-course-title>
+  <td class="hide-from-small-screen" colspan="6" data-test-course-title>
     {{@lm.courseTitle}}
+  </td>
+  <td class="hide-from-large-screen" colspan="6" data-test-course-session-title>
+    {{@lm.courseTitle}} :: {{@lm.sessionTitle}}
   </td>
   <td class="hide-from-small-screen" colspan="3" data-test-instructors>
     <TruncateText
