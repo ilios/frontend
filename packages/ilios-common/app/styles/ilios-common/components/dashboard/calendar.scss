@@ -50,6 +50,10 @@
           border-bottom: 0.5px solid c.$davysGrey;
           padding: 0.25em;
           width: 100%;
+
+          @include m.for-phone-only {
+            height: 7vh;
+          }
         }
 
         h6 {
