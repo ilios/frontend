@@ -75,7 +75,6 @@ module.exports = async function (defaults) {
     staticHelpers: true,
     staticComponents: true,
     splitAtRoutes: [
-      //temporarily disabled route splitting for https://github.com/ilios/ilios/issues/4508
       /admin[a-z-]*/,
       'assign-students',
       /course[a-z-]*/,
