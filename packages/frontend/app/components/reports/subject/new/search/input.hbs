@@ -28,7 +28,7 @@
         <li>{{yield result}}</li>
       {{/each}}
     </ol>
-  {{else if @searchReturned}}
+  {{else if (and @searchReturned (not @searchIsRunning))}}
     <ul class="results" data-test-results>
       <li>
         {{t "general.noSearchResultsPrompt"}}
