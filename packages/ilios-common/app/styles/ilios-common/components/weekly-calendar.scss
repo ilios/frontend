@@ -6,7 +6,7 @@
 .weekly-calendar {
   $hour-height: 0.3rem;
   $minute-rows: math.div(24 * 60, 5); //every 5 minutes
-  --hour-space: 2.9rem;
+  --hour-space: 3.3rem;
 
   @include m.for-tablet-and-up {
     --hour-space: 5.5rem;
