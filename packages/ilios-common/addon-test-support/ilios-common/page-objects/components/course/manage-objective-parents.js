@@ -21,7 +21,7 @@ const definition = {
     value: value(),
   }),
   competencies: collection('.parent-picker [data-test-competency]', {
-    title: text('.competency-title'),
+    title: text('[data-test-competency-title]'),
     selected: hasClass('selected'),
     notSelected: notHasClass('selected'),
     objectives: collection('ul li', {

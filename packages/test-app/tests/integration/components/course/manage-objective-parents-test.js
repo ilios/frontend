@@ -117,6 +117,58 @@ module('Integration | Component | course/manage-objective-parents', function (ho
     assert.ok(true, 'no a11y errors found!');
   });
 
+  test('parent domain title is shown next to competency title, if applicable', async function (assert) {
+    const programYearObjective1 = this.server.create('program-year-objective');
+    const programYearObjective2 = this.server.create('program-year-objective');
+    const domain = this.server.create('competency', { title: 'domain' });
+    const domainModel = await this.owner
+      .lookup('service:store')
+      .findRecord('competency', domain.id);
+    const cohortObjectives = [
+      {
+        title: 'cohort 0',
+        id: 1,
+        competencies: [
+          {
+            title: 'competency 0',
+            parent: domainModel,
+            objectives: [
+              {
+                id: programYearObjective1.id,
+                title: programYearObjective1.title,
+                active: programYearObjective1.active,
+              },
+            ],
+          },
+          {
+            title: 'competency 1',
+            objectives: [
+              {
+                id: programYearObjective2.id,
+                title: programYearObjective2.title,
+                active: programYearObjective2.active,
+              },
+            ],
+          },
+        ],
+      },
+    ];
+    this.set('cohortObjectives', cohortObjectives);
+    await render(hbs`<Course::ManageObjectiveParents
+      @cohortObjectives={{this.cohortObjectives}}
+      @selected={{(array)}}
+      @add={{(noop)}}
+      @remove={{(noop)}}
+      @removeFromCohort={{(noop)}}
+    />
+`);
+    assert.strictEqual(component.competencies.length, 2);
+    assert.strictEqual(component.competencies[0].title, 'competency 0 (domain)');
+    assert.strictEqual(component.competencies[1].title, 'competency 1');
+    await a11yAudit(this.element);
+    assert.ok(true, 'no a11y errors found!');
+  });
+
   test('inactive parents are hidden unless they are selected', async function (assert) {
     const activeProgramYearObjective = this.server.create('program-year-objective');
     const inactiveProgramYearObjective = this.server.create('program-year-objective', {

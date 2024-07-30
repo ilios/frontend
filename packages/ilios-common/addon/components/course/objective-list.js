@@ -81,10 +81,12 @@ export default class CourseObjectiveListComponent extends Component {
       const objectiveObjects = await map(objectives.slice(), async (objective) => {
         let competencyId = 0;
         let competencyTitle = intl.t('general.noAssociatedCompetency');
+        let competencyParent = null;
         const competency = await objective.competency;
         if (competency) {
           competencyId = competency.id;
           competencyTitle = competency.title;
+          competencyParent = await competency.parent;
         }
         return {
           id: objective.id,
@@ -92,6 +94,7 @@ export default class CourseObjectiveListComponent extends Component {
           active: objective.active,
           competencyId,
           competencyTitle,
+          competencyParent,
           cohortId: cohort.id,
         };
       });
@@ -102,6 +105,7 @@ export default class CourseObjectiveListComponent extends Component {
             id: obj.competencyId,
             title: obj.competencyTitle,
             objectives: [],
+            parent: obj.competencyParent,
           };
           set.push(existing);
         }
