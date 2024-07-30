@@ -26,6 +26,6 @@
     "npm": "use pnpm"
   },
   "devDependencies": {
-    "husky": "^9.1.2"
+    "husky": "^9.1.4"
   }
 }
