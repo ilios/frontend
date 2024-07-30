@@ -2,6 +2,18 @@
 @use "../mixins" as m;
 
 .ilios-calendar {
+  .ilios-calendar-pickers {
+    align-items: center;
+    clear: both;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    @include m.for-tablet-and-up {
+      flex-direction: row;
+    }
+  }
+
   .ilios-calendar-calendar {
     clear: both;
     position: relative;
