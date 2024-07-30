@@ -193,6 +193,9 @@
             />
           </div>
         {{else}}
+          {{#if this.showLearnerGroupCalendar}}
+            <LearnerGroup::Calendar @learnerGroup={{@learnerGroup}} />
+          {{/if}}
           <div class="learner-group-overview-content">
             <LearnerGroup::Members
               @learnerGroupId={{this.learnerGroupId}}
@@ -201,9 +204,6 @@
               @users={{this.usersToPassToManager}}
             />
           </div>
-        {{/if}}
-        {{#if this.showLearnerGroupCalendar}}
-          <LearnerGroup::Calendar @learnerGroup={{@learnerGroup}} />
         {{/if}}
         <section class="subgroups" data-test-subgroups>
           <div class="header">
