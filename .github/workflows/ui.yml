@@ -143,3 +143,4 @@ jobs:
         run: pnpm --filter ${{ matrix.workspace }} exec percy exec -- ember test
         env:
           PERCY_TOKEN: ${{ vars.PERCY_TOKEN }}
+          PERCY_PULL_REQUEST: ${{ github.event.pull_request.number }}
