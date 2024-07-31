@@ -928,6 +928,9 @@ importers:
       '@embroider/macros':
         specifier: ^1.16.3
         version: 1.16.5
+      '@embroider/router':
+        specifier: ^2.1.8
+        version: 2.1.8(@embroider/core@3.4.14)
       '@embroider/webpack':
         specifier: ~4.0.3
         version: 4.0.4(@embroider/core@3.4.14)(webpack@5.93.0)
@@ -1150,6 +1153,9 @@ importers:
       '@embroider/macros':
         specifier: ^1.16.3
         version: 1.16.5
+      '@embroider/router':
+        specifier: ^2.1.8
+        version: 2.1.8(@embroider/core@3.4.14)
       '@embroider/test-setup':
         specifier: ^4.0.0
         version: 4.0.0(@embroider/compat@3.6.0(@embroider/core@3.4.14))(@embroider/core@3.4.14)(@embroider/webpack@4.0.4(@embroider/core@3.4.14)(webpack@5.93.0))

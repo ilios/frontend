@@ -37,6 +37,7 @@
     "@ember/test-helpers": "^3.3.0",
     "@embroider/compat": "^3.6.0",
     "@embroider/macros": "^1.16.3",
+    "@embroider/router": "^2.1.8",
     "@embroider/test-setup": "^4.0.0",
     "@embroider/webpack": "~4.0.3",
     "@glimmer/component": "^1.1.2",
