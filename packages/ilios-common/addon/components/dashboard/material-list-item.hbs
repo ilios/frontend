@@ -75,7 +75,11 @@
     {{@lm.courseTitle}}
   </td>
   <td class="hide-from-large-screen" colspan="6" data-test-course-session-title>
-    {{@lm.courseTitle}} :: {{@lm.sessionTitle}}
+    {{#if (is-empty @lm.sessionTitle)}}
+      {{@lm.courseTitle}}
+    {{else}}
+      {{@lm.courseTitle}} :: {{@lm.sessionTitle}}
+    {{/if}}
   </td>
   <td class="hide-from-small-screen" colspan="3" data-test-instructors>
     <TruncateText
