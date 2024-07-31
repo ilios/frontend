@@ -8,18 +8,14 @@
   margin-bottom: 1rem;
   min-height: 5rem;
   overflow-x: scroll;
-  padding: 0.25rem;
+  padding: 1rem;
   position: relative;
-
-  h2 {
-    @include m.ilios-heading;
-    margin-bottom: 1rem;
-  }
 
   .calendar-time-picker {
     @include m.ilios-list-reset;
 
     margin-bottom: 0.5rem;
+    text-align: center;
 
     li {
       display: inline;
