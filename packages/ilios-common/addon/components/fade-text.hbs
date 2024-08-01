@@ -1,0 +1,39 @@
+{{#if (has-block)}}
+  {{yield this.displayText this.expand this.collapse this.isFaded this.expanded}}
+{{else}}
+  <span class="fade-text" data-test-fade-text ...attributes>
+    <div class="display-text-wrapper">
+      <div class="display-text">
+        {{this.displayText}}
+      </div>
+    </div>
+    {{#if this.isFaded}}
+      <div class="fade-text-control">
+        <EllipsisIcon />
+        <button
+          class="expand-buttons"
+          aria-label={{t "general.expand"}}
+          title={{t "general.expand"}}
+          type="button"
+          data-test-expand
+          {{on "click" this.expand}}
+        >
+          <FaIcon @icon="angles-down" />
+        </button>
+      </div>
+    {{else}}
+      {{#if this.expanded}}
+        <button
+          class="expand-buttons"
+          aria-label={{t "general.collapse"}}
+          title={{t "general.collapse"}}
+          type="button"
+          data-test-collapse
+          {{on "click" this.collapse}}
+        >
+          <FaIcon @icon="angles-up" />
+        </button>
+      {{/if}}
+    {{/if}}
+  </span>
+{{/if}}
