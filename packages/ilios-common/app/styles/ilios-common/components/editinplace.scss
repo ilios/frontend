@@ -5,7 +5,7 @@
   .viewer {
     .display-text-wrapper {
       &.is-faded {
-        max-height: 120px;
+        max-height: 200px;
         overflow: hidden;
         position: relative;
       }
@@ -13,9 +13,9 @@
 
     .fade-text-control {
       background-image: linear-gradient(to bottom, transparent, c.$lightBlue);
-      bottom: 60px;
-      height: 50px;
-      padding-top: 60px;
+      bottom: 140px;
+      height: 130px;
+      padding-top: 140px;
       position: relative;
     }
   }
