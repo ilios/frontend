@@ -1,7 +1,7 @@
 {{#let (unique-id) as |templateId|}}
   <li
     hidden={{this.isHidden}}
-    class="learnergroup-tree {{if this.hasChildren "strong" "em"}}"
+    class="learnergroup-tree strong"
     data-test-learnergroup-tree
     data-test-learnergroup-tree-root={{if this.isRoot "true" "false"}}
   >
