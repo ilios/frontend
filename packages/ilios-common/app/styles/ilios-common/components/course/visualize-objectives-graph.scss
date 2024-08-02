@@ -1,10 +1,7 @@
-@use "../../colors" as c;
 @use "../../mixins" as m;
 
 .course-visualize-objectives-graph {
-  display: inline-block;
-  height: 1rem;
-  width: 1rem;
+  @include m.graph-with-data-table;
 
   .with-hours {
     p {
@@ -36,49 +33,7 @@
     }
   }
 
-  .data-table {
-    grid-column: -1/1;
-    padding-top: 2rem;
-
-    table {
-      @include m.ilios-table-structure;
-      @include m.ilios-table-colors;
-      @include m.ilios-removable-table;
-      @include m.ilios-zebra-table;
-
-      thead {
-        background-color: c.$culturedGrey;
-      }
-
-      td {
-        vertical-align: top;
-      }
-
-      .objective {
-        p {
-          margin: 0;
-        }
-      }
-    }
-  }
-
   &.not-icon {
-    display: grid;
     grid-template-columns: 2fr 1fr;
-    height: auto;
-    width: auto;
-
-    .simple-chart {
-      height: 80vh;
-    }
-
-    .simple-chart-tooltip {
-      .title {
-        p {
-          margin: 0;
-          padding: 0;
-        }
-      }
-    }
   }
 }

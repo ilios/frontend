@@ -30,10 +30,9 @@
   }
 
   .visualizations {
-    display: flex;
-    flex-wrap: wrap;
-    justify-items: center;
-    margin-top: 2rem;
-    padding-left: 0.8rem;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: 10px;
+    margin-left: 0.8rem;
   }
 }

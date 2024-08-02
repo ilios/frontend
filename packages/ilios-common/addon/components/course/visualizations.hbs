@@ -44,7 +44,6 @@
           <Course::VisualizeSessionTypesGraph
             @isIcon={{true}}
             @course={{@model}}
-            @chartType="donut"
           />
         </LinkTo>
       </div>
@@ -53,7 +52,7 @@
           <h4>
             {{t "general.vocabularies"}}
           </h4>
-          <Course::VisualizeVocabulariesGraph @isIcon={{true}} @course={{@model}} />
+          <Course::VisualizeVocabulariesGraph @isIcon={{true}} @course={{@model}} @showDataTable={{false}} />
         </LinkTo>
       </div>
       <div data-test-visualize-instructors>
@@ -64,7 +63,6 @@
           <Course::VisualizeInstructorsGraph
             @isIcon={{true}}
             @course={{@model}}
-            @chartType="donut"
           />
         </LinkTo>
       </div>

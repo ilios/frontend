@@ -1,10 +1,8 @@
 import Component from '@glimmer/component';
 import { service } from '@ember/service';
 import { map, filter } from 'rsvp';
-import { use } from 'ember-could-get-used-to-this';
 import { TrackedAsyncData } from 'ember-async-data';
 import { cached } from '@glimmer/tracking';
-import AsyncProcess from 'ilios-common/classes/async-process';
 import { mapBy } from 'ilios-common/utils/array-helpers';
 
 export default class CourseVisualizeInstructorComponent extends Component {
@@ -25,31 +23,28 @@ export default class CourseVisualizeInstructorComponent extends Component {
   }
 
   get sessions() {
-    return this.sessionsData.isResolved ? this.sessionsData.value : null;
+    return this.sessionsData.isResolved ? this.sessionsData.value.slice() : [];
   }
 
-  @use minutes = new AsyncProcess(() => [this.getMinutes.bind(this), this.sessions]);
+  @cached
+  get minutesData() {
+    return new TrackedAsyncData(this.getMinutes(this.sessions));
+  }
+
+  get minutes() {
+    return this.minutesData.isResolved ? this.minutesData.value : [];
+  }
 
   get totalInstructionalTime() {
-    if (!this.minutes) {
-      return 0;
-    }
     return mapBy(this.minutes, 'offeringMinutes').reduce((total, mins) => total + mins, 0);
   }
 
   get totalIlmTime() {
-    if (!this.minutes) {
-      return 0;
-    }
     return mapBy(this.minutes, 'ilmMinutes').reduce((total, mins) => total + mins, 0);
   }
 
   async getMinutes(sessions) {
-    if (!sessions) {
-      return [];
-    }
-
-    const sessionsWithUser = await filter(sessions.slice(), async (session) => {
+    const sessionsWithUser = await filter(sessions, async (session) => {
       const instructors = await session.getAllInstructors();
       return mapBy(instructors, 'id').includes(this.args.user.id);
     });
