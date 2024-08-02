@@ -1,8 +1,6 @@
 {{#let (unique-id) as |templateId|}}
   <div
     class="unassigned-students-summary small-component {{if this.hasUnassignedStudents "alert"}}"
-    {{did-insert (perform this.load) this.schoolId}}
-    {{did-update (perform this.load) this.schoolId}}
     data-test-unassigned-students-summary
   >
     <h3 data-test-title>
@@ -32,7 +30,7 @@
         {{/if}}
       </div>
     </div>
-    {{#if (and this.load.isIdle (is-array this.unassignedStudents))}}
+    {{#if this.isLoaded}}
       <p data-test-summary-text>
         {{t
           "general.unassignedStudentsSummary"

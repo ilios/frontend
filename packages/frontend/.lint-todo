@@ -1,6 +1,4 @@
 add|ember-template-lint|no-at-ember-render-modifiers|5|2|5|2|23cd787c79c34a628dadb6e96dd4004d42eebb79|1721088000000|1723680000000|1726272000000|app/components/new-directory-user.hbs
-add|ember-template-lint|no-at-ember-render-modifiers|4|4|4|4|5d93dc162628c4faaa7bce9ef9bfba305f14ce38|1721088000000|1723680000000|1726272000000|app/components/unassigned-students-summary.hbs
-add|ember-template-lint|no-at-ember-render-modifiers|5|4|5|4|5f7f17419fe451673ab74fb58778311bc01912c0|1721088000000|1723680000000|1726272000000|app/components/unassigned-students-summary.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|5|4|5|4|ddf86727990ead62165fe28c6dff53552a4d49b7|1721088000000|1723680000000|1726272000000|app/components/user-menu.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|28|43|28|43|5c127b0b8124a93b18177d7580bcc47dbb8ebbff|1721088000000|1723680000000|1726272000000|app/components/user-menu.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|4|2|4|2|23cd787c79c34a628dadb6e96dd4004d42eebb79|1721088000000|1723680000000|1726272000000|app/components/user-profile-bio.hbs
