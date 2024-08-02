@@ -83,7 +83,5 @@ add|ember-template-lint|no-at-ember-render-modifiers|5|2|5|2|da607c2bd27a97b79ff
 add|ember-template-lint|no-at-ember-render-modifiers|6|2|6|2|a53cdd3e0f9a1da348e33891999342148844afe4|1720137600000|1722729600000|1725321600000|addon/components/session/objective-list-item.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|3|2|3|2|31149a49c6b7ccbedc584e99d2280cfba9726e71|1720137600000|1722729600000|1725321600000|addon/components/session/objectives.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|4|2|4|2|60333f2ba463ca3d2ba17a04d799c8d66d8b99e2|1720137600000|1722729600000|1725321600000|addon/components/session/objectives.hbs
-add|ember-template-lint|no-at-ember-render-modifiers|3|2|3|2|1fb6f249958ee245e6abc413681c9fe096120cef|1720137600000|1722729600000|1725321600000|addon/components/session/postrequisite-editor.hbs
-add|ember-template-lint|no-at-ember-render-modifiers|4|2|4|2|856162ce473b112534763bb641aae7a4422d8e2e|1720137600000|1722729600000|1725321600000|addon/components/session/postrequisite-editor.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|28|6|28|6|242be4337ef58ba487a9168fe2944bd6919a1397|1720137600000|1722729600000|1725321600000|addon/components/session/publication-menu.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|29|6|29|6|df94e6558ff62dea69f6f656f668f29b56bcc378|1720137600000|1722729600000|1725321600000|addon/components/session/publication-menu.hbs

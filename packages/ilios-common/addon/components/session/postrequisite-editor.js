@@ -1,29 +1,57 @@
 import Component from '@glimmer/component';
-import { tracked } from '@glimmer/tracking';
+import { cached, tracked } from '@glimmer/tracking';
 import { task } from 'ember-concurrency';
 import escapeRegExp from 'ilios-common/utils/escape-reg-exp';
 import { sortBy } from 'ilios-common/utils/array-helpers';
+import { TrackedAsyncData } from 'ember-async-data';
 
 export default class SessionPostrequisiteEditorComponent extends Component {
   @tracked filter = '';
-  @tracked selectedPostrequisite = null;
-  @tracked linkablePostrequisites = [];
+  @tracked userSelectedPostrequisite = false;
 
-  constructor() {
-    super(...arguments);
-    this.args.session.postrequisite.then((postrequisite) => {
-      this.selectedPostrequisite = postrequisite;
-    });
+  @cached
+  get currentPostrequisiteData() {
+    return new TrackedAsyncData(this.args.session.postrequisite);
   }
 
-  setup = task(async () => {
-    const { session } = this.args;
-    const course = await session.course;
-    const sessions = await course.sessions;
-    this.linkablePostrequisites = sortBy(sessions, 'title').filter(
-      (sessionInCourse) => sessionInCourse.id !== session.id,
+  get currentPostrequisite() {
+    return this.currentPostrequisiteData.isResolved ? this.currentPostrequisiteData.value : null;
+  }
+
+  @cached
+  get courseData() {
+    return new TrackedAsyncData(this.args.session.course);
+  }
+
+  get course() {
+    return this.courseData.isResolved ? this.courseData.value : null;
+  }
+
+  @cached
+  get sessionsData() {
+    return new TrackedAsyncData(this.course?.sessions);
+  }
+
+  get sessions() {
+    return this.sessionsData.isResolved ? this.sessionsData.value : [];
+  }
+
+  get selectedPostrequisite() {
+    if (this.userSelectedPostrequisite !== false) {
+      return this.userSelectedPostrequisite;
+    }
+    return this.currentPostrequisite;
+  }
+
+  get linkablePostrequisites() {
+    if (!this.sessions) {
+      return [];
+    }
+    return sortBy(
+      this.sessions.filter((session) => session.id !== this.args.session.id),
+      'title',
     );
-  });
+  }
 
   save = task(async () => {
     this.args.session.set('postrequisite', this.selectedPostrequisite);
