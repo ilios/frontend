@@ -49,6 +49,13 @@ const definition = {
       status: {
         scope: 'th:nth-of-type(1)',
       },
+      title: {
+        scope: 'th:nth-of-type(2)',
+        isSortedAscending: hasClass('fa-arrow-down-a-z', 'svg'),
+        isSortedDescending: hasClass('fa-arrow-down-z-a', 'svg'),
+        isSortedOn: notHasClass('fa-sort', 'svg'),
+        click: clickable('button'),
+      },
       sessionTitle: {
         scope: 'th:nth-of-type(3)',
         isSortedAscending: hasClass('fa-arrow-down-a-z', 'svg'),
@@ -63,18 +70,18 @@ const definition = {
         isSortedOn: notHasClass('fa-sort', 'svg'),
         click: clickable('button'),
       },
-      title: {
-        scope: 'th:nth-of-type(2)',
+      courseSessionTitle: {
+        scope: 'th:nth-of-type(5)',
         isSortedAscending: hasClass('fa-arrow-down-a-z', 'svg'),
         isSortedDescending: hasClass('fa-arrow-down-z-a', 'svg'),
         isSortedOn: notHasClass('fa-sort', 'svg'),
         click: clickable('button'),
       },
       instructor: {
-        scope: 'th:nth-of-type(5)',
+        scope: 'th:nth-of-type(6)',
       },
       firstOfferingDate: {
-        scope: 'th:nth-of-type(6)',
+        scope: 'th:nth-of-type(7)',
         isSortedAscending: hasClass('fa-arrow-down-1-9', 'svg'),
         isSortedDescending: hasClass('fa-arrow-down-9-1', 'svg'),
         isSortedOn: notHasClass('fa-sort', 'svg'),

@@ -190,12 +190,12 @@ module('Acceptance | Dashboard Materials', function (hooks) {
       'Showing 1 - 6 of 6',
     );
     assert.strictEqual(page.materials.table.headers.status.text, 'Status');
+    assert.strictEqual(page.materials.table.headers.title.text, 'Title');
+    assert.notOk(page.materials.table.headers.title.isSortedOn);
     assert.strictEqual(page.materials.table.headers.sessionTitle.text, 'Session');
     assert.notOk(page.materials.table.headers.sessionTitle.isSortedOn);
     assert.strictEqual(page.materials.table.headers.courseTitle.text, 'Course');
     assert.notOk(page.materials.table.headers.courseTitle.isSortedOn);
-    assert.strictEqual(page.materials.table.headers.title.text, 'Title');
-    assert.notOk(page.materials.table.headers.title.isSortedOn);
     assert.strictEqual(page.materials.table.headers.instructor.text, 'Instructor');
     assert.strictEqual(page.materials.table.headers.firstOfferingDate.text, 'Date');
     assert.ok(page.materials.table.headers.firstOfferingDate.isSortedOn);

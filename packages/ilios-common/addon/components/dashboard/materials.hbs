@@ -96,6 +96,7 @@
               {{t "general.title"}}
             </SortableTh>
             <SortableTh
+              class="hide-from-small-screen"
               @colspan={{6}}
               @sortedAscending={{this.sortedAscending}}
               @sortedBy={{or
@@ -107,6 +108,7 @@
               {{t "general.session"}}
             </SortableTh>
             <SortableTh
+              class="hide-from-small-screen"
               @colspan={{6}}
               @sortedAscending={{this.sortedAscending}}
               @sortedBy={{or
@@ -116,6 +118,18 @@
               @onClick={{fn this.sortBy "courseTitle"}}
             >
               {{t "general.course"}}
+            </SortableTh>
+            <SortableTh
+              class="hide-from-large-screen"
+              @colspan={{6}}
+              @sortedAscending={{this.sortedAscending}}
+              @sortedBy={{or
+              (eq @sortBy "courseTitle")
+              (eq @sortBy "courseTitle:desc")
+            }}
+              @onClick={{fn this.sortBy "courseTitle"}}
+            >
+              {{t "general.course"}} :: {{t "general.session"}}
             </SortableTh>
             <th colspan="3" class="hide-from-small-screen">
               {{t "general.instructor"}}

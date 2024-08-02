@@ -76,6 +76,14 @@
     }
   }
 
+  .hide-from-tablet-screen {
+    display: none;
+
+    @include media.for-tablet-and-up {
+      display: table-cell;
+    }
+  }
+
   .hide-from-large-screen {
     display: none;
 
