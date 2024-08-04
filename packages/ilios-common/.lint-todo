@@ -77,7 +77,5 @@ add|ember-template-lint|no-at-ember-render-modifiers|5|2|5|2|a90be151f45cd8ab328
 add|ember-template-lint|no-at-ember-render-modifiers|25|10|25|10|4913c92cf4c945ea3970261ab1c1da9fa97d4bbc|1720137600000|1722729600000|1725321600000|addon/components/dashboard/courses-calendar-filter.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|4|4|4|4|03a0b2a6468e5c6768194c11af7aae4a82913ad9|1720137600000|1722729600000|1725321600000|addon/components/dashboard/filter-tags.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|5|4|5|4|c66686be652666be4c47d41c570b9807967cf118|1720137600000|1722729600000|1725321600000|addon/components/dashboard/filter-tags.hbs
-add|ember-template-lint|no-at-ember-render-modifiers|4|2|4|2|23cd787c79c34a628dadb6e96dd4004d42eebb79|1720137600000|1722729600000|1725321600000|addon/components/session/collapsed-objectives.hbs
-add|ember-template-lint|no-at-ember-render-modifiers|5|2|5|2|7e0d8502a2d39a13198bac7b12683622f4f70fa2|1720137600000|1722729600000|1725321600000|addon/components/session/collapsed-objectives.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|28|6|28|6|242be4337ef58ba487a9168fe2944bd6919a1397|1720137600000|1722729600000|1725321600000|addon/components/session/publication-menu.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|29|6|29|6|df94e6558ff62dea69f6f656f668f29b56bcc378|1720137600000|1722729600000|1725321600000|addon/components/session/publication-menu.hbs
