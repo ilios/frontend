@@ -164,7 +164,7 @@
     color: c.$raisinBlack;
     margin-left: 20px;
 
-    &.strong {
+    &.branch {
       font-weight: bold;
 
       li {
@@ -172,8 +172,8 @@
       }
     }
 
-    &.em {
-      font-style: italic;
+    &.leaf {
+      font-weight: bold;
 
       li {
         font-style: normal;
