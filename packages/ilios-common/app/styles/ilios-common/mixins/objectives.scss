@@ -1,4 +1,5 @@
 @use "../colors" as c;
+@use "font-size";
 @use "ilios-button";
 @use "ilios-form";
 @use "ilios-heading";
@@ -121,6 +122,13 @@
       p {
         margin: 0;
       }
+      button {
+        @include font-size.font-size("base");
+
+        p {
+          @include font-size.font-size("base");
+        }
+      }
     }
 
     &.confirm-removal {
@@ -168,6 +176,10 @@
 
       &:last-of-type {
         margin-bottom: 0;
+      }
+
+      button {
+        @include font-size.font-size("base");
       }
     }
   }
