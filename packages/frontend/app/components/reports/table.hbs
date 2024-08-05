@@ -41,12 +41,6 @@
           </td>
         </tr>
       {{/if}}
-    {{else}}
-      <tr data-test-empty-list>
-        <td>
-          {{if @query (t "general.noResultsFound") (t "general.none")}}
-        </td>
-      </tr>
     {{/each}}
-  </tbody>
+   </tbody>
 </table>

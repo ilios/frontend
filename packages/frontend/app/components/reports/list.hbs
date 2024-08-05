@@ -55,13 +55,15 @@
   {{else}}
     <div class="list">
       {{#if (and this.subjectReportObjects this.subjectReportObjects.isResolved)}}
-        <Reports::Table
-          @decoratedReports={{this.filteredReports}}
-          @query={{@titleFilter}}
-          @sortBy={{@sortReportsBy}}
-          @setSortBy={{@setSortReportsBy}}
-          @remove={{perform this.removeReport}}
-        />
+        {{#if this.reportsCount}}
+          <Reports::Table
+            @decoratedReports={{this.filteredReports}}
+            @query={{@titleFilter}}
+            @sortBy={{@sortReportsBy}}
+            @setSortBy={{@setSortReportsBy}}
+            @remove={{perform this.removeReport}}
+          />
+        {{/if}}
       {{else}}
         <Reports::ListLoading @count={{this.reportsCount}} />
       {{/if}}

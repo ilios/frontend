@@ -49,7 +49,7 @@ module('Integration | Component | reports/list', function (hooks) {
       @titleFilter=""
       @changeTitleFilter={{(noop)}}
     />`);
-    assert.ok(component.table.emptyListRow.isVisible);
+    assert.notOk(component.table.isVisible);
     a11yAudit(this.element);
   });
 
