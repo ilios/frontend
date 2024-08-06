@@ -7,14 +7,19 @@ jobs:
   enforce--ready-label:
     runs-on: ubuntu-latest
     steps:
-    - uses: yogevbd/enforce-label-action@2
+    - uses: mheap/github-action-required-labels@v5
       with:
-        REQUIRED_LABELS_ANY: "ready to merge"
-        REQUIRED_LABELS_ANY_DESCRIPTION: "Add the 'ready to merge' label to merge this PR"
+        mode: exactly
+        count: 1
+        labels: |
+          ready to merge
+        message: "Add the 'ready to merge' label to merge this PR"
   prevent-donotmerge-label:
     runs-on: ubuntu-latest
     steps:
-    - uses: yogevbd/enforce-label-action@2
+    - uses: mheap/github-action-required-labels@v5
       with:
-        BANNED_LABELS: "DO NOT MERGE"
-        BANNED_LABELS_DESCRIPTION: "Remove the 'DO NOT MERGE' label to merge this PR"
+        mode: exactly
+        count: 0
+        labels: "DO NOT MERGE"
+        message: "DO NOT MERGE label is not allowed on this PR"
