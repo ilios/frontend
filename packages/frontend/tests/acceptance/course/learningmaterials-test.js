@@ -697,16 +697,26 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
     await page.details.learningMaterials.manager.addStartDate();
 
     await page.details.learningMaterials.manager.startDate.datePicker.set(newDate.toJSDate());
+    console.log('1');
     await page.details.learningMaterials.manager.startTime.timePicker.hour.select('10');
+    console.log('2');
     await page.details.learningMaterials.manager.startTime.timePicker.minute.select('10');
+    console.log('3');
     await page.details.learningMaterials.manager.startTime.timePicker.ampm.select('AM');
+    console.log('4');
 
     await page.details.learningMaterials.manager.addEndDate();
+    console.log('5');
     await page.details.learningMaterials.manager.endDate.datePicker.set(newDate.toJSDate());
+    console.log('6');
     await page.details.learningMaterials.manager.endTime.timePicker.hour.select('10');
+    console.log('7');
     await page.details.learningMaterials.manager.endTime.timePicker.minute.select('10');
+    console.log('8');
     await page.details.learningMaterials.manager.endTime.timePicker.ampm.select('AM');
+    console.log('9');
     await page.details.learningMaterials.manager.save();
+    console.log('10');
 
     assert.ok(page.details.learningMaterials.manager.hasEndDateValidationError);
     const formattedDate = this.intl.formatDate(newDate.toJSDate(), {

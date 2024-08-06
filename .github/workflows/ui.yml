@@ -17,7 +17,7 @@ jobs:
     name: Browser Stack Test
     runs-on: ubuntu-latest
     timeout-minutes: 120
-    if: contains(github.event.pull_request.labels.*.name, 'ready to merge')
+    # if: contains(github.event.pull_request.labels.*.name, 'ready to merge')
     strategy:
       fail-fast: false
       max-parallel: 1
@@ -26,9 +26,9 @@ jobs:
           - frontend
           - test-app
         launcher:
-          - BS_OSX_Safari
+          # - BS_OSX_Safari
           - BS_IOS_SAFARI
-          - BS_CHROME_ANDROID
+          # - BS_CHROME_ANDROID
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4
