@@ -1,10 +1,11 @@
 import Component from '@glimmer/component';
 import { service } from '@ember/service';
-import { tracked } from '@glimmer/tracking';
+import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { restartableTask } from 'ember-concurrency';
 import { validatable, Length, BeforeDate, AfterDate } from 'ilios-common/decorators/validation';
 import { findById } from 'ilios-common/utils/array-helpers';
+import { TrackedAsyncData } from 'ember-async-data';
 
 @validatable
 export default class CourseOverview extends Component {
@@ -23,19 +24,33 @@ export default class CourseOverview extends Component {
   @tracked levelOptions = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   @tracked clerkshipTypeId;
   @tracked clerkshipTypeOptions;
-  @tracked canCreateCourseInSchool = false;
-  @tracked school = null;
 
-  load = restartableTask(async () => {
-    this.clerkshipTypeOptions = await this.store.peekAll('course-clerkship-type');
-    this.externalId = this.args.course.externalId;
-    this.startDate = this.args.course.startDate;
-    this.endDate = this.args.course.endDate;
-    this.level = this.args.course.level;
-    this.school = await this.args.course.school;
-    this.clerkshipTypeId = this.args.course.belongsTo('clerkshipType').id();
-    this.canCreateCourseInSchool = await this.permissionChecker.canCreateCourse(this.school);
-  });
+  constructor() {
+    super(...arguments);
+    const { course } = this.args;
+    this.clerkshipTypeOptions = this.store.peekAll('course-clerkship-type');
+    this.externalId = course.externalId;
+    this.startDate = course.startDate;
+    this.endDate = course.endDate;
+    this.level = course.level;
+    this.clerkshipTypeId = course.belongsTo('clerkshipType').id();
+  }
+
+  @cached
+  get schoolData() {
+    return new TrackedAsyncData(this.args.course.school);
+  }
+
+  @cached
+  get canCreateCourseInSchoolData() {
+    return new TrackedAsyncData(this.permissionChecker.canCreateCourse(this.schoolData.value));
+  }
+
+  get canCreateCourseInSchool() {
+    return this.schoolData.isResolved && this.canCreateCourseInSchoolData.isResolved
+      ? this.canCreateCourseInSchoolData.value
+      : false;
+  }
 
   get selectedClerkshipType() {
     if (!this.clerkshipTypeId) {

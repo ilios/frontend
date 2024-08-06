@@ -57,8 +57,6 @@ add|ember-template-lint|no-at-ember-render-modifiers|4|2|4|2|23cd787c79c34a628da
 add|ember-template-lint|no-at-ember-render-modifiers|5|2|5|2|84076f8cf85c554eaf0d9fdec26154bae5bceeb2|1722902400000|1730682000000|1754006400000|addon/components/course/objective-list.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|3|2|3|2|23cd787c79c34a628dadb6e96dd4004d42eebb79|1722902400000|1730682000000|1754006400000|addon/components/course/objectives.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|4|2|4|2|84076f8cf85c554eaf0d9fdec26154bae5bceeb2|1722902400000|1730682000000|1754006400000|addon/components/course/objectives.hbs
-add|ember-template-lint|no-at-ember-render-modifiers|4|2|4|2|1009d3843f6aed52099f0e7fbd4eebb52bc176e5|1722902400000|1730682000000|1754006400000|addon/components/course/overview.hbs
-add|ember-template-lint|no-at-ember-render-modifiers|5|2|5|2|84076f8cf85c554eaf0d9fdec26154bae5bceeb2|1722902400000|1730682000000|1754006400000|addon/components/course/overview.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|29|6|29|6|df94e6558ff62dea69f6f656f668f29b56bcc378|1722902400000|1730682000000|1754006400000|addon/components/course/publication-menu.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|28|6|28|6|1ef231a97c0ec761eaafb3e76093515e5523ff27|1725580800000|1728172800000|1730768400000|addon/components/course/publication-menu.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|4|2|4|2|2bbf15957242a9a3c1e26e14e5d022c858199fde|1722902400000|1730682000000|1754006400000|addon/components/course/rollover-date-picker.hbs

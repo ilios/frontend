@@ -1,8 +1,6 @@
 <section
   class="course-overview"
   data-test-course-overview
-  {{did-insert (perform this.load) @course}}
-  {{did-update (perform this.load) @course}}
 >
   {{#let (unique-id) as |templateId|}}
     <div class="course-overview-header">
