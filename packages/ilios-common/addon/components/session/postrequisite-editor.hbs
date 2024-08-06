@@ -1,7 +1,5 @@
 <div
   class="session-postrequisite-editor"
-  {{did-insert (perform this.setup) @session}}
-  {{did-update (perform this.setup) @session}}
   data-test-session-postrequisite-editor
 >
   <div class="info">
@@ -9,7 +7,7 @@
       <strong data-test-label>{{t "general.duePriorTo"}}:</strong>
       {{#if this.selectedPostrequisite}}
         <span data-test-title>{{this.selectedPostrequisite.title}}</span>
-        <button {{on "click" (set this.selectedPostrequisite null)}}
+        <button {{on "click" (set this.userSelectedPostrequisite null)}}
           class="remove"
           type="button"
           data-test-remove
@@ -47,7 +45,7 @@
             <td>
               <button
                 type="button"
-                {{on "click" (set this.selectedPostrequisite (if (eq postrequisite.id this.selectedPostrequisite.id) null postrequisite))}}
+                {{on "click" (set this.userSelectedPostrequisite (if (eq postrequisite.id this.selectedPostrequisite.id) null postrequisite))}}
               >
                 {{#if (eq postrequisite.id this.selectedPostrequisite.id)}}
                   <FaIcon
@@ -64,7 +62,7 @@
             <td colspan="10">
               <button
                 type="button"
-                {{on "click" (set this.selectedPostrequisite (if (eq postrequisite.id this.selectedPostrequisite.id) null postrequisite))}}
+                {{on "click" (set this.userSelectedPostrequisite (if (eq postrequisite.id this.selectedPostrequisite.id) null postrequisite))}}
               >
                 {{postrequisite.title}}
               </button>
@@ -72,7 +70,7 @@
             <td colspan="3">
               <button
                 type="button"
-                {{on "click" (set this.selectedPostrequisite (if (eq postrequisite.id this.selectedPostrequisite.id) null postrequisite))}}
+                {{on "click" (set this.userSelectedPostrequisite (if (eq postrequisite.id this.selectedPostrequisite.id) null postrequisite))}}
               >
                 {{#if postrequisite.firstOfferingDate}}
                   {{#if postrequisite.ilmSession}}

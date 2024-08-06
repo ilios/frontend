@@ -1,8 +1,6 @@
 <section
   class="session-collapsed-objectives"
   data-test-session-collapsed-objectives
-  {{did-insert (perform this.load)}}
-  {{did-update (perform this.load) @session.sessionObjectives}}
 >
   <div>
     <button
@@ -16,7 +14,7 @@
       <FaIcon @icon="caret-right" />
     </button>
   </div>
-  {{#if this.load.lastSuccessful}}
+  {{#if this.objectivesData.isResolved}}
     <div class="content">
       <table>
         <thead>

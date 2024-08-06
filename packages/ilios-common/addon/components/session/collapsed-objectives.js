@@ -1,33 +1,32 @@
 import Component from '@glimmer/component';
-import { tracked } from '@glimmer/tracking';
-import { restartableTask } from 'ember-concurrency';
+import { cached } from '@glimmer/tracking';
+import { TrackedAsyncData } from 'ember-async-data';
 
 export default class SessionCollapsedObjectivesComponent extends Component {
-  @tracked objectivesRelationship;
-
-  load = restartableTask(async () => {
-    this.objectivesRelationship = await this.args.session.sessionObjectives;
-  });
+  @cached
+  get objectivesData() {
+    return new TrackedAsyncData(this.args.session.sessionObjectives);
+  }
 
   get objectives() {
-    return this.objectivesRelationship ? this.objectivesRelationship.slice() : [];
+    return this.objectivesData.isResolved ? this.objectivesData.value : [];
   }
 
   get objectivesWithParents() {
     return this.objectives.filter((objective) => {
-      return objective.courseObjectives.length > 0;
+      return objective.hasMany('courseObjectives').ids().length > 0;
     });
   }
 
   get objectivesWithMesh() {
     return this.objectives.filter((objective) => {
-      return objective.meshDescriptors.length > 0;
+      return objective.hasMany('meshDescriptors').ids().length > 0;
     });
   }
 
   get objectivesWithTerms() {
     return this.objectives.filter((objective) => {
-      return objective.terms.length > 0;
+      return objective.hasMany('terms').ids().length > 0;
     });
   }
 }

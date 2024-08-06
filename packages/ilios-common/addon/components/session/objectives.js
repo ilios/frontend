@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
 import { service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
-import { dropTask, restartableTask } from 'ember-concurrency';
+import { dropTask } from 'ember-concurrency';
 import { action } from '@ember/object';
 import { mapBy } from 'ilios-common/utils/array-helpers';
 
@@ -11,7 +11,6 @@ export default class SessionObjectivesComponent extends Component {
 
   @tracked newObjectiveEditorOn = false;
   @tracked newObjectiveTitle;
-  @tracked objectivesRelationship;
 
   get showCollapsible() {
     return this.hasObjectives && !this.isManaging;
@@ -22,12 +21,8 @@ export default class SessionObjectivesComponent extends Component {
   }
 
   get objectiveCount() {
-    return this.objectivesRelationship ? this.objectivesRelationship.length : 0;
+    return this.args.session.hasMany('sessionObjectives').ids().length;
   }
-
-  load = restartableTask(async () => {
-    this.objectivesRelationship = await this.args.session.sessionObjectives;
-  });
 
   saveNewObjective = dropTask(async (title) => {
     const newSessionObjective = this.store.createRecord('session-objective');

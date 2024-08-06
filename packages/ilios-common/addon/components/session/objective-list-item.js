@@ -19,6 +19,11 @@ export default class SessionObjectiveListItemComponent extends Component {
   @tracked termsBuffer = [];
   @tracked selectedVocabulary;
 
+  constructor() {
+    super(...arguments);
+    this.title = this.args.sessionObjective.title;
+  }
+
   @cached
   get parentsData() {
     return new TrackedAsyncData(this.args.sessionObjective.courseObjectives);
@@ -35,14 +40,6 @@ export default class SessionObjectiveListItemComponent extends Component {
 
   get meshDescriptors() {
     return this.meshDescriptorsData.isResolved ? this.meshDescriptorsData.value : null;
-  }
-
-  @action
-  load(element, [sessionObjective]) {
-    if (!sessionObjective) {
-      return;
-    }
-    this.title = this.args.sessionObjective.title;
   }
 
   get isManaging() {
