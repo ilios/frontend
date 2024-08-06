@@ -280,8 +280,8 @@ importers:
         specifier: ^4.7.0
         version: 4.7.0
       luxon:
-        specifier: ^3.4.4
-        version: 3.4.4
+        specifier: ^3.5.0
+        version: 3.5.0
       miragejs:
         specifier: ^0.1.48
         version: 0.1.48
@@ -478,8 +478,8 @@ importers:
         specifier: '>= 4.2.1'
         version: 4.2.1
       luxon:
-        specifier: '>= 3.0.0'
-        version: 3.4.4
+        specifier: '>= 3.5.0'
+        version: 3.5.0
       mockdate:
         specifier: '>= 3.0.0'
         version: 3.0.5
@@ -1280,8 +1280,8 @@ importers:
         specifier: ^4.7.0
         version: 4.7.0
       luxon:
-        specifier: '>= 3.0.0'
-        version: 3.4.4
+        specifier: '>= 3.5.0'
+        version: 3.5.0
       miragejs:
         specifier: '>= 0.1.45'
         version: 0.1.48
@@ -7282,8 +7282,8 @@ packages:
     resolution: {integrity: sha512-jumlc0BIUrS3qJGgIkWZsyfAM7NCWiBcCDhnd+3NNM5KbBmLTgHVfWBcg6W+rLUsIpzpERPsvwUP7CckAQSOoA==}
     engines: {node: '>=12'}
 
-  luxon@3.4.4:
-    resolution: {integrity: sha512-zobTr7akeGHnv7eBOXcRgMeCP6+uyYsczwmeRCauvpvaAltgNyTbLH/+VaEAPUeWBT+1GuNmz4wC/6jtQzbbVA==}
+  luxon@3.5.0:
+    resolution: {integrity: sha512-rh+Zjr6DNfUYR3bPwJEnuwDdqMbxZW7LOQfUN4B54+Cl+0o5zaU9RJ6bcidfDtC1cWCZXQ+nvX8bf6bAji37QQ==}
     engines: {node: '>=12'}
 
   magic-string@0.24.1:
@@ -16023,7 +16023,7 @@ snapshots:
       cli-table3: 0.6.5
       core-object: 3.1.5
       ember-cli-deploy-plugin: 0.2.9
-      luxon: 3.4.4
+      luxon: 3.5.0
       rsvp: 4.8.5
 
   ember-cli-deploy-gzip@2.0.1:
@@ -19218,7 +19218,7 @@ snapshots:
 
   lru-cache@7.18.3: {}
 
-  luxon@3.4.4: {}
+  luxon@3.5.0: {}
 
   magic-string@0.24.1:
     dependencies:
