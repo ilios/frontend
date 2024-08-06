@@ -37,9 +37,18 @@ export default class IliosUsersComponent extends Component {
     return ensureSafeComponent(component, this);
   }
 
+  getTotalUsers = restartableTask(async () => {
+    const q = cleanQuery(this.args.query);
+    await timeout(DEBOUNCE_TIMEOUT);
+    return this.store.query('user', {
+      q,
+    });
+  });
+
   searchForUsers = restartableTask(async () => {
     const q = cleanQuery(this.args.query);
     await timeout(DEBOUNCE_TIMEOUT);
+    this.getTotalUsers.perform();
     return this.store.query('user', {
       limit: this.args.limit,
       q,
