@@ -42,7 +42,7 @@
     "@embroider/webpack": "~4.0.3",
     "@glimmer/component": "^1.1.2",
     "@glimmer/tracking": "^1.1.2",
-    "@percy/cli": "^1.28.9",
+    "@percy/cli": "^1.29.1",
     "@percy/ember": "^4.2.0",
     "@warp-drive/build-config": "0.0.0-beta.6",
     "broccoli-asset-rev": "^3.0.0",
