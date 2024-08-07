@@ -44,11 +44,13 @@ jobs:
           github-token: "${{ secrets.GITHUB_TOKEN }}"
       - uses: actions/checkout@v4
         if: ${{contains(steps.metadata.outputs.dependency-names, matrix.safe-dependency) && (steps.metadata.outputs.update-type == 'version-update:semver-minor' || steps.metadata.outputs.update-type == 'version-update:semver-patch') }}
-      - name: Enable auto-merge for Dependabot PRs
-        if: ${{contains(steps.metadata.outputs.dependency-names, matrix.safe-dependency) && (steps.metadata.outputs.update-type == 'version-update:semver-minor' || steps.metadata.outputs.update-type == 'version-update:semver-patch') }}
+      - name: Review and Label
         run: |
           gh pr edit --add-label "ready to merge" ${{ steps.cpr.outputs.pull-request-number }}
           gh pr review --approve -b "Auto Approved" ${{ github.event.number }}
-          gh pr merge --merge --auto ${{ github.event.number }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Enable Auto Merge
+        run: gh pr merge --merge --auto ${{ github.event.number }}
         env:
           GH_TOKEN: ${{ secrets.ZORGBORT_TOKEN }}
