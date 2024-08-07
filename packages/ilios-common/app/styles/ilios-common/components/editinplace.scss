@@ -2,24 +2,6 @@
 @use "../mixins" as m;
 
 .editinplace {
-  .viewer {
-    .display-text-wrapper {
-      &.is-faded {
-        max-height: 200px;
-        overflow: hidden;
-        position: relative;
-      }
-    }
-
-    .fade-text-control {
-      background-image: linear-gradient(to bottom, transparent, c.$lightBlue);
-      bottom: 140px;
-      height: 130px;
-      padding-top: 140px;
-      position: relative;
-    }
-  }
-
   .editable {
     color: c.$blueMunsell;
     cursor: pointer;
