@@ -37,11 +37,11 @@
       grid-area: user;
     }
     .user-guide-link {
+      display: flex;
       grid-area: guide;
-      height: 72%;
 
       @include m.for-phone-only {
-        height: 100%;
+        vertical-align: -0.25em;
       }
     }
 
