@@ -47,7 +47,7 @@ jobs:
       - name: Review and Label
         if: ${{contains(steps.metadata.outputs.dependency-names, matrix.safe-dependency) && (steps.metadata.outputs.update-type == 'version-update:semver-minor' || steps.metadata.outputs.update-type == 'version-update:semver-patch') }}
         run: |
-          gh pr edit --add-label "ready to merge" ${{ steps.cpr.outputs.pull-request-number }}
+          gh pr edit --add-label "ready to merge"  ${{ github.event.number }}
           gh pr review --approve -b "Auto Approved" ${{ github.event.number }}
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
