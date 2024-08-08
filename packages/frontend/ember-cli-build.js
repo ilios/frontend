@@ -60,6 +60,9 @@ module.exports = async function (defaults) {
     minifyCSS: {
       enabled: false,
     },
+    sassOptions: {
+      silenceDeprecations: ['mixed-decls'],
+    },
   };
 
   const app = new EmberApp(defaults, config);
