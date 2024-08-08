@@ -17,6 +17,9 @@ module.exports = async function (defaults) {
       enabled: true,
     },
     hinting: isTestBuild,
+    sassOptions: {
+      silenceDeprecations: ['mixed-decls'],
+    },
   };
   const app = new EmberApp(defaults, config);
 

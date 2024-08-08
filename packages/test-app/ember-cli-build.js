@@ -18,6 +18,9 @@ module.exports = async function (defaults) {
     autoImport: {
       watchDependencies: ['ilios-common'],
     },
+    sassOptions: {
+      silenceDeprecations: ['mixed-decls'],
+    },
     babel: {
       plugins: [
         require.resolve('ember-auto-import/babel-plugin'),
