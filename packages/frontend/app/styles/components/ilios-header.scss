@@ -37,8 +37,12 @@
       grid-area: user;
     }
     .user-guide-link {
+      display: flex;
       grid-area: guide;
-      height: 100%;
+
+      @include m.for-phone-only {
+        vertical-align: -0.25em;
+      }
     }
 
     .global-search-box {
