@@ -241,7 +241,7 @@
               </div>
             {{/if}}
           </div>
-          <div class="list">
+          <div class="list{{if (eq @learnerGroup.childrenCount 0) " empty"}}">
            {{#if @learnerGroup.childrenCount}}
               <LearnerGroup::List
                 @learnerGroups={{this.learnerGroups}}

@@ -2,4 +2,8 @@
 
 .list {
   @include m.main-list-box-table;
+
+  &.empty {
+    padding: 0;
+  }
 }
