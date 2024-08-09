@@ -1,0 +1,38 @@
+name: Dependabot auto-merge
+on: pull_request
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    name: Determine Automerge Status
+    if: ${{ github.actor == 'dependabot[bot]' }}
+    outputs:
+      shouldMerge: ${{ steps.should_merge.outputs.shouldMerge }}
+    env:
+      SAFE_DEPENDENCIES: "@embroider/test-setup,@embroider/util,@formatjs/intl-locale,@formatjs/intl-pluralrules,@formatjs/intl-relativetimeformat,@percy/cli,@percy/ember,@sentry/ember,broccoli-file-creator,broccoli-funnel,broccoli-merge-trees,browserslist,caniuse-db,ember-a11y-testing,ember-cli-bundle-analyzer,ember-cli-dependency-checker,ember-cli-dependency-lint,ember-cli-deprecation-workflow,ember-mirage,ember-cli-page-object,ember-noscript,ember-qunit-nice-errors,ember-template-lint,ember-test-selectors,stylelint-config-recommended-scss,stylelint-scss"
+    steps:
+      - name: Dependabot metadata
+        id: metadata
+        uses: dependabot/fetch-metadata@v2.2.0
+        with:
+          github-token: "${{ secrets.GITHUB_TOKEN }}"
+      - run: >
+          npx in-string-list ${{ steps.metadata.outputs.dependency-names }} ${{ env.SAFE_DEPENDENCIES }}
+          && echo "isSafe=yes" >> "$GITHUB_OUTPUT"
+      - run: >
+          ${{ steps.metadata.outputs.update-type }} != 'version-update:semver-major'
+          && echo "isNotMajor=yes" >> "$GITHUB_OUTPUT"
+      - id: should_merge
+        run: (test -z {{env.isSafe}} && test -z {{env.isNotMajor}}) && echo "shouldMerge=yes" >> "$GITHUB_OUTPUT"
+  auto_merge:
+    runs-on: ubuntu-latest
+    needs: check
+    if: needs.check.outputs.shouldMerge == 'yes'
+    name: Approve, label, and merge
+    steps:
+      - uses: actions/checkout@v4
+      - run: |
+          gh pr merge --merge --auto ${{ github.event.number }}
+          gh pr edit --add-label "ready to merge"  ${{ github.event.number }}
+          gh pr review --approve -b "Auto Approved" ${{ github.event.number }}
+        env:
+          GH_TOKEN: ${{ secrets.ZORGBORT_TOKEN }}
