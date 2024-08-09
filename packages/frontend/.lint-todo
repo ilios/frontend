@@ -71,3 +71,11 @@ add|ember-template-lint|no-at-ember-render-modifiers|10|6|10|6|d919d2af254f782c0
 add|ember-template-lint|no-at-ember-render-modifiers|11|6|11|6|940005188b476a060b0e5d3f05baea24ba178878|1722902400000|1730682000000|1754006400000|app/components/reports/subject/new/session-type.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|10|6|10|6|d919d2af254f782c01fe2ba15416673e52e91124|1722902400000|1730682000000|1754006400000|app/components/reports/subject/new/term.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|11|6|11|6|940005188b476a060b0e5d3f05baea24ba178878|1722902400000|1730682000000|1754006400000|app/components/reports/subject/new/term.hbs
+remove|ember-template-lint|no-at-ember-render-modifiers|3|2|3|2|ec3a02c7de9a846320bb33eb702a742de00e56bd|1722902400000|1730682000000|1754006400000|app/components/curriculum-inventory/report-header.hbs
+remove|ember-template-lint|no-at-ember-render-modifiers|4|2|4|2|708f3a1a4359e7d1bd669262535d882c49469947|1722902400000|1730682000000|1754006400000|app/components/curriculum-inventory/report-header.hbs
+remove|ember-template-lint|no-at-ember-render-modifiers|4|2|4|2|7312526529ca39ed820819d1478d8e1b8f555279|1722902400000|1730682000000|1754006400000|app/components/instructor-group/header.hbs
+remove|ember-template-lint|no-at-ember-render-modifiers|5|2|5|2|10c85f1f7f9cf2d05a7f36c4618679ea04c51154|1722902400000|1730682000000|1754006400000|app/components/instructor-group/header.hbs
+remove|ember-template-lint|no-at-ember-render-modifiers|4|2|4|2|7312526529ca39ed820819d1478d8e1b8f555279|1722902400000|1730682000000|1754006400000|app/components/learner-group/header.hbs
+remove|ember-template-lint|no-at-ember-render-modifiers|5|2|5|2|c33c821719fcbe918954f20b45e0959a3a40c62b|1722902400000|1730682000000|1754006400000|app/components/learner-group/header.hbs
+remove|ember-template-lint|no-at-ember-render-modifiers|4|4|4|4|66fe3cf991d61995cda5f5935874230700b5e21f|1722902400000|1730682000000|1754006400000|app/components/program/header.hbs
+remove|ember-template-lint|no-at-ember-render-modifiers|5|4|5|4|0bcfaa7865c6a954a5b5226ffe44ddc6c63945ba|1722902400000|1730682000000|1754006400000|app/components/program/header.hbs
