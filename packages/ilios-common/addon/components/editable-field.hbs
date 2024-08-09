@@ -1,4 +1,4 @@
-<div class="editinplace {{if this.isEditing "is-editing"}}" ...attributes>
+<div class="editinplace{{if this.isEditing " is-editing"}}" ...attributes>
   <span class="content">
     {{#if this.isEditing}}
       <span
@@ -33,7 +33,7 @@
         </span>
       </span>
     {{else}}
-      <span>
+      <span class="viewer">
         {{#if @value}}
           {{#if this.looksEmpty}}
             <button
@@ -48,11 +48,11 @@
               />
             </button>
           {{else}}
-            <TruncateText
+            <FadeText
               @renderHtml={{@renderHtml}}
               @text={{@value}}
               @onEdit={{fn this.setIsEditing true}}
-              as |displayText expand collapse isTruncated expanded|
+              as |displayText expand collapse isFaded expanded|
             >
               <button
                 class="link-button editable"
@@ -61,7 +61,11 @@
                 type="button"
                 {{on "click" (fn this.setIsEditing true)}}
               >
-                {{displayText}}
+                <div class="display-text-wrapper{{if isFaded ' is-faded'}}">
+                  <div class="display-text">
+                    {{displayText}}
+                  </div>
+                </div>
                 {{#if @showIcon}}
                   <FaIcon
                     data-test-edit-icon
@@ -70,18 +74,20 @@
                   />
                 {{/if}}
               </button>
-              {{#if isTruncated}}
-                <EllipsisIcon />
-                <button
-                  class="expand-text-button"
-                  type="button"
-                  aria-label={{t "general.expand"}}
-                  title={{t "general.expand"}}
-                  data-test-expand
-                  {{on "click" expand}}
-                >
-                  <FaIcon @icon="angles-down" />
-                </button>
+              {{#if isFaded}}
+                <div class="fade-text-control">
+                  <EllipsisIcon />
+                  <button
+                    class="expand-text-button"
+                    type="button"
+                    aria-label={{t "general.expand"}}
+                    title={{t "general.expand"}}
+                    data-test-expand
+                    {{on "click" expand}}
+                  >
+                    <FaIcon @icon="angles-down" />
+                  </button>
+                </div>
               {{else}}
                 {{#if expanded}}
                   <button
@@ -96,7 +102,7 @@
                   </button>
                 {{/if}}
               {{/if}}
-            </TruncateText>
+            </FadeText>
           {{/if}}
         {{else}}
           <button
