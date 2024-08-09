@@ -7,7 +7,7 @@ import { TrackedAsyncData } from 'ember-async-data';
 
 @validatable
 export default class LearnerGroupHeaderComponent extends Component {
-  @tracked @NotBlank() @Length(3, 60) title;
+  @tracked @NotBlank() @Length(3, 60) title = this.getTitle();
 
   @cached
   get upstreamRelationshipsData() {
@@ -45,9 +45,8 @@ export default class LearnerGroupHeaderComponent extends Component {
     return { cohort, programYear, program, school };
   }
 
-  @action
-  load() {
-    this.title = this.args.learnerGroup.title;
+  getTitle() {
+    return this.args.learnerGroup.title;
   }
 
   @action

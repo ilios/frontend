@@ -1,16 +1,14 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
-import { action } from '@ember/object';
 import { validatable, Length, NotBlank } from 'ilios-common/decorators/validation';
 import { dropTask } from 'ember-concurrency';
 
 @validatable
 export default class ProgramHeaderComponent extends Component {
-  @NotBlank() @Length(3, 200) @tracked title;
+  @NotBlank() @Length(3, 200) @tracked title = this.getTitle();
 
-  @action
-  load() {
-    this.title = this.args.program.title;
+  getTitle() {
+    return this.args.program.title;
   }
 
   changeTitle = dropTask(async () => {
