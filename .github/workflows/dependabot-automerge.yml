@@ -19,7 +19,7 @@ jobs:
           npx in-string-list ${{ steps.metadata.outputs.dependency-names }} ${{ env.SAFE_DEPENDENCIES }}
           && echo "isSafe=yes" >> "$GITHUB_OUTPUT"
       - run: >
-          ${{ steps.metadata.outputs.update-type }} != 'version-update:semver-major'
+          test ${{ steps.metadata.outputs.update-type }} != 'version-update:semver-major'
           && echo "isNotMajor=yes" >> "$GITHUB_OUTPUT"
       - id: should_merge
         run: (test -z {{env.isSafe}} && test -z {{env.isNotMajor}}) && echo "shouldMerge=yes" >> "$GITHUB_OUTPUT"
