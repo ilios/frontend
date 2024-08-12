@@ -1,5 +1,7 @@
 {{#if (has-block)}}
-  {{yield this.displayText this.expand this.collapse this.isFaded this.expanded}}
+  <span class="fade-text" data-test-fade-text ...attributes>
+    {{yield this.displayText this.expand this.collapse this.isFaded this.expanded}}
+  </span>
 {{else}}
   <span class="fade-text" data-test-fade-text ...attributes>
     <div class="display-text-wrapper">
