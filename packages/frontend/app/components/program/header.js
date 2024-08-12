@@ -5,10 +5,11 @@ import { dropTask } from 'ember-concurrency';
 
 @validatable
 export default class ProgramHeaderComponent extends Component {
-  @NotBlank() @Length(3, 200) @tracked title = this.getTitle();
+  @NotBlank() @Length(3, 200) @tracked title;
 
-  getTitle() {
-    return this.args.program.title;
+  constructor() {
+    super(...arguments);
+    this.title = this.args.program.title;
   }
 
   changeTitle = dropTask(async () => {

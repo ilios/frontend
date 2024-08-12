@@ -8,10 +8,11 @@ import { dropTask } from 'ember-concurrency';
 @validatable
 export default class InstructorGroupHeaderComponent extends Component {
   @service store;
-  @tracked @NotBlank() @Length(3, 60) title = this.getTitle();
+  @tracked @NotBlank() @Length(3, 60) title;
 
-  getTitle() {
-    return this.args.instructorGroup.title;
+  constructor() {
+    super(...arguments);
+    this.title = this.args.instructorGroup.title;
   }
 
   changeTitle = dropTask(async () => {
