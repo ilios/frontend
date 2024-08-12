@@ -49,7 +49,6 @@
             </button>
           {{else}}
             <FadeText
-              @renderHtml={{@renderHtml}}
               @text={{@value}}
               @onEdit={{fn this.setIsEditing true}}
               as |displayText expand collapse isFaded expanded|

@@ -23,29 +23,17 @@ export default class FadeTextComponent extends Component {
 
     return this.args.text;
   }
-  get cleanText() {
-    // return this.text.replace(/(<([^>]+)>)/gi, '');
-    return this.text;
-  }
   get totalLength() {
     return this.length + this.slippage;
   }
   get isFaded() {
-    if (this.args.renderHtml) {
-      return this.displayText.toString() !== this.text;
-    } else {
-      return this.displayText.toString() !== this.cleanText;
-    }
+    return this.displayText.toString() !== this.text;
   }
   get displayText() {
-    if (this.expanded || this.cleanText.length < this.totalLength) {
-      if (this.args.renderHtml) {
-        return new htmlSafe(this.text);
-      } else {
-        return new htmlSafe(this.cleanText);
-      }
+    if (this.expanded || this.text.length < this.totalLength) {
+      return new htmlSafe(this.text);
     }
-    const fadedText = this.cleanText.substring(0, this.length);
+    const fadedText = this.text.substring(0, this.length);
     return new htmlSafe(fadedText);
   }
 
