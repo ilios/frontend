@@ -1,47 +1,43 @@
 @use "../colors" as c;
 
-.display-text-wrapper {
-  &.is-faded {
-    max-height: 200px;
-    overflow: hidden;
+.fade-text {
+  .display-text-wrapper {
+    &.is-faded {
+      max-height: 200px;
+      overflow: hidden;
+      position: relative;
+    }
+  }
+
+  .fade-text-control {
+    bottom: 140px;
+    height: 130px;
+    padding-top: 140px;
     position: relative;
   }
 }
 
-.fade-text-control {
-  bottom: 140px;
-  height: 130px;
-  padding-top: 140px;
-  position: relative;
-}
-
-span {
-  &.draggable-object-content {
-    .fade-text-control {
-      background-image: linear-gradient(
-        to bottom,
-        transparent,
-        c.$culturedGrey
-      );
-    }
-  }
-}
-
 .course-objective-list {
-  .editinplace {
-    .viewer {
-      .fade-text-control {
-        background-image: linear-gradient(to bottom, transparent, c.$white);
-      }
-    }
+  .fade-text-control {
+    background-image: linear-gradient(to bottom, transparent, c.$white);
   }
 }
 
 .session-objective-list {
-  .editinplace {
-    .viewer {
+  .fade-text-control {
+    background-image: linear-gradient(to bottom, transparent, c.$lightBlue);
+  }
+}
+
+.objective-sort-manager {
+  span {
+    &.draggable-object-content {
       .fade-text-control {
-        background-image: linear-gradient(to bottom, transparent, c.$lightBlue);
+        background-image: linear-gradient(
+          to bottom,
+          transparent,
+          c.$culturedGrey
+        );
       }
     }
   }
