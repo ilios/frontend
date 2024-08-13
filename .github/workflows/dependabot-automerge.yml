@@ -17,12 +17,16 @@ jobs:
           github-token: "${{ secrets.GITHUB_TOKEN }}"
       - run: >
           npx in-string-list ${{ steps.metadata.outputs.dependency-names }} ${{ env.SAFE_DEPENDENCIES }}
-          && echo "isSafe=yes" >> "$GITHUB_OUTPUT"
+          && echo "isSafe=yes" >> "$GITHUB_ENV"
       - run: >
           test ${{ steps.metadata.outputs.update-type }} != 'version-update:semver-major'
-          && echo "isNotMajor=yes" >> "$GITHUB_OUTPUT"
+          && echo "isNotMajor=yes" >> "$GITHUB_ENV"
+      - run: |
+          echo ${{ env.isSafe }}
+          echo ${{ env.isNotMajor }}
+          echo (test -z ${{env.isSafe}} && test -z ${{env.isNotMajor}})
       - id: should_merge
-        run: (test -z {{env.isSafe}} && test -z {{env.isNotMajor}}) && echo "shouldMerge=yes" >> "$GITHUB_OUTPUT"
+        run: (test -z ${{env.isSafe}} && test -z ${{env.isNotMajor}}) && echo "shouldMerge=yes" >> "$GITHUB_OUTPUT"
   auto_merge:
     runs-on: ubuntu-latest
     needs: check
