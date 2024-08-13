@@ -326,4 +326,29 @@ module('Unit | Service | reporting', function (hooks) {
     assert.strictEqual(props.school, 'School of Schools');
     assert.strictEqual(props.subject, 'Competencies');
   });
+
+  test('getArrayResults() for term report', async function (assert) {
+    assert.expect(2);
+    const school = this.server.create('school', { title: 'School of Schools' });
+    const report = this.server.create('report', {
+      subject: 'term',
+      school,
+    });
+    const vocabulary = this.server.create('vocabulary', { school });
+    const terms = this.server.createList('term', 2, { vocabulary });
+    this.server.post('api/graphql', function (schema, { requestBody }) {
+      const { query } = JSON.parse(requestBody);
+      assert.strictEqual(query, 'query { terms(schools: [1]) { id } }');
+      return {
+        data: {
+          terms: terms.map(({ id }) => ({ id })),
+        },
+      };
+    });
+
+    const store = this.owner.lookup('service:store');
+    const reportModel = await store.findRecord('report', report.id);
+    const props = await this.service.getArrayResults(reportModel, 1999);
+    assert.deepEqual(props, [['Vocabulary'], ['Vocabulary 1 > term 0'], ['Vocabulary 1 > term 1']]);
+  });
 });

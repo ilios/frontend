@@ -229,16 +229,24 @@ export default class ReportingService extends Service {
   async termsArrayResults(report) {
     const filters = await this.#getFilters(report);
     const result = await this.graphql.find('terms', filters, 'id');
-    let terms = await this.store.query('term', {
-      filters: {
-        ids: [result.data.terms.map(({ id }) => id)],
-      },
-    });
-    const titles = map(terms.slice(), async (term) => {
-      const vocabulary = await term.get('vocabulary');
-      const titleWithParentTitles = await term.getTitleWithParentTitles();
-      return vocabulary.title + ' > ' + titleWithParentTitles;
-    }).sort();
+    let terms = [];
+    for (let i = 0; i < result.data.terms.length; i += 100) {
+      const chunk = result.data.terms.slice(i, i + 100);
+      const loadedTerms = await this.store.query('term', {
+        filters: {
+          id: chunk.map(({ id }) => id),
+        },
+      });
+      terms = terms.concat(loadedTerms);
+    }
+
+    const titles = (
+      await map(terms, async (term) => {
+        const vocabulary = await term.vocabulary;
+        const titleWithParentTitles = await term.getTitleWithParentTitles();
+        return [vocabulary.title + ' > ' + titleWithParentTitles];
+      })
+    ).sort();
     return [[this.intl.t('general.vocabulary')]].concat(titles);
   }
 
