@@ -341,7 +341,7 @@ module('Unit | Service | reporting', function (hooks) {
       assert.strictEqual(query, 'query { terms(schools: [1]) { id } }');
       return {
         data: {
-          terms: terms.map(({ id }) => ({ id })),
+          terms: terms.reverse().map(({ id }) => ({ id })),
         },
       };
     });
@@ -350,5 +350,45 @@ module('Unit | Service | reporting', function (hooks) {
     const reportModel = await store.findRecord('report', report.id);
     const props = await this.service.getArrayResults(reportModel, 1999);
     assert.deepEqual(props, [['Vocabulary'], ['Vocabulary 1 > term 0'], ['Vocabulary 1 > term 1']]);
+  });
+
+  test('getArrayResults() for instructor report', async function (assert) {
+    assert.expect(2);
+    const school = this.server.create('school', { title: 'School of Schools' });
+    const course = this.server.create('course', { id: 42, school });
+    const session = this.server.create('session', { course });
+    const ilmSession = this.server.create('ilmSession', { session });
+    const report = this.server.create('report', {
+      subject: 'instructor',
+      school,
+      prepositionalObject: 'course',
+      prepositionalObjectTableRowId: 42,
+    });
+    const instructors = this.server.createList('user', 2, { instructorIlmSessions: [ilmSession] });
+    this.server.post('api/graphql', function (schema, { requestBody }) {
+      const { query } = JSON.parse(requestBody);
+      assert.strictEqual(
+        query,
+        'query { users(schools: [1], instructedCourses: [42]) { id,firstName,middleName,lastName,displayName } }',
+      );
+      return {
+        data: {
+          users: instructors
+            .reverse()
+            .map(({ id, firstName, middleName, lastName, displayName }) => ({
+              id,
+              firstName,
+              middleName,
+              lastName,
+              displayName,
+            })),
+        },
+      };
+    });
+
+    const store = this.owner.lookup('service:store');
+    const reportModel = await store.findRecord('report', report.id);
+    const props = await this.service.getArrayResults(reportModel, 1999);
+    assert.deepEqual(props, [['Instructors'], ['0 guy M. Mc0son'], ['1 guy M. Mc1son']]);
   });
 });
