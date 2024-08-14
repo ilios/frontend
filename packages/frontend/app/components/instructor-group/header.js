@@ -10,8 +10,8 @@ export default class InstructorGroupHeaderComponent extends Component {
   @service store;
   @tracked @NotBlank() @Length(3, 60) title;
 
-  @action
-  load() {
+  constructor() {
+    super(...arguments);
     this.title = this.args.instructorGroup.title;
   }
 

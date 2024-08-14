@@ -8,9 +8,9 @@ import { restartableTask } from 'ember-concurrency';
 export default class CurriculumInventoryReportHeaderComponent extends Component {
   @NotBlank() @Length(3, 200) @tracked name;
 
-  @action
-  load(element, [report]) {
-    this.name = report?.name;
+  constructor() {
+    super(...arguments);
+    this.name = this.args.report.name;
   }
 
   saveName = restartableTask(async () => {
