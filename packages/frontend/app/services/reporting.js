@@ -1,6 +1,6 @@
 import Service, { service } from '@ember/service';
 import { pluralize } from 'ember-inflector';
-import { camelize, dasherize } from '@ember/string';
+import { camelize, capitalize, dasherize } from '@ember/string';
 import striptags from 'striptags';
 import { mapBy, sortBy } from 'ilios-common/utils/array-helpers';
 import { map } from 'rsvp';
@@ -162,8 +162,24 @@ export default class ReportingService extends Service {
 
   async instructorsArrayResults(report) {
     const filters = await this.#getFilters(report);
+    const graphqlFilters = filters.map((filter) => {
+      const specialInstructed = [
+        'learningMaterials',
+        'sessionTypes',
+        'courses',
+        'sessions',
+        'academicYears',
+      ];
+      specialInstructed.forEach((special) => {
+        if (filter.includes(special)) {
+          const cap = capitalize(special);
+          filter = filter.replace(special, `instructed${cap}`);
+        }
+      });
+      return filter;
+    });
     const attributes = ['id', 'firstName', 'middleName', 'lastName', 'displayName'];
-    const result = await this.graphql.find('users', filters, attributes.join(','));
+    const result = await this.graphql.find('users', graphqlFilters, attributes.join(','));
     const names = result.data.users
       .map(({ firstName, middleName, lastName, displayName }) => {
         if (displayName) {
@@ -180,7 +196,7 @@ export default class ReportingService extends Service {
       })
       .sort();
 
-    return [[this.intl.t('general.instructors')]].concat(names);
+    return [[this.intl.t('general.instructors')]].concat(names.map((name) => [name]));
   }
 
   async valueResults(endpoint, report, translationKey) {
@@ -229,16 +245,24 @@ export default class ReportingService extends Service {
   async termsArrayResults(report) {
     const filters = await this.#getFilters(report);
     const result = await this.graphql.find('terms', filters, 'id');
-    let terms = await this.store.query('term', {
-      filters: {
-        ids: [result.data.terms.map(({ id }) => id)],
-      },
-    });
-    const titles = map(terms.slice(), async (term) => {
-      const vocabulary = await term.get('vocabulary');
-      const titleWithParentTitles = await term.getTitleWithParentTitles();
-      return vocabulary.title + ' > ' + titleWithParentTitles;
-    }).sort();
+    let terms = [];
+    for (let i = 0; i < result.data.terms.length; i += 100) {
+      const chunk = result.data.terms.slice(i, i + 100);
+      const loadedTerms = await this.store.query('term', {
+        filters: {
+          id: chunk.map(({ id }) => id),
+        },
+      });
+      terms = terms.concat(loadedTerms);
+    }
+
+    const titles = (
+      await map(terms, async (term) => {
+        const vocabulary = await term.vocabulary;
+        const titleWithParentTitles = await term.getTitleWithParentTitles();
+        return [vocabulary.title + ' > ' + titleWithParentTitles];
+      })
+    ).sort();
     return [[this.intl.t('general.vocabulary')]].concat(titles);
   }
 
