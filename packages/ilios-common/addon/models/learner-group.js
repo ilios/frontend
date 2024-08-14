@@ -473,6 +473,15 @@ export default class LearnerGroup extends Model {
     return parentTitles.join(' > ') + ' > ' + this.title;
   }
 
+  @cached
+  get titleWithParentTitlesData() {
+    return new TrackedAsyncData(this.getTitleWithParentTitles());
+  }
+
+  get titleWithParentTitles() {
+    return this.titleWithParentTitlesData.isResolved ? this.titleWithParentTitlesData.value : '';
+  }
+
   /**
    * Adds a user to a group and then traverses parent groups recursively
    * to add the user to them as well.  Will only modify groups where the

@@ -103,11 +103,13 @@
                       {{user.email}}
                     </button>
                   </td>
-                  <td class="text-left" colspan="2">
+                  <td class="text-left" colspan="2" data-test-learnergroup>
                     <LinkTo
                       @route="learner-group"
                       @model={{user.lowestGroupInTree}}
                       @query={{hash isEditing=true sortUsersBy=@sortBy}}
+                      title={{user.lowestGroupInTree.titleWithParentTitles}}
+                      aria-label={{user.lowestGroupInTree.titleWithParentTitles}}
                     >
                       {{user.lowestGroupInTree.title}}
                     </LinkTo>
@@ -230,11 +232,13 @@
                       {{user.email}}
                     </button>
                   </td>
-                  <td class="text-left" colspan="2">
+                  <td class="text-left" colspan="2" data-test-learnergroup>
                     <LinkTo
                       @route="learner-group"
                       @model={{user.lowestGroupInTree}}
                       @query={{hash isEditing=true sortUsersBy=@sortBy}}
+                      title={{user.lowestGroupInTree.titleWithParentTitles}}
+                      aria-label={{user.lowestGroupInTree.titleWithParentTitles}}
                     >
                       {{user.lowestGroupInTree.title}}
                     </LinkTo>

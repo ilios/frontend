@@ -1,4 +1,5 @@
 import {
+  attribute,
   clickable,
   collection,
   create,
@@ -46,6 +47,11 @@ const definition = {
       isClickable: isPresent('button'),
       click: clickable('button'),
     },
+    learnerGroup: {
+      scope: '[data-test-learnergroup]',
+      linkTitle: attribute('title', 'a'),
+      linkAriaLabel: attribute('aria-label', 'a'),
+    },
     isDisabled: isPresent('td:nth-of-type(1) [data-test-is-disabled]'),
     remove: clickable('[data-test-remove-user]'),
     canBeRemoved: isPresent('[data-test-remove-user]'),
@@ -69,6 +75,11 @@ const definition = {
       scope: 'td:eq(3)',
       isClickable: isPresent('button'),
       click: clickable('button'),
+    },
+    learnerGroup: {
+      scope: '[data-test-learnergroup]',
+      linkTitle: attribute('title', 'a'),
+      linkAriaLabel: attribute('aria-label', 'a'),
     },
     isDisabled: isPresent('td:nth-of-type(1) [data-test-is-disabled]'),
     add: clickable('[data-test-add-user]'),

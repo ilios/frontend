@@ -1036,4 +1036,69 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
     await component.usersInCurrentGroup[0].email.click();
     assert.ok(component.usersInCurrentGroup[0].isSelected);
   });
+
+  test('learner-group hierarchy is shown in group-title and aria-label', async function (assert) {
+    const parentGroup = this.server.create('learner-group');
+    const learnerGroup = this.server.create('learner-group', { parent: parentGroup });
+    const childGroup = this.server.create('learner-group', { parent: learnerGroup });
+    const user1 = this.server.create('user', {
+      learnerGroups: [learnerGroup],
+    });
+    const user2 = this.server.create('user', {
+      learnerGroups: [childGroup],
+    });
+    const userModel1 = await this.owner.lookup('service:store').findRecord('user', user1.id);
+    const userModel2 = await this.owner.lookup('service:store').findRecord('user', user2.id);
+    const learnerGroupModel = await this.owner
+      .lookup('service:store')
+      .findRecord('learner-group', learnerGroup.id);
+    const childGroupModel = await this.owner
+      .lookup('service:store')
+      .findRecord('learner-group', childGroup.id);
+    const userModelProxy1 = ObjectProxy.create({
+      content: userModel1,
+      lowestGroupInTree: learnerGroupModel,
+      lowestGroupInTreeTitle: learnerGroupModel.title,
+    });
+    const userModelProxy2 = ObjectProxy.create({
+      content: userModel2,
+      lowestGroupInTree: childGroupModel,
+      lowestGroupInTreeTitle: childGroupModel.title,
+    });
+
+    this.set('users', [userModelProxy1, userModelProxy2]);
+    this.set('learnerGroup', learnerGroupModel);
+    await render(hbs`<LearnerGroup::UserManager
+      @learnerGroupId={{this.learnerGroup.id}}
+      @learnerGroupTitle="this group"
+      @topLevelGroupTitle="top group"
+      @cohortTitle="this cohort"
+      @users={{this.users}}
+      @sortBy="id"
+      @setSortBy={{(noop)}}
+      @addUserToGroup={{(noop)}}
+      @removeUserFromGroup={{(noop)}}
+      @addUsersToGroup={{(noop)}}
+      @removeUsersFromGroup={{(noop)}}
+    />`);
+
+    assert.strictEqual(component.usersInCurrentGroup.length, 1);
+    assert.strictEqual(
+      component.usersInCurrentGroup[0].learnerGroup.linkTitle,
+      'learner group 0 > learner group 1',
+    );
+    assert.strictEqual(
+      component.usersInCurrentGroup[0].learnerGroup.linkAriaLabel,
+      'learner group 0 > learner group 1',
+    );
+    assert.strictEqual(component.usersNotInCurrentGroup.length, 1);
+    assert.strictEqual(
+      component.usersNotInCurrentGroup[0].learnerGroup.linkTitle,
+      'learner group 0 > learner group 1 > learner group 2',
+    );
+    assert.strictEqual(
+      component.usersNotInCurrentGroup[0].learnerGroup.linkAriaLabel,
+      'learner group 0 > learner group 1 > learner group 2',
+    );
+  });
 });
