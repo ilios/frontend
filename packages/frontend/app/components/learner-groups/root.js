@@ -155,10 +155,6 @@ export default class LearnerGroupsRootComponent extends Component {
     });
   }
 
-  get countForSelectedCohort() {
-    return 2;
-  }
-
   saveNewLearnerGroup = dropTask(async (title, fillWithCohort) => {
     const group = this.store.createRecord('learner-group', {
       title,
