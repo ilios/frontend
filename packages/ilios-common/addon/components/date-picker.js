@@ -1,72 +1,56 @@
 import Component from '@glimmer/component';
 import { service } from '@ember/service';
-import { dropTask, restartableTask, waitForProperty } from 'ember-concurrency';
-import { tracked } from '@glimmer/tracking';
-import flatpickr from 'flatpickr';
-import { later, next } from '@ember/runloop';
 import { isTesting } from '@embroider/macros';
+import { action } from '@ember/object';
+import { TrackedAsyncData } from 'ember-async-data';
 
 export default class DatePickerComponent extends Component {
   @service intl;
 
-  @tracked _flatPickerInstance;
-  @tracked isOpen = false;
+  isTesting = isTesting();
 
-  updatePicker = restartableTask(async (element, [value]) => {
-    await waitForProperty(this, '_flatPickerInstance');
-    if (this._flatPickerInstance.selectedDates[0] != value) {
-      this._flatPickerInstance.setDate(value);
+  get localeData() {
+    const locale = this.intl.primaryLocale;
+    let p = 'en';
+    if (locale === 'fr') {
+      p = import('flatpickr/dist/l10n/fr.js');
     }
-  });
-
-  setupPicker = dropTask(async (element) => {
-    const currentLocale = this.intl.primaryLocale;
-    let locale;
-    switch (currentLocale) {
-      case 'fr':
-        // eslint-disable-next-line no-case-declarations
-        const { French } = await import('flatpickr/dist/l10n/fr.js');
-        locale = French;
-        break;
-      case 'es':
-        // eslint-disable-next-line no-case-declarations
-        const { Spanish } = await import('flatpickr/dist/l10n/es.js');
-        locale = Spanish;
-        break;
-      default:
-        locale = 'en';
+    if (locale === 'es') {
+      p = import('flatpickr/dist/l10n/es.js');
     }
-    this._flatPickerInstance = flatpickr(element, {
-      locale,
-      defaultDate: this.args.value,
-      formatDate: (dateObj) =>
-        this.intl.formatDate(dateObj, { day: '2-digit', month: '2-digit', year: 'numeric' }),
-      onChange: (selectedDates) => this.onChange(selectedDates[0]),
-      onOpen: () => {
-        // eslint-disable-next-line ember/no-runloop
-        later(() => {
-          this.isOpen = true;
-        }, 250);
-      },
-      onClose: () => {
-        this.isOpen = false;
-      },
-      maxDate: this.args.maxDate ?? null,
-      minDate: this.args.minDate ?? null,
-      disableMobile: isTesting(),
-    });
-  });
 
-  willDestroy() {
-    super.willDestroy(...arguments);
-    if (this._flatPickerInstance) {
-      this._flatPickerInstance.destroy();
+    return new TrackedAsyncData(p);
+  }
+
+  get locale() {
+    if (this.localeData.isResolved) {
+      return this.localeData.value;
+    }
+
+    return 'en';
+  }
+
+  get maxDate() {
+    return this.args.maxDate ?? null;
+  }
+
+  get minDate() {
+    return this.args.minDate ?? null;
+  }
+
+  @action
+  onReady(_selectedDates, _dateStr, flatpickrRef) {
+    if (this.args.openOnLoad) {
+      flatpickrRef.open();
     }
   }
 
-  async onChange(date) {
-    await this.args.onChange(date);
-    // eslint-disable-next-line ember/no-runloop
-    await next(() => {});
+  @action
+  onChange(dates) {
+    this.args.onChange(dates[0]);
+  }
+
+  @action formatDate(date) {
+    return this.intl.formatDate(date, { day: '2-digit', month: '2-digit', year: 'numeric' });
   }
 }

@@ -15,6 +15,7 @@
           <DatePicker
             @value={{this.dueDate}}
             @onChange={{this.updateDate}}
+            @openOnLoad={{true}}
           />
           <TimePicker @date={{this.dueDate}} @action={{this.updateTime}} />
           <ValidationError @errors={{get-errors-for this.dueDate}} />

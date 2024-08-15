@@ -72,6 +72,9 @@ export default class CurriculumInventoryNewSequenceBlock extends Component {
       { id: '2', title: this.intl.t('general.optionalElective') },
       { id: '3', title: this.intl.t('general.requiredInTrack') },
     ];
+
+    this.startDate = new Date();
+    this.endDate = new Date();
   }
 
   get linkedCourseIsClerkship() {
