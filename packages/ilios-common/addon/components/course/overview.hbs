@@ -125,6 +125,7 @@
               <DatePicker
                 @value={{this.startDate}}
                 @onChange={{pipe (set this.startDate) (fn this.addErrorDisplayFor "startDate")}}
+                @openOnLoad={{true}}
               />
             </EditableField>
             <ValidationError @errors={{get-errors-for this.startDate}} />
@@ -145,6 +146,7 @@
               <DatePicker
                 @value={{this.endDate}}
                 @onChange={{pipe (set this.endDate) (fn this.addErrorDisplayFor "endDate")}}
+                @openOnLoad={{true}}
               />
             </EditableField>
             <ValidationError @errors={{get-errors-for this.endDate}} />

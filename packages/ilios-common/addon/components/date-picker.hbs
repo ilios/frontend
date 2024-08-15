@@ -1,8 +1,15 @@
-<input
-  aria-label={{t "general.pickADate"}}
-  class="date-picker"
+<EmberFlatpickr
   data-test-date-picker
-  {{did-insert (perform this.setupPicker)}}
-  {{did-update (perform this.updatePicker) @value @maxDate @minDate}}
+  aria-label={{t "general.pickADate"}}
+  placeholder={{t "general.pickADate"}}
+  @date={{@value}}
+  @disableMobile={{this.isTesting}}
+  @enableTime={{false}}
+  @locale={{this.locale}}
+  @maxDate={{this.maxDate}}
+  @minDate={{this.minDate}}
+  @onChange={{this.onChange}}
+  @onReady={{this.onReady}}
+  @formatDate={{this.formatDate}}
   ...attributes
 />

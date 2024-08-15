@@ -45,6 +45,7 @@
     "ember-event-helpers": "^0.1.0",
     "ember-feature-flags": "^6.0.0",
     "ember-file-upload": "^9.0.0",
+    "ember-flatpickr": "^8.0.1",
     "ember-focus-trap": "^1.0.0",
     "ember-in-element-polyfill": "^1.0.0",
     "ember-in-viewport": "^4.0.0",
