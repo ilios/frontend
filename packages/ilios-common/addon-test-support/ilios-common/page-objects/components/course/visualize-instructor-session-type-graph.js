@@ -5,10 +5,9 @@ const definition = {
   isIcon: notHasClass('no-icon'),
   chart: {
     scope: '.simple-chart',
-    bars: collection('.bars rect', {
-      description: text('desc'),
-    }),
-    labels: collection('.bars text'),
+    slices: collection('svg .slice'),
+    labels: collection('.slice text'),
+    descriptions: collection('.slice desc'),
   },
   noData: {
     scope: '[data-test-no-data]',

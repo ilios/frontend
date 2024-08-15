@@ -83,12 +83,12 @@ module(
 `,
       );
       assert.notOk(component.noData.isVisible);
-      //let the chart animations finish
       await waitFor('.loaded');
-      await waitFor('svg .bars');
-      assert.strictEqual(component.chart.bars.length, 2);
-      assert.strictEqual(component.chart.bars[0].description, 'Campaign - 180 Minutes');
-      assert.strictEqual(component.chart.bars[1].description, 'Standalone - 630 Minutes');
+      await waitFor('svg .slice');
+      assert.strictEqual(component.chart.slices.length, 2);
+      assert.strictEqual(component.chart.descriptions.length, 2);
+      assert.strictEqual(component.chart.descriptions[0].text, 'Campaign - 180 Minutes');
+      assert.strictEqual(component.chart.descriptions[1].text, 'Standalone - 630 Minutes');
       assert.strictEqual(component.chart.labels.length, 2);
       assert.strictEqual(component.chart.labels[0].text, 'Campaign');
       assert.strictEqual(component.chart.labels[1].text, 'Standalone');

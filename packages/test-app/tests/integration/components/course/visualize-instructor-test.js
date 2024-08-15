@@ -139,12 +139,13 @@ module('Integration | Component | course/visualize-instructor', function (hooks)
     // wait for charts to load
     await waitFor('.loaded');
     await waitFor('svg .bars');
+    await waitFor('svg .slice');
     assert.strictEqual(component.termsChart.chart.bars.length, 3);
     assert.strictEqual(component.termsChart.chart.labels.length, 3);
     assert.strictEqual(component.termsChart.chart.labels[0].text, 'Vocabulary 1 - term 0');
     assert.strictEqual(component.termsChart.chart.labels[1].text, 'Vocabulary 1 - term 1');
     assert.strictEqual(component.termsChart.chart.labels[2].text, 'Vocabulary 2 - term 2');
-    assert.strictEqual(component.sessionTypesChart.chart.bars.length, 2);
+    assert.strictEqual(component.sessionTypesChart.chart.slices.length, 2);
     assert.strictEqual(component.sessionTypesChart.chart.labels.length, 2);
     assert.strictEqual(component.sessionTypesChart.chart.labels[0].text, 'session type 1');
     assert.strictEqual(component.sessionTypesChart.chart.labels[1].text, 'session type 0');

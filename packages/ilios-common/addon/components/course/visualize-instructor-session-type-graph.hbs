@@ -6,7 +6,7 @@
   {{#if this.isLoaded}}
     {{#if (or @isIcon this.hasChartData)}}
       <SimpleChart
-        @name="horz-bar"
+        @name="donut"
         @isIcon={{@isIcon}}
         @data={{this.chartData}}
         @hover={{perform this.donutHover}}
