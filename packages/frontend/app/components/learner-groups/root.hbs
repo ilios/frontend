@@ -122,7 +122,7 @@
           @setSortBy={{@setSortBy}}
         />
       {{else}}
-        <LearnerGroups::Loading />
+        <LearnerGroups::Loading @count={{this.countForSelectedCohort}} />
       {{/if}}
     </div>
   </div>
