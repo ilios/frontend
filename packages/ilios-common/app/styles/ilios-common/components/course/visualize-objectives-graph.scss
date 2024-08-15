@@ -36,4 +36,11 @@
   &.not-icon {
     grid-template-columns: 2fr 1fr;
   }
+
+
+  .objective-row {
+    p {
+      margin: 0;
+    }
+  }
 }
