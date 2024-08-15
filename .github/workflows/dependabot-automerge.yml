@@ -24,7 +24,6 @@ jobs:
       - run: |
           echo ${{ env.isSafe }}
           echo ${{ env.isNotMajor }}
-          echo (test -z ${{env.isSafe}} && test -z ${{env.isNotMajor}})
       - id: should_merge
         run: (test -z ${{env.isSafe}} && test -z ${{env.isNotMajor}}) && echo "shouldMerge=yes" >> "$GITHUB_OUTPUT"
   auto_merge:
