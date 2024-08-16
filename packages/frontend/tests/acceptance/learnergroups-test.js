@@ -16,7 +16,6 @@ module('Acceptance | Learner Groups', function (hooks) {
   });
 
   test('visiting /learnergroups', async function (assert) {
-    assert.expect(1);
     await page.visit();
     assert.strictEqual(currentRouteName(), 'learner-groups');
   });
