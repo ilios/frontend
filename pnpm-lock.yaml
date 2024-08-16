@@ -448,8 +448,8 @@ importers:
         specifier: ^5.0.1
         version: 5.0.1(@babel/core@7.25.2)
       ember-intl:
-        specifier: ^7.0.4
-        version: 7.0.4(webpack@5.93.0)
+        specifier: ^7.0.5
+        version: 7.0.5(webpack@5.93.0)
       ember-local-storage:
         specifier: ^2.0.7
         version: 2.0.7(@babel/core@7.25.2)
@@ -5343,8 +5343,8 @@ packages:
   ember-inflector@5.0.1:
     resolution: {integrity: sha512-Me7ZhwD6tkTOOgCRDdBi7j7ZwicUJyOBlWqKwlwe9JFch3a8364u/3VzR7dZopN2fB0oL2I0W49KvRNdBOqTGg==}
 
-  ember-intl@7.0.4:
-    resolution: {integrity: sha512-EKIEV24BiUTx05+zi1Y37+qaOwVO/bFMZtsHPzndMDJcj6wjC1e3aMm5nvs4+jldh1TVwnIMVs9ivEoUNeijHQ==}
+  ember-intl@7.0.5:
+    resolution: {integrity: sha512-B+G6y6q52iHWG3IfsD74h7xP2qdaDdVmWOTGz+c11AmtxHRg98JpuVbyBsfHiazwfo3gPC/9qdaCQjkMsXTlOw==}
     engines: {node: 18.* || >= 20}
     peerDependencies:
       typescript: ^5.0.0
@@ -16702,7 +16702,7 @@ snapshots:
       - '@babel/core'
       - supports-color
 
-  ember-intl@7.0.4(webpack@5.93.0):
+  ember-intl@7.0.5(webpack@5.93.0):
     dependencies:
       '@babel/core': 7.25.2
       '@formatjs/icu-messageformat-parser': 2.7.8
