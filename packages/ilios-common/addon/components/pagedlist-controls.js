@@ -52,6 +52,7 @@ export default class PagedlistControlsComponent extends Component {
 
   get lastPage() {
     if (this.args.limitless) {
+      // return false;
       return this.limit >= this.total;
     }
     return this.offset + this.limit >= this.total;
