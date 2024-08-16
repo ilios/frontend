@@ -1,16 +1,39 @@
 import Component from '@glimmer/component';
+import { cached } from '@glimmer/tracking';
 import { service } from '@ember/service';
+import { TrackedAsyncData } from 'ember-async-data';
 import { mapBy, sortBy } from 'ilios-common/utils/array-helpers';
-import { use } from 'ember-could-get-used-to-this';
-import AsyncProcess from 'ilios-common/classes/async-process';
 
 export default class DashboardCalendarFiltersComponent extends Component {
   @service dataLoader;
 
-  @use sessionTypes = new AsyncProcess(() => [this.loadSessionTypes.bind(this), this.args.school]);
-  @use vocabularies = new AsyncProcess(() => [this.loadVocabularies.bind(this), this.args.school]);
-
   courseLevels = ['1', '2', '3', '4', '5'];
+
+  @cached
+  get sessionTypesData() {
+    return new TrackedAsyncData(this.loadSessionTypes(this.args.school));
+  }
+
+  get sessionTypes() {
+    return this.sessionTypesData.isResolved ? this.sessionTypesData.value : [];
+  }
+
+  get sessionTypesLoaded() {
+    return this.sessionTypesData.isResolved;
+  }
+
+  @cached
+  get vocabulariesData() {
+    return new TrackedAsyncData(this.loadVocabularies(this.args.school));
+  }
+
+  get vocabularies() {
+    return this.vocabulariesData.isResolved ? this.vocabulariesData.value : [];
+  }
+
+  get vocabulariesLoaded() {
+    return this.vocabulariesData.isResolved;
+  }
 
   async loadSessionTypes(school) {
     await this.dataLoader.loadSchoolForCalendar(school.id);

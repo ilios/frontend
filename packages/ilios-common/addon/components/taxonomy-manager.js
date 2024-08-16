@@ -1,13 +1,12 @@
 import Component from '@glimmer/component';
-import { tracked } from '@glimmer/tracking';
+import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
 import { isPresent } from '@ember/utils';
+import { TrackedAsyncData } from 'ember-async-data';
 import { restartableTask, timeout } from 'ember-concurrency';
 import { filter } from 'rsvp';
-import { use } from 'ember-could-get-used-to-this';
 import escapeRegExp from 'ilios-common/utils/escape-reg-exp';
-import AsyncProcess from 'ilios-common/classes/async-process';
 
 export default class TaxonomyManager extends Component {
   @service store;
@@ -15,11 +14,17 @@ export default class TaxonomyManager extends Component {
   @service flashMessages;
   @tracked termFilter = '';
   @tracked vocabId = null;
-  @use filteredTopLevelTerms = new AsyncProcess(() => [
-    this.getFilteredTopLevelTermsFromSelectedVocabulary.bind(this),
-    this.selectedVocabulary,
-    this.termFilter,
-  ]);
+
+  @cached
+  get filteredTopLevelTermsData() {
+    return new TrackedAsyncData(
+      this.getFilteredTopLevelTermsFromSelectedVocabulary(this.selectedVocabulary, this.termFilter),
+    );
+  }
+
+  get filteredTopLevelTerms() {
+    return this.filteredTopLevelTermsData.isResolved ? this.filteredTopLevelTermsData.value : [];
+  }
 
   @action
   load(element, [vocabulary]) {

@@ -2,11 +2,9 @@ import Component from '@glimmer/component';
 import { filter, map } from 'rsvp';
 import { task, timeout } from 'ember-concurrency';
 import { service } from '@ember/service';
-import AsyncProcess from 'ilios-common/classes/async-process';
 import { TrackedAsyncData } from 'ember-async-data';
 import { cached, tracked } from '@glimmer/tracking';
 import { uniqueValues } from 'ilios-common/utils/array-helpers';
-import { use } from 'ember-could-get-used-to-this';
 import { action } from '@ember/object';
 
 export default class ProgramYearCompetenciesComponent extends Component {
@@ -40,11 +38,18 @@ export default class ProgramYearCompetenciesComponent extends Component {
     return this.upstreamRelationships?.programYearCompetencies || [];
   }
 
-  @use competenciesWithSelectedChildren = new AsyncProcess(() => [
-    this.getCompetenciesWithSelectedChildren,
-    this.selectedCompetencies,
-    this.competencies,
-  ]);
+  @cached
+  get competenciesWithSelectedChildrenData() {
+    return new TrackedAsyncData(
+      this.getCompetenciesWithSelectedChildren(this.selectedCompetencies, this.competencies),
+    );
+  }
+
+  get competenciesWithSelectedChildren() {
+    return this.competenciesWithSelectedChildrenData.isResolved
+      ? this.competenciesWithSelectedChildrenData.value
+      : [];
+  }
 
   get domains() {
     return uniqueValues(this.upstreamRelationships?.domains || []);

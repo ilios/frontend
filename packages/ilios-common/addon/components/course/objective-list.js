@@ -3,17 +3,13 @@ import { cached, tracked } from '@glimmer/tracking';
 import { restartableTask } from 'ember-concurrency';
 import { map } from 'rsvp';
 import { service } from '@ember/service';
-import { use } from 'ember-could-get-used-to-this';
-import AsyncProcess from 'ilios-common/classes/async-process';
 import { TrackedAsyncData } from 'ember-async-data';
 import sortableByPosition from 'ilios-common/utils/sortable-by-position';
 import { findById } from 'ilios-common/utils/array-helpers';
-
 export default class CourseObjectiveListComponent extends Component {
   @service store;
   @service intl;
   @service dataLoader;
-
   @tracked isSorting = false;
 
   @cached
@@ -50,11 +46,18 @@ export default class CourseObjectiveListComponent extends Component {
     return [];
   }
 
-  @use cohortObjectives = new AsyncProcess(() => [
-    this.getCohortObjectives,
-    this.courseCohorts,
-    this.intl,
-  ]);
+  @cached
+  get cohortObjectivesData() {
+    return new TrackedAsyncData(this.getCohortObjectives(this.courseCohorts, this.intl));
+  }
+
+  get cohortObjectives() {
+    return this.cohortObjectivesData.isResolved ? this.cohortObjectivesData.value : [];
+  }
+
+  get cohortObjectivesLoaded() {
+    return this.cohortObjectivesData.isResolved;
+  }
 
   get courseObjectiveCount() {
     if (this.courseObjectives) {

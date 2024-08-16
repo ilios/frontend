@@ -2,7 +2,7 @@
   class="detail-learnergroups-list"
   data-test-detail-learnergroups-list
 >
-  {{#if (is-array this.trees)}}
+  {{#if this.isLoaded}}
     {{#each this.trees as |tree|}}
       <div class="trees" data-test-trees>
         <fieldset data-test-tree>

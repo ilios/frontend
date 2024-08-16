@@ -1,14 +1,17 @@
 import Component from '@glimmer/component';
+import { cached } from '@glimmer/tracking';
 import { filter } from 'rsvp';
-import { use } from 'ember-could-get-used-to-this';
-import AsyncProcess from 'ilios-common/classes/async-process';
+import { TrackedAsyncData } from 'ember-async-data';
 
 export default class SelectableTermsList extends Component {
-  @use filteredTerms = new AsyncProcess(() => [
-    this.getFilteredTerms.bind(this),
-    this.args.parent,
-    this.args.termFilter,
-  ]);
+  @cached
+  get termsData() {
+    return new TrackedAsyncData(this.getFilteredTerms(this.args.parent, this.args.termFilter));
+  }
+
+  get terms() {
+    return this.termsData.isResolved ? this.termsData.value : [];
+  }
 
   async getFilteredTerms(parent, termFilter) {
     const terms = (await parent.children).slice();
@@ -20,10 +23,6 @@ export default class SelectableTermsList extends Component {
       });
     }
     return terms;
-  }
-
-  get terms() {
-    return this.filteredTerms ?? [];
   }
 
   get level() {

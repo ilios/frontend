@@ -1,16 +1,18 @@
 import Component from '@glimmer/component';
 import { cached, tracked } from '@glimmer/tracking';
-import { use } from 'ember-could-get-used-to-this';
-import AsyncProcess from 'ilios-common/classes/async-process';
 import { TrackedAsyncData } from 'ember-async-data';
-
 export default class DetailTermsListItem extends Component {
   @tracked isHovering;
   @tracked theElement;
 
-  @use allParentTitles = new AsyncProcess(() => [
-    this.args.term.getAllParentTitles.bind(this.args.term),
-  ]);
+  @cached
+  get allParentsTitlesData() {
+    return new TrackedAsyncData(this.args.term.getAllParentTitles(this.args.term));
+  }
+
+  get allParentTitles() {
+    return this.allParentsTitlesData.isResolved ? this.allParentsTitlesData.value : [];
+  }
 
   @cached
   get parentData() {

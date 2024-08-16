@@ -1,31 +1,31 @@
 import Component from '@glimmer/component';
 import { service } from '@ember/service';
-import { tracked } from '@glimmer/tracking';
+import { cached, tracked } from '@glimmer/tracking';
 import { map, filter } from 'rsvp';
 import { mapBy } from 'ilios-common/utils/array-helpers';
-import { use } from 'ember-could-get-used-to-this';
-import AsyncProcess from 'ilios-common/classes/async-process';
+import { TrackedAsyncData } from 'ember-async-data';
 
 export default class DetailCohortManagerComponent extends Component {
   @service intl;
   @service store;
   @service permissionChecker;
   @tracked filter = '';
-  @use proxies = new AsyncProcess(() => [this.loadCohorts.bind(this), this.args.course]);
+
+  @cached
+  get proxiesData() {
+    return new TrackedAsyncData(this.loadCohorts(this.args.course));
+  }
 
   get isLoaded() {
-    return !!this.proxies;
+    return this.proxiesData.isResolved;
   }
 
   get availableCohortProxies() {
-    if (!this.proxies) {
-      return [];
-    }
-    return this.proxies;
+    return this.proxiesData.isResolved ? this.proxiesData.value : [];
   }
 
   get unselectedAvailableCohortProxies() {
-    if (!this.availableCohortProxies) {
+    if (!this.availableCohortProxies.length) {
       return [];
     }
     const selectedCohorts = this.args.selectedCohorts || [];

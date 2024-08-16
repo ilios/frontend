@@ -1,14 +1,19 @@
 import Component from '@glimmer/component';
 import { cached, tracked } from '@glimmer/tracking';
 import { dropTask } from 'ember-concurrency';
-import AsyncProcess from 'ilios-common/classes/async-process';
 import { TrackedAsyncData } from 'ember-async-data';
-import { use } from 'ember-could-get-used-to-this';
 
 export default class DetailLearningMaterialsItemComponent extends Component {
   @tracked showRemoveConfirmation = false;
 
-  @use owningUser = new AsyncProcess(() => [this.getOwningUser.bind(this), this.args.lm]);
+  @cached
+  get owningUserData() {
+    return new TrackedAsyncData(this.getOwningUser(this.args.lm));
+  }
+
+  get owningUser() {
+    return this.owningUserData.isResolved ? this.owningUserData.value : null;
+  }
 
   @cached
   get meshDescriptorsData() {

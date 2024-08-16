@@ -3,11 +3,8 @@ import { cached, tracked } from '@glimmer/tracking';
 import { dropTask } from 'ember-concurrency';
 import { map } from 'rsvp';
 import { service } from '@ember/service';
-import { use } from 'ember-could-get-used-to-this';
 import { TrackedAsyncData } from 'ember-async-data';
-import AsyncProcess from 'ilios-common/classes/async-process';
 import { mapBy, uniqueValues } from 'ilios-common/utils/array-helpers';
-
 export default class ProgramYearObjectiveListComponent extends Component {
   @service iliosConfig;
   @service session;
@@ -23,13 +20,17 @@ export default class ProgramYearObjectiveListComponent extends Component {
   get programYearCompetencies() {
     return this.programYearCompetenciesData.isResolved
       ? this.programYearCompetenciesData.value
-      : null;
+      : [];
   }
 
-  @use domainTrees = new AsyncProcess(() => [
-    this.getDomainTrees.bind(this),
-    this.programYearCompetencies ?? [],
-  ]);
+  @cached
+  get domainTreesData() {
+    return new TrackedAsyncData(this.getDomainTrees(this.programYearCompetencies));
+  }
+
+  get domainTrees() {
+    return this.domainTreesData.isResolved ? this.domainTreesData.value : [];
+  }
 
   get programYearObjectiveCount() {
     return this.args.programYear.programYearObjectives.length;
