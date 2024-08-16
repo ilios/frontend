@@ -2,7 +2,7 @@ import Service, { service } from '@ember/service';
 import { pluralize } from 'ember-inflector';
 import { camelize, capitalize, dasherize } from '@ember/string';
 import striptags from 'striptags';
-import { mapBy, sortBy } from 'ilios-common/utils/array-helpers';
+import { mapBy, sortBy, uniqueById } from 'ilios-common/utils/array-helpers';
 import { map } from 'rsvp';
 
 const subjectTranslations = {
@@ -160,27 +160,68 @@ export default class ReportingService extends Service {
     ].concat(mappedResults);
   }
 
-  async instructorsArrayResults(report) {
-    const filters = await this.#getFilters(report);
-    const graphqlFilters = filters.map((filter) => {
-      const specialInstructed = [
-        'learningMaterials',
-        'sessionTypes',
-        'courses',
-        'sessions',
-        'academicYears',
-      ];
-      specialInstructed.forEach((special) => {
-        if (filter.includes(special)) {
-          const cap = capitalize(special);
-          filter = filter.replace(special, `instructed${cap}`);
-        }
+  async getInstructorsArrayResultsForCourse(courseId) {
+    const userInfo = '{ id firstName middleName lastName displayName }';
+    const block = `instructorGroups {  users ${userInfo}}instructors ${userInfo}`;
+    const results = await this.graphql.find(
+      'courses',
+      [`id: ${courseId}`],
+      `sessions {
+        ilmSession { ${block} }
+        offerings { ${block} }
+      }`,
+    );
+
+    if (!results.data.courses.length) {
+      return [];
+    }
+
+    const users = results.data.courses[0].sessions.reduce((acc, session) => {
+      if (session.ilmSession) {
+        acc.push(
+          ...session.ilmSession.instructors,
+          ...session.ilmSession.instructorGroups.flatMap((group) => group.users),
+        );
+      }
+      session.offerings.forEach((offering) => {
+        acc.push(
+          ...offering.instructors,
+          ...offering.instructorGroups.flatMap((group) => group.users),
+        );
       });
-      return filter;
-    });
-    const attributes = ['id', 'firstName', 'middleName', 'lastName', 'displayName'];
-    const result = await this.graphql.find('users', graphqlFilters, attributes.join(','));
-    const names = result.data.users
+
+      return acc;
+    }, []);
+
+    return uniqueById(users);
+  }
+
+  async instructorsArrayResults(report) {
+    let users;
+    if (report.prepositionalObject === 'course') {
+      users = await this.getInstructorsArrayResultsForCourse(report.prepositionalObjectTableRowId);
+    } else {
+      const filters = await this.#getFilters(report);
+      const graphqlFilters = filters.map((filter) => {
+        const specialInstructed = [
+          'learningMaterials',
+          'sessionTypes',
+          'sessions',
+          'academicYears',
+        ];
+        specialInstructed.forEach((special) => {
+          if (filter.includes(special)) {
+            const cap = capitalize(special);
+            filter = filter.replace(special, `instructed${cap}`);
+          }
+        });
+        return filter;
+      });
+      const attributes = ['id', 'firstName', 'middleName', 'lastName', 'displayName'];
+      users = await this.graphql.find('users', graphqlFilters, attributes.join(','));
+    }
+
+    const names = users
       .map(({ firstName, middleName, lastName, displayName }) => {
         if (displayName) {
           return displayName;
