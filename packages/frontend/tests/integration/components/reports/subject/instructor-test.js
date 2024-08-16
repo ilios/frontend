@@ -71,8 +71,8 @@ module('Integration | Component | reports/subject/instructor', function (hooks) 
       assert.strictEqual(
         query,
         `query { courses(id: 13) { sessions {
-        ilmSession { instructorGroups {  users { id firstName middleName lastName displayName }}instructors { id firstName middleName lastName displayName } }
-        offerings { instructorGroups {  users { id firstName middleName lastName displayName }}instructors { id firstName middleName lastName displayName } }
+        ilmSession { instructorGroups {  users { id firstName middleName lastName displayName }} instructors { id firstName middleName lastName displayName } }
+        offerings { instructorGroups {  users { id firstName middleName lastName displayName }} instructors { id firstName middleName lastName displayName } }
       } } }`,
       );
       return responseData;

@@ -63,7 +63,7 @@ export default class ReportsSubjectInstructorComponent extends Component {
 
   async getResultsForCourse(courseId) {
     const userInfo = '{ id firstName middleName lastName displayName }';
-    const block = `instructorGroups {  users ${userInfo}}instructors ${userInfo}`;
+    const block = `instructorGroups {  users ${userInfo}} instructors ${userInfo}`;
     const results = await this.graphql.find(
       'courses',
       [`id: ${courseId}`],
