@@ -41,6 +41,9 @@ export default class ReportsSubjectInstructorGroupComponent extends Component {
       filters.push(`${what}: [${prepositionalObjectTableRowId}]`);
     }
     const result = await this.graphql.find('instructorGroups', filters, 'title');
+    if (this.args.setDataIsLoaded) {
+      this.args.setDataIsLoaded();
+    }
     return result.data.instructorGroups.map(({ title }) => title);
   }
 }

@@ -78,6 +78,9 @@ export default class ReportsSubjectInstructorComponent extends Component {
     );
     const attributes = ['firstName', 'middleName', 'lastName', 'displayName'];
     const result = await this.graphql.find('users', filters, attributes.join(','));
+    if (this.args.setDataIsLoaded) {
+      this.args.setDataIsLoaded();
+    }
     return result.data.users;
   }
 }

@@ -55,6 +55,9 @@ export default class ReportsSubjectSessionTypeComponent extends Component {
       school,
     );
     const result = await this.graphql.find('sessionTypes', filters, 'title');
+    if (this.args.setDataIsLoaded) {
+      this.args.setDataIsLoaded();
+    }
     return result.data.sessionTypes.map(({ title }) => title);
   }
 }

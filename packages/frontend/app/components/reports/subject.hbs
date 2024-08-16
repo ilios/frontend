@@ -37,13 +37,13 @@
       <div class="actions">
         <button
           type="button"
-          disabled={{this.downloadReport.isRunning}}
+          disabled={{or (not this.dataIsLoaded) this.downloadReport.isRunning}}
           {{on "click" (perform this.downloadReport)}}
           data-test-download
         >
           {{#if this.finishedBuildingReport}}
             <FaIcon @icon="check" />
-          {{else if this.downloadReport.isRunning}}
+          {{else if (or (not this.dataIsLoaded) this.downloadReport.isRunning)}}
             <LoadingSpinner />
           {{else}}
             <FaIcon @icon="download" />
@@ -55,6 +55,7 @@
     {{#let (load this.reportDescriptionPromise) as |p|}}
       {{#if p.isResolved}}
         <Reports::SubjectResults
+          @setDataIsLoaded={{this.setDataIsLoaded}}
           @subject={{@report.subject}}
           @prepositionalObject={{@report.prepositionalObject}}
           @prepositionalObjectTableRowId={{@report.prepositionalObjectTableRowId}}

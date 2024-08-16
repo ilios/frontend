@@ -16,6 +16,7 @@ export default class ReportsSubjectComponent extends Component {
   @service store;
   @tracked finishedBuildingReport = false;
   @tracked myReportEditorOn = false;
+  @tracked dataIsLoaded = false;
   @tracked @Length(1, 240) title = '';
 
   @cached
@@ -85,6 +86,11 @@ export default class ReportsSubjectComponent extends Component {
     this.args.report.title = this.title;
     await this.args.report.save();
   });
+
+  @action
+  setDataIsLoaded() {
+    this.dataIsLoaded = true;
+  }
 
   @action
   revertTitleChanges() {
