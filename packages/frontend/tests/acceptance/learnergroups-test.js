@@ -21,6 +21,47 @@ module('Acceptance | Learner Groups', function (hooks) {
     assert.strictEqual(currentRouteName(), 'learner-groups');
   });
 
+  test('list groups', async function (assert) {
+    assert.expect(8);
+    this.server.createList('user', 11);
+    const program = this.server.create('program', { school: this.school });
+    const programYear = this.server.create('program-year', { program });
+    const cohort = this.server.create('cohort', { programYear });
+    const firstLearnerGroup = this.server.create('learner-group', {
+      cohort,
+      userIds: [2, 3, 4, 5, 6],
+    });
+    this.server.create('learner-group', {
+      cohort,
+    });
+    const firstChildGroup = this.server.create('learner-group', {
+      parent: firstLearnerGroup,
+      userIds: [7, 8],
+    });
+    this.server.create('learner-group', {
+      parent: firstLearnerGroup,
+      userIds: [9, 10],
+    });
+    this.server.create('learner-group', {
+      parent: firstChildGroup,
+      userIds: [11, 12],
+    });
+    this.server.createList('offering', 2, {
+      learnerGroups: [firstLearnerGroup],
+    });
+
+    await page.visit();
+    await percySnapshot(assert);
+    assert.strictEqual(page.headerTitle, 'Learner Groups (2)');
+    assert.strictEqual(page.list.items.length, 2);
+    assert.strictEqual(page.list.items[0].title, 'learner group 0');
+    assert.strictEqual(page.list.items[0].users, '5');
+    assert.strictEqual(page.list.items[0].children, '2');
+    assert.strictEqual(page.list.items[1].title, 'learner group 1');
+    assert.strictEqual(page.list.items[1].users, '0');
+    assert.strictEqual(page.list.items[1].children, '0');
+  });
+
   test('single option filters', async function (assert) {
     assert.expect(6);
     const program = this.server.create('program', { school: this.school });
@@ -91,47 +132,6 @@ module('Acceptance | Learner Groups', function (hooks) {
     assert.strictEqual(page.headerTitle, 'Learner Groups (1)');
     assert.strictEqual(page.list.items.length, 1);
     assert.strictEqual(page.list.items[0].title, 'learner group 1');
-  });
-
-  test('list groups', async function (assert) {
-    assert.expect(8);
-    this.server.createList('user', 11);
-    const program = this.server.create('program', { school: this.school });
-    const programYear = this.server.create('program-year', { program });
-    const cohort = this.server.create('cohort', { programYear });
-    const firstLearnerGroup = this.server.create('learner-group', {
-      cohort,
-      userIds: [2, 3, 4, 5, 6],
-    });
-    this.server.create('learner-group', {
-      cohort,
-    });
-    const firstChildGroup = this.server.create('learner-group', {
-      parent: firstLearnerGroup,
-      userIds: [7, 8],
-    });
-    this.server.create('learner-group', {
-      parent: firstLearnerGroup,
-      userIds: [9, 10],
-    });
-    this.server.create('learner-group', {
-      parent: firstChildGroup,
-      userIds: [11, 12],
-    });
-    this.server.createList('offering', 2, {
-      learnerGroups: [firstLearnerGroup],
-    });
-
-    await page.visit();
-    await percySnapshot(assert);
-    assert.strictEqual(page.headerTitle, 'Learner Groups (2)');
-    assert.strictEqual(page.list.items.length, 2);
-    assert.strictEqual(page.list.items[0].title, 'learner group 0');
-    assert.strictEqual(page.list.items[0].users, '5');
-    assert.strictEqual(page.list.items[0].children, '2');
-    assert.strictEqual(page.list.items[1].title, 'learner group 1');
-    assert.strictEqual(page.list.items[1].users, '0');
-    assert.strictEqual(page.list.items[1].children, '0');
   });
 
   test('filters by title', async function (assert) {
