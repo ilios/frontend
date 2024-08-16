@@ -73,9 +73,9 @@ module('Integration | Component | user-profile-cohorts-manager', function (hooks
     await render(hbs`<UserProfileCohortsManager
       @primaryCohort={{this.primaryCohort}}
       @secondaryCohorts={{this.secondaryCohorts}}
-      @addSecondaryCohortToBuffer={{(noop)}}
-      @removeSecondaryCohortFromBuffer={{(noop)}}
-      @setPrimaryCohortBuffer={{(noop)}}
+      @addSecondaryCohort={{(noop)}}
+      @removeSecondaryCohort={{(noop)}}
+      @setPrimaryCohort={{(noop)}}
     />`);
 
     assert.strictEqual(component.primaryCohort.title, 'school 0 program 0 cohort 0');
@@ -98,9 +98,9 @@ module('Integration | Component | user-profile-cohorts-manager', function (hooks
     await render(hbs`<UserProfileCohortsManager
       @primaryCohort={{null}}
       @secondaryCohorts={{(array)}}
-      @addSecondaryCohortToBuffer={{(noop)}}
-      @removeSecondaryCohortFromBuffer={{(noop)}}
-      @setPrimaryCohortBuffer={{(noop)}}
+      @addSecondaryCohort={{(noop)}}
+      @removeSecondaryCohort={{(noop)}}
+      @setPrimaryCohort={{(noop)}}
     />`);
 
     assert.strictEqual(component.primaryCohort.title, 'None');
@@ -130,9 +130,9 @@ module('Integration | Component | user-profile-cohorts-manager', function (hooks
     await render(hbs`<UserProfileCohortsManager
       @primaryCohort={{null}}
       @secondaryCohorts={{this.secondaryCohorts}}
-      @addSecondaryCohortToBuffer={{(noop)}}
-      @removeSecondaryCohortFromBuffer={{(noop)}}
-      @setPrimaryCohortBuffer={{this.setPrimaryCohort}}
+      @addSecondaryCohort={{(noop)}}
+      @removeSecondaryCohort={{(noop)}}
+      @setPrimaryCohort={{this.setPrimaryCohort}}
     />`);
 
     assert.strictEqual(component.secondaryCohorts[0].title, 'school 0 program 0 cohort 0');
@@ -148,9 +148,9 @@ module('Integration | Component | user-profile-cohorts-manager', function (hooks
     await render(hbs`<UserProfileCohortsManager
       @primaryCohort={{this.primaryCohort}}
       @secondaryCohorts={{(array)}}
-      @addSecondaryCohortToBuffer={{(noop)}}
-      @removeSecondaryCohortFromBuffer={{(noop)}}
-      @setPrimaryCohortBuffer={{this.setPrimaryCohort}}
+      @addSecondaryCohort={{(noop)}}
+      @removeSecondaryCohort={{(noop)}}
+      @setPrimaryCohort={{this.setPrimaryCohort}}
     />`);
 
     assert.strictEqual(component.primaryCohort.title, 'school 0 program 0 cohort 0');
@@ -159,15 +159,15 @@ module('Integration | Component | user-profile-cohorts-manager', function (hooks
 
   test('add secondary cohort', async function (assert) {
     assert.expect(2);
-    this.set('addSecondaryCohortToBuffer', (cohort) => {
+    this.set('addSecondaryCohort', (cohort) => {
       assert.strictEqual(cohort, this.cohort1);
     });
     await render(hbs`<UserProfileCohortsManager
       @primaryCohort={{(noop)}}
       @secondaryCohorts={{(array)}}
-      @addSecondaryCohortToBuffer={{this.addSecondaryCohortToBuffer}}
-      @removeSecondaryCohortFromBuffer={{(noop)}}
-      @setPrimaryCohortBuffer={{(noop)}}
+      @addSecondaryCohort={{this.addSecondaryCohort}}
+      @removeSecondaryCohort={{(noop)}}
+      @setPrimaryCohort={{(noop)}}
     />`);
 
     assert.strictEqual(component.assignableCohorts[0].title, 'program 0 cohort 0');
@@ -176,16 +176,16 @@ module('Integration | Component | user-profile-cohorts-manager', function (hooks
 
   test('remove secondary cohort', async function (assert) {
     assert.expect(2);
-    this.set('removeSecondaryCohortFromBuffer', (cohort) => {
+    this.set('removeSecondaryCohort', (cohort) => {
       assert.strictEqual(cohort, this.cohort1);
     });
     this.set('secondaryCohorts', [this.cohort1]);
     await render(hbs`<UserProfileCohortsManager
       @primaryCohort={{(noop)}}
       @secondaryCohorts={{this.secondaryCohorts}}
-      @addSecondaryCohortToBuffer={{(noop)}}
-      @removeSecondaryCohortFromBuffer={{this.removeSecondaryCohortFromBuffer}}
-      @setPrimaryCohortBuffer={{(noop)}}
+      @addSecondaryCohort={{(noop)}}
+      @removeSecondaryCohort={{this.removeSecondaryCohort}}
+      @setPrimaryCohort={{(noop)}}
     />`);
 
     assert.strictEqual(component.secondaryCohorts[0].title, 'school 0 program 0 cohort 0');

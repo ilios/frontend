@@ -10,7 +10,7 @@
       <button
         type="button"
         class="link-button"
-        {{on "click" (fn @setPrimaryCohortBuffer null)}}
+        {{on "click" (fn @setPrimaryCohort null)}}
         data-test-remove
       >
         <FaIcon
@@ -40,7 +40,7 @@
           <button
             class="link-button"
             type="button"
-            {{on "click" (fn @setPrimaryCohortBuffer cohort)}}
+            {{on "click" (fn @setPrimaryCohort cohort)}}
             data-test-promote
           >
             <FaIcon
@@ -52,7 +52,7 @@
           <button
             class="link-button"
             type="button"
-            {{on "click" (fn @removeSecondaryCohortFromBuffer cohort)}}
+            {{on "click" (fn @removeSecondaryCohort cohort)}}
             data-test-remove
           >
             <FaIcon
@@ -114,7 +114,7 @@
             <button
               type="button"
               class="link-button"
-              {{on "click" (fn @addSecondaryCohortToBuffer cohort)}}
+              {{on "click" (fn @addSecondaryCohort cohort)}}
               data-test-add
             >
               <FaIcon
