@@ -79,7 +79,7 @@ module('Integration | Component | user profile cohorts', function (hooks) {
   });
 
   test('can edit user cohorts', async function (assert) {
-    assert.expect(28);
+    assert.expect(33);
     this.set('user', this.user);
 
     await render(
@@ -114,7 +114,15 @@ module('Integration | Component | user profile cohorts', function (hooks) {
     await component.manager.assignableCohorts[0].add();
     await component.save();
 
+    assert.strictEqual(component.manager.schools.filter.value, '2');
     assert.strictEqual(component.manager.assignableCohorts.length, 0);
+    assert.strictEqual(component.manager.primaryCohort.title, 'school 1 program 1 cohort 1');
+    assert.strictEqual(component.manager.secondaryCohorts.length, 1);
+    assert.strictEqual(component.manager.secondaryCohorts[0].title, 'school 1 program 1 cohort 3');
+
+    await component.manager.schools.filter.select('1');
+
+    assert.strictEqual(component.manager.assignableCohorts.length, 3);
     assert.strictEqual(component.manager.primaryCohort.title, 'school 1 program 1 cohort 1');
     assert.strictEqual(component.manager.secondaryCohorts.length, 1);
     assert.strictEqual(component.manager.secondaryCohorts[0].title, 'school 1 program 1 cohort 3');

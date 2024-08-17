@@ -14,6 +14,55 @@ export default class UserProfileCohortsComponent extends Component {
   @tracked newPrimaryCohort = false;
   @tracked cohortsToAdd = [];
   @tracked cohortsToRemove = [];
+  @tracked selectedSchool = null;
+
+  @cached
+  get allSchoolsData() {
+    return new TrackedAsyncData(this.store.findAll('school'));
+  }
+
+  @cached
+  get schoolPermissionsData() {
+    return new TrackedAsyncData(
+      Promise.all(
+        this.allSchoolsData.value.map(async (school) => {
+          return {
+            school,
+            canUpdate: await this.permissionChecker.canUpdateUserInSchool(school),
+          };
+        }),
+      ),
+    );
+  }
+
+  get selectedableSchools() {
+    if (!this.allSchoolsData.isResolved || !this.schoolPermissionsData.isResolved) {
+      return [];
+    }
+
+    return this.schoolPermissionsData.value
+      .filter((obj) => obj.canUpdate)
+      .map(({ school }) => school);
+  }
+
+  @cached
+  get userData() {
+    return new TrackedAsyncData(this.currentUser.getModel());
+  }
+
+  get user() {
+    return this.userData.isResolved ? this.userData.value : null;
+  }
+
+  get currentSchool() {
+    if (this.selectedSchool) {
+      return this.selectedSchool;
+    }
+
+    const schoolId = this.user?.belongsTo('school').id();
+
+    return this.selectedableSchools.find((school) => school.id === schoolId);
+  }
 
   @cached
   get primaryCohortData() {
@@ -47,7 +96,13 @@ export default class UserProfileCohortsComponent extends Component {
   }
 
   get isLoaded() {
-    return this.primaryCohortData.isResolved && this.cohortsData.isResolved;
+    return (
+      this.primaryCohortData.isResolved &&
+      this.cohortsData.isResolved &&
+      this.allSchoolsData.isResolved &&
+      this.schoolPermissionsData.isResolved &&
+      this.userData.isResolved
+    );
   }
 
   get currentPrimaryCohort() {
