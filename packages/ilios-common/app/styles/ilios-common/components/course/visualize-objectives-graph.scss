@@ -13,13 +13,19 @@
     }
   }
 
-  .zero-hours {
+  .objective-row {
     p {
-      margin-top: 0.5rem;
+      margin: 0;
     }
+  }
 
+  .zero-hours {
     h4 {
       @include m.ilios-heading-h4;
+    }
+
+    p {
+      margin-top: 0.5rem;
     }
 
     li {
@@ -35,12 +41,5 @@
 
   &.not-icon {
     grid-template-columns: 2fr 1fr;
-  }
-
-
-  .objective-row {
-    p {
-      margin: 0;
-    }
   }
 }
