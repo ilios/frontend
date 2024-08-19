@@ -4,6 +4,7 @@ import { cached } from '@glimmer/tracking';
 import { service } from '@ember/service';
 import { pluralize } from 'ember-inflector';
 import { camelize, capitalize } from '@ember/string';
+import { uniqueById } from 'ilios-common/utils/array-helpers';
 
 export default class ReportsSubjectInstructorComponent extends Component {
   @service graphql;
@@ -50,13 +51,7 @@ export default class ReportsSubjectInstructorComponent extends Component {
     }
     if (prepositionalObject && prepositionalObjectTableRowId) {
       let what = pluralize(camelize(prepositionalObject));
-      const specialInstructed = [
-        'learningMaterials',
-        'sessionTypes',
-        'courses',
-        'sessions',
-        'academicYears',
-      ];
+      const specialInstructed = ['learningMaterials', 'sessionTypes', 'sessions', 'academicYears'];
       if (specialInstructed.includes(what)) {
         what = 'instructed' + capitalize(what);
       }
@@ -66,9 +61,49 @@ export default class ReportsSubjectInstructorComponent extends Component {
     return rhett;
   }
 
+  async getResultsForCourse(courseId) {
+    const userInfo = '{ id firstName middleName lastName displayName }';
+    const block = `instructorGroups {  users ${userInfo}} instructors ${userInfo}`;
+    const results = await this.graphql.find(
+      'courses',
+      [`id: ${courseId}`],
+      `sessions {
+        ilmSession { ${block} }
+        offerings { ${block} }
+      }`,
+    );
+
+    if (!results.data.courses.length) {
+      return [];
+    }
+
+    const users = results.data.courses[0].sessions.reduce((acc, session) => {
+      if (session.ilmSession) {
+        acc.push(
+          ...session.ilmSession.instructors,
+          ...session.ilmSession.instructorGroups.flatMap((group) => group.users),
+        );
+      }
+      session.offerings.forEach((offering) => {
+        acc.push(
+          ...offering.instructors,
+          ...offering.instructorGroups.flatMap((group) => group.users),
+        );
+      });
+
+      return acc;
+    }, []);
+
+    return uniqueById(users);
+  }
+
   async getReportResults(subject, prepositionalObject, prepositionalObjectTableRowId, school) {
     if (subject !== 'instructor') {
       throw new Error(`Report for ${subject} sent to ReportsSubjectInstructorComponent`);
+    }
+
+    if (prepositionalObject === 'course') {
+      return this.getResultsForCourse(prepositionalObjectTableRowId);
     }
 
     const filters = await this.getGraphQLFilters(

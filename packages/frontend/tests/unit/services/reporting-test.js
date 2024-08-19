@@ -354,34 +354,118 @@ module('Unit | Service | reporting', function (hooks) {
 
   test('getArrayResults() for instructor report', async function (assert) {
     assert.expect(2);
-    const school = this.server.create('school', { title: 'School of Schools' });
-    const course = this.server.create('course', { id: 42, school });
-    const session = this.server.create('session', { course });
-    const ilmSession = this.server.create('ilmSession', { session });
     const report = this.server.create('report', {
       subject: 'instructor',
-      school,
       prepositionalObject: 'course',
       prepositionalObjectTableRowId: 42,
     });
-    const instructors = this.server.createList('user', 2, { instructorIlmSessions: [ilmSession] });
     this.server.post('api/graphql', function (schema, { requestBody }) {
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
-        'query { users(schools: [1], instructedCourses: [42]) { id,firstName,middleName,lastName,displayName } }',
+        `query { courses(id: 42) { sessions {
+        ilmSession { instructorGroups {  users { id firstName middleName lastName displayName }} instructors { id firstName middleName lastName displayName } }
+        offerings { instructorGroups {  users { id firstName middleName lastName displayName }} instructors { id firstName middleName lastName displayName } }
+      } } }`,
       );
       return {
         data: {
-          users: instructors
-            .reverse()
-            .map(({ id, firstName, middleName, lastName, displayName }) => ({
-              id,
-              firstName,
-              middleName,
-              lastName,
-              displayName,
-            })),
+          courses: [
+            {
+              sessions: [
+                {
+                  ilmSession: {
+                    instructors: [
+                      {
+                        id: 1,
+                        firstName: 'F',
+                        middleName: '1',
+                        lastName: 'L',
+                        displayName: '',
+                      },
+                    ],
+                    instructorGroups: [
+                      {
+                        users: [
+                          {
+                            id: 2,
+                            firstName: 'F',
+                            middleName: '2',
+                            lastName: 'L',
+                            displayName: '',
+                          },
+                        ],
+                      },
+                    ],
+                  },
+                  offerings: [
+                    {
+                      instructors: [
+                        {
+                          id: 3,
+                          firstName: 'F',
+                          middleName: '',
+                          lastName: 'L',
+                          displayName: 'o1i',
+                        },
+                        {
+                          id: 2,
+                          firstName: 'F',
+                          middleName: '2',
+                          lastName: 'L',
+                          displayName: '',
+                        },
+                      ],
+                      instructorGroups: [
+                        {
+                          users: [
+                            {
+                              id: 4,
+                              firstName: 'F',
+                              middleName: '',
+                              lastName: 'L',
+                              displayName: 'o1ig',
+                            },
+                          ],
+                        },
+                      ],
+                    },
+                    {
+                      instructors: [
+                        {
+                          id: 5,
+                          firstName: 'F',
+                          middleName: '',
+                          lastName: 'L',
+                          displayName: 'o2i',
+                        },
+                      ],
+                      instructorGroups: [
+                        {
+                          users: [
+                            {
+                              id: 6,
+                              firstName: 'F',
+                              middleName: '',
+                              lastName: 'L',
+                              displayName: 'o2ig',
+                            },
+                            {
+                              id: 2,
+                              firstName: 'F',
+                              middleName: '2',
+                              lastName: 'L',
+                              displayName: '',
+                            },
+                          ],
+                        },
+                      ],
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
         },
       };
     });
@@ -389,6 +473,14 @@ module('Unit | Service | reporting', function (hooks) {
     const store = this.owner.lookup('service:store');
     const reportModel = await store.findRecord('report', report.id);
     const props = await this.service.getArrayResults(reportModel, 1999);
-    assert.deepEqual(props, [['Instructors'], ['0 guy M. Mc0son'], ['1 guy M. Mc1son']]);
+    assert.deepEqual(props, [
+      ['Instructors'],
+      ['F 1. L'],
+      ['F 2. L'],
+      ['o1i'],
+      ['o1ig'],
+      ['o2i'],
+      ['o2ig'],
+    ]);
   });
 });

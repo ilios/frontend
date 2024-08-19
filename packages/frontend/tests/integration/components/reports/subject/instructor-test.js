@@ -70,7 +70,10 @@ module('Integration | Component | reports/subject/instructor', function (hooks) 
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
-        'query { users(instructedCourses: [13]) { firstName,middleName,lastName,displayName } }',
+        `query { courses(id: 13) { sessions {
+        ilmSession { instructorGroups {  users { id firstName middleName lastName displayName }} instructors { id firstName middleName lastName displayName } }
+        offerings { instructorGroups {  users { id firstName middleName lastName displayName }} instructors { id firstName middleName lastName displayName } }
+      } } }`,
       );
       return responseData;
     });
@@ -127,6 +130,29 @@ module('Integration | Component | reports/subject/instructor', function (hooks) 
       subject: 'instructor',
       prepositionalObject: 'academic year',
       prepositionalObjectTableRowId: 2005,
+    });
+    this.set('report', await this.owner.lookup('service:store').findRecord('report', id));
+    await render(hbs`<Reports::Subject::Instructor
+      @subject={{this.report.subject}}
+      @prepositionalObject={{this.report.prepositionalObject}}
+      @prepositionalObjectTableRowId={{this.report.prepositionalObjectTableRowId}}
+    />`);
+  });
+
+  test('filter by session types', async function (assert) {
+    assert.expect(1);
+    this.server.post('api/graphql', function (schema, { requestBody }) {
+      const { query } = JSON.parse(requestBody);
+      assert.strictEqual(
+        query,
+        'query { users(instructedSessionTypes: [4]) { firstName,middleName,lastName,displayName } }',
+      );
+      return responseData;
+    });
+    const { id } = this.server.create('report', {
+      subject: 'instructor',
+      prepositionalObject: 'session type',
+      prepositionalObjectTableRowId: 4,
     });
     this.set('report', await this.owner.lookup('service:store').findRecord('report', id));
     await render(hbs`<Reports::Subject::Instructor
