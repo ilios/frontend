@@ -64,7 +64,7 @@ export default class CourseVisualizeTermGraph extends Component {
   }
 
   async getDataObjects(course, term) {
-    const sessions = (await course.sessions).slice();
+    const sessions = await course.sessions;
     const sessionIds = term.hasMany('sessions').ids();
     const filteredSessions = sessions.filter((session) => sessionIds.includes(session.id));
     const sessionTypes = await Promise.all(filteredSessions.map((s) => s.sessionType));

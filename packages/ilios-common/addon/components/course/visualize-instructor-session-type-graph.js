@@ -64,7 +64,7 @@ export default class CourseVisualizeInstructorSessionTypeGraph extends Component
   }
 
   async getData(course, user) {
-    const sessions = (await course.sessions).slice();
+    const sessions = await course.sessions;
     if (!sessions.length) {
       return [];
     }

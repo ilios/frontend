@@ -66,7 +66,7 @@ export default class CourseVisualizeVocabulariesGraph extends Component {
   }
 
   async getDataObjects(course) {
-    const sessions = (await course.sessions).slice();
+    const sessions = await course.sessions;
     if (!sessions.length) {
       return [];
     }
@@ -82,7 +82,7 @@ export default class CourseVisualizeVocabulariesGraph extends Component {
     const sessionWithMinutesAndVocabs = await map(
       sessionsWithMinutes,
       async ({ session, minutes }) => {
-        const terms = (await session.terms).slice();
+        const terms = await session.terms;
         const vocabularies = await all(mapBy(terms, 'vocabulary'));
         return {
           session,

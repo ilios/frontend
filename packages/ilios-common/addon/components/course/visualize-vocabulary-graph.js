@@ -65,7 +65,7 @@ export default class CourseVisualizeVocabularyGraph extends Component {
   }
 
   async getDataObjects(course) {
-    const sessions = (await course.sessions).slice();
+    const sessions = await course.sessions;
     if (!sessions.length) {
       return [];
     }

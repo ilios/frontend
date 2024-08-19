@@ -65,7 +65,7 @@ export default class CourseVisualizeInstructorTermGraph extends Component {
   }
 
   async getData(course, user) {
-    const sessions = (await course.sessions).slice();
+    const sessions = await course.sessions;
     if (!sessions.length) {
       return [];
     }
@@ -75,7 +75,8 @@ export default class CourseVisualizeInstructorTermGraph extends Component {
     });
 
     const sessionsWithTerms = await map(sessionsWithUser, async (session) => {
-      const terms = await map((await session.terms).slice(), async (term) => {
+      const sessionTerms = await session.terms;
+      const terms = await map(sessionTerms, async (term) => {
         const vocabulary = await term.vocabulary;
         return {
           term,

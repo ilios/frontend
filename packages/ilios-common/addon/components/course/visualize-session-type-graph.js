@@ -65,8 +65,8 @@ export default class CourseVisualizeSessionTypeGraph extends Component {
   }
 
   async getDataObjects(course, sessionType) {
-    const sessions = (await course.sessions).slice();
-    const sessionTypeSessions = (await sessionType.sessions).slice();
+    const sessions = await course.sessions;
+    const sessionTypeSessions = await sessionType.sessions;
 
     const courseSessionsWithSessionType = sessions.filter((session) =>
       sessionTypeSessions.includes(session),
@@ -81,7 +81,7 @@ export default class CourseVisualizeSessionTypeGraph extends Component {
     });
 
     const termData = await map(sessionsWithMinutes, async ({ session, minutes }) => {
-      const terms = (await session.terms).slice();
+      const terms = await session.terms;
       return map(terms, async (term) => {
         const vocabulary = await term.vocabulary;
         return {

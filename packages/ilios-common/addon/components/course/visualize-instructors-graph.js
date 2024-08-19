@@ -84,7 +84,7 @@ export default class CourseVisualizeInstructorsGraph extends Component {
   }
 
   async getData(course) {
-    const sessions = (await course.sessions).slice();
+    const sessions = await course.sessions;
     const sessionsWithInstructors = await map(sessions, async (session) => {
       const instructors = await session.getAllInstructors();
       const instructorsWithInstructionalTime = await map(instructors, async (instructor) => {
