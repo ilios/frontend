@@ -171,7 +171,7 @@ export default class BulkNewUsersComponent extends Component {
 
   async existingUsernames() {
     const authentications = await this.store.findAll('authentication');
-    return mapBy(authentications.slice(), 'username').filter(Boolean);
+    return mapBy(authentications, 'username').filter(Boolean);
   }
 
   /**
@@ -254,7 +254,7 @@ export default class BulkNewUsersComponent extends Component {
     const selectedSchool = this.bestSelectedSchool;
     const selectedCohort = this.bestSelectedCohort;
     const roles = await this.store.findAll('user-role');
-    const studentRole = findById(roles.slice(), '4');
+    const studentRole = findById(roles, '4');
 
     const proposedUsers = this.selectedUsers;
 

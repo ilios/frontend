@@ -120,14 +120,14 @@ export default class NewUserComponent extends Component {
 
   get bestSelectedCohort() {
     if (this.primaryCohortId) {
-      const currentCohort = findById(this.currentSchoolCohorts.slice(), this.primaryCohortId);
+      const currentCohort = findById(this.currentSchoolCohorts, this.primaryCohortId);
 
       if (currentCohort) {
         return currentCohort;
       }
     }
 
-    return this.currentSchoolCohorts.slice().reverse()[0];
+    return this.currentSchoolCohorts.reverse()[0];
   }
 
   async isUsernameTaken(username) {
@@ -175,7 +175,7 @@ export default class NewUserComponent extends Component {
     });
     if (!this.nonStudentMode) {
       user.set('primaryCohort', primaryCohort);
-      const studentRole = findBy(roles.slice(), 'title', 'Student');
+      const studentRole = findBy(roles, 'title', 'Student');
       user.set('roles', [studentRole]);
     }
     user = await user.save();

@@ -50,12 +50,12 @@ export default class PendingUpdatesSummaryComponent extends Component {
   get bestSelectedSchool() {
     const id = this.selectedSchoolId ?? this.user?.belongsTo('school').id();
     if (id) {
-      const school = findById(this.args.schools.slice(), id);
+      const school = findById(this.args.schools, id);
       if (school) {
         return school;
       }
     }
-    return this.args.schools.slice()[0];
+    return this.args.schools[0];
   }
 
   get areUpdatesLoaded() {
@@ -67,11 +67,11 @@ export default class PendingUpdatesSummaryComponent extends Component {
       return [];
     }
 
-    return this.allUpdates.slice();
+    return this.allUpdates;
   }
 
   async getUpdatesForSchool(allUpdates, selectedSchool) {
-    return filter(allUpdates.slice(), async (update) => {
+    return filter(allUpdates, async (update) => {
       const user = await update.user;
       return user.belongsTo('school').id() === selectedSchool.id;
     });

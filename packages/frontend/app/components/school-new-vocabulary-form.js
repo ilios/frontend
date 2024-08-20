@@ -38,7 +38,7 @@ export default class SchoolNewVocabularyFormComponent extends Component {
 
   async validateTitleCallback() {
     const allVocabsInSchool = await this.args.school.vocabularies;
-    const titles = mapBy(allVocabsInSchool.slice(), 'title');
+    const titles = mapBy(allVocabsInSchool, 'title');
     return !titles.includes(this.title);
   }
 

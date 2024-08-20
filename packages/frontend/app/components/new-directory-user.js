@@ -139,7 +139,7 @@ export default class NewDirectoryUserComponent extends Component {
 
   get bestSelectedCohort() {
     if (this.primaryCohortId) {
-      const currentCohort = findById(this.currentSchoolCohorts.slice(), this.primaryCohortId);
+      const currentCohort = findById(this.currentSchoolCohorts, this.primaryCohortId);
 
       if (currentCohort) {
         return currentCohort;

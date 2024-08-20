@@ -97,7 +97,7 @@ export default class SchoolVocabularyTermManagerComponent extends Component {
     const goTo = isEmpty(parent) ? null : parent.id;
     this.args.term.deleteRecord();
     if (parent) {
-      const siblings = (await parent.children).slice();
+      const siblings = await parent.children;
       siblings.splice(siblings.indexOf(this.args.term), 1);
       parent.set('children', siblings);
     }
@@ -119,7 +119,7 @@ export default class SchoolVocabularyTermManagerComponent extends Component {
 
   async validateTitleCallback() {
     const terms = await this.args.term.children;
-    return !mapBy(terms.slice(), 'title').includes(this.title);
+    return !mapBy(terms, 'title').includes(this.title);
   }
 
   validateTitleMessageCallback() {
