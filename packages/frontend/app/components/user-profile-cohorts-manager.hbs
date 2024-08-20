@@ -10,7 +10,7 @@
       <button
         type="button"
         class="link-button"
-        {{on "click" (fn @setPrimaryCohortBuffer null)}}
+        {{on "click" (fn @setPrimaryCohort null)}}
         data-test-remove
       >
         <FaIcon
@@ -40,7 +40,7 @@
           <button
             class="link-button"
             type="button"
-            {{on "click" (fn @setPrimaryCohortBuffer cohort)}}
+            {{on "click" (fn @setPrimaryCohort cohort)}}
             data-test-promote
           >
             <FaIcon
@@ -52,7 +52,7 @@
           <button
             class="link-button"
             type="button"
-            {{on "click" (fn @removeSecondaryCohortFromBuffer cohort)}}
+            {{on "click" (fn @removeSecondaryCohort cohort)}}
             data-test-remove
           >
             <FaIcon
@@ -84,37 +84,33 @@
     </h4>
     <div class="schoolsfilter" data-test-schools>
       <FaIcon @icon="building-columns" @fixedWidth={{true}} />
-      {{#if this.allSchoolsLoaded}}
-        {{#if (gt this.allSchools.length 1)}}
-          <select
-            aria-label={{t "general.schools"}}
-            {{on "change" (pick "target.value" this.changeSchool)}}
-            data-test-filter
-          >
-            {{#each (sort-by "title" this.allSchools) as |school|}}
-              <option
-                value={{school.id}}
-                selected={{eq school (if this.selectedSchool this.selectedSchool this.userSchool)}}
-              >
-                {{school.title}}
-              </option>
-            {{/each}}
-          </select>
-        {{else}}
-          {{this.selectedSchool.title}}
-        {{/if}}
+      {{#if (gt @schools.length 1)}}
+        <select
+          aria-label={{t "general.schools"}}
+          {{on "change" (pick "target.value" this.changeSchool)}}
+          data-test-filter
+        >
+          {{#each (sort-by "title" @schools) as |school|}}
+            <option
+              value={{school.id}}
+              selected={{eq school (if @selectedSchool @selectedSchool this.userSchool)}}
+            >
+              {{school.title}}
+            </option>
+          {{/each}}
+        </select>
       {{else}}
-        <LoadingSpinner />
+        {{@selectedSchool.title}}
       {{/if}}
     </div>
-    {{#if this.selectableCohortsLoaded}}
+    {{#if this.selectableCohortsData.isResolved}}
       <ul data-test-assignable-cohorts>
         {{#each this.selectableCohorts as |cohort|}}
           <li data-test-assignable-cohort>
             <button
               type="button"
               class="link-button"
-              {{on "click" (fn @addSecondaryCohortToBuffer cohort)}}
+              {{on "click" (fn @addSecondaryCohort cohort)}}
               data-test-add
             >
               <FaIcon

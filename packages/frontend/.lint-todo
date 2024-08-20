@@ -3,7 +3,6 @@ add|ember-template-lint|no-at-ember-render-modifiers|5|4|5|4|ddf86727990ead62165
 add|ember-template-lint|no-at-ember-render-modifiers|28|43|28|43|5c127b0b8124a93b18177d7580bcc47dbb8ebbff|1722902400000|1730682000000|1754006400000|app/components/user-menu.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|4|2|4|2|23cd787c79c34a628dadb6e96dd4004d42eebb79|1722902400000|1730682000000|1754006400000|app/components/user-profile-bio.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|5|2|5|2|f53982efe02d2bef9e7f12b5b862288c594579c2|1722902400000|1730682000000|1754006400000|app/components/user-profile-bio.hbs
-add|ember-template-lint|no-at-ember-render-modifiers|5|2|5|2|cb63b416987d7c877a388fbd8e02681fb5571202|1722902400000|1730682000000|1754006400000|app/components/user-profile-cohorts.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|4|2|4|2|23cd787c79c34a628dadb6e96dd4004d42eebb79|1722902400000|1730682000000|1754006400000|app/components/user-profile-roles.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|5|2|5|2|e5120f87b74c5ae8e4c76b9089e0b4a4504c6e3c|1722902400000|1730682000000|1754006400000|app/components/user-profile-roles.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|4|2|4|2|1fb0566922ce4f066916e5e2931f650f69d7cfba|1722902400000|1730682000000|1754006400000|app/components/visualizer-program-year-objectives.hbs

@@ -2,9 +2,8 @@
   class="user-profile-cohorts small-component {{if this.hasSavedRecently "has-saved" "has-not-saved"}}"
   data-test-user-profile-cohorts
   ...attributes
-  {{did-insert (perform this.load) @user}}
 >
-  {{#unless this.load.isRunning}}
+  {{#if this.isLoaded}}
     <div class="user-profile-cohorts-header">
       <h3 class="title" data-test-title>
         {{t "general.cohorts"}}
@@ -46,11 +45,14 @@
     </div>
     {{#if @isManaging}}
       <UserProfileCohortsManager
-        @primaryCohort={{this.primaryCohortBuffer}}
-        @secondaryCohorts={{this.secondaryCohortsBuffer}}
-        @addSecondaryCohortToBuffer={{this.addSecondaryCohortToBuffer}}
-        @removeSecondaryCohortFromBuffer={{this.removeSecondaryCohortFromBuffer}}
-        @setPrimaryCohortBuffer={{this.setPrimaryCohortBuffer}}
+        @primaryCohort={{this.currentPrimaryCohort}}
+        @secondaryCohorts={{this.secondaryCohorts}}
+        @addSecondaryCohort={{this.addSecondaryCohort}}
+        @removeSecondaryCohort={{this.removeSecondaryCohort}}
+        @setPrimaryCohort={{set this.newPrimaryCohort}}
+        @schools={{this.selectedableSchools}}
+        @selectedSchool={{this.currentSchool}}
+        @setSchool={{set this.selectedSchool}}
       />
     {{else}}
       <UserProfileCohortsDetails
@@ -58,5 +60,5 @@
         @secondaryCohorts={{this.secondaryCohorts}}
       />
     {{/if}}
-  {{/unless}}
+  {{/if}}
 </div>
