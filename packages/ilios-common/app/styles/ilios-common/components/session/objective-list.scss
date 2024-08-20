@@ -1,5 +1,10 @@
 @use "../../mixins" as m;
+@use "../../colors" as c;
 
 .session-objective-list {
   @include m.objective-list;
+
+  .fade-text-control {
+    background-image: linear-gradient(to bottom, transparent, c.$lightBlue);
+  }
 }

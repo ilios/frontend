@@ -16,29 +16,3 @@
     position: relative;
   }
 }
-
-.course-objective-list {
-  .fade-text-control {
-    background-image: linear-gradient(to bottom, transparent, c.$white);
-  }
-}
-
-.session-objective-list {
-  .fade-text-control {
-    background-image: linear-gradient(to bottom, transparent, c.$lightBlue);
-  }
-}
-
-.objective-sort-manager {
-  span {
-    &.draggable-object-content {
-      .fade-text-control {
-        background-image: linear-gradient(
-          to bottom,
-          transparent,
-          c.$culturedGrey
-        );
-      }
-    }
-  }
-}
