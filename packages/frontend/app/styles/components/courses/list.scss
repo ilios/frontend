@@ -1,9 +1,11 @@
 @use "../../mixins" as m;
 
 .courses-list {
-  @include m.main-list-box-table;
-
   i {
     margin-left: 0.5rem;
+  }
+
+  .list {
+    @include m.main-list-box-table;
   }
 }

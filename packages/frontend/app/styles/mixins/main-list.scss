@@ -95,6 +95,10 @@
   display: block;
   padding: 1rem;
 
+  &.empty {
+    padding: 0;
+  }
+
   table {
     @include cm.ilios-table-structure;
     @include cm.ilios-table-colors;
