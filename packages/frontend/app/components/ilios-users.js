@@ -41,7 +41,8 @@ export default class IliosUsersComponent extends Component {
     const q = cleanQuery(this.args.query);
     await timeout(DEBOUNCE_TIMEOUT);
     return this.store.query('user', {
-      limit: this.args.limit,
+      // overfetch for nextPage functionality
+      limit: this.args.limit + 1,
       q,
       offset: this.args.offset,
       'order_by[lastName]': 'ASC',

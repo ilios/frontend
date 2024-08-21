@@ -65,6 +65,7 @@
     {{#if this.searchForUsers.lastSuccessful}}
       <div data-test-top-paged-list-controls>
         <PagedlistControls
+          @total={{this.searchForUsers.lastSuccessful.value.length}}
           @offset={{@offset}}
           @limit={{@limit}}
           @limitless={{true}}
@@ -73,6 +74,9 @@
         />
       </div>
       <div class="list">
+      {{#if this.searchForUsers.isRunning}}
+        <LoadingSpinner />
+      {{else}}
         {{#if (gt this.searchForUsers.lastSuccessful.value.length 0)}}
           <UserList @users={{this.searchForUsers.lastSuccessful.value}} />
         {{else}}
@@ -80,9 +84,11 @@
             {{t "general.noResultsFound"}}
           </span>
         {{/if}}
+      {{/if}}
       </div>
       <div data-test-bottom-paged-list-controls>
         <PagedlistControls
+          @total={{this.searchForUsers.lastSuccessful.value.length}}
           @offset={{@offset}}
           @limit={{@limit}}
           @limitless={{true}}
