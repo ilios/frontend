@@ -595,7 +595,7 @@ export default class SessionModel extends Model {
 
   async getTotalSumOfferingsDurationByInstructor(user) {
     const offerings = await this.offerings;
-    const offeringsWithUser = await filter(offerings.slice(), async (offering) => {
+    const offeringsWithUser = await filter(offerings, async (offering) => {
       const instructors = await offering.getAllInstructors();
       return mapBy(instructors, 'id').includes(user.id);
     });

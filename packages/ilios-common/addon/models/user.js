@@ -626,9 +626,7 @@ export default class User extends Model {
   async getLowestMemberGroupInALearnerGroupTree(learnerGroupTree) {
     const learnerGroups = await this.learnerGroups;
     //all the groups a user is in that are in our current learner groups tree
-    const relevantGroups = learnerGroups
-      .slice()
-      .filter((group) => learnerGroupTree.includes(group));
+    const relevantGroups = learnerGroups.filter((group) => learnerGroupTree.includes(group));
     const relevantGroupIds = mapBy(relevantGroups, 'id');
     const lowestGroup = relevantGroups.find((group) => {
       const childIds = group.hasMany('children').ids();

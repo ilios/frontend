@@ -110,7 +110,7 @@ export default class Term extends Model {
   }
 
   async getAllDescendants() {
-    const children = (await this.children).slice();
+    const children = await this.children;
     const childrenDescendants = await Promise.all(
       children.map((child) => child.getAllDescendants()),
     );
