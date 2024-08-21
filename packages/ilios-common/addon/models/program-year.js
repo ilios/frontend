@@ -1,5 +1,4 @@
 import Model, { hasMany, belongsTo, attr } from '@ember-data/model';
-import sortableByPosition from 'ilios-common/utils/sortable-by-position';
 import { TrackedAsyncData } from 'ember-async-data';
 import { cached } from '@glimmer/tracking';
 import { sortBy, uniqueValues } from 'ilios-common/utils/array-helpers';
@@ -33,11 +32,6 @@ export default class ProgramYear extends Model {
 
   @hasMany('program-year-objective', { async: true, inverse: 'programYear' })
   programYearObjectives;
-
-  @cached
-  get _programYearObjectivesData() {
-    return new TrackedAsyncData(this.programYearObjectives);
-  }
 
   @hasMany('term', { async: true, inverse: 'programYears' })
   terms;
@@ -89,16 +83,6 @@ export default class ProgramYear extends Model {
   async getClassOfYear() {
     const program = await this.program;
     return Number(this.startYear) + Number(program.duration);
-  }
-
-  /**
-   * A list of program-year objectives, sorted by position.
-   */
-  get sortedProgramYearObjectives() {
-    if (!this._programYearObjectivesData.isResolved) {
-      return null;
-    }
-    return this._programYearObjectivesData.value.slice().sort(sortableByPosition);
   }
 
   @cached
