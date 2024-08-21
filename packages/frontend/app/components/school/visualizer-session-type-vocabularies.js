@@ -5,8 +5,6 @@ import { map } from 'rsvp';
 import { restartableTask, timeout } from 'ember-concurrency';
 import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
-import { use } from 'ember-could-get-used-to-this';
-import AsyncProcess from 'ilios-common/classes/async-process';
 import { TrackedAsyncData } from 'ember-async-data';
 
 export default class SchoolVisualizerSessionTypeVocabulariesComponent extends Component {
@@ -16,37 +14,23 @@ export default class SchoolVisualizerSessionTypeVocabulariesComponent extends Co
   @tracked tooltipTitle = null;
 
   @cached
-  get sessionsData() {
-    return new TrackedAsyncData(this.args.sessionType.sessions);
-  }
-
-  get sessions() {
-    return this.sessionsData.isResolved ? this.sessionsData.value : null;
-  }
-
-  @use loadedData = new AsyncProcess(() => [this.loadData.bind(this), this.sessions]);
-
-  get isLoaded() {
-    return !!this.loadedData;
+  get outputData() {
+    return new TrackedAsyncData(this.loadData(this.args.sessionType));
   }
 
   get data() {
-    if (!this.isLoaded) {
-      return [];
-    }
-    return this.loadedData;
+    return this.outputData.isResolved ? this.outputData.value : [];
   }
 
-  async loadData(sessions) {
-    if (!sessions) {
-      return null;
-    }
+  get isLoaded() {
+    return this.outputData.isResolved;
+  }
 
+  async loadData(sessionType) {
+    const sessions = await sessionType.sessions;
     if (!sessions.length) {
       return [];
     }
-
-    const sessionType = await sessions[0].sessionType;
 
     const sessionsWithTerms = await map(sessions, async (session) => {
       const terms = (await session.terms).slice();

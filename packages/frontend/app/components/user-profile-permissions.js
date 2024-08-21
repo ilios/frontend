@@ -4,8 +4,6 @@ import { action } from '@ember/object';
 import { service } from '@ember/service';
 import { DateTime } from 'luxon';
 import { filter } from 'rsvp';
-import { use } from 'ember-could-get-used-to-this';
-import AsyncProcess from 'ilios-common/classes/async-process';
 import { TrackedAsyncData } from 'ember-async-data';
 import { findById, sortBy, uniqueValues } from 'ilios-common/utils/array-helpers';
 
@@ -139,14 +137,19 @@ export default class UserProfilePermissionsComponent extends Component {
   }
 
   get _userDirectedPrograms() {
-    return this._userDirectedProgramsData.isResolved ? this._userDirectedProgramsData.value : null;
+    return this._userDirectedProgramsData.isResolved ? this._userDirectedProgramsData.value : [];
   }
 
-  @use directedPrograms = new AsyncProcess(() => [
-    this.getDirectedPrograms.bind(this),
-    this.bestSelectedSchool,
-    this._userDirectedPrograms?.slice() ?? [],
-  ]);
+  @cached
+  get directedProgramsData() {
+    return new TrackedAsyncData(
+      this.getDirectedPrograms(this.bestSelectedSchool, this._userDirectedPrograms),
+    );
+  }
+
+  get directedPrograms() {
+    return this.directedProgramsData.isResolved ? this.directedProgramsData.value : [];
+  }
 
   @cached
   get _userProgramYearsData() {
@@ -154,14 +157,19 @@ export default class UserProfilePermissionsComponent extends Component {
   }
 
   get _userProgramYears() {
-    return this._userProgramYearsData.isResolved ? this._userProgramYearsData.value : null;
+    return this._userProgramYearsData.isResolved ? this._userProgramYearsData.value : [];
   }
 
-  @use directedProgramYears = new AsyncProcess(() => [
-    this.getDirectedProgramYears.bind(this),
-    this.bestSelectedSchool,
-    this._userProgramYears?.slice() ?? [],
-  ]);
+  @cached
+  get directedProgramYearsData() {
+    return new TrackedAsyncData(
+      this.getDirectedProgramYears(this.bestSelectedSchool, this._userProgramYears),
+    );
+  }
+
+  get directedProgramYears() {
+    return this.directedProgramYearsData.isResolved ? this.directedProgramYearsData.value : [];
+  }
 
   @cached
   get _userDirectedCoursesData() {
@@ -169,15 +177,23 @@ export default class UserProfilePermissionsComponent extends Component {
   }
 
   get _userDirectedCourses() {
-    return this._userDirectedCoursesData.isResolved ? this._userDirectedCoursesData.value : null;
+    return this._userDirectedCoursesData.isResolved ? this._userDirectedCoursesData.value : [];
   }
 
-  @use directedCourses = new AsyncProcess(() => [
-    this.getDirectedCourses.bind(this),
-    this.bestSelectedSchool,
-    this.selectedYearId,
-    this._userDirectedCourses?.slice() ?? [],
-  ]);
+  @cached
+  get directedCoursesData() {
+    return new TrackedAsyncData(
+      this.getDirectedCourses(
+        this.bestSelectedSchool,
+        this.selectedYearId,
+        this._userDirectedCourses,
+      ),
+    );
+  }
+
+  get directedCourses() {
+    return this.directedCoursesData.isResolved ? this.directedCoursesData.value : [];
+  }
 
   @cached
   get _userAdministeredCoursesData() {
@@ -187,21 +203,38 @@ export default class UserProfilePermissionsComponent extends Component {
   get _userAdministeredCourses() {
     return this._userAdministeredCoursesData.isResolved
       ? this._userAdministeredCoursesData.value
-      : null;
+      : [];
   }
 
-  @use administeredCourses = new AsyncProcess(() => [
-    this.getAdministeredCourses.bind(this),
-    this.bestSelectedSchool,
-    this.selectedYearId,
-    this._userAdministeredCourses?.slice() ?? [],
-  ]);
-  @use instructedCourses = new AsyncProcess(() => [
-    this.getInstructedCourses.bind(this),
-    this.bestSelectedSchool,
-    this.selectedYearId,
-    this.args.user.allInstructedCourses,
-  ]);
+  @cached
+  get administeredCoursesData() {
+    return new TrackedAsyncData(
+      this.getAdministeredCourses(
+        this.bestSelectedSchool,
+        this.selectedYearId,
+        this._userAdministeredCourses,
+      ),
+    );
+  }
+
+  get administeredCourses() {
+    return this.administeredCoursesData.isResolved ? this.administeredCoursesData.value : [];
+  }
+
+  @cached
+  get instructedCoursesData() {
+    return new TrackedAsyncData(
+      this.getInstructedCourses(
+        this.bestSelectedSchool,
+        this.selectedYearId,
+        this.args.user.allInstructedCourses,
+      ),
+    );
+  }
+
+  get instructedCourses() {
+    return this.instructedCoursesData.isResolved ? this.instructedCoursesData.value : [];
+  }
 
   @cached
   get _userStudentAdvisedCoursesData() {
@@ -211,15 +244,23 @@ export default class UserProfilePermissionsComponent extends Component {
   get _userStudentAdvisedCourses() {
     return this._userStudentAdvisedCoursesData.isResolved
       ? this._userStudentAdvisedCoursesData.value
-      : null;
+      : [];
   }
 
-  @use studentAdvisedCourses = new AsyncProcess(() => [
-    this.getStudentAdvisedCourses.bind(this),
-    this.bestSelectedSchool,
-    this.selectedYearId,
-    this._userStudentAdvisedCourses?.slice() ?? [],
-  ]);
+  @cached
+  get studentAdvisedCoursesData() {
+    return new TrackedAsyncData(
+      this.getStudentAdvisedCourses(
+        this.bestSelectedSchool,
+        this.selectedYearId,
+        this._userStudentAdvisedCourses,
+      ),
+    );
+  }
+
+  get studentAdvisedCourses() {
+    return this.studentAdvisedCoursesData.isResolved ? this.studentAdvisedCoursesData.value : [];
+  }
 
   @cached
   get _userAdministeredSessionsData() {
@@ -229,21 +270,38 @@ export default class UserProfilePermissionsComponent extends Component {
   get _userAdministeredSessions() {
     return this._userAdministeredSessionsData.isResolved
       ? this._userAdministeredSessionsData.value
-      : null;
+      : [];
   }
 
-  @use administeredSessions = new AsyncProcess(() => [
-    this.getAdministeredSessions.bind(this),
-    this.bestSelectedSchool,
-    this.selectedYearId,
-    this._userAdministeredSessions?.slice() ?? [],
-  ]);
-  @use instructedSessions = new AsyncProcess(() => [
-    this.getInstructedSessions.bind(this),
-    this.bestSelectedSchool,
-    this.selectedYearId,
-    this.args.user.allInstructedSessions,
-  ]);
+  @cached
+  get administeredSessionsData() {
+    return new TrackedAsyncData(
+      this.getAdministeredSessions(
+        this.bestSelectedSchool,
+        this.selectedYearId,
+        this._userAdministeredSessions,
+      ),
+    );
+  }
+
+  get administeredSessions() {
+    return this.administeredSessionsData.isResolved ? this.administeredSessionsData.value : [];
+  }
+
+  @cached
+  get instructedSessionsData() {
+    return new TrackedAsyncData(
+      this.getInstructedSessions(
+        this.bestSelectedSchool,
+        this.selectedYearId,
+        this.args.user.allInstructedSessions,
+      ),
+    );
+  }
+
+  get instructedSessions() {
+    return this.instructedSessionsData.isResolved ? this.instructedSessionsData.value : [];
+  }
 
   @cached
   get _userStudentAdvisedSessionsData() {
@@ -253,15 +311,23 @@ export default class UserProfilePermissionsComponent extends Component {
   get _userStudentAdvisedSessions() {
     return this._userStudentAdvisedSessionsData.isResolved
       ? this._userStudentAdvisedSessionsData.value
-      : null;
+      : [];
   }
 
-  @use studentAdvisedSessions = new AsyncProcess(() => [
-    this.getStudentAdvisedSessions.bind(this),
-    this.bestSelectedSchool,
-    this.selectedYearId,
-    this._userStudentAdvisedSessions?.slice() ?? [],
-  ]);
+  @cached
+  get studentAdvisedSessionsData() {
+    return new TrackedAsyncData(
+      this.getStudentAdvisedSessions(
+        this.bestSelectedSchool,
+        this.selectedYearId,
+        this._userStudentAdvisedSessions,
+      ),
+    );
+  }
+
+  get studentAdvisedSessions() {
+    return this.studentAdvisedSessionsData.isResolved ? this.studentAdvisedSessionsData.value : [];
+  }
 
   async getDirectedPrograms(selectedSchool, directedPrograms) {
     return filter(directedPrograms, async (program) => {

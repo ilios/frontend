@@ -4,8 +4,6 @@ import { action } from '@ember/object';
 import { service } from '@ember/service';
 import { isPresent } from '@ember/utils';
 import { restartableTask, timeout } from 'ember-concurrency';
-import { use } from 'ember-could-get-used-to-this';
-import AsyncProcess from 'ilios-common/classes/async-process';
 import { TrackedAsyncData } from 'ember-async-data';
 import { DateTime } from 'luxon';
 import { filterBy, sortBy, uniqueById } from 'ilios-common/utils/array-helpers';
@@ -19,11 +17,32 @@ export default class DashboardMaterialsComponent extends Component {
   @service iliosConfig;
   @tracked showAllMaterials = false;
   @service currentUser;
-  @use _course = new AsyncProcess(() => [this.loadCourse.bind(this), this.args.courseIdFilter]);
-  @use _materials = new AsyncProcess(() => [
-    this.loadMaterials.bind(this),
-    this.args.showAllMaterials,
-  ]);
+
+  @cached
+  get courseData() {
+    return new TrackedAsyncData(this.loadCourse(this.args.courseIdFilter));
+  }
+
+  get course() {
+    return this.courseData.isResolved ? this.courseData.value : null;
+  }
+
+  get courseLoaded() {
+    return this.courseData.isResolved;
+  }
+
+  @cached
+  get materialsData() {
+    return new TrackedAsyncData(this.loadMaterials(this.args.showAllMaterials));
+  }
+
+  get materials() {
+    return this.materialsData.isResolved ? this.materialsData.value : [];
+  }
+
+  get materialsLoaded() {
+    return this.materialsData.isResolved;
+  }
 
   crossesBoundaryConfig = new TrackedAsyncData(
     this.iliosConfig.itemFromConfig('academicYearCrossesCalendarYearBoundaries'),
@@ -58,28 +77,6 @@ export default class DashboardMaterialsComponent extends Component {
       // eat the exception
     }
     return course;
-  }
-
-  get course() {
-    if (this._course) {
-      return this._course;
-    }
-    return null;
-  }
-
-  get courseLoaded() {
-    return this._course !== undefined;
-  }
-
-  get materials() {
-    if (this._materials) {
-      return this._materials;
-    }
-    return [];
-  }
-
-  get materialsLoaded() {
-    return this._materials !== undefined;
   }
 
   get canApplyCourseFilter() {

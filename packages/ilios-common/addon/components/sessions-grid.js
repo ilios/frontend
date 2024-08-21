@@ -1,16 +1,15 @@
 import Component from '@glimmer/component';
-import { tracked } from '@glimmer/tracking';
+import { cached, tracked } from '@glimmer/tracking';
 import { isEmpty } from '@ember/utils';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
 import { next } from '@ember/runloop';
-import { use } from 'ember-could-get-used-to-this';
 import { dropTask } from 'ember-concurrency';
 import { DateTime } from 'luxon';
 import { filter, map } from 'rsvp';
 import escapeRegExp from 'ilios-common/utils/escape-reg-exp';
-import AsyncProcess from 'ilios-common/classes/async-process';
 import { sortBy } from 'ilios-common/utils/array-helpers';
+import { TrackedAsyncData } from 'ember-async-data';
 
 export default class SessionsGrid extends Component {
   @service router;
@@ -18,12 +17,16 @@ export default class SessionsGrid extends Component {
   @service intl;
   @tracked confirmDeleteSessionIds = [];
 
-  @use sortedSessions = new AsyncProcess(() => [
-    this.sortSessions.bind(this),
-    this.args.sessions,
-    this.args.filterBy,
-    this.sortInfo,
-  ]);
+  @cached
+  get sortedSessionsData() {
+    return new TrackedAsyncData(
+      this.sortSessions(this.args.sessions, this.args.filterBy, this.sortInfo),
+    );
+  }
+
+  get sortedSessions() {
+    return this.sortedSessionsData.isResolved ? this.sortedSessionsData.value : [];
+  }
 
   async sortSessions(sessions, filterBy, sortInfo) {
     const filteredSessions = await this.filterSessions(sessions, filterBy);

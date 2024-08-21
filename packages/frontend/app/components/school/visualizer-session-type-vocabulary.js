@@ -4,10 +4,7 @@ import { htmlSafe } from '@ember/template';
 import { filter, map } from 'rsvp';
 import { restartableTask, timeout } from 'ember-concurrency';
 import { cached, tracked } from '@glimmer/tracking';
-import { use } from 'ember-could-get-used-to-this';
-import AsyncProcess from 'ilios-common/classes/async-process';
 import { TrackedAsyncData } from 'ember-async-data';
-
 export default class SchoolVisualizerSessionTypeVocabularyComponent extends Component {
   @service router;
   @service intl;
@@ -15,41 +12,23 @@ export default class SchoolVisualizerSessionTypeVocabularyComponent extends Comp
   @tracked tooltipTitle = null;
 
   @cached
-  get sessionsData() {
-    return new TrackedAsyncData(this.args.sessionType.sessions);
-  }
-
-  get sessions() {
-    return this.sessionsData.isResolved ? this.sessionsData.value : null;
-  }
-
-  @use loadedData = new AsyncProcess(() => [
-    this.loadData.bind(this),
-    this.sessions,
-    this.args.vocabulary,
-  ]);
-
-  get isLoaded() {
-    return !!this.loadedData;
+  get outputData() {
+    return new TrackedAsyncData(this.loadData(this.args.sessionType, this.args.vocabulary));
   }
 
   get data() {
-    if (!this.loadedData) {
-      return [];
-    }
-    return this.loadedData;
+    return this.outputData.isResolved ? this.outputData.value : [];
   }
 
-  async loadData(sessions, vocabulary) {
-    if (!sessions) {
-      return null;
-    }
+  get isLoaded() {
+    return this.outputData.isResolved;
+  }
 
+  async loadData(sessionType, vocabulary) {
+    const sessions = await sessionType.sessions;
     if (!sessions.length) {
       return [];
     }
-
-    const sessionType = await sessions[0].sessionType;
 
     const termsWithSession = await map(sessions, async (session) => {
       const sessionTerms = (await session.terms).slice();

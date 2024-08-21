@@ -1,14 +1,18 @@
 import Component from '@glimmer/component';
-import AsyncProcess from 'ilios-common/classes/async-process';
-import { use } from 'ember-could-get-used-to-this';
+import { cached } from '@glimmer/tracking';
 import { map } from 'rsvp';
+import { TrackedAsyncData } from 'ember-async-data';
 import { sortBy } from 'ilios-common/utils/array-helpers';
 
 export default class SessionsGridOfferingTableOfferingsComponent extends Component {
-  @use sortedOfferingsResource = new AsyncProcess(() => [
-    this.sortOfferings.bind(this),
-    this.args.offeringTimeBlock,
-  ]);
+  @cached
+  get sortedOfferingsData() {
+    return new TrackedAsyncData(this.sortOfferings(this.args.offeringTimeBlock));
+  }
+
+  get sortedOfferings() {
+    return this.sortedOfferingsData.isResolved ? this.sortedOfferingsData.value : [];
+  }
 
   async sortOfferings(offeringTimeBlock) {
     const sortProxies = await map(offeringTimeBlock.offerings, async (offering) => {
@@ -19,12 +23,5 @@ export default class SessionsGridOfferingTableOfferingsComponent extends Compone
       };
     });
     return sortBy(sortProxies, 'title').map((proxy) => proxy.offering);
-  }
-
-  get sortedOfferings() {
-    if (!this.sortedOfferingsResource) {
-      return [];
-    }
-    return this.sortedOfferingsResource;
   }
 }

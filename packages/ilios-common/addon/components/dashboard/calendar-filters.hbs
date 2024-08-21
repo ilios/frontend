@@ -15,7 +15,7 @@
         {{t "general.sessionTypes"}}
       </h5>
       <div class="filters">
-        {{#if (is-array this.sessionTypes)}}
+        {{#if this.sessionTypesLoaded}}
           <ul>
             {{#each this.sessionTypes as |type|}}
               <li class="clickable">
@@ -43,7 +43,7 @@
         {{t "general.terms"}}
       </h5>
       <div class="filters">
-        {{#if (is-array this.vocabularies)}}
+        {{#if this.vocabulariesLoaded}}
           <ul>
             {{#each this.vocabularies as |vocabulary|}}
               <Dashboard::SelectedVocabulary
@@ -69,7 +69,7 @@
         {{t "general.sessionTypes"}}
       </h5>
       <div class="filters">
-        {{#if (is-array this.sessionTypes)}}
+        {{#if this.sessionTypesLoaded}}
           <ul>
             {{#each this.sessionTypes as |type|}}
               <li class="clickable" data-test-filter>

@@ -1,21 +1,25 @@
 import Component from '@glimmer/component';
+import { cached } from '@glimmer/tracking';
 import { filter, map } from 'rsvp';
-import { use } from 'ember-could-get-used-to-this';
-import AsyncProcess from 'ilios-common/classes/async-process';
+import { TrackedAsyncData } from 'ember-async-data';
 import { mapBy, uniqueValues } from 'ilios-common/utils/array-helpers';
 
 export default class DetailLearnerGroupsListComponent extends Component {
-  @use cohortTrees = new AsyncProcess(() => [this.loadCohorts.bind(this)]);
+  @cached
+  get treesData() {
+    return new TrackedAsyncData(this.loadCohorts());
+  }
 
-  get learnerGroups() {
-    return this.args.learnerGroups ?? [];
+  get isLoaded() {
+    return this.treesData.isResolved;
   }
 
   get trees() {
-    if (!this.cohortTrees) {
-      return [];
-    }
-    return this.cohortTrees;
+    return this.treesData.isResolved ? this.treesData.value : [];
+  }
+
+  get learnerGroups() {
+    return this.args.learnerGroups ?? [];
   }
 
   async loadCohorts() {

@@ -1,16 +1,14 @@
 import Component from '@glimmer/component';
-import { use } from 'ember-could-get-used-to-this';
-import AsyncProcess from 'ilios-common/classes/async-process';
+import { cached } from '@glimmer/tracking';
+import { TrackedAsyncData } from 'ember-async-data';
 
 export default class DashboardSelectedVocabularyComponent extends Component {
-  @use _topLevelTerms = new AsyncProcess(() => [
-    this.args.vocabulary.getTopLevelTerms.bind(this.args.vocabulary),
-  ]);
+  @cached
+  get topLevelTermsData() {
+    return new TrackedAsyncData(this.args.vocabulary.getTopLevelTerms());
+  }
 
   get topLevelTerms() {
-    if (!this._topLevelTerms) {
-      return [];
-    }
-    return this._topLevelTerms;
+    return this.topLevelTermsData.isResolved ? this.topLevelTermsData.value : [];
   }
 }
