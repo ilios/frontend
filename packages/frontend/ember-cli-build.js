@@ -16,9 +16,6 @@ module.exports = async function (defaults) {
     fingerprint: {
       extensions: broccoliAssetRevDefaults.extensions.concat(['webmanifest', 'svg']),
     },
-    sourcemaps: {
-      enabled: true,
-    },
     emberData: {
       compatWith: '5.2',
     },
@@ -107,6 +104,7 @@ module.exports = async function (defaults) {
     packagerOptions: {
       webpackConfig: {
         plugins: [new RetryChunkLoadPlugin() /*, new BundleAnalyzerPlugin()*/],
+        devtool: 'source-map',
         optimization: {
           minimize: true,
           minimizer: [
