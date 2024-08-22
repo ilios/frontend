@@ -23,34 +23,6 @@ module('Unit | Model | ProgramYear', function (hooks) {
     assert.strictEqual(await waitForResource(model, 'classOfYear'), '2006');
   });
 
-  test('sortedProgramYearObjectives', async function (assert) {
-    const store = this.owner.lookup('service:store');
-    const programYear = store.createRecord('program-year');
-    const programYearObjective1 = store.createRecord('program-year-objective', {
-      id: 1,
-      programYear,
-      title: 'Aardvark',
-      position: 3,
-    });
-    const programYearObjective2 = store.createRecord('program-year-objective', {
-      id: 2,
-      programYear,
-      title: 'Bar',
-      position: 2,
-    });
-    const programYearObjective3 = store.createRecord('program-year-objective', {
-      id: 3,
-      programYear,
-      title: 'Foo',
-      position: 2,
-    });
-    const objectives = await waitForResource(programYear, 'sortedProgramYearObjectives');
-    assert.strictEqual(objectives.length, 3);
-    assert.strictEqual(objectives[0], programYearObjective3);
-    assert.strictEqual(objectives[1], programYearObjective2);
-    assert.strictEqual(objectives[2], programYearObjective1);
-  });
-
   test('assignableVocabularies', async function (assert) {
     const store = this.owner.lookup('service:store');
     const programYear = store.createRecord('program-year');

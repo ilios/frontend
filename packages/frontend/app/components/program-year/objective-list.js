@@ -5,6 +5,8 @@ import { map } from 'rsvp';
 import { service } from '@ember/service';
 import { TrackedAsyncData } from 'ember-async-data';
 import { mapBy, uniqueValues } from 'ilios-common/utils/array-helpers';
+import sortableByPosition from 'ilios-common/utils/sortable-by-position';
+
 export default class ProgramYearObjectiveListComponent extends Component {
   @service iliosConfig;
   @service session;
@@ -30,6 +32,17 @@ export default class ProgramYearObjectiveListComponent extends Component {
 
   get domainTrees() {
     return this.domainTreesData.isResolved ? this.domainTreesData.value : [];
+  }
+
+  @cached
+  get programYearObjectivesData() {
+    return new TrackedAsyncData(this.args.programYear.programYearObjectives);
+  }
+
+  get sortedProgramYearObjectives() {
+    return this.programYearObjectivesData.isResolved
+      ? this.programYearObjectivesData.value.slice().sort(sortableByPosition)
+      : [];
   }
 
   get programYearObjectiveCount() {

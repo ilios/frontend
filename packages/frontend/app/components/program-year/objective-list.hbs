@@ -37,8 +37,8 @@
       <span class="grid-item" data-test-header>{{t "general.meshTerms"}}</span>
       <span class="actions grid-item" data-test-header>{{t "general.actions"}}</span>
     </div>
-    {{#if (and (is-array @programYear.sortedProgramYearObjectives) (is-array this.domainTrees))}}
-      {{#each @programYear.sortedProgramYearObjectives as |programYearObjective|}}
+    {{#if (is-array this.domainTrees)}}
+      {{#each this.sortedProgramYearObjectives as |programYearObjective|}}
         <ProgramYear::ObjectiveListItem
           @programYearObjective={{programYearObjective}}
           @editable={{@editable}}
