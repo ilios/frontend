@@ -1,5 +1,5 @@
 export async function loadPolyfills() {
-  //we need CRYPTO.randomUUID until we drop support for Safari 15.x
+  //we need CRYPTO.randomUUID until we drop support for iOS Safari 16.x as that version doesn't provide it in insecure (aka test) contexts
   installUUIDPolyfill();
 }
 

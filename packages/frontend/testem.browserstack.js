@@ -8,11 +8,11 @@ const BrowserStackLaunchers = {
       '--os',
       'OS X',
       '--osv',
-      'Monterey',
+      'Ventura',
       '--b',
       'safari',
       '--bv',
-      'latest', // Will always be 15.x on Monterey
+      'latest', // Will always be 16.x on Ventura
       ...defaultArgs,
     ],
     protocol: 'browser',
