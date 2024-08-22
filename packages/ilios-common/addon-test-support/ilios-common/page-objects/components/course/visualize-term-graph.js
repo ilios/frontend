@@ -1,7 +1,7 @@
 import { attribute, clickable, collection, create, notHasClass, text } from 'ember-cli-page-object';
 
 const definition = {
-  scope: '[data-test-course-visualize-session-type-graph]',
+  scope: '[data-test-course-visualize-term-graph]',
   isIcon: notHasClass('no-icon'),
   chart: {
     scope: '.simple-chart',
@@ -17,8 +17,8 @@ const definition = {
     scope: '[data-test-data-table]',
     header: {
       scope: 'thead',
-      vocabularyTerm: {
-        scope: '[data-test-vocabulary-term]',
+      sessionType: {
+        scope: '[data-test-session-type]',
         toggle: clickable('button'),
       },
       sessions: {
@@ -31,7 +31,7 @@ const definition = {
       },
     },
     rows: collection('tbody tr', {
-      vocabularyTerm: text('[data-test-vocabulary-term]'),
+      sessionType: text('[data-test-session-type]'),
       sessions: {
         scope: '[data-test-sessions]',
         links: collection('a', {

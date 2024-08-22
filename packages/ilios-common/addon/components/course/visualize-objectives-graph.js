@@ -5,9 +5,7 @@ import { service } from '@ember/service';
 import { htmlSafe } from '@ember/template';
 import { filter, map } from 'rsvp';
 import { restartableTask, timeout } from 'ember-concurrency';
-import { use } from 'ember-could-get-used-to-this';
 import { TrackedAsyncData } from 'ember-async-data';
-import AsyncProcess from 'ilios-common/classes/async-process';
 import { mapBy, sortBy, uniqueValues } from 'ilios-common/utils/array-helpers';
 
 export default class CourseVisualizeObjectivesGraph extends Component {
@@ -20,32 +18,29 @@ export default class CourseVisualizeObjectivesGraph extends Component {
   @tracked sortBy = 'percentage:desc';
 
   @cached
-  get courseSessionsData() {
+  get sessionsData() {
     return new TrackedAsyncData(this.args.course.sessions);
   }
 
-  get courseSessions() {
-    return this.courseSessionsData.isResolved ? this.courseSessionsData.value : null;
+  get sessions() {
+    return this.sessionsData.isResolved ? this.sessionsData.value : [];
   }
 
-  @use dataObjects = new AsyncProcess(() => [this.getDataObjects.bind(this), this.sessions]);
+  @cached
+  get outputData() {
+    return new TrackedAsyncData(this.getDataObjects(this.sessions));
+  }
+
+  get data() {
+    return this.outputData.isResolved ? this.outputData.value : [];
+  }
 
   get sortedAscending() {
     return this.sortBy.search(/desc/) === -1;
   }
 
-  get sessions() {
-    if (!this.courseSessions) {
-      return [];
-    }
-    return this.courseSessions.slice();
-  }
-
   get tableData() {
-    if (!this.dataObjects) {
-      return [];
-    }
-    return this.dataObjects.map((obj) => {
+    return this.data.map((obj) => {
       const rhett = {};
       rhett.minutes = obj.data;
       // KLUDGE!
@@ -64,15 +59,15 @@ export default class CourseVisualizeObjectivesGraph extends Component {
   }
 
   get objectiveWithMinutes() {
-    return this.dataObjects?.filter((obj) => obj.data !== 0);
+    return this.data.filter((obj) => obj.data !== 0);
   }
 
   get objectiveWithoutMinutes() {
-    return this.dataObjects?.filter((obj) => obj.data === 0);
+    return this.data.filter((obj) => obj.data === 0);
   }
 
   get isLoaded() {
-    return !!this.dataObjects;
+    return this.outputData.isResolved;
   }
 
   @action
@@ -84,10 +79,6 @@ export default class CourseVisualizeObjectivesGraph extends Component {
   }
 
   async getDataObjects(sessions) {
-    if (!sessions) {
-      return [];
-    }
-
     const sessionsWithMinutes = sessions.map(async (session) => {
       const hours = await session.getTotalSumDuration();
       return {
@@ -139,14 +130,14 @@ export default class CourseVisualizeObjectivesGraph extends Component {
         .filter((title) => !!title)
         .sort();
       const minutes = sessionCourseObjectiveMap.map((obj) => {
-        if (obj.objectives.includes(courseObjective.get('id'))) {
+        if (obj.objectives.includes(courseObjective.id)) {
           return obj.minutes;
         } else {
           return 0;
         }
       });
       const sessionObjectives = sessionCourseObjectiveMap.filter((obj) =>
-        obj.objectives.includes(courseObjective.get('id')),
+        obj.objectives.includes(courseObjective.id),
       );
       const meta = {
         competencies: uniqueValues(competencyTitles).join(', '),
@@ -168,7 +159,12 @@ export default class CourseVisualizeObjectivesGraph extends Component {
 
     return mappedObjectives.map((obj) => {
       const percent = totalMinutes ? ((obj.data / totalMinutes) * 100).toFixed(1) : 0;
+      let objectiveTitle = obj.meta.courseObjective.title;
+      if (obj.meta.competencies) {
+        objectiveTitle += ` (${obj.meta.competencies})`;
+      }
       obj.label = `${percent}%`;
+      obj.description = `${objectiveTitle} - ${obj.data} ${this.intl.t('general.minutes')}`;
       obj.percentage = percent;
       return obj;
     });
@@ -187,11 +183,9 @@ export default class CourseVisualizeObjectivesGraph extends Component {
       objectiveTitle += `(${meta.competencies})`;
     }
 
-    const title = htmlSafe(`${objectiveTitle} &bull; ${data} ${this.intl.t('general.minutes')}`);
-    const sessionTitles = mapBy(meta.sessionObjectives, 'sessionTitle');
-    const content = sessionTitles.sort().join(', ');
-
-    this.tooltipTitle = title;
-    this.tooltipContent = content;
+    this.tooltipTitle = htmlSafe(
+      `${objectiveTitle} &bull; ${data} ${this.intl.t('general.minutes')}`,
+    );
+    this.tooltipContent = htmlSafe(mapBy(meta.sessionObjectives, 'sessionTitle').sort().join(', '));
   });
 }

@@ -1,20 +1,22 @@
 import { module, test } from 'qunit';
 import { currentURL, waitFor } from '@ember/test-helpers';
 import { setupApplicationTest } from 'frontend/tests/helpers';
-import page from 'ilios-common/page-objects/course-visualizations-vocabularies';
+import page from 'ilios-common/page-objects/course-visualizations-session-types';
 import { setupAuthentication } from 'ilios-common';
 import { DateTime } from 'luxon';
 import percySnapshot from '@percy/ember';
 
-module('Acceptance | course visualizations - vocabularies', function (hooks) {
+module('Acceptance | course visualizations - session-types', function (hooks) {
   setupApplicationTest(hooks);
   hooks.beforeEach(async function () {
     this.user = await setupAuthentication();
   });
 
   test('it renders', async function (assert) {
-    assert.expect(12);
-    const sessionType = this.server.create('session-type');
+    assert.expect(18);
+    const sessionType1 = this.server.create('session-type');
+    const sessionType2 = this.server.create('session-type');
+    const sessionType3 = this.server.create('session-type');
     const vocabulary1 = this.server.create('vocabulary');
     const vocabulary2 = this.server.create('vocabulary');
     const term1 = this.server.create('term', {
@@ -27,15 +29,15 @@ module('Acceptance | course visualizations - vocabularies', function (hooks) {
       vocabulary: vocabulary2,
     });
     const session1 = this.server.create('session', {
-      sessionType,
+      sessionType: sessionType1,
       terms: [term1],
     });
     const session2 = this.server.create('session', {
-      sessionType,
+      sessionType: sessionType2,
       terms: [term2, term3],
     });
     const session3 = this.server.create('session', {
-      sessionType,
+      sessionType: sessionType3,
     });
     this.server.create('ilm-session', {
       session: session3,
@@ -56,21 +58,36 @@ module('Acceptance | course visualizations - vocabularies', function (hooks) {
       year: 2022,
     });
     await page.visit({ courseId: course.id });
-    assert.strictEqual(currentURL(), '/data/courses/1/vocabularies');
-    assert.strictEqual(page.root.courseTitle.text, 'course 0 2022');
-    assert.strictEqual(page.root.courseTitle.link, '/courses/1');
+    assert.strictEqual(currentURL(), '/data/courses/1/session-types');
+    assert.strictEqual(page.root.title, 'course 0 2022');
     assert.strictEqual(page.root.breadcrumb.crumbs.length, 3);
     assert.strictEqual(page.root.breadcrumb.crumbs[0].text, 'course 0');
     assert.strictEqual(page.root.breadcrumb.crumbs[0].link, '/courses/1');
     assert.strictEqual(page.root.breadcrumb.crumbs[1].text, 'Visualizations');
     assert.strictEqual(page.root.breadcrumb.crumbs[1].link, '/data/courses/1');
-    assert.strictEqual(page.root.breadcrumb.crumbs[2].text, 'Vocabularies');
+    assert.strictEqual(page.root.breadcrumb.crumbs[2].text, 'Session Types');
     // wait for charts to load
     await waitFor('.loaded');
-    await waitFor('svg .chart');
+    await waitFor('svg .bars');
     await percySnapshot(assert);
-    assert.strictEqual(page.root.vocabulariesChart.chart.slices.length, 2);
-    assert.strictEqual(page.root.vocabulariesChart.chart.slices[0].text, 'Vocabulary 1');
-    assert.strictEqual(page.root.vocabulariesChart.chart.slices[1].text, 'Vocabulary 2');
+    assert.strictEqual(page.root.title, 'course 0 2022');
+    assert.strictEqual(page.root.sessionTypesChart.chart.bars.length, 3);
+    assert.strictEqual(
+      page.root.sessionTypesChart.chart.bars[0].description,
+      'session type 1 - 30 Minutes',
+    );
+    assert.strictEqual(
+      page.root.sessionTypesChart.chart.bars[1].description,
+      'session type 0 - 60 Minutes',
+    );
+    assert.strictEqual(
+      page.root.sessionTypesChart.chart.bars[2].description,
+      'session type 2 - 120 Minutes',
+    );
+    assert.strictEqual(page.root.sessionTypesChart.chart.labels.length, 3);
+    assert.strictEqual(page.root.sessionTypesChart.chart.labels[0].text, 'session type 1');
+    assert.strictEqual(page.root.sessionTypesChart.chart.labels[1].text, 'session type 0');
+    assert.strictEqual(page.root.sessionTypesChart.chart.labels[2].text, 'session type 2');
+    assert.strictEqual(page.root.sessionTypesChart.dataTable.rows.length, 3);
   });
 });

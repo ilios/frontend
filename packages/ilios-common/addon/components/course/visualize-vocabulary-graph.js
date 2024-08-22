@@ -5,99 +5,126 @@ import { restartableTask, timeout } from 'ember-concurrency';
 import { service } from '@ember/service';
 import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
-import { use } from 'ember-could-get-used-to-this';
 import { TrackedAsyncData } from 'ember-async-data';
-import AsyncProcess from 'ilios-common/classes/async-process';
-import { findBy, mapBy, uniqueValues } from 'ilios-common/utils/array-helpers';
+import { findById, mapBy } from 'ilios-common/utils/array-helpers';
 
 export default class CourseVisualizeVocabularyGraph extends Component {
   @service router;
   @service intl;
   @tracked tooltipContent = null;
   @tracked tooltipTitle = null;
+  @tracked sortBy = 'minutes';
 
   @cached
-  get sessionsData() {
-    return new TrackedAsyncData(this.args.course.sessions);
+  get outputData() {
+    return new TrackedAsyncData(this.getDataObjects(this.args.course));
   }
 
-  get sessions() {
-    return this.sessionsData.isResolved ? this.sessionsData.value : [];
+  get data() {
+    return this.outputData.isResolved ? this.outputData.value : [];
   }
 
-  @use dataObjects = new AsyncProcess(() => [this.getDataObjects.bind(this), this.sessions]);
+  get hasData() {
+    return this.data.length;
+  }
+
+  get chartData() {
+    return this.data.filter((obj) => obj.data);
+  }
+
+  get hasChartData() {
+    return this.chartData.length;
+  }
+
+  get tableData() {
+    return this.data.map((obj) => {
+      const rhett = {};
+      rhett.minutes = obj.data;
+      rhett.sessions = obj.meta.sessions;
+      rhett.term = obj.meta.term;
+      rhett.termTitle = obj.meta.term.title;
+      rhett.sessionTitles = mapBy(rhett.sessions, 'title').join(', ');
+      return rhett;
+    });
+  }
 
   get isLoaded() {
-    return !!this.dataObjects;
+    return this.outputData.isResolved;
   }
 
-  async getDataObjects(sessions) {
-    if (!sessions) {
+  get sortedAscending() {
+    return this.sortBy.search(/desc/) === -1;
+  }
+
+  @action
+  setSortBy(prop) {
+    if (this.sortBy === prop) {
+      prop += ':desc';
+    }
+    this.sortBy = prop;
+  }
+
+  async getDataObjects(course) {
+    const sessions = await course.sessions;
+    if (!sessions.length) {
       return [];
     }
-    const sessionsWithMinutes = await map(sessions.slice(), async (session) => {
+    const sessionsWithMinutes = await map(sessions, async (session) => {
       const hours = await session.getTotalSumDuration();
       return {
         session,
         minutes: Math.round(hours * 60),
       };
     });
-    const terms = await map(sessionsWithMinutes, async ({ session, minutes }) => {
-      const sessionTerms = await session.get('terms');
-      const sessionTermsInThisVocabulary = await filter(sessionTerms.slice(), async (term) => {
-        const termVocab = await term.get('vocabulary');
-        return termVocab.get('id') === this.args.vocabulary.get('id');
-      });
-      return sessionTermsInThisVocabulary.map((term) => {
-        return {
-          term,
-          session: {
-            title: session.get('title'),
+    const termsWithSessionAndMinutes = await map(
+      sessionsWithMinutes,
+      async ({ session, minutes }) => {
+        const sessionTerms = await session.terms;
+        const sessionTermsInThisVocabulary = await filter(sessionTerms.slice(), async (term) => {
+          const termVocab = await term.vocabulary;
+          return termVocab.id === this.args.vocabulary.id;
+        });
+        return sessionTermsInThisVocabulary.map((term) => {
+          return {
+            term,
+            session,
             minutes,
-          },
-        };
+          };
+        });
+      },
+    );
+
+    return termsWithSessionAndMinutes
+      .reduce((flattened, arr) => {
+        return [...flattened, ...arr];
+      }, [])
+      .reduce((set, { term, session, minutes }) => {
+        const id = term.id;
+        let existing = findById(set, id);
+        if (!existing) {
+          existing = {
+            id,
+            data: 0,
+            label: term.title,
+            meta: {
+              term,
+              sessions: [],
+            },
+          };
+          set.push(existing);
+        }
+        existing.data += minutes;
+        existing.meta.sessions.push(session);
+        return set;
+      }, [])
+      .map((obj) => {
+        obj.description = `${obj.meta.term.title} - ${obj.data} ${this.intl.t('general.minutes')}`;
+        delete obj.id;
+        return obj;
+      })
+      .sort((first, second) => {
+        return first.data - second.data;
       });
-    });
-
-    return terms.reduce((flattened, arr) => {
-      return [...flattened, ...arr];
-    }, []);
-  }
-
-  get data() {
-    const termData = this.dataObjects.reduce((set, { term, session }) => {
-      const termTitle = term.get('title');
-      let existing = findBy(set, 'label', termTitle);
-      if (!existing) {
-        existing = {
-          data: 0,
-          label: termTitle,
-          meta: {
-            termTitle,
-            termId: term.get('id'),
-            sessions: [],
-          },
-        };
-        set.push(existing);
-      }
-      existing.data += session.minutes;
-      existing.meta.sessions.push(session.title);
-
-      return set;
-    }, []);
-
-    const totalMinutes = mapBy(termData, 'data').reduce((total, minutes) => total + minutes, 0);
-    const mappedTermsWithLabel = termData.map((obj) => {
-      const percent = ((obj.data / totalMinutes) * 100).toFixed(1);
-      obj.label = `${obj.meta.termTitle}: ${obj.data} ${this.intl.t('general.minutes')}`;
-      obj.meta.totalMinutes = totalMinutes;
-      obj.meta.percent = percent;
-      return obj;
-    });
-
-    return mappedTermsWithLabel.sort((first, second) => {
-      return first.data - second.data;
-    });
   }
 
   barHover = restartableTask(async (obj) => {
@@ -107,10 +134,11 @@ export default class CourseVisualizeVocabularyGraph extends Component {
       this.tooltipContent = null;
       return;
     }
-    const { label, meta } = obj;
-
-    this.tooltipTitle = htmlSafe(label);
-    this.tooltipContent = uniqueValues(meta.sessions).sort().join(', ');
+    const { data, meta } = obj;
+    this.tooltipTitle = htmlSafe(
+      `${meta.term.title} &bull; ${data} ${this.intl.t('general.minutes')}`,
+    );
+    this.tooltipContent = htmlSafe(mapBy(meta.sessions, 'title').sort().join(', '));
   });
 
   @action
@@ -118,6 +146,6 @@ export default class CourseVisualizeVocabularyGraph extends Component {
     if (this.args.isIcon || !obj || obj.empty || !obj.meta) {
       return;
     }
-    this.router.transitionTo('course-visualize-term', this.args.course.id, obj.meta.termId);
+    this.router.transitionTo('course-visualize-term', this.args.course.id, obj.meta.term.id);
   }
 }

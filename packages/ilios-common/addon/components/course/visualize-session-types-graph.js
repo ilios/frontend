@@ -6,101 +6,124 @@ import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { cleanQuery } from 'ilios-common/utils/query-utils';
 import { map } from 'rsvp';
-import { use } from 'ember-could-get-used-to-this';
 import { TrackedAsyncData } from 'ember-async-data';
-import AsyncProcess from 'ilios-common/classes/async-process';
-import { findBy, mapBy, uniqueValues } from 'ilios-common/utils/array-helpers';
+import { findById, mapBy, uniqueValues } from 'ilios-common/utils/array-helpers';
 
 export default class CourseVisualizeSessionTypesGraph extends Component {
   @service router;
   @service intl;
   @tracked tooltipContent = null;
   @tracked tooltipTitle = null;
+  @tracked sortBy = 'minutes';
 
   @cached
-  get sessionsData() {
-    return new TrackedAsyncData(this.args.course.sessions);
+  get outputData() {
+    return new TrackedAsyncData(this.getData(this.args.course));
   }
 
-  get sessions() {
-    return this.sessionsData.isResolved ? this.sessionsData.value : null;
-  }
-
-  @use loadedData = new AsyncProcess(() => [this.getData.bind(this), this.sessions]);
-
-  get chartType() {
-    return this.args.chartType || 'horz-bar';
-  }
-
-  get filteredData() {
-    if (!this.data) {
-      return [];
-    }
-    let data = this.data;
-    const q = cleanQuery(this.args.filter);
-    if (q) {
-      const exp = new RegExp(q, 'gi');
-      data = this.data.filter(({ label }) => label.match(exp));
-    }
-    return data.sort((first, second) => {
-      return first.data - second.data;
-    });
+  get isLoaded() {
+    return this.outputData.isResolved;
   }
 
   get data() {
-    if (!this.loadedData) {
-      return [];
-    }
-    return this.loadedData;
+    return this.outputData.isResolved ? this.outputData.value : [];
   }
 
-  async getData(sessions) {
-    if (!sessions) {
+  get hasData() {
+    return this.data.length;
+  }
+
+  get chartData() {
+    return this.data.filter((obj) => obj.data);
+  }
+
+  get filteredChartData() {
+    return this.filterData(this.chartData);
+  }
+
+  get hasChartData() {
+    return this.filteredChartData.length;
+  }
+
+  get filteredData() {
+    return this.filterData(this.data);
+  }
+
+  get tableData() {
+    return this.filteredData.map((obj) => {
+      const rhett = {};
+      rhett.minutes = obj.data;
+      rhett.sessions = obj.meta.sessions;
+      rhett.sessionType = obj.meta.sessionType;
+      rhett.sessionTypeTitle = obj.meta.sessionType.title;
+      rhett.sessionTitles = mapBy(rhett.sessions, 'title').join(', ');
+      return rhett;
+    });
+  }
+
+  get sortedAscending() {
+    return this.sortBy.search(/desc/) === -1;
+  }
+
+  @action
+  setSortBy(prop) {
+    if (this.sortBy === prop) {
+      prop += ':desc';
+    }
+    this.sortBy = prop;
+  }
+
+  filterData(data) {
+    const q = cleanQuery(this.args.filter);
+    if (q) {
+      const exp = new RegExp(q, 'gi');
+      return data.filter(({ label }) => label.match(exp));
+    }
+    return data;
+  }
+
+  async getData(course) {
+    const sessions = await course.sessions;
+
+    if (!sessions.length) {
       return [];
     }
 
-    const dataMap = await map(sessions.slice(), async (session) => {
+    const dataMap = await map(sessions, async (session) => {
       const hours = await session.getTotalSumDuration();
       const minutes = Math.round(hours * 60);
       const sessionType = await session.sessionType;
       return {
-        sessionTitle: session.title,
-        sessionTypeTitle: sessionType.title,
-        sessionTypeId: sessionType.get('id'),
+        session,
+        sessionType,
         minutes,
       };
     });
 
-    const mappedSessionTypes = dataMap.reduce((set, obj) => {
-      let existing = findBy(set, 'label', obj.sessionTypeTitle);
-      if (!existing) {
-        existing = {
-          data: 0,
-          label: obj.sessionTypeTitle,
-          meta: {
-            sessionType: obj.sessionTypeTitle,
-            sessionTypeId: obj.sessionTypeId,
-            sessions: [],
-          },
-        };
-        set.push(existing);
-      }
-      existing.data += obj.minutes;
-      existing.meta.sessions.push(obj.sessionTitle);
+    return dataMap
+      .reduce((set, { sessionType, session, minutes }) => {
+        const id = sessionType.id;
+        let existing = findById(set, id);
+        if (!existing) {
+          existing = {
+            id,
+            data: 0,
+            label: sessionType.title,
+            meta: {
+              sessionType,
+              sessions: [],
+            },
+          };
+          set.push(existing);
+        }
+        existing.data += minutes;
+        existing.meta.sessions.push(session);
 
-      return set;
-    }, []);
-
-    const totalMinutes = mapBy(mappedSessionTypes, 'data').reduce(
-      (total, minutes) => total + minutes,
-      0,
-    );
-    return mappedSessionTypes
+        return set;
+      }, [])
       .map((obj) => {
-        const percent = ((obj.data / totalMinutes) * 100).toFixed(1);
-        obj.label = `${obj.meta.sessionType}: ${obj.data} ${this.intl.t('general.minutes')}`;
-        obj.meta.totalMinutes = totalMinutes;
-        obj.meta.percent = percent;
+        obj.description = `${obj.meta.sessionType.title} - ${obj.data} ${this.intl.t('general.minutes')}`;
+        delete obj.id;
         return obj;
       })
       .sort((first, second) => {
@@ -115,13 +138,11 @@ export default class CourseVisualizeSessionTypesGraph extends Component {
       this.tooltipContent = null;
       return;
     }
-    const { label, meta } = obj;
-
-    const title = htmlSafe(label);
-    const sessions = uniqueValues(meta.sessions).sort().join(', ');
-
-    this.tooltipTitle = title;
-    this.tooltipContent = sessions;
+    const { data, meta } = obj;
+    this.tooltipTitle = htmlSafe(
+      `${meta.sessionType.title} &bull; ${data} ${this.intl.t('general.minutes')}`,
+    );
+    this.tooltipContent = htmlSafe(uniqueValues(mapBy(meta.sessions, 'title')).sort().join(', '));
   });
 
   @action
@@ -131,8 +152,8 @@ export default class CourseVisualizeSessionTypesGraph extends Component {
     }
     this.router.transitionTo(
       'course-visualize-session-type',
-      this.args.course.get('id'),
-      obj.meta.sessionTypeId,
+      this.args.course.id,
+      obj.meta.sessionType.id,
     );
   }
 }

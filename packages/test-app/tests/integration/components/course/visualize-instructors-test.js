@@ -55,10 +55,10 @@ module('Integration | Component | course/visualize-instructors', function (hooks
     await waitFor('svg .bars');
     assert.strictEqual(component.instructorsChart.chart.bars.length, 4);
     assert.strictEqual(component.instructorsChart.chart.labels.length, 4);
-    assert.strictEqual(component.instructorsChart.chart.labels[0].text, 'Daisy: 180 Minutes');
-    assert.strictEqual(component.instructorsChart.chart.labels[1].text, 'Duke: 180 Minutes');
-    assert.strictEqual(component.instructorsChart.chart.labels[2].text, 'William: 510 Minutes');
-    assert.strictEqual(component.instructorsChart.chart.labels[3].text, 'Marie: 810 Minutes');
+    assert.strictEqual(component.instructorsChart.chart.labels[0].text, 'Daisy');
+    assert.strictEqual(component.instructorsChart.chart.labels[1].text, 'Duke');
+    assert.strictEqual(component.instructorsChart.chart.labels[2].text, 'William');
+    assert.strictEqual(component.instructorsChart.chart.labels[3].text, 'Marie');
   });
 
   test('filter works', async function (assert) {
@@ -85,21 +85,12 @@ module('Integration | Component | course/visualize-instructors', function (hooks
     assert.strictEqual(component.title, 'course 0 2021');
     assert.strictEqual(component.instructorsChart.chart.bars.length, 2);
     assert.strictEqual(component.instructorsChart.chart.labels.length, 2);
-    assert.strictEqual(
-      component.instructorsChart.chart.labels[0].text,
-      'foo M. Mc0son: 1440 Minutes',
-    );
-    assert.strictEqual(
-      component.instructorsChart.chart.labels[1].text,
-      'bar M. Mc1son: 1440 Minutes',
-    );
+    assert.strictEqual(component.instructorsChart.chart.labels[0].text, 'foo M. Mc0son');
+    assert.strictEqual(component.instructorsChart.chart.labels[1].text, 'bar M. Mc1son');
     await component.filter.set('foo');
     assert.strictEqual(component.instructorsChart.chart.bars.length, 1);
     assert.strictEqual(component.instructorsChart.chart.labels.length, 1);
-    assert.strictEqual(
-      component.instructorsChart.chart.labels[0].text,
-      'foo M. Mc0son: 1440 Minutes',
-    );
+    assert.strictEqual(component.instructorsChart.chart.labels[0].text, 'foo M. Mc0son');
   });
 
   test('course year is shown as range if applicable by configuration', async function (assert) {

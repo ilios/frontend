@@ -9,7 +9,7 @@ module('Integration | Component | course/visualize-instructor-term-graph', funct
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
-  test('it renders', async function (assert) {
+  hooks.beforeEach(async function () {
     const instructor = this.server.create('user');
     const vocabulary1 = this.server.create('vocabulary');
     const vocabulary2 = this.server.create('vocabulary');
@@ -21,18 +21,29 @@ module('Integration | Component | course/visualize-instructor-term-graph', funct
       vocabulary: vocabulary2,
       title: 'Campaign',
     });
+    const term3 = this.server.create('term', {
+      vocabulary: vocabulary2,
+      title: 'Prelude',
+    });
     const sessionType = this.server.create('session-type');
-    const course = this.server.create('course');
+    const linkedCourseWithTime = this.server.create('course');
+    const linkedCourseWithoutTime = this.server.create('course');
     const session1 = this.server.create('session', {
       title: 'Berkeley Investigations',
-      course,
+      course: linkedCourseWithTime,
       terms: [term1],
       sessionType: sessionType,
     });
     const session2 = this.server.create('session', {
       title: 'The San Leandro Horror',
-      course,
+      course: linkedCourseWithTime,
       terms: [term2],
+      sessionType: sessionType,
+    });
+    const session3 = this.server.create('session', {
+      title: 'Two Slices of Pizza',
+      course: linkedCourseWithoutTime,
+      terms: [term3],
       sessionType: sessionType,
     });
     this.server.create('offering', {
@@ -53,24 +64,148 @@ module('Integration | Component | course/visualize-instructor-term-graph', funct
       endDate: new Date('2019-12-05T21:00:00'),
       instructors: [instructor],
     });
+    this.server.create('offering', {
+      session: session3,
+      startDate: new Date('2019-12-05T18:00:00'),
+      endDate: new Date('2019-12-05T18:00:00'),
+      instructors: [instructor],
+    });
+    this.emptyCourse = await this.owner
+      .lookup('service:store')
+      .findRecord('course', this.server.create('course').id);
+    this.linkedCourseWithTime = await this.owner
+      .lookup('service:store')
+      .findRecord('course', linkedCourseWithTime.id);
+    this.linkedCourseWithoutTime = await this.owner
+      .lookup('service:store')
+      .findRecord('course', linkedCourseWithoutTime.id);
+    this.user = await this.owner.lookup('service:store').findRecord('user', instructor.id);
+  });
 
-    const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
-    const userModel = await this.owner.lookup('service:store').findRecord('user', instructor.id);
-
-    this.set('course', courseModel);
-    this.set('instructor', userModel);
-
+  test('it renders', async function (assert) {
+    this.set('course', this.linkedCourseWithTime);
+    this.set('instructor', this.user);
     await render(
-      hbs`<Course::VisualizeInstructorTermGraph @course={{this.course}} @user={{this.instructor}} @isIcon={{false}} />
+      hbs`<Course::VisualizeInstructorTermGraph @course={{this.course}} @user={{this.instructor}} @isIcon={{false}} @showDataTable={{true}} />
 `,
     );
+    assert.notOk(component.noData.isVisible);
     //let the chart animations finish
     await waitFor('.loaded');
     await waitFor('svg .bars');
-
     assert.strictEqual(component.chart.bars.length, 2);
+    assert.strictEqual(
+      component.chart.bars[0].description,
+      'Vocabulary 1 - Standalone - 630 Minutes',
+    );
+    assert.strictEqual(
+      component.chart.bars[1].description,
+      'Vocabulary 2 - Campaign - 180 Minutes',
+    );
     assert.strictEqual(component.chart.labels.length, 2);
-    assert.strictEqual(component.chart.labels[0].text, 'Vocabulary 1 > Standalone: 630 Minutes');
-    assert.strictEqual(component.chart.labels[1].text, 'Vocabulary 2 > Campaign: 180 Minutes');
+    assert.strictEqual(component.chart.labels[0].text, 'Vocabulary 1 - Standalone');
+    assert.strictEqual(component.chart.labels[1].text, 'Vocabulary 2 - Campaign');
+    assert.strictEqual(component.dataTable.rows[0].vocabularyTerm, 'Vocabulary 2 - Campaign');
+    assert.strictEqual(component.dataTable.rows[0].sessions.links.length, 1);
+    assert.strictEqual(
+      component.dataTable.rows[0].sessions.links[0].text,
+      'The San Leandro Horror',
+    );
+    assert.strictEqual(component.dataTable.rows[0].sessions.links[0].url, '/courses/1/sessions/2');
+    assert.strictEqual(component.dataTable.rows[0].minutes, '180');
+    assert.strictEqual(component.dataTable.rows[1].vocabularyTerm, 'Vocabulary 1 - Standalone');
+    assert.strictEqual(component.dataTable.rows[1].sessions.links.length, 1);
+    assert.strictEqual(
+      component.dataTable.rows[1].sessions.links[0].text,
+      'Berkeley Investigations',
+    );
+    assert.strictEqual(component.dataTable.rows[1].sessions.links[0].url, '/courses/1/sessions/1');
+    assert.strictEqual(component.dataTable.rows[1].minutes, '630');
+  });
+
+  test('sort data-table by vocabulary term', async function (assert) {
+    this.set('course', this.linkedCourseWithTime);
+    this.set('instructor', this.user);
+    await render(
+      hbs`<Course::VisualizeInstructorTermGraph @course={{this.course}} @user={{this.instructor}} @isIcon={{false}} @showDataTable={{true}} />
+`,
+    );
+    assert.strictEqual(component.dataTable.rows[0].vocabularyTerm, 'Vocabulary 2 - Campaign');
+    assert.strictEqual(component.dataTable.rows[1].vocabularyTerm, 'Vocabulary 1 - Standalone');
+    await component.dataTable.header.vocabularyTerm.toggle();
+    assert.strictEqual(component.dataTable.rows[0].vocabularyTerm, 'Vocabulary 1 - Standalone');
+    assert.strictEqual(component.dataTable.rows[1].vocabularyTerm, 'Vocabulary 2 - Campaign');
+    await component.dataTable.header.vocabularyTerm.toggle();
+    assert.strictEqual(component.dataTable.rows[0].vocabularyTerm, 'Vocabulary 2 - Campaign');
+    assert.strictEqual(component.dataTable.rows[1].vocabularyTerm, 'Vocabulary 1 - Standalone');
+  });
+
+  test('sort data-table by sessions', async function (assert) {
+    this.set('course', this.linkedCourseWithTime);
+    this.set('instructor', this.user);
+    await render(
+      hbs`<Course::VisualizeInstructorTermGraph @course={{this.course}} @user={{this.instructor}} @isIcon={{false}} @showDataTable={{true}} />
+`,
+    );
+    assert.strictEqual(component.dataTable.rows[0].sessions.text, 'The San Leandro Horror');
+    assert.strictEqual(component.dataTable.rows[1].sessions.text, 'Berkeley Investigations');
+    await component.dataTable.header.sessions.toggle();
+    assert.strictEqual(component.dataTable.rows[0].sessions.text, 'Berkeley Investigations');
+    assert.strictEqual(component.dataTable.rows[1].sessions.text, 'The San Leandro Horror');
+    await component.dataTable.header.sessions.toggle();
+    assert.strictEqual(component.dataTable.rows[0].sessions.text, 'The San Leandro Horror');
+    assert.strictEqual(component.dataTable.rows[1].sessions.text, 'Berkeley Investigations');
+    await component.dataTable.header.sessions.toggle();
+    assert.strictEqual(component.dataTable.rows[0].sessions.text, 'Berkeley Investigations');
+    assert.strictEqual(component.dataTable.rows[1].sessions.text, 'The San Leandro Horror');
+  });
+
+  test('sort data-table by minutes', async function (assert) {
+    this.set('course', this.linkedCourseWithTime);
+    this.set('instructor', this.user);
+    await render(
+      hbs`<Course::VisualizeInstructorTermGraph @course={{this.course}} @user={{this.instructor}} @isIcon={{false}} @showDataTable={{true}} />
+`,
+    );
+    assert.strictEqual(component.dataTable.rows[0].minutes, '180');
+    assert.strictEqual(component.dataTable.rows[1].minutes, '630');
+    await component.dataTable.header.minutes.toggle();
+    assert.strictEqual(component.dataTable.rows[0].minutes, '630');
+    assert.strictEqual(component.dataTable.rows[1].minutes, '180');
+    await component.dataTable.header.minutes.toggle();
+    assert.strictEqual(component.dataTable.rows[0].minutes, '180');
+    assert.strictEqual(component.dataTable.rows[1].minutes, '630');
+  });
+
+  test('no data', async function (assert) {
+    this.set('course', this.emptyCourse);
+    this.set('instructor', this.user);
+    await render(
+      hbs`<Course::VisualizeInstructorTermGraph @course={{this.course}} @user={{this.instructor}} @isIcon={{false}} @showDataTable={{true}} />
+`,
+    );
+    assert.notOk(component.chart.isVisible);
+    assert.notOk(component.dataTable.isVisible);
+    assert.strictEqual(
+      component.noData.text,
+      '0 guy M. Mc0son is not instructing any sessions in this this course.',
+    );
+  });
+
+  test('only zero time data', async function (assert) {
+    this.set('course', this.linkedCourseWithoutTime);
+    this.set('instructor', this.user);
+    await render(
+      hbs`<Course::VisualizeInstructorTermGraph @course={{this.course}} @user={{this.instructor}} @isIcon={{false}} @showDataTable={{true}} />
+`,
+    );
+    assert.notOk(component.chart.isVisible);
+    assert.notOk(component.noData.isVisible);
+    assert.strictEqual(component.dataTable.rows.length, 1);
+    assert.strictEqual(component.dataTable.rows[0].vocabularyTerm, 'Vocabulary 2 - Prelude');
+    assert.strictEqual(component.dataTable.rows[0].sessions.links.length, 1);
+    assert.strictEqual(component.dataTable.rows[0].sessions.links[0].text, 'Two Slices of Pizza');
+    assert.strictEqual(component.dataTable.rows[0].sessions.links[0].url, '/courses/2/sessions/3');
+    assert.strictEqual(component.dataTable.rows[0].minutes, '0');
   });
 });
