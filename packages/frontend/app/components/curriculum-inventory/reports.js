@@ -29,7 +29,7 @@ export default class CurriculumInventoryReportsComponent extends Component {
   }
 
   get curriculumInventoryReports() {
-    return this.reports ? this.reports.slice() : [];
+    return this.reports ?? [];
   }
 
   @action
@@ -68,14 +68,14 @@ export default class CurriculumInventoryReportsComponent extends Component {
     if (!this.args.schools) {
       return;
     }
-    this.sortedSchools = sortBy(this.args.schools.slice(), 'title');
+    this.sortedSchools = sortBy(this.args.schools, 'title');
     this.hasMoreThanOneSchool = this.sortedSchools.length > 1;
 
     if (!this.args.schoolId) {
       const user = await this.currentUser.getModel();
       this.selectedSchool = await user.school;
     } else {
-      this.selectedSchool = findById(this.args.schools.slice(), this.args.schoolId);
+      this.selectedSchool = findById(this.args.schools, this.args.schoolId);
     }
 
     if (this.selectedSchool) {
@@ -83,7 +83,7 @@ export default class CurriculumInventoryReportsComponent extends Component {
         this.selectedSchool,
       );
       const programs = await this.selectedSchool.programs;
-      this.programs = sortBy(programs.slice(), 'title');
+      this.programs = sortBy(programs, 'title');
     }
 
     if (this.args.programId) {
@@ -94,7 +94,7 @@ export default class CurriculumInventoryReportsComponent extends Component {
   });
 
   removeCurriculumInventoryReport = dropTask(async (report) => {
-    const reports = (await this.selectedProgram.curriculumInventoryReports).slice();
+    const reports = await this.selectedProgram.curriculumInventoryReports;
     reports.splice(reports.indexOf(report), 1);
     this.selectedProgram.set('curriculumInventoryReports', reports);
     await report.destroyRecord();

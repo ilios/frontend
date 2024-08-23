@@ -12,7 +12,7 @@ export default class ProgramYearObjectiveListItemExpandedComponent extends Compo
     if (!programYearObjective) {
       return;
     }
-    const courseObjectives = (await programYearObjective.courseObjectives).slice();
+    const courseObjectives = await programYearObjective.courseObjectives;
     const objectiveObjects = await map(courseObjectives, async (courseObjective) => {
       const course = await courseObjective.course;
       return {

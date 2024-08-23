@@ -133,7 +133,7 @@ export default class CoursesRootComponent extends Component {
 
   get selectedSchool() {
     if (this.args.schoolId) {
-      const school = findById(this.args.schools.slice(), this.args.schoolId);
+      const school = findById(this.args.schools, this.args.schoolId);
       if (school) {
         return school;
       }
@@ -161,7 +161,7 @@ export default class CoursesRootComponent extends Component {
   }
 
   removeCourse = dropTask(async (course) => {
-    const courses = (await this.selectedSchool.courses).slice();
+    const courses = await this.selectedSchool.courses;
     courses.splice(courses.indexOf(course), 1);
     this.selectedSchool.set('courses', courses);
     await course.destroyRecord();

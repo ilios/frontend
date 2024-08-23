@@ -63,15 +63,15 @@ export default class LearnerGroupListItemComponent extends Component {
   }
 
   async isLinkedToOfferingsOrIlms(learnerGroup) {
-    const offerings = (await learnerGroup.offerings).slice();
+    const offerings = await learnerGroup.offerings;
     if (offerings.length) {
       return true;
     }
-    const ilms = (await learnerGroup.ilmSessions).slice();
+    const ilms = await learnerGroup.ilmSessions;
     if (ilms.length) {
       return true;
     }
-    const children = (await learnerGroup.children).slice();
+    const children = await learnerGroup.children;
     const linkedChildren = await filter(children, async (child) => {
       return this.isLinkedToOfferingsOrIlms(child);
     });

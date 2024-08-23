@@ -33,7 +33,7 @@ export default class SchoolVisualizerSessionTypeVocabulariesComponent extends Co
     }
 
     const sessionsWithTerms = await map(sessions, async (session) => {
-      const terms = (await session.terms).slice();
+      const terms = await session.terms;
       return terms.map((term) => {
         return { session, term };
       });

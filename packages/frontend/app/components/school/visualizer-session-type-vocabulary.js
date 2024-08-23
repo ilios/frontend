@@ -31,7 +31,7 @@ export default class SchoolVisualizerSessionTypeVocabularyComponent extends Comp
     }
 
     const termsWithSession = await map(sessions, async (session) => {
-      const sessionTerms = (await session.terms).slice();
+      const sessionTerms = await session.terms;
 
       const terms = await filter(sessionTerms, async (term) => {
         const termVocab = await term.vocabulary;

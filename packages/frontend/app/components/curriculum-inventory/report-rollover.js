@@ -49,7 +49,7 @@ export default class CurriculumInventoryReportRolloverComponent extends Componen
     const programs = await school.programs;
 
     this.selectedProgram = program;
-    this.programs = programs.slice();
+    this.programs = programs;
     this.years = years;
     this.selectedYear = selectedYear.year;
     this.name = this.args.report.name;

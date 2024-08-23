@@ -56,7 +56,7 @@ export default class ProgramYearObjectiveListItemComponent extends Component {
   }
 
   get assignableVocabularies() {
-    return this.vocabularies?.slice() ?? [];
+    return this.vocabularies ?? [];
   }
 
   get isManaging() {
@@ -107,14 +107,14 @@ export default class ProgramYearObjectiveListItemComponent extends Component {
 
   manageDescriptors = dropTask(async () => {
     const meshDescriptors = await this.args.programYearObjective.meshDescriptors;
-    this.descriptorsBuffer = meshDescriptors.slice();
+    this.descriptorsBuffer = meshDescriptors;
     this.isManagingDescriptors = true;
   });
 
   manageTerms = dropTask(async (vocabulary) => {
     this.selectedVocabulary = vocabulary;
     const terms = await this.args.programYearObjective.terms;
-    this.termsBuffer = terms.slice();
+    this.termsBuffer = terms;
     this.isManagingTerms = true;
   });
 
@@ -158,7 +158,7 @@ export default class ProgramYearObjectiveListItemComponent extends Component {
   }
   @action
   setCompetencyBuffer(competencyId) {
-    this.competencyBuffer = findById(this.args.programYearCompetencies.slice(), competencyId);
+    this.competencyBuffer = findById(this.args.programYearCompetencies, competencyId);
   }
   @action
   addDescriptorToBuffer(descriptor) {
