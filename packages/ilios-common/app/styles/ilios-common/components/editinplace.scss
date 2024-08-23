@@ -5,6 +5,7 @@
   .editable {
     color: c.$blueMunsell;
     cursor: pointer;
+    display: block;
 
     &.prompt {
       font-style: italic;
