@@ -50,6 +50,7 @@
           {{else}}
             <FadeText
               @text={{@value}}
+              {{on "click" (fn this.setIsEditing true)}}
               @onEdit={{fn this.setIsEditing true}}
               as |displayText expand collapse isFaded expanded|
             >
