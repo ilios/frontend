@@ -67,11 +67,11 @@ export default class UserProfilePermissionsComponent extends Component {
   }
 
   get schools() {
-    return this.schoolData.isResolved ? this.schoolData.value.slice() : [];
+    return this.schoolData.isResolved ? this.schoolData.value : [];
   }
 
   get academicYears() {
-    return this.academicYearData.isResolved ? this.academicYearData.value.slice() : [];
+    return this.academicYearData.isResolved ? this.academicYearData.value : [];
   }
 
   @cached

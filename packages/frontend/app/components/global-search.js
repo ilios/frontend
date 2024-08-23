@@ -50,7 +50,7 @@ export default class GlobalSearchComponent extends Component {
       return [];
     }
     return this.args.ignoredSchoolIds.map((id) => {
-      const school = findById(this.schools.slice(), id);
+      const school = findById(this.schools, id);
       return school ? school.title : '';
     });
   }

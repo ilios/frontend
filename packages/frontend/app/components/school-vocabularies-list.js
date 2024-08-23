@@ -24,7 +24,7 @@ export default class SchoolVocabulariesListComponent extends Component {
     if (!this.vocabularies) {
       return [];
     }
-    return sortBy(filterBy(this.vocabularies.slice(), 'isNew', false), 'title');
+    return sortBy(filterBy(this.vocabularies, 'isNew', false), 'title');
   }
 
   @action

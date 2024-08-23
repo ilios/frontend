@@ -72,7 +72,7 @@ module('Integration | Component | school list', function (hooks) {
     await render(hbs`<SchoolList @schools={{this.schools}} />`);
     await component.expandCollapseButton.toggle();
 
-    let schools = (await this.owner.lookup('service:store').findAll('school')).slice();
+    let schools = await this.owner.lookup('service:store').findAll('school');
     assert.strictEqual(schools.length, 2);
     assert.notOk(component.savedSchool.isVisible);
     component.newSchoolForm.title.set('school of rocket surgery');

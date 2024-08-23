@@ -32,11 +32,7 @@ export default class SchoolVocabularyManagerComponent extends Component {
       return [];
     }
     return sortBy(
-      filterBy(
-        filterBy(filterBy(this.terms.slice(), 'isTopLevel'), 'isNew', false),
-        'isDeleted',
-        false,
-      ),
+      filterBy(filterBy(filterBy(this.terms, 'isTopLevel'), 'isNew', false), 'isDeleted', false),
       'title',
     );
   }
@@ -75,7 +71,7 @@ export default class SchoolVocabularyManagerComponent extends Component {
   async validateTitleCallback() {
     const school = await this.args.vocabulary.school;
     const allVocabsInSchool = await school.vocabularies;
-    const siblings = allVocabsInSchool.slice().filter((vocab) => {
+    const siblings = allVocabsInSchool.filter((vocab) => {
       return vocab !== this.args.vocabulary;
     });
     const siblingTitles = mapBy(siblings, 'title');

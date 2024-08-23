@@ -14,6 +14,6 @@ export default class SchoolCompetenciesListItemPcrsComponent extends Component {
   }
 
   get aamcPcrses() {
-    return this.aamcPcrsesData.isResolved ? this.aamcPcrsesData.value.slice() : [];
+    return this.aamcPcrsesData.isResolved ? this.aamcPcrsesData.value : [];
   }
 }
