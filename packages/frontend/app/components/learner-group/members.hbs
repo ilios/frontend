@@ -1,6 +1,6 @@
 {{#let (unique-id) as |templateId|}}
   <div
-    class="learner-group-members"
+    class="learner-group-members{{if (eq this.usersInGroup.length 0) " empty"}}"
     data-test-learner-group-members
   >
     {{#if this.usersInGroup.length}}
