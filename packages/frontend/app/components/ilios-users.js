@@ -3,7 +3,7 @@ import { service } from '@ember/service';
 import { cleanQuery } from 'ilios-common/utils/query-utils';
 import { restartableTask, timeout } from 'ember-concurrency';
 import { TrackedAsyncData } from 'ember-async-data';
-import { cached } from '@glimmer/tracking';
+import { tracked, cached } from '@glimmer/tracking';
 import { ensureSafeComponent } from '@embroider/util';
 import { action } from '@ember/object';
 import NewDirectoryUser from './new-directory-user';
@@ -15,10 +15,13 @@ export default class IliosUsersComponent extends Component {
   @service iliosConfig;
   @service store;
   @service dataLoader;
+  @tracked query;
+
   searchTypeConfig = new TrackedAsyncData(this.iliosConfig.itemFromConfig('userSearchType'));
 
   constructor() {
     super(...arguments);
+    this.query = this.args.query;
     this.searchForUsers.perform();
   }
 
@@ -53,7 +56,12 @@ export default class IliosUsersComponent extends Component {
   @action
   setQuery(query) {
     this.args.setQuery(query);
-    this.searchForUsers.perform();
+    if (query != this.query) {
+      this.query = query;
+      this.setOffset(0);
+    } else {
+      this.searchForUsers.perform();
+    }
   }
 
   @action
