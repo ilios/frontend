@@ -66,14 +66,14 @@ export default class ProgramYearCompetenciesComponent extends Component {
     const program = await programYear.program;
     const school = await program.school;
     const competencies = await school.competencies;
-    const domains = await map(competencies.slice(), async (c) => c.getDomain());
+    const domains = await map(competencies, async (c) => c.getDomain());
     const programYearCompetencies = await programYear.competencies;
 
     return { program, school, competencies, domains, programYearCompetencies };
   }
 
   async getCompetenciesWithSelectedChildren(selectedCompetencies, competencies) {
-    return await filter(competencies.slice(), async (competency) => {
+    return await filter(competencies, async (competency) => {
       const children = await competency.children;
       const selectedChildren = children.filter((c) => selectedCompetencies.includes(c));
       return selectedChildren.length > 0;

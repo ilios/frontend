@@ -334,7 +334,7 @@ export default class ReportsNewSubjectComponent extends Component {
 
   @action
   changeSchool(schoolId) {
-    this.selectedSchool = findById(this.allSchools.slice(), schoolId);
+    this.selectedSchool = findById(this.allSchools, schoolId);
     this.schoolChanged = true;
   }
 

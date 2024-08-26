@@ -110,7 +110,7 @@ export default class LearnerGroupsRootComponent extends Component {
   get selectedSchool() {
     const schoolId = this.args.schoolId ?? this.user?.belongsTo('school').id();
 
-    const school = findById(this.args.schools.slice(), schoolId) ?? this.args.schools.slice()[0];
+    const school = findById(this.args.schools, schoolId) ?? this.args.schools[0];
     //trigger a pre-load of the data we need to load an individual group in this school
     this.dataLoader.loadInstructorGroupsForSchool(school.id);
     return school;
@@ -121,7 +121,7 @@ export default class LearnerGroupsRootComponent extends Component {
       return null;
     }
     if (this.args.programId) {
-      return findById(this.programs.slice(), this.args.programId);
+      return findById(this.programs, this.args.programId);
     }
 
     return this.defaultSelectedProgram;
@@ -132,10 +132,10 @@ export default class LearnerGroupsRootComponent extends Component {
       return null;
     }
     if (this.args.programYearId) {
-      return findById(this.programYears.slice(), this.args.programYearId);
+      return findById(this.programYears, this.args.programYearId);
     }
 
-    return sortBy(this.programYears.slice(), 'startYear').reverse()[0];
+    return sortBy(this.programYears, 'startYear').reverse()[0];
   }
 
   get rootLevelLearnerGroups() {
@@ -147,7 +147,7 @@ export default class LearnerGroupsRootComponent extends Component {
 
   get filteredLearnerGroups() {
     if (!this.args.titleFilter) {
-      return this.rootLevelLearnerGroups.slice();
+      return this.rootLevelLearnerGroups;
     }
     const filter = this.args.titleFilter.trim().toLowerCase();
     return this.rootLevelLearnerGroups.filter((learnerGroup) => {
@@ -161,7 +161,7 @@ export default class LearnerGroupsRootComponent extends Component {
       cohort: this.selectedCohort,
     });
     if (fillWithCohort) {
-      const users = (await this.selectedCohort.users).slice();
+      const users = await this.selectedCohort.users;
       group.set('users', users);
     }
     this.savedLearnerGroup = await group.save();
@@ -188,9 +188,9 @@ export default class LearnerGroupsRootComponent extends Component {
     if (!programs) {
       return null;
     }
-    const sortingPrograms = await map(programs.slice(), async (program) => {
+    const sortingPrograms = await map(programs, async (program) => {
       const thisYear = new Date().getFullYear();
-      const programYears = (await program.programYears).slice();
+      const programYears = await program.programYears;
       const sorters = await map(programYears, async (programYear) => {
         const groupCount = (await programYear.cohort).hasMany('learnerGroups').ids().length;
         return {
@@ -236,7 +236,7 @@ export default class LearnerGroupsRootComponent extends Component {
   }
 
   setProgramId = dropTask(async (programId) => {
-    const program = findById(this.programs.slice(), programId);
+    const program = findById(this.programs, programId);
     const school = await program.school;
     this.args.setSchoolId(school.id);
     this.args.setProgramId(program.id);
@@ -244,7 +244,7 @@ export default class LearnerGroupsRootComponent extends Component {
   });
 
   setProgramYearId = dropTask(async (programYearId) => {
-    const programYear = findById(this.programYears.slice(), programYearId);
+    const programYear = findById(this.programYears, programYearId);
     const program = await programYear.program;
     const school = await program.school;
     this.args.setSchoolId(school.id);

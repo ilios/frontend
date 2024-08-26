@@ -109,7 +109,7 @@ export default class SequenceBlockSessionManagerComponent extends Component {
     if (this.allSelected) {
       this.linkedSessions = [];
     } else {
-      this.linkedSessions = this.sessions.slice();
+      this.linkedSessions = this.sessions;
     }
   }
 
@@ -118,7 +118,7 @@ export default class SequenceBlockSessionManagerComponent extends Component {
     if (this.allExcluded) {
       this.excludedSessions = [];
     } else {
-      this.excludedSessions = this.sessions.slice();
+      this.excludedSessions = this.sessions;
     }
   }
 
@@ -136,9 +136,9 @@ export default class SequenceBlockSessionManagerComponent extends Component {
   }
 
   load = restartableTask(async () => {
-    this.linkedSessions = (await this.args.sequenceBlock.sessions).slice();
-    this.excludedSessions = (await this.args.sequenceBlock.excludedSessions).slice();
-    this.sessions = (await this.args.sessions).slice();
+    this.linkedSessions = await this.args.sequenceBlock.sessions;
+    this.excludedSessions = await this.args.sequenceBlock.excludedSessions;
+    this.sessions = await this.args.sessions;
   });
 
   saveChanges = dropTask(async () => {

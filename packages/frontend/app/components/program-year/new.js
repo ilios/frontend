@@ -8,7 +8,7 @@ export default class NewProgramYearComponent extends Component {
   @tracked year;
 
   get existingStartYears() {
-    return mapBy(this.args.programYears?.slice() ?? [], 'startYear').map(Number);
+    return mapBy(this.args.programYears ?? [], 'startYear').map(Number);
   }
 
   get selectedYear() {

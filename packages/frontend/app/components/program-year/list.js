@@ -26,7 +26,7 @@ export default class ProgramYearListComponent extends Component {
   }
 
   get sortedProgramYears() {
-    return sortBy(this.programYears.slice(), 'startYear');
+    return sortBy(this.programYears, 'startYear');
   }
 
   @cached
@@ -42,9 +42,9 @@ export default class ProgramYearListComponent extends Component {
     });
 
     if (latestProgramYear) {
-      const directors = (await latestProgramYear.directors).slice();
-      const competencies = (await latestProgramYear.competencies).slice();
-      const terms = (await latestProgramYear.terms).slice();
+      const directors = await latestProgramYear.directors;
+      const competencies = await latestProgramYear.competencies;
+      const terms = await latestProgramYear.terms;
       newProgramYear.set('directors', directors);
       newProgramYear.set('competencies', competencies);
       newProgramYear.set('terms', terms);
@@ -52,7 +52,7 @@ export default class ProgramYearListComponent extends Component {
     const savedProgramYear = await newProgramYear.save();
     if (latestProgramYear) {
       const relatedObjectives = await latestProgramYear.programYearObjectives;
-      const programYearObjectives = sortBy(relatedObjectives.slice(), 'id');
+      const programYearObjectives = sortBy(relatedObjectives, 'id');
 
       const newObjectiveObjects = programYearObjectives.map((pyoToCopy) => {
         const terms = pyoToCopy

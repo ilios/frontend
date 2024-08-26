@@ -27,7 +27,7 @@ export default class InstructorGroupUsersComponent extends Component {
   }
 
   manage = dropTask(async () => {
-    this.usersBuffer = (await this.args.instructorGroup.users).slice();
+    this.usersBuffer = await this.args.instructorGroup.users;
     this.isManaging = true;
   });
 

@@ -52,7 +52,7 @@ export default class LearnerGroupRootComponent extends Component {
     if (!this.subGroups) {
       return [];
     }
-    return this.subGroups.slice();
+    return this.subGroups;
   }
 
   get bestUrl() {
@@ -185,8 +185,8 @@ export default class LearnerGroupRootComponent extends Component {
 
   @action
   saveInstructors(newInstructors, newInstructorGroups) {
-    this.args.learnerGroup.set('instructors', newInstructors.slice());
-    this.args.learnerGroup.set('instructorGroups', newInstructorGroups.slice());
+    this.args.learnerGroup.set('instructors', newInstructors);
+    this.args.learnerGroup.set('instructorGroups', newInstructorGroups);
     return this.args.learnerGroup.save();
   }
 
@@ -251,7 +251,7 @@ export default class LearnerGroupRootComponent extends Component {
     } else {
       users = await this.args.learnerGroup.getUsersOnlyAtThisLevel();
     }
-    return await map(users.slice(), async (user) => {
+    return await map(users, async (user) => {
       const lowestGroupInTree = await user.getLowestMemberGroupInALearnerGroupTree(this.treeGroups);
       return ObjectProxy.create({
         content: user,
@@ -298,8 +298,8 @@ export default class LearnerGroupRootComponent extends Component {
   });
 
   async getCoursesForGroupWithSubgroupName(prefix, learnerGroup) {
-    const offerings = (await learnerGroup.offerings).slice();
-    const ilms = (await learnerGroup.ilmSessions).slice();
+    const offerings = await learnerGroup.offerings;
+    const ilms = await learnerGroup.ilmSessions;
     const arr = [].concat(offerings, ilms);
     const sessions = await Promise.all(mapBy(arr, 'session'));
     const filteredSessions = uniqueValues(sessions.filter(Boolean));
@@ -316,7 +316,7 @@ export default class LearnerGroupRootComponent extends Component {
       }
       return obj;
     });
-    const children = (await learnerGroup.children).slice();
+    const children = await learnerGroup.children;
     const childCourses = await map(children, async (child) => {
       return await this.getCoursesForGroupWithSubgroupName(learnerGroup.title, child);
     });

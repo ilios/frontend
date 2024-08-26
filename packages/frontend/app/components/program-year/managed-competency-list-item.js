@@ -14,12 +14,12 @@ export default class ProgramYearManagedCompetencyListItemComponent extends Compo
   }
 
   addCompetencyToBuffer = task(async (competency) => {
-    const children = (await competency.children).slice();
+    const children = await competency.children;
     this.args.addCompetencyToBuffer(competency, children);
   });
 
   removeCompetencyFromBuffer = task(async (competency) => {
-    const children = (await competency.children).slice();
+    const children = await competency.children;
     this.args.removeCompetencyFromBuffer(competency, children);
   });
 }

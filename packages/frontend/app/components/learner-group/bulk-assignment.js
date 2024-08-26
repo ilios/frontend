@@ -24,7 +24,7 @@ export default class LearnerGroupBulkAssignmentComponent extends Component {
   @action
   async addMatch(name, groupId) {
     const group = await this.store.findRecord('learner-group', groupId);
-    const matchedGroups = this.matchedGroups.slice();
+    const matchedGroups = this.matchedGroups;
     const match = findBy(matchedGroups, 'name', name);
     if (match) {
       this.removeMatch(name);
@@ -49,7 +49,7 @@ export default class LearnerGroupBulkAssignmentComponent extends Component {
       parent: learnerGroup,
     });
     const savedGroup = await group.save();
-    const children = (await learnerGroup.children).slice();
+    const children = await learnerGroup.children;
     learnerGroup.set('children', [...children, savedGroup]);
     this.matchedGroups = [...this.matchedGroups, { name: title, group: savedGroup }];
   }

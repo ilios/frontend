@@ -47,7 +47,7 @@ export default class LearnerGroupCalendarComponent extends Component {
     }
     const offerings = await all(mapBy(learnerGroups, 'offerings'));
     const flat = offerings.reduce((flattened, obj) => {
-      return [...flattened, ...obj.slice()];
+      return [...flattened, ...obj];
     }, []);
     return await map(flat, async (offering) => {
       const session = await offering.session;

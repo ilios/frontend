@@ -20,9 +20,9 @@ export default class LearnerGroupInstructorManagerComponent extends Component {
       const school = await program.get('school');
       const availableInstructorGroups = await school.get('instructorGroups');
 
-      this.instructors = instructors.slice();
-      this.instructorGroups = instructorGroups.slice();
-      this.availableInstructorGroups = availableInstructorGroups.slice();
+      this.instructors = instructors;
+      this.instructorGroups = instructorGroups;
+      this.availableInstructorGroups = availableInstructorGroups;
     }
   });
 

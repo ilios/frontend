@@ -225,7 +225,7 @@ export default class CurriculumInventoryNewSequenceBlock extends Component {
     this.orderInSequence = 0;
     if (this.isInOrderedSequence) {
       const siblings = await this.args.parent.children;
-      for (let i = 0, n = siblings.slice().length + 1; i < n; i++) {
+      for (let i = 0, n = siblings.length + 1; i < n; i++) {
         this.orderInSequenceOptions.push(i + 1);
       }
       this.orderInSequence = 1;
@@ -242,8 +242,8 @@ export default class CurriculumInventoryNewSequenceBlock extends Component {
         this.startingAcademicLevel = await this.args.parent.startingAcademicLevel;
         this.endingAcademicLevel = await this.args.parent.endingAcademicLevel;
       } else {
-        this.startingAcademicLevel = this.academicLevels.slice()[0];
-        this.endingAcademicLevel = this.academicLevels.slice()[0];
+        this.startingAcademicLevel = this.academicLevels[0];
+        this.endingAcademicLevel = this.academicLevels[0];
       }
       this.linkableCourses = await this.getLinkableCourses(this.args.report);
     }
@@ -256,8 +256,8 @@ export default class CurriculumInventoryNewSequenceBlock extends Component {
         this.startingAcademicLevel = await this.args.parent.startingAcademicLevel;
         this.endingAcademicLevel = await this.args.parent.endingAcademicLevel;
       } else {
-        this.startingAcademicLevel = this.academicLevels.slice()[0];
-        this.endingAcademicLevel = this.academicLevels.slice()[0];
+        this.startingAcademicLevel = this.academicLevels[0];
+        this.endingAcademicLevel = this.academicLevels[0];
       }
       this.linkableCourses = await this.getLinkableCourses(this.args.report);
     }

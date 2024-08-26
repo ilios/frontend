@@ -29,7 +29,7 @@ export default class ProgramYearObjectivesComponent extends Component {
   saveNewObjective = dropTask(async (title) => {
     const programYearObjectives = await this.args.programYear.programYearObjectives;
     const position = programYearObjectives.length
-      ? sortBy(programYearObjectives.slice(), 'position').reverse()[0].position + 1
+      ? sortBy(programYearObjectives, 'position').reverse()[0].position + 1
       : 0;
 
     const newProgramYearObjective = this.store.createRecord('program-year-objective');
