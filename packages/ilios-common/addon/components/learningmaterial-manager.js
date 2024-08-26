@@ -60,6 +60,26 @@ export default class LearningMaterialManagerComponent extends Component {
       minute,
       second: 0,
     }).toJSDate();
+
+    if (which == 'startDate' && this['endDate']) {
+      const startDate = DateTime.fromJSDate(value);
+      this['endDate'] = DateTime.fromObject({
+        day: startDate.day,
+        hour: 8,
+        minute: 0,
+        second: 0,
+      }).toJSDate();
+    }
+
+    if (which == 'endDate' && this['startDate']) {
+      const endDate = DateTime.fromJSDate(this['endDate']);
+      this['startDate'] = DateTime.fromObject({
+        day: endDate.day,
+        hour: 8,
+        minute: 0,
+        second: 0,
+      }).toJSDate();
+    }
   }
   @action
   updateTime(which, value, type) {
@@ -82,11 +102,43 @@ export default class LearningMaterialManagerComponent extends Component {
   }
   @action
   addDate(which) {
-    this[which] = DateTime.fromObject({
-      hour: 8,
-      minute: 0,
-      second: 0,
-    }).toJSDate();
+    if (which == 'endDate') {
+      if (this['startDate']) {
+        const startDate = DateTime.fromJSDate(this['startDate']);
+
+        this[which] = DateTime.fromObject({
+          day: startDate.day,
+          hour: 8,
+          minute: 0,
+          second: 0,
+        }).toJSDate();
+      } else {
+        this[which] = DateTime.fromObject({
+          hour: 8,
+          minute: 0,
+          second: 0,
+        }).toJSDate();
+      }
+    } else {
+      if (which == 'startDate') {
+        if (this['endDate']) {
+          const endDate = DateTime.fromJSDate(this['endDate']);
+
+          this[which] = DateTime.fromObject({
+            day: endDate.day,
+            hour: 8,
+            minute: 0,
+            second: 0,
+          }).toJSDate();
+        } else {
+          this[which] = DateTime.fromObject({
+            hour: 8,
+            minute: 0,
+            second: 0,
+          }).toJSDate();
+        }
+      }
+    }
   }
   @action
   addTerm(term) {
