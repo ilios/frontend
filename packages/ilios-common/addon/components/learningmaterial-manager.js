@@ -62,23 +62,27 @@ export default class LearningMaterialManagerComponent extends Component {
     }).toJSDate();
 
     if (which == 'startDate' && this['endDate']) {
-      const startDate = DateTime.fromJSDate(value);
-      this['endDate'] = DateTime.fromObject({
-        day: startDate.day,
-        hour: 8,
-        minute: 0,
-        second: 0,
-      }).toJSDate();
+      if (DateTime.fromJSDate(value) > DateTime.fromJSDate(this['endDate'])) {
+        const startDate = DateTime.fromJSDate(value);
+        this['endDate'] = DateTime.fromObject({
+          day: startDate.day,
+          hour: 8,
+          minute: 0,
+          second: 0,
+        }).toJSDate();
+      }
     }
 
     if (which == 'endDate' && this['startDate']) {
-      const endDate = DateTime.fromJSDate(this['endDate']);
-      this['startDate'] = DateTime.fromObject({
-        day: endDate.day,
-        hour: 8,
-        minute: 0,
-        second: 0,
-      }).toJSDate();
+      if (DateTime.fromJSDate(value) < DateTime.fromJSDate(this['startDate'])) {
+        const endDate = DateTime.fromJSDate(this['endDate']);
+        this['startDate'] = DateTime.fromObject({
+          day: endDate.day,
+          hour: 8,
+          minute: 0,
+          second: 0,
+        }).toJSDate();
+      }
     }
   }
   @action
