@@ -216,9 +216,6 @@ importers:
       ember-load-initializers:
         specifier: ^2.1.2
         version: 2.1.2(@babel/core@7.25.2)
-      ember-metrics:
-        specifier: 1.5.2
-        version: 1.5.2
       ember-mirage:
         specifier: ^0.3.1
         version: 0.3.1(@babel/core@7.25.2)(ember-source@5.9.0(@babel/core@7.25.2)(@glimmer/component@1.1.2(@babel/core@7.25.2))(rsvp@4.8.5)(webpack@5.94.0))(miragejs@0.1.48)
@@ -5359,10 +5356,6 @@ packages:
     engines: {node: 14.* || 16.* || >= 18}
     peerDependencies:
       ember-source: ^4.0.0 || ^5.0.0
-
-  ember-metrics@1.5.2:
-    resolution: {integrity: sha512-6QUg3XcGQ/wnMHxT4T+QXQs9NlojJ+ai/055sQWdmLrxep4w2fyy/spn9wxAkokdwEjj0nV5MPfTOTq5OS748w==}
-    engines: {node: 12.* || 14.* || >= 16}
 
   ember-mirage@0.3.1:
     resolution: {integrity: sha512-BN1cHSyi4Yp9+B8fIVkCUJacdwlZkb+Co5ILWUxugQI0jN6pI7G8U0c6+SfxhIaJ+GgXLsj7iWaerIA8cc0nWw==}
@@ -16084,14 +16077,6 @@ snapshots:
     dependencies:
       '@embroider/addon-shim': 1.8.9
       ember-source: 5.9.0(@babel/core@7.25.2)(@glimmer/component@1.1.2(@babel/core@7.25.2))(rsvp@4.8.5)(webpack@5.94.0)
-    transitivePeerDependencies:
-      - supports-color
-
-  ember-metrics@1.5.2:
-    dependencies:
-      broccoli-funnel: 3.0.8
-      ember-cli-babel: 7.26.11
-      ember-cli-typescript: 4.2.1
     transitivePeerDependencies:
       - supports-color
 
