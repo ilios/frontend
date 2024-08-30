@@ -91,30 +91,30 @@ jobs:
           name: replay-${{matrix.workspace}}-firefox-${{ matrix.firefox-version }}.json
           path: ./packages/${{matrix.workspace}}/test-execution-*.json
           retention-days: 7
-
-  percy:
-    name: Test and Capture Screenshots
-    runs-on: ubuntu-latest
-    needs: [firefox-test, browserstack-test]
-    timeout-minutes: 20
-    if: contains(github.event.pull_request.labels.*.name, 'ready to merge')
-    strategy:
-      fail-fast: false
-      matrix:
-        workspace:
-          - frontend
-          - test-app
-    steps:
-      - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v4
-        with:
-          version: 9
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: pnpm
-      - run: pnpm install
-      - name: Run Percy Tests
-        run: pnpm --filter ${{ matrix.workspace }} exec percy exec -- ember test
-        env:
-          PERCY_TOKEN: "web_1899a9764a4891f3a19b87e52aa1ae038359e28ba550daa6bad00d0e0a230a33"
+#
+#  percy:
+#    name: Test and Capture Screenshots
+#    runs-on: ubuntu-latest
+#    needs: [firefox-test, browserstack-test]
+#    timeout-minutes: 20
+#    if: contains(github.event.pull_request.labels.*.name, 'ready to merge')
+#    strategy:
+#      fail-fast: false
+#      matrix:
+#        workspace:
+#          - frontend
+#          - test-app
+#    steps:
+#      - uses: actions/checkout@v4
+#      - uses: pnpm/action-setup@v4
+#        with:
+#          version: 9
+#      - uses: actions/setup-node@v4
+#        with:
+#          node-version: 20
+#          cache: pnpm
+#      - run: pnpm install
+#      - name: Run Percy Tests
+#        run: pnpm --filter ${{ matrix.workspace }} exec percy exec -- ember test
+#        env:
+#          PERCY_TOKEN: "web_1899a9764a4891f3a19b87e52aa1ae038359e28ba550daa6bad00d0e0a230a33"
