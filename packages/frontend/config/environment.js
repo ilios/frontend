@@ -34,9 +34,6 @@ module.exports = function (environment) {
           process.env.ILIOS_FRONTEND_ERROR_CAPTURE_ENVIRONMENT || environment,
       },
     },
-    'ember-metrics': {
-      includeAdapters: ['google-analytics'],
-    },
     'ember-qunit-nice-errors': {
       completeExistingMessages: true,
       showFileInfo: true,

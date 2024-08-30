@@ -91,7 +91,6 @@
     "ember-exam": "^9.0.0",
     "ember-focus-trap": "^1.1.0",
     "ember-load-initializers": "^2.1.2",
-    "ember-metrics": "1.5.2",
     "ember-mirage": "^0.3.1",
     "ember-modifier": "^4.1.0",
     "ember-noscript": "^4.1.0",
