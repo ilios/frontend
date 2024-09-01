@@ -84,6 +84,8 @@
     }
 
     .list {
+      @include m.main-list-box-table;
+
       .confirm-copy,
       .confirm-copy:nth-child(even),
       .confirm-copy:nth-child(odd) {
