@@ -140,17 +140,19 @@ module('Integration | Component | editable field', function (hooks) {
     assert.dom('textarea', this.element).isFocused();
   });
 
-  test('expand/collapse overlong text', async function (assert) {
-    const text = 't'.repeat(400);
-    const abbreviatedText = 't'.repeat(200);
+  test('expand/collapse overlong html', async function (assert) {
+    const text = `
+      <p>A long list:</p><ol><li>One</li><li>two</li><li>Five!</li><li>Six</li><li>Seven but with extra text to make long</li><li>a</li><li>b</li><li>c</li><li>d</li><li>e</li><li>f</li><li>g</li><li>h</li><li>iii</li><li>Jjjjjj</li><li>k</li><li>lLLLLLLlll</li><li>mmmmmMMMMMmm</li></ol>
+    `;
+    const fadedClass = 'is-faded';
     this.set('value', text);
-    await render(hbs`<EditableField @value={{this.value}} />
-`);
-    assert.dom(this.element).hasText(abbreviatedText);
+    await render(hbs`<EditableField @value={{this.value}} />`);
+
+    assert.dom('.display-text-wrapper', this.element).hasClass(fadedClass);
     await click('[data-test-expand]');
-    assert.dom(this.element).hasText(text);
+    assert.dom('.display-text-wrapper', this.element).doesNotHaveClass(fadedClass);
     await click('[data-test-collapse]');
-    assert.dom(this.element).hasText(abbreviatedText);
+    assert.dom('.display-text-wrapper', this.element).hasClass(fadedClass);
   });
 
   test('sends status info', async function (assert) {
