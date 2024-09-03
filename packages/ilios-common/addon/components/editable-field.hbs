@@ -74,7 +74,11 @@
                 {{/if}}
               </button>
               {{#if isFaded}}
-                <div class="fade-text-control">
+                <div
+                  class="fade-text-control"
+                  {{! template-lint-disable no-invalid-interactive}}
+                  {{on "click" (fn this.setIsEditing true)}}
+                >
                   <button
                     class="expand-text-button"
                     type="button"
