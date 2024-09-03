@@ -4,7 +4,7 @@
   </span>
 {{else}}
   <span class="fade-text" data-test-fade-text ...attributes>
-    <div class="display-text-wrapper">
+    <div class="display-text-wrapper{{if this.isFaded ' is-faded'}}">
       <div class="display-text">
         {{this.displayText}}
       </div>
