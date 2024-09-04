@@ -14,7 +14,7 @@ export default class CourseVisualizeVocabulariesRoute extends Route {
   }
 
   async afterModel(course) {
-    const sessions = (await course.sessions).slice();
+    const sessions = await course.sessions;
     return await all([course.get('school'), map(sessions, (s) => s.terms)]);
   }
 
