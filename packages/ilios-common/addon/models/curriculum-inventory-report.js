@@ -51,7 +51,7 @@ export default class CurriculumInventoryReport extends Model {
   }
 
   async getLinkedCourses() {
-    const courses = await Promise.all(mapBy((await this.sequenceBlocks).slice(), 'course'));
+    const courses = await Promise.all(mapBy(await this.sequenceBlocks, 'course'));
     return courses.filter(Boolean);
   }
 }

@@ -102,7 +102,7 @@ export default class CurriculumInventorySequenceBlock extends Model {
     if (!parent) {
       return [];
     }
-    const parentsAncestors = (await parent.getAllParents()).slice();
+    const parentsAncestors = await parent.getAllParents();
     return [parent, ...parentsAncestors];
   }
 }
