@@ -14,10 +14,10 @@ export default class SelectableTermsList extends Component {
   }
 
   async getFilteredTerms(parent, termFilter) {
-    const terms = (await parent.children).slice();
+    const terms = await parent.children;
     if (termFilter) {
       const exp = new RegExp(termFilter, 'gi');
-      return await filter(terms.slice(), async (term) => {
+      return await filter(terms, async (term) => {
         const searchString = await term.getTitleWithDescendantTitles();
         return searchString.match(exp);
       });

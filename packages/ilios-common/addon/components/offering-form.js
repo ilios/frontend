@@ -294,7 +294,7 @@ export default class OfferingForm extends Component {
     if (isEmpty(cohorts)) {
       associatedSchools = [];
     } else {
-      const cohortSchools = await map(cohorts.slice(), async (cohort) => {
+      const cohortSchools = await map(cohorts, async (cohort) => {
         const programYear = await cohort.programYear;
         const program = await programYear.program;
         return program.school;
@@ -303,7 +303,7 @@ export default class OfferingForm extends Component {
     }
     const allInstructorGroups = await map(associatedSchools, (school) => school.instructorGroups);
     return allInstructorGroups.reduce((flattened, arr) => {
-      return [...flattened, ...arr.slice()];
+      return [...flattened, ...arr];
     }, []);
   }
 
@@ -340,10 +340,10 @@ export default class OfferingForm extends Component {
       instructors: offering.get('instructors'),
       instructorGroups: offering.get('instructorGroups'),
     });
-    this.learnerGroups = obj.learnerGroups.slice();
-    this.learners = obj.learners.slice();
-    this.instructors = obj.instructors.slice();
-    this.instructorGroups = obj.instructorGroups.slice();
+    this.learnerGroups = obj.learnerGroups;
+    this.learners = obj.learners;
+    this.instructors = obj.instructors;
+    this.instructorGroups = obj.instructorGroups;
     this.loaded = true;
   });
 
@@ -504,8 +504,8 @@ export default class OfferingForm extends Component {
         if (isPresent(defaultLocation)) {
           room = defaultLocation;
         }
-        const instructors = (await learnerGroup.instructors).slice();
-        const instructorGroups = (await learnerGroup.instructorGroups).slice();
+        const instructors = await learnerGroup.instructors;
+        const instructorGroups = await learnerGroup.instructorGroups;
         const offering = {
           startDate,
           endDate,

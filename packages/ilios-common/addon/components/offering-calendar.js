@@ -70,7 +70,7 @@ export default class OfferingCalendar extends Component {
     } else {
       const data = await map(learnerGroups, async (learnerGroup) => {
         const offerings = await learnerGroup.offerings;
-        return await map(offerings.slice(), async (offering) => {
+        return await map(offerings, async (offering) => {
           const session = await offering.session;
           const course = await session.course;
           return {
@@ -88,7 +88,7 @@ export default class OfferingCalendar extends Component {
       });
 
       this.learnerGroupEvents = data.reduce((flattened, obj) => {
-        return [...flattened, ...obj.slice()];
+        return [...flattened, ...obj];
       }, []);
     }
 
@@ -99,7 +99,7 @@ export default class OfferingCalendar extends Component {
       const offerings = await session.offerings;
       const sessionType = await session.sessionType;
       const course = await session.course;
-      this.sessionEvents = await map(offerings.slice(), async (offering) => {
+      this.sessionEvents = await map(offerings, async (offering) => {
         return {
           startDate: DateTime.fromJSDate(offering.startDate).toISO(),
           endDate: DateTime.fromJSDate(offering.endDate).toISO(),

@@ -87,7 +87,7 @@ export default class SessionsGrid extends Component {
       const offerings = await session.offerings;
       const learnerGroups = await map(offerings, async (offering) => {
         const learnerGroups = await offering.learnerGroups;
-        return learnerGroups.slice();
+        return learnerGroups;
       });
       return {
         session,
@@ -116,7 +116,6 @@ export default class SessionsGrid extends Component {
     }
     const offerings = await session.offerings;
     return offerings
-      .slice()
       .filter((offering) => Boolean(offering.startDate))
       .sort((a, b) => {
         const aDate = DateTime.fromJSDate(a.startDate);

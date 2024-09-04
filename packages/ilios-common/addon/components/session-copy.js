@@ -37,7 +37,7 @@ export default class SessionCopyComponent extends Component {
       .map((year) => Number(year.id))
       .filter((year) => year >= thisYear - 1)
       .sort();
-    this.allCourses = await filter(schoolCourses.slice(), async (co) => {
+    this.allCourses = await filter(schoolCourses, async (co) => {
       return this.permissionChecker.canCreateSession(co);
     });
   });
@@ -102,8 +102,8 @@ export default class SessionCopyComponent extends Component {
     );
 
     session.set('course', newCourse);
-    session.set('meshDescriptors', (await sessionToCopy.meshDescriptors).slice());
-    session.set('terms', (await sessionToCopy.terms).slice());
+    session.set('meshDescriptors', await sessionToCopy.meshDescriptors);
+    session.set('terms', await sessionToCopy.terms);
     session.set('sessionType', await sessionToCopy.sessionType);
 
     const ilmToCopy = await sessionToCopy.ilmSession;
@@ -142,11 +142,11 @@ export default class SessionCopyComponent extends Component {
     //parse objectives last because it is a many2many relationship
     //and ember data tries to save it too soon
     const relatedSessionObjectives = await sessionToCopy.sessionObjectives;
-    const sessionObjectivesToCopy = sortBy(relatedSessionObjectives, 'id').slice();
+    const sessionObjectivesToCopy = sortBy(relatedSessionObjectives, 'id');
     for (let i = 0, n = sessionObjectivesToCopy.length; i < n; i++) {
       const sessionObjectiveToCopy = sessionObjectivesToCopy[i];
-      const meshDescriptors = (await sessionObjectiveToCopy.meshDescriptors).slice();
-      const terms = (await sessionObjectiveToCopy.terms).slice();
+      const meshDescriptors = await sessionObjectiveToCopy.meshDescriptors;
+      const terms = await sessionObjectiveToCopy.terms;
       const sessionObjective = this.store.createRecord('session-objective', {
         session,
         position: sessionObjectiveToCopy.position,

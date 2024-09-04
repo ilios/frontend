@@ -85,7 +85,7 @@ export default class SessionOverview extends Component {
   load = restartableTask(async (element, [session]) => {
     const course = await session.course;
     const school = await course.school;
-    const sessionTypes = (await school.sessionTypes).slice();
+    const sessionTypes = await school.sessionTypes;
     const {
       ilmSession,
       sessionType,
@@ -150,7 +150,7 @@ export default class SessionOverview extends Component {
       }
     }
     const school = await course.school;
-    const schoolCourses = (await school.courses).slice();
+    const schoolCourses = await school.courses;
     let schoolCourse;
     for (schoolCourse of schoolCourses) {
       if (await this.permissionChecker.canCreateSession(schoolCourse)) {
