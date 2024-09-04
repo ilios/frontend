@@ -91,7 +91,7 @@ export default class CourseVisualizeObjectivesGraph extends Component {
       async ({ session, minutes }) => {
         const sessionObjectives = await session.sessionObjectives;
         const sessionObjectivesWithParents = await filter(
-          sessionObjectives.slice(),
+          sessionObjectives,
           async (sessionObjective) => {
             const parents = await sessionObjective.courseObjectives;
             return parents.length;
@@ -101,7 +101,7 @@ export default class CourseVisualizeObjectivesGraph extends Component {
           sessionObjectivesWithParents,
           async (sessionObjective) => {
             const parents = await sessionObjective.courseObjectives;
-            return mapBy(parents.slice(), 'id');
+            return mapBy(parents, 'id');
           },
         );
         const flatObjectives = courseSessionObjectives.reduce((flattened, arr) => {
@@ -119,8 +119,8 @@ export default class CourseVisualizeObjectivesGraph extends Component {
 
     // condensed objectives map
     const courseObjectives = await this.args.course.courseObjectives;
-    const mappedObjectives = await map(courseObjectives.slice(), async (courseObjective) => {
-      const programYearObjectives = (await courseObjective.programYearObjectives).slice();
+    const mappedObjectives = await map(courseObjectives, async (courseObjective) => {
+      const programYearObjectives = await courseObjective.programYearObjectives;
       const competencyTitles = (
         await map(programYearObjectives, async (pyObjective) => {
           const competency = await pyObjective.competency;

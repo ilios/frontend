@@ -40,7 +40,7 @@ export default class CourseObjectiveListComponent extends Component {
 
   get courseCohorts() {
     if (this.load.lastSuccessful && this.courseCohortsAsync) {
-      return this.courseCohortsAsync.slice();
+      return this.courseCohortsAsync;
     }
 
     return [];
@@ -81,7 +81,7 @@ export default class CourseObjectiveListComponent extends Component {
         'allowMultipleCourseObjectiveParents',
       );
       const objectives = await programYear.programYearObjectives;
-      const objectiveObjects = await map(objectives.slice(), async (objective) => {
+      const objectiveObjects = await map(objectives, async (objective) => {
         let competencyId = 0;
         let competencyTitle = intl.t('general.noAssociatedCompetency');
         let competencyParent = null;
