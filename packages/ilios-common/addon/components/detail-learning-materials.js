@@ -30,8 +30,8 @@ export default class DetailCohortsComponent extends Component {
 
   constructor() {
     super(...arguments);
-    this.learningMaterialStatuses = this.store.peekAll('learning-material-status').slice();
-    this.learningMaterialUserRoles = this.store.peekAll('learning-material-user-role').slice();
+    this.learningMaterialStatuses = this.store.peekAll('learning-material-status');
+    this.learningMaterialUserRoles = this.store.peekAll('learning-material-user-role');
   }
 
   @cached

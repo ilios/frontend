@@ -65,8 +65,8 @@ export default class DetailLearnersAndLearnerGroupsComponent extends Component {
       learners: ilmSession.learners,
     });
 
-    this.learnerGroupBuffer = learnerGroups.slice();
-    this.learnerBuffer = learners.slice();
+    this.learnerGroupBuffer = learnerGroups;
+    this.learnerBuffer = learners;
     this.isManaging = true;
   });
 
@@ -96,14 +96,14 @@ export default class DetailLearnersAndLearnerGroupsComponent extends Component {
     if (!this.ilmLearners) {
       return [];
     }
-    return this.ilmLearners.slice();
+    return this.ilmLearners;
   }
 
   get selectedIlmLearnerGroups() {
     if (!this.ilmLearnerGroups) {
       return [];
     }
-    return this.ilmLearnerGroups.slice();
+    return this.ilmLearnerGroups;
   }
 
   @action

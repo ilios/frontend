@@ -9,7 +9,7 @@ export default class DashboardSelectedTermTreeComponent extends Component {
   }
 
   get children() {
-    return this.childrenData.isResolved ? this.childrenData.value.slice() : [];
+    return this.childrenData.isResolved ? this.childrenData.value : [];
   }
 
   get level() {
