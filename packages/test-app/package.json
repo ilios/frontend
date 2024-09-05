@@ -46,7 +46,7 @@
     "@percy/ember": "^4.2.0",
     "@warp-drive/build-config": "0.0.0-beta.6",
     "broccoli-asset-rev": "^3.0.0",
-    "ember-a11y-testing": "^6.1.1",
+    "ember-a11y-testing": "^7.0.0",
     "ember-auto-import": "^2.7.3",
     "ember-cli": "~5.9.0",
     "ember-cli-app-version": "^6.0.1",
