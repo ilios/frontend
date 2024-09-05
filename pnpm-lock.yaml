@@ -118,8 +118,8 @@ importers:
         specifier: ^0.14.0
         version: 0.14.1
       ember-a11y-refocus:
-        specifier: 4.1.1
-        version: 4.1.1
+        specifier: 4.1.4
+        version: 4.1.4
       ember-a11y-testing:
         specifier: ^7.0.0
         version: 7.0.0(@babel/core@7.25.2)(@ember/test-helpers@3.3.1(@babel/core@7.25.2)(ember-source@5.9.0(@babel/core@7.25.2)(@glimmer/component@1.1.2(@babel/core@7.25.2))(rsvp@4.8.5)(webpack@5.94.0))(webpack@5.94.0))(qunit@2.22.0)(webpack@5.94.0)
@@ -4958,8 +4958,8 @@ packages:
   elliptic@6.5.7:
     resolution: {integrity: sha512-ESVCtTwiA+XhY3wyh24QqRGBoP3rEdDUl3EDUUo9tft074fi19IrdpH7hLCMMP3CIj7jb3W96rn8lt/BqIlt5Q==}
 
-  ember-a11y-refocus@4.1.1:
-    resolution: {integrity: sha512-cNeNA4rg+yMny0hXBoxz0F61X7aaI860zD2Ljx8syL0PAZWMR3QjtdG7JEwNwaMrO5MSrPgsdJh+ZjyEvnFWMQ==}
+  ember-a11y-refocus@4.1.4:
+    resolution: {integrity: sha512-51tGk30bskObL1LsGZRxzqIxgZhIE8ZvvDYcT1OWphxZlq00+Arz57aMLS4Vz4qhSE40BfeN2qFYP/gXtp9qDA==}
     engines: {node: 16.* || >= 18.*}
 
   ember-a11y-testing@7.0.0:
@@ -15672,7 +15672,7 @@ snapshots:
       minimalistic-assert: 1.0.1
       minimalistic-crypto-utils: 1.0.1
 
-  ember-a11y-refocus@4.1.1:
+  ember-a11y-refocus@4.1.4:
     dependencies:
       ember-cli-babel: 7.26.11
       ember-cli-htmlbars: 6.3.0
