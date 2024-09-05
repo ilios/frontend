@@ -169,4 +169,54 @@ module('Integration | Component | learner-group/list-item', function (hooks) {
     assert.strictEqual(component.title, 'learner group 0');
     assert.notOk(component.canBeDeleted);
   });
+
+  test('group needs accommodations', async function (assert) {
+    const group = this.server.create('learner-group', {
+      needsAccommodation: true,
+    });
+    const learnerGroupModel = await this.owner
+      .lookup('service:store')
+      .findRecord('learner-group', group.id);
+    this.set('learnerGroup', learnerGroupModel);
+    await render(hbs`<LearnerGroup::ListItem @learnerGroup={{this.learnerGroup}} />`);
+    assert.ok(component.needsAccommodation);
+  });
+
+  test('group does not need accommodations', async function (assert) {
+    const group = this.server.create('learner-group', {
+      needsAccommodation: false,
+    });
+    const learnerGroupModel = await this.owner
+      .lookup('service:store')
+      .findRecord('learner-group', group.id);
+    this.set('learnerGroup', learnerGroupModel);
+    await render(hbs`<LearnerGroup::ListItem @learnerGroup={{this.learnerGroup}} />`);
+    assert.notOk(component.needsAccommodation);
+  });
+
+  test('subgroup needs accommodations', async function (assert) {
+    this.server.create('learner-group', {
+      parent: this.learnerGroup,
+      needsAccommodation: true,
+    });
+    const learnerGroupModel = await this.owner
+      .lookup('service:store')
+      .findRecord('learner-group', this.learnerGroup.id);
+    this.set('learnerGroup', learnerGroupModel);
+    await render(hbs`<LearnerGroup::ListItem @learnerGroup={{this.learnerGroup}} />`);
+    assert.ok(component.subgroupNeedsAccommodation);
+  });
+
+  test('subgroup does not need accommodations', async function (assert) {
+    this.server.create('learner-group', {
+      parent: this.learnerGroup,
+      needsAccommodation: false,
+    });
+    const learnerGroupModel = await this.owner
+      .lookup('service:store')
+      .findRecord('learner-group', this.learnerGroup.id);
+    this.set('learnerGroup', learnerGroupModel);
+    await render(hbs`<LearnerGroup::ListItem @learnerGroup={{this.learnerGroup}} />`);
+    assert.notOk(component.subgroupNeedsAccommodation);
+  });
 });

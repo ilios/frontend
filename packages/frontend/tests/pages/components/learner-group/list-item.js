@@ -2,13 +2,14 @@ import { create, clickable, hasClass, isVisible, text } from 'ember-cli-page-obj
 
 const definition = {
   scope: '[data-test-learner-group-list-item]',
-  title: text('[data-test-title]'),
+  title: text('[data-test-title] a'),
+  needsAccommodation: isVisible('[data-test-needs-accommodation]'),
   clickTitle: clickable('[data-test-title] a'),
   users: text('[data-test-users]'),
   children: text('[data-test-children]'),
   canBeDeleted: isVisible('[data-test-remove]'),
   canBeCopied: isVisible('[data-test-copy]'),
-  needsAccommodation: isVisible('[data-test-needs-accommodation]'),
+  subgroupNeedsAccommodation: isVisible('[data-test-subgroup-needs-accommodation]'),
   remove: clickable('[data-test-remove]'),
   copy: clickable('[data-test-copy]'),
   hasRemoveStyle: hasClass('confirm-removal'),
