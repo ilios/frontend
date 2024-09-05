@@ -49,6 +49,22 @@ export default class LearningMaterialManagerComponent extends Component {
     return this.type === 'citation';
   }
 
+  defaultTime = DateTime.fromObject({
+    hour: 8,
+    minute: 0,
+    second: 0,
+  }).toJSDate();
+
+  updateOtherDate = (originalDate, value) => {
+    const otherDate = DateTime.fromJSDate(value);
+    this[originalDate] = DateTime.fromObject({
+      day: otherDate.day,
+      hour: 8,
+      minute: 0,
+      second: 0,
+    }).toJSDate();
+  };
+
   @action
   updateDate(which, value) {
     const { hour, minute } = DateTime.fromJSDate(this[which]);
@@ -60,6 +76,18 @@ export default class LearningMaterialManagerComponent extends Component {
       minute,
       second: 0,
     }).toJSDate();
+
+    if (which == 'startDate' && this['endDate']) {
+      if (DateTime.fromJSDate(value) > DateTime.fromJSDate(this['endDate'])) {
+        this.updateOtherDate('endDate', value);
+      }
+    }
+
+    if (which == 'endDate' && this['startDate']) {
+      if (DateTime.fromJSDate(value) < DateTime.fromJSDate(this['startDate'])) {
+        this.updateOtherDate('startDate', value);
+      }
+    }
   }
   @action
   updateTime(which, value, type) {
@@ -80,13 +108,24 @@ export default class LearningMaterialManagerComponent extends Component {
       second: 0,
     }).toJSDate();
   }
+
   @action
   addDate(which) {
-    this[which] = DateTime.fromObject({
-      hour: 8,
-      minute: 0,
-      second: 0,
-    }).toJSDate();
+    if (which == 'endDate') {
+      if (this['startDate']) {
+        this.updateOtherDate('endDate', this['startDate']);
+      } else {
+        this[which] = this.defaultTime;
+      }
+    } else {
+      if (which == 'startDate') {
+        if (this['endDate']) {
+          this.updateOtherDate('startDate', this['endDate']);
+        } else {
+          this[which] = this.defaultTime;
+        }
+      }
+    }
   }
   @action
   addTerm(term) {
