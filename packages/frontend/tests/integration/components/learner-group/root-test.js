@@ -689,7 +689,7 @@ module('Integration | Component | learner-group/root', function (hooks) {
       @canUpdate={{true}}
       @setIsEditing={{(noop)}}
       @setSortUsersBy={{(noop)}}
-      @setIsBulkAssigning={{set this.isBulkAssigning true}}
+      @setIsBulkAssigning={{set this "isBulkAssigning" true}}
       @learnerGroup={{this.learnerGroup}}
       @isEditing={{false}}
       @isBulkAssigning={{this.isBulkAssigning}}

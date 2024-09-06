@@ -138,7 +138,7 @@ module('Integration | Component | instructor-groups/list', function (hooks) {
     await render(hbs`<InstructorGroups::List
       @instructorGroups={{this.instructorGroups}}
       @sortBy={{this.sortBy}}
-      @setSortBy={{set this.sortBy}}
+      @setSortBy={{set this "sortBy"}}
     />`);
     assert.strictEqual(component.items.length, 3);
     assert.ok(component.header.title.isSortedAscending);
