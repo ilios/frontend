@@ -109,7 +109,7 @@
           aria-expanded={{if this.isSessionMaterialsListExpanded "true" "false"}}
           aria-label={{if this.isSessionMaterialsListExpanded (t "general.hideSessionMaterials") (t "general.showSessionMaterials")}}
           type="button"
-          {{on "click" (set this.isSessionMaterialsListExpanded (not this.isSessionMaterialsListExpanded))}}
+          {{on "click" (set this "isSessionMaterialsListExpanded" (not this.isSessionMaterialsListExpanded))}}
           data-test-expand-collapse
         >
           {{t "general.materials"}}
@@ -152,7 +152,7 @@
           aria-expanded={{if this.isCourseMaterialsListExpanded "true" "false"}}
           aria-label={{if this.isCourseMaterialsListExpanded (t "general.hideCourseMaterials") (t "general.showCourseMaterials")}}
           type="button"
-          {{on "click" (set this.isCourseMaterialsListExpanded (not this.isCourseMaterialsListExpanded))}}
+          {{on "click" (set this "isCourseMaterialsListExpanded" (not this.isCourseMaterialsListExpanded))}}
           data-test-expand-collapse
         >
           {{t "general.courseMaterials"}}

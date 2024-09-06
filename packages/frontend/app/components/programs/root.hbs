@@ -32,7 +32,7 @@
         {{#if this.canCreate}}
           <ExpandCollapseButton
             @value={{this.showNewProgramForm}}
-            @action={{set this.showNewProgramForm (not this.showNewProgramForm)}}
+            @action={{set this "showNewProgramForm" (not this.showNewProgramForm)}}
           />
         {{/if}}
       </div>
@@ -42,7 +42,7 @@
       {{#if this.showNewProgramForm}}
         <Program::New
           @save={{perform this.saveNewProgram}}
-          @cancel={{set this.showNewProgramForm false}}
+          @cancel={{set this "showNewProgramForm" false}}
         />
       {{/if}}
       {{#if this.newProgram}}

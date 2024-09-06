@@ -28,7 +28,7 @@
                 id="title-{{templateId}}"
                 type="text"
                 value={{this.title}}
-                {{on "input" (pick "target.value" (set this.title))}}
+                {{on "input" (pick "target.value" (set this "title"))}}
                 {{on "keyup" (queue (fn this.addErrorDisplayFor "title") (perform this.saveOrCancel))}}
               >
               <ValidationError @errors={{get-errors-for this.title}} />
@@ -41,7 +41,7 @@
                 id="email-{{templateId}}"
                 type="text"
                 value={{this.iliosAdministratorEmail}}
-                {{on "input" (pick "target.value" (set this.iliosAdministratorEmail))}}
+                {{on "input" (pick "target.value" (set this "iliosAdministratorEmail"))}}
                 {{on "keyup" (queue (fn this.addErrorDisplayFor "iliosAdministratorEmail") (perform this.saveOrCancel))}}
               >
               <ValidationError @errors={{get-errors-for this.iliosAdministratorEmail}} />

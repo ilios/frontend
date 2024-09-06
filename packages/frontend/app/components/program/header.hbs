@@ -9,7 +9,7 @@
         <EditableField
           @value={{this.title}}
           @save={{perform this.changeTitle}}
-          @close={{set this.title @program.title}}
+          @close={{set this "title" @program.title}}
           @saveOnEnter={{true}}
           @clickPrompt={{t "general.clickToEdit"}}
           @closeOnEscape={{true}} as |isSaving|
@@ -18,7 +18,7 @@
             id="{{id}}-title"
             type="text"
             value={{this.title}}
-            {{on "input" (pick "target.value" (set this.title))}}
+            {{on "input" (pick "target.value" (set this "title"))}}
             {{on "keypress" (fn this.addErrorDisplayFor "title")}}
             disabled={{isSaving}}
           >

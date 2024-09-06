@@ -2,7 +2,7 @@
   role="menubar"
   class="publication-menu {{this.publicationStatus}}"
   data-test-session-publication-menu
-  {{on-click-outside (set this.isOpen false)}}
+  {{on-click-outside (set this "isOpen" false)}}
 >
   <button
     aria-label={{this.title}}
@@ -25,7 +25,7 @@
     <div
       class="menu"
       role="menu"
-      {{did-insert (set this.menuElement)}}
+      {{did-insert (set this "menuElement")}}
       {{did-insert this.focusOnFirstItem}}
       data-test-menu
     >

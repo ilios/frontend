@@ -10,7 +10,7 @@
   {{#if (and this.showCampusNameOfRecord @user.hasDifferentDisplayName)}}
     <span
       data-test-info
-      {{did-insert (set this.theElement)}}
+      {{did-insert (set this "theElement")}}
       {{mouse-hover-toggle this.toggleUsernameInfoHover}}
     >
       <FaIcon

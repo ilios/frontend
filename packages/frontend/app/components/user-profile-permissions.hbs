@@ -71,7 +71,7 @@
             aria-expanded={{if this.programCollapsed "false" "true"}}
             class="toggle-button {{if this.programCollapsed "collapsed" "expanded"}}"
             type="button"
-            {{on "click" (set this.programCollapsed (not this.programCollapsed))}}
+            {{on "click" (set this "programCollapsed" (not this.programCollapsed))}}
           >
             {{t "general.programs"}}
             ({{this.directedPrograms.length}})
@@ -103,7 +103,7 @@
             aria-expanded={{if this.programYearCollapsed "false" "true"}}
             class="toggle-button {{if this.programYearCollapsed "collapsed" "expanded"}}"
             type="button"
-            {{on "click" (set this.programYearCollapsed (not this.programYearCollapsed))}}
+            {{on "click" (set this "programYearCollapsed" (not this.programYearCollapsed))}}
           >
             {{t "general.programYears"}}
             ({{this.directedProgramYears.length}})
@@ -142,7 +142,7 @@
             aria-expanded={{if this.courseCollapsed "false" "true"}}
             class="toggle-button {{if this.courseCollapsed "collapsed" "expanded"}}"
             type="button"
-            {{on "click" (set this.courseCollapsed (not this.courseCollapsed))}}
+            {{on "click" (set this "courseCollapsed" (not this.courseCollapsed))}}
           >
             {{t "general.courses"}}
             ({{this.courseCount}})
@@ -247,7 +247,7 @@
             aria-expanded={{if this.sessionCollapsed "false" "true"}}
             class="toggle-button {{if this.sessionCollapsed "collapsed" "expanded"}}"
             type="button"
-            {{on "click" (set this.sessionCollapsed (not this.sessionCollapsed))}}
+            {{on "click" (set this "sessionCollapsed" (not this.sessionCollapsed))}}
           >
             {{t "general.sessions"}}
             ({{this.sessionCount}})

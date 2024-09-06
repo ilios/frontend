@@ -7,7 +7,7 @@
   {{#if this.isSorting}}
     <ObjectiveSortManager
       @subject={{@course}}
-      @close={{set this.isSorting false}}
+      @close={{set this "isSorting" false}}
     />
   {{/if}}
 
@@ -16,7 +16,7 @@
       <button
         class="sort-button"
         type="button"
-        {{on "click" (set this.isSorting true)}}
+        {{on "click" (set this "isSorting" true)}}
         data-test-sort
       >
         {{t "general.sortObjectives"}}

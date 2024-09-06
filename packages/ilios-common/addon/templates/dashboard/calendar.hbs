@@ -6,14 +6,14 @@
   @mySchedule={{this.mySchedule}}
   @showFilters={{this.showFilters}}
   @changeDate={{this.changeDate}}
-  @changeView={{set this.view}}
+  @changeView={{set this "view"}}
   @selectEvent={{this.selectEvent}}
   @toggleMySchedule={{this.toggleMySchedule}}
   @toggleShowFilters={{this.toggleShowFilters}}
   @selectedSchool={{this.selectedSchool}}
-  @changeSchool={{set this.school}}
+  @changeSchool={{set this "school"}}
   @courseFilters={{this.courseFilters}}
-  @toggleCourseFilters={{fn (set this.courseFilters) (not this.courseFilters)}}
+  @toggleCourseFilters={{fn (set this "courseFilters") (not this.courseFilters)}}
   @selectedCohortIds={{split "-" this.cohorts}}
   @addCohortId={{fn this.add "cohorts"}}
   @removeCohortId={{fn this.remove "cohorts"}}

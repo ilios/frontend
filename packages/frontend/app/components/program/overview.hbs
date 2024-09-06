@@ -18,7 +18,7 @@
           <EditableField
             @value={{this.shortTitle}}
             @save={{perform this.changeShortTitle}}
-            @close={{set this.duration @program.duration}}
+            @close={{set this "duration" @program.duration}}
             @saveOnEnter={{true}}
             @clickPrompt={{t "general.clickToEdit"}}
             @closeOnEscape={{true}} as |isSaving|
@@ -27,7 +27,7 @@
               id={{concat this.id "short-title"}}
               type="text"
               value={{this.shortTitle}}
-              {{on "input" (pick "target.value" (set this.shortTitle))}}
+              {{on "input" (pick "target.value" (set this "shortTitle"))}}
               {{on "keypress" (fn this.addErrorDisplayFor "shortTitle")}}
               disabled={{isSaving}}
             >
@@ -47,7 +47,7 @@
           <EditableField
             @value={{this.duration}}
             @save={{perform this.changeDuration}}
-            @close={{set this.duration @program.duration}}
+            @close={{set this "duration" @program.duration}}
           >
             <select id={{concat this.id "duration"}} {{on "change" this.setDuration}}>
               {{#each (array 1 2 3 4 5 6 7 8 9 10) as |val|}}

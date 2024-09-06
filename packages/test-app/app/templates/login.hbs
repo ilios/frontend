@@ -5,7 +5,7 @@
       id="token-{{templateId}}"
       type="text"
       value={{this.jwt}}
-      {{on "input" (pick "target.value" (set this.jwt))}}
+      {{on "input" (pick "target.value" (set this "jwt"))}}
       {{on "keypress" (perform this.loginOnEnter)}}
       disabled={{this.login.isRunning}}
     />

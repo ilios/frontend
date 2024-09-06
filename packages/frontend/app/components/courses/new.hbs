@@ -22,7 +22,7 @@
             value={{this.title}}
             {{on "focusout" (fn this.addErrorDisplayFor "title")}}
             {{on "keyup" this.keyboard}}
-            {{on "input" (pick "target.value" (set this.title))}}
+            {{on "input" (pick "target.value" (set this "title"))}}
             {{on "keyup" (fn this.addErrorDisplayFor "title")}}
             data-test-title
           >

@@ -54,7 +54,7 @@
               >
                 <DatePicker
                   @value={{this.startDate}}
-                  @onChange={{queue (set this.startDate) (fn this.addErrorDisplayFor "startDate")}}
+                  @onChange={{queue (set this "startDate") (fn this.addErrorDisplayFor "startDate")}}
                   data-test-start-date-picker
                 />
                 <ValidationError @errors={{get-errors-for this.startDate}} />
@@ -77,7 +77,7 @@
               >
                 <DatePicker
                   @value={{this.endDate}}
-                  @onChange={{queue (set this.endDate) (fn this.addErrorDisplayFor "endDate")}}
+                  @onChange={{queue (set this "endDate") (fn this.addErrorDisplayFor "endDate")}}
                   data-test-end-date-picker
                 />
                 <ValidationError @errors={{get-errors-for this.endDate}} />
@@ -100,7 +100,7 @@
               >
                 <select
                   id="year-{{templateId}}"
-                  {{on "change" (pick "target.value" (set this.year))}}
+                  {{on "change" (pick "target.value" (set this "year"))}}
                 >
                   {{#each this.yearOptions as |obj|}}
                     <option value={{obj.id}} selected={{eq obj.id this.year}}>{{obj.title}}</option>
@@ -143,7 +143,7 @@
                   id="description-{{templateId}}"
                   value={{this.description}}
                   disabled={{this.isSaving}}
-                  {{on "input" (pick "target.value" (set this.description))}}
+                  {{on "input" (pick "target.value" (set this "description"))}}
                   {{on "keyup" (fn this.addErrorDisplayFor "description")}}
                   placeholder={{t "general.reportDescriptionPlaceholder"}}
                 >

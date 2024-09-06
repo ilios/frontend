@@ -10,7 +10,7 @@
         aria-expanded={{if this.unPublishableCollapsed "true" "false"}}
         data-test-expand-collapse
         data-test-title
-        {{on "click" (set this.unPublishableCollapsed (not this.unPublishableCollapsed))}}
+        {{on "click" (set this "unPublishableCollapsed" (not this.unPublishableCollapsed))}}
       >
         {{t "general.incompleteSessions"}} ({{this.unPublishableSessions.length}})
         <FaIcon @icon={{if this.unPublishableCollapsed "caret-right" "caret-down"}} />
@@ -109,7 +109,7 @@
         aria-expanded={{if this.publishableCollapsed "true" "false"}}
         data-test-expand-collapse
         data-test-title
-        {{on "click" (set this.publishableCollapsed (not this.publishableCollapsed))}}
+        {{on "click" (set this "publishableCollapsed" (not this.publishableCollapsed))}}
       >
         {{t "general.completeSessions"}} ({{this.publishableSessions.length}})
         <FaIcon @icon={{if this.publishableCollapsed "caret-right" "caret-down"}} />

@@ -38,7 +38,7 @@
             id="name-{{templateId}}"
             type="text"
             value={{this.name}}
-            {{on "input" (pick "target.value" (set this.name))}}
+            {{on "input" (pick "target.value" (set this "name"))}}
             {{on "keyup"
               (queue
                 (fn this.addErrorDisplayFor "name")
@@ -57,7 +57,7 @@
             type="text"
             maxlength="5"
             value={{this.aamcCode}}
-            {{on "input" (pick "target.value" (set this.aamcCode))}}
+            {{on "input" (pick "target.value" (set this "aamcCode"))}}
             {{on "keyup"
               (queue
                 (fn this.addErrorDisplayFor "aamcCode")
@@ -75,7 +75,7 @@
             id="street-{{templateId}}"
             type="text"
             value={{this.addressStreet}}
-            {{on "input" (pick "target.value" (set this.addressStreet))}}
+            {{on "input" (pick "target.value" (set this "addressStreet"))}}
             {{on "keyup"
               (queue
                 (fn this.addErrorDisplayFor "addressStreet")
@@ -93,7 +93,7 @@
             id="city-{{templateId}}"
             type="text"
             value={{this.addressCity}}
-            {{on "input" (pick "target.value" (set this.addressCity))}}
+            {{on "input" (pick "target.value" (set this "addressCity"))}}
             {{on "keyup"
               (queue
                 (fn this.addErrorDisplayFor "addressCity")
@@ -111,7 +111,7 @@
             id="state-{{templateId}}"
             type="text"
             value={{this.addressStateOrProvince}}
-            {{on "input" (pick "target.value" (set this.addressStateOrProvince))}}
+            {{on "input" (pick "target.value" (set this "addressStateOrProvince"))}}
             {{on "keyup"
               (queue
                 (fn this.addErrorDisplayFor "addressStateOrProvince")
@@ -129,7 +129,7 @@
             id="zip-{{templateId}}"
             type="text"
             value={{this.addressZipCode}}
-            {{on "input" (pick "target.value" (set this.addressZipCode))}}
+            {{on "input" (pick "target.value" (set this "addressZipCode"))}}
             {{on "keyup"
               (queue
                 (fn this.addErrorDisplayFor "addressZipCode")
@@ -148,7 +148,7 @@
             type="text"
             maxlength="2"
             value={{this.addressCountryCode}}
-            {{on "input" (pick "target.value" (set this.addressCountryCode))}}
+            {{on "input" (pick "target.value" (set this "addressCountryCode"))}}
             {{on "keyup"
               (queue
                 (fn this.addErrorDisplayFor "addressCountryCode")

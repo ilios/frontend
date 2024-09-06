@@ -22,7 +22,7 @@
             placeholder={{t "general.reportNamePlaceholder"}}
             {{on "focusout" (fn this.addErrorDisplayFor "name")}}
             {{on "keyup" (perform this.keyboard)}}
-            {{on "input" (pick "target.value" (set this.name))}}
+            {{on "input" (pick "target.value" (set this "name"))}}
             {{on "keyup" (fn this.addErrorDisplayFor "name")}}
           >
           <ValidationError @errors={{get-errors-for this.name}} />
@@ -35,7 +35,7 @@
             id="description-{{templateId}}"
             disabled={{this.save.isRunning}}
             placeholder={{t "general.reportDescriptionPlaceholder"}}
-            {{on "input" (pick "target.value" (set this.description))}}
+            {{on "input" (pick "target.value" (set this "description"))}}
           >{{this.description}}</textarea>
           <ValidationError @errors={{get-errors-for this.description}} />
         </div>

@@ -11,7 +11,7 @@
           value={{this.filter}}
           placeholder={{t "general.filterByNameOrEmail"}}
           aria-label={{t "general.filterByNameOrEmail"}}
-          {{on "input" (pick "target.value" (set this.filter))}}
+          {{on "input" (pick "target.value" (set this "filter"))}}
           data-test-filter
         >
       </div>

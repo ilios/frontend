@@ -16,7 +16,7 @@
             @spin={{this.save.isRunning}}
           />
         </button>
-        <button class="bigcancel" type="button" {{on "click" (set this.isManaging false)}} data-test-cancel>
+        <button class="bigcancel" type="button" {{on "click" (set this "isManaging" false)}} data-test-cancel>
           <FaIcon @icon="arrow-rotate-left" />
         </button>
       {{else if @canUpdate}}

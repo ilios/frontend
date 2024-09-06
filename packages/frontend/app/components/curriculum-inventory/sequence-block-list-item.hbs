@@ -45,7 +45,7 @@
       <button
         class="link-button"
         type="button"
-        {{on "click" (set this.showRemoveConfirmation true)}}
+        {{on "click" (set this "showRemoveConfirmation" true)}}
         aria-label={{t "general.remove"}}
         data-test-remove
       >
@@ -69,7 +69,7 @@
           <button
             type="button"
             class="done text"
-            {{on "click" (set this.showRemoveConfirmation false)}}
+            {{on "click" (set this "showRemoveConfirmation" false)}}
             data-test-cancel
           >
             {{t "general.cancel"}}

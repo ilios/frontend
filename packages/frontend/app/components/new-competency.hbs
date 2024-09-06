@@ -4,7 +4,7 @@
     value={{this.title}}
     disabled={{this.save.isRunning}}
     data-test-title
-    {{on "input" (pick "target.value" (set this.title))}}
+    {{on "input" (pick "target.value" (set this "title"))}}
     {{on "keyup" (queue (fn this.addErrorDisplayFor "title") (perform this.cancelOrSave))}}
     placeholder={{t "general.title"}}
     aria-label={{t "general.title"}}

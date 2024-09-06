@@ -2,7 +2,7 @@
   <nav
     class="user-menu{{if this.isOpen " is-open"}}"
     aria-label={{t "general.userMenu"}}
-    {{did-insert (set this.element)}}
+    {{did-insert (set this "element")}}
     {{! template-lint-disable no-invalid-interactive }}
     {{on "keyup" this.keyUp}}
     data-test-user-menu
@@ -23,15 +23,15 @@
       <FaIcon @icon={{if this.isOpen "caret-down" "caret-right"}} />
     </button>
     {{#if this.isOpen}}
-      <div {{on-click-outside (set this.isOpen false)}}>
+      <div {{on-click-outside (set this "isOpen" false)}}>
         <ul class="menu">
           <li tabindex="-1" data-test-item {{did-insert this.focus}}>
-            <LinkToWithAction @route="myprofile" @action={{set this.isOpen false}} @queryParams={{hash invalidatetokens=null newtoken=null}}>
+            <LinkToWithAction @route="myprofile" @action={{set this "isOpen" false}} @queryParams={{hash invalidatetokens=null newtoken=null}}>
               {{t "general.myProfile"}}
             </LinkToWithAction>
           </li>
           <li tabindex="-1" data-test-item>
-            <LinkToWithAction @route="logout" @action={{set this.isOpen false}}>
+            <LinkToWithAction @route="logout" @action={{set this "isOpen" false}}>
               {{t "general.logout"}}
             </LinkToWithAction>
           </li>

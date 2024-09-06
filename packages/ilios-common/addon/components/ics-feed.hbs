@@ -7,10 +7,10 @@
     @clipboardText={{@url}}
     @success={{perform this.textCopied}}
     {{!-- template-lint-disable no-at-ember-render-modifiers --}}
-    {{did-insert (set this.copyButton)}}
+    {{did-insert (set this "copyButton")}}
     aria-label={{if @instructions @instructions (t "general.copyIcsFeedUrl")}}
     class="link-button highlight"
-    {{mouse-hover-toggle (set this.showTooltip)}}
+    {{mouse-hover-toggle (set this "showTooltip")}}
   >
     <FaIcon @icon="square-rss" />
   </CopyButton>

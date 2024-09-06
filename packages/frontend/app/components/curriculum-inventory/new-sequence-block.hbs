@@ -23,7 +23,7 @@
             disabled={{this.save.isRunning}}
             placeholder={{t "general.sequenceBlockTitlePlaceholder"}}
             {{on "keyup" (queue (fn this.addErrorDisplayFor "title") this.saveOrCancel)}}
-            {{on "input" (pick "target.value" (set this.title))}}
+            {{on "input" (pick "target.value" (set this "title"))}}
           >
           <ValidationError @errors={{get-errors-for this.title}} />
         </div>
@@ -63,7 +63,7 @@
             id="description-{{templateId}}"
             disabled={{this.save.isRunning}}
             placeholder={{t "general.sequenceBlockDescriptionPlaceholder"}}
-            {{on "input" (pick "target.value" (set this.description))}}
+            {{on "input" (pick "target.value" (set this "description"))}}
           >{{this.description}}</textarea>
         </div>
         <div class="item required" data-test-required>
@@ -124,7 +124,7 @@
             value={{this.duration}}
             disabled={{this.save.isRunning}}
             {{on "keyup" (queue (fn this.addErrorDisplayFor "duration") this.saveOrCancel)}}
-            {{on "input" (pick "target.value" (set this.duration))}}
+            {{on "input" (pick "target.value" (set this "duration"))}}
           >
           <ValidationError @errors={{get-errors-for this.duration}} />
         </div>
@@ -153,7 +153,7 @@
             value={{this.minimum}}
             disabled={{this.save.isRunning}}
             {{on "keyup" (queue (fn this.addErrorDisplayFor "minimum") this.saveOrCancel)}}
-            {{on "input" (pick "target.value" (set this.minimum))}}
+            {{on "input" (pick "target.value" (set this "minimum"))}}
           >
           <ValidationError @errors={{get-errors-for this.minimum}} />
         </div>
@@ -167,7 +167,7 @@
             value={{this.maximum}}
             disabled={{this.save.isRunning}}
             {{on "keyup" (queue (fn this.addErrorDisplayFor "maximum") this.saveOrCancel)}}
-            {{on "input" (pick "target.value" (set this.maximum))}}
+            {{on "input" (pick "target.value" (set this "maximum"))}}
           >
           <ValidationError @errors={{get-errors-for this.maximum}} />
         </div>

@@ -59,7 +59,7 @@
         {{#if this.canCreate}}
           <ExpandCollapseButton
             @value={{this.showNewCourseForm}}
-            @action={{set this.showNewCourseForm (not this.showNewCourseForm)}}
+            @action={{set this "showNewCourseForm" (not this.showNewCourseForm)}}
           />
         {{/if}}
       </div>
@@ -70,7 +70,7 @@
           @currentSchool={{this.selectedSchool}}
           @currentYear={{this.selectedYear}}
           @save={{perform this.saveNewCourse}}
-          @cancel={{set this.showNewCourseForm false}}
+          @cancel={{set this "showNewCourseForm" false}}
         />
       {{/if}}
       {{#if this.newCourse}}

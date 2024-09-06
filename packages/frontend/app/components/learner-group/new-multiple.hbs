@@ -13,7 +13,7 @@
         {{on "focusout" (fn this.addErrorDisplayFor "numberOfGroups")}}
         {{on "keyup" this.keyboard}}
         {{on "keyup" (fn this.addErrorDisplayFor "numberOfGroups")}}
-        {{on "input" (pick "target.value" (set this.numberOfGroups))}}
+        {{on "input" (pick "target.value" (set this "numberOfGroups"))}}
         data-test-number-of-groups
       >
       <ValidationError @errors={{get-errors-for this.numberOfGroups}} />

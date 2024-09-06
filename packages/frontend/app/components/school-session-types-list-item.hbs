@@ -59,7 +59,7 @@
           class="link-button"
           disabled={{or (this.showRemoveConfirmation this.deleteSessionType.isRunning)}}
           data-test-delete
-          {{on "click" (set this.showRemoveConfirmation true)}}
+          {{on "click" (set this "showRemoveConfirmation" true)}}
         >
           <FaIcon
             @icon="trash"
@@ -100,7 +100,7 @@
           <button
             type="button"
             class="done text"
-            {{on "click" (set this.showRemoveConfirmation false)}}
+            {{on "click" (set this "showRemoveConfirmation" false)}}
             data-test-cancel
           >
             {{t "general.cancel"}}
@@ -124,7 +124,7 @@
           <button
             type="button"
             class="done text"
-            {{on "click" (set this.showRemoveConfirmation false)}}
+            {{on "click" (set this "showRemoveConfirmation" false)}}
             data-test-cancel
           >
             {{t "general.cancel"}}

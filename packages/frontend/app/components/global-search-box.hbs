@@ -7,11 +7,11 @@
     data-test-input
     type="search"
     value={{this.computedQuery}}
-    {{did-insert (set this.searchInputElement)}}
+    {{did-insert (set this "searchInputElement")}}
     {{on "input"
       (queue
-        (pick "target.value" (set this.internalQuery))
-        (set this.autocompleteSelectedQuery null)
+        (pick "target.value" (set this "internalQuery"))
+        (set this "autocompleteSelectedQuery" null)
         (perform this.autocomplete)
       )
     }}
@@ -27,7 +27,7 @@
     <FaIcon @icon="magnifying-glass"/>
   </button>
   {{#if this.hasResults}}
-    <div {{on-click-outside (set this.results null)}}>
+    <div {{on-click-outside (set this "results" null)}}>
       <div class="autocomplete" data-test-autocomplete>
         {{#each this.results as |result|}}
           <button

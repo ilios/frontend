@@ -73,7 +73,7 @@
               id="firstname-{{templateId}}"
               type="text"
               value={{this.firstName}}
-              {{on "input" (pick "target.value" (set this.firstName))}}
+              {{on "input" (pick "target.value" (set this "firstName"))}}
               {{on "keyup" (fn this.addErrorDisplayFor "firstName")}}
               {{on "keyup" this.keyboard}}
               data-test-first-name-input
@@ -94,7 +94,7 @@
               id="middlename-{{templateId}}"
               type="text"
               value={{this.middleName}}
-              {{on "input" (pick "target.value" (set this.middleName))}}
+              {{on "input" (pick "target.value" (set this "middleName"))}}
               {{on "keyup" (fn this.addErrorDisplayFor "middleName")}}
               {{on "keyup" this.keyboard}}
               data-test-middle-name-input
@@ -120,7 +120,7 @@
               id="lastname-{{templateId}}"
               type="text"
               value={{this.lastName}}
-              {{on "input" (pick "target.value" (set this.lastName))}}
+              {{on "input" (pick "target.value" (set this "lastName"))}}
               {{on "keyup" (fn this.addErrorDisplayFor "lastName")}}
               {{on "keyup" this.keyboard}}
               data-test-last-name-input
@@ -147,7 +147,7 @@
                 id="campus-id-{{templateId}}"
                 type="text"
                 value={{this.campusId}}
-                {{on "input" (pick "target.value" (set this.campusId))}}
+                {{on "input" (pick "target.value" (set this "campusId"))}}
                 {{on "keyup" (fn this.addErrorDisplayFor "campusId")}}
                 {{on "keyup" this.keyboard}}
                 data-test-campus-id-input
@@ -189,7 +189,7 @@
               id="other-id-{{templateId}}"
               type="text"
               value={{this.otherId}}
-              {{on "input" (pick "target.value" (set this.otherId))}}
+              {{on "input" (pick "target.value" (set this "otherId"))}}
               {{on "keyup" (fn this.addErrorDisplayFor "otherId")}}
               {{on "keyup" this.keyboard}}
               data-test-other-id-input
@@ -214,7 +214,7 @@
               id="email-{{templateId}}"
               type="text"
               value={{this.email}}
-              {{on "input" (pick "target.value" (set this.email))}}
+              {{on "input" (pick "target.value" (set this "email"))}}
               {{on "keyup" (fn this.addErrorDisplayFor "email")}}
               {{on "keyup" this.keyboard}}
               data-test-email-input
@@ -242,7 +242,7 @@
               id="displayname-{{templateId}}"
               type="text"
               value={{this.displayName}}
-              {{on "input" (pick "target.value" (set this.displayName))}}
+              {{on "input" (pick "target.value" (set this "displayName"))}}
               {{on "keyup" (fn this.addErrorDisplayFor "displayName")}}
               {{on "keyup" this.keyboard}}
               data-test-display-name-input
@@ -270,7 +270,7 @@
               id="pronouns-{{templateId}}"
               type="text"
               value={{this.pronouns}}
-              {{on "input" (pick "target.value" (set this.pronouns))}}
+              {{on "input" (pick "target.value" (set this "pronouns"))}}
               {{on "keyup" (fn this.addErrorDisplayFor "pronouns")}}
               {{on "keyup" this.keyboard}}
               data-test-pronouns-input
@@ -298,7 +298,7 @@
               id="preferred-email-{{templateId}}"
               type="text"
               value={{this.preferredEmail}}
-              {{on "input" (pick "target.value" (set this.preferredEmail))}}
+              {{on "input" (pick "target.value" (set this "preferredEmail"))}}
               {{on "keyup" (fn this.addErrorDisplayFor "preferredEmail")}}
               {{on "keyup" this.keyboard}}
               data-test-preferred-email-input
@@ -323,7 +323,7 @@
               id="phone-{{templateId}}"
               type="text"
               value={{this.phone}}
-              {{on "input" (pick "target.value" (set this.phone))}}
+              {{on "input" (pick "target.value" (set this "phone"))}}
               {{on "keyup" (fn this.addErrorDisplayFor "phone")}}
               {{on "keyup" this.keyboard}}
               data-test-phone-input
@@ -348,8 +348,8 @@
               id="username-{{templateId}}"
               type="text"
               value={{this.username}}
-              {{on "input" (pick "target.value" (set this.username))}}
-              {{on "input" (set this.showUsernameTakenErrorMessage false)}}
+              {{on "input" (pick "target.value" (set this "username"))}}
+              {{on "input" (set this "showUsernameTakenErrorMessage" false)}}
               {{on "keyup" (fn this.addErrorDisplayFor "username")}}
               {{on "keyup" this.keyboard}}
               disabled={{not this.canEditUsernameAndPassword}}
@@ -421,7 +421,7 @@
                 <button
                   class="link-button activate-password-field"
                   type="button"
-                  {{on "click" (set this.changeUserPassword true)}}
+                  {{on "click" (set this "changeUserPassword" true)}}
                   data-test-change-password
                 >
                   {{t "general.modifyUserPassword"}}

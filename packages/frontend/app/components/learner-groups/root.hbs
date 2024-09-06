@@ -86,7 +86,7 @@
         {{#if this.canCreate}}
           <ExpandCollapseButton
             @value={{this.showNewLearnerGroupForm}}
-            @action={{set this.showNewLearnerGroupForm (not this.showNewLearnerGroupForm)}}
+            @action={{set this "showNewLearnerGroupForm" (not this.showNewLearnerGroupForm)}}
             @expandButtonLabel={{t "general.expand"}}
             @collapseButtonLabel={{t "general.close"}}
           />
@@ -98,7 +98,7 @@
       {{#if this.showNewLearnerGroupForm}}
         <LearnerGroup::New
           @save={{perform this.saveNewLearnerGroup}}
-          @cancel={{set this.showNewLearnerGroupForm false}}
+          @cancel={{set this "showNewLearnerGroupForm" false}}
           @fillModeSupported={{true}}
         />
       {{/if}}

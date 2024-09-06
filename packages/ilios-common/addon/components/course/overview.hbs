@@ -64,7 +64,7 @@
                 disabled={{isSaving}}
                 type="text"
                 value={{this.externalId}}
-                {{on "input" (pick "target.value" (set this.externalId))}}
+                {{on "input" (pick "target.value" (set this "externalId"))}}
                 {{on "key-press" (fn this.addErrorDisplayFor "externalId")}}
               />
               <ValidationError @errors={{get-errors-for this.externalId}} />
@@ -124,7 +124,7 @@
             >
               <DatePicker
                 @value={{this.startDate}}
-                @onChange={{pipe (set this.startDate) (fn this.addErrorDisplayFor "startDate")}}
+                @onChange={{pipe (set this "startDate") (fn this.addErrorDisplayFor "startDate")}}
               />
             </EditableField>
             <ValidationError @errors={{get-errors-for this.startDate}} />
@@ -144,7 +144,7 @@
             >
               <DatePicker
                 @value={{this.endDate}}
-                @onChange={{pipe (set this.endDate) (fn this.addErrorDisplayFor "endDate")}}
+                @onChange={{pipe (set this "endDate") (fn this.addErrorDisplayFor "endDate")}}
               />
             </EditableField>
             <ValidationError @errors={{get-errors-for this.endDate}} />

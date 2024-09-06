@@ -60,7 +60,7 @@
                   type="text"
                   value={{this.title}}
                   disabled={{isSaving}}
-                  {{on "input" (pick "target.value" (set this.titleValue))}}
+                  {{on "input" (pick "target.value" (set this "titleValue"))}}
                   {{on "keyup" (fn this.addErrorDisplayFor "titleValue")}}
                 >
               </EditableField>
@@ -109,7 +109,7 @@
                 <textarea
                   id="description-{{templateId}}"
                   value={{this.description}}
-                  {{on "input" (pick "target.value" (set this.descriptionValue))}}
+                  {{on "input" (pick "target.value" (set this "descriptionValue"))}}
                   disabled={{this.isSaving}}
                 >
                   {{this.description}}

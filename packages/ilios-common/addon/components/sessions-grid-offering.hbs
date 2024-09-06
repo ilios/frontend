@@ -3,7 +3,7 @@
   data-test-sessions-grid-offering
   {{did-insert this.revertRoomChanges}}
   {{did-update this.revertRoomChanges}}
-  {{did-insert (set this.row)}}
+  {{did-insert (set this "row")}}
 >
   {{#if this.cohortsLoaded}}
     {{#if (and this.isEditing)}}
@@ -55,7 +55,7 @@
               value={{this.room}}
               disabled={{isSaving}}
               {{on "key-press" (fn this.addErrorDisplayFor "room")}}
-              {{on "input" (pick "target.value" (set this.room))}}
+              {{on "input" (pick "target.value" (set this "room"))}}
             />
             <ValidationError @errors={{get-errors-for this.room}} />
           </EditableField>

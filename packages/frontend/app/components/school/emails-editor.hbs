@@ -29,7 +29,7 @@
             type="text"
             value={{this.administratorEmail}}
             placeholder={{this.administratorEmailPlaceholder}}
-            {{on "input" (pick "target.value" (set this.administratorEmail))}}
+            {{on "input" (pick "target.value" (set this "administratorEmail"))}}
             {{on "keyup"
                (queue
                  (fn this.addErrorDisplayFor "administratorEmail")
@@ -48,7 +48,7 @@
             type="text"
             value={{this.changeAlertRecipients}}
             placeholder={{this.changeAlertRecipientsPlaceholder}}
-            {{on "input" (pick "target.value" (set this.changeAlertRecipients))}}
+            {{on "input" (pick "target.value" (set this "changeAlertRecipients"))}}
             {{on "keyup"
                  (queue
                    (fn this.addErrorDisplayFor "changeAlertRecipients")
