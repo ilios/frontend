@@ -176,9 +176,7 @@ export default class LearningMaterialManagerComponent extends Component {
     this.startDate = learningMaterial.startDate;
     this.endDate = learningMaterial.endDate;
 
-    const meshDescriptors = await learningMaterial.get('meshDescriptors');
-    this.terms = meshDescriptors;
-
+    this.terms = await learningMaterial.get('meshDescriptors');
     this.parentMaterial = parentMaterial;
     this.type = parentMaterial.type;
     this.title = parentMaterial.title;

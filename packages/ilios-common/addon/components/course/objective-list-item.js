@@ -74,8 +74,7 @@ export default class CourseObjectiveListItemComponent extends Component {
   });
 
   manageDescriptors = dropTask(async () => {
-    const meshDescriptors = await this.args.courseObjective.meshDescriptors;
-    this.descriptorsBuffer = meshDescriptors;
+    this.descriptorsBuffer = await this.args.courseObjective.meshDescriptors;
     this.isManagingDescriptors = true;
   });
 

@@ -86,8 +86,7 @@ export default class SessionsGrid extends Component {
     const sortProxies = await map(sessions, async (session) => {
       const offerings = await session.offerings;
       const learnerGroups = await map(offerings, async (offering) => {
-        const learnerGroups = await offering.learnerGroups;
-        return learnerGroups;
+        return await offering.learnerGroups;
       });
       return {
         session,
