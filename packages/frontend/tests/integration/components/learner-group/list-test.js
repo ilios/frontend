@@ -84,7 +84,7 @@ module('Integration | Component | learner-group/list', function (hooks) {
     await render(hbs`<LearnerGroup::List
       @learnerGroups={{this.learnerGroups}}
       @sortBy={{this.sortBy}}
-      @setSortBy={{set this.sortBy}}
+      @setSortBy={{set this "sortBy"}}
     />`);
 
     assert.strictEqual(component.items.length, 3);

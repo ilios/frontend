@@ -12,7 +12,7 @@
           @save={{perform this.changeTitle}}
           @close={{this.revertTitleChanges}}
           @saveOnEnter={{true}}
-          @onEditingStatusChange={{set this.isEditingTitle}}
+          @onEditingStatusChange={{set this "isEditingTitle"}}
           @closeOnEscape={{true}} as |isSaving|
         >
           <input
@@ -20,7 +20,7 @@
             disabled={{isSaving}}
             type="text"
             value={{this.courseTitle}}
-            {{on "input" (pick "target.value" (set this.courseTitle))}}
+            {{on "input" (pick "target.value" (set this "courseTitle"))}}
             {{on "keypress" (fn this.addErrorDisplayFor "courseTitle")}}
           >
           <ValidationError @errors={{get-errors-for this.courseTitle}} />

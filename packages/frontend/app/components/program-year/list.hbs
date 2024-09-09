@@ -12,7 +12,7 @@
         <div class="actions">
           <ExpandCollapseButton
             @value={{this.editorOn}}
-            @action={{set this.editorOn (not this.editorOn)}}
+            @action={{set this "editorOn" (not this.editorOn)}}
           />
         </div>
       {{/if}}
@@ -23,7 +23,7 @@
           @programYears={{this.programYears}}
           @academicYearCrossesCalendarYearBoundaries={{this.academicYearCrossesCalendarYearBoundaries}}
           @save={{perform this.saveNew}}
-          @cancel={{set this.editorOn false}}
+          @cancel={{set this "editorOn" false}}
         />
       {{/if}}
       {{#if this.savedProgramYear}}

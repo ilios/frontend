@@ -16,7 +16,7 @@
         value={{this.title}}
         disabled={{isSaving}}
         aria-label={{t "general.title"}}
-        {{on "input" (pick "target.value" (set this.title))}}
+        {{on "input" (pick "target.value" (set this "title"))}}
         {{on "keyup" (fn this.addErrorDisplayFor "title")}}
       >
     </EditableField>

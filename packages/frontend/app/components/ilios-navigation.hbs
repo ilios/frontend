@@ -10,7 +10,7 @@
         <button
           type="button"
           class="link-button expander"
-          {{on "click" (set this.expanded (not this.expanded))}}
+          {{on "click" (set this "expanded" (not this.expanded))}}
           data-test-expand-collapse
           aria-haspopup="true"
           aria-expanded={{if this.expanded "true" "false"}}

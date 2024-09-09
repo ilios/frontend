@@ -36,7 +36,7 @@
           </label>
           <textarea
             id={{descriptionId}}
-            {{on "input" (pick "target.value" (set this.description))}}
+            {{on "input" (pick "target.value" (set this "description"))}}
             disabled={{this.save.isRunning}}
             placeholder={{t "general.reportDescriptionPlaceholder"}}
           >{{this.description}}</textarea>

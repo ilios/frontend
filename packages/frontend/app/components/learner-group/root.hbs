@@ -52,7 +52,7 @@
                   type="text"
                   value={{this.location}}
                   disabled={{isSaving}}
-                  {{on "input" (pick "target.value" (set this.location))}}
+                  {{on "input" (pick "target.value" (set this "location"))}}
                   {{on "keyup" (fn this.addErrorDisplayFor "location")}}
                 >
                 <ValidationError @errors={{get-errors-for this.location}} />
@@ -215,7 +215,7 @@
               {{#if @canCreate}}
                 <ExpandCollapseButton
                   @value={{this.showNewLearnerGroupForm}}
-                  @action={{set this.showNewLearnerGroupForm (not this.showNewLearnerGroupForm)}}
+                  @action={{set this "showNewLearnerGroupForm" (not this.showNewLearnerGroupForm)}}
                   @expandButtonLabel={{t "general.expand"}}
                   @collapseButtonLabel={{t "general.close"}}
                 />
@@ -226,7 +226,7 @@
             {{#if this.showNewLearnerGroupForm}}
               <LearnerGroup::New
                 @save={{perform this.saveNewLearnerGroup}}
-                @cancel={{set this.showNewLearnerGroupForm false}}
+                @cancel={{set this "showNewLearnerGroupForm" false}}
                 @generateNewLearnerGroups={{this.generateNewLearnerGroups}}
                 @multiModeSupported={{true}}
               />
@@ -248,7 +248,7 @@
                 @canCopyWithLearners={{false}}
                 @copyGroup={{perform this.copyGroup}}
                 @sortBy={{this.sortGroupsBy}}
-                @setSortBy={{set this.sortGroupsBy}}
+                @setSortBy={{set this "sortGroupsBy"}}
               />
             {{/if}}
           </div>

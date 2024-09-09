@@ -18,7 +18,7 @@
             value={{this.title}}
             disabled={{this.save.isRunning}}
             {{on "keyup" (fn this.addErrorDisplayFor "title")}}
-            {{on "input" (pick "target.value" (set this.title))}}
+            {{on "input" (pick "target.value" (set this "title"))}}
           />
           <ValidationError @errors={{get-errors-for this.title}} data-test-title-validation-error-message />
         {{else}}
@@ -49,7 +49,7 @@
           {{t "general.required"}}:
         </label>
         {{#if @editable}}
-          <ToggleYesno @yes={{this.required}} @toggle={{set this.required}} />
+          <ToggleYesno @yes={{this.required}} @toggle={{set this "required"}} />
         {{else if this.required}}
           <span class="add">
             {{t "general.yes"}}
@@ -65,7 +65,7 @@
           {{t "general.instructionalNotes"}}:
         </label>
         {{#if @editable}}
-          <HtmlEditor @content={{this.notes}} @update={{set this.notes}} />
+          <HtmlEditor @content={{this.notes}} @update={{set this "notes"}} />
         {{else}}
           <span>
             {{! template-lint-disable no-triple-curlies }}
@@ -78,7 +78,7 @@
           {{t "general.showNotesToStudents"}}:
         </label>
         {{#if @editable}}
-          <ToggleYesno @yes={{this.publicNotes}} @toggle={{set this.publicNotes}} />
+          <ToggleYesno @yes={{this.publicNotes}} @toggle={{set this "publicNotes"}} />
         {{else if this.publicNotes}}
           <span class="add">
             {{t "general.yes"}}
@@ -121,7 +121,7 @@
           {{#if (and @editable this.isLinkedOnlyOnce)}}
             <HtmlEditor
               @content={{this.description}}
-              @update={{set this.description}}
+              @update={{set this "description"}}
             />
           {{else}}
             {{! template-lint-disable no-triple-curlies }}
@@ -243,7 +243,7 @@
             {{/if}}
           </div>
           {{#if @editable}}
-            <button class="remove-date" type="button" {{on "click" (fn (set this.startDate) null)}}>
+            <button class="remove-date" type="button" {{on "click" (fn (set this "startDate") null)}}>
               {{t "general.timedReleaseClearStartDate"}}
             </button>
           {{/if}}
@@ -288,7 +288,7 @@
           </div>
           <ValidationError @errors={{get-errors-for this.endDate}} data-test-end-date-validation-error-message />
           {{#if @editable}}
-            <button class="remove-date" type="button" {{on "click" (fn (set this.endDate) null)}}>
+            <button class="remove-date" type="button" {{on "click" (fn (set this "endDate") null)}}>
               {{t "general.timedReleaseClearEndDate"}}
             </button>
           {{/if}}

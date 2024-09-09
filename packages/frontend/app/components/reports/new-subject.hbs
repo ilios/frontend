@@ -18,7 +18,7 @@
             type="text"
             value={{this.title}}
             {{on "focusout" (fn this.addErrorDisplayFor "title")}}
-            {{on "input" (pick "target.value" (set this.selectedTitle))}}
+            {{on "input" (pick "target.value" (set this "selectedTitle"))}}
             {{on "keyup" (fn this.addErrorDisplayFor "title")}}
           >
           <ValidationError @errors={{get-errors-for this.title}} />
@@ -88,7 +88,7 @@
         @school={{this.currentSchool}}
         @templateId={{templateId}}
         @currentId={{this.prepositionalObjectId}}
-        @changeId={{set this.selectedPrepositionalObjectId}}
+        @changeId={{set this "selectedPrepositionalObjectId"}}
       />
       <ValidationError @errors={{get-errors-for this.prepositionalObjectId}} data-test-validation-error />
       <div class="input-buttons">

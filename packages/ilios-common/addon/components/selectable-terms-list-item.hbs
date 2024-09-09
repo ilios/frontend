@@ -4,8 +4,8 @@
   data-test-selectable-terms-list-item
   data-test-selectable-terms-list-item-level={{this.level}}
   {{on "click" this.click}}
-  {{mouse-hover-toggle (set this.isHovering)}}
-  {{did-insert (set this.theElement)}}
+  {{mouse-hover-toggle (set this "isHovering")}}
+  {{did-insert (set this "theElement")}}
 >
   {{#if (and this.theElement this.showTooltip)}}
     <IliosTooltip @target={{this.theElement}}>

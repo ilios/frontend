@@ -70,7 +70,7 @@ module('Integration | Component | editable field', function (hooks) {
             @save={{this.save}} @saveOnEnter={{true}} @value={{this.value}}
           >
             <label>
-              <input value={{this.value}} {{on "input" (pick "target.value" (set this.value))}}>
+              <input value={{this.value}} {{on "input" (pick "target.value" (set this "value"))}}>
               {{this.label}}
             </label>
           </EditableField>
@@ -95,7 +95,7 @@ module('Integration | Component | editable field', function (hooks) {
             @value={{this.value}}
           >
             <label>
-              <input value={{this.value}} {{on "input" (pick "target.value" (set this.value))}}>
+              <input value={{this.value}} {{on "input" (pick "target.value" (set this "value"))}}>
               {{this.label}}
             </label>
           </EditableField>
@@ -159,7 +159,7 @@ module('Integration | Component | editable field', function (hooks) {
       hbs`<EditableField
             @close={{(noop)}}
             @value="lorem"
-            @onEditingStatusChange={{set this.status}}
+            @onEditingStatusChange={{set this "status"}}
           >
           </EditableField>
 

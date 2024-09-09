@@ -59,7 +59,7 @@
           placeholder={{t "general.search"}}
           {{on "input" this.update}}
           {{on "keyup" this.keyUp}}
-          {{did-insert (set this.searchInput)}}
+          {{did-insert (set this "searchInput")}}
         >
       </div>
     {{/if}}

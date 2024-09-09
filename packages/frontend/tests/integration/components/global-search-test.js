@@ -124,7 +124,7 @@ module('Integration | Component | global-search', function (hooks) {
       @setQuery={{(noop)}}
       @onSelectPage={{(noop)}}
       @selectedYear={{this.selectedYear}}
-      @setSelectedYear={{set this.selectedYear}}
+      @setSelectedYear={{set this "selectedYear"}}
     />`);
     assert.strictEqual(component.academicYear, '');
     assert.strictEqual(
@@ -210,7 +210,7 @@ module('Integration | Component | global-search', function (hooks) {
       @setQuery={{(noop)}}
       @onSelectPage={{(noop)}}
       @ignoredSchoolIds={{this.ignoredSchoolIds}}
-      @setIgnoredSchoolIds={{set this.ignoredSchoolIds}}
+      @setIgnoredSchoolIds={{set this "ignoredSchoolIds"}}
     />`);
     assert.strictEqual(component.searchResults.length, 4);
     assert.strictEqual(component.searchResults[0].courseTitle, '2019 Course 1');

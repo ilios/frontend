@@ -12,7 +12,7 @@
         @yes={{this.showLearnerGroupEvents}}
         @toggle={{fn (mut this.showLearnerGroupEvents)}}
       />
-      <label {{on "click" (set this.showLearnerGroupEvents (not this.showLearnerGroupEvents))}}>
+      <label {{on "click" (set this "showLearnerGroupEvents" (not this.showLearnerGroupEvents))}}>
         {{t "general.showLearnerGroupEvents"}}
       </label>
     </span>

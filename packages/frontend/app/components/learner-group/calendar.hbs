@@ -6,9 +6,9 @@
     <span class="filter" data-test-learner-group-calendar-toggle-subgroup-events>
       <ToggleYesno
         @yes={{this.showSubgroupEvents}}
-        @toggle={{set this.showSubgroupEvents}}
+        @toggle={{set this "showSubgroupEvents"}}
       />
-      <label {{on "click" (fn (set this.showSubgroupEvents) (not this.showSubgroupEvents))}}>
+      <label {{on "click" (fn (set this "showSubgroupEvents") (not this.showSubgroupEvents))}}>
         {{t "general.showSubgroupEvents"}}
       </label>
     </span>

@@ -16,7 +16,7 @@
         <select
           aria-label={{t "general.cohorts"}}
           disabled={{@isSaving}}
-          {{on "change" (pick "target.value" (set this.primaryCohortId))}}
+          {{on "change" (pick "target.value" (set this "primaryCohortId"))}}
         >
           {{#each (sort-by "title" this.cohorts) as |cohort|}}
             <option

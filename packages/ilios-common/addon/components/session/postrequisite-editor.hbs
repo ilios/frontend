@@ -7,7 +7,7 @@
       <strong data-test-label>{{t "general.duePriorTo"}}:</strong>
       {{#if this.selectedPostrequisite}}
         <span data-test-title>{{this.selectedPostrequisite.title}}</span>
-        <button {{on "click" (set this.userSelectedPostrequisite null)}}
+        <button {{on "click" (set this "userSelectedPostrequisite" null)}}
           class="remove"
           type="button"
           data-test-remove
@@ -23,7 +23,7 @@
       placeholder={{t "general.filterPlaceholder"}}
       type="text"
       value={{this.filter}}
-      {{on "input" (pick "target.value" (set this.filter))}}
+      {{on "input" (pick "target.value" (set this "filter"))}}
       data-test-filter
     />
   </div>
@@ -45,7 +45,7 @@
             <td>
               <button
                 type="button"
-                {{on "click" (set this.userSelectedPostrequisite (if (eq postrequisite.id this.selectedPostrequisite.id) null postrequisite))}}
+                {{on "click" (set this "userSelectedPostrequisite" (if (eq postrequisite.id this.selectedPostrequisite.id) null postrequisite))}}
               >
                 {{#if (eq postrequisite.id this.selectedPostrequisite.id)}}
                   <FaIcon
@@ -62,7 +62,7 @@
             <td colspan="10">
               <button
                 type="button"
-                {{on "click" (set this.userSelectedPostrequisite (if (eq postrequisite.id this.selectedPostrequisite.id) null postrequisite))}}
+                {{on "click" (set this "userSelectedPostrequisite" (if (eq postrequisite.id this.selectedPostrequisite.id) null postrequisite))}}
               >
                 {{postrequisite.title}}
               </button>
@@ -70,7 +70,7 @@
             <td colspan="3">
               <button
                 type="button"
-                {{on "click" (set this.userSelectedPostrequisite (if (eq postrequisite.id this.selectedPostrequisite.id) null postrequisite))}}
+                {{on "click" (set this "userSelectedPostrequisite" (if (eq postrequisite.id this.selectedPostrequisite.id) null postrequisite))}}
               >
                 {{#if postrequisite.firstOfferingDate}}
                   {{#if postrequisite.ilmSession}}

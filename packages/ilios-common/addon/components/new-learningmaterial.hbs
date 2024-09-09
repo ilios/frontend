@@ -11,7 +11,7 @@
           type="text"
           value={{this.title}}
           {{on "focus-out" (fn this.addErrorDisplayFor "title")}}
-          {{on "input" (pick "target.value" (set this.title))}}
+          {{on "input" (pick "target.value" (set this "title"))}}
           {{on "keyup" (fn this.addErrorDisplayFor "title")}}
         />
         <ValidationError @errors={{get-errors-for this.title}} />
@@ -56,7 +56,7 @@
           type="text"
           value={{this.originalAuthor}}
           {{on "focus-out" (fn this.addErrorDisplayFor "originalAuthor")}}
-          {{on "input" (pick "target.value" (set this.originalAuthor))}}
+          {{on "input" (pick "target.value" (set this "originalAuthor"))}}
         />
         <ValidationError @errors={{get-errors-for this.originalAuthor}} />
       </span>
@@ -110,7 +110,7 @@
             id="citation-{{templateId}}"
             disabled={{this.prepareSave.isRunning}}
             {{on "focus-out" (fn this.addErrorDisplayFor "citation")}}
-            {{on "input" (pick "target.value" (set this.citation))}}
+            {{on "input" (pick "target.value" (set this "citation"))}}
           >{{this.citation}}</textarea>
           <ValidationError @errors={{get-errors-for this.citation}} />
         </span>
@@ -135,7 +135,7 @@
               id="copyright-permission-{{templateId}}"
               type="checkbox"
               checked={{this.copyrightPermission}}
-              {{on "click" (set this.copyrightPermission (not this.copyrightPermission))}}
+              {{on "click" (set this "copyrightPermission" (not this.copyrightPermission))}}
               data-test-copyright-agreement
             >
             {{t "general.copyrightAgreement"}}
@@ -157,7 +157,7 @@
             <textarea
               id="copyright-rationale-{{templateId}}"
               {{on "focus-out" (fn this.addErrorDisplayFor "copyrightRationale")}}
-              {{on "input" (pick "target.value" (set this.copyrightRationale))}}
+              {{on "input" (pick "target.value" (set this "copyrightRationale"))}}
               data-test-copyright-rationale
             >{{this.copyrightRationale}}</textarea>
           <ValidationError @errors={{get-errors-for this.copyrightRationale}} />
@@ -170,8 +170,8 @@
         </label>
         <LearningMaterialUploader
           @for="file-upload-{{this.templateId}}"
-          @setFilename={{set this.filename}}
-          @setFileHash={{set this.fileHash}}
+          @setFilename={{set this "filename"}}
+          @setFileHash={{set this "fileHash"}}
         />
         <ValidationError @errors={{get-errors-for this.filename}} />
       </div>

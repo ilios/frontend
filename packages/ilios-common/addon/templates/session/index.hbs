@@ -3,12 +3,12 @@
   @editable={{this.canUpdate}}
   @sessionObjectiveDetails={{this.sessionObjectiveDetails}}
   @sessionTaxonomyDetails={{this.sessionTaxonomyDetails}}
-  @setSessionObjectiveDetails={{set this.sessionObjectiveDetails}}
-  @setSessionTaxonomyDetails={{set this.sessionTaxonomyDetails}}
+  @setSessionObjectiveDetails={{set this "sessionObjectiveDetails"}}
+  @setSessionTaxonomyDetails={{set this "sessionTaxonomyDetails"}}
   @showNewOfferingForm={{this.addOffering}}
-  @toggleShowNewOfferingForm={{fn (set this.addOffering) (not this.addOffering)}}
+  @toggleShowNewOfferingForm={{fn (set this "addOffering") (not this.addOffering)}}
   @sessionLeadershipDetails={{this.sessionLeadershipDetails}}
-  @setSessionLeadershipDetails={{set this.sessionLeadershipDetails}}
+  @setSessionLeadershipDetails={{set this "sessionLeadershipDetails"}}
   @sessionManageLeadership={{this.sessionManageLeadership}}
-  @setSessionManageLeadership={{set this.sessionManageLeadership}}
+  @setSessionManageLeadership={{set this "sessionManageLeadership"}}
 />

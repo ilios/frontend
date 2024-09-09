@@ -17,7 +17,7 @@ module('Integration | Component | pagination-links', function (hooks) {
       @page={{this.page}}
       @results={{this.results}}
       @size={{this.size}}
-      @onSelectPage={{set this.page}}
+      @onSelectPage={{set this "page"}}
     />`);
     assert.ok(
       component.nextIsHidden,

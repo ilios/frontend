@@ -23,7 +23,7 @@
             type="text"
             value={{this.title}}
             disabled={{isSaving}}
-            {{on "input" (pick "target.value" (set this.title))}}
+            {{on "input" (pick "target.value" (set this "title"))}}
             {{on "keyup" (fn this.addErrorDisplayFor "title")}}
           >
           <ValidationError @errors={{get-errors-for this.title}} />

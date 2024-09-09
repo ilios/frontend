@@ -44,7 +44,7 @@
           id="former-student"
           type="checkbox"
           checked={{this.isFormerStudent}}
-          {{on "click" (set this.isFormerStudentFlipped (not this.isFormerStudentFlipped))}}
+          {{on "click" (set this "isFormerStudentFlipped" (not this.isFormerStudentFlipped))}}
         >
       {{else}}
         <span class="value {{if this.isFormerStudent "yes" "no"}}">
@@ -66,7 +66,7 @@
           id="is-enabled"
           type="checkbox"
           checked={{this.isEnabled}}
-          {{on "click" (set this.isEnabledFlipped (not this.isEnabledFlipped))}}
+          {{on "click" (set this "isEnabledFlipped" (not this.isEnabledFlipped))}}
           disabled={{if (eq @user.id this.currentUser.currentUserId) true}}
         >
       {{else}}
@@ -88,7 +88,7 @@
           id="exclude-from-sync"
           type="checkbox"
           checked={{this.isUserSyncIgnored}}
-          {{on "click" (set this.isUserSyncIgnoredFlipped (not this.isUserSyncIgnoredFlipped))}}
+          {{on "click" (set this "isUserSyncIgnoredFlipped" (not this.isUserSyncIgnoredFlipped))}}
         >
       {{else}}
         <span class="value {{if this.isUserSyncIgnored "yes" "no"}}">

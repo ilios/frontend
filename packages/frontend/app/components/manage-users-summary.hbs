@@ -39,7 +39,7 @@
       autocomplete="name"
       type="search"
       value={{this.searchValue}}
-      {{on "input" (pick "target.value" (set this.searchValue))}}
+      {{on "input" (pick "target.value" (set this "searchValue"))}}
       placeholder={{t "general.searchForIliosUsers"}}
       aria-label={{t "general.searchForIliosUsers"}}
       incremental="true"

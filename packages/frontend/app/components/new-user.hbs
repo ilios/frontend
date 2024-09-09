@@ -12,7 +12,7 @@
           @buttonContent1={{t "general.nonStudent"}}
           @buttonContent2={{t "general.student"}}
           @firstChoicePicked={{this.nonStudentMode}}
-          @toggle={{set this.nonStudentMode (not this.nonStudentMode)}}
+          @toggle={{set this "nonStudentMode" (not this.nonStudentMode)}}
         />
       </div>
       <div class="item" data-test-first-name>
@@ -23,7 +23,7 @@
           id="first-{{templateId}}"
           type="text"
           value={{this.firstName}}
-          {{on "input" (pick "target.value" (set this.firstName))}}
+          {{on "input" (pick "target.value" (set this "firstName"))}}
           {{on "keyup" (queue (fn this.addErrorDisplayFor "firstName") (perform this.saveOrCancel))}}
         >
         <ValidationError @errors={{get-errors-for this.firstName}} />
@@ -36,7 +36,7 @@
           id="middle-{{templateId}}"
           type="text"
           value={{this.middleName}}
-          {{on "input" (pick "target.value" (set this.middleName))}}
+          {{on "input" (pick "target.value" (set this "middleName"))}}
           {{on "keyup" (queue (fn this.addErrorDisplayFor "middleName") (perform this.saveOrCancel))}}
         >
         <ValidationError @errors={{get-errors-for this.middleName}} />
@@ -49,7 +49,7 @@
           id="last-{{templateId}}"
           type="text"
           value={{this.lastName}}
-          {{on "input" (pick "target.value" (set this.lastName))}}
+          {{on "input" (pick "target.value" (set this "lastName"))}}
           {{on "keyup" (queue (fn this.addErrorDisplayFor "lastName") (perform this.saveOrCancel))}}
         >
         <ValidationError @errors={{get-errors-for this.lastName}} />
@@ -62,7 +62,7 @@
           id="campus-{{templateId}}"
           type="text"
           value={{this.campusId}}
-          {{on "input" (pick "target.value" (set this.campusId))}}
+          {{on "input" (pick "target.value" (set this "campusId"))}}
           {{on "keyup" (queue (fn this.addErrorDisplayFor "campusId") (perform this.saveOrCancel))}}
         >
         <ValidationError @errors={{get-errors-for this.campusId}} />
@@ -75,7 +75,7 @@
           id="other-{{templateId}}"
           type="text"
           value={{this.otherId}}
-          {{on "input" (pick "target.value" (set this.otherId))}}
+          {{on "input" (pick "target.value" (set this "otherId"))}}
           {{on "keyup" (queue (fn this.addErrorDisplayFor "otherId") (perform this.saveOrCancel))}}
         >
         <ValidationError @errors={{get-errors-for this.otherId}} />
@@ -88,7 +88,7 @@
           id="email-{{templateId}}"
           type="text"
           value={{this.email}}
-          {{on "input" (pick "target.value" (set this.email))}}
+          {{on "input" (pick "target.value" (set this "email"))}}
           {{on "keyup" (queue (fn this.addErrorDisplayFor "email") (perform this.saveOrCancel))}}
         >
         <ValidationError @errors={{get-errors-for this.email}} />
@@ -101,7 +101,7 @@
           id="phone-{{templateId}}"
           type="text"
           value={{this.phone}}
-          {{on "input" (pick "target.value" (set this.phone))}}
+          {{on "input" (pick "target.value" (set this "phone"))}}
           {{on "keyup" (queue (fn this.addErrorDisplayFor "phone") (perform this.saveOrCancel))}}
         >
         <ValidationError @errors={{get-errors-for this.phone}} />
@@ -114,8 +114,8 @@
           id="username-{{templateId}}"
           type="text"
           value={{this.username}}
-          {{on "input" (pick "target.value" (set this.username))}}
-          {{on "input" (set this.showUsernameTakenErrorMessage false)}}
+          {{on "input" (pick "target.value" (set this "username"))}}
+          {{on "input" (set this "showUsernameTakenErrorMessage" false)}}
           {{on "keyup" (queue (fn this.addErrorDisplayFor "username") (perform this.saveOrCancel))}}
         >
         <ValidationError @errors={{get-errors-for this.username}} />
@@ -133,7 +133,7 @@
           id="password-{{templateId}}"
           type="text"
           value={{this.password}}
-          {{on "input" (pick "target.value" (set this.password))}}
+          {{on "input" (pick "target.value" (set this "password"))}}
           {{on "keyup" (queue (fn this.addErrorDisplayFor "password") (perform this.saveOrCancel))}}
         >
         <ValidationError @errors={{get-errors-for this.password}} />
@@ -142,7 +142,7 @@
         <label for="primary-school-{{templateId}}">
           {{t "general.primarySchool"}}:
         </label>
-        <select id="primary-school-{{templateId}}" {{on "change" (pick "target.value" (set this.schoolId))}}>
+        <select id="primary-school-{{templateId}}" {{on "change" (pick "target.value" (set this "schoolId"))}}>
           {{#each (sort-by "title" this.schools) as |school|}}
             <option
               value={{school.id}}
@@ -158,7 +158,7 @@
           <label for="primary-cohort-{{templateId}}">
             {{t "general.primaryCohort"}}:
           </label>
-          <select id="primary-cohort-{{templateId}}" {{on "change" (pick "target.value" (set this.primaryCohortId))}}>
+          <select id="primary-cohort-{{templateId}}" {{on "change" (pick "target.value" (set this "primaryCohortId"))}}>
             {{#each (sort-by "title" this.cohorts) as |cohort|}}
               <option
                 value={{cohort.id}}

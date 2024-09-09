@@ -5,7 +5,7 @@
     <div class="schoolsfilter" data-test-school-filter>
       <FaIcon @icon="building-columns" @fixedWidth={{true}} />
       {{#if this.hasMoreThanOneSchool}}
-        <select aria-label={{t "general.filterBySchool"}} {{on "change" (pick "target.value" (set this.school))}}>
+        <select aria-label={{t "general.filterBySchool"}} {{on "change" (pick "target.value" (set this "school"))}}>
           {{#each (sort-by "title" this.model.schools) as |school|}}
             <option
               value={{school.id}}
@@ -24,7 +24,7 @@
         aria-label={{t "general.filterByTitle"}}
         type="text"
         value={{this.filter}}
-         {{on "input" (pick "target.value" (set this.filter))}}
+         {{on "input" (pick "target.value" (set this "filter"))}}
         placeholder={{t "general.pendingUserUpdates.filterBy"}}
       >
     </div>

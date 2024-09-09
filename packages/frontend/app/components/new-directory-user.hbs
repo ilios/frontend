@@ -15,7 +15,7 @@
             @buttonContent1={{t "general.nonStudent"}}
             @buttonContent2={{t "general.student"}}
             @firstChoicePicked={{this.nonStudentMode}}
-            @toggle={{set this.nonStudentMode (not this.nonStudentMode)}}
+            @toggle={{set this "nonStudentMode" (not this.nonStudentMode)}}
           />
         </div>
         <div class="item" data-test-first-name>
@@ -78,7 +78,7 @@
             id="other-id-{{templateId}}"
             type="text"
             value={{this.otherId}}
-            {{on "input" (pick "target.value" (set this.otherId))}}
+            {{on "input" (pick "target.value" (set this "otherId"))}}
             {{on "keyup" (fn this.addErrorDisplayFor "otherId")}}
           >
           <ValidationError @errors={{get-errors-for this.otherId}} />
@@ -92,7 +92,7 @@
               id="username-{{templateId}}"
               type="text"
               value={{this.username}}
-              {{on "input" (pick "target.value" (set this.username))}}
+              {{on "input" (pick "target.value" (set this "username"))}}
               {{on "keyup" (fn this.addErrorDisplayFor "username")}}
               {{on "keyup" this.keyboard}}
             >
@@ -112,7 +112,7 @@
               id="password-{{templateId}}"
               type="text"
               value={{this.password}}
-              {{on "input" (pick "target.value" (set this.password))}}
+              {{on "input" (pick "target.value" (set this "password"))}}
               {{on "keyup" (fn this.addErrorDisplayFor "password")}}
               {{on "keyup" this.keyboard}}
             >

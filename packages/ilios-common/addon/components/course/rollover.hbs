@@ -29,7 +29,7 @@
           id="title-{{templateId}}"
           type="text"
           value={{this.title}}
-          {{on "input" (pick "target.value" (set this.title))}}
+          {{on "input" (pick "target.value" (set this "title"))}}
           {{on "input" (fn this.addErrorDisplayFor "title")}}
           disabled={{this.save.isRunning}}
           placeholder={{t "general.courseTitlePlaceholder"}}
@@ -81,7 +81,7 @@
           <Course::RolloverDatePicker
             @course={{@course}}
             @value={{this.startDate}}
-            @onChange={{set this.startDate}}
+            @onChange={{set this "startDate"}}
           />
         </div>
         <div class="included">

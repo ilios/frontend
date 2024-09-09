@@ -15,7 +15,7 @@
       </label>
       <div id="school-selection" class="inline-data" data-test-schools>
         {{#if (gt @schools.length 1)}}
-          <select id="school-filter-{{templateId}}" {{on "change" (pick "target.value" (set this.schoolId))}}>
+          <select id="school-filter-{{templateId}}" {{on "change" (pick "target.value" (set this "schoolId"))}}>
             {{#each (sort-by "title" @schools) as |school|}}
               <option
                 value={{school.id}}

@@ -135,7 +135,7 @@
                   type="text"
                   value={{this.duration}}
                   disabled={{this.saveDuration.isRunning}}
-                  {{on "input" (pick "target.value" (set this.duration))}}
+                  {{on "input" (pick "target.value" (set this "duration"))}}
                   {{on "keyup" (queue (fn this.addErrorDisplayFor "duration") this.saveOrCancelDuration)}}
                 >
                 <ValidationError @errors={{get-errors-for this.duration}} />
@@ -173,7 +173,7 @@
                   class="link-button"
                   type="button"
                   data-test-edit
-                  {{on "click" (set this.isEditingDatesAndDuration true)}}
+                  {{on "click" (set this "isEditingDatesAndDuration" true)}}
                 >
                   {{#if @sequenceBlock.startDate}}
                     {{format-date @sequenceBlock.startDate day="2-digit" month="2-digit" year="numeric"}}
@@ -198,7 +198,7 @@
                   class="link-button"
                   type="button"
                   data-test-edit
-                  {{on "click" (set this.isEditingDatesAndDuration true)}}
+                  {{on "click" (set this "isEditingDatesAndDuration" true)}}
                 >
                   {{#if @sequenceBlock.endDate}}
                     {{format-date @sequenceBlock.endDate day="2-digit" month="2-digit" year="numeric"}}
@@ -223,7 +223,7 @@
                   class="link-button"
                   type="button"
                   data-test-edit
-                  {{on "click" (set this.isEditingDatesAndDuration true)}}
+                  {{on "click" (set this "isEditingDatesAndDuration" true)}}
                 >
                   {{#if @sequenceBlock.duration}}
                     {{@sequenceBlock.duration}}
@@ -252,7 +252,7 @@
               >
                 <select
                   id="child-sequence-order-{{templateId}}"
-                  {{on "change" (pick "target.value" (set this.childSequenceOrder))}}
+                  {{on "change" (pick "target.value" (set this "childSequenceOrder"))}}
                 >
                   <option value="1" selected={{eq this.childSequenceOrder "1"}}>{{t "general.ordered"}}</option>
                   <option value="2" selected={{eq this.childSequenceOrder "2"}}>{{t "general.unordered"}}</option>
@@ -351,7 +351,7 @@
                   type="text"
                   value={{if this.isElective "0" this.minimum}}
                   disabled={{or this.isElective this.saveMinMax.isRunning}}
-                  {{on "input" (pick "target.value" (set this.minimum))}}
+                  {{on "input" (pick "target.value" (set this "minimum"))}}
                   {{on "keyup" (queue (fn this.addErrorDisplayFor "minimum") this.saveOrCancelMinMax)}}
                 >
                 <ValidationError @errors={{get-errors-for this.minimum}} />
@@ -365,7 +365,7 @@
                   type="text"
                   value={{this.maximum}}
                   disabled={{this.saveMinMax.isRunning}}
-                  {{on "input" (pick "target.value" (set this.maximum))}}
+                  {{on "input" (pick "target.value" (set this "maximum"))}}
                   {{on "keyup" (queue (fn this.addErrorDisplayFor "maximum") this.saveOrCancelMinMax)}}
                 >
                 <ValidationError @errors={{get-errors-for this.maximum}} />

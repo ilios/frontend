@@ -8,7 +8,7 @@
     placeholder={{this.placeholder}}
     {{on "input" this.update}}
     {{on "keyup" this.keyUp}}
-    {{did-insert (set this.searchInput)}}
+    {{did-insert (set this "searchInput")}}
   >
   <button
     aria-label={{t "general.search"}}

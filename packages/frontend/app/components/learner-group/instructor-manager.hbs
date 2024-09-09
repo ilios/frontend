@@ -21,13 +21,13 @@
               @spin={{if this.saveChanges.isRunning true false}}
             />
           </button>
-          <button type="button" class="bigcancel" {{ on "click" (set this.isManaging false)}} data-test-cancel>
+          <button type="button" class="bigcancel" {{ on "click" (set this "isManaging" false)}} data-test-cancel>
             <FaIcon @icon="arrow-rotate-left" />
           </button>
         </div>
       {{else}}
         {{#if @canUpdate}}
-          <button type="button" {{on "click" (set this.isManaging true)}} data-test-manage>
+          <button type="button" {{on "click" (set this "isManaging" true)}} data-test-manage>
             {{t "general.instructorsManageTitle"}}
           </button>
         {{/if}}

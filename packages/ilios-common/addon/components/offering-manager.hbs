@@ -84,7 +84,7 @@
             <button
               class="link-button remove"
               type="button"
-              {{on "click" (set this.showRemoveConfirmation true)}}
+              {{on "click" (set this "showRemoveConfirmation" true)}}
             >
               <FaIcon @icon="trash" class="enabled" />
             </button>
@@ -105,7 +105,7 @@
               <button type="button" class="remove text" {{on "click" (fn @remove @offering)}}>
                 {{t "general.yes"}}
               </button>
-              <button type="button" class="cancel text" {{on "click" (set this.showRemoveConfirmation false)}}>
+              <button type="button" class="cancel text" {{on "click" (set this "showRemoveConfirmation" false)}}>
                 {{t "general.cancel"}}
               </button>
             </div>

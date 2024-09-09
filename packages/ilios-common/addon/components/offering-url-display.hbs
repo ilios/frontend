@@ -9,7 +9,7 @@
       @clipboardText={{@url}}
       @success={{perform this.copy}}
       class={{if this.copy.isRunning "copying"}}
-      {{did-insert (set this.copyButton)}}
+      {{did-insert (set this "copyButton")}}
       data-test-copy-url
     >
       {{#if this.copy.isRunning}}

@@ -67,7 +67,7 @@
         <button
           type="button"
           class="done text"
-          {{on "click" (set this.showRemoveConfirmation false)}}
+          {{on "click" (set this "showRemoveConfirmation" false)}}
           data-test-cancel
         >
           {{t "general.cancel"}}
@@ -111,7 +111,7 @@
         <button
           type="button"
           class="cancel text"
-          {{on "click" (set this.showCopyConfirmation false)}}
+          {{on "click" (set this "showCopyConfirmation" false)}}
           data-test-cancel
         >
           {{t "general.cancel"}}

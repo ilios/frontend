@@ -8,7 +8,7 @@
       aria-label={{if this.isExpanded (t "general.hideObjectives") (t "general.showObjectives")}}
       aria-expanded={{if this.isExpanded "true" "false"}}
       type="button"
-      {{on "click" (set this.isExpanded (not this.isExpanded))}}
+      {{on "click" (set this "isExpanded" (not this.isExpanded))}}
       data-test-expand-collapse
     >
       {{@title}}
@@ -19,7 +19,7 @@
         class="display-mode-toggle-btn {{unless this.isExpanded "disabled" (if this.groupByCompetencies "active")}}"
         type="button"
         disabled={{not this.isExpanded}}
-        {{on "click" (set this.groupByCompetencies (not this.groupByCompetencies))}}
+        {{on "click" (set this "groupByCompetencies" (not this.groupByCompetencies))}}
         data-test-display-mode-toggle
       >
         {{#if this.groupByCompetencies}}

@@ -58,7 +58,7 @@
         class="link-button"
         type="button"
         aria-label={{t "general.remove"}}
-        {{on "click" (set this.showRemoveConfirmation true)}}
+        {{on "click" (set this "showRemoveConfirmation" true)}}
         data-test-remove
       >
         <FaIcon @icon="trash" class="enabled remove" />
@@ -87,7 +87,7 @@
         class="done"
         type="button"
         data-test-cancel
-        {{on "click" (set this.showRemoveConfirmation false)}}
+        {{on "click" (set this "showRemoveConfirmation" false)}}
       >
         {{t "general.cancel"}}
       </button>

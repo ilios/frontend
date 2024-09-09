@@ -84,7 +84,7 @@
           <button
             type="button"
             class="link-button"
-            {{on "click" (set this.showRemoveConfirmation true)}}
+            {{on "click" (set this "showRemoveConfirmation" true)}}
             data-test-remove
           >
             <FaIcon
@@ -119,7 +119,7 @@
             <button
               type="button"
               class="done text"
-              {{on "click" (set this.showRemoveConfirmation false)}}
+              {{on "click" (set this "showRemoveConfirmation" false)}}
               data-test-cancel
             >
               {{t "general.cancel"}}
@@ -146,7 +146,7 @@
             <button
               type="button"
               class="done text"
-              {{on "click" (set this.showRemoveConfirmation false)}}
+              {{on "click" (set this "showRemoveConfirmation" false)}}
               data-test-cancel
             >
               {{t "general.cancel"}}

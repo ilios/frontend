@@ -37,7 +37,7 @@
       type="search"
       value={{this.title}}
       placeholder={{t "general.filterPlaceholder"}}
-      {{on "input" (pick "target.value" (set this.title))}}
+      {{on "input" (pick "target.value" (set this "title"))}}
     >
   </div>
   <div class="visualizations">
