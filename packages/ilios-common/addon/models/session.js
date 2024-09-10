@@ -440,7 +440,7 @@ export default class SessionModel extends Model {
       return [];
     }
 
-    return [...this._ilmSessionInstructors.slice(), ...this._ilmSessionInstructorGroupInstructors];
+    return [...this._ilmSessionInstructors, ...this._ilmSessionInstructorGroupInstructors];
   }
 
   get allInstructors() {
@@ -545,13 +545,13 @@ export default class SessionModel extends Model {
   }
 
   async getAllOfferingInstructors() {
-    const offerings = (await this.offerings).slice();
+    const offerings = await this.offerings;
     if (!offerings.length) {
       return [];
     }
     const allOfferingInstructors = await Promise.all(
       offerings.map(async (offering) => {
-        return (await offering.getAllInstructors()).slice();
+        return await offering.getAllInstructors();
       }),
     );
 

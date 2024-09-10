@@ -40,7 +40,7 @@ export default class EventsBase extends Service {
     const sessionTerms = await session.get('terms');
     const course = await session.get('course');
     const courseTerms = await course.get('terms');
-    return uniqueValues(mapBy([...sessionTerms.slice(), ...courseTerms.slice()], 'id'));
+    return uniqueValues(mapBy([...sessionTerms, ...courseTerms], 'id'));
   }
 
   /**
@@ -86,7 +86,7 @@ export default class EventsBase extends Service {
   async getCohortIdsForEvent(event) {
     const course = await this.getCourseForEvent(event);
     const cohorts = await course.get('cohorts');
-    return mapBy(cohorts.slice(), 'id');
+    return mapBy(cohorts, 'id');
   }
 
   /**

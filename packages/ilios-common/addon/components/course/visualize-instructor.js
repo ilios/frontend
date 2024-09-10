@@ -23,7 +23,7 @@ export default class CourseVisualizeInstructorComponent extends Component {
   }
 
   get sessions() {
-    return this.sessionsData.isResolved ? this.sessionsData.value.slice() : [];
+    return this.sessionsData.isResolved ? this.sessionsData.value : [];
   }
 
   @cached

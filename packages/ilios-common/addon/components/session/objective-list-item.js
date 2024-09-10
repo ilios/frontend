@@ -58,21 +58,18 @@ export default class SessionObjectiveListItemComponent extends Component {
   });
 
   manageParents = dropTask(async () => {
-    const parents = await this.args.sessionObjective.courseObjectives;
-    this.parentsBuffer = parents.slice();
+    this.parentsBuffer = await this.args.sessionObjective.courseObjectives;
     this.isManagingParents = true;
   });
 
   manageDescriptors = dropTask(async () => {
-    const meshDescriptors = await this.args.sessionObjective.meshDescriptors;
-    this.descriptorsBuffer = meshDescriptors.slice();
+    this.descriptorsBuffer = await this.args.sessionObjective.meshDescriptors;
     this.isManagingDescriptors = true;
   });
 
   manageTerms = dropTask(async (vocabulary) => {
     this.selectedVocabulary = vocabulary;
-    const terms = await this.args.sessionObjective.terms;
-    this.termsBuffer = terms.slice();
+    this.termsBuffer = await this.args.sessionObjective.terms;
     this.isManagingTerms = true;
   });
 

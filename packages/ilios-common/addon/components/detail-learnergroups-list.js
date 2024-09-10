@@ -27,12 +27,12 @@ export default class DetailLearnerGroupsListComponent extends Component {
       return [];
     }
     const cohorts = uniqueValues(
-      await map(this.args.learnerGroups.slice(), async (learnerGroup) => {
+      await map(this.args.learnerGroups, async (learnerGroup) => {
         return learnerGroup.cohort;
       }),
     );
     return map(cohorts, async (cohort) => {
-      const groups = await filter(this.args.learnerGroups.slice(), async (group) => {
+      const groups = await filter(this.args.learnerGroups, async (group) => {
         const groupCohort = await group.cohort;
         return groupCohort === cohort;
       });

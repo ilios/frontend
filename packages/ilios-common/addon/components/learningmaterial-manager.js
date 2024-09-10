@@ -176,9 +176,7 @@ export default class LearningMaterialManagerComponent extends Component {
     this.startDate = learningMaterial.startDate;
     this.endDate = learningMaterial.endDate;
 
-    const meshDescriptors = await learningMaterial.get('meshDescriptors');
-    this.terms = meshDescriptors.slice();
-
+    this.terms = await learningMaterial.meshDescriptors;
     this.parentMaterial = parentMaterial;
     this.type = parentMaterial.type;
     this.title = parentMaterial.title;
@@ -193,10 +191,10 @@ export default class LearningMaterialManagerComponent extends Component {
     this.filename = parentMaterial.filename;
     this.uploadDate = parentMaterial.uploadDate;
 
-    const status = await parentMaterial.get('status');
+    const status = await parentMaterial.status;
     this.statusId = status.id;
-    this.owningUser = await parentMaterial.get('owningUser');
-    const userRole = await parentMaterial.get('userRole');
+    this.owningUser = await parentMaterial.owningUser;
+    const userRole = await parentMaterial.userRole;
     this.userRoleTitle = userRole.title;
   });
 

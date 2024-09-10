@@ -29,7 +29,7 @@ export default class DetailTaxonomiesComponent extends Component {
   manage = dropTask(async () => {
     this.args.expand();
     const terms = await this.args.subject.terms;
-    this.bufferedTerms = [...terms.slice()];
+    this.bufferedTerms = [...terms];
     this.isManaging = true;
   });
 

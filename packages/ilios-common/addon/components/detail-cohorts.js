@@ -20,7 +20,7 @@ export default class DetailCohortsComponent extends Component {
 
   manage = dropTask(async () => {
     const cohorts = await this.args.course.cohorts;
-    this.bufferedCohorts = [...cohorts.slice()];
+    this.bufferedCohorts = [...cohorts];
     this.isManaging = true;
   });
 

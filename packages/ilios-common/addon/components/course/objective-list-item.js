@@ -67,22 +67,21 @@ export default class CourseObjectiveListItemComponent extends Component {
       return [...set, ...cohortObjectives.flat()];
     }, []);
     const parents = await this.args.courseObjective.programYearObjectives;
-    this.parentsBuffer = parents.slice().map((objective) => {
+    this.parentsBuffer = parents.map((objective) => {
       return findById(objectives, objective.id);
     });
     this.isManagingParents = true;
   });
 
   manageDescriptors = dropTask(async () => {
-    const meshDescriptors = await this.args.courseObjective.meshDescriptors;
-    this.descriptorsBuffer = meshDescriptors.slice();
+    this.descriptorsBuffer = await this.args.courseObjective.meshDescriptors;
     this.isManagingDescriptors = true;
   });
 
   manageTerms = dropTask(async (vocabulary) => {
     this.selectedVocabulary = vocabulary;
     const terms = await this.args.courseObjective.terms;
-    this.termsBuffer = terms.slice();
+    this.termsBuffer = terms;
     this.isManagingTerms = true;
   });
 

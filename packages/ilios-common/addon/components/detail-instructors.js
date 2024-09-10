@@ -58,8 +58,8 @@ export default class DetailInstructorsComponent extends Component {
       instructors: ilmSession.instructors,
     });
 
-    this.instructorGroupBuffer = instructorGroups.slice();
-    this.instructorBuffer = instructors.slice();
+    this.instructorGroupBuffer = instructorGroups;
+    this.instructorBuffer = instructors;
     this.isManaging = true;
   });
 
@@ -82,14 +82,14 @@ export default class DetailInstructorsComponent extends Component {
     if (!this.ilmInstructors) {
       return [];
     }
-    return this.ilmInstructors.slice();
+    return this.ilmInstructors;
   }
 
   get selectedIlmInstructorGroups() {
     if (!this.ilmInstructorGroups) {
       return [];
     }
-    return this.ilmInstructorGroups.slice();
+    return this.ilmInstructorGroups;
   }
 
   get instructorGroupCount() {

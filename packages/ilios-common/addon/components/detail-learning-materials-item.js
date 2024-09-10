@@ -21,7 +21,7 @@ export default class DetailLearningMaterialsItemComponent extends Component {
   }
 
   get meshDescriptors() {
-    return this.meshDescriptorsData.isResolved ? this.meshDescriptorsData.value.slice() : [];
+    return this.meshDescriptorsData.isResolved ? this.meshDescriptorsData.value : [];
   }
 
   get meshDescriptorsLoaded() {

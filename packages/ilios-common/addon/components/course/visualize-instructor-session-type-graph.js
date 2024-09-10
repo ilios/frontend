@@ -74,7 +74,7 @@ export default class CourseVisualizeInstructorSessionTypeGraph extends Component
       return mapBy(allInstructors, 'id').includes(user.id);
     });
 
-    const sessionsWithSessionType = await map(sessionsWithUser.slice(), async (session) => {
+    const sessionsWithSessionType = await map(sessionsWithUser, async (session) => {
       const sessionType = await session.sessionType;
       return {
         session,

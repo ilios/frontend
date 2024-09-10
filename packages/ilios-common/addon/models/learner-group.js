@@ -189,7 +189,7 @@ export default class LearnerGroup extends Model {
   }
 
   async getAllDescendants() {
-    const children = (await this.children).slice();
+    const children = await this.children;
     const childDescendants = await map(children, (child) => {
       return child.getAllDescendants();
     });
@@ -216,14 +216,14 @@ export default class LearnerGroup extends Model {
   async getAllDescendantUsers() {
     const users = await this.users;
     const descendantUsers = await this._getDescendantUsers();
-    return uniqueValues([...users.slice(), ...descendantUsers]);
+    return uniqueValues([...users, ...descendantUsers]);
   }
 
   async _getDescendantUsers() {
     const allDescendants = await this.getAllDescendants();
     const descendantsUsers = await Promise.all(mapBy(allDescendants, 'users'));
     return descendantsUsers.reduce((all, groups) => {
-      return [...all, ...groups.slice()];
+      return [...all, ...groups];
     }, []);
   }
 
@@ -240,7 +240,7 @@ export default class LearnerGroup extends Model {
   }
 
   async getUsersOnlyAtThisLevel() {
-    const users = (await this.users).slice();
+    const users = await this.users;
     const descendantsUsers = await this._getDescendantUsers();
 
     return users.filter((user) => !descendantsUsers.includes(user));

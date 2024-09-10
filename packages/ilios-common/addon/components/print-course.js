@@ -92,6 +92,6 @@ export default class PrintCourseComponent extends Component {
       return this.sessionsRelationship.filter((session) => session.isPublishedOrScheduled);
     }
 
-    return this.sessionsRelationship.slice();
+    return this.sessionsRelationship;
   }
 }

@@ -38,13 +38,13 @@ export default class DashboardCalendarFiltersComponent extends Component {
   async loadSessionTypes(school) {
     await this.dataLoader.loadSchoolForCalendar(school.id);
     const types = await school.sessionTypes;
-    return sortBy(types.slice(), 'title');
+    return sortBy(types, 'title');
   }
 
   async loadVocabularies(school) {
     await this.dataLoader.loadSchoolForCalendar(school.id);
     const vocabularies = await school.vocabularies;
     await Promise.all(mapBy(vocabularies, 'terms'));
-    return sortBy(vocabularies.slice(), 'title');
+    return sortBy(vocabularies, 'title');
   }
 }

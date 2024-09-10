@@ -80,7 +80,7 @@ export default class CourseVisualizeVocabularyGraph extends Component {
       sessionsWithMinutes,
       async ({ session, minutes }) => {
         const sessionTerms = await session.terms;
-        const sessionTermsInThisVocabulary = await filter(sessionTerms.slice(), async (term) => {
+        const sessionTermsInThisVocabulary = await filter(sessionTerms, async (term) => {
           const termVocab = await term.vocabulary;
           return termVocab.id === this.args.vocabulary.id;
         });
