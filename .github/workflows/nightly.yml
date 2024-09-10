@@ -2,7 +2,7 @@ name: Nightly
 
 on:
   schedule:
-    - cron: "15 9 * * 1-5" # nightly, M-F
+    - cron: "15 9 * * 0-5" # nightly, S-F
 
 env:
   SW_DISABLED: true
