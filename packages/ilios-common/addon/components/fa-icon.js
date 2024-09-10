@@ -37,4 +37,22 @@ export default class FaIconComponent extends Component {
 
     return '';
   }
+
+  get extraClasses() {
+    let classes = [this.flip];
+
+    if (this.args.spin) {
+      classes.push('spin');
+    }
+
+    if (this.args.listItem) {
+      classes.push('list-item');
+    }
+
+    if (this.args.fixedWidth) {
+      classes.push('fixed-width');
+    }
+
+    return classes.join(' ');
+  }
 }

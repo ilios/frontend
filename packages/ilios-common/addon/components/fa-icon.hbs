@@ -1,6 +1,6 @@
 {{! template-lint-disable eol-last }}
 <svg
-  class="awesome-icon fa-{{@icon}} {{if @spin "spin"}} {{this.flip}} {{if @listItem "list-item"}} {{if @fixedWidth "fixed-width"}}"
+  class="awesome-icon fa-{{@icon}}{{this.extraClasses}}"
   data-icon={{@icon}}
   aria-hidden={{this.ariaHidden}}
   focusable={{this.focusable}}
