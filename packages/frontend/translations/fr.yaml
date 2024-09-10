@@ -6,6 +6,8 @@ general:
   academicLevels: Niveaux scolaire
   academicYear: Année Scolaire
   academicYears: Années Scolaire
+  accommodationIsRequiredForLearnersInThisGroup: Des aménagements sont nécessaires pour les apprenants de ce groupe
+  accommodationIsRequiredForLearnersInSubgroups: "Des aménagements sont nécessaires pour les apprenants des sous-groupes suivants: {groups}"
   accountEnabled: Compte Activé
   activate: Activer
   active: Actif

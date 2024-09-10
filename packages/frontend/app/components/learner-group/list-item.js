@@ -2,7 +2,7 @@ import Component from '@glimmer/component';
 import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { dropTask } from 'ember-concurrency';
-import { all, filter } from 'rsvp';
+import { all, filter, map } from 'rsvp';
 import { TrackedAsyncData } from 'ember-async-data';
 import { service } from '@ember/service';
 
@@ -10,6 +10,21 @@ export default class LearnerGroupListItemComponent extends Component {
   @service permissionChecker;
   @tracked showRemoveConfirmation = false;
   @tracked showCopyConfirmation = false;
+
+  @cached
+  get sortedTitlesOfSubgroupsInNeedOfAccommodationData() {
+    return new TrackedAsyncData(
+      this.getSortedTitlesOfSubgroupsInNeedOfAccommodation(
+        this.args.learnerGroup.getSubgroupsInNeedOfAccommodation,
+      ),
+    );
+  }
+
+  get sortedTitlesOfSubgroupsInNeedOfAccommodation() {
+    return this.sortedTitlesOfSubgroupsInNeedOfAccommodationData.isResolved
+      ? this.sortedTitlesOfSubgroupsInNeedOfAccommodationData.value
+      : '';
+  }
 
   @cached
   get canDeleteData() {
@@ -53,6 +68,11 @@ export default class LearnerGroupListItemComponent extends Component {
 
   get canCreate() {
     return this.canCreateData.isResolved ? this.canCreateData.value && this.school : false;
+  }
+
+  async getSortedTitlesOfSubgroupsInNeedOfAccommodation(groups) {
+    const titles = await map(groups, (group) => group.getTitleWithParentTitles());
+    return titles.sort().join(', ');
   }
 
   async getSchool(learnerGroup) {

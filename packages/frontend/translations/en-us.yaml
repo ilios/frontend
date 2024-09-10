@@ -6,6 +6,8 @@ general:
   academicLevels: Academic Levels
   academicYear: Academic Year
   academicYears: Academic Years
+  accommodationIsRequiredForLearnersInThisGroup: Accommodation is required for learners in this group
+  accommodationIsRequiredForLearnersInSubgroups: "Accommodation is required for learners in the following subgroups: {groups}"
   accountEnabled: Account Enabled
   activate: Activate
   active: Active

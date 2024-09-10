@@ -194,8 +194,14 @@ module('Integration | Component | learner-group/list-item', function (hooks) {
     assert.notOk(component.needsAccommodation);
   });
 
-  test('subgroup needs accommodations', async function (assert) {
+  test('subgroups needs accommodations', async function (assert) {
     this.server.create('learner-group', {
+      title: 'omega',
+      parent: this.learnerGroup,
+      needsAccommodation: true,
+    });
+    this.server.create('learner-group', {
+      title: 'alpha',
       parent: this.learnerGroup,
       needsAccommodation: true,
     });
@@ -205,6 +211,10 @@ module('Integration | Component | learner-group/list-item', function (hooks) {
     this.set('learnerGroup', learnerGroupModel);
     await render(hbs`<LearnerGroup::ListItem @learnerGroup={{this.learnerGroup}} />`);
     assert.ok(component.subgroupNeedsAccommodation);
+    assert.strictEqual(
+      component.subgroupNeedsAccommodationTitle,
+      'Accommodation is required for learners in the following subgroups: learner group 0 > alpha, learner group 0 > omega',
+    );
   });
 
   test('subgroup does not need accommodations', async function (assert) {
