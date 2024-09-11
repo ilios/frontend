@@ -1,5 +1,6 @@
 general:
   accessAllMaterialsForThisCourse: "Accéder à tout le matériel d'étude pour ce cours"
+  accommodationIsRequiredForLearnersInThisGroup: Des aménagements sont nécessaires pour les apprenants de ce groupe
   actions: Actions
   activeFilters: Filtres actifs
   admin: Admin
