@@ -104,7 +104,7 @@ module.exports = async function (defaults) {
     packagerOptions: {
       webpackConfig: {
         plugins: [new RetryChunkLoadPlugin() /*, new BundleAnalyzerPlugin()*/],
-        devtool: 'source-map',
+        devtool: env === 'production' ? 'source-map' : 'eval',
         optimization: {
           minimize: true,
           minimizer: [
