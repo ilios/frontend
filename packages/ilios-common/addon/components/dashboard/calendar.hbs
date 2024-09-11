@@ -80,7 +80,7 @@
         />
       {{/if}}
     </section>
-    {{#if (is-array this.cohortProxies)}}
+    {{#if (and this.cohortProxiesData.isResolved (is-array this.cohortProxies))}}
       <Dashboard::FilterTags
         @selectedCourseLevels={{@selectedCourseLevels}}
         @selectedSessionTypeIds={{@selectedSessionTypeIds}}
