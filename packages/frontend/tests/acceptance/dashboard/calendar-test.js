@@ -773,6 +773,28 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
     assert.strictEqual(page.calendar.calendar.weekly.events.length, 0);
   });
 
+  test('test cohort filter on page load ilios/ilios#5699', async function (assert) {
+    const today = DateTime.fromObject({ hour: 8, minute: 8, second: 8 });
+    this.server.create('userevent', {
+      user: this.user.id,
+      startDate: today.toJSDate(),
+      endDate: today.plus({ hour: 1 }).toJSDate(),
+      cohorts: [{ id: 1 }],
+    });
+    this.server.create('userevent', {
+      user: this.user.id,
+      startDate: today.toJSDate(),
+      endDate: today.plus({ hour: 1 }).toJSDate(),
+      cohorts: [{ id: 1 }],
+    });
+    await page.visit({ show: 'calendar', view: 'week', cohorts: 2 });
+    await page.calendar.controls.showFilters.toggle.secondLabel.click();
+    await page.calendar.controls.showCourseFilters.toggle.secondLabel.click();
+    assert.ok(page.calendar.controls.filters.cohortsFilter.cohorts[0].isChecked);
+    assert.notOk(page.calendar.controls.filters.cohortsFilter.cohorts[1].isChecked);
+    assert.strictEqual(page.calendar.calendar.weekly.events.length, 0);
+  });
+
   test('test course filter', async function (assert) {
     const today = DateTime.fromObject({ hour: 8, minute: 8, second: 8 });
     this.server.create('userevent', {
