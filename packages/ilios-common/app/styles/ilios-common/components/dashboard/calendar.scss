@@ -44,15 +44,17 @@
         width: 33%;
 
         h5 {
-          @include m.ilios-heading-h5;
+          @include m.ilios-heading;
+          @include m.font-size("base");
           display: block;
           background-color: c.$culturedGrey;
           border-bottom: 0.5px solid c.$davysGrey;
+          height: 7vh;
           padding: 0.25em;
           width: 100%;
 
-          @include m.for-phone-only {
-            height: 7vh;
+          @include m.for-tablet-and-up {
+            height: auto;
           }
         }
 
@@ -75,10 +77,6 @@
           overflow-x: hidden;
           overflow-y: scroll;
           padding: 0.25em 0.25em 1em;
-        }
-
-        &.small-filter-list {
-          width: 15%;
         }
 
         &.large-filter-list {
