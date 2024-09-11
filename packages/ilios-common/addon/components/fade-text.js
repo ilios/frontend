@@ -38,12 +38,14 @@ export default class FadeTextComponent extends Component {
   }
 
   @action
-  expand() {
+  expand(event) {
+    event.stopPropagation();
     this.expanded = true;
   }
 
   @action
-  collapse() {
+  collapse(event) {
+    event.stopPropagation();
     this.expanded = false;
   }
 }
