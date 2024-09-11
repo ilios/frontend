@@ -19,13 +19,17 @@
     background: transparent;
     grid-area: tools;
     margin-right: 0.25rem;
-    padding: 0.25rem 0;
+    padding: 0;
     display: grid;
     justify-content: end;
     grid-template-areas:
       ". locale user guide"
       "search search search search";
     row-gap: 0.25rem;
+
+    @include m.for-phone-and-up {
+      padding: 0.4rem 0;
+    }
 
     @include m.for-tablet-and-up {
       grid-template-areas: "search locale user guide";
