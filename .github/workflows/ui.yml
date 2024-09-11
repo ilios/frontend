@@ -103,7 +103,6 @@ jobs:
       matrix:
         workspace:
           - frontend
-          - test-app
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4

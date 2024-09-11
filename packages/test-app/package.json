@@ -42,8 +42,6 @@
     "@embroider/webpack": "~4.0.3",
     "@glimmer/component": "^1.1.2",
     "@glimmer/tracking": "^1.1.2",
-    "@percy/cli": "^1.29.3",
-    "@percy/ember": "^4.2.0",
     "@warp-drive/build-config": "0.0.0-beta.6",
     "broccoli-asset-rev": "^3.0.0",
     "ember-a11y-testing": "^7.0.0",
