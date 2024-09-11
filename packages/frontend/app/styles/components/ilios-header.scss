@@ -3,6 +3,7 @@
 
 .ilios-header {
   background-color: c.$orange;
+  display: grid;
 
   h1 {
     @include m.visually-hidden;
