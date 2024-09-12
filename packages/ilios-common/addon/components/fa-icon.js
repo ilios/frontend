@@ -39,7 +39,7 @@ export default class FaIconComponent extends Component {
   }
 
   get extraClasses() {
-    let classes = [this.flip];
+    let classes = [];
 
     if (this.args.spin) {
       classes.push('spin');
@@ -53,6 +53,10 @@ export default class FaIconComponent extends Component {
       classes.push('fixed-width');
     }
 
-    return classes.join(' ');
+    if (this.flip !== '') {
+      classes.push(this.flip);
+    }
+
+    return classes.length ? ` ${classes.join(' ')}` : '';
   }
 }
