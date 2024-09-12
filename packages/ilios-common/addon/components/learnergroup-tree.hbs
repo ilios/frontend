@@ -22,7 +22,10 @@
         {{@learnerGroup.title}}
       </button>
     {{#if @learnerGroup.needsAccommodation}}
-      <FaIcon @icon="universal-access" @title={{t "general.membersOfThisGroupRequireAccommodation"}}></FaIcon>
+      <FaIcon
+        @icon="universal-access"
+        @title={{t "general.accommodationIsRequiredForLearnersInThisGroup"}}
+      />
     {{/if}}
     {{#if this.hasChildren}}
       <ul data-test-subgroups>

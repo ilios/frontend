@@ -28,7 +28,10 @@
             >
               {{learnerGroup.title}}
               {{#if learnerGroup.needsAccommodation}}
-                <FaIcon @icon="universal-access" @title={{t "general.membersOfThisGroupRequireAccommodation"}}></FaIcon>
+                <FaIcon
+                  @icon="universal-access"
+                  @title={{t "general.accommodationIsRequiredForLearnersInThisGroup"}}
+                />
               {{/if}}
               {{#unless learnerGroup.isTopLevelGroup}}
                 {{#if (and
