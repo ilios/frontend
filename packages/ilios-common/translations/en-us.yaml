@@ -274,7 +274,7 @@ general:
   preWork: Pre-work
   printSummary: Print Summary
   program: Program
-  programAndCohort: Program/Cohort
+  programAndCohort: Program / Cohort
   programCohorts: Program Cohorts
   programDetail: Program Detail
   publicationStatus: Publication Status
