@@ -34,6 +34,30 @@ module('Integration | Component | fa-icon', function (hooks) {
     assert.dom('svg').hasClass('spin');
   });
 
+  test('it optionally renders fixed-width class', async function (assert) {
+    this.set('fixedWidth', false);
+    await render(hbs`<FaIcon @icon="coffee" @fixedWidth={{this.fixedWidth}} />`);
+    assert.dom('svg').doesNotHaveClass('fixed-width');
+    this.set('fixedWidth', true);
+    assert.dom('svg').hasClass('fixed-width');
+  });
+
+  test('it renders vertically and horizontally flipped', async function (assert) {
+    this.set('flip', '');
+    await render(hbs`<FaIcon @icon="coffee" @flip={{this.flip}} />`);
+    assert.dom('svg').doesNotHaveClass('flip-horizontal');
+    assert.dom('svg').doesNotHaveClass('flip-vertical');
+    this.set('flip', 'horizontal');
+    assert.dom('svg').hasClass('flip-horizontal');
+    assert.dom('svg').doesNotHaveClass('flip-vertical');
+    this.set('flip', 'vertical');
+    assert.dom('svg').doesNotHaveClass('flip-horizontal');
+    assert.dom('svg').hasClass('flip-vertical');
+    this.set('flip', 'both');
+    assert.dom('svg').hasClass('flip-horizontal');
+    assert.dom('svg').hasClass('flip-vertical');
+  });
+
   test('it binds title', async function (assert) {
     const title = 'awesome is as awesome does';
     this.set('title', title);
