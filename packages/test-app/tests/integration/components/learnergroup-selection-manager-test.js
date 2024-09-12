@@ -106,7 +106,7 @@ module('Integration | Component | learnergroup-selection-manager', function (hoo
     );
     assert.strictEqual(
       component.selectedLearnerGroups.detailLearnergroupsList.trees[1].items[0].text,
-      'Top Group 2 » Second 10 (0) members of this group require accommodation',
+      'Top Group 2 » Second 10 (0) Accommodation is required for learners in this group',
     );
     assert.ok(
       component.selectedLearnerGroups.detailLearnergroupsList.trees[1].items[0].needsAccommodation,

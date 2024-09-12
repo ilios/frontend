@@ -52,7 +52,7 @@ module('Integration | Component | detail-learnergroups-list-item', function (hoo
     assert.ok(component.needsAccommodation);
     assert.strictEqual(
       component.text,
-      'bar » baz » foo (3) members of this group require accommodation',
+      'bar » baz » foo (3) Accommodation is required for learners in this group',
     );
   });
 
