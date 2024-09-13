@@ -17,6 +17,6 @@ export default class TimedReleaseSchedule extends Component {
     if (!this.args.startDate) {
       return false;
     }
-    return DateTime.fromISO(this.args.startDate) > DateTime.now();
+    return DateTime.fromJSDate(new Date(this.args.startDate)) > DateTime.now();
   }
 }
