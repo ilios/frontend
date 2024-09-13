@@ -15,9 +15,6 @@
 
     .title {
       @include m.ilios-form-item;
-      input {
-        min-width: 400px;
-      }
     }
 
     .buttons {
