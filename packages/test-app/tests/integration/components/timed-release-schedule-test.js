@@ -65,7 +65,7 @@ module('Integration | Component | timed release schedule', function (hooks) {
     assert.dom(this.element).hasNoText();
   });
 
-  test('it renders nothing with only start date in the past and showNoSchdule set to false', async function (assert) {
+  test('it renders nothing with only start date in the past and showNoSchedule set to false', async function (assert) {
     const yesterday = DateTime.fromObject({ hour: 8 }).minus({ days: 1 });
     this.set('yesterday', yesterday.toJSDate());
     await render(
