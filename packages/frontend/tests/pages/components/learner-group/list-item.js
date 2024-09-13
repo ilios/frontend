@@ -10,6 +10,7 @@ const definition = {
   canBeDeleted: isVisible('[data-test-remove]'),
   canBeCopied: isVisible('[data-test-copy]'),
   subgroupNeedsAccommodation: isVisible('[data-test-subgroup-needs-accommodation]'),
+  subgroupNeedsAccommodationTitle: text('[data-test-subgroup-needs-accommodation] title'),
   remove: clickable('[data-test-remove]'),
   copy: clickable('[data-test-copy]'),
   hasRemoveStyle: hasClass('confirm-removal'),

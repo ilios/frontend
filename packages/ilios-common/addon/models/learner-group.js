@@ -403,18 +403,24 @@ export default class LearnerGroup extends Model {
 
   /**
    * Recursively checks if any of this group's subgroups and their subgroups need accommodation.
+   * @return {Boolean}
    */
   get hasSubgroupsInNeedOfAccommodation() {
+    return !!this.getSubgroupsInNeedOfAccommodation.length;
+  }
+
+  /**
+   * Retrieves all subgroups in need of accommodation.
+   *
+   * @return {Array}
+   */
+  get getSubgroupsInNeedOfAccommodation() {
     // no subgroups? no needs.
     if (!this.hasMany('children').ids().length) {
-      return false;
+      return [];
     }
 
-    const subGroupsInNeedOfAccomodation = this.allDescendants?.filter(
-      (group) => group.needsAccommodation,
-    );
-
-    return subGroupsInNeedOfAccomodation?.length > 0;
+    return this.allDescendants.filter((group) => group.needsAccommodation);
   }
 
   /**
