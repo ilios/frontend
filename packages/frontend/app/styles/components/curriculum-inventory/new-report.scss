@@ -12,7 +12,10 @@
 
   .form {
     @include m.ilios-form;
-    grid-template-columns: repeat(2, 1fr);
+
+    @include m.for-tablet-and-up {
+      grid-template-columns: repeat(2, 1fr);
+    }
 
     .item {
       @include m.ilios-form-item;

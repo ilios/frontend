@@ -38,6 +38,14 @@
       @include cm.font-size("base");
     }
 
+    select {
+      max-width: 88vw;
+
+      @include cm.for-tablet-and-up {
+        max-width: none;
+      }
+    }
+
     .inline-data {
       display: inline;
     }
