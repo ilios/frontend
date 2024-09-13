@@ -1,5 +1,6 @@
 general:
   accessAllMaterialsForThisCourse: Acceso Todos los Materiales para este Curso
+  accommodationIsRequiredForLearnersInThisGroup: Se requiere alojamiento para los estudiantes de este grupo
   actions: Acciones
   activeFilters: Filtros Activos
   add: Agregue
@@ -200,7 +201,6 @@ general:
   manageLearners: Administrar Aprendedores
   markAsScheduled: Marque Como Programado
   materials: Materiales
-  membersOfThisGroupRequireAccommodation: los miembros de este grupo necesitan adaptación
   mesh: MeSH
   meshCount: "{count, plural, =1 {1 tiene MeSH} other {# tienen MeSH}}"
   meshManageTitle: Administrar MeSH

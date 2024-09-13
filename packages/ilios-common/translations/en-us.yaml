@@ -1,5 +1,6 @@
 general:
   accessAllMaterialsForThisCourse: Access All Materials for this Course
+  accommodationIsRequiredForLearnersInThisGroup: Accommodation is required for learners in this group
   actions: Actions
   activeFilters: Active Filters
   add: Add
@@ -200,7 +201,6 @@ general:
   manageLearners: Manage Learners
   markAsScheduled: Mark as Scheduled
   materials: Materials
-  membersOfThisGroupRequireAccommodation: members of this group require accommodation
   mesh: MeSH
   meshCount: "{count, plural, =1 {1 has MeSH} other {# have MesH}}"
   meshManageTitle: Manage MeSH

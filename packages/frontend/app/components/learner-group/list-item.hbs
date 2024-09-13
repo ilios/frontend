@@ -16,7 +16,7 @@
   <td class="text-center hide-from-small-screen" data-test-children>
     <span data-test-children-count>{{@learnerGroup.childrenCount}}</span>
     {{#if @learnerGroup.hasSubgroupsInNeedOfAccommodation}}
-      <FaIcon @icon="universal-access" @title={{t "general.membersOfThisGroupRequireAccommodation"}} data-test-subgroup-needs-accommodation />
+      <FaIcon @icon="universal-access" @title={{t "general.accommodationIsRequiredForLearnersInThisGroup"}} data-test-subgroup-needs-accommodation />
     {{/if}}
   </td>
   <td class="text-right">
