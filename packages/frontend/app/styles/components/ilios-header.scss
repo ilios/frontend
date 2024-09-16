@@ -15,14 +15,6 @@
       display: none;
     }
 
-    & > div,
-    & > nav {
-      & > input,
-      & > button {
-        max-height: 32px;
-      }
-    }
-
     align-items: center;
     background: transparent;
     grid-area: tools;
@@ -35,8 +27,8 @@
       "search search search search";
     row-gap: 0.25rem;
 
-    @include m.for-tablet-and-up {
-      grid-template-areas: "search locale user guide";
+    @include m.for-phone-and-up {
+      padding: 0.2rem 0 0;
     }
 
     .locale-chooser {

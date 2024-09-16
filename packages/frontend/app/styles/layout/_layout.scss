@@ -42,6 +42,24 @@
       "footer footer";
     grid-template-rows: auto auto 1fr 20px;
 
+    & > header {
+      @include m.for-tablet-and-up {
+        display: block;
+      }
+
+      & > .tools {
+        padding: 0.25rem 0 0;
+
+        @include m.for-phone-and-up {
+          padding: 0.4rem 0;
+        }
+
+        @include m.for-tablet-and-up {
+          grid-template-areas: "search locale user guide";
+        }
+      }
+    }
+
     @include m.for-tablet-and-up {
       grid-template-rows: 42px auto 1fr 20px;
     }
