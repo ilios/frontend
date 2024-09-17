@@ -12,7 +12,6 @@ export default class DashboardCoursesCalendarFilterComponent extends Component {
   @service iliosConfig;
 
   @tracked _expandedYears;
-  @tracked el;
   @tracked yearsInView = [];
   @tracked titlesInView = [];
   @tracked coursesRelationship;
@@ -97,8 +96,7 @@ export default class DashboardCoursesCalendarFilterComponent extends Component {
   @action
   scrollToLastYear(element, [year]) {
     if (year === this.academicYear - 1) {
-      const element = this.el.querySelector('.filters');
-      scrollIntoView(element, { align: { top: 0 } });
+      scrollIntoView(element.parentElement, { align: { top: 0 } });
     }
   }
 
