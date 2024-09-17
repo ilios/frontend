@@ -12,7 +12,6 @@ export default class DashboardCoursesCalendarFilterComponent extends Component {
   @service iliosConfig;
 
   @tracked _expandedYears;
-  @tracked el;
   @tracked yearsInView = [];
   @tracked titlesInView = [];
   @tracked coursesRelationship;
