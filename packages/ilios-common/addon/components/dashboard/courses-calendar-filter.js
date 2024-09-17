@@ -97,8 +97,9 @@ export default class DashboardCoursesCalendarFilterComponent extends Component {
   @action
   scrollToLastYear(element, [year]) {
     if (year === this.academicYear - 1) {
-      const element = this.el.querySelector('.filters');
-      scrollIntoView(element, { align: { top: 0 } });
+      scrollIntoView(element.parentElement.parentElement, {
+        align: { top: 0 },
+      });
     }
   }
 
