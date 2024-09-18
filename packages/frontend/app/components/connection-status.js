@@ -2,6 +2,7 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { restartableTask, timeout } from 'ember-concurrency';
 import { registerDestructor } from '@ember/destroyable';
+import { action } from '@ember/object';
 
 export default class ConnectionStatusComponent extends Component {
   @tracked isOnline = true;
@@ -17,35 +18,29 @@ export default class ConnectionStatusComponent extends Component {
     if (!navigator.onLine) {
       this.changeConnectionState.perform(false);
     }
-    this.onlineListener = window.addEventListener(
-      'online',
-      () => {
-        this.changeConnectionState.perform(true);
-      },
-      {
-        passive: true,
-        capture: false,
-      },
-    );
-    this.offlineListener = window.addEventListener(
-      'offline',
-      () => {
-        this.changeConnectionState.perform(false);
-      },
-      {
-        passive: true,
-        capture: false,
-      },
-    );
+    window.addEventListener('online', this.online, {
+      passive: true,
+      capture: false,
+    });
+    window.addEventListener('offline', this.offline, {
+      passive: true,
+      capture: false,
+    });
 
     registerDestructor(this, () => {
-      if (this.onlineListener) {
-        window.removeEventListener('online', this.onlineListener);
-      }
-      if (this.offlineListener) {
-        window.removeEventListener('offline', this.offlineListener);
-      }
+      window.removeEventListener('online', this.online);
+      window.removeEventListener('offline', this.offline);
     });
+  }
+
+  @action
+  online() {
+    this.changeConnectionState.perform(true);
+  }
+
+  @action
+  offline() {
+    this.changeConnectionState.perform(false);
   }
 
   changeConnectionState = restartableTask(async (isOnline) => {
