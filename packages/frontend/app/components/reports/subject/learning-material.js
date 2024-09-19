@@ -4,6 +4,7 @@ import { cached } from '@glimmer/tracking';
 import { service } from '@ember/service';
 import { pluralize } from 'ember-inflector';
 import { camelize } from '@ember/string';
+import { action } from '@ember/object';
 
 export default class ReportsSubjectLearningMaterialComponent extends Component {
   @service graphql;
@@ -59,5 +60,10 @@ export default class ReportsSubjectLearningMaterialComponent extends Component {
     );
     const result = await this.graphql.find('learningMaterials', filters, 'id, title');
     return result.data.learningMaterials.map(({ title }) => title);
+  }
+
+  @action
+  async fetchDownloadData() {
+    return [[this.intl.t('general.learningMaterials')], ...this.sortedData.map((v) => [v])];
   }
 }

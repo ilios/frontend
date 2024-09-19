@@ -5,6 +5,7 @@ import { hbs } from 'ember-cli-htmlbars';
 import { setupMirage } from 'frontend/tests/test-support/mirage';
 import { setupAuthentication } from 'ilios-common';
 import { component } from 'frontend/tests/pages/components/reports/subject-header';
+import a11yAudit from 'ember-a11y-testing/test-support/audit';
 
 module('Integration | Component | reports/subject-header', function (hooks) {
   setupRenderingTest(hooks);
@@ -29,10 +30,15 @@ module('Integration | Component | reports/subject-header', function (hooks) {
     this.set('report', reportModel);
     await render(hbs`<Reports::SubjectHeader
       @report={{this.report}}
+      @subject={{this.report.subject}}
+      @prepositionalObject={{this.report.prepositionalObject}}
+      @prepositionalObjectTableRowId={{this.report.prepositionalObjectTableRowId}}
       @year=''
       @school={{null}}
     />`);
     assert.strictEqual(component.title.text, 'All Courses for 0 guy M. Mc0son in All Schools');
+    await a11yAudit(this.element);
+    assert.ok(true, 'no a11y errors found!');
   });
 
   test('edit report title, then save', async function (assert) {
@@ -65,6 +71,9 @@ module('Integration | Component | reports/subject-header', function (hooks) {
     this.set('school', schoolModel);
     await render(hbs`<Reports::SubjectHeader
       @report={{this.report}}
+      @subject={{this.report.subject}}
+      @prepositionalObject={{this.report.prepositionalObject}}
+      @prepositionalObjectTableRowId={{this.report.prepositionalObjectTableRowId}}
       @year={{this.selectedYear}}
       @school={{this.school}}
     />`);
@@ -96,6 +105,9 @@ module('Integration | Component | reports/subject-header', function (hooks) {
     this.set('school', schoolModel);
     await render(hbs`<Reports::SubjectHeader
       @report={{this.report}}
+      @subject={{this.report.subject}}
+      @prepositionalObject={{this.report.prepositionalObject}}
+      @prepositionalObjectTableRowId={{this.report.prepositionalObjectTableRowId}}
       @year=''
       @school={{this.school}}
     />`);
@@ -130,6 +142,9 @@ module('Integration | Component | reports/subject-header', function (hooks) {
     this.set('school', schoolModel);
     await render(hbs`<Reports::SubjectHeader
       @report={{this.report}}
+      @subject={{this.report.subject}}
+      @prepositionalObject={{this.report.prepositionalObject}}
+      @prepositionalObjectTableRowId={{this.report.prepositionalObjectTableRowId}}
       @year=''
       @school={{this.school}}
     />`);

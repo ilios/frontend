@@ -4,6 +4,7 @@ import { cached } from '@glimmer/tracking';
 import { service } from '@ember/service';
 import { pluralize } from 'ember-inflector';
 import { camelize } from '@ember/string';
+import { action } from '@ember/object';
 
 export default class ReportsSubjectSessionTypeComponent extends Component {
   @service graphql;
@@ -56,5 +57,10 @@ export default class ReportsSubjectSessionTypeComponent extends Component {
     );
     const result = await this.graphql.find('sessionTypes', filters, 'title');
     return result.data.sessionTypes.map(({ title }) => title);
+  }
+
+  @action
+  async fetchDownloadData() {
+    return [[this.intl.t('general.sessionTypes')], ...this.sortedData.map((v) => [v])];
   }
 }

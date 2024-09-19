@@ -1,15 +1,18 @@
 import Component from '@glimmer/component';
-import { filterBy, sortBy } from 'ilios-common/utils/array-helpers';
+import { filterBy, mapBy, sortBy } from 'ilios-common/utils/array-helpers';
 import { TrackedAsyncData } from 'ember-async-data';
 import { cached } from '@glimmer/tracking';
 import { service } from '@ember/service';
 import { pluralize } from 'ember-inflector';
 import { camelize } from '@ember/string';
+import { action } from '@ember/object';
+import striptags from 'striptags';
 
 export default class ReportsSubjectSessionComponent extends Component {
   @service graphql;
   @service iliosConfig;
   @service currentUser;
+  @service intl;
 
   crossesBoundaryConfig = new TrackedAsyncData(
     this.iliosConfig.itemFromConfig('academicYearCrossesCalendarYearBoundaries'),
@@ -87,5 +90,45 @@ export default class ReportsSubjectSessionComponent extends Component {
     return result.data.sessions.map(({ id, title, course }) => {
       return { id, title, year: course.year, courseId: course.id, courseTitle: course.title };
     });
+  }
+
+  @action
+  async fetchDownloadData() {
+    const filters = await this.getGraphQLFilters(
+      this.args.prepositionalObject,
+      this.args.prepositionalObjectTableRowId,
+      this.args.school,
+    );
+    const attributes = [
+      'id',
+      'title',
+      'description',
+      'sessionObjectives { title }',
+      'course { title, year }',
+    ];
+    const result = await this.graphql.find('sessions', filters, attributes.join(','));
+    const sortedResults = sortBy(result.data.sessions, 'title');
+    const mappedResults = sortedResults.map(({ title, course, sessionObjectives, description }) => {
+      return [
+        title,
+        course.title,
+        this.academicYearCrossesCalendarYearBoundaries
+          ? `${course.year} - ${course.year + 1}`
+          : `${course.year}`,
+        striptags(description),
+        striptags(mapBy(sessionObjectives.slice(), 'title').join()),
+      ];
+    });
+
+    return [
+      [
+        this.intl.t('general.session'),
+        this.intl.t('general.course'),
+        this.intl.t('general.academicYear'),
+        this.intl.t('general.description'),
+        this.intl.t('general.objectives'),
+      ],
+      ...mappedResults,
+    ];
   }
 }

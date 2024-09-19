@@ -5,6 +5,7 @@ import { service } from '@ember/service';
 import { pluralize } from 'ember-inflector';
 import { camelize, capitalize } from '@ember/string';
 import { uniqueById } from 'ilios-common/utils/array-helpers';
+import { action } from '@ember/object';
 
 export default class ReportsSubjectInstructorComponent extends Component {
   @service graphql;
@@ -114,5 +115,10 @@ export default class ReportsSubjectInstructorComponent extends Component {
     const attributes = ['firstName', 'middleName', 'lastName', 'displayName'];
     const result = await this.graphql.find('users', filters, attributes.join(','));
     return result.data.users;
+  }
+
+  @action
+  async fetchDownloadData() {
+    return [[this.intl.t('general.instructors')], ...this.sortedResults.map((v) => [v])];
   }
 }

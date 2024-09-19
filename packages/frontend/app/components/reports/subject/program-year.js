@@ -5,10 +5,12 @@ import { cached } from '@glimmer/tracking';
 import { service } from '@ember/service';
 import { pluralize } from 'ember-inflector';
 import { camelize } from '@ember/string';
+import { action } from '@ember/object';
 
 export default class ReportsSubjectProgramYearComponent extends Component {
   @service graphql;
   @service currentUser;
+  @service intl;
 
   @cached
   get data() {
@@ -58,5 +60,17 @@ export default class ReportsSubjectProgramYearComponent extends Component {
       obj.classOfYear = String(classOfYear);
       return obj;
     });
+  }
+
+  @action
+  async fetchDownloadData() {
+    return [
+      [this.intl.t('general.year'), this.intl.t('general.program'), this.intl.t('general.school')],
+      ...this.sortedProgramYears.map(({ classOfYear, program }) => [
+        classOfYear,
+        program.title,
+        program.school.title,
+      ]),
+    ];
   }
 }

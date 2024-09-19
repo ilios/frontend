@@ -1,9 +1,14 @@
 <Reports::SubjectHeader
   @report={{@report}}
   @school={{@school}}
+  @subject={{@subject}}
+  @prepositionalObject={{@prepositionalObject}}
+  @prepositionalObjectTableRowId={{@prepositionalObjectTableRowId}}
   @year={{@year}}
   @showYearFilter={{false}}
   @description={{@description}}
+  @fetchDownloadData={{this.fetchDownloadData}}
+  @readyToDownload={{this.data.isResolved}}
 />
 <div data-test-reports-subject-learning-material>
   {{#if this.data.isResolved}}

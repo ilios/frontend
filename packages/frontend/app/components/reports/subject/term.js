@@ -5,9 +5,11 @@ import { service } from '@ember/service';
 import { pluralize } from 'ember-inflector';
 import { camelize } from '@ember/string';
 import { sortBy } from 'ilios-common/utils/array-helpers';
+import { action } from '@ember/object';
 
 export default class ReportsSubjectTermComponent extends Component {
   @service graphql;
+  @service intl;
 
   @cached
   get data() {
@@ -40,5 +42,13 @@ export default class ReportsSubjectTermComponent extends Component {
     }
     const result = await this.graphql.find('terms', filters, 'id, title, vocabulary { id, title }');
     return result.data.terms;
+  }
+
+  @action
+  async fetchDownloadData() {
+    return [
+      [this.intl.t('general.vocabulary'), this.intl.t('general.term')],
+      ...this.sortedData.map(({ vocabulary, title }) => [vocabulary.title, title]),
+    ];
   }
 }

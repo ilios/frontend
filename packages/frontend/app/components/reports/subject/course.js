@@ -5,11 +5,13 @@ import { cached } from '@glimmer/tracking';
 import { service } from '@ember/service';
 import { pluralize } from 'ember-inflector';
 import { camelize } from '@ember/string';
+import { action } from '@ember/object';
 
 export default class ReportsSubjectCourseComponent extends Component {
   @service graphql;
   @service iliosConfig;
   @service currentUser;
+  @service intl;
 
   crossesBoundaryConfig = new TrackedAsyncData(
     this.iliosConfig.itemFromConfig('academicYearCrossesCalendarYearBoundaries'),
@@ -40,6 +42,20 @@ export default class ReportsSubjectCourseComponent extends Component {
     return !this.args.year && this.args.prepositionalObject !== 'academic year';
   }
 
+  get mappedCourses() {
+    if (this.academicYearCrossesCalendarYearBoundaries) {
+      return this.filteredCourses.map(({ title, year, externalId }) => {
+        return {
+          title,
+          year: `${year} - ${year + 1}`,
+          externalId,
+        };
+      });
+    } else {
+      return this.filteredCourses;
+    }
+  }
+
   get filteredCourses() {
     if (this.args.year) {
       return filterBy(this.data.value, 'year', Number(this.args.year));
@@ -49,7 +65,7 @@ export default class ReportsSubjectCourseComponent extends Component {
   }
 
   get sortedCourses() {
-    return sortBy(this.filteredCourses, ['year', 'title']);
+    return sortBy(this.mappedCourses, ['year', 'title']);
   }
 
   async getGraphQLFilters(prepositionalObject, prepositionalObjectTableRowId, school) {
@@ -80,5 +96,17 @@ export default class ReportsSubjectCourseComponent extends Component {
     }
     const result = await this.graphql.find('courses', filters, 'id, title, year, externalId');
     return result.data.courses;
+  }
+
+  @action
+  async fetchDownloadData() {
+    return [
+      [
+        this.intl.t('general.courses'),
+        this.intl.t('general.academicYear'),
+        this.intl.t('general.externalId'),
+      ],
+      ...this.sortedCourses.map(({ title, year, externalId }) => [title, year, externalId]),
+    ];
   }
 }
