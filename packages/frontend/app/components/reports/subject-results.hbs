@@ -1,18 +1,12 @@
 <div class="content-container" data-test-subject-results>
-  <Reports::SubjectDescription
-    @description={{@description}}
-  />
-  <Reports::SubjectYearFilter
-    @subject={{@subject}}
-    @prepositionalObject={{@prepositionalObject}}
-    @changeYear={{@changeYear}}
-  />
   <this.subjectComponent
-    @setDataIsLoaded={{@setDataIsLoaded}}
+    @report={{@report}}
     @subject={{@subject}}
     @prepositionalObject={{@prepositionalObject}}
     @prepositionalObjectTableRowId={{@prepositionalObjectTableRowId}}
     @school={{@school}}
+    @changeYear={{@changeYear}}
     @year={{@year}}
+    @description={{@description}}
   />
 </div>

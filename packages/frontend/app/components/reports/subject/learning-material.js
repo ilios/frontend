@@ -58,9 +58,6 @@ export default class ReportsSubjectLearningMaterialComponent extends Component {
       school,
     );
     const result = await this.graphql.find('learningMaterials', filters, 'id, title');
-    if (this.args.setDataIsLoaded) {
-      this.args.setDataIsLoaded();
-    }
     return result.data.learningMaterials.map(({ title }) => title);
   }
 }

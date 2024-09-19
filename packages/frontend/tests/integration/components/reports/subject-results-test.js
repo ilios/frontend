@@ -44,23 +44,4 @@ module('Integration | Component | reports/subject-results', function (hooks) {
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
   });
-
-  test('data-is-loaded callback fires.', async function (assert) {
-    assert.expect(3);
-    const setDataIsLoaded = () => {
-      assert.ok(true, 'callback fired');
-    };
-    this.set('setDataIsLoaded', setDataIsLoaded);
-    await render(hbs`<Reports::SubjectResults
-      @subject={{this.report.subject}}
-      @prepositionalObject={{this.report.prepositionalObject}}
-      @prepositionalObjectTableRowId={{this.report.prepositionalObjectTableRowId}}
-      @year={{null}}
-      @changeYear={{(noop)}}
-      @setDataIsLoaded={{this.setDataIsLoaded}}
-    />`);
-
-    assert.strictEqual(component.results.length, 1);
-    assert.strictEqual(component.results[0].text, '2013 course 0');
-  });
 });

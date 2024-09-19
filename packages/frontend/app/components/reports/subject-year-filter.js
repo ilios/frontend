@@ -4,7 +4,6 @@ import { cached } from '@glimmer/tracking';
 import { service } from '@ember/service';
 
 export default class ReportsSubjectYearFilter extends Component {
-  @service reporting;
   @service store;
 
   @cached
@@ -14,13 +13,5 @@ export default class ReportsSubjectYearFilter extends Component {
 
   get allAcademicYears() {
     return this.allAcademicYearsData.isResolved ? this.allAcademicYearsData.value : null;
-  }
-
-  get showAcademicYearFilter() {
-    return (
-      this.args.prepositionalObject !== 'course' &&
-      this.args.prepositionalObject !== 'academic year' &&
-      ['course', 'session'].includes(this.args.subject)
-    );
   }
 }

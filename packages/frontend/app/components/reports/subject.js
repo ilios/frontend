@@ -8,7 +8,6 @@ export default class ReportsSubjectComponent extends Component {
   @service preserveScroll;
   @service reporting;
   @service store;
-  @tracked finishedBuildingReport = false;
   @tracked myReportEditorOn = false;
 
   get reportDescriptionPromise() {

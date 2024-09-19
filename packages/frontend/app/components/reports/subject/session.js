@@ -84,9 +84,6 @@ export default class ReportsSubjectSessionComponent extends Component {
       filters,
       'id, title, course { id, year, title }',
     );
-    if (this.args.setDataIsLoaded) {
-      this.args.setDataIsLoaded();
-    }
     return result.data.sessions.map(({ id, title, course }) => {
       return { id, title, year: course.year, courseId: course.id, courseTitle: course.title };
     });

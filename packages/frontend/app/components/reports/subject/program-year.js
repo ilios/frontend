@@ -53,9 +53,6 @@ export default class ReportsSubjectProgramYearComponent extends Component {
       'id, startYear, program { id, title, duration, school { title } }',
     );
 
-    if (this.args.setDataIsLoaded) {
-      this.args.setDataIsLoaded();
-    }
     return result.data.programYears.map((obj) => {
       const classOfYear = Number(obj.startYear) + Number(obj.program.duration);
       obj.classOfYear = String(classOfYear);

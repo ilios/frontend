@@ -1,3 +1,11 @@
+<Reports::SubjectHeader
+  @report={{@report}}
+  @school={{@school}}
+  @year={{@year}}
+  @changeYear={{@changeYear}}
+  @showYearFilter={{not-eq @prepositionalObject 'course'}}
+  @description={{@description}}
+/>
 <div data-test-reports-subject-session>
   {{#if this.data.isResolved}}
     <ul class="report-results" data-test-results>

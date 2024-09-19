@@ -41,9 +41,6 @@ export default class ReportsSubjectCompetencyComponent extends Component {
       filters.push(`${what}: [${prepositionalObjectTableRowId}]`);
     }
     const result = await this.graphql.find('competencies', filters, 'id, title');
-    if (this.args.setDataIsLoaded) {
-      this.args.setDataIsLoaded();
-    }
     return result.data.competencies.map(({ title }) => title);
   }
 }

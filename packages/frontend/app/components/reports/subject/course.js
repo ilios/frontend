@@ -79,9 +79,6 @@ export default class ReportsSubjectCourseComponent extends Component {
       throw new Error(`Report for ${subject} sent to ReportsSubjectCourseComponent`);
     }
     const result = await this.graphql.find('courses', filters, 'id, title, year, externalId');
-    if (this.args.setDataIsLoaded) {
-      this.args.setDataIsLoaded();
-    }
     return result.data.courses;
   }
 }

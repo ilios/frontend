@@ -39,9 +39,6 @@ export default class ReportsSubjectTermComponent extends Component {
       filters.push(`${what}: [${prepositionalObjectTableRowId}]`);
     }
     const result = await this.graphql.find('terms', filters, 'id, title, vocabulary { id, title }');
-    if (this.args.setDataIsLoaded) {
-      this.args.setDataIsLoaded();
-    }
     return result.data.terms;
   }
 }

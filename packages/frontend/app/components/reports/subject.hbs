@@ -9,14 +9,10 @@
         {{t "general.backToReports"}}
       </LinkTo>
     </div>
-    <Reports::SubjectHeader
-      @report={{@report}}
-      @school={{this.school}}
-      @year={{@year}}
-    />
     {{#let (load this.reportDescriptionPromise) as |p|}}
       {{#if p.isResolved}}
         <Reports::SubjectResults
+          @report={{@report}}
           @subject={{@report.subject}}
           @prepositionalObject={{@report.prepositionalObject}}
           @prepositionalObjectTableRowId={{@report.prepositionalObjectTableRowId}}

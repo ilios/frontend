@@ -1,6 +1,4 @@
 import Component from '@glimmer/component';
-import { TrackedAsyncData } from 'ember-async-data';
-import { cached } from '@glimmer/tracking';
 import CourseComponent from './subject/course';
 import SessionComponent from './subject/session';
 import ProgramComponent from './subject/program';
@@ -13,21 +11,8 @@ import MeshTermComponent from './subject/mesh-term';
 import TermComponent from './subject/term';
 import SessionTypeComponent from './subject/session-type';
 import { ensureSafeComponent } from '@embroider/util';
-import { service } from '@ember/service';
 
 export default class ReportsSubjectResultsComponent extends Component {
-  @service reporting;
-  @service store;
-
-  @cached
-  get allAcademicYearsData() {
-    return new TrackedAsyncData(this.store.findAll('academic-year'));
-  }
-
-  get allAcademicYears() {
-    return this.allAcademicYearsData.isResolved ? this.allAcademicYearsData.value : null;
-  }
-
   get subjectComponent() {
     switch (this.args.subject) {
       case 'course':
@@ -55,13 +40,5 @@ export default class ReportsSubjectResultsComponent extends Component {
     }
 
     return null;
-  }
-
-  get showAcademicYearFilter() {
-    return (
-      this.args.prepositionalObject !== 'course' &&
-      this.args.prepositionalObject !== 'academic year' &&
-      ['course', 'session'].includes(this.args.subject)
-    );
   }
 }

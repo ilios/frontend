@@ -8,6 +8,7 @@ import {
   text,
   value,
 } from 'ember-cli-page-object';
+import academicYears from './subject-year-filter';
 
 const definition = {
   scope: '[data-test-reports-subject]',
@@ -23,6 +24,7 @@ const definition = {
     cancel: clickable('.cancel'),
     save: clickable('.done'),
   },
+  academicYears,
   description: text('[data-test-report-description]'),
   download: clickable('[data-test-download]'),
   results: collection('[data-test-results] li', {
