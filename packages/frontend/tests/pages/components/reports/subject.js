@@ -5,7 +5,6 @@ import {
   collection,
   fillable,
   isPresent,
-  property,
   text,
   value,
 } from 'ember-cli-page-object';
@@ -26,13 +25,6 @@ const definition = {
   },
   description: text('[data-test-report-description]'),
   download: clickable('[data-test-download]'),
-  academicYears: {
-    scope: '[data-test-year-filter]',
-    choose: fillable(),
-    items: collection('option', {
-      isSelected: property('selected'),
-    }),
-  },
   results: collection('[data-test-results] li', {
     link: attribute('href', 'a'),
     hasLink: isPresent('a'),
