@@ -132,7 +132,7 @@ export default class ReportingService extends Service {
     const filters = await this.#getFilters(report);
     const attributes = ['id', 'title', 'school { title }'];
     const result = await this.graphql.find('programs', filters, attributes.join(','));
-    const sortedResults = sortBy(result.data.program, 'title');
+    const sortedResults = sortBy(result.data.programs, 'title');
     const mappedResults = sortedResults.map(({ title, school }) => {
       return [title, school.title];
     });
