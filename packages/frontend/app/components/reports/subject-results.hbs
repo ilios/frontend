@@ -1,7 +1,7 @@
 <div class="content-container" data-test-subject-results>
-  <div class="description" data-test-report-description>
-    {{@description}}
-  </div>
+  <Reports::SubjectDescription
+    @description={{@description}}
+  />
   <Reports::SubjectYearFilter
     @subject={{@subject}}
     @prepositionalObject={{@prepositionalObject}}
