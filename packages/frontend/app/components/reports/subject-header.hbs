@@ -1,47 +1,44 @@
-{{#if @report}}
-  <div class="reports-subject-header" data-test-reports-subject-header>
-    <h2 data-test-report-title>
-      {{#if this.reportTitleData.isResolved}}
-        <EditableField
-          data-test-title
-          @value={{this.reportTitle}}
-          @save={{perform this.changeTitle}}
-          @close={{this.revertTitleChanges}}
-          @saveOnEnter={{true}}
-          @showIcon={{true}}
-          @closeOnEscape={{true}} as |isSaving|
-        >
-          <input
-            aria-label={{t "general.reportTitle"}}
-            type="text"
-            value={{this.reportTitle}}
-            placeholder={{this.reportTitleData.value}}
-            disabled={{isSaving}}
-            {{on "input" (pick "target.value" (set this "title"))}}
-            {{on "keyup" (fn this.addErrorDisplayFor "title")}}
-          >
-          <ValidationError @errors={{get-errors-for this.title}} />
-        </EditableField>
-      {{/if}}
-    </h2>
-    <div class="actions">
-      <button
-        type="button"
-        disabled={{this.downloadReport.isRunning}}
-        {{on "click" (perform this.downloadReport)}}
-        data-test-download
+<div class="reports-subject-header" data-test-reports-subject-header>
+  <h2 data-test-report-title>
+    {{#if (and @report this.reportTitleData.isResolved)}}
+      <EditableField
+        data-test-title
+        @value={{this.reportTitle}}
+        @save={{perform this.changeTitle}}
+        @close={{this.revertTitleChanges}}
+        @saveOnEnter={{true}}
+        @showIcon={{true}}
+        @closeOnEscape={{true}} as |isSaving|
       >
-        <FaIcon @icon="download" />
-        {{t "general.downloadResults"}}
-      </button>
-    </div>
-  </div>
-{{/if}}
-<Reports::SubjectDescription
-  @description={{@description}}
-/>
-{{#if @showYearFilter}}
-  <Reports::SubjectYearFilter
-    @changeYear={{@changeYear}}
+        <input
+          aria-label={{t "general.reportTitle"}}
+          type="text"
+          value={{this.reportTitle}}
+          placeholder={{this.reportTitleData.value}}
+          disabled={{isSaving}}
+          {{on "input" (pick "target.value" (set this "title"))}}
+          {{on "keyup" (fn this.addErrorDisplayFor "title")}}
+        >
+        <ValidationError @errors={{get-errors-for this.title}} />
+      </EditableField>
+    {{/if}}
+  </h2>
+  <button
+    type="button"
+    class="download"
+    disabled={{this.downloadReport.isRunning}}
+    {{on "click" (perform this.downloadReport)}}
+    data-test-download
+  >
+    <FaIcon @icon="download" />
+    {{t "general.downloadResults"}}
+  </button>
+  {{#if @showYearFilter}}
+    <Reports::SubjectYearFilter
+      @changeYear={{@changeYear}}
+    />
+  {{/if}}
+  <Reports::SubjectDescription
+    @description={{@description}}
   />
-{{/if}}
+</div>

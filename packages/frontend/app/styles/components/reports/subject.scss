@@ -10,19 +10,6 @@
   .content-container {
     margin-left: 1rem;
 
-    .description {
-      font-style: italic;
-      padding-bottom: 1rem;
-      padding-top: 0.5rem;
-    }
-
-    .years-filter {
-      margin: 0.5rem 0 1rem;
-      padding-right: 0.5rem;
-      text-align: left;
-      width: 100%;
-    }
-
     .report-results {
       @include cm.ilios-list-reset;
     }
