@@ -66,7 +66,7 @@ module.exports = function (environment) {
         // e.g. EMBER_NATIVE_DECORATOR_SUPPORT: true
       },
       EXTEND_PROTOTYPES: {
-        Array: true, //waiting on https://github.com/emberjs/data/issues/8202
+        Array: false,
       },
     },
 
