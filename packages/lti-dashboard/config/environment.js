@@ -38,7 +38,7 @@ module.exports = function (environment) {
       },
       EXTEND_PROTOTYPES: {
         String: false,
-        Array: true,
+        Array: false,
         Function: false,
         Date: false,
       },
