@@ -1,4 +1,12 @@
-import { clickable, create, collection, fillable, value } from 'ember-cli-page-object';
+import {
+  clickable,
+  create,
+  collection,
+  fillable,
+  isPresent,
+  property,
+  value,
+} from 'ember-cli-page-object';
 
 const definition = {
   scope: '[data-test-reports-subject-header]',
@@ -11,7 +19,9 @@ const definition = {
     cancel: clickable('.cancel'),
     save: clickable('.done'),
   },
+  isDownloadDisabled: property('disabled', '[data-test-download]'),
   download: clickable('[data-test-download]'),
+  hasYearFilter: isPresent('[data-test-year-filter]'),
 };
 
 export default definition;

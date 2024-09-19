@@ -1,6 +1,6 @@
-import { module, test } from 'qunit';
+import { module, test, skip } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
-import { render } from '@ember/test-helpers';
+import { click, render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import { setupMirage } from 'frontend/tests/test-support/mirage';
 import { component } from 'frontend/tests/pages/components/reports/subject/course';
@@ -247,5 +247,23 @@ module('Integration | Component | reports/subject/course', function (hooks) {
       @prepositionalObject={{this.report.prepositionalObject}}
       @prepositionalObjectTableRowId={{this.report.prepositionalObjectTableRowId}}
     />`);
+  });
+
+  //skipped because I can't figure out how to test the download functionality
+  skip('download', async function (assert) {
+    await setupAuthentication({}, true);
+    assert.expect(10);
+    this.server.post('api/graphql', () => responseData);
+    const { id } = this.server.create('report', {
+      subject: 'course',
+    });
+    this.set('report', await this.owner.lookup('service:store').findRecord('report', id));
+    await render(hbs`<Reports::Subject::Course
+      @subject={{this.report.subject}}
+      @prepositionalObject={{this.report.prepositionalObject}}
+      @prepositionalObjectTableRowId={{this.report.prepositionalObjectTableRowId}}
+    />`);
+
+    await click('[data-test-download]');
   });
 });
