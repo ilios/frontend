@@ -4,9 +4,9 @@ import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import { setupMirage } from 'frontend/tests/test-support/mirage';
 import { setupAuthentication } from 'ilios-common';
-import { component } from 'frontend/tests/pages/components/reports/subject/header';
+import { component } from 'frontend/tests/pages/components/reports/subject-header';
 
-module('Integration | Component | reports/subject/header', function (hooks) {
+module('Integration | Component | reports/subject-header', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
@@ -27,7 +27,7 @@ module('Integration | Component | reports/subject/header', function (hooks) {
     });
     const reportModel = await this.owner.lookup('service:store').findRecord('report', report.id);
     this.set('report', reportModel);
-    await render(hbs`<Reports::Subject::Header
+    await render(hbs`<Reports::SubjectHeader
       @report={{this.report}}
       @year=''
       @school={{null}}
@@ -63,7 +63,7 @@ module('Integration | Component | reports/subject/header', function (hooks) {
     this.set('report', reportModel);
     const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
     this.set('school', schoolModel);
-    await render(hbs`<Reports::Subject::Header
+    await render(hbs`<Reports::SubjectHeader
       @report={{this.report}}
       @year={{this.selectedYear}}
       @school={{this.school}}
@@ -94,7 +94,7 @@ module('Integration | Component | reports/subject/header', function (hooks) {
     this.set('report', reportModel);
     const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
     this.set('school', schoolModel);
-    await render(hbs`<Reports::Subject::Header
+    await render(hbs`<Reports::SubjectHeader
       @report={{this.report}}
       @year=''
       @school={{this.school}}
@@ -128,7 +128,7 @@ module('Integration | Component | reports/subject/header', function (hooks) {
     this.set('report', reportModel);
     const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
     this.set('school', schoolModel);
-    await render(hbs`<Reports::Subject::Header
+    await render(hbs`<Reports::SubjectHeader
       @report={{this.report}}
       @year=''
       @school={{this.school}}
