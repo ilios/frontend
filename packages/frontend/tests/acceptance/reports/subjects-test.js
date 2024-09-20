@@ -378,6 +378,47 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
     assert.strictEqual(page.root.results.results[0].text, 'course 0: session 0');
   });
 
+  test('reset year when subject report is run', async function (assert) {
+    assert.expect(12);
+    await page.visit();
+    await page.root.list.toggleNewSubjectReportForm();
+    await page.root.list.newSubject.schools.choose('1');
+    await page.root.list.newSubject.subjects.choose('course');
+    this.server.post('api/graphql', ({ db }, { requestBody }) => {
+      const { query } = JSON.parse(requestBody);
+      assert.strictEqual(query, 'query { courses(schools: [1]) { id, title, year, externalId } }');
+      return {
+        data: {
+          courses: db.courses.map(({ id, title, year, externalId }) => {
+            return { id, title, year, externalId };
+          }),
+        },
+      };
+    });
+    await page.root.list.newSubject.run();
+    assert.strictEqual(
+      page.root.runSubject.header.description,
+      'This report shows all Courses in school 0.',
+    );
+    assert.strictEqual(page.root.runSubject.results.results.length, 2);
+    assert.strictEqual(
+      page.root.runSubject.results.results[0].text,
+      '2015 course 0 (Theoretical Phys Ed)',
+    );
+    assert.strictEqual(page.root.runSubject.results.results[1].text, '2016 course 1');
+    assert.ok(page.root.runSubject.header.academicYears.isVisible);
+    await page.root.runSubject.header.academicYears.choose('2016');
+    assert.strictEqual(page.root.runSubject.results.results.length, 1);
+    assert.strictEqual(page.root.runSubject.results.results[0].text, 'course 1');
+    await page.root.list.newSubject.run();
+    assert.strictEqual(page.root.runSubject.results.results.length, 2);
+    assert.strictEqual(
+      page.root.runSubject.results.results[0].text,
+      '2015 course 0 (Theoretical Phys Ed)',
+    );
+    assert.strictEqual(page.root.runSubject.results.results[1].text, '2016 course 1');
+  });
+
   test('remove report title', async function (assert) {
     assert.expect(6);
     await page.visit();

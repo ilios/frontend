@@ -127,6 +127,7 @@ export default class ReportsListComponent extends Component {
 
   runSubjectReport = restartableTask(
     async (subject, prepositionalObject, prepositionalObjectTableRowId, school) => {
+      this.reportYear = null;
       this.runningSubjectReport = {
         subject,
         prepositionalObject,
