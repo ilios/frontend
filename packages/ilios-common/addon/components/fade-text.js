@@ -5,7 +5,6 @@ import { htmlSafe } from '@ember/template';
 import { action } from '@ember/object';
 
 export default class FadeTextComponent extends Component {
-  @tracked textWidth;
   @tracked textHeight;
   @tracked expanded = false;
 
@@ -45,13 +44,11 @@ export default class FadeTextComponent extends Component {
   getTextDims(element) {
     if (element) {
       this.textHeight = element.getBoundingClientRect().height;
-      this.textWidth = element.getBoundingClientRect().width;
     }
   }
 
   @action
-  updateTextDims({ contentRect: { width, height } }) {
-    this.textWidth = width;
+  updateTextDims({ contentRect: { height } }) {
     this.textHeight = height;
   }
 

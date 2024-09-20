@@ -3,42 +3,44 @@
     {{yield this.displayText this.expand this.collapse this.getTextDims this.updateTextDims this.isFaded this.expanded}}
   </span>
 {{else}}
-  <span class="fade-text" data-test-fade-text ...attributes>
-    <div class="display-text-wrapper{{if this.isFaded ' is-faded'}}">
-      <div
-        class="display-text"
-        {{did-insert this.getElementAttrs}}
-        {{on-resize this.updateElementDims}}
-      >
-        {{this.displayText}}
-      </div>
-    </div>
-    {{#if this.isFaded}}
-      <div class="fade-text-control">
-        <button
-          class="expand-buttons"
-          aria-label={{t "general.expand"}}
-          title={{t "general.expand"}}
-          type="button"
-          {{on "click" this.expand}}
-          data-test-expand
+  {{#if @text}}
+    <span class="fade-text" data-test-fade-text ...attributes>
+      <div class="display-text-wrapper{{if this.isFaded ' is-faded'}}">
+        <div
+          class="display-text"
+          {{did-insert this.getTextDims}}
+          {{on-resize this.updateTextDims}}
         >
-          <FaIcon @icon="angles-down" />
-        </button>
+          {{this.displayText}}
+        </div>
       </div>
-    {{else}}
-      {{#if this.expanded}}
-        <button
-          class="expand-buttons"
-          aria-label={{t "general.collapse"}}
-          title={{t "general.collapse"}}
-          type="button"
-          {{on "click" this.collapse}}
-          data-test-collapse
-        >
-          <FaIcon @icon="angles-up" />
-        </button>
+      {{#if this.isFaded}}
+        <div class="fade-text-control">
+          <button
+            class="expand-buttons"
+            aria-label={{t "general.expand"}}
+            title={{t "general.expand"}}
+            type="button"
+            data-test-expand
+            {{on "click" this.expand}}
+          >
+            <FaIcon @icon="angles-down" />
+          </button>
+        </div>
+      {{else}}
+        {{#if this.expanded}}
+          <button
+            class="expand-buttons"
+            aria-label={{t "general.collapse"}}
+            title={{t "general.collapse"}}
+            type="button"
+            data-test-collapse
+            {{on "click" this.collapse}}
+          >
+            <FaIcon @icon="angles-up" />
+          </button>
+        {{/if}}
       {{/if}}
-    {{/if}}
-  </span>
+    </span>
+  {{/if}}
 {{/if}}

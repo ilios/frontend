@@ -51,7 +51,7 @@
             <FadeText
               @text={{@value}}
               @onEdit={{fn this.setIsEditing true}}
-              as |displayText expand collapse isFaded expanded|
+              as |displayText expand collapse getTextDims updateTextDims isFaded expanded|
             >
               <button
                 class="link-button editable"
@@ -61,7 +61,11 @@
                 {{on "click" (fn this.setIsEditing true)}}
               >
                 <div class="display-text-wrapper{{if isFaded ' is-faded'}}">
-                  <div class="display-text">
+                  <div
+                    class="display-text"
+                    {{did-insert getTextDims}}
+                    {{on-resize updateTextDims}}
+                  >
                     {{displayText}}
                   </div>
                 </div>
