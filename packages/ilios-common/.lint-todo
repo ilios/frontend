@@ -66,3 +66,4 @@ add|ember-template-lint|no-at-ember-render-modifiers|5|2|5|2|a90be151f45cd8ab328
 add|ember-template-lint|no-at-ember-render-modifiers|24|10|24|10|2ed3ce70b879732dc85047f9f546c5dbd5376dba|1727049600000|1729641600000|1732237200000|addon/components/dashboard/courses-calendar-filter.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|29|6|29|6|df94e6558ff62dea69f6f656f668f29b56bcc378|1722902400000|1730682000000|1754006400000|addon/components/session/publication-menu.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|28|6|28|6|1ef231a97c0ec761eaafb3e76093515e5523ff27|1725580800000|1728172800000|1730768400000|addon/components/session/publication-menu.hbs
+add|ember-template-lint|no-at-ember-render-modifiers|10|8|10|8|cb596e21498ee50dca0ebbaecc838121a3ef8f68|1726790400000|1729382400000|1731978000000|addon/components/fade-text.hbs
