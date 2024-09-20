@@ -120,7 +120,6 @@
     "ember-cli-sass": "11.0.1",
     "ember-cli-terser": "^4.0.2",
     "ember-load-initializers": "^2.1.2",
-    "ember-on-resize-modifier": "^2.0.2",
     "ember-page-title": "^8.2.3",
     "ember-resolver": "^11.0.1",
     "ember-source": "~5.11.0",
