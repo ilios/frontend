@@ -5,14 +5,12 @@ import { htmlSafe } from '@ember/template';
 import { action } from '@ember/object';
 
 export default class FadeTextComponent extends Component {
+  @tracked textWidth;
+  @tracked textHeight;
   @tracked expanded = false;
 
-  get length() {
-    return this.args.length ?? 200;
-  }
-  get slippage() {
-    return this.args.slippage ?? 25;
-  }
+  MAX_HEIGHT = 200;
+
   get text() {
     if (!this.args.text) {
       return '';
@@ -23,18 +21,38 @@ export default class FadeTextComponent extends Component {
 
     return this.args.text;
   }
-  get totalLength() {
-    return this.length + this.slippage;
-  }
-  get isFaded() {
-    return this.displayText.toString() !== this.text;
-  }
   get displayText() {
-    if (this.expanded || this.text.length < this.totalLength) {
-      return new htmlSafe(this.text);
+    return new htmlSafe(this.text);
+  }
+
+  get textWidthRounded() {
+    return Math.floor(this.textWidth);
+  }
+
+  get textHeightRounded() {
+    return Math.floor(this.textHeight);
+  }
+
+  get isFaded() {
+    if (!this.expanded) {
+      return this.textHeightRounded >= this.MAX_HEIGHT;
+    } else {
+      return false;
     }
-    const fadedText = this.text.substring(0, this.length);
-    return new htmlSafe(fadedText);
+  }
+
+  @action
+  getTextDims(element) {
+    if (element) {
+      this.textHeight = element.getBoundingClientRect().height;
+      this.textWidth = element.getBoundingClientRect().width;
+    }
+  }
+
+  @action
+  updateTextDims({ contentRect: { width, height } }) {
+    this.textWidth = width;
+    this.textHeight = height;
   }
 
   @action

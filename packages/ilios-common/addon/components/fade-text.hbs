@@ -1,11 +1,15 @@
 {{#if (has-block)}}
   <span class="fade-text" data-test-fade-text ...attributes>
-    {{yield this.displayText this.expand this.collapse this.isFaded this.expanded}}
+    {{yield this.displayText this.expand this.collapse this.getTextDims this.updateTextDims this.isFaded this.expanded}}
   </span>
 {{else}}
   <span class="fade-text" data-test-fade-text ...attributes>
     <div class="display-text-wrapper{{if this.isFaded ' is-faded'}}">
-      <div class="display-text">
+      <div
+        class="display-text"
+        {{did-insert this.getElementAttrs}}
+        {{on-resize this.updateElementDims}}
+      >
         {{this.displayText}}
       </div>
     </div>
@@ -16,8 +20,8 @@
           aria-label={{t "general.expand"}}
           title={{t "general.expand"}}
           type="button"
-          data-test-expand
           {{on "click" this.expand}}
+          data-test-expand
         >
           <FaIcon @icon="angles-down" />
         </button>
@@ -29,8 +33,8 @@
           aria-label={{t "general.collapse"}}
           title={{t "general.collapse"}}
           type="button"
-          data-test-collapse
           {{on "click" this.collapse}}
+          data-test-collapse
         >
           <FaIcon @icon="angles-up" />
         </button>

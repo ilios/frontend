@@ -10,10 +10,16 @@
   }
 
   .fade-text-control {
-    bottom: 140px;
+    border: 1px dotted red;
+    bottom: 100px;
     cursor: pointer;
-    height: 130px;
-    padding-top: 140px;
+    height: 100px;
+    padding: 0;
     position: relative;
+
+    button {
+      position: relative;
+      top: 100px;
+    }
   }
 }
