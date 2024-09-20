@@ -145,7 +145,7 @@ importers:
         specifier: ^3.0.0
         version: 3.0.0
       ember-cli-code-coverage:
-        specifier: ^v3.0.0
+        specifier: ^3.0.1
         version: 3.0.1(@embroider/compat@3.6.1(@embroider/core@3.4.15))(@embroider/core@3.4.15)
       ember-cli-dependency-checker:
         specifier: ^3.3.2
@@ -751,6 +751,9 @@ importers:
       ember-cli-clean-css:
         specifier: ^3.0.0
         version: 3.0.0
+      ember-cli-code-coverage:
+        specifier: ^3.0.1
+        version: 3.0.1(@embroider/compat@3.6.1(@embroider/core@3.4.15))(@embroider/core@3.4.15)
       ember-cli-dependency-checker:
         specifier: ^3.3.2
         version: 3.3.2(ember-cli@5.11.0(babel-core@6.26.3)(ejs@3.1.10)(handlebars@4.7.8)(underscore@1.13.7))
@@ -976,6 +979,9 @@ importers:
       ember-cli-clean-css:
         specifier: ^3.0.0
         version: 3.0.0
+      ember-cli-code-coverage:
+        specifier: ^3.0.1
+        version: 3.0.1(@embroider/compat@3.6.1(@embroider/core@3.4.15))(@embroider/core@3.4.15)
       ember-cli-dependency-checker:
         specifier: ^3.3.2
         version: 3.3.2(ember-cli@5.11.0(babel-core@6.26.3)(ejs@3.1.10)(handlebars@4.7.8)(underscore@1.13.7))
@@ -1195,6 +1201,9 @@ importers:
       ember-cli-clean-css:
         specifier: ^3.0.0
         version: 3.0.0
+      ember-cli-code-coverage:
+        specifier: ^3.0.1
+        version: 3.0.1(@embroider/compat@3.6.1(@embroider/core@3.4.15))(@embroider/core@3.4.15)
       ember-cli-dependency-checker:
         specifier: ^3.3.2
         version: 3.3.2(ember-cli@5.11.0(babel-core@6.26.3)(ejs@3.1.10)(handlebars@4.7.8)(underscore@1.13.7))
