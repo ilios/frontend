@@ -1,9 +1,7 @@
 <div
   class="detail-cohort-list"
-  {{did-insert (perform this.load) @cohorts}}
-  {{did-update (perform this.load) @cohorts}}
 >
-  {{#if (is-array this.sortedCohorts)}}
+  {{#if this.cohortsData.isResolved}}
     {{#if this.sortedCohorts.length}}
       <table>
         <thead>

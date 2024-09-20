@@ -1,20 +1,30 @@
 import Component from '@glimmer/component';
 import { service } from '@ember/service';
-import { tracked } from '@glimmer/tracking';
-import { restartableTask } from 'ember-concurrency';
+import { cached } from '@glimmer/tracking';
 import { map } from 'rsvp';
-import { mapBy, sortBy } from 'ilios-common/utils/array-helpers';
+import { sortBy } from 'ilios-common/utils/array-helpers';
+import { TrackedAsyncData } from 'ember-async-data';
 
 export default class DetailCohortListComponent extends Component {
   @service intl;
-  @tracked sortedCohorts = null;
 
-  load = restartableTask(async (event, [cohorts]) => {
-    if (!cohorts) {
-      return false;
+  @cached
+  get cohortsData() {
+    return new TrackedAsyncData(this.getCohortProxies(this.args.cohorts ?? []));
+  }
+
+  get sortedCohorts() {
+    if (!this.cohortsData.isResolved) {
+      return [];
     }
 
-    const sortProxies = await map(cohorts, async (cohort) => {
+    return sortBy(this.cohortsData.value, ['schoolTitle', 'displayTitle']).map(
+      ({ cohort }) => cohort,
+    );
+  }
+
+  async getCohortProxies(cohorts) {
+    return await map(cohorts, async (cohort) => {
       const programYear = await cohort.programYear;
       const program = await programYear.program;
       const school = await program.school;
@@ -32,7 +42,5 @@ export default class DetailCohortListComponent extends Component {
         displayTitle,
       };
     });
-
-    this.sortedCohorts = mapBy(sortBy(sortProxies, ['schoolTitle', 'displayTitle']), 'cohort');
-  });
+  }
 }
