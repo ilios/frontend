@@ -24,8 +24,8 @@ module.exports = async function (defaults) {
     babel: {
       plugins: [
         require.resolve('ember-auto-import/babel-plugin'),
-        // eslint-disable-next-line
         require.resolve('ember-concurrency/async-arrow-task-transform'),
+        ...require('ember-cli-code-coverage').buildBabelPlugin({ embroider: true }),
       ],
     },
   });

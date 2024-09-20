@@ -21,6 +21,9 @@ module.exports = async function (defaults) {
     sassOptions: {
       silenceDeprecations: ['mixed-decls'],
     },
+    babel: {
+      plugins: [...require('ember-cli-code-coverage').buildBabelPlugin({ embroider: true })],
+    },
   };
   const app = new EmberApp(defaults, config);
 

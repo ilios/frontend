@@ -22,7 +22,10 @@ module.exports = async function (defaults) {
 
     hinting: isTestBuild,
     babel: {
-      plugins: [require.resolve('ember-concurrency/async-arrow-task-transform')],
+      plugins: [
+        require.resolve('ember-concurrency/async-arrow-task-transform'),
+        ...require('ember-cli-code-coverage').buildBabelPlugin({ embroider: true }),
+      ],
     },
     'ember-cli-image-transformer': {
       images: [
