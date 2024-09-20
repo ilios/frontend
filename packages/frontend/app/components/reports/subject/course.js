@@ -102,7 +102,7 @@ export default class ReportsSubjectCourseComponent extends Component {
   async fetchDownloadData() {
     return [
       [
-        this.intl.t('general.courses'),
+        this.intl.t('general.course'),
         this.intl.t('general.academicYear'),
         this.intl.t('general.externalId'),
       ],
