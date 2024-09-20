@@ -1,6 +1,9 @@
 @use "../../mixins" as m;
 
 .dashboard-courses-calendar-filter {
+  .filters {
+    position: relative;
+  }
   .year {
     button {
       @include m.ilios-button-reset;

@@ -1,10 +1,11 @@
-import { collection, clickable, create, property, text } from 'ember-cli-page-object';
+import { collection, clickable, create, hasClass, property, text } from 'ember-cli-page-object';
 
 const definition = {
   scope: '[data-test-courses-calendar-filter]',
   years: collection('[data-test-year]', {
     title: text('[data-test-year-title]'),
     toggle: clickable('[data-test-year-title] button'),
+    isExpanded: hasClass('expanded'),
     courses: collection('[data-test-course]', {
       title: text(),
       toggle: clickable('[data-test-target]'),

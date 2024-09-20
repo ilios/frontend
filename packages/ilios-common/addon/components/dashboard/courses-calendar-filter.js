@@ -5,7 +5,6 @@ import { action } from '@ember/object';
 import { service } from '@ember/service';
 import { DateTime } from 'luxon';
 import { findBy, sortBy } from 'ilios-common/utils/array-helpers';
-import scrollIntoView from 'scroll-into-view';
 
 export default class DashboardCoursesCalendarFilterComponent extends Component {
   @service dataLoader;
@@ -67,20 +66,21 @@ export default class DashboardCoursesCalendarFilterComponent extends Component {
     return sortBy(courseYears, 'year').reverse();
   }
 
+  get defaultExpandedYear() {
+    if (this.courseYears.length) {
+      const coursesThisYear = findBy(this.courseYears, 'year', this.academicYear);
+      return coursesThisYear ? this.academicYear : this.courseYears[0].year;
+    }
+
+    return false;
+  }
+
   get expandedYears() {
     if (this._expandedYears !== undefined) {
       return this._expandedYears;
     }
-    if (this.courseYears.length) {
-      const coursesThisYear = findBy(this.courseYears, 'year', this.academicYear);
-      if (coursesThisYear) {
-        return [this.academicYear];
-      } else {
-        return [this.courseYears[this.courseYears.length - 1].year];
-      }
-    }
 
-    return [];
+    return this.defaultExpandedYear ? [this.defaultExpandedYear] : [];
   }
 
   load = restartableTask(async () => {
@@ -95,9 +95,11 @@ export default class DashboardCoursesCalendarFilterComponent extends Component {
 
   @action
   scrollToLastYear(element, [year]) {
-    if (year === this.academicYear - 1) {
-      scrollIntoView(element.parentElement.parentElement, {
-        align: { top: 0 },
+    if (year === this.defaultExpandedYear) {
+      const { offsetTop } = element;
+      element.parentElement.scrollTo({
+        top: offsetTop,
+        behavior: 'instant',
       });
     }
   }
