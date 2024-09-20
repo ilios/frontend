@@ -7,17 +7,20 @@
   grid-template-areas:
     "title"
     "description"
-    "download"
-    "years-filter";
-  margin: 0 0.8rem 0 0;
+    "years-filter"
+    "download";
+  row-gap: 0.25rem;
+  margin: 0 0.8rem 0.25rem 0;
+  padding-bottom: 0.25rem;
 
   @include cm.for-tablet-and-up {
     grid-template-areas:
       "title download"
-      "description years-filter";
+      "description description"
+      "years-filter years-filter";
     grid-template-columns: 4fr 1fr;
     justify-content: space-between;
-    row-gap: 0.5rem;
+    row-gap: 0;
   }
 
   h2 {
@@ -31,7 +34,6 @@
 
   .download {
     grid-area: download;
-
     &:disabled {
       cursor: default;
       background-color: c.$davysGrey;
@@ -45,7 +47,5 @@
   .description {
     grid-area: description;
     font-style: italic;
-    padding-bottom: 1rem;
-    padding-top: 0.5rem;
   }
 }
