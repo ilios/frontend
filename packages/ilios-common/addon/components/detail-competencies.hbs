@@ -1,9 +1,4 @@
-<section
-  class="detail-competencies"
-  data-test-detail-competencies
-  {{did-insert (perform this.load)}}
-  {{did-update (perform this.load) @course.competencies}}
->
+<section class="detail-competencies" data-test-detail-competencies>
   {{#if this.hasCompetencies}}
     <button
       class="title link-button"

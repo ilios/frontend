@@ -4,8 +4,6 @@ add|ember-template-lint|no-at-ember-render-modifiers|25|6|25|6|1ef231a97c0ec761e
 add|ember-template-lint|no-at-ember-render-modifiers|7|2|7|2|1a2522cd1202904fb09a6e811dec6b46d8189ab3|1725580800000|1728172800000|1730768400000|addon/components/daily-calendar-event.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|5|2|5|2|fb8a149d14413d4dfc84ffd31349ef3f2ac6d17b|1722902400000|1730682000000|1754006400000|addon/components/date-picker.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|6|2|6|2|993f1e23f796f19a221eae6e24872755e0436cb4|1722902400000|1730682000000|1754006400000|addon/components/date-picker.hbs
-add|ember-template-lint|no-at-ember-render-modifiers|3|2|3|2|23cd787c79c34a628dadb6e96dd4004d42eebb79|1722902400000|1730682000000|1754006400000|addon/components/detail-competencies.hbs
-add|ember-template-lint|no-at-ember-render-modifiers|4|2|4|2|bcdebfb3fe4e091e21441a8dd4ddae2f5dfafb6a|1722902400000|1730682000000|1754006400000|addon/components/detail-competencies.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|6|23|6|23|cd8fd540bd3dc98969677fecef5b4617da0031c8|1725580800000|1728172800000|1730768400000|addon/components/detail-learning-materials.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|4|2|4|2|23cd787c79c34a628dadb6e96dd4004d42eebb79|1722902400000|1730682000000|1754006400000|addon/components/detail-mesh.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|5|2|5|2|aeb46aff123bc727f06ae48e1615d63dd2e58f6e|1722902400000|1730682000000|1754006400000|addon/components/detail-mesh.hbs
