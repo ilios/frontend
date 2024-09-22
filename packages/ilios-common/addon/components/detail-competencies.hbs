@@ -1,5 +1,6 @@
 <section
- class="detail-competencies"
+  class="detail-competencies"
+  data-test-detail-competencies
   {{did-insert (perform this.load)}}
   {{did-update (perform this.load) @course.competencies}}
 >
@@ -17,11 +18,11 @@
     <div class="detail-competencies-content">
       <ul class="static-list">
         {{#each @course.domainsWithSubcompetencies as |domain|}}
-          <li>
+          <li data-test-domain>
             {{domain.title}}
             <ul>
               {{#each domain.subCompetencies as |competency|}}
-                <li>
+                <li data-test-competency>
                   {{competency.title}}
                 </li>
               {{/each}}
