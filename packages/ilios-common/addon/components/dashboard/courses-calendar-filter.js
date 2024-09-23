@@ -94,7 +94,7 @@ export default class DashboardCoursesCalendarFilterComponent extends Component {
   });
 
   @action
-  scrollToLastYear(element, [year]) {
+  scrollToDefaultExpandedYear(element, [year]) {
     if (year === this.defaultExpandedYear) {
       const { offsetTop } = element;
       element.parentElement.scrollTo({
