@@ -80,6 +80,7 @@
               {{#if isFaded}}
                 <div
                   class="fade-text-control"
+                  data-test-fade-text-control
                   {{! template-lint-disable no-invalid-interactive}}
                   {{on "click" (fn this.setIsEditing true)}}
                 >
@@ -96,16 +97,18 @@
                 </div>
               {{else}}
                 {{#if expanded}}
-                  <button
-                    class="expand-text-button"
-                    aria-label={{t "general.collapse"}}
-                    title={{t "general.collapse"}}
-                    type="button"
-                    data-test-collapse
-                    {{on "click" collapse}}
-                  >
-                    <FaIcon @icon="angles-up" />
-                  </button>
+                  <div class="fade-text-control" data-test-fade-text-control>
+                    <button
+                      class="expand-text-button"
+                      aria-label={{t "general.collapse"}}
+                      title={{t "general.collapse"}}
+                      type="button"
+                      data-test-collapse
+                      {{on "click" collapse}}
+                    >
+                      <FaIcon @icon="angles-up" />
+                    </button>
+                  </div>
                 {{/if}}
               {{/if}}
             </FadeText>
