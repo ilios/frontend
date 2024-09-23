@@ -1,20 +1,19 @@
 import Component from '@glimmer/component';
-import { tracked } from '@glimmer/tracking';
+import { cached } from '@glimmer/tracking';
 import { action } from '@ember/object';
-import { restartableTask } from 'ember-concurrency';
+import { TrackedAsyncData } from 'ember-async-data';
 
 export default class DetailCompetenciesComponent extends Component {
-  @tracked competenciesRelationship;
-
-  load = restartableTask(async () => {
-    this.competenciesRelationship = await this.args.course.competencies;
-  });
+  @cached
+  get courseCompetenciesData() {
+    return new TrackedAsyncData(this.args.course.competencies);
+  }
 
   get competencyCount() {
-    if (!this.competenciesRelationship) {
+    if (!this.courseCompetenciesData.isResolved) {
       return 0;
     }
-    return this.competenciesRelationship.length;
+    return this.courseCompetenciesData.value.length;
   }
 
   get hasCompetencies() {
@@ -23,7 +22,7 @@ export default class DetailCompetenciesComponent extends Component {
 
   @action
   collapse() {
-    if (this.hasCompetencies) {
+    if (this.courseCompetenciesData.isResolved && this.hasCompetencies) {
       this.args.collapse();
     }
   }

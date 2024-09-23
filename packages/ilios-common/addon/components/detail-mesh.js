@@ -1,27 +1,25 @@
 import Component from '@glimmer/component';
-import { service } from '@ember/service';
-import { tracked } from '@glimmer/tracking';
-import { dropTask, restartableTask } from 'ember-concurrency';
+import { cached, tracked } from '@glimmer/tracking';
+import { dropTask } from 'ember-concurrency';
 import { action } from '@ember/object';
+import { TrackedAsyncData } from 'ember-async-data';
 
 export default class DetailMeshComponent extends Component {
-  @service store;
-  @service intl;
-
   @tracked isManaging = false;
   @tracked bufferedDescriptors = null;
   @tracked meshDescriptorRelationship;
 
-  load = restartableTask(async () => {
-    this.meshDescriptorRelationship = await this.args.subject.meshDescriptors;
-  });
+  @cached
+  get meshDescriptorsData() {
+    return new TrackedAsyncData(this.args.subject.meshDescriptors);
+  }
 
   get meshDescriptors() {
-    if (!this.meshDescriptorRelationship) {
+    if (!this.meshDescriptorsData.isResolved) {
       return [];
     }
 
-    return this.meshDescriptorRelationship;
+    return this.meshDescriptorsData.value;
   }
   @action
   manage() {

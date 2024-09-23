@@ -1,10 +1,5 @@
-<section
-  class="detail-mesh"
-  data-test-detail-mesh
-  {{did-insert (perform this.load)}}
-  {{did-update (perform this.load) @subject.meshDescriptors}}
->
-  {{#if (is-array this.meshDescriptors)}}
+<section class="detail-mesh" data-test-detail-mesh>
+  {{#if this.meshDescriptorsData.isResolved}}
     <div class="detail-mesh-header">
       <div class="title">
         {{#if this.isManaging}}
