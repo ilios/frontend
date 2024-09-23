@@ -155,7 +155,7 @@ module('Acceptance | Course - Objective List', function (hooks) {
     assert.strictEqual(page.details.objectives.objectiveList.objectives.length, 1);
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[0].description.text,
-      longTitle.substring(0, 200),
+      longTitle,
     );
     await percySnapshot(assert);
     await page.details.objectives.objectiveList.objectives[0].description.openEditor();

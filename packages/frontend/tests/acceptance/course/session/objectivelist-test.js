@@ -149,7 +149,7 @@ module('Acceptance | Session - Objective List', function (hooks) {
     assert.strictEqual(page.details.objectives.objectiveList.objectives.length, 1);
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[0].description.text,
-      longTitle.substring(0, 200),
+      longTitle,
     );
     await page.details.objectives.objectiveList.objectives[0].description.openEditor();
     assert.strictEqual(
