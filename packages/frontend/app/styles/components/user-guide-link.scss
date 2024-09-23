@@ -8,6 +8,10 @@ $header-menu-background-color: color.adjust(c.$slightWhite, $lightness: -3%);
 .user-guide-link {
   margin-right: 0.85rem;
 
+  @include cm.for-phone-only {
+    vertical-align: -0.25em;
+  }
+
   a {
     @include cm.ilios-link-button;
     background-color: $header-menu-background-color;
@@ -30,8 +34,15 @@ $header-menu-background-color: color.adjust(c.$slightWhite, $lightness: -3%);
     }
 
     @include cm.for-phone-only {
-      /* stylelint-disable property-disallowed-list */
+      /* stylelint-disable-next-line property-disallowed-list */
       font-size: 2.75vw;
+      vertical-align: -0.25em;
+    }
+
+    @include cm.for-laptop-and-up {
+      /* stylelint-disable-next-line property-disallowed-list */
+      font-size: 14px;
+      padding: 3px;
     }
   }
 }

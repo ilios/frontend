@@ -57,6 +57,10 @@
         @include m.for-tablet-and-up {
           grid-template-areas: "search locale user guide";
         }
+
+        @include m.for-laptop-and-up {
+          padding: 6.4px 0;
+        }
       }
     }
 
