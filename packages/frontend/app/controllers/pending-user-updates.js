@@ -22,7 +22,7 @@ export default class PendingUserUpdatesController extends Controller {
 
   get selectedSchool() {
     if (this.school) {
-      const school = findById(this.model.schools.slice(), this.school);
+      const school = findById(this.model.schools, this.school);
       if (school) {
         return school;
       }
@@ -73,7 +73,7 @@ export default class PendingUserUpdatesController extends Controller {
     const updates = await user.pendingUserUpdates;
     await Promise.all(updates.map((update) => update.destroyRecord()));
 
-    this.deletedUpdates = [...this.deletedUpdates, ...updates.slice()];
+    this.deletedUpdates = [...this.deletedUpdates, ...updates];
     this.updatesBeingSaved = this.updatesBeingSaved.filter((u) => u !== update);
     this.flashMessages.success('general.savedSuccessfully');
   });
@@ -87,7 +87,7 @@ export default class PendingUserUpdatesController extends Controller {
     const updates = await user.pendingUserUpdates;
     await Promise.all(updates.map((update) => update.destroyRecord()));
 
-    this.deletedUpdates = [...this.deletedUpdates, ...updates.slice()];
+    this.deletedUpdates = [...this.deletedUpdates, ...updates];
     this.updatesBeingSaved = this.updatesBeingSaved.filter((u) => u !== update);
     this.flashMessages.success('general.savedSuccessfully');
   });

@@ -113,7 +113,7 @@ export default class ReportingService extends Service {
         course.title,
         crosses ? `${course.year} - ${course.year + 1}` : `${course.year}`,
         striptags(description),
-        striptags(mapBy(sessionObjectives.slice(), 'title').join()),
+        striptags(mapBy(sessionObjectives, 'title').join()),
       ];
     });
 
@@ -275,7 +275,7 @@ export default class ReportingService extends Service {
   }
 
   async termsResults(results) {
-    return map(results.slice(), async (term) => {
+    return map(results, async (term) => {
       const vocabulary = await term.get('vocabulary');
       const titleWithParentTitles = await term.get('titleWithParentTitles');
       const value = vocabulary.get('title') + ' > ' + titleWithParentTitles;

@@ -57,7 +57,7 @@ export default class UserController extends Controller {
     if (!schools) {
       return false;
     }
-    const schoolsWithCreateUserPermission = await filter(schools.slice(), async (school) => {
+    const schoolsWithCreateUserPermission = await filter(schools, async (school) => {
       return this.permissionChecker.canCreateUser(school);
     });
     return schoolsWithCreateUserPermission.length > 0;
