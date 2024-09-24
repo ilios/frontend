@@ -33,123 +33,99 @@ module('Integration | Component | fade-text', function (hooks) {
     assert.dom(this.element).hasText(shortText);
   });
 
-  module('fading (flaky)', () => {
-    skip('it fades tall text', async function (assert) {
-      const longHtml = `
-        An objective description so long that it fades.<br />
-        An objective description so long that it fades.<br />
-        An objective description so long that it fades.<br />
-        An objective description so long that it fades.<br />
-        An objective description so long that it fades.<br />
-        An objective description so long that it fades.<br />
-        An objective description so long that it fades.<br />
-        An objective description so long that it fades.<br />
-        An objective description so long that it fades.<br />
-        An objective description so long that it fades.<br />
-        An objective description so long that it fades.<br />
-        An objective description so long that it fades.<br />
-        An objective description so long that it fades.<br />
-        An objective description so long that it fades.
-      `;
-      const fadedClass = 'is-faded';
-      this.set('longHtml', longHtml);
+  test('it fades tall text', async function (assert) {
+    const longHtml = `
+      An objective description so long that it fades.<br />
+      An objective description so long that it fades.<br />
+      An objective description so long that it fades.<br />
+      An objective description so long that it fades.<br />
+      An objective description so long that it fades.<br />
+      An objective description so long that it fades.<br />
+      An objective description so long that it fades.<br />
+      An objective description so long that it fades.<br />
+      An objective description so long that it fades.<br />
+      An objective description so long that it fades.<br />
+      An objective description so long that it fades.<br />
+      An objective description so long that it fades.<br />
+      An objective description so long that it fades.<br />
+      An objective description so long that it fades.
+    `;
+    const fadedClass = 'is-faded';
+    this.set('longHtml', longHtml);
 
-      await render(hbs`<FadeText @text={{this.longHtml}} />`);
+    await render(hbs`<FadeText @text={{this.longHtml}} />`);
 
-      assert.dom('.display-text-wrapper', this.element).hasClass(fadedClass);
+    assert.dom('.display-text-wrapper', this.element).hasClass(fadedClass);
 
-      await component.expand.click();
+    await component.expand.click();
 
-      assert.dom('.display-text-wrapper', this.element).doesNotHaveClass(fadedClass);
-      await component.collapse.click();
-      assert.dom('.display-text-wrapper', this.element).hasClass(fadedClass);
+    assert.dom('.display-text-wrapper', this.element).doesNotHaveClass(fadedClass);
+    await component.collapse.click();
+    assert.dom('.display-text-wrapper', this.element).hasClass(fadedClass);
 
-      await render(hbs`
-        <FadeText @text={{this.longHtml}} as |displayText expand collapse getTextDims updateTextDims isFaded expanded|>
-          <div class="display-text-wrapper{{if isFaded ' is-faded'}}">
-            <div
-              class="display-text"
-              {{!-- template-lint-disable no-at-ember-render-modifiers --}}
-              {{did-insert getTextDims}}
-              {{on-resize updateTextDims}}
-            >
-              {{displayText}}
-            </div>
+    await render(hbs`
+      <FadeText
+        @text={{this.longHtml}}
+        as |displayText expand collapse updateTextDims isFaded expanded|
+      >
+        <div class="display-text-wrapper{{if isFaded ' is-faded'}}">
+          <div class="display-text" {{on-resize updateTextDims}}>
+            {{displayText}}
           </div>
-          {{#if isFaded}}
-          <div class="fade-text-control" data-test-fade-text-control>
-            <button
-              class="expand-buttons"
-              aria-label={{t "general.expand"}}
-              title={{t "general.expand"}}
-              type="button"
-              data-test-expand
-              {{on "click" expand}}
-            >
-              <FaIcon @icon="angles-down" />
-            </button>
-          </div>
-          {{else}}
-            {{#if expanded}}
-              <div class="fade-text-control" data-test-fade-text-control>
-                <button
-                  class="expand-buttons"
-                  aria-label={{t "general.collapse"}}
-                  title={{t "general.collapse"}}
-                  type="button"
-                  data-test-collapse
-                  {{on "click" collapse}}
-                >
-                  <FaIcon @icon="angles-up" />
-                </button>
-              </div>
-            {{/if}}
+        </div>
+        {{#if isFaded}}
+        <div class="fade-text-control" data-test-fade-text-control>
+          <button type="button" data-test-expand {{on "click" expand}}></button>
+        </div>
+        {{else}}
+          {{#if expanded}}
+            <button type="button" data-test-collapse {{on "click" collapse}}></button>
           {{/if}}
-        </FadeText>
-      `);
+        {{/if}}
+      </FadeText>
+    `);
 
-      assert.dom('.display-text-wrapper', this.element).hasClass(fadedClass);
-      await component.expand.click();
-      assert.dom('.display-text-wrapper', this.element).doesNotHaveClass(fadedClass);
-      await component.collapse.click();
-      assert.dom('.display-text-wrapper', this.element).hasClass(fadedClass);
-    });
+    assert.dom('.display-text-wrapper', this.element).hasClass(fadedClass);
+    await component.expand.click();
+    assert.dom('.display-text-wrapper', this.element).doesNotHaveClass(fadedClass);
+    await component.collapse.click();
+    assert.dom('.display-text-wrapper', this.element).hasClass(fadedClass);
+  });
 
-    skip('expand/collapse', async function (assert) {
-      const longHtml = `
-        An objective description so long that it fades.<br />
-        An objective description so long that it fades.<br />
-        An objective description so long that it fades.<br />
-        An objective description so long that it fades.<br />
-        An objective description so long that it fades.<br />
-        An objective description so long that it fades.<br />
-        An objective description so long that it fades.<br />
-        An objective description so long that it fades.<br />
-        An objective description so long that it fades.<br />
-        An objective description so long that it fades.<br />
-        An objective description so long that it fades.<br />
-        An objective description so long that it fades.<br />
-        An objective description so long that it fades.<br />
-        An objective description so long that it fades.
-      `;
-      const longText = `An objective description so long that it fades. An objective description so long that it fades. An objective description so long that it fades. An objective description so long that it fades. An objective description so long that it fades. An objective description so long that it fades. An objective description so long that it fades. An objective description so long that it fades. An objective description so long that it fades. An objective description so long that it fades. An objective description so long that it fades. An objective description so long that it fades. An objective description so long that it fades. An objective description so long that it fades.`;
-      const fadedClass = 'is-faded';
-      this.set('longHtml', longHtml);
-      this.set('longText', longText);
-      await render(hbs`<FadeText @text={{this.longHtml}} />`);
+  skip('expand/collapse', async function (assert) {
+    const longHtml = `
+      An objective description so long that it fades.<br />
+      An objective description so long that it fades.<br />
+      An objective description so long that it fades.<br />
+      An objective description so long that it fades.<br />
+      An objective description so long that it fades.<br />
+      An objective description so long that it fades.<br />
+      An objective description so long that it fades.<br />
+      An objective description so long that it fades.<br />
+      An objective description so long that it fades.<br />
+      An objective description so long that it fades.<br />
+      An objective description so long that it fades.<br />
+      An objective description so long that it fades.<br />
+      An objective description so long that it fades.<br />
+      An objective description so long that it fades.
+    `;
+    const longText = `An objective description so long that it fades. An objective description so long that it fades. An objective description so long that it fades. An objective description so long that it fades. An objective description so long that it fades. An objective description so long that it fades. An objective description so long that it fades. An objective description so long that it fades. An objective description so long that it fades. An objective description so long that it fades. An objective description so long that it fades. An objective description so long that it fades. An objective description so long that it fades. An objective description so long that it fades.`;
+    const fadedClass = 'is-faded';
+    this.set('longHtml', longHtml);
+    this.set('longText', longText);
+    await render(hbs`<FadeText @text={{this.longHtml}} />`);
 
-      assert.dom('.display-text-wrapper', this.element).hasClass(fadedClass);
-      assert.strictEqual(component.text, longText);
-      assert.ok(component.expand.isVisible);
-      assert.notOk(component.collapse.isVisible);
-      await component.expand.click();
-      assert.dom('.display-text-wrapper', this.element).doesNotHaveClass(fadedClass);
-      assert.notOk(component.expand.isVisible);
-      assert.ok(component.collapse.isVisible);
-      await component.collapse.click();
-      assert.dom('.display-text-wrapper', this.element).hasClass(fadedClass);
-      assert.ok(component.expand.isVisible);
-      assert.notOk(component.collapse.isVisible);
-    });
+    assert.dom('.display-text-wrapper', this.element).hasClass(fadedClass);
+    assert.strictEqual(component.text, longText);
+    assert.ok(component.expand.isVisible);
+    assert.notOk(component.collapse.isVisible);
+    await component.expand.click();
+    assert.dom('.display-text-wrapper', this.element).doesNotHaveClass(fadedClass);
+    assert.notOk(component.expand.isVisible);
+    assert.ok(component.collapse.isVisible);
+    await component.collapse.click();
+    assert.dom('.display-text-wrapper', this.element).hasClass(fadedClass);
+    assert.ok(component.expand.isVisible);
+    assert.notOk(component.collapse.isVisible);
   });
 });

@@ -33,7 +33,7 @@
         </span>
       </span>
     {{else}}
-      <span class="viewer">
+      <span>
         {{#if @value}}
           {{#if this.looksEmpty}}
             <button
@@ -51,7 +51,7 @@
             <FadeText
               @text={{@value}}
               @onEdit={{fn this.setIsEditing true}}
-              as |displayText expand collapse getTextDims updateTextDims isFaded expanded|
+              as |displayText expand collapse updateTextDims isFaded expanded|
             >
               <button
                 class="link-button editable"
@@ -63,7 +63,6 @@
                 <div class="display-text-wrapper{{if isFaded ' is-faded'}}">
                   <div
                     class="display-text"
-                    {{did-insert getTextDims}}
                     {{on-resize updateTextDims}}
                   >
                     {{displayText}}
@@ -97,18 +96,16 @@
                 </div>
               {{else}}
                 {{#if expanded}}
-                  <div class="fade-text-control" data-test-fade-text-control>
-                    <button
-                      class="expand-text-button"
-                      aria-label={{t "general.collapse"}}
-                      title={{t "general.collapse"}}
-                      type="button"
-                      data-test-collapse
-                      {{on "click" collapse}}
-                    >
-                      <FaIcon @icon="angles-up" />
-                    </button>
-                  </div>
+                  <button
+                    class="expand-text-button"
+                    aria-label={{t "general.collapse"}}
+                    title={{t "general.collapse"}}
+                    type="button"
+                    data-test-collapse
+                    {{on "click" collapse}}
+                  >
+                    <FaIcon @icon="angles-up" />
+                  </button>
                 {{/if}}
               {{/if}}
             </FadeText>

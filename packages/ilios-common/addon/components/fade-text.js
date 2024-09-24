@@ -41,13 +41,6 @@ export default class FadeTextComponent extends Component {
   }
 
   @action
-  getTextDims(element) {
-    if (element) {
-      this.textHeight = element.getBoundingClientRect().height;
-    }
-  }
-
-  @action
   updateTextDims({ contentRect: { height } }) {
     this.textHeight = height;
   }
