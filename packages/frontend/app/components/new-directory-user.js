@@ -276,7 +276,7 @@ export default class NewDirectoryUserComponent extends Component {
     });
     if (!this.nonStudentMode) {
       user.set('primaryCohort', primaryCohort);
-      const studentRole = findBy(roles.slice(), 'title', 'Student');
+      const studentRole = findBy(roles, 'title', 'Student');
       user.set('roles', [studentRole]);
     }
     user = await user.save();

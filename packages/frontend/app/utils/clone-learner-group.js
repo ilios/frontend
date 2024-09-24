@@ -20,14 +20,14 @@ export default async function cloneLearnerGroup(store, group, cohort, withLearne
   }
   if (withLearners) {
     const users = await group.users;
-    await map(users.slice(), async (user) => {
+    await map(users, async (user) => {
       await newGroup.addUserToGroupAndAllParents(user);
     });
   }
   const instructors = await group.instructors;
   newGroup.set('instructors', instructors);
   const children = await group.children;
-  const newChildren = await map(children.slice(), async (child) => {
+  const newChildren = await map(children, async (child) => {
     return await cloneLearnerGroup(store, child, cohort, withLearners, newGroup);
   });
   const flat = newChildren.reduce((flattened, children) => {

@@ -72,7 +72,7 @@ module('Integration | Component | week glance', function (hooks) {
 
     this.userEventsMock = Service.extend({
       async getEvents() {
-        return events.slice();
+        return events;
       },
     });
     this.blankEventsMock = Service.extend({

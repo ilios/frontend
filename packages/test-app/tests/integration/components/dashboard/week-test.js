@@ -77,7 +77,7 @@ module('Integration | Component | dashboard/week', function (hooks) {
     const { userevents } = this.server.db;
     class UserEvents extends Service {
       async getEvents() {
-        return userevents.slice();
+        return userevents;
       }
     }
     this.owner.register('service:user-events', UserEvents);
