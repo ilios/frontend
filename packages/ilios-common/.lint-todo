@@ -70,3 +70,5 @@ add|ember-template-lint|no-at-ember-render-modifiers|10|8|10|8|cb596e21498ee50dc
 add|ember-template-lint|no-at-ember-render-modifiers|66|20|66|20|1a0edd8e58580088f7666ab3dadfa024a8664fe0|1726790400000|1729382400000|1731978000000|addon/components/editable-field.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|11|10|11|10|63b2ddad1fa8524c94e9b124e04e244695abbf9e|1726790400000|1729382400000|1731978000000|addon/components/fade-text.hbs
 remove|ember-template-lint|no-at-ember-render-modifiers|10|8|10|8|cb596e21498ee50dca0ebbaecc838121a3ef8f68|1726790400000|1729382400000|1731978000000|addon/components/fade-text.hbs
+remove|ember-template-lint|no-at-ember-render-modifiers|66|20|66|20|1a0edd8e58580088f7666ab3dadfa024a8664fe0|1726790400000|1729382400000|1731978000000|addon/components/editable-field.hbs
+remove|ember-template-lint|no-at-ember-render-modifiers|11|10|11|10|63b2ddad1fa8524c94e9b124e04e244695abbf9e|1726790400000|1729382400000|1731978000000|addon/components/fade-text.hbs
