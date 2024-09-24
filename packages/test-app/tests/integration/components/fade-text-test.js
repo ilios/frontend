@@ -1,4 +1,4 @@
-import { module, test, skip } from 'qunit';
+import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
@@ -19,8 +19,7 @@ module('Integration | Component | fade-text', function (hooks) {
     const shortText = 'template block text';
     this.set('shortText', shortText);
 
-    await render(hbs`<FadeText @text={{this.shortText}} />
-`);
+    await render(hbs`<FadeText @text={{this.shortText}} />`);
     assert.strictEqual(component.text, shortText);
     assert.notOk(component.collapse.isVisible);
     assert.notOk(component.expand.isVisible);
@@ -33,7 +32,7 @@ module('Integration | Component | fade-text', function (hooks) {
     assert.dom(this.element).hasText(shortText);
   });
 
-  test('it fades tall text', async function (assert) {
+  test('it fades tall text given as component argument', async function (assert) {
     const longHtml = `
       An objective description so long that it fades.<br />
       An objective description so long that it fades.<br />
@@ -62,6 +61,27 @@ module('Integration | Component | fade-text', function (hooks) {
     assert.dom('.display-text-wrapper', this.element).doesNotHaveClass(fadedClass);
     await component.collapse.click();
     assert.dom('.display-text-wrapper', this.element).hasClass(fadedClass);
+  });
+
+  test('it fades tall text given as block', async function (assert) {
+    const longHtml = `
+      An objective description so long that it fades.<br />
+      An objective description so long that it fades.<br />
+      An objective description so long that it fades.<br />
+      An objective description so long that it fades.<br />
+      An objective description so long that it fades.<br />
+      An objective description so long that it fades.<br />
+      An objective description so long that it fades.<br />
+      An objective description so long that it fades.<br />
+      An objective description so long that it fades.<br />
+      An objective description so long that it fades.<br />
+      An objective description so long that it fades.<br />
+      An objective description so long that it fades.<br />
+      An objective description so long that it fades.<br />
+      An objective description so long that it fades.
+    `;
+    const fadedClass = 'is-faded';
+    this.set('longHtml', longHtml);
 
     await render(hbs`
       <FadeText
@@ -92,7 +112,7 @@ module('Integration | Component | fade-text', function (hooks) {
     assert.dom('.display-text-wrapper', this.element).hasClass(fadedClass);
   });
 
-  skip('expand/collapse', async function (assert) {
+  test('expand/collapse', async function (assert) {
     const longHtml = `
       An objective description so long that it fades.<br />
       An objective description so long that it fades.<br />
