@@ -3,6 +3,7 @@ import { TrackedAsyncData } from 'ember-async-data';
 import { cached } from '@glimmer/tracking';
 import { service } from '@ember/service';
 import { task, timeout } from 'ember-concurrency';
+import currentAcademicYear from 'ilios-common/utils/current-academic-year';
 
 export default class ReportsSubjectNewAcademicYearComponent extends Component {
   @service store;
@@ -37,10 +38,8 @@ export default class ReportsSubjectNewAcademicYearComponent extends Component {
     if (ids.includes(this.args.currentId)) {
       return;
     }
-    if (!this.academicYears.length) {
-      this.args.changeId(null);
-    } else {
-      this.args.changeId(this.academicYears[0].id);
-    }
+    const currentYear = currentAcademicYear();
+    const currentYearId = this.academicYears.find(({ id }) => Number(id) === currentYear)?.id;
+    this.args.changeId(currentYearId ?? ids.at(-1));
   }
 }

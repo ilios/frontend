@@ -3,8 +3,8 @@ import { tracked } from '@glimmer/tracking';
 import { restartableTask } from 'ember-concurrency';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
-import { DateTime } from 'luxon';
 import { findBy, sortBy } from 'ilios-common/utils/array-helpers';
+import currentAcademicYear from 'ilios-common/utils/current-academic-year';
 
 export default class DashboardCoursesCalendarFilterComponent extends Component {
   @service dataLoader;
@@ -15,17 +15,6 @@ export default class DashboardCoursesCalendarFilterComponent extends Component {
   @tracked titlesInView = [];
   @tracked coursesRelationship;
   @tracked academicYearCrossesCalendarYearBoundaries = false;
-
-  get academicYear() {
-    const today = DateTime.now();
-    const thisYear = Number(today.year);
-    const thisMonth = Number(today.month);
-    if (thisMonth < 4) {
-      return thisYear - 1;
-    }
-
-    return thisYear;
-  }
 
   get expandedYearWithoutTitleView() {
     const yearsWithNoTitle = this.yearsInView.filter((year) => !this.titlesInView.includes(year));
@@ -68,8 +57,9 @@ export default class DashboardCoursesCalendarFilterComponent extends Component {
 
   get defaultExpandedYear() {
     if (this.courseYears.length) {
-      const coursesThisYear = findBy(this.courseYears, 'year', this.academicYear);
-      return coursesThisYear ? this.academicYear : this.courseYears[0].year;
+      const academicYear = currentAcademicYear();
+      const coursesThisYear = findBy(this.courseYears, 'year', academicYear);
+      return coursesThisYear ? academicYear : this.courseYears[0].year;
     }
 
     return false;

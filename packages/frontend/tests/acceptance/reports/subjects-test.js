@@ -463,6 +463,7 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
     await page.root.list.newSubject.schools.choose('1');
     await page.root.list.newSubject.subjects.choose('instructor');
     await page.root.list.newSubject.objects.choose('academic year');
+    await page.root.list.newSubject.prepositionalObjects.choose('2015');
     await page.root.list.newSubject.save();
     assert.notOk(page.root.list.newReportLinkIsHidden);
     assert.strictEqual(page.root.list.table.reports.length, 3);
