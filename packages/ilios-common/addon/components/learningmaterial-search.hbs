@@ -30,13 +30,13 @@
               </span>
             </div>
             <span class="learning-material-description">
-            {{! template-lint-disable no-triple-curlies }}
+              {{! template-lint-disable no-triple-curlies }}
               {{{learningMaterial.description}}}
-          </span>
+            </span>
             {{#if learningMaterial.status.title}}
-              <span class="learning-material-status">
-                {{learningMaterial.status.title}}
-              </span>
+            <span class="learning-material-status">
+              {{learningMaterial.status.title}}
+            </span>
             {{/if}}
             <ul class="learning-material-properties">
               <li>
@@ -44,10 +44,10 @@
                 {{learningMaterial.owningUser.fullName}}
               </li>
               {{#if learningMaterial.originalAuthor}}
-                <li>
-                  {{t "general.contentAuthor"}}:
-                  {{learningMaterial.originalAuthor}}
-                </li>
+              <li>
+                {{t "general.contentAuthor"}}:
+                {{learningMaterial.originalAuthor}}
+              </li>
               {{/if}}
               <li>
                 {{t "general.uploadDate"}}:
@@ -62,6 +62,7 @@
           <button
             disabled={{if this.searchMore.isRunning true}}
             type="button"
+            data-test-show-more
             {{on "click" (perform this.searchMore)}}
           >
             {{#if this.searchMore.isRunning}}
