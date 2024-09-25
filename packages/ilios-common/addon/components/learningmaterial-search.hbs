@@ -62,6 +62,7 @@
           <button
             disabled={{if this.searchMore.isRunning true}}
             type="button"
+            data-test-show-more
             {{on "click" (perform this.searchMore)}}
           >
             {{#if this.searchMore.isRunning}}
