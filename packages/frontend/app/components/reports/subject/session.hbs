@@ -6,7 +6,7 @@
   @prepositionalObjectTableRowId={{@prepositionalObjectTableRowId}}
   @year={{@year}}
   @changeYear={{@changeYear}}
-  @showYearFilter={{not-eq @prepositionalObject 'course'}}
+  @showYearFilter={{and (not-eq @prepositionalObject 'course') (not-eq @prepositionalObject 'academic year')}}
   @description={{@description}}
   @fetchDownloadData={{this.fetchDownloadData}}
   @readyToDownload={{true}}

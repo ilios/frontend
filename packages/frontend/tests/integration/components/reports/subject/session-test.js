@@ -4,6 +4,8 @@ import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import { setupMirage } from 'frontend/tests/test-support/mirage';
 import { component } from 'frontend/tests/pages/components/reports/subject/session';
+import { component as headerComponent } from 'frontend/tests/pages/components/reports/subject-header';
+
 import { setupAuthentication } from 'ilios-common';
 
 module('Integration | Component | reports/subject/session', function (hooks) {
@@ -168,7 +170,7 @@ module('Integration | Component | reports/subject/session', function (hooks) {
   });
 
   test('filter by school', async function (assert) {
-    assert.expect(1);
+    assert.expect(2);
     this.server.post('api/graphql', function (schema, { requestBody }) {
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
@@ -189,10 +191,11 @@ module('Integration | Component | reports/subject/session', function (hooks) {
       @prepositionalObjectTableRowId={{this.report.prepositionalObjectTableRowId}}
       @school={{this.school}}
     />`);
+    assert.ok(headerComponent.hasYearFilter);
   });
 
   test('filter by program', async function (assert) {
-    assert.expect(1);
+    assert.expect(2);
     this.server.post('api/graphql', function (schema, { requestBody }) {
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
@@ -212,10 +215,11 @@ module('Integration | Component | reports/subject/session', function (hooks) {
       @prepositionalObject={{this.report.prepositionalObject}}
       @prepositionalObjectTableRowId={{this.report.prepositionalObjectTableRowId}}
     />`);
+    assert.ok(headerComponent.hasYearFilter);
   });
 
   test('filter by school and program', async function (assert) {
-    assert.expect(1);
+    assert.expect(2);
     this.server.post('api/graphql', function (schema, { requestBody }) {
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
@@ -238,10 +242,11 @@ module('Integration | Component | reports/subject/session', function (hooks) {
       @prepositionalObjectTableRowId={{this.report.prepositionalObjectTableRowId}}
       @school={{this.school}}
     />`);
+    assert.ok(headerComponent.hasYearFilter);
   });
 
   test('filter by course', async function (assert) {
-    assert.expect(1);
+    assert.expect(2);
     this.server.post('api/graphql', function (schema, { requestBody }) {
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
@@ -261,10 +266,11 @@ module('Integration | Component | reports/subject/session', function (hooks) {
       @prepositionalObject={{this.report.prepositionalObject}}
       @prepositionalObjectTableRowId={{this.report.prepositionalObjectTableRowId}}
     />`);
+    assert.notOk(headerComponent.hasYearFilter);
   });
 
   test('filter by session type', async function (assert) {
-    assert.expect(1);
+    assert.expect(2);
     this.server.post('api/graphql', function (schema, { requestBody }) {
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
@@ -284,10 +290,11 @@ module('Integration | Component | reports/subject/session', function (hooks) {
       @prepositionalObject={{this.report.prepositionalObject}}
       @prepositionalObjectTableRowId={{this.report.prepositionalObjectTableRowId}}
     />`);
+    assert.ok(headerComponent.hasYearFilter);
   });
 
   test('filter by mesh', async function (assert) {
-    assert.expect(1);
+    assert.expect(2);
     this.server.post('api/graphql', function (schema, { requestBody }) {
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
@@ -307,5 +314,31 @@ module('Integration | Component | reports/subject/session', function (hooks) {
       @prepositionalObject={{this.report.prepositionalObject}}
       @prepositionalObjectTableRowId={{this.report.prepositionalObjectTableRowId}}
     />`);
+    assert.ok(headerComponent.hasYearFilter);
+  });
+
+  test('filter by academic year', async function (assert) {
+    assert.expect(2);
+    this.server.post('api/graphql', function (schema, { requestBody }) {
+      const { query } = JSON.parse(requestBody);
+      assert.strictEqual(
+        query,
+        'query { sessions(academicYears: [2005]) { id, title, course { id, year, title } } }',
+      );
+      return responseData;
+    });
+    const { id } = this.server.create('report', {
+      subject: 'session',
+      prepositionalObject: 'academic year',
+      prepositionalObjectTableRowId: '2005',
+    });
+    this.set('report', await this.owner.lookup('service:store').findRecord('report', id));
+    await render(hbs`<Reports::Subject::Session
+      @subject={{this.report.subject}}
+      @prepositionalObject={{this.report.prepositionalObject}}
+      @prepositionalObjectTableRowId={{this.report.prepositionalObjectTableRowId}}
+    />`);
+
+    assert.notOk(headerComponent.hasYearFilter);
   });
 });
