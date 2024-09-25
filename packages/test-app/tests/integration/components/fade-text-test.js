@@ -7,6 +7,27 @@ import { component } from 'ilios-common/page-objects/components/fade-text';
 module('Integration | Component | fade-text', function (hooks) {
   setupRenderingTest(hooks);
 
+  hooks.beforeEach(function () {
+    this.longHtml = `
+      An objective description so long that it fades.<br />
+      An objective description so long that it fades.<br />
+      An objective description so long that it fades.<br />
+      An objective description so long that it fades.<br />
+      An objective description so long that it fades.<br />
+      An objective description so long that it fades.<br />
+      An objective description so long that it fades.<br />
+      An objective description so long that it fades.<br />
+      An objective description so long that it fades.<br />
+      An objective description so long that it fades.<br />
+      An objective description so long that it fades.<br />
+      An objective description so long that it fades.<br />
+      An objective description so long that it fades.<br />
+      An objective description so long that it fades.
+    `;
+    this.fadedClass = 'is-faded';
+    this.fadedSelector = '.is-faded';
+  });
+
   test('it renders empty', async function (assert) {
     await render(hbs`<FadeText />`);
     assert.strictEqual(component.text, '');
@@ -33,65 +54,29 @@ module('Integration | Component | fade-text', function (hooks) {
   });
 
   test('it fades tall text given as component argument', async function (assert) {
-    const longHtml = `
-      An objective description so long that it fades.<br />
-      An objective description so long that it fades.<br />
-      An objective description so long that it fades.<br />
-      An objective description so long that it fades.<br />
-      An objective description so long that it fades.<br />
-      An objective description so long that it fades.<br />
-      An objective description so long that it fades.<br />
-      An objective description so long that it fades.<br />
-      An objective description so long that it fades.<br />
-      An objective description so long that it fades.<br />
-      An objective description so long that it fades.<br />
-      An objective description so long that it fades.<br />
-      An objective description so long that it fades.<br />
-      An objective description so long that it fades.
-    `;
-    const fadedClass = 'is-faded';
-    const fadedSelector = '.is-faded';
-    this.set('longHtml', longHtml);
+    this.set('longHtml', this.longHtml);
 
     await render(hbs`<FadeText @text={{this.longHtml}} />`);
 
     // slight delay to allow for proper loading of component
-    await waitFor(fadedSelector);
+    await waitFor(this.fadedSelector);
 
-    assert.dom('.display-text-wrapper', this.element).hasClass(fadedClass);
+    assert.dom('.display-text-wrapper', this.element).hasClass(this.fadedClass);
 
     await component.expand.click();
 
-    assert.dom('.display-text-wrapper', this.element).doesNotHaveClass(fadedClass);
+    assert.dom('.display-text-wrapper', this.element).doesNotHaveClass(this.fadedClass);
 
     await component.collapse.click();
 
     // slight delay to allow for proper loading of component
-    await waitFor(fadedSelector);
+    await waitFor(this.fadedSelector);
 
-    assert.dom('.display-text-wrapper', this.element).hasClass(fadedClass);
+    assert.dom('.display-text-wrapper', this.element).hasClass(this.fadedClass);
   });
 
   test('it fades tall text given as block', async function (assert) {
-    const longHtml = `
-      An objective description so long that it fades.<br />
-      An objective description so long that it fades.<br />
-      An objective description so long that it fades.<br />
-      An objective description so long that it fades.<br />
-      An objective description so long that it fades.<br />
-      An objective description so long that it fades.<br />
-      An objective description so long that it fades.<br />
-      An objective description so long that it fades.<br />
-      An objective description so long that it fades.<br />
-      An objective description so long that it fades.<br />
-      An objective description so long that it fades.<br />
-      An objective description so long that it fades.<br />
-      An objective description so long that it fades.<br />
-      An objective description so long that it fades.
-    `;
-    const fadedClass = 'is-faded';
-    const fadedSelector = '.is-faded';
-    this.set('longHtml', longHtml);
+    this.set('longHtml', this.longHtml);
 
     await render(hbs`
       <FadeText
@@ -116,66 +101,48 @@ module('Integration | Component | fade-text', function (hooks) {
     `);
 
     // slight delay to allow for proper loading of component
-    await waitFor(fadedSelector);
+    await waitFor(this.fadedSelector);
 
-    assert.dom('.display-text-wrapper', this.element).hasClass(fadedClass);
+    assert.dom('.display-text-wrapper', this.element).hasClass(this.fadedClass);
 
     await component.expand.click();
 
-    assert.dom('.display-text-wrapper', this.element).doesNotHaveClass(fadedClass);
+    assert.dom('.display-text-wrapper', this.element).doesNotHaveClass(this.fadedClass);
 
     await component.collapse.click();
 
     // slight delay to allow for proper loading of component
-    await waitFor(fadedSelector);
+    await waitFor(this.fadedSelector);
 
-    assert.dom('.display-text-wrapper', this.element).hasClass(fadedClass);
+    assert.dom('.display-text-wrapper', this.element).hasClass(this.fadedClass);
   });
 
   test('expand/collapse', async function (assert) {
-    const longHtml = `
-      An objective description so long that it fades.<br />
-      An objective description so long that it fades.<br />
-      An objective description so long that it fades.<br />
-      An objective description so long that it fades.<br />
-      An objective description so long that it fades.<br />
-      An objective description so long that it fades.<br />
-      An objective description so long that it fades.<br />
-      An objective description so long that it fades.<br />
-      An objective description so long that it fades.<br />
-      An objective description so long that it fades.<br />
-      An objective description so long that it fades.<br />
-      An objective description so long that it fades.<br />
-      An objective description so long that it fades.<br />
-      An objective description so long that it fades.
-    `;
     const longText = `An objective description so long that it fades. An objective description so long that it fades. An objective description so long that it fades. An objective description so long that it fades. An objective description so long that it fades. An objective description so long that it fades. An objective description so long that it fades. An objective description so long that it fades. An objective description so long that it fades. An objective description so long that it fades. An objective description so long that it fades. An objective description so long that it fades. An objective description so long that it fades. An objective description so long that it fades.`;
-    const fadedClass = 'is-faded';
-    const fadedSelector = '.is-faded';
-    this.set('longHtml', longHtml);
+    this.set('longHtml', this.longHtml);
     this.set('longText', longText);
     await render(hbs`<FadeText @text={{this.longHtml}} />`);
 
     // slight delay to allow for proper loading of component
-    await waitFor(fadedSelector);
+    await waitFor(this.fadedSelector);
 
-    assert.dom('.display-text-wrapper', this.element).hasClass(fadedClass);
+    assert.dom('.display-text-wrapper', this.element).hasClass(this.fadedClass);
     assert.strictEqual(component.text, longText);
     assert.ok(component.expand.isVisible);
     assert.notOk(component.collapse.isVisible);
 
     await component.expand.click();
 
-    assert.dom('.display-text-wrapper', this.element).doesNotHaveClass(fadedClass);
+    assert.dom('.display-text-wrapper', this.element).doesNotHaveClass(this.fadedClass);
     assert.notOk(component.expand.isVisible);
     assert.ok(component.collapse.isVisible);
 
     await component.collapse.click();
 
     // slight delay to allow for proper loading of component
-    await waitFor(fadedSelector);
+    await waitFor(this.fadedSelector);
 
-    assert.dom('.display-text-wrapper', this.element).hasClass(fadedClass);
+    assert.dom('.display-text-wrapper', this.element).hasClass(this.fadedClass);
     assert.ok(component.expand.isVisible);
     assert.notOk(component.collapse.isVisible);
   });
