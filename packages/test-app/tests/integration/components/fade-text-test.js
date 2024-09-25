@@ -1,8 +1,7 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
-import { render } from '@ember/test-helpers';
+import { render, waitFor } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
-import { later } from '@ember/runloop';
 import { component } from 'ilios-common/page-objects/components/fade-text';
 
 module('Integration | Component | fade-text', function (hooks) {
@@ -51,35 +50,24 @@ module('Integration | Component | fade-text', function (hooks) {
       An objective description so long that it fades.
     `;
     const fadedClass = 'is-faded';
+    const fadedSelector = '.is-faded';
     this.set('longHtml', longHtml);
 
     await render(hbs`<FadeText @text={{this.longHtml}} />`);
 
     // slight delay to allow for proper loading of component
-    await new Promise((resolve) => {
-      // eslint-disable-next-line ember/no-runloop
-      later(resolve, 10);
-    });
+    await waitFor(fadedSelector);
 
     assert.dom('.display-text-wrapper', this.element).hasClass(fadedClass);
 
     await component.expand.click();
-
-    // slight delay to allow for proper loading of component
-    await new Promise((resolve) => {
-      // eslint-disable-next-line ember/no-runloop
-      later(resolve, 10);
-    });
 
     assert.dom('.display-text-wrapper', this.element).doesNotHaveClass(fadedClass);
 
     await component.collapse.click();
 
     // slight delay to allow for proper loading of component
-    await new Promise((resolve) => {
-      // eslint-disable-next-line ember/no-runloop
-      later(resolve, 10);
-    });
+    await waitFor(fadedSelector);
 
     assert.dom('.display-text-wrapper', this.element).hasClass(fadedClass);
   });
@@ -102,6 +90,7 @@ module('Integration | Component | fade-text', function (hooks) {
       An objective description so long that it fades.
     `;
     const fadedClass = 'is-faded';
+    const fadedSelector = '.is-faded';
     this.set('longHtml', longHtml);
 
     await render(hbs`
@@ -127,30 +116,18 @@ module('Integration | Component | fade-text', function (hooks) {
     `);
 
     // slight delay to allow for proper loading of component
-    await new Promise((resolve) => {
-      // eslint-disable-next-line ember/no-runloop
-      later(resolve, 10);
-    });
+    await waitFor(fadedSelector);
 
     assert.dom('.display-text-wrapper', this.element).hasClass(fadedClass);
 
     await component.expand.click();
-
-    // slight delay to allow for proper loading of component
-    await new Promise((resolve) => {
-      // eslint-disable-next-line ember/no-runloop
-      later(resolve, 10);
-    });
 
     assert.dom('.display-text-wrapper', this.element).doesNotHaveClass(fadedClass);
 
     await component.collapse.click();
 
     // slight delay to allow for proper loading of component
-    await new Promise((resolve) => {
-      // eslint-disable-next-line ember/no-runloop
-      later(resolve, 10);
-    });
+    await waitFor(fadedSelector);
 
     assert.dom('.display-text-wrapper', this.element).hasClass(fadedClass);
   });
@@ -174,15 +151,13 @@ module('Integration | Component | fade-text', function (hooks) {
     `;
     const longText = `An objective description so long that it fades. An objective description so long that it fades. An objective description so long that it fades. An objective description so long that it fades. An objective description so long that it fades. An objective description so long that it fades. An objective description so long that it fades. An objective description so long that it fades. An objective description so long that it fades. An objective description so long that it fades. An objective description so long that it fades. An objective description so long that it fades. An objective description so long that it fades. An objective description so long that it fades.`;
     const fadedClass = 'is-faded';
+    const fadedSelector = '.is-faded';
     this.set('longHtml', longHtml);
     this.set('longText', longText);
     await render(hbs`<FadeText @text={{this.longHtml}} />`);
 
     // slight delay to allow for proper loading of component
-    await new Promise((resolve) => {
-      // eslint-disable-next-line ember/no-runloop
-      later(resolve, 10);
-    });
+    await waitFor(fadedSelector);
 
     assert.dom('.display-text-wrapper', this.element).hasClass(fadedClass);
     assert.strictEqual(component.text, longText);
@@ -191,12 +166,6 @@ module('Integration | Component | fade-text', function (hooks) {
 
     await component.expand.click();
 
-    // slight delay to allow for proper loading of component
-    await new Promise((resolve) => {
-      // eslint-disable-next-line ember/no-runloop
-      later(resolve, 10);
-    });
-
     assert.dom('.display-text-wrapper', this.element).doesNotHaveClass(fadedClass);
     assert.notOk(component.expand.isVisible);
     assert.ok(component.collapse.isVisible);
@@ -204,10 +173,7 @@ module('Integration | Component | fade-text', function (hooks) {
     await component.collapse.click();
 
     // slight delay to allow for proper loading of component
-    await new Promise((resolve) => {
-      // eslint-disable-next-line ember/no-runloop
-      later(resolve, 10);
-    });
+    await waitFor(fadedSelector);
 
     assert.dom('.display-text-wrapper', this.element).hasClass(fadedClass);
     assert.ok(component.expand.isVisible);
