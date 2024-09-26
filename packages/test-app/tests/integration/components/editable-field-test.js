@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
-import { render, click, triggerKeyEvent } from '@ember/test-helpers';
+import { render, click, triggerKeyEvent, waitFor } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 
 module('Integration | Component | editable field', function (hooks) {
@@ -142,16 +142,22 @@ module('Integration | Component | editable field', function (hooks) {
 
   test('expand/collapse overlong html', async function (assert) {
     const text = `
-      <p>A long list:</p><ol><li>One</li><li>two</li><li>Five!</li><li>Six</li><li>Seven but with extra text to make long</li><li>a</li><li>b</li><li>c</li><li>d</li><li>e</li><li>f</li><li>g</li><li>h</li><li>iii</li><li>Jjjjjj</li><li>k</li><li>lLLLLLLlll</li><li>mmmmmMMMMMmm</li></ol>
+      <p>A long list:</p><ol><li>One</li><li>two</li><li>Five!</li><li>Six</li><li>Seven but with extra text to make long</li><li>a</li><li>b</li><li>c</li><li>d</li><li>e</li><li>f</li><li>g</li><li>h</li><li>iii</li><li>Jjjjjj</li><li>k</li><li>lLLLLLLlll</li><li>mmmmmMMMMMmm</li><li>nnnnnOPE</li><li>ohno</li><li>pppppPowerbook</li></ol>
     `;
     const fadedClass = 'is-faded';
+    const fadedSelector = '.is-faded';
     this.set('value', text);
     await render(hbs`<EditableField @value={{this.value}} />`);
+
+    await waitFor(fadedSelector);
 
     assert.dom('.display-text-wrapper', this.element).hasClass(fadedClass);
     await click('[data-test-expand]');
     assert.dom('.display-text-wrapper', this.element).doesNotHaveClass(fadedClass);
     await click('[data-test-collapse]');
+
+    await waitFor(fadedSelector);
+
     assert.dom('.display-text-wrapper', this.element).hasClass(fadedClass);
   });
 
