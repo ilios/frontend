@@ -295,7 +295,9 @@ module('Integration | Component | course/visualize-objectives-graph', function (
 
     this.set('course', courseModel);
 
-    await render(hbs`<Course::VisualizeObjectivesGraph @course={{this.course}} @isIcon={{false}} />`);
+    await render(
+      hbs`<Course::VisualizeObjectivesGraph @course={{this.course}} @isIcon={{false}} />`,
+    );
     assert.notOk(component.chart.isPresent);
     assert.ok(component.unlinkedObjectives.isPresent);
     assert.strictEqual(

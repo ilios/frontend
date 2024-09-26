@@ -29,7 +29,9 @@ module('Integration | Component | dashboard/courses-calendar-filter', function (
     });
     const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
     this.set('school', schoolModel);
-    await render(hbs`<Dashboard::CoursesCalendarFilter @school={{this.school}} @add={{(noop)}} @remove={{(noop)}} />`);
+    await render(
+      hbs`<Dashboard::CoursesCalendarFilter @school={{this.school}} @add={{(noop)}} @remove={{(noop)}} />`,
+    );
 
     assert.strictEqual(component.years.length, 3);
     assert.strictEqual(parseInt(component.years[0].title, 10), thisYear + 1);
@@ -76,7 +78,9 @@ module('Integration | Component | dashboard/courses-calendar-filter', function (
     });
     const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
     this.set('school', schoolModel);
-    await render(hbs`<Dashboard::CoursesCalendarFilter @school={{this.school}} @add={{(noop)}} @remove={{(noop)}} />`);
+    await render(
+      hbs`<Dashboard::CoursesCalendarFilter @school={{this.school}} @add={{(noop)}} @remove={{(noop)}} />`,
+    );
 
     assert.strictEqual(component.years[0].title, `${thisYear + 1} - ${thisYear + 2}`);
     assert.strictEqual(component.years[1].title, `${thisYear} - ${thisYear + 1}`);
@@ -99,7 +103,9 @@ module('Integration | Component | dashboard/courses-calendar-filter', function (
     });
     const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
     this.set('school', schoolModel);
-    await render(hbs`<Dashboard::CoursesCalendarFilter @school={{this.school}} @add={{(noop)}} @remove={{(noop)}} />`);
+    await render(
+      hbs`<Dashboard::CoursesCalendarFilter @school={{this.school}} @add={{(noop)}} @remove={{(noop)}} />`,
+    );
 
     assert.strictEqual(component.years.length, 3);
 
@@ -138,7 +144,9 @@ module('Integration | Component | dashboard/courses-calendar-filter', function (
     });
     const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
     this.set('school', schoolModel);
-    await render(hbs`<Dashboard::CoursesCalendarFilter @school={{this.school}} @add={{(noop)}} @remove={{(noop)}} />`);
+    await render(
+      hbs`<Dashboard::CoursesCalendarFilter @school={{this.school}} @add={{(noop)}} @remove={{(noop)}} />`,
+    );
 
     assert.strictEqual(component.years.length, 2);
     assert.strictEqual(component.years[0].title, `2015`);
@@ -178,7 +186,9 @@ module('Integration | Component | dashboard/courses-calendar-filter', function (
     });
     const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
     this.set('school', schoolModel);
-    await render(hbs`<Dashboard::CoursesCalendarFilter @school={{this.school}} @add={{(noop)}} @remove={{(noop)}} />`);
+    await render(
+      hbs`<Dashboard::CoursesCalendarFilter @school={{this.school}} @add={{(noop)}} @remove={{(noop)}} />`,
+    );
 
     assert.strictEqual(component.years.length, 3);
     assert.strictEqual(component.years[0].title, `${currentYear + 1}`);
@@ -251,7 +261,9 @@ module('Integration | Component | dashboard/courses-calendar-filter', function (
     this.set('add', (id) => {
       assert.strictEqual(id, '1');
     });
-    await render(hbs`<Dashboard::CoursesCalendarFilter @school={{this.school}} @add={{this.add}} @remove={{(noop)}} />`);
+    await render(
+      hbs`<Dashboard::CoursesCalendarFilter @school={{this.school}} @add={{this.add}} @remove={{(noop)}} />`,
+    );
     assert.notOk(component.years[0].courses[0].isChecked);
     await component.years[0].courses[0].toggle();
   });

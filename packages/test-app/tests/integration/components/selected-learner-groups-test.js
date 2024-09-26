@@ -74,7 +74,9 @@ module('Integration | Component | selected-learner-groups', function (hooks) {
 
   test('read-only', async function (assert) {
     this.set('learnerGroups', [this.tlg1, this.subGroup1, this.subSubGroup, this.subGroup2]);
-    await render(hbs`<SelectedLearnerGroups @learnerGroups={{this.learnerGroups}} @remove={{(noop)}} />`);
+    await render(
+      hbs`<SelectedLearnerGroups @learnerGroups={{this.learnerGroups}} @remove={{(noop)}} />`,
+    );
     assert.strictEqual(component.heading, 'Selected Learner Groups:');
     assert.strictEqual(component.detailLearnergroupsList.trees.length, 1);
     assert.strictEqual(component.detailLearnergroupsList.trees[0].title, 'program 0 cohort 0');

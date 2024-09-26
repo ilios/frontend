@@ -15,7 +15,9 @@ module('Integration | Component | user-search-result-instructor-group', function
       .lookup('service:store')
       .findRecord('instructor-group', group.id);
     this.set('group', groupModel);
-    await render(hbs`<UserSearchResultInstructorGroup @group={{this.group}} @addInstructorGroup={{(noop)}} />`);
+    await render(
+      hbs`<UserSearchResultInstructorGroup @group={{this.group}} @addInstructorGroup={{(noop)}} />`,
+    );
     assert.strictEqual(component.text, 'instructor group 0');
     assert.ok(component.isActive);
   });

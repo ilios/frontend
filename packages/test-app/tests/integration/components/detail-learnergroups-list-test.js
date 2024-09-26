@@ -60,7 +60,9 @@ module('Integration | Component | detail-learnergroups-list', function (hooks) {
       this.subSubGroup,
       this.subGroup2,
     ]);
-    await render(hbs`<DetailLearnergroupsList @learnerGroups={{this.learnerGroups}} @remove={{(noop)}} />`);
+    await render(
+      hbs`<DetailLearnergroupsList @learnerGroups={{this.learnerGroups}} @remove={{(noop)}} />`,
+    );
     assert.strictEqual(component.trees.length, 2);
     assert.strictEqual(component.trees[0].title, 'program 0 cohort 0');
     assert.strictEqual(component.trees[0].items.length, 3);

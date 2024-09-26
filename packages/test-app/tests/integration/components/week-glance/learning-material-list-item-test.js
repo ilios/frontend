@@ -44,7 +44,9 @@ module('Integration | Component | week-glance/learning-material-list-item', func
       learningMaterials: [lm],
     });
 
-    await render(hbs`<WeekGlance::LearningMaterialListItem @event={{this.event}} @lm={{this.lm}} @index={{1}} />`);
+    await render(
+      hbs`<WeekGlance::LearningMaterialListItem @event={{this.event}} @lm={{this.lm}} @index={{1}} />`,
+    );
 
     assert.notOk(component.hasLink);
   });

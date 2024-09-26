@@ -21,7 +21,9 @@ module('Integration | Component | session-overview-ilm-duedate', function (hooks
 
   test('it renders and is accessible', async function (assert) {
     this.set('editable', true);
-    await render(hbs`<SessionOverviewIlmDuedate @ilmSession={{this.ilmSession}} @editable={{this.editable}} />`);
+    await render(
+      hbs`<SessionOverviewIlmDuedate @ilmSession={{this.ilmSession}} @editable={{this.editable}} />`,
+    );
 
     assert.ok(component.isVisible);
     assert.strictEqual(component.label, 'Due By:');
@@ -34,7 +36,9 @@ module('Integration | Component | session-overview-ilm-duedate', function (hooks
   test('it renders in read-only mode and is accessible', async function (assert) {
     this.set('editable', false);
 
-    await render(hbs`<SessionOverviewIlmDuedate @ilmSession={{this.ilmSession}} @editable={{this.editable}} />`);
+    await render(
+      hbs`<SessionOverviewIlmDuedate @ilmSession={{this.ilmSession}} @editable={{this.editable}} />`,
+    );
 
     assert.strictEqual(component.label, 'Due By:');
     assert.strictEqual(component.value, '05/19/21, 11:55 PM');
@@ -46,7 +50,9 @@ module('Integration | Component | session-overview-ilm-duedate', function (hooks
   test('change date and time, then save', async function (assert) {
     this.set('editable', true);
 
-    await render(hbs`<SessionOverviewIlmDuedate @ilmSession={{this.ilmSession}} @editable={{this.editable}} />`);
+    await render(
+      hbs`<SessionOverviewIlmDuedate @ilmSession={{this.ilmSession}} @editable={{this.editable}} />`,
+    );
 
     assert.strictEqual(component.value, '05/19/21, 11:55 PM');
     await component.edit();
@@ -65,7 +71,9 @@ module('Integration | Component | session-overview-ilm-duedate', function (hooks
   test('change date and time, then cancel', async function (assert) {
     this.set('editable', true);
 
-    await render(hbs`<SessionOverviewIlmDuedate @ilmSession={{this.ilmSession}} @editable={{this.editable}} />`);
+    await render(
+      hbs`<SessionOverviewIlmDuedate @ilmSession={{this.ilmSession}} @editable={{this.editable}} />`,
+    );
 
     assert.strictEqual(component.value, '05/19/21, 11:55 PM');
     await component.edit();

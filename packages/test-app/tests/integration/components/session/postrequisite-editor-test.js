@@ -146,7 +146,9 @@ module('Integration | Component | session/postrequisite-editor', function (hooks
     });
     this.set('session', sessionModel);
 
-    await render(hbs`<Session::PostrequisiteEditor @close={{this.close}} @session={{this.session}} />`);
+    await render(
+      hbs`<Session::PostrequisiteEditor @close={{this.close}} @session={{this.session}} />`,
+    );
     await component.close();
   });
 
@@ -164,7 +166,9 @@ module('Integration | Component | session/postrequisite-editor', function (hooks
     });
     this.set('session', sessionModel);
 
-    await render(hbs`<Session::PostrequisiteEditor @close={{this.close}} @session={{this.session}} />`);
+    await render(
+      hbs`<Session::PostrequisiteEditor @close={{this.close}} @session={{this.session}} />`,
+    );
     await component.save();
   });
 

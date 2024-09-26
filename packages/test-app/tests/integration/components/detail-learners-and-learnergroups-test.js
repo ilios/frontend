@@ -498,7 +498,9 @@ module('Integration | Component | detail-learners-and-learner-groups', function 
 
   test('it updates when relationships change #1550', async function (assert) {
     this.set('session', this.session);
-    await render(hbs`<DetailLearnersAndLearnerGroups @editable={{true}} @session={{this.session}} @cohorts={{(array)}} />`);
+    await render(
+      hbs`<DetailLearnersAndLearnerGroups @editable={{true}} @session={{this.session}} @cohorts={{(array)}} />`,
+    );
     assert.strictEqual(component.title, 'Learners (3) and Learner Groups (3)');
     assert.strictEqual(component.selectedLearners.learners.length, 3);
     assert.strictEqual(component.selectedLearnerGroups.detailLearnergroupsList.trees.length, 2);

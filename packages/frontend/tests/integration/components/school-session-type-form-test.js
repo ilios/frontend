@@ -152,7 +152,9 @@ module('Integration | Component | school session type form', function (hooks) {
     this.set('cancel', () => {
       assert.ok(true);
     });
-    await render(hbs`<SchoolSessionTypeForm @canUpdate={{true}} @save={{(noop)}} @close={{this.cancel}} />`);
+    await render(
+      hbs`<SchoolSessionTypeForm @canUpdate={{true}} @save={{(noop)}} @close={{this.cancel}} />`,
+    );
 
     await component.cancel.click();
   });
@@ -162,7 +164,9 @@ module('Integration | Component | school session type form', function (hooks) {
     this.set('close', () => {
       assert.ok(true);
     });
-    await render(hbs`<SchoolSessionTypeForm @canUpdate={{false}} @save={{(noop)}} @close={{this.close}} />`);
+    await render(
+      hbs`<SchoolSessionTypeForm @canUpdate={{false}} @save={{(noop)}} @close={{this.close}} />`,
+    );
 
     await component.close.click();
   });

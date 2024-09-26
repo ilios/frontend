@@ -112,7 +112,9 @@ module('Integration | Component | leadership search', function (hooks) {
     const user1 = await this.owner.lookup('service:store').findRecord('user', 1);
 
     this.set('existingUsers', [user1]);
-    await render(hbs`<LeadershipSearch @existingUsers={{this.existingUsers}} @selectUser={{this.select}} />`);
+    await render(
+      hbs`<LeadershipSearch @existingUsers={{this.existingUsers}} @selectUser={{this.select}} />`,
+    );
     const search = 'input[type="search"]';
     const results = 'ul li';
     const resultsCount = `${results}:nth-of-type(1)`;

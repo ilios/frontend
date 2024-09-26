@@ -36,7 +36,9 @@ module('Integration | Component | daily-calendar', function (hooks) {
       second: 0,
     });
     this.set('date', january9th2019.toJSDate());
-    await render(hbs`<DailyCalendar @date={{this.date}} @events={{(array)}} @selectEvent={{(noop)}} />`);
+    await render(
+      hbs`<DailyCalendar @date={{this.date}} @events={{(array)}} @selectEvent={{(noop)}} />`,
+    );
     assert.strictEqual(component.ariaBusy, 'false');
     assert.strictEqual(component.title.longDayOfWeek, 'Wednesday, January 9, 2019');
     assert.strictEqual(component.title.shortDayOfWeek, '01/09/2019');
@@ -59,7 +61,9 @@ module('Integration | Component | daily-calendar', function (hooks) {
     this.createEvent('2019-01-09 08:00:00', '2019-01-09 09:00:00', '#ffffff');
     this.set('events', this.server.db.userevents);
     this.set('date', january9th2019.toJSDate());
-    await render(hbs`<DailyCalendar @date={{this.date}} @events={{this.events}} @selectEvent={{(noop)}} />`);
+    await render(
+      hbs`<DailyCalendar @date={{this.date}} @events={{this.events}} @selectEvent={{(noop)}} />`,
+    );
     assert.strictEqual(component.ariaBusy, 'false');
 
     assert.strictEqual(component.title.longDayOfWeek, 'Wednesday, January 9, 2019');
@@ -90,7 +94,9 @@ module('Integration | Component | daily-calendar', function (hooks) {
     this.createEvent('2019-01-09 08:00:00', '2019-01-09 09:00:00', '#ffffff');
     this.set('events', this.server.db.userevents);
     this.set('date', january9th2019.toJSDate());
-    await render(hbs`<DailyCalendar @date={{this.date}} @events={{this.events}} @selectEvent={{(noop)}} />`);
+    await render(
+      hbs`<DailyCalendar @date={{this.date}} @events={{this.events}} @selectEvent={{(noop)}} />`,
+    );
 
     assert.strictEqual(component.events.length, 6);
     assert.strictEqual(component.events[0].name, 'event 0');
@@ -125,7 +131,9 @@ module('Integration | Component | daily-calendar', function (hooks) {
     this.set('selectEvent', () => {
       assert.ok(true);
     });
-    await render(hbs`<DailyCalendar @date={{this.date}} @events={{this.events}} @selectEvent={{this.selectEvent}} />`);
+    await render(
+      hbs`<DailyCalendar @date={{this.date}} @events={{this.events}} @selectEvent={{this.selectEvent}} />`,
+    );
 
     await component.events[0].click();
   });
@@ -145,7 +153,9 @@ module('Integration | Component | daily-calendar', function (hooks) {
     });
     this.set('events', this.server.db.userevents);
     this.set('date', december111980.toJSDate());
-    await render(hbs`<DailyCalendar @date={{this.date}} @events={{this.events}} @selectEvent={{(noop)}} />`);
+    await render(
+      hbs`<DailyCalendar @date={{this.date}} @events={{this.events}} @selectEvent={{(noop)}} />`,
+    );
 
     assert.strictEqual(component.title.longDayOfWeek, 'Thursday, December 11, 1980');
     assert.strictEqual(component.title.shortDayOfWeek, '12/11/1980');

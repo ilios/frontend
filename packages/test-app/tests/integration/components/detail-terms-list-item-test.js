@@ -57,7 +57,9 @@ module('Integration | Component | detail terms list item', function (hooks) {
     this.set('remove', (val) => {
       assert.strictEqual(termModel, val);
     });
-    await render(hbs`<DetailTermsListItem @term={{this.term}} @canEdit={{true}} @remove={{this.remove}} />`);
+    await render(
+      hbs`<DetailTermsListItem @term={{this.term}} @canEdit={{true}} @remove={{this.remove}} />`,
+    );
     assert.dom('.fa-xmark').exists({ count: 1 });
     await click('.fa-xmark');
   });

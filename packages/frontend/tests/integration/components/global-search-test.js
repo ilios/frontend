@@ -13,7 +13,9 @@ module('Integration | Component | global-search', function (hooks) {
   test('it renders', async function (assert) {
     assert.expect(1);
 
-    await render(hbs`<GlobalSearch @setQuery={{(noop)}} @onSelectPage={{(noop)}} @setSelectedYear={{(noop)}} />`);
+    await render(
+      hbs`<GlobalSearch @setQuery={{(noop)}} @onSelectPage={{(noop)}} @setSelectedYear={{(noop)}} />`,
+    );
     assert.dom('[data-test-global-search-box]').exists({ count: 1 });
   });
 
@@ -65,7 +67,9 @@ module('Integration | Component | global-search', function (hooks) {
     });
 
     this.set('query', (value) => assert.strictEqual(value, 'typed it'));
-    await render(hbs`<GlobalSearch @setQuery={{this.query}} @onSelectPage={{(noop)}} @setSelectedYear={{(noop)}} />`);
+    await render(
+      hbs`<GlobalSearch @setQuery={{this.query}} @onSelectPage={{(noop)}} @setSelectedYear={{(noop)}} />`,
+    );
     await component.searchBox.input('typed it');
     await component.searchBox.clickIcon();
   });

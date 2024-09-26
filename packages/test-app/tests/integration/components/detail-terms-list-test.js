@@ -47,7 +47,9 @@ module('Integration | Component | detail terms list', function (hooks) {
 
     this.set('vocabulary', vocabularyModel);
     this.set('terms', terms);
-    await render(hbs`<DetailTermsList @vocabulary={{this.vocabulary}} @terms={{this.terms}} @canEdit={{false}} />`);
+    await render(
+      hbs`<DetailTermsList @vocabulary={{this.vocabulary}} @terms={{this.terms}} @canEdit={{false}} />`,
+    );
     assert.strictEqual(component.title, 'Topics (Medicine)');
     assert.strictEqual(component.vocabularyName, 'Topics');
     assert.strictEqual(component.terms.length, 2);
@@ -94,7 +96,9 @@ module('Integration | Component | detail terms list', function (hooks) {
 
     this.set('vocabulary', vocabularyModel);
     this.set('terms', terms);
-    await render(hbs`<DetailTermsList @vocabulary={{this.vocabulary}} @terms={{this.terms}} @canEdit={{false}} />`);
+    await render(
+      hbs`<DetailTermsList @vocabulary={{this.vocabulary}} @terms={{this.terms}} @canEdit={{false}} />`,
+    );
     assert.strictEqual(component.title, 'Topics (Medicine)');
     assert.strictEqual(component.terms.length, 0);
   });
@@ -151,7 +155,9 @@ module('Integration | Component | detail terms list', function (hooks) {
       .findRecord('vocabulary', vocabulary.id);
     this.set('vocabulary', vocabularyModel);
     this.set('terms', []);
-    await render(hbs`<DetailTermsList @vocabulary={{this.vocabulary}} @terms={{this.terms}} @canEdit={{true}} />`);
+    await render(
+      hbs`<DetailTermsList @vocabulary={{this.vocabulary}} @terms={{this.terms}} @canEdit={{true}} />`,
+    );
     assert.dom('[data-test-title] .inactive').hasText('(inactive)');
   });
 

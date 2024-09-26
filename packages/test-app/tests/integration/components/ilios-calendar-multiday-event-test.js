@@ -59,7 +59,9 @@ module('Integration | Component | ilios calendar multiday event', function (hook
 
   test('event is disabled when not explicitly flagged as selectable', async function (assert) {
     this.ev.offering = 1;
-    await render(hbs`<IliosCalendarMultidayEvent @event={{this.ev}} @selectEvent={{this.selectEvent}} />`);
+    await render(
+      hbs`<IliosCalendarMultidayEvent @event={{this.ev}} @selectEvent={{this.selectEvent}} />`,
+    );
     assert.ok(component.isDisabled);
   });
 });

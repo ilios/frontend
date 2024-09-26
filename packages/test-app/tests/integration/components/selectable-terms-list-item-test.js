@@ -18,7 +18,9 @@ module('Integration | Component | selectable terms list item', function (hooks) 
     this.set('selectedTerms', [this.termModel]);
     this.set('term', this.termModel);
 
-    await render(hbs`<SelectableTermsListItem @selectedTerms={{this.selectedTerms}} @term={{this.term}} />`);
+    await render(
+      hbs`<SelectableTermsListItem @selectedTerms={{this.selectedTerms}} @term={{this.term}} />`,
+    );
 
     assert.strictEqual(component.text, this.termModel.get('title'));
   });

@@ -382,7 +382,9 @@ module('Integration | Component | course/materials', function (hooks) {
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('course', courseModel);
 
-    await render(hbs`<Course::Materials @course={{this.course}} @courseSort={{(noop)}} @sessionSort={{(noop)}} />`);
+    await render(
+      hbs`<Course::Materials @course={{this.course}} @courseSort={{(noop)}} @sessionSort={{(noop)}} />`,
+    );
 
     assert.strictEqual(component.courses.length, 1);
     assert.strictEqual(component.courses[0].title, 'No Course Learning Materials Available');

@@ -18,7 +18,9 @@ module('Integration | Component | reports/subject/new/course', function (hooks) 
   });
 
   test('it renders', async function (assert) {
-    await render(hbs`<Reports::Subject::New::Course @currentId={{null}} @changeId={{(noop)}} @school={{null}} />`);
+    await render(
+      hbs`<Reports::Subject::New::Course @currentId={{null}} @changeId={{(noop)}} @school={{null}} />`,
+    );
 
     assert.notOk(component.hasSelectedCourse);
 
@@ -35,7 +37,9 @@ module('Integration | Component | reports/subject/new/course', function (hooks) 
   });
 
   test('it renders selected course', async function (assert) {
-    await render(hbs`<Reports::Subject::New::Course @currentId='2' @changeId={{(noop)}} @school={{null}} />`);
+    await render(
+      hbs`<Reports::Subject::New::Course @currentId='2' @changeId={{(noop)}} @school={{null}} />`,
+    );
 
     assert.ok(component.hasSelectedCourse);
     assert.strictEqual(component.selectedCourse, '2015 course 1');
@@ -71,7 +75,9 @@ module('Integration | Component | reports/subject/new/course', function (hooks) 
   test('it filters by school', async function (assert) {
     const schoolModel = await this.owner.lookup('service:store').findRecord('school', 2);
     this.set('school', schoolModel);
-    await render(hbs`<Reports::Subject::New::Course @currentId={{null}} @changeId={{(noop)}} @school={{this.school}} />`);
+    await render(
+      hbs`<Reports::Subject::New::Course @currentId={{null}} @changeId={{(noop)}} @school={{this.school}} />`,
+    );
 
     await component.input('course');
     await component.search();
@@ -86,7 +92,9 @@ module('Integration | Component | reports/subject/new/course', function (hooks) 
     assert.expect(6);
     this.server.db.courses.update(1, { title: 'xx', externalId: 'course1' });
     this.server.db.courses.update(3, { title: 'aa', externalId: 'course2' });
-    await render(hbs`<Reports::Subject::New::Course @currentId={{null}} @changeId={{(noop)}} @school={{null}} />`);
+    await render(
+      hbs`<Reports::Subject::New::Course @currentId={{null}} @changeId={{(noop)}} @school={{null}} />`,
+    );
 
     await component.input('course');
     await component.search();

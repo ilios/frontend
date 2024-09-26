@@ -31,7 +31,9 @@ module('Integration | Component | reports/subject/new/learning-material', functi
 
   test('it renders with selected material', async function (assert) {
     assert.expect(2);
-    await render(hbs`<Reports::Subject::New::LearningMaterial @currentId={{2}} @changeId={{(noop)}} @school={{null}} />`);
+    await render(
+      hbs`<Reports::Subject::New::LearningMaterial @currentId={{2}} @changeId={{(noop)}} @school={{null}} />`,
+    );
     assert.ok(component.hasSelectedMaterial);
     assert.strictEqual(component.selectedMaterial, 'learning material 1');
   });

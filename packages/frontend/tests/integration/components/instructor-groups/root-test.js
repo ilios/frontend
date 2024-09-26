@@ -43,7 +43,9 @@ module('Integration | Component | instructor-groups/root', function (hooks) {
   test('it renders', async function (assert) {
     setupPermissionChecker(this, true);
     this.set('schools', this.schools);
-    await render(hbs`<InstructorGroups::Root @schools={{this.schools}} @sortBy='title' @setSortBy={{(noop)}} />`);
+    await render(
+      hbs`<InstructorGroups::Root @schools={{this.schools}} @sortBy='title' @setSortBy={{(noop)}} />`,
+    );
     assert.strictEqual(component.headerTitle, 'Instructor Groups (3)');
     assert.strictEqual(component.list.items.length, 3);
     assert.strictEqual(component.list.items[0].title, 'instructor group 3');

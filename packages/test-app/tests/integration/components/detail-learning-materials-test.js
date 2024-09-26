@@ -37,7 +37,9 @@ module('Integration | Component | detail learning materials', function (hooks) {
 
     this.set('subject', courseModel);
 
-    await render(hbs`<DetailLearningMaterials @subject={{this.subject}} @isCourse={{true}} @editable={{true}} />`);
+    await render(
+      hbs`<DetailLearningMaterials @subject={{this.subject}} @isCourse={{true}} @editable={{true}} />`,
+    );
     assert.strictEqual(component.current.length, 1);
     assert.ok(component.current[0].typeIcon.isCitation);
     assert.strictEqual(component.current[0].title, 'test title');
@@ -74,7 +76,9 @@ module('Integration | Component | detail learning materials', function (hooks) {
 
     this.set('subject', courseModel);
 
-    await render(hbs`<DetailLearningMaterials @subject={{this.subject}} @isCourse={{true}} @editable={{true}} />`);
+    await render(
+      hbs`<DetailLearningMaterials @subject={{this.subject}} @isCourse={{true}} @editable={{true}} />`,
+    );
     assert.strictEqual(component.current[0].userNameInfo.fullName, 'Clem Chowder');
     assert.notOk(component.current[0].userNameInfo.isTooltipVisible);
     await component.current[0].userNameInfo.expandTooltip();
@@ -104,7 +108,9 @@ module('Integration | Component | detail learning materials', function (hooks) {
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('subject', courseModel);
 
-    await render(hbs`<DetailLearningMaterials @subject={{this.subject}} @isCourse={{true}} @editable={{true}} />`);
+    await render(
+      hbs`<DetailLearningMaterials @subject={{this.subject}} @isCourse={{true}} @editable={{true}} />`,
+    );
 
     assert.ok(component.canSort);
   });
@@ -126,7 +132,9 @@ module('Integration | Component | detail learning materials', function (hooks) {
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('subject', courseModel);
 
-    await render(hbs`<DetailLearningMaterials @subject={{this.subject}} @isCourse={{true}} @editable={{false}} />`);
+    await render(
+      hbs`<DetailLearningMaterials @subject={{this.subject}} @isCourse={{true}} @editable={{false}} />`,
+    );
 
     assert.notOk(component.canSort);
   });
@@ -136,7 +144,9 @@ module('Integration | Component | detail learning materials', function (hooks) {
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('subject', courseModel);
 
-    await render(hbs`<DetailLearningMaterials @subject={{this.subject}} @isCourse={{true}} @editable={{true}} />`);
+    await render(
+      hbs`<DetailLearningMaterials @subject={{this.subject}} @isCourse={{true}} @editable={{true}} />`,
+    );
 
     assert.notOk(component.canSort);
   });
@@ -161,7 +171,9 @@ module('Integration | Component | detail learning materials', function (hooks) {
 
     this.set('subject', courseModel);
 
-    await render(hbs`<DetailLearningMaterials @subject={{this.subject}} @isCourse={{true}} @editable={{true}} />`);
+    await render(
+      hbs`<DetailLearningMaterials @subject={{this.subject}} @isCourse={{true}} @editable={{true}} />`,
+    );
 
     assert.notOk(component.canSort);
   });
@@ -184,7 +196,9 @@ module('Integration | Component | detail learning materials', function (hooks) {
     });
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('subject', courseModel);
-    await render(hbs`<DetailLearningMaterials @subject={{this.subject}} @isCourse={{true}} @editable={{true}} />`);
+    await render(
+      hbs`<DetailLearningMaterials @subject={{this.subject}} @isCourse={{true}} @editable={{true}} />`,
+    );
     assert.ok(component.canSort);
     assert.notOk(component.sortManager.isVisible);
     await component.sort();
@@ -221,7 +235,9 @@ module('Integration | Component | detail learning materials', function (hooks) {
       return schema.courseLearningMaterials.find(2);
     });
 
-    await render(hbs`<DetailLearningMaterials @subject={{this.subject}} @isCourse={{true}} @editable={{true}} />`);
+    await render(
+      hbs`<DetailLearningMaterials @subject={{this.subject}} @isCourse={{true}} @editable={{true}} />`,
+    );
     await component.sort();
     await component.sortManager.save();
   });

@@ -38,7 +38,9 @@ module('Integration | Component | learner-group/list', function (hooks) {
       await store.findRecord('learner-group', 3),
     ];
     this.set('learnerGroups', learnerGroupModels);
-    await render(hbs`<LearnerGroup::List @learnerGroups={{this.learnerGroups}} @sortBy='title' @setSortBy={{(noop)}} />`);
+    await render(
+      hbs`<LearnerGroup::List @learnerGroups={{this.learnerGroups}} @sortBy='title' @setSortBy={{(noop)}} />`,
+    );
 
     assert.strictEqual(component.items.length, 3);
     assert.strictEqual(component.items[0].title, 'learner group 0');
@@ -142,7 +144,9 @@ module('Integration | Component | learner-group/list', function (hooks) {
     this.server.createList('learner-group', 3, { cohort: this.cohort });
     const learnerGroupModels = await this.owner.lookup('service:store').findAll('learner-group');
     this.set('learnerGroups', learnerGroupModels);
-    await render(hbs`<LearnerGroup::List @learnerGroups={{this.learnerGroups}} @sortBy='title' @setSortBy={{(noop)}} />`);
+    await render(
+      hbs`<LearnerGroup::List @learnerGroups={{this.learnerGroups}} @sortBy='title' @setSortBy={{(noop)}} />`,
+    );
     assert.strictEqual(this.server.db.learnerGroups.length, 3);
     assert.strictEqual(component.items.length, 3);
     assert.strictEqual(component.items[0].title, 'learner group 0');
@@ -157,7 +161,9 @@ module('Integration | Component | learner-group/list', function (hooks) {
     this.server.createList('learner-group', 3, { cohort: this.cohort });
     const learnerGroupModels = await this.owner.lookup('service:store').findAll('learner-group');
     this.set('learnerGroups', learnerGroupModels);
-    await render(hbs`<LearnerGroup::List @learnerGroups={{this.learnerGroups}} @sortBy='title' @setSortBy={{(noop)}} />`);
+    await render(
+      hbs`<LearnerGroup::List @learnerGroups={{this.learnerGroups}} @sortBy='title' @setSortBy={{(noop)}} />`,
+    );
     assert.strictEqual(this.server.db.learnerGroups.length, 3);
     assert.strictEqual(component.items.length, 3);
     assert.strictEqual(component.items[0].title, 'learner group 0');

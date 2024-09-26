@@ -24,7 +24,9 @@ module('Integration | Component | ilios calendar month', function (hooks) {
     thirdEvent.startDate = date.plus({ hour: 3 }).toISO();
     thirdEvent.endDate = date.plus({ hour: 4 }).toISO();
     this.set('events', [firstEvent, secondEvent, thirdEvent]);
-    await render(hbs`<IliosCalendarMonth @date={{this.date}} @calendarEvents={{this.events}} @selectEvent={{(noop)}} />`);
+    await render(
+      hbs`<IliosCalendarMonth @date={{this.date}} @calendarEvents={{this.events}} @selectEvent={{(noop)}} />`,
+    );
     assert.strictEqual(component.calendar.title, 'September 2015');
     assert.strictEqual(component.calendar.events.length, 2);
     assert.ok(component.calendar.days[29].hasShowMore);
@@ -42,7 +44,9 @@ module('Integration | Component | ilios calendar month', function (hooks) {
     secondEvent.startDate = date.plus({ hour: 1 }).toISO();
     secondEvent.endDate = date.plus({ hour: 3 }).toISO();
     this.set('events', [firstEvent, secondEvent]);
-    await render(hbs`<IliosCalendarMonth @date={{this.date}} @calendarEvents={{this.events}} @selectEvent={{(noop)}} />`);
+    await render(
+      hbs`<IliosCalendarMonth @date={{this.date}} @calendarEvents={{this.events}} @selectEvent={{(noop)}} />`,
+    );
     assert.strictEqual(component.calendar.title, 'September 2015');
     assert.strictEqual(component.calendar.events.length, 2);
     assert.notOk(component.calendar.days[29].hasShowMore);
@@ -95,7 +99,9 @@ module('Integration | Component | ilios calendar month', function (hooks) {
     event2.endDate = date.plus({ hour: 72 }).toISO();
     this.set('date', date.toJSDate());
     this.set('events', [event, event2]);
-    await render(hbs`<IliosCalendarMonth @date={{this.date}} @calendarEvents={{this.events}} @selectEvent={{(noop)}} />`);
+    await render(
+      hbs`<IliosCalendarMonth @date={{this.date}} @calendarEvents={{this.events}} @selectEvent={{(noop)}} />`,
+    );
     assert.strictEqual(component.multiday.events.length, 2);
     assert.strictEqual(
       component.multiday.events[0].text,

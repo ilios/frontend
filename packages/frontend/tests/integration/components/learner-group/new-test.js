@@ -9,7 +9,9 @@ module('Integration | Component | learner-group/new', function (hooks) {
   setupRenderingTest(hooks);
 
   test('it renders', async function (assert) {
-    await render(hbs`<LearnerGroup::New @save={{(noop)}} @cancel={{(noop)}} @fillModeSupported={{true}} />`);
+    await render(
+      hbs`<LearnerGroup::New @save={{(noop)}} @cancel={{(noop)}} @fillModeSupported={{true}} />`,
+    );
     assert.ok(component.single.isVisible);
     await a11yAudit(this.element);
   });

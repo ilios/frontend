@@ -45,7 +45,9 @@ module('Integration | Component | instructor-groups/list', function (hooks) {
   });
 
   test('it renders empty', async function (assert) {
-    await render(hbs`<InstructorGroups::List @instructorGroups={{(array)}} @sortBy='title' @setSortBy={{(noop)}} />`);
+    await render(
+      hbs`<InstructorGroups::List @instructorGroups={{(array)}} @sortBy='title' @setSortBy={{(noop)}} />`,
+    );
 
     assert.strictEqual(component.items.length, 0);
     assert.ok(component.isEmpty);

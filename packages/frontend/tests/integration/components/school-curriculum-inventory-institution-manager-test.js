@@ -208,7 +208,9 @@ module(
       this.set('school', schoolModel);
       this.set('canUpdate', true);
 
-      await render(hbs`<SchoolCurriculumInventoryInstitutionManager @canUpdate={{this.canUpdate}} @manage={{(noop)}} />`);
+      await render(
+        hbs`<SchoolCurriculumInventoryInstitutionManager @canUpdate={{this.canUpdate}} @manage={{(noop)}} />`,
+      );
 
       assert.notOk(component.content.name.hasError);
       assert.notOk(component.content.aamcCode.hasError);

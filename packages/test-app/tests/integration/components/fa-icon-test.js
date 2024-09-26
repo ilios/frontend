@@ -126,7 +126,9 @@ module('Integration | Component | fa-icon', function (hooks) {
     this.set('x', '19');
     this.set('y', '81');
 
-    await render(hbs`<FaIcon @icon='coffee' height={{this.height}} width={{this.width}} x={{this.x}} y={{this.y}} />`);
+    await render(
+      hbs`<FaIcon @icon='coffee' height={{this.height}} width={{this.width}} x={{this.x}} y={{this.y}} />`,
+    );
 
     assert.dom('svg').hasAttribute('height', '5px');
     assert.dom('svg').hasAttribute('width', '6px');

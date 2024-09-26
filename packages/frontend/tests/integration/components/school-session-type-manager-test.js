@@ -31,7 +31,9 @@ module('Integration | Component | school session type manager', function (hooks)
       .lookup('service:store')
       .findRecord('session-type', sessionType.id);
     this.set('sessionType', sessionTypeModel);
-    await render(hbs`<SchoolSessionTypeManager @canUpdate={{true}} @sessionType={{this.sessionType}} @close={{(noop)}} />`);
+    await render(
+      hbs`<SchoolSessionTypeManager @canUpdate={{true}} @sessionType={{this.sessionType}} @close={{(noop)}} />`,
+    );
 
     assert.strictEqual(component.title, 'one');
     assert.strictEqual(component.form.title.value, 'one');

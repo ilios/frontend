@@ -63,7 +63,9 @@ module('Integration | Component | learning-material-uploader', function (hooks) 
     });
     this.owner.register('service:iliosConfig', iliosConfigMock);
 
-    await render(hbs`<LearningMaterialUploader @for='test' @setFilename={{(noop)}} @setFileHash={{(noop)}} />`);
+    await render(
+      hbs`<LearningMaterialUploader @for='test' @setFilename={{(noop)}} @setFileHash={{(noop)}} />`,
+    );
     const file = new File(['1234'], 'test.file');
     await selectFiles('[data-test-learning-material-uploader] input', file);
     assert.dom('[data-test-learning-material-uploader]').includesText('This file is too large.');

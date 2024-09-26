@@ -82,7 +82,9 @@ module('Integration | Component | daily-calendar-event', function (hooks) {
 
     test('it renders alone', async function (assert) {
       this.set('event', this.events[0]);
-      await render(hbs`<DailyCalendarEvent @event={{this.event}} @allDayEvents={{array this.event}} />`);
+      await render(
+        hbs`<DailyCalendarEvent @event={{this.event}} @allDayEvents={{array this.event}} />`,
+      );
       const styles = this.getStyle(97, 12, 50);
       assert.ok(component.style.includes(styles['grid-row-start']));
       assert.ok(component.style.includes(styles['grid-row-end']));

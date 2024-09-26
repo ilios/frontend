@@ -283,7 +283,9 @@ module('Integration | Component | offering form', function (hooks) {
 
       savedCount++;
     });
-    await render(hbs`<OfferingForm @close={{(noop)}} @showMakeRecurring={{true}} @save={{this.save}} />`);
+    await render(
+      hbs`<OfferingForm @close={{(noop)}} @showMakeRecurring={{true}} @save={{this.save}} />`,
+    );
     await component.recurring.yesNoToggle.click();
     await component.startDate.datePicker.set(newStartDate);
     await component.recurring.weekdays[tuesday.weekday].input.toggle();
@@ -337,7 +339,9 @@ module('Integration | Component | offering form', function (hooks) {
 
       savedCount++;
     });
-    await render(hbs`<OfferingForm @close={{(noop)}} @showMakeRecurring={{true}} @save={{this.save}} />`);
+    await render(
+      hbs`<OfferingForm @close={{(noop)}} @showMakeRecurring={{true}} @save={{this.save}} />`,
+    );
     await component.recurring.yesNoToggle.click();
     await component.recurring.setWeeks('3');
     await component.startDate.datePicker.set(newStartDate);

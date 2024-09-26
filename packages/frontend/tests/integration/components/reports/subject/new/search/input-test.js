@@ -42,7 +42,9 @@ module('Integration | Component | reports/subject/new/search/input', function (h
     this.set('search', () => {
       assert.ok(false, 'search should not be called');
     });
-    await render(hbs`<Reports::Subject::New::Search::Input @search={{this.search}} @searchIsIdle={{true}} />`);
+    await render(
+      hbs`<Reports::Subject::New::Search::Input @search={{this.search}} @searchIsIdle={{true}} />`,
+    );
     await component.input(input);
     await component.triggerInput();
     assert.strictEqual(component.text, 'keep typing...');

@@ -23,7 +23,9 @@ module('Integration | Helper | optional', function (hooks) {
   test('Works in a pipe', async function (assert) {
     assert.expect(1);
     this.set('check', (value) => assert.strictEqual(value, 42));
-    await render(hbs`<button type='button' {{on 'click' (pipe (optional this.handler) (fn this.check 42))}}></button>`);
+    await render(
+      hbs`<button type='button' {{on 'click' (pipe (optional this.handler) (fn this.check 42))}}></button>`,
+    );
     await click('button');
   });
 });

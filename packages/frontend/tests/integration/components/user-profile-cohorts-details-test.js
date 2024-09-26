@@ -48,7 +48,9 @@ module('Integration | Component | user-profile-cohorts-details', function (hooks
   test('it renders empty', async function (assert) {
     this.set('primaryCohort', this.cohort1);
     this.set('secondaryCohorts', [this.cohort2, this.cohort3, this.cohort4]);
-    await render(hbs`<UserProfileCohortsDetails @primaryCohort={{null}} @secondaryCohorts={{(array)}} />`);
+    await render(
+      hbs`<UserProfileCohortsDetails @primaryCohort={{null}} @secondaryCohorts={{(array)}} />`,
+    );
 
     assert.strictEqual(component.primaryCohort.title, 'None');
     assert.strictEqual(component.secondaryCohorts.length, 1);

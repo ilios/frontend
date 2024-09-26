@@ -24,7 +24,9 @@ module('Integration | Component | sessions-grid', function (hooks) {
   test('it renders with no results', async function (assert) {
     this.set('sessions', []);
     this.set('sortBy', 'title');
-    await render(hbs`<SessionsGrid @sessions={{this.sessions}} @sortBy={{this.sortBy}} @setSortBy={{(noop)}} />`);
+    await render(
+      hbs`<SessionsGrid @sessions={{this.sessions}} @sortBy={{this.sortBy}} @setSortBy={{(noop)}} />`,
+    );
     assert.dom(this.element).hasText('No results found. Please try again.');
   });
 

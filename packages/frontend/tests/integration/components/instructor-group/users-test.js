@@ -82,7 +82,9 @@ module('Integration | Component | instructor-group/users', function (hooks) {
       .lookup('service:store')
       .findRecord('instructor-group', instructorGroup.id);
     this.set('instructorGroup', instructorGroupModel);
-    await render(hbs`<InstructorGroup::Users @instructorGroup={{this.instructorGroup}} @canUpdate={{true}} />`);
+    await render(
+      hbs`<InstructorGroup::Users @instructorGroup={{this.instructorGroup}} @canUpdate={{true}} />`,
+    );
     assert.strictEqual(component.users.length, 3);
     assert.strictEqual(component.title, 'Instructors (3)');
     await component.manage.click();
@@ -106,7 +108,9 @@ module('Integration | Component | instructor-group/users', function (hooks) {
       .lookup('service:store')
       .findRecord('instructor-group', instructorGroup.id);
     this.set('instructorGroup', instructorGroupModel);
-    await render(hbs`<InstructorGroup::Users @instructorGroup={{this.instructorGroup}} @canUpdate={{true}} />`);
+    await render(
+      hbs`<InstructorGroup::Users @instructorGroup={{this.instructorGroup}} @canUpdate={{true}} />`,
+    );
     assert.strictEqual(component.users.length, 3);
     assert.strictEqual(component.title, 'Instructors (3)');
     await component.manage.click();
@@ -132,7 +136,9 @@ module('Integration | Component | instructor-group/users', function (hooks) {
       .lookup('service:store')
       .findRecord('instructor-group', instructorGroup.id);
     this.set('instructorGroup', instructorGroupModel);
-    await render(hbs`<InstructorGroup::Users @instructorGroup={{this.instructorGroup}} @canUpdate={{true}} />`);
+    await render(
+      hbs`<InstructorGroup::Users @instructorGroup={{this.instructorGroup}} @canUpdate={{true}} />`,
+    );
     assert.strictEqual(component.users.length, 2);
     assert.strictEqual(component.title, 'Instructors (2)');
     await component.manage.click();
@@ -159,7 +165,9 @@ module('Integration | Component | instructor-group/users', function (hooks) {
       .lookup('service:store')
       .findRecord('instructor-group', instructorGroup.id);
     this.set('instructorGroup', instructorGroupModel);
-    await render(hbs`<InstructorGroup::Users @instructorGroup={{this.instructorGroup}} @canUpdate={{true}} />`);
+    await render(
+      hbs`<InstructorGroup::Users @instructorGroup={{this.instructorGroup}} @canUpdate={{true}} />`,
+    );
     assert.strictEqual(component.users.length, 2);
     assert.strictEqual(component.title, 'Instructors (2)');
     await component.manage.click();

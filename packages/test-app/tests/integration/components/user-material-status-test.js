@@ -104,7 +104,9 @@ module('Integration | Component | user-material-status', function (hooks) {
       sessionLearningMaterial: 3,
     });
 
-    await render(hbs`<UserMaterialStatus @learningMaterial={{this.learningMaterial}} @disabled={{true}} />`);
+    await render(
+      hbs`<UserMaterialStatus @learningMaterial={{this.learningMaterial}} @disabled={{true}} />`,
+    );
     assert.true(component.isChecked);
     assert.true(component.isDisabled);
     assert.dom(this.element).hasText('');

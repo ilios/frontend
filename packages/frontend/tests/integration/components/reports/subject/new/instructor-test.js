@@ -20,7 +20,9 @@ module('Integration | Component | reports/subject/new/instructor', function (hoo
       assert.strictEqual(userId, '3');
       this.set('currentId', userId);
     });
-    await render(hbs`<Reports::Subject::New::Instructor @currentId={{this.currentId}} @changeId={{this.changeId}} />`);
+    await render(
+      hbs`<Reports::Subject::New::Instructor @currentId={{this.currentId}} @changeId={{this.changeId}} />`,
+    );
     assert.notOk(component.hasSelectedInstructor);
     await component.userSearch.searchBox.set('guy');
     assert.strictEqual(component.userSearch.results.items.length, 5);
@@ -36,7 +38,9 @@ module('Integration | Component | reports/subject/new/instructor', function (hoo
       assert.strictEqual(userId, null);
       this.set('currentId', null);
     });
-    await render(hbs`<Reports::Subject::New::Instructor @currentId={{this.currentId}} @changeId={{this.changeId}} />`);
+    await render(
+      hbs`<Reports::Subject::New::Instructor @currentId={{this.currentId}} @changeId={{this.changeId}} />`,
+    );
     assert.ok(component.hasSelectedInstructor);
     await component.removeSelectedInstructor();
     assert.notOk(component.hasSelectedInstructor);
