@@ -19,6 +19,10 @@
 
     h2 {
       @include m.ilios-heading-h3;
+
+      a {
+        display: inline-block;
+      }
     }
 
     .actions {
