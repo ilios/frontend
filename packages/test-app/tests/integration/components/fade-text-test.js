@@ -32,7 +32,7 @@ module('Integration | Component | fade-text', function (hooks) {
     await render(hbs`<FadeText />`);
     assert.strictEqual(component.text, '');
 
-    await render(hbs`<FadeText></FadeText>`);
+    await render(hbs`<FadeText />`);
     assert.dom(this.element).hasText('');
   });
 
@@ -45,11 +45,9 @@ module('Integration | Component | fade-text', function (hooks) {
     assert.notOk(component.collapse.isVisible);
     assert.notOk(component.expand.isVisible);
 
-    await render(hbs`
-      <FadeText>
-        {{this.shortText}}
-      </FadeText>
-    `);
+    await render(hbs`<FadeText>
+  {{this.shortText}}
+</FadeText>`);
     assert.dom(this.element).hasText(shortText);
   });
 
@@ -78,27 +76,22 @@ module('Integration | Component | fade-text', function (hooks) {
   test('it fades tall text given as block', async function (assert) {
     this.set('longHtml', this.longHtml);
 
-    await render(hbs`
-      <FadeText
-        @text={{this.longHtml}}
-        as |displayText expand collapse updateTextDims isFaded expanded|
-      >
-        <div class="display-text-wrapper{{if isFaded ' is-faded'}}">
-          <div class="display-text" {{on-resize updateTextDims}}>
-            {{displayText}}
-          </div>
-        </div>
-        {{#if isFaded}}
-        <div class="fade-text-control" data-test-fade-text-control>
-          <button type="button" data-test-expand {{on "click" expand}}></button>
-        </div>
-        {{else}}
-          {{#if expanded}}
-            <button type="button" data-test-collapse {{on "click" collapse}}></button>
-          {{/if}}
-        {{/if}}
-      </FadeText>
-    `);
+    await render(hbs`<FadeText @text={{this.longHtml}} as |displayText expand collapse updateTextDims isFaded expanded|>
+  <div class='display-text-wrapper{{if isFaded " is-faded"}}'>
+    <div class='display-text' {{on-resize updateTextDims}}>
+      {{displayText}}
+    </div>
+  </div>
+  {{#if isFaded}}
+    <div class='fade-text-control' data-test-fade-text-control>
+      <button type='button' data-test-expand {{on 'click' expand}}></button>
+    </div>
+  {{else}}
+    {{#if expanded}}
+      <button type='button' data-test-collapse {{on 'click' collapse}}></button>
+    {{/if}}
+  {{/if}}
+</FadeText>`);
 
     // slight delay to allow for proper loading of component
     await waitFor(this.fadedSelector);

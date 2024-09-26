@@ -11,12 +11,12 @@
     <div class="schoolsfilter" data-test-school-filter>
       <FaIcon @icon="building-columns" @fixedWidth={{true}} />
       {{#if this.hasMoreThanOneSchool}}
-        <select aria-label={{t "general.filterBySchool"}} {{on "change" (pick "target.value" @changeSelectedSchool)}}>
+        <select
+          aria-label={{t "general.filterBySchool"}}
+          {{on "change" (pick "target.value" @changeSelectedSchool)}}
+        >
           {{#each (sort-by "title" @schools) as |school|}}
-            <option
-              value={{school.id}}
-              selected={{eq school this.selectedSchool}}
-            >
+            <option value={{school.id}} selected={{eq school this.selectedSchool}}>
               {{school.title}}
             </option>
           {{/each}}
@@ -46,7 +46,7 @@
         aria-label={{t "general.courseTitleFilterPlaceholder"}}
         placeholder={{t "general.courseTitleFilterPlaceholder"}}
         data-test-title-filter
-      >
+      />
     </div>
   </div>
   <section class="courses">
@@ -100,4 +100,3 @@
     </div>
   </section>
 </section>
-

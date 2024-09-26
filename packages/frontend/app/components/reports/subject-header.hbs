@@ -8,7 +8,8 @@
         @close={{this.revertTitleChanges}}
         @saveOnEnter={{true}}
         @showIcon={{true}}
-        @closeOnEscape={{true}} as |isSaving|
+        @closeOnEscape={{true}}
+        as |isSaving|
       >
         <input
           aria-label={{t "general.reportTitle"}}
@@ -18,7 +19,7 @@
           disabled={{isSaving}}
           {{on "input" (pick "target.value" (set this "title"))}}
           {{on "keyup" (fn this.addErrorDisplayFor "title")}}
-        >
+        />
         <ValidationError @errors={{get-errors-for this.title}} />
       </EditableField>
     {{/if}}
@@ -39,12 +40,7 @@
     </button>
   </div>
   {{#if @showYearFilter}}
-    <Reports::SubjectYearFilter
-      @selectedYear={{@year}}
-      @changeYear={{@changeYear}}
-    />
+    <Reports::SubjectYearFilter @selectedYear={{@year}} @changeYear={{@changeYear}} />
   {{/if}}
-  <Reports::SubjectDescription
-    @description={{@description}}
-  />
+  <Reports::SubjectDescription @description={{@description}} />
 </div>

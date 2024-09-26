@@ -43,10 +43,10 @@ module('Integration | Component | reports/subject/session', function (hooks) {
     });
     this.set('report', await this.owner.lookup('service:store').findRecord('report', id));
     await render(hbs`<Reports::Subject::Session
-      @subject={{this.report.subject}}
-      @prepositionalObject={{this.report.prepositionalObject}}
-      @prepositionalObjectTableRowId={{this.report.prepositionalObjectTableRowId}}
-    />`);
+  @subject={{this.report.subject}}
+  @prepositionalObject={{this.report.prepositionalObject}}
+  @prepositionalObjectTableRowId={{this.report.prepositionalObjectTableRowId}}
+/>`);
 
     assert.strictEqual(component.results.length, 3);
     assert.ok(component.results[0].hasCourseLink);
@@ -85,10 +85,10 @@ module('Integration | Component | reports/subject/session', function (hooks) {
     });
     this.set('report', await this.owner.lookup('service:store').findRecord('report', id));
     await render(hbs`<Reports::Subject::Session
-      @subject={{this.report.subject}}
-      @prepositionalObject={{this.report.prepositionalObject}}
-      @prepositionalObjectTableRowId={{this.report.prepositionalObjectTableRowId}}
-    />`);
+  @subject={{this.report.subject}}
+  @prepositionalObject={{this.report.prepositionalObject}}
+  @prepositionalObjectTableRowId={{this.report.prepositionalObjectTableRowId}}
+/>`);
 
     assert.strictEqual(component.results.length, 3);
     assert.notOk(component.results[0].hasCourseLink);
@@ -127,10 +127,10 @@ module('Integration | Component | reports/subject/session', function (hooks) {
     });
     this.set('report', await this.owner.lookup('service:store').findRecord('report', id));
     await render(hbs`<Reports::Subject::Session
-      @subject={{this.report.subject}}
-      @prepositionalObject={{this.report.prepositionalObject}}
-      @prepositionalObjectTableRowId={{this.report.prepositionalObjectTableRowId}}
-    />`);
+  @subject={{this.report.subject}}
+  @prepositionalObject={{this.report.prepositionalObject}}
+  @prepositionalObjectTableRowId={{this.report.prepositionalObjectTableRowId}}
+/>`);
 
     assert.strictEqual(component.results.length, 3);
     assert.strictEqual(component.results[0].year, '2020 - 2021');
@@ -156,11 +156,11 @@ module('Integration | Component | reports/subject/session', function (hooks) {
     });
     this.set('report', await this.owner.lookup('service:store').findRecord('report', id));
     await render(hbs`<Reports::Subject::Session
-    @subject={{this.report.subject}}
-    @prepositionalObject={{this.report.prepositionalObject}}
-    @prepositionalObjectTableRowId={{this.report.prepositionalObjectTableRowId}}
-    @year={{2023}}
-  />`);
+  @subject={{this.report.subject}}
+  @prepositionalObject={{this.report.prepositionalObject}}
+  @prepositionalObjectTableRowId={{this.report.prepositionalObjectTableRowId}}
+  @year={{2023}}
+/>`);
 
     assert.strictEqual(component.results.length, 2);
     assert.notOk(component.results[0].hasYear);
@@ -186,11 +186,11 @@ module('Integration | Component | reports/subject/session', function (hooks) {
     this.set('report', await this.owner.lookup('service:store').findRecord('report', id));
     this.set('school', await this.owner.lookup('service:store').findRecord('school', 33));
     await render(hbs`<Reports::Subject::Session
-      @subject={{this.report.subject}}
-      @prepositionalObject={{this.report.prepositionalObject}}
-      @prepositionalObjectTableRowId={{this.report.prepositionalObjectTableRowId}}
-      @school={{this.school}}
-    />`);
+  @subject={{this.report.subject}}
+  @prepositionalObject={{this.report.prepositionalObject}}
+  @prepositionalObjectTableRowId={{this.report.prepositionalObjectTableRowId}}
+  @school={{this.school}}
+/>`);
     assert.ok(headerComponent.hasYearFilter);
   });
 
@@ -211,10 +211,10 @@ module('Integration | Component | reports/subject/session', function (hooks) {
     });
     this.set('report', await this.owner.lookup('service:store').findRecord('report', id));
     await render(hbs`<Reports::Subject::Session
-      @subject={{this.report.subject}}
-      @prepositionalObject={{this.report.prepositionalObject}}
-      @prepositionalObjectTableRowId={{this.report.prepositionalObjectTableRowId}}
-    />`);
+  @subject={{this.report.subject}}
+  @prepositionalObject={{this.report.prepositionalObject}}
+  @prepositionalObjectTableRowId={{this.report.prepositionalObjectTableRowId}}
+/>`);
     assert.ok(headerComponent.hasYearFilter);
   });
 
@@ -237,11 +237,11 @@ module('Integration | Component | reports/subject/session', function (hooks) {
     this.set('report', await this.owner.lookup('service:store').findRecord('report', id));
     this.set('school', await this.owner.lookup('service:store').findRecord('school', 24));
     await render(hbs`<Reports::Subject::Session
-      @subject={{this.report.subject}}
-      @prepositionalObject={{this.report.prepositionalObject}}
-      @prepositionalObjectTableRowId={{this.report.prepositionalObjectTableRowId}}
-      @school={{this.school}}
-    />`);
+  @subject={{this.report.subject}}
+  @prepositionalObject={{this.report.prepositionalObject}}
+  @prepositionalObjectTableRowId={{this.report.prepositionalObjectTableRowId}}
+  @school={{this.school}}
+/>`);
     assert.ok(headerComponent.hasYearFilter);
   });
 
@@ -262,10 +262,10 @@ module('Integration | Component | reports/subject/session', function (hooks) {
     });
     this.set('report', await this.owner.lookup('service:store').findRecord('report', id));
     await render(hbs`<Reports::Subject::Session
-      @subject={{this.report.subject}}
-      @prepositionalObject={{this.report.prepositionalObject}}
-      @prepositionalObjectTableRowId={{this.report.prepositionalObjectTableRowId}}
-    />`);
+  @subject={{this.report.subject}}
+  @prepositionalObject={{this.report.prepositionalObject}}
+  @prepositionalObjectTableRowId={{this.report.prepositionalObjectTableRowId}}
+/>`);
     assert.notOk(headerComponent.hasYearFilter);
   });
 
@@ -286,10 +286,10 @@ module('Integration | Component | reports/subject/session', function (hooks) {
     });
     this.set('report', await this.owner.lookup('service:store').findRecord('report', id));
     await render(hbs`<Reports::Subject::Session
-      @subject={{this.report.subject}}
-      @prepositionalObject={{this.report.prepositionalObject}}
-      @prepositionalObjectTableRowId={{this.report.prepositionalObjectTableRowId}}
-    />`);
+  @subject={{this.report.subject}}
+  @prepositionalObject={{this.report.prepositionalObject}}
+  @prepositionalObjectTableRowId={{this.report.prepositionalObjectTableRowId}}
+/>`);
     assert.ok(headerComponent.hasYearFilter);
   });
 
@@ -310,10 +310,10 @@ module('Integration | Component | reports/subject/session', function (hooks) {
     });
     this.set('report', await this.owner.lookup('service:store').findRecord('report', id));
     await render(hbs`<Reports::Subject::Session
-      @subject={{this.report.subject}}
-      @prepositionalObject={{this.report.prepositionalObject}}
-      @prepositionalObjectTableRowId={{this.report.prepositionalObjectTableRowId}}
-    />`);
+  @subject={{this.report.subject}}
+  @prepositionalObject={{this.report.prepositionalObject}}
+  @prepositionalObjectTableRowId={{this.report.prepositionalObjectTableRowId}}
+/>`);
     assert.ok(headerComponent.hasYearFilter);
   });
 
@@ -334,10 +334,10 @@ module('Integration | Component | reports/subject/session', function (hooks) {
     });
     this.set('report', await this.owner.lookup('service:store').findRecord('report', id));
     await render(hbs`<Reports::Subject::Session
-      @subject={{this.report.subject}}
-      @prepositionalObject={{this.report.prepositionalObject}}
-      @prepositionalObjectTableRowId={{this.report.prepositionalObjectTableRowId}}
-    />`);
+  @subject={{this.report.subject}}
+  @prepositionalObject={{this.report.prepositionalObject}}
+  @prepositionalObjectTableRowId={{this.report.prepositionalObjectTableRowId}}
+/>`);
 
     assert.notOk(headerComponent.hasYearFilter);
   });

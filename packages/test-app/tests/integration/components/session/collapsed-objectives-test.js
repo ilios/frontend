@@ -37,13 +37,7 @@ module('Integration | Component | session/collapsed-objectives', function (hooks
     const sessionModel = await this.owner.lookup('service:store').findRecord('session', session.id);
 
     this.set('session', sessionModel);
-    await render(hbs`
-      <Session::CollapsedObjectives
-        @session={{this.session}}
-        @expand={{(noop)}}
-      />
-
-`);
+    await render(hbs`<Session::CollapsedObjectives @session={{this.session}} @expand={{(noop)}} />`);
 
     assert.strictEqual(component.title, 'Objectives (4)');
     assert.strictEqual(component.objectiveCount, 'There are 4 objectives');
@@ -67,8 +61,7 @@ module('Integration | Component | session/collapsed-objectives', function (hooks
       assert.ok(true);
     });
     await render(
-      hbs`<Session::CollapsedObjectives @session={{this.session}} @expand={{this.click}} />
-`,
+      hbs`<Session::CollapsedObjectives @session={{this.session}} @expand={{this.click}} />`,
     );
 
     assert.strictEqual(component.title, 'Objectives (0)');
@@ -82,13 +75,7 @@ module('Integration | Component | session/collapsed-objectives', function (hooks
     const sessionModel = await this.owner.lookup('service:store').findRecord('session', session.id);
 
     this.set('session', sessionModel);
-    await render(hbs`
-      <Session::CollapsedObjectives
-        @session={{this.session}}
-        @expand={{(noop)}}
-      />
-
-`);
+    await render(hbs`<Session::CollapsedObjectives @session={{this.session}} @expand={{(noop)}} />`);
     assert.strictEqual(component.title, 'Objectives (1)');
     assert.ok(component.parentStatus.complete);
   });
@@ -100,13 +87,7 @@ module('Integration | Component | session/collapsed-objectives', function (hooks
     const sessionModel = await this.owner.lookup('service:store').findRecord('session', session.id);
 
     this.set('session', sessionModel);
-    await render(hbs`
-      <Session::CollapsedObjectives
-        @session={{this.session}}
-        @expand={{(noop)}}
-      />
-
-`);
+    await render(hbs`<Session::CollapsedObjectives @session={{this.session}} @expand={{(noop)}} />`);
     assert.strictEqual(component.title, 'Objectives (1)');
     assert.ok(component.parentStatus.none);
   });
@@ -118,13 +99,7 @@ module('Integration | Component | session/collapsed-objectives', function (hooks
     const sessionModel = await this.owner.lookup('service:store').findRecord('session', session.id);
 
     this.set('session', sessionModel);
-    await render(hbs`
-      <Session::CollapsedObjectives
-        @session={{this.session}}
-        @expand={{(noop)}}
-      />
-
-`);
+    await render(hbs`<Session::CollapsedObjectives @session={{this.session}} @expand={{(noop)}} />`);
     assert.strictEqual(component.title, 'Objectives (1)');
     assert.ok(component.meshStatus.complete);
   });
@@ -136,13 +111,7 @@ module('Integration | Component | session/collapsed-objectives', function (hooks
     const sessionModel = await this.owner.lookup('service:store').findRecord('session', session.id);
 
     this.set('session', sessionModel);
-    await render(hbs`
-      <Session::CollapsedObjectives
-        @session={{this.session}}
-        @expand={{(noop)}}
-      />
-
-`);
+    await render(hbs`<Session::CollapsedObjectives @session={{this.session}} @expand={{(noop)}} />`);
     assert.strictEqual(component.title, 'Objectives (1)');
     assert.ok(component.meshStatus.none);
   });
@@ -154,13 +123,7 @@ module('Integration | Component | session/collapsed-objectives', function (hooks
     const sessionModel = await this.owner.lookup('service:store').findRecord('session', session.id);
 
     this.set('session', sessionModel);
-    await render(hbs`
-      <Session::CollapsedObjectives
-        @session={{this.session}}
-        @expand={{(noop)}}
-      />
-
-`);
+    await render(hbs`<Session::CollapsedObjectives @session={{this.session}} @expand={{(noop)}} />`);
     assert.strictEqual(component.title, 'Objectives (1)');
     assert.ok(component.termStatus.complete);
   });
@@ -172,13 +135,7 @@ module('Integration | Component | session/collapsed-objectives', function (hooks
     const sessionModel = await this.owner.lookup('service:store').findRecord('session', session.id);
 
     this.set('session', sessionModel);
-    await render(hbs`
-      <Session::CollapsedObjectives
-        @session={{this.session}}
-        @expand={{(noop)}}
-      />
-
-`);
+    await render(hbs`<Session::CollapsedObjectives @session={{this.session}} @expand={{(noop)}} />`);
     assert.strictEqual(component.title, 'Objectives (1)');
     assert.ok(component.termStatus.none);
   });

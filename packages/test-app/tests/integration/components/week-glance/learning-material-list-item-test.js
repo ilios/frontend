@@ -22,12 +22,11 @@ module('Integration | Component | week-glance/learning-material-list-item', func
     });
 
     await render(hbs`<WeekGlance::LearningMaterialListItem
-      @event={{this.event}}
-      @lm={{this.lm}}
-      @index={{1}}
-      @showLink={{true}}
-    />
-`);
+  @event={{this.event}}
+  @lm={{this.lm}}
+  @index={{1}}
+  @showLink={{true}}
+/>`);
 
     assert.strictEqual(component.title, 'lm 1');
     assert.ok(component.typeIcon.isLink);
@@ -45,12 +44,7 @@ module('Integration | Component | week-glance/learning-material-list-item', func
       learningMaterials: [lm],
     });
 
-    await render(hbs`<WeekGlance::LearningMaterialListItem
-      @event={{this.event}}
-      @lm={{this.lm}}
-      @index={{1}}
-    />
-`);
+    await render(hbs`<WeekGlance::LearningMaterialListItem @event={{this.event}} @lm={{this.lm}} @index={{1}} />`);
 
     assert.notOk(component.hasLink);
   });
@@ -67,12 +61,11 @@ module('Integration | Component | week-glance/learning-material-list-item', func
     });
 
     await render(hbs`<WeekGlance::LearningMaterialListItem
-      @event={{this.event}}
-      @lm={{this.lm}}
-      @index={{1}}
-      @showLink={{false}}
-    />
-`);
+  @event={{this.event}}
+  @lm={{this.lm}}
+  @index={{1}}
+  @showLink={{false}}
+/>`);
     assert.notOk(component.hasLink);
   });
 });

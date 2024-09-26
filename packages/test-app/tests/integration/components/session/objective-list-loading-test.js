@@ -7,8 +7,7 @@ module('Integration | Component | session/objective-list-loading', function (hoo
   setupRenderingTest(hooks);
 
   test('it renders', async function (assert) {
-    await render(hbs`<Session::ObjectiveListLoading @count={{9}} />
-`);
+    await render(hbs`<Session::ObjectiveListLoading @count={{9}} />`);
 
     assert.dom('.grid-row').exists({ count: 9 });
   });

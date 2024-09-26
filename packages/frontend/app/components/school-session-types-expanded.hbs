@@ -12,12 +12,14 @@
         data-test-title
         {{on "click" @collapse}}
       >
-        {{t "general.sessionTypes"}} ({{this.sessionTypes.length}})
+        {{t "general.sessionTypes"}}
+        ({{this.sessionTypes.length}})
         <FaIcon @icon="caret-down" />
       </button>
     {{else}}
       <div class="title" data-test-title>
-        {{t "general.sessionTypes"}} ({{this.sessionTypes.length}})
+        {{t "general.sessionTypes"}}
+        ({{this.sessionTypes.length}})
       </div>
     {{/if}}
     <div class="actions">

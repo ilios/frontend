@@ -67,8 +67,7 @@ module('Integration | Component | publish all sessions', function (hooks) {
   test('it renders', async function (assert) {
     this.set('course', this.course);
 
-    await render(hbs`<PublishAllSessions @course={{this.course}} />
-`);
+    await render(hbs`<PublishAllSessions @course={{this.course}} />`);
     assert.strictEqual(
       component.unpublishableSessions.text,
       'Sessions Incomplete: cannot publish (1)',
@@ -135,8 +134,7 @@ module('Integration | Component | publish all sessions', function (hooks) {
     const model = await store.findRecord('course', course.id);
     this.set('course', model);
 
-    await render(hbs`<PublishAllSessions @course={{this.course}} />
-`);
+    await render(hbs`<PublishAllSessions @course={{this.course}} />`);
 
     assert.strictEqual(
       component.unpublishableSessions.text,
@@ -160,8 +158,7 @@ module('Integration | Component | publish all sessions', function (hooks) {
   test('shows course objective warning', async function (assert) {
     this.set('course', this.course);
 
-    await render(hbs`<PublishAllSessions @course={{this.course}} />
-`);
+    await render(hbs`<PublishAllSessions @course={{this.course}} />`);
     assert.strictEqual(
       component.review.unlinkedObjectivesWarning,
       'This course has unlinked objective(s)',
@@ -173,8 +170,7 @@ module('Integration | Component | publish all sessions', function (hooks) {
   test('publish all overridable #2478', async function (assert) {
     this.set('course', this.course);
 
-    await render(hbs`<PublishAllSessions @course={{this.course}} />
-`);
+    await render(hbs`<PublishAllSessions @course={{this.course}} />`);
     assert.strictEqual(
       component.review.confirmation,
       'Publish 2, schedule 1, and ignore 1 sessions',
@@ -203,8 +199,7 @@ module('Integration | Component | publish all sessions', function (hooks) {
   test('schedule all overridable #2478', async function (assert) {
     this.set('course', this.course);
 
-    await render(hbs`<PublishAllSessions @course={{this.course}} />
-`);
+    await render(hbs`<PublishAllSessions @course={{this.course}} />`);
     assert.strictEqual(
       component.review.confirmation,
       'Publish 2, schedule 1, and ignore 1 sessions',

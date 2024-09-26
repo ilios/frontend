@@ -24,13 +24,12 @@ module('Integration | Component | ilios calendar single event objective list', f
     this.set('objectives', objectives);
 
     await render(hbs`<SingleEventObjectiveList
-      @objectives={{this.objectives}}
-      @groupByCompetenciesPhrase={{this.groupByCompetenciesPhrase}}
-      @listByPriorityPhrase={{this.listByPriorityPhrase}}
-      @title={{this.title}}
-      @isExpandedByDefault={{true}}
-    />
-`);
+  @objectives={{this.objectives}}
+  @groupByCompetenciesPhrase={{this.groupByCompetenciesPhrase}}
+  @listByPriorityPhrase={{this.listByPriorityPhrase}}
+  @title={{this.title}}
+  @isExpandedByDefault={{true}}
+/>`);
 
     assert.strictEqual(component.title.expandCollapseSwitcher.text, title);
     assert.strictEqual(component.title.expandCollapseSwitcher.ariaExpanded, 'true');
@@ -72,11 +71,7 @@ module('Integration | Component | ilios calendar single event objective list', f
   test('displays `None` when provided no content', async function (assert) {
     this.set('objectives', []);
 
-    await render(hbs`<SingleEventObjectiveList
-      @objectives={{this.objectives}}
-      @isExpandedByDefault={{true}}
-    />
-`);
+    await render(hbs`<SingleEventObjectiveList @objectives={{this.objectives}} @isExpandedByDefault={{true}} />`);
     assert.strictEqual(component.noContent.text, 'None');
   });
 
@@ -89,11 +84,7 @@ module('Integration | Component | ilios calendar single event objective list', f
     ];
 
     this.set('objectives', objectives);
-    await render(hbs`<SingleEventObjectiveList
-      @objectives={{this.objectives}}
-      @isExpandedByDefault={{true}}
-    />
-`);
+    await render(hbs`<SingleEventObjectiveList @objectives={{this.objectives}} @isExpandedByDefault={{true}} />`);
 
     assert.notOk(component.title.displayModeSwitcher.isVisible);
     assert.strictEqual(component.tree.domains.length, 2);
@@ -108,11 +99,7 @@ module('Integration | Component | ilios calendar single event objective list', f
     ];
     this.set('objectives', objectives);
 
-    await render(hbs`<SingleEventObjectiveList
-      @objectives={{this.objectives}}
-      @isExpandedByDefault={{false}}
-    />
-`);
+    await render(hbs`<SingleEventObjectiveList @objectives={{this.objectives}} @isExpandedByDefault={{false}} />`);
 
     assert.strictEqual(component.title.expandCollapseSwitcher.ariaExpanded, 'false');
     assert.strictEqual(component.title.expandCollapseSwitcher.ariaLabel, 'Show objectives');

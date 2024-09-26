@@ -18,9 +18,7 @@ module('Integration | Component | program-year/overview', function (hooks) {
       .lookup('service:store')
       .findRecord('program-year', programYear.id);
     this.set('program', programYearModel);
-    await render(hbs`<ProgramYear::Overview
-      @programYear={{this.programYear}}
-    />`);
+    await render(hbs`<ProgramYear::Overview @programYear={{this.programYear}} />`);
     assert.strictEqual(component.title, 'Overview');
     assert.notOk(component.actions.visualizations.isPresent);
     await a11yAudit(this.element);
@@ -35,9 +33,7 @@ module('Integration | Component | program-year/overview', function (hooks) {
       .findRecord('program-year', programYear.id);
     this.set('program', programYearModel);
     enableFeature('programYearVisualizations');
-    await render(hbs`<ProgramYear::Overview
-      @programYear={{this.programYear}}
-    />`);
+    await render(hbs`<ProgramYear::Overview @programYear={{this.programYear}} />`);
     assert.ok(component.actions.visualizations.isPresent);
   });
 });

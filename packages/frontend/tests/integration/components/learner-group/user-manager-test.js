@@ -47,18 +47,18 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
     this.set('users', [userModelProxy1, userModelProxy2]);
     this.set('learnerGroup', learnerGroupModel);
     await render(hbs`<LearnerGroup::UserManager
-      @learnerGroupId={{this.learnerGroup.id}}
-      @learnerGroupTitle="this group"
-      @topLevelGroupTitle="top group"
-      @cohortTitle="this cohort"
-      @users={{this.users}}
-      @sortBy="id"
-      @setSortBy={{(noop)}}
-      @addUserToGroup={{(noop)}}
-      @removeUserFromGroup={{(noop)}}
-      @addUsersToGroup={{(noop)}}
-      @removeUsersFromGroup={{(noop)}}
-    />`);
+  @learnerGroupId={{this.learnerGroup.id}}
+  @learnerGroupTitle='this group'
+  @topLevelGroupTitle='top group'
+  @cohortTitle='this cohort'
+  @users={{this.users}}
+  @sortBy='id'
+  @setSortBy={{(noop)}}
+  @addUserToGroup={{(noop)}}
+  @removeUserFromGroup={{(noop)}}
+  @addUsersToGroup={{(noop)}}
+  @removeUsersFromGroup={{(noop)}}
+/>`);
     assert.strictEqual(component.groupMembers, 'Members of current group (2)');
     assert.strictEqual(component.allOtherMembers, 'All other members of top group (0)');
     assert.strictEqual(
@@ -127,18 +127,18 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
     this.set('users', [userModelProxy1, userModelProxy2, userModelProxy3]);
     this.set('learnerGroup', learnerGroupModel);
     await render(hbs`<LearnerGroup::UserManager
-      @learnerGroupId={{this.learnerGroup.Id}}
-      @learnerGroupTitle="this group"
-      @topLevelGroupTitle="top group"
-      @cohortTitle="this cohort"
-      @users={{this.users}}
-      @sortBy="fullName"
-      @setSortBy={{(noop)}}
-      @addUserToGroup={{(noop)}}
-      @removeUserFromGroup={{(noop)}}
-      @addUsersToGroup={{(noop)}}
-      @removeUsersFromGroup={{(noop)}}
-    />`);
+  @learnerGroupId={{this.learnerGroup.Id}}
+  @learnerGroupTitle='this group'
+  @topLevelGroupTitle='top group'
+  @cohortTitle='this cohort'
+  @users={{this.users}}
+  @sortBy='fullName'
+  @setSortBy={{(noop)}}
+  @addUserToGroup={{(noop)}}
+  @removeUserFromGroup={{(noop)}}
+  @addUsersToGroup={{(noop)}}
+  @removeUsersFromGroup={{(noop)}}
+/>`);
 
     assert.strictEqual(component.usersNotInCurrentGroup.length, 3);
     assert.strictEqual(component.usersNotInCurrentGroup[0].name.userNameInfo.fullName, 'Captain J');
@@ -176,18 +176,18 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
       assert.strictEqual(userModel, user);
     });
     await render(hbs`<LearnerGroup::UserManager
-      @learnerGroupId={{this.learnerGroup.id}}
-      @learnerGroupTitle="this group"
-      @topLevelGroupTitle="top group"
-      @cohortTitle="this cohort"
-      @users={{this.users}}
-      @sortBy="id"
-      @setSortBy={{(noop)}}
-      @addUserToGroup={{(noop)}}
-      @removeUserFromGroup={{(noop)}}
-      @addUsersToGroup={{this.addMany}}
-      @removeUsersFromGroup={{(noop)}}
-    />`);
+  @learnerGroupId={{this.learnerGroup.id}}
+  @learnerGroupTitle='this group'
+  @topLevelGroupTitle='top group'
+  @cohortTitle='this cohort'
+  @users={{this.users}}
+  @sortBy='id'
+  @setSortBy={{(noop)}}
+  @addUserToGroup={{(noop)}}
+  @removeUserFromGroup={{(noop)}}
+  @addUsersToGroup={{this.addMany}}
+  @removeUsersFromGroup={{(noop)}}
+/>`);
 
     assert.notOk(component.membersCanBeAdded);
     await component.usersNotInCurrentGroup[0].select();
@@ -217,18 +217,18 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
       assert.strictEqual(userModel, user);
     });
     await render(hbs`<LearnerGroup::UserManager
-      @learnerGroupId={{this.learnerGroup.id}}
-      @learnerGroupTitle="this group"
-      @topLevelGroupTitle="top group"
-      @cohortTitle="this cohort"
-      @users={{this.users}}
-      @sortBy="id"
-      @setSortBy={{(noop)}}
-      @addUserToGroup={{(noop)}}
-      @removeUserFromGroup={{(noop)}}
-      @addUsersToGroup={{(noop)}}
-      @removeUsersFromGroup={{this.removeMany}}
-    />`);
+  @learnerGroupId={{this.learnerGroup.id}}
+  @learnerGroupTitle='this group'
+  @topLevelGroupTitle='top group'
+  @cohortTitle='this cohort'
+  @users={{this.users}}
+  @sortBy='id'
+  @setSortBy={{(noop)}}
+  @addUserToGroup={{(noop)}}
+  @removeUserFromGroup={{(noop)}}
+  @addUsersToGroup={{(noop)}}
+  @removeUsersFromGroup={{this.removeMany}}
+/>`);
 
     assert.notOk(component.membersCanBeRemoved);
     await component.usersInCurrentGroup[0].select();
@@ -260,18 +260,18 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
     });
 
     await render(hbs`<LearnerGroup::UserManager
-      @learnerGroupId={{this.learnerGroup.id}}
-      @learnerGroupTitle="this group"
-      @topLevelGroupTitle="top group"
-      @cohortTitle="this cohort"
-      @users={{this.users}}
-      @sortBy="id"
-      @setSortBy={{(noop)}}
-      @addUserToGroup={{(noop)}}
-      @removeUserFromGroup={{this.removeOne}}
-      @addUsersToGroup={{(noop)}}
-      @removeUsersFromGroup={{(noop)}}
-    />`);
+  @learnerGroupId={{this.learnerGroup.id}}
+  @learnerGroupTitle='this group'
+  @topLevelGroupTitle='top group'
+  @cohortTitle='this cohort'
+  @users={{this.users}}
+  @sortBy='id'
+  @setSortBy={{(noop)}}
+  @addUserToGroup={{(noop)}}
+  @removeUserFromGroup={{this.removeOne}}
+  @addUsersToGroup={{(noop)}}
+  @removeUsersFromGroup={{(noop)}}
+/>`);
 
     await component.usersInCurrentGroup[0].remove();
   });
@@ -302,18 +302,18 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
     });
 
     await render(hbs`<LearnerGroup::UserManager
-      @learnerGroupId={{this.learnerGroupModel.id}}
-      @learnerGroupTitle="this group"
-      @topLevelGroupTitle="top group"
-      @cohortTitle="this cohort"
-      @users={{this.users}}
-      @sortBy="id"
-      @setSortBy={{(noop)}}
-      @addUserToGroup={{this.addOne}}
-      @removeUserFromGroup={{(noop)}}
-      @addUsersToGroup={{(noop)}}
-      @removeUsersFromGroup={{(noop)}}
-    />`);
+  @learnerGroupId={{this.learnerGroupModel.id}}
+  @learnerGroupTitle='this group'
+  @topLevelGroupTitle='top group'
+  @cohortTitle='this cohort'
+  @users={{this.users}}
+  @sortBy='id'
+  @setSortBy={{(noop)}}
+  @addUserToGroup={{this.addOne}}
+  @removeUserFromGroup={{(noop)}}
+  @addUsersToGroup={{(noop)}}
+  @removeUsersFromGroup={{(noop)}}
+/>`);
     await component.usersNotInCurrentGroup[0].add();
   });
 
@@ -344,18 +344,18 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
     this.set('users', [userModelProxy, userModelProxy2]);
     this.set('learnerGroup', learnerGroupModel);
     await render(hbs`<LearnerGroup::UserManager
-      @learnerGroupId={{this.learnerGroup.id}}
-      @learnerGroupTitle="this group"
-      @topLevelGroupTitle="top group"
-      @cohortTitle="this cohort"
-      @users={{this.users}}
-      @sortBy="id"
-      @setSortBy={{(noop)}}
-      @addUserToGroup={{(noop)}}
-      @removeUserFromGroup={{(noop)}}
-      @addUsersToGroup={{(noop)}}
-      @removeUsersFromGroup={{(noop)}}
-    />`);
+  @learnerGroupId={{this.learnerGroup.id}}
+  @learnerGroupTitle='this group'
+  @topLevelGroupTitle='top group'
+  @cohortTitle='this cohort'
+  @users={{this.users}}
+  @sortBy='id'
+  @setSortBy={{(noop)}}
+  @addUserToGroup={{(noop)}}
+  @removeUserFromGroup={{(noop)}}
+  @addUsersToGroup={{(noop)}}
+  @removeUsersFromGroup={{(noop)}}
+/>`);
 
     assert.ok(component.usersInCurrentGroup[0].canBeRemoved);
     assert.ok(component.usersNotInCurrentGroup[0].canBeAdded);
@@ -394,18 +394,18 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
     this.set('learnerGroup', learnerGroupModel);
 
     await render(hbs`<LearnerGroup::UserManager
-      @learnerGroupId={{this.learnerGroup.id}}
-      @learnerGroupTitle="this group"
-      @topLevelGroupTitle="top group"
-      @cohortTitle="this cohort"
-      @users={{this.users}}
-      @sortBy="id"
-      @setSortBy={{(noop)}}
-      @addUserToGroup={{(noop)}}
-      @removeUserFromGroup={{(noop)}}
-      @addUsersToGroup={{(noop)}}
-      @removeUsersFromGroup={{this.removeMany}}
-    />`);
+  @learnerGroupId={{this.learnerGroup.id}}
+  @learnerGroupTitle='this group'
+  @topLevelGroupTitle='top group'
+  @cohortTitle='this cohort'
+  @users={{this.users}}
+  @sortBy='id'
+  @setSortBy={{(noop)}}
+  @addUserToGroup={{(noop)}}
+  @removeUserFromGroup={{(noop)}}
+  @addUsersToGroup={{(noop)}}
+  @removeUsersFromGroup={{this.removeMany}}
+/>`);
     assert.notOk(component.usersInCurrentGroup[0].isSelected);
     assert.notOk(component.usersInCurrentGroup[0].isSelected);
     await component.selectAllUsersInGroup.toggle();
@@ -447,18 +447,18 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
     });
     this.set('learnerGroup', learnerGroupModel);
     await render(hbs`<LearnerGroup::UserManager
-      @learnerGroupId={{this.learnerGroup.id}}
-      @learnerGroupTitle="this group"
-      @topLevelGroupTitle="top group"
-      @cohortTitle="this cohort"
-      @users={{this.users}}
-      @sortBy="id"
-      @setSortBy={{(noop)}}
-      @addUserToGroup={{(noop)}}
-      @removeUserFromGroup={{(noop)}}
-      @addUsersToGroup={{this.addMany}}
-      @removeUsersFromGroup={{(noop)}}
-    />`);
+  @learnerGroupId={{this.learnerGroup.id}}
+  @learnerGroupTitle='this group'
+  @topLevelGroupTitle='top group'
+  @cohortTitle='this cohort'
+  @users={{this.users}}
+  @sortBy='id'
+  @setSortBy={{(noop)}}
+  @addUserToGroup={{(noop)}}
+  @removeUserFromGroup={{(noop)}}
+  @addUsersToGroup={{this.addMany}}
+  @removeUsersFromGroup={{(noop)}}
+/>`);
     assert.notOk(component.usersNotInCurrentGroup[0].isSelected);
     assert.notOk(component.usersNotInCurrentGroup[0].isSelected);
     await component.selectAllUsersNotInGroup.toggle();
@@ -492,18 +492,18 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
     this.set('learnerGroup', learnerGroupModel);
 
     await render(hbs`<LearnerGroup::UserManager
-      @learnerGroupId={{this.learnerGroup.id}}
-      @learnerGroupTitle="this group"
-      @topLevelGroupTitle="top group"
-      @cohortTitle="this cohort"
-      @users={{this.users}}
-      @sortBy="id"
-      @setSortBy={{(noop)}}
-      @addUserToGroup={{(noop)}}
-      @removeUserFromGroup={{(noop)}}
-      @addUsersToGroup={{(noop)}}
-      @removeUsersFromGroup={{(noop)}}
-    />`);
+  @learnerGroupId={{this.learnerGroup.id}}
+  @learnerGroupTitle='this group'
+  @topLevelGroupTitle='top group'
+  @cohortTitle='this cohort'
+  @users={{this.users}}
+  @sortBy='id'
+  @setSortBy={{(noop)}}
+  @addUserToGroup={{(noop)}}
+  @removeUserFromGroup={{(noop)}}
+  @addUsersToGroup={{(noop)}}
+  @removeUsersFromGroup={{(noop)}}
+/>`);
 
     assert.notOk(component.usersInCurrentGroup[0].isSelected);
     assert.notOk(component.usersInCurrentGroup[1].isSelected);
@@ -555,18 +555,18 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
     this.set('learnerGroup', learnerGroupModel);
 
     await render(hbs`<LearnerGroup::UserManager
-      @learnerGroupId={{this.learnerGroup.id}}
-      @learnerGroupTitle="this group"
-      @topLevelGroupTitle="top group"
-      @cohortTitle="this cohort"
-      @users={{this.users}}
-      @sortBy="id"
-      @setSortBy={{(noop)}}
-      @addUserToGroup={{(noop)}}
-      @removeUserFromGroup={{(noop)}}
-      @addUsersToGroup={{(noop)}}
-      @removeUsersFromGroup={{(noop)}}
-    />`);
+  @learnerGroupId={{this.learnerGroup.id}}
+  @learnerGroupTitle='this group'
+  @topLevelGroupTitle='top group'
+  @cohortTitle='this cohort'
+  @users={{this.users}}
+  @sortBy='id'
+  @setSortBy={{(noop)}}
+  @addUserToGroup={{(noop)}}
+  @removeUserFromGroup={{(noop)}}
+  @addUsersToGroup={{(noop)}}
+  @removeUsersFromGroup={{(noop)}}
+/>`);
 
     assert.strictEqual(component.usersInCurrentGroup.length, 3);
     assert.strictEqual(component.usersInCurrentGroup[0].name.userNameInfo.fullName, 'Alpha');
@@ -664,18 +664,18 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
     this.set('learnerGroup', learnerGroupModel);
 
     await render(hbs`<LearnerGroup::UserManager
-      @learnerGroupId={{this.learnerGroup.id}}
-      @learnerGroupTitle="this group"
-      @topLevelGroupTitle="top group"
-      @cohortTitle="this cohort"
-      @users={{this.users}}
-      @sortBy="id"
-      @setSortBy={{(noop)}}
-      @addUserToGroup={{(noop)}}
-      @removeUserFromGroup={{(noop)}}
-      @addUsersToGroup={{(noop)}}
-      @removeUsersFromGroup={{(noop)}}
-    />`);
+  @learnerGroupId={{this.learnerGroup.id}}
+  @learnerGroupTitle='this group'
+  @topLevelGroupTitle='top group'
+  @cohortTitle='this cohort'
+  @users={{this.users}}
+  @sortBy='id'
+  @setSortBy={{(noop)}}
+  @addUserToGroup={{(noop)}}
+  @removeUserFromGroup={{(noop)}}
+  @addUsersToGroup={{(noop)}}
+  @removeUsersFromGroup={{(noop)}}
+/>`);
 
     assert.strictEqual(component.usersNotInCurrentGroup.length, 3);
     assert.strictEqual(component.usersNotInCurrentGroup[0].name.userNameInfo.fullName, 'Alpha');
@@ -782,18 +782,18 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
     this.set('users', [userModelProxy1, userModelProxy2, userModelProxy3]);
     this.set('learnerGroup', learnerGroupModel);
     await render(hbs`<LearnerGroup::UserManager
-      @learnerGroupId={{this.learnerGroup.id}}
-      @learnerGroupTitle="this group"
-      @topLevelGroupTitle="top group"
-      @cohortTitle="this cohort"
-      @users={{this.users}}
-      @sortBy="id"
-      @setSortBy={{(noop)}}
-      @addUserToGroup={{(noop)}}
-      @removeUserFromGroup={{(noop)}}
-      @addUsersToGroup={{(noop)}}
-      @removeUsersFromGroup={{(noop)}}
-    />`);
+  @learnerGroupId={{this.learnerGroup.id}}
+  @learnerGroupTitle='this group'
+  @topLevelGroupTitle='top group'
+  @cohortTitle='this cohort'
+  @users={{this.users}}
+  @sortBy='id'
+  @setSortBy={{(noop)}}
+  @addUserToGroup={{(noop)}}
+  @removeUserFromGroup={{(noop)}}
+  @addUsersToGroup={{(noop)}}
+  @removeUsersFromGroup={{(noop)}}
+/>`);
 
     assert.strictEqual(component.usersInCurrentGroup.length, 3);
     assert.strictEqual(
@@ -841,18 +841,18 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
     this.set('learnerGroup', learnerGroupModel);
 
     await render(hbs`<LearnerGroup::UserManager
-      @learnerGroupId={{this.learnerGroupModel.id}}
-      @learnerGroupTitle="this group"
-      @topLevelGroupTitle="top group"
-      @cohortTitle="this cohort"
-      @users={{this.users}}
-      @sortBy="id"
-      @setSortBy={{(noop)}}
-      @addUserToGroup={{(noop)}}
-      @removeUserFromGroup={{(noop)}}
-      @addUsersToGroup={{(noop)}}
-      @removeUsersFromGroup={{(noop)}}
-    />`);
+  @learnerGroupId={{this.learnerGroupModel.id}}
+  @learnerGroupTitle='this group'
+  @topLevelGroupTitle='top group'
+  @cohortTitle='this cohort'
+  @users={{this.users}}
+  @sortBy='id'
+  @setSortBy={{(noop)}}
+  @addUserToGroup={{(noop)}}
+  @removeUserFromGroup={{(noop)}}
+  @addUsersToGroup={{(noop)}}
+  @removeUsersFromGroup={{(noop)}}
+/>`);
 
     assert.notOk(component.usersNotInCurrentGroup[0].isSelected);
     await component.usersNotInCurrentGroup[0].name.click();
@@ -879,18 +879,18 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
     this.set('learnerGroup', learnerGroupModel);
 
     await render(hbs`<LearnerGroup::UserManager
-      @learnerGroupId={{this.learnerGroupModel.id}}
-      @learnerGroupTitle="this group"
-      @topLevelGroupTitle="top group"
-      @cohortTitle="this cohort"
-      @users={{this.users}}
-      @sortBy="id"
-      @setSortBy={{(noop)}}
-      @addUserToGroup={{(noop)}}
-      @removeUserFromGroup={{(noop)}}
-      @addUsersToGroup={{(noop)}}
-      @removeUsersFromGroup={{(noop)}}
-    />`);
+  @learnerGroupId={{this.learnerGroupModel.id}}
+  @learnerGroupTitle='this group'
+  @topLevelGroupTitle='top group'
+  @cohortTitle='this cohort'
+  @users={{this.users}}
+  @sortBy='id'
+  @setSortBy={{(noop)}}
+  @addUserToGroup={{(noop)}}
+  @removeUserFromGroup={{(noop)}}
+  @addUsersToGroup={{(noop)}}
+  @removeUsersFromGroup={{(noop)}}
+/>`);
 
     assert.notOk(component.usersNotInCurrentGroup[0].isSelected);
     await component.usersNotInCurrentGroup[0].campusId.click();
@@ -917,18 +917,18 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
     this.set('learnerGroup', learnerGroupModel);
 
     await render(hbs`<LearnerGroup::UserManager
-      @learnerGroupId={{this.learnerGroupModel.id}}
-      @learnerGroupTitle="this group"
-      @topLevelGroupTitle="top group"
-      @cohortTitle="this cohort"
-      @users={{this.users}}
-      @sortBy="id"
-      @setSortBy={{(noop)}}
-      @addUserToGroup={{(noop)}}
-      @removeUserFromGroup={{(noop)}}
-      @addUsersToGroup={{(noop)}}
-      @removeUsersFromGroup={{(noop)}}
-    />`);
+  @learnerGroupId={{this.learnerGroupModel.id}}
+  @learnerGroupTitle='this group'
+  @topLevelGroupTitle='top group'
+  @cohortTitle='this cohort'
+  @users={{this.users}}
+  @sortBy='id'
+  @setSortBy={{(noop)}}
+  @addUserToGroup={{(noop)}}
+  @removeUserFromGroup={{(noop)}}
+  @addUsersToGroup={{(noop)}}
+  @removeUsersFromGroup={{(noop)}}
+/>`);
 
     assert.notOk(component.usersNotInCurrentGroup[0].isSelected);
     await component.usersNotInCurrentGroup[0].email.click();
@@ -951,18 +951,18 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
     this.set('learnerGroup', learnerGroupModel);
 
     await render(hbs`<LearnerGroup::UserManager
-      @learnerGroupId={{this.learnerGroup.id}}
-      @learnerGroupTitle="this group"
-      @topLevelGroupTitle="top group"
-      @cohortTitle="this cohort"
-      @users={{this.users}}
-      @sortBy="id"
-      @setSortBy={{(noop)}}
-      @addUserToGroup={{(noop)}}
-      @removeUserFromGroup={{(noop)}}
-      @addUsersToGroup={{(noop)}}
-      @removeUsersFromGroup={{(noop)}}
-    />`);
+  @learnerGroupId={{this.learnerGroup.id}}
+  @learnerGroupTitle='this group'
+  @topLevelGroupTitle='top group'
+  @cohortTitle='this cohort'
+  @users={{this.users}}
+  @sortBy='id'
+  @setSortBy={{(noop)}}
+  @addUserToGroup={{(noop)}}
+  @removeUserFromGroup={{(noop)}}
+  @addUsersToGroup={{(noop)}}
+  @removeUsersFromGroup={{(noop)}}
+/>`);
 
     assert.notOk(component.usersInCurrentGroup[0].isSelected);
     await component.usersInCurrentGroup[0].name.click();
@@ -985,18 +985,18 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
     this.set('learnerGroup', learnerGroupModel);
 
     await render(hbs`<LearnerGroup::UserManager
-      @learnerGroupId={{this.learnerGroup.id}}
-      @learnerGroupTitle="this group"
-      @topLevelGroupTitle="top group"
-      @cohortTitle="this cohort"
-      @users={{this.users}}
-      @sortBy="id"
-      @setSortBy={{(noop)}}
-      @addUserToGroup={{(noop)}}
-      @removeUserFromGroup={{(noop)}}
-      @addUsersToGroup={{(noop)}}
-      @removeUsersFromGroup={{(noop)}}
-    />`);
+  @learnerGroupId={{this.learnerGroup.id}}
+  @learnerGroupTitle='this group'
+  @topLevelGroupTitle='top group'
+  @cohortTitle='this cohort'
+  @users={{this.users}}
+  @sortBy='id'
+  @setSortBy={{(noop)}}
+  @addUserToGroup={{(noop)}}
+  @removeUserFromGroup={{(noop)}}
+  @addUsersToGroup={{(noop)}}
+  @removeUsersFromGroup={{(noop)}}
+/>`);
 
     assert.notOk(component.usersInCurrentGroup[0].isSelected);
     await component.usersInCurrentGroup[0].campusId.click();
@@ -1019,18 +1019,18 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
     this.set('learnerGroup', learnerGroupModel);
 
     await render(hbs`<LearnerGroup::UserManager
-      @learnerGroupId={{this.learnerGroup.id}}
-      @learnerGroupTitle="this group"
-      @topLevelGroupTitle="top group"
-      @cohortTitle="this cohort"
-      @users={{this.users}}
-      @sortBy="id"
-      @setSortBy={{(noop)}}
-      @addUserToGroup={{(noop)}}
-      @removeUserFromGroup={{(noop)}}
-      @addUsersToGroup={{(noop)}}
-      @removeUsersFromGroup={{(noop)}}
-    />`);
+  @learnerGroupId={{this.learnerGroup.id}}
+  @learnerGroupTitle='this group'
+  @topLevelGroupTitle='top group'
+  @cohortTitle='this cohort'
+  @users={{this.users}}
+  @sortBy='id'
+  @setSortBy={{(noop)}}
+  @addUserToGroup={{(noop)}}
+  @removeUserFromGroup={{(noop)}}
+  @addUsersToGroup={{(noop)}}
+  @removeUsersFromGroup={{(noop)}}
+/>`);
 
     assert.notOk(component.usersInCurrentGroup[0].isSelected);
     await component.usersInCurrentGroup[0].email.click();
@@ -1069,18 +1069,18 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
     this.set('users', [userModelProxy1, userModelProxy2]);
     this.set('learnerGroup', learnerGroupModel);
     await render(hbs`<LearnerGroup::UserManager
-      @learnerGroupId={{this.learnerGroup.id}}
-      @learnerGroupTitle="this group"
-      @topLevelGroupTitle="top group"
-      @cohortTitle="this cohort"
-      @users={{this.users}}
-      @sortBy="id"
-      @setSortBy={{(noop)}}
-      @addUserToGroup={{(noop)}}
-      @removeUserFromGroup={{(noop)}}
-      @addUsersToGroup={{(noop)}}
-      @removeUsersFromGroup={{(noop)}}
-    />`);
+  @learnerGroupId={{this.learnerGroup.id}}
+  @learnerGroupTitle='this group'
+  @topLevelGroupTitle='top group'
+  @cohortTitle='this cohort'
+  @users={{this.users}}
+  @sortBy='id'
+  @setSortBy={{(noop)}}
+  @addUserToGroup={{(noop)}}
+  @removeUserFromGroup={{(noop)}}
+  @addUsersToGroup={{(noop)}}
+  @removeUsersFromGroup={{(noop)}}
+/>`);
 
     assert.strictEqual(component.usersInCurrentGroup.length, 1);
     assert.strictEqual(

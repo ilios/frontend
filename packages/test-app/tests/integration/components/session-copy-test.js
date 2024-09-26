@@ -50,8 +50,7 @@ module('Integration | Component | session copy', function (hooks) {
     const sessionModel = await this.owner.lookup('service:store').findRecord('session', session.id);
     this.set('session', sessionModel);
 
-    await render(hbs`<SessionCopy @session={{this.session}} />
-`);
+    await render(hbs`<SessionCopy @session={{this.session}} />`);
 
     const yearSelect = '.year-select select';
     const courseSelect = '.course-select select';
@@ -131,8 +130,7 @@ module('Integration | Component | session copy', function (hooks) {
     this.set('visit', (newSession) => {
       assert.strictEqual(parseInt(newSession.id, 10), 2);
     });
-    await render(hbs`<SessionCopy @session={{this.session}} @visit={{this.visit}} />
-`);
+    await render(hbs`<SessionCopy @session={{this.session}} @visit={{this.visit}} />`);
 
     await click('.done');
 
@@ -198,8 +196,7 @@ module('Integration | Component | session copy', function (hooks) {
     const sessionModel = await this.owner.lookup('service:store').findRecord('session', session.id);
     this.set('session', sessionModel);
 
-    await render(hbs`<SessionCopy @session={{this.session}} />
-`);
+    await render(hbs`<SessionCopy @session={{this.session}} />`);
     assert.dom('[data-test-save]').isDisabled();
   });
 
@@ -242,8 +239,7 @@ module('Integration | Component | session copy', function (hooks) {
     this.owner.register('service:permissionChecker', permissionCheckerMock);
     const sessionModel = await this.owner.lookup('service:store').findRecord('session', session.id);
     this.set('session', sessionModel);
-    await render(hbs`<SessionCopy @session={{this.session}} />
-`);
+    await render(hbs`<SessionCopy @session={{this.session}} />`);
     const yearSelect = '.year-select select';
     const courseSelect = '.course-select select';
 
@@ -305,8 +301,7 @@ module('Integration | Component | session copy', function (hooks) {
       assert.strictEqual(parseInt(newSession.id, 10), 2);
     });
 
-    await render(hbs`<SessionCopy @session={{this.session}} @visit={{this.visit}} />
-`);
+    await render(hbs`<SessionCopy @session={{this.session}} @visit={{this.visit}} />`);
     const yearSelect = '.year-select select';
     const courseSelect = '.course-select select';
 
@@ -359,8 +354,7 @@ module('Integration | Component | session copy', function (hooks) {
       assert.strictEqual(parseInt(newSession.id, 10), 3);
     });
 
-    await render(hbs`<SessionCopy @session={{this.session}} @visit={{this.visit}} />
-`);
+    await render(hbs`<SessionCopy @session={{this.session}} @visit={{this.visit}} />`);
 
     await click('.done');
 
@@ -416,8 +410,7 @@ module('Integration | Component | session copy', function (hooks) {
       assert.strictEqual(parseInt(newSession.id, 10), 3);
     });
 
-    await render(hbs`<SessionCopy @session={{this.session}} @visit={{this.visit}} />
-`);
+    await render(hbs`<SessionCopy @session={{this.session}} @visit={{this.visit}} />`);
     const courseSelect = '.course-select select';
     await fillIn(courseSelect, secondCourse.id);
     await click('.done');
@@ -474,8 +467,7 @@ module('Integration | Component | session copy', function (hooks) {
       assert.strictEqual(parseInt(newSession.id, 10), 4);
     });
 
-    await render(hbs`<SessionCopy @session={{this.session}} @visit={{this.visit}} />
-`);
+    await render(hbs`<SessionCopy @session={{this.session}} @visit={{this.visit}} />`);
 
     await click('.done');
 
@@ -535,8 +527,7 @@ module('Integration | Component | session copy', function (hooks) {
       assert.strictEqual(parseInt(newSession.id, 10), 4);
     });
 
-    await render(hbs`<SessionCopy @session={{this.session}} @visit={{this.visit}} />
-`);
+    await render(hbs`<SessionCopy @session={{this.session}} @visit={{this.visit}} />`);
 
     const courseSelect = '.course-select select';
     await fillIn(courseSelect, secondCourse.id);

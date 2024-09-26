@@ -20,11 +20,10 @@ module('Integration | Component | session-offerings-time-block-offerings', funct
     offeringTimeBlock.addOffering(offering2);
     this.set('offeringTimeBlock', offeringTimeBlock);
     await render(hbs`<SessionOfferingsTimeBlockOfferings
-      @offeringTimeBlock={{this.offeringTimeBlock}}
-      @removeOffering={{(noop)}}
-      @editable={{true}}
-    />
-`);
+  @offeringTimeBlock={{this.offeringTimeBlock}}
+  @removeOffering={{(noop)}}
+  @editable={{true}}
+/>`);
     assert.strictEqual(component.offerings.length, 2);
   });
 
@@ -42,11 +41,10 @@ module('Integration | Component | session-offerings-time-block-offerings', funct
       assert.strictEqual(offering, o);
     });
     await render(hbs`<SessionOfferingsTimeBlockOfferings
-      @offeringTimeBlock={{this.offeringTimeBlock}}
-      @removeOffering={{this.removeOffering}}
-      @editable={{true}}
-    />
-`);
+  @offeringTimeBlock={{this.offeringTimeBlock}}
+  @removeOffering={{this.removeOffering}}
+  @editable={{true}}
+/>`);
     assert.strictEqual(component.offerings.length, 1);
     await component.offerings[0].remove();
     await component.offerings[0].confirmRemoval();

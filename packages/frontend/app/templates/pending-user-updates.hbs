@@ -5,12 +5,12 @@
     <div class="schoolsfilter" data-test-school-filter>
       <FaIcon @icon="building-columns" @fixedWidth={{true}} />
       {{#if this.hasMoreThanOneSchool}}
-        <select aria-label={{t "general.filterBySchool"}} {{on "change" (pick "target.value" (set this "school"))}}>
+        <select
+          aria-label={{t "general.filterBySchool"}}
+          {{on "change" (pick "target.value" (set this "school"))}}
+        >
           {{#each (sort-by "title" this.model.schools) as |school|}}
-            <option
-              value={{school.id}}
-              selected={{eq school this.selectedSchool}}
-            >
+            <option value={{school.id}} selected={{eq school this.selectedSchool}}>
               {{school.title}}
             </option>
           {{/each}}
@@ -24,9 +24,9 @@
         aria-label={{t "general.filterByTitle"}}
         type="text"
         value={{this.filter}}
-         {{on "input" (pick "target.value" (set this "filter"))}}
+        {{on "input" (pick "target.value" (set this "filter"))}}
         placeholder={{t "general.pendingUserUpdates.filterBy"}}
-      >
+      />
     </div>
   </div>
   <div class="updates">
@@ -76,38 +76,26 @@
                       {{on "click" (perform this.updateEmailAddress update)}}
                       data-test-update-email
                     >
-                      <FaIcon
-                        @icon="circle-arrow-up"
-                        class="yes"
-                        @title={{t "general.update"}}
-                      />
+                      <FaIcon @icon="circle-arrow-up" class="yes" @title={{t "general.update"}} />
                       {{t "general.pendingUserUpdates.updateIlios"}}
                     </button>
-                    <br>
+                    <br />
                   {{/if}}
                   <button
                     type="button"
                     {{on "click" (perform this.excludeFromSync update)}}
                     data-test-exclude-from-sync
                   >
-                    <FaIcon
-                      @icon="ban"
-                      class="no"
-                      @title={{t "general.excludeFromSync"}}
-                    />
+                    <FaIcon @icon="ban" class="no" @title={{t "general.excludeFromSync"}} />
                     {{t "general.excludeFromSync"}}
                   </button>
-                  <br>
+                  <br />
                   <button
                     type="button"
                     {{on "click" (perform this.disableUser update)}}
                     data-test-disable-user
                   >
-                    <FaIcon
-                      @icon="xmark"
-                      class="no"
-                      @title={{t "general.disableUser"}}
-                    />
+                    <FaIcon @icon="xmark" class="no" @title={{t "general.disableUser"}} />
                     {{t "general.disableUser"}}
                   </button>
                 {{/if}}

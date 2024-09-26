@@ -29,15 +29,15 @@ module('Integration | Component | school competencies expanded', function (hooks
     const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
     this.set('school', schoolModel);
     await render(hbs`<SchoolCompetenciesExpanded
-      @school={{this.school}}
-      @canUpdate={{true}}
-      @canDelete={{true}}
-      @canCreate={{true}}
-      @collapse={{(noop)}}
-      @expand={{(noop)}}
-      @isManaging={{false}}
-      @setSchoolManageCompetencies={{(noop)}}
-    />`);
+  @school={{this.school}}
+  @canUpdate={{true}}
+  @canDelete={{true}}
+  @canCreate={{true}}
+  @collapse={{(noop)}}
+  @expand={{(noop)}}
+  @isManaging={{false}}
+  @setSchoolManageCompetencies={{(noop)}}
+/>`);
     assert.strictEqual(component.collapser.text, 'Competencies (1/2)');
     assert.strictEqual(component.competenciesList.items.length, 3);
     assert.strictEqual(component.competenciesList.items[0].title.text, 'domain 0');
@@ -52,15 +52,15 @@ module('Integration | Component | school competencies expanded', function (hooks
     const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
     this.set('school', schoolModel);
     await render(hbs`<SchoolCompetenciesExpanded
-      @school={{this.school}}
-      @canUpdate={{true}}
-      @canDelete={{true}}
-      @canCreate={{true}}
-      @collapse={{(noop)}}
-      @expand={{(noop)}}
-      @isManaging={{false}}
-      @setSchoolManageCompetencies={{(noop)}}
-    />`);
+  @school={{this.school}}
+  @canUpdate={{true}}
+  @canDelete={{true}}
+  @canCreate={{true}}
+  @collapse={{(noop)}}
+  @expand={{(noop)}}
+  @isManaging={{false}}
+  @setSchoolManageCompetencies={{(noop)}}
+/>`);
     assert.ok(component.competenciesList.isHidden);
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');

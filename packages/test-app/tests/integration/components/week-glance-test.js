@@ -113,13 +113,12 @@ module('Integration | Component | week glance', function (hooks) {
     this.set('today', testDate.toJSDate());
     this.set('week', testDate.weekNumber);
     await render(hbs`<WeekGlance
-      @collapsible={{false}}
-      @collapsed={{false}}
-      @showFullTitle={{true}}
-      @year={{format-date this.today year="numeric"}}
-      @week={{this.week}}
-    />
-`);
+  @collapsible={{false}}
+  @collapsed={{false}}
+  @showFullTitle={{true}}
+  @year={{format-date this.today year='numeric'}}
+  @week={{this.week}}
+/>`);
 
     assert.strictEqual(component.title, this.getTitle(true));
 
@@ -139,13 +138,12 @@ module('Integration | Component | week glance', function (hooks) {
     this.set('today', testDate.toJSDate());
     this.set('week', testDate.weekNumber);
     await render(hbs`<WeekGlance
-      @collapsible={{false}}
-      @collapsed={{false}}
-      @showFullTitle={{true}}
-      @year={{format-date this.today year="numeric"}}
-      @week={{this.week}}
-    />
-`);
+  @collapsible={{false}}
+  @collapsed={{false}}
+  @showFullTitle={{true}}
+  @year={{format-date this.today year='numeric'}}
+  @week={{this.week}}
+/>`);
     const title = '[data-test-week-title]';
     const body = 'p';
     const expectedTitle = this.getTitle(true);
@@ -166,13 +164,12 @@ module('Integration | Component | week glance', function (hooks) {
     this.set('today', testDate.toJSDate());
     this.set('week', testDate.weekNumber);
     await render(hbs`<WeekGlance
-      @collapsible={{false}}
-      @collapsed={{false}}
-      @showFullTitle={{false}}
-      @year={{format-date this.today year="numeric"}}
-      @week={{this.week}}
-    />
-`);
+  @collapsible={{false}}
+  @collapsed={{false}}
+  @showFullTitle={{false}}
+  @year={{format-date this.today year='numeric'}}
+  @week={{this.week}}
+/>`);
     const title = '[data-test-week-title]';
     const expectedTitle = this.getTitle(false);
     await settled();
@@ -190,13 +187,12 @@ module('Integration | Component | week glance', function (hooks) {
     this.set('today', testDate.toJSDate());
     this.set('week', testDate.weekNumber);
     await render(hbs`<WeekGlance
-      @collapsible={{true}}
-      @collapsed={{true}}
-      @showFullTitle={{false}}
-      @year={{format-date this.today year="numeric"}}
-      @week={{this.week}}
-    />
-`);
+  @collapsible={{true}}
+  @collapsed={{true}}
+  @showFullTitle={{false}}
+  @year={{format-date this.today year='numeric'}}
+  @week={{this.week}}
+/>`);
     const title = '[data-test-week-title]';
     const body = 'p';
     const expectedTitle = this.getTitle(false);
@@ -223,14 +219,13 @@ module('Integration | Component | week glance', function (hooks) {
       assert.ok(value);
     });
     await render(hbs`<WeekGlance
-      @collapsible={{true}}
-      @collapsed={{true}}
-      @showFullTitle={{false}}
-      @year={{format-date this.today year="numeric"}}
-      @week={{this.week}}
-      @toggleCollapsed={{this.toggle}}
-    />
-`);
+  @collapsible={{true}}
+  @collapsed={{true}}
+  @showFullTitle={{false}}
+  @year={{format-date this.today year='numeric'}}
+  @week={{this.week}}
+  @toggleCollapsed={{this.toggle}}
+/>`);
     const title = '[data-test-week-title]';
     await settled();
     await click(title);
@@ -246,14 +241,13 @@ module('Integration | Component | week glance', function (hooks) {
       assert.notOk(value);
     });
     await render(hbs`<WeekGlance
-      @collapsible={{true}}
-      @collapsed={{false}}
-      @showFullTitle={{false}}
-      @year={{format-date this.today year="numeric"}}
-      @week={{this.week}}
-      @toggleCollapsed={{this.toggle}}
-    />
-`);
+  @collapsible={{true}}
+  @collapsed={{false}}
+  @showFullTitle={{false}}
+  @year={{format-date this.today year='numeric'}}
+  @week={{this.week}}
+  @toggleCollapsed={{this.toggle}}
+/>`);
     const title = '[data-test-week-title]';
     await settled();
     await click(title);
@@ -301,13 +295,12 @@ module('Integration | Component | week glance', function (hooks) {
     this.set('year', testDate.year);
     this.set('week', testDate.weekNumber);
     await render(hbs`<WeekGlance
-      @collapsible={{false}}
-      @collapsed={{false}}
-      @showFullTitle={{true}}
-      @year={{this.year}}
-      @week={{this.week}}
-    />
-`);
+  @collapsible={{false}}
+  @collapsed={{false}}
+  @showFullTitle={{true}}
+  @year={{this.year}}
+  @week={{this.week}}
+/>`);
     const title = '[data-test-week-title]';
     const body = 'p';
     const expectedTitle = this.getTitle(true);
@@ -329,12 +322,12 @@ module('Integration | Component | week glance', function (hooks) {
     this.set('today', testDate.toJSDate());
     this.set('week', testDate.weekNumber);
     await render(hbs`<WeekGlance
-      @collapsible={{true}}
-      @collapsed={{true}}
-      @showFullTitle={{true}}
-      @year={{format-date this.today year="numeric"}}
-      @week={{this.week}}
-    />`);
+  @collapsible={{true}}
+  @collapsed={{true}}
+  @showFullTitle={{true}}
+  @year={{format-date this.today year='numeric'}}
+  @week={{this.week}}
+/>`);
 
     assert.strictEqual(component.title, this.getTitle(true));
 

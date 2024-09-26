@@ -1,6 +1,5 @@
 <div
-  class="{{unless @isIcon "not-icon"}}
-  visualizer-program-year-objectives"
+  class="{{unless @isIcon 'not-icon'}} visualizer-program-year-objectives"
   {{did-insert (perform this.load) @programYear}}
   {{did-update (perform this.load) @programYear}}
   ...attributes
@@ -12,7 +11,8 @@
         @isIcon={{@isIcon}}
         @data={{this.data}}
         @hover={{perform this.nodeHover}}
-        @leave={{perform this.nodeHover}} as |chart|
+        @leave={{perform this.nodeHover}}
+        as |chart|
       >
         {{#if this.tooltipTitle}}
           <chart.tooltip @title={{this.tooltipTitle}}>

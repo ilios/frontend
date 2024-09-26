@@ -16,16 +16,14 @@ module('Integration | Component | user search', function (hooks) {
   });
 
   test('it renders', async function (assert) {
-    await render(hbs`<UserSearch />
-`);
+    await render(hbs`<UserSearch />`);
     assert.ok(component.searchBox.isVisible);
     assert.strictEqual(component.results.items.length, 0);
     assert.notOk(component.resultsCount.isVisible);
   });
 
   test('less than 3 characters triggers warning', async function (assert) {
-    await render(hbs`<UserSearch />
-`);
+    await render(hbs`<UserSearch />`);
     await component.searchBox.set('ab');
     assert.strictEqual(component.results.text, 'keep typing...');
   });
@@ -37,8 +35,7 @@ module('Integration | Component | user search', function (hooks) {
       assert.strictEqual(queryParams['q'], 'search words');
       return schema.users.all();
     });
-    await render(hbs`<UserSearch />
-`);
+    await render(hbs`<UserSearch />`);
     await component.searchBox.set('search words');
     assert.strictEqual(component.resultsCount.text, '1 Results');
     assert.strictEqual(component.results.items.length, 1);
@@ -46,8 +43,7 @@ module('Integration | Component | user search', function (hooks) {
   });
 
   test('no results displays messages', async function (assert) {
-    await render(hbs`<UserSearch />
-`);
+    await render(hbs`<UserSearch />`);
     await component.searchBox.set('search words');
     assert.strictEqual(component.results.text, 'no results');
   });
@@ -56,8 +52,7 @@ module('Integration | Component | user search', function (hooks) {
     this.server.createList('instructor-group', 2);
     const instructorGroups = await this.owner.lookup('service:store').findAll('instructor-group');
     this.set('availableInstructorGroups', instructorGroups);
-    await render(hbs`<UserSearch @availableInstructorGroups={{this.availableInstructorGroups}} />
-`);
+    await render(hbs`<UserSearch @availableInstructorGroups={{this.availableInstructorGroups}} />`);
     await component.searchBox.set('group');
     assert.strictEqual(component.resultsCount.text, '2 Results');
     assert.strictEqual(component.results.items.length, 2);
@@ -72,8 +67,7 @@ module('Integration | Component | user search', function (hooks) {
     this.set('action', (passedUser) => {
       assert.strictEqual(passedUser, userModel);
     });
-    await render(hbs`<UserSearch @addUser={{this.action}} />
-`);
+    await render(hbs`<UserSearch @addUser={{this.action}} />`);
     await component.searchBox.set('test');
     assert.strictEqual(component.resultsCount.text, '1 Results');
     assert.strictEqual(component.results.items.length, 1);
@@ -90,10 +84,9 @@ module('Integration | Component | user search', function (hooks) {
     });
     this.set('availableInstructorGroups', instructorGroups);
     await render(hbs`<UserSearch
-      @availableInstructorGroups={{this.availableInstructorGroups}}
-      @addInstructorGroup={{this.action}}
-    />
-`);
+  @availableInstructorGroups={{this.availableInstructorGroups}}
+  @addInstructorGroup={{this.action}}
+/>`);
     await component.searchBox.set('group');
     assert.strictEqual(component.resultsCount.text, '2 Results');
     assert.strictEqual(component.results.items.length, 2);
@@ -118,8 +111,7 @@ module('Integration | Component | user search', function (hooks) {
     this.server.create('user', {
       lastName: 'person',
     });
-    await render(hbs`<UserSearch />
-`);
+    await render(hbs`<UserSearch />`);
     await component.searchBox.set('person');
     assert.strictEqual(component.resultsCount.text, '4 Results');
     assert.strictEqual(component.results.items.length, 4);
@@ -136,8 +128,7 @@ module('Integration | Component | user search', function (hooks) {
     });
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     this.set('currentlyActiveUsers', [userModel]);
-    await render(hbs`<UserSearch @currentlyActiveUsers={{this.currentlyActiveUsers}} />
-`);
+    await render(hbs`<UserSearch @currentlyActiveUsers={{this.currentlyActiveUsers}} />`);
     await component.searchBox.set('foo');
     assert.strictEqual(component.resultsCount.text, '1 Results');
     assert.strictEqual(component.results.items.length, 1);
@@ -152,10 +143,7 @@ module('Integration | Component | user search', function (hooks) {
     });
     const users = this.owner.lookup('service:store').query('user', { id: user.id });
     this.set('currentlyActiveUsers', users);
-    await render(hbs`<UserSearch
-      @currentlyActiveUsers={{this.currentlyActiveUsers}}
-    />
-`);
+    await render(hbs`<UserSearch @currentlyActiveUsers={{this.currentlyActiveUsers}} />`);
     await component.searchBox.set('foo');
     assert.strictEqual(component.resultsCount.text, '1 Results');
     assert.strictEqual(component.results.items.length, 1);
@@ -169,10 +157,9 @@ module('Integration | Component | user search', function (hooks) {
     this.set('availableInstructorGroups', instructorGroups);
     this.set('currentlyActiveInstructorGroups', instructorGroups);
     await render(hbs`<UserSearch
-      @availableInstructorGroups={{this.availableInstructorGroups}}
-      @currentlyActiveInstructorGroups={{this.currentlyActiveInstructorGroups}}
-    />
-`);
+  @availableInstructorGroups={{this.availableInstructorGroups}}
+  @currentlyActiveInstructorGroups={{this.currentlyActiveInstructorGroups}}
+/>`);
     await component.searchBox.set('group');
     assert.strictEqual(component.resultsCount.text, '1 Results');
     assert.strictEqual(component.results.items.length, 1);
@@ -186,10 +173,9 @@ module('Integration | Component | user search', function (hooks) {
     this.set('availableInstructorGroups', await igPromise);
     this.set('currentlyActiveInstructorGroups', igPromise);
     await render(hbs`<UserSearch
-      @availableInstructorGroups={{this.availableInstructorGroups}}
-      @currentlyActiveInstructorGroups={{this.currentlyActiveInstructorGroups}}
-    />
-`);
+  @availableInstructorGroups={{this.availableInstructorGroups}}
+  @currentlyActiveInstructorGroups={{this.currentlyActiveInstructorGroups}}
+/>`);
     await component.searchBox.set('group');
     assert.strictEqual(component.resultsCount.text, '1 Results');
     assert.strictEqual(component.results.items.length, 1);

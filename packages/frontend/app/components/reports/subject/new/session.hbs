@@ -13,13 +13,14 @@
               {{on "click" this.clear}}
               data-test-selected-session
             >
-              {{session.course.year}} |&nbsp;
+              {{session.course.year}}
+              |&nbsp;
               {{session.title}}
               {{#if session.course.externalId}}
                 [{{session.course.externalId}}] |
               {{/if}}
               {{session.course.title}}
-              <FaIcon @icon="xmark" class="remove"/>
+              <FaIcon @icon="xmark" class="remove" />
             </button>
           {{/let}}
         {{else}}
@@ -36,12 +37,9 @@
         @results={{this.sortedSessions}}
         as |session|
       >
-        <button
-          class="link-button"
-          type="button"
-          {{on "click" (fn @changeId session.id)}}
-        >
-          {{session.course.year}} |&nbsp;
+        <button class="link-button" type="button" {{on "click" (fn @changeId session.id)}}>
+          {{session.course.year}}
+          |&nbsp;
           {{session.title}}
           {{#if session.course.externalId}}
             [{{session.course.externalId}}] |

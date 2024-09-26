@@ -22,27 +22,38 @@
                   @close={{this.revertCourseChanges}}
                   @clickPrompt={{t "general.selectCourse"}}
                 >
-                  <select
-                    id="course-{{templateId}}"
-                    {{on "change" this.updateCourse}}
-                  >
-                    <option value="" selected={{is-empty this.course}}>{{t "general.selectCourse"}}</option>
+                  <select id="course-{{templateId}}" {{on "change" this.updateCourse}}>
+                    <option value="" selected={{is-empty this.course}}>{{t
+                        "general.selectCourse"
+                      }}</option>
                     {{#each (sort-by "title" this.linkableCourses) as |obj|}}
-                      <option value={{obj.id}} selected={{eq obj this.course}}>{{obj.title}}</option>
+                      <option
+                        value={{obj.id}}
+                        selected={{eq obj this.course}}
+                      >{{obj.title}}</option>
                     {{/each}}
                   </select>
                 </EditableField>
               {{else}}
-                <span data-test-course-title>{{if this.course this.course.title (t "general.notApplicableAbbr")}}</span>
+                <span data-test-course-title>{{if
+                    this.course
+                    this.course.title
+                    (t "general.notApplicableAbbr")
+                  }}</span>
               {{/if}}
             </span>
             {{#if this.course}}
               <span class="details" data-test-course-details>
-                {{t "general.level"}}: {{this.course.level}},
-                {{t "general.startDate"}}: {{format-date this.course.startDate day="2-digit" month="2-digit" year="numeric"}},
-                {{t "general.endDate"}}: {{format-date this.course.endDate day="2-digit" month="2-digit" year="numeric"}}
+                {{t "general.level"}}:
+                {{this.course.level}},
+                {{t "general.startDate"}}:
+                {{format-date this.course.startDate day="2-digit" month="2-digit" year="numeric"}},
+                {{t "general.endDate"}}:
+                {{format-date this.course.endDate day="2-digit" month="2-digit" year="numeric"}}
                 {{#if this.course.clerkshipType}}
-                  - {{t "general.clerkship"}} ({{this.course.clerkshipType.title}})
+                  -
+                  {{t "general.clerkship"}}
+                  ({{this.course.clerkshipType.title}})
                 {{/if}}
               </span>
             {{/if}}
@@ -82,9 +93,15 @@
                   id="required-{{templateId}}"
                   {{on "change" (pick "target.value" this.setRequired)}}
                 >
-                  <option value="1" selected={{eq this.required "1"}}>{{t "general.required"}}</option>
-                  <option value="2" selected={{eq this.required "2"}}>{{t "general.optionalElective"}}</option>
-                  <option value="3" selected={{eq this.required "3"}}>{{t "general.requiredInTrack"}}</option>
+                  <option value="1" selected={{eq this.required "1"}}>{{t
+                      "general.required"
+                    }}</option>
+                  <option value="2" selected={{eq this.required "2"}}>{{t
+                      "general.optionalElective"
+                    }}</option>
+                  <option value="3" selected={{eq this.required "3"}}>{{t
+                      "general.requiredInTrack"
+                    }}</option>
                 </select>
               </EditableField>
             {{else}}
@@ -136,8 +153,11 @@
                   value={{this.duration}}
                   disabled={{this.saveDuration.isRunning}}
                   {{on "input" (pick "target.value" (set this "duration"))}}
-                  {{on "keyup" (queue (fn this.addErrorDisplayFor "duration") this.saveOrCancelDuration)}}
-                >
+                  {{on
+                    "keyup"
+                    (queue (fn this.addErrorDisplayFor "duration") this.saveOrCancelDuration)
+                  }}
+                />
                 <ValidationError @errors={{get-errors-for this.duration}} />
               </div>
               <div class="buttons">
@@ -176,7 +196,12 @@
                   {{on "click" (set this "isEditingDatesAndDuration" true)}}
                 >
                   {{#if @sequenceBlock.startDate}}
-                    {{format-date @sequenceBlock.startDate day="2-digit" month="2-digit" year="numeric"}}
+                    {{format-date
+                      @sequenceBlock.startDate
+                      day="2-digit"
+                      month="2-digit"
+                      year="numeric"
+                    }}
                   {{else}}
                     {{t "general.clickToEdit"}}
                   {{/if}}
@@ -184,7 +209,12 @@
               {{else}}
                 <span>
                   {{#if @sequenceBlock.startDate}}
-                    {{format-date @sequenceBlock.startDate day="2-digit" month="2-digit" year="numeric"}}
+                    {{format-date
+                      @sequenceBlock.startDate
+                      day="2-digit"
+                      month="2-digit"
+                      year="numeric"
+                    }}
                   {{else}}
                     {{t "general.notApplicableAbbr"}}
                   {{/if}}
@@ -201,7 +231,12 @@
                   {{on "click" (set this "isEditingDatesAndDuration" true)}}
                 >
                   {{#if @sequenceBlock.endDate}}
-                    {{format-date @sequenceBlock.endDate day="2-digit" month="2-digit" year="numeric"}}
+                    {{format-date
+                      @sequenceBlock.endDate
+                      day="2-digit"
+                      month="2-digit"
+                      year="numeric"
+                    }}
                   {{else}}
                     {{t "general.clickToEdit"}}
                   {{/if}}
@@ -209,7 +244,12 @@
               {{else}}
                 <span>
                   {{#if @sequenceBlock.endDate}}
-                    {{format-date @sequenceBlock.endDate day="2-digit" month="2-digit" year="numeric"}}
+                    {{format-date
+                      @sequenceBlock.endDate
+                      day="2-digit"
+                      month="2-digit"
+                      year="numeric"
+                    }}
                   {{else}}
                     {{t "general.notApplicableAbbr"}}
                   {{/if}}
@@ -243,7 +283,9 @@
             </div>
           {{/if}}
           <div class="block child-sequence-order" data-test-child-sequence-order>
-            <label for="child-sequence-order-{{templateId}}">{{t "general.childSequenceOrder"}}:</label>
+            <label for="child-sequence-order-{{templateId}}">{{t
+                "general.childSequenceOrder"
+              }}:</label>
             {{#if @canUpdate}}
               <EditableField
                 @value={{this.childSequenceOrderLabel}}
@@ -254,9 +296,15 @@
                   id="child-sequence-order-{{templateId}}"
                   {{on "change" (pick "target.value" (set this "childSequenceOrder"))}}
                 >
-                  <option value="1" selected={{eq this.childSequenceOrder "1"}}>{{t "general.ordered"}}</option>
-                  <option value="2" selected={{eq this.childSequenceOrder "2"}}>{{t "general.unordered"}}</option>
-                  <option value="3" selected={{eq this.childSequenceOrder "3"}}>{{t "general.parallel"}}</option>
+                  <option value="1" selected={{eq this.childSequenceOrder "1"}}>{{t
+                      "general.ordered"
+                    }}</option>
+                  <option value="2" selected={{eq this.childSequenceOrder "2"}}>{{t
+                      "general.unordered"
+                    }}</option>
+                  <option value="3" selected={{eq this.childSequenceOrder "3"}}>{{t
+                      "general.parallel"
+                    }}</option>
                 </select>
               </EditableField>
             {{else}}
@@ -278,7 +326,10 @@
                       {{on "change" this.updateOrderInSequence}}
                     >
                       {{#each this.orderInSequenceOptions as |val|}}
-                        <option value={{val}} selected={{eq val this.orderInSequence}}>{{val}}</option>
+                        <option
+                          value={{val}}
+                          selected={{eq val this.orderInSequence}}
+                        >{{val}}</option>
                       {{/each}}
                     </select>
                   </EditableField>
@@ -303,7 +354,10 @@
                   {{on "change" this.setStartingAcademicLevel}}
                 >
                   {{#each (sort-by "level" this.academicLevels) as |obj|}}
-                    <option value={{obj.id}} selected={{eq obj.id this.startingAcademicLevel.id}}>{{obj.name}}</option>
+                    <option
+                      value={{obj.id}}
+                      selected={{eq obj.id this.startingAcademicLevel.id}}
+                    >{{obj.name}}</option>
                   {{/each}}
                 </select>
                 <ValidationError @errors={{get-errors-for this.startingAcademicLevel}} />
@@ -325,7 +379,10 @@
                   {{on "change" this.setEndingAcademicLevel}}
                 >
                   {{#each (sort-by "level" this.academicLevels) as |obj|}}
-                    <option value={{obj.id}} selected={{eq obj.id this.endingAcademicLevel.id}}>{{obj.name}}</option>
+                    <option
+                      value={{obj.id}}
+                      selected={{eq obj.id this.endingAcademicLevel.id}}
+                    >{{obj.name}}</option>
                   {{/each}}
                 </select>
                 <ValidationError @errors={{get-errors-for this.endingAcademicLevel}} />
@@ -334,7 +391,10 @@
               <span>{{this.endingAcademicLevel.name}}</span>
             {{/if}}
           </div>
-          <div class="block is-selective {{unless this.isSelective "hidden"}}" data-test-is-selective>
+          <div
+            class="block is-selective {{unless this.isSelective 'hidden'}}"
+            data-test-is-selective
+          >
             <label>{{t "general.sequenceBlockIsSelective"}}</label>
           </div>
           {{#if this.isEditingMinMax}}
@@ -352,8 +412,11 @@
                   value={{if this.isElective "0" this.minimum}}
                   disabled={{or this.isElective this.saveMinMax.isRunning}}
                   {{on "input" (pick "target.value" (set this "minimum"))}}
-                  {{on "keyup" (queue (fn this.addErrorDisplayFor "minimum") this.saveOrCancelMinMax)}}
-                >
+                  {{on
+                    "keyup"
+                    (queue (fn this.addErrorDisplayFor "minimum") this.saveOrCancelMinMax)
+                  }}
+                />
                 <ValidationError @errors={{get-errors-for this.minimum}} />
               </div>
               <div class="item maximum" data-test-maximum>
@@ -366,8 +429,11 @@
                   value={{this.maximum}}
                   disabled={{this.saveMinMax.isRunning}}
                   {{on "input" (pick "target.value" (set this "maximum"))}}
-                  {{on "keyup" (queue (fn this.addErrorDisplayFor "maximum") this.saveOrCancelMinMax)}}
-                >
+                  {{on
+                    "keyup"
+                    (queue (fn this.addErrorDisplayFor "maximum") this.saveOrCancelMinMax)
+                  }}
+                />
                 <ValidationError @errors={{get-errors-for this.maximum}} />
               </div>
               <div class="buttons">
@@ -433,7 +499,9 @@
             <label>{{t "general.sessions"}} ({{this.sessions.length}})</label>
             {{#if (and (not this.isManagingSessions) @canUpdate this.sessions.length)}}
               <div class="actions">
-                <button type="button" {{on "click" this.toggleManagingSessions}}>{{t "general.manage"}}</button>
+                <button type="button" {{on "click" this.toggleManagingSessions}}>{{t
+                    "general.manage"
+                  }}</button>
               </div>
             {{/if}}
           </div>

@@ -24,7 +24,7 @@
             {{on "keyup" (perform this.keyboard)}}
             {{on "input" (pick "target.value" (set this "name"))}}
             {{on "keyup" (fn this.addErrorDisplayFor "name")}}
-          >
+          />
           <ValidationError @errors={{get-errors-for this.name}} />
         </div>
         <div class="item" data-test-description>
@@ -57,7 +57,10 @@
             {{on "change" (pick "target.value" this.setSelectedYear)}}
           >
             {{#each this.years as |year|}}
-              <option value={{year.id}} selected={{eq year.id this.selectedYear.id}}>{{year.title}}</option>
+              <option
+                value={{year.id}}
+                selected={{eq year.id this.selectedYear.id}}
+              >{{year.title}}</option>
             {{/each}}
           </select>
         </div>

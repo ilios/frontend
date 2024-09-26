@@ -29,7 +29,7 @@
                   indeterminate={{this.someSelected}}
                   aria-labelledby={{countAsOneLabelId}}
                   {{on "click" (pick "target.value" this.toggleSelectAll)}}
-                >
+                />
                 <label id={{countAsOneLabelId}}>{{t "general.countAsOneOffering"}}</label>
               </th>
               <th class="text-center count-as-one-header" colspan="2">
@@ -39,7 +39,7 @@
                   indeterminate={{this.someExcluded}}
                   aria-labelledby={{excludedLabelId}}
                   {{on "click" (pick "target.value" this.toggleExcludeAll)}}
-                >
+                />
                 <label id={{excludedLabelId}}>{{t "general.exclude"}}</label>
               </th>
               <SortableTh
@@ -88,7 +88,7 @@
                       checked={{includes session this.linkedSessions}}
                       aria-labelledby={{concat countAsOneLabelId " " sessionTitleLabelId}}
                       {{on "change" (fn this.changeSession session)}}
-                    >
+                    />
                   </td>
                   <td class="text-center" colspan="2">
                     <input
@@ -96,7 +96,7 @@
                       checked={{includes session this.excludedSessions}}
                       aria-labelledby={{concat excludedLabelId " " sessionTitleLabelId}}
                       {{on "change" (fn this.excludeSession session)}}
-                    >
+                    />
                   </td>
                   <td class="text-left" colspan="3">
                     <label id={{sessionTitleLabelId}}>
@@ -116,7 +116,7 @@
                       {{session.maxDuration}}
                     {{else}}
                       {{session.totalSumDuration}}
-                     {{/if}}
+                    {{/if}}
                   </td>
                   <td class="text-center" colspan="1">
                     {{session.offerings.length}}

@@ -38,14 +38,13 @@ module('Integration | Component | leadership list', function (hooks) {
     this.set('studentAdvisors', [this.user2, this.user3]);
 
     await render(hbs`<LeadershipList
-      @directors={{this.directors}}
-      @administrators={{this.administrators}}
-      @studentAdvisors={{this.studentAdvisors}}
-      @showAdministrators={{true}}
-      @showDirectors={{true}}
-      @showStudentAdvisors={{true}}
-    />
-`);
+  @directors={{this.directors}}
+  @administrators={{this.administrators}}
+  @studentAdvisors={{this.studentAdvisors}}
+  @showAdministrators={{true}}
+  @showDirectors={{true}}
+  @showStudentAdvisors={{true}}
+/>`);
     const directors = 'table tbody tr:nth-of-type(1) td:nth-of-type(1) li [data-test-fullname]';
     const directorsUsernameInfo =
       'table tbody tr:nth-of-type(1) td:nth-of-type(1) li [data-test-info]';
@@ -93,13 +92,12 @@ module('Integration | Component | leadership list', function (hooks) {
     this.set('studentAdvisors', [this.user1]);
 
     await render(hbs`<LeadershipList
-      @showDirectors={{false}}
-      @showAdministrators={{true}}
-      @administrators={{this.administrators}}
-      @showStudentAdvisors={{true}}
-      @studentAdvisors={{this.studentAdvisors}}
-    />
-`);
+  @showDirectors={{false}}
+  @showAdministrators={{true}}
+  @administrators={{this.administrators}}
+  @showStudentAdvisors={{true}}
+  @studentAdvisors={{this.studentAdvisors}}
+/>`);
     const administrators =
       'table tbody tr:nth-of-type(1) td:nth-of-type(1) li [data-test-fullname]';
     const studentAdvisors =
@@ -116,13 +114,12 @@ module('Integration | Component | leadership list', function (hooks) {
     this.set('studentAdvisors', [this.user1]);
 
     await render(hbs`<LeadershipList
-      @showAdministrators={{false}}
-      @showDirectors={{true}}
-      @directors={{this.directors}}
-      @showStudentAdvisors={{true}}
-      @studentAdvisors={{this.studentAdvisors}}
-    />
-`);
+  @showAdministrators={{false}}
+  @showDirectors={{true}}
+  @directors={{this.directors}}
+  @showStudentAdvisors={{true}}
+  @studentAdvisors={{this.studentAdvisors}}
+/>`);
     const directors = 'table tbody tr:nth-of-type(1) td:nth-of-type(1) li [data-test-fullname]';
     const studentAdvisors =
       'table tbody tr:nth-of-type(1) td:nth-of-type(2) li [data-test-fullname]';
@@ -138,13 +135,12 @@ module('Integration | Component | leadership list', function (hooks) {
     this.set('administrators', [this.user1]);
 
     await render(hbs`<LeadershipList
-      @showDirectors={{true}}
-      @directors={{this.directors}}
-      @showAdministrators={{true}}
-      @administrators={{this.administrators}}
-      @showStudentAdvisors={{false}}
-    />
-`);
+  @showDirectors={{true}}
+  @directors={{this.directors}}
+  @showAdministrators={{true}}
+  @administrators={{this.administrators}}
+  @showStudentAdvisors={{false}}
+/>`);
     const directors = 'table tbody tr:nth-of-type(1) td:nth-of-type(1) li [data-test-fullname]';
     const administrators =
       'table tbody tr:nth-of-type(1) td:nth-of-type(2) li [data-test-fullname]';
@@ -161,14 +157,13 @@ module('Integration | Component | leadership list', function (hooks) {
     this.set('studentAdvisors', []);
 
     await render(hbs`<LeadershipList
-      @directors={{this.directors}}
-      @administrators={{this.administrators}}
-      @studentAdvisors={{this.studentAdvisors}}
-      @showAdministrators={{true}}
-      @showDirectors={{true}}
-      @showStudentAdvisors={{true}}
-      />
-`);
+  @directors={{this.directors}}
+  @administrators={{this.administrators}}
+  @studentAdvisors={{this.studentAdvisors}}
+  @showAdministrators={{true}}
+  @showDirectors={{true}}
+  @showStudentAdvisors={{true}}
+/>`);
     const directors = 'table tbody tr:nth-of-type(1) td:nth-of-type(1) li';
     const administrators = 'table tbody tr:nth-of-type(1) td:nth-of-type(2) li';
     const studentAdvisors = 'table tbody tr:nth-of-type(1) td:nth-of-type(3) li';
@@ -189,14 +184,13 @@ module('Integration | Component | leadership list', function (hooks) {
     this.set('studentAdvisors', [this.user2]);
 
     await render(hbs`<LeadershipList
-      @directors={{this.directors}}
-      @administrators={{this.administrators}}
-      @studentAdvisors={{this.studentAdvisors}}
-      @showAdministrators={{true}}
-      @showDirectors={{true}}
-      @showStudentAdvisors={{true}}
-    />
-`);
+  @directors={{this.directors}}
+  @administrators={{this.administrators}}
+  @studentAdvisors={{this.studentAdvisors}}
+  @showAdministrators={{true}}
+  @showDirectors={{true}}
+  @showStudentAdvisors={{true}}
+/>`);
     const directors = 'table tbody tr:nth-of-type(1) td:nth-of-type(1) li';
     const administrators = 'table tbody tr:nth-of-type(1) td:nth-of-type(2) li';
     const studentAdvisors = 'table tbody tr:nth-of-type(1) td:nth-of-type(3) li';

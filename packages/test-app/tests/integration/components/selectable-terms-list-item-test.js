@@ -18,11 +18,7 @@ module('Integration | Component | selectable terms list item', function (hooks) 
     this.set('selectedTerms', [this.termModel]);
     this.set('term', this.termModel);
 
-    await render(hbs`<SelectableTermsListItem
-      @selectedTerms={{this.selectedTerms}}
-      @term={{this.term}}
-    />
-`);
+    await render(hbs`<SelectableTermsListItem @selectedTerms={{this.selectedTerms}} @term={{this.term}} />`);
 
     assert.strictEqual(component.text, this.termModel.get('title'));
   });
@@ -41,11 +37,10 @@ module('Integration | Component | selectable terms list item', function (hooks) 
     });
 
     await render(hbs`<SelectableTermsListItem
-      @selectedTerms={{this.selectedTerms}}
-      @term={{this.term}}
-      @remove={{this.remove}}
-    />
-`);
+  @selectedTerms={{this.selectedTerms}}
+  @term={{this.term}}
+  @remove={{this.remove}}
+/>`);
 
     assert.ok(component.isSelected);
     await component.click();
@@ -63,11 +58,10 @@ module('Integration | Component | selectable terms list item', function (hooks) 
     });
 
     await render(hbs`<SelectableTermsListItem
-      @selectedTerms={{this.selectedTerms}}
-      @term={{this.term}}
-      @add={{this.add}}
-    />
-`);
+  @selectedTerms={{this.selectedTerms}}
+  @term={{this.term}}
+  @add={{this.add}}
+/>`);
 
     assert.notOk(component.isSelected);
     await component.click();

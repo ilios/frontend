@@ -75,14 +75,14 @@ module('Integration | Component | assign-students/manager', function (hooks) {
     this.set('school', this.school1);
     this.set('selectableStudents', [this.user1, this.user2, this.user3]);
     await render(hbs`<AssignStudents::Manager
-      @school={{this.school}}
-      @selectableStudents={{this.selectableStudents}}
-      @selectedStudents={{(array)}}
-      @changeUserSelection={{(noop)}}
-      @changeAllUserSelections={{(noop)}}
-      @save={{(noop)}}
-      @isSaving={{false}}
-    />`);
+  @school={{this.school}}
+  @selectableStudents={{this.selectableStudents}}
+  @selectedStudents={{(array)}}
+  @changeUserSelection={{(noop)}}
+  @changeAllUserSelections={{(noop)}}
+  @save={{(noop)}}
+  @isSaving={{false}}
+/>`);
     assert.strictEqual(component.cohorts.label, 'Assign 0 selected users to:');
     assert.notOk(component.cohorts.isDisabled);
     assert.strictEqual(component.cohorts.options.length, 3);
@@ -106,14 +106,14 @@ module('Integration | Component | assign-students/manager', function (hooks) {
   test('it renders without users', async function (assert) {
     this.set('school', this.school1);
     await render(hbs`<AssignStudents::Manager
-      @school={{this.school}}
-      @selectableStudents={{(array)}}
-      @selectedStudents={{(array)}}
-      @changeUserSelection={{(noop)}}
-      @changeAllUserSelections={{(noop)}}
-      @save={{(noop)}}
-      @isSaving={{false}}
-    />`);
+  @school={{this.school}}
+  @selectableStudents={{(array)}}
+  @selectedStudents={{(array)}}
+  @changeUserSelection={{(noop)}}
+  @changeAllUserSelections={{(noop)}}
+  @save={{(noop)}}
+  @isSaving={{false}}
+/>`);
     assert.strictEqual(component.students.length, 0);
     assert.ok(component.isToggleAllDisabled);
     assert.ok(component.noResult.isVisible);
@@ -125,14 +125,14 @@ module('Integration | Component | assign-students/manager', function (hooks) {
     this.set('school', this.school2);
     this.set('selectableStudents', [this.user4, this.user5]);
     await render(hbs`<AssignStudents::Manager
-      @school={{this.school}}
-      @selectableStudents={{this.selectableStudents}}
-      @selectedStudents={{(array)}}
-      @changeUserSelection={{(noop)}}
-      @changeAllUserSelections={{(noop)}}
-      @save={{(noop)}}
-      @isSaving={{false}}
-    />`);
+  @school={{this.school}}
+  @selectableStudents={{this.selectableStudents}}
+  @selectedStudents={{(array)}}
+  @changeUserSelection={{(noop)}}
+  @changeAllUserSelections={{(noop)}}
+  @save={{(noop)}}
+  @isSaving={{false}}
+/>`);
     assert.ok(component.cohorts.noCohorts.isVisible);
     assert.strictEqual(
       component.cohorts.noCohorts.text,
@@ -154,14 +154,14 @@ module('Integration | Component | assign-students/manager', function (hooks) {
       assert.strictEqual(userId, this.user1.id);
     });
     await render(hbs`<AssignStudents::Manager
-      @school={{this.school}}
-      @selectableStudents={{this.selectableStudents}}
-      @selectedStudents={{(array)}}
-      @changeUserSelection={{this.changeUser}}
-      @changeAllUserSelections={{(noop)}}
-      @save={{(noop)}}
-      @isSaving={{false}}
-    />`);
+  @school={{this.school}}
+  @selectableStudents={{this.selectableStudents}}
+  @selectedStudents={{(array)}}
+  @changeUserSelection={{this.changeUser}}
+  @changeAllUserSelections={{(noop)}}
+  @save={{(noop)}}
+  @isSaving={{false}}
+/>`);
     assert.strictEqual(component.students.length, 1);
     assert.strictEqual(component.students[0].userNameInfo.fullName, 'Alpha');
     assert.notOk(component.students[0].isToggleDisabled);
@@ -178,14 +178,14 @@ module('Integration | Component | assign-students/manager', function (hooks) {
       assert.strictEqual(userId, this.user1.id);
     });
     await render(hbs`<AssignStudents::Manager
-      @school={{this.school}}
-      @selectableStudents={{this.selectableStudents}}
-      @selectedStudents={{this.selectableStudents}}
-      @changeUserSelection={{this.changeUser}}
-      @changeAllUserSelections={{(noop)}}
-      @save={{(noop)}}
-      @isSaving={{false}}
-    />`);
+  @school={{this.school}}
+  @selectableStudents={{this.selectableStudents}}
+  @selectedStudents={{this.selectableStudents}}
+  @changeUserSelection={{this.changeUser}}
+  @changeAllUserSelections={{(noop)}}
+  @save={{(noop)}}
+  @isSaving={{false}}
+/>`);
     assert.strictEqual(component.students.length, 1);
     assert.strictEqual(component.students[0].userNameInfo.fullName, 'Alpha');
     assert.notOk(component.students[0].isToggleDisabled);
@@ -201,14 +201,14 @@ module('Integration | Component | assign-students/manager', function (hooks) {
       assert.ok(true, 'toggle-all fired');
     });
     await render(hbs`<AssignStudents::Manager
-      @school={{this.school}}
-      @selectableStudents={{this.selectableStudents}}
-      @selectedStudents={{(array)}}
-      @changeUserSelection={{(noop)}}
-      @changeAllUserSelections={{this.toggleAll}}
-      @save={{(noop)}}
-      @isSaving={{false}}
-    />`);
+  @school={{this.school}}
+  @selectableStudents={{this.selectableStudents}}
+  @selectedStudents={{(array)}}
+  @changeUserSelection={{(noop)}}
+  @changeAllUserSelections={{this.toggleAll}}
+  @save={{(noop)}}
+  @isSaving={{false}}
+/>`);
     assert.notOk(component.isToggleAllDisabled);
     await component.toggleAll();
   });
@@ -218,14 +218,14 @@ module('Integration | Component | assign-students/manager', function (hooks) {
     this.set('selectableStudents', [this.user1, this.user2]);
     this.set('selectedStudents', [this.user1, this.user2]);
     await render(hbs`<AssignStudents::Manager
-      @school={{this.school}}
-      @selectableStudents={{this.selectableStudents}}
-      @selectedStudents={{this.selectedStudents}}
-      @changeUserSelection={{(noop)}}
-      @changeAllUserSelections={{(noop)}}
-      @save={{(noop)}}
-      @isSaving={{false}}
-    />`);
+  @school={{this.school}}
+  @selectableStudents={{this.selectableStudents}}
+  @selectedStudents={{this.selectedStudents}}
+  @changeUserSelection={{(noop)}}
+  @changeAllUserSelections={{(noop)}}
+  @save={{(noop)}}
+  @isSaving={{false}}
+/>`);
     assert.strictEqual(component.cohorts.label, 'Assign 2 selected users to:');
     assert.notOk(component.isToggleAllDisabled);
     assert.ok(component.isToggleAllChecked);
@@ -238,14 +238,14 @@ module('Integration | Component | assign-students/manager', function (hooks) {
     this.set('selectableStudents', [this.user1, this.user2]);
     this.set('selectedStudents', [this.user1]);
     await render(hbs`<AssignStudents::Manager
-      @school={{this.school}}
-      @selectableStudents={{this.selectableStudents}}
-      @selectedStudents={{this.selectedStudents}}
-      @changeUserSelection={{(noop)}}
-      @changeAllUserSelections={{(noop)}}
-      @save={{(noop)}}
-      @isSaving={{false}}
-    />`);
+  @school={{this.school}}
+  @selectableStudents={{this.selectableStudents}}
+  @selectedStudents={{this.selectedStudents}}
+  @changeUserSelection={{(noop)}}
+  @changeAllUserSelections={{(noop)}}
+  @save={{(noop)}}
+  @isSaving={{false}}
+/>`);
     assert.strictEqual(component.cohorts.label, 'Assign 1 selected user to:');
     assert.notOk(component.isToggleAllDisabled);
     assert.notOk(component.isToggleAllChecked);
@@ -257,14 +257,14 @@ module('Integration | Component | assign-students/manager', function (hooks) {
     this.set('school', this.school1);
     this.set('selectableStudents', [this.user1, this.user2]);
     await render(hbs`<AssignStudents::Manager
-      @school={{this.school}}
-      @selectableStudents={{this.selectableStudents}}
-      @selectedStudents={{(array)}}
-      @changeUserSelection={{(noop)}}
-      @changeAllUserSelections={{(noop)}}
-      @save={{(noop)}}
-      @isSaving={{false}}
-    />`);
+  @school={{this.school}}
+  @selectableStudents={{this.selectableStudents}}
+  @selectedStudents={{(array)}}
+  @changeUserSelection={{(noop)}}
+  @changeAllUserSelections={{(noop)}}
+  @save={{(noop)}}
+  @isSaving={{false}}
+/>`);
     assert.strictEqual(component.cohorts.label, 'Assign 0 selected users to:');
     assert.notOk(component.isToggleAllDisabled);
     assert.notOk(component.isToggleAllChecked);
@@ -277,14 +277,14 @@ module('Integration | Component | assign-students/manager', function (hooks) {
     this.set('selectableStudents', [this.user1, this.user2, this.user3]);
     this.set('selectedStudents', [this.user2]);
     await render(hbs`<AssignStudents::Manager
-      @school={{this.school}}
-      @selectableStudents={{this.selectableStudents}}
-      @selectedStudents={{this.selectedStudents}}
-      @changeUserSelection={{(noop)}}
-      @changeAllUserSelections={{(noop)}}
-      @save={{(noop)}}
-      @isSaving={{false}}
-    />`);
+  @school={{this.school}}
+  @selectableStudents={{this.selectableStudents}}
+  @selectedStudents={{this.selectedStudents}}
+  @changeUserSelection={{(noop)}}
+  @changeAllUserSelections={{(noop)}}
+  @save={{(noop)}}
+  @isSaving={{false}}
+/>`);
     assert.strictEqual(component.cohorts.label, 'Assign 1 selected user to:');
     assert.strictEqual(component.cohorts.options.length, 3);
     assert.strictEqual(component.cohorts.options[0].text, 'program 0 cohort 0');
@@ -318,14 +318,14 @@ module('Integration | Component | assign-students/manager', function (hooks) {
       assert.ok(true, 'save fired');
     });
     await render(hbs`<AssignStudents::Manager
-      @school={{this.school}}
-      @selectableStudents={{this.selectableStudents}}
-      @selectedStudents={{this.selectedStudents}}
-      @changeUserSelection={{(noop)}}
-      @changeAllUserSelections={{(noop)}}
-      @save={{this.save}}
-      @isSaving={{false}}
-    />`);
+  @school={{this.school}}
+  @selectableStudents={{this.selectableStudents}}
+  @selectedStudents={{this.selectedStudents}}
+  @changeUserSelection={{(noop)}}
+  @changeAllUserSelections={{(noop)}}
+  @save={{this.save}}
+  @isSaving={{false}}
+/>`);
     assert.notOk(component.isSaveDisabled);
     await component.save();
   });
@@ -335,14 +335,14 @@ module('Integration | Component | assign-students/manager', function (hooks) {
     this.set('selectableStudents', [this.user1]);
     this.set('selectedStudents', [this.user1]);
     await render(hbs`<AssignStudents::Manager
-      @school={{this.school}}
-      @selectableStudents={{this.selectableStudents}}
-      @selectedStudents={{this.selectedStudents}}
-      @changeUserSelection={{(noop)}}
-      @changeAllUserSelections={{(noop)}}
-      @save={{(noop)}}
-      @isSaving={{true}}
-    />`);
+  @school={{this.school}}
+  @selectableStudents={{this.selectableStudents}}
+  @selectedStudents={{this.selectedStudents}}
+  @changeUserSelection={{(noop)}}
+  @changeAllUserSelections={{(noop)}}
+  @save={{(noop)}}
+  @isSaving={{true}}
+/>`);
     assert.ok(component.isSaveDisabled);
     assert.ok(component.cohorts.isDisabled);
     assert.ok(component.isToggleAllDisabled);

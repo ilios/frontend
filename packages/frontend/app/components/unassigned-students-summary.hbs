@@ -1,6 +1,6 @@
 {{#let (unique-id) as |templateId|}}
   <div
-    class="unassigned-students-summary small-component {{if this.hasUnassignedStudents "alert"}}"
+    class="unassigned-students-summary small-component {{if this.hasUnassignedStudents 'alert'}}"
     data-test-unassigned-students-summary
   >
     <h3 data-test-title>
@@ -15,12 +15,12 @@
       </label>
       <div id="school-selection" class="inline-data" data-test-schools>
         {{#if (gt @schools.length 1)}}
-          <select id="school-filter-{{templateId}}" {{on "change" (pick "target.value" (set this "schoolId"))}}>
+          <select
+            id="school-filter-{{templateId}}"
+            {{on "change" (pick "target.value" (set this "schoolId"))}}
+          >
             {{#each (sort-by "title" @schools) as |school|}}
-              <option
-                value={{school.id}}
-                selected={{eq school.id this.selectedSchool.id}}
-              >
+              <option value={{school.id}} selected={{eq school.id this.selectedSchool.id}}>
                 {{school.title}}
               </option>
             {{/each}}
@@ -32,10 +32,7 @@
     </div>
     {{#if this.isLoaded}}
       <p data-test-summary-text>
-        {{t
-          "general.unassignedStudentsSummary"
-          count=this.unassignedStudents.length
-        }}
+        {{t "general.unassignedStudentsSummary" count=this.unassignedStudents.length}}
       </p>
       {{#if (gt this.unassignedStudents.length 0)}}
         <div class="actions">

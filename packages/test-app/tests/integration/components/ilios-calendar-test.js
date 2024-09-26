@@ -21,14 +21,13 @@ module('Integration | Component | ilios calendar', function (hooks) {
     this.set('date', date.toJSDate());
 
     await render(hbs`<IliosCalendar
-      @selectedDate={{this.date}}
-      @selectedView="day"
-      @calendarEvents={{(array)}}
-      @changeDate={{(noop)}}
-      @changeView={{(noop)}}
-      @selectEvent={{(noop)}}
-    />
-`);
+  @selectedDate={{this.date}}
+  @selectedView='day'
+  @calendarEvents={{(array)}}
+  @changeDate={{(noop)}}
+  @changeView={{(noop)}}
+  @selectEvent={{(noop)}}
+/>`);
     assert.strictEqual(component.daily.title.longDayOfWeek, 'Wednesday, September 30, 2015');
     assert.notOk(component.monthly.isVisible);
     assert.notOk(component.weekly.isVisible);
@@ -59,14 +58,13 @@ module('Integration | Component | ilios calendar', function (hooks) {
     this.set('date', date.toJSDate());
 
     await render(hbs`<IliosCalendar
-      @selectedDate={{this.date}}
-      @selectedView="week"
-      @calendarEvents={{(array)}}
-      @changeDate={{(noop)}}
-      @changeView={{(noop)}}
-      @selectEvent={{(noop)}}
-    />
-`);
+  @selectedDate={{this.date}}
+  @selectedView='week'
+  @calendarEvents={{(array)}}
+  @changeDate={{(noop)}}
+  @changeView={{(noop)}}
+  @selectEvent={{(noop)}}
+/>`);
     assert.strictEqual(component.weekly.title.longWeekOfYear, 'Week of September 27, 2015');
     assert.notOk(component.monthly.isVisible);
     assert.notOk(component.daily.isVisible);
@@ -89,14 +87,13 @@ module('Integration | Component | ilios calendar', function (hooks) {
     this.set('date', date.toJSDate());
 
     await render(hbs`<IliosCalendar
-      @selectedDate={{this.date}}
-      @selectedView="month"
-      @calendarEvents={{(array)}}
-      @changeDate={{(noop)}}
-      @changeView={{(noop)}}
-      @selectEvent={{(noop)}}
-    />
-`);
+  @selectedDate={{this.date}}
+  @selectedView='month'
+  @calendarEvents={{(array)}}
+  @changeDate={{(noop)}}
+  @changeView={{(noop)}}
+  @selectEvent={{(noop)}}
+/>`);
     assert.strictEqual(component.monthly.title, 'September 2015');
     assert.notOk(component.daily.isVisible);
     assert.notOk(component.weekly.isVisible);

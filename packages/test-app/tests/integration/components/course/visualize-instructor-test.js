@@ -19,8 +19,7 @@ module('Integration | Component | course/visualize-instructor', function (hooks)
     this.set('course', courseModel);
     this.set('user', userModel);
 
-    await render(hbs`<Course::VisualizeInstructor @course={{this.course}} @user={{this.user}} />
-`);
+    await render(hbs`<Course::VisualizeInstructor @course={{this.course}} @user={{this.user}} />`);
 
     assert.strictEqual(component.title, 'course 0 2021');
     assert.strictEqual(component.instructorName, '0 guy M. Mc0son');
@@ -44,8 +43,7 @@ module('Integration | Component | course/visualize-instructor', function (hooks)
     this.set('course', courseModel);
     this.set('user', userModel);
 
-    await render(hbs`<Course::VisualizeInstructor @course={{this.course}} @user={{this.user}} />
-`);
+    await render(hbs`<Course::VisualizeInstructor @course={{this.course}} @user={{this.user}} />`);
 
     assert.strictEqual(component.title, 'course 0 2021 - 2022');
   });
@@ -66,8 +64,7 @@ module('Integration | Component | course/visualize-instructor', function (hooks)
     this.set('course', courseModel);
     this.set('user', userModel);
 
-    await render(hbs`<Course::VisualizeInstructor @course={{this.course}} @user={{this.user}} />
-`);
+    await render(hbs`<Course::VisualizeInstructor @course={{this.course}} @user={{this.user}} />`);
 
     assert.strictEqual(component.breadcrumb.crumbs.length, 4);
     assert.strictEqual(component.breadcrumb.crumbs[0].text, 'course 0');
@@ -133,8 +130,7 @@ module('Integration | Component | course/visualize-instructor', function (hooks)
     this.set('course', courseModel);
     this.set('user', userModel);
 
-    await render(hbs`<Course::VisualizeInstructor @course={{this.course}} @user={{this.user}} />
-`);
+    await render(hbs`<Course::VisualizeInstructor @course={{this.course}} @user={{this.user}} />`);
 
     // wait for charts to load
     await waitFor('.loaded');

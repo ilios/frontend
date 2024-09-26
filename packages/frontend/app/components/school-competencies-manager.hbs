@@ -2,10 +2,7 @@
   {{#each this.domains as |obj|}}
     <div class="domain" data-test-domain>
       <div class="block" data-test-domain-details>
-        <CompetencyTitleEditor
-          @competency={{obj.domain}}
-          @canUpdate={{@canUpdate}}
-        />
+        <CompetencyTitleEditor @competency={{obj.domain}} @canUpdate={{@canUpdate}} />
         {{#if (eq obj.competencies.length 0)}}
           <button
             type="button"
@@ -22,10 +19,7 @@
       <ul>
         {{#each obj.competencies as |competency|}}
           <li class="block" data-test-competency>
-            <CompetencyTitleEditor
-              @competency={{competency}}
-              @canUpdate={{@canUpdate}}
-            />
+            <CompetencyTitleEditor @competency={{competency}} @canUpdate={{@canUpdate}} />
             {{#if (and @canDelete (eq competency.programYearObjectives.length 0))}}
               <button
                 type="button"

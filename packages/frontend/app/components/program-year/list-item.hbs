@@ -1,14 +1,7 @@
 {{#if (and this.cohort (not @programYear.archived))}}
-  <tr
-    class={{if this.showRemoveConfirmation "confirm-removal"}}
-    data-test-program-year-list-item
-  >
+  <tr class={{if this.showRemoveConfirmation "confirm-removal"}} data-test-program-year-list-item>
     <td class="text-left">
-      <LinkTo
-        @route="program-year"
-        @models={{array this.program @programYear}}
-        data-test-link
-      >
+      <LinkTo @route="program-year" @models={{array this.program @programYear}} data-test-link>
         <FaIcon @icon="square-up-right" />
         {{this.academicYear}}
       </LinkTo>
@@ -17,10 +10,7 @@
       {{#if this.cohort.title}}
         {{this.cohort.title}}
       {{else}}
-        {{t
-          "general.classOf"
-          year=this.classOfYear
-        }}
+        {{t "general.classOf" year=this.classOfYear}}
       {{/if}}
     </td>
     <td class="text-left hide-from-small-screen" data-test-competencies>
@@ -87,10 +77,7 @@
             {{on "click" (set this "showRemoveConfirmation" true)}}
             data-test-remove
           >
-            <FaIcon
-              @icon="trash"
-              class="remove"
-            />
+            <FaIcon @icon="trash" class="remove" />
           </button>
         {{else}}
           <FaIcon @icon="trash" class="disabled" />
@@ -102,11 +89,8 @@
     <tr class="confirm-removal">
       <td colspan="8" class="hide-from-small-screen">
         <div class="confirm-message" data-test-message>
-          {{t
-            "general.confirmRemoveProgramYear"
-            courseCount=this.cohort.courses.length
-          }}
-          <br>
+          {{t "general.confirmRemoveProgramYear" courseCount=this.cohort.courses.length}}
+          <br />
           <div class="confirm-buttons">
             <button
               type="button"
@@ -129,11 +113,8 @@
       </td>
       <td colspan="3" class="hide-from-large-screen" data-test-confirm-removal>
         <div class="confirm-message" data-test-message>
-          {{t
-            "general.confirmRemoveProgramYear"
-            courseCount=this.cohort.courses.length
-          }}
-          <br>
+          {{t "general.confirmRemoveProgramYear" courseCount=this.cohort.courses.length}}
+          <br />
           <div class="confirm-buttons">
             <button
               type="button"

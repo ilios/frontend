@@ -51,12 +51,12 @@ module('Integration | Component | curriculum-inventory/reports', function (hooks
 
   test('it renders', async function (assert) {
     await render(hbs`<CurriculumInventory::Reports
-      @schools={{this.schools}}
-      @sortReportsBy="name"
-      @setSortBy={{(noop)}}
-      @setSchoolId={{(noop)}}
-      @setProgramId={{(noop)}}
-    />`);
+  @schools={{this.schools}}
+  @sortReportsBy='name'
+  @setSortBy={{(noop)}}
+  @setSchoolId={{(noop)}}
+  @setProgramId={{(noop)}}
+/>`);
     assert.notOk(component.newReport.isVisible);
     assert.ok(component.reports.isVisible);
     assert.strictEqual(component.schools.options.length, 3);
@@ -65,14 +65,14 @@ module('Integration | Component | curriculum-inventory/reports', function (hooks
 
   test('selected school with multiple programs', async function (assert) {
     await render(hbs`<CurriculumInventory::Reports
-      @schools={{this.schools}}
-      @schoolId={{this.schoolWithMultiplePrograms.id}}
-      @programId={{this.program1.id}}
-      @sortReportsBy="name"
-      @setSortBy={{(noop)}}
-      @setSchoolId={{(noop)}}
-      @setProgramId={{(noop)}}
-    />`);
+  @schools={{this.schools}}
+  @schoolId={{this.schoolWithMultiplePrograms.id}}
+  @programId={{this.program1.id}}
+  @sortReportsBy='name'
+  @setSortBy={{(noop)}}
+  @setSchoolId={{(noop)}}
+  @setProgramId={{(noop)}}
+/>`);
     assert.strictEqual(component.schools.options.length, 3);
     assert.ok(component.schools.options[0].isSelected);
     assert.strictEqual(component.programs.options.length, 2);
@@ -81,14 +81,14 @@ module('Integration | Component | curriculum-inventory/reports', function (hooks
 
   test('selected school with one program', async function (assert) {
     await render(hbs`<CurriculumInventory::Reports
-      @schools={{this.schools}}
-      @schoolId={{this.schoolWithOneProgram.id}}
-      @programId={{this.program3.id}}
-      @sortReportsBy="name"
-      @setSortBy={{(noop)}}
-      @setSchoolId={{(noop)}}
-      @setProgramId={{(noop)}}
-    />`);
+  @schools={{this.schools}}
+  @schoolId={{this.schoolWithOneProgram.id}}
+  @programId={{this.program3.id}}
+  @sortReportsBy='name'
+  @setSortBy={{(noop)}}
+  @setSchoolId={{(noop)}}
+  @setProgramId={{(noop)}}
+/>`);
     assert.strictEqual(component.schools.options.length, 3);
     assert.ok(component.schools.options[1].isSelected);
     assert.strictEqual(component.programs.options.length, 1);
@@ -97,13 +97,13 @@ module('Integration | Component | curriculum-inventory/reports', function (hooks
 
   test('selected school without programs', async function (assert) {
     await render(hbs`<CurriculumInventory::Reports
-      @schools={{this.schools}}
-      @schoolId={{this.schoolWithoutPrograms.id}}
-      @sortReportsBy="name"
-      @setSortBy={{(noop)}}
-      @setSchoolId={{(noop)}}
-      @setProgramId={{(noop)}}
-    />`);
+  @schools={{this.schools}}
+  @schoolId={{this.schoolWithoutPrograms.id}}
+  @sortReportsBy='name'
+  @setSortBy={{(noop)}}
+  @setSchoolId={{(noop)}}
+  @setProgramId={{(noop)}}
+/>`);
     assert.strictEqual(component.schools.options.length, 3);
     assert.ok(component.schools.options[2].isSelected);
     assert.strictEqual(component.programs.options.length, 0);
@@ -116,12 +116,12 @@ module('Integration | Component | curriculum-inventory/reports', function (hooks
       assert.strictEqual(id, this.schoolWithOneProgram.id);
     });
     await render(hbs`<CurriculumInventory::Reports
-      @schools={{this.schools}}
-      @sortReportsBy="name"
-      @setSortBy={{(noop)}}
-      @setSchoolId={{this.setSchoolId}}
-      @setProgramId={{(noop)}}
-    />`);
+  @schools={{this.schools}}
+  @sortReportsBy='name'
+  @setSortBy={{(noop)}}
+  @setSchoolId={{this.setSchoolId}}
+  @setProgramId={{(noop)}}
+/>`);
     await component.schools.select(this.schoolWithOneProgram.id);
   });
 
@@ -131,23 +131,23 @@ module('Integration | Component | curriculum-inventory/reports', function (hooks
       assert.strictEqual(programId, this.program2.id);
     });
     await render(hbs`<CurriculumInventory::Reports
-      @schools={{this.schools}}
-      @sortReportsBy="name"
-      @setSortBy={{(noop)}}
-      @setSchoolId={{(noop)}}
-      @setProgramId={{this.setProgramId}}
-    />`);
+  @schools={{this.schools}}
+  @sortReportsBy='name'
+  @setSortBy={{(noop)}}
+  @setSchoolId={{(noop)}}
+  @setProgramId={{this.setProgramId}}
+/>`);
     await component.programs.select(this.program2.id);
   });
 
   test('click expand button to show new report form', async function (assert) {
     await render(hbs`<CurriculumInventory::Reports
-      @schools={{this.schools}}
-      @sortReportsBy="name"
-      @setSortBy={{(noop)}}
-      @setSchoolId={{(noop)}}
-      @setProgramId={{(noop)}}
-    />`);
+  @schools={{this.schools}}
+  @sortReportsBy='name'
+  @setSortBy={{(noop)}}
+  @setSchoolId={{(noop)}}
+  @setProgramId={{(noop)}}
+/>`);
     assert.notOk(component.newReport.isVisible);
     await component.toggleNewReportForm();
     assert.ok(component.newReport.isVisible);

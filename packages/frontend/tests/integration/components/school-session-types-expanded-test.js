@@ -36,16 +36,16 @@ module('Integration | Component | school session types expanded', function (hook
     this.school.set('sessionTypes', []);
     this.set('school', this.school);
     await render(hbs`<SchoolSessionTypesExpanded
-      @school={{this.school}}
-      @canUpdate={{true}}
-      @canDelete={{true}}
-      @canCreate={{true}}
-      @collapse={{(noop)}}
-      @expand={{(noop)}}
-      @managedSessionTypeId={{null}}
-      @setSchoolManagedSessionType={{(noop)}}
-      @setSchoolNewSessionType={{(noop)}}
-    />`);
+  @school={{this.school}}
+  @canUpdate={{true}}
+  @canDelete={{true}}
+  @canCreate={{true}}
+  @collapse={{(noop)}}
+  @expand={{(noop)}}
+  @managedSessionTypeId={{null}}
+  @setSchoolManagedSessionType={{(noop)}}
+  @setSchoolNewSessionType={{(noop)}}
+/>`);
 
     assert.notOk(component.list.sessionTypes.isVisible);
     assert.strictEqual(component.title, 'Session Types (0)');
@@ -54,16 +54,16 @@ module('Integration | Component | school session types expanded', function (hook
   test('it renders', async function (assert) {
     this.set('school', this.school);
     await render(hbs`<SchoolSessionTypesExpanded
-      @school={{this.school}}
-      @canUpdate={{true}}
-      @canDelete={{true}}
-      @canCreate={{true}}
-      @collapse={{(noop)}}
-      @expand={{(noop)}}
-      @managedSessionTypeId={{null}}
-      @setSchoolManagedSessionType={{(noop)}}
-      @setSchoolNewSessionType={{(noop)}}
-    />`);
+  @school={{this.school}}
+  @canUpdate={{true}}
+  @canDelete={{true}}
+  @canCreate={{true}}
+  @collapse={{(noop)}}
+  @expand={{(noop)}}
+  @managedSessionTypeId={{null}}
+  @setSchoolManagedSessionType={{(noop)}}
+  @setSchoolNewSessionType={{(noop)}}
+/>`);
 
     assert.strictEqual(component.list.sessionTypes.length, 1);
     assert.strictEqual(component.title, 'Session Types (1)');
@@ -73,16 +73,16 @@ module('Integration | Component | school session types expanded', function (hook
     this.set('school', this.school);
     this.set('sessionType', this.sessionType);
     await render(hbs`<SchoolSessionTypesExpanded
-      @school={{this.school}}
-      @canUpdate={{true}}
-      @canDelete={{true}}
-      @canCreate={{true}}
-      @collapse={{(noop)}}
-      @expand={{(noop)}}
-      @managedSessionTypeId={{this.sessionType.id}}
-      @setSchoolManagedSessionType={{(noop)}}
-      @setSchoolNewSessionType={{(noop)}}
-    />`);
+  @school={{this.school}}
+  @canUpdate={{true}}
+  @canDelete={{true}}
+  @canCreate={{true}}
+  @collapse={{(noop)}}
+  @expand={{(noop)}}
+  @managedSessionTypeId={{this.sessionType.id}}
+  @setSchoolManagedSessionType={{(noop)}}
+  @setSchoolNewSessionType={{(noop)}}
+/>`);
 
     assert.ok(component.manager.isVisible);
   });
@@ -94,16 +94,16 @@ module('Integration | Component | school session types expanded', function (hook
       assert.strictEqual(parseInt(id, 10), 1);
     });
     await render(hbs`<SchoolSessionTypesExpanded
-      @school={{this.school}}
-      @canUpdate={{true}}
-      @canDelete={{true}}
-      @canCreate={{true}}
-      @collapse={{(noop)}}
-      @expand={{(noop)}}
-      @managedSessionTypeId={{null}}
-      @setSchoolManagedSessionType={{this.click}}
-      @setSchoolNewSessionType={{(noop)}}
-    />`);
+  @school={{this.school}}
+  @canUpdate={{true}}
+  @canDelete={{true}}
+  @canCreate={{true}}
+  @collapse={{(noop)}}
+  @expand={{(noop)}}
+  @managedSessionTypeId={{null}}
+  @setSchoolManagedSessionType={{this.click}}
+  @setSchoolNewSessionType={{(noop)}}
+/>`);
 
     await component.list.sessionTypes[0].manage();
   });
@@ -115,16 +115,16 @@ module('Integration | Component | school session types expanded', function (hook
       assert.true(isExpanded);
     });
     await render(hbs`<SchoolSessionTypesExpanded
-      @school={{this.school}}
-      @canUpdate={{true}}
-      @canDelete={{true}}
-      @canCreate={{true}}
-      @collapse={{(noop)}}
-      @expand={{(noop)}}
-      @managedSessionTypeId={{null}}
-      @setSchoolManagedSessionType={{(noop)}}
-      @setSchoolNewSessionType={{this.click}}
-    />`);
+  @school={{this.school}}
+  @canUpdate={{true}}
+  @canDelete={{true}}
+  @canCreate={{true}}
+  @collapse={{(noop)}}
+  @expand={{(noop)}}
+  @managedSessionTypeId={{null}}
+  @setSchoolManagedSessionType={{(noop)}}
+  @setSchoolNewSessionType={{this.click}}
+/>`);
 
     await component.createNew();
   });
@@ -137,16 +137,16 @@ module('Integration | Component | school session types expanded', function (hook
       assert.strictEqual(id, null);
     });
     await render(hbs`<SchoolSessionTypesExpanded
-      @school={{this.school}}
-      @canUpdate={{true}}
-      @canDelete={{true}}
-      @canCreate={{true}}
-      @collapse={{(noop)}}
-      @expand={{(noop)}}
-      @managedSessionTypeId={{this.sessionType.id}}
-      @setSchoolManagedSessionType={{this.click}}
-      @setSchoolNewSessionType={{(noop)}}
-    />`);
+  @school={{this.school}}
+  @canUpdate={{true}}
+  @canDelete={{true}}
+  @canCreate={{true}}
+  @collapse={{(noop)}}
+  @expand={{(noop)}}
+  @managedSessionTypeId={{this.sessionType.id}}
+  @setSchoolManagedSessionType={{this.click}}
+  @setSchoolNewSessionType={{(noop)}}
+/>`);
 
     await component.newSessionType.cancel.click();
   });
@@ -158,16 +158,16 @@ module('Integration | Component | school session types expanded', function (hook
       assert.ok(true, 'action was fired');
     });
     await render(hbs`<SchoolSessionTypesExpanded
-      @school={{this.school}}
-      @canUpdate={{true}}
-      @canDelete={{true}}
-      @canCreate={{true}}
-      @collapse={{this.click}}
-      @expand={{(noop)}}
-      @managedSessionTypeId={{null}}
-      @setSchoolManagedSessionType={{(noop)}}
-      @setSchoolNewSessionType={{(noop)}}
-    />`);
+  @school={{this.school}}
+  @canUpdate={{true}}
+  @canDelete={{true}}
+  @canCreate={{true}}
+  @collapse={{this.click}}
+  @expand={{(noop)}}
+  @managedSessionTypeId={{null}}
+  @setSchoolManagedSessionType={{(noop)}}
+  @setSchoolNewSessionType={{(noop)}}
+/>`);
     await component.collapse();
   });
 });

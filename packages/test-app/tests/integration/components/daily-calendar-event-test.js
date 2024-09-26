@@ -82,11 +82,7 @@ module('Integration | Component | daily-calendar-event', function (hooks) {
 
     test('it renders alone', async function (assert) {
       this.set('event', this.events[0]);
-      await render(hbs`<DailyCalendarEvent
-        @event={{this.event}}
-        @allDayEvents={{array this.event}}
-      />
-`);
+      await render(hbs`<DailyCalendarEvent @event={{this.event}} @allDayEvents={{array this.event}} />`);
       const styles = this.getStyle(97, 12, 50);
       assert.ok(component.style.includes(styles['grid-row-start']));
       assert.ok(component.style.includes(styles['grid-row-end']));
@@ -98,11 +94,7 @@ module('Integration | Component | daily-calendar-event', function (hooks) {
     test('check event 0', async function (assert) {
       this.set('event', this.events[0]);
       this.set('events', this.events);
-      await render(hbs`<DailyCalendarEvent
-        @event={{this.event}}
-        @allDayEvents={{this.events}}
-      />
-`);
+      await render(hbs`<DailyCalendarEvent @event={{this.event}} @allDayEvents={{this.events}} />`);
       const styles = this.getStyle(97, 12, 16);
       assert.ok(component.style.includes(styles['grid-row-start']));
       assert.ok(component.style.includes(styles['grid-row-end']));
@@ -114,11 +106,7 @@ module('Integration | Component | daily-calendar-event', function (hooks) {
     test('check event 1', async function (assert) {
       this.set('event', this.events[1]);
       this.set('events', this.events);
-      await render(hbs`<DailyCalendarEvent
-        @event={{this.event}}
-        @allDayEvents={{this.events}}
-      />
-`);
+      await render(hbs`<DailyCalendarEvent @event={{this.event}} @allDayEvents={{this.events}} />`);
       const styles = this.getStyle(97, 42, 16);
       assert.ok(component.style.includes(styles['grid-row-start']));
       assert.ok(component.style.includes(styles['grid-row-end']));
@@ -130,11 +118,7 @@ module('Integration | Component | daily-calendar-event', function (hooks) {
     test('check event 2', async function (assert) {
       this.set('event', this.events[2]);
       this.set('events', this.events);
-      await render(hbs`<DailyCalendarEvent
-        @event={{this.event}}
-        @allDayEvents={{this.events}}
-      />
-`);
+      await render(hbs`<DailyCalendarEvent @event={{this.event}} @allDayEvents={{this.events}} />`);
       const styles = this.getStyle(99, 22, 16);
       assert.ok(component.style.includes(styles['grid-row-start']));
       assert.ok(component.style.includes(styles['grid-row-end']));
@@ -146,11 +130,7 @@ module('Integration | Component | daily-calendar-event', function (hooks) {
     test('check event 3', async function (assert) {
       this.set('event', this.events[3]);
       this.set('events', this.events);
-      await render(hbs`<DailyCalendarEvent
-        @event={{this.event}}
-        @allDayEvents={{this.events}}
-      />
-`);
+      await render(hbs`<DailyCalendarEvent @event={{this.event}} @allDayEvents={{this.events}} />`);
       const styles = this.getStyle(121, 24, 16);
       assert.ok(component.style.includes(styles['grid-row-start']));
       assert.ok(component.style.includes(styles['grid-row-end']));
@@ -162,11 +142,7 @@ module('Integration | Component | daily-calendar-event', function (hooks) {
     test('check event 4', async function (assert) {
       this.set('event', this.events[4]);
       this.set('events', this.events);
-      await render(hbs`<DailyCalendarEvent
-        @event={{this.event}}
-        @allDayEvents={{this.events}}
-      />
-`);
+      await render(hbs`<DailyCalendarEvent @event={{this.event}} @allDayEvents={{this.events}} />`);
       const styles = this.getStyle(123, 22, 16);
       assert.ok(component.style.includes(styles['grid-row-start']));
       assert.ok(component.style.includes(styles['grid-row-end']));
@@ -178,11 +154,7 @@ module('Integration | Component | daily-calendar-event', function (hooks) {
     test('check event 5', async function (assert) {
       this.set('event', this.events[5]);
       this.set('events', this.events);
-      await render(hbs`<DailyCalendarEvent
-        @event={{this.event}}
-        @allDayEvents={{this.events}}
-      />
-`);
+      await render(hbs`<DailyCalendarEvent @event={{this.event}} @allDayEvents={{this.events}} />`);
       const styles = this.getStyle(145, 12, 50);
       assert.ok(component.style.includes(styles['grid-row-start']));
       assert.ok(component.style.includes(styles['grid-row-end']));
@@ -277,11 +249,7 @@ module('Integration | Component | daily-calendar-event', function (hooks) {
     test('check event 0', async function (assert) {
       this.set('event', this.events[0]);
       this.set('events', this.events);
-      await render(hbs`<DailyCalendarEvent
-        @event={{this.event}}
-        @allDayEvents={{this.events}}
-      />
-`);
+      await render(hbs`<DailyCalendarEvent @event={{this.event}} @allDayEvents={{this.events}} />`);
       const styles = this.getStyle(99, 22, 25);
       assert.ok(component.style.includes(styles['grid-row-start']));
       assert.ok(component.style.includes(styles['grid-row-end']));
@@ -293,11 +261,7 @@ module('Integration | Component | daily-calendar-event', function (hooks) {
     test('check event 1', async function (assert) {
       this.set('event', this.events[1]);
       this.set('events', this.events);
-      await render(hbs`<DailyCalendarEvent
-        @event={{this.event}}
-        @allDayEvents={{this.events}}
-      />
-`);
+      await render(hbs`<DailyCalendarEvent @event={{this.event}} @allDayEvents={{this.events}} />`);
       const styles = this.getStyle(99, 14, 25);
       assert.ok(component.style.includes(styles['grid-row-start']));
       assert.ok(component.style.includes(styles['grid-row-end']));
@@ -309,11 +273,7 @@ module('Integration | Component | daily-calendar-event', function (hooks) {
     test('check event 2', async function (assert) {
       this.set('event', this.events[2]);
       this.set('events', this.events);
-      await render(hbs`<DailyCalendarEvent
-        @event={{this.event}}
-        @allDayEvents={{this.events}}
-      />
-`);
+      await render(hbs`<DailyCalendarEvent @event={{this.event}} @allDayEvents={{this.events}} />`);
       const styles = this.getStyle(117, 10, 25);
       assert.ok(component.style.includes(styles['grid-row-start']));
       assert.ok(component.style.includes(styles['grid-row-end']));
@@ -325,11 +285,7 @@ module('Integration | Component | daily-calendar-event', function (hooks) {
     test('check event 3', async function (assert) {
       this.set('event', this.events[3]);
       this.set('events', this.events);
-      await render(hbs`<DailyCalendarEvent
-        @event={{this.event}}
-        @allDayEvents={{this.events}}
-      />
-`);
+      await render(hbs`<DailyCalendarEvent @event={{this.event}} @allDayEvents={{this.events}} />`);
       const styles = this.getStyle(123, 22, 7);
       assert.ok(component.style.includes(styles['grid-row-start']));
       assert.ok(component.style.includes(styles['grid-row-end']));
@@ -341,11 +297,7 @@ module('Integration | Component | daily-calendar-event', function (hooks) {
     test('check event 4', async function (assert) {
       this.set('event', this.events[4]);
       this.set('events', this.events);
-      await render(hbs`<DailyCalendarEvent
-        @event={{this.event}}
-        @allDayEvents={{this.events}}
-      />
-`);
+      await render(hbs`<DailyCalendarEvent @event={{this.event}} @allDayEvents={{this.events}} />`);
       const styles = this.getStyle(129, 22, 6);
       assert.ok(component.style.includes(styles['grid-row-start']));
       assert.ok(component.style.includes(styles['grid-row-end']));
@@ -357,11 +309,7 @@ module('Integration | Component | daily-calendar-event', function (hooks) {
     test('check event 5', async function (assert) {
       this.set('event', this.events[5]);
       this.set('events', this.events);
-      await render(hbs`<DailyCalendarEvent
-        @event={{this.event}}
-        @allDayEvents={{this.events}}
-      />
-`);
+      await render(hbs`<DailyCalendarEvent @event={{this.event}} @allDayEvents={{this.events}} />`);
       const styles = this.getStyle(129, 22, 6);
       assert.ok(component.style.includes(styles['grid-row-start']));
       assert.ok(component.style.includes(styles['grid-row-end']));
@@ -373,11 +321,7 @@ module('Integration | Component | daily-calendar-event', function (hooks) {
     test('check event 6', async function (assert) {
       this.set('event', this.events[6]);
       this.set('events', this.events);
-      await render(hbs`<DailyCalendarEvent
-        @event={{this.event}}
-        @allDayEvents={{this.events}}
-      />
-`);
+      await render(hbs`<DailyCalendarEvent @event={{this.event}} @allDayEvents={{this.events}} />`);
       const styles = this.getStyle(129, 22, 6);
       assert.ok(component.style.includes(styles['grid-row-start']));
       assert.ok(component.style.includes(styles['grid-row-end']));
@@ -389,11 +333,7 @@ module('Integration | Component | daily-calendar-event', function (hooks) {
     test('check event 7', async function (assert) {
       this.set('event', this.events[7]);
       this.set('events', this.events);
-      await render(hbs`<DailyCalendarEvent
-        @event={{this.event}}
-        @allDayEvents={{this.events}}
-      />
-`);
+      await render(hbs`<DailyCalendarEvent @event={{this.event}} @allDayEvents={{this.events}} />`);
       const styles = this.getStyle(129, 22, 6);
       assert.ok(component.style.includes(styles['grid-row-start']));
       assert.ok(component.style.includes(styles['grid-row-end']));
@@ -405,11 +345,7 @@ module('Integration | Component | daily-calendar-event', function (hooks) {
     test('check event 8', async function (assert) {
       this.set('event', this.events[8]);
       this.set('events', this.events);
-      await render(hbs`<DailyCalendarEvent
-        @event={{this.event}}
-        @allDayEvents={{this.events}}
-      />
-`);
+      await render(hbs`<DailyCalendarEvent @event={{this.event}} @allDayEvents={{this.events}} />`);
       const styles = this.getStyle(129, 22, 6);
       assert.ok(component.style.includes(styles['grid-row-start']));
       assert.ok(component.style.includes(styles['grid-row-end']));
@@ -421,11 +357,7 @@ module('Integration | Component | daily-calendar-event', function (hooks) {
     test('check event 9', async function (assert) {
       this.set('event', this.events[9]);
       this.set('events', this.events);
-      await render(hbs`<DailyCalendarEvent
-        @event={{this.event}}
-        @allDayEvents={{this.events}}
-      />
-`);
+      await render(hbs`<DailyCalendarEvent @event={{this.event}} @allDayEvents={{this.events}} />`);
       const styles = this.getStyle(129, 22, 6);
       assert.ok(component.style.includes(styles['grid-row-start']));
       assert.ok(component.style.includes(styles['grid-row-end']));
@@ -437,11 +369,7 @@ module('Integration | Component | daily-calendar-event', function (hooks) {
     test('check event 10', async function (assert) {
       this.set('event', this.events[10]);
       this.set('events', this.events);
-      await render(hbs`<DailyCalendarEvent
-        @event={{this.event}}
-        @allDayEvents={{this.events}}
-      />
-`);
+      await render(hbs`<DailyCalendarEvent @event={{this.event}} @allDayEvents={{this.events}} />`);
       const styles = this.getStyle(145, 12, 7);
       assert.ok(component.style.includes(styles['grid-row-start']));
       assert.ok(component.style.includes(styles['grid-row-end']));
@@ -463,11 +391,7 @@ module('Integration | Component | daily-calendar-event', function (hooks) {
       const events = this.server.db.userevents;
       this.set('event', events[0]);
       this.set('events', events);
-      await render(hbs`<DailyCalendarEvent
-        @event={{this.event}}
-        @allDayEvents={{this.events}}
-      />
-`);
+      await render(hbs`<DailyCalendarEvent @event={{this.event}} @allDayEvents={{this.events}} />`);
       assert.ok(component.wasRecentlyUpdated);
     });
 
@@ -482,11 +406,7 @@ module('Integration | Component | daily-calendar-event', function (hooks) {
       const events = this.server.db.userevents;
       this.set('event', events[0]);
       this.set('events', events);
-      await render(hbs`<DailyCalendarEvent
-        @event={{this.event}}
-        @allDayEvents={{this.events}}
-      />
-`);
+      await render(hbs`<DailyCalendarEvent @event={{this.event}} @allDayEvents={{this.events}} />`);
       assert.notOk(component.wasRecentlyUpdated);
     });
 
@@ -501,11 +421,7 @@ module('Integration | Component | daily-calendar-event', function (hooks) {
       const events = this.server.db.userevents;
       this.set('event', events[0]);
       this.set('events', events);
-      await render(hbs`<DailyCalendarEvent
-        @event={{this.event}}
-        @allDayEvents={{this.events}}
-      />
-`);
+      await render(hbs`<DailyCalendarEvent @event={{this.event}} @allDayEvents={{this.events}} />`);
       assert.ok(component.isScheduled);
     });
 
@@ -520,11 +436,7 @@ module('Integration | Component | daily-calendar-event', function (hooks) {
       const events = this.server.db.userevents;
       this.set('event', events[0]);
       this.set('events', events);
-      await render(hbs`<DailyCalendarEvent
-        @event={{this.event}}
-        @allDayEvents={{this.events}}
-      />
-`);
+      await render(hbs`<DailyCalendarEvent @event={{this.event}} @allDayEvents={{this.events}} />`);
       assert.ok(component.isDraft);
     });
   });

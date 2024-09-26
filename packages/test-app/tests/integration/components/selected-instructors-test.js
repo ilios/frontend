@@ -38,8 +38,7 @@ module('Integration | Component | selected-instructors', function (hooks) {
 
   test('it renders', async function (assert) {
     this.set('instructors', [this.instructorModel1, this.instructorModel2, this.instructorModel3]);
-    await render(hbs`<SelectedInstructors @instructors={{this.instructors}} />
-`);
+    await render(hbs`<SelectedInstructors @instructors={{this.instructors}} />`);
     assert.strictEqual(component.heading, 'Selected Instructors:');
     assert.strictEqual(component.instructors.length, 3);
     await a11yAudit(this.element);
@@ -48,8 +47,7 @@ module('Integration | Component | selected-instructors', function (hooks) {
 
   test('no selected instructors', async function (assert) {
     this.set('instructors', []);
-    await render(hbs`<SelectedInstructors @instructors={{this.instructors}} />
-`);
+    await render(hbs`<SelectedInstructors @instructors={{this.instructors}} />`);
     assert.strictEqual(component.heading, 'Selected Instructors:');
     assert.strictEqual(component.noInstructors.text, 'None');
   });
@@ -57,8 +55,7 @@ module('Integration | Component | selected-instructors', function (hooks) {
   test('show default not loaded', async function (assert) {
     this.set('instructors', []);
     await render(
-      hbs`<SelectedInstructors @instructors={{this.instructors}} @showDefaultNotLoaded={{true}} />
-`,
+      hbs`<SelectedInstructors @instructors={{this.instructors}} @showDefaultNotLoaded={{true}} />`,
     );
     assert.strictEqual(component.heading, 'Selected Instructors: (Default Not Loaded)');
   });
@@ -70,8 +67,11 @@ module('Integration | Component | selected-instructors', function (hooks) {
       assert.strictEqual(user.id, this.instructorModel1.id);
     });
     await render(
-      hbs`<SelectedInstructors @instructors={{this.instructors}} @isManaging={{true}} @remove={{this.remove}}/>
-`,
+      hbs`<SelectedInstructors
+  @instructors={{this.instructors}}
+  @isManaging={{true}}
+  @remove={{this.remove}}
+/>`,
     );
     assert.strictEqual(component.heading, 'Selected Instructors:');
     assert.strictEqual(component.instructors.length, 2);

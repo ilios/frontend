@@ -48,13 +48,21 @@
           <span>
             {{#if @canUpdate}}
               <EditableField
-                @value={{format-date @report.startDate day="2-digit" month="2-digit" year="numeric"}}
+                @value={{format-date
+                  @report.startDate
+                  day="2-digit"
+                  month="2-digit"
+                  year="numeric"
+                }}
                 @save={{perform this.changeStartDate}}
                 @close={{this.revertStartDateChanges}}
               >
                 <DatePicker
                   @value={{this.startDate}}
-                  @onChange={{queue (set this "startDate") (fn this.addErrorDisplayFor "startDate")}}
+                  @onChange={{queue
+                    (set this "startDate")
+                    (fn this.addErrorDisplayFor "startDate")
+                  }}
                   data-test-start-date-picker
                 />
                 <ValidationError @errors={{get-errors-for this.startDate}} />
@@ -135,9 +143,9 @@
                 @value={{this.description}}
                 @save={{perform this.changeDescription}}
                 @close={{this.revertDescriptionChanges}}
-                @clickPrompt={{if this.description this.description (t "general.clickToEdit")
-                }}
-                @closeOnEscape={{true}} as |isSaving|
+                @clickPrompt={{if this.description this.description (t "general.clickToEdit")}}
+                @closeOnEscape={{true}}
+                as |isSaving|
               >
                 <textarea
                   id="description-{{templateId}}"

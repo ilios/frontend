@@ -1,7 +1,4 @@
-<div
-  class="user-profile-cohorts-manager"
-  data-test-user-profile-cohorts-manager
->
+<div class="user-profile-cohorts-manager" data-test-user-profile-cohorts-manager>
   <p data-test-primary-cohort>
     <h4>
       {{t "general.primaryCohort"}}:
@@ -55,11 +52,7 @@
             {{on "click" (fn @removeSecondaryCohort cohort)}}
             data-test-remove
           >
-            <FaIcon
-              @icon="xmark"
-              class="clickable remove"
-              @title={{t "general.removeCohort"}}
-            />
+            <FaIcon @icon="xmark" class="clickable remove" @title={{t "general.removeCohort"}} />
           </button>
           <span data-test-title>
             {{cohort.programYear.program.school.title}}
@@ -113,11 +106,7 @@
               {{on "click" (fn @addSecondaryCohort cohort)}}
               data-test-add
             >
-              <FaIcon
-                @icon="plus"
-                class="clickable add"
-                @title={{t "general.addCohort"}}
-              />
+              <FaIcon @icon="plus" class="clickable add" @title={{t "general.addCohort"}} />
             </button>
             <span data-test-title>
               <strong>
@@ -126,13 +115,13 @@
               {{cohort.title}}
             </span>
           </li>
-          {{else}}
-            <li>
-              <span data-test-title>
-                {{t "general.none"}}
-              </span>
-            </li>
-         {{/each}}
+        {{else}}
+          <li>
+            <span data-test-title>
+              {{t "general.none"}}
+            </span>
+          </li>
+        {{/each}}
       </ul>
     {{else}}
       <LoadingSpinner />

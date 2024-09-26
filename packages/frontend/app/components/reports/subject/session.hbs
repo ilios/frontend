@@ -6,7 +6,10 @@
   @prepositionalObjectTableRowId={{@prepositionalObjectTableRowId}}
   @year={{@year}}
   @changeYear={{@changeYear}}
-  @showYearFilter={{and (not-eq @prepositionalObject 'course') (not-eq @prepositionalObject 'academic year')}}
+  @showYearFilter={{and
+    (not-eq @prepositionalObject "course")
+    (not-eq @prepositionalObject "academic year")
+  }}
   @description={{@description}}
   @fetchDownloadData={{this.fetchDownloadData}}
   @readyToDownload={{true}}
@@ -19,7 +22,9 @@
           {{#if this.showYear}}
             <span data-test-year>
               {{#if this.academicYearCrossesCalendarYearBoundaries}}
-                {{obj.year}} - {{add obj.year 1}}
+                {{obj.year}}
+                -
+                {{add obj.year 1}}
               {{else}}
                 {{obj.year}}
               {{/if}}

@@ -9,10 +9,9 @@ module('Integration | Component | link-to-with-action', function (hooks) {
 
   test('it renders', async function (assert) {
     this.set('content', 'Link Text');
-    await render(hbs`
-      <LinkToWithAction @route="dashboard">
-        {{this.content}}
-      </LinkToWithAction>`);
+    await render(hbs`<LinkToWithAction @route='dashboard'>
+  {{this.content}}
+</LinkToWithAction>`);
 
     assert.strictEqual(component.text, 'Link Text');
     assert.strictEqual(component.url, '/dashboard');

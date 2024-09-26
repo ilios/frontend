@@ -81,11 +81,7 @@ module('Integration | Component | school-new-vocabulary-form', function (hooks) 
         };
       },
     });
-    await render(hbs`<SchoolNewVocabularyForm
-      @school={{this.school}}
-      @close={{(noop)}}
-      @save={{this.save}}
-    />`);
+    await render(hbs`<SchoolNewVocabularyForm @school={{this.school}} @close={{(noop)}} @save={{this.save}} />`);
     await component.title.set(newTitle);
     await component.submit.click();
   });

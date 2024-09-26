@@ -34,13 +34,12 @@ module('Integration | Component | sessions-grid-row', function (hooks) {
     const model = await this.owner.lookup('service:store').findRecord('session', session.id);
     this.set('session', model);
     await render(hbs`<SessionsGridRow
-      @session={{this.session}}
-      @confirmDelete={{(noop)}}
-      @closeSession={{(noop)}}
-      @expandSession={{(noop)}}
-      @expandedSessionIds={{(array)}}
-    />
-`);
+  @session={{this.session}}
+  @confirmDelete={{(noop)}}
+  @closeSession={{(noop)}}
+  @expandSession={{(noop)}}
+  @expandedSessionIds={{(array)}}
+/>`);
     assert.ok(component.isCollapsed);
     assert.strictEqual(component.title, 'session 0');
     assert.strictEqual(component.type, 'session type 0');
@@ -68,13 +67,12 @@ module('Integration | Component | sessions-grid-row', function (hooks) {
     this.set('session', model);
     this.set('expandedSessionIds', [session.id]);
     await render(hbs`<SessionsGridRow
-      @session={{this.session}}
-      @confirmDelete={{(noop)}}
-      @closeSession={{(noop)}}
-      @expandSession={{(noop)}}
-      @expandedSessionIds={{this.expandedSessionIds}}
-    />
-`);
+  @session={{this.session}}
+  @confirmDelete={{(noop)}}
+  @closeSession={{(noop)}}
+  @expandSession={{(noop)}}
+  @expandedSessionIds={{this.expandedSessionIds}}
+/>`);
     assert.ok(component.isExpanded);
   });
 
@@ -96,13 +94,12 @@ module('Integration | Component | sessions-grid-row', function (hooks) {
       assert.strictEqual(s, model.id);
     });
     await render(hbs`<SessionsGridRow
-      @session={{this.session}}
-      @confirmDelete={{this.confirmDelete}}
-      @closeSession={{(noop)}}
-      @expandSession={{(noop)}}
-      @expandedSessionIds={{(array)}}
-    />
-`);
+  @session={{this.session}}
+  @confirmDelete={{this.confirmDelete}}
+  @closeSession={{(noop)}}
+  @expandSession={{(noop)}}
+  @expandedSessionIds={{(array)}}
+/>`);
     await component.trash();
   });
 
@@ -116,13 +113,12 @@ module('Integration | Component | sessions-grid-row', function (hooks) {
       assert.strictEqual(s, model);
     });
     await render(hbs`<SessionsGridRow
-      @session={{this.session}}
-      @confirmDelete={{(noop)}}
-      @closeSession={{this.closeSession}}
-      @expandSession={{(noop)}}
-      @expandedSessionIds={{this.expandedSessionIds}}
-    />
-`);
+  @session={{this.session}}
+  @confirmDelete={{(noop)}}
+  @closeSession={{this.closeSession}}
+  @expandSession={{(noop)}}
+  @expandedSessionIds={{this.expandedSessionIds}}
+/>`);
     await component.collapse();
   });
 
@@ -137,13 +133,12 @@ module('Integration | Component | sessions-grid-row', function (hooks) {
       assert.strictEqual(s, model);
     });
     await render(hbs`<SessionsGridRow
-      @session={{this.session}}
-      @confirmDelete={{(noop)}}
-      @closeSession={{(noop)}}
-      @expandSession={{this.expandSession}}
-      @expandedSessionIds={{(array)}}
-    />
-`);
+  @session={{this.session}}
+  @confirmDelete={{(noop)}}
+  @closeSession={{(noop)}}
+  @expandSession={{this.expandSession}}
+  @expandedSessionIds={{(array)}}
+/>`);
     await component.expand();
   });
 });

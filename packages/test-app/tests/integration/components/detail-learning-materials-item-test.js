@@ -34,12 +34,7 @@ module('Integration | Component | detail-learning-materials-item', function (hoo
 
   test('it renders', async function (assert) {
     this.set('lm', this.lm);
-    await render(hbs`<DetailLearningMaterialsItem
-      @editable={{true}}
-      @lm={{this.lm}}
-      @setManagedMaterial={{(noop)}}
-      />
-`);
+    await render(hbs`<DetailLearningMaterialsItem @editable={{true}} @lm={{this.lm}} @setManagedMaterial={{(noop)}} />`);
     assert.ok(component.typeIcon.isCitation);
     assert.strictEqual(component.title, 'test title');
     assert.strictEqual(component.userNameInfo.fullName, '0 guy M. Mc0son');
@@ -54,12 +49,7 @@ module('Integration | Component | detail-learning-materials-item', function (hoo
 
   test('read-only', async function (assert) {
     this.set('lm', this.lm);
-    await render(hbs`<DetailLearningMaterialsItem
-      @editable={{false}}
-      @lm={{this.lm}}
-      @setManagedMaterial={{(noop)}}
-      />
-`);
+    await render(hbs`<DetailLearningMaterialsItem @editable={{false}} @lm={{this.lm}} @setManagedMaterial={{(noop)}} />`);
     assert.ok(component.typeIcon.isCitation);
     assert.strictEqual(component.title, 'test title');
     assert.strictEqual(component.userNameInfo.fullName, '0 guy M. Mc0son');
@@ -77,12 +67,11 @@ module('Integration | Component | detail-learning-materials-item', function (hoo
     this.set('lm', this.lm);
     this.set('remove', { perform() {} });
     await render(hbs`<DetailLearningMaterialsItem
-      @editable={{true}}
-      @lm={{this.lm}}
-      @setManagedMaterial={{(noop)}}
-      @remove={{this.remove}}
-      />
-`);
+  @editable={{true}}
+  @lm={{this.lm}}
+  @setManagedMaterial={{(noop)}}
+  @remove={{this.remove}}
+/>`);
     assert.notOk(component.confirmRemoval.isVisible);
     await component.actions.remove.click();
     assert.ok(component.confirmRemoval.isVisible);
@@ -99,12 +88,11 @@ module('Integration | Component | detail-learning-materials-item', function (hoo
       },
     });
     await render(hbs`<DetailLearningMaterialsItem
-      @editable={{true}}
-      @lm={{this.lm}}
-      @setManagedMaterial={{(noop)}}
-      @remove={{this.remove}}
-      />
-`);
+  @editable={{true}}
+  @lm={{this.lm}}
+  @setManagedMaterial={{(noop)}}
+  @remove={{this.remove}}
+/>`);
     assert.notOk(component.confirmRemoval.isVisible);
     await component.actions.remove.click();
     assert.ok(component.confirmRemoval.isVisible);
@@ -118,11 +106,10 @@ module('Integration | Component | detail-learning-materials-item', function (hoo
     });
     this.set('lm', this.lm);
     await render(hbs`<DetailLearningMaterialsItem
-      @editable={{true}}
-      @lm={{this.lm}}
-      @setManagedMaterial={{this.setManagedMaterial}}
-      />
-`);
+  @editable={{true}}
+  @lm={{this.lm}}
+  @setManagedMaterial={{this.setManagedMaterial}}
+/>`);
     await component.actions.edit.click();
   });
 
@@ -133,11 +120,10 @@ module('Integration | Component | detail-learning-materials-item', function (hoo
     });
     this.set('lm', this.lm);
     await render(hbs`<DetailLearningMaterialsItem
-      @editable={{true}}
-      @lm={{this.lm}}
-      @setManagedMaterial={{this.setManagedMaterial}}
-      />
-`);
+  @editable={{true}}
+  @lm={{this.lm}}
+  @setManagedMaterial={{this.setManagedMaterial}}
+/>`);
     await component.actions.edit.click();
   });
 });

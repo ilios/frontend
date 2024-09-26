@@ -1,13 +1,7 @@
-<div
-  class="learner-group-calendar"
-  data-test-learner-group-calendar
->
+<div class="learner-group-calendar" data-test-learner-group-calendar>
   <p class="learner-group-calendar-filter-options">
     <span class="filter" data-test-learner-group-calendar-toggle-subgroup-events>
-      <ToggleYesno
-        @yes={{this.showSubgroupEvents}}
-        @toggle={{set this "showSubgroupEvents"}}
-      />
+      <ToggleYesno @yes={{this.showSubgroupEvents}} @toggle={{set this "showSubgroupEvents"}} />
       <label {{on "click" (fn (set this "showSubgroupEvents") (not this.showSubgroupEvents))}}>
         {{t "general.showSubgroupEvents"}}
       </label>
@@ -26,12 +20,7 @@
       </button>
     </li>
     <li>
-      <button
-        class="link-button"
-        type="button"
-        {{on "click" this.gotoToday}}
-        data-test-go-today
-      >
+      <button class="link-button" type="button" {{on "click" this.gotoToday}} data-test-go-today>
         {{t "general.today"}}
       </button>
     </li>
@@ -55,7 +44,7 @@
       @areDaysSelectable={{false}}
     />
   </div>
-  <span class="loading-indicator {{unless this.load.isRunning "loaded"}}">
+  <span class="loading-indicator {{unless this.load.isRunning 'loaded'}}">
     <LoadingSpinner />
     {{t "general.loadingEvents"}}
     ...

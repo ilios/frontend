@@ -33,11 +33,7 @@ module('Integration | Component | course/objective-list', function (hooks) {
     this.set('course', courseModel);
 
     await render(
-      hbs`<Course::ObjectiveList
-        @editable={{true}}
-        @course={{this.course}}
-      />
-`,
+      hbs`<Course::ObjectiveList @editable={{true}} @course={{this.course}} />`,
     );
     assert.ok(component.sortIsVisible, 'Sort Objectives button is visible');
     assert.strictEqual(component.headers[0].text, 'Description');
@@ -70,11 +66,7 @@ module('Integration | Component | course/objective-list', function (hooks) {
     this.set('course', courseModel);
 
     await render(
-      hbs`<Course::ObjectiveList
-        @editable={{true}}
-        @course={{this.course}}
-      />
-`,
+      hbs`<Course::ObjectiveList @editable={{true}} @course={{this.course}} />`,
     );
     assert.notOk(component.sortIsVisible);
     assert.strictEqual(component.text, '');
@@ -87,11 +79,7 @@ module('Integration | Component | course/objective-list', function (hooks) {
     this.set('course', courseModel);
 
     await render(
-      hbs`<Course::ObjectiveList
-        @editable={{true}}
-        @course={{this.course}}
-      />
-`,
+      hbs`<Course::ObjectiveList @editable={{true}} @course={{this.course}} />`,
     );
     assert.notOk(component.sortIsVisible, 'Sort Objectives button is visible');
     assert.strictEqual(component.objectives.length, 1);

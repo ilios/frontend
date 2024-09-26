@@ -1,8 +1,4 @@
-<div
-  class="pending-single-user-updates"
-  data-test-pending-single-user-update
-  ...attributes
->
+<div class="pending-single-user-updates" data-test-pending-single-user-update ...attributes>
 
   {{#each this.updates as |update|}}
     <div class="update" data-test-update>
@@ -28,11 +24,7 @@
               {{on "click" (perform this.updateEmailAddress update)}}
               data-test-update-email
             >
-              <FaIcon
-                @icon="circle-arrow-up"
-                class="yes"
-                @title={{t "general.update"}}
-              />
+              <FaIcon @icon="circle-arrow-up" class="yes" @title={{t "general.update"}} />
               {{t "general.pendingUserUpdates.updateIlios"}}
             </button>
           {{/if}}
@@ -41,23 +33,11 @@
             {{on "click" (perform this.excludeFromSync)}}
             data-test-exclude-from-sync
           >
-            <FaIcon
-              @icon="ban"
-              class="no"
-              @title={{t "general.excludeFromSync"}}
-            />
+            <FaIcon @icon="ban" class="no" @title={{t "general.excludeFromSync"}} />
             {{t "general.excludeFromSync"}}
           </button>
-          <button
-            type="button"
-            {{on "click" (perform this.disableUser)}}
-            data-test-disable
-          >
-            <FaIcon
-              @icon="xmark"
-              class="no"
-              @title={{t "general.disableUser"}}
-            />
+          <button type="button" {{on "click" (perform this.disableUser)}} data-test-disable>
+            <FaIcon @icon="xmark" class="no" @title={{t "general.disableUser"}} />
             {{t "general.disableUser"}}
           </button>
         {{/if}}

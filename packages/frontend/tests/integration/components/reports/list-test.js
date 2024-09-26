@@ -28,11 +28,11 @@ module('Integration | Component | reports/list', function (hooks) {
     });
 
     await render(hbs`<Reports::List
-      @sortReportsBy="title"
-      @setSortReportsBy={{(noop)}}
-      @titleFilter=""
-      @changeTitleFilter={{(noop)}}
-    />`);
+  @sortReportsBy='title'
+  @setSortReportsBy={{(noop)}}
+  @titleFilter=''
+  @changeTitleFilter={{(noop)}}
+/>`);
 
     assert.strictEqual(component.table.reports.length, 2);
     assert.strictEqual(component.table.reports[0].title, 'All Courses in All Schools');
@@ -44,22 +44,22 @@ module('Integration | Component | reports/list', function (hooks) {
 
   test('it renders empty', async function (assert) {
     await render(hbs`<Reports::Root
-      @sortReportsBy="title"
-      @setSortReportsBy={{(noop)}}
-      @titleFilter=""
-      @changeTitleFilter={{(noop)}}
-    />`);
+  @sortReportsBy='title'
+  @setSortReportsBy={{(noop)}}
+  @titleFilter=''
+  @changeTitleFilter={{(noop)}}
+/>`);
     assert.notOk(component.table.isVisible);
     a11yAudit(this.element);
   });
 
   test('toggle new report form', async function (assert) {
     await render(hbs`<Reports::Root
-      @sortReportsBy="title"
-      @setSortReportsBy={{(noop)}}
-      @titleFilter=""
-      @changeTitleFilter={{(noop)}}
-    />`);
+  @sortReportsBy='title'
+  @setSortReportsBy={{(noop)}}
+  @titleFilter=''
+  @changeTitleFilter={{(noop)}}
+/>`);
     assert.notOk(component.newSubject.isVisible);
     await component.toggleNewSubjectReportForm();
     assert.ok(component.newSubject.isVisible);

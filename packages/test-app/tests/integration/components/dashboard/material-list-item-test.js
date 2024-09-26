@@ -31,8 +31,7 @@ module('Integration | Component | dashboard/material-list-item', function (hooks
     };
 
     this.set('lm', lm);
-    await render(hbs`<Dashboard::MaterialListItem @lm={{this.lm}} />
-`);
+    await render(hbs`<Dashboard::MaterialListItem @lm={{this.lm}} />`);
 
     assert.strictEqual(component.sessionTitle, 'session1title');
     assert.strictEqual(component.courseTitle, 'course title');

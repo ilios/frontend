@@ -3,10 +3,7 @@
   data-test-curriculum-inventory-sequence-block-list-item
 >
   <td class="text-left" colspan="4" data-test-title>
-    <LinkTo
-      @route="curriculum-inventory-sequence-block"
-      @model={{@sequenceBlock}}
-    >
+    <LinkTo @route="curriculum-inventory-sequence-block" @model={{@sequenceBlock}}>
       {{@sequenceBlock.title}}
     </LinkTo>
   </td>
@@ -18,7 +15,7 @@
   </td>
   <td class="text-center" colspan="2" data-test-order-in-sequence>
     {{#if @isInOrderedSequence}}
-       {{@sequenceBlock.orderInSequence}}
+      {{@sequenceBlock.orderInSequence}}
     {{else}}
       {{t "general.notApplicableAbbr"}}
     {{/if}}
@@ -61,9 +58,14 @@
     <td colspan="15">
       <div class="confirm-message">
         {{t "general.sequenceBlockConfirmRemove"}}
-        <br>
+        <br />
         <div class="confirm-buttons">
-          <button type="button" class="remove text" {{on "click" (fn @remove @sequenceBlock)}} data-test-confirm>
+          <button
+            type="button"
+            class="remove text"
+            {{on "click" (fn @remove @sequenceBlock)}}
+            data-test-confirm
+          >
             {{t "general.yes"}}
           </button>
           <button

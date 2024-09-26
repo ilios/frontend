@@ -69,7 +69,7 @@ module('Integration | Component | program-year/visualize-objectives', function (
       .lookup('service:store')
       .findRecord('program-year', programYear.id);
     this.set('model', programYearModel);
-    await render(hbs`<ProgramYear::VisualizeObjectives @model={{this.model}}/>`);
+    await render(hbs`<ProgramYear::VisualizeObjectives @model={{this.model}} />`);
     assert.strictEqual(component.title.text, 'program 0 Class of 2022');
     assert.strictEqual(component.title.link, '/programs/1/programyears/1');
     assert.strictEqual(component.breadcrumb.crumbs.length, 2);

@@ -34,12 +34,11 @@ module('Integration | Component | course/objectives', function (hooks) {
 
     this.set('course', courseModel);
     await render(hbs`<Course::Objectives
-      @course={{this.course}}
-      @editable={{true}}
-      @collapse={{(noop)}}
-      @expand={{(noop)}}
-    />
-`);
+  @course={{this.course}}
+  @editable={{true}}
+  @collapse={{(noop)}}
+  @expand={{(noop)}}
+/>`);
 
     assert.strictEqual(component.objectiveList.objectives.length, 2);
     assert.strictEqual(
@@ -87,12 +86,11 @@ module('Integration | Component | course/objectives', function (hooks) {
 
     this.set('course', courseModel);
     await render(hbs`<Course::Objectives
-      @course={{this.course}}
-      @editable={{true}}
-      @collapse={{(noop)}}
-      @expand={{(noop)}}
-    />
-`);
+  @course={{this.course}}
+  @editable={{true}}
+  @collapse={{(noop)}}
+  @expand={{(noop)}}
+/>`);
 
     assert.strictEqual(component.objectiveList.objectives.length, 1);
     assert.strictEqual(
@@ -163,12 +161,11 @@ module('Integration | Component | course/objectives', function (hooks) {
 
     this.set('course', courseModel);
     await render(hbs`<Course::Objectives
-      @course={{this.course}}
-      @editable={{true}}
-      @collapse={{(noop)}}
-      @expand={{(noop)}}
-    />
-`);
+  @course={{this.course}}
+  @editable={{true}}
+  @collapse={{(noop)}}
+  @expand={{(noop)}}
+/>`);
 
     assert.strictEqual(component.objectiveList.objectives.length, 1);
     assert.strictEqual(
@@ -215,12 +212,11 @@ module('Integration | Component | course/objectives', function (hooks) {
 
     this.set('course', courseModel);
     await render(hbs`<Course::Objectives
-      @course={{this.course}}
-      @editable={{true}}
-      @collapse={{(noop)}}
-      @expand={{(noop)}}
-    />
-`);
+  @course={{this.course}}
+  @editable={{true}}
+  @collapse={{(noop)}}
+  @expand={{(noop)}}
+/>`);
 
     assert.strictEqual(component.objectiveList.objectives.length, 1);
     assert.strictEqual(component.title, 'Objectives (1)');

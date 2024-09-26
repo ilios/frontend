@@ -1,7 +1,4 @@
-<div
-  class="user-profile-calendar"
-  data-test-user-profile-calendar
->
+<div class="user-profile-calendar" data-test-user-profile-calendar>
   <ul class="calendar-time-picker">
     <li>
       <button
@@ -15,12 +12,7 @@
       </button>
     </li>
     <li>
-      <button
-        class="link-button"
-        type="button"
-        {{on "click" this.gotoToday}}
-        data-test-go-today
-      >
+      <button class="link-button" type="button" {{on "click" this.gotoToday}} data-test-go-today>
         {{t "general.today"}}
       </button>
     </li>

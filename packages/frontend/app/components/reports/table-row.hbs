@@ -1,5 +1,6 @@
 <tr
-  class="reports-table-row {{if (includes @decoratedReport.report.id @reportsForRemovalConfirmation) "confirm-removal"}}"
+  class="reports-table-row
+    {{if (includes @decoratedReport.report.id @reportsForRemovalConfirmation) 'confirm-removal'}}"
   data-test-reports-table-row
 >
   <td class="text-left" data-test-report-title>

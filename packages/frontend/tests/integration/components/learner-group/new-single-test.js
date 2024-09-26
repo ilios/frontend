@@ -9,21 +9,14 @@ module('Integration | Component | learner-group/new-single', function (hooks) {
   setupRenderingTest(hooks);
 
   test('it renders without fill mode', async function (assert) {
-    await render(hbs`<LearnerGroup::NewSingle
-      @save={{(noop)}}
-      @cancel={{(noop)}}
-    />`);
+    await render(hbs`<LearnerGroup::NewSingle @save={{(noop)}} @cancel={{(noop)}} />`);
     assert.ok(component.isVisible);
     assert.notOk(component.canFill);
     await a11yAudit(this.element);
   });
 
   test('it renders with fill mode false', async function (assert) {
-    await render(hbs`<LearnerGroup::NewSingle
-      @save={{(noop)}}
-      @cancel={{(noop)}}
-      @fillModeSupported={{false}}
-    />`);
+    await render(hbs`<LearnerGroup::NewSingle @save={{(noop)}} @cancel={{(noop)}} @fillModeSupported={{false}} />`);
     assert.ok(component.isVisible);
     assert.notOk(component.canFill);
     await a11yAudit(this.element);
@@ -35,11 +28,7 @@ module('Integration | Component | learner-group/new-single', function (hooks) {
       assert.strictEqual(title, 'new group');
       assert.false(fill);
     });
-    await render(hbs`<LearnerGroup::NewSingle
-      @save={{this.save}}
-      @cancel={{(noop)}}
-      @fillModeSupported={{true}}
-    />`);
+    await render(hbs`<LearnerGroup::NewSingle @save={{this.save}} @cancel={{(noop)}} @fillModeSupported={{true}} />`);
     await component.title('new group');
     await component.save();
   });
@@ -50,11 +39,7 @@ module('Integration | Component | learner-group/new-single', function (hooks) {
       assert.strictEqual(title, 'new group');
       assert.true(fill);
     });
-    await render(hbs`<LearnerGroup::NewSingle
-      @save={{this.save}}
-      @cancel={{(noop)}}
-      @fillModeSupported={{true}}
-    />`);
+    await render(hbs`<LearnerGroup::NewSingle @save={{this.save}} @cancel={{(noop)}} @fillModeSupported={{true}} />`);
     await component.title('new group');
     assert.ok(component.canFill);
     await component.fillWithCohort();

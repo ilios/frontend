@@ -1,8 +1,4 @@
-<div
-  class="learner-group-upload-data"
-  data-test-learner-group-upload-data
-  ...attributes
->
+<div class="learner-group-upload-data" data-test-learner-group-upload-data ...attributes>
   {{#if this.data}}
     <p>
       <button type="button" {{on "click" this.reset}}>
@@ -18,15 +14,15 @@
         download="SampleUserUpload.tsv"
         href="data:application/octet-stream;charset=utf-8;base64,{{this.sampleData}}"
       >
-         {{t "general.sampleFile"}}
-       </a>)
+        {{t "general.sampleFile"}}
+      </a>)
     </label>
     <input
       id="user-file"
       type="file"
       {{on "change" (pick "target.files" this.updateSelectedFile)}}
       data-test-user-upload
-    >
+    />
   {{/if}}
   {{#if this.parseFile.isRunning}}
     <LoadingSpinner class="loading-file" />
@@ -76,10 +72,10 @@
             </td>
             <td class="error">
               {{#each user.errors as |error|}}
-                {{error}}<br>
+                {{error}}<br />
               {{/each}}
               {{#each user.warnings as |warning|}}
-                {{warning}}<br>
+                {{warning}}<br />
               {{/each}}
             </td>
           </tr>

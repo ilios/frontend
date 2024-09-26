@@ -1,9 +1,5 @@
 {{#let (unique-id) as |id|}}
-  <div
-    class="program-header"
-    data-test-program-header
-    ...attributes
-  >
+  <div class="program-header" data-test-program-header ...attributes>
     <h2 class="title" data-test-title>
       {{#if @canUpdate}}
         <EditableField
@@ -12,7 +8,8 @@
           @close={{set this "title" @program.title}}
           @saveOnEnter={{true}}
           @clickPrompt={{t "general.clickToEdit"}}
-          @closeOnEscape={{true}} as |isSaving|
+          @closeOnEscape={{true}}
+          as |isSaving|
         >
           <input
             id="{{id}}-title"
@@ -21,7 +18,7 @@
             {{on "input" (pick "target.value" (set this "title"))}}
             {{on "keypress" (fn this.addErrorDisplayFor "title")}}
             disabled={{isSaving}}
-          >
+          />
         </EditableField>
         <ValidationError @errors={{get-errors-for this.title}} />
       {{else}}

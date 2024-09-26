@@ -1,4 +1,7 @@
-<div class="program-year-objective-list-item-competency grid-item" data-test-objective-list-item-competency>
+<div
+  class="program-year-objective-list-item-competency grid-item"
+  data-test-objective-list-item-competency
+>
   {{#if @isManaging}}
     <button
       type="button"
@@ -39,7 +42,7 @@
         <span data-test-competency>{{@objective.competency.title}}</span>
       {{/if}}
       {{#if @objective.competency.parent}}
-          <span data-test-domain>({{@objective.competency.parent.title}})</span>
+        <span data-test-domain>({{@objective.competency.parent.title}})</span>
       {{/if}}
     {{else if @editable}}
       <button type="button" {{on "click" @manage}} data-test-manage>

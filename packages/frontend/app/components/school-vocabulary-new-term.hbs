@@ -1,7 +1,4 @@
-<div
-  class="school-vocabulary-new-term"
-  data-test-school-vocabulary-new-term
->
+<div class="school-vocabulary-new-term" data-test-school-vocabulary-new-term>
   <input
     aria-label={{t "general.title"}}
     type="text"
@@ -9,7 +6,7 @@
     disabled={{this.save.isRunning}}
     {{on "input" (pick "target.value" (set this "title"))}}
     {{on "keyup" (queue (fn this.addErrorDisplayFor "title") (perform this.saveOnEnter))}}
-  >
+  />
   <button
     type="button"
     class="save text"

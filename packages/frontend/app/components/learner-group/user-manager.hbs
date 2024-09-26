@@ -9,7 +9,7 @@
           aria-label={{t "general.filterByNameOrEmail"}}
           {{on "input" (pick "target.value" (set this "filter"))}}
           data-test-filter
-        >
+        />
       </div>
       <div class="learner-group-user-manager-content">
         <div class="list">
@@ -28,7 +28,7 @@
                     aria-label={{t "general.selectAllOrNone"}}
                     {{on "click" this.toggleAllGroupUsersSelection}}
                     data-test-toggle-all
-                  >
+                  />
                 </th>
                 <SortableTh
                   @colspan={{4}}
@@ -47,7 +47,10 @@
                 <SortableTh
                   @colspan={{2}}
                   @onClick={{fn this.setSortBy "lowestGroupInTreeTitle"}}
-                  @sortedBy={{or (eq @sortBy "lowestGroupInTreeTitle") (eq @sortBy "lowestGroupInTreeTitle:desc")}}
+                  @sortedBy={{or
+                    (eq @sortBy "lowestGroupInTreeTitle")
+                    (eq @sortBy "lowestGroupInTreeTitle:desc")
+                  }}
                   @sortedAscending={{this.sortedAscending}}
                 >
                   {{t "general.groupName"}}
@@ -66,7 +69,7 @@
                       type="checkbox"
                       checked={{includes user.content this.selectedGroupUsers}}
                       {{on "click" (fn this.toggleGroupUserSelection user.content)}}
-                    >
+                    />
                     {{#unless user.enabled}}
                       <FaIcon
                         @icon="user-xmark"
@@ -82,7 +85,10 @@
                       type="button"
                       {{on "click" (fn this.toggleGroupUserSelection user.content)}}
                     >
-                      <UserNameInfo id="selected-username-{{index}}-{{templateId}}" @user={{user}} />
+                      <UserNameInfo
+                        id="selected-username-{{index}}-{{templateId}}"
+                        @user={{user}}
+                      />
                     </button>
                   </td>
                   <td class="text-left" colspan="2">
@@ -128,11 +134,7 @@
                           <FaIcon
                             @icon="minus"
                             class="no"
-                            @title={{t
-                              "general.removeLearnerToCohort"
-                              cohort=@cohortTitle
-                              count=1
-                            }}
+                            @title={{t "general.removeLearnerToCohort" cohort=@cohortTitle count=1}}
                           />
                         </button>
                       {{/if}}
@@ -148,43 +150,46 @@
           </div>
           <table data-test-assignable-users>
             <thead>
-            <tr>
-              <th class="text-left" colspan="1">
-                <input
-                  type="checkbox"
-                  checked={{this.hasAllSelectedNonGroupUsers}}
-                  indeterminate={{this.hasSomeSelectedNonGroupUsers}}
-                  aria-label={{t "general.selectAllOrNone"}}
-                  {{on "click" this.toggleAllNonGroupUsersSelection}}
-                  data-test-toggle-all
+              <tr>
+                <th class="text-left" colspan="1">
+                  <input
+                    type="checkbox"
+                    checked={{this.hasAllSelectedNonGroupUsers}}
+                    indeterminate={{this.hasSomeSelectedNonGroupUsers}}
+                    aria-label={{t "general.selectAllOrNone"}}
+                    {{on "click" this.toggleAllNonGroupUsersSelection}}
+                    data-test-toggle-all
+                  />
+                </th>
+                <SortableTh
+                  @colspan={{4}}
+                  @onClick={{fn this.setSortBy "fullName"}}
+                  @sortedBy={{or (eq @sortBy "fullName") (eq @sortBy "fullName:desc")}}
+                  @sortedAscending={{this.sortedAscending}}
                 >
-              </th>
-              <SortableTh
-                @colspan={{4}}
-                @onClick={{fn this.setSortBy "fullName"}}
-                @sortedBy={{or (eq @sortBy "fullName") (eq @sortBy "fullName:desc")}}
-                @sortedAscending={{this.sortedAscending}}
-              >
-                {{t "general.name"}}
-              </SortableTh>
-              <th class="text-left" colspan="2">
-                {{t "general.campusId"}}
-              </th>
-              <th class="text-left hide-from-small-screen" colspan="5">
-                {{t "general.email"}}
-              </th>
-              <SortableTh
-                @colspan={{2}}
-                @onClick={{fn this.setSortBy "lowestGroupInTreeTitle"}}
-                @sortedBy={{or (eq @sortBy "lowestGroupInTreeTitle") (eq @sortBy "lowestGroupInTreeTitle:desc")}}
-                @sortedAscending={{this.sortedAscending}}
-              >
-                {{t "general.groupName"}}
-              </SortableTh>
-              <th class="text-left" colspan="1">
-                {{t "general.actions"}}
-              </th>
-            </tr>
+                  {{t "general.name"}}
+                </SortableTh>
+                <th class="text-left" colspan="2">
+                  {{t "general.campusId"}}
+                </th>
+                <th class="text-left hide-from-small-screen" colspan="5">
+                  {{t "general.email"}}
+                </th>
+                <SortableTh
+                  @colspan={{2}}
+                  @onClick={{fn this.setSortBy "lowestGroupInTreeTitle"}}
+                  @sortedBy={{or
+                    (eq @sortBy "lowestGroupInTreeTitle")
+                    (eq @sortBy "lowestGroupInTreeTitle:desc")
+                  }}
+                  @sortedAscending={{this.sortedAscending}}
+                >
+                  {{t "general.groupName"}}
+                </SortableTh>
+                <th class="text-left" colspan="1">
+                  {{t "general.actions"}}
+                </th>
+              </tr>
             </thead>
             <tbody>
               {{#each (sort-by @sortBy this.nonGroupUsers) as |user index|}}
@@ -195,7 +200,7 @@
                       type="checkbox"
                       checked={{includes user.content this.selectedNonGroupUsers}}
                       {{on "click" (fn this.toggleNonGroupUserSelection user.content)}}
-                    >
+                    />
                     {{#unless user.enabled}}
                       <FaIcon
                         @icon="user-xmark"
@@ -256,11 +261,7 @@
                         <FaIcon
                           @icon="plus"
                           class="yes"
-                          @title={{t
-                            "general.moveToGroup"
-                            groupTitle=@learnerGroupTitle
-                            count=1
-                          }}
+                          @title={{t "general.moveToGroup" groupTitle=@learnerGroupTitle count=1}}
                         />
                       </button>
                     {{/if}}
@@ -272,25 +273,29 @@
         </div>
       </div>
       <p class="fullwidth">
-          {{#if (gt this.selectedNonGroupUsers.length 0)}}
-            <button type="button" class="done text" {{on "click" (perform this.addUsersToGroup)}}>
-              {{t
-                "general.moveToGroup"
-                groupTitle=@learnerGroupTitle
-                count=this.selectedNonGroupUsers.length
-              }}
-            </button>
-          {{/if}}
-          {{#if (gt this.selectedGroupUsers.length 0)}}
-            <button type="button" class="cancel text" {{on "click" (perform this.removeUsersFromGroup)}}>
-              {{t
-                "general.removeLearnerToCohort"
-                cohort=@cohortTitle
-                count=this.selectedGroupUsers.length
-              }}
-            </button>
-          {{/if}}
-        </p>
+        {{#if (gt this.selectedNonGroupUsers.length 0)}}
+          <button type="button" class="done text" {{on "click" (perform this.addUsersToGroup)}}>
+            {{t
+              "general.moveToGroup"
+              groupTitle=@learnerGroupTitle
+              count=this.selectedNonGroupUsers.length
+            }}
+          </button>
+        {{/if}}
+        {{#if (gt this.selectedGroupUsers.length 0)}}
+          <button
+            type="button"
+            class="cancel text"
+            {{on "click" (perform this.removeUsersFromGroup)}}
+          >
+            {{t
+              "general.removeLearnerToCohort"
+              cohort=@cohortTitle
+              count=this.selectedGroupUsers.length
+            }}
+          </button>
+        {{/if}}
+      </p>
     {{/if}}
   </div>
 {{/let}}

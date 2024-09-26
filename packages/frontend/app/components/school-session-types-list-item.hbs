@@ -1,10 +1,10 @@
-<tr
-  class="school-session-types-list-item"
-  data-test-school-session-types-list-item
-  ...attributes
->
+<tr class="school-session-types-list-item" data-test-school-session-types-list-item ...attributes>
   <td colspan="3" data-test-title>
-    <button class="link-button" type="button" {{on "click" (fn @manageSessionType @sessionType.id)}}>
+    <button
+      class="link-button"
+      type="button"
+      {{on "click" (fn @manageSessionType @sessionType.id)}}
+    >
       {{@sessionType.title}}
     </button>
     {{#unless @sessionType.active}}
@@ -64,20 +64,17 @@
           <FaIcon
             @icon="trash"
             class={{if
-            (or this.showRemoveConfirmation this.deleteSessionType.isRunning)
-            "inactive"
-            "remove"
-          }}
+              (or this.showRemoveConfirmation this.deleteSessionType.isRunning)
+              "inactive"
+              "remove"
+            }}
           />
         </button>
       {{/if}}
     {{else}}
       <FaIcon @icon="trash" class="disabled" />
     {{/if}}
-    <LinkTo
-      @route="session-type-visualize-vocabularies"
-      @model={{@sessionType}}
-    >
+    <LinkTo @route="session-type-visualize-vocabularies" @model={{@sessionType}}>
       <FaIcon @icon="chart-column" class="enabled" />
     </LinkTo>
   </td>
@@ -87,7 +84,7 @@
     <td colspan="11" class="hide-from-small-screen">
       <div class="confirm-message" data-test-message>
         {{t "general.sessionTypeConfirmRemoval"}}
-        <br>
+        <br />
         <div class="confirm-buttons">
           <button
             type="button"
@@ -111,7 +108,7 @@
     <td colspan="5" class="hide-from-large-screen" data-test-confirm-removal>
       <div class="confirm-message" data-test-message>
         {{t "general.sessionTypeConfirmRemoval"}}
-        <br>
+        <br />
         <div class="confirm-buttons">
           <button
             type="button"

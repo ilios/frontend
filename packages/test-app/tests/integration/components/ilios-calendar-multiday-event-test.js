@@ -19,16 +19,13 @@ module('Integration | Component | ilios calendar multiday event', function (hook
   });
 
   test('event displays correctly', async function (assert) {
-    await render(hbs`
-      <ul>
-        <IliosCalendarMultidayEvent
-          @event={{this.ev}}
-          @isEventSelectable={{true}}
-          @selectEvent={{(noop)}}
-        />
-      </ul>
-
-`);
+    await render(hbs`<ul>
+  <IliosCalendarMultidayEvent
+    @event={{this.ev}}
+    @isEventSelectable={{true}}
+    @selectEvent={{(noop)}}
+  />
+</ul>`);
     assert.strictEqual(
       component.text,
       '11/11/84, 12:00 AM – 11/12/84, 12:00 AM Cheramie is born Lancaster, CA',
@@ -42,39 +39,27 @@ module('Integration | Component | ilios calendar multiday event', function (hook
     this.set('selectEvent', (value) => {
       assert.deepEqual(this.ev, value);
     });
-    await render(hbs`
-      <IliosCalendarMultidayEvent
-        @event={{this.ev}}
-        @isEventSelectable={{true}}
-        @selectEvent={{this.selectEvent}}
-      />
-
-`);
+    await render(hbs`<IliosCalendarMultidayEvent
+  @event={{this.ev}}
+  @isEventSelectable={{true}}
+  @selectEvent={{this.selectEvent}}
+/>`);
     assert.notOk(component.isDisabled);
     await component.click();
   });
 
   test('event is disabled for scheduled events', async function (assert) {
-    await render(hbs`
-      <IliosCalendarMultidayEvent
-        @event={{this.ev}}
-        @isEventSelectable={{true}}
-        @selectEvent={{this.selectEvent}}
-      />
-
-`);
+    await render(hbs`<IliosCalendarMultidayEvent
+  @event={{this.ev}}
+  @isEventSelectable={{true}}
+  @selectEvent={{this.selectEvent}}
+/>`);
     assert.ok(component.isDisabled);
   });
 
   test('event is disabled when not explicitly flagged as selectable', async function (assert) {
     this.ev.offering = 1;
-    await render(hbs`
-      <IliosCalendarMultidayEvent
-        @event={{this.ev}}
-        @selectEvent={{this.selectEvent}}
-      />
-
-`);
+    await render(hbs`<IliosCalendarMultidayEvent @event={{this.ev}} @selectEvent={{this.selectEvent}} />`);
     assert.ok(component.isDisabled);
   });
 });

@@ -7,8 +7,7 @@ module('Integration | Modifier | animate-loading', function (hooks) {
   setupRenderingTest(hooks);
 
   test('it renders defaults', async function (assert) {
-    await render(hbs`<div {{animate-loading}}></div>
-`);
+    await render(hbs`<div {{animate-loading}}></div>`);
     assert.ok(
       Math.abs(getComputedStyle(this.element.querySelector('div'), null).opacity - 0.1) < 0.001,
     );
@@ -24,10 +23,8 @@ module('Integration | Modifier | animate-loading', function (hooks) {
   });
 
   test('it renders options', async function (assert) {
-    await render(hbs`<div
-      {{animate-loading initialOpacity=".3" finalOpacity="0.6" loadingTime=500}}>
-    </div>
-`);
+    await render(hbs`<div {{animate-loading initialOpacity='.3' finalOpacity='0.6' loadingTime=500}}>
+</div>`);
     assert.ok(
       Math.abs(getComputedStyle(this.element.querySelector('div'), null).opacity - 0.3) < 0.001,
     );
@@ -47,10 +44,8 @@ module('Integration | Modifier | animate-loading', function (hooks) {
   test('it works with tracker service', async function (assert) {
     const tracker = this.owner.lookup('service:loading-opacity-tracker');
     tracker.set('someKey', '0.23');
-    await render(hbs`<div
-      {{animate-loading "someKey"}}>
-    </div>
-`);
+    await render(hbs`<div {{animate-loading 'someKey'}}>
+</div>`);
     assert.ok(
       Math.abs(getComputedStyle(this.element.querySelector('div'), null).opacity - 0.23) < 0.001,
     );
@@ -63,8 +58,7 @@ module('Integration | Modifier | animate-loading', function (hooks) {
     //   opacity: '1',
     //   transition: 'opacity 1s linear 0s', //temporarily disabled as FF ESR 91 doesn't support getting this value
     // });
-    await render(hbs`<div></div>
-`);
+    await render(hbs`<div></div>`);
     assert.strictEqual(tracker.get('someKey'), '1');
   });
 });

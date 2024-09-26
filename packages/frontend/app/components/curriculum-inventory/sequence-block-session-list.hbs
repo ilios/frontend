@@ -24,10 +24,7 @@
           <SortableTh
             @colspan={{3}}
             @onClick={{fn this.changeSortOrder "sessionType.title"}}
-            @sortedBy={{or
-              (eq @sortBy "sessionType.title")
-              (eq @sortBy "sessionType.title:desc")
-            }}
+            @sortedBy={{or (eq @sortBy "sessionType.title") (eq @sortBy "sessionType.title:desc")}}
             @sortedAscending={{this.sortedAscending}}
           >
             {{t "general.sessionType"}}
@@ -38,10 +35,7 @@
           <SortableTh
             @colspan={{1}}
             @onClick={{fn this.changeSortOrder "offerings.length"}}
-            @sortedBy={{or
-              (eq @sortBy "offerings.length")
-              (eq @sortBy "offerings.length:desc")
-            }}
+            @sortedBy={{or (eq @sortBy "offerings.length") (eq @sortBy "offerings.length:desc")}}
             @sortedAscending={{this.sortedAscending}}
             @sortType="numeric"
           >
@@ -53,18 +47,10 @@
         {{#each (sort-by @sortBy @sessions) as |session|}}
           <tr>
             <td class="text-center" colspan="2">
-              {{if
-                (includes session this.sessions)
-                (t "general.yes")
-                (t "general.no")
-              }}
+              {{if (includes session this.sessions) (t "general.yes") (t "general.no")}}
             </td>
             <td class="text-center" colspan="2">
-              {{if
-                (includes session this.excludedSessions)
-                (t "general.yes")
-                (t "general.no")
-              }}
+              {{if (includes session this.excludedSessions) (t "general.yes") (t "general.no")}}
             </td>
             <td class="text-left" colspan="3">
               {{#if session.isIndependentLearning}}
@@ -75,17 +61,17 @@
               {{session.title}}
             </td>
             <td class="text-left" colspan="3">
-                {{session.sessionType.title}}
+              {{session.sessionType.title}}
             </td>
             <td class="text-center" colspan="1">
               {{#if (includes session this.sessions)}}
-                  {{session.maxDuration}}
+                {{session.maxDuration}}
               {{else}}
-                  {{session.totalSumDuration}}
+                {{session.totalSumDuration}}
               {{/if}}
             </td>
             <td class="text-center" colspan="1">
-                {{session.offerings.length}}
+              {{session.offerings.length}}
             </td>
           </tr>
         {{/each}}

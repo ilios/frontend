@@ -23,10 +23,7 @@ module('Integration | Component | school vocabulary new term', function (hooks) 
     this.set('createTerm', (title) => {
       assert.strictEqual(newTitle, title);
     });
-    await render(hbs`<SchoolVocabularyNewTerm
-      @vocabulary={{this.vocabulary}}
-      @createTerm={{this.createTerm}}
-    />`);
+    await render(hbs`<SchoolVocabularyNewTerm @vocabulary={{this.vocabulary}} @createTerm={{this.createTerm}} />`);
 
     await component.setTitle(newTitle);
     await component.save();
@@ -40,10 +37,7 @@ module('Integration | Component | school vocabulary new term', function (hooks) 
       .findRecord('vocabulary', vocabulary.id);
 
     this.set('vocabulary', vocabularyModel);
-    await render(hbs`<SchoolVocabularyNewTerm
-      @vocabulary={{this.vocabulary}}
-      @createTerm={{true}}
-    />`);
+    await render(hbs`<SchoolVocabularyNewTerm @vocabulary={{this.vocabulary}} @createTerm={{true}} />`);
 
     assert.notOk(component.hasError);
     await component.setTitle('');
@@ -65,10 +59,7 @@ module('Integration | Component | school vocabulary new term', function (hooks) 
       .findRecord('vocabulary', vocabulary.id);
 
     this.set('vocabulary', vocabularyModel);
-    await render(hbs`<SchoolVocabularyNewTerm
-      @vocabulary={{this.vocabulary}}
-      @createTerm={{(noop)}}
-    />`);
+    await render(hbs`<SchoolVocabularyNewTerm @vocabulary={{this.vocabulary}} @createTerm={{(noop)}} />`);
 
     assert.notOk(component.hasError);
     await component.setTitle(title);
@@ -97,10 +88,10 @@ module('Integration | Component | school vocabulary new term', function (hooks) 
     this.set('vocabulary', vocabularyModel);
     this.set('term', termModel);
     await render(hbs`<SchoolVocabularyNewTerm
-      @vocabulary={{this.vocabulary}}
-      @term={{this.term}}
-      @createTerm={{(noop)}}
-    />`);
+  @vocabulary={{this.vocabulary}}
+  @term={{this.term}}
+  @createTerm={{(noop)}}
+/>`);
 
     assert.notOk(component.hasError);
     await component.setTitle(title);

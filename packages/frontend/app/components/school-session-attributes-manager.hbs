@@ -19,16 +19,17 @@
           <td>
             {{#if @showSessionAttendanceRequired}}
               <input
-                type="checkbox" checked={{true}}
+                type="checkbox"
+                checked={{true}}
                 {{on "click" (fn @disable "showSessionAttendanceRequired")}}
                 aria-labelledby="attendance-required-{{templateId}}"
-              >
+              />
             {{else}}
               <input
                 type="checkbox"
                 {{on "click" (fn @enable "showSessionAttendanceRequired")}}
                 aria-labelledby="attendance-required-{{templateId}}"
-              >
+              />
             {{/if}}
           </td>
         </tr>
@@ -43,13 +44,13 @@
                 checked={{true}}
                 {{on "click" (fn @disable "showSessionSupplemental")}}
                 aria-labelledby="supplemental-{{templateId}}"
-              >
+              />
             {{else}}
               <input
                 type="checkbox"
                 {{on "click" (fn @enable "showSessionSupplemental")}}
                 aria-labelledby="supplemental-{{templateId}}"
-              >
+              />
             {{/if}}
           </td>
         </tr>
@@ -64,13 +65,13 @@
                 checked={{true}}
                 {{on "click" (fn @disable "showSessionSpecialAttireRequired")}}
                 aria-labelledby="special-attire-{{templateId}}"
-              >
+              />
             {{else}}
               <input
                 type="checkbox"
                 {{on "click" (fn @enable "showSessionSpecialAttireRequired")}}
                 aria-labelledby="special-attire-{{templateId}}"
-              >
+              />
             {{/if}}
           </td>
         </tr>
@@ -85,13 +86,13 @@
                 checked={{true}}
                 {{on "click" (fn @disable "showSessionSpecialEquipmentRequired")}}
                 aria-labelledby="special-equipment-required-{{templateId}}"
-              >
+              />
             {{else}}
               <input
                 type="checkbox"
                 {{on "click" (fn @enable "showSessionSpecialEquipmentRequired")}}
                 aria-labelledby="special-equipment-required-{{templateId}}"
-              >
+              />
             {{/if}}
           </td>
         </tr>

@@ -39,8 +39,7 @@ module('Integration | Component | sessions-grid-offering-table', function (hooks
     const model = await this.owner.lookup('service:store').findRecord('session', session.id);
     this.set('model', model);
 
-    await render(hbs`<SessionsGridOfferingTable @session={{this.model}} />
-`);
+    await render(hbs`<SessionsGridOfferingTable @session={{this.model}} />`);
 
     assert.strictEqual(page.table.dates.length, 2);
     assert.strictEqual(page.table.offerings.length, 9);

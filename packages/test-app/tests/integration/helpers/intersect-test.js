@@ -14,12 +14,9 @@ module('Integration | Helper | intersect', function (hooks) {
     this.set('array2', ['foo', 'baz']);
     this.set('array3', ['qux', 'foo']);
 
-    await render(hbs`
-      {{~#each (intersect this.array1 this.array2 this.array3) as |word|~}}
-        {{~word~}}
-      {{~/each~}}
-
-`);
+    await render(hbs`{{~#each (intersect this.array1 this.array2 this.array3) as |word|~}}
+  {{~word~}}
+{{~/each~}}`);
 
     assert.dom().hasText('foo', 'intersect shows words common to all arrays');
   });
@@ -29,12 +26,9 @@ module('Integration | Helper | intersect', function (hooks) {
     this.set('array2', emberArray(['foo', 'baz']));
     this.set('array3', emberArray(['qux', 'foo']));
 
-    await render(hbs`
-      {{~#each (intersect this.array1 this.array2 this.array3) as |word|~}}
-        {{~word~}}
-      {{~/each~}}
-
-`);
+    await render(hbs`{{~#each (intersect this.array1 this.array2 this.array3) as |word|~}}
+  {{~word~}}
+{{~/each~}}`);
     // eslint-disable-next-line ember/no-runloop
     run(() => this.get('array2').pushObject('bar'));
     // eslint-disable-next-line ember/no-runloop
@@ -47,13 +41,10 @@ module('Integration | Helper | intersect', function (hooks) {
     this.set('array', null);
     this.set('text', 'this is all that will render');
 
-    await render(hbs`
-      {{this.text}}
-      {{#each (intersect this.array this.array) as |value|}}
-        {{value}}
-      {{/each}}
-
-`);
+    await render(hbs`{{this.text}}
+{{#each (intersect this.array this.array) as |value|}}
+  {{value}}
+{{/each}}`);
 
     assert.dom().hasText('this is all that will render', 'no error is thrown');
   });
@@ -62,13 +53,10 @@ module('Integration | Helper | intersect', function (hooks) {
     this.set('array', undefined);
     this.set('text', 'this is all that will render');
 
-    await render(hbs`
-      {{this.text}}
-      {{#each (intersect this.array this.array) as |value|}}
-        {{value}}
-      {{/each}}
-
-`);
+    await render(hbs`{{this.text}}
+{{#each (intersect this.array this.array) as |value|}}
+  {{value}}
+{{/each}}`);
 
     assert.dom().hasText('this is all that will render', 'no error is thrown');
   });
@@ -78,13 +66,10 @@ module('Integration | Helper | intersect', function (hooks) {
     this.set('array2', ['foo', 'baz']);
     this.set('text', 'this is all that will render');
 
-    await render(hbs`
-      {{this.text}}
-      {{#each (intersect this.array1 this.array2) as |value|}}
-        {{value}}
-      {{/each}}
-
-`);
+    await render(hbs`{{this.text}}
+{{#each (intersect this.array1 this.array2) as |value|}}
+  {{value}}
+{{/each}}`);
 
     assert.dom().hasText('this is all that will render', 'no error is thrown');
   });

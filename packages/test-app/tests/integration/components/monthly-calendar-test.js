@@ -29,12 +29,11 @@ module('Integration | Component | monthly-calendar', function (hooks) {
     });
     this.set('date', january9th2019.toJSDate());
     await render(hbs`<MonthlyCalendar
-      @date={{this.date}}
-      @events={{(array)}}
-      @changeToDayView={{(noop)}}
-      @selectEvent={{(noop)}}
-    />
-`);
+  @date={{this.date}}
+  @events={{(array)}}
+  @changeToDayView={{(noop)}}
+  @selectEvent={{(noop)}}
+/>`);
     assert.strictEqual(component.ariaBusy, 'false');
     assert.strictEqual(component.title, 'January 2019');
     assert.strictEqual(component.days.length, 31);
@@ -66,12 +65,11 @@ module('Integration | Component | monthly-calendar', function (hooks) {
     this.set('events', this.server.db.userevents);
     this.set('date', january9th2019.toJSDate());
     await render(hbs`<MonthlyCalendar
-      @date={{this.date}}
-      @events={{this.events}}
-      @changeToDayView={{(noop)}}
-      @selectEvent={{(noop)}}
-    />
-`);
+  @date={{this.date}}
+  @events={{this.events}}
+  @changeToDayView={{(noop)}}
+  @selectEvent={{(noop)}}
+/>`);
     assert.strictEqual(component.ariaBusy, 'false');
     assert.strictEqual(component.days.length, 31);
     assert.ok(component.days[8].isFourthDayOfWeek);
@@ -100,12 +98,11 @@ module('Integration | Component | monthly-calendar', function (hooks) {
     this.set('events', this.server.db.userevents);
     this.set('date', january9th2019.toJSDate());
     await render(hbs`<MonthlyCalendar
-      @date={{this.date}}
-      @events={{this.events}}
-      @changeToDayView={{(noop)}}
-      @selectEvent={{(noop)}}
-    />
-`);
+  @date={{this.date}}
+  @events={{this.events}}
+  @changeToDayView={{(noop)}}
+  @selectEvent={{(noop)}}
+/>`);
     assert.strictEqual(component.days.length, 31);
     assert.ok(component.days[8].isFourthDayOfWeek);
     assert.ok(component.days[8].isSecondWeek);
@@ -132,12 +129,11 @@ module('Integration | Component | monthly-calendar', function (hooks) {
       assert.ok(true);
     });
     await render(hbs`<MonthlyCalendar
-      @date={{this.date}}
-      @events={{(array)}}
-      @changeToDayView={{this.changeToDayView}}
-      @selectEvent={{(noop)}}
-    />
-`);
+  @date={{this.date}}
+  @events={{(array)}}
+  @changeToDayView={{this.changeToDayView}}
+  @selectEvent={{(noop)}}
+/>`);
 
     await component.days[3].selectDay();
   });
@@ -163,12 +159,11 @@ module('Integration | Component | monthly-calendar', function (hooks) {
       assert.ok(true);
     });
     await render(hbs`<MonthlyCalendar
-      @date={{this.date}}
-      @events={{this.events}}
-      @changeToDayView={{(noop)}}
-      @selectEvent={{this.selectEvent}}
-    />
-`);
+  @date={{this.date}}
+  @events={{this.events}}
+  @changeToDayView={{(noop)}}
+  @selectEvent={{this.selectEvent}}
+/>`);
 
     await component.days[8].events[0].click();
   });
@@ -193,12 +188,11 @@ module('Integration | Component | monthly-calendar', function (hooks) {
       assert.ok(true);
     });
     await render(hbs`<MonthlyCalendar
-      @date={{this.date}}
-      @events={{this.events}}
-      @changeToDayView={{this.changeToDayView}}
-      @selectEvent={{(noop)}}
-    />
-`);
+  @date={{this.date}}
+  @events={{this.events}}
+  @changeToDayView={{this.changeToDayView}}
+  @selectEvent={{(noop)}}
+/>`);
 
     await component.days[8].showMore();
   });
@@ -225,12 +219,11 @@ module('Integration | Component | monthly-calendar', function (hooks) {
       assert.ok(true);
     });
     await render(hbs`<MonthlyCalendar
-      @date={{this.date}}
-      @events={{this.events}}
-      @changeToDayView={{this.changeToDayView}}
-      @selectEvent={{(noop)}}
-    />
-`);
+  @date={{this.date}}
+  @events={{this.events}}
+  @changeToDayView={{this.changeToDayView}}
+  @selectEvent={{(noop)}}
+/>`);
 
     await component.days[8].events[0].click();
   });
@@ -251,12 +244,11 @@ module('Integration | Component | monthly-calendar', function (hooks) {
     this.set('events', this.server.db.userevents);
     this.set('date', december112017.toJSDate());
     await render(hbs`<MonthlyCalendar
-      @date={{this.date}}
-      @events={{this.events}}
-      @changeToDayView={{(noop)}}
-      @selectEvent={{(noop)}}
-    />
-`);
+  @date={{this.date}}
+  @events={{this.events}}
+  @changeToDayView={{(noop)}}
+  @selectEvent={{(noop)}}
+/>`);
 
     assert.strictEqual(component.days.length, 31);
     assert.ok(component.days[10].isSecondDayOfWeek);
@@ -290,12 +282,11 @@ module('Integration | Component | monthly-calendar', function (hooks) {
     this.set('events', this.server.db.userevents);
     this.set('date', february1st2020.toJSDate());
     await render(hbs`<MonthlyCalendar
-      @date={{this.date}}
-      @events={{this.events}}
-      @changeToDayView={{(noop)}}
-      @selectEvent={{(noop)}}
-    />
-`);
+  @date={{this.date}}
+  @events={{this.events}}
+  @changeToDayView={{(noop)}}
+  @selectEvent={{(noop)}}
+/>`);
 
     assert.strictEqual(component.days.length, 29);
     assert.ok(component.days[0].isSeventhDayOfWeek);
@@ -316,13 +307,12 @@ module('Integration | Component | monthly-calendar', function (hooks) {
   test('events are loading', async function (assert) {
     this.set('date', DateTime.now().toJSDate());
     await render(hbs`<MonthlyCalendar
-      @isLoadingEvents={{true}}
-      @date={{this.date}}
-      @events={{(array)}}
-      @changeToDayView={{(noop)}}
-      @selectEvent={{(noop)}}
-    />
-`);
+  @isLoadingEvents={{true}}
+  @date={{this.date}}
+  @events={{(array)}}
+  @changeToDayView={{(noop)}}
+  @selectEvent={{(noop)}}
+/>`);
     assert.strictEqual(component.ariaBusy, 'true');
     assert.strictEqual(component.title, 'Loading Events ...');
   });

@@ -16,12 +16,11 @@ module('Integration | Component | course/manage-objective-descriptors', function
       .findRecord('mesh-descriptor', descriptors[0].id);
     this.set('selected', [descriptorModel]);
     await render(hbs`<Course::ManageObjectiveDescriptors
-      @selected={{this.selected}}
-      @add={{(noop)}}
-      @remove={{(noop)}}
-      @editable={{true}}
-    />
-`);
+  @selected={{this.selected}}
+  @add={{(noop)}}
+  @remove={{(noop)}}
+  @editable={{true}}
+/>`);
     const m = component.meshManager;
 
     assert.strictEqual(m.selectedTerms.length, 1);
@@ -50,12 +49,11 @@ module('Integration | Component | course/manage-objective-descriptors', function
       assert.ok(true);
     });
     await render(hbs`<Course::ManageObjectiveDescriptors
-      @selected={{this.selected}}
-      @add={{this.add}}
-      @remove={{(noop)}}
-      @editable={{true}}
-    />
-`);
+  @selected={{this.selected}}
+  @add={{this.add}}
+  @remove={{(noop)}}
+  @editable={{true}}
+/>`);
     const m = component.meshManager;
 
     assert.strictEqual(m.selectedTerms.length, 1);
@@ -91,12 +89,11 @@ module('Integration | Component | course/manage-objective-descriptors', function
       assert.ok(true);
     });
     await render(hbs`<Course::ManageObjectiveDescriptors
-      @selected={{this.selected}}
-      @add={{(noop)}}
-      @remove={{this.remove}}
-      @editable={{true}}
-    />
-`);
+  @selected={{this.selected}}
+  @add={{(noop)}}
+  @remove={{this.remove}}
+  @editable={{true}}
+/>`);
     const m = component.meshManager;
 
     assert.strictEqual(m.selectedTerms.length, 1);

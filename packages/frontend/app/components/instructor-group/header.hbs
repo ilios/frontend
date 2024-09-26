@@ -1,8 +1,4 @@
-<div
-  class="instructor-group-header"
-  data-test-instructor-group-header
-  ...attributes
->
+<div class="instructor-group-header" data-test-instructor-group-header ...attributes>
   {{! template-lint-disable no-bare-strings }}
   <div class="header-bar">
     <span class="title">
@@ -13,7 +9,8 @@
           @save={{perform this.changeTitle}}
           @close={{this.revertTitleChanges}}
           @saveOnEnter={{true}}
-          @closeOnEscape={{true}} as |isSaving|
+          @closeOnEscape={{true}}
+          as |isSaving|
         >
           <input
             aria-label={{t "general.instructorGroupTitle"}}
@@ -22,7 +19,7 @@
             disabled={{isSaving}}
             {{on "input" (pick "target.value" (set this "title"))}}
             {{on "keyup" (fn this.addErrorDisplayFor "title")}}
-          >
+          />
           <ValidationError @errors={{get-errors-for this.title}} />
         </EditableField>
       {{else}}
@@ -43,10 +40,7 @@
       </LinkTo>
     </span>
     <span>
-      <LinkTo
-        @route="instructor-groups"
-        @query={{hash schoolId=@instructorGroup.school.id}}
-      >
+      <LinkTo @route="instructor-groups" @query={{hash schoolId=@instructorGroup.school.id}}>
         {{@instructorGroup.school.title}}
       </LinkTo>
     </span>

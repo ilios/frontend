@@ -12,18 +12,18 @@ module('Integration | Component | ilios users', function (hooks) {
 
   test('it renders', async function (assert) {
     await render(hbs`<IliosUsers
-      @limit="25"
-      @offset="25"
-      @query=""
-      @searchTerms={{(array)}}
-      @setQuery={{(noop)}}
-      @setLimit={{(noop)}}
-      @setOffset={{(noop)}}
-      @setShowNewUserForm={{(noop)}}
-      @setShowBulkNewUserForm={{(noop)}}
-      @setSearchTerms={{(noop)}}
-      @transitionToUser={{(noop)}}
-    />`);
+  @limit='25'
+  @offset='25'
+  @query=''
+  @searchTerms={{(array)}}
+  @setQuery={{(noop)}}
+  @setLimit={{(noop)}}
+  @setOffset={{(noop)}}
+  @setShowNewUserForm={{(noop)}}
+  @setShowBulkNewUserForm={{(noop)}}
+  @setSearchTerms={{(noop)}}
+  @transitionToUser={{(noop)}}
+/>`);
     assert.strictEqual(component.title.text, 'Users');
   });
 
@@ -37,18 +37,18 @@ module('Integration | Component | ilios users', function (hooks) {
       assert.strictEqual(query, newValue);
     });
     await render(hbs`<IliosUsers
-      @limit="25"
-      @offset="25"
-      @query={{this.value}}
-      @searchTerms={{(array)}}
-      @setQuery={{this.setQuery}}
-      @setLimit={{(noop)}}
-      @setOffset={{(noop)}}
-      @setShowNewUserForm={{(noop)}}
-      @setShowBulkNewUserForm={{(noop)}}
-      @setSearchTerms={{(noop)}}
-      @transitionToUser={{(noop)}}
-    />`);
+  @limit='25'
+  @offset='25'
+  @query={{this.value}}
+  @searchTerms={{(array)}}
+  @setQuery={{this.setQuery}}
+  @setLimit={{(noop)}}
+  @setOffset={{(noop)}}
+  @setShowNewUserForm={{(noop)}}
+  @setShowBulkNewUserForm={{(noop)}}
+  @setSearchTerms={{(noop)}}
+  @transitionToUser={{(noop)}}
+/>`);
 
     assert.strictEqual(component.search.value, value);
     await component.search.set(newValue);
@@ -84,16 +84,16 @@ module('Integration | Component | ilios users', function (hooks) {
     this.owner.register('service:current-user', CurrentUserMock);
 
     await render(hbs`<IliosUsers
-      @showNewUserForm={{true}}
-      @searchTerms={{(array)}}
-      @setQuery={{(noop)}}
-      @setLimit={{(noop)}}
-      @setOffset={{(noop)}}
-      @setShowNewUserForm={{(noop)}}
-      @setShowBulkNewUserForm={{(noop)}}
-      @setSearchTerms={{(noop)}}
-      @transitionToUser={{(noop)}}
-    />`);
+  @showNewUserForm={{true}}
+  @searchTerms={{(array)}}
+  @setQuery={{(noop)}}
+  @setLimit={{(noop)}}
+  @setOffset={{(noop)}}
+  @setShowNewUserForm={{(noop)}}
+  @setShowBulkNewUserForm={{(noop)}}
+  @setSearchTerms={{(noop)}}
+  @transitionToUser={{(noop)}}
+/>`);
     assert.ok(component.newUserForm.isPresent, 'the new user form is present');
     assert.notOk(
       component.newDirectoryUserForm.isPresent,
@@ -132,16 +132,16 @@ module('Integration | Component | ilios users', function (hooks) {
     this.owner.register('service:current-user', CurrentUserMock);
 
     await render(hbs`<IliosUsers
-      @showNewUserForm={{true}}
-      @searchTerms={{(array)}}
-      @setQuery={{(noop)}}
-      @setLimit={{(noop)}}
-      @setOffset={{(noop)}}
-      @setShowNewUserForm={{(noop)}}
-      @setShowBulkNewUserForm={{(noop)}}
-      @setSearchTerms={{(noop)}}
-      @transitionToUser={{(noop)}}
-    />`);
+  @showNewUserForm={{true}}
+  @searchTerms={{(array)}}
+  @setQuery={{(noop)}}
+  @setLimit={{(noop)}}
+  @setOffset={{(noop)}}
+  @setShowNewUserForm={{(noop)}}
+  @setShowBulkNewUserForm={{(noop)}}
+  @setSearchTerms={{(noop)}}
+  @transitionToUser={{(noop)}}
+/>`);
     assert.notOk(component.newUserForm.isPresent, 'the new user form is not present');
     assert.ok(component.newDirectoryUserForm.isPresent, 'the new directory form is present');
   });
@@ -179,16 +179,16 @@ module('Integration | Component | ilios users', function (hooks) {
       assert.notOk(value);
     });
     await render(hbs`<IliosUsers
-      @showBulkNewUserForm={{true}}
-      @searchTerms={{(array)}}
-      @setQuery={{(noop)}}
-      @setLimit={{(noop)}}
-      @setOffset={{(noop)}}
-      @setShowNewUserForm={{(noop)}}
-      @setShowBulkNewUserForm={{this.setShowBulkNewUserForm}}
-      @setSearchTerms={{(noop)}}
-      @transitionToUser={{(noop)}}
-    />`);
+  @showBulkNewUserForm={{true}}
+  @searchTerms={{(array)}}
+  @setQuery={{(noop)}}
+  @setLimit={{(noop)}}
+  @setOffset={{(noop)}}
+  @setShowNewUserForm={{(noop)}}
+  @setShowBulkNewUserForm={{this.setShowBulkNewUserForm}}
+  @setSearchTerms={{(noop)}}
+  @transitionToUser={{(noop)}}
+/>`);
     await component.newBulkUserForm.cancel();
   });
 
@@ -224,16 +224,16 @@ module('Integration | Component | ilios users', function (hooks) {
       assert.notOk(value);
     });
     await render(hbs`<IliosUsers
-      @showNewUserForm={{true}}
-      @searchTerms={{(array)}}
-      @setQuery={{(noop)}}
-      @setLimit={{(noop)}}
-      @setOffset={{(noop)}}
-      @setShowNewUserForm={{this.setShowNewUserForm}}
-      @setShowBulkNewUserForm={{(noop)}}
-      @setSearchTerms={{(noop)}}
-      @transitionToUser={{(noop)}}
-    />`);
+  @showNewUserForm={{true}}
+  @searchTerms={{(array)}}
+  @setQuery={{(noop)}}
+  @setLimit={{(noop)}}
+  @setOffset={{(noop)}}
+  @setShowNewUserForm={{this.setShowNewUserForm}}
+  @setShowBulkNewUserForm={{(noop)}}
+  @setSearchTerms={{(noop)}}
+  @transitionToUser={{(noop)}}
+/>`);
     await component.newUserForm.cancel();
   });
 
@@ -271,16 +271,16 @@ module('Integration | Component | ilios users', function (hooks) {
       assert.notOk(value);
     });
     await render(hbs`<IliosUsers
-      @showBulkNewUserForm={{true}}
-      @searchTerms={{(array)}}
-      @setQuery={{(noop)}}
-      @setLimit={{(noop)}}
-      @setOffset={{(noop)}}
-      @setShowNewUserForm={{(noop)}}
-      @setShowBulkNewUserForm={{this.setShowBulkNewUserForm}}
-      @setSearchTerms={{(noop)}}
-      @transitionToUser={{(noop)}}
-    />`);
+  @showBulkNewUserForm={{true}}
+  @searchTerms={{(array)}}
+  @setQuery={{(noop)}}
+  @setLimit={{(noop)}}
+  @setOffset={{(noop)}}
+  @setShowNewUserForm={{(noop)}}
+  @setShowBulkNewUserForm={{this.setShowBulkNewUserForm}}
+  @setSearchTerms={{(noop)}}
+  @transitionToUser={{(noop)}}
+/>`);
     await component.collapseForm();
   });
 });

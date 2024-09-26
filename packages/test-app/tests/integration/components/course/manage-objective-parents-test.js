@@ -33,13 +33,12 @@ module('Integration | Component | course/manage-objective-parents', function (ho
     ];
     this.set('cohortObjectives', cohortObjectives);
     await render(hbs`<Course::ManageObjectiveParents
-      @cohortObjectives={{this.cohortObjectives}}
-      @selected={{(array)}}
-      @add={{(noop)}}
-      @remove={{(noop)}}
-      @removeFromCohort={{(noop)}}
-    />
-`);
+  @cohortObjectives={{this.cohortObjectives}}
+  @selected={{(array)}}
+  @add={{(noop)}}
+  @remove={{(noop)}}
+  @removeFromCohort={{(noop)}}
+/>`);
 
     assert.notOk(component.hasMultipleCohorts);
     assert.strictEqual(component.selectedCohortTitle, 'cohort 0');
@@ -95,13 +94,12 @@ module('Integration | Component | course/manage-objective-parents', function (ho
     ];
     this.set('cohortObjectives', cohortObjectives);
     await render(hbs`<Course::ManageObjectiveParents
-      @cohortObjectives={{this.cohortObjectives}}
-      @selected={{(array)}}
-      @add={{(noop)}}
-      @remove={{(noop)}}
-      @removeFromCohort={{(noop)}}
-    />
-`);
+  @cohortObjectives={{this.cohortObjectives}}
+  @selected={{(array)}}
+  @add={{(noop)}}
+  @remove={{(noop)}}
+  @removeFromCohort={{(noop)}}
+/>`);
 
     assert.ok(component.hasMultipleCohorts);
     assert.strictEqual(component.selectedCohortTitle, 'cohort 0 cohort 1');
@@ -155,13 +153,12 @@ module('Integration | Component | course/manage-objective-parents', function (ho
     ];
     this.set('cohortObjectives', cohortObjectives);
     await render(hbs`<Course::ManageObjectiveParents
-      @cohortObjectives={{this.cohortObjectives}}
-      @selected={{(array)}}
-      @add={{(noop)}}
-      @remove={{(noop)}}
-      @removeFromCohort={{(noop)}}
-    />
-`);
+  @cohortObjectives={{this.cohortObjectives}}
+  @selected={{(array)}}
+  @add={{(noop)}}
+  @remove={{(noop)}}
+  @removeFromCohort={{(noop)}}
+/>`);
     assert.strictEqual(component.competencies.length, 2);
     assert.strictEqual(component.competencies[0].title, 'competency 0 (domain)');
     assert.strictEqual(component.competencies[1].title, 'competency 1');
@@ -212,13 +209,12 @@ module('Integration | Component | course/manage-objective-parents', function (ho
     this.set('cohortObjectives', cohortObjectives);
     this.set('selected', [obj3]);
     await render(hbs`<Course::ManageObjectiveParents
-      @cohortObjectives={{this.cohortObjectives}}
-      @selected={{this.selected}}
-      @add={{(noop)}}
-      @remove={{(noop)}}
-      @removeFromCohort={{(noop)}}
-    />
-`);
+  @cohortObjectives={{this.cohortObjectives}}
+  @selected={{this.selected}}
+  @add={{(noop)}}
+  @remove={{(noop)}}
+  @removeFromCohort={{(noop)}}
+/>`);
 
     assert.strictEqual(component.competencies.length, 1);
     assert.strictEqual(component.competencies[0].title, 'competency 0');

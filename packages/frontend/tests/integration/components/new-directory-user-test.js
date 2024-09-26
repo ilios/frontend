@@ -47,10 +47,10 @@ module('Integration | Component | new directory user', function (hooks) {
       assert.strictEqual(val, searchTerm, 'changes to search get sent as action');
     });
     await render(hbs`<NewDirectoryUser
-      @close={{(noop)}}
-      @setSearchTerms={{this.setSearchTerms}}
-      @searchTerms={{this.startingSearchTerms}}
-    />`);
+  @close={{(noop)}}
+  @setSearchTerms={{this.setSearchTerms}}
+  @searchTerms={{this.startingSearchTerms}}
+/>`);
     await component.search.set(searchTerm);
     await component.search.submit();
   });
@@ -69,10 +69,10 @@ module('Integration | Component | new directory user', function (hooks) {
     });
     this.set('startingSearchTerms', startingSearchTerms);
     await render(hbs`<NewDirectoryUser
-      @close={{(noop)}}
-      @setSearchTerms={{(noop)}}
-      @searchTerms={{this.startingSearchTerms}}
-    />`);
+  @close={{(noop)}}
+  @setSearchTerms={{(noop)}}
+  @searchTerms={{this.startingSearchTerms}}
+/>`);
     assert.strictEqual(component.search.value, startingSearchTerms);
   });
 
@@ -162,11 +162,11 @@ module('Integration | Component | new directory user', function (hooks) {
       assert.strictEqual(Number(userId), 5, 'after saving we transition to the right user');
     });
     await render(hbs`<NewDirectoryUser
-      @close={{(noop)}}
-      @setSearchTerms={{(noop)}}
-      @transitionToUser={{this.transitionToUser}}
-      @searchTerms="searchterm"
-    />`);
+  @close={{(noop)}}
+  @setSearchTerms={{(noop)}}
+  @transitionToUser={{this.transitionToUser}}
+  @searchTerms='searchterm'
+/>`);
 
     assert.strictEqual(component.searchResults.length, 3);
     assert.ok(component.searchResults[0].userCanBeAdded);
@@ -252,11 +252,11 @@ module('Integration | Component | new directory user', function (hooks) {
       assert.strictEqual(Number(userId), 2, 'after saving we transition to the right user');
     });
     await render(hbs`<NewDirectoryUser
-      @close={{(noop)}}
-      @setSearchTerms={{(noop)}}
-      @transitionToUser={{this.transitionToUser}}
-      @searchTerms="searchterm"
-    />`);
+  @close={{(noop)}}
+  @setSearchTerms={{(noop)}}
+  @transitionToUser={{this.transitionToUser}}
+  @searchTerms='searchterm'
+/>`);
 
     assert.strictEqual(component.searchResults.length, 1);
     assert.ok(component.searchResults[0].userCanBeAdded);
@@ -311,11 +311,11 @@ module('Integration | Component | new directory user', function (hooks) {
       assert.strictEqual(Number(userId), 2, 'after saving we transition to the right user');
     });
     await render(hbs`<NewDirectoryUser
-      @close={{(noop)}}
-      @setSearchTerms={{(noop)}}
-      @transitionToUser={{this.transitionToUser}}
-      @searchTerms="searchterm"
-    />`);
+  @close={{(noop)}}
+  @setSearchTerms={{(noop)}}
+  @transitionToUser={{this.transitionToUser}}
+  @searchTerms='searchterm'
+/>`);
 
     assert.strictEqual(component.searchResults.length, 1);
     assert.ok(component.searchResults[0].userCanBeAdded);

@@ -32,10 +32,10 @@ module('Integration | Component | school-competencies-list-item', function (hook
   test('it renders - domain', async function (assert) {
     this.set('competency', this.domainModel);
     await render(hbs`<SchoolCompetenciesListItem
-      @competency={{this.competency}}
-      @isDomain={{true}}
-      @canUpdate={{true}}
-    />`);
+  @competency={{this.competency}}
+  @isDomain={{true}}
+  @canUpdate={{true}}
+/>`);
     assert.strictEqual(component.title.text, 'competency 0');
     assert.notOk(component.title.isCompetency);
     assert.ok(component.title.isDomain);
@@ -49,10 +49,10 @@ module('Integration | Component | school-competencies-list-item', function (hook
   test('it renders - competency', async function (assert) {
     this.set('competency', this.competencyModel);
     await render(hbs`<SchoolCompetenciesListItem
-      @competency={{this.competency}}
-      @isDomain={{false}}
-      @canUpdate={{true}}
-    />`);
+  @competency={{this.competency}}
+  @isDomain={{false}}
+  @canUpdate={{true}}
+/>`);
     assert.strictEqual(component.title.text, 'competency 1');
     assert.ok(component.title.isCompetency);
     assert.notOk(component.title.isDomain);
@@ -65,10 +65,10 @@ module('Integration | Component | school-competencies-list-item', function (hook
   test('manage - no pre-selected PCRS', async function (assert) {
     this.set('competency', this.competencyModel);
     await render(hbs`<SchoolCompetenciesListItem
-      @competency={{this.competency}}
-      @isDomain={{false}}
-      @canUpdate={{true}}
-    />`);
+  @competency={{this.competency}}
+  @isDomain={{false}}
+  @canUpdate={{true}}
+/>`);
     assert.strictEqual(component.title.text, 'competency 1');
     assert.strictEqual(component.pcrs.items.length, 1);
     assert.strictEqual(component.pcrs.items[0].text, 'Click to edit');
@@ -85,10 +85,10 @@ module('Integration | Component | school-competencies-list-item', function (hook
   test('manage - pre-selected PCRS', async function (assert) {
     this.set('competency', this.domainModel);
     await render(hbs`<SchoolCompetenciesListItem
-      @competency={{this.competency}}
-      @isDomain={{false}}
-      @canUpdate={{true}}
-    />`);
+  @competency={{this.competency}}
+  @isDomain={{false}}
+  @canUpdate={{true}}
+/>`);
     assert.strictEqual(component.title.text, 'competency 0');
     assert.strictEqual(component.pcrs.items.length, 2);
     assert.strictEqual(component.pcrs.items[0].text, '1 Zylinder');

@@ -28,10 +28,10 @@ module('Integration | Component | instructor-groups/list', function (hooks) {
       .findAll('instructor-group');
     this.set('instructorGroups', instructorGroupModels);
     await render(hbs`<InstructorGroups::List
-      @instructorGroups={{this.instructorGroups}}
-      @sortBy="title"
-      @setSortBy={{(noop)}}
-    />`);
+  @instructorGroups={{this.instructorGroups}}
+  @sortBy='title'
+  @setSortBy={{(noop)}}
+/>`);
     assert.strictEqual(component.header.title.text, 'Instructor Group Title');
     assert.strictEqual(component.header.members.text, 'Members');
     assert.strictEqual(component.items.length, 3);
@@ -45,11 +45,7 @@ module('Integration | Component | instructor-groups/list', function (hooks) {
   });
 
   test('it renders empty', async function (assert) {
-    await render(hbs`<InstructorGroups::List
-      @instructorGroups={{(array)}}
-      @sortBy="title"
-      @setSortBy={{(noop)}}
-    />`);
+    await render(hbs`<InstructorGroups::List @instructorGroups={{(array)}} @sortBy='title' @setSortBy={{(noop)}} />`);
 
     assert.strictEqual(component.items.length, 0);
     assert.ok(component.isEmpty);
@@ -63,10 +59,10 @@ module('Integration | Component | instructor-groups/list', function (hooks) {
       .findAll('instructor-group');
     this.set('instructorGroups', instructorGroupModels);
     await render(hbs`<InstructorGroups::List
-      @instructorGroups={{this.instructorGroups}}
-      @sortBy="title"
-      @setSortBy={{(noop)}}
-    />`);
+  @instructorGroups={{this.instructorGroups}}
+  @sortBy='title'
+  @setSortBy={{(noop)}}
+/>`);
     assert.strictEqual(this.server.db.instructorGroups.length, 3);
     assert.strictEqual(component.items.length, 3);
     assert.strictEqual(component.items[0].title, 'instructor group 0');
@@ -85,10 +81,10 @@ module('Integration | Component | instructor-groups/list', function (hooks) {
       .findAll('instructor-group');
     this.set('instructorGroups', instructorGroupModels);
     await render(hbs`<InstructorGroups::List
-      @instructorGroups={{this.instructorGroups}}
-      @sortBy="title"
-      @setSortBy={{(noop)}}
-    />`);
+  @instructorGroups={{this.instructorGroups}}
+  @sortBy='title'
+  @setSortBy={{(noop)}}
+/>`);
     assert.strictEqual(this.server.db.instructorGroups.length, 3);
     assert.strictEqual(component.items.length, 3);
     assert.strictEqual(component.items[0].title, 'instructor group 0');
@@ -136,10 +132,10 @@ module('Integration | Component | instructor-groups/list', function (hooks) {
     this.set('sortBy', 'title');
     this.set('instructorGroups', instructorGroupModels);
     await render(hbs`<InstructorGroups::List
-      @instructorGroups={{this.instructorGroups}}
-      @sortBy={{this.sortBy}}
-      @setSortBy={{set this "sortBy"}}
-    />`);
+  @instructorGroups={{this.instructorGroups}}
+  @sortBy={{this.sortBy}}
+  @setSortBy={{set this 'sortBy'}}
+/>`);
     assert.strictEqual(component.items.length, 3);
     assert.ok(component.header.title.isSortedAscending);
     assert.ok(component.header.members.isNotSorted);

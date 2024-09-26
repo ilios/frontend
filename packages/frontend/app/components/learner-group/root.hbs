@@ -24,7 +24,10 @@
           <label>{{t "general.accommodationIsRequiredForLearnersInThisGroup"}}:</label>
           <span>
             {{#if @canUpdate}}
-              <ToggleYesno @yes={{@learnerGroup.needsAccommodation}} @toggle={{perform this.changeNeedsAccommodation}}/>
+              <ToggleYesno
+                @yes={{@learnerGroup.needsAccommodation}}
+                @toggle={{perform this.changeNeedsAccommodation}}
+              />
             {{else}}
               {{#if @learnerGroup.needsAccommodation}}
                 <span class="add">{{t "general.yes"}}</span>
@@ -45,7 +48,8 @@
                 @save={{perform this.changeLocation}}
                 @close={{this.revertLocationChanges}}
                 @saveOnEnter={{true}}
-                @closeOnEscape={{true}} as |isSaving|
+                @closeOnEscape={{true}}
+                as |isSaving|
               >
                 <input
                   id="location-{{templateId}}"
@@ -54,7 +58,7 @@
                   disabled={{isSaving}}
                   {{on "input" (pick "target.value" (set this "location"))}}
                   {{on "keyup" (fn this.addErrorDisplayFor "location")}}
-                >
+                />
                 <ValidationError @errors={{get-errors-for this.location}} />
               </EditableField>
             {{else if this.location}}
@@ -75,7 +79,8 @@
                 @save={{perform this.saveUrlChanges}}
                 @close={{this.revertUrlChanges}}
                 @saveOnEnter={{true}}
-                @closeOnEscape={{true}} as |isSaving|
+                @closeOnEscape={{true}}
+                as |isSaving|
               >
                 {{! template-lint-disable no-bare-strings}}
                 <input
@@ -88,7 +93,7 @@
                   {{on "keyup" (fn this.addErrorDisplayFor "url")}}
                   {{on "focus" this.selectAllText}}
                   disabled={{isSaving}}
-                >
+                />
                 <ValidationError @errors={{get-errors-for this.url}} />
               </EditableField>
             {{else if this.url}}
@@ -100,7 +105,8 @@
         </div>
         <div class="block associatedcourses" data-test-courses>
           <label>
-            {{t "general.associatedCourses"}} ({{this.courses.length}}):
+            {{t "general.associatedCourses"}}
+            ({{this.courses.length}}):
           </label>
           <ul>
             {{#each (sort-by "courseTitle" this.courses) as |obj|}}
@@ -108,7 +114,9 @@
                 <LinkTo @route="course" @model={{obj.course}}>
                   {{obj.courseTitle}}
                   {{#if this.academicYearCrossesCalendarYearBoundaries}}
-                    ({{obj.course.year}} - {{add obj.course.year 1}})
+                    ({{obj.course.year}}
+                    -
+                    {{add obj.course.year 1}})
                   {{else}}
                     ({{obj.course.year}})
                   {{/if}}
@@ -241,8 +249,8 @@
               </div>
             {{/if}}
           </div>
-          <div class="list{{if (eq @learnerGroup.childrenCount 0) " empty"}}">
-           {{#if @learnerGroup.childrenCount}}
+          <div class="list{{if (eq @learnerGroup.childrenCount 0) ' empty'}}">
+            {{#if @learnerGroup.childrenCount}}
               <LearnerGroup::List
                 @learnerGroups={{this.learnerGroups}}
                 @canCopyWithLearners={{false}}

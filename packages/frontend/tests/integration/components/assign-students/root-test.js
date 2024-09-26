@@ -77,11 +77,7 @@ module('Integration | Component | assign-students/root', function (hooks) {
       schools: [this.school1, this.school2],
       unassignedStudents: [this.user1, this.user2, this.user3, this.user4, this.user5],
     });
-    await render(hbs`<AssignStudents::Root
-      @model={{this.model}}
-      @setSchoolId={{(noop)}}
-      @setQuery={{(noop)}}
-    />`);
+    await render(hbs`<AssignStudents::Root @model={{this.model}} @setSchoolId={{(noop)}} @setQuery={{(noop)}} />`);
     assert.strictEqual(component.titleFilter.value, '');
     assert.strictEqual(component.schoolFilter.options.length, 2);
     assert.strictEqual(component.schoolFilter.options[0].text, 'school 0');
@@ -115,11 +111,11 @@ module('Integration | Component | assign-students/root', function (hooks) {
     });
     this.set('schoolId', this.school2.id);
     await render(hbs`<AssignStudents::Root
-      @model={{this.model}}
-      @schoolId={{this.schoolId}}
-      @setSchoolId={{(noop)}}
-      @setQuery={{(noop)}}
-    />`);
+  @model={{this.model}}
+  @schoolId={{this.schoolId}}
+  @setSchoolId={{(noop)}}
+  @setQuery={{(noop)}}
+/>`);
     assert.strictEqual(component.schoolFilter.options.length, 2);
     assert.strictEqual(component.schoolFilter.options[0].text, 'school 0');
     assert.strictEqual(component.schoolFilter.options[1].text, 'school 1');
@@ -141,11 +137,11 @@ module('Integration | Component | assign-students/root', function (hooks) {
     });
     this.set('query', 'alp');
     await render(hbs`<AssignStudents::Root
-      @model={{this.model}}
-      @query={{this.query}}
-      @setSchoolId={{(noop)}}
-      @setQuery={{(noop)}}
-    />`);
+  @model={{this.model}}
+  @query={{this.query}}
+  @setSchoolId={{(noop)}}
+  @setQuery={{(noop)}}
+/>`);
     assert.strictEqual(component.manager.students.length, 1);
     assert.strictEqual(component.manager.students[0].userNameInfo.fullName, 'Alpha');
   });
@@ -161,10 +157,10 @@ module('Integration | Component | assign-students/root', function (hooks) {
       assert.strictEqual(schoolId, this.school2.id);
     });
     await render(hbs`<AssignStudents::Root
-      @model={{this.model}}
-      @setSchoolId={{this.setSchoolId}}
-      @setQuery={{(noop)}}
-    />`);
+  @model={{this.model}}
+  @setSchoolId={{this.setSchoolId}}
+  @setQuery={{(noop)}}
+/>`);
     assert.strictEqual(component.schoolFilter.selectedSchool, this.school1.id);
     await component.schoolFilter.set(this.school2.id);
   });
@@ -180,11 +176,7 @@ module('Integration | Component | assign-students/root', function (hooks) {
     this.set('setQuery', (query) => {
       assert.strictEqual(filter, query);
     });
-    await render(hbs`<AssignStudents::Root
-      @model={{this.model}}
-      @setSchoolId={{(noop)}}
-      @setQuery={{this.setQuery}}
-    />`);
+    await render(hbs`<AssignStudents::Root @model={{this.model}} @setSchoolId={{(noop)}} @setQuery={{this.setQuery}} />`);
     assert.strictEqual(component.titleFilter.value, '');
     await component.titleFilter.set(filter);
   });
@@ -195,11 +187,7 @@ module('Integration | Component | assign-students/root', function (hooks) {
       schools: [this.school1, this.school2],
       unassignedStudents: [this.user1, this.user2, this.user3, this.user4, this.user5],
     });
-    await render(hbs`<AssignStudents::Root
-      @model={{this.model}}
-      @setSchoolId={{(noop)}}
-      @setQuery={{(noop)}}
-    />`);
+    await render(hbs`<AssignStudents::Root @model={{this.model}} @setSchoolId={{(noop)}} @setQuery={{(noop)}} />`);
     assert.strictEqual(component.manager.students.length, 3);
     assert.notOk(component.manager.students[0].isToggleChecked);
     assert.notOk(component.manager.students[1].isToggleChecked);

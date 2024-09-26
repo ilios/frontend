@@ -16,7 +16,12 @@
             @spin={{this.save.isRunning}}
           />
         </button>
-        <button class="bigcancel" type="button" {{on "click" (set this "isManaging" false)}} data-test-cancel>
+        <button
+          class="bigcancel"
+          type="button"
+          {{on "click" (set this "isManaging" false)}}
+          data-test-cancel
+        >
           <FaIcon @icon="arrow-rotate-left" />
         </button>
       {{else if @canUpdate}}
@@ -37,11 +42,7 @@
       {{/unless}}
     {{else}}
       <ul class="instructor-group-users-list" data-test-users-list>
-        {{#each
-          (sort-by
-            "fullName" this.users
-          ) as |user|
-        }}
+        {{#each (sort-by "fullName" this.users) as |user|}}
           <li data-test-user>
             <UserNameInfo @user={{user}} />
           </li>

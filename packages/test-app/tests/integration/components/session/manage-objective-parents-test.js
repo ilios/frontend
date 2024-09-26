@@ -17,13 +17,12 @@ module('Integration | Component | session/manage-objective-parents', function (h
     this.set('courseObjectives', await courseModel.courseObjectives);
     this.set('courseTitle', course.title);
     await render(hbs`<Session::ManageObjectiveParents
-      @courseTitle={{this.courseTitle}}
-      @courseObjectives={{this.courseObjectives}}
-      @selected={{(array)}}
-      @add={{(noop)}}
-      @remove={{(noop)}}
-    />
-`);
+  @courseTitle={{this.courseTitle}}
+  @courseObjectives={{this.courseObjectives}}
+  @selected={{(array)}}
+  @add={{(noop)}}
+  @remove={{(noop)}}
+/>`);
 
     assert.strictEqual(component.courseTitle, course.title);
     assert.strictEqual(component.objectives.length, 1);
@@ -54,13 +53,12 @@ module('Integration | Component | session/manage-objective-parents', function (h
     this.set('courseObjectives', objectives);
     this.set('courseTitle', course.title);
     await render(hbs`<Session::ManageObjectiveParents
-      @courseTitle={{this.courseTitle}}
-      @courseObjectives={{this.courseObjectives}}
-      @selected={{(array)}}
-      @add={{(noop)}}
-      @remove={{(noop)}}
-    />
-`);
+  @courseTitle={{this.courseTitle}}
+  @courseObjectives={{this.courseObjectives}}
+  @selected={{(array)}}
+  @add={{(noop)}}
+  @remove={{(noop)}}
+/>`);
 
     assert.strictEqual(component.objectives.length, 3);
     assert.strictEqual(component.objectives[0].title, 'Oscar');

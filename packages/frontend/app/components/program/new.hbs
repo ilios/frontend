@@ -18,28 +18,18 @@
           {{on "keyup" this.keyboard}}
           {{on "keyup" (fn this.addErrorDisplayFor "title")}}
           {{on "input" (pick "target.value" (set this "title"))}}
-        >
+        />
         <ValidationError @errors={{get-errors-for this.title}} />
       </div>
       <div class="buttons">
-        <button
-          type="button"
-          class="done text"
-          {{on "click" (perform this.save)}}
-          data-test-done
-        >
+        <button type="button" class="done text" {{on "click" (perform this.save)}} data-test-done>
           {{#if this.save.isRunning}}
             <LoadingSpinner />
           {{else}}
             {{t "general.done"}}
           {{/if}}
         </button>
-        <button
-          type="button"
-          class="cancel text"
-          {{on "click" @cancel}}
-          data-test-cancel
-        >
+        <button type="button" class="cancel text" {{on "click" @cancel}} data-test-cancel>
           {{t "general.cancel"}}
         </button>
       </div>

@@ -34,9 +34,9 @@ module('Integration | Component | user-profile-cohorts-details', function (hooks
     this.set('primaryCohort', this.cohort1);
     this.set('secondaryCohorts', [this.cohort2, this.cohort3, this.cohort4]);
     await render(hbs`<UserProfileCohortsDetails
-      @primaryCohort={{this.primaryCohort}}
-      @secondaryCohorts={{this.secondaryCohorts}}
-    />`);
+  @primaryCohort={{this.primaryCohort}}
+  @secondaryCohorts={{this.secondaryCohorts}}
+/>`);
 
     assert.strictEqual(component.primaryCohort.title, 'school 0 program 0 cohort 0');
     assert.strictEqual(component.secondaryCohorts.length, 3);
@@ -48,10 +48,7 @@ module('Integration | Component | user-profile-cohorts-details', function (hooks
   test('it renders empty', async function (assert) {
     this.set('primaryCohort', this.cohort1);
     this.set('secondaryCohorts', [this.cohort2, this.cohort3, this.cohort4]);
-    await render(hbs`<UserProfileCohortsDetails
-      @primaryCohort={{null}}
-      @secondaryCohorts={{(array)}}
-    />`);
+    await render(hbs`<UserProfileCohortsDetails @primaryCohort={{null}} @secondaryCohorts={{(array)}} />`);
 
     assert.strictEqual(component.primaryCohort.title, 'None');
     assert.strictEqual(component.secondaryCohorts.length, 1);

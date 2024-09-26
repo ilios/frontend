@@ -11,7 +11,8 @@
         @data={{this.data}}
         @onClick={{this.donutClick}}
         @hover={{perform this.donutHover}}
-        @leave={{perform this.donutHover}} as |chart|
+        @leave={{perform this.donutHover}}
+        as |chart|
       >
         {{#if this.tooltipContent}}
           <chart.tooltip @title={{this.tooltipTitle}}>

@@ -44,12 +44,12 @@ module('Integration | Component | program-year/manage-objective-competency', fun
     this.set('domainTrees', domainTrees);
     this.set('programYearCompetencies', [this.domainModel1, this.competencyModel1]);
     await render(hbs`<ProgramYear::ManageObjectiveCompetency
-      @domainTrees={{this.domainTrees}}
-      @programYearCompetencies={{this.programYearCompetencies}}
-      @selected={{null}}
-      @add={{(noop)}}
-      @remove={{(noop)}}
-    />`);
+  @domainTrees={{this.domainTrees}}
+  @programYearCompetencies={{this.programYearCompetencies}}
+  @selected={{null}}
+  @add={{(noop)}}
+  @remove={{(noop)}}
+/>`);
     assert.strictEqual(component.domains.length, 1);
     assert.strictEqual(component.domains[0].title, this.domainModel1.title);
     assert.ok(component.domains[0].notSelected);
@@ -77,12 +77,12 @@ module('Integration | Component | program-year/manage-objective-competency', fun
       assert.ok(true); // input doesn't matter, we just need to confirm this fired.
     });
     await render(hbs`<ProgramYear::ManageObjectiveCompetency
-      @domainTrees={{this.domainTrees}}
-      @programYearCompetencies={{this.programYearCompetencies}}
-      @selected={{this.selected}}
-      @add={{(noop)}}
-      @remove={{this.remove}}
-    />`);
+  @domainTrees={{this.domainTrees}}
+  @programYearCompetencies={{this.programYearCompetencies}}
+  @selected={{this.selected}}
+  @add={{(noop)}}
+  @remove={{this.remove}}
+/>`);
     assert.ok(component.domains[0].selected);
     await component.domains[0].toggle();
   });
@@ -102,12 +102,12 @@ module('Integration | Component | program-year/manage-objective-competency', fun
       assert.strictEqual(id, this.domainModel1.id);
     });
     await render(hbs`<ProgramYear::ManageObjectiveCompetency
-      @domainTrees={{this.domainTrees}}
-      @programYearCompetencies={{this.programYearCompetencies}}
-      @selected={{null}}
-      @add={{this.add}}
-      @remove={{(noop)}}
-    />`);
+  @domainTrees={{this.domainTrees}}
+  @programYearCompetencies={{this.programYearCompetencies}}
+  @selected={{null}}
+  @add={{this.add}}
+  @remove={{(noop)}}
+/>`);
     assert.ok(component.domains[0].notSelected);
     await component.domains[0].toggle();
   });
@@ -128,12 +128,12 @@ module('Integration | Component | program-year/manage-objective-competency', fun
     this.set('domainTrees', domainTrees);
     this.set('programYearCompetencies', [this.domainModel1, this.domainModel2]);
     await render(hbs`<ProgramYear::ManageObjectiveCompetency
-      @domainTrees={{this.domainTrees}}
-      @programYearCompetencies={{this.programYearCompetencies}}
-      @selected={{null}}
-      @add={{(noop)}}
-      @remove={{(noop)}}
-    />`);
+  @domainTrees={{this.domainTrees}}
+  @programYearCompetencies={{this.programYearCompetencies}}
+  @selected={{null}}
+  @add={{(noop)}}
+  @remove={{(noop)}}
+/>`);
     assert.strictEqual(component.domains[0].title, this.domainModel2.title);
     assert.strictEqual(component.domains[1].title, this.domainModel1.title);
   });
@@ -155,12 +155,12 @@ module('Integration | Component | program-year/manage-objective-competency', fun
     this.set('selected', this.domainModel1);
     this.set('programYearCompetencies', [this.domainModel1, this.competencyModel1]);
     await render(hbs`<ProgramYear::ManageObjectiveCompetency
-      @domainTrees={{this.domainTrees}}
-      @programYearCompetencies={{this.programYearCompetencies}}
-      @selected={{this.selected}}
-      @add={{(noop)}}
-      @remove={{(noop)}}
-    />`);
+  @domainTrees={{this.domainTrees}}
+  @programYearCompetencies={{this.programYearCompetencies}}
+  @selected={{this.selected}}
+  @add={{(noop)}}
+  @remove={{(noop)}}
+/>`);
     assert.ok(component.domains[0].selected);
     await component.domains[0].toggle();
     assert.notOk(component.domains[0].selectable);
@@ -183,12 +183,12 @@ module('Integration | Component | program-year/manage-objective-competency', fun
     this.set('selected', this.competencyModel1);
     this.set('programYearCompetencies', [this.domainModel1, this.competencyModel1]);
     await render(hbs`<ProgramYear::ManageObjectiveCompetency
-      @domainTrees={{this.domainTrees}}
-      @programYearCompetencies={{this.programYearCompetencies}}
-      @selected={{this.selected}}
-      @add={{(noop)}}
-      @remove={{(noop)}}
-    />`);
+  @domainTrees={{this.domainTrees}}
+  @programYearCompetencies={{this.programYearCompetencies}}
+  @selected={{this.selected}}
+  @add={{(noop)}}
+  @remove={{(noop)}}
+/>`);
     assert.ok(component.domains[0].competencies[0].selected);
     await component.domains[0].competencies[0].toggle();
     assert.notOk(component.domains[0].competencies[0].selectable);

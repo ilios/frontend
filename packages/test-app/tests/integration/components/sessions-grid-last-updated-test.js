@@ -34,8 +34,7 @@ module('Integration | Component | sessions-grid-last-updated', function (hooks) 
     const sessionModel = await this.owner.lookup('service:store').findRecord('session', session.id);
 
     this.set('session', sessionModel);
-    await render(hbs`<SessionsGridLastUpdated @session={{this.session}} />
-`);
+    await render(hbs`<SessionsGridLastUpdated @session={{this.session}} />`);
     const lastUpdatedText = () => {
       const date = this.intl.formatDate(session.updatedAt, {
         month: '2-digit',

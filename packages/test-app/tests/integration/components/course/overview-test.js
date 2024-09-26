@@ -28,8 +28,7 @@ module('Integration | Component | course overview', function (hooks) {
     });
     const courseModel = await this.store.findRecord('course', course.id);
     this.set('course', courseModel);
-    await render(hbs`<Course::Overview @course={{this.course}} @editable={{true}} />
-`);
+    await render(hbs`<Course::Overview @course={{this.course}} @editable={{true}} />`);
 
     assert.ok(component.externalId.isVisible);
     assert.strictEqual(component.externalId.text, 'Course ID: Click to edit');
@@ -47,8 +46,7 @@ module('Integration | Component | course overview', function (hooks) {
     });
     const courseModel = await this.store.findRecord('course', course.id);
     this.set('course', courseModel);
-    await render(hbs`<Course::Overview @course={{this.course}} @editable={{true}} />
-`);
+    await render(hbs`<Course::Overview @course={{this.course}} @editable={{true}} />`);
 
     assert.ok(component.externalId.isVisible);
     assert.strictEqual(component.externalId.text, 'Course ID: Click to edit');

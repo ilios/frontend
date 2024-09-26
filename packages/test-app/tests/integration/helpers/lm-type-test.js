@@ -9,24 +9,21 @@ module('Integration | Helper | lm-type', function (hooks) {
   test('link', async function (assert) {
     const lm = { link: 'whatever' };
     this.set('lm', lm);
-    await render(hbs`{{lm-type this.lm}}
-`);
+    await render(hbs`{{lm-type this.lm}}`);
     assert.dom(this.element).hasText('link');
   });
 
   test('citation', async function (assert) {
     const lm = { citation: 'whatever' };
     this.set('lm', lm);
-    await render(hbs`{{lm-type this.lm}}
-`);
+    await render(hbs`{{lm-type this.lm}}`);
     assert.dom(this.element).hasText('citation');
   });
 
   test('file', async function (assert) {
     const lm = { filename: 'whatever' };
     this.set('lm', lm);
-    await render(hbs`{{lm-type this.lm}}
-`);
+    await render(hbs`{{lm-type this.lm}}`);
     assert.dom(this.element).hasText('file');
   });
 });

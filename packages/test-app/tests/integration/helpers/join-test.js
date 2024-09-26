@@ -12,8 +12,7 @@ module('Integration | Helper | join', function (hooks) {
   test('It joins the words with given separator', async function (assert) {
     this.set('array', emberArray(['foo', 'bar', 'baz']));
 
-    await render(hbs`{{join ", " this.array}}
-`);
+    await render(hbs`{{join ', ' this.array}}`);
 
     assert.dom().hasText('foo, bar, baz', 'words are joined with a comma and a space');
   });
@@ -22,8 +21,7 @@ module('Integration | Helper | join', function (hooks) {
     let array = emberArray(['foo', 'bar', 'baz']);
     this.set('array', array);
 
-    await render(hbs`{{join ", " this.array}}
-`);
+    await render(hbs`{{join ', ' this.array}}`);
 
     // eslint-disable-next-line ember/no-runloop
     run(() => array.pushObject('quux'));
@@ -35,11 +33,8 @@ module('Integration | Helper | join', function (hooks) {
     this.set('array', null);
     this.set('text', 'this is all that will render');
 
-    await render(hbs`
-      {{this.text}}
-      {{join ", " this.array}}
-
-`);
+    await render(hbs`{{this.text}}
+{{join ', ' this.array}}`);
 
     assert.dom().hasText('this is all that will render', 'no error is thrown');
   });
@@ -48,11 +43,8 @@ module('Integration | Helper | join', function (hooks) {
     this.set('array', undefined);
     this.set('text', 'this is all that will render');
 
-    await render(hbs`
-      {{this.text}}
-      {{join ", " this.array}}
-
-`);
+    await render(hbs`{{this.text}}
+{{join ', ' this.array}}`);
 
     assert.dom().hasText('this is all that will render', 'no error is thrown');
   });

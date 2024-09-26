@@ -9,12 +9,9 @@ module('Integration | Component | copy-button', function (hooks) {
 
   test('it renders', async function (assert) {
     this.set('content', 'template block text');
-    await render(hbs`
-      <CopyButton>
-        {{this.content}}
-      </CopyButton>
-
-`);
+    await render(hbs`<CopyButton>
+  {{this.content}}
+</CopyButton>`);
 
     assert.strictEqual(component.text, 'template block text');
   });
@@ -37,15 +34,9 @@ module('Integration | Component | copy-button', function (hooks) {
     this.set('success', () => {
       assert.ok(true);
     });
-    await render(hbs`
-      <CopyButton
-        @clipboardText={{this.text}}
-        @success={{this.success}}
-      >
-          {{this.content}}
-        </CopyButton>
-
-`);
+    await render(hbs`<CopyButton @clipboardText={{this.text}} @success={{this.success}}>
+  {{this.content}}
+</CopyButton>`);
     await component.click();
     // undo writeText overwrite.
     navigator.clipboard.writeText = writeText;

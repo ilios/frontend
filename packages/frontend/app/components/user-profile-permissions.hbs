@@ -18,10 +18,7 @@
         data-test-select-school
       >
         {{#each (sort-by "title" this.schools) as |school|}}
-          <option
-            value={{school.id}}
-            selected={{eq school.id this.bestSelectedSchool.id}}
-          >
+          <option value={{school.id}} selected={{eq school.id this.bestSelectedSchool.id}}>
             {{school.title}}
           </option>
         {{/each}}
@@ -52,14 +49,14 @@
           {{t "general.director"}}:
         </strong>
         <YesNo @value={{this.isDirectingSchool}} />
-        <br>
+        <br />
       </span>
       <span class="hide-on-collapse" data-test-administrator>
         <strong>
           {{t "general.administrator"}}:
         </strong>
         <YesNo @value={{this.isAdministeringSchool}} />
-        <br>
+        <br />
       </span>
     </p>
 
@@ -67,15 +64,22 @@
       <h4 data-test-title>
         {{#if this.directedPrograms.length}}
           <button
-            aria-label={{if this.programCollapsed (t "general.showRolesInPrograms") (t "general.hideRolesInPrograms")}}
+            aria-label={{if
+              this.programCollapsed
+              (t "general.showRolesInPrograms")
+              (t "general.hideRolesInPrograms")
+            }}
             aria-expanded={{if this.programCollapsed "false" "true"}}
-            class="toggle-button {{if this.programCollapsed "collapsed" "expanded"}}"
+            class="toggle-button {{if this.programCollapsed 'collapsed' 'expanded'}}"
             type="button"
             {{on "click" (set this "programCollapsed" (not this.programCollapsed))}}
           >
             {{t "general.programs"}}
             ({{this.directedPrograms.length}})
-            <FaIcon @icon={{if this.programCollapsed "caret-right" "caret-down"}} class="disabled" />
+            <FaIcon
+              @icon={{if this.programCollapsed "caret-right" "caret-down"}}
+              class="disabled"
+            />
           </button>
         {{else}}
           {{t "general.programs"}}
@@ -99,15 +103,22 @@
       <h4 data-test-title>
         {{#if this.directedProgramYears.length}}
           <button
-            aria-label={{if this.programYearCollapsed (t "general.showRolesInProgramYears") (t "general.hideRolesInProgramYears")}}
+            aria-label={{if
+              this.programYearCollapsed
+              (t "general.showRolesInProgramYears")
+              (t "general.hideRolesInProgramYears")
+            }}
             aria-expanded={{if this.programYearCollapsed "false" "true"}}
-            class="toggle-button {{if this.programYearCollapsed "collapsed" "expanded"}}"
+            class="toggle-button {{if this.programYearCollapsed 'collapsed' 'expanded'}}"
             type="button"
             {{on "click" (set this "programYearCollapsed" (not this.programYearCollapsed))}}
           >
             {{t "general.programYears"}}
             ({{this.directedProgramYears.length}})
-            <FaIcon @icon={{if this.programYearCollapsed "caret-right" "caret-down"}} class="disabled" />
+            <FaIcon
+              @icon={{if this.programYearCollapsed "caret-right" "caret-down"}}
+              class="disabled"
+            />
           </button>
         {{else}}
           {{t "general.programYears"}}
@@ -119,11 +130,7 @@
           {{t "general.director"}}
         </h5>
         <ul data-test-directors>
-          {{#each
-            (sort-by
-              "program.title" "title" this.directedProgramYears
-            ) as |programYear|
-          }}
+          {{#each (sort-by "program.title" "title" this.directedProgramYears) as |programYear|}}
             <li data-test-program>
               {{programYear.program.title}}
               <strong>
@@ -138,9 +145,13 @@
       <h4 data-test-title>
         {{#if this.courseCount}}
           <button
-            aria-label={{if this.courseCollapsed (t "general.showRolesInCourses") (t "general.hideRolesInCourses")}}
+            aria-label={{if
+              this.courseCollapsed
+              (t "general.showRolesInCourses")
+              (t "general.hideRolesInCourses")
+            }}
             aria-expanded={{if this.courseCollapsed "false" "true"}}
-            class="toggle-button {{if this.courseCollapsed "collapsed" "expanded"}}"
+            class="toggle-button {{if this.courseCollapsed 'collapsed' 'expanded'}}"
             type="button"
             {{on "click" (set this "courseCollapsed" (not this.courseCollapsed))}}
           >
@@ -161,12 +172,15 @@
           {{#each (sort-by "title" this.directedCourses) as |course|}}
             <li data-test-course>
               {{#if this.academicYearCrossesCalendarYearBoundaries}}
-                {{course.year}} - {{add course.year 1}}
+                {{course.year}}
+                -
+                {{add course.year 1}}
               {{else}}
                 {{course.year}}
-              {{/if}}            <LinkTo @route="course" @model={{course}}>
-              {{course.title}}
-            </LinkTo>
+              {{/if}}
+              <LinkTo @route="course" @model={{course}}>
+                {{course.title}}
+              </LinkTo>
             </li>
           {{else}}
             <li data-test-none>
@@ -181,7 +195,9 @@
           {{#each (sort-by "title" this.administeredCourses) as |course|}}
             <li data-test-course>
               {{#if this.academicYearCrossesCalendarYearBoundaries}}
-                {{course.year}} - {{add course.year 1}}
+                {{course.year}}
+                -
+                {{add course.year 1}}
               {{else}}
                 {{course.year}}
               {{/if}}
@@ -202,7 +218,9 @@
           {{#each (sort-by "title" this.instructedCourses) as |course|}}
             <li data-test-course>
               {{#if this.academicYearCrossesCalendarYearBoundaries}}
-                {{course.year}} - {{add course.year 1}}
+                {{course.year}}
+                -
+                {{add course.year 1}}
               {{else}}
                 {{course.year}}
               {{/if}}
@@ -223,7 +241,9 @@
           {{#each this.studentAdvisedCourses as |course|}}
             <li data-test-course>
               {{#if this.academicYearCrossesCalendarYearBoundaries}}
-                {{course.year}} - {{add course.year 1}}
+                {{course.year}}
+                -
+                {{add course.year 1}}
               {{else}}
                 {{course.year}}
               {{/if}}
@@ -243,15 +263,22 @@
       <h4 data-test-title>
         {{#if this.sessionCount}}
           <button
-            aria-label={{if this.sessionCollapsed (t "general.showRolesInSessions") (t "general.hideRolesInSessions")}}
+            aria-label={{if
+              this.sessionCollapsed
+              (t "general.showRolesInSessions")
+              (t "general.hideRolesInSessions")
+            }}
             aria-expanded={{if this.sessionCollapsed "false" "true"}}
-            class="toggle-button {{if this.sessionCollapsed "collapsed" "expanded"}}"
+            class="toggle-button {{if this.sessionCollapsed 'collapsed' 'expanded'}}"
             type="button"
             {{on "click" (set this "sessionCollapsed" (not this.sessionCollapsed))}}
           >
             {{t "general.sessions"}}
             ({{this.sessionCount}})
-            <FaIcon @icon={{if this.sessionCollapsed "caret-right" "caret-down"}} class="disabled" />
+            <FaIcon
+              @icon={{if this.sessionCollapsed "caret-right" "caret-down"}}
+              class="disabled"
+            />
           </button>
         {{else}}
           {{t "general.sessions"}}
@@ -264,10 +291,12 @@
         </h5>
         <ul data-test-administrators="">
           {{#each this.administeredSessions as |session|}}
-          {{! template-lint-disable no-bare-strings }}
+            {{! template-lint-disable no-bare-strings }}
             <li data-test-course>
               {{#if this.academicYearCrossesCalendarYearBoundaries}}
-                {{session.course.year}} - {{add session.course.year 1}}
+                {{session.course.year}}
+                -
+                {{add session.course.year 1}}
               {{else}}
                 {{session.course.year}}
               {{/if}}
@@ -288,13 +317,14 @@
         </h5>
         <ul data-test-instructors>
           {{#each
-            (sort-by
-              "course.year:desc" "course.title" "title" this.instructedSessions
-            ) as |session|
+            (sort-by "course.year:desc" "course.title" "title" this.instructedSessions)
+            as |session|
           }}
             <li data-test-course>
               {{#if this.academicYearCrossesCalendarYearBoundaries}}
-                {{session.course.year}} - {{add session.course.year 1}}
+                {{session.course.year}}
+                -
+                {{add session.course.year 1}}
               {{else}}
                 {{session.course.year}}
               {{/if}}
@@ -317,7 +347,9 @@
           {{#each this.studentAdvisedSessions as |session|}}
             <li data-test-course>
               {{#if this.academicYearCrossesCalendarYearBoundaries}}
-                {{session.course.year}} - {{add session.course.year 1}}
+                {{session.course.year}}
+                -
+                {{add session.course.year 1}}
               {{else}}
                 {{session.course.year}}
               {{/if}}

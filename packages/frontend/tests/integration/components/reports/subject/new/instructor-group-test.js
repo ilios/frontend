@@ -23,10 +23,10 @@ module('Integration | Component | reports/subject/new/instructor-group', functio
       this.set('currentId', id);
     });
     await render(hbs`<Reports::Subject::New::InstructorGroup
-      @currentId={{this.currentId}}
-      @changeId={{this.changeId}}
-      @school={{null}}
-     />`);
+  @currentId={{this.currentId}}
+  @changeId={{this.changeId}}
+  @school={{null}}
+/>`);
 
     assert.strictEqual(component.options.length, 5);
     assert.strictEqual(component.options[0].text, 'instructor group 0');
@@ -48,10 +48,10 @@ module('Integration | Component | reports/subject/new/instructor-group', functio
     assert.expect(5);
     this.set('currentId', '1');
     await render(hbs`<Reports::Subject::New::InstructorGroup
-      @currentId={{this.currentId}}
-      @changeId={{this.changeId}}
-      @school={{null}}
-     />`);
+  @currentId={{this.currentId}}
+  @changeId={{this.changeId}}
+  @school={{null}}
+/>`);
     this.set('changeId', (id) => {
       assert.strictEqual(id, '3');
       this.set('currentId', id);
@@ -73,10 +73,10 @@ module('Integration | Component | reports/subject/new/instructor-group', functio
       this.set('currentId', id);
     });
     await render(hbs`<Reports::Subject::New::InstructorGroup
-      @currentId={{this.currentId}}
-      @changeId={{this.changeId}}
-      @school={{this.school}}
-     />`);
+  @currentId={{this.currentId}}
+  @changeId={{this.changeId}}
+  @school={{this.school}}
+/>`);
 
     assert.strictEqual(component.options.length, 3);
     assert.strictEqual(component.options[0].text, 'instructor group 2');
@@ -95,10 +95,10 @@ module('Integration | Component | reports/subject/new/instructor-group', functio
       assert.strictEqual(id, '1');
     });
     await render(hbs`<Reports::Subject::New::InstructorGroup
-      @currentId={{null}}
-      @changeId={{this.changeId}}
-      @school={{this.school}}
-     />`);
+  @currentId={{null}}
+  @changeId={{this.changeId}}
+  @school={{this.school}}
+/>`);
 
     this.set('changeId', (id) => {
       assert.strictEqual(id, '3');

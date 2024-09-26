@@ -1,4 +1,8 @@
-<div class="curriculum-inventory-sequence-block-list" data-test-curriculum-inventory-sequence-block-list ...attributes>
+<div
+  class="curriculum-inventory-sequence-block-list"
+  data-test-curriculum-inventory-sequence-block-list
+  ...attributes
+>
   <div class="header" data-test-header>
     <div class="title" data-test-title>
       {{t "general.sequenceBlocks"}}
@@ -6,10 +10,7 @@
     </div>
     <div class="actions">
       {{#if @canUpdate}}
-        <ExpandCollapseButton
-          @value={{this.editorOn}}
-          @action={{this.toggleEditor}}
-        />
+        <ExpandCollapseButton @value={{this.editorOn}} @action={{this.toggleEditor}} />
       {{/if}}
     </div>
   </div>
@@ -64,7 +65,14 @@
           </tr>
         </thead>
         <tbody>
-          {{#each (if this.isInOrderedSequence (sort-by "orderInSequence" "title" "startDate" "id" @sequenceBlocks) (sort-by "title" "startDate" "id" @sequenceBlocks)) as |sequenceBlock|}}
+          {{#each
+            (if
+              this.isInOrderedSequence
+              (sort-by "orderInSequence" "title" "startDate" "id" @sequenceBlocks)
+              (sort-by "title" "startDate" "id" @sequenceBlocks)
+            )
+            as |sequenceBlock|
+          }}
             <CurriculumInventory::SequenceBlockListItem
               @sequenceBlock={{sequenceBlock}}
               @canUpdate={{@canUpdate}}

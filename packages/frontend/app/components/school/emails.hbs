@@ -1,17 +1,9 @@
-<section
-  class="school-emails"
-  data-test-school-emails
-  ...attributes
->
+<section class="school-emails" data-test-school-emails ...attributes>
   <div class="header">
     <div class="title" data-test-title>{{t "general.emails"}}</div>
     <div class="actions">
       {{#if @canUpdate}}
-        <button
-          type="button"
-          {{on "click" (fn @manage true)}}
-          data-test-manage
-        >
+        <button type="button" {{on "click" (fn @manage true)}} data-test-manage>
           {{t "general.manageEmails"}}
         </button>
       {{/if}}

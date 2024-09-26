@@ -1,8 +1,5 @@
 {{#let (unique-id) as |templateId|}}
-  <div
-    class="bulk-new-users"
-    ...attributes
-  >
+  <div class="bulk-new-users" ...attributes>
     {{#unless this.isLoading}}
       {{#if this.savingUserErrors.length}}
         <div class="saving-user-errors">
@@ -10,9 +7,7 @@
             {{t "general.errorSavingUser"}}
           </p>
           <ul>
-            {{#each
-              (sort-by "lastName" (map-by "userInput" this.savingUserErrors)) as |obj|
-            }}
+            {{#each (sort-by "lastName" (map-by "userInput" this.savingUserErrors)) as |obj|}}
               <li>
                 {{obj.lastName}},
                 {{obj.firstName}}
@@ -28,11 +23,7 @@
             {{t "general.errorSavingAuthentication"}}
           </p>
           <ul>
-            {{#each
-              (sort-by
-                "lastName" (map-by "user" this.savingAuthenticationErrors)
-              ) as |user|
-            }}
+            {{#each (sort-by "lastName" (map-by "user" this.savingAuthenticationErrors)) as |user|}}
               <li>
                 <LinkTo @route="user" @model={{user}}>
                   {{user.lastName}},
@@ -76,7 +67,7 @@
             type="file"
             {{on "change" (pick "target.files" (perform this.updateSelectedFile))}}
             disabled={{this.updateSelectedFile.isRunning}}
-          >
+          />
         </div>
         {{#if this.updateSelectedFile.isRunning}}
           <div class="file-is-loading">
@@ -127,7 +118,7 @@
                         {{on "click" (fn this.toggleUserSelection obj)}}
                         disabled={{not (includes obj this.validUsers)}}
                         aria-label={{t "general.select"}}
-                      >
+                      />
                     </td>
                     <td class={{if (has-error-for obj "firstName") "error"}}>
                       {{obj.firstName}}
@@ -172,10 +163,7 @@
             data-test-schools
           >
             {{#each (sort-by "title" this.schoolsWithPermissionData.value) as |school|}}
-              <option
-                value={{school.id}}
-                selected={{eq school.id this.bestSelectedSchool.id}}
-              >
+              <option value={{school.id}} selected={{eq school.id this.bestSelectedSchool.id}}>
                 {{school.title}}
               </option>
             {{/each}}
@@ -192,10 +180,7 @@
               data-test-cohorts
             >
               {{#each (sort-by "title" this.cohorts) as |cohort|}}
-                <option
-                  value={{cohort.id}}
-                  selected={{eq cohort.id this.bestSelectedCohort.id}}
-                >
+                <option value={{cohort.id}} selected={{eq cohort.id this.bestSelectedCohort.id}}>
                   {{cohort.title}}
                 </option>
               {{/each}}
@@ -206,11 +191,7 @@
           <button
             type="button"
             class="done text"
-            disabled={{or
-              (lt this.selectedUsers.length 1)
-              this.save.isRunning
-              this.load.isRunning
-            }}
+            disabled={{or (lt this.selectedUsers.length 1) this.save.isRunning this.load.isRunning}}
             {{on "click" (perform this.save)}}
           >
             {{#if this.save.isRunning}}

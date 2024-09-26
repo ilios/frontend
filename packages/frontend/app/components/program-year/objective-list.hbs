@@ -1,12 +1,6 @@
-<div
-  class="program-year-objective-list"
-  data-test-program-year-objective-list
->
+<div class="program-year-objective-list" data-test-program-year-objective-list>
   {{#if this.isSorting}}
-    <ObjectiveSortManager
-      @subject={{@programYear}}
-      @close={{set this "isSorting" false}}
-    />
+    <ObjectiveSortManager @subject={{@programYear}} @close={{set this "isSorting" false}} />
   {{/if}}
 
   {{#if (and this.programYearObjectiveCount (not this.isSorting))}}

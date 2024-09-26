@@ -18,7 +18,7 @@ module('Integration | Component | school/emails', function (hooks) {
 
     this.set('school', schoolModel);
 
-    await render(hbs`<School::Emails @school={{this.school}} @manage={{(noop)}}/>`);
+    await render(hbs`<School::Emails @school={{this.school}} @manage={{(noop)}} />`);
 
     assert.strictEqual(component.title, 'Emails');
     assert.notOk(component.canManage);
@@ -42,7 +42,7 @@ module('Integration | Component | school/emails', function (hooks) {
     });
 
     await render(
-      hbs`<School::Emails @school={{this.school}} @manage={{this.manage}} @canUpdate={{true}}/>`,
+      hbs`<School::Emails @school={{this.school}} @manage={{this.manage}} @canUpdate={{true}} />`,
     );
     assert.ok(component.canManage);
     await component.manage();

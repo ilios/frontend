@@ -9,10 +9,7 @@ module('Integration | Component | instructor-groups/new', function (hooks) {
   setupRenderingTest(hooks);
 
   test('it renders', async function (assert) {
-    await render(hbs`<InstructorGroups::New
-      @save={{(noop)}}
-      @cancel={{(noop)}}
-    />`);
+    await render(hbs`<InstructorGroups::New @save={{(noop)}} @cancel={{(noop)}} />`);
     assert.strictEqual(component.title.label, 'Title:');
     assert.strictEqual(component.done.text, 'Done');
     assert.strictEqual(component.cancel.text, 'Cancel');
@@ -24,20 +21,14 @@ module('Integration | Component | instructor-groups/new', function (hooks) {
     this.set('cancel', () => {
       assert.ok(true, 'cancel fired.');
     });
-    await render(hbs`<InstructorGroups::New
-      @save={{(noop)}}
-      @cancel={{this.cancel}}
-    />`);
+    await render(hbs`<InstructorGroups::New @save={{(noop)}} @cancel={{this.cancel}} />`);
     await component.cancel.click();
   });
 
   test('validation fails, no title', async function (assert) {
     assert.expect(3);
 
-    await render(hbs`<InstructorGroups::New
-      @save={{(noop)}}
-      @cancel={{(noop)}}
-    />`);
+    await render(hbs`<InstructorGroups::New @save={{(noop)}} @cancel={{(noop)}} />`);
     assert.strictEqual(component.title.errors.length, 0);
     await component.done.click();
     assert.strictEqual(component.title.errors.length, 1);
@@ -47,10 +38,7 @@ module('Integration | Component | instructor-groups/new', function (hooks) {
   test('validation fails, title too short', async function (assert) {
     assert.expect(3);
 
-    await render(hbs`<InstructorGroups::New
-      @save={{(noop)}}
-      @cancel={{(noop)}}
-    />`);
+    await render(hbs`<InstructorGroups::New @save={{(noop)}} @cancel={{(noop)}} />`);
     assert.strictEqual(component.title.errors.length, 0);
     await component.title.set('Aa');
     await component.done.click();
@@ -64,10 +52,7 @@ module('Integration | Component | instructor-groups/new', function (hooks) {
   test('validation fails, title too long', async function (assert) {
     assert.expect(3);
 
-    await render(hbs`<InstructorGroups::New
-      @save={{(noop)}}
-      @cancel={{(noop)}}
-    />`);
+    await render(hbs`<InstructorGroups::New @save={{(noop)}} @cancel={{(noop)}} />`);
     assert.strictEqual(component.title.errors.length, 0);
     await component.title.set('0123456789'.repeat(21));
     await component.done.click();
@@ -84,10 +69,7 @@ module('Integration | Component | instructor-groups/new', function (hooks) {
       assert.strictEqual(instructorGroup.title, 'Jayden Rules!');
     });
 
-    await render(hbs`<InstructorGroups::New
-      @save={{this.save}}
-      @cancel={{(noop)}}
-    />`);
+    await render(hbs`<InstructorGroups::New @save={{this.save}} @cancel={{(noop)}} />`);
     await component.title.set('Jayden Rules!');
     await component.done.click();
   });

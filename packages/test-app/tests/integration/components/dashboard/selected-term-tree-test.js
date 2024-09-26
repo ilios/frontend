@@ -37,12 +37,11 @@ module('Integration | Component | dashboard/SelectedTermTree', function (hooks) 
     this.set('term', this.rootTerm);
     this.set('selectedTermIds', ['4']);
     await render(hbs`<Dashboard::SelectedTermTree
-      @term={{this.term}}
-      @selectedTermIds={{this.selectedTermIds}}
-      @add={{(noop)}}
-      @remove={{(noop)}}
-    />
-`);
+  @term={{this.term}}
+  @selectedTermIds={{this.selectedTermIds}}
+  @add={{(noop)}}
+  @remove={{(noop)}}
+/>`);
     assert.strictEqual(component.checkboxes.length, 4);
     assert.strictEqual(component.children[0].children.length, 0);
     assert.strictEqual(component.children[1].children.length, 1);
@@ -64,12 +63,11 @@ module('Integration | Component | dashboard/SelectedTermTree', function (hooks) 
       assert.strictEqual(id, '1');
     });
     await render(hbs`<Dashboard::SelectedTermTree
-      @term={{this.term}}
-      @selectedTermIds={{(array)}}
-      @add={{this.add}}
-      @remove={{(noop)}}
-    />
-`);
+  @term={{this.term}}
+  @selectedTermIds={{(array)}}
+  @add={{this.add}}
+  @remove={{(noop)}}
+/>`);
     await component.checkboxes[0].click();
   });
 
@@ -81,12 +79,11 @@ module('Integration | Component | dashboard/SelectedTermTree', function (hooks) 
       assert.strictEqual(id, '1');
     });
     await render(hbs`<Dashboard::SelectedTermTree
-      @term={{this.term}}
-      @selectedTermIds={{this.selectedTermIds}}
-      @add={{(noop)}}
-      @remove={{this.remove}}
-    />
-`);
+  @term={{this.term}}
+  @selectedTermIds={{this.selectedTermIds}}
+  @add={{(noop)}}
+  @remove={{this.remove}}
+/>`);
     await component.checkboxes[0].click();
   });
 });

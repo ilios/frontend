@@ -1,6 +1,6 @@
 {{#let (unique-id) as |template-id|}}
   <div
-    class="pending-updates-summary small-component {{if this.haveUpdates "alert"}}"
+    class="pending-updates-summary small-component {{if this.haveUpdates 'alert'}}"
     data-test-pending-updates-summary
     ...attributes
   >
@@ -16,12 +16,12 @@
       </label>
       <div id="school-selection" class="inline-data">
         {{#if (gt @schools.length 1)}}
-          <select id="schools-{{template-id}}" {{on "change" (pick "target.value" (set this "selectedSchoolId"))}}>
+          <select
+            id="schools-{{template-id}}"
+            {{on "change" (pick "target.value" (set this "selectedSchoolId"))}}
+          >
             {{#each (sort-by "title" @schools) as |school|}}
-              <option
-                value={{school.id}}
-                selected={{eq school.id this.bestSelectedSchool.id}}
-              >
+              <option value={{school.id}} selected={{eq school.id this.bestSelectedSchool.id}}>
                 {{school.title}}
               </option>
             {{/each}}

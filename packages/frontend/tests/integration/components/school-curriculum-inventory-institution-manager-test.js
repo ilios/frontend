@@ -32,10 +32,10 @@ module(
       this.set('canUpdate', true);
       this.set('institution', institutionModel);
       await render(hbs`<SchoolCurriculumInventoryInstitutionManager
-      @institution={{this.institution}}
-      @canUpdate={{this.canUpdate}}
-      @manage={{(noop)}}
-    />`);
+  @institution={{this.institution}}
+  @canUpdate={{this.canUpdate}}
+  @manage={{(noop)}}
+/>`);
 
       assert.strictEqual(component.header.title, 'Curriculum Inventory Institutional Information');
       assert.ok(component.header.hasSaveButton);
@@ -65,10 +65,10 @@ module(
       this.set('school', schoolModel);
       this.set('canUpdate', true);
       await render(hbs`<SchoolCurriculumInventoryInstitutionManager
-      @institution={{this.school.curriculumInventoryInstitution}}
-      @canUpdate={{this.canUpdate}}
-      @manage={{(noop)}}
-    />`);
+  @institution={{this.school.curriculumInventoryInstitution}}
+  @canUpdate={{this.canUpdate}}
+  @manage={{(noop)}}
+/>`);
 
       assert.strictEqual(component.content.name.value, '');
       assert.strictEqual(component.content.aamcCode.value, '');
@@ -94,10 +94,10 @@ module(
         assert.false(isManaging);
       });
       await render(hbs`<SchoolCurriculumInventoryInstitutionManager
-      @institution={{this.school.curriculumInventoryInstitution}}
-      @canUpdate={{this.canUpdate}}
-      @manage={{this.manage}}
-    />`);
+  @institution={{this.school.curriculumInventoryInstitution}}
+  @canUpdate={{this.canUpdate}}
+  @manage={{this.manage}}
+/>`);
       await component.header.cancel();
     });
 
@@ -141,11 +141,11 @@ module(
         assert.strictEqual(institution.belongsTo('school').id(), schoolModel.get('id'));
       });
       await render(hbs`<SchoolCurriculumInventoryInstitutionManager
-      @institution={{this.institution}}
-      @canUpdate={{this.canUpdate}}
-      @manage={{(noop)}}
-      @save={{this.saveInstitution}}
-    />`);
+  @institution={{this.institution}}
+  @canUpdate={{this.canUpdate}}
+  @manage={{(noop)}}
+  @save={{this.saveInstitution}}
+/>`);
 
       component.content.name.change(newName);
       component.content.aamcCode.change(newAamcCode);
@@ -185,10 +185,10 @@ module(
         assert.notOk(institution.belongsTo('school').id());
       });
       await render(hbs`<SchoolCurriculumInventoryInstitutionManager
-      @canUpdate={{this.canUpdate}}
-      @manage={{(noop)}}
-      @save={{this.saveInstitution}}
-    />`);
+  @canUpdate={{this.canUpdate}}
+  @manage={{(noop)}}
+  @save={{this.saveInstitution}}
+/>`);
 
       component.content.name.change(newName);
       component.content.aamcCode.change(newAamcCode);
@@ -208,10 +208,7 @@ module(
       this.set('school', schoolModel);
       this.set('canUpdate', true);
 
-      await render(hbs`<SchoolCurriculumInventoryInstitutionManager
-      @canUpdate={{this.canUpdate}}
-      @manage={{(noop)}}
-    />`);
+      await render(hbs`<SchoolCurriculumInventoryInstitutionManager @canUpdate={{this.canUpdate}} @manage={{(noop)}} />`);
 
       assert.notOk(component.content.name.hasError);
       assert.notOk(component.content.aamcCode.hasError);
@@ -266,10 +263,10 @@ module(
       this.set('canUpdate', false);
 
       await render(hbs`<SchoolCurriculumInventoryInstitutionManager
-      @institution={{this.school.curriculumInventoryInstitution}}
-      @canUpdate={{this.canUpdate}}
-      @manage={{(noop)}}
-    />`);
+  @institution={{this.school.curriculumInventoryInstitution}}
+  @canUpdate={{this.canUpdate}}
+  @manage={{(noop)}}
+/>`);
       assert.notOk(component.header.hasSaveButton);
     });
   },

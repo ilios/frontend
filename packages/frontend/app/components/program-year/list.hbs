@@ -1,8 +1,4 @@
-<div
-  class="program-year-list"
-  data-test-program-year-list
-  ...attributes
->
+<div class="program-year-list" data-test-program-year-list ...attributes>
   <section class="program-years" data-test-years>
     <div class="header">
       <div class="title">
@@ -28,13 +24,12 @@
       {{/if}}
       {{#if this.savedProgramYear}}
         <div class="saved-result">
-          <LinkTo
-            @route="program-year"
-            @models={{array @program this.savedProgramYear}}
-          >
+          <LinkTo @route="program-year" @models={{array @program this.savedProgramYear}}>
             <FaIcon @icon="square-up-right" />
             {{#if this.academicYearCrossesCalendarYearBoundaries}}
-              {{this.savedProgramYear.startYear}} - {{add this.savedProgramYear.startYear 1}}
+              {{this.savedProgramYear.startYear}}
+              -
+              {{add this.savedProgramYear.startYear 1}}
             {{else}}
               {{this.savedProgramYear.startYear}}
             {{/if}}

@@ -1,4 +1,8 @@
-<section class="school-session-attributes-expanded" data-test-school-session-attributes-expanded ...attributes>
+<section
+  class="school-session-attributes-expanded"
+  data-test-school-session-attributes-expanded
+  ...attributes
+>
   <div class="school-session-attributes-expanded-header">
     {{#if @isManaging}}
       <div class="title" data-test-title>
@@ -28,7 +32,7 @@
           <FaIcon @icon="arrow-rotate-left" />
         </button>
       {{else if @canUpdate}}
-        <button type="button"  {{on "click" (fn @manage true)}} data-test-manage>
+        <button type="button" {{on "click" (fn @manage true)}} data-test-manage>
           {{t "general.manageSessionAttributes"}}
         </button>
       {{/if}}

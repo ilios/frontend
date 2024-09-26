@@ -1,10 +1,10 @@
 <div
   id="competency-{{@competency.id}}"
-  class="competency-row grid-row {{if this.isManaging "is-managing"}}"
+  class="competency-row grid-row {{if this.isManaging 'is-managing'}}"
   data-test-school-competencies-list-item
   ...attributes
 >
-  <div class="grid-item {{if this.isDomain "domain" "competency"}}" data-test-title>
+  <div class="grid-item {{if this.isDomain 'domain' 'competency'}}" data-test-title>
     {{@competency.title}}
   </div>
   <SchoolCompetenciesListItemPcrs

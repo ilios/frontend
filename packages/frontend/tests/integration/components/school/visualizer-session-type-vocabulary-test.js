@@ -38,7 +38,10 @@ module('Integration | Component | school/visualizer-session-type-vocabulary', fu
     this.set('sessionType', this.sessionType);
     this.set('vocabulary', this.vocabulary);
     await render(
-      hbs`<School::VisualizerSessionTypeVocabulary @sessionType={{this.sessionType}} @vocabulary={{this.vocabulary}} />`,
+      hbs`<School::VisualizerSessionTypeVocabulary
+  @sessionType={{this.sessionType}}
+  @vocabulary={{this.vocabulary}}
+/>`,
     );
     await waitFor('.loaded');
     await waitFor('.chart');

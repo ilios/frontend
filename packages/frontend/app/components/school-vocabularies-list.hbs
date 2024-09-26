@@ -1,8 +1,4 @@
-<div
-  class="school-vocabularies-list"
-  data-test-school-vocabularies-list
-  ...attributes
->
+<div class="school-vocabularies-list" data-test-school-vocabularies-list ...attributes>
   <div class="school-vocabularies-list-list">
     {{#if this.sortedVocabularies.length}}
       <table>
@@ -22,11 +18,7 @@
         <tbody>
           {{#each this.sortedVocabularies as |vocabulary index|}}
             <tr
-              class={{if
-                (eq this.showRemovalConfirmationFor vocabulary)
-                "confirm-removal"
-                ""
-              }}
+              class={{if (eq this.showRemovalConfirmationFor vocabulary) "confirm-removal" ""}}
               data-test-vocabulary={{index}}
             >
               <td class="text-left text-top" colspan="3" data-test-title>
@@ -51,7 +43,13 @@
                 >
                   <FaIcon @icon="pen-to-square" class="enabled" />
                 </button>
-                {{#if (and @canDelete (eq vocabulary.termCount 0) (not-eq this.showRemovalConfirmationFor vocabulary))}}
+                {{#if
+                  (and
+                    @canDelete
+                    (eq vocabulary.termCount 0)
+                    (not-eq this.showRemovalConfirmationFor vocabulary)
+                  )
+                }}
                   <button
                     class="link-button"
                     type="button"
@@ -71,7 +69,7 @@
                 <td colspan="5">
                   <div class="confirm-message">
                     {{t "general.confirmVocabularyRemoval"}}
-                    <br>
+                    <br />
                     <div class="confirm-buttons">
                       <button
                         type="button"

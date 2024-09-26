@@ -11,13 +11,12 @@ module('Integration | Component | course/manage-objective-parents-item', functio
     this.set('allowMultipleParents', true);
     this.set('title', '<p>Country &amp; Western</p>');
     await render(hbs`<Course::ManageObjectiveParentsItem
-      @title={{this.title}}
-      @isSelected={{this.isSelected}}
-      @allowMultipleParents={{this.allowMultipleParents}}
-      @add={{(noop)}}
-      @remove={{(noop)}}
-    />
-`);
+  @title={{this.title}}
+  @isSelected={{this.isSelected}}
+  @allowMultipleParents={{this.allowMultipleParents}}
+  @add={{(noop)}}
+  @remove={{(noop)}}
+/>`);
 
     assert.dom('input[type="checkbox"]').exists();
     assert.dom('input').isChecked();

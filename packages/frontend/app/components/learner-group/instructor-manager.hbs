@@ -10,18 +10,29 @@
         {{#if this.isManaging}}
           {{t "general.manageDefaultInstructors"}}
         {{else}}
-          {{t "general.defaultInstructors"}} ({{@learnerGroup.allInstructors.length}})
+          {{t "general.defaultInstructors"}}
+          ({{@learnerGroup.allInstructors.length}})
         {{/if}}
       </div>
       {{#if this.isManaging}}
         <div class="actions">
-          <button type="button" class="bigadd" {{on "click" (perform this.saveChanges)}} data-test-save>
+          <button
+            type="button"
+            class="bigadd"
+            {{on "click" (perform this.saveChanges)}}
+            data-test-save
+          >
             <FaIcon
               @icon={{if this.saveChanges.isRunning "spinner" "check"}}
               @spin={{if this.saveChanges.isRunning true false}}
             />
           </button>
-          <button type="button" class="bigcancel" {{ on "click" (set this "isManaging" false)}} data-test-cancel>
+          <button
+            type="button"
+            class="bigcancel"
+            {{on "click" (set this "isManaging" false)}}
+            data-test-cancel
+          >
             <FaIcon @icon="arrow-rotate-left" />
           </button>
         </div>
@@ -72,7 +83,7 @@
                   {{instructorGroup.title}}
                   <FaIcon @icon="xmark" class="remove" />
                 </button>
-                <br>
+                <br />
                 <LearnerGroup::InstructorGroupMembersList @instructorGroup={{instructorGroup}} />
               </div>
             {{/each}}

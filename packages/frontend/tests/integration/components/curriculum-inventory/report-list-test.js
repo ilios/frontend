@@ -186,7 +186,7 @@ module('Integration | Component | curriculum-inventory/report-list', function (h
   });
 
   test('empty list', async function (assert) {
-    await render(hbs`<CurriculumInventory::ReportList @reports={{(array)}} @remove={{(noop)}}/>`);
+    await render(hbs`<CurriculumInventory::ReportList @reports={{(array)}} @remove={{(noop)}} />`);
     assert.strictEqual(component.emptyList.text, 'None');
   });
 
@@ -257,11 +257,11 @@ module('Integration | Component | curriculum-inventory/report-list', function (h
       count++;
     });
     await render(hbs`<CurriculumInventory::ReportList
-      @reports={{this.reports}}
-      @setSortBy={{this.setSortBy}}
-      @sortBy={{this.sortBy}}
-      @remove={{(noop)}}
-    />`);
+  @reports={{this.reports}}
+  @setSortBy={{this.setSortBy}}
+  @sortBy={{this.sortBy}}
+  @remove={{(noop)}}
+/>`);
     await component.headers.clickOnName();
     await component.headers.clickOnName();
     await component.headers.clickOnYear();

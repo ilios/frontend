@@ -1,9 +1,5 @@
 {{#let (unique-id) as |templateId|}}
-  <div
-    class="courses-new"
-    {{did-insert (perform this.load)}}
-    data-test-courses-new
-  >
+  <div class="courses-new" {{did-insert (perform this.load)}} data-test-courses-new>
     {{#unless this.load.isRunning}}
       <h4>
         {{t "general.newCourse"}}
@@ -25,14 +21,18 @@
             {{on "input" (pick "target.value" (set this "title"))}}
             {{on "keyup" (fn this.addErrorDisplayFor "title")}}
             data-test-title
-          >
+          />
           <ValidationError @errors={{get-errors-for this.title}} />
         </div>
         <div class="item">
           <label for="year-{{templateId}}">
             {{t "general.academicYear"}}:
           </label>
-          <select id="year-{{templateId}}" data-test-year {{on "change" (pick "target.value" this.setYear)}}>
+          <select
+            id="year-{{templateId}}"
+            data-test-year
+            {{on "change" (pick "target.value" this.setYear)}}
+          >
             <option disabled="" selected={{is-empty this.selectedYear}} value="">
               {{t "general.selectAcademicYear"}}
             </option>

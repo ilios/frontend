@@ -44,10 +44,10 @@ module('Integration | Component | my profile', function (hooks) {
 
     this.set('user', userModel);
     await render(hbs`<MyProfile
-      @user={{this.user}}
-      @toggleShowCreateNewToken={{(noop)}}
-      @toggleShowInvalidateTokens={{(noop)}}
-    />`);
+  @user={{this.user}}
+  @toggleShowCreateNewToken={{(noop)}}
+  @toggleShowInvalidateTokens={{(noop)}}
+/>`);
 
     assert.strictEqual(component.name, 'test name');
     assert.ok(component.userIsStudent);
@@ -68,10 +68,10 @@ module('Integration | Component | my profile', function (hooks) {
 
     this.set('user', userModel);
     await render(hbs`<MyProfile
-      @user={{this.user}}
-      @toggleShowCreateNewToken={{(noop)}}
-      @toggleShowInvalidateTokens={{(noop)}}
-    />`);
+  @user={{this.user}}
+  @toggleShowCreateNewToken={{(noop)}}
+  @toggleShowInvalidateTokens={{(noop)}}
+/>`);
 
     assert.notOk(component.userIsStudent);
     assert.strictEqual(component.primaryCohort, 'Unassigned');
@@ -101,11 +101,11 @@ module('Integration | Component | my profile', function (hooks) {
 
     this.set('user', userModel);
     await render(hbs`<MyProfile
-      @user={{this.user}}
-      @showCreateNewToken={{true}}
-      @toggleShowCreateNewToken={{(noop)}}
-      @toggleShowInvalidateTokens={{(noop)}}
-    />`);
+  @user={{this.user}}
+  @showCreateNewToken={{true}}
+  @toggleShowCreateNewToken={{(noop)}}
+  @toggleShowInvalidateTokens={{(noop)}}
+/>`);
 
     await component.newTokenForm.submit();
     assert.strictEqual(component.newTokenResult.value, 'new token');
@@ -129,10 +129,10 @@ module('Integration | Component | my profile', function (hooks) {
       assert.ok(true);
     });
     await render(hbs`<MyProfile
-      @user={{this.user}}
-      @showCreateNewToken={{true}}
-      @toggleShowCreateNewToken={{this.toggle}}
-    />`);
+  @user={{this.user}}
+  @showCreateNewToken={{true}}
+  @toggleShowCreateNewToken={{this.toggle}}
+/>`);
 
     await component.newTokenForm.submit();
     assert.strictEqual(component.newTokenResult.value, 'new token');
@@ -152,10 +152,10 @@ module('Integration | Component | my profile', function (hooks) {
       assert.ok(true);
     });
     await render(hbs`<MyProfile
-      @user={{this.user}}
-      @toggleShowCreateNewToken={{this.toggle}}
-      @toggleShowInvalidateTokens={{(noop)}}
-    />`);
+  @user={{this.user}}
+  @toggleShowCreateNewToken={{this.toggle}}
+  @toggleShowInvalidateTokens={{(noop)}}
+/>`);
 
     await component.showCreateNewTokenForm();
   });
@@ -182,11 +182,11 @@ module('Integration | Component | my profile', function (hooks) {
 
     this.set('user', userModel);
     await render(hbs`<MyProfile
-      @user={{this.user}}
-      @showCreateNewToken={{true}}
-      @toggleShowCreateNewToken={{(noop)}}
-      @toggleShowInvalidateTokens={{(noop)}}
-    />`);
+  @user={{this.user}}
+  @showCreateNewToken={{true}}
+  @toggleShowCreateNewToken={{(noop)}}
+  @toggleShowInvalidateTokens={{(noop)}}
+/>`);
 
     const dt = DateTime.fromObject({ hours: 8 }).plus({ days: 41 }).toJSDate();
     await component.newTokenForm.setDate(dt);
@@ -204,10 +204,10 @@ module('Integration | Component | my profile', function (hooks) {
       assert.ok(true);
     });
     await render(hbs`<MyProfile
-      @user={{this.user}}
-      @toggleShowCreateNewToken={{(noop)}}
-      @toggleShowInvalidateTokens={{this.toggle}}
-    />`);
+  @user={{this.user}}
+  @toggleShowCreateNewToken={{(noop)}}
+  @toggleShowInvalidateTokens={{this.toggle}}
+/>`);
 
     await component.showInvalidateTokensForm();
   });
@@ -237,11 +237,11 @@ module('Integration | Component | my profile', function (hooks) {
 
     this.set('user', userModel);
     await render(hbs`<MyProfile
-      @user={{this.user}}
-      @showInvalidateTokens={{true}}
-      @toggleShowCreateNewToken={{(noop)}}
-      @toggleShowInvalidateTokens={{(noop)}}
-    />`);
+  @user={{this.user}}
+  @showInvalidateTokens={{true}}
+  @toggleShowCreateNewToken={{(noop)}}
+  @toggleShowInvalidateTokens={{(noop)}}
+/>`);
 
     await component.invalidateTokensForm.submit();
   });

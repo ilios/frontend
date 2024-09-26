@@ -16,10 +16,10 @@ module('Integration | Component | reports/subject/new/learning-material', functi
   test('it renders', async function (assert) {
     assert.expect(7);
     await render(hbs`<Reports::Subject::New::LearningMaterial
-      @currentId={{null}}
-      @changeId={{(noop)}}
-      @school={{null}}
-     />`);
+  @currentId={{null}}
+  @changeId={{(noop)}}
+  @school={{null}}
+/>`);
 
     await component.input('material');
     assert.strictEqual(component.results.length, 5);
@@ -31,11 +31,7 @@ module('Integration | Component | reports/subject/new/learning-material', functi
 
   test('it renders with selected material', async function (assert) {
     assert.expect(2);
-    await render(hbs`<Reports::Subject::New::LearningMaterial
-      @currentId={{2}}
-      @changeId={{(noop)}}
-      @school={{null}}
-     />`);
+    await render(hbs`<Reports::Subject::New::LearningMaterial @currentId={{2}} @changeId={{(noop)}} @school={{null}} />`);
     assert.ok(component.hasSelectedMaterial);
     assert.strictEqual(component.selectedMaterial, 'learning material 1');
   });
@@ -47,10 +43,10 @@ module('Integration | Component | reports/subject/new/learning-material', functi
       this.set('currentId', id);
     });
     await render(hbs`<Reports::Subject::New::LearningMaterial
-      @currentId={{this.currentId}}
-      @changeId={{this.changeId}}
-      @school={{null}}
-     />`);
+  @currentId={{this.currentId}}
+  @changeId={{this.changeId}}
+  @school={{null}}
+/>`);
     assert.notOk(component.hasSelectedMaterial);
     await component.input('material');
     await component.results[2].click();

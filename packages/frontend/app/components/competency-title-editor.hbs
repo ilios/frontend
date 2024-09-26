@@ -1,7 +1,4 @@
-<span
-  class="competency-title-editor"
-  data-test-competency-title-editor
->
+<span class="competency-title-editor" data-test-competency-title-editor>
   {{#if @canUpdate}}
     <EditableField
       @value={{this.title}}
@@ -9,7 +6,8 @@
       @close={{this.revert}}
       @saveOnEnter={{true}}
       data-test-title
-      @closeOnEscape={{true}} as |isSaving|
+      @closeOnEscape={{true}}
+      as |isSaving|
     >
       <input
         type="text"
@@ -18,7 +16,7 @@
         aria-label={{t "general.title"}}
         {{on "input" (pick "target.value" (set this "title"))}}
         {{on "keyup" (fn this.addErrorDisplayFor "title")}}
-      >
+      />
     </EditableField>
     <ValidationError @errors={{get-errors-for this.title}} />
   {{else}}

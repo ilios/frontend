@@ -26,10 +26,7 @@
       @setIsManaging={{@setManagePyCompetencies}}
     />
   {{else}}
-    <CollapsedCompetencies
-      @subject={{@programYear}}
-      @expand={{fn @setPyCompetencyDetails true}}
-    />
+    <CollapsedCompetencies @subject={{@programYear}} @expand={{fn @setPyCompetencyDetails true}} />
   {{/if}}
   {{#if (or (eq @programYear.programYearObjectives.length 0) @pyObjectiveDetails)}}
     <ProgramYear::Objectives
@@ -52,10 +49,7 @@
       @expand={{fn @setPyTaxonomyDetails true}}
     />
   {{else}}
-    <CollapsedTaxonomies
-      @subject={{@programYear}}
-      @expand={{fn @setPyTaxonomyDetails true}}
-    />
+    <CollapsedTaxonomies @subject={{@programYear}} @expand={{fn @setPyTaxonomyDetails true}} />
   {{/if}}
   <ProgramYear::Courses @programYear={{@programYear}} />
 </div>

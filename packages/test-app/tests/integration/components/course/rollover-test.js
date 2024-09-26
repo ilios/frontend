@@ -92,11 +92,7 @@ module('Integration | Component | course/rollover', function (hooks) {
     this.set('visit', (newCourse) => {
       assert.strictEqual(parseInt(newCourse.id, 10), 14);
     });
-    await render(hbs`<Course::Rollover
-      @course={{this.course}}
-      @visit={{this.visit}}
-    />
-`);
+    await render(hbs`<Course::Rollover @course={{this.course}} @visit={{this.visit}} />`);
     await click('.done');
   });
 
@@ -123,11 +119,7 @@ module('Integration | Component | course/rollover', function (hooks) {
         }),
       );
     });
-    await render(hbs`<Course::Rollover
-      @course={{this.course}}
-      @visit={{(noop)}}
-    />
-`);
+    await render(hbs`<Course::Rollover @course={{this.course}} @visit={{(noop)}} />`);
     const title = '.title';
     const input = `${title} input`;
     await fillIn(input, newTitle);
@@ -163,11 +155,7 @@ module('Integration | Component | course/rollover', function (hooks) {
     this.set('visit', (newCourse) => {
       assert.strictEqual(parseInt(newCourse.id, 10), 14);
     });
-    await render(hbs`<Course::Rollover
-      @course={{this.course}}
-      @visit={{this.visit}}
-    />
-`);
+    await render(hbs`<Course::Rollover @course={{this.course}} @visit={{this.visit}} />`);
     await fillIn('[data-test-year]', selectedYear);
 
     await click('.done');
@@ -197,11 +185,7 @@ module('Integration | Component | course/rollover', function (hooks) {
 
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('course', courseModel);
-    await render(hbs`<Course::Rollover
-      @course={{this.course}}
-      @visit={{(noop)}}
-    />
-`);
+    await render(hbs`<Course::Rollover @course={{this.course}} @visit={{(noop)}} />`);
 
     let options = findAll('select:nth-of-type(1) option');
     assert.ok(options[0].disabled);
@@ -238,11 +222,7 @@ module('Integration | Component | course/rollover', function (hooks) {
     });
     const courseModel = await this.owner.lookup('service:store').findRecord('course', 2);
     this.set('course', courseModel);
-    await render(hbs`<Course::Rollover
-      @course={{this.course}}
-      @visit={{(noop)}}
-    />
-`);
+    await render(hbs`<Course::Rollover @course={{this.course}} @visit={{(noop)}} />`);
     assert.dom('[data-test-year] option:disabled').exists({ count: 1 });
     await fillIn('[data-test-title]', 'new title');
     assert.dom('[data-test-year] option:disabled').doesNotExist();
@@ -275,11 +255,7 @@ module('Integration | Component | course/rollover', function (hooks) {
         }),
       );
     });
-    await render(hbs`<Course::Rollover
-        @course={{this.course}}
-        @visit={{(noop)}}
-      />
-    `);
+    await render(hbs`<Course::Rollover @course={{this.course}} @visit={{(noop)}} />`);
     const advancedOptions = '.advanced-options';
     const startDate = `${advancedOptions} input:nth-of-type(1)`;
     await fillIn('[data-test-year]', courseStartDate.year);
@@ -347,11 +323,7 @@ module('Integration | Component | course/rollover', function (hooks) {
       );
     });
 
-    await render(hbs`<Course::Rollover
-      @course={{this.course}}
-      @visit={{(noop)}}
-    />
-`);
+    await render(hbs`<Course::Rollover @course={{this.course}} @visit={{(noop)}} />`);
     const advancedOptions = '.advanced-options';
     const yearSelect = '.year-select select';
     const startDate = `${advancedOptions} input:nth-of-type(1)`;
@@ -400,11 +372,7 @@ module('Integration | Component | course/rollover', function (hooks) {
     });
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('course', courseModel);
-    await render(hbs`<Course::Rollover
-      @course={{this.course}}
-      @visit={{(noop)}}
-    />
-`);
+    await render(hbs`<Course::Rollover @course={{this.course}} @visit={{(noop)}} />`);
     const advancedOptions = '.advanced-options';
     const yearSelect = '.year-select select';
     const startDate = `${advancedOptions} input:nth-of-type(1)`;
@@ -450,11 +418,7 @@ module('Integration | Component | course/rollover', function (hooks) {
     });
 
     this.set('course', course);
-    await render(hbs`<Course::Rollover
-      @course={{this.course}}
-      @visit={{(noop)}}
-    />
-`);
+    await render(hbs`<Course::Rollover @course={{this.course}} @visit={{(noop)}} />`);
     const advancedOptions = '.advanced-options';
     const offerings = `${advancedOptions} [data-test-skip-offerings]`;
 
@@ -472,8 +436,7 @@ module('Integration | Component | course/rollover', function (hooks) {
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('course', courseModel);
 
-    await render(hbs`<Course::Rollover @course={{this.course}} />
-`);
+    await render(hbs`<Course::Rollover @course={{this.course}} />`);
     assert.dom('.validation-error-message').doesNotExist();
   });
 
@@ -485,8 +448,7 @@ module('Integration | Component | course/rollover', function (hooks) {
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('course', courseModel);
 
-    await render(hbs`<Course::Rollover @course={{this.course}} />
-`);
+    await render(hbs`<Course::Rollover @course={{this.course}} />`);
 
     const title = '.title';
     const input = `${title} input`;
@@ -541,11 +503,7 @@ module('Integration | Component | course/rollover', function (hooks) {
     this.owner.register('service:currentUser', currentUserMock);
 
     this.set('course', course);
-    await render(hbs`<Course::Rollover
-      @course={{this.course}}
-      @visit={{(noop)}}
-    />
-`);
+    await render(hbs`<Course::Rollover @course={{this.course}} @visit={{(noop)}} />`);
     const advancedOptions = '.advanced-options';
     const firstCohort = `${advancedOptions} .selectable-cohorts li:nth-of-type(1) button`;
 

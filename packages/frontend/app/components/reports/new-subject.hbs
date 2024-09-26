@@ -1,9 +1,5 @@
 {{#let (unique-id) as |templateId|}}
-  <div
-    class="reports-new-subject"
-    data-test-reports-new-subject
-    ...attributes
-  >
+  <div class="reports-new-subject" data-test-reports-new-subject ...attributes>
     <div class="title" data-test-component-title>
       {{t "general.newReport"}}
     </div>
@@ -20,7 +16,7 @@
             {{on "focusout" (fn this.addErrorDisplayFor "title")}}
             {{on "input" (pick "target.value" (set this "selectedTitle"))}}
             {{on "keyup" (fn this.addErrorDisplayFor "title")}}
-          >
+          />
           <ValidationError @errors={{get-errors-for this.title}} />
         </div>
       </p>
@@ -28,18 +24,12 @@
         <label for="for-{{templateId}}">
           {{t "general.for"}}
         </label>
-        <select
-          id="for-{{templateId}}"
-          {{on "change" (pick "target.value" this.changeSchool)}}
-        >
+        <select id="for-{{templateId}}" {{on "change" (pick "target.value" this.changeSchool)}}>
           <option value="null" selected={{eq null this.currentSchool}}>
             {{t "general.allSchools"}}
           </option>
           {{#each (sort-by "title" this.allSchools) as |school|}}
-            <option
-              value={{school.id}}
-              selected={{eq school.id this.currentSchool.id}}
-            >
+            <option value={{school.id}} selected={{eq school.id this.currentSchool.id}}>
               {{school.title}}
             </option>
           {{/each}}
@@ -49,10 +39,7 @@
         <label for="all-{{templateId}}">
           {{t "general.all"}}
         </label>
-        <select
-          id="all-{{templateId}}"
-          {{on "change" (pick "target.value" this.changeSubject)}}
-        >
+        <select id="all-{{templateId}}" {{on "change" (pick "target.value" this.changeSubject)}}>
           {{#each this.subjectList as |o|}}
             <option value={{o.value}} selected={{eq o.value this.subject}}>
               {{o.label}}
@@ -73,10 +60,7 @@
               {{t "general.anything"}}
             </option>
             {{#each (sort-by "label" this.prepositionalObjectList) as |o|}}
-              <option
-                value={{o.value}}
-                selected={{eq o.value this.prepositionalObject}}
-              >
+              <option value={{o.value}} selected={{eq o.value this.prepositionalObject}}>
                 {{o.label}}
               </option>
             {{/each}}
@@ -90,7 +74,10 @@
         @currentId={{this.prepositionalObjectId}}
         @changeId={{set this "selectedPrepositionalObjectId"}}
       />
-      <ValidationError @errors={{get-errors-for this.prepositionalObjectId}} data-test-validation-error />
+      <ValidationError
+        @errors={{get-errors-for this.prepositionalObjectId}}
+        data-test-validation-error
+      />
       <div class="input-buttons">
         <button
           type="button"

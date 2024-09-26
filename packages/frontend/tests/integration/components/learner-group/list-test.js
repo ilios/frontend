@@ -38,11 +38,7 @@ module('Integration | Component | learner-group/list', function (hooks) {
       await store.findRecord('learner-group', 3),
     ];
     this.set('learnerGroups', learnerGroupModels);
-    await render(hbs`<LearnerGroup::List
-      @learnerGroups={{this.learnerGroups}}
-      @sortBy="title"
-      @setSortBy={{(noop)}}
-    />`);
+    await render(hbs`<LearnerGroup::List @learnerGroups={{this.learnerGroups}} @sortBy='title' @setSortBy={{(noop)}} />`);
 
     assert.strictEqual(component.items.length, 3);
     assert.strictEqual(component.items[0].title, 'learner group 0');
@@ -82,10 +78,10 @@ module('Integration | Component | learner-group/list', function (hooks) {
     this.set('learnerGroups', learnerGroupModels);
     this.set('sortBy', 'title');
     await render(hbs`<LearnerGroup::List
-      @learnerGroups={{this.learnerGroups}}
-      @sortBy={{this.sortBy}}
-      @setSortBy={{set this "sortBy"}}
-    />`);
+  @learnerGroups={{this.learnerGroups}}
+  @sortBy={{this.sortBy}}
+  @setSortBy={{set this 'sortBy'}}
+/>`);
 
     assert.strictEqual(component.items.length, 3);
     assert.ok(component.header.title.isSortedAscending);
@@ -146,11 +142,7 @@ module('Integration | Component | learner-group/list', function (hooks) {
     this.server.createList('learner-group', 3, { cohort: this.cohort });
     const learnerGroupModels = await this.owner.lookup('service:store').findAll('learner-group');
     this.set('learnerGroups', learnerGroupModels);
-    await render(hbs`<LearnerGroup::List
-      @learnerGroups={{this.learnerGroups}}
-      @sortBy="title"
-      @setSortBy={{(noop)}}
-    />`);
+    await render(hbs`<LearnerGroup::List @learnerGroups={{this.learnerGroups}} @sortBy='title' @setSortBy={{(noop)}} />`);
     assert.strictEqual(this.server.db.learnerGroups.length, 3);
     assert.strictEqual(component.items.length, 3);
     assert.strictEqual(component.items[0].title, 'learner group 0');
@@ -165,11 +157,7 @@ module('Integration | Component | learner-group/list', function (hooks) {
     this.server.createList('learner-group', 3, { cohort: this.cohort });
     const learnerGroupModels = await this.owner.lookup('service:store').findAll('learner-group');
     this.set('learnerGroups', learnerGroupModels);
-    await render(hbs`<LearnerGroup::List
-      @learnerGroups={{this.learnerGroups}}
-      @sortBy="title"
-      @setSortBy={{(noop)}}
-    />`);
+    await render(hbs`<LearnerGroup::List @learnerGroups={{this.learnerGroups}} @sortBy='title' @setSortBy={{(noop)}} />`);
     assert.strictEqual(this.server.db.learnerGroups.length, 3);
     assert.strictEqual(component.items.length, 3);
     assert.strictEqual(component.items[0].title, 'learner group 0');
@@ -190,12 +178,12 @@ module('Integration | Component | learner-group/list', function (hooks) {
       assert.strictEqual(parseInt(group.id, 10), 1);
     });
     await render(hbs`<LearnerGroup::List
-      @learnerGroups={{this.learnerGroups}}
-      @canCopyWithLearners={{true}}
-      @copyGroup={{this.copyGroup}}
-      @sortBy="title"
-      @setSortBy={{(noop)}}
-    />`);
+  @learnerGroups={{this.learnerGroups}}
+  @canCopyWithLearners={{true}}
+  @copyGroup={{this.copyGroup}}
+  @sortBy='title'
+  @setSortBy={{(noop)}}
+/>`);
     await component.items[0].copy();
     assert.ok(component.confirmCopy.canCopyWithLearners);
     await component.confirmCopy.copyWithLearners();
@@ -211,12 +199,12 @@ module('Integration | Component | learner-group/list', function (hooks) {
       assert.strictEqual(parseInt(group.id, 10), 1);
     });
     await render(hbs`<LearnerGroup::List
-      @learnerGroups={{this.learnerGroups}}
-      @canCopyWithLearners={{true}}
-      @copyGroup={{this.copyGroup}}
-      @sortBy="title"
-      @setSortBy={{(noop)}}
-    />`);
+  @learnerGroups={{this.learnerGroups}}
+  @canCopyWithLearners={{true}}
+  @copyGroup={{this.copyGroup}}
+  @sortBy='title'
+  @setSortBy={{(noop)}}
+/>`);
     await component.items[0].copy();
     assert.ok(component.confirmCopy.canCopyWithLearners);
     await component.confirmCopy.copyWithoutLearners();
@@ -232,12 +220,12 @@ module('Integration | Component | learner-group/list', function (hooks) {
       assert.strictEqual(parseInt(group.id, 10), 1);
     });
     await render(hbs`<LearnerGroup::List
-      @learnerGroups={{this.learnerGroups}}
-      @canCopyWithLearners={{false}}
-      @copyGroup={{this.copyGroup}}
-      @sortBy="title"
-      @setSortBy={{(noop)}}
-    />`);
+  @learnerGroups={{this.learnerGroups}}
+  @canCopyWithLearners={{false}}
+  @copyGroup={{this.copyGroup}}
+  @sortBy='title'
+  @setSortBy={{(noop)}}
+/>`);
     await component.items[0].copy();
     assert.notOk(component.confirmCopy.canCopyWithLearners);
     await component.confirmCopy.copyWithoutLearners();
@@ -252,12 +240,12 @@ module('Integration | Component | learner-group/list', function (hooks) {
       assert.ok(false);
     });
     await render(hbs`<LearnerGroup::List
-      @learnerGroups={{this.learnerGroups}}
-      @canCopyWithLearners={{true}}
-      @copyGroup={{this.copyGroup}}
-      @sortBy="title"
-      @setSortBy={{(noop)}}
-    />`);
+  @learnerGroups={{this.learnerGroups}}
+  @canCopyWithLearners={{true}}
+  @copyGroup={{this.copyGroup}}
+  @sortBy='title'
+  @setSortBy={{(noop)}}
+/>`);
     await component.items[0].copy();
     assert.ok(component.confirmCopy.isPresent);
     assert.ok(component.confirmCopy.canCopyWithLearners);
@@ -274,12 +262,12 @@ module('Integration | Component | learner-group/list', function (hooks) {
       assert.ok(false);
     });
     await render(hbs`<LearnerGroup::List
-      @learnerGroups={{this.learnerGroups}}
-      @canCopyWithLearners={{false}}
-      @copyGroup={{this.copyGroup}}
-      @sortBy="title"
-      @setSortBy={{(noop)}}
-    />`);
+  @learnerGroups={{this.learnerGroups}}
+  @canCopyWithLearners={{false}}
+  @copyGroup={{this.copyGroup}}
+  @sortBy='title'
+  @setSortBy={{(noop)}}
+/>`);
     await component.items[0].copy();
     assert.ok(component.confirmCopy.isPresent);
     assert.notOk(component.confirmCopy.canCopyWithLearners);

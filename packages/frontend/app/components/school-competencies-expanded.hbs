@@ -1,8 +1,4 @@
-<section
-  class="school-competencies-expanded"
-  data-test-school-competencies-expanded
-  ...attributes
->
+<section class="school-competencies-expanded" data-test-school-competencies-expanded ...attributes>
   <div class="school-competencies-expanded-header" data-test-header>
     {{#if @isManaging}}
       <div class="title" data-test-title>
@@ -40,7 +36,11 @@
           <FaIcon @icon="arrow-rotate-left" />
         </button>
       {{else if (or @canUpdate @canDelete @canCreate)}}
-        <button type="button" {{on "click" (fn @setSchoolManageCompetencies true)}} data-test-manage>
+        <button
+          type="button"
+          {{on "click" (fn @setSchoolManageCompetencies true)}}
+          data-test-manage
+        >
           {{t "general.manageCompetencies"}}
         </button>
       {{/if}}

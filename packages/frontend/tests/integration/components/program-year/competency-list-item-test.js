@@ -29,10 +29,10 @@ module('Integration | Component | program-year/competency-list-item', function (
     this.set('competencies', [this.domain, this.competency1, this.competency2]);
 
     await render(hbs`<ProgramYear::CompetencyListItem
-      @domain={{this.domain}}
-      @selectedCompetencies={{this.selectedCompetencies}}
-      @competencies={{this.competencies}}
-    />`);
+  @domain={{this.domain}}
+  @selectedCompetencies={{this.selectedCompetencies}}
+  @competencies={{this.competencies}}
+/>`);
     assert.strictEqual(component.title, 'domain');
     assert.ok(component.isActive);
     assert.strictEqual(component.competencies.length, 2);
@@ -44,10 +44,10 @@ module('Integration | Component | program-year/competency-list-item', function (
     this.set('domain', this.domain);
     this.set('competencies', [this.domain, this.competency1, this.competency2]);
     await render(hbs`<ProgramYear::CompetencyListItem
-      @domain={{this.domain}}
-      @selectedCompetencies={{(array)}}
-      @competencies={{this.competencies}}
-    />`);
+  @domain={{this.domain}}
+  @selectedCompetencies={{(array)}}
+  @competencies={{this.competencies}}
+/>`);
     assert.strictEqual(component.title, 'domain');
     assert.notOk(component.isActive);
     assert.strictEqual(component.competencies.length, 0);

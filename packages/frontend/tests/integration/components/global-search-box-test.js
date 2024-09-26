@@ -42,7 +42,7 @@ module('Integration | Component | global search box', function (hooks) {
   });
 
   test('displays initial passed down value', async function (assert) {
-    await render(hbs`<GlobalSearchBox @query="course" />`);
+    await render(hbs`<GlobalSearchBox @query='course' />`);
     assert.strictEqual(component.inputValue, 'course');
   });
 

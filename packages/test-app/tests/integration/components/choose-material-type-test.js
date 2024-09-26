@@ -10,11 +10,7 @@ module('Integration | Component | choose-material-type', function (hooks) {
 
   test('it renders and is accessible', async function (assert) {
     this.set('nothing', () => {});
-    await render(hbs`<ChooseMaterialType
-      @choose={{(noop)}}
-      @types={{array "file" "link" "citation"}}
-    />
-`);
+    await render(hbs`<ChooseMaterialType @choose={{(noop)}} @types={{array 'file' 'link' 'citation'}} />`);
 
     await a11yAudit(this.element);
     assert.strictEqual(component.text, 'Add');
@@ -26,11 +22,7 @@ module('Integration | Component | choose-material-type', function (hooks) {
 
   test('click opens menu', async function (assert) {
     this.set('nothing', () => {});
-    await render(hbs`<ChooseMaterialType
-      @choose={{(noop)}}
-      @types={{array "file" "link" "citation"}}
-    />
-`);
+    await render(hbs`<ChooseMaterialType @choose={{(noop)}} @types={{array 'file' 'link' 'citation'}} />`);
 
     assert.strictEqual(component.types.length, 0);
     await component.toggle.click();
@@ -45,22 +37,14 @@ module('Integration | Component | choose-material-type', function (hooks) {
     this.set('choose', (type) => {
       assert.strictEqual(type, 'link');
     });
-    await render(hbs`<ChooseMaterialType
-      @choose={{this.choose}}
-      @types={{array "file" "link" "citation"}}
-    />
-`);
+    await render(hbs`<ChooseMaterialType @choose={{this.choose}} @types={{array 'file' 'link' 'citation'}} />`);
     await component.toggle.click();
     await component.types[1].click();
   });
 
   test('down opens menu', async function (assert) {
     this.set('nothing', () => {});
-    await render(hbs`<ChooseMaterialType
-      @choose={{(noop)}}
-      @types={{array "file" "link" "citation"}}
-    />
-`);
+    await render(hbs`<ChooseMaterialType @choose={{(noop)}} @types={{array 'file' 'link' 'citation'}} />`);
 
     assert.strictEqual(component.types.length, 0);
     await component.toggle.down();
@@ -69,11 +53,7 @@ module('Integration | Component | choose-material-type', function (hooks) {
 
   test('escape closes menu', async function (assert) {
     this.set('nothing', () => {});
-    await render(hbs`<ChooseMaterialType
-      @choose={{(noop)}}
-      @types={{array "file" "link" "citation"}}
-    />
-`);
+    await render(hbs`<ChooseMaterialType @choose={{(noop)}} @types={{array 'file' 'link' 'citation'}} />`);
 
     await component.toggle.down();
     assert.strictEqual(component.types.length, 3);

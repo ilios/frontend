@@ -18,8 +18,7 @@ module('Integration | Component | course/visualize-vocabularies', function (hook
   test('it renders', async function (assert) {
     this.set('course', this.courseModel);
 
-    await render(hbs`<Course::VisualizeVocabularies @model={{this.course}} />
-`);
+    await render(hbs`<Course::VisualizeVocabularies @model={{this.course}} />`);
     assert.strictEqual(component.courseTitle.text, 'course 0 2021');
     assert.strictEqual(component.courseTitle.link, '/courses/1');
   });
@@ -34,16 +33,14 @@ module('Integration | Component | course/visualize-vocabularies', function (hook
     });
     this.set('course', this.courseModel);
 
-    await render(hbs`<Course::VisualizeVocabularies @model={{this.course}} />
-`);
+    await render(hbs`<Course::VisualizeVocabularies @model={{this.course}} />`);
     assert.strictEqual(component.courseTitle.text, 'course 0 2021 - 2022');
   });
 
   test('breadcrumb', async function (assert) {
     this.set('course', this.courseModel);
 
-    await render(hbs`<Course::VisualizeVocabularies @model={{this.course}} />
-`);
+    await render(hbs`<Course::VisualizeVocabularies @model={{this.course}} />`);
 
     assert.strictEqual(component.breadcrumb.crumbs.length, 3);
     assert.strictEqual(component.breadcrumb.crumbs[0].text, 'course 0');

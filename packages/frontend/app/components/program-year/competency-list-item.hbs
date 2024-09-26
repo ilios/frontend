@@ -1,7 +1,7 @@
 <li data-test-program-year-competency-list-item>
   <span
     data-test-domain-title
-    class="{{if (includes @domain.id (map-by "id" @selectedCompetencies)) "active"}}"
+    class="{{if (includes @domain.id (map-by 'id' @selectedCompetencies)) 'active'}}"
     data-test-title
   >
     {{@domain.title}}
@@ -11,9 +11,7 @@
       {{#if
         (and
           (includes competency this.children)
-          (includes
-            competency.id (map-by "id" @selectedCompetencies)
-          )
+          (includes competency.id (map-by "id" @selectedCompetencies))
         )
       }}
         <li data-test-competency>

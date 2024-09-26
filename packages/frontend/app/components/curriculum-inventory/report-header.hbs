@@ -10,7 +10,8 @@
         @save={{perform this.saveName}}
         @close={{this.revertNameChanges}}
         @saveOnEnter={{true}}
-        @closeOnEscape={{true}} as |isSaving|
+        @closeOnEscape={{true}}
+        as |isSaving|
       >
         <input
           aria-label={{t "general.title"}}
@@ -19,7 +20,7 @@
           disabled={{isSaving}}
           {{on "input" (pick "target.value" (set this "name"))}}
           {{on "keyup" (fn this.addErrorDisplayFor "name")}}
-        >
+        />
         <ValidationError @errors={{get-errors-for this.name}} />
       </EditableField>
     {{else}}

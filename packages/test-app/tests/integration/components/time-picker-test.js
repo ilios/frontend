@@ -14,8 +14,7 @@ module('Integration | Component | time-picker', function (hooks) {
   });
 
   test('it renders and is accessible', async function (assert) {
-    await render(hbs`<TimePicker @date={{this.date}} @action={{(noop)}} />
-`);
+    await render(hbs`<TimePicker @date={{this.date}} @action={{(noop)}} />`);
     assert.strictEqual(component.hour.value, '11');
     assert.strictEqual(component.hour.options.length, 12);
     assert.strictEqual(component.minute.value, '58');
@@ -33,8 +32,7 @@ module('Integration | Component | time-picker', function (hooks) {
       assert.strictEqual(unit, 'hour');
       assert.strictEqual(value, 19);
     });
-    await render(hbs`<TimePicker @date={{this.date}} @action={{this.action}} />
-`);
+    await render(hbs`<TimePicker @date={{this.date}} @action={{this.action}} />`);
     assert.strictEqual(component.hour.value, '11');
     await component.hour.select(newHour);
     assert.strictEqual(component.hour.value, newHour);
@@ -47,8 +45,7 @@ module('Integration | Component | time-picker', function (hooks) {
       assert.strictEqual(unit, 'minute');
       assert.strictEqual(value, 22);
     });
-    await render(hbs`<TimePicker @date={{this.date}} @action={{this.action}} />
-`);
+    await render(hbs`<TimePicker @date={{this.date}} @action={{this.action}} />`);
     assert.strictEqual(component.minute.value, '58');
     await component.minute.select(newMinute);
     assert.strictEqual(component.minute.value, newMinute);
@@ -60,8 +57,7 @@ module('Integration | Component | time-picker', function (hooks) {
       assert.strictEqual(unit, 'hour');
       assert.strictEqual(value, 11);
     });
-    await render(hbs`<TimePicker @date={{this.date}} @action={{this.action}} />
-`);
+    await render(hbs`<TimePicker @date={{this.date}} @action={{this.action}} />`);
     assert.strictEqual(component.hour.value, '11');
     assert.strictEqual(component.ampm.value, 'PM');
     await component.ampm.select('AM');

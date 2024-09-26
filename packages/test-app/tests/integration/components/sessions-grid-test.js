@@ -24,12 +24,7 @@ module('Integration | Component | sessions-grid', function (hooks) {
   test('it renders with no results', async function (assert) {
     this.set('sessions', []);
     this.set('sortBy', 'title');
-    await render(hbs`<SessionsGrid
-      @sessions={{this.sessions}}
-      @sortBy={{this.sortBy}}
-      @setSortBy={{(noop)}}
-    />
-`);
+    await render(hbs`<SessionsGrid @sessions={{this.sessions}} @sortBy={{this.sortBy}} @setSortBy={{(noop)}} />`);
     assert.dom(this.element).hasText('No results found. Please try again.');
   });
 
@@ -44,12 +39,11 @@ module('Integration | Component | sessions-grid', function (hooks) {
       assert.strictEqual(s, sessionModel);
     });
     await render(hbs`<SessionsGrid
-      @sessions={{this.sessions}}
-      @sortBy={{this.sortBy}}
-      @setSortBy={{(noop)}}
-      @expandSession={{this.expandSession}}
-    />
-`);
+  @sessions={{this.sessions}}
+  @sortBy={{this.sortBy}}
+  @setSortBy={{(noop)}}
+  @expandSession={{this.expandSession}}
+/>`);
     await click('[data-test-expand-collapse-control] svg');
   });
 
@@ -63,12 +57,11 @@ module('Integration | Component | sessions-grid', function (hooks) {
       assert.ok(false);
     });
     await render(hbs`<SessionsGrid
-      @sessions={{this.sessions}}
-      @sortBy={{this.sortBy}}
-      @setSortBy={{(noop)}}
-      @expandSession={{this.expandSession}}
-    />
-`);
+  @sessions={{this.sessions}}
+  @sortBy={{this.sortBy}}
+  @setSortBy={{(noop)}}
+  @expandSession={{this.expandSession}}
+/>`);
     await click('[data-test-expand-collapse-control] svg');
   });
 
@@ -84,12 +77,11 @@ module('Integration | Component | sessions-grid', function (hooks) {
       .findRecord('session', session2.id);
     this.set('sessions', [sessionModel1, sessionModel2]);
     await render(hbs`<SessionsGrid
-      @sessions={{this.sessions}}
-      @sortBy="title"
-      @setSortBy={{(noop)}}
-      @expandSession={{(noop)}}
-    />
-`);
+  @sessions={{this.sessions}}
+  @sortBy='title'
+  @setSortBy={{(noop)}}
+  @expandSession={{(noop)}}
+/>`);
     assert.dom('[data-test-session]:nth-of-type(1) [data-test-delete-disabled]').isVisible();
     assert.dom('[data-test-session]:nth-of-type(1) [data-test-delete]').isNotVisible();
     assert.dom('[data-test-session]:nth-of-type(2) [data-test-delete-disabled]').isNotVisible();

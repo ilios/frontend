@@ -1,8 +1,4 @@
-<div
-  class="login-form"
-  data-test-login-form
-  ...attributes
->
+<div class="login-form" data-test-login-form ...attributes>
   {{#let (unique-id) as |templateId|}}
     {{#if @noAccountExistsError}}
       <div class="error" data-test-error>
@@ -34,7 +30,7 @@
             value={{this.username}}
             {{on "input" (pick "target.value" (set this "username"))}}
             {{on "keyup" this.submitOnEnter}}
-          >
+          />
           <ValidationError @errors={{get-errors-for this.username}} />
         </div>
         <div class="item" data-test-password>
@@ -49,13 +45,13 @@
             value={{this.password}}
             {{on "input" (pick "target.value" (set this "password"))}}
             {{on "keyup" this.submitOnEnter}}
-          >
+          />
           <ValidationError @errors={{get-errors-for this.password}} />
         </div>
         <div class="buttons">
           <button
             type="button"
-            class="done {{if this.authenticate.isRunning "active"}}"
+            class="done {{if this.authenticate.isRunning 'active'}}"
             disabled={{if this.authenticate.isRunning "disabled"}}
             {{on "click" (perform this.authenticate)}}
             data-test-login

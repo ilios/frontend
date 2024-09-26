@@ -23,10 +23,10 @@ module('Integration | Component | reports/subject/new/competency', function (hoo
       this.set('currentId', id);
     });
     await render(hbs`<Reports::Subject::New::Competency
-      @currentId={{this.currentId}}
-      @changeId={{this.changeId}}
-      @school={{null}}
-     />`);
+  @currentId={{this.currentId}}
+  @changeId={{this.changeId}}
+  @school={{null}}
+/>`);
 
     assert.strictEqual(component.options.length, 5);
     assert.strictEqual(component.options[0].text, 'competency 0');
@@ -48,10 +48,10 @@ module('Integration | Component | reports/subject/new/competency', function (hoo
     assert.expect(5);
     this.set('currentId', '1');
     await render(hbs`<Reports::Subject::New::Competency
-      @currentId={{this.currentId}}
-      @changeId={{this.changeId}}
-      @school={{null}}
-     />`);
+  @currentId={{this.currentId}}
+  @changeId={{this.changeId}}
+  @school={{null}}
+/>`);
     this.set('changeId', (id) => {
       assert.strictEqual(id, '3');
       this.set('currentId', id);
@@ -73,10 +73,10 @@ module('Integration | Component | reports/subject/new/competency', function (hoo
       this.set('currentId', id);
     });
     await render(hbs`<Reports::Subject::New::Competency
-      @currentId={{this.currentId}}
-      @changeId={{this.changeId}}
-      @school={{this.school}}
-     />`);
+  @currentId={{this.currentId}}
+  @changeId={{this.changeId}}
+  @school={{this.school}}
+/>`);
 
     assert.strictEqual(component.options.length, 3);
     assert.strictEqual(component.options[0].text, 'competency 2');
@@ -95,10 +95,10 @@ module('Integration | Component | reports/subject/new/competency', function (hoo
       assert.strictEqual(id, '1');
     });
     await render(hbs`<Reports::Subject::New::Competency
-      @currentId={{null}}
-      @changeId={{this.changeId}}
-      @school={{this.school}}
-     />`);
+  @currentId={{null}}
+  @changeId={{this.changeId}}
+  @school={{this.school}}
+/>`);
 
     this.set('changeId', (id) => {
       assert.strictEqual(id, '3');

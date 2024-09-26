@@ -177,7 +177,7 @@ module('Integration | Component | new user', function (hooks) {
     this.set('cancel', () => {
       assert.ok(true, 'cancel event fired.');
     });
-    await render(hbs`<NewUser @close={{this.cancel}}  />`);
+    await render(hbs`<NewUser @close={{this.cancel}} />`);
     await component.cancel();
   });
 
@@ -208,7 +208,7 @@ module('Integration | Component | new user', function (hooks) {
     await this.owner.lookup('service:store').findAll('program-year');
     await this.owner.lookup('service:store').findAll('cohort');
 
-    await render(hbs`<NewUser @close={{(noop)}}  />`);
+    await render(hbs`<NewUser @close={{(noop)}} />`);
     await component.cancel();
     await component.clickChoiceButtons.secondButton.click();
 
@@ -226,7 +226,7 @@ module('Integration | Component | new user', function (hooks) {
   });
 
   test('validate email address', async function (assert) {
-    await render(hbs`<NewUser @close={{(noop)}}  />`);
+    await render(hbs`<NewUser @close={{(noop)}} />`);
     await component.cancel();
     assert.notOk(component.email.hasError);
     await component.email.set('thisisnotanemailaddress');

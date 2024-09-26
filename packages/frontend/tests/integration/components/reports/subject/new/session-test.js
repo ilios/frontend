@@ -28,11 +28,7 @@ module('Integration | Component | reports/subject/new/session', function (hooks)
 
   test('it renders', async function (assert) {
     assert.expect(6);
-    await render(hbs`<Reports::Subject::New::Session
-      @currentId={{null}}
-      @changeId={{(noop)}}
-      @school={{null}}
-     />`);
+    await render(hbs`<Reports::Subject::New::Session @currentId={{null}} @changeId={{(noop)}} @school={{null}} />`);
 
     await component.input('session');
     assert.strictEqual(component.results.length, 5);
@@ -48,10 +44,10 @@ module('Integration | Component | reports/subject/new/session', function (hooks)
     assert.expect(2);
     this.set('currentId', 3);
     await render(hbs`<Reports::Subject::New::Session
-      @currentId={{this.currentId}}
-      @changeId={{(noop)}}
-      @school={{null}}
-     />`);
+  @currentId={{this.currentId}}
+  @changeId={{(noop)}}
+  @school={{null}}
+/>`);
 
     assert.ok(component.hasSelectedSession);
     assert.strictEqual(component.selectedSession, '2027 | session 2 course 1');
@@ -65,10 +61,10 @@ module('Integration | Component | reports/subject/new/session', function (hooks)
       this.set('currentId', id);
     });
     await render(hbs`<Reports::Subject::New::Session
-      @currentId={{this.currentId}}
-      @changeId={{this.changeId}}
-      @school={{null}}
-     />`);
+  @currentId={{this.currentId}}
+  @changeId={{this.changeId}}
+  @school={{null}}
+/>`);
 
     await component.input('session');
 
@@ -81,11 +77,7 @@ module('Integration | Component | reports/subject/new/session', function (hooks)
   test('it filters by school', async function (assert) {
     const schoolModel = await this.owner.lookup('service:store').findRecord('school', 2);
     this.set('school', schoolModel);
-    await render(hbs`<Reports::Subject::New::Session
-      @currentId={{null}}
-      @changeId={{(noop)}}
-      @school={{this.school}}
-     />`);
+    await render(hbs`<Reports::Subject::New::Session @currentId={{null}} @changeId={{(noop)}} @school={{this.school}} />`);
 
     await component.input('session');
 

@@ -7,8 +7,7 @@ module('Integration | Component | course/objective-list-loading', function (hook
   setupRenderingTest(hooks);
 
   test('it renders', async function (assert) {
-    await render(hbs`<Course::ObjectiveListLoading @count={{9}} />
-`);
+    await render(hbs`<Course::ObjectiveListLoading @count={{9}} />`);
 
     assert.dom('.grid-row').exists({ count: 9 });
   });

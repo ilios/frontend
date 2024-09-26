@@ -24,8 +24,7 @@ module('Integration | Component | session-publicationcheck', function (hooks) {
     await setupAuthentication({ school, administeredSchools: [school] });
     const sessionModel = await this.owner.lookup('service:store').findRecord('session', session.id);
     this.set('model', sessionModel);
-    await render(hbs`<SessionPublicationcheck @session={{this.model}} />
-`);
+    await render(hbs`<SessionPublicationcheck @session={{this.model}} />`);
     assert.ok(component.unlink.isPresent);
   });
 
@@ -45,8 +44,7 @@ module('Integration | Component | session-publicationcheck', function (hooks) {
     await setupAuthentication({ school, administeredSchools: [school] });
     const sessionModel = await this.owner.lookup('service:store').findRecord('session', session.id);
     this.set('model', sessionModel);
-    await render(hbs`<SessionPublicationcheck @session={{this.model}} />
-`);
+    await render(hbs`<SessionPublicationcheck @session={{this.model}} />`);
     assert.notOk(component.unlink.isPresent);
   });
 });

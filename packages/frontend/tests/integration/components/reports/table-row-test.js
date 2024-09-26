@@ -29,10 +29,7 @@ module('Integration | Component | reports/table-row', function (hooks) {
       type: 'subject',
     });
 
-    await render(hbs`<Reports::TableRow
-      @decoratedReport={{this.decoratedReport}}
-      @confirmRemoval={{(noop)}}
-    />`);
+    await render(hbs`<Reports::TableRow @decoratedReport={{this.decoratedReport}} @confirmRemoval={{(noop)}} />`);
 
     assert.strictEqual(component.title, 'this report');
     await a11yAudit(this.element);

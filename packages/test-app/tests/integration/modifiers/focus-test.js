@@ -8,22 +8,19 @@ module('Integration | Modifier | focus', function (hooks) {
 
   test('it focuses by default without condition', async function (assert) {
     this.set('label', 'foo bar');
-    await render(hbs`<label><input {{focus}} />{{this.label}}</label>
-`);
+    await render(hbs`<label><input {{focus}} />{{this.label}}</label>`);
     assert.dom('input').isFocused();
   });
 
   test('it focuses when condition is met', async function (assert) {
     this.set('label', 'foo bar');
-    await render(hbs`<label><input {{focus true}} />{{this.label}}</label>
-`);
+    await render(hbs`<label><input {{focus true}} />{{this.label}}</label>`);
     assert.dom('input').isFocused();
   });
 
   test('it does not focus when condition is not met', async function (assert) {
     this.set('label', 'foo bar');
-    await render(hbs`<label><input {{focus false}} />{{this.label}}</label>
-`);
+    await render(hbs`<label><input {{focus false}} />{{this.label}}</label>`);
     assert.dom('input').isNotFocused();
   });
 });

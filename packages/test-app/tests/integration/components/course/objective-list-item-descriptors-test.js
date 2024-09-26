@@ -22,15 +22,14 @@ module('Integration | Component | course/objective-list-item-descriptors', funct
 
   test('it renders and is accessible when managing', async function (assert) {
     await render(hbs`<Course::ObjectiveListItemDescriptors
-      @meshDescriptors={{(array)}}
-      @editable={{false}}
-      @manage={{(noop)}}
-      @isManaging={{true}}
-      @save={{(noop)}}
-      @isSaving={{false}}
-      @cancel={{(noop)}}
-    />
-`);
+  @meshDescriptors={{(array)}}
+  @editable={{false}}
+  @manage={{(noop)}}
+  @isManaging={{true}}
+  @save={{(noop)}}
+  @isSaving={{false}}
+  @cancel={{(noop)}}
+/>`);
     assert.ok(component.canSave);
     assert.ok(component.canCancel);
     await a11yAudit(this.element);
@@ -39,15 +38,14 @@ module('Integration | Component | course/objective-list-item-descriptors', funct
 
   test('it renders and is accessible empty and un-editable', async function (assert) {
     await render(hbs`<Course::ObjectiveListItemDescriptors
-      @meshDescriptors={{(array)}}
-      @editable={{false}}
-      @manage={{(noop)}}
-      @isManaging={{false}}
-      @save={{(noop)}}
-      @isSaving={{false}}
-      @cancel={{(noop)}}
-    />
-`);
+  @meshDescriptors={{(array)}}
+  @editable={{false}}
+  @manage={{(noop)}}
+  @isManaging={{false}}
+  @save={{(noop)}}
+  @isSaving={{false}}
+  @cancel={{(noop)}}
+/>`);
     assert.strictEqual(component.text, 'None');
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
@@ -56,15 +54,14 @@ module('Integration | Component | course/objective-list-item-descriptors', funct
   test('it renders and is accessible un-editable', async function (assert) {
     this.set('meshDescriptors', [this.meshDescriptor1, this.meshDescriptor2]);
     await render(hbs`<Course::ObjectiveListItemDescriptors
-      @meshDescriptors={{this.meshDescriptors}}
-      @editable={{false}}
-      @manage={{(noop)}}
-      @isManaging={{false}}
-      @save={{(noop)}}
-      @isSaving={{false}}
-      @cancel={{(noop)}}
-    />
-`);
+  @meshDescriptors={{this.meshDescriptors}}
+  @editable={{false}}
+  @manage={{(noop)}}
+  @isManaging={{false}}
+  @save={{(noop)}}
+  @isSaving={{false}}
+  @cancel={{(noop)}}
+/>`);
     assert.strictEqual(component.list.length, 2);
     assert.strictEqual(component.list[0].title, 'descriptor 0');
     assert.strictEqual(component.list[1].title, 'descriptor 1');
@@ -75,15 +72,14 @@ module('Integration | Component | course/objective-list-item-descriptors', funct
   test('it renders and is accessible editable', async function (assert) {
     this.set('meshDescriptors', [this.meshDescriptor1, this.meshDescriptor2]);
     await render(hbs`<Course::ObjectiveListItemDescriptors
-      @meshDescriptors={{this.meshDescriptors}}
-      @editable={{true}}
-      @manage={{(noop)}}
-      @isManaging={{false}}
-      @save={{(noop)}}
-      @isSaving={{false}}
-      @cancel={{(noop)}}
-    />
-`);
+  @meshDescriptors={{this.meshDescriptors}}
+  @editable={{true}}
+  @manage={{(noop)}}
+  @isManaging={{false}}
+  @save={{(noop)}}
+  @isSaving={{false}}
+  @cancel={{(noop)}}
+/>`);
     assert.strictEqual(component.list.length, 2);
     assert.strictEqual(component.list[0].title, 'descriptor 0');
     assert.strictEqual(component.list[1].title, 'descriptor 1');
@@ -98,15 +94,14 @@ module('Integration | Component | course/objective-list-item-descriptors', funct
     });
     this.set('meshDescriptors', [this.meshDescriptor1, this.meshDescriptor2]);
     await render(hbs`<Course::ObjectiveListItemDescriptors
-      @meshDescriptors={{this.meshDescriptors}}
-      @editable={{true}}
-      @manage={{(noop)}}
-      @isManaging={{true}}
-      @save={{this.save}}
-      @isSaving={{false}}
-      @cancel={{(noop)}}
-    />
-`);
+  @meshDescriptors={{this.meshDescriptors}}
+  @editable={{true}}
+  @manage={{(noop)}}
+  @isManaging={{true}}
+  @save={{this.save}}
+  @isSaving={{false}}
+  @cancel={{(noop)}}
+/>`);
     await component.save();
   });
 
@@ -117,15 +112,14 @@ module('Integration | Component | course/objective-list-item-descriptors', funct
     });
     this.set('meshDescriptors', [this.meshDescriptor1, this.meshDescriptor2]);
     await render(hbs`<Course::ObjectiveListItemDescriptors
-      @meshDescriptors={{this.meshDescriptors}}
-      @editable={{true}}
-      @manage={{(noop)}}
-      @isManaging={{true}}
-      @save={{(noop)}}
-      @isSaving={{false}}
-      @cancel={{this.cancel}}
-    />
-`);
+  @meshDescriptors={{this.meshDescriptors}}
+  @editable={{true}}
+  @manage={{(noop)}}
+  @isManaging={{true}}
+  @save={{(noop)}}
+  @isSaving={{false}}
+  @cancel={{this.cancel}}
+/>`);
     await component.cancel();
   });
 
@@ -136,15 +130,14 @@ module('Integration | Component | course/objective-list-item-descriptors', funct
     });
     this.set('meshDescriptors', [this.meshDescriptor1, this.meshDescriptor2]);
     await render(hbs`<Course::ObjectiveListItemDescriptors
-      @meshDescriptors={{this.meshDescriptors}}
-      @editable={{true}}
-      @manage={{this.manage}}
-      @isManaging={{false}}
-      @save={{(noop)}}
-      @isSaving={{false}}
-      @cancel={{(noop)}}
-    />
-`);
+  @meshDescriptors={{this.meshDescriptors}}
+  @editable={{true}}
+  @manage={{this.manage}}
+  @isManaging={{false}}
+  @save={{(noop)}}
+  @isSaving={{false}}
+  @cancel={{(noop)}}
+/>`);
     await component.list[0].manage();
   });
 });

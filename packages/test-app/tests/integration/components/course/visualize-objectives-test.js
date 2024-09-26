@@ -15,8 +15,7 @@ module('Integration | Component | course/visualize-objectives', function (hooks)
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('course', courseModel);
 
-    await render(hbs`<Course::VisualizeObjectives @model={{this.course}} />
-`);
+    await render(hbs`<Course::VisualizeObjectives @model={{this.course}} />`);
     assert.strictEqual(component.title, 'course 0 2021');
   });
 
@@ -33,8 +32,7 @@ module('Integration | Component | course/visualize-objectives', function (hooks)
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('course', courseModel);
 
-    await render(hbs`<Course::VisualizeObjectives @model={{this.course}} />
-`);
+    await render(hbs`<Course::VisualizeObjectives @model={{this.course}} />`);
 
     assert.strictEqual(component.title, 'course 0 2021 - 2022');
   });
@@ -45,8 +43,7 @@ module('Integration | Component | course/visualize-objectives', function (hooks)
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('course', courseModel);
 
-    await render(hbs`<Course::VisualizeObjectives @model={{this.course}} />
-`);
+    await render(hbs`<Course::VisualizeObjectives @model={{this.course}} />`);
 
     assert.strictEqual(component.breadcrumb.crumbs.length, 3);
     assert.strictEqual(component.breadcrumb.crumbs[0].text, 'course 0');
@@ -105,8 +102,7 @@ module('Integration | Component | course/visualize-objectives', function (hooks)
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('course', courseModel);
 
-    await render(hbs`<Course::VisualizeObjectives @model={{this.course}} />
-`);
+    await render(hbs`<Course::VisualizeObjectives @model={{this.course}} />`);
 
     await waitFor('.loaded');
     await waitFor('svg .slice');

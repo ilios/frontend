@@ -1,6 +1,6 @@
 <div
   data-test-user-profile-bio
-  class="user-profile-bio small-component {{if this.hasRecentlySaved "has-saved" "has-not-saved"}}"
+  class="user-profile-bio small-component {{if this.hasRecentlySaved 'has-saved' 'has-not-saved'}}"
   {{did-insert (perform this.load)}}
   {{did-update (perform this.load) @user @isManaging}}
   ...attributes
@@ -61,8 +61,7 @@
       <div class="form">
         <div
           class="item
-            {{if (includes "firstName" this.updatedFieldsFromSync) "synced-from-directory"
-            }}"
+            {{if (includes 'firstName' this.updatedFieldsFromSync) 'synced-from-directory'}}"
           data-test-firstname
         >
           <label for="firstname-{{templateId}}">
@@ -77,7 +76,7 @@
               {{on "keyup" (fn this.addErrorDisplayFor "firstName")}}
               {{on "keyup" this.keyboard}}
               data-test-first-name-input
-            >
+            />
             <ValidationError @errors={{get-errors-for this.firstName}} />
           {{else}}
             <span class="value">
@@ -98,7 +97,7 @@
               {{on "keyup" (fn this.addErrorDisplayFor "middleName")}}
               {{on "keyup" this.keyboard}}
               data-test-middle-name-input
-            >
+            />
             <ValidationError @errors={{get-errors-for this.middleName}} />
           {{else}}
             <span class="value">
@@ -108,8 +107,7 @@
         </div>
         <div
           class="item
-            {{if (includes "lastName" this.updatedFieldsFromSync) "synced-from-directory"
-            }}"
+            {{if (includes 'lastName' this.updatedFieldsFromSync) 'synced-from-directory'}}"
           data-test-lastname
         >
           <label for="lastname-{{templateId}}">
@@ -124,7 +122,7 @@
               {{on "keyup" (fn this.addErrorDisplayFor "lastName")}}
               {{on "keyup" this.keyboard}}
               data-test-last-name-input
-            >
+            />
             <ValidationError @errors={{get-errors-for this.lastName}} />
           {{else}}
             <span class="value">
@@ -134,8 +132,8 @@
         </div>
         <div
           class="item
-          {{if (includes "campusId" this.updatedFieldsFromSync) "synced-from-directory"}}
-          campus-id"
+            {{if (includes 'campusId' this.updatedFieldsFromSync) 'synced-from-directory'}}
+            campus-id"
           data-test-campus-id
         >
           <label for="campus-id-{{templateId}}">
@@ -151,7 +149,7 @@
                 {{on "keyup" (fn this.addErrorDisplayFor "campusId")}}
                 {{on "keyup" this.keyboard}}
                 data-test-campus-id-input
-              >
+              />
               {{#unless this.canEditUsernameAndPassword}}
                 <button
                   type="button"
@@ -167,7 +165,7 @@
                   />
                 </button>
               {{/unless}}
-<ValidationError @errors={{get-errors-for this.campusId}} />
+              <ValidationError @errors={{get-errors-for this.campusId}} />
             </div>
             {{#if this.showSyncErrorMessage}}
               <span class="validation-error-message" data-test-sync-error>
@@ -193,7 +191,7 @@
               {{on "keyup" (fn this.addErrorDisplayFor "otherId")}}
               {{on "keyup" this.keyboard}}
               data-test-other-id-input
-            >
+            />
             <ValidationError @errors={{get-errors-for this.otherId}} />
           {{else}}
             <span class="value">
@@ -202,8 +200,7 @@
           {{/if}}
         </div>
         <div
-          class="item
-            {{if (includes "email" this.updatedFieldsFromSync) "synced-from-directory"}}"
+          class="item {{if (includes 'email' this.updatedFieldsFromSync) 'synced-from-directory'}}"
           data-test-email
         >
           <label for="email-{{templateId}}">
@@ -218,7 +215,7 @@
               {{on "keyup" (fn this.addErrorDisplayFor "email")}}
               {{on "keyup" this.keyboard}}
               data-test-email-input
-            >
+            />
             <ValidationError @errors={{get-errors-for this.email}} />
           {{else}}
             <span class="value">
@@ -228,10 +225,7 @@
         </div>
         <div
           class="item
-            {{if
-              (includes "displayName" this.updatedFieldsFromSync)
-              "synced-from-directory"
-            }}"
+            {{if (includes 'displayName' this.updatedFieldsFromSync) 'synced-from-directory'}}"
           data-test-displayname
         >
           <label for="displayname-{{templateId}}">
@@ -246,7 +240,7 @@
               {{on "keyup" (fn this.addErrorDisplayFor "displayName")}}
               {{on "keyup" this.keyboard}}
               data-test-display-name-input
-            >
+            />
             <ValidationError @errors={{get-errors-for this.displayName}} />
           {{else}}
             <span class="value">
@@ -256,10 +250,7 @@
         </div>
         <div
           class="item
-            {{if
-              (includes "pronouns" this.updatedFieldsFromSync)
-              "synced-from-directory"
-            }}"
+            {{if (includes 'pronouns' this.updatedFieldsFromSync) 'synced-from-directory'}}"
           data-test-pronouns
         >
           <label for="pronouns-{{templateId}}">
@@ -274,7 +265,7 @@
               {{on "keyup" (fn this.addErrorDisplayFor "pronouns")}}
               {{on "keyup" this.keyboard}}
               data-test-pronouns-input
-            >
+            />
             <ValidationError @errors={{get-errors-for this.pronouns}} />
           {{else}}
             <span class="value">
@@ -284,10 +275,7 @@
         </div>
         <div
           class="item
-            {{if
-              (includes "preferredEmail" this.updatedFieldsFromSync)
-              "synced-from-directory"
-            }}"
+            {{if (includes 'preferredEmail' this.updatedFieldsFromSync) 'synced-from-directory'}}"
           data-test-preferred-email
         >
           <label for="preferred-email-{{templateId}}">
@@ -302,7 +290,7 @@
               {{on "keyup" (fn this.addErrorDisplayFor "preferredEmail")}}
               {{on "keyup" this.keyboard}}
               data-test-preferred-email-input
-            >
+            />
             <ValidationError @errors={{get-errors-for this.preferredEmail}} />
           {{else}}
             <span class="value">
@@ -311,8 +299,7 @@
           {{/if}}
         </div>
         <div
-          class="item
-            {{if (includes "phone" this.updatedFieldsFromSync) "synced-from-directory"}}"
+          class="item {{if (includes 'phone' this.updatedFieldsFromSync) 'synced-from-directory'}}"
           data-test-phone
         >
           <label for="phone-{{templateId}}">
@@ -327,7 +314,7 @@
               {{on "keyup" (fn this.addErrorDisplayFor "phone")}}
               {{on "keyup" this.keyboard}}
               data-test-phone-input
-            >
+            />
             <ValidationError @errors={{get-errors-for this.phone}} />
           {{else}}
             <span class="value">
@@ -337,7 +324,7 @@
         </div>
         <div
           class="item
-          {{if (includes "username" this.updatedFieldsFromSync) "synced-from-directory"}}"
+            {{if (includes 'username' this.updatedFieldsFromSync) 'synced-from-directory'}}"
           data-test-username
         >
           <label for="username-{{templateId}}">
@@ -354,7 +341,7 @@
               {{on "keyup" this.keyboard}}
               disabled={{not this.canEditUsernameAndPassword}}
               data-test-username-input
-            >
+            />
             <ValidationError @errors={{get-errors-for this.username}} />
             {{#if this.showUsernameTakenErrorMessage}}
               <span class="validation-error-message" data-test-duplicate-username>
@@ -382,13 +369,12 @@
                   {{on "keyup" (fn this.addErrorDisplayFor "password")}}
                   {{on "keyup" this.keyboard}}
                   data-test-password-input
-                >
+                />
                 {{#if (has-error-for this.password)}}
                   <ValidationError @errors={{get-errors-for this.password}} />
                 {{else if (gt this.password.length 0)}}
                   <span
-                    class="password-strength
-                    {{concat "strength-" this.passwordStrengthScore}}"
+                    class="password-strength {{concat 'strength-' this.passwordStrengthScore}}"
                     data-test-password-strength-text
                   >
                     {{#if (eq this.passwordStrengthScore 0)}}

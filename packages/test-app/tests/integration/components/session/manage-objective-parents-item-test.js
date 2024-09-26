@@ -10,12 +10,11 @@ module('Integration | Component | session/manage-objective-parents-item', functi
     this.set('isSelected', true);
     this.set('title', '<p>Country &amp; Western</p>');
     await render(hbs`<Session::ManageObjectiveParentsItem
-      @title={{this.title}}
-      @isSelected={{this.isSelected}}
-      @add={{(noop)}}
-      @remove={{(noop)}}
-    />
-`);
+  @title={{this.title}}
+  @isSelected={{this.isSelected}}
+  @add={{(noop)}}
+  @remove={{(noop)}}
+/>`);
 
     assert.dom('input[type="checkbox"]').exists();
     assert.dom('input').isChecked();

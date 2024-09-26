@@ -48,11 +48,11 @@ module('Integration | Component | curriculum-inventory/sequence-block-list-item'
 
     await render(
       hbs`<CurriculumInventory::SequenceBlockListItem
-        @sequenceBlock={{this.block}}
-        @canUpdate={{true}}
-        @remove={{(noop)}}
-        @isInOrderedSequence={{true}}
-      />`,
+  @sequenceBlock={{this.block}}
+  @canUpdate={{true}}
+  @remove={{(noop)}}
+  @isInOrderedSequence={{true}}
+/>`,
     );
 
     assert.strictEqual(component.title, 'block 1');
@@ -88,11 +88,11 @@ module('Integration | Component | curriculum-inventory/sequence-block-list-item'
 
     await render(
       hbs`<CurriculumInventory::SequenceBlockListItem
-        @sequenceBlock={{this.block}}
-        @canUpdate={{true}}
-        @remove={{(noop)}}
-        @isInOrderedSequence={{false}}
-      />`,
+  @sequenceBlock={{this.block}}
+  @canUpdate={{true}}
+  @remove={{(noop)}}
+  @isInOrderedSequence={{false}}
+/>`,
     );
 
     assert.strictEqual(component.orderInSequence, 'n/a');
@@ -107,11 +107,11 @@ module('Integration | Component | curriculum-inventory/sequence-block-list-item'
 
     await render(
       hbs`<CurriculumInventory::SequenceBlockListItem
-        @sequenceBlock={{this.block}}
-        @canUpdate={{false}}
-        @remove={{(noop)}}
-        @isInOrderedSequence={{false}}
-      />`,
+  @sequenceBlock={{this.block}}
+  @canUpdate={{false}}
+  @remove={{(noop)}}
+  @isInOrderedSequence={{false}}
+/>`,
     );
 
     assert.notOk(component.isDeletable);
@@ -130,11 +130,11 @@ module('Integration | Component | curriculum-inventory/sequence-block-list-item'
 
     await render(
       hbs`<CurriculumInventory::SequenceBlockListItem
-        @sequenceBlock={{this.block}}
-        @canUpdate={{true}}
-        @remove={{this.remove}}
-        @isInOrderedSequence={{false}}
-      />`,
+  @sequenceBlock={{this.block}}
+  @canUpdate={{true}}
+  @remove={{this.remove}}
+  @isInOrderedSequence={{false}}
+/>`,
     );
 
     assert.notOk(component.confirmRemoval.isVisible);

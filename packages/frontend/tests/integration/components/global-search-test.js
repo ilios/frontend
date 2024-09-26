@@ -13,11 +13,7 @@ module('Integration | Component | global-search', function (hooks) {
   test('it renders', async function (assert) {
     assert.expect(1);
 
-    await render(hbs`<GlobalSearch
-      @setQuery={{(noop)}}
-      @onSelectPage={{(noop)}}
-      @setSelectedYear={{(noop)}}
-    />`);
+    await render(hbs`<GlobalSearch @setQuery={{(noop)}} @onSelectPage={{(noop)}} @setSelectedYear={{(noop)}} />`);
     assert.dom('[data-test-global-search-box]').exists({ count: 1 });
   });
 
@@ -43,12 +39,12 @@ module('Integration | Component | global-search', function (hooks) {
 
     this.set('query', '');
     await render(hbs`<GlobalSearch
-      @query={{this.query}}
-      @page="1"
-      @setQuery={{(noop)}}
-      @onSelectPage={{(noop)}}
-      @setSelectedYear={{(noop)}}
-    />`);
+  @query={{this.query}}
+  @page='1'
+  @setQuery={{(noop)}}
+  @onSelectPage={{(noop)}}
+  @setSelectedYear={{(noop)}}
+/>`);
     assert.ok(component.noResultsIsVisible);
     this.set('query', 'hello world');
     await settled();
@@ -69,11 +65,7 @@ module('Integration | Component | global-search', function (hooks) {
     });
 
     this.set('query', (value) => assert.strictEqual(value, 'typed it'));
-    await render(hbs`<GlobalSearch
-      @setQuery={{this.query}}
-      @onSelectPage={{(noop)}}
-      @setSelectedYear={{(noop)}}
-    />`);
+    await render(hbs`<GlobalSearch @setQuery={{this.query}} @onSelectPage={{(noop)}} @setSelectedYear={{(noop)}} />`);
     await component.searchBox.input('typed it');
     await component.searchBox.clickIcon();
   });
@@ -119,13 +111,13 @@ module('Integration | Component | global-search', function (hooks) {
     this.set('query', 'hello world');
     this.set('selectedYear', null);
     await render(hbs`<GlobalSearch
-      @page="1"
-      @query={{this.query}}
-      @setQuery={{(noop)}}
-      @onSelectPage={{(noop)}}
-      @selectedYear={{this.selectedYear}}
-      @setSelectedYear={{set this "selectedYear"}}
-    />`);
+  @page='1'
+  @query={{this.query}}
+  @setQuery={{(noop)}}
+  @onSelectPage={{(noop)}}
+  @selectedYear={{this.selectedYear}}
+  @setSelectedYear={{set this 'selectedYear'}}
+/>`);
     assert.strictEqual(component.academicYear, '');
     assert.strictEqual(
       component.academicYearOptions,
@@ -205,13 +197,13 @@ module('Integration | Component | global-search', function (hooks) {
     this.set('query', 'hello world');
     this.set('ignoredSchoolIds', []);
     await render(hbs`<GlobalSearch
-      @page="1"
-      @query={{this.query}}
-      @setQuery={{(noop)}}
-      @onSelectPage={{(noop)}}
-      @ignoredSchoolIds={{this.ignoredSchoolIds}}
-      @setIgnoredSchoolIds={{set this "ignoredSchoolIds"}}
-    />`);
+  @page='1'
+  @query={{this.query}}
+  @setQuery={{(noop)}}
+  @onSelectPage={{(noop)}}
+  @ignoredSchoolIds={{this.ignoredSchoolIds}}
+  @setIgnoredSchoolIds={{set this 'ignoredSchoolIds'}}
+/>`);
     assert.strictEqual(component.searchResults.length, 4);
     assert.strictEqual(component.searchResults[0].courseTitle, '2019 Course 1');
     assert.strictEqual(component.searchResults[1].courseTitle, '2020 Course 2');
@@ -301,12 +293,12 @@ module('Integration | Component | global-search', function (hooks) {
 
     this.set('query', 'hello world');
     await render(hbs`<GlobalSearch
-      @page="1"
-      @query={{this.query}}
-      @setQuery={{(noop)}}
-      @onSelectPage={{(noop)}}
-      @setSelectedYear={{(noop)}}
-    />`);
+  @page='1'
+  @query={{this.query}}
+  @setQuery={{(noop)}}
+  @onSelectPage={{(noop)}}
+  @setSelectedYear={{(noop)}}
+/>`);
     assert.strictEqual(component.searchResults.length, 1);
     assert.strictEqual(component.searchResults[0].courseTitle, '2019 Course 1');
     assert.strictEqual(component.schoolFilters.length, 3);
@@ -340,12 +332,12 @@ module('Integration | Component | global-search', function (hooks) {
 
     this.set('query', 'hello world');
     await render(hbs`<GlobalSearch
-      @page="1"
-      @query={{this.query}}
-      @setQuery={{(noop)}}
-      @onSelectPage={{(noop)}}
-      @setSelectedYear={{(noop)}}
-    />`);
+  @page='1'
+  @query={{this.query}}
+  @setQuery={{(noop)}}
+  @onSelectPage={{(noop)}}
+  @setSelectedYear={{(noop)}}
+/>`);
     assert.strictEqual(component.searchResults.length, 1);
     assert.strictEqual(component.searchResults[0].courseTitle, '2019 Course 1');
     assert.strictEqual(component.schoolFilters.length, 0);
@@ -366,12 +358,12 @@ module('Integration | Component | global-search', function (hooks) {
 
     this.set('query', '');
     await render(hbs`<GlobalSearch
-      @query={{this.query}}
-      @page="1"
-      @setQuery={{(noop)}}
-      @onSelectPage={{(noop)}}
-      @setSelectedYear={{(noop)}}
-    />`);
+  @query={{this.query}}
+  @page='1'
+  @setQuery={{(noop)}}
+  @onSelectPage={{(noop)}}
+  @setSelectedYear={{(noop)}}
+/>`);
     assert.notOk(component.searchIsRunning);
     this.set('query', 'hello world');
     assert.ok(component.searchIsRunning);

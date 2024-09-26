@@ -14,7 +14,7 @@
         {{on "keyup" this.keyboard}}
         {{on "keyup" (fn this.addErrorDisplayFor "title")}}
         {{on "input" (pick "target.value" (set this "title"))}}
-      >
+      />
       <ValidationError @errors={{get-errors-for this.title}} />
     </div>
     {{#if @fillModeSupported}}
@@ -28,7 +28,7 @@
               checked={{this.fillWithCohort}}
               type="radio"
               {{on "click" (toggle "fillWithCohort" this)}}
-            >
+            />
             {{t "general.yesPopulateGroup"}}
           </label>
         </div>
@@ -38,7 +38,7 @@
               checked={{not this.fillWithCohort}}
               type="radio"
               {{on "click" (toggle "fillWithCohort" this)}}
-            >
+            />
             {{t "general.noPopulateGroup"}}
           </label>
         </div>

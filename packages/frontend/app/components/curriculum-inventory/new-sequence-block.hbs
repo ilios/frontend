@@ -8,7 +8,7 @@
     {{t "general.newSequenceBlock"}}
   </h2>
   {{#if this.isLoading}}
-      <LoadingSpinner />
+    <LoadingSpinner />
   {{else}}
     {{#let (unique-id) as |templateId|}}
       <div class="form">
@@ -24,7 +24,7 @@
             placeholder={{t "general.sequenceBlockTitlePlaceholder"}}
             {{on "keyup" (queue (fn this.addErrorDisplayFor "title") this.saveOrCancel)}}
             {{on "input" (pick "target.value" (set this "title"))}}
-          >
+          />
           <ValidationError @errors={{get-errors-for this.title}} />
         </div>
         <div class="item course" data-test-course>
@@ -50,7 +50,8 @@
               {{t "general.endDate"}}:
               {{format-date this.course.endDate day="2-digit" month="2-digit" year="numeric"}}
               {{#if this.course.clerkshipType}}
-                -{{t "general.clerkship"}} ({{this.course.clerkshipType.title}})
+                -{{t "general.clerkship"}}
+                ({{this.course.clerkshipType.title}})
               {{/if}}
             </span>
           {{/if}}
@@ -76,7 +77,10 @@
             {{on "change" (pick "target.value" this.setRequired)}}
           >
             {{#each this.requiredOptions as |obj|}}
-              <option value={{obj.id}} selected={{eq obj.id this.required.id}}>{{obj.title}}</option>
+              <option
+                value={{obj.id}}
+                selected={{eq obj.id this.required.id}}
+              >{{obj.title}}</option>
             {{/each}}
           </select>
         </div>
@@ -125,15 +129,11 @@
             disabled={{this.save.isRunning}}
             {{on "keyup" (queue (fn this.addErrorDisplayFor "duration") this.saveOrCancel)}}
             {{on "input" (pick "target.value" (set this "duration"))}}
-          >
+          />
           <ValidationError @errors={{get-errors-for this.duration}} />
         </div>
         <div class="item clear-dates">
-          <button
-            type="button"
-            {{on "click" this.clearDates}}
-            data-test-clear-dates
-          >
+          <button type="button" {{on "click" this.clearDates}} data-test-clear-dates>
             {{t "general.clearDates"}}
           </button>
         </div>
@@ -154,7 +154,7 @@
             disabled={{this.save.isRunning}}
             {{on "keyup" (queue (fn this.addErrorDisplayFor "minimum") this.saveOrCancel)}}
             {{on "input" (pick "target.value" (set this "minimum"))}}
-          >
+          />
           <ValidationError @errors={{get-errors-for this.minimum}} />
         </div>
         <div class="item maximum" data-test-maximum>
@@ -168,7 +168,7 @@
             disabled={{this.save.isRunning}}
             {{on "keyup" (queue (fn this.addErrorDisplayFor "maximum") this.saveOrCancel)}}
             {{on "input" (pick "target.value" (set this "maximum"))}}
-          >
+          />
           <ValidationError @errors={{get-errors-for this.maximum}} />
         </div>
         <div class="item starting-academic-level" data-test-starting-academic-level>
@@ -181,7 +181,10 @@
             {{on "change" (pick "target.value" this.setStartingAcademicLevel)}}
           >
             {{#each (sort-by "level" this.academicLevels) as |obj|}}
-              <option value={{obj.id}} selected={{eq obj.id this.startingAcademicLevel.id}}>{{obj.name}}</option>
+              <option
+                value={{obj.id}}
+                selected={{eq obj.id this.startingAcademicLevel.id}}
+              >{{obj.name}}</option>
             {{/each}}
           </select>
         </div>
@@ -195,7 +198,10 @@
             {{on "change" (pick "target.value" this.setEndingAcademicLevel)}}
           >
             {{#each (sort-by "level" this.academicLevels) as |obj|}}
-              <option value={{obj.id}} selected={{eq obj.id this.endingAcademicLevel.id}}>{{obj.name}}</option>
+              <option
+                value={{obj.id}}
+                selected={{eq obj.id this.endingAcademicLevel.id}}
+              >{{obj.name}}</option>
             {{/each}}
           </select>
           <ValidationError @errors={{get-errors-for this.endingAcademicLevel}} />
@@ -210,7 +216,10 @@
             {{on "change" (pick "target.value" this.setChildSequenceOrder)}}
           >
             {{#each this.childSequenceOrderOptions as |obj|}}
-              <option value={{obj.id}} selected={{eq obj.id this.childSequenceOrder.id}}>{{obj.title}}</option>
+              <option
+                value={{obj.id}}
+                selected={{eq obj.id this.childSequenceOrder.id}}
+              >{{obj.title}}</option>
             {{/each}}
           </select>
         </div>
@@ -244,12 +253,7 @@
               {{t "general.done"}}
             {{/if}}
           </button>
-          <button
-            type="button"
-            class="cancel text"
-            data-test-cancel
-            {{on "click" @cancel}}
-          >
+          <button type="button" class="cancel text" data-test-cancel {{on "click" @cancel}}>
             {{t "general.cancel"}}
           </button>
         </div>

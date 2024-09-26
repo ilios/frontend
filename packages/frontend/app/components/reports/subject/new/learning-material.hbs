@@ -14,7 +14,7 @@
               data-test-selected-learning-material
             >
               {{material.title}}
-              <FaIcon @icon="xmark" class="remove"/>
+              <FaIcon @icon="xmark" class="remove" />
             </button>
           {{/let}}
         {{else}}
@@ -31,11 +31,7 @@
         @results={{this.sortedMaterials}}
         as |material|
       >
-        <button
-          class="link-button"
-          type="button"
-          {{on "click" (fn @changeId material.id)}}
-        >
+        <button class="link-button" type="button" {{on "click" (fn @changeId material.id)}}>
           {{material.title}}
         </button>
 

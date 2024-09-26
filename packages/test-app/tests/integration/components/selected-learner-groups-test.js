@@ -52,11 +52,10 @@ module('Integration | Component | selected-learner-groups', function (hooks) {
   test('it renders', async function (assert) {
     this.set('learnerGroups', [this.tlg1, this.subGroup1, this.subSubGroup, this.subGroup2]);
     await render(hbs`<SelectedLearnerGroups
-      @learnerGroups={{this.learnerGroups}}
-      @remove={{(noop)}}
-      @isManaging={{true}}
-    />
-`);
+  @learnerGroups={{this.learnerGroups}}
+  @remove={{(noop)}}
+  @isManaging={{true}}
+/>`);
     assert.strictEqual(component.heading, 'Selected Learner Groups:');
     assert.strictEqual(component.detailLearnergroupsList.trees.length, 1);
     assert.strictEqual(component.detailLearnergroupsList.trees[0].title, 'program 0 cohort 0');
@@ -75,11 +74,7 @@ module('Integration | Component | selected-learner-groups', function (hooks) {
 
   test('read-only', async function (assert) {
     this.set('learnerGroups', [this.tlg1, this.subGroup1, this.subSubGroup, this.subGroup2]);
-    await render(hbs`<SelectedLearnerGroups
-      @learnerGroups={{this.learnerGroups}}
-      @remove={{(noop)}}
-    />
-`);
+    await render(hbs`<SelectedLearnerGroups @learnerGroups={{this.learnerGroups}} @remove={{(noop)}} />`);
     assert.strictEqual(component.heading, 'Selected Learner Groups:');
     assert.strictEqual(component.detailLearnergroupsList.trees.length, 1);
     assert.strictEqual(component.detailLearnergroupsList.trees[0].title, 'program 0 cohort 0');
@@ -103,11 +98,10 @@ module('Integration | Component | selected-learner-groups', function (hooks) {
       assert.strictEqual(this.subGroup2, learnerGroup);
     });
     await render(hbs`<SelectedLearnerGroups
-      @learnerGroups={{this.learnerGroups}}
-      @remove={{this.remove}}
-      @isManaging={{true}}
-    />
-`);
+  @learnerGroups={{this.learnerGroups}}
+  @remove={{this.remove}}
+  @isManaging={{true}}
+/>`);
     await component.detailLearnergroupsList.trees[0].items[3].remove();
   });
 });
