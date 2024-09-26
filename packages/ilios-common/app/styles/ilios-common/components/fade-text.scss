@@ -1,0 +1,24 @@
+@use "../colors" as c;
+
+.fade-text {
+  .display-text-wrapper {
+    &.is-faded {
+      max-height: 200px;
+      overflow: hidden;
+      position: relative;
+    }
+  }
+
+  .fade-text-control {
+    bottom: 105px;
+    cursor: pointer;
+    height: 110px;
+    padding: 0;
+    position: relative;
+
+    button {
+      position: relative;
+      top: 110px;
+    }
+  }
+}
