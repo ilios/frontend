@@ -4,6 +4,7 @@ import { cached } from '@glimmer/tracking';
 import { service } from '@ember/service';
 import { pluralize } from 'ember-inflector';
 import { camelize } from '@ember/string';
+import { action } from '@ember/object';
 
 export default class ReportsSubjectInstructorGroupComponent extends Component {
   @service graphql;
@@ -41,9 +42,11 @@ export default class ReportsSubjectInstructorGroupComponent extends Component {
       filters.push(`${what}: [${prepositionalObjectTableRowId}]`);
     }
     const result = await this.graphql.find('instructorGroups', filters, 'title');
-    if (this.args.setDataIsLoaded) {
-      this.args.setDataIsLoaded();
-    }
     return result.data.instructorGroups.map(({ title }) => title);
+  }
+
+  @action
+  async fetchDownloadData() {
+    return [[this.intl.t('general.instructorGroups')], ...this.sortedData.map((v) => [v])];
   }
 }

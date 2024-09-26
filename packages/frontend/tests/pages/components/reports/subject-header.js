@@ -1,20 +1,16 @@
 import {
-  attribute,
   clickable,
   create,
   collection,
   fillable,
   isPresent,
+  property,
   text,
   value,
 } from 'ember-cli-page-object';
-import academicYears from './subject-year-filter';
 
 const definition = {
-  scope: '[data-test-reports-subject]',
-  backToReports: {
-    scope: '[data-test-back-to-reports]',
-  },
+  scope: '[data-test-reports-subject-header]',
   title: {
     scope: '[data-test-report-title]',
     edit: clickable('[data-test-edit]'),
@@ -24,13 +20,17 @@ const definition = {
     cancel: clickable('.cancel'),
     save: clickable('.done'),
   },
-  academicYears,
+  academicYears: {
+    scope: '[data-test-report-subject-year-filter]',
+    choose: fillable('select'),
+    items: collection('select option', {
+      isSelected: property('selected'),
+    }),
+  },
   description: text('[data-test-report-description]'),
+  isDownloadDisabled: property('disabled', '[data-test-download]'),
   download: clickable('[data-test-download]'),
-  results: collection('[data-test-results] li', {
-    link: attribute('href', 'a'),
-    hasLink: isPresent('a'),
-  }),
+  hasYearFilter: isPresent('[data-test-year-filter]'),
 };
 
 export default definition;

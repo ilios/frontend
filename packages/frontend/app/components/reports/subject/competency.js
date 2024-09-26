@@ -4,6 +4,7 @@ import { pluralize } from 'ember-inflector';
 import { camelize } from '@ember/string';
 import { TrackedAsyncData } from 'ember-async-data';
 import { cached } from '@glimmer/tracking';
+import { action } from '@ember/object';
 
 export default class ReportsSubjectCompetencyComponent extends Component {
   @service graphql;
@@ -41,9 +42,11 @@ export default class ReportsSubjectCompetencyComponent extends Component {
       filters.push(`${what}: [${prepositionalObjectTableRowId}]`);
     }
     const result = await this.graphql.find('competencies', filters, 'id, title');
-    if (this.args.setDataIsLoaded) {
-      this.args.setDataIsLoaded();
-    }
     return result.data.competencies.map(({ title }) => title);
+  }
+
+  @action
+  async fetchDownloadData() {
+    return [[this.intl.t('general.competencies')], ...this.sortedData.map((v) => [v])];
   }
 }

@@ -1,3 +1,16 @@
+<Reports::SubjectHeader
+  @report={{@report}}
+  @school={{@school}}
+  @subject={{@subject}}
+  @prepositionalObject={{@prepositionalObject}}
+  @prepositionalObjectTableRowId={{@prepositionalObjectTableRowId}}
+  @year={{@year}}
+  @changeYear={{@changeYear}}
+  @showYearFilter={{and (not-eq @prepositionalObject 'course') (not-eq @prepositionalObject 'academic year')}}
+  @description={{@description}}
+  @fetchDownloadData={{this.fetchDownloadData}}
+  @readyToDownload={{true}}
+/>
 <div data-test-reports-subject-session>
   {{#if this.data.isResolved}}
     <ul class="report-results" data-test-results>

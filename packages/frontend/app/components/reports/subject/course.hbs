@@ -1,3 +1,16 @@
+<Reports::SubjectHeader
+  @report={{@report}}
+  @school={{@school}}
+  @subject={{@subject}}
+  @prepositionalObject={{@prepositionalObject}}
+  @prepositionalObjectTableRowId={{@prepositionalObjectTableRowId}}
+  @year={{@year}}
+  @changeYear={{@changeYear}}
+  @showYearFilter={{not-eq @prepositionalObject 'academic year'}}
+  @description={{@description}}
+  @fetchDownloadData={{this.fetchDownloadData}}
+  @readyToDownload={{this.data.isResolved}}
+/>
 <div data-test-reports-subject-course>
   {{#if this.data.isResolved}}
     <ul class="report-results" data-test-results>
@@ -5,11 +18,7 @@
         <li>
           {{#if this.showYear}}
             <span data-test-year>
-              {{#if this.academicYearCrossesCalendarYearBoundaries}}
-                {{course.year}} - {{add course.year 1}}
-              {{else}}
-                {{course.year}}
-              {{/if}}
+              {{course.year}}
             </span>
           {{/if}}
           <span data-test-title>

@@ -4,6 +4,7 @@ import { cached } from '@glimmer/tracking';
 import { service } from '@ember/service';
 import { pluralize } from 'ember-inflector';
 import { camelize } from '@ember/string';
+import { action } from '@ember/object';
 
 export default class ReportsSubjectMeshTermComponent extends Component {
   @service graphql;
@@ -41,9 +42,11 @@ export default class ReportsSubjectMeshTermComponent extends Component {
       filters.push(`${what}: [${prepositionalObjectTableRowId}]`);
     }
     const result = await this.graphql.find('meshDescriptors', filters, 'id, name');
-    if (this.args.setDataIsLoaded) {
-      this.args.setDataIsLoaded();
-    }
     return result.data.meshDescriptors.map(({ name }) => name);
+  }
+
+  @action
+  async fetchDownloadData() {
+    return [[this.intl.t('general.meshTerms')], ...this.sortedData.map((v) => [v])];
   }
 }

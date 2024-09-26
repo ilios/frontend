@@ -5,10 +5,12 @@ import { cached } from '@glimmer/tracking';
 import { service } from '@ember/service';
 import { pluralize } from 'ember-inflector';
 import { camelize } from '@ember/string';
+import { action } from '@ember/object';
 
 export default class ReportsSubjectProgramComponent extends Component {
   @service graphql;
   @service currentUser;
+  @service intl;
 
   @cached
   get data() {
@@ -48,9 +50,14 @@ export default class ReportsSubjectProgramComponent extends Component {
       filters.push(`${what}: [${prepositionalObjectTableRowId}]`);
     }
     const result = await this.graphql.find('programs', filters, 'id, title, school { title }');
-    if (this.args.setDataIsLoaded) {
-      this.args.setDataIsLoaded();
-    }
     return result.data.programs;
+  }
+
+  @action
+  async fetchDownloadData() {
+    return [
+      [this.intl.t('general.program'), this.intl.t('general.school')],
+      ...this.sortedPrograms.map(({ title, school }) => [title, school.title]),
+    ];
   }
 }

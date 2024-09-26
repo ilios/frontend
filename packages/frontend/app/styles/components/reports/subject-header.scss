@@ -1,0 +1,51 @@
+@use "../../ilios-common/mixins" as cm;
+@use "../../ilios-common/colors" as c;
+
+.reports-subject-header {
+  border-bottom: 1px solid c.$culturedGrey;
+  display: grid;
+  grid-template-areas:
+    "title"
+    "description"
+    "years-filter"
+    "download";
+  row-gap: 0.25rem;
+  margin: 0 0.8rem 0.25rem 0;
+  padding-bottom: 0.25rem;
+
+  @include cm.for-tablet-and-up {
+    grid-template-areas:
+      "title download"
+      "description description"
+      "years-filter years-filter";
+    grid-template-columns: 4fr 1fr;
+    justify-content: space-between;
+    row-gap: 0;
+  }
+
+  h2 {
+    @include cm.ilios-heading-h4;
+    grid-area: title;
+
+    input {
+      width: 90%;
+    }
+  }
+
+  .download {
+    grid-area: download;
+    &:disabled {
+      cursor: default;
+      background-color: c.$davysGrey;
+    }
+  }
+
+  .years-filter {
+    grid-area: years-filter;
+  }
+
+  .description {
+    grid-area: description;
+    font-style: italic;
+  }
+}
