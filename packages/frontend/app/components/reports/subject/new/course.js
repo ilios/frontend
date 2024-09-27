@@ -32,7 +32,7 @@ export default class ReportsSubjectNewCourseComponent extends Component {
   }
 
   get sortedCourses() {
-    return this.filteredCourses.sort((a, b) => {
+    return this.filteredCourses.slice().sort((a, b) => {
       if (a.year !== b.year) {
         return b.year - a.year;
       }
