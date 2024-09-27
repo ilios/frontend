@@ -19,7 +19,7 @@
       </EditableField>
     {{else}}
       {{! template-lint-disable no-triple-curlies }}
-      {{{@courseObjective.title}}}
+      <FadeText @text={{{@courseObjective.title}}} />
     {{/if}}
   </div>
   <Course::ObjectiveListItemParents
