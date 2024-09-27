@@ -2,7 +2,7 @@ import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
 
-export default class LearnerGroupListComponent extends Component {
+export default class InstructorGroupsListComponent extends Component {
   @service intl;
 
   get sortedAscending() {
