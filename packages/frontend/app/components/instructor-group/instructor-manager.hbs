@@ -8,16 +8,12 @@
     {{#if @instructors.length}}
       <ul class="instructor-list">
         {{#each (sort-by "fullName" @instructors) as |user|}}
-            <li data-test-selected-instructor>
-              <button
-                type="button"
-                {{on "click" (fn @remove user)}}
-                data-test-remove
-              >
-                <UserNameInfo @user={{user}} />
-                <FaIcon @icon="xmark" class="remove" />
-              </button>
-            </li>
+          <li data-test-selected-instructor>
+            <button type="button" {{on "click" (fn @remove user)}} data-test-remove>
+              <UserNameInfo @user={{user}} />
+              <FaIcon @icon="xmark" class="remove" />
+            </button>
+          </li>
         {{/each}}
       </ul>
     {{else}}

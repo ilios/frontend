@@ -66,10 +66,10 @@ module('Integration | Component | reports/subject', function (hooks) {
       };
     });
     await render(hbs`<Reports::Subject
-      @report={{this.selectedReport}}
-      @year={{this.selectedYear}}
-      @changeYear={{this.setReportYear}}
-    />`);
+  @report={{this.selectedReport}}
+  @year={{this.selectedYear}}
+  @changeYear={{this.setReportYear}}
+/>`);
     assert.strictEqual(component.title.text, 'my report 0');
     assert.strictEqual(
       component.description,
@@ -119,10 +119,10 @@ module('Integration | Component | reports/subject', function (hooks) {
       };
     });
     await render(hbs`<Reports::Subject
-      @report={{this.selectedReport}}
-      @year={{this.selectedYear}}
-      @changeYear={{(noop)}}
-    />`);
+  @report={{this.selectedReport}}
+  @year={{this.selectedYear}}
+  @changeYear={{(noop)}}
+/>`);
     assert.strictEqual(
       component.description,
       'This report shows all Courses associated with Program "program 0" in school 0.',
@@ -161,10 +161,10 @@ module('Integration | Component | reports/subject', function (hooks) {
       };
     });
     await render(hbs`<Reports::Subject
-      @report={{this.selectedReport}}
-      @year={{this.selectedYear}}
-      @changeYear={{this.setReportYear}}
-    />`);
+  @report={{this.selectedReport}}
+  @year={{this.selectedYear}}
+  @changeYear={{this.setReportYear}}
+/>`);
     assert.strictEqual(component.description, 'This report shows all Courses in school 0.');
     assert.strictEqual(component.academicYears.value, '');
     assert.strictEqual(component.results.length, 1);

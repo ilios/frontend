@@ -16,22 +16,14 @@
     </li>
     {{#each this.sessions as |session|}}
       <li class="session-row">
-        <LinkTo
-          @route="session"
-          @models={{array @course.id session.id}}
-          class="session-title-link"
-        >
+        <LinkTo @route="session" @models={{array @course.id session.id}} class="session-title-link">
           {{session.title}}
         </LinkTo>
         <GlobalSearchTags @tags={{session.matchedIn}} />
       </li>
     {{/each}}
     {{#if (and (not this.showMore) (gt @course.sessions.length 3))}}
-      <button
-        class="show-more link-button"
-        type="button"
-        {{on "click" (set this "showMore" true)}}
-      >
+      <button class="show-more link-button" type="button" {{on "click" (set this "showMore" true)}}>
         <FaIcon @icon="angle-down" />
         {{t "general.showMore"}}
       </button>

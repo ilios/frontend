@@ -1,4 +1,8 @@
-<div class="curriculum-inventory-verification-preview-table2" data-test-curriculum-inventory-verification-preview-table2 ...attributes>
+<div
+  class="curriculum-inventory-verification-preview-table2"
+  data-test-curriculum-inventory-verification-preview-table2
+  ...attributes
+>
   <h4 data-test-title>
     {{t "general.table2PrimaryInstructionalMethodByNonClerkshipSequenceBlock"}}
   </h4>
@@ -33,7 +37,9 @@
             {{clerkship.title}}
           </td>
           <td>
-            {{clerkship.startingLevel}} - {{clerkship.endingLevel}}
+            {{clerkship.startingLevel}}
+            -
+            {{clerkship.endingLevel}}
           </td>
           {{#each clerkship.methods as |method|}}
             <td>

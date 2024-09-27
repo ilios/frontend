@@ -1,6 +1,6 @@
 <nav
   aria-label={{t "general.primary"}}
-  class="ilios-navigation {{if this.expanded "expanded"}}"
+  class="ilios-navigation {{if this.expanded 'expanded'}}"
   data-test-ilios-navigation
   ...attributes
 >
@@ -25,29 +25,13 @@
         <LinkTo
           @route="dashboard"
           title={{t "general.dashboard"}}
-          @current-when={{
-            join " "
-            (array
-              "dashboard"
-              "events"
-              "mymaterials"
-              "weeklyevents"
-            )
-           }}
+          @current-when={{join " " (array "dashboard" "events" "mymaterials" "weeklyevents")}}
         >
-          <FaIcon
-            @icon="house"
-            @fixedWidth={{true}}
-          />
+          <FaIcon @icon="house" @fixedWidth={{true}} />
           <span class="text">
             {{t "general.dashboard"}}
           </span>
-          <FaIcon
-            class="if-active"
-            @prefix="fas"
-            @icon="chevron-right"
-            @fixedWidth={{true}}
-          />
+          <FaIcon class="if-active" @prefix="fas" @icon="chevron-right" @fixedWidth={{true}} />
         </LinkTo>
       </li>
       {{#if this.currentUser.performsNonLearnerFunction}}
@@ -55,8 +39,8 @@
           <LinkTo
             @route="courses"
             title={{t "general.coursesAndSessions"}}
-            @current-when={{
-              join " "
+            @current-when={{join
+              " "
               (array
                 "course"
                 "course-materials"
@@ -79,11 +63,7 @@
             <span class="text">
               {{t "general.coursesAndSessions"}}
             </span>
-            <FaIcon
-              class="if-active"
-              @icon="chevron-right"
-              @fixedWidth={{true}}
-            />
+            <FaIcon class="if-active" @icon="chevron-right" @fixedWidth={{true}} />
           </LinkTo>
         </li>
         <li>
@@ -96,11 +76,7 @@
             <span class="text">
               {{t "general.learnerGroups"}}
             </span>
-            <FaIcon
-              class="if-active"
-              @icon="chevron-right"
-              @fixedWidth={{true}}
-            />
+            <FaIcon class="if-active" @icon="chevron-right" @fixedWidth={{true}} />
           </LinkTo>
         </li>
         <li>
@@ -113,11 +89,7 @@
             <span class="text">
               {{t "general.instructorGroups"}}
             </span>
-            <FaIcon
-              class="if-active"
-              @icon="chevron-right"
-              @fixedWidth={{true}}
-            />
+            <FaIcon class="if-active" @icon="chevron-right" @fixedWidth={{true}} />
           </LinkTo>
         </li>
         <li>
@@ -125,16 +97,12 @@
             @route="schools"
             title={{t "general.schools"}}
             @current-when="schools school session-type-visualize-vocabularies session-type-visualize-vocabulary"
-        >
+          >
             <FaIcon @icon="building-columns" @fixedWidth={{true}} />
             <span class="text">
               {{t "general.schools"}}
             </span>
-            <FaIcon
-              class="if-active"
-              @icon="chevron-right"
-              @fixedWidth={{true}}
-            />
+            <FaIcon class="if-active" @icon="chevron-right" @fixedWidth={{true}} />
           </LinkTo>
         </li>
         <li>
@@ -147,28 +115,16 @@
             <span class="text">
               {{t "general.programs"}}
             </span>
-            <FaIcon
-              class="if-active"
-              @icon="chevron-right"
-              @fixedWidth={{true}}
-            />
+            <FaIcon class="if-active" @icon="chevron-right" @fixedWidth={{true}} />
           </LinkTo>
         </li>
         <li>
-          <LinkTo
-            @route="reports"
-            title={{t "general.reports"}}
-            @current-when="reports"
-          >
+          <LinkTo @route="reports" title={{t "general.reports"}} @current-when="reports">
             <FaIcon @icon="file-lines" @fixedWidth={{true}} />
             <span class="text">
               {{t "general.reports"}}
             </span>
-            <FaIcon
-              class="if-active"
-              @icon="chevron-right"
-              @fixedWidth={{true}}
-            />
+            <FaIcon class="if-active" @icon="chevron-right" @fixedWidth={{true}} />
           </LinkTo>
         </li>
       {{/if}}
@@ -183,11 +139,7 @@
             <span class="text">
               {{t "general.admin"}}
             </span>
-            <FaIcon
-              class="if-active"
-              @icon="chevron-right"
-              @fixedWidth={{true}}
-            />
+            <FaIcon class="if-active" @icon="chevron-right" @fixedWidth={{true}} />
           </LinkTo>
         </li>
       {{/if}}
@@ -196,8 +148,8 @@
           <LinkTo
             @route="curriculum-inventory-reports"
             title={{t "general.curriculumInventory"}}
-            @current-when={{
-              join " "
+            @current-when={{join
+              " "
               (array
                 "curriculum-inventory-report"
                 "curriculum-inventory-reports"
@@ -210,11 +162,7 @@
             <span class="text">
               {{t "general.curriculumInventory"}}
             </span>
-            <FaIcon
-              class="if-active"
-              @icon="chevron-right"
-              @fixedWidth={{true}}
-            />
+            <FaIcon class="if-active" @icon="chevron-right" @fixedWidth={{true}} />
           </LinkTo>
         </li>
       {{/if}}

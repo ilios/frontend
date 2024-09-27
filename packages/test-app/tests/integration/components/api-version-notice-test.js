@@ -15,8 +15,7 @@ module('Integration | Component | api-version-notice', function (hooks) {
       },
     });
     this.owner.register('service:apiVersion', apiVersionMock);
-    await render(hbs`<ApiVersionNotice />
-`);
+    await render(hbs`<ApiVersionNotice />`);
     await waitFor('[data-test-load-finished]');
     assert.ok(component.isHidden);
     assert.ok(component.notMismatched);
@@ -30,8 +29,7 @@ module('Integration | Component | api-version-notice', function (hooks) {
       },
     });
     this.owner.register('service:apiVersion', apiVersionMock);
-    await render(hbs`<ApiVersionNotice />
-`);
+    await render(hbs`<ApiVersionNotice />`);
     await waitFor('[data-test-load-finished]');
     assert.ok(component.isVisible);
     assert.ok(component.mismatched);

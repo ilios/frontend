@@ -15,13 +15,13 @@ module('Integration | Helper | queue', function (hooks) {
     this.set('value', 2);
     this.set('label', 'Calculate');
 
-    await render(hbs`
-      <p>{{this.value}}</p>
-      <button type="button" {{on "click" (fn (queue this.doAThing this.process this.undoAThing) this.value)}}>
-        {{this.label}}
-      </button>
-
-`);
+    await render(hbs`<p>{{this.value}}</p>
+<button
+  type='button'
+  {{on 'click' (fn (queue this.doAThing this.process this.undoAThing) this.value)}}
+>
+  {{this.label}}
+</button>`);
 
     assert.dom('p').hasText('2', 'precond - should render 2');
     await click('button');
@@ -34,13 +34,13 @@ module('Integration | Helper | queue', function (hooks) {
     this.set('process', (x) => this.set('value', x * x));
     this.set('label', 'Calculate');
 
-    await render(hbs`
-      <p>{{this.value}}</p>
-      <button type="button" {{on "click" (fn (queue this.doAThingThatTakesTime this.process) this.value)}}>
-        {{this.label}}
-      </button>
-
-`);
+    await render(hbs`<p>{{this.value}}</p>
+<button
+  type='button'
+  {{on 'click' (fn (queue this.doAThingThatTakesTime this.process) this.value)}}
+>
+  {{this.label}}
+</button>`);
 
     assert.dom('p').hasText('3', 'precond - should render 3');
     await click('button');

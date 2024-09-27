@@ -10,12 +10,11 @@ module('Integration | Component | click choice buttons', function (hooks) {
 
   test('it renders', async function (assert) {
     await render(hbs`<ClickChoiceButtons
-      @toggle={{(noop)}}
-      @firstChoicePicked={{true}}
-      @buttonContent1="Left Button"
-      @buttonContent2="Right Button"
-    />
-`);
+  @toggle={{(noop)}}
+  @firstChoicePicked={{true}}
+  @buttonContent1='Left Button'
+  @buttonContent2='Right Button'
+/>`);
     assert.strictEqual(component.firstButton.text, 'Left Button', 'first button has correct text');
     assert.strictEqual(
       component.secondButton.text,
@@ -30,12 +29,11 @@ module('Integration | Component | click choice buttons', function (hooks) {
 
   test('it renders second choice picked', async function (assert) {
     await render(hbs`<ClickChoiceButtons
-      @toggle={{(noop)}}
-      @firstChoicePicked={{false}}
-      @buttonContent1="Left Button"
-      @buttonContent2="Right Button"
-    />
-`);
+  @toggle={{(noop)}}
+  @firstChoicePicked={{false}}
+  @buttonContent1='Left Button'
+  @buttonContent2='Right Button'
+/>`);
     assert.strictEqual(component.firstButton.text, 'Left Button', 'first button has correct text');
     assert.strictEqual(
       component.secondButton.text,
@@ -59,12 +57,11 @@ module('Integration | Component | click choice buttons', function (hooks) {
       called++;
     });
     await render(hbs`<ClickChoiceButtons
-      @toggle={{this.toggle}}
-      @firstChoicePicked={{this.firstChoicePicked}}
-      @buttonContent1="Left Button"
-      @buttonContent2="Right Button"
-    />
-`);
+  @toggle={{this.toggle}}
+  @firstChoicePicked={{this.firstChoicePicked}}
+  @buttonContent1='Left Button'
+  @buttonContent2='Right Button'
+/>`);
     assert.ok(component.firstButton.isActive);
     assert.notOk(component.secondButton.isActive);
 
@@ -85,12 +82,11 @@ module('Integration | Component | click choice buttons', function (hooks) {
       assert.ok(false, 'this should not be fired');
     });
     await render(hbs`<ClickChoiceButtons
-      @toggle={{this.toggle}}
-      @firstChoicePicked={{true}}
-      @buttonContent1="Left Button"
-      @buttonContent2="Right Button"
-    />
-`);
+  @toggle={{this.toggle}}
+  @firstChoicePicked={{true}}
+  @buttonContent1='Left Button'
+  @buttonContent2='Right Button'
+/>`);
 
     assert.ok(component.firstButton.isActive);
     assert.notOk(component.secondButton.isActive);

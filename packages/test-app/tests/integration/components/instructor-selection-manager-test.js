@@ -51,15 +51,14 @@ module('Integration | Component | instructor selection manager', function (hooks
     this.set('groups', [this.group1, this.group2]);
     this.set('availableGroups', []);
     await render(hbs`<InstructorSelectionManager
-      @instructors={{this.instructors}}
-      @instructorGroups={{this.groups}}
-      @availableInstructorGroups={{this.availableGroups}}
-      @addInstructor={{(noop)}}
-      @addInstructorGroup={{(noop)}}
-      @removeInstructor={{(noop)}}
-      @removeInstructorGroup={{(noop)}}
-    />
-`);
+  @instructors={{this.instructors}}
+  @instructorGroups={{this.groups}}
+  @availableInstructorGroups={{this.availableGroups}}
+  @addInstructor={{(noop)}}
+  @addInstructorGroup={{(noop)}}
+  @removeInstructor={{(noop)}}
+  @removeInstructorGroup={{(noop)}}
+/>`);
     assert.strictEqual(component.selectedInstructors.instructors.length, 3);
     assert.strictEqual(
       component.selectedInstructors.instructors[0].userNameInfo.fullName,
@@ -143,15 +142,14 @@ module('Integration | Component | instructor selection manager', function (hooks
       assert.strictEqual(instructor, this.instructor1);
     });
     await render(hbs`<InstructorSelectionManager
-      @instructors={{this.instructors}}
-      @instructorGroups={{this.groups}}
-      @availableInstructorGroups={{this.availableGroups}}
-      @addInstructor={{(noop)}}
-      @addInstructorGroup={{(noop)}}
-      @removeInstructor={{this.removeInstructor}}
-      @removeInstructorGroup={{(noop)}}
-    />
-`);
+  @instructors={{this.instructors}}
+  @instructorGroups={{this.groups}}
+  @availableInstructorGroups={{this.availableGroups}}
+  @addInstructor={{(noop)}}
+  @addInstructorGroup={{(noop)}}
+  @removeInstructor={{this.removeInstructor}}
+  @removeInstructorGroup={{(noop)}}
+/>`);
     await component.selectedInstructors.instructors[0].remove();
   });
 
@@ -164,15 +162,14 @@ module('Integration | Component | instructor selection manager', function (hooks
       assert.strictEqual(group, this.group1);
     });
     await render(hbs`<InstructorSelectionManager
-      @instructors={{this.instructors}}
-      @instructorGroups={{this.groups}}
-      @availableInstructorGroups={{this.availableGroups}}
-      @addInstructor={{(noop)}}
-      @addInstructorGroup={{(noop)}}
-      @removeInstructor={{(noop)}}
-      @removeInstructorGroup={{this.removeGroup}}
-    />
-`);
+  @instructors={{this.instructors}}
+  @instructorGroups={{this.groups}}
+  @availableInstructorGroups={{this.availableGroups}}
+  @addInstructor={{(noop)}}
+  @addInstructorGroup={{(noop)}}
+  @removeInstructor={{(noop)}}
+  @removeInstructorGroup={{this.removeGroup}}
+/>`);
     await component.selectedInstructorGroups.instructorGroups[0].remove();
   });
 
@@ -185,15 +182,14 @@ module('Integration | Component | instructor selection manager', function (hooks
       assert.strictEqual(group, this.group3);
     });
     await render(hbs`<InstructorSelectionManager
-      @instructors={{this.instructors}}
-      @instructorGroups={{this.groups}}
-      @availableInstructorGroups={{this.availableGroups}}
-      @addInstructor={{(noop)}}
-      @addInstructorGroup={{this.addGroup}}
-      @removeInstructor={{(noop)}}
-      @removeInstructorGroup={{(noop)}}
-    />
-`);
+  @instructors={{this.instructors}}
+  @instructorGroups={{this.groups}}
+  @availableInstructorGroups={{this.availableGroups}}
+  @addInstructor={{(noop)}}
+  @addInstructorGroup={{this.addGroup}}
+  @removeInstructor={{(noop)}}
+  @removeInstructorGroup={{(noop)}}
+/>`);
     await component.search.searchBox.set('Gamma');
     await component.search.results.items[0].click();
   });
@@ -210,15 +206,14 @@ module('Integration | Component | instructor selection manager', function (hooks
       assert.strictEqual(instructor, this.instructor3);
     });
     await render(hbs`<InstructorSelectionManager
-      @instructors={{this.instructors}}
-      @instructorGroups={{this.groups}}
-      @availableInstructorGroups={{this.availableGroups}}
-      @addInstructor={{this.addInstructor}}
-      @addInstructorGroup={{(noop)}}
-      @removeInstructor={{(noop)}}
-      @removeInstructorGroup={{(noop)}}
-    />
-`);
+  @instructors={{this.instructors}}
+  @instructorGroups={{this.groups}}
+  @availableInstructorGroups={{this.availableGroups}}
+  @addInstructor={{this.addInstructor}}
+  @addInstructorGroup={{(noop)}}
+  @removeInstructor={{(noop)}}
+  @removeInstructorGroup={{(noop)}}
+/>`);
     await component.search.searchBox.set('Aardvark');
     await component.search.results.items[0].click();
   });

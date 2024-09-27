@@ -55,7 +55,7 @@ module('Integration | Component | user-name-info', function (hooks) {
     const user = this.server.create('user');
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     this.set('user', userModel);
-    await render(hbs`<UserNameInfo id="test-id" @user={{this.user}} />`);
+    await render(hbs`<UserNameInfo id='test-id' @user={{this.user}} />`);
     assert.strictEqual(component.id, 'test-id');
   });
 

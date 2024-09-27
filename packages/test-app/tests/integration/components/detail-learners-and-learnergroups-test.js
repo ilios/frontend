@@ -89,11 +89,10 @@ module('Integration | Component | detail-learners-and-learner-groups', function 
     this.set('session', this.session);
     this.set('cohorts', [this.cohort1, this.cohort2]);
     await render(hbs`<DetailLearnersAndLearnerGroups
-      @editable={{true}}
-      @session={{this.session}}
-      @cohorts={{this.cohorts}}
-    />
-`);
+  @editable={{true}}
+  @session={{this.session}}
+  @cohorts={{this.cohorts}}
+/>`);
     assert.strictEqual(component.title, 'Learners (3) and Learner Groups (3)');
     assert.strictEqual(component.selectedLearners.learners.length, 3);
     assert.strictEqual(
@@ -143,11 +142,10 @@ module('Integration | Component | detail-learners-and-learner-groups', function 
     this.set('session', this.session);
     this.set('cohorts', [this.cohort1, this.cohort2]);
     await render(hbs`<DetailLearnersAndLearnerGroups
-      @editable={{true}}
-      @session={{this.session}}
-      @cohorts={{this.cohorts}}
-    />
-`);
+  @editable={{true}}
+  @session={{this.session}}
+  @cohorts={{this.cohorts}}
+/>`);
     assert.ok(component.hasManageButton);
     assert.notOk(component.hasSaveButton);
     assert.notOk(component.hasCancelButton);
@@ -277,11 +275,10 @@ module('Integration | Component | detail-learners-and-learner-groups', function 
     this.set('session', this.session);
     this.set('cohorts', [this.cohort1, this.cohort2]);
     await render(hbs`<DetailLearnersAndLearnerGroups
-      @editable={{false}}
-      @session={{this.session}}
-      @cohorts={{this.cohorts}}
-    />
-`);
+  @editable={{false}}
+  @session={{this.session}}
+  @cohorts={{this.cohorts}}
+/>`);
     assert.notOk(component.hasManageButton);
   });
 
@@ -289,11 +286,10 @@ module('Integration | Component | detail-learners-and-learner-groups', function 
     this.set('session', this.session);
     this.set('cohorts', [this.cohort1, this.cohort2]);
     await render(hbs`<DetailLearnersAndLearnerGroups
-      @editable={{true}}
-      @session={{this.session}}
-      @cohorts={{this.cohorts}}
-    />
-`);
+  @editable={{true}}
+  @session={{this.session}}
+  @cohorts={{this.cohorts}}
+/>`);
     await component.manage();
     assert.strictEqual(component.learnerSelectionManager.selectedLearners.learners.length, 3);
     await component.learnerSelectionManager.selectedLearners.learners[0].remove();
@@ -304,11 +300,10 @@ module('Integration | Component | detail-learners-and-learner-groups', function 
     this.set('session', this.session);
     this.set('cohorts', [this.cohort1, this.cohort2]);
     await render(hbs`<DetailLearnersAndLearnerGroups
-      @editable={{true}}
-      @session={{this.session}}
-      @cohorts={{this.cohorts}}
-    />
-`);
+  @editable={{true}}
+  @session={{this.session}}
+  @cohorts={{this.cohorts}}
+/>`);
     await component.manage();
     assert.strictEqual(
       component.learnergroupSelectionManager.selectedLearnerGroups.detailLearnergroupsList.trees[0]
@@ -335,11 +330,10 @@ module('Integration | Component | detail-learners-and-learner-groups', function 
     this.set('session', this.session);
     this.set('cohorts', [this.cohort1, this.cohort2]);
     await render(hbs`<DetailLearnersAndLearnerGroups
-      @editable={{true}}
-      @session={{this.session}}
-      @cohorts={{this.cohorts}}
-    />
-`);
+  @editable={{true}}
+  @session={{this.session}}
+  @cohorts={{this.cohorts}}
+/>`);
     await component.manage();
     assert.strictEqual(
       component.learnergroupSelectionManager.selectedLearnerGroups.detailLearnergroupsList.trees[0]
@@ -366,11 +360,10 @@ module('Integration | Component | detail-learners-and-learner-groups', function 
     this.set('session', this.session);
     this.set('cohorts', [this.cohort1, this.cohort2]);
     await render(hbs`<DetailLearnersAndLearnerGroups
-      @editable={{true}}
-      @session={{this.session}}
-      @cohorts={{this.cohorts}}
-    />
-`);
+  @editable={{true}}
+  @session={{this.session}}
+  @cohorts={{this.cohorts}}
+/>`);
     await component.manage();
     assert.strictEqual(
       component.learnergroupSelectionManager.selectedLearnerGroups.detailLearnergroupsList.trees[1]
@@ -403,11 +396,10 @@ module('Integration | Component | detail-learners-and-learner-groups', function 
       return schema.users.all();
     });
     await render(hbs`<DetailLearnersAndLearnerGroups
-      @editable={{true}}
-      @session={{this.session}}
-      @cohorts={{this.cohorts}}
-    />
-`);
+  @editable={{true}}
+  @session={{this.session}}
+  @cohorts={{this.cohorts}}
+/>`);
     await component.manage();
     assert.strictEqual(component.learnerSelectionManager.selectedLearners.learners.length, 3);
     await component.learnerSelectionManager.search.searchBox.set('does not matter');
@@ -420,11 +412,10 @@ module('Integration | Component | detail-learners-and-learner-groups', function 
     this.set('session', this.session);
     this.set('cohorts', [this.cohort1, this.cohort2]);
     await render(hbs`<DetailLearnersAndLearnerGroups
-      @editable={{true}}
-      @session={{this.session}}
-      @cohorts={{this.cohorts}}
-    />
-`);
+  @editable={{true}}
+  @session={{this.session}}
+  @cohorts={{this.cohorts}}
+/>`);
     assert.strictEqual(component.selectedLearners.learners.length, 3);
     assert.strictEqual(
       component.selectedLearnerGroups.detailLearnergroupsList.trees[1].items.length,
@@ -465,11 +456,10 @@ module('Integration | Component | detail-learners-and-learner-groups', function 
     this.set('session', this.session);
     this.set('cohorts', [this.cohort1, this.cohort2]);
     await render(hbs`<DetailLearnersAndLearnerGroups
-      @editable={{true}}
-      @session={{this.session}}
-      @cohorts={{this.cohorts}}
-    />
-`);
+  @editable={{true}}
+  @session={{this.session}}
+  @cohorts={{this.cohorts}}
+/>`);
     assert.strictEqual(component.selectedLearners.learners.length, 3);
     assert.strictEqual(
       component.selectedLearnerGroups.detailLearnergroupsList.trees[1].items.length,
@@ -508,12 +498,9 @@ module('Integration | Component | detail-learners-and-learner-groups', function 
 
   test('it updates when relationships change #1550', async function (assert) {
     this.set('session', this.session);
-    await render(hbs`<DetailLearnersAndLearnerGroups
-      @editable={{true}}
-      @session={{this.session}}
-      @cohorts={{(array)}}
-    />
-`);
+    await render(
+      hbs`<DetailLearnersAndLearnerGroups @editable={{true}} @session={{this.session}} @cohorts={{(array)}} />`,
+    );
     assert.strictEqual(component.title, 'Learners (3) and Learner Groups (3)');
     assert.strictEqual(component.selectedLearners.learners.length, 3);
     assert.strictEqual(component.selectedLearnerGroups.detailLearnergroupsList.trees.length, 2);
@@ -530,11 +517,10 @@ module('Integration | Component | detail-learners-and-learner-groups', function 
     this.set('session', this.session);
     this.set('cohorts', [this.cohort1, this.cohort2]);
     await render(hbs`<DetailLearnersAndLearnerGroups
-      @editable={{true}}
-      @session={{this.session}}
-      @cohorts={{this.cohorts}}
-    />
-`);
+  @editable={{true}}
+  @session={{this.session}}
+  @cohorts={{this.cohorts}}
+/>`);
     await component.manage();
     assert.strictEqual(
       component.learnergroupSelectionManager.selectedLearnerGroups.detailLearnergroupsList.trees
@@ -583,11 +569,10 @@ module('Integration | Component | detail-learners-and-learner-groups', function 
     this.set('session', this.session);
     this.set('cohorts', [this.cohort1, this.cohort2]);
     await render(hbs`<DetailLearnersAndLearnerGroups
-      @editable={{true}}
-      @session={{this.session}}
-      @cohorts={{this.cohorts}}
-    />
-`);
+  @editable={{true}}
+  @session={{this.session}}
+  @cohorts={{this.cohorts}}
+/>`);
     await component.manage();
     assert.strictEqual(
       component.learnergroupSelectionManager.selectedLearnerGroups.detailLearnergroupsList.trees
@@ -636,11 +621,10 @@ module('Integration | Component | detail-learners-and-learner-groups', function 
     this.set('session', this.session);
     this.set('cohorts', [this.cohort1, this.cohort2]);
     await render(hbs`<DetailLearnersAndLearnerGroups
-      @editable={{true}}
-      @session={{this.session}}
-      @cohorts={{this.cohorts}}
-    />
-`);
+  @editable={{true}}
+  @session={{this.session}}
+  @cohorts={{this.cohorts}}
+/>`);
     await component.manage();
     assert.strictEqual(
       component.learnergroupSelectionManager.selectedLearnerGroups.detailLearnergroupsList.trees
@@ -685,11 +669,10 @@ module('Integration | Component | detail-learners-and-learner-groups', function 
     this.set('session', this.session);
     this.set('cohorts', [this.cohort1, this.cohort2]);
     await render(hbs`<DetailLearnersAndLearnerGroups
-      @editable={{true}}
-      @session={{this.session}}
-      @cohorts={{this.cohorts}}
-    />
-`);
+  @editable={{true}}
+  @session={{this.session}}
+  @cohorts={{this.cohorts}}
+/>`);
     await component.manage();
     assert.strictEqual(
       component.learnergroupSelectionManager.selectedLearnerGroups.detailLearnergroupsList.trees
@@ -740,11 +723,10 @@ module('Integration | Component | detail-learners-and-learner-groups', function 
     this.set('session', this.session);
     this.set('cohorts', [this.cohort1, this.cohort2]);
     await render(hbs`<DetailLearnersAndLearnerGroups
-      @editable={{true}}
-      @session={{this.session}}
-      @cohorts={{this.cohorts}}
-    />
-`);
+  @editable={{true}}
+  @session={{this.session}}
+  @cohorts={{this.cohorts}}
+/>`);
     await component.manage();
     assert.strictEqual(
       component.learnergroupSelectionManager.selectedLearnerGroups.detailLearnergroupsList.trees
@@ -790,11 +772,10 @@ module('Integration | Component | detail-learners-and-learner-groups', function 
     this.set('session', this.session);
     this.set('cohorts', [this.cohort1, this.cohort2]);
     await render(hbs`<DetailLearnersAndLearnerGroups
-      @editable={{true}}
-      @session={{this.session}}
-      @cohorts={{this.cohorts}}
-    />
-`);
+  @editable={{true}}
+  @session={{this.session}}
+  @cohorts={{this.cohorts}}
+/>`);
     await component.manage();
     assert.strictEqual(
       component.learnergroupSelectionManager.selectedLearnerGroups.detailLearnergroupsList.trees

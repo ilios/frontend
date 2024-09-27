@@ -13,12 +13,12 @@ module('Integration | Component | school session attributes collapsed', function
     this.set('showSessionSpecialAttireRequired', false);
     this.set('showSessionSpecialEquipmentRequired', false);
     await render(hbs`<SchoolSessionAttributesCollapsed
-      @showSessionAttendanceRequired={{this.showSessionAttendanceRequired}}
-      @showSessionSupplemental={{this.showSessionSupplemental}}
-      @showSessionSpecialAttireRequired={{this.showSessionSpecialAttireRequired}}
-      @showSessionSpecialEquipmentRequired={{this.showSessionSpecialEquipmentRequired}}
-      @expand={{(noop)}}
-    />`);
+  @showSessionAttendanceRequired={{this.showSessionAttendanceRequired}}
+  @showSessionSupplemental={{this.showSessionSupplemental}}
+  @showSessionSpecialAttireRequired={{this.showSessionSpecialAttireRequired}}
+  @showSessionSpecialEquipmentRequired={{this.showSessionSpecialEquipmentRequired}}
+  @expand={{(noop)}}
+/>`);
 
     assert.strictEqual(component.attendanceRequired.label, 'Attendance Required');
     assert.ok(component.attendanceRequired.isDisabled);
@@ -36,12 +36,12 @@ module('Integration | Component | school session attributes collapsed', function
       assert.ok(true, 'expand triggered.');
     });
     await render(hbs`<SchoolSessionAttributesCollapsed
-      @showSessionAttendanceRequired={{true}}
-      @showSessionSupplemental={{true}}
-      @showSessionSpecialAttireRequired={{true}}
-      @showSessionSpecialEquipmentRequired={{true}}
-      @expand={{this.expand}}
-    />`);
+  @showSessionAttendanceRequired={{true}}
+  @showSessionSupplemental={{true}}
+  @showSessionSpecialAttireRequired={{true}}
+  @showSessionSpecialEquipmentRequired={{true}}
+  @expand={{this.expand}}
+/>`);
 
     await component.expand();
   });

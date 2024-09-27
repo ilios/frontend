@@ -20,7 +20,8 @@
           disabled={{eq @page pageNumber}}
           {{on "click" (fn @onSelectPage pageNumber)}}
           data-test-page-button
-          data-test-page-{{pageNumber}}
+          data-test-page-
+          {{pageNumber}}
         >
           {{pageNumber}}
         </button>

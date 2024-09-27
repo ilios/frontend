@@ -12,7 +12,8 @@
           <button
             class="link-button"
             type="button"
-            data-test-all {{on "click" this.clearVocabAndTerm}}
+            data-test-all
+            {{on "click" this.clearVocabAndTerm}}
           >
             {{t "general.allVocabularies"}}
           </button>
@@ -21,7 +22,8 @@
           <button
             class="link-button"
             type="button"
-            data-test-vocabulary {{on "click" (fn @manageTerm null)}}
+            data-test-vocabulary
+            {{on "click" (fn @manageTerm null)}}
           >
             {{@vocabulary.title}}
           </button>
@@ -31,7 +33,8 @@
             <button
               class="link-button"
               type="button"
-              data-test-term {{on "click" (fn @manageTerm parent.id)}}
+              data-test-term
+              {{on "click" (fn @manageTerm parent.id)}}
             >
               {{parent.title}}
             </button>
@@ -53,7 +56,8 @@
                 @save={{perform this.changeTitle}}
                 @close={{this.revertTitleChanges}}
                 @saveOnEnter={{true}}
-                @closeOnEscape={{true}} as |isSaving|
+                @closeOnEscape={{true}}
+                as |isSaving|
               >
                 <input
                   id="title-{{templateId}}"
@@ -62,7 +66,7 @@
                   disabled={{isSaving}}
                   {{on "input" (pick "target.value" (set this "titleValue"))}}
                   {{on "keyup" (fn this.addErrorDisplayFor "titleValue")}}
-                >
+                />
               </EditableField>
             {{else}}
               {{this.title}}
@@ -101,10 +105,15 @@
             </label>
             {{#if @canUpdate}}
               <EditableField
-                @value={{if this.description this.description (t "general.clickToAddTermDescription")}}
+                @value={{if
+                  this.description
+                  this.description
+                  (t "general.clickToAddTermDescription")
+                }}
                 @save={{perform this.changeDescription}}
                 @close={{this.revertDescriptionChanges}}
-                @closeOnEscape={{true}} as |isSaving|
+                @closeOnEscape={{true}}
+                as |isSaving|
               >
                 <textarea
                   id="description-{{templateId}}"
@@ -130,7 +139,7 @@
             <button
               class="link-button"
               type="button"
-              {{ on "click" (fn @manageTerm this.newTerm.id)}}
+              {{on "click" (fn @manageTerm this.newTerm.id)}}
             >
               <FaIcon @icon="square-up-right" />
               {{this.newTerm.title}}
@@ -139,7 +148,7 @@
           </div>
         {{/if}}
         {{#if @canCreate}}
-            <SchoolVocabularyNewTerm @createTerm={{this.createTerm}} @term={{@term}}/>
+          <SchoolVocabularyNewTerm @createTerm={{this.createTerm}} @term={{@term}} />
         {{/if}}
         <ul data-test-term-list>
           {{#each this.children as |term|}}
@@ -152,7 +161,11 @@
               >
                 {{term.title}}
                 {{#if term.hasChildren}}
-                  <FaIcon @icon="asterisk" data-test-has-children @title={{t "general.thisTermHasSubTerms"}} />
+                  <FaIcon
+                    @icon="asterisk"
+                    data-test-has-children
+                    @title={{t "general.thisTermHasSubTerms"}}
+                  />
                 {{/if}}
                 {{#unless term.active}}
                   <em>

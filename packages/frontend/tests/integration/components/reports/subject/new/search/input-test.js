@@ -11,16 +11,14 @@ module('Integration | Component | reports/subject/new/search/input', function (h
   test('it renders and is accessible', async function (assert) {
     await render(hbs`<Reports::Subject::New::Search::Input />`);
 
-    await render(hbs`
-      <Reports::Subject::New::Search::Input
-        @search={{this.search}}
-        @results={{array 1 2 3}}
-        @searchIsIdle={{true}}
-        as |num|
-      >
-        {{num}}
-      </Reports::Subject::New::Search::Input>
-    `);
+    await render(hbs`<Reports::Subject::New::Search::Input
+  @search={{this.search}}
+  @results={{array 1 2 3}}
+  @searchIsIdle={{true}}
+  as |num|
+>
+  {{num}}
+</Reports::Subject::New::Search::Input>`);
     assert.ok(component.hasInput);
     assert.strictEqual(component.text, '3 Results 1 2 3');
     await a11yAudit(this.element);
@@ -33,9 +31,7 @@ module('Integration | Component | reports/subject/new/search/input', function (h
     this.set('search', (value) => {
       assert.strictEqual(value, input);
     });
-    await render(hbs`
-      <Reports::Subject::New::Search::Input @search={{this.search}} />
-    `);
+    await render(hbs`<Reports::Subject::New::Search::Input @search={{this.search}} />`);
     await component.input(input);
     await component.triggerInput();
   });
@@ -46,13 +42,9 @@ module('Integration | Component | reports/subject/new/search/input', function (h
     this.set('search', () => {
       assert.ok(false, 'search should not be called');
     });
-    await render(hbs`
-      <Reports::Subject::New::Search::Input
-        @search={{this.search}}
-        @searchIsIdle={{true}}
-      >
-      </Reports::Subject::New::Search::Input>
-    `);
+    await render(
+      hbs`<Reports::Subject::New::Search::Input @search={{this.search}} @searchIsIdle={{true}} />`,
+    );
     await component.input(input);
     await component.triggerInput();
     assert.strictEqual(component.text, 'keep typing...');

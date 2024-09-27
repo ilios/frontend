@@ -43,12 +43,11 @@ module('Integration | Component | offering-calendar', function (hooks) {
     this.set('session', sessionModel);
     this.set('learnerGroups', [learnerGroupModel]);
     await render(hbs`<OfferingCalendar
-      @learnerGroups={{this.learnerGroups}}
-      @session={{this.session}}
-      @startDate={{this.startDate}}
-      @endDate={{this.endDate}}
-    />
-`);
+  @learnerGroups={{this.learnerGroups}}
+  @session={{this.session}}
+  @startDate={{this.startDate}}
+  @endDate={{this.endDate}}
+/>`);
     const events = '[data-test-calendar-event]';
     assert.dom(events).exists({ count: 4 });
   });

@@ -19,10 +19,9 @@ module('Integration | Component | reports/subject-year-filter', function (hooks)
   });
 
   test('it renders', async function (assert) {
-    await render(hbs`<Reports::SubjectYearFilter
-      @prepositionalObject={{null}}
-      @subject="course"
-    />`);
+    await render(
+      hbs`<Reports::SubjectYearFilter @prepositionalObject={{null}} @subject='course' />`,
+    );
 
     assert.ok(component.isVisible, true);
     assert.strictEqual(component.items.length, 3);

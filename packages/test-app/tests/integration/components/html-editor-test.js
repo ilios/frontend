@@ -7,8 +7,7 @@ module('Integration | Component | html editor', function (hooks) {
   setupRenderingTest(hooks);
 
   test('it renders', async function (assert) {
-    await render(hbs`<HtmlEditor />
-`);
+    await render(hbs`<HtmlEditor />`);
     await waitFor('[data-test-load-finished]');
 
     assert

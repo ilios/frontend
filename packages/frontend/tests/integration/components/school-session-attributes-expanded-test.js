@@ -13,13 +13,13 @@ module('Integration | Component | school session attributes expanded', function 
     this.set('showSessionSpecialAttireRequired', false);
     this.set('showSessionSpecialEquipmentRequired', false);
     await render(hbs`<SchoolSessionAttributesExpanded
-      @showSessionAttendanceRequired={{this.showSessionAttendanceRequired}}
-      @showSessionSupplemental={{this.showSessionSupplemental}}
-      @showSessionSpecialAttireRequired={{this.showSessionSpecialAttireRequired}}
-      @showSessionSpecialEquipmentRequired={{this.showSessionSpecialEquipmentRequired}}
-      @collapse={{(noop)}}
-      @manage={{(noop)}}
-    />`);
+  @showSessionAttendanceRequired={{this.showSessionAttendanceRequired}}
+  @showSessionSupplemental={{this.showSessionSupplemental}}
+  @showSessionSpecialAttireRequired={{this.showSessionSpecialAttireRequired}}
+  @showSessionSpecialEquipmentRequired={{this.showSessionSpecialEquipmentRequired}}
+  @collapse={{(noop)}}
+  @manage={{(noop)}}
+/>`);
 
     assert.strictEqual(component.attributes.attendanceRequired.label, 'Attendance Required');
     assert.ok(component.attributes.attendanceRequired.isDisabled);
@@ -41,13 +41,13 @@ module('Integration | Component | school session attributes expanded', function 
       assert.ok(true, 'Collapse triggered.');
     });
     await render(hbs`<SchoolSessionAttributesExpanded
-      @showSessionAttendanceRequired={{true}}
-      @showSessionSupplemental={{true}}
-      @showSessionSpecialAttireRequired={{true}}
-      @showSessionSpecialEquipmentRequired={{true}}
-      @collapse={{this.collapse}}
-      @manage={{(noop)}}
-    />`);
+  @showSessionAttendanceRequired={{true}}
+  @showSessionSupplemental={{true}}
+  @showSessionSpecialAttireRequired={{true}}
+  @showSessionSpecialEquipmentRequired={{true}}
+  @collapse={{this.collapse}}
+  @manage={{(noop)}}
+/>`);
 
     await component.collapse();
   });
@@ -58,14 +58,14 @@ module('Integration | Component | school session attributes expanded', function 
       assert.ok(true, 'Manage triggered.');
     });
     await render(hbs`<SchoolSessionAttributesExpanded
-      @showSessionAttendanceRequired={{this.showSessionAttendanceRequired}}
-      @showSessionSupplemental={{this.showSessionSupplemental}}
-      @showSessionSpecialAttireRequired={{this.showSessionSpecialAttireRequired}}
-      @showSessionSpecialEquipmentRequired={{this.showSessionSpecialEquipmentRequired}}
-      @collapse={{(noop)}}
-      @canUpdate={{true}}
-      @manage={{this.manage}}
-    />`);
+  @showSessionAttendanceRequired={{this.showSessionAttendanceRequired}}
+  @showSessionSupplemental={{this.showSessionSupplemental}}
+  @showSessionSpecialAttireRequired={{this.showSessionSpecialAttireRequired}}
+  @showSessionSpecialEquipmentRequired={{this.showSessionSpecialEquipmentRequired}}
+  @collapse={{(noop)}}
+  @canUpdate={{true}}
+  @manage={{this.manage}}
+/>`);
 
     await component.manage();
   });
@@ -79,15 +79,15 @@ module('Integration | Component | school session attributes expanded', function 
       assert.ok(attributes.showSessionSpecialEquipmentRequired);
     });
     await render(hbs`<SchoolSessionAttributesExpanded
-      @showSessionAttendanceRequired={{false}}
-      @showSessionSupplemental={{false}}
-      @showSessionSpecialAttireRequired={{false}}
-      @showSessionSpecialEquipmentRequired={{false}}
-      @collapse={{(noop)}}
-      @saveAll={{this.save}}
-      @manage={{(noop)}}
-      @isManaging={{true}}
-    />`);
+  @showSessionAttendanceRequired={{false}}
+  @showSessionSupplemental={{false}}
+  @showSessionSpecialAttireRequired={{false}}
+  @showSessionSpecialEquipmentRequired={{false}}
+  @collapse={{(noop)}}
+  @saveAll={{this.save}}
+  @manage={{(noop)}}
+  @isManaging={{true}}
+/>`);
 
     assert.notOk(component.manager.attendanceRequired.isChecked);
     assert.notOk(component.manager.supplemental.isChecked);

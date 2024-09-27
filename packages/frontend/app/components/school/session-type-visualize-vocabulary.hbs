@@ -5,7 +5,11 @@
 >
   <div class="breadcrumbs" data-test-breadcrumb>
     <span>
-      <LinkTo @route="school" @model={{@model.vocabulary.school}} @query={{hash schoolSessionTypeDetails=true}}>
+      <LinkTo
+        @route="school"
+        @model={{@model.vocabulary.school}}
+        @query={{hash schoolSessionTypeDetails=true}}
+      >
         {{@model.vocabulary.school.title}}
       </LinkTo>
     </span>
@@ -29,9 +33,13 @@
   </div>
   <h2 data-test-primary-title>{{t "general.termsBySessionType"}}</h2>
   <h3 data-test-secondary-title>
-    {{@model.sessionType.title}} ({{@model.vocabulary.title}})
+    {{@model.sessionType.title}}
+    ({{@model.vocabulary.title}})
   </h3>
   <div class="visualizations">
-    <School::VisualizerSessionTypeVocabulary @sessionType={{@model.sessionType}} @vocabulary={{@model.vocabulary}} />
+    <School::VisualizerSessionTypeVocabulary
+      @sessionType={{@model.sessionType}}
+      @vocabulary={{@model.vocabulary}}
+    />
   </div>
 </section>

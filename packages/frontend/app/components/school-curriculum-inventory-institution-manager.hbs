@@ -39,13 +39,14 @@
             type="text"
             value={{this.name}}
             {{on "input" (pick "target.value" (set this "name"))}}
-            {{on "keyup"
+            {{on
+              "keyup"
               (queue
                 (fn this.addErrorDisplayFor "name")
                 (if @institution (perform this.saveOrCancel) (noop))
               )
             }}
-          >
+          />
           <ValidationError @errors={{get-errors-for this.name}} />
         </div>
         <div class="item" data-test-institution-aamc-code>
@@ -58,13 +59,14 @@
             maxlength="5"
             value={{this.aamcCode}}
             {{on "input" (pick "target.value" (set this "aamcCode"))}}
-            {{on "keyup"
+            {{on
+              "keyup"
               (queue
                 (fn this.addErrorDisplayFor "aamcCode")
                 (if @institution (perform this.saveOrCancel) (noop))
               )
             }}
-          >
+          />
           <ValidationError @errors={{get-errors-for this.aamcCode}} />
         </div>
         <div class="item" data-test-institution-address-street>
@@ -76,13 +78,14 @@
             type="text"
             value={{this.addressStreet}}
             {{on "input" (pick "target.value" (set this "addressStreet"))}}
-            {{on "keyup"
+            {{on
+              "keyup"
               (queue
                 (fn this.addErrorDisplayFor "addressStreet")
                 (if @institution (perform this.saveOrCancel) (noop))
               )
             }}
-          >
+          />
           <ValidationError @errors={{get-errors-for this.addressStreet}} />
         </div>
         <div class="item" data-test-institution-address-city>
@@ -94,13 +97,14 @@
             type="text"
             value={{this.addressCity}}
             {{on "input" (pick "target.value" (set this "addressCity"))}}
-            {{on "keyup"
+            {{on
+              "keyup"
               (queue
                 (fn this.addErrorDisplayFor "addressCity")
                 (if @institution (perform this.saveOrCancel) (noop))
               )
             }}
-          >
+          />
           <ValidationError @errors={{get-errors-for this.addressCity}} />
         </div>
         <div class="item" data-test-institution-address-state-or-province>
@@ -112,13 +116,14 @@
             type="text"
             value={{this.addressStateOrProvince}}
             {{on "input" (pick "target.value" (set this "addressStateOrProvince"))}}
-            {{on "keyup"
+            {{on
+              "keyup"
               (queue
                 (fn this.addErrorDisplayFor "addressStateOrProvince")
                 (if @institution (perform this.saveOrCancel) (noop))
               )
             }}
-          >
+          />
           <ValidationError @errors={{get-errors-for this.addressStateOrProvince}} />
         </div>
         <div class="item" data-test-institution-address-zip-code>
@@ -130,13 +135,14 @@
             type="text"
             value={{this.addressZipCode}}
             {{on "input" (pick "target.value" (set this "addressZipCode"))}}
-            {{on "keyup"
+            {{on
+              "keyup"
               (queue
                 (fn this.addErrorDisplayFor "addressZipCode")
                 (if @institution (perform this.saveOrCancel) (noop))
               )
             }}
-          >
+          />
           <ValidationError @errors={{get-errors-for this.addressZipCode}} />
         </div>
         <div class="item" data-test-institution-address-country-code>
@@ -149,13 +155,14 @@
             maxlength="2"
             value={{this.addressCountryCode}}
             {{on "input" (pick "target.value" (set this "addressCountryCode"))}}
-            {{on "keyup"
+            {{on
+              "keyup"
               (queue
                 (fn this.addErrorDisplayFor "addressCountryCode")
                 (if @institution (perform this.saveOrCancel) (noop))
               )
             }}
-          >
+          />
           <ValidationError @errors={{get-errors-for this.addressCountryCode}} />
         </div>
       </div>

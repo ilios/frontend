@@ -61,20 +61,20 @@ module('Integration | Component | courses/root', function (hooks) {
     this.set('titleFilter', '');
     this.set('userCoursesOnly', false);
     await render(hbs`<Courses::Root
-      @schools={{this.schools}}
-      @primarySchool={{this.primarySchool}}
-      @years={{this.years}}
-      @year={{this.year}}
-      @changeSelectedYear={{(noop)}}
-      @schoolId={{this.schoolId}}
-      @changeSelectedSchool={{(noop)}}
-      @sortCoursesBy={{this.sortCoursesBy}}
-      @setSortCoursesBy={{(noop)}}
-      @titleFilter={{this.titleFilter}}
-      @changeTitleFilter={{(noop)}}
-      @userCoursesOnly={{this.userCoursesOnly}}
-      @toggleUserCoursesOnly={{(noop)}}
-    />`);
+  @schools={{this.schools}}
+  @primarySchool={{this.primarySchool}}
+  @years={{this.years}}
+  @year={{this.year}}
+  @changeSelectedYear={{(noop)}}
+  @schoolId={{this.schoolId}}
+  @changeSelectedSchool={{(noop)}}
+  @sortCoursesBy={{this.sortCoursesBy}}
+  @setSortCoursesBy={{(noop)}}
+  @titleFilter={{this.titleFilter}}
+  @changeTitleFilter={{(noop)}}
+  @userCoursesOnly={{this.userCoursesOnly}}
+  @toggleUserCoursesOnly={{(noop)}}
+/>`);
     assert.strictEqual(component.yearFilters.length, 2);
     assert.strictEqual(component.yearFilters[0].value, '2023');
     assert.notOk(component.yearFilters[0].selected);
@@ -101,20 +101,20 @@ module('Integration | Component | courses/root', function (hooks) {
     this.set('titleFilter', '');
     this.set('userCoursesOnly', false);
     await render(hbs`<Courses::Root
-      @schools={{this.schools}}
-      @primarySchool={{this.primarySchool}}
-      @years={{this.years}}
-      @year={{this.year}}
-      @changeSelectedYear={{(noop)}}
-      @schoolId={{this.schoolId}}
-      @changeSelectedSchool={{(noop)}}
-      @sortCoursesBy={{this.sortCoursesBy}}
-      @setSortCoursesBy={{(noop)}}
-      @titleFilter={{this.titleFilter}}
-      @changeTitleFilter={{(noop)}}
-      @userCoursesOnly={{this.userCoursesOnly}}
-      @toggleUserCoursesOnly={{(noop)}}
-    />`);
+  @schools={{this.schools}}
+  @primarySchool={{this.primarySchool}}
+  @years={{this.years}}
+  @year={{this.year}}
+  @changeSelectedYear={{(noop)}}
+  @schoolId={{this.schoolId}}
+  @changeSelectedSchool={{(noop)}}
+  @sortCoursesBy={{this.sortCoursesBy}}
+  @setSortCoursesBy={{(noop)}}
+  @titleFilter={{this.titleFilter}}
+  @changeTitleFilter={{(noop)}}
+  @userCoursesOnly={{this.userCoursesOnly}}
+  @toggleUserCoursesOnly={{(noop)}}
+/>`);
     assert.strictEqual(component.yearFilters.length, 2);
     assert.strictEqual(component.yearFilters[0].value, '2023');
     assert.ok(component.yearFilters[0].selected);
@@ -143,20 +143,20 @@ module('Integration | Component | courses/root', function (hooks) {
       assert.strictEqual(value, 'title:desc');
     });
     await render(hbs`<Courses::Root
-      @schools={{this.schools}}
-      @primarySchool={{this.primarySchool}}
-      @years={{this.years}}
-      @year={{this.year}}
-      @changeSelectedYear={{(noop)}}
-      @schoolId={{this.schoolId}}
-      @changeSelectedSchool={{(noop)}}
-      @sortCoursesBy={{this.sortCoursesBy}}
-      @setSortCoursesBy={{this.setSortCoursesBy}}
-      @titleFilter={{this.titleFilter}}
-      @changeTitleFilter={{(noop)}}
-      @userCoursesOnly={{this.userCoursesOnly}}
-      @toggleUserCoursesOnly={{(noop)}}
-    />`);
+  @schools={{this.schools}}
+  @primarySchool={{this.primarySchool}}
+  @years={{this.years}}
+  @year={{this.year}}
+  @changeSelectedYear={{(noop)}}
+  @schoolId={{this.schoolId}}
+  @changeSelectedSchool={{(noop)}}
+  @sortCoursesBy={{this.sortCoursesBy}}
+  @setSortCoursesBy={{this.setSortCoursesBy}}
+  @titleFilter={{this.titleFilter}}
+  @changeTitleFilter={{(noop)}}
+  @userCoursesOnly={{this.userCoursesOnly}}
+  @toggleUserCoursesOnly={{(noop)}}
+/>`);
     await component.list.sortByTitle();
   });
 
@@ -170,20 +170,20 @@ module('Integration | Component | courses/root', function (hooks) {
     this.set('titleFilter', 'Beta');
     this.set('userCoursesOnly', false);
     await render(hbs`<Courses::Root
-      @schools={{this.schools}}
-      @primarySchool={{this.primarySchool}}
-      @years={{this.years}}
-      @year={{this.year}}
-      @changeSelectedYear={{(noop)}}
-      @schoolId={{this.schoolId}}
-      @changeSelectedSchool={{(noop)}}
-      @sortCoursesBy={{this.sortCoursesBy}}
-      @setSortCoursesBy={{(noop)}}
-      @titleFilter={{this.titleFilter}}
-      @changeTitleFilter={{(noop)}}
-      @userCoursesOnly={{this.userCoursesOnly}}
-      @toggleUserCoursesOnly={{(noop)}}
-    />`);
+  @schools={{this.schools}}
+  @primarySchool={{this.primarySchool}}
+  @years={{this.years}}
+  @year={{this.year}}
+  @changeSelectedYear={{(noop)}}
+  @schoolId={{this.schoolId}}
+  @changeSelectedSchool={{(noop)}}
+  @sortCoursesBy={{this.sortCoursesBy}}
+  @setSortCoursesBy={{(noop)}}
+  @titleFilter={{this.titleFilter}}
+  @changeTitleFilter={{(noop)}}
+  @userCoursesOnly={{this.userCoursesOnly}}
+  @toggleUserCoursesOnly={{(noop)}}
+/>`);
     assert.strictEqual(component.list.courses.length, 1);
     assert.strictEqual(component.list.courses[0].title, 'Beta');
   });
@@ -202,20 +202,20 @@ module('Integration | Component | courses/root', function (hooks) {
       assert.strictEqual(value, 'lorem ipsum');
     });
     await render(hbs`<Courses::Root
-      @schools={{this.schools}}
-      @primarySchool={{this.primarySchool}}
-      @years={{this.years}}
-      @year={{this.year}}
-      @changeSelectedYear={{(noop)}}
-      @schoolId={{this.schoolId}}
-      @changeSelectedSchool={{(noop)}}
-      @sortCoursesBy={{this.sortCoursesBy}}
-      @setSortCoursesBy={{(noop)}}
-      @titleFilter={{this.titleFilter}}
-      @changeTitleFilter={{this.changeTitleFilter}}
-      @userCoursesOnly={{this.userCoursesOnly}}
-      @toggleUserCoursesOnly={{(noop)}}
-    />`);
+  @schools={{this.schools}}
+  @primarySchool={{this.primarySchool}}
+  @years={{this.years}}
+  @year={{this.year}}
+  @changeSelectedYear={{(noop)}}
+  @schoolId={{this.schoolId}}
+  @changeSelectedSchool={{(noop)}}
+  @sortCoursesBy={{this.sortCoursesBy}}
+  @setSortCoursesBy={{(noop)}}
+  @titleFilter={{this.titleFilter}}
+  @changeTitleFilter={{this.changeTitleFilter}}
+  @userCoursesOnly={{this.userCoursesOnly}}
+  @toggleUserCoursesOnly={{(noop)}}
+/>`);
     await component.filterByTitle('lorem ipsum');
   });
 
@@ -233,20 +233,20 @@ module('Integration | Component | courses/root', function (hooks) {
       assert.strictEqual(value, '2022');
     });
     await render(hbs`<Courses::Root
-      @schools={{this.schools}}
-      @primarySchool={{this.primarySchool}}
-      @years={{this.years}}
-      @year={{this.year}}
-      @changeSelectedYear={{this.changeSelectedYear}}
-      @schoolId={{this.schoolId}}
-      @changeSelectedSchool={{(noop)}}
-      @sortCoursesBy={{this.sortCoursesBy}}
-      @setSortCoursesBy={{(noop)}}
-      @titleFilter={{this.titleFilter}}
-      @changeTitleFilter={{(noop)}}
-      @userCoursesOnly={{this.userCoursesOnly}}
-      @toggleUserCoursesOnly={{(noop)}}
-    />`);
+  @schools={{this.schools}}
+  @primarySchool={{this.primarySchool}}
+  @years={{this.years}}
+  @year={{this.year}}
+  @changeSelectedYear={{this.changeSelectedYear}}
+  @schoolId={{this.schoolId}}
+  @changeSelectedSchool={{(noop)}}
+  @sortCoursesBy={{this.sortCoursesBy}}
+  @setSortCoursesBy={{(noop)}}
+  @titleFilter={{this.titleFilter}}
+  @changeTitleFilter={{(noop)}}
+  @userCoursesOnly={{this.userCoursesOnly}}
+  @toggleUserCoursesOnly={{(noop)}}
+/>`);
     await component.filterByYear('2022');
   });
 
@@ -264,20 +264,20 @@ module('Integration | Component | courses/root', function (hooks) {
       assert.strictEqual(value, this.school2.id);
     });
     await render(hbs`<Courses::Root
-      @schools={{this.schools}}
-      @primarySchool={{this.primarySchool}}
-      @years={{this.years}}
-      @year={{this.year}}
-      @changeSelectedYear={{(noop)}}
-      @schoolId={{this.schoolId}}
-      @changeSelectedSchool={{this.changeSelectedSchool}}
-      @sortCoursesBy={{this.sortCoursesBy}}
-      @setSortCoursesBy={{(noop)}}
-      @titleFilter={{this.titleFilter}}
-      @changeTitleFilter={{(noop)}}
-      @userCoursesOnly={{this.userCoursesOnly}}
-      @toggleUserCoursesOnly={{(noop)}}
-    />`);
+  @schools={{this.schools}}
+  @primarySchool={{this.primarySchool}}
+  @years={{this.years}}
+  @year={{this.year}}
+  @changeSelectedYear={{(noop)}}
+  @schoolId={{this.schoolId}}
+  @changeSelectedSchool={{this.changeSelectedSchool}}
+  @sortCoursesBy={{this.sortCoursesBy}}
+  @setSortCoursesBy={{(noop)}}
+  @titleFilter={{this.titleFilter}}
+  @changeTitleFilter={{(noop)}}
+  @userCoursesOnly={{this.userCoursesOnly}}
+  @toggleUserCoursesOnly={{(noop)}}
+/>`);
     await component.filterBySchool(this.school2.id);
   });
 
@@ -295,20 +295,20 @@ module('Integration | Component | courses/root', function (hooks) {
       assert.ok(value);
     });
     await render(hbs`<Courses::Root
-      @schools={{this.schools}}
-      @primarySchool={{this.primarySchool}}
-      @years={{this.years}}
-      @year={{this.year}}
-      @changeSelectedYear={{(noop)}}
-      @schoolId={{this.schoolId}}
-      @changeSelectedSchool={{(noop)}}
-      @sortCoursesBy={{this.sortCoursesBy}}
-      @setSortCoursesBy={{(noop)}}
-      @titleFilter={{this.titleFilter}}
-      @changeTitleFilter={{(noop)}}
-      @userCoursesOnly={{this.userCoursesOnly}}
-      @toggleUserCoursesOnly={{this.toggleUserCoursesOnly}}
-    />`);
+  @schools={{this.schools}}
+  @primarySchool={{this.primarySchool}}
+  @years={{this.years}}
+  @year={{this.year}}
+  @changeSelectedYear={{(noop)}}
+  @schoolId={{this.schoolId}}
+  @changeSelectedSchool={{(noop)}}
+  @sortCoursesBy={{this.sortCoursesBy}}
+  @setSortCoursesBy={{(noop)}}
+  @titleFilter={{this.titleFilter}}
+  @changeTitleFilter={{(noop)}}
+  @userCoursesOnly={{this.userCoursesOnly}}
+  @toggleUserCoursesOnly={{this.toggleUserCoursesOnly}}
+/>`);
     await component.filterByMyCourses();
   });
 });

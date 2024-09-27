@@ -84,8 +84,12 @@ module('Integration | Component | course/visualize-session-type-graph', function
     this.set('course', this.linkedCourseWithTime);
     this.set('type', this.sessionType);
     await render(
-      hbs`<Course::VisualizeSessionTypeGraph @course={{this.course}} @sessionType={{this.type}} @isIcon={{false}} @showDataTable={{true}} />
-`,
+      hbs`<Course::VisualizeSessionTypeGraph
+  @course={{this.course}}
+  @sessionType={{this.type}}
+  @isIcon={{false}}
+  @showDataTable={{true}}
+/>`,
     );
     //let the chart animations finish
     assert.notOk(component.noData.isVisible);
@@ -130,8 +134,12 @@ module('Integration | Component | course/visualize-session-type-graph', function
     this.set('course', this.linkedCourseWithTime);
     this.set('type', this.sessionType);
     await render(
-      hbs`<Course::VisualizeSessionTypeGraph @course={{this.course}} @sessionType={{this.type}} @isIcon={{false}} @showDataTable={{true}} />
-`,
+      hbs`<Course::VisualizeSessionTypeGraph
+  @course={{this.course}}
+  @sessionType={{this.type}}
+  @isIcon={{false}}
+  @showDataTable={{true}}
+/>`,
     );
     assert.strictEqual(component.dataTable.rows[0].vocabularyTerm, 'Vocabulary 1 - Standalone');
     assert.strictEqual(component.dataTable.rows[1].vocabularyTerm, 'Vocabulary 2 - Campaign');
@@ -150,8 +158,12 @@ module('Integration | Component | course/visualize-session-type-graph', function
     this.set('course', this.linkedCourseWithTime);
     this.set('type', this.sessionType);
     await render(
-      hbs`<Course::VisualizeSessionTypeGraph @course={{this.course}} @sessionType={{this.type}} @isIcon={{false}} @showDataTable={{true}} />
-`,
+      hbs`<Course::VisualizeSessionTypeGraph
+  @course={{this.course}}
+  @sessionType={{this.type}}
+  @isIcon={{false}}
+  @showDataTable={{true}}
+/>`,
     );
     assert.strictEqual(component.dataTable.rows[0].sessions.text, 'Berkeley Investigations');
     assert.strictEqual(component.dataTable.rows[1].sessions.text, 'The San Leandro Horror');
@@ -178,8 +190,12 @@ module('Integration | Component | course/visualize-session-type-graph', function
     this.set('course', this.linkedCourseWithTime);
     this.set('type', this.sessionType);
     await render(
-      hbs`<Course::VisualizeSessionTypeGraph @course={{this.course}} @sessionType={{this.type}} @isIcon={{false}} @showDataTable={{true}} />
-`,
+      hbs`<Course::VisualizeSessionTypeGraph
+  @course={{this.course}}
+  @sessionType={{this.type}}
+  @isIcon={{false}}
+  @showDataTable={{true}}
+/>`,
     );
     assert.strictEqual(component.dataTable.rows[0].minutes, '630');
     assert.strictEqual(component.dataTable.rows[1].minutes, '180');
@@ -198,8 +214,12 @@ module('Integration | Component | course/visualize-session-type-graph', function
     this.set('course', this.emptyCourse);
     this.set('type', this.sessionType);
     await render(
-      hbs`<Course::VisualizeSessionTypeGraph @course={{this.course}} @sessionType={{this.type}} @isIcon={{false}} @showDataTable={{true}} />
-`,
+      hbs`<Course::VisualizeSessionTypeGraph
+  @course={{this.course}}
+  @sessionType={{this.type}}
+  @isIcon={{false}}
+  @showDataTable={{true}}
+/>`,
     );
     assert.notOk(component.chart.isVisible);
     assert.notOk(component.dataTable.isVisible);
@@ -213,8 +233,12 @@ module('Integration | Component | course/visualize-session-type-graph', function
     this.set('course', this.linkedCourseWithoutTime);
     this.set('type', this.sessionType);
     await render(
-      hbs`<Course::VisualizeSessionTypeGraph @course={{this.course}} @sessionType={{this.type}} @isIcon={{false}} @showDataTable={{true}} />
-`,
+      hbs`<Course::VisualizeSessionTypeGraph
+  @course={{this.course}}
+  @sessionType={{this.type}}
+  @isIcon={{false}}
+  @showDataTable={{true}}
+/>`,
     );
     assert.notOk(component.chart.isVisible);
     assert.notOk(component.noData.isVisible);

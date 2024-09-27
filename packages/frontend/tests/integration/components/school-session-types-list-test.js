@@ -100,9 +100,9 @@ module('Integration | Component | school session types list', function (hooks) {
       assert.strictEqual(parseInt(sessionTypeId, 10), 1);
     });
     await render(hbs`<SchoolSessionTypesList
-      @sessionTypes={{this.sessionTypes}}
-      @manageSessionType={{this.manageSessionType}}
-    />`);
+  @sessionTypes={{this.sessionTypes}}
+  @manageSessionType={{this.manageSessionType}}
+/>`);
 
     await component.sessionTypes[0].manage();
   });
@@ -123,9 +123,9 @@ module('Integration | Component | school session types list', function (hooks) {
       assert.strictEqual(parseInt(sessionTypeId, 10), 1);
     });
     await render(hbs`<SchoolSessionTypesList
-      @sessionTypes={{this.sessionTypes}}
-      @manageSessionType={{this.manageSessionType}}
-    />`);
+  @sessionTypes={{this.sessionTypes}}
+  @manageSessionType={{this.manageSessionType}}
+/>`);
 
     await component.sessionTypes[0].title.edit();
   });
@@ -151,10 +151,10 @@ module('Integration | Component | school session types list', function (hooks) {
     const sessionTypeModels = await this.owner.lookup('service:store').findAll('session-type');
     this.set('sessionTypes', sessionTypeModels);
     await render(hbs`<SchoolSessionTypesList
-      @sessionTypes={{this.sessionTypes}}
-      @manageSessionType={{(noop)}}
-      @canDelete={{true}}
-    />`);
+  @sessionTypes={{this.sessionTypes}}
+  @manageSessionType={{(noop)}}
+  @canDelete={{true}}
+/>`);
 
     assert.notOk(component.sessionTypes[0].isDeletable);
     assert.ok(component.sessionTypes[1].isDeletable);
@@ -170,10 +170,10 @@ module('Integration | Component | school session types list', function (hooks) {
 
     this.set('sessionTypes', sessionTypeModels);
     await render(hbs`<SchoolSessionTypesList
-      @sessionTypes={{this.sessionTypes}}
-      @manageSessionType={{(noop)}}
-      @canDelete={{true}}
-    />`);
+  @sessionTypes={{this.sessionTypes}}
+  @manageSessionType={{(noop)}}
+  @canDelete={{true}}
+/>`);
 
     assert.strictEqual(this.server.db.sessionTypes.length, 1);
     assert.notOk(component.sessionTypes[0].confirmRemoval.isVisible);

@@ -15,13 +15,10 @@ module('Integration | Helper | pipe', function (hooks) {
     this.set('squareRoot', (x) => this.set('value', Math.sqrt(x)));
     this.set('label', 'Calculate');
 
-    await render(hbs`
-      <p>{{this.value}}</p>
-      <button type="button" {{on "click" (pipe (fn this.add 2 4) this.square this.squareRoot)}}>
-        {{this.label}}
-      </button>
-
-`);
+    await render(hbs`<p>{{this.value}}</p>
+<button type='button' {{on 'click' (pipe (fn this.add 2 4) this.square this.squareRoot)}}>
+  {{this.label}}
+</button>`);
 
     assert.dom('p').hasText('0', 'precond - should render 0');
     await click('button');
@@ -36,13 +33,13 @@ module('Integration | Helper | pipe', function (hooks) {
     this.set('resolvify', resolve);
     this.set('label', 'Calculate');
 
-    await render(hbs`
-      <p>{{this.value}}</p>
-      <button type="button" {{on "click" (pipe (fn this.add 2 4) this.square this.resolvify this.squareRoot)}}>
-        {{this.label}}
-      </button>
-
-`);
+    await render(hbs`<p>{{this.value}}</p>
+<button
+  type='button'
+  {{on 'click' (pipe (fn this.add 2 4) this.square this.resolvify this.squareRoot)}}
+>
+  {{this.label}}
+</button>`);
 
     assert.dom('p').hasText('0', 'precond - should render 0');
     await click('button');

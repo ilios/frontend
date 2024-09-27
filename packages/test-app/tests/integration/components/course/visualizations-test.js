@@ -15,8 +15,7 @@ module('Integration | Component | course/visualizations', function (hooks) {
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('course', courseModel);
 
-    await render(hbs`<Course::Visualizations @model={{this.course}} />
-`);
+    await render(hbs`<Course::Visualizations @model={{this.course}} />`);
 
     assert.ok(component.objectives.isVisible);
     assert.ok(component.sessionTypes.isVisible);
@@ -38,8 +37,7 @@ module('Integration | Component | course/visualizations', function (hooks) {
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('course', courseModel);
 
-    await render(hbs`<Course::Visualizations @model={{this.course}} />
-`);
+    await render(hbs`<Course::Visualizations @model={{this.course}} />`);
 
     assert.strictEqual(component.title, 'course 0 2021 - 2022');
   });
@@ -50,8 +48,7 @@ module('Integration | Component | course/visualizations', function (hooks) {
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('course', courseModel);
 
-    await render(hbs`<Course::Visualizations @model={{this.course}} />
-`);
+    await render(hbs`<Course::Visualizations @model={{this.course}} />`);
 
     assert.strictEqual(component.breadcrumb.crumbs.length, 2);
     assert.strictEqual(component.breadcrumb.crumbs[0].text, 'course 0');

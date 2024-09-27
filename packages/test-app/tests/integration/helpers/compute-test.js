@@ -9,8 +9,7 @@ module('Integration | Helper | compute', function (hooks) {
 
   test("It calls an action and returns it's value", async function (assert) {
     this.set('square', (x) => x * x);
-    await render(hbs`{{compute this.square 4}}
-`);
+    await render(hbs`{{compute this.square 4}}`);
 
     assert.dom().hasText('16', '4 squared is 16');
   });

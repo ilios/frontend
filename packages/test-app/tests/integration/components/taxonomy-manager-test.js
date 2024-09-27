@@ -73,12 +73,11 @@ module('Integration | Component | taxonomy manager', function (hooks) {
     this.set('selectedTerms', [this.termModel1, this.termModel2, this.termModel3]);
 
     await render(hbs`<TaxonomyManager
-      @vocabularies={{this.assignableVocabularies}}
-      @selectedTerms={{this.selectedTerms}}
-      @add={{(noop)}}
-      @remove={{(noop)}}
-    />
-`);
+  @vocabularies={{this.assignableVocabularies}}
+  @selectedTerms={{this.selectedTerms}}
+  @add={{(noop)}}
+  @remove={{(noop)}}
+/>`);
 
     assert.strictEqual(component.selectedTerms.length, 2);
     assert.strictEqual(component.selectedTerms[0].title, 'Foo (Medicine)');
@@ -121,12 +120,11 @@ module('Integration | Component | taxonomy manager', function (hooks) {
     });
 
     await render(hbs`<TaxonomyManager
-      @vocabularies={{this.assignableVocabularies}}
-      @selectedTerms={{this.selectedTerms}}
-      @add={{this.add}}
-      @remove={{this.remove}}
-    />
-`);
+  @vocabularies={{this.assignableVocabularies}}
+  @selectedTerms={{this.selectedTerms}}
+  @add={{this.add}}
+  @remove={{this.remove}}
+/>`);
 
     assert.notOk(component.selectedTerms[0].terms[1].isPresent);
     assert.notOk(component.availableTerms[1].isSelected);
@@ -158,12 +156,11 @@ module('Integration | Component | taxonomy manager', function (hooks) {
     this.set('selectedTerms', [this.termModel1, this.termModel2, this.termModel3]);
 
     await render(hbs`<TaxonomyManager
-      @vocabularies={{this.assignableVocabularies}}
-      @selectedTerms={{this.selectedTerms}}
-      @add={{(noop)}}
-      @remove={{(noop)}}
-    />
-`);
+  @vocabularies={{this.assignableVocabularies}}
+  @selectedTerms={{this.selectedTerms}}
+  @add={{(noop)}}
+  @remove={{(noop)}}
+/>`);
 
     assert.strictEqual(component.vocabulary.options.length, 2);
     assert.strictEqual(component.vocabulary.options[0].value, '1');
@@ -186,12 +183,11 @@ module('Integration | Component | taxonomy manager', function (hooks) {
     this.set('selectedTerms', [this.termModel1, this.termModel2, this.termModel3]);
 
     await render(hbs`<TaxonomyManager
-      @vocabularies={{this.assignableVocabularies}}
-      @selectedTerms={{this.selectedTerms}}
-      @add={{(noop)}}
-      @remove={{(noop)}}
-    />
-`);
+  @vocabularies={{this.assignableVocabularies}}
+  @selectedTerms={{this.selectedTerms}}
+  @add={{(noop)}}
+  @remove={{(noop)}}
+/>`);
 
     assert.strictEqual(component.availableTerms.length, 2);
     assert.strictEqual(component.availableTerms[0].name, 'Alpha');
@@ -220,13 +216,12 @@ module('Integration | Component | taxonomy manager', function (hooks) {
     this.set('vocabulary', this.vocabModel2);
 
     await render(hbs`<TaxonomyManager
-      @vocabularies={{this.assignableVocabularies}}
-      @vocabulary={{this.vocabulary}}
-      @selectedTerms={{this.selectedTerms}}
-      @add={{(noop)}}
-      @remove={{(noop)}}
-    />
-`);
+  @vocabularies={{this.assignableVocabularies}}
+  @vocabulary={{this.vocabulary}}
+  @selectedTerms={{this.selectedTerms}}
+  @add={{(noop)}}
+  @remove={{(noop)}}
+/>`);
 
     assert.strictEqual(component.vocabulary.options.length, 2);
     assert.notOk(component.vocabulary.options[0].isSelected);

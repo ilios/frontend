@@ -37,13 +37,13 @@ module('Integration | Component | courses/list-item', function (hooks) {
 
   test('it renders', async function (assert) {
     await render(hbs`<Courses::ListItem
-      @course={{this.course}}
-      @coursesForRemovalConfirmation={{(array)}}
-      @savingCourseIds={{(array)}}
-      @lockCourse={{(noop)}}
-      @unlockCourse={{(noop)}}
-      @confirmRemoval={{(noop)}}
-    />`);
+  @course={{this.course}}
+  @coursesForRemovalConfirmation={{(array)}}
+  @savingCourseIds={{(array)}}
+  @lockCourse={{(noop)}}
+  @unlockCourse={{(noop)}}
+  @confirmRemoval={{(noop)}}
+/>`);
     assert.strictEqual(component.title, 'Test Course');
     assert.strictEqual(component.level, '2');
     assert.strictEqual(component.startDate, '04/23/2023');
@@ -61,13 +61,13 @@ module('Integration | Component | courses/list-item', function (hooks) {
       assert.strictEqual(course, this.course);
     });
     await render(hbs`<Courses::ListItem
-      @course={{this.course}}
-      @coursesForRemovalConfirmation={{(array)}}
-      @savingCourseIds={{(array)}}
-      @lockCourse={{this.lock}}
-      @unlockCourse={{(array)}}
-      @confirmRemoval={{(noop)}}
-    />`);
+  @course={{this.course}}
+  @coursesForRemovalConfirmation={{(array)}}
+  @savingCourseIds={{(array)}}
+  @lockCourse={{this.lock}}
+  @unlockCourse={{(array)}}
+  @confirmRemoval={{(noop)}}
+/>`);
     assert.ok(component.isUnlocked);
     assert.notOk(component.isLocked);
     assert.ok(component.canLock);
@@ -81,13 +81,13 @@ module('Integration | Component | courses/list-item', function (hooks) {
       assert.strictEqual(course, this.course);
     });
     await render(hbs`<Courses::ListItem
-      @course={{this.course}}
-      @coursesForRemovalConfirmation={{(array)}}
-      @savingCourseIds={{(array)}}
-      @lockCourse={{(noop)}}
-      @unlockCourse={{this.unlock}}
-      @confirmRemoval={{(noop)}}
-    />`);
+  @course={{this.course}}
+  @coursesForRemovalConfirmation={{(array)}}
+  @savingCourseIds={{(array)}}
+  @lockCourse={{(noop)}}
+  @unlockCourse={{this.unlock}}
+  @confirmRemoval={{(noop)}}
+/>`);
     assert.notOk(component.isUnlocked);
     assert.ok(component.isLocked);
     assert.ok(component.canUnlock);
@@ -100,13 +100,13 @@ module('Integration | Component | courses/list-item', function (hooks) {
       assert.strictEqual(course, this.course);
     });
     await render(hbs`<Courses::ListItem
-      @course={{this.course}}
-      @coursesForRemovalConfirmation={{(array)}}
-      @savingCourseIds={{(array)}}
-      @lockCourse={{(noop)}}
-      @unlockCourse={{(noop)}}
-      @confirmRemoval={{this.confirmRemoval}}
-    />`);
+  @course={{this.course}}
+  @coursesForRemovalConfirmation={{(array)}}
+  @savingCourseIds={{(array)}}
+  @lockCourse={{(noop)}}
+  @unlockCourse={{(noop)}}
+  @confirmRemoval={{this.confirmRemoval}}
+/>`);
     assert.ok(component.canRemove);
     await component.remove();
   });
@@ -119,13 +119,13 @@ module('Integration | Component | courses/list-item', function (hooks) {
     });
     this.course.locked = true;
     await render(hbs`<Courses::ListItem
-      @course={{this.course}}
-      @coursesForRemovalConfirmation={{(array)}}
-      @savingCourseIds={{(array)}}
-      @lockCourse={{(noop)}}
-      @unlockCourse={{(noop)}}
-      @confirmRemoval={{(noop)}}
-    />`);
+  @course={{this.course}}
+  @coursesForRemovalConfirmation={{(array)}}
+  @savingCourseIds={{(array)}}
+  @lockCourse={{(noop)}}
+  @unlockCourse={{(noop)}}
+  @confirmRemoval={{(noop)}}
+/>`);
     assert.ok(component.isLocked);
     assert.notOk(component.canUnlock);
   });
@@ -137,13 +137,13 @@ module('Integration | Component | courses/list-item', function (hooks) {
       },
     });
     await render(hbs`<Courses::ListItem
-      @course={{this.course}}
-      @coursesForRemovalConfirmation={{(array)}}
-      @savingCourseIds={{(array)}}
-      @lockCourse={{(noop)}}
-      @unlockCourse={{(noop)}}
-      @confirmRemoval={{(noop)}}
-    />`);
+  @course={{this.course}}
+  @coursesForRemovalConfirmation={{(array)}}
+  @savingCourseIds={{(array)}}
+  @lockCourse={{(noop)}}
+  @unlockCourse={{(noop)}}
+  @confirmRemoval={{(noop)}}
+/>`);
     assert.ok(component.isUnlocked);
     assert.notOk(component.canLock);
   });
@@ -153,26 +153,26 @@ module('Integration | Component | courses/list-item', function (hooks) {
     const courseModel2 = await this.owner.lookup('service:store').findRecord('course', course2.id);
     this.course.descendants = [courseModel2];
     await render(hbs`<Courses::ListItem
-      @course={{this.course}}
-      @coursesForRemovalConfirmation={{(array)}}
-      @savingCourseIds={{(array)}}
-      @lockCourse={{(noop)}}
-      @unlockCourse={{(noop)}}
-      @confirmRemoval={{(noop)}}
-    />`);
+  @course={{this.course}}
+  @coursesForRemovalConfirmation={{(array)}}
+  @savingCourseIds={{(array)}}
+  @lockCourse={{(noop)}}
+  @unlockCourse={{(noop)}}
+  @confirmRemoval={{(noop)}}
+/>`);
     assert.notOk(component.canRemove);
   });
 
   test('cannot delete b/c course is scheduled', async function (assert) {
     this.course.publishedAsTbd = true;
     await render(hbs`<Courses::ListItem
-      @course={{this.course}}
-      @coursesForRemovalConfirmation={{(array)}}
-      @savingCourseIds={{(array)}}
-      @lockCourse={{(noop)}}
-      @unlockCourse={{(noop)}}
-      @confirmRemoval={{(noop)}}
-    />`);
+  @course={{this.course}}
+  @coursesForRemovalConfirmation={{(array)}}
+  @savingCourseIds={{(array)}}
+  @lockCourse={{(noop)}}
+  @unlockCourse={{(noop)}}
+  @confirmRemoval={{(noop)}}
+/>`);
     assert.strictEqual(component.status, 'Scheduled');
     assert.notOk(component.canRemove);
   });
@@ -180,13 +180,13 @@ module('Integration | Component | courses/list-item', function (hooks) {
   test('cannot delete b/c course is published', async function (assert) {
     this.course.published = true;
     await render(hbs`<Courses::ListItem
-      @course={{this.course}}
-      @coursesForRemovalConfirmation={{(array)}}
-      @savingCourseIds={{(array)}}
-      @lockCourse={{(noop)}}
-      @unlockCourse={{(noop)}}
-      @confirmRemoval={{(noop)}}
-    />`);
+  @course={{this.course}}
+  @coursesForRemovalConfirmation={{(array)}}
+  @savingCourseIds={{(array)}}
+  @lockCourse={{(noop)}}
+  @unlockCourse={{(noop)}}
+  @confirmRemoval={{(noop)}}
+/>`);
     assert.strictEqual(component.status, 'Published');
     assert.notOk(component.canRemove);
   });
@@ -198,13 +198,13 @@ module('Integration | Component | courses/list-item', function (hooks) {
       },
     });
     await render(hbs`<Courses::ListItem
-      @course={{this.course}}
-      @coursesForRemovalConfirmation={{(array)}}
-      @savingCourseIds={{(array)}}
-      @lockCourse={{(noop)}}
-      @unlockCourse={{(noop)}}
-      @confirmRemoval={{(noop)}}
-    />`);
+  @course={{this.course}}
+  @coursesForRemovalConfirmation={{(array)}}
+  @savingCourseIds={{(array)}}
+  @lockCourse={{(noop)}}
+  @unlockCourse={{(noop)}}
+  @confirmRemoval={{(noop)}}
+/>`);
     assert.notOk(component.canRemove);
   });
 });

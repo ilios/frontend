@@ -1,8 +1,4 @@
-<section
-  class="school-manager"
-  data-test-school-manager
-  ...attributes
->
+<section class="school-manager" data-test-school-manager ...attributes>
   <div class="backtolink">
     <LinkTo @route="schools">
       {{t "general.backToSchools"}}
@@ -16,7 +12,8 @@
           @save={{perform this.changeTitle}}
           @close={{this.revertTitleChanges}}
           @saveOnEnter={{true}}
-          @closeOnEscape={{true}} as |isSaving|
+          @closeOnEscape={{true}}
+          as |isSaving|
         >
           <input
             aria-label={{t "general.title"}}
@@ -25,7 +22,7 @@
             disabled={{isSaving}}
             {{on "input" (pick "target.value" (set this "title"))}}
             {{on "keyup" (fn this.addErrorDisplayFor "title")}}
-          >
+          />
           <ValidationError @errors={{get-errors-for this.title}} />
         </EditableField>
       {{else}}
@@ -34,7 +31,12 @@
     </h2>
   </div>
   <div class="school-manager-content">
-    {{#if (or (and (eq @school.directors.length 0) (eq @school.administrators.length 0)) @schoolLeadershipDetails)}}
+    {{#if
+      (or
+        (and (eq @school.directors.length 0) (eq @school.administrators.length 0))
+        @schoolLeadershipDetails
+      )
+    }}
       <LeadershipExpanded
         @model={{@school}}
         @editable={{@canUpdateSchool}}

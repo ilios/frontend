@@ -49,11 +49,11 @@ module('Integration | Component | learner-group/members', function (hooks) {
     this.set('users', [this.userProxy1, this.userProxy2]);
     this.set('learnerGroup', this.learnerGroup);
     await render(hbs`<LearnerGroup::Members
-      @learnerGroupId={{this.learnerGroup.id}}
-      @users={{this.users}}
-      @sortBy="id"
-      @setSortBy={{(noop)}}
-    />`);
+  @learnerGroupId={{this.learnerGroup.id}}
+  @users={{this.users}}
+  @sortBy='id'
+  @setSortBy={{(noop)}}
+/>`);
     assert.strictEqual(component.users.length, 2);
     assert.strictEqual(component.users[0].name.userNameInfo.fullName, 'Jasper M. Dog');
     assert.strictEqual(component.users[0].campusId.text, '1234');
@@ -67,11 +67,11 @@ module('Integration | Component | learner-group/members', function (hooks) {
     this.set('users', [this.userProxy1, this.userProxy2]);
     this.set('learnerGroup', this.learnerGroup);
     await render(hbs`<LearnerGroup::Members
-      @learnerGroupId={{this.learnerGroup.id}}
-      @users={{this.users}}
-      @sortBy="id"
-      @setSortBy={{(noop)}}
-    />`);
+  @learnerGroupId={{this.learnerGroup.id}}
+  @users={{this.users}}
+  @sortBy='id'
+  @setSortBy={{(noop)}}
+/>`);
     assert.strictEqual(component.users.length, 2);
     assert.strictEqual(component.users[0].name.userNameInfo.fullName, 'Jasper M. Dog');
     assert.strictEqual(component.users[1].name.userNameInfo.fullName, 'Jackson M. Doggy');

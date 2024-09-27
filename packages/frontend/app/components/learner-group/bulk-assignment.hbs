@@ -1,12 +1,8 @@
-<div
-  class="learner-group-bulk-assignment"
-  data-test-learner-group-bulk-assignment
-  ...attributes
->
+<div class="learner-group-bulk-assignment" data-test-learner-group-bulk-assignment ...attributes>
   {{#if this.validUsers}}
     <p>
       {{t "general.usersSelected" count=this.validUsers.length}}
-      <br>
+      <br />
       <button type="button" {{on "click" this.clear}}>
         {{t "general.startOver"}}
       </button>

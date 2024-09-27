@@ -20,14 +20,13 @@ module('Integration | Component | leadership expanded', function (hooks) {
       const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
       this.set('course', courseModel);
       await render(hbs`<LeadershipExpanded
-      @model={{this.course}}
-      @editable={{true}}
-      @collapse={{(noop)}}
-      @expand={{(noop)}}
-      @isManaging={{false}}
-      @setIsManaging={{(noop)}}
-    />
-`);
+  @model={{this.course}}
+  @editable={{true}}
+  @collapse={{(noop)}}
+  @expand={{(noop)}}
+  @isManaging={{false}}
+  @setIsManaging={{(noop)}}
+/>`);
 
       assert.strictEqual(component.title, 'Leadership (4)');
       assert.strictEqual(component.leadershipList.directors.length, 1);
@@ -51,14 +50,13 @@ module('Integration | Component | leadership expanded', function (hooks) {
         assert.ok(true, 'Action was fired');
       });
       await render(hbs`<LeadershipExpanded
-      @model={{this.course}}
-      @editable={{true}}
-      @collapse={{this.click}}
-      @expand={{(noop)}}
-      @isManaging={{false}}
-      @setIsManaging={{(noop)}}
-    />
-`);
+  @model={{this.course}}
+  @editable={{true}}
+  @collapse={{this.click}}
+  @expand={{(noop)}}
+  @isManaging={{false}}
+  @setIsManaging={{(noop)}}
+/>`);
       await component.collapse();
     });
 
@@ -74,14 +72,13 @@ module('Integration | Component | leadership expanded', function (hooks) {
         assert.ok(true, 'Action was fired');
       });
       await render(hbs`<LeadershipExpanded
-      @model={{this.course}}
-      @editable={{true}}
-      @collapse={{this.click}}
-      @expand={{(noop)}}
-      @isManaging={{false}}
-      @setIsManaging={{(noop)}}
-    />
-`);
+  @model={{this.course}}
+  @editable={{true}}
+  @collapse={{this.click}}
+  @expand={{(noop)}}
+  @isManaging={{false}}
+  @setIsManaging={{(noop)}}
+/>`);
       await component.collapse();
     });
 
@@ -97,14 +94,13 @@ module('Integration | Component | leadership expanded', function (hooks) {
         assert.ok(true, 'Action was fired');
       });
       await render(hbs`<LeadershipExpanded
-      @model={{this.course}}
-      @editable={{true}}
-      @collapse={{this.click}}
-      @expand={{(noop)}}
-      @isManaging={{false}}
-      @setIsManaging={{(noop)}}
-    />
-`);
+  @model={{this.course}}
+  @editable={{true}}
+  @collapse={{this.click}}
+  @expand={{(noop)}}
+  @isManaging={{false}}
+  @setIsManaging={{(noop)}}
+/>`);
       await component.collapse();
     });
 
@@ -117,14 +113,13 @@ module('Integration | Component | leadership expanded', function (hooks) {
         assert.ok(true, 'Action was fired');
       });
       await render(hbs`<LeadershipExpanded
-      @model={{this.course}}
-      @editable={{true}}
-      @collapse={{(noop)}}
-      @expand={{(noop)}}
-      @isManaging={{false}}
-      @setIsManaging={{this.click}}
-    />
-`);
+  @model={{this.course}}
+  @editable={{true}}
+  @collapse={{(noop)}}
+  @expand={{(noop)}}
+  @isManaging={{false}}
+  @setIsManaging={{this.click}}
+/>`);
       await component.manage();
     });
   });
@@ -144,14 +139,13 @@ module('Integration | Component | leadership expanded', function (hooks) {
         .findRecord('session', session.id);
       this.set('session', sessionModel);
       await render(hbs`<LeadershipExpanded
-      @model={{this.session}}
-      @editable={{true}}
-      @collapse={{(noop)}}
-      @expand={{(noop)}}
-      @isManaging={{false}}
-      @setIsManaging={{(noop)}}
-    />
-`);
+  @model={{this.session}}
+  @editable={{true}}
+  @collapse={{(noop)}}
+  @expand={{(noop)}}
+  @isManaging={{false}}
+  @setIsManaging={{(noop)}}
+/>`);
 
       assert.strictEqual(component.title, 'Leadership (3)');
       assert.strictEqual(component.leadershipList.administrators.length, 2);
@@ -177,14 +171,13 @@ module('Integration | Component | leadership expanded', function (hooks) {
         assert.ok(true, 'Action was fired');
       });
       await render(hbs`<LeadershipExpanded
-      @model={{this.session}}
-      @editable={{true}}
-      @collapse={{this.click}}
-      @expand={{(noop)}}
-      @isManaging={{false}}
-      @setIsManaging={{(noop)}}
-    />
-`);
+  @model={{this.session}}
+  @editable={{true}}
+  @collapse={{this.click}}
+  @expand={{(noop)}}
+  @isManaging={{false}}
+  @setIsManaging={{(noop)}}
+/>`);
       await component.collapse();
     });
 
@@ -204,14 +197,13 @@ module('Integration | Component | leadership expanded', function (hooks) {
         assert.ok(true, 'Action was fired');
       });
       await render(hbs`<LeadershipExpanded
-      @model={{this.session}}
-      @editable={{true}}
-      @collapse={{this.click}}
-      @expand={{(noop)}}
-      @isManaging={{false}}
-      @setIsManaging={{(noop)}}
-    />
-`);
+  @model={{this.session}}
+  @editable={{true}}
+  @collapse={{this.click}}
+  @expand={{(noop)}}
+  @isManaging={{false}}
+  @setIsManaging={{(noop)}}
+/>`);
       await component.collapse();
     });
 
@@ -226,14 +218,13 @@ module('Integration | Component | leadership expanded', function (hooks) {
         assert.ok(true, 'Action was fired');
       });
       await render(hbs`<LeadershipExpanded
-      @model={{this.session}}
-      @editable={{true}}
-      @collapse={{(noop)}}
-      @expand={{(noop)}}
-      @isManaging={{false}}
-      @setIsManaging={{this.click}}
-    />
-`);
+  @model={{this.session}}
+  @editable={{true}}
+  @collapse={{(noop)}}
+  @expand={{(noop)}}
+  @isManaging={{false}}
+  @setIsManaging={{this.click}}
+/>`);
       await component.manage();
     });
   });
@@ -259,13 +250,13 @@ module('Integration | Component | leadership expanded', function (hooks) {
 
       this.set('program', programModel);
       await render(hbs`<LeadershipExpanded
-      @model={{this.program}}
-      @editable={{true}}
-      @collapse={{(noop)}}
-      @expand={{(noop)}}
-      @isManaging={{false}}
-      @setIsManaging={{(noop)}}
-    />`);
+  @model={{this.program}}
+  @editable={{true}}
+  @collapse={{(noop)}}
+  @expand={{(noop)}}
+  @isManaging={{false}}
+  @setIsManaging={{(noop)}}
+/>`);
       assert.strictEqual(component.title, 'Leadership (2)');
       assert.strictEqual(component.leadershipList.directors.length, 2);
       assert.strictEqual(component.leadershipList.directors[0].text, 'a M. person');
@@ -284,13 +275,13 @@ module('Integration | Component | leadership expanded', function (hooks) {
         assert.ok(true, 'Action was fired');
       });
       await render(hbs`<LeadershipExpanded
-      @model={{this.program}}
-      @editable={{true}}
-      @collapse={{this.click}}
-      @expand={{(noop)}}
-      @isManaging={{false}}
-      @setIsManaging={{(noop)}}
-    />`);
+  @model={{this.program}}
+  @editable={{true}}
+  @collapse={{this.click}}
+  @expand={{(noop)}}
+  @isManaging={{false}}
+  @setIsManaging={{(noop)}}
+/>`);
       await component.collapse();
     });
 
@@ -306,13 +297,13 @@ module('Integration | Component | leadership expanded', function (hooks) {
         assert.ok(true, 'Action was fired');
       });
       await render(hbs`<LeadershipExpanded
-      @model={{this.program}}
-      @editable={{true}}
-      @collapse={{(noop)}}
-      @expand={{(noop)}}
-      @isManaging={{false}}
-      @setIsManaging={{this.click}}
-    />`);
+  @model={{this.program}}
+  @editable={{true}}
+  @collapse={{(noop)}}
+  @expand={{(noop)}}
+  @isManaging={{false}}
+  @setIsManaging={{this.click}}
+/>`);
       await component.manage();
     });
   });
@@ -339,13 +330,13 @@ module('Integration | Component | leadership expanded', function (hooks) {
         .findRecord('program-year', programYear.id);
       this.set('programYear', programYearModel);
       await render(hbs`<LeadershipExpanded
-      @model={{this.programYear}}
-      @editable={{true}}
-      @collapse={{(noop)}}
-      @expand={{(noop)}}
-      @isManaging={{false}}
-      @setIsManaging={{(noop)}}
-    />`);
+  @model={{this.programYear}}
+  @editable={{true}}
+  @collapse={{(noop)}}
+  @expand={{(noop)}}
+  @isManaging={{false}}
+  @setIsManaging={{(noop)}}
+/>`);
       assert.strictEqual(component.title, 'Leadership (2)');
       assert.strictEqual(component.leadershipList.directors.length, 2);
       assert.strictEqual(component.leadershipList.directors[0].text, 'a M. person');
@@ -366,13 +357,13 @@ module('Integration | Component | leadership expanded', function (hooks) {
         assert.ok(true, 'Action was fired');
       });
       await render(hbs`<LeadershipExpanded
-      @model={{this.programYear}}
-      @editable={{true}}
-      @collapse={{this.click}}
-      @expand={{(noop)}}
-      @isManaging={{false}}
-      @setIsManaging={{(noop)}}
-    />`);
+  @model={{this.programYear}}
+  @editable={{true}}
+  @collapse={{this.click}}
+  @expand={{(noop)}}
+  @isManaging={{false}}
+  @setIsManaging={{(noop)}}
+/>`);
       await component.collapse();
     });
 
@@ -390,13 +381,13 @@ module('Integration | Component | leadership expanded', function (hooks) {
         assert.ok(true, 'Action was fired');
       });
       await render(hbs`<LeadershipExpanded
-      @model={{this.programYear}}
-      @editable={{true}}
-      @collapse={{(noop)}}
-      @expand={{(noop)}}
-      @isManaging={{false}}
-      @setIsManaging={{this.click}}
-    />`);
+  @model={{this.programYear}}
+  @editable={{true}}
+  @collapse={{(noop)}}
+  @expand={{(noop)}}
+  @isManaging={{false}}
+  @setIsManaging={{this.click}}
+/>`);
       await component.manage();
     });
   });
@@ -413,13 +404,13 @@ module('Integration | Component | leadership expanded', function (hooks) {
       const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
       this.set('school', schoolModel);
       await render(hbs`<LeadershipExpanded
-      @model={{this.school}}
-      @editable={{true}}
-      @collapse={{(noop)}}
-      @expand={{(noop)}}
-      @isManaging={{false}}
-      @setIsManaging={{(noop)}}
-    />`);
+  @model={{this.school}}
+  @editable={{true}}
+  @collapse={{(noop)}}
+  @expand={{(noop)}}
+  @isManaging={{false}}
+  @setIsManaging={{(noop)}}
+/>`);
       assert.strictEqual(component.title, 'Leadership (3)');
       assert.strictEqual(component.leadershipList.directors.length, 1);
       assert.strictEqual(component.leadershipList.directors[0].text, '0 guy M. Mc0son');
@@ -440,13 +431,13 @@ module('Integration | Component | leadership expanded', function (hooks) {
         assert.ok(true, 'Action was fired');
       });
       await render(hbs`<LeadershipExpanded
-      @model={{this.school}}
-      @editable={{true}}
-      @collapse={{this.collapse}}
-      @expand={{(noop)}}
-      @isManaging={{false}}
-      @setIsManaging={{(noop)}}
-    />`);
+  @model={{this.school}}
+  @editable={{true}}
+  @collapse={{this.collapse}}
+  @expand={{(noop)}}
+  @isManaging={{false}}
+  @setIsManaging={{(noop)}}
+/>`);
       await component.collapse();
     });
 
@@ -459,13 +450,13 @@ module('Integration | Component | leadership expanded', function (hooks) {
         assert.ok(true, 'Action was fired');
       });
       await render(hbs`<LeadershipExpanded
-      @model={{this.school}}
-      @editable={{true}}
-      @collapse={{(noop)}}
-      @expand={{(noop)}}
-      @isManaging={{false}}
-      @setIsManaging={{this.manage}}
-    />`);
+  @model={{this.school}}
+  @editable={{true}}
+  @collapse={{(noop)}}
+  @expand={{(noop)}}
+  @isManaging={{false}}
+  @setIsManaging={{this.manage}}
+/>`);
 
       await component.manage();
     });
@@ -476,13 +467,13 @@ module('Integration | Component | leadership expanded', function (hooks) {
       const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
       this.set('school', schoolModel);
       await render(hbs`<LeadershipExpanded
-      @model={{this.school}}
-      @editable={{true}}
-      @collapse={{(noop)}}
-      @expand={{(noop)}}
-      @isManaging={{true}}
-      @setIsManaging={{(noop)}}
-    />`);
+  @model={{this.school}}
+  @editable={{true}}
+  @collapse={{(noop)}}
+  @expand={{(noop)}}
+  @isManaging={{true}}
+  @setIsManaging={{(noop)}}
+/>`);
 
       assert.ok(component.leadershipManager.isVisible);
     });
@@ -499,13 +490,13 @@ module('Integration | Component | leadership expanded', function (hooks) {
         .findRecord('curriculum-inventory-report', report.id);
       this.set('report', reportModel);
       await render(hbs`<LeadershipExpanded
-      @model={{this.report}}
-      @editable={{true}}
-      @collapse={{(noop)}}
-      @expand={{(noop)}}
-      @isManaging={{false}}
-      @setIsManaging={{(noop)}}
-    />`);
+  @model={{this.report}}
+  @editable={{true}}
+  @collapse={{(noop)}}
+  @expand={{(noop)}}
+  @isManaging={{false}}
+  @setIsManaging={{(noop)}}
+/>`);
       assert.strictEqual(component.leadershipList.administrators.length, 2);
       assert.strictEqual(component.leadershipList.administrators[0].text, '0 guy M. Mc0son');
       assert.strictEqual(component.leadershipList.administrators[1].text, '1 guy M. Mc1son');
@@ -523,13 +514,13 @@ module('Integration | Component | leadership expanded', function (hooks) {
         assert.ok(true, 'Action was fired');
       });
       await render(hbs`<LeadershipExpanded
-      @model={{this.report}}
-      @editable={{true}}
-      @collapse={{this.collapse}}
-      @expand={{(noop)}}
-      @isManaging={{false}}
-      @setIsManaging={{(noop)}}
-    />`);
+  @model={{this.report}}
+  @editable={{true}}
+  @collapse={{this.collapse}}
+  @expand={{(noop)}}
+  @isManaging={{false}}
+  @setIsManaging={{(noop)}}
+/>`);
       await component.collapse();
     });
 
@@ -545,13 +536,13 @@ module('Integration | Component | leadership expanded', function (hooks) {
         assert.ok(true, 'Action was fired');
       });
       await render(hbs`<LeadershipExpanded
-      @model={{this.report}}
-      @editable={{true}}
-      @collapse={{(noop)}}
-      @expand={{(noop)}}
-      @isManaging={{false}}
-      @setIsManaging={{this.manage}}
-    />`);
+  @model={{this.report}}
+  @editable={{true}}
+  @collapse={{(noop)}}
+  @expand={{(noop)}}
+  @isManaging={{false}}
+  @setIsManaging={{this.manage}}
+/>`);
       await component.manage();
     });
   });

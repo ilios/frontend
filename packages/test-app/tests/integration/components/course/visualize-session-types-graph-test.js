@@ -69,8 +69,11 @@ module('Integration | Component | course/visualize-session-types-graph', functio
 
   test('it renders', async function (assert) {
     this.set('course', this.linkedCourseWithTime);
-    await render(hbs`<Course::VisualizeSessionTypesGraph @course={{this.course}} @isIcon={{false}} @showDataTable={{true}} />
-`);
+    await render(hbs`<Course::VisualizeSessionTypesGraph
+  @course={{this.course}}
+  @isIcon={{false}}
+  @showDataTable={{true}}
+/>`);
     assert.notOk(component.noData.isVisible);
     //let the chart animations finish
     await waitFor('.loaded');
@@ -121,8 +124,12 @@ module('Integration | Component | course/visualize-session-types-graph', functio
     this.set('title', 'Campaign');
     this.set('course', this.linkedCourseWithTime);
     await render(
-      hbs`<Course::VisualizeSessionTypesGraph @course={{this.course}} @filter={{this.title}} @isIcon={{false}} @showDataTable={{true}}/>
-`,
+      hbs`<Course::VisualizeSessionTypesGraph
+  @course={{this.course}}
+  @filter={{this.title}}
+  @isIcon={{false}}
+  @showDataTable={{true}}
+/>`,
     );
     assert.notOk(component.noData.isVisible);
     //let the chart animations finish
@@ -139,8 +146,12 @@ module('Integration | Component | course/visualize-session-types-graph', functio
     this.set('title', 'Geflarknik');
     this.set('course', this.linkedCourseWithTime);
     await render(
-      hbs`<Course::VisualizeSessionTypesGraph @course={{this.course}} @filter={{this.title}} @isIcon={{false}} @showDataTable={{true}}/>
-`,
+      hbs`<Course::VisualizeSessionTypesGraph
+  @course={{this.course}}
+  @filter={{this.title}}
+  @isIcon={{false}}
+  @showDataTable={{true}}
+/>`,
     );
     assert.notOk(component.chart.isVisible);
     assert.notOk(component.noData.isVisible);
@@ -150,8 +161,11 @@ module('Integration | Component | course/visualize-session-types-graph', functio
 
   test('sort data-table by session type', async function (assert) {
     this.set('course', this.linkedCourseWithTime);
-    await render(hbs`<Course::VisualizeSessionTypesGraph @course={{this.course}} @isIcon={{false}} @showDataTable={{true}} />
-`);
+    await render(hbs`<Course::VisualizeSessionTypesGraph
+  @course={{this.course}}
+  @isIcon={{false}}
+  @showDataTable={{true}}
+/>`);
     assert.strictEqual(component.dataTable.rows[0].sessionType.text, 'Prelude');
     assert.strictEqual(component.dataTable.rows[1].sessionType.text, 'Campaign');
     assert.strictEqual(component.dataTable.rows[2].sessionType.text, 'Standalone');
@@ -167,8 +181,11 @@ module('Integration | Component | course/visualize-session-types-graph', functio
 
   test('sort data-table by sessions', async function (assert) {
     this.set('course', this.linkedCourseWithTime);
-    await render(hbs`<Course::VisualizeSessionTypesGraph @course={{this.course}} @isIcon={{false}} @showDataTable={{true}} />
-`);
+    await render(hbs`<Course::VisualizeSessionTypesGraph
+  @course={{this.course}}
+  @isIcon={{false}}
+  @showDataTable={{true}}
+/>`);
     assert.strictEqual(component.dataTable.rows[0].sessions.text, 'Two Slices of Pizza');
     assert.strictEqual(component.dataTable.rows[1].sessions.text, 'The San Leandro Horror');
     assert.strictEqual(component.dataTable.rows[2].sessions.text, 'Berkeley Investigations');
@@ -184,8 +201,11 @@ module('Integration | Component | course/visualize-session-types-graph', functio
 
   test('sort data-table by minutes', async function (assert) {
     this.set('course', this.linkedCourseWithTime);
-    await render(hbs`<Course::VisualizeSessionTypesGraph @course={{this.course}} @isIcon={{false}} @showDataTable={{true}} />
-`);
+    await render(hbs`<Course::VisualizeSessionTypesGraph
+  @course={{this.course}}
+  @isIcon={{false}}
+  @showDataTable={{true}}
+/>`);
     assert.strictEqual(component.dataTable.rows[0].minutes, '0');
     assert.strictEqual(component.dataTable.rows[1].minutes, '180');
     assert.strictEqual(component.dataTable.rows[2].minutes, '630');
@@ -202,8 +222,11 @@ module('Integration | Component | course/visualize-session-types-graph', functio
   test('no data', async function (assert) {
     this.set('course', this.emptyCourse);
     await render(
-      hbs`<Course::VisualizeSessionTypesGraph @course={{this.course}} @isIcon={{false}} @showDataTable={{true}} />
-`,
+      hbs`<Course::VisualizeSessionTypesGraph
+  @course={{this.course}}
+  @isIcon={{false}}
+  @showDataTable={{true}}
+/>`,
     );
     assert.notOk(component.chart.isVisible);
     assert.notOk(component.dataTable.isVisible);
@@ -213,8 +236,11 @@ module('Integration | Component | course/visualize-session-types-graph', functio
   test('only zero time data', async function (assert) {
     this.set('course', this.linkedCourseWithoutTime);
     await render(
-      hbs`<Course::VisualizeSessionTypesGraph @course={{this.course}} @isIcon={{false}} @showDataTable={{true}} />
-`,
+      hbs`<Course::VisualizeSessionTypesGraph
+  @course={{this.course}}
+  @isIcon={{false}}
+  @showDataTable={{true}}
+/>`,
     );
     assert.notOk(component.chart.isVisible);
     assert.notOk(component.noData.isVisible);

@@ -41,20 +41,20 @@ module('Integration | Component | school session type form', function (hooks) {
     await this.store.findAll('aamc-method');
     await this.store.findAll('assessment-option');
     await render(hbs`<SchoolSessionTypeForm
-      @canEditTitle={{true}}
-      @canEditAamcMethod={{true}}
-      @canEditCalendarColor={{true}}
-      @canEditAssessment={{true}}
-      @canEditAssessmentOption={{true}}
-      @canEditActive={{true}}
-      @title={{this.title}}
-      @calendarColor={{this.calendarColor}}
-      @assessment={{true}}
-      @isActive={{true}}
-      @selectedAssessmentOptionId={{this.assessmentOptionId}}
-      @save={{(noop)}}
-      @close={{(noop)}}
-    />`);
+  @canEditTitle={{true}}
+  @canEditAamcMethod={{true}}
+  @canEditCalendarColor={{true}}
+  @canEditAssessment={{true}}
+  @canEditAssessmentOption={{true}}
+  @canEditActive={{true}}
+  @title={{this.title}}
+  @calendarColor={{this.calendarColor}}
+  @assessment={{true}}
+  @isActive={{true}}
+  @selectedAssessmentOptionId={{this.assessmentOptionId}}
+  @save={{(noop)}}
+  @close={{(noop)}}
+/>`);
 
     assert.strictEqual(component.title.value, 'one');
     assert.strictEqual(component.aamcMethod.value, '');
@@ -101,15 +101,15 @@ module('Integration | Component | school session type form', function (hooks) {
     this.set('assessmentOption', assessmentOptions[1]);
     this.set('assessmentOptions', assessmentOptions);
     await render(hbs`<SchoolSessionTypeForm
-      @canEditAamcMethod={{true}}
-      @canEditCalendarColor={{true}}
-      @canEditAssessment={{true}}
-      @assessment={{true}}
-      @assessmentOption={{this.assessmentOption}}
-      @assessmentOptions={{this.assessmentOptions}}
-      @save={{(noop)}}
-      @close={{(noop)}}
-    />`);
+  @canEditAamcMethod={{true}}
+  @canEditCalendarColor={{true}}
+  @canEditAssessment={{true}}
+  @assessment={{true}}
+  @assessmentOption={{this.assessmentOption}}
+  @assessmentOptions={{this.assessmentOptions}}
+  @save={{(noop)}}
+  @close={{(noop)}}
+/>`);
 
     assert.strictEqual(component.aamcMethod.value, '');
     assert.strictEqual(component.aamcMethod.options.length, 2);
@@ -134,14 +134,14 @@ module('Integration | Component | school session type form', function (hooks) {
     await this.store.findAll('aamc-method');
     await this.store.findAll('assessment-option');
     await render(hbs`<SchoolSessionTypeForm
-      @assessment={{false}}
-      @assessmentOption={{null}}
-      @assessmentOptions={{(array)}}
-      @canEditAssessment={{true}}
-      @canEditAssessmentOption={{true}}
-      @save={{(noop)}}
-      @close={{(noop)}}
-    />`);
+  @assessment={{false}}
+  @assessmentOption={{null}}
+  @assessmentOptions={{(array)}}
+  @canEditAssessment={{true}}
+  @canEditAssessmentOption={{true}}
+  @save={{(noop)}}
+  @close={{(noop)}}
+/>`);
 
     assert.notOk(component.assessment.isAssessment);
     assert.notOk(component.assessmentSelector.isVisible);
@@ -152,11 +152,9 @@ module('Integration | Component | school session type form', function (hooks) {
     this.set('cancel', () => {
       assert.ok(true);
     });
-    await render(hbs`<SchoolSessionTypeForm
-      @canUpdate={{true}}
-      @save={{(noop)}}
-      @close={{this.cancel}}
-    />`);
+    await render(
+      hbs`<SchoolSessionTypeForm @canUpdate={{true}} @save={{(noop)}} @close={{this.cancel}} />`,
+    );
 
     await component.cancel.click();
   });
@@ -166,11 +164,9 @@ module('Integration | Component | school session type form', function (hooks) {
     this.set('close', () => {
       assert.ok(true);
     });
-    await render(hbs`<SchoolSessionTypeForm
-      @canUpdate={{false}}
-      @save={{(noop)}}
-      @close={{this.close}}
-    />`);
+    await render(
+      hbs`<SchoolSessionTypeForm @canUpdate={{false}} @save={{(noop)}} @close={{this.close}} />`,
+    );
 
     await component.close.click();
   });
@@ -201,20 +197,20 @@ module('Integration | Component | school session type form', function (hooks) {
       assert.false(isActive, 'correct isActive value is sent');
     });
     await render(hbs`<SchoolSessionTypeForm
-      @title=""
-      @calendarColor=""
-      @assessment={{true}}
-      @canEditTitle={{true}}
-      @canEditAamcMethod={{true}}
-      @canEditCalendarColor={{true}}
-      @canEditAssessment={{true}}
-      @canEditAssessmentOption={{true}}
-      @canEditActive={{true}}
-      @isActive={{true}}
-      @canUpdate={{true}}
-      @save={{this.save}}
-      @close={{(noop)}}
-    />`);
+  @title=''
+  @calendarColor=''
+  @assessment={{true}}
+  @canEditTitle={{true}}
+  @canEditAamcMethod={{true}}
+  @canEditCalendarColor={{true}}
+  @canEditAssessment={{true}}
+  @canEditAssessmentOption={{true}}
+  @canEditActive={{true}}
+  @isActive={{true}}
+  @canUpdate={{true}}
+  @save={{this.save}}
+  @close={{(noop)}}
+/>`);
 
     assert.strictEqual(component.active.yesNoToggle.checked, 'true');
     await component.title.set('new title');
@@ -240,21 +236,21 @@ module('Integration | Component | school session type form', function (hooks) {
     await this.store.findAll('aamc-method');
     await this.store.findAll('assessment-option');
     await render(hbs`<SchoolSessionTypeForm
-      @canEditTitle={{false}}
-      @canEditAamcMethod={{false}}
-      @canEditCalendarColor={{false}}
-      @canEditAssessment={{false}}
-      @canEditAssessmentOption={{false}}
-      @canEditActive={{false}}
-      @title="one"
-      @selectedAamcMethodId="AM001"
-      @calendarColor="#ffffff"
-      @assessment={{true}}
-      @selectedAssessmentOptionId="1"
-      @isActive={{true}}
-      @save={{(noop)}}
-      @close={{(noop)}}
-    />`);
+  @canEditTitle={{false}}
+  @canEditAamcMethod={{false}}
+  @canEditCalendarColor={{false}}
+  @canEditAssessment={{false}}
+  @canEditAssessmentOption={{false}}
+  @canEditActive={{false}}
+  @title='one'
+  @selectedAamcMethodId='AM001'
+  @calendarColor='#ffffff'
+  @assessment={{true}}
+  @selectedAssessmentOptionId='1'
+  @isActive={{true}}
+  @save={{(noop)}}
+  @close={{(noop)}}
+/>`);
 
     assert.notOk(component.title.inputControlIsVisible);
     assert.notOk(component.aamcMethod.inputControlIsVisible);
@@ -286,12 +282,12 @@ module('Integration | Component | school session type form', function (hooks) {
     await this.store.findAll('aamc-method');
     await this.store.findAll('assessment-option');
     await render(hbs`<SchoolSessionTypeForm
-      @canEditAamcMethod={{true}}
-      @selectedAamcMethodId="AM001"
-      @assessment={{true}}
-      @save={{(noop)}}
-      @close={{(noop)}}
-    />`);
+  @canEditAamcMethod={{true}}
+  @selectedAamcMethodId='AM001'
+  @assessment={{true}}
+  @save={{(noop)}}
+  @close={{(noop)}}
+/>`);
 
     assert.strictEqual(component.aamcMethod.value, 'AM001');
     assert.strictEqual(component.aamcMethod.options[1].text, 'lorem ipsum (inactive)');
@@ -314,13 +310,13 @@ module('Integration | Component | school session type form', function (hooks) {
     await this.store.findAll('assessment-option');
     this.set('aamcMethodId', aamcMethodId);
     await render(hbs`<SchoolSessionTypeForm
-      @canEditAamcMethod={{false}}
-      @canEditActive={{true}}
-      @selectedAamcMethodId={{this.aamcMethodId}}
-      @assessment={{true}}
-      @save={{(noop)}}
-      @close={{(noop)}}
-    />`);
+  @canEditAamcMethod={{false}}
+  @canEditActive={{true}}
+  @selectedAamcMethodId={{this.aamcMethodId}}
+  @assessment={{true}}
+  @save={{(noop)}}
+  @close={{(noop)}}
+/>`);
 
     assert.strictEqual(component.aamcMethod.readonlyValue, 'lorem ipsum (inactive)');
   });
@@ -329,15 +325,15 @@ module('Integration | Component | school session type form', function (hooks) {
   // @todo: check if we can get rid of validation modifiers for this field altogether[ST 2020/12/08]
   skip('calendar color input validation', async function (assert) {
     await render(hbs`<SchoolSessionTypeForm
-      @assessment={{false}}
-      @assessmentOption={{null}}
-      @assessmentOptions={{(array)}}
-      @canUpdate={{true}}
-      @canEditCalendarColor={{true}}
-      @calendarColor="#ffffff"
-      @save={{(noop)}}
-      @close={{(noop)}}
-    />`);
+  @assessment={{false}}
+  @assessmentOption={{null}}
+  @assessmentOptions={{(array)}}
+  @canUpdate={{true}}
+  @canEditCalendarColor={{true}}
+  @calendarColor='#ffffff'
+  @save={{(noop)}}
+  @close={{(noop)}}
+/>`);
 
     assert.strictEqual(component.calendarColor.value, '#ffffff');
     assert.notOk(component.calendarColor.hasError);

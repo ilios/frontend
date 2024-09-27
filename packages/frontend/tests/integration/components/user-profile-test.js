@@ -52,7 +52,7 @@ module('Integration | Component | user-profile', function (hooks) {
   @permissionsYear={{null}}
   @setPermissionsSchool={{(noop)}}
   @setPermissionsYear={{(noop)}}
-    />`);
+/>`);
 
     assert.notOk(component.calendar.isVisible);
     assert.strictEqual(component.actions.calendarToggle.firstLabel.text, 'Hide Calendar');

@@ -13,16 +13,15 @@ module('Integration | Component | leadership collapsed', function (hooks) {
     this.set('administratorsCount', 1);
     this.set('studentAdvisorsCount', 4);
     await render(hbs`<LeadershipCollapsed
-      @title={{this.title}}
-      @showAdministrators={{true}}
-      @showDirectors={{true}}
-      @showStudentAdvisors={{true}}
-      @directorsCount={{this.directorsCount}}
-      @administratorsCount={{this.administratorsCount}}
-      @studentAdvisorsCount={{this.studentAdvisorsCount}}
-      @expand={{(noop)}}
-    />
-`);
+  @title={{this.title}}
+  @showAdministrators={{true}}
+  @showDirectors={{true}}
+  @showStudentAdvisors={{true}}
+  @directorsCount={{this.directorsCount}}
+  @administratorsCount={{this.administratorsCount}}
+  @studentAdvisorsCount={{this.studentAdvisorsCount}}
+  @expand={{(noop)}}
+/>`);
     assert.strictEqual(component.title, 'Leadership (8)');
     assert.strictEqual(component.summary.length, 3);
     assert.strictEqual(component.summary[0].name, 'Directors');
@@ -39,10 +38,7 @@ module('Integration | Component | leadership collapsed', function (hooks) {
     this.set('click', () => {
       assert.ok(true, 'Action was fired');
     });
-    await render(hbs`<LeadershipCollapsed
-      @expand={{this.click}}
-    />
-`);
+    await render(hbs`<LeadershipCollapsed @expand={{this.click}} />`);
     await component.expand();
   });
 
@@ -52,14 +48,13 @@ module('Integration | Component | leadership collapsed', function (hooks) {
     this.set('administratorsCount', 2);
     this.set('studentAdvisorsCount', 4);
     await render(hbs`<LeadershipCollapsed
-      @title={{this.title}}
-      @showAdministrators={{true}}
-      @directorsCount={{this.directorsCount}}
-      @administratorsCount={{this.administratorsCount}}
-      @studentAdvisorsCount={{this.studentAdvisorsCount}}
-      @expand={{(noop)}}
-    />
-`);
+  @title={{this.title}}
+  @showAdministrators={{true}}
+  @directorsCount={{this.directorsCount}}
+  @administratorsCount={{this.administratorsCount}}
+  @studentAdvisorsCount={{this.studentAdvisorsCount}}
+  @expand={{(noop)}}
+/>`);
     assert.strictEqual(component.title, 'Leadership (2)');
     assert.strictEqual(component.summary.length, 1);
     assert.strictEqual(component.summary[0].name, 'Administrators');
@@ -72,14 +67,13 @@ module('Integration | Component | leadership collapsed', function (hooks) {
     this.set('administratorsCount', 3);
     this.set('studentAdvisorsCount', 4);
     await render(hbs`<LeadershipCollapsed
-      @title={{this.title}}
-      @showDirectors={{true}}
-      @directorsCount={{this.directorsCount}}
-      @administratorsCount={{this.administratorsCount}}
-      @studentAdvisorsCount={{this.studentAdvisorsCount}}
-      @expand={{(noop)}}
-    />
-`);
+  @title={{this.title}}
+  @showDirectors={{true}}
+  @directorsCount={{this.directorsCount}}
+  @administratorsCount={{this.administratorsCount}}
+  @studentAdvisorsCount={{this.studentAdvisorsCount}}
+  @expand={{(noop)}}
+/>`);
     assert.strictEqual(component.title, 'Leadership (1)');
     assert.strictEqual(component.summary.length, 1);
     assert.strictEqual(component.summary[0].name, 'Directors');
@@ -92,14 +86,13 @@ module('Integration | Component | leadership collapsed', function (hooks) {
     this.set('administratorsCount', 3);
     this.set('studentAdvisorsCount', 1);
     await render(hbs`<LeadershipCollapsed
-      @title={{this.title}}
-      @showStudentAdvisors={{true}}
-      @directorsCount={{this.directorsCount}}
-      @administratorsCount={{this.administratorsCount}}
-      @studentAdvisorsCount={{this.studentAdvisorsCount}}
-      @expand={{(noop)}}
-    />
-`);
+  @title={{this.title}}
+  @showStudentAdvisors={{true}}
+  @directorsCount={{this.directorsCount}}
+  @administratorsCount={{this.administratorsCount}}
+  @studentAdvisorsCount={{this.studentAdvisorsCount}}
+  @expand={{(noop)}}
+/>`);
     assert.strictEqual(component.title, 'Leadership (1)');
     assert.strictEqual(component.summary.length, 1);
     assert.strictEqual(component.summary[0].name, 'Student Advisors');
@@ -108,11 +101,7 @@ module('Integration | Component | leadership collapsed', function (hooks) {
 
   test('it renders empty', async function (assert) {
     this.set('title', 'Test Title');
-    await render(hbs`<LeadershipCollapsed
-      @title={{this.title}}
-      @expand={{(noop)}}
-    />
-`);
+    await render(hbs`<LeadershipCollapsed @title={{this.title}} @expand={{(noop)}} />`);
     assert.strictEqual(component.title, 'Leadership (0)');
     assert.strictEqual(component.summary.length, 0);
   });

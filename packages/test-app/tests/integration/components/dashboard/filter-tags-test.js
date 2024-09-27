@@ -19,20 +19,19 @@ module('Integration | Component | dashboard/filter-tags', function (hooks) {
       { id: 3, displayTitle: 'cohort 3', programTitle: 'program 2' },
     ]);
     await render(hbs`<Dashboard::FilterTags
-      @selectedCourseLevels={{array 1 2}}
-      @selectedSessionTypeIds={{array 2 3}}
-      @selectedCohortIds={{array 2 3}}
-      @selectedCourseIds={{array 2 3}}
-      @selectedTermIds={{array 2 3}}
-      @cohortProxies={{this.cohortProxies}}
-      @removeCourseLevel={{(noop)}}
-      @removeSessionTypeId={{(noop)}}
-      @removeCohortId={{(noop)}}
-      @removeCourseId={{(noop)}}
-      @removeTermId={{(noop)}}
-      @clearFilters={{(noop)}}
-    />
-`);
+  @selectedCourseLevels={{array 1 2}}
+  @selectedSessionTypeIds={{array 2 3}}
+  @selectedCohortIds={{array 2 3}}
+  @selectedCourseIds={{array 2 3}}
+  @selectedTermIds={{array 2 3}}
+  @cohortProxies={{this.cohortProxies}}
+  @removeCourseLevel={{(noop)}}
+  @removeSessionTypeId={{(noop)}}
+  @removeCohortId={{(noop)}}
+  @removeCourseId={{(noop)}}
+  @removeTermId={{(noop)}}
+  @clearFilters={{(noop)}}
+/>`);
 
     assert.dom().containsText('Course Level 1');
     assert.dom().containsText('Course Level 2');

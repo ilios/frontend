@@ -50,10 +50,10 @@ module('Integration | Component | reports/subject/new/term', function (hooks) {
       this.set('currentId', id);
     });
     await render(hbs`<Reports::Subject::New::Term
-      @currentId={{this.currentId}}
-      @changeId={{this.changeId}}
-      @school={{null}}
-     />`);
+  @currentId={{this.currentId}}
+  @changeId={{this.changeId}}
+  @school={{null}}
+/>`);
 
     assert.strictEqual(component.options.length, 7);
     assert.strictEqual(component.options[0].text, 'Vocabulary 1 > term 0');
@@ -83,10 +83,10 @@ module('Integration | Component | reports/subject/new/term', function (hooks) {
     assert.expect(5);
     this.set('currentId', '3');
     await render(hbs`<Reports::Subject::New::Term
-      @currentId={{this.currentId}}
-      @changeId={{this.changeId}}
-      @school={{null}}
-     />`);
+  @currentId={{this.currentId}}
+  @changeId={{this.changeId}}
+  @school={{null}}
+/>`);
     this.set('changeId', (id) => {
       assert.strictEqual(id, '1');
       this.set('currentId', id);
@@ -108,10 +108,10 @@ module('Integration | Component | reports/subject/new/term', function (hooks) {
       this.set('currentId', id);
     });
     await render(hbs`<Reports::Subject::New::Term
-      @currentId={{this.currentId}}
-      @changeId={{this.changeId}}
-      @school={{this.school}}
-     />`);
+  @currentId={{this.currentId}}
+  @changeId={{this.changeId}}
+  @school={{this.school}}
+/>`);
 
     assert.strictEqual(component.options.length, 1);
     assert.strictEqual(component.options[0].text, 'Vocabulary 2 > term 5');
@@ -125,10 +125,10 @@ module('Integration | Component | reports/subject/new/term', function (hooks) {
       assert.strictEqual(id, '1');
     });
     await render(hbs`<Reports::Subject::New::Term
-      @currentId={{null}}
-      @changeId={{this.changeId}}
-      @school={{this.school}}
-     />`);
+  @currentId={{null}}
+  @changeId={{this.changeId}}
+  @school={{this.school}}
+/>`);
 
     this.set('changeId', (id) => {
       assert.strictEqual(id, '6');

@@ -27,12 +27,9 @@ module('Integration | Helper | sort-by-position', function (hooks) {
     });
     const objectives = await this.owner.lookup('service:store').findAll('course-objective');
     this.set('objectives', objectives);
-    await render(hbs`
-      {{#each (sort-by-position this.objectives) as |o|}}
-        <span>{{o.title}}</span>
-      {{/each}}
-
-`);
+    await render(hbs`{{#each (sort-by-position this.objectives) as |o|}}
+  <span>{{o.title}}</span>
+{{/each}}`);
     assert.dom('span').exists({ count: 4 });
     assert.dom('span:nth-of-type(1)').hasText('Bockwurst');
     assert.dom('span:nth-of-type(2)').hasText('Oscar');
@@ -42,28 +39,22 @@ module('Integration | Helper | sort-by-position', function (hooks) {
 
   test('empty list', async function (assert) {
     this.set('emptyArrayMessage', 'Nada!');
-    await render(hbs`
-      {{#each (sort-by-position (array)) as |o|}}
-        <span>{{o.title}}</span>
-      {{else}}
-        <span>{{this.emptyArrayMessage}}</span>
-      {{/each}}
-
-`);
+    await render(hbs`{{#each (sort-by-position (array)) as |o|}}
+  <span>{{o.title}}</span>
+{{else}}
+  <span>{{this.emptyArrayMessage}}</span>
+{{/each}}`);
     assert.dom('span').exists({ count: 1 });
     assert.dom('span:nth-of-type(1)').hasText('Nada!');
   });
 
   test('null input', async function (assert) {
     this.set('emptyArrayMessage', 'Nada!');
-    await render(hbs`
-      {{#each (sort-by-position null) as |o|}}
-        <span>{{o.title}}</span>
-      {{else}}
-        <span>{{this.emptyArrayMessage}}</span>
-      {{/each}}
-
-`);
+    await render(hbs`{{#each (sort-by-position null) as |o|}}
+  <span>{{o.title}}</span>
+{{else}}
+  <span>{{this.emptyArrayMessage}}</span>
+{{/each}}`);
     assert.dom('span').exists({ count: 1 });
     assert.dom('span:nth-of-type(1)').hasText('Nada!');
   });

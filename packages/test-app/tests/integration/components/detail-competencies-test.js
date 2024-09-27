@@ -52,11 +52,11 @@ module('Integration | Component | detail-competencies', function (hooks) {
   test('it renders and is accessible', async function (assert) {
     this.set('course', this.courseModel);
     await render(hbs`<DetailCompetencies
-      @course={{this.course}}
-      @editable={{false}}
-      @collapse={{(noop)}}
-      @expand={{(noop)}}
-    />`);
+  @course={{this.course}}
+  @editable={{false}}
+  @collapse={{(noop)}}
+  @expand={{(noop)}}
+/>`);
     assert.strictEqual(component.domains.length, 2);
     assert.strictEqual(component.domains[0].text, 'competency 0 competency 2 competency 3');
     assert.strictEqual(component.domains[0].competencies.length, 2);

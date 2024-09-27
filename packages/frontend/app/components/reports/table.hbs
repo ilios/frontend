@@ -24,9 +24,13 @@
           <td colspan="2">
             <div class="confirm-message">
               {{t "general.reportConfirmRemove"}}
-              <br>
+              <br />
               <div class="confirm-buttons">
-                <button {{on "click" (fn @remove decoratedReport.report)}} type="button" class="remove text">
+                <button
+                  {{on "click" (fn @remove decoratedReport.report)}}
+                  type="button"
+                  class="remove text"
+                >
                   {{t "general.yes"}}
                 </button>
                 <button
@@ -42,5 +46,5 @@
         </tr>
       {{/if}}
     {{/each}}
-   </tbody>
+  </tbody>
 </table>

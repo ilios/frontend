@@ -1,9 +1,5 @@
 <div data-test-report-search-input>
-  <SearchBox
-    @search={{this.search}}
-    @clear={{this.search}}
-    ...attributes
-  />
+  <SearchBox @search={{this.search}} @clear={{this.search}} ...attributes />
   {{#if @searchIsRunning}}
     <ul class="results" data-test-results>
       <li>

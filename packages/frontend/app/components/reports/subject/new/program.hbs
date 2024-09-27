@@ -11,10 +11,7 @@
       {{did-update (perform this.setInitialValue) @school}}
     >
       {{#each this.sortedPrograms as |program|}}
-        <option
-          selected={{eq program.id @currentId}}
-          value={{program.id}}
-        >
+        <option selected={{eq program.id @currentId}} value={{program.id}}>
           {{program.title}}
         </option>
       {{/each}}

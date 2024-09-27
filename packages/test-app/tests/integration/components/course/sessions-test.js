@@ -29,13 +29,12 @@ module('Integration | Component | course/sessions', function (hooks) {
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('course', courseModel);
     await render(hbs`<Course::Sessions
-      @course={{this.course}}
-      @sortBy="title"
-      @setSortBy={{(noop)}}
-      @filterBy={{null}}
-      @setFilterBy={{(noop)}}
-    />
-`);
+  @course={{this.course}}
+  @sortBy='title'
+  @setSortBy={{(noop)}}
+  @filterBy={{null}}
+  @setFilterBy={{(noop)}}
+/>`);
 
     assert.strictEqual(component.header.title, 'Sessions (0)');
     assert.notOk(component.sessionsGridHeader.expandCollapse.toggle.isVisible);
@@ -49,13 +48,12 @@ module('Integration | Component | course/sessions', function (hooks) {
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('course', courseModel);
     await render(hbs`<Course::Sessions
-      @course={{this.course}}
-      @sortBy="title"
-      @setSortBy={{(noop)}}
-      @filterBy={{null}}
-      @setFilterBy={{(noop)}}
-    />
-`);
+  @course={{this.course}}
+  @sortBy='title'
+  @setSortBy={{(noop)}}
+  @filterBy={{null}}
+  @setFilterBy={{(noop)}}
+/>`);
 
     assert.strictEqual(component.header.title, 'Sessions (2)');
     assert.notOk(component.sessionsGridHeader.expandCollapse.toggle.isVisible);
@@ -72,13 +70,12 @@ module('Integration | Component | course/sessions', function (hooks) {
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('course', courseModel);
     await render(hbs`<Course::Sessions
-      @course={{this.course}}
-      @sortBy="title"
-      @setSortBy={{(noop)}}
-      @filterBy={{null}}
-      @setFilterBy={{(noop)}}
-    />
-`);
+  @course={{this.course}}
+  @sortBy='title'
+  @setSortBy={{(noop)}}
+  @filterBy={{null}}
+  @setFilterBy={{(noop)}}
+/>`);
 
     assert.strictEqual(component.header.title, 'Sessions (2)');
     assert.ok(component.sessionsGridHeader.expandCollapse.toggle.isVisible);

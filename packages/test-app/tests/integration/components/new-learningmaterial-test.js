@@ -21,16 +21,13 @@ module('Integration | Component | new learningmaterial', function (hooks) {
 
   test('owning user has additional info', async function (assert) {
     this.set('type', 'citation');
-    await render(hbs`
-      <NewLearningmaterial
-        @type={{this.type}}
-        @learningMaterialStatuses={{(array)}}
-        @learningMaterialUserRoles={{(array)}}
-        @save={{(noop)}}
-        @cancel={{(noop)}}
-      />
-
-`);
+    await render(hbs`<NewLearningmaterial
+  @type={{this.type}}
+  @learningMaterialStatuses={{(array)}}
+  @learningMaterialUserRoles={{(array)}}
+  @save={{(noop)}}
+  @cancel={{(noop)}}
+/>`);
     assert.strictEqual(component.owningUser.userNameInfo.fullName, 'Clem Chowder');
     assert.ok(component.owningUser.userNameInfo.hasAdditionalInfo);
     assert.notOk(component.owningUser.userNameInfo.isTooltipVisible);
@@ -46,16 +43,13 @@ module('Integration | Component | new learningmaterial', function (hooks) {
 
   test('link validation', async function (assert) {
     this.set('type', 'link');
-    await render(hbs`
-      <NewLearningmaterial
-        @type={{this.type}}
-        @learningMaterialStatuses={{(array)}}
-        @learningMaterialUserRoles={{(array)}}
-        @save={{(noop)}}
-        @cancel={{(noop)}}
-      />
-
-`);
+    await render(hbs`<NewLearningmaterial
+  @type={{this.type}}
+  @learningMaterialStatuses={{(array)}}
+  @learningMaterialUserRoles={{(array)}}
+  @save={{(noop)}}
+  @cancel={{(noop)}}
+/>`);
     assert.strictEqual(component.url.validationErrors.length, 0);
     await component.save();
     assert.strictEqual(component.url.validationErrors.length, 1);
@@ -72,16 +66,13 @@ module('Integration | Component | new learningmaterial', function (hooks) {
 
   test('missing file', async function (assert) {
     this.set('type', 'file');
-    await render(hbs`
-      <NewLearningmaterial
-        @type={{this.type}}
-        @learningMaterialStatuses={{(array)}}
-        @learningMaterialUserRoles={{(array)}}
-        @save={{(noop)}}
-        @cancel={{(noop)}}
-      />
-
-`);
+    await render(hbs`<NewLearningmaterial
+  @type={{this.type}}
+  @learningMaterialStatuses={{(array)}}
+  @learningMaterialUserRoles={{(array)}}
+  @save={{(noop)}}
+  @cancel={{(noop)}}
+/>`);
     assert.strictEqual(component.fileUpload.validationErrors.length, 0);
     await component.save();
     assert.strictEqual(component.fileUpload.validationErrors[0].text, 'Missing file');

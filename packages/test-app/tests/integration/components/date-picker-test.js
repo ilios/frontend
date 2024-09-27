@@ -11,8 +11,7 @@ module('Integration | Component | date-picker', function (hooks) {
   test('it renders', async function (assert) {
     const date = new Date(2020, 4, 6);
     this.set('date', date);
-    await render(hbs`<DatePicker @value={{this.date}} />
-`);
+    await render(hbs`<DatePicker @value={{this.date}} />`);
     assert.strictEqual(component.value, '5/6/2020');
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
@@ -26,8 +25,7 @@ module('Integration | Component | date-picker', function (hooks) {
     this.set('change', (changedDate) => {
       assert.strictEqual(newDate.getTime(), changedDate.getTime());
     });
-    await render(hbs`<DatePicker @value={{this.date}} @onChange={{this.change}} />
-`);
+    await render(hbs`<DatePicker @value={{this.date}} @onChange={{this.change}} />`);
     component.set(newDate);
   });
 });

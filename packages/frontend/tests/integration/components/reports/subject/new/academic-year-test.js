@@ -32,10 +32,10 @@ module('Integration | Component | reports/subject/new/academic-year', function (
       this.set('currentId', id);
     });
     await render(hbs`<Reports::Subject::New::AcademicYear
-      @currentId={{this.currentId}}
-      @changeId={{this.changeId}}
-      @school={{null}}
-     />`);
+  @currentId={{this.currentId}}
+  @changeId={{this.changeId}}
+  @school={{null}}
+/>`);
 
     assert.strictEqual(component.options.length, 3);
     assert.strictEqual(component.options[0].text, '2015');
@@ -65,10 +65,10 @@ module('Integration | Component | reports/subject/new/academic-year', function (
     assert.expect(8);
     this.set('currentId', '2015');
     await render(hbs`<Reports::Subject::New::AcademicYear
-      @currentId={{this.currentId}}
-      @changeId={{this.changeId}}
-      @school={{null}}
-     />`);
+  @currentId={{this.currentId}}
+  @changeId={{this.changeId}}
+  @school={{null}}
+/>`);
     this.set('changeId', (id) => {
       assert.strictEqual(id, '2031');
       this.set('currentId', id);

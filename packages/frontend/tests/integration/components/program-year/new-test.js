@@ -15,11 +15,11 @@ module('Integration | Component | program-year/new', function (hooks) {
     assert.expect(14);
 
     await render(hbs`<ProgramYear::New
-      @programYears={{(array)}}
-      @save={{(noop)}}
-      @cancel={{(noop)}}
-      @academicYearCrossesCalendarYearBoundaries={{false}}
-    />`);
+  @programYears={{(array)}}
+  @save={{(noop)}}
+  @cancel={{(noop)}}
+  @academicYearCrossesCalendarYearBoundaries={{false}}
+/>`);
 
     assert.strictEqual(component.title, 'New Program Year');
     const { options } = component.years;
@@ -45,11 +45,11 @@ module('Integration | Component | program-year/new', function (hooks) {
     });
 
     await render(hbs`<ProgramYear::New
-      @programYears={{(array)}}
-      @save={{(noop)}}
-      @cancel={{this.cancel}}
-      @academicYearCrossesCalendarYearBoundaries={{false}}
-    />`);
+  @programYears={{(array)}}
+  @save={{(noop)}}
+  @cancel={{this.cancel}}
+  @academicYearCrossesCalendarYearBoundaries={{false}}
+/>`);
     await component.cancel.click();
   });
 
@@ -59,11 +59,11 @@ module('Integration | Component | program-year/new', function (hooks) {
       assert.strictEqual(startYear, (this.currentYear - 5).toString());
     });
     await render(hbs`<ProgramYear::New
-      @programYears={{(array)}}
-      @save={{this.save}}
-      @cancel={{(noop)}}
-      @academicYearCrossesCalendarYearBoundaries={{false}}
-    />`);
+  @programYears={{(array)}}
+  @save={{this.save}}
+  @cancel={{(noop)}}
+  @academicYearCrossesCalendarYearBoundaries={{false}}
+/>`);
     await component.done.click();
   });
 
@@ -74,11 +74,11 @@ module('Integration | Component | program-year/new', function (hooks) {
       assert.strictEqual(startYear, year);
     });
     await render(hbs`<ProgramYear::New
-      @programYears={{(array)}}
-      @save={{this.save}}
-      @cancel={{(noop)}}
-      @academicYearCrossesCalendarYearBoundaries={{false}}
-    />`);
+  @programYears={{(array)}}
+  @save={{this.save}}
+  @cancel={{(noop)}}
+  @academicYearCrossesCalendarYearBoundaries={{false}}
+/>`);
     assert.notOk(component.years.options[5].isSelected);
     await component.years.select(year);
     assert.ok(component.years.options[5].isSelected);
@@ -87,11 +87,11 @@ module('Integration | Component | program-year/new', function (hooks) {
 
   test('academic-years dropdown shows year ranges if application config enables it', async function (assert) {
     await render(hbs`<ProgramYear::New
-      @programYears={{(array)}}
-      @save={{(noop)}}
-      @cancel={{(noop)}}
-      @academicYearCrossesCalendarYearBoundaries={{true}}
-    />`);
+  @programYears={{(array)}}
+  @save={{(noop)}}
+  @cancel={{(noop)}}
+  @academicYearCrossesCalendarYearBoundaries={{true}}
+/>`);
     const { options } = component.years;
     assert.strictEqual(options.length, 10);
     assert.strictEqual(options[0].text, `${this.currentYear - 5} - ${this.currentYear - 4}`);

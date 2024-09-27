@@ -8,8 +8,7 @@ module('Integration | Component | sortable th', function (hooks) {
 
   test('it renders with default options', async function (assert) {
     this.set('label', 'Foo');
-    await render(hbs`<SortableTh>{{this.label}}</SortableTh>
-`);
+    await render(hbs`<SortableTh>{{this.label}}</SortableTh>`);
     assert.dom('th').hasText('Foo');
     assert.dom('th').hasClass('text-left');
     assert.dom('th').hasNoClass('hide-from-small-screen');
@@ -33,18 +32,17 @@ module('Integration | Component | sortable th', function (hooks) {
     this.set('sortType', 'numeric');
     await render(
       hbs`<SortableTh
-            @colspan={{this.colspan}}
-            @align={{this.align}}
-            @title={{this.title}}
-            @onClick={{this.click}}
-            @hideFromSmallScreen={{this.hideFromSmallScreen}}
-            @sortedBy={{this.sortedBy}}
-            @sortedAscending={{this.sortedAscending}}
-            @sortType={{this.sortType}}
-          >
-            {{this.label}}
-          </SortableTh>
-`,
+  @colspan={{this.colspan}}
+  @align={{this.align}}
+  @title={{this.title}}
+  @onClick={{this.click}}
+  @hideFromSmallScreen={{this.hideFromSmallScreen}}
+  @sortedBy={{this.sortedBy}}
+  @sortedAscending={{this.sortedAscending}}
+  @sortType={{this.sortType}}
+>
+  {{this.label}}
+</SortableTh>`,
     );
     assert.dom('th').hasText('Foo');
     assert.dom('th').hasClass(`text-${align}`);
@@ -61,13 +59,12 @@ module('Integration | Component | sortable th', function (hooks) {
     this.set('label', 'Foo');
     await render(
       hbs`<SortableTh
-            @sortedBy={{this.sortedBy}}
-            @sortedAscending={{this.sortedAscending}}
-            @sortType={{this.sortType}}
-          >
-            {{this.label}}
-          </SortableTh>
-`,
+  @sortedBy={{this.sortedBy}}
+  @sortedAscending={{this.sortedAscending}}
+  @sortType={{this.sortType}}
+>
+  {{this.label}}
+</SortableTh>`,
     );
     assert.dom('svg').hasClass('fa-arrow-down-9-1');
     assert.dom('th').hasAttribute('aria-sort', 'descending');
@@ -80,13 +77,12 @@ module('Integration | Component | sortable th', function (hooks) {
     this.set('label', 'Foo');
     await render(
       hbs`<SortableTh
-            @sortedBy={{this.sortedBy}}
-            @sortedAscending={{this.sortedAscending}}
-            @sortType={{this.sortType}}
-          >
-            {{this.label}}
-          </SortableTh>
-`,
+  @sortedBy={{this.sortedBy}}
+  @sortedAscending={{this.sortedAscending}}
+  @sortType={{this.sortType}}
+>
+  {{this.label}}
+</SortableTh>`,
     );
     assert.dom('svg').hasClass('fa-arrow-down-1-9');
     assert.dom('th').hasAttribute('aria-sort', 'ascending');
@@ -97,8 +93,7 @@ module('Integration | Component | sortable th', function (hooks) {
     this.set('sortType', 'numeric');
     this.set('label', 'Foo');
     await render(
-      hbs`<SortableTh @sortedBy={{this.sortedBy}} @sortType={{this.sortType}}>{{this.label}}</SortableTh>
-`,
+      hbs`<SortableTh @sortedBy={{this.sortedBy}} @sortType={{this.sortType}}>{{this.label}}</SortableTh>`,
     );
     assert.dom('svg').hasClass('fa-arrow-down-1-9');
     assert.dom('th').hasAttribute('aria-sort', 'ascending');
@@ -110,8 +105,7 @@ module('Integration | Component | sortable th', function (hooks) {
     this.set('click', () => {
       assert.ok(true);
     });
-    await render(hbs`<SortableTh @onClick={{this.click}}>{{this.label}}</SortableTh>
-`);
+    await render(hbs`<SortableTh @onClick={{this.click}}>{{this.label}}</SortableTh>`);
     await click(find('th button'));
   });
 });

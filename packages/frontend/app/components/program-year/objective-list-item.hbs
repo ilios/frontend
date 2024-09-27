@@ -1,6 +1,10 @@
 <div
   id="objective-{{@programYearObjective.id}}"
-  class="grid-row objective-row {{if this.showRemoveConfirmation "confirm-removal"}} {{if this.highlightSave.isRunning "highlight-ok"}} {{if this.isManaging "is-managing"}}  {{unless @programYearObjective.active "is-inactive"}}"
+  class="grid-row objective-row
+    {{if this.showRemoveConfirmation 'confirm-removal'}}
+    {{if this.highlightSave.isRunning 'highlight-ok'}}
+    {{if this.isManaging 'is-managing'}}
+    {{unless @programYearObjective.active 'is-inactive'}}"
   data-test-program-year-objective-list-item
   {{did-insert this.load @programYearObjective}}
   {{did-update this.load @programYearObjective}}
@@ -70,12 +74,22 @@
         <LoadingSpinner />
       {{else}}
         {{#if @programYearObjective.active}}
-          <button class="active" type="button" {{on "click" (perform this.saveIsActive false)}} data-test-deactivate>
+          <button
+            class="active"
+            type="button"
+            {{on "click" (perform this.saveIsActive false)}}
+            data-test-deactivate
+          >
             <FaIcon @icon="toggle-on" @title={{t "general.deactivate"}} />
           </button>
         {{else}}
-          <button class="active" type="button" {{on "click" (perform this.saveIsActive true)}} data-test-activate>
-            <FaIcon @icon="toggle-off" @title={{t "general.activate"}}/>
+          <button
+            class="active"
+            type="button"
+            {{on "click" (perform this.saveIsActive true)}}
+            data-test-activate
+          >
+            <FaIcon @icon="toggle-off" @title={{t "general.activate"}} />
           </button>
         {{/if}}
       {{/if}}
@@ -135,7 +149,6 @@
       @selected={{this.competencyBuffer}}
       @add={{this.setCompetencyBuffer}}
       @remove={{set this "competencyBuffer" null}}
-
     />
   {{/if}}
   {{#if this.isManagingDescriptors}}

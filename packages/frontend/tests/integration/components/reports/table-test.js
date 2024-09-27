@@ -40,12 +40,12 @@ module('Integration | Component | reports/table', function (hooks) {
       }),
     );
     await render(hbs`<Reports::Table
-      @decoratedReports={{this.decoratedReports}}
-      @query={{null}}
-      @sortBy="title"
-      @setSortBy={{(noop)}}
-      @remove={{(noop)}}
-    />`);
+  @decoratedReports={{this.decoratedReports}}
+  @query={{null}}
+  @sortBy='title'
+  @setSortBy={{(noop)}}
+  @remove={{(noop)}}
+/>`);
 
     assert.strictEqual(component.reports.length, 2);
 

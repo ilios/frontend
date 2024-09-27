@@ -31,13 +31,13 @@ module('Integration | Component | reports/subject-results', function (hooks) {
 
   test('it renders', async function (assert) {
     await render(hbs`<Reports::SubjectResults
-      @report={{this.report}}
-      @subject={{this.report.subject}}
-      @prepositionalObject={{this.report.prepositionalObject}}
-      @prepositionalObjectTableRowId={{this.report.prepositionalObjectTableRowId}}
-      @year={{null}}
-      @changeYear={{(noop)}}
-    />`);
+  @report={{this.report}}
+  @subject={{this.report.subject}}
+  @prepositionalObject={{this.report.prepositionalObject}}
+  @prepositionalObjectTableRowId={{this.report.prepositionalObjectTableRowId}}
+  @year={{null}}
+  @changeYear={{(noop)}}
+/>`);
 
     assert.strictEqual(component.results.length, 1);
     assert.strictEqual(component.results[0].text, '2013 course 0');

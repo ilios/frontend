@@ -68,11 +68,11 @@ module(
       this.set('sequenceBlock', blockModel);
       this.set('sortBy', 'title');
       await render(hbs`<CurriculumInventory::SequenceBlockSessionManager
-        @sessions={{this.sessions}}
-        @sequenceBlock={{this.sequenceBlock}}
-        @sortBy={{this.sortBy}}
-        @setSortBy={{(noop)}}
-      />`);
+  @sessions={{this.sessions}}
+  @sequenceBlock={{this.sequenceBlock}}
+  @sortBy={{this.sortBy}}
+  @setSortBy={{(noop)}}
+/>`);
 
       assert.strictEqual(
         component.header.countAsOneOffering.text,
@@ -198,11 +198,11 @@ module(
       this.set('sortBy', 'title');
 
       await render(hbs`<CurriculumInventory::SequenceBlockSessionManager
-        @sessions={{(array)}}
-        @sequenceBlock={{this.sequenceBlock}}
-        @sortBy={{this.sortBy}}
-        @setSortBy={{(noop)}}
-      />`);
+  @sessions={{(array)}}
+  @sequenceBlock={{this.sequenceBlock}}
+  @sortBy={{this.sortBy}}
+  @setSortBy={{(noop)}}
+/>`);
 
       assert.ok(component.header.isVisible);
       assert.strictEqual(component.sessions.length, 0);
@@ -231,11 +231,11 @@ module(
       });
 
       await render(hbs`<CurriculumInventory::SequenceBlockSessionManager
-        @sessions={{this.sessions}}
-        @sequenceBlock={{this.sequenceBlock}}
-        @sortBy={{this.sortBy}}
-        @setSortBy={{this.setSortBy}}
-      />`);
+  @sessions={{this.sessions}}
+  @sequenceBlock={{this.sequenceBlock}}
+  @sortBy={{this.sortBy}}
+  @setSortBy={{this.setSortBy}}
+/>`);
 
       await component.header.title.click();
     });
@@ -267,11 +267,11 @@ module(
       });
 
       await render(hbs`<CurriculumInventory::SequenceBlockSessionManager
-        @sessions={{this.sessions}}
-        @sequenceBlock={{this.sequenceBlock}}
-        @sortBy={{this.sortBy}}
-        @setSortBy={{this.setSortBy}}
-      />`);
+  @sessions={{this.sessions}}
+  @sequenceBlock={{this.sequenceBlock}}
+  @sortBy={{this.sortBy}}
+  @setSortBy={{this.setSortBy}}
+/>`);
 
       await component.header.sessionType.click();
     });
@@ -303,11 +303,11 @@ module(
       });
 
       await render(hbs`<CurriculumInventory::SequenceBlockSessionManager
-        @sessions={{this.sessions}}
-        @sequenceBlock={{this.sequenceBlock}}
-        @sortBy={{this.sortBy}}
-        @setSortBy={{this.setSortBy}}
-      />`);
+  @sessions={{this.sessions}}
+  @sequenceBlock={{this.sequenceBlock}}
+  @sortBy={{this.sortBy}}
+  @setSortBy={{this.setSortBy}}
+/>`);
 
       await component.header.offeringsCount.click();
     });
@@ -342,11 +342,11 @@ module(
       this.set('sortBy', 'id');
 
       await render(hbs`<CurriculumInventory::SequenceBlockSessionManager
-        @sessions={{this.sessions}}
-        @sequenceBlock={{this.sequenceBlock}}
-        @sortBy={{this.sortBy}}
-        @setSortBy={{(noop)}}
-      />`);
+  @sessions={{this.sessions}}
+  @sequenceBlock={{this.sequenceBlock}}
+  @sortBy={{this.sortBy}}
+  @setSortBy={{(noop)}}
+/>`);
 
       assert.strictEqual(component.sessions[0].totalTime.text, '30.00');
       assert.ok(component.header.countAsOneOffering.isChecked);
@@ -402,11 +402,11 @@ module(
       this.set('sortBy', 'id');
 
       await render(hbs`<CurriculumInventory::SequenceBlockSessionManager
-        @sessions={{this.sessions}}
-        @sequenceBlock={{this.sequenceBlock}}
-        @sortBy={{this.sortBy}}
-        @setSortBy={{(noop)}}
-      />`);
+  @sessions={{this.sessions}}
+  @sequenceBlock={{this.sequenceBlock}}
+  @sortBy={{this.sortBy}}
+  @setSortBy={{(noop)}}
+/>`);
 
       assert.notOk(component.header.countAsOneOffering.isChecked);
       assert.ok(component.header.countAsOneOffering.isPartiallyChecked);
@@ -453,12 +453,12 @@ module(
       this.set('sortBy', 'id');
 
       await render(hbs`<CurriculumInventory::SequenceBlockSessionManager
-        @sessions={{this.sessions}}
-        @sequenceBlock={{this.sequenceBlock}}
-        @sortBy={{this.sortBy}}
-        @setSortBy={{(noop)}}
-        @save={{this.save}}
-      />`);
+  @sessions={{this.sessions}}
+  @sequenceBlock={{this.sequenceBlock}}
+  @sortBy={{this.sortBy}}
+  @setSortBy={{(noop)}}
+  @save={{this.save}}
+/>`);
 
       assert.notOk(component.header.exclude.isChecked);
       assert.ok(component.header.exclude.isPartiallyChecked);
@@ -506,12 +506,12 @@ module(
       });
 
       await render(hbs`<CurriculumInventory::SequenceBlockSessionManager
-        @sessions={{this.sessions}}
-        @sequenceBlock={{this.sequenceBlock}}
-        @sortBy={{this.sortBy}}
-        @setSortBy={{(noop)}}
-        @save={{this.save}}
-      />`);
+  @sessions={{this.sessions}}
+  @sequenceBlock={{this.sequenceBlock}}
+  @sortBy={{this.sortBy}}
+  @setSortBy={{(noop)}}
+  @save={{this.save}}
+/>`);
 
       assert.ok(component.sessions[0].countAsOneOffering.isChecked);
       assert.notOk(component.sessions[0].exclude.isChecked);
@@ -538,11 +538,11 @@ module(
       });
 
       await render(hbs`<CurriculumInventory::SequenceBlockSessionManager
-        @sessions={{(array)}}
-        @sequenceBlock={{this.sequenceBlock}}
-        @sortBy={{this.sortBy}}
-        @cancel={{this.cancel}}
-      />`);
+  @sessions={{(array)}}
+  @sequenceBlock={{this.sequenceBlock}}
+  @sortBy={{this.sortBy}}
+  @cancel={{this.cancel}}
+/>`);
 
       await component.cancel();
     });

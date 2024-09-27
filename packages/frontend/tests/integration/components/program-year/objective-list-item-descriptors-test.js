@@ -12,14 +12,14 @@ module('Integration | Component | program-year/objective-list-item-descriptors',
 
   test('it renders and is accessible when managing', async function (assert) {
     await render(hbs`<ProgramYear::ObjectiveListItemDescriptors
-      @meshDescriptors={{(array)}}
-      @editable={{false}}
-      @manage={{(noop)}}
-      @isManaging={{true}}
-      @save={{(noop)}}
-      @isSaving={{false}}
-      @cancel={{(noop)}}
-    />`);
+  @meshDescriptors={{(array)}}
+  @editable={{false}}
+  @manage={{(noop)}}
+  @isManaging={{true}}
+  @save={{(noop)}}
+  @isSaving={{false}}
+  @cancel={{(noop)}}
+/>`);
     assert.ok(component.canSave);
     assert.ok(component.canCancel);
     await a11yAudit(this.element);
@@ -28,14 +28,14 @@ module('Integration | Component | program-year/objective-list-item-descriptors',
 
   test('it renders and is accessible empty and un-editable', async function (assert) {
     await render(hbs`<ProgramYear::ObjectiveListItemDescriptors
-      @meshDescriptors={{(array)}}
-      @editable={{false}}
-      @manage={{(noop)}}
-      @isManaging={{false}}
-      @save={{(noop)}}
-      @isSaving={{false}}
-      @cancel={{(noop)}}
-    />`);
+  @meshDescriptors={{(array)}}
+  @editable={{false}}
+  @manage={{(noop)}}
+  @isManaging={{false}}
+  @save={{(noop)}}
+  @isSaving={{false}}
+  @cancel={{(noop)}}
+/>`);
     assert.strictEqual(component.text, 'None');
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
@@ -51,14 +51,14 @@ module('Integration | Component | program-year/objective-list-item-descriptors',
       .findRecord('mesh-descriptor', meshDescriptors[1].id);
     this.set('meshDescriptors', [meshDescriptorModel1, meshDescriptorModel2]);
     await render(hbs`<ProgramYear::ObjectiveListItemDescriptors
-      @meshDescriptors={{this.meshDescriptors}}
-      @editable={{false}}
-      @manage={{(noop)}}
-      @isManaging={{false}}
-      @save={{(noop)}}
-      @isSaving={{false}}
-      @cancel={{(noop)}}
-    />`);
+  @meshDescriptors={{this.meshDescriptors}}
+  @editable={{false}}
+  @manage={{(noop)}}
+  @isManaging={{false}}
+  @save={{(noop)}}
+  @isSaving={{false}}
+  @cancel={{(noop)}}
+/>`);
     assert.strictEqual(component.list.length, 2);
     assert.strictEqual(component.list[0].title, 'descriptor 0');
     assert.strictEqual(component.list[1].title, 'descriptor 1');
@@ -76,14 +76,14 @@ module('Integration | Component | program-year/objective-list-item-descriptors',
       .findRecord('mesh-descriptor', meshDescriptors[1].id);
     this.set('meshDescriptors', [meshDescriptorModel1, meshDescriptorModel2]);
     await render(hbs`<ProgramYear::ObjectiveListItemDescriptors
-      @meshDescriptors={{this.meshDescriptors}}
-      @editable={{true}}
-      @manage={{(noop)}}
-      @isManaging={{false}}
-      @save={{(noop)}}
-      @isSaving={{false}}
-      @cancel={{(noop)}}
-    />`);
+  @meshDescriptors={{this.meshDescriptors}}
+  @editable={{true}}
+  @manage={{(noop)}}
+  @isManaging={{false}}
+  @save={{(noop)}}
+  @isSaving={{false}}
+  @cancel={{(noop)}}
+/>`);
     assert.strictEqual(component.list.length, 2);
     assert.strictEqual(component.list[0].title, 'descriptor 0');
     assert.strictEqual(component.list[1].title, 'descriptor 1');
@@ -105,14 +105,14 @@ module('Integration | Component | program-year/objective-list-item-descriptors',
       assert.ok(true);
     });
     await render(hbs`<ProgramYear::ObjectiveListItemDescriptors
-      @meshDescriptors={{this.meshDescriptors}}
-      @editable={{true}}
-      @manage={{(noop)}}
-      @isManaging={{true}}
-      @save={{this.save}}
-      @isSaving={{false}}
-      @cancel={{(noop)}}
-    />`);
+  @meshDescriptors={{this.meshDescriptors}}
+  @editable={{true}}
+  @manage={{(noop)}}
+  @isManaging={{true}}
+  @save={{this.save}}
+  @isSaving={{false}}
+  @cancel={{(noop)}}
+/>`);
     await component.save();
   });
 
@@ -130,14 +130,14 @@ module('Integration | Component | program-year/objective-list-item-descriptors',
       assert.ok(true);
     });
     await render(hbs`<ProgramYear::ObjectiveListItemDescriptors
-      @meshDescriptors={{this.meshDescriptors}}
-      @editable={{true}}
-      @manage={{(noop)}}
-      @isManaging={{true}}
-      @save={{(noop)}}
-      @isSaving={{false}}
-      @cancel={{this.cancel}}
-    />`);
+  @meshDescriptors={{this.meshDescriptors}}
+  @editable={{true}}
+  @manage={{(noop)}}
+  @isManaging={{true}}
+  @save={{(noop)}}
+  @isSaving={{false}}
+  @cancel={{this.cancel}}
+/>`);
     await component.cancel();
   });
 
@@ -155,14 +155,14 @@ module('Integration | Component | program-year/objective-list-item-descriptors',
       assert.ok(true);
     });
     await render(hbs`<ProgramYear::ObjectiveListItemDescriptors
-      @meshDescriptors={{this.meshDescriptors}}
-      @editable={{true}}
-      @manage={{this.manage}}
-      @isManaging={{false}}
-      @save={{(noop)}}
-      @isSaving={{false}}
-      @cancel={{(noop)}}
-    />`);
+  @meshDescriptors={{this.meshDescriptors}}
+  @editable={{true}}
+  @manage={{this.manage}}
+  @isManaging={{false}}
+  @save={{(noop)}}
+  @isSaving={{false}}
+  @cancel={{(noop)}}
+/>`);
     await component.list[0].manage();
   });
 });

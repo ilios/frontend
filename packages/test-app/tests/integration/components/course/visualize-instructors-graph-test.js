@@ -67,8 +67,11 @@ module('Integration | Component | course/visualize-instructors-graph', function 
 
   test('it renders', async function (assert) {
     this.set('course', this.linkedCourseWithTime);
-    await render(hbs`<Course::VisualizeInstructorsGraph @course={{this.course}} @isIcon={{false}} @showDataTable={{true}}/>
-`);
+    await render(hbs`<Course::VisualizeInstructorsGraph
+  @course={{this.course}}
+  @isIcon={{false}}
+  @showDataTable={{true}}
+/>`);
     assert.notOk(component.noData.isVisible);
     //let the chart animations finish
     await waitFor('.loaded');
@@ -136,8 +139,12 @@ module('Integration | Component | course/visualize-instructors-graph', function 
     this.set('name', 'Marie');
     this.set('course', this.linkedCourseWithTime);
     await render(
-      hbs`<Course::VisualizeInstructorsGraph @course={{this.course}} @filter={{this.name}} @isIcon={{false}} @showDataTable={{true}}/>
-`,
+      hbs`<Course::VisualizeInstructorsGraph
+  @course={{this.course}}
+  @filter={{this.name}}
+  @isIcon={{false}}
+  @showDataTable={{true}}
+/>`,
     );
     //let the chart animations finish
     await waitFor('.loaded');
@@ -151,8 +158,11 @@ module('Integration | Component | course/visualize-instructors-graph', function 
 
   test('sort data-table by instructor', async function (assert) {
     this.set('course', this.linkedCourseWithTime);
-    await render(hbs`<Course::VisualizeInstructorsGraph @course={{this.course}} @isIcon={{false}} @showDataTable={{true}}/>
-`);
+    await render(hbs`<Course::VisualizeInstructorsGraph
+  @course={{this.course}}
+  @isIcon={{false}}
+  @showDataTable={{true}}
+/>`);
     assert.strictEqual(component.dataTable.rows[0].instructor.text, 'Daisy');
     assert.strictEqual(component.dataTable.rows[1].instructor.text, 'Duke');
     assert.strictEqual(component.dataTable.rows[2].instructor.text, 'William');
@@ -171,8 +181,11 @@ module('Integration | Component | course/visualize-instructors-graph', function 
 
   test('sort data-table by sessions', async function (assert) {
     this.set('course', this.linkedCourseWithTime);
-    await render(hbs`<Course::VisualizeInstructorsGraph @course={{this.course}} @isIcon={{false}} @showDataTable={{true}}/>
-`);
+    await render(hbs`<Course::VisualizeInstructorsGraph
+  @course={{this.course}}
+  @isIcon={{false}}
+  @showDataTable={{true}}
+/>`);
     assert.strictEqual(component.dataTable.rows[0].sessions.text, 'The San Leandro Horror');
     assert.strictEqual(component.dataTable.rows[1].sessions.text, 'The San Leandro Horror');
     assert.strictEqual(
@@ -209,8 +222,11 @@ module('Integration | Component | course/visualize-instructors-graph', function 
 
   test('sort data-table by minutes', async function (assert) {
     this.set('course', this.linkedCourseWithTime);
-    await render(hbs`<Course::VisualizeInstructorsGraph @course={{this.course}} @isIcon={{false}} @showDataTable={{true}}/>
-`);
+    await render(hbs`<Course::VisualizeInstructorsGraph
+  @course={{this.course}}
+  @isIcon={{false}}
+  @showDataTable={{true}}
+/>`);
     assert.strictEqual(component.dataTable.rows[0].minutes, '180');
     assert.strictEqual(component.dataTable.rows[1].minutes, '180');
     assert.strictEqual(component.dataTable.rows[2].minutes, '510');
@@ -229,8 +245,11 @@ module('Integration | Component | course/visualize-instructors-graph', function 
 
   test('no data', async function (assert) {
     this.set('course', this.emptyCourse);
-    await render(hbs`<Course::VisualizeInstructorsGraph @course={{this.course}} @isIcon={{false}} @showDataTable={{true}}/>
-`);
+    await render(hbs`<Course::VisualizeInstructorsGraph
+  @course={{this.course}}
+  @isIcon={{false}}
+  @showDataTable={{true}}
+/>`);
     assert.notOk(component.chart.isVisible);
     assert.notOk(component.dataTable.isVisible);
     assert.strictEqual(
@@ -241,8 +260,11 @@ module('Integration | Component | course/visualize-instructors-graph', function 
 
   test('only zero time data', async function (assert) {
     this.set('course', this.linkedCourseWithoutTime);
-    await render(hbs`<Course::VisualizeInstructorsGraph @course={{this.course}} @isIcon={{false}} @showDataTable={{true}}/>
-`);
+    await render(hbs`<Course::VisualizeInstructorsGraph
+  @course={{this.course}}
+  @isIcon={{false}}
+  @showDataTable={{true}}
+/>`);
     assert.notOk(component.chart.isVisible);
     assert.notOk(component.noData.isVisible);
     assert.strictEqual(component.dataTable.rows.length, 1);

@@ -50,8 +50,7 @@ module('Integration | Component | course/visualize-session-types', function (hoo
 
   test('it renders', async function (assert) {
     this.set('course', this.course);
-    await render(hbs`<Course::VisualizeSessionTypes @model={{this.course}} />
-`);
+    await render(hbs`<Course::VisualizeSessionTypes @model={{this.course}} />`);
     assert.strictEqual(component.title, 'course 0 2021');
     assert.strictEqual(component.title, 'course 0 2021');
     await waitFor('.loaded');
@@ -71,15 +70,13 @@ module('Integration | Component | course/visualize-session-types', function (hoo
       };
     });
     this.set('course', this.course);
-    await render(hbs`<Course::VisualizeSessionTypes @model={{this.course}} />
-`);
+    await render(hbs`<Course::VisualizeSessionTypes @model={{this.course}} />`);
     assert.strictEqual(component.title, 'course 0 2021 - 2022');
   });
 
   test('filter works', async function (assert) {
     this.set('course', this.course);
-    await render(hbs`<Course::VisualizeSessionTypes @model={{this.course}} />
-`);
+    await render(hbs`<Course::VisualizeSessionTypes @model={{this.course}} />`);
     //let the chart animations finish
     await waitFor('.loaded');
     await waitFor('svg .bars');
@@ -97,8 +94,7 @@ module('Integration | Component | course/visualize-session-types', function (hoo
   test('breadcrumb', async function (assert) {
     this.set('course', this.course);
 
-    await render(hbs`<Course::VisualizeSessionTypes @model={{this.course}} />
-`);
+    await render(hbs`<Course::VisualizeSessionTypes @model={{this.course}} />`);
 
     assert.strictEqual(component.breadcrumb.crumbs.length, 3);
     assert.strictEqual(component.breadcrumb.crumbs[0].text, 'course 0');

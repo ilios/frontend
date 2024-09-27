@@ -24,12 +24,11 @@ module('Integration | Component | session/objectives', function (hooks) {
 
     this.set('session', sessionModel);
     await render(hbs`<Session::Objectives
-      @session={{this.session}}
-      @editable={{true}}
-      @collapse={{(noop)}}
-      @expand={{(noop)}}
-    />
-`);
+  @session={{this.session}}
+  @editable={{true}}
+  @collapse={{(noop)}}
+  @expand={{(noop)}}
+/>`);
 
     assert.strictEqual(component.objectiveList.objectives.length, 3);
     assert.strictEqual(
@@ -69,12 +68,11 @@ module('Integration | Component | session/objectives', function (hooks) {
 
     this.set('session', sessionModel);
     await render(hbs`<Session::Objectives
-      @session={{this.session}}
-      @editable={{true}}
-      @collapse={{(noop)}}
-      @expand={{(noop)}}
-    />
-`);
+  @session={{this.session}}
+  @editable={{true}}
+  @collapse={{(noop)}}
+  @expand={{(noop)}}
+/>`);
 
     assert.strictEqual(component.objectiveList.objectives.length, 1);
     assert.strictEqual(component.title, 'Objectives (1)');

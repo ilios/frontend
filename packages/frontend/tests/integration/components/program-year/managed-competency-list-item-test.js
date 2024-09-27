@@ -30,13 +30,13 @@ module('Integration | Component | program-year/managed-competency-list-item', fu
     this.set('competenciesWithSelectedChildren', [this.domain]);
 
     await render(hbs`<ProgramYear::ManagedCompetencyListItem
-      @domain={{this.domain}}
-      @selectedCompetencies={{this.selectedCompetencies}}
-      @competenciesWithSelectedChildren={{this.competenciesWithSelectedChildren}}
-      @competencies={{this.competencies}}
-      @removeCompetencyFromBuffer={{(noop)}}
-      @addCompetencyToBuffer={{(noop)}}
-    />`);
+  @domain={{this.domain}}
+  @selectedCompetencies={{this.selectedCompetencies}}
+  @competenciesWithSelectedChildren={{this.competenciesWithSelectedChildren}}
+  @competencies={{this.competencies}}
+  @removeCompetencyFromBuffer={{(noop)}}
+  @addCompetencyToBuffer={{(noop)}}
+/>`);
 
     assert.ok(component.isChecked);
     assert.notOk(component.isIndeterminate);
@@ -54,13 +54,13 @@ module('Integration | Component | program-year/managed-competency-list-item', fu
     this.set('competenciesWithSelectedChildren', [this.domain]);
 
     await render(hbs`<ProgramYear::ManagedCompetencyListItem
-      @domain={{this.domain}}
-      @selectedCompetencies={{this.selectedCompetencies}}
-      @competenciesWithSelectedChildren={{this.competenciesWithSelectedChildren}}
-      @competencies={{this.competencies}}
-      @removeCompetencyFromBuffer={{(noop)}}
-      @addCompetencyToBuffer={{(noop)}}
-    />`);
+  @domain={{this.domain}}
+  @selectedCompetencies={{this.selectedCompetencies}}
+  @competenciesWithSelectedChildren={{this.competenciesWithSelectedChildren}}
+  @competencies={{this.competencies}}
+  @removeCompetencyFromBuffer={{(noop)}}
+  @addCompetencyToBuffer={{(noop)}}
+/>`);
 
     assert.notOk(component.isChecked);
     assert.ok(component.isIndeterminate);
@@ -76,13 +76,13 @@ module('Integration | Component | program-year/managed-competency-list-item', fu
     this.set('competencies', [this.domain, this.competency1, this.competency2]);
 
     await render(hbs`<ProgramYear::ManagedCompetencyListItem
-      @domain={{this.domain}}
-      @selectedCompetencies={{(array)}}
-      @competenciesWithSelectedChildren={{(array)}}
-      @competencies={{this.competencies}}
-      @removeCompetencyFromBuffer={{(noop)}}
-      @addCompetencyToBuffer={{(noop)}}
-    />`);
+  @domain={{this.domain}}
+  @selectedCompetencies={{(array)}}
+  @competenciesWithSelectedChildren={{(array)}}
+  @competencies={{this.competencies}}
+  @removeCompetencyFromBuffer={{(noop)}}
+  @addCompetencyToBuffer={{(noop)}}
+/>`);
 
     assert.notOk(component.isChecked);
     assert.notOk(component.isIndeterminate);
@@ -104,13 +104,13 @@ module('Integration | Component | program-year/managed-competency-list-item', fu
       assert.ok(children.includes(this.competency2));
     });
     await render(hbs`<ProgramYear::ManagedCompetencyListItem
-      @domain={{this.domain}}
-      @selectedCompetencies={{(array)}}
-      @competenciesWithSelectedChildren={{(array)}}
-      @competencies={{this.competencies}}
-      @removeCompetencyFromBuffer={{(noop)}}
-      @addCompetencyToBuffer={{this.add}}
-    />`);
+  @domain={{this.domain}}
+  @selectedCompetencies={{(array)}}
+  @competenciesWithSelectedChildren={{(array)}}
+  @competencies={{this.competencies}}
+  @removeCompetencyFromBuffer={{(noop)}}
+  @addCompetencyToBuffer={{this.add}}
+/>`);
 
     assert.notOk(component.isChecked);
     await component.click();
@@ -128,13 +128,13 @@ module('Integration | Component | program-year/managed-competency-list-item', fu
       assert.ok(children.includes(this.competency2));
     });
     await render(hbs`<ProgramYear::ManagedCompetencyListItem
-      @domain={{this.domain}}
-      @selectedCompetencies={{this.selectedCompetencies}}
-      @competenciesWithSelectedChildren={{(array)}}
-      @competencies={{this.competencies}}
-      @removeCompetencyFromBuffer={{this.remove}}
-      @addCompetencyToBuffer={{(noop)}}
-    />`);
+  @domain={{this.domain}}
+  @selectedCompetencies={{this.selectedCompetencies}}
+  @competenciesWithSelectedChildren={{(array)}}
+  @competencies={{this.competencies}}
+  @removeCompetencyFromBuffer={{this.remove}}
+  @addCompetencyToBuffer={{(noop)}}
+/>`);
 
     assert.ok(component.isChecked);
     await component.click();
@@ -149,13 +149,13 @@ module('Integration | Component | program-year/managed-competency-list-item', fu
       assert.strictEqual(children.length, 0);
     });
     await render(hbs`<ProgramYear::ManagedCompetencyListItem
-      @domain={{this.domain}}
-      @selectedCompetencies={{(array)}}
-      @competenciesWithSelectedChildren={{(array)}}
-      @competencies={{this.competencies}}
-      @removeCompetencyFromBuffer={{(noop)}}
-      @addCompetencyToBuffer={{this.add}}
-    />`);
+  @domain={{this.domain}}
+  @selectedCompetencies={{(array)}}
+  @competenciesWithSelectedChildren={{(array)}}
+  @competencies={{this.competencies}}
+  @removeCompetencyFromBuffer={{(noop)}}
+  @addCompetencyToBuffer={{this.add}}
+/>`);
 
     assert.notOk(component.competencies[0].isChecked);
     await component.competencies[0].click();
@@ -172,13 +172,13 @@ module('Integration | Component | program-year/managed-competency-list-item', fu
       assert.strictEqual(children.length, 0);
     });
     await render(hbs`<ProgramYear::ManagedCompetencyListItem
-      @domain={{this.domain}}
-      @selectedCompetencies={{this.selectedCompetencies}}
-      @competenciesWithSelectedChildren={{this.competenciesWithSelectedChildren}}
-      @competencies={{this.competencies}}
-      @removeCompetencyFromBuffer={{this.remove}}
-      @addCompetencyToBuffer={{(array)}}
-    />`);
+  @domain={{this.domain}}
+  @selectedCompetencies={{this.selectedCompetencies}}
+  @competenciesWithSelectedChildren={{this.competenciesWithSelectedChildren}}
+  @competencies={{this.competencies}}
+  @removeCompetencyFromBuffer={{this.remove}}
+  @addCompetencyToBuffer={{(array)}}
+/>`);
 
     assert.ok(component.competencies[0].isChecked);
     await component.competencies[0].click();

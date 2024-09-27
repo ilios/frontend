@@ -60,11 +60,9 @@ module('Integration | Component | detail-learnergroups-list', function (hooks) {
       this.subSubGroup,
       this.subGroup2,
     ]);
-    await render(hbs`<DetailLearnergroupsList
-      @learnerGroups={{this.learnerGroups}}
-      @remove={{(noop)}}
-    />
-`);
+    await render(
+      hbs`<DetailLearnergroupsList @learnerGroups={{this.learnerGroups}} @remove={{(noop)}} />`,
+    );
     assert.strictEqual(component.trees.length, 2);
     assert.strictEqual(component.trees[0].title, 'program 0 cohort 0');
     assert.strictEqual(component.trees[0].items.length, 3);
@@ -87,11 +85,10 @@ module('Integration | Component | detail-learnergroups-list', function (hooks) {
       assert.strictEqual(this.tlg1, learnerGroup);
     });
     await render(hbs`<DetailLearnergroupsList
-      @learnerGroups={{this.learnerGroups}}
-      @remove={{this.remove}}
-      @isManaging={{true}}
-    />
-`);
+  @learnerGroups={{this.learnerGroups}}
+  @remove={{this.remove}}
+  @isManaging={{true}}
+/>`);
     await component.trees[0].items[0].remove();
   });
 });

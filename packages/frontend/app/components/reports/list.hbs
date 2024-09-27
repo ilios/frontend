@@ -6,7 +6,7 @@
       aria-label={{t "general.filterByTitle"}}
       placeholder={{t "general.filterByTitle"}}
       data-test-title-filter
-    >
+    />
   </div>
 </div>
 <section class="reports">
@@ -34,7 +34,12 @@
     {{/if}}
     {{#if this.newReport}}
       <div class="saved-result" data-test-newly-saved-report>
-        <LinkTo @route="subject-report" @model={{this.newReport.report}} @query={{hash reportYear=null}} data-test-report-title>
+        <LinkTo
+          @route="subject-report"
+          @model={{this.newReport.report}}
+          @query={{hash reportYear=null}}
+          data-test-report-title
+        >
           <FaIcon @icon="square-up-right" />
           {{this.newReport.title}}
         </LinkTo>

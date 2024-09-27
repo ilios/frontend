@@ -21,7 +21,10 @@ module('Integration | Component | curriculum-inventory/sequence-block-header', f
   test('it renders', async function (assert) {
     this.set('sequenceBlock', this.blockModel);
     await render(
-      hbs`<CurriculumInventory::SequenceBlockHeader @sequenceBlock={{this.sequenceBlock}} @canUpdate={{true}} />`,
+      hbs`<CurriculumInventory::SequenceBlockHeader
+  @sequenceBlock={{this.sequenceBlock}}
+  @canUpdate={{true}}
+/>`,
     );
     assert.ok(component.title.isVisible);
     assert.strictEqual(component.title.value, this.blockModel.title);
@@ -31,7 +34,10 @@ module('Integration | Component | curriculum-inventory/sequence-block-header', f
   test('read-only mode for block in when it can not be updated', async function (assert) {
     this.set('sequenceBlock', this.blockModel);
     await render(
-      hbs`<CurriculumInventory::SequenceBlockHeader @sequenceBlock={{this.sequenceBlock}} @canUpdate={{false}} />`,
+      hbs`<CurriculumInventory::SequenceBlockHeader
+  @sequenceBlock={{this.sequenceBlock}}
+  @canUpdate={{false}}
+/>`,
     );
     assert.notOk(component.title.isEditable, 'Block title is not editable.');
   });
@@ -40,7 +46,10 @@ module('Integration | Component | curriculum-inventory/sequence-block-header', f
     const newTitle = 'new title';
     this.set('sequenceBlock', this.blockModel);
     await render(
-      hbs`<CurriculumInventory::SequenceBlockHeader @sequenceBlock={{this.sequenceBlock}} @canUpdate={{true}} />`,
+      hbs`<CurriculumInventory::SequenceBlockHeader
+  @sequenceBlock={{this.sequenceBlock}}
+  @canUpdate={{true}}
+/>`,
     );
     await component.title.edit();
     assert.notOk(component.title.hasError);
@@ -53,7 +62,10 @@ module('Integration | Component | curriculum-inventory/sequence-block-header', f
   test('change title fails on empty value', async function (assert) {
     this.set('sequenceBlock', this.blockModel);
     await render(
-      hbs`<CurriculumInventory::SequenceBlockHeader @sequenceBlock={{this.sequenceBlock}} @canUpdate={{true}} />`,
+      hbs`<CurriculumInventory::SequenceBlockHeader
+  @sequenceBlock={{this.sequenceBlock}}
+  @canUpdate={{true}}
+/>`,
     );
     await component.title.edit();
     assert.notOk(component.title.hasError);
@@ -65,7 +77,10 @@ module('Integration | Component | curriculum-inventory/sequence-block-header', f
   test('change title fails on too-short value', async function (assert) {
     this.set('sequenceBlock', this.blockModel);
     await render(
-      hbs`<CurriculumInventory::SequenceBlockHeader @sequenceBlock={{this.sequenceBlock}} @canUpdate={{true}} />`,
+      hbs`<CurriculumInventory::SequenceBlockHeader
+  @sequenceBlock={{this.sequenceBlock}}
+  @canUpdate={{true}}
+/>`,
     );
     await component.title.edit();
     assert.notOk(component.title.hasError);
@@ -77,7 +92,10 @@ module('Integration | Component | curriculum-inventory/sequence-block-header', f
   test('change title fails on overlong value', async function (assert) {
     this.set('sequenceBlock', this.blockModel);
     await render(
-      hbs`<CurriculumInventory::SequenceBlockHeader @sequenceBlock={{this.sequenceBlock}} @canUpdate={{true}} />`,
+      hbs`<CurriculumInventory::SequenceBlockHeader
+  @sequenceBlock={{this.sequenceBlock}}
+  @canUpdate={{true}}
+/>`,
     );
     await component.title.edit();
     assert.notOk(component.title.hasError);
@@ -89,7 +107,10 @@ module('Integration | Component | curriculum-inventory/sequence-block-header', f
   test('cancel title changes', async function (assert) {
     this.set('sequenceBlock', this.blockModel);
     await render(
-      hbs`<CurriculumInventory::SequenceBlockHeader @sequenceBlock={{this.sequenceBlock}} @canUpdate={{true}} />`,
+      hbs`<CurriculumInventory::SequenceBlockHeader
+  @sequenceBlock={{this.sequenceBlock}}
+  @canUpdate={{true}}
+/>`,
     );
     await component.title.edit();
     await component.title.set('some other title');

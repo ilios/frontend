@@ -1,5 +1,6 @@
 <tr
-  class="courses-list-item {{if (includes @course.id @coursesForRemovalConfirmation) "confirm-removal"}}"
+  class="courses-list-item
+    {{if (includes @course.id @coursesForRemovalConfirmation) 'confirm-removal'}}"
   data-test-courses-list-item
 >
   <td class="text-left" colspan="8" data-test-course-title>
@@ -23,7 +24,11 @@
     {{#if (includes @course.id @savingCourseIds)}}
       <LoadingSpinner />
     {{else}}
-      <PublicationStatus @item={{@course}} @showText={{media "isLaptopAndUp"}} @showIcon={{not (media "isLaptopAndUp")}} />
+      <PublicationStatus
+        @item={{@course}}
+        @showText={{media "isLaptopAndUp"}}
+        @showIcon={{not (media "isLaptopAndUp")}}
+      />
       {{#if @course.locked}}
         {{#if this.canUnlock}}
           <button

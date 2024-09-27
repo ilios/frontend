@@ -11,11 +11,10 @@
     />
     <button type="button" disabled={{this.login.isRunning}} {{on "click" (perform this.login)}}>
       {{#if this.login.isRunning}}
-        <FaIcon @icon="spinner"  @spin={{true}}/>
+        <FaIcon @icon="spinner" @spin={{true}} />
       {{/if}}
       {{t "general.login"}}
     </button>
   {{/let}}
   <p>{{this.error}}</p>
 </div>
-

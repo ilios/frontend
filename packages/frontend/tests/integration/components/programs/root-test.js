@@ -63,10 +63,10 @@ module('Integration | Component | programs/root', function (hooks) {
       this.set('schoolId', schoolId);
     });
     await render(hbs`<Programs::Root
-      @schools={{this.schools}}
-      @setSchoolId={{this.setSchoolId}}
-      @schoolId={{this.schoolId}}
-    />`);
+  @schools={{this.schools}}
+  @setSchoolId={{this.setSchoolId}}
+  @schoolId={{this.schoolId}}
+/>`);
     assert.strictEqual(component.schoolFilter.selectedSchool, '2');
     assert.strictEqual(component.list.items.length, 3);
     assert.strictEqual(component.list.items[0].title, 'program 3');

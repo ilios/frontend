@@ -36,11 +36,10 @@ module('Integration | Component | dashboard/cohort-calendar-filter', function (h
       },
     ]);
     await render(hbs`<Dashboard::CohortCalendarFilter
-      @cohortProxies={{this.cohortProxies}}
-      @add={{(noop)}}
-      @remove={{(noop)}}
-    />
-`);
+  @cohortProxies={{this.cohortProxies}}
+  @add={{(noop)}}
+  @remove={{(noop)}}
+/>`);
 
     assert.strictEqual(component.cohorts.length, 4);
     assert.strictEqual(component.cohorts[3].title, 'name 2 program 2');
@@ -80,12 +79,11 @@ module('Integration | Component | dashboard/cohort-calendar-filter', function (h
       },
     ]);
     await render(hbs`<Dashboard::CohortCalendarFilter
-      @cohortProxies={{this.cohortProxies}}
-      @selectedIds={{array 2 3}}
-      @add={{(noop)}}
-      @remove={{(noop)}}
-    />
-`);
+  @cohortProxies={{this.cohortProxies}}
+  @selectedIds={{array 2 3}}
+  @add={{(noop)}}
+  @remove={{(noop)}}
+/>`);
 
     assert.strictEqual(component.cohorts.length, 4);
     assert.strictEqual(component.cohorts[0].title, 'name 1 program 1');
@@ -112,12 +110,11 @@ module('Integration | Component | dashboard/cohort-calendar-filter', function (h
       assert.strictEqual(id, 1);
     });
     await render(hbs`<Dashboard::CohortCalendarFilter
-      @cohortProxies={{this.cohortProxies}}
-      @selectedIds={{array 1}}
-      @add={{(noop)}}
-      @remove={{this.remove}}
-    />
-`);
+  @cohortProxies={{this.cohortProxies}}
+  @selectedIds={{array 1}}
+  @add={{(noop)}}
+  @remove={{this.remove}}
+/>`);
     assert.ok(component.cohorts[0].isChecked);
     await component.cohorts[0].toggle();
   });
@@ -136,11 +133,10 @@ module('Integration | Component | dashboard/cohort-calendar-filter', function (h
       assert.strictEqual(id, 1);
     });
     await render(hbs`<Dashboard::CohortCalendarFilter
-      @cohortProxies={{this.cohortProxies}}
-      @add={{this.add}}
-      @remove={{(noop)}}
-    />
-`);
+  @cohortProxies={{this.cohortProxies}}
+  @add={{this.add}}
+  @remove={{(noop)}}
+/>`);
     assert.notOk(component.cohorts[0].isChecked);
     await component.cohorts[0].toggle();
   });

@@ -40,10 +40,10 @@ module('Integration | Component | school-session-types-list-item', function (hoo
       .findRecord('session-type', sessionType.id);
     this.set('sessionType', sessionTypeModel);
     await render(hbs`<SchoolSessionTypesListItem
-      @sessionType={{this.sessionType}}
-      @canDelete={{true}}
-      @manageSessionType={{(noop)}}
-    />`);
+  @sessionType={{this.sessionType}}
+  @canDelete={{true}}
+  @manageSessionType={{(noop)}}
+/>`);
     assert.strictEqual(component.title.text, 'salt');
     assert.strictEqual(component.sessionCount, '2');
     assert.ok(component.isAssessment);
@@ -66,10 +66,10 @@ module('Integration | Component | school-session-types-list-item', function (hoo
       .findRecord('session-type', sessionType.id);
     this.set('sessionType', sessionTypeModel);
     await render(hbs`<SchoolSessionTypesListItem
-      @sessionType={{this.sessionType}}
-      @canDelete={{true}}
-      @manageSessionType={{(noop)}}
-    />`);
+  @sessionType={{this.sessionType}}
+  @canDelete={{true}}
+  @manageSessionType={{(noop)}}
+/>`);
     assert.notOk(component.isAssessment);
     assert.strictEqual(component.aamcMethod, '');
     assert.strictEqual(component.assessmentOption, '');
@@ -95,10 +95,10 @@ module('Integration | Component | school-session-types-list-item', function (hoo
       .findRecord('session-type', sessionType.id);
     this.set('sessionType', sessionTypeModel);
     await render(hbs`<SchoolSessionTypesListItem
-      @sessionType={{this.sessionType}}
-      @canDelete={{true}}
-      @manageSessionType={{(noop)}}
-    />`);
+  @sessionType={{this.sessionType}}
+  @canDelete={{true}}
+  @manageSessionType={{(noop)}}
+/>`);
     assert.strictEqual(component.aamcMethod, 'Lorem Ipsum (inactive)');
   });
 
@@ -119,10 +119,10 @@ module('Integration | Component | school-session-types-list-item', function (hoo
       assert.strictEqual(parseInt(sessionTypeId, 10), 1);
     });
     await render(hbs`<SchoolSessionTypesListItem
-      @sessionType={{this.sessionType}}
-      @canDelete={{true}}
-      @manageSessionType={{this.manageSessionType}}
-    />`);
+  @sessionType={{this.sessionType}}
+  @canDelete={{true}}
+  @manageSessionType={{this.manageSessionType}}
+/>`);
     await component.manage();
   });
 
@@ -143,10 +143,10 @@ module('Integration | Component | school-session-types-list-item', function (hoo
       assert.strictEqual(parseInt(sessionTypeId, 10), 1);
     });
     await render(hbs`<SchoolSessionTypesListItem
-      @sessionType={{this.sessionType}}
-      @canDelete={{true}}
-      @manageSessionType={{this.manageSessionType}}
-    />`);
+  @sessionType={{this.sessionType}}
+  @canDelete={{true}}
+  @manageSessionType={{this.manageSessionType}}
+/>`);
     await component.title.edit();
   });
 
@@ -164,10 +164,10 @@ module('Integration | Component | school-session-types-list-item', function (hoo
       .findRecord('session-type', sessionType.id);
     this.set('sessionType', sessionTypeModel);
     await render(hbs`<SchoolSessionTypesListItem
-      @sessionType={{this.sessionType}}
-      @canDelete={{true}}
-      @manageSessionType={{(noop)}}
-    />`);
+  @sessionType={{this.sessionType}}
+  @canDelete={{true}}
+  @manageSessionType={{(noop)}}
+/>`);
     assert.ok(component.isDeletable);
   });
 
@@ -185,10 +185,10 @@ module('Integration | Component | school-session-types-list-item', function (hoo
       .findRecord('session-type', sessionType.id);
     this.set('sessionType', sessionTypeModel);
     await render(hbs`<SchoolSessionTypesListItem
-      @sessionType={{this.sessionType}}
-      @canDelete={{false}}
-      @manageSessionType={{(noop)}}
-    />`);
+  @sessionType={{this.sessionType}}
+  @canDelete={{false}}
+  @manageSessionType={{(noop)}}
+/>`);
     assert.notOk(component.isDeletable);
   });
 
@@ -207,10 +207,10 @@ module('Integration | Component | school-session-types-list-item', function (hoo
       .findRecord('session-type', sessionType.id);
     this.set('sessionType', sessionTypeModel);
     await render(hbs`<SchoolSessionTypesListItem
-      @sessionType={{this.sessionType}}
-      @canDelete={{true}}
-      @manageSessionType={{(noop)}}
-    />`);
+  @sessionType={{this.sessionType}}
+  @canDelete={{true}}
+  @manageSessionType={{(noop)}}
+/>`);
     assert.notOk(component.isDeletable);
   });
 });

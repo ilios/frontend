@@ -8,8 +8,7 @@ module('Integration | Component | pagedlist controls', function (hooks) {
   setupRenderingTest(hooks);
 
   test('it renders', async function (assert) {
-    await render(hbs`<PagedlistControls @limit={{10}} @offset={{11}} @total={{33}} />
-`);
+    await render(hbs`<PagedlistControls @limit={{10}} @offset={{11}} @total={{33}} />`);
     assert.strictEqual(component.limit.options.length, 3);
     assert.strictEqual(component.limit.options[0].text, '10');
     assert.strictEqual(component.limit.options[1].text, '25');
@@ -23,8 +22,7 @@ module('Integration | Component | pagedlist controls', function (hooks) {
   });
 
   test('limitless', async function (assert) {
-    await render(hbs`<PagedlistControls @limitless={{true}} />
-`);
+    await render(hbs`<PagedlistControls @limitless={{true}} />`);
     assert.strictEqual(component.limit.options.length, 7);
     assert.strictEqual(component.limit.options[0].text, '10');
     assert.strictEqual(component.limit.options[1].text, '25');
@@ -39,8 +37,7 @@ module('Integration | Component | pagedlist controls', function (hooks) {
   });
 
   test('first page', async function (assert) {
-    await render(hbs`<PagedlistControls @offset={{0}} @limit={{10}} @total={{100}} />
-`);
+    await render(hbs`<PagedlistControls @offset={{0}} @limit={{10}} @total={{100}} />`);
     assert.ok(component.firstPage.isDisabled);
     assert.ok(component.previousPage.isDisabled);
     assert.notOk(component.nextPage.isDisabled);
@@ -48,8 +45,7 @@ module('Integration | Component | pagedlist controls', function (hooks) {
   });
 
   test('last page', async function (assert) {
-    await render(hbs`<PagedlistControls @offset={{90}} @limit={{10}} @total={{100}} />
-`);
+    await render(hbs`<PagedlistControls @offset={{90}} @limit={{10}} @total={{100}} />`);
     assert.notOk(component.firstPage.isDisabled);
     assert.notOk(component.previousPage.isDisabled);
     assert.ok(component.nextPage.isDisabled);
@@ -57,8 +53,7 @@ module('Integration | Component | pagedlist controls', function (hooks) {
   });
 
   test('last page is first page', async function (assert) {
-    await render(hbs`<PagedlistControls @offset={{0}} @limit={{10}} @total={{10}} />
-`);
+    await render(hbs`<PagedlistControls @offset={{0}} @limit={{10}} @total={{10}} />`);
     assert.ok(component.firstPage.isDisabled);
     assert.ok(component.previousPage.isDisabled);
     assert.ok(component.nextPage.isDisabled);
@@ -71,8 +66,7 @@ module('Integration | Component | pagedlist controls', function (hooks) {
       assert.strictEqual(offset, 80);
     });
     await render(
-      hbs`<PagedlistControls @offset={{90}} @limit={{10}} @total={{100}} @setOffset={{this.setOffset}} />
-`,
+      hbs`<PagedlistControls @offset={{90}} @limit={{10}} @total={{100}} @setOffset={{this.setOffset}} />`,
     );
     await component.previousPage.click();
   });
@@ -83,8 +77,7 @@ module('Integration | Component | pagedlist controls', function (hooks) {
       assert.strictEqual(offset, 10);
     });
     await render(
-      hbs`<PagedlistControls @offset={{0}} @limit={{10}} @total={{100}} @setOffset={{this.setOffset}} />
-`,
+      hbs`<PagedlistControls @offset={{0}} @limit={{10}} @total={{100}} @setOffset={{this.setOffset}} />`,
     );
     await component.nextPage.click();
   });
@@ -95,8 +88,7 @@ module('Integration | Component | pagedlist controls', function (hooks) {
       assert.strictEqual(offset, 0);
     });
     await render(
-      hbs`<PagedlistControls @offset={{50}} @limit={{10}} @total={{100}} @setOffset={{this.setOffset}} />
-`,
+      hbs`<PagedlistControls @offset={{50}} @limit={{10}} @total={{100}} @setOffset={{this.setOffset}} />`,
     );
     await component.firstPage.click();
   });
@@ -107,8 +99,7 @@ module('Integration | Component | pagedlist controls', function (hooks) {
       assert.strictEqual(offset, 90);
     });
     await render(
-      hbs`<PagedlistControls @offset={{50}} @limit={{10}} @total={{100}} @setOffset={{this.setOffset}} />
-`,
+      hbs`<PagedlistControls @offset={{50}} @limit={{10}} @total={{100}} @setOffset={{this.setOffset}} />`,
     );
     await component.lastPage.click();
   });
@@ -122,13 +113,12 @@ module('Integration | Component | pagedlist controls', function (hooks) {
       assert.strictEqual(offset, 0);
     });
     await render(hbs`<PagedlistControls
-      @offset={{10}}
-      @limit={{25}}
-      @total={{100}}
-      @setOffset={{this.setOffset}}
-      @setLimit={{this.setLimit}}
-    />
-`);
+  @offset={{10}}
+  @limit={{25}}
+  @total={{100}}
+  @setOffset={{this.setOffset}}
+  @setLimit={{this.setLimit}}
+/>`);
     await component.limit.set(10);
   });
 });

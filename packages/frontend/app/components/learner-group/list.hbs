@@ -1,18 +1,11 @@
-<table
-  class="learner-group-list"
-  data-test-learner-group-list
-  ...attributes
->
+<table class="learner-group-list" data-test-learner-group-list ...attributes>
   <thead>
     <tr>
       <SortableTh
         @colspan={{2}}
         @sortedAscending={{this.sortedAscending}}
         @onClick={{fn this.setSortBy "title"}}
-        @sortedBy={{or
-          (eq @sortBy "title")
-          (eq @sortBy "title:desc")
-        }}
+        @sortedBy={{or (eq @sortBy "title") (eq @sortBy "title:desc")}}
       >
         {{t "general.learnerGroupTitle"}}
       </SortableTh>
@@ -23,10 +16,7 @@
         @sortedAscending={{this.sortedAscending}}
         @sortType="numeric"
         @onClick={{fn this.setSortBy "usersCount"}}
-        @sortedBy={{or
-          (eq @sortBy "usersCount")
-          (eq @sortBy "usersCount:desc")
-        }}
+        @sortedBy={{or (eq @sortBy "usersCount") (eq @sortBy "usersCount:desc")}}
       >
         {{t "general.members"}}
       </SortableTh>
@@ -37,10 +27,7 @@
         @sortedAscending={{this.sortedAscending}}
         @sortType="numeric"
         @onClick={{fn this.setSortBy "childrenCount"}}
-        @sortedBy={{or
-          (eq @sortBy "childrenCount")
-          (eq @sortBy "childrenCount:desc")
-        }}
+        @sortedBy={{or (eq @sortBy "childrenCount") (eq @sortBy "childrenCount:desc")}}
       >
         {{t "general.subgroups"}}
       </SortableTh>
@@ -50,9 +37,12 @@
     </tr>
   </thead>
   <tbody>
-    {{#each (
-      sort-by (if (or (eq @sortBy "title") (eq @sortBy "title:desc")) this.sortByTitle @sortBy
-      ) @learnerGroups) as |learnerGroup|
+    {{#each
+      (sort-by
+        (if (or (eq @sortBy "title") (eq @sortBy "title:desc")) this.sortByTitle @sortBy)
+        @learnerGroups
+      )
+      as |learnerGroup|
     }}
       <LearnerGroup::ListItem
         @learnerGroup={{learnerGroup}}

@@ -14,11 +14,11 @@ module('Integration | Component | pagination-links', function (hooks) {
     this.set('prevPage', () => this.set('page', this.page - 1));
     this.set('nextPage', () => this.set('page', this.page + 1));
     await render(hbs`<PaginationLinks
-      @page={{this.page}}
-      @results={{this.results}}
-      @size={{this.size}}
-      @onSelectPage={{set this "page"}}
-    />`);
+  @page={{this.page}}
+  @results={{this.results}}
+  @size={{this.size}}
+  @onSelectPage={{set this 'page'}}
+/>`);
     assert.ok(
       component.nextIsHidden,
       'results array length needs to be greater than size for pagination to show',

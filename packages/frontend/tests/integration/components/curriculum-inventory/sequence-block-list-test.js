@@ -77,11 +77,11 @@ module('Integration | Component | curriculum-inventory/sequence-block-list', fun
   test('it renders with top-level sequence blocks', async function (assert) {
     this.set('blocks', await this.report.getTopLevelSequenceBlocks());
     await render(hbs`<CurriculumInventory::SequenceBlockList
-      @report={{this.report}}
-      @sequenceBlocks={{this.blocks}}
-      @canUpdate={{true}}
-      @remove={{(noop)}}
-    />`);
+  @report={{this.report}}
+  @sequenceBlocks={{this.blocks}}
+  @canUpdate={{true}}
+  @remove={{(noop)}}
+/>`);
 
     assert.strictEqual(
       component.header.title,
@@ -173,12 +173,12 @@ module('Integration | Component | curriculum-inventory/sequence-block-list', fun
     this.set('sequenceBlocks', children);
 
     await render(hbs`<CurriculumInventory::SequenceBlockList
-      @parent={{this.parent}}
-      @report={{this.report}}
-      @sequenceBlocks={{this.sequenceBlocks}}
-      @canUpdate={{true}}
-      @remove={{(noop)}}
-    />`);
+  @parent={{this.parent}}
+  @report={{this.report}}
+  @sequenceBlocks={{this.sequenceBlocks}}
+  @canUpdate={{true}}
+  @remove={{(noop)}}
+/>`);
 
     assert.strictEqual(
       component.header.title,
@@ -220,11 +220,11 @@ module('Integration | Component | curriculum-inventory/sequence-block-list', fun
   test('read-only mode', async function (assert) {
     this.set('blocks', await this.report.getTopLevelSequenceBlocks());
     await render(hbs`<CurriculumInventory::SequenceBlockList
-      @report={{this.report}}
-      @sequenceBlocks={{this.blocks}}
-      @canUpdate={{false}}
-      @remove={{(noop)}}
-    />`);
+  @report={{this.report}}
+  @sequenceBlocks={{this.blocks}}
+  @canUpdate={{false}}
+  @remove={{(noop)}}
+/>`);
 
     assert.notOk(component.header.expandCollapse.isVisible, 'Add new button is not visible.');
     assert.notOk(component.list.items[0].isDeletable);
@@ -238,11 +238,11 @@ module('Integration | Component | curriculum-inventory/sequence-block-list', fun
     });
     this.set('blocks', await this.report.getTopLevelSequenceBlocks());
     await render(hbs`<CurriculumInventory::SequenceBlockList
-      @report={{this.report}}
-      @sequenceBlocks={{this.blocks}}
-      @canUpdate={{true}}
-      @remove={{this.remove}}
-    />`);
+  @report={{this.report}}
+  @sequenceBlocks={{this.blocks}}
+  @canUpdate={{true}}
+  @remove={{this.remove}}
+/>`);
 
     assert.notOk(component.list.items[0].confirmRemoval.isVisible);
     await component.list.items[0].remove();
@@ -253,11 +253,11 @@ module('Integration | Component | curriculum-inventory/sequence-block-list', fun
   test('cancel delete', async function (assert) {
     this.set('blocks', await this.report.getTopLevelSequenceBlocks());
     await render(hbs`<CurriculumInventory::SequenceBlockList
-      @report={{this.report}}
-      @sequenceBlocks={{this.blocks}}
-      @canUpdate={{true}}
-      @remove={{(noop)}}
-    />`);
+  @report={{this.report}}
+  @sequenceBlocks={{this.blocks}}
+  @canUpdate={{true}}
+  @remove={{(noop)}}
+/>`);
 
     assert.notOk(component.list.items[0].confirmRemoval.isVisible);
     await component.list.items[0].remove();
@@ -268,10 +268,10 @@ module('Integration | Component | curriculum-inventory/sequence-block-list', fun
 
   test('empty top level blocks list', async function (assert) {
     await render(hbs`<CurriculumInventory::SequenceBlockList
-      @report={{this.report}}
-      @canUpdate={{true}}
-      @sequenceBlocks={{(array)}}
-    />`);
+  @report={{this.report}}
+  @canUpdate={{true}}
+  @sequenceBlocks={{(array)}}
+/>`);
     assert.strictEqual(
       component.header.title,
       'Sequence Blocks (0)',
@@ -291,10 +291,10 @@ module('Integration | Component | curriculum-inventory/sequence-block-list', fun
       .findRecord('curriculum-inventory-sequence-block', parentBlock.id);
     this.set('parent', parentBlockModel);
     await render(hbs`<CurriculumInventory::SequenceBlockList
-      @parent={{this.parent}}
-      @report={{this.report}}
-      @sequenceBlocks={{(array)}}
-    />`);
+  @parent={{this.parent}}
+  @report={{this.report}}
+  @sequenceBlocks={{(array)}}
+/>`);
     assert.strictEqual(
       component.header.title,
       'Sequence Blocks (0)',

@@ -11,16 +11,14 @@ module('Integration | Component | dashboard/filter-checkbox', function (hooks) {
     const id = '100';
     this.set('content', 'label text');
     this.set('id', id);
-    await render(hbs`
-      <Dashboard::FilterCheckbox
-        @checked={{false}}
-        @add={{(noop)}}
-        @remove={{(noop)}}
-        @targetId={{this.id}}
-      >
-        {{this.content}}
-      </Dashboard::FilterCheckbox>
-`);
+    await render(hbs`<Dashboard::FilterCheckbox
+  @checked={{false}}
+  @add={{(noop)}}
+  @remove={{(noop)}}
+  @targetId={{this.id}}
+>
+  {{this.content}}
+</Dashboard::FilterCheckbox>`);
 
     assert.strictEqual(component.text, 'label text');
     assert.notOk(component.isChecked);
@@ -29,16 +27,9 @@ module('Integration | Component | dashboard/filter-checkbox', function (hooks) {
 
   test('it renders checked', async function (assert) {
     this.set('content', 'label text');
-    await render(hbs`
-      <Dashboard::FilterCheckbox
-        @checked={{true}}
-        @add={{(noop)}}
-        @remove={{(noop)}}
-      >
-       {{this.content}}
-      </Dashboard::FilterCheckbox>
-
-`);
+    await render(hbs`<Dashboard::FilterCheckbox @checked={{true}} @add={{(noop)}} @remove={{(noop)}}>
+  {{this.content}}
+</Dashboard::FilterCheckbox>`);
     assert.strictEqual(component.text, 'label text');
     assert.ok(component.isChecked);
   });
@@ -49,16 +40,9 @@ module('Integration | Component | dashboard/filter-checkbox', function (hooks) {
     this.set('remove', () => {
       assert.ok(true);
     });
-    await render(hbs`
-      <Dashboard::FilterCheckbox
-        @checked={{true}}
-        @add={{(noop)}}
-        @remove={{this.remove}}
-      >
-        {{this.content}}
-      </Dashboard::FilterCheckbox>
-
-`);
+    await render(hbs`<Dashboard::FilterCheckbox @checked={{true}} @add={{(noop)}} @remove={{this.remove}}>
+  {{this.content}}
+</Dashboard::FilterCheckbox>`);
 
     await component.click();
   });
@@ -69,16 +53,9 @@ module('Integration | Component | dashboard/filter-checkbox', function (hooks) {
     this.set('add', () => {
       assert.ok(true);
     });
-    await render(hbs`
-      <Dashboard::FilterCheckbox
-        @checked={{false}}
-        @add={{this.add}}
-        @remove={{(noop)}}
-      >
-        {{this.content}}
-      </Dashboard::FilterCheckbox>
-
-`);
+    await render(hbs`<Dashboard::FilterCheckbox @checked={{false}} @add={{this.add}} @remove={{(noop)}}>
+  {{this.content}}
+</Dashboard::FilterCheckbox>`);
 
     await component.click();
   });

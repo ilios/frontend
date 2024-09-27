@@ -16,11 +16,11 @@ module('Integration | Component | program-year/manage-objective-descriptors', fu
       .findRecord('mesh-descriptor', descriptors[0].id);
     this.set('selected', [descriptorModel]);
     await render(hbs`<ProgramYear::ManageObjectiveDescriptors
-      @selected={{this.selected}}
-      @add={{(noop)}}
-      @remove={{(noop)}}
-      @editable={{true}}
-    />`);
+  @selected={{this.selected}}
+  @add={{(noop)}}
+  @remove={{(noop)}}
+  @editable={{true}}
+/>`);
     const m = component.meshManager;
 
     assert.strictEqual(m.selectedTerms.length, 1);
@@ -49,11 +49,11 @@ module('Integration | Component | program-year/manage-objective-descriptors', fu
       assert.ok(true);
     });
     await render(hbs`<ProgramYear::ManageObjectiveDescriptors
-      @selected={{this.selected}}
-      @add={{this.add}}
-      @remove={{(noop)}}
-      @editable={{true}}
-    />`);
+  @selected={{this.selected}}
+  @add={{this.add}}
+  @remove={{(noop)}}
+  @editable={{true}}
+/>`);
     const m = component.meshManager;
 
     assert.strictEqual(m.selectedTerms.length, 1);
@@ -89,11 +89,11 @@ module('Integration | Component | program-year/manage-objective-descriptors', fu
       assert.ok(true);
     });
     await render(hbs`<ProgramYear::ManageObjectiveDescriptors
-      @selected={{this.selected}}
-      @add={{(noop)}}
-      @remove={{this.remove}}
-      @editable={{true}}
-    />`);
+  @selected={{this.selected}}
+  @add={{(noop)}}
+  @remove={{this.remove}}
+  @editable={{true}}
+/>`);
     const m = component.meshManager;
 
     assert.strictEqual(m.selectedTerms.length, 1);

@@ -19,10 +19,7 @@ module('Integration | Component | single-event-learningmaterial-list-item', func
   test('blanked', async function (assert) {
     const lm = { title: 'foo bar', isBlanked: true };
     this.set('lm', lm);
-    await render(hbs`<SingleEventLearningmaterialListItem
-      @learningMaterial={{this.lm}}
-    />
-`);
+    await render(hbs`<SingleEventLearningmaterialListItem @learningMaterial={{this.lm}} />`);
     assert.strictEqual(component.title, 'foo bar');
     assert.strictEqual(component.timingInfo.text, '');
     assert.notOk(component.isRequired);
@@ -54,10 +51,7 @@ module('Integration | Component | single-event-learningmaterial-list-item', func
       endDate: endDate.toJSDate(),
     });
     this.set('lm', lm);
-    await render(hbs`<SingleEventLearningmaterialListItem
-      @learningMaterial={{this.lm}}
-    />
-`);
+    await render(hbs`<SingleEventLearningmaterialListItem @learningMaterial={{this.lm}} />`);
     assert.strictEqual(component.title, 'foo bar');
     assert.strictEqual(
       component.timingInfo.text,
@@ -88,11 +82,9 @@ module('Integration | Component | single-event-learningmaterial-list-item', func
       absoluteFileUri: '/foo/bar',
     });
     this.set('lm', lm);
-    await render(hbs`<SingleEventLearningmaterialListItem
-      @learningMaterial={{this.lm}}
-      @linked={{true}}
-    />
-`);
+    await render(
+      hbs`<SingleEventLearningmaterialListItem @learningMaterial={{this.lm}} @linked={{true}} />`,
+    );
     assert.strictEqual(component.title, 'foo bar (1kb)');
     assert.strictEqual(
       component.timingInfo.text,
@@ -118,10 +110,7 @@ module('Integration | Component | single-event-learningmaterial-list-item', func
       required: true,
     });
     this.set('lm', lm);
-    await render(hbs`<SingleEventLearningmaterialListItem
-      @learningMaterial={{this.lm}}
-    />
-`);
+    await render(hbs`<SingleEventLearningmaterialListItem @learningMaterial={{this.lm}} />`);
     assert.ok(component.isRequired);
   });
 
@@ -133,11 +122,9 @@ module('Integration | Component | single-event-learningmaterial-list-item', func
       absoluteFileUri: '/foo/bar',
     });
     this.set('lm', lm);
-    await render(hbs`<SingleEventLearningmaterialListItem
-      @learningMaterial={{this.lm}}
-      @linked={{true}}
-    />
-`);
+    await render(
+      hbs`<SingleEventLearningmaterialListItem @learningMaterial={{this.lm}} @linked={{true}} />`,
+    );
     assert.strictEqual(component.title, 'foo bar (1kb)');
     assert.ok(component.typeIcon.isPdf);
     assert.ok(component.pdfLink.url.endsWith('/foo/bar?inline'));
@@ -157,11 +144,9 @@ module('Integration | Component | single-event-learningmaterial-list-item', func
       absoluteFileUri: '/foo/bar',
     });
     this.set('lm', lm);
-    await render(hbs`<SingleEventLearningmaterialListItem
-      @learningMaterial={{this.lm}}
-      @linked={{true}}
-    />
-`);
+    await render(
+      hbs`<SingleEventLearningmaterialListItem @learningMaterial={{this.lm}} @linked={{true}} />`,
+    );
     assert.strictEqual(component.title, 'foo bar (1kb)');
     assert.ok(component.typeIcon.isFile);
     assert.notOk(component.pdfLink.isPresent);
@@ -181,11 +166,9 @@ module('Integration | Component | single-event-learningmaterial-list-item', func
       absoluteFileUri: '/foo/bar',
     });
     this.set('lm', lm);
-    await render(hbs`<SingleEventLearningmaterialListItem
-      @learningMaterial={{this.lm}}
-      @linked={{false}}
-    />
-`);
+    await render(
+      hbs`<SingleEventLearningmaterialListItem @learningMaterial={{this.lm}} @linked={{false}} />`,
+    );
     assert.strictEqual(component.title, 'foo bar (1kb)');
     assert.ok(component.typeIcon.isFile);
     assert.notOk(component.pdfLink.isPresent);
@@ -203,11 +186,9 @@ module('Integration | Component | single-event-learningmaterial-list-item', func
       link: 'https://iliosproject.org/',
     });
     this.set('lm', lm);
-    await render(hbs`<SingleEventLearningmaterialListItem
-      @learningMaterial={{this.lm}}
-      @linked={{true}}
-    />
-`);
+    await render(
+      hbs`<SingleEventLearningmaterialListItem @learningMaterial={{this.lm}} @linked={{true}} />`,
+    );
     assert.strictEqual(component.title, 'foo bar');
     assert.ok(component.typeIcon.isLink);
     assert.notOk(component.pdfLink.isPresent);
@@ -225,11 +206,9 @@ module('Integration | Component | single-event-learningmaterial-list-item', func
       link: 'https://iliosproject.org/',
     });
     this.set('lm', lm);
-    await render(hbs`<SingleEventLearningmaterialListItem
-      @learningMaterial={{this.lm}}
-      @linked={{false}}
-    />
-`);
+    await render(
+      hbs`<SingleEventLearningmaterialListItem @learningMaterial={{this.lm}} @linked={{false}} />`,
+    );
     assert.strictEqual(component.title, 'foo bar');
     assert.ok(component.typeIcon.isLink);
     assert.notOk(component.pdfLink.isPresent);
@@ -247,10 +226,7 @@ module('Integration | Component | single-event-learningmaterial-list-item', func
       citation: 'Lorem Ipsum',
     });
     this.set('lm', lm);
-    await render(hbs`<SingleEventLearningmaterialListItem
-      @learningMaterial={{this.lm}}
-    />
-`);
+    await render(hbs`<SingleEventLearningmaterialListItem @learningMaterial={{this.lm}} />`);
     assert.strictEqual(component.title, 'foo bar');
     assert.ok(component.typeIcon.isCitation);
     assert.notOk(component.pdfLink.isPresent);
@@ -268,10 +244,7 @@ module('Integration | Component | single-event-learningmaterial-list-item', func
       publicNotes: 'read this',
     });
     this.set('lm', lm);
-    await render(hbs`<SingleEventLearningmaterialListItem
-      @learningMaterial={{this.lm}}
-    />
-`);
+    await render(hbs`<SingleEventLearningmaterialListItem @learningMaterial={{this.lm}} />`);
     assert.strictEqual(component.publicNotes.text, 'read this');
   });
 
@@ -305,11 +278,9 @@ module('Integration | Component | single-event-learningmaterial-list-item', func
     this.owner.register('service:current-user', CurrentUserMock);
 
     this.set('lm', lm);
-    await render(hbs`<SingleEventLearningmaterialListItem
-      @learningMaterial={{this.lm}}
-      @linked={{true}}
-    />
-`);
+    await render(
+      hbs`<SingleEventLearningmaterialListItem @learningMaterial={{this.lm}} @linked={{true}} />`,
+    );
     assert.notOk(component.userMaterialStatus.isDisabled);
   });
 
@@ -343,11 +314,9 @@ module('Integration | Component | single-event-learningmaterial-list-item', func
     this.owner.register('service:current-user', CurrentUserMock);
 
     this.set('lm', lm);
-    await render(hbs`<SingleEventLearningmaterialListItem
-      @learningMaterial={{this.lm}}
-      @linked={{false}}
-    />
-`);
+    await render(
+      hbs`<SingleEventLearningmaterialListItem @learningMaterial={{this.lm}} @linked={{false}} />`,
+    );
     assert.ok(component.userMaterialStatus.isDisabled);
   });
 });

@@ -19,8 +19,7 @@ module('Integration | Component | detail terms list item', function (hooks) {
     });
     const termModel = await this.owner.lookup('service:store').findRecord('term', term.id);
     this.set('term', termModel);
-    await render(hbs`<DetailTermsListItem @term={{this.term}} @canEdit={{false}} />
-`);
+    await render(hbs`<DetailTermsListItem @term={{this.term}} @canEdit={{false}} />`);
     assert.notStrictEqual(this.element.textContent.trim().indexOf('Foo'), -1);
   });
 
@@ -41,8 +40,7 @@ module('Integration | Component | detail terms list item', function (hooks) {
     });
     const termModel = await this.owner.lookup('service:store').findRecord('term', term3.id);
     this.set('term', termModel);
-    await render(hbs`<DetailTermsListItem @term={{this.term}} @canEdit={{false}} />
-`);
+    await render(hbs`<DetailTermsListItem @term={{this.term}} @canEdit={{false}} />`);
     assert.dom('.muted').includesText('Lorem »');
     assert.dom(findAll('.muted')[1]).includesText('Ipsum »');
     assert.notStrictEqual(this.element.textContent.trim().indexOf('Foo'), -1);
@@ -59,12 +57,9 @@ module('Integration | Component | detail terms list item', function (hooks) {
     this.set('remove', (val) => {
       assert.strictEqual(termModel, val);
     });
-    await render(hbs`<DetailTermsListItem
-      @term={{this.term}}
-      @canEdit={{true}}
-      @remove={{this.remove}}
-    />
-`);
+    await render(
+      hbs`<DetailTermsListItem @term={{this.term}} @canEdit={{true}} @remove={{this.remove}} />`,
+    );
     assert.dom('.fa-xmark').exists({ count: 1 });
     await click('.fa-xmark');
   });
@@ -77,8 +72,7 @@ module('Integration | Component | detail terms list item', function (hooks) {
     const termModel = await this.owner.lookup('service:store').findRecord('term', term.id);
     this.set('term', termModel);
     await render(
-      hbs`<DetailTermsListItem @term={{this.term}} @canEdit={{true}} @remove={{(noop)}} />
-`,
+      hbs`<DetailTermsListItem @term={{this.term}} @canEdit={{true}} @remove={{(noop)}} />`,
     );
     assert.dom('.inactive').hasText('(inactive)');
     assert.dom('.fa-xmark').exists({ count: 1 });
@@ -91,8 +85,7 @@ module('Integration | Component | detail terms list item', function (hooks) {
     });
     const termModel = await this.owner.lookup('service:store').findRecord('term', term.id);
     this.set('term', termModel);
-    await render(hbs`<DetailTermsListItem @term={{this.term}} @canEdit={{false}} />
-`);
+    await render(hbs`<DetailTermsListItem @term={{this.term}} @canEdit={{false}} />`);
     assert.dom('.inactive').doesNotExist();
     assert.dom('.fa-xmark').doesNotExist();
   });

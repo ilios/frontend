@@ -3,53 +3,29 @@
   data-test-active-row
   data-test-curriculum-inventory-report-list-item
 >
-  <td
-    class="text-left"
-    colspan="4"
-    data-test-name
-  >
+  <td class="text-left" colspan="4" data-test-name>
     <LinkTo @route="curriculum-inventory-report" @model={{@report}}>
       {{@report.name}}
     </LinkTo>
   </td>
-  <td
-    class="text-center hide-from-small-screen"
-    colspan="2"
-    data-test-program
-  >
+  <td class="text-center hide-from-small-screen" colspan="2" data-test-program>
     {{@report.program.title}}
   </td>
-  <td
-    class="text-center hide-from-small-screen"
-    colspan="2"
-    data-test-year
-  >
+  <td class="text-center hide-from-small-screen" colspan="2" data-test-year>
     {{this.yearLabel}}
   </td>
-  <td
-    class="text-center hide-from-small-screen"
-    colspan="2"
-    data-test-start-date
-  >
+  <td class="text-center hide-from-small-screen" colspan="2" data-test-start-date>
     {{format-date @report.startDate day="2-digit" month="2-digit" year="numeric"}}
   </td>
-  <td
-    class="text-center hide-from-small-screen"
-    colspan="2"
-    data-test-end-date
-  >
+  <td class="text-center hide-from-small-screen" colspan="2" data-test-end-date>
     {{format-date @report.endDate day="2-digit" month="2-digit" year="numeric"}}
   </td>
-  <td
-    class="text-center"
-    colspan="2"
-    data-test-status
-  >
+  <td class="text-center" colspan="2" data-test-status>
     {{#if this.isFinalized}}
       <FaIcon @icon="lock" class="enabled" />
     {{/if}}
     <span
-      class="status publication-status {{if this.isFinalized "published" "notpublished"}}"
+      class="status publication-status {{if this.isFinalized 'published' 'notpublished'}}"
       data-test-curriculum-inventory-report-publication-status
     >
       <span data-test-text>
@@ -92,9 +68,14 @@
     <td colspan="16">
       <div class="confirm-message">
         {{t "general.reportConfirmRemove"}}
-        <br>
+        <br />
         <div class="confirm-buttons">
-          <button type="button" class="remove text" {{on "click" (fn @remove @report)}} data-test-confirm>
+          <button
+            type="button"
+            class="remove text"
+            {{on "click" (fn @remove @report)}}
+            data-test-confirm
+          >
             {{t "general.yes"}}
           </button>
           <button

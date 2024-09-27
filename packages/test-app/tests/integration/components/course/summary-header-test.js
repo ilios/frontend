@@ -73,8 +73,7 @@ module('Integration | Component | course summary header', function (hooks) {
     });
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('course', courseModel);
-    await render(hbs`<Course::SummaryHeader @course={{this.course}} />
-`);
+    await render(hbs`<Course::SummaryHeader @course={{this.course}} />`);
     const actions = '.course-summary-actions a';
     const printIcon = `${actions}:nth-of-type(1) svg`;
 

@@ -21,7 +21,8 @@
             @close={{set this "duration" @program.duration}}
             @saveOnEnter={{true}}
             @clickPrompt={{t "general.clickToEdit"}}
-            @closeOnEscape={{true}} as |isSaving|
+            @closeOnEscape={{true}}
+            as |isSaving|
           >
             <input
               id={{concat this.id "short-title"}}
@@ -30,7 +31,7 @@
               {{on "input" (pick "target.value" (set this "shortTitle"))}}
               {{on "keypress" (fn this.addErrorDisplayFor "shortTitle")}}
               disabled={{isSaving}}
-            >
+            />
           </EditableField>
           <ValidationError @errors={{get-errors-for this.shortTitle}} />
         {{else}}

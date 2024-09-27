@@ -31,15 +31,14 @@ module('Integration | Component | objective-list-item-terms', function (hooks) {
   test('it renders and is accessible when managing', async function (assert) {
     this.set('subject', this.subject);
     await render(hbs`<ObjectiveListItemTerms
-      @subject={{this.subject}}
-      @editable={{true}}
-      @manage={{(noop)}}
-      @isManaging={{true}}
-      @save={{(noop)}}
-      @isSaving={{false}}
-      @cancel={{(noop)}}
-    />
-`);
+  @subject={{this.subject}}
+  @editable={{true}}
+  @manage={{(noop)}}
+  @isManaging={{true}}
+  @save={{(noop)}}
+  @isSaving={{false}}
+  @cancel={{(noop)}}
+/>`);
     assert.ok(component.canSave);
     assert.ok(component.canCancel);
     await a11yAudit(this.element);
@@ -49,15 +48,14 @@ module('Integration | Component | objective-list-item-terms', function (hooks) {
   test('it renders and is accessible when not managing', async function (assert) {
     this.set('subject', this.subject);
     await render(hbs`<ObjectiveListItemTerms
-      @subject={{this.subject}}
-      @editable={{true}}
-      @manage={{(noop)}}
-      @isManaging={{false}}
-      @save={{(noop)}}
-      @isSaving={{false}}
-      @cancel={{(noop)}}
-    />
-`);
+  @subject={{this.subject}}
+  @editable={{true}}
+  @manage={{(noop)}}
+  @isManaging={{false}}
+  @save={{(noop)}}
+  @isSaving={{false}}
+  @cancel={{(noop)}}
+/>`);
     assert.strictEqual(component.list.length, 2);
     assert.strictEqual(component.list[0].title, 'Vocabulary 1 (school 0)');
     assert.strictEqual(component.list[0].terms.length, 2);
@@ -74,15 +72,14 @@ module('Integration | Component | objective-list-item-terms', function (hooks) {
       assert.strictEqual(vocabulary, this.vocabularyModel1);
     });
     await render(hbs`<ObjectiveListItemTerms
-      @subject={{this.subject}}
-      @editable={{true}}
-      @manage={{this.manage}}
-      @isManaging={{false}}
-      @save={{(noop)}}
-      @isSaving={{false}}
-      @cancel={{(noop)}}
-    />
-`);
+  @subject={{this.subject}}
+  @editable={{true}}
+  @manage={{this.manage}}
+  @isManaging={{false}}
+  @save={{(noop)}}
+  @isSaving={{false}}
+  @cancel={{(noop)}}
+/>`);
     await component.list[0].manage();
   });
 
@@ -99,15 +96,14 @@ module('Integration | Component | objective-list-item-terms', function (hooks) {
       assert.strictEqual(vocabulary, null);
     });
     await render(hbs`<ObjectiveListItemTerms
-      @subject={{this.subject}}
-      @editable={{true}}
-      @manage={{this.manage}}
-      @isManaging={{false}}
-      @save={{(noop)}}
-      @isSaving={{false}}
-      @cancel={{(noop)}}
-    />
-`);
+  @subject={{this.subject}}
+  @editable={{true}}
+  @manage={{this.manage}}
+  @isManaging={{false}}
+  @save={{(noop)}}
+  @isSaving={{false}}
+  @cancel={{(noop)}}
+/>`);
     await component.manage();
   });
 
@@ -118,15 +114,14 @@ module('Integration | Component | objective-list-item-terms', function (hooks) {
       assert.ok(true);
     });
     await render(hbs`<ObjectiveListItemTerms
-      @subject={{this.subject}}
-      @editable={{true}}
-      @manage={{(noop)}}
-      @isManaging={{true}}
-      @save={{this.save}}
-      @isSaving={{false}}
-      @cancel={{(noop)}}
-    />
-`);
+  @subject={{this.subject}}
+  @editable={{true}}
+  @manage={{(noop)}}
+  @isManaging={{true}}
+  @save={{this.save}}
+  @isSaving={{false}}
+  @cancel={{(noop)}}
+/>`);
     await component.save();
   });
 
@@ -137,15 +132,14 @@ module('Integration | Component | objective-list-item-terms', function (hooks) {
       assert.ok(true);
     });
     await render(hbs`<ObjectiveListItemTerms
-      @subject={{this.subject}}
-      @editable={{true}}
-      @manage={{(noop)}}
-      @isManaging={{true}}
-      @save={{(noop)}}
-      @isSaving={{false}}
-      @cancel={{this.cancel}}
-    />
-`);
+  @subject={{this.subject}}
+  @editable={{true}}
+  @manage={{(noop)}}
+  @isManaging={{true}}
+  @save={{(noop)}}
+  @isSaving={{false}}
+  @cancel={{this.cancel}}
+/>`);
     await component.cancel();
   });
 });

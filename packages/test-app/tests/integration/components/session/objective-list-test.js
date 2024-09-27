@@ -32,13 +32,7 @@ module('Integration | Component | session/objective-list', function (hooks) {
     const sessionModel = await this.owner.lookup('service:store').findRecord('session', session.id);
     this.set('session', sessionModel);
 
-    await render(
-      hbs`<Session::ObjectiveList
-        @editable={{true}}
-        @session={{this.session}}
-      />
-`,
-    );
+    await render(hbs`<Session::ObjectiveList @editable={{true}} @session={{this.session}} />`);
     assert.ok(component.sortIsVisible, 'Sort Objectives button is visible');
     assert.strictEqual(component.headers[0].text, 'Description');
     assert.strictEqual(component.headers[1].text, 'Parent Objectives');
@@ -70,13 +64,7 @@ module('Integration | Component | session/objective-list', function (hooks) {
     const sessionModel = await this.owner.lookup('service:store').findRecord('session', session.id);
     this.set('session', sessionModel);
 
-    await render(
-      hbs`<Session::ObjectiveList
-        @editable={{true}}
-        @session={{this.session}}
-      />
-`,
-    );
+    await render(hbs`<Session::ObjectiveList @editable={{true}} @session={{this.session}} />`);
     assert.notOk(component.sortIsVisible);
     assert.strictEqual(component.text, '');
   });
@@ -88,13 +76,7 @@ module('Integration | Component | session/objective-list', function (hooks) {
     const sessionModel = await this.owner.lookup('service:store').findRecord('session', session.id);
     this.set('session', sessionModel);
 
-    await render(
-      hbs`<Session::ObjectiveList
-        @editable={{true}}
-        @session={{this.session}}
-      />
-`,
-    );
+    await render(hbs`<Session::ObjectiveList @editable={{true}} @session={{this.session}} />`);
     assert.notOk(component.sortIsVisible, 'Sort Objectives button is visible');
     assert.strictEqual(component.objectives.length, 1);
 

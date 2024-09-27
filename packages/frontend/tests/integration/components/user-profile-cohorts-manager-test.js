@@ -75,15 +75,15 @@ module('Integration | Component | user-profile-cohorts-manager', function (hooks
     this.set('schools', [this.school1, this.school2]);
     this.set('selectedSchool', this.school1);
     await render(hbs`<UserProfileCohortsManager
-      @primaryCohort={{this.primaryCohort}}
-      @secondaryCohorts={{this.secondaryCohorts}}
-      @addSecondaryCohort={{(noop)}}
-      @removeSecondaryCohort={{(noop)}}
-      @setPrimaryCohort={{(noop)}}
-      @schools={{this.schools}}
-      @selectedSchool={{this.selectedSchool}}
-      @setSchool={{(noop)}}
-    />`);
+  @primaryCohort={{this.primaryCohort}}
+  @secondaryCohorts={{this.secondaryCohorts}}
+  @addSecondaryCohort={{(noop)}}
+  @removeSecondaryCohort={{(noop)}}
+  @setPrimaryCohort={{(noop)}}
+  @schools={{this.schools}}
+  @selectedSchool={{this.selectedSchool}}
+  @setSchool={{(noop)}}
+/>`);
 
     assert.strictEqual(component.primaryCohort.title, 'school 0 program 0 cohort 0');
     assert.strictEqual(component.secondaryCohorts.length, 2);
@@ -106,15 +106,15 @@ module('Integration | Component | user-profile-cohorts-manager', function (hooks
     this.set('schools', [this.school2]);
     this.set('selectedSchool', this.school2);
     await render(hbs`<UserProfileCohortsManager
-      @primaryCohort={{null}}
-      @secondaryCohorts={{(array)}}
-      @addSecondaryCohort={{(noop)}}
-      @removeSecondaryCohort={{(noop)}}
-      @setPrimaryCohort={{(noop)}}
-      @schools={{this.schools}}
-      @selectedSchool={{this.selectedSchool}}
-      @setSchool={{(noop)}}
-    />`);
+  @primaryCohort={{null}}
+  @secondaryCohorts={{(array)}}
+  @addSecondaryCohort={{(noop)}}
+  @removeSecondaryCohort={{(noop)}}
+  @setPrimaryCohort={{(noop)}}
+  @schools={{this.schools}}
+  @selectedSchool={{this.selectedSchool}}
+  @setSchool={{(noop)}}
+/>`);
 
     assert.strictEqual(component.schools.text, 'school 1');
 
@@ -128,15 +128,15 @@ module('Integration | Component | user-profile-cohorts-manager', function (hooks
     this.set('schools', [this.school1, this.school2]);
     this.set('selectedSchool', this.school1);
     await render(hbs`<UserProfileCohortsManager
-      @primaryCohort={{null}}
-      @secondaryCohorts={{(array)}}
-      @addSecondaryCohort={{(noop)}}
-      @removeSecondaryCohort={{(noop)}}
-      @setPrimaryCohort={{(noop)}}
-      @schools={{this.schools}}
-      @selectedSchool={{this.selectedSchool}}
-      @setSchool={{(noop)}}
-    />`);
+  @primaryCohort={{null}}
+  @secondaryCohorts={{(array)}}
+  @addSecondaryCohort={{(noop)}}
+  @removeSecondaryCohort={{(noop)}}
+  @setPrimaryCohort={{(noop)}}
+  @schools={{this.schools}}
+  @selectedSchool={{this.selectedSchool}}
+  @setSchool={{(noop)}}
+/>`);
 
     assert.strictEqual(component.primaryCohort.title, 'None');
     assert.strictEqual(component.secondaryCohorts.length, 1);
@@ -166,15 +166,15 @@ module('Integration | Component | user-profile-cohorts-manager', function (hooks
     this.set('schools', [this.school1, this.school2]);
     this.set('selectedSchool', this.school1);
     await render(hbs`<UserProfileCohortsManager
-      @primaryCohort={{null}}
-      @secondaryCohorts={{this.secondaryCohorts}}
-      @addSecondaryCohort={{(noop)}}
-      @removeSecondaryCohort={{(noop)}}
-      @setPrimaryCohort={{this.setPrimaryCohort}}
-      @schools={{this.schools}}
-      @selectedSchool={{this.selectedSchool}}
-      @setSchool={{(noop)}}
-    />`);
+  @primaryCohort={{null}}
+  @secondaryCohorts={{this.secondaryCohorts}}
+  @addSecondaryCohort={{(noop)}}
+  @removeSecondaryCohort={{(noop)}}
+  @setPrimaryCohort={{this.setPrimaryCohort}}
+  @schools={{this.schools}}
+  @selectedSchool={{this.selectedSchool}}
+  @setSchool={{(noop)}}
+/>`);
 
     assert.strictEqual(component.secondaryCohorts[0].title, 'school 0 program 0 cohort 0');
     await component.secondaryCohorts[0].promote();
@@ -189,15 +189,15 @@ module('Integration | Component | user-profile-cohorts-manager', function (hooks
     this.set('schools', [this.school1, this.school2]);
     this.set('selectedSchool', this.school1);
     await render(hbs`<UserProfileCohortsManager
-      @primaryCohort={{this.primaryCohort}}
-      @secondaryCohorts={{(array)}}
-      @addSecondaryCohort={{(noop)}}
-      @removeSecondaryCohort={{(noop)}}
-      @setPrimaryCohort={{this.setPrimaryCohort}}
-      @schools={{this.schools}}
-      @selectedSchool={{this.selectedSchool}}
-      @setSchool={{(noop)}}
-    />`);
+  @primaryCohort={{this.primaryCohort}}
+  @secondaryCohorts={{(array)}}
+  @addSecondaryCohort={{(noop)}}
+  @removeSecondaryCohort={{(noop)}}
+  @setPrimaryCohort={{this.setPrimaryCohort}}
+  @schools={{this.schools}}
+  @selectedSchool={{this.selectedSchool}}
+  @setSchool={{(noop)}}
+/>`);
 
     assert.strictEqual(component.primaryCohort.title, 'school 0 program 0 cohort 0');
     await component.primaryCohort.remove();
@@ -211,15 +211,15 @@ module('Integration | Component | user-profile-cohorts-manager', function (hooks
     this.set('schools', [this.school1, this.school2]);
     this.set('selectedSchool', this.school1);
     await render(hbs`<UserProfileCohortsManager
-      @primaryCohort={{(noop)}}
-      @secondaryCohorts={{(array)}}
-      @addSecondaryCohort={{this.addSecondaryCohort}}
-      @removeSecondaryCohort={{(noop)}}
-      @setPrimaryCohort={{(noop)}}
-      @schools={{this.schools}}
-      @selectedSchool={{this.selectedSchool}}
-      @setSchool={{(noop)}}
-    />`);
+  @primaryCohort={{(noop)}}
+  @secondaryCohorts={{(array)}}
+  @addSecondaryCohort={{this.addSecondaryCohort}}
+  @removeSecondaryCohort={{(noop)}}
+  @setPrimaryCohort={{(noop)}}
+  @schools={{this.schools}}
+  @selectedSchool={{this.selectedSchool}}
+  @setSchool={{(noop)}}
+/>`);
 
     assert.strictEqual(component.assignableCohorts[0].title, 'program 0 cohort 0');
     await component.assignableCohorts[0].add();
@@ -234,15 +234,15 @@ module('Integration | Component | user-profile-cohorts-manager', function (hooks
     this.set('schools', [this.school1, this.school2]);
     this.set('selectedSchool', this.school1);
     await render(hbs`<UserProfileCohortsManager
-      @primaryCohort={{(noop)}}
-      @secondaryCohorts={{this.secondaryCohorts}}
-      @addSecondaryCohort={{(noop)}}
-      @removeSecondaryCohort={{this.removeSecondaryCohort}}
-      @setPrimaryCohort={{(noop)}}
-      @schools={{this.schools}}
-      @selectedSchool={{this.selectedSchool}}
-      @setSchool={{(noop)}}
-    />`);
+  @primaryCohort={{(noop)}}
+  @secondaryCohorts={{this.secondaryCohorts}}
+  @addSecondaryCohort={{(noop)}}
+  @removeSecondaryCohort={{this.removeSecondaryCohort}}
+  @setPrimaryCohort={{(noop)}}
+  @schools={{this.schools}}
+  @selectedSchool={{this.selectedSchool}}
+  @setSchool={{(noop)}}
+/>`);
 
     assert.strictEqual(component.secondaryCohorts[0].title, 'school 0 program 0 cohort 0');
     await component.secondaryCohorts[0].remove();
@@ -256,15 +256,15 @@ module('Integration | Component | user-profile-cohorts-manager', function (hooks
     this.set('schools', [this.school1, this.school2]);
     this.set('selectedSchool', this.school1);
     await render(hbs`<UserProfileCohortsManager
-      @primaryCohort={{(noop)}}
-      @secondaryCohorts={{this.secondaryCohorts}}
-      @addSecondaryCohort={{(noop)}}
-      @removeSecondaryCohort={{this.removeSecondaryCohort}}
-      @setPrimaryCohort={{(noop)}}
-      @schools={{this.schools}}
-      @selectedSchool={{this.selectedSchool}}
-      @setSchool={{this.changeSchool}}
-    />`);
+  @primaryCohort={{(noop)}}
+  @secondaryCohorts={{this.secondaryCohorts}}
+  @addSecondaryCohort={{(noop)}}
+  @removeSecondaryCohort={{this.removeSecondaryCohort}}
+  @setPrimaryCohort={{(noop)}}
+  @schools={{this.schools}}
+  @selectedSchool={{this.selectedSchool}}
+  @setSchool={{this.changeSchool}}
+/>`);
     await component.schools.filter.select('2');
   });
 });

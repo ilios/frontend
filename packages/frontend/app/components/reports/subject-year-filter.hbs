@@ -7,15 +7,8 @@
     <option selected={{is-empty @selectedYear}} value="">
       {{t "general.allAcademicYears"}}
     </option>
-    {{#each
-      (sort-by
-        "title:desc" this.allAcademicYears
-      ) as |year|
-    }}
-      <option
-        value={{year.id}}
-        selected={{eq year.id @selectedYear}}
-      >
+    {{#each (sort-by "title:desc" this.allAcademicYears) as |year|}}
+      <option value={{year.id}} selected={{eq year.id @selectedYear}}>
         {{year.title}}
       </option>
     {{/each}}

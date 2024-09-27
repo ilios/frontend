@@ -14,8 +14,7 @@ module('Integration | Component | course/publication-menu', function (hooks) {
     this.server.create('course');
     const courseModel = await this.owner.lookup('service:store').findRecord('course', 1);
     this.set('course', courseModel);
-    await render(hbs`<Course::PublicationMenu @course={{this.course}} />
-`);
+    await render(hbs`<Course::PublicationMenu @course={{this.course}} />`);
 
     await a11yAudit(this.element, {
       rules: {
@@ -43,8 +42,7 @@ module('Integration | Component | course/publication-menu', function (hooks) {
     });
     const courseModel = await this.owner.lookup('service:store').findRecord('course', 1);
     this.set('course', courseModel);
-    await render(hbs`<Course::PublicationMenu @course={{this.course}} />
-`);
+    await render(hbs`<Course::PublicationMenu @course={{this.course}} />`);
 
     await a11yAudit(this.element);
     assert.strictEqual(component.text, 'Scheduled');
@@ -60,8 +58,7 @@ module('Integration | Component | course/publication-menu', function (hooks) {
     });
     const courseModel = await this.owner.lookup('service:store').findRecord('course', 1);
     this.set('course', courseModel);
-    await render(hbs`<Course::PublicationMenu @course={{this.course}} />
-`);
+    await render(hbs`<Course::PublicationMenu @course={{this.course}} />`);
 
     await a11yAudit(this.element);
     assert.strictEqual(component.text, 'Published');
@@ -74,8 +71,7 @@ module('Integration | Component | course/publication-menu', function (hooks) {
     this.server.create('course');
     const courseModel = await this.owner.lookup('service:store').findRecord('course', 1);
     this.set('course', courseModel);
-    await render(hbs`<Course::PublicationMenu @course={{this.course}} />
-`);
+    await render(hbs`<Course::PublicationMenu @course={{this.course}} />`);
     assert.ok(component.menuClosed);
     await component.toggle.click();
     assert.ok(component.menuOpen);
@@ -85,8 +81,7 @@ module('Integration | Component | course/publication-menu', function (hooks) {
     this.server.create('course');
     const courseModel = await this.owner.lookup('service:store').findRecord('course', 1);
     this.set('course', courseModel);
-    await render(hbs`<Course::PublicationMenu @course={{this.course}} />
-`);
+    await render(hbs`<Course::PublicationMenu @course={{this.course}} />`);
     await component.toggle.click();
     assert.ok(component.menuOpen);
     assert.notOk(component.hasPublishAsIs);
@@ -103,8 +98,7 @@ module('Integration | Component | course/publication-menu', function (hooks) {
     });
     const courseModel = await this.owner.lookup('service:store').findRecord('course', 1);
     this.set('course', courseModel);
-    await render(hbs`<Course::PublicationMenu @course={{this.course}} />
-`);
+    await render(hbs`<Course::PublicationMenu @course={{this.course}} />`);
     await component.toggle.click();
     assert.ok(component.menuOpen);
     assert.ok(component.hasPublishAsIs);
@@ -121,8 +115,7 @@ module('Integration | Component | course/publication-menu', function (hooks) {
     });
     const courseModel = await this.owner.lookup('service:store').findRecord('course', 1);
     this.set('course', courseModel);
-    await render(hbs`<Course::PublicationMenu @course={{this.course}} />
-`);
+    await render(hbs`<Course::PublicationMenu @course={{this.course}} />`);
     await component.toggle.click();
     assert.ok(component.menuOpen);
     assert.notOk(component.hasPublishAsIs);
@@ -141,8 +134,7 @@ module('Integration | Component | course/publication-menu', function (hooks) {
     });
     const courseModel = await this.owner.lookup('service:store').findRecord('course', 1);
     this.set('course', courseModel);
-    await render(hbs`<Course::PublicationMenu @course={{this.course}} />
-`);
+    await render(hbs`<Course::PublicationMenu @course={{this.course}} />`);
     await component.toggle.click();
     assert.ok(component.menuOpen);
     assert.ok(component.hasPublishAsIs);
@@ -159,8 +151,7 @@ module('Integration | Component | course/publication-menu', function (hooks) {
     });
     const courseModel = await this.owner.lookup('service:store').findRecord('course', 1);
     this.set('course', courseModel);
-    await render(hbs`<Course::PublicationMenu @course={{this.course}} />
-`);
+    await render(hbs`<Course::PublicationMenu @course={{this.course}} />`);
     await component.toggle.click();
     assert.ok(component.menuOpen);
     assert.notOk(component.hasPublishAsIs);
@@ -174,8 +165,7 @@ module('Integration | Component | course/publication-menu', function (hooks) {
     this.server.create('course');
     const courseModel = await this.owner.lookup('service:store').findRecord('course', 1);
     this.set('course', courseModel);
-    await render(hbs`<Course::PublicationMenu @course={{this.course}} />
-`);
+    await render(hbs`<Course::PublicationMenu @course={{this.course}} />`);
 
     assert.ok(component.menuClosed);
     await component.toggle.down();
@@ -186,8 +176,7 @@ module('Integration | Component | course/publication-menu', function (hooks) {
     this.server.create('course');
     const courseModel = await this.owner.lookup('service:store').findRecord('course', 1);
     this.set('course', courseModel);
-    await render(hbs`<Course::PublicationMenu @course={{this.course}} />
-`);
+    await render(hbs`<Course::PublicationMenu @course={{this.course}} />`);
 
     await component.toggle.down();
     assert.ok(component.menuOpen);

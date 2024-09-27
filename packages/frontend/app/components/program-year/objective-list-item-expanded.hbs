@@ -11,9 +11,7 @@
   <tbody>
     {{#if (is-array this.courseObjects)}}
       {{#each (sort-by "title" this.courseObjects) as |obj|}}
-        <tr
-          data-test-program-year-objective-list-item-expanded-course
-        >
+        <tr data-test-program-year-objective-list-item-expanded-course>
           <td class="text-top" data-test-title>
             {{obj.title}}
           </td>

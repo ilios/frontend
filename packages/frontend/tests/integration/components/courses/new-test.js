@@ -42,7 +42,12 @@ module('Integration | Component | courses/new', function (hooks) {
       .findRecord('academic-year', academicYear.id);
     this.set('year', academicYearModel);
     await render(
-      hbs`<Courses::New @currentSchool={{this.school}} @save={{(noop)}} @cancel={{(noop)}} @currentYear={{this.year}} />`,
+      hbs`<Courses::New
+  @currentSchool={{this.school}}
+  @save={{(noop)}}
+  @cancel={{(noop)}}
+  @currentYear={{this.year}}
+/>`,
     );
     assert.notOk(component.years[0].selected);
     assert.notOk(component.years[1].selected);
@@ -60,7 +65,12 @@ module('Integration | Component | courses/new', function (hooks) {
       .findRecord('academic-year', academicYear.id);
     this.set('year', academicYearModel);
     await render(
-      hbs`<Courses::New @currentSchool={{this.school}} @save={{(noop)}} @cancel={{(noop)}} @currentYear={{this.year}} />`,
+      hbs`<Courses::New
+  @currentSchool={{this.school}}
+  @save={{(noop)}}
+  @cancel={{(noop)}}
+  @currentYear={{this.year}}
+/>`,
     );
     assert.ok(component.years[0].selected);
     assert.notOk(component.years[1].selected);
@@ -117,7 +127,12 @@ module('Integration | Component | courses/new', function (hooks) {
       assert.strictEqual(school.id, this.school.id);
     });
     await render(
-      hbs`<Courses::New @currentSchool={{this.school}} @save={{this.save}} @cancel={{(noop)}} @currentYear={{this.year}} />`,
+      hbs`<Courses::New
+  @currentSchool={{this.school}}
+  @save={{this.save}}
+  @cancel={{(noop)}}
+  @currentYear={{this.year}}
+/>`,
     );
     await component.title('test course');
     await component.save();
@@ -139,7 +154,12 @@ module('Integration | Component | courses/new', function (hooks) {
       assert.strictEqual(school.id, this.school.id);
     });
     await render(
-      hbs`<Courses::New @currentSchool={{this.school}} @save={{this.save}} @cancel={{(noop)}} @currentYear={{this.year}} />`,
+      hbs`<Courses::New
+  @currentSchool={{this.school}}
+  @save={{this.save}}
+  @cancel={{(noop)}}
+  @currentYear={{this.year}}
+/>`,
     );
     await component.title('test course');
     await component.submitOnEnter();
@@ -157,7 +177,12 @@ module('Integration | Component | courses/new', function (hooks) {
       assert.ok(false, 'this code should never be invoked.');
     });
     await render(
-      hbs`<Courses::New @currentSchool={{this.school}} @save={{this.save}} @cancel={{(noop)}} @currentYear={{this.year}} />`,
+      hbs`<Courses::New
+  @currentSchool={{this.school}}
+  @save={{this.save}}
+  @cancel={{(noop)}}
+  @currentYear={{this.year}}
+/>`,
     );
     assert.notOk(component.titleHasValidationError);
     await component.title('fo');
@@ -177,7 +202,12 @@ module('Integration | Component | courses/new', function (hooks) {
       assert.ok(false, 'this code should never be invoked.');
     });
     await render(
-      hbs`<Courses::New @currentSchool={{this.school}} @save={{this.save}} @cancel={{(noop)}} @currentYear={{this.year}} />`,
+      hbs`<Courses::New
+  @currentSchool={{this.school}}
+  @save={{this.save}}
+  @cancel={{(noop)}}
+  @currentYear={{this.year}}
+/>`,
     );
     assert.notOk(component.titleHasValidationError);
     await component.title('0123456789'.repeat(21));

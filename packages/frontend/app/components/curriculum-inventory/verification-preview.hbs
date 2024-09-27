@@ -48,8 +48,7 @@
       </li>
       <li>
         <button class="link link-button" type="button" {{on "click" (fn this.scrollTo "table7")}}>
-          {{t "general.table7AllEventsWithAssessmentsTaggedAsFormativeOrSummative"
-          }}
+          {{t "general.table7AllEventsWithAssessmentsTaggedAsFormativeOrSummative"}}
         </button>
       </li>
       <li>
@@ -64,7 +63,8 @@
     />
     <button
       class="link link-button back-to-toc"
-      type="button" {{on "click" (fn this.scrollTo "toc")}}
+      type="button"
+      {{on "click" (fn this.scrollTo "toc")}}
       {{did-insert this.setScrollTarget "table2"}}
     >
       {{t "general.backToTableOfContents"}}
@@ -96,7 +96,8 @@
     />
     <button
       class="link link-button back-to-toc"
-      type="button" {{on "click" (fn this.scrollTo "toc")}}
+      type="button"
+      {{on "click" (fn this.scrollTo "toc")}}
       {{did-insert this.setScrollTarget "table4"}}
     >
       {{t "general.backToTableOfContents"}}
@@ -145,9 +146,7 @@
     >
       {{t "general.backToTableOfContents"}}
     </button>
-    <CurriculumInventory::VerificationPreviewTable8
-      @data={{this.tables.all_resource_types}}
-    />
+    <CurriculumInventory::VerificationPreviewTable8 @data={{this.tables.all_resource_types}} />
     <button
       class="link link-button back-to-toc"
       type="button"

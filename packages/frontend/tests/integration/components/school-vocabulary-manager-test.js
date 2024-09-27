@@ -31,10 +31,10 @@ module('Integration | Component | school vocabulary manager', function (hooks) {
 
     this.set('vocabulary', vocabularyModel);
     await render(hbs`<SchoolVocabularyManager
-      @vocabulary={{this.vocabulary}}
-      @manageTerm={{(noop)}}
-      @manageVocabulary={{(noop)}}
-    />`);
+  @vocabulary={{this.vocabulary}}
+  @manageTerm={{(noop)}}
+  @manageVocabulary={{(noop)}}
+/>`);
     assert.strictEqual(component.title, `Title: ${vocabulary.title} (3 total)`);
     assert.strictEqual(component.breadcrumbs.all, 'All Vocabularies');
     assert.strictEqual(component.breadcrumbs.vocabulary, vocabulary.title);
@@ -56,11 +56,11 @@ module('Integration | Component | school vocabulary manager', function (hooks) {
 
     this.set('vocabulary', vocabularyModel);
     await render(hbs`<SchoolVocabularyManager
-      @vocabulary={{this.vocabulary}}
-      @manageTerm={{(noop)}}
-      @manageVocabulary={{(noop)}}
-      @canUpdate={{true}}
-    />`);
+  @vocabulary={{this.vocabulary}}
+  @manageTerm={{(noop)}}
+  @manageVocabulary={{(noop)}}
+  @canUpdate={{true}}
+/>`);
     assert.strictEqual(component.title, `Title: ${vocabulary.title} (0 total)`);
     await component.editTitle();
     await component.changeTitle('new title');
@@ -79,11 +79,11 @@ module('Integration | Component | school vocabulary manager', function (hooks) {
 
     this.set('vocabulary', vocabularyModel);
     await render(hbs`<SchoolVocabularyManager
-      @vocabulary={{this.vocabulary}}
-      @manageTerm={{(noop)}}
-      @manageVocabulary={{(noop)}}
-      @canUpdate={{true}}
-    />`);
+  @vocabulary={{this.vocabulary}}
+  @manageTerm={{(noop)}}
+  @manageVocabulary={{(noop)}}
+  @canUpdate={{true}}
+/>`);
     assert.strictEqual(component.title, `Title: ${vocabulary.title} (0 total)`);
     assert.notOk(component.hasError);
     await component.editTitle();
@@ -109,11 +109,11 @@ module('Integration | Component | school vocabulary manager', function (hooks) {
 
     this.set('vocabulary', vocabularyModel);
     await render(hbs`<SchoolVocabularyManager
-      @vocabulary={{this.vocabulary}}
-      @manageTerm={{(noop)}}
-      @manageVocabulary={{(noop)}}
-      @canUpdate={{true}}
-    />`);
+  @vocabulary={{this.vocabulary}}
+  @manageTerm={{(noop)}}
+  @manageVocabulary={{(noop)}}
+  @canUpdate={{true}}
+/>`);
     assert.strictEqual(component.title, `Title: ${vocabulary.title} (0 total)`);
     assert.notOk(component.hasError);
     await component.editTitle();
@@ -135,11 +135,11 @@ module('Integration | Component | school vocabulary manager', function (hooks) {
 
     this.set('vocabulary', vocabularyModel);
     await render(hbs`<SchoolVocabularyManager
-      @vocabulary={{this.vocabulary}}
-      @manageTerm={{(noop)}}
-      @manageVocabulary={{(noop)}}
-      @canCreate={{true}}
-    />`);
+  @vocabulary={{this.vocabulary}}
+  @manageTerm={{(noop)}}
+  @manageVocabulary={{(noop)}}
+  @canCreate={{true}}
+/>`);
     assert.strictEqual(component.title, `Title: ${vocabulary.title} (0 total)`);
     assert.strictEqual(component.terms.list.length, 0);
 
@@ -162,11 +162,11 @@ module('Integration | Component | school vocabulary manager', function (hooks) {
 
     this.set('vocabulary', vocabularyModel);
     await render(hbs`<SchoolVocabularyManager
-      @vocabulary={{this.vocabulary}}
-      @manageTerm={{(noop)}}
-      @manageVocabulary={{(noop)}}
-      @canCreate={{true}}
-    />`);
+  @vocabulary={{this.vocabulary}}
+  @manageTerm={{(noop)}}
+  @manageVocabulary={{(noop)}}
+  @canCreate={{true}}
+/>`);
     assert.strictEqual(component.title, `Title: ${vocabulary.title} (0 total)`);
     assert.strictEqual(component.terms.list.length, 0);
 
@@ -192,11 +192,11 @@ module('Integration | Component | school vocabulary manager', function (hooks) {
 
     this.set('vocabulary', vocabularyModel);
     await render(hbs`<SchoolVocabularyManager
-      @vocabulary={{this.vocabulary}}
-      @manageTerm={{(noop)}}
-      @manageVocabulary={{(noop)}}
-      @canCreate={{true}}
-    />`);
+  @vocabulary={{this.vocabulary}}
+  @manageTerm={{(noop)}}
+  @manageVocabulary={{(noop)}}
+  @canCreate={{true}}
+/>`);
     assert.strictEqual(component.title, `Title: ${vocabulary.title} (1 total)`);
     assert.strictEqual(component.terms.list.length, 1);
 

@@ -31,11 +31,10 @@ module('Integration | Component | course/materials', function (hooks) {
       sessionSort: 'firstOfferingDate',
     });
     await render(hbs`<Course::Materials
-      @course={{this.course}}
-      @courseSort={{this.courseSort}}
-      @sessionSort={{this.sessionSort}}
-    />
-`);
+  @course={{this.course}}
+  @courseSort={{this.courseSort}}
+  @sessionSort={{this.sessionSort}}
+/>`);
 
     assert.strictEqual(component.courses.length, 1);
     assert.strictEqual(component.courses[0].title, 'title1');
@@ -110,12 +109,11 @@ module('Integration | Component | course/materials', function (hooks) {
       sessionSort: 'firstOfferingDate',
     });
     await render(hbs`<Course::Materials
-      @course={{this.course}}
-      @courseSort={{this.courseSort}}
-      @sessionSort={{this.sessionSort}}
-      @onSessionSort={{(noop)}}
-    />
-`);
+  @course={{this.course}}
+  @courseSort={{this.courseSort}}
+  @sessionSort={{this.sessionSort}}
+  @onSessionSort={{(noop)}}
+/>`);
 
     assert.strictEqual(component.courses.length, 3);
     assert.strictEqual(component.courses[0].title, 'title1');
@@ -194,13 +192,12 @@ module('Integration | Component | course/materials', function (hooks) {
     });
 
     await render(hbs`<Course::Materials
-      @course={{this.course}}
-      @courseSort={{this.courseSort}}
-      @sessionSort={{this.sessionSort}}
-      @onCourseSort={{this.cSortBy}}
-      @onSessionSort={{this.sSortBy}}
-    />
-`);
+  @course={{this.course}}
+  @courseSort={{this.courseSort}}
+  @sessionSort={{this.sessionSort}}
+  @onCourseSort={{this.cSortBy}}
+  @onSessionSort={{this.sSortBy}}
+/>`);
     await component.sortCoursesBy.title();
     await component.sortCoursesBy.title();
     await component.sortCoursesBy.type();
@@ -229,11 +226,10 @@ module('Integration | Component | course/materials', function (hooks) {
     });
 
     await render(hbs`<Course::Materials
-      @course={{this.course}}
-      @courseSort={{this.courseSort}}
-      @sessionSort={{this.sessionSort}}
-    />
-`);
+  @course={{this.course}}
+  @courseSort={{this.courseSort}}
+  @sessionSort={{this.sessionSort}}
+/>`);
 
     assert.strictEqual(component.courses.length, 3);
     await component.courseFilter('title1');
@@ -250,11 +246,10 @@ module('Integration | Component | course/materials', function (hooks) {
     });
 
     await render(hbs`<Course::Materials
-      @course={{this.course}}
-      @courseSort={{this.courseSort}}
-      @sessionSort={{this.sessionSort}}
-    />
-`);
+  @course={{this.course}}
+  @courseSort={{this.courseSort}}
+  @sessionSort={{this.sessionSort}}
+/>`);
 
     assert.strictEqual(component.courses.length, 3);
     await component.courseFilter('file');
@@ -271,11 +266,10 @@ module('Integration | Component | course/materials', function (hooks) {
     });
 
     await render(hbs`<Course::Materials
-      @course={{this.course}}
-      @courseSort={{this.courseSort}}
-      @sessionSort={{this.sessionSort}}
-    />
-`);
+  @course={{this.course}}
+  @courseSort={{this.courseSort}}
+  @sessionSort={{this.sessionSort}}
+/>`);
 
     assert.strictEqual(component.courses.length, 3);
     await component.courseFilter('author2');
@@ -292,11 +286,10 @@ module('Integration | Component | course/materials', function (hooks) {
     });
 
     await render(hbs`<Course::Materials
-      @course={{this.course}}
-      @courseSort={{this.courseSort}}
-      @sessionSort={{this.sessionSort}}
-    />
-`);
+  @course={{this.course}}
+  @courseSort={{this.courseSort}}
+  @sessionSort={{this.sessionSort}}
+/>`);
 
     assert.strictEqual(component.courses.length, 3);
     await component.courseFilter('citationtext');
@@ -313,11 +306,10 @@ module('Integration | Component | course/materials', function (hooks) {
     });
 
     await render(hbs`<Course::Materials
-      @course={{this.course}}
-      @courseSort={{this.courseSort}}
-      @sessionSort={{this.sessionSort}}
-    />
-`);
+  @course={{this.course}}
+  @courseSort={{this.courseSort}}
+  @sessionSort={{this.sessionSort}}
+/>`);
 
     assert.strictEqual(component.sessions.length, 3);
     await component.sessionFilter('title1');
@@ -334,11 +326,10 @@ module('Integration | Component | course/materials', function (hooks) {
     });
 
     await render(hbs`<Course::Materials
-      @course={{this.course}}
-      @courseSort={{this.courseSort}}
-      @sessionSort={{this.sessionSort}}
-    />
-`);
+  @course={{this.course}}
+  @courseSort={{this.courseSort}}
+  @sessionSort={{this.sessionSort}}
+/>`);
 
     assert.strictEqual(component.sessions.length, 3);
     await component.sessionFilter('file');
@@ -355,11 +346,10 @@ module('Integration | Component | course/materials', function (hooks) {
     });
 
     await render(hbs`<Course::Materials
-      @course={{this.course}}
-      @courseSort={{this.courseSort}}
-      @sessionSort={{this.sessionSort}}
-    />
-`);
+  @course={{this.course}}
+  @courseSort={{this.courseSort}}
+  @sessionSort={{this.sessionSort}}
+/>`);
 
     assert.strictEqual(component.sessions.length, 3);
     await component.sessionFilter('author2');
@@ -376,11 +366,10 @@ module('Integration | Component | course/materials', function (hooks) {
     });
 
     await render(hbs`<Course::Materials
-      @course={{this.course}}
-      @courseSort={{this.courseSort}}
-      @sessionSort={{this.sessionSort}}
-    />
-`);
+  @course={{this.course}}
+  @courseSort={{this.courseSort}}
+  @sessionSort={{this.sessionSort}}
+/>`);
 
     assert.strictEqual(component.sessions.length, 3);
     await component.sessionFilter('citationtext');
@@ -393,12 +382,9 @@ module('Integration | Component | course/materials', function (hooks) {
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('course', courseModel);
 
-    await render(hbs`<Course::Materials
-      @course={{this.course}}
-      @courseSort={{(noop)}}
-      @sessionSort={{(noop)}}
-    />
-`);
+    await render(
+      hbs`<Course::Materials @course={{this.course}} @courseSort={{(noop)}} @sessionSort={{(noop)}} />`,
+    );
 
     assert.strictEqual(component.courses.length, 1);
     assert.strictEqual(component.courses[0].title, 'No Course Learning Materials Available');

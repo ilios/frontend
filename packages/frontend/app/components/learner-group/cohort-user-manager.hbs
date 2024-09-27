@@ -1,5 +1,9 @@
 {{#let (unique-id) as |templateId|}}
-  <div class="learner-group-cohort-user-manager" data-test-learner-group-cohort-user-manager ...attributes>
+  <div
+    class="learner-group-cohort-user-manager"
+    data-test-learner-group-cohort-user-manager
+    ...attributes
+  >
     <div class="learner-group-cohort-user-manager-header">
       <div class="title" data-test-title>
         {{t "general.cohortMembersNotInGroup" groupTitle=@topLevelGroupTitle}}
@@ -13,10 +17,10 @@
           aria-label={{t "general.filterByNameOrEmail"}}
           {{on "input" (pick "target.value" (set this "filter"))}}
           data-test-filter
-        >
+        />
       </div>
     </div>
-    <div class="learner-group-cohort-user-manager-content" >
+    <div class="learner-group-cohort-user-manager-content">
       <div class="list">
         <table>
           <thead data-test-headers>
@@ -24,17 +28,14 @@
               <th class="text-left" colspan="1">
                 <input
                   type="checkbox"
-                  checked={{and
-                    (includes @users this.selectedUsers)
-                    this.selectedUsers.length
-                  }}
+                  checked={{and (includes @users this.selectedUsers) this.selectedUsers.length}}
                   indeterminate={{and
                     (not (includes @users this.selectedUsers))
                     this.selectedUsers.length
                   }}
                   aria-label={{t "general.selectAllOrNone"}}
                   {{on "click" this.toggleUserSelectionAllOrNone}}
-                >
+                />
               </th>
               <SortableTh
                 @colspan={{4}}
@@ -65,7 +66,7 @@
                       checked={{includes user this.selectedUsers}}
                       aria-labelledby="username-{{index}}-{{templateId}}"
                       {{on "click" (fn this.toggleUserSelection user)}}
-                    >
+                    />
                   {{/if}}
                   {{#unless user.enabled}}
                     <FaIcon
@@ -128,11 +129,7 @@
                       <FaIcon
                         @icon="plus"
                         class="yes"
-                        @title={{t
-                          "general.moveToGroup"
-                          groupTitle=@learnerGroupTitle
-                          count=1
-                        }}
+                        @title={{t "general.moveToGroup" groupTitle=@learnerGroupTitle count=1}}
                       />
                     </button>
                   {{/if}}
@@ -145,11 +142,7 @@
     </div>
     {{#if (gt this.selectedUsers.length 0)}}
       <button type="button" class="done text" {{on "click" (perform this.addSelectedUsers)}}>
-        {{t
-          "general.moveToGroup"
-          groupTitle=@learnerGroupTitle
-          count=this.selectedUsers.length
-        }}
+        {{t "general.moveToGroup" groupTitle=@learnerGroupTitle count=this.selectedUsers.length}}
       </button>
     {{/if}}
   </div>

@@ -46,8 +46,11 @@ module('Integration | Component | selected-instructor-groups', function (hooks) 
   test('it renders', async function (assert) {
     this.set('instructors', [this.instructorGroup1, this.instructorGroup2, this.instructorGroup3]);
     await render(
-      hbs`<SelectedInstructorGroups @instructorGroups={{this.instructors}} @isManaging={{true}} @remove={{(noop)}}/>
-`,
+      hbs`<SelectedInstructorGroups
+  @instructorGroups={{this.instructors}}
+  @isManaging={{true}}
+  @remove={{(noop)}}
+/>`,
     );
     assert.strictEqual(component.heading, 'Selected Instructor Groups:');
     assert.strictEqual(component.instructorGroups.length, 3);
@@ -83,8 +86,7 @@ module('Integration | Component | selected-instructor-groups', function (hooks) 
   test('read-only', async function (assert) {
     this.set('instructors', [this.instructorGroup1, this.instructorGroup2, this.instructorGroup3]);
     await render(
-      hbs`<SelectedInstructorGroups @instructorGroups={{this.instructors}} @isManaging={{false}} />
-`,
+      hbs`<SelectedInstructorGroups @instructorGroups={{this.instructors}} @isManaging={{false}} />`,
     );
     assert.strictEqual(component.heading, 'Selected Instructor Groups:');
     assert.strictEqual(component.instructorGroups.length, 3);
@@ -119,8 +121,7 @@ module('Integration | Component | selected-instructor-groups', function (hooks) 
 
   test('no instructor groups', async function (assert) {
     this.set('instructors', []);
-    await render(hbs`<SelectedInstructorGroups @instructorGroups={{this.instructors}} />
-`);
+    await render(hbs`<SelectedInstructorGroups @instructorGroups={{this.instructors}} />`);
     assert.strictEqual(component.heading, 'Selected Instructor Groups:');
     assert.strictEqual(component.instructorGroups.length, 0);
     assert.strictEqual(component.noGroups.text, 'None');
@@ -135,8 +136,11 @@ module('Integration | Component | selected-instructor-groups', function (hooks) 
       assert.strictEqual(instructorGroup, this.instructorGroup1);
     });
     await render(
-      hbs`<SelectedInstructorGroups @instructorGroups={{this.instructors}} @isManaging={{true}} @remove={{this.remove}} />
-`,
+      hbs`<SelectedInstructorGroups
+  @instructorGroups={{this.instructors}}
+  @isManaging={{true}}
+  @remove={{this.remove}}
+/>`,
     );
     await component.instructorGroups[0].remove();
   });

@@ -13,13 +13,13 @@ module('Integration | Component | school session attributes manager', function (
     this.set('showSessionSpecialAttireRequired', false);
     this.set('showSessionSpecialEquipmentRequired', false);
     await render(hbs`<SchoolSessionAttributesManager
-      @showSessionAttendanceRequired={{this.showSessionAttendanceRequired}}
-      @showSessionSupplemental={{this.showSessionSupplemental}}
-      @showSessionSpecialAttireRequired={{this.showSessionSpecialAttireRequired}}
-      @showSessionSpecialEquipmentRequired={{this.showSessionSpecialEquipmentRequired}}
-      @enable={{(noop)}}
-      @disable={{(noop)}}
-    />`);
+  @showSessionAttendanceRequired={{this.showSessionAttendanceRequired}}
+  @showSessionSupplemental={{this.showSessionSupplemental}}
+  @showSessionSpecialAttireRequired={{this.showSessionSpecialAttireRequired}}
+  @showSessionSpecialEquipmentRequired={{this.showSessionSpecialEquipmentRequired}}
+  @enable={{(noop)}}
+  @disable={{(noop)}}
+/>`);
 
     assert.strictEqual(component.attendanceRequired.label, 'Attendance Required');
     assert.notOk(component.attendanceRequired.isChecked);
@@ -41,13 +41,13 @@ module('Integration | Component | school session attributes manager', function (
       context.set(sentName, true);
     });
     await render(hbs`<SchoolSessionAttributesManager
-      @showSessionAttendanceRequired={{this.showSessionAttendanceRequired}}
-      @showSessionSupplemental={{this.showSessionSupplemental}}
-      @showSessionSpecialAttireRequired={{this.showSessionSpecialAttireRequired}}
-      @showSessionSpecialEquipmentRequired={{this.showSessionSpecialEquipmentRequired}}
-      @enable={{this.enable}}
-      @disable={{(noop)}}
-    />`);
+  @showSessionAttendanceRequired={{this.showSessionAttendanceRequired}}
+  @showSessionSupplemental={{this.showSessionSupplemental}}
+  @showSessionSpecialAttireRequired={{this.showSessionSpecialAttireRequired}}
+  @showSessionSpecialEquipmentRequired={{this.showSessionSpecialEquipmentRequired}}
+  @enable={{this.enable}}
+  @disable={{(noop)}}
+/>`);
 
     assert.notOk(attribute.isChecked);
     await attribute.check();
@@ -94,13 +94,13 @@ module('Integration | Component | school session attributes manager', function (
       context.set(sentName, false);
     });
     await render(hbs`<SchoolSessionAttributesManager
-      @showSessionAttendanceRequired={{this.showSessionAttendanceRequired}}
-      @showSessionSupplemental={{this.showSessionSupplemental}}
-      @showSessionSpecialAttireRequired={{this.showSessionSpecialAttireRequired}}
-      @showSessionSpecialEquipmentRequired={{this.showSessionSpecialEquipmentRequired}}
-      @enable={{(noop)}}
-      @disable={{this.disable}}
-    />`);
+  @showSessionAttendanceRequired={{this.showSessionAttendanceRequired}}
+  @showSessionSupplemental={{this.showSessionSupplemental}}
+  @showSessionSpecialAttireRequired={{this.showSessionSpecialAttireRequired}}
+  @showSessionSpecialEquipmentRequired={{this.showSessionSpecialEquipmentRequired}}
+  @enable={{(noop)}}
+  @disable={{this.disable}}
+/>`);
 
     assert.ok(attribute.isChecked);
     await attribute.check();

@@ -19,8 +19,7 @@ module('Integration | Component | course/publicationcheck', function (hooks) {
     this.server.create('course-objective', { course });
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('model', courseModel);
-    await render(hbs`<Course::Publicationcheck @course={{this.model}} />
-`);
+    await render(hbs`<Course::Publicationcheck @course={{this.model}} />`);
     assert.ok(component.unlink.isPresent);
   });
 
@@ -37,8 +36,7 @@ module('Integration | Component | course/publicationcheck', function (hooks) {
     });
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('model', courseModel);
-    await render(hbs`<Course::Publicationcheck @course={{this.model}} />
-`);
+    await render(hbs`<Course::Publicationcheck @course={{this.model}} />`);
     assert.notOk(component.unlink.isPresent);
   });
 });

@@ -1,5 +1,6 @@
 <tr
-  class="{{if this.showRemoveConfirmation "confirm-removal"}} {{if this.showCopyConfirmation "confirm-copy content-row"}}"
+  class="{{if this.showRemoveConfirmation 'confirm-removal'}}
+    {{if this.showCopyConfirmation 'confirm-copy content-row'}}"
   data-test-learner-group-list-item
 >
   <td class="text-left" colspan="2" data-test-title>
@@ -7,7 +8,11 @@
       {{@learnerGroup.title}}
     </LinkTo>
     {{#if @learnerGroup.needsAccommodation}}
-      <FaIcon @icon="universal-access" @title={{t "general.accommodationIsRequiredForLearnersInThisGroup"}} data-test-needs-accommodation />
+      <FaIcon
+        @icon="universal-access"
+        @title={{t "general.accommodationIsRequiredForLearnersInThisGroup"}}
+        data-test-needs-accommodation
+      />
     {{/if}}
   </td>
   <td class="text-center hide-from-small-screen" data-test-users>
@@ -18,31 +23,24 @@
     {{#if @learnerGroup.hasSubgroupsInNeedOfAccommodation}}
       <FaIcon
         @icon="universal-access"
-        @title={{t "general.accommodationIsRequiredForLearnersInSubgroups" groups=this.sortedTitlesOfSubgroupsInNeedOfAccommodation}}
+        @title={{t
+          "general.accommodationIsRequiredForLearnersInSubgroups"
+          groups=this.sortedTitlesOfSubgroupsInNeedOfAccommodation
+        }}
         data-test-subgroup-needs-accommodation
       />
     {{/if}}
   </td>
   <td class="text-right">
     {{#if (and this.canDelete (not this.showRemoveConfirmation))}}
-      <button
-        class="link-button"
-        type="button"
-        {{on "click" this.showRemove}}
-        data-test-remove
-      >
+      <button class="link-button" type="button" {{on "click" this.showRemove}} data-test-remove>
         <FaIcon @icon="trash" @title={{t "general.remove"}} />
       </button>
     {{else}}
       <FaIcon @icon="trash" class="disabled" />
     {{/if}}
     {{#if (and this.canCreate (not this.showCopyConfirmation))}}
-      <button
-        class="link-button"
-        type="button"
-        {{on "click" this.showCopy}}
-        data-test-copy
-      >
+      <button class="link-button" type="button" {{on "click" this.showCopy}} data-test-copy>
         <FaIcon @icon="copy" @title={{t "general.copy"}} />
       </button>
     {{else}}
@@ -54,11 +52,8 @@
   <tr class="confirm-removal" data-test-confirm-removal>
     <td class="hide-from-small-screen"></td>
     <td colspan="3" class="confirm-message">
-      {{t
-        "general.confirmRemoveLearnerGroup"
-        subgroupCount=@learnerGroup.children.length
-      }}
-      <br>
+      {{t "general.confirmRemoveLearnerGroup" subgroupCount=@learnerGroup.children.length}}
+      <br />
       <div class="confirm-buttons">
         <button
           type="button"

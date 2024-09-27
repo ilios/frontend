@@ -1,18 +1,11 @@
-<table
-  class="instructor-groups-list"
-  data-test-instructor-groups-list
-  ...attributes
->
+<table class="instructor-groups-list" data-test-instructor-groups-list ...attributes>
   <thead>
     <tr>
       <SortableTh
         @colspan={{2}}
         @sortedAscending={{this.sortedAscending}}
         @onClick={{fn this.setSortBy "title"}}
-        @sortedBy={{or
-          (eq @sortBy "title")
-          (eq @sortBy "title:desc")
-        }}
+        @sortedBy={{or (eq @sortBy "title") (eq @sortBy "title:desc")}}
       >
         {{t "general.instructorGroupTitle"}}
       </SortableTh>
@@ -23,10 +16,7 @@
         @sortedAscending={{this.sortedAscending}}
         @sortType="numeric"
         @onClick={{fn this.setSortBy "usersCount"}}
-        @sortedBy={{or
-          (eq @sortBy "usersCount")
-          (eq @sortBy "usersCount:desc")
-        }}
+        @sortedBy={{or (eq @sortBy "usersCount") (eq @sortBy "usersCount:desc")}}
       >
         {{t "general.members"}}
       </SortableTh>
@@ -37,10 +27,7 @@
         @sortedAscending={{this.sortedAscending}}
         @sortType="numeric"
         @onClick={{fn this.setSortBy "courses"}}
-        @sortedBy={{or
-          (eq @sortBy "courses")
-          (eq @sortBy "courses:desc")
-        }}
+        @sortedBy={{or (eq @sortBy "courses") (eq @sortBy "courses:desc")}}
       >
         {{t "general.associatedCourses"}}
       </SortableTh>

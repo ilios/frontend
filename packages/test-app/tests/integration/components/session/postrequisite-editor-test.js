@@ -19,11 +19,7 @@ module('Integration | Component | session/postrequisite-editor', function (hooks
       .findRecord('session', sessions[2].id);
     this.set('session', sessionModel);
 
-    await render(hbs`<Session::PostrequisiteEditor
-     @close={{(noop)}}
-     @session={{this.session}}
-    />
-`);
+    await render(hbs`<Session::PostrequisiteEditor @close={{(noop)}} @session={{this.session}} />`);
     assert.strictEqual(component.selectedPostrequisiteLabel, 'Due prior to:');
     assert.strictEqual(component.selectedPostrequisiteTitle, 'None');
     assert.strictEqual(component.postRequisites.length, 4);
@@ -45,11 +41,7 @@ module('Integration | Component | session/postrequisite-editor', function (hooks
     const sessionModel = await this.owner.lookup('service:store').findRecord('session', session.id);
     this.set('session', sessionModel);
 
-    await render(hbs`<Session::PostrequisiteEditor
-     @close={{(noop)}}
-     @session={{this.session}}
-    />
-`);
+    await render(hbs`<Session::PostrequisiteEditor @close={{(noop)}} @session={{this.session}} />`);
     assert.strictEqual(component.selectedPostrequisiteTitle, 'session 1');
     assert.strictEqual(component.postRequisites.length, 4);
     assert.false(component.postRequisites[0].isSelected);
@@ -70,11 +62,7 @@ module('Integration | Component | session/postrequisite-editor', function (hooks
     const sessionModel = await this.owner.lookup('service:store').findRecord('session', session.id);
     this.set('session', sessionModel);
 
-    await render(hbs`<Session::PostrequisiteEditor
-     @close={{(noop)}}
-     @session={{this.session}}
-    />
-`);
+    await render(hbs`<Session::PostrequisiteEditor @close={{(noop)}} @session={{this.session}} />`);
     assert.strictEqual(component.selectedPostrequisiteTitle, 'session 1');
     assert.strictEqual(component.postRequisites.length, 4);
     assert.false(component.postRequisites[0].isSelected);
@@ -102,11 +90,7 @@ module('Integration | Component | session/postrequisite-editor', function (hooks
     const sessionModel = await this.owner.lookup('service:store').findRecord('session', session.id);
     this.set('session', sessionModel);
 
-    await render(hbs`<Session::PostrequisiteEditor
-     @close={{(noop)}}
-     @session={{this.session}}
-    />
-`);
+    await render(hbs`<Session::PostrequisiteEditor @close={{(noop)}} @session={{this.session}} />`);
     assert.strictEqual(component.selectedPostrequisiteTitle, 'session 1');
     assert.strictEqual(component.postRequisites.length, 4);
     assert.false(component.postRequisites[0].isSelected);
@@ -132,11 +116,7 @@ module('Integration | Component | session/postrequisite-editor', function (hooks
       .findRecord('session', sessions[0].id);
     this.set('session', sessionModel);
 
-    await render(hbs`<Session::PostrequisiteEditor
-     @close={{(noop)}}
-     @session={{this.session}}
-    />
-`);
+    await render(hbs`<Session::PostrequisiteEditor @close={{(noop)}} @session={{this.session}} />`);
     assert.strictEqual(component.selectedPostrequisiteTitle, 'None');
     assert.strictEqual(component.postRequisites.length, 4);
     assert.false(component.postRequisites[0].isSelected);
@@ -166,11 +146,9 @@ module('Integration | Component | session/postrequisite-editor', function (hooks
     });
     this.set('session', sessionModel);
 
-    await render(hbs`<Session::PostrequisiteEditor
-     @close={{this.close}}
-     @session={{this.session}}
-    />
-`);
+    await render(
+      hbs`<Session::PostrequisiteEditor @close={{this.close}} @session={{this.session}} />`,
+    );
     await component.close();
   });
 
@@ -188,11 +166,9 @@ module('Integration | Component | session/postrequisite-editor', function (hooks
     });
     this.set('session', sessionModel);
 
-    await render(hbs`<Session::PostrequisiteEditor
-     @close={{this.close}}
-     @session={{this.session}}
-    />
-`);
+    await render(
+      hbs`<Session::PostrequisiteEditor @close={{this.close}} @session={{this.session}} />`,
+    );
     await component.save();
   });
 
@@ -216,11 +192,7 @@ module('Integration | Component | session/postrequisite-editor', function (hooks
     const sessionModel = await this.owner.lookup('service:store').findRecord('session', session.id);
     this.set('session', sessionModel);
 
-    await render(hbs`<Session::PostrequisiteEditor
-     @close={{(noop)}}
-     @session={{this.session}}
-    />
-`);
+    await render(hbs`<Session::PostrequisiteEditor @close={{(noop)}} @session={{this.session}} />`);
     assert.strictEqual(component.postRequisites.length, 3);
     assert.strictEqual(component.postRequisites[0].title, 'fuzzy the cat');
     assert.strictEqual(component.postRequisites[1].title, 'jackson dog');

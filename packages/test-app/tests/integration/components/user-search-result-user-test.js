@@ -13,11 +13,7 @@ module('Integration | Component | user-search-result-user', function (hooks) {
     const user = this.server.create('user');
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     this.set('user', userModel);
-    await render(hbs`<UserSearchResultUser
-      @user={{this.user}}
-      @addUser={{(noop)}}
-    />
-`);
+    await render(hbs`<UserSearchResultUser @user={{this.user}} @addUser={{(noop)}} />`);
     assert.strictEqual(component.text, '0 guy M. Mc0son user@example.edu');
     assert.ok(component.isActive);
   });
@@ -28,11 +24,10 @@ module('Integration | Component | user-search-result-user', function (hooks) {
     this.set('user', userModel);
     this.set('activeUsers', [userModel]);
     await render(hbs`<UserSearchResultUser
-      @user={{this.user}}
-      @addUser={{(noop)}}
-      @currentlyActiveUsers={{this.activeUsers}}
-    />
-`);
+  @user={{this.user}}
+  @addUser={{(noop)}}
+  @currentlyActiveUsers={{this.activeUsers}}
+/>`);
     assert.strictEqual(component.text, '0 guy M. Mc0son user@example.edu');
     assert.notOk(component.isActive);
   });
@@ -45,12 +40,9 @@ module('Integration | Component | user-search-result-user', function (hooks) {
     this.set('add', (add) => {
       assert.strictEqual(add, userModel);
     });
-    await render(hbs`<UserSearchResultUser
-      @user={{this.user}}
-      @addUser={{this.add}}
-      @currentlyActiveUsers={{(array)}}
-    />
-`);
+    await render(
+      hbs`<UserSearchResultUser @user={{this.user}} @addUser={{this.add}} @currentlyActiveUsers={{(array)}} />`,
+    );
     assert.strictEqual(component.text, '0 guy M. Mc0son user@example.edu');
     assert.ok(component.isActive);
     await component.click();

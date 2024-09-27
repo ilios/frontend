@@ -31,11 +31,9 @@ module('Integration | Component | school session type manager', function (hooks)
       .lookup('service:store')
       .findRecord('session-type', sessionType.id);
     this.set('sessionType', sessionTypeModel);
-    await render(hbs`<SchoolSessionTypeManager
-      @canUpdate={{true}}
-      @sessionType={{this.sessionType}}
-      @close={{(noop)}}
-    />`);
+    await render(
+      hbs`<SchoolSessionTypeManager @canUpdate={{true}} @sessionType={{this.sessionType}} @close={{(noop)}} />`,
+    );
 
     assert.strictEqual(component.title, 'one');
     assert.strictEqual(component.form.title.value, 'one');
@@ -60,10 +58,10 @@ module('Integration | Component | school session type manager', function (hooks)
       assert.ok(true, 'action was fired');
     });
     await render(hbs`<SchoolSessionTypeManager
-      @canUpdate={{true}}
-      @sessionType={{this.sessionType}}
-      @close={{this.close}}
-    />`);
+  @canUpdate={{true}}
+  @sessionType={{this.sessionType}}
+  @close={{this.close}}
+/>`);
 
     await component.form.cancel.click();
   });

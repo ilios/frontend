@@ -15,11 +15,9 @@ module('Integration | Component | user-search-result-instructor-group', function
       .lookup('service:store')
       .findRecord('instructor-group', group.id);
     this.set('group', groupModel);
-    await render(hbs`<UserSearchResultInstructorGroup
-      @group={{this.group}}
-      @addInstructorGroup={{(noop)}}
-    />
-`);
+    await render(
+      hbs`<UserSearchResultInstructorGroup @group={{this.group}} @addInstructorGroup={{(noop)}} />`,
+    );
     assert.strictEqual(component.text, 'instructor group 0');
     assert.ok(component.isActive);
   });
@@ -32,11 +30,10 @@ module('Integration | Component | user-search-result-instructor-group', function
     this.set('group', groupModel);
     this.set('activeGroups', [groupModel]);
     await render(hbs`<UserSearchResultInstructorGroup
-      @group={{this.group}}
-      @addInstructorGroup={{(noop)}}
-      @currentlyActiveInstructorGroups={{this.activeGroups}}
-    />
-`);
+  @group={{this.group}}
+  @addInstructorGroup={{(noop)}}
+  @currentlyActiveInstructorGroups={{this.activeGroups}}
+/>`);
     assert.strictEqual(component.text, 'instructor group 0');
     assert.notOk(component.isActive);
   });
@@ -52,11 +49,10 @@ module('Integration | Component | user-search-result-instructor-group', function
       assert.strictEqual(add, groupModel);
     });
     await render(hbs`<UserSearchResultInstructorGroup
-      @group={{this.group}}
-      @addInstructorGroup={{this.add}}
-      @currentlyActiveInstructorGroups={{(array)}}
-    />
-`);
+  @group={{this.group}}
+  @addInstructorGroup={{this.add}}
+  @currentlyActiveInstructorGroups={{(array)}}
+/>`);
     assert.strictEqual(component.text, 'instructor group 0');
     assert.ok(component.isActive);
     await component.click();

@@ -9,10 +9,7 @@
           data-test-school-selector
         >
           {{#each (sort-by "title" @schools) as |school|}}
-            <option
-              selected={{eq school.id this.bestSelectedSchool.id}}
-              value={{school.id}}
-            >
+            <option selected={{eq school.id this.bestSelectedSchool.id}} value={{school.id}}>
               {{school.title}}
             </option>
           {{/each}}
@@ -28,7 +25,7 @@
         {{on "input" (pick "target.value" @setTitleFilter)}}
         placeholder={{t "general.instructorGroupTitleFilterPlaceholder"}}
         data-test-title-filter
-      >
+      />
     </div>
   </div>
 

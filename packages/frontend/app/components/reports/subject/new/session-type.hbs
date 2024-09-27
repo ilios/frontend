@@ -11,10 +11,7 @@
       {{did-update (perform this.setInitialValue) @school}}
     >
       {{#each this.sortedSessionTypes as |sessionType|}}
-        <option
-          selected={{eq sessionType.id @currentId}}
-          value={{sessionType.id}}
-        >
+        <option selected={{eq sessionType.id @currentId}} value={{sessionType.id}}>
           {{sessionType.title}}
           {{#unless sessionType.active}}
             ({{t "general.inactive"}})

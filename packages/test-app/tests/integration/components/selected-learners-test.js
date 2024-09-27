@@ -32,8 +32,7 @@ module('Integration | Component | selected-learners', function (hooks) {
 
   test('it renders', async function (assert) {
     this.set('learners', [this.learnerModel1, this.learnerModel2, this.learnerModel3]);
-    await render(hbs`<SelectedLearners @learners={{this.learners}} />
-`);
+    await render(hbs`<SelectedLearners @learners={{this.learners}} />`);
     assert.strictEqual(component.heading, 'Selected Learners:');
     assert.strictEqual(component.learners.length, 3);
     await a11yAudit(this.element);
@@ -42,8 +41,7 @@ module('Integration | Component | selected-learners', function (hooks) {
 
   test('no selected learners', async function (assert) {
     this.set('learners', []);
-    await render(hbs`<SelectedLearners @learners={{this.learners}} />
-`);
+    await render(hbs`<SelectedLearners @learners={{this.learners}} />`);
     assert.strictEqual(component.heading, 'Selected Learners:');
     assert.strictEqual(component.noLearners.text, 'None');
   });
@@ -55,8 +53,7 @@ module('Integration | Component | selected-learners', function (hooks) {
       assert.strictEqual(user.id, this.learnerModel1.id);
     });
     await render(
-      hbs`<SelectedLearners @learners={{this.learners}} @isManaging={{true}} @remove={{this.remove}}/>
-`,
+      hbs`<SelectedLearners @learners={{this.learners}} @isManaging={{true}} @remove={{this.remove}} />`,
     );
     assert.strictEqual(component.heading, 'Selected Learners:');
     assert.strictEqual(component.learners.length, 2);

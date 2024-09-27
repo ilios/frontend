@@ -3,12 +3,12 @@
     <h2 class="title">
       {{t "general.manageUsersSummaryTitle"}}
       (<LinkTo
-         @route="users"
-         @query={{hash showBulkNewUserForm=false showNewUserForm=false filter=null}}
-         data-test-users-link
-       >
-         {{t "general.viewAll"}}
-       </LinkTo>)
+        @route="users"
+        @query={{hash showBulkNewUserForm=false showNewUserForm=false filter=null}}
+        data-test-users-link
+      >
+        {{t "general.viewAll"}}
+      </LinkTo>)
     </h2>
     <div class="actions">
       {{#if @canCreate}}
@@ -22,10 +22,7 @@
           </button>
         </LinkTo>
         {{#if (not-eq this.userSearchType "ldap")}}
-          <LinkTo
-            @route="users"
-            @query={{hash showBulkNewUserForm=true showNewUserForm=false}}
-          >
+          <LinkTo @route="users" @query={{hash showBulkNewUserForm=true showNewUserForm=false}}>
             <button type="button">
               {{t "general.createBulk"}}
             </button>
@@ -45,7 +42,7 @@
       incremental="true"
       {{on "search" (perform this.searchForUsers)}}
       {{on "keyup" (perform this.searchForUsers)}}
-    >
+    />
     <ul
       class="results
         {{if
@@ -56,7 +53,7 @@
               (eq this.searchForUsers.lastSuccessful.value.length 0)
             )
           )
-          "hidden"
+          'hidden'
         }}"
     >
       {{#if this.searchForUsers.isRunning}}
@@ -95,11 +92,7 @@
                 <span class="name">
                   {{result.user.fullName}}
                   {{#unless result.user.enabled}}
-                    <FaIcon
-                      @icon="user-xmark"
-                      @title={{t "general.disabled"}}
-                      class="error"
-                    />
+                    <FaIcon @icon="user-xmark" @title={{t "general.disabled"}} class="error" />
                   {{/unless}}
                 </span>
                 <span class="email">

@@ -29,13 +29,13 @@ module('Integration | Component | reports/subject-header', function (hooks) {
     const reportModel = await this.owner.lookup('service:store').findRecord('report', report.id);
     this.set('report', reportModel);
     await render(hbs`<Reports::SubjectHeader
-      @report={{this.report}}
-      @subject={{this.report.subject}}
-      @prepositionalObject={{this.report.prepositionalObject}}
-      @prepositionalObjectTableRowId={{this.report.prepositionalObjectTableRowId}}
-      @year=''
-      @school={{null}}
-    />`);
+  @report={{this.report}}
+  @subject={{this.report.subject}}
+  @prepositionalObject={{this.report.prepositionalObject}}
+  @prepositionalObjectTableRowId={{this.report.prepositionalObjectTableRowId}}
+  @year=''
+  @school={{null}}
+/>`);
     assert.strictEqual(component.title.text, 'All Courses for 0 guy M. Mc0son in All Schools');
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
@@ -70,13 +70,13 @@ module('Integration | Component | reports/subject-header', function (hooks) {
     const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
     this.set('school', schoolModel);
     await render(hbs`<Reports::SubjectHeader
-      @report={{this.report}}
-      @subject={{this.report.subject}}
-      @prepositionalObject={{this.report.prepositionalObject}}
-      @prepositionalObjectTableRowId={{this.report.prepositionalObjectTableRowId}}
-      @year={{this.selectedYear}}
-      @school={{this.school}}
-    />`);
+  @report={{this.report}}
+  @subject={{this.report.subject}}
+  @prepositionalObject={{this.report.prepositionalObject}}
+  @prepositionalObjectTableRowId={{this.report.prepositionalObjectTableRowId}}
+  @year={{this.selectedYear}}
+  @school={{this.school}}
+/>`);
     assert.strictEqual(component.title.text, 'my report 0');
     await component.title.edit();
     assert.strictEqual(component.title.value, 'my report 0');
@@ -104,13 +104,13 @@ module('Integration | Component | reports/subject-header', function (hooks) {
     const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
     this.set('school', schoolModel);
     await render(hbs`<Reports::SubjectHeader
-      @report={{this.report}}
-      @subject={{this.report.subject}}
-      @prepositionalObject={{this.report.prepositionalObject}}
-      @prepositionalObjectTableRowId={{this.report.prepositionalObjectTableRowId}}
-      @year=''
-      @school={{this.school}}
-    />`);
+  @report={{this.report}}
+  @subject={{this.report.subject}}
+  @prepositionalObject={{this.report.prepositionalObject}}
+  @prepositionalObjectTableRowId={{this.report.prepositionalObjectTableRowId}}
+  @year=''
+  @school={{this.school}}
+/>`);
     assert.strictEqual(component.title.text, 'my report 0');
     await component.title.edit();
     assert.strictEqual(component.title.value, 'my report 0');
@@ -141,13 +141,13 @@ module('Integration | Component | reports/subject-header', function (hooks) {
     const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
     this.set('school', schoolModel);
     await render(hbs`<Reports::SubjectHeader
-      @report={{this.report}}
-      @subject={{this.report.subject}}
-      @prepositionalObject={{this.report.prepositionalObject}}
-      @prepositionalObjectTableRowId={{this.report.prepositionalObjectTableRowId}}
-      @year=''
-      @school={{this.school}}
-    />`);
+  @report={{this.report}}
+  @subject={{this.report.subject}}
+  @prepositionalObject={{this.report.prepositionalObject}}
+  @prepositionalObjectTableRowId={{this.report.prepositionalObjectTableRowId}}
+  @year=''
+  @school={{this.school}}
+/>`);
     assert.strictEqual(component.title.text, 'my report 0');
     await component.title.edit();
     assert.strictEqual(component.title.value, 'my report 0');
@@ -166,14 +166,14 @@ module('Integration | Component | reports/subject-header', function (hooks) {
     const reportModel = await this.owner.lookup('service:store').findRecord('report', report.id);
     this.set('report', reportModel);
     await render(hbs`<Reports::SubjectHeader
-      @report={{this.report}}
-      @subject={{this.report.subject}}
-      @prepositionalObject={{this.report.prepositionalObject}}
-      @prepositionalObjectTableRowId={{this.report.prepositionalObjectTableRowId}}
-      @year=''
-      @readyToDownload={{false}}
-      @school={{null}}
-    />`);
+  @report={{this.report}}
+  @subject={{this.report.subject}}
+  @prepositionalObject={{this.report.prepositionalObject}}
+  @prepositionalObjectTableRowId={{this.report.prepositionalObjectTableRowId}}
+  @year=''
+  @readyToDownload={{false}}
+  @school={{null}}
+/>`);
     assert.ok(component.isDownloadDisabled);
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
@@ -189,15 +189,15 @@ module('Integration | Component | reports/subject-header', function (hooks) {
     const reportModel = await this.owner.lookup('service:store').findRecord('report', report.id);
     this.set('report', reportModel);
     await render(hbs`<Reports::SubjectHeader
-      @report={{this.report}}
-      @subject={{this.report.subject}}
-      @prepositionalObject={{this.report.prepositionalObject}}
-      @prepositionalObjectTableRowId={{this.report.prepositionalObjectTableRowId}}
-      @year=''
-      @readyToDownload={{true}}
-      @fetchDownloadData={{(noop)}}
-      @school={{null}}
-    />`);
+  @report={{this.report}}
+  @subject={{this.report.subject}}
+  @prepositionalObject={{this.report.prepositionalObject}}
+  @prepositionalObjectTableRowId={{this.report.prepositionalObjectTableRowId}}
+  @year=''
+  @readyToDownload={{true}}
+  @fetchDownloadData={{(noop)}}
+  @school={{null}}
+/>`);
     assert.notOk(component.isDownloadDisabled);
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
@@ -213,14 +213,14 @@ module('Integration | Component | reports/subject-header', function (hooks) {
     const reportModel = await this.owner.lookup('service:store').findRecord('report', report.id);
     this.set('report', reportModel);
     await render(hbs`<Reports::SubjectHeader
-      @report={{this.report}}
-      @subject={{this.report.subject}}
-      @prepositionalObject={{this.report.prepositionalObject}}
-      @prepositionalObjectTableRowId={{this.report.prepositionalObjectTableRowId}}
-      @year=''
-      @showYearFilter={{false}}
-      @school={{null}}
-    />`);
+  @report={{this.report}}
+  @subject={{this.report.subject}}
+  @prepositionalObject={{this.report.prepositionalObject}}
+  @prepositionalObjectTableRowId={{this.report.prepositionalObjectTableRowId}}
+  @year=''
+  @showYearFilter={{false}}
+  @school={{null}}
+/>`);
     assert.notOk(component.hasYearFilter);
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
@@ -236,14 +236,14 @@ module('Integration | Component | reports/subject-header', function (hooks) {
     const reportModel = await this.owner.lookup('service:store').findRecord('report', report.id);
     this.set('report', reportModel);
     await render(hbs`<Reports::SubjectHeader
-      @report={{this.report}}
-      @subject={{this.report.subject}}
-      @prepositionalObject={{this.report.prepositionalObject}}
-      @prepositionalObjectTableRowId={{this.report.prepositionalObjectTableRowId}}
-      @year=''
-      @showYearFilter={{true}}
-      @school={{null}}
-    />`);
+  @report={{this.report}}
+  @subject={{this.report.subject}}
+  @prepositionalObject={{this.report.prepositionalObject}}
+  @prepositionalObjectTableRowId={{this.report.prepositionalObjectTableRowId}}
+  @year=''
+  @showYearFilter={{true}}
+  @school={{null}}
+/>`);
     assert.ok(component.hasYearFilter);
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');

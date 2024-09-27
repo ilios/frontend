@@ -1,9 +1,5 @@
 {{! template-lint-disable no-bare-strings }}
-<div
-  class="new-directory-user"
-  data-test-new-directory-user
-  {{did-insert (perform this.load)}}
->
+<div class="new-directory-user" data-test-new-directory-user {{did-insert (perform this.load)}}>
   {{#let (unique-id) as |templateId|}}
     {{#if this.selectedUser}}
       <div class="form" data-test-form>
@@ -80,7 +76,7 @@
             value={{this.otherId}}
             {{on "input" (pick "target.value" (set this "otherId"))}}
             {{on "keyup" (fn this.addErrorDisplayFor "otherId")}}
-          >
+          />
           <ValidationError @errors={{get-errors-for this.otherId}} />
         </div>
         <div class="item" data-test-username>
@@ -95,7 +91,7 @@
               {{on "input" (pick "target.value" (set this "username"))}}
               {{on "keyup" (fn this.addErrorDisplayFor "username")}}
               {{on "keyup" this.keyboard}}
-            >
+            />
             <ValidationError @errors={{get-errors-for this.username}} />
           {{else}}
             <span>
@@ -115,7 +111,7 @@
               {{on "input" (pick "target.value" (set this "password"))}}
               {{on "keyup" (fn this.addErrorDisplayFor "password")}}
               {{on "keyup" this.keyboard}}
-            >
+            />
             <ValidationError @errors={{get-errors-for this.password}} />
           </div>
         {{/if}}
@@ -123,15 +119,9 @@
           <label for="school-{{templateId}}">
             {{t "general.primarySchool"}}:
           </label>
-          <select
-            id="school-{{templateId}}"
-            {{on "change" (pick "target.value" this.setSchool)}}
-          >
+          <select id="school-{{templateId}}" {{on "change" (pick "target.value" this.setSchool)}}>
             {{#each (sort-by "title" this.schools) as |school|}}
-              <option
-                value={{school.id}}
-                selected={{eq school this.bestSelectedSchool}}
-              >
+              <option value={{school.id}} selected={{eq school this.bestSelectedSchool}}>
                 {{school.title}}
               </option>
             {{/each}}
@@ -147,10 +137,7 @@
               {{on "change" (pick "target.value" this.setPrimaryCohort)}}
             >
               {{#each (sort-by "title" this.cohorts) as |cohort|}}
-                <option
-                  value={{cohort.id}}
-                  selected={{eq cohort.id this.bestSelectedCohort.id}}
-                >
+                <option value={{cohort.id}} selected={{eq cohort.id this.bestSelectedCohort.id}}>
                   {{cohort.title}}
                 </option>
               {{/each}}
@@ -171,12 +158,7 @@
               {{t "general.done"}}
             {{/if}}
           </button>
-          <button
-            type="button"
-            class="cancel text"
-            data-test-cancel
-            {{on "click" this.unPickUser}}
-          >
+          <button type="button" class="cancel text" data-test-cancel {{on "click" this.unPickUser}}>
             {{t "general.cancel"}}
           </button>
         </div>
@@ -185,10 +167,7 @@
       <h3>
         {{t "general.newUser"}}
       </h3>
-      <div
-        class="new-directory-user-search-tools"
-        data-test-search
-      >
+      <div class="new-directory-user-search-tools" data-test-search>
         <input
           aria-label={{t "general.search"}}
           autocomplete="name"
@@ -196,7 +175,7 @@
           value={{@searchTerms}}
           {{on "input" (pick "target.value" @setSearchTerms)}}
           {{on "keyup" this.keyboard}}
-        >
+        />
         <button
           type="button"
           data-test-submit
@@ -237,11 +216,7 @@
                             data-test-view
                             {{on "click" (fn @transitionToUser user.user)}}
                           >
-                            <FaIcon
-                              @icon="sun"
-                              class="warning"
-                              @title={{t "general.goToUser"}}
-                            />
+                            <FaIcon @icon="sun" class="warning" @title={{t "general.goToUser"}} />
                           </button>
                         {{else if user.addable}}
                           <button
@@ -250,11 +225,7 @@
                             data-test-add
                             {{on "click" (fn this.pickUser user)}}
                           >
-                            <FaIcon
-                              @icon="plus"
-                              class="yes"
-                              @title={{t "general.addNew"}}
-                            />
+                            <FaIcon @icon="plus" class="yes" @title={{t "general.addNew"}} />
                           </button>
                         {{else}}
                           <FaIcon

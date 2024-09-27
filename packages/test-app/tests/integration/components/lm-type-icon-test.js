@@ -11,8 +11,7 @@ module('Integration | Component | lm type icon', function (hooks) {
   test('link', async function (assert) {
     const lm = createTypedLearningMaterialProxy({ link: 'https://iliosproject.org' });
     this.set('lm', lm);
-    await render(hbs`<LmTypeIcon @type={{this.lm.type}} />
-`);
+    await render(hbs`<LmTypeIcon @type={{this.lm.type}} />`);
     assert.ok(component.isLink);
     assert.strictEqual(component.title, 'Web Link');
   });
@@ -20,8 +19,7 @@ module('Integration | Component | lm type icon', function (hooks) {
   test('citation', async function (assert) {
     const lm = createTypedLearningMaterialProxy({ citation: 'Lorem Ipsum' });
     this.set('lm', lm);
-    await render(hbs`<LmTypeIcon @type={{this.lm.type}} />
-`);
+    await render(hbs`<LmTypeIcon @type={{this.lm.type}} />`);
     assert.ok(component.isCitation);
     assert.strictEqual(component.title, 'Citation');
   });
@@ -32,8 +30,7 @@ module('Integration | Component | lm type icon', function (hooks) {
       mimetype: 'application/pdf',
     });
     this.set('lm', lm);
-    await render(hbs`<LmTypeIcon @type={{this.lm.type}} @mimetype={{this.lm.mimetype}} />
-`);
+    await render(hbs`<LmTypeIcon @type={{this.lm.type}} @mimetype={{this.lm.mimetype}} />`);
     assert.ok(component.isPdf);
     assert.strictEqual(component.title, 'PDF file');
   });
@@ -50,8 +47,7 @@ module('Integration | Component | lm type icon', function (hooks) {
 
     for (let i = 0; i < fixtures.length; i++) {
       this.set('lm', createTypedLearningMaterialProxy(fixtures[i]));
-      await render(hbs`<LmTypeIcon @type={{this.lm.type}} @mimetype={{this.lm.mimetype}} />
-`);
+      await render(hbs`<LmTypeIcon @type={{this.lm.type}} @mimetype={{this.lm.mimetype}} />`);
       assert.ok(component.isPowerpoint);
       assert.strictEqual(component.title, 'PowerPoint file');
     }
@@ -68,8 +64,7 @@ module('Integration | Component | lm type icon', function (hooks) {
 
     for (let i = 0; i < fixtures.length; i++) {
       this.set('lm', createTypedLearningMaterialProxy(fixtures[i]));
-      await render(hbs`<LmTypeIcon @type={{this.lm.type}} @mimetype={{this.lm.mimetype}} />
-`);
+      await render(hbs`<LmTypeIcon @type={{this.lm.type}} @mimetype={{this.lm.mimetype}} />`);
       assert.ok(component.isVideo);
       assert.strictEqual(component.title, 'Video file');
     }
@@ -86,8 +81,7 @@ module('Integration | Component | lm type icon', function (hooks) {
 
     for (let i = 0; i < fixtures.length; i++) {
       this.set('lm', fixtures[i]);
-      await render(hbs`<LmTypeIcon @type={{this.lm.type}} @mimetype={{this.lm.mimetype}} />
-`);
+      await render(hbs`<LmTypeIcon @type={{this.lm.type}} @mimetype={{this.lm.mimetype}} />`);
       assert.ok(component.isAudio);
       assert.strictEqual(component.title, 'Audio file');
     }
@@ -102,8 +96,7 @@ module('Integration | Component | lm type icon', function (hooks) {
 
     for (let i = 0; i < fixtures.length; i++) {
       this.set('lm', fixtures[i].lm);
-      await render(hbs`<LmTypeIcon @type={{this.lm.type}} @mimetype={{this.lm.mimetype}} />
-`);
+      await render(hbs`<LmTypeIcon @type={{this.lm.type}} @mimetype={{this.lm.mimetype}} />`);
       assert.ok(component.isFile);
       assert.strictEqual(component.title, 'File');
     }
@@ -112,8 +105,7 @@ module('Integration | Component | lm type icon', function (hooks) {
   test('listItem', async function (assert) {
     const lm = createTypedLearningMaterialProxy({ link: 'https://iliosproject.org' });
     this.set('lm', lm);
-    await render(hbs`<LmTypeIcon @type={{this.lm.type}} @listItem={{true}} />
-`);
+    await render(hbs`<LmTypeIcon @type={{this.lm.type}} @listItem={{true}} />`);
     assert.dom('.list-item').exists();
   });
 
@@ -121,16 +113,14 @@ module('Integration | Component | lm type icon', function (hooks) {
     const lm = createTypedLearningMaterialProxy({ link: 'https://iliosproject.org' });
     this.set('lm', lm);
 
-    await render(hbs`<LmTypeIcon @type={{this.lm.type}} />
-`);
+    await render(hbs`<LmTypeIcon @type={{this.lm.type}} />`);
     assert.strictEqual(
       this.element.querySelectorAll('.list-item').length,
       0,
       'List icon class is not applied by default.',
     );
 
-    await render(hbs`<LmTypeIcon @type={{this.lm.type}} @listItem={{false}} />
-`);
+    await render(hbs`<LmTypeIcon @type={{this.lm.type}} @listItem={{false}} />`);
     assert.dom('.list-item').doesNotExist();
   });
 });

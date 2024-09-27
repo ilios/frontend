@@ -11,10 +11,7 @@
       {{did-update (perform this.setInitialValue) @school}}
     >
       {{#each this.sortedCompetencies as |competency|}}
-        <option
-          selected={{eq competency.id @currentId}}
-          value={{competency.id}}
-        >
+        <option selected={{eq competency.id @currentId}} value={{competency.id}}>
           {{competency.title}}
         </option>
       {{/each}}

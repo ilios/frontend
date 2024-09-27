@@ -36,9 +36,9 @@ module('Integration | Component | program-year/list-item', function (hooks) {
 
     this.set('programYear', programYearModel);
     await render(hbs`<ProgramYear::ListItem
-      @programYear={{this.programYear}}
-      @academicYearCrossesCalendarYearBoundaries={{false}}
-    />`);
+  @programYear={{this.programYear}}
+  @academicYearCrossesCalendarYearBoundaries={{false}}
+/>`);
     assert.strictEqual(component.title, 'cohort 0');
   });
 
@@ -53,9 +53,9 @@ module('Integration | Component | program-year/list-item', function (hooks) {
 
     this.set('programYear', programYearModel);
     await render(hbs`<ProgramYear::ListItem
-      @programYear={{this.programYear}}
-      @academicYearCrossesCalendarYearBoundaries={{false}}
-    />`);
+  @programYear={{this.programYear}}
+  @academicYearCrossesCalendarYearBoundaries={{false}}
+/>`);
     assert.strictEqual(component.title, 'Class of 2016');
   });
 
@@ -70,9 +70,9 @@ module('Integration | Component | program-year/list-item', function (hooks) {
 
     this.set('programYear', programYearModel);
     await render(hbs`<ProgramYear::ListItem
-      @programYear={{this.programYear}}
-      @academicYearCrossesCalendarYearBoundaries={{false}}
-    />`);
+  @programYear={{this.programYear}}
+  @academicYearCrossesCalendarYearBoundaries={{false}}
+/>`);
     assert.strictEqual(component.link.text, '2012');
   });
 
@@ -87,9 +87,9 @@ module('Integration | Component | program-year/list-item', function (hooks) {
 
     this.set('programYear', programYearModel);
     await render(hbs`<ProgramYear::ListItem
-      @programYear={{this.programYear}}
-      @academicYearCrossesCalendarYearBoundaries={{true}}
-    />`);
+  @programYear={{this.programYear}}
+  @academicYearCrossesCalendarYearBoundaries={{true}}
+/>`);
     assert.strictEqual(component.link.text, '2012 - 2013');
   });
 
@@ -104,9 +104,9 @@ module('Integration | Component | program-year/list-item', function (hooks) {
 
     this.set('programYear', programYearModel);
     await render(hbs`<ProgramYear::ListItem
-      @programYear={{this.programYear}}
-      @academicYearCrossesCalendarYearBoundaries={{false}}
-    />`);
+  @programYear={{this.programYear}}
+  @academicYearCrossesCalendarYearBoundaries={{false}}
+/>`);
     assert.ok(component.canBeRemoved);
   });
 
@@ -126,9 +126,9 @@ module('Integration | Component | program-year/list-item', function (hooks) {
 
     this.set('programYear', programYearModel);
     await render(hbs`<ProgramYear::ListItem
-      @programYear={{this.programYear}}
-      @academicYearCrossesCalendarYearBoundaries={{false}}
-    />`);
+  @programYear={{this.programYear}}
+  @academicYearCrossesCalendarYearBoundaries={{false}}
+/>`);
     assert.notOk(component.canBeRemoved);
   });
 });

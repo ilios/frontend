@@ -12,12 +12,9 @@ module('Integration | Helper | map-by', function (hooks) {
   test('It maps by value', async function (assert) {
     this.set('array', emberArray([{ name: 'a' }, { name: 'b' }, { name: 'c' }]));
 
-    await render(hbs`
-      {{~#each (map-by "name" this.array) as |name|~}}
-        {{~name~}}
-      {{~/each~}}
-
-`);
+    await render(hbs`{{~#each (map-by 'name' this.array) as |name|~}}
+  {{~name~}}
+{{~/each~}}`);
 
     assert.dom().hasText('abc', 'name property is mapped');
   });
@@ -29,12 +26,9 @@ module('Integration | Helper | map-by', function (hooks) {
     });
     this.set('array', [person]);
 
-    await render(hbs`
-      {{~#each (map-by "firstName" this.array) as |name|~}}
-        {{~name~}}
-      {{~/each~}}
-
-`);
+    await render(hbs`{{~#each (map-by 'firstName' this.array) as |name|~}}
+  {{~name~}}
+{{~/each~}}`);
 
     assert.dom().hasText('Janusz', 'first name property is mapped');
   });
@@ -44,12 +38,9 @@ module('Integration | Helper | map-by', function (hooks) {
 
     this.set('array', array);
 
-    await render(hbs`
-      {{~#each (map-by "name" this.array) as |name|~}}
-        {{~name~}}
-      {{~/each~}}
-
-`);
+    await render(hbs`{{~#each (map-by 'name' this.array) as |name|~}}
+  {{~name~}}
+{{~/each~}}`);
 
     // eslint-disable-next-line ember/no-runloop
     run(() => array.pushObject({ name: 'd' }));
@@ -67,12 +58,9 @@ module('Integration | Helper | map-by', function (hooks) {
     this.set('array', array);
     this.set('property', 'name');
 
-    await render(hbs`
-      {{~#each (map-by this.property this.array) as |name|~}}
-        {{~name~}}
-      {{~/each~}}
-
-`);
+    await render(hbs`{{~#each (map-by this.property this.array) as |name|~}}
+  {{~name~}}
+{{~/each~}}`);
 
     this.set('property', 'x');
 
@@ -82,12 +70,9 @@ module('Integration | Helper | map-by', function (hooks) {
   test('It allows null arrays', async function (assert) {
     this.set('array', null);
 
-    await render(hbs`
-      {{~#each (map-by "name" this.array) as |name|~}}
-        {{~name~}}
-      {{~/each~}}
-
-`);
+    await render(hbs`{{~#each (map-by 'name' this.array) as |name|~}}
+  {{~name~}}
+{{~/each~}}`);
 
     assert.dom().hasText('', 'this is all that will render, but there is no error');
   });
@@ -95,12 +80,9 @@ module('Integration | Helper | map-by', function (hooks) {
   test('It allows undefined arrays', async function (assert) {
     this.set('array', undefined);
 
-    await render(hbs`
-      {{~#each (map-by "name" this.array) as |name|~}}
-        {{~name~}}
-      {{~/each~}}
-
-`);
+    await render(hbs`{{~#each (map-by 'name' this.array) as |name|~}}
+  {{~name~}}
+{{~/each~}}`);
 
     assert.dom().hasText('', 'this is all that will render, but there is no error');
   });
@@ -118,12 +100,9 @@ module('Integration | Helper | map-by', function (hooks) {
 
     this.set('users', users);
 
-    await render(hbs`
-      {{~#each (map-by "firstName" this.users) as |name|~}}
-        {{~name~}}
-      {{~/each~}}
-
-`);
+    await render(hbs`{{~#each (map-by 'firstName' this.users) as |name|~}}
+  {{~name~}}
+{{~/each~}}`);
 
     assert.dom().hasText('abc', 'first name property is mapped');
   });

@@ -9,10 +9,9 @@ module('Integration | Component | learner-group/new-multiple', function (hooks) 
   setupRenderingTest(hooks);
 
   test('it renders', async function (assert) {
-    await render(hbs`<LearnerGroup::NewMultiple
-      @cancel={{(noop)}}
-      @generateNewLearnerGroups={{(noop)}}
-    />`);
+    await render(
+      hbs`<LearnerGroup::NewMultiple @cancel={{(noop)}} @generateNewLearnerGroups={{(noop)}} />`,
+    );
     assert.ok(component.isVisible);
     await a11yAudit(this.element);
   });
@@ -22,10 +21,9 @@ module('Integration | Component | learner-group/new-multiple', function (hooks) 
     this.set('save', (num) => {
       assert.strictEqual(parseInt(num, 10), 13);
     });
-    await render(hbs`<LearnerGroup::NewMultiple
-      @generateNewLearnerGroups={{this.save}}
-      @cancel={{(noop)}}
-    />`);
+    await render(
+      hbs`<LearnerGroup::NewMultiple @generateNewLearnerGroups={{this.save}} @cancel={{(noop)}} />`,
+    );
     await component.setNumberOfGroups(13);
     await component.save();
   });

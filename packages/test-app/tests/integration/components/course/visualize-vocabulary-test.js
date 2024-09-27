@@ -41,8 +41,7 @@ module('Integration | Component | course/visualize-vocabulary', function (hooks)
   test('it renders', async function (assert) {
     this.set('model', { course: this.courseModel, vocabulary: this.vocabularyModel });
 
-    await render(hbs`<Course::VisualizeVocabulary @model={{this.model}} />
-`);
+    await render(hbs`<Course::VisualizeVocabulary @model={{this.model}} />`);
 
     assert.strictEqual(component.vocabularyTitle, 'Vocabulary 1');
     assert.strictEqual(component.courseTitle.text, 'course 0 2021');
@@ -59,8 +58,7 @@ module('Integration | Component | course/visualize-vocabulary', function (hooks)
     });
     this.set('model', { course: this.courseModel, vocabulary: this.vocabularyModel });
 
-    await render(hbs`<Course::VisualizeVocabulary @model={{this.model}} />
-`);
+    await render(hbs`<Course::VisualizeVocabulary @model={{this.model}} />`);
 
     assert.strictEqual(component.courseTitle.text, 'course 0 2021 - 2022');
   });
@@ -68,8 +66,7 @@ module('Integration | Component | course/visualize-vocabulary', function (hooks)
   test('breadcrumb', async function (assert) {
     this.set('model', { course: this.courseModel, vocabulary: this.vocabularyModel });
 
-    await render(hbs`<Course::VisualizeVocabulary @model={{this.model}} />
-`);
+    await render(hbs`<Course::VisualizeVocabulary @model={{this.model}} />`);
 
     assert.strictEqual(component.breadcrumb.crumbs.length, 4);
     assert.strictEqual(component.breadcrumb.crumbs[0].text, 'course 0');
@@ -84,8 +81,7 @@ module('Integration | Component | course/visualize-vocabulary', function (hooks)
   test('chart', async function (assert) {
     this.set('model', { course: this.courseModel, vocabulary: this.vocabularyModel });
 
-    await render(hbs`<Course::VisualizeVocabulary @model={{this.model}} />
-`);
+    await render(hbs`<Course::VisualizeVocabulary @model={{this.model}} />`);
     // wait for charts to load
     await waitFor('.loaded');
     await waitFor('svg .bars');

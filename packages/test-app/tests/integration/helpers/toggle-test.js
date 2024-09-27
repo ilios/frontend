@@ -9,12 +9,9 @@ module('Integration | Helper | toggle', function (hooks) {
 
   test('it toggles the property', async function (assert) {
     this.set('isExpanded', false);
-    await render(hbs`
-      <button type="button" {{on "click" (toggle "isExpanded" this)}}>
-        {{if this.isExpanded "I am expanded" "I am not"}}
-      </button>
-
-`);
+    await render(hbs`<button type='button' {{on 'click' (toggle 'isExpanded' this)}}>
+  {{if this.isExpanded 'I am expanded' 'I am not'}}
+</button>`);
     await click('button');
 
     assert.dom().hasText('I am expanded', 'should be expanded');
@@ -22,12 +19,9 @@ module('Integration | Helper | toggle', function (hooks) {
 
   test('it rotates between values', async function (assert) {
     this.set('currentName', 'foo');
-    await render(hbs`
-      <button type="button" {{on "click" (toggle "currentName" this "foo" "bar" "baz")}}>
-        {{this.currentName}}
-      </button>
-
-`);
+    await render(hbs`<button type='button' {{on 'click' (toggle 'currentName' this 'foo' 'bar' 'baz')}}>
+  {{this.currentName}}
+</button>`);
 
     assert.dom().hasText('foo', 'precondition');
     await click('button');
@@ -40,12 +34,9 @@ module('Integration | Helper | toggle', function (hooks) {
 
   test('it handles current value not being in the array of values', async function (assert) {
     this.set('currentName', 'meow');
-    await render(hbs`
-      <button type="button" {{on "click" (toggle "currentName" this "foo" "bar")}}>
-        {{this.currentName}}
-      </button>
-
-`);
+    await render(hbs`<button type='button' {{on 'click' (toggle 'currentName' this 'foo' 'bar')}}>
+  {{this.currentName}}
+</button>`);
 
     assert.dom().hasText('meow', 'precondition');
     await click('button');

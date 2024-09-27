@@ -73,11 +73,11 @@ module(
       this.set('sequenceBlock', blockModel);
       this.set('sortBy', 'title');
       await render(hbs`<CurriculumInventory::SequenceBlockSessionList
-      @sessions={{this.sessions}}
-      @sequenceBlock={{this.sequenceBlock}}
-      @sortBy={{this.sortBy}}
-      @setSortBy={{(noop)}}
-    />`);
+  @sessions={{this.sessions}}
+  @sequenceBlock={{this.sequenceBlock}}
+  @sortBy={{this.sortBy}}
+  @setSortBy={{(noop)}}
+/>`);
       assert.strictEqual(
         component.header.countAsOneOffering.text,
         'Count as one offering',
@@ -197,11 +197,11 @@ module(
       this.set('sequenceBlock', blockModel);
       this.set('sortBy', 'title');
       await render(hbs`<CurriculumInventory::SequenceBlockSessionList
-      @sessions={{this.sessions}}
-      @sequenceBlock={{this.sequenceBlock}}
-      @sortBy={{this.sortBy}}
-      @setSortBy={{(noop)}}
-    />`);
+  @sessions={{this.sessions}}
+  @sequenceBlock={{this.sequenceBlock}}
+  @sortBy={{this.sortBy}}
+  @setSortBy={{(noop)}}
+/>`);
       assert.ok(component.header.exclude.isVisible, 'Table header is visible,');
       assert.strictEqual(component.sessions.length, 0, 'but table body is empty.');
     });
@@ -227,11 +227,11 @@ module(
         assert.strictEqual(what, 'title', 'Sorting callback gets called for session titles.');
       });
       await render(hbs`<CurriculumInventory::SequenceBlockSessionList
-      @sessions={{this.sessions}}
-      @sequenceBlock={{this.sequenceBlock}}
-      @sortBy={{this.sortBy}}
-      @setSortBy={{this.setSortBy}}
-    />`);
+  @sessions={{this.sessions}}
+  @sequenceBlock={{this.sequenceBlock}}
+  @sortBy={{this.sortBy}}
+  @setSortBy={{this.setSortBy}}
+/>`);
       await component.header.title.click();
     });
 
@@ -260,11 +260,11 @@ module(
         );
       });
       await render(hbs`<CurriculumInventory::SequenceBlockSessionList
-        @sessions={{this.sessions}}
-        @sequenceBlock={{this.sequenceBlock}}
-        @sortBy={{this.sortBy}}
-        @setSortBy={{this.setSortBy}}
-      />`);
+  @sessions={{this.sessions}}
+  @sequenceBlock={{this.sequenceBlock}}
+  @sortBy={{this.sortBy}}
+  @setSortBy={{this.setSortBy}}
+/>`);
       await component.header.sessionType.click();
     });
 
@@ -293,11 +293,11 @@ module(
         );
       });
       await render(hbs`<CurriculumInventory::SequenceBlockSessionList
-      @sessions={{this.sessions}}
-      @sequenceBlock={{this.sequenceBlock}}
-      @sortBy={{this.sortBy}}
-      @setSortBy={{this.setSortBy}}
-    />`);
+  @sessions={{this.sessions}}
+  @sequenceBlock={{this.sequenceBlock}}
+  @sortBy={{this.sortBy}}
+  @setSortBy={{this.setSortBy}}
+/>`);
       await component.header.offeringsCount.click();
     });
   },

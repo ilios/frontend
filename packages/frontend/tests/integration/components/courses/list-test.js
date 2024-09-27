@@ -50,14 +50,14 @@ module('Integration | Component | courses/list', function (hooks) {
     this.set('sortBy', '');
     this.set('query', '');
     await render(hbs`<Courses::List
-      @courses={{this.courses}}
-      @query={{this.query}}
-      @sortBy={{this.sortBy}}
-      @lock={{(noop)}}
-      @remove={{(noop)}}
-      @setSortBy={{(noop)}}
-      @unlock={{(noop)}}
-    />`);
+  @courses={{this.courses}}
+  @query={{this.query}}
+  @sortBy={{this.sortBy}}
+  @lock={{(noop)}}
+  @remove={{(noop)}}
+  @setSortBy={{(noop)}}
+  @unlock={{(noop)}}
+/>`);
     assert.strictEqual(component.courses.length, 2);
     assert.notOk(component.emptyListRow.isVisible);
   });
@@ -66,14 +66,14 @@ module('Integration | Component | courses/list', function (hooks) {
     this.set('sortBy', '');
     this.set('query', '');
     await render(hbs`<Courses::List
-      @courses={{(array)}}
-      @query={{this.query}}
-      @sortBy={{this.sortBy}}
-      @lock={{(noop)}}
-      @remove={{(noop)}}
-      @setSortBy={{(noop)}}
-      @unlock={{(noop)}}
-    />`);
+  @courses={{(array)}}
+  @query={{this.query}}
+  @sortBy={{this.sortBy}}
+  @lock={{(noop)}}
+  @remove={{(noop)}}
+  @setSortBy={{(noop)}}
+  @unlock={{(noop)}}
+/>`);
     assert.strictEqual(component.courses.length, 0);
     assert.ok(component.emptyListRow.isVisible);
     assert.strictEqual(component.emptyListRow.text, 'None');
@@ -83,14 +83,14 @@ module('Integration | Component | courses/list', function (hooks) {
     this.set('sortBy', '');
     this.set('query', 'whatever');
     await render(hbs`<Courses::List
-      @courses={{(array)}}
-      @query={{this.query}}
-      @sortBy={{this.sortBy}}
-      @lock={{(noop)}}
-      @remove={{(noop)}}
-      @setSortBy={{(noop)}}
-      @unlock={{(noop)}}
-    />`);
+  @courses={{(array)}}
+  @query={{this.query}}
+  @sortBy={{this.sortBy}}
+  @lock={{(noop)}}
+  @remove={{(noop)}}
+  @setSortBy={{(noop)}}
+  @unlock={{(noop)}}
+/>`);
     assert.strictEqual(component.courses.length, 0);
     assert.ok(component.emptyListRow.isVisible);
     assert.strictEqual(component.emptyListRow.text, 'No results found. Please try again.');
@@ -101,14 +101,14 @@ module('Integration | Component | courses/list', function (hooks) {
     this.set('sortBy', 'title');
     this.set('query', '');
     await render(hbs`<Courses::List
-      @courses={{this.courses}}
-      @query={{this.query}}
-      @sortBy={{this.sortBy}}
-      @lock={{(noop)}}
-      @remove={{(noop)}}
-      @setSortBy={{(noop)}}
-      @unlock={{(noop)}}
-    />`);
+  @courses={{this.courses}}
+  @query={{this.query}}
+  @sortBy={{this.sortBy}}
+  @lock={{(noop)}}
+  @remove={{(noop)}}
+  @setSortBy={{(noop)}}
+  @unlock={{(noop)}}
+/>`);
     assert.strictEqual(component.courses.length, 2);
     assert.strictEqual(component.courses[0].title, 'Alpha');
     assert.strictEqual(component.courses[1].title, 'Omega');
@@ -120,14 +120,14 @@ module('Integration | Component | courses/list', function (hooks) {
     this.set('sortBy', 'title:desc');
     this.set('query', '');
     await render(hbs`<Courses::List
-      @courses={{this.courses}}
-      @query={{this.query}}
-      @sortBy={{this.sortBy}}
-      @lock={{(noop)}}
-      @remove={{(noop)}}
-      @setSortBy={{(noop)}}
-      @unlock={{(noop)}}
-    />`);
+  @courses={{this.courses}}
+  @query={{this.query}}
+  @sortBy={{this.sortBy}}
+  @lock={{(noop)}}
+  @remove={{(noop)}}
+  @setSortBy={{(noop)}}
+  @unlock={{(noop)}}
+/>`);
     assert.strictEqual(component.courses.length, 2);
     assert.strictEqual(component.courses[0].title, 'Omega');
     assert.strictEqual(component.courses[1].title, 'Alpha');
@@ -143,14 +143,14 @@ module('Integration | Component | courses/list', function (hooks) {
       assert.strictEqual(value, 'title:desc');
     });
     await render(hbs`<Courses::List
-      @courses={{this.courses}}
-      @query={{this.query}}
-      @sortBy={{this.sortBy}}
-      @lock={{(noop)}}
-      @remove={{(noop)}}
-      @setSortBy={{this.setSortBy}}
-      @unlock={{(noop)}}
-    />`);
+  @courses={{this.courses}}
+  @query={{this.query}}
+  @sortBy={{this.sortBy}}
+  @lock={{(noop)}}
+  @remove={{(noop)}}
+  @setSortBy={{this.setSortBy}}
+  @unlock={{(noop)}}
+/>`);
     await component.sortByTitle();
   });
 
@@ -159,14 +159,14 @@ module('Integration | Component | courses/list', function (hooks) {
     this.set('sortBy', 'level');
     this.set('query', '');
     await render(hbs`<Courses::List
-      @courses={{this.courses}}
-      @query={{this.query}}
-      @sortBy={{this.sortBy}}
-      @lock={{(noop)}}
-      @remove={{(noop)}}
-      @setSortBy={{(noop)}}
-      @unlock={{(noop)}}
-    />`);
+  @courses={{this.courses}}
+  @query={{this.query}}
+  @sortBy={{this.sortBy}}
+  @lock={{(noop)}}
+  @remove={{(noop)}}
+  @setSortBy={{(noop)}}
+  @unlock={{(noop)}}
+/>`);
     assert.strictEqual(component.courses.length, 2);
     assert.strictEqual(component.courses[0].level, '1');
     assert.strictEqual(component.courses[1].level, '2');
@@ -178,14 +178,14 @@ module('Integration | Component | courses/list', function (hooks) {
     this.set('sortBy', 'level:desc');
     this.set('query', '');
     await render(hbs`<Courses::List
-      @courses={{this.courses}}
-      @query={{this.query}}
-      @sortBy={{this.sortBy}}
-      @lock={{(noop)}}
-      @remove={{(noop)}}
-      @setSortBy={{(noop)}}
-      @unlock={{(noop)}}
-    />`);
+  @courses={{this.courses}}
+  @query={{this.query}}
+  @sortBy={{this.sortBy}}
+  @lock={{(noop)}}
+  @remove={{(noop)}}
+  @setSortBy={{(noop)}}
+  @unlock={{(noop)}}
+/>`);
     assert.strictEqual(component.courses.length, 2);
     assert.strictEqual(component.courses[0].level, '2');
     assert.strictEqual(component.courses[1].level, '1');
@@ -201,14 +201,14 @@ module('Integration | Component | courses/list', function (hooks) {
       assert.strictEqual(value, 'level:desc');
     });
     await render(hbs`<Courses::List
-      @courses={{this.courses}}
-      @query={{this.query}}
-      @sortBy={{this.sortBy}}
-      @lock={{(noop)}}
-      @remove={{(noop)}}
-      @setSortBy={{this.setSortBy}}
-      @unlock={{(noop)}}
-    />`);
+  @courses={{this.courses}}
+  @query={{this.query}}
+  @sortBy={{this.sortBy}}
+  @lock={{(noop)}}
+  @remove={{(noop)}}
+  @setSortBy={{this.setSortBy}}
+  @unlock={{(noop)}}
+/>`);
     await component.sortByLevel();
   });
 
@@ -217,14 +217,14 @@ module('Integration | Component | courses/list', function (hooks) {
     this.set('sortBy', 'startDate');
     this.set('query', '');
     await render(hbs`<Courses::List
-      @courses={{this.courses}}
-      @query={{this.query}}
-      @sortBy={{this.sortBy}}
-      @lock={{(noop)}}
-      @remove={{(noop)}}
-      @setSortBy={{(noop)}}
-      @unlock={{(noop)}}
-    />`);
+  @courses={{this.courses}}
+  @query={{this.query}}
+  @sortBy={{this.sortBy}}
+  @lock={{(noop)}}
+  @remove={{(noop)}}
+  @setSortBy={{(noop)}}
+  @unlock={{(noop)}}
+/>`);
     assert.strictEqual(component.courses.length, 2);
     assert.strictEqual(component.courses[0].startDate, '01/11/2022');
     assert.strictEqual(component.courses[1].startDate, '04/23/2023');
@@ -236,14 +236,14 @@ module('Integration | Component | courses/list', function (hooks) {
     this.set('sortBy', 'startDate:desc');
     this.set('query', '');
     await render(hbs`<Courses::List
-      @courses={{this.courses}}
-      @query={{this.query}}
-      @sortBy={{this.sortBy}}
-      @lock={{(noop)}}
-      @remove={{(noop)}}
-      @setSortBy={{(noop)}}
-      @unlock={{(noop)}}
-    />`);
+  @courses={{this.courses}}
+  @query={{this.query}}
+  @sortBy={{this.sortBy}}
+  @lock={{(noop)}}
+  @remove={{(noop)}}
+  @setSortBy={{(noop)}}
+  @unlock={{(noop)}}
+/>`);
     assert.strictEqual(component.courses.length, 2);
     assert.strictEqual(component.courses[0].startDate, '04/23/2023');
     assert.strictEqual(component.courses[1].startDate, '01/11/2022');
@@ -259,14 +259,14 @@ module('Integration | Component | courses/list', function (hooks) {
       assert.strictEqual(value, 'startDate:desc');
     });
     await render(hbs`<Courses::List
-      @courses={{this.courses}}
-      @query={{this.query}}
-      @sortBy={{this.sortBy}}
-      @lock={{(noop)}}
-      @remove={{(noop)}}
-      @setSortBy={{this.setSortBy}}
-      @unlock={{(noop)}}
-    />`);
+  @courses={{this.courses}}
+  @query={{this.query}}
+  @sortBy={{this.sortBy}}
+  @lock={{(noop)}}
+  @remove={{(noop)}}
+  @setSortBy={{this.setSortBy}}
+  @unlock={{(noop)}}
+/>`);
     await component.sortByStartDate();
   });
 
@@ -275,14 +275,14 @@ module('Integration | Component | courses/list', function (hooks) {
     this.set('sortBy', 'endDate');
     this.set('query', '');
     await render(hbs`<Courses::List
-      @courses={{this.courses}}
-      @query={{this.query}}
-      @sortBy={{this.sortBy}}
-      @lock={{(noop)}}
-      @remove={{(noop)}}
-      @setSortBy={{(noop)}}
-      @unlock={{(noop)}}
-    />`);
+  @courses={{this.courses}}
+  @query={{this.query}}
+  @sortBy={{this.sortBy}}
+  @lock={{(noop)}}
+  @remove={{(noop)}}
+  @setSortBy={{(noop)}}
+  @unlock={{(noop)}}
+/>`);
     assert.strictEqual(component.courses.length, 2);
     assert.strictEqual(component.courses[0].endDate, '01/12/2022');
     assert.strictEqual(component.courses[1].endDate, '05/30/2023');
@@ -294,14 +294,14 @@ module('Integration | Component | courses/list', function (hooks) {
     this.set('sortBy', 'endDate:desc');
     this.set('query', '');
     await render(hbs`<Courses::List
-      @courses={{this.courses}}
-      @query={{this.query}}
-      @sortBy={{this.sortBy}}
-      @lock={{(noop)}}
-      @remove={{(noop)}}
-      @setSortBy={{(noop)}}
-      @unlock={{(noop)}}
-    />`);
+  @courses={{this.courses}}
+  @query={{this.query}}
+  @sortBy={{this.sortBy}}
+  @lock={{(noop)}}
+  @remove={{(noop)}}
+  @setSortBy={{(noop)}}
+  @unlock={{(noop)}}
+/>`);
     assert.strictEqual(component.courses.length, 2);
     assert.strictEqual(component.courses[0].endDate, '05/30/2023');
     assert.strictEqual(component.courses[1].endDate, '01/12/2022');
@@ -317,14 +317,14 @@ module('Integration | Component | courses/list', function (hooks) {
       assert.strictEqual(value, 'endDate:desc');
     });
     await render(hbs`<Courses::List
-      @courses={{this.courses}}
-      @query={{this.query}}
-      @sortBy={{this.sortBy}}
-      @lock={{(noop)}}
-      @remove={{(noop)}}
-      @setSortBy={{this.setSortBy}}
-      @unlock={{(noop)}}
-    />`);
+  @courses={{this.courses}}
+  @query={{this.query}}
+  @sortBy={{this.sortBy}}
+  @lock={{(noop)}}
+  @remove={{(noop)}}
+  @setSortBy={{this.setSortBy}}
+  @unlock={{(noop)}}
+/>`);
     await component.sortByEndDate();
   });
 
@@ -333,14 +333,14 @@ module('Integration | Component | courses/list', function (hooks) {
     this.set('sortBy', 'status');
     this.set('query', '');
     await render(hbs`<Courses::List
-      @courses={{this.courses}}
-      @query={{this.query}}
-      @sortBy={{this.sortBy}}
-      @lock={{(noop)}}
-      @remove={{(noop)}}
-      @setSortBy={{(noop)}}
-      @unlock={{(noop)}}
-    />`);
+  @courses={{this.courses}}
+  @query={{this.query}}
+  @sortBy={{this.sortBy}}
+  @lock={{(noop)}}
+  @remove={{(noop)}}
+  @setSortBy={{(noop)}}
+  @unlock={{(noop)}}
+/>`);
     assert.strictEqual(component.courses.length, 2);
     assert.strictEqual(component.courses[0].status, 'Not Published');
     assert.strictEqual(component.courses[1].status, 'Published');
@@ -352,14 +352,14 @@ module('Integration | Component | courses/list', function (hooks) {
     this.set('sortBy', 'status:desc');
     this.set('query', '');
     await render(hbs`<Courses::List
-      @courses={{this.courses}}
-      @query={{this.query}}
-      @sortBy={{this.sortBy}}
-      @lock={{(noop)}}
-      @remove={{(noop)}}
-      @setSortBy={{(noop)}}
-      @unlock={{(noop)}}
-    />`);
+  @courses={{this.courses}}
+  @query={{this.query}}
+  @sortBy={{this.sortBy}}
+  @lock={{(noop)}}
+  @remove={{(noop)}}
+  @setSortBy={{(noop)}}
+  @unlock={{(noop)}}
+/>`);
     assert.strictEqual(component.courses.length, 2);
     assert.strictEqual(component.courses[0].status, 'Published');
     assert.strictEqual(component.courses[1].status, 'Not Published');
@@ -375,14 +375,14 @@ module('Integration | Component | courses/list', function (hooks) {
       assert.strictEqual(value, 'status:desc');
     });
     await render(hbs`<Courses::List
-      @courses={{this.courses}}
-      @query={{this.query}}
-      @sortBy={{this.sortBy}}
-      @lock={{(noop)}}
-      @remove={{(noop)}}
-      @setSortBy={{this.setSortBy}}
-      @unlock={{(noop)}}
-    />`);
+  @courses={{this.courses}}
+  @query={{this.query}}
+  @sortBy={{this.sortBy}}
+  @lock={{(noop)}}
+  @remove={{(noop)}}
+  @setSortBy={{this.setSortBy}}
+  @unlock={{(noop)}}
+/>`);
     await component.sortByStatus();
   });
 
@@ -395,14 +395,14 @@ module('Integration | Component | courses/list', function (hooks) {
       assert.strictEqual(course, this.course2);
     });
     await render(hbs`<Courses::List
-      @courses={{this.courses}}
-      @query={{this.query}}
-      @sortBy={{this.sortBy}}
-      @lock={{this.lock}}
-      @remove={{(noop)}}
-      @setSortBy={{(noop)}}
-      @unlock={{(noop)}}
-    />`);
+  @courses={{this.courses}}
+  @query={{this.query}}
+  @sortBy={{this.sortBy}}
+  @lock={{this.lock}}
+  @remove={{(noop)}}
+  @setSortBy={{(noop)}}
+  @unlock={{(noop)}}
+/>`);
     assert.ok(component.courses[0].isUnlocked);
     await component.courses[0].lock();
   });
@@ -416,14 +416,14 @@ module('Integration | Component | courses/list', function (hooks) {
       assert.strictEqual(course, this.course1);
     });
     await render(hbs`<Courses::List
-      @courses={{this.courses}}
-      @query={{this.query}}
-      @sortBy={{this.sortBy}}
-      @lock={{(noop)}}
-      @remove={{(noop)}}
-      @setSortBy={{(noop)}}
-      @unlock={{this.unlock}}
-    />`);
+  @courses={{this.courses}}
+  @query={{this.query}}
+  @sortBy={{this.sortBy}}
+  @lock={{(noop)}}
+  @remove={{(noop)}}
+  @setSortBy={{(noop)}}
+  @unlock={{this.unlock}}
+/>`);
     assert.ok(component.courses[0].isLocked);
     await component.courses[0].unLock();
   });
@@ -437,14 +437,14 @@ module('Integration | Component | courses/list', function (hooks) {
       assert.strictEqual(course, this.course1);
     });
     await render(hbs`<Courses::List
-      @courses={{this.courses}}
-      @query={{this.query}}
-      @sortBy={{this.sortBy}}
-      @lock={{(noop)}}
-      @remove={{this.remove}}
-      @setSortBy={{(noop)}}
-      @unlock={{(noop)}}
-    />`);
+  @courses={{this.courses}}
+  @query={{this.query}}
+  @sortBy={{this.sortBy}}
+  @lock={{(noop)}}
+  @remove={{this.remove}}
+  @setSortBy={{(noop)}}
+  @unlock={{(noop)}}
+/>`);
     await component.courses[0].remove();
     await component.confirmCourseRemoval();
   });

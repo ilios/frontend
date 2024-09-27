@@ -10,36 +10,27 @@ module('Integration | Component | publication-status', function (hooks) {
 
   test('it renders published and is accessible', async function (assert) {
     this.set('item', { isPublished: true, isScheduled: false });
-    await render(hbs`<PublicationStatus
-      @item={{this.item}}
-      @showIcon={{true}}
-      @showText={{true}}
-    />
-`);
+    await render(
+      hbs`<PublicationStatus @item={{this.item}} @showIcon={{true}} @showText={{true}} />`,
+    );
     assert.strictEqual(component.value, 'Published');
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
   });
   test('it renders schedule and is accessible', async function (assert) {
     this.set('item', { isPublished: true, isScheduled: true });
-    await render(hbs`<PublicationStatus
-      @item={{this.item}}
-      @showIcon={{true}}
-      @showText={{true}}
-    />
-`);
+    await render(
+      hbs`<PublicationStatus @item={{this.item}} @showIcon={{true}} @showText={{true}} />`,
+    );
     assert.strictEqual(component.value, 'Scheduled');
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
   });
   test('it renders not published and is accessible', async function (assert) {
     this.set('item', { isPublished: false, isScheduled: false });
-    await render(hbs`<PublicationStatus
-      @item={{this.item}}
-      @showIcon={{true}}
-      @showText={{true}}
-    />
-`);
+    await render(
+      hbs`<PublicationStatus @item={{this.item}} @showIcon={{true}} @showText={{true}} />`,
+    );
     assert.strictEqual(component.value, 'Not Published');
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');

@@ -25,7 +25,7 @@
             placeholder={{t "general.reportNamePlaceholder"}}
             {{on "input" (pick "target.value" this.changeName)}}
             {{on "keyup" (queue (fn this.addErrorDisplayFor "name") this.saveOnEnter)}}
-          >
+          />
         {{/let}}
         <ValidationError @errors={{get-errors-for this.name}} />
       </div>
@@ -54,7 +54,10 @@
             {{on "change" (pick "target.value" this.setSelectedYear)}}
           >
             {{#each this.years as |obj|}}
-              <option value={{obj.year}} selected={{eq obj.year this.selectedYear}}>{{obj.title}}</option>
+              <option
+                value={{obj.year}}
+                selected={{eq obj.year this.selectedYear}}
+              >{{obj.title}}</option>
             {{/each}}
           </select>
         {{/let}}
@@ -96,11 +99,7 @@
           {{/if}}
         </button>
         <LinkTo @route="curriculum-inventory-report" @model={{@report}}>
-          <button
-            type="button"
-            class="cancel text"
-            data-test-cancel
-          >
+          <button type="button" class="cancel text" data-test-cancel>
             {{t "general.cancel"}}
           </button>
         </LinkTo>

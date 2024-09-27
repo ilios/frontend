@@ -14,13 +14,15 @@
           data-test-title
           {{on "click" this.collapse}}
         >
-          {{t "general.objectives"}} ({{this.objectiveCount}})
+          {{t "general.objectives"}}
+          ({{this.objectiveCount}})
           <FaIcon @icon="caret-down" />
         </button>
       </div>
     {{else}}
       <h3 class="title" data-test-title>
-        {{t "general.objectives"}} ({{this.objectiveCount}})
+        {{t "general.objectives"}}
+        ({{this.objectiveCount}})
       </h3>
     {{/if}}
     {{#if @editable}}
@@ -40,9 +42,6 @@
         @cancel={{this.toggleNewObjectiveEditor}}
       />
     {{/if}}
-    <ProgramYear::ObjectiveList
-      @programYear={{@programYear}}
-      @editable={{@editable}}
-    />
+    <ProgramYear::ObjectiveList @programYear={{@programYear}} @editable={{@editable}} />
   </div>
 </section>

@@ -35,11 +35,9 @@ module('Integration | Component | school vocabularies list', function (hooks) {
     const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
 
     this.set('school', schoolModel);
-    await render(hbs`<SchoolVocabulariesList
-      @school={{this.school}}
-      @manageVocabulary={{(noop)}}
-      @canDelete={{true}}
-    />`);
+    await render(
+      hbs`<SchoolVocabulariesList @school={{this.school}} @manageVocabulary={{(noop)}} @canDelete={{true}} />`,
+    );
     assert.strictEqual(component.vocabularies.length, 3);
     assert.notOk(component.vocabularies[0].hasDeleteButton);
     assert.notOk(component.vocabularies[1].hasDeleteButton);
@@ -51,11 +49,9 @@ module('Integration | Component | school vocabularies list', function (hooks) {
     this.server.create('vocabulary', { school });
     const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
     this.set('school', schoolModel);
-    await render(hbs`<SchoolVocabulariesList
-      @school={{this.school}}
-      @manageVocabulary={{(noop)}}
-      @canDelete={{true}}
-    />`);
+    await render(
+      hbs`<SchoolVocabulariesList @school={{this.school}} @manageVocabulary={{(noop)}} @canDelete={{true}} />`,
+    );
 
     assert.notOk(component.deletionConfirmation.isVisible);
     await component.vocabularies[0].delete();

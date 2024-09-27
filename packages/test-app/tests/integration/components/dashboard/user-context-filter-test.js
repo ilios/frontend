@@ -48,7 +48,10 @@ module('Integration | Component | dashboard/user-context-filter', function (hook
       assert.strictEqual(context, null);
     });
     await render(
-      hbs`<Dashboard::UserContextFilter @setUserContext={{this.setUserContext}} @userContext={{this.userContext}}/>`,
+      hbs`<Dashboard::UserContextFilter
+  @setUserContext={{this.setUserContext}}
+  @userContext={{this.userContext}}
+/>`,
     );
     assert.strictEqual(component.learning.ariaDescription, 'Show all my activities');
     assert.strictEqual(component.learning.title, 'Show all my activities');
@@ -76,7 +79,10 @@ module('Integration | Component | dashboard/user-context-filter', function (hook
       assert.strictEqual(context, null);
     });
     await render(
-      hbs`<Dashboard::UserContextFilter @setUserContext={{this.setUserContext}} @userContext={{this.userContext}}/>`,
+      hbs`<Dashboard::UserContextFilter
+  @setUserContext={{this.setUserContext}}
+  @userContext={{this.userContext}}
+/>`,
     );
     assert.strictEqual(component.instructing.ariaDescription, 'Show all my activities');
     assert.strictEqual(component.instructing.title, 'Show all my activities');
@@ -104,7 +110,10 @@ module('Integration | Component | dashboard/user-context-filter', function (hook
       assert.strictEqual(context, null);
     });
     await render(
-      hbs`<Dashboard::UserContextFilter @setUserContext={{this.setUserContext}} @userContext={{this.userContext}}/>`,
+      hbs`<Dashboard::UserContextFilter
+  @setUserContext={{this.setUserContext}}
+  @userContext={{this.userContext}}
+/>`,
     );
     assert.strictEqual(component.admin.ariaDescription, 'Show all my activities');
     assert.strictEqual(component.admin.title, 'Show all my activities');

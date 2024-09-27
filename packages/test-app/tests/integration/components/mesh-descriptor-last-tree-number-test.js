@@ -16,8 +16,7 @@ module('Integration | Component | mesh-descriptor-last-tree-number', function (h
       .lookup('service:store')
       .findRecord('mesh-descriptor', descriptor.id);
     this.set('descriptor', descriptorModel);
-    await render(hbs`<MeshDescriptorLastTreeNumber @descriptor={{this.descriptor}} />
-`);
+    await render(hbs`<MeshDescriptorLastTreeNumber @descriptor={{this.descriptor}} />`);
     assert.strictEqual(component.text, 'tree number 4');
   });
 
@@ -27,8 +26,7 @@ module('Integration | Component | mesh-descriptor-last-tree-number', function (h
       .lookup('service:store')
       .findRecord('mesh-descriptor', descriptor.id);
     this.set('descriptor', descriptorModel);
-    await render(hbs`<MeshDescriptorLastTreeNumber @descriptor={{this.descriptor}} />
-`);
+    await render(hbs`<MeshDescriptorLastTreeNumber @descriptor={{this.descriptor}} />`);
     assert.strictEqual(component.text, '');
   });
 });

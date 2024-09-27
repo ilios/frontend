@@ -79,8 +79,12 @@ module(
       this.set('course', this.linkedCourseWithTime);
       this.set('instructor', this.instructor);
       await render(
-        hbs`<Course::VisualizeInstructorSessionTypeGraph @course={{this.course}} @user={{this.instructor}} @isIcon={{false}} @showDataTable={{true}}/>
-`,
+        hbs`<Course::VisualizeInstructorSessionTypeGraph
+  @course={{this.course}}
+  @user={{this.instructor}}
+  @isIcon={{false}}
+  @showDataTable={{true}}
+/>`,
       );
       assert.notOk(component.noData.isVisible);
       await waitFor('.loaded');
@@ -121,8 +125,12 @@ module(
       this.set('course', this.linkedCourseWithTime);
       this.set('instructor', this.instructor);
       await render(
-        hbs`<Course::VisualizeInstructorSessionTypeGraph @course={{this.course}} @user={{this.instructor}} @isIcon={{false}} @showDataTable={{true}}/>
-`,
+        hbs`<Course::VisualizeInstructorSessionTypeGraph
+  @course={{this.course}}
+  @user={{this.instructor}}
+  @isIcon={{false}}
+  @showDataTable={{true}}
+/>`,
       );
       assert.strictEqual(component.dataTable.rows[0].sessionType, 'Campaign');
       assert.strictEqual(component.dataTable.rows[1].sessionType, 'Standalone');
@@ -141,8 +149,12 @@ module(
       this.set('course', this.linkedCourseWithTime);
       this.set('instructor', this.instructor);
       await render(
-        hbs`<Course::VisualizeInstructorSessionTypeGraph @course={{this.course}} @user={{this.instructor}} @isIcon={{false}} @showDataTable={{true}}/>
-`,
+        hbs`<Course::VisualizeInstructorSessionTypeGraph
+  @course={{this.course}}
+  @user={{this.instructor}}
+  @isIcon={{false}}
+  @showDataTable={{true}}
+/>`,
       );
       assert.strictEqual(component.dataTable.rows[0].sessions.text, 'The San Leandro Horror');
       assert.strictEqual(component.dataTable.rows[1].sessions.text, 'Berkeley Investigations');
@@ -161,8 +173,12 @@ module(
       this.set('course', this.linkedCourseWithTime);
       this.set('instructor', this.instructor);
       await render(
-        hbs`<Course::VisualizeInstructorSessionTypeGraph @course={{this.course}} @user={{this.instructor}} @isIcon={{false}} @showDataTable={{true}}/>
-`,
+        hbs`<Course::VisualizeInstructorSessionTypeGraph
+  @course={{this.course}}
+  @user={{this.instructor}}
+  @isIcon={{false}}
+  @showDataTable={{true}}
+/>`,
       );
       assert.strictEqual(component.dataTable.rows[0].minutes, '180');
       assert.strictEqual(component.dataTable.rows[1].minutes, '630');
@@ -178,8 +194,12 @@ module(
       this.set('course', this.emptyCourse);
       this.set('instructor', this.instructor);
       await render(
-        hbs`<Course::VisualizeInstructorSessionTypeGraph @course={{this.course}} @user={{this.instructor}} @isIcon={{false}} @showDataTable={{true}}/>
-`,
+        hbs`<Course::VisualizeInstructorSessionTypeGraph
+  @course={{this.course}}
+  @user={{this.instructor}}
+  @isIcon={{false}}
+  @showDataTable={{true}}
+/>`,
       );
       assert.notOk(component.chart.isVisible);
       assert.notOk(component.dataTable.isVisible);
@@ -193,8 +213,12 @@ module(
       this.set('course', this.linkedCourseWithoutTime);
       this.set('instructor', this.instructor);
       await render(
-        hbs`<Course::VisualizeInstructorSessionTypeGraph @course={{this.course}} @user={{this.instructor}} @isIcon={{false}} @showDataTable={{true}}/>
-`,
+        hbs`<Course::VisualizeInstructorSessionTypeGraph
+  @course={{this.course}}
+  @user={{this.instructor}}
+  @isIcon={{false}}
+  @showDataTable={{true}}
+/>`,
       );
       assert.notOk(component.chart.isVisible);
       assert.notOk(component.noData.isVisible);

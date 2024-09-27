@@ -73,12 +73,11 @@ module('Integration | Component | learnergroup-selection-manager', function (hoo
     this.set('learnerGroups', [this.secondLevelLearnerGroup1, this.secondLevelLearnerGroup3]);
     this.set('cohorts', [this.cohort1, this.cohort2]);
     await render(hbs`<LearnergroupSelectionManager
-      @learnerGroups={{this.learnerGroups}}
-      @cohorts={{this.cohorts}}
-      @add={{(noop)}}
-      @remove={{(noop)}}
-    />
-`);
+  @learnerGroups={{this.learnerGroups}}
+  @cohorts={{this.cohorts}}
+  @add={{(noop)}}
+  @remove={{(noop)}}
+/>`);
     assert.strictEqual(component.selectedLearnerGroups.heading, 'Selected Learner Groups:');
     assert.strictEqual(component.selectedLearnerGroups.detailLearnergroupsList.trees.length, 2);
     assert.strictEqual(
@@ -160,12 +159,11 @@ module('Integration | Component | learnergroup-selection-manager', function (hoo
     this.set('learnerGroups', [this.secondLevelLearnerGroup1]);
     this.set('cohorts', [this.cohort1]);
     await render(hbs`<LearnergroupSelectionManager
-      @learnerGroups={{this.learnerGroups}}
-      @cohorts={{this.cohorts}}
-      @add={{(noop)}}
-      @remove={{this.remove}}
-    />
-`);
+  @learnerGroups={{this.learnerGroups}}
+  @cohorts={{this.cohorts}}
+  @add={{(noop)}}
+  @remove={{this.remove}}
+/>`);
     await component.selectedLearnerGroups.detailLearnergroupsList.trees[0].items[0].remove();
   });
 
@@ -177,12 +175,11 @@ module('Integration | Component | learnergroup-selection-manager', function (hoo
     this.set('learnerGroups', [this.secondLevelLearnerGroup1]);
     this.set('cohorts', [this.cohort1]);
     await render(hbs`<LearnergroupSelectionManager
-      @learnerGroups={{this.learnerGroups}}
-      @cohorts={{this.cohorts}}
-      @add={{(noop)}}
-      @remove={{this.remove}}
-    />
-`);
+  @learnerGroups={{this.learnerGroups}}
+  @cohorts={{this.cohorts}}
+  @add={{(noop)}}
+  @remove={{this.remove}}
+/>`);
     assert.ok(component.availableGroups.cohorts[0].trees[0].subgroups[0].isChecked);
     await component.availableGroups.cohorts[0].trees[0].subgroups[0].toggle();
   });
@@ -195,12 +192,11 @@ module('Integration | Component | learnergroup-selection-manager', function (hoo
     this.set('learnerGroups', []);
     this.set('cohorts', [this.cohort1]);
     await render(hbs`<LearnergroupSelectionManager
-      @learnerGroups={{this.learnerGroups}}
-      @cohorts={{this.cohorts}}
-      @add={{this.add}}
-      @remove={{(noop)}}
-    />
-`);
+  @learnerGroups={{this.learnerGroups}}
+  @cohorts={{this.cohorts}}
+  @add={{this.add}}
+  @remove={{(noop)}}
+/>`);
     assert.notOk(component.availableGroups.cohorts[0].trees[0].subgroups[0].isChecked);
     await component.availableGroups.cohorts[0].trees[0].subgroups[0].toggle();
   });

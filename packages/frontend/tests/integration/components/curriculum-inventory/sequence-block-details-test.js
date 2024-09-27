@@ -66,12 +66,12 @@ module('Integration | Component | curriculum-inventory/sequence-block-details', 
     this.set('sortBy', 'title');
     this.set('canUpdate', true);
     await render(hbs`<CurriculumInventory::SequenceBlockDetails
-      @report={{this.report}}
-      @sequenceBlock={{this.sequenceBlock}}
-      @canUpdate={{this.canUpdate}}
-      @sortSessionsBy={{this.sortBy}}
-      @setSortSessionBy={{(noop)}}
-    />`);
+  @report={{this.report}}
+  @sequenceBlock={{this.sequenceBlock}}
+  @canUpdate={{this.canUpdate}}
+  @sortSessionsBy={{this.sortBy}}
+  @setSortSessionBy={{(noop)}}
+/>`);
     assert.strictEqual(component.header.title.value, blockModel.title);
     assert.strictEqual(
       component.overview.description.text,

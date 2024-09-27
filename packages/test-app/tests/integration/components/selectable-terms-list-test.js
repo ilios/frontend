@@ -57,12 +57,11 @@ module('Integration | Component | selectable terms list', function (hooks) {
     this.set('selectedTerms', []);
     this.set('term', this.rootTerm);
     await render(hbs`<SelectableTermsList
-      @selectedTerms={{this.selectedTerms}}
-      @parent={{this.term}}
-      @add={{(noop)}}
-      @remove={{(noop)}}
-    />
-`);
+  @selectedTerms={{this.selectedTerms}}
+  @parent={{this.term}}
+  @add={{(noop)}}
+  @remove={{(noop)}}
+/>`);
     assert.strictEqual(component.items.length, 2);
     assert.strictEqual(component.items[0].title, 'First');
     assert.strictEqual(component.items[1].title, 'Second');
@@ -82,12 +81,11 @@ module('Integration | Component | selectable terms list', function (hooks) {
     this.set('selectedTerms', []);
     this.set('term', this.rootTerm);
     await render(hbs`<SelectableTermsList
-      @selectedTerms={{this.selectedTerms}}
-      @parent={{this.term}}
-      @add={{(noop)}}
-      @remove={{(noop)}}
-    />
-`);
+  @selectedTerms={{this.selectedTerms}}
+  @parent={{this.term}}
+  @add={{(noop)}}
+  @remove={{(noop)}}
+/>`);
     assert.strictEqual(component.items.length, 1);
     assert.strictEqual(component.items[0].title, 'First');
     assert.strictEqual(component.lists.length, 1);
@@ -111,12 +109,11 @@ module('Integration | Component | selectable terms list', function (hooks) {
       );
     });
     await render(hbs`<SelectableTermsList
-      @selectedTerms={{this.selectedTerms}}
-      @parent={{this.term}}
-      @add={{this.add}}
-      @remove={{this.remove}}
-    />
-`);
+  @selectedTerms={{this.selectedTerms}}
+  @parent={{this.term}}
+  @add={{this.add}}
+  @remove={{this.remove}}
+/>`);
     assert.notOk(component.items[0].isSelected);
     await component.items[0].click();
     assert.ok(component.items[0].isSelected);
@@ -129,13 +126,12 @@ module('Integration | Component | selectable terms list', function (hooks) {
     this.set('term', this.rootTerm);
     this.set('termFilter', 'Gamma');
     await render(hbs`<SelectableTermsList
-      @selectedTerms={{this.selectedTerms}}
-      @parent={{this.term}}
-      @add={{(noop)}}
-      @remove={{(noop)}}
-      @termFilter={{this.termFilter}}
-    />
-`);
+  @selectedTerms={{this.selectedTerms}}
+  @parent={{this.term}}
+  @add={{(noop)}}
+  @remove={{(noop)}}
+  @termFilter={{this.termFilter}}
+/>`);
     assert.strictEqual(component.items.length, 1);
     assert.strictEqual(component.items[0].title, 'Second');
     assert.strictEqual(component.lists[0].items.length, 1);
@@ -147,13 +143,12 @@ module('Integration | Component | selectable terms list', function (hooks) {
     this.set('term', this.rootTerm);
     this.set('termFilter', 'amma');
     await render(hbs`<SelectableTermsList
-      @selectedTerms={{this.selectedTerms}}
-      @parent={{this.term}}
-      @add={{(noop)}}
-      @remove={{(noop)}}
-      @termFilter={{this.termFilter}}
-    />
-`);
+  @selectedTerms={{this.selectedTerms}}
+  @parent={{this.term}}
+  @add={{(noop)}}
+  @remove={{(noop)}}
+  @termFilter={{this.termFilter}}
+/>`);
     assert.strictEqual(component.items.length, 1);
     assert.strictEqual(component.items[0].title, 'Second');
     assert.strictEqual(component.lists[0].items.length, 1);

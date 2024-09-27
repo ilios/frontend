@@ -1,8 +1,4 @@
-<div
-  class="locale-chooser"
-  data-test-locale-chooser
-  {{on-click-outside this.close}}
->
+<div class="locale-chooser" data-test-locale-chooser {{on-click-outside this.close}}>
   <button
     type="button"
     class="toggle"
@@ -21,10 +17,7 @@
     <FaIcon @icon={{if this.isOpen "caret-down" "caret-right"}} />
   </button>
   {{#if this.isOpen}}
-    <div
-      class="menu"
-      role="menu"
-    >
+    <div class="menu" role="menu">
       {{#each this.locales as |loc index|}}
         <button
           type="button"

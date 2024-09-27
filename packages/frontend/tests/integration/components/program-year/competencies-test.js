@@ -36,13 +36,13 @@ module('Integration | Component | program-year/competencies', function (hooks) {
     const programYear = await this.owner.lookup('service:store').findRecord('program-year', 1);
     this.set('programYear', programYear);
     await render(hbs`<ProgramYear::Competencies
-      @programYear={{this.programYear}}
-      @canUpdate={{true}}
-      @isManaging={{false}}
-      @collapse={{(noop)}}
-      @expand={{(noop)}}
-      @setIsManaging={{(noop)}}
-    />`);
+  @programYear={{this.programYear}}
+  @canUpdate={{true}}
+  @isManaging={{false}}
+  @collapse={{(noop)}}
+  @expand={{(noop)}}
+  @setIsManaging={{(noop)}}
+/>`);
 
     assert.strictEqual(component.title, 'Competencies (3)');
     assert.ok(component.canManage);
@@ -65,13 +65,13 @@ module('Integration | Component | program-year/competencies', function (hooks) {
       assert.true(b);
     });
     await render(hbs`<ProgramYear::Competencies
-      @programYear={{this.programYear}}
-      @canUpdate={{true}}
-      @isManaging={{false}}
-      @collapse={{(noop)}}
-      @expand={{(noop)}}
-      @setIsManaging={{this.setIsManaging}}
-    />`);
+  @programYear={{this.programYear}}
+  @canUpdate={{true}}
+  @isManaging={{false}}
+  @collapse={{(noop)}}
+  @expand={{(noop)}}
+  @setIsManaging={{this.setIsManaging}}
+/>`);
 
     await component.manage();
   });
@@ -84,13 +84,13 @@ module('Integration | Component | program-year/competencies', function (hooks) {
       assert.ok(true);
     });
     await render(hbs`<ProgramYear::Competencies
-      @programYear={{this.programYear}}
-      @canUpdate={{true}}
-      @isManaging={{false}}
-      @collapse={{this.collapse}}
-      @expand={{(noop)}}
-      @setIsManaging={{(noop)}}
-    />`);
+  @programYear={{this.programYear}}
+  @canUpdate={{true}}
+  @isManaging={{false}}
+  @collapse={{this.collapse}}
+  @expand={{(noop)}}
+  @setIsManaging={{(noop)}}
+/>`);
     await component.clickTitle();
   });
 });

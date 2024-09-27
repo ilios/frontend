@@ -39,10 +39,10 @@ module('Integration | Component | reports/subject/new/program-year', function (h
       this.set('currentId', id);
     });
     await render(hbs`<Reports::Subject::New::ProgramYear
-      @currentId={{this.currentId}}
-      @changeId={{this.changeId}}
-      @school={{null}}
-     />`);
+  @currentId={{this.currentId}}
+  @changeId={{this.changeId}}
+  @school={{null}}
+/>`);
 
     assert.strictEqual(component.options.length, 4);
     assert.strictEqual(component.options[0].text, '2027 program 1');
@@ -66,10 +66,10 @@ module('Integration | Component | reports/subject/new/program-year', function (h
     assert.expect(5);
     this.set('currentId', '3');
     await render(hbs`<Reports::Subject::New::ProgramYear
-      @currentId={{this.currentId}}
-      @changeId={{this.changeId}}
-      @school={{null}}
-     />`);
+  @currentId={{this.currentId}}
+  @changeId={{this.changeId}}
+  @school={{null}}
+/>`);
     this.set('changeId', (id) => {
       assert.strictEqual(id, '1');
       this.set('currentId', id);
@@ -91,10 +91,10 @@ module('Integration | Component | reports/subject/new/program-year', function (h
       this.set('currentId', id);
     });
     await render(hbs`<Reports::Subject::New::ProgramYear
-      @currentId={{this.currentId}}
-      @changeId={{this.changeId}}
-      @school={{this.school}}
-     />`);
+  @currentId={{this.currentId}}
+  @changeId={{this.changeId}}
+  @school={{this.school}}
+/>`);
 
     assert.strictEqual(component.options.length, 3);
     assert.strictEqual(component.options[0].text, '2011 program 0');
@@ -113,10 +113,10 @@ module('Integration | Component | reports/subject/new/program-year', function (h
       assert.strictEqual(id, '2');
     });
     await render(hbs`<Reports::Subject::New::ProgramYear
-      @currentId={{null}}
-      @changeId={{this.changeId}}
-      @school={{this.school}}
-     />`);
+  @currentId={{null}}
+  @changeId={{this.changeId}}
+  @school={{this.school}}
+/>`);
 
     this.set('changeId', (id) => {
       assert.strictEqual(id, '3');

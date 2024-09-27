@@ -9,11 +9,7 @@ module('Integration | Component | leadership search', function (hooks) {
   setupMirage(hooks);
 
   test('it renders', async function (assert) {
-    await render(hbs`<LeadershipSearch
-      @existingUsers={{(array)}}
-      @selectUser={{(noop)}}
-    />
-`);
+    await render(hbs`<LeadershipSearch @existingUsers={{(array)}} @selectUser={{(noop)}} />`);
 
     const search = 'input[type="search"]';
 
@@ -21,11 +17,7 @@ module('Integration | Component | leadership search', function (hooks) {
   });
 
   test('less than 3 characters triggers warning', async function (assert) {
-    await render(hbs`<LeadershipSearch
-      @existingUsers={{(array)}}
-      @selectUser={{(noop)}}
-    />
-`);
+    await render(hbs`<LeadershipSearch @existingUsers={{(array)}} @selectUser={{(noop)}} />`);
     const search = 'input[type="search"]';
     const results = 'ul';
 
@@ -39,11 +31,7 @@ module('Integration | Component | leadership search', function (hooks) {
       lastName: 'person',
       email: 'testemail',
     });
-    await render(hbs`<LeadershipSearch
-      @existingUsers={{(array)}}
-      @selectUser={{(noop)}}
-    />
-`);
+    await render(hbs`<LeadershipSearch @existingUsers={{(array)}} @selectUser={{(noop)}} />`);
     const search = 'input[type="search"]';
     const results = 'ul li';
     const resultsCount = `${results}:nth-of-type(1)`;
@@ -74,11 +62,7 @@ module('Integration | Component | leadership search', function (hooks) {
   });
 
   test('no results displays messages', async function (assert) {
-    await render(hbs`<LeadershipSearch
-      @existingUsers={{(array)}}
-      @selectUser={{(noop)}}
-    />
-`);
+    await render(hbs`<LeadershipSearch @existingUsers={{(array)}} @selectUser={{(noop)}} />`);
     const search = 'input[type="search"]';
     const results = 'ul li';
     const resultsCount = `${results}:nth-of-type(1)`;
@@ -97,11 +81,7 @@ module('Integration | Component | leadership search', function (hooks) {
     this.set('select', (user) => {
       assert.strictEqual(parseInt(user.id, 10), 1);
     });
-    await render(hbs`<LeadershipSearch
-      @existingUsers={{(array)}}
-      @selectUser={{this.select}}
-    />
-`);
+    await render(hbs`<LeadershipSearch @existingUsers={{(array)}} @selectUser={{this.select}} />`);
     const search = 'input[type="search"]';
     const results = 'ul li';
     const firstResult = `${results}:nth-of-type(2)`;
@@ -132,11 +112,9 @@ module('Integration | Component | leadership search', function (hooks) {
     const user1 = await this.owner.lookup('service:store').findRecord('user', 1);
 
     this.set('existingUsers', [user1]);
-    await render(hbs`<LeadershipSearch
-      @existingUsers={{this.existingUsers}}
-      @selectUser={{this.select}}
-    />
-`);
+    await render(
+      hbs`<LeadershipSearch @existingUsers={{this.existingUsers}} @selectUser={{this.select}} />`,
+    );
     const search = 'input[type="search"]';
     const results = 'ul li';
     const resultsCount = `${results}:nth-of-type(1)`;

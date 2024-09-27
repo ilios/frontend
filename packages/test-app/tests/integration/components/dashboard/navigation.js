@@ -9,8 +9,7 @@ module('Integration | Component | dashboard/navigation', function (hooks) {
   setupRenderingTest(hooks);
 
   test('it renders and is accessible', async function (assert) {
-    await render(hbs`<Dashboard::Navigation />
-`);
+    await render(hbs`<Dashboard::Navigation />`);
     assert.strictEqual(component.calendar.text, 'Calendar');
     assert.strictEqual(component.calendar.linkTarget, '/dashboard/calendar');
     assert.strictEqual(component.materials.text, 'Materials');

@@ -11,8 +11,7 @@ module('Integration | Helper | includes', function (hooks) {
   test('it checks if an array includes a primitive value', async function (assert) {
     this.set('items', ['foo', 'bar', 'baz']);
 
-    await render(hbs`{{includes "foo" this.items}}
-`);
+    await render(hbs`{{includes 'foo' this.items}}`);
 
     assert.dom().hasText('true', 'should render true');
   });
@@ -22,8 +21,7 @@ module('Integration | Helper | includes', function (hooks) {
     this.set('selectedGame', games[0]);
     this.set('wishlist', games);
 
-    await render(hbs`{{includes this.selectedGame this.wishlist}}
-`);
+    await render(hbs`{{includes this.selectedGame this.wishlist}}`);
 
     assert.dom().hasText('true', 'should render true');
   });
@@ -32,8 +30,7 @@ module('Integration | Helper | includes', function (hooks) {
     this.set('items', ['foo', 'bar', 'baz', undefined, null]);
     this.set('selectedItems', ['foo', 'bar', undefined, null]);
 
-    await render(hbs`{{includes this.selectedItems this.items}}
-`);
+    await render(hbs`{{includes this.selectedItems this.items}}`);
 
     assert.dom().hasText('true', 'should render true');
   });
@@ -43,8 +40,7 @@ module('Integration | Helper | includes', function (hooks) {
     this.set('selectedGame', games[0]);
     this.set('wishlist', games);
 
-    await render(hbs`{{includes this.selectedGame this.wishlist}}
-`);
+    await render(hbs`{{includes this.selectedGame this.wishlist}}`);
 
     assert.dom().hasText('true', 'should render true');
 
@@ -65,13 +61,10 @@ module('Integration | Helper | includes', function (hooks) {
     this.set('array', null);
     this.set('text', 'this is all that will render');
 
-    await render(hbs`
-      {{this.text}}
-      {{~#each (includes 1 this.array) as |val|~}}
-        {{val}}
-      {{~/each~}}
-
-`);
+    await render(hbs`{{this.text}}
+{{~#each (includes 1 this.array) as |val|~}}
+  {{val}}
+{{~/each~}}`);
 
     assert.dom().hasText('this is all that will render', 'no error is thrown');
   });
@@ -80,13 +73,10 @@ module('Integration | Helper | includes', function (hooks) {
     this.set('array', undefined);
     this.set('text', 'this is all that will render');
 
-    await render(hbs`
-      {{this.text}}
-      {{~#each (includes 1 this.array) as |val|~}}
-        {{val}}
-      {{~/each~}}
-
-`);
+    await render(hbs`{{this.text}}
+{{~#each (includes 1 this.array) as |val|~}}
+  {{val}}
+{{~/each~}}`);
 
     assert.dom().hasText('this is all that will render', 'no error is thrown');
   });

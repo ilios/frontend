@@ -15,7 +15,9 @@
     <ul class="report-results" data-test-results>
       {{#each this.sortedData as |obj|}}
         <li>
-          {{obj.vocabulary.title}} &gt; {{obj.title}}
+          {{obj.vocabulary.title}}
+          &gt;
+          {{obj.title}}
         </li>
       {{else}}
         <li>{{t "general.none"}}</li>

@@ -72,8 +72,12 @@ module('Integration | Component | course/visualize-term-graph', function (hooks)
     this.set('course', this.linkedCourseWithTime);
     this.set('term', this.term);
     await render(
-      hbs`<Course::VisualizeTermGraph @course={{this.course}} @term={{this.term}} @isIcon={{false}} @showDataTable={{true}} />
-`,
+      hbs`<Course::VisualizeTermGraph
+  @course={{this.course}}
+  @term={{this.term}}
+  @isIcon={{false}}
+  @showDataTable={{true}}
+/>`,
     );
     assert.notOk(component.noData.isVisible);
     //let the chart animations finish
@@ -107,8 +111,12 @@ module('Integration | Component | course/visualize-term-graph', function (hooks)
   test('sort data-table by session type', async function (assert) {
     this.set('course', this.linkedCourseWithTime);
     await render(
-      hbs`<Course::VisualizeTermGraph @course={{this.course}} @term={{this.term}} @isIcon={{false}} @showDataTable={{true}} />
-`,
+      hbs`<Course::VisualizeTermGraph
+  @course={{this.course}}
+  @term={{this.term}}
+  @isIcon={{false}}
+  @showDataTable={{true}}
+/>`,
     );
     assert.strictEqual(component.dataTable.rows[0].sessionType, 'Campaign');
     assert.strictEqual(component.dataTable.rows[1].sessionType, 'Standalone');
@@ -126,8 +134,12 @@ module('Integration | Component | course/visualize-term-graph', function (hooks)
   test('sort data-table by sessions', async function (assert) {
     this.set('course', this.linkedCourseWithTime);
     await render(
-      hbs`<Course::VisualizeTermGraph @course={{this.course}} @term={{this.term}} @isIcon={{false}} @showDataTable={{true}} />
-`,
+      hbs`<Course::VisualizeTermGraph
+  @course={{this.course}}
+  @term={{this.term}}
+  @isIcon={{false}}
+  @showDataTable={{true}}
+/>`,
     );
     assert.strictEqual(component.dataTable.rows[0].sessions.text, 'The San Leandro Horror');
     assert.strictEqual(component.dataTable.rows[1].sessions.text, 'Berkeley Investigations');
@@ -145,8 +157,12 @@ module('Integration | Component | course/visualize-term-graph', function (hooks)
   test('sort data-table by minutes', async function (assert) {
     this.set('course', this.linkedCourseWithTime);
     await render(
-      hbs`<Course::VisualizeTermGraph @course={{this.course}} @term={{this.term}} @isIcon={{false}} @showDataTable={{true}} />
-`,
+      hbs`<Course::VisualizeTermGraph
+  @course={{this.course}}
+  @term={{this.term}}
+  @isIcon={{false}}
+  @showDataTable={{true}}
+/>`,
     );
     assert.strictEqual(component.dataTable.rows[0].minutes, '180');
     assert.strictEqual(component.dataTable.rows[1].minutes, '630');
@@ -162,8 +178,12 @@ module('Integration | Component | course/visualize-term-graph', function (hooks)
     this.set('course', this.emptyCourse);
     this.set('term', this.term);
     await render(
-      hbs`<Course::VisualizeTermGraph @course={{this.course}} @term={{this.term}} @isIcon={{false}} @showDataTable={{true}} />
-`,
+      hbs`<Course::VisualizeTermGraph
+  @course={{this.course}}
+  @term={{this.term}}
+  @isIcon={{false}}
+  @showDataTable={{true}}
+/>`,
     );
     assert.notOk(component.chart.isVisible);
     assert.notOk(component.dataTable.isVisible);
@@ -177,8 +197,12 @@ module('Integration | Component | course/visualize-term-graph', function (hooks)
     this.set('course', this.linkedCourseWithoutTime);
     this.set('term', this.term);
     await render(
-      hbs`<Course::VisualizeTermGraph @course={{this.course}} @term={{this.term}} @isIcon={{false}} @showDataTable={{true}} />
-`,
+      hbs`<Course::VisualizeTermGraph
+  @course={{this.course}}
+  @term={{this.term}}
+  @isIcon={{false}}
+  @showDataTable={{true}}
+/>`,
     );
     assert.notOk(component.chart.isVisible);
     assert.notOk(component.noData.isVisible);

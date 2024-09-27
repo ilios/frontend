@@ -1,9 +1,5 @@
 {{#let (unique-id) as |templateId|}}
-  <div
-    class="school-vocabulary-manager"
-    data-test-school-vocabulary-manager
-    attributes...
-  >
+  <div class="school-vocabulary-manager" data-test-school-vocabulary-manager attributes...>
     <div class="breadcrumbs" data-test-breadcrumbs>
       <span>
         <button
@@ -19,7 +15,7 @@
         {{@vocabulary.title}}
       </span>
     </div>
-    <br>
+    <br />
     <div class="school-vocabulary-manager-title" data-test-title>
       <label for="title-{{templateId}}">
         {{t "general.title"}}:
@@ -30,7 +26,8 @@
           @save={{perform this.changeTitle}}
           @close={{this.revertTitleChanges}}
           @saveOnEnter={{true}}
-          @closeOnEscape={{true}} as |isSaving|
+          @closeOnEscape={{true}}
+          as |isSaving|
         >
           <input
             id="title-{{templateId}}"
@@ -39,7 +36,7 @@
             disabled={{isSaving}}
             {{on "input" (pick "target.value" (set this "titleValue"))}}
             {{on "keyup" (fn this.addErrorDisplayFor "titleValue")}}
-          >
+          />
           <ValidationError @errors={{get-errors-for this.titleValue}} />
         </EditableField>
       {{else}}
@@ -53,11 +50,7 @@
     <div class="terms" data-test-terms>
       {{#if this.newTerm}}
         <div class="saved-result">
-          <button
-            class="link-button"
-            type="button"
-            {{on "click" (fn @manageTerm this.newTerm.id)}}
-          >
+          <button class="link-button" type="button" {{on "click" (fn @manageTerm this.newTerm.id)}}>
             <FaIcon @icon="square-up-right" />
             {{this.newTerm.title}}
           </button>
@@ -65,7 +58,7 @@
         </div>
       {{/if}}
       {{#if @canCreate}}
-        <SchoolVocabularyNewTerm @createTerm={{this.createTerm}} @vocabulary={{@vocabulary}}/>
+        <SchoolVocabularyNewTerm @createTerm={{this.createTerm}} @vocabulary={{@vocabulary}} />
       {{/if}}
       <ul data-test-term-list>
         {{#each this.sortedTerms as |term|}}
@@ -78,7 +71,11 @@
             >
               {{term.title}}
               {{#if term.hasChildren}}
-                <FaIcon @icon="asterisk" data-test-has-children @title={{t "general.thisTermHasSubTerms"}} />
+                <FaIcon
+                  @icon="asterisk"
+                  data-test-has-children
+                  @title={{t "general.thisTermHasSubTerms"}}
+                />
               {{/if}}
               {{#unless term.active}}
                 <em>

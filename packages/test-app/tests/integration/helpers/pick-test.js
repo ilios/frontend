@@ -14,14 +14,11 @@ module('Integration | Helper | pick', function (hooks) {
       assert.strictEqual(value, 'pizza party', 'The action receives the correct value');
     });
 
-    await render(hbs`
-      <input
-        id="test-input"
-        value="pizza party"
-        {{on "focusin" (pipe (pick "target.value") this.onFocus)}}
-      />
-
-`);
+    await render(hbs`<input
+  id='test-input'
+  value='pizza party'
+  {{on 'focusin' (pipe (pick 'target.value') this.onFocus)}}
+/>`);
 
     await click('#test-input');
   });
@@ -33,14 +30,9 @@ module('Integration | Helper | pick', function (hooks) {
       assert.strictEqual(value, 'pizza party', 'The action receives the correct value');
     });
 
-    await render(hbs`
-      <input
-        id="test-input"
-        value="pizza party"
-        {{on "focusin" (pick "target.value" this.onFocus)}}
-      />
-
-`);
+    await render(
+      hbs`<input id='test-input' value='pizza party' {{on 'focusin' (pick 'target.value' this.onFocus)}} />`,
+    );
 
     await click('#test-input');
   });

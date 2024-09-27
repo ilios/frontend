@@ -145,20 +145,19 @@ module('Integration | Component | dashboard/materials', function (hooks) {
     });
 
     await render(hbs`<Dashboard::Materials
-        @courseIdFilter={{null}}
-        @filter=""
-        @sortBy="title"
-        @offset={{0}}
-        @setOffset={{(noop)}}
-        @limit={{25}}
-        @setLimit={{(noop)}}
-        @setCourseIdFilter={{(noop)}}
-        @setFilter={{(noop)}}
-        @setSortBy={{(noop)}}
-        @toggleMaterialsMode={{(noop)}}
-        @showAllMaterials={{false}}
-    />
-`);
+  @courseIdFilter={{null}}
+  @filter=''
+  @sortBy='title'
+  @offset={{0}}
+  @setOffset={{(noop)}}
+  @limit={{25}}
+  @setLimit={{(noop)}}
+  @setCourseIdFilter={{(noop)}}
+  @setFilter={{(noop)}}
+  @setSortBy={{(noop)}}
+  @toggleMaterialsMode={{(noop)}}
+  @showAllMaterials={{false}}
+/>`);
     assert.ok(component.header.displayToggle.firstButton.isChecked);
     assert.strictEqual(component.title, 'My Materials');
     assert.strictEqual(component.courseFilter.options.length, 5);
@@ -259,20 +258,19 @@ module('Integration | Component | dashboard/materials', function (hooks) {
       };
     });
     await render(hbs`<Dashboard::Materials
-        @courseIdFilter={{null}}
-        @filter=""
-        @sortBy="title"
-        @offset={{0}}
-        @setOffset={{(noop)}}
-        @limit={{25}}
-        @setLimit={{(noop)}}
-        @setCourseIdFilter={{(noop)}}
-        @setFilter={{(noop)}}
-        @setSortBy={{(noop)}}
-        @toggleMaterialsMode={{(noop)}}
-        @showAllMaterials={{true}}
-    />
-`);
+  @courseIdFilter={{null}}
+  @filter=''
+  @sortBy='title'
+  @offset={{0}}
+  @setOffset={{(noop)}}
+  @limit={{25}}
+  @setLimit={{(noop)}}
+  @setCourseIdFilter={{(noop)}}
+  @setFilter={{(noop)}}
+  @setSortBy={{(noop)}}
+  @toggleMaterialsMode={{(noop)}}
+  @showAllMaterials={{true}}
+/>`);
 
     assert.ok(component.header.displayToggle.secondButton.isChecked);
     assert.strictEqual(component.courseFilter.options.length, 6);
@@ -297,20 +295,19 @@ module('Integration | Component | dashboard/materials', function (hooks) {
       };
     });
     await render(hbs`<Dashboard::Materials
-        @courseIdFilter={{null}}
-        @filter=""
-        @sortBy="title"
-        @offset={{0}}
-        @setOffset={{(noop)}}
-        @limit={{25}}
-        @setLimit={{(noop)}}
-        @setCourseIdFilter={{(noop)}}
-        @setFilter={{(noop)}}
-        @setSortBy={{(noop)}}
-        @toggleMaterialsMode={{(noop)}}
-        @showAllMaterials={{true}}
-    />
-`);
+  @courseIdFilter={{null}}
+  @filter=''
+  @sortBy='title'
+  @offset={{0}}
+  @setOffset={{(noop)}}
+  @limit={{25}}
+  @setLimit={{(noop)}}
+  @setCourseIdFilter={{(noop)}}
+  @setFilter={{(noop)}}
+  @setSortBy={{(noop)}}
+  @toggleMaterialsMode={{(noop)}}
+  @showAllMaterials={{true}}
+/>`);
 
     assert.strictEqual(component.courseFilter.options.length, 1);
     assert.strictEqual(component.courseFilter.options[0].text, 'All Courses');
@@ -332,20 +329,19 @@ module('Integration | Component | dashboard/materials', function (hooks) {
       this.set('courseId', id);
     });
     await render(hbs`<Dashboard::Materials
-        @courseIdFilter={{this.courseId}}
-        @filter=""
-        @sortBy="title"
-        @offset={{0}}
-        @setOffset={{(noop)}}
-        @limit={{25}}
-        @setLimit={{(noop)}}
-        @setCourseIdFilter={{this.setCourse}}
-        @setFilter={{(noop)}}
-        @setSortBy={{(noop)}}
-        @toggleMaterialsMode={{(noop)}}
-        @showAllMaterials={{false}}
-    />
-`);
+  @courseIdFilter={{this.courseId}}
+  @filter=''
+  @sortBy='title'
+  @offset={{0}}
+  @setOffset={{(noop)}}
+  @limit={{25}}
+  @setLimit={{(noop)}}
+  @setCourseIdFilter={{this.setCourse}}
+  @setFilter={{(noop)}}
+  @setSortBy={{(noop)}}
+  @toggleMaterialsMode={{(noop)}}
+  @showAllMaterials={{false}}
+/>`);
 
     assert.strictEqual(component.courseFilter.options.length, 5);
     assert.ok(component.courseFilter.options[1].isSelected);
@@ -372,20 +368,19 @@ module('Integration | Component | dashboard/materials', function (hooks) {
       this.set('filter', text);
     });
     await render(hbs`<Dashboard::Materials
-        @courseIdFilter={{null}}
-        @filter={{this.filter}}
-        @sortBy="title"
-        @offset={{0}}
-        @setOffset={{(noop)}}
-        @limit={{25}}
-        @setLimit={{(noop)}}
-        @setCourseIdFilter={{(noop)}}
-        @setFilter={{this.setFilter}}
-        @setSortBy={{(noop)}}
-        @toggleMaterialsMode={{(noop)}}
-        @showAllMaterials={{false}}
-    />
-`);
+  @courseIdFilter={{null}}
+  @filter={{this.filter}}
+  @sortBy='title'
+  @offset={{0}}
+  @setOffset={{(noop)}}
+  @limit={{25}}
+  @setLimit={{(noop)}}
+  @setCourseIdFilter={{(noop)}}
+  @setFilter={{this.setFilter}}
+  @setSortBy={{(noop)}}
+  @toggleMaterialsMode={{(noop)}}
+  @showAllMaterials={{false}}
+/>`);
 
     assert.strictEqual(component.textFilter.value, 'title3');
     assert.strictEqual(component.topPaginator.controls.pagerDetails.text, 'Showing 1 - 1 of 1');
@@ -410,20 +405,19 @@ module('Integration | Component | dashboard/materials', function (hooks) {
       assert.strictEqual(offset, 150);
     });
     await render(hbs`<Dashboard::Materials
-        @courseIdFilter={{null}}
-        @filter=""
-        @sortBy="title"
-        @offset={{this.limit}}
-        @setOffset={{this.setOffset}}
-        @limit={{this.offset}}
-        @setLimit={{(noop)}}
-        @setCourseIdFilter={{(noop)}}
-        @setFilter={{(noop)}}
-        @setSortBy={{(noop)}}
-        @toggleMaterialsMode={{(noop)}}
-        @showAllMaterials={{true}}
-    />
-`);
+  @courseIdFilter={{null}}
+  @filter=''
+  @sortBy='title'
+  @offset={{this.limit}}
+  @setOffset={{this.setOffset}}
+  @limit={{this.offset}}
+  @setLimit={{(noop)}}
+  @setCourseIdFilter={{(noop)}}
+  @setFilter={{(noop)}}
+  @setSortBy={{(noop)}}
+  @toggleMaterialsMode={{(noop)}}
+  @showAllMaterials={{true}}
+/>`);
     assert.strictEqual(
       component.topPaginator.controls.pagerDetails.text,
       'Showing 51 - 150 of 205',
@@ -445,20 +439,19 @@ module('Integration | Component | dashboard/materials', function (hooks) {
       this.set('sortBy', sortBy);
     });
     await render(hbs`<Dashboard::Materials
-        @courseIdFilter={{null}}
-        @filter=""
-        @sortBy={{this.sortBy}}
-        @offset={{0}}
-        @setOffset={{(noop)}}
-        @limit={{25}}
-        @setLimit={{(noop)}}
-        @setCourseIdFilter={{(noop)}}
-        @setFilter={{(noop)}}
-        @setSortBy={{this.setSortBy}}
-        @toggleMaterialsMode={{(noop)}}
-        @showAllMaterials={{true}}
-    />
-`);
+  @courseIdFilter={{null}}
+  @filter=''
+  @sortBy={{this.sortBy}}
+  @offset={{0}}
+  @setOffset={{(noop)}}
+  @limit={{25}}
+  @setLimit={{(noop)}}
+  @setCourseIdFilter={{(noop)}}
+  @setFilter={{(noop)}}
+  @setSortBy={{this.setSortBy}}
+  @toggleMaterialsMode={{(noop)}}
+  @showAllMaterials={{true}}
+/>`);
     assert.strictEqual(component.topPaginator.controls.pagerDetails.text, 'Showing 1 - 25 of 205');
     assert.notOk(component.table.headers.sessionTitle.isSortedOn);
     assert.ok(component.table.headers.courseTitle.isSortedOn);
@@ -484,20 +477,19 @@ module('Integration | Component | dashboard/materials', function (hooks) {
       this.set('sortBy', sortBy);
     });
     await render(hbs`<Dashboard::Materials
-        @courseIdFilter={{null}}
-        @filter=""
-        @sortBy={{this.sortBy}}
-        @offset={{0}}
-        @setOffset={{(noop)}}
-        @limit={{25}}
-        @setLimit={{(noop)}}
-        @setCourseIdFilter={{(noop)}}
-        @setFilter={{(noop)}}
-        @setSortBy={{this.setSortBy}}
-        @toggleMaterialsMode={{(noop)}}
-        @showAllMaterials={{true}}
-    />
-`);
+  @courseIdFilter={{null}}
+  @filter=''
+  @sortBy={{this.sortBy}}
+  @offset={{0}}
+  @setOffset={{(noop)}}
+  @limit={{25}}
+  @setLimit={{(noop)}}
+  @setCourseIdFilter={{(noop)}}
+  @setFilter={{(noop)}}
+  @setSortBy={{this.setSortBy}}
+  @toggleMaterialsMode={{(noop)}}
+  @showAllMaterials={{true}}
+/>`);
     assert.strictEqual(component.topPaginator.controls.pagerDetails.text, 'Showing 1 - 25 of 205');
     assert.ok(component.table.headers.sessionTitle.isSortedOn);
     assert.ok(component.table.headers.sessionTitle.isSortedAscending);
@@ -523,20 +515,19 @@ module('Integration | Component | dashboard/materials', function (hooks) {
       this.set('sortBy', sortBy);
     });
     await render(hbs`<Dashboard::Materials
-        @courseIdFilter={{null}}
-        @filter=""
-        @sortBy={{this.sortBy}}
-        @offset={{0}}
-        @setOffset={{(noop)}}
-        @limit={{25}}
-        @setLimit={{(noop)}}
-        @setCourseIdFilter={{(noop)}}
-        @setFilter={{(noop)}}
-        @setSortBy={{this.setSortBy}}
-        @toggleMaterialsMode={{(noop)}}
-        @showAllMaterials={{true}}
-    />
-`);
+  @courseIdFilter={{null}}
+  @filter=''
+  @sortBy={{this.sortBy}}
+  @offset={{0}}
+  @setOffset={{(noop)}}
+  @limit={{25}}
+  @setLimit={{(noop)}}
+  @setCourseIdFilter={{(noop)}}
+  @setFilter={{(noop)}}
+  @setSortBy={{this.setSortBy}}
+  @toggleMaterialsMode={{(noop)}}
+  @showAllMaterials={{true}}
+/>`);
     assert.strictEqual(component.topPaginator.controls.pagerDetails.text, 'Showing 1 - 25 of 205');
     assert.notOk(component.table.headers.sessionTitle.isSortedOn);
     assert.notOk(component.table.headers.courseTitle.isSortedOn);
@@ -565,20 +556,19 @@ module('Integration | Component | dashboard/materials', function (hooks) {
       this.set('sortBy', sortBy);
     });
     await render(hbs`<Dashboard::Materials
-        @courseIdFilter={{null}}
-        @filter=""
-        @sortBy={{this.sortBy}}
-        @offset={{0}}
-        @setOffset={{(noop)}}
-        @limit={{25}}
-        @setLimit={{(noop)}}
-        @setCourseIdFilter={{(noop)}}
-        @setFilter={{(noop)}}
-        @setSortBy={{this.setSortBy}}
-        @toggleMaterialsMode={{(noop)}}
-        @showAllMaterials={{true}}
-    />
-`);
+  @courseIdFilter={{null}}
+  @filter=''
+  @sortBy={{this.sortBy}}
+  @offset={{0}}
+  @setOffset={{(noop)}}
+  @limit={{25}}
+  @setLimit={{(noop)}}
+  @setCourseIdFilter={{(noop)}}
+  @setFilter={{(noop)}}
+  @setSortBy={{this.setSortBy}}
+  @toggleMaterialsMode={{(noop)}}
+  @showAllMaterials={{true}}
+/>`);
     assert.strictEqual(component.topPaginator.controls.pagerDetails.text, 'Showing 1 - 25 of 205');
     assert.notOk(component.table.headers.sessionTitle.isSortedOn);
     assert.notOk(component.table.headers.title.isSortedOn);

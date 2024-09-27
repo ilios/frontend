@@ -20,10 +20,9 @@ module('Integration | Component | reports/subject/new/mesh-term', function (hook
       assert.strictEqual(userId, '3');
       this.set('currentId', userId);
     });
-    await render(hbs`<Reports::Subject::New::MeshTerm
-      @currentId={{this.currentId}}
-      @changeId={{this.changeId}}
-     />`);
+    await render(
+      hbs`<Reports::Subject::New::MeshTerm @currentId={{this.currentId}} @changeId={{this.changeId}} />`,
+    );
     assert.notOk(component.hasSelectedTerm);
     await component.meshManager.search.set('descriptor');
     assert.strictEqual(component.meshManager.searchResults.length, 5);
@@ -39,10 +38,9 @@ module('Integration | Component | reports/subject/new/mesh-term', function (hook
       assert.strictEqual(userId, null);
       this.set('currentId', null);
     });
-    await render(hbs`<Reports::Subject::New::MeshTerm
-      @currentId={{this.currentId}}
-      @changeId={{this.changeId}}
-     />`);
+    await render(
+      hbs`<Reports::Subject::New::MeshTerm @currentId={{this.currentId}} @changeId={{this.changeId}} />`,
+    );
     assert.ok(component.hasSelectedTerm);
     await component.removeSelectedTerm();
     assert.notOk(component.hasSelectedTerm);

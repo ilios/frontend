@@ -47,8 +47,7 @@ module('Integration | Component | course/visualize-instructors', function (hooks
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('course', courseModel);
 
-    await render(hbs`<Course::VisualizeInstructors @model={{this.course}} />
-`);
+    await render(hbs`<Course::VisualizeInstructors @model={{this.course}} />`);
     assert.strictEqual(component.title, 'course 0 2021');
     //let the chart animations finish
     await waitFor('.loaded');
@@ -76,8 +75,7 @@ module('Integration | Component | course/visualize-instructors', function (hooks
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('course', courseModel);
 
-    await render(hbs`<Course::VisualizeInstructors @model={{this.course}} />
-`);
+    await render(hbs`<Course::VisualizeInstructors @model={{this.course}} />`);
     //let the chart animations finish
     await waitFor('.loaded');
     await waitFor('svg .bars');
@@ -106,8 +104,7 @@ module('Integration | Component | course/visualize-instructors', function (hooks
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('course', courseModel);
 
-    await render(hbs`<Course::VisualizeInstructors @model={{this.course}} />
-`);
+    await render(hbs`<Course::VisualizeInstructors @model={{this.course}} />`);
 
     assert.strictEqual(component.title, 'course 0 2021 - 2022');
   });
@@ -118,8 +115,7 @@ module('Integration | Component | course/visualize-instructors', function (hooks
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('course', courseModel);
 
-    await render(hbs`<Course::VisualizeInstructors @model={{this.course}} />
-`);
+    await render(hbs`<Course::VisualizeInstructors @model={{this.course}} />`);
 
     assert.strictEqual(component.breadcrumb.crumbs.length, 3);
     assert.strictEqual(component.breadcrumb.crumbs[0].text, 'course 0');

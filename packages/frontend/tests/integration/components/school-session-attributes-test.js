@@ -19,11 +19,11 @@ module('Integration | Component | school session attributes', function (hooks) {
     const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
     this.set('school', schoolModel);
     await render(hbs`<SchoolSessionAttributes
-      @school={{this.school}}
-      @manage={{(noop)}}
-      @collapse={{(noop)}}
-      @expand={{(noop)}}
-    />`);
+  @school={{this.school}}
+  @manage={{(noop)}}
+  @collapse={{(noop)}}
+  @expand={{(noop)}}
+/>`);
 
     assert.notOk(component.expanded.isVisible);
     assert.notOk(component.collapsed.attendanceRequired.isEnabled);
@@ -42,12 +42,12 @@ module('Integration | Component | school session attributes', function (hooks) {
     const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
     this.set('school', schoolModel);
     await render(hbs`<SchoolSessionAttributes
-      @school={{this.school}}
-      @details={{true}}
-      @manage={{(noop)}}
-      @collapse={{(noop)}}
-      @expand={{(noop)}}
-    />`);
+  @school={{this.school}}
+  @details={{true}}
+  @manage={{(noop)}}
+  @collapse={{(noop)}}
+  @expand={{(noop)}}
+/>`);
 
     assert.notOk(component.collapsed.isVisible);
     assert.notOk(component.expanded.attributes.attendanceRequired.isEnabled);
@@ -65,11 +65,11 @@ module('Integration | Component | school session attributes', function (hooks) {
       assert.ok(true, 'expand triggered.');
     });
     await render(hbs`<SchoolSessionAttributes
-      @school={{this.school}}
-      @manage={{(noop)}}
-      @collapse={{(noop)}}
-      @expand={{this.expand}}
-    />`);
+  @school={{this.school}}
+  @manage={{(noop)}}
+  @collapse={{(noop)}}
+  @expand={{this.expand}}
+/>`);
 
     await component.collapsed.expand();
   });
@@ -83,12 +83,12 @@ module('Integration | Component | school session attributes', function (hooks) {
       assert.ok(true, 'collapse triggered');
     });
     await render(hbs`<SchoolSessionAttributes
-      @school={{this.school}}
-      @details={{true}}
-      @manage={{(noop)}}
-      @collapse={{this.collapse}}
-      @expand={{(noop)}}
-    />`);
+  @school={{this.school}}
+  @details={{true}}
+  @manage={{(noop)}}
+  @collapse={{this.collapse}}
+  @expand={{(noop)}}
+/>`);
 
     await component.expanded.collapse();
   });

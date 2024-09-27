@@ -12,14 +12,14 @@ module('Integration | Component | program-year/objective-list-item-competency', 
 
   test('it renders and is accessible when managing', async function (assert) {
     await render(hbs`<ProgramYear::ObjectiveListItemCompetency
-      @objective={{null}}
-      @editable={{false}}
-      @manage={{(noop)}}
-      @isManaging={{true}}
-      @save={{(noop)}}
-      @isSaving={{false}}
-      @cancel={{(noop)}}
-    />`);
+  @objective={{null}}
+  @editable={{false}}
+  @manage={{(noop)}}
+  @isManaging={{true}}
+  @save={{(noop)}}
+  @isSaving={{false}}
+  @cancel={{(noop)}}
+/>`);
     assert.ok(component.canSave);
     assert.ok(component.canCancel);
     await a11yAudit(this.element);
@@ -33,14 +33,14 @@ module('Integration | Component | program-year/objective-list-item-competency', 
       .findRecord('program-year-objective', objective.id);
     this.set('objective', objectiveModel);
     await render(hbs`<ProgramYear::ObjectiveListItemCompetency
-      @objective={{this.objective}}
-      @editable={{false}}
-      @manage={{(noop)}}
-      @isManaging={{false}}
-      @save={{(noop)}}
-      @isSaving={{false}}
-      @cancel={{(noop)}}
-    />`);
+  @objective={{this.objective}}
+  @editable={{false}}
+  @manage={{(noop)}}
+  @isManaging={{false}}
+  @save={{(noop)}}
+  @isSaving={{false}}
+  @cancel={{(noop)}}
+/>`);
     assert.strictEqual(component.text, 'None');
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
@@ -55,14 +55,14 @@ module('Integration | Component | program-year/objective-list-item-competency', 
       .findRecord('program-year-objective', objective.id);
     this.set('objective', objectiveModel);
     await render(hbs`<ProgramYear::ObjectiveListItemCompetency
-      @objective={{this.objective}}
-      @editable={{false}}
-      @manage={{(noop)}}
-      @isManaging={{false}}
-      @save={{(noop)}}
-      @isSaving={{false}}
-      @cancel={{(noop)}}
-    />`);
+  @objective={{this.objective}}
+  @editable={{false}}
+  @manage={{(noop)}}
+  @isManaging={{false}}
+  @save={{(noop)}}
+  @isSaving={{false}}
+  @cancel={{(noop)}}
+/>`);
     assert.strictEqual(component.text, 'competency 1 (competency 0)');
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
@@ -76,14 +76,14 @@ module('Integration | Component | program-year/objective-list-item-competency', 
       .findRecord('program-year-objective', objective.id);
     this.set('objective', objectiveModel);
     await render(hbs`<ProgramYear::ObjectiveListItemCompetency
-      @objective={{this.objective}}
-      @editable={{false}}
-      @manage={{(noop)}}
-      @isManaging={{false}}
-      @save={{(noop)}}
-      @isSaving={{false}}
-      @cancel={{(noop)}}
-    />`);
+  @objective={{this.objective}}
+  @editable={{false}}
+  @manage={{(noop)}}
+  @isManaging={{false}}
+  @save={{(noop)}}
+  @isSaving={{false}}
+  @cancel={{(noop)}}
+/>`);
     assert.strictEqual(component.text, 'competency 0');
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
@@ -100,14 +100,14 @@ module('Integration | Component | program-year/objective-list-item-competency', 
       .findRecord('program-year-objective', objective.id);
     this.set('objective', objectiveModel);
     await render(hbs`<ProgramYear::ObjectiveListItemCompetency
-      @objective={{this.objective}}
-      @editable={{true}}
-      @manage={{(noop)}}
-      @isManaging={{false}}
-      @save={{(noop)}}
-      @isSaving={{false}}
-      @cancel={{(noop)}}
-    />`);
+  @objective={{this.objective}}
+  @editable={{true}}
+  @manage={{(noop)}}
+  @isManaging={{false}}
+  @save={{(noop)}}
+  @isSaving={{false}}
+  @cancel={{(noop)}}
+/>`);
     assert.strictEqual(component.text, 'competency 1 (competency 0)');
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
@@ -123,14 +123,14 @@ module('Integration | Component | program-year/objective-list-item-competency', 
       .findRecord('program-year-objective', objective.id);
     this.set('objective', objectiveModel);
     await render(hbs`<ProgramYear::ObjectiveListItemCompetency
-      @objective={{this.objective}}
-      @editable={{true}}
-      @manage={{(noop)}}
-      @isManaging={{false}}
-      @save={{(noop)}}
-      @isSaving={{false}}
-      @cancel={{(noop)}}
-    />`);
+  @objective={{this.objective}}
+  @editable={{true}}
+  @manage={{(noop)}}
+  @isManaging={{false}}
+  @save={{(noop)}}
+  @isSaving={{false}}
+  @cancel={{(noop)}}
+/>`);
     assert.strictEqual(component.text, 'competency 0');
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
@@ -151,14 +151,14 @@ module('Integration | Component | program-year/objective-list-item-competency', 
       assert.ok(true);
     });
     await render(hbs`<ProgramYear::ObjectiveListItemCompetency
-      @objective={{this.objective}}
-      @editable={{true}}
-      @manage={{(noop)}}
-      @isManaging={{true}}
-      @save={{this.save}}
-      @isSaving={{false}}
-      @cancel={{(noop)}}
-    />`);
+  @objective={{this.objective}}
+  @editable={{true}}
+  @manage={{(noop)}}
+  @isManaging={{true}}
+  @save={{this.save}}
+  @isSaving={{false}}
+  @cancel={{(noop)}}
+/>`);
     await component.save();
   });
 
@@ -177,14 +177,14 @@ module('Integration | Component | program-year/objective-list-item-competency', 
       assert.ok(true);
     });
     await render(hbs`<ProgramYear::ObjectiveListItemCompetency
-      @objective={{this.objective}}
-      @editable={{true}}
-      @manage={{(noop)}}
-      @isManaging={{true}}
-      @save={{(noop)}}
-      @isSaving={{false}}
-      @cancel={{this.cancel}}
-    />`);
+  @objective={{this.objective}}
+  @editable={{true}}
+  @manage={{(noop)}}
+  @isManaging={{true}}
+  @save={{(noop)}}
+  @isSaving={{false}}
+  @cancel={{this.cancel}}
+/>`);
     await component.cancel();
   });
 
@@ -203,14 +203,14 @@ module('Integration | Component | program-year/objective-list-item-competency', 
       assert.ok(true);
     });
     await render(hbs`<ProgramYear::ObjectiveListItemCompetency
-      @objective={{this.objective}}
-      @editable={{true}}
-      @manage={{this.manage}}
-      @isManaging={{false}}
-      @save={{(noop)}}
-      @isSaving={{false}}
-      @cancel={{(noop)}}
-    />`);
+  @objective={{this.objective}}
+  @editable={{true}}
+  @manage={{this.manage}}
+  @isManaging={{false}}
+  @save={{(noop)}}
+  @isSaving={{false}}
+  @cancel={{(noop)}}
+/>`);
     await component.manage();
   });
 });

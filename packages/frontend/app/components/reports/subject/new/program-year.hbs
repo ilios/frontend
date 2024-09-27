@@ -11,11 +11,9 @@
       {{did-update (perform this.setInitialValue) @school}}
     >
       {{#each this.programYears as |programYear|}}
-        <option
-          selected={{eq programYear.id @currentId}}
-          value={{programYear.id}}
-        >
-          {{programYear.classOfYear}} {{programYear.program.title}}
+        <option selected={{eq programYear.id @currentId}} value={{programYear.id}}>
+          {{programYear.classOfYear}}
+          {{programYear.program.title}}
         </option>
       {{/each}}
     </select>

@@ -10,13 +10,12 @@ module('Integration | Component | new offering', function (hooks) {
     this.set('today', new Date());
     this.set('cohorts', []);
     await render(hbs`<NewOffering
-      @session={{this.session}}
-      @cohorts={{this.cohorts}}
-      @courseStartDate={{this.today}}
-      @courseEndDate={{this.today}}
-      @close={{(noop)}}
-    />
-`);
+  @session={{this.session}}
+  @cohorts={{this.cohorts}}
+  @courseStartDate={{this.today}}
+  @courseEndDate={{this.today}}
+  @close={{(noop)}}
+/>`);
 
     assert.dom('.new-offering-title').hasText('New Offering');
   });

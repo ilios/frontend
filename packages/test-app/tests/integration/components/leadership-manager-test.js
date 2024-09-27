@@ -17,20 +17,19 @@ module('Integration | Component | leadership manager', function (hooks) {
     this.set('studentAdvisors', [users[1]]);
 
     await render(hbs`<LeadershipManager
-      @showAdministrators={{true}}
-      @showDirectors={{true}}
-      @showStudentAdvisors={{true}}
-      @directors={{this.directors}}
-      @administrators={{this.administrators}}
-      @studentAdvisors={{this.studentAdvisors}}
-      @removeDirector={{(noop)}}
-      @addDirector={{(noop)}}
-      @removeAdministrator={{(noop)}}
-      @addAdministrator={{(noop)}}
-      @removeStudentAdvisor={{(noop)}}
-      @addStudentAdvisor={{(noop)}}
-    />
-`);
+  @showAdministrators={{true}}
+  @showDirectors={{true}}
+  @showStudentAdvisors={{true}}
+  @directors={{this.directors}}
+  @administrators={{this.administrators}}
+  @studentAdvisors={{this.studentAdvisors}}
+  @removeDirector={{(noop)}}
+  @addDirector={{(noop)}}
+  @removeAdministrator={{(noop)}}
+  @addAdministrator={{(noop)}}
+  @removeStudentAdvisor={{(noop)}}
+  @addStudentAdvisor={{(noop)}}
+/>`);
     assert.strictEqual(component.selectedDirectors.length, 1);
     assert.strictEqual(component.selectedDirectors[0].userNameInfo.fullName, '0 guy M. Mc0son');
     assert.strictEqual(component.selectedAdministrators.length, 2);
@@ -55,20 +54,19 @@ module('Integration | Component | leadership manager', function (hooks) {
     this.set('studentAdvisors', []);
 
     await render(hbs`<LeadershipManager
-      @showAdministrators={{true}}
-      @showDirectors={{true}}
-      @showStudentAdvisors={{true}}
-      @directors={{this.directors}}
-      @administrators={{this.administrators}}
-      @studentAdvisors={{this.studentAdvisors}}
-      @removeDirector={{(noop)}}
-      @addDirector={{(noop)}}
-      @removeAdministrator={{(noop)}}
-      @addAdministrator={{(noop)}}
-      @removeStudentAdvisor={{(noop)}}
-      @addStudentAdvisor={{(noop)}}
-    />
-`);
+  @showAdministrators={{true}}
+  @showDirectors={{true}}
+  @showStudentAdvisors={{true}}
+  @directors={{this.directors}}
+  @administrators={{this.administrators}}
+  @studentAdvisors={{this.studentAdvisors}}
+  @removeDirector={{(noop)}}
+  @addDirector={{(noop)}}
+  @removeAdministrator={{(noop)}}
+  @addAdministrator={{(noop)}}
+  @removeStudentAdvisor={{(noop)}}
+  @addStudentAdvisor={{(noop)}}
+/>`);
     assert.strictEqual(component.selectedDirectors.length, 0);
     assert.strictEqual(component.selectedAdministrators.length, 0);
     assert.strictEqual(component.selectedStudentAdvisors.length, 0);
@@ -86,20 +84,19 @@ module('Integration | Component | leadership manager', function (hooks) {
     });
 
     await render(hbs`<LeadershipManager
-      @showAdministrators={{true}}
-      @showDirectors={{true}}
-      @showStudentAdvisors={{true}}
-      @directors={{this.directors}}
-      @administrators={{this.administrators}}
-      @studentAdvisors={{this.studentAdvisors}}
-      @removeDirector={{this.remove}}
-      @addDirector={{(noop)}}
-      @removeAdministrator={{(noop)}}
-      @addAdministrator={{(noop)}}
-      @removeStudentAdvisor={{(noop)}}
-      @addStudentAdvisor={{(noop)}}
-    />
-`);
+  @showAdministrators={{true}}
+  @showDirectors={{true}}
+  @showStudentAdvisors={{true}}
+  @directors={{this.directors}}
+  @administrators={{this.administrators}}
+  @studentAdvisors={{this.studentAdvisors}}
+  @removeDirector={{this.remove}}
+  @addDirector={{(noop)}}
+  @removeAdministrator={{(noop)}}
+  @addAdministrator={{(noop)}}
+  @removeStudentAdvisor={{(noop)}}
+  @addStudentAdvisor={{(noop)}}
+/>`);
     assert.strictEqual(component.selectedDirectors.length, 1);
     assert.strictEqual(component.selectedDirectors[0].userNameInfo.fullName, '0 guy M. Mc0son');
     component.selectedDirectors[0].remove();
@@ -117,20 +114,19 @@ module('Integration | Component | leadership manager', function (hooks) {
     });
 
     await render(hbs`<LeadershipManager
-      @showAdministrators={{true}}
-      @showDirectors={{true}}
-      @showStudentAdvisors={{true}}
-      @directors={{this.directors}}
-      @administrators={{this.administrators}}
-      @studentAdvisors={{this.studentAdvisors}}
-      @removeDirector={{(noop)}}
-      @addDirector={{(noop)}}
-      @removeAdministrator={{this.remove}}
-      @addAdministrator={{(noop)}}
-      @removeStudentAdvisor={{(noop)}}
-      @addStudentAdvisor={{(noop)}}
-    />
-`);
+  @showAdministrators={{true}}
+  @showDirectors={{true}}
+  @showStudentAdvisors={{true}}
+  @directors={{this.directors}}
+  @administrators={{this.administrators}}
+  @studentAdvisors={{this.studentAdvisors}}
+  @removeDirector={{(noop)}}
+  @addDirector={{(noop)}}
+  @removeAdministrator={{this.remove}}
+  @addAdministrator={{(noop)}}
+  @removeStudentAdvisor={{(noop)}}
+  @addStudentAdvisor={{(noop)}}
+/>`);
     assert.strictEqual(component.selectedAdministrators.length, 1);
     assert.strictEqual(
       component.selectedAdministrators[0].userNameInfo.fullName,
@@ -151,20 +147,19 @@ module('Integration | Component | leadership manager', function (hooks) {
     });
 
     await render(hbs`<LeadershipManager
-      @showAdministrators={{true}}
-      @showDirectors={{true}}
-      @showStudentAdvisors={{true}}
-      @directors={{this.directors}}
-      @administrators={{this.administrators}}
-      @studentAdvisors={{this.studentAdvisors}}
-      @removeDirector={{(noop)}}
-      @addDirector={{(noop)}}
-      @removeAdministrator={{(noop)}}
-      @addAdministrator={{(noop)}}
-      @removeStudentAdvisor={{this.remove}}
-      @addStudentAdvisor={{(noop)}}
-    />
-`);
+  @showAdministrators={{true}}
+  @showDirectors={{true}}
+  @showStudentAdvisors={{true}}
+  @directors={{this.directors}}
+  @administrators={{this.administrators}}
+  @studentAdvisors={{this.studentAdvisors}}
+  @removeDirector={{(noop)}}
+  @addDirector={{(noop)}}
+  @removeAdministrator={{(noop)}}
+  @addAdministrator={{(noop)}}
+  @removeStudentAdvisor={{this.remove}}
+  @addStudentAdvisor={{(noop)}}
+/>`);
     assert.strictEqual(component.selectedStudentAdvisors.length, 1);
     assert.strictEqual(
       component.selectedStudentAdvisors[0].userNameInfo.fullName,
@@ -186,20 +181,19 @@ module('Integration | Component | leadership manager', function (hooks) {
     });
 
     await render(hbs`<LeadershipManager
-      @showAdministrators={{true}}
-      @showDirectors={{true}}
-      @showStudentAdvisors={{true}}
-      @directors={{this.directors}}
-      @administrators={{this.administrators}}
-      @studentAdvisors={{this.studentAdvisors}}
-      @removeDirector={{(noop)}}
-      @addDirector={{this.add}}
-      @removeAdministrator={{(noop)}}
-      @addAdministrator={{(noop)}}
-      @removeStudentAdvisor={{(noop)}}
-      @addStudentAdvisor={{(noop)}}
-    />
-`);
+  @showAdministrators={{true}}
+  @showDirectors={{true}}
+  @showStudentAdvisors={{true}}
+  @directors={{this.directors}}
+  @administrators={{this.administrators}}
+  @studentAdvisors={{this.studentAdvisors}}
+  @removeDirector={{(noop)}}
+  @addDirector={{this.add}}
+  @removeAdministrator={{(noop)}}
+  @addAdministrator={{(noop)}}
+  @removeStudentAdvisor={{(noop)}}
+  @addStudentAdvisor={{(noop)}}
+/>`);
     assert.strictEqual(component.selectedDirectors.length, 0);
     assert.strictEqual(component.selectedAdministrators.length, 1);
     assert.strictEqual(component.selectedStudentAdvisors.length, 1);
@@ -226,20 +220,19 @@ module('Integration | Component | leadership manager', function (hooks) {
     });
 
     await render(hbs`<LeadershipManager
-      @showAdministrators={{true}}
-      @showDirectors={{true}}
-      @showStudentAdvisors={{true}}
-      @directors={{this.directors}}
-      @administrators={{this.administrators}}
-      @studentAdvisors={{this.studentAdvisors}}
-      @removeDirector={{(noop)}}
-      @addDirector={{(noop)}}
-      @removeAdministrator={{(noop)}}
-      @addAdministrator={{this.add}}
-      @removeStudentAdvisor={{(noop)}}
-      @addStudentAdvisor={{(noop)}}
-    />
-`);
+  @showAdministrators={{true}}
+  @showDirectors={{true}}
+  @showStudentAdvisors={{true}}
+  @directors={{this.directors}}
+  @administrators={{this.administrators}}
+  @studentAdvisors={{this.studentAdvisors}}
+  @removeDirector={{(noop)}}
+  @addDirector={{(noop)}}
+  @removeAdministrator={{(noop)}}
+  @addAdministrator={{this.add}}
+  @removeStudentAdvisor={{(noop)}}
+  @addStudentAdvisor={{(noop)}}
+/>`);
     assert.strictEqual(component.selectedDirectors.length, 1);
     assert.strictEqual(component.selectedAdministrators.length, 0);
     assert.strictEqual(component.selectedStudentAdvisors.length, 1);
@@ -269,20 +262,19 @@ module('Integration | Component | leadership manager', function (hooks) {
     });
 
     await render(hbs`<LeadershipManager
-      @showAdministrators={{true}}
-      @showDirectors={{true}}
-      @showStudentAdvisors={{true}}
-      @directors={{this.directors}}
-      @administrators={{this.administrators}}
-      @studentAdvisors={{this.studentAdvisors}}
-      @removeDirector={{(noop)}}
-      @addDirector={{(noop)}}
-      @removeAdministrator={{(noop)}}
-      @addAdministrator={{(noop)}}
-      @removeStudentAdvisor={{(noop)}}
-      @addStudentAdvisor={{this.add}}
-    />
-`);
+  @showAdministrators={{true}}
+  @showDirectors={{true}}
+  @showStudentAdvisors={{true}}
+  @directors={{this.directors}}
+  @administrators={{this.administrators}}
+  @studentAdvisors={{this.studentAdvisors}}
+  @removeDirector={{(noop)}}
+  @addDirector={{(noop)}}
+  @removeAdministrator={{(noop)}}
+  @addAdministrator={{(noop)}}
+  @removeStudentAdvisor={{(noop)}}
+  @addStudentAdvisor={{this.add}}
+/>`);
     assert.strictEqual(component.selectedDirectors.length, 1);
     assert.strictEqual(component.selectedAdministrators.length, 1);
     assert.strictEqual(component.selectedStudentAdvisors.length, 0);
@@ -312,16 +304,15 @@ module('Integration | Component | leadership manager', function (hooks) {
     this.set('administrators', users);
 
     await render(hbs`<LeadershipManager
-      @showAdministrators={{true}}
-      @showDirectors={{true}}
-      @directors={{this.directors}}
-      @administrators={{this.administrators}}
-      @removeDirector={{(noop)}}
-      @addDirector={{(noop)}}
-      @removeAdministrator={{(noop)}}
-      @addAdministrator={{(noop)}}
-    />
-`);
+  @showAdministrators={{true}}
+  @showDirectors={{true}}
+  @directors={{this.directors}}
+  @administrators={{this.administrators}}
+  @removeDirector={{(noop)}}
+  @addDirector={{(noop)}}
+  @removeAdministrator={{(noop)}}
+  @addAdministrator={{(noop)}}
+/>`);
     assert.strictEqual(component.selectedDirectors.length, 1);
     assert.strictEqual(component.selectedDirectors[0].userNameInfo.fullName, '0 guy M. Mc0son');
     assert.notOk(component.selectedDirectors[0].isDisabled);
@@ -357,20 +348,19 @@ module('Integration | Component | leadership manager', function (hooks) {
     this.set('studentAdvisors', users);
 
     await render(hbs`<LeadershipManager
-      @showAdministrators={{true}}
-      @showDirectors={{true}}
-      @showStudentAdvisors={{true}}
-      @directors={{this.directors}}
-      @administrators={{this.administrators}}
-      @studentAdvisors={{this.studentAdvisors}}
-      @removeDirector={{(noop)}}
-      @addDirector={{(noop)}}
-      @removeAdministrator={{(noop)}}
-      @addAdministrator={{(noop)}}
-      @removeStudentAdvisor={{(noop)}}
-      @addStudentAdvisor={{(noop)}}
-    />
-`);
+  @showAdministrators={{true}}
+  @showDirectors={{true}}
+  @showStudentAdvisors={{true}}
+  @directors={{this.directors}}
+  @administrators={{this.administrators}}
+  @studentAdvisors={{this.studentAdvisors}}
+  @removeDirector={{(noop)}}
+  @addDirector={{(noop)}}
+  @removeAdministrator={{(noop)}}
+  @addAdministrator={{(noop)}}
+  @removeStudentAdvisor={{(noop)}}
+  @addStudentAdvisor={{(noop)}}
+/>`);
     assert.strictEqual(component.selectedDirectors.length, 3);
     assert.strictEqual(component.selectedDirectors[0].userNameInfo.fullName, 'Aaron M. Aardvark');
     assert.strictEqual(component.selectedDirectors[1].userNameInfo.fullName, 'The Bane of Iowa');
@@ -422,20 +412,19 @@ module('Integration | Component | leadership manager', function (hooks) {
     this.set('studentAdvisors', users);
 
     await render(hbs`<LeadershipManager
-      @showAdministrators={{true}}
-      @showDirectors={{true}}
-      @showStudentAdvisors={{true}}
-      @directors={{this.directors}}
-      @administrators={{this.administrators}}
-      @studentAdvisors={{this.studentAdvisors}}
-      @removeDirector={{(noop)}}
-      @addDirector={{(noop)}}
-      @removeAdministrator={{(noop)}}
-      @addAdministrator={{(noop)}}
-      @removeStudentAdvisor={{(noop)}}
-      @addStudentAdvisor={{(noop)}}
-    />
-`);
+  @showAdministrators={{true}}
+  @showDirectors={{true}}
+  @showStudentAdvisors={{true}}
+  @directors={{this.directors}}
+  @administrators={{this.administrators}}
+  @studentAdvisors={{this.studentAdvisors}}
+  @removeDirector={{(noop)}}
+  @addDirector={{(noop)}}
+  @removeAdministrator={{(noop)}}
+  @addAdministrator={{(noop)}}
+  @removeStudentAdvisor={{(noop)}}
+  @addStudentAdvisor={{(noop)}}
+/>`);
     assert.strictEqual(component.selectedDirectors.length, 3);
     assert.strictEqual(component.selectedDirectors[0].userNameInfo.fullName, 'Aaron M. Aardvark');
     assert.strictEqual(component.selectedDirectors[1].userNameInfo.fullName, 'The Bane of Iowa');

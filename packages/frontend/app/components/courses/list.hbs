@@ -1,7 +1,4 @@
-<div
-  data-test-courses-list
-  ...attributes
->
+<div data-test-courses-list ...attributes>
   {{#unless this.load.isRunning}}
     <table>
       <thead>
@@ -60,7 +57,10 @@
         </tr>
       </thead>
       <tbody data-test-courses>
-        {{#each (sort-by (if this.sortingByStatus this.sortCoursesByStatus @sortBy) @courses) as |course|}}
+        {{#each
+          (sort-by (if this.sortingByStatus this.sortCoursesByStatus @sortBy) @courses)
+          as |course|
+        }}
           <Courses::ListItem
             @course={{course}}
             @coursesForRemovalConfirmation={{this.coursesForRemovalConfirmation}}
@@ -77,7 +77,7 @@
                     "general.confirmRemoveCourse"
                     publishedOfferingCount=course.publishedOfferingCount
                   }}
-                  <br>
+                  <br />
                   <div class="confirm-buttons">
                     <button {{on "click" (fn @remove course)}} type="button" class="remove text">
                       {{t "general.yes"}}
