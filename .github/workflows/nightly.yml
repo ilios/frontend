@@ -3,6 +3,7 @@ name: Nightly
 on:
   schedule:
     - cron: "15 9 * * 0-5" # nightly, S-F
+  workflow_dispatch: null
 
 env:
   SW_DISABLED: true
