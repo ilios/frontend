@@ -116,7 +116,7 @@ export default class ReportsSubjectSessionComponent extends Component {
           ? `${course.year} - ${course.year + 1}`
           : `${course.year}`,
         striptags(description),
-        striptags(mapBy(sessionObjectives.slice(), 'title').join()),
+        striptags(mapBy(sessionObjectives, 'title').join()),
       ];
     });
 
