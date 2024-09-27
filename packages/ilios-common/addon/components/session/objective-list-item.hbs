@@ -16,8 +16,7 @@
         <ValidationError @errors={{get-errors-for this.title}} />
       </EditableField>
     {{else}}
-      {{! template-lint-disable no-triple-curlies }}
-      <FadeText @text={{{@sessionObjective.title}}} />
+      <FadeText @text={{@sessionObjective.title}} />
     {{/if}}
   </div>
   <Session::ObjectiveListItemParents
