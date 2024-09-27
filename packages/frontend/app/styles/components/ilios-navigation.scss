@@ -94,7 +94,10 @@
     border-bottom: calc(20px * constants.$golden-ratio-large) solid c.$orange;
 
     ul {
+      bottom: 0;
       display: inline;
+      position: sticky;
+      top: 0;
 
       .text {
         clear: none;
