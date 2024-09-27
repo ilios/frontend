@@ -58,6 +58,15 @@
         display: inline-block;
       }
 
+      .fade-text-control {
+        button {
+          background: c.$tealBlue;
+          border-radius: 3px;
+          color: c.$white;
+          padding: 0.3em 1em;
+        }
+      }
+
       &.dragging-item {
         opacity: 0.3;
       }
