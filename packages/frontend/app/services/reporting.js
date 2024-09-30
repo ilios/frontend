@@ -102,10 +102,15 @@ export default class ReportingService extends Service {
       const objectKey = objectTranslations[prepositionalObject];
       const objectTranslation = this.intl.t(objectKey);
       let object;
+
       if (model === 'user') {
         object = record.fullName;
       } else if (model === 'mesh-descriptor') {
         object = record.name;
+      } else if (model === 'program-year') {
+        const program = await record.program;
+        const title = program.title;
+        object = `${record.classOfYear} ${title}`;
       } else {
         object = record.title;
       }
