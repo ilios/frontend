@@ -58,6 +58,7 @@ export default class LearningMaterialManagerComponent extends Component {
   updateOtherDate = (originalDate, value) => {
     const otherDate = DateTime.fromJSDate(value);
     this[originalDate] = DateTime.fromObject({
+      month: otherDate.month,
       day: otherDate.day,
       hour: 8,
       minute: 0,
