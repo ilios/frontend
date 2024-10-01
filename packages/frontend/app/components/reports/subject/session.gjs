@@ -139,28 +139,40 @@ export default class ReportsSubjectSessionComponent extends Component {
     ];
     const result = await this.graphql.find('sessions', filters, attributes.join(','));
     const sortedResults = sortBy(result.data.sessions, 'title');
+
+    const objectives = sortedResults.map(({ sessionObjectives }) => {
+      return mapBy(sessionObjectives, 'title');
+    });
+    const maxObjectiveCount = objectives.reduce((longest, current) => {
+      return current.length > longest.length ? current : longest;
+    }, []).length;
+
     const mappedResults = sortedResults.map(({ title, course, sessionObjectives, description }) => {
-      return [
+      const results = [
         title,
         course.title,
         this.academicYearCrossesCalendarYearBoundaries
           ? `${course.year} - ${course.year + 1}`
           : `${course.year}`,
         striptags(description),
-        striptags(mapBy(sessionObjectives, 'title').join()),
       ];
+      sessionObjectives.forEach((objective) => {
+        results.push(striptags(objective.title));
+      });
+      return results;
     });
 
-    return [
-      [
-        this.intl.t('general.session'),
-        this.intl.t('general.course'),
-        this.intl.t('general.academicYear'),
-        this.intl.t('general.description'),
-        this.intl.t('general.objectives'),
-      ],
-      ...mappedResults,
+    const columns = [
+      this.intl.t('general.session'),
+      this.intl.t('general.course'),
+      this.intl.t('general.academicYear'),
+      this.intl.t('general.description'),
     ];
+    [...Array(maxObjectiveCount + 1).keys()].slice(1).map((key) => {
+      columns.push(`${this.intl.t('general.objective')} ${key}`);
+    });
+
+    return [columns, ...mappedResults];
   }
   <template>
     <SubjectHeader
