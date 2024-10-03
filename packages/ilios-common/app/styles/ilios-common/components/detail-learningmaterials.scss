@@ -51,6 +51,11 @@
         &:hover {
           background: c.$culturedGrey;
         }
+
+        &:last-of-type {
+          border-bottom: none;
+          min-height: auto;
+        }
       }
 
       .learning-material-title {
