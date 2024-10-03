@@ -64,6 +64,10 @@
         display: inline-flex;
         gap: 5px;
         margin: 0;
+
+        span {
+          padding-right: 2em;
+        }
       }
 
       .learning-material-description {
