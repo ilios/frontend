@@ -110,6 +110,7 @@
     "eslint-plugin-qunit": "^8.1.1",
     "eslint-plugin-yml": "^1.14.0",
     "file-saver": "^2.0.5",
+    "fractal-page-object": "^1.0.0",
     "ilios-common": "workspace:*",
     "loader.js": "^4.7.0",
     "luxon": "^3.5.0",
