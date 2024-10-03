@@ -93,12 +93,12 @@
 
     &.static {
       color: c.$raisinBlack;
-      cursor: arrow;
+      cursor: default;
     }
 
     &.disabled {
       color: color.adjust(c.$raisinBlack, $lightness: 40%);
-      cursor: arrow;
+      cursor: default;
     }
   }
 }

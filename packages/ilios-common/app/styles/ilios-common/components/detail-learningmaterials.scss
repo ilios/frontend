@@ -51,19 +51,30 @@
         &:hover {
           background: c.$culturedGrey;
         }
+
+        &:last-of-type {
+          border-bottom: none;
+          min-height: auto;
+        }
       }
 
       .learning-material-title {
-        @include m.ilios-heading-h4;
+        @include m.ilios-heading-h5;
         color: inherit;
-        display: block;
+        display: inline-flex;
+        gap: 5px;
         margin: 0;
+
+        span {
+          padding-right: 2em;
+        }
       }
 
       .learning-material-description {
         color: c.$davysGrey;
         display: block;
         @include m.font-size("small");
+        margin-left: 1.9em;
       }
 
       .learning-material-status {
@@ -75,6 +86,8 @@
       }
 
       .learning-material-properties {
+        margin-left: 1.6em;
+
         li {
           border: 0;
           color: c.$davysGrey;
@@ -83,7 +96,7 @@
           @include m.font-size("small");
           margin: 0;
           min-height: 0;
-          padding: 0 0 0 0.75rem;
+          padding: 0;
         }
       }
     }
