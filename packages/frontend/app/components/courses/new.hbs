@@ -28,7 +28,7 @@
           <label for="year-{{templateId}}">
             {{t "general.academicYear"}}:
           </label>
-          {{#if this.academicYearData.isResolved}}
+          {{#if this.academicYearCrossesCalendarYearBoundariesData.isResolved}}
             <select
               id="year-{{templateId}}"
               data-test-year

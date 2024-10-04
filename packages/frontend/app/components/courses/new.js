@@ -15,7 +15,6 @@ export default class CoursesNewComponent extends Component {
 
   @tracked @NotBlank() selectedYear;
   @tracked @NotBlank() @Length(3, 200) title;
-  @tracked academicYearCrossesCalendarYearBoundaries;
   @tracked years;
 
   constructor() {
@@ -29,10 +28,16 @@ export default class CoursesNewComponent extends Component {
   }
 
   @cached
-  get academicYearData() {
+  get academicYearCrossesCalendarYearBoundariesData() {
     return new TrackedAsyncData(
       this.iliosConfig.itemFromConfig('academicYearCrossesCalendarYearBoundaries'),
     );
+  }
+
+  get academicYearCrossesCalendarYearBoundaries() {
+    return this.academicYearCrossesCalendarYearBoundariesData.isResolved
+      ? this.academicYearCrossesCalendarYearBoundariesData.value
+      : false;
   }
 
   @action
