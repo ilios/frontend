@@ -148,16 +148,18 @@
         <label for="primary-school-{{templateId}}">
           {{t "general.primarySchool"}}:
         </label>
-        <select
-          id="primary-school-{{templateId}}"
-          {{on "change" (pick "target.value" (set this "schoolId"))}}
-        >
-          {{#each (sort-by "title" this.schools) as |school|}}
-            <option value={{school.id}} selected={{eq school this.bestSelectedSchool}}>
-              {{school.title}}
-            </option>
-          {{/each}}
-        </select>
+        {{#if this.userModel.isResolved}}
+          <select
+            id="primary-school-{{templateId}}"
+            {{on "change" (pick "target.value" (set this "schoolId"))}}
+          >
+            {{#each (sort-by "title" this.schools) as |school|}}
+              <option value={{school.id}} selected={{eq school this.bestSelectedSchool}}>
+                {{school.title}}
+              </option>
+            {{/each}}
+          </select>
+        {{/if}}
       </div>
       {{#unless this.nonStudentMode}}
         <div class="item last" data-test-cohort>
