@@ -2,7 +2,6 @@
   <nav
     class="user-menu{{if this.isOpen ' is-open'}}"
     aria-label={{t "general.userMenu"}}
-    {{did-insert (set this "element")}}
     {{! template-lint-disable no-invalid-interactive }}
     {{on "keyup" this.keyUp}}
     data-test-user-menu
@@ -25,7 +24,7 @@
     {{#if this.isOpen}}
       <div {{on-click-outside (set this "isOpen" false)}}>
         <ul class="menu">
-          <li tabindex="-1" data-test-item {{did-insert this.focus}}>
+          <li tabindex="-1" data-test-item {{focus}}>
             <LinkToWithAction
               @route="myprofile"
               @action={{set this "isOpen" false}}

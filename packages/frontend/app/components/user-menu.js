@@ -1,5 +1,4 @@
 import Component from '@glimmer/component';
-import { schedule } from '@ember/runloop';
 import { service } from '@ember/service';
 import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
@@ -9,7 +8,6 @@ export default class UserMenuComponent extends Component {
   @service intl;
   @service currentUser;
   @tracked isOpen = false;
-  @tracked element;
 
   userModel = new TrackedAsyncData(this.currentUser.getModel());
 
@@ -49,26 +47,25 @@ export default class UserMenuComponent extends Component {
     return true;
   }
 
-  handleArrowDown(evt, item) {
-    if (evt.target.tagName.toLowerCase() === 'button') {
+  handleArrowDown(event, item) {
+    if (event.target.tagName.toLowerCase() === 'button') {
       this.isOpen = true;
     } else {
       if (item.nextElementSibling) {
         item.nextElementSibling.querySelector('a').focus();
       } else {
-        // eslint-disable-next-line ember/no-runloop
-        schedule('afterRender', () => {
-          this.element.querySelector('.menu li:nth-of-type(1) a').focus();
-        });
+        item.parentElement.firstElementChild.querySelector('a').focus();
       }
     }
   }
 
   handleArrowUp(item) {
-    if (item.previousElementSibling) {
-      item.previousElementSibling.querySelector('a').focus();
-    } else {
-      this.element.querySelector('.menu li:last-of-type a').focus();
+    if (item) {
+      if (item.previousElementSibling) {
+        item.previousElementSibling.querySelector('a').focus();
+      } else {
+        item.parentElement.lastElementChild.querySelector('a').focus();
+      }
     }
   }
 
