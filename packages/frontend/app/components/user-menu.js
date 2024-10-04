@@ -68,8 +68,4 @@ export default class UserMenuComponent extends Component {
       }
     }
   }
-
-  focus(el) {
-    el.focus();
-  }
 }
