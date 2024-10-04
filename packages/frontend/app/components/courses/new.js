@@ -1,10 +1,11 @@
 import Component from '@glimmer/component';
-import { tracked } from '@glimmer/tracking';
+import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
 import { DateTime } from 'luxon';
 import { validatable, Length, NotBlank } from 'ilios-common/decorators/validation';
-import { dropTask, restartableTask } from 'ember-concurrency';
+import { dropTask } from 'ember-concurrency';
+import { TrackedAsyncData } from 'ember-async-data';
 
 @validatable
 export default class CoursesNewComponent extends Component {
@@ -21,6 +22,17 @@ export default class CoursesNewComponent extends Component {
     super(...arguments);
     const thisYear = DateTime.now().year;
     this.years = [thisYear - 2, thisYear - 1, thisYear, thisYear + 1, thisYear + 2];
+
+    if (this.args.currentYear && this.years.includes(parseInt(this.args.currentYear.id, 10))) {
+      this.setYear(this.args.currentYear.id);
+    }
+  }
+
+  @cached
+  get academicYearData() {
+    return new TrackedAsyncData(
+      this.iliosConfig.itemFromConfig('academicYearCrossesCalendarYearBoundaries'),
+    );
   }
 
   @action
@@ -44,15 +56,6 @@ export default class CoursesNewComponent extends Component {
       this.args.cancel();
     }
   }
-
-  load = restartableTask(async () => {
-    this.academicYearCrossesCalendarYearBoundaries = await this.iliosConfig.itemFromConfig(
-      'academicYearCrossesCalendarYearBoundaries',
-    );
-    if (this.args.currentYear && this.years.includes(parseInt(this.args.currentYear.id, 10))) {
-      this.setYear(this.args.currentYear.id);
-    }
-  });
 
   saveCourse = dropTask(async () => {
     this.addErrorDisplayFor('title');
