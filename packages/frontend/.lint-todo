@@ -7,7 +7,6 @@ add|ember-template-lint|no-at-ember-render-modifiers|4|2|4|2|23cd787c79c34a628da
 add|ember-template-lint|no-at-ember-render-modifiers|5|2|5|2|e5120f87b74c5ae8e4c76b9089e0b4a4504c6e3c|1722902400000|1730682000000|1754006400000|app/components/user-profile-roles.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|4|2|4|2|1fb0566922ce4f066916e5e2931f650f69d7cfba|1722902400000|1730682000000|1754006400000|app/components/visualizer-program-year-objectives.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|5|2|5|2|38e65b45b56fdfd4160d3b0884114b6643e3a036|1722902400000|1730682000000|1754006400000|app/components/visualizer-program-year-objectives.hbs
-add|ember-template-lint|no-at-ember-render-modifiers|4|4|4|4|23cd787c79c34a628dadb6e96dd4004d42eebb79|1722902400000|1730682000000|1754006400000|app/components/courses/new.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|5|2|5|2|23cd787c79c34a628dadb6e96dd4004d42eebb79|1722902400000|1730682000000|1754006400000|app/components/curriculum-inventory/new-report.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|4|2|4|2|23cd787c79c34a628dadb6e96dd4004d42eebb79|1722902400000|1730682000000|1754006400000|app/components/curriculum-inventory/new-sequence-block.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|5|2|5|2|77e3831e4ae1b00caee1f808711f2e26ab452a23|1722902400000|1730682000000|1754006400000|app/components/curriculum-inventory/new-sequence-block.hbs

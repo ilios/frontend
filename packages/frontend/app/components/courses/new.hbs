@@ -1,5 +1,5 @@
 {{#let (unique-id) as |templateId|}}
-  <div class="courses-new" {{did-insert (perform this.load)}} data-test-courses-new>
+  <div class="courses-new" data-test-courses-new>
     {{#unless this.load.isRunning}}
       <h4>
         {{t "general.newCourse"}}
@@ -28,26 +28,28 @@
           <label for="year-{{templateId}}">
             {{t "general.academicYear"}}:
           </label>
-          <select
-            id="year-{{templateId}}"
-            data-test-year
-            {{on "change" (pick "target.value" this.setYear)}}
-          >
-            <option disabled="" selected={{is-empty this.selectedYear}} value="">
-              {{t "general.selectAcademicYear"}}
-            </option>
-            {{#each this.years as |year|}}
-              <option selected={{eq year this.selectedYear}} value={{year}}>
-                {{#if this.academicYearCrossesCalendarYearBoundaries}}
-                  {{year}}
-                  -
-                  {{add year 1}}
-                {{else}}
-                  {{year}}
-                {{/if}}
+          {{#if this.academicYearCrossesCalendarYearBoundariesData.isResolved}}
+            <select
+              id="year-{{templateId}}"
+              data-test-year
+              {{on "change" (pick "target.value" this.setYear)}}
+            >
+              <option disabled="" selected={{is-empty this.selectedYear}} value="">
+                {{t "general.selectAcademicYear"}}
               </option>
-            {{/each}}
-          </select>
+              {{#each this.years as |year|}}
+                <option selected={{eq year this.selectedYear}} value={{year}}>
+                  {{#if this.academicYearCrossesCalendarYearBoundaries}}
+                    {{year}}
+                    -
+                    {{add year 1}}
+                  {{else}}
+                    {{year}}
+                  {{/if}}
+                </option>
+              {{/each}}
+            </select>
+          {{/if}}
         </div>
         <div class="buttons">
           <button
