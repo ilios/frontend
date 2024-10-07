@@ -19,6 +19,12 @@ export default class UserMenuComponent extends Component {
   @action
   toggleMenu() {
     this.isOpen = !this.isOpen;
+
+    if (this.isOpen) {
+      setTimeout(() => {
+        document.querySelector('.user-menu .menu a:first-of-type').focus();
+      }, 1);
+    }
   }
 
   @action
@@ -50,6 +56,10 @@ export default class UserMenuComponent extends Component {
   handleArrowDown(event, item) {
     if (event.target.tagName.toLowerCase() === 'button') {
       this.isOpen = true;
+      setTimeout(
+        () => event.target.parentElement.querySelector('.menu a:first-of-type').focus(),
+        1,
+      );
     } else {
       if (item.nextElementSibling) {
         item.nextElementSibling.querySelector('a').focus();
