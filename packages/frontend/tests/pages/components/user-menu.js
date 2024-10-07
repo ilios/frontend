@@ -1,5 +1,5 @@
 import { create, collection, triggerable } from 'ember-cli-page-object';
-import { hasFocus } from 'ilios-common';
+import linkToWithAction from 'frontend/tests/pages/components/link-to-with-action';
 
 export default create({
   scope: '[data-test-user-menu]',
@@ -10,11 +10,7 @@ export default create({
     esc: triggerable('keyup', '', { eventProperties: { key: 'Escape' } }),
   },
   links: collection('[data-test-item]', {
-    hasFocus: hasFocus(),
-    link: {
-      scope: '[data-test-link-to-with-action]',
-      hasFocus: hasFocus(),
-    },
+    link: linkToWithAction,
     mouseEnter: triggerable('mouseenter'),
     down: triggerable('keyup', '', { eventProperties: { key: 'ArrowDown' } }),
     esc: triggerable('keyup', '', { eventProperties: { key: 'Escape' } }),
