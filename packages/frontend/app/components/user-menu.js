@@ -1,8 +1,8 @@
 import Component from '@glimmer/component';
-import { schedule } from '@ember/runloop';
 import { service } from '@ember/service';
 import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
+import { task, timeout } from 'ember-concurrency';
 import { TrackedAsyncData } from 'ember-async-data';
 
 export default class UserMenuComponent extends Component {
@@ -17,15 +17,17 @@ export default class UserMenuComponent extends Component {
     return this.userModel.isResolved ? this.userModel.value : null;
   }
 
+  focusFirstLink = task(async () => {
+    await timeout(1);
+    document.querySelector('.user-menu .menu a:first-of-type').focus();
+  });
+
   @action
-  toggleMenu() {
+  async toggleMenu() {
     this.isOpen = !this.isOpen;
 
     if (this.isOpen) {
-      // eslint-disable-next-line ember/no-runloop
-      schedule('afterRender', () => {
-        document.querySelector('.user-menu .menu a:first-of-type').focus();
-      });
+      await this.focusFirstLink.perform();
     }
   }
 
@@ -55,13 +57,10 @@ export default class UserMenuComponent extends Component {
     return true;
   }
 
-  handleArrowDown(event, item) {
+  async handleArrowDown(event, item) {
     if (event.target.tagName.toLowerCase() === 'button') {
       this.isOpen = true;
-      // eslint-disable-next-line ember/no-runloop
-      schedule('afterRender', () => {
-        event.target.parentElement.querySelector('.menu a:first-of-type').focus();
-      });
+      await this.focusFirstLink.perform();
     } else {
       if (item.nextElementSibling) {
         item.nextElementSibling.querySelector('a').focus();
@@ -73,7 +72,7 @@ export default class UserMenuComponent extends Component {
 
   handleArrowUp(item) {
     if (item) {
-      if (item.previousElementSibling) {
+      if (item?.previousElementSibling) {
         item.previousElementSibling.querySelector('a').focus();
       } else {
         item.parentElement.lastElementChild.querySelector('a').focus();
