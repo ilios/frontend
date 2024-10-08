@@ -1,4 +1,5 @@
 import Component from '@glimmer/component';
+import { schedule } from '@ember/runloop';
 import { service } from '@ember/service';
 import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
@@ -21,9 +22,10 @@ export default class UserMenuComponent extends Component {
     this.isOpen = !this.isOpen;
 
     if (this.isOpen) {
-      setTimeout(() => {
+      // eslint-disable-next-line ember/no-runloop
+      schedule('afterRender', () => {
         document.querySelector('.user-menu .menu a:first-of-type').focus();
-      }, 1);
+      });
     }
   }
 
@@ -56,10 +58,10 @@ export default class UserMenuComponent extends Component {
   handleArrowDown(event, item) {
     if (event.target.tagName.toLowerCase() === 'button') {
       this.isOpen = true;
-      setTimeout(
-        () => event.target.parentElement.querySelector('.menu a:first-of-type').focus(),
-        1,
-      );
+      // eslint-disable-next-line ember/no-runloop
+      schedule('afterRender', () => {
+        event.target.parentElement.querySelector('.menu a:first-of-type').focus();
+      });
     } else {
       if (item.nextElementSibling) {
         item.nextElementSibling.querySelector('a').focus();
