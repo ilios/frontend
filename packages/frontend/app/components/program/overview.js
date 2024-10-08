@@ -11,8 +11,8 @@ export default class ProgramOverviewComponent extends Component {
   @tracked duration;
   @Length(2, 10) @tracked shortTitle;
 
-  @action
-  load() {
+  constructor() {
+    super(...arguments);
     this.duration = this.args.program.duration;
     this.shortTitle = this.args.program.shortTitle;
   }
