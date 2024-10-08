@@ -21,8 +21,8 @@ export default class ProgramYearObjectiveListItemComponent extends Component {
   @tracked termsBuffer = [];
   @tracked selectedVocabulary;
 
-  @action
-  load() {
+  constructor() {
+    super(...arguments);
     this.title = this.args.programYearObjective.title;
   }
 
