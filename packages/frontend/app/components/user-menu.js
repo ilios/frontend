@@ -71,12 +71,10 @@ export default class UserMenuComponent extends Component {
   }
 
   handleArrowUp(item) {
-    if (item) {
-      if (item?.previousElementSibling) {
-        item.previousElementSibling.querySelector('a').focus();
-      } else {
-        item.parentElement.lastElementChild.querySelector('a').focus();
-      }
+    if (item?.previousElementSibling) {
+      item.previousElementSibling.querySelector('a').focus();
+    } else {
+      item.parentElement.lastElementChild.querySelector('a').focus();
     }
   }
 }
