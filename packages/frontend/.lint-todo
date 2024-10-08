@@ -35,8 +35,6 @@ add|ember-template-lint|no-at-ember-render-modifiers|3|2|3|2|cb6d7acb9879902b89a
 add|ember-template-lint|no-at-ember-render-modifiers|4|2|4|2|2bdc98d02ac5ea2a4bd5bac6a0f9e880abafdcbe|1722902400000|1730682000000|1754006400000|app/components/learner-group/instructor-manager.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|4|4|4|4|170987df2d1e4c134a0ac459fc0bdd8dd91b9929|1722902400000|1730682000000|1754006400000|app/components/learner-group/root.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|5|4|5|4|7c59a55b95fd159dd99afa6b20e5f05b5b68def0|1722902400000|1730682000000|1754006400000|app/components/learner-group/root.hbs
-add|ember-template-lint|no-at-ember-render-modifiers|3|2|3|2|66fe3cf991d61995cda5f5935874230700b5e21f|1722902400000|1730682000000|1754006400000|app/components/program/overview.hbs
-add|ember-template-lint|no-at-ember-render-modifiers|4|2|4|2|0bcfaa7865c6a954a5b5226ffe44ddc6c63945ba|1722902400000|1730682000000|1754006400000|app/components/program/overview.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|5|2|5|2|12f77ac1f8c43640397b771ba2c9830dd2041f23|1722902400000|1730682000000|1754006400000|app/components/program-year/collapsed-objectives.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|6|2|6|2|87dcba868bd23c9305b095ffbda9e90ab5b4918e|1722902400000|1730682000000|1754006400000|app/components/program-year/collapsed-objectives.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|3|2|3|2|b759467cf4c3dc1d7e39d4bed1d085d51090d363|1722902400000|1730682000000|1754006400000|app/components/program-year/objective-list-item-expanded.hbs
