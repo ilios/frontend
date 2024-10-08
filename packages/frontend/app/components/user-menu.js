@@ -74,7 +74,7 @@ export default class UserMenuComponent extends Component {
     if (item?.previousElementSibling) {
       item.previousElementSibling.querySelector('a').focus();
     } else {
-      item.parentElement.lastElementChild.querySelector('a').focus();
+      item?.parentElement.lastElementChild.querySelector('a').focus();
     }
   }
 }
