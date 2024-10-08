@@ -1,15 +1,14 @@
 import Component from '@glimmer/component';
-import { schedule } from '@ember/runloop';
 import { service } from '@ember/service';
 import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
+import { task, timeout } from 'ember-concurrency';
 import { TrackedAsyncData } from 'ember-async-data';
 
 export default class UserMenuComponent extends Component {
   @service intl;
   @service currentUser;
   @tracked isOpen = false;
-  @tracked element;
 
   userModel = new TrackedAsyncData(this.currentUser.getModel());
 
@@ -18,9 +17,18 @@ export default class UserMenuComponent extends Component {
     return this.userModel.isResolved ? this.userModel.value : null;
   }
 
+  focusFirstLink = task(async () => {
+    await timeout(1);
+    document.querySelector('.user-menu .menu a:first-of-type').focus();
+  });
+
   @action
-  toggleMenu() {
+  async toggleMenu() {
     this.isOpen = !this.isOpen;
+
+    if (this.isOpen) {
+      await this.focusFirstLink.perform();
+    }
   }
 
   @action
@@ -49,30 +57,24 @@ export default class UserMenuComponent extends Component {
     return true;
   }
 
-  handleArrowDown(evt, item) {
-    if (evt.target.tagName.toLowerCase() === 'button') {
+  async handleArrowDown(event, item) {
+    if (event.target.tagName.toLowerCase() === 'button') {
       this.isOpen = true;
+      await this.focusFirstLink.perform();
     } else {
       if (item.nextElementSibling) {
         item.nextElementSibling.querySelector('a').focus();
       } else {
-        // eslint-disable-next-line ember/no-runloop
-        schedule('afterRender', () => {
-          this.element.querySelector('.menu li:nth-of-type(1) a').focus();
-        });
+        item.parentElement.firstElementChild.querySelector('a').focus();
       }
     }
   }
 
   handleArrowUp(item) {
-    if (item.previousElementSibling) {
+    if (item?.previousElementSibling) {
       item.previousElementSibling.querySelector('a').focus();
     } else {
-      this.element.querySelector('.menu li:last-of-type a').focus();
+      item?.parentElement.lastElementChild.querySelector('a').focus();
     }
-  }
-
-  focus(el) {
-    el.focus();
   }
 }

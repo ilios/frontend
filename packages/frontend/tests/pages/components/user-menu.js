@@ -11,5 +11,12 @@ export default create({
   },
   links: collection('[data-test-item]', {
     link: linkToWithAction,
+    mouseEnter: triggerable('mouseenter'),
+    down: triggerable('keyup', '', { eventProperties: { key: 'ArrowDown' } }),
+    esc: triggerable('keyup', '', { eventProperties: { key: 'Escape' } }),
+    left: triggerable('keyup', '', { eventProperties: { key: 'ArrowLeft' } }),
+    right: triggerable('keyup', '', { eventProperties: { key: 'ArrowRight' } }),
+    tab: triggerable('keyup', '', { eventProperties: { key: 'Tab' } }),
+    up: triggerable('keyup', '', { eventProperties: { key: 'ArrowUp' } }),
   }),
 });
