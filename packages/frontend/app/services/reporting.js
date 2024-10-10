@@ -110,7 +110,8 @@ export default class ReportingService extends Service {
       } else if (model === 'program-year') {
         const program = await record.program;
         const title = program.title;
-        object = `${record.classOfYear} ${title}`;
+        const classOfYear = await record.getClassOfYear();
+        object = `${classOfYear} ${title}`;
       } else {
         object = record.title;
       }
