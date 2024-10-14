@@ -5,7 +5,8 @@
 >
   <div class="course-sessions-header" data-test-course-sessions-header>
     <div class="title" data-test-title>
-      {{t "general.sessions"}} ({{this.sessionsCount}})
+      {{t "general.sessions"}}
+      ({{this.sessionsCount}})
     </div>
     <div class="actions" data-test-actions>
       {{#if @canCreateSession}}
@@ -46,41 +47,41 @@
   {{/if}}
 
   {{#if this.sessionsCount}}
-  <div class="filter">
-    <input
-      aria-label={{t "general.sessionTitleFilterPlaceholder"}}
-      value={{this.filterByDebounced}}
-      placeholder={{t "general.sessionTitleFilterPlaceholder"}}
-      data-test-session-filter
-      {{on "input" (fn (perform this.changeFilterBy))}}
-    >
-  </div>
-  <section>
-    <SessionsGridHeader
-      @showExpandAll={{this.showExpandAll}}
-      @setSortBy={{@setSortBy}}
-      @sortBy={{@sortBy}}
-      @allSessionsExpanded={{and
-        (eq this.expandedSessionIds.length this.sessionsWithOfferings.length)
-        (gt this.sessionsWithOfferings.length 0)
-      }}
-      @toggleExpandAll={{this.toggleExpandAll}}
-      @headerIsLocked={{this.tableHeadersLocked}}
-    />
-    {{#if this.sessions}}
-      <SessionsGrid
-        @sessions={{this.sessions}}
-        @sortBy={{@sortBy}}
-        @filterBy={{@filterBy}}
-        @expandedSessionIds={{this.expandedSessionIds}}
-        @closeSession={{perform this.closeSession}}
-        @expandSession={{perform this.expandSession}}
-        @headerIsLocked={{this.tableHeadersLocked}}
-        @setHeaderLockedStatus={{this.setHeaderLockedStatus}}
+    <div class="filter">
+      <input
+        aria-label={{t "general.sessionTitleFilterPlaceholder"}}
+        value={{this.filterByDebounced}}
+        placeholder={{t "general.sessionTitleFilterPlaceholder"}}
+        data-test-session-filter
+        {{on "input" (fn (perform this.changeFilterBy))}}
       />
-    {{else}}
-      <SessionsGridLoading @count={{this.sessionsCount}} />
-    {{/if}}
-  </section>
+    </div>
+    <section>
+      <SessionsGridHeader
+        @showExpandAll={{this.showExpandAll}}
+        @setSortBy={{@setSortBy}}
+        @sortBy={{@sortBy}}
+        @allSessionsExpanded={{and
+          (eq this.expandedSessionIds.length this.sessionsWithOfferings.length)
+          (gt this.sessionsWithOfferings.length 0)
+        }}
+        @toggleExpandAll={{this.toggleExpandAll}}
+        @headerIsLocked={{this.tableHeadersLocked}}
+      />
+      {{#if this.sessions}}
+        <SessionsGrid
+          @sessions={{this.sessions}}
+          @sortBy={{@sortBy}}
+          @filterBy={{@filterBy}}
+          @expandedSessionIds={{this.expandedSessionIds}}
+          @closeSession={{perform this.closeSession}}
+          @expandSession={{perform this.expandSession}}
+          @headerIsLocked={{this.tableHeadersLocked}}
+          @setHeaderLockedStatus={{this.setHeaderLockedStatus}}
+        />
+      {{else}}
+        <SessionsGridLoading @count={{this.sessionsCount}} />
+      {{/if}}
+    </section>
   {{/if}}
 </section>
