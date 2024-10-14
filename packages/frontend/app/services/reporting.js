@@ -122,6 +122,9 @@ export default class ReportingService extends Service {
           'academicYearCrossesCalendarYearBoundaries',
         );
         year = crosses ? `(${record.year} - ${record.year + 1})` : `(${record.year})`;
+      } else if (model === 'program-year') {
+        const classOfYear = await record.getClassOfYear();
+        year = `(${classOfYear})`;
       }
 
       return {
