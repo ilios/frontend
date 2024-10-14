@@ -80,7 +80,7 @@ module('Integration | Component | user search', function (hooks) {
     this.server.createList('instructor-group', 2);
     const instructorGroups = await this.owner.lookup('service:store').findAll('instructor-group');
     this.set('action', (group) => {
-      assert.strictEqual(group, instructorGroups.slice()[0]);
+      assert.strictEqual(group, instructorGroups[0]);
     });
     this.set('availableInstructorGroups', instructorGroups);
     await render(hbs`<UserSearch
