@@ -525,6 +525,11 @@ export default class OfferingForm extends Component {
   }
 
   updateDurationHours = restartableTask(async (hours) => {
+    // The corresponding input field passes an empty string if the input blank or invalid.
+    // Here, we ignore invalid input and exit early.
+    if ('' === hours) {
+      return;
+    }
     await timeout(DEBOUNCE_DELAY);
     this.addErrorDisplayFor('durationHours');
     this.addErrorDisplayFor('durationMinutes');
@@ -535,6 +540,11 @@ export default class OfferingForm extends Component {
   });
 
   updateDurationMinutes = restartableTask(async (minutes) => {
+    // The corresponding input field passes an empty string if the input blank or invalid.
+    // Here, we ignore invalid input and exit early.
+    if ('' === minutes) {
+      return;
+    }
     await timeout(DEBOUNCE_DELAY);
     this.addErrorDisplayFor('durationHours');
     this.addErrorDisplayFor('durationMinutes');
