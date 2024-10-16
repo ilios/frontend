@@ -262,7 +262,7 @@ module('Unit | Service | reporting', function (hooks) {
 
     assert.strictEqual(
       title,
-      `This report shows all Terms associated with Program Year "${programYearTitle}" (${classOfYear}) in ${schoolModel.title}.`,
+      `This report shows all Terms associated with Program Year "${programYearTitle}"  in ${schoolModel.title}.`,
     );
   });
 
