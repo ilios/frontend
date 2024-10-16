@@ -1,6 +1,5 @@
 @use "../ilios-common/colors" as c;
-@use "../ilios-common/mixins" as cm;
-@use "../mixins" as m;
+@use "../ilios-common/mixins" as m;
 
 .school-vocabulary-manager {
   .school-vocabulary-manager-title {
@@ -9,12 +8,12 @@
     margin-bottom: 1rem;
 
     label {
-      @include cm.ilios-label;
-      @include cm.ilios-heading-h4;
+      @include m.ilios-label;
+      @include m.ilios-heading-h4;
     }
 
     .editinplace {
-      @include cm.ilios-heading-h4;
+      @include m.ilios-heading-h4;
       margin-left: 0.5rem;
     }
 
@@ -33,15 +32,17 @@
     width: 80%;
 
     .saved-result {
-      @include m.main-list-saved-new;
+      border: 1px solid c.$fernGreen;
+      margin: 1rem;
+      padding: 1rem;
 
-      @include cm.for-laptop-and-up {
+      @include m.for-laptop-and-up {
         width: 40%;
       }
     }
 
     ul {
-      @include cm.ilios-selectable-list;
+      @include m.ilios-selectable-list;
 
       em {
         color: c.$crimson;
