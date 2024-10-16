@@ -2,7 +2,7 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
-import { component } from 'ilios-common/page-objects/components/password-validator';
+import { component } from 'frontend/tests/pages/components/password-validator';
 
 module('Integration | Component | password-validator', function (hooks) {
   setupRenderingTest(hooks);
