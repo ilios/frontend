@@ -1,8 +1,7 @@
-@use "../../ilios-common/mixins" as cm;
-@use "../../mixins" as m;
+@use "../../ilios-common/mixins" as m;
 
 .instructor-groups-root {
-  @include cm.main-section;
+  @include m.main-section;
 
   .filters {
     @include m.main-list-filters;
@@ -24,7 +23,7 @@
       @include m.main-list-box-header;
 
       h2 {
-        @include cm.ilios-heading;
+        @include m.ilios-heading;
       }
 
       .title {

@@ -1,29 +1,28 @@
 @use "../../ilios-common/colors" as c;
-@use "../../ilios-common/mixins" as cm;
-@use "../../mixins" as m;
+@use "../../ilios-common/mixins" as m;
 
 .learner-group-cohort-user-manager {
-  @include cm.detail-container(c.$tealBlue);
+  @include m.detail-container(c.$tealBlue);
   border-bottom: 0;
   border-top: 1px dotted c.$orange;
 
   .learner-group-cohort-user-manager-header {
-    @include cm.detail-container-header;
+    @include m.detail-container-header;
 
     .title {
-      @include cm.detail-container-title;
+      @include m.detail-container-title;
     }
 
     .actions {
       input {
-        @include cm.ilios-input;
+        @include m.ilios-input;
         width: 15rem;
       }
     }
   }
 
   .learner-group-cohort-user-manager-content {
-    @include cm.detail-container-content;
+    @include m.detail-container-content;
 
     .list {
       @include m.main-list-box-table;
@@ -33,7 +32,7 @@
   }
 
   .inline-button {
-    @include cm.ilios-button-reset;
+    @include m.ilios-button-reset;
     text-align: left;
     width: 100%;
   }

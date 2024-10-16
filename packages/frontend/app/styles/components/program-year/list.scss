@@ -1,8 +1,7 @@
-@use "../../ilios-common/mixins" as cm;
-@use "../../mixins" as m;
+@use "../../ilios-common/mixins" as m;
 
 .program-year-list {
-  @include cm.main-section;
+  @include m.main-section;
 
   .program-years {
     @include m.main-list-box;
@@ -11,7 +10,7 @@
       @include m.main-list-box-header;
 
       h2 {
-        @include cm.ilios-heading;
+        @include m.ilios-heading;
       }
 
       .title {
@@ -35,6 +34,6 @@
   .fa-lock,
   .fa-trash,
   .fa-unlock {
-    @include cm.icon;
+    @include m.icon;
   }
 }

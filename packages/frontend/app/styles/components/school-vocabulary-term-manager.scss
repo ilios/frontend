@@ -1,6 +1,5 @@
 @use "../ilios-common/colors" as c;
-@use "../ilios-common/mixins" as cm;
-@use "../mixins" as m;
+@use "../ilios-common/mixins" as m;
 
 .school-vocabulary-term-manager {
   .school-vocabulary-term-manager-properties {
@@ -9,7 +8,7 @@
     padding: 0.8rem;
 
     label {
-      @include cm.ilios-label;
+      @include m.ilios-label;
       margin: 0 0.5rem 0 0;
     }
 
@@ -23,12 +22,12 @@
       }
 
       &.term-title {
-        @include cm.ilios-heading-h4;
+        @include m.ilios-heading-h4;
       }
 
       &.term-description {
         textarea {
-          @include cm.ilios-textarea;
+          @include m.ilios-textarea;
         }
       }
     }
@@ -46,7 +45,7 @@
     .saved-result {
       @include m.main-list-saved-new;
 
-      @include cm.for-laptop-and-up {
+      @include m.for-laptop-and-up {
         width: 40%;
       }
     }
@@ -56,7 +55,7 @@
       margin-bottom: 0.5rem;
 
       .item {
-        @include cm.ilios-form-item;
+        @include m.ilios-form-item;
       }
 
       button {
@@ -65,7 +64,7 @@
     }
 
     ul {
-      @include cm.ilios-selectable-list;
+      @include m.ilios-selectable-list;
 
       em {
         color: c.$crimson;
