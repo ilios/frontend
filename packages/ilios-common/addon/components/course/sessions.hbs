@@ -34,7 +34,7 @@
     </div>
   {{/if}}
   {{#if this.saveSession.lastSuccessful.value}}
-    <div class="saved-result" data-test-new-saved-session>
+    <div class="save-result" data-test-new-saved-session>
       <LinkTo
         @route="session.index"
         @models={{array @course this.saveSession.lastSuccessful.value}}
