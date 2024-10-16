@@ -470,6 +470,56 @@ module('Integration | Component | offering form', function (hooks) {
     assert.ok(component.duration.minutes.hasError);
   });
 
+  test('blanking minutes or hours is ignored', async function (assert) {
+    await render(hbs`<OfferingForm @close={{(noop)}} @save={{(noop)}} />`);
+
+    // Verify the initial end-date.
+    assert.strictEqual(
+      this.intl.formatDate(DateTime.fromObject({ hour: 9, minute: 0 }).toJSDate(), {
+        month: '2-digit',
+        day: '2-digit',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+      }),
+      component.endDate.value,
+    );
+
+    // Change the duration, verify the calculated end-date.
+    await component.duration.minutes.set('4');
+    await component.duration.hours.set('9');
+    const newEndDate = this.intl.formatDate(
+      DateTime.fromObject({ hour: 17, minute: 4 }).toJSDate(),
+      {
+        month: '2-digit',
+        day: '2-digit',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+      },
+    );
+    assert.strictEqual(newEndDate, component.endDate.value);
+
+    // Provide blank input for the duration fields, verify that the end-date does not change again.
+    await component.duration.minutes.set('');
+    await component.duration.hours.set('');
+    assert.strictEqual(newEndDate, component.endDate.value);
+
+    // Change the duration again, verify that the calculated end-date has changed and is correct.
+    await component.duration.minutes.set('12');
+    await component.duration.hours.set('2');
+    assert.strictEqual(
+      this.intl.formatDate(DateTime.fromObject({ hour: 10, minute: 12 }).toJSDate(), {
+        month: '2-digit',
+        day: '2-digit',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+      }),
+      component.endDate.value,
+    );
+  });
+
   test('learner manager is not present in small-group mode', async function (assert) {
     await render(hbs`<OfferingForm @close={{(noop)}} @smallGroupMode={{true}} />`);
     assert.notOk(component.learnerManager.learnerSelectionManager.isPresent);
