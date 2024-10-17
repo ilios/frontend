@@ -39,10 +39,6 @@ add|ember-template-lint|no-at-ember-render-modifiers|5|2|5|2|12f77ac1f8c43640397
 add|ember-template-lint|no-at-ember-render-modifiers|6|2|6|2|87dcba868bd23c9305b095ffbda9e90ab5b4918e|1722902400000|1730682000000|1754006400000|app/components/program-year/collapsed-objectives.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|3|2|3|2|b759467cf4c3dc1d7e39d4bed1d085d51090d363|1722902400000|1730682000000|1754006400000|app/components/program-year/objective-list-item-expanded.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|4|2|4|2|c4f87a15e0dbf28e3a3b95d7b8259a419f93b29d|1722902400000|1730682000000|1754006400000|app/components/program-year/objective-list-item-expanded.hbs
-add|ember-template-lint|no-at-ember-render-modifiers|5|2|5|2|fc55335d86e2b3d97a0614f6c046ba360820801c|1722902400000|1730682000000|1754006400000|app/components/program-year/objective-list-item.hbs
-add|ember-template-lint|no-at-ember-render-modifiers|6|2|6|2|12443b4ba50f603e3c3af3d9e10ce840e7b67d9e|1722902400000|1730682000000|1754006400000|app/components/program-year/objective-list-item.hbs
-add|ember-template-lint|no-at-ember-render-modifiers|3|2|3|2|286929067e02096dda5597efc45c876218621874|1722902400000|1730682000000|1754006400000|app/components/program-year/objectives.hbs
-add|ember-template-lint|no-at-ember-render-modifiers|4|2|4|2|f37fd8ee0b117114a09137593ed6f113b2c80806|1722902400000|1730682000000|1754006400000|app/components/program-year/objectives.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|10|6|10|6|d919d2af254f782c01fe2ba15416673e52e91124|1722902400000|1730682000000|1754006400000|app/components/reports/subject/new/academic-year.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|11|6|11|6|940005188b476a060b0e5d3f05baea24ba178878|1722902400000|1730682000000|1754006400000|app/components/reports/subject/new/academic-year.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|10|6|10|6|d919d2af254f782c01fe2ba15416673e52e91124|1722902400000|1730682000000|1754006400000|app/components/reports/subject/new/competency.hbs
@@ -57,7 +53,3 @@ add|ember-template-lint|no-at-ember-render-modifiers|10|6|10|6|d919d2af254f782c0
 add|ember-template-lint|no-at-ember-render-modifiers|11|6|11|6|940005188b476a060b0e5d3f05baea24ba178878|1722902400000|1730682000000|1754006400000|app/components/reports/subject/new/session-type.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|10|6|10|6|d919d2af254f782c01fe2ba15416673e52e91124|1722902400000|1730682000000|1754006400000|app/components/reports/subject/new/term.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|11|6|11|6|940005188b476a060b0e5d3f05baea24ba178878|1722902400000|1730682000000|1754006400000|app/components/reports/subject/new/term.hbs
-remove|ember-template-lint|no-at-ember-render-modifiers|5|2|5|2|fc55335d86e2b3d97a0614f6c046ba360820801c|1722902400000|1730682000000|1754006400000|app/components/program-year/objective-list-item.hbs
-remove|ember-template-lint|no-at-ember-render-modifiers|6|2|6|2|12443b4ba50f603e3c3af3d9e10ce840e7b67d9e|1722902400000|1730682000000|1754006400000|app/components/program-year/objective-list-item.hbs
-remove|ember-template-lint|no-at-ember-render-modifiers|3|2|3|2|286929067e02096dda5597efc45c876218621874|1722902400000|1730682000000|1754006400000|app/components/program-year/objectives.hbs
-remove|ember-template-lint|no-at-ember-render-modifiers|4|2|4|2|f37fd8ee0b117114a09137593ed6f113b2c80806|1722902400000|1730682000000|1754006400000|app/components/program-year/objectives.hbs
