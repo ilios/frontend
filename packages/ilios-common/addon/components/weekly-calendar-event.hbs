@@ -24,9 +24,9 @@
       />
     {{/if}}
     {{#if (not @event.isPublished)}}
-      <FaIcon @icon="file-signature" data-test-draft-icon />
+      <FaIcon @icon="file-signature" @title={{t "general.notPublished"}} data-test-draft-icon />
     {{else if @event.isScheduled}}
-      <FaIcon @icon="clock" data-test-scheduled-icon />
+      <FaIcon @icon="clock" @title={{t "general.scheduled" }} data-test-scheduled-icon />
     {{/if}}
   </span>
   <span class="ilios-calendar-event-time" data-test-time>
