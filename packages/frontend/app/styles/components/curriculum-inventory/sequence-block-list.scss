@@ -1,15 +1,14 @@
 @use "../../ilios-common/colors" as c;
-@use "../../ilios-common/mixins" as cm;
-@use "../../mixins" as m;
+@use "../../ilios-common/mixins" as m;
 
 .curriculum-inventory-sequence-block-list {
-  @include cm.main-section;
+  @include m.main-section;
 
   .header {
     @include m.main-list-box-header;
 
     h2 {
-      @include cm.ilios-heading;
+      @include m.ilios-heading;
     }
 
     .title {
@@ -33,8 +32,6 @@
   }
 
   .saved-result {
-    border: 1px solid c.$fernGreen;
-    margin: 1rem;
-    padding: 0.75rem;
+    @include m.main-list-saved-new;
   }
 }

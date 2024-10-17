@@ -43,9 +43,7 @@
     width: 80%;
 
     .saved-result {
-      border: 1px solid c.$fernGreen;
-      margin: 1rem;
-      padding: 1rem;
+      @include m.main-list-saved-new;
 
       @include m.for-laptop-and-up {
         width: 40%;

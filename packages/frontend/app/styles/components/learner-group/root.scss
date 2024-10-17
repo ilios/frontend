@@ -1,18 +1,17 @@
 @use "../../ilios-common/colors" as c;
-@use "../../ilios-common/mixins" as cm;
-@use "../../mixins" as m;
+@use "../../ilios-common/mixins" as m;
 
 @use "sass:color";
 
 .learner-group-root {
-  @include cm.main-section;
+  @include m.main-section;
 
   .learner-group-overview {
-    @include cm.ilios-overview(c.$orange);
+    @include m.ilios-overview(c.$orange);
     margin-left: 0.8rem;
 
     .block {
-      @include cm.ilios-overview-block;
+      @include m.ilios-overview-block;
 
       &.associatedcourses {
         align-items: flex-start;
@@ -23,7 +22,7 @@
           white-space: nowrap;
         }
         ul {
-          @include cm.ilios-tag-list;
+          @include m.ilios-tag-list;
 
           li {
             margin-top: 0;
@@ -41,16 +40,16 @@
     }
 
     .learner-group-overview-actions {
-      @include cm.detail-container-header;
+      @include m.detail-container-header;
       margin-top: 0.25rem;
       padding-top: 0.5rem;
 
       .title {
-        @include cm.detail-container-title;
+        @include m.detail-container-title;
       }
 
       .actions {
-        @include cm.for-phone-and-up {
+        @include m.for-phone-and-up {
           .toggle-buttons {
             display: inline;
           }
@@ -66,20 +65,20 @@
   .cohortmembers {
     .cohortmembers-loading {
       display: block;
-      @include cm.font-size("xxl");
+      @include m.font-size("xxl");
       margin: auto;
       text-align: center;
     }
   }
 
   .subgroups {
-    @include cm.detail-container-content;
+    @include m.detail-container-content;
 
     .header {
-      @include cm.detail-container-header;
+      @include m.detail-container-header;
 
       .title {
-        @include cm.detail-container-title;
+        @include m.detail-container-title;
       }
     }
 
