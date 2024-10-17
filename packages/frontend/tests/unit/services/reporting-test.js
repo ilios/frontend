@@ -2,6 +2,7 @@ import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
 import { setupIntl } from 'ember-intl/test-support';
 import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { DateTime } from 'luxon';
 
 module('Unit | Service | reporting', function (hooks) {
   setupTest(hooks);
@@ -223,6 +224,45 @@ module('Unit | Service | reporting', function (hooks) {
       `This report shows all Terms associated with Course "${courseModel.title}" (${
         courseModel.year
       } - ${courseModel.year + 1}) in ${schoolModel.title}.`,
+    );
+  });
+
+  test('buildReportDescription() - all terms for program year X in school Y', async function (assert) {
+    const school = this.server.create('school', { title: 'School of Schools' });
+    const program = this.server.create('program', { school: school });
+    const programYear = this.server.create('program-year', {
+      program,
+      startYear: DateTime.now().year,
+    });
+    const vocabulary = this.server.create('vocabulary', { school });
+    this.server.create('term', {
+      title: 'foo bar',
+      programYears: [programYear],
+      vocabulary,
+    });
+    const report = this.server.create('report', {
+      subject: 'term',
+      prepositionalObject: 'program year',
+      prepositionalObjectTableRowId: programYear.id,
+      school,
+    });
+
+    const store = this.owner.lookup('service:store');
+    const reportModel = await store.findRecord('report', report.id);
+    const programYearModel = await store.findRecord('program year', programYear.id);
+    const schoolModel = await store.findRecord('school', school.id);
+    const title = await this.service.buildReportDescription(
+      reportModel.subject,
+      reportModel.prepositionalObject,
+      reportModel.prepositionalObjectTableRowId,
+      school,
+    );
+    const classOfYear = await programYearModel.getClassOfYear();
+    const programYearTitle = `${classOfYear} ${program.title}`;
+
+    assert.strictEqual(
+      title,
+      `This report shows all Terms associated with Program Year "${programYearTitle}"  in ${schoolModel.title}.`,
     );
   });
 
