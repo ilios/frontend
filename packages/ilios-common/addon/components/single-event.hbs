@@ -9,6 +9,11 @@
             @title={{t "general.newUpdates"}}
           />
         {{/if}}
+        {{#if (not this.isPublished)}}
+          <FaIcon @icon="file-signature" @title={{t "general.notPublished"}} data-test-draft-icon />
+        {{else if this.isScheduled}}
+          <FaIcon @icon="clock" @title={{t "general.scheduled" }} data-test-scheduled-icon />
+        {{/if}}
         {{@event.courseTitle}}
         -
         <em>
