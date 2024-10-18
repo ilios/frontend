@@ -60,4 +60,28 @@ module('Integration | Component | search box', function (hooks) {
     await render(hbs`<SearchBox @search={{(noop)}} @placeholder={{this.placeholder}} />`);
     assert.strictEqual(component.placeholder, placeholder);
   });
+
+  test('default maxlength', async function (assert) {
+    const MAX_LENGTH = 6000;
+
+    await render(hbs`<SearchBox @search={{(noop)}} />`);
+    await component.set('t'.repeat(6000));
+
+    assert.strictEqual(component.value.length, MAX_LENGTH);
+
+    await component.keydown({ which: 84 });
+    assert.strictEqual(component.value.length, MAX_LENGTH);
+  });
+
+  test('custom maxlength', async function (assert) {
+    const MAX_LENGTH = 255;
+
+    await render(hbs`<SearchBox @search={{(noop)}} @maxlength={{this.MAX_LENGTH}} />`);
+    await component.set('t'.repeat(255));
+
+    assert.strictEqual(component.value.length, MAX_LENGTH);
+
+    await component.keydown({ which: 84 });
+    assert.strictEqual(component.value.length, MAX_LENGTH);
+  });
 });

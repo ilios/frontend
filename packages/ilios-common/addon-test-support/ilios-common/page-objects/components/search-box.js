@@ -8,6 +8,7 @@ const definition = {
   value: value('input'),
   inputHasFocus: hasFocus('input'),
   placeholder: attribute('placeholder', 'input'),
+  keydown: triggerable('keypress', 'input'),
   esc: triggerable('keyup', 'input', { eventProperties: { key: 'Escape' } }),
 };
 
