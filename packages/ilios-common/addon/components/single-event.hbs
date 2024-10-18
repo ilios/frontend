@@ -1,31 +1,42 @@
 <div class="single-event" data-test-single-event>
   {{#if @event}}
     <div class="single-event-summary" data-test-summary>
-      <h2 data-test-title>
+      <h2 data-test-header>
         {{#if this.recentlyUpdated}}
           <FaIcon
             @icon="circle-exclamation"
-            class="recently-updated-icon-event"
             @title={{t "general.newUpdates"}}
+            class="recently-updated-icon-event"
+            data-test-recently-updated-icon
           />
         {{/if}}
         {{#if (not this.isPublished)}}
-          <FaIcon @icon="file-signature" @title={{t "general.notPublished"}} data-test-draft-icon />
+          <FaIcon
+            @icon="file-signature"
+            @title={{t "general.notPublished"}}
+            data-test-draft-icon
+          />
         {{else if this.isScheduled}}
-          <FaIcon @icon="clock" @title={{t "general.scheduled" }} data-test-scheduled-icon />
+          <FaIcon
+            @icon="clock"
+            @title={{t "general.scheduled" }}
+            data-test-scheduled-icon
+          />
         {{/if}}
-        {{@event.courseTitle}}
-        -
-        <em>
-          {{#if (and this.sessionRouteExists this.canViewSession)}}
-            <LinkTo
-              @route="session"
-              @models={{array @event.course @event.session}}
-            >{{@event.name}}</LinkTo>
-          {{else}}
-            {{@event.name}}
-          {{/if}}
-        </em>
+        <span data-test-header-title>
+          {{@event.courseTitle}}
+          -
+          <em>
+            {{#if (and this.sessionRouteExists this.canViewSession)}}
+              <LinkTo
+                @route="session"
+                @models={{array @event.course @event.session}}
+              >{{@event.name}}</LinkTo>
+            {{else}}
+              {{@event.name}}
+            {{/if}}
+          </em>
+        </span>
       </h2>
       <div class="single-event-offered-at" data-test-offered-at>
         {{#if (gt @event.postrequisites.length 0)}}
