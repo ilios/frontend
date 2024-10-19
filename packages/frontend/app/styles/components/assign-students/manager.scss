@@ -1,5 +1,4 @@
-@use "../../ilios-common/mixins" as cm;
-@use "../../mixins" as m;
+@use "../../ilios-common/mixins" as m;
 
 .assign-students-manager {
   @include m.main-list-box;
@@ -8,7 +7,7 @@
     @include m.main-list-box-header;
 
     h2 {
-      @include cm.ilios-heading;
+      @include m.ilios-heading;
     }
 
     .title {
@@ -22,12 +21,12 @@
     flex-direction: column;
     padding: 0.5rem;
 
-    @include cm.for-laptop-and-up {
+    @include m.for-laptop-and-up {
       flex-direction: row;
     }
 
     label {
-      @include cm.ilios-label;
+      @include m.ilios-label;
       margin: 0 0.5rem;
     }
 

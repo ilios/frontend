@@ -1,18 +1,23 @@
-@use "../ilios-common/mixins" as cm;
-@use "../ilios-common/colors" as c;
+@use "../colors" as c;
+@use "font-size";
+@use "ilios-heading";
+@use "ilios-input";
+@use "ilios-select";
+@use "ilios-table";
+@use "media";
 
 @mixin main-list-filters() {
   display: flex;
   flex-direction: column;
   margin-bottom: 1rem;
 
-  @include cm.for-laptop-and-up {
+  @include media.for-laptop-and-up {
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: space-between;
   }
 
-  @include cm.for-desktop-and-up {
+  @include media.for-desktop-and-up {
     justify-content: flex-start;
   }
 }
@@ -21,24 +26,24 @@
   padding: 0 1rem 1rem 1rem;
   white-space: nowrap;
 
-  @include cm.for-laptop-and-up {
+  @include media.for-laptop-and-up {
     align-content: center;
     padding-bottom: 0;
     width: 25%;
   }
 
-  @include cm.for-desktop-and-up {
+  @include media.for-desktop-and-up {
     margin-right: 2rem;
     width: auto;
   }
 
   select {
-    @include cm.ilios-select;
+    @include ilios-select.ilios-select;
     width: 90%;
   }
 
   input {
-    @include cm.ilios-input;
+    @include ilios-input.ilios-input;
     width: 100%;
   }
 }
@@ -55,7 +60,7 @@
   padding: 0.5rem 0;
   text-align: center;
 
-  @include cm.for-laptop-and-up {
+  @include media.for-laptop-and-up {
     flex-direction: row;
     justify-content: space-between;
     margin-left: 1rem;
@@ -63,21 +68,21 @@
 }
 
 @mixin main-list-box-header-title {
-  @include cm.ilios-heading-h4;
-  @include cm.text-align-bottom;
+  @include ilios-heading.ilios-heading-h4;
+  @include font-size.text-align-bottom;
   margin-bottom: 0.5rem;
-  @include cm.for-laptop-and-up {
+  @include media.for-laptop-and-up {
     margin-bottom: 0;
   }
 }
 
 @mixin main-list-box-header-actions {
-  @include cm.for-laptop-and-up {
+  @include media.for-laptop-and-up {
     padding-right: 1rem;
     text-align: right;
   }
 
-  @include cm.for-phone-only {
+  @include media.for-phone-only {
     & > * {
       margin-top: 0.25em;
     }
@@ -100,10 +105,10 @@
   }
 
   table {
-    @include cm.ilios-table-structure;
-    @include cm.ilios-table-colors;
-    @include cm.ilios-removable-table;
-    @include cm.ilios-zebra-table;
+    @include ilios-table.ilios-table-structure;
+    @include ilios-table.ilios-table-colors;
+    @include ilios-table.ilios-removable-table;
+    @include ilios-table.ilios-zebra-table;
 
     thead {
       background-color: c.$culturedGrey;
