@@ -640,6 +640,92 @@ module('Integration | Component | ilios calendar single event', function (hooks)
     assert.ok(component.summary.header.hasLink);
   });
 
+  module('iconography', function () {
+    test('recently updated', async function (assert) {
+      const now = DateTime.fromObject({ hour: 0, minute: 0, second: 0 });
+      this.server.create('userevent', {
+        name: 'Learn to Learn',
+        courseTitle: 'course',
+        startDate: now.toJSDate(),
+        endDate: now.plus({ hour: 1 }).toJSDate(),
+        isBlanked: false,
+        isPublished: true,
+        isScheduled: false,
+        offering: 1,
+        lastModified: now.plus({ hour: 1 }),
+        sessionTypeTitle: 'test type',
+      });
+
+      this.set('event', this.server.db.userevents[0]);
+      await render(hbs`<SingleEvent @event={{this.event}} />`);
+
+      assert.ok(component.summary.header.wasRecentlyUpdated, 'event has NewUpdates icon');
+    });
+
+    test('not recently updated', async function (assert) {
+      const now = DateTime.fromObject({ hour: 0, minute: 0, second: 0 });
+      this.server.create('userevent', {
+        name: 'Learn to Learn',
+        courseTitle: 'course',
+        startDate: now.toJSDate(),
+        endDate: now.plus({ days: 7 }).toJSDate(),
+        isBlanked: false,
+        isPublished: true,
+        isScheduled: false,
+        offering: 1,
+        lastModified: null,
+        sessionTypeTitle: 'test type',
+      });
+
+      this.set('event', this.server.db.userevents[0]);
+      await render(hbs`<SingleEvent @event={{this.event}} />`);
+      assert.notOk(
+        component.summary.header.wasRecentlyUpdated,
+        'event does not have NewUpdates icon',
+      );
+    });
+
+    test('scheduled', async function (assert) {
+      const now = DateTime.fromObject({ hour: 0, minute: 0, second: 0 });
+      this.server.create('userevent', {
+        name: 'Learn to Learn',
+        courseTitle: 'course',
+        startDate: now.toJSDate(),
+        endDate: now.plus({ hour: 1 }).toJSDate(),
+        isBlanked: false,
+        isPublished: true,
+        isScheduled: true,
+        offering: 1,
+        lastModified: null,
+        sessionTypeTitle: 'test type',
+      });
+
+      this.set('event', this.server.db.userevents[0]);
+      await render(hbs`<SingleEvent @event={{this.event}} />`);
+      assert.ok(component.summary.header.isScheduled, 'event has Scheduled icon');
+    });
+
+    test('draft', async function (assert) {
+      const now = DateTime.fromObject({ hour: 0, minute: 0, second: 0 });
+      this.server.create('userevent', {
+        name: 'Learn to Learn',
+        courseTitle: 'course',
+        startDate: now.toJSDate(),
+        endDate: now.plus({ hour: 1 }).toJSDate(),
+        isBlanked: false,
+        isPublished: false,
+        isScheduled: false,
+        offering: 1,
+        lastModified: null,
+        sessionTypeTitle: 'test type',
+      });
+
+      this.set('event', this.server.db.userevents[0]);
+      await render(hbs`<SingleEvent @event={{this.event}} />`);
+      assert.ok(component.summary.header.isDraft, 'event has NotPublished icon');
+    });
+  });
+
   todo(
     "non learners don't get link to session if session route doesn't exists",
     async function (assert) {

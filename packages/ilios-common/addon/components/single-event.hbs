@@ -10,13 +10,13 @@
             data-test-recently-updated-icon
           />
         {{/if}}
-        {{#if (not this.isPublished)}}
+        {{#if (not @event.isPublished)}}
           <FaIcon
             @icon="file-signature"
             @title={{t "general.notPublished"}}
             data-test-draft-icon
           />
-        {{else if this.isScheduled}}
+        {{else if @event.isScheduled}}
           <FaIcon
             @icon="clock"
             @title={{t "general.scheduled" }}
