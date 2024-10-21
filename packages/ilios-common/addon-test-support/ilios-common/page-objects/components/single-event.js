@@ -6,9 +6,13 @@ const definition = {
   scope: '[data-test-single-event]',
   summary: {
     scope: '[data-test-summary]',
-    title: {
-      scope: '[data-test-title]',
+    header: {
+      scope: '[data-test-header]',
       hasLink: isPresent('a'),
+      title: text('[data-test-header-title]'),
+      isScheduled: isPresent('[data-test-scheduled-icon]'),
+      isDraft: isPresent('[data-test-draft-icon]'),
+      wasRecentlyUpdated: isPresent('[data-test-recently-updated-icon]'),
     },
     offeredAt: text('[data-test-offered-at]'),
     offeredAtLink: attribute('href', '[data-test-offered-at] a'),

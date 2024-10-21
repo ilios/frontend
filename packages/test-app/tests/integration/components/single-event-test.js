@@ -124,7 +124,7 @@ module('Integration | Component | ilios calendar single event', function (hooks)
     this.set('event', ourEvent);
     await render(hbs`<SingleEvent @event={{this.event}} />`);
 
-    assert.notOk(component.summary.title.hasLink);
+    assert.notOk(component.summary.header.hasLink);
     assert.strictEqual(
       component.sessionObjectives.objectiveList.title.expandCollapseSwitcher.ariaExpanded,
       'true',
@@ -258,8 +258,8 @@ module('Integration | Component | ilios calendar single event', function (hooks)
 
     this.set('event', this.server.db.userevents[0]);
     await render(hbs`<SingleEvent @event={{this.event}} />`);
-    assert.strictEqual(component.summary.title.text, 'course - Learn to Learn');
-    assert.notOk(component.summary.title.hasLink);
+    assert.strictEqual(component.summary.header.title, 'course - Learn to Learn');
+    assert.notOk(component.summary.header.hasLink);
     assert.strictEqual(
       component.summary.offeredAt,
       this.intl.formatDate(today.toJSDate(), {
@@ -301,8 +301,8 @@ module('Integration | Component | ilios calendar single event', function (hooks)
 
     this.set('event', this.server.db.userevents[0]);
     await render(hbs`<SingleEvent @event={{this.event}} />`);
-    assert.strictEqual(component.summary.title.text, 'course - Learn to Learn');
-    assert.notOk(component.summary.title.hasLink);
+    assert.strictEqual(component.summary.header.title, 'course - Learn to Learn');
+    assert.notOk(component.summary.header.hasLink);
     const formatedDate = this.intl.formatDate(tomorrow.toJSDate(), {
       weekday: 'long',
       year: 'numeric',
@@ -382,8 +382,8 @@ module('Integration | Component | ilios calendar single event', function (hooks)
 
     this.set('ev', this.server.db.userevents[0]);
     await render(hbs`<SingleEvent @event={{this.ev}} />`);
-    assert.notOk(component.summary.title.hasLink);
-    assert.strictEqual(component.summary.title.text, 'course - Learn to Learn');
+    assert.notOk(component.summary.header.hasLink);
+    assert.strictEqual(component.summary.header.title, 'course - Learn to Learn');
     const { materials } = component.sessionLearningMaterials;
     assert.strictEqual(materials.items.length, 4);
     assert.strictEqual(materials.prework.length, 2);
@@ -430,8 +430,8 @@ module('Integration | Component | ilios calendar single event', function (hooks)
 
     this.set('event', this.server.db.userevents[0]);
     await render(hbs`<SingleEvent @event={{this.event}} />`);
-    assert.strictEqual(component.summary.title.text, 'course - Learn to Learn');
-    assert.notOk(component.summary.title.hasLink);
+    assert.strictEqual(component.summary.header.title, 'course - Learn to Learn');
+    assert.notOk(component.summary.header.hasLink);
     const formattedTomorrow = this.intl.formatDate(tomorrow.toJSDate(), {
       weekday: 'long',
       year: 'numeric',
@@ -514,8 +514,8 @@ module('Integration | Component | ilios calendar single event', function (hooks)
 
     this.set('event', this.server.db.userevents[0]);
     await render(hbs`<SingleEvent @event={{this.event}} />`);
-    assert.strictEqual(component.summary.title.text, 'course - Learn to Learn');
-    assert.notOk(component.summary.title.hasLink);
+    assert.strictEqual(component.summary.header.title, 'course - Learn to Learn');
+    assert.notOk(component.summary.header.hasLink);
     assert.strictEqual(
       component.summary.offeredAt,
       this.intl.formatDate(today.toJSDate(), {
@@ -547,8 +547,8 @@ module('Integration | Component | ilios calendar single event', function (hooks)
 
     this.set('event', this.server.db.userevents[0]);
     await render(hbs`<SingleEvent @event={{this.event}} />`);
-    assert.strictEqual(component.summary.title.text, 'course - Learn to Learn');
-    assert.notOk(component.summary.title.hasLink);
+    assert.strictEqual(component.summary.header.title, 'course - Learn to Learn');
+    assert.notOk(component.summary.header.hasLink);
     assert.strictEqual(
       component.summary.offeredAt,
       this.intl.formatDate(today.toJSDate(), {
@@ -585,8 +585,8 @@ module('Integration | Component | ilios calendar single event', function (hooks)
 
     this.set('event', this.server.db.userevents[0]);
     await render(hbs`<SingleEvent @event={{this.event}} />`);
-    assert.strictEqual(component.summary.title.text, 'course - Learn to Learn');
-    assert.notOk(component.summary.title.hasLink);
+    assert.strictEqual(component.summary.header.title, 'course - Learn to Learn');
+    assert.notOk(component.summary.header.hasLink);
     assert.strictEqual(
       component.summary.offeredAt,
       this.intl.formatDate(today.toJSDate(), {
@@ -636,8 +636,94 @@ module('Integration | Component | ilios calendar single event', function (hooks)
 
     this.set('event', this.server.db.userevents[0]);
     await render(hbs`<SingleEvent @event={{this.event}} />`);
-    assert.strictEqual(component.summary.title.text, 'course - Learn to Learn');
-    assert.ok(component.summary.title.hasLink);
+    assert.strictEqual(component.summary.header.title, 'course - Learn to Learn');
+    assert.ok(component.summary.header.hasLink);
+  });
+
+  module('iconography', function () {
+    test('recently updated', async function (assert) {
+      const now = DateTime.fromObject({ hour: 0, minute: 0, second: 0 });
+      this.server.create('userevent', {
+        name: 'Learn to Learn',
+        courseTitle: 'course',
+        startDate: now.toJSDate(),
+        endDate: now.plus({ hour: 1 }).toJSDate(),
+        isBlanked: false,
+        isPublished: true,
+        isScheduled: false,
+        offering: 1,
+        lastModified: now.plus({ hour: 1 }),
+        sessionTypeTitle: 'test type',
+      });
+
+      this.set('event', this.server.db.userevents[0]);
+      await render(hbs`<SingleEvent @event={{this.event}} />`);
+
+      assert.ok(component.summary.header.wasRecentlyUpdated, 'event has NewUpdates icon');
+    });
+
+    test('not recently updated', async function (assert) {
+      const now = DateTime.fromObject({ hour: 0, minute: 0, second: 0 });
+      this.server.create('userevent', {
+        name: 'Learn to Learn',
+        courseTitle: 'course',
+        startDate: now.toJSDate(),
+        endDate: now.plus({ days: 7 }).toJSDate(),
+        isBlanked: false,
+        isPublished: true,
+        isScheduled: false,
+        offering: 1,
+        lastModified: null,
+        sessionTypeTitle: 'test type',
+      });
+
+      this.set('event', this.server.db.userevents[0]);
+      await render(hbs`<SingleEvent @event={{this.event}} />`);
+      assert.notOk(
+        component.summary.header.wasRecentlyUpdated,
+        'event does not have NewUpdates icon',
+      );
+    });
+
+    test('scheduled', async function (assert) {
+      const now = DateTime.fromObject({ hour: 0, minute: 0, second: 0 });
+      this.server.create('userevent', {
+        name: 'Learn to Learn',
+        courseTitle: 'course',
+        startDate: now.toJSDate(),
+        endDate: now.plus({ hour: 1 }).toJSDate(),
+        isBlanked: false,
+        isPublished: true,
+        isScheduled: true,
+        offering: 1,
+        lastModified: null,
+        sessionTypeTitle: 'test type',
+      });
+
+      this.set('event', this.server.db.userevents[0]);
+      await render(hbs`<SingleEvent @event={{this.event}} />`);
+      assert.ok(component.summary.header.isScheduled, 'event has Scheduled icon');
+    });
+
+    test('draft', async function (assert) {
+      const now = DateTime.fromObject({ hour: 0, minute: 0, second: 0 });
+      this.server.create('userevent', {
+        name: 'Learn to Learn',
+        courseTitle: 'course',
+        startDate: now.toJSDate(),
+        endDate: now.plus({ hour: 1 }).toJSDate(),
+        isBlanked: false,
+        isPublished: false,
+        isScheduled: false,
+        offering: 1,
+        lastModified: null,
+        sessionTypeTitle: 'test type',
+      });
+
+      this.set('event', this.server.db.userevents[0]);
+      await render(hbs`<SingleEvent @event={{this.event}} />`);
+      assert.ok(component.summary.header.isDraft, 'event has NotPublished icon');
+    });
   });
 
   todo(
