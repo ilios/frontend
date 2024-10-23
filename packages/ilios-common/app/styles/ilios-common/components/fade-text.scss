@@ -12,6 +12,12 @@
     }
   }
 
+  button {
+    &.expand-text-button {
+      @include m.ilios-link-button;
+    }
+  }
+
   .fade-text-control {
     bottom: 105px;
     cursor: pointer;
