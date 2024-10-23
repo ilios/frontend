@@ -7,4 +7,16 @@
   .fade-text-control {
     background-image: linear-gradient(to bottom, transparent, c.$white);
   }
+
+  .objective-row {
+    &.is-managing {
+      .fade-text-control {
+        background-image: linear-gradient(
+          to bottom,
+          transparent,
+          c.$culturedGrey
+        );
+      }
+    }
+  }
 }
