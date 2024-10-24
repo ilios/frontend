@@ -20,7 +20,7 @@ export default class ProgramYearObjectivesComponent extends Component {
     return this.objectiveCount > 0;
   }
 
-  get objectivesCount() {
+  get objectiveCount() {
     return this.args.programYear.hasMany('programYearObjectives').ids().length;
   }
 
