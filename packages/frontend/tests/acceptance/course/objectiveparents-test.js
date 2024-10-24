@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import { setupAuthentication } from 'ilios-common';
 import { setupApplicationTest } from 'frontend/tests/helpers';
-import { getUniqueName } from '../helpers/percy-snapshot-name';
+import { getUniqueName } from '../../helpers/percy-snapshot-name';
 import page from 'ilios-common/page-objects/course';
 import percySnapshot from '@percy/ember';
 
