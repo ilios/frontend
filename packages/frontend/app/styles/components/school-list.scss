@@ -1,9 +1,8 @@
 @use "../ilios-common/colors" as c;
-@use "../ilios-common/mixins" as cm;
-@use "../mixins" as m;
+@use "../ilios-common/mixins" as m;
 
 .school-list {
-  @include cm.main-section;
+  @include m.main-section;
 
   .schools {
     @include m.main-list-box;
@@ -12,7 +11,7 @@
       @include m.main-list-box-header;
 
       h2 {
-        @include cm.ilios-heading;
+        @include m.ilios-heading;
       }
 
       .title {
@@ -29,23 +28,23 @@
     border: 1px solid c.$culturedGrey;
     padding: 1rem;
 
-    @include cm.for-laptop-and-up {
+    @include m.for-laptop-and-up {
       margin-left: 1rem;
     }
 
     .new-result-title {
-      @include cm.ilios-heading-h4;
+      @include m.ilios-heading-h4;
     }
 
     .form {
-      @include cm.ilios-form;
+      @include m.ilios-form;
 
       .item {
-        @include cm.ilios-form-item;
+        @include m.ilios-form-item;
       }
 
       .buttons {
-        @include cm.ilios-form-buttons;
+        @include m.ilios-form-buttons;
       }
     }
   }

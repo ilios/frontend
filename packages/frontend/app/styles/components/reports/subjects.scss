@@ -1,14 +1,13 @@
-@use "../../ilios-common/mixins" as cm;
-@use "../../mixins" as m;
+@use "../../ilios-common/mixins" as m;
 
 .reports-subjects {
-  @include cm.main-section;
+  @include m.main-section;
 
   .header {
     @include m.main-list-box-header;
 
     h2 {
-      @include cm.ilios-heading;
+      @include m.ilios-heading;
     }
 
     .title {
@@ -20,7 +19,7 @@
     margin-left: 1rem;
 
     .saved-reports {
-      @include cm.ilios-list-reset;
+      @include m.ilios-list-reset;
       margin: 0.5rem 0;
 
       li {
@@ -30,7 +29,7 @@
     }
 
     .fa-trash {
-      @include cm.icon;
+      @include m.icon;
     }
   }
 }
