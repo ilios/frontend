@@ -14,10 +14,6 @@
   line-height: 1; /* stylelint-disable-line property-disallowed-list */
   text-rendering: auto;
 
-  &.fa-download {
-    margin-left: 0.1rem;
-  }
-
   &.spin {
     animation-name: awesome-spin;
     animation-delay: 0s;

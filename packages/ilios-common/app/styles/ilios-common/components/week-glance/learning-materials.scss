@@ -32,6 +32,10 @@
 
     .week-glance-learning-material-list-item {
       display: flex;
+
+      &.fa-download {
+        margin-left: 0.1rem;
+      }
     }
   }
 }

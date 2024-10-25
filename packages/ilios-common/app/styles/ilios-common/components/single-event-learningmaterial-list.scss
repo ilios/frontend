@@ -50,5 +50,9 @@
   .single-event-learningmaterial-item-title {
     display: flex;
     align-items: center;
+
+    &.fa-download {
+      margin-left: 0.1rem;
+    }
   }
 }
