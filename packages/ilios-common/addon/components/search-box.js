@@ -19,6 +19,10 @@ export default class SearchBox extends Component {
     return this.args.placeholder ?? this.intl.t('general.search');
   }
 
+  get maxlength() {
+    return this.args.maxlength ?? '6000';
+  }
+
   @action
   update(event) {
     this.value = event.target.value;

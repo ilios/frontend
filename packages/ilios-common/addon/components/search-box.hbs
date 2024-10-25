@@ -6,6 +6,7 @@
     type="search"
     value={{this.value}}
     placeholder={{this.placeholder}}
+    maxlength={{this.maxlength}}
     {{on "input" this.update}}
     {{on "keyup" this.keyUp}}
     {{did-insert (set this "searchInput")}}
