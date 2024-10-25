@@ -11,7 +11,6 @@ export default class ProgramYearObjectivesComponent extends Component {
 
   @tracked newObjectiveEditorOn = false;
   @tracked newObjectiveTitle;
-  @tracked objectiveCount;
 
   get showCollapsible() {
     return this.hasObjectives && !this.isManaging;
@@ -21,9 +20,8 @@ export default class ProgramYearObjectivesComponent extends Component {
     return this.objectiveCount > 0;
   }
 
-  @action
-  load(element, [programYear]) {
-    this.objectiveCount = programYear.hasMany('programYearObjectives').ids().length;
+  get objectiveCount() {
+    return this.args.programYear.hasMany('programYearObjectives').ids().length;
   }
 
   saveNewObjective = dropTask(async (title) => {
