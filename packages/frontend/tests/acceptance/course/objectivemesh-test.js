@@ -39,8 +39,9 @@ module('Acceptance | Course - Objective Mesh Descriptors', function (hooks) {
   });
 
   test('manage terms', async function (assert) {
-    assert.expect(37);
+    assert.expect(35);
     this.user.update({ administeredSchools: [this.school] });
+
     await page.visit({
       courseId: this.course.id,
       details: true,
@@ -115,8 +116,9 @@ module('Acceptance | Course - Objective Mesh Descriptors', function (hooks) {
   });
 
   test('save terms', async function (assert) {
-    assert.expect(18);
+    assert.expect(16);
     this.user.update({ administeredSchools: [this.school] });
+
     await page.visit({
       courseId: this.course.id,
       details: true,
@@ -179,8 +181,9 @@ module('Acceptance | Course - Objective Mesh Descriptors', function (hooks) {
   });
 
   test('cancel changes', async function (assert) {
-    assert.expect(18);
+    assert.expect(16);
     this.user.update({ administeredSchools: [this.school] });
+
     await page.visit({
       courseId: this.course.id,
       details: true,

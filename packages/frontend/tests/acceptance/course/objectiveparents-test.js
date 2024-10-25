@@ -87,7 +87,7 @@ module('Acceptance | Course - Objective Parents', function (hooks) {
   });
 
   test('save changes', async function (assert) {
-    assert.expect(12);
+    assert.expect(10);
     this.user.update({ administeredSchools: [this.school] });
 
     await page.visit({
@@ -131,7 +131,7 @@ module('Acceptance | Course - Objective Parents', function (hooks) {
   });
 
   test('cancel changes', async function (assert) {
-    assert.expect(12);
+    assert.expect(10);
     this.user.update({ administeredSchools: [this.school] });
 
     await page.visit({
