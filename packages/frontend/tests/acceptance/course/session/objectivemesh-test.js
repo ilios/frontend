@@ -1,8 +1,9 @@
 import { module, test } from 'qunit';
 import { setupAuthentication } from 'ilios-common';
-
 import { setupApplicationTest } from 'frontend/tests/helpers';
+import { getUniqueName } from '../../../helpers/percy-snapshot-name';
 import page from 'ilios-common/page-objects/session';
+import percySnapshot from '@percy/ember';
 
 module('Acceptance | Session - Objective Mesh Descriptors', function (hooks) {
   setupApplicationTest(hooks);
@@ -36,6 +37,7 @@ module('Acceptance | Session - Objective Mesh Descriptors', function (hooks) {
   test('manage terms', async function (assert) {
     assert.expect(35);
     this.user.update({ administeredSchools: [this.school] });
+
     await page.visit({
       courseId: 1,
       sessionId: 1,
@@ -72,7 +74,10 @@ module('Acceptance | Session - Objective Mesh Descriptors', function (hooks) {
       'descriptor 5',
     );
 
+    await percySnapshot(getUniqueName(assert, 'default background color'));
     await page.details.objectives.objectiveList.objectives[1].meshDescriptors.list[0].manage();
+    await percySnapshot(getUniqueName(assert, 'managed background color'));
+
     const m = page.details.objectives.objectiveList.objectives[1].meshManager.meshManager;
     assert.strictEqual(m.selectedTerms.length, 5);
     assert.strictEqual(m.selectedTerms[0].title, 'descriptor 1');
@@ -107,7 +112,9 @@ module('Acceptance | Session - Objective Mesh Descriptors', function (hooks) {
   });
 
   test('save terms', async function (assert) {
+    assert.expect(16);
     this.user.update({ administeredSchools: [this.school] });
+
     await page.visit({
       courseId: 1,
       sessionId: 1,
@@ -123,7 +130,9 @@ module('Acceptance | Session - Objective Mesh Descriptors', function (hooks) {
       page.details.objectives.objectiveList.objectives[1].meshDescriptors.list.length,
       5,
     );
+    await percySnapshot(getUniqueName(assert, 'default background color'));
     await page.details.objectives.objectiveList.objectives[1].meshDescriptors.list[0].manage();
+    await percySnapshot(getUniqueName(assert, 'managed background color'));
 
     const m = page.details.objectives.objectiveList.objectives[1].meshManager.meshManager;
     assert.strictEqual(m.selectedTerms.length, 5);
@@ -167,7 +176,9 @@ module('Acceptance | Session - Objective Mesh Descriptors', function (hooks) {
   });
 
   test('cancel changes', async function (assert) {
+    assert.expect(16);
     this.user.update({ administeredSchools: [this.school] });
+
     await page.visit({
       courseId: 1,
       sessionId: 1,
@@ -183,7 +194,9 @@ module('Acceptance | Session - Objective Mesh Descriptors', function (hooks) {
       page.details.objectives.objectiveList.objectives[1].meshDescriptors.list.length,
       5,
     );
+    await percySnapshot(getUniqueName(assert, 'default background color'));
     await page.details.objectives.objectiveList.objectives[1].meshDescriptors.list[0].manage();
+    await percySnapshot(getUniqueName(assert, 'managed background color'));
 
     const m = page.details.objectives.objectiveList.objectives[1].meshManager.meshManager;
     assert.strictEqual(m.selectedTerms.length, 5);

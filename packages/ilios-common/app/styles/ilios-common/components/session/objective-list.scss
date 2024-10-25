@@ -7,4 +7,20 @@
   .fade-text-control {
     background-image: linear-gradient(to bottom, transparent, c.$lightBlue);
   }
+
+  .objective-row {
+    &.is-managing {
+      .fade-text-control {
+        background-image: linear-gradient(
+          to bottom,
+          transparent,
+          c.$culturedGrey
+        );
+
+        button {
+          @include m.ilios-button;
+        }
+      }
+    }
+  }
 }

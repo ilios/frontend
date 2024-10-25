@@ -1,8 +1,9 @@
 import { module, test } from 'qunit';
 import { setupAuthentication } from 'ilios-common';
-
 import { setupApplicationTest } from 'frontend/tests/helpers';
+import { getUniqueName } from '../../../helpers/percy-snapshot-name';
 import page from 'ilios-common/page-objects/session';
+import percySnapshot from '@percy/ember';
 
 module('Acceptance | Session - Objective Parents', function (hooks) {
   setupApplicationTest(hooks);
@@ -25,8 +26,8 @@ module('Acceptance | Session - Objective Parents', function (hooks) {
   });
 
   test('list parent objectives', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     assert.expect(13);
+    this.user.update({ administeredSchools: [this.school] });
 
     await page.visit({
       courseId: 1,
@@ -49,7 +50,10 @@ module('Acceptance | Session - Objective Parents', function (hooks) {
       'course objective 1',
     );
 
+    await percySnapshot(getUniqueName(assert, 'default background color'));
     await page.details.objectives.objectiveList.objectives[0].parents.list[0].manage();
+    await percySnapshot(getUniqueName(assert, 'managed background color'));
+
     const m = page.details.objectives.objectiveList.objectives[0].parentManager;
     assert.strictEqual(m.courseTitle, 'course 0');
     assert.strictEqual(m.objectives.length, 3);
@@ -62,7 +66,9 @@ module('Acceptance | Session - Objective Parents', function (hooks) {
   });
 
   test('save changes', async function (assert) {
+    assert.expect(12);
     this.user.update({ administeredSchools: [this.school] });
+
     await page.visit({
       courseId: 1,
       sessionId: 1,
@@ -83,7 +89,10 @@ module('Acceptance | Session - Objective Parents', function (hooks) {
       'course objective 1',
     );
 
+    await percySnapshot(getUniqueName(assert, 'default background color'));
     await page.details.objectives.objectiveList.objectives[0].parents.list[0].manage();
+    await percySnapshot(getUniqueName(assert, 'managed background color'));
+
     const m = page.details.objectives.objectiveList.objectives[0].parentManager;
     assert.strictEqual(m.courseTitle, 'course 0');
     await m.objectives[0].add();
@@ -109,7 +118,9 @@ module('Acceptance | Session - Objective Parents', function (hooks) {
   });
 
   test('cancel changes', async function (assert) {
+    assert.expect(12);
     this.user.update({ administeredSchools: [this.school] });
+
     await page.visit({
       courseId: 1,
       sessionId: 1,
@@ -130,7 +141,10 @@ module('Acceptance | Session - Objective Parents', function (hooks) {
       'course objective 1',
     );
 
+    await percySnapshot(getUniqueName(assert, 'default background color'));
     await page.details.objectives.objectiveList.objectives[0].parents.list[0].manage();
+    await percySnapshot(getUniqueName(assert, 'managed background color'));
+
     const m = page.details.objectives.objectiveList.objectives[0].parentManager;
     assert.strictEqual(m.courseTitle, 'course 0');
     await m.objectives[0].add();
@@ -156,7 +170,9 @@ module('Acceptance | Session - Objective Parents', function (hooks) {
   });
 
   test('deselect all parents for session objective', async function (assert) {
+    assert.expect(10);
     this.user.update({ administeredSchools: [this.school] });
+
     await page.visit({
       courseId: 1,
       sessionId: 1,
@@ -177,7 +193,10 @@ module('Acceptance | Session - Objective Parents', function (hooks) {
       'course objective 1',
     );
 
+    await percySnapshot(getUniqueName(assert, 'default background color'));
     await page.details.objectives.objectiveList.objectives[0].parents.list[0].manage();
+    await percySnapshot(getUniqueName(assert, 'managed background color'));
+
     const m = page.details.objectives.objectiveList.objectives[0].parentManager;
     assert.strictEqual(m.courseTitle, 'course 0');
     await m.objectives[0].add();

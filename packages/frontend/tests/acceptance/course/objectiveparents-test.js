@@ -1,8 +1,9 @@
 import { module, test } from 'qunit';
 import { setupAuthentication } from 'ilios-common';
-
 import { setupApplicationTest } from 'frontend/tests/helpers';
+import { getUniqueName } from '../../helpers/percy-snapshot-name';
 import page from 'ilios-common/page-objects/course';
+import percySnapshot from '@percy/ember';
 
 module('Acceptance | Course - Objective Parents', function (hooks) {
   setupApplicationTest(hooks);
@@ -45,8 +46,8 @@ module('Acceptance | Course - Objective Parents', function (hooks) {
   });
 
   test('list parent objectives by competency', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     assert.expect(18);
+    this.user.update({ administeredSchools: [this.school] });
 
     await page.visit({
       courseId: this.course.id,
@@ -86,7 +87,9 @@ module('Acceptance | Course - Objective Parents', function (hooks) {
   });
 
   test('save changes', async function (assert) {
+    assert.expect(10);
     this.user.update({ administeredSchools: [this.school] });
+
     await page.visit({
       courseId: this.course.id,
       details: true,
@@ -104,7 +107,10 @@ module('Acceptance | Course - Objective Parents', function (hooks) {
       'program-year objective 0',
     );
 
+    await percySnapshot(getUniqueName(assert, 'default background color'));
     await page.details.objectives.objectiveList.objectives[0].parents.list[0].manage();
+    await percySnapshot(getUniqueName(assert, 'default background color'));
+
     const m = page.details.objectives.objectiveList.objectives[0].parentManager;
 
     assert.strictEqual(m.selectedCohortTitle, 'program 0 cohort 0');
@@ -125,7 +131,9 @@ module('Acceptance | Course - Objective Parents', function (hooks) {
   });
 
   test('cancel changes', async function (assert) {
+    assert.expect(10);
     this.user.update({ administeredSchools: [this.school] });
+
     await page.visit({
       courseId: this.course.id,
       details: true,
@@ -143,7 +151,10 @@ module('Acceptance | Course - Objective Parents', function (hooks) {
       'program-year objective 0',
     );
 
+    await percySnapshot(getUniqueName(assert, 'default background color'));
     await page.details.objectives.objectiveList.objectives[0].parents.list[0].manage();
+    await percySnapshot(getUniqueName(assert, 'managed background color'));
+
     const m = page.details.objectives.objectiveList.objectives[0].parentManager;
 
     assert.strictEqual(m.selectedCohortTitle, 'program 0 cohort 0');
