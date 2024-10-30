@@ -17,7 +17,7 @@
             {{on "input" (pick "target.value" (set this "selectedTitle"))}}
             {{on "keyup" (fn this.addErrorDisplayFor "title")}}
           />
-          <ValidationError @errors={{get-errors-for this.title}} />
+          <ValidationError @validatable={{this}} @property="title" />
         </div>
       </p>
       <p data-test-school>
@@ -65,7 +65,7 @@
               </option>
             {{/each}}
           </select>
-          <ValidationError @errors={{get-errors-for this.prepositionalObject}} />
+          <ValidationError @validatable={{this}} @property="prepositionalObject" />
         </div>
       </p>
       <this.newPrepositionalObjectComponent
@@ -75,7 +75,8 @@
         @changeId={{set this "selectedPrepositionalObjectId"}}
       />
       <ValidationError
-        @errors={{get-errors-for this.prepositionalObjectId}}
+        @validatable={{this}}
+        @property="prepositionalObjectId"
         data-test-validation-error
       />
       <div class="input-buttons">

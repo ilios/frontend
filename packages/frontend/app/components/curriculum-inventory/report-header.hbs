@@ -21,7 +21,7 @@
           {{on "input" (pick "target.value" (set this "name"))}}
           {{on "keyup" (fn this.addErrorDisplayFor "name")}}
         />
-        <ValidationError @errors={{get-errors-for this.name}} />
+        <ValidationError @validatable={{this}} @property="name" />
       </EditableField>
     {{else}}
       <h2 data-test-locked-name>

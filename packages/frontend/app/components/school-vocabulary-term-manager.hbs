@@ -71,7 +71,7 @@
             {{else}}
               {{this.title}}
             {{/if}}
-            <ValidationError @errors={{get-errors-for this.titleValue}} />
+            <ValidationError @validatable={{this}} @property="titleValue" />
             {{#if (and @canDelete (not this.children.length) (not @term.hasAssociations))}}
               <FaIcon
                 @icon="trash"

@@ -130,7 +130,7 @@
                   @value={{this.startDate}}
                   @onChange={{this.changeStartDate}}
                 />
-                <ValidationError @errors={{get-errors-for this.startDate}} />
+                <ValidationError @validatable={{this}} @property="startDate" />
               </div>
               <div class="item end-date" data-test-enddate>
                 <label for="enddate-{{templateId}}">
@@ -141,7 +141,7 @@
                   @value={{this.endDate}}
                   @onChange={{this.changeEndDate}}
                 />
-                <ValidationError @errors={{get-errors-for this.endDate}} />
+                <ValidationError @validatable={{this}} @property="endDate" />
               </div>
               <div class="item duration" data-test-duration>
                 <label for="duration-{{templateId}}">
@@ -158,7 +158,7 @@
                     (queue (fn this.addErrorDisplayFor "duration") this.saveOrCancelDuration)
                   }}
                 />
-                <ValidationError @errors={{get-errors-for this.duration}} />
+                <ValidationError @validatable={{this}} @property="duration" />
               </div>
               <div class="buttons">
                 <button
@@ -360,7 +360,7 @@
                     >{{obj.name}}</option>
                   {{/each}}
                 </select>
-                <ValidationError @errors={{get-errors-for this.startingAcademicLevel}} />
+                <ValidationError @validatable={{this}} @property="startingAcademicLevel" />
               </EditableField>
             {{else}}
               <span>{{this.startingAcademicLevel.name}}</span>
@@ -385,7 +385,7 @@
                     >{{obj.name}}</option>
                   {{/each}}
                 </select>
-                <ValidationError @errors={{get-errors-for this.endingAcademicLevel}} />
+                <ValidationError @validatable={{this}} @property="endingAcademicLevel" />
               </EditableField>
             {{else}}
               <span>{{this.endingAcademicLevel.name}}</span>
@@ -417,7 +417,7 @@
                     (queue (fn this.addErrorDisplayFor "minimum") this.saveOrCancelMinMax)
                   }}
                 />
-                <ValidationError @errors={{get-errors-for this.minimum}} />
+                <ValidationError @validatable={{this}} @property="minimum" />
               </div>
               <div class="item maximum" data-test-maximum>
                 <label for="maximum-{{templateId}}">
@@ -434,7 +434,7 @@
                     (queue (fn this.addErrorDisplayFor "maximum") this.saveOrCancelMinMax)
                   }}
                 />
-                <ValidationError @errors={{get-errors-for this.maximum}} />
+                <ValidationError @validatable={{this}} @property="maximum" />
               </div>
               <div class="buttons">
                 <button

@@ -15,7 +15,7 @@
         @close={{this.revertTitleChanges}}
       >
         <HtmlEditor @content={{@courseObjective.title}} @update={{this.changeTitle}} @autofocus={{true}} />
-        <ValidationError @errors={{get-errors-for this.title}} />
+        <ValidationError @validatable={{this}} @property="title" />
       </EditableField>
     {{else}}
       <FadeText @text={{@courseObjective.title}} />

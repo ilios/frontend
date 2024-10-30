@@ -15,7 +15,7 @@
         {{on "keyup" (fn this.addErrorDisplayFor "title")}}
         {{on "input" (pick "target.value" (set this "title"))}}
       />
-      <ValidationError @errors={{get-errors-for this.title}} />
+      <ValidationError @validatable={{this}} @property="title" />
     </div>
     {{#if @fillModeSupported}}
       <div class="item">

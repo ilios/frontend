@@ -65,7 +65,7 @@
                   }}
                   data-test-start-date-picker
                 />
-                <ValidationError @errors={{get-errors-for this.startDate}} />
+                <ValidationError @validatable={{this}} @property="startDate" />
               </EditableField>
             {{else}}
               {{format-date @report.startDate day="2-digit" month="2-digit" year="numeric"}}
@@ -88,7 +88,7 @@
                   @onChange={{queue (set this "endDate") (fn this.addErrorDisplayFor "endDate")}}
                   data-test-end-date-picker
                 />
-                <ValidationError @errors={{get-errors-for this.endDate}} />
+                <ValidationError @validatable={{this}} @property="endDate" />
               </EditableField>
             {{else}}
               {{format-date @report.endDate day="2-digit" month="2-digit" year="numeric"}}
@@ -157,7 +157,7 @@
                 >
                   {{this.description}}
                 </textarea>
-                <ValidationError @errors={{get-errors-for this.description}} />
+                <ValidationError @validatable={{this}} @property="description" />
               </EditableField>
             {{else}}
               {{this.description}}

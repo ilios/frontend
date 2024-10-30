@@ -29,7 +29,7 @@
             (queue (fn this.addErrorDisplayFor "firstName") (perform this.saveOrCancel))
           }}
         />
-        <ValidationError @errors={{get-errors-for this.firstName}} />
+        <ValidationError @validatable={{this}} @property="firstName" />
       </div>
       <div class="item" data-test-middle-name>
         <label for="middle-{{templateId}}">
@@ -45,7 +45,7 @@
             (queue (fn this.addErrorDisplayFor "middleName") (perform this.saveOrCancel))
           }}
         />
-        <ValidationError @errors={{get-errors-for this.middleName}} />
+        <ValidationError @validatable={{this}} @property="middleName" />
       </div>
       <div class="item" data-test-last-name>
         <label for="last-{{templateId}}">
@@ -58,7 +58,7 @@
           {{on "input" (pick "target.value" (set this "lastName"))}}
           {{on "keyup" (queue (fn this.addErrorDisplayFor "lastName") (perform this.saveOrCancel))}}
         />
-        <ValidationError @errors={{get-errors-for this.lastName}} />
+        <ValidationError @validatable={{this}} @property="lastName" />
       </div>
       <div class="item" data-test-campus-id>
         <label for="campus-{{templateId}}">
@@ -71,7 +71,7 @@
           {{on "input" (pick "target.value" (set this "campusId"))}}
           {{on "keyup" (queue (fn this.addErrorDisplayFor "campusId") (perform this.saveOrCancel))}}
         />
-        <ValidationError @errors={{get-errors-for this.campusId}} />
+        <ValidationError @validatable={{this}} @property="campusId" />
       </div>
       <div class="item" data-test-other-id>
         <label for="other-{{templateId}}">
@@ -84,7 +84,7 @@
           {{on "input" (pick "target.value" (set this "otherId"))}}
           {{on "keyup" (queue (fn this.addErrorDisplayFor "otherId") (perform this.saveOrCancel))}}
         />
-        <ValidationError @errors={{get-errors-for this.otherId}} />
+        <ValidationError @validatable={{this}} @property="otherId" />
       </div>
       <div class="item" data-test-email>
         <label for="email-{{templateId}}">
@@ -97,7 +97,7 @@
           {{on "input" (pick "target.value" (set this "email"))}}
           {{on "keyup" (queue (fn this.addErrorDisplayFor "email") (perform this.saveOrCancel))}}
         />
-        <ValidationError @errors={{get-errors-for this.email}} />
+        <ValidationError @validatable={{this}} @property="email" />
       </div>
       <div class="item" data-test-phone>
         <label for="phone-{{templateId}}">
@@ -110,7 +110,7 @@
           {{on "input" (pick "target.value" (set this "phone"))}}
           {{on "keyup" (queue (fn this.addErrorDisplayFor "phone") (perform this.saveOrCancel))}}
         />
-        <ValidationError @errors={{get-errors-for this.phone}} />
+        <ValidationError @validatable={{this}} @property="phone" />
       </div>
       <div class="item" data-test-username>
         <label for="username-{{templateId}}">
@@ -124,7 +124,7 @@
           {{on "input" (set this "showUsernameTakenErrorMessage" false)}}
           {{on "keyup" (queue (fn this.addErrorDisplayFor "username") (perform this.saveOrCancel))}}
         />
-        <ValidationError @errors={{get-errors-for this.username}} />
+        <ValidationError @validatable={{this}} @property="username" />
         {{#if this.showUsernameTakenErrorMessage}}
           <span class="validation-error-message" data-test-duplicate-username>
             {{t "errors.duplicateUsername"}}
@@ -142,7 +142,7 @@
           {{on "input" (pick "target.value" (set this "password"))}}
           {{on "keyup" (queue (fn this.addErrorDisplayFor "password") (perform this.saveOrCancel))}}
         />
-        <ValidationError @errors={{get-errors-for this.password}} />
+        <ValidationError @validatable={{this}} @property="password" />
       </div>
       <div class="item" data-test-school>
         <label for="primary-school-{{templateId}}">

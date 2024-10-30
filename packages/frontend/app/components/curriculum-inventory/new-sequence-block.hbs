@@ -25,7 +25,7 @@
             {{on "keyup" (queue (fn this.addErrorDisplayFor "title") this.saveOrCancel)}}
             {{on "input" (pick "target.value" (set this "title"))}}
           />
-          <ValidationError @errors={{get-errors-for this.title}} />
+          <ValidationError @validatable={{this}} @property="title" />
         </div>
         <div class="item course" data-test-course>
           <label for="course-{{templateId}}">
@@ -104,7 +104,7 @@
             @onChange={{this.changeStartDate}}
             data-test-start-date-picker
           />
-          <ValidationError @errors={{get-errors-for this.startDate}} />
+          <ValidationError @validatable={{this}} @property="startDate" />
         </div>
         <div class="item end-date" data-test-enddate>
           <label for="end-date-{{templateId}}">
@@ -116,7 +116,7 @@
             @onChange={{this.changeEndDate}}
             data-test-end-date-picker
           />
-          <ValidationError @errors={{get-errors-for this.endDate}} />
+          <ValidationError @validatable={{this}} @property="endDate" />
         </div>
         <div class="item duration" data-test-duration>
           <label for="duration-{{templateId}}">
@@ -130,7 +130,7 @@
             {{on "keyup" (queue (fn this.addErrorDisplayFor "duration") this.saveOrCancel)}}
             {{on "input" (pick "target.value" (set this "duration"))}}
           />
-          <ValidationError @errors={{get-errors-for this.duration}} />
+          <ValidationError @validatable={{this}} @property="duration" />
         </div>
         <div class="item clear-dates">
           <button type="button" {{on "click" this.clearDates}} data-test-clear-dates>
@@ -155,7 +155,7 @@
             {{on "keyup" (queue (fn this.addErrorDisplayFor "minimum") this.saveOrCancel)}}
             {{on "input" (pick "target.value" (set this "minimum"))}}
           />
-          <ValidationError @errors={{get-errors-for this.minimum}} />
+          <ValidationError @validatable={{this}} @property="minimum" />
         </div>
         <div class="item maximum" data-test-maximum>
           <label for="maximum-{{templateId}}">
@@ -169,7 +169,7 @@
             {{on "keyup" (queue (fn this.addErrorDisplayFor "maximum") this.saveOrCancel)}}
             {{on "input" (pick "target.value" (set this "maximum"))}}
           />
-          <ValidationError @errors={{get-errors-for this.maximum}} />
+          <ValidationError @validatable={{this}} @property="maximum" />
         </div>
         <div class="item starting-academic-level" data-test-starting-academic-level>
           <label for="starting-academic-level-{{templateId}}">
@@ -204,7 +204,7 @@
               >{{obj.name}}</option>
             {{/each}}
           </select>
-          <ValidationError @errors={{get-errors-for this.endingAcademicLevel}} />
+          <ValidationError @validatable={{this}} @property="endingAcademicLevel" />
         </div>
         <div class="item child-sequence-order" data-test-child-sequence-order>
           <label for="child-sequence-order-{{templateId}}">

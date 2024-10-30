@@ -25,7 +25,7 @@
             {{on "input" (pick "target.value" (set this "name"))}}
             {{on "keyup" (fn this.addErrorDisplayFor "name")}}
           />
-          <ValidationError @errors={{get-errors-for this.name}} />
+          <ValidationError @validatable={{this}} @property="name" />
         </div>
         <div class="item" data-test-description>
           <label for="description-{{templateId}}">
@@ -37,7 +37,7 @@
             placeholder={{t "general.reportDescriptionPlaceholder"}}
             {{on "input" (pick "target.value" (set this "description"))}}
           >{{this.description}}</textarea>
-          <ValidationError @errors={{get-errors-for this.description}} />
+          <ValidationError @validatable={{this}} @property="description" />
         </div>
         <div class="item" data-test-program-title>
           <label>

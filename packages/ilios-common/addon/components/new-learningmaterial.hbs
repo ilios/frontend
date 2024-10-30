@@ -14,7 +14,7 @@
           {{on "input" (pick "target.value" (set this "title"))}}
           {{on "keyup" (fn this.addErrorDisplayFor "title")}}
         />
-        <ValidationError @errors={{get-errors-for this.title}} />
+        <ValidationError @validatable={{this}} @property="title" />
       </span>
     </div>
     <div class="item">
@@ -58,7 +58,7 @@
           {{on "focus-out" (fn this.addErrorDisplayFor "originalAuthor")}}
           {{on "input" (pick "target.value" (set this "originalAuthor"))}}
         />
-        <ValidationError @errors={{get-errors-for this.originalAuthor}} />
+        <ValidationError @validatable={{this}} @property="originalAuthor" />
       </span>
     </div>
     <div class="item">
@@ -96,7 +96,7 @@
             {{on "keyup" (fn this.addErrorDisplayFor "link")}}
             {{on "focus" this.selectAllText}}
           >
-          <ValidationError @errors={{get-errors-for this.link}} />
+          <ValidationError @validatable={{this}} @property="link" />
         </span>
       </div>
     {{/if}}
@@ -112,7 +112,7 @@
             {{on "focus-out" (fn this.addErrorDisplayFor "citation")}}
             {{on "input" (pick "target.value" (set this "citation"))}}
           >{{this.citation}}</textarea>
-          <ValidationError @errors={{get-errors-for this.citation}} />
+          <ValidationError @validatable={{this}} @property="citation" />
         </span>
       </div>
     {{/if}}
@@ -160,7 +160,7 @@
               {{on "input" (pick "target.value" (set this "copyrightRationale"))}}
               data-test-copyright-rationale
             >{{this.copyrightRationale}}</textarea>
-          <ValidationError @errors={{get-errors-for this.copyrightRationale}} />
+          <ValidationError @validatable={{this}} @property="copyrightRationale" />
           </span>
         </div>
       {{/unless}}
@@ -173,7 +173,7 @@
           @setFilename={{set this "filename"}}
           @setFileHash={{set this "fileHash"}}
         />
-        <ValidationError @errors={{get-errors-for this.filename}} />
+        <ValidationError @validatable={{this}} @property="filename" />
       </div>
     {{/if}}
     <div class="buttons">

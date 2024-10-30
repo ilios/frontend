@@ -77,7 +77,7 @@
               {{on "keyup" this.keyboard}}
               data-test-first-name-input
             />
-            <ValidationError @errors={{get-errors-for this.firstName}} />
+            <ValidationError @validatable={{this}} @property="firstName" />
           {{else}}
             <span class="value">
               {{@user.firstName}}
@@ -98,7 +98,7 @@
               {{on "keyup" this.keyboard}}
               data-test-middle-name-input
             />
-            <ValidationError @errors={{get-errors-for this.middleName}} />
+            <ValidationError @validatable={{this}} @property="middleName" />
           {{else}}
             <span class="value">
               {{@user.middleName}}
@@ -123,7 +123,7 @@
               {{on "keyup" this.keyboard}}
               data-test-last-name-input
             />
-            <ValidationError @errors={{get-errors-for this.lastName}} />
+            <ValidationError @validatable={{this}} @property="lastName" />
           {{else}}
             <span class="value">
               {{@user.lastName}}
@@ -165,7 +165,7 @@
                   />
                 </button>
               {{/unless}}
-              <ValidationError @errors={{get-errors-for this.campusId}} />
+              <ValidationError @validatable={{this}} @property="campusId" />
             </div>
             {{#if this.showSyncErrorMessage}}
               <span class="validation-error-message" data-test-sync-error>
@@ -192,7 +192,7 @@
               {{on "keyup" this.keyboard}}
               data-test-other-id-input
             />
-            <ValidationError @errors={{get-errors-for this.otherId}} />
+            <ValidationError @validatable={{this}} @property="otherId" />
           {{else}}
             <span class="value">
               {{@user.otherId}}
@@ -216,7 +216,7 @@
               {{on "keyup" this.keyboard}}
               data-test-email-input
             />
-            <ValidationError @errors={{get-errors-for this.email}} />
+            <ValidationError @validatable={{this}} @property="email" />
           {{else}}
             <span class="value">
               {{@user.email}}
@@ -241,7 +241,7 @@
               {{on "keyup" this.keyboard}}
               data-test-display-name-input
             />
-            <ValidationError @errors={{get-errors-for this.displayName}} />
+            <ValidationError @validatable={{this}} @property="displayName" />
           {{else}}
             <span class="value">
               {{@user.displayName}}
@@ -266,7 +266,7 @@
               {{on "keyup" this.keyboard}}
               data-test-pronouns-input
             />
-            <ValidationError @errors={{get-errors-for this.pronouns}} />
+            <ValidationError @validatable={{this}} @property="pronouns" />
           {{else}}
             <span class="value">
               {{@user.pronouns}}
@@ -291,7 +291,7 @@
               {{on "keyup" this.keyboard}}
               data-test-preferred-email-input
             />
-            <ValidationError @errors={{get-errors-for this.preferredEmail}} />
+            <ValidationError @validatable={{this}} @property="preferredEmail" />
           {{else}}
             <span class="value">
               {{@user.preferredEmail}}
@@ -315,7 +315,7 @@
               {{on "keyup" this.keyboard}}
               data-test-phone-input
             />
-            <ValidationError @errors={{get-errors-for this.phone}} />
+            <ValidationError @validatable={{this}} @property="phone" />
           {{else}}
             <span class="value">
               {{@user.phone}}
@@ -342,7 +342,7 @@
               disabled={{not this.canEditUsernameAndPassword}}
               data-test-username-input
             />
-            <ValidationError @errors={{get-errors-for this.username}} />
+            <ValidationError @validatable={{this}} @property="username" />
             {{#if this.showUsernameTakenErrorMessage}}
               <span class="validation-error-message" data-test-duplicate-username>
                 {{t "errors.duplicateUsername"}}
@@ -371,7 +371,7 @@
                   data-test-password-input
                 />
                 {{#if (has-error-for this.password)}}
-                  <ValidationError @errors={{get-errors-for this.password}} />
+                  <ValidationError @validatable={{this}} @property="password" />
                 {{else if (gt this.password.length 0)}}
                   <span
                     class="password-strength {{concat 'strength-' this.passwordStrengthScore}}"
