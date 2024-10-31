@@ -16,11 +16,13 @@ jobs:
         with:
           github-token: "${{ secrets.GITHUB_TOKEN }}"
       - run: >
-          npx in-string-list ${{ steps.metadata.outputs.dependency-names }} ${{ env.SAFE_DEPENDENCIES }}
+          pnpm dlx in-string-list ${{ steps.metadata.outputs.dependency-names }} ${{ env.SAFE_DEPENDENCIES }}
           && echo "isSafe=yes" >> "$GITHUB_ENV"
+          || echo "Not marked as safe"
       - run: >
           test ${{ steps.metadata.outputs.update-type }} != 'version-update:semver-major'
           && echo "isNotMajor=yes" >> "$GITHUB_ENV"
+          || echo "This is a major version update"
       - run: |
           echo ${{ env.isSafe }}
           echo ${{ env.isNotMajor }}
