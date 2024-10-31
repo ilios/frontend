@@ -442,7 +442,7 @@ module('Integration | Component | course/materials', function (hooks) {
     assert.strictEqual(component.courseMaterialsCount, '0');
     assert.strictEqual(component.courses[0].title, 'No Course Learning Materials Available');
     assert.strictEqual(component.sessions.length, 1);
-    assert.strictEqual(component.courseMaterialsCount, '0');
+    assert.strictEqual(component.sessionMaterialsCount, '0');
     assert.strictEqual(component.sessions[0].title, 'No Session Learning Materials Available');
   });
 });
