@@ -3,8 +3,8 @@
   data-test-course-materials
 >
   <div class="material-list">
-    <h3>
-      {{t "general.courseLearningMaterials"}} ({{this.filteredCourseLearningMaterials.length}})
+    <h3 class="course-material-title">
+      {{t "general.courseLearningMaterials"}} (<span data-test-course-materials-count>{{this.filteredCourseLearningMaterials.length}}</span>)
     </h3>
     <span class="filter-course-lms">
       <input
@@ -96,7 +96,7 @@
   </div>
   <div class="material-list">
     <h3 class="session-material-title">
-      {{t "general.sessionLearningMaterials"}} ({{this.filteredSessionLearningMaterialObjects.length}})
+      {{t "general.sessionLearningMaterials"}} (<span data-test-session-materials-count>{{this.filteredSessionLearningMaterialObjects.length}}</span>)
     </h3>
     <span class="filter-session-lms">
       <input

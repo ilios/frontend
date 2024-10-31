@@ -10,6 +10,7 @@ import {
 
 const definition = {
   scope: '[data-test-course-materials]',
+  courseMaterialsCount: text('[data-test-course-materials-count]'),
   courseFilter: fillable('[data-test-course-filter]'),
   sortCoursesBy: {
     scope: '[data-test-course-table] thead',
@@ -24,6 +25,7 @@ const definition = {
     type: text('td', { at: 1 }),
     author: text('td', { at: 2 }),
   }),
+  sessionMaterialsCount: text('[data-test-session-materials-count]'),
   sessionFilter: fillable('[data-test-session-filter]'),
   sortSessionsBy: {
     scope: '[data-test-session-table] thead',
