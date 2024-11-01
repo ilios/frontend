@@ -46,7 +46,7 @@ const BrowserStackLaunchers = {
       '--b',
       'android',
       '--device',
-      'Google Pixel 9',
+      'Google Pixel 8',
       ...defaultArgs,
     ],
     protocol: 'browser',
