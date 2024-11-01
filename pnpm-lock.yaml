@@ -310,8 +310,8 @@ importers:
         specifier: ^1.0.0
         version: 1.0.0
       sass:
-        specifier: ^1.77.8
-        version: 1.80.3
+        specifier: ^1.80.5
+        version: 1.80.5
       scroll-into-view:
         specifier: ^1.16.2
         version: 1.16.2
@@ -626,8 +626,8 @@ importers:
         specifier: ^3.3.3
         version: 3.3.3
       sass:
-        specifier: ^1.77.8
-        version: 1.80.3
+        specifier: ^1.80.5
+        version: 1.80.5
       stylelint:
         specifier: ^16.3.1
         version: 16.10.0
@@ -857,8 +857,8 @@ importers:
         specifier: ^1.0.0
         version: 1.0.0
       sass:
-        specifier: ^1.77.8
-        version: 1.80.3
+        specifier: ^1.80.5
+        version: 1.80.5
       stylelint:
         specifier: ^16.3.1
         version: 16.10.0
@@ -1091,8 +1091,8 @@ importers:
         specifier: ^1.0.0
         version: 1.0.0
       sass:
-        specifier: ^1.77.8
-        version: 1.80.3
+        specifier: ^1.80.5
+        version: 1.80.5
       stylelint:
         specifier: ^16.3.1
         version: 16.10.0
@@ -8689,8 +8689,8 @@ packages:
     engines: {node: 10.* || >= 12.*}
     hasBin: true
 
-  sass@1.80.3:
-    resolution: {integrity: sha512-ptDWyVmDMVielpz/oWy3YP3nfs7LpJTHIJZboMVs8GEC9eUmtZTZhMHlTW98wY4aEorDfjN38+Wr/XjskFWcfA==}
+  sass@1.80.5:
+    resolution: {integrity: sha512-TQd2aoQl/+zsxRMEDSxVdpPIqeq9UFc6pr7PzkugiTx3VYCFPUaa3P4RrBQsqok4PO200Vkz0vXQBNlg7W907g==}
     engines: {node: '>=14.0.0'}
     hasBin: true
 
@@ -20717,7 +20717,7 @@ snapshots:
       minimist: 1.2.8
       walker: 1.0.8
 
-  sass@1.80.3:
+  sass@1.80.5:
     dependencies:
       '@parcel/watcher': 2.4.1
       chokidar: 4.0.1
