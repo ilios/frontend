@@ -51,6 +51,17 @@ export default class NewLearningmaterialComponent extends Component {
   userModel = new TrackedAsyncData(this.currentUser.getModel());
 
   @cached
+  get hasErrorForCopyrightPermissionData() {
+    return new TrackedAsyncData(this.hasErrorFor('copyrightPermission'));
+  }
+
+  get hasErrorForCopyrightPermission() {
+    return this.hasErrorForCopyrightPermissionData.isResolved
+      ? this.hasErrorForCopyrightPermissionData.value
+      : false;
+  }
+
+  @cached
   get currentUserModel() {
     return this.userModel.isResolved ? this.userModel.value : null;
   }

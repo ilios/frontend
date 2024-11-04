@@ -77,4 +77,21 @@ module('Integration | Component | new learningmaterial', function (hooks) {
     await component.save();
     assert.strictEqual(component.fileUpload.validationErrors[0].text, 'Missing file');
   });
+
+  test('validate copyright permission', async function (assert) {
+    this.set('type', 'file');
+    await render(hbs`<NewLearningmaterial
+  @type={{this.type}}
+  @learningMaterialStatuses={{(array)}}
+  @learningMaterialUserRoles={{(array)}}
+  @save={{(noop)}}
+  @cancel={{(noop)}}
+/>`);
+    assert.notOk(component.hasAgreementValidationError);
+    await component.save();
+    assert.ok(component.hasAgreementValidationError);
+    await component.agreement();
+    await component.save();
+    assert.notOk(component.hasAgreementValidationError);
+  });
 });
