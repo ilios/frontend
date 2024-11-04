@@ -36,6 +36,28 @@ export default class SessionOverview extends Component {
   @tracked isIndependentLearning = false;
 
   @cached
+  get hasErrorForInstructionalNotesData() {
+    return new TrackedAsyncData(this.hasErrorFor('instructionalNotes'));
+  }
+
+  get hasErrorForInstructionalNotes() {
+    return this.hasErrorForInstructionalNotesData.isResolved
+      ? this.hasErrorForInstructionalNotesData.value
+      : false;
+  }
+
+  @cached
+  get hasErrorForDescriptionData() {
+    return new TrackedAsyncData(this.hasErrorFor('description'));
+  }
+
+  get hasErrorForDescription() {
+    return this.hasErrorForDescriptionData.isResolved
+      ? this.hasErrorForDescriptionData.value
+      : false;
+  }
+
+  @cached
   get prerequisitesData() {
     return new TrackedAsyncData(this.args.session.prerequisites);
   }
