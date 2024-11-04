@@ -25,6 +25,15 @@ export default class SessionObjectiveListItemComponent extends Component {
   }
 
   @cached
+  get hasErrorForTitleData() {
+    return new TrackedAsyncData(this.hasErrorFor('title'));
+  }
+
+  get hasErrorForTitle() {
+    return this.hasErrorForTitleData.isResolved ? this.hasErrorForTitleData.value : false;
+  }
+
+  @cached
   get parentsData() {
     return new TrackedAsyncData(this.args.sessionObjective.courseObjectives);
   }

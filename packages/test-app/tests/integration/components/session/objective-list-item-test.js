@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
-import { render } from '@ember/test-helpers';
+import { render, settled } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import { component } from 'ilios-common/page-objects/components/session/objective-list-item';
 import { a11yAudit } from 'ember-a11y-testing/test-support';
@@ -156,5 +156,36 @@ module('Integration | Component | session/objective-list-item', function (hooks)
     );
     await component.remove();
     assert.ok(component.hasRemoveConfirmation);
+  });
+
+  test('validate description', async function (assert) {
+    const session = this.server.create('session');
+    const sessionObjective = this.server.create('session-objective', {
+      session,
+    });
+    const store = await this.owner.lookup('service:store');
+    const sessionModel = await store.findRecord('session', session.id);
+    const sessionObjectiveModel = await store.findRecord('session-objective', sessionObjective.id);
+    this.set('sessionObjective', sessionObjectiveModel);
+    this.set('sessionModel', sessionModel);
+    await render(
+      hbs`<Session::ObjectiveListItem
+  @sessionObjective={{this.sessionObjective}}
+  @editable={{true}}
+  @courseObjectives={{(array)}}
+  @session={{this.sessionModel}}
+/>`,
+    );
+    await component.description.openEditor();
+    assert.notOk(component.description.hasError);
+    assert.notOk(component.description.savingIsDisabled);
+    await component.description.edit('a'.repeat(65000));
+    await settled();
+    assert.ok(component.description.hasValidationError);
+    assert.ok(component.description.savingIsDisabled);
+    await component.description.edit('lorem ipsum');
+    await settled();
+    assert.notOk(component.description.hasValidationError);
+    assert.notOk(component.description.savingIsDisabled);
   });
 });
