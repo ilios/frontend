@@ -24,7 +24,7 @@
       <EditableField
         @value={{this.title}}
         @renderHtml={{true}}
-        @isSaveDisabled={{has-error-for this "title"}}
+        @isSaveDisabled={{this.hasErrorForTitle}}
         @save={{perform this.saveTitleChanges}}
         @close={{this.revertTitleChanges}}
       >
