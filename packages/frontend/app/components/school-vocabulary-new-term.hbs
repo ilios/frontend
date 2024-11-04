@@ -19,5 +19,5 @@
       {{t "general.add"}}
     {{/if}}
   </button>
-  <ValidationError @errors={{get-errors-for this.title}} />
+  <ValidationError @validatable={{this}} @property="title" />
 </div>

@@ -13,7 +13,7 @@
             {{on "input" (pick "target.value" (set this "title"))}}
             {{on "keyup" (queue (fn this.addErrorDisplayFor "title") (perform this.saveOrCancel))}}
           />
-          <ValidationError @errors={{get-errors-for this.title}} />
+          <ValidationError @validatable={{this}} @property="title" />
         {{else}}
           <span class="value">
             {{this.title}}
@@ -66,7 +66,7 @@
               (queue (fn this.addErrorDisplayFor "calendarColor") (perform this.saveOrCancel))
             }}
           />
-          <ValidationError @errors={{get-errors-for this.calendarColor}} />
+          <ValidationError @validatable={{this}} @property="calendarColor" />
         {{else}}
           <span class="value">
             {{! template-lint-disable no-inline-styles style-concatenation no-triple-curlies}}

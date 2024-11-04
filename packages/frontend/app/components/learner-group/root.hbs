@@ -59,7 +59,7 @@
                   {{on "input" (pick "target.value" (set this "location"))}}
                   {{on "keyup" (fn this.addErrorDisplayFor "location")}}
                 />
-                <ValidationError @errors={{get-errors-for this.location}} />
+                <ValidationError @validatable={{this}} @property="location" />
               </EditableField>
             {{else if this.location}}
               {{this.location}}
@@ -94,7 +94,7 @@
                   {{on "focus" this.selectAllText}}
                   disabled={{isSaving}}
                 />
-                <ValidationError @errors={{get-errors-for this.url}} />
+                <ValidationError @validatable={{this}} @property="url" />
               </EditableField>
             {{else if this.url}}
               {{this.url}}

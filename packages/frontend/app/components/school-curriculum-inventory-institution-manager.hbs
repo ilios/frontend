@@ -47,7 +47,7 @@
               )
             }}
           />
-          <ValidationError @errors={{get-errors-for this.name}} />
+          <ValidationError @validatable={{this}} @property="name" />
         </div>
         <div class="item" data-test-institution-aamc-code>
           <label for="aamc-id-{{templateId}}">
@@ -67,7 +67,7 @@
               )
             }}
           />
-          <ValidationError @errors={{get-errors-for this.aamcCode}} />
+          <ValidationError @validatable={{this}} @property="aamcCode" />
         </div>
         <div class="item" data-test-institution-address-street>
           <label for="street-{{templateId}}">
@@ -86,7 +86,7 @@
               )
             }}
           />
-          <ValidationError @errors={{get-errors-for this.addressStreet}} />
+          <ValidationError @validatable={{this}} @property="addressStreet" />
         </div>
         <div class="item" data-test-institution-address-city>
           <label for="city-{{templateId}}">
@@ -105,7 +105,7 @@
               )
             }}
           />
-          <ValidationError @errors={{get-errors-for this.addressCity}} />
+          <ValidationError @validatable={{this}} @property="addressCity" />
         </div>
         <div class="item" data-test-institution-address-state-or-province>
           <label for="state-{{templateId}}">
@@ -124,7 +124,7 @@
               )
             }}
           />
-          <ValidationError @errors={{get-errors-for this.addressStateOrProvince}} />
+          <ValidationError @validatable={{this}} @property="addressStateOrProvince" />
         </div>
         <div class="item" data-test-institution-address-zip-code>
           <label for="zip-{{templateId}}">
@@ -143,7 +143,7 @@
               )
             }}
           />
-          <ValidationError @errors={{get-errors-for this.addressZipCode}} />
+          <ValidationError @validatable={{this}} @property="addressZipCode" />
         </div>
         <div class="item" data-test-institution-address-country-code>
           <label for="country-{{templateId}}">
@@ -163,7 +163,7 @@
               )
             }}
           />
-          <ValidationError @errors={{get-errors-for this.addressCountryCode}} />
+          <ValidationError @validatable={{this}} @property="addressCountryCode" />
         </div>
       </div>
     </div>

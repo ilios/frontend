@@ -22,7 +22,7 @@
           disabled={{this.saveNewSession.isRunning}}
           data-test-title
         >
-        <ValidationError @errors={{get-errors-for this.title}} />
+        <ValidationError @validatable={{this}} @property="title" />
       </div>
       <div class="item">
         <label for="session-type-{{templateId}}">

@@ -31,7 +31,7 @@
               (queue (fn this.addErrorDisplayFor "administratorEmail") (perform this.saveOrCancel))
             }}
           />
-          <ValidationError @errors={{get-errors-for this.administratorEmail}} />
+          <ValidationError @validatable={{this}} @property="administratorEmail" />
         </div>
         <div class="item" data-test-change-alert-recipients>
           <label for="change-alert-recipients-{{templateId}}">
@@ -50,7 +50,7 @@
               )
             }}
           />
-          <ValidationError @errors={{get-errors-for this.changeAlertRecipients}} />
+          <ValidationError @validatable={{this}} @property="changeAlertRecipients" />
         </div>
       </div>
     </div>

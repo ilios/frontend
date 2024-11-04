@@ -7,27 +7,43 @@ module('Integration | Component | validation-error', function (hooks) {
   setupRenderingTest(hooks);
 
   test('it renders with no errors', async function (assert) {
-    await render(hbs`<ValidationError @errors={{(array)}} />`);
+    assert.expect(2);
+
+    const propertyName = 'foo';
+
+    this.set('validatable', {
+      async getErrorsFor(prop) {
+        assert.strictEqual(prop, propertyName);
+        return [];
+      },
+    });
+    this.set('propertyName', propertyName);
+
+    await render(
+      hbs`<ValidationError @validatable={{this.validatable}} @property={{this.propertyName}} />`,
+    );
 
     assert.dom(this.element).hasText('');
   });
 
   test('it renders with errors', async function (assert) {
-    await render(hbs`<ValidationError @errors={{array 'test 1' 'test 2'}} />`);
+    assert.expect(2);
 
-    assert.dom(this.element).hasText('test 1 test 2');
-  });
+    const propertyName = 'foo';
+    const errors = ['test 1', 'test 2'];
 
-  test('it responds to changes', async function (assert) {
-    this.set('errors', ['one']);
-    await render(hbs`<ValidationError @errors={{this.errors}} />`);
+    this.set('validatable', {
+      async getErrorsFor(prop) {
+        assert.strictEqual(prop, propertyName);
+        return errors;
+      },
+    });
+    this.set('propertyName', propertyName);
 
-    assert.dom(this.element).hasText('one');
+    await render(
+      hbs`<ValidationError @validatable={{this.validatable}} @property={{this.propertyName}} />`,
+    );
 
-    this.set('errors', ['two']);
-    assert.dom(this.element).hasText('two');
-
-    this.set('errors', []);
-    assert.dom(this.element).hasText('');
+    assert.dom(this.element).hasText(errors.join(' '));
   });
 });

@@ -16,7 +16,7 @@
         {{on "input" (pick "target.value" (set this "numberOfGroups"))}}
         data-test-number-of-groups
       />
-      <ValidationError @errors={{get-errors-for this.numberOfGroups}} />
+      <ValidationError @validatable={{this}} @property="numberOfGroups" />
     </div>
     <div class="buttons">
       <button type="button" class="done text" {{on "click" (perform this.save)}} data-test-save>

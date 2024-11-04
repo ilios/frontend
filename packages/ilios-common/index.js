@@ -4,7 +4,6 @@ const Funnel = require('broccoli-funnel');
 const MergeTrees = require('broccoli-merge-trees');
 const path = require('path');
 const HasErrorForTransform = require('./lib/has-error-for-transform');
-const GetErrorsForTransform = require('./lib/get-errors-for-transform');
 
 module.exports = {
   name: require('./package').name,
@@ -40,7 +39,6 @@ module.exports = {
 
   setupPreprocessorRegistry: function (type, registry) {
     registry.add('htmlbars-ast-plugin', HasErrorForTransform.instantiate());
-    registry.add('htmlbars-ast-plugin', GetErrorsForTransform.instantiate());
   },
 
   treeForApp(appTree) {

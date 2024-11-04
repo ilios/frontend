@@ -77,7 +77,7 @@
             {{on "input" (pick "target.value" (set this "otherId"))}}
             {{on "keyup" (fn this.addErrorDisplayFor "otherId")}}
           />
-          <ValidationError @errors={{get-errors-for this.otherId}} />
+          <ValidationError @validatable={{this}} @property="otherId" />
         </div>
         <div class="item" data-test-username>
           <label for="username-{{templateId}}">
@@ -92,7 +92,7 @@
               {{on "keyup" (fn this.addErrorDisplayFor "username")}}
               {{on "keyup" this.keyboard}}
             />
-            <ValidationError @errors={{get-errors-for this.username}} />
+            <ValidationError @validatable={{this}} @property="username" />
           {{else}}
             <span>
               {{this.username}}
@@ -112,7 +112,7 @@
               {{on "keyup" (fn this.addErrorDisplayFor "password")}}
               {{on "keyup" this.keyboard}}
             />
-            <ValidationError @errors={{get-errors-for this.password}} />
+            <ValidationError @validatable={{this}} @property="password" />
           </div>
         {{/if}}
         <div class="item" data-test-school>

@@ -20,7 +20,7 @@
             disabled={{isSaving}}
           />
         </EditableField>
-        <ValidationError @errors={{get-errors-for this.title}} />
+        <ValidationError @validatable={{this}} @property="title" />
       {{else}}
         <h2>{{@program.title}}</h2>
       {{/if}}

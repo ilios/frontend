@@ -60,7 +60,7 @@
                     {{t "general.hours"}}
                   </label>
                 </div>
-                <ValidationError @errors={{get-errors-for this.durationHours}} />
+                <ValidationError @validatable={{this}} @property="durationHours" />
               </div>
               <div class="minutes">
                 <div class="minutes-container">
@@ -78,7 +78,7 @@
                     {{t "general.minutes"}}
                   </label>
                 </div>
-                <ValidationError @errors={{get-errors-for this.durationMinutes}} />
+                <ValidationError @validatable={{this}} @property="durationMinutes" />
               </div>
             </div>
           </div>
@@ -184,7 +184,7 @@
                       >
                         {{t "general.weeks"}}
                       </label>
-                      <ValidationError @errors={{get-errors-for this.numberOfWeeks}} />
+                      <ValidationError @validatable={{this}} @property="numberOfWeeks" />
                     </div>
                   </div>
                 {{/if}}
@@ -208,7 +208,7 @@
                 {{on "keyup" (fn this.addErrorDisplayFor "room")}}
                 {{on "keypress" (if @offering (perform this.saveOnEnter) (noop))}}
               >
-              <ValidationError @errors={{get-errors-for this.room}} />
+              <ValidationError @validatable={{this}} @property="room" />
             </div>
             <div class="url" data-test-url>
               <label for="url-{{templateId}}">
@@ -230,7 +230,7 @@
                   {{on "focus" this.selectAllText}}
                   {{on "keypress" (if @offering (perform this.saveOnEnter) (noop))}}
               >
-              <ValidationError @errors={{get-errors-for this.url}} />
+              <ValidationError @validatable={{this}} @property="url" />
             </div>
           {{/if}}
         </fieldset>
@@ -257,7 +257,7 @@
             @add={{this.addLearnerGroup}}
             @remove={{this.removeLearnerGroup}}
           />
-          <ValidationError @errors={{get-errors-for this.learnerGroups}} />
+          <ValidationError @validatable={{this}} @property="learnerGroups" />
           {{#unless @smallGroupMode}}
             <LearnerSelectionManager
               @learners={{this.learners}}

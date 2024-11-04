@@ -13,7 +13,7 @@
         @close={{this.revertTitleChanges}}
       >
         <HtmlEditor @content={{@sessionObjective.title}} @update={{this.changeTitle}} @autofocus={{true}} />
-        <ValidationError @errors={{get-errors-for this.title}} />
+        <ValidationError @validatable={{this}} @property="title" />
       </EditableField>
     {{else}}
       <FadeText @text={{@sessionObjective.title}} />

@@ -18,7 +18,7 @@
         {{on "keyup" (fn this.addErrorDisplayFor "title")}}
       />
     </EditableField>
-    <ValidationError @errors={{get-errors-for this.title}} />
+    <ValidationError @validatable={{this}} @property="title" />
   {{else}}
     {{this.title}}
   {{/if}}
