@@ -370,7 +370,7 @@
                   {{on "keyup" this.keyboard}}
                   data-test-password-input
                 />
-                {{#if (has-error-for this.password)}}
+                {{#if this.hasErrorForPassword}}
                   <ValidationError @validatable={{this}} @property="password" />
                 {{else if (gt this.password.length 0)}}
                   <span

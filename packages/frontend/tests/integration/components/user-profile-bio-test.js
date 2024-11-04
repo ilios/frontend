@@ -314,6 +314,25 @@ module('Integration | Component | user profile bio', function (hooks) {
     assert.strictEqual(component.password.value, '');
   });
 
+  test('password validation', async function (assert) {
+    setupApplicationConfig('form', this);
+    const userModel = await this.owner.lookup('service:store').findRecord('user', this.user.id);
+    this.set('user', userModel);
+
+    await render(
+      hbs`<UserProfileBio @isManaging={{true}} @user={{this.user}} @setIsManaging={{(noop)}} />`,
+    );
+
+    await component.password.edit();
+    assert.notOk(component.password.hasError);
+    await component.password.set('');
+    await component.save();
+    assert.ok(component.password.hasError);
+    await component.password.set('abcdef');
+    await component.save();
+    assert.notOk(component.password.hasError);
+  });
+
   test('password strength 0 display', async function (assert) {
     setupApplicationConfig('form', this);
     const userModel = await this.owner.lookup('service:store').findRecord('user', this.user.id);
