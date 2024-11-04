@@ -1,10 +1,11 @@
 import Component from '@glimmer/component';
 import { service } from '@ember/service';
-import { tracked } from '@glimmer/tracking';
+import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { dropTask } from 'ember-concurrency';
 import { validatable, Length, NotBlank } from 'ilios-common/decorators/validation';
 import { findBy } from 'ilios-common/utils/array-helpers';
+import { TrackedAsyncData } from 'ember-async-data';
 
 @validatable
 export default class NewSessionComponent extends Component {
@@ -12,6 +13,15 @@ export default class NewSessionComponent extends Component {
 
   @NotBlank() @Length(3, 200) @tracked title;
   @tracked selectedSessionTypeId;
+
+  @cached
+  get hasErrorForTitleData() {
+    return new TrackedAsyncData(this.hasErrorFor('title'));
+  }
+
+  get hasErrorForTitle() {
+    return this.hasErrorForTitleData.isResolved ? this.hasErrorForTitleData.value : false;
+  }
 
   get activeSessionTypes() {
     return this.args.sessionTypes.filter((sessionType) => sessionType.active);

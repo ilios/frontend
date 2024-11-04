@@ -74,7 +74,7 @@ module('Integration | Component | new session', function (hooks) {
   });
 
   test('input validation fails if title is too short', async function (assert) {
-    assert.expect(2);
+    assert.expect(4);
     const newTitle = 'fo';
     this.set('sessionTypes', [this.sessionType, this.sessionType2]);
     this.set('save', () => {
@@ -84,13 +84,15 @@ module('Integration | Component | new session', function (hooks) {
       hbs`<NewSession @save={{this.save}} @cancel={{(noop)}} @sessionTypes={{this.sessionTypes}} />`,
     );
     assert.notOk(component.hasError);
+    assert.notOk(component.title.hasError);
     await component.title.set(newTitle);
     await component.title.submit();
     assert.ok(component.hasError);
+    assert.ok(component.title.hasError);
   });
 
   test('input validation fails if title is too long', async function (assert) {
-    assert.expect(2);
+    assert.expect(4);
     const newTitle = '0123456789'.repeat(21);
     this.set('sessionTypes', [this.sessionType, this.sessionType2]);
     this.set('save', () => {
@@ -100,8 +102,10 @@ module('Integration | Component | new session', function (hooks) {
       hbs`<NewSession @save={{this.save}} @cancel={{(noop)}} @sessionTypes={{this.sessionTypes}} />`,
     );
     assert.notOk(component.hasError);
+    assert.notOk(component.title.hasError);
     await component.title.set(newTitle);
     await component.title.submit();
     assert.ok(component.hasError);
+    assert.ok(component.title.hasError);
   });
 });
