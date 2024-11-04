@@ -120,28 +120,28 @@
                         aria-label={{t "general.select"}}
                       />
                     </td>
-                    <td class={{if (has-error-for obj "firstName") "error"}}>
+                    <td class={{if obj.hasErrorForFirstName "error"}}>
                       {{obj.firstName}}
                     </td>
-                    <td class={{if (has-error-for obj "lastName") "error"}}>
+                    <td class={{if obj.hasErrorForLastName "error"}}>
                       {{obj.lastName}}
                     </td>
-                    <td class={{if (has-error-for obj "middleName") "error"}}>
+                    <td class={{if obj.hasErrorForMiddleName "error"}}>
                       {{obj.middleName}}
                     </td>
                     <td>
                       {{obj.phone}}
                     </td>
-                    <td class={{if (has-error-for obj "email") "error"}}>
+                    <td class={{if obj.hasErrorForEmail "error"}}>
                       {{obj.email}}
                     </td>
-                    <td class={{if (has-error-for obj "campusId") "error"}}>
+                    <td class={{if obj.hasErrorForCampusId "error"}}>
                       {{obj.campusId}}
                     </td>
-                    <td class={{if (has-error-for obj "otherId") "error"}}>
+                    <td class={{if obj.hasErrorForOtherId "error"}}>
                       {{obj.otherId}}
                     </td>
-                    <td class={{if (has-error-for obj "username") "error"}}>
+                    <td class={{if obj.hasErrorForUsername "error"}}>
                       {{obj.username}}
                     </td>
                     <td>
