@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
-import { render } from '@ember/test-helpers';
+import { render, settled } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import { component } from 'ilios-common/page-objects/components/course/objective-list-item';
 import { a11yAudit } from 'ember-a11y-testing/test-support';
@@ -144,5 +144,35 @@ module('Integration | Component | course/objective-list-item', function (hooks) 
     );
     await component.remove();
     assert.ok(component.hasRemoveConfirmation);
+  });
+
+  test('validate description', async function (assert) {
+    const school = this.server.create('school');
+    const course = this.server.create('course', { school });
+    const courseObjective = this.server.create('course-objective', { course });
+    const store = this.owner.lookup('service:store');
+    const courseModel = await store.findRecord('course', course.id);
+    const courseObjectiveModel = await store.findRecord('course-objective', courseObjective.id);
+    this.set('course', courseModel);
+    this.set('courseObjective', courseObjectiveModel);
+    await render(
+      hbs`<Course::ObjectiveListItem
+  @courseObjective={{this.courseObjective}}
+  @editable={{true}}
+  @cohortObjectives={{(array)}}
+  @course={{this.course}}
+/>`,
+    );
+    await component.description.openEditor();
+    assert.notOk(component.description.hasError);
+    assert.notOk(component.description.savingIsDisabled);
+    await component.description.edit('a'.repeat(65000));
+    await settled();
+    assert.ok(component.description.hasValidationError);
+    assert.ok(component.description.savingIsDisabled);
+    await component.description.edit('lorem ipsum');
+    await settled();
+    assert.notOk(component.description.hasValidationError);
+    assert.notOk(component.description.savingIsDisabled);
   });
 });
