@@ -33,7 +33,7 @@
       {{#if @mySchedule}}
         {{#if this.showUserContextFilters}}
           <div class="calendar-options-control toggle-user-context-filters" data-test-usercontexts>
-            <Dashboard::UserContextFilter @setUserContext={{this.setUserContext}} @userContext={{this.userContext}}/>
+            <Dashboard::UserContextFilter @setUserContext={{set this "userContext"}} @userContext={{this.userContext}}/>
           </div>
         {{/if}}
       {{else}}
