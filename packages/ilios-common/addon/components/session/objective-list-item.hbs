@@ -11,12 +11,18 @@
         @isSaveDisabled={{this.hasErrorForTitle}}
         @save={{perform this.saveTitleChanges}}
         @close={{this.revertTitleChanges}}
+        @fadeTextExpanded={{this.fadeTextIsExpanded}}
+        @onExpandAllFadeText={{this.expandAllFadeText}}
       >
         <HtmlEditor @content={{@sessionObjective.title}} @update={{this.changeTitle}} @autofocus={{true}} />
         <ValidationError @validatable={{this}} @property="title" />
       </EditableField>
     {{else}}
-      <FadeText @text={{@sessionObjective.title}} />
+      <FadeText
+        @text={{@sessionObjective.title}}
+        @expanded={{@fadeTextExpanded}}
+        @onExpandAll={{@onExpandAllFadeText}}
+      />
     {{/if}}
   </div>
   <Session::ObjectiveListItemParents
@@ -27,6 +33,8 @@
     @save={{perform this.saveParents}}
     @isSaving={{this.saveParents.isRunning}}
     @cancel={{this.cancel}}
+    @fadeTextExpanded={{this.fadeTextIsExpanded}}
+    @onExpandAllFadeText={{this.expandAllFadeText}}
   />
 
   <ObjectiveListItemTerms

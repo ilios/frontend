@@ -30,6 +30,8 @@
           <li data-test-parent>
             <FadeText
               @text={{html-safe (remove-html-tags parent.title)}}
+              @expanded={{@fadeTextExpanded}}
+              @onExpandAll={{@onExpandAllFadeText}}
               as |displayText expand collapse updateTextDims isFaded expanded|
             >
               <button
@@ -90,7 +92,11 @@
           </li>
         {{else}}
           <li data-test-parent>
-            <FadeText @text={{html-safe (remove-html-tags parent.title)}} />
+            <FadeText
+              @text={{html-safe (remove-html-tags parent.title)}}
+              @expanded={{@fadeTextExpanded}}
+              @onExpandAll={{@onExpandAllFadeText}}
+            />
           </li>
         {{/if}}
       {{else}}
