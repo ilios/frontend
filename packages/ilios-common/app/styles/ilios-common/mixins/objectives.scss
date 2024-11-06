@@ -120,6 +120,7 @@
 
     .description {
       p {
+        @include font-size.font-size("base");
         margin: 0;
       }
       button {
@@ -178,7 +179,8 @@
         margin-bottom: 0;
       }
 
-      button {
+      button,
+      .display-text {
         @include font-size.font-size("base");
       }
     }
