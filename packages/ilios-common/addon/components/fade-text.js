@@ -23,9 +23,6 @@ export default class FadeTextComponent extends Component {
     return new htmlSafe(this.text);
   }
 
-  get textWidthRounded() {
-    return Math.floor(this.textWidth);
-  }
   get textHeightRounded() {
     return Math.floor(this.textHeight);
   }
