@@ -51,6 +51,8 @@
             <FadeText
               @text={{@value}}
               @onEdit={{fn this.setIsEditing true}}
+              @expanded={{@fadeTextExpanded}}
+              @onExpandAll={{@onExpandAllFadeText}}
               as |displayText expand collapse updateTextDims isFaded expanded|
             >
               <button

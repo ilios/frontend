@@ -14,6 +14,8 @@
         @isSaveDisabled={{this.hasErrorForTitle}}
         @save={{perform this.saveTitleChanges}}
         @close={{this.revertTitleChanges}}
+        @fadeTextExpanded={{this.fadeTextIsExpanded}}
+        @onExpandAllFadeText={{this.expandAllFadeText}}
       >
         <HtmlEditor
           @content={{@courseObjective.title}}
@@ -23,7 +25,11 @@
         <ValidationError @validatable={{this}} @property="title" />
       </EditableField>
     {{else}}
-      <FadeText @text={{@courseObjective.title}} />
+      <FadeText
+        @text={{@courseObjective.title}}
+        @expanded={{this.fadeTextIsExpanded}}
+        @onExpandAll={{this.expandAllFadeText}}
+      />
     {{/if}}
   </div>
   <Course::ObjectiveListItemParents
@@ -34,6 +40,8 @@
     @save={{perform this.saveParents}}
     @isSaving={{this.saveParents.isRunning}}
     @cancel={{this.cancel}}
+    @fadeTextExpanded={{this.fadeTextIsExpanded}}
+    @onExpandAllFadeText={{this.expandAllFadeText}}
   />
 
   <ObjectiveListItemTerms

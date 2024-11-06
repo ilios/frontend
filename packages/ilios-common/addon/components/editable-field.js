@@ -15,6 +15,10 @@ export default class EditableFieldComponent extends Component {
     return strippedText.length === 0;
   }
 
+  get fadeTextIsExpanded() {
+    return this.args.fadeTextIsExpanded;
+  }
+
   saveData = dropTask(async () => {
     await timeout(1);
     const result = await this.args.save();

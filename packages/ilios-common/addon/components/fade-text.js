@@ -6,7 +6,6 @@ import { action } from '@ember/object';
 
 export default class FadeTextComponent extends Component {
   @tracked textHeight;
-  @tracked expanded = false;
 
   MAX_HEIGHT = 200;
 
@@ -27,33 +26,44 @@ export default class FadeTextComponent extends Component {
   get textWidthRounded() {
     return Math.floor(this.textWidth);
   }
-
   get textHeightRounded() {
     return Math.floor(this.textHeight);
   }
 
   get isFaded() {
-    if (!this.expanded) {
-      return this.textHeightRounded >= this.MAX_HEIGHT;
+    if (!this.expanded !== undefined) {
+      if (this.expanded) {
+        return false;
+      } else {
+        return this.exceedsHeight;
+      }
     } else {
-      return false;
+      return this.exceedsHeight;
     }
   }
 
-  @action
-  updateTextDims({ contentRect: { height } }) {
-    this.textHeight = height;
+  get exceedsHeight() {
+    return this.textHeightRounded >= this.MAX_HEIGHT;
+  }
+
+  get expanded() {
+    return this.args.expanded;
   }
 
   @action
   expand(event) {
     event.stopPropagation();
-    this.expanded = true;
+    this.args.onExpandAll(true);
   }
 
   @action
   collapse(event) {
     event.stopPropagation();
-    this.expanded = false;
+    this.args.onExpandAll(false);
+  }
+
+  @action
+  updateTextDims({ contentRect: { height } }) {
+    this.textHeight = height;
   }
 }

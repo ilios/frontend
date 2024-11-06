@@ -19,6 +19,7 @@ export default class CourseObjectiveListItemComponent extends Component {
   @tracked isManagingTerms;
   @tracked termsBuffer = [];
   @tracked selectedVocabulary;
+  @tracked fadeTextExpanded = false;
 
   constructor() {
     super(...arguments);
@@ -54,6 +55,10 @@ export default class CourseObjectiveListItemComponent extends Component {
 
   get isManaging() {
     return this.isManagingParents || this.isManagingDescriptors || this.isManagingTerms;
+  }
+
+  get fadeTextIsExpanded() {
+    return this.fadeTextExpanded;
   }
 
   saveTitleChanges = dropTask(async () => {
@@ -122,6 +127,10 @@ export default class CourseObjectiveListItemComponent extends Component {
     this.highlightSave.perform();
   });
 
+  @action
+  expandAllFadeText(isExpanded) {
+    this.fadeTextExpanded = isExpanded;
+  }
   @action
   revertTitleChanges() {
     this.title = this.args.courseObjective.title;
