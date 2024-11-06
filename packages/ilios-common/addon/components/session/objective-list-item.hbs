@@ -20,8 +20,8 @@
     {{else}}
       <FadeText
         @text={{@sessionObjective.title}}
-        @expanded={{@fadeTextExpanded}}
-        @onExpandAll={{@onExpandAllFadeText}}
+        @expanded={{this.fadeTextIsExpanded}}
+        @onExpandAll={{this.expandAllFadeText}}
       />
     {{/if}}
   </div>
