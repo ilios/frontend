@@ -8,10 +8,13 @@ module('Acceptance | Session - Offering Management', function (hooks) {
 
   hooks.beforeEach(async function () {
     this.school = this.server.create('school');
-    await setupAuthentication({
-      school: this.school,
-      administeredSchools: [this.school],
-    });
+    await setupAuthentication(
+      {
+        school: this.school,
+        administeredSchools: [this.school],
+      },
+      true,
+    );
   });
 
   test('search for instructor who is a course director #2838', async function (assert) {

@@ -7,7 +7,7 @@ import page from 'ilios-common/page-objects/course';
 module('Acceptance | Course - Mesh Terms', function (hooks) {
   setupApplicationTest(hooks);
   hooks.beforeEach(async function () {
-    this.user = await setupAuthentication();
+    this.user = await setupAuthentication({}, true);
     this.school = this.server.create('school');
     this.server.create('academic-year');
     this.server.createList('meshTree', 3);

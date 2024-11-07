@@ -8,7 +8,7 @@ import percySnapshot from '@percy/ember';
 module('Acceptance | Course - Objective Mesh Descriptors', function (hooks) {
   setupApplicationTest(hooks);
   hooks.beforeEach(async function () {
-    this.user = await setupAuthentication();
+    this.user = await setupAuthentication({}, true);
     this.school = this.server.create('school');
     this.server.create('academic-year', { id: 2013 });
     this.server.createList('program', 2);

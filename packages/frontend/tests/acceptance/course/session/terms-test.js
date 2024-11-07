@@ -8,7 +8,7 @@ module('Acceptance | Session - Terms', function (hooks) {
   setupApplicationTest(hooks);
   hooks.beforeEach(async function () {
     this.school = this.server.create('school');
-    this.user = await setupAuthentication({ school: this.school });
+    this.user = await setupAuthentication({ school: this.school }, true);
     const vocabulary = this.server.create('vocabulary', {
       school: this.school,
       active: true,

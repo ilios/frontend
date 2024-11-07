@@ -17,7 +17,7 @@ module('Acceptance | Session - Offerings', function (hooks) {
     );
     this.intl = this.owner.lookup('service:intl');
     this.school = this.server.create('school');
-    this.user = await setupAuthentication({ school: this.school });
+    this.user = await setupAuthentication({ school: this.school }, true);
     const program = this.server.create('program', { school: this.school });
     const programYear = this.server.create('program-year', { program });
     const cohort = this.server.create('cohort', { programYear });

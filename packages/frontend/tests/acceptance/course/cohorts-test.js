@@ -9,10 +9,13 @@ module('Acceptance | Course - Cohorts', function (hooks) {
 
   hooks.beforeEach(async function () {
     const school = this.server.create('school');
-    this.user = await setupAuthentication({
-      school,
-      administeredSchools: [school],
-    });
+    this.user = await setupAuthentication(
+      {
+        school,
+        administeredSchools: [school],
+      },
+      true,
+    );
     const currentYear = new Date().getFullYear();
     this.server.create('academic-year', { id: currentYear });
     const program = this.server.create('program', { school, duration: 4 });
@@ -80,7 +83,6 @@ module('Acceptance | Course - Cohorts', function (hooks) {
   test('list cohorts', async function (assert) {
     assert.expect(4);
     await page.visit({ courseId: this.course.id, details: true });
-
     assert.strictEqual(page.details.cohorts.current.length, 1);
     assert.strictEqual(page.details.cohorts.current[0].school, 'school 0');
     assert.strictEqual(page.details.cohorts.current[0].program, 'program 0');

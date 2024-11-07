@@ -7,6 +7,8 @@ export default class CourseRoute extends Route {
   @service dataLoader;
   @service session;
   @service store;
+  @service router;
+  @service currentUser;
 
   titleToken = 'general.coursesAndSessions';
   editable = false;
@@ -14,6 +16,11 @@ export default class CourseRoute extends Route {
 
   beforeModel(transition) {
     this.session.requireAuthentication(transition, 'login');
+    if (!this.currentUser.performsNonLearnerFunction) {
+      // Slash on the route name is necessary here due to this bug:
+      // https://github.com/emberjs/ember.js/issues/12945
+      this.router.replaceWith('/four-oh-four');
+    }
   }
 
   async model(params) {
