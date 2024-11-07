@@ -45,6 +45,15 @@ export default class UserProfileBioComponent extends Component {
   userSearchTypeConfig = new TrackedAsyncData(this.iliosConfig.getUserSearchType());
 
   @cached
+  get hasErrorForPasswordData() {
+    return new TrackedAsyncData(this.hasErrorFor('password'));
+  }
+
+  get hasErrorForPassword() {
+    return this.hasErrorForPasswordData.isResolved ? this.hasErrorForPasswordData.value : false;
+  }
+
+  @cached
   get userSearchType() {
     return this.userSearchTypeConfig.isResolved ? this.userSearchTypeConfig.value : null;
   }

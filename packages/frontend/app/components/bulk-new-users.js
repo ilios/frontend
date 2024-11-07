@@ -375,6 +375,69 @@ class ProposedUser extends CoreObject {
     this.addErrorDisplayForAllFields();
   }
 
+  @cached
+  get hasErrorForFirstNameData() {
+    return new TrackedAsyncData(this.hasErrorFor('firstName'));
+  }
+
+  get hasErrorForFirstName() {
+    return this.hasErrorForFirstNameData.isResolved ? this.hasErrorForFirstNameData.value : false;
+  }
+
+  @cached
+  get hasErrorForLastNameData() {
+    return new TrackedAsyncData(this.hasErrorFor('lastName'));
+  }
+
+  get hasErrorForLastName() {
+    return this.hasErrorForLastNameData.isResolved ? this.hasErrorForLastNameData.value : false;
+  }
+
+  @cached
+  get hasErrorForMiddleNameData() {
+    return new TrackedAsyncData(this.hasErrorFor('middleName'));
+  }
+
+  get hasErrorForMiddleName() {
+    return this.hasErrorForMiddleNameData.isResolved ? this.hasErrorForMiddleNameData.value : false;
+  }
+
+  @cached
+  get hasErrorForEmailData() {
+    return new TrackedAsyncData(this.hasErrorFor('email'));
+  }
+
+  get hasErrorForEmail() {
+    return this.hasErrorForEmailData.isResolved ? this.hasErrorForEmailData.value : false;
+  }
+
+  @cached
+  get hasErrorForCampusIdData() {
+    return new TrackedAsyncData(this.hasErrorFor('campusId'));
+  }
+
+  get hasErrorForCampusId() {
+    return this.hasErrorForCampusIdData.isResolved ? this.hasErrorForCampusIdData.value : false;
+  }
+
+  @cached
+  get hasErrorForOtherIdData() {
+    return new TrackedAsyncData(this.hasErrorFor('otherId'));
+  }
+
+  get hasErrorForOtherId() {
+    return this.hasErrorForOtherIdData.isResolved ? this.hasErrorForOtherIdData.value : false;
+  }
+
+  @cached
+  get hasErrorForUsernameData() {
+    return new TrackedAsyncData(this.hasErrorFor('username'));
+  }
+
+  get hasErrorForUsername() {
+    return this.hasErrorForUsernameData.isResolved ? this.hasErrorForUsernameData.value : false;
+  }
+
   async validateUsernameCallback() {
     return !this.existingUsernames.includes(this.username);
   }

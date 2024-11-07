@@ -1,4 +1,12 @@
-import { attribute, clickable, create, fillable, isVisible, text } from 'ember-cli-page-object';
+import {
+  attribute,
+  clickable,
+  create,
+  fillable,
+  isVisible,
+  property,
+  text,
+} from 'ember-cli-page-object';
 import { pageObjectFillInFroalaEditor } from 'ilios-common';
 import postrequisiteEditor from './session/postrequisite-editor';
 import yesNoToggle from './toggle-yesno';
@@ -6,7 +14,7 @@ import ilmDueDateAndTime from './session-overview-ilm-duedate';
 import publicationStatus from './publication-status';
 import publicationMenu from './session/publication-menu';
 
-export default create({
+const definition = {
   scope: '[data-test-session-overview]',
   title: {
     scope: '[data-test-title]',
@@ -36,6 +44,7 @@ export default create({
     edit: clickable('[data-test-edit]'),
     set: pageObjectFillInFroalaEditor('[data-test-html-editor]'),
     save: clickable('.done'),
+    savingIsDisabled: property('disabled', '.done'),
     cancel: clickable('.cancel'),
     hasError: isVisible('.validation-error-message'),
   },
@@ -45,6 +54,7 @@ export default create({
     edit: clickable('[data-test-edit]'),
     set: pageObjectFillInFroalaEditor('[data-test-html-editor]'),
     save: clickable('.done'),
+    savingIsDisabled: property('disabled', '.done'),
     cancel: clickable('.cancel'),
     hasError: isVisible('.validation-error-message'),
   },
@@ -94,4 +104,7 @@ export default create({
   },
   publicationStatus,
   publicationMenu,
-});
+};
+
+export default definition;
+export const component = create(definition);

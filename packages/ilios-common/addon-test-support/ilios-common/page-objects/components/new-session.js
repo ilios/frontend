@@ -3,6 +3,7 @@ import {
   collection,
   create,
   fillable,
+  hasClass,
   isPresent,
   text,
   triggerable,
@@ -14,6 +15,7 @@ const definition = {
     scope: '[data-test-title]',
     set: fillable(),
     submit: triggerable('keyup', '', { eventProperties: { key: 'Enter' } }),
+    hasError: hasClass('has-error'),
   },
   sessionTypes: collection('[data-test-session-type]', {
     title: text(),

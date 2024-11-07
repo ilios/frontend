@@ -27,6 +27,15 @@ export default class ProgramYearObjectiveListItemComponent extends Component {
   }
 
   @cached
+  get hasErrorForTitleData() {
+    return new TrackedAsyncData(this.hasErrorFor('title'));
+  }
+
+  get hasErrorForTitle() {
+    return this.hasErrorForTitleData.isResolved ? this.hasErrorForTitleData.value : false;
+  }
+
+  @cached
   get upstreamRelationshipsData() {
     return new TrackedAsyncData(this.resolveUpstreamRelationships(this.args.programYearObjective));
   }

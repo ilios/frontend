@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
-import { render } from '@ember/test-helpers';
+import { render, settled } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import { component } from 'frontend/tests/pages/components/program-year/objective-list-item';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
@@ -147,5 +147,26 @@ module('Integration | Component | program-year/objective-list-item', function (h
     assert.ok(component.isInactive);
     await component.activate();
     assert.ok(component.isActive);
+  });
+
+  test('validate description', async function (assert) {
+    this.set('programYearObjective', this.model);
+    await render(
+      hbs`<ProgramYear::ObjectiveListItem
+  @programYearObjective={{this.programYearObjective}}
+  @editable={{true}}
+/>`,
+    );
+    await component.description.openEditor();
+    assert.notOk(component.description.hasError);
+    assert.notOk(component.description.savingIsDisabled);
+    await component.description.edit('a'.repeat(65000));
+    await settled();
+    assert.ok(component.description.hasValidationError);
+    assert.ok(component.description.savingIsDisabled);
+    await component.description.edit('lorem ipsum');
+    await settled();
+    assert.notOk(component.description.hasValidationError);
+    assert.notOk(component.description.savingIsDisabled);
   });
 });
