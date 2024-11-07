@@ -52,11 +52,13 @@ module('Integration | Component | fade-text', function (hooks) {
   });
 
   test('it fades tall text given as component argument', async function (assert) {
+    assert.expect(5);
     this.set('longHtml', this.longHtml);
 
     this.set('expanded', false);
     this.set('onExpandAll', (isExpanded) => {
       this.set('expanded', isExpanded);
+      assert.strictEqual(this.expanded, isExpanded);
     });
     await render(
       hbs`<FadeText @text={{this.longHtml}} @expanded={{this.expanded}} @onExpandAll={{this.onExpandAll}} />`,
@@ -80,10 +82,13 @@ module('Integration | Component | fade-text', function (hooks) {
   });
 
   test('it fades tall text given as block', async function (assert) {
+    assert.expect(5);
     this.set('longHtml', this.longHtml);
+
     this.set('expanded', false);
     this.set('onExpandAll', (isExpanded) => {
       this.set('expanded', isExpanded);
+      assert.strictEqual(this.expanded, isExpanded);
     });
 
     await render(hbs`<FadeText
@@ -126,12 +131,15 @@ module('Integration | Component | fade-text', function (hooks) {
   });
 
   test('expand/collapse', async function (assert) {
+    assert.expect(12);
     const longText = `An objective description so long that it fades. An objective description so long that it fades. An objective description so long that it fades. An objective description so long that it fades. An objective description so long that it fades. An objective description so long that it fades. An objective description so long that it fades. An objective description so long that it fades. An objective description so long that it fades. An objective description so long that it fades. An objective description so long that it fades. An objective description so long that it fades. An objective description so long that it fades. An objective description so long that it fades.`;
     this.set('longHtml', this.longHtml);
     this.set('longText', longText);
+
     this.set('expanded', false);
     this.set('onExpandAll', (isExpanded) => {
       this.set('expanded', isExpanded);
+      assert.strictEqual(this.expanded, isExpanded);
     });
     await render(
       hbs`<FadeText @text={{this.longHtml}} @expanded={{this.expanded}} @onExpandAll={{this.onExpandAll}} />`,
