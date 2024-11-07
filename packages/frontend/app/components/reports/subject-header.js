@@ -4,7 +4,7 @@ import { action } from '@ember/object';
 import { service } from '@ember/service';
 import PapaParse from 'papaparse';
 import { dropTask, timeout, waitForProperty } from 'ember-concurrency';
-import createDownloadFile from 'frontend/utils/create-download-file';
+import createDownloadFile from 'ilios-common/utils/create-download-file';
 import { validatable, Length } from 'ilios-common/decorators/validation';
 import { TrackedAsyncData } from 'ember-async-data';
 
