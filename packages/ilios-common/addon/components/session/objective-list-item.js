@@ -56,10 +56,6 @@ export default class SessionObjectiveListItemComponent extends Component {
     return this.isManagingParents || this.isManagingDescriptors || this.isManagingTerms;
   }
 
-  get fadeTextIsExpanded() {
-    return this.fadeTextExpanded;
-  }
-
   saveTitleChanges = dropTask(async () => {
     this.addErrorDisplayFor('title');
     const isValid = await this.isValid('title');

@@ -14,7 +14,7 @@
         @isSaveDisabled={{this.hasErrorForTitle}}
         @save={{perform this.saveTitleChanges}}
         @close={{this.revertTitleChanges}}
-        @fadeTextExpanded={{this.fadeTextIsExpanded}}
+        @fadeTextExpanded={{this.fadeTextExpanded}}
         @onExpandAllFadeText={{this.expandAllFadeText}}
       >
         <HtmlEditor
@@ -40,7 +40,7 @@
     @save={{perform this.saveParents}}
     @isSaving={{this.saveParents.isRunning}}
     @cancel={{this.cancel}}
-    @fadeTextExpanded={{this.fadeTextIsExpanded}}
+    @fadeTextExpanded={{this.fadeTextExpanded}}
     @onExpandAllFadeText={{this.expandAllFadeText}}
   />
 
