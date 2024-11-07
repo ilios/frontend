@@ -15,6 +15,7 @@
   button {
     &.expand-text-button {
       @include m.ilios-link-button;
+      display: block;
     }
   }
 

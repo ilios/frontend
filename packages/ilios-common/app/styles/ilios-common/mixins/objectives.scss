@@ -124,6 +124,7 @@
         margin: 0;
       }
       button {
+        @include ilios-button.ilios-link-button;
         @include font-size.font-size("base");
 
         p {
