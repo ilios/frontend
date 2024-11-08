@@ -52,13 +52,11 @@ module('Integration | Component | fade-text', function (hooks) {
   });
 
   test('it fades tall text given as component argument', async function (assert) {
-    assert.expect(5);
     this.set('longHtml', this.longHtml);
 
     this.set('expanded', false);
     this.set('onExpandAll', (isExpanded) => {
       this.set('expanded', isExpanded);
-      assert.strictEqual(this.expanded, isExpanded);
     });
     await render(
       hbs`<FadeText @text={{this.longHtml}} @expanded={{this.expanded}} @onExpandAll={{this.onExpandAll}} />`,
@@ -67,10 +65,12 @@ module('Integration | Component | fade-text', function (hooks) {
     // slight delay to allow for proper loading of component
     await waitFor(this.fadedSelector);
 
+    assert.false(this.expanded);
     assert.dom('.display-text-wrapper', this.element).hasClass(this.fadedClass);
 
     await component.expand.click();
 
+    assert.true(this.expanded);
     assert.dom('.display-text-wrapper', this.element).doesNotHaveClass(this.fadedClass);
 
     await component.collapse.click();
@@ -78,17 +78,16 @@ module('Integration | Component | fade-text', function (hooks) {
     // slight delay to allow for proper loading of component
     await waitFor(this.fadedSelector);
 
+    assert.false(this.expanded);
     assert.dom('.display-text-wrapper', this.element).hasClass(this.fadedClass);
   });
 
   test('it fades tall text given as block', async function (assert) {
-    assert.expect(5);
     this.set('longHtml', this.longHtml);
 
     this.set('expanded', false);
     this.set('onExpandAll', (isExpanded) => {
       this.set('expanded', isExpanded);
-      assert.strictEqual(this.expanded, isExpanded);
     });
 
     await render(hbs`<FadeText
@@ -116,10 +115,12 @@ module('Integration | Component | fade-text', function (hooks) {
     // slight delay to allow for proper loading of component
     await waitFor(this.fadedSelector);
 
+    assert.false(this.expanded);
     assert.dom('.display-text-wrapper', this.element).hasClass(this.fadedClass);
 
     await component.expand.click();
 
+    assert.true(this.expanded);
     assert.dom('.display-text-wrapper', this.element).doesNotHaveClass(this.fadedClass);
 
     await component.collapse.click();
@@ -127,11 +128,11 @@ module('Integration | Component | fade-text', function (hooks) {
     // slight delay to allow for proper loading of component
     await waitFor(this.fadedSelector);
 
+    assert.false(this.expanded);
     assert.dom('.display-text-wrapper', this.element).hasClass(this.fadedClass);
   });
 
   test('expand/collapse', async function (assert) {
-    assert.expect(12);
     const longText = `An objective description so long that it fades. An objective description so long that it fades. An objective description so long that it fades. An objective description so long that it fades. An objective description so long that it fades. An objective description so long that it fades. An objective description so long that it fades. An objective description so long that it fades. An objective description so long that it fades. An objective description so long that it fades. An objective description so long that it fades. An objective description so long that it fades. An objective description so long that it fades. An objective description so long that it fades.`;
     this.set('longHtml', this.longHtml);
     this.set('longText', longText);
@@ -139,7 +140,6 @@ module('Integration | Component | fade-text', function (hooks) {
     this.set('expanded', false);
     this.set('onExpandAll', (isExpanded) => {
       this.set('expanded', isExpanded);
-      assert.strictEqual(this.expanded, isExpanded);
     });
     await render(
       hbs`<FadeText @text={{this.longHtml}} @expanded={{this.expanded}} @onExpandAll={{this.onExpandAll}} />`,
@@ -148,6 +148,7 @@ module('Integration | Component | fade-text', function (hooks) {
     // slight delay to allow for proper loading of component
     await waitFor(this.fadedSelector);
 
+    assert.false(this.expanded);
     assert.dom('.display-text-wrapper', this.element).hasClass(this.fadedClass);
     assert.strictEqual(component.text, longText, 'component text matches');
     assert.ok(component.expand.isVisible, 'expand button is visible');
@@ -155,6 +156,7 @@ module('Integration | Component | fade-text', function (hooks) {
 
     await component.expand.click();
 
+    assert.true(this.expanded);
     assert.dom('.display-text-wrapper', this.element).doesNotHaveClass(this.fadedClass);
     assert.notOk(component.expand.isVisible, 'expand button is NOT visible');
     assert.ok(component.collapse.isVisible, 'collpase button is visible');
@@ -164,6 +166,7 @@ module('Integration | Component | fade-text', function (hooks) {
     // slight delay to allow for proper loading of component
     await waitFor(this.fadedSelector);
 
+    assert.false(this.expanded);
     assert.dom('.display-text-wrapper', this.element).hasClass(this.fadedClass);
     assert.ok(component.expand.isVisible);
     assert.notOk(component.collapse.isVisible);
