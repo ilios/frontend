@@ -132,7 +132,7 @@
         {{/if}}
       </div>
       <div class="item" data-test-password>
-        <label for="password-{{templateId}}">
+        {{!-- <label for="password-{{templateId}}">
           {{t "general.password"}}:
         </label>
         <input
@@ -142,7 +142,8 @@
           {{on "input" (pick "target.value" (set this "password"))}}
           {{on "keyup" (queue (fn this.addErrorDisplayFor "password") (perform this.saveOrCancel))}}
         />
-        <ValidationError @validatable={{this}} @property="password" />
+        <ValidationError @validatable={{this}} @property="password" /> --}}
+        <PasswordValidator />
       </div>
       <div class="item" data-test-school>
         <label for="primary-school-{{templateId}}">
