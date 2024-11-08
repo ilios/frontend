@@ -1,9 +1,4 @@
-<section
-  class="course-objectives"
-  {{did-insert (perform this.load)}}
-  {{did-update (perform this.load) @course}}
-  data-test-course-objectives
->
+<section class="course-objectives" data-test-course-objectives>
   <div class="header">
     {{#if this.showCollapsible}}
       <div>
@@ -14,13 +9,15 @@
           data-test-title
           {{on "click" this.collapse}}
         >
-          {{t "general.objectives"}} ({{this.objectiveCount}})
+          {{t "general.objectives"}}
+          ({{this.objectiveCount}})
           <FaIcon @icon="caret-down" />
         </button>
       </div>
     {{else}}
       <h3 class="title" data-test-title>
-        {{t "general.objectives"}} ({{this.objectiveCount}})
+        {{t "general.objectives"}}
+        ({{this.objectiveCount}})
       </h3>
     {{/if}}
     {{#if @editable}}
@@ -52,9 +49,6 @@
         @cancel={{this.toggleNewObjectiveEditor}}
       />
     {{/if}}
-    <Course::ObjectiveList
-      @course={{@course}}
-      @editable={{@editable}}
-    />
+    <Course::ObjectiveList @course={{@course}} @editable={{@editable}} />
   </div>
 </section>
