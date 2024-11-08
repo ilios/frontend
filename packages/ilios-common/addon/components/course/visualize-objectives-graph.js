@@ -211,6 +211,6 @@ export default class CourseVisualizeObjectivesGraph extends Component {
       return rhett;
     });
     const csv = PapaParse.unparse(output);
-    createDownloadFile('data.csv', csv, 'text/csv');
+    createDownloadFile(`ilios-course-${this.args.course.id}-objectives.csv`, csv, 'text/csv');
   });
 }

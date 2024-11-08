@@ -169,6 +169,6 @@ export default class CourseVisualizeSessionTypesGraph extends Component {
       return rhett;
     });
     const csv = PapaParse.unparse(output);
-    createDownloadFile('data.csv', csv, 'text/csv');
+    createDownloadFile(`ilios-course-${this.args.course.id}-session-types.csv`, csv, 'text/csv');
   });
 }
