@@ -212,6 +212,5 @@ export default class CourseVisualizeObjectivesGraph extends Component {
     });
     const csv = PapaParse.unparse(output);
     createDownloadFile('data.csv', csv, 'text/csv');
-    await timeout(2000);
   });
 }
