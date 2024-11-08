@@ -2,12 +2,14 @@ import Component from '@glimmer/component';
 import { filter, map } from 'rsvp';
 import { isEmpty } from '@ember/utils';
 import { htmlSafe } from '@ember/template';
-import { restartableTask, timeout } from 'ember-concurrency';
+import { dropTask, restartableTask, timeout } from 'ember-concurrency';
 import { service } from '@ember/service';
 import { cached, tracked } from '@glimmer/tracking';
 import { TrackedAsyncData } from 'ember-async-data';
-import { findById, mapBy, sortBy } from 'ilios-common/utils/array-helpers';
 import { action } from '@ember/object';
+import PapaParse from 'papaparse';
+import createDownloadFile from 'ilios-common/utils/create-download-file';
+import { findById, mapBy, sortBy } from 'ilios-common/utils/array-helpers';
 
 export default class CourseVisualizeInstructorTermGraph extends Component {
   @service router;
@@ -155,5 +157,22 @@ export default class CourseVisualizeInstructorTermGraph extends Component {
       `${meta.vocabulary.title} - ${meta.term.title} &bull; ${data} ${this.intl.t('general.minutes')}`,
     );
     this.tooltipContent = htmlSafe(mapBy(meta.sessions, 'title').sort().join(', '));
+  });
+
+  downloadData = dropTask(async () => {
+    const data = await this.getData(this.args.course, this.args.user);
+    const output = data.map((obj) => {
+      const rhett = {};
+      rhett[`${this.intl.t('general.term')}`] = obj.meta.term.title;
+      rhett[this.intl.t('general.sessions')] = mapBy(obj.meta.sessions, 'title').sort().join(', ');
+      rhett[this.intl.t('general.minutes')] = obj.data;
+      return rhett;
+    });
+    const csv = PapaParse.unparse(output);
+    createDownloadFile(
+      `ilios-course-${this.args.course.id}-instructor-${this.args.user.id}-vocabulary-terms.csv`,
+      csv,
+      'text/csv',
+    );
   });
 }
