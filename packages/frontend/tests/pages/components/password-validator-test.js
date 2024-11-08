@@ -10,17 +10,16 @@ module('Integration | Component | password-validator', function (hooks) {
   test('it renders', async function (assert) {
     await render(hbs`<PasswordValidator />`);
 
-    assert.ok(component);
-    assert.strictEqual(component.label, 'Password:');
+    assert.ok(component, 'component exists');
+    assert.strictEqual(component.label, 'Password:', 'has Password label');
   });
 
   test('it fails blank password', async function (assert) {
     await render(hbs`<PasswordValidator />`);
 
-    assert.false(component.hasError);
+    assert.false(component.hasError, 'no error with no input');
     await component.submit();
-
-    assert.true(component.hasError);
+    assert.true(component.hasError, 'shows blank password error');
   });
 
   test('it fails short password', async function (assert) {
