@@ -35,6 +35,9 @@ export default class CourseVisualizeObjectivesGraph extends Component {
     return this.outputData.isResolved ? this.outputData.value : [];
   }
 
+  get hasData() {
+    return this.data.length;
+  }
   get sortedAscending() {
     return this.sortBy.search(/desc/) === -1;
   }

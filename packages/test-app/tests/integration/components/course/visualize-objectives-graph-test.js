@@ -142,6 +142,20 @@ module('Integration | Component | course/visualize-objectives-graph', function (
     assert.strictEqual(component.dataTable.rows[2].minutes, '0');
   });
 
+  test('data table is not visible if graph has no data', async function (assert) {
+    const course = this.server.create('course');
+    const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
+    this.set('course', courseModel);
+    await render(
+      hbs`<Course::VisualizeObjectivesGraph
+  @course={{this.course}}
+  @isIcon={{false}}
+  @showDataTable={{true}}
+/>`,
+    );
+    assert.notOk(component.dataTable.isVisible);
+  });
+
   test('sort data table by percentages', async function (assert) {
     this.set('course', this.course);
     await render(
