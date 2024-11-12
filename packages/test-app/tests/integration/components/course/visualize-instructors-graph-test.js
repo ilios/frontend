@@ -30,6 +30,10 @@ module('Integration | Component | course/visualize-instructors-graph', function 
       title: 'Two Slices of Pizza',
       course: linkedCourseWithoutTime,
     });
+    const session4 = this.server.create('session', {
+      title: 'Aardvark',
+      course: linkedCourseWithTime,
+    });
     this.server.create('offering', {
       session: session1,
       startDate: new Date('2019-12-08T12:00:00'),
@@ -53,6 +57,12 @@ module('Integration | Component | course/visualize-instructors-graph', function 
       startDate: new Date('2019-12-08T12:00:00'),
       endDate: new Date('2019-12-08T12:00:00'),
       instructors: [instructor5],
+    });
+    this.server.create('offering', {
+      session: session4,
+      startDate: new Date('2019-12-08T12:00:00'),
+      endDate: new Date('2019-12-08T12:00:00'),
+      instructors: [instructor4],
     });
     this.emptyCourse = await this.owner
       .lookup('service:store')
@@ -107,17 +117,19 @@ module('Integration | Component | course/visualize-instructors-graph', function 
     assert.strictEqual(component.dataTable.rows[1].minutes, '180');
     assert.strictEqual(component.dataTable.rows[2].instructor.text, 'William');
     assert.strictEqual(component.dataTable.rows[2].instructor.url, '/data/courses/1/instructors/4');
-    assert.strictEqual(component.dataTable.rows[2].sessions.links.length, 2);
-    assert.strictEqual(
-      component.dataTable.rows[2].sessions.links[0].text,
-      'Berkeley Investigations',
-    );
-    assert.strictEqual(component.dataTable.rows[2].sessions.links[0].url, '/courses/1/sessions/1');
+    assert.strictEqual(component.dataTable.rows[2].sessions.links.length, 3);
+    assert.strictEqual(component.dataTable.rows[2].sessions.links[0].text, 'Aardvark');
+    assert.strictEqual(component.dataTable.rows[2].sessions.links[0].url, '/courses/1/sessions/4');
     assert.strictEqual(
       component.dataTable.rows[2].sessions.links[1].text,
+      'Berkeley Investigations',
+    );
+    assert.strictEqual(component.dataTable.rows[2].sessions.links[1].url, '/courses/1/sessions/1');
+    assert.strictEqual(
+      component.dataTable.rows[2].sessions.links[2].text,
       'The San Leandro Horror',
     );
-    assert.strictEqual(component.dataTable.rows[2].sessions.links[1].url, '/courses/1/sessions/2');
+    assert.strictEqual(component.dataTable.rows[2].sessions.links[2].url, '/courses/1/sessions/2');
     assert.strictEqual(component.dataTable.rows[2].minutes, '510');
     assert.strictEqual(component.dataTable.rows[3].instructor.text, 'Marie');
     assert.strictEqual(component.dataTable.rows[3].instructor.url, '/data/courses/1/instructors/1');
@@ -190,7 +202,7 @@ module('Integration | Component | course/visualize-instructors-graph', function 
     assert.strictEqual(component.dataTable.rows[1].sessions.text, 'The San Leandro Horror');
     assert.strictEqual(
       component.dataTable.rows[2].sessions.text,
-      'Berkeley Investigations, The San Leandro Horror',
+      'Aardvark, Berkeley Investigations, The San Leandro Horror',
     );
     assert.strictEqual(
       component.dataTable.rows[3].sessions.text,
@@ -199,7 +211,7 @@ module('Integration | Component | course/visualize-instructors-graph', function 
     await component.dataTable.header.sessions.toggle();
     assert.strictEqual(
       component.dataTable.rows[0].sessions.text,
-      'Berkeley Investigations, The San Leandro Horror',
+      'Aardvark, Berkeley Investigations, The San Leandro Horror',
     );
     assert.strictEqual(
       component.dataTable.rows[1].sessions.text,
@@ -216,7 +228,7 @@ module('Integration | Component | course/visualize-instructors-graph', function 
     );
     assert.strictEqual(
       component.dataTable.rows[3].sessions.text,
-      'Berkeley Investigations, The San Leandro Horror',
+      'Aardvark, Berkeley Investigations, The San Leandro Horror',
     );
   });
 

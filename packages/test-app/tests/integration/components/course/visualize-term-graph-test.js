@@ -36,6 +36,12 @@ module('Integration | Component | course/visualize-term-graph', function (hooks)
       sessionType: sessionType2,
     });
     this.server.create('session', {
+      title: 'Aardvark',
+      course: linkedCourseWithTime,
+      terms: [term],
+      sessionType: sessionType2,
+    });
+    this.server.create('session', {
       title: 'Two Slices of Pizza',
       course: linkedCourseWithoutTime,
       terms: [term],
@@ -91,12 +97,14 @@ module('Integration | Component | course/visualize-term-graph', function (hooks)
     assert.strictEqual(component.chart.labels[1].text, 'Standalone');
     assert.strictEqual(component.dataTable.rows.length, 2);
     assert.strictEqual(component.dataTable.rows[0].sessionType, 'Campaign');
-    assert.strictEqual(component.dataTable.rows[0].sessions.links.length, 1);
+    assert.strictEqual(component.dataTable.rows[0].sessions.links.length, 2);
+    assert.strictEqual(component.dataTable.rows[0].sessions.links[0].text, 'Aardvark');
     assert.strictEqual(
-      component.dataTable.rows[0].sessions.links[0].text,
+      component.dataTable.rows[0].sessions.links[1].text,
       'The San Leandro Horror',
     );
-    assert.strictEqual(component.dataTable.rows[0].sessions.links[0].url, '/courses/1/sessions/2');
+    assert.strictEqual(component.dataTable.rows[0].sessions.links[0].url, '/courses/1/sessions/3');
+    assert.strictEqual(component.dataTable.rows[0].sessions.links[1].url, '/courses/1/sessions/2');
     assert.strictEqual(component.dataTable.rows[0].minutes, '180');
     assert.strictEqual(component.dataTable.rows[1].sessionType, 'Standalone');
     assert.strictEqual(component.dataTable.rows[1].sessions.links.length, 1);
@@ -141,17 +149,29 @@ module('Integration | Component | course/visualize-term-graph', function (hooks)
   @showDataTable={{true}}
 />`,
     );
-    assert.strictEqual(component.dataTable.rows[0].sessions.text, 'The San Leandro Horror');
+    assert.strictEqual(
+      component.dataTable.rows[0].sessions.text,
+      'Aardvark, The San Leandro Horror',
+    );
+    assert.strictEqual(component.dataTable.rows[1].sessions.text, 'Berkeley Investigations');
+    await component.dataTable.header.sessions.toggle();
+    assert.strictEqual(
+      component.dataTable.rows[0].sessions.text,
+      'Aardvark, The San Leandro Horror',
+    );
     assert.strictEqual(component.dataTable.rows[1].sessions.text, 'Berkeley Investigations');
     await component.dataTable.header.sessions.toggle();
     assert.strictEqual(component.dataTable.rows[0].sessions.text, 'Berkeley Investigations');
-    assert.strictEqual(component.dataTable.rows[1].sessions.text, 'The San Leandro Horror');
+    assert.strictEqual(
+      component.dataTable.rows[1].sessions.text,
+      'Aardvark, The San Leandro Horror',
+    );
     await component.dataTable.header.sessions.toggle();
-    assert.strictEqual(component.dataTable.rows[0].sessions.text, 'The San Leandro Horror');
+    assert.strictEqual(
+      component.dataTable.rows[0].sessions.text,
+      'Aardvark, The San Leandro Horror',
+    );
     assert.strictEqual(component.dataTable.rows[1].sessions.text, 'Berkeley Investigations');
-    await component.dataTable.header.sessions.toggle();
-    assert.strictEqual(component.dataTable.rows[0].sessions.text, 'Berkeley Investigations');
-    assert.strictEqual(component.dataTable.rows[1].sessions.text, 'The San Leandro Horror');
   });
 
   test('sort data-table by minutes', async function (assert) {
@@ -210,7 +230,7 @@ module('Integration | Component | course/visualize-term-graph', function (hooks)
     assert.strictEqual(component.dataTable.rows[0].sessionType, 'Prelude');
     assert.strictEqual(component.dataTable.rows[0].sessions.links.length, 1);
     assert.strictEqual(component.dataTable.rows[0].sessions.links[0].text, 'Two Slices of Pizza');
-    assert.strictEqual(component.dataTable.rows[0].sessions.links[0].url, '/courses/2/sessions/3');
+    assert.strictEqual(component.dataTable.rows[0].sessions.links[0].url, '/courses/2/sessions/4');
     assert.strictEqual(component.dataTable.rows[0].minutes, '0');
   });
 });

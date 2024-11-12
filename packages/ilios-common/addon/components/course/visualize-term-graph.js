@@ -5,7 +5,7 @@ import { restartableTask, timeout } from 'ember-concurrency';
 import { service } from '@ember/service';
 import { cached, tracked } from '@glimmer/tracking';
 import { TrackedAsyncData } from 'ember-async-data';
-import { findById, mapBy } from 'ilios-common/utils/array-helpers';
+import { findById, mapBy, sortBy } from 'ilios-common/utils/array-helpers';
 import { action } from '@ember/object';
 
 export default class CourseVisualizeTermGraph extends Component {
@@ -44,7 +44,7 @@ export default class CourseVisualizeTermGraph extends Component {
     return this.data.map((obj) => {
       const rhett = {};
       rhett.minutes = obj.data;
-      rhett.sessions = obj.meta.sessions;
+      rhett.sessions = sortBy(obj.meta.sessions, 'title');
       rhett.sessionType = obj.meta.sessionType.title;
       rhett.sessionTitles = mapBy(rhett.sessions, 'title').join(', ');
       return rhett;

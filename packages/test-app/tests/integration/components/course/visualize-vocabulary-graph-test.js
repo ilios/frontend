@@ -40,6 +40,11 @@ module('Integration | Component | course/visualize-vocabulary-graph', function (
       course: linkedCourseWithoutTime,
       terms: [term3],
     });
+    this.server.create('session', {
+      title: 'Aardvark',
+      course: linkedCourseWithTime,
+      terms: [term1],
+    });
     this.server.create('offering', {
       session: session1,
       startDate: new Date('2019-12-08T12:00:00'),
@@ -103,12 +108,14 @@ module('Integration | Component | course/visualize-vocabulary-graph', function (
     assert.strictEqual(component.dataTable.rows[0].minutes, '180');
     assert.strictEqual(component.dataTable.rows[1].term.text, 'Standalone');
     assert.strictEqual(component.dataTable.rows[1].term.url, '/data/courses/1/terms/1');
-    assert.strictEqual(component.dataTable.rows[1].sessions.links.length, 1);
+    assert.strictEqual(component.dataTable.rows[1].sessions.links.length, 2);
+    assert.strictEqual(component.dataTable.rows[1].sessions.links[0].text, 'Aardvark');
     assert.strictEqual(
-      component.dataTable.rows[1].sessions.links[0].text,
+      component.dataTable.rows[1].sessions.links[1].text,
       'Berkeley Investigations',
     );
-    assert.strictEqual(component.dataTable.rows[1].sessions.links[0].url, '/courses/1/sessions/1');
+    assert.strictEqual(component.dataTable.rows[1].sessions.links[0].url, '/courses/1/sessions/4');
+    assert.strictEqual(component.dataTable.rows[1].sessions.links[1].url, '/courses/1/sessions/1');
     assert.strictEqual(component.dataTable.rows[1].minutes, '630');
   });
 
@@ -148,15 +155,27 @@ module('Integration | Component | course/visualize-vocabulary-graph', function (
 />`,
     );
     assert.strictEqual(component.dataTable.rows[0].sessions.text, 'The San Leandro Horror');
-    assert.strictEqual(component.dataTable.rows[1].sessions.text, 'Berkeley Investigations');
+    assert.strictEqual(
+      component.dataTable.rows[1].sessions.text,
+      'Aardvark, Berkeley Investigations',
+    );
     await component.dataTable.header.sessions.toggle();
-    assert.strictEqual(component.dataTable.rows[0].sessions.text, 'Berkeley Investigations');
+    assert.strictEqual(
+      component.dataTable.rows[0].sessions.text,
+      'Aardvark, Berkeley Investigations',
+    );
     assert.strictEqual(component.dataTable.rows[1].sessions.text, 'The San Leandro Horror');
     await component.dataTable.header.sessions.toggle();
     assert.strictEqual(component.dataTable.rows[0].sessions.text, 'The San Leandro Horror');
-    assert.strictEqual(component.dataTable.rows[1].sessions.text, 'Berkeley Investigations');
+    assert.strictEqual(
+      component.dataTable.rows[1].sessions.text,
+      'Aardvark, Berkeley Investigations',
+    );
     await component.dataTable.header.sessions.toggle();
-    assert.strictEqual(component.dataTable.rows[0].sessions.text, 'Berkeley Investigations');
+    assert.strictEqual(
+      component.dataTable.rows[0].sessions.text,
+      'Aardvark, Berkeley Investigations',
+    );
     assert.strictEqual(component.dataTable.rows[1].sessions.text, 'The San Leandro Horror');
   });
 

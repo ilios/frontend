@@ -8,7 +8,7 @@ import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { cleanQuery } from 'ilios-common/utils/query-utils';
 import { TrackedAsyncData } from 'ember-async-data';
-import { findById, mapBy, uniqueValues } from 'ilios-common/utils/array-helpers';
+import { findById, mapBy, sortBy, uniqueValues } from 'ilios-common/utils/array-helpers';
 
 export default class CourseVisualizeInstructorsGraph extends Component {
   @service router;
@@ -54,7 +54,7 @@ export default class CourseVisualizeInstructorsGraph extends Component {
     return this.filteredData.map((obj) => {
       const rhett = {};
       rhett.minutes = obj.data;
-      rhett.sessions = obj.meta.sessions;
+      rhett.sessions = sortBy(obj.meta.sessions, 'title');
       rhett.instructor = obj.meta.user;
       rhett.instructorName = obj.meta.user.fullName;
       rhett.sessionTitles = mapBy(rhett.sessions, 'title').join(', ');

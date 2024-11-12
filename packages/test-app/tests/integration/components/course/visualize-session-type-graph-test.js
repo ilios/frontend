@@ -46,6 +46,12 @@ module('Integration | Component | course/visualize-session-type-graph', function
       sessionType,
     });
     this.server.create('session', {
+      title: 'Aardvark',
+      course: linkedCourseWithTime,
+      terms: [term3],
+      sessionType,
+    });
+    this.server.create('session', {
       title: 'Peanut Butter Stout',
       course: linkedCourseWithoutTime,
       terms: [term2],
@@ -124,9 +130,11 @@ module('Integration | Component | course/visualize-session-type-graph', function
     );
     assert.strictEqual(component.dataTable.rows[1].sessions.links[0].url, '/courses/1/sessions/2');
     assert.strictEqual(component.dataTable.rows[1].minutes, '180');
-    assert.strictEqual(component.dataTable.rows[2].sessions.links.length, 1);
-    assert.strictEqual(component.dataTable.rows[2].sessions.links[0].text, 'Two Slices of Pizza');
-    assert.strictEqual(component.dataTable.rows[2].sessions.links[0].url, '/courses/1/sessions/3');
+    assert.strictEqual(component.dataTable.rows[2].sessions.links.length, 2);
+    assert.strictEqual(component.dataTable.rows[2].sessions.links[0].text, 'Aardvark');
+    assert.strictEqual(component.dataTable.rows[2].sessions.links[1].text, 'Two Slices of Pizza');
+    assert.strictEqual(component.dataTable.rows[2].sessions.links[0].url, '/courses/1/sessions/4');
+    assert.strictEqual(component.dataTable.rows[2].sessions.links[1].url, '/courses/1/sessions/3');
     assert.strictEqual(component.dataTable.rows[2].minutes, '0');
   });
 
@@ -167,23 +175,23 @@ module('Integration | Component | course/visualize-session-type-graph', function
     );
     assert.strictEqual(component.dataTable.rows[0].sessions.text, 'Berkeley Investigations');
     assert.strictEqual(component.dataTable.rows[1].sessions.text, 'The San Leandro Horror');
-    assert.strictEqual(component.dataTable.rows[2].sessions.text, 'Two Slices of Pizza');
+    assert.strictEqual(component.dataTable.rows[2].sessions.text, 'Aardvark, Two Slices of Pizza');
     await component.dataTable.header.sessions.toggle();
-    assert.strictEqual(component.dataTable.rows[0].sessions.text, 'Berkeley Investigations');
-    assert.strictEqual(component.dataTable.rows[1].sessions.text, 'The San Leandro Horror');
-    assert.strictEqual(component.dataTable.rows[2].sessions.text, 'Two Slices of Pizza');
+    assert.strictEqual(component.dataTable.rows[0].sessions.text, 'Aardvark, Two Slices of Pizza');
+    assert.strictEqual(component.dataTable.rows[1].sessions.text, 'Berkeley Investigations');
+    assert.strictEqual(component.dataTable.rows[2].sessions.text, 'The San Leandro Horror');
     await component.dataTable.header.sessions.toggle();
-    assert.strictEqual(component.dataTable.rows[0].sessions.text, 'Two Slices of Pizza');
-    assert.strictEqual(component.dataTable.rows[1].sessions.text, 'The San Leandro Horror');
-    assert.strictEqual(component.dataTable.rows[2].sessions.text, 'Berkeley Investigations');
+    assert.strictEqual(component.dataTable.rows[0].sessions.text, 'The San Leandro Horror');
+    assert.strictEqual(component.dataTable.rows[1].sessions.text, 'Berkeley Investigations');
+    assert.strictEqual(component.dataTable.rows[2].sessions.text, 'Aardvark, Two Slices of Pizza');
     await component.dataTable.header.sessions.toggle();
-    assert.strictEqual(component.dataTable.rows[0].sessions.text, 'Berkeley Investigations');
-    assert.strictEqual(component.dataTable.rows[1].sessions.text, 'The San Leandro Horror');
-    assert.strictEqual(component.dataTable.rows[2].sessions.text, 'Two Slices of Pizza');
+    assert.strictEqual(component.dataTable.rows[0].sessions.text, 'Aardvark, Two Slices of Pizza');
+    assert.strictEqual(component.dataTable.rows[1].sessions.text, 'Berkeley Investigations');
+    assert.strictEqual(component.dataTable.rows[2].sessions.text, 'The San Leandro Horror');
     await component.dataTable.header.sessions.toggle();
-    assert.strictEqual(component.dataTable.rows[0].sessions.text, 'Two Slices of Pizza');
-    assert.strictEqual(component.dataTable.rows[1].sessions.text, 'The San Leandro Horror');
-    assert.strictEqual(component.dataTable.rows[2].sessions.text, 'Berkeley Investigations');
+    assert.strictEqual(component.dataTable.rows[0].sessions.text, 'The San Leandro Horror');
+    assert.strictEqual(component.dataTable.rows[1].sessions.text, 'Berkeley Investigations');
+    assert.strictEqual(component.dataTable.rows[2].sessions.text, 'Aardvark, Two Slices of Pizza');
   });
 
   test('sort data-table by minutes', async function (assert) {
@@ -246,7 +254,7 @@ module('Integration | Component | course/visualize-session-type-graph', function
     assert.strictEqual(component.dataTable.rows[0].vocabularyTerm, 'Vocabulary 2 - Campaign');
     assert.strictEqual(component.dataTable.rows[0].sessions.links.length, 1);
     assert.strictEqual(component.dataTable.rows[0].sessions.links[0].text, 'Peanut Butter Stout');
-    assert.strictEqual(component.dataTable.rows[0].sessions.links[0].url, '/courses/2/sessions/4');
+    assert.strictEqual(component.dataTable.rows[0].sessions.links[0].url, '/courses/2/sessions/5');
     assert.strictEqual(component.dataTable.rows[0].minutes, '0');
   });
 });

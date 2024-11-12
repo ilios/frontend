@@ -39,6 +39,11 @@ module(
         course: linkedCourseWithoutTime,
         sessionType: sessionType3,
       });
+      const session4 = this.server.create('session', {
+        title: 'Aardvark',
+        course: linkedCourseWithTime,
+        sessionType: sessionType2,
+      });
       this.server.create('offering', {
         session: session1,
         startDate: new Date('2019-12-08T12:00:00'),
@@ -59,6 +64,12 @@ module(
       });
       this.server.create('offering', {
         session: session3,
+        startDate: new Date('2019-12-05T18:00:00'),
+        endDate: new Date('2019-12-05T18:00:00'),
+        instructors: [instructor],
+      });
+      this.server.create('offering', {
+        session: session4,
         startDate: new Date('2019-12-05T18:00:00'),
         endDate: new Date('2019-12-05T18:00:00'),
         instructors: [instructor],
@@ -98,13 +109,18 @@ module(
       assert.strictEqual(component.chart.labels[1].text, 'Standalone');
       assert.strictEqual(component.dataTable.rows.length, 2);
       assert.strictEqual(component.dataTable.rows[0].sessionType, 'Campaign');
-      assert.strictEqual(component.dataTable.rows[0].sessions.links.length, 1);
+      assert.strictEqual(component.dataTable.rows[0].sessions.links.length, 2);
+      assert.strictEqual(component.dataTable.rows[0].sessions.links[0].text, 'Aardvark');
       assert.strictEqual(
-        component.dataTable.rows[0].sessions.links[0].text,
+        component.dataTable.rows[0].sessions.links[0].url,
+        '/courses/1/sessions/4',
+      );
+      assert.strictEqual(
+        component.dataTable.rows[0].sessions.links[1].text,
         'The San Leandro Horror',
       );
       assert.strictEqual(
-        component.dataTable.rows[0].sessions.links[0].url,
+        component.dataTable.rows[0].sessions.links[1].url,
         '/courses/1/sessions/2',
       );
       assert.strictEqual(component.dataTable.rows[0].minutes, '180');
@@ -156,17 +172,29 @@ module(
   @showDataTable={{true}}
 />`,
       );
-      assert.strictEqual(component.dataTable.rows[0].sessions.text, 'The San Leandro Horror');
+      assert.strictEqual(
+        component.dataTable.rows[0].sessions.text,
+        'Aardvark, The San Leandro Horror',
+      );
+      assert.strictEqual(component.dataTable.rows[1].sessions.text, 'Berkeley Investigations');
+      await component.dataTable.header.sessions.toggle();
+      assert.strictEqual(
+        component.dataTable.rows[0].sessions.text,
+        'Aardvark, The San Leandro Horror',
+      );
       assert.strictEqual(component.dataTable.rows[1].sessions.text, 'Berkeley Investigations');
       await component.dataTable.header.sessions.toggle();
       assert.strictEqual(component.dataTable.rows[0].sessions.text, 'Berkeley Investigations');
-      assert.strictEqual(component.dataTable.rows[1].sessions.text, 'The San Leandro Horror');
+      assert.strictEqual(
+        component.dataTable.rows[1].sessions.text,
+        'Aardvark, The San Leandro Horror',
+      );
       await component.dataTable.header.sessions.toggle();
-      assert.strictEqual(component.dataTable.rows[0].sessions.text, 'The San Leandro Horror');
+      assert.strictEqual(
+        component.dataTable.rows[0].sessions.text,
+        'Aardvark, The San Leandro Horror',
+      );
       assert.strictEqual(component.dataTable.rows[1].sessions.text, 'Berkeley Investigations');
-      await component.dataTable.header.sessions.toggle();
-      assert.strictEqual(component.dataTable.rows[0].sessions.text, 'Berkeley Investigations');
-      assert.strictEqual(component.dataTable.rows[1].sessions.text, 'The San Leandro Horror');
     });
 
     test('sort data-table by minutes', async function (assert) {

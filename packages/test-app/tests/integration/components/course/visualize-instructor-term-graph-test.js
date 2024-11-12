@@ -46,6 +46,12 @@ module('Integration | Component | course/visualize-instructor-term-graph', funct
       terms: [term3],
       sessionType: sessionType,
     });
+    const session4 = this.server.create('session', {
+      title: 'Aardvark',
+      course: linkedCourseWithTime,
+      terms: [term2],
+      sessionType: sessionType,
+    });
     this.server.create('offering', {
       session: session1,
       startDate: new Date('2019-12-08T12:00:00'),
@@ -66,6 +72,12 @@ module('Integration | Component | course/visualize-instructor-term-graph', funct
     });
     this.server.create('offering', {
       session: session3,
+      startDate: new Date('2019-12-05T18:00:00'),
+      endDate: new Date('2019-12-05T18:00:00'),
+      instructors: [instructor],
+    });
+    this.server.create('offering', {
+      session: session4,
       startDate: new Date('2019-12-05T18:00:00'),
       endDate: new Date('2019-12-05T18:00:00'),
       instructors: [instructor],
@@ -110,12 +122,14 @@ module('Integration | Component | course/visualize-instructor-term-graph', funct
     assert.strictEqual(component.chart.labels[0].text, 'Vocabulary 1 - Standalone');
     assert.strictEqual(component.chart.labels[1].text, 'Vocabulary 2 - Campaign');
     assert.strictEqual(component.dataTable.rows[0].vocabularyTerm, 'Vocabulary 2 - Campaign');
-    assert.strictEqual(component.dataTable.rows[0].sessions.links.length, 1);
+    assert.strictEqual(component.dataTable.rows[0].sessions.links.length, 2);
+    assert.strictEqual(component.dataTable.rows[0].sessions.links[0].text, 'Aardvark');
+    assert.strictEqual(component.dataTable.rows[0].sessions.links[0].url, '/courses/1/sessions/4');
     assert.strictEqual(
-      component.dataTable.rows[0].sessions.links[0].text,
+      component.dataTable.rows[0].sessions.links[1].text,
       'The San Leandro Horror',
     );
-    assert.strictEqual(component.dataTable.rows[0].sessions.links[0].url, '/courses/1/sessions/2');
+    assert.strictEqual(component.dataTable.rows[0].sessions.links[1].url, '/courses/1/sessions/2');
     assert.strictEqual(component.dataTable.rows[0].minutes, '180');
     assert.strictEqual(component.dataTable.rows[1].vocabularyTerm, 'Vocabulary 1 - Standalone');
     assert.strictEqual(component.dataTable.rows[1].sessions.links.length, 1);
@@ -159,17 +173,29 @@ module('Integration | Component | course/visualize-instructor-term-graph', funct
   @showDataTable={{true}}
 />`,
     );
-    assert.strictEqual(component.dataTable.rows[0].sessions.text, 'The San Leandro Horror');
+    assert.strictEqual(
+      component.dataTable.rows[0].sessions.text,
+      'Aardvark, The San Leandro Horror',
+    );
+    assert.strictEqual(component.dataTable.rows[1].sessions.text, 'Berkeley Investigations');
+    await component.dataTable.header.sessions.toggle();
+    assert.strictEqual(
+      component.dataTable.rows[0].sessions.text,
+      'Aardvark, The San Leandro Horror',
+    );
     assert.strictEqual(component.dataTable.rows[1].sessions.text, 'Berkeley Investigations');
     await component.dataTable.header.sessions.toggle();
     assert.strictEqual(component.dataTable.rows[0].sessions.text, 'Berkeley Investigations');
-    assert.strictEqual(component.dataTable.rows[1].sessions.text, 'The San Leandro Horror');
+    assert.strictEqual(
+      component.dataTable.rows[1].sessions.text,
+      'Aardvark, The San Leandro Horror',
+    );
     await component.dataTable.header.sessions.toggle();
-    assert.strictEqual(component.dataTable.rows[0].sessions.text, 'The San Leandro Horror');
+    assert.strictEqual(
+      component.dataTable.rows[0].sessions.text,
+      'Aardvark, The San Leandro Horror',
+    );
     assert.strictEqual(component.dataTable.rows[1].sessions.text, 'Berkeley Investigations');
-    await component.dataTable.header.sessions.toggle();
-    assert.strictEqual(component.dataTable.rows[0].sessions.text, 'Berkeley Investigations');
-    assert.strictEqual(component.dataTable.rows[1].sessions.text, 'The San Leandro Horror');
   });
 
   test('sort data-table by minutes', async function (assert) {
