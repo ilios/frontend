@@ -9,7 +9,7 @@ export default class CourseCollapsedObjectivesComponent extends Component {
   }
 
   get objectives() {
-    return this.objectivesData.isResolved ? this.objectivesData.value : null;
+    return this.objectivesData.isResolved ? this.objectivesData.value : [];
   }
 
   get objectivesWithParents() {
