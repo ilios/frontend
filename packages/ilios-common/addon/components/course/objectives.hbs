@@ -10,14 +10,14 @@
           {{on "click" this.collapse}}
         >
           {{t "general.objectives"}}
-          ({{this.objectiveCount}})
+          ({{this.objectives.length}})
           <FaIcon @icon="caret-down" />
         </button>
       </div>
     {{else}}
       <h3 class="title" data-test-title>
         {{t "general.objectives"}}
-        ({{this.objectiveCount}})
+        ({{this.objectives.length}})
       </h3>
     {{/if}}
     {{#if @editable}}

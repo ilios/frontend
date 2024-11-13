@@ -14,11 +14,7 @@ export default class CourseObjectivesComponent extends Component {
   @tracked newObjectiveTitle;
 
   get showCollapsible() {
-    return this.hasObjectives && !this.isManaging;
-  }
-
-  get hasObjectives() {
-    return this.objectiveCount > 0;
+    return this.objectives.length > 0 && !this.isManaging;
   }
 
   @cached
@@ -27,11 +23,7 @@ export default class CourseObjectivesComponent extends Component {
   }
 
   get objectives() {
-    return this.objectivesData.isResolved ? this.objectivesData.value : null;
-  }
-
-  get objectiveCount() {
-    return this.objectives ? this.objectives.length : 0;
+    return this.objectivesData.isResolved ? this.objectivesData.value : [];
   }
 
   saveNewObjective = dropTask(async (title) => {
@@ -62,7 +54,7 @@ export default class CourseObjectivesComponent extends Component {
   }
   @action
   collapse() {
-    if (this.hasObjectives) {
+    if (this.objectives.length > 0) {
       this.args.collapse();
     }
   }
