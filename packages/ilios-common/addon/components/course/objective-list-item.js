@@ -52,14 +52,6 @@ export default class CourseObjectiveListItemComponent extends Component {
     return this.meshDescriptorsData.isResolved ? this.meshDescriptorsData.value : null;
   }
 
-  // @action
-  // load(element, [courseObjective]) {
-  //   if (!courseObjective) {
-  //     return;
-  //   }
-  //   this.title = courseObjective.title;
-  // }
-
   get isManaging() {
     return this.isManagingParents || this.isManagingDescriptors || this.isManagingTerms;
   }
