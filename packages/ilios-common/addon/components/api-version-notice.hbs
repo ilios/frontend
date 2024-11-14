@@ -2,7 +2,6 @@
   class="api-version-notice {{if this.mismatched "mismatch"}}"
   hidden={{not this.mismatched}}
   role={{if this.mismatched "alert" false}}
-  {{did-insert (perform this.check)}}
   data-test-load-finished={{this.check.lastSuccessful.value}}
   data-test-api-version-notice
 >
