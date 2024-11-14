@@ -269,18 +269,33 @@ export default class ReportsNewSubjectComponent extends Component {
     return this.usersPrimarySchool;
   }
 
-  @action
-  changeSubject(subject) {
-    this.selectedSubject = subject;
-    this.selectedPrepositionalObject = null;
-    this.selectedPrepositionalObjectId = null;
-    this.clearErrorDisplay();
+  get includeAnythingObject() {
+    const exceptedSubjects = ['instructor', 'mesh term'];
+    return !exceptedSubjects.includes(this.subject);
   }
 
   @action
-  changePrepositionalObject(object) {
+  changeSubject(subject) {
+    this.selectedSubject = subject;
+
+    if (this.includeAnythingObject) {
+      this.changePrepositionalObject(null);
+    } else {
+      const firstPrepositionalObjectLabel = Object.values(this.prepositionalObjectList)
+        .map((item) => item.label)
+        .sort()[0];
+      const firstPrepositionalObject = this.fullPrepositionalObjectList.filter(
+        (item) => item.label == firstPrepositionalObjectLabel,
+      )[0].value;
+
+      this.changePrepositionalObject(firstPrepositionalObject);
+    }
+  }
+
+  @action
+  changePrepositionalObject(object, id = null) {
     this.selectedPrepositionalObject = object;
-    this.selectedPrepositionalObjectId = null;
+    this.selectedPrepositionalObjectId = id;
     this.clearErrorDisplay();
   }
 
@@ -358,7 +373,7 @@ export default class ReportsNewSubjectComponent extends Component {
   @action
   validatePrepositionalObjectCallback() {
     if (this.subject && !this.prepositionalObject) {
-      return !['instructor', 'mesh term'].includes(this.subject);
+      return this.includeAnythingObject;
     }
     return true;
   }

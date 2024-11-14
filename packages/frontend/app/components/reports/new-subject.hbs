@@ -56,9 +56,11 @@
             id="associated-{{templateId}}"
             {{on "change" (pick "target.value" this.changePrepositionalObject)}}
           >
-            <option value="" selected={{eq null this.prepositionalObject}}>
-              {{t "general.anything"}}
-            </option>
+            {{#if this.includeAnythingObject}}
+              <option value="" selected={{eq null this.prepositionalObject}}>
+                {{t "general.anything"}}
+              </option>
+            {{/if}}
             {{#each (sort-by "label" this.prepositionalObjectList) as |o|}}
               <option value={{o.value}} selected={{eq o.value this.prepositionalObject}}>
                 {{o.label}}
