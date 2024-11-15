@@ -3,24 +3,28 @@ import { service } from '@ember/service';
 import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { dropTask } from 'ember-concurrency';
-import { validatable, Length, NotBlank } from 'ilios-common/decorators/validation';
 import { findBy } from 'ilios-common/utils/array-helpers';
 import { TrackedAsyncData } from 'ember-async-data';
+import YupValidations from 'ilios-common/classes/yup-validations';
+import { string } from 'yup';
 
-@validatable
 export default class NewSessionComponent extends Component {
   @service store;
 
-  @NotBlank() @Length(3, 200) @tracked title;
+  @tracked title;
   @tracked selectedSessionTypeId;
 
+  validations = new YupValidations(this, {
+    title: string().required().min(3).max(200),
+  });
+
   @cached
-  get hasErrorForTitleData() {
-    return new TrackedAsyncData(this.hasErrorFor('title'));
+  get validationData() {
+    return new TrackedAsyncData(this.validations.validate());
   }
 
   get hasErrorForTitle() {
-    return this.hasErrorForTitleData.isResolved ? this.hasErrorForTitleData.value : false;
+    return this.validationData.isResolved ? this.validations.errors.title : false;
   }
 
   get activeSessionTypes() {
@@ -49,12 +53,12 @@ export default class NewSessionComponent extends Component {
   }
 
   saveNewSession = dropTask(async () => {
-    this.addErrorDisplayFor('title');
-    const isValid = await this.isValid();
+    this.validations.addErrorDisplayFor('title');
+    const isValid = await this.validations.validate();
     if (!isValid) {
       return false;
     }
-    this.removeErrorDisplayFor('title');
+    this.validations.removeErrorDisplayFor('title');
     const session = this.store.createRecord('session', {
       title: this.title,
       sessionType: this.selectedSessionType,
