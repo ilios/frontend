@@ -93,7 +93,7 @@
       grid-area: nav;
       @include m.for-laptop-and-up {
         display: block;
-        z-index: 5;
+        z-index: 0;
       }
     }
   }
