@@ -6,7 +6,7 @@ import { service } from '@ember/service';
 import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { TrackedAsyncData } from 'ember-async-data';
-import { findById, mapBy, uniqueById } from 'ilios-common/utils/array-helpers';
+import { findById, mapBy, sortBy, uniqueById } from 'ilios-common/utils/array-helpers';
 
 export default class CourseVisualizeVocabulariesGraph extends Component {
   @service router;
@@ -40,7 +40,7 @@ export default class CourseVisualizeVocabulariesGraph extends Component {
     return this.data.map((obj) => {
       const rhett = {};
       rhett.minutes = obj.data;
-      rhett.sessions = obj.meta.sessions;
+      rhett.sessions = sortBy(obj.meta.sessions, 'title');
       rhett.vocabulary = obj.meta.vocabulary;
       rhett.vocabularyTitle = obj.meta.vocabulary.title;
       rhett.sessionTitles = mapBy(rhett.sessions, 'title').join(', ');

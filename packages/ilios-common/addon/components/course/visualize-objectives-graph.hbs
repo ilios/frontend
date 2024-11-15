@@ -51,7 +51,7 @@
         </ul>
       </div>
     {{/if}}
-    {{#if (and (not @isIcon) @showDataTable)}}
+    {{#if (and (not @isIcon) this.hasData @showDataTable)}}
       <div class="data-table" data-test-data-table>
         <table>
           <thead>
