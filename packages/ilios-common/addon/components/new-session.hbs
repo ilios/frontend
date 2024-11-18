@@ -18,7 +18,7 @@
           {{on "input" this.changeTitle}}
           {{on "keyup" (fn this.validations.addErrorDisplayFor "title")}}
           {{on "keyup" this.keyboard}}
-          class={{if this.hasErrorForTitle "has-error"}}
+          class={{if this.validations.errors.title "has-error"}}
           disabled={{this.saveNewSession.isRunning}}
           data-test-title
         >

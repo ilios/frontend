@@ -1,10 +1,9 @@
 import Component from '@glimmer/component';
 import { service } from '@ember/service';
-import { cached, tracked } from '@glimmer/tracking';
+import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { dropTask } from 'ember-concurrency';
 import { findBy } from 'ilios-common/utils/array-helpers';
-import { TrackedAsyncData } from 'ember-async-data';
 import YupValidations from 'ilios-common/classes/yup-validations';
 import { string } from 'yup';
 
@@ -17,15 +16,6 @@ export default class NewSessionComponent extends Component {
   validations = new YupValidations(this, {
     title: string().required().min(3).max(200),
   });
-
-  @cached
-  get validationData() {
-    return new TrackedAsyncData(this.validations.validate());
-  }
-
-  get hasErrorForTitle() {
-    return this.validationData.isResolved ? this.validations.errors.title : false;
-  }
 
   get activeSessionTypes() {
     return this.args.sessionTypes.filter((sessionType) => sessionType.active);

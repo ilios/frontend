@@ -60,21 +60,18 @@ export default class YupValidations {
     }
   }
 
-  async validateAndGetErrors() {
-    await this.validate();
-    return this.errors;
-  }
-
   addErrorDisplaysFor = (fields) => {
     fields.forEach((field) => this.addErrorDisplayFor(field));
   };
 
   addErrorDisplayFor = (field) => {
+    this.validate();
     if (!this.visibleErrors.includes(field)) {
       this.visibleErrors = [...this.visibleErrors, field];
     }
   };
   addErrorDisplayForAllFields = () => {
+    this.validate();
     this.showAllErrors = true;
   };
   clearErrorDisplay = () => {
