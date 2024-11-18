@@ -285,7 +285,7 @@ export default class ReportsNewSubjectComponent extends Component {
         .map((item) => item.label)
         .sort()[0];
       const firstPrepositionalObject = this.fullPrepositionalObjectList.filter(
-        (item) => item.label == firstPrepositionalObjectLabel,
+        (item) => item.label === firstPrepositionalObjectLabel,
       )[0].value;
 
       this.changePrepositionalObject(firstPrepositionalObject);
