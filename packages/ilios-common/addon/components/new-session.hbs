@@ -22,7 +22,10 @@
           disabled={{this.saveNewSession.isRunning}}
           data-test-title
         >
-        <YupValidationMessage @messages={{this.validations.errors.title}} />
+        <YupValidationMessage
+          @description={{t 'general.title'}}
+          @validationErrors={{this.validations.errors.title}}
+        />
       </div>
       <div class="item">
         <label for="session-type-{{templateId}}">

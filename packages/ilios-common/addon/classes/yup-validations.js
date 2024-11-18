@@ -1,6 +1,6 @@
 import { tracked } from '@glimmer/tracking';
 import { getProperties } from '@ember/object';
-import { object } from 'yup';
+import { object, setLocale } from 'yup';
 
 /**
  * Started with: https://mainmatter.com/blog/2021/12/08/validations-in-ember-apps/
@@ -25,9 +25,9 @@ export default class YupValidations {
       const key = validationError.path;
 
       if (!acc[key]) {
-        acc[key] = [validationError.message];
+        acc[key] = [validationError];
       } else {
-        acc[key].push(validationError.message);
+        acc[key].push(validationError);
       }
 
       return acc;
@@ -91,4 +91,48 @@ export default class YupValidations {
   #validationProperties() {
     return getProperties(this.context, ...Object.keys(this.shape));
   }
+}
+//call this function to set the error messages and their locale one time when this file is loaded
+setupErrorMessages();
+
+function setupErrorMessages() {
+  setLocale({
+    mixed: {
+      required: required(),
+    },
+    string: {
+      min: min(['min']),
+      max: max(['max']),
+    },
+  });
+}
+
+function required() {
+  return (validationParams) => {
+    return {
+      path: validationParams.path,
+      messageKey: 'errors.blank',
+      values: [],
+    };
+  };
+}
+
+function max(localeValues = []) {
+  return (validationParams) => {
+    return {
+      path: validationParams.path,
+      messageKey: 'errors.tooLong',
+      values: getProperties(validationParams, ...localeValues),
+    };
+  };
+}
+
+function min(localeValues = []) {
+  return (validationParams) => {
+    return {
+      path: validationParams.path,
+      messageKey: 'errors.tooShort',
+      values: getProperties(validationParams, ...localeValues),
+    };
+  };
 }
