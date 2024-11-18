@@ -88,11 +88,7 @@ export default class ReportsListComponent extends Component {
   }
 
   get decoratedReports() {
-    if (!this.subjectReportObjects?.isResolved) {
-      return [];
-    }
-
-    return this.subjectReportObjects.value;
+    return this.subjectReportObjects?.isResolved ? this.subjectReportObjects.value : [];
   }
 
   get newReport() {
@@ -103,15 +99,11 @@ export default class ReportsListComponent extends Component {
     return false;
   }
 
-  get subjectReportsFilteredByTitle() {
+  get filteredReports() {
     const filterTitle = this.args.titleFilter?.trim().toLowerCase() ?? '';
     return this.decoratedReports.filter(({ title }) =>
       title.trim().toLowerCase().includes(filterTitle),
     );
-  }
-
-  get filteredReports() {
-    return this.subjectReportsFilteredByTitle;
   }
 
   saveNewSubjectReport = dropTask(async (report) => {
