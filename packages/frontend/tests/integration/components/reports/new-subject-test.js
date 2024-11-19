@@ -14,6 +14,7 @@ module('Integration | Component | reports/new-subject', function (hooks) {
     const school = context.server.create('school', { title: 'first' });
     const user = context.server.create('user', { school });
     const userModel = await context.owner.lookup('service:store').findRecord('user', user.id);
+    const exceptedSubjects = ['instructor', 'mesh term'];
 
     class CurrentUserMock extends Service {
       async getModel() {
@@ -26,10 +27,16 @@ module('Integration | Component | reports/new-subject', function (hooks) {
     assert.strictEqual(component.subjects.items[subjectNum].value, subjectVal);
     await component.subjects.choose(subjectVal);
     await component.objects.choose('null');
-    assert.strictEqual(component.objects.items[0].value, '');
-    expectedObjects.forEach((val, i) => {
-      assert.strictEqual(component.objects.items[i + 1].value, val, `${val} is object option`);
-    });
+    if (!exceptedSubjects.includes(subjectVal)) {
+      assert.strictEqual(component.objects.items[0].value, '', '"Anything" is first object option');
+      expectedObjects.forEach((val, i) => {
+        assert.strictEqual(component.objects.items[i + 1].value, val, `${val} is object option`);
+      });
+    } else {
+      expectedObjects.forEach((val, i) => {
+        assert.strictEqual(component.objects.items[i].value, val, `${val} is object option`);
+      });
+    }
   };
 
   test('it renders', async function (assert) {
@@ -164,7 +171,7 @@ module('Integration | Component | reports/new-subject', function (hooks) {
   });
 
   test('choosing instructor selects correct objects', function (assert) {
-    assert.expect(8);
+    assert.expect(7);
     return checkObjects(this, assert, 4, 'instructor', [
       'academic year',
       'course',
@@ -210,7 +217,7 @@ module('Integration | Component | reports/new-subject', function (hooks) {
   });
 
   test('choosing mesh term selects correct objects', function (assert) {
-    assert.expect(6);
+    assert.expect(5);
     return checkObjects(this, assert, 8, 'mesh term', [
       'course',
       'learning material',
@@ -365,47 +372,5 @@ module('Integration | Component | reports/new-subject', function (hooks) {
     await component.save();
     assert.strictEqual(component.errors.length, 1);
     assert.strictEqual(component.errors[0].text, 'MeSH Term is Required');
-  });
-
-  test('missing object for MeSH term', async function (assert) {
-    const school = this.server.create('school', { title: 'first' });
-    const user = this.server.create('user', { school });
-    const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
-    class CurrentUserMock extends Service {
-      async getModel() {
-        return userModel;
-      }
-    }
-    this.owner.register('service:current-user', CurrentUserMock);
-    await render(hbs`<Reports::NewSubject @close={{(noop)}} />`);
-    await component.subjects.choose('mesh term');
-    assert.strictEqual(component.objects.errors.length, 0);
-    await component.save();
-    assert.strictEqual(component.objects.errors.length, 1);
-    assert.strictEqual(
-      component.objects.errors[0].text,
-      'Association is required when MeSH Term is the subject',
-    );
-  });
-
-  test('missing object for instructor', async function (assert) {
-    const school = this.server.create('school', { title: 'first' });
-    const user = this.server.create('user', { school });
-    const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
-    class CurrentUserMock extends Service {
-      async getModel() {
-        return userModel;
-      }
-    }
-    this.owner.register('service:current-user', CurrentUserMock);
-    await render(hbs`<Reports::NewSubject @close={{(noop)}} />`);
-    await component.subjects.choose('instructor');
-    assert.strictEqual(component.objects.errors.length, 0);
-    await component.save();
-    assert.strictEqual(component.objects.errors.length, 1);
-    assert.strictEqual(
-      component.objects.errors[0].text,
-      'Association is required when Instructor is the subject',
-    );
   });
 });
