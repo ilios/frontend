@@ -1,9 +1,4 @@
-<section
-  class="course-collapsed-objectives"
-  data-test-course-collapsed-objectives
-  {{did-insert (perform this.load)}}
-  {{did-update (perform this.load) @course.courseObjectives}}
->
+<section class="course-collapsed-objectives" data-test-course-collapsed-objectives>
   <div>
     <button
       class="title link-button"
@@ -12,11 +7,12 @@
       data-test-title
       {{on "click" @expand}}
     >
-      {{t "general.objectives"}} ({{get this.objectives "length"}})
+      {{t "general.objectives"}}
+      ({{this.objectives.length}})
       <FaIcon @icon="caret-right" />
     </button>
   </div>
-  {{#if this.load.lastSuccessful}}
+  {{#if this.objectives.length}}
     <div class="content">
       <table>
         <thead>
@@ -38,15 +34,10 @@
         <tbody>
           <tr>
             <td data-test-objective-count>
-              {{t "general.objectiveCount" count=(get this.objectives "length")}}
+              {{t "general.objectiveCount" count=this.objectives.length}}
             </td>
             <td class="text-middle text-center" rowspan="3" data-test-parent-status>
-              {{#if
-                (eq
-                  (get this.objectivesWithParents "length")
-                  (get this.objectives "length")
-                )
-              }}
+              {{#if (eq this.objectivesWithParents.length this.objectives.length)}}
                 <FaIcon @icon="circle" class="yes" />
               {{else if (gte (get this.objectivesWithParents "length") 1)}}
                 <FaIcon @icon="circle" class="maybe" />
@@ -55,12 +46,7 @@
               {{/if}}
             </td>
             <td class="text-middle text-center" rowspan="3" data-test-term-status>
-              {{#if
-                (eq
-                  (get this.objectivesWithTerms "length")
-                  (get this.objectives "length")
-                )
-              }}
+              {{#if (eq this.objectivesWithTerms.length this.objectives.length)}}
                 <FaIcon @icon="circle" class="yes" />
               {{else if (gte (get this.objectivesWithTerms "length") 1)}}
                 <FaIcon @icon="circle" class="maybe" />
@@ -69,12 +55,7 @@
               {{/if}}
             </td>
             <td class="text-middle text-center" rowspan="3" data-test-mesh-status>
-              {{#if
-                (eq
-                  (get this.objectivesWithMesh "length")
-                  (get this.objectives "length")
-                )
-              }}
+              {{#if (eq this.objectivesWithMesh.length this.objectives.length)}}
                 <FaIcon @icon="circle" class="yes" />
               {{else if (gte (get this.objectivesWithMesh "length") 1)}}
                 <FaIcon @icon="circle" class="maybe" />
@@ -85,26 +66,17 @@
           </tr>
           <tr>
             <td data-test-parent-count class="count">
-              {{t
-                  "general.parentCount"
-                  count=(get this.objectivesWithParents "length")
-              }}
+              {{t "general.parentCount" count=this.objectivesWithParents.length}}
             </td>
           </tr>
           <tr>
             <td data-test-term-count class="count">
-              {{t
-                "general.termCount"
-                count=(get this.objectivesWithTerms "length")
-              }}
+              {{t "general.termCount" count=this.objectivesWithTerms.length}}
             </td>
           </tr>
           <tr>
             <td data-test-mesh-count class="count">
-              {{t
-                "general.meshCount"
-                count=(get this.objectivesWithMesh "length")
-              }}
+              {{t "general.meshCount" count=this.objectivesWithMesh.length}}
             </td>
           </tr>
         </tbody>

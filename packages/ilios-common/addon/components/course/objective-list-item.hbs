@@ -1,9 +1,10 @@
 <div
   id="objective-{{@courseObjective.id}}"
-  class="grid-row objective-row{{if this.showRemoveConfirmation " confirm-removal"}}{{if this.highlightSave.isRunning " highlight-ok"}}{{if this.isManaging " is-managing"}}"
+  class="grid-row objective-row{{if this.showRemoveConfirmation ' confirm-removal'}}{{if
+      this.highlightSave.isRunning
+      ' highlight-ok'
+    }}{{if this.isManaging ' is-managing'}}"
   data-test-course-objective-list-item
-  {{did-insert this.load @courseObjective}}
-  {{did-update this.load @courseObjective}}
 >
   <div class="description grid-item" data-test-description>
     {{#if (and @editable (not this.isManaging) (not this.showRemoveConfirmation))}}
@@ -14,7 +15,11 @@
         @save={{perform this.saveTitleChanges}}
         @close={{this.revertTitleChanges}}
       >
-        <HtmlEditor @content={{@courseObjective.title}} @update={{this.changeTitle}} @autofocus={{true}} />
+        <HtmlEditor
+          @content={{@courseObjective.title}}
+          @update={{this.changeTitle}}
+          @autofocus={{true}}
+        />
         <ValidationError @validatable={{this}} @property="title" />
       </EditableField>
     {{else}}
@@ -32,13 +37,13 @@
   />
 
   <ObjectiveListItemTerms
-      @subject={{@courseObjective}}
-      @editable={{and @editable (not this.isManaging) (not this.showRemoveConfirmation)}}
-      @manage={{perform this.manageTerms}}
-      @isManaging={{this.isManagingTerms}}
-      @save={{perform this.saveTerms}}
-      @isSaving={{this.saveTerms.isRunning}}
-      @cancel={{this.cancel}}
+    @subject={{@courseObjective}}
+    @editable={{and @editable (not this.isManaging) (not this.showRemoveConfirmation)}}
+    @manage={{perform this.manageTerms}}
+    @isManaging={{this.isManagingTerms}}
+    @save={{perform this.saveTerms}}
+    @isSaving={{this.saveTerms.isRunning}}
+    @cancel={{this.cancel}}
   />
 
   <Course::ObjectiveListItemDescriptors
@@ -52,7 +57,14 @@
   />
 
   <div class="actions grid-item" data-test-actions>
-    {{#if (and @editable (not this.isManaging) (not this.showRemoveConfirmation) (not this.showRemoveConfirmation))}}
+    {{#if
+      (and
+        @editable
+        (not this.isManaging)
+        (not this.showRemoveConfirmation)
+        (not this.showRemoveConfirmation)
+      )
+    }}
       <button
         class="link-button"
         type="button"

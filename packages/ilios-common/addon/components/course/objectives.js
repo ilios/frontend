@@ -1,9 +1,10 @@
 import Component from '@glimmer/component';
 import { service } from '@ember/service';
-import { tracked } from '@glimmer/tracking';
-import { dropTask, restartableTask } from 'ember-concurrency';
+import { cached, tracked } from '@glimmer/tracking';
+import { dropTask } from 'ember-concurrency';
 import { action } from '@ember/object';
 import { mapBy } from 'ilios-common/utils/array-helpers';
+import { TrackedAsyncData } from 'ember-async-data';
 
 export default class CourseObjectivesComponent extends Component {
   @service store;
@@ -11,23 +12,19 @@ export default class CourseObjectivesComponent extends Component {
 
   @tracked newObjectiveEditorOn = false;
   @tracked newObjectiveTitle;
-  @tracked objectivesRelationship;
 
   get showCollapsible() {
-    return this.hasObjectives && !this.isManaging;
+    return this.objectives.length > 0 && !this.isManaging;
   }
 
-  get hasObjectives() {
-    return this.objectiveCount > 0;
+  @cached
+  get objectivesData() {
+    return new TrackedAsyncData(this.args.course.courseObjectives);
   }
 
-  get objectiveCount() {
-    return this.objectivesRelationship ? this.objectivesRelationship.length : 0;
+  get objectives() {
+    return this.objectivesData.isResolved ? this.objectivesData.value : [];
   }
-
-  load = restartableTask(async () => {
-    this.objectivesRelationship = await this.args.course.courseObjectives;
-  });
 
   saveNewObjective = dropTask(async (title) => {
     const newCourseObjective = this.store.createRecord('course-objective');
@@ -57,7 +54,7 @@ export default class CourseObjectivesComponent extends Component {
   }
   @action
   collapse() {
-    if (this.hasObjectives) {
+    if (this.objectives.length > 0) {
       this.args.collapse();
     }
   }
