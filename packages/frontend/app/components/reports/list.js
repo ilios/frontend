@@ -10,9 +10,7 @@ export default class ReportsListComponent extends Component {
   @service currentUser;
   @service reporting;
 
-  @tracked showNewReportForm;
   @tracked newSubjectReport;
-  @tracked runningSubjectReport;
   @tracked reportYear;
 
   userModel = new TrackedAsyncData(this.currentUser.getModel());
@@ -107,7 +105,7 @@ export default class ReportsListComponent extends Component {
   }
 
   saveNewSubjectReport = dropTask(async (report) => {
-    this.runningSubjectReport = null;
+    this.args.setRunningSubjectReport(null);
     this.newSubjectReport = await report.save();
     this.showNewReportForm = false;
   });
@@ -120,7 +118,7 @@ export default class ReportsListComponent extends Component {
   runSubjectReport = restartableTask(
     async (subject, prepositionalObject, prepositionalObjectTableRowId, school) => {
       this.reportYear = null;
-      this.runningSubjectReport = {
+      this.args.setRunningSubjectReport({
         subject,
         prepositionalObject,
         prepositionalObjectTableRowId,
@@ -131,13 +129,13 @@ export default class ReportsListComponent extends Component {
           prepositionalObjectTableRowId,
           school,
         ),
-      };
+      });
     },
   );
 
   @action
   toggleNewReportForm() {
-    this.runningSubjectReport = null;
-    this.showNewReportForm = !this.showNewReportForm;
+    this.args.setRunningSubjectReport(null);
+    this.args.toggleNewReportForm;
   }
 }

@@ -344,6 +344,9 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
   test('run subject report', async function (assert) {
     assert.expect(5);
     await page.visit();
+
+    console.log('currentURL()', page);
+
     await page.root.list.toggleNewSubjectReportForm();
     await page.root.list.newSubject.schools.choose('1');
     await page.root.list.newSubject.subjects.choose('session');
@@ -369,7 +372,7 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
     });
     await page.root.list.newSubject.run();
     await percySnapshot(assert);
-    assert.strictEqual(currentURL(), '/reports');
+    assert.strictEqual(currentURL(), '/reports?showNewReportForm=true');
     assert.strictEqual(
       page.root.results.description,
       'This report shows all Sessions associated with Course "course 0" (2015) in school 0.',
