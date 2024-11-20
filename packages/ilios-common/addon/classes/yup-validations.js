@@ -51,12 +51,12 @@ export default class YupValidations {
   runValidator = restartableTask(async () => {
     //wait for user input to stop
     await timeout(DEBOUNCE_MS);
-    const rhett = await this.validate();
+    const rhett = await this.#validate();
     //return the result of the validation and not the promise itself
     return rhett;
   });
 
-  async validate() {
+  async #validate() {
     try {
       await this.schema.validate(this.#validationProperties(), {
         abortEarly: false,
@@ -67,6 +67,10 @@ export default class YupValidations {
       this.error = error;
       return false;
     }
+  }
+
+  async isValid() {
+    return (await this.#validate()) === true;
   }
 
   addErrorDisplaysFor = (fields) => {

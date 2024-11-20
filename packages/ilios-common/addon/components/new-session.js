@@ -44,7 +44,7 @@ export default class NewSessionComponent extends Component {
 
   saveNewSession = dropTask(async () => {
     this.validations.addErrorDisplayForAllFields();
-    if (!(await this.validations.validate())) {
+    if (!(await this.validations.isValid())) {
       return false;
     }
     this.validations.clearErrorDisplay();
