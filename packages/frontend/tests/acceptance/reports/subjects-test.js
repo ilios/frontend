@@ -344,9 +344,6 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
   test('run subject report', async function (assert) {
     assert.expect(5);
     await page.visit();
-
-    console.log('currentURL()', page);
-
     await page.root.list.toggleNewSubjectReportForm();
     await page.root.list.newSubject.schools.choose('1');
     await page.root.list.newSubject.subjects.choose('session');
