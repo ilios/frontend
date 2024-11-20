@@ -43,12 +43,11 @@ export default class NewSessionComponent extends Component {
   }
 
   saveNewSession = dropTask(async () => {
-    this.validations.addErrorDisplayFor('title');
-    const isValid = await this.validations.validate();
-    if (!isValid) {
+    this.validations.addErrorDisplayForAllFields();
+    if (!(await this.validations.validate())) {
       return false;
     }
-    this.validations.removeErrorDisplayFor('title');
+    this.validations.clearErrorDisplay();
     const session = this.store.createRecord('session', {
       title: this.title,
       sessionType: this.selectedSessionType,
