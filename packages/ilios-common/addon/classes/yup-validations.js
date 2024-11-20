@@ -1,6 +1,9 @@
 import { tracked } from '@glimmer/tracking';
 import { getProperties } from '@ember/object';
 import { object, setLocale } from 'yup';
+import { didCancel, restartableTask, timeout } from 'ember-concurrency';
+
+const DEBOUNCE_MS = 250;
 
 /**
  * Started with: https://mainmatter.com/blog/2021/12/08/validations-in-ember-apps/
@@ -45,18 +48,30 @@ export default class YupValidations {
     return getProperties(this.errorsByKey, ...this.visibleErrors);
   }
 
-  async validate() {
+  validator = restartableTask(async () => {
     try {
+      await timeout(DEBOUNCE_MS); //wait for user input to stop
       await this.schema.validate(this.#validationProperties(), {
         abortEarly: false,
       });
-
       this.error = null;
       return true;
     } catch (error) {
       this.error = error;
-
       return false;
+    }
+  });
+
+  async validate() {
+    //Wrap the task in a try/catch to prevent the task from throwing an error when it's debounced
+    try {
+      const isValid = await this.validator.perform();
+      return isValid;
+    } catch (e) {
+      if (!didCancel(e)) {
+        // re-throw the non-cancelation error
+        throw e;
+      }
     }
   }
 
