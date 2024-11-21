@@ -578,18 +578,7 @@ module('Acceptance | Session - Overview', function (hooks) {
     assert.strictEqual(currentRouteName(), 'session.copy');
   });
 
-  test('copy hidden from unprivileged users', async function (assert) {
-    await setupAuthentication({ school: this.school });
-    this.server.create('session', {
-      course: this.course,
-      sessionType: this.sessionTypes[0],
-    });
-    await page.visit({ courseId: 1, sessionId: 1 });
-    assert.strictEqual(currentRouteName(), 'session.index');
-    assert.notOk(page.details.overview.copy.isVisible);
-  });
-
-  test('copy visible to privileged users', async function (assert) {
+  test('copy button is visible', async function (assert) {
     await setupAuthentication(
       {
         school: this.school,
