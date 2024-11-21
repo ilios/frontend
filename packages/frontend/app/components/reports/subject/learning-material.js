@@ -11,6 +11,8 @@ export default class ReportsSubjectLearningMaterialComponent extends Component {
   @service intl;
 
   resultsLengthMax = 200;
+  controller = new AbortController();
+  signal = this.controller.signal;
 
   @cached
   get allLearningMaterialsData() {
@@ -68,7 +70,19 @@ export default class ReportsSubjectLearningMaterialComponent extends Component {
       prepositionalObjectTableRowId,
       school,
     );
-    const result = await this.graphql.find('learningMaterials', filters, 'id, title');
+
+    if (this.graphql.findTask.isRunning) {
+      this.controller.abort('running query canceled so new one could run');
+    }
+    this.controller = new AbortController();
+    this.signal = this.controller.signal;
+
+    const result = await this.graphql.findTask.perform(
+      'learningMaterials',
+      filters,
+      'id, title',
+      this.signal,
+    );
     return result.data.learningMaterials.map(({ title }) => title);
   }
 
