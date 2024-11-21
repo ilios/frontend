@@ -5,6 +5,8 @@ import { findById } from 'ilios-common/utils/array-helpers';
 export default class SessionRoute extends Route {
   @service dataLoader;
   @service session;
+  @service currentUser;
+  @service router;
 
   async model(params) {
     const course = this.modelFor('course');
@@ -15,5 +17,8 @@ export default class SessionRoute extends Route {
 
   beforeModel(transition) {
     this.session.requireAuthentication(transition, 'login');
+    if (!this.currentUser.performsNonLearnerFunction) {
+      this.router.replaceWith('/four-oh-four');
+    }
   }
 }

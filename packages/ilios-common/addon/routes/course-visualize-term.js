@@ -5,6 +5,8 @@ import { all, map } from 'rsvp';
 export default class CourseVisualizeTermRoute extends Route {
   @service session;
   @service store;
+  @service currentUser;
+  @service router;
 
   titleToken = 'general.coursesAndSessions';
 
@@ -26,5 +28,8 @@ export default class CourseVisualizeTermRoute extends Route {
 
   beforeModel(transition) {
     this.session.requireAuthentication(transition, 'login');
+    if (!this.currentUser.performsNonLearnerFunction) {
+      this.router.replaceWith('/four-oh-four');
+    }
   }
 }

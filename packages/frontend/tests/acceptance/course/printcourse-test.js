@@ -8,6 +8,7 @@ module('Acceptance | Course - Print Course', function (hooks) {
   setupApplicationTest(hooks);
   hooks.beforeEach(async function () {
     this.school = this.server.create('school');
+    await setupAuthentication({ school: this.school }, true);
     const program = this.server.create('program', { school: this.school });
     const programYear = this.server.create('program-year', { program });
     this.server.create('academic-year');
@@ -60,7 +61,6 @@ module('Acceptance | Course - Print Course', function (hooks) {
 
   test('print course header', async function (assert) {
     assert.expect(2);
-    await setupAuthentication({ school: this.school });
     await visit('/course/1/print');
     await percySnapshot(assert);
     assert.dom('[data-test-course-header] [data-test-course-title]').hasText('Back to the Future');
@@ -68,7 +68,6 @@ module('Acceptance | Course - Print Course', function (hooks) {
   });
 
   test('course year shows as range if applicable by configuration', async function (assert) {
-    await setupAuthentication({ school: this.school });
     const { apiVersion } = this.owner.resolveRegistration('config:environment');
     this.server.get('application/config', function () {
       return {
@@ -83,13 +82,11 @@ module('Acceptance | Course - Print Course', function (hooks) {
   });
 
   test('print course mesh terms', async function (assert) {
-    await setupAuthentication({ school: this.school });
     await visit('/course/1/print');
     assert.dom('[data-test-course-mesh] ul li').hasText('Flux Capacitor');
   });
 
   test('print course learning materials', async function (assert) {
-    await setupAuthentication({ school: this.school });
     await visit('/course/1/print');
 
     const values = await findAll('[data-test-course-learningmaterials] .content tbody tr td');
@@ -104,7 +101,6 @@ module('Acceptance | Course - Print Course', function (hooks) {
   });
 
   test('test print unpublished sessions for elevated privileges', async function (assert) {
-    await setupAuthentication({ school: this.school }, true);
     this.server.create('session', {
       course: this.course,
       published: false,
@@ -129,34 +125,7 @@ module('Acceptance | Course - Print Course', function (hooks) {
     assert.dom(sessionHeaders[2]).hasText('session 2');
   });
 
-  test('test does not print unpublished sessions for unprivileged users', async function (assert) {
-    await setupAuthentication({ school: this.school });
-    this.server.create('session', {
-      course: this.course,
-      published: false,
-      publishedAsTbd: false,
-    });
-    this.server.create('session', {
-      course: this.course,
-      published: true,
-      publishedAsTbd: false,
-    });
-    this.server.create('session', {
-      course: this.course,
-      published: true,
-      publishedAsTbd: true,
-    });
-    await visit('/course/1/print?unpublished=true');
-
-    const sessionHeaders = await findAll('[data-test-session-header] h2');
-    assert.strictEqual(sessionHeaders.length, 2);
-    assert.dom(sessionHeaders[0]).hasText('session 1');
-    assert.dom(sessionHeaders[1]).hasText('session 2');
-  });
-
   test('test print ILM details', async function (assert) {
-    await setupAuthentication({ school: this.school });
-
     this.server.create('session', {
       course: this.course,
       published: true,
@@ -185,8 +154,6 @@ module('Acceptance | Course - Print Course', function (hooks) {
   });
 
   test('test print session objectives', async function (assert) {
-    await setupAuthentication({ school: this.school });
-
     const session = this.server.create('session', {
       courseId: 1,
       published: true,
@@ -235,8 +202,6 @@ module('Acceptance | Course - Print Course', function (hooks) {
   });
 
   test('test print course objectives', async function (assert) {
-    await setupAuthentication({ school: this.school });
-
     const competency = this.server.create('competency', {
       school: this.school,
       title: 'Competency 1',
@@ -284,7 +249,6 @@ module('Acceptance | Course - Print Course', function (hooks) {
   });
 
   test('test print session learning materials', async function (assert) {
-    await setupAuthentication({ school: this.school });
     const session = this.server.create('session', {
       course: this.course,
       published: true,
@@ -312,7 +276,6 @@ module('Acceptance | Course - Print Course', function (hooks) {
   });
 
   test('test print session vocabulary terms', async function (assert) {
-    await setupAuthentication({ school: this.school });
     const session = this.server.create('session', {
       course: this.course,
       published: true,

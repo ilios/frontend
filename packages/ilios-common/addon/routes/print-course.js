@@ -5,6 +5,7 @@ export default class PrintCourseRoute extends Route {
   @service currentUser;
   @service dataLoader;
   @service session;
+  @service router;
 
   titleToken = 'general.coursesAndSessions';
   canViewUnpublished = false;
@@ -33,5 +34,8 @@ export default class PrintCourseRoute extends Route {
 
   beforeModel(transition) {
     this.session.requireAuthentication(transition, 'login');
+    if (!this.currentUser.performsNonLearnerFunction) {
+      this.router.replaceWith('/four-oh-four');
+    }
   }
 }

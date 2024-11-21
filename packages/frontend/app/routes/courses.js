@@ -7,6 +7,7 @@ export default class CoursesRoute extends Route {
   @service store;
   @service dataLoader;
   @service session;
+  @service router;
 
   queryParams = {
     titleFilter: {
@@ -16,6 +17,11 @@ export default class CoursesRoute extends Route {
 
   beforeModel(transition) {
     this.session.requireAuthentication(transition, 'login');
+    if (!this.currentUser.performsNonLearnerFunction) {
+      // Slash on the route name is necessary here due to this bug:
+      // https://github.com/emberjs/ember.js/issues/12945
+      this.router.replaceWith('/four-oh-four');
+    }
   }
 
   async model() {

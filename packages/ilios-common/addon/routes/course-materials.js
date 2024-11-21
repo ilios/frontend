@@ -6,6 +6,8 @@ import { mapBy } from 'ilios-common/utils/array-helpers';
 export default class CourseMaterialsRoute extends Route {
   @service session;
   @service dataLoader;
+  @service currentUser;
+  @service router;
 
   titleToken = 'general.coursesAndSessions';
 
@@ -22,6 +24,9 @@ export default class CourseMaterialsRoute extends Route {
 
   beforeModel(transition) {
     this.session.requireAuthentication(transition, 'login');
+    if (!this.currentUser.performsNonLearnerFunction) {
+      this.router.replaceWith('/four-oh-four');
+    }
   }
 
   async loadCourseLearningMaterials(course) {
