@@ -13,7 +13,7 @@ module('Acceptance | Instructor Group', function (hooks) {
 
   hooks.beforeEach(async function () {
     this.school = this.server.create('school');
-    this.user = await setupAuthentication({ school: this.school });
+    this.user = await setupAuthentication({ school: this.school }, true);
     const users = this.server.createList('user', 4);
     const courses = this.server.createList('course', 2, {
       school: this.school,
