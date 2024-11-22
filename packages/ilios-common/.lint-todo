@@ -1,4 +1,3 @@
-add|ember-template-lint|no-at-ember-render-modifiers|5|2|5|2|fb439ee6b510cea24e2b47eda775aee573be6e1e|1731542400000|1762646400000|1793750400000|addon/components/api-version-notice.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|25|6|25|6|1ef231a97c0ec761eaafb3e76093515e5523ff27|1731542400000|1762646400000|1793750400000|addon/components/choose-material-type.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|26|6|26|6|df94e6558ff62dea69f6f656f668f29b56bcc378|1731542400000|1762646400000|1793750400000|addon/components/choose-material-type.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|7|2|7|2|1a2522cd1202904fb09a6e811dec6b46d8189ab3|1731542400000|1762646400000|1793750400000|addon/components/daily-calendar-event.hbs

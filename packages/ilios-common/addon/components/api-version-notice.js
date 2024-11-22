@@ -11,6 +11,11 @@ export default class ApiVersionNoticeComponent extends Component {
   @tracked countdownToUpdate = null;
   @tracked showReloadButton = false;
 
+  constructor() {
+    super(...arguments);
+    this.check.perform();
+  }
+
   reload() {
     window.location.reload();
   }

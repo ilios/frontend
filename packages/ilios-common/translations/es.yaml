@@ -14,7 +14,7 @@ general:
   allMaterials: Todos los Materiales
   allWeeks: Todas las Semanas
   apiVersionMismatch: Incompatibilidad de versión de API
-  apiVersionMismatchDetails: "Este interfaz de usuario no corresponde a la versión del API con el cual se comunica. Por favor notifique a un administrador o el dueño técnico del sistema con respecto a este error '<em>'inmediatamente'</em>', no puede trabajar con Ilios hasta que esto ha sido resuelto"
+  apiVersionMismatchDetails: "Por lo general, se trata de un error temporal de su navegador; Ilios está en modo de solo lectura hasta que se resuelva. Si la actualización no soluciona el problema, notifique a un administrador o al propietario técnico del sistema sobre este error. También puede probar con otro navegador."
   assignedTerms: Términos asignados
   associatedGroups: Grupos Associados
   attendanceIs_Required_: "Se '<strong><em>'require'</em></strong>' asistencia"
