@@ -32,6 +32,8 @@ module('Integration | Component | reports/list', function (hooks) {
   @setSortReportsBy={{(noop)}}
   @titleFilter=''
   @changeTitleFilter={{(noop)}}
+  @showNewReportForm={{false}}
+  @toggleNewReportForm={{(noop)}}
 />`);
 
     assert.strictEqual(component.table.reports.length, 2);
@@ -48,17 +50,26 @@ module('Integration | Component | reports/list', function (hooks) {
   @setSortReportsBy={{(noop)}}
   @titleFilter=''
   @changeTitleFilter={{(noop)}}
+  @showNewReportForm={{false}}
+  @toggleNewReportForm={{(noop)}}
 />`);
     assert.notOk(component.table.isVisible);
     a11yAudit(this.element);
   });
 
   test('toggle new report form', async function (assert) {
+    this.set('showNewReportForm', false);
+    this.set('toggleNewReportForm', () => {
+      this.set('showNewReportForm', !this.showNewReportForm);
+    });
+
     await render(hbs`<Reports::Root
   @sortReportsBy='title'
   @setSortReportsBy={{(noop)}}
   @titleFilter=''
   @changeTitleFilter={{(noop)}}
+  @showNewReportForm={{this.showNewReportForm}}
+  @toggleNewReportForm={{this.toggleNewReportForm}}
 />`);
     assert.notOk(component.newSubject.isVisible);
     await component.toggleNewSubjectReportForm();

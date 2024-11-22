@@ -17,18 +17,18 @@
     </h2>
     <div class="actions">
       <ExpandCollapseButton
-        @value={{this.showNewReportForm}}
-        @action={{this.toggleNewReportForm}}
+        @value={{@showNewReportForm}}
+        @action={{@toggleNewReportForm}}
         @expandButtonLabel={{t "general.newReport"}}
         @collapseButtonLabel={{t "general.close"}}
       />
     </div>
   </div>
   <section class="new">
-    {{#if this.showNewReportForm}}
+    {{#if @showNewReportForm}}
       <Reports::NewSubject
         @save={{perform this.saveNewSubjectReport}}
-        @close={{this.toggleNewReportForm}}
+        @close={{@toggleNewReportForm}}
         @run={{perform this.runSubjectReport}}
       />
     {{/if}}
@@ -47,13 +47,13 @@
       </div>
     {{/if}}
   </section>
-  {{#if this.runningSubjectReport}}
+  {{#if @runningSubjectReport}}
     <Reports::SubjectResults
-      @subject={{this.runningSubjectReport.subject}}
-      @prepositionalObject={{this.runningSubjectReport.prepositionalObject}}
-      @prepositionalObjectTableRowId={{this.runningSubjectReport.prepositionalObjectTableRowId}}
-      @school={{this.runningSubjectReport.school}}
-      @description={{this.runningSubjectReport.description}}
+      @subject={{@runningSubjectReport.subject}}
+      @prepositionalObject={{@runningSubjectReport.prepositionalObject}}
+      @prepositionalObjectTableRowId={{@runningSubjectReport.prepositionalObjectTableRowId}}
+      @school={{@runningSubjectReport.school}}
+      @description={{@runningSubjectReport.description}}
       @year={{this.reportYear}}
       @changeYear={{set this "reportYear"}}
     />

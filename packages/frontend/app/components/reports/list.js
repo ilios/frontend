@@ -10,9 +10,7 @@ export default class ReportsListComponent extends Component {
   @service currentUser;
   @service reporting;
 
-  @tracked showNewReportForm;
   @tracked newSubjectReport;
-  @tracked runningSubjectReport;
   @tracked reportYear;
 
   userModel = new TrackedAsyncData(this.currentUser.getModel());
@@ -88,11 +86,7 @@ export default class ReportsListComponent extends Component {
   }
 
   get decoratedReports() {
-    if (!this.subjectReportObjects?.isResolved) {
-      return [];
-    }
-
-    return this.subjectReportObjects.value;
+    return this.subjectReportObjects?.isResolved ? this.subjectReportObjects.value : [];
   }
 
   get newReport() {
@@ -103,19 +97,15 @@ export default class ReportsListComponent extends Component {
     return false;
   }
 
-  get subjectReportsFilteredByTitle() {
+  get filteredReports() {
     const filterTitle = this.args.titleFilter?.trim().toLowerCase() ?? '';
     return this.decoratedReports.filter(({ title }) =>
       title.trim().toLowerCase().includes(filterTitle),
     );
   }
 
-  get filteredReports() {
-    return this.subjectReportsFilteredByTitle;
-  }
-
   saveNewSubjectReport = dropTask(async (report) => {
-    this.runningSubjectReport = null;
+    this.args.setRunningSubjectReport(null);
     this.newSubjectReport = await report.save();
     this.showNewReportForm = false;
   });
@@ -128,7 +118,7 @@ export default class ReportsListComponent extends Component {
   runSubjectReport = restartableTask(
     async (subject, prepositionalObject, prepositionalObjectTableRowId, school) => {
       this.reportYear = null;
-      this.runningSubjectReport = {
+      this.args.setRunningSubjectReport({
         subject,
         prepositionalObject,
         prepositionalObjectTableRowId,
@@ -139,13 +129,13 @@ export default class ReportsListComponent extends Component {
           prepositionalObjectTableRowId,
           school,
         ),
-      };
+      });
     },
   );
 
   @action
   toggleNewReportForm() {
-    this.runningSubjectReport = null;
-    this.showNewReportForm = !this.showNewReportForm;
+    this.args.setRunningSubjectReport(null);
+    this.args.toggleNewReportForm;
   }
 }
