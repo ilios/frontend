@@ -60,6 +60,7 @@ export default class ReportingService extends Service {
     prepositionalObjectTableRowId,
     school,
   ) {
+    console.log('ReportingService buildReportDescription', subject);
     try {
       const props = await this.getDescriptiveProperties(
         subject,
