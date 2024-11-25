@@ -133,6 +133,7 @@
       }
     }
 
+    .course-objective-list-item-parents,
     .session-objective-list-item-parents {
       p {
         @include font-size.font-size("base");

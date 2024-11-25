@@ -24,92 +24,76 @@
       <FaIcon @icon="arrow-rotate-left" />
     </button>
   {{else}}
-    <ul>
-      {{#each (sort-by "title" @parents) as |parent|}}
+    {{#if @parents}}
+      <FadeText
+        @text={{this.parents}}
+        @expanded={{@fadeTextExpanded}}
+        @onExpandAll={{@onExpandAllFadeText}}
+        as |displayText expand collapse updateTextDims shouldFade expanded|
+      >
         {{#if @editable}}
-          <li data-test-parent>
-            <FadeText
-              @text={{html-safe (remove-html-tags parent.title)}}
-              @expanded={{@fadeTextExpanded}}
-              @onExpandAll={{@onExpandAllFadeText}}
-              as |displayText expand collapse updateTextDims shouldFade expanded|
-            >
-              <button
-                type="button"
-                class="link-button"
-                {{on "click" @manage}}
-                data-test-manage
-              >
-                <div class="display-text-wrapper{{if shouldFade ' faded'}}">
-                  <div
-                    class="display-text"
-                    {{on-resize updateTextDims}}
-                  >
-                    {{displayText}}
-                  </div>
+          <span data-test-parent>
+            <button type="button" class="link-button" {{on "click" @manage}} data-test-manage>
+              <div class="display-text-wrapper{{if shouldFade ' faded'}}">
+                <div class="display-text" {{on-resize updateTextDims}}>
+                  {{displayText}}
                 </div>
-                {{#if @showIcon}}
-                  <FaIcon
-                    data-test-edit-icon
-                    @icon="pen-to-square"
-                    class="enabled"
-                  />
-                {{/if}}
-              </button>
-              {{#if shouldFade}}
-                <div
-                  class="fade-text-control"
-                  data-test-fade-text-control
-                  {{! template-lint-disable no-invalid-interactive}}
-                  {{on "click" @manage}}
-                >
-                  <button
-                    class="expand-text-button"
-                    type="button"
-                    aria-label={{t "general.expand"}}
-                    title={{t "general.expand"}}
-                    data-test-expand
-                    {{on "click" expand}}
-                  >
-                    <FaIcon @icon="angles-down" />
-                  </button>
-                </div>
-              {{else}}
-                {{#if expanded}}
-                  <button
-                    class="expand-text-button"
-                    aria-label={{t "general.collapse"}}
-                    title={{t "general.collapse"}}
-                    type="button"
-                    data-test-collapse
-                    {{on "click" collapse}}
-                  >
-                    <FaIcon @icon="angles-up" />
-                  </button>
-                {{/if}}
+              </div>
+              {{#if @showIcon}}
+                <FaIcon
+                  data-test-edit-icon
+                  @icon="pen-to-square"
+                  class="enabled"
+                />
               {{/if}}
-            </FadeText>
-          </li>
-        {{else}}
-          <li data-test-parent>
-            <FadeText
-              @text={{html-safe (remove-html-tags parent.title)}}
-              @expanded={{@fadeTextExpanded}}
-              @onExpandAll={{@onExpandAllFadeText}}
-            />
-          </li>
-        {{/if}}
-      {{else}}
-        <li>
-          {{#if @editable}}
-            <button type="button" {{on "click" @manage}} data-test-manage>
-              {{t "general.addNew"}}
             </button>
-          {{else}}
-            {{t "general.none"}}
+          </span>
+        {{else}}
+          <span data-test-parent>
+            {{html-safe (remove-html-tags displayText)}}
+          </span>
+        {{/if}}
+        {{#if shouldFade}}
+          <div
+            class="fade-text-control"
+            data-test-fade-text-control
+            {{! template-lint-disable no-invalid-interactive}}
+            {{on "click" @manage}}
+          >
+            <button
+              class="expand-text-button"
+              type="button"
+              aria-label={{t "general.expand"}}
+              title={{t "general.expand"}}
+              data-test-expand
+              {{on "click" expand}}
+            >
+              <FaIcon @icon="angles-down" />
+            </button>
+          </div>
+        {{else}}
+          {{#if expanded}}
+            <button
+              class="expand-text-button"
+              aria-label={{t "general.collapse"}}
+              title={{t "general.collapse"}}
+              type="button"
+              data-test-collapse
+              {{on "click" collapse}}
+            >
+              <FaIcon @icon="angles-up" />
+            </button>
           {{/if}}
-        </li>
-      {{/each}}
-    </ul>
+        {{/if}}
+      </FadeText>
+    {{else}}
+      {{#if @editable}}
+        <button type="button" {{on "click" @manage}} data-test-manage>
+          {{t "general.addNew"}}
+        </button>
+      {{else}}
+        {{t "general.none"}}
+      {{/if}}
+    {{/if}}
   {{/if}}
 </div>
