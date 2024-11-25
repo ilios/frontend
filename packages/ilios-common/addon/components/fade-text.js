@@ -13,6 +13,9 @@ export default class FadeTextComponent extends Component {
     if (!this.args.text) {
       return '';
     }
+    if (typeOf(this.args.text) == 'array') {
+      return this.args.text;
+    }
     if (typeOf(this.args.text) !== 'string') {
       return this.args.text.toString();
     }
@@ -20,6 +23,9 @@ export default class FadeTextComponent extends Component {
     return this.args.text;
   }
   get displayText() {
+    if (typeOf(this.text) == 'array') {
+      return new htmlSafe(this.text.join('<br />'));
+    }
     return new htmlSafe(this.text);
   }
 
@@ -49,13 +55,17 @@ export default class FadeTextComponent extends Component {
 
   @action
   expand(event) {
-    event.stopPropagation();
+    if (event) {
+      event.stopPropagation();
+    }
     this.args.onExpandAll(true);
   }
 
   @action
   collapse(event) {
-    event.stopPropagation();
+    if (event) {
+      event.stopPropagation();
+    }
     this.args.onExpandAll(false);
   }
 
