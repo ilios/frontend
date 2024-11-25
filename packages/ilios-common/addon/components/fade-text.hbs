@@ -1,10 +1,10 @@
 {{#if (has-block)}}
   <span class="fade-text" data-test-fade-text ...attributes>
-    {{yield this.displayText this.expand this.collapse this.updateTextDims this.isFaded this.expanded}}
+    {{yield this.displayText this.expand this.collapse this.updateTextDims this.shouldFade this.expanded}}
   </span>
 {{else}}
   <span class="fade-text" data-test-fade-text ...attributes>
-    <div class="display-text-wrapper{{if this.isFaded ' is-faded'}}">
+    <div class="display-text-wrapper{{if this.shouldFade ' faded'}}">
       <div
         class="display-text"
         {{on-resize this.updateTextDims}}
@@ -12,7 +12,7 @@
         {{this.displayText}}
       </div>
     </div>
-    {{#if this.isFaded}}
+    {{#if this.shouldFade}}
       <div class="fade-text-control" data-test-fade-text-control>
         <button
           class="expand-text-button"

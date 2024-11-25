@@ -32,7 +32,7 @@
               @text={{html-safe (remove-html-tags parent.title)}}
               @expanded={{@fadeTextExpanded}}
               @onExpandAll={{@onExpandAllFadeText}}
-              as |displayText expand collapse updateTextDims isFaded expanded|
+              as |displayText expand collapse updateTextDims shouldFade expanded|
             >
               <button
                 type="button"
@@ -40,7 +40,7 @@
                 {{on "click" @manage}}
                 data-test-manage
               >
-                <div class="display-text-wrapper{{if isFaded ' is-faded'}}">
+                <div class="display-text-wrapper{{if shouldFade ' faded'}}">
                   <div
                     class="display-text"
                     {{on-resize updateTextDims}}
@@ -56,7 +56,7 @@
                   />
                 {{/if}}
               </button>
-              {{#if isFaded}}
+              {{#if shouldFade}}
                 <div
                   class="fade-text-control"
                   data-test-fade-text-control

@@ -117,8 +117,8 @@ module('Integration | Component | editable field', function (hooks) {
     const text = `
       <p>A long list:</p><ol><li>One</li><li>two</li><li>Five!</li><li>Six</li><li>Seven but with extra text to make long</li><li>a</li><li>b</li><li>c</li><li>d</li><li>e</li><li>f</li><li>g</li><li>h</li><li>iii</li><li>Jjjjjj</li><li>k</li><li>lLLLLLLlll</li><li>mmmmmMMMMMmm</li><li>nnnnnOPE</li><li>ohno</li><li>pppppPowerbook</li></ol>
     `;
-    const fadedClass = 'is-faded';
-    const fadedSelector = '.is-faded';
+    const fadedClass = 'faded';
+    const fadedSelector = '.faded';
     this.set('value', text);
     this.set('fadeTextIsExpanded', false);
     this.set('expandAllFadeText', (isExpanded) => {

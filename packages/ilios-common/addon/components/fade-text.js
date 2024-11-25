@@ -33,14 +33,15 @@ export default class FadeTextComponent extends Component {
     return Math.floor(this.textHeight);
   }
 
-  get isFaded() {
-    if (!this.expanded !== undefined) {
-      if (this.expanded) {
-        return false;
-      } else {
-        return this.exceedsHeight;
-      }
-    } else {
+  get shouldFade() {
+    // check for global expansion flag
+    if (this.expanded !== undefined) {
+      // if global expansion flag is true, then element should not fade
+      // otherwise, check text height to see if it should fade
+      return this.expanded ? false : this.exceedsHeight;
+    }
+    // if no global expansion flag passed in, just check text height
+    else {
       return this.exceedsHeight;
     }
   }

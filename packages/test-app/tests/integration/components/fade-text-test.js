@@ -24,8 +24,8 @@ module('Integration | Component | fade-text', function (hooks) {
       An objective description so long that it fades.<br />
       An objective description so long that it fades.
     `;
-    this.fadedClass = 'is-faded';
-    this.fadedSelector = '.is-faded';
+    this.fadedClass = 'faded';
+    this.fadedSelector = '.faded';
   });
 
   test('it renders empty', async function (assert) {
@@ -94,14 +94,14 @@ module('Integration | Component | fade-text', function (hooks) {
   @text={{this.longHtml}}
   @expanded={{this.expanded}}
   @onExpandAll={{this.onExpandAll}}
-  as |displayText expand collapse updateTextDims isFaded expanded|
+  as |displayText expand collapse updateTextDims shouldFade expanded|
 >
-  <div class='display-text-wrapper{{if isFaded " is-faded"}}'>
+  <div class='display-text-wrapper{{if shouldFade " faded"}}'>
     <div class='display-text' {{on-resize updateTextDims}}>
       {{displayText}}
     </div>
   </div>
-  {{#if isFaded}}
+  {{#if shouldFade}}
     <div class='fade-text-control' data-test-fade-text-control>
       <button type='button' data-test-expand {{on 'click' expand}}></button>
     </div>
