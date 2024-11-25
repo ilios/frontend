@@ -118,8 +118,7 @@
       }
     }
 
-    .description,
-    .session-objective-list-item-parents {
+    .description {
       p {
         @include font-size.font-size("base");
         margin: 0;
@@ -131,6 +130,13 @@
         p {
           @include font-size.font-size("base");
         }
+      }
+    }
+
+    .session-objective-list-item-parents {
+      p {
+        @include font-size.font-size("base");
+        margin: 0;
       }
     }
 
