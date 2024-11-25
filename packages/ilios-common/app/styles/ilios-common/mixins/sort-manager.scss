@@ -66,6 +66,11 @@
       }
 
       .fade-text {
+        .display-text {
+          p {
+            margin: 0;
+          }
+        }
         button {
           &.expand-text-button {
             background: c.$tealBlue;
