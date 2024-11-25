@@ -118,7 +118,8 @@
       }
     }
 
-    .description {
+    .description,
+    .session-objective-list-item-parents {
       p {
         @include font-size.font-size("base");
         margin: 0;
