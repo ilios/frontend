@@ -64,7 +64,7 @@ module('Acceptance | Course - Objective Inactive Parents', function (hooks) {
     assert.strictEqual(objectives[0].parents.list.length, 1);
     assert.strictEqual(objectives[0].parents.list[0].text, 'inactive selected');
 
-    await objectives[0].parents.list[0].manage();
+    await objectives[0].parents.manage();
     const m = objectives[0].parentManager;
 
     assert.strictEqual(m.selectedCohortTitle, 'program 0 cohort 0');

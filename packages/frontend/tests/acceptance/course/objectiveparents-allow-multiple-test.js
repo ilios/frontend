@@ -5,7 +5,7 @@ import { setupApplicationTest } from 'frontend/tests/helpers';
 import page from 'ilios-common/page-objects/course';
 import percySnapshot from '@percy/ember';
 
-module('Acceptance | Course - Multiple Objective  Parents', function (hooks) {
+module('Acceptance | Course - Multiple Objective Parents', function (hooks) {
   setupApplicationTest(hooks);
   hooks.beforeEach(async function () {
     this.user = await setupAuthentication({}, true);
@@ -65,7 +65,7 @@ module('Acceptance | Course - Multiple Objective  Parents', function (hooks) {
       'program-year objective 1',
     );
 
-    await page.details.objectives.objectiveList.objectives[0].parents.list[0].manage();
+    await page.details.objectives.objectiveList.objectives[0].parents.manage();
     const m = page.details.objectives.objectiveList.objectives[0].parentManager;
 
     assert.strictEqual(m.selectedCohortTitle, 'program 0 cohort 0');
@@ -92,7 +92,7 @@ module('Acceptance | Course - Multiple Objective  Parents', function (hooks) {
       page.details.objectives.objectiveList.objectives[0].description.text,
       'course objective 0',
     );
-    await page.details.objectives.objectiveList.objectives[0].parents.list[0].manage();
+    await page.details.objectives.objectiveList.objectives[0].parents.manage();
     const m = page.details.objectives.objectiveList.objectives[0].parentManager;
 
     await m.competencies[0].objectives[2].add();

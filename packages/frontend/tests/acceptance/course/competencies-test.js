@@ -69,7 +69,7 @@ module('Acceptance | Course - Competencies', function (hooks) {
       details: true,
       courseObjectiveDetails: true,
     });
-    await page.details.objectives.objectiveList.objectives[1].parents.list[0].manage();
+    await page.details.objectives.objectiveList.objectives[1].parents.manage();
     const m = page.details.objectives.objectiveList.objectives[1].parentManager;
     await m.competencies[1].objectives[0].add();
     assert.ok(m.competencies[0].objectives[0].notSelected);

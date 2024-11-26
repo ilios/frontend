@@ -78,7 +78,7 @@ module('Integration | Component | course/objective-list-item', function (hooks) 
   @manageParents={{this.manageParents}}
 />`,
     );
-    await component.parents.list[0].manage();
+    await component.parents.manage();
     assert.ok(component.parentManager.isPresent);
   });
 

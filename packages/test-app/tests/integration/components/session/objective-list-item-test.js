@@ -85,7 +85,7 @@ module('Integration | Component | session/objective-list-item', function (hooks)
   @session={{this.sessionModel}}
 />`,
     );
-    await component.parents.list[0].manage();
+    await component.parents.manage();
     assert.ok(component.parentManager.isPresent);
   });
 

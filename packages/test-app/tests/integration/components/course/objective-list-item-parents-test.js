@@ -141,6 +141,6 @@ module('Integration | Component | course/objective-list-item-parents', function 
   @isSaving={{false}}
   @cancel={{(noop)}}
 />`);
-    await component.list[0].manage();
+    await component.manage();
   });
 });

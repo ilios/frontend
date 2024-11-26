@@ -75,7 +75,7 @@ module('Acceptance | Course with multiple Cohorts - Objective Parents', function
       page.details.objectives.objectiveList.objectives[0].parents.list[1].text,
       'program-year objective 3',
     );
-    await page.details.objectives.objectiveList.objectives[0].parents.list[0].manage();
+    await page.details.objectives.objectiveList.objectives[0].parents.manage();
     const m = page.details.objectives.objectiveList.objectives[0].parentManager;
 
     await m.selectCohort(1);
@@ -135,7 +135,7 @@ module('Acceptance | Course with multiple Cohorts - Objective Parents', function
       page.details.objectives.objectiveList.objectives[0].parents.list[1].text,
       'program-year objective 3',
     );
-    await page.details.objectives.objectiveList.objectives[0].parents.list[0].manage();
+    await page.details.objectives.objectiveList.objectives[0].parents.manage();
     const m = page.details.objectives.objectiveList.objectives[0].parentManager;
 
     await m.selectCohort(1);
@@ -185,7 +185,7 @@ module('Acceptance | Course with multiple Cohorts - Objective Parents', function
       page.details.objectives.objectiveList.objectives[0].parents.list[1].text,
       'program-year objective 3',
     );
-    await page.details.objectives.objectiveList.objectives[0].parents.list[0].manage();
+    await page.details.objectives.objectiveList.objectives[0].parents.manage();
     const m = page.details.objectives.objectiveList.objectives[0].parentManager;
 
     await m.selectCohort(1);
