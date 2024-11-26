@@ -5,10 +5,7 @@
 {{else}}
   <span class="fade-text" data-test-fade-text ...attributes>
     <div class="display-text-wrapper{{if this.shouldFade ' faded'}}">
-      <div
-        class="display-text"
-        {{on-resize this.updateTextDims}}
-      >
+      <div class="display-text" {{on-resize this.updateTextDims}}>
         {{this.displayText}}
       </div>
     </div>

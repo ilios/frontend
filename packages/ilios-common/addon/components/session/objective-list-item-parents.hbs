@@ -31,6 +31,7 @@
         @onExpandAll={{@onExpandAllFadeText}}
         as |displayText expand collapse updateTextDims shouldFade expanded|
       >
+        <ul>
         {{#if @editable}}
           <span data-test-parent>
             <button type="button" class="link-button" {{on "click" @manage}} data-test-manage>
@@ -49,12 +50,15 @@
             </button>
           </span>
         {{else}}
-          <div class="display-text-wrapper{{if shouldFade ' faded'}}">
-            <div class="display-text" {{on-resize updateTextDims}}>
-              {{displayText}}
+          <span data-test-parent>
+            <div class="display-text-wrapper{{if shouldFade ' faded'}}">
+              <div class="display-text" {{on-resize updateTextDims}}>
+                {{displayText}}
+              </div>
             </div>
-          </div>
+          </span>
         {{/if}}
+        </ul>
         {{#if shouldFade}}
           <div
             class="fade-text-control"
