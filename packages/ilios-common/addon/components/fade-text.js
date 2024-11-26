@@ -15,7 +15,10 @@ export default class FadeTextComponent extends Component {
     }
     if (typeOf(this.args.text) !== 'string') {
       if (typeOf(this.args.text) === 'array') {
-        return this.args.text.map((elem) => `<li>${elem}</li>`).join('');
+        let text = '<ul>';
+        text += this.args.text.map((elem) => `<li>${elem}</li>`).join('');
+        text += '</ul>';
+        return text;
       }
       return this.args.text.toString();
     }
