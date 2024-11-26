@@ -1,27 +1,21 @@
 import Component from '@glimmer/component';
 import { service } from '@ember/service';
-import { cached, tracked } from '@glimmer/tracking';
+import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { dropTask } from 'ember-concurrency';
-import { validatable, Length, NotBlank } from 'ilios-common/decorators/validation';
 import { findBy } from 'ilios-common/utils/array-helpers';
-import { TrackedAsyncData } from 'ember-async-data';
+import YupValidations from 'ilios-common/classes/yup-validations';
+import { string } from 'yup';
 
-@validatable
 export default class NewSessionComponent extends Component {
   @service store;
 
-  @NotBlank() @Length(3, 200) @tracked title;
+  @tracked title;
   @tracked selectedSessionTypeId;
 
-  @cached
-  get hasErrorForTitleData() {
-    return new TrackedAsyncData(this.hasErrorFor('title'));
-  }
-
-  get hasErrorForTitle() {
-    return this.hasErrorForTitleData.isResolved ? this.hasErrorForTitleData.value : false;
-  }
+  validations = new YupValidations(this, {
+    title: string().required().min(3).max(200),
+  });
 
   get activeSessionTypes() {
     return this.args.sessionTypes.filter((sessionType) => sessionType.active);
@@ -49,12 +43,11 @@ export default class NewSessionComponent extends Component {
   }
 
   saveNewSession = dropTask(async () => {
-    this.addErrorDisplayFor('title');
-    const isValid = await this.isValid();
-    if (!isValid) {
+    this.validations.addErrorDisplayForAllFields();
+    if (!(await this.validations.isValid())) {
       return false;
     }
-    this.removeErrorDisplayFor('title');
+    this.validations.clearErrorDisplay();
     const session = this.store.createRecord('session', {
       title: this.title,
       sessionType: this.selectedSessionType,
