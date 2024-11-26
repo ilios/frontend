@@ -112,6 +112,7 @@ function setupErrorMessages() {
     string: {
       min: min(['min']),
       max: max(['max']),
+      email: isEmail(),
     },
   });
 }
@@ -142,6 +143,16 @@ function min(localeValues = []) {
       path: validationParams.path,
       messageKey: 'errors.tooShort',
       values: getProperties(validationParams, ...localeValues),
+    };
+  };
+}
+
+function isEmail() {
+  return (validationParams) => {
+    return {
+      path: validationParams.path,
+      messageKey: 'errors.email',
+      values: [],
     };
   };
 }

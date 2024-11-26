@@ -429,7 +429,6 @@ module('Integration | Component | bulk new users', function (hooks) {
     const badCheck = 'tbody tr:nth-of-type(2) td:nth-of-type(1) input';
     const BadBox = 'tbody tr:nth-of-type(2) td:nth-of-type(4)';
     assert.dom(goodCheck).isNotDisabled();
-    assert.dom(goodCheck).isNotDisabled();
     assert.dom(goodBox).hasNoClass('error');
     assert.dom(badCheck).isDisabled();
     assert.dom(BadBox).hasClass('error');

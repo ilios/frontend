@@ -1,17 +1,16 @@
 import Component from '@glimmer/component';
 import { cached, tracked } from '@glimmer/tracking';
-import { getOwner } from '@ember/application';
 import { action } from '@ember/object';
-import CoreObject from '@ember/object/core';
 import { service } from '@ember/service';
 import { isPresent } from '@ember/utils';
 import { all, filter } from 'rsvp';
 import { dropTask, restartableTask } from 'ember-concurrency';
 import PapaParse from 'papaparse';
 import { DateTime } from 'luxon';
-import { validatable, Length, NotBlank, IsEmail, Custom } from 'ilios-common/decorators/validation';
 import { findById, mapBy } from 'ilios-common/utils/array-helpers';
 import { TrackedAsyncData } from 'ember-async-data';
+import YupValidations from 'ilios-common/classes/yup-validations';
+import { string } from 'yup';
 
 export default class BulkNewUsersComponent extends Component {
   @service flashMessages;
@@ -169,7 +168,7 @@ export default class BulkNewUsersComponent extends Component {
     this.primaryCohortId = id;
   }
 
-  async existingUsernames() {
+  async getExistingUserNames() {
     const authentications = await this.store.findAll('authentication');
     return mapBy(authentications, 'username').filter(Boolean);
   }
@@ -182,26 +181,29 @@ export default class BulkNewUsersComponent extends Component {
    **/
   async getFileContents(file) {
     this.fileUploadError = false;
+    const existingUsernames = await this.getExistingUserNames();
     return new Promise((resolve) => {
       const allowedFileTypes = ['text/plain', 'text/csv', 'text/tab-separated-values'];
       if (!allowedFileTypes.includes(file.type)) {
-        const intl = this.intl;
-        this.set('fileUploadError', true);
-        throw new Error(intl.t('general.fileTypeError', { fileType: file.type }));
+        this.fileUploadError = true;
+        throw new Error(this.intl.t('general.fileTypeError', { fileType: file.type }));
       }
       const complete = ({ data }) => {
         const proposedUsers = data.map((arr) => {
-          return ProposedUser.create(getOwner(this).ownerInjection(), {
-            firstName: isPresent(arr[0]) ? arr[0] : null,
-            lastName: isPresent(arr[1]) ? arr[1] : null,
-            middleName: isPresent(arr[2]) ? arr[2] : null,
-            phone: isPresent(arr[3]) ? arr[3] : null,
-            email: isPresent(arr[4]) ? arr[4] : null,
-            campusId: isPresent(arr[5]) ? arr[5] : null,
-            otherId: isPresent(arr[6]) ? arr[6] : null,
-            username: isPresent(arr[7]) ? arr[7] : null,
-            password: isPresent(arr[8]) ? arr[8] : null,
-          });
+          return new ProposedUser(
+            {
+              firstName: isPresent(arr[0]) ? arr[0] : null,
+              lastName: isPresent(arr[1]) ? arr[1] : null,
+              middleName: isPresent(arr[2]) ? arr[2] : null,
+              phone: isPresent(arr[3]) ? arr[3] : null,
+              email: isPresent(arr[4]) ? arr[4] : null,
+              campusId: isPresent(arr[5]) ? arr[5] : null,
+              otherId: isPresent(arr[6]) ? arr[6] : null,
+              username: isPresent(arr[7]) ? arr[7] : null,
+              password: isPresent(arr[8]) ? arr[8] : null,
+            },
+            existingUsernames,
+          );
         });
         const notHeaderRow = proposedUsers.filter(
           (obj) =>
@@ -234,18 +236,12 @@ export default class BulkNewUsersComponent extends Component {
 
   parseFile = restartableTask(async (file) => {
     const proposedUsers = await this.getFileContents(file);
-    const existingUsernames = await this.existingUsernames();
-    const filledOutUsers = proposedUsers.map((obj) => {
-      obj.existingUsernames = existingUsernames;
-
-      return obj;
-    });
-    this.validUsers = await filter(filledOutUsers, async (obj) => {
-      return await obj.isValid();
+    this.validUsers = await filter(proposedUsers, async (obj) => {
+      return obj.isValid();
     });
 
     this.selectedUsers = this.validUsers;
-    this.proposedUsers = filledOutUsers;
+    this.proposedUsers = proposedUsers;
   });
 
   save = dropTask(async () => {
@@ -345,116 +341,56 @@ export default class BulkNewUsersComponent extends Component {
   });
 }
 
-@validatable
-class ProposedUser extends CoreObject {
-  @service intl;
-
-  @Length(1, 50) @NotBlank() firstName;
-  @Length(1, 20) middleName;
-  @Length(1, 50) @NotBlank() lastName;
-  @Length(1, 100) @Custom('validateUsernameCallback', 'validateUsernameMessageCallback') username;
-  @Custom('validatePasswordCallback', 'validatePasswordMessageCallback') password;
-  @Length(1, 16) campusId;
-  @Length(1, 16) otherId;
-  @Length(1, 100) @NotBlank() @IsEmail() email;
-  @Length(1, 20) phone;
+class ProposedUser {
   addedViaIlios = true;
   enabled = true;
 
-  constructor(data) {
-    super(...arguments);
-    this.firstName = data.firstName;
-    this.lastName = data.lastName;
-    this.middleName = data.middleName;
-    this.phone = data.phone;
-    this.email = data.email;
-    this.campusId = data.campusId;
-    this.otherId = data.otherId;
-    this.username = data.username;
-    this.password = data.password;
-    this.addErrorDisplayForAllFields();
+  validations = new YupValidations(this, {
+    firstName: string().required().min(1).max(50),
+    middleName: string().nullable().min(1).max(20),
+    lastName: string().required().min(1).max(50),
+    username: string()
+      .nullable()
+      .min(1)
+      .max(100)
+      .test(
+        'is-username-unique',
+        (d) => {
+          return {
+            path: d.path,
+            messageKey: 'errors.exclusion',
+          };
+        },
+        (value) => value == null || !this.existingUsernames.includes(this.username),
+      ),
+    password: string().when('username', {
+      is: (username) => !!username, // Check if the username field has a value
+      then: (schema) => schema.required(),
+      otherwise: (schema) => schema.notRequired(),
+    }),
+    campusId: string().nullable().min(1).max(16),
+    otherId: string().nullable().min(1).max(16),
+    email: string().nullable().email(),
+    phone: string().nullable().min(1).max(20),
+  });
+
+  constructor(userObj, existingUsernames) {
+    this.firstName = userObj.firstName;
+    this.lastName = userObj.lastName;
+    this.middleName = userObj.middleName;
+    this.phone = userObj.phone;
+    this.email = userObj.email;
+    this.campusId = userObj.campusId;
+    this.otherId = userObj.otherId;
+    this.username = userObj.username;
+    this.password = userObj.password;
+
+    this.existingUsernames = existingUsernames;
+
+    this.validations.addErrorDisplayForAllFields();
   }
 
-  @cached
-  get hasErrorForFirstNameData() {
-    return new TrackedAsyncData(this.hasErrorFor('firstName'));
-  }
-
-  get hasErrorForFirstName() {
-    return this.hasErrorForFirstNameData.isResolved ? this.hasErrorForFirstNameData.value : false;
-  }
-
-  @cached
-  get hasErrorForLastNameData() {
-    return new TrackedAsyncData(this.hasErrorFor('lastName'));
-  }
-
-  get hasErrorForLastName() {
-    return this.hasErrorForLastNameData.isResolved ? this.hasErrorForLastNameData.value : false;
-  }
-
-  @cached
-  get hasErrorForMiddleNameData() {
-    return new TrackedAsyncData(this.hasErrorFor('middleName'));
-  }
-
-  get hasErrorForMiddleName() {
-    return this.hasErrorForMiddleNameData.isResolved ? this.hasErrorForMiddleNameData.value : false;
-  }
-
-  @cached
-  get hasErrorForEmailData() {
-    return new TrackedAsyncData(this.hasErrorFor('email'));
-  }
-
-  get hasErrorForEmail() {
-    return this.hasErrorForEmailData.isResolved ? this.hasErrorForEmailData.value : false;
-  }
-
-  @cached
-  get hasErrorForCampusIdData() {
-    return new TrackedAsyncData(this.hasErrorFor('campusId'));
-  }
-
-  get hasErrorForCampusId() {
-    return this.hasErrorForCampusIdData.isResolved ? this.hasErrorForCampusIdData.value : false;
-  }
-
-  @cached
-  get hasErrorForOtherIdData() {
-    return new TrackedAsyncData(this.hasErrorFor('otherId'));
-  }
-
-  get hasErrorForOtherId() {
-    return this.hasErrorForOtherIdData.isResolved ? this.hasErrorForOtherIdData.value : false;
-  }
-
-  @cached
-  get hasErrorForUsernameData() {
-    return new TrackedAsyncData(this.hasErrorFor('username'));
-  }
-
-  get hasErrorForUsername() {
-    return this.hasErrorForUsernameData.isResolved ? this.hasErrorForUsernameData.value : false;
-  }
-
-  async validateUsernameCallback() {
-    return !this.existingUsernames.includes(this.username);
-  }
-
-  validateUsernameMessageCallback() {
-    return this.intl.t('errors.exclusion', { description: this.intl.t('general.username') });
-  }
-
-  async validatePasswordCallback() {
-    if (!this.username) {
-      return true;
-    }
-    const stringValue = String(this.password).trim();
-    return Boolean(stringValue.length);
-  }
-
-  validatePasswordMessageCallback() {
-    return this.intl.t('errors.blank', { description: this.intl.t('general.password') });
+  async isValid() {
+    return this.validations.isValid();
   }
 }
