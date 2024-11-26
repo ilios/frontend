@@ -13,19 +13,16 @@ export default class FadeTextComponent extends Component {
     if (!this.args.text) {
       return '';
     }
-    if (typeOf(this.args.text) == 'array') {
-      return this.args.text;
-    }
     if (typeOf(this.args.text) !== 'string') {
+      if (typeOf(this.args.text) === 'array') {
+        return this.args.text.join('<br />');
+      }
       return this.args.text.toString();
     }
 
     return this.args.text;
   }
   get displayText() {
-    if (typeOf(this.text) == 'array') {
-      return new htmlSafe(this.text.join('<br />'));
-    }
     return new htmlSafe(this.text);
   }
 

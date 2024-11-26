@@ -49,9 +49,11 @@
             </button>
           </span>
         {{else}}
-          <span data-test-parent>
-            {{html-safe (remove-html-tags displayText)}}
-          </span>
+          <div class="display-text-wrapper{{if shouldFade ' faded'}}">
+            <div class="display-text" {{on-resize updateTextDims}}>
+              {{displayText}}
+            </div>
+          </div>
         {{/if}}
         {{#if shouldFade}}
           <div
