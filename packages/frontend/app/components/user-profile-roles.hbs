@@ -2,8 +2,6 @@
   class="user-profile-roles small-component last
     {{if this.hasSavedRecently 'has-saved' 'has-not-saved'}}"
   data-test-user-profile-roles
-  {{did-insert (perform this.load)}}
-  {{did-update (perform this.load) @user.roles}}
   ...attributes
 >
   <div class="actions">
