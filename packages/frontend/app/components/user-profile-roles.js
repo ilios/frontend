@@ -1,9 +1,10 @@
 import Component from '@glimmer/component';
 import { service } from '@ember/service';
-import { dropTask, restartableTask, timeout } from 'ember-concurrency';
-import { tracked } from '@glimmer/tracking';
+import { dropTask, timeout } from 'ember-concurrency';
+import { tracked, cached } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { findBy } from 'ilios-common/utils/array-helpers';
+import { TrackedAsyncData } from 'ember-async-data';
 
 export default class UserProfileRolesComponent extends Component {
   @service store;
@@ -13,12 +14,17 @@ export default class UserProfileRolesComponent extends Component {
   @tracked isFormerStudentFlipped = false;
   @tracked isStudentFlipped = false;
   @tracked isUserSyncIgnoredFlipped = false;
-  @tracked roleTitles = [];
 
-  load = restartableTask(async () => {
-    const roles = await this.args.user.roles;
-    this.roleTitles = roles.map((role) => role.title.toLowerCase());
-  });
+  @cached
+  get roleTitlesData() {
+    return new TrackedAsyncData(this.args.user.roles);
+  }
+
+  get roleTitles() {
+    return this.roleTitlesData.isResolved
+      ? this.roleTitlesData.value.map((role) => role.title.toLowerCase())
+      : [];
+  }
 
   get isStudent() {
     const originallyYes = this.roleTitles.includes('student');
