@@ -149,7 +149,8 @@ jobs:
           # https://community.sonarsource.com/t/xml-file-extension-is-binded-to-multiple-language/41745/4
           args: >
             -Dsonar.projectKey=ilios_frontend_27a24e39-b0ec-405a-91a6-b6392ffcdd30
-            -Dsonar.lang.patterns.mule=- sonar.excludePlugins=mule
+            -Dsonar.lang.patterns.mule=-
+            -Dsonar.excludePlugins=mule
 
   upload-coverage:
     name: Upload Coverage
