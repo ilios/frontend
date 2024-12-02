@@ -146,9 +146,9 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: https://sonarqube.ucsf.edu
         with:
+          # https://community.sonarsource.com/t/xml-file-extension-is-binded-to-multiple-language/41745/4
           args: >
             -Dsonar.projectKey=ilios_frontend_27a24e39-b0ec-405a-91a6-b6392ffcdd30
-            # https://community.sonarsource.com/t/xml-file-extension-is-binded-to-multiple-language/41745/4
             -Dsonar.lang.patterns.mule=- sonar.excludePlugins=mule
 
   upload-coverage:
