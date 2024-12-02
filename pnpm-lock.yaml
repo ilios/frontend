@@ -268,8 +268,8 @@ importers:
         specifier: ^8.1.1
         version: 8.1.2(eslint@8.57.1)
       eslint-plugin-yml:
-        specifier: ^1.14.0
-        version: 1.15.0(eslint@8.57.1)
+        specifier: ^1.16.0
+        version: 1.16.0(eslint@8.57.1)
       file-saver:
         specifier: ^2.0.5
         version: 2.0.5
@@ -617,8 +617,8 @@ importers:
         specifier: ^8.1.1
         version: 8.1.2(eslint@8.57.1)
       eslint-plugin-yml:
-        specifier: ^1.14.0
-        version: 1.15.0(eslint@8.57.1)
+        specifier: ^1.16.0
+        version: 1.16.0(eslint@8.57.1)
       loader.js:
         specifier: ^4.7.0
         version: 4.7.0
@@ -836,8 +836,8 @@ importers:
         specifier: ^8.1.1
         version: 8.1.2(eslint@8.57.1)
       eslint-plugin-yml:
-        specifier: ^1.14.0
-        version: 1.15.0(eslint@8.57.1)
+        specifier: ^1.16.0
+        version: 1.16.0(eslint@8.57.1)
       ilios-common:
         specifier: workspace:*
         version: link:../ilios-common
@@ -1067,8 +1067,8 @@ importers:
         specifier: ^8.1.1
         version: 8.1.2(eslint@8.57.1)
       eslint-plugin-yml:
-        specifier: ^1.14.0
-        version: 1.15.0(eslint@8.57.1)
+        specifier: ^1.16.0
+        version: 1.16.0(eslint@8.57.1)
       ilios-common:
         specifier: workspace:*
         version: link:../ilios-common
@@ -1289,8 +1289,8 @@ importers:
         specifier: ^8.1.1
         version: 8.1.2(eslint@8.57.1)
       eslint-plugin-yml:
-        specifier: ^1.14.0
-        version: 1.15.0(eslint@8.57.1)
+        specifier: ^1.16.0
+        version: 1.16.0(eslint@8.57.1)
       ilios-common:
         specifier: workspace:*
         version: link:../ilios-common
@@ -5701,6 +5701,12 @@ packages:
     peerDependencies:
       eslint: '>=6.0.0'
 
+  eslint-compat-utils@0.6.4:
+    resolution: {integrity: sha512-/u+GQt8NMfXO8w17QendT4gvO5acfxQsAKirAt0LVxDnr2N8YLCVbregaNc/Yhp7NM128DwCaRvr8PLDfeNkQw==}
+    engines: {node: '>=12'}
+    peerDependencies:
+      eslint: '>=6.0.0'
+
   eslint-config-prettier@9.1.0:
     resolution: {integrity: sha512-NSWl5BFQWEPi1j4TjVNItzYV7dZXZ+wP6I6ZhrBGpChQhZRUaElihE9uRRkcbRnNb76UMKDF3r+WTmNcGPKsqw==}
     hasBin: true
@@ -5750,8 +5756,8 @@ packages:
     resolution: {integrity: sha512-2gDQdHlQW8GVXD7YYkO8vbm9Ldc60JeGMuQN5QlD48OeZ8znBvvoHWZZMeXjvoDPReGaLEvyuWrDtrI8bDbcqw==}
     engines: {node: ^16.0.0 || ^18.0.0 || >=20.0.0}
 
-  eslint-plugin-yml@1.15.0:
-    resolution: {integrity: sha512-leC8APYVOsKyWUlvRwVhewytK5wS70BfMqIaUplFstRfzCoVp0YoEroV4cUEvQrBj93tQ3M9LcjO/ewr6D4kjA==}
+  eslint-plugin-yml@1.16.0:
+    resolution: {integrity: sha512-t4MNCetPjTn18/fUDlQ/wKkcYjnuLYKChBrZ0qUaNqRigVqChHWzTP8SrfFi5s4keX3vdlkWRSu8zHJMdKwxWQ==}
     engines: {node: ^14.17.0 || >=16.0.0}
     peerDependencies:
       eslint: '>=6.0.0'
@@ -17504,6 +17510,11 @@ snapshots:
       eslint: 8.57.1
       semver: 7.6.3
 
+  eslint-compat-utils@0.6.4(eslint@8.57.1):
+    dependencies:
+      eslint: 8.57.1
+      semver: 7.6.3
+
   eslint-config-prettier@9.1.0(eslint@8.57.1):
     dependencies:
       eslint: 8.57.1
@@ -17562,11 +17573,11 @@ snapshots:
     transitivePeerDependencies:
       - eslint
 
-  eslint-plugin-yml@1.15.0(eslint@8.57.1):
+  eslint-plugin-yml@1.16.0(eslint@8.57.1):
     dependencies:
       debug: 4.3.7(supports-color@8.1.1)
       eslint: 8.57.1
-      eslint-compat-utils: 0.5.1(eslint@8.57.1)
+      eslint-compat-utils: 0.6.4(eslint@8.57.1)
       lodash: 4.17.21
       natural-compare: 1.4.0
       yaml-eslint-parser: 1.2.3
