@@ -5,6 +5,8 @@ export default class SessionIndexRoute extends Route {
   @service permissionChecker;
   @service store;
   @service session;
+  @service currentUser;
+  @service router;
 
   canUpdate = false;
 
@@ -14,6 +16,9 @@ export default class SessionIndexRoute extends Route {
 
   beforeModel(transition) {
     this.session.requireAuthentication(transition, 'login');
+    if (!this.currentUser.performsNonLearnerFunction) {
+      this.router.replaceWith('/four-oh-four');
+    }
   }
 
   setupController(controller, model) {

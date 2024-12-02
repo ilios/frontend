@@ -16,7 +16,7 @@ module('Acceptance | Session - Publish', function (hooks) {
       }).toJSDate(),
     );
     const school = this.server.create('school');
-    await setupAuthentication({ school, administeredSchools: [school] });
+    await setupAuthentication({ school, administeredSchools: [school] }, true);
     this.course = this.server.create('course', { school });
     this.server.create('session-type');
     this.publishedSession = this.server.create('session', {

@@ -11,7 +11,7 @@ module('Acceptance | Course - Overview', function (hooks) {
   setupApplicationTest(hooks);
   hooks.beforeEach(async function () {
     this.intl = this.owner.lookup('service:intl');
-    this.user = await setupAuthentication();
+    this.user = await setupAuthentication({}, true);
     this.school = this.server.create('school');
     this.server.createList('course-clerkship-type', 2);
   });

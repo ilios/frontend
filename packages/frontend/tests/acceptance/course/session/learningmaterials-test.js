@@ -13,7 +13,7 @@ module('Acceptance | Session - Learning Materials', function (hooks) {
   hooks.beforeEach(async function () {
     this.intl = this.owner.lookup('service:intl');
     this.school = this.server.create('school');
-    this.user = await setupAuthentication({ school: this.school });
+    this.user = await setupAuthentication({ school: this.school }, true);
     this.user2 = this.server.create('user', { displayName: 'Clem Chowder' });
     this.server.create('academic-year');
 

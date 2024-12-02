@@ -8,7 +8,7 @@ module('Acceptance | Session - Independent Learning', function (hooks) {
   setupApplicationTest(hooks);
   hooks.beforeEach(async function () {
     this.school = this.server.create('school');
-    this.user = await setupAuthentication({ school: this.school });
+    this.user = await setupAuthentication({ school: this.school }, true);
     this.server.createList('user', 6);
     this.server.create('academic-year');
     this.course = this.server.create('course', { school: this.school });

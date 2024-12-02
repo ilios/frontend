@@ -8,10 +8,13 @@ module('Acceptance | Session - Publish All', function (hooks) {
   setupApplicationTest(hooks);
   hooks.beforeEach(async function () {
     const school = this.server.create('school');
-    await setupAuthentication({
-      school,
-      administeredSchools: [school],
-    });
+    await setupAuthentication(
+      {
+        school,
+        administeredSchools: [school],
+      },
+      true,
+    );
     const vocabulary = this.server.create('vocabulary', {
       school,
     });

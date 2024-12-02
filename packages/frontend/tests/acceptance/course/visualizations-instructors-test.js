@@ -9,7 +9,7 @@ import percySnapshot from '@percy/ember';
 module('Acceptance | course visualizations - instructors', function (hooks) {
   setupApplicationTest(hooks);
   hooks.beforeEach(async function () {
-    this.user = await setupAuthentication();
+    this.user = await setupAuthentication({}, true);
     const instructor1 = this.server.create('user');
     const instructor2 = this.server.create('user');
     const vocabulary1 = this.server.create('vocabulary');

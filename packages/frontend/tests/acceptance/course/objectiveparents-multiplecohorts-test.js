@@ -6,7 +6,7 @@ import page from 'ilios-common/page-objects/course';
 module('Acceptance | Course with multiple Cohorts - Objective Parents', function (hooks) {
   setupApplicationTest(hooks);
   hooks.beforeEach(async function () {
-    this.user = await setupAuthentication();
+    this.user = await setupAuthentication({}, true);
     this.school = this.server.create('school');
     const program = this.server.create('program', { school: this.school });
 

@@ -6,6 +6,8 @@ export default class CourseVisualizeInstructorsRoute extends Route {
   @service session;
   @service store;
   @service dataLoader;
+  @service currentUser;
+  @service router;
 
   titleToken = 'general.coursesAndSessions';
 
@@ -24,5 +26,8 @@ export default class CourseVisualizeInstructorsRoute extends Route {
 
   beforeModel(transition) {
     this.session.requireAuthentication(transition, 'login');
+    if (!this.currentUser.performsNonLearnerFunction) {
+      this.router.replaceWith('/four-oh-four');
+    }
   }
 }

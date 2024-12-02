@@ -8,6 +8,8 @@ export default class CourseIndexRoute extends Route {
   @service store;
   @service dataLoader;
   @service session;
+  @service router;
+  @service currentUser;
 
   canCreateSession = false;
   canUpdateCourse = false;
@@ -19,6 +21,9 @@ export default class CourseIndexRoute extends Route {
 
   beforeModel(transition) {
     this.session.requireAuthentication(transition, 'login');
+    if (!this.currentUser.performsNonLearnerFunction) {
+      this.router.replaceWith('/four-oh-four');
+    }
   }
 
   setupController(controller, model) {

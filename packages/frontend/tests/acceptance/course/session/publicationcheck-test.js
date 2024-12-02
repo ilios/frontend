@@ -8,7 +8,7 @@ import percySnapshot from '@percy/ember';
 module('Acceptance | Session - Publication Check', function (hooks) {
   setupApplicationTest(hooks);
   hooks.beforeEach(async function () {
-    await setupAuthentication();
+    await setupAuthentication({}, true);
     const school = this.server.create('school');
     const vocabulary = this.server.create('vocabulary', {
       school,

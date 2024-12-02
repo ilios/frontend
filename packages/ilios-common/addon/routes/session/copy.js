@@ -4,6 +4,8 @@ import Route from '@ember/routing/route';
 export default class SessionCopyRoute extends Route {
   @service permissionChecker;
   @service session;
+  @service currentUser;
+  @service router;
 
   canUpdate = false;
 
@@ -13,6 +15,9 @@ export default class SessionCopyRoute extends Route {
 
   beforeModel(transition) {
     this.session.requireAuthentication(transition, 'login');
+    if (!this.currentUser.performsNonLearnerFunction) {
+      this.router.replaceWith('/four-oh-four');
+    }
   }
 
   setupController(controller, model) {

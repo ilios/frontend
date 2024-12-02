@@ -7,7 +7,7 @@ import { setupAuthentication } from 'ilios-common';
 module('Acceptance | course visualizations', function (hooks) {
   setupApplicationTest(hooks);
   hooks.beforeEach(async function () {
-    this.user = await setupAuthentication();
+    this.user = await setupAuthentication({}, true);
     this.school = this.server.create('school');
 
     this.server.create('course', {

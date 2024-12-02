@@ -8,7 +8,7 @@ import percySnapshot from '@percy/ember';
 module('Acceptance | Course - Multiple Objective  Parents', function (hooks) {
   setupApplicationTest(hooks);
   hooks.beforeEach(async function () {
-    this.user = await setupAuthentication();
+    this.user = await setupAuthentication({}, true);
     this.school = this.server.create('school');
     this.server.create('schoolConfig', {
       school: this.school,
