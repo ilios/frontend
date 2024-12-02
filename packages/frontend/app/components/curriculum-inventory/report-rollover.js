@@ -20,6 +20,11 @@ export default class CurriculumInventoryReportRolloverComponent extends Componen
   @tracked selectedProgram;
   @tracked programs = [];
 
+  constructor() {
+    super(...arguments);
+    this.load.perform();
+  }
+
   load = restartableTask(async () => {
     const academicYearCrossesCalendarYearBoundaries = await this.iliosConfig.itemFromConfig(
       'academicYearCrossesCalendarYearBoundaries',

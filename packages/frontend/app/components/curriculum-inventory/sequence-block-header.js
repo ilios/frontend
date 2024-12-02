@@ -10,10 +10,15 @@ export default class CurriculumInventorySequenceBlockHeaderComponent extends Com
   @service store;
   @tracked @NotBlank() @Length(3, 200) title;
 
-  @action
-  load(element, [sequenceBlock]) {
-    this.title = sequenceBlock.title;
+  constructor() {
+    super(...arguments);
+    this.title = this.args.sequenceBlock.title;
   }
+
+  // @action
+  // load(element, [sequenceBlock]) {
+  //   this.title = sequenceBlock.title;
+  // }
 
   @action
   revertTitleChanges() {

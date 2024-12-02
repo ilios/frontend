@@ -1,9 +1,4 @@
-<section
-  class="curriculum-inventory-reports"
-  {{did-insert (perform this.load)}}
-  {{did-update (perform this.load) @schoolId @programId}}
-  data-test-curriculum-inventory-reports
->
+<section class="curriculum-inventory-reports" data-test-curriculum-inventory-reports>
   {{#unless this.load.isRunning}}
     <div class="filters">
       <div class="schoolsfilter" data-test-schools-filter>

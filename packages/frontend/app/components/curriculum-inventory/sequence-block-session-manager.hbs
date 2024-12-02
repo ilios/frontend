@@ -2,8 +2,6 @@
   class="curriculum-inventory-sequence-block-session-manager resultslist"
   data-test-curriculum-inventory-sequence-block-session-manager
   ...attributes
-  {{did-insert (perform this.load)}}
-  {{did-update (perform this.load) @sequenceBlock @sessions}}
 >
   {{#unless this.load.isRunning}}
     <div class="actions">

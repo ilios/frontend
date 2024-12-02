@@ -65,6 +65,11 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
   @AfterDate('startDate', { granularity: 'day' })
   endDate;
 
+  constructor() {
+    super(...arguments);
+    this.load.perform(null, [this.args.sequenceBlock]);
+  }
+
   get linkedCourseIsClerkship() {
     if (!this.course) {
       return false;
