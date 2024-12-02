@@ -9,7 +9,11 @@ export default class CurriculumInventoryVerificationPreviewComponent extends Com
   @service fetch;
   @service iliosConfig;
   @tracked tables = null;
-  @tracked scrollTargets = {};
+
+  constructor() {
+    super(...arguments);
+    this.load.perform(null, [this.args.report]);
+  }
 
   load = task(async (element, [report]) => {
     const url = `${this.iliosConfig.apiNameSpace}/curriculuminventoryreports/${report.id}/verificationpreview`;
@@ -19,11 +23,8 @@ export default class CurriculumInventoryVerificationPreviewComponent extends Com
 
   @action
   scrollTo(key) {
-    scrollIntoView(this.scrollTargets[key]);
-  }
-
-  @action
-  setScrollTarget(element, [key]) {
-    this.scrollTargets[key] = element;
+    scrollIntoView(document.getElementById(key), {
+      behavior: 'smooth',
+    });
   }
 }
