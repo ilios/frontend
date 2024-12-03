@@ -46,6 +46,18 @@ export default class UserProfileBioComponent extends Component {
 
   constructor() {
     super(...arguments);
+
+    this.firstName = this.args.user.firstName;
+    this.middleName = this.args.user.middleName;
+    this.lastName = this.args.user.lastName;
+    this.campusId = this.args.user.campusId;
+    this.otherId = this.args.user.otherId;
+    this.email = this.args.user.email;
+    this.displayName = this.args.user.displayName;
+    this.pronouns = this.args.user.pronouns;
+    this.preferredEmail = this.args.user.preferredEmail;
+    this.phone = this.args.user.phone;
+
     this.load.perform();
   }
 
@@ -122,17 +134,6 @@ export default class UserProfileBioComponent extends Component {
 
   @action
   cancel() {
-    this.firstName = null;
-    this.lastName = null;
-    this.middleName = null;
-    this.campusId = null;
-    this.otherId = null;
-    this.email = null;
-    this.displayName = null;
-    this.pronouns = null;
-    this.preferredEmail = null;
-    this.phone = null;
-    this.username = null;
     this.password = null;
     this.passwordStrengthScore = 0;
     this.changeUserPassword = false;
@@ -148,16 +149,6 @@ export default class UserProfileBioComponent extends Component {
   }
 
   load = restartableTask(async () => {
-    this.firstName = this.args.user.firstName;
-    this.middleName = this.args.user.middleName;
-    this.lastName = this.args.user.lastName;
-    this.campusId = this.args.user.campusId;
-    this.otherId = this.args.user.otherId;
-    this.email = this.args.user.email;
-    this.displayName = this.args.user.displayName;
-    this.pronouns = this.args.user.pronouns;
-    this.preferredEmail = this.args.user.preferredEmail;
-    this.phone = this.args.user.phone;
     const auth = await this.args.user.authentication;
     if (auth) {
       this.username = auth.username;
