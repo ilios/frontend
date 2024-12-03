@@ -20,7 +20,7 @@ export default class CurriculumInventoryNewReportComponent extends Component {
 
   constructor() {
     super(...arguments);
-    this.load.perform();
+    this.description = this.intl.t('general.curriculumInventoryReport');
   }
 
   load = restartableTask(async () => {
@@ -37,7 +37,6 @@ export default class CurriculumInventoryNewReportComponent extends Component {
       const year = { id, title };
       years.push(year);
     }
-    this.description = this.intl.t('general.curriculumInventoryReport');
     this.years = years;
     this.selectedYear = findById(years, currentYear);
   });

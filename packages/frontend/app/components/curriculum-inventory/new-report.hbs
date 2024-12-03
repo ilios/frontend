@@ -1,5 +1,9 @@
 {{! template-lint-disable attribute-indentation }}
-<div class="curriculum-inventory-new-report" data-test-curriculum-inventory-new-report>
+<div
+  class="curriculum-inventory-new-report"
+  data-test-curriculum-inventory-new-report
+  {{did-insert (perform this.load)}}
+>
   {{#let (unique-id) as |templateId|}}
     {{#unless this.load.isRunning}}
       <h4>

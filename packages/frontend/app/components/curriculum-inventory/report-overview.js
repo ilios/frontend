@@ -27,11 +27,6 @@ export default class CurriculumInventoryReportOverviewComponent extends Componen
   @tracked academicYearCrossesCalendarYearBoundaries = false;
   @tracked canRollover = false;
 
-  constructor() {
-    super(...arguments);
-    this.load.perform();
-  }
-
   @cached
   get courseData() {
     return new TrackedAsyncData(this.args.report.getLinkedCourses());

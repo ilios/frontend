@@ -2,6 +2,8 @@
   class="curriculum-inventory-sequence-block-header"
   ...attributes
   data-test-curriculum-inventory-sequence-block-header
+  {{did-insert this.load @sequenceBlock}}
+  {{did-update this.load @sequenceBlock}}
 >
   <div class="title" data-test-title>
     {{#if @canUpdate}}

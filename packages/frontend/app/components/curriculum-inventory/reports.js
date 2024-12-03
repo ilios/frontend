@@ -19,11 +19,6 @@ export default class CurriculumInventoryReportsComponent extends Component {
   @tracked selectedProgram = null;
   @tracked canCreate = false;
 
-  constructor() {
-    super(...arguments);
-    this.load.perform();
-  }
-
   @cached
   get reportsData() {
     return new TrackedAsyncData(this.selectedProgram?.curriculumInventoryReports);

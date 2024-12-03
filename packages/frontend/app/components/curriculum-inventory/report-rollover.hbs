@@ -1,4 +1,9 @@
-<div class="curriculum-inventory-report-rollover" data-test-curriculum-inventory-report-rollover>
+<div
+  class="curriculum-inventory-report-rollover"
+  {{did-insert (perform this.load)}}
+  {{did-update (perform this.load) @report}}
+  data-test-curriculum-inventory-report-rollover
+>
   {{#unless this.load.isRunning}}
     <div class="rollover-form" {{scroll-into-view}}>
       <h3 class="title">

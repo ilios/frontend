@@ -10,11 +10,6 @@ export default class SequenceBlockSessionManagerComponent extends Component {
   @tracked linkedSessions = [];
   @tracked sessions = [];
 
-  constructor() {
-    super(...arguments);
-    this.load.perform();
-  }
-
   get allSelected() {
     if (
       !this.linkedSessions ||
