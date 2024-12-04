@@ -33,13 +33,9 @@ add|ember-template-lint|no-at-ember-render-modifiers|5|2|5|2|77e3831e4ae1b00caee
 add|ember-template-lint|no-at-ember-render-modifiers|3|2|3|2|23cd787c79c34a628dadb6e96dd4004d42eebb79|1733184000000|1735776000000|1738368000000|app/components/curriculum-inventory/report-overview.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|3|2|3|2|23cd787c79c34a628dadb6e96dd4004d42eebb79|1733184000000|1735776000000|1738368000000|app/components/curriculum-inventory/report-rollover.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|4|2|4|2|5e634ade97cc174a33ee6f2fdce6c42465ec31e3|1733184000000|1735776000000|1738368000000|app/components/curriculum-inventory/report-rollover.hbs
-add|ember-template-lint|no-at-ember-render-modifiers|3|2|3|2|23cd787c79c34a628dadb6e96dd4004d42eebb79|1733184000000|1735776000000|1738368000000|app/components/curriculum-inventory/reports.hbs
-add|ember-template-lint|no-at-ember-render-modifiers|4|2|4|2|7f75978f3cd895409aab8b335e6816db689c6155|1733184000000|1735776000000|1738368000000|app/components/curriculum-inventory/reports.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|5|2|5|2|c34ed16d221405a625e5c23907f49fd55e6ba231|1733184000000|1735776000000|1738368000000|app/components/curriculum-inventory/sequence-block-header.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|6|2|6|2|6236d751dee8e47f88ffd257c6bfcec223f2b91c|1733184000000|1735776000000|1738368000000|app/components/curriculum-inventory/sequence-block-header.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|4|2|4|2|e65bc0e9138a1521733c31ef990721569f51eb20|1733184000000|1735776000000|1738368000000|app/components/curriculum-inventory/sequence-block-overview.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|5|2|5|2|bd1419d59d5caf1243719b72f63702d3b5bebc07|1733184000000|1735776000000|1738368000000|app/components/curriculum-inventory/sequence-block-overview.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|5|2|5|2|23cd787c79c34a628dadb6e96dd4004d42eebb79|1733184000000|1735776000000|1738368000000|app/components/curriculum-inventory/sequence-block-session-manager.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|6|2|6|2|394d8c8b6b1bc28f48ede0d39dcbfbb4dcd8261e|1733184000000|1735776000000|1738368000000|app/components/curriculum-inventory/sequence-block-session-manager.hbs
-remove|ember-template-lint|no-at-ember-render-modifiers|3|2|3|2|23cd787c79c34a628dadb6e96dd4004d42eebb79|1733184000000|1735776000000|1738368000000|app/components/curriculum-inventory/reports.hbs
-remove|ember-template-lint|no-at-ember-render-modifiers|4|2|4|2|7f75978f3cd895409aab8b335e6816db689c6155|1733184000000|1735776000000|1738368000000|app/components/curriculum-inventory/reports.hbs
