@@ -20,6 +20,7 @@
     <input
       id="user-file"
       type="file"
+      accept=".csv, .tsv, .txt"
       {{on "change" (pick "target.files" this.updateSelectedFile)}}
       data-test-user-upload
     />

@@ -65,6 +65,7 @@
           <input
             id="upload-{{templateId}}"
             type="file"
+            accept=".csv, .tsv, .txt"
             {{on "change" (pick "target.files" (perform this.updateSelectedFile))}}
             disabled={{this.updateSelectedFile.isRunning}}
           />
