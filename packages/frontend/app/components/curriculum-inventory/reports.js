@@ -14,7 +14,7 @@ export default class CurriculumInventoryReportsComponent extends Component {
   @tracked showNewCurriculumInventoryReportForm = false;
   @tracked _selectedSchool = null;
   @tracked _programs = [];
-  @tracked selectedProgram = null;
+  @tracked _selectedProgram = null;
 
   get sortedSchools() {
     if (!this.args.schools) {
@@ -107,6 +107,14 @@ export default class CurriculumInventoryReportsComponent extends Component {
     return [];
   }
 
+  get selectedProgram() {
+    if (this.args.programId) {
+      return findById(this.programs, this.args.programId);
+    }
+
+    return this.programs.length ? this.programs[0] : null;
+  }
+
   @cached
   get canCreateData() {
     return new TrackedAsyncData(
@@ -132,9 +140,9 @@ export default class CurriculumInventoryReportsComponent extends Component {
     }
 
     if (this.args.programId) {
-      this.selectedProgram = findById(this._programs, this.args.programId);
+      this._selectedProgram = findById(this._programs, this.args.programId);
     } else {
-      this.selectedProgram = this._programs.length ? this._programs[0] : null;
+      this._selectedProgram = this._programs.length ? this._programs[0] : null;
     }
   });
 
