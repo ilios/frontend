@@ -237,7 +237,7 @@ export default class BulkNewUsersComponent extends Component {
   parseFile = restartableTask(async (file) => {
     const proposedUsers = await this.getFileContents(file);
     this.validUsers = await filter(proposedUsers, async (obj) => {
-      return obj.isValid();
+      return await obj.isValid();
     });
 
     this.selectedUsers = this.validUsers;
