@@ -12,7 +12,7 @@ export default class CurriculumInventoryReportsComponent extends Component {
   @service permissionChecker;
 
   @tracked showNewCurriculumInventoryReportForm = false;
-  @tracked selectedSchool = null;
+  @tracked _selectedSchool = null;
   @tracked programs = [];
   @tracked selectedProgram = null;
   @tracked canCreate = false;
@@ -73,19 +73,37 @@ export default class CurriculumInventoryReportsComponent extends Component {
     this.showNewCurriculumInventoryReportForm = false;
   }
 
+  @cached
+  get selectedSchoolData() {
+    return new TrackedAsyncData(this.loadSelectedSchool(this.args.schoolId, this.args.schools));
+  }
+
+  get selectedSchool() {
+    return this.selectedSchoolData.isResolved ? this.selectedSchoolData.value : null;
+  }
+
+  async loadSelectedSchool(schoolId, schools) {
+    if (!schoolId) {
+      const user = await this.currentUser.getModel();
+      return await user.school;
+    } else {
+      return findById(schools, schoolId);
+    }
+  }
+
   load = restartableTask(async () => {
     if (!this.args.schoolId) {
       const user = await this.currentUser.getModel();
-      this.selectedSchool = await user.school;
+      this._selectedSchool = await user.school;
     } else {
-      this.selectedSchool = findById(this.args.schools, this.args.schoolId);
+      this._selectedSchool = findById(this.args.schools, this.args.schoolId);
     }
 
-    if (this.selectedSchool) {
+    if (this._selectedSchool) {
       this.canCreate = await this.permissionChecker.canCreateCurriculumInventoryReport(
-        this.selectedSchool,
+        this._selectedSchool,
       );
-      const programs = await this.selectedSchool.programs;
+      const programs = await this._selectedSchool.programs;
       this.programs = sortBy(programs, 'title');
     }
 
