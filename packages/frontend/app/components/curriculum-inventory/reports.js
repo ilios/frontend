@@ -81,6 +81,15 @@ export default class CurriculumInventoryReportsComponent extends Component {
     return this.selectedSchoolData.isResolved ? this.selectedSchoolData.value : null;
   }
 
+  async loadSelectedSchool(schoolId, schools) {
+    if (!schoolId) {
+      const user = await this.currentUser.getModel();
+      return await user.school;
+    } else {
+      return findById(schools, schoolId);
+    }
+  }
+
   @cached
   get programsData() {
     return new TrackedAsyncData(this.loadProgramsInSelectedSchool(this.selectedSchool));
@@ -107,15 +116,6 @@ export default class CurriculumInventoryReportsComponent extends Component {
 
   get canCreate() {
     return this.canCreateData.isResolved ? this.canCreateData.value : false;
-  }
-
-  async loadSelectedSchool(schoolId, schools) {
-    if (!schoolId) {
-      const user = await this.currentUser.getModel();
-      return await user.school;
-    } else {
-      return findById(schools, schoolId);
-    }
   }
 
   load = restartableTask(async () => {
