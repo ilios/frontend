@@ -1,16 +1,10 @@
 <div
   class="curriculum-inventory-verification-preview"
   data-test-curriculum-inventory-verification-preview
-  {{did-insert (perform this.load) @report}}
-  {{did-update (perform this.load) @report}}
   ...attributes
 >
   {{#if this.tables}}
-    <ul
-      class="table-of-contents"
-      data-test-table-of-contents
-      {{did-insert this.setScrollTarget "toc"}}
-    >
+    <ul class="table-of-contents" data-test-table-of-contents>
       <li>
         <button class="link link-button" type="button" {{on "click" (fn this.scrollTo "table1")}}>
           {{t "general.table1ProgramExpectationsMappedToPcrs"}}
@@ -59,13 +53,11 @@
     </ul>
     <CurriculumInventory::VerificationPreviewTable1
       @data={{this.tables.program_expectations_mapped_to_pcrs}}
-      {{did-insert this.setScrollTarget "table1"}}
     />
     <button
       class="link link-button back-to-toc"
       type="button"
       {{on "click" (fn this.scrollTo "toc")}}
-      {{did-insert this.setScrollTarget "table2"}}
     >
       {{t "general.backToTableOfContents"}}
     </button>
@@ -76,7 +68,6 @@
       class="link link-button back-to-toc"
       type="button"
       {{on "click" (fn this.scrollTo "toc")}}
-      {{did-insert this.setScrollTarget "table3a"}}
     >
       {{t "general.backToTableOfContents"}}
     </button>
@@ -87,7 +78,6 @@
       class="link link-button back-to-toc"
       type="button"
       {{on "click" (fn this.scrollTo "toc")}}
-      {{did-insert this.setScrollTarget "table3b"}}
     >
       {{t "general.backToTableOfContents"}}
     </button>
@@ -98,7 +88,6 @@
       class="link link-button back-to-toc"
       type="button"
       {{on "click" (fn this.scrollTo "toc")}}
-      {{did-insert this.setScrollTarget "table4"}}
     >
       {{t "general.backToTableOfContents"}}
     </button>
@@ -109,7 +98,6 @@
       class="link link-button back-to-toc"
       type="button"
       {{on "click" (fn this.scrollTo "toc")}}
-      {{did-insert this.setScrollTarget "table5"}}
     >
       {{t "general.backToTableOfContents"}}
     </button>
@@ -120,7 +108,6 @@
       class="link link-button back-to-toc"
       type="button"
       {{on "click" (fn this.scrollTo "toc")}}
-      {{did-insert this.setScrollTarget "table6"}}
     >
       {{t "general.backToTableOfContents"}}
     </button>
@@ -131,7 +118,6 @@
       class="link link-button back-to-toc"
       type="button"
       {{on "click" (fn this.scrollTo "toc")}}
-      {{did-insert this.setScrollTarget "table7"}}
     >
       {{t "general.backToTableOfContents"}}
     </button>
@@ -142,7 +128,6 @@
       class="link link-button back-to-toc"
       type="button"
       {{on "click" (fn this.scrollTo "toc")}}
-      {{did-insert this.setScrollTarget "table8"}}
     >
       {{t "general.backToTableOfContents"}}
     </button>
