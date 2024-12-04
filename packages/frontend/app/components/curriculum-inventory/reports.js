@@ -70,14 +70,14 @@ export default class CurriculumInventoryReportsComponent extends Component {
 
   @cached
   get selectedSchoolData() {
-    return new TrackedAsyncData(this.loadSelectedSchool(this.args.schoolId, this.args.schools));
+    return new TrackedAsyncData(this.getSelectedSchool(this.args.schoolId, this.args.schools));
   }
 
   get selectedSchool() {
     return this.selectedSchoolData.isResolved ? this.selectedSchoolData.value : null;
   }
 
-  async loadSelectedSchool(schoolId, schools) {
+  async getSelectedSchool(schoolId, schools) {
     if (!schoolId) {
       const user = await this.currentUser.getModel();
       return await user.school;
@@ -88,14 +88,14 @@ export default class CurriculumInventoryReportsComponent extends Component {
 
   @cached
   get programsData() {
-    return new TrackedAsyncData(this.loadProgramsInSelectedSchool(this.selectedSchool));
+    return new TrackedAsyncData(this.getProgramsInSelectedSchool(this.selectedSchool));
   }
 
   get programs() {
     return this.programsData.isResolved ? this.programsData.value : [];
   }
 
-  async loadProgramsInSelectedSchool(school) {
+  async getProgramsInSelectedSchool(school) {
     if (school) {
       const programs = await school.programs;
       return sortBy(programs, 'title');
