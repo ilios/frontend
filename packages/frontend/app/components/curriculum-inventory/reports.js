@@ -13,7 +13,7 @@ export default class CurriculumInventoryReportsComponent extends Component {
 
   @tracked showNewCurriculumInventoryReportForm = false;
   @tracked _selectedSchool = null;
-  @tracked programs = [];
+  @tracked _programs = [];
   @tracked selectedProgram = null;
 
   get sortedSchools() {
@@ -42,7 +42,7 @@ export default class CurriculumInventoryReportsComponent extends Component {
 
   @action
   async changeSelectedProgram(programId) {
-    const program = findById(this.programs, programId);
+    const program = findById(this._programs, programId);
     const school = await program.school;
     this.args.setSchoolId(school.id);
     this.args.setProgramId(programId);
@@ -82,6 +82,23 @@ export default class CurriculumInventoryReportsComponent extends Component {
   }
 
   @cached
+  get programsData() {
+    return new TrackedAsyncData(this.loadProgramsInSelectedSchool(this.selectedSchool));
+  }
+
+  get programs() {
+    return this.programsData.isResolved ? this.programsData.value : [];
+  }
+
+  async loadProgramsInSelectedSchool(school) {
+    if (school) {
+      const programs = await school.programs;
+      return sortBy(programs, 'title');
+    }
+    return [];
+  }
+
+  @cached
   get canCreateData() {
     return new TrackedAsyncData(
       this.permissionChecker.canCreateCurriculumInventoryReport(this.selectedSchool),
@@ -111,13 +128,13 @@ export default class CurriculumInventoryReportsComponent extends Component {
 
     if (this._selectedSchool) {
       const programs = await this._selectedSchool.programs;
-      this.programs = sortBy(programs, 'title');
+      this._programs = sortBy(programs, 'title');
     }
 
     if (this.args.programId) {
-      this.selectedProgram = findById(this.programs, this.args.programId);
+      this.selectedProgram = findById(this._programs, this.args.programId);
     } else {
-      this.selectedProgram = this.programs.length ? this.programs[0] : null;
+      this.selectedProgram = this._programs.length ? this._programs[0] : null;
     }
   });
 
