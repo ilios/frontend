@@ -12,12 +12,21 @@ export default class CurriculumInventoryReportsComponent extends Component {
   @service permissionChecker;
 
   @tracked showNewCurriculumInventoryReportForm = false;
-  @tracked hasMoreThanOneSchool = false;
   @tracked selectedSchool = null;
-  @tracked sortedSchools = [];
   @tracked programs = [];
   @tracked selectedProgram = null;
   @tracked canCreate = false;
+
+  get sortedSchools() {
+    if (!this.args.schools) {
+      return [];
+    }
+    return sortBy(this.args.schools, 'title');
+  }
+
+  get hasMoreThanOneSchool() {
+    return this.sortedSchools.length > 1;
+  }
 
   @cached
   get reportsData() {
@@ -65,12 +74,6 @@ export default class CurriculumInventoryReportsComponent extends Component {
   }
 
   load = restartableTask(async () => {
-    if (!this.args.schools) {
-      return;
-    }
-    this.sortedSchools = sortBy(this.args.schools, 'title');
-    this.hasMoreThanOneSchool = this.sortedSchools.length > 1;
-
     if (!this.args.schoolId) {
       const user = await this.currentUser.getModel();
       this.selectedSchool = await user.school;
