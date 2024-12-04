@@ -2,7 +2,7 @@ import Component from '@glimmer/component';
 import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
-import { dropTask, restartableTask } from 'ember-concurrency';
+import { dropTask } from 'ember-concurrency';
 import { findById, sortBy } from 'ilios-common/utils/array-helpers';
 import { TrackedAsyncData } from 'ember-async-data';
 
@@ -10,11 +10,7 @@ export default class CurriculumInventoryReportsComponent extends Component {
   @service currentUser;
   @service intl;
   @service permissionChecker;
-
   @tracked showNewCurriculumInventoryReportForm = false;
-  @tracked _selectedSchool = null;
-  @tracked _programs = [];
-  @tracked _selectedProgram = null;
 
   get sortedSchools() {
     if (!this.args.schools) {
@@ -42,7 +38,7 @@ export default class CurriculumInventoryReportsComponent extends Component {
 
   @action
   async changeSelectedProgram(programId) {
-    const program = findById(this._programs, programId);
+    const program = findById(this.programs, programId);
     const school = await program.school;
     this.args.setSchoolId(school.id);
     this.args.setProgramId(programId);
@@ -125,26 +121,6 @@ export default class CurriculumInventoryReportsComponent extends Component {
   get canCreate() {
     return this.canCreateData.isResolved ? this.canCreateData.value : false;
   }
-
-  load = restartableTask(async () => {
-    if (!this.args.schoolId) {
-      const user = await this.currentUser.getModel();
-      this._selectedSchool = await user.school;
-    } else {
-      this._selectedSchool = findById(this.args.schools, this.args.schoolId);
-    }
-
-    if (this._selectedSchool) {
-      const programs = await this._selectedSchool.programs;
-      this._programs = sortBy(programs, 'title');
-    }
-
-    if (this.args.programId) {
-      this._selectedProgram = findById(this._programs, this.args.programId);
-    } else {
-      this._selectedProgram = this._programs.length ? this._programs[0] : null;
-    }
-  });
 
   removeCurriculumInventoryReport = dropTask(async (report) => {
     const reports = await this.selectedProgram.curriculumInventoryReports;
