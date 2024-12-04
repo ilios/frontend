@@ -15,7 +15,6 @@ export default class CurriculumInventoryReportsComponent extends Component {
   @tracked _selectedSchool = null;
   @tracked programs = [];
   @tracked selectedProgram = null;
-  @tracked canCreate = false;
 
   get sortedSchools() {
     if (!this.args.schools) {
@@ -82,6 +81,17 @@ export default class CurriculumInventoryReportsComponent extends Component {
     return this.selectedSchoolData.isResolved ? this.selectedSchoolData.value : null;
   }
 
+  @cached
+  get canCreateData() {
+    return new TrackedAsyncData(
+      this.permissionChecker.canCreateCurriculumInventoryReport(this.selectedSchool),
+    );
+  }
+
+  get canCreate() {
+    return this.canCreateData.isResolved ? this.canCreateData.value : false;
+  }
+
   async loadSelectedSchool(schoolId, schools) {
     if (!schoolId) {
       const user = await this.currentUser.getModel();
@@ -100,9 +110,6 @@ export default class CurriculumInventoryReportsComponent extends Component {
     }
 
     if (this._selectedSchool) {
-      this.canCreate = await this.permissionChecker.canCreateCurriculumInventoryReport(
-        this._selectedSchool,
-      );
       const programs = await this._selectedSchool.programs;
       this.programs = sortBy(programs, 'title');
     }
