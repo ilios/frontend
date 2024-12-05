@@ -2,7 +2,7 @@ import Component from '@glimmer/component';
 import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
-import { dropTask, restartableTask } from 'ember-concurrency';
+import { dropTask } from 'ember-concurrency';
 import { findById, sortBy } from 'ilios-common/utils/array-helpers';
 import { TrackedAsyncData } from 'ember-async-data';
 
@@ -10,14 +10,18 @@ export default class CurriculumInventoryReportsComponent extends Component {
   @service currentUser;
   @service intl;
   @service permissionChecker;
-
   @tracked showNewCurriculumInventoryReportForm = false;
-  @tracked hasMoreThanOneSchool = false;
-  @tracked selectedSchool = null;
-  @tracked sortedSchools = [];
-  @tracked programs = [];
-  @tracked selectedProgram = null;
-  @tracked canCreate = false;
+
+  get sortedSchools() {
+    if (!this.args.schools) {
+      return [];
+    }
+    return sortBy(this.args.schools, 'title');
+  }
+
+  get hasMoreThanOneSchool() {
+    return this.sortedSchools.length > 1;
+  }
 
   @cached
   get reportsData() {
@@ -64,34 +68,59 @@ export default class CurriculumInventoryReportsComponent extends Component {
     this.showNewCurriculumInventoryReportForm = false;
   }
 
-  load = restartableTask(async () => {
-    if (!this.args.schools) {
-      return;
-    }
-    this.sortedSchools = sortBy(this.args.schools, 'title');
-    this.hasMoreThanOneSchool = this.sortedSchools.length > 1;
+  @cached
+  get selectedSchoolData() {
+    return new TrackedAsyncData(this.getSelectedSchool(this.args.schoolId, this.args.schools));
+  }
 
-    if (!this.args.schoolId) {
+  get selectedSchool() {
+    return this.selectedSchoolData.isResolved ? this.selectedSchoolData.value : null;
+  }
+
+  async getSelectedSchool(schoolId, schools) {
+    if (!schoolId) {
       const user = await this.currentUser.getModel();
-      this.selectedSchool = await user.school;
+      return await user.school;
     } else {
-      this.selectedSchool = findById(this.args.schools, this.args.schoolId);
+      return findById(schools, schoolId);
     }
+  }
 
-    if (this.selectedSchool) {
-      this.canCreate = await this.permissionChecker.canCreateCurriculumInventoryReport(
-        this.selectedSchool,
-      );
-      const programs = await this.selectedSchool.programs;
-      this.programs = sortBy(programs, 'title');
+  @cached
+  get programsData() {
+    return new TrackedAsyncData(this.getProgramsInSelectedSchool(this.selectedSchool));
+  }
+
+  get programs() {
+    return this.programsData.isResolved ? this.programsData.value : [];
+  }
+
+  async getProgramsInSelectedSchool(school) {
+    if (school) {
+      const programs = await school.programs;
+      return sortBy(programs, 'title');
     }
+    return [];
+  }
 
+  get selectedProgram() {
     if (this.args.programId) {
-      this.selectedProgram = findById(this.programs, this.args.programId);
-    } else {
-      this.selectedProgram = this.programs.length ? this.programs[0] : null;
+      return findById(this.programs, this.args.programId);
     }
-  });
+
+    return this.programs.length ? this.programs[0] : null;
+  }
+
+  @cached
+  get canCreateData() {
+    return new TrackedAsyncData(
+      this.permissionChecker.canCreateCurriculumInventoryReport(this.selectedSchool),
+    );
+  }
+
+  get canCreate() {
+    return this.canCreateData.isResolved ? this.canCreateData.value : false;
+  }
 
   removeCurriculumInventoryReport = dropTask(async (report) => {
     const reports = await this.selectedProgram.curriculumInventoryReports;
