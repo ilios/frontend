@@ -8,9 +8,9 @@ const definition = {
     isFaded: hasClass('faded'),
   },
   control: {
-    scope: '[data-test-fade-text-control]',
-    toggle: clickable('[data-test-expand]'),
-    toggleMode: attribute('aria-label', '[data-test-expand]'),
+    expand: clickable('[data-test-expand]'),
+    collapse: clickable('[data-test-collapse]'),
+    toggleMode: attribute('aria-label'),
   },
   expand: {
     scope: '[data-test-expand]',
