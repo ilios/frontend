@@ -2,7 +2,7 @@ import { module, test } from 'qunit';
 import { setupAuthentication } from 'ilios-common';
 import { setupApplicationTest } from 'frontend/tests/helpers';
 // import { getUniqueName } from '../../helpers/percy-snapshot-name';
-// import { pauseTest } from '@ember/test-helpers';
+import { waitFor } from '@ember/test-helpers';
 import page from 'ilios-common/page-objects/course';
 // import percySnapshot from '@percy/ember';
 
@@ -68,7 +68,6 @@ module('Acceptance | Course - Objective Parents - Faded Status Sync', function (
   });
 
   test('objective description and parent objectives faded statuses are synced', async function (assert) {
-    // assert.expect(18);
     this.user.update({ administeredSchools: [this.school] });
 
     await page.visit({
@@ -77,7 +76,8 @@ module('Acceptance | Course - Objective Parents - Faded Status Sync', function (
       courseObjectiveDetails: true,
     });
 
-    // await pauseTest();
+    // slight delay to allow for proper loading of component
+    await waitFor(this.fadedSelector);
 
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives.length,
@@ -85,62 +85,256 @@ module('Acceptance | Course - Objective Parents - Faded Status Sync', function (
       'course objective count is 3',
     );
 
+    /*
+      1st option: col1 long/col2 short
+    */
+
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[0].description.text,
       this.longObjDescription,
-      'first course objective title is long',
+      '1st objective title is long',
     );
-    assert.dom('#objective-1 .display-text-wrapper', this.element).hasClass(this.fadedClass);
+    assert.ok(
+      page.details.objectives.objectiveList.objectives[0].description.fadeText.enabled,
+      '1st objective is fade-enabled',
+    );
+    assert.ok(
+      page.details.objectives.objectiveList.objectives[0].description.fadeText.displayText.isFaded,
+      '1st objective long title is faded',
+    );
+    assert.ok(
+      page.details.objectives.objectiveList.objectives[0].description.fadeText.control.expand,
+      '1st objective long title has expand button',
+    );
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[0].parents.list.length,
       1,
-      'first course objective has one parent objective',
+      '1st objective has one parent objective',
     );
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[0].parents.list[0].text,
       'program-year objective 0',
-      "first course objective's parent objective's title is short",
+      '1st parent objective title is short',
     );
-    assert
-      .dom('#objective-1 .display-text-wrapper', this.element)
-      .doesNotHaveClass(this.fadedClass);
+    assert.notOk(
+      page.details.objectives.objectiveList.objectives[0].parents.fadeText.enabled,
+      '1st parent objective is not fade-enabled',
+    );
+
+    await page.details.objectives.objectiveList.objectives[0].description.fadeText.control.expand();
+
+    assert.notOk(
+      page.details.objectives.objectiveList.objectives[0].description.fadeText.displayText.isFaded,
+      '1st objective long title is no longer faded',
+    );
+    assert.ok(
+      page.details.objectives.objectiveList.objectives[0].description.fadeText.control.collapse,
+      '1st objective long title now has collapse button',
+    );
+    assert.notOk(
+      page.details.objectives.objectiveList.objectives[0].parents.fadeText.enabled,
+      '1st parent objective is still not fade-enabled',
+    );
+
+    await page.details.objectives.objectiveList.objectives[0].description.fadeText.control.collapse();
+
+    assert.ok(
+      page.details.objectives.objectiveList.objectives[0].description.fadeText.displayText.isFaded,
+      '1st objective long title is faded again',
+    );
+    assert.ok(
+      page.details.objectives.objectiveList.objectives[0].description.fadeText.control.expand,
+      '1st objective long title now has expand button',
+    );
+    assert.notOk(
+      page.details.objectives.objectiveList.objectives[0].parents.fadeText.enabled,
+      '1st parent objective is still not fade-enabled',
+    );
+
+    /*
+      2nd option: col1 short/col2 long
+    */
 
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[1].description.text,
       'course objective 1',
-      'second course objective title is short',
+      '2nd objective title is short',
     );
-    assert
-      .dom('#objective-2 .display-text-wrapper', this.element)
-      .doesNotHaveClass(this.fadedClass);
+    assert.notOk(
+      page.details.objectives.objectiveList.objectives[1].description.fadeText.enabled,
+      '2nd objective is not fade-enabled',
+    );
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[1].parents.list.length,
       1,
-      'second course objective has one parent objective',
+      '2nd objective has one parent objective',
     );
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[1].parents.list[0].text,
       this.longParentObjTitle,
-      "second course objective's parent objective's title is long",
+      '2nd parent objective title is long',
     );
-    assert.dom('#objective-2 .display-text-wrapper', this.element).hasClass(this.fadedClass);
+    assert.ok(
+      page.details.objectives.objectiveList.objectives[1].parents.fadeText.enabled,
+      '2nd parent objective title is fade-enabled',
+    );
+    assert.ok(
+      page.details.objectives.objectiveList.objectives[1].parents.fadeText.displayText.isFaded,
+      '2nd parent objective long title is faded',
+    );
+    assert.ok(
+      page.details.objectives.objectiveList.objectives[1].parents.fadeText.control.expand,
+      '2nd parent objective long title has expand button',
+    );
+
+    await page.details.objectives.objectiveList.objectives[1].parents.fadeText.control.expand();
+
+    assert.notOk(
+      page.details.objectives.objectiveList.objectives[1].parents.fadeText.displayText.isFaded,
+      '2nd parent objective long title is no longer faded',
+    );
+    assert.ok(
+      page.details.objectives.objectiveList.objectives[1].parents.fadeText.control.collapse,
+      '2nd parent objective long title now has collapse button',
+    );
+    assert.notOk(
+      page.details.objectives.objectiveList.objectives[1].description.fadeText.enabled,
+      '2nd objective is still not fade-enabled',
+    );
+
+    await page.details.objectives.objectiveList.objectives[1].parents.fadeText.control.collapse();
+
+    assert.ok(
+      page.details.objectives.objectiveList.objectives[1].parents.fadeText.displayText.isFaded,
+      '2nd parent objective long title is faded again',
+    );
+    assert.ok(
+      page.details.objectives.objectiveList.objectives[1].parents.fadeText.control.expand,
+      '2nd objective long title now has expand button',
+    );
+    assert.notOk(
+      page.details.objectives.objectiveList.objectives[1].description.fadeText.enabled,
+      '2nd parent objective is still not fade-enabled',
+    );
+
+    /*
+      3rd option: col1 long/col2 long
+    */
 
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[2].description.text,
       this.longObjDescription,
-      'third course objective title is long',
+      '3rd objective title is long',
     );
-    assert.dom('#objective-3 .display-text-wrapper', this.element).hasClass(this.fadedClass);
+    assert.ok(
+      page.details.objectives.objectiveList.objectives[2].description.fadeText.enabled,
+      '3rd objective is fade-enabled',
+    );
+    assert.ok(
+      page.details.objectives.objectiveList.objectives[2].description.fadeText.displayText.isFaded,
+      '3rd objective long title is faded',
+    );
+    assert.ok(
+      page.details.objectives.objectiveList.objectives[2].description.fadeText.control.expand,
+      '3rd objective long title has expand button',
+    );
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[2].parents.list.length,
       1,
-      'third course objective has one parent objective',
+      '3rd objective has one parent objective',
     );
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[2].parents.list[0].text,
       this.longParentObjTitle,
-      "third course objective's parent objective's title is long",
+      '3rd parent objective title is long',
     );
-    assert.dom('#objective-3 .display-text-wrapper', this.element).hasClass(this.fadedClass);
+    assert.ok(
+      page.details.objectives.objectiveList.objectives[2].parents.fadeText.enabled,
+      '3rd parent objective title is fade-enabled',
+    );
+    assert.ok(
+      page.details.objectives.objectiveList.objectives[2].parents.fadeText.displayText.isFaded,
+      '3rd parent objective long title is faded',
+    );
+    assert.ok(
+      page.details.objectives.objectiveList.objectives[2].parents.fadeText.control.expand,
+      '3rd parent objective long title has expand button',
+    );
+
+    await page.details.objectives.objectiveList.objectives[2].description.fadeText.control.expand();
+
+    assert.notOk(
+      page.details.objectives.objectiveList.objectives[2].description.fadeText.displayText.isFaded,
+      '3rd objective long title is no longer faded',
+    );
+    assert.ok(
+      page.details.objectives.objectiveList.objectives[2].description.fadeText.control.collapse,
+      '3rd objective long title now has collapse button',
+    );
+    assert.notOk(
+      page.details.objectives.objectiveList.objectives[2].parents.fadeText.displayText.isFaded,
+      '3rd parent objective long title is no longer faded',
+    );
+    assert.ok(
+      page.details.objectives.objectiveList.objectives[2].parents.fadeText.control.collapse,
+      '3rd parent objective long title now has collapse button',
+    );
+
+    await page.details.objectives.objectiveList.objectives[2].description.fadeText.control.collapse();
+
+    assert.ok(
+      page.details.objectives.objectiveList.objectives[2].description.fadeText.displayText.isFaded,
+      '3rd objective long title is faded again',
+    );
+    assert.ok(
+      page.details.objectives.objectiveList.objectives[2].description.fadeText.control.expand,
+      '3rd objective long title now has expand button',
+    );
+    assert.ok(
+      page.details.objectives.objectiveList.objectives[2].parents.fadeText.displayText.isFaded,
+      '3rd parent objective long title is faded again',
+    );
+    assert.ok(
+      page.details.objectives.objectiveList.objectives[2].parents.fadeText.control.expand,
+      '3rd parent objective long title now has expand button',
+    );
+
+    await page.details.objectives.objectiveList.objectives[2].parents.fadeText.control.expand();
+
+    assert.notOk(
+      page.details.objectives.objectiveList.objectives[2].description.fadeText.displayText.isFaded,
+      '3rd objective long title is no longer faded',
+    );
+    assert.ok(
+      page.details.objectives.objectiveList.objectives[2].description.fadeText.control.collapse,
+      '3rd objective long title now has collapse button',
+    );
+    assert.notOk(
+      page.details.objectives.objectiveList.objectives[2].parents.fadeText.displayText.isFaded,
+      '3rd parent objective long title is no longer faded',
+    );
+    assert.ok(
+      page.details.objectives.objectiveList.objectives[2].parents.fadeText.control.collapse,
+      '3rd parent objective long title now has collapse button',
+    );
+
+    await page.details.objectives.objectiveList.objectives[2].parents.fadeText.control.collapse();
+
+    assert.ok(
+      page.details.objectives.objectiveList.objectives[2].description.fadeText.displayText.isFaded,
+      '3rd objective long title is faded again',
+    );
+    assert.ok(
+      page.details.objectives.objectiveList.objectives[2].description.fadeText.control.expand,
+      '3rd objective long title now has expand button',
+    );
+    assert.ok(
+      page.details.objectives.objectiveList.objectives[2].parents.fadeText.displayText.isFaded,
+      '3rd parent objective long title is faded again',
+    );
+    assert.ok(
+      page.details.objectives.objectiveList.objectives[2].parents.fadeText.control.expand,
+      '3rd parent objective long title now has expand button',
+    );
   });
 });
