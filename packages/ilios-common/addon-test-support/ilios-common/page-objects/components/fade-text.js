@@ -8,15 +8,15 @@ const definition = {
     isFaded: hasClass('faded'),
   },
   control: {
-    expand: clickable('[data-test-expand]'),
-    collapse: clickable('[data-test-collapse]'),
+    expand: {
+      scope: '[data-test-expand]',
+      click: clickable(),
+    },
+    collapse: {
+      scope: '[data-test-collapse]',
+      click: clickable(),
+    },
     toggleMode: attribute('aria-label'),
-  },
-  expand: {
-    scope: '[data-test-expand]',
-  },
-  collapse: {
-    scope: '[data-test-collapse]',
   },
 };
 

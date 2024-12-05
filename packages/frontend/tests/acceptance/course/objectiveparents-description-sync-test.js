@@ -121,7 +121,7 @@ module('Acceptance | Course - Objective Parents - Faded Status Sync', function (
       '1st parent objective is not fade-enabled',
     );
 
-    await page.details.objectives.objectiveList.objectives[0].description.fadeText.control.expand();
+    await page.details.objectives.objectiveList.objectives[0].description.fadeText.control.expand.click();
 
     assert.notOk(
       page.details.objectives.objectiveList.objectives[0].description.fadeText.displayText.isFaded,
@@ -136,7 +136,7 @@ module('Acceptance | Course - Objective Parents - Faded Status Sync', function (
       '1st parent objective is still not fade-enabled',
     );
 
-    await page.details.objectives.objectiveList.objectives[0].description.fadeText.control.collapse();
+    await page.details.objectives.objectiveList.objectives[0].description.fadeText.control.collapse.click();
 
     assert.ok(
       page.details.objectives.objectiveList.objectives[0].description.fadeText.displayText.isFaded,
@@ -187,7 +187,7 @@ module('Acceptance | Course - Objective Parents - Faded Status Sync', function (
       '2nd parent objective long title has expand button',
     );
 
-    await page.details.objectives.objectiveList.objectives[1].parents.fadeText.control.expand();
+    await page.details.objectives.objectiveList.objectives[1].parents.fadeText.control.expand.click();
 
     assert.notOk(
       page.details.objectives.objectiveList.objectives[1].parents.fadeText.displayText.isFaded,
@@ -202,7 +202,7 @@ module('Acceptance | Course - Objective Parents - Faded Status Sync', function (
       '2nd objective is still not fade-enabled',
     );
 
-    await page.details.objectives.objectiveList.objectives[1].parents.fadeText.control.collapse();
+    await page.details.objectives.objectiveList.objectives[1].parents.fadeText.control.collapse.click();
 
     assert.ok(
       page.details.objectives.objectiveList.objectives[1].parents.fadeText.displayText.isFaded,
@@ -261,7 +261,7 @@ module('Acceptance | Course - Objective Parents - Faded Status Sync', function (
       '3rd parent objective long title has expand button',
     );
 
-    await page.details.objectives.objectiveList.objectives[2].description.fadeText.control.expand();
+    await page.details.objectives.objectiveList.objectives[2].description.fadeText.control.expand.click();
 
     assert.notOk(
       page.details.objectives.objectiveList.objectives[2].description.fadeText.displayText.isFaded,
@@ -280,7 +280,7 @@ module('Acceptance | Course - Objective Parents - Faded Status Sync', function (
       '3rd parent objective long title now has collapse button',
     );
 
-    await page.details.objectives.objectiveList.objectives[2].description.fadeText.control.collapse();
+    await page.details.objectives.objectiveList.objectives[2].description.fadeText.control.collapse.click();
 
     assert.ok(
       page.details.objectives.objectiveList.objectives[2].description.fadeText.displayText.isFaded,
@@ -299,7 +299,7 @@ module('Acceptance | Course - Objective Parents - Faded Status Sync', function (
       '3rd parent objective long title now has expand button',
     );
 
-    await page.details.objectives.objectiveList.objectives[2].parents.fadeText.control.expand();
+    await page.details.objectives.objectiveList.objectives[2].parents.fadeText.control.expand.click();
 
     assert.notOk(
       page.details.objectives.objectiveList.objectives[2].description.fadeText.displayText.isFaded,
@@ -318,7 +318,7 @@ module('Acceptance | Course - Objective Parents - Faded Status Sync', function (
       '3rd parent objective long title now has collapse button',
     );
 
-    await page.details.objectives.objectiveList.objectives[2].parents.fadeText.control.collapse();
+    await page.details.objectives.objectiveList.objectives[2].parents.fadeText.control.collapse.click();
 
     assert.ok(
       page.details.objectives.objectiveList.objectives[2].description.fadeText.displayText.isFaded,

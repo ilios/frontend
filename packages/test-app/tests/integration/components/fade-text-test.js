@@ -41,9 +41,7 @@ module('Integration | Component | fade-text', function (hooks) {
     this.set('shortText', shortText);
 
     await render(hbs`<FadeText @text={{this.shortText}} />`);
-    assert.strictEqual(component.text, shortText);
-    assert.notOk(component.collapse.isVisible);
-    assert.notOk(component.expand.isVisible);
+    assert.notOk(component.enabled);
 
     await render(hbs`<FadeText>
   {{this.shortText}}
@@ -68,12 +66,12 @@ module('Integration | Component | fade-text', function (hooks) {
     assert.false(this.expanded);
     assert.dom('.display-text-wrapper', this.element).hasClass(this.fadedClass);
 
-    await component.expand.click();
+    await component.control.expand.click();
 
     assert.true(this.expanded);
     assert.dom('.display-text-wrapper', this.element).doesNotHaveClass(this.fadedClass);
 
-    await component.collapse.click();
+    await component.control.collapse.click();
 
     // slight delay to allow for proper loading of component
     await waitFor(this.fadedSelector);
@@ -118,12 +116,12 @@ module('Integration | Component | fade-text', function (hooks) {
     assert.false(this.expanded);
     assert.dom('.display-text-wrapper', this.element).hasClass(this.fadedClass);
 
-    await component.expand.click();
+    await component.control.expand.click();
 
     assert.true(this.expanded);
     assert.dom('.display-text-wrapper', this.element).doesNotHaveClass(this.fadedClass);
 
-    await component.collapse.click();
+    await component.control.collapse.click();
 
     // slight delay to allow for proper loading of component
     await waitFor(this.fadedSelector);
@@ -149,26 +147,26 @@ module('Integration | Component | fade-text', function (hooks) {
     await waitFor(this.fadedSelector);
 
     assert.false(this.expanded);
-    assert.dom('.display-text-wrapper', this.element).hasClass(this.fadedClass);
+    assert.ok(component.displayText.isFaded, 'text is faded');
     assert.strictEqual(component.text, longText, 'component text matches');
-    assert.ok(component.expand.isVisible, 'expand button is visible');
-    assert.notOk(component.collapse.isVisible, 'collapse button is NOT visible');
+    assert.ok(component.control.expand.isVisible, 'expand button is visible');
+    assert.notOk(component.control.collapse.isVisible, 'collapse button is NOT visible');
 
-    await component.expand.click();
+    await component.control.expand.click();
 
     assert.true(this.expanded);
-    assert.dom('.display-text-wrapper', this.element).doesNotHaveClass(this.fadedClass);
-    assert.notOk(component.expand.isVisible, 'expand button is NOT visible');
-    assert.ok(component.collapse.isVisible, 'collpase button is visible');
+    assert.notOk(component.displayText.isFaded, 'text is NOT faded');
+    assert.notOk(component.control.expand.isVisible, 'expand button is NOT visible');
+    assert.ok(component.control.collapse.isVisible, 'collpase button is visible');
 
-    await component.collapse.click();
+    await component.control.collapse.click();
 
     // slight delay to allow for proper loading of component
     await waitFor(this.fadedSelector);
 
     assert.false(this.expanded);
-    assert.dom('.display-text-wrapper', this.element).hasClass(this.fadedClass);
-    assert.ok(component.expand.isVisible);
-    assert.notOk(component.collapse.isVisible);
+    assert.ok(component.displayText.isFaded, 'text is faded');
+    assert.ok(component.control.expand.isVisible, 'expand button is visible');
+    assert.notOk(component.control.collapse.isVisible, 'collapse button is NOT visible');
   });
 });
