@@ -1,12 +1,22 @@
-import { create } from 'ember-cli-page-object';
+import { attribute, clickable, create, hasClass, isPresent } from 'ember-cli-page-object';
 
 const definition = {
   scope: '[data-test-fade-text]',
-  expand: {
-    scope: '[data-test-expand]',
+  enabled: isPresent('[data-test-fade-text-control]'),
+  displayText: {
+    scope: '.display-text-wrapper',
+    isFaded: hasClass('faded'),
   },
-  collapse: {
-    scope: '[data-test-collapse]',
+  control: {
+    expand: {
+      scope: '[data-test-expand]',
+      click: clickable(),
+    },
+    collapse: {
+      scope: '[data-test-collapse]',
+      click: clickable(),
+    },
+    toggleMode: attribute('aria-label'),
   },
 };
 

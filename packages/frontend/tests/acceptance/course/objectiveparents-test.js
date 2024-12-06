@@ -66,7 +66,7 @@ module('Acceptance | Course - Objective Parents', function (hooks) {
       'program-year objective 0',
     );
 
-    await page.details.objectives.objectiveList.objectives[0].parents.list[0].manage();
+    await page.details.objectives.objectiveList.objectives[0].parents.manage();
     const m = page.details.objectives.objectiveList.objectives[0].parentManager;
 
     assert.strictEqual(m.selectedCohortTitle, 'program 0 cohort 0');
@@ -108,7 +108,7 @@ module('Acceptance | Course - Objective Parents', function (hooks) {
     );
 
     await percySnapshot(getUniqueName(assert, 'default background color'));
-    await page.details.objectives.objectiveList.objectives[0].parents.list[0].manage();
+    await page.details.objectives.objectiveList.objectives[0].parents.manage();
     await percySnapshot(getUniqueName(assert, 'default background color'));
 
     const m = page.details.objectives.objectiveList.objectives[0].parentManager;
@@ -152,7 +152,7 @@ module('Acceptance | Course - Objective Parents', function (hooks) {
     );
 
     await percySnapshot(getUniqueName(assert, 'default background color'));
-    await page.details.objectives.objectiveList.objectives[0].parents.list[0].manage();
+    await page.details.objectives.objectiveList.objectives[0].parents.manage();
     await percySnapshot(getUniqueName(assert, 'managed background color'));
 
     const m = page.details.objectives.objectiveList.objectives[0].parentManager;

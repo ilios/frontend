@@ -38,7 +38,11 @@
           {{/unless}}
           <span class="draggable-object-content">
             <span>
-              <FadeText @text={{item.title}} />
+              <FadeText
+                @text={{item.title}}
+                @expanded={{this.expanded}}
+                @onExpandAll={{this.toggleExpansion}}
+              />
             </span>
           </span>
         </li>

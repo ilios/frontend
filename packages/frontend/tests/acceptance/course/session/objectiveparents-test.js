@@ -51,7 +51,7 @@ module('Acceptance | Session - Objective Parents', function (hooks) {
     );
 
     await percySnapshot(getUniqueName(assert, 'default background color'));
-    await page.details.objectives.objectiveList.objectives[0].parents.list[0].manage();
+    await page.details.objectives.objectiveList.objectives[0].parents.manage();
     await percySnapshot(getUniqueName(assert, 'managed background color'));
 
     const m = page.details.objectives.objectiveList.objectives[0].parentManager;
@@ -90,7 +90,7 @@ module('Acceptance | Session - Objective Parents', function (hooks) {
     );
 
     await percySnapshot(getUniqueName(assert, 'default background color'));
-    await page.details.objectives.objectiveList.objectives[0].parents.list[0].manage();
+    await page.details.objectives.objectiveList.objectives[0].parents.manage();
     await percySnapshot(getUniqueName(assert, 'managed background color'));
 
     const m = page.details.objectives.objectiveList.objectives[0].parentManager;
@@ -142,7 +142,7 @@ module('Acceptance | Session - Objective Parents', function (hooks) {
     );
 
     await percySnapshot(getUniqueName(assert, 'default background color'));
-    await page.details.objectives.objectiveList.objectives[0].parents.list[0].manage();
+    await page.details.objectives.objectiveList.objectives[0].parents.manage();
     await percySnapshot(getUniqueName(assert, 'managed background color'));
 
     const m = page.details.objectives.objectiveList.objectives[0].parentManager;
@@ -194,7 +194,7 @@ module('Acceptance | Session - Objective Parents', function (hooks) {
     );
 
     await percySnapshot(getUniqueName(assert, 'default background color'));
-    await page.details.objectives.objectiveList.objectives[0].parents.list[0].manage();
+    await page.details.objectives.objectiveList.objectives[0].parents.manage();
     await percySnapshot(getUniqueName(assert, 'managed background color'));
 
     const m = page.details.objectives.objectiveList.objectives[0].parentManager;

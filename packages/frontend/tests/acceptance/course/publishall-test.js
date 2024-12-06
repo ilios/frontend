@@ -168,7 +168,7 @@ module('Acceptance | Course - Publish All Sessions', function (hooks) {
     assert.ok(page.publishAll.isVisible);
     assert.ok(page.publishAll.hasUnlinkedWarning);
 
-    await page.details.objectives.objectiveList.objectives[0].parents.list[0].manage();
+    await page.details.objectives.objectiveList.objectives[0].parents.manage();
     const m = page.details.objectives.objectiveList.objectives[0].parentManager;
     await m.competencies[0].objectives[0].add();
     await page.details.objectives.objectiveList.objectives[0].parents.save();

@@ -38,14 +38,21 @@
   .sortable-items {
     list-style-type: none;
     .item {
+      align-items: center;
       background-color: c.$culturedGrey;
       border-radius: 4px;
       box-sizing: border-box;
       cursor: pointer;
+      display: flex;
+      gap: 1em;
       margin: 10px 0.3rem 0 0;
       opacity: 1;
       padding: 1rem;
       vertical-align: middle;
+
+      svg {
+        min-width: 16px;
+      }
 
       .fa {
         vertical-align: top;
@@ -58,12 +65,19 @@
         display: inline-block;
       }
 
-      .fade-text-control {
+      .fade-text {
+        .display-text {
+          p {
+            margin: 0;
+          }
+        }
         button {
-          background: c.$tealBlue;
-          border-radius: 3px;
-          color: c.$white;
-          padding: 0.3em 1em;
+          &.expand-text-button {
+            background: c.$tealBlue;
+            border-radius: 3px;
+            color: c.$white;
+            padding: 0.3em 1em;
+          }
         }
       }
 

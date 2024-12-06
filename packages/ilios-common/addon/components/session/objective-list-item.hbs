@@ -1,6 +1,6 @@
 <div
   id="objective-{{@sessionObjective.id}}"
-  class="grid-row objective-row {{if this.showRemoveConfirmation "confirm-removal"}} {{if this.highlightSave.isRunning "highlight-ok"}} {{if this.isManaging "is-managing"}}"
+  class="grid-row objective-row{{if this.showRemoveConfirmation ' confirm-removal'}}{{if this.highlightSave.isRunning ' highlight-ok'}}{{if this.isManaging ' is-managing'}}"
   data-test-session-objective-list-item
 >
   <div class="description grid-item" data-test-description>
@@ -11,12 +11,22 @@
         @isSaveDisabled={{this.hasErrorForTitle}}
         @save={{perform this.saveTitleChanges}}
         @close={{this.revertTitleChanges}}
+        @fadeTextExpanded={{this.fadeTextExpanded}}
+        @onExpandAllFadeText={{this.expandAllFadeText}}
       >
-        <HtmlEditor @content={{@sessionObjective.title}} @update={{this.changeTitle}} @autofocus={{true}} />
+        <HtmlEditor
+          @content={{@sessionObjective.title}}
+          @update={{this.changeTitle}}
+          @autofocus={{true}}
+        />
         <ValidationError @validatable={{this}} @property="title" />
       </EditableField>
     {{else}}
-      <FadeText @text={{@sessionObjective.title}} />
+      <FadeText
+        @text={{@sessionObjective.title}}
+        @expanded={{this.fadeTextExpanded}}
+        @onExpandAll={{this.expandAllFadeText}}
+      />
     {{/if}}
   </div>
   <Session::ObjectiveListItemParents
@@ -27,16 +37,18 @@
     @save={{perform this.saveParents}}
     @isSaving={{this.saveParents.isRunning}}
     @cancel={{this.cancel}}
+    @fadeTextExpanded={{this.fadeTextExpanded}}
+    @onExpandAllFadeText={{this.expandAllFadeText}}
   />
 
   <ObjectiveListItemTerms
-      @subject={{@sessionObjective}}
-      @editable={{and @editable (not this.isManaging) (not this.showRemoveConfirmation)}}
-      @manage={{perform this.manageTerms}}
-      @isManaging={{this.isManagingTerms}}
-      @save={{perform this.saveTerms}}
-      @isSaving={{this.saveTerms.isRunning}}
-      @cancel={{this.cancel}}
+    @subject={{@sessionObjective}}
+    @editable={{and @editable (not this.isManaging) (not this.showRemoveConfirmation)}}
+    @manage={{perform this.manageTerms}}
+    @isManaging={{this.isManagingTerms}}
+    @save={{perform this.saveTerms}}
+    @isSaving={{this.saveTerms.isRunning}}
+    @cancel={{this.cancel}}
   />
 
   <Session::ObjectiveListItemDescriptors
@@ -50,7 +62,14 @@
   />
 
   <div class="actions grid-item" data-test-actions>
-    {{#if (and @editable (not this.isManaging) (not this.showRemoveConfirmation) (not this.showRemoveConfirmation))}}
+    {{#if
+      (and
+        @editable
+        (not this.isManaging)
+        (not this.showRemoveConfirmation)
+        (not this.showRemoveConfirmation)
+      )
+    }}
       <button
         class="link-button"
         type="button"

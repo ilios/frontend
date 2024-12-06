@@ -98,7 +98,7 @@ module('Integration | Component | course/objectives', function (hooks) {
       'course objective 0',
     );
     assert.strictEqual(component.objectiveList.objectives[0].parents.list.length, 1);
-    await component.objectiveList.objectives[0].parents.list[0].manage();
+    await component.objectiveList.objectives[0].parents.manage();
 
     const m = component.objectiveList.objectives[0].parentManager;
     assert.notOk(m.hasMultipleCohorts);
@@ -173,7 +173,7 @@ module('Integration | Component | course/objectives', function (hooks) {
       'course objective 0',
     );
     assert.strictEqual(component.objectiveList.objectives[0].parents.list.length, 1);
-    await component.objectiveList.objectives[0].parents.list[0].manage();
+    await component.objectiveList.objectives[0].parents.manage();
 
     const m = component.objectiveList.objectives[0].parentManager;
     assert.ok(m.hasMultipleCohorts);

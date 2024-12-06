@@ -141,7 +141,7 @@ module('Integration | Component | session/objective-list-item-parents', function
   @isSaving={{false}}
   @cancel={{(noop)}}
 />`);
-    await component.list[0].manage();
+    await component.manage();
   });
 
   test('parent objectives are correctly sorted', async function (assert) {

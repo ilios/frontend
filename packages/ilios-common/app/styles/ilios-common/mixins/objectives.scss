@@ -69,6 +69,10 @@
     .grid-item {
       border-bottom: 1px solid c.$davysGrey;
       padding: 0.5em 0.25em;
+
+      &:has(.faded) {
+        max-height: 245px;
+      }
     }
 
     &:last-of-type {
@@ -120,14 +124,24 @@
 
     .description {
       p {
+        @include font-size.font-size("base");
         margin: 0;
       }
       button {
+        @include ilios-button.ilios-link-button;
         @include font-size.font-size("base");
 
         p {
           @include font-size.font-size("base");
         }
+      }
+    }
+
+    .course-objective-list-item-parents,
+    .session-objective-list-item-parents {
+      p {
+        @include font-size.font-size("base");
+        margin: 0;
       }
     }
 
@@ -178,7 +192,8 @@
         margin-bottom: 0;
       }
 
-      button {
+      button,
+      .display-text {
         @include font-size.font-size("base");
       }
     }

@@ -5,7 +5,7 @@
   .display-text-wrapper {
     display: inline-block;
 
-    &.is-faded {
+    &.faded {
       max-height: 200px;
       overflow: hidden;
       position: relative;
@@ -15,6 +15,7 @@
   button {
     &.expand-text-button {
       @include m.ilios-link-button;
+      display: block;
     }
   }
 

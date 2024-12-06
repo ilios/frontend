@@ -1,5 +1,6 @@
 import { clickable, create, hasClass, isVisible, property, text } from 'ember-cli-page-object';
 import { pageObjectFillInFroalaEditor, pageObjectFroalaEditorValue } from 'ilios-common';
+import fadeText from '../fade-text';
 import meshManager from './manage-objective-descriptors';
 import parentManager from './manage-objective-parents';
 import meshDescriptors from './objective-list-item-descriptors';
@@ -13,6 +14,7 @@ const definition = {
   description: {
     scope: '[data-test-description]',
     openEditor: clickable('[data-test-edit]'),
+    fadeText,
     editorContents: pageObjectFroalaEditorValue('[data-test-html-editor]'),
     edit: pageObjectFillInFroalaEditor('[data-test-html-editor]'),
     save: clickable('.done'),

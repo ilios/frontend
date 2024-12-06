@@ -13,6 +13,7 @@ export default class ObjectiveSortManagerComponent extends Component {
   @tracked draggedAboveItem;
   @tracked draggedBelowItem;
   @tracked sortedItems;
+  @tracked expanded;
 
   @cached
   get objectives() {
@@ -98,5 +99,10 @@ export default class ObjectiveSortManagerComponent extends Component {
         this.draggedAboveItem = item;
       }
     }
+  }
+
+  @action
+  toggleExpansion() {
+    this.expanded = !this.expanded;
   }
 }
