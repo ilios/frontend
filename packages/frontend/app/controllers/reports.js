@@ -7,12 +7,14 @@ export default class ReportsController extends Controller {
   queryParams = [
     { sortReportsBy: 'sortBy' },
     { titleFilter: 'filter' },
-    { showNewReportForm: 'showNewReportForm' },
+    { showNewSubjectReportForm: 'showNewSubjectReportForm' },
+    { showNewCourseReportForm: 'showNewCourseReportForm' },
   ];
 
   @tracked sortReportsBy = 'title';
   @tracked titleFilter = null;
-  @tracked showNewReportForm = false;
+  @tracked showNewSubjectReportForm = false;
+  @tracked showNewCourseReportForm = false;
   @tracked runningSubjectReport = null;
 
   changeTitleFilter = restartableTask(async (value) => {
@@ -24,11 +26,5 @@ export default class ReportsController extends Controller {
   @action
   setRunningSubjectReport(report) {
     this.runningSubjectReport = report;
-  }
-
-  @action
-  toggleNewReportForm() {
-    this.runningSubjectReport = null;
-    this.showNewReportForm = !this.showNewReportForm;
   }
 }

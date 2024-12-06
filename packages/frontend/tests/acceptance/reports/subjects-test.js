@@ -90,7 +90,8 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
     );
     assert.strictEqual(page.root.list.table.reports[1].title, 'my report 0');
     assert.ok(page.root.list.newReportLinkIsHidden);
-    await page.root.list.toggleNewSubjectReportForm();
+    await page.root.list.chooser.toggle.click();
+    await page.root.list.chooser.subject.click();
     await page.root.list.newSubject.title.set('aardvark');
     await page.root.list.newSubject.schools.choose('1');
     await page.root.list.newSubject.subjects.choose('session');
@@ -139,7 +140,8 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
     await page.visit();
     assert.strictEqual(page.root.list.table.reports.length, 2);
     assert.ok(page.root.list.newReportLinkIsHidden);
-    await page.root.list.toggleNewSubjectReportForm();
+    await page.root.list.chooser.toggle.click();
+    await page.root.list.chooser.subject.click();
     await page.root.list.newSubject.schools.choose('1');
     await page.root.list.newSubject.subjects.choose('session');
     await page.root.list.newSubject.save();
@@ -158,7 +160,8 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
       'All Sessions for term 0 in school 0',
     );
     assert.strictEqual(page.root.list.table.reports[1].title, 'my report 0');
-    await page.root.list.toggleNewSubjectReportForm();
+    await page.root.list.chooser.toggle.click();
+    await page.root.list.chooser.subject.click();
     await page.root.list.newSubject.schools.choose('1');
     await page.root.list.newSubject.subjects.choose('term');
     await page.root.list.newSubject.objects.choose('session');
@@ -208,7 +211,8 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
       'All Sessions for term 0 in school 0',
     );
     assert.strictEqual(page.root.list.table.reports[1].title, 'my report 0');
-    await page.root.list.toggleNewSubjectReportForm();
+    await page.root.list.chooser.toggle.click();
+    await page.root.list.chooser.subject.click();
     await page.root.list.newSubject.schools.choose('1');
     await page.root.list.newSubject.subjects.choose('course');
     await page.root.list.newSubject.objects.choose('mesh term');
@@ -295,7 +299,8 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
       'All Sessions for term 0 in school 0',
     );
     assert.strictEqual(page.root.list.table.reports[1].title, 'my report 0');
-    await page.root.list.toggleNewSubjectReportForm();
+    await page.root.list.chooser.toggle.click();
+    await page.root.list.chooser.subject.click();
     await page.root.list.newSubject.schools.choose('1');
     await page.root.list.newSubject.subjects.choose('term');
     await page.root.list.newSubject.objects.choose('program year');
@@ -325,7 +330,8 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
       'All Sessions for term 0 in school 0',
     );
     assert.strictEqual(page.root.list.table.reports[1].title, 'my report 0');
-    await page.root.list.toggleNewSubjectReportForm();
+    await page.root.list.chooser.toggle.click();
+    await page.root.list.chooser.subject.click();
     await page.root.list.newSubject.schools.choose('All Schools');
     await page.root.list.newSubject.subjects.choose('course');
     await page.root.list.newSubject.save();
@@ -376,7 +382,8 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
   test('run subject report', async function (assert) {
     assert.expect(5);
     await page.visit();
-    await page.root.list.toggleNewSubjectReportForm();
+    await page.root.list.chooser.toggle.click();
+    await page.root.list.chooser.subject.click();
     await page.root.list.newSubject.schools.choose('1');
     await page.root.list.newSubject.subjects.choose('session');
     await page.root.list.newSubject.objects.choose('course');
@@ -401,7 +408,7 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
     });
     await page.root.list.newSubject.run();
     await percySnapshot(assert);
-    assert.strictEqual(currentURL(), '/reports?showNewReportForm=true');
+    assert.strictEqual(currentURL(), '/reports?showNewSubjectReportForm=true');
     assert.strictEqual(
       page.root.results.description,
       'This report shows all Sessions associated with Course "course 0" (2015) in school 0.',
@@ -413,7 +420,8 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
   test('reset year when subject report is run', async function (assert) {
     assert.expect(12);
     await page.visit();
-    await page.root.list.toggleNewSubjectReportForm();
+    await page.root.list.chooser.toggle.click();
+    await page.root.list.chooser.subject.click();
     await page.root.list.newSubject.schools.choose('1');
     await page.root.list.newSubject.subjects.choose('course');
     this.server.post('api/graphql', ({ db }, { requestBody }) => {
@@ -491,7 +499,8 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
     await page.visit();
     assert.strictEqual(page.root.list.table.reports.length, 2);
     assert.ok(page.root.list.newReportLinkIsHidden);
-    await page.root.list.toggleNewSubjectReportForm();
+    await page.root.list.chooser.toggle.click();
+    await page.root.list.chooser.subject.click();
     await page.root.list.newSubject.schools.choose('1');
     await page.root.list.newSubject.subjects.choose('instructor');
     await page.root.list.newSubject.objects.choose('academic year');
@@ -536,7 +545,8 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
   test('courses by academic year hides year', async function (assert) {
     assert.expect(5);
     await page.visit();
-    await page.root.list.toggleNewSubjectReportForm();
+    await page.root.list.chooser.toggle.click();
+    await page.root.list.chooser.subject.click();
     await page.root.list.newSubject.schools.choose('');
     await page.root.list.newSubject.subjects.choose('course');
     await page.root.list.newSubject.objects.choose('academic year');

@@ -1,0 +1,44 @@
+<div
+  role="menubar"
+  class="choose-new-report"
+  data-test-choose-new-report
+  {{on-click-outside (set this "isOpen" false)}}
+>
+  <button
+    aria-label={{t "general.add"}}
+    role="menuitem"
+    class="toggle"
+    type="button"
+    aria-haspopup="true"
+    aria-expanded={{if this.isOpen "true" "false"}}
+    data-test-toggle
+    {{on "click" (toggle "isOpen" this)}}
+    {{on "keyup" this.toggleMenu}}
+  >
+    {{t "general.add"}}
+    <FaIcon @icon={{if this.isOpen "caret-down" "caret-right"}} />
+  </button>
+  {{#if this.isOpen}}
+    <div
+      class="menu"
+      role="menu"
+      {{! template-lint-disable no-at-ember-render-modifiers }}
+      {{did-insert (set this "menuElement")}}
+      {{did-insert this.focusOnFirstItem}}
+    >
+      {{#each (array "Subject" "Course") as |type|}}
+        <button
+          role="menuitem"
+          type="button"
+          tabindex="-1"
+          data-test-item
+          {{on "click" (fn this.choose type)}}
+          {{on "keyup" this.moveFocus}}
+          {{on "mouseenter" this.clearFocus}}
+        >
+          {{t (concat "general.new" type "Report")}}
+        </button>
+      {{/each}}
+    </div>
+  {{/if}}
+</div>

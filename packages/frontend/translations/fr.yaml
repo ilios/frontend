@@ -232,6 +232,7 @@ general:
   narrative: narrative
   navigationCompleteText: La navigation sur la page Ilios est terminée. Vous pouvez maintenant naviguer dans le contenu de la page comme vous le souhaitez.
   newCourse: Cours neuf
+  newCourseReport: nouveau rapport de cours
   newCurriculumInventoryReport: "Nouveau Rapport d'inventaire des Programmes d'études"
   newDomain: Domaine nouvelle
   newInstructorGroup: Groupe des Instructeurs nouveau
@@ -240,6 +241,7 @@ general:
   newProgramYear: Année de diplôme neuf
   newReport: Nouveau rapport
   newSchool: École nouvelle
+  newSubjectReport: nouveau rapport thématique
   newSequenceBlock: Nouveau bloc de séquence
   newTerm: Nouveau terme
   newToken: Nouveau jeton

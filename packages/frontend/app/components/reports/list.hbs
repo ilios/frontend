@@ -16,21 +16,19 @@
       ({{this.filteredReports.length}})
     </h2>
     <div class="actions">
-      <ExpandCollapseButton
-        @value={{@showNewReportForm}}
-        @action={{@toggleNewReportForm}}
-        @expandButtonLabel={{t "general.newReport"}}
-        @collapseButtonLabel={{t "general.close"}}
-      />
+      <Reports::ChooseNewReport @choose={{this.createNewReport}} />
     </div>
   </div>
   <section class="new">
-    {{#if @showNewReportForm}}
+    {{#if @showNewSubjectReportForm}}
       <Reports::NewSubject
         @save={{perform this.saveNewSubjectReport}}
-        @close={{@toggleNewReportForm}}
         @run={{perform this.runSubjectReport}}
+        @close={{fn @setShowNewSubjectReportForm false}}
       />
+    {{/if}}
+    {{#if @showNewCourseReportForm}}
+      <Reports::NewCourse />
     {{/if}}
     {{#if this.newReport}}
       <div class="saved-result" data-test-newly-saved-report>
