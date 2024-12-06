@@ -1,0 +1,135 @@
+{{#let (unique-id) as |templateId|}}
+  <div class="form">
+    <div
+      class="item {{if (includes 'firstName' this.updatedFieldsFromSync) 'synced-from-directory'}}"
+      data-test-firstname
+    >
+      <label for="firstname-{{templateId}}">
+        {{t "general.firstName"}}:
+      </label>
+      <span class="value">
+        {{@user.firstName}}
+      </span>
+    </div>
+    <div class="item" data-test-middlename>
+      <label for="middlename-{{templateId}}">
+        {{t "general.middleName"}}:
+      </label>
+      <span class="value">
+        {{@user.middleName}}
+      </span>
+    </div>
+    <div
+      class="item {{if (includes 'lastName' this.updatedFieldsFromSync) 'synced-from-directory'}}"
+      data-test-lastname
+    >
+      <label for="lastname-{{templateId}}">
+        {{t "general.lastName"}}:
+      </label>
+      <span class="value">
+        {{@user.lastName}}
+      </span>
+    </div>
+    <div
+      class="item
+        {{if (includes 'campusId' this.updatedFieldsFromSync) 'synced-from-directory'}}
+        campus-id"
+      data-test-campus-id
+    >
+      <label for="campus-id-{{templateId}}">
+        {{t "general.campusId"}}:
+      </label>
+      <span class="value">
+        {{@user.campusId}}
+      </span>
+    </div>
+    <div class="item" data-test-other-id>
+      <label for="other-id-{{templateId}}">
+        {{t "general.otherId"}}:
+      </label>
+      <span class="value">
+        {{@user.otherId}}
+      </span>
+    </div>
+    <div
+      class="item {{if (includes 'email' this.updatedFieldsFromSync) 'synced-from-directory'}}"
+      data-test-email
+    >
+      <label for="email-{{templateId}}">
+        {{t "general.email"}}:
+      </label>
+      <span class="value">
+        {{@user.email}}
+      </span>
+    </div>
+    <div
+      class="item
+        {{if (includes 'displayName' this.updatedFieldsFromSync) 'synced-from-directory'}}"
+      data-test-displayname
+    >
+      <label for="displayname-{{templateId}}">
+        {{t "general.displayName"}}:
+      </label>
+      <span class="value">
+        {{@user.displayName}}
+      </span>
+    </div>
+    <div
+      class="item {{if (includes 'pronouns' this.updatedFieldsFromSync) 'synced-from-directory'}}"
+      data-test-pronouns
+    >
+      <label for="pronouns-{{templateId}}">
+        {{t "general.pronouns"}}:
+      </label>
+      <span class="value">
+        {{@user.pronouns}}
+      </span>
+    </div>
+    <div
+      class="item
+        {{if (includes 'preferredEmail' this.updatedFieldsFromSync) 'synced-from-directory'}}"
+      data-test-preferred-email
+    >
+      <label for="preferred-email-{{templateId}}">
+        {{t "general.preferredEmail"}}:
+      </label>
+      <span class="value">
+        {{@user.preferredEmail}}
+      </span>
+    </div>
+    <div
+      class="item {{if (includes 'phone' this.updatedFieldsFromSync) 'synced-from-directory'}}"
+      data-test-phone
+    >
+      <label for="phone-{{templateId}}">
+        {{t "general.phone"}}:
+      </label>
+      <span class="value">
+        {{@user.phone}}
+      </span>
+    </div>
+    <div
+      class="item {{if (includes 'username' this.updatedFieldsFromSync) 'synced-from-directory'}}"
+      data-test-username
+    >
+      <label for="username-{{templateId}}">
+        {{t "general.username"}}:
+      </label>
+      <span class="value">
+        {{this.userAuthentication.username}}
+      </span>
+    </div>
+    {{#if this.canEditUsernameAndPassword}}
+      <div class="item password" data-test-password>
+        <label for="password-{{templateId}}">
+          {{t "general.password"}}:
+        </label>
+        <span class="value">
+          {{#if this.userAuthentication.username}}
+            *********
+          {{/if}}
+        </span>
+      </div>
+    {{/if}}
+  </div>
+{{/let}}
