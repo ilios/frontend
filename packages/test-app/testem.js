@@ -1,4 +1,5 @@
 'use strict';
+const FailureOnlyReporter = require('testem-failure-only-reporter');
 
 module.exports = {
   test_page: 'tests/index.html?hidepassed',
@@ -7,6 +8,7 @@ module.exports = {
   launch_in_dev: ['Chrome'],
   browser_disconnect_timeout: 120,
   browser_start_timeout: 30,
+  reporter: FailureOnlyReporter,
   parallel: process.env.EMBER_EXAM_SPLIT_COUNT || -1,
   browser_args: {
     Chrome: {
