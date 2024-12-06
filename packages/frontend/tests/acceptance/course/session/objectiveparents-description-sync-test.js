@@ -1,12 +1,12 @@
 import { module, test } from 'qunit';
 import { setupAuthentication } from 'ilios-common';
 import { setupApplicationTest } from 'frontend/tests/helpers';
-import { getUniqueName } from '../../helpers/percy-snapshot-name';
+import { getUniqueName } from '../../../helpers/percy-snapshot-name';
 import { waitFor } from '@ember/test-helpers';
-import page from 'ilios-common/page-objects/course';
+import page from 'ilios-common/page-objects/session';
 import percySnapshot from '@percy/ember';
 
-module('Acceptance | Course - Objective Parents - Faded Status Sync', function (hooks) {
+module('Acceptance | Session - Objective Parents - Faded Status Sync', function (hooks) {
   setupApplicationTest(hooks);
   hooks.beforeEach(async function () {
     this.longObjDescription =
@@ -15,8 +15,8 @@ module('Acceptance | Course - Objective Parents - Faded Status Sync', function (
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam placerat tempor neque ut egestas. In cursus dignissim erat, sed porttitor mauris tincidunt at. Nunc et tortor in purus facilisis molestie. Phasellus in ligula nisi. Nam nec mi in urna mollis pharetra. Suspendisse in nibh ex. Curabitur maximus diam in condimentum pulvinar. Phasellus sit amet metus interdum, molestie turpis vel, bibendum eros. In fermentum elit in odio cursus cursus. Nullam ipsum ipsum, fringilla a efficitur non, vehicula vitae enim. Duis ultrices vitae neque in pulvinar. Nulla molestie vitae quam eu faucibus. Vestibulum tempor, tellus in dapibus sagittis, velit purus maximus lectus, quis ullamcorper sem neque quis sem. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Sed commodo risus sed tellus imperdiet, ac suscipit justo scelerisque. Quisque sit amet nulla efficitur, sollicitudin sem in, venenatis mi. Quisque sit amet neque varius, interdum quam id, condimentum ipsum. Quisque tincidunt efficitur diam ut feugiat. Duis vehicula mauris elit, vel vehicula eros commodo rhoncus. Phasellus ac eros vel turpis egestas aliquet. Nam id dolor rutrum, imperdiet purus ac, faucibus nisi. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nam aliquam leo eget quam varius ultricies. Suspendisse pellentesque varius mi eu luctus. Integer lacinia ornare magna, in egestas quam molestie non.';
     this.fadedSelector = '.faded';
 
-    this.user = await setupAuthentication({}, true);
     this.school = this.server.create('school');
+    this.user = await setupAuthentication({ school: this.school }, true);
     const program = this.server.create('program', { school: this.school });
     const programYear = this.server.create('program-year', { program });
     const cohort = this.server.create('cohort', { programYear });
@@ -46,23 +46,38 @@ module('Acceptance | Course - Objective Parents - Faded Status Sync', function (
       competency: competency3,
       title: this.longParentObjTitle,
     });
-    this.course = this.server.create('course', {
+    const course = this.server.create('course', {
       year: 2024,
       school: this.school,
       cohorts: [cohort],
     });
-    this.server.create('course-objective', {
-      course: this.course,
+    const courseObjective1 = this.server.create('course-objective', {
+      course,
       programYearObjectives: [parent1],
+    });
+    const courseObjective2 = this.server.create('course-objective', {
+      course,
+      programYearObjectives: [parent2],
       title: this.longObjDescription,
     });
-    this.server.create('course-objective', {
-      course: this.course,
-      programYearObjectives: [parent2],
-    });
-    this.server.create('course-objective', {
-      course: this.course,
+    const courseObjective3 = this.server.create('course-objective', {
+      course,
       programYearObjectives: [parent3],
+      title: this.longObjDescription,
+    });
+    const session = this.server.create('session', { course });
+    this.server.create('session-objective', {
+      session,
+      courseObjectives: [courseObjective1],
+      title: this.longObjDescription,
+    });
+    this.server.create('session-objective', {
+      session,
+      courseObjectives: [courseObjective2],
+    });
+    this.server.create('session-objective', {
+      session,
+      courseObjectives: [courseObjective3],
       title: this.longObjDescription,
     });
   });
@@ -72,9 +87,9 @@ module('Acceptance | Course - Objective Parents - Faded Status Sync', function (
     this.user.update({ administeredSchools: [this.school] });
 
     await page.visit({
-      courseId: this.course.id,
-      details: true,
-      courseObjectiveDetails: true,
+      courseId: 1,
+      sessionId: 1,
+      sessionObjectiveDetails: true,
     });
 
     // slight delay to allow for proper loading of component
@@ -83,7 +98,7 @@ module('Acceptance | Course - Objective Parents - Faded Status Sync', function (
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives.length,
       3,
-      'course objective count is 3',
+      'session objective count is 3',
     );
 
     /*
@@ -114,7 +129,7 @@ module('Acceptance | Course - Objective Parents - Faded Status Sync', function (
     );
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[0].parents.list[0].text,
-      'program-year objective 0',
+      'course objective 0',
       '1st parent objective title is short',
     );
     assert.notOk(
@@ -161,7 +176,7 @@ module('Acceptance | Course - Objective Parents - Faded Status Sync', function (
 
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[1].description.text,
-      'course objective 1',
+      'session objective 1',
       '2nd objective title is short',
     );
     assert.notOk(
