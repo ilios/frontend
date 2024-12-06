@@ -13,8 +13,10 @@ export default class LearningMaterialManagerComponent extends Component {
   @service flashMessages;
   @service intl;
 
-  @tracked notes;
-  @tracked learningMaterial;
+  constructor() {
+    super(...arguments);
+    this.loadExistingData();
+  }
 
   validations = new YupValidations(this, {
     title: string().required().min(4).max(120),
@@ -47,9 +49,12 @@ export default class LearningMaterialManagerComponent extends Component {
       }),
   });
 
+  @tracked isLoaded = false;
+
+  @tracked notes;
+  @tracked learningMaterial;
   @tracked title;
   @tracked endDate;
-
   @tracked type;
   @tracked owningUser;
   @tracked originalAuthor;
@@ -200,10 +205,11 @@ export default class LearningMaterialManagerComponent extends Component {
     return findById(this.args.learningMaterialStatuses, this.statusId);
   }
 
-  load = restartableTask(async (element, [learningMaterial]) => {
-    if (!learningMaterial) {
-      return;
+  async loadExistingData() {
+    if (!this.args.learningMaterial) {
+      throw new Error('LearningMaterialManagerComponent requires a learningMaterial argument');
     }
+    const { learningMaterial } = this.args;
     const parentMaterial = await learningMaterial.learningMaterial;
     this.notes = learningMaterial.notes;
     this.required = learningMaterial.required;
@@ -231,7 +237,9 @@ export default class LearningMaterialManagerComponent extends Component {
     this.owningUser = await parentMaterial.owningUser;
     const userRole = await parentMaterial.userRole;
     this.userRoleTitle = userRole.title;
-  });
+
+    this.isLoaded = true;
+  }
 
   save = dropTask(async () => {
     this.validations.addErrorDisplayForAllFields();

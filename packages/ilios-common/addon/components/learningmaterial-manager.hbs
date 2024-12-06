@@ -1,11 +1,5 @@
-<div
-  class="learningmaterial-manager"
-  {{did-insert (perform this.load) @learningMaterial}}
-  {{did-update (perform this.load) @learningMaterial}}
->
-  {{#if this.load.isRunning}}
-    <LoadingSpinner class="loading" />
-  {{else}}
+<div class="learningmaterial-manager">
+  {{#if this.isLoaded}}
     {{#let (unique-id) as |templateId|}}
       <div class="item displayname">
         <label for="displayname-{{templateId}}">
