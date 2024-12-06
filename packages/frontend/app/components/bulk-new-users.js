@@ -168,7 +168,7 @@ export default class BulkNewUsersComponent extends Component {
     this.primaryCohortId = id;
   }
 
-  async getExistingUserNames() {
+  async getExistingUsernames() {
     const authentications = await this.store.findAll('authentication');
     return mapBy(authentications, 'username').filter(Boolean);
   }
@@ -181,7 +181,7 @@ export default class BulkNewUsersComponent extends Component {
    **/
   async getFileContents(file) {
     this.fileUploadError = false;
-    const existingUsernames = await this.getExistingUserNames();
+    const existingUsernames = await this.getExistingUsernames();
     return new Promise((resolve) => {
       const allowedFileTypes = ['text/plain', 'text/csv', 'text/tab-separated-values'];
       if (!allowedFileTypes.includes(file.type)) {
