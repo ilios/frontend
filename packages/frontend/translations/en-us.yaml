@@ -232,6 +232,7 @@ general:
   narrative: Narrative
   navigationCompleteText: Ilios page navigation is complete. You may now navigate the page content as you wish.
   newCourse: New Course
+  newCourseReport: New Course Report
   newCurriculumInventoryReport: New Curriculum Inventory Report
   newDomain: New Domain
   newInstructorGroup: New Instructor Group
@@ -241,6 +242,7 @@ general:
   newReport: New Report
   newSchool: New School
   newSequenceBlock: New Sequence Block
+  newSubjectReport: New Subject Report
   newTerm: New Term
   newToken: New Token
   newUser: New User
