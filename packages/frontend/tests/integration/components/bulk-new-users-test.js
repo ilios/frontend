@@ -429,7 +429,6 @@ module('Integration | Component | bulk new users', function (hooks) {
     const badCheck = 'tbody tr:nth-of-type(2) td:nth-of-type(1) input';
     const BadBox = 'tbody tr:nth-of-type(2) td:nth-of-type(4)';
     assert.dom(goodCheck).isNotDisabled();
-    assert.dom(goodCheck).isNotDisabled();
     assert.dom(goodBox).hasNoClass('error');
     assert.dom(badCheck).isDisabled();
     assert.dom(BadBox).hasClass('error');
@@ -733,6 +732,44 @@ module('Integration | Component | bulk new users', function (hooks) {
     const goodBox = 'tbody tr:nth-of-type(1) td:nth-of-type(9)';
     assert.dom(goodCheck).isNotDisabled();
     assert.dom(goodBox).hasNoClass('error');
+  });
+
+  test('password required if username is not blank', async function (assert) {
+    await render(hbs`<BulkNewUsers @close={{(noop)}} />`);
+    const users = [
+      [
+        'jackson',
+        'johnson',
+        'middle',
+        '12345',
+        'jj@example.com',
+        '1234Campus',
+        '1234Other',
+        'username',
+        'password',
+      ],
+      [
+        'jayden',
+        'johnson',
+        'middle',
+        '123456',
+        'jj2@example.com',
+        '12345Campus',
+        '',
+        'username',
+        '',
+      ],
+    ];
+    await triggerUpload(users, find('input[type=file]'));
+
+    const goodCheck = 'tbody tr:nth-of-type(1) td:nth-of-type(1) input';
+    const goodBox = 'tbody tr:nth-of-type(1) td:nth-of-type(9)';
+    const badCheck = 'tbody tr:nth-of-type(2) td:nth-of-type(1) input';
+    const BadBox = 'tbody tr:nth-of-type(2) td:nth-of-type(10)';
+    assert.dom(goodCheck).isNotDisabled();
+    assert.dom(goodBox).hasNoClass('error');
+    assert.dom(badCheck).isDisabled();
+    assert.dom(BadBox).hasClass('error');
   });
 
   test('dont create authentication if username is not set', async function (assert) {
