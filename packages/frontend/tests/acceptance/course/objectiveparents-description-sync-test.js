@@ -1,10 +1,10 @@
 import { module, test } from 'qunit';
 import { setupAuthentication } from 'ilios-common';
 import { setupApplicationTest } from 'frontend/tests/helpers';
-// import { getUniqueName } from '../../helpers/percy-snapshot-name';
+import { getUniqueName } from '../../helpers/percy-snapshot-name';
 import { waitFor } from '@ember/test-helpers';
 import page from 'ilios-common/page-objects/course';
-// import percySnapshot from '@percy/ember';
+import percySnapshot from '@percy/ember';
 
 module('Acceptance | Course - Objective Parents - Faded Status Sync', function (hooks) {
   setupApplicationTest(hooks);
@@ -15,7 +15,6 @@ module('Acceptance | Course - Objective Parents - Faded Status Sync', function (
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam placerat tempor neque ut egestas. In cursus dignissim erat, sed porttitor mauris tincidunt at. Nunc et tortor in purus facilisis molestie. Phasellus in ligula nisi. Nam nec mi in urna mollis pharetra. Suspendisse in nibh ex. Curabitur maximus diam in condimentum pulvinar. Phasellus sit amet metus interdum, molestie turpis vel, bibendum eros. In fermentum elit in odio cursus cursus. Nullam ipsum ipsum, fringilla a efficitur non, vehicula vitae enim. Duis ultrices vitae neque in pulvinar. Nulla molestie vitae quam eu faucibus. Vestibulum tempor, tellus in dapibus sagittis, velit purus maximus lectus, quis ullamcorper sem neque quis sem. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Sed commodo risus sed tellus imperdiet, ac suscipit justo scelerisque. Quisque sit amet nulla efficitur, sollicitudin sem in, venenatis mi. Quisque sit amet neque varius, interdum quam id, condimentum ipsum. Quisque tincidunt efficitur diam ut feugiat. Duis vehicula mauris elit, vel vehicula eros commodo rhoncus. Phasellus ac eros vel turpis egestas aliquet. Nam id dolor rutrum, imperdiet purus ac, faucibus nisi. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nam aliquam leo eget quam varius ultricies. Suspendisse pellentesque varius mi eu luctus. Integer lacinia ornare magna, in egestas quam molestie non.';
     this.longParentObjTitle =
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam placerat tempor neque ut egestas. In cursus dignissim erat, sed porttitor mauris tincidunt at. Nunc et tortor in purus facilisis molestie. Phasellus in ligula nisi. Nam nec mi in urna mollis pharetra. Suspendisse in nibh ex. Curabitur maximus diam in condimentum pulvinar. Phasellus sit amet metus interdum, molestie turpis vel, bibendum eros. In fermentum elit in odio cursus cursus. Nullam ipsum ipsum, fringilla a efficitur non, vehicula vitae enim. Duis ultrices vitae neque in pulvinar. Nulla molestie vitae quam eu faucibus. Vestibulum tempor, tellus in dapibus sagittis, velit purus maximus lectus, quis ullamcorper sem neque quis sem. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Sed commodo risus sed tellus imperdiet, ac suscipit justo scelerisque. Quisque sit amet nulla efficitur, sollicitudin sem in, venenatis mi. Quisque sit amet neque varius, interdum quam id, condimentum ipsum. Quisque tincidunt efficitur diam ut feugiat. Duis vehicula mauris elit, vel vehicula eros commodo rhoncus. Phasellus ac eros vel turpis egestas aliquet. Nam id dolor rutrum, imperdiet purus ac, faucibus nisi. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nam aliquam leo eget quam varius ultricies. Suspendisse pellentesque varius mi eu luctus. Integer lacinia ornare magna, in egestas quam molestie non.';
-    this.fadedClass = 'faded';
     this.fadedSelector = '.faded';
     const program = this.server.create('program', { school: this.school });
     const programYear = this.server.create('program-year', { program });
@@ -68,6 +67,7 @@ module('Acceptance | Course - Objective Parents - Faded Status Sync', function (
   });
 
   test('objective description and parent objectives faded statuses are synced', async function (assert) {
+    assert.expect(52);
     this.user.update({ administeredSchools: [this.school] });
 
     await page.visit({
@@ -121,7 +121,9 @@ module('Acceptance | Course - Objective Parents - Faded Status Sync', function (
       '1st parent objective is not fade-enabled',
     );
 
+    await percySnapshot(getUniqueName(assert, '1st objective list item collapsed'));
     await page.details.objectives.objectiveList.objectives[0].description.fadeText.control.expand.click();
+    await percySnapshot(getUniqueName(assert, '1st objective list item expanded'));
 
     assert.notOk(
       page.details.objectives.objectiveList.objectives[0].description.fadeText.displayText.isFaded,
@@ -137,6 +139,7 @@ module('Acceptance | Course - Objective Parents - Faded Status Sync', function (
     );
 
     await page.details.objectives.objectiveList.objectives[0].description.fadeText.control.collapse.click();
+    await percySnapshot(getUniqueName(assert, '1st objective list item collapsed again'));
 
     assert.ok(
       page.details.objectives.objectiveList.objectives[0].description.fadeText.displayText.isFaded,
@@ -187,7 +190,9 @@ module('Acceptance | Course - Objective Parents - Faded Status Sync', function (
       '2nd parent objective long title has expand button',
     );
 
+    await percySnapshot(getUniqueName(assert, '2nd objective list item collapsed'));
     await page.details.objectives.objectiveList.objectives[1].parents.fadeText.control.expand.click();
+    await percySnapshot(getUniqueName(assert, '2nd objective list item expanded'));
 
     assert.notOk(
       page.details.objectives.objectiveList.objectives[1].parents.fadeText.displayText.isFaded,
@@ -203,6 +208,7 @@ module('Acceptance | Course - Objective Parents - Faded Status Sync', function (
     );
 
     await page.details.objectives.objectiveList.objectives[1].parents.fadeText.control.collapse.click();
+    await percySnapshot(getUniqueName(assert, '2nd objective list item collapsed again'));
 
     assert.ok(
       page.details.objectives.objectiveList.objectives[1].parents.fadeText.displayText.isFaded,
@@ -261,7 +267,9 @@ module('Acceptance | Course - Objective Parents - Faded Status Sync', function (
       '3rd parent objective long title has expand button',
     );
 
+    await percySnapshot(getUniqueName(assert, '3rd objective list item collapsed'));
     await page.details.objectives.objectiveList.objectives[2].description.fadeText.control.expand.click();
+    await percySnapshot(getUniqueName(assert, '3rd objective list item expanded'));
 
     assert.notOk(
       page.details.objectives.objectiveList.objectives[2].description.fadeText.displayText.isFaded,
@@ -281,6 +289,7 @@ module('Acceptance | Course - Objective Parents - Faded Status Sync', function (
     );
 
     await page.details.objectives.objectiveList.objectives[2].description.fadeText.control.collapse.click();
+    await percySnapshot(getUniqueName(assert, '3rd objective list item collapsed again'));
 
     assert.ok(
       page.details.objectives.objectiveList.objectives[2].description.fadeText.displayText.isFaded,
@@ -300,6 +309,7 @@ module('Acceptance | Course - Objective Parents - Faded Status Sync', function (
     );
 
     await page.details.objectives.objectiveList.objectives[2].parents.fadeText.control.expand.click();
+    await percySnapshot(getUniqueName(assert, '3rd objective list item expanded again'));
 
     assert.notOk(
       page.details.objectives.objectiveList.objectives[2].description.fadeText.displayText.isFaded,
@@ -319,6 +329,7 @@ module('Acceptance | Course - Objective Parents - Faded Status Sync', function (
     );
 
     await page.details.objectives.objectiveList.objectives[2].parents.fadeText.control.collapse.click();
+    await percySnapshot(getUniqueName(assert, '3rd objective list item collapsed again'));
 
     assert.ok(
       page.details.objectives.objectiveList.objectives[2].description.fadeText.displayText.isFaded,
