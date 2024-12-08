@@ -1,10 +1,10 @@
 import Component from '@glimmer/component';
-import { tracked } from '@glimmer/tracking';
+import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
+import { dropTask } from 'ember-concurrency';
+import { TrackedAsyncData } from 'ember-async-data';
 import { validatable, Length, NotBlank } from 'ilios-common/decorators/validation';
-import { findById } from 'ilios-common/utils/array-helpers';
-import { dropTask, restartableTask } from 'ember-concurrency';
 
 @validatable
 export default class CurriculumInventoryNewReportComponent extends Component {
@@ -12,34 +12,40 @@ export default class CurriculumInventoryNewReportComponent extends Component {
   @service iliosConfig;
   @service intl;
 
+  currentYear = new Date().getFullYear();
   @tracked @NotBlank() @Length(1, 60) name;
   @tracked @NotBlank() @Length(1, 21844) description;
   @tracked selectedYear;
-  @tracked years = [];
-  @tracked academicYearCrossesCalendarYearBoundaries;
 
   constructor() {
     super(...arguments);
     this.description = this.intl.t('general.curriculumInventoryReport');
+    this.selectedYear = this.currentYear;
   }
 
-  load = restartableTask(async () => {
-    const years = [];
-    const currentYear = new Date().getFullYear();
-    this.academicYearCrossesCalendarYearBoundaries = await this.iliosConfig.itemFromConfig(
-      'academicYearCrossesCalendarYearBoundaries',
+  @cached
+  get academicYearCrossesCalendarYearBoundariesData() {
+    return new TrackedAsyncData(
+      this.iliosConfig.itemFromConfig('academicYearCrossesCalendarYearBoundaries'),
     );
-    for (let id = currentYear - 5, n = currentYear + 5; id <= n; id++) {
-      let title = id.toString();
-      if (this.academicYearCrossesCalendarYearBoundaries) {
-        title = title + ' - ' + (id + 1);
-      }
-      const year = { id, title };
-      years.push(year);
+  }
+
+  get academicYearCrossesCalendarYearBoundaries() {
+    return this.academicYearCrossesCalendarYearBoundariesData.isResolved
+      ? this.academicYearCrossesCalendarYearBoundariesData.value
+      : false;
+  }
+
+  get years() {
+    const rhett = [];
+    for (let year = this.currentYear - 5, n = this.currentYear + 5; year <= n; year++) {
+      rhett.push({
+        id: year,
+        title: this.academicYearCrossesCalendarYearBoundaries ? `${year} - ${year + 1}` : `${year}`,
+      });
     }
-    this.years = years;
-    this.selectedYear = findById(years, currentYear);
-  });
+    return rhett;
+  }
 
   save = dropTask(async () => {
     this.addErrorDisplaysFor(['name', 'description']);
@@ -47,7 +53,7 @@ export default class CurriculumInventoryNewReportComponent extends Component {
     if (!isValid) {
       return false;
     }
-    const year = this.selectedYear.id;
+    const year = this.selectedYear;
     const startDate = this.academicYearCrossesCalendarYearBoundaries
       ? new Date(year, 6, 1)
       : new Date(year, 0, 1);
@@ -67,8 +73,7 @@ export default class CurriculumInventoryNewReportComponent extends Component {
 
   @action
   setSelectedYear(year) {
-    const id = Number(year);
-    this.selectedYear = findById(this.years, id);
+    this.selectedYear = Number(year);
   }
 
   keyboard = dropTask(async (ev) => {
