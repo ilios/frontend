@@ -4,20 +4,57 @@ import { service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { DateTime } from 'luxon';
-import { validatable, Length, AfterDate, NotBlank } from 'ilios-common/decorators/validation';
 import { findById } from 'ilios-common/utils/array-helpers';
+import YupValidations from 'ilios-common/classes/yup-validations';
+import { date, string } from 'yup';
 
-@validatable
 export default class LearningMaterialManagerComponent extends Component {
   @service store;
   @service flashMessages;
+  @service intl;
+
+  constructor() {
+    super(...arguments);
+    this.loadExistingData();
+  }
+
+  validations = new YupValidations(this, {
+    title: string().required().min(4).max(120),
+    startDate: date().notRequired(),
+    endDate: date()
+      .notRequired()
+      .when('startDate', {
+        is: (startDate) => !!startDate, // Check if the startDate field has a value
+        then: (schema) =>
+          schema.test(
+            'is-end-date-after-start-date',
+            (d) => {
+              return {
+                path: d.path,
+                messageKey: 'errors.after',
+                values: {
+                  after: this.intl.t('general.startDate'),
+                },
+              };
+            },
+            (value) => {
+              if (!value) {
+                return true;
+              }
+              return (
+                DateTime.fromJSDate(value).diff(DateTime.fromJSDate(this.startDate), 'minutes') > 1
+              );
+            },
+          ),
+      }),
+  });
+
+  @tracked isLoaded = false;
 
   @tracked notes;
   @tracked learningMaterial;
-
-  @Length(4, 120) @NotBlank() @tracked title;
-  @AfterDate('startDate', { granularity: 'minute' }) @tracked endDate;
-
+  @tracked title;
+  @tracked endDate;
   @tracked type;
   @tracked owningUser;
   @tracked originalAuthor;
@@ -108,6 +145,8 @@ export default class LearningMaterialManagerComponent extends Component {
       minute: minute,
       second: 0,
     }).toJSDate();
+
+    this.validations.addErrorDisplayFor(which);
   }
 
   @action
@@ -166,10 +205,11 @@ export default class LearningMaterialManagerComponent extends Component {
     return findById(this.args.learningMaterialStatuses, this.statusId);
   }
 
-  load = restartableTask(async (element, [learningMaterial]) => {
-    if (!learningMaterial) {
-      return;
+  async loadExistingData() {
+    if (!this.args.learningMaterial) {
+      throw new Error('LearningMaterialManagerComponent requires a learningMaterial argument');
     }
+    const { learningMaterial } = this.args;
     const parentMaterial = await learningMaterial.learningMaterial;
     this.notes = learningMaterial.notes;
     this.required = learningMaterial.required;
@@ -197,16 +237,17 @@ export default class LearningMaterialManagerComponent extends Component {
     this.owningUser = await parentMaterial.owningUser;
     const userRole = await parentMaterial.userRole;
     this.userRoleTitle = userRole.title;
-  });
+
+    this.isLoaded = true;
+  }
 
   save = dropTask(async () => {
-    this.addErrorDisplayForAllFields();
-    const isTitleValid = await this.isValid('title');
-    const isEndDateValid = this.startDate && this.endDate ? await this.isValid('endDate') : true;
-    if (!isTitleValid || !isEndDateValid) {
+    this.validations.addErrorDisplayForAllFields();
+    const isValid = await this.validations.isValid();
+    if (!isValid) {
       return false;
     }
-    this.clearErrorDisplay();
+    this.validations.clearErrorDisplay();
 
     this.args.learningMaterial.set('publicNotes', this.publicNotes);
     this.args.learningMaterial.set('required', this.required);
