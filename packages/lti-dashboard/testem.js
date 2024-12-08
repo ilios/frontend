@@ -1,12 +1,15 @@
 /* eslint camelcase: 0 */
 'use strict';
 
+const FailureOnlyReporter = require('testem-failure-only-reporter');
+
 module.exports = {
   test_page: 'tests/index.html?hidepassed',
   disable_watching: true,
   launch_in_ci: ['Chrome'],
   launch_in_dev: ['Chrome'],
   browser_start_timeout: 120,
+  reporter: FailureOnlyReporter,
   parallel: process.env.EMBER_EXAM_SPLIT_COUNT || -1,
   browser_args: {
     Chrome: {
