@@ -1,11 +1,5 @@
-<div
-  class="learningmaterial-manager"
-  {{did-insert (perform this.load) @learningMaterial}}
-  {{did-update (perform this.load) @learningMaterial}}
->
-  {{#if this.load.isRunning}}
-    <LoadingSpinner class="loading" />
-  {{else}}
+<div class="learningmaterial-manager">
+  {{#if this.isLoaded}}
     {{#let (unique-id) as |templateId|}}
       <div class="item displayname">
         <label for="displayname-{{templateId}}">
@@ -17,10 +11,14 @@
             type="text"
             value={{this.title}}
             disabled={{this.save.isRunning}}
-            {{on "keyup" (fn this.addErrorDisplayFor "title")}}
+            {{on "keyup" (fn this.validations.addErrorDisplayFor "title")}}
             {{on "input" (pick "target.value" (set this "title"))}}
           />
-          <ValidationError @validatable={{this}} @property="title" data-test-title-validation-error-message />
+          <YupValidationMessage
+            @description={{t 'general.title'}}
+            @validationErrors={{this.validations.errors.title}}
+            data-test-title-validation-error-message
+          />
         {{else}}
           <span>
             {{this.title}}
@@ -286,7 +284,11 @@
               {{format-date this.endDate day="2-digit" month="2-digit" year="numeric" hour12=true hour="2-digit" minute="2-digit"}}
             {{/if}}
           </div>
-          <ValidationError @validatable={{this}} @property="endDate" data-test-end-date-validation-error-message />
+          <YupValidationMessage
+            @description={{t 'general.endDate'}}
+            @validationErrors={{this.validations.errors.endDate}}
+            data-test-end-date-validation-error-message
+          />
           {{#if @editable}}
             <button class="remove-date" type="button" {{on "click" (fn (set this "endDate") null)}}>
               {{t "general.timedReleaseClearEndDate"}}

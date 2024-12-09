@@ -122,7 +122,7 @@ function required() {
     return {
       path: validationParams.path,
       messageKey: 'errors.blank',
-      values: [],
+      values: {},
     };
   };
 }
