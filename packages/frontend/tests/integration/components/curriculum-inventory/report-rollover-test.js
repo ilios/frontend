@@ -33,9 +33,42 @@ module('Integration | Component | curriculum-inventory/report-rollover', functio
     assert.strictEqual(component.years.options[1].text, `${thisYear + 2}`);
     assert.strictEqual(component.years.options[2].text, `${thisYear + 3}`);
     assert.strictEqual(component.years.options[3].text, `${thisYear + 4}`);
+    assert.ok(component.years.options[0].isSelected);
+    assert.notOk(component.years.options[1].isSelected);
+    assert.notOk(component.years.options[2].isSelected);
+    assert.notOk(component.years.options[3].isSelected);
     assert.strictEqual(component.name.value, reportModel.name);
     assert.strictEqual(component.description.value, reportModel.description);
     assert.strictEqual(component.programs.text, 'Program: program 0');
+  });
+
+  test('multiple target programs, source program is selected by default', async function (assert) {
+    const thisYear = DateTime.fromObject({ hour: 8 }).year;
+    const school = this.server.create('school');
+    const program = this.server.create('program', { school, title: 'Zeppelin' });
+    this.server.createList('program', 3, { school });
+    const report = this.server.create('curriculum-inventory-report', {
+      name: 'old report',
+      description: 'this is an old report',
+      year: thisYear,
+      program,
+    });
+    const reportModel = await this.owner
+      .lookup('service:store')
+      .findRecord('curriculum-inventory-report', report.id);
+    this.set('report', reportModel);
+
+    await render(hbs`<CurriculumInventory::ReportRollover @report={{this.report}} />`);
+
+    assert.strictEqual(component.programs.options.length, 4);
+    assert.strictEqual(component.programs.options[0].text, 'program 1');
+    assert.strictEqual(component.programs.options[1].text, 'program 2');
+    assert.strictEqual(component.programs.options[2].text, 'program 3');
+    assert.strictEqual(component.programs.options[3].text, 'Zeppelin');
+    assert.notOk(component.programs.options[0].isSelected);
+    assert.notOk(component.programs.options[1].isSelected);
+    assert.notOk(component.programs.options[2].isSelected);
+    assert.ok(component.programs.options[3].isSelected);
   });
 
   test('academic years labeled as range if configured accordingly', async function (assert) {
@@ -67,6 +100,39 @@ module('Integration | Component | curriculum-inventory/report-rollover', functio
     assert.strictEqual(component.years.options[1].text, `${thisYear + 2} - ${thisYear + 3}`);
     assert.strictEqual(component.years.options[2].text, `${thisYear + 3} - ${thisYear + 4}`);
     assert.strictEqual(component.years.options[3].text, `${thisYear + 4} - ${thisYear + 5}`);
+  });
+
+  test('rollover report with future year', async function (assert) {
+    const thisYear = DateTime.fromObject({ hour: 8 }).year;
+    const sourceYear = thisYear + 1;
+    const school = this.server.create('school');
+    const program = this.server.create('program', { school });
+    const report = this.server.create('curriculum-inventory-report', {
+      name: 'old report',
+      description: 'this is an old report',
+      year: sourceYear,
+      program,
+    });
+    const reportModel = await this.owner
+      .lookup('service:store')
+      .findRecord('curriculum-inventory-report', report.id);
+    this.set('report', reportModel);
+
+    await render(hbs`<CurriculumInventory::ReportRollover @report={{this.report}} />`);
+    assert.strictEqual(component.years.options.length, 5);
+    assert.strictEqual(component.years.options[0].text, `${thisYear}`);
+    assert.strictEqual(component.years.options[1].text, `${thisYear + 2}`);
+    assert.strictEqual(component.years.options[2].text, `${thisYear + 3}`);
+    assert.strictEqual(component.years.options[3].text, `${thisYear + 4}`);
+    assert.strictEqual(component.years.options[4].text, `${thisYear + 5}`);
+    assert.notOk(component.years.options[0].isSelected);
+    assert.ok(
+      component.years.options[1].isSelected,
+      'the year following the source year is selected.',
+    );
+    assert.notOk(component.years.options[2].isSelected);
+    assert.notOk(component.years.options[3].isSelected);
+    assert.notOk(component.years.options[4].isSelected);
   });
 
   test('rollover report', async function (assert) {

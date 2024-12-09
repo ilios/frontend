@@ -1,9 +1,4 @@
-<div
-  class="curriculum-inventory-report-rollover"
-  {{did-insert (perform this.load)}}
-  {{did-update (perform this.load) @report}}
-  data-test-curriculum-inventory-report-rollover
->
+<div class="curriculum-inventory-report-rollover" data-test-curriculum-inventory-report-rollover>
   {{#unless this.load.isRunning}}
     <div class="rollover-form" {{scroll-into-view}}>
       <h3 class="title">
@@ -56,39 +51,41 @@
             {{#each this.years as |obj|}}
               <option
                 value={{obj.year}}
-                selected={{eq obj.year this.selectedYear}}
+                selected={{eq obj.year this.defaultYear}}
               >{{obj.title}}</option>
             {{/each}}
           </select>
         {{/let}}
       </div>
       <div class="item programs" data-test-programs>
-        {{#let (unique-id) as |programId|}}
-          <label for={{programId}}>
-            {{t "general.program"}}:
-          </label>
-          {{#if (gt this.programs.length 1)}}
-            <select
-              id={{programId}}
-              disabled={{this.save.isRunning}}
-              {{on "change" (pick "target.value" this.changeProgram)}}
-            >
-              {{#each (sort-by "title" this.programs) as |program|}}
-                <option value={{program.id}} selected={{eq program this.selectedProgram}}>
-                  {{program.title}}
-                </option>
-              {{/each}}
-            </select>
-          {{else}}
-            {{this.selectedProgram.title}}
-          {{/if}}
-        {{/let}}
+        {{#if this.programsDataLoaded}}
+          {{#let (unique-id) as |programId|}}
+            <label for={{programId}}>
+              {{t "general.program"}}:
+            </label>
+            {{#if (gt this.programs.length 1)}}
+              <select
+                id={{programId}}
+                disabled={{this.save.isRunning}}
+                {{on "change" (pick "target.value" this.changeProgram)}}
+              >
+                {{#each (sort-by "title" this.programs) as |program|}}
+                  <option value={{program.id}} selected={{eq program this.defaultProgram}}>
+                    {{program.title}}
+                  </option>
+                {{/each}}
+              </select>
+            {{else}}
+              {{this.defaultProgram.title}}
+            {{/if}}
+          {{/let}}
+        {{/if}}
       </div>
       <div class="buttons">
         <button
           type="button"
           class="done text"
-          disabled={{this.save.isRunning}}
+          disabled={{or (not this.programsDataLoaded) this.save.isRunning}}
           {{on "click" (perform this.save)}}
           data-test-save
         >
