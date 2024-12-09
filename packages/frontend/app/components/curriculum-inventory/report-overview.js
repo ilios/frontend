@@ -2,14 +2,14 @@ import Component from '@glimmer/component';
 import { cached, tracked } from '@glimmer/tracking';
 import { service } from '@ember/service';
 import { action } from '@ember/object';
-import { dropTask, restartableTask } from 'ember-concurrency';
+import { dropTask } from 'ember-concurrency';
 import { TrackedAsyncData } from 'ember-async-data';
 import {
-  validatable,
   AfterDate,
   BeforeDate,
   Length,
   NotBlank,
+  validatable,
 } from 'ilios-common/decorators/validation';
 
 @validatable
@@ -23,9 +23,14 @@ export default class CurriculumInventoryReportOverviewComponent extends Componen
   @BeforeDate('endDate', { granularity: 'minute' }) @tracked startDate;
   @AfterDate('startDate', { granularity: 'minute' }) @tracked endDate;
   @tracked year = null;
-  @tracked yearOptions = [];
-  @tracked academicYearCrossesCalendarYearBoundaries = false;
-  @tracked canRollover = false;
+
+  constructor() {
+    super(...arguments);
+    this.description = this.args.report.description;
+    this.year = this.args.report.year;
+    this.startDate = this.args.report.startDate;
+    this.endDate = this.args.report.endDate;
+  }
 
   @cached
   get courseData() {
@@ -45,6 +50,21 @@ export default class CurriculumInventoryReportOverviewComponent extends Componen
     return Boolean(this.linkedCourses?.length);
   }
 
+  @cached
+  get canRolloverData() {
+    return new TrackedAsyncData(this.getCanRollover(this.args.report));
+  }
+
+  get canRollover() {
+    return this.canRolloverData.isResolved ? this.canRolloverData.value : false;
+  }
+
+  async getCanRollover(report) {
+    const program = await report.program;
+    const school = await program.school;
+    return await this.permissionChecker.canCreateCurriculumInventoryReport(school);
+  }
+
   get showRollover() {
     if (this.router.currentRouteName === 'curriculum-inventory-report.rollover') {
       return false;
@@ -53,34 +73,37 @@ export default class CurriculumInventoryReportOverviewComponent extends Componen
     return this.canRollover;
   }
 
+  @cached
+  get academicYearCrossesCalendarYearBoundariesData() {
+    return new TrackedAsyncData(
+      this.iliosConfig.itemFromConfig('academicYearCrossesCalendarYearBoundaries'),
+    );
+  }
+
+  get academicYearCrossesCalendarYearBoundaries() {
+    return this.academicYearCrossesCalendarYearBoundariesData.isResolved
+      ? this.academicYearCrossesCalendarYearBoundariesData.value
+      : false;
+  }
+
+  get yearOptions() {
+    const currentYear = new Date().getFullYear();
+    const rhett = [];
+    for (let i = currentYear - 5, n = currentYear + 5; i <= n; i++) {
+      rhett.push({
+        id: `${i}`,
+        title: this.academicYearCrossesCalendarYearBoundaries ? `${i} - ${i + 1}` : `${i}`,
+      });
+    }
+    return rhett;
+  }
+
   get yearLabel() {
     if (this.academicYearCrossesCalendarYearBoundaries) {
       return this.year + ' - ' + (parseInt(this.year, 10) + 1);
     }
     return this.year;
   }
-
-  load = restartableTask(async () => {
-    const currentYear = new Date().getFullYear();
-    const program = await this.args.report.program;
-    const school = await program.school;
-    this.academicYearCrossesCalendarYearBoundaries = await this.iliosConfig.itemFromConfig(
-      'academicYearCrossesCalendarYearBoundaries',
-    );
-    this.canRollover = await this.permissionChecker.canCreateCurriculumInventoryReport(school);
-    const yearOptions = [];
-    for (let i = currentYear - 5, n = currentYear + 5; i <= n; i++) {
-      yearOptions.push({
-        id: `${i}`,
-        title: this.academicYearCrossesCalendarYearBoundaries ? `${i} - ${i + 1}` : `${i}`,
-      });
-    }
-    this.yearOptions = yearOptions;
-    this.description = this.args.report.description;
-    this.year = this.args.report.year;
-    this.startDate = this.args.report.startDate;
-    this.endDate = this.args.report.endDate;
-  });
 
   changeStartDate = dropTask(async () => {
     this.addErrorDisplayFor('startDate');
