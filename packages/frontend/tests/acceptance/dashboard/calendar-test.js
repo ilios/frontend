@@ -4,7 +4,6 @@ import { module, test } from 'qunit';
 import { setupAuthentication, freezeDateAt, unfreezeDate } from 'ilios-common';
 import { setupApplicationTest } from 'frontend/tests/helpers';
 import page from 'ilios-common/page-objects/dashboard-calendar';
-import resetStorages from 'ember-local-storage/test-support/reset-storage';
 import percySnapshot from '@percy/ember';
 
 module('Acceptance | Dashboard Calendar', function (hooks) {
@@ -80,10 +79,6 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
 
   hooks.afterEach(() => {
     unfreezeDate();
-    if (window.localStorage) {
-      window.localStorage.clear();
-    }
-    resetStorages();
   });
 
   test('load month calendar', async function (assert) {
