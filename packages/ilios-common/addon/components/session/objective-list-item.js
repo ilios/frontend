@@ -18,6 +18,7 @@ export default class SessionObjectiveListItemComponent extends Component {
   @tracked isManagingTerms;
   @tracked termsBuffer = [];
   @tracked selectedVocabulary;
+  @tracked fadeTextExpanded = false;
 
   constructor() {
     super(...arguments);
@@ -113,6 +114,10 @@ export default class SessionObjectiveListItemComponent extends Component {
     this.highlightSave.perform();
   });
 
+  @action
+  expandAllFadeText(isExpanded) {
+    this.fadeTextExpanded = isExpanded;
+  }
   @action
   revertTitleChanges() {
     this.title = this.args.sessionObjective.title;

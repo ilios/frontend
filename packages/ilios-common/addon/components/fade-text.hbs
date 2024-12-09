@@ -1,21 +1,18 @@
 {{#if (has-block)}}
   <span class="fade-text" data-test-fade-text ...attributes>
-    {{yield this.displayText this.expand this.collapse this.updateTextDims this.isFaded this.expanded}}
+    {{yield this.displayText this.expand this.collapse this.updateTextDims this.shouldFade this.expanded}}
   </span>
 {{else}}
   <span class="fade-text" data-test-fade-text ...attributes>
-    <div class="display-text-wrapper{{if this.isFaded ' is-faded'}}">
-      <div
-        class="display-text"
-        {{on-resize this.updateTextDims}}
-      >
+    <div class="display-text-wrapper{{if this.shouldFade ' faded'}}">
+      <div class="display-text" {{on-resize this.updateTextDims}}>
         {{this.displayText}}
       </div>
     </div>
-    {{#if this.isFaded}}
+    {{#if this.shouldFade}}
       <div class="fade-text-control" data-test-fade-text-control>
         <button
-          class="expand-buttons"
+          class="expand-text-button"
           aria-label={{t "general.expand"}}
           title={{t "general.expand"}}
           type="button"
@@ -28,7 +25,7 @@
     {{else}}
       {{#if this.expanded}}
         <button
-          class="expand-buttons"
+          class="expand-text-button"
           aria-label={{t "general.collapse"}}
           title={{t "general.collapse"}}
           type="button"

@@ -6,7 +6,6 @@ import { action } from '@ember/object';
 
 export default class FadeTextComponent extends Component {
   @tracked textHeight;
-  @tracked expanded = false;
 
   MAX_HEIGHT = 200;
 
@@ -15,6 +14,12 @@ export default class FadeTextComponent extends Component {
       return '';
     }
     if (typeOf(this.args.text) !== 'string') {
+      if (typeOf(this.args.text) === 'array') {
+        let text = '<ul>';
+        text += this.args.text.map((elem) => `<li>${elem}</li>`).join('');
+        text += '</ul>';
+        return text;
+      }
       return this.args.text.toString();
     }
 
@@ -24,36 +29,44 @@ export default class FadeTextComponent extends Component {
     return new htmlSafe(this.text);
   }
 
-  get textWidthRounded() {
-    return Math.floor(this.textWidth);
-  }
-
   get textHeightRounded() {
     return Math.floor(this.textHeight);
   }
 
-  get isFaded() {
-    if (!this.expanded) {
-      return this.textHeightRounded >= this.MAX_HEIGHT;
-    } else {
-      return false;
+  get exceedsHeight() {
+    return this.textHeightRounded >= this.MAX_HEIGHT;
+  }
+
+  get shouldFade() {
+    if (this.expanded !== undefined) {
+      return this.expanded ? false : this.exceedsHeight;
     }
+
+    return this.exceedsHeight;
+  }
+
+  get expanded() {
+    return this.args.expanded && this.exceedsHeight;
+  }
+
+  @action
+  expand(event) {
+    if (event) {
+      event.stopPropagation();
+    }
+    this.args.onExpandAll(true);
+  }
+
+  @action
+  collapse(event) {
+    if (event) {
+      event.stopPropagation();
+    }
+    this.args.onExpandAll(false);
   }
 
   @action
   updateTextDims({ contentRect: { height } }) {
     this.textHeight = height;
-  }
-
-  @action
-  expand(event) {
-    event.stopPropagation();
-    this.expanded = true;
-  }
-
-  @action
-  collapse(event) {
-    event.stopPropagation();
-    this.expanded = false;
   }
 }

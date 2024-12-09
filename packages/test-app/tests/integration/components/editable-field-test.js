@@ -104,12 +104,10 @@ module('Integration | Component | editable field', function (hooks) {
   test('focus when editor opens on textarea', async function (assert) {
     this.set('value', 'lorem');
     this.set('label', 'Foo Bar');
-    await render(
-      hbs`<EditableField @value={{this.value}}>
+    await render(hbs`<EditableField @value={{this.value}}>
   <label for='textarea'>{{this.label}}</label>
   <textarea id='textarea'></textarea>
-</EditableField>`,
-    );
+</EditableField>`);
     await click('[data-test-edit]');
 
     assert.dom('textarea', this.element).isFocused();
@@ -119,16 +117,28 @@ module('Integration | Component | editable field', function (hooks) {
     const text = `
       <p>A long list:</p><ol><li>One</li><li>two</li><li>Five!</li><li>Six</li><li>Seven but with extra text to make long</li><li>a</li><li>b</li><li>c</li><li>d</li><li>e</li><li>f</li><li>g</li><li>h</li><li>iii</li><li>Jjjjjj</li><li>k</li><li>lLLLLLLlll</li><li>mmmmmMMMMMmm</li><li>nnnnnOPE</li><li>ohno</li><li>pppppPowerbook</li></ol>
     `;
-    const fadedClass = 'is-faded';
-    const fadedSelector = '.is-faded';
+    const fadedClass = 'faded';
+    const fadedSelector = '.faded';
     this.set('value', text);
-    await render(hbs`<EditableField @value={{this.value}} />`);
+    this.set('fadeTextIsExpanded', false);
+    this.set('expandAllFadeText', (isExpanded) => {
+      this.set('fadeTextIsExpanded', isExpanded);
+    });
+    await render(
+      hbs`<EditableField
+  @value={{this.value}}
+  @fadeTextExpanded={{this.fadeTextIsExpanded}}
+  @onExpandAllFadeText={{this.expandAllFadeText}}
+/>`,
+    );
 
     await waitFor(fadedSelector);
 
     assert.dom('.display-text-wrapper', this.element).hasClass(fadedClass);
     await click('[data-test-expand]');
+
     assert.dom('.display-text-wrapper', this.element).doesNotHaveClass(fadedClass);
+
     await click('[data-test-collapse]');
 
     await waitFor(fadedSelector);

@@ -27,6 +27,8 @@
         @isSaveDisabled={{this.hasErrorForTitle}}
         @save={{perform this.saveTitleChanges}}
         @close={{this.revertTitleChanges}}
+        @fadeTextExpanded={{this.fadeTextExpanded}}
+        @onExpandAllFadeText={{this.expandAllFadeText}}
       >
         <HtmlEditor @content={{this.title}} @update={{this.changeTitle}} @autofocus={{true}} />
         <ValidationError @validatable={{this}} @property="title" />

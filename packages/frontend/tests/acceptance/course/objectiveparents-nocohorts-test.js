@@ -41,7 +41,7 @@ module('Acceptance | Course with no cohorts - Objective Parents', function (hook
 
     assert.strictEqual(firstObjective.description.text, 'course objective 0');
     assert.ok(firstObjective.parents.empty);
-    await firstObjective.parents.list[0].manage();
+    await firstObjective.parents.manage();
     const m = firstObjective.parentManager;
 
     assert.ok(m.hasNoCohortWarning);
@@ -50,7 +50,7 @@ module('Acceptance | Course with no cohorts - Objective Parents', function (hook
     await page.details.cohorts.selectable[0].add();
     await page.details.cohorts.save();
     assert.strictEqual(page.details.cohorts.current.length, 1);
-    await firstObjective.parents.list[0].manage();
+    await firstObjective.parents.manage();
 
     assert.strictEqual(m.selectedCohortTitle, 'program 0 cohort 0');
     assert.strictEqual(m.competencies.length, 1);
@@ -64,7 +64,7 @@ module('Acceptance | Course with no cohorts - Objective Parents', function (hook
     await page.details.cohorts.selected[0].remove();
     await page.details.cohorts.save();
     assert.strictEqual(page.details.cohorts.current.length, 0);
-    await firstObjective.parents.list[0].manage();
+    await firstObjective.parents.manage();
     assert.ok(m.hasNoCohortWarning);
   });
 });
