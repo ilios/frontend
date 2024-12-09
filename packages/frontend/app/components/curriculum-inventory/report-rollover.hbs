@@ -51,7 +51,7 @@
             {{#each this.years as |obj|}}
               <option
                 value={{obj.year}}
-                selected={{eq obj.year this.defaultSelectedYear}}
+                selected={{eq obj.year this.defaultYear}}
               >{{obj.title}}</option>
             {{/each}}
           </select>
@@ -70,13 +70,13 @@
                 {{on "change" (pick "target.value" this.changeProgram)}}
               >
                 {{#each (sort-by "title" this.programs) as |program|}}
-                  <option value={{program.id}} selected={{eq program this.defaultSelectedProgram}}>
+                  <option value={{program.id}} selected={{eq program this.defaultProgram}}>
                     {{program.title}}
                   </option>
                 {{/each}}
               </select>
             {{else}}
-              {{this.defaultSelectedProgram.title}}
+              {{this.defaultProgram.title}}
             {{/if}}
           {{/let}}
         {{/if}}

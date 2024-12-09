@@ -69,7 +69,7 @@ export default class CurriculumInventoryReportRolloverComponent extends Componen
     return rhett;
   }
 
-  get defaultSelectedYear() {
+  get defaultYear() {
     let selectedYear = findBy(this.years, 'year', this.startYear + 1);
     if (!selectedYear) {
       selectedYear = findBy(this.years, 'year', this.reportYear + 1);
@@ -93,18 +93,16 @@ export default class CurriculumInventoryReportRolloverComponent extends Componen
   }
 
   @cached
-  get defaultSelectedProgramData() {
+  get defaultProgramData() {
     return new TrackedAsyncData(this.args.report.program);
   }
 
-  get defaultSelectedProgram() {
-    return this.defaultSelectedProgramData.isResolved
-      ? this.defaultSelectedProgramData.value
-      : null;
+  get defaultProgram() {
+    return this.defaultProgramData.isResolved ? this.defaultProgramData.value : null;
   }
 
   get programsDataLoaded() {
-    return this.defaultSelectedProgramData.isResolved && this.programsData.isResolved;
+    return this.defaultProgramData.isResolved && this.programsData.isResolved;
   }
 
   @action
@@ -138,8 +136,8 @@ export default class CurriculumInventoryReportRolloverComponent extends Componen
     const data = {
       name: this.name,
       description: this.description,
-      year: this.selectedYear ? this.selectedYear : this.defaultSelectedYear,
-      program: this.selectedProgram ? this.selectedProgram.id : this.defaultSelectedProgram.id,
+      year: this.selectedYear ? this.selectedYear : this.defaultYear,
+      program: this.selectedProgram ? this.selectedProgram.id : this.defaultProgram.id,
     };
     const url = `curriculuminventoryreports/${this.args.report.id}/rollover`;
     const newReportObj = await this.fetch.postQueryToApi(url, data);
