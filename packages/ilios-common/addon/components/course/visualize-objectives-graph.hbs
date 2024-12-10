@@ -56,7 +56,6 @@
         <div class="table-actions" data-test-data-table-actions>
           <button
             type="button"
-            disabled={{not this.hasData}}
             {{on "click" (perform this.downloadData)}}
             data-test-download-data
           >
