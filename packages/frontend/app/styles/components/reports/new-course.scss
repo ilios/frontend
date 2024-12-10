@@ -1,0 +1,43 @@
+@use "../../ilios-common/colors" as c;
+@use "../../ilios-common/mixins" as m;
+@use "sass:color";
+
+.reports-new-course {
+  background-color: c.$slightWhite;
+  border: 1px solid c.$culturedGrey;
+  margin: 0.5rem 0;
+  padding: 1rem 1rem 3rem;
+
+  .title {
+    @include m.ilios-heading-h5;
+    margin-bottom: 0.5rem;
+  }
+
+  .course-search {
+    margin: 1rem 0;
+
+    .results {
+      @include m.ilios-list-reset;
+      border: 1px solid c.$culturedGrey;
+      padding: 0.5rem;
+      li {
+        &.results-count {
+          text-align: right;
+          color: c.$fernGreen;
+        }
+
+        button {
+          &:disabled {
+            cursor: default;
+            color: c.$davysGrey;
+          }
+        }
+      }
+    }
+  }
+
+  .input-buttons {
+    margin-top: 0.5rem;
+    float: right;
+  }
+}

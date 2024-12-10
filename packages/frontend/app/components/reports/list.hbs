@@ -28,7 +28,11 @@
       />
     {{/if}}
     {{#if @showNewCourseReportForm}}
-      <Reports::NewCourse />
+      <Reports::NewCourse
+        @selectedCourseIds={{@selectedCourseIds}}
+        @setSelectedCourseIds={{@setSelectedCourseIds}}
+        @close={{fn @setShowNewCourseReportForm false}}
+      />
     {{/if}}
     {{#if this.newReport}}
       <div class="saved-result" data-test-newly-saved-report>
