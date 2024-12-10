@@ -1,1 +1,75 @@
-<div></div>
+<div class="reports-new-course" data-test-reports-new-course ...attributes>
+  <h2 data-test-component-title>{{t "general.newCourseReport"}}</h2>
+  <div class="courses" data-test-courses>
+    <label for="{{this.uniqueId}}-course-search">
+      {{t "general.courses"}}:
+    </label>
+    {{#if @selectedCourseIds}}
+      <ul>
+        {{#each this.selectedCourses as |course|}}
+          <li>
+            <button
+              class="link-button"
+              type="button"
+              {{on "click" (fn this.removeCourse course.id)}}
+              data-test-selected-course
+            >
+              {{course.year}}&nbsp;
+              {{#if course.externalId}}
+                [{{course.externalId}}]&nbsp;
+              {{/if}}
+              {{course.title}}
+              <FaIcon @icon="xmark" class="remove" />
+            </button>
+          </li>
+        {{/each}}
+      </ul>
+    {{/if}}
+    <div class="course-search">
+      <Reports::Subject::New::Search::Input
+        @search={{perform this.search}}
+        @searchIsRunning={{this.search.isRunning}}
+        @searchIsIdle={{this.search.isIdle}}
+        @searchReturned={{is-array this.searchResults}}
+        @results={{this.sortedSearchResults}}
+        as |course|
+      >
+        <button
+          class="link-button"
+          type="button"
+          disabled={{includes course.id @selectedCourseIds}}
+          {{on "click" (fn this.pickCourse course.id)}}
+        >
+          {{#if (includes course.id @selectedCourseIds)}}
+            <FaIcon @icon="check" />
+          {{else}}
+            <FaIcon @icon="plus" class="add" />
+          {{/if}}
+          {{course.year}}&nbsp;
+          {{#if course.externalId}}
+            [{{course.externalId}}]&nbsp;
+          {{/if}}
+          {{course.title}}
+        </button>
+      </Reports::Subject::New::Search::Input>
+    </div>
+  </div>
+  <div class="input-buttons">
+    <button
+      type="button"
+      class="done text"
+      {{on "click" (perform this.run)}}
+      disabled={{this.run.isRunning}}
+      data-test-run
+    >
+      {{#if this.run.isRunning}}
+        <LoadingSpinner />
+      {{else}}
+        {{t "general.runReport"}}
+      {{/if}}
+    </button>
+    <button type="button" class="cancel text" {{on "click" this.close}} data-test-cancel>
+      {{t "general.cancel"}}
+    </button>
+  </div>
+</div>
