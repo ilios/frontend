@@ -6,6 +6,7 @@ import { htmlSafe } from '@ember/template';
 import { filter, map } from 'rsvp';
 import { dropTask, restartableTask, timeout } from 'ember-concurrency';
 import { TrackedAsyncData } from 'ember-async-data';
+import striptags from 'striptags';
 import PapaParse from 'papaparse';
 import { mapBy, sortBy, uniqueValues } from 'ilios-common/utils/array-helpers';
 import createDownloadFile from 'ilios-common/utils/create-download-file';
@@ -201,7 +202,7 @@ export default class CourseVisualizeObjectivesGraph extends Component {
     const output = data.map((obj) => {
       const rhett = {};
       rhett[this.intl.t('general.percentage')] = obj.percentage;
-      rhett[this.intl.t('general.courseObjective')] = obj.meta.courseObjective.title;
+      rhett[this.intl.t('general.courseObjective')] = striptags(obj.meta.courseObjective.title);
       rhett[this.intl.t('general.competencies')] = obj.meta.competencies;
       rhett[this.intl.t('general.sessions')] = mapBy(
         sortBy(mapBy(obj.meta.sessionObjectives, 'session'), 'title'),
