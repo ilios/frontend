@@ -89,6 +89,7 @@ module('Integration | Component | course/visualize-session-types-graph', functio
     assert.strictEqual(component.chart.labels.length, 2);
     assert.strictEqual(component.chart.labels[0].text, 'Campaign');
     assert.strictEqual(component.chart.labels[1].text, 'Standalone');
+    assert.ok(component.dataTable.actions.download.isVisible);
     assert.strictEqual(component.dataTable.rows.length, 3);
     assert.strictEqual(component.dataTable.rows[0].sessionType.text, 'Prelude');
     assert.strictEqual(
