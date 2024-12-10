@@ -850,6 +850,9 @@ importers:
       loader.js:
         specifier: ^4.7.0
         version: 4.7.0
+      papaparse:
+        specifier: ^5.4.1
+        version: 5.4.1
       prettier:
         specifier: ^3.3.3
         version: 3.4.2
@@ -1309,6 +1312,9 @@ importers:
       miragejs:
         specifier: '>= 0.1.45'
         version: 0.1.48
+      papaparse:
+        specifier: ^5.4.1
+        version: 5.4.1
       prettier:
         specifier: ^3.3.3
         version: 3.4.2

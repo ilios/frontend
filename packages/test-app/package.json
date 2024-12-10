@@ -81,6 +81,7 @@
     "loader.js": "^4.7.0",
     "luxon": ">= 3.5.0",
     "miragejs": ">= 0.1.45",
+    "papaparse": "^5.4.1",
     "prettier": "^3.3.3",
     "query-string": ">= 9.1.0",
     "qunit": "^2.22.0",
