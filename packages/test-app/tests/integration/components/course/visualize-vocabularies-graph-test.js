@@ -89,7 +89,7 @@ module('Integration | Component | course/visualize-vocabularies-graph', function
     assert.strictEqual(component.chart.labels.length, 2);
     assert.strictEqual(component.chart.labels[0].text, 'Campaign');
     assert.strictEqual(component.chart.labels[1].text, 'Standalone');
-
+    assert.ok(component.dataTable.actions.download.isVisible);
     assert.strictEqual(component.dataTable.rows.length, 2);
     assert.strictEqual(component.dataTable.rows[0].vocabulary.text, 'Campaign');
     assert.strictEqual(
