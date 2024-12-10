@@ -96,6 +96,7 @@ module('Integration | Component | course/visualize-instructors-graph', function 
     assert.strictEqual(component.chart.labels[1].text, 'Duke');
     assert.strictEqual(component.chart.labels[2].text, 'William');
     assert.strictEqual(component.chart.labels[3].text, 'Marie');
+    assert.ok(component.dataTable.actions.download.isVisible);
     assert.strictEqual(component.dataTable.rows.length, 4);
     assert.strictEqual(component.dataTable.rows[0].instructor.text, 'Daisy');
     assert.strictEqual(component.dataTable.rows[0].instructor.url, '/data/courses/1/instructors/2');

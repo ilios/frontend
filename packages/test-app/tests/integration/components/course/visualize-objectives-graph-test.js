@@ -107,6 +107,7 @@ module('Integration | Component | course/visualize-objectives-graph', function (
     assert.notOk(component.unlinkedObjectives.isPresent);
     assert.strictEqual(component.untaughtObjectives.items.length, 1);
     assert.strictEqual(component.untaughtObjectives.items[0].text, 'course objective 2');
+    assert.ok(component.dataTable.actions.download.isVisible);
     assert.strictEqual(component.dataTable.header.percentage.text, 'Percentage');
     assert.strictEqual(component.dataTable.header.objective.text, 'Course Objective');
     assert.strictEqual(component.dataTable.header.competencies.text, 'Competencies');
