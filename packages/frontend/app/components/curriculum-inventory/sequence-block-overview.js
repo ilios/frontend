@@ -28,7 +28,7 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
   @tracked
   @Custom('validateStartingEndingLevelCallback', 'validateEndingLevelMessageCallback')
   endingAcademicLevel;
-  @tracked academicLevels = [];
+  @tracked _academicLevels = [];
   @tracked childSequenceOrder;
   @tracked _course;
   @tracked description;
@@ -83,7 +83,7 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
   load = restartableTask(async (element, [sequenceBlock]) => {
     this._report = await sequenceBlock.report;
     this._parent = await sequenceBlock.parent;
-    this.academicLevels = await this._report.academicLevels;
+    this._academicLevels = await this._report.academicLevels;
     this._isInOrderedSequence = false;
     this._orderInSequenceOptions = [];
     if (isPresent(this._parent) && this._parent.isOrdered) {
@@ -109,6 +109,15 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
 
   get report() {
     return this.reportData.isResolved ? this.reportData.value : null;
+  }
+
+  @cached
+  get academicLevelsData() {
+    return new TrackedAsyncData(this.report?.academicLevels);
+  }
+
+  get academicLevels() {
+    return this.academicLevelsData.isResolved ? this.academicLevelsData.value : [];
   }
 
   @cached
@@ -356,7 +365,7 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
   @action
   setStartingAcademicLevel(event) {
     const id = event.target.value;
-    this.startingAcademicLevel = findById(this.academicLevels, id);
+    this.startingAcademicLevel = findById(this._academicLevels, id);
   }
 
   @action
@@ -377,7 +386,7 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
   @action
   setEndingAcademicLevel(event) {
     const id = event.target.value;
-    this.endingAcademicLevel = findById(this.academicLevels, id);
+    this.endingAcademicLevel = findById(this._academicLevels, id);
   }
 
   @action
