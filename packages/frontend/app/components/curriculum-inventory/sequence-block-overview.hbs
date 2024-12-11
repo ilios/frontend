@@ -340,8 +340,8 @@
               {{#if this.isInOrderedSequence}}
                 {{#if @canUpdate}}
                   <EditableField
-                    @value={{this.orderInSequence}}
-                    @save={{perform this.changeOrderInSequence}}
+                    @value={{@sequenceBlock.orderInSequence}}
+                    @save={{perform this.saveOrderInSequenceChanges}}
                     @close={{this.revertOrderInSequenceChanges}}
                   >
                     <select

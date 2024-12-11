@@ -43,10 +43,10 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
   @Gte(0)
   @Custom('validateMaximumCallback', 'validateMaximumMessageCallback')
   maximum;
-  @tracked isInOrderedSequence;
+  @tracked _isInOrderedSequence;
   @tracked orderInSequence;
-  @tracked orderInSequenceOptions = [];
-  @tracked parent;
+  @tracked _orderInSequenceOptions = [];
+  @tracked _parent;
   @tracked _report;
   @tracked required;
   @tracked sessions = [];
@@ -69,16 +69,16 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
 
   load = restartableTask(async (element, [sequenceBlock]) => {
     this._report = await sequenceBlock.report;
-    this.parent = await sequenceBlock.parent;
+    this._parent = await sequenceBlock.parent;
     this.academicLevels = await this._report.academicLevels;
-    this.isInOrderedSequence = false;
-    this.orderInSequenceOptions = [];
-    if (isPresent(this.parent) && this.parent.isOrdered) {
-      this.isInOrderedSequence = true;
-      const siblings = await this.parent.children;
+    this._isInOrderedSequence = false;
+    this._orderInSequenceOptions = [];
+    if (isPresent(this._parent) && this._parent.isOrdered) {
+      this._isInOrderedSequence = true;
+      const siblings = await this._parent.children;
       for (let i = 0, n = siblings.length; i < n; i++) {
         const num = i + 1;
-        this.orderInSequenceOptions.push(num);
+        this._orderInSequenceOptions.push(num);
       }
     }
     this.linkedSessions = await sequenceBlock.sessions;
@@ -159,6 +159,44 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
     }
 
     return linkableCourses;
+  }
+
+  @cached
+  get parentData() {
+    return new TrackedAsyncData(this.args.sequenceBlock.parent);
+  }
+
+  get parent() {
+    return this.parentData.isResolved ? this.parentData.value : null;
+  }
+
+  @cached
+  get selfAndSiblingsData() {
+    return new TrackedAsyncData(this.getSelfAndSiblings(this.parent));
+  }
+
+  get selfAndSiblings() {
+    return this.selfAndSiblingsData.isResolved ? this.selfAndSiblingsData.value : [];
+  }
+
+  async getSelfAndSiblings(parent) {
+    if (!parent) {
+      return [this.args.sequenceBlock];
+    }
+    return await parent.children;
+  }
+
+  get isInOrderedSequence() {
+    return this.parent && this.parent.isOrdered;
+  }
+
+  get orderInSequenceOptions() {
+    const rhett = [];
+    for (let i = 0, n = this.selfAndSiblings.length; i < n; i++) {
+      const num = i + 1;
+      rhett.push(num);
+    }
+    return rhett;
   }
 
   get hasZeroDuration() {
@@ -343,18 +381,27 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
     this.endingAcademicLevel = this.args.sequenceBlock.endingAcademicLevel;
   }
 
-  changeOrderInSequence = dropTask(async () => {
+  @action
+  updateOrderInSequence(event) {
+    this.orderInSequence = parseInt(event.target.value);
+  }
+
+  @action
+  revertOrderInSequenceChanges() {
+    this.orderInSequence = this.args.sequenceBlock.orderInSequence;
+  }
+
+  saveOrderInSequenceChanges = dropTask(async () => {
+    if (this.orderInSequence === this.args.sequenceBlock.orderInSequence) {
+      return;
+    }
+
     this.args.sequenceBlock.set('orderInSequence', this.orderInSequence);
     const savedBlock = await this.args.sequenceBlock.save();
     const parent = await savedBlock.parent;
     const children = await parent.children;
     await all(children.map((child) => child.reload()));
   });
-
-  @action
-  revertOrderInSequenceChanges() {
-    this.orderInSequence = this.args.sequenceBlock.orderInSequence;
-  }
 
   @action
   editMinMax() {
@@ -388,11 +435,6 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
   @action
   changeDescription(event) {
     this.description = event.target.value;
-  }
-
-  @action
-  updateOrderInSequence(event) {
-    this.orderInSequence = event.target.value;
   }
 
   @action
