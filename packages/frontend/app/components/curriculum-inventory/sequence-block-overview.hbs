@@ -9,55 +9,52 @@
     <div class="curriculum-inventory-sequence-block-overview-wrapper" data-test-overview>
       <div class="title" data-test-title>{{t "general.overview"}}</div>
       <div class="curriculum-inventory-sequence-block-overview-content">
+        <div class="block course" data-test-course>
+          <span>
+            <label for="course-{{templateId}}">{{t "general.course"}}:</label>
+            {{#if @canUpdate}}
+              <EditableField
+                @value={{this.course.title}}
+                @save={{this.saveCourse}}
+                @close={{this.revertCourseChanges}}
+                @clickPrompt={{t "general.selectCourse"}}
+              >
+                <select id="course-{{templateId}}" {{on "change" this.updateCourse}}>
+                  <option value="" selected={{is-empty this.course}}>{{t
+                      "general.selectCourse"
+                    }}</option>
+                  {{#each (sort-by "title" this.linkableCourses) as |obj|}}
+                    <option value={{obj.id}} selected={{eq obj this.course}}>{{obj.title}}</option>
+                  {{/each}}
+                </select>
+              </EditableField>
+            {{else}}
+              <span data-test-course-title>{{if
+                  this.course
+                  this.course.title
+                  (t "general.notApplicableAbbr")
+                }}</span>
+            {{/if}}
+          </span>
+          {{#if this.course}}
+            <span class="details" data-test-course-details>
+              {{t "general.level"}}:
+              {{this.course.level}},
+              {{t "general.startDate"}}:
+              {{format-date this.course.startDate day="2-digit" month="2-digit" year="numeric"}},
+              {{t "general.endDate"}}:
+              {{format-date this.course.endDate day="2-digit" month="2-digit" year="numeric"}}
+              {{#if this.course.clerkshipType}}
+                -
+                {{t "general.clerkship"}}
+                ({{this.course.clerkshipType.title}})
+              {{/if}}
+            </span>
+          {{/if}}
+        </div>
         {{#if (or this.load.isRunning this.reload.isRunning)}}
           <div class="block"><LoadingSpinner /></div>
         {{else}}
-          <div class="block course" data-test-course>
-            <span>
-              <label for="course-{{templateId}}">{{t "general.course"}}:</label>
-              {{#if @canUpdate}}
-                <EditableField
-                  @value={{this.course.title}}
-                  @save={{this.saveCourse}}
-                  @close={{this.revertCourseChanges}}
-                  @clickPrompt={{t "general.selectCourse"}}
-                >
-                  <select id="course-{{templateId}}" {{on "change" this.updateCourse}}>
-                    <option value="" selected={{is-empty this.course}}>{{t
-                        "general.selectCourse"
-                      }}</option>
-                    {{#each (sort-by "title" this.linkableCourses) as |obj|}}
-                      <option
-                        value={{obj.id}}
-                        selected={{eq obj this.course}}
-                      >{{obj.title}}</option>
-                    {{/each}}
-                  </select>
-                </EditableField>
-              {{else}}
-                <span data-test-course-title>{{if
-                    this.course
-                    this.course.title
-                    (t "general.notApplicableAbbr")
-                  }}</span>
-              {{/if}}
-            </span>
-            {{#if this.course}}
-              <span class="details" data-test-course-details>
-                {{t "general.level"}}:
-                {{this.course.level}},
-                {{t "general.startDate"}}:
-                {{format-date this.course.startDate day="2-digit" month="2-digit" year="numeric"}},
-                {{t "general.endDate"}}:
-                {{format-date this.course.endDate day="2-digit" month="2-digit" year="numeric"}}
-                {{#if this.course.clerkshipType}}
-                  -
-                  {{t "general.clerkship"}}
-                  ({{this.course.clerkshipType.title}})
-                {{/if}}
-              </span>
-            {{/if}}
-          </div>
           <div class="block description" data-test-description>
             <label for="description-{{templateId}}">{{t "general.description"}}:</label>
             {{#if @canUpdate}}

@@ -1,11 +1,12 @@
 import Component from '@glimmer/component';
-import { tracked } from '@glimmer/tracking';
+import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
 import { isPresent } from '@ember/utils';
 import { dropTask, restartableTask } from 'ember-concurrency';
 import { all } from 'rsvp';
 import { ValidateIf } from 'class-validator';
+import { TrackedAsyncData } from 'ember-async-data';
 import {
   validatable,
   AfterDate,
@@ -29,12 +30,12 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
   endingAcademicLevel;
   @tracked academicLevels = [];
   @tracked childSequenceOrder;
-  @tracked course;
+  @tracked _course;
   @tracked description;
   @tracked isEditingDatesAndDuration = false;
   @tracked isEditingMinMax = false;
   @tracked isManagingSessions = false;
-  @tracked linkableCourses = [];
+  @tracked _linkableCourses = [];
   @tracked @NotBlank() @IsInt() @Gte(0) minimum;
   @tracked
   @NotBlank()
@@ -46,7 +47,7 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
   @tracked orderInSequence;
   @tracked orderInSequenceOptions = [];
   @tracked parent;
-  @tracked report;
+  @tracked _report;
   @tracked required;
   @tracked sessions = [];
   @tracked
@@ -64,26 +65,12 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
   @NotBlank()
   @AfterDate('startDate', { granularity: 'day' })
   endDate;
-
-  get linkedCourseIsClerkship() {
-    if (!this.course) {
-      return false;
-    }
-    return !!this.course.belongsTo('clerkshipType').id();
-  }
-
-  get hasZeroDuration() {
-    const num = Number(this.duration);
-    if (Number.isNaN(num)) {
-      return false;
-    }
-    return 0 === num;
-  }
+  @tracked selectedCourse;
 
   load = restartableTask(async (element, [sequenceBlock]) => {
-    this.report = await sequenceBlock.report;
+    this._report = await sequenceBlock.report;
     this.parent = await sequenceBlock.parent;
-    this.academicLevels = await this.report.academicLevels;
+    this.academicLevels = await this._report.academicLevels;
     this.isInOrderedSequence = false;
     this.orderInSequenceOptions = [];
     if (isPresent(this.parent) && this.parent.isOrdered) {
@@ -104,12 +91,83 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
     this.childSequenceOrder = sequenceBlock.childSequenceOrder.toString();
     this.orderInSequence = sequenceBlock.orderInSequence;
     this.description = sequenceBlock.description;
-    this.course = await sequenceBlock.course;
+    this._course = await sequenceBlock.course;
     this.minimum = sequenceBlock.minimum;
     this.maximum = sequenceBlock.maximum;
-    this.sessions = await this.getSessions(this.course);
-    this.linkableCourses = await this.getLinkableCourses(this.report, this.course);
+    this.sessions = await this.getSessions(this._course);
+    this._linkableCourses = await this.getLinkableCourses(this._report, this._course);
   });
+
+  @cached
+  get reportData() {
+    return new TrackedAsyncData(this.args.sequenceBlock.report);
+  }
+
+  get report() {
+    return this.reportData.isResolved ? this.reportData.value : null;
+  }
+
+  @cached
+  get courseData() {
+    return new TrackedAsyncData(this.args.sequenceBlock.course);
+  }
+
+  get course() {
+    return this.courseData.isResolved ? this.courseData.value : null;
+  }
+
+  get linkedCourseIsClerkship() {
+    if (!this.course) {
+      return false;
+    }
+    return !!this.course.belongsTo('clerkshipType').id();
+  }
+
+  @cached
+  get linkableCourseData() {
+    return new TrackedAsyncData(this.getLinkableCourses(this.report, this.course));
+  }
+
+  get linkableCourses() {
+    return this.linkableCourseData.isResolved ? this.linkableCourseData.value : [];
+  }
+
+  /**
+   * Returns a list of courses that can be linked to this sequence block.
+   */
+  async getLinkableCourses(report, course) {
+    if (!report) {
+      return [];
+    }
+    const program = await report.program;
+    const schoolId = program.belongsTo('school').id();
+    const allLinkableCourses = await this.store.query('course', {
+      filters: {
+        published: true,
+        school: [schoolId],
+        year: report.get('year'),
+      },
+    });
+    const linkedCourses = await report.getLinkedCourses();
+    // Filter out all courses that are linked to (sequence blocks in) this report.
+    const linkableCourses = allLinkableCourses.filter((course) => {
+      return !linkedCourses.includes(course);
+    });
+    // Always add the currently linked course to this list, if existent.
+    if (isPresent(course)) {
+      linkableCourses.push(course);
+    }
+
+    return linkableCourses;
+  }
+
+  get hasZeroDuration() {
+    const num = Number(this.duration);
+    if (Number.isNaN(num)) {
+      return false;
+    }
+    return 0 === num;
+  }
 
   get requiredLabel() {
     switch (this.required) {
@@ -148,35 +206,6 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
       default:
         return null;
     }
-  }
-
-  /**
-   * Returns a list of courses that can be linked to this sequence block.
-   */
-  async getLinkableCourses(report, course) {
-    if (!report) {
-      return [];
-    }
-    const program = await report.program;
-    const schoolId = program.belongsTo('school').id();
-    const allLinkableCourses = await this.store.query('course', {
-      filters: {
-        published: true,
-        school: [schoolId],
-        year: report.get('year'),
-      },
-    });
-    const linkedCourses = await report.getLinkedCourses();
-    // Filter out all courses that are linked to (sequence blocks in) this report.
-    const linkableCourses = allLinkableCourses.filter((course) => {
-      return !linkedCourses.includes(course);
-    });
-    // Always add the currently linked course to this list, if existent.
-    if (isPresent(course)) {
-      linkableCourses.push(course);
-    }
-
-    return linkableCourses;
   }
 
   /**
@@ -220,21 +249,29 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
   }
 
   @action
-  async saveCourse() {
-    const oldCourse = await this.args.sequenceBlock.course;
-    if (!this.isDestroying) {
-      if (oldCourse !== this.course) {
-        this.args.sequenceBlock.set('sessions', []);
-        this.args.sequenceBlock.set('excludedSessions', []);
-      }
-      this.args.sequenceBlock.set('course', this.course);
-      await this.args.sequenceBlock.save();
+  updateCourse(event) {
+    const value = event.target.value;
+    if (!value) {
+      this.selectedCourse = null;
+    } else {
+      this.selectedCourse = findById(this.linkableCourses, value);
     }
   }
 
   @action
   async revertCourseChanges() {
-    this.course = await this.args.sequenceBlock.get('course');
+    this.selectedCourse = null;
+  }
+
+  @action
+  async saveCourse() {
+    const oldCourse = await this.args.sequenceBlock.course;
+    if (oldCourse !== this.selectedCourse) {
+      this.args.sequenceBlock.set('sessions', []);
+      this.args.sequenceBlock.set('excludedSessions', []);
+    }
+    this.args.sequenceBlock.set('course', this.selectedCourse);
+    await this.args.sequenceBlock.save();
   }
 
   changeTrack = dropTask(async (value) => {
@@ -347,16 +384,6 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
     await this.args.sequenceBlock.save();
     this.isManagingSessions = false;
   });
-
-  @action
-  updateCourse(event) {
-    const value = event.target.value;
-    if (!value) {
-      this.course = null;
-    } else {
-      this.course = findById(this.linkableCourses, value);
-    }
-  }
 
   @action
   changeDescription(event) {
