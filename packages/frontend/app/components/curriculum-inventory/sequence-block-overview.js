@@ -67,6 +67,19 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
   endDate;
   @tracked selectedCourse;
 
+  constructor() {
+    super(...arguments);
+    this.required = this.args.sequenceBlock.required.toString();
+    this.duration = this.args.sequenceBlock.duration;
+    this.startDate = this.args.sequenceBlock.startDate;
+    this.endDate = this.args.sequenceBlock.endDate;
+    this.childSequenceOrder = this.args.sequenceBlock.childSequenceOrder.toString();
+    this.orderInSequence = this.args.sequenceBlock.orderInSequence;
+    this.minimum = this.args.sequenceBlock.minimum;
+    this.maximum = this.args.sequenceBlock.maximum;
+    this.description = this.args.sequenceBlock.description;
+  }
+
   load = restartableTask(async (element, [sequenceBlock]) => {
     this._report = await sequenceBlock.report;
     this._parent = await sequenceBlock.parent;
@@ -84,16 +97,7 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
     this.linkedSessions = await sequenceBlock.sessions;
     this.startingAcademicLevel = await sequenceBlock.startingAcademicLevel;
     this.endingAcademicLevel = await sequenceBlock.endingAcademicLevel;
-    this.required = sequenceBlock.required.toString();
-    this.duration = sequenceBlock.duration;
-    this.startDate = sequenceBlock.startDate;
-    this.endDate = sequenceBlock.endDate;
-    this.childSequenceOrder = sequenceBlock.childSequenceOrder.toString();
-    this.orderInSequence = sequenceBlock.orderInSequence;
-    this.description = sequenceBlock.description;
     this._course = await sequenceBlock.course;
-    this.minimum = sequenceBlock.minimum;
-    this.maximum = sequenceBlock.maximum;
     this.sessions = await this.getSessions(this._course);
     this._linkableCourses = await this.getLinkableCourses(this._report, this._course);
   });
