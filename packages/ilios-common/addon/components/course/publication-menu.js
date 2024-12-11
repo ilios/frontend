@@ -2,6 +2,7 @@ import Component from '@glimmer/component';
 import { service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
+import { task, timeout } from 'ember-concurrency';
 
 export default class CoursePublicationMenuComponent extends Component {
   @service router;
@@ -63,53 +64,70 @@ export default class CoursePublicationMenuComponent extends Component {
     return 'notpublished';
   }
 
-  focusOnFirstItem(menuElement) {
-    menuElement.querySelector('button:first-of-type').focus();
+  focusFirstLink = task(async () => {
+    await timeout(1);
+    document.querySelector('.publication-menu .menu button:first-of-type').focus();
+  });
+
+  handleArrowUp(item) {
+    if (item?.previousElementSibling) {
+      item.previousElementSibling.focus();
+    } else {
+      item?.parentElement.lastElementChild.focus();
+    }
+  }
+  async handleArrowDown(item) {
+    if (item.classList.value == 'toggle') {
+      this.isOpen = true;
+      await this.focusFirstLink.perform();
+    } else {
+      if (item.nextElementSibling) {
+        item.nextElementSibling.focus();
+      } else {
+        await this.focusFirstLink.perform();
+      }
+    }
   }
 
   @action
-  moveFocus({ key, target }) {
-    switch (key) {
+  async toggleMenu(event) {
+    console.log('course toggleMenu', event.target);
+    this.isOpen = !this.isOpen;
+
+    if (this.isOpen) {
+      await this.focusFirstLink.perform();
+    }
+  }
+  @action
+  keyUp(event) {
+    event.stopPropagation();
+    event.preventDefault();
+
+    switch (event.key) {
       case 'ArrowDown':
-        if (target.nextElementSibling) {
-          target.nextElementSibling.focus();
-        } else {
-          this.menuElement.querySelector('button:nth-of-type(1)').focus();
-        }
+        this.handleArrowDown(event.target);
         break;
       case 'ArrowUp':
-        if (target.previousElementSibling) {
-          target.previousElementSibling.focus();
-        } else {
-          this.menuElement.querySelector('button:last-of-type').focus();
-        }
+        this.handleArrowUp(event.target);
         break;
       case 'Escape':
       case 'Tab':
       case 'ArrowRight':
       case 'ArrowLeft':
-        this.isOpen = false;
+        this.close();
         break;
     }
+
+    return false;
   }
   @action
   clearFocus() {
-    const buttons = this.menuElement.querySelectorAll('button');
+    const buttons = document.querySelectorAll('.publication-menu .menu button');
     buttons.forEach((el) => el.blur());
   }
   @action
-  toggleMenu({ key }) {
-    switch (key) {
-      case 'ArrowDown':
-        this.isOpen = true;
-        break;
-      case 'Escape':
-      case 'Tab':
-      case 'ArrowRight':
-      case 'ArrowLeft':
-        this.isOpen = false;
-        break;
-    }
+  close() {
+    this.isOpen = false;
   }
 
   @action
