@@ -36,7 +36,33 @@
                 }}</span>
             {{/if}}
           </span>
-          {{#if this.course}}
+          {{#if this.selectedCourse}}
+            {{#if this.selectedCourse.id}}
+              <span class="details" data-test-course-details>
+                {{t "general.level"}}:
+                {{this.selectedCourse.level}},
+                {{t "general.startDate"}}:
+                {{format-date
+                  this.selectedCourse.startDate
+                  day="2-digit"
+                  month="2-digit"
+                  year="numeric"
+                }},
+                {{t "general.endDate"}}:
+                {{format-date
+                  this.selectedCourse.endDate
+                  day="2-digit"
+                  month="2-digit"
+                  year="numeric"
+                }}
+                {{#if this.selectedCourse.clerkshipType}}
+                  -
+                  {{t "general.clerkship"}}
+                  ({{this.selectedCourse.clerkshipType.title}})
+                {{/if}}
+              </span>
+            {{/if}}
+          {{else if this.course}}
             <span class="details" data-test-course-details>
               {{t "general.level"}}:
               {{this.course.level}},

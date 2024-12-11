@@ -252,7 +252,7 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
   updateCourse(event) {
     const value = event.target.value;
     if (!value) {
-      this.selectedCourse = null;
+      this.selectedCourse = {}; // Use an empty object here to indicate a user selection.
     } else {
       this.selectedCourse = findById(this.linkableCourses, value);
     }
@@ -270,7 +270,7 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
       this.args.sequenceBlock.set('sessions', []);
       this.args.sequenceBlock.set('excludedSessions', []);
     }
-    this.args.sequenceBlock.set('course', this.selectedCourse);
+    this.args.sequenceBlock.set('course', this.selectedCourse.id ? this.selectedCourse : null);
     await this.args.sequenceBlock.save();
   }
 
