@@ -1,8 +1,9 @@
 import Component from '@glimmer/component';
-import { tracked } from '@glimmer/tracking';
+import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
-import { dropTask, restartableTask } from 'ember-concurrency';
+import { dropTask } from 'ember-concurrency';
+import { TrackedAsyncData } from 'ember-async-data';
 import { validatable, Length, NotBlank } from 'ilios-common/decorators/validation';
 import { findBy, findById } from 'ilios-common/utils/array-helpers';
 
@@ -13,48 +14,96 @@ export default class CurriculumInventoryReportRolloverComponent extends Componen
   @service iliosConfig;
   @service store;
 
+  currentYear = new Date().getFullYear();
   @tracked @NotBlank() @Length(3, 200) name;
   @tracked @NotBlank() @Length(1, 21844) description;
   @tracked selectedYear;
-  @tracked years = [];
   @tracked selectedProgram;
-  @tracked programs = [];
 
-  load = restartableTask(async () => {
-    const academicYearCrossesCalendarYearBoundaries = await this.iliosConfig.itemFromConfig(
-      'academicYearCrossesCalendarYearBoundaries',
+  constructor() {
+    super(...arguments);
+    this.name = this.args.report.name;
+    this.description = this.args.report.description;
+  }
+
+  @cached
+  get academicYearCrossesCalendarYearBoundariesData() {
+    return new TrackedAsyncData(
+      this.iliosConfig.itemFromConfig('academicYearCrossesCalendarYearBoundaries'),
     );
-    const thisYear = new Date().getFullYear();
-    const reportYear = parseInt(this.args.report.year, 10);
-    const startYear = Math.min(thisYear, reportYear);
-    const endYear = Math.max(thisYear, reportYear) + 5;
-    const years = [];
-    for (let i = startYear; i < endYear; i++) {
-      if (i === reportYear) {
+  }
+
+  get academicYearCrossesCalendarYearBoundaries() {
+    return this.academicYearCrossesCalendarYearBoundariesData.isResolved
+      ? this.academicYearCrossesCalendarYearBoundariesData.value
+      : false;
+  }
+
+  get reportYear() {
+    return parseInt(this.args.report.year, 10);
+  }
+
+  get startYear() {
+    return Math.min(this.currentYear, this.reportYear);
+  }
+
+  get endYear() {
+    return Math.max(this.currentYear, this.reportYear) + 5;
+  }
+
+  get years() {
+    const rhett = [];
+    for (let i = this.startYear; i < this.endYear; i++) {
+      // Rollover into the same year as the source report's year is VERBOTEN.
+      if (i === this.reportYear) {
         continue;
       }
-      const title = academicYearCrossesCalendarYearBoundaries ? `${i} - ${i + 1}` : i.toString();
-      years.push({
+      const title = this.academicYearCrossesCalendarYearBoundaries
+        ? `${i} - ${i + 1}`
+        : i.toString();
+      rhett.push({
         year: i,
         title,
       });
     }
-    let selectedYear = findBy(years, 'year', startYear + 1);
+    return rhett;
+  }
+
+  get defaultYear() {
+    let selectedYear = findBy(this.years, 'year', this.startYear + 1);
     if (!selectedYear) {
-      selectedYear = findBy(years, 'year', reportYear + 1);
+      selectedYear = findBy(this.years, 'year', this.reportYear + 1);
     }
+    return selectedYear.year;
+  }
 
-    const program = await this.args.report.program;
+  @cached
+  get programsData() {
+    return new TrackedAsyncData(this.getPrograms(this.args.report));
+  }
+
+  get programs() {
+    return this.programsData.isResolved ? this.programsData.value : [];
+  }
+
+  async getPrograms(report) {
+    const program = await report.program;
     const school = await program.school;
-    const programs = await school.programs;
+    return school.programs;
+  }
 
-    this.selectedProgram = program;
-    this.programs = programs;
-    this.years = years;
-    this.selectedYear = selectedYear.year;
-    this.name = this.args.report.name;
-    this.description = this.args.report.description;
-  });
+  @cached
+  get defaultProgramData() {
+    return new TrackedAsyncData(this.args.report.program);
+  }
+
+  get defaultProgram() {
+    return this.defaultProgramData.isResolved ? this.defaultProgramData.value : null;
+  }
+
+  get programsDataLoaded() {
+    return this.defaultProgramData.isResolved && this.programsData.isResolved;
+  }
 
   @action
   changeName(newName) {
@@ -87,8 +136,8 @@ export default class CurriculumInventoryReportRolloverComponent extends Componen
     const data = {
       name: this.name,
       description: this.description,
-      year: this.selectedYear,
-      program: this.selectedProgram.id,
+      year: this.selectedYear ? this.selectedYear : this.defaultYear,
+      program: this.selectedProgram ? this.selectedProgram.id : this.defaultProgram.id,
     };
     const url = `curriculuminventoryreports/${this.args.report.id}/rollover`;
     const newReportObj = await this.fetch.postQueryToApi(url, data);
