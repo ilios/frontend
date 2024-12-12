@@ -76,6 +76,7 @@ export default class CoursePublicationMenuComponent extends Component {
       item?.parentElement.lastElementChild.focus();
     }
   }
+
   async handleArrowDown(item) {
     if (item.classList.value == 'toggle') {
       this.isOpen = true;
@@ -90,8 +91,7 @@ export default class CoursePublicationMenuComponent extends Component {
   }
 
   @action
-  async toggleMenu(event) {
-    console.log('course toggleMenu', event.target);
+  async toggleMenu() {
     this.isOpen = !this.isOpen;
 
     if (this.isOpen) {
@@ -99,16 +99,13 @@ export default class CoursePublicationMenuComponent extends Component {
     }
   }
   @action
-  keyUp(event) {
-    event.stopPropagation();
-    event.preventDefault();
-
-    switch (event.key) {
+  keyUp({ key, target }) {
+    switch (key) {
       case 'ArrowDown':
-        this.handleArrowDown(event.target);
+        this.handleArrowDown(target);
         break;
       case 'ArrowUp':
-        this.handleArrowUp(event.target);
+        this.handleArrowUp(target);
         break;
       case 'Escape':
       case 'Tab':
