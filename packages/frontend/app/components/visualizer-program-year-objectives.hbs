@@ -1,10 +1,5 @@
-<div
-  class="{{unless @isIcon 'not-icon'}} visualizer-program-year-objectives"
-  {{did-insert (perform this.load) @programYear}}
-  {{did-update (perform this.load) @programYear}}
-  ...attributes
->
-  {{#if this.load.lastSuccessful}}
+<div class="{{unless @isIcon 'not-icon'}} visualizer-program-year-objectives" ...attributes>
+  {{#if this.programYearData.isResolved}}
     {{#if (or @isIcon this.data)}}
       <SimpleChart
         @name="tree"
