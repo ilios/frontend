@@ -366,7 +366,7 @@
           </div>
           <div class="block starting-academic-level" data-test-starting-academic-level>
             <label for="academic-level-{{templateId}}">{{t "general.startLevel"}}:</label>
-            {{#if @canUpdate}}
+            {{#if (and @canUpdate this.startingAndEndingAcademicLevelsLoaded)}}
               <EditableField
                 @value={{this.startingAcademicLevel.name}}
                 @save={{perform this.changeStartingAcademicLevel}}
@@ -383,7 +383,7 @@
                     >{{obj.name}}</option>
                   {{/each}}
                 </select>
-                <ValidationError @validatable={{this}} @property="startingAcademicLevel" />
+                <ValidationError @validatable={{this}} @property="selectedStartingAcademicLevel" />
               </EditableField>
             {{else}}
               <span>{{this.startingAcademicLevel.name}}</span>
@@ -391,7 +391,7 @@
           </div>
           <div class="block ending-academic-level" data-test-ending-academic-level>
             <label for="academic-level-{{templateId}}">{{t "general.endLevel"}}:</label>
-            {{#if @canUpdate}}
+            {{#if (and @canUpdate this.startingAndEndingAcademicLevelsLoaded)}}
               <EditableField
                 @value={{this.endingAcademicLevel.name}}
                 @save={{perform this.changeEndingAcademicLevel}}
@@ -408,7 +408,7 @@
                     >{{obj.name}}</option>
                   {{/each}}
                 </select>
-                <ValidationError @validatable={{this}} @property="endingAcademicLevel" />
+                <ValidationError @validatable={{this}} @property="selectedEndingAcademicLevel" />
               </EditableField>
             {{else}}
               <span>{{this.endingAcademicLevel.name}}</span>

@@ -23,11 +23,11 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
   @service intl;
   @service store;
   @tracked
-  @Custom('validateStartingEndingLevelCallback', 'validateStartingLevelMessageCallback')
-  startingAcademicLevel;
+  @Custom('_validateStartingEndingLevelCallback', '_validateStartingLevelMessageCallback')
+  _startingAcademicLevel;
   @tracked
-  @Custom('validateStartingEndingLevelCallback', 'validateEndingLevelMessageCallback')
-  endingAcademicLevel;
+  @Custom('_validateStartingEndingLevelCallback', '_validateEndingLevelMessageCallback')
+  _endingAcademicLevel;
   @tracked _academicLevels = [];
   @tracked childSequenceOrder;
   @tracked _course;
@@ -66,6 +66,12 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
   @AfterDate('startDate', { granularity: 'day' })
   endDate;
   @tracked selectedCourse;
+  @tracked
+  @Custom('validateStartingEndingLevelCallback', 'validateStartingLevelMessageCallback')
+  selectedStartingAcademicLevel;
+  @tracked
+  @Custom('validateStartingEndingLevelCallback', 'validateEndingLevelMessageCallback')
+  selectedEndingAcademicLevel;
 
   constructor() {
     super(...arguments);
@@ -95,8 +101,8 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
       }
     }
     this.linkedSessions = await sequenceBlock.sessions;
-    this.startingAcademicLevel = await sequenceBlock.startingAcademicLevel;
-    this.endingAcademicLevel = await sequenceBlock.endingAcademicLevel;
+    this._startingAcademicLevel = await sequenceBlock.startingAcademicLevel;
+    this._endingAcademicLevel = await sequenceBlock.endingAcademicLevel;
     this._course = await sequenceBlock.course;
     this.sessions = await this.getSessions(this._course);
     this._linkableCourses = await this.getLinkableCourses(this._report, this._course);
@@ -118,6 +124,28 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
 
   get academicLevels() {
     return this.academicLevelsData.isResolved ? this.academicLevelsData.value : [];
+  }
+
+  @cached
+  get startingAcademicLevelData() {
+    return new TrackedAsyncData(this.args.sequenceBlock.startingAcademicLevel);
+  }
+
+  get startingAcademicLevel() {
+    return this.startingAcademicLevelData.isResolved ? this.startingAcademicLevelData.value : null;
+  }
+
+  @cached
+  get endingAcademicLevelData() {
+    return new TrackedAsyncData(this.args.sequenceBlock.endingAcademicLevel);
+  }
+
+  get endingAcademicLevel() {
+    return this.endingAcademicLevelData.isResolved ? this.endingAcademicLevelData.value : null;
+  }
+
+  get startingAndEndingAcademicLevelsLoaded() {
+    return this.startingAcademicLevelData.isResolved && this.endingAcademicLevelData.isResolved;
   }
 
   @cached
@@ -353,45 +381,47 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
   }
 
   changeStartingAcademicLevel = dropTask(async () => {
-    this.addErrorDisplaysFor(['startingAcademicLevel']);
+    this.addErrorDisplaysFor(['selectedStartingAcademicLevel']);
     const isValid = await this.isValid();
     if (!isValid) {
       return false;
     }
-    this.args.sequenceBlock.set('startingAcademicLevel', this.startingAcademicLevel);
+    this.args.sequenceBlock.set('startingAcademicLevel', this.selectedStartingAcademicLevel);
     await this.args.sequenceBlock.save();
+    this.revertStartingAcademicLevelChanges();
   });
 
   @action
   setStartingAcademicLevel(event) {
     const id = event.target.value;
-    this.startingAcademicLevel = findById(this._academicLevels, id);
+    this.selectedStartingAcademicLevel = findById(this.academicLevels, id);
   }
 
   @action
   revertStartingAcademicLevelChanges() {
-    this.startingAcademicLevel = this.args.sequenceBlock.startingAcademicLevel;
+    this.selectedStartingAcademicLevel = null;
   }
 
   changeEndingAcademicLevel = dropTask(async () => {
-    this.addErrorDisplaysFor(['endingAcademicLevel']);
+    this.addErrorDisplaysFor(['selectedEndingAcademicLevel']);
     const isValid = await this.isValid();
     if (!isValid) {
       return false;
     }
-    this.args.sequenceBlock.set('endingAcademicLevel', this.endingAcademicLevel);
+    this.args.sequenceBlock.set('endingAcademicLevel', this.selectedEndingAcademicLevel);
     await this.args.sequenceBlock.save();
+    this.revertEndingAcademicLevelChanges();
   });
 
   @action
   setEndingAcademicLevel(event) {
     const id = event.target.value;
-    this.endingAcademicLevel = findById(this._academicLevels, id);
+    this.selectedEndingAcademicLevel = findById(this.academicLevels, id);
   }
 
   @action
   revertEndingAcademicLevelChanges() {
-    this.endingAcademicLevel = this.args.sequenceBlock.endingAcademicLevel;
+    this.selectedStartingAcademicLevel = null;
   }
 
   @action
@@ -479,8 +509,31 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
   }
 
   @action
+  _validateStartingEndingLevelCallback() {
+    return this._endingAcademicLevel.level >= this._startingAcademicLevel.level;
+  }
+
+  @action
+  _validateEndingLevelMessageCallback() {
+    return this.intl.t('errors.greaterThanOrEqualTo', {
+      gte: this.intl.t('general.startLevel'),
+      description: this.intl.t('general.endLevel'),
+    });
+  }
+
+  @action
+  _validateStartingLevelMessageCallback() {
+    return this.intl.t('errors.lessThanOrEqualTo', {
+      lte: this.intl.t('general.endLevel'),
+      description: this.intl.t('general.startLevel'),
+    });
+  }
+
+  @action
   validateStartingEndingLevelCallback() {
-    return this.endingAcademicLevel.level >= this.startingAcademicLevel.level;
+    const startingAcademicLevel = this.selectedStartingAcademicLevel || this.startingAcademicLevel;
+    const endingAcademicLevel = this.selectedEndingAcademicLevel || this.endingAcademicLevel;
+    return endingAcademicLevel.level >= startingAcademicLevel.level;
   }
 
   @action
