@@ -20,7 +20,7 @@ export default class ChooseMaterialTypeComponent extends Component {
   }
 
   async handleArrowDown(item) {
-    if (item.classList.value == 'toggle') {
+    if (item.classList.value.includes('toggle')) {
       this.isOpen = true;
       await this.focusFirstLink.perform();
     } else {
