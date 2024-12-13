@@ -2,7 +2,11 @@
   <h2>{{t "general.results"}}</h2>
   <div class="download">
     <button type="button" {{on "click" (perform this.downloadReport)}} data-test-download>
-      <FaIcon @icon="download" />
+      {{#if this.finishedBuildingReport}}
+        <FaIcon @icon="check" />
+      {{else}}
+        <FaIcon @icon="download" />
+      {{/if}}
       {{t "general.downloadResults"}}
     </button>
   </div>
