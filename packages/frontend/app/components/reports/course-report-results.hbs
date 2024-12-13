@@ -9,32 +9,27 @@
   <table>
     <thead>
       <tr>
-        <th colspan="3">{{t "general.course"}}</th>
-        <th>{{t "general.date"}}</th>
-        <th colspan="2">{{t "general.sessionType"}}</th>
-        <th colspan="3">{{t "general.title"}}</th>
-        <th>{{t "general.duration"}}</th>
+        <th colspan="2">{{t "general.course"}}</th>
+        <th>{{t "general.sessionType"}}</th>
+        <th colspan="2">{{t "general.sessionTitle"}}</th>
+        <th colspan="4">{{t "general.objective"}}</th>
       </tr>
     </thead>
     <tbody>
-      {{#each this.results as |activity|}}
+      {{#each this.sortedResults as |o|}}
         <tr>
-          <td colspan="3">
-            <LinkTo @route="course" @models={{array activity.courseId}}>
-              {{activity.courseTitle}}
+          <td colspan="2">
+            <LinkTo @route="course" @models={{array o.courseId}}>
+              {{o.courseTitle}}
             </LinkTo>
           </td>
-
-          <td>
-            {{format-date activity.startDate month="2-digit" day="2-digit" year="numeric"}}
-          </td>
-          <td colspan="2">{{activity.sessionType}}</td>
-          <td colspan="3">
-            <LinkTo @route="session" @models={{array activity.courseId activity.sessionId}}>
-              {{activity.sessionTitle}}
+          <td>{{o.sessionType}}</td>
+          <td colspan="2">
+            <LinkTo @route="session" @models={{array o.courseId o.sessionId}}>
+              {{o.sessionTitle}}
             </LinkTo>
           </td>
-          <td>{{activity.minutes}}</td>
+          <td colspan="4">{{o.title}}</td>
         </tr>
       {{/each}}
     </tbody>
