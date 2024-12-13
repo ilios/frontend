@@ -68,9 +68,9 @@ export default class SessionPublicationMenuComponent extends Component {
     return 'notpublished';
   }
 
-  focusFirstLink = task(async () => {
+  focusFirstLink = task(async (item) => {
     await timeout(1);
-    document.querySelector('.publication-menu .menu button:first-of-type').focus();
+    item.querySelector('.menu button:first-of-type').focus();
   });
 
   handleArrowUp(item) {
@@ -84,22 +84,22 @@ export default class SessionPublicationMenuComponent extends Component {
   async handleArrowDown(item) {
     if (item.classList.value == 'toggle') {
       this.isOpen = true;
-      await this.focusFirstLink.perform();
+      await this.focusFirstLink.perform(item.parentElement);
     } else {
       if (item.nextElementSibling) {
         item.nextElementSibling.focus();
       } else {
-        await this.focusFirstLink.perform();
+        await this.focusFirstLink.perform(item.parentElement);
       }
     }
   }
 
   @action
-  async toggleMenu() {
+  async toggleMenu({ target }) {
     this.isOpen = !this.isOpen;
 
     if (this.isOpen) {
-      await this.focusFirstLink.perform();
+      await this.focusFirstLink.perform(target.parentElement.parentElement);
     }
   }
   @action
@@ -122,9 +122,9 @@ export default class SessionPublicationMenuComponent extends Component {
     return true;
   }
   @action
-  clearFocus() {
-    const buttons = document.querySelectorAll('.publication-menu .menu button');
-    buttons.forEach((el) => el.blur());
+  clearFocus({ target }) {
+    const menu = target.parentElement.parentElement;
+    menu.querySelectorAll('button').forEach((el) => el.blur());
   }
   @action
   close() {
