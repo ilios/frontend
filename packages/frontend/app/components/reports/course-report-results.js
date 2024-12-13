@@ -1,6 +1,6 @@
 import Component from '@glimmer/component';
 import { service } from '@ember/service';
-import { DateTime } from 'luxon';
+import striptags from 'striptags';
 
 export default class CourseReportResultsComponent extends Component {
   @service store;
@@ -8,54 +8,31 @@ export default class CourseReportResultsComponent extends Component {
   @service router;
 
   get results() {
-    return this.args.data
-      .map((course) => {
-        return course.sessions
-          .map((session) => {
-            const offerings = session.offerings.map(({ startDate, endDate }) => {
-              const luxonStartDate = DateTime.fromISO(startDate);
-              const luxonEndDate = DateTime.fromISO(endDate);
-              const { minutes } = luxonEndDate.diff(luxonStartDate, 'minutes').toObject();
-              return {
-                startDate,
-                endDate,
-                luxonStartDate,
-                minutes,
-              };
-            });
+    return this.args.data.map((o) => {
+      const title = striptags(o.title);
 
-            if (session.ilmSession) {
-              const { hours, dueDate } = session.ilmSession;
-              const luxonStartDate = DateTime.fromISO(dueDate);
-              const luxonEndDate = luxonStartDate.plus({ hours });
-              const { minutes } = luxonEndDate.diff(luxonStartDate, 'minutes').toObject();
-              offerings.push({
-                startDate: dueDate,
-                luxonStartDate,
-                minutes,
-              });
-            }
+      const origin = window.location.origin;
+      const path = this.router.urlFor('session', o.session.course.id, o.session.id);
 
-            offerings.sort((a, b) => a.luxonStartDate - b.luxonStartDate);
+      return {
+        courseId: o.session.course.id,
+        courseTitle: o.session.course.title,
+        sessionId: o.session.id,
+        sessionTitle: o.session.title,
+        sessionType: o.session.sessionType.title,
+        title,
+        link: `${origin}${path}`,
+      };
+    });
+  }
 
-            const startDate = offerings.length ? offerings[0].startDate : null;
-            const minutes = offerings.length ? offerings[0].minutes : null;
-            const origin = window.location.origin;
-            const path = this.router.urlFor('session', course.id, session.id);
+  get sortedResults() {
+    return this.results.sort((a, b) => {
+      if (a.courseTitle !== b.courseTitle) {
+        return a.courseTitle.localeCompare(b.courseTitle);
+      }
 
-            return {
-              courseId: course.id,
-              courseTitle: course.title,
-              sessionId: session.id,
-              sessionTitle: session.title,
-              sessionType: session.sessionType.title,
-              startDate,
-              minutes,
-              link: `${origin}${path}`,
-            };
-          })
-          .filter(Boolean);
-      })
-      .flat();
+      return a.sessionTitle.localeCompare(b.sessionTitle);
+    });
   }
 }
