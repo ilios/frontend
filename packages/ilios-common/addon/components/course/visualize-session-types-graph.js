@@ -1,13 +1,15 @@
 import Component from '@glimmer/component';
 import { htmlSafe } from '@ember/template';
-import { restartableTask, timeout } from 'ember-concurrency';
+import { dropTask, restartableTask, timeout } from 'ember-concurrency';
 import { service } from '@ember/service';
 import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
-import { cleanQuery } from 'ilios-common/utils/query-utils';
 import { map } from 'rsvp';
 import { TrackedAsyncData } from 'ember-async-data';
+import PapaParse from 'papaparse';
+import { cleanQuery } from 'ilios-common/utils/query-utils';
 import { findById, mapBy, sortBy, uniqueValues } from 'ilios-common/utils/array-helpers';
+import createDownloadFile from 'ilios-common/utils/create-download-file';
 
 export default class CourseVisualizeSessionTypesGraph extends Component {
   @service router;
@@ -156,4 +158,17 @@ export default class CourseVisualizeSessionTypesGraph extends Component {
       obj.meta.sessionType.id,
     );
   }
+
+  downloadData = dropTask(async () => {
+    const data = await this.getData(this.args.course);
+    const output = data.map((obj) => {
+      const rhett = {};
+      rhett[this.intl.t('general.sessionType')] = obj.meta.sessionType.title;
+      rhett[this.intl.t('general.sessions')] = mapBy(obj.meta.sessions, 'title').sort().join(', ');
+      rhett[this.intl.t('general.minutes')] = obj.data;
+      return rhett;
+    });
+    const csv = PapaParse.unparse(output);
+    createDownloadFile(`ilios-course-${this.args.course.id}-session-types.csv`, csv, 'text/csv');
+  });
 }

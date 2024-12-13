@@ -1,11 +1,13 @@
 import Component from '@glimmer/component';
 import { filter, map } from 'rsvp';
 import { htmlSafe } from '@ember/template';
-import { restartableTask, timeout } from 'ember-concurrency';
+import { dropTask, restartableTask, timeout } from 'ember-concurrency';
 import { service } from '@ember/service';
 import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { TrackedAsyncData } from 'ember-async-data';
+import PapaParse from 'papaparse';
+import createDownloadFile from 'ilios-common/utils/create-download-file';
 import { findById, mapBy, sortBy } from 'ilios-common/utils/array-helpers';
 
 export default class CourseVisualizeVocabularyGraph extends Component {
@@ -148,4 +150,21 @@ export default class CourseVisualizeVocabularyGraph extends Component {
     }
     this.router.transitionTo('course-visualize-term', this.args.course.id, obj.meta.term.id);
   }
+
+  downloadData = dropTask(async () => {
+    const data = await this.getDataObjects(this.args.course, this.args.vocabulary.id);
+    const output = data.map((obj) => {
+      const rhett = {};
+      rhett[`${this.intl.t('general.term')}`] = obj.meta.term.title;
+      rhett[this.intl.t('general.sessions')] = mapBy(obj.meta.sessions, 'title').sort().join(', ');
+      rhett[this.intl.t('general.minutes')] = obj.data;
+      return rhett;
+    });
+    const csv = PapaParse.unparse(output);
+    createDownloadFile(
+      `ilios-course-${this.args.course.id}-vocabulary-${this.args.vocabulary.id}`,
+      csv,
+      'text/csv',
+    );
+  });
 }
