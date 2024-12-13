@@ -5,7 +5,6 @@ import { cached, tracked } from '@glimmer/tracking';
 import { guidFor } from '@ember/object/internals';
 import { TrackedAsyncData } from 'ember-async-data';
 import { uniqueById } from 'ilios-common/utils/array-helpers';
-import { DateTime } from 'luxon';
 
 export default class ReportsNewCourseComponent extends Component {
   @service store;
@@ -79,66 +78,9 @@ export default class ReportsNewCourseComponent extends Component {
       filters,
       `id, title, year, externalId, ${sessionQuery}`,
     );
-    const { courses } = result.data;
 
-    const activities = this.buildActivities(courses);
-
-    activities.sort((a, b) => DateTime.fromISO(a.startDate) - DateTime.fromISO(b.startDate));
-
-    this.reportResults = activities;
+    this.reportResults = result.data.courses;
   });
-
-  buildActivities(courses) {
-    return courses
-      .map((course) => {
-        return course.sessions
-          .map((session) => {
-            const offerings = session.offerings.map(({ startDate, endDate }) => {
-              const luxonStartDate = DateTime.fromISO(startDate);
-              const luxonEndDate = DateTime.fromISO(endDate);
-              const { minutes } = luxonEndDate.diff(luxonStartDate, 'minutes').toObject();
-              return {
-                startDate,
-                endDate,
-                luxonStartDate,
-                minutes,
-              };
-            });
-
-            if (session.ilmSession) {
-              const { hours, dueDate } = session.ilmSession;
-              const luxonStartDate = DateTime.fromISO(dueDate);
-              const luxonEndDate = luxonStartDate.plus({ hours });
-              const { minutes } = luxonEndDate.diff(luxonStartDate, 'minutes').toObject();
-              offerings.push({
-                startDate: dueDate,
-                luxonStartDate,
-                minutes,
-              });
-            }
-
-            offerings.sort((a, b) => a.luxonStartDate - b.luxonStartDate);
-
-            const startDate = offerings.length ? offerings[0].startDate : null;
-            const minutes = offerings.length ? offerings[0].minutes : null;
-            const origin = window.location.origin;
-            const path = this.router.urlFor('session', course.id, session.id);
-
-            return {
-              courseId: course.id,
-              courseTitle: course.title,
-              sessionId: session.id,
-              sessionTitle: session.title,
-              sessionType: session.sessionType.title,
-              startDate,
-              minutes,
-              link: `${origin}${path}`,
-            };
-          })
-          .filter(Boolean);
-      })
-      .flat();
-  }
 
   close = () => {
     this.searchResults = false;
