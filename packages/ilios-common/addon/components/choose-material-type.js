@@ -6,9 +6,9 @@ import { task, timeout } from 'ember-concurrency';
 export default class ChooseMaterialTypeComponent extends Component {
   @tracked isOpen = false;
 
-  focusFirstLink = task(async () => {
+  focusFirstLink = task(async (item) => {
     await timeout(1);
-    document.querySelector('.choose-material-type .menu button:first-of-type').focus();
+    item.querySelector('.menu button:first-of-type').focus();
   });
 
   handleArrowUp(item) {
@@ -22,22 +22,22 @@ export default class ChooseMaterialTypeComponent extends Component {
   async handleArrowDown(item) {
     if (item.classList.value.includes('toggle')) {
       this.isOpen = true;
-      await this.focusFirstLink.perform();
+      await this.focusFirstLink.perform(item.parentElement);
     } else {
       if (item.nextElementSibling) {
-        item.nextElementSibling.focus();
+        item.nextElementSibling.focus(item.parentElement);
       } else {
-        await this.focusFirstLink.perform();
+        await this.focusFirstLink.perform(item.parentElement);
       }
     }
   }
 
   @action
-  async toggleMenu() {
+  async toggleMenu({ target }) {
     this.isOpen = !this.isOpen;
 
     if (this.isOpen) {
-      await this.focusFirstLink.perform();
+      await this.focusFirstLink.perform(target.parentElement.parentElement);
     }
   }
   @action
@@ -58,9 +58,9 @@ export default class ChooseMaterialTypeComponent extends Component {
     }
   }
   @action
-  clearFocus() {
-    const buttons = document.querySelectorAll('.choose-material-type .menu button');
-    buttons.forEach((el) => el.blur());
+  clearFocus({ target }) {
+    const menu = target.parentElement.parentElement;
+    menu.querySelectorAll('button').forEach((el) => el.blur());
   }
   @action
   close() {
