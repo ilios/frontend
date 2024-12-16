@@ -1,16 +1,7 @@
-<div
-  class="sessions-grid"
-  data-test-sessions-grid
-  {{did-insert this.scrollDown}}
->
+<div class="sessions-grid" data-test-sessions-grid>
   {{#each this.sortedSessions as |session|}}
     <div
-      class="{{if
-          (includes session.id @expandedSessionIds)
-          "is-expanded"
-          "not-expanded"
-        }}
-         session"
+      class="{{if (includes session.id @expandedSessionIds) 'is-expanded' 'not-expanded'}} session"
       data-test-expanded-session={{includes session.id @expandedSessionIds}}
       data-test-session
     >
@@ -38,11 +29,7 @@
                 {{t "general.yes"}}
               {{/if}}
             </button>
-            <button
-              class="done"
-              type="button"
-              {{on "click" (fn this.cancelDelete session.id)}}
-            >
+            <button class="done" type="button" {{on "click" (fn this.cancelDelete session.id)}}>
               {{t "general.cancel"}}
             </button>
           </div>
