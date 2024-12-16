@@ -12,6 +12,11 @@ export default class SessionsGridOffering extends Component {
   @tracked isEditing = false;
   @tracked wasUpdated = false;
 
+  constructor() {
+    super(...arguments);
+    this.room = this.args.offering.room;
+  }
+
   @cached
   get sessionData() {
     return new TrackedAsyncData(this.args.offering.session);
@@ -50,11 +55,6 @@ export default class SessionsGridOffering extends Component {
 
   get cohortsLoaded() {
     return !!this.cohorts;
-  }
-
-  @action
-  revertRoomChanges() {
-    this.room = this.args.offering.room;
   }
 
   @action
