@@ -3,7 +3,7 @@ import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
 import { isPresent } from '@ember/utils';
-import { dropTask, restartableTask } from 'ember-concurrency';
+import { dropTask } from 'ember-concurrency';
 import { all } from 'rsvp';
 import { ValidateIf } from 'class-validator';
 import { TrackedAsyncData } from 'ember-async-data';
@@ -22,20 +22,12 @@ import { findById } from 'ilios-common/utils/array-helpers';
 export default class CurriculumInventorySequenceBlockOverviewComponent extends Component {
   @service intl;
   @service store;
-  @tracked
-  @Custom('_validateStartingEndingLevelCallback', '_validateStartingLevelMessageCallback')
-  _startingAcademicLevel;
-  @tracked
-  @Custom('_validateStartingEndingLevelCallback', '_validateEndingLevelMessageCallback')
-  _endingAcademicLevel;
-  @tracked _academicLevels = [];
+
   @tracked childSequenceOrder;
-  @tracked _course;
   @tracked description;
   @tracked isEditingDatesAndDuration = false;
   @tracked isEditingMinMax = false;
   @tracked isManagingSessions = false;
-  @tracked _linkableCourses = [];
   @tracked @NotBlank() @IsInt() @Gte(0) minimum;
   @tracked
   @NotBlank()
@@ -43,13 +35,8 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
   @Gte(0)
   @Custom('validateMaximumCallback', 'validateMaximumMessageCallback')
   maximum;
-  @tracked _isInOrderedSequence;
   @tracked orderInSequence;
-  @tracked _orderInSequenceOptions = [];
-  @tracked _parent;
-  @tracked _report;
   @tracked required;
-  @tracked _sessions = [];
   @tracked
   @NotBlank()
   @IsInt()
@@ -85,27 +72,6 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
     this.maximum = this.args.sequenceBlock.maximum;
     this.description = this.args.sequenceBlock.description;
   }
-
-  load = restartableTask(async (element, [sequenceBlock]) => {
-    this._report = await sequenceBlock.report;
-    this._parent = await sequenceBlock.parent;
-    this._academicLevels = await this._report.academicLevels;
-    this._isInOrderedSequence = false;
-    this._orderInSequenceOptions = [];
-    if (isPresent(this._parent) && this._parent.isOrdered) {
-      this._isInOrderedSequence = true;
-      const siblings = await this._parent.children;
-      for (let i = 0, n = siblings.length; i < n; i++) {
-        const num = i + 1;
-        this._orderInSequenceOptions.push(num);
-      }
-    }
-    this._startingAcademicLevel = await sequenceBlock.startingAcademicLevel;
-    this._endingAcademicLevel = await sequenceBlock.endingAcademicLevel;
-    this._course = await sequenceBlock.course;
-    this._sessions = await this.getSessions(this._course);
-    this._linkableCourses = await this.getLinkableCourses(this._report, this._course);
-  });
 
   @cached
   get reportData() {
@@ -512,27 +478,6 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
     return this.intl.t('errors.greaterThanOrEqualTo', {
       gte: this.intl.t('general.minimum'),
       description: this.intl.t('general.maximum'),
-    });
-  }
-
-  @action
-  _validateStartingEndingLevelCallback() {
-    return this._endingAcademicLevel.level >= this._startingAcademicLevel.level;
-  }
-
-  @action
-  _validateEndingLevelMessageCallback() {
-    return this.intl.t('errors.greaterThanOrEqualTo', {
-      gte: this.intl.t('general.startLevel'),
-      description: this.intl.t('general.endLevel'),
-    });
-  }
-
-  @action
-  _validateStartingLevelMessageCallback() {
-    return this.intl.t('errors.lessThanOrEqualTo', {
-      lte: this.intl.t('general.endLevel'),
-      description: this.intl.t('general.startLevel'),
     });
   }
 
