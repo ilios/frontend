@@ -217,15 +217,13 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
     if (!course) {
       return [];
     }
-    const sessions = await this.store.query('session', {
+    return await this.store.query('session', {
       filters: {
-        course: course.get('id'),
+        course: course.id,
         published: true,
       },
     });
-    return sessions;
   }
-
 
   @cached
   get parentData() {
