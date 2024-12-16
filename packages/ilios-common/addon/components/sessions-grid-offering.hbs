@@ -1,8 +1,8 @@
 <tr
-  class="sessions-grid-offering
-    {{if @even 'even'}}
-    {{if @firstRow 'firstRow'}}
-    {{if this.wasUpdated 'wasUpdated'}}"
+  class="sessions-grid-offering{{if @even ' even'}}{{if @firstRow ' firstRow'}}{{if
+      this.wasUpdated
+      ' wasUpdated'
+    }}"
   data-test-sessions-grid-offering
   {{did-insert this.revertRoomChanges}}
   {{did-update this.revertRoomChanges}}
