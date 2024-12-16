@@ -49,7 +49,7 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
   @tracked _parent;
   @tracked _report;
   @tracked required;
-  @tracked sessions = [];
+  @tracked _sessions = [];
   @tracked
   @NotBlank()
   @IsInt()
@@ -103,7 +103,7 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
     this._startingAcademicLevel = await sequenceBlock.startingAcademicLevel;
     this._endingAcademicLevel = await sequenceBlock.endingAcademicLevel;
     this._course = await sequenceBlock.course;
-    this.sessions = await this.getSessions(this._course);
+    this._sessions = await this.getSessions(this._course);
     this._linkableCourses = await this.getLinkableCourses(this._report, this._course);
   });
 
@@ -202,6 +202,32 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
   }
 
   @cached
+  get sessionsData() {
+    return new TrackedAsyncData(this.getSessions(this.course));
+  }
+
+  get sessions() {
+    return this.sessionsData.isResolved ? this.sessionsData.value : [];
+  }
+
+  /**
+   * Returns a list of published sessions that belong to a given course.
+   */
+  async getSessions(course) {
+    if (!course) {
+      return [];
+    }
+    const sessions = await this.store.query('session', {
+      filters: {
+        course: course.get('id'),
+        published: true,
+      },
+    });
+    return sessions;
+  }
+
+
+  @cached
   get parentData() {
     return new TrackedAsyncData(this.args.sequenceBlock.parent);
   }
@@ -284,22 +310,6 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
       default:
         return null;
     }
-  }
-
-  /**
-   * Returns a list of published sessions that belong to a given course.
-   */
-  async getSessions(course) {
-    if (!course) {
-      return [];
-    }
-    const sessions = await this.store.query('session', {
-      filters: {
-        course: course.get('id'),
-        published: true,
-      },
-    });
-    return sessions;
   }
 
   changeRequired = dropTask(async () => {
