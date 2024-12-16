@@ -1,9 +1,11 @@
 <tr
-  class="sessions-grid-offering {{if @even "even"}} {{if @firstRow "firstRow"}} {{if this.wasUpdated "wasUpdated"}}"
+  class="sessions-grid-offering
+    {{if @even 'even'}}
+    {{if @firstRow 'firstRow'}}
+    {{if this.wasUpdated 'wasUpdated'}}"
   data-test-sessions-grid-offering
   {{did-insert this.revertRoomChanges}}
   {{did-update this.revertRoomChanges}}
-  {{did-insert (set this "row")}}
 >
   {{#if this.cohortsLoaded}}
     {{#if (and this.isEditing)}}
@@ -20,7 +22,6 @@
           @offering={{@offering}}
           @session={{this.session}}
           @scrollToBottom={{false}}
-
         />
       </td>
     {{else}}
@@ -46,7 +47,8 @@
             @save={{perform this.changeRoom}}
             @close={{this.revertRoomChanges}}
             @saveOnEnter={{true}}
-            @closeOnEscape={{true}} as |isSaving|
+            @closeOnEscape={{true}}
+            as |isSaving|
           >
             <input
               aria-label={{t "general.room"}}
@@ -64,41 +66,23 @@
         {{/if}}
       </td>
       <td
-          colspan="2"
-          title={{join
-          ", "
-          (map-by "fullName" (sort-by "fullName" @offering.allLearners))
-      }}
+        colspan="2"
+        title={{join ", " (map-by "fullName" (sort-by "fullName" @offering.allLearners))}}
       >
         {{#if @offering.allLearners.length}}
           <strong>({{@offering.allLearners.length}})</strong>
         {{/if}}
-        {{truncate
-          (join ", " (map-by "fullName" (sort-by "fullName" @offering.allLearners)))
-          25
-        }}
+        {{truncate (join ", " (map-by "fullName" (sort-by "fullName" @offering.allLearners))) 25}}
       </td>
-      <td
-        colspan="2"
-        title={{join
-          ", "
-          (map-by "title" (sort-by "title" this.learnerGroups))
-        }}
-      >
+      <td colspan="2" title={{join ", " (map-by "title" (sort-by "title" this.learnerGroups))}}>
         {{#if this.learnerGroups.length}}
           <strong>({{this.learnerGroups.length}})</strong>
         {{/if}}
-        {{truncate
-          (join ", " (map-by "title" (sort-by "title" this.learnerGroups)))
-          25
-        }}
+        {{truncate (join ", " (map-by "title" (sort-by "title" this.learnerGroups))) 25}}
       </td>
       <td
         colspan="2"
-        title={{join
-          ", "
-          (map-by "fullName" (sort-by "fullName" @offering.allInstructors))
-        }}
+        title={{join ", " (map-by "fullName" (sort-by "fullName" @offering.allInstructors))}}
       >
         {{#if @offering.allInstructors.length}}
           <strong>({{@offering.allInstructors.length}})</strong>
@@ -116,11 +100,7 @@
             type="button"
             {{on "click" this.toggleEditing}}
           >
-            <FaIcon
-              @icon="pencil"
-              @title={{t "general.edit"}}
-              @ariaHidden={{false}}
-            />
+            <FaIcon @icon="pencil" @title={{t "general.edit"}} @ariaHidden={{false}} />
           </button>
         </td>
       {{/if}}

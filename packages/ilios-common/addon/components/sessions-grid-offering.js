@@ -58,10 +58,13 @@ export default class SessionsGridOffering extends Component {
   }
 
   @action
-  close() {
+  close({ target }) {
     this.isEditing = false;
     this.args.setHeaderLockedStatus(this.isEditing);
-    scrollIntoView(this.row);
+    const row = target.parentElement.parentElement.parentElement.parentElement.parentElement;
+    scrollIntoView(row, {
+      behavior: 'smooth',
+    });
   }
 
   changeRoom = dropTask(async () => {
