@@ -100,7 +100,6 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
         this._orderInSequenceOptions.push(num);
       }
     }
-    this.linkedSessions = await sequenceBlock.sessions;
     this._startingAcademicLevel = await sequenceBlock.startingAcademicLevel;
     this._endingAcademicLevel = await sequenceBlock.endingAcademicLevel;
     this._course = await sequenceBlock.course;
