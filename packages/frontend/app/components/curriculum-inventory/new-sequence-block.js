@@ -74,6 +74,48 @@ export default class CurriculumInventoryNewSequenceBlock extends Component {
     ];
   }
 
+  load = restartableTask(async () => {
+    this.orderInSequence = 0;
+    if (this.isInOrderedSequence) {
+      const siblings = await this.args.parent.children;
+      for (let i = 0, n = siblings.length + 1; i < n; i++) {
+        this.orderInSequenceOptions.push(i + 1);
+      }
+      this.orderInSequence = 1;
+    }
+    this.childSequenceOrder = this.childSequenceOrderOptions[0];
+    this.required = this.requiredOptions[0];
+    if (this.args.parent) {
+      this.startingAcademicLevel = await this.args.parent.startingAcademicLevel;
+      this.endingAcademicLevel = await this.args.parent.endingAcademicLevel;
+    }
+    if (this.args.report) {
+      this.academicLevels = await this.args.report.academicLevels;
+      if (this.args.parent) {
+        this.startingAcademicLevel = await this.args.parent.startingAcademicLevel;
+        this.endingAcademicLevel = await this.args.parent.endingAcademicLevel;
+      } else {
+        this.startingAcademicLevel = this.academicLevels[0];
+        this.endingAcademicLevel = this.academicLevels[0];
+      }
+      this.linkableCourses = await this.getLinkableCourses(this.args.report);
+    }
+  });
+
+  reload = restartableTask(async () => {
+    if (this.args.report) {
+      this.academicLevels = await this.args.report.academicLevels;
+      if (this.args.parent) {
+        this.startingAcademicLevel = await this.args.parent.startingAcademicLevel;
+        this.endingAcademicLevel = await this.args.parent.endingAcademicLevel;
+      } else {
+        this.startingAcademicLevel = this.academicLevels[0];
+        this.endingAcademicLevel = this.academicLevels[0];
+      }
+      this.linkableCourses = await this.getLinkableCourses(this.args.report);
+    }
+  });
+
   get linkedCourseIsClerkship() {
     if (!this.course) {
       return false;
@@ -220,48 +262,6 @@ export default class CurriculumInventoryNewSequenceBlock extends Component {
       description: this.intl.t('general.duration'),
     });
   }
-
-  load = restartableTask(async () => {
-    this.orderInSequence = 0;
-    if (this.isInOrderedSequence) {
-      const siblings = await this.args.parent.children;
-      for (let i = 0, n = siblings.length + 1; i < n; i++) {
-        this.orderInSequenceOptions.push(i + 1);
-      }
-      this.orderInSequence = 1;
-    }
-    this.childSequenceOrder = this.childSequenceOrderOptions[0];
-    this.required = this.requiredOptions[0];
-    if (this.args.parent) {
-      this.startingAcademicLevel = await this.args.parent.startingAcademicLevel;
-      this.endingAcademicLevel = await this.args.parent.endingAcademicLevel;
-    }
-    if (this.args.report) {
-      this.academicLevels = await this.args.report.academicLevels;
-      if (this.args.parent) {
-        this.startingAcademicLevel = await this.args.parent.startingAcademicLevel;
-        this.endingAcademicLevel = await this.args.parent.endingAcademicLevel;
-      } else {
-        this.startingAcademicLevel = this.academicLevels[0];
-        this.endingAcademicLevel = this.academicLevels[0];
-      }
-      this.linkableCourses = await this.getLinkableCourses(this.args.report);
-    }
-  });
-
-  reload = restartableTask(async () => {
-    if (this.args.report) {
-      this.academicLevels = await this.args.report.academicLevels;
-      if (this.args.parent) {
-        this.startingAcademicLevel = await this.args.parent.startingAcademicLevel;
-        this.endingAcademicLevel = await this.args.parent.endingAcademicLevel;
-      } else {
-        this.startingAcademicLevel = this.academicLevels[0];
-        this.endingAcademicLevel = this.academicLevels[0];
-      }
-      this.linkableCourses = await this.getLinkableCourses(this.args.report);
-    }
-  });
 
   save = dropTask(async () => {
     this.addErrorDisplaysFor([
