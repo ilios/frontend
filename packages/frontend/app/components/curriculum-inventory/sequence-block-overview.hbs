@@ -361,7 +361,7 @@
         </div>
         <div class="block starting-academic-level" data-test-starting-academic-level>
           <label for="academic-level-{{templateId}}">{{t "general.startLevel"}}:</label>
-          {{#if (and @canUpdate this.startingAndEndingAcademicLevelsLoaded)}}
+          {{#if @canUpdate}}
             <EditableField
               @value={{this.startingAcademicLevel.name}}
               @save={{perform this.changeStartingAcademicLevel}}
@@ -386,7 +386,7 @@
         </div>
         <div class="block ending-academic-level" data-test-ending-academic-level>
           <label for="academic-level-{{templateId}}">{{t "general.endLevel"}}:</label>
-          {{#if (and @canUpdate this.startingAndEndingAcademicLevelsLoaded)}}
+          {{#if @canUpdate}}
             <EditableField
               @value={{this.endingAcademicLevel.name}}
               @save={{perform this.changeEndingAcademicLevel}}

@@ -109,10 +109,6 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
     return this.endingAcademicLevelData.isResolved ? this.endingAcademicLevelData.value : null;
   }
 
-  get startingAndEndingAcademicLevelsLoaded() {
-    return this.startingAcademicLevelData.isResolved && this.endingAcademicLevelData.isResolved;
-  }
-
   @cached
   get courseData() {
     return new TrackedAsyncData(this.args.sequenceBlock.course);
