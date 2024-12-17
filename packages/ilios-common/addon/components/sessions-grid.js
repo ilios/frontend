@@ -17,6 +17,11 @@ export default class SessionsGrid extends Component {
   @service intl;
   @tracked confirmDeleteSessionIds = [];
 
+  constructor() {
+    super(...arguments);
+    this.scrollDown();
+  }
+
   @cached
   get sortedSessionsData() {
     return new TrackedAsyncData(

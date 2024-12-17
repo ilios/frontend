@@ -25,15 +25,10 @@ add|ember-template-lint|no-at-ember-render-modifiers|3|2|3|2|23cd787c79c34a628da
 add|ember-template-lint|no-at-ember-render-modifiers|4|2|4|2|60333f2ba463ca3d2ba17a04d799c8d66d8b99e2|1731542400000|1762646400000|1793750400000|addon/components/session-offerings-list.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|3|2|3|2|7ed3e86f759809c1d3f9de3aec39e22bf5f11d30|1731542400000|1762646400000|1793750400000|addon/components/session-overview.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|4|2|4|2|60333f2ba463ca3d2ba17a04d799c8d66d8b99e2|1731542400000|1762646400000|1793750400000|addon/components/session-overview.hbs
-add|ember-template-lint|no-at-ember-render-modifiers|4|2|4|2|d0be752b9919c749f04a2eb96469552df0f4bcf2|1731542400000|1762646400000|1793750400000|addon/components/sessions-grid-offering.hbs
-add|ember-template-lint|no-at-ember-render-modifiers|5|2|5|2|6c3d49b1de5e39076551e876b3765c5beaaa50f5|1731542400000|1762646400000|1793750400000|addon/components/sessions-grid-offering.hbs
-add|ember-template-lint|no-at-ember-render-modifiers|6|2|6|2|9a885b1dbe0bab0f39ee91139933a48473e39f09|1731542400000|1762646400000|1793750400000|addon/components/sessions-grid-offering.hbs
-add|ember-template-lint|no-at-ember-render-modifiers|4|2|4|2|d4688dbdc2532b9de099a680503f5bdff6b55af6|1731542400000|1762646400000|1793750400000|addon/components/sessions-grid.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|3|2|3|2|7491f1d2f4e83f2c87fbb4c84f36a84ba901e218|1731542400000|1762646400000|1793750400000|addon/components/taxonomy-manager.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|13|6|13|6|1a2522cd1202904fb09a6e811dec6b46d8189ab3|1731542400000|1762646400000|1793750400000|addon/components/user-name-info.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|8|57|8|57|49de9e74a62c8d39ef6a37eaecf07bd389aa57c7|1731542400000|1762646400000|1793750400000|addon/components/wait-saving.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|7|2|7|2|1a2522cd1202904fb09a6e811dec6b46d8189ab3|1731542400000|1762646400000|1793750400000|addon/components/weekly-calendar-event.hbs
-add|ember-template-lint|no-at-ember-render-modifiers|6|2|6|2|4f45b7b5de154ec564345a9fa5b7cc54fe746a9b|1731542400000|1762646400000|1793750400000|addon/components/course/details.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|4|2|4|2|23cd787c79c34a628dadb6e96dd4004d42eebb79|1731542400000|1762646400000|1793750400000|addon/components/course/header.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|5|2|5|2|32658810aa13672f5981281c562729112a89788f|1731542400000|1762646400000|1793750400000|addon/components/course/header.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|4|2|4|2|23cd787c79c34a628dadb6e96dd4004d42eebb79|1731542400000|1762646400000|1793750400000|addon/components/course/objective-list.hbs

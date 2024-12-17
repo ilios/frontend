@@ -12,6 +12,11 @@ export default class SessionsGridOffering extends Component {
   @tracked isEditing = false;
   @tracked wasUpdated = false;
 
+  constructor() {
+    super(...arguments);
+    this.room = this.args.offering.room;
+  }
+
   @cached
   get sessionData() {
     return new TrackedAsyncData(this.args.offering.session);
@@ -53,15 +58,13 @@ export default class SessionsGridOffering extends Component {
   }
 
   @action
-  revertRoomChanges() {
-    this.room = this.args.offering.room;
-  }
-
-  @action
-  close() {
+  close({ target }) {
     this.isEditing = false;
     this.args.setHeaderLockedStatus(this.isEditing);
-    scrollIntoView(this.row);
+    const row = target.parentElement.parentElement.parentElement.parentElement.parentElement;
+    scrollIntoView(row, {
+      behavior: 'smooth',
+    });
   }
 
   changeRoom = dropTask(async () => {
