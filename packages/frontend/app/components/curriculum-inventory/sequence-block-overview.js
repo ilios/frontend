@@ -1,11 +1,12 @@
 import Component from '@glimmer/component';
-import { tracked } from '@glimmer/tracking';
+import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
 import { isPresent } from '@ember/utils';
-import { dropTask, restartableTask } from 'ember-concurrency';
+import { dropTask } from 'ember-concurrency';
 import { all } from 'rsvp';
 import { ValidateIf } from 'class-validator';
+import { TrackedAsyncData } from 'ember-async-data';
 import {
   validatable,
   AfterDate,
@@ -21,20 +22,12 @@ import { findById } from 'ilios-common/utils/array-helpers';
 export default class CurriculumInventorySequenceBlockOverviewComponent extends Component {
   @service intl;
   @service store;
-  @tracked
-  @Custom('validateStartingEndingLevelCallback', 'validateStartingLevelMessageCallback')
-  startingAcademicLevel;
-  @tracked
-  @Custom('validateStartingEndingLevelCallback', 'validateEndingLevelMessageCallback')
-  endingAcademicLevel;
-  @tracked academicLevels = [];
+
   @tracked childSequenceOrder;
-  @tracked course;
   @tracked description;
   @tracked isEditingDatesAndDuration = false;
   @tracked isEditingMinMax = false;
   @tracked isManagingSessions = false;
-  @tracked linkableCourses = [];
   @tracked @NotBlank() @IsInt() @Gte(0) minimum;
   @tracked
   @NotBlank()
@@ -42,13 +35,8 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
   @Gte(0)
   @Custom('validateMaximumCallback', 'validateMaximumMessageCallback')
   maximum;
-  @tracked isInOrderedSequence;
   @tracked orderInSequence;
-  @tracked orderInSequenceOptions = [];
-  @tracked parent;
-  @tracked report;
   @tracked required;
-  @tracked sessions = [];
   @tracked
   @NotBlank()
   @IsInt()
@@ -64,12 +52,177 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
   @NotBlank()
   @AfterDate('startDate', { granularity: 'day' })
   endDate;
+  @tracked selectedCourse;
+  @tracked
+  @Custom('validateStartingEndingLevelCallback', 'validateStartingLevelMessageCallback')
+  selectedStartingAcademicLevel;
+  @tracked
+  @Custom('validateStartingEndingLevelCallback', 'validateEndingLevelMessageCallback')
+  selectedEndingAcademicLevel;
+
+  constructor() {
+    super(...arguments);
+    this.required = this.args.sequenceBlock.required.toString();
+    this.duration = this.args.sequenceBlock.duration;
+    this.startDate = this.args.sequenceBlock.startDate;
+    this.endDate = this.args.sequenceBlock.endDate;
+    this.childSequenceOrder = this.args.sequenceBlock.childSequenceOrder.toString();
+    this.orderInSequence = this.args.sequenceBlock.orderInSequence;
+    this.minimum = this.args.sequenceBlock.minimum;
+    this.maximum = this.args.sequenceBlock.maximum;
+    this.description = this.args.sequenceBlock.description;
+  }
+
+  @cached
+  get reportData() {
+    return new TrackedAsyncData(this.args.sequenceBlock.report);
+  }
+
+  get report() {
+    return this.reportData.isResolved ? this.reportData.value : null;
+  }
+
+  @cached
+  get academicLevelsData() {
+    return new TrackedAsyncData(this.report?.academicLevels);
+  }
+
+  get academicLevels() {
+    return this.academicLevelsData.isResolved ? this.academicLevelsData.value : [];
+  }
+
+  @cached
+  get startingAcademicLevelData() {
+    return new TrackedAsyncData(this.args.sequenceBlock.startingAcademicLevel);
+  }
+
+  get startingAcademicLevel() {
+    return this.startingAcademicLevelData.isResolved ? this.startingAcademicLevelData.value : null;
+  }
+
+  @cached
+  get endingAcademicLevelData() {
+    return new TrackedAsyncData(this.args.sequenceBlock.endingAcademicLevel);
+  }
+
+  get endingAcademicLevel() {
+    return this.endingAcademicLevelData.isResolved ? this.endingAcademicLevelData.value : null;
+  }
+
+  @cached
+  get courseData() {
+    return new TrackedAsyncData(this.args.sequenceBlock.course);
+  }
+
+  get course() {
+    return this.courseData.isResolved ? this.courseData.value : null;
+  }
 
   get linkedCourseIsClerkship() {
     if (!this.course) {
       return false;
     }
     return !!this.course.belongsTo('clerkshipType').id();
+  }
+
+  @cached
+  get linkableCourseData() {
+    return new TrackedAsyncData(this.getLinkableCourses(this.report, this.course));
+  }
+
+  get linkableCourses() {
+    return this.linkableCourseData.isResolved ? this.linkableCourseData.value : [];
+  }
+
+  /**
+   * Returns a list of courses that can be linked to this sequence block.
+   */
+  async getLinkableCourses(report, course) {
+    if (!report) {
+      return [];
+    }
+    const program = await report.program;
+    const schoolId = program.belongsTo('school').id();
+    const allLinkableCourses = await this.store.query('course', {
+      filters: {
+        published: true,
+        school: [schoolId],
+        year: report.get('year'),
+      },
+    });
+    const linkedCourses = await report.getLinkedCourses();
+    // Filter out all courses that are linked to (sequence blocks in) this report.
+    const linkableCourses = allLinkableCourses.filter((course) => {
+      return !linkedCourses.includes(course);
+    });
+    // Always add the currently linked course to this list, if existent.
+    if (isPresent(course)) {
+      linkableCourses.push(course);
+    }
+
+    return linkableCourses;
+  }
+
+  @cached
+  get sessionsData() {
+    return new TrackedAsyncData(this.getSessions(this.course));
+  }
+
+  get sessions() {
+    return this.sessionsData.isResolved ? this.sessionsData.value : [];
+  }
+
+  /**
+   * Returns a list of published sessions that belong to a given course.
+   */
+  async getSessions(course) {
+    if (!course) {
+      return [];
+    }
+    return await this.store.query('session', {
+      filters: {
+        course: course.id,
+        published: true,
+      },
+    });
+  }
+
+  @cached
+  get parentData() {
+    return new TrackedAsyncData(this.args.sequenceBlock.parent);
+  }
+
+  get parent() {
+    return this.parentData.isResolved ? this.parentData.value : null;
+  }
+
+  @cached
+  get selfAndSiblingsData() {
+    return new TrackedAsyncData(this.getSelfAndSiblings(this.parent));
+  }
+
+  get selfAndSiblings() {
+    return this.selfAndSiblingsData.isResolved ? this.selfAndSiblingsData.value : [];
+  }
+
+  async getSelfAndSiblings(parent) {
+    if (!parent) {
+      return [this.args.sequenceBlock];
+    }
+    return await parent.children;
+  }
+
+  get isInOrderedSequence() {
+    return this.parent && this.parent.isOrdered;
+  }
+
+  get orderInSequenceOptions() {
+    const rhett = [];
+    for (let i = 0, n = this.selfAndSiblings.length; i < n; i++) {
+      const num = i + 1;
+      rhett.push(num);
+    }
+    return rhett;
   }
 
   get hasZeroDuration() {
@@ -79,37 +232,6 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
     }
     return 0 === num;
   }
-
-  load = restartableTask(async (element, [sequenceBlock]) => {
-    this.report = await sequenceBlock.report;
-    this.parent = await sequenceBlock.parent;
-    this.academicLevels = await this.report.academicLevels;
-    this.isInOrderedSequence = false;
-    this.orderInSequenceOptions = [];
-    if (isPresent(this.parent) && this.parent.isOrdered) {
-      this.isInOrderedSequence = true;
-      const siblings = await this.parent.children;
-      for (let i = 0, n = siblings.length; i < n; i++) {
-        const num = i + 1;
-        this.orderInSequenceOptions.push(num);
-      }
-    }
-    this.linkedSessions = await sequenceBlock.sessions;
-    this.startingAcademicLevel = await sequenceBlock.startingAcademicLevel;
-    this.endingAcademicLevel = await sequenceBlock.endingAcademicLevel;
-    this.required = sequenceBlock.required.toString();
-    this.duration = sequenceBlock.duration;
-    this.startDate = sequenceBlock.startDate;
-    this.endDate = sequenceBlock.endDate;
-    this.childSequenceOrder = sequenceBlock.childSequenceOrder.toString();
-    this.orderInSequence = sequenceBlock.orderInSequence;
-    this.description = sequenceBlock.description;
-    this.course = await sequenceBlock.course;
-    this.minimum = sequenceBlock.minimum;
-    this.maximum = sequenceBlock.maximum;
-    this.sessions = await this.getSessions(this.course);
-    this.linkableCourses = await this.getLinkableCourses(this.report, this.course);
-  });
 
   get requiredLabel() {
     switch (this.required) {
@@ -150,51 +272,6 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
     }
   }
 
-  /**
-   * Returns a list of courses that can be linked to this sequence block.
-   */
-  async getLinkableCourses(report, course) {
-    if (!report) {
-      return [];
-    }
-    const program = await report.program;
-    const schoolId = program.belongsTo('school').id();
-    const allLinkableCourses = await this.store.query('course', {
-      filters: {
-        published: true,
-        school: [schoolId],
-        year: report.get('year'),
-      },
-    });
-    const linkedCourses = await report.getLinkedCourses();
-    // Filter out all courses that are linked to (sequence blocks in) this report.
-    const linkableCourses = allLinkableCourses.filter((course) => {
-      return !linkedCourses.includes(course);
-    });
-    // Always add the currently linked course to this list, if existent.
-    if (isPresent(course)) {
-      linkableCourses.push(course);
-    }
-
-    return linkableCourses;
-  }
-
-  /**
-   * Returns a list of published sessions that belong to a given course.
-   */
-  async getSessions(course) {
-    if (!course) {
-      return [];
-    }
-    const sessions = await this.store.query('session', {
-      filters: {
-        course: course.get('id'),
-        published: true,
-      },
-    });
-    return sessions;
-  }
-
   changeRequired = dropTask(async () => {
     this.args.sequenceBlock.required = parseInt(this.required, 10);
     if ('2' === this.required) {
@@ -220,21 +297,29 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
   }
 
   @action
-  async saveCourse() {
-    const oldCourse = await this.args.sequenceBlock.course;
-    if (!this.isDestroying) {
-      if (oldCourse !== this.course) {
-        this.args.sequenceBlock.set('sessions', []);
-        this.args.sequenceBlock.set('excludedSessions', []);
-      }
-      this.args.sequenceBlock.set('course', this.course);
-      await this.args.sequenceBlock.save();
+  updateCourse(event) {
+    const value = event.target.value;
+    if (!value) {
+      this.selectedCourse = {}; // Use an empty object here to indicate a user selection.
+    } else {
+      this.selectedCourse = findById(this.linkableCourses, value);
     }
   }
 
   @action
   async revertCourseChanges() {
-    this.course = await this.args.sequenceBlock.get('course');
+    this.selectedCourse = null;
+  }
+
+  @action
+  async saveCourse() {
+    const oldCourse = await this.args.sequenceBlock.course;
+    if (oldCourse !== this.selectedCourse) {
+      this.args.sequenceBlock.set('sessions', []);
+      this.args.sequenceBlock.set('excludedSessions', []);
+    }
+    this.args.sequenceBlock.set('course', this.selectedCourse.id ? this.selectedCourse : null);
+    await this.args.sequenceBlock.save();
   }
 
   changeTrack = dropTask(async (value) => {
@@ -265,59 +350,82 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
   }
 
   changeStartingAcademicLevel = dropTask(async () => {
-    this.addErrorDisplaysFor(['startingAcademicLevel']);
+    if (!this.selectedStartingAcademicLevel) {
+      return;
+    }
+    if (this.selectedStartingAcademicLevel.id === this.startingAcademicLevel.id) {
+      return;
+    }
+    this.addErrorDisplaysFor(['selectedStartingAcademicLevel']);
     const isValid = await this.isValid();
     if (!isValid) {
       return false;
     }
-    this.args.sequenceBlock.set('startingAcademicLevel', this.startingAcademicLevel);
+    this.args.sequenceBlock.set('startingAcademicLevel', this.selectedStartingAcademicLevel);
     await this.args.sequenceBlock.save();
+    this.revertStartingAcademicLevelChanges();
   });
 
   @action
   setStartingAcademicLevel(event) {
     const id = event.target.value;
-    this.startingAcademicLevel = findById(this.academicLevels, id);
+    this.selectedStartingAcademicLevel = findById(this.academicLevels, id);
   }
 
   @action
   revertStartingAcademicLevelChanges() {
-    this.startingAcademicLevel = this.args.sequenceBlock.startingAcademicLevel;
+    this.selectedStartingAcademicLevel = null;
   }
 
   changeEndingAcademicLevel = dropTask(async () => {
-    this.addErrorDisplaysFor(['endingAcademicLevel']);
+    if (!this.selectedEndingAcademicLevel) {
+      return;
+    }
+    if (this.selectedEndingAcademicLevel.id === this.endingAcademicLevel.id) {
+      return;
+    }
+    this.addErrorDisplaysFor(['selectedEndingAcademicLevel']);
     const isValid = await this.isValid();
     if (!isValid) {
       return false;
     }
-    this.args.sequenceBlock.set('endingAcademicLevel', this.endingAcademicLevel);
+    this.args.sequenceBlock.set('endingAcademicLevel', this.selectedEndingAcademicLevel);
     await this.args.sequenceBlock.save();
+    this.revertEndingAcademicLevelChanges();
   });
 
   @action
   setEndingAcademicLevel(event) {
     const id = event.target.value;
-    this.endingAcademicLevel = findById(this.academicLevels, id);
+    this.selectedEndingAcademicLevel = findById(this.academicLevels, id);
   }
 
   @action
   revertEndingAcademicLevelChanges() {
-    this.endingAcademicLevel = this.args.sequenceBlock.endingAcademicLevel;
+    this.selectedStartingAcademicLevel = null;
   }
 
-  changeOrderInSequence = dropTask(async () => {
+  @action
+  updateOrderInSequence(event) {
+    this.orderInSequence = parseInt(event.target.value);
+  }
+
+  @action
+  revertOrderInSequenceChanges() {
+    this.orderInSequence = this.args.sequenceBlock.orderInSequence;
+  }
+
+  saveOrderInSequenceChanges = dropTask(async () => {
+    if (this.orderInSequence === this.args.sequenceBlock.orderInSequence) {
+      return;
+    }
+
     this.args.sequenceBlock.set('orderInSequence', this.orderInSequence);
     const savedBlock = await this.args.sequenceBlock.save();
     const parent = await savedBlock.parent;
     const children = await parent.children;
     await all(children.map((child) => child.reload()));
   });
-
-  @action
-  revertOrderInSequenceChanges() {
-    this.orderInSequence = this.args.sequenceBlock.orderInSequence;
-  }
 
   @action
   editMinMax() {
@@ -349,23 +457,8 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
   });
 
   @action
-  updateCourse(event) {
-    const value = event.target.value;
-    if (!value) {
-      this.course = null;
-    } else {
-      this.course = findById(this.linkableCourses, value);
-    }
-  }
-
-  @action
   changeDescription(event) {
     this.description = event.target.value;
-  }
-
-  @action
-  updateOrderInSequence(event) {
-    this.orderInSequence = event.target.value;
   }
 
   @action
@@ -398,7 +491,9 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
 
   @action
   validateStartingEndingLevelCallback() {
-    return this.endingAcademicLevel.level >= this.startingAcademicLevel.level;
+    const startingAcademicLevel = this.selectedStartingAcademicLevel || this.startingAcademicLevel;
+    const endingAcademicLevel = this.selectedEndingAcademicLevel || this.endingAcademicLevel;
+    return endingAcademicLevel.level >= startingAcademicLevel.level;
   }
 
   @action
