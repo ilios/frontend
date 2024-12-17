@@ -27,7 +27,6 @@ export default class CurriculumInventoryNewSequenceBlock extends Component {
   endingAcademicLevel;
   @tracked academicLevels = [];
   @tracked childSequenceOrder;
-  @tracked childSequenceOrderOptions = [];
   @tracked course;
   @tracked description;
   @tracked
@@ -56,18 +55,19 @@ export default class CurriculumInventoryNewSequenceBlock extends Component {
   @tracked @NotBlank() @IsInt() @Gte(0) minimum = 0;
   @tracked orderInSequenceOptions = [];
   @tracked required;
-  @tracked requiredOptions = [];
   @tracked @NotBlank() @Length(1, 200) title;
   @tracked track = false;
 
-  constructor() {
-    super(...arguments);
-    this.childSequenceOrderOptions = [
+  get childSequenceOrderOptions() {
+    return [
       { id: '1', title: this.intl.t('general.ordered') },
       { id: '2', title: this.intl.t('general.unordered') },
       { id: '3', title: this.intl.t('general.parallel') },
     ];
-    this.requiredOptions = [
+  }
+
+  get requiredOptions() {
+    return [
       { id: '1', title: this.intl.t('general.required') },
       { id: '2', title: this.intl.t('general.optionalElective') },
       { id: '3', title: this.intl.t('general.requiredInTrack') },
