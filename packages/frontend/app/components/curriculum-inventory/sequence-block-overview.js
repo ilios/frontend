@@ -354,6 +354,12 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
   }
 
   changeStartingAcademicLevel = dropTask(async () => {
+    if (!this.selectedStartingAcademicLevel) {
+      return;
+    }
+    if (this.selectedStartingAcademicLevel.id === this.startingAcademicLevel.id) {
+      return;
+    }
     this.addErrorDisplaysFor(['selectedStartingAcademicLevel']);
     const isValid = await this.isValid();
     if (!isValid) {
@@ -376,6 +382,12 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
   }
 
   changeEndingAcademicLevel = dropTask(async () => {
+    if (!this.selectedEndingAcademicLevel) {
+      return;
+    }
+    if (this.selectedEndingAcademicLevel.id === this.endingAcademicLevel.id) {
+      return;
+    }
     this.addErrorDisplaysFor(['selectedEndingAcademicLevel']);
     const isValid = await this.isValid();
     if (!isValid) {
