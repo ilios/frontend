@@ -1,9 +1,10 @@
 import Component from '@glimmer/component';
-import { tracked } from '@glimmer/tracking';
+import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { restartableTask } from 'ember-concurrency';
 import { validatable, Length, NotBlank } from 'ilios-common/decorators/validation';
 import { service } from '@ember/service';
+import { TrackedAsyncData } from 'ember-async-data';
 
 @validatable
 export default class CourseHeaderComponent extends Component {
@@ -11,14 +12,24 @@ export default class CourseHeaderComponent extends Component {
 
   @Length(3, 200) @NotBlank() @tracked courseTitle;
   @tracked isEditingTitle = false;
-  @tracked academicYearCrossesCalendarYearBoundaries = false;
 
-  load = restartableTask(async () => {
-    this.academicYearCrossesCalendarYearBoundaries = await this.iliosConfig.itemFromConfig(
-      'academicYearCrossesCalendarYearBoundaries',
+  constructor() {
+    super(...arguments);
+    this.courseTitle = this.args.course.title;
+  }
+
+  @cached
+  get academicYearCrossesCalendarYearBoundariesData() {
+    return new TrackedAsyncData(
+      this.iliosConfig.itemFromConfig('academicYearCrossesCalendarYearBoundaries'),
     );
-    this.revertTitleChanges();
-  });
+  }
+
+  get academicYearCrossesCalendarYearBoundaries() {
+    return this.academicYearCrossesCalendarYearBoundariesData.isResolved
+      ? this.academicYearCrossesCalendarYearBoundariesData.value
+      : false;
+  }
 
   changeTitle = restartableTask(async () => {
     this.courseTitle = this.courseTitle.trim();
