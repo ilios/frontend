@@ -2,9 +2,10 @@ import Component from '@glimmer/component';
 import { htmlSafe } from '@ember/template';
 import { filter, map } from 'rsvp';
 import { restartableTask, timeout } from 'ember-concurrency';
-import { tracked } from '@glimmer/tracking';
+import { cached, tracked } from '@glimmer/tracking';
 import { service } from '@ember/service';
 import { filterBy, uniqueValues } from 'ilios-common/utils/array-helpers';
+import { TrackedAsyncData } from 'ember-async-data';
 
 export default class VisualizerProgramYearObjectivesComponent extends Component {
   @service intl;
@@ -16,14 +17,28 @@ export default class VisualizerProgramYearObjectivesComponent extends Component 
   @tracked programYearName;
   @tracked data;
 
-  load = restartableTask(async (element, [programYear]) => {
-    const cohort = await programYear.cohort;
-    const year = await programYear.getClassOfYear();
+  constructor() {
+    super(...arguments);
+    this.load.perform();
+  }
+
+  load = restartableTask(async () => {
+    const cohort = await this.programYear.cohort;
+    const year = await this.programYear.getClassOfYear();
     const classOfYear = this.intl.t('general.classOf', { year });
     this.programYearName = cohort.title ?? classOfYear;
 
-    this.data = await this.getData(programYear);
+    this.data = await this.getData(this.programYear);
   });
+
+  @cached
+  get programYearData() {
+    return new TrackedAsyncData(this.args.programYear);
+  }
+
+  get programYear() {
+    return this.programYearData.isResolved ? this.programYearData.value : null;
+  }
 
   async getObjectiveObjects(programYear) {
     const buildTreeLevel = async function (parent, childrenTree, sessionTitle, courseTitle) {
