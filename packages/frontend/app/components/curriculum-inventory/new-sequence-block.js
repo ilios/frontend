@@ -1,9 +1,10 @@
 import Component from '@glimmer/component';
-import { tracked } from '@glimmer/tracking';
+import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
-import { dropTask, restartableTask } from 'ember-concurrency';
+import { dropTask } from 'ember-concurrency';
 import { ValidateIf } from 'class-validator';
+import { TrackedAsyncData } from 'ember-async-data';
 import {
   validatable,
   AfterDate,
@@ -21,11 +22,12 @@ export default class CurriculumInventoryNewSequenceBlock extends Component {
   @service intl;
   @service store;
 
-  @tracked startingAcademicLevel;
   @tracked
-  @Custom('validateEndingLevelCallback', 'validateEndingLevelMessageCallback')
+  @Custom('validateStartingEndingLevelCallback', 'validateStartingLevelMessageCallback')
+  startingAcademicLevel;
+  @tracked
+  @Custom('validateStartingEndingLevelCallback', 'validateEndingLevelMessageCallback')
   endingAcademicLevel;
-  @tracked academicLevels = [];
   @tracked childSequenceOrder;
   @tracked course;
   @tracked description;
@@ -44,8 +46,7 @@ export default class CurriculumInventoryNewSequenceBlock extends Component {
   @NotBlank()
   @AfterDate('startDate', { granularity: 'day' })
   endDate;
-  @tracked orderInSequence = 0;
-  @tracked linkableCourses = [];
+  @tracked orderInSequence = null;
   @tracked
   @NotBlank()
   @IsInt()
@@ -53,10 +54,15 @@ export default class CurriculumInventoryNewSequenceBlock extends Component {
   @Custom('validateMaximumCallback', 'validateMaximumMessageCallback')
   maximum = 0;
   @tracked @NotBlank() @IsInt() @Gte(0) minimum = 0;
-  @tracked orderInSequenceOptions = [];
   @tracked required;
   @tracked @NotBlank() @Length(1, 200) title;
   @tracked track = false;
+
+  constructor() {
+    super(...arguments);
+    this.childSequenceOrder = this.childSequenceOrderOptions[0];
+    this.required = this.requiredOptions[0];
+  }
 
   get childSequenceOrderOptions() {
     return [
@@ -74,47 +80,121 @@ export default class CurriculumInventoryNewSequenceBlock extends Component {
     ];
   }
 
-  load = restartableTask(async () => {
-    this.orderInSequence = 0;
-    if (this.isInOrderedSequence) {
-      const siblings = await this.args.parent.children;
-      for (let i = 0, n = siblings.length + 1; i < n; i++) {
-        this.orderInSequenceOptions.push(i + 1);
-      }
-      this.orderInSequence = 1;
+  @cached
+  get defaultOrderInSequence() {
+    if (!this.isInOrderedSequence || !this.args.parent) {
+      return 0;
     }
-    this.childSequenceOrder = this.childSequenceOrderOptions[0];
-    this.required = this.requiredOptions[0];
-    if (this.args.parent) {
-      this.startingAcademicLevel = await this.args.parent.startingAcademicLevel;
-      this.endingAcademicLevel = await this.args.parent.endingAcademicLevel;
-    }
-    if (this.args.report) {
-      this.academicLevels = await this.args.report.academicLevels;
-      if (this.args.parent) {
-        this.startingAcademicLevel = await this.args.parent.startingAcademicLevel;
-        this.endingAcademicLevel = await this.args.parent.endingAcademicLevel;
-      } else {
-        this.startingAcademicLevel = this.academicLevels[0];
-        this.endingAcademicLevel = this.academicLevels[0];
-      }
-      this.linkableCourses = await this.getLinkableCourses(this.args.report);
-    }
-  });
+    return 1;
+  }
 
-  reload = restartableTask(async () => {
-    if (this.args.report) {
-      this.academicLevels = await this.args.report.academicLevels;
-      if (this.args.parent) {
-        this.startingAcademicLevel = await this.args.parent.startingAcademicLevel;
-        this.endingAcademicLevel = await this.args.parent.endingAcademicLevel;
-      } else {
-        this.startingAcademicLevel = this.academicLevels[0];
-        this.endingAcademicLevel = this.academicLevels[0];
-      }
-      this.linkableCourses = await this.getLinkableCourses(this.args.report);
+  @cached
+  get orderInSequenceOptionsData() {
+    return new TrackedAsyncData(
+      this.getOrderInSequenceOptions(this.isInOrderedSequence, this.args.parent),
+    );
+  }
+
+  get orderInSequenceOptions() {
+    return this.orderInSequenceOptionsData.isResolved ? this.orderInSequenceOptionsData.value : [];
+  }
+
+  async getOrderInSequenceOptions(isInOrderedSequence, parent) {
+    const rhett = [];
+    if (!isInOrderedSequence || !parent) {
+      return rhett;
     }
-  });
+    const siblings = await parent.children;
+    for (let i = 0, n = siblings.length + 1; i < n; i++) {
+      rhett.push(i + 1);
+    }
+    return rhett;
+  }
+
+  @cached
+  get linkableCoursesData() {
+    // KLUDGE!
+    // We're only referencing the parent sequence block's course value here
+    // so that a re-computation is triggered if/when that value changes.
+    // [ST 2024/12/17]
+    return new TrackedAsyncData(
+      this.getLinkableCourses(this.args.report, this.args.parent?.course),
+    );
+  }
+
+  get linkableCourses() {
+    return this.linkableCoursesData.isResolved ? this.linkableCoursesData.value : [];
+  }
+
+  async getLinkableCourses(report) {
+    const program = await report.program;
+    const schoolId = program.belongsTo('school').id();
+    const linkedCourses = await report.getLinkedCourses();
+    const allLinkableCourses = await this.store.query('course', {
+      filters: {
+        school: [schoolId],
+        published: true,
+        year: report.year,
+      },
+    });
+    // Filter out all courses that are linked to (sequence blocks in) this report.
+    return allLinkableCourses.filter((course) => {
+      return !linkedCourses.includes(course);
+    });
+  }
+
+  @cached
+  get academicLevelsData() {
+    return new TrackedAsyncData(this.args.report.academicLevels);
+  }
+
+  get academicLevels() {
+    return this.academicLevelsData.isResolved ? this.academicLevelsData.value : [];
+  }
+
+  @cached
+  get defaultStartingAcademicLevelData() {
+    return new TrackedAsyncData(
+      this.getDefaultStartingAcademicLevel(this.args.report, this.args.parent),
+    );
+  }
+
+  get defaultStartingAcademicLevel() {
+    return this.defaultStartingAcademicLevelData.isResolved
+      ? this.defaultStartingAcademicLevelData.value
+      : null;
+  }
+
+  async getDefaultStartingAcademicLevel(report, parent) {
+    if (parent) {
+      return await parent.startingAcademicLevel;
+    }
+
+    const academicLevels = await report.academicLevels;
+    return academicLevels[0];
+  }
+
+  @cached
+  get defaultEndingAcademicLevelData() {
+    return new TrackedAsyncData(
+      this.getDefaultEndingAcademicLevel(this.args.report, this.args.parent),
+    );
+  }
+
+  get defaultEndingAcademicLevel() {
+    return this.defaultEndingAcademicLevelData.isResolved
+      ? this.defaultEndingAcademicLevelData.value
+      : null;
+  }
+
+  async getDefaultEndingAcademicLevel(report, parent) {
+    if (parent) {
+      return await parent.endingAcademicLevel;
+    }
+
+    const academicLevels = await report.academicLevels;
+    return academicLevels[0];
+  }
 
   get linkedCourseIsClerkship() {
     if (!this.course) {
@@ -137,23 +217,6 @@ export default class CurriculumInventoryNewSequenceBlock extends Component {
 
   get isInOrderedSequence() {
     return this.args.parent && this.args.parent.isOrdered;
-  }
-
-  async getLinkableCourses(report) {
-    const program = await report.program;
-    const schoolId = program.belongsTo('school').id();
-    const linkedCourses = await report.getLinkedCourses();
-    const allLinkableCourses = await this.store.query('course', {
-      filters: {
-        school: [schoolId],
-        published: true,
-        year: report.year,
-      },
-    });
-    // Filter out all courses that are linked to (sequence blocks in) this report.
-    return allLinkableCourses.filter((course) => {
-      return !linkedCourses.includes(course);
-    });
   }
 
   @action
@@ -237,8 +300,27 @@ export default class CurriculumInventoryNewSequenceBlock extends Component {
   }
 
   @action
-  validateEndingLevelCallback() {
-    return this.endingAcademicLevel.level >= this.startingAcademicLevel.level;
+  async validateStartingEndingLevelCallback() {
+    // In case no user selection has been made (yet), we'll use default values for comparison.
+    const defaultStartingAcademicLevel = await this.getDefaultStartingAcademicLevel(
+      this.args.report,
+      this.args.parent,
+    );
+    const defaultEndingAcademicLevel = await this.getDefaultEndingAcademicLevel(
+      this.args.report,
+      this.args.parent,
+    );
+    const startingAcademicLevel = this.startingAcademicLevel || defaultStartingAcademicLevel;
+    const endingAcademicLevel = this.endingAcademicLevel || defaultEndingAcademicLevel;
+    return endingAcademicLevel.level >= startingAcademicLevel.level;
+  }
+
+  @action
+  validateStartingLevelMessageCallback() {
+    return this.intl.t('errors.lessThanOrEqualTo', {
+      lte: this.intl.t('general.endLevel'),
+      description: this.intl.t('general.startLevel'),
+    });
   }
 
   @action
@@ -271,21 +353,32 @@ export default class CurriculumInventoryNewSequenceBlock extends Component {
       'endDate',
       'minimum',
       'maximum',
+      'startingAcademicLevel',
       'endingAcademicLevel',
     ]);
     const isValid = await this.isValid();
     if (!isValid) {
       return false;
     }
+
+    const defaultStartingAcademicLevel = await this.getDefaultStartingAcademicLevel(
+      this.args.report,
+      this.args.parent,
+    );
+    const defaultEndingAcademicLevel = await this.getDefaultEndingAcademicLevel(
+      this.args.report,
+      this.args.parent,
+    );
+
     const block = this.store.createRecord('curriculum-inventory-sequence-block', {
       title: this.title,
       description: this.description,
       parent: this.args.parent,
-      startingAcademicLevel: this.startingAcademicLevel,
-      endingAcademicLevel: this.endingAcademicLevel,
+      startingAcademicLevel: this.startingAcademicLevel || defaultStartingAcademicLevel,
+      endingAcademicLevel: this.endingAcademicLevel || defaultEndingAcademicLevel,
       required: this.required.id,
       track: this.track,
-      orderInSequence: this.orderInSequence,
+      orderInSequence: this.orderInSequence ?? this.defaultOrderInSequence,
       childSequenceOrder: this.childSequenceOrder.id,
       startDate: this.startDate,
       endDate: this.endDate,
