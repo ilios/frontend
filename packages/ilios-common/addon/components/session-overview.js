@@ -18,7 +18,6 @@ export default class SessionOverview extends Component {
   @service intl;
   @service store;
 
-  @Length(3, 200) @NotBlank() @tracked title = null;
   @Length(3, 65000) @tracked instructionalNotes = null;
   @NotBlank() @Gte(0) @tracked hours = null;
   @Length(3, 65000) @tracked description = null;
@@ -136,7 +135,6 @@ export default class SessionOverview extends Component {
     this.showSpecialEquipmentRequired = showSessionSpecialEquipmentRequired;
     this.sessionType = sessionType;
 
-    this.title = session.title;
     this.instructionalNotes = session.instructionalNotes;
     if (ilmSession) {
       this.hours = ilmSession.hours;
@@ -203,24 +201,6 @@ export default class SessionOverview extends Component {
       await this.args.session.save();
     }
   });
-
-  @action
-  async changeTitle() {
-    this.addErrorDisplayFor('title');
-    const isValid = await this.isValid('title');
-    if (!isValid) {
-      return false;
-    }
-
-    this.removeErrorDisplayFor('title');
-    this.args.session.title = this.title;
-    await this.args.session.save();
-  }
-
-  @action
-  revertTitleChanges() {
-    this.title = this.args.session.title;
-  }
 
   @action
   revertInstructionalNotesChanges() {

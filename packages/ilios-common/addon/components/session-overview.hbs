@@ -5,38 +5,7 @@
 >
   {{#let (unique-id) as |templateId|}}
     {{#if this.load.performCount}}
-      <div class="session-header">
-        <h3 class="title" data-test-title>
-          {{#if @editable}}
-            <EditableField
-              @value={{this.title}}
-              @save={{this.changeTitle}}
-              @close={{this.revertTitleChanges}}
-              @saveOnEnter={{true}}
-              @closeOnEscape={{true}} as |isSaving|
-            >
-              <input
-                aria-label={{t "general.title"}}
-                disabled={{isSaving}}
-                type="text"
-                value={{this.title}}
-                {{on "key-press" (fn this.addErrorDisplayFor "title")}}
-                {{on "input" (pick "target.value" (set this "title"))}}
-              >
-              <ValidationError @validatable={{this}} @property="title" />
-            </EditableField>
-          {{else}}
-            {{@session.title}}
-          {{/if}}
-        </h3>
-        <span class="session-publication">
-          {{#if @editable}}
-            <Session::PublicationMenu @session={{@session}} @hideCheckLink={{@hideCheckLink}} />
-          {{else}}
-            <PublicationStatus @item={{@session}} @showIcon={{true}} @showText={{true}} />
-          {{/if}}
-        </span>
-      </div>
+      <Session::Header @session={{@session}} @editable={{@editable}} @hideCheckLink={{@hideCheckLink}} />
 
       <section class="session-overview">
         <div class="last-update" data-test-last-update>
