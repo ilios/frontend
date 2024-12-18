@@ -2,13 +2,19 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
-import { dropTask, restartableTask } from 'ember-concurrency';
 
 export default class SequenceBlockSessionManagerComponent extends Component {
   @service store;
   @tracked excludedSessions = [];
   @tracked linkedSessions = [];
   @tracked sessions = [];
+
+  constructor() {
+    super(...arguments);
+    this.linkedSessions = this.args.linkedSessions;
+    this.excludedSessions = this.args.excludedSessions;
+    this.sessions = this.args.sessions;
+  }
 
   get allSelected() {
     if (
@@ -129,19 +135,4 @@ export default class SequenceBlockSessionManagerComponent extends Component {
     }
     this.args.setSortBy(what);
   }
-
-  @action
-  close() {
-    this.args.cancel();
-  }
-
-  load = restartableTask(async () => {
-    this.linkedSessions = await this.args.sequenceBlock.sessions;
-    this.excludedSessions = await this.args.sequenceBlock.excludedSessions;
-    this.sessions = await this.args.sessions;
-  });
-
-  saveChanges = dropTask(async () => {
-    await this.args.save(this.linkedSessions, this.excludedSessions);
-  });
 }
