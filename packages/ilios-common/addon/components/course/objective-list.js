@@ -1,6 +1,5 @@
 import Component from '@glimmer/component';
 import { cached, tracked } from '@glimmer/tracking';
-import { restartableTask } from 'ember-concurrency';
 import { map } from 'rsvp';
 import { service } from '@ember/service';
 import { TrackedAsyncData } from 'ember-async-data';
@@ -11,6 +10,19 @@ export default class CourseObjectiveListComponent extends Component {
   @service intl;
   @service dataLoader;
   @tracked isSorting = false;
+
+  @cached
+  get courseSessionsData() {
+    return new TrackedAsyncData(this.getCourseSessions(this.args.course));
+  }
+
+  get courseSessions() {
+    return this.courseSessionsData.isResolved ? this.courseSessionsData.value : null;
+  }
+
+  get courseSessionsLoaded() {
+    return this.courseSessionsData.isResolved;
+  }
 
   @cached
   get courseObjectivesAsyncData() {
@@ -27,7 +39,7 @@ export default class CourseObjectiveListComponent extends Component {
   }
 
   get courseObjectives() {
-    if (this.load.lastSuccessful && this.courseObjectivesAsync) {
+    if (this.courseSessionsLoaded && this.courseObjectivesAsync) {
       return this.courseObjectivesAsync.slice().sort(sortableByPosition);
     }
 
@@ -39,7 +51,7 @@ export default class CourseObjectiveListComponent extends Component {
   }
 
   get courseCohorts() {
-    if (this.load.lastSuccessful && this.courseCohortsAsync) {
+    if (this.courseSessionsLoaded && this.courseCohortsAsync) {
       return this.courseCohortsAsync;
     }
 
@@ -67,10 +79,9 @@ export default class CourseObjectiveListComponent extends Component {
     return this.args.course.hasMany('courseObjectives').ids().length;
   }
 
-  load = restartableTask(async () => {
-    //pre-load all session data as well to get access to child objectives
-    await this.dataLoader.loadCourseSessions(this.args.course.id);
-  });
+  async getCourseSessions(course) {
+    await this.dataLoader.loadCourseSessions(course.id);
+  }
 
   async getCohortObjectives(cohorts, intl) {
     return await map(cohorts, async (cohort) => {
