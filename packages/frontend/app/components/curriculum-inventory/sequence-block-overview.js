@@ -188,6 +188,32 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
   }
 
   @cached
+  get linkedSessionsData() {
+    return new TrackedAsyncData(this.args.sequenceBlock.sessions);
+  }
+
+  get linkedSessions() {
+    return this.linkedSessionsData.isResolved ? this.linkedSessionsData.value : [];
+  }
+
+  @cached
+  get excludedSessionsData() {
+    return new TrackedAsyncData(this.args.sequenceBlock.excludedSessions);
+  }
+
+  get excludedSessions() {
+    return this.excludedSessionsData.isResolved ? this.excludedSessionsData.value : [];
+  }
+
+  get dataForSessionsManagerLoaded() {
+    return (
+      this.sessionsData.isResolved &&
+      this.linkedSessionsData.isResolved &&
+      this.excludedSessionsData.isResolved
+    );
+  }
+
+  @cached
   get parentData() {
     return new TrackedAsyncData(this.args.sequenceBlock.parent);
   }

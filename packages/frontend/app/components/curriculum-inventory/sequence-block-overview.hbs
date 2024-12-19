@@ -523,9 +523,10 @@
       </div>
     </div>
     {{#if this.sessions.length}}
-      {{#if this.isManagingSessions}}
+      {{#if (and this.isManagingSessions this.dataForSessionsManagerLoaded)}}
         <CurriculumInventory::SequenceBlockSessionManager
-          @sequenceBlock={{@sequenceBlock}}
+          @linkedSessions={{this.linkedSessions}}
+          @excludedSessions={{this.excludedSessions}}
           @sessions={{this.sessions}}
           @cancel={{this.cancelManagingSessions}}
           @save={{perform this.changeSessions}}

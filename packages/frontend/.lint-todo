@@ -29,5 +29,3 @@ add|ember-template-lint|no-at-ember-render-modifiers|10|6|10|6|d919d2af254f782c0
 add|ember-template-lint|no-at-ember-render-modifiers|11|6|11|6|940005188b476a060b0e5d3f05baea24ba178878|1731542400000|1762646400000|1793750400000|app/components/reports/subject/new/term.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|4|2|4|2|23cd787c79c34a628dadb6e96dd4004d42eebb79|1733184000000|1735776000000|1738368000000|app/components/curriculum-inventory/new-sequence-block.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|5|2|5|2|77e3831e4ae1b00caee1f808711f2e26ab452a23|1733184000000|1735776000000|1738368000000|app/components/curriculum-inventory/new-sequence-block.hbs
-add|ember-template-lint|no-at-ember-render-modifiers|5|2|5|2|23cd787c79c34a628dadb6e96dd4004d42eebb79|1733184000000|1735776000000|1738368000000|app/components/curriculum-inventory/sequence-block-session-manager.hbs
-add|ember-template-lint|no-at-ember-render-modifiers|6|2|6|2|394d8c8b6b1bc28f48ede0d39dcbfbb4dcd8261e|1733184000000|1735776000000|1738368000000|app/components/curriculum-inventory/sequence-block-session-manager.hbs
