@@ -1,0 +1,41 @@
+<div class="report-results">
+  <h2>{{t "general.results"}}</h2>
+  <div class="download">
+    <button type="button" {{on "click" (perform this.downloadReport)}} data-test-download>
+      {{#if this.finishedBuildingReport}}
+        <FaIcon @icon="check" />
+      {{else}}
+        <FaIcon @icon="download" />
+      {{/if}}
+      {{t "general.downloadResults"}}
+    </button>
+  </div>
+  <table>
+    <thead>
+      <tr>
+        <th colspan="2">{{t "general.course"}}</th>
+        <th>{{t "general.sessionType"}}</th>
+        <th colspan="2">{{t "general.sessionTitle"}}</th>
+        <th colspan="4">{{t "general.objective"}}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each this.sortedResults as |o|}}
+        <tr>
+          <td colspan="2">
+            <LinkTo @route="course" @models={{array o.courseId}}>
+              {{o.courseTitle}}
+            </LinkTo>
+          </td>
+          <td>{{o.sessionType}}</td>
+          <td colspan="2">
+            <LinkTo @route="session" @models={{array o.courseId o.sessionId}}>
+              {{o.sessionTitle}}
+            </LinkTo>
+          </td>
+          <td colspan="4">{{o.title}}</td>
+        </tr>
+      {{/each}}
+    </tbody>
+  </table>
+</div>
