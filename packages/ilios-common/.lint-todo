@@ -29,10 +29,6 @@ add|ember-template-lint|no-at-ember-render-modifiers|3|2|3|2|7491f1d2f4e83f2c87f
 add|ember-template-lint|no-at-ember-render-modifiers|13|6|13|6|1a2522cd1202904fb09a6e811dec6b46d8189ab3|1731542400000|1762646400000|1793750400000|addon/components/user-name-info.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|8|57|8|57|49de9e74a62c8d39ef6a37eaecf07bd389aa57c7|1731542400000|1762646400000|1793750400000|addon/components/wait-saving.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|7|2|7|2|1a2522cd1202904fb09a6e811dec6b46d8189ab3|1731542400000|1762646400000|1793750400000|addon/components/weekly-calendar-event.hbs
-add|ember-template-lint|no-at-ember-render-modifiers|4|2|4|2|23cd787c79c34a628dadb6e96dd4004d42eebb79|1731542400000|1762646400000|1793750400000|addon/components/course/header.hbs
-add|ember-template-lint|no-at-ember-render-modifiers|5|2|5|2|32658810aa13672f5981281c562729112a89788f|1731542400000|1762646400000|1793750400000|addon/components/course/header.hbs
-add|ember-template-lint|no-at-ember-render-modifiers|4|2|4|2|23cd787c79c34a628dadb6e96dd4004d42eebb79|1731542400000|1762646400000|1793750400000|addon/components/course/objective-list.hbs
-add|ember-template-lint|no-at-ember-render-modifiers|5|2|5|2|84076f8cf85c554eaf0d9fdec26154bae5bceeb2|1731542400000|1762646400000|1793750400000|addon/components/course/objective-list.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|4|2|4|2|2bbf15957242a9a3c1e26e14e5d022c858199fde|1731542400000|1762646400000|1793750400000|addon/components/course/rollover-date-picker.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|5|2|5|2|167e8d9ede488c7f199cb748e81bc09b97617e71|1731542400000|1762646400000|1793750400000|addon/components/course/rollover-date-picker.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|3|2|3|2|1009d3843f6aed52099f0e7fbd4eebb52bc176e5|1731542400000|1762646400000|1793750400000|addon/components/course/rollover.hbs
