@@ -1,12 +1,11 @@
 import Component from '@glimmer/component';
 import { service } from '@ember/service';
-import { cached } from '@glimmer/tracking';
+import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { DateTime } from 'luxon';
 import { map } from 'rsvp';
 import { mapBy, sortBy } from 'ilios-common/utils/array-helpers';
 import { TrackedAsyncData } from 'ember-async-data';
-import { storageFor } from 'ember-local-storage';
 
 export default class DashboardCalendarComponent extends Component {
   @service userEvents;
@@ -17,17 +16,7 @@ export default class DashboardCalendarComponent extends Component {
   @service iliosConfig;
   @service dataLoader;
   @service localeDays;
-
-  @storageFor('dashboard') dashboardStorage;
-
-  get userContext() {
-    return this.dashboardStorage?.get('userContext');
-  }
-
-  @action
-  setUserContext(userContext) {
-    this.dashboardStorage?.set('userContext', userContext);
-  }
+  @tracked userContext;
 
   @cached
   get cohortProxiesData() {
