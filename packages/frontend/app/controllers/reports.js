@@ -7,13 +7,17 @@ export default class ReportsController extends Controller {
   queryParams = [
     { sortReportsBy: 'sortBy' },
     { titleFilter: 'filter' },
-    { showNewReportForm: 'showNewReportForm' },
+    { showNewSubjectReportForm: 'showNewSubjectReportForm' },
+    { showNewCourseReportForm: 'showNewCourseReportForm' },
+    { courses: 'courses' },
   ];
 
   @tracked sortReportsBy = 'title';
   @tracked titleFilter = null;
-  @tracked showNewReportForm = false;
+  @tracked showNewSubjectReportForm = false;
+  @tracked showNewCourseReportForm = false;
   @tracked runningSubjectReport = null;
+  @tracked courses = null;
 
   changeTitleFilter = restartableTask(async (value) => {
     this.titleFilter = value;
@@ -26,9 +30,16 @@ export default class ReportsController extends Controller {
     this.runningSubjectReport = report;
   }
 
+  get selectedCourseIds() {
+    return this.courses?.split('-');
+  }
+
   @action
-  toggleNewReportForm() {
-    this.runningSubjectReport = null;
-    this.showNewReportForm = !this.showNewReportForm;
+  setSelectedCourseIds(ids) {
+    if (!ids) {
+      this.courses = null;
+    }
+    //use a Set to remove duplicates
+    this.courses = [...new Set(ids)].join('-');
   }
 }

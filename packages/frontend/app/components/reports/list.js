@@ -134,8 +134,8 @@ export default class ReportsListComponent extends Component {
   );
 
   @action
-  toggleNewReportForm() {
+  createNewReport(type) {
     this.args.setRunningSubjectReport(null);
-    this.args.toggleNewReportForm;
+    this.args[`setShowNew${type}ReportForm`](true);
   }
 }
