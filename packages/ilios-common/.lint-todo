@@ -42,3 +42,7 @@ add|ember-template-lint|no-at-ember-render-modifiers|4|2|4|2|23cd787c79c34a628da
 add|ember-template-lint|no-at-ember-render-modifiers|3|2|3|2|23cd787c79c34a628dadb6e96dd4004d42eebb79|1731542400000|1762646400000|1793750400000|addon/components/dashboard/courses-calendar-filter.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|4|2|4|2|a90be151f45cd8ab32827e9247a9a9eb7f1baef2|1731542400000|1762646400000|1793750400000|addon/components/dashboard/courses-calendar-filter.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|24|10|24|10|2ed3ce70b879732dc85047f9f546c5dbd5376dba|1731542400000|1762646400000|1793750400000|addon/components/dashboard/courses-calendar-filter.hbs
+remove|ember-template-lint|no-at-ember-render-modifiers|4|2|4|2|2bbf15957242a9a3c1e26e14e5d022c858199fde|1731542400000|1762646400000|1793750400000|addon/components/course/rollover-date-picker.hbs
+remove|ember-template-lint|no-at-ember-render-modifiers|5|2|5|2|167e8d9ede488c7f199cb748e81bc09b97617e71|1731542400000|1762646400000|1793750400000|addon/components/course/rollover-date-picker.hbs
+remove|ember-template-lint|no-at-ember-render-modifiers|3|2|3|2|1009d3843f6aed52099f0e7fbd4eebb52bc176e5|1731542400000|1762646400000|1793750400000|addon/components/course/rollover.hbs
+remove|ember-template-lint|no-at-ember-render-modifiers|4|2|4|2|84076f8cf85c554eaf0d9fdec26154bae5bceeb2|1731542400000|1762646400000|1793750400000|addon/components/course/rollover.hbs

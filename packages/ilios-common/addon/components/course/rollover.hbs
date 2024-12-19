@@ -1,12 +1,6 @@
-<div
-  class="course-rollover"
-  {{did-insert (perform this.load) @course}}
-  {{did-update (perform this.load) @course}}
->
+<div class="course-rollover">
   {{#if this.save.isRunning}}
-    <WaitSaving
-      @showProgress={{false}}
-    />
+    <WaitSaving @showProgress={{false}} />
   {{/if}}
   {{#let (unique-id) as |templateId|}}
     <div class="backtolink">
@@ -34,7 +28,7 @@
           disabled={{this.save.isRunning}}
           placeholder={{t "general.courseTitlePlaceholder"}}
           data-test-title
-        >
+        />
         <ValidationError @validatable={{this}} @property="title" />
       </div>
       <div class="item year-select">
@@ -46,6 +40,7 @@
             id="year-{{templateId}}"
             data-test-year
             {{on "change" this.setSelectedYear}}
+            {{get-element this.loadValidYear}}
           >
             {{#each this.years as |year|}}
               <option
@@ -54,7 +49,9 @@
                 selected={{is-equal year this.selectedYear}}
               >
                 {{#if this.academicYearCrossesCalendarYearBoundaries}}
-                  {{year}} - {{add year 1}}
+                  {{year}}
+                  -
+                  {{add year 1}}
                 {{else}}
                   {{year}}
                 {{/if}}
@@ -73,16 +70,18 @@
         <div class="item">
           <label>
             {{t "general.startDate"}}:
-            <br>
+            <br />
             <small>
               ({{t "general.mustBeSameDayOfWeekAsCurrentStartDate"}})
             </small>
           </label>
-          <Course::RolloverDatePicker
-            @course={{@course}}
-            @value={{this.startDate}}
-            @onChange={{set this "startDate"}}
-          />
+          {{#if this.allCourses}}
+            <Course::RolloverDatePicker
+              @course={{@course}}
+              @value={{this.startDate}}
+              @onChange={{set this "startDate"}}
+            />
+          {{/if}}
         </div>
         <div class="included">
           <label class="title" for="included-{{templateId}}">
@@ -95,7 +94,7 @@
               checked={{not this.skipOfferings}}
               data-test-skip-offerings
               {{on "click" (toggle "skipOfferings" this)}}
-            >
+            />
             <span>
               {{t "general.offerings"}}
             </span>
@@ -117,10 +116,7 @@
         <button
           type="button"
           disabled={{if
-            (or
-              (not this.selectedYear)
-              (includes this.selectedYear this.unavailableYears)
-            )
+            (or (not this.selectedYear) (includes this.selectedYear this.unavailableYears))
             true
           }}
           class="done text"

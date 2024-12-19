@@ -1,8 +1,6 @@
 <input
   aria-label={{t "general.pickADate"}}
   data-test-course-rollover-picker
-  {{did-insert (perform this.showPicker) @course @value}}
-  {{did-update (perform this.showPicker) @course @value}}
-  {{on "click" (if this.isOpen this.close (noop))}}
+  {{get-element (perform this.showPicker @course @value)}}
   ...attributes
 />

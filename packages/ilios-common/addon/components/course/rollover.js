@@ -1,11 +1,12 @@
 import Component from '@glimmer/component';
 import { service } from '@ember/service';
-import { tracked } from '@glimmer/tracking';
+import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { validatable, Length, NotBlank } from 'ilios-common/decorators/validation';
-import { dropTask, restartableTask, timeout } from 'ember-concurrency';
+import { dropTask, timeout } from 'ember-concurrency';
 import { DateTime } from 'luxon';
 import { filterBy, mapBy } from 'ilios-common/utils/array-helpers';
+import { TrackedAsyncData } from 'ember-async-data';
 
 @validatable
 export default class CourseRolloverComponent extends Component {
@@ -20,9 +21,7 @@ export default class CourseRolloverComponent extends Component {
   @tracked course;
   @tracked startDate;
   @tracked skipOfferings = false;
-  @tracked allCourses;
   @tracked selectedCohorts = [];
-  @tracked academicYearCrossesCalendarYearBoundaries = false;
 
   constructor() {
     super(...arguments);
@@ -31,27 +30,44 @@ export default class CourseRolloverComponent extends Component {
     for (let i = 0; i < 6; i++) {
       this.years.push(currentYear + i);
     }
+    this.title = this.args.course.title;
   }
 
-  load = restartableTask(async (event, [course]) => {
-    if (!course) {
-      return;
-    }
-    this.title = course.title;
-    const school = course.belongsTo('school').id();
-    this.academicYearCrossesCalendarYearBoundaries = await this.iliosConfig.itemFromConfig(
-      'academicYearCrossesCalendarYearBoundaries',
+  @cached
+  get academicYearCrossesCalendarYearBoundariesData() {
+    return new TrackedAsyncData(
+      this.iliosConfig.itemFromConfig('academicYearCrossesCalendarYearBoundaries'),
     );
-    this.allCourses = await this.store.query('course', {
-      filters: {
-        school,
-      },
-    });
+  }
 
-    // set selectedYear to next valid year (or current if none found)
+  get academicYearCrossesCalendarYearBoundaries() {
+    return this.academicYearCrossesCalendarYearBoundariesData.isResolved
+      ? this.academicYearCrossesCalendarYearBoundariesData.value
+      : false;
+  }
+
+  @cached
+  get allCoursesData() {
+    const school = this.args.course.belongsTo('school').id();
+    return new TrackedAsyncData(
+      this.store.query('course', {
+        filters: {
+          school,
+        },
+      }),
+    );
+  }
+
+  get allCourses() {
+    return this.allCoursesData.isResolved ? this.allCoursesData.value : null;
+  }
+
+  @action
+  async loadValidYear() {
+    await this.allCourses;
     const validYear = this.years.find((year) => !this.unavailableYears.includes(year));
     this.changeSelectedYear(validYear || this.years[0]);
-  });
+  }
 
   @action
   changeTitle(newTitle) {
