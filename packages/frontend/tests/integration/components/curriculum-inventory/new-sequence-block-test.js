@@ -486,6 +486,28 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
     assert.strictEqual(component.maximum.errors.length, 1);
   });
 
+  test('save fails when starting level is higher than ending academic level', async function (assert) {
+    const reportModel = await this.owner
+      .lookup('service:store')
+      .findRecord('curriculum-inventory-report', this.report.id);
+    this.set('report', reportModel);
+
+    await render(
+      hbs`<CurriculumInventory::NewSequenceBlock
+  @report={{this.report}}
+  @save={{(noop)}}
+  @cancel={{(noop)}}
+/>`,
+    );
+    assert.strictEqual(component.startLevel.errors.length, 0);
+    assert.strictEqual(component.endLevel.errors.length, 0);
+    await component.startLevel.select(this.academicLevels[8].level);
+    await component.endLevel.select(this.academicLevels[2].level);
+    await component.save();
+    assert.strictEqual(component.startLevel.errors.length, 1);
+    assert.strictEqual(component.endLevel.errors.length, 1);
+  });
+
   test('save with date range and a zero duration', async function (assert) {
     assert.expect(3);
     const newStartDate = new Date('2016-01-12');
