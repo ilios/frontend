@@ -1,31 +1,34 @@
 import Component from '@glimmer/component';
-import { tracked } from '@glimmer/tracking';
-import { restartableTask } from 'ember-concurrency';
+import { cached } from '@glimmer/tracking';
+import { TrackedAsyncData } from 'ember-async-data';
 
 export default class ProgramYearCollapsedObjectivesComponent extends Component {
-  @tracked objectives;
-  @tracked objectivesWithCompetency;
-  @tracked objectivesWithMesh;
-  @tracked objectivesWithTerms;
+  @cached
+  get objectivesData() {
+    return new TrackedAsyncData(this.args.programYear.programYearObjectives);
+  }
 
-  load = restartableTask(async (element, [objectivePromise]) => {
-    if (!objectivePromise) {
-      return false;
-    }
-    this.objectives = await objectivePromise;
+  get objectives() {
+    return this.objectivesData.isResolved ? this.objectivesData.value : [];
+  }
 
-    this.objectivesWithCompetency = this.objectives.filter((objective) => {
+  get objectivesWithCompetency() {
+    return this.objectives.filter((objective) => {
       return !!objective.belongsTo('competency').id();
     });
-    this.objectivesWithMesh = this.objectives.filter((objective) => {
+  }
+
+  get objectivesWithMesh() {
+    return this.objectives.filter((objective) => {
       const meshDescriptorIds = objective.hasMany('meshDescriptors').ids();
       return meshDescriptorIds.length > 0;
     });
-    this.objectivesWithTerms = this.objectives.filter((objective) => {
+  }
+
+  get objectivesWithTerms() {
+    return this.objectives.filter((objective) => {
       const termIds = objective.hasMany('terms').ids();
       return termIds.length > 0;
     });
-
-    return true;
-  });
+  }
 }
