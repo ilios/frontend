@@ -39,6 +39,24 @@ export default class LearnerGroupRootComponent extends Component {
   @tracked totalGroupsToSave = 0;
   @service iliosConfig;
 
+  load = restartableTask(async (element, [learnerGroup]) => {
+    if (isPresent(learnerGroup)) {
+      this.location = learnerGroup.location;
+      this.url = learnerGroup.url;
+      this.learnerGroupId = learnerGroup.id;
+      this.learnerGroupTitle = learnerGroup.title;
+      const cohort = await learnerGroup.cohort;
+      this.cohortTitle = cohort.title;
+      const topLevelGroup = await learnerGroup.getTopLevelGroup();
+      this.topLevelGroupTitle = topLevelGroup.title;
+      const allDescendants = await topLevelGroup.getAllDescendants();
+      this.treeGroups = [topLevelGroup, ...allDescendants];
+      this.usersToPassToManager = await this.createUsersToPassToManager.perform();
+      this.usersToPassToCohortManager = await this.createUsersToPassToCohortManager.perform();
+      this.courses = await this.getCoursesForGroupWithSubgroupName(null, this.args.learnerGroup);
+    }
+  });
+
   @cached
   get subGroupsData() {
     return new TrackedAsyncData(this.args.learnerGroup.children);
@@ -66,24 +84,6 @@ export default class LearnerGroupRootComponent extends Component {
   get sortUsersBy() {
     return this.args.sortUsersBy || 'fullName';
   }
-
-  load = restartableTask(async (element, [learnerGroup]) => {
-    if (isPresent(learnerGroup)) {
-      this.location = learnerGroup.location;
-      this.url = learnerGroup.url;
-      this.learnerGroupId = learnerGroup.id;
-      this.learnerGroupTitle = learnerGroup.title;
-      const cohort = await learnerGroup.cohort;
-      this.cohortTitle = cohort.title;
-      const topLevelGroup = await learnerGroup.getTopLevelGroup();
-      this.topLevelGroupTitle = topLevelGroup.title;
-      const allDescendants = await topLevelGroup.getAllDescendants();
-      this.treeGroups = [topLevelGroup, ...allDescendants];
-      this.usersToPassToManager = await this.createUsersToPassToManager.perform();
-      this.usersToPassToCohortManager = await this.createUsersToPassToCohortManager.perform();
-      this.courses = await this.getCoursesForGroupWithSubgroupName(null, this.args.learnerGroup);
-    }
-  });
 
   saveNewLearnerGroup = dropTask(async (title) => {
     const cohort = await this.args.learnerGroup.cohort;
