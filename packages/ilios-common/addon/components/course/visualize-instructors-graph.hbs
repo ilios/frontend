@@ -27,6 +27,15 @@
     {{/if}}
     {{#if (and (not @isIcon) this.hasData @showDataTable)}}
         <div class="data-table" data-test-data-table>
+          <div class="table-actions" data-test-data-table-actions>
+            <button
+              type="button"
+              {{on "click" (perform this.downloadData)}}
+              data-test-download-data
+            >
+              <FaIcon @icon="download" /> {{t "general.download"}}
+            </button>
+          </div>
           <table>
             <thead>
             <tr>
