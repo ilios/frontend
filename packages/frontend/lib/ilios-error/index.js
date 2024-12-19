@@ -39,11 +39,15 @@ module.exports = {
           link.type = "text/css";
           link.rel = "stylesheet";
           link.media = "screen";
-
           document.getElementsByTagName( "head" )[0].appendChild( link );
+
+          var dialogContainer = document.createElement('dialog');
+          dialogContainer.id = 'ilios-loading-error';
+          dialogContainer.setAttribute('role', 'banner');
+
           var errorContainer = document.createElement('div');
-          errorContainer.id = 'ilios-loading-error';
-          errorContainer.setAttribute('role', 'banner');
+          errorContainer.id = 'ilios-loading-error-content';
+
           errorContainer.innerHTML = '' +
             '<h1>' +
               'It is possible that your browser is not supported by Ilios. ' +
@@ -60,7 +64,9 @@ module.exports = {
               '<pre>' + event.lineno + '</pre>' +
             '</fieldset>'
           ;
-          document.body.appendChild(errorContainer);
+
+          dialogContainer.appendChild(errorContainer);
+          document.body.appendChild(dialogContainer);
         }
       });
     `;
