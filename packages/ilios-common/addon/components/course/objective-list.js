@@ -8,21 +8,7 @@ import { findById } from 'ilios-common/utils/array-helpers';
 export default class CourseObjectiveListComponent extends Component {
   @service store;
   @service intl;
-  @service dataLoader;
   @tracked isSorting = false;
-
-  @cached
-  get courseSessionsData() {
-    return new TrackedAsyncData(this.getCourseSessions(this.args.course));
-  }
-
-  get courseSessions() {
-    return this.courseSessionsData.isResolved ? this.courseSessionsData.value : null;
-  }
-
-  get courseSessionsLoaded() {
-    return this.courseSessionsData.isResolved;
-  }
 
   @cached
   get courseObjectivesAsyncData() {
@@ -39,7 +25,7 @@ export default class CourseObjectiveListComponent extends Component {
   }
 
   get courseObjectives() {
-    if (this.courseSessionsLoaded && this.courseObjectivesAsync) {
+    if (this.courseObjectivesAsync) {
       return this.courseObjectivesAsync.slice().sort(sortableByPosition);
     }
 
@@ -51,7 +37,7 @@ export default class CourseObjectiveListComponent extends Component {
   }
 
   get courseCohorts() {
-    if (this.courseSessionsLoaded && this.courseCohortsAsync) {
+    if (this.courseCohortsAsync) {
       return this.courseCohortsAsync;
     }
 
@@ -77,10 +63,6 @@ export default class CourseObjectiveListComponent extends Component {
     }
 
     return this.args.course.hasMany('courseObjectives').ids().length;
-  }
-
-  async getCourseSessions(course) {
-    await this.dataLoader.loadCourseSessions(course.id);
   }
 
   async getCohortObjectives(cohorts, intl) {
