@@ -1,21 +1,52 @@
 #ilios-loading-error {
-  padding: 2em;
-}
-#ilios-loading-error h1,
-#ilios-loading-error h2 {
-  text-align: center;
-}
-#ilios-loading-error .supported-browsers {
-  border: 1px solid blue;
-  margin: 1rem 0;
-  padding: 1rem 2rem;
-}
-#ilios-loading-error ul {
+  align-items: center;
+  background-color: rgba(17, 17, 17, 0.47);
+  border: none;
   display: flex;
-  flex-wrap: wrap;
-  justify-content: space-evenly;
-  list-style-type: none;
-}
-#ilios-loading-error.hidden {
-  display: none;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 5;
+
+  #ilios-loading-error-content {
+    background-color: white;
+    bottom: 20%;
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    max-width: 90%;
+    padding: 1em;
+    position: sticky;
+    width: 100%;
+    z-index: 5;
+
+    h1,
+    h2 {
+      text-align: center;
+    }
+
+    .supported-browsers {
+      border: 1px solid blue;
+      margin: 1rem 0;
+      padding: 1rem 2rem;
+    }
+
+    ul {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-evenly;
+      list-style-type: none;
+    }
+
+    fieldset {
+      pre {
+        white-space: break-spaces;
+      }
+    }
+
+    .hidden {
+      display: none;
+    }
+  }
 }
