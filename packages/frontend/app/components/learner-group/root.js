@@ -36,7 +36,6 @@ export default class LearnerGroupRootComponent extends Component {
     this.url = this.args.learnerGroup.url;
   }
 
-  @cached
   get learnerGroupId() {
     return this.args.learnerGroup.id;
   }
