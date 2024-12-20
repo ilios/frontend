@@ -24,7 +24,6 @@ export default class LearnerGroupRootComponent extends Component {
   @IsURL() @Length(2, 2000) @tracked url = null;
   @tracked showLearnerGroupCalendar = false;
   @tracked courses = [];
-  @tracked treeGroups = [];
   @tracked usersToPassToManager = [];
   @tracked usersToPassToCohortManager = [];
   @tracked sortGroupsBy = 'title';
@@ -43,9 +42,6 @@ export default class LearnerGroupRootComponent extends Component {
 
   load = restartableTask(async (element, [learnerGroup]) => {
     if (isPresent(learnerGroup)) {
-      const topLevelGroup = await learnerGroup.getTopLevelGroup();
-      const allDescendants = await topLevelGroup.getAllDescendants();
-      this.treeGroups = [topLevelGroup, ...allDescendants];
       this.usersToPassToManager = await this.createUsersToPassToManager.perform();
       this.usersToPassToCohortManager = await this.createUsersToPassToCohortManager.perform();
       this.courses = await this.getCoursesForGroupWithSubgroupName(null, this.args.learnerGroup);
@@ -275,14 +271,16 @@ export default class LearnerGroupRootComponent extends Component {
 
   createUsersToPassToManager = task(async () => {
     let users;
+    const topLevelGroup = await this.args.learnerGroup.getTopLevelGroup();
+    const allDescendants = await topLevelGroup.getAllDescendants();
+    const treeGroups = [topLevelGroup, ...allDescendants];
     if (this.args.isEditing) {
-      const topLevelGroup = await this.args.learnerGroup.getTopLevelGroup();
       users = await topLevelGroup.getAllDescendantUsers();
     } else {
       users = await this.args.learnerGroup.getUsersOnlyAtThisLevel();
     }
     return await map(users, async (user) => {
-      const lowestGroupInTree = await user.getLowestMemberGroupInALearnerGroupTree(this.treeGroups);
+      const lowestGroupInTree = await user.getLowestMemberGroupInALearnerGroupTree(treeGroups);
       return ObjectProxy.create({
         content: user,
         lowestGroupInTree,
