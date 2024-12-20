@@ -21,7 +21,6 @@ export default class LearnerGroupRootComponent extends Component {
   @service intl;
   @service store;
   @tracked cohortTitle = null;
-  @tracked learnerGroupId = null;
   @tracked learnerGroupTitle = null;
   @tracked location = null;
   @IsURL() @Length(2, 2000) @tracked url = null;
@@ -39,12 +38,15 @@ export default class LearnerGroupRootComponent extends Component {
   @tracked totalGroupsToSave = 0;
   @service iliosConfig;
 
+  constructor() {
+    super(...arguments);
+    this.location = this.args.learnerGroup.location;
+    this.url = this.args.learnerGroup.url;
+    this.learnerGroupTitle = this.args.learnerGroup.title;
+  }
+
   load = restartableTask(async (element, [learnerGroup]) => {
     if (isPresent(learnerGroup)) {
-      this.location = learnerGroup.location;
-      this.url = learnerGroup.url;
-      this.learnerGroupId = learnerGroup.id;
-      this.learnerGroupTitle = learnerGroup.title;
       const cohort = await learnerGroup.cohort;
       this.cohortTitle = cohort.title;
       const topLevelGroup = await learnerGroup.getTopLevelGroup();
@@ -56,6 +58,11 @@ export default class LearnerGroupRootComponent extends Component {
       this.courses = await this.getCoursesForGroupWithSubgroupName(null, this.args.learnerGroup);
     }
   });
+
+  @cached
+  get learnerGroupId() {
+    return this.args.learnerGroup.id;
+  }
 
   @cached
   get subGroupsData() {
