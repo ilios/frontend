@@ -22,7 +22,6 @@ export default class LearnerGroupRootComponent extends Component {
   @service store;
   @tracked location = null;
   @IsURL() @Length(2, 2000) @tracked url = null;
-  @tracked topLevelGroupTitle = null;
   @tracked showLearnerGroupCalendar = false;
   @tracked courses = [];
   @tracked treeGroups = [];
@@ -45,7 +44,6 @@ export default class LearnerGroupRootComponent extends Component {
   load = restartableTask(async (element, [learnerGroup]) => {
     if (isPresent(learnerGroup)) {
       const topLevelGroup = await learnerGroup.getTopLevelGroup();
-      this.topLevelGroupTitle = topLevelGroup.title;
       const allDescendants = await topLevelGroup.getAllDescendants();
       this.treeGroups = [topLevelGroup, ...allDescendants];
       this.usersToPassToManager = await this.createUsersToPassToManager.perform();
@@ -74,6 +72,19 @@ export default class LearnerGroupRootComponent extends Component {
 
   get cohortTitle() {
     return this.cohort?.title;
+  }
+
+  @cached
+  get topLevelGroupData() {
+    return new TrackedAsyncData(this.args.learnerGroup.getTopLevelGroup());
+  }
+
+  get topLevelGroup() {
+    return this.topLevelGroupData.isResolved ? this.topLevelGroupData.value : null;
+  }
+
+  get topLevelGroupTitle() {
+    return this.topLevelGroup?.title;
   }
 
   @cached
