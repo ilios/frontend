@@ -48,18 +48,19 @@ export default class CourseRolloverComponent extends Component {
 
   @cached
   get allCoursesData() {
-    const school = this.args.course.belongsTo('school').id();
     return new TrackedAsyncData(
       this.store.query('course', {
-        filters: {
-          school,
-        },
+        filters: { school: this.school },
       }),
     );
   }
 
   get allCourses() {
     return this.allCoursesData.isResolved ? this.allCoursesData.value : null;
+  }
+
+  get school() {
+    return this.args.course.belongsTo('school').id();
   }
 
   @action
