@@ -75,6 +75,15 @@ export default class CurriculumInventoryNewSequenceBlock extends Component {
     this.required = this.requiredOptions[0];
   }
 
+  @cached
+  get siblingsData() {
+    return new TrackedAsyncData(this.args.parent ? this.args.parent.children : []);
+  }
+
+  get siblings() {
+    return this.siblingsData.isResolved ? this.siblingsData.value : [];
+  }
+
   get defaultOrderInSequence() {
     if (!this.isInOrderedSequence || !this.args.parent) {
       return 0;
@@ -85,7 +94,7 @@ export default class CurriculumInventoryNewSequenceBlock extends Component {
   @cached
   get orderInSequenceOptionsData() {
     return new TrackedAsyncData(
-      this.getOrderInSequenceOptions(this.isInOrderedSequence, this.args.parent),
+      this.getOrderInSequenceOptions(this.isInOrderedSequence, this.siblings),
     );
   }
 
@@ -93,12 +102,11 @@ export default class CurriculumInventoryNewSequenceBlock extends Component {
     return this.orderInSequenceOptionsData.isResolved ? this.orderInSequenceOptionsData.value : [];
   }
 
-  async getOrderInSequenceOptions(isInOrderedSequence, parent) {
+  async getOrderInSequenceOptions(isInOrderedSequence, siblings) {
     const rhett = [];
     if (!isInOrderedSequence || !parent) {
       return rhett;
     }
-    const siblings = await parent.children;
     for (let i = 0, n = siblings.length + 1; i < n; i++) {
       rhett.push(i + 1);
     }
