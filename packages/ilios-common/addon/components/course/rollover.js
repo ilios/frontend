@@ -65,7 +65,6 @@ export default class CourseRolloverComponent extends Component {
 
   @action
   async loadValidYear() {
-    await this.allCourses;
     const validYear = this.years.find((year) => !this.unavailableYears.includes(year));
     this.changeSelectedYear(validYear || this.years[0]);
   }
