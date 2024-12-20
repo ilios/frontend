@@ -19,6 +19,7 @@ export default class LearnerGroupRootComponent extends Component {
   @service flashMessages;
   @service intl;
   @service store;
+  @service iliosConfig;
   @tracked location = null;
   @IsURL() @Length(2, 2000) @tracked url = null;
   @tracked showLearnerGroupCalendar = false;
@@ -28,7 +29,6 @@ export default class LearnerGroupRootComponent extends Component {
   @tracked showNewLearnerGroupForm = false;
   @tracked currentGroupsSaved = 0;
   @tracked totalGroupsToSave = 0;
-  @service iliosConfig;
 
   constructor() {
     super(...arguments);
