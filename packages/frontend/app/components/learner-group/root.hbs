@@ -138,7 +138,7 @@
               {{t "general.uploadGroupAssignments"}}
             {{else}}
               {{t "general.members"}}
-              ({{this.usersToPassToManager.length}})
+              ({{this.usersForUserManager.length}})
             {{/if}}
           </div>
           <span class="actions" data-test-buttons>
@@ -191,7 +191,7 @@
               @learnerGroupTitle={{this.learnerGroupTitle}}
               @topLevelGroupTitle={{this.topLevelGroupTitle}}
               @cohortTitle={{this.cohortTitle}}
-              @users={{this.usersToPassToManager}}
+              @users={{this.usersForUserManager}}
               @sortBy={{this.sortUsersBy}}
               @setSortBy={{@setSortUsersBy}}
               @addUserToGroup={{perform this.addUserToGroup}}
@@ -209,7 +209,7 @@
               @learnerGroupId={{this.learnerGroupId}}
               @setSortBy={{@setSortUsersBy}}
               @sortBy={{this.sortUsersBy}}
-              @users={{this.usersToPassToManager}}
+              @users={{this.usersForMembersList}}
             />
           </div>
         {{/if}}

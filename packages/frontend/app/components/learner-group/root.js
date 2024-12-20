@@ -23,7 +23,6 @@ export default class LearnerGroupRootComponent extends Component {
   @tracked location = null;
   @IsURL() @Length(2, 2000) @tracked url = null;
   @tracked showLearnerGroupCalendar = false;
-  @tracked usersToPassToManager = [];
   @tracked usersToPassToCohortManager = [];
   @tracked sortGroupsBy = 'title';
   @tracked isSavingGroups = false;
@@ -41,7 +40,6 @@ export default class LearnerGroupRootComponent extends Component {
 
   load = restartableTask(async (element, [learnerGroup]) => {
     if (isPresent(learnerGroup)) {
-      this.usersToPassToManager = await this.createUsersToPassToManager.perform();
       this.usersToPassToCohortManager = await this.createUsersToPassToCohortManager.perform();
     }
   });
@@ -225,6 +223,68 @@ export default class LearnerGroupRootComponent extends Component {
     return this.args.learnerGroup.save();
   }
 
+  @cached
+  get usersForMembersListData() {
+    return new TrackedAsyncData(
+      this.getUsersForMembersList(
+        this.args.learnerGroup,
+        // Learnergroup members are only referenced here to trigger a re-computation on membership changes.
+        this.args.learnerGroup.users,
+      ),
+    );
+  }
+
+  get usersForMembersList() {
+    return this.usersForMembersListData.isResolved ? this.usersForMembersListData.value : [];
+  }
+
+  async getUsersForMembersList(learnerGroup) {
+    const topLevelGroup = await learnerGroup.getTopLevelGroup();
+    const allDescendants = await topLevelGroup.getAllDescendants();
+    const treeGroups = [topLevelGroup, ...allDescendants];
+    const users = await learnerGroup.getUsersOnlyAtThisLevel();
+    return await map(users, async (user) => {
+      const lowestGroupInTree = await user.getLowestMemberGroupInALearnerGroupTree(treeGroups);
+      return ObjectProxy.create({
+        content: user,
+        lowestGroupInTree,
+        //special sorting property
+        lowestGroupInTreeTitle: lowestGroupInTree.title,
+      });
+    });
+  }
+
+  @cached
+  get usersForUserManagerData() {
+    return new TrackedAsyncData(
+      this.getUsersForUserManager(
+        this.args.learnerGroup,
+        // Learnergroup members are only referenced here to trigger a re-computation on membership changes.
+        this.args.learnerGroup.users,
+      ),
+    );
+  }
+
+  get usersForUserManager() {
+    return this.usersForUserManagerData.isResolved ? this.usersForUserManagerData.value : [];
+  }
+
+  async getUsersForUserManager(learnerGroup) {
+    const topLevelGroup = await learnerGroup.getTopLevelGroup();
+    const allDescendants = await topLevelGroup.getAllDescendants();
+    const treeGroups = [topLevelGroup, ...allDescendants];
+    const users = await topLevelGroup.getAllDescendantUsers();
+    return await map(users, async (user) => {
+      const lowestGroupInTree = await user.getLowestMemberGroupInALearnerGroupTree(treeGroups);
+      return ObjectProxy.create({
+        content: user,
+        lowestGroupInTree,
+        //special sorting property
+        lowestGroupInTreeTitle: lowestGroupInTree.title,
+      });
+    });
+  }
+
   addUserToGroup = enqueueTask(async (user) => {
     const learnerGroup = this.args.learnerGroup;
     const topLevelGroup = await learnerGroup.topLevelGroup;
@@ -232,7 +292,6 @@ export default class LearnerGroupRootComponent extends Component {
     const addGroups = await learnerGroup.addUserToGroupAndAllParents(user);
     await Promise.all(removeGroups.map((g) => g.save()));
     await Promise.all(addGroups.map((g) => g.save()));
-    this.usersToPassToManager = await this.createUsersToPassToManager.perform();
     this.usersToPassToCohortManager = await this.createUsersToPassToCohortManager.perform();
   });
 
@@ -240,7 +299,6 @@ export default class LearnerGroupRootComponent extends Component {
     const topLevelGroup = await this.args.learnerGroup.topLevelGroup;
     const groups = await topLevelGroup.removeUserFromGroupAndAllDescendants(user);
     await all(groups.map((group) => group.save()));
-    this.usersToPassToManager = await this.createUsersToPassToManager.perform();
     this.usersToPassToCohortManager = await this.createUsersToPassToCohortManager.perform();
   });
 
@@ -260,8 +318,6 @@ export default class LearnerGroupRootComponent extends Component {
 
     await Promise.all(uniqueValues(removeGroups).map((g) => g.save()));
     await Promise.all(uniqueValues(addGroups).map((g) => g.save()));
-
-    this.usersToPassToManager = await this.createUsersToPassToManager.perform();
     this.usersToPassToCohortManager = await this.createUsersToPassToCohortManager.perform();
   });
 
@@ -274,29 +330,7 @@ export default class LearnerGroupRootComponent extends Component {
       groupsToSave = [...groupsToSave, ...removeGroups];
     }
     await all(uniqueValues(groupsToSave).map((group) => group.save()));
-    this.usersToPassToManager = await this.createUsersToPassToManager.perform();
     this.usersToPassToCohortManager = await this.createUsersToPassToCohortManager.perform();
-  });
-
-  createUsersToPassToManager = task(async () => {
-    let users;
-    const topLevelGroup = await this.args.learnerGroup.getTopLevelGroup();
-    const allDescendants = await topLevelGroup.getAllDescendants();
-    const treeGroups = [topLevelGroup, ...allDescendants];
-    if (this.args.isEditing) {
-      users = await topLevelGroup.getAllDescendantUsers();
-    } else {
-      users = await this.args.learnerGroup.getUsersOnlyAtThisLevel();
-    }
-    return await map(users, async (user) => {
-      const lowestGroupInTree = await user.getLowestMemberGroupInALearnerGroupTree(treeGroups);
-      return ObjectProxy.create({
-        content: user,
-        lowestGroupInTree,
-        //special sorting property
-        lowestGroupInTreeTitle: lowestGroupInTree.title,
-      });
-    });
   });
 
   createUsersToPassToCohortManager = task(async () => {
