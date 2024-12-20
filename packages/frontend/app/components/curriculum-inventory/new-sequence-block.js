@@ -57,27 +57,22 @@ export default class CurriculumInventoryNewSequenceBlock extends Component {
   @tracked required;
   @tracked @NotBlank() @Length(1, 200) title;
   @tracked track = false;
+  childSequenceOrderOptions = [
+    { id: '1', title: this.intl.t('general.ordered') },
+    { id: '2', title: this.intl.t('general.unordered') },
+    { id: '3', title: this.intl.t('general.parallel') },
+  ];
+
+  requiredOptions = [
+    { id: '1', title: this.intl.t('general.required') },
+    { id: '2', title: this.intl.t('general.optionalElective') },
+    { id: '3', title: this.intl.t('general.requiredInTrack') },
+  ];
 
   constructor() {
     super(...arguments);
     this.childSequenceOrder = this.childSequenceOrderOptions[0];
     this.required = this.requiredOptions[0];
-  }
-
-  get childSequenceOrderOptions() {
-    return [
-      { id: '1', title: this.intl.t('general.ordered') },
-      { id: '2', title: this.intl.t('general.unordered') },
-      { id: '3', title: this.intl.t('general.parallel') },
-    ];
-  }
-
-  get requiredOptions() {
-    return [
-      { id: '1', title: this.intl.t('general.required') },
-      { id: '2', title: this.intl.t('general.optionalElective') },
-      { id: '3', title: this.intl.t('general.requiredInTrack') },
-    ];
   }
 
   @cached
