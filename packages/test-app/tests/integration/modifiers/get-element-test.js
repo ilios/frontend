@@ -6,9 +6,20 @@ import { hbs } from 'ember-cli-htmlbars';
 module('Integration | Modifier | get-element', function (hooks) {
   setupRenderingTest(hooks);
 
-  // Replace this with your real tests.
-  test('it renders', async function (assert) {
-    await render(hbs`<div {{get-element this.setRootElement}}></div>`);
-    assert.ok(true);
+  test('it passes element to a valid callback', async function (assert) {
+    this.rootElement = null;
+    this.setRootElement = (element) => {
+      this.rootElement = element;
+    };
+    assert.strictEqual(this.rootElement, null);
+    await render(hbs`<div id='root-element' {{get-element this.setRootElement}}></div>`);
+    assert.strictEqual(this.rootElement, document.getElementById('root-element'));
+  });
+
+  test('it fails when no callback is given', async function (assert) {
+    this.rootElement = null;
+    assert.strictEqual(this.rootElement, null);
+    await render(hbs`<div id='root-element' {{get-element}}></div>`);
+    assert.strictEqual(this.rootElement, null);
   });
 });

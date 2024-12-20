@@ -12,9 +12,10 @@ import { modifier } from 'ember-modifier';
   ```
 */
 export default modifier(function getElement(element, [callback]) {
+  // assert('callback is a function', typeof callback === 'function');
   if (typeof callback === 'function') {
-    callback(element); // Pass the element to the provided callback
+    callback(element);
   } else {
-    console.warn('get-element modifier expects a callback as the first positional argument.');
+    return null;
   }
 });
