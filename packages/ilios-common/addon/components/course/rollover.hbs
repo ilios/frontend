@@ -75,7 +75,7 @@
               ({{t "general.mustBeSameDayOfWeekAsCurrentStartDate"}})
             </small>
           </label>
-          {{#if this.allCourses}}
+          {{#if (is-array this.allCourses)}}
             <Course::RolloverDatePicker
               @course={{@course}}
               @value={{this.startDate}}
