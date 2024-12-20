@@ -75,7 +75,6 @@ export default class CurriculumInventoryNewSequenceBlock extends Component {
     this.required = this.requiredOptions[0];
   }
 
-  @cached
   get defaultOrderInSequence() {
     if (!this.isInOrderedSequence || !this.args.parent) {
       return 0;
