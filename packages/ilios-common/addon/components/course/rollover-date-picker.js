@@ -14,7 +14,7 @@ export default class CourseRolloverDatePickerComponent extends Component {
 
   #flatPickerInstance;
 
-  showPicker = dropTask(async (element, [course, value]) => {
+  showPicker = dropTask(async (course, value, element) => {
     if (!course) {
       return;
     }
