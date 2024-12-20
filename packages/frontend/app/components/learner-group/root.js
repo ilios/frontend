@@ -3,7 +3,6 @@ import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import ObjectProxy from '@ember/object/proxy';
 import { service } from '@ember/service';
-import { isPresent } from '@ember/utils';
 import { all, map } from 'rsvp';
 import { dropTask, enqueueTask, restartableTask, task } from 'ember-concurrency';
 import pad from 'pad';
@@ -23,7 +22,6 @@ export default class LearnerGroupRootComponent extends Component {
   @tracked location = null;
   @IsURL() @Length(2, 2000) @tracked url = null;
   @tracked showLearnerGroupCalendar = false;
-  @tracked usersToPassToCohortManager = [];
   @tracked sortGroupsBy = 'title';
   @tracked isSavingGroups = false;
   @tracked savedGroup;
@@ -37,12 +35,6 @@ export default class LearnerGroupRootComponent extends Component {
     this.location = this.args.learnerGroup.location;
     this.url = this.args.learnerGroup.url;
   }
-
-  load = restartableTask(async (element, [learnerGroup]) => {
-    if (isPresent(learnerGroup)) {
-      this.usersToPassToCohortManager = await this.createUsersToPassToCohortManager.perform();
-    }
-  });
 
   @cached
   get learnerGroupId() {
@@ -285,6 +277,26 @@ export default class LearnerGroupRootComponent extends Component {
     });
   }
 
+  @cached
+  get usersForCohortManagerData() {
+    // Learnergroup members are only referenced here to trigger a re-computation on membership changes.
+    return new TrackedAsyncData(
+      this.getUsersToPassToCohortManager(this.args.learnerGroup, this.args.learnerGroup.users),
+    );
+  }
+
+  get usersForCohortManager() {
+    return this.usersForCohortManagerData.isResolved ? this.usersForCohortManagerData.value : [];
+  }
+
+  async getUsersToPassToCohortManager(learnerGroup) {
+    const cohort = await learnerGroup.cohort;
+    const topLevelGroup = await learnerGroup.getTopLevelGroup();
+    const currentUsers = await topLevelGroup.getAllDescendantUsers();
+    const users = await cohort.users;
+    return users.filter((user) => !currentUsers.includes(user));
+  }
+
   addUserToGroup = enqueueTask(async (user) => {
     const learnerGroup = this.args.learnerGroup;
     const topLevelGroup = await learnerGroup.topLevelGroup;
@@ -292,14 +304,12 @@ export default class LearnerGroupRootComponent extends Component {
     const addGroups = await learnerGroup.addUserToGroupAndAllParents(user);
     await Promise.all(removeGroups.map((g) => g.save()));
     await Promise.all(addGroups.map((g) => g.save()));
-    this.usersToPassToCohortManager = await this.createUsersToPassToCohortManager.perform();
   });
 
   removeUserToCohort = enqueueTask(async (user) => {
     const topLevelGroup = await this.args.learnerGroup.topLevelGroup;
     const groups = await topLevelGroup.removeUserFromGroupAndAllDescendants(user);
     await all(groups.map((group) => group.save()));
-    this.usersToPassToCohortManager = await this.createUsersToPassToCohortManager.perform();
   });
 
   addUsersToGroup = enqueueTask(async (users) => {
@@ -318,7 +328,6 @@ export default class LearnerGroupRootComponent extends Component {
 
     await Promise.all(uniqueValues(removeGroups).map((g) => g.save()));
     await Promise.all(uniqueValues(addGroups).map((g) => g.save()));
-    this.usersToPassToCohortManager = await this.createUsersToPassToCohortManager.perform();
   });
 
   removeUsersToCohort = enqueueTask(async (users) => {
@@ -330,7 +339,6 @@ export default class LearnerGroupRootComponent extends Component {
       groupsToSave = [...groupsToSave, ...removeGroups];
     }
     await all(uniqueValues(groupsToSave).map((group) => group.save()));
-    this.usersToPassToCohortManager = await this.createUsersToPassToCohortManager.perform();
   });
 
   createUsersToPassToCohortManager = task(async () => {
