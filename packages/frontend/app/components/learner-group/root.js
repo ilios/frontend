@@ -21,7 +21,6 @@ export default class LearnerGroupRootComponent extends Component {
   @service intl;
   @service store;
   @tracked cohortTitle = null;
-  @tracked learnerGroupTitle = null;
   @tracked location = null;
   @IsURL() @Length(2, 2000) @tracked url = null;
   @tracked topLevelGroupTitle = null;
@@ -42,7 +41,6 @@ export default class LearnerGroupRootComponent extends Component {
     super(...arguments);
     this.location = this.args.learnerGroup.location;
     this.url = this.args.learnerGroup.url;
-    this.learnerGroupTitle = this.args.learnerGroup.title;
   }
 
   load = restartableTask(async (element, [learnerGroup]) => {
@@ -62,6 +60,10 @@ export default class LearnerGroupRootComponent extends Component {
   @cached
   get learnerGroupId() {
     return this.args.learnerGroup.id;
+  }
+
+  get learnerGroupTitle() {
+    return this.args.learnerGroup.title;
   }
 
   @cached
