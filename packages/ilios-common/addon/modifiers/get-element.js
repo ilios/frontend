@@ -12,7 +12,6 @@ import { modifier } from 'ember-modifier';
   ```
 */
 export default modifier(function getElement(element, [callback]) {
-  // assert('callback is a function', typeof callback === 'function');
   if (typeof callback === 'function') {
     callback(element);
   } else {
