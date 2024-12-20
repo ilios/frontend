@@ -107,10 +107,8 @@ export default class CurriculumInventoryNewSequenceBlock extends Component {
 
   @cached
   get linkableCoursesData() {
-    // KLUDGE!
     // We're only referencing the parent sequence block's course value here
     // so that a re-computation is triggered if/when that value changes.
-    // [ST 2024/12/17]
     return new TrackedAsyncData(
       this.getLinkableCourses(this.args.report, this.args.parent?.course),
     );
