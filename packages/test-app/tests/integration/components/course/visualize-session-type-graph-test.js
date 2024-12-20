@@ -113,6 +113,7 @@ module('Integration | Component | course/visualize-session-type-graph', function
     assert.strictEqual(component.chart.labels.length, 2);
     assert.strictEqual(component.chart.labels[0].text, 'Vocabulary 1 - Standalone');
     assert.strictEqual(component.chart.labels[1].text, 'Vocabulary 2 - Campaign');
+    assert.ok(component.dataTable.actions.download.isVisible);
     assert.strictEqual(component.dataTable.rows.length, 3);
     assert.strictEqual(component.dataTable.rows[0].vocabularyTerm, 'Vocabulary 1 - Standalone');
     assert.strictEqual(component.dataTable.rows[0].sessions.links.length, 1);

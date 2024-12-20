@@ -19,6 +19,12 @@ const definition = {
   },
   dataTable: {
     scope: '[data-test-data-table]',
+    actions: {
+      scope: '[data-test-data-table-actions]',
+      download: {
+        scope: '[data-test-download-data]',
+      },
+    },
     header: {
       scope: 'thead',
       percentage: {

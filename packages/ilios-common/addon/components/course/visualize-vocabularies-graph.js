@@ -1,11 +1,13 @@
 import Component from '@glimmer/component';
 import { all, map } from 'rsvp';
 import { htmlSafe } from '@ember/template';
-import { restartableTask, timeout } from 'ember-concurrency';
+import { dropTask, restartableTask, timeout } from 'ember-concurrency';
 import { service } from '@ember/service';
 import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { TrackedAsyncData } from 'ember-async-data';
+import PapaParse from 'papaparse';
+import createDownloadFile from 'ilios-common/utils/create-download-file';
 import { findById, mapBy, sortBy, uniqueById } from 'ilios-common/utils/array-helpers';
 
 export default class CourseVisualizeVocabulariesGraph extends Component {
@@ -43,7 +45,6 @@ export default class CourseVisualizeVocabulariesGraph extends Component {
       rhett.sessions = sortBy(obj.meta.sessions, 'title');
       rhett.vocabulary = obj.meta.vocabulary;
       rhett.vocabularyTitle = obj.meta.vocabulary.title;
-      rhett.sessionTitles = mapBy(rhett.sessions, 'title').join(', ');
       rhett.sessionTitles = mapBy(rhett.sessions, 'title').join(', ');
       return rhett;
     });
@@ -150,4 +151,17 @@ export default class CourseVisualizeVocabulariesGraph extends Component {
       obj.meta.vocabulary.id,
     );
   }
+
+  downloadData = dropTask(async () => {
+    const data = await this.getDataObjects(this.args.course);
+    const output = data.map((obj) => {
+      const rhett = {};
+      rhett[`${this.intl.t('general.vocabulary')}`] = obj.meta.vocabulary.title;
+      rhett[this.intl.t('general.sessions')] = mapBy(obj.meta.sessions, 'title').sort().join(', ');
+      rhett[this.intl.t('general.minutes')] = obj.data;
+      return rhett;
+    });
+    const csv = PapaParse.unparse(output);
+    createDownloadFile(`ilios-course-${this.args.course.id}-vocabularies.csv`, csv, 'text/csv');
+  });
 }

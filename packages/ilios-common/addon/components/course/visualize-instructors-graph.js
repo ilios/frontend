@@ -1,13 +1,15 @@
 import Component from '@glimmer/component';
 import { isEmpty } from '@ember/utils';
 import { htmlSafe } from '@ember/template';
-import { restartableTask, timeout } from 'ember-concurrency';
+import { dropTask, restartableTask, timeout } from 'ember-concurrency';
 import { map } from 'rsvp';
 import { service } from '@ember/service';
 import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { cleanQuery } from 'ilios-common/utils/query-utils';
 import { TrackedAsyncData } from 'ember-async-data';
+import PapaParse from 'papaparse';
+import createDownloadFile from 'ilios-common/utils/create-download-file';
 import { findById, mapBy, sortBy, uniqueValues } from 'ilios-common/utils/array-helpers';
 
 export default class CourseVisualizeInstructorsGraph extends Component {
@@ -155,4 +157,17 @@ export default class CourseVisualizeInstructorsGraph extends Component {
 
     this.router.transitionTo('course-visualize-instructor', this.args.course.id, obj.meta.user.id);
   }
+
+  downloadData = dropTask(async () => {
+    const data = await this.getData(this.args.course);
+    const output = data.map((obj) => {
+      const rhett = {};
+      rhett[`${this.intl.t('general.instructor')}`] = obj.meta.user.fullName;
+      rhett[this.intl.t('general.sessions')] = mapBy(obj.meta.sessions, 'title').sort().join(', ');
+      rhett[this.intl.t('general.minutes')] = obj.data;
+      return rhett;
+    });
+    const csv = PapaParse.unparse(output);
+    createDownloadFile(`ilios-course-${this.args.course.id}-instructors.csv`, csv, 'text/csv');
+  });
 }

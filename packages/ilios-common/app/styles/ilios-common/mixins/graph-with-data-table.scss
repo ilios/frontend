@@ -10,6 +10,10 @@
     grid-column: -1/1;
     padding-top: 2rem;
 
+    .table-actions {
+      text-align: right;
+    }
+
     table {
       @include t.ilios-table-structure;
       @include t.ilios-table-colors;

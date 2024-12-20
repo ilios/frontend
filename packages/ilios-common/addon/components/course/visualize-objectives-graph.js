@@ -4,9 +4,12 @@ import { action } from '@ember/object';
 import { service } from '@ember/service';
 import { htmlSafe } from '@ember/template';
 import { filter, map } from 'rsvp';
-import { restartableTask, timeout } from 'ember-concurrency';
+import { dropTask, restartableTask, timeout } from 'ember-concurrency';
 import { TrackedAsyncData } from 'ember-async-data';
+import striptags from 'striptags';
+import PapaParse from 'papaparse';
 import { mapBy, sortBy, uniqueValues } from 'ilios-common/utils/array-helpers';
+import createDownloadFile from 'ilios-common/utils/create-download-file';
 
 export default class CourseVisualizeObjectivesGraph extends Component {
   @service router;
@@ -38,6 +41,7 @@ export default class CourseVisualizeObjectivesGraph extends Component {
   get hasData() {
     return this.data.length;
   }
+
   get sortedAscending() {
     return this.sortBy.search(/desc/) === -1;
   }
@@ -190,5 +194,24 @@ export default class CourseVisualizeObjectivesGraph extends Component {
       `${objectiveTitle} &bull; ${data} ${this.intl.t('general.minutes')}`,
     );
     this.tooltipContent = htmlSafe(mapBy(meta.sessionObjectives, 'sessionTitle').sort().join(', '));
+  });
+
+  downloadData = dropTask(async () => {
+    const sessions = await this.args.course.sessions;
+    const data = await this.getDataObjects(sessions);
+    const output = data.map((obj) => {
+      const rhett = {};
+      rhett[this.intl.t('general.percentage')] = obj.percentage;
+      rhett[this.intl.t('general.courseObjective')] = striptags(obj.meta.courseObjective.title);
+      rhett[this.intl.t('general.competencies')] = obj.meta.competencies;
+      rhett[this.intl.t('general.sessions')] = mapBy(
+        sortBy(mapBy(obj.meta.sessionObjectives, 'session'), 'title'),
+        'title',
+      ).join(', ');
+      rhett[this.intl.t('general.minutes')] = obj.data;
+      return rhett;
+    });
+    const csv = PapaParse.unparse(output);
+    createDownloadFile(`ilios-course-${this.args.course.id}-objectives.csv`, csv, 'text/csv');
   });
 }
