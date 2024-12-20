@@ -15,6 +15,8 @@ export default modifier(function getElement(element, [callback]) {
   if (typeof callback === 'function') {
     callback(element);
   } else {
-    return null;
+    throw new Error(
+      'get-element modifier expects a valid callback as the first positional argument',
+    );
   }
 });
