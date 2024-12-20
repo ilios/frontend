@@ -23,7 +23,6 @@ export default class LearnerGroupRootComponent extends Component {
   @tracked location = null;
   @IsURL() @Length(2, 2000) @tracked url = null;
   @tracked showLearnerGroupCalendar = false;
-  @tracked courses = [];
   @tracked usersToPassToManager = [];
   @tracked usersToPassToCohortManager = [];
   @tracked sortGroupsBy = 'title';
@@ -44,7 +43,6 @@ export default class LearnerGroupRootComponent extends Component {
     if (isPresent(learnerGroup)) {
       this.usersToPassToManager = await this.createUsersToPassToManager.perform();
       this.usersToPassToCohortManager = await this.createUsersToPassToCohortManager.perform();
-      this.courses = await this.getCoursesForGroupWithSubgroupName(null, this.args.learnerGroup);
     }
   });
 
@@ -55,6 +53,17 @@ export default class LearnerGroupRootComponent extends Component {
 
   get learnerGroupTitle() {
     return this.args.learnerGroup.title;
+  }
+
+  @cached
+  get coursesData() {
+    return new TrackedAsyncData(
+      this.getCoursesForGroupWithSubgroupName(null, this.args.learnerGroup),
+    );
+  }
+
+  get courses() {
+    return this.coursesData.isResolved ? this.coursesData.value : [];
   }
 
   @cached
