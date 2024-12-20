@@ -1,7 +1,5 @@
 <table
   class="program-year-objective-list-item-expanded"
-  {{did-insert (perform this.load) @objective}}
-  {{did-update (perform this.load) @objective @objective.courses}}
   data-test-program-year-objective-list-item-expanded
 >
   <thead>
@@ -9,7 +7,7 @@
     <th>{{t "general.objectives"}}</th>
   </thead>
   <tbody>
-    {{#if (is-array this.courseObjects)}}
+    {{#if this.courseObjectsLoaded}}
       {{#each (sort-by "title" this.courseObjects) as |obj|}}
         <tr data-test-program-year-objective-list-item-expanded-course>
           <td class="text-top" data-test-title>
