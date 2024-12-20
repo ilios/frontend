@@ -20,7 +20,6 @@ export default class LearnerGroupRootComponent extends Component {
   @service flashMessages;
   @service intl;
   @service store;
-  @tracked cohortTitle = null;
   @tracked location = null;
   @IsURL() @Length(2, 2000) @tracked url = null;
   @tracked topLevelGroupTitle = null;
@@ -45,8 +44,6 @@ export default class LearnerGroupRootComponent extends Component {
 
   load = restartableTask(async (element, [learnerGroup]) => {
     if (isPresent(learnerGroup)) {
-      const cohort = await learnerGroup.cohort;
-      this.cohortTitle = cohort.title;
       const topLevelGroup = await learnerGroup.getTopLevelGroup();
       this.topLevelGroupTitle = topLevelGroup.title;
       const allDescendants = await topLevelGroup.getAllDescendants();
@@ -64,6 +61,19 @@ export default class LearnerGroupRootComponent extends Component {
 
   get learnerGroupTitle() {
     return this.args.learnerGroup.title;
+  }
+
+  @cached
+  get cohortData() {
+    return new TrackedAsyncData(this.args.learnerGroup.cohort);
+  }
+
+  get cohort() {
+    return this.cohortData.isResolved ? this.cohortData.value : null;
+  }
+
+  get cohortTitle() {
+    return this.cohort?.title;
   }
 
   @cached
