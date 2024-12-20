@@ -1,17 +1,25 @@
 import Component from '@glimmer/component';
-import { restartableTask } from 'ember-concurrency';
-import { map } from 'rsvp';
+import { cached } from '@glimmer/tracking';
 import { htmlSafe } from '@ember/template';
-import { tracked } from '@glimmer/tracking';
+import { TrackedAsyncData } from 'ember-async-data';
+import { map } from 'rsvp';
 import { findById } from 'ilios-common/utils/array-helpers';
 
 export default class ProgramYearObjectiveListItemExpandedComponent extends Component {
-  @tracked courseObjects;
+  @cached
+  get courseObjectsData() {
+    return new TrackedAsyncData(this.getCourseObjects(this.args.objective));
+  }
 
-  load = restartableTask(async (element, [programYearObjective]) => {
-    if (!programYearObjective) {
-      return;
-    }
+  get courseObjects() {
+    return this.courseObjectsData.isResolved ? this.courseObjectsData.value : [];
+  }
+
+  get courseObjectsLoaded() {
+    return this.courseObjectsData.isResolved;
+  }
+
+  async getCourseObjects(programYearObjective) {
     const courseObjectives = await programYearObjective.courseObjectives;
     const objectiveObjects = await map(courseObjectives, async (courseObjective) => {
       const course = await courseObjective.course;
@@ -22,7 +30,7 @@ export default class ProgramYearObjectiveListItemExpandedComponent extends Compo
         courseExternalId: course.externalId,
       };
     });
-    this.courseObjects = objectiveObjects.reduce((set, obj) => {
+    return objectiveObjects.reduce((set, obj) => {
       let existing = findById(set, obj.courseId);
       if (!existing) {
         let title = obj.courseTitle;
@@ -41,5 +49,5 @@ export default class ProgramYearObjectiveListItemExpandedComponent extends Compo
       });
       return set;
     }, []);
-  });
+  }
 }
