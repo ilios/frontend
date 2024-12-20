@@ -203,10 +203,6 @@ export default class CurriculumInventoryNewSequenceBlock extends Component {
     return 0 === num;
   }
 
-  get isLoading() {
-    return this.load.isRunning || this.reload.isRunning;
-  }
-
   get isInOrderedSequence() {
     return this.args.parent && this.args.parent.isOrdered;
   }
