@@ -35,7 +35,7 @@
         <label for="year-{{templateId}}">
           {{t "general.year"}}:
         </label>
-        {{#if (is-array this.allCourses)}}
+        {{#if this.allCoursesData.isResolved}}
           <select
             id="year-{{templateId}}"
             data-test-year
@@ -75,7 +75,7 @@
               ({{t "general.mustBeSameDayOfWeekAsCurrentStartDate"}})
             </small>
           </label>
-          {{#if (is-array this.allCourses)}}
+          {{#if this.allCoursesData.isResolved}}
             <Course::RolloverDatePicker
               @course={{@course}}
               @value={{this.startDate}}
