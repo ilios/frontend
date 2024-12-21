@@ -55,25 +55,29 @@ module(
         sessionType: sessionType4,
         ilmSession,
       });
-      const block = this.server.create('curriculum-inventory-sequence-block', {
-        sessions: [session1, session3],
-        excludedSessions: [session2],
-      });
-      const blockModel = await this.owner
+      const sessionModel1 = await this.owner
         .lookup('service:store')
-        .findRecord('curriculum-inventory-sequence-block', block.id);
+        .findRecord('session', session1.id);
+      const sessionModel2 = await this.owner
+        .lookup('service:store')
+        .findRecord('session', session2.id);
+      const sessionModel3 = await this.owner
+        .lookup('service:store')
+        .findRecord('session', session3.id);
       const sessionModels = await this.owner.lookup('service:store').findAll('session');
-
       this.set('sessions', sessionModels);
-      this.set('sequenceBlock', blockModel);
+      this.set('linkedSessions', [sessionModel1, sessionModel3]);
+      this.set('excludedSessions', [sessionModel2]);
       this.set('sortBy', 'title');
       await render(hbs`<CurriculumInventory::SequenceBlockSessionManager
   @sessions={{this.sessions}}
-  @sequenceBlock={{this.sequenceBlock}}
+  @linkedSessions={{this.linkedSessions}}
+  @excludedSessions={{this.excludedSessions}}
   @sortBy={{this.sortBy}}
   @setSortBy={{(noop)}}
+  @save={{(noop)}}
+  @cancel={{(noop)}}
 />`);
-
       assert.strictEqual(
         component.header.countAsOneOffering.text,
         'Count as one offering',
@@ -190,20 +194,16 @@ module(
     });
 
     test('empty list', async function (assert) {
-      const block = this.server.create('curriculum-inventory-sequence-block');
-      const blockModel = await this.owner
-        .lookup('service:store')
-        .findRecord('curriculum-inventory-sequence-block', block.id);
-      this.set('sequenceBlock', blockModel);
       this.set('sortBy', 'title');
-
       await render(hbs`<CurriculumInventory::SequenceBlockSessionManager
   @sessions={{(array)}}
-  @sequenceBlock={{this.sequenceBlock}}
+  @linkedSessions={{(array)}}
+  @excludedSessions={{(array)}}
   @sortBy={{this.sortBy}}
   @setSortBy={{(noop)}}
+  @save={{(noop)}}
+  @cancel={{(noop)}}
 />`);
-
       assert.ok(component.header.isVisible);
       assert.strictEqual(component.sessions.length, 0);
     });
@@ -216,27 +216,25 @@ module(
         sessionType,
         maxDuration: 0,
       });
-      const block = this.server.create('curriculum-inventory-sequence-block', {
-        sessions: [session],
-      });
-      const blockModel = await this.owner
+      const sessionModel = await this.owner
         .lookup('service:store')
-        .findRecord('curriculum-inventory-sequence-block', block.id);
+        .findRecord('session', session.id);
       const sessionModels = await this.owner.lookup('service:store').findAll('session');
       this.set('sessions', sessionModels);
-      this.set('sequenceBlock', blockModel);
+      this.set('linkedSession', [sessionModel]);
       this.set('sortBy', 'id');
       this.set('setSortBy', function (what) {
         assert.strictEqual(what, 'title', 'Sorting callback gets called for session titles.');
       });
-
       await render(hbs`<CurriculumInventory::SequenceBlockSessionManager
   @sessions={{this.sessions}}
-  @sequenceBlock={{this.sequenceBlock}}
+  @linkedSessions={{this.linkedSessions}}
+  @excludedSessions={{(array)}}
   @sortBy={{this.sortBy}}
   @setSortBy={{this.setSortBy}}
+  @save={{(noop)}}
+  @cancel={{(noop)}}
 />`);
-
       await component.header.title.click();
     });
 
@@ -248,15 +246,12 @@ module(
         sessionType,
         maxDuration: 0,
       });
-      const block = this.server.create('curriculum-inventory-sequence-block', {
-        sessions: [session],
-      });
-      const blockModel = await this.owner
+      const sessionModel = await this.owner
         .lookup('service:store')
-        .findRecord('curriculum-inventory-sequence-block', block.id);
+        .findRecord('session', session.id);
       const sessionModels = await this.owner.lookup('service:store').findAll('session');
       this.set('sessions', sessionModels);
-      this.set('sequenceBlock', blockModel);
+      this.set('linkedSessions', [sessionModel]);
       this.set('sortBy', 'id');
       this.set('setSortBy', function (what) {
         assert.strictEqual(
@@ -265,14 +260,15 @@ module(
           'Sorting callback gets called for session types.',
         );
       });
-
       await render(hbs`<CurriculumInventory::SequenceBlockSessionManager
   @sessions={{this.sessions}}
-  @sequenceBlock={{this.sequenceBlock}}
+  @linkedSessions={{this.linkedSessions}}
+  @excludedSessions={{(array)}}
   @sortBy={{this.sortBy}}
   @setSortBy={{this.setSortBy}}
+  @save={{(noop)}}
+  @cancel={{(noop)}}
 />`);
-
       await component.header.sessionType.click();
     });
 
@@ -284,15 +280,12 @@ module(
         sessionType,
         maxDuration: 0,
       });
-      const block = this.server.create('curriculum-inventory-sequence-block', {
-        sessions: [session],
-      });
-      const blockModel = await this.owner
+      const sessionModel = await this.owner
         .lookup('service:store')
-        .findRecord('curriculum-inventory-sequence-block', block.id);
+        .findRecord('session', session.id);
       const sessionModels = await this.owner.lookup('service:store').findAll('session');
       this.set('sessions', sessionModels);
-      this.set('sequenceBlock', blockModel);
+      this.set('linkedSessions', [sessionModel]);
       this.set('sortBy', 'id');
       this.set('setSortBy', function (what) {
         assert.strictEqual(
@@ -301,14 +294,15 @@ module(
           'Sorting callback gets called for offerings count.',
         );
       });
-
       await render(hbs`<CurriculumInventory::SequenceBlockSessionManager
   @sessions={{this.sessions}}
-  @sequenceBlock={{this.sequenceBlock}}
+  @linkedSessions={{this.linkedSessions}}
+  @excludedSessions={{(array)}}
   @sortBy={{this.sortBy}}
   @setSortBy={{this.setSortBy}}
+  @save={{(noop)}}
+  @cancel={{(noop)}}
 />`);
-
       await component.header.offeringsCount.click();
     });
 
@@ -330,24 +324,22 @@ module(
         sessionType,
         offerings: [offering1, offering2],
       });
-      const block = this.server.create('curriculum-inventory-sequence-block', {
-        sessions: [session],
-      });
-      const blockModel = await this.owner
+      const sessionModel = await this.owner
         .lookup('service:store')
-        .findRecord('curriculum-inventory-sequence-block', block.id);
+        .findRecord('session', session.id);
       const sessionModels = await this.owner.lookup('service:store').findAll('session');
       this.set('sessions', sessionModels);
-      this.set('sequenceBlock', blockModel);
+      this.set('linkedSessions', [sessionModel]);
       this.set('sortBy', 'id');
-
       await render(hbs`<CurriculumInventory::SequenceBlockSessionManager
   @sessions={{this.sessions}}
-  @sequenceBlock={{this.sequenceBlock}}
+  @linkedSessions={{this.linkedSessions}}
+  @excludedSessions={{(array)}}
   @sortBy={{this.sortBy}}
   @setSortBy={{(noop)}}
+  @save={{(noop)}}
+  @cancel={{(noop)}}
 />`);
-
       assert.strictEqual(component.sessions[0].totalTime.text, '30.00');
       assert.ok(component.header.countAsOneOffering.isChecked);
       assert.notOk(component.header.countAsOneOffering.isPartiallyChecked);
@@ -380,7 +372,7 @@ module(
         endDate: in30Hours,
       });
       const sessionType = this.server.create('session-type');
-      const session1 = this.server.create('session', {
+      const session = this.server.create('session', {
         title: 'Alpha',
         sessionType: sessionType,
         offerings: [offering1, offering2],
@@ -390,24 +382,22 @@ module(
         sessionType: sessionType,
         offerings: [offering3, offering4],
       });
-      const block = this.server.create('curriculum-inventory-sequence-block', {
-        sessions: [session1],
-      });
-      const blockModel = await this.owner
+      const sessionModel = await this.owner
         .lookup('service:store')
-        .findRecord('curriculum-inventory-sequence-block', block.id);
+        .findRecord('session', session.id);
       const sessionModels = await this.owner.lookup('service:store').findAll('session');
       this.set('sessions', sessionModels);
-      this.set('sequenceBlock', blockModel);
+      this.set('linkedSessions', [sessionModel]);
       this.set('sortBy', 'id');
-
       await render(hbs`<CurriculumInventory::SequenceBlockSessionManager
   @sessions={{this.sessions}}
-  @sequenceBlock={{this.sequenceBlock}}
+  @linkedSessions={{this.linkedSessions}}
+  @excludedSessions={{(array)}}
   @sortBy={{this.sortBy}}
   @setSortBy={{(noop)}}
+  @save={{(noop)}}
+  @cancel={{(noop)}}
 />`);
-
       assert.notOk(component.header.countAsOneOffering.isChecked);
       assert.ok(component.header.countAsOneOffering.isPartiallyChecked);
       assert.ok(component.sessions[0].countAsOneOffering.isChecked);
@@ -440,26 +430,26 @@ module(
         title: 'Omega',
         sessionType: sessionType,
       });
-      const block = this.server.create('curriculum-inventory-sequence-block', {
-        excludedSessions: [session1],
-        sessions: [session2],
-      });
-      const blockModel = await this.owner
+      const sessionModel1 = await this.owner
         .lookup('service:store')
-        .findRecord('curriculum-inventory-sequence-block', block.id);
+        .findRecord('session', session1.id);
+      const sessionModel2 = await this.owner
+        .lookup('service:store')
+        .findRecord('session', session2.id);
       const sessionModels = await this.owner.lookup('service:store').findAll('session');
       this.set('sessions', sessionModels);
-      this.set('sequenceBlock', blockModel);
+      this.set('linkedSessions', [sessionModel2]);
+      this.set('excludedSessions', [sessionModel1]);
       this.set('sortBy', 'id');
-
       await render(hbs`<CurriculumInventory::SequenceBlockSessionManager
   @sessions={{this.sessions}}
-  @sequenceBlock={{this.sequenceBlock}}
+  @linkedSessions={{this.linkedSessions}}
+  @excludedSessions={{this.excludedSessions}}
   @sortBy={{this.sortBy}}
   @setSortBy={{(noop)}}
-  @save={{this.save}}
+  @save={{(noop)}}
+  @cancel={{(noop)}}
 />`);
-
       assert.notOk(component.header.exclude.isChecked);
       assert.ok(component.header.exclude.isPartiallyChecked);
       assert.ok(component.sessions[0].exclude.isChecked);
@@ -487,16 +477,16 @@ module(
         title: 'Omega',
         sessionType: sessionType,
       });
-      const block = this.server.create('curriculum-inventory-sequence-block', {
-        sessions: [session1],
-        excludedSessions: [session2],
-      });
-      const blockModel = await this.owner
+      const sessionModel1 = await this.owner
         .lookup('service:store')
-        .findRecord('curriculum-inventory-sequence-block', block.id);
+        .findRecord('session', session1.id);
+      const sessionModel2 = await this.owner
+        .lookup('service:store')
+        .findRecord('session', session2.id);
       const sessionModels = await this.owner.lookup('service:store').findAll('session');
       this.set('sessions', sessionModels);
-      this.set('sequenceBlock', blockModel);
+      this.set('linkedSessions', [sessionModel1]);
+      this.set('excludedSessions', [sessionModel2]);
       this.set('sortBy', 'id');
       this.set('save', (countAsOneOfferingSessions, excludedSessions) => {
         assert.strictEqual(countAsOneOfferingSessions.length, 1);
@@ -504,15 +494,16 @@ module(
         assert.strictEqual(excludedSessions.length, 1);
         assert.strictEqual(excludedSessions[0].title, 'Alpha');
       });
-
       await render(hbs`<CurriculumInventory::SequenceBlockSessionManager
   @sessions={{this.sessions}}
   @sequenceBlock={{this.sequenceBlock}}
+  @linkedSessions={{this.linkedSessions}}
+  @excludedSessions={{this.excludedSessions}}
   @sortBy={{this.sortBy}}
   @setSortBy={{(noop)}}
   @save={{this.save}}
+  @cancel={{(noop)}}
 />`);
-
       assert.ok(component.sessions[0].countAsOneOffering.isChecked);
       assert.notOk(component.sessions[0].exclude.isChecked);
       assert.notOk(component.sessions[1].countAsOneOffering.isChecked);
@@ -526,24 +517,18 @@ module(
 
     test('cancel', async function (assert) {
       assert.expect(1);
-      const block = this.server.create('curriculum-inventory-sequence-block');
-      const blockModel = await this.owner
-        .lookup('service:store')
-        .findRecord('curriculum-inventory-sequence-block', block.id);
-
-      this.set('sequenceBlock', blockModel);
       this.set('sortBy', 'title');
       this.set('cancel', () => {
         assert.ok(true, 'Cancel action fired.');
       });
-
       await render(hbs`<CurriculumInventory::SequenceBlockSessionManager
   @sessions={{(array)}}
-  @sequenceBlock={{this.sequenceBlock}}
+  @linkedSessions={{(array)}}
+  @excludedSessions={{(array)}}
   @sortBy={{this.sortBy}}
+  @save={{(noop)}}
   @cancel={{this.cancel}}
 />`);
-
       await component.cancel();
     });
   },
