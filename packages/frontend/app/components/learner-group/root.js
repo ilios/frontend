@@ -64,6 +64,70 @@ export default class LearnerGroupRootComponent extends Component {
     return this.cohortData.isResolved ? this.cohortData.value : null;
   }
 
+  @cached
+  get programYearData() {
+    return new TrackedAsyncData(this.cohort?.programYear);
+  }
+
+  get programYear() {
+    return this.programYearData.isResolved ? this.programYearData.value : null;
+  }
+
+  @cached
+  get programData() {
+    return new TrackedAsyncData(this.programYear?.program);
+  }
+
+  get program() {
+    return this.programData.isResolved ? this.programData.value : null;
+  }
+
+  @cached
+  get schoolData() {
+    return new TrackedAsyncData(this.program?.school);
+  }
+
+  get school() {
+    return this.schoolData.isResolved ? this.schoolData.value : null;
+  }
+
+  @cached
+  get availableInstructorGroupsData() {
+    return new TrackedAsyncData(this.school?.instructorGroups);
+  }
+
+  get availableInstructorGroups() {
+    return this.availableInstructorGroupsData.isResolved
+      ? this.availableInstructorGroupsData.value
+      : [];
+  }
+
+  @cached
+  get instructorsData() {
+    return new TrackedAsyncData(this.args.learnerGroup.instructors);
+  }
+
+  get instructors() {
+    return this.instructorsData.isResolved ? this.instructorsData.value : [];
+  }
+
+  @cached
+  get instructorGroupsData() {
+    return new TrackedAsyncData(this.args.learnerGroup.instructorGroups);
+  }
+
+  get instructorGroups() {
+    return this.instructorGroupsData.isResolved ? this.instructorGroupsData.value : [];
+  }
+
+  get dataForInstructorGroupManagerLoaded() {
+    return (
+      this.availableInstructorGroupsData.isResolved &&
+      this.instructorGroupsData.isResolved &&
+      this.instructorsData.isResolved
+    );
+  }
+
   get cohortTitle() {
     return this.cohort?.title;
   }
@@ -207,12 +271,11 @@ export default class LearnerGroupRootComponent extends Component {
     this.urlChanged = true;
   }
 
-  @action
-  saveInstructors(newInstructors, newInstructorGroups) {
+  saveInstructors = restartableTask(async (newInstructors, newInstructorGroups) => {
     this.args.learnerGroup.set('instructors', newInstructors);
     this.args.learnerGroup.set('instructorGroups', newInstructorGroups);
-    return this.args.learnerGroup.save();
-  }
+    await this.args.learnerGroup.save();
+  });
 
   @cached
   get usersForMembersListData() {
