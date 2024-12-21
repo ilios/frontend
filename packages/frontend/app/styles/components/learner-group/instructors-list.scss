@@ -1,0 +1,25 @@
+@use "../../ilios-common/colors" as c;
+@use "../../ilios-common/mixins" as m;
+
+.learner-group-instructors-list {
+  @include m.detail-container(c.$orange);
+  border-top: 1px dotted c.$orange;
+
+  .detail-header {
+    @include m.detail-container-header;
+
+    .title {
+      @include m.detail-container-title;
+    }
+
+    .actions {
+      @include m.detail-container-actions;
+    }
+  }
+
+  .detail-content {
+    .assigned-instructors {
+      @include m.ilios-tag-list;
+    }
+  }
+}

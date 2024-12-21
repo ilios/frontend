@@ -5,21 +5,12 @@ import membersList from './instructor-group-members-list';
 const definition = {
   scope: '[data-test-learner-group-instructor-manager]',
   title: text('[data-test-title]'),
-  cancel: clickable('[data-test-cancel]'),
-  manage: clickable('[data-test-manage]'),
-  save: clickable('[data-test-save]'),
-  cancelButton: {
+  cancel: {
     scope: '[data-test-cancel]',
   },
-  manageButton: {
-    scope: '[data-test-manage]',
-  },
-  saveButton: {
+  save: {
     scope: '[data-test-save]',
   },
-  assignedInstructors: collection('[data-test-assigned-instructor]', {
-    userNameInfo,
-  }),
   selectedInstructors: collection('[data-test-selected-instructor]', {
     userNameInfo,
     remove: clickable(),
