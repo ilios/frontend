@@ -29,6 +29,7 @@ export default class LearnerGroupRootComponent extends Component {
   @tracked showNewLearnerGroupForm = false;
   @tracked currentGroupsSaved = 0;
   @tracked totalGroupsToSave = 0;
+  @tracked isManagingInstructors = false;
 
   constructor() {
     super(...arguments);
@@ -275,6 +276,7 @@ export default class LearnerGroupRootComponent extends Component {
     this.args.learnerGroup.set('instructors', newInstructors);
     this.args.learnerGroup.set('instructorGroups', newInstructorGroups);
     await this.args.learnerGroup.save();
+    this.isManagingInstructors = false;
   });
 
   @cached

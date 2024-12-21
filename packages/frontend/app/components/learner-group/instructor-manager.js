@@ -5,12 +5,11 @@ import { action } from '@ember/object';
 export default class LearnerGroupInstructorManagerComponent extends Component {
   @tracked instructors = [];
   @tracked instructorGroups = [];
-  @tracked isManaging = false;
 
   constructor() {
     super(...arguments);
-    this.instructors = [];
-    this.instructorGroups = [];
+    this.instructors = this.args.instructors;
+    this.instructorGroups = this.args.instructorGroups;
   }
 
   @action
