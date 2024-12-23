@@ -90,17 +90,17 @@ module('Integration | Component | learner-group/root', function (hooks) {
 />`);
 
     assert.strictEqual(component.defaultLocation.text, 'Default Location: test location');
-    assert.strictEqual(component.instructorManager.assignedInstructors.length, 2);
+    assert.strictEqual(component.instructorsList.assignedInstructors.length, 2);
     assert.strictEqual(
-      component.instructorManager.assignedInstructors[0].userNameInfo.fullName,
+      component.instructorsList.assignedInstructors[0].userNameInfo.fullName,
       'Aardvark',
     );
-    assert.ok(component.instructorManager.assignedInstructors[0].userNameInfo.hasAdditionalInfo);
+    assert.ok(component.instructorsList.assignedInstructors[0].userNameInfo.hasAdditionalInfo);
     assert.strictEqual(
-      component.instructorManager.assignedInstructors[1].userNameInfo.fullName,
+      component.instructorsList.assignedInstructors[1].userNameInfo.fullName,
       'Walther v. Vogelweide',
     );
-    assert.notOk(component.instructorManager.assignedInstructors[1].userNameInfo.hasAdditionalInfo);
+    assert.notOk(component.instructorsList.assignedInstructors[1].userNameInfo.hasAdditionalInfo);
     assert.strictEqual(component.associatedCourses.courses.length, 2);
     assert.ok(component.actions.buttons.toggle.isVisible);
     assert.ok(component.actions.buttons.bulkAssignment.isVisible);
@@ -725,5 +725,190 @@ module('Integration | Component | learner-group/root', function (hooks) {
 />`);
 
     assert.notOk(component.subgroups.list.isVisible);
+  });
+
+  test('toggling between instructor manager and instructor view mode', async function (assert) {
+    const instructor = this.server.create('user', {
+      firstName: 'test',
+      lastName: 'person',
+      middleName: '',
+    });
+    const instructor2 = this.server.create('user', {
+      firstName: 'zeb',
+      lastName: 'z00ber',
+      displayName: 'aardvark',
+    });
+    const instructor3 = this.server.create('user', {
+      firstName: 'test',
+      lastName: 'person2',
+      middleName: '',
+    });
+    const instructorGroup = this.server.create('instructor-group', {
+      title: 'test group',
+      users: [instructor3],
+    });
+    const learnerGroup = this.server.create('learner-group', {
+      title: 'this group',
+      cohort: this.cohort,
+      instructors: [instructor, instructor2],
+      instructorGroups: [instructorGroup],
+    });
+    const learnerGroupModel = await this.owner
+      .lookup('service:store')
+      .findRecord('learner-group', learnerGroup.id);
+    this.set('learnerGroup', learnerGroupModel);
+    await render(hbs`<LearnerGroup::Root
+  @canUpdate={{true}}
+  @setIsEditing={{(noop)}}
+  @setSortUsersBy={{(noop)}}
+  @setIsBulkAssigning={{(noop)}}
+  @sortUsersBy='fullName'
+  @learnerGroup={{this.learnerGroup}}
+  @isEditing={{false}}
+  @isBulkAssigning={{false}}
+/>`);
+    assert.notOk(component.instructorManager.isVisible);
+    assert.strictEqual(component.instructorsList.title, 'Default Instructors (3)');
+    assert.strictEqual(component.instructorsList.assignedInstructors.length, 3);
+    assert.strictEqual(
+      component.instructorsList.assignedInstructors[0].userNameInfo.fullName,
+      'aardvark',
+    );
+    assert.dom(component.instructorsList.assignedInstructors[0].userNameInfo.hasAdditionalInfo);
+    assert.strictEqual(
+      component.instructorsList.assignedInstructors[1].userNameInfo.fullName,
+      'test person',
+    );
+    assert.notOk(component.instructorsList.assignedInstructors[1].userNameInfo.hasAdditionalInfo);
+    assert.strictEqual(
+      component.instructorsList.assignedInstructors[2].userNameInfo.fullName,
+      'test person2',
+    );
+    assert.notOk(component.instructorsList.assignedInstructors[2].userNameInfo.hasAdditionalInfo);
+    assert.strictEqual(component.instructorsList.manage.text, 'Manage Instructors');
+    await component.instructorsList.manage.click();
+    assert.notOk(component.instructorsList.isVisible);
+    assert.strictEqual(component.instructorManager.title, 'Manage Default Instructors');
+    assert.strictEqual(component.instructorManager.selectedInstructors.length, 2);
+    assert.strictEqual(
+      component.instructorManager.selectedInstructors[0].userNameInfo.fullName,
+      'aardvark',
+    );
+    assert.dom(component.instructorManager.selectedInstructors[0].userNameInfo.hasAdditionalInfo);
+    assert.strictEqual(
+      component.instructorManager.selectedInstructors[1].userNameInfo.fullName,
+      'test person',
+    );
+    assert.notOk(component.instructorManager.selectedInstructors[1].userNameInfo.hasAdditionalInfo);
+    assert.strictEqual(component.instructorManager.selectedInstructorGroups.length, 1);
+    assert.strictEqual(component.instructorManager.selectedInstructorGroups[0].title, 'test group');
+    assert.strictEqual(
+      component.instructorManager.selectedInstructorGroups[0].membersList.users.length,
+      1,
+    );
+    assert.strictEqual(
+      component.instructorManager.selectedInstructorGroups[0].membersList.users[0].userNameInfo
+        .fullName,
+      'test person2',
+    );
+    await component.instructorManager.cancel.click();
+    assert.notOk(component.instructorManager.isVisible);
+    await component.instructorsList.manage.click();
+    assert.notOk(component.instructorsList.isVisible);
+    await component.instructorManager.save.click();
+    assert.notOk(component.instructorManager.isVisible);
+    assert.ok(component.instructorsList.isVisible);
+  });
+
+  test('edit and cancel', async function (assert) {
+    const instructor = this.server.create('user', {
+      firstName: 'test',
+      lastName: 'person',
+      middleName: '',
+    });
+    const instructor2 = this.server.create('user', {
+      firstName: 'zeb',
+      lastName: 'z00ber',
+      displayName: 'aardvark',
+    });
+    const learnerGroup = this.server.create('learner-group', {
+      title: 'this group',
+      cohort: this.cohort,
+      instructors: [instructor, instructor2],
+    });
+    const learnerGroupModel = await this.owner
+      .lookup('service:store')
+      .findRecord('learner-group', learnerGroup.id);
+    this.set('learnerGroup', learnerGroupModel);
+    await render(hbs`<LearnerGroup::Root
+  @canUpdate={{true}}
+  @setIsEditing={{(noop)}}
+  @setSortUsersBy={{(noop)}}
+  @setIsBulkAssigning={{(noop)}}
+  @sortUsersBy='fullName'
+  @learnerGroup={{this.learnerGroup}}
+  @isEditing={{false}}
+  @isBulkAssigning={{false}}
+/>`);
+    assert.strictEqual(component.instructorsList.assignedInstructors.length, 2);
+    await component.instructorsList.manage.click();
+    assert.strictEqual(component.instructorManager.selectedInstructors.length, 2);
+    await component.instructorManager.selectedInstructors[0].remove();
+    assert.strictEqual(component.instructorManager.selectedInstructors.length, 1);
+    await component.instructorManager.cancel.click();
+    assert.strictEqual(component.instructorsList.assignedInstructors.length, 2);
+  });
+
+  test('edit and save', async function (assert) {
+    const instructor = this.server.create('user', {
+      firstName: 'test',
+      lastName: 'person',
+      middleName: '',
+    });
+    const instructor2 = this.server.create('user', {
+      firstName: 'zeb',
+      lastName: 'z00ber',
+      displayName: 'aardvark',
+    });
+    const instructor3 = this.server.create('user', {
+      firstName: 'test',
+      lastName: 'person2',
+      middleName: '',
+    });
+    const instructorGroup = this.server.create('instructor-group', {
+      title: 'test group',
+      users: [instructor3],
+    });
+    const instructorGroup2 = this.server.create('instructor-group', { title: 'test group 2' });
+    const learnerGroup = this.server.create('learner-group', {
+      title: 'this group',
+      cohort: this.cohort,
+      instructors: [instructor, instructor2],
+      instructorGroups: [instructorGroup, instructorGroup2],
+    });
+    const learnerGroupModel = await this.owner
+      .lookup('service:store')
+      .findRecord('learner-group', learnerGroup.id);
+    this.set('learnerGroup', learnerGroupModel);
+    await render(hbs`<LearnerGroup::Root
+  @canUpdate={{true}}
+  @setIsEditing={{(noop)}}
+  @setSortUsersBy={{(noop)}}
+  @setIsBulkAssigning={{(noop)}}
+  @sortUsersBy='fullName'
+  @learnerGroup={{this.learnerGroup}}
+  @isEditing={{false}}
+  @isBulkAssigning={{false}}
+/>`);
+    assert.strictEqual(component.instructorsList.assignedInstructors.length, 3);
+    await component.instructorsList.manage.click();
+    assert.strictEqual(component.instructorManager.selectedInstructors.length, 2);
+    await component.instructorManager.selectedInstructors[0].remove();
+    assert.strictEqual(component.instructorManager.selectedInstructorGroups.length, 2);
+    await component.instructorManager.selectedInstructorGroups[0].remove();
+    assert.strictEqual(component.instructorManager.selectedInstructors.length, 1);
+    assert.strictEqual(component.instructorManager.selectedInstructorGroups.length, 1);
+    await component.instructorManager.save.click();
+    assert.strictEqual(component.instructorsList.assignedInstructors.length, 1);
   });
 });

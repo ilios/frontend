@@ -118,11 +118,22 @@
           {{/each}}
         </ul>
       </div>
-      <LearnerGroup::InstructorManager
-        @learnerGroup={{@learnerGroup}}
-        @save={{this.saveInstructors}}
-        @canUpdate={{@canUpdate}}
-      />
+      {{#if (and this.dataForInstructorGroupManagerLoaded this.isManagingInstructors)}}
+        <LearnerGroup::InstructorManager
+          @learnerGroup={{@learnerGroup}}
+          @instructors={{this.instructors}}
+          @instructorGroups={{this.instructorGroups}}
+          @availableInstructorGroups={{this.availableInstructorGroups}}
+          @save={{perform this.saveInstructors}}
+          @cancel={{set this "isManagingInstructors" false}}
+        />
+      {{else}}
+        <LearnerGroup::InstructorsList
+          @learnerGroup={{@learnerGroup}}
+          @canUpdate={{@canUpdate}}
+          @manage={{set this "isManagingInstructors" true}}
+        />
+      {{/if}}
       <div class="learner-group-overview-actions" data-test-overview-actions>
         <div class="title" data-test-title>
           {{#if @isEditing}}
