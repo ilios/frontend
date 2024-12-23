@@ -13,7 +13,10 @@ export default class TaxonomyManager extends Component {
   @service intl;
   @service flashMessages;
   @tracked termFilter = '';
-  @tracked vocabId = null;
+
+  get vocabularyId() {
+    return this.args.vocabulary.id;
+  }
 
   @cached
   get filteredTopLevelTermsData() {
@@ -24,13 +27,6 @@ export default class TaxonomyManager extends Component {
 
   get filteredTopLevelTerms() {
     return this.filteredTopLevelTermsData.isResolved ? this.filteredTopLevelTermsData.value : [];
-  }
-
-  @action
-  load(element, [vocabulary]) {
-    if (vocabulary) {
-      this.vocabId = vocabulary.id;
-    }
   }
 
   async getFilteredTopLevelTermsFromSelectedVocabulary(vocabulary, termFilter) {

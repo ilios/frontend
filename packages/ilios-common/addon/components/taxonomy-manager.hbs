@@ -1,7 +1,7 @@
 <section
   class="taxonomy-manager"
-  {{did-insert this.load @vocabulary}}
   data-test-taxonomy-manager
+  ...attributes
 >
   {{#let (unique-id) as |templateId|}}
     {{#if @selectedTerms}}
