@@ -104,6 +104,7 @@ const definition = {
     options: collection('option', {
       isSelected: property('selected'),
     }),
+    errors: collection('.validation-error-message'),
   },
   endLevel: {
     scope: '[data-test-ending-academic-level]',
@@ -113,6 +114,7 @@ const definition = {
     options: collection('option', {
       isSelected: property('selected'),
     }),
+    errors: collection('.validation-error-message'),
   },
   childSequenceOrder: {
     scope: '[data-test-child-sequence-order]',
