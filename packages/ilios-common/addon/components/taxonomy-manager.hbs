@@ -1,7 +1,7 @@
 <section
   class="taxonomy-manager"
-  {{did-insert this.load @vocabulary}}
   data-test-taxonomy-manager
+  ...attributes
 >
   {{#let (unique-id) as |templateId|}}
     {{#if @selectedTerms}}
@@ -27,7 +27,7 @@
             {{on "change" this.changeSelectedVocabulary}}
           >
             {{#each this.assignableVocabularies as |vocab|}}
-              <option value={{vocab.id}} selected={{if (eq vocab.id this.vocabId) "selected"}}>
+              <option value={{vocab.id}} selected={{if (eq vocab.id this.selectedVocabularyId) "selected"}}>
                 {{vocab.title}} ({{vocab.school.title}})
               </option>
             {{/each}}
