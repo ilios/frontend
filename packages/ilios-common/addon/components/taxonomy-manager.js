@@ -13,7 +13,7 @@ export default class TaxonomyManager extends Component {
   @service intl;
   @service flashMessages;
   @tracked termFilter = '';
-  @tracked vocabId = null;
+  @tracked vocabulary = null;
 
   @cached
   get filteredTopLevelTermsData() {
@@ -24,13 +24,6 @@ export default class TaxonomyManager extends Component {
 
   get filteredTopLevelTerms() {
     return this.filteredTopLevelTermsData.isResolved ? this.filteredTopLevelTermsData.value : [];
-  }
-
-  @action
-  load(element, [vocabulary]) {
-    if (vocabulary) {
-      this.vocabId = vocabulary.id;
-    }
   }
 
   async getFilteredTopLevelTermsFromSelectedVocabulary(vocabulary, termFilter) {
@@ -84,20 +77,28 @@ export default class TaxonomyManager extends Component {
   }
 
   get selectedVocabulary() {
-    if (isPresent(this.vocabId)) {
-      const vocab = this.assignableVocabularies.find((v) => {
-        return v.id === this.vocabId;
-      });
-      if (vocab) {
-        return vocab;
-      }
+    if (this.vocabulary) {
+      return this.vocabulary;
     }
-    return this.assignableVocabularies[0];
+    if (this.args.vocabulary) {
+      return this.args.vocabulary;
+    }
+    if (this.assignableVocabularies.length) {
+      return this.assignableVocabularies[0];
+    }
+    return null;
+  }
+
+  get selectedVocabularyId() {
+    return this.selectedVocabulary?.id;
   }
 
   @action
   changeSelectedVocabulary(event) {
-    this.vocabId = event.target.value;
+    const vocabId = event.target.value;
+    this.vocabulary = this.assignableVocabularies.find((v) => {
+      return v.id === vocabId;
+    });
   }
 
   setTermFilter = restartableTask(async (termFilter) => {
