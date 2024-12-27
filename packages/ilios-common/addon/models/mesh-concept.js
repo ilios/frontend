@@ -13,9 +13,6 @@ export default class MeshConcept extends Model {
   @attr('string')
   cash1Name;
 
-  @attr('string')
-  registryNumber;
-
   @attr('date')
   createdAt;
 
