@@ -34,6 +34,15 @@ module('Integration | Component | dashboard/week', function (hooks) {
 
       return expectedTitle;
     };
+
+    this.setupEmptyEvents = function () {
+      class UserEvents extends Service {
+        async getEvents() {
+          return [];
+        }
+      }
+      this.owner.register('service:user-events', UserEvents);
+    };
   });
 
   hooks.afterEach(() => {
@@ -92,14 +101,7 @@ module('Integration | Component | dashboard/week', function (hooks) {
   });
 
   test('it renders blank', async function (assert) {
-    class UserEvents extends Service {
-      async getEvents() {
-        return [];
-      }
-    }
-    this.owner.register('service:user-events', UserEvents);
-    this.userEvents = this.owner.lookup('service:user-events');
-
+    this.setupEmptyEvents();
     await render(hbs`<Dashboard::Week />`);
     const expectedTitle = this.getTitle();
     assert.strictEqual(component.weeklyLink, 'All Weeks');
@@ -108,13 +110,7 @@ module('Integration | Component | dashboard/week', function (hooks) {
   });
 
   test('right week on sunday #5308', async function (assert) {
-    class UserEvents extends Service {
-      async getEvents() {
-        return [];
-      }
-    }
-    this.owner.register('service:user-events', UserEvents);
-    this.userEvents = this.owner.lookup('service:user-events');
+    this.setupEmptyEvents();
     freezeDateAt(DateTime.fromObject({ year: 2024, month: 3, day: 10 }).toJSDate());
 
     await render(hbs`<Dashboard::Week />`);
@@ -122,13 +118,7 @@ module('Integration | Component | dashboard/week', function (hooks) {
   });
 
   test('right week on monday #5308', async function (assert) {
-    class UserEvents extends Service {
-      async getEvents() {
-        return [];
-      }
-    }
-    this.owner.register('service:user-events', UserEvents);
-    this.userEvents = this.owner.lookup('service:user-events');
+    this.setupEmptyEvents();
     freezeDateAt(DateTime.fromObject({ year: 2023, month: 8, day: 7 }).toJSDate());
 
     await render(hbs`<Dashboard::Week />`);
@@ -136,67 +126,85 @@ module('Integration | Component | dashboard/week', function (hooks) {
   });
 
   test('right week on tuesday #5308', async function (assert) {
-    class UserEvents extends Service {
-      async getEvents() {
-        return [];
-      }
-    }
-    this.owner.register('service:user-events', UserEvents);
-    this.userEvents = this.owner.lookup('service:user-events');
+    this.setupEmptyEvents();
     freezeDateAt(DateTime.fromObject({ year: 2022, month: 12, day: 6 }).toJSDate());
     await render(hbs`<Dashboard::Week />`);
     assert.strictEqual(component.weekGlance.title, 'December 4-10 Week at a Glance');
   });
 
   test('right week on wednesday #5308', async function (assert) {
-    class UserEvents extends Service {
-      async getEvents() {
-        return [];
-      }
-    }
-    this.owner.register('service:user-events', UserEvents);
-    this.userEvents = this.owner.lookup('service:user-events');
+    this.setupEmptyEvents();
     freezeDateAt(DateTime.fromObject({ year: 2022, month: 7, day: 13 }).toJSDate());
     await render(hbs`<Dashboard::Week />`);
     assert.strictEqual(component.weekGlance.title, 'July 10-16 Week at a Glance');
   });
 
   test('right week on thursday #5308', async function (assert) {
-    class UserEvents extends Service {
-      async getEvents() {
-        return [];
-      }
-    }
-    this.owner.register('service:user-events', UserEvents);
-    this.userEvents = this.owner.lookup('service:user-events');
+    this.setupEmptyEvents();
     freezeDateAt(DateTime.fromObject({ year: 2021, month: 5, day: 13 }).toJSDate());
     await render(hbs`<Dashboard::Week />`);
     assert.strictEqual(component.weekGlance.title, 'May 9-15 Week at a Glance');
   });
 
   test('right week on friday #5308', async function (assert) {
-    class UserEvents extends Service {
-      async getEvents() {
-        return [];
-      }
-    }
-    this.owner.register('service:user-events', UserEvents);
-    this.userEvents = this.owner.lookup('service:user-events');
+    this.setupEmptyEvents();
     freezeDateAt(DateTime.fromObject({ year: 2021, month: 9, day: 24 }).toJSDate());
     await render(hbs`<Dashboard::Week />`);
     assert.strictEqual(component.weekGlance.title, 'September 19-25 Week at a Glance');
   });
 
   test('right week on saturday #5308', async function (assert) {
-    class UserEvents extends Service {
-      async getEvents() {
-        return [];
-      }
-    }
-    this.owner.register('service:user-events', UserEvents);
-    this.userEvents = this.owner.lookup('service:user-events');
+    this.setupEmptyEvents();
     freezeDateAt(DateTime.fromObject({ year: 2022, month: 7, day: 30 }).toJSDate());
     await render(hbs`<Dashboard::Week />`);
     assert.strictEqual(component.weekGlance.title, 'July 24-30 Week at a Glance');
+  });
+
+  test('correct at the start of 2024 ilios/ilios#5908', async function (assert) {
+    this.setupEmptyEvents();
+    freezeDateAt(DateTime.fromObject({ year: 2024, month: 1, day: 2 }).toJSDate());
+    await render(hbs`<Dashboard::Week />`);
+
+    assert.strictEqual(component.weekGlance.title, 'December 31 - January 6 Week at a Glance');
+  });
+
+  test('correct at the end of 2024 ilios/ilios#5908', async function (assert) {
+    this.setupEmptyEvents();
+    freezeDateAt(DateTime.fromObject({ year: 2024, month: 12, day: 30 }).toJSDate());
+    await render(hbs`<Dashboard::Week />`);
+
+    assert.strictEqual(component.weekGlance.title, 'December 29 - January 4 Week at a Glance');
+  });
+
+  test('correct at the start of 2025 ilios/ilios#5908', async function (assert) {
+    this.setupEmptyEvents();
+    freezeDateAt(DateTime.fromObject({ year: 2025, month: 1, day: 3 }).toJSDate());
+    await render(hbs`<Dashboard::Week />`);
+
+    assert.strictEqual(component.weekGlance.title, 'December 29 - January 4 Week at a Glance');
+  });
+
+  test('correct at the end of 2025 ilios/ilios#5908', async function (assert) {
+    this.setupEmptyEvents();
+    freezeDateAt(DateTime.fromObject({ year: 2025, month: 12, day: 30 }).toJSDate());
+    await render(hbs`<Dashboard::Week />`);
+
+    assert.strictEqual(component.weekGlance.title, 'December 28 - January 3 Week at a Glance');
+  });
+
+  test('correct at the start of 2026 ilios/ilios#5908', async function (assert) {
+    this.setupEmptyEvents();
+    freezeDateAt(DateTime.fromObject({ year: 2026, month: 1, day: 2 }).toJSDate());
+    await render(hbs`<Dashboard::Week />`);
+
+    assert.strictEqual(component.weekGlance.title, 'December 28 - January 3 Week at a Glance');
+  });
+
+  test('correct on some random day ilios/ilios#5908', async function (assert) {
+    this.setupEmptyEvents();
+    freezeDateAt(DateTime.fromObject({ year: 2005, month: 6, day: 24 }).toJSDate());
+    await render(hbs`<Dashboard::Week />`);
+
+    assert.strictEqual(component.weekGlance.title, 'June 19-25 Week at a Glance');
   });
 });

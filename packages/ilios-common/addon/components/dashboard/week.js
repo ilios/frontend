@@ -1,25 +1,37 @@
 import Component from '@glimmer/component';
 import { DateTime } from 'luxon';
+
 export default class DashboardWeekComponent extends Component {
   get expanded() {
-    const now = DateTime.now();
-    const lastSunday = now.set({ weekday: 1 }).minus({ week: 1 }).toFormat('W');
-    const thisSunday = now.set({ weekday: 1 }).toFormat('W');
-    const nextSunday = now.set({ weekday: 1 }).plus({ week: 1 }).toFormat('W');
+    const lastSunday = this.thisThursday.minus({ week: 1 }).toFormat('W');
+    const thisSunday = this.thisThursday.toFormat('W');
+    const nextSunday = this.thisThursday.plus({ week: 1 }).toFormat('W');
 
     return `${lastSunday}-${thisSunday}-${nextSunday}`;
   }
-  get year() {
-    return DateTime.now().year;
-  }
-  get week() {
-    const today = DateTime.now();
+
+  get thisThursday() {
+    const thursday = DateTime.fromObject({
+      weekday: 4,
+      hour: 0,
+      minute: 0,
+      second: 0,
+    });
+
     // In this component the week always starts on Sunday, but luxon's starts on Monday
-    // so we need to adjust the week number to account for that.
-    if (today.weekday === 7) {
-      return today.weekNumber + 1;
-    } else {
-      return today.weekNumber;
+    // If today is sunday, we need to add a week to get the correct Thursday
+    if (DateTime.now().weekday === 7) {
+      return thursday.plus({ weeks: 1 });
     }
+
+    return thursday;
+  }
+
+  get year() {
+    return this.thisThursday.weekYear;
+  }
+
+  get week() {
+    return this.thisThursday.weekNumber;
   }
 }
