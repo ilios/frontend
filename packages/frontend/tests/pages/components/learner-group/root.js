@@ -12,6 +12,7 @@ import {
 import header from './header';
 import cohortUserManager from './cohort-user-manager';
 import instructorManager from './instructor-manager';
+import instructorsList from './instructors-list';
 import bulkAssignment from './bulk-assignment';
 import userManager from './user-manager';
 import members from './members';
@@ -58,6 +59,7 @@ const definition = {
       linksTo: attribute('href', 'a'),
     }),
   },
+  instructorsList,
   instructorManager,
   actions: {
     scope: '[data-test-overview-actions]',
