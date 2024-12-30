@@ -29,21 +29,33 @@ export default class WeeklyGlance extends Component {
   }
 
   get thursdayOfTheWeek() {
-    return DateTime.fromObject({
+    const thursday = DateTime.fromObject({
       weekYear: this.args.year,
       weekNumber: this.args.week,
       weekday: 4,
       hour: 0,
       minute: 0,
       second: 0,
-    }).toJSDate();
+    });
+
+    if (!thursday.isValid) {
+      console.error('Invalid date', thursday.invalidReason, this.args.year, this.args.week);
+      return null;
+    }
+    return thursday.toJSDate();
   }
 
   get midnightAtTheStartOfTheWeekDateTime() {
+    if (!this.thursdayOfTheWeek) {
+      return null;
+    }
     return DateTime.fromJSDate(this.localeDays.firstDayOfDateWeek(this.thursdayOfTheWeek));
   }
 
   get midnightAtTheEndOfTheWeekDateTime() {
+    if (!this.thursdayOfTheWeek) {
+      return null;
+    }
     return DateTime.fromJSDate(this.localeDays.lastDayOfDateWeek(this.thursdayOfTheWeek));
   }
 

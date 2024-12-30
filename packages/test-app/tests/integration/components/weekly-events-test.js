@@ -114,4 +114,50 @@ module('Integration | Component | weekly events', function (hooks) {
     assert.strictEqual(component.topNavigation.title, '2016');
     assert.strictEqual(component.bottomNavigation.title, '2016');
   });
+
+  test('it renders 2024 ilios/ilios#5908', async function (assert) {
+    await render(
+      hbs`<WeeklyEvents
+  @year={{2024}}
+  @expandedWeeks={{(array)}}
+  @setYear={{(noop)}}
+  @toggleOpenWeek={{(noop)}}
+/>`,
+    );
+    assert.strictEqual(component.topNavigation.title, '2024');
+    assert.strictEqual(component.weeks.length, 52);
+    assert.strictEqual(component.weeks[0].title, 'December 31 - January 6');
+    assert.strictEqual(component.weeks[51].title, 'December 22-28');
+  });
+
+  test('it renders 2025 ilios/ilios#5908', async function (assert) {
+    await render(
+      hbs`<WeeklyEvents
+  @year={{2025}}
+  @expandedWeeks={{(array)}}
+  @setYear={{(noop)}}
+  @toggleOpenWeek={{(noop)}}
+/>`,
+    );
+    assert.strictEqual(component.topNavigation.title, '2025');
+    assert.strictEqual(component.weeks.length, 52);
+    assert.strictEqual(component.weeks[0].title, 'December 29 - January 4');
+    assert.strictEqual(component.weeks[51].title, 'December 21-27');
+  });
+
+  test('it renders 2026 ilios/ilios#5908', async function (assert) {
+    assert.expect(4);
+    await render(
+      hbs`<WeeklyEvents
+  @year={{2026}}
+  @expandedWeeks={{(array)}}
+  @setYear={{(noop)}}
+  @toggleOpenWeek={{(noop)}}
+/>`,
+    );
+    assert.strictEqual(component.topNavigation.title, '2026');
+    assert.strictEqual(component.weeks.length, 53);
+    assert.strictEqual(component.weeks[0].title, 'December 28 - January 3');
+    assert.strictEqual(component.weeks[52].title, 'December 27 - January 2');
+  });
 });
