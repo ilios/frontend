@@ -6,11 +6,12 @@
   .title {
     @include m.ilios-heading-h3;
     margin-bottom: 1em;
+  }
 
-    &.collapsible {
-      @include m.ilios-button-reset;
-      @include m.font-size("xl");
-    }
+  .collapsible-title {
+    @include m.ilios-button-reset;
+    @include m.font-size("xl");
+    margin-bottom: 1em;
   }
 
   .event {

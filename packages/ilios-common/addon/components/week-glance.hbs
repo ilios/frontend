@@ -6,7 +6,7 @@
   {{#if @collapsible}}
     <button
       type="button"
-      class="title collapsible"
+      class="collapsible-title"
       aria-expanded={{if @collapsed "false" "true"}}
       data-test-week-title
       {{on "click" (fn (optional @toggleCollapsed) @collapsed)}}
