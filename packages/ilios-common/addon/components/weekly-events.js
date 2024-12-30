@@ -4,9 +4,9 @@ import { DateTime } from 'luxon';
 
 export default class WeeklyEvents extends Component {
   get weeksInYear() {
-    const weeksInTheYear = DateTime.now().set({ year: this.args.year }).weeksInWeekYear;
+    const { weeksInWeekYear } = DateTime.fromObject({ year: this.args.year });
     const weeks = [];
-    for (let i = 1; i <= weeksInTheYear; i++) {
+    for (let i = 1; i <= weeksInWeekYear; i++) {
       weeks.push(`${i}`);
     }
     return weeks;
