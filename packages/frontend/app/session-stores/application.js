@@ -1,5 +1,5 @@
-import CookieStore from 'ember-simple-auth/session-stores/cookie';
+import Cookie from 'ember-simple-auth/session-stores/cookie';
 
-export default CookieStore.extend({
-  cookieName: 'ilios-session',
-});
+export default class ApplicationSessionStore extends Cookie {
+  cookieName = 'ilios-session';
+}
