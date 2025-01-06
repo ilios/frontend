@@ -57,9 +57,6 @@ module.exports = async function (defaults) {
     'ember-simple-auth': {
       useSessionSetupMethod: true, //can be removed in ESA v5.x
     },
-    minifyCSS: {
-      enabled: false,
-    },
     sassOptions: {
       silenceDeprecations: ['mixed-decls'],
     },

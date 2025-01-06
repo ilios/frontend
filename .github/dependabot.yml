@@ -34,7 +34,6 @@ updates:
       - dependency-name: ember-cli
       - dependency-name: ember-cli-app-version
       - dependency-name: ember-cli-babel
-      - dependency-name: ember-cli-clean-css
       - dependency-name: ember-cli-dependency-checker
       - dependency-name: ember-cli-htmlbars
       - dependency-name: ember-cli-inject-live-reload
