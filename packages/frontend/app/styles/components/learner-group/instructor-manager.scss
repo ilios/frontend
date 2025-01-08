@@ -18,10 +18,6 @@
   }
 
   .detail-content {
-    .assigned-instructors {
-      @include m.ilios-tag-list;
-    }
-
     .removable-instructors {
       @include m.ilios-removable-list;
       margin-bottom: 1rem;

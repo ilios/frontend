@@ -18,7 +18,7 @@ module('Integration | Component | learner-group/instructor-manager', function (h
   });
 
   test('it renders', async function (assert) {
-    const instructor = this.server.create('user', {
+    const instructor1 = this.server.create('user', {
       firstName: 'test',
       lastName: 'person',
       middleName: '',
@@ -40,32 +40,34 @@ module('Integration | Component | learner-group/instructor-manager', function (h
     const learnerGroup = this.server.create('learner-group', {
       title: 'this group',
       cohort: this.cohort,
-      instructors: [instructor, instructor2],
+      instructors: [instructor1, instructor2],
       instructorGroups: [instructorGroup],
     });
     const learnerGroupModel = await this.owner
       .lookup('service:store')
       .findRecord('learner-group', learnerGroup.id);
-
+    const instructorGroupModel = await this.owner
+      .lookup('service:store')
+      .findRecord('instructor-group', instructorGroup.id);
+    const instructorModel1 = await this.owner
+      .lookup('service:store')
+      .findRecord('user', instructor1.id);
+    const instructorModel2 = await this.owner
+      .lookup('service:store')
+      .findRecord('user', instructor2.id);
     this.set('learnerGroup', learnerGroupModel);
+    this.set('instructors', [instructorModel1, instructorModel2]);
+    this.set('instructorGroups', [instructorGroupModel]);
+    this.set('availableInstructorGroups', [instructorGroupModel]);
     await render(hbs`<LearnerGroup::InstructorManager
   @learnerGroup={{this.learnerGroup}}
+  @instructors={{this.instructors}}
+  @instructorGroups={{this.instructorGroups}}
+  @availableInstructorGroups={{this.availableInstructorGroups}}
   @save={{(noop)}}
-  @canUpdate={{true}}
+  @cancel={{(noop)}}
 />`);
 
-    assert.strictEqual(component.title, 'Default Instructors (3)');
-    assert.strictEqual(component.assignedInstructors.length, 3);
-    assert.strictEqual(component.assignedInstructors[0].userNameInfo.fullName, 'aardvark');
-    assert.dom(component.assignedInstructors[0].userNameInfo.hasAdditionalInfo);
-    assert.strictEqual(component.assignedInstructors[1].userNameInfo.fullName, 'test person');
-    assert.notOk(component.assignedInstructors[1].userNameInfo.hasAdditionalInfo);
-    assert.strictEqual(component.assignedInstructors[2].userNameInfo.fullName, 'test person2');
-    assert.notOk(component.assignedInstructors[2].userNameInfo.hasAdditionalInfo);
-    assert.notOk(component.saveButton.isVisible);
-    assert.notOk(component.cancelButton.isVisible);
-    assert.strictEqual(component.manageButton.text, 'Manage Instructors');
-    await component.manage();
     assert.strictEqual(component.title, 'Manage Default Instructors');
     assert.strictEqual(component.selectedInstructors.length, 2);
     assert.strictEqual(component.selectedInstructors[0].userNameInfo.fullName, 'aardvark');
@@ -79,9 +81,6 @@ module('Integration | Component | learner-group/instructor-manager', function (h
       component.selectedInstructorGroups[0].membersList.users[0].userNameInfo.fullName,
       'test person2',
     );
-    assert.ok(component.saveButton.isVisible);
-    assert.ok(component.cancelButton.isVisible);
-    assert.notOk(component.manageButton.isVisible);
   });
 
   test('no selected instructors', async function (assert) {
@@ -92,18 +91,21 @@ module('Integration | Component | learner-group/instructor-manager', function (h
     const learnerGroupModel = await this.owner
       .lookup('service:store')
       .findRecord('learner-group', learnerGroup.id);
-
     this.set('learnerGroup', learnerGroupModel);
     await render(hbs`<LearnerGroup::InstructorManager
   @learnerGroup={{this.learnerGroup}}
+  @instructors={{(array)}}
+  @instructorGroups={{(array)}}
+  @availableInstructorGroups={{(array)}}
   @save={{(noop)}}
-  @canUpdate={{true}}
+  @cancel={{(noop)}}
 />`);
-    assert.strictEqual(component.title, 'Default Instructors (0)');
     assert.strictEqual(component.selectedInstructors.length, 0);
+    assert.strictEqual(component.selectedInstructorGroups.length, 0);
   });
 
-  test('read-only mode', async function (assert) {
+  test('cancel', async function (assert) {
+    assert.expect(1);
     const instructor = this.server.create('user', {
       firstName: 'test',
       lastName: 'person',
@@ -122,56 +124,24 @@ module('Integration | Component | learner-group/instructor-manager', function (h
     const learnerGroupModel = await this.owner
       .lookup('service:store')
       .findRecord('learner-group', learnerGroup.id);
-
     this.set('learnerGroup', learnerGroupModel);
+    this.set('cancel', () => {
+      assert.ok(true, 'cancel() fired.');
+    });
     await render(hbs`<LearnerGroup::InstructorManager
   @learnerGroup={{this.learnerGroup}}
+  @instructors={{(array)}}
+  @instructorGroups={{(array)}}
+  @availableInstructorGroups={{(array)}}
   @save={{(noop)}}
-  @canUpdate={{false}}
+  @cancel={{this.cancel}}
 />`);
-    assert.strictEqual(component.assignedInstructors.length, 2);
-    assert.notOk(component.manageButton.isVisible);
+    await component.cancel.click();
   });
 
-  test('edit and cancel', async function (assert) {
-    const instructor = this.server.create('user', {
-      firstName: 'test',
-      lastName: 'person',
-      middleName: '',
-    });
-    const instructor2 = this.server.create('user', {
-      firstName: 'zeb',
-      lastName: 'z00ber',
-      displayName: 'aardvark',
-    });
-    const learnerGroup = this.server.create('learner-group', {
-      title: 'this group',
-      cohort: this.cohort,
-      instructors: [instructor, instructor2],
-    });
-
-    const learnerGroupModel = await this.owner
-      .lookup('service:store')
-      .findRecord('learner-group', learnerGroup.id);
-    this.set('learnerGroup', learnerGroupModel);
-
-    await render(hbs`<LearnerGroup::InstructorManager
-  @learnerGroup={{this.learnerGroup}}
-  @save={{(noop)}}
-  @canUpdate={{true}}
-/>`);
-    assert.strictEqual(component.assignedInstructors.length, 2);
-    await component.manage();
-    assert.strictEqual(component.selectedInstructors.length, 2);
-    await component.selectedInstructors[0].remove();
-    assert.strictEqual(component.selectedInstructors.length, 1);
-    await component.cancel();
-    assert.strictEqual(component.assignedInstructors.length, 2);
-  });
-
-  test('edit and save', async function (assert) {
-    assert.expect(9);
-    const instructor = this.server.create('user', {
+  test('save', async function (assert) {
+    assert.expect(8);
+    const instructor1 = this.server.create('user', {
       firstName: 'test',
       lastName: 'person',
       middleName: '',
@@ -186,7 +156,7 @@ module('Integration | Component | learner-group/instructor-manager', function (h
       lastName: 'person2',
       middleName: '',
     });
-    const instructorGroup = this.server.create('instructor-group', {
+    const instructorGroup1 = this.server.create('instructor-group', {
       title: 'test group',
       users: [instructor3],
     });
@@ -194,13 +164,28 @@ module('Integration | Component | learner-group/instructor-manager', function (h
     const learnerGroup = this.server.create('learner-group', {
       title: 'this group',
       cohort: this.cohort,
-      instructors: [instructor, instructor2],
-      instructorGroups: [instructorGroup, instructorGroup2],
+      instructors: [instructor1, instructor2],
+      instructorGroups: [instructorGroup1, instructorGroup2],
     });
     const learnerGroupModel = await this.owner
       .lookup('service:store')
       .findRecord('learner-group', learnerGroup.id);
-
+    const instructorGroupModel1 = await this.owner
+      .lookup('service:store')
+      .findRecord('instructor-group', instructorGroup1.id);
+    const instructorGroupModel2 = await this.owner
+      .lookup('service:store')
+      .findRecord('instructor-group', instructorGroup2.id);
+    const instructorModel1 = await this.owner
+      .lookup('service:store')
+      .findRecord('user', instructor1.id);
+    const instructorModel2 = await this.owner
+      .lookup('service:store')
+      .findRecord('user', instructor2.id);
+    this.set('learnerGroup', learnerGroupModel);
+    this.set('instructors', [instructorModel1, instructorModel2]);
+    this.set('instructorGroups', [instructorGroupModel1, instructorGroupModel2]);
+    this.set('availableInstructorGroups', [instructorGroupModel1, instructorGroupModel2]);
     this.set('save', (users, groups) => {
       assert.strictEqual(users.length, 1);
       assert.strictEqual(groups.length, 1);
@@ -208,26 +193,28 @@ module('Integration | Component | learner-group/instructor-manager', function (h
       assert.strictEqual(groups[0].get('title'), 'test group 2');
     });
     this.set('learnerGroup', learnerGroupModel);
-
     await render(hbs`<LearnerGroup::InstructorManager
   @learnerGroup={{this.learnerGroup}}
+  @instructors={{this.instructors}}
+  @instructorGroups={{this.instructorGroups}}
+  @availableInstructorGroups={{this.availableInstructorGroups}}
   @save={{this.save}}
-  @canUpdate={{true}}
+  @cancel={{(noop)}}
 />`);
-
-    assert.strictEqual(component.assignedInstructors.length, 3);
-    await component.manage();
     assert.strictEqual(component.selectedInstructors.length, 2);
     await component.selectedInstructors[0].remove();
     assert.strictEqual(component.selectedInstructorGroups.length, 2);
     await component.selectedInstructorGroups[0].remove();
     assert.strictEqual(component.selectedInstructors.length, 1);
     assert.strictEqual(component.selectedInstructorGroups.length, 1);
-    await component.save();
+    await component.save.click();
   });
 
   test('search and add instructor group', async function (assert) {
-    this.server.create('instructor-group', { title: 'test group', school: this.school });
+    const instructorGroup = this.server.create('instructor-group', {
+      title: 'test group',
+      school: this.school,
+    });
     const learnerGroup = this.server.create('learner-group', {
       title: 'this group',
       cohort: this.cohort,
@@ -235,14 +222,19 @@ module('Integration | Component | learner-group/instructor-manager', function (h
     const learnerGroupModel = await this.owner
       .lookup('service:store')
       .findRecord('learner-group', learnerGroup.id);
-
+    const instructorGroupModel = await this.owner
+      .lookup('service:store')
+      .findRecord('instructor-group', instructorGroup.id);
     this.set('learnerGroup', learnerGroupModel);
+    this.set('availableInstructorGroup', [instructorGroupModel]);
     await render(hbs`<LearnerGroup::InstructorManager
   @learnerGroup={{this.learnerGroup}}
+  @instructors={{(array)}}
+  @instructorGroups={{(array)}}
+  @availableInstructorGroups={{this.availableInstructorGroup}}
   @save={{(noop)}}
-  @canUpdate={{true}}
+  @cancel={{(noop)}}
 />`);
-    await component.manage();
     assert.strictEqual(component.selectedInstructorGroups.length, 0);
     await component.search('test group');
     await component.searchResults[0].add();
@@ -267,10 +259,12 @@ module('Integration | Component | learner-group/instructor-manager', function (h
     this.set('learnerGroup', learnerGroupModel);
     await render(hbs`<LearnerGroup::InstructorManager
   @learnerGroup={{this.learnerGroup}}
+  @instructors={{(array)}}
+  @instructorGroups={{(array)}}
+  @availableInstructorGroups={{(array)}}
   @save={{(noop)}}
-  @canUpdate={{true}}
+  @cancel={{(noop)}}
 />`);
-    await component.manage();
     assert.strictEqual(component.selectedInstructors.length, 0);
     await component.search('test group');
     await component.searchResults[0].add();
