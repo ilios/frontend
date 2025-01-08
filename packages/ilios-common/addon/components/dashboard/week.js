@@ -3,11 +3,11 @@ import { DateTime } from 'luxon';
 
 export default class DashboardWeekComponent extends Component {
   get expanded() {
-    const lastSunday = this.thisThursday.minus({ week: 1 }).toFormat('W');
-    const thisSunday = this.thisThursday.toFormat('W');
-    const nextSunday = this.thisThursday.plus({ week: 1 }).toFormat('W');
+    const lastWeek = this.thisThursday.minus({ week: 1 }).toFormat('W');
+    const thisWeek = this.thisThursday.toFormat('W');
+    const nextWeek = this.thisThursday.plus({ week: 1 }).toFormat('W');
 
-    return `${lastSunday}-${thisSunday}-${nextSunday}`;
+    return `${lastWeek}-${thisWeek}-${nextWeek}`;
   }
 
   get thisThursday() {
