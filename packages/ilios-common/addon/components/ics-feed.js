@@ -5,6 +5,10 @@ import { service } from '@ember/service';
 export default class IcsFeedComponent extends Component {
   @service flashMessages;
 
+  copyButton = (id) => {
+    return document.getElementById(id);
+  };
+
   textCopied = restartableTask(async () => {
     this.flashMessages.success('general.copiedIcsFeedUrl');
   });
