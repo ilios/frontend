@@ -9,7 +9,6 @@ module.exports = function (environment) {
     'ember-simple-auth': {
       authorizer: 'authorizer:token',
       authenticationRoute: 'login-error',
-      useSessionSetupMethod: true, //can be removed in ESA v5.x
     },
     'ember-simple-auth-token': {
       serverTokenEndpoint: '/auth/login',
