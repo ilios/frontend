@@ -18,7 +18,6 @@ export default class GlobalSearchBox extends Component {
   @tracked autocompleteCache = [];
   @tracked autocompleteSelectedQuery;
   @tracked internalQuery;
-  @tracked searchInputElement;
   @tracked results = null;
 
   get hasResults() {
@@ -36,8 +35,10 @@ export default class GlobalSearchBox extends Component {
   }
 
   @action
-  focusAndSearch() {
-    this.searchInputElement.focus();
+  focusAndSearch(event) {
+    const searchInputElement =
+      event.currentTarget.parentElement.getElementsByClassName('global-search-input')[0];
+    searchInputElement.focus();
     this.search();
   }
 
