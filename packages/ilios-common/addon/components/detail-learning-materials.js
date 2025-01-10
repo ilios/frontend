@@ -1,6 +1,7 @@
 import Component from '@glimmer/component';
 import { service } from '@ember/service';
 import { cached, tracked } from '@glimmer/tracking';
+import { guidFor } from '@ember/object/internals';
 import { action } from '@ember/object';
 import { dropTask } from 'ember-concurrency';
 import { all } from 'rsvp';
@@ -21,7 +22,6 @@ export default class DetailCohortsComponent extends Component {
   @tracked type;
   @tracked learningMaterialStatuses;
   @tracked learningMaterialUserRoles;
-  @tracked title;
 
   @cached
   get lmData() {
@@ -32,6 +32,14 @@ export default class DetailCohortsComponent extends Component {
     super(...arguments);
     this.learningMaterialStatuses = this.store.peekAll('learning-material-status');
     this.learningMaterialUserRoles = this.store.peekAll('learning-material-user-role');
+  }
+
+  get titleId() {
+    return `detail-learning-materials-header-${guidFor(this)}`;
+  }
+
+  get title() {
+    return document.getElementById(this.titleId);
   }
 
   @cached
