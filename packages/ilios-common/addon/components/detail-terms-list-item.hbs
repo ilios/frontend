@@ -4,10 +4,10 @@
   role={{if @canEdit "button"}}
   {{on "click" (fn (if @canEdit @remove (noop)) @term)}}
   {{mouse-hover-toggle (set this "isHovering")}}
-  {{did-insert (set this "theElement")}}
+  id={{this.detailTermsListItemId}}
 >
-  {{#if (and this.theElement this.showTooltip)}}
-    <IliosTooltip @target={{this.theElement}}>
+  {{#if this.showTooltip}}
+    <IliosTooltip @target={{this.detailTermsListItemElement}}>
       {{@term.description}}
     </IliosTooltip>
   {{/if}}

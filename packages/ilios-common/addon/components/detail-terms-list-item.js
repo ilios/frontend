@@ -1,9 +1,10 @@
 import Component from '@glimmer/component';
 import { cached, tracked } from '@glimmer/tracking';
 import { TrackedAsyncData } from 'ember-async-data';
+import { guidFor } from '@ember/object/internals';
+
 export default class DetailTermsListItem extends Component {
   @tracked isHovering;
-  @tracked theElement;
 
   @cached
   get allParentsTitlesData() {
@@ -23,8 +24,16 @@ export default class DetailTermsListItem extends Component {
     return this.parentData.isResolved ? this.parentData.value : null;
   }
 
+  get detailTermsListItemId() {
+    return `detail-terms-list-item-${guidFor(this)}`;
+  }
+
+  get detailTermsListItemElement() {
+    return document.getElementById(this.detailTermsListItemId);
+  }
+
   get showTooltip() {
-    return this.args?.term.description?.length && this.theElement && this.isHovering;
+    return this.args?.term.description?.length && this.isHovering;
   }
 
   get isTopLevel() {
