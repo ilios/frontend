@@ -3,11 +3,20 @@ import { service } from '@ember/service';
 import { action } from '@ember/object';
 import { htmlSafe } from '@ember/template';
 import { DateTime } from 'luxon';
+import { guidFor } from '@ember/object/internals';
 import colorChange from 'ilios-common/utils/color-change';
 import calendarEventTooltip from 'ilios-common/utils/calendar-event-tooltip';
 
 export default class IliosCalendarEventMonthComponent extends Component {
   @service intl;
+
+  get eventButtonId() {
+    return `ilios-calendar-event-month-button-${guidFor(this)}`;
+  }
+
+  get eventButtonElement() {
+    return document.getElementById(this.eventButtonId);
+  }
 
   get isIlm() {
     return !!this.args.event.ilmSession;
