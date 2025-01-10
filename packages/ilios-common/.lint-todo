@@ -6,7 +6,6 @@ add|ember-template-lint|no-at-ember-render-modifiers|7|2|7|2|1a2522cd1202904fb09
 add|ember-template-lint|no-at-ember-render-modifiers|6|8|6|8|c628ee621a6e921e369bf6bcb158a5ef932e6741|1731542400000|1762646400000|1793750400000|addon/components/editable-field.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|2|2|2|2|ad17d66e0fe1720bc8ddedc12dff3a105709765c|1731542400000|1762646400000|1793750400000|addon/components/html-editor.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|3|2|3|2|d39abab22a3e75d93f69335da422e7ef73b36283|1731542400000|1762646400000|1793750400000|addon/components/html-editor.hbs
-add|ember-template-lint|no-at-ember-render-modifiers|9|2|9|2|1a2522cd1202904fb09a6e811dec6b46d8189ab3|1731542400000|1762646400000|1793750400000|addon/components/ilios-calendar-event-month.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|4|4|4|4|fc97c348371546a640a56d968295aa0dec994ad9|1731542400000|1762646400000|1793750400000|addon/components/ilios-tooltip.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|62|10|62|10|5ba6894d30ea3a3eae704867d5bc5d61c5ee4e1f|1731542400000|1762646400000|1793750400000|addon/components/mesh-manager.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|3|2|3|2|6bbbcafd85d75fd8f3d70c2bd4ba01d753c24f9c|1731542400000|1762646400000|1793750400000|addon/components/offering-calendar.hbs
