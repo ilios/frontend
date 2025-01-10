@@ -1,16 +1,16 @@
 <button
   {{! template-lint-disable no-inline-styles }}
   style={{this.style}}
-  class="daily-calendar-event {{if this.isIlm "ilm"}} {{if this.clickable "clickable"}}"
+  class="daily-calendar-event {{if this.isIlm 'ilm'}} {{if this.clickable 'clickable'}}"
   type="button"
   {{on "click" (if this.clickable @selectEvent (noop))}}
-  {{did-insert (set this "theElement")}}
+  id={{this.eventButtonId}}
   {{mouse-hover-toggle (set this "showTooltip")}}
   data-test-calendar-event
   data-test-daily-calendar-event
 >
-  {{#if (and this.theElement this.showTooltip)}}
-    <IliosTooltip @target={{this.theElement}}>
+  {{#if this.showTooltip}}
+    <IliosTooltip @target={{this.eventButtonElement}}>
       {{this.tooltipContent}}
     </IliosTooltip>
   {{/if}}
