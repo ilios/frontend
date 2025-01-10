@@ -1,7 +1,6 @@
 add|ember-template-lint|no-at-ember-render-modifiers|7|2|7|2|1a2522cd1202904fb09a6e811dec6b46d8189ab3|1731542400000|1762646400000|1793750400000|addon/components/daily-calendar-event.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|5|2|5|2|fb8a149d14413d4dfc84ffd31349ef3f2ac6d17b|1731542400000|1762646400000|1793750400000|addon/components/date-picker.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|6|2|6|2|993f1e23f796f19a221eae6e24872755e0436cb4|1731542400000|1762646400000|1793750400000|addon/components/date-picker.hbs
-add|ember-template-lint|no-at-ember-render-modifiers|6|23|6|23|cd8fd540bd3dc98969677fecef5b4617da0031c8|1731542400000|1762646400000|1793750400000|addon/components/detail-learning-materials.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|7|2|7|2|1a2522cd1202904fb09a6e811dec6b46d8189ab3|1731542400000|1762646400000|1793750400000|addon/components/detail-terms-list-item.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|6|8|6|8|c628ee621a6e921e369bf6bcb158a5ef932e6741|1731542400000|1762646400000|1793750400000|addon/components/editable-field.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|2|2|2|2|ad17d66e0fe1720bc8ddedc12dff3a105709765c|1731542400000|1762646400000|1793750400000|addon/components/html-editor.hbs
