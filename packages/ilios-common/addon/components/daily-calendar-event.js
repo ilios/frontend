@@ -4,6 +4,7 @@ import colorChange from 'ilios-common/utils/color-change';
 import { htmlSafe } from '@ember/template';
 import calendarEventTooltip from 'ilios-common/utils/calendar-event-tooltip';
 import { service } from '@ember/service';
+import { guidFor } from '@ember/object/internals';
 
 export default class DailyCalendarEventComponent extends Component {
   @service intl;
@@ -20,6 +21,14 @@ export default class DailyCalendarEventComponent extends Component {
     });
 
     this.minutes = allMinutesInDay;
+  }
+
+  get eventButtonId() {
+    return `daily-calendar-event-button-${guidFor(this)}`;
+  }
+
+  get eventButtonElement() {
+    return document.getElementById(this.eventButtonId);
   }
 
   get isIlm() {
