@@ -456,6 +456,9 @@ importers:
       ember-on-resize-modifier:
         specifier: ^2.0.2
         version: 2.0.2(@babel/core@7.26.0)(ember-source@5.11.1(@glimmer/component@1.1.2(@babel/core@7.26.0))(rsvp@4.8.5)(webpack@5.97.1))(webpack@5.97.1)
+      ember-popper-modifier:
+        specifier: ^4.1.0
+        version: 4.1.0(ember-source@5.11.1(@glimmer/component@1.1.2(@babel/core@7.26.0))(rsvp@4.8.5)(webpack@5.97.1))(webpack@5.97.1)
       ember-set-helper:
         specifier: ^3.0.1
         version: 3.0.1(@babel/core@7.26.0)
@@ -5482,6 +5485,12 @@ packages:
     engines: {node: 16.* || >= 18}
     peerDependencies:
       ember-source: '>= 3.28.0'
+
+  ember-popper-modifier@4.1.0:
+    resolution: {integrity: sha512-NoX4mvq7aBmhfylSyDqkbLubKnuLWD9q8O9er7dVsBMWhMRU0ly7ur7nGnuF95rtCeaBeNhZzcWlLBEF/X8KsA==}
+    engines: {node: 18.* || >= 20}
+    peerDependencies:
+      ember-source: '>= 4.8.0'
 
   ember-qunit@8.1.1:
     resolution: {integrity: sha512-nT+6s74j3BKNn+QQY/hINC3Xw3kn0NF0cU9zlgVQmCBWoyis1J24xWrY2LFOMThPmF6lHqcrUb5JwvBD4BXEXg==}
@@ -16516,6 +16525,20 @@ snapshots:
       ember-source: 5.11.1(@glimmer/component@1.1.2(@babel/core@7.26.0))(rsvp@4.8.5)(webpack@5.97.1)
     transitivePeerDependencies:
       - supports-color
+
+  ember-popper-modifier@4.1.0(ember-source@5.11.1(@glimmer/component@1.1.2(@babel/core@7.26.0))(rsvp@4.8.5)(webpack@5.97.1))(webpack@5.97.1):
+    dependencies:
+      '@babel/core': 7.26.0(supports-color@8.1.1)
+      '@popperjs/core': 2.11.8
+      ember-auto-import: 2.10.0(webpack@5.97.1)
+      ember-cli-babel: 8.2.0(@babel/core@7.26.0)
+      ember-cli-htmlbars: 6.3.0
+      ember-modifier: 4.2.0(@babel/core@7.26.0)(ember-source@5.11.1(@glimmer/component@1.1.2(@babel/core@7.26.0))(rsvp@4.8.5)(webpack@5.97.1))
+      ember-source: 5.11.1(@glimmer/component@1.1.2(@babel/core@7.26.0))(rsvp@4.8.5)(webpack@5.97.1)
+    transitivePeerDependencies:
+      - '@glint/template'
+      - supports-color
+      - webpack
 
   ember-qunit@8.1.1(@ember/test-helpers@3.3.1(@babel/core@7.26.0)(ember-source@5.11.1(@glimmer/component@1.1.2(@babel/core@7.26.0))(rsvp@4.8.5)(webpack@5.97.1))(webpack@5.97.1))(ember-source@5.11.1(@glimmer/component@1.1.2(@babel/core@7.26.0))(rsvp@4.8.5)(webpack@5.97.1))(qunit@2.23.1):
     dependencies:
