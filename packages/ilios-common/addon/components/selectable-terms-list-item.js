@@ -1,10 +1,18 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
+import { guidFor } from '@ember/object/internals';
 
 export default class SelectableTermsListItem extends Component {
   @tracked isHovering;
-  @tracked theElement;
+
+  get selectableTermsListItemButtonId() {
+    return `selectable-terms-list-item-button-${guidFor(this)}`;
+  }
+
+  get selectableTermsListItemButtonElement() {
+    return document.getElementById(this.selectableTermsListItemButtonId);
+  }
 
   get isSelected() {
     const term = this.args.term;
@@ -17,7 +25,7 @@ export default class SelectableTermsListItem extends Component {
   }
 
   get showTooltip() {
-    return this.args?.term.description?.length && this.theElement && this.isHovering;
+    return this.args?.term.description?.length && this.isHovering;
   }
 
   @action
