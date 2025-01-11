@@ -7,7 +7,7 @@
   {{mouse-hover-toggle (set this "isHovering")}}
   id={{this.selectableTermsListItemButtonId}}
 >
-  {{#if (and this.theElement this.showTooltip)}}
+  {{#if this.showTooltip}}
     <IliosTooltip @target={{this.selectableTermsListItemButtonElement}}>
       {{@term.description}}
     </IliosTooltip>
