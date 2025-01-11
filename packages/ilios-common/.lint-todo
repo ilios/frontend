@@ -15,7 +15,6 @@ add|ember-template-lint|no-at-ember-render-modifiers|12|6|12|6|9264ba2eca1f85881
 add|ember-template-lint|no-at-ember-render-modifiers|3|2|3|2|23cd787c79c34a628dadb6e96dd4004d42eebb79|1731542400000|1762646400000|1793750400000|addon/components/print-course.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|4|2|4|2|aa5aedc5b45db1644928b5b95c2fefc1ef4a7bdf|1731542400000|1762646400000|1793750400000|addon/components/print-course.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|12|4|12|4|5ba6894d30ea3a3eae704867d5bc5d61c5ee4e1f|1731542400000|1762646400000|1793750400000|addon/components/search-box.hbs
-add|ember-template-lint|no-at-ember-render-modifiers|8|2|8|2|1a2522cd1202904fb09a6e811dec6b46d8189ab3|1731542400000|1762646400000|1793750400000|addon/components/selectable-terms-list-item.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|3|2|3|2|1fb6f249958ee245e6abc413681c9fe096120cef|1731542400000|1762646400000|1793750400000|addon/components/session-copy.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|4|2|4|2|856162ce473b112534763bb641aae7a4422d8e2e|1731542400000|1762646400000|1793750400000|addon/components/session-copy.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|3|2|3|2|23cd787c79c34a628dadb6e96dd4004d42eebb79|1731542400000|1762646400000|1793750400000|addon/components/session-offerings-list.hbs
