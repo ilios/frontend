@@ -3,6 +3,8 @@ import { service } from '@ember/service';
 import { dropTask, restartableTask, waitForProperty } from 'ember-concurrency';
 import { tracked } from '@glimmer/tracking';
 import flatpickr from 'flatpickr';
+import { French } from 'flatpickr/dist/l10n/fr.js';
+import { Spanish } from 'flatpickr/dist/l10n/es.js';
 import { later, next } from '@ember/runloop';
 import { isTesting } from '@embroider/macros';
 
@@ -19,18 +21,14 @@ export default class DatePickerComponent extends Component {
     }
   });
 
-  setupPicker = dropTask(async (element) => {
+  setupPicker = dropTask((element) => {
     const currentLocale = this.intl.primaryLocale;
     let locale;
     switch (currentLocale) {
       case 'fr':
-        // eslint-disable-next-line no-case-declarations
-        const { French } = await import('flatpickr/dist/l10n/fr.js');
         locale = French;
         break;
       case 'es':
-        // eslint-disable-next-line no-case-declarations
-        const { Spanish } = await import('flatpickr/dist/l10n/es.js');
         locale = Spanish;
         break;
       default:
