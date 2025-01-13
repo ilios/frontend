@@ -13,12 +13,6 @@ module.exports = function (environment) {
       types: ['success', 'warning', 'info', 'alert'],
       injectionFactories: [],
     },
-    'ember-simple-auth-token': {
-      serverTokenEndpoint: '/auth/login',
-      tokenPropertyName: 'jwt',
-      refreshAccessTokens: false,
-      authorizationPrefix: 'Token ',
-    },
     i18n: {
       defaultLocale: 'en',
     },

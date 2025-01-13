@@ -10,14 +10,6 @@ module.exports = function (environment) {
       authorizer: 'authorizer:token',
       authenticationRoute: 'login-error',
     },
-    'ember-simple-auth-token': {
-      serverTokenEndpoint: '/auth/login',
-      serverTokenRefreshEndpoint: '/auth/token',
-      tokenPropertyName: 'jwt',
-      authorizationHeaderName: 'X-JWT-Authorization',
-      authorizationPrefix: 'Token ',
-      refreshLeeway: 300,
-    },
     'ember-local-storage': {
       namespace: true,
       keyDelimiter: '/',
