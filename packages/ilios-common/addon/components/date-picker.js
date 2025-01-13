@@ -13,7 +13,7 @@ export default class DatePickerComponent extends Component {
   @tracked isOpen = false;
   _flatPickerInstance;
 
-  picker = modifier((element, [value, minDate, maxDate]) => {
+  picker = modifier((element, [value, minDate, maxDate, localeIdentifier]) => {
     if (!this._flatPickerInstance) {
       this._flatPickerInstance = this.initPicker(element, value, minDate, maxDate);
     }
@@ -26,21 +26,26 @@ export default class DatePickerComponent extends Component {
     if (this._flatPickerInstance.maxDate !== maxDate) {
       this._flatPickerInstance.set('maxDate', maxDate);
     }
+    const locale = this.getLocale(localeIdentifier);
+    if (this._flatPickerInstance.l10n !== locale) {
+      this._flatPickerInstance.set('locale', locale);
+    }
   });
 
-  initPicker(element, value, minDate, maxDate) {
-    const currentLocale = this.intl.primaryLocale;
-    let locale;
-    switch (currentLocale) {
+  getLocale(localeIdentifier) {
+    //console.log(French);
+    switch (localeIdentifier) {
       case 'fr':
-        locale = French;
-        break;
+        return French;
       case 'es':
-        locale = Spanish;
-        break;
+        return Spanish;
       default:
-        locale = 'en';
+        return 'en';
     }
+  }
+
+  initPicker(element, value, minDate, maxDate, localeIdentifier) {
+    const locale = this.getLocale(localeIdentifier);
     return flatpickr(element, {
       locale,
       defaultDate: value,
