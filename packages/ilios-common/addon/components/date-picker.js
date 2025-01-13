@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
 import { service } from '@ember/service';
-import { dropTask, restartableTask, waitForProperty } from 'ember-concurrency';
 import { tracked } from '@glimmer/tracking';
+import { modifier } from 'ember-modifier';
 import flatpickr from 'flatpickr';
 import { French } from 'flatpickr/dist/l10n/fr.js';
 import { Spanish } from 'flatpickr/dist/l10n/es.js';
@@ -10,18 +10,25 @@ import { isTesting } from '@embroider/macros';
 
 export default class DatePickerComponent extends Component {
   @service intl;
-
-  @tracked _flatPickerInstance;
   @tracked isOpen = false;
+  _flatPickerInstance;
 
-  updatePicker = restartableTask(async (element, [value]) => {
-    await waitForProperty(this, '_flatPickerInstance');
-    if (this._flatPickerInstance.selectedDates[0] != value) {
+  picker = modifier((element, [value, minDate, maxDate]) => {
+    if (!this._flatPickerInstance) {
+      this._flatPickerInstance = this.initPicker(element, value, minDate, maxDate);
+    }
+    if (this._flatPickerInstance.selectedDates[0] !== value) {
       this._flatPickerInstance.setDate(value);
+    }
+    if (this._flatPickerInstance.minDate !== minDate) {
+      this._flatPickerInstance.set('minDate', minDate);
+    }
+    if (this._flatPickerInstance.maxDate !== maxDate) {
+      this._flatPickerInstance.set('maxDate', maxDate);
     }
   });
 
-  setupPicker = dropTask((element) => {
+  initPicker(element, value, minDate, maxDate) {
     const currentLocale = this.intl.primaryLocale;
     let locale;
     switch (currentLocale) {
@@ -34,9 +41,9 @@ export default class DatePickerComponent extends Component {
       default:
         locale = 'en';
     }
-    this._flatPickerInstance = flatpickr(element, {
+    return flatpickr(element, {
       locale,
-      defaultDate: this.args.value,
+      defaultDate: value,
       formatDate: (dateObj) =>
         this.intl.formatDate(dateObj, { day: '2-digit', month: '2-digit', year: 'numeric' }),
       onChange: (selectedDates) => this.onChange(selectedDates[0]),
@@ -49,11 +56,11 @@ export default class DatePickerComponent extends Component {
       onClose: () => {
         this.isOpen = false;
       },
-      maxDate: this.args.maxDate ?? null,
-      minDate: this.args.minDate ?? null,
+      maxDate: maxDate ?? null,
+      minDate: minDate ?? null,
       disableMobile: isTesting(),
     });
-  });
+  }
 
   willDestroy() {
     super.willDestroy(...arguments);
