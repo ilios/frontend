@@ -445,8 +445,8 @@ importers:
         specifier: ^5.0.2
         version: 5.0.2(@babel/core@7.26.0)
       ember-intl:
-        specifier: ^7.1.0
-        version: 7.1.0(@ember/test-helpers@4.0.4(@babel/core@7.26.0)(ember-source@5.11.1(@glimmer/component@1.1.2(@babel/core@7.26.0))(rsvp@4.8.5)(webpack@5.97.1)))(webpack@5.97.1)
+        specifier: ^7.1.1
+        version: 7.1.1(@ember/test-helpers@4.0.4(@babel/core@7.26.0)(ember-source@5.11.1(@glimmer/component@1.1.2(@babel/core@7.26.0))(rsvp@4.8.5)(webpack@5.97.1)))(webpack@5.97.1)
       ember-math-helpers:
         specifier: ^4.0.0
         version: 4.2.1(ember-source@5.11.1(@glimmer/component@1.1.2(@babel/core@7.26.0))(rsvp@4.8.5)(webpack@5.97.1))
@@ -5430,8 +5430,8 @@ packages:
   ember-inflector@5.0.2:
     resolution: {integrity: sha512-aoPaT7B3pbUHSi4ulf02iRaMMvPteuDBO8jA1SLLOl/JwnO2YI5F/MhNPaolxp8DWwAd/P6MNN+wD5bLwmiUIA==}
 
-  ember-intl@7.1.0:
-    resolution: {integrity: sha512-AGhUCHKeBBr8wTcuj73vhUFIq3bR9SRe9pvpxcI88pvCAgCBmggwWabhwfa7W+ULdFcF4TldMaN1hv1KeQzKHQ==}
+  ember-intl@7.1.1:
+    resolution: {integrity: sha512-C1GZ4Wv3TSewZmB9OFdzjDCKBeWN/9dBi1kGOBMgS/0zdi/xiiex8NbGaNPV9zGlCcdP7zHuS40dv5EylFP44g==}
     engines: {node: 18.* || >= 20}
     peerDependencies:
       '@ember/test-helpers': ^2.9.4 || ^3.2.0 || ^4.0.0
@@ -16415,7 +16415,7 @@ snapshots:
       - '@babel/core'
       - supports-color
 
-  ember-intl@7.1.0(@ember/test-helpers@4.0.4(@babel/core@7.26.0)(ember-source@5.11.1(@glimmer/component@1.1.2(@babel/core@7.26.0))(rsvp@4.8.5)(webpack@5.97.1)))(webpack@5.97.1):
+  ember-intl@7.1.1(@ember/test-helpers@4.0.4(@babel/core@7.26.0)(ember-source@5.11.1(@glimmer/component@1.1.2(@babel/core@7.26.0))(rsvp@4.8.5)(webpack@5.97.1)))(webpack@5.97.1):
     dependencies:
       '@babel/core': 7.26.0(supports-color@8.1.1)
       '@formatjs/icu-messageformat-parser': 2.9.8
