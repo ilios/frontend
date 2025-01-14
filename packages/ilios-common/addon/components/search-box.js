@@ -10,7 +10,6 @@ const DEBOUNCE_TIMEOUT = 250;
 export default class SearchBox extends Component {
   @service intl;
   @tracked value = '';
-  @tracked searchInput;
 
   get searchBoxId() {
     return `search-box-${guidFor(this)}`;
