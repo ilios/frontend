@@ -11,7 +11,6 @@ add|ember-template-lint|no-at-ember-render-modifiers|4|2|4|2|0a8f8f3c4ad64455e02
 add|ember-template-lint|no-at-ember-render-modifiers|4|2|4|2|fab53a12bc25481f88028a380c2d467d682eee45|1731542400000|1762646400000|1793750400000|addon/components/offering-form.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|5|2|5|2|d6e466b5b7ca03528b0882253d26794d3a9aa6ca|1731542400000|1762646400000|1793750400000|addon/components/offering-form.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|26|14|26|14|e5d8b6826e05b980dca30d848c35171b24960c39|1731542400000|1762646400000|1793750400000|addon/components/offering-manager.hbs
-add|ember-template-lint|no-at-ember-render-modifiers|12|6|12|6|9264ba2eca1f858819d7863757a2b23b353ace38|1731542400000|1762646400000|1793750400000|addon/components/offering-url-display.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|3|2|3|2|23cd787c79c34a628dadb6e96dd4004d42eebb79|1731542400000|1762646400000|1793750400000|addon/components/print-course.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|4|2|4|2|aa5aedc5b45db1644928b5b95c2fefc1ef4a7bdf|1731542400000|1762646400000|1793750400000|addon/components/print-course.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|12|4|12|4|5ba6894d30ea3a3eae704867d5bc5d61c5ee4e1f|1731542400000|1762646400000|1793750400000|addon/components/search-box.hbs

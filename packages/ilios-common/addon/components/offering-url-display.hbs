@@ -1,15 +1,12 @@
 {{#if @url}}
-  <span
-    class="offering-url-display"
-    ...attributes
-  >
+  <span class="offering-url-display" ...attributes>
     <a title={{@url}} href={{@url}}>{{t "general.virtualSessionLink"}}</a>
     <CopyButton
       title={{t "general.copyLink"}}
       @clipboardText={{@url}}
       @success={{perform this.copy}}
       class={{if this.copy.isRunning "copying"}}
-      {{did-insert (set this "copyButton")}}
+      id={{this.copyButtonId}}
       data-test-copy-url
     >
       {{#if this.copy.isRunning}}
@@ -19,9 +16,9 @@
       {{/if}}
     </CopyButton>
   </span>
-  {{#if (and this.copyButton this.copy.isRunning)}}
+  {{#if this.copy.isRunning}}
     <IliosTooltip
-      @target={{this.copyButton}}
+      @target={{this.copyButtonElement}}
       @options={{hash placement="right"}}
       class="offering-url-display-success-message-tooltip"
     >
