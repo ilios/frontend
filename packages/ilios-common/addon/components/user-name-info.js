@@ -8,7 +8,6 @@ import { guidFor } from '@ember/object/internals';
 export default class UserNameInfoComponent extends Component {
   @service iliosConfig;
   @tracked isHoveringOverUsernameInfo = false;
-  @tracked element;
 
   showCampusNameOfRecordConfig = new TrackedAsyncData(
     this.iliosConfig.itemFromConfig('showCampusNameOfRecord'),
