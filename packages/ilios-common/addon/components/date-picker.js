@@ -12,10 +12,12 @@ export default class DatePickerComponent extends Component {
   @service intl;
   @tracked isOpen = false;
   _flatPickerInstance;
+  _locale;
 
-  picker = modifier((element, [value, minDate, maxDate, localeIdentifier]) => {
+  picker = modifier((element, [value, minDate, maxDate, locale]) => {
     if (!this._flatPickerInstance) {
-      this._flatPickerInstance = this.initPicker(element, value, minDate, maxDate);
+      this._flatPickerInstance = this.initPicker(element, value, minDate, maxDate, locale);
+      this._locale = locale;
     }
     if (this._flatPickerInstance.selectedDates[0] !== value) {
       this._flatPickerInstance.setDate(value);
@@ -26,14 +28,13 @@ export default class DatePickerComponent extends Component {
     if (this._flatPickerInstance.maxDate !== maxDate) {
       this._flatPickerInstance.set('maxDate', maxDate);
     }
-    const locale = this.getLocale(localeIdentifier);
-    if (this._flatPickerInstance.l10n !== locale) {
-      this._flatPickerInstance.set('locale', locale);
+    if (this._locale !== locale) {
+      this._locale = locale;
+      this._flatPickerInstance.set('locale', this.getFlatpickrLocale(locale));
     }
   });
 
-  getLocale(localeIdentifier) {
-    //console.log(French);
+  getFlatpickrLocale(localeIdentifier) {
     switch (localeIdentifier) {
       case 'fr':
         return French;
@@ -44,10 +45,9 @@ export default class DatePickerComponent extends Component {
     }
   }
 
-  initPicker(element, value, minDate, maxDate, localeIdentifier) {
-    const locale = this.getLocale(localeIdentifier);
+  initPicker(element, value, minDate, maxDate, locale) {
     return flatpickr(element, {
-      locale,
+      locale: this.getFlatpickrLocale(locale),
       defaultDate: value,
       formatDate: (dateObj) =>
         this.intl.formatDate(dateObj, { day: '2-digit', month: '2-digit', year: 'numeric' }),
@@ -69,6 +69,7 @@ export default class DatePickerComponent extends Component {
 
   willDestroy() {
     super.willDestroy(...arguments);
+    this._locale = null;
     if (this._flatPickerInstance) {
       this._flatPickerInstance.destroy();
     }
