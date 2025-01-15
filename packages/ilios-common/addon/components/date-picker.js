@@ -5,12 +5,11 @@ import { modifier } from 'ember-modifier';
 import flatpickr from 'flatpickr';
 import { French } from 'flatpickr/dist/l10n/fr.js';
 import { Spanish } from 'flatpickr/dist/l10n/es.js';
-import { later, next } from '@ember/runloop';
+import { next } from '@ember/runloop';
 import { isTesting } from '@embroider/macros';
 
 export default class DatePickerComponent extends Component {
   @service intl;
-  @tracked isOpen = false;
   _flatPickerInstance;
   _locale;
 
@@ -52,15 +51,6 @@ export default class DatePickerComponent extends Component {
       formatDate: (dateObj) =>
         this.intl.formatDate(dateObj, { day: '2-digit', month: '2-digit', year: 'numeric' }),
       onChange: (selectedDates) => this.onChange(selectedDates[0]),
-      onOpen: () => {
-        // eslint-disable-next-line ember/no-runloop
-        later(() => {
-          this.isOpen = true;
-        }, 250);
-      },
-      onClose: () => {
-        this.isOpen = false;
-      },
       maxDate: maxDate ?? null,
       minDate: minDate ?? null,
       disableMobile: isTesting(),
