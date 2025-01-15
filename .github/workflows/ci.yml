@@ -159,14 +159,17 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/download-artifact@v4
         with:
-          name: coverage-frontend
+          pattern: coverage-*
           path: coverage
       - run: ls -lh
-      - run: ls -lh coverage
+      - run: ls -lh ${{github.workspace}}/coverage
+      - run: ls -lh ${{github.workspace}}/coverage/coverage-frontend
+      - run: ls -lh ${{github.workspace}}/coverage/coverage-test-app
       - name: Publish code coverage
         uses: paambaati/codeclimate-action@v9.0.0
         env:
           CC_TEST_REPORTER_ID: 8c510ad3aa4b1a2a3d504dfdbcc5605e7966c019dc1e9b68a815de50b946ebc6
         with:
           coverageLocations: |
-            coverageLocations: ${{github.workspace}}/coverage/lcov.info:lcov
+            ${{github.workspace}}/coverage/coverage-frontend/lcov.info:lcov
+            ${{github.workspace}}/coverage/coverage-test-app/lcov.info:lcov
