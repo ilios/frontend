@@ -3,7 +3,6 @@ import { registerDestructor } from '@ember/destroyable';
 import flatpickr from 'flatpickr';
 import { French } from 'flatpickr/dist/l10n/fr.js';
 import { Spanish } from 'flatpickr/dist/l10n/es.js';
-import { next } from '@ember/runloop';
 import { isTesting } from '@embroider/macros';
 import { service } from '@ember/service';
 
@@ -81,7 +80,5 @@ export default class DatePickerModifier extends Modifier {
     if (this.onChangeHandler) {
       await this.onChangeHandler(date);
     }
-    // eslint-disable-next-line ember/no-runloop
-    await next(() => {});
   }
 }
