@@ -9,26 +9,26 @@ import { isTesting } from '@embroider/macros';
 
 export default class DatePickerComponent extends Component {
   @service intl;
-  _flatPickerInstance;
-  _locale;
+  #flatPickerInstance;
+  #locale;
 
   picker = modifier((element, [value, minDate, maxDate, locale]) => {
-    if (!this._flatPickerInstance) {
-      this._flatPickerInstance = this.initPicker(element, value, minDate, maxDate, locale);
-      this._locale = locale;
+    if (!this.#flatPickerInstance) {
+      this.#flatPickerInstance = this.initPicker(element, value, minDate, maxDate, locale);
+      this.#locale = locale;
     }
-    if (this._flatPickerInstance.selectedDates[0] !== value) {
-      this._flatPickerInstance.setDate(value);
+    if (this.#flatPickerInstance.selectedDates[0] !== value) {
+      this.#flatPickerInstance.setDate(value);
     }
-    if (this._flatPickerInstance.minDate !== minDate) {
-      this._flatPickerInstance.set('minDate', minDate);
+    if (this.#flatPickerInstance.minDate !== minDate) {
+      this.#flatPickerInstance.set('minDate', minDate);
     }
-    if (this._flatPickerInstance.maxDate !== maxDate) {
-      this._flatPickerInstance.set('maxDate', maxDate);
+    if (this.#flatPickerInstance.maxDate !== maxDate) {
+      this.#flatPickerInstance.set('maxDate', maxDate);
     }
-    if (this._locale !== locale) {
-      this._locale = locale;
-      this._flatPickerInstance.set('locale', this.getFlatpickrLocale(locale));
+    if (this.#locale !== locale) {
+      this.#locale = locale;
+      this.#flatPickerInstance.set('locale', this.getFlatpickrLocale(locale));
     }
   });
 
@@ -58,9 +58,9 @@ export default class DatePickerComponent extends Component {
 
   willDestroy() {
     super.willDestroy(...arguments);
-    this._locale = null;
-    if (this._flatPickerInstance) {
-      this._flatPickerInstance.destroy();
+    this.#locale = null;
+    if (this.#flatPickerInstance) {
+      this.#flatPickerInstance.destroy();
     }
   }
 
