@@ -4,7 +4,6 @@ import { tracked } from '@glimmer/tracking';
 import { dropTask, restartableTask, timeout } from 'ember-concurrency';
 import { action } from '@ember/object';
 import { mapBy, sortBy } from 'ilios-common/utils/array-helpers';
-import { guidFor } from '@ember/object/internals';
 
 const DEBOUNCE_TIMEOUT = 250;
 const MIN_INPUT = 3;
@@ -17,14 +16,6 @@ export default class MeshManagerComponent extends Component {
   @tracked searchResults = [];
   @tracked searchPage = 0;
   @tracked hasMoreSearchResults = false;
-
-  get meshSearchInputId() {
-    return `mesh-search-input-${guidFor(this)}`;
-  }
-
-  get meshSearchInputElement() {
-    return document.getElementById(this.meshSearchInputId);
-  }
 
   get terms() {
     return this.args.terms ?? [];
@@ -72,12 +63,6 @@ export default class MeshManagerComponent extends Component {
   update(event) {
     this.query = event.target.value;
     this.search.perform();
-  }
-
-  @action
-  moveFocus() {
-    // place focus into the search box when search icon is clicked
-    this?.meshSearchInputElement.focus();
   }
 
   search = restartableTask(async () => {
