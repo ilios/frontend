@@ -4,12 +4,20 @@ import { action } from '@ember/object';
 import { isNone } from '@ember/utils';
 import { restartableTask, timeout } from 'ember-concurrency';
 import { service } from '@ember/service';
+import { guidFor } from '@ember/object/internals';
 const DEBOUNCE_TIMEOUT = 250;
 
 export default class SearchBox extends Component {
   @service intl;
   @tracked value = '';
-  @tracked searchInput;
+
+  get searchBoxId() {
+    return `search-box-${guidFor(this)}`;
+  }
+
+  get searchBoxInputElement() {
+    return document.getElementById(this.searchBoxId).querySelector('input');
+  }
 
   get liveSearch() {
     return isNone(this.args.liveSearch) ? true : this.args.liveSearch;
@@ -42,7 +50,7 @@ export default class SearchBox extends Component {
   @action
   moveFocus() {
     // place focus into the search box when search icon is clicked
-    this?.searchInput.focus();
+    this?.searchBoxInputElement?.focus();
   }
 
   @action

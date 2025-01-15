@@ -1,4 +1,4 @@
-<div class="search-box" data-test-search-box>
+<div class="search-box" id={{this.searchBoxId}} data-test-search-box>
   <input
     aria-label={{this.placeholder}}
     autocomplete="off"
@@ -9,8 +9,7 @@
     maxlength={{this.maxlength}}
     {{on "input" this.update}}
     {{on "keyup" this.keyUp}}
-    {{did-insert (set this "searchInput")}}
-  >
+  />
   <button
     aria-label={{t "general.search"}}
     class="link-button search-icon"
