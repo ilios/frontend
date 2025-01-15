@@ -5,7 +5,7 @@
     ...attributes
     {{focus-trap focusTrapOptions=(hash fallbackFocus=this.contentElement)}}
   >
-    <div tabindex="-1" class="content" data-test-content {{did-insert (set this "contentElement")}}>
+    <div tabindex="-1" class="content" id={{this.contentId}} data-test-content>
       <PulseLoader />
       <h2 class="page-title">
         {{#if (has-block)}}
