@@ -463,8 +463,8 @@ importers:
         specifier: ^7.1.1
         version: 7.1.1(@ember/test-helpers@4.0.4(@babel/core@7.26.0)(ember-source@5.11.1(@glimmer/component@1.1.2(@babel/core@7.26.0))(rsvp@4.8.5)(webpack@5.97.1)))(ember-source@5.11.1(@glimmer/component@1.1.2(@babel/core@7.26.0))(rsvp@4.8.5)(webpack@5.97.1))
       ember-simple-charts:
-        specifier: ^12.0.0
-        version: 12.0.0(@babel/core@7.26.0)(@glimmer/tracking@1.1.2)(ember-source@5.11.1(@glimmer/component@1.1.2(@babel/core@7.26.0))(rsvp@4.8.5)(webpack@5.97.1))(webpack@5.97.1)
+        specifier: ^12.1.0
+        version: 12.1.0(@babel/core@7.26.0)(@glimmer/tracking@1.1.2)(ember-source@5.11.1(@glimmer/component@1.1.2(@babel/core@7.26.0))(rsvp@4.8.5)(webpack@5.97.1))(webpack@5.97.1)
       ember-test-selectors:
         specifier: ^7.0.0
         version: 7.0.0
@@ -5530,8 +5530,10 @@ packages:
       '@ember/test-helpers':
         optional: true
 
-  ember-simple-charts@12.0.0:
-    resolution: {integrity: sha512-FFI82Umwp4WAtedxLsME5Kb+VkZBGI5qIonX3CAz3OtUJTwJ4yIikzNv+wo6/lecMXiW25OLhXwQLqpU76yULg==}
+  ember-simple-charts@12.1.0:
+    resolution: {integrity: sha512-qg08fWSCr1oiKUdHgA0lMid4zueXatdmdDfn3qbgufmVS1RZwgZMYYAXzvf37W8DUS6hv3DqocYf24jY8IdNnw==}
+    peerDependencies:
+      ember-source: '>= 4.12.0'
 
   ember-source@5.11.1:
     resolution: {integrity: sha512-il3aR4qEx8r0y99iZsyVdDeu2cscYLQ6+m1znhAu56s65c+9bdw3KPnVcKDxIwKH0n520jYVGpGHu7OI9kt0Zw==}
@@ -16606,9 +16608,8 @@ snapshots:
       - '@glint/template'
       - supports-color
 
-  ember-simple-charts@12.0.0(@babel/core@7.26.0)(@glimmer/tracking@1.1.2)(ember-source@5.11.1(@glimmer/component@1.1.2(@babel/core@7.26.0))(rsvp@4.8.5)(webpack@5.97.1))(webpack@5.97.1):
+  ember-simple-charts@12.1.0(@babel/core@7.26.0)(@glimmer/tracking@1.1.2)(ember-source@5.11.1(@glimmer/component@1.1.2(@babel/core@7.26.0))(rsvp@4.8.5)(webpack@5.97.1))(webpack@5.97.1):
     dependencies:
-      '@ember/render-modifiers': 2.1.0(@babel/core@7.26.0)(ember-source@5.11.1(@glimmer/component@1.1.2(@babel/core@7.26.0))(rsvp@4.8.5)(webpack@5.97.1))
       '@embroider/addon-shim': 1.9.0
       '@embroider/util': 1.13.2(ember-source@5.11.1(@glimmer/component@1.1.2(@babel/core@7.26.0))(rsvp@4.8.5)(webpack@5.97.1))
       '@popperjs/core': 2.11.8
@@ -16621,16 +16622,18 @@ snapshots:
       d3-shape: 3.2.0
       d3-transition: 3.0.1(d3-selection@3.0.0)
       decorator-transforms: 2.3.0(@babel/core@7.26.0)
+      ember-async-data: 1.0.3(ember-source@5.11.1(@glimmer/component@1.1.2(@babel/core@7.26.0))(rsvp@4.8.5)(webpack@5.97.1))
       ember-concurrency: 4.0.2(@babel/core@7.26.0)(@glimmer/tracking@1.1.2)(ember-source@5.11.1(@glimmer/component@1.1.2(@babel/core@7.26.0))(rsvp@4.8.5)(webpack@5.97.1))
       ember-in-element-polyfill: 1.0.1
+      ember-modifier: 4.2.0(@babel/core@7.26.0)(ember-source@5.11.1(@glimmer/component@1.1.2(@babel/core@7.26.0))(rsvp@4.8.5)(webpack@5.97.1))
       ember-on-resize-modifier: 2.0.2(@babel/core@7.26.0)(ember-source@5.11.1(@glimmer/component@1.1.2(@babel/core@7.26.0))(rsvp@4.8.5)(webpack@5.97.1))(webpack@5.97.1)
       ember-resize-observer-polyfill: 0.0.1
+      ember-source: 5.11.1(@glimmer/component@1.1.2(@babel/core@7.26.0))(rsvp@4.8.5)(webpack@5.97.1)
     transitivePeerDependencies:
       - '@babel/core'
       - '@glimmer/tracking'
       - '@glint/environment-ember-loose'
       - '@glint/template'
-      - ember-source
       - supports-color
       - webpack
       - webpack-cli
