@@ -16,7 +16,6 @@ export default class MeshManagerComponent extends Component {
   @tracked searchResults = [];
   @tracked searchPage = 0;
   @tracked hasMoreSearchResults = false;
-  @tracked searchInput;
 
   get terms() {
     return this.args.terms ?? [];
@@ -64,12 +63,6 @@ export default class MeshManagerComponent extends Component {
   update(event) {
     this.query = event.target.value;
     this.search.perform();
-  }
-
-  @action
-  moveFocus() {
-    // place focus into the search box when search icon is clicked
-    this?.searchInput.focus();
   }
 
   search = restartableTask(async () => {
