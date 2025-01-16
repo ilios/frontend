@@ -1,7 +1,4 @@
-<section
-  class="mesh-manager"
-  data-test-mesh-manager
->
+<section class="mesh-manager" data-test-mesh-manager>
   {{#let (unique-id) as |templateId|}}
     {{#if @targetItemTitle}}
       <h2 class="target-title">
@@ -13,19 +10,18 @@
         {{#each this.sortedTerms as |term|}}
           <li>
             {{#if @editable}}
-              <button
-                type="button"
-                {{on "click" (fn @remove term)}}
-              >
+              <button type="button" {{on "click" (fn @remove term)}}>
                 <span class="term-title">
                   {{term.name}}
                 </span>
                 <span class="term-details">
                   {{term.id}}
                   {{#if term.deleted}}
-                    - <span class="deprecated">({{t "general.deprecatedAbbreviation"}})</span>
+                    -
+                    <span class="deprecated">({{t "general.deprecatedAbbreviation"}})</span>
                   {{else if term.trees.length}}
-                    - <MeshDescriptorLastTreeNumber @descriptor={{term}} />
+                    -
+                    <MeshDescriptorLastTreeNumber @descriptor={{term}} />
                   {{/if}}
                 </span>
                 <FaIcon @icon="xmark" class="remove" />
@@ -35,11 +31,13 @@
                 {{term.name}}
               </span>
               <span class="term-details">
-              {{term.id}}
+                {{term.id}}
                 {{#if term.deleted}}
-                  - <span class="deprecated">({{t "general.deprecatedAbbreviation"}})</span>
+                  -
+                  <span class="deprecated">({{t "general.deprecatedAbbreviation"}})</span>
                 {{else if term.trees.length}}
-                  - <MeshDescriptorLastTreeNumber @descriptor={{term}} />
+                  -
+                  <MeshDescriptorLastTreeNumber @descriptor={{term}} />
                 {{/if}}
               </span>
             {{/if}}
@@ -59,8 +57,7 @@
           placeholder={{t "general.search"}}
           {{on "input" this.update}}
           {{on "keyup" this.keyUp}}
-          {{did-insert (set this "searchInput")}}
-        >
+        />
       </div>
     {{/if}}
     <div {{on-click-outside this.clear}} data-test-search-results-container>
@@ -83,26 +80,23 @@
               class={{if (includes term.id (map-by "id" this.terms)) "disabled"}}
               data-test-search-result
             >
-              <button
-                type="button"
-                {{on "click" (fn this.add term)}}
-              >
+              <button type="button" {{on "click" (fn this.add term)}}>
                 <span class="descriptor-name" data-test-name>
                   {{term.name}}
                 </span>
                 <span class="descriptor-id">
                   {{term.id}}
                   {{#if term.trees.length}}
-                    - <MeshDescriptorLastTreeNumber @descriptor={{term}} />
+                    -
+                    <MeshDescriptorLastTreeNumber @descriptor={{term}} />
                   {{/if}}
                 </span>
                 <ul class="mesh-concepts">
                   {{#each term.concepts as |concept|}}
                     {{#if concept.scopeNote}}
                       <li
-                        class="{{unless term.isActive "disabled"}}
-
-                          {{if concept.hasTruncatedScopeNote "truncated"}}"
+                        class="{{unless term.isActive 'disabled'}}
+                          {{if concept.hasTruncatedScopeNote 'truncated'}}"
                       >
                         {{concept.truncatedScopeNote}}
                       </li>
@@ -127,7 +121,7 @@
             {{t "general.showMore"}}
           </button>
         {{/if}}
-     {{else if (and this.hasSearchQuery this.search.lastSuccessful)}}
+      {{else if (and this.hasSearchQuery this.search.lastSuccessful)}}
         <ul class="mesh-search-results" data-test-search-results>
           <li data-test-search-result>
             {{t "general.noSearchResultsPrompt"}}
