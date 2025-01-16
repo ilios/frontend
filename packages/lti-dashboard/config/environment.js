@@ -10,11 +10,6 @@ module.exports = function (environment) {
       authorizer: 'authorizer:token',
       authenticationRoute: 'login-error',
     },
-    'ember-local-storage': {
-      namespace: true,
-      keyDelimiter: '/',
-      includeEmberDataSupport: false,
-    },
     i18n: {
       defaultLocale: 'en',
     },

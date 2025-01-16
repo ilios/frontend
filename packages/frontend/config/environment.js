@@ -38,11 +38,6 @@ module.exports = function (environment) {
         visualNoiseLevel: 1,
       },
     },
-    'ember-local-storage': {
-      namespace: true,
-      keyDelimiter: '/',
-      includeEmberDataSupport: false,
-    },
     fontawesome: {
       enableExperimentalBuildTimeTransform: false,
       defaultPrefix: 'fas',
