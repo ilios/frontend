@@ -14,7 +14,8 @@ module('Integration | Helper | {{html-safe}}', function (hooks) {
 
   test('It safely renders CSS classes from a property', async function (assert) {
     this.set('classes', 'error has-error');
-    await render(hbs`<h1 class={{html-safe this.classes}}>Hello World</h1>`);
+    this.set('text', 'Hello World');
+    await render(hbs`<h1 class={{html-safe this.classes}}>{{this.text}}</h1>`);
 
     assert.dom('h1').hasText('Hello World', 'it renders');
     assert.deepEqual(
