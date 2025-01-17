@@ -414,9 +414,6 @@ importers:
       ember-cli-page-object:
         specifier: ^2.3.0
         version: 2.3.1(@ember/test-helpers@4.0.4(@babel/core@7.26.0)(ember-source@5.11.1(@glimmer/component@1.1.2(@babel/core@7.26.0))(rsvp@4.8.5)(webpack@5.97.1)))
-      ember-cli-string-helpers:
-        specifier: ^6.0.1
-        version: 6.1.0
       ember-click-outside:
         specifier: ^6.0.0
         version: 6.1.1(@babel/core@7.26.0)(ember-source@5.11.1(@glimmer/component@1.1.2(@babel/core@7.26.0))(rsvp@4.8.5)(webpack@5.97.1))
@@ -5273,10 +5270,6 @@ packages:
   ember-cli-server-variables@3.0.0:
     resolution: {integrity: sha512-qxjsscDVHo1Yokf3q4ji2q4oJt/eRXRLTj9pq7Vz1I9H/IClnmvHS8W7Fc0ytFAaNdQageB/j9NrZCI8Sol4SQ==}
     engines: {node: 12.* || 14.* || >= 16}
-
-  ember-cli-string-helpers@6.1.0:
-    resolution: {integrity: sha512-Lw8B6MJx2n8CNF2TSIKs+hWLw0FqSYjr2/NRPyquyYA05qsl137WJSYW3ZqTsLgoinHat0DGF2qaCXocLhLmyA==}
-    engines: {node: 10.* || >=12.*}
 
   ember-cli-string-utils@1.1.0:
     resolution: {integrity: sha512-PlJt4fUDyBrC/0X+4cOpaGCiMawaaB//qD85AXmDRikxhxVzfVdpuoec02HSiTGTTB85qCIzWBIh8lDOiMyyFg==}
@@ -15938,15 +15931,6 @@ snapshots:
       ember-cli-babel: 7.26.11
       ember-cli-htmlbars: 5.7.2
       lodash: 4.17.21
-    transitivePeerDependencies:
-      - supports-color
-
-  ember-cli-string-helpers@6.1.0:
-    dependencies:
-      '@babel/core': 7.26.0(supports-color@8.1.1)
-      broccoli-funnel: 3.0.8
-      ember-cli-babel: 7.26.11
-      resolve: 1.22.10
     transitivePeerDependencies:
       - supports-color
 
