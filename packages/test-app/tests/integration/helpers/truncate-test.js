@@ -17,7 +17,7 @@ module('Integration | Helper | {{truncate}}', function (hooks) {
     let expected =
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas hendrerit quam enim, in suscipit est rutrum id. Etiam vitae blandit pur...';
 
-    assert.dom('*').hasText(expected, 'truncates to 140 characters');
+    assert.dom().hasText(expected, 'truncates to 140 characters');
   });
 
   test('It truncates to characterLimit provided', async function (assert) {
@@ -30,7 +30,7 @@ module('Integration | Helper | {{truncate}}', function (hooks) {
 
     let expected = 'Lorem ipsum dolor...';
 
-    assert.dom('*').hasText(expected, 'truncates to characterLimit');
+    assert.dom().hasText(expected, 'truncates to characterLimit');
   });
 
   test('It does not truncate if string is not longer than characterLimit', async function (assert) {
@@ -44,7 +44,7 @@ module('Integration | Helper | {{truncate}}', function (hooks) {
     let expected =
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas hendrerit quam enim, in suscipit est rutrum id.';
 
-    assert.dom('*').hasText(expected, 'does not truncate');
+    assert.dom().hasText(expected, 'does not truncate');
   });
 
   test('It truncates to characterLimit provided without an ellipsis if useEllipsis is false', async function (assert) {
@@ -58,7 +58,7 @@ module('Integration | Helper | {{truncate}}', function (hooks) {
 
     let expected = 'Lorem ipsum dolor si';
 
-    assert.dom('*').hasText(expected, 'truncates to characterLimit without ellipsis');
+    assert.dom().hasText(expected, 'truncates to characterLimit without ellipsis');
   });
 
   test('It handles a SafeString', async function (assert) {
@@ -73,6 +73,6 @@ module('Integration | Helper | {{truncate}}', function (hooks) {
 
     let expected = 'Lorem ipsum dolor...';
 
-    assert.dom('*').hasText(expected, 'correctly trims a SafeString');
+    assert.dom().hasText(expected, 'correctly trims a SafeString');
   });
 });
