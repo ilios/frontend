@@ -4,7 +4,7 @@ import { isHTMLSafe } from '@ember/template';
 
 export function capitalize([string]) {
   if (isHTMLSafe(string)) {
-    string = string.string;
+    string = string.toString();
   }
 
   string = string || '';
