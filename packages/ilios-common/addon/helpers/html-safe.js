@@ -3,7 +3,7 @@ import { isHTMLSafe, htmlSafe as _htmlSafe } from '@ember/template';
 
 export function htmlSafe([string]) {
   if (isHTMLSafe(string)) {
-    string = string.string;
+    string = string.toString();
   }
 
   string = string || '';

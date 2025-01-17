@@ -1,5 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
+import { htmlSafe } from '@ember/template';
 import { render, find } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
@@ -23,5 +24,12 @@ module('Integration | Helper | {{html-safe}}', function (hooks) {
       ['error', 'has-error'].sort(),
       'it has the correct CSS classes',
     );
+  });
+
+  test('It renders safe-string input', async function (assert) {
+    const safeString = htmlSafe('<h1>Hello World</h1>');
+    this.set('text', safeString);
+    await render(hbs`{{html-safe this.text}}`);
+    assert.dom('h1').hasText('Hello World', 'html string is correctly rendered');
   });
 });
