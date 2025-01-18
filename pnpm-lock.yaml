@@ -54,9 +54,6 @@ importers:
       '@ember-data/tracking':
         specifier: 5.3.9
         version: 5.3.9(@warp-drive/core-types@0.0.0-beta.12)(ember-source@5.11.1(@glimmer/component@1.1.2(@babel/core@7.26.0))(rsvp@4.8.5)(webpack@5.97.1))
-      '@ember/edition-utils':
-        specifier: ^1.2.0
-        version: 1.2.0
       '@ember/optional-features':
         specifier: ^2.1.0
         version: 2.2.0
@@ -547,9 +544,6 @@ importers:
       '@ember-data/tracking':
         specifier: 5.3.9
         version: 5.3.9(@warp-drive/core-types@0.0.0-beta.12)(ember-source@5.11.1(@glimmer/component@1.1.2(@babel/core@7.26.0))(rsvp@4.8.5)(webpack@5.97.1))
-      '@ember/edition-utils':
-        specifier: ^1.1.1
-        version: 1.2.0
       '@ember/optional-features':
         specifier: ^2.1.0
         version: 2.2.0
@@ -688,9 +682,6 @@ importers:
       '@ember-data/tracking':
         specifier: 5.3.9
         version: 5.3.9(@warp-drive/core-types@0.0.0-beta.12)(ember-source@5.11.1(@glimmer/component@1.1.2(@babel/core@7.26.0))(rsvp@4.8.5)(webpack@5.97.1))
-      '@ember/edition-utils':
-        specifier: ^1.2.0
-        version: 1.2.0
       '@ember/optional-features':
         specifier: ^2.1.0
         version: 2.2.0
@@ -922,9 +913,6 @@ importers:
       '@ember-data/tracking':
         specifier: 5.3.9
         version: 5.3.9(@warp-drive/core-types@0.0.0-beta.12)(ember-source@5.11.1(@glimmer/component@1.1.2(@babel/core@7.26.0))(rsvp@4.8.5)(webpack@5.97.1))
-      '@ember/edition-utils':
-        specifier: ^1.2.0
-        version: 1.2.0
       '@ember/optional-features':
         specifier: ^2.1.0
         version: 2.2.0
