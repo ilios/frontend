@@ -463,8 +463,8 @@ importers:
         specifier: ^3.0.1
         version: 3.0.1(@babel/core@7.26.0)
       ember-simple-auth:
-        specifier: ^7.1.2
-        version: 7.1.2(@ember/test-helpers@4.0.4(@babel/core@7.26.0)(ember-source@5.11.1(@glimmer/component@1.1.2(@babel/core@7.26.0))(rsvp@4.8.5)(webpack@5.97.1)))(ember-source@5.11.1(@glimmer/component@1.1.2(@babel/core@7.26.0))(rsvp@4.8.5)(webpack@5.97.1))
+        specifier: ^7.1.3
+        version: 7.1.3(@ember/test-helpers@4.0.4(@babel/core@7.26.0)(ember-source@5.11.1(@glimmer/component@1.1.2(@babel/core@7.26.0))(rsvp@4.8.5)(webpack@5.97.1)))(ember-source@5.11.1(@glimmer/component@1.1.2(@babel/core@7.26.0))(rsvp@4.8.5)(webpack@5.97.1))
       ember-simple-charts:
         specifier: ^12.1.0
         version: 12.1.0(@babel/core@7.26.0)(@glimmer/tracking@1.1.2)(ember-source@5.11.1(@glimmer/component@1.1.2(@babel/core@7.26.0))(rsvp@4.8.5)(webpack@5.97.1))(webpack@5.97.1)
@@ -5528,8 +5528,8 @@ packages:
   ember-set-helper@3.0.1:
     resolution: {integrity: sha512-Ord3CuttDiF88wiNpHNDjf4aFKPnHSkpeK7zFfH9nV7YdDFSJissDCZEg42A0ReWY1WuqWbc2hMl5XkgupdyZQ==}
 
-  ember-simple-auth@7.1.2:
-    resolution: {integrity: sha512-YA47iHFkAwqVR/B/EHhZBinhqw5padsp1dbIfYUT+/2ZmvDDwj4PL1ywyzoQO4FvtgF0/NmQaxvStqiUhQxXPw==}
+  ember-simple-auth@7.1.3:
+    resolution: {integrity: sha512-QMDc82evtQceEQFJ9C3RYptqAfGUY0Z5TenpVVsbmwdo5sC0mxlLolhkpj142JknvRLjTrtCWRtoML6V5pj1Dw==}
     peerDependencies:
       '@ember/test-helpers': '>= 3 || > 2.7'
       ember-source: '>=4.0'
@@ -16561,7 +16561,7 @@ snapshots:
       - '@babel/core'
       - supports-color
 
-  ember-simple-auth@7.1.2(@ember/test-helpers@4.0.4(@babel/core@7.26.0)(ember-source@5.11.1(@glimmer/component@1.1.2(@babel/core@7.26.0))(rsvp@4.8.5)(webpack@5.97.1)))(ember-source@5.11.1(@glimmer/component@1.1.2(@babel/core@7.26.0))(rsvp@4.8.5)(webpack@5.97.1)):
+  ember-simple-auth@7.1.3(@ember/test-helpers@4.0.4(@babel/core@7.26.0)(ember-source@5.11.1(@glimmer/component@1.1.2(@babel/core@7.26.0))(rsvp@4.8.5)(webpack@5.97.1)))(ember-source@5.11.1(@glimmer/component@1.1.2(@babel/core@7.26.0))(rsvp@4.8.5)(webpack@5.97.1)):
     dependencies:
       '@ember/test-waiters': 3.1.0
       '@embroider/addon-shim': 1.9.0
