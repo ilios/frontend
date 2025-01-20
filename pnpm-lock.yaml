@@ -196,8 +196,8 @@ importers:
         specifier: ^11.0.1
         version: 11.0.1
       ember-cli-server-variables:
-        specifier: 3.0.0
-        version: 3.0.0
+        specifier: 4.0.0
+        version: 4.0.0(ember-source@5.11.1(@glimmer/component@1.1.2(@babel/core@7.26.0))(rsvp@4.8.5)(webpack@5.97.1))(webpack@5.97.1)
       ember-cli-terser:
         specifier: ^4.0.2
         version: 4.0.2
@@ -1223,8 +1223,8 @@ importers:
         specifier: 11.0.1
         version: 11.0.1
       ember-cli-server-variables:
-        specifier: ^3.0.0
-        version: 3.0.0
+        specifier: ^4.0.0
+        version: 4.0.0(ember-source@5.11.1(@glimmer/component@1.1.2(@babel/core@7.26.0))(rsvp@4.8.5)(webpack@5.97.1))(webpack@5.97.1)
       ember-cli-terser:
         specifier: ^4.0.2
         version: 4.0.2
@@ -2266,6 +2266,9 @@ packages:
   '@ember/string@3.1.1':
     resolution: {integrity: sha512-UbXJ+k3QOrYN4SRPHgXCqYIJ+yWWUg1+vr0H4DhdQPTy8LJfyqwZ2tc5uqpSSnEXE+/1KopHBE5J8GDagAg5cg==}
     engines: {node: 12.* || 14.* || >= 16}
+
+  '@ember/string@4.0.0':
+    resolution: {integrity: sha512-IMVyVE72twuAMSYcHzWSgtgYTtzlHlKSGW8vEbztnnmkU6uo7kVHmiqSN9R4RkBhzvh0VD4G76Eph+55t3iNIA==}
 
   '@ember/test-helpers@2.9.4':
     resolution: {integrity: sha512-z+Qs1NYWyIVDmrY6WdmOS5mdG1lJ5CFfzh6dRhLfs9lq45deDaDrVNcaCYhnNeJZTvUBK2XR2SvPcZm0RloXdA==}
@@ -5271,9 +5274,11 @@ packages:
     resolution: {integrity: sha512-RMlFPMK4kaB+67seF/IIoY3EC4rRd+L58q+lyElrxB3FcQTgph/qmGwtqf9Up7m3SDbPiA7cccCOSmgReMgCXA==}
     engines: {node: '>= 10.*'}
 
-  ember-cli-server-variables@3.0.0:
-    resolution: {integrity: sha512-qxjsscDVHo1Yokf3q4ji2q4oJt/eRXRLTj9pq7Vz1I9H/IClnmvHS8W7Fc0ytFAaNdQageB/j9NrZCI8Sol4SQ==}
-    engines: {node: 12.* || 14.* || >= 16}
+  ember-cli-server-variables@4.0.0:
+    resolution: {integrity: sha512-pZAg8W6e+cJf/DZzWX/HFaEBww/6Y0PR4qG5J9yP75moxnbVmq16eewzocsJIpgeeeXGLldKDzaUtkbXrLceSQ==}
+    engines: {node: '>= 18'}
+    peerDependencies:
+      ember-source: '>= 4.0.0'
 
   ember-cli-string-helpers@6.1.0:
     resolution: {integrity: sha512-Lw8B6MJx2n8CNF2TSIKs+hWLw0FqSYjr2/NRPyquyYA05qsl137WJSYW3ZqTsLgoinHat0DGF2qaCXocLhLmyA==}
@@ -11612,6 +11617,8 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
+  '@ember/string@4.0.0': {}
+
   '@ember/test-helpers@2.9.4(@babel/core@7.26.0)(ember-source@5.11.1(@glimmer/component@1.1.2(@babel/core@7.26.0))(rsvp@4.8.5)(webpack@5.97.1))':
     dependencies:
       '@ember/test-waiters': 3.1.0
@@ -15887,13 +15894,19 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  ember-cli-server-variables@3.0.0:
+  ember-cli-server-variables@4.0.0(ember-source@5.11.1(@glimmer/component@1.1.2(@babel/core@7.26.0))(rsvp@4.8.5)(webpack@5.97.1))(webpack@5.97.1):
     dependencies:
-      ember-cli-babel: 7.26.11
-      ember-cli-htmlbars: 5.7.2
+      '@babel/core': 7.26.0(supports-color@8.1.1)
+      '@ember/string': 4.0.0
+      ember-auto-import: 2.10.0(webpack@5.97.1)
+      ember-cli-babel: 8.2.0(@babel/core@7.26.0)
+      ember-cli-htmlbars: 6.3.0
+      ember-source: 5.11.1(@glimmer/component@1.1.2(@babel/core@7.26.0))(rsvp@4.8.5)(webpack@5.97.1)
       lodash: 4.17.21
     transitivePeerDependencies:
+      - '@glint/template'
       - supports-color
+      - webpack
 
   ember-cli-string-helpers@6.1.0:
     dependencies:
