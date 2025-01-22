@@ -32,8 +32,8 @@ export default class DatePickerModifier extends Modifier {
       this.onChangeHandler = onChangeHandler;
     }
     if (!this.flatpickr) {
+      this.locale = locale ?? this.intl.primaryLocale;
       this.flatpickr = this.initPicker(element, value, minDate, maxDate, this.locale);
-      this.locale = locale;
     }
 
     if (this.flatpickr.selectedDates[0] !== value) {
@@ -46,7 +46,7 @@ export default class DatePickerModifier extends Modifier {
       this.flatpickr.set('maxDate', maxDate);
     }
 
-    if (this.locale !== locale) {
+    if (locale && this.locale !== locale) {
       this.locale = locale;
       this.flatpickr.set('locale', this.getFlatpickrLocale(locale));
     }
