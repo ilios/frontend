@@ -2,6 +2,6 @@
   aria-label={{t "general.pickADate"}}
   class="date-picker"
   data-test-date-picker
-  {{date-picker @value @minDate @maxDate this.intl.primaryLocale @onChange}}
+  {{date-picker @value minDate=@minDate maxDate=@maxDate locale=this.intl.primaryLocale onChangeHandler=@onChange}}
   ...attributes
 />

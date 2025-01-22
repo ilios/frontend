@@ -13,7 +13,15 @@ module('Integration | Modifier | date-picker', function (hooks) {
     this.set('maxDate', null);
     this.set('locale', 'en');
     await render(
-      hbs`<div {{date-picker this.value this.minDate this.maxDate this.locale (noop)}}></div>`,
+      hbs`<div
+  {{date-picker
+    this.value
+    minDate=this.minDate
+    maxDate=this.maxDate
+    locale=this.locale
+    onChangeHandler=(noop)
+  }}
+></div>`,
     );
     // todo: add more test assertions here.
     assert.ok(true);

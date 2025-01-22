@@ -8,7 +8,7 @@ import { service } from '@ember/service';
 
 function cleanup(instance) {
   instance.locale = null;
-  instance.onChangeHandler = null;
+  instance.onChange = null;
   if (instance.flatpickr) {
     instance.flatpickr.destroy();
     instance.flatpickr = null;
@@ -26,13 +26,13 @@ export default class DatePickerModifier extends Modifier {
     registerDestructor(this, cleanup);
   }
 
-  modify(element, [value, minDate, maxDate, locale, onChangeHandler]) {
+  modify(element, [value], { minDate, maxDate, locale, onChangeHandler }) {
     // We only need to set this once.
     if (!this.onChangeHandler) {
       this.onChangeHandler = onChangeHandler;
     }
     if (!this.flatpickr) {
-      this.flatpickr = this.initPicker(element, value, minDate, maxDate, locale);
+      this.flatpickr = this.initPicker(element, value, minDate, maxDate, this.locale);
       this.locale = locale;
     }
 
@@ -76,6 +76,7 @@ export default class DatePickerModifier extends Modifier {
       disableMobile: isTesting(),
     });
   }
+
   async onChange(date) {
     if (this.onChangeHandler) {
       await this.onChangeHandler(date);
