@@ -109,7 +109,6 @@
     "@ember/optional-features": "^2.1.0",
     "@ember/test-helpers": "^4.0.4",
     "@embroider/test-setup": "^4.0.0",
-    "@ilios/ember-template-lint-plugin": "^3.0.0",
     "@warp-drive/build-config": "0.0.0-beta.7",
     "broccoli-asset-rev": "^3.0.0",
     "ember-cli": "~5.11.0",

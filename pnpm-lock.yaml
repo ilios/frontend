@@ -550,9 +550,6 @@ importers:
       '@embroider/test-setup':
         specifier: ^4.0.0
         version: 4.0.0(@embroider/compat@3.8.0(@embroider/core@3.5.0))(@embroider/core@3.5.0)(@embroider/webpack@4.0.9(@embroider/core@3.5.0)(webpack@5.97.1))
-      '@ilios/ember-template-lint-plugin':
-        specifier: ^3.0.0
-        version: 3.0.0
       '@warp-drive/build-config':
         specifier: 0.0.0-beta.7
         version: 0.0.0-beta.7
@@ -2537,9 +2534,6 @@ packages:
   '@humanwhocodes/object-schema@2.0.3':
     resolution: {integrity: sha512-93zYdMES/c1D69yZiKDBj0V24vqNzB/koF26KPaagAfd3P/4gUlh3Dys5ogAK+Exi9QyzlD8x/08Zt7wIKcDcA==}
     deprecated: Use @eslint/object-schema instead
-
-  '@ilios/ember-template-lint-plugin@3.0.0':
-    resolution: {integrity: sha512-1uCmP9E97H4DeBLzLUhGUW2Wew8y9MMmJyU4Hfs3TDgnFE2woL8DkUa2EZWs1tja5atcbYyUfnubaWkOnNSlsg==}
 
   '@inquirer/figures@1.0.9':
     resolution: {integrity: sha512-BXvGj0ehzrngHTPTDqUoDT3NXL8U0RxUk2zJm2A66RhCEIWdtU1v6GuUqNAgArW4PQ9CinqIWyHdQgdwOj06zQ==}
@@ -12178,8 +12172,6 @@ snapshots:
   '@humanwhocodes/module-importer@1.0.1': {}
 
   '@humanwhocodes/object-schema@2.0.3': {}
-
-  '@ilios/ember-template-lint-plugin@3.0.0': {}
 
   '@inquirer/figures@1.0.9': {}
 
