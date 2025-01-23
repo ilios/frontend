@@ -6,15 +6,6 @@ import { Spanish } from 'flatpickr/dist/l10n/es.js';
 import { isTesting } from '@embroider/macros';
 import { service } from '@ember/service';
 
-function cleanup(instance) {
-  instance.locale = null;
-  instance.onChange = null;
-  if (instance.flatpickr) {
-    instance.flatpickr.destroy();
-    instance.flatpickr = null;
-  }
-}
-
 export default class DatePickerModifier extends Modifier {
   @service intl;
   flatpickr = null;
@@ -23,7 +14,14 @@ export default class DatePickerModifier extends Modifier {
 
   constructor(owner, args) {
     super(owner, args);
-    registerDestructor(this, cleanup);
+    registerDestructor(this, () => {
+      this.locale = null;
+      this.onChangeHandler = null;
+      if (this.flatpickr) {
+        this.flatpickr.destroy();
+        this.flatpickr = null;
+      }
+    });
   }
 
   modify(element, [value], { minDate, maxDate, locale, onChangeHandler }) {
