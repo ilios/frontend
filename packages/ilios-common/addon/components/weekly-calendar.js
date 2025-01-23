@@ -1,21 +1,17 @@
 import Component from '@glimmer/component';
 import { service } from '@ember/service';
-import { task, timeout } from 'ember-concurrency';
 import { action } from '@ember/object';
-import { DateTime } from 'luxon';
 import { sortBy } from 'ilios-common/utils/array-helpers';
+import { DateTime } from 'luxon';
 
 export default class WeeklyCalendarComponent extends Component {
   @service intl;
   @service localeDays;
 
-  scrollView = task(async () => {
-    const calendarElement = document.getElementById(`weekly-calendar-days`);
-    // waiting ensures that hour elements are loaded
-    await timeout(1);
+  @action
+  async scrollView(calendarElement, earliestHour) {
     // all of the hour elements are registered in the template as hour-0, hour-1, etc
     let hourElement = document.getElementsByClassName(`hour-6`)[0];
-    let earliestHour = this.earliestHour;
 
     if (earliestHour < 24 && earliestHour > 2) {
       hourElement = document.getElementsByClassName(`hour-${earliestHour}`)[0];
@@ -25,7 +21,7 @@ export default class WeeklyCalendarComponent extends Component {
       top: offsetTop,
       behavior: 'instant',
     });
-  });
+  }
 
   get firstDayOfWeek() {
     return this.localeDays.firstDayOfDateWeek(this.args.date);
@@ -66,8 +62,6 @@ export default class WeeklyCalendarComponent extends Component {
   }
 
   get days() {
-    this.scrollView.perform();
-
     return this.week.map((day) => {
       const dt = DateTime.fromJSDate(day.date);
       day.events = this.sortedEvents.filter((e) =>

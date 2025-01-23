@@ -23,6 +23,7 @@
     class="days"
     tabindex="0"
     id="weekly-calendar-days"
+    {{on-update this.scrollView this.earliestHour}}
   >
     <div class="hours">
       {{#each this.hours as |hour|}}
