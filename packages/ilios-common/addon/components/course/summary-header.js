@@ -1,20 +1,22 @@
 import Component from '@glimmer/component';
 import { service } from '@ember/service';
-import { tracked } from '@glimmer/tracking';
-import { restartableTask } from 'ember-concurrency';
+import { cached } from '@glimmer/tracking';
+import { TrackedAsyncData } from 'ember-async-data';
 
 export default class CourseSummaryHeaderComponent extends Component {
-  @service currentUser;
   @service permissionChecker;
 
-  @tracked canRollover;
+  @cached
+  get canRolloverData() {
+    return new TrackedAsyncData(this.getCanRollover(this.args.course));
+  }
 
-  load = restartableTask(async () => {
-    const school = await this.args.course.school;
-    this.canRollover = await this.permissionChecker.canCreateCourse(school);
-  });
+  get canRollover() {
+    return this.canRolloverData.isResolved ? this.canRolloverData.value : false;
+  }
 
-  get showRollover() {
-    return this.canRollover;
+  async getCanRollover(course) {
+    const school = await course.school;
+    return this.permissionChecker.canCreateCourse(school);
   }
 }

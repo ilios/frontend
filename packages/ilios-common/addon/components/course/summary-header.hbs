@@ -1,8 +1,4 @@
-<div
-  class="course-summary-header"
-  {{did-insert (perform this.load) @course}}
-  {{did-update (perform this.load) @course}}
->
+<div class="course-summary-header" ...attributes>
   <div class="course-summary-header-top">
     <h2>
       {{@course.title}}
@@ -20,7 +16,7 @@
           @fixedWidth={{true}}
         />
       </LinkTo>
-      {{#if this.showRollover}}
+      {{#if this.canRollover}}
         <LinkTo @route="course.rollover" @model={{@course}} class="rollover">
           <FaIcon
             @icon="shuffle"
