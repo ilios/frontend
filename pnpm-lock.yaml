@@ -420,9 +420,6 @@ importers:
       ember-event-helpers:
         specifier: ^0.1.0
         version: 0.1.1
-      ember-feature-flags:
-        specifier: ^6.0.0
-        version: 6.0.0
       ember-file-upload:
         specifier: ^9.0.0
         version: 9.1.0(@ember/test-helpers@4.0.4(@babel/core@7.26.0)(ember-source@5.11.1(@glimmer/component@1.1.2(@babel/core@7.26.0))(rsvp@4.8.5)(webpack@5.97.1)))(@glimmer/component@1.1.2(@babel/core@7.26.0))(@glimmer/tracking@1.1.2)(ember-modifier@4.2.0(@babel/core@7.26.0)(ember-source@5.11.1(@glimmer/component@1.1.2(@babel/core@7.26.0))(rsvp@4.8.5)(webpack@5.97.1)))(miragejs@0.1.48)(tracked-built-ins@3.4.0(@babel/core@7.26.0))(webpack@5.97.1)
@@ -5362,10 +5359,6 @@ packages:
       ember-qunit: '*'
       ember-source: '>= 4.0.0'
       qunit: '*'
-
-  ember-feature-flags@6.0.0:
-    resolution: {integrity: sha512-CcKpQ0NI/AMkYcP/4obqfDrzFlLqFngabFUfmAlQNnCic5cz51nlLY9MzYRtbop0+1iyegM4XHJFE4Awlji/1g==}
-    engines: {node: 8.* || >= 10.*}
 
   ember-fetch@8.1.2:
     resolution: {integrity: sha512-TVx24/jrvDIuPL296DV0hBwp7BWLcSMf0I8464KGz01sPytAB+ZAePbc9ooBTJDkKZEGFgatJa4nj3yF1S9Bpw==}
@@ -16252,12 +16245,6 @@ snapshots:
       - '@glint/template'
       - supports-color
       - webpack
-
-  ember-feature-flags@6.0.0:
-    dependencies:
-      ember-cli-babel: 7.26.11
-    transitivePeerDependencies:
-      - supports-color
 
   ember-fetch@8.1.2:
     dependencies:
