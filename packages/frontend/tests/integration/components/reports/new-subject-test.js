@@ -227,14 +227,13 @@ module('Integration | Component | reports/new-subject', function (hooks) {
   });
 
   test('choosing term selects correct objects', function (assert) {
-    assert.expect(11);
+    assert.expect(10);
     return checkObjects(this, assert, 9, 'term', [
       'academic year',
       'competency',
       'course',
       'instructor',
       'learning material',
-      'mesh term',
       'program',
       'program year',
       'session',
