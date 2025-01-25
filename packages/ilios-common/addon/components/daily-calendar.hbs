@@ -21,7 +21,7 @@
     class="day"
     tabindex="0"
     id="daily-calendar-events"
-    {{on-update this.scrollView this.earliestHour}}
+    {{this.scrollView this.earliestHour}}
   >
     <div class="hours">
       {{#each this.hours as |hour|}}
