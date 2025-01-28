@@ -22,11 +22,12 @@
   <div
     class="days"
     tabindex="0"
-    {{did-update (perform this.scrollView) this.earliestHour}}
+    id="weekly-calendar-days"
+    {{this.scrollView this.earliestHour}}
   >
     <div class="hours">
       {{#each this.hours as |hour|}}
-        <span aria-hidden="true" class="hour hour-{{hour.hour}}" {{did-insert this.setHour hour.hour}}>
+        <span aria-hidden="true" class="hour hour-{{hour.hour}}">
           <span class="long">{{hour.longName}}</span>
           <span class="short">{{hour.shortName}}</span>
         </span>

@@ -1,4 +1,3 @@
-{{!-- template-lint-disable no-at-ember-render-modifiers --}}
 <section
   class="daily-calendar"
   aria-busy={{if @isLoadingEvents "true" "false"}}
@@ -21,11 +20,12 @@
   <div
     class="day"
     tabindex="0"
-    {{did-update (perform this.scrollView) this.earliestHour}}
+    id="daily-calendar-events"
+    {{this.scrollView this.earliestHour}}
   >
     <div class="hours">
       {{#each this.hours as |hour|}}
-        <span aria-hidden="true" class="hour hour-{{hour.hour}}" {{did-insert this.setHour hour.hour}}>
+        <span aria-hidden="true" class="hour hour-{{hour.hour}}">
           <span class="long">{{hour.longName}}</span>
           <span class="short">{{hour.shortName}}</span>
         </span>
