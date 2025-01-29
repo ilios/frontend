@@ -13,27 +13,25 @@
   <table>
     <thead>
       <tr>
-        <th colspan="2">{{t "general.course"}}</th>
-        <th>{{t "general.sessionType"}}</th>
-        <th colspan="2">{{t "general.sessionTitle"}}</th>
-        <th colspan="4">{{t "general.objective"}}</th>
+        <th>{{t "general.course"}}</th>
+        <th>{{t "general.session"}}</th>
+        <th>{{t "general.objectives"}}</th>
       </tr>
     </thead>
     <tbody>
-      {{#each this.sortedResults as |o|}}
+      {{#each this.summary as |o|}}
         <tr>
-          <td colspan="2">
+          <td>
             <LinkTo @route="course" @models={{array o.courseId}}>
               {{o.courseTitle}}
             </LinkTo>
           </td>
-          <td>{{o.sessionType}}</td>
-          <td colspan="2">
+          <td>
             <LinkTo @route="session" @models={{array o.courseId o.sessionId}}>
               {{o.sessionTitle}}
             </LinkTo>
           </td>
-          <td colspan="4">{{o.title}}</td>
+          <td>{{o.objectiveCount}}</td>
         </tr>
       {{/each}}
     </tbody>

@@ -70,11 +70,21 @@ export default class ReportsNewCourseComponent extends Component {
       this.reportResults = null;
       return;
     }
-    const filters = [`courses: [${this.passedCourseIds.join(', ')}]`];
-    const data = 'title, session { id, title, sessionType { title }, course { id, title, year } }';
-    const result = await this.graphql.find('sessionObjectives', filters, data);
+    const filters = [`ids: [${this.passedCourseIds.join(', ')}]`];
+    const userData = ['id', 'firstName', 'lastName', 'middleName', 'displayName'].join(', ');
+    const sessionData = [
+      'id',
+      'title',
+      'sessionType { title }',
+      'sessionObjectives { id, title }',
+      `offerings { id, startDate, endDate, instructors { ${userData} }, instructorGroups { id, users { ${userData} } } }`,
+      `ilmSession { id, dueDate, hours, instructors { ${userData} }, instructorGroups { id, users { ${userData} } } }`,
+    ].join(', ');
 
-    this.reportResults = result.data.sessionObjectives;
+    const data = ['id', 'title', 'year', `sessions { ${sessionData} }`];
+    const result = await this.graphql.find('courses', filters, data.join(', '));
+
+    this.reportResults = result.data.courses;
   });
 
   close = () => {
