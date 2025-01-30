@@ -8,10 +8,25 @@ import { hbs } from 'ember-cli-htmlbars';
 import { DateTime } from 'luxon';
 import { setupMirage } from 'test-app/tests/test-support/mirage';
 import queryString from 'query-string';
+import { freezeDateAt, unfreezeDate } from 'ilios-common';
 
 module('Integration | Component | course/rollover', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
+
+  hooks.afterEach(() => {
+    unfreezeDate();
+  });
+
+  const earliestRolloverYear = (jsDate) => {
+    let { month, year } = DateTime.fromJSDate(jsDate);
+    year--; // start with the previous year
+    if (month < 7) {
+      // before July 1st (start of a new academic year) show the year before
+      year--;
+    }
+    return year;
+  };
 
   test('it renders', async function (assert) {
     const school = this.server.create('school');
@@ -24,12 +39,12 @@ module('Integration | Component | course/rollover', function (hooks) {
 
     await render(hbs`<Course::Rollover @course={{this.course}} />`);
 
-    const currentYear = DateTime.now().year;
+    const firstYear = earliestRolloverYear(new Date());
     const yearSelect = '.year-select select';
     const title = '.title input';
 
     for (let i = 0; i < 6; i++) {
-      assert.dom(`${yearSelect} option:nth-of-type(${i + 1})`).hasText(`${currentYear + i}`);
+      assert.dom(`${yearSelect} option:nth-of-type(${i + 1})`).hasText(`${firstYear + i}`);
     }
     assert.dom(title).exists({ count: 1 });
     assert.strictEqual(find(title).value.trim(), course.title);
@@ -53,12 +68,12 @@ module('Integration | Component | course/rollover', function (hooks) {
 
     await render(hbs`<Course::Rollover @course={{this.course}} />`);
 
-    const currentYear = DateTime.now().year;
+    const firstYear = earliestRolloverYear(new Date());
     const yearSelect = '.year-select select';
     for (let i = 0; i < 6; i++) {
       assert
         .dom(`${yearSelect} option:nth-of-type(${i + 1})`)
-        .hasText(`${currentYear + i} - ${currentYear + i + 1}`);
+        .hasText(`${firstYear + i} - ${firstYear + i + 1}`);
     }
   });
 
@@ -74,10 +89,10 @@ module('Integration | Component | course/rollover', function (hooks) {
     this.set('course', courseModel);
 
     this.server.post(`/api/courses/${course.id}/rollover`, function (schema, request) {
-      const currentYear = DateTime.now().year;
+      const firstYear = earliestRolloverYear(new Date());
       const data = queryString.parse(request.requestBody);
       assert.ok('year' in data);
-      assert.strictEqual(parseInt(data.year, 10), currentYear);
+      assert.strictEqual(parseInt(data.year, 10), firstYear);
       assert.strictEqual(data.newCourseTitle, course.title);
       assert.ok('newStartDate' in data);
       return this.serialize(
@@ -163,24 +178,24 @@ module('Integration | Component | course/rollover', function (hooks) {
 
   test('disable years when title already exists', async function (assert) {
     const title = 'to be rolled';
-    const currentYear = DateTime.now().year;
+    const firstYear = earliestRolloverYear(new Date());
     const school = this.server.create('school');
     const course = this.server.create('course', {
       title,
       school,
-      year: currentYear - 1,
+      year: firstYear - 1,
     });
     this.server.create('course', {
       id: 2,
       school,
       title,
-      year: currentYear,
+      year: firstYear,
     });
     this.server.create('course', {
       id: 3,
       school,
       title,
-      year: currentYear + 2,
+      year: firstYear + 2,
     });
 
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
@@ -509,5 +524,117 @@ module('Integration | Component | course/rollover', function (hooks) {
 
     await click(firstCohort);
     await click('.done');
+  });
+
+  test('dates are correct in December', async function (assert) {
+    const december11th2024 = DateTime.fromObject({
+      year: 2024,
+      month: 12,
+      day: 11,
+      hour: 8,
+    });
+    freezeDateAt(december11th2024.toJSDate());
+    const school = this.server.create('school');
+    const course = this.server.create('course', {
+      title: 'old course',
+      school,
+    });
+    const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
+    this.set('course', courseModel);
+
+    await render(hbs`<Course::Rollover @course={{this.course}} />`);
+
+    const yearSelect = '.year-select select';
+    const title = '.title input';
+
+    const years = [2023, 2024, 2025, 2026, 2027, 2028];
+    years.forEach((year, i) => {
+      assert.dom(`${yearSelect} option:nth-of-type(${i + 1})`).hasText(year.toString());
+    });
+    assert.strictEqual(find(title).value.trim(), course.title);
+  });
+
+  test('dates are correct in January', async function (assert) {
+    const january1st2025 = DateTime.fromObject({
+      year: 2025,
+      month: 1,
+      day: 1,
+      hour: 8,
+    });
+    freezeDateAt(january1st2025.toJSDate());
+    const school = this.server.create('school');
+    const course = this.server.create('course', {
+      title: 'old course',
+      school,
+    });
+    const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
+    this.set('course', courseModel);
+
+    await render(hbs`<Course::Rollover @course={{this.course}} />`);
+
+    const yearSelect = '.year-select select';
+    const title = '.title input';
+
+    const years = [2023, 2024, 2025, 2026, 2027, 2028];
+    years.forEach((year, i) => {
+      assert.dom(`${yearSelect} option:nth-of-type(${i + 1})`).hasText(year.toString());
+    });
+    assert.strictEqual(find(title).value.trim(), course.title);
+  });
+
+  test('dates are correct in June', async function (assert) {
+    const june30th2025 = DateTime.fromObject({
+      year: 2025,
+      month: 6,
+      day: 30,
+      hour: 8,
+    });
+    freezeDateAt(june30th2025.toJSDate());
+    const school = this.server.create('school');
+    const course = this.server.create('course', {
+      title: 'old course',
+      school,
+    });
+    const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
+    this.set('course', courseModel);
+
+    await render(hbs`<Course::Rollover @course={{this.course}} />`);
+
+    const yearSelect = '.year-select select';
+    const title = '.title input';
+
+    const years = [2023, 2024, 2025, 2026, 2027, 2028];
+    years.forEach((year, i) => {
+      assert.dom(`${yearSelect} option:nth-of-type(${i + 1})`).hasText(year.toString());
+    });
+    assert.strictEqual(find(title).value.trim(), course.title);
+  });
+
+  test('dates are correct in July', async function (assert) {
+    const july1st2025 = DateTime.fromObject({
+      year: 2025,
+      month: 7,
+      day: 1,
+      hour: 8,
+    });
+    freezeDateAt(july1st2025.toJSDate());
+    const school = this.server.create('school');
+    const course = this.server.create('course', {
+      title: 'old course',
+      school,
+    });
+    const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
+    this.set('course', courseModel);
+
+    await render(hbs`<Course::Rollover @course={{this.course}} />`);
+
+    const yearSelect = '.year-select select';
+    const title = '.title input';
+
+    const years = [2024, 2025, 2026, 2027, 2028, 2029];
+    years.forEach((year, i) => {
+      assert.dom(`${yearSelect} option:nth-of-type(${i + 1})`).hasText(year.toString());
+    });
+    assert.strictEqual(find(title).value.trim(), course.title);
   });
 });
