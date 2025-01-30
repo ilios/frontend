@@ -26,10 +26,15 @@ export default class CourseRolloverComponent extends Component {
 
   constructor() {
     super(...arguments);
-    const currentYear = DateTime.now().year;
+    let { month, year } = DateTime.now();
+    year--; // start with the previous year
+    if (month < 7) {
+      // before July 1st (start of a new academic year) show the year before
+      year--;
+    }
     this.years = [];
     for (let i = 0; i < 6; i++) {
-      this.years.push(currentYear + i);
+      this.years.push(year + i);
     }
   }
 
