@@ -19,12 +19,17 @@
     }
   }
 
+  .leadership-collapsed,
   .leadership-expanded-header,
+  .leadership-expanded-content,
+  .session-collapsed-objectives,
+  .session-objectives,
   .detail-learningmaterials-header,
-  .detail-taxonomies-header,
+  .collapsed-taxonomies,
+  .detail-taxonomies,
   .detail-mesh-header,
-  .offering-section-top,
-  .toggle-offering-calendar {
+  .session-offerings {
+    padding-left: 0.5rem;
     padding-right: 0.5rem;
   }
 }

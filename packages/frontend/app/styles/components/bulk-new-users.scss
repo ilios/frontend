@@ -2,10 +2,10 @@
 @use "../ilios-common/mixins" as m;
 
 .bulk-new-users {
-  padding: 1rem;
+  padding: 1rem 0;
 
   h3 {
-    margin: 0.5rem;
+    margin: 0.5rem 0;
   }
 
   .new-user-form {

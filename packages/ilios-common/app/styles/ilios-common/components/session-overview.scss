@@ -42,6 +42,7 @@
 
   .session-overview-header {
     @include m.ilios-overview-header;
+    padding-left: 0.5rem;
 
     .title {
       @include m.ilios-overview-title;
@@ -59,6 +60,7 @@
 
   .session-overview-content {
     @include m.ilios-overview-content;
+    padding-left: 0.5rem;
   }
 
   .block {
