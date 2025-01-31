@@ -4,7 +4,7 @@
 .print-course {
   .header {
     background-color: c.$culturedGrey;
-    padding: 0 1rem;
+    padding: 0 0.5rem;
     width: 100%;
 
     h2 {
@@ -27,7 +27,7 @@
   .block {
     @include m.detail-container(c.$orange);
     background-color: c.$white;
-    padding: 0 1rem;
+    padding: 0.5rem;
 
     .title {
       @include m.detail-container-title;
@@ -43,6 +43,14 @@
 
     .static-list {
       @include m.ilios-static-list;
+    }
+  }
+
+  .print-course-session {
+    .session-objective-list {
+      .fade-text-control {
+        background-image: linear-gradient(to bottom, transparent, c.$white);
+      }
     }
   }
 
