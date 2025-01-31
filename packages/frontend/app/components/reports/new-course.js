@@ -41,30 +41,6 @@ export default class ReportsNewCourseComponent extends Component {
     return guidFor(this);
   }
 
-  get sortedSearchResults() {
-    return this.searchResults?.toSorted(this.sortCourses);
-  }
-
-  sortCourses(a, b) {
-    if (a.year !== b.year) {
-      return b.year - a.year;
-    }
-
-    return a.title.localeCompare(b.title);
-  }
-
-  @restartableTask
-  *search(q) {
-    if (!q.length) {
-      this.searchResults = null;
-      return;
-    }
-
-    this.searchResults = yield this.store.query('course', {
-      q,
-    });
-  }
-
   run = restartableTask(async () => {
     if (!this.passedCourseIds.length) {
       this.reportResults = null;
