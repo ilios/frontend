@@ -10,7 +10,7 @@
     justify-content: space-between;
     padding: calc(constants.$golden-ratio-large * 1rem) 0
       calc(constants.$golden-ratio-small * 1rem) 0;
-    margin: 0 0.8rem;
+    margin: 0 0 0.8rem 0;
 
     @include m.for-tablet-and-up {
       flex-direction: row;
@@ -34,5 +34,9 @@
     .info {
       @include m.text-align-bottom;
     }
+  }
+
+  .breadcrumbs {
+    margin: 0 0 0.8rem;
   }
 }

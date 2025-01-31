@@ -24,4 +24,8 @@
       width: 90%;
     }
   }
+
+  & + .breadcrumbs {
+    margin-left: 0.5rem;
+  }
 }

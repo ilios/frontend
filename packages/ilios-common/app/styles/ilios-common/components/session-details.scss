@@ -10,7 +10,6 @@
   border-style: solid;
   border-top: 0;
   border-width: 0 2px 2px;
-  padding-left: 0.8rem;
 
   table {
     thead,
@@ -18,5 +17,14 @@
       background-color: c.$tealBlue;
       color: c.$white;
     }
+  }
+
+  .leadership-expanded-header,
+  .detail-learningmaterials-header,
+  .detail-taxonomies-header,
+  .detail-mesh-header,
+  .offering-section-top,
+  .toggle-offering-calendar {
+    padding-right: 0.5rem;
   }
 }

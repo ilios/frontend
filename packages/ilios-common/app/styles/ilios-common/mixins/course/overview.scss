@@ -5,6 +5,7 @@
 
 @mixin course-overview() {
   @include ilios-overview.ilios-overview(c.$orange);
+  padding: 0.5rem 0;
   @include ilios-form.ilios-form-error;
 
   .title {
@@ -13,19 +14,27 @@
 
   .course-overview-header {
     @include ilios-overview.ilios-overview-header;
+
+    &:last-child {
+      margin-right: 0;
+    }
   }
 
   .course-overview-actions {
     @include ilios-overview.ilios-overview-actions;
 
+    span {
+      color: c.$blueMunsell;
+    }
+
     a,
     span {
       @include font-size.font-size("medium");
       margin-right: 0.5rem;
-    }
 
-    span {
-      color: c.$blueMunsell;
+      &:last-child {
+        margin-right: 0;
+      }
     }
   }
 

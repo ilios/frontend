@@ -43,7 +43,7 @@
     .scheduling {
       align-items: start;
       display: grid;
-      grid-gap: 0.25rem 1rem;
+      grid-gap: 0.25rem 0.75rem;
       margin-bottom: 1rem;
       legend {
         @include m.ilios-heading;

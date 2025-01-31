@@ -11,7 +11,6 @@
   display: grid;
   grid-gap: 0.25rem 1rem;
   grid-template-columns: 1fr;
-  margin-bottom: 1rem;
   padding: 0.5rem 1rem 0.5rem 0.5rem;
 
   @include media.for-laptop-and-up {

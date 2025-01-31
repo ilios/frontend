@@ -3,7 +3,7 @@
 
 .curriculum-inventory-report-details {
   @include m.detail-container(c.$orange);
-  margin: 0 0.8rem;
+  margin: 0 0.5rem;
 
   .title {
     @include m.detail-container-title;

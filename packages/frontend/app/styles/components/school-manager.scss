@@ -5,6 +5,10 @@
 .school-manager {
   @include m.main-section;
 
+  .backtolink {
+    margin: 0;
+  }
+
   .school-overview {
     border-bottom: 1px solid c.$culturedGrey;
     display: flex;
@@ -15,11 +19,6 @@
 
     h2 {
       @include m.ilios-heading-h4;
-      margin-left: 0.8rem;
     }
-  }
-
-  .school-manager-content {
-    margin-left: 0.8rem;
   }
 }

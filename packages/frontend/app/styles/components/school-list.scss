@@ -26,11 +26,8 @@
 
   .new {
     border: 1px solid c.$culturedGrey;
+    margin: 0.5rem 0;
     padding: 1rem;
-
-    @include m.for-laptop-and-up {
-      margin-left: 1rem;
-    }
 
     .new-result-title {
       @include m.ilios-heading-h4;

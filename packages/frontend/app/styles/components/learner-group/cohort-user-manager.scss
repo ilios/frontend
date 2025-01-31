@@ -5,6 +5,7 @@
   @include m.detail-container(c.$tealBlue);
   border-bottom: 0;
   border-top: 1px dotted c.$orange;
+  padding-left: 0;
 
   .learner-group-cohort-user-manager-header {
     @include m.detail-container-header;
