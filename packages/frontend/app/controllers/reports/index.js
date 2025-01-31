@@ -3,7 +3,7 @@ import { tracked } from '@glimmer/tracking';
 import { restartableTask, timeout } from 'ember-concurrency';
 import { action } from '@ember/object';
 
-export default class ReportsController extends Controller {
+export default class ReportsIndexController extends Controller {
   queryParams = [
     { sortReportsBy: 'sortBy' },
     { titleFilter: 'filter' },

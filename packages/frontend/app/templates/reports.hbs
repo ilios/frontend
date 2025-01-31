@@ -1,15 +1,2 @@
 {{page-title (t "general.reports")}}
-<Reports::Root
-  @sortReportsBy={{this.sortReportsBy}}
-  @setSortReportsBy={{set this "sortReportsBy"}}
-  @titleFilter={{this.titleFilter}}
-  @changeTitleFilter={{perform this.changeTitleFilter}}
-  @showNewSubjectReportForm={{this.showNewSubjectReportForm}}
-  @setShowNewSubjectReportForm={{set this "showNewSubjectReportForm"}}
-  @showNewCourseReportForm={{this.showNewCourseReportForm}}
-  @setShowNewCourseReportForm={{set this "showNewCourseReportForm"}}
-  @runningSubjectReport={{this.runningSubjectReport}}
-  @setRunningSubjectReport={{this.setRunningSubjectReport}}
-  @selectedCourseIds={{this.selectedCourseIds}}
-  @setSelectedCourseIds={{this.setSelectedCourseIds}}
-/>
+{{outlet}}
