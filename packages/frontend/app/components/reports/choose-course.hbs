@@ -1,0 +1,58 @@
+<div class="reports-choose-course">
+  {{#each (sort-by "title" this.allSchools) as |s|}}
+    <ul class="school">
+      <li>
+        <button
+          type="button"
+          aria-expanded={{if (eq s.id this.expandedSchool.id) "true" "false"}}
+          {{on "click" (fn this.toggleSchool s.id)}}
+        >
+          {{s.title}}
+          {{#if (and (eq s.id this.bestExpandedSchoolId) (not this.expandedSchoolData.isResolved))}}
+            <FaIcon @icon="spinner" @spin={{true}} />
+          {{else}}
+            <FaIcon @icon={{if (eq s.id this.expandedSchool.id) "caret-down" "caret-right"}} />
+          {{/if}}
+        </button>
+      </li>
+      {{#if (eq s.id this.expandedSchool.id)}}
+        {{#each this.visibleExapndedSchoolYears as |year|}}
+          <ul class="year {{if (eq year this.expandedYear) 'expanded' 'collapsed'}}">
+            <li>
+              <button
+                type="button"
+                aria-expanded={{if (eq year this.expandedYear) "true" "false"}}
+                {{on "click" (fn this.toggleYear year)}}
+              >
+                {{year}}
+                <FaIcon @icon={{if (eq year this.expandedYear) "caret-down" "caret-right"}} />
+              </button>
+            </li>
+            {{#if (eq year this.expandedYear)}}
+              <ul class="courses">
+                {{#each (sort-by "title" this.coursesForExpandedSchoolAndYear) as |c|}}
+                  <li>
+                    <label>
+                      <input
+                        type="checkbox"
+                        checked={{includes c.id @selectedCourseIds}}
+                        {{on
+                          "click"
+                          (fn (if (includes c.id @selectedCourseIds) @remove @add) c.id)
+                        }}
+                      />
+                      {{c.title}}
+                      {{#if c.externalId}}
+                        ({{c.externalId}})
+                      {{/if}}
+                    </label>
+                  </li>
+                {{/each}}
+              </ul>
+            {{/if}}
+          </ul>
+        {{/each}}
+      {{/if}}
+    </ul>
+  {{/each}}
+</div>
