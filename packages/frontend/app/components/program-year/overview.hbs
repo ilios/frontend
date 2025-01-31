@@ -4,7 +4,7 @@
       {{t "general.overview"}}
     </h5>
     <div class="programyear-overview-actions" data-test-actions>
-      {{#if (feature-flag "programYearVisualizations")}}
+      {{#if this.showVisualizations}}
         <LinkTo
           @route="program-year-visualize-objectives"
           @model={{@programYear}}
