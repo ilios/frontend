@@ -1,0 +1,16 @@
+@use "../../ilios-common/mixins" as cm;
+
+.reports-choose-course {
+  button {
+    @include cm.ilios-button-reset;
+    font-weight: bold;
+  }
+
+  ul {
+    @include cm.ilios-list-reset;
+
+    li {
+      margin-left: 0.5em;
+    }
+  }
+}

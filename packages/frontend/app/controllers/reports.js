@@ -36,10 +36,11 @@ export default class ReportsController extends Controller {
 
   @action
   setSelectedCourseIds(ids) {
-    if (!ids) {
+    if (!ids || !ids.length) {
       this.courses = null;
+    } else {
+      //use a Set to remove duplicates
+      this.courses = [...new Set(ids)].join('-');
     }
-    //use a Set to remove duplicates
-    this.courses = [...new Set(ids)].join('-');
   }
 }

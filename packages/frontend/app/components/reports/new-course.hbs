@@ -25,35 +25,12 @@
         {{/each}}
       </ul>
     {{/if}}
-    <div class="course-search">
-      <Reports::Subject::New::Search::Input
-        @search={{perform this.search}}
-        @searchIsRunning={{this.search.isRunning}}
-        @searchIsIdle={{this.search.isIdle}}
-        @searchReturned={{is-array this.searchResults}}
-        @results={{this.sortedSearchResults}}
-        as |course|
-      >
-        <button
-          class="link-button"
-          type="button"
-          disabled={{includes course.id @selectedCourseIds}}
-          {{on "click" (fn this.pickCourse course.id)}}
-        >
-          {{#if (includes course.id @selectedCourseIds)}}
-            <FaIcon @icon="check" />
-          {{else}}
-            <FaIcon @icon="plus" class="add" />
-          {{/if}}
-          {{course.year}}&nbsp;
-          {{#if course.externalId}}
-            [{{course.externalId}}]&nbsp;
-          {{/if}}
-          {{course.title}}
-        </button>
-      </Reports::Subject::New::Search::Input>
-    </div>
   </div>
+  <Reports::ChooseCourse
+    @selectedCourseIds={{@selectedCourseIds}}
+    @add={{this.pickCourse}}
+    @remove={{this.removeCourse}}
+  />
   <div class="input-buttons">
     <button
       type="button"
