@@ -65,7 +65,7 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
 
   test('visiting /reports', async function (assert) {
     await page.visit();
-    assert.strictEqual(currentRouteName(), 'reports');
+    assert.strictEqual(currentRouteName(), 'reports.index');
   });
 
   test('shows reports', async function (assert) {
