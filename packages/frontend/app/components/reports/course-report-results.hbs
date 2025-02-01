@@ -1,6 +1,6 @@
 <div class="report-results">
   <h2>{{t "general.results"}}</h2>
-  <div class="download">
+  <div class="input-buttons">
     <button type="button" {{on "click" (perform this.downloadReport)}} data-test-download>
       {{#if this.finishedBuildingReport}}
         <FaIcon @icon="check" />
@@ -8,6 +8,9 @@
         <FaIcon @icon="download" />
       {{/if}}
       {{t "general.downloadResults"}}
+    </button>
+    <button type="button" class="cancel text" {{on "click" @close}} data-test-close>
+      {{t "general.close"}}
     </button>
   </div>
   <table>
