@@ -74,7 +74,7 @@ export default class CourseReportResultsComponent extends Component {
             firstOfferingDate: firstOfferingDate
               ? DateTime.fromISO(firstOfferingDate).toLocaleString(this.intl.primarlyLocale)
               : '',
-            duration: duration.toFixed(2) ?? 0,
+            duration: duration?.toFixed(2) ?? 0,
           });
         });
       });
