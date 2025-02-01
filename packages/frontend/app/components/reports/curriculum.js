@@ -2,11 +2,10 @@ import Component from '@glimmer/component';
 import { service } from '@ember/service';
 import { restartableTask } from 'ember-concurrency';
 import { cached, tracked } from '@glimmer/tracking';
-import { guidFor } from '@ember/object/internals';
 import { TrackedAsyncData } from 'ember-async-data';
 import { uniqueById } from 'ilios-common/utils/array-helpers';
 
-export default class ReportsNewCourseComponent extends Component {
+export default class ReportsCurriculumComponent extends Component {
   @service store;
   @service graphql;
   @service router;
@@ -37,10 +36,6 @@ export default class ReportsNewCourseComponent extends Component {
     return uniqueById(this.selectedCourseData.value).toSorted(this.sortCourses);
   }
 
-  get uniqueId() {
-    return guidFor(this);
-  }
-
   run = restartableTask(async () => {
     if (!this.passedCourseIds.length) {
       this.reportResults = null;
@@ -62,12 +57,6 @@ export default class ReportsNewCourseComponent extends Component {
 
     this.reportResults = result.data.courses;
   });
-
-  close = () => {
-    this.searchResults = false;
-    this.args.setSelectedCourseIds(null);
-    this.args.close();
-  };
 
   pickCourse = (id) => {
     this.args.setSelectedCourseIds([...this.passedCourseIds, id].sort());
