@@ -1,6 +1,6 @@
 @use "../../ilios-common/mixins" as m;
 
-.reports-root {
+.reports-subjects-list {
   @include m.main-section;
 
   .filters {
