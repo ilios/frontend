@@ -5,11 +5,8 @@ import { TrackedAsyncData } from 'ember-async-data';
 import { DateTime } from 'luxon';
 
 export default class ReportsChooseCourse extends Component {
-  @service graphql;
-  @service store;
   @service iliosConfig;
   @service currentUser;
-  @service dataLoader;
 
   //tri state, null expands primary school, false collapses all, an id expands a specific school
   @tracked userExpandedSchoolId = null;
@@ -27,9 +24,6 @@ export default class ReportsChooseCourse extends Component {
   }
 
   userModel = new TrackedAsyncData(this.currentUser.getModel());
-  get allSchools() {
-    return this.store.peekAll('school');
-  }
 
   @cached
   get user() {
@@ -37,7 +31,7 @@ export default class ReportsChooseCourse extends Component {
   }
 
   get primarySchool() {
-    return this.allSchools.find(({ id }) => id === this.user?.belongsTo('school').id());
+    return this.args.schools.find(({ id }) => id === this.user?.belongsTo('school').id());
   }
 
   crossesBoundaryConfig = new TrackedAsyncData(
@@ -60,43 +54,16 @@ export default class ReportsChooseCourse extends Component {
     return null;
   }
 
-  @cached
-  get expandedSchoolData() {
-    return new TrackedAsyncData(
-      this.bestExpandedSchoolId
-        ? this.dataLoader.loadSchoolForCourses(this.bestExpandedSchoolId)
-        : null,
-    );
-  }
-
   get expandedSchool() {
-    return this.expandedSchoolData.isResolved ? this.expandedSchoolData.value : null;
-  }
-
-  get expandedSchoolCourses() {
-    if (!this.expandedSchool) {
-      return [];
-    }
-
-    const courseIds = this.expandedSchool.hasMany('courses').ids();
-    return courseIds.map((id) => this.store.peekRecord('course', id));
-  }
-
-  get expandedSchoolYears() {
-    const years = this.expandedSchoolCourses.map(({ year }) => year);
-    return [...new Set(years)].sort().reverse();
+    return this.args.schools.find(({ id }) => id === this.bestExpandedSchoolId);
   }
 
   get visibleExapndedSchoolYears() {
     if (this.showAllYears) {
-      return this.expandedSchoolYears;
+      return this.expandedSchool?.years;
     }
 
-    return this.expandedSchoolYears.slice(0, 3);
-  }
-
-  get coursesForExpandedSchoolAndYear() {
-    return this.expandedSchoolCourses.filter(({ year }) => year === this.expandedYear);
+    return this.expandedSchool?.years.slice(0, 3);
   }
 
   toggleSchool = (schoolId) => {
