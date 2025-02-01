@@ -1,0 +1,25 @@
+@use "../../ilios-common/colors" as c;
+@use "../../ilios-common/mixins" as m;
+@use "sass:color";
+
+.reports-curriculum {
+  margin: 0.5rem 0;
+  padding: 1rem 1rem 3rem;
+
+  .title {
+    @include m.ilios-heading-h5;
+    margin-bottom: 0.5rem;
+  }
+
+  .input-buttons {
+    margin-top: 0.5rem;
+    float: right;
+  }
+
+  table {
+    th,
+    td {
+      text-align: left;
+    }
+  }
+}

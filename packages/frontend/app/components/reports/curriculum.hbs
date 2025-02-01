@@ -1,10 +1,7 @@
-<div class="reports-new-course" data-test-reports-new-course ...attributes>
-  <h2 data-test-component-title>{{t "general.newCourseReport"}}</h2>
+<div class="reports-curriculum" data-test-reports-curriculum ...attributes>
   <div class="courses" data-test-courses>
-    <label for="{{this.uniqueId}}-course-search">
-      {{t "general.courses"}}:
-    </label>
     {{#if @selectedCourseIds}}
+      <h2 class="title">{{t "general.selectedCourses"}}:</h2>
       <ul>
         {{#each this.selectedCourses as |course|}}
           <li>
@@ -44,9 +41,6 @@
       {{else}}
         {{t "general.runReport"}}
       {{/if}}
-    </button>
-    <button type="button" class="cancel text" {{on "click" this.close}} data-test-cancel>
-      {{t "general.cancel"}}
     </button>
   </div>
 

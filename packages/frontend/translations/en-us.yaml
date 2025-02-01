@@ -99,6 +99,7 @@ general:
   curriculumInventoryReportRolloverSummary: "This action will copy the structure of this report to be used in your target year. It will not copy course information, only the higher level sequence block structure. You will need to add the appropriate course information and modify the sequence block start and end dates once you have rolled over the existing report structure."
   curriculumInventoryReportRolloverSuccess: Report-Rollover Completed Successfully
   curriculumInventoryReports: Curriculum Inventory Reports
+  curriculumReports: Curriculum Reports
   dashboard: Dashboard
   deactivate: Deactivate
   defaultInstructors: Default Instructors
@@ -368,6 +369,7 @@ general:
   selectAllOrNone: Select All or None
   selected: Selected
   selectPolite: (please select one)
+  selectedCourses: Selected Courses
   selectProgram: Select a Program
   selectSchool: Select School
   selectUser: Select User

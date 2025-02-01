@@ -78,6 +78,8 @@ Router.map(function () {
   });
   this.route('search');
   this.route('reports', function () {
+    this.route('curriculum');
+    this.route('subjects');
     this.route('subject', { path: 'subjects/:report_id' });
   });
 });

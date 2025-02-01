@@ -141,12 +141,13 @@
 
 @forward "components/reports/choose-course";
 @forward "components/reports/choose-new-report";
-@forward "components/reports/new-course";
+@forward "components/reports/curriculum";
 @forward "components/reports/new-subject";
+@forward "components/reports/switcher";
 @forward "components/reports/subject";
 @forward "components/reports/subject-header";
 @forward "components/reports/subjects";
-@forward "components/reports/root";
+@forward "components/reports/subjects-list";
 @forward "components/reports/list-loading";
 
 @forward "components/school/session-type-visualize-vocabularies";
