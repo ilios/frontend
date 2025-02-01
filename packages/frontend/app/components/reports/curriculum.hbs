@@ -3,7 +3,7 @@
     {{#if @selectedCourseIds}}
       <h2 class="title">{{t "general.selectedCourses"}}:</h2>
       <ul>
-        {{#each this.selectedCourses as |course|}}
+        {{#each (sort-by "title" this.selectedCourses) as |course|}}
           <li>
             <button
               class="link-button"
@@ -25,6 +25,7 @@
   </div>
   <Reports::ChooseCourse
     @selectedCourseIds={{@selectedCourseIds}}
+    @schools={{@schools}}
     @add={{this.pickCourse}}
     @remove={{this.removeCourse}}
   />

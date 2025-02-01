@@ -2,8 +2,6 @@ import Component from '@glimmer/component';
 import { service } from '@ember/service';
 import { restartableTask } from 'ember-concurrency';
 import { cached, tracked } from '@glimmer/tracking';
-import { TrackedAsyncData } from 'ember-async-data';
-import { uniqueById } from 'ilios-common/utils/array-helpers';
 
 export default class ReportsCurriculumComponent extends Component {
   @service store;
@@ -18,22 +16,17 @@ export default class ReportsCurriculumComponent extends Component {
   }
 
   @cached
-  get selectedCourseData() {
-    const loadedCourses = this.passedCourseIds
-      .map((id) => this.store.peekRecord('course', id))
-      .filter(Boolean);
-    const loadedIds = loadedCourses.map(({ id }) => id);
-    const unloadedCoursIds = this.passedCourseIds.filter((id) => !loadedIds.includes(id));
-    const courseLoadingPromises = unloadedCoursIds.map((id) => this.store.findRecord('course', id));
-    return new TrackedAsyncData(Promise.all([...loadedCourses, ...courseLoadingPromises]));
+  get allCourses() {
+    return this.args.schools.reduce((all, school) => {
+      const courses = school.years.reduce((arr, year) => {
+        return [...arr, ...year.courses];
+      }, []);
+      return [...all, ...courses];
+    }, []);
   }
 
   get selectedCourses() {
-    if (!this.selectedCourseData.isResolved) {
-      return [];
-    }
-
-    return uniqueById(this.selectedCourseData.value).toSorted(this.sortCourses);
+    return this.allCourses.filter((course) => this.passedCourseIds.includes(Number(course.id)));
   }
 
   run = restartableTask(async () => {

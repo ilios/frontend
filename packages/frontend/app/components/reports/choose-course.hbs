@@ -1,5 +1,5 @@
 <div class="reports-choose-course">
-  {{#each (sort-by "title" this.allSchools) as |s|}}
+  {{#each (sort-by "title" @schools) as |s|}}
     <ul class="school">
       <li>
         <button
@@ -8,29 +8,25 @@
           {{on "click" (fn this.toggleSchool s.id)}}
         >
           {{s.title}}
-          {{#if (and (eq s.id this.bestExpandedSchoolId) (not this.expandedSchoolData.isResolved))}}
-            <FaIcon @icon="spinner" @spin={{true}} />
-          {{else}}
-            <FaIcon @icon={{if (eq s.id this.expandedSchool.id) "caret-down" "caret-right"}} />
-          {{/if}}
+          <FaIcon @icon={{if (eq s.id this.expandedSchool.id) "caret-down" "caret-right"}} />
         </button>
       </li>
       {{#if (eq s.id this.expandedSchool.id)}}
-        {{#each this.visibleExapndedSchoolYears as |year|}}
-          <ul class="year {{if (eq year this.expandedYear) 'expanded' 'collapsed'}}">
+        {{#each this.visibleExapndedSchoolYears as |y|}}
+          <ul class="year {{if (eq y.year this.expandedYear) 'expanded' 'collapsed'}}">
             <li>
               <button
                 type="button"
-                aria-expanded={{if (eq year this.expandedYear) "true" "false"}}
-                {{on "click" (fn this.toggleYear year)}}
+                aria-expanded={{if (eq y.year this.expandedYear) "true" "false"}}
+                {{on "click" (fn this.toggleYear y.year)}}
               >
-                {{year}}
-                <FaIcon @icon={{if (eq year this.expandedYear) "caret-down" "caret-right"}} />
+                {{y.year}}
+                <FaIcon @icon={{if (eq y.year this.expandedYear) "caret-down" "caret-right"}} />
               </button>
             </li>
-            {{#if (eq year this.expandedYear)}}
+            {{#if (eq y.year this.expandedYear)}}
               <ul class="courses">
-                {{#each (sort-by "title" this.coursesForExpandedSchoolAndYear) as |c|}}
+                {{#each (sort-by "title" y.courses) as |c|}}
                   <li>
                     <label>
                       <input
