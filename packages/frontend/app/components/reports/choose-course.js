@@ -58,16 +58,31 @@ export default class ReportsChooseCourse extends Component {
     return this.args.schools.find(({ id }) => id === this.bestExpandedSchoolId);
   }
 
-  get visibleExapndedSchoolYears() {
+  get visibleYears() {
+    let lastTenAndNextTenYears = [];
+    for (let i = DateTime.now().year - 10; i <= DateTime.now().year + 10; i++) {
+      lastTenAndNextTenYears.push(i);
+    }
     if (this.showAllYears) {
-      return this.expandedSchool?.years;
+      return lastTenAndNextTenYears;
     }
 
-    return this.expandedSchool?.years.slice(0, 3);
+    return lastTenAndNextTenYears.slice(8, 11);
+  }
+
+  get visibleExapndedSchoolYears() {
+    return this.expandedSchool?.years.filter(({ year }) => this.visibleYears.includes(year));
+  }
+
+  get filteredSchools() {
+    return this.args.schools.filter(({ years }) => {
+      const schoolYears = years.map(({ year }) => year);
+      return schoolYears.some((year) => this.visibleYears.includes(year));
+    });
   }
 
   get sortedSchools() {
-    return this.args.schools.sort((a, b) => {
+    return this.filteredSchools.sort((a, b) => {
       if (a.id === this.primarySchool?.id) {
         return -1;
       }
