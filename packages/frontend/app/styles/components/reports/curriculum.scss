@@ -23,6 +23,9 @@
 
   table {
     width: 100%;
+    caption {
+      @include m.ilios-heading-h5;
+    }
     th,
     td {
       text-align: left;

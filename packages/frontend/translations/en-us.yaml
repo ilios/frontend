@@ -355,6 +355,7 @@ general:
   reportTitle: Report Title
   requiredInTrack: Required In Track
   resourceTypes: Resource Types
+  resultsSummary: Results Summary
   root: Root
   runReport: Run Report
   sampleFile: Sample File
