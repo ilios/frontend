@@ -66,6 +66,18 @@ export default class ReportsChooseCourse extends Component {
     return this.expandedSchool?.years.slice(0, 3);
   }
 
+  get sortedSchools() {
+    return this.args.schools.sort((a, b) => {
+      if (a.id === this.primarySchool?.id) {
+        return -1;
+      }
+      if (b.id === this.primarySchool?.id) {
+        return 1;
+      }
+      return a.title.localeCompare(b.name);
+    });
+  }
+
   toggleSchool = (schoolId) => {
     if (
       (this.userExpandedSchoolId === null && this.primarySchool?.id === schoolId) ||
