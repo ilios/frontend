@@ -5,13 +5,45 @@ import PapaParse from 'papaparse';
 import { dropTask, timeout } from 'ember-concurrency';
 import createDownloadFile from 'frontend/utils/create-download-file';
 import { DateTime } from 'luxon';
+import { cached } from '@glimmer/tracking';
+import { TrackedAsyncData } from 'ember-async-data';
 
-export default class CourseReportResultsComponent extends Component {
+export default class ReportsCurriculumSessionObjectivesComponent extends Component {
   @service router;
   @service intl;
+  @service graphql;
+
+  @cached
+  get reportResultsData() {
+    const courseIds = this.args.courses.map((c) => c.id);
+    const filters = [`ids: [${courseIds.join(', ')}]`];
+    const userData = ['id', 'firstName', 'lastName', 'middleName', 'displayName'].join(', ');
+    const sessionData = [
+      'id',
+      'title',
+      'sessionType { title }',
+      'sessionObjectives { id, title }',
+      `offerings { id, startDate, endDate, instructors { ${userData} }, instructorGroups { id, users { ${userData} } } }`,
+      `ilmSession { id, dueDate, hours, instructors { ${userData} }, instructorGroups { id, users { ${userData} } } }`,
+    ].join(', ');
+
+    const data = ['id', 'title', 'year', `sessions { ${sessionData} }`];
+    return new TrackedAsyncData(this.graphql.find('courses', filters, data.join(', ')));
+  }
+
+  get reportResults() {
+    if (!this.reportResultsData.isResolved) {
+      return [];
+    }
+    return this.reportResultsData.value.data.courses;
+  }
+
+  get reportRunning() {
+    return this.reportResultsData.isPending;
+  }
 
   get summary() {
-    return this.args.data
+    return this.reportResults
       .reduce((acc, c) => {
         c.sessions.forEach((s) => {
           acc.push({
@@ -40,7 +72,7 @@ export default class CourseReportResultsComponent extends Component {
 
   get results() {
     const origin = window.location.origin;
-    return this.args.data.reduce((acc, c) => {
+    return this.reportResults.reduce((acc, c) => {
       c.sessions.forEach((s) => {
         const path = this.router.urlFor('session', c.id, s.id);
         const offeringInstructors = s.offerings

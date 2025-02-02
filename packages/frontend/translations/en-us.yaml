@@ -382,6 +382,7 @@ general:
   sequenceBlockTitlePlaceholder: Please enter a title for this sequence block.
   sequenceNumber: "Sequence #"
   sessionAttributes: Session Attributes
+  sessionObjectives: Session Objectives
   sessionTitlePlaceholder: Enter a title for this session
   sessionTypeConfirmRemoval: Are you sure you want to delete this session type? This action cannot be undone.
   showResultsFor: Show Results For

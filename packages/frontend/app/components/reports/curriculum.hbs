@@ -1,7 +1,16 @@
 <div class="reports-curriculum" data-test-reports-curriculum ...attributes>
   <div class="courses" data-test-courses>
     {{#if @selectedCourseIds}}
-      <h2 class="title">{{t "general.selectedCourses"}}:</h2>
+      <label>
+        {{t "general.runReport"}}:
+        <select {{on "change" (pick "target.value" (set this "selectedReport"))}}>
+          {{#each this.reportList as |report|}}
+            <option value={{report.value}} selected={{eq report.value this.selectedReport}}>
+              {{report.label}}
+            </option>
+          {{/each}}
+        </select>
+      </label>
       <ul class="selected-courses">
         {{#each (sort-by "title" this.selectedCourses) as |course|}}
           <li>
@@ -24,28 +33,22 @@
       </ul>
     {{/if}}
   </div>
-  {{#if this.reportResults}}
-    <Reports::CourseReportResults
-      @data={{this.reportResults}}
-      @close={{set this "reportResults" null}}
+  {{#if this.reportIsRunning}}
+    <this.reportResultsComponent
+      @courses={{this.selectedCourses}}
+      @close={{set this "reportIsRunning" false}}
     />
   {{else}}
     <div class="input-buttons">
-      {{#unless this.reportResults}}
-        <button
-          type="button"
-          class="done text"
-          {{on "click" (perform this.run)}}
-          disabled={{this.run.isRunning}}
-          data-test-run
-        >
-          {{#if this.run.isRunning}}
-            <LoadingSpinner />
-          {{else}}
-            {{t "general.runReport"}}
-          {{/if}}
-        </button>
-      {{/unless}}
+      <button
+        type="button"
+        class="done text"
+        {{on "click" (set this "reportIsRunning" true)}}
+        disabled={{this.reportIsRunning}}
+        data-test-run
+      >
+        <FaIcon @icon="play" />
+      </button>
     </div>
     <Reports::ChooseCourse
       @selectedCourseIds={{@selectedCourseIds}}
