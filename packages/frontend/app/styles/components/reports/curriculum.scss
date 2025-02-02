@@ -28,4 +28,22 @@
       text-align: left;
     }
   }
+
+  .selected-courses {
+    @include m.ilios-list-reset;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    li {
+      margin-left: 0.5rem;
+      button {
+        @include m.ilios-button-reset;
+        @include m.font-size("small");
+        border-radius: 3px;
+        display: inline-block;
+        padding: 2px 5px;
+        background-color: c.$pearl;
+      }
+    }
+  }
 }
