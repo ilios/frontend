@@ -2,16 +2,17 @@
   <div class="courses" data-test-courses>
     {{#if @selectedCourseIds}}
       <h2 class="title">{{t "general.selectedCourses"}}:</h2>
-      <ul>
+      <ul class="selected-courses">
         {{#each (sort-by "title" this.selectedCourses) as |course|}}
           <li>
             <button
-              class="link-button"
               type="button"
               {{on "click" (fn this.removeCourse course.id)}}
               data-test-selected-course
             >
-              {{course.year}}&nbsp;
+              {{#if this.showCourseYears}}
+                {{course.year}}&nbsp;
+              {{/if}}
               {{#if course.externalId}}
                 [{{course.externalId}}]&nbsp;
               {{/if}}
