@@ -1,0 +1,50 @@
+<div class="input-buttons">
+  {{#if this.reportRunning}}
+    <button type="button" class="done text" disabled>
+      <FaIcon @icon="spinner" @spin={{true}} />
+    </button>
+  {{else}}
+    <button type="button" {{on "click" (perform this.downloadReport)}} data-test-download>
+      {{#if this.finishedBuildingReport}}
+        <FaIcon @icon="check" />
+      {{else}}
+        <FaIcon @icon="download" />
+      {{/if}}
+      {{t "general.downloadResults"}}
+    </button>
+    <button type="button" class="cancel text" {{on "click" @close}} data-test-close>
+      {{t "general.close"}}
+    </button>
+  {{/if}}
+</div>
+{{#unless this.reportRunning}}
+  <div class="report-results">
+    <table>
+      <caption>{{t "general.results"}}</caption>
+      <thead>
+        <tr>
+          <th>{{t "general.course"}}</th>
+          <th>{{t "general.session"}}</th>
+          <th>{{t "general.objectives"}}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each this.summary as |o|}}
+          <tr>
+            <td>
+              <LinkTo @route="course" @models={{array o.courseId}}>
+                {{o.courseTitle}}
+              </LinkTo>
+            </td>
+            <td>
+              <LinkTo @route="session" @models={{array o.courseId o.sessionId}}>
+                {{o.sessionTitle}}
+              </LinkTo>
+            </td>
+            <td>{{o.objectiveCount}}</td>
+          </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+{{/unless}}

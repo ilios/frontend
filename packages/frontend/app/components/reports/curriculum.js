@@ -1,15 +1,21 @@
 import Component from '@glimmer/component';
 import { service } from '@ember/service';
-import { restartableTask } from 'ember-concurrency';
 import { cached, tracked } from '@glimmer/tracking';
+import { ensureSafeComponent } from '@embroider/util';
+import SessionObjectives from './curriculum/session-objectives';
 
 export default class ReportsCurriculumComponent extends Component {
   @service store;
   @service graphql;
   @service router;
+  @service intl;
 
   @tracked searchResults = null;
   @tracked reportResults = null;
+  @tracked selectedReport = 'sessionObjectives';
+  @tracked reportIsRunning = false;
+
+  reportList = [{ value: 'sessionObjectives', label: this.intl.t('general.sessionObjectives') }];
 
   get passedCourseIds() {
     return this.args.selectedCourseIds?.map(Number) ?? [];
@@ -34,33 +40,21 @@ export default class ReportsCurriculumComponent extends Component {
     return years.some((year) => year !== years[0]);
   }
 
-  run = restartableTask(async () => {
-    if (!this.passedCourseIds.length) {
-      this.reportResults = null;
-      return;
+  get reportResultsComponent() {
+    switch (this.selectedReport) {
+      case 'sessionObjectives':
+        return ensureSafeComponent(SessionObjectives, this);
     }
-    const filters = [`ids: [${this.passedCourseIds.join(', ')}]`];
-    const userData = ['id', 'firstName', 'lastName', 'middleName', 'displayName'].join(', ');
-    const sessionData = [
-      'id',
-      'title',
-      'sessionType { title }',
-      'sessionObjectives { id, title }',
-      `offerings { id, startDate, endDate, instructors { ${userData} }, instructorGroups { id, users { ${userData} } } }`,
-      `ilmSession { id, dueDate, hours, instructors { ${userData} }, instructorGroups { id, users { ${userData} } } }`,
-    ].join(', ');
 
-    const data = ['id', 'title', 'year', `sessions { ${sessionData} }`];
-    const result = await this.graphql.find('courses', filters, data.join(', '));
-
-    this.reportResults = result.data.courses;
-  });
+    return false;
+  }
 
   pickCourse = (id) => {
     this.args.setSelectedCourseIds([...this.passedCourseIds, id].sort());
   };
 
   removeCourse = (id) => {
+    this.reportIsRunning = false;
     this.args.setSelectedCourseIds(this.passedCourseIds.filter((i) => i !== Number(id)).sort());
   };
 }
