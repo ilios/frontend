@@ -20,27 +20,25 @@
 {{#unless this.reportRunning}}
   <div class="report-results">
     <table>
-      <caption>{{t "general.results"}}</caption>
+      <caption>{{t "general.resultsSummary"}}</caption>
       <thead>
         <tr>
           <th>{{t "general.course"}}</th>
-          <th>{{t "general.session"}}</th>
+          <th>{{t "general.sessions"}}</th>
+          <th>{{t "general.instructors"}}</th>
           <th>{{t "general.objectives"}}</th>
         </tr>
       </thead>
       <tbody>
-        {{#each this.summary as |o|}}
+        {{#each (sort-by "courseTitle" this.summary) as |o|}}
           <tr>
             <td>
-              <LinkTo @route="course" @models={{array o.courseId}}>
+              <LinkTo @route="course" @model={{o.courseId}}>
                 {{o.courseTitle}}
               </LinkTo>
             </td>
-            <td>
-              <LinkTo @route="session" @models={{array o.courseId o.sessionId}}>
-                {{o.sessionTitle}}
-              </LinkTo>
-            </td>
+            <td>{{o.sessionCount}}</td>
+            <td>{{o.instructorsCount}}</td>
             <td>{{o.objectiveCount}}</td>
           </tr>
         {{/each}}

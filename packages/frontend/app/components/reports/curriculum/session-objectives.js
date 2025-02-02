@@ -42,20 +42,40 @@ export default class ReportsCurriculumSessionObjectivesComponent extends Compone
     return this.reportResultsData.isPending;
   }
 
+  get reportWithInstructors() {
+    return this.reportResults.map((c) => {
+      c.sessions = c.sessions.map((s) => {
+        const offeringInstructors = s.offerings.map((o) => o.instructors.map((i) => i)).flat();
+        const ilmInstructors = s.ilmSession?.instructors.map((i) => i) ?? [];
+        const offeringInstructorGroups = s.offerings.map((o) => o.instructorGroups).flat();
+        const ilmInstructorGroups = s.ilmSession?.instructorGroups ?? [];
+        const instructorGroupInstructors = [...offeringInstructorGroups, ...ilmInstructorGroups]
+          .map((ig) => ig.users)
+          .flat();
+        const instructors = [
+          ...offeringInstructors,
+          ...ilmInstructors,
+          ...instructorGroupInstructors,
+        ].map((i) => this.getUserName(i));
+
+        s.instructors = [...new Set(instructors)].sort();
+        return s;
+      });
+
+      return c;
+    });
+  }
+
   get summary() {
-    return this.reportResults
-      .reduce((acc, c) => {
-        c.sessions.forEach((s) => {
-          acc.push({
-            courseTitle: c.title,
-            sessionTitle: s.title,
-            sessionType: s.sessionType.title,
-            objectiveCount: s.sessionObjectives.length,
-          });
-        });
-        return acc;
-      }, [])
-      .sort(this.sortResults);
+    return this.reportWithInstructors.map((c) => {
+      return {
+        courseId: c.id,
+        courseTitle: c.title,
+        sessionCount: c.sessions.length,
+        objectiveCount: c.sessions.reduce((acc, s) => acc + s.sessionObjectives.length, 0),
+        instructorsCount: c.sessions.reduce((acc, s) => acc + s.instructors.length, 0),
+      };
+    });
   }
 
   getUserName = (user) => {
@@ -72,13 +92,9 @@ export default class ReportsCurriculumSessionObjectivesComponent extends Compone
 
   get results() {
     const origin = window.location.origin;
-    return this.reportResults.reduce((acc, c) => {
+    return this.reportWithInstructors.reduce((acc, c) => {
       c.sessions.forEach((s) => {
         const path = this.router.urlFor('session', c.id, s.id);
-        const offeringInstructors = s.offerings
-          .map((o) => o.instructors.map((i) => this.getUserName(i)))
-          .flat();
-        const ilmInstructors = s.ilmSession?.instructors.map((i) => this.getUserName(i)) ?? [];
         let firstOfferingDate, duration;
         const firstOffering = s.offerings.sort(
           (a, b) => DateTime.fromISO(a.startDate) - DateTime.fromISO(b.startDate),
@@ -102,7 +118,7 @@ export default class ReportsCurriculumSessionObjectivesComponent extends Compone
             sessionType: s.sessionType.title,
             title,
             link: `${origin}${path}`,
-            instructors: [...offeringInstructors, ...ilmInstructors].sort(),
+            instructors: s.instructors,
             firstOfferingDate: firstOfferingDate
               ? DateTime.fromISO(firstOfferingDate).toLocaleString(this.intl.primarlyLocale)
               : '',
