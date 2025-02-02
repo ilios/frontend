@@ -3,7 +3,7 @@
     {{#if @selectedCourseIds}}
       <label>
         {{t "general.runReport"}}:
-        <select {{on "change" (pick "target.value" (set this "selectedReport"))}}>
+        <select {{on "change" this.changeSelectedReport}}>
           {{#each this.reportList as |report|}}
             <option value={{report.value}} selected={{eq report.value this.selectedReport}}>
               {{report.label}}

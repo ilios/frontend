@@ -3,6 +3,7 @@ import { service } from '@ember/service';
 import { cached, tracked } from '@glimmer/tracking';
 import { ensureSafeComponent } from '@embroider/util';
 import SessionObjectives from './curriculum/session-objectives';
+import LearnerGroups from './curriculum/learner-groups';
 
 export default class ReportsCurriculumComponent extends Component {
   @service store;
@@ -15,7 +16,10 @@ export default class ReportsCurriculumComponent extends Component {
   @tracked selectedReport = 'sessionObjectives';
   @tracked reportIsRunning = false;
 
-  reportList = [{ value: 'sessionObjectives', label: this.intl.t('general.sessionObjectives') }];
+  reportList = [
+    { value: 'sessionObjectives', label: this.intl.t('general.sessionObjectives') },
+    { value: 'learnerGroups', label: this.intl.t('general.learnerGroups') },
+  ];
 
   get passedCourseIds() {
     return this.args.selectedCourseIds?.map(Number) ?? [];
@@ -44,6 +48,8 @@ export default class ReportsCurriculumComponent extends Component {
     switch (this.selectedReport) {
       case 'sessionObjectives':
         return ensureSafeComponent(SessionObjectives, this);
+      case 'learnerGroups':
+        return ensureSafeComponent(LearnerGroups, this);
     }
 
     return false;
@@ -56,5 +62,10 @@ export default class ReportsCurriculumComponent extends Component {
   removeCourse = (id) => {
     this.reportIsRunning = false;
     this.args.setSelectedCourseIds(this.passedCourseIds.filter((i) => i !== Number(id)).sort());
+  };
+
+  changeSelectedReport = ({ target }) => {
+    this.reportIsRunning = false;
+    this.selectedReport = target.value;
   };
 }
