@@ -21,23 +21,6 @@
           </li>
         {{/each}}
       </ul>
-      <div class="input-buttons">
-        {{#unless this.reportResults}}
-          <button
-            type="button"
-            class="done text"
-            {{on "click" (perform this.run)}}
-            disabled={{this.run.isRunning}}
-            data-test-run
-          >
-            {{#if this.run.isRunning}}
-              <LoadingSpinner />
-            {{else}}
-              {{t "general.runReport"}}
-            {{/if}}
-          </button>
-        {{/unless}}
-      </div>
     {{/if}}
   </div>
   {{#if this.reportResults}}
@@ -46,6 +29,23 @@
       @close={{set this "reportResults" null}}
     />
   {{else}}
+    <div class="input-buttons">
+      {{#unless this.reportResults}}
+        <button
+          type="button"
+          class="done text"
+          {{on "click" (perform this.run)}}
+          disabled={{this.run.isRunning}}
+          data-test-run
+        >
+          {{#if this.run.isRunning}}
+            <LoadingSpinner />
+          {{else}}
+            {{t "general.runReport"}}
+          {{/if}}
+        </button>
+      {{/unless}}
+    </div>
     <Reports::ChooseCourse
       @selectedCourseIds={{@selectedCourseIds}}
       @schools={{@schools}}
