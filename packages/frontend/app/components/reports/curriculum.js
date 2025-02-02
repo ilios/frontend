@@ -29,6 +29,11 @@ export default class ReportsCurriculumComponent extends Component {
     return this.allCourses.filter((course) => this.passedCourseIds.includes(Number(course.id)));
   }
 
+  get showCourseYears() {
+    const years = this.selectedCourses.map(({ year }) => year);
+    return years.some((year) => year !== years[0]);
+  }
+
   run = restartableTask(async () => {
     if (!this.passedCourseIds.length) {
       this.reportResults = null;
