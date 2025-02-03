@@ -13,7 +13,6 @@ export default class ReportsCurriculumComponent extends Component {
 
   @tracked searchResults = null;
   @tracked reportResults = null;
-  @tracked selectedReport = 'sessionObjectives';
   @tracked reportIsRunning = false;
 
   reportList = [
@@ -23,6 +22,10 @@ export default class ReportsCurriculumComponent extends Component {
 
   get passedCourseIds() {
     return this.args.selectedCourseIds?.map(Number) ?? [];
+  }
+
+  get selectedReport() {
+    return this.args.report ?? this.reportList[0].value;
   }
 
   @cached
@@ -66,6 +69,6 @@ export default class ReportsCurriculumComponent extends Component {
 
   changeSelectedReport = ({ target }) => {
     this.reportIsRunning = false;
-    this.selectedReport = target.value;
+    this.args.setReport(target.value);
   };
 }
