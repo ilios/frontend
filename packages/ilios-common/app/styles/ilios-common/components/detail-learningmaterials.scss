@@ -104,6 +104,7 @@
 
   .detail-learningmaterials-content {
     @include m.detail-container-content;
+    padding: 0.5rem;
 
     table {
       td {
