@@ -88,7 +88,7 @@
     "qunit": "^2.22.0",
     "qunit-dom": "^2.0.0",
     "qunit-theme-ember": "^1.0.0",
-    "papaparse": "^5.4.1",
+    "papaparse": "^5.5.2",
     "sass": "^1.83.4",
     "stylelint": "^16.3.1",
     "stylelint-config-recommended-scss": "^14.1.0",
