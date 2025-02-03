@@ -325,8 +325,8 @@ importers:
         specifier: ^5.0.0
         version: 5.0.2(prettier@3.4.2)(stylelint@16.14.0)
       stylelint-scss:
-        specifier: ^6.10.1
-        version: 6.10.1(stylelint@16.14.0)
+        specifier: ^6.11.0
+        version: 6.11.0(stylelint@16.14.0)
       terser-webpack-plugin:
         specifier: ^5.3.9
         version: 5.3.11(webpack@5.97.1)
@@ -626,8 +626,8 @@ importers:
         specifier: ^5.0.0
         version: 5.0.2(prettier@3.4.2)(stylelint@16.14.0)
       stylelint-scss:
-        specifier: ^6.10.1
-        version: 6.10.1(stylelint@16.14.0)
+        specifier: ^6.11.0
+        version: 6.11.0(stylelint@16.14.0)
       tracked-built-ins:
         specifier: ^3.1.1
         version: 3.4.0(@babel/core@7.26.7)
@@ -854,8 +854,8 @@ importers:
         specifier: ^5.0.0
         version: 5.0.2(prettier@3.4.2)(stylelint@16.14.0)
       stylelint-scss:
-        specifier: ^6.10.1
-        version: 6.10.1(stylelint@16.14.0)
+        specifier: ^6.11.0
+        version: 6.11.0(stylelint@16.14.0)
       testem-failure-only-reporter:
         specifier: ^1.0.0
         version: 1.0.0(babel-core@6.26.3)(ejs@3.1.10)(handlebars@4.7.8)(underscore@1.13.7)
@@ -1082,8 +1082,8 @@ importers:
         specifier: ^5.0.0
         version: 5.0.2(prettier@3.4.2)(stylelint@16.14.0)
       stylelint-scss:
-        specifier: ^6.10.1
-        version: 6.10.1(stylelint@16.14.0)
+        specifier: ^6.11.0
+        version: 6.11.0(stylelint@16.14.0)
       testem-failure-only-reporter:
         specifier: ^1.0.0
         version: 1.0.0(babel-core@6.26.3)(ejs@3.1.10)(handlebars@4.7.8)(underscore@1.13.7)
@@ -1307,8 +1307,8 @@ importers:
         specifier: ^5.0.0
         version: 5.0.2(prettier@3.4.2)(stylelint@16.14.0)
       stylelint-scss:
-        specifier: ^6.10.1
-        version: 6.10.1(stylelint@16.14.0)
+        specifier: ^6.11.0
+        version: 6.11.0(stylelint@16.14.0)
       testem-failure-only-reporter:
         specifier: ^1.0.0
         version: 1.0.0(babel-core@6.26.3)(ejs@3.1.10)(handlebars@4.7.8)(underscore@1.13.7)
@@ -9221,8 +9221,8 @@ packages:
       prettier: '>=3.0.0'
       stylelint: '>=16.0.0'
 
-  stylelint-scss@6.10.1:
-    resolution: {integrity: sha512-CBqs0jecftIyhic6xba+4OvZUp4B0wNbX19w6Rq1fPo+lBDmTevk+olo8H7u/WQpTSDCDbBN4f3oocQurvXLTQ==}
+  stylelint-scss@6.11.0:
+    resolution: {integrity: sha512-AvJ6LVzz2iXHxPlPTR9WVy73FC/vmohH54VySNlCKX1NIXNAeuzy/VbIkMJLMyw/xKYqkgY4kAgB+qy5BfCaCg==}
     engines: {node: '>=18.12.0'}
     peerDependencies:
       stylelint: ^16.0.2
@@ -20919,7 +20919,7 @@ snapshots:
       postcss-scss: 4.0.9(postcss@8.5.1)
       stylelint: 16.14.0
       stylelint-config-recommended: 14.0.1(stylelint@16.14.0)
-      stylelint-scss: 6.10.1(stylelint@16.14.0)
+      stylelint-scss: 6.11.0(stylelint@16.14.0)
     optionalDependencies:
       postcss: 8.5.1
 
@@ -20938,7 +20938,7 @@ snapshots:
       prettier-linter-helpers: 1.0.0
       stylelint: 16.14.0
 
-  stylelint-scss@6.10.1(stylelint@16.14.0):
+  stylelint-scss@6.11.0(stylelint@16.14.0):
     dependencies:
       css-tree: 3.1.0
       is-plain-object: 5.0.0
