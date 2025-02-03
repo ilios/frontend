@@ -2,7 +2,7 @@ import Controller from '@ember/controller';
 import { tracked } from '@glimmer/tracking';
 
 export default class ReportsCurriculumController extends Controller {
-  queryParams = [{ courses: 'courses' }];
+  queryParams = [{ courses: 'courses' }, { report: 'report' }];
 
   @tracked courses = null;
 
