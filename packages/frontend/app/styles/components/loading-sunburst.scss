@@ -1,0 +1,18 @@
+.loading-sunburst {
+  display: grid;
+  place-items: center;
+  height: 100%;
+  width: 100%;
+  background-image: url("icons/sunburst-transparent512.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  animation: fadeIn 10s forwards;
+  @keyframes fadeIn {
+    from {
+      opacity: 0.01;
+    }
+    to {
+      opacity: 0.5;
+    }
+  }
+}
