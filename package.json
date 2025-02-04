@@ -27,5 +27,12 @@
   },
   "devDependencies": {
     "husky": "^9.1.4"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "aws-sdk",
+      "fsevents",
+      "sharp"
+    ]
   }
 }
