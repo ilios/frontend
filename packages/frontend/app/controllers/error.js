@@ -11,6 +11,9 @@ export default class ErrorController extends Controller {
     if (this.model?.errors?.length > 0) {
       return Number(this.model.errors[0].status) === 404;
     }
+    if (this.model?.message?.toLowerCase().includes('not found')) {
+      return true;
+    }
 
     return false;
   }
