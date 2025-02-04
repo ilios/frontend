@@ -9,8 +9,8 @@
   padding: 1rem 1rem 3rem;
 
   .title {
-    @include m.ilios-heading-h5;
-    margin-bottom: 0.5rem;
+    @include m.ilios-heading-h4;
+    margin-bottom: 1rem;
   }
 
   .new-subject-content {

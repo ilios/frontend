@@ -3,6 +3,7 @@
 
 .detail-instructors {
   @include m.detail-container(c.$tealBlue);
+  padding: 1rem 0.5rem;
 
   .detail-instructors-header {
     @include m.detail-container-header;
