@@ -1,6 +1,9 @@
 @use "../../ilios-common/mixins" as cm;
 
 .reports-choose-course {
+  .schools {
+    margin: 0 0 1em 0;
+  }
   button {
     @include cm.ilios-button-reset;
     font-weight: bold;
