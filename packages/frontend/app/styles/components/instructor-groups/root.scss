@@ -9,6 +9,10 @@
     .schools,
     .title {
       @include m.main-list-filter;
+
+      &:last-child {
+        padding-right: 0;
+      }
     }
   }
 

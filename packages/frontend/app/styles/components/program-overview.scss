@@ -3,7 +3,6 @@
 
 .program-overview {
   @include m.ilios-overview(c.$culturedGrey);
-  margin: 0 0.8rem;
 
   h2 {
     @include m.ilios-overview-title;

@@ -4,6 +4,7 @@
 .learner-group-instructors-list {
   @include m.detail-container(c.$orange);
   border-top: 1px dotted c.$orange;
+  padding-left: 0;
 
   .detail-header {
     @include m.detail-container-header;

@@ -19,7 +19,7 @@
     align-items: baseline;
     display: flex;
     flex-direction: column;
-    padding: 0.5rem;
+    padding: 0.5rem 0;
 
     @include m.for-laptop-and-up {
       flex-direction: row;
@@ -27,7 +27,7 @@
 
     label {
       @include m.ilios-label;
-      margin: 0 0.5rem;
+      margin: 0 0.5rem 0 0;
     }
 
     .done {

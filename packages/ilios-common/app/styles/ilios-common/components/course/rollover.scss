@@ -12,7 +12,7 @@
     border: 1px solid c.$blueMunsell;
     display: block;
     margin-top: 1rem;
-    padding: 1rem;
+    padding: 1rem 0.5rem;
 
     .item {
       @include m.ilios-form-item;

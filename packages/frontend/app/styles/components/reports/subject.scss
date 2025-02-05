@@ -3,13 +3,7 @@
 .reports-subject {
   @include cm.main-section;
 
-  .back-to-reports {
-    margin-left: 1rem;
-  }
-
   .content-container {
-    margin-left: 1rem;
-
     .report-results {
       @include cm.ilios-list-reset;
     }

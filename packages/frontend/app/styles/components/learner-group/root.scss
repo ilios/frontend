@@ -8,7 +8,6 @@
 
   .learner-group-overview {
     @include m.ilios-overview(c.$orange);
-    margin-left: 0.8rem;
 
     .block {
       @include m.ilios-overview-block;

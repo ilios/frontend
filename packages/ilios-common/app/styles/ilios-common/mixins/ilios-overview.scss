@@ -8,7 +8,7 @@
     border-bottom: 1px dotted $bottom-border-color;
   }
   display: block;
-  padding: 0.8rem 0;
+  padding: 0.5rem 0;
 
   label {
     @include ilios-form.ilios-label;
@@ -40,7 +40,6 @@
   align-items: baseline;
   display: flex;
   justify-content: space-around;
-  margin-right: 0.5rem;
   text-align: right;
   vertical-align: middle;
 }

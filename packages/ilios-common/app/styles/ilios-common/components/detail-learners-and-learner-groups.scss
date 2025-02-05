@@ -3,6 +3,7 @@
 
 .detail-learners-and-learner-groups {
   @include m.detail-container(c.$tealBlue);
+  padding: 1rem 0.5rem;
 
   .detail-learners-and-learner-groups-header {
     @include m.detail-container-header;

@@ -2,6 +2,10 @@
 @use "../ilios-common/mixins" as m;
 
 .school-vocabulary-manager {
+  .breadcrumbs {
+    margin: 0.8rem 0;
+  }
+
   .school-vocabulary-manager-title {
     align-items: baseline;
     display: flex;

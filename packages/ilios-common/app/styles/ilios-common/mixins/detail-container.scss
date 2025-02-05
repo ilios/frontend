@@ -44,6 +44,10 @@
     @include media.for-phone-only {
       margin-top: 0.25em;
     }
+
+    &:last-child {
+      margin-right: 0;
+    }
   }
 
   .bigadd {

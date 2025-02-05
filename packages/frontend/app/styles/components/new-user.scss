@@ -2,9 +2,14 @@
 @use "../ilios-common/mixins" as m;
 
 .new-user {
+  background-color: c.$slightWhite;
   border: 1px solid c.$culturedGrey;
-  margin: 0.5rem;
+  margin: 0.5rem 0;
   padding: 1rem;
+
+  & > .title {
+    @include m.ilios-heading-h4;
+  }
 
   .new-user-form {
     @include m.ilios-form;

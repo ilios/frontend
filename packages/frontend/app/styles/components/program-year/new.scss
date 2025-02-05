@@ -2,8 +2,9 @@
 @use "../../ilios-common/mixins" as m;
 
 .new-program-year {
+  background-color: c.$slightWhite;
   border: 1px solid c.$culturedGrey;
-  margin: 0.5rem;
+  margin: 0.5rem 0;
   padding: 1rem;
 
   h4 {

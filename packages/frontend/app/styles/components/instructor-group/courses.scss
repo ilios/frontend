@@ -3,7 +3,6 @@
 
 .instructor-group-courses {
   @include m.detail-container(c.$orange);
-  margin-left: 0.8rem;
 
   .instructor-group-courses-header {
     @include m.detail-container-header;

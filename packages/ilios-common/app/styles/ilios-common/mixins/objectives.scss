@@ -20,6 +20,10 @@
 
       .expand-collapse-button {
         margin: 0 0.5em;
+
+        &:last-child {
+          margin-right: 0;
+        }
       }
 
       .course-visualize-objectives-graph {
@@ -34,17 +38,17 @@
   }
 
   .new-objective {
+    background-color: c.$slightWhite;
     border: 1px solid c.$culturedGrey;
-    margin: 1rem;
-    padding: 0.5rem;
+    margin: 0.5rem 0;
+    padding: 1rem;
 
     .title {
-      margin-bottom: 0.25em;
+      @include ilios-heading.ilios-heading-h5;
+      margin-bottom: 0.5em;
     }
 
     .new-objective-form {
-      margin-left: 0.5em;
-
       label {
         font-weight: bold;
         margin: 0.25em;
@@ -64,7 +68,6 @@
     display: grid;
     grid-template-columns: 5fr 3fr 3fr 3fr 1fr;
     grid-template-rows: auto;
-    margin-right: 0.5em;
 
     .grid-item {
       border-bottom: 1px solid c.$davysGrey;

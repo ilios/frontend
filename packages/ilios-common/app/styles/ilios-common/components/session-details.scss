@@ -10,7 +10,6 @@
   border-style: solid;
   border-top: 0;
   border-width: 0 2px 2px;
-  padding-left: 0.8rem;
 
   table {
     thead,
@@ -18,5 +17,19 @@
       background-color: c.$tealBlue;
       color: c.$white;
     }
+  }
+
+  .leadership-collapsed,
+  .leadership-expanded-header,
+  .leadership-expanded-content,
+  .session-collapsed-objectives,
+  .session-objectives,
+  .detail-learningmaterials-header,
+  .collapsed-taxonomies,
+  .detail-taxonomies,
+  .detail-mesh-header,
+  .session-offerings {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
   }
 }
