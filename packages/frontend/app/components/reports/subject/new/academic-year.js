@@ -31,9 +31,8 @@ export default class ReportsSubjectNewAcademicYearComponent extends Component {
     return this.data.isResolved;
   }
 
-  @task
-  *setInitialValue() {
-    yield timeout(1); //wait a moment so we can render before setting
+  setInitialValue = task(async () => {
+    await timeout(1); //wait a moment so we can render before setting
     const ids = this.academicYears.map(({ id }) => id);
     if (ids.includes(this.args.currentId)) {
       return;
@@ -41,5 +40,5 @@ export default class ReportsSubjectNewAcademicYearComponent extends Component {
     const currentYear = currentAcademicYear();
     const currentYearId = this.academicYears.find(({ id }) => Number(id) === currentYear)?.id;
     this.args.changeId(currentYearId ?? ids.at(-1));
-  }
+  });
 }
