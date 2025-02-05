@@ -96,7 +96,6 @@ export default class GlobalSearchBox extends Component {
 
     if (this.isEscapeKey(keyCode)) {
       this.clear();
-      this.args.search('');
     }
   }
 
