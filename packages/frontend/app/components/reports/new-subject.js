@@ -215,6 +215,8 @@ export default class ReportsNewSubjectComponent extends Component {
 
   get newPrepositionalObjectComponent() {
     switch (this.prepositionalObject) {
+      case 'academic year':
+        return ensureSafeComponent(NewAcademicYearComponent, this);
       case 'competency':
         return ensureSafeComponent(NewCompetencyComponent, this);
       case 'course':
@@ -237,8 +239,6 @@ export default class ReportsNewSubjectComponent extends Component {
         return ensureSafeComponent(NewSessionTypeComponent, this);
       case 'term':
         return ensureSafeComponent(NewTermComponent, this);
-      case 'academic year':
-        return ensureSafeComponent(NewAcademicYearComponent, this);
     }
 
     return null;
