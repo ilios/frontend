@@ -8,8 +8,7 @@ export default class ReportsChooseCourse extends Component {
   @service iliosConfig;
   @service currentUser;
 
-  //tri state, null expands primary school, false collapses all, an id expands a specific school
-  @tracked userExpandedSchoolId = null;
+  @tracked selectedSchoolId = null;
   @tracked expandedYear;
   @tracked showAllYears = false;
 
@@ -43,19 +42,15 @@ export default class ReportsChooseCourse extends Component {
     return this.crossesBoundaryConfig.isResolved ? this.crossesBoundaryConfig.value : false;
   }
 
-  get bestExpandedSchoolId() {
-    if (this.userExpandedSchoolId) {
-      return this.userExpandedSchoolId;
+  get bestSelectedSchoolId() {
+    if (this.selectedSchoolId) {
+      return this.selectedSchoolId;
     }
-    if (this.userExpandedSchoolId === null) {
-      return this.primarySchool?.id;
-    }
-
-    return null;
+    return this.primarySchool?.id;
   }
 
-  get expandedSchool() {
-    return this.args.schools.find(({ id }) => id === this.bestExpandedSchoolId);
+  get selectedSchool() {
+    return this.args.schools.find(({ id }) => id === this.bestSelectedSchoolId);
   }
 
   get visibleYears() {
@@ -71,7 +66,7 @@ export default class ReportsChooseCourse extends Component {
   }
 
   get visibleExapndedSchoolYears() {
-    return this.expandedSchool?.years.filter(({ year }) => this.visibleYears.includes(year));
+    return this.selectedSchool?.years.filter(({ year }) => this.visibleYears.includes(year));
   }
 
   get filteredSchools() {
@@ -80,29 +75,6 @@ export default class ReportsChooseCourse extends Component {
       return schoolYears.some((year) => this.visibleYears.includes(year));
     });
   }
-
-  get sortedSchools() {
-    return this.filteredSchools.sort((a, b) => {
-      if (a.id === this.primarySchool?.id) {
-        return -1;
-      }
-      if (b.id === this.primarySchool?.id) {
-        return 1;
-      }
-      return a.title.localeCompare(b.name);
-    });
-  }
-
-  toggleSchool = (schoolId) => {
-    if (
-      (this.userExpandedSchoolId === null && this.primarySchool?.id === schoolId) ||
-      this.userExpandedSchoolId === schoolId
-    ) {
-      this.userExpandedSchoolId = false;
-    } else {
-      this.userExpandedSchoolId = schoolId;
-    }
-  };
 
   toggleYear = (year) => {
     if (this.expandedYear === year) {
