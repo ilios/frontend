@@ -1,0 +1,57 @@
+<div
+  class="reports-curriculum reports-curriculum-loading"
+  data-test-reports-curriculum
+  ...attributes
+>
+  <div class="run" data-test-courses>
+    {{#if this.guessCourses}}
+      <label>
+        {{t "general.run"}}
+        <select disabled>
+          <option>{{this.reportLabel}}</option>
+        </select>
+      </label>
+      {{t "general.reportForCourses" courseCount=this.guessCourses}}
+    {{else}}
+      {{t "general.selectCoursesToRunReport"}}
+    {{/if}}
+  </div>
+  <div class="input-buttons">
+    <button type="button" class="done text" disabled>
+      <FaIcon @icon="play" />
+    </button>
+  </div>
+  <div class="reports-choose-course">
+    <div class="schools">
+      <FaIcon @icon="building-columns" />
+      <select aria-label={{t "general.filterBySchool"}} disabled>
+        <option>{{this.primarySchool.title}}</option>
+      </select>
+    </div>
+    <ul class="year">
+      <li>
+        <button type="button">
+          {{2025}}
+          <FaIcon @icon="caret-right" />
+        </button>
+      </li>
+      <li>
+        <button type="button">
+          {{2024}}
+          <FaIcon @icon="caret-down" />
+        </button>
+        <ul class="courses">
+          {{! template-lint-disable no-unused-block-params }}
+          {{#each (repeat 5) as |empty|}}
+            <li>
+              <label>
+                <input type="checkbox" disabled />
+                {{truncate (repeat (random 3 10) "ilios rocks") 100}}
+              </label>
+            </li>
+          {{/each}}
+        </ul>
+      </li>
+    </ul>
+  </div>
+</div>
