@@ -1,16 +1,20 @@
 <div class="reports-curriculum" data-test-reports-curriculum ...attributes>
   <div class="run" data-test-courses>
     {{#if @selectedCourseIds.length}}
-      <label>
-        {{t "general.run"}}
-        <select {{on "change" this.changeSelectedReport}} disabled={{this.reportIsRunning}}>
-          {{#each this.reportList as |report|}}
-            <option value={{report.value}} selected={{eq report.value this.selectedReport}}>
-              {{report.label}}
-            </option>
-          {{/each}}
-        </select>
-      </label>
+      {{t "general.run"}}
+      {{#if this.reportIsRunning}}
+        {{this.selectedReport.label}}
+      {{else}}
+        <label>
+          <select {{on "change" this.changeSelectedReport}} disabled={{this.reportIsRunning}}>
+            {{#each this.reportList as |report|}}
+              <option value={{report.value}} selected={{eq report.value this.selectedReport.value}}>
+                {{report.label}}
+              </option>
+            {{/each}}
+          </select>
+        </label>
+      {{/if}}
       {{t "general.reportForCourses" courseCount=@selectedCourseIds.length}}
     {{else}}
       {{t "general.selectCoursesToRunReport"}}
