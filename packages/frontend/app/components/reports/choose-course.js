@@ -10,7 +10,6 @@ export default class ReportsChooseCourse extends Component {
 
   @tracked selectedSchoolId = null;
   @tracked expandedYear;
-  @tracked showAllYears = false;
 
   constructor() {
     super(...arguments);
@@ -53,27 +52,8 @@ export default class ReportsChooseCourse extends Component {
     return this.args.schools.find(({ id }) => id === this.bestSelectedSchoolId);
   }
 
-  get visibleYears() {
-    let lastTenAndNextTenYears = [];
-    for (let i = DateTime.now().year - 10; i <= DateTime.now().year + 10; i++) {
-      lastTenAndNextTenYears.push(i);
-    }
-    if (this.showAllYears) {
-      return lastTenAndNextTenYears;
-    }
-
-    return lastTenAndNextTenYears.slice(8, 11);
-  }
-
-  get visibleExapndedSchoolYears() {
-    return this.selectedSchool?.years.filter(({ year }) => this.visibleYears.includes(year));
-  }
-
   get filteredSchools() {
-    return this.args.schools.filter(({ years }) => {
-      const schoolYears = years.map(({ year }) => year);
-      return schoolYears.some((year) => this.visibleYears.includes(year));
-    });
+    return this.args.schools.filter(({ years }) => years.length);
   }
 
   toggleYear = (year) => {

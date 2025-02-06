@@ -16,7 +16,7 @@
       {{this.selectedSchool.title}}
     {{/if}}
   </div>
-  {{#each this.visibleExapndedSchoolYears as |y|}}
+  {{#each this.selectedSchool.years as |y|}}
     <ul class="year {{if (eq y.year this.expandedYear) 'expanded' 'collapsed'}}">
       <li>
         <button
