@@ -1,37 +1,16 @@
 <div class="reports-curriculum" data-test-reports-curriculum ...attributes>
-  <div class="courses" data-test-courses>
-    {{#if @selectedCourseIds}}
-      <label>
-        {{t "general.runReport"}}:
-        <select {{on "change" this.changeSelectedReport}}>
-          {{#each this.reportList as |report|}}
-            <option value={{report.value}} selected={{eq report.value this.selectedReport}}>
-              {{report.label}}
-            </option>
-          {{/each}}
-        </select>
-      </label>
-      <ul class="selected-courses">
-        {{#each (sort-by "title" this.selectedCourses) as |course|}}
-          <li>
-            <button
-              type="button"
-              {{on "click" (fn this.removeCourse course.id)}}
-              data-test-selected-course
-            >
-              {{#if this.showCourseYears}}
-                {{course.year}}&nbsp;
-              {{/if}}
-              {{#if course.externalId}}
-                [{{course.externalId}}]&nbsp;
-              {{/if}}
-              {{course.title}}
-              <FaIcon @icon="xmark" class="remove" />
-            </button>
-          </li>
+  <div class="run" data-test-courses>
+    <label>
+      {{t "general.run"}}
+      <select {{on "change" this.changeSelectedReport}} disabled={{this.reportIsRunning}}>
+        {{#each this.reportList as |report|}}
+          <option value={{report.value}} selected={{eq report.value this.selectedReport}}>
+            {{report.label}}
+          </option>
         {{/each}}
-      </ul>
-    {{/if}}
+      </select>
+    </label>
+    {{t "general.reportForCourses" courseCount=@selectedCourseIds.length}}
   </div>
   {{#if this.reportIsRunning}}
     <this.reportResultsComponent
@@ -44,7 +23,7 @@
         type="button"
         class="done text"
         {{on "click" (set this "reportIsRunning" true)}}
-        disabled={{this.reportIsRunning}}
+        disabled={{or (not @selectedCourseIds.length) this.reportIsRunning}}
         data-test-run
       >
         <FaIcon @icon="play" />
