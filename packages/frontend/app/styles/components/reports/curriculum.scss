@@ -1,13 +1,12 @@
 @use "../../ilios-common/colors" as c;
-@use "../../ilios-common/mixins" as m;
+@use "../../ilios-common/mixins" as cm;
 @use "sass:color";
 
 .reports-curriculum {
-  margin: 0.5rem 0;
-  padding: 1rem 1rem 3rem;
+  @include cm.main-section;
 
   .title {
-    @include m.ilios-heading-h5;
+    @include cm.ilios-heading-h5;
     margin-bottom: 0.5rem;
   }
 
@@ -18,13 +17,18 @@
     justify-content: flex-end;
     button {
       margin-left: 0.5rem;
+
+      &:disabled {
+        cursor: default;
+        background-color: c.$davysGrey;
+      }
     }
   }
 
   table {
     width: 100%;
     caption {
-      @include m.ilios-heading-h5;
+      @include cm.ilios-heading-h5;
     }
     th,
     td {
@@ -32,22 +36,7 @@
     }
   }
 
-  .selected-courses {
-    @include m.ilios-list-reset;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    margin-top: 0.5rem;
-    li {
-      margin-left: 0.5rem;
-      button {
-        @include m.ilios-button-reset;
-        @include m.font-size("small");
-        border-radius: 3px;
-        display: inline-block;
-        padding: 2px 5px;
-        background-color: c.$pearl;
-      }
-    }
+  .run {
+    @include cm.font-size("medium");
   }
 }
