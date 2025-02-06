@@ -5,11 +5,6 @@
 .reports-curriculum {
   @include cm.main-section;
 
-  .title {
-    @include cm.ilios-heading-h5;
-    margin-bottom: 0.5rem;
-  }
-
   .input-buttons {
     display: flex;
     width: 100%;
