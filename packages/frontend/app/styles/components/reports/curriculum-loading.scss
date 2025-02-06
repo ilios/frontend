@@ -1,0 +1,11 @@
+@use "../../ilios-common/mixins" as cm;
+@use "sass:color";
+
+.reports-curriculum-loading {
+  @include cm.loading-text;
+  @include cm.loading-shimmer;
+
+  select {
+    @include cm.loading-text;
+  }
+}
