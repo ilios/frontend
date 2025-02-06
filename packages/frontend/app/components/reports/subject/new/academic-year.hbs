@@ -7,10 +7,9 @@
       id="new-academic-year"
       data-test-prepositional-objects
       {{on "change" (pick "target.value" @changeId)}}
-      {{this.loadLatest this.setInitialValue @school}}
     >
       {{#each (sort-by "title" this.academicYears) as |year|}}
-        <option selected={{eq year.id @currentId}} value={{year.id}}>
+        <option selected={{eq year.id this.bestSelectedAcademicYear}} value={{year.id}}>
           {{#if this.academicYearCrossesCalendarYearBoundaries}}
             {{year.id}}
             -
