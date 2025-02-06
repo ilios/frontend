@@ -23,7 +23,7 @@ export default class ReportsSubjectNewAcademicYearComponent extends Component {
     this.iliosConfig.itemFromConfig('academicYearCrossesCalendarYearBoundaries'),
   );
 
-  loadLatest = modifier((element, [taskInstance] = null) => {
+  loadLatest = modifier((element, [taskInstance]) => {
     taskInstance.perform();
   });
 
