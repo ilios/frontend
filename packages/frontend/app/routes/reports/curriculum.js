@@ -1,5 +1,6 @@
 import Route from '@ember/routing/route';
 import { service } from '@ember/service';
+import { DateTime } from 'luxon';
 
 export default class ReportsCurriculumRoute extends Route {
   @service session;
@@ -13,7 +14,14 @@ export default class ReportsCurriculumRoute extends Route {
 
   async model() {
     const schools = await this.store.findAll('school');
-    const result = await this.graphql.find('courses', [], 'id, title, year, externalId');
+    const threeYearsAgo = DateTime.now().year - 3;
+    // Limit query to surounding years
+    const years = [...Array(7).keys()].map((i) => threeYearsAgo + i);
+    const result = await this.graphql.find(
+      'courses',
+      [`academicYears: [${years.join(', ')}]`],
+      'id, title, year, externalId',
+    );
     const allCourseData = result.data.courses;
 
     return schools.map((school) => {
