@@ -2,6 +2,7 @@ import Component from '@glimmer/component';
 import { TrackedAsyncData } from 'ember-async-data';
 import { cached } from '@glimmer/tracking';
 import { service } from '@ember/service';
+import { modifier } from 'ember-modifier';
 import { task, timeout } from 'ember-concurrency';
 import currentAcademicYear from 'ilios-common/utils/current-academic-year';
 
@@ -10,25 +11,25 @@ export default class ReportsSubjectNewAcademicYearComponent extends Component {
   @service iliosConfig;
 
   @cached
-  get data() {
+  get academicYearsData() {
     return new TrackedAsyncData(this.store.findAll('academic-year'));
+  }
+
+  get academicYears() {
+    return this.academicYearsData.isResolved ? this.academicYearsData.value : null;
   }
 
   crossesBoundaryConfig = new TrackedAsyncData(
     this.iliosConfig.itemFromConfig('academicYearCrossesCalendarYearBoundaries'),
   );
 
+  loadLatest = modifier((element, [taskInstance] = null) => {
+    taskInstance.perform();
+  });
+
   @cached
   get academicYearCrossesCalendarYearBoundaries() {
     return this.crossesBoundaryConfig.isResolved ? this.crossesBoundaryConfig.value : false;
-  }
-
-  get academicYears() {
-    return this.data.value;
-  }
-
-  get isLoaded() {
-    return this.data.isResolved;
   }
 
   setInitialValue = task(async () => {
@@ -39,6 +40,7 @@ export default class ReportsSubjectNewAcademicYearComponent extends Component {
     }
     const currentYear = currentAcademicYear();
     const currentYearId = this.academicYears.find(({ id }) => Number(id) === currentYear)?.id;
-    this.args.changeId(currentYearId ?? ids.at(-1));
+    const newId = currentYearId ?? ids.at(-1);
+    this.args.changeId(newId);
   });
 }
