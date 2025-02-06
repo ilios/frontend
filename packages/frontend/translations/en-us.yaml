@@ -370,6 +370,7 @@ general:
   select: Select
   selectAcademicYear: Select Academic Year
   selectAllOrNone: Select All or None
+  selectCoursesToRunReport: Select Courses to Run Report
   selected: Selected
   selectPolite: (please select one)
   selectedCourses: Selected Courses
