@@ -25,7 +25,7 @@ export default class ReportsCurriculumComponent extends Component {
   }
 
   get selectedReport() {
-    return this.args.report ?? this.reportList[0].value;
+    return this.reportList.find((r) => r.value === this.args.report) ?? this.reportList[0];
   }
 
   @cached
@@ -48,7 +48,7 @@ export default class ReportsCurriculumComponent extends Component {
   }
 
   get reportResultsComponent() {
-    switch (this.selectedReport) {
+    switch (this.selectedReport.value) {
       case 'sessionObjectives':
         return ensureSafeComponent(SessionObjectives, this);
       case 'learnerGroups':
