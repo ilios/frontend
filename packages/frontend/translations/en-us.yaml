@@ -349,6 +349,7 @@ general:
   reportDisplayDescriptionWithoutObject: "This report shows all {subject} in {school}."
   reportDisplayTitleWithObject: "All {subject} for {object} in {school}"
   reportDisplayTitleWithoutObject: "All {subject} in {school}"
+  reportForCourses: report for {courseCount, plural, one {one course} other {# courses}}
   reportName: Report Name
   reportNamePlaceholder: Please enter a report name.
   reports: Reports
@@ -357,6 +358,7 @@ general:
   resourceTypes: Resource Types
   resultsSummary: Results Summary
   root: Root
+  run: Run
   runReport: Run Report
   sampleFile: Sample File
   saved: New User Saved Successfully
