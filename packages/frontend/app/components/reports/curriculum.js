@@ -13,19 +13,14 @@ export default class ReportsCurriculumComponent extends Component {
 
   @tracked searchResults = null;
   @tracked reportResults = null;
-  @tracked reportIsRunning = false;
-
-  reportList = [
-    { value: 'sessionObjectives', label: this.intl.t('general.sessionObjectives') },
-    { value: 'learnerGroups', label: this.intl.t('general.learnerGroups') },
-  ];
+  @tracked showReportResults = false;
 
   get passedCourseIds() {
     return this.args.selectedCourseIds?.map(Number) ?? [];
   }
 
-  get selectedReport() {
-    return this.reportList.find((r) => r.value === this.args.report) ?? this.reportList[0];
+  get selectedReportValue() {
+    return this.args.report ?? 'sessionObjectives';
   }
 
   @cached
@@ -48,7 +43,7 @@ export default class ReportsCurriculumComponent extends Component {
   }
 
   get reportResultsComponent() {
-    switch (this.selectedReport.value) {
+    switch (this.selectedReportValue) {
       case 'sessionObjectives':
         return ensureSafeComponent(SessionObjectives, this);
       case 'learnerGroups':
@@ -63,12 +58,12 @@ export default class ReportsCurriculumComponent extends Component {
   };
 
   removeCourse = (id) => {
-    this.reportIsRunning = false;
+    this.showReportResults = false;
     this.args.setSelectedCourseIds(this.passedCourseIds.filter((i) => i !== Number(id)).sort());
   };
 
   changeSelectedReport = ({ target }) => {
-    this.reportIsRunning = false;
+    this.showReportResults = false;
     this.args.setReport(target.value);
   };
 }

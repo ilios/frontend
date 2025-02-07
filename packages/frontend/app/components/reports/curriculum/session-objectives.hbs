@@ -1,8 +1,11 @@
-<Reports::Curriculum::ResultButtons
-  @running={{this.reportRunning}}
-  @finished={{this.finishedBuildingReport}}
-  @downloadReport={{perform this.downloadReport}}
+<Reports::Curriculum::Header
+  @countSelectedCourses={{@courses.length}}
+  @showReportResults={{true}}
+  @loading={{this.reportRunning}}
+  @selectedReportValue="sessionObjectives"
+  @changeSelectedReport={{(noop)}}
   @close={{@close}}
+  @download={{perform this.downloadReport}}
 />
 {{#unless this.reportRunning}}
   <div class="report-results">

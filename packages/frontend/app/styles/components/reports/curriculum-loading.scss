@@ -1,5 +1,5 @@
 @use "../../ilios-common/mixins" as cm;
-@use "sass:color";
+@use "../../ilios-common/colors" as c;
 
 .reports-curriculum-loading {
   @include cm.loading-text;
@@ -7,5 +7,11 @@
 
   select {
     @include cm.loading-text;
+  }
+
+  .reports-curriculum-header .input-buttons button.done {
+    @include cm.loading-text;
+    cursor: default;
+    background-color: c.$culturedGrey;
   }
 }

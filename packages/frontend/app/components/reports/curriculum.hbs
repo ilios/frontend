@@ -1,42 +1,18 @@
 <div class="reports-curriculum" data-test-reports-curriculum ...attributes>
-  <div class="run" data-test-courses>
-    {{#if @selectedCourseIds.length}}
-      {{t "general.run"}}
-      {{#if this.reportIsRunning}}
-        {{this.selectedReport.label}}
-      {{else}}
-        <label>
-          <select {{on "change" this.changeSelectedReport}} disabled={{this.reportIsRunning}}>
-            {{#each this.reportList as |report|}}
-              <option value={{report.value}} selected={{eq report.value this.selectedReport.value}}>
-                {{report.label}}
-              </option>
-            {{/each}}
-          </select>
-        </label>
-      {{/if}}
-      {{t "general.reportForCourses" courseCount=@selectedCourseIds.length}}
-    {{else}}
-      {{t "general.selectCoursesToRunReport"}}
-    {{/if}}
-  </div>
-  {{#if this.reportIsRunning}}
+  {{#if this.showReportResults}}
     <this.reportResultsComponent
       @courses={{this.selectedCourses}}
-      @close={{set this "reportIsRunning" false}}
+      @close={{set this "showReportResults" false}}
     />
   {{else}}
-    <div class="input-buttons">
-      <button
-        type="button"
-        class="done text"
-        {{on "click" (set this "reportIsRunning" true)}}
-        disabled={{or (not @selectedCourseIds.length) this.reportIsRunning}}
-        data-test-run
-      >
-        <FaIcon @icon="play" />
-      </button>
-    </div>
+    <Reports::Curriculum::Header
+      @countSelectedCourses={{@selectedCourseIds.length}}
+      @showReportResults={{this.showReportResults}}
+      @selectedReportValue={{this.selectedReportValue}}
+      @changeSelectedReport={{this.changeSelectedReport}}
+      @runReport={{set this "showReportResults" true}}
+      @close={{set this "showReportResults" false}}
+    />
     <Reports::ChooseCourse
       @selectedCourseIds={{@selectedCourseIds}}
       @schools={{@schools}}
