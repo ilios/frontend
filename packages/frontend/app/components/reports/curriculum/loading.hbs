@@ -3,24 +3,15 @@
   data-test-reports-curriculum
   ...attributes
 >
-  <div class="run" data-test-courses>
-    {{#if this.guessCourses}}
-      <label>
-        {{t "general.run"}}
-        <select disabled>
-          <option>{{this.reportLabel}}</option>
-        </select>
-      </label>
-      {{t "general.reportForCourses" courseCount=this.guessCourses}}
-    {{else}}
-      {{t "general.selectCoursesToRunReport"}}
-    {{/if}}
-  </div>
-  <div class="input-buttons">
-    <button type="button" class="done text" disabled>
-      <FaIcon @icon="play" />
-    </button>
-  </div>
+  <Reports::Curriculum::Header
+    @countSelectedCourses={{this.guessCourses}}
+    @showReportResults={{false}}
+    @loading={{false}}
+    @selectedReportValue={{this.selectedReportValue}}
+    @changeSelectedReport={{(noop)}}
+    @runReport={{(noop)}}
+    @close={{(noop)}}
+  />
   <div class="reports-choose-course">
     <div class="schools">
       <FaIcon @icon="building-columns" />

@@ -1,24 +1,7 @@
-@use "../../ilios-common/colors" as c;
 @use "../../ilios-common/mixins" as cm;
-@use "sass:color";
 
 .reports-curriculum {
   @include cm.main-section;
-
-  .input-buttons {
-    display: flex;
-    width: 100%;
-    margin-top: 0.5rem;
-    justify-content: flex-end;
-    button {
-      margin-left: 0.5rem;
-
-      &:disabled {
-        cursor: default;
-        background-color: c.$davysGrey;
-      }
-    }
-  }
 
   table {
     width: 100%;
@@ -29,9 +12,5 @@
     td {
       text-align: left;
     }
-  }
-
-  .run {
-    @include cm.font-size("medium");
   }
 }
