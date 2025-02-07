@@ -138,4 +138,34 @@ export default class ReportingService extends Service {
       school: schoolTitle,
     };
   }
+
+  consolidateSessionInstructorsGraph(s) {
+    const offeringInstructors = s.offerings.map((o) => o.instructors.map((i) => i)).flat();
+    const ilmInstructors = s.ilmSession?.instructors.map((i) => i) ?? [];
+    const offeringInstructorGroups = s.offerings.map((o) => o.instructorGroups).flat();
+    const ilmInstructorGroups = s.ilmSession?.instructorGroups ?? [];
+    const instructorGroupInstructors = [...offeringInstructorGroups, ...ilmInstructorGroups]
+      .map((ig) => ig.users)
+      .flat();
+    const instructors = [
+      ...offeringInstructors,
+      ...ilmInstructors,
+      ...instructorGroupInstructors,
+    ].map((i) => getUserNameForGraphUser(i));
+
+    s.instructors = [...new Set(instructors)].sort();
+    return s;
+  }
 }
+
+const getUserNameForGraphUser = function (user) {
+  if (user.displayName) {
+    return user.displayName;
+  }
+  const middleInitial = user.middleName ? user.middleName.charAt(0) : false;
+  if (middleInitial) {
+    return `${user.firstName} ${middleInitial}. ${user.lastName}`;
+  } else {
+    return `${user.firstName} ${user.lastName}`;
+  }
+};
