@@ -25,11 +25,6 @@ export default class ReportsCurriculumLoading extends Component {
     return this.allSchools.find(({ id }) => id === this.user?.belongsTo('school').id());
   }
 
-  reportList = [
-    { value: 'sessionObjectives', label: this.intl.t('general.sessionObjectives') },
-    { value: 'learnerGroups', label: this.intl.t('general.learnerGroups') },
-  ];
-
   get queryParams() {
     return this.router.currentRoute.queryParams;
   }
@@ -38,11 +33,7 @@ export default class ReportsCurriculumLoading extends Component {
     return this.queryParams?.courses?.split('-').length;
   }
 
-  get reportLabel() {
-    if (this.queryParams?.report) {
-      return this.reportList.find(({ value }) => value === this.queryParams.report).label;
-    }
-
-    return this.reportList[0].label;
+  get selectedReportValue() {
+    return this.queryParams?.report ?? 'sessionObjectives';
   }
 }

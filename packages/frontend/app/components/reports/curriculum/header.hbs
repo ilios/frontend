@@ -1,0 +1,54 @@
+<div class="reports-curriculum-header">
+  <div class="run">
+    {{#if @countSelectedCourses}}
+      {{t "general.run"}}
+      {{#if @showReportResults}}
+        {{this.selectedReport.label}}
+      {{else}}
+        <label>
+          <select {{on "change" @changeSelectedReport}}>
+            {{#each this.reportList as |report|}}
+              <option value={{report.value}} selected={{eq report.value this.selectedReport.value}}>
+                {{report.label}}
+              </option>
+            {{/each}}
+          </select>
+        </label>
+      {{/if}}
+      {{t "general.reportForCourses" courseCount=@countSelectedCourses}}
+    {{else}}
+      {{t "general.selectCoursesToRunReport"}}
+    {{/if}}
+  </div>
+  <div class="input-buttons">
+    {{#if @showReportResults}}
+      {{#if @loading}}
+        <button type="button" class="done text">
+          <FaIcon @icon="spinner" @spin={{true}} />
+        </button>
+      {{else}}
+        <button type="button" {{on "click" @download}} data-test-download>
+          {{#if @finished}}
+            <FaIcon @icon="check" />
+          {{else}}
+            <FaIcon @icon="download" />
+          {{/if}}
+          {{t "general.downloadResults"}}
+        </button>
+        <button type="button" class="cancel text" {{on "click" @close}} data-test-close>
+          {{t "general.close"}}
+        </button>
+      {{/if}}
+    {{else}}
+      <button
+        type="button"
+        class="done text"
+        {{on "click" @runReport}}
+        disabled={{not @countSelectedCourses}}
+        data-test-run
+      >
+        <FaIcon @icon="play" />
+      </button>
+    {{/if}}
+  </div>
+</div>

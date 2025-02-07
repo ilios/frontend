@@ -1,0 +1,24 @@
+@use "../../ilios-common/mixins" as cm;
+@use "../../ilios-common/colors" as c;
+
+.reports-curriculum-header {
+  .run {
+    @include cm.font-size("medium");
+    min-height: 2rem;
+  }
+
+  .input-buttons {
+    display: flex;
+    width: 100%;
+    margin-top: 0.5rem;
+    justify-content: flex-end;
+    button {
+      margin-left: 0.5rem;
+
+      &:disabled {
+        cursor: default;
+        background-color: c.$davysGrey;
+      }
+    }
+  }
+}
