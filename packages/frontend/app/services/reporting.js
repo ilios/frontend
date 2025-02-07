@@ -156,6 +156,11 @@ export default class ReportingService extends Service {
     s.instructors = [...new Set(instructors)].sort();
     return s;
   }
+
+  countUniqueValuesInArray(arr, value) {
+    const all = arr.reduce((acc, o) => [...acc, ...o[value]], []);
+    return new Set(all).size;
+  }
 }
 
 const getUserNameForGraphUser = function (user) {

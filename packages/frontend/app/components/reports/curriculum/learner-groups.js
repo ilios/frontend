@@ -72,8 +72,8 @@ export default class ReportsCurriculumLearnerGroupsComponent extends Component {
         courseId: c.id,
         courseTitle: c.title,
         sessionCount: c.sessions.length,
-        learnerGroupsCount: c.sessions.reduce((acc, s) => acc + s.learnerGroups.length, 0),
-        instructorsCount: c.sessions.reduce((acc, s) => acc + s.instructors.length, 0),
+        learnerGroupsCount: this.reporting.countUniqueValuesInArray(c.sessions, 'learnerGroups'),
+        instructorsCount: this.reporting.countUniqueValuesInArray(c.sessions, 'instructors'),
       };
     });
   }

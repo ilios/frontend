@@ -58,7 +58,7 @@ export default class ReportsCurriculumSessionObjectivesComponent extends Compone
         courseTitle: c.title,
         sessionCount: c.sessions.length,
         objectiveCount: c.sessions.reduce((acc, s) => acc + s.sessionObjectives.length, 0),
-        instructorsCount: c.sessions.reduce((acc, s) => acc + s.instructors.length, 0),
+        instructorsCount: this.reporting.countUniqueValuesInArray(c.sessions, 'instructors'),
       };
     });
   }
