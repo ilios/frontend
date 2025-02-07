@@ -14,6 +14,7 @@ export default class GlobalSearchBox extends Component {
   @service iliosConfig;
   @service('search') iliosSearch;
   @service intl;
+  @service router;
 
   @tracked autocompleteCache = [];
   @tracked autocompleteSelectedQuery;
@@ -58,10 +59,22 @@ export default class GlobalSearchBox extends Component {
   }
 
   @action
-  keyboard({ keyCode, target }) {
+  keyboard(event) {
+    event.preventDefault();
+
+    const { keyCode, target } = event;
+
     const container = target.parentElement.parentElement;
     const list = container.getElementsByClassName('autocomplete-row');
     const listArray = Array.from(list);
+
+    if (this.isEscapeKey(keyCode)) {
+      this.clear();
+      if (this.router.currentRouteName === 'search') {
+        this.args.search('');
+      }
+    }
+
     const isValid = this.isEnterKey(keyCode) || listArray.length > 0;
 
     if (isValid) {
@@ -92,11 +105,6 @@ export default class GlobalSearchBox extends Component {
         this.args.search(this.computedQuery);
         this.clear();
       }
-    }
-
-    if (this.isEscapeKey(keyCode)) {
-      this.clear();
-      this.args.search('');
     }
   }
 
