@@ -57,16 +57,14 @@ export default class MyProfileComponent extends Component {
   }
 
   createNewToken = task(async () => {
-    await timeout(10); //small delay to allow rendering the spinner
+    await timeout(1); //small delay to allow rendering the spinner
+
+    //set the expiration time to the end of the day
     const expiresAt = DateTime.fromJSDate(this.expiresAt).set({ hour: 23, minute: 59, second: 59 });
-    const now = DateTime.now();
-    const days = expiresAt.diff(now, 'days').toFormat('dd');
-
-    const hours = DateTime.fromObject({ hour: 23 }).diff(now, 'hours').toFormat('hh');
-    const minutes = DateTime.fromObject({ minute: 59 }).diff(now, 'minutes').toFormat('mm');
-    const seconds = DateTime.fromObject({ second: 59 }).diff(now, 'seconds').toFormat('ss');
-
-    const interval = `P${days}DT${hours}H${minutes}M${seconds}S`;
+    //calculate the difference between now and the expiration time, and round each unit down (so we don't get secionds like 31.123)
+    const diff = expiresAt.diffNow(['days', 'hours', 'minutes', 'seconds']).mapUnits(Math.floor);
+    //Use Luxon's ISO format to get a string like "P1DT2H3M4S" which is 1 day, 2 hours, 3 minutes, and 4 seconds
+    const interval = diff.toISO();
 
     const url = '/auth/token?ttl=' + interval;
     const data = await this.fetch.getJsonFromApiHost(url);

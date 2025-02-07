@@ -6,10 +6,15 @@ import { hbs } from 'ember-cli-htmlbars';
 import { DateTime, Duration } from 'luxon';
 import { setupMirage } from 'frontend/tests/test-support/mirage';
 import { component } from 'frontend/tests/pages/components/my-profile';
+import { freezeDateAt, unfreezeDate } from 'ilios-common';
 
 module('Integration | Component | my profile', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
+
+  hooks.afterEach(() => {
+    unfreezeDate();
+  });
 
   test('it renders', async function (assert) {
     const school = this.server.create('school');
@@ -244,5 +249,79 @@ module('Integration | Component | my profile', function (hooks) {
 />`);
 
     await component.invalidateTokensForm.submit();
+  });
+
+  test('works close to midnight ilios/ilios#5976', async function (assert) {
+    assert.expect(3);
+
+    freezeDateAt(
+      DateTime.fromObject({
+        hour: 23,
+        minute: 11,
+        seconds: 24,
+      }).toJSDate(),
+    );
+
+    this.server.get(`/auth/token`, (scheme, { queryParams }) => {
+      assert.ok('ttl' in queryParams);
+      assert.strictEqual(queryParams.ttl, 'P14DT48M35S');
+      return {
+        jwt: 'new token',
+      };
+    });
+
+    const school = this.server.create('school');
+    const user = this.server.create('user', { school });
+    const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
+
+    this.set('user', userModel);
+    await render(
+      hbs`<MyProfile
+  @user={{this.user}}
+  @showCreateNewToken={{true}}
+  @toggleShowCreateNewToken={{(noop)}}
+  @toggleShowInvalidateTokens={{(noop)}}
+/>`,
+    );
+
+    await component.newTokenForm.submit();
+    assert.strictEqual(component.newTokenResult.value, 'new token');
+  });
+
+  test('works after midnight ilios/ilios#5976', async function (assert) {
+    assert.expect(3);
+
+    freezeDateAt(
+      DateTime.fromObject({
+        hour: 1,
+        minute: 6,
+        seconds: 24,
+      }).toJSDate(),
+    );
+
+    this.server.get(`/auth/token`, (scheme, { queryParams }) => {
+      assert.ok('ttl' in queryParams);
+      assert.strictEqual(queryParams.ttl, 'P14DT22H53M35S');
+      return {
+        jwt: 'new token',
+      };
+    });
+
+    const school = this.server.create('school');
+    const user = this.server.create('user', { school });
+    const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
+
+    this.set('user', userModel);
+    await render(
+      hbs`<MyProfile
+  @user={{this.user}}
+  @showCreateNewToken={{true}}
+  @toggleShowCreateNewToken={{(noop)}}
+  @toggleShowInvalidateTokens={{(noop)}}
+/>`,
+    );
+
+    await component.newTokenForm.submit();
+    assert.strictEqual(component.newTokenResult.value, 'new token');
   });
 });
