@@ -25,7 +25,7 @@ module('Integration | Component | reports/subject/new/academic-year', function (
   });
 
   test('it renders', async function (assert) {
-    assert.expect(13);
+    assert.expect(12);
     this.set('currentId', null);
     this.set('changeId', (id) => {
       assert.strictEqual(id, '2060');
