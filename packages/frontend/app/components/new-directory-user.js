@@ -44,6 +44,13 @@ export default class NewDirectoryUserComponent extends Component {
   userModel = new TrackedAsyncData(this.currentUser.getModel());
   authTypeConfig = new TrackedAsyncData(this.iliosConfig.getAuthenticationType());
 
+  constructor() {
+    super(...arguments);
+    if (this.args.searchTerms) {
+      this.findUsersInDirectory.perform(this.args.searchTerms);
+    }
+  }
+
   @cached
   get allowCustomUserName() {
     if (!this.authTypeConfig.isResolved) {
@@ -148,12 +155,6 @@ export default class NewDirectoryUserComponent extends Component {
 
     return this.currentSchoolCohorts.slice().reverse()[0];
   }
-
-  load = restartableTask(async () => {
-    if (this.args.searchTerms) {
-      await this.findUsersInDirectory.perform(this.args.searchTerms);
-    }
-  });
 
   @action
   pickUser(user) {

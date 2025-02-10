@@ -1,5 +1,5 @@
 {{! template-lint-disable no-bare-strings }}
-<div class="new-directory-user" data-test-new-directory-user {{did-insert (perform this.load)}}>
+<div class="new-directory-user" data-test-new-directory-user>
   {{#let (unique-id) as |templateId|}}
     {{#if this.selectedUser}}
       <div class="form" data-test-form>
