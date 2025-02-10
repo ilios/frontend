@@ -7,19 +7,32 @@
   @close={{@close}}
   @download={{perform this.downloadReport}}
 />
-{{#unless this.reportRunning}}
-  <div class="report-results">
-    <table>
-      <caption>{{t "general.resultsSummary"}}</caption>
-      <thead>
-        <tr>
-          <th>{{t "general.course"}}</th>
-          <th>{{t "general.sessions"}}</th>
-          <th>{{t "general.instructors"}}</th>
-          <th>{{t "general.learnerGroups"}}</th>
-        </tr>
-      </thead>
-      <tbody>
+<div class="report-results {{if this.reportRunning 'running'}}">
+  <table>
+    <caption>{{t "general.resultsSummary"}}</caption>
+    <thead>
+      <tr>
+        <th>{{t "general.course"}}</th>
+        <th>{{t "general.sessions"}}</th>
+        <th>{{t "general.instructors"}}</th>
+        <th>{{t "general.learnerGroups"}}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#if this.reportRunning}}
+        {{#each (sort-by "courseTitle" @courses) as |c|}}
+          <tr>
+            <td>
+              <LinkTo @route="course" @model={{c.id}}>
+                {{c.title}}
+              </LinkTo>
+            </td>
+            <td>{{5}}</td>
+            <td>{{6}}</td>
+            <td>{{81}}</td>
+          </tr>
+        {{/each}}
+      {{else}}
         {{#each (sort-by "courseTitle" this.summary) as |o|}}
           <tr>
             <td>
@@ -32,7 +45,7 @@
             <td>{{o.learnerGroupsCount}}</td>
           </tr>
         {{/each}}
-      </tbody>
-    </table>
-  </div>
-{{/unless}}
+      {{/if}}
+    </tbody>
+  </table>
+</div>
