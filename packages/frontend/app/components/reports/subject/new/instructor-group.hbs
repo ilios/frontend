@@ -2,16 +2,17 @@
   <label for="new-instructor-group">
     {{t "general.whichIs"}}
   </label>
-  {{#if this.isLoaded}}
+  {{#if this.allInstructorGroupsData.isResolved}}
     <select
       id="new-instructor-group"
       data-test-prepositional-objects
       {{on "change" (pick "target.value" @changeId)}}
-      {{did-insert (perform this.setInitialValue)}}
-      {{did-update (perform this.setInitialValue) @school}}
     >
       {{#each this.sortedInstructorGroups as |instructorGroup|}}
-        <option selected={{eq instructorGroup.id @currentId}} value={{instructorGroup.id}}>
+        <option
+          selected={{eq instructorGroup.id this.bestSelectedInstructorGroup}}
+          value={{instructorGroup.id}}
+        >
           {{instructorGroup.title}}
         </option>
       {{/each}}
