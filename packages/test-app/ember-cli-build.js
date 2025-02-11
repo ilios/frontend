@@ -12,9 +12,6 @@ module.exports = async function (defaults) {
     fingerprint: {
       extensions: broccoliAssetRevDefaults.extensions.concat(['svg']),
     },
-    emberData: {
-      compatWith: '5.3',
-    },
     autoImport: {
       watchDependencies: ['ilios-common'],
     },
@@ -31,7 +28,10 @@ module.exports = async function (defaults) {
   });
   const { setConfig } = await import('@warp-drive/build-config');
   setConfig(app, __dirname, {
-    ___legacy_support: true,
+    compatWith: '5.3',
+    deprecations: {
+      DEPRECATE_STORE_EXTENDS_EMBER_OBJECT: false,
+    },
   });
   return require('@embroider/compat').compatBuild(app, Webpack, {
     staticAddonTestSupportTrees: true,
