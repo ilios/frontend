@@ -30,11 +30,11 @@ module('Acceptance | assign students', function (hooks) {
       roleIds: [4],
       displayName: 'Aardvark',
     });
-    await setupAuthentication({ school: this.school, administeredSchools: [this.school] });
   });
 
   test('visiting /admin/assignstudents', async function (assert) {
     assert.expect(3);
+    await setupAuthentication({ school: this.school, administeredSchools: [this.school] });
     await page.visit();
     await percySnapshot(assert);
     assert.strictEqual(page.root.schoolFilter.text, 'school 0');
@@ -60,6 +60,7 @@ module('Acceptance | assign students', function (hooks) {
   });
 
   test('users are listed in full name by default', async function (assert) {
+    await setupAuthentication({ school: this.school, administeredSchools: [this.school] });
     await page.visit();
     assert.strictEqual(page.root.manager.students.length, 2);
     assert.strictEqual(page.root.manager.students[0].userNameInfo.fullName, 'Aardvark');
@@ -69,6 +70,7 @@ module('Acceptance | assign students', function (hooks) {
   });
 
   test('applying text filter respects user selections', async function (assert) {
+    await setupAuthentication({ school: this.school, administeredSchools: [this.school] });
     await page.visit();
     assert.strictEqual(page.root.titleFilter.value, '');
     assert.strictEqual(page.root.manager.students.length, 2);
