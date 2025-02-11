@@ -17,7 +17,7 @@ module.exports = async function (defaults) {
       extensions: broccoliAssetRevDefaults.extensions.concat(['webmanifest', 'svg']),
     },
     emberData: {
-      compatWith: '5.2',
+      compatWith: '5.3',
     },
 
     hinting: isTestBuild,

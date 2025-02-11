@@ -14,6 +14,9 @@ module.exports = async function (defaults) {
       extensions: broccoliAssetRevDefaults.extensions.concat(['webmanifest', 'svg']),
       exclude: ['ilios-icon.png'],
     },
+    emberData: {
+      compatWith: '5.3',
+    },
     sourcemaps: {
       enabled: true,
     },

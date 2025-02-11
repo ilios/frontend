@@ -12,6 +12,9 @@ module.exports = async function (defaults) {
     fingerprint: {
       extensions: broccoliAssetRevDefaults.extensions.concat(['svg']),
     },
+    emberData: {
+      compatWith: '5.3',
+    },
     autoImport: {
       watchDependencies: ['ilios-common'],
     },
