@@ -1,6 +1,6 @@
 import IliosAdapter from 'ilios-common/adapters/ilios';
 
-export default IliosAdapter.extend({
+export default class SchoolAdapter extends IliosAdapter {
   /**
    * Don't reload school records if we have any of them
    * in the store already. Schools rarely change, but they
@@ -9,8 +9,8 @@ export default IliosAdapter.extend({
    */
   shouldReloadAll(store, snapshotRecordArray) {
     return !snapshotRecordArray.length;
-  },
+  }
   shouldBackgroundReloadAll() {
     return false;
-  },
-});
+  }
+}
