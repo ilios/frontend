@@ -3,7 +3,7 @@ import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
 import { isPresent } from '@ember/utils';
-import { all, filter } from 'rsvp';
+import { filter } from 'rsvp';
 import { dropTask, restartableTask } from 'ember-concurrency';
 import PapaParse from 'papaparse';
 import { DateTime } from 'luxon';
@@ -293,7 +293,6 @@ export default class BulkNewUsersComponent extends Component {
       let authentication = false;
       if (userInput.username) {
         authentication = this.store.createRecord('authentication', { username, password });
-        authentication.set('user', user);
       }
 
       const rhett = { user, userInput };
@@ -307,10 +306,13 @@ export default class BulkNewUsersComponent extends Component {
     while (records.length > 0) {
       try {
         parts = records.splice(0, 10);
-        const users = mapBy(parts, 'user');
-        await all(users.map((user) => user.save()));
-        const authentications = mapBy(parts, 'authentication');
-        await all(authentications.map((auth) => auth.save()));
+        for (const obj of parts) {
+          await obj.user.save();
+          if (obj.authentication) {
+            obj.authentication.user = obj.user;
+            await obj.authentication.save();
+          }
+        }
       } catch (e) {
         const userErrors = parts.filter((obj) => obj.user.get('isError'));
         const authenticationErrors = parts.filter(
