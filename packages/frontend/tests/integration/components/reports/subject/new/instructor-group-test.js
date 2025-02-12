@@ -16,7 +16,7 @@ module('Integration | Component | reports/subject/new/instructor-group', functio
   });
 
   test('it renders', async function (assert) {
-    assert.expect(16);
+    assert.expect(15);
     this.set('currentId', null);
     this.set('changeId', (id) => {
       assert.strictEqual(id, '1');
@@ -64,7 +64,7 @@ module('Integration | Component | reports/subject/new/instructor-group', functio
   });
 
   test('it filters by school', async function (assert) {
-    assert.expect(8);
+    assert.expect(7);
     const schoolModel = await this.owner.lookup('service:store').findRecord('school', 2);
     this.set('currentId', null);
     this.set('school', schoolModel);
@@ -96,23 +96,16 @@ module('Integration | Component | reports/subject/new/instructor-group', functio
     });
     await render(hbs`<Reports::Subject::New::InstructorGroup
   @currentId={{null}}
-  @changeId={{this.changeId}}
+  @changeId={{noop}}
   @school={{this.school}}
 />`);
 
-    this.set('changeId', (id) => {
-      assert.strictEqual(id, '3');
-    });
+    assert.strictEqual(component.options[0].text, 'instructor group 0');
     this.set('school', schoolModels[1]);
-
-    this.set('changeId', (id) => {
-      assert.strictEqual(id, '1');
-    });
+    assert.strictEqual(component.options[0].text, 'instructor group 2');
     this.set('school', null);
-
-    this.set('changeId', (id) => {
-      assert.strictEqual(id, '1');
-    });
+    assert.strictEqual(component.options[0].text, 'instructor group 0');
     this.set('school', schoolModels[0]);
+    assert.strictEqual(component.options[0].text, 'instructor group 0');
   });
 });
