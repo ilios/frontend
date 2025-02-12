@@ -19,7 +19,7 @@ export default class CourseObjectiveListItemComponent extends Component {
   @tracked isManagingTerms;
   @tracked termsBuffer = [];
   @tracked selectedVocabulary;
-  @tracked fadeTextExpanded = false;
+  @tracked fadeTextExpanded = this.args.printable ?? false;
 
   constructor() {
     super(...arguments);

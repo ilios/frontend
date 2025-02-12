@@ -48,13 +48,36 @@
 
   .print-course-session {
     .session-objective-list {
-      .fade-text-control {
-        background-image: linear-gradient(to bottom, transparent, c.$white);
+      .grid-row {
+        .grid-item {
+          &:has(.faded) {
+            max-height: none;
+          }
+        }
       }
     }
   }
 
   .offering-instructors {
     @include m.ilios-list-reset;
+  }
+
+  .fade-text {
+    .fade-text-control {
+      height: auto;
+    }
+
+    .display-text-wrapper {
+      &.faded {
+        max-height: none;
+        overflow: auto;
+      }
+    }
+
+    button {
+      &.expand-text-button {
+        display: none;
+      }
+    }
   }
 }
