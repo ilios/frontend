@@ -13,7 +13,6 @@ export default class ReportsCurriculumComponent extends Component {
 
   @tracked searchResults = null;
   @tracked reportResults = null;
-  @tracked showReportResults = false;
 
   get passedCourseIds() {
     return this.args.selectedCourseIds?.map(Number) ?? [];
@@ -58,12 +57,12 @@ export default class ReportsCurriculumComponent extends Component {
   };
 
   removeCourse = (id) => {
-    this.showReportResults = false;
+    this.args.stop();
     this.args.setSelectedCourseIds(this.passedCourseIds.filter((i) => i !== Number(id)).sort());
   };
 
   changeSelectedReport = ({ target }) => {
-    this.showReportResults = false;
+    this.args.stop();
     this.args.setReport(target.value);
   };
 }

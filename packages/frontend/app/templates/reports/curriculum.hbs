@@ -4,4 +4,7 @@
   @report={{this.report}}
   @setReport={{set this "report"}}
   @schools={{@model}}
+  @run={{fn (set this "run") true}}
+  @stop={{fn (set this "run") false}}
+  @showReportResults={{this.run}}
 />

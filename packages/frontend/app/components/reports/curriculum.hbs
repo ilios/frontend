@@ -1,17 +1,14 @@
 <div class="reports-curriculum" data-test-reports-curriculum ...attributes>
-  {{#if this.showReportResults}}
-    <this.reportResultsComponent
-      @courses={{this.selectedCourses}}
-      @close={{set this "showReportResults" false}}
-    />
+  {{#if @showReportResults}}
+    <this.reportResultsComponent @courses={{this.selectedCourses}} @close={{@stop}} />
   {{else}}
     <Reports::Curriculum::Header
       @countSelectedCourses={{@selectedCourseIds.length}}
-      @showReportResults={{this.showReportResults}}
+      @showReportResults={{@showReportResults}}
       @selectedReportValue={{this.selectedReportValue}}
       @changeSelectedReport={{this.changeSelectedReport}}
-      @runReport={{set this "showReportResults" true}}
-      @close={{set this "showReportResults" false}}
+      @runReport={{@run}}
+      @close={{@stop}}
     />
     <Reports::ChooseCourse
       @selectedCourseIds={{@selectedCourseIds}}
