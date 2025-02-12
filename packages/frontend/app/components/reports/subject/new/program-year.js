@@ -2,7 +2,6 @@ import Component from '@glimmer/component';
 import { TrackedAsyncData } from 'ember-async-data';
 import { cached } from '@glimmer/tracking';
 import { service } from '@ember/service';
-import { task, timeout } from 'ember-concurrency';
 import { sortBy } from 'ilios-common/utils/array-helpers';
 import { hash } from 'rsvp';
 
@@ -10,7 +9,7 @@ export default class ReportsSubjectNewProgramYearComponent extends Component {
   @service store;
 
   @cached
-  get data() {
+  get mappedProgramYearsData() {
     return new TrackedAsyncData(
       hash({
         programs: this.store.findAll('program'),
@@ -19,22 +18,24 @@ export default class ReportsSubjectNewProgramYearComponent extends Component {
     );
   }
 
-  get isLoaded() {
-    return this.data.isResolved;
-  }
-
   get mappedProgramYears() {
-    return this.data.value.programYears.map((programYear) => {
-      const programId = programYear.belongsTo('program').id();
-      const program = this.data.value.programs.find(({ id }) => id === programId);
-      const schoolId = program.belongsTo('school').id();
+    if (this.mappedProgramYearsData.isResolved) {
+      return this.mappedProgramYearsData.value.programYears.map((programYear) => {
+        const programId = programYear.belongsTo('program').id();
+        const program = this.mappedProgramYearsData.value.programs.find(
+          ({ id }) => id === programId,
+        );
+        const schoolId = program.belongsTo('school').id();
 
-      return {
-        programYear,
-        program,
-        schoolId,
-      };
-    });
+        return {
+          programYear,
+          program,
+          schoolId,
+        };
+      });
+    } else {
+      return [];
+    }
   }
 
   get filteredProgramYears() {
@@ -56,16 +57,12 @@ export default class ReportsSubjectNewProgramYearComponent extends Component {
     return this.sortedProgramYears.map(({ programYear }) => programYear);
   }
 
-  setInitialValue = task(async () => {
-    await timeout(1); //wait a moment so we can render before setting
+  get bestSelectedProgramYear() {
     const ids = this.programYears.map(({ id }) => id);
     if (ids.includes(this.args.currentId)) {
-      return;
+      return this.args.currentId;
     }
-    if (!this.programYears.length) {
-      this.args.changeId(null);
-    } else {
-      this.args.changeId(this.programYears[0].id);
-    }
-  });
+
+    return this.programYears[0].id;
+  }
 }
