@@ -25,7 +25,7 @@ module('Integration | Component | reports/subject/new/academic-year', function (
   });
 
   test('it renders', async function (assert) {
-    assert.expect(14);
+    assert.expect(12);
     this.set('currentId', null);
     this.set('changeId', (id) => {
       assert.strictEqual(id, '2060');
@@ -37,16 +37,16 @@ module('Integration | Component | reports/subject/new/academic-year', function (
   @school={{null}}
 />`);
 
-    assert.strictEqual(component.options.length, 3);
-    assert.strictEqual(component.options[0].text, '2015');
-    assert.strictEqual(component.options[1].text, '2031');
-    assert.strictEqual(component.options[2].text, '2060');
+    assert.strictEqual(component.options.length, 3, 'dropdown has 3 options');
+    assert.strictEqual(component.options[0].text, '2015', 'first option is 2015');
+    assert.strictEqual(component.options[1].text, '2031', 'second option is 2031');
+    assert.strictEqual(component.options[2].text, '2060', 'third option is 2060');
 
-    assert.strictEqual(component.value, '2060');
+    assert.strictEqual(component.value, '2060', 'selected option is 2060');
 
-    assert.notOk(component.options[0].isSelected);
-    assert.notOk(component.options[1].isSelected);
-    assert.ok(component.options[2].isSelected);
+    assert.notOk(component.options[0].isSelected, 'option 0 is not selected');
+    assert.notOk(component.options[1].isSelected, 'option 1 is not selected');
+    assert.ok(component.options[2].isSelected, 'option 2 is selected');
 
     this.set('changeId', (id) => {
       assert.strictEqual(id, '2031');
@@ -54,11 +54,10 @@ module('Integration | Component | reports/subject/new/academic-year', function (
     });
 
     this.set('currentId', '2031');
-    assert.notOk(component.options[0].isSelected);
-    assert.notOk(component.options[0].isSelected);
-    assert.ok(component.options[1].isSelected);
-    assert.notOk(component.options[2].isSelected);
-    assert.strictEqual(component.value, '2031');
+    assert.notOk(component.options[0].isSelected, 'option 0 is not selected');
+    assert.ok(component.options[1].isSelected, 'option 1 is selected');
+    assert.notOk(component.options[2].isSelected, 'option 2 is not selected');
+    assert.strictEqual(component.value, '2031', 'selected option is 2031');
   });
 
   test('it works', async function (assert) {
@@ -73,14 +72,14 @@ module('Integration | Component | reports/subject/new/academic-year', function (
       assert.strictEqual(id, '2031');
       this.set('currentId', id);
     });
-    assert.ok(component.options[0].isSelected);
-    assert.notOk(component.options[1].isSelected);
-    assert.notOk(component.options[2].isSelected);
+    assert.ok(component.options[0].isSelected, 'option 0 is selected');
+    assert.notOk(component.options[1].isSelected, 'option 1 is not selected');
+    assert.notOk(component.options[2].isSelected, 'option 2 is not selected');
 
     await component.set('2031');
-    assert.notOk(component.options[0].isSelected);
-    assert.ok(component.options[1].isSelected);
-    assert.notOk(component.options[2].isSelected);
-    assert.strictEqual(component.value, '2031');
+    assert.notOk(component.options[0].isSelected, 'option 0 is not selected');
+    assert.ok(component.options[1].isSelected, 'option 1 is selected');
+    assert.notOk(component.options[2].isSelected, 'option 2 is not selected');
+    assert.strictEqual(component.value, '2031', 'selected option is 2031');
   });
 });
