@@ -8,6 +8,12 @@ export default class ReportsCurriculumRoute extends Route {
   @service graphql;
   @service currentUser;
 
+  queryParams = {
+    courses: {
+      replace: true,
+    },
+  };
+
   beforeModel(transition) {
     this.session.requireAuthentication(transition, 'login');
   }
