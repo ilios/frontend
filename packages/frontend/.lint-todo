@@ -8,6 +8,7 @@ add|ember-template-lint|no-at-ember-render-modifiers|10|6|10|6|d919d2af254f782c0
 add|ember-template-lint|no-at-ember-render-modifiers|11|6|11|6|940005188b476a060b0e5d3f05baea24ba178878|1731542400000|1762646400000|1793750400000|app/components/reports/subject/new/academic-year.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|10|6|10|6|d919d2af254f782c01fe2ba15416673e52e91124|1731542400000|1762646400000|1793750400000|app/components/reports/subject/new/competency.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|11|6|11|6|940005188b476a060b0e5d3f05baea24ba178878|1731542400000|1762646400000|1793750400000|app/components/reports/subject/new/competency.hbs
+add|ember-template-lint|prettier|22|4|22|4|0caa2a8da2a6943a3031682405c07ccbc8efaf58|1739318400000|1741906800000|1744498800000|app/components/reports/subject/new/competency.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|10|6|10|6|d919d2af254f782c01fe2ba15416673e52e91124|1731542400000|1762646400000|1793750400000|app/components/reports/subject/new/program-year.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|11|6|11|6|940005188b476a060b0e5d3f05baea24ba178878|1731542400000|1762646400000|1793750400000|app/components/reports/subject/new/program-year.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|10|6|10|6|d919d2af254f782c01fe2ba15416673e52e91124|1731542400000|1762646400000|1793750400000|app/components/reports/subject/new/program.hbs
@@ -16,5 +17,3 @@ add|ember-template-lint|no-at-ember-render-modifiers|10|6|10|6|d919d2af254f782c0
 add|ember-template-lint|no-at-ember-render-modifiers|11|6|11|6|940005188b476a060b0e5d3f05baea24ba178878|1731542400000|1762646400000|1793750400000|app/components/reports/subject/new/session-type.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|10|6|10|6|d919d2af254f782c01fe2ba15416673e52e91124|1731542400000|1762646400000|1793750400000|app/components/reports/subject/new/term.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|11|6|11|6|940005188b476a060b0e5d3f05baea24ba178878|1731542400000|1762646400000|1793750400000|app/components/reports/subject/new/term.hbs
-add|ember-template-lint|no-at-ember-render-modifiers|2|61|2|61|23cd787c79c34a628dadb6e96dd4004d42eebb79|1739318400000|1741906800000|1744498800000|app/components/new-directory-user.hbs
-add|ember-template-lint|prettier|22|4|22|4|0caa2a8da2a6943a3031682405c07ccbc8efaf58|1739318400000|1741906800000|1744498800000|app/components/reports/subject/new/competency.hbs
