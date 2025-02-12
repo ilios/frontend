@@ -1,24 +1,29 @@
 <div class="reports-curriculum-header">
   <div class="run">
-    {{#if @countSelectedCourses}}
-      {{t "general.run"}}
-      {{#if @showReportResults}}
-        {{this.selectedReport.label}}
+    <p>
+      {{#if @countSelectedCourses}}
+        {{t "general.run"}}
+        {{#if @showReportResults}}
+          {{this.selectedReport.label}}
+        {{else}}
+          <label>
+            <select {{on "change" @changeSelectedReport}}>
+              {{#each this.reportList as |report|}}
+                <option
+                  value={{report.value}}
+                  selected={{eq report.value this.selectedReport.value}}
+                >
+                  {{report.label}}
+                </option>
+              {{/each}}
+            </select>
+          </label>
+        {{/if}}
+        {{this.selectedReport.summary}}
       {{else}}
-        <label>
-          <select {{on "change" @changeSelectedReport}}>
-            {{#each this.reportList as |report|}}
-              <option value={{report.value}} selected={{eq report.value this.selectedReport.value}}>
-                {{report.label}}
-              </option>
-            {{/each}}
-          </select>
-        </label>
+        {{t "general.selectCoursesToRunReport"}}
       {{/if}}
-      {{t "general.reportForCourses" courseCount=@countSelectedCourses}}
-    {{else}}
-      {{t "general.selectCoursesToRunReport"}}
-    {{/if}}
+    </p>
   </div>
   <div class="input-buttons">
     {{#if @showReportResults}}
