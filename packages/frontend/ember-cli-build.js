@@ -60,7 +60,7 @@ module.exports = async function (defaults) {
 
   const { setConfig } = await import('@warp-drive/build-config');
   setConfig(app, __dirname, {
-    compatWith: '5.3',
+    compatWith: '5.2',
     deprecations: {
       DEPRECATE_STORE_EXTENDS_EMBER_OBJECT: false,
     },
