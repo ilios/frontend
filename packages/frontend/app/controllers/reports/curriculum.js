@@ -2,9 +2,11 @@ import Controller from '@ember/controller';
 import { tracked } from '@glimmer/tracking';
 
 export default class ReportsCurriculumController extends Controller {
-  queryParams = [{ courses: 'courses' }, { report: 'report' }];
+  queryParams = [{ courses: 'courses' }, { report: 'report' }, { run: 'run' }];
 
   @tracked courses = null;
+  @tracked report = null;
+  @tracked run = false;
 
   get selectedCourseIds() {
     return this.courses?.split('-');
