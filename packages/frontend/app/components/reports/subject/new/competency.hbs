@@ -2,14 +2,16 @@
   <label for="new-competency">
     {{t "general.whichIs"}}
   </label>
-  {{#if this.allCompetenciesData.isResolved}}
+  {{#if this.isLoaded}}
     <select
       id="new-competency"
       data-test-prepositional-objects
       {{on "change" (pick "target.value" @changeId)}}
+      {{did-insert (perform this.setInitialValue)}}
+      {{did-update (perform this.setInitialValue) @school}}
     >
       {{#each this.sortedCompetencies as |competency|}}
-        <option selected={{eq competency.id this.bestSelectedCompetency}} value={{competency.id}}>
+        <option selected={{eq competency.id @currentId}} value={{competency.id}}>
           {{competency.title}}
         </option>
       {{/each}}

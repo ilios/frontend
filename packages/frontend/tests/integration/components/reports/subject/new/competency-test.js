@@ -16,7 +16,7 @@ module('Integration | Component | reports/subject/new/competency', function (hoo
   });
 
   test('it renders', async function (assert) {
-    assert.expect(15);
+    assert.expect(16);
     this.set('currentId', null);
     this.set('changeId', (id) => {
       assert.strictEqual(id, '1');
@@ -64,7 +64,7 @@ module('Integration | Component | reports/subject/new/competency', function (hoo
   });
 
   test('it filters by school', async function (assert) {
-    assert.expect(7);
+    assert.expect(8);
     const schoolModel = await this.owner.lookup('service:store').findRecord('school', 2);
     this.set('currentId', null);
     this.set('school', schoolModel);
@@ -91,16 +91,28 @@ module('Integration | Component | reports/subject/new/competency', function (hoo
     assert.expect(4);
     const schoolModels = await this.owner.lookup('service:store').findAll('school');
     this.set('school', schoolModels[0]);
-    await render(
-      hbs`<Reports::Subject::New::Competency @currentId={{null}} @changeId={{noop}} @school={{this.school}} />`,
-    );
+    this.set('changeId', (id) => {
+      assert.strictEqual(id, '1');
+    });
+    await render(hbs`<Reports::Subject::New::Competency
+  @currentId={{null}}
+  @changeId={{this.changeId}}
+  @school={{this.school}}
+/>`);
 
-    assert.strictEqual(component.options[0].text, 'competency 0');
+    this.set('changeId', (id) => {
+      assert.strictEqual(id, '3');
+    });
     this.set('school', schoolModels[1]);
-    assert.strictEqual(component.options[0].text, 'competency 2');
+
+    this.set('changeId', (id) => {
+      assert.strictEqual(id, '1');
+    });
     this.set('school', null);
-    assert.strictEqual(component.options[0].text, 'competency 0');
+
+    this.set('changeId', (id) => {
+      assert.strictEqual(id, '1');
+    });
     this.set('school', schoolModels[0]);
-    assert.strictEqual(component.options[0].text, 'competency 0');
   });
 });
