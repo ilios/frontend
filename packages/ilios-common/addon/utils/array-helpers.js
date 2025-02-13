@@ -159,6 +159,17 @@ export function filterBy(arr, key, searchValue) {
   });
 }
 
+export function chunk(arr, size) {
+  assert('value passed to chunk is an array', Array.isArray(arr));
+  assert('size passed to chunk is a positive integer', Number.isInteger(size) && size >= 0);
+
+  const result = [];
+  for (let i = 0; i < arr.length; i += size) {
+    result.push(arr.slice(i, i + size));
+  }
+  return result;
+}
+
 //Stolen from https://github.com/emberjs/ember.js/blob/464e694afd611e2203759e5f76a14c7bfb023006/packages/%40ember/-internals/runtime/lib/compare.ts#L42
 function spaceship(a, b) {
   // SAFETY: `Math.sign` always returns `-1` for negative, `0` for zero, and `1`
