@@ -15,6 +15,12 @@
     }
   }
 
+  .progress-container {
+    display: flex;
+    height: 1rem;
+    justify-content: end;
+  }
+
   .report-results.running {
     @include cm.loading-shimmer;
     &,

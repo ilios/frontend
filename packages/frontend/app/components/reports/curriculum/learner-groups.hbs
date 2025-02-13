@@ -7,6 +7,14 @@
   @close={{@close}}
   @download={{perform this.downloadReport}}
 />
+<div class="progress-container">
+  {{#if this.reportRunning}}
+    <progress
+      value={{add 1 this.completedPromises.length}}
+      max={{add 1 this.queryPromises.length}}
+    ></progress>
+  {{/if}}
+</div>
 <div class="report-results {{if this.reportRunning 'running'}}">
   <table>
     <caption>{{t "general.resultsSummary"}}</caption>
