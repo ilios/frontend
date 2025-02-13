@@ -1,5 +1,5 @@
-<div class="reports-choose-course">
-  <div class="schools">
+<div class="reports-choose-course" data-test-reports-curriculum-choose-course>
+  <div class="schools" data-test-schools>
     <FaIcon @icon="building-columns" />
     {{#if (gt this.filteredSchools.length 1)}}
       <select
@@ -17,19 +17,20 @@
     {{/if}}
   </div>
   {{#each this.selectedSchool.years as |y|}}
-    <ul class="year {{if (eq y.year this.expandedYear) 'expanded' 'collapsed'}}">
+    <ul class="year {{if (eq y.year this.expandedYear) 'expanded' 'collapsed'}}" data-test-year>
       <li>
         <button
           type="button"
           aria-expanded={{if (eq y.year this.expandedYear) "true" "false"}}
           {{on "click" (fn this.toggleYear y.year)}}
+          data-test-expand
         >
           {{y.year}}
           <FaIcon @icon={{if (eq y.year this.expandedYear) "caret-down" "caret-right"}} />
         </button>
       </li>
       {{#if (eq y.year this.expandedYear)}}
-        <ul class="courses">
+        <ul class="courses" data-test-courses>
           <li>
             <input
               type="checkbox"
@@ -42,7 +43,7 @@
             />
           </li>
           {{#each (sort-by "title" y.courses) as |c|}}
-            <li>
+            <li data-test-course>
               <label>
                 <input
                   type="checkbox"

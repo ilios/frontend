@@ -2,7 +2,7 @@ import Component from '@glimmer/component';
 import { service } from '@ember/service';
 import { cached, tracked } from '@glimmer/tracking';
 import { TrackedAsyncData } from 'ember-async-data';
-import { DateTime } from 'luxon';
+import currentAcademicYear from 'ilios-common/utils/current-academic-year';
 
 export default class ReportsChooseCourse extends Component {
   @service iliosConfig;
@@ -13,12 +13,7 @@ export default class ReportsChooseCourse extends Component {
 
   constructor() {
     super(...arguments);
-    let { month, year } = DateTime.now();
-    if (month < 7) {
-      // before July 1st (start of a new academic year) show the year before
-      year--;
-    }
-    this.expandedYear = year;
+    this.expandedYear = currentAcademicYear();
   }
 
   userModel = new TrackedAsyncData(this.currentUser.getModel());
