@@ -7,6 +7,7 @@ import createDownloadFile from 'frontend/utils/create-download-file';
 import { DateTime } from 'luxon';
 import { cached } from '@glimmer/tracking';
 import { TrackedAsyncData } from 'ember-async-data';
+import { chunk } from 'ilios-common/utils/array-helpers';
 
 export default class ReportsCurriculumSessionObjectivesComponent extends Component {
   @service router;
@@ -15,9 +16,8 @@ export default class ReportsCurriculumSessionObjectivesComponent extends Compone
   @service reporting;
 
   @cached
-  get reportResultsData() {
-    const courseIds = this.args.courses.map((c) => c.id);
-    const filters = [`ids: [${courseIds.join(', ')}]`];
+  get queryPromises() {
+    const chunks = chunk(this.args.courses, 5);
     const userData = ['id', 'firstName', 'lastName', 'middleName', 'displayName'].join(', ');
     const sessionData = [
       'id',
@@ -29,18 +29,30 @@ export default class ReportsCurriculumSessionObjectivesComponent extends Compone
     ].join(', ');
 
     const data = ['id', 'title', 'year', `sessions { ${sessionData} }`];
-    return new TrackedAsyncData(this.graphql.find('courses', filters, data.join(', ')));
+
+    return chunks.map((courses) => {
+      const courseIds = courses.map((c) => c.id);
+      const filters = [`ids: [${courseIds.join(', ')}]`];
+      return new TrackedAsyncData(this.graphql.find('courses', filters, data.join(', ')));
+    });
   }
 
-  get reportResults() {
-    if (!this.reportResultsData.isResolved) {
-      return [];
-    }
-    return this.reportResultsData.value.data.courses;
+  get completedPromises() {
+    return this.queryPromises.filter((tad) => tad.isResolved);
   }
 
   get reportRunning() {
-    return this.reportResultsData.isPending;
+    return this.queryPromises.length > this.completedPromises.length;
+  }
+
+  get reportResults() {
+    if (this.reportRunning) {
+      return [];
+    }
+    return this.completedPromises
+      .map(({ value }) => value)
+      .map(({ data }) => data.courses)
+      .flat();
   }
 
   get reportWithInstructors() {
