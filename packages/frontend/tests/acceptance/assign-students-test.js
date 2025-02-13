@@ -9,7 +9,7 @@ import { DateTime } from 'luxon';
 module('Acceptance | assign students', function (hooks) {
   setupApplicationTest(hooks);
 
-  hooks.beforeEach(async function () {
+  hooks.beforeEach(function () {
     this.school = this.server.create('school');
     this.school2 = this.server.create('school');
     const program = this.server.create('program', { school: this.school });
