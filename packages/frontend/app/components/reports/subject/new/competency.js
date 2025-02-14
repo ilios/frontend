@@ -34,6 +34,6 @@ export default class ReportsSubjectNewCompetencyComponent extends Component {
       return this.args.currentId;
     }
 
-    return this.sortedCompetencies[0].id;
+    return null;
   }
 }

@@ -46,6 +46,10 @@ export default class ReportsNewSubjectComponent extends Component {
     return this.selectedPrepositionalObjectId ?? this.args.report?.prepositionalObjectTableRowId;
   }
 
+  get prepositionalObjectIdMissing() {
+    return this.prepositionalObject && !this.prepositionalObjectId;
+  }
+
   get subject() {
     return this.selectedSubject ?? this.args.report?.subject ?? 'course';
   }
@@ -335,6 +339,9 @@ export default class ReportsNewSubjectComponent extends Component {
     this.addErrorDisplaysFor(['title', 'prepositionalObject', 'prepositionalObjectId']);
     const isValid = await this.isValid();
     if (!isValid) {
+      if (this.prepositionalObject === 'competency' && !this.prepositionalObjectId) {
+        document.querySelector('select[data-test-prepositional-objects]').focus();
+      }
       return false;
     }
     this.clearErrorDisplay();
@@ -360,7 +367,10 @@ export default class ReportsNewSubjectComponent extends Component {
 
   @action
   validatePrepositionalObjectIdMessageCallback() {
-    if (this.prepositionalObject && !this.prepositionalObjectId) {
+    if (this.prepositionalObjectIdMissing) {
+      if (this.prepositionalObject === 'competency') {
+        return this.intl.t('errors.reportMissingCompetency');
+      }
       if (this.prepositionalObject === 'instructor') {
         return this.intl.t('errors.reportMissingInstructor');
       }
@@ -381,6 +391,9 @@ export default class ReportsNewSubjectComponent extends Component {
   @action
   validatePrepositionalObjectMessageCallback() {
     if (this.subject && !this.prepositionalObject) {
+      if (this.subject === 'competency') {
+        return this.intl.t('errors.reportMissingObjectForCompetency');
+      }
       if (this.subject === 'instructor') {
         return this.intl.t('errors.reportMissingObjectForInstructor');
       }
