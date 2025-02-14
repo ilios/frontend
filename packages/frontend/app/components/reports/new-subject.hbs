@@ -76,12 +76,12 @@
         @currentId={{this.prepositionalObjectId}}
         @changeId={{set this "selectedPrepositionalObjectId"}}
       />
-      <ValidationError
-        @validatable={{this}}
-        @property="prepositionalObjectId"
-        data-test-validation-error
-      />
       <div class="input-buttons">
+        <ValidationError
+          @validatable={{this}}
+          @property="prepositionalObjectId"
+          data-test-validation-error
+        />
         <button
           type="button"
           class="done text{{if this.prepositionalObjectIdMissing ' disabled'}}"
