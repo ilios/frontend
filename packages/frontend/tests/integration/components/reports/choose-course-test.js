@@ -6,6 +6,7 @@ import { setupAuthentication, freezeDateAt, unfreezeDate } from 'ilios-common';
 import { setupMirage } from 'frontend/tests/test-support/mirage';
 import { DateTime } from 'luxon';
 import { component } from 'frontend/tests/pages/components/reports/curriculum/choose-course';
+import { buildSchoolsFromData } from 'frontend/tests/helpers/curriculum-report';
 
 module('Integration | Component | reports/choose-course', function (hooks) {
   setupRenderingTest(hooks);
@@ -33,27 +34,6 @@ module('Integration | Component | reports/choose-course', function (hooks) {
   hooks.afterEach(() => {
     unfreezeDate();
   });
-
-  const buildSchoolsFromData = (server) => {
-    const schools = server.db.schools;
-    const allCourseData = server.db.courses;
-    return schools.map((school) => {
-      const courseIds = school.courseIds;
-      const courses = allCourseData.filter((course) => courseIds.includes(course.id));
-      const years = courses.map(({ year }) => year);
-      const uniqueYears = [...new Set(years)].sort().reverse();
-      return {
-        id: school.id,
-        title: school.title,
-        years: uniqueYears.map((year) => {
-          return {
-            year,
-            courses: courses.filter((course) => course.year === year),
-          };
-        }),
-      };
-    });
-  };
 
   test('it renders with one school', async function (assert) {
     const school = this.server.create('school');
