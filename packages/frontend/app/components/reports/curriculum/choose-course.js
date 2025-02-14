@@ -4,7 +4,7 @@ import { cached, tracked } from '@glimmer/tracking';
 import { TrackedAsyncData } from 'ember-async-data';
 import currentAcademicYear from 'ilios-common/utils/current-academic-year';
 
-export default class ReportsChooseCourse extends Component {
+export default class ReportsCurriculumChooseCourse extends Component {
   @service iliosConfig;
   @service currentUser;
 
