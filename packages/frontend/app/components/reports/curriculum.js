@@ -61,8 +61,8 @@ export default class ReportsCurriculumComponent extends Component {
     this.args.setSelectedCourseIds(this.passedCourseIds.filter((i) => i !== Number(id)).sort());
   };
 
-  changeSelectedReport = ({ target }) => {
+  changeSelectedReport = (value) => {
     this.args.stop();
-    this.args.setReport(target.value);
+    this.args.setReport(value);
   };
 }
