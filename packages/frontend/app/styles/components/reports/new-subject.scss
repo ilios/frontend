@@ -15,6 +15,11 @@
 
   .new-subject-content {
     @include m.ilios-form-error;
+
+    .validation-error-message {
+      margin-right: 0.25rem;
+    }
+
     p {
       display: grid;
       grid-gap: 0.25rem;
@@ -28,10 +33,6 @@
       select,
       input {
         width: 100%;
-      }
-
-      .validation-error-message {
-        grid-column: 1 / -1;
       }
 
       .mesh-search {
@@ -71,6 +72,18 @@
 
             &:hover {
               background-color: c.$culturedGrey;
+            }
+
+            &.disabled {
+              background-color: c.$davysGrey;
+              cursor: default;
+            }
+
+            &:disabled {
+              background-color: c.$culturedGrey;
+              border-color: c.$davysGrey;
+              color: c.$white;
+              cursor: default;
             }
           }
 
