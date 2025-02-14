@@ -1,13 +1,13 @@
-<div class="reports-curriculum-header">
+<div class="reports-curriculum-header" data-test-reports-curriculum-header>
   <div class="run">
-    <p>
+    <p data-test-run-summary>
       {{#if @countSelectedCourses}}
         {{t "general.run"}}
         {{#if @showReportResults}}
           {{this.selectedReport.label}}
         {{else}}
-          <label>
-            <select {{on "change" @changeSelectedReport}}>
+          <label data-test-report-selector>
+            <select {{on "change" this.changeSelectedReport}}>
               {{#each this.reportList as |report|}}
                 <option
                   value={{report.value}}

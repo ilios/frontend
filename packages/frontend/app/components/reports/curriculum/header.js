@@ -26,4 +26,8 @@ export default class ReportsCurriculumHeader extends Component {
   get selectedReport() {
     return this.reportList.find((r) => r.value === this.args.selectedReportValue);
   }
+
+  changeSelectedReport = ({ target }) => {
+    this.args.changeSelectedReport(target.value);
+  };
 }
