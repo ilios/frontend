@@ -91,6 +91,7 @@ general:
   createNew: Crear Nuevo
   createNewGroup: Crear Este Grupo
   currentCompetency: Competencia Actual
+  curriculumReports: Informes Curriculares
   currentSchool: Escuela Actual
   curriculumInventory: Inventario de plan de Estudios
   curriculumInventoryInstitutionalInfo: Inventario de plan de Estudios Información Institucional
@@ -187,6 +188,7 @@ general:
   lastName: Apellido
   learner: Aprendedor
   learnerAssignments: "{groupTitle} Asignaciónes de Aprendedores"
+  learnerGroupsReportSummary: "informe para {courseCount, plural, one {un curso} other {# cursos}}. Cada grupo de alumnos adjunto se enumera junto con los instructores y los datos del curso."
   learnerGroupTitle: Título de Grupo de Instructores
   learnerGroupTitleFilterPlaceholder: Aplicar un Filtro por Título de Grupo de Aprendedor
   learnerGroupTitlePlaceholder: Entre en un Título para este grupo de aprendedores
@@ -232,7 +234,6 @@ general:
   narrative: narrativa
   navigationCompleteText: La navegación de la página de Ilios está completa. Ahora puede navegar por el contenido de la página como desee.
   newCourse: Curso Nuevo
-  newCourseReport: Nuevo Informe de Curso
   newCurriculumInventoryReport: Nuevo Informe de Inventario de Plan de Estudios
   newDomain: Nuevo Dominio
   newInstructorGroup: Nuevo Grupo de Instructores
@@ -242,7 +243,6 @@ general:
   newReport: Nuevo Reporte
   newSchool: Nueva Escuela
   newSequenceBlock: Nuevo Bloque de Secuencia
-  newSubjectReport: Nuevo Informe de Tema
   newTerm: Nuevo Termino
   newToken: Nuevo Símbolo (Token)
   newUser: Nuevo Usuario
@@ -354,7 +354,9 @@ general:
   reportTitle: Título de Informe
   requiredInTrack: Requerido en Pista
   resourceTypes: Tipos de recursos
+  resultsSummary: Resumen de Resultados
   root: Root
+  run: Ejecutar
   runReport: Ejecutar Informe
   sampleFile: Archivo de Ejemplo
   saved: Nuevo Usuario Salvó con Éxito
@@ -366,6 +368,7 @@ general:
   select: Selecciona
   selectAcademicYear: Selecciona Año Academico
   selectAllOrNone: Seleccione Todo o Ninguno
+  selectCoursesToRunReport: Seleccionar cursos para ejecutar el informe
   selected: Escogido
   selectPolite: (seleccione uno, por favor)
   selectProgram: Seleccione un Programa
@@ -380,6 +383,8 @@ general:
   sequenceBlockTitlePlaceholder: "Por favor, introduzca un título para esta bloque de la secuencia."
   sequenceNumber: No. de Secuencia
   sessionAttributes: Atributos de la Sesión
+  sessionObjectives: Objetivos de la sesión
+  sessionObjectivesReportSummary: "informe para {courseCount, plural, one {un curso} other {# cursos}}. Se enumera el objetivo de cada sesión junto con los instructores y los datos del curso."
   sessionTitlePlaceholder: Entre en un titulo para esta sesión
   sessionTypeConfirmRemoval: ¿Está seguro de que desea eliminar este tipo de sesión? Esta acción no se puede deshacer.
   showResultsFor: Mostrar Resultados Para
