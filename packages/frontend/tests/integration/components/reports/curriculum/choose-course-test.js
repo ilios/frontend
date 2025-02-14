@@ -8,7 +8,7 @@ import { DateTime } from 'luxon';
 import { component } from 'frontend/tests/pages/components/reports/curriculum/choose-course';
 import { buildSchoolsFromData } from 'frontend/tests/helpers/curriculum-report';
 
-module('Integration | Component | reports/choose-course', function (hooks) {
+module('Integration | Component | reports/curriculum/choose-course', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
@@ -55,7 +55,7 @@ module('Integration | Component | reports/choose-course', function (hooks) {
     await setupAuthentication({ school });
     this.set('selectedCourseIds', ['2']);
     this.set('schools', buildSchoolsFromData(this.server));
-    await render(hbs`<Reports::ChooseCourse
+    await render(hbs`<Reports::Curriculum::ChooseCourse
   @selectedCourseIds={{this.selectedCourseIds}}
   @schools={{this.schools}}
   @add={{(noop)}}
@@ -99,7 +99,7 @@ module('Integration | Component | reports/choose-course', function (hooks) {
     });
     this.set('schools', buildSchoolsFromData(this.server));
     this.set('selectedCourseIds', []);
-    await render(hbs`<Reports::ChooseCourse
+    await render(hbs`<Reports::Curriculum::ChooseCourse
   @selectedCourseIds={{this.selectedCourseIds}}
   @schools={{this.schools}}
   @add={{(noop)}}
@@ -140,7 +140,7 @@ module('Integration | Component | reports/choose-course', function (hooks) {
     this.set('add', (courseId) => {
       assert.strictEqual(courseId, course.id);
     });
-    await render(hbs`<Reports::ChooseCourse
+    await render(hbs`<Reports::Curriculum::ChooseCourse
   @selectedCourseIds={{this.selectedCourseIds}}
   @schools={{this.schools}}
   @add={{this.add}}
@@ -165,7 +165,7 @@ module('Integration | Component | reports/choose-course', function (hooks) {
     this.set('remove', (courseId) => {
       assert.strictEqual(courseId, course.id);
     });
-    await render(hbs`<Reports::ChooseCourse
+    await render(hbs`<Reports::Curriculum::ChooseCourse
   @selectedCourseIds={{this.selectedCourseIds}}
   @schools={{this.schools}}
   @add={{(noop)}}
@@ -189,7 +189,7 @@ module('Integration | Component | reports/choose-course', function (hooks) {
     this.set('add', (courseId) => {
       this.set('selectedCourseIds', [...this.selectedCourseIds, courseId]);
     });
-    await render(hbs`<Reports::ChooseCourse
+    await render(hbs`<Reports::Curriculum::ChooseCourse
   @selectedCourseIds={{this.selectedCourseIds}}
   @schools={{this.schools}}
   @add={{this.add}}
@@ -227,7 +227,7 @@ module('Integration | Component | reports/choose-course', function (hooks) {
         this.selectedCourseIds.filter((id) => id !== courseId),
       );
     });
-    await render(hbs`<Reports::ChooseCourse
+    await render(hbs`<Reports::Curriculum::ChooseCourse
   @selectedCourseIds={{this.selectedCourseIds}}
   @schools={{this.schools}}
   @add={{(noop)}}
