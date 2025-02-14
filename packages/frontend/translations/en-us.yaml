@@ -471,7 +471,9 @@ general:
 errors:
   duplicateUsername: This username is already taken by another user account.
   invalidChangeAlertRecipients: This list of change-alerts recipients contains invalid email addresses.
+  reportMissingCompetency: Competency is Required
   reportMissingInstructor: Instructor is Required
   reportMissingMeshTerm: MeSH Term is Required
+  reportMissingObjectForCompetency: Association is required when Competency is the subject
   reportMissingObjectForInstructor: Association is required when Instructor is the subject
   reportMissingObjectForMeshTerm: Association is required when MeSH Term is the subject
