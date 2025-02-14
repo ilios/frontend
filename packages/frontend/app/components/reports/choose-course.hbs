@@ -32,15 +32,17 @@
       {{#if (eq y.year this.expandedYear)}}
         <ul class="courses" data-test-courses>
           <li>
-            <input
-              type="checkbox"
-              checked={{this.hasAllExpandedYearCourses}}
-              indeterminate={{this.hasSomeExpandedYearCourses}}
-              aria-label={{t "general.selectAllOrNone"}}
-              {{on "click" this.toggleAllExpandedYearCourseSelection}}
-              disabled={{eq y.courses.length 0}}
-              data-test-toggle-all
-            />
+            <label class="select-all">
+              <input
+                type="checkbox"
+                checked={{this.hasAllExpandedYearCourses}}
+                indeterminate={{this.hasSomeExpandedYearCourses}}
+                {{on "click" this.toggleAllExpandedYearCourseSelection}}
+                disabled={{eq y.courses.length 0}}
+                data-test-toggle-all
+              />
+              {{t "general.selectAllOrNone"}}
+            </label>
           </li>
           {{#each (sort-by "title" y.courses) as |c|}}
             <li data-test-course>
