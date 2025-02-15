@@ -365,6 +365,7 @@ general:
   selectAcademicYear: Selecciona Año Academico
   selectAllOrNone: Seleccione Todo o Ninguno
   selected: Escogido
+  selectPolite: (seleccione uno, por favor)
   selectProgram: Seleccione un Programa
   selectSchool: Seleccione Escuela
   selectUser: Seleccione usuario

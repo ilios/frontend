@@ -365,6 +365,7 @@ general:
   selectAcademicYear: Select Academic Year
   selectAllOrNone: Select All or None
   selected: Selected
+  selectPolite: (please select one)
   selectProgram: Select a Program
   selectSchool: Select School
   selectUser: Select User
