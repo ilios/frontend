@@ -368,14 +368,13 @@ export default class ReportsNewSubjectComponent extends Component {
   @action
   validatePrepositionalObjectIdMessageCallback() {
     if (this.prepositionalObjectIdMissing) {
-      if (this.prepositionalObject === 'competency') {
-        return this.intl.t('errors.reportMissingCompetency');
-      }
-      if (this.prepositionalObject === 'instructor') {
-        return this.intl.t('errors.reportMissingInstructor');
-      }
-      if (this.prepositionalObject === 'mesh term') {
-        return this.intl.t('errors.reportMissingMeshTerm');
+      switch (this.prepositionalObject) {
+        case 'competency':
+          return this.intl.t('errors.reportMissingCompetency');
+        case 'instructor':
+          return this.intl.t('errors.reportMissingInstructor');
+        case 'mesh term':
+          return this.intl.t('errors.reportMissingMeshTerm');
       }
     }
   }
@@ -391,14 +390,13 @@ export default class ReportsNewSubjectComponent extends Component {
   @action
   validatePrepositionalObjectMessageCallback() {
     if (this.subject && !this.prepositionalObject) {
-      if (this.subject === 'competency') {
-        return this.intl.t('errors.reportMissingObjectForCompetency');
-      }
-      if (this.subject === 'instructor') {
-        return this.intl.t('errors.reportMissingObjectForInstructor');
-      }
-      if (this.subject === 'mesh term') {
-        return this.intl.t('errors.reportMissingObjectForMeshTerm');
+      switch (this.subject) {
+        case 'competency':
+          return this.intl.t('errors.reportMissingObjectForCompetency');
+        case 'instructor':
+          return this.intl.t('errors.reportMissingObjectForInstructor');
+        case 'mesh term':
+          return this.intl.t('errors.reportMissingObjectForMeshTerm');
       }
     }
   }
