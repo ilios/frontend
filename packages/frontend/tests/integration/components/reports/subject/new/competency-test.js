@@ -10,6 +10,7 @@ module('Integration | Component | reports/subject/new/competency', function (hoo
   setupMirage(hooks);
 
   hooks.beforeEach(function () {
+    this.intl = this.owner.lookup('service:intl');
     const [school1, school2] = this.server.createList('school', 2);
     this.server.createList('competency', 2, { school: school1 });
     this.server.createList('competency', 3, { school: school2 });
@@ -29,7 +30,7 @@ module('Integration | Component | reports/subject/new/competency', function (hoo
 />`);
 
     assert.strictEqual(component.options.length, 6);
-    assert.strictEqual(component.options[0].text, '');
+    assert.strictEqual(component.options[0].text, this.intl.t('general.selectPolite'));
     assert.ok(component.options[0].isSelected);
     assert.strictEqual(component.value, '');
 
@@ -80,7 +81,7 @@ module('Integration | Component | reports/subject/new/competency', function (hoo
 />`);
 
     assert.strictEqual(component.options.length, 4);
-    assert.strictEqual(component.options[0].text, '');
+    assert.strictEqual(component.options[0].text, this.intl.t('general.selectPolite'));
     assert.ok(component.options[0].isSelected);
     assert.strictEqual(component.options[1].text, 'competency 2');
     assert.notOk(component.options[1].isSelected);
@@ -106,16 +107,16 @@ module('Integration | Component | reports/subject/new/competency', function (hoo
 />`,
     );
 
-    assert.strictEqual(component.options[0].text, '');
+    assert.strictEqual(component.options[0].text, this.intl.t('general.selectPolite'));
 
     await component.set('1');
     assert.strictEqual(component.value, '1');
 
     this.set('school', schoolModels[1]);
-    assert.strictEqual(component.options[0].text, '');
+    assert.strictEqual(component.options[0].text, this.intl.t('general.selectPolite'));
     this.set('school', null);
-    assert.strictEqual(component.options[0].text, '');
+    assert.strictEqual(component.options[0].text, this.intl.t('general.selectPolite'));
     this.set('school', schoolModels[0]);
-    assert.strictEqual(component.options[0].text, '');
+    assert.strictEqual(component.options[0].text, this.intl.t('general.selectPolite'));
   });
 });
