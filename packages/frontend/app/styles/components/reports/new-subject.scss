@@ -42,6 +42,20 @@
       }
     }
 
+    button {
+      &.disabled {
+        background-color: c.$davysGrey;
+        cursor: default;
+      }
+
+      &:disabled {
+        background-color: c.$culturedGrey;
+        border-color: c.$davysGrey;
+        color: c.$white;
+        cursor: default;
+      }
+    }
+
     .new-subject-search {
       p {
         margin-bottom: 0;
@@ -72,18 +86,6 @@
 
             &:hover {
               background-color: c.$culturedGrey;
-            }
-
-            &.disabled {
-              background-color: c.$davysGrey;
-              cursor: default;
-            }
-
-            &:disabled {
-              background-color: c.$culturedGrey;
-              border-color: c.$davysGrey;
-              color: c.$white;
-              cursor: default;
             }
           }
 
