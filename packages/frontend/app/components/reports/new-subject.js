@@ -340,7 +340,9 @@ export default class ReportsNewSubjectComponent extends Component {
     const isValid = await this.isValid();
     if (!isValid) {
       if (this.prepositionalObject === 'competency' && !this.prepositionalObjectId) {
-        document.querySelector('select[data-test-prepositional-objects]').focus();
+        const select = document.querySelector('select[data-test-prepositional-objects]');
+        select.classList.add('error');
+        select.focus();
       }
       return false;
     }

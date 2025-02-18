@@ -35,6 +35,11 @@
         width: 100%;
       }
 
+      select.error {
+        border: 1px solid c.$crimson;
+        outline-color: c.$crimson;
+      }
+
       .mesh-search {
         label {
           display: none;

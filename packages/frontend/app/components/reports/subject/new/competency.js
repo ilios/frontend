@@ -1,6 +1,7 @@
 import Component from '@glimmer/component';
 import { TrackedAsyncData } from 'ember-async-data';
 import { cached } from '@glimmer/tracking';
+import { action } from '@ember/object';
 import { service } from '@ember/service';
 import { sortBy } from 'ilios-common/utils/array-helpers';
 
@@ -35,5 +36,15 @@ export default class ReportsSubjectNewCompetencyComponent extends Component {
     }
 
     return null;
+  }
+
+  @action
+  updatePrepositionalObjectId(event) {
+    const value = event.target.value;
+    this.args.changeId(value);
+
+    if (!isNaN(value)) {
+      event.target.classList.remove('error');
+    }
   }
 }
