@@ -15,7 +15,7 @@
     ></progress>
   {{/if}}
 </div>
-<div class="report-results {{if this.reportRunning 'running'}}">
+<div class="report-results {{if this.reportRunning 'running'}}" data-test-report-results>
   <table>
     <caption>{{t "general.resultsSummary"}}</caption>
     <thead>
@@ -42,7 +42,7 @@
         {{/each}}
       {{else}}
         {{#each (sort-by "courseTitle" this.summary) as |o|}}
-          <tr>
+          <tr data-test-result>
             <td>
               <LinkTo @route="course" @model={{o.courseId}}>
                 {{o.courseTitle}}
