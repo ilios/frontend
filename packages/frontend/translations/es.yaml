@@ -365,6 +365,7 @@ general:
   selectAcademicYear: Selecciona Año Academico
   selectAllOrNone: Seleccione Todo o Ninguno
   selected: Escogido
+  selectPolite: (seleccione uno, por favor)
   selectProgram: Seleccione un Programa
   selectSchool: Seleccione Escuela
   selectUser: Seleccione usuario
@@ -471,7 +472,9 @@ general:
 errors:
   duplicateUsername: Este nombre de usuario ya está ocupado por otra cuenta de usuario.
   invalidChangeAlertRecipients: Esta lista de destinatarios de alertas de cambios contiene direcciones de correo electrónico no válidas.
+  reportMissingCompetency: Competencia es Necesario
   reportMissingInstructor: Instructor es Necesario
   reportMissingMeshTerm: Término de MeSH es Necesario
+  reportMissingObjectForCompetency: Asociación es Necesario Cuando Competencia es el Sujeto
   reportMissingObjectForInstructor: Asociación es Necesario Cuando Instructor es el Sujeto
   reportMissingObjectForMeshTerm: Asociación es Necesario Cuando Término de MeSH es el Sujeto

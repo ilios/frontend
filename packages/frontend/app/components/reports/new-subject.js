@@ -46,6 +46,10 @@ export default class ReportsNewSubjectComponent extends Component {
     return this.selectedPrepositionalObjectId ?? this.args.report?.prepositionalObjectTableRowId;
   }
 
+  get prepositionalObjectIdMissing() {
+    return this.prepositionalObject && !this.prepositionalObjectId;
+  }
+
   get subject() {
     return this.selectedSubject ?? this.args.report?.subject ?? 'course';
   }
@@ -335,6 +339,11 @@ export default class ReportsNewSubjectComponent extends Component {
     this.addErrorDisplaysFor(['title', 'prepositionalObject', 'prepositionalObjectId']);
     const isValid = await this.isValid();
     if (!isValid) {
+      if (this.prepositionalObject === 'competency' && !this.prepositionalObjectId) {
+        const select = document.querySelector('select[data-test-prepositional-objects]');
+        select.classList.add('error');
+        select.focus();
+      }
       return false;
     }
     this.clearErrorDisplay();
@@ -360,12 +369,14 @@ export default class ReportsNewSubjectComponent extends Component {
 
   @action
   validatePrepositionalObjectIdMessageCallback() {
-    if (this.prepositionalObject && !this.prepositionalObjectId) {
-      if (this.prepositionalObject === 'instructor') {
-        return this.intl.t('errors.reportMissingInstructor');
-      }
-      if (this.prepositionalObject === 'mesh term') {
-        return this.intl.t('errors.reportMissingMeshTerm');
+    if (this.prepositionalObjectIdMissing) {
+      switch (this.prepositionalObject) {
+        case 'competency':
+          return this.intl.t('errors.reportMissingCompetency');
+        case 'instructor':
+          return this.intl.t('errors.reportMissingInstructor');
+        case 'mesh term':
+          return this.intl.t('errors.reportMissingMeshTerm');
       }
     }
   }
@@ -381,11 +392,13 @@ export default class ReportsNewSubjectComponent extends Component {
   @action
   validatePrepositionalObjectMessageCallback() {
     if (this.subject && !this.prepositionalObject) {
-      if (this.subject === 'instructor') {
-        return this.intl.t('errors.reportMissingObjectForInstructor');
-      }
-      if (this.subject === 'mesh term') {
-        return this.intl.t('errors.reportMissingObjectForMeshTerm');
+      switch (this.subject) {
+        case 'competency':
+          return this.intl.t('errors.reportMissingObjectForCompetency');
+        case 'instructor':
+          return this.intl.t('errors.reportMissingObjectForInstructor');
+        case 'mesh term':
+          return this.intl.t('errors.reportMissingObjectForMeshTerm');
       }
     }
   }
