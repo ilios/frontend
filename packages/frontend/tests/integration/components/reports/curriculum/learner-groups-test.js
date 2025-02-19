@@ -5,88 +5,11 @@ import { hbs } from 'ember-cli-htmlbars';
 import { setupMirage } from 'frontend/tests/test-support/mirage';
 import { component } from 'frontend/tests/pages/components/reports/curriculum/learner-groups';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
+import { graphQL } from 'frontend/tests/helpers/curriculum-report';
 
 module('Integration | Component | reports/curriculum/learner-groups', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
-
-  const fetchCourse = (db, courseId) => {
-    const { id, title, year } = db.courses.find(courseId);
-    const sessions = db.sessions.where({ courseId }).map((session) => fetchSession(db, session.id));
-    return { id, title, year, sessions };
-  };
-
-  const fetchSession = (db, sessionId) => {
-    const { id, title, sessionTypeId } = db.sessions.find(sessionId);
-    const { title: sessionTypeTitle } = db.sessionTypes.find(sessionTypeId);
-    const offerings = db.offerings
-      .where({ sessionId })
-      .map((offering) => fetchOffering(db, offering));
-    const ilmSession = fetchIlmSession(db, db.ilmSessions.findBy({ sessionId }));
-
-    offerings.forEach((offering) => {
-      offering.learnerGroups = fetchLearnerGroups(
-        db,
-        db.offerings.find(offering.id).learnerGroupIds,
-      );
-    });
-    if (ilmSession) {
-      const ilm = db.ilmSessions.find(ilmSession.id);
-      ilmSession.learnerGroups = fetchLearnerGroups(db, ilm.learnerGroupIds);
-    }
-    return {
-      id,
-      title,
-      sessionType: { title: sessionTypeTitle },
-      offerings,
-      ilmSession,
-    };
-  };
-
-  const fetchLearnerGroups = (db, ids) => {
-    return db.learnerGroups.find(ids).map(({ id, title }) => {
-      return { id, title };
-    });
-  };
-
-  const fetchIlmSession = (db, ilmSession) => {
-    if (!ilmSession) {
-      return null;
-    }
-    const { id, dueDate, hours, instructorIds, instructorGroupIds } = ilmSession;
-    const { instructors, instructorGroups } = fetchInstructors(
-      db,
-      instructorIds,
-      instructorGroupIds,
-    );
-    return { id, dueDate, hours, instructors, instructorGroups };
-  };
-
-  const fetchOffering = (db, offering) => {
-    const { id, startDate, endDate, instructorIds, instructorGroupIds } = offering;
-    const { instructors, instructorGroups } = fetchInstructors(
-      db,
-      instructorIds,
-      instructorGroupIds,
-    );
-    return { id, startDate, endDate, instructors, instructorGroups };
-  };
-
-  const fetchInstructors = (db, instructorIds, instructorGroupIds) => {
-    const instructors = db.users.find(instructorIds);
-    const instructorGroups = db.instructorGroups.find(instructorGroupIds);
-    const instructorData = instructors.map((instructor) => fetchUser(db, instructor.id));
-    const instructorGroupData = instructorGroups.map((ig) => {
-      const users = ig.userIds.map((id) => fetchUser(db, id));
-      return { id: ig.id, users };
-    });
-    return { instructors: instructorData, instructorGroups: instructorGroupData };
-  };
-
-  const fetchUser = (db, userId) => {
-    const { id, firstName, lastName, middleName, displayName } = db.users.find(userId);
-    return { id, firstName, lastName, middleName, displayName };
-  };
 
   hooks.beforeEach(function () {
     const course = this.server.create('course');
@@ -112,10 +35,27 @@ module('Integration | Component | reports/curriculum/learner-groups', function (
     });
     this.server.create('user', { instructorGroups: [ilmSessionInstructorGroup] });
     this.server.create('user', { instructorIlmSessions: [ilmSession] });
-    this.server.post('api/graphql', (schema) => {
+    this.server.post('api/graphql', ({ db }) => {
       //use all the courses, getting the id filter from graphQL is a bit tricky
-      const courseIds = schema.db.courses.map((c) => c.id);
-      const courses = courseIds.map((id) => fetchCourse(schema.db, id));
+      const courseIds = db.courses.map((c) => c.id);
+      const rawCourses = courseIds.map((id) => graphQL.fetchCourse(db, id));
+      const courses = rawCourses.map((course) => {
+        course.sessions.forEach((session) => {
+          session.offerings.forEach((offering) => {
+            offering.learnerGroups = graphQL.fetchLearnerGroups(
+              db,
+              db.offerings.find(offering.id).learnerGroupIds,
+            );
+          });
+          if (session.ilmSession) {
+            const ilm = db.ilmSessions.find(session.ilmSession.id);
+            session.ilmSession.learnerGroups = graphQL.fetchLearnerGroups(db, ilm.learnerGroupIds);
+          }
+        });
+
+        return course;
+      });
+
       return { data: { courses } };
     });
   });
