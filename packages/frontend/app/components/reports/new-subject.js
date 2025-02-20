@@ -333,6 +333,7 @@ export default class ReportsNewSubjectComponent extends Component {
       school: this.currentSchool,
     });
     await this.args.save(report);
+    this.args.close();
   });
 
   run = dropTask(async () => {
