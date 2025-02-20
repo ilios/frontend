@@ -3,6 +3,7 @@ import { TrackedAsyncData } from 'ember-async-data';
 import { action } from '@ember/object';
 import { cached } from '@glimmer/tracking';
 import { service } from '@ember/service';
+import { sortBy } from 'ilios-common/utils/array-helpers';
 
 export default class ReportsSubjectNewAcademicYearComponent extends Component {
   @service store;
@@ -15,6 +16,10 @@ export default class ReportsSubjectNewAcademicYearComponent extends Component {
 
   get academicYears() {
     return this.academicYearsData.isResolved ? this.academicYearsData.value : [];
+  }
+
+  get sortedAcademicYears() {
+    return sortBy(this.academicYears, ['title']).reverse();
   }
 
   get bestSelectedAcademicYear() {

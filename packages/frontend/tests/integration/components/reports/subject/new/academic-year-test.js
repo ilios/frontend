@@ -44,9 +44,9 @@ module('Integration | Component | reports/subject/new/academic-year', function (
       this.intl.t('general.selectPolite'),
       'first option is blank',
     );
-    assert.strictEqual(component.options[1].text, '2015', 'second option is 2015');
+    assert.strictEqual(component.options[1].text, '2060', 'second option is 2060');
     assert.strictEqual(component.options[2].text, '2031', 'third option is 2031');
-    assert.strictEqual(component.options[3].text, '2060', 'fourth option is 2060');
+    assert.strictEqual(component.options[3].text, '2015', 'fourth option is 2015');
 
     assert.strictEqual(component.value, '', 'selected option is blank');
 
@@ -81,9 +81,9 @@ module('Integration | Component | reports/subject/new/academic-year', function (
       this.set('currentId', id);
     });
     assert.notOk(component.options[0].isSelected, 'option 0 is not selected');
-    assert.ok(component.options[1].isSelected, 'option 1 is selected');
+    assert.notOk(component.options[1].isSelected, 'option 1 is selected');
     assert.notOk(component.options[2].isSelected, 'option 2 is not selected');
-    assert.notOk(component.options[3].isSelected, 'option 3 is not selected');
+    assert.ok(component.options[3].isSelected, 'option 3 is not selected');
 
     await component.set('2031');
     assert.notOk(component.options[0].isSelected, 'option 0 is not selected');

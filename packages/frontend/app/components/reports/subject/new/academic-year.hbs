@@ -11,7 +11,7 @@
       <option selected={{is-empty @currentId}} value="">
         {{t "general.selectPolite"}}
       </option>
-      {{#each (sort-by "title" this.academicYears) as |year|}}
+      {{#each this.sortedAcademicYears as |year|}}
         <option selected={{eq year.id this.bestSelectedAcademicYear}} value={{year.id}}>
           {{#if this.academicYearCrossesCalendarYearBoundaries}}
             {{year.id}}
