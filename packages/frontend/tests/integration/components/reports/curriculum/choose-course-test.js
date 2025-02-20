@@ -7,6 +7,7 @@ import { setupMirage } from 'frontend/tests/test-support/mirage';
 import { DateTime } from 'luxon';
 import { component } from 'frontend/tests/pages/components/reports/curriculum/choose-course';
 import { buildSchoolsFromData } from 'frontend/tests/helpers/curriculum-report';
+import a11yAudit from 'ember-a11y-testing/test-support/audit';
 
 module('Integration | Component | reports/curriculum/choose-course', function (hooks) {
   setupRenderingTest(hooks);
@@ -35,7 +36,7 @@ module('Integration | Component | reports/curriculum/choose-course', function (h
     unfreezeDate();
   });
 
-  test('it renders with one school', async function (assert) {
+  test('it renders with one school and is accessible', async function (assert) {
     const school = this.server.create('school');
     this.server.create('academicYear', { id: 1984 });
     this.server.create('academicYear', { id: 1985 });
@@ -81,9 +82,12 @@ module('Integration | Component | reports/curriculum/choose-course', function (h
     assert.ok(component.years[1].courses[1].isSelected);
     assert.strictEqual(component.years[1].courses[2].text, 'course 2');
     assert.notOk(component.years[1].courses[2].isSelected);
+
+    await a11yAudit(this.element);
+    assert.ok(true, 'no a11y errors found!');
   });
 
-  test('it renders with multiple schools', async function (assert) {
+  test('it renders with multiple schools and is accessible', async function (assert) {
     const school = this.server.create('school');
     const school2 = this.server.create('school');
     await setupAuthentication({ school });
@@ -124,6 +128,9 @@ module('Integration | Component | reports/curriculum/choose-course', function (h
     assert.strictEqual(component.years[0].courses.length, 1);
     assert.strictEqual(component.years[0].courses[0].text, 'course 0');
     assert.notOk(component.years[0].courses[0].isSelected);
+
+    await a11yAudit(this.element);
+    assert.ok(true, 'no a11y errors found!');
   });
 
   test('select course fires action', async function (assert) {
