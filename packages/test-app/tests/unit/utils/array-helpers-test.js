@@ -447,7 +447,7 @@ module('Unit | Utility | array-helpers', function () {
     assert.strictEqual(result[0][1].name, 'jasper');
     assert.strictEqual(result[0][2].name, 'jackson');
   });
-  test('chunk with chunk size 0', function (assert) {
+  test('chunk with chunk size zero', function (assert) {
     const result = chunk(getDogs(), 0);
     assert.deepEqual(result, []);
   });
