@@ -163,6 +163,9 @@ export function chunk(arr, size) {
   assert('value passed to chunk is an array', Array.isArray(arr));
   assert('size passed to chunk is a positive integer', Number.isInteger(size) && size >= 0);
 
+  if (size === 0) {
+    return [];
+  }
   const result = [];
   for (let i = 0; i < arr.length; i += size) {
     result.push(arr.slice(i, i + size));
