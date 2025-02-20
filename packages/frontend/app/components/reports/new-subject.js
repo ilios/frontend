@@ -339,7 +339,9 @@ export default class ReportsNewSubjectComponent extends Component {
     this.addErrorDisplaysFor(['title', 'prepositionalObject', 'prepositionalObjectId']);
     const isValid = await this.isValid();
     if (!isValid) {
-      if (this.prepositionalObject === 'competency' && !this.prepositionalObjectId) {
+      const dropdownObjectTypes = ['academic year', 'competency'];
+
+      if (dropdownObjectTypes.includes(this.prepositionalObject) && !this.prepositionalObjectId) {
         const select = document.querySelector('select[data-test-prepositional-objects]');
         select.classList.add('error');
         select.focus();
@@ -371,6 +373,8 @@ export default class ReportsNewSubjectComponent extends Component {
   validatePrepositionalObjectIdMessageCallback() {
     if (this.prepositionalObjectIdMissing) {
       switch (this.prepositionalObject) {
+        case 'academic year':
+          return this.intl.t('errors.reportMissingAcademicYear');
         case 'competency':
           return this.intl.t('errors.reportMissingCompetency');
         case 'instructor':
@@ -393,6 +397,8 @@ export default class ReportsNewSubjectComponent extends Component {
   validatePrepositionalObjectMessageCallback() {
     if (this.subject && !this.prepositionalObject) {
       switch (this.subject) {
+        case 'academic year':
+          return this.intl.t('errors.reportMissingObjectForAcademicYear');
         case 'competency':
           return this.intl.t('errors.reportMissingObjectForCompetency');
         case 'instructor':
