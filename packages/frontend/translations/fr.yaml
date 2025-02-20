@@ -473,6 +473,7 @@ general:
 errors:
   duplicateUsername: "Ce nom d'utilisateur est déjà pris par un autre compte utilisateur."
   invalidChangeAlertRecipients: "Cette liste de destinataires d'alertes de changement contient des adresses e-mail invalides."
+  reportMissingAcademicYear: Année Scolaire requis
   reportMissingCompetency: Compétence requis
   reportMissingInstructor: Instructeur requis
   reportMissingMeshTerm: terme de MeSH requis

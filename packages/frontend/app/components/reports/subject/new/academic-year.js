@@ -1,8 +1,8 @@
 import Component from '@glimmer/component';
 import { TrackedAsyncData } from 'ember-async-data';
+import { action } from '@ember/object';
 import { cached } from '@glimmer/tracking';
 import { service } from '@ember/service';
-import currentAcademicYear from 'ilios-common/utils/current-academic-year';
 
 export default class ReportsSubjectNewAcademicYearComponent extends Component {
   @service store;
@@ -24,11 +24,7 @@ export default class ReportsSubjectNewAcademicYearComponent extends Component {
       return this.args.currentId;
     }
 
-    const currentYear = currentAcademicYear();
-    const currentYearId = this.academicYears.find(({ id }) => Number(id) === currentYear)?.id;
-    const newId = currentYearId ?? ids.at(-1);
-
-    return newId;
+    return null;
   }
 
   crossesBoundaryConfig = new TrackedAsyncData(
@@ -38,5 +34,15 @@ export default class ReportsSubjectNewAcademicYearComponent extends Component {
   @cached
   get academicYearCrossesCalendarYearBoundaries() {
     return this.crossesBoundaryConfig.isResolved ? this.crossesBoundaryConfig.value : false;
+  }
+
+  @action
+  updatePrepositionalObjectId(event) {
+    const value = event.target.value;
+    this.args.changeId(value);
+
+    if (!isNaN(value)) {
+      event.target.classList.remove('error');
+    }
   }
 }
