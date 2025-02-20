@@ -53,7 +53,7 @@ export default class ReportsCurriculumComponent extends Component {
   }
 
   pickCourse = (id) => {
-    this.args.setSelectedCourseIds([...this.passedCourseIds, id].sort());
+    this.args.setSelectedCourseIds([...this.passedCourseIds, Number(id)].sort());
   };
 
   removeCourse = (id) => {
