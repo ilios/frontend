@@ -3,11 +3,12 @@ import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import { component } from 'frontend/tests/pages/components/reports/curriculum/header';
+import a11yAudit from 'ember-a11y-testing/test-support/audit';
 
 module('Integration | Component | reports/curriculum/header', function (hooks) {
   setupRenderingTest(hooks);
 
-  test('it renders for session objectives', async function (assert) {
+  test('it renders for session objectives and is accessible', async function (assert) {
     await render(hbs`<Reports::Curriculum::Header
   @countSelectedCourses={{3}}
   @showReportResults={{false}}
@@ -29,9 +30,11 @@ module('Integration | Component | reports/curriculum/header', function (hooks) {
       ),
     );
     assert.ok(component.runReport.isPresent);
+    await a11yAudit(this.element);
+    assert.ok(true, 'no a11y errors found!');
   });
 
-  test('it renders for learner groups', async function (assert) {
+  test('it renders for learner groups and is accessible', async function (assert) {
     await render(hbs`<Reports::Curriculum::Header
   @countSelectedCourses={{5}}
   @showReportResults={{false}}
@@ -53,6 +56,8 @@ module('Integration | Component | reports/curriculum/header', function (hooks) {
       ),
     );
     assert.ok(component.runReport.isPresent);
+    await a11yAudit(this.element);
+    assert.ok(true, 'no a11y errors found!');
   });
 
   test('it changes selected report', async function (assert) {

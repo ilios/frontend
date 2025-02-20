@@ -2,11 +2,12 @@
   <div class="run">
     <p data-test-run-summary>
       {{#if @countSelectedCourses}}
-        {{t "general.run"}}
         {{#if @showReportResults}}
+          {{t "general.run"}}
           {{this.selectedReport.label}}
         {{else}}
           <label data-test-report-selector>
+            {{t "general.run"}}
             <select {{on "change" this.changeSelectedReport}}>
               {{#each this.reportList as |report|}}
                 <option
@@ -52,7 +53,7 @@
         disabled={{not @countSelectedCourses}}
         data-test-run
       >
-        <FaIcon @icon="play" />
+        <FaIcon @icon="play" @title={{t "general.run"}} />
       </button>
     {{/if}}
   </div>
