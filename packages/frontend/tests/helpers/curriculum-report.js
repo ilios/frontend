@@ -5,14 +5,14 @@ export function buildSchoolsFromData(server) {
     const courseIds = school.courseIds;
     const courses = allCourseData.filter((course) => courseIds.includes(course.id));
     const years = courses.map(({ year }) => year);
-    const uniqueYears = [...new Set(years)].sort().reverse();
+    const uniqueYears = [...new Set(years)].sort().reverse().map(Number);
     return {
       id: school.id,
       title: school.title,
       years: uniqueYears.map((year) => {
         return {
           year,
-          courses: courses.filter((course) => course.year === year),
+          courses: courses.filter((course) => Number(course.year) === year),
         };
       }),
     };
