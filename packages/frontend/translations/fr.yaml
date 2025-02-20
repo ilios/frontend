@@ -480,3 +480,4 @@ errors:
   reportMissingObjectForCompetency: connexion requis quand `compétence` est le sujet
   reportMissingObjectForInstructor: connexion requis quand `instructeur` est le sujet
   reportMissingObjectForMeshTerm: connexion requis quand `terme de MeSH` est le sujet
+  reportMissingProgramYear: Année Diplôme requis

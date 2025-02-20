@@ -3,6 +3,7 @@ import { TrackedAsyncData } from 'ember-async-data';
 import { cached } from '@glimmer/tracking';
 import { service } from '@ember/service';
 import { sortBy } from 'ilios-common/utils/array-helpers';
+import { action } from '@ember/object';
 import { hash } from 'rsvp';
 
 export default class ReportsSubjectNewProgramYearComponent extends Component {
@@ -63,6 +64,16 @@ export default class ReportsSubjectNewProgramYearComponent extends Component {
       return this.args.currentId;
     }
 
-    return this.programYears[0].id;
+    return null;
+  }
+
+  @action
+  updatePrepositionalObjectId(event) {
+    const value = event.target.value;
+    this.args.changeId(value);
+
+    if (!isNaN(value)) {
+      event.target.classList.remove('error');
+    }
   }
 }
