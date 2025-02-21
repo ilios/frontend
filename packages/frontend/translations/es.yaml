@@ -475,8 +475,10 @@ errors:
   reportMissingAcademicYear: Año Academico es Necesario
   reportMissingCompetency: Competencia es Necesario
   reportMissingInstructor: Instructor es Necesario
+  reportMissingInstructorGroup: Grupo de Instructor es Necesario
   reportMissingMeshTerm: Término de MeSH es Necesario
   reportMissingObjectForCompetency: Asociación es Necesario Cuando Competencia es el Sujeto
   reportMissingObjectForInstructor: Asociación es Necesario Cuando Instructor es el Sujeto
+  reportMissingObjectForInstructorGroup: Asociación es Necesario Cuando Grupo de Instructor es el Sujeto
   reportMissingObjectForMeshTerm: Asociación es Necesario Cuando Término de MeSH es el Sujeto
   reportMissingProgramYear: Año Programa es Necesario
