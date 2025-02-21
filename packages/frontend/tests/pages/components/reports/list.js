@@ -2,12 +2,11 @@ import { clickable, create, fillable, isHidden, text } from 'ember-cli-page-obje
 import { hasFocus } from 'ilios-common';
 import table from './table';
 import newSubject from './new-subject';
-import chooser from './choose-new-report';
 
 const definition = {
   filterByTitle: fillable('[data-test-title-filter]'),
   headerTitle: text('[data-test-reports-header-title]'),
-  chooser,
+  toggleNewSubjectReportForm: clickable('[data-test-expand-collapse-button] button'),
   newSubject,
   newReportLink: text('[data-test-newly-saved-report] a'),
   newReportLinkIsHidden: isHidden('[data-test-newly-saved-report] a'),
