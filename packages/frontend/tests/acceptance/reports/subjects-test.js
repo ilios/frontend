@@ -270,6 +270,7 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
     await page.root.list.newSubject.objects.choose('program year');
     await page.root.list.newSubject.prepositionalObjects.choose('2');
     await page.root.list.newSubject.objects.choose('program');
+    await page.root.list.newSubject.prepositionalObjects.choose('1');
 
     await page.root.list.newSubject.save();
     assert.strictEqual(page.root.list.table.reports.length, 3);
