@@ -484,6 +484,8 @@ errors:
   reportMissingObjectForMeshTerm: connexion requis quand `terme de MeSH` est le sujet
   reportMissingObjectForProgram: connexion requis quand `diplôme` est le sujet
   reportMissingObjectForSessionType: connexion requis quand `type de Seance` est le sujet
+  reportMissingObjectForTerm: connexion requis quand `terme` est le sujet
   reportMissingProgram: Diplôme requis
   reportMissingProgramYear: Année Diplôme requis
   reportMissingSessionType: Type de Seance requis
+  reportMissingTerm: Terme requis
