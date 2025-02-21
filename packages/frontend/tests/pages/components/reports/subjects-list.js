@@ -4,7 +4,7 @@ import results from './results';
 import runSubject from './run-subject';
 
 const definition = {
-  scope: '[data-test-reports-root]',
+  scope: '[data-test-reports-subjects-list]',
   list,
   results,
   runSubject,

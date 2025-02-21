@@ -58,11 +58,9 @@ module('Integration | Component | reports/subjects-list', function (hooks) {
   });
 
   test('toggle new report form', async function (assert) {
-    assert.expect(5);
-    this.set('showNewSubjectReportForm', false);
-    this.set('setShowNewSubjectReportForm', (val) => {
-      assert.deepEqual(!this.showNewSubjectReportForm, val);
-      this.set('showNewSubjectReportForm', val);
+    this.set('showNewReportForm', false);
+    this.set('toggleNewReportForm', () => {
+      this.set('showNewReportForm', !this.showNewReportForm);
     });
 
     await render(hbs`<Reports::SubjectsList
@@ -70,13 +68,12 @@ module('Integration | Component | reports/subjects-list', function (hooks) {
   @setSortReportsBy={{(noop)}}
   @titleFilter=''
   @changeTitleFilter={{(noop)}}
-  @showNewSubjectReportForm={{this.showNewSubjectReportForm}}
-  @setShowNewSubjectReportForm={{this.setShowNewSubjectReportForm}}
+  @showNewReportForm={{this.showNewReportForm}}
+  @toggleNewReportForm={{this.toggleNewReportForm}}
   @setRunningSubjectReport={{(noop)}}
 />`);
     assert.notOk(component.newSubject.isVisible);
-    await component.chooser.toggle.click();
-    await component.chooser.subject.click();
+    await component.toggleNewSubjectReportForm();
     assert.ok(component.newSubject.isVisible);
     await component.newSubject.cancel();
     assert.notOk(component.newSubject.isVisible);
