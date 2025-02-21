@@ -99,6 +99,7 @@ general:
   curriculumInventoryReportRolloverSummary: "This action will copy the structure of this report to be used in your target year. It will not copy course information, only the higher level sequence block structure. You will need to add the appropriate course information and modify the sequence block start and end dates once you have rolled over the existing report structure."
   curriculumInventoryReportRolloverSuccess: Report-Rollover Completed Successfully
   curriculumInventoryReports: Curriculum Inventory Reports
+  curriculumReports: Curriculum Reports
   dashboard: Dashboard
   deactivate: Deactivate
   defaultInstructors: Default Instructors
@@ -187,6 +188,7 @@ general:
   lastName: Last Name
   learner: Learner
   learnerAssignments: "{groupTitle} Learner Assignments"
+  learnerGroupsReportSummary: "report for {courseCount, plural, one {one course} other {# courses}}. Each attached learner group is listed along with instructors and course data."
   learnerGroupTitle: Learner Group Title
   learnerGroupTitleFilterPlaceholder: Filter by Learner Group Title
   learnerGroupTitlePlaceholder: Enter a title for this learner group
@@ -352,7 +354,9 @@ general:
   reportTitle: Report Title
   requiredInTrack: Required In Track
   resourceTypes: Resource Types
+  resultsSummary: Results Summary
   root: Root
+  run: Run
   runReport: Run Report
   sampleFile: Sample File
   saved: New User Saved Successfully
@@ -364,6 +368,7 @@ general:
   select: Select
   selectAcademicYear: Select Academic Year
   selectAllOrNone: Select All or None
+  selectCoursesToRunReport: Select Courses to Run Report
   selected: Selected
   selectPolite: (please select one)
   selectProgram: Select a Program
@@ -378,6 +383,8 @@ general:
   sequenceBlockTitlePlaceholder: Please enter a title for this sequence block.
   sequenceNumber: "Sequence #"
   sessionAttributes: Session Attributes
+  sessionObjectives: Session Objectives
+  sessionObjectivesReportSummary: "report for {courseCount, plural, one {one course} other {# courses}}. Each session objective is listed along with instructors and course data."
   sessionTitlePlaceholder: Enter a title for this session
   sessionTypeConfirmRemoval: Are you sure you want to delete this session type? This action cannot be undone.
   showResultsFor: Show Results For

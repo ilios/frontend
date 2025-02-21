@@ -1,0 +1,66 @@
+<div class="reports-choose-course" data-test-reports-curriculum-choose-course>
+  <div class="schools" data-test-schools>
+    <FaIcon @icon="building-columns" />
+    {{#if (gt this.filteredSchools.length 1)}}
+      <select
+        aria-label={{t "general.filterBySchool"}}
+        {{on "change" (pick "target.value" (set this "selectedSchoolId"))}}
+      >
+        {{#each (sort-by "title" this.filteredSchools) as |school|}}
+          <option value={{school.id}} selected={{eq school.id this.bestSelectedSchoolId}}>
+            {{school.title}}
+          </option>
+        {{/each}}
+      </select>
+    {{else}}
+      {{this.selectedSchool.title}}
+    {{/if}}
+  </div>
+  {{#each this.selectedSchool.years as |y|}}
+    <ul class="year {{if (eq y.year this.expandedYear) 'expanded' 'collapsed'}}" data-test-year>
+      <li>
+        <button
+          type="button"
+          aria-expanded={{if (eq y.year this.expandedYear) "true" "false"}}
+          {{on "click" (fn this.toggleYear y.year)}}
+          data-test-expand
+        >
+          {{y.year}}
+          <FaIcon @icon={{if (eq y.year this.expandedYear) "caret-down" "caret-right"}} />
+        </button>
+        {{#if (eq y.year this.expandedYear)}}
+          <ul class="courses" data-test-courses>
+            <li>
+              <label class="select-all">
+                <input
+                  type="checkbox"
+                  checked={{this.hasAllExpandedYearCourses}}
+                  indeterminate={{this.hasSomeExpandedYearCourses}}
+                  {{on "click" this.toggleAllExpandedYearCourseSelection}}
+                  disabled={{eq y.courses.length 0}}
+                  data-test-toggle-all
+                />
+                {{t "general.selectAllOrNone"}}
+              </label>
+            </li>
+            {{#each (sort-by "title" y.courses) as |c|}}
+              <li data-test-course>
+                <label>
+                  <input
+                    type="checkbox"
+                    checked={{includes c.id @selectedCourseIds}}
+                    {{on "click" (fn (if (includes c.id @selectedCourseIds) @remove @add) c.id)}}
+                  />
+                  {{c.title}}
+                  {{#if c.externalId}}
+                    ({{c.externalId}})
+                  {{/if}}
+                </label>
+              </li>
+            {{/each}}
+          </ul>
+        {{/if}}
+      </li>
+    </ul>
+  {{/each}}
+</div>

@@ -5,7 +5,7 @@
 >
   <td class="text-left" data-test-report-title>
     {{#if (eq @decoratedReport.type "subject")}}
-      <LinkTo @route="subject-report" @model={{@decoratedReport.report}}>
+      <LinkTo @route="reports.subject" @model={{@decoratedReport.report}}>
         {{@decoratedReport.title}}
       </LinkTo>
     {{/if}}

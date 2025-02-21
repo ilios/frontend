@@ -139,11 +139,16 @@
 @forward "components/curriculum-inventory/verification-preview-table7";
 @forward "components/curriculum-inventory/verification-preview-table8";
 
+@forward "components/reports/choose-course";
+@forward "components/reports/curriculum";
+@forward "components/reports/curriculum-header";
+@forward "components/reports/curriculum-loading";
 @forward "components/reports/new-subject";
+@forward "components/reports/switcher";
 @forward "components/reports/subject";
 @forward "components/reports/subject-header";
 @forward "components/reports/subjects";
-@forward "components/reports/root";
+@forward "components/reports/subjects-list";
 @forward "components/reports/list-loading";
 
 @forward "components/school/session-type-visualize-vocabularies";
