@@ -482,4 +482,6 @@ errors:
   reportMissingObjectForInstructor: connexion requis quand `instructeur` est le sujet
   reportMissingObjectForInstructorGroup: connexion requis quand `groupe des instructeurs` est le sujet
   reportMissingObjectForMeshTerm: connexion requis quand `terme de MeSH` est le sujet
+  reportMissingObjectForSessionType: connexion requis quand `type de Seance` est le sujet
   reportMissingProgramYear: Année Diplôme requis
+  reportMissingSessionType: Type de Seance requis

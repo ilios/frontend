@@ -1,46 +1,50 @@
 import Component from '@glimmer/component';
 import { TrackedAsyncData } from 'ember-async-data';
+import { action } from '@ember/object';
 import { cached } from '@glimmer/tracking';
 import { service } from '@ember/service';
-import { task, timeout } from 'ember-concurrency';
 import { sortBy } from 'ilios-common/utils/array-helpers';
 
 export default class ReportsSubjectNewSessionTypeComponent extends Component {
   @service store;
 
   @cached
-  get allSessionTypes() {
+  get sessionTypesData() {
     return new TrackedAsyncData(this.store.findAll('session-type'));
   }
 
-  get isLoaded() {
-    return this.allSessionTypes.isResolved;
+  get sessionTypes() {
+    return this.sessionTypesData.isResolved ? this.sessionTypesData.value : [];
   }
 
   get filteredSessionTypes() {
     if (this.args.school) {
-      return this.allSessionTypes.value.filter(
-        (st) => st.belongsTo('school').id() === this.args.school.id,
-      );
+      return this.sessionTypes.filter((st) => st.belongsTo('school').id() === this.args.school.id);
     }
 
-    return this.allSessionTypes.value;
+    return this.sessionTypes;
   }
 
   get sortedSessionTypes() {
     return sortBy(this.filteredSessionTypes, 'title');
   }
 
-  setInitialValue = task(async () => {
-    await timeout(1); //wait a moment so we can render before setting
-    const ids = this.sortedSessionTypes.map(({ id }) => id);
+  get bestSelectedSessionType() {
+    const ids = this.sessionTypes.map(({ id }) => id);
     if (ids.includes(this.args.currentId)) {
-      return;
+      return this.args.currentId;
     }
-    if (!this.sortedSessionTypes.length) {
-      this.args.changeId(null);
-    } else {
-      this.args.changeId(this.sortedSessionTypes[0].id);
+
+    return null;
+  }
+
+  @action
+  updatePrepositionalObjectId(event) {
+    const value = event.target.value;
+    this.args.changeId(value);
+
+    if (!isNaN(value)) {
+      event.target.classList.remove('error');
     }
-  });
+  }
 }
