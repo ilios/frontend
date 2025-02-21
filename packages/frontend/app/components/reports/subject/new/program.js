@@ -1,46 +1,50 @@
 import Component from '@glimmer/component';
 import { TrackedAsyncData } from 'ember-async-data';
+import { action } from '@ember/object';
 import { cached } from '@glimmer/tracking';
 import { service } from '@ember/service';
-import { task, timeout } from 'ember-concurrency';
 import { sortBy } from 'ilios-common/utils/array-helpers';
 
 export default class ReportsSubjectNewProgramComponent extends Component {
   @service store;
 
   @cached
-  get allPrograms() {
+  get allProgramsData() {
     return new TrackedAsyncData(this.store.findAll('program'));
   }
 
-  get isLoaded() {
-    return this.allPrograms.isResolved;
+  get allPrograms() {
+    return this.allProgramsData.isResolved ? this.allProgramsData.value : [];
   }
 
   get filteredPrograms() {
     if (this.args.school) {
-      return this.allPrograms.value.filter(
-        (c) => c.belongsTo('school').id() === this.args.school.id,
-      );
+      return this.allPrograms.filter((c) => c.belongsTo('school').id() === this.args.school.id);
     }
 
-    return this.allPrograms.value;
+    return this.allPrograms;
   }
 
   get sortedPrograms() {
     return sortBy(this.filteredPrograms, 'title');
   }
 
-  setInitialValue = task(async () => {
-    await timeout(1); //wait a moment so we can render before setting
+  get bestSelectedProgram() {
     const ids = this.sortedPrograms.map(({ id }) => id);
     if (ids.includes(this.args.currentId)) {
-      return;
+      return this.args.currentId;
     }
-    if (!this.sortedPrograms.length) {
-      this.args.changeId(null);
-    } else {
-      this.args.changeId(this.sortedPrograms[0].id);
+
+    return null;
+  }
+
+  @action
+  updatePrepositionalObjectId(event) {
+    const value = event.target.value;
+    this.args.changeId(value);
+
+    if (!isNaN(value)) {
+      event.target.classList.remove('error');
     }
-  });
+  }
 }

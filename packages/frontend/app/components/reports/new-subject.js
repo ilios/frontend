@@ -344,6 +344,7 @@ export default class ReportsNewSubjectComponent extends Component {
         'academic year',
         'competency',
         'instructor-group',
+        'program',
         'program year',
         'session-type',
       ];
@@ -390,6 +391,8 @@ export default class ReportsNewSubjectComponent extends Component {
           return this.intl.t('errors.reportMissingInstructorGroup');
         case 'mesh term':
           return this.intl.t('errors.reportMissingMeshTerm');
+        case 'program':
+          return this.intl.t('errors.reportMissingProgram');
         case 'program year':
           return this.intl.t('errors.reportMissingProgramYear');
         case 'session type':
@@ -420,6 +423,8 @@ export default class ReportsNewSubjectComponent extends Component {
           return this.intl.t('errors.reportMissingObjectForInstructorGroup');
         case 'mesh term':
           return this.intl.t('errors.reportMissingObjectForMeshTerm');
+        case 'program':
+          return this.intl.t('errors.reportMissingObjectForProgram');
         case 'program year':
           return this.intl.t('errors.reportMissingObjectForProgramYear');
         case 'session type':
