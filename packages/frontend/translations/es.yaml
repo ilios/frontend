@@ -479,3 +479,4 @@ errors:
   reportMissingObjectForCompetency: Asociación es Necesario Cuando Competencia es el Sujeto
   reportMissingObjectForInstructor: Asociación es Necesario Cuando Instructor es el Sujeto
   reportMissingObjectForMeshTerm: Asociación es Necesario Cuando Término de MeSH es el Sujeto
+  reportMissingProgramYear: Año Programa es Necesario

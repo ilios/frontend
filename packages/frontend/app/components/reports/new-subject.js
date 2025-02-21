@@ -339,7 +339,7 @@ export default class ReportsNewSubjectComponent extends Component {
     this.addErrorDisplaysFor(['title', 'prepositionalObject', 'prepositionalObjectId']);
     const isValid = await this.isValid();
     if (!isValid) {
-      const dropdownObjectTypes = ['academic year', 'competency'];
+      const dropdownObjectTypes = ['academic year', 'competency', 'program year'];
 
       if (dropdownObjectTypes.includes(this.prepositionalObject) && !this.prepositionalObjectId) {
         const select = document.querySelector('select[data-test-prepositional-objects]');
@@ -381,6 +381,8 @@ export default class ReportsNewSubjectComponent extends Component {
           return this.intl.t('errors.reportMissingInstructor');
         case 'mesh term':
           return this.intl.t('errors.reportMissingMeshTerm');
+        case 'program year':
+          return this.intl.t('errors.reportMissingProgramYear');
       }
     }
   }
@@ -405,6 +407,8 @@ export default class ReportsNewSubjectComponent extends Component {
           return this.intl.t('errors.reportMissingObjectForInstructor');
         case 'mesh term':
           return this.intl.t('errors.reportMissingObjectForMeshTerm');
+        case 'program year':
+          return this.intl.t('errors.reportMissingObjectForProgramYear');
       }
     }
   }
