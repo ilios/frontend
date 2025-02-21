@@ -481,5 +481,6 @@ errors:
   reportMissingObjectForInstructor: Association is required when Instructor is the subject
   reportMissingObjectForInstructorGroup: Association is required when Instructor Group is the subject
   reportMissingObjectForMeshTerm: Association is required when MeSH Term is the subject
+  reportMissingObjectForSessionType: Association is required when Session Type is the subject
   reportMissingProgramYear: Program Year is Required
   reportMissingSessionType: Session Type is Required

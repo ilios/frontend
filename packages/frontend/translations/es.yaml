@@ -481,5 +481,6 @@ errors:
   reportMissingObjectForInstructor: Asociación es Necesario Cuando Instructor es el Sujeto
   reportMissingObjectForInstructorGroup: Asociación es Necesario Cuando Grupo de Instructor es el Sujeto
   reportMissingObjectForMeshTerm: Asociación es Necesario Cuando Término de MeSH es el Sujeto
+  reportMissingObjectForSessionType: Asociación es Necesario Cuando Tipo de Sesión es el Sujeto
   reportMissingProgramYear: Año Programa es Necesario
   reportMissingSessionType: Tipo de Sesión es Necesario
