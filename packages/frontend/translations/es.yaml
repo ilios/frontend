@@ -483,6 +483,8 @@ errors:
   reportMissingObjectForMeshTerm: Asociación es Necesario Cuando Término de MeSH es el Sujeto
   reportMissingObjectForProgram: Asociación es Necesario Cuando Programs es el Sujecto
   reportMissingObjectForSessionType: Asociación es Necesario Cuando Tipo de Sesión es el Sujeto
+  reportMissingObjectForTerm: Asociación es Necesario Cuando Término es el Sujeto
   reportMissingProgram: Programa es Necesario
   reportMissingProgramYear: Año Programa es Necesario
   reportMissingSessionType: Tipo de Sesión es Necesario
+  reportMissingTerm: Término es Necesario

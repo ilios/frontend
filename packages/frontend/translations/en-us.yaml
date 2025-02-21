@@ -483,6 +483,8 @@ errors:
   reportMissingObjectForMeshTerm: Association is required when MeSH Term is the subject
   reportMissingObjectForProgram: Association is required when Program is the subject
   reportMissingObjectForSessionType: Association is required when Session Type is the subject
+  reportMissingObjectForTerm: Association is required when Term is the subject
   reportMissingProgram: Program is Required
   reportMissingProgramYear: Program Year is Required
   reportMissingSessionType: Session Type is Required
+  reportMissingTerm: Term is Required

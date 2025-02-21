@@ -1,8 +1,8 @@
 import Component from '@glimmer/component';
 import { TrackedAsyncData } from 'ember-async-data';
+import { action } from '@ember/object';
 import { cached } from '@glimmer/tracking';
 import { service } from '@ember/service';
-import { task, timeout } from 'ember-concurrency';
 import { sortBy } from 'ilios-common/utils/array-helpers';
 import { hash } from 'rsvp';
 
@@ -10,7 +10,7 @@ export default class ReportsSubjectNewProgramYearComponent extends Component {
   @service store;
 
   @cached
-  get data() {
+  get allTermsData() {
     return new TrackedAsyncData(
       hash({
         terms: this.store.findAll('term'),
@@ -19,18 +19,14 @@ export default class ReportsSubjectNewProgramYearComponent extends Component {
     );
   }
 
-  get terms() {
-    return this.data.value.terms;
-  }
-
-  get isLoaded() {
-    return this.data.isResolved;
+  get allTerms() {
+    return this.allTermsData.isResolved ? this.allTermsData.value : [];
   }
 
   get mappedTerms() {
-    return this.data.value.terms.map((term) => {
+    return this.allTerms.terms.map((term) => {
       const vocabularyId = term.belongsTo('vocabulary').id();
-      const vocabulary = this.data.value.vocabularies.find(({ id }) => id === vocabularyId);
+      const vocabulary = this.allTerms.vocabularies.find(({ id }) => id === vocabularyId);
       const schoolId = vocabulary.belongsTo('school').id();
       const title = [...this.getParentTitlesForTerm(term), term.title].join(' > ');
       return {
@@ -47,7 +43,7 @@ export default class ReportsSubjectNewProgramYearComponent extends Component {
     if (!pId) {
       return [];
     }
-    const parent = this.terms.find((t) => t.id === pId);
+    const parent = this.allTerms.terms.find((t) => t.id === pId);
 
     return [...this.getParentTitlesForTerm(parent), parent.title];
   }
@@ -64,16 +60,22 @@ export default class ReportsSubjectNewProgramYearComponent extends Component {
     return sortBy(this.filteredTerms, ['vocabulary.title', 'title']);
   }
 
-  setInitialValue = task(async () => {
-    await timeout(1); //wait a moment so we can render before setting
+  get bestSelectedTerm() {
     const ids = this.sortedTerms.map(({ term }) => term.id);
     if (ids.includes(this.args.currentId)) {
-      return;
+      return this.args.currentId;
     }
-    if (!this.sortedTerms.length) {
-      this.args.changeId(null);
-    } else {
-      this.args.changeId(this.sortedTerms[0].term.id);
+
+    return null;
+  }
+
+  @action
+  updatePrepositionalObjectId(event) {
+    const value = event.target.value;
+    this.args.changeId(value);
+
+    if (!isNaN(value)) {
+      event.target.classList.remove('error');
     }
-  });
+  }
 }
