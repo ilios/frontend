@@ -1,9 +1,11 @@
 import { create, visitable } from 'ember-cli-page-object';
-// import root from './components/reports/root';
+import subjects from './components/reports/subjects-list';
+import switcher from './components/reports/switcher';
 
 const page = {
   visit: visitable('/reports'),
-  // root,
+  switcher,
+  subjects,
 };
 
 export default create(page);
