@@ -347,6 +347,7 @@ export default class ReportsNewSubjectComponent extends Component {
         'program',
         'program year',
         'session-type',
+        'term',
       ];
 
       if (dropdownObjectTypes.includes(this.prepositionalObject) && !this.prepositionalObjectId) {
@@ -397,6 +398,8 @@ export default class ReportsNewSubjectComponent extends Component {
           return this.intl.t('errors.reportMissingProgramYear');
         case 'session type':
           return this.intl.t('errors.reportMissingSessionType');
+        case 'term':
+          return this.intl.t('errors.reportMissingTerm');
       }
     }
   }
@@ -429,6 +432,8 @@ export default class ReportsNewSubjectComponent extends Component {
           return this.intl.t('errors.reportMissingObjectForProgramYear');
         case 'session type':
           return this.intl.t('errors.reportMissingObjectForSessionType');
+        case 'term':
+          return this.intl.t('errors.reportMissingObjectForTerm');
       }
     }
   }
