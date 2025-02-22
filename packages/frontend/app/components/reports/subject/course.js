@@ -74,15 +74,38 @@ export default class ReportsSubjectCourseComponent extends Component {
       rhett.push(`schools: [${school.id}]`);
     }
     if (prepositionalObject && prepositionalObjectTableRowId) {
-      let what = pluralize(camelize(prepositionalObject));
       if (prepositionalObject === 'mesh term') {
-        what = 'meshDescriptors';
-        prepositionalObjectTableRowId = `"${prepositionalObjectTableRowId}"`;
+        const courseIds = await this.getCourseIdsForMeshDescriptor(prepositionalObjectTableRowId);
+        rhett.push(`ids: [${courseIds.join(', ')}]`);
+      } else {
+        const what = pluralize(camelize(prepositionalObject));
+        rhett.push(`${what}: [${prepositionalObjectTableRowId}]`);
       }
-      rhett.push(`${what}: [${prepositionalObjectTableRowId}]`);
     }
 
     return rhett;
+  }
+
+  async getCourseIdsForMeshDescriptor(meshDescriptorId) {
+    const parts = [
+      'courses { id }',
+      'courseObjectives { course { id } }',
+      'sessions { course { id } }',
+      'sessionObjectives { session { course { id } } }',
+    ];
+    const result = await this.graphql.find(
+      'meshDescriptors',
+      [`id: "${meshDescriptorId}"`],
+      parts.join(', '),
+    );
+    const { courses, courseObjectives, sessions, sessionObjectives } =
+      result.data.meshDescriptors[0];
+    return [
+      ...courses.map((course) => course.id),
+      ...courseObjectives.map((objective) => objective.course.id),
+      ...sessions.map((session) => session.course.id),
+      ...sessionObjectives.map((objective) => objective.session.course.id),
+    ].sort();
   }
 
   async getReportResults(subject, prepositionalObject, prepositionalObjectTableRowId, school) {
