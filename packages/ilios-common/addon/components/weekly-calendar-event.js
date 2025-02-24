@@ -4,9 +4,18 @@ import colorChange from 'ilios-common/utils/color-change';
 import { htmlSafe } from '@ember/template';
 import calendarEventTooltip from 'ilios-common/utils/calendar-event-tooltip';
 import { service } from '@ember/service';
+import { guidFor } from '@ember/object/internals';
 
 export default class WeeklyCalendarEventComponent extends Component {
   @service intl;
+
+  get eventButtonId() {
+    return `weekly-calendar-event-button-${guidFor(this)}`;
+  }
+
+  get eventButtonElement() {
+    return document.getElementById(this.eventButtonId);
+  }
 
   get minutes() {
     const allMinutesInDay = Array(60 * 24).fill(0);

@@ -4,13 +4,13 @@
   class="weekly-calendar-event day-{{@day}} {{if this.isIlm "ilm"}} {{if this.clickable "clickable"}}"
   type="button"
   {{on "click" (if this.clickable @selectEvent (noop))}}
-  {{did-insert (set this "theElement")}}
+  id={{this.eventButtonId}}
   {{mouse-hover-toggle (set this "showTooltip")}}
   data-test-calendar-event
   data-test-weekly-calendar-event
 >
-  {{#if (and this.theElement this.showTooltip)}}
-    <IliosTooltip @target={{this.theElement}} data-test-ilios-calendar-event-tooltip>
+  {{#if this.showTooltip}}
+    <IliosTooltip @target={{this.eventButtonElement}} data-test-ilios-calendar-event-tooltip>
       {{this.tooltipContent}}
     </IliosTooltip>
   {{/if}}
