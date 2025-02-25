@@ -106,4 +106,84 @@ module('Integration | Component | reports/subject/mesh-term', function (hooks) {
   @school={{this.school}}
 />`);
   });
+  test('filter by course', async function (assert) {
+    assert.expect(2);
+    let graphQueryCounter = 0;
+    this.server.post('api/graphql', function (schema, { requestBody }) {
+      graphQueryCounter++;
+      const { query } = JSON.parse(requestBody);
+      let rhett;
+      switch (graphQueryCounter) {
+        case 1:
+          assert.strictEqual(
+            query,
+            'query { courses(id: 11) { meshDescriptors { id }, learningMaterials { meshDescriptors { id } }, courseObjectives { meshDescriptors { id } }, sessions { meshDescriptors { id }, sessionObjectives { meshDescriptors { id } }, learningMaterials { meshDescriptors { id } }} } }',
+          );
+          rhett = {
+            data: {
+              courses: [
+                {
+                  meshDescriptors: [{ id: 'a' }, { id: 'b' }, { id: 'c' }],
+                  courseObjectives: [
+                    { meshDescriptors: [{ id: 'd' }] },
+                    { meshDescriptors: [{ id: 'b' }] },
+                  ],
+                  learningMaterials: [
+                    { meshDescriptors: [{ id: 'e' }] },
+                    { meshDescriptors: [{ id: 'c' }] },
+                  ],
+                  sessions: [
+                    {
+                      meshDescriptors: [{ id: 'f' }, { id: 'g' }, { id: 'b' }],
+                      sessionObjectives: [
+                        { meshDescriptors: [{ id: 'h' }] },
+                        { meshDescriptors: [{ id: 'e' }] },
+                      ],
+                      learningMaterials: [
+                        { meshDescriptors: [{ id: 'i' }] },
+                        { meshDescriptors: [{ id: 'c' }] },
+                      ],
+                    },
+                    {
+                      meshDescriptors: [{ id: 'j' }, { id: 'i' }, { id: 'k' }],
+                      sessionObjectives: [
+                        { meshDescriptors: [{ id: 'l' }] },
+                        { meshDescriptors: [{ id: 'd' }] },
+                      ],
+                      learningMaterials: [
+                        { meshDescriptors: [{ id: 'f' }] },
+                        { meshDescriptors: [{ id: 'm' }] },
+                      ],
+                    },
+                  ],
+                },
+              ],
+            },
+          };
+          break;
+        case 2:
+          assert.strictEqual(
+            query,
+            'query { meshDescriptors(ids: ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m"]) { id, name } }',
+          );
+          rhett = responseData;
+          break;
+        default:
+          assert.ok(false, 'too many queries');
+      }
+
+      return rhett;
+    });
+    const { id } = this.server.create('report', {
+      subject: 'mesh term',
+      prepositionalObject: 'course',
+      prepositionalObjectTableRowId: 11,
+    });
+    this.set('report', await this.owner.lookup('service:store').findRecord('report', id));
+    await render(hbs`<Reports::Subject::MeshTerm
+  @subject={{this.report.subject}}
+  @prepositionalObject={{this.report.prepositionalObject}}
+  @prepositionalObjectTableRowId={{this.report.prepositionalObjectTableRowId}}
+/>`);
+  });
 });

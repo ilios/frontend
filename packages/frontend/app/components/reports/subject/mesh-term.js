@@ -38,11 +38,50 @@ export default class ReportsSubjectMeshTermComponent extends Component {
       filters.push(`schools: [${school.id}]`);
     }
     if (prepositionalObject && prepositionalObjectTableRowId) {
-      const what = pluralize(camelize(prepositionalObject));
-      filters.push(`${what}: [${prepositionalObjectTableRowId}]`);
+      if (prepositionalObject === 'course') {
+        const ids = await this.getMeshIdsForCourse(prepositionalObjectTableRowId);
+        filters.push(`ids: [${ids.join(', ')}]`);
+      } else {
+        const what = pluralize(camelize(prepositionalObject));
+        filters.push(`${what}: [${prepositionalObjectTableRowId}]`);
+      }
     }
     const result = await this.graphql.find('meshDescriptors', filters, 'id, name');
     return result.data.meshDescriptors.map(({ name }) => name);
+  }
+
+  async getMeshIdsForCourse(courseId) {
+    const attributes = [
+      'meshDescriptors { id }',
+      'learningMaterials { meshDescriptors { id } }',
+      'courseObjectives { meshDescriptors { id } }',
+      'sessions { meshDescriptors { id }, sessionObjectives { meshDescriptors { id } }, learningMaterials { meshDescriptors { id } }}',
+    ];
+    const results = await this.graphql.find('courses', [`id: ${courseId}`], attributes.join(', '));
+    const course = results.data.courses[0];
+    const sessionMeshDescriptors = course.sessions.reduce((acc, session) => {
+      return [
+        ...acc,
+        ...session.meshDescriptors.map(({ id }) => id),
+        ...session.sessionObjectives
+          .map(({ meshDescriptors }) => meshDescriptors.map(({ id }) => id))
+          .flat(),
+        ...session.learningMaterials
+          .map(({ meshDescriptors }) => meshDescriptors.map(({ id }) => id))
+          .flat(),
+      ];
+    }, []);
+    const ids = [
+      ...course.meshDescriptors.map(({ id }) => id),
+      ...course.courseObjectives
+        .map(({ meshDescriptors }) => meshDescriptors.map(({ id }) => id))
+        .flat(),
+      ...course.learningMaterials
+        .map(({ meshDescriptors }) => meshDescriptors.map(({ id }) => id))
+        .flat(),
+      ...sessionMeshDescriptors,
+    ];
+    return [...new Set(ids)].sort().map((id) => `"${id}"`);
   }
 
   @action
