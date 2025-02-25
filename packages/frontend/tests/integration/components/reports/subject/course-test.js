@@ -216,9 +216,9 @@ module('Integration | Component | reports/subject/course', function (hooks) {
             data: {
               meshDescriptors: [
                 {
-                  courses: [{ id: 1 }, { id: 3 }, { id: 5 }],
+                  courses: [{ id: 1 }, { id: 3 }, { id: 5 }, { id: 1 }],
                   courseObjectives: [{ course: { id: 2 } }],
-                  sessions: [{ course: { id: 4 } }],
+                  sessions: [{ course: { id: 4 } }, { course: { id: 3 } }],
                   sessionObjectives: [{ session: { course: { id: 6 } } }],
                 },
               ],

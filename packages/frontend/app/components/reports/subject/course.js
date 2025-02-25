@@ -100,12 +100,14 @@ export default class ReportsSubjectCourseComponent extends Component {
     );
     const { courses, courseObjectives, sessions, sessionObjectives } =
       result.data.meshDescriptors[0];
-    return [
+    const ids = [
       ...courses.map((course) => course.id),
       ...courseObjectives.map((objective) => objective.course.id),
       ...sessions.map((session) => session.course.id),
       ...sessionObjectives.map((objective) => objective.session.course.id),
-    ].sort();
+    ];
+
+    return [...new Set(ids)].sort();
   }
 
   async getReportResults(subject, prepositionalObject, prepositionalObjectTableRowId, school) {
