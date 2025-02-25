@@ -1,7 +1,6 @@
 import { service } from '@ember/service';
 import Component from '@glimmer/component';
 import { cached, tracked } from '@glimmer/tracking';
-import { dropTask } from 'ember-concurrency';
 import sortableByPosition from 'ilios-common/utils/sortable-by-position';
 import { TrackedAsyncData } from 'ember-async-data';
 
@@ -11,7 +10,19 @@ export default class PrintCourseComponent extends Component {
 
   @tracked sortTitle;
   @tracked sortDirectorsBy;
-  @tracked academicYearCrossesCalendarYearBoundaries = false;
+
+  @cached
+  get academicYearCrossesCalendarYearBoundariesData() {
+    return new TrackedAsyncData(
+      this.iliosConfig.itemFromConfig('academicYearCrossesCalendarYearBoundaries'),
+    );
+  }
+
+  get academicYearCrossesCalendarYearBoundaries() {
+    return this.academicYearCrossesCalendarYearBoundariesData.isResolved
+      ? this.academicYearCrossesCalendarYearBoundariesData.value
+      : false;
+  }
 
   @cached
   get competenciesData() {
@@ -68,12 +79,6 @@ export default class PrintCourseComponent extends Component {
   get terms() {
     return this.termsData.isResolved ? this.termsData.value : [];
   }
-
-  load = dropTask(async () => {
-    this.academicYearCrossesCalendarYearBoundaries = await this.iliosConfig.itemFromConfig(
-      'academicYearCrossesCalendarYearBoundaries',
-    );
-  });
 
   get courseLearningMaterials() {
     if (!this.courseLearningMaterialsRelationship) {

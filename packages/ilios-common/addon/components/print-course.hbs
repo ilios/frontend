@@ -1,9 +1,4 @@
-<section
-  class="print-course"
-  {{did-insert (perform this.load)}}
-  {{did-update (perform this.load) @course.sessions @course.learningMaterials}}
-  ...attributes
->
+<section class="print-course" ...attributes>
   {{#let (unique-id) as |templateId|}}
     <div class="header" data-test-course-header>
       <h2 data-test-course-title>
