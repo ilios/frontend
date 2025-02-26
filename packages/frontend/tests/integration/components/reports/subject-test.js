@@ -73,7 +73,7 @@ module('Integration | Component | reports/subject', function (hooks) {
     assert.strictEqual(component.title.text, 'my report 0');
     assert.strictEqual(
       component.description,
-      'This report shows all Courses associated with Instructor "0 guy M. Mc0son" in school 0.',
+      'This report shows all Courses associated with Instructor "0 guy M. Mc0son" in school 0. (2)',
     );
     assert.strictEqual(component.results.length, 2);
     assert.strictEqual(component.results[0].text, '2015 course 0');
@@ -125,7 +125,7 @@ module('Integration | Component | reports/subject', function (hooks) {
 />`);
     assert.strictEqual(
       component.description,
-      'This report shows all Courses associated with Program "program 0" in school 0.',
+      'This report shows all Courses associated with Program "program 0" in school 0. (1)',
     );
     assert.strictEqual(component.results[0].text, '2016 - 2017 course 0');
     this.set('selectedYear', year);
@@ -165,7 +165,7 @@ module('Integration | Component | reports/subject', function (hooks) {
   @year={{this.selectedYear}}
   @changeYear={{this.setReportYear}}
 />`);
-    assert.strictEqual(component.description, 'This report shows all Courses in school 0.');
+    assert.strictEqual(component.description, 'This report shows all Courses in school 0. (1)');
     assert.strictEqual(component.academicYears.value, '');
     assert.strictEqual(component.results.length, 1);
     await component.academicYears.choose('2015');
