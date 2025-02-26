@@ -111,7 +111,7 @@ export default class ReportsCurriculumLearnerGroupsComponent extends Component {
             year: c.year,
             sessionTitle: s.title,
             firstOfferingDate: firstOfferingDate
-              ? DateTime.fromISO(firstOfferingDate).toLocaleString(this.intl.primarlyLocale)
+              ? DateTime.fromISO(firstOfferingDate).toLocaleString(this.intl.primaryLocale)
               : '',
             instructors: s.instructors,
             title,

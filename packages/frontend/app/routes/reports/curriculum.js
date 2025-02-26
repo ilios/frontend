@@ -21,7 +21,7 @@ export default class ReportsCurriculumRoute extends Route {
   async model() {
     const schools = await this.store.findAll('school');
     const threeYearsAgo = DateTime.now().year - 3;
-    // Limit query to surounding years
+    // Limit query to surrounding years
     const years = [...Array(7).keys()].map((i) => threeYearsAgo + i);
     const result = await this.graphql.find(
       'courses',
