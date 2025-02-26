@@ -4,7 +4,7 @@ import PapaParse from 'papaparse';
 import { dropTask, timeout } from 'ember-concurrency';
 import createDownloadFile from 'frontend/utils/create-download-file';
 import { DateTime } from 'luxon';
-import { cached } from '@glimmer/tracking';
+import { cached, tracked } from '@glimmer/tracking';
 import { TrackedAsyncData } from 'ember-async-data';
 import { chunk, uniqueById } from 'ilios-common/utils/array-helpers';
 
@@ -13,6 +13,7 @@ export default class ReportsCurriculumLearnerGroupsComponent extends Component {
   @service intl;
   @service graphql;
   @service reporting;
+  @tracked finishedBuildingReport = false;
 
   @cached
   get queryPromises() {
