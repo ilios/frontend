@@ -40,7 +40,7 @@ export default class ReportsSubjectMeshTermComponent extends Component {
     if (prepositionalObject && prepositionalObjectTableRowId) {
       if (prepositionalObject === 'course') {
         const ids = await this.getMeshIdsForCourse(prepositionalObjectTableRowId);
-        filters.push(`ids: [${ids.join(', ')}]`);
+        filters = [`ids: [${ids.join(', ')}]`]; //drop school filter, a course is only in one school
       } else {
         const what = pluralize(camelize(prepositionalObject));
         filters.push(`${what}: [${prepositionalObjectTableRowId}]`);
