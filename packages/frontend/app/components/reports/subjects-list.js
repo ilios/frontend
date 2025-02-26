@@ -5,7 +5,7 @@ import { dropTask, restartableTask } from 'ember-concurrency';
 import { TrackedAsyncData } from 'ember-async-data';
 import { action } from '@ember/object';
 
-export default class ReportsListComponent extends Component {
+export default class ReportsSubjectsListComponent extends Component {
   @service store;
   @service currentUser;
   @service reporting;
@@ -134,8 +134,8 @@ export default class ReportsListComponent extends Component {
   );
 
   @action
-  toggleNewReportForm() {
+  createNewReport(type) {
     this.args.setRunningSubjectReport(null);
-    this.args.toggleNewReportForm;
+    this.args[`setShowNew${type}ReportForm`](true);
   }
 }

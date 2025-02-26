@@ -7,7 +7,7 @@ import { setupAuthentication } from 'ilios-common';
 import { component } from 'frontend/tests/pages/components/reports/list';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
 
-module('Integration | Component | reports/list', function (hooks) {
+module('Integration | Component | reports/subjects-list', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
@@ -27,7 +27,7 @@ module('Integration | Component | reports/list', function (hooks) {
       user: this.user,
     });
 
-    await render(hbs`<Reports::List
+    await render(hbs`<Reports::SubjectsList
   @sortReportsBy='title'
   @setSortReportsBy={{(noop)}}
   @titleFilter=''
@@ -45,7 +45,7 @@ module('Integration | Component | reports/list', function (hooks) {
   });
 
   test('it renders empty', async function (assert) {
-    await render(hbs`<Reports::Root
+    await render(hbs`<Reports::SubjectsList
   @sortReportsBy='title'
   @setSortReportsBy={{(noop)}}
   @titleFilter=''
@@ -63,18 +63,19 @@ module('Integration | Component | reports/list', function (hooks) {
       this.set('showNewReportForm', !this.showNewReportForm);
     });
 
-    await render(hbs`<Reports::Root
+    await render(hbs`<Reports::SubjectsList
   @sortReportsBy='title'
   @setSortReportsBy={{(noop)}}
   @titleFilter=''
   @changeTitleFilter={{(noop)}}
   @showNewReportForm={{this.showNewReportForm}}
   @toggleNewReportForm={{this.toggleNewReportForm}}
+  @setRunningSubjectReport={{(noop)}}
 />`);
     assert.notOk(component.newSubject.isVisible);
     await component.toggleNewSubjectReportForm();
     assert.ok(component.newSubject.isVisible);
-    await component.toggleNewSubjectReportForm();
+    await component.newSubject.cancel();
     assert.notOk(component.newSubject.isVisible);
   });
 });
