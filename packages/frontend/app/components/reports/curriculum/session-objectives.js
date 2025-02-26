@@ -106,7 +106,7 @@ export default class ReportsCurriculumSessionObjectivesComponent extends Compone
             link: `${origin}${path}`,
             instructors: s.instructors,
             firstOfferingDate: firstOfferingDate
-              ? DateTime.fromISO(firstOfferingDate).toLocaleString(this.intl.primarlyLocale)
+              ? DateTime.fromISO(firstOfferingDate).toLocaleString(this.intl.primaryLocale)
               : '',
             duration: duration?.toFixed(2) ?? 0,
           });
