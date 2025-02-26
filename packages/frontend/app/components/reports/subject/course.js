@@ -1,17 +1,22 @@
 import Component from '@glimmer/component';
 import { filterBy, sortBy } from 'ilios-common/utils/array-helpers';
 import { TrackedAsyncData } from 'ember-async-data';
-import { cached } from '@glimmer/tracking';
+import { cached, tracked } from '@glimmer/tracking';
 import { service } from '@ember/service';
 import { pluralize } from 'ember-inflector';
 import { camelize } from '@ember/string';
 import { action } from '@ember/object';
+import scrollIntoView from 'scroll-into-view';
 
 export default class ReportsSubjectCourseComponent extends Component {
   @service graphql;
   @service iliosConfig;
   @service currentUser;
   @service intl;
+  @tracked resultsLength;
+  @tracked showDetails = false;
+
+  resultsLengthMax = 100;
 
   crossesBoundaryConfig = new TrackedAsyncData(
     this.iliosConfig.itemFromConfig('academicYearCrossesCalendarYearBoundaries'),
@@ -68,6 +73,12 @@ export default class ReportsSubjectCourseComponent extends Component {
     return sortBy(this.mappedCourses, ['year', 'title']);
   }
 
+  get limitedCourses() {
+    return this.showDetails
+      ? this.sortedCourses
+      : this.sortedCourses.slice(0, this.resultsLengthMax);
+  }
+
   async getGraphQLFilters(prepositionalObject, prepositionalObjectTableRowId, school) {
     let rhett = [];
     if (school) {
@@ -120,7 +131,26 @@ export default class ReportsSubjectCourseComponent extends Component {
       throw new Error(`Report for ${subject} sent to ReportsSubjectCourseComponent`);
     }
     const result = await this.graphql.find('courses', filters, 'id, title, year, externalId');
+    this.resultsLength = result.data.courses.length;
+
     return result.data.courses;
+  }
+
+  get dataIsBeingLimited() {
+    return this.resultsLength > this.resultsLengthMax;
+  }
+
+  @action
+  setShowDetails(value) {
+    this.showDetails = value;
+  }
+
+  @action
+  collapse() {
+    scrollIntoView(document.getElementsByClassName('reports-subject-header')[0], {
+      behavior: 'smooth',
+    });
+    this.setShowDetails(false);
   }
 
   @action
