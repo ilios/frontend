@@ -14,9 +14,10 @@ export default class ReportsSubjectCourseComponent extends Component {
   @service currentUser;
   @service intl;
   @tracked resultsLength;
+  @tracked resultsFilteredLength;
   @tracked showDetails = false;
 
-  resultsLengthMax = 100;
+  resultsLengthMax = 10;
 
   crossesBoundaryConfig = new TrackedAsyncData(
     this.iliosConfig.itemFromConfig('academicYearCrossesCalendarYearBoundaries'),
@@ -109,6 +110,12 @@ export default class ReportsSubjectCourseComponent extends Component {
     this.resultsLength = result.data.courses.length;
 
     return result.data.courses;
+  }
+
+  get resultsLengthDisplay() {
+    return this.dataIsBeingLimited
+      ? `${this.limitedCourses.length}/${this.resultsLength}`
+      : this.resultsLength;
   }
 
   get dataIsBeingLimited() {
