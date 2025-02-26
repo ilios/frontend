@@ -47,6 +47,14 @@ export default class ReportsSubjectCourseComponent extends Component {
     return !this.args.year && this.args.prepositionalObject !== 'academic year';
   }
 
+  get filteredCourses() {
+    if (this.args.year) {
+      return filterBy(this.data.value, 'year', Number(this.args.year));
+    }
+
+    return this.data.value;
+  }
+
   get mappedCourses() {
     if (this.academicYearCrossesCalendarYearBoundaries) {
       return this.filteredCourses.map(({ title, year, externalId }) => {
@@ -59,14 +67,6 @@ export default class ReportsSubjectCourseComponent extends Component {
     } else {
       return this.filteredCourses;
     }
-  }
-
-  get filteredCourses() {
-    if (this.args.year) {
-      return filterBy(this.data.value, 'year', Number(this.args.year));
-    }
-
-    return this.data.value;
   }
 
   get sortedCourses() {
