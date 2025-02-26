@@ -10,11 +10,12 @@
   @description={{@description}}
   @fetchDownloadData={{this.fetchDownloadData}}
   @readyToDownload={{this.data.isResolved}}
+  @resultsLength={{this.resultsLength}}
 />
 <div data-test-reports-subject-course>
   {{#if this.data.isResolved}}
-    <ul class="report-results" data-test-results>
-      {{#each this.sortedCourses as |course|}}
+    <ul class="report-results{{if this.dataIsBeingLimited ' limited'}}" data-test-results>
+      {{#each this.limitedCourses as |course|}}
         <li>
           {{#if this.showYear}}
             <span data-test-year>
@@ -41,6 +42,27 @@
         <li>{{t "general.none"}}</li>
       {{/each}}
     </ul>
+    {{#if this.dataIsBeingLimited}}
+      {{#if this.showDetails}}
+        <div class="detail-collapsed-control">
+          <button type="button" data-test-expand-course-details {{on "click" this.collapse}}>
+            {{t "general.collapseResults"}}
+            <FaIcon @icon="square-minus" class="expand-collapse-icon" />
+          </button>
+        </div>
+      {{else}}
+        <div class="detail-collapsed-control">
+          <button
+            type="button"
+            data-test-expand-course-details
+            {{on "click" (fn this.setShowDetails true)}}
+          >
+            {{t "general.expandResults"}}
+            <FaIcon @icon="square-plus" class="expand-collapse-icon" />
+          </button>
+        </div>
+      {{/if}}
+    {{/if}}
   {{else}}
     <LoadingSpinner />
   {{/if}}
