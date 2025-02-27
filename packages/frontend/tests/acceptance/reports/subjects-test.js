@@ -200,7 +200,7 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
   });
 
   test('get all courses associated with mesh term #3419', async function (assert) {
-    assert.expect(15);
+    assert.expect(16);
     await page.visit();
     assert.strictEqual(page.root.list.table.reports.length, 2);
     assert.strictEqual(
@@ -226,20 +226,51 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
       'All Sessions for term 0 in school 0',
     );
     assert.strictEqual(page.root.list.table.reports[2].title, 'my report 0');
-    this.server.post('api/graphql', ({ db }, { requestBody }) => {
+    let graphQueryCounter = 0;
+    this.server.post('api/graphql', function ({ db }, { requestBody }) {
+      console.log(graphQueryCounter);
+      graphQueryCounter++;
       const { query } = JSON.parse(requestBody);
+      let rhett;
+      switch (graphQueryCounter) {
+        case 1:
+          assert.strictEqual(
+            query,
+            'query { meshDescriptors(id: "D1234") { courses { id }, courseObjectives { course { id } }, sessions { course { id } }, sessionObjectives { session { course { id } } } } }',
+          );
+          rhett = {
+            data: {
+              meshDescriptors: [
+                {
+                  courses: db.courses.map(({ id }) => {
+                    return { id };
+                  }),
+                  courseObjectives: [],
+                  sessions: [],
+                  sessionObjectives: [],
+                },
+              ],
+            },
+          };
+          break;
+        case 2:
+          assert.strictEqual(
+            query,
+            'query { courses(schools: [1], ids: [1, 2]) { id, title, year, externalId } }',
+          );
+          rhett = {
+            data: {
+              courses: db.courses.map(({ id, title, year, externalId }) => {
+                return { id, title, year, externalId };
+              }),
+            },
+          };
+          break;
+        default:
+          assert.ok(false, 'too many queries');
+      }
 
-      assert.strictEqual(
-        query,
-        'query { courses(schools: [1], meshDescriptors: ["D1234"]) { id, title, year, externalId } }',
-      );
-      return {
-        data: {
-          courses: db.courses.map(({ id, title, year, externalId }) => {
-            return { id, title, year, externalId };
-          }),
-        },
-      };
+      return rhett;
     });
     await page.root.list.table.reports[0].select();
     assert.strictEqual(currentURL(), '/reports/subjects/3');

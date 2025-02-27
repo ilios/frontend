@@ -200,14 +200,43 @@ module('Integration | Component | reports/subject/course', function (hooks) {
   });
 
   test('filter by mesh', async function (assert) {
-    assert.expect(1);
+    assert.expect(2);
+    let graphQueryCounter = 0;
     this.server.post('api/graphql', function (schema, { requestBody }) {
+      graphQueryCounter++;
       const { query } = JSON.parse(requestBody);
-      assert.strictEqual(
-        query,
-        'query { courses(meshDescriptors: ["ABC"]) { id, title, year, externalId } }',
-      );
-      return responseData;
+      let rhett;
+      switch (graphQueryCounter) {
+        case 1:
+          assert.strictEqual(
+            query,
+            'query { meshDescriptors(id: "ABC") { courses { id }, courseObjectives { course { id } }, sessions { course { id } }, sessionObjectives { session { course { id } } } } }',
+          );
+          rhett = {
+            data: {
+              meshDescriptors: [
+                {
+                  courses: [{ id: 1 }, { id: 3 }, { id: 5 }, { id: 1 }],
+                  courseObjectives: [{ course: { id: 2 } }],
+                  sessions: [{ course: { id: 4 } }, { course: { id: 3 } }],
+                  sessionObjectives: [{ session: { course: { id: 6 } } }],
+                },
+              ],
+            },
+          };
+          break;
+        case 2:
+          assert.strictEqual(
+            query,
+            'query { courses(ids: [1, 2, 3, 4, 5, 6]) { id, title, year, externalId } }',
+          );
+          rhett = responseData;
+          break;
+        default:
+          assert.ok(false, 'too many queries');
+      }
+
+      return rhett;
     });
     const { id } = this.server.create('report', {
       subject: 'course',
