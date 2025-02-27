@@ -430,7 +430,7 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
     await page.root.list.newSubject.run();
     assert.strictEqual(
       page.root.runSubject.header.description,
-      'This report shows all Courses in school 0.',
+      'This report shows all Courses in school 0. (2)',
     );
     assert.strictEqual(page.root.runSubject.results.results.length, 2);
     assert.strictEqual(

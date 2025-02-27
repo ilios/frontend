@@ -1,17 +1,21 @@
 import Component from '@glimmer/component';
 import { filterBy, sortBy } from 'ilios-common/utils/array-helpers';
 import { TrackedAsyncData } from 'ember-async-data';
-import { cached } from '@glimmer/tracking';
+import { cached, tracked } from '@glimmer/tracking';
 import { service } from '@ember/service';
 import { pluralize } from 'ember-inflector';
 import { camelize } from '@ember/string';
 import { action } from '@ember/object';
+import scrollIntoView from 'scroll-into-view';
 
 export default class ReportsSubjectCourseComponent extends Component {
   @service graphql;
   @service iliosConfig;
   @service currentUser;
   @service intl;
+  @tracked resultsLength;
+  @tracked resultsFilteredLength;
+  @tracked showDetails = false;
 
   crossesBoundaryConfig = new TrackedAsyncData(
     this.iliosConfig.itemFromConfig('academicYearCrossesCalendarYearBoundaries'),
@@ -42,6 +46,14 @@ export default class ReportsSubjectCourseComponent extends Component {
     return !this.args.year && this.args.prepositionalObject !== 'academic year';
   }
 
+  get filteredCourses() {
+    if (this.args.year) {
+      return filterBy(this.data.value, 'year', Number(this.args.year));
+    }
+
+    return this.data.value;
+  }
+
   get mappedCourses() {
     if (this.academicYearCrossesCalendarYearBoundaries) {
       return this.filteredCourses.map(({ title, year, externalId }) => {
@@ -56,16 +68,14 @@ export default class ReportsSubjectCourseComponent extends Component {
     }
   }
 
-  get filteredCourses() {
-    if (this.args.year) {
-      return filterBy(this.data.value, 'year', Number(this.args.year));
-    }
-
-    return this.data.value;
-  }
-
   get sortedCourses() {
     return sortBy(this.mappedCourses, ['year', 'title']);
+  }
+
+  get limitedCourses() {
+    return this.showDetails
+      ? this.sortedCourses
+      : this.sortedCourses.slice(0, this.args.resultsLengthMax);
   }
 
   async getGraphQLFilters(prepositionalObject, prepositionalObjectTableRowId, school) {
@@ -120,7 +130,32 @@ export default class ReportsSubjectCourseComponent extends Component {
       throw new Error(`Report for ${subject} sent to ReportsSubjectCourseComponent`);
     }
     const result = await this.graphql.find('courses', filters, 'id, title, year, externalId');
+    this.resultsLength = result.data.courses.length;
+
     return result.data.courses;
+  }
+
+  get resultsLengthDisplay() {
+    return this.dataIsBeingLimited
+      ? `${this.limitedCourses.length}/${this.resultsLength}`
+      : this.resultsLength;
+  }
+
+  get dataIsBeingLimited() {
+    return this.resultsLength > this.args.resultsLengthMax;
+  }
+
+  @action
+  setShowDetails(value) {
+    this.showDetails = value;
+  }
+
+  @action
+  collapse() {
+    scrollIntoView(document.getElementsByClassName('reports-subject-header')[0], {
+      behavior: 'smooth',
+    });
+    this.setShowDetails(false);
   }
 
   @action
