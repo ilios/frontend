@@ -3,6 +3,7 @@ import { tracked } from '@glimmer/tracking';
 import { restartableTask } from 'ember-concurrency';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
+import { modifier } from 'ember-modifier';
 import { findBy, sortBy } from 'ilios-common/utils/array-helpers';
 import currentAcademicYear from 'ilios-common/utils/current-academic-year';
 
@@ -15,6 +16,16 @@ export default class DashboardCoursesCalendarFilterComponent extends Component {
   @tracked titlesInView = [];
   @tracked coursesRelationship;
   @tracked academicYearCrossesCalendarYearBoundaries = false;
+
+  scrollToDefaultExpandedYear = modifier((element, [year]) => {
+    if (year === this.defaultExpandedYear) {
+      const { offsetTop } = element;
+      element.parentElement.scrollTo({
+        top: offsetTop,
+        behavior: 'instant',
+      });
+    }
+  });
 
   get expandedYearWithoutTitleView() {
     const yearsWithNoTitle = this.yearsInView.filter((year) => !this.titlesInView.includes(year));
@@ -82,17 +93,6 @@ export default class DashboardCoursesCalendarFilterComponent extends Component {
       this.coursesRelationship = await this.args.school.courses;
     }
   });
-
-  @action
-  scrollToDefaultExpandedYear(element, [year]) {
-    if (year === this.defaultExpandedYear) {
-      const { offsetTop } = element;
-      element.parentElement.scrollTo({
-        top: offsetTop,
-        behavior: 'instant',
-      });
-    }
-  }
 
   @action
   toggleYear(year) {
