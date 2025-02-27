@@ -1,9 +1,9 @@
 import Component from '@glimmer/component';
-import { tracked } from '@glimmer/tracking';
-import { restartableTask } from 'ember-concurrency';
+import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
 import { modifier } from 'ember-modifier';
+import { TrackedAsyncData } from 'ember-async-data';
 import { findBy, sortBy } from 'ilios-common/utils/array-helpers';
 import currentAcademicYear from 'ilios-common/utils/current-academic-year';
 
@@ -14,8 +14,6 @@ export default class DashboardCoursesCalendarFilterComponent extends Component {
   @tracked _expandedYears;
   @tracked yearsInView = [];
   @tracked titlesInView = [];
-  @tracked coursesRelationship;
-  @tracked academicYearCrossesCalendarYearBoundaries = false;
 
   scrollToDefaultExpandedYear = modifier((element, [year]) => {
     if (year === this.defaultExpandedYear) {
@@ -26,6 +24,41 @@ export default class DashboardCoursesCalendarFilterComponent extends Component {
       });
     }
   });
+
+  @cached
+  get academicYearCrossesCalendarYearBoundariesData() {
+    return new TrackedAsyncData(
+      this.iliosConfig.itemFromConfig('academicYearCrossesCalendarYearBoundaries'),
+    );
+  }
+
+  get academicYearCrossesCalendarYearBoundaries() {
+    return this.academicYearCrossesCalendarYearBoundariesData.isResolved
+      ? this.academicYearCrossesCalendarYearBoundariesData.value
+      : false;
+  }
+
+  @cached
+  get schoolCalendarData() {
+    return new TrackedAsyncData(this.dataLoader.loadSchoolForCalendar(this.args.school.id));
+  }
+
+  get schoolCalendar() {
+    return this.schoolCalendarData.isResolved ? this.schoolCalendarData.value : null;
+  }
+
+  @cached
+  get coursesRelationshipData() {
+    return new TrackedAsyncData(this.args.school.courses);
+  }
+
+  get coursesRelationship() {
+    if (!this.args.school) {
+      return null;
+    }
+
+    return this.coursesRelationshipData.isResolved ? this.coursesRelationshipData.value : null;
+  }
 
   get expandedYearWithoutTitleView() {
     const yearsWithNoTitle = this.yearsInView.filter((year) => !this.titlesInView.includes(year));
@@ -83,16 +116,6 @@ export default class DashboardCoursesCalendarFilterComponent extends Component {
 
     return this.defaultExpandedYear ? [this.defaultExpandedYear] : [];
   }
-
-  load = restartableTask(async () => {
-    this.academicYearCrossesCalendarYearBoundaries = await this.iliosConfig.itemFromConfig(
-      'academicYearCrossesCalendarYearBoundaries',
-    );
-    if (this.args.school) {
-      await this.dataLoader.loadSchoolForCalendar(this.args.school.id);
-      this.coursesRelationship = await this.args.school.courses;
-    }
-  });
 
   @action
   toggleYear(year) {
