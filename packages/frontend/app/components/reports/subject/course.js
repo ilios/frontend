@@ -19,8 +19,10 @@ export default class ReportsSubjectCourseComponent extends Component {
     this.iliosConfig.itemFromConfig('academicYearCrossesCalendarYearBoundaries'),
   );
 
+  // allCourses ->
+
   @cached
-  get data() {
+  get allCoursesData() {
     return new TrackedAsyncData(
       this.getReportResults(
         this.args.subject,
@@ -29,6 +31,10 @@ export default class ReportsSubjectCourseComponent extends Component {
         this.args.school,
       ),
     );
+  }
+
+  get allCourses() {
+    return this.allCoursesData.isResolved ? this.allCoursesData.value : [];
   }
 
   @cached
@@ -46,10 +52,10 @@ export default class ReportsSubjectCourseComponent extends Component {
 
   get filteredCourses() {
     if (this.args.year) {
-      return filterBy(this.data.value, 'year', Number(this.args.year));
+      return filterBy(this.allCourses, 'year', Number(this.args.year));
     }
 
-    return this.data.value;
+    return this.allCourses;
   }
 
   get mappedCourses() {
@@ -131,7 +137,15 @@ export default class ReportsSubjectCourseComponent extends Component {
   }
 
   get reportResultsExceedMax() {
-    return this.getReportResults.length > this.args.resultsLengthMax;
+    return this.filteredCourses.length > this.args.resultsLengthMax;
+  }
+
+  get resultsLengthDisplay() {
+    if (this.args.year) {
+      return `${this.filteredCourses.length}/${this.allCourses.length}`;
+    }
+
+    return this.allCourses.length;
   }
 
   @action
