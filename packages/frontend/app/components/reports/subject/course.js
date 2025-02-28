@@ -15,7 +15,6 @@ export default class ReportsSubjectCourseComponent extends Component {
   @service intl;
   @tracked resultsLength;
   @tracked resultsFilteredLength;
-  @tracked showDetails = false;
 
   subjectHeaderInstance = null;
 
@@ -87,9 +86,7 @@ export default class ReportsSubjectCourseComponent extends Component {
   }
 
   get limitedCourses() {
-    return this.showDetails
-      ? this.sortedCourses
-      : this.sortedCourses.slice(0, this.args.resultsLengthMax);
+    return this.sortedCourses.slice(0, this.args.resultsLengthMax);
   }
 
   async getGraphQLFilters(prepositionalObject, prepositionalObjectTableRowId, school) {
@@ -160,16 +157,10 @@ export default class ReportsSubjectCourseComponent extends Component {
   }
 
   @action
-  setShowDetails(value) {
-    this.showDetails = value;
-  }
-
-  @action
   collapse() {
     scrollIntoView(document.getElementsByClassName('reports-subject-header')[0], {
       behavior: 'smooth',
     });
-    this.setShowDetails(false);
   }
 
   @action
