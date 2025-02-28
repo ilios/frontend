@@ -10,12 +10,12 @@
   @description={{@description}}
   @fetchDownloadData={{this.fetchDownloadData}}
   @readyToDownload={{this.data.isResolved}}
-  @resultsLength={{this.resultsLengthDisplay}}
+  @resultsLength={{this.resultsLength}}
   @registerSubjectHeader={{this.setSubjectHeader}}
 />
 <div data-test-reports-subject-course>
   {{#if this.data.isResolved}}
-    <ul class="report-results{{if this.dataIsBeingLimited ' limited'}}" data-test-results>
+    <ul class="report-results{{if this.reportResultsExceedMax ' limited'}}" data-test-results>
       {{#each this.limitedCourses as |course|}}
         <li>
           {{#if this.showYear}}
