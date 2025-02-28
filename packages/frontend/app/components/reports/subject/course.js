@@ -19,8 +19,6 @@ export default class ReportsSubjectCourseComponent extends Component {
     this.iliosConfig.itemFromConfig('academicYearCrossesCalendarYearBoundaries'),
   );
 
-  // allCourses ->
-
   @cached
   get allCoursesData() {
     return new TrackedAsyncData(
