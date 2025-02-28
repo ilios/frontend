@@ -1,7 +1,5 @@
 <div
   class="calendar-filter-list large-filter-list dashboard-courses-calendar-filter"
-  {{did-insert (perform this.load)}}
-  {{did-update (perform this.load) @school}}
   data-test-courses-calendar-filter
 >
   <h5>
@@ -21,7 +19,7 @@
       {{#each this.courseYears as |year|}}
         <div
           class="year {{if (includes year.year this.expandedYears) "expanded" "collapsed"}}"
-          {{did-insert this.scrollToDefaultExpandedYear year.year}}
+          {{this.scrollToDefaultExpandedYear year.year}}
           {{in-viewport
             onEnter=(fn this.addYearInView year.year)
             onExit=(fn this.removeYearInView year.year)
