@@ -1,34 +1,19 @@
 import Component from '@glimmer/component';
 import { filterBy, sortBy } from 'ilios-common/utils/array-helpers';
 import { TrackedAsyncData } from 'ember-async-data';
-import { cached, tracked } from '@glimmer/tracking';
+import { cached } from '@glimmer/tracking';
 import { service } from '@ember/service';
 import { pluralize } from 'ember-inflector';
 import { camelize } from '@ember/string';
 import { action } from '@ember/object';
-import scrollIntoView from 'scroll-into-view';
 
 export default class ReportsSubjectCourseComponent extends Component {
   @service graphql;
   @service iliosConfig;
   @service currentUser;
   @service intl;
-  @tracked resultsLength;
-  @tracked resultsFilteredLength;
 
   subjectHeaderInstance = null;
-
-  @action
-  setSubjectHeader(instance) {
-    this.subjectHeaderInstance = instance;
-  }
-
-  @action
-  downloadReport() {
-    if (this.subjectHeaderInstance) {
-      this.subjectHeaderInstance.downloadReport.perform();
-    }
-  }
 
   crossesBoundaryConfig = new TrackedAsyncData(
     this.iliosConfig.itemFromConfig('academicYearCrossesCalendarYearBoundaries'),
@@ -141,26 +126,24 @@ export default class ReportsSubjectCourseComponent extends Component {
       throw new Error(`Report for ${subject} sent to ReportsSubjectCourseComponent`);
     }
     const result = await this.graphql.find('courses', filters, 'id, title, year, externalId');
-    this.resultsLength = result.data.courses.length;
 
     return result.data.courses;
   }
 
-  get resultsLengthDisplay() {
-    return this.reportResultsExceedMax
-      ? `${this.limitedCourses.length}/${this.resultsLength}`
-      : this.resultsLength;
-  }
-
   get reportResultsExceedMax() {
-    return this.resultsLength > this.args.resultsLengthMax;
+    return this.getReportResults.length > this.args.resultsLengthMax;
   }
 
   @action
-  collapse() {
-    scrollIntoView(document.getElementsByClassName('reports-subject-header')[0], {
-      behavior: 'smooth',
-    });
+  setSubjectHeader(instance) {
+    this.subjectHeaderInstance = instance;
+  }
+
+  @action
+  downloadReport() {
+    if (this.subjectHeaderInstance) {
+      this.subjectHeaderInstance.downloadReport.perform();
+    }
   }
 
   @action
