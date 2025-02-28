@@ -19,25 +19,6 @@ module('Integration | Component | reports/subject/course', function (hooks) {
     },
   };
 
-  const responseDataLarge = {
-    data: {
-      courses: [
-        { id: 1, title: 'First Course', year: 2020 },
-        { id: 2, title: 'Second Course', year: 2020 },
-        { id: 3, title: 'Third Course', year: 2020 },
-        { id: 4, title: 'Fourth Course', year: 2020 },
-        { id: 5, title: 'Fifth Course', year: 2021 },
-        { id: 6, title: 'Sixth Course', year: 2021 },
-        { id: 7, title: 'Seventh Course', year: 2021 },
-        { id: 8, title: 'Eighth Course', year: 2022 },
-        { id: 9, title: 'Ninth Course', year: 2023 },
-        { id: 10, title: 'Tenth Course', year: 2023 },
-        { id: 11, title: 'Eleventh Course', year: 2024 },
-        { id: 12, title: 'Twelfth Course', year: 2025 },
-      ],
-    },
-  };
-
   test('it renders for user with permissions', async function (assert) {
     await setupAuthentication({}, true);
     assert.expect(10);
@@ -94,9 +75,54 @@ module('Integration | Component | reports/subject/course', function (hooks) {
     assert.strictEqual(component.results[1].courseTitle, 'First Course');
   });
 
-  test('it renders limited results when resultsLengthMax is eclipsed', async function (assert) {
+  test('it renders all results when resultsLengthMax is not reached', async function (assert) {
     await setupAuthentication({}, true);
-    assert.expect(10);
+    assert.expect(3);
+
+    this.server.post('api/graphql', function (schema, { requestBody }) {
+      const { query } = JSON.parse(requestBody);
+      assert.strictEqual(query, 'query { courses { id, title, year, externalId } }');
+      return responseData;
+    });
+    const { id } = this.server.create('report', {
+      subject: 'course',
+    });
+    this.set('resultsLengthMax', 10);
+    this.set('report', await this.owner.lookup('service:store').findRecord('report', id));
+    await render(hbs`<Reports::Subject::Course
+  @subject={{this.report.subject}}
+  @prepositionalObject={{this.report.prepositionalObject}}
+  @prepositionalObjectTableRowId={{this.report.prepositionalObjectTableRowId}}
+  @resultsLengthMax={{this.resultsLengthMax}}
+/>`);
+
+    assert.strictEqual(component.results.length, 2, 'responseData shows all 2 of 2 courses');
+    assert.notOk(component.hasFullResultsDownloadButton, 'full results download button is hidden');
+  });
+
+  test('it renders limited results and an extra download button when resultsLengthMax is eclipsed', async function (assert) {
+    await setupAuthentication({}, true);
+    assert.expect(3);
+
+    const responseDataLarge = {
+      data: {
+        courses: [
+          { id: 1, title: 'First Course', year: 2020 },
+          { id: 2, title: 'Second Course', year: 2020 },
+          { id: 3, title: 'Third Course', year: 2020 },
+          { id: 4, title: 'Fourth Course', year: 2020 },
+          { id: 5, title: 'Fifth Course', year: 2021 },
+          { id: 6, title: 'Sixth Course', year: 2021 },
+          { id: 7, title: 'Seventh Course', year: 2021 },
+          { id: 8, title: 'Eighth Course', year: 2022 },
+          { id: 9, title: 'Ninth Course', year: 2023 },
+          { id: 10, title: 'Tenth Course', year: 2023 },
+          { id: 11, title: 'Eleventh Course', year: 2024 },
+          { id: 12, title: 'Twelfth Course', year: 2025 },
+        ],
+      },
+    };
+
     this.server.post('api/graphql', function (schema, { requestBody }) {
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(query, 'query { courses { id, title, year, externalId } }');
@@ -114,21 +140,12 @@ module('Integration | Component | reports/subject/course', function (hooks) {
   @resultsLengthMax={{this.resultsLengthMax}}
 />`);
 
-    assert.strictEqual(component.results.length, 10);
-    assert.notOk(component.hasCollapseButton);
-    assert.ok(component.hasExpandButton);
-
-    await component.expandResults();
-
-    assert.strictEqual(component.results.length, 12);
-    assert.ok(component.hasCollapseButton);
-    assert.notOk(component.hasExpandButton);
-
-    await component.collapseResults();
-
-    assert.strictEqual(component.results.length, 10);
-    assert.notOk(component.hasCollapseButton);
-    assert.ok(component.hasExpandButton);
+    assert.strictEqual(
+      component.results.length,
+      10,
+      'responseDataLarge shows only 10 of 12 courses',
+    );
+    assert.ok(component.hasFullResultsDownloadButton, 'full results download button is present');
   });
 
   test('it reads academic year config', async function (assert) {
