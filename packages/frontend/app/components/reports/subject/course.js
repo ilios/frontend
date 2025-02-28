@@ -17,6 +17,20 @@ export default class ReportsSubjectCourseComponent extends Component {
   @tracked resultsFilteredLength;
   @tracked showDetails = false;
 
+  subjectHeaderInstance = null;
+
+  @action
+  setSubjectHeader(instance) {
+    this.subjectHeaderInstance = instance;
+  }
+
+  @action
+  downloadReport() {
+    if (this.subjectHeaderInstance) {
+      this.subjectHeaderInstance.downloadReport.perform();
+    }
+  }
+
   crossesBoundaryConfig = new TrackedAsyncData(
     this.iliosConfig.itemFromConfig('academicYearCrossesCalendarYearBoundaries'),
   );
@@ -136,12 +150,12 @@ export default class ReportsSubjectCourseComponent extends Component {
   }
 
   get resultsLengthDisplay() {
-    return this.dataIsBeingLimited
+    return this.reportResultsExceedMax
       ? `${this.limitedCourses.length}/${this.resultsLength}`
       : this.resultsLength;
   }
 
-  get dataIsBeingLimited() {
+  get reportResultsExceedMax() {
     return this.resultsLength > this.args.resultsLengthMax;
   }
 

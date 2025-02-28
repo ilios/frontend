@@ -352,6 +352,7 @@ general:
   reportDisplayTitleWithoutObject: "All {subject} in {school}"
   reportName: Report Name
   reportNamePlaceholder: Please enter a report name.
+  reportResultsExceedMax: Only the first 200 results shown. Download report to see all results.
   reports: Reports
   reportTitle: Report Title
   requiredInTrack: Required In Track
