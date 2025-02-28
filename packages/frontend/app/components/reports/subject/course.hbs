@@ -1,4 +1,4 @@
-{{#if this.data.isResolved}}
+{{#if this.allCoursesData.isResolved}}
   <Reports::SubjectHeader
     @report={{@report}}
     @school={{@school}}
@@ -10,13 +10,13 @@
     @showYearFilter={{not-eq @prepositionalObject "academic year"}}
     @description={{@description}}
     @fetchDownloadData={{this.fetchDownloadData}}
-    @readyToDownload={{this.data.isResolved}}
-    @resultsLength={{this.limitedCourses.length}}
+    @readyToDownload={{this.allCoursesData.isResolved}}
+    @resultsLength={{this.resultsLengthDisplay}}
     @registerSubjectHeader={{this.setSubjectHeader}}
   />
 {{/if}}
 <div data-test-reports-subject-course>
-  {{#if this.data.isResolved}}
+  {{#if this.allCoursesData.isResolved}}
     <ul class="report-results{{if this.reportResultsExceedMax ' limited'}}" data-test-results>
       {{#each this.limitedCourses as |course|}}
         <li>
