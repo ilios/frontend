@@ -1,18 +1,20 @@
-<Reports::SubjectHeader
-  @report={{@report}}
-  @school={{@school}}
-  @subject={{@subject}}
-  @prepositionalObject={{@prepositionalObject}}
-  @prepositionalObjectTableRowId={{@prepositionalObjectTableRowId}}
-  @year={{@year}}
-  @changeYear={{@changeYear}}
-  @showYearFilter={{not-eq @prepositionalObject "academic year"}}
-  @description={{@description}}
-  @fetchDownloadData={{this.fetchDownloadData}}
-  @readyToDownload={{this.data.isResolved}}
-  @resultsLength={{this.resultsLength}}
-  @registerSubjectHeader={{this.setSubjectHeader}}
-/>
+{{#if this.data.isResolved}}
+  <Reports::SubjectHeader
+    @report={{@report}}
+    @school={{@school}}
+    @subject={{@subject}}
+    @prepositionalObject={{@prepositionalObject}}
+    @prepositionalObjectTableRowId={{@prepositionalObjectTableRowId}}
+    @year={{@year}}
+    @changeYear={{@changeYear}}
+    @showYearFilter={{not-eq @prepositionalObject "academic year"}}
+    @description={{@description}}
+    @fetchDownloadData={{this.fetchDownloadData}}
+    @readyToDownload={{this.data.isResolved}}
+    @resultsLength={{this.limitedCourses.length}}
+    @registerSubjectHeader={{this.setSubjectHeader}}
+  />
+{{/if}}
 <div data-test-reports-subject-course>
   {{#if this.data.isResolved}}
     <ul class="report-results{{if this.reportResultsExceedMax ' limited'}}" data-test-results>
