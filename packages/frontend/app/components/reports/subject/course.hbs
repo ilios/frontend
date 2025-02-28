@@ -46,8 +46,8 @@
       {{/each}}
     </ul>
     {{#if this.reportResultsExceedMax}}
-      <p>{{t "general.reportResultsExceedMax"}}</p>
       <div class="download">
+        <p>{{t "general.reportResultsExceedMax"}}</p>
         <button type="button" {{on "click" this.downloadReport}} data-test-download>
           {{#if this.finishedBuildingReport}}
             <FaIcon @icon="check" />

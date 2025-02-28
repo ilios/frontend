@@ -1,4 +1,4 @@
-import { attribute, clickable, create, collection, isPresent, text } from 'ember-cli-page-object';
+import { attribute, create, collection, isPresent, text } from 'ember-cli-page-object';
 
 const definition = {
   scope: '[data-test-reports-subject-course]',
@@ -9,10 +9,7 @@ const definition = {
     hasYear: isPresent('[data-test-year]'),
     year: text('[data-test-year]'),
   }),
-  collapseResults: clickable('[data-test-collapse-report-extra-results]'),
-  expandResults: clickable('[data-test-expand-report-extra-results]'),
-  hasCollapseButton: isPresent('[data-test-collapse-report-extra-results]'),
-  hasExpandButton: isPresent('[data-test-expand-report-extra-results]'),
+  hasFullResultsDownloadButton: isPresent('[data-test-results] + .download'),
 };
 
 export default definition;
