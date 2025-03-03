@@ -29,6 +29,9 @@
     "husky": "^9.1.4"
   },
   "pnpm": {
+    "ignoredBuiltDependencies": [
+      "@percy/core"
+    ],
     "onlyBuiltDependencies": [
       "aws-sdk",
       "fsevents",
