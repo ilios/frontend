@@ -2,9 +2,10 @@ import Component from '@glimmer/component';
 import { htmlSafe } from '@ember/template';
 import { filter, map } from 'rsvp';
 import { restartableTask, timeout } from 'ember-concurrency';
-import { tracked } from '@glimmer/tracking';
+import { cached, tracked } from '@glimmer/tracking';
 import { service } from '@ember/service';
 import { filterBy, uniqueValues } from 'ilios-common/utils/array-helpers';
+import { TrackedAsyncData } from 'ember-async-data';
 
 export default class VisualizerProgramYearObjectivesComponent extends Component {
   @service intl;
@@ -13,17 +14,27 @@ export default class VisualizerProgramYearObjectivesComponent extends Component 
   @tracked tooltipSessions;
   @tracked tooltipTitle;
 
-  @tracked programYearName;
-  @tracked data;
+  @cached
+  get chartOutputData() {
+    return new TrackedAsyncData(this.loadData(this.args.programYear));
+  }
 
-  load = restartableTask(async (element, [programYear]) => {
+  get chartOutput() {
+    return this.chartOutputData.isResolved ? this.chartOutputData.value : null;
+  }
+
+  async loadData(programYear) {
     const cohort = await programYear.cohort;
     const year = await programYear.getClassOfYear();
     const classOfYear = this.intl.t('general.classOf', { year });
-    this.programYearName = cohort.title ?? classOfYear;
+    const programYearName = cohort.title ?? classOfYear;
 
-    this.data = await this.getData(programYear);
-  });
+    return {
+      name: programYearName,
+      children: await this.getDomainObjects(programYear),
+      meta: {},
+    };
+  }
 
   async getObjectiveObjects(programYear) {
     const buildTreeLevel = async function (parent, childrenTree, sessionTitle, courseTitle) {
@@ -104,14 +115,6 @@ export default class VisualizerProgramYearObjectivesComponent extends Component 
         meta: {},
       };
     });
-  }
-
-  async getData(programYear) {
-    return {
-      name: this.programYearName,
-      children: await this.getDomainObjects(programYear),
-      meta: {},
-    };
   }
 
   nodeHover = restartableTask(async (obj) => {
