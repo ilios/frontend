@@ -774,7 +774,7 @@ module('Integration | Component | learner-group/root', function (hooks) {
       component.instructorsList.assignedInstructors[0].userNameInfo.fullName,
       'aardvark',
     );
-    assert.dom(component.instructorsList.assignedInstructors[0].userNameInfo.hasAdditionalInfo);
+    assert.ok(component.instructorsList.assignedInstructors[0].userNameInfo.hasAdditionalInfo);
     assert.strictEqual(
       component.instructorsList.assignedInstructors[1].userNameInfo.fullName,
       'test person',
@@ -794,7 +794,7 @@ module('Integration | Component | learner-group/root', function (hooks) {
       component.instructorManager.selectedInstructors[0].userNameInfo.fullName,
       'aardvark',
     );
-    assert.dom(component.instructorManager.selectedInstructors[0].userNameInfo.hasAdditionalInfo);
+    assert.ok(component.instructorManager.selectedInstructors[0].userNameInfo.hasAdditionalInfo);
     assert.strictEqual(
       component.instructorManager.selectedInstructors[1].userNameInfo.fullName,
       'test person',
