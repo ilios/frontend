@@ -14,30 +14,26 @@ export default class VisualizerProgramYearObjectivesComponent extends Component 
   @tracked tooltipSessions;
   @tracked tooltipTitle;
 
-  @tracked programYearName;
-  @tracked data;
-
-  constructor() {
-    super(...arguments);
-    this.load.perform();
-  }
-
-  load = restartableTask(async () => {
-    const cohort = await this.programYear.cohort;
-    const year = await this.programYear.getClassOfYear();
-    const classOfYear = this.intl.t('general.classOf', { year });
-    this.programYearName = cohort.title ?? classOfYear;
-
-    this.data = await this.getData(this.programYear);
-  });
-
   @cached
-  get programYearData() {
-    return new TrackedAsyncData(this.args.programYear);
+  get chartOutputData() {
+    return new TrackedAsyncData(this.loadData(this.args.programYear));
   }
 
-  get programYear() {
-    return this.programYearData.isResolved ? this.programYearData.value : null;
+  get chartOutput() {
+    return this.chartOutputData.isResolved ? this.chartOutputData.value : null;
+  }
+
+  async loadData(programYear) {
+    const cohort = await programYear.cohort;
+    const year = await programYear.getClassOfYear();
+    const classOfYear = this.intl.t('general.classOf', { year });
+    const programYearName = cohort.title ?? classOfYear;
+
+    return {
+      name: programYearName,
+      children: await this.getDomainObjects(programYear),
+      meta: {},
+    };
   }
 
   async getObjectiveObjects(programYear) {
@@ -119,14 +115,6 @@ export default class VisualizerProgramYearObjectivesComponent extends Component 
         meta: {},
       };
     });
-  }
-
-  async getData(programYear) {
-    return {
-      name: this.programYearName,
-      children: await this.getDomainObjects(programYear),
-      meta: {},
-    };
   }
 
   nodeHover = restartableTask(async (obj) => {

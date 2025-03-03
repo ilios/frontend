@@ -1,10 +1,10 @@
 <div class="{{unless @isIcon 'not-icon'}} visualizer-program-year-objectives" ...attributes>
-  {{#if this.programYearData.isResolved}}
-    {{#if (or @isIcon this.data)}}
+  {{#if this.chartOutputData.isResolved}}
+    {{#if (or @isIcon this.chartOutput)}}
       <SimpleChart
         @name="tree"
         @isIcon={{@isIcon}}
-        @data={{this.data}}
+        @data={{this.chartOutput}}
         @hover={{perform this.nodeHover}}
         @leave={{perform this.nodeHover}}
         as |chart|
