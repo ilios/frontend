@@ -30,6 +30,7 @@
   },
   "pnpm": {
     "onlyBuiltDependencies": [
+      "@percy/core",
       "aws-sdk",
       "fsevents",
       "sharp"
