@@ -33,7 +33,7 @@
     "broccoli-funnel": "^3.0.0",
     "broccoli-merge-trees": "^4.0.0",
     "class-validator": ">= 0.14.0",
-    "ember-async-data": "^1.0.1",
+    "ember-async-data": "^2.0.0",
     "ember-auto-import": "^2.7.4",
     "ember-cli-babel": "^8.2.0",
     "ember-cli-flash": "^5.1.0",
