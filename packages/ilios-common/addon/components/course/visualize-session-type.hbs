@@ -1,9 +1,8 @@
 <section
   class="course-visualize-session-type"
   data-test-course-visualize-session-type
-  {{did-insert (perform this.load)}}
 >
-  {{#unless this.load.isRunning}}
+  {{#if this.academicYearCrossesCalendarYearBoundariesData.isResolved}}
     <div class="breadcrumbs" data-test-breadcrumb>
       <span>
         <LinkTo @route="course" @model={{@model.course}}>
@@ -44,5 +43,5 @@
         @showDataTable={{true}}
       />
     </div>
-  {{/unless}}
+  {{/if}}
 </section>
