@@ -11,6 +11,8 @@ export default class DatePickerModifier extends Modifier {
   @service intl;
   flatpickr = null;
   locale = null;
+  minDate = null;
+  maxDate = null;
   onChangeHandler = null;
   allowedWeekdays = [];
 
@@ -45,11 +47,19 @@ export default class DatePickerModifier extends Modifier {
       this.flatpickr.setDate(value);
     }
 
-    if (this.flatpickr.minDate !== minDate) {
+    if (
+      this.minDate !== minDate &&
+      new Date(this.minDate).getTime() !== new Date(minDate).getTime()
+    ) {
+      this.minDate = minDate;
       this.flatpickr.set('minDate', minDate);
     }
 
-    if (this.flatpickr.maxDate !== maxDate) {
+    if (
+      this.maxDate !== maxDate &&
+      new Date(this.maxDate).getTime() !== new Date(maxDate).getTime()
+    ) {
+      this.maxDate = maxDate;
       this.flatpickr.set('maxDate', maxDate);
     }
 
