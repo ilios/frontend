@@ -5,12 +5,14 @@ import { French } from 'flatpickr/dist/l10n/fr.js';
 import { Spanish } from 'flatpickr/dist/l10n/es.js';
 import { isTesting } from '@embroider/macros';
 import { service } from '@ember/service';
+import { DateTime } from 'luxon';
 
 export default class DatePickerModifier extends Modifier {
   @service intl;
   flatpickr = null;
   locale = null;
   onChangeHandler = null;
+  allowedWeekdays = [];
 
   constructor(owner, args) {
     super(owner, args);
@@ -24,11 +26,16 @@ export default class DatePickerModifier extends Modifier {
     });
   }
 
-  modify(element, [value], { minDate, maxDate, locale, onChangeHandler }) {
+  modify(element, [value], { minDate, maxDate, allowedWeekdays, locale, onChangeHandler }) {
     // We only need to set this once.
     if (!this.onChangeHandler) {
       this.onChangeHandler = onChangeHandler;
     }
+
+    if (Array.isArray(allowedWeekdays)) {
+      this.allowedWeekdays = allowedWeekdays;
+    }
+
     if (!this.flatpickr) {
       this.locale = locale ?? this.intl.primaryLocale;
       this.flatpickr = this.initPicker(element, value, minDate, maxDate, this.locale);
@@ -37,9 +44,11 @@ export default class DatePickerModifier extends Modifier {
     if (this.flatpickr.selectedDates[0] !== value) {
       this.flatpickr.setDate(value);
     }
+
     if (this.flatpickr.minDate !== minDate) {
       this.flatpickr.set('minDate', minDate);
     }
+
     if (this.flatpickr.maxDate !== maxDate) {
       this.flatpickr.set('maxDate', maxDate);
     }
@@ -72,6 +81,16 @@ export default class DatePickerModifier extends Modifier {
       maxDate: maxDate ?? null,
       minDate: minDate ?? null,
       disableMobile: isTesting(),
+      disable: [
+        // If a list of allowed weekdays is given,
+        // then disable all dates that don't fall on these weekdays.
+        (date) => {
+          if (this.allowedWeekdays.length) {
+            return !this.allowedWeekdays.includes(DateTime.fromJSDate(date).weekday);
+          }
+          return false;
+        },
+      ],
     });
   }
 
