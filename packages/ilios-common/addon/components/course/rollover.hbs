@@ -78,10 +78,11 @@
               ({{t "general.mustBeSameDayOfWeekAsCurrentStartDate"}})
             </small>
           </label>
-          <Course::RolloverDatePicker
-            @course={{@course}}
+          <DatePicker
             @value={{this.startDate}}
-            @onChange={{set this "startDate"}}
+            @allowedWeekdays={{this.allowedWeekdays}}
+            @minDate={{@course.startDate}}
+            @onChange={{this.updateStartDate}}
           />
         </div>
         <div class="included">

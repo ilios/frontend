@@ -276,7 +276,7 @@ module('Integration | Component | course/rollover', function (hooks) {
     await fillIn('[data-test-year]', courseStartDate.year);
 
     await click(startDate);
-    const picker = find('[data-test-course-rollover-picker]')._flatpickr;
+    const picker = find('[data-test-date-picker]')._flatpickr;
     assert.strictEqual(
       picker.currentYear,
       courseStartDate.year,
@@ -347,7 +347,7 @@ module('Integration | Component | course/rollover', function (hooks) {
     await emberBlur(yearSelect);
 
     await click(startDate);
-    const picker = find('[data-test-course-rollover-picker]')._flatpickr;
+    const picker = find('[data-test-date-picker]')._flatpickr;
     picker.setDate(rolloverDate.toJSDate(), true);
     assert.strictEqual(
       picker.currentYear,
@@ -396,7 +396,7 @@ module('Integration | Component | course/rollover', function (hooks) {
     await emberBlur(yearSelect);
 
     await click(startDate);
-    const picker = find('[data-test-course-rollover-picker]')._flatpickr;
+    const picker = find('[data-test-date-picker]')._flatpickr;
     assert.strictEqual(
       picker.currentYear,
       rolloverDate.year,
