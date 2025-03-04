@@ -1,4 +1,5 @@
 import Service, { service } from '@ember/service';
+import { waitForPromise } from '@ember/test-waiters';
 
 export default class GraphqlService extends Service {
   @service session;
@@ -37,6 +38,6 @@ export default class GraphqlService extends Service {
 
   async find(endpoint, filters, attributes) {
     const filterString = filters.length ? '(' + filters.join(', ') + ')' : '';
-    return this.#query(`query { ${endpoint}${filterString} { ${attributes} } }`);
+    return waitForPromise(this.#query(`query { ${endpoint}${filterString} { ${attributes} } }`));
   }
 }
