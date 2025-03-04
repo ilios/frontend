@@ -1,0 +1,27 @@
+@use "../../ilios-common/mixins" as cm;
+
+.reports-choose-course {
+  .schools {
+    margin: 0 0 1em 0;
+  }
+  button {
+    @include cm.ilios-button-reset;
+    font-weight: bold;
+  }
+
+  ul {
+    @include cm.ilios-list-reset;
+
+    li {
+      margin-left: 0.5em;
+    }
+
+    ul {
+      margin-top: 0.5rem;
+    }
+  }
+
+  .select-all {
+    font-style: italic;
+  }
+}

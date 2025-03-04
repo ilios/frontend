@@ -1,0 +1,17 @@
+@use "../../ilios-common/mixins" as cm;
+@use "../../ilios-common/colors" as c;
+
+.reports-curriculum-loading {
+  @include cm.loading-text;
+  @include cm.loading-shimmer;
+
+  select {
+    @include cm.loading-text;
+  }
+
+  .reports-curriculum-header .input-buttons button.done {
+    @include cm.loading-text;
+    cursor: default;
+    background-color: c.$culturedGrey;
+  }
+}

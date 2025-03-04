@@ -1,4 +1,5 @@
 import {
+  chunk,
   findBy,
   findById,
   filterBy,
@@ -413,5 +414,41 @@ module('Unit | Utility | array-helpers', function () {
     const result = filterBy(arr, 'barksForNoReason');
     assert.strictEqual(result.length, 1);
     assert.strictEqual(result[0].name, 'jasper');
+  });
+
+  test('chunk', function (assert) {
+    const result = chunk(getDogs(), 2);
+    assert.strictEqual(result.length, 2);
+    assert.strictEqual(result[0].length, 2);
+    assert.strictEqual(result[1].length, 1);
+    assert.strictEqual(result[0][0].name, 'jayden');
+    assert.strictEqual(result[0][1].name, 'jasper');
+    assert.strictEqual(result[1][0].name, 'jackson');
+  });
+  test('chunk with empty array', function (assert) {
+    const result = chunk([], 2);
+    assert.deepEqual(result, []);
+  });
+  test('chunk with chunk size 1', function (assert) {
+    const result = chunk(getDogs(), 1);
+    assert.strictEqual(result.length, 3);
+    assert.strictEqual(result[0].length, 1);
+    assert.strictEqual(result[1].length, 1);
+    assert.strictEqual(result[2].length, 1);
+    assert.strictEqual(result[0][0].name, 'jayden');
+    assert.strictEqual(result[1][0].name, 'jasper');
+    assert.strictEqual(result[2][0].name, 'jackson');
+  });
+  test('chunk with chunk size greater than array length', function (assert) {
+    const result = chunk(getDogs(), 5);
+    assert.strictEqual(result.length, 1);
+    assert.strictEqual(result[0].length, 3);
+    assert.strictEqual(result[0][0].name, 'jayden');
+    assert.strictEqual(result[0][1].name, 'jasper');
+    assert.strictEqual(result[0][2].name, 'jackson');
+  });
+  test('chunk with chunk size zero', function (assert) {
+    const result = chunk(getDogs(), 0);
+    assert.deepEqual(result, []);
   });
 });
