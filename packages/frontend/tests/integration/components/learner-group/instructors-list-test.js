@@ -57,7 +57,7 @@ module('Integration | Component | learner-group/instructors-list', function (hoo
     assert.strictEqual(component.title, 'Default Instructors (3)');
     assert.strictEqual(component.assignedInstructors.length, 3);
     assert.strictEqual(component.assignedInstructors[0].userNameInfo.fullName, 'aardvark');
-    assert.dom(component.assignedInstructors[0].userNameInfo.hasAdditionalInfo);
+    assert.ok(component.assignedInstructors[0].userNameInfo.hasAdditionalInfo);
     assert.strictEqual(component.assignedInstructors[1].userNameInfo.fullName, 'test person');
     assert.notOk(component.assignedInstructors[1].userNameInfo.hasAdditionalInfo);
     assert.strictEqual(component.assignedInstructors[2].userNameInfo.fullName, 'test person2');

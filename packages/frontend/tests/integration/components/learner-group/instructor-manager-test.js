@@ -71,7 +71,7 @@ module('Integration | Component | learner-group/instructor-manager', function (h
     assert.strictEqual(component.title, 'Manage Default Instructors');
     assert.strictEqual(component.selectedInstructors.length, 2);
     assert.strictEqual(component.selectedInstructors[0].userNameInfo.fullName, 'aardvark');
-    assert.dom(component.selectedInstructors[0].userNameInfo.hasAdditionalInfo);
+    assert.ok(component.selectedInstructors[0].userNameInfo.hasAdditionalInfo);
     assert.strictEqual(component.selectedInstructors[1].userNameInfo.fullName, 'test person');
     assert.notOk(component.selectedInstructors[1].userNameInfo.hasAdditionalInfo);
     assert.strictEqual(component.selectedInstructorGroups.length, 1);
