@@ -1,7 +1,6 @@
 import Component from '@glimmer/component';
 import { cached, tracked } from '@glimmer/tracking';
 import { map } from 'rsvp';
-import { deprecate } from '@ember/debug';
 import { DateTime } from 'luxon';
 import { TrackedAsyncData } from 'ember-async-data';
 
@@ -86,34 +85,6 @@ export default class OfferingCalendar extends Component {
         prerequisites: [],
       };
     }
-  }
-
-  get startDate() {
-    if (typeof this.args.startDate === 'string') {
-      deprecate(`String passed to OfferingCalendar @startDate instead of Date`, false, {
-        id: 'common.dates-no-strings',
-        for: 'ilios-common',
-        until: '72',
-        since: '71',
-      });
-      return DateTime.fromISO(this.args.startDate).toJSDate();
-    }
-
-    return this.args.startDate;
-  }
-
-  get endDate() {
-    if (typeof this.args.endDate === 'string') {
-      deprecate(`String passed to OfferingCalendar @endDate instead of Date`, false, {
-        id: 'common.dates-no-strings',
-        for: 'ilios-common',
-        until: '72',
-        since: '71',
-      });
-      return DateTime.fromISO(this.args.endDate).toJSDate();
-    }
-
-    return this.args.endDate;
   }
 
   get calendarEvents() {
