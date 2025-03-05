@@ -1,5 +1,5 @@
 import Component from '@glimmer/component';
-import { tracked } from '@glimmer/tracking';
+import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
 import { isEmpty, isPresent } from '@ember/utils';
@@ -19,6 +19,7 @@ import {
 } from 'ilios-common/decorators/validation';
 import { ValidateIf } from 'class-validator';
 import { uniqueValues } from 'ilios-common/utils/array-helpers';
+import { TrackedAsyncData } from 'ember-async-data';
 
 const DEBOUNCE_DELAY = 600;
 const DEFAULT_URL_VALUE = 'https://';
@@ -149,12 +150,12 @@ export default class OfferingForm extends Component {
     return DEFAULT_URL_VALUE;
   }
 
-  load = restartableTask(async (element, [offering, cohorts]) => {
-    await this.loadData.perform(offering, cohorts);
-    await timeout(1);
-  });
+  @cached
+  get offeringFormData() {
+    return new TrackedAsyncData(this.loadData(this.args.offering, this.args.cohorts));
+  }
 
-  loadData = restartableTask(async (offering, cohorts) => {
+  async loadData(offering, cohorts) {
     this.availableInstructorGroups = await this.loadAvailableInstructorGroups(cohorts);
 
     if (isPresent(offering)) {
@@ -162,6 +163,64 @@ export default class OfferingForm extends Component {
     } else {
       this.loadDefaultAttrs();
     }
+  }
+
+  async loadAvailableInstructorGroups(cohorts) {
+    let associatedSchools;
+    if (isEmpty(cohorts)) {
+      associatedSchools = [];
+    } else {
+      const cohortSchools = await map(cohorts, async (cohort) => {
+        const programYear = await cohort.programYear;
+        const program = await programYear.program;
+        return program.school;
+      });
+      associatedSchools = uniqueValues(cohortSchools);
+    }
+    const allInstructorGroups = await map(associatedSchools, (school) => school.instructorGroups);
+    return allInstructorGroups.reduce((flattened, arr) => {
+      return [...flattened, ...arr];
+    }, []);
+  }
+
+  loadDefaultAttrs() {
+    if (this.loaded) {
+      return;
+    }
+    this.startDate = DateTime.fromJSDate(this.defaultStartDate)
+      .set({ hour: 8, minute: 0, second: 0 })
+      .toJSDate();
+    this.endDate = DateTime.fromJSDate(this.defaultStartDate)
+      .set({ hour: 9, minute: 0, second: 0 })
+      .toJSDate();
+    this.learnerGroups = [];
+    this.learners = [];
+    this.recurringDays = [];
+    this.instructors = [];
+    this.instructorGroups = [];
+    this.loaded = true;
+  }
+
+  loadAttrsFromOffering = dropTask(async (offering) => {
+    if (this.loaded) {
+      return;
+    }
+    this.startDate = offering.get('startDate');
+    this.endDate = offering.get('endDate');
+    this.room = offering.get('room');
+    this.url = offering.get('url');
+    this.recurringDays = [];
+    const obj = await hash({
+      learnerGroups: offering.get('learnerGroups'),
+      learners: offering.get('learners'),
+      instructors: offering.get('instructors'),
+      instructorGroups: offering.get('instructorGroups'),
+    });
+    this.learnerGroups = obj.learnerGroups;
+    this.learners = obj.learners;
+    this.instructors = obj.instructors;
+    this.instructorGroups = obj.instructorGroups;
+    this.loaded = true;
   });
 
   @action
@@ -288,64 +347,6 @@ export default class OfferingForm extends Component {
       target.select();
     }
   }
-
-  async loadAvailableInstructorGroups(cohorts) {
-    let associatedSchools;
-    if (isEmpty(cohorts)) {
-      associatedSchools = [];
-    } else {
-      const cohortSchools = await map(cohorts, async (cohort) => {
-        const programYear = await cohort.programYear;
-        const program = await programYear.program;
-        return program.school;
-      });
-      associatedSchools = uniqueValues(cohortSchools);
-    }
-    const allInstructorGroups = await map(associatedSchools, (school) => school.instructorGroups);
-    return allInstructorGroups.reduce((flattened, arr) => {
-      return [...flattened, ...arr];
-    }, []);
-  }
-
-  loadDefaultAttrs() {
-    if (this.loaded) {
-      return;
-    }
-    this.startDate = DateTime.fromJSDate(this.defaultStartDate)
-      .set({ hour: 8, minute: 0, second: 0 })
-      .toJSDate();
-    this.endDate = DateTime.fromJSDate(this.defaultStartDate)
-      .set({ hour: 9, minute: 0, second: 0 })
-      .toJSDate();
-    this.learnerGroups = [];
-    this.learners = [];
-    this.recurringDays = [];
-    this.instructors = [];
-    this.instructorGroups = [];
-    this.loaded = true;
-  }
-
-  loadAttrsFromOffering = dropTask(async (offering) => {
-    if (this.loaded) {
-      return;
-    }
-    this.startDate = offering.get('startDate');
-    this.endDate = offering.get('endDate');
-    this.room = offering.get('room');
-    this.url = offering.get('url');
-    this.recurringDays = [];
-    const obj = await hash({
-      learnerGroups: offering.get('learnerGroups'),
-      learners: offering.get('learners'),
-      instructors: offering.get('instructors'),
-      instructorGroups: offering.get('instructorGroups'),
-    });
-    this.learnerGroups = obj.learnerGroups;
-    this.learners = obj.learners;
-    this.instructors = obj.instructors;
-    this.instructorGroups = obj.instructorGroups;
-    this.loaded = true;
-  });
 
   saveOnEnter = dropTask(async (event) => {
     const keyCode = event.keyCode;
