@@ -169,7 +169,6 @@ module('Acceptance | search', function (hooks) {
         },
       };
       if (queryParams.onlySuggest) {
-        // eslint-disable-next-line qunit/no-early-return
         return rhett;
       }
       assert.ok(searchRun <= 2);

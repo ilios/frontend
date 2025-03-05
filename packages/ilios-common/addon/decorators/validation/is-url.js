@@ -23,7 +23,6 @@ export function IsURL(validationOptions) {
             return false;
           }
           return URLValidator(value, {
-            // eslint-disable-next-line camelcase
             require_protocol: true,
           });
         },

@@ -19,10 +19,9 @@ export async function launchWorker() {
     while (registration.active?.state !== 'activated') {
       await new Promise((resolve) => setTimeout(resolve, 10));
     }
-    // eslint-disable-next-line no-console
+
     console.log('☀️ Ilios Service worker registered successfully');
   } catch (err) {
-    // eslint-disable-next-line no-console
     console.log('😥 Ilios Service worker registration failed: ', err);
   }
 }

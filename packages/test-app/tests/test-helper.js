@@ -24,7 +24,6 @@ if (typeof Testem !== 'undefined') {
     sendCoverage(callback);
   });
 } else if (typeof QUnit !== 'undefined') {
-  //eslint-disable-next-line no-undef
   QUnit.done(async function () {
     forceModulesToBeLoaded();
     await sendCoverage();
