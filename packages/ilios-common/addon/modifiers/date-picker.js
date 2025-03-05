@@ -55,7 +55,10 @@ export default class DatePickerModifier extends Modifier {
         this.flatpickr.set('maxDate', maxDate);
       }
 
-      if (this.flatpickr.selectedDates[0] !== value) {
+      if (
+        this.flatpickr.selectedDates[0] !== value &&
+        new Date(this.flatpickr.selectedDates[0]).getTime() !== new Date(value).getTime()
+      ) {
         this.flatpickr.setDate(value);
       }
 
