@@ -38,34 +38,36 @@ export default class DatePickerModifier extends Modifier {
       this.allowedWeekdays = allowedWeekdays;
     }
 
-    if (!this.flatpickr) {
+    if (this.flatpickr) {
+      if (
+        this.minDate !== (minDate ?? null) &&
+        new Date(this.minDate).getTime() !== new Date(minDate).getTime()
+      ) {
+        this.minDate = minDate;
+        this.flatpickr.set('minDate', minDate);
+      }
+
+      if (
+        this.maxDate !== (maxDate ?? null) &&
+        new Date(this.maxDate).getTime() !== new Date(maxDate).getTime()
+      ) {
+        this.maxDate = maxDate;
+        this.flatpickr.set('maxDate', maxDate);
+      }
+
+      if (this.flatpickr.selectedDates[0] !== value) {
+        this.flatpickr.setDate(value);
+      }
+
+      if (locale && this.locale !== locale) {
+        this.locale = locale;
+        this.flatpickr.set('locale', this.getFlatpickrLocale(locale));
+      }
+    } else {
+      this.minDate = minDate ?? null;
+      this.maxDate = maxDate ?? null;
       this.locale = locale ?? this.intl.primaryLocale;
-      this.flatpickr = this.initPicker(element, value, minDate, maxDate, this.locale);
-    }
-
-    if (this.flatpickr.selectedDates[0] !== value) {
-      this.flatpickr.setDate(value);
-    }
-
-    if (
-      this.minDate !== (minDate ?? null) &&
-      new Date(this.minDate).getTime() !== new Date(minDate).getTime()
-    ) {
-      this.minDate = minDate;
-      this.flatpickr.set('minDate', minDate);
-    }
-
-    if (
-      this.maxDate !== (maxDate ?? null) &&
-      new Date(this.maxDate).getTime() !== new Date(maxDate).getTime()
-    ) {
-      this.maxDate = maxDate;
-      this.flatpickr.set('maxDate', maxDate);
-    }
-
-    if (locale && this.locale !== locale) {
-      this.locale = locale;
-      this.flatpickr.set('locale', this.getFlatpickrLocale(locale));
+      this.flatpickr = this.initPicker(element, value, this.minDate, this.maxDate, this.locale);
     }
   }
 
