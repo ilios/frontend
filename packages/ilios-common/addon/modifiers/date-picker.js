@@ -36,6 +36,8 @@ export default class DatePickerModifier extends Modifier {
 
     if (Array.isArray(allowedWeekdays)) {
       this.allowedWeekdays = allowedWeekdays;
+    } else {
+      this.allowedWeekdays = [];
     }
 
     if (this.flatpickr) {
