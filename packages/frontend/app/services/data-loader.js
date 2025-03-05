@@ -7,7 +7,6 @@ export default class DataLoaderService extends CommonDataLoaderService {
   #loadedCohortLearnerGroups = new Map();
   #loadedUserProfiles = new Map();
   #loadedInstructorGroup = new Map();
-  #loadedReportsForUser = new Map();
   #schoolSchools = new Map();
 
   async loadCoursesForLearnerGroup(learnerGroupId) {
