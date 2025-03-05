@@ -11,8 +11,8 @@ All Ilios issues should be reported to our [common issue tracker](https://github
 
 ## Compatibility
 
-- Ember.js v5.9 or above
-- Ember CLI v5.9 or above
+- Ember.js v6.2 or above
+- Ember CLI v6.2 or above
 - Node.js v20 or above
 
 ## Open Source Heroes
