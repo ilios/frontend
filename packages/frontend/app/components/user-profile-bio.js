@@ -264,7 +264,7 @@ export default class UserProfileBioComponent extends Component {
         this.username = userData.username;
         this.updatedFieldsFromSync = [...this.updatedFieldsFromSync, 'username'];
       }
-    } catch (e) {
+    } catch {
       this.showSyncErrorMessage = true;
     }
   });
