@@ -37,7 +37,7 @@ module('Acceptance | Session - Overview', function (hooks) {
     assert.strictEqual(page.details.overview.sessionType.value, 'session type 0');
     assert.strictEqual(page.details.overview.sessionDescription.value, session.description);
     assert.strictEqual(page.details.overview.instructionalNotes.value, 'session notes');
-    assert.notOk(page.details.overview.ilmHours.isVisible);
+    assert.notOk(page.details.overview.ilm.ilmHours.isVisible);
   });
 
   test('check remove ilm', async function (assert) {
@@ -56,11 +56,11 @@ module('Acceptance | Session - Overview', function (hooks) {
     await page.visit({ courseId: 1, sessionId: 1 });
 
     assert.strictEqual(currentRouteName(), 'session.index');
-    assert.ok(page.details.overview.ilmHours.isVisible);
-    assert.ok(page.details.overview.ilmDueDateAndTime.isVisible);
-    assert.strictEqual(parseInt(page.details.overview.ilmHours.value, 10), ilmSession.hours);
+    assert.ok(page.details.overview.ilm.ilmHours.isVisible);
+    assert.ok(page.details.overview.ilm.ilmDueDateAndTime.isVisible);
+    assert.strictEqual(parseInt(page.details.overview.ilm.ilmHours.value, 10), ilmSession.hours);
     assert.strictEqual(
-      page.details.overview.ilmDueDateAndTime.value,
+      page.details.overview.ilm.ilmDueDateAndTime.value,
       this.intl.formatDate(ilmSession.dueDate, {
         month: '2-digit',
         day: '2-digit',
@@ -71,10 +71,10 @@ module('Acceptance | Session - Overview', function (hooks) {
       }),
     );
 
-    await page.details.overview.toggleIlm.yesNoToggle.click();
+    await page.details.overview.ilm.toggleIlm.yesNoToggle.click();
 
-    assert.notOk(page.details.overview.ilmHours.isVisible);
-    assert.notOk(page.details.overview.ilmDueDateAndTime.isVisible);
+    assert.notOk(page.details.overview.ilm.ilmHours.isVisible);
+    assert.notOk(page.details.overview.ilm.ilmDueDateAndTime.isVisible);
   });
 
   test('check add ilm', async function (assert) {
@@ -91,16 +91,16 @@ module('Acceptance | Session - Overview', function (hooks) {
     await page.visit({ courseId: 1, sessionId: 1 });
 
     assert.strictEqual(currentRouteName(), 'session.index');
-    assert.notOk(page.details.overview.ilmHours.isVisible);
-    assert.notOk(page.details.overview.ilmDueDateAndTime.isVisible);
+    assert.notOk(page.details.overview.ilm.ilmHours.isVisible);
+    assert.notOk(page.details.overview.ilm.ilmDueDateAndTime.isVisible);
 
-    await page.details.overview.toggleIlm.yesNoToggle.click();
+    await page.details.overview.ilm.toggleIlm.yesNoToggle.click();
 
-    assert.ok(page.details.overview.ilmHours.isVisible);
-    assert.ok(page.details.overview.ilmDueDateAndTime.isVisible);
-    assert.strictEqual(parseInt(page.details.overview.ilmHours.value, 10), 1);
+    assert.ok(page.details.overview.ilm.ilmHours.isVisible);
+    assert.ok(page.details.overview.ilm.ilmDueDateAndTime.isVisible);
+    assert.strictEqual(parseInt(page.details.overview.ilm.ilmHours.value, 10), 1);
     assert.strictEqual(
-      page.details.overview.ilmDueDateAndTime.value,
+      page.details.overview.ilm.ilmDueDateAndTime.value,
       this.intl.formatDate(DateTime.fromObject({ hour: 17, minute: 0 }).plus({ weeks: 6 }), {
         month: '2-digit',
         day: '2-digit',
@@ -130,11 +130,11 @@ module('Acceptance | Session - Overview', function (hooks) {
     await page.visit({ courseId: 1, sessionId: 1 });
 
     assert.strictEqual(currentRouteName(), 'session.index');
-    assert.strictEqual(parseInt(page.details.overview.ilmHours.value, 10), 3);
-    await page.details.overview.ilmHours.edit();
-    await page.details.overview.ilmHours.set(23);
-    await page.details.overview.ilmHours.save();
-    assert.strictEqual(parseInt(page.details.overview.ilmHours.value, 10), 23);
+    assert.strictEqual(parseInt(page.details.overview.ilm.ilmHours.value, 10), 3);
+    await page.details.overview.ilm.ilmHours.edit();
+    await page.details.overview.ilm.ilmHours.set(23);
+    await page.details.overview.ilm.ilmHours.save();
+    assert.strictEqual(parseInt(page.details.overview.ilm.ilmHours.value, 10), 23);
   });
 
   test('change ilm due date and time', async function (assert) {
@@ -160,7 +160,7 @@ module('Acceptance | Session - Overview', function (hooks) {
 
     assert.strictEqual(currentRouteName(), 'session.index');
     assert.strictEqual(
-      page.details.overview.ilmDueDateAndTime.value,
+      page.details.overview.ilm.ilmDueDateAndTime.value,
       this.intl.formatDate(ilmSession.dueDate, {
         month: '2-digit',
         day: '2-digit',
@@ -170,15 +170,19 @@ module('Acceptance | Session - Overview', function (hooks) {
         minute: '2-digit',
       }),
     );
-    await page.details.overview.ilmDueDateAndTime.edit();
-    await page.details.overview.ilmDueDateAndTime.datePicker.set(newDate.toJSDate());
-    await page.details.overview.ilmDueDateAndTime.timePicker.hour.select(newDate.toFormat('hh'));
-    await page.details.overview.ilmDueDateAndTime.timePicker.minute.select(newDate.toFormat('mm'));
-    await page.details.overview.ilmDueDateAndTime.timePicker.ampm.select(newDate.toFormat('a'));
+    await page.details.overview.ilm.ilmDueDateAndTime.edit();
+    await page.details.overview.ilm.ilmDueDateAndTime.datePicker.set(newDate.toJSDate());
+    await page.details.overview.ilm.ilmDueDateAndTime.timePicker.hour.select(
+      newDate.toFormat('hh'),
+    );
+    await page.details.overview.ilm.ilmDueDateAndTime.timePicker.minute.select(
+      newDate.toFormat('mm'),
+    );
+    await page.details.overview.ilm.ilmDueDateAndTime.timePicker.ampm.select(newDate.toFormat('a'));
 
-    await page.details.overview.ilmDueDateAndTime.save();
+    await page.details.overview.ilm.ilmDueDateAndTime.save();
     assert.strictEqual(
-      page.details.overview.ilmDueDateAndTime.value,
+      page.details.overview.ilm.ilmDueDateAndTime.value,
       this.intl.formatDate(newDate.toJSDate(), {
         month: '2-digit',
         day: '2-digit',
@@ -792,7 +796,7 @@ module('Acceptance | Session - Overview', function (hooks) {
       sessionLearnergroupDetails: true,
     });
     assert.strictEqual(page.details.overview.postrequisite.text, 'Due prior to: None');
-    assert.ok(page.details.overview.ilmDueDateAndTime.isVisible);
+    assert.ok(page.details.overview.ilm.ilmDueDateAndTime.isVisible);
   });
 
   test('has post-requisite', async function (assert) {
@@ -818,7 +822,7 @@ module('Acceptance | Session - Overview', function (hooks) {
       sessionLearnergroupDetails: true,
     });
     assert.strictEqual(page.details.overview.postrequisite.text, 'Due prior to: session 1');
-    assert.notOk(page.details.overview.ilmDueDateAndTime.isVisible);
+    assert.notOk(page.details.overview.ilm.ilmDueDateAndTime.isVisible);
   });
 
   test('change post-requisite', async function (assert) {

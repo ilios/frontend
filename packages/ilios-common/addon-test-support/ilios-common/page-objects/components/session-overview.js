@@ -10,7 +10,7 @@ import {
 import { pageObjectFillInFroalaEditor } from 'ilios-common';
 import postrequisiteEditor from './session/postrequisite-editor';
 import yesNoToggle from './toggle-yesno';
-import ilmDueDateAndTime from './session-overview-ilm-duedate';
+import ilm from './session/ilm';
 import publicationStatus from './publication-status';
 import publicationMenu from './session/publication-menu';
 
@@ -58,15 +58,7 @@ const definition = {
     cancel: clickable('.cancel'),
     hasError: isVisible('.validation-error-message'),
   },
-  ilmHours: {
-    scope: '[data-test-ilm-hours]',
-    value: text('span', { at: 0 }),
-    edit: clickable('[data-test-edit]'),
-    set: fillable('input'),
-    save: clickable('.done'),
-    hasError: isVisible('.validation-error-message'),
-  },
-  ilmDueDateAndTime,
+  ilm,
   supplemental: {
     scope: '[data-test-supplemental]',
     yesNoToggle,
@@ -81,10 +73,6 @@ const definition = {
   },
   attendanceRequired: {
     scope: '[data-test-attendance-required]',
-    yesNoToggle,
-  },
-  toggleIlm: {
-    scope: '[data-test-ilm]',
     yesNoToggle,
   },
   prerequisites: {

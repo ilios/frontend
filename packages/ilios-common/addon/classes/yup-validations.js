@@ -26,6 +26,11 @@ export default class YupValidations {
   get errorsByKey() {
     return this.error?.errors.reduce((acc, validationError) => {
       const key = validationError.path;
+      if (!key || !validationError.messageKey) {
+        throw new Error(
+          `No transaltion found for validation error: ${validationError}. It needs to be setup in the YupValidations class.`,
+        );
+      }
 
       if (!acc[key]) {
         acc[key] = [validationError];
@@ -108,11 +113,15 @@ function setupErrorMessages() {
   setLocale({
     mixed: {
       required: required(),
+      notType: notType(),
     },
     string: {
       min: min(['min']),
       max: max(['max']),
       email: isEmail(),
+    },
+    number: {
+      moreThan: moreThan(),
     },
   });
 }
@@ -153,6 +162,34 @@ function isEmail() {
       path: validationParams.path,
       messageKey: 'errors.email',
       values: [],
+    };
+  };
+}
+
+function notType() {
+  return ({ type, path }) => {
+    let messageKey,
+      values = [];
+    switch (type) {
+      case 'number':
+        messageKey = 'errors.notANumber';
+        break;
+      default:
+        throw new Error(`No translation found for incorect type: ${type}`);
+    }
+
+    return { path, messageKey, values };
+  };
+}
+
+function moreThan() {
+  return (validationParams) => {
+    //our current translations expects this key to be named gt and not more as it is in yup
+    const gt = validationParams.more;
+    return {
+      path: validationParams.path,
+      messageKey: 'errors.greaterThan',
+      values: { gt },
     };
   };
 }

@@ -134,55 +134,7 @@
             </div>
           {{/if}}
           <hr>
-          <div class="independentlearningcontrol block" data-test-ilm>
-            <label>{{t "general.independentLearning"}}:</label>
-            <span class="independentlearningcontrol-value">
-              {{#if @editable}}
-                <ToggleYesno @yes={{this.isIndependentLearning}} @toggle={{perform this.saveIndependentLearning}} />
-              {{else}}
-                {{#if this.isIndependentLearning}}
-                  <span class="add">{{t "general.yes"}}</span>
-                {{else}}
-                  <span class="remove">{{t "general.no"}}</span>
-                {{/if}}
-              {{/if}}
-            </span>
-          </div>
-          {{#if this.isIndependentLearning}}
-            <div class="sessionilmhours block" data-test-ilm-hours>
-              <label for="hours-{{templateId}}">{{t "general.hours"}}:</label>
-              <span>
-                {{#if @editable}}
-                  <EditableField
-                      @value={{this.hours}}
-                      @save={{this.changeIlmHours}}
-                      @close={{this.revertIlmHoursChanges}}
-                      @saveOnEnter={{true}}
-                      @closeOnEscape={{true}} as |isSaving|
-                  >
-                    <input
-                      id="hours-{{templateId}}"
-                      disabled={{isSaving}}
-                      type="text"
-                      value={{this.hours}}
-                      {{on "key-press" (fn this.addErrorDisplayFor "hours")}}
-                      {{on "input" (pick "target.value" (set this "hours"))}}
-                    >
-                    <ValidationError @validatable={{this}} @property="hours" />
-                  </EditableField>
-                {{else}}
-                  {{@session.ilmSession.hours}}&nbsp;
-                {{/if}}
-              </span>
-            </div>
-            {{#unless @session.hasPostrequisite}}
-              <SessionOverviewIlmDuedate
-                @ilmSession={{this.ilmSession}}
-                @editable={{@editable}}
-                class="block"
-              />
-            {{/unless}}
-          {{/if}}
+          <Session::Ilm @session={{@session}} @editable={{@editable}} />
           <div class="postrequisite block" data-test-postrequisite>
             {{#if @editable}}
               {{#if this.isEditingPostRequisite}}
