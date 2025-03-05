@@ -48,7 +48,7 @@ export default class DatePickerModifier extends Modifier {
     }
 
     if (
-      this.minDate !== minDate &&
+      this.minDate !== (minDate ?? null) &&
       new Date(this.minDate).getTime() !== new Date(minDate).getTime()
     ) {
       this.minDate = minDate;
@@ -56,7 +56,7 @@ export default class DatePickerModifier extends Modifier {
     }
 
     if (
-      this.maxDate !== maxDate &&
+      this.maxDate !== (maxDate ?? null) &&
       new Date(this.maxDate).getTime() !== new Date(maxDate).getTime()
     ) {
       this.maxDate = maxDate;
