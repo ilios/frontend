@@ -432,13 +432,8 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
     });
     await page.subjects.list.newSubject.run();
     assert.strictEqual(
-<<<<<<< HEAD
-      page.subjects.runSubject.header.description,
-      'This report shows all Courses in school 0.',
-=======
       page.root.runSubject.header.description,
       'This report shows all Courses in school 0. (2)',
->>>>>>> ced03b890 (fixed tests)
     );
     assert.strictEqual(page.subjects.runSubject.results.results.length, 2);
     assert.strictEqual(
