@@ -18,7 +18,6 @@ export default class CourseRolloverComponent extends Component {
   @Length(3, 200) @NotBlank() @tracked newTitle;
   @NotBlank() @tracked selectedYear;
   @tracked years;
-  @tracked course;
   @tracked selectedStartDate;
   @tracked skipOfferings = false;
   @tracked selectedCohorts = [];
