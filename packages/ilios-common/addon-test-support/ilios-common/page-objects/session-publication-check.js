@@ -1,6 +1,6 @@
 import { create, text, visitable } from 'ember-cli-page-object';
 
-import overview from './components/session-overview';
+import overview from './components/session/overview';
 
 export default create({
   visit: visitable('/courses/:courseId/sessions/:sessionId/publicationcheck'),

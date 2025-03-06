@@ -8,11 +8,11 @@ import {
   text,
 } from 'ember-cli-page-object';
 import { pageObjectFillInFroalaEditor } from 'ilios-common';
-import postrequisiteEditor from './session/postrequisite-editor';
-import yesNoToggle from './toggle-yesno';
-import ilm from './session/ilm';
-import publicationStatus from './publication-status';
-import publicationMenu from './session/publication-menu';
+import postrequisiteEditor from './postrequisite-editor';
+import yesNoToggle from '../toggle-yesno';
+import ilm from './ilm';
+import publicationStatus from '../publication-status';
+import publicationMenu from './publication-menu';
 
 const definition = {
   scope: '[data-test-session-overview]',
