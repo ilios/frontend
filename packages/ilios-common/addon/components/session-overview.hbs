@@ -200,13 +200,16 @@
                 <EditableField
                   @value={{this.description}}
                   @renderHtml={{true}}
-                  @isSaveDisabled={{this.hasErrorForDescription}}
+                  @isSaveDisabled={{this.validations.errors.description}}
                   @save={{perform this.saveDescription}}
                   @close={{this.revertDescriptionChanges}}
                   @clickPrompt={{t "general.clickToEdit"}}
                 >
                   <HtmlEditor @content={{this.description}} @update={{this.changeDescription}} />
-                  <ValidationError @validatable={{this}} @property="description" />
+                  <YupValidationMessage
+                    @description={{t 'general.description'}}
+                    @validationErrors={{this.validations.errors.description}}
+                  />
                 </EditableField>
               {{else}}
                 {{! template-lint-disable no-triple-curlies}}
@@ -221,13 +224,16 @@
                 <EditableField
                   @value={{@session.instructionalNotes}}
                   @renderHtml={{true}}
-                  @isSaveDisabled={{this.hasErrorForInstructionalNotes}}
+                  @isSaveDisabled={{this.validations.errors.instructionalNotes}}
                   @save={{perform this.saveInstructionalNotes}}
                   @close={{this.revertInstructionalNotesChanges}}
                   @clickPrompt={{t "general.clickToEdit"}}
                 >
                   <HtmlEditor @content={{this.instructionalNotes}} @update={{this.changeInstructionalNotes}} />
-                  <ValidationError @validatable={{this}} @property="instructionalNotes" />
+                  <YupValidationMessage
+                    @description={{t 'general.instructionalNotes'}}
+                    @validationErrors={{this.validations.errors.instructionalNotes}}
+                  />
                 </EditableField>
               {{else}}
                 {{! template-lint-disable no-triple-curlies}}

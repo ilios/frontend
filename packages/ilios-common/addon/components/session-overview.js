@@ -5,12 +5,12 @@ import { service } from '@ember/service';
 import { isEmpty } from '@ember/utils';
 import { task, restartableTask } from 'ember-concurrency';
 import { DateTime } from 'luxon';
-import { validatable, Length } from 'ilios-common/decorators/validation';
 import { hash } from 'rsvp';
 import { findById, sortBy } from 'ilios-common/utils/array-helpers';
 import { TrackedAsyncData } from 'ember-async-data';
+import YupValidations from 'ilios-common/classes/yup-validations';
+import { string } from 'yup';
 
-@validatable
 export default class SessionOverview extends Component {
   @service currentUser;
   @service router;
@@ -18,8 +18,8 @@ export default class SessionOverview extends Component {
   @service intl;
   @service store;
 
-  @Length(3, 65000) @tracked instructionalNotes = null;
-  @Length(3, 65000) @tracked description = null;
+  @tracked instructionalNotes = null;
+  @tracked description = null;
   @tracked sessionType = null;
   @tracked isSaving = false;
   @tracked isEditingPostRequisite = false;
@@ -32,27 +32,10 @@ export default class SessionOverview extends Component {
   @tracked showSpecialAttireRequired = false;
   @tracked showSpecialEquipmentRequired = false;
 
-  @cached
-  get hasErrorForInstructionalNotesData() {
-    return new TrackedAsyncData(this.hasErrorFor('instructionalNotes'));
-  }
-
-  get hasErrorForInstructionalNotes() {
-    return this.hasErrorForInstructionalNotesData.isResolved
-      ? this.hasErrorForInstructionalNotesData.value
-      : false;
-  }
-
-  @cached
-  get hasErrorForDescriptionData() {
-    return new TrackedAsyncData(this.hasErrorFor('description'));
-  }
-
-  get hasErrorForDescription() {
-    return this.hasErrorForDescriptionData.isResolved
-      ? this.hasErrorForDescriptionData.value
-      : false;
-  }
+  validations = new YupValidations(this, {
+    instructionalNotes: string().nullable().min(3).max(65000),
+    description: string().nullable().min(3).max(65000),
+  });
 
   @cached
   get prerequisitesData() {
@@ -208,21 +191,21 @@ export default class SessionOverview extends Component {
   }
 
   saveDescription = task(async () => {
-    this.addErrorDisplayFor('description');
-    const isValid = await this.isValid('description');
+    this.validations.addErrorDisplayFor('description');
+    const isValid = await this.validations.isValid();
 
     if (!isValid) {
       return false;
     }
 
-    this.removeErrorDisplayFor('description');
+    this.validations.removeErrorDisplayFor('description');
     this.args.session.description = this.description;
     await this.args.session.save();
   });
 
   @action
   changeDescription(html) {
-    this.addErrorDisplayFor('description');
+    this.validations.addErrorDisplayFor('description');
     const noTagsText = html.replace(/(<([^>]+)>)/gi, '');
     const strippedText = noTagsText.replace(/&nbsp;/gi, '').replace(/\s/g, '');
 
@@ -241,7 +224,7 @@ export default class SessionOverview extends Component {
 
   @action
   changeInstructionalNotes(html) {
-    this.addErrorDisplayFor('instructionalNotes');
+    this.validations.addErrorDisplayFor('instructionalNotes');
     const noTagsText = html.replace(/(<([^>]+)>)/gi, '');
     const strippedText = noTagsText.replace(/&nbsp;/gi, '').replace(/\s/g, '');
 
@@ -253,12 +236,12 @@ export default class SessionOverview extends Component {
   }
 
   saveInstructionalNotes = task(async () => {
-    this.addErrorDisplayFor('instructionalNotes');
-    const isValid = await this.isValid('instructionalNotes');
+    this.validations.addErrorDisplayFor('instructionalNotes');
+    const isValid = await this.validations.isValid();
     if (!isValid) {
       return false;
     }
-    this.removeErrorDisplayFor('instructionalNotes');
+    this.validations.removeErrorDisplayFor('instructionalNotes');
     this.args.session.instructionalNotes = this.instructionalNotes;
 
     await this.args.session.save();
