@@ -15,13 +15,12 @@ export default class CourseRolloverComponent extends Component {
   @service flashMessages;
   @service iliosConfig;
 
-  @Length(3, 200) @NotBlank() @tracked title;
+  @Length(3, 200) @NotBlank() @tracked newTitle;
   @NotBlank() @tracked selectedYear;
   @tracked years;
   @tracked course;
   @tracked selectedStartDate;
   @tracked skipOfferings = false;
-  @tracked allCourses;
   @tracked selectedCohorts = [];
 
   constructor() {
@@ -36,6 +35,14 @@ export default class CourseRolloverComponent extends Component {
     for (let i = 0; i < 6; i++) {
       this.years.push(year + i);
     }
+  }
+
+  get isNewTitleSet() {
+    return typeof this.newTitle !== 'undefined';
+  }
+
+  get title() {
+    return this.isNewTitleSet ? this.newTitle : this.args.course.title;
   }
 
   @cached
@@ -59,18 +66,28 @@ export default class CourseRolloverComponent extends Component {
     return [DateTime.fromJSDate(this.args.course.startDate).weekday];
   }
 
-  load = restartableTask(async (event, [course]) => {
-    if (!course) {
-      return;
-    }
-    this.title = course.title;
+  @cached
+  get allCoursesData() {
+    return new TrackedAsyncData(this.loadAllCourses(this.args.course));
+  }
+
+  get allCourses() {
+    return this.allCoursesData.isResolved ? this.allCoursesData.value : [];
+  }
+
+  async loadAllCourses(course) {
     const school = course.belongsTo('school').id();
-    this.allCourses = await this.store.query('course', {
+    return this.store.query('course', {
       filters: {
         school,
       },
     });
+  }
 
+  load = restartableTask(async (event, [course]) => {
+    if (!course) {
+      return;
+    }
     // set selectedYear to next valid year (or current if none found)
     const validYear = this.years.find((year) => !this.unavailableYears.includes(year));
     this.changeSelectedYear(validYear || this.years[0]);
@@ -78,7 +95,7 @@ export default class CourseRolloverComponent extends Component {
 
   @action
   changeTitle(newTitle) {
-    this.title = newTitle;
+    this.newTitle = newTitle;
   }
   @action
   addCohort(cohort) {
@@ -97,6 +114,10 @@ export default class CourseRolloverComponent extends Component {
 
   save = dropTask(async () => {
     await timeout(1);
+    // if the user hasn't set a new title, then we do this on their behalf now.
+    if (!this.isNewTitleSet) {
+      this.changeTitle(this.args.course.title);
+    }
     this.addErrorDisplayForAllFields();
     const isValid = await this.isValid();
     if (!isValid) {
@@ -130,9 +151,6 @@ export default class CourseRolloverComponent extends Component {
   });
 
   get unavailableYears() {
-    if (!this.allCourses) {
-      return [];
-    }
     const existingCoursesWithTitle = filterBy(this.allCourses, 'title', this.title.trim());
     return mapBy(existingCoursesWithTitle, 'year');
   }
