@@ -1,10 +1,6 @@
-<div
-  data-test-session-overview
-  {{did-insert (perform this.load) @session}}
-  {{did-update (perform this.load) @session}}
->
+<div data-test-session-overview>
   {{#let (unique-id) as |templateId|}}
-    {{#if this.load.performCount}}
+    {{#if this.isLoaded}}
       <Session::Header @session={{@session}} @editable={{@editable}} @hideCheckLink={{@hideCheckLink}} />
 
       <section class="session-overview">

@@ -3,9 +3,8 @@ import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
 import { isEmpty } from '@ember/utils';
-import { task, restartableTask } from 'ember-concurrency';
+import { task } from 'ember-concurrency';
 import { DateTime } from 'luxon';
-import { hash } from 'rsvp';
 import { findById, sortBy } from 'ilios-common/utils/array-helpers';
 import { TrackedAsyncData } from 'ember-async-data';
 import YupValidations from 'ilios-common/classes/yup-validations';
@@ -18,19 +17,10 @@ export default class SessionOverview extends Component {
   @service intl;
   @service store;
 
-  @tracked instructionalNotes = null;
-  @tracked description = null;
-  @tracked sessionType = null;
-  @tracked isSaving = false;
+  @tracked localInstructionalNotes = null;
+  @tracked localDescription = null;
+  @tracked localSessionType = null;
   @tracked isEditingPostRequisite = false;
-  @tracked updatedAt = null;
-  @tracked showCopy = false;
-
-  @tracked sessionTypes = [];
-  @tracked showAttendanceRequired = false;
-  @tracked showSupplemental = false;
-  @tracked showSpecialAttireRequired = false;
-  @tracked showSpecialEquipmentRequired = false;
 
   validations = new YupValidations(this, {
     instructionalNotes: string().nullable().min(3).max(65000),
@@ -50,6 +40,99 @@ export default class SessionOverview extends Component {
   @cached
   get postrequisiteCourseData() {
     return new TrackedAsyncData(this.postrequisite?.course);
+  }
+
+  @cached
+  get sessionTypeData() {
+    return new TrackedAsyncData(this.args.session.sessionType);
+  }
+
+  @cached
+  get courseData() {
+    return new TrackedAsyncData(this.args.session.course);
+  }
+
+  @cached
+  get schoolData() {
+    return new TrackedAsyncData(this.courseData.isResolved ? this.courseData.value.school : null);
+  }
+
+  @cached
+  get sessionTypesData() {
+    return new TrackedAsyncData(
+      this.schoolData.isResolved ? this.schoolData.value?.sessionType : null,
+    );
+  }
+
+  get sessionTypes() {
+    return this.sessionTypesData.isResolved ? this.sessionTypesData.value : [];
+  }
+
+  @cached
+  get showAttendanceRequiredData() {
+    return new TrackedAsyncData(
+      this.schoolData.isResolved
+        ? this.schoolData.value?.getConfigValue('showSessionAttendanceRequired')
+        : false,
+    );
+  }
+
+  @cached
+  get showSupplementalData() {
+    return new TrackedAsyncData(
+      this.schoolData.isResolved
+        ? this.schoolData.value?.getConfigValue('showSessionSupplemental')
+        : false,
+    );
+  }
+
+  @cached
+  get showSpecialAttireRequiredData() {
+    return new TrackedAsyncData(
+      this.schoolData.isResolved
+        ? this.schoolData.value?.getConfigValue('showSessionSpecialAttireRequired')
+        : false,
+    );
+  }
+
+  @cached
+  get showSpecialEquipmentRequiredData() {
+    return new TrackedAsyncData(
+      this.schoolData.isResolved
+        ? this.schoolData.value?.getConfigValue('showSessionSpecialEquipmentRequired')
+        : false,
+    );
+  }
+
+  get showAttendanceRequired() {
+    return this.showAttendanceRequiredData.isResolved
+      ? this.showAttendanceRequiredData.value
+      : false;
+  }
+
+  get showSupplemental() {
+    return this.showSupplementalData.isResolved ? this.showSupplementalData.value : false;
+  }
+
+  get showSpecialAttireRequired() {
+    return this.showSpecialAttireRequiredData.isResolved
+      ? this.showSpecialAttireRequiredData.value
+      : false;
+  }
+
+  get showSpecialEquipmentRequired() {
+    return this.showSpecialEquipmentRequiredData.isResolved
+      ? this.showSpecialEquipmentRequiredData.value
+      : false;
+  }
+
+  @cached
+  get showCopyData() {
+    return new TrackedAsyncData(this.getShowCopy(this.args.session));
+  }
+
+  get showCopy() {
+    return this.showCopyData.isResolved ? this.showCopyData.value : false;
   }
 
   get prerequisites() {
@@ -75,41 +158,34 @@ export default class SessionOverview extends Component {
     return sortBy(this.filteredSessionTypes, 'title');
   }
 
-  load = restartableTask(async (element, [session]) => {
-    const course = await session.course;
-    const school = await course.school;
-    const sessionTypes = await school.sessionTypes;
-    const {
-      sessionType,
-      showCopy,
-      showSessionAttendanceRequired,
-      showSessionSupplemental,
-      showSessionSpecialAttireRequired,
-      showSessionSpecialEquipmentRequired,
-    } = await hash({
-      course: session.course,
-      sessionType: session.sessionType,
-      showCopy: this.getShowCopy(session),
-      showSessionAttendanceRequired: school.getConfigValue('showSessionAttendanceRequired'),
-      showSessionSupplemental: school.getConfigValue('showSessionSupplemental'),
-      showSessionSpecialAttireRequired: school.getConfigValue('showSessionSpecialAttireRequired'),
-      showSessionSpecialEquipmentRequired: school.getConfigValue(
-        'showSessionSpecialEquipmentRequired',
-      ),
-    });
-    this.showCopy = showCopy;
+  get instructionalNotes() {
+    return this.localInstructionalNotes ?? this.args.session.instructionalNotes;
+  }
 
-    this.showAttendanceRequired = showSessionAttendanceRequired;
-    this.showSupplemental = showSessionSupplemental;
-    this.showSpecialAttireRequired = showSessionSpecialAttireRequired;
-    this.showSpecialEquipmentRequired = showSessionSpecialEquipmentRequired;
-    this.sessionType = sessionType;
+  get description() {
+    return this.localDescription ?? this.args.session.description;
+  }
 
-    this.instructionalNotes = session.instructionalNotes;
-    this.updatedAt = DateTime.fromJSDate(session.updatedAt).toFormat('D t');
-    this.sessionTypes = sessionTypes || [];
-    this.description = session.description;
-  });
+  get sessionType() {
+    return (this.localSessionType ?? this.sessionTypeData.isResolved)
+      ? this.sessionTypeData.value
+      : null;
+  }
+
+  get updatedAt() {
+    return DateTime.fromJSDate(this.args.session.updatedAt).toFormat('D t');
+  }
+
+  get isLoaded() {
+    return (
+      this.sessionTypesData.isResolved &&
+      this.showAttendanceRequiredData.isResolved &&
+      this.showSupplementalData.isResolved &&
+      this.showSpecialAttireRequiredData.isResolved &&
+      this.showSpecialEquipmentRequiredData.isResolved &&
+      this.showCopyData.isResolved
+    );
+  }
 
   /**
    * Check if a user is allowed to create a session anywhere
