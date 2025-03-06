@@ -1,8 +1,39 @@
 import Component from '@glimmer/component';
+import { restartableTask } from 'ember-concurrency';
 import { service } from '@ember/service';
+import { guidFor } from '@ember/object/internals';
 
 export default class ReportsCurriculumHeader extends Component {
+  @service flashMessages;
   @service intl;
+
+  get copyButtonId() {
+    return `curriculum-report-copy-button-${guidFor(this)}`;
+  }
+
+  get copyButtonElement() {
+    return document.getElementById(this.copyButtonId);
+  }
+
+  get reportUrl() {
+    return window.location.href;
+  }
+
+  textCopied = restartableTask(async () => {
+    this.flashMessages.success('general.copiedCurriculumReportUrl');
+  });
+
+  popperOptions = {
+    placement: 'right',
+    modifiers: [
+      {
+        name: 'flip',
+        options: {
+          fallbackPlacements: ['bottom'],
+        },
+      },
+    ],
+  };
 
   get reportList() {
     return [
