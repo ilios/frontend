@@ -2,6 +2,7 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render, find } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
+import { DateTime } from 'luxon';
 
 module('Integration | Modifier | date-picker', function (hooks) {
   setupRenderingTest(hooks);
@@ -104,6 +105,46 @@ module('Integration | Modifier | date-picker', function (hooks) {
     });
     await render(
       hbs`<div data-test-picker-element {{date-picker this.value onChangeHandler=this.onChange}}></div>`,
+    );
+    const flatpickr = find('[data-test-picker-element]')._flatpickr;
+    flatpickr.setDate(newValue, true);
+  });
+
+  test('weekday restrictions - clicking on invalid date fails', async function (assert) {
+    assert.expect(1);
+    const value = new Date('2014-03-02'); // a Sunday
+    const allowedWeekdays = [DateTime.fromJSDate(value).weekday];
+    const newValue = new Date('2022-06-23'); // a Thursday
+    this.set('value', value);
+    this.set('allowedWeekdays', allowedWeekdays);
+    this.set('onChange', (date) => {
+      assert.notOk(date);
+    });
+    await render(
+      hbs`<div
+  data-test-picker-element
+  {{date-picker this.value allowedWeekdays=this.allowedWeekdays onChangeHandler=this.onChange}}
+></div>`,
+    );
+    const flatpickr = find('[data-test-picker-element]')._flatpickr;
+    flatpickr.setDate(newValue, true);
+  });
+
+  test('weekday restrictions - clicking on valid date succeeds', async function (assert) {
+    assert.expect(1);
+    const value = new Date('2014-03-02'); // a Sunday
+    const allowedWeekdays = [DateTime.fromJSDate(value).weekday];
+    const newValue = new Date('2022-06-26'); // another Sunday
+    this.set('value', value);
+    this.set('allowedWeekdays', allowedWeekdays);
+    this.set('onChange', (date) => {
+      assert.strictEqual(date.getTime(), newValue.getTime());
+    });
+    await render(
+      hbs`<div
+  data-test-picker-element
+  {{date-picker this.value allowedWeekdays=this.allowedWeekdays onChangeHandler=this.onChange}}
+></div>`,
     );
     const flatpickr = find('[data-test-picker-element]')._flatpickr;
     flatpickr.setDate(newValue, true);

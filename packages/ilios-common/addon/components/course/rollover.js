@@ -18,7 +18,7 @@ export default class CourseRolloverComponent extends Component {
   @NotBlank() @tracked selectedYear;
   @tracked years;
   @tracked course;
-  @tracked startDate;
+  @tracked selectedStartDate;
   @tracked skipOfferings = false;
   @tracked allCourses;
   @tracked selectedCohorts = [];
@@ -36,6 +36,14 @@ export default class CourseRolloverComponent extends Component {
     for (let i = 0; i < 6; i++) {
       this.years.push(year + i);
     }
+  }
+
+  get startDate() {
+    return this.selectedStartDate ?? this.args.course.startDate;
+  }
+
+  get allowedWeekdays() {
+    return [DateTime.fromJSDate(this.args.course.startDate).weekday];
   }
 
   load = restartableTask(async (event, [course]) => {
@@ -71,6 +79,12 @@ export default class CourseRolloverComponent extends Component {
     this.selectedCohorts = this.selectedCohorts.filter((obj) => obj !== cohort);
   }
 
+  @action
+  updateStartDate(newStartDate) {
+    // if a date is forced that isn't allowed
+    this.selectedStartDate = newStartDate ? newStartDate : this.args.course.startDate;
+  }
+
   save = dropTask(async () => {
     await timeout(1);
     this.addErrorDisplayForAllFields();
@@ -86,8 +100,8 @@ export default class CourseRolloverComponent extends Component {
       year: this.selectedYear,
       newCourseTitle: this.title,
     };
-    if (this.startDate) {
-      data.newStartDate = DateTime.fromJSDate(this.startDate).toFormat('yyyy-LL-dd');
+    if (this.selectedStartDate) {
+      data.newStartDate = DateTime.fromJSDate(this.selectedStartDate).toFormat('yyyy-LL-dd');
     }
     if (this.skipOfferings) {
       data.skipOfferings = true;
@@ -124,7 +138,7 @@ export default class CourseRolloverComponent extends Component {
 
     const from = DateTime.fromJSDate(this.args.course.startDate);
 
-    this.startDate = DateTime.fromObject({
+    this.selectedStartDate = DateTime.fromObject({
       hour: 0,
       minute: 0,
       weekYear: Number(selectedYear),
