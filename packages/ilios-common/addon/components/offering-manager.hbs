@@ -23,7 +23,7 @@
         <ul>
           {{#each this.sortedLearnerGroups as |learnerGroup|}}
             <li
-              {{did-insert this.setLearnerGroupElement learnerGroup.id}}
+              {{this.setLearnerGroupElement learnerGroup.id}}
               {{mouse-hover-toggle (fn this.toggleHover learnerGroup.id)}}
             >
               {{learnerGroup.title}}
