@@ -3,6 +3,7 @@ import { action, set } from '@ember/object';
 import { service } from '@ember/service';
 import { cached, tracked } from '@glimmer/tracking';
 import { task, timeout } from 'ember-concurrency';
+import { modifier } from 'ember-modifier';
 import { TrackedAsyncData } from 'ember-async-data';
 
 export default class OfferingManagerComponent extends Component {
@@ -10,6 +11,10 @@ export default class OfferingManagerComponent extends Component {
   @tracked isEditing = false;
   @tracked showRemoveConfirmation = false;
   @tracked hoveredGroups = [];
+
+  setLearnerGroupElement = modifier((element, [id]) => {
+    set(this, `learnerGroupElement${id}`, element);
+  });
 
   @cached
   get learnerGroupsData() {
@@ -92,9 +97,4 @@ export default class OfferingManagerComponent extends Component {
   textCopied = task(async () => {
     await timeout(3000);
   });
-
-  @action
-  setLearnerGroupElement(element, [id]) {
-    set(this, `learnerGroupElement${id}`, element);
-  }
 }
