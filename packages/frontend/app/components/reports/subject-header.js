@@ -58,7 +58,6 @@ export default class ReportsSubjectHeader extends Component {
   }
 
   downloadReport = dropTask(async () => {
-    console.log('ReportsSubjectHeader downloadReport');
     await waitForProperty(this, 'reportTitleData.isResolved');
     const data = await this.args.fetchDownloadData();
     const csv = PapaParse.unparse(data);
