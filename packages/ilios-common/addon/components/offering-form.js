@@ -56,7 +56,6 @@ export default class OfferingForm extends Component {
   @tracked savedOfferings = 0;
   @tracked recurringDayOptions = null;
   @tracked availableInstructorGroups = [];
-  @tracked loaded = false;
   @tracked saveProgressPercent;
   @tracked urlChanged = false;
   @tracked learnerGroupsFilter = '';
@@ -184,9 +183,6 @@ export default class OfferingForm extends Component {
   }
 
   loadDefaultAttrs() {
-    if (this.loaded) {
-      return;
-    }
     this.startDate = DateTime.fromJSDate(this.defaultStartDate)
       .set({ hour: 8, minute: 0, second: 0 })
       .toJSDate();
@@ -198,13 +194,9 @@ export default class OfferingForm extends Component {
     this.recurringDays = [];
     this.instructors = [];
     this.instructorGroups = [];
-    this.loaded = true;
   }
 
   loadAttrsFromOffering = dropTask(async (offering) => {
-    if (this.loaded) {
-      return;
-    }
     this.startDate = offering.get('startDate');
     this.endDate = offering.get('endDate');
     this.room = offering.get('room');
@@ -220,7 +212,6 @@ export default class OfferingForm extends Component {
     this.learners = obj.learners;
     this.instructors = obj.instructors;
     this.instructorGroups = obj.instructorGroups;
-    this.loaded = true;
   });
 
   @action
