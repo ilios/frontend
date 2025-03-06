@@ -17,9 +17,9 @@ export default class SessionOverview extends Component {
   @service intl;
   @service store;
 
-  @tracked localInstructionalNotes = null;
-  @tracked localDescription = null;
-  @tracked localSessionType = null;
+  @tracked localInstructionalNotes;
+  @tracked localDescription;
+  @tracked localSessionType;
   @tracked isEditingPostRequisite = false;
 
   validations = new YupValidations(this, {
@@ -60,12 +60,16 @@ export default class SessionOverview extends Component {
   @cached
   get sessionTypesData() {
     return new TrackedAsyncData(
-      this.schoolData.isResolved ? this.schoolData.value?.sessionType : null,
+      this.schoolData.isResolved ? this.schoolData.value?.sessionTypes : null,
     );
   }
 
   get sessionTypes() {
-    return this.sessionTypesData.isResolved ? this.sessionTypesData.value : [];
+    if (!this.sessionTypesData.isResolved || !this.sessionTypesData.value) {
+      return [];
+    }
+
+    return this.sessionTypesData.value;
   }
 
   @cached
@@ -159,17 +163,24 @@ export default class SessionOverview extends Component {
   }
 
   get instructionalNotes() {
-    return this.localInstructionalNotes ?? this.args.session.instructionalNotes;
+    if (this.localInstructionalNotes === undefined) {
+      return this.args.session.instructionalNotes;
+    }
+    return this.localInstructionalNotes;
   }
 
   get description() {
-    return this.localDescription ?? this.args.session.description;
+    if (this.localDescription === undefined) {
+      return this.args.session.description;
+    }
+    return this.localDescription;
   }
 
   get sessionType() {
-    return (this.localSessionType ?? this.sessionTypeData.isResolved)
-      ? this.sessionTypeData.value
-      : null;
+    if (this.localSessionType === undefined) {
+      return this.sessionTypeData.isResolved ? this.sessionTypeData.value : null;
+    }
+    return this.localSessionType;
   }
 
   get updatedAt() {
@@ -179,6 +190,7 @@ export default class SessionOverview extends Component {
   get isLoaded() {
     return (
       this.sessionTypesData.isResolved &&
+      this.sessionTypeData.isResolved &&
       this.showAttendanceRequiredData.isResolved &&
       this.showSupplementalData.isResolved &&
       this.showSpecialAttireRequiredData.isResolved &&
@@ -223,23 +235,24 @@ export default class SessionOverview extends Component {
 
   @action
   revertInstructionalNotesChanges() {
-    this.instructionalNotes = this.args.session.instructionalNotes;
+    this.localInstructionalNotes = undefined;
   }
 
   @action
   setSessionType(event) {
-    this.sessionType = findById(this.sessionTypes, event.target.value);
+    this.localSessionType = findById(this.sessionTypes, event.target.value);
   }
 
   @action
   changeSessionType() {
     this.args.session.sessionType = this.sessionType;
     this.args.session.save();
+    this.localSessionType = undefined;
   }
 
   @action
   async revertSessionTypeChanges() {
-    this.sessionType = await this.args.session.sessionType;
+    this.localSessionType = undefined;
   }
 
   @action
@@ -277,6 +290,7 @@ export default class SessionOverview extends Component {
     this.validations.removeErrorDisplayFor('description');
     this.args.session.description = this.description;
     await this.args.session.save();
+    this.localDescription = undefined;
   });
 
   @action
@@ -290,12 +304,12 @@ export default class SessionOverview extends Component {
       html = null;
     }
 
-    this.description = html;
+    this.localDescription = html;
   }
 
   @action
   revertDescriptionChanges() {
-    this.description = this.args.session.description;
+    this.localDescription = undefined;
   }
 
   @action
@@ -308,7 +322,7 @@ export default class SessionOverview extends Component {
     if (strippedText.length === 0) {
       html = null;
     }
-    this.instructionalNotes = html;
+    this.localInstructionalNotes = html;
   }
 
   saveInstructionalNotes = task(async () => {
@@ -321,5 +335,6 @@ export default class SessionOverview extends Component {
     this.args.session.instructionalNotes = this.instructionalNotes;
 
     await this.args.session.save();
+    this.localInstructionalNotes = undefined;
   });
 }
