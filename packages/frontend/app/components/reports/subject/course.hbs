@@ -1,20 +1,23 @@
-<Reports::SubjectHeader
-  @report={{@report}}
-  @school={{@school}}
-  @subject={{@subject}}
-  @prepositionalObject={{@prepositionalObject}}
-  @prepositionalObjectTableRowId={{@prepositionalObjectTableRowId}}
-  @year={{@year}}
-  @changeYear={{@changeYear}}
-  @showYearFilter={{not-eq @prepositionalObject "academic year"}}
-  @description={{@description}}
-  @fetchDownloadData={{this.fetchDownloadData}}
-  @readyToDownload={{this.data.isResolved}}
-/>
+{{#if this.allCoursesData.isResolved}}
+  <Reports::SubjectHeader
+    @report={{@report}}
+    @school={{@school}}
+    @subject={{@subject}}
+    @prepositionalObject={{@prepositionalObject}}
+    @prepositionalObjectTableRowId={{@prepositionalObjectTableRowId}}
+    @year={{@year}}
+    @changeYear={{@changeYear}}
+    @showYearFilter={{not-eq @prepositionalObject "academic year"}}
+    @description={{@description}}
+    @fetchDownloadData={{this.fetchDownloadData}}
+    @readyToDownload={{this.allCoursesData.isResolved}}
+    @resultsLength={{this.resultsLengthDisplay}}
+  />
+{{/if}}
 <div data-test-reports-subject-course>
-  {{#if this.data.isResolved}}
-    <ul class="report-results" data-test-results>
-      {{#each this.sortedCourses as |course|}}
+  {{#if this.allCoursesData.isResolved}}
+    <ul class="report-results{{if this.reportResultsExceedMax ' limited'}}" data-test-results>
+      {{#each this.limitedCourses as |course|}}
         <li>
           {{#if this.showYear}}
             <span data-test-year>
@@ -41,6 +44,19 @@
         <li>{{t "general.none"}}</li>
       {{/each}}
     </ul>
+    {{#if this.reportResultsExceedMax}}
+      <Reports::SubjectDownload
+        @report={{@report}}
+        @school={{@school}}
+        @subject={{@subject}}
+        @prepositionalObject={{@prepositionalObject}}
+        @prepositionalObjectTableRowId={{@prepositionalObjectTableRowId}}
+        @fetchDownloadData={{this.fetchDownloadData}}
+        @readyToDownload={{true}}
+        @reportTitleData={{this.reportTitleData}}
+        @message={{t "general.reportResultsExceedMax"}}
+      />
+    {{/if}}
   {{else}}
     <LoadingSpinner />
   {{/if}}
