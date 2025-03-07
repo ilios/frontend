@@ -2,6 +2,7 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { dropTask, timeout } from 'ember-concurrency';
 import { action } from '@ember/object';
+import { modifier } from 'ember-modifier';
 
 export default class EditableFieldComponent extends Component {
   @tracked isEditing = false;
@@ -29,7 +30,7 @@ export default class EditableFieldComponent extends Component {
     this.setIsEditing(false);
   });
 
-  focusFirstControl(element) {
+  focusFirstControl = modifier((element) => {
     const elements = element.querySelectorAll('input,textarea,select,.fr-element');
     if (elements.length) {
       const visibleControls = Array.from(elements).filter((el) => {
@@ -37,7 +38,7 @@ export default class EditableFieldComponent extends Component {
       });
       visibleControls[0].focus();
     }
-  }
+  });
 
   @action
   keyup(event) {

@@ -3,7 +3,7 @@
     {{#if this.isEditing}}
       <span
         class="editor"
-        {{did-insert this.focusFirstControl}}
+        {{this.focusFirstControl}}
         {{! template-lint-disable no-invalid-interactive}}
         {{on "keyup" this.keyup}}
       >
