@@ -1,10 +1,5 @@
-<div
-  class="offering-form"
-  data-test-offering-form
-  {{did-insert (perform this.load) @offering @cohorts}}
-  {{did-update (perform this.load) @offering @cohorts}}
->
-  {{#unless this.loadData.isRunning}}
+<div class="offering-form" data-test-offering-form>
+  {{#if this.offeringFormData.isResolved}}
     {{#let (unique-id) as |templateId|}}
       <div class="toggle-offering-calendar">
         <ToggleButtons
@@ -286,5 +281,5 @@
         </div>
       </div>
     {{/let}}
-  {{/unless}}
+  {{/if}}
 </div>
