@@ -9,7 +9,6 @@ module('Unit | Controller | AdminDashboard ', function (hooks) {
     this.owner.register('controller:admin-dashboard', Controller);
   });
 
-  // Replace this with your real tests.
   test('it exists', function (assert) {
     var controller = this.owner.lookup('controller:admin-dashboard');
     assert.ok(controller);

@@ -10,13 +10,13 @@ module('Integration | Service | user events', function (hooks) {
   setupMirage(hooks);
 
   hooks.beforeEach(function () {
-    const MockCurrentUserService = Service.extend({
+    class MockCurrentUserService extends Service {
       async getModel() {
         return EmberObject.create({
           id: 1,
         });
-      },
-    });
+      }
+    }
     this.owner.register('service:current-user', MockCurrentUserService);
     this.currentUser = this.owner.lookup('service:current-user');
   });
@@ -86,10 +86,10 @@ module('Integration | Service | user events', function (hooks) {
 
   test('getEvents - with configured namespace', async function (assert) {
     assert.expect(2);
-    const iliosConfigMock = Service.extend({
-      apiNameSpace: 'geflarknik',
-    });
-    this.owner.register('service:iliosConfig', iliosConfigMock);
+    class IliosConfigMock extends Service {
+      apiNameSpace = 'geflarknik';
+    }
+    this.owner.register('service:iliosConfig', IliosConfigMock);
     const from = DateTime.fromObject({ year: 2015, month: 3, day: 5, hour: 0 });
     const to = from.set({ hour: 24 });
     this.server.get(`/geflarknik/userevents/:id`, (scheme, { params }) => {

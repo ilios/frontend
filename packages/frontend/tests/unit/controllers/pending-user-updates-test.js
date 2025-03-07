@@ -9,7 +9,6 @@ module('Unit | Controller | pending user updates', function (hooks) {
     this.owner.register('controller:pending-user-updates', Controller);
   });
 
-  // Replace this with your real tests.
   test('it exists', function (assert) {
     const controller = this.owner.lookup('controller:pending-user-updates');
     assert.ok(controller);

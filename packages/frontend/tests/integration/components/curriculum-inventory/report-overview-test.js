@@ -31,12 +31,12 @@ module('Integration | Component | curriculum-inventory/report-overview', functio
       endDate: DateTime.fromObject({ year: currentYear, month: 4, day: 11 }).toJSDate(),
       description: 'Lorem Ipsum',
     });
-    this.permissionCheckerMock = Service.extend({
+    class PermissionCheckerMock extends Service {
       canCreateCurriculumInventoryReport() {
         return true;
-      },
-    });
-    this.owner.register('service:permission-checker', this.permissionCheckerMock);
+      }
+    }
+    this.owner.register('service:permission-checker', PermissionCheckerMock);
   });
 
   test('it renders', async function (assert) {
@@ -190,11 +190,12 @@ module('Integration | Component | curriculum-inventory/report-overview', functio
       .lookup('service:store')
       .findRecord('curriculum-inventory-report', this.report.id);
     this.set('report', reportModel);
-    this.permissionCheckerMock.reopen({
+    class PermissionCheckerMock extends Service {
       canCreateCurriculumInventoryReport() {
         return false;
-      },
-    });
+      }
+    }
+    this.owner.register('service:permission-checker', PermissionCheckerMock);
     await render(
       hbs`<CurriculumInventory::ReportOverview @report={{this.report}} @canUpdate={{true}} />`,
     );

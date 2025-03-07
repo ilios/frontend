@@ -9,7 +9,6 @@ module('Unit | Controller | curriculum inventory sequence block', function (hook
     this.owner.register('controller:curriculum-inventory-sequence-block', Controller);
   });
 
-  // Replace this with your real tests.
   test('it exists', function (assert) {
     const controller = this.owner.lookup('controller:curriculum-inventory-sequence-block');
     assert.ok(controller);

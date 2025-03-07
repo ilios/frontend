@@ -226,14 +226,14 @@ module('Integration | Component | my profile', function (hooks) {
         jwt: 'new token',
       };
     });
-    const sessionMock = Service.extend({
+    class SessionMock extends Service {
       authenticate(how, obj) {
         assert.strictEqual(how, 'authenticator:ilios-jwt');
         assert.ok(obj.jwt);
         assert.strictEqual(obj.jwt, 'new token');
-      },
-    });
-    this.owner.register('service:session', sessionMock);
+      }
+    }
+    this.owner.register('service:session', SessionMock);
     this.session = this.owner.lookup('service:session');
     this.flashMessages = this.owner.lookup('service:flashMessages');
     const school = this.server.create('school');

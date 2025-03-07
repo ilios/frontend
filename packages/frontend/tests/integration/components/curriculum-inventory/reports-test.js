@@ -41,12 +41,12 @@ module('Integration | Component | curriculum-inventory/reports', function (hooks
       }
     }
     this.owner.register('service:currentUser', CurrentUserMock);
-    const permissionCheckerMock = Service.extend({
+    class PermissionCheckerMock extends Service {
       async canCreateCurriculumInventoryReport() {
         return true;
-      },
-    });
-    this.owner.register('service:permissionChecker', permissionCheckerMock);
+      }
+    }
+    this.owner.register('service:permissionChecker', PermissionCheckerMock);
   });
 
   test('it renders', async function (assert) {
