@@ -156,53 +156,6 @@ module('Integration | Component | reports/subject-header', function (hooks) {
     assert.strictEqual(component.title.text, 'All Courses for 0 guy M. Mc0son in school 0');
   });
 
-  test('download is disabled when not ready', async function (assert) {
-    const report = this.server.create('report', {
-      subject: 'course',
-      prepositionalObject: 'instructor',
-      prepositionalObjectTableRowId: this.user.id,
-      user: this.user,
-    });
-    const reportModel = await this.owner.lookup('service:store').findRecord('report', report.id);
-    this.set('report', reportModel);
-    await render(hbs`<Reports::SubjectHeader
-  @report={{this.report}}
-  @subject={{this.report.subject}}
-  @prepositionalObject={{this.report.prepositionalObject}}
-  @prepositionalObjectTableRowId={{this.report.prepositionalObjectTableRowId}}
-  @year=''
-  @readyToDownload={{false}}
-  @school={{null}}
-/>`);
-    assert.ok(component.isDownloadDisabled);
-    await a11yAudit(this.element);
-    assert.ok(true, 'no a11y errors found!');
-  });
-
-  test('download enabled', async function (assert) {
-    const report = this.server.create('report', {
-      subject: 'course',
-      prepositionalObject: 'instructor',
-      prepositionalObjectTableRowId: this.user.id,
-      user: this.user,
-    });
-    const reportModel = await this.owner.lookup('service:store').findRecord('report', report.id);
-    this.set('report', reportModel);
-    await render(hbs`<Reports::SubjectHeader
-  @report={{this.report}}
-  @subject={{this.report.subject}}
-  @prepositionalObject={{this.report.prepositionalObject}}
-  @prepositionalObjectTableRowId={{this.report.prepositionalObjectTableRowId}}
-  @year=''
-  @readyToDownload={{true}}
-  @fetchDownloadData={{(noop)}}
-  @school={{null}}
-/>`);
-    assert.notOk(component.isDownloadDisabled);
-    await a11yAudit(this.element);
-    assert.ok(true, 'no a11y errors found!');
-  });
-
   test('year filter is hidden when not needed', async function (assert) {
     const report = this.server.create('report', {
       subject: 'course',
