@@ -14,13 +14,6 @@ export default class ReportsSubjectHeader extends Component {
   @tracked finishedBuildingReport = false;
   @tracked @Length(1, 240) title = '';
 
-  constructor() {
-    super(...arguments);
-    if (this.args.registerSubjectHeader) {
-      this.args.registerSubjectHeader(this);
-    }
-  }
-
   @cached
   get reportTitleData() {
     return new TrackedAsyncData(
