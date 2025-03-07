@@ -1,42 +1,7 @@
-<div
-  data-test-session-overview
-  {{did-insert (perform this.load) @session}}
-  {{did-update (perform this.load) @session}}
->
+<div data-test-session-overview>
   {{#let (unique-id) as |templateId|}}
-    {{#if this.load.performCount}}
-      <div class="session-header">
-        <h3 class="title" data-test-title>
-          {{#if @editable}}
-            <EditableField
-              @value={{this.title}}
-              @save={{this.changeTitle}}
-              @close={{this.revertTitleChanges}}
-              @saveOnEnter={{true}}
-              @closeOnEscape={{true}} as |isSaving|
-            >
-              <input
-                aria-label={{t "general.title"}}
-                disabled={{isSaving}}
-                type="text"
-                value={{this.title}}
-                {{on "key-press" (fn this.addErrorDisplayFor "title")}}
-                {{on "input" (pick "target.value" (set this "title"))}}
-              >
-              <ValidationError @validatable={{this}} @property="title" />
-            </EditableField>
-          {{else}}
-            {{@session.title}}
-          {{/if}}
-        </h3>
-        <span class="session-publication">
-          {{#if @editable}}
-            <Session::PublicationMenu @session={{@session}} @hideCheckLink={{@hideCheckLink}} />
-          {{else}}
-            <PublicationStatus @item={{@session}} @showIcon={{true}} @showText={{true}} />
-          {{/if}}
-        </span>
-      </div>
+    {{#if this.isLoaded}}
+      <Session::Header @session={{@session}} @editable={{@editable}} @hideCheckLink={{@hideCheckLink}} />
 
       <section class="session-overview">
         <div class="last-update" data-test-last-update>
@@ -165,55 +130,7 @@
             </div>
           {{/if}}
           <hr>
-          <div class="independentlearningcontrol block" data-test-ilm>
-            <label>{{t "general.independentLearning"}}:</label>
-            <span class="independentlearningcontrol-value">
-              {{#if @editable}}
-                <ToggleYesno @yes={{this.isIndependentLearning}} @toggle={{perform this.saveIndependentLearning}} />
-              {{else}}
-                {{#if this.isIndependentLearning}}
-                  <span class="add">{{t "general.yes"}}</span>
-                {{else}}
-                  <span class="remove">{{t "general.no"}}</span>
-                {{/if}}
-              {{/if}}
-            </span>
-          </div>
-          {{#if this.isIndependentLearning}}
-            <div class="sessionilmhours block" data-test-ilm-hours>
-              <label for="hours-{{templateId}}">{{t "general.hours"}}:</label>
-              <span>
-                {{#if @editable}}
-                  <EditableField
-                      @value={{this.hours}}
-                      @save={{this.changeIlmHours}}
-                      @close={{this.revertIlmHoursChanges}}
-                      @saveOnEnter={{true}}
-                      @closeOnEscape={{true}} as |isSaving|
-                  >
-                    <input
-                      id="hours-{{templateId}}"
-                      disabled={{isSaving}}
-                      type="text"
-                      value={{this.hours}}
-                      {{on "key-press" (fn this.addErrorDisplayFor "hours")}}
-                      {{on "input" (pick "target.value" (set this "hours"))}}
-                    >
-                    <ValidationError @validatable={{this}} @property="hours" />
-                  </EditableField>
-                {{else}}
-                  {{@session.ilmSession.hours}}&nbsp;
-                {{/if}}
-              </span>
-            </div>
-            {{#unless @session.hasPostrequisite}}
-              <SessionOverviewIlmDuedate
-                @ilmSession={{this.ilmSession}}
-                @editable={{@editable}}
-                class="block"
-              />
-            {{/unless}}
-          {{/if}}
+          <Session::Ilm @session={{@session}} @editable={{@editable}} />
           <div class="postrequisite block" data-test-postrequisite>
             {{#if @editable}}
               {{#if this.isEditingPostRequisite}}
@@ -279,13 +196,16 @@
                 <EditableField
                   @value={{this.description}}
                   @renderHtml={{true}}
-                  @isSaveDisabled={{this.hasErrorForDescription}}
+                  @isSaveDisabled={{this.validations.errors.description}}
                   @save={{perform this.saveDescription}}
                   @close={{this.revertDescriptionChanges}}
                   @clickPrompt={{t "general.clickToEdit"}}
                 >
                   <HtmlEditor @content={{this.description}} @update={{this.changeDescription}} />
-                  <ValidationError @validatable={{this}} @property="description" />
+                  <YupValidationMessage
+                    @description={{t 'general.description'}}
+                    @validationErrors={{this.validations.errors.description}}
+                  />
                 </EditableField>
               {{else}}
                 {{! template-lint-disable no-triple-curlies}}
@@ -300,13 +220,16 @@
                 <EditableField
                   @value={{@session.instructionalNotes}}
                   @renderHtml={{true}}
-                  @isSaveDisabled={{this.hasErrorForInstructionalNotes}}
+                  @isSaveDisabled={{this.validations.errors.instructionalNotes}}
                   @save={{perform this.saveInstructionalNotes}}
                   @close={{this.revertInstructionalNotesChanges}}
                   @clickPrompt={{t "general.clickToEdit"}}
                 >
                   <HtmlEditor @content={{this.instructionalNotes}} @update={{this.changeInstructionalNotes}} />
-                  <ValidationError @validatable={{this}} @property="instructionalNotes" />
+                  <YupValidationMessage
+                    @description={{t 'general.instructionalNotes'}}
+                    @validationErrors={{this.validations.errors.instructionalNotes}}
+                  />
                 </EditableField>
               {{else}}
                 {{! template-lint-disable no-triple-curlies}}

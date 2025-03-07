@@ -10,7 +10,7 @@ import leadershipCollapsed from './leadership-collapsed';
 import leadershipExpanded from './leadership-expanded';
 import detailInstructors from './detail-instructors';
 import detailLearnersAndLearnerGroups from './detail-learners-and-learner-groups';
-import overview from './session-overview';
+import overview from './session/overview';
 import timeBlockOfferings from './session-offerings-time-block-offerings';
 
 export default create({

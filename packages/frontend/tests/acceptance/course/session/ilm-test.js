@@ -583,7 +583,7 @@ module('Acceptance | Session - Independent Learning', function (hooks) {
       sessionId: 1,
       sessionLearnergroupDetails: true,
     });
-    assert.ok(page.details.overview.ilmDueDateAndTime.isVisible);
+    assert.ok(page.details.overview.ilm.ilmDueDateAndTime.isVisible);
   });
 
   test('ilm due date should not be visible if session has post-requisite', async function (assert) {
@@ -596,7 +596,7 @@ module('Acceptance | Session - Independent Learning', function (hooks) {
       sessionId: 1,
       sessionLearnergroupDetails: true,
     });
-    assert.ok(page.details.overview.ilmDueDateAndTime.isHidden);
+    assert.ok(page.details.overview.ilm.ilmDueDateAndTime.isHidden);
   });
 
   test('ilm-only subcomponents disappear/reappear if ilm gets toggled off/on', async function (assert) {
@@ -611,12 +611,12 @@ module('Acceptance | Session - Independent Learning', function (hooks) {
     assert.ok(page.details.learnersAreVisible);
     assert.ok(page.details.instructorsAreVisible);
 
-    await page.details.overview.toggleIlm.yesNoToggle.click();
+    await page.details.overview.ilm.toggleIlm.yesNoToggle.click();
 
     assert.notOk(page.details.learnersAreVisible);
     assert.notOk(page.details.instructorsAreVisible);
 
-    await page.details.overview.toggleIlm.yesNoToggle.click();
+    await page.details.overview.ilm.toggleIlm.yesNoToggle.click();
 
     assert.ok(page.details.learnersAreVisible);
     assert.ok(page.details.instructorsAreVisible);

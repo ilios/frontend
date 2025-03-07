@@ -4,9 +4,9 @@ import { hbs } from 'ember-cli-htmlbars';
 import { setupMirage } from 'test-app/tests/test-support/mirage';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { setupAuthentication } from 'ilios-common';
-import { component } from 'ilios-common/page-objects/components/session-overview';
+import { component } from 'ilios-common/page-objects/components/session/overview';
 
-module('Integration | Component | session-overview', function (hooks) {
+module('Integration | Component | session/overview', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
@@ -33,7 +33,7 @@ module('Integration | Component | session-overview', function (hooks) {
     });
     const sessionModel = await this.owner.lookup('service:store').findRecord('session', session.id);
     this.set('session', sessionModel);
-    await render(hbs`<SessionOverview @session={{this.session}} @editable={{true}} />`);
+    await render(hbs`<Session::Overview @session={{this.session}} @editable={{true}} />`);
     assert.strictEqual(component.sessionDescription.value, 'Click to edit');
     await component.sessionDescription.edit();
     assert.notOk(component.sessionDescription.hasError);
@@ -60,7 +60,7 @@ module('Integration | Component | session-overview', function (hooks) {
     });
     const sessionModel = await this.owner.lookup('service:store').findRecord('session', session.id);
     this.set('session', sessionModel);
-    await render(hbs`<SessionOverview @session={{this.session}} @editable={{true}} />`);
+    await render(hbs`<Session::Overview @session={{this.session}} @editable={{true}} />`);
     assert.strictEqual(component.instructionalNotes.value, 'Click to edit');
     await component.instructionalNotes.edit();
     assert.notOk(component.instructionalNotes.hasError);

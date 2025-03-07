@@ -1,6 +1,6 @@
 import { create, visitable } from 'ember-cli-page-object';
 
-import overview from './components/session-overview';
+import overview from './components/session/overview';
 import publishAllSessions from './components/publish-all-sessions';
 
 export default create({
