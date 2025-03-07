@@ -23,6 +23,10 @@ const definition = {
     scope: '[data-test-download]',
     click: clickable(),
   },
+  copy: {
+    scope: '[data-test-copy-url]',
+    click: clickable(),
+  },
 };
 
 export default definition;
