@@ -32,6 +32,7 @@
       @success={{perform this.textCopied}}
       aria-label={{t "general.copyCurriculumReportUrl"}}
       id={{this.copyButtonId}}
+      data-test-copy-url
       {{mouse-hover-toggle (set this "showTooltip")}}
     >
       <FaIcon @icon="copy" />
