@@ -27,24 +27,26 @@
     </p>
   </div>
   <div class="input-buttons">
-    <CopyButton
-      @clipboardText={{this.reportUrl}}
-      @success={{perform this.textCopied}}
-      aria-label={{t "general.copyCurriculumReportUrl"}}
-      id={{this.copyButtonId}}
-      data-test-copy-url
-      {{mouse-hover-toggle (set this "showTooltip")}}
-    >
-      <FaIcon @icon="copy" />
-    </CopyButton>
-    {{#if this.showTooltip}}
-      <IliosTooltip
-        @target={{this.copyButtonElement}}
-        @options={{this.popperOptions}}
-        class="ics-feed-tooltip"
+    {{#if @countSelectedCourses}}
+      <CopyButton
+        @clipboardText={{this.reportUrl}}
+        @success={{perform this.textCopied}}
+        aria-label={{t "general.copyCurriculumReportUrl"}}
+        id={{this.copyButtonId}}
+        data-test-copy-url
+        {{mouse-hover-toggle (set this "showTooltip")}}
       >
-        {{t "general.copyCurriculumReportUrl"}}
-      </IliosTooltip>
+        <FaIcon @icon="copy" />
+      </CopyButton>
+      {{#if this.showTooltip}}
+        <IliosTooltip
+          @target={{this.copyButtonElement}}
+          @options={{this.popperOptions}}
+          class="ics-feed-tooltip"
+        >
+          {{t "general.copyCurriculumReportUrl"}}
+        </IliosTooltip>
+      {{/if}}
     {{/if}}
     {{#if @showReportResults}}
       {{#if @loading}}
