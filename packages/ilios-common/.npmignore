@@ -7,8 +7,6 @@
 /.ember-cli
 /.env*
 /.eslintcache
-/.eslintignore
-/.eslintrc.js
 /.git/
 /.github/
 /.gitignore
@@ -22,6 +20,7 @@
 /CONTRIBUTING.md
 /coverage/
 /ember-cli-build.js
+/eslint.config.mjs
 /testem.js
 /tests/
 /tsconfig.declarations.json

@@ -6,5 +6,5 @@ export default helper(function repeat([length, value]) {
   if (typeOf(length) !== 'number') {
     return [value];
   }
-  return Array.apply(null, { length }).map(() => value); // eslint-disable-line
+  return Array.apply(null, { length }).map(() => value);
 });

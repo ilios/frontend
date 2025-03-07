@@ -313,7 +313,7 @@ export default class BulkNewUsersComponent extends Component {
             await obj.authentication.save();
           }
         }
-      } catch (e) {
+      } catch {
         const userErrors = parts.filter((obj) => obj.user.get('isError'));
         const authenticationErrors = parts.filter(
           (obj) =>

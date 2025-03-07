@@ -73,7 +73,7 @@ export default class DashboardMaterialsComponent extends Component {
     let course = null;
     try {
       course = await this.store.findRecord('course', courseId);
-    } catch (e) {
+    } catch {
       // eat the exception
     }
     return course;

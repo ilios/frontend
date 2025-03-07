@@ -7,7 +7,7 @@ export default class CourseBackToCoursesComponent extends Component {
   get showLink() {
     try {
       return Boolean(this.router.urlFor('courses'));
-    } catch (error) {
+    } catch {
       return false;
     }
   }

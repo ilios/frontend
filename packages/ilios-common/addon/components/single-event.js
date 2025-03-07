@@ -188,7 +188,7 @@ export default class SingleEvent extends Component {
   get sessionRouteExists() {
     try {
       this.router.urlFor('session', this.args.event.course, this.args.event.session);
-    } catch (e) {
+    } catch {
       return false;
     }
     return true;

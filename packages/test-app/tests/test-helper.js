@@ -3,6 +3,8 @@ import config from 'test-app/config/environment';
 import * as QUnit from 'qunit';
 import { setApplication } from '@ember/test-helpers';
 import { setup } from 'qunit-dom';
+import { setupEmberOnerrorValidation } from 'ember-qunit';
+
 import start from 'ember-exam/test-support/start';
 import { setRunOptions } from 'ember-a11y-testing/test-support';
 import 'qunit-theme-ember/qunit.css';
@@ -21,7 +23,6 @@ if (typeof Testem !== 'undefined') {
     sendCoverage(callback);
   });
 } else if (typeof QUnit !== 'undefined') {
-  //eslint-disable-next-line no-undef
   QUnit.done(async function () {
     forceModulesToBeLoaded();
     await sendCoverage();
@@ -31,5 +32,5 @@ if (typeof Testem !== 'undefined') {
 setApplication(Application.create(config.APP));
 
 setup(QUnit.assert);
-
+setupEmberOnerrorValidation();
 start();

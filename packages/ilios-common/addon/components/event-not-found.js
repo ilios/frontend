@@ -7,7 +7,7 @@ export default class EventNotFoundComponent extends Component {
   get showLink() {
     try {
       return Boolean(this.router.urlFor('dashboard'));
-    } catch (error) {
+    } catch {
       return false;
     }
   }

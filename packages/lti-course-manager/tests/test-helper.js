@@ -3,6 +3,8 @@ import config from 'lti-course-manager/config/environment';
 import * as QUnit from 'qunit';
 import { setApplication } from '@ember/test-helpers';
 import { setup } from 'qunit-dom';
+import { setupEmberOnerrorValidation } from 'ember-qunit';
+
 import start from 'ember-exam/test-support/start';
 import 'qunit-theme-ember/qunit.css';
 import { forceModulesToBeLoaded, sendCoverage } from 'ember-cli-code-coverage/test-support';
@@ -16,7 +18,6 @@ if (typeof Testem !== 'undefined') {
     sendCoverage(callback);
   });
 } else if (typeof QUnit !== 'undefined') {
-  //eslint-disable-next-line no-undef
   QUnit.done(async function () {
     forceModulesToBeLoaded();
     await sendCoverage();
@@ -25,5 +26,5 @@ if (typeof Testem !== 'undefined') {
 setApplication(Application.create(config.APP));
 
 setup(QUnit.assert);
-
+setupEmberOnerrorValidation();
 start();

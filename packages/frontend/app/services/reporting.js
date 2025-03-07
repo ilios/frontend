@@ -49,7 +49,7 @@ export default class ReportingService extends Service {
       return prepositionalObject
         ? this.intl.t('general.reportDisplayTitleWithObject', props)
         : this.intl.t('general.reportDisplayTitleWithoutObject', props);
-    } catch (e) {
+    } catch {
       return this.intl.t('general.thisReportIsNoLongerAvailable');
     }
   }
@@ -70,7 +70,7 @@ export default class ReportingService extends Service {
       return prepositionalObject
         ? this.intl.t('general.reportDisplayDescriptionWithObject', props)
         : this.intl.t('general.reportDisplayDescriptionWithoutObject', props);
-    } catch (e) {
+    } catch {
       return this.intl.t('general.thisReportIsNoLongerAvailable');
     }
   }
