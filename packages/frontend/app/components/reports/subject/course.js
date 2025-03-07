@@ -13,8 +13,6 @@ export default class ReportsSubjectCourseComponent extends Component {
   @service currentUser;
   @service intl;
 
-  subjectHeaderInstance = null;
-
   crossesBoundaryConfig = new TrackedAsyncData(
     this.iliosConfig.itemFromConfig('academicYearCrossesCalendarYearBoundaries'),
   );
@@ -144,18 +142,6 @@ export default class ReportsSubjectCourseComponent extends Component {
     }
 
     return this.allCourses.length;
-  }
-
-  @action
-  setSubjectHeader(instance) {
-    this.subjectHeaderInstance = instance;
-  }
-
-  @action
-  downloadReport() {
-    if (this.subjectHeaderInstance) {
-      this.subjectHeaderInstance.downloadReport.perform();
-    }
   }
 
   @action

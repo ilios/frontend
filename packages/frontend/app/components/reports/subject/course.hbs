@@ -12,7 +12,6 @@
     @fetchDownloadData={{this.fetchDownloadData}}
     @readyToDownload={{this.allCoursesData.isResolved}}
     @resultsLength={{this.resultsLengthDisplay}}
-    @registerSubjectHeader={{this.setSubjectHeader}}
   />
 {{/if}}
 <div data-test-reports-subject-course>
@@ -46,17 +45,17 @@
       {{/each}}
     </ul>
     {{#if this.reportResultsExceedMax}}
-      <div class="download">
-        <p>{{t "general.reportResultsExceedMax"}}</p>
-        <button type="button" {{on "click" this.downloadReport}} data-test-download>
-          {{#if this.finishedBuildingReport}}
-            <FaIcon @icon="check" />
-          {{else}}
-            <FaIcon @icon="download" />
-          {{/if}}
-          {{t "general.downloadResults"}}
-        </button>
-      </div>
+      <Reports::SubjectDownload
+        @report={{@report}}
+        @school={{@school}}
+        @subject={{@subject}}
+        @prepositionalObject={{@prepositionalObject}}
+        @prepositionalObjectTableRowId={{@prepositionalObjectTableRowId}}
+        @fetchDownloadData={{this.fetchDownloadData}}
+        @readyToDownload={{true}}
+        @reportTitleData={{this.reportTitleData}}
+        @message={{t "general.reportResultsExceedMax"}}
+      />
     {{/if}}
   {{else}}
     <LoadingSpinner />
