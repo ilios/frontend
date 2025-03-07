@@ -28,8 +28,6 @@ const definition = {
     }),
   },
   description: text('[data-test-report-description]'),
-  isDownloadDisabled: property('disabled', '[data-test-download]'),
-  download: clickable('[data-test-download]'),
   hasYearFilter: isPresent('[data-test-year-filter]'),
 };
 
