@@ -1,9 +1,9 @@
 import Component from '@glimmer/component';
 import { service } from '@ember/service';
-import { tracked } from '@glimmer/tracking';
-import { restartableTask } from 'ember-concurrency';
+import { cached, tracked } from '@glimmer/tracking';
 import { loadFroalaEditor } from 'ilios-common/utils/load-froala-editor';
 import { guidFor } from '@ember/object/internals';
+import { TrackedAsyncData } from 'ember-async-data';
 
 export default class HtmlEditorComponent extends Component {
   @service intl;
@@ -25,6 +25,12 @@ export default class HtmlEditorComponent extends Component {
   constructor() {
     super(...arguments);
     this.editorId = guidFor(this);
+  }
+
+  @cached
+  get editorData() {
+    const element = document.getElementById(this.editorId);
+    return new TrackedAsyncData(this.loadEditor(element, this.options));
   }
 
   get options() {
@@ -83,7 +89,7 @@ export default class HtmlEditorComponent extends Component {
     });
   }
 
-  loadEditor = restartableTask(async (element, [options]) => {
+  async loadEditor(element, options) {
     if (!this.editor) {
       this.editor = await this.createEditor(element, options);
       this.editor.html.set(this.args.content);
@@ -94,5 +100,5 @@ export default class HtmlEditorComponent extends Component {
     }
 
     return true;
-  });
+  }
 }
