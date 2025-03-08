@@ -13,12 +13,12 @@ module('Integration | Component | learning-material-uploader', function (hooks) 
 
   test('upload file', async function (assert) {
     assert.expect(5);
-    const iliosConfigMock = Service.extend({
+    class IliosConfigMock extends Service {
       async getMaxUploadSize() {
         return 1000;
-      },
-    });
-    this.owner.register('service:iliosConfig', iliosConfigMock);
+      }
+    }
+    this.owner.register('service:iliosConfig', IliosConfigMock);
 
     this.server.post('/upload', (schema, request) => {
       assert.ok(request.requestBody.has('file'));
@@ -56,12 +56,12 @@ module('Integration | Component | learning-material-uploader', function (hooks) 
   });
 
   test('shows error when file is too big', async function (assert) {
-    const iliosConfigMock = Service.extend({
+    class IliosConfigMock extends Service {
       async getMaxUploadSize() {
         return 1;
-      },
-    });
-    this.owner.register('service:iliosConfig', iliosConfigMock);
+      }
+    }
+    this.owner.register('service:iliosConfig', IliosConfigMock);
 
     await render(
       hbs`<LearningMaterialUploader @for='test' @setFilename={{(noop)}} @setFileHash={{(noop)}} />`,

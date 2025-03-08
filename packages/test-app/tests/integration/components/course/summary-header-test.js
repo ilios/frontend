@@ -10,10 +10,10 @@ module('Integration | Component | course summary header', function (hooks) {
   setupMirage(hooks);
 
   hooks.beforeEach(function () {
-    const currentUserMock = Service.extend({
-      userIsCourseDirector: true,
-    });
-    this.owner.register('service:currentUser', currentUserMock);
+    class CurrentUserMock extends Service {
+      userIsCourseDirector = true;
+    }
+    this.owner.register('service:currentUser', CurrentUserMock);
 
     class PermissionCheckerStub extends Service {
       async canCreateCourse() {

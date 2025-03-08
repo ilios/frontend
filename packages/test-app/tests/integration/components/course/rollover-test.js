@@ -1,6 +1,5 @@
 import Service from '@ember/service';
 import { resolve } from 'rsvp';
-import EmberObject from '@ember/object';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render, click, find, findAll, fillIn, blur as emberBlur } from '@ember/test-helpers';
@@ -510,12 +509,10 @@ module('Integration | Component | course/rollover', function (hooks) {
       );
     });
 
-    const mockCurrentUser = EmberObject.create({});
-
-    const currentUserMock = Service.extend({
-      model: resolve(mockCurrentUser),
-    });
-    this.owner.register('service:currentUser', currentUserMock);
+    class CurrentUserMock extends Service {
+      model = resolve({});
+    }
+    this.owner.register('service:currentUser', CurrentUserMock);
 
     this.set('course', course);
     await render(hbs`<Course::Rollover @course={{this.course}} @visit={{(noop)}} />`);

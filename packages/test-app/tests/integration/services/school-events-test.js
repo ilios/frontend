@@ -60,10 +60,10 @@ module('Integration | Service | school events', function (hooks) {
 
   test('getEvents - with configured namespace', async function (assert) {
     assert.expect(4);
-    const iliosConfigMock = Service.extend({
-      apiNameSpace: 'geflarknik',
-    });
-    this.owner.register('service:iliosConfig', iliosConfigMock);
+    class IliosConfigMock extends Service {
+      apiNameSpace = 'geflarknik';
+    }
+    this.owner.register('service:iliosConfig', IliosConfigMock);
 
     const from = DateTime.fromObject({ year: 2015, month: 3, day: 5, hour: 0 });
     const to = from.set({ hour: 24 });

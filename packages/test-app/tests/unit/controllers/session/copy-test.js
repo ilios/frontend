@@ -9,7 +9,6 @@ module('Unit | Controller | session/copy', function (hooks) {
     this.owner.register('controller:session/copy', Controller);
   });
 
-  // Replace this with your real tests.
   test('it exists', function (assert) {
     const controller = this.owner.lookup('controller:session/copy');
     assert.ok(controller);

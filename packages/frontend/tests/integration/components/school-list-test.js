@@ -26,30 +26,30 @@ module('Integration | Component | school list', function (hooks) {
   });
 
   test('create school button is visible to root', async function (assert) {
-    const currentUserMock = Service.extend({
-      isRoot: true,
-    });
-    this.owner.register('service:current-user', currentUserMock);
+    class CurrentUserMock extends Service {
+      isRoot = true;
+    }
+    this.owner.register('service:current-user', CurrentUserMock);
     this.set('schools', []);
     await render(hbs`<SchoolList @schools={{this.schools}} />`);
     assert.ok(component.expandCollapseButton.isVisible);
   });
 
   test('create school button is not visible to non root users', async function (assert) {
-    const currentUserMock = Service.extend({
-      isRoot: false,
-    });
-    this.owner.register('service:current-user', currentUserMock);
+    class CurrentUserMock extends Service {
+      isRoot = false;
+    }
+    this.owner.register('service:current-user', CurrentUserMock);
     this.set('schools', []);
     await render(hbs`<SchoolList @schools={{this.schools}} />`);
     assert.notOk(component.expandCollapseButton.isVisible);
   });
 
   test('toggle visibility of new school form', async function (assert) {
-    const currentUserMock = Service.extend({
-      isRoot: true,
-    });
-    this.owner.register('service:current-user', currentUserMock);
+    class CurrentUserMock extends Service {
+      isRoot = true;
+    }
+    this.owner.register('service:current-user', CurrentUserMock);
     this.set('schools', []);
     await render(hbs`<SchoolList @schools={{this.schools}} />`);
     assert.notOk(component.newSchoolForm.isVisible);
@@ -64,10 +64,10 @@ module('Integration | Component | school list', function (hooks) {
   });
 
   test('create new school', async function (assert) {
-    const currentUserMock = Service.extend({
-      isRoot: true,
-    });
-    this.owner.register('service:current-user', currentUserMock);
+    class CurrentUserMock extends Service {
+      isRoot = true;
+    }
+    this.owner.register('service:current-user', CurrentUserMock);
     this.set('schools', []);
     await render(hbs`<SchoolList @schools={{this.schools}} />`);
     await component.expandCollapseButton.toggle();
@@ -87,10 +87,10 @@ module('Integration | Component | school list', function (hooks) {
   });
 
   test('submit empty form fails', async function (assert) {
-    const currentUserMock = Service.extend({
-      isRoot: true,
-    });
-    this.owner.register('service:current-user', currentUserMock);
+    class CurrentUserMock extends Service {
+      isRoot = true;
+    }
+    this.owner.register('service:current-user', CurrentUserMock);
     this.set('schools', []);
     await render(hbs`<SchoolList @schools={{this.schools}} />`);
     await component.expandCollapseButton.toggle();
@@ -102,10 +102,10 @@ module('Integration | Component | school list', function (hooks) {
   });
 
   test('email validation works', async function (assert) {
-    const currentUserMock = Service.extend({
-      isRoot: true,
-    });
-    this.owner.register('service:current-user', currentUserMock);
+    class CurrentUserMock extends Service {
+      isRoot = true;
+    }
+    this.owner.register('service:current-user', CurrentUserMock);
     this.set('schools', []);
     await render(hbs`<SchoolList @schools={{this.schools}} />`);
     await component.expandCollapseButton.toggle();

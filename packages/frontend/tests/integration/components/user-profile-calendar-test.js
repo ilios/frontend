@@ -12,10 +12,10 @@ module('Integration | Component | user profile calendar', function (hooks) {
   setupMirage(hooks);
 
   hooks.beforeEach(function () {
-    const iliosConfigMock = Service.extend({
-      namespace: '',
-    });
-    this.owner.register('service:iliosConfig', iliosConfigMock);
+    class IliosConfigMock extends Service {
+      namespace = '';
+    }
+    this.owner.register('service:iliosConfig', IliosConfigMock);
   });
 
   test('shows events for this week', async function (assert) {

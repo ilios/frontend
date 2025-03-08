@@ -6,7 +6,6 @@ import { hbs } from 'ember-cli-htmlbars';
 module('Integration | Modifier | scroll-into-view', function (hooks) {
   setupRenderingTest(hooks);
 
-  // Replace this with your real tests.
   test('it renders', async function (assert) {
     await render(hbs`<div {{scroll-into-view}}></div>`);
 

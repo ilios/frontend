@@ -9,7 +9,6 @@ module('Unit | Controller | weeklyevents', function (hooks) {
     this.owner.register('controller:weeklyevents', Controller);
   });
 
-  // Replace this with your real tests.
   test('it exists', function (assert) {
     const controller = this.owner.lookup('controller:weeklyevents');
     assert.ok(controller);

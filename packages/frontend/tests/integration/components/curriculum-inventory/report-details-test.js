@@ -12,12 +12,12 @@ module('Integration | Component | curriculum-inventory/report-details', function
   setupMirage(hooks);
 
   hooks.beforeEach(async function () {
-    this.permissionCheckerMock = Service.extend({
+    class PermissionCheckerMock extends Service {
       canCreateCurriculumInventoryReport() {
         return true;
-      },
-    });
-    this.owner.register('service:permission-checker', this.permissionCheckerMock);
+      }
+    }
+    this.owner.register('service:permission-checker', PermissionCheckerMock);
   });
 
   test('it renders', async function (assert) {

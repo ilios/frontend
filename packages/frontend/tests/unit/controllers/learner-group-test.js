@@ -9,7 +9,6 @@ module('Unit | Controller | learner group', function (hooks) {
     this.owner.register('controller:learner-group', Controller);
   });
 
-  // Replace this with your real tests.
   test('it exists', function (assert) {
     const controller = this.owner.lookup('controller:learner-group');
     assert.ok(controller);

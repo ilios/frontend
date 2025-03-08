@@ -32,13 +32,13 @@ module('Integration | Component | new user', function (hooks) {
       }
     }
 
-    const permissionCheckerMock = Service.extend({
+    class PermissionCheckerMock extends Service {
       async canCreateUser() {
         return resolve(true);
-      },
-    });
+      }
+    }
     this.owner.register('service:current-user', CurrentUserMock);
-    this.owner.register('service:permissionChecker', permissionCheckerMock);
+    this.owner.register('service:permissionChecker', PermissionCheckerMock);
   });
 
   test('it renders', async function (assert) {
@@ -281,12 +281,12 @@ module('Integration | Component | new user', function (hooks) {
 
   test('create new user in another school without permission in primary school #4830', async function (assert) {
     assert.expect(2);
-    const permissionCheckerMock = Service.extend({
+    class PermissionCheckerMock extends Service {
       async canCreateUser(school) {
         return Number(school.id) === 2;
-      },
-    });
-    this.owner.register('service:permissionChecker', permissionCheckerMock);
+      }
+    }
+    this.owner.register('service:permissionChecker', PermissionCheckerMock);
 
     this.set('transitionToUser', (userId) => {
       assert.strictEqual(Number(userId), 2);

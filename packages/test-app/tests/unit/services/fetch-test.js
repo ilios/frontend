@@ -9,10 +9,10 @@ module('Unit | Service | fetch', function (hooks) {
   setupMirage(hooks);
 
   hooks.beforeEach(function () {
-    const iliosConfigMock = Service.extend({
-      apiHost: '',
-    });
-    this.owner.register('service:iliosConfig', iliosConfigMock);
+    class IliosConfigMock extends Service {
+      apiHost = '';
+    }
+    this.owner.register('service:iliosConfig', IliosConfigMock);
   });
 
   test('getJsonFromApiHost works', async function (assert) {

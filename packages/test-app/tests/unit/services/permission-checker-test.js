@@ -7,7 +7,6 @@ module('Unit | Service | permission-checker', function (hooks) {
   setupTest(hooks);
   setupMirage(hooks);
 
-  // Replace this with your real tests.
   test('it exists', function (assert) {
     const service = this.owner.lookup('service:permission-checker');
     assert.ok(service);
@@ -17,38 +16,38 @@ module('Unit | Service | permission-checker', function (hooks) {
     assert.expect(7);
     const school = { id: 1 };
 
-    const apiVersionMock = Service.extend({
+    class ApiVersionMock extends Service {
       async getIsMismatched() {
         return false;
-      },
-    });
-    this.owner.register('service:apiVersion', apiVersionMock);
+      }
+    }
+    this.owner.register('service:apiVersion', ApiVersionMock);
 
-    const currentUserMock = Service.extend({
-      isRoot: false,
+    class CurrentUserMock extends Service {
+      isRoot = false;
       async getRolesInSchool(sch) {
         assert.strictEqual(sch, school);
         return ['ADMIN'];
-      },
-    });
-    this.owner.register('service:currentUser', currentUserMock);
+      }
+    }
+    this.owner.register('service:currentUser', CurrentUserMock);
 
-    const permissionMatrixMock = Service.extend({
+    class PermissionMatrixMock extends Service {
       getPermittedRoles(sch, cap) {
         assert.strictEqual(sch, school);
         assert.strictEqual(cap, 'GO_FORTH');
 
         return ['ADMIN'];
-      },
+      }
       hasPermission(sch, cap, roles) {
         assert.strictEqual(sch, school);
         assert.strictEqual(cap, 'GO_FORTH');
         assert.deepEqual(roles, ['ADMIN']);
 
         return ['ADMIN'];
-      },
-    });
-    this.owner.register('service:permissionMatrix', permissionMatrixMock);
+      }
+    }
+    this.owner.register('service:permissionMatrix', PermissionMatrixMock);
 
     const service = this.owner.lookup('service:permission-checker');
     const canChangeInSchool = await service.canChangeInSchool(school, 'GO_FORTH');
@@ -59,18 +58,17 @@ module('Unit | Service | permission-checker', function (hooks) {
     assert.expect(2);
     const school = { id: 1 };
 
-    const apiVersionMock = Service.extend({
+    class ApiVersionMock extends Service {
       async getIsMismatched() {
         assert.ok(true);
         return true;
-      },
-    });
-    const currentUserMock = Service.extend({
-      isRoot: true,
-    });
-    this.owner.register('service:currentUser', currentUserMock);
-
-    this.owner.register('service:apiVersion', apiVersionMock);
+      }
+    }
+    class CurrentUserMock extends Service {
+      isRoot = true;
+    }
+    this.owner.register('service:apiVersion', ApiVersionMock);
+    this.owner.register('service:currentUser', CurrentUserMock);
     const service = this.owner.lookup('service:permission-checker');
     const canChangeInSchool = await service.canChangeInSchool(school, 'GO_FORTH');
     assert.notOk(canChangeInSchool);
@@ -80,20 +78,20 @@ module('Unit | Service | permission-checker', function (hooks) {
     assert.expect(2);
     const school = { id: 1 };
 
-    const apiVersionMock = Service.extend({
+    class ApiVersionMock extends Service {
       async getIsMismatched() {
         return false;
-      },
-    });
-    this.owner.register('service:apiVersion', apiVersionMock);
+      }
+    }
+    this.owner.register('service:apiVersion', ApiVersionMock);
 
-    const currentUserMock = Service.extend({
+    class CurrentUserMock extends Service {
       get isRoot() {
         assert.ok(true);
         return true;
-      },
-    });
-    this.owner.register('service:currentUser', currentUserMock);
+      }
+    }
+    this.owner.register('service:currentUser', CurrentUserMock);
 
     const service = this.owner.lookup('service:permission-checker');
     const canChangeInSchool = await service.canChangeInSchool(school, 'GO_FORTH');
@@ -109,14 +107,14 @@ module('Unit | Service | permission-checker', function (hooks) {
     const group = this.server.create('learner-group', { cohort });
     const model = await this.owner.lookup('service:store').findRecord('learner-group', group.id);
 
-    const currentUserMock = Service.extend({
-      isRoot: false,
+    class CurrentUserMock extends Service {
+      isRoot = false;
       async getRolesInSchool(sch) {
         assert.strictEqual(sch.id, school.id);
         return ['SCHOOL_ADMINISTRATOR'];
-      },
-    });
-    this.owner.register('service:currentUser', currentUserMock);
+      }
+    }
+    this.owner.register('service:currentUser', CurrentUserMock);
 
     const service = this.owner.lookup('service:permission-checker');
     const canUpdateLearnerGroup = await service.canUpdateLearnerGroup(model);
@@ -132,14 +130,14 @@ module('Unit | Service | permission-checker', function (hooks) {
     const group = this.server.create('learner-group', { cohort });
     const model = await this.owner.lookup('service:store').findRecord('learner-group', group.id);
 
-    const currentUserMock = Service.extend({
-      isRoot: false,
+    class CurrentUserMock extends Service {
+      isRoot = false;
       async getRolesInSchool(sch) {
         assert.strictEqual(sch.id, school.id);
         return ['SCHOOL_ADMINISTRATOR'];
-      },
-    });
-    this.owner.register('service:currentUser', currentUserMock);
+      }
+    }
+    this.owner.register('service:currentUser', CurrentUserMock);
 
     const service = this.owner.lookup('service:permission-checker');
     const canDeleteLearnerGroup = await service.canUpdateLearnerGroup(model);
@@ -155,14 +153,14 @@ module('Unit | Service | permission-checker', function (hooks) {
     const group = this.server.create('learner-group', { cohort });
     const model = await this.owner.lookup('service:store').findRecord('learner-group', group.id);
 
-    const currentUserMock = Service.extend({
-      isRoot: false,
+    class CurrentUserMock extends Service {
+      isRoot = false;
       async getRolesInSchool(sch) {
         assert.strictEqual(sch.id, school.id);
         return [];
-      },
-    });
-    this.owner.register('service:currentUser', currentUserMock);
+      }
+    }
+    this.owner.register('service:currentUser', CurrentUserMock);
 
     const service = this.owner.lookup('service:permission-checker');
     const canUpdateLearnerGroup = await service.canUpdateLearnerGroup(model);
@@ -178,14 +176,14 @@ module('Unit | Service | permission-checker', function (hooks) {
     const group = this.server.create('learner-group', { cohort });
     const model = await this.owner.lookup('service:store').findRecord('learner-group', group.id);
 
-    const currentUserMock = Service.extend({
-      isRoot: false,
+    class CurrentUserMock extends Service {
+      isRoot = false;
       async getRolesInSchool(sch) {
         assert.strictEqual(sch.id, school.id);
         return [];
-      },
-    });
-    this.owner.register('service:currentUser', currentUserMock);
+      }
+    }
+    this.owner.register('service:currentUser', CurrentUserMock);
 
     const service = this.owner.lookup('service:permission-checker');
     const canDeleteLearnerGroup = await service.canUpdateLearnerGroup(model);
@@ -201,14 +199,14 @@ module('Unit | Service | permission-checker', function (hooks) {
       .lookup('service:store')
       .findRecord('curriculum-inventory-report', report.id);
 
-    const currentUserMock = Service.extend({
-      isRoot: false,
+    class CurrentUserMock extends Service {
+      isRoot = false;
       async getRolesInSchool(sch) {
         assert.strictEqual(sch.id, school.id);
         return ['SCHOOL_ADMINISTRATOR'];
-      },
-    });
-    this.owner.register('service:currentUser', currentUserMock);
+      }
+    }
+    this.owner.register('service:currentUser', CurrentUserMock);
 
     const service = this.owner.lookup('service:permission-checker');
     const canDeleteCurriculumInventoryReport =
@@ -225,18 +223,18 @@ module('Unit | Service | permission-checker', function (hooks) {
       .lookup('service:store')
       .findRecord('curriculum-inventory-report', report.id);
 
-    const currentUserMock = Service.extend({
-      isRoot: false,
+    class CurrentUserMock extends Service {
+      isRoot = false;
       async getRolesInSchool(sch) {
         assert.strictEqual(sch.id, school.id);
         return [];
-      },
+      }
       async getRolesInCurriculumInventoryReport(rpt) {
         assert.strictEqual(rpt.id, model.id);
         return ['CURRICULUM_INVENTORY_REPORT_ADMINISTRATOR'];
-      },
-    });
-    this.owner.register('service:currentUser', currentUserMock);
+      }
+    }
+    this.owner.register('service:currentUser', CurrentUserMock);
 
     const service = this.owner.lookup('service:permission-checker');
     const canDeleteCurriculumInventoryReport =

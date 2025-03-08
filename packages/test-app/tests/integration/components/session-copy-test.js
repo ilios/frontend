@@ -40,12 +40,12 @@ module('Integration | Component | session copy', function (hooks) {
       course,
     });
 
-    const permissionCheckerMock = Service.extend({
+    class PermissionCheckerMock extends Service {
       canCreateSession() {
         return true;
-      },
-    });
-    this.owner.register('service:permissionChecker', permissionCheckerMock);
+      }
+    }
+    this.owner.register('service:permissionChecker', PermissionCheckerMock);
 
     const sessionModel = await this.owner.lookup('service:store').findRecord('session', session.id);
     this.set('session', sessionModel);
@@ -119,12 +119,12 @@ module('Integration | Component | session copy', function (hooks) {
       position: 3,
     });
 
-    const permissionCheckerMock = Service.extend({
+    class PermissionCheckerMock extends Service {
       canCreateSession() {
         return true;
-      },
-    });
-    this.owner.register('service:permissionChecker', permissionCheckerMock);
+      }
+    }
+    this.owner.register('service:permissionChecker', PermissionCheckerMock);
     const sessionModel = await this.owner.lookup('service:store').findRecord('session', session.id);
     this.set('session', sessionModel);
     this.set('visit', (newSession) => {
@@ -187,12 +187,12 @@ module('Integration | Component | session copy', function (hooks) {
       sessionType,
     });
 
-    const permissionCheckerMock = Service.extend({
+    class PermissionCheckerMock extends Service {
       canCreateSession() {
         return true;
-      },
-    });
-    this.owner.register('service:permissionChecker', permissionCheckerMock);
+      }
+    }
+    this.owner.register('service:permissionChecker', PermissionCheckerMock);
     const sessionModel = await this.owner.lookup('service:store').findRecord('session', session.id);
     this.set('session', sessionModel);
 
@@ -231,12 +231,12 @@ module('Integration | Component | session copy', function (hooks) {
       sessionType,
     });
 
-    const permissionCheckerMock = Service.extend({
+    class PermissionCheckerMock extends Service {
       canCreateSession() {
         return true;
-      },
-    });
-    this.owner.register('service:permissionChecker', permissionCheckerMock);
+      }
+    }
+    this.owner.register('service:permissionChecker', PermissionCheckerMock);
     const sessionModel = await this.owner.lookup('service:store').findRecord('session', session.id);
     this.set('session', sessionModel);
     await render(hbs`<SessionCopy @session={{this.session}} />`);
@@ -289,12 +289,12 @@ module('Integration | Component | session copy', function (hooks) {
       sessionType,
     });
 
-    const permissionCheckerMock = Service.extend({
+    class PermissionCheckerMock extends Service {
       canCreateSession() {
         return true;
-      },
-    });
-    this.owner.register('service:permissionChecker', permissionCheckerMock);
+      }
+    }
+    this.owner.register('service:permissionChecker', PermissionCheckerMock);
     const sessionModel = await this.owner.lookup('service:store').findRecord('session', session.id);
     this.set('session', sessionModel);
     this.set('visit', (newSession) => {
@@ -342,12 +342,12 @@ module('Integration | Component | session copy', function (hooks) {
       postrequisite,
     });
 
-    const permissionCheckerMock = Service.extend({
+    class PermissionCheckerMock extends Service {
       canCreateSession() {
         return true;
-      },
-    });
-    this.owner.register('service:permissionChecker', permissionCheckerMock);
+      }
+    }
+    this.owner.register('service:permissionChecker', PermissionCheckerMock);
     const sessionModel = await this.owner.lookup('service:store').findRecord('session', session.id);
     this.set('session', sessionModel);
     this.set('visit', (newSession) => {
@@ -398,12 +398,12 @@ module('Integration | Component | session copy', function (hooks) {
       postrequisite,
     });
 
-    const permissionCheckerMock = Service.extend({
+    class PermissionCheckerMock extends Service {
       canCreateSession() {
         return true;
-      },
-    });
-    this.owner.register('service:permissionChecker', permissionCheckerMock);
+      }
+    }
+    this.owner.register('service:permissionChecker', PermissionCheckerMock);
     const sessionModel = await this.owner.lookup('service:store').findRecord('session', session.id);
     this.set('session', sessionModel);
     this.set('visit', (newSession) => {
@@ -455,12 +455,12 @@ module('Integration | Component | session copy', function (hooks) {
       prerequisites: [firstPrerequisite, secondPrerequisite],
     });
 
-    const permissionCheckerMock = Service.extend({
+    class PermissionCheckerMock extends Service {
       canCreateSession() {
         return true;
-      },
-    });
-    this.owner.register('service:permissionChecker', permissionCheckerMock);
+      }
+    }
+    this.owner.register('service:permissionChecker', PermissionCheckerMock);
     const sessionModel = await this.owner.lookup('service:store').findRecord('session', session.id);
     this.set('session', sessionModel);
     this.set('visit', (newSession) => {
@@ -515,12 +515,12 @@ module('Integration | Component | session copy', function (hooks) {
       prerequisites: [firstPrerequisite, secondPrerequisite],
     });
 
-    const permissionCheckerMock = Service.extend({
+    class PermissionCheckerMock extends Service {
       canCreateSession() {
         return true;
-      },
-    });
-    this.owner.register('service:permissionChecker', permissionCheckerMock);
+      }
+    }
+    this.owner.register('service:permissionChecker', PermissionCheckerMock);
     const sessionModel = await this.owner.lookup('service:store').findRecord('session', session.id);
     this.set('session', sessionModel);
     this.set('visit', (newSession) => {

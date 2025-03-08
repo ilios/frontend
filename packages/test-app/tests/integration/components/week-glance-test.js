@@ -23,6 +23,26 @@ module('Integration | Component | week glance', function (hooks) {
     second: 0,
   });
 
+  const setupUserEvents = (context) => {
+    class Mock extends Service {
+      async getEvents() {
+        return context.server.db.userevents;
+      }
+    }
+
+    context.owner.register('service:user-events', Mock);
+  };
+
+  const setupBlankEvents = (context) => {
+    class Mock extends Service {
+      async getEvents() {
+        return [];
+      }
+    }
+
+    context.owner.register('service:user-events', Mock);
+  };
+
   hooks.beforeEach(function () {
     this.server.create('userevent', {
       name: 'Learn to Learn',
@@ -68,18 +88,6 @@ module('Integration | Component | week glance', function (hooks) {
       offering: 1,
       slug: 'c',
     });
-    const events = this.server.db.userevents;
-
-    this.userEventsMock = Service.extend({
-      async getEvents() {
-        return events;
-      },
-    });
-    this.blankEventsMock = Service.extend({
-      async getEvents() {
-        return [];
-      },
-    });
 
     this.getTitle = function (fullTitle) {
       this.intl = this.owner.lookup('service:intl');
@@ -109,7 +117,7 @@ module('Integration | Component | week glance', function (hooks) {
   });
 
   test('it renders with events', async function (assert) {
-    this.owner.register('service:user-events', this.userEventsMock);
+    setupUserEvents(this);
     this.set('today', testDate.toJSDate());
     this.set('week', testDate.weekNumber);
     await render(hbs`<WeekGlance
@@ -132,8 +140,7 @@ module('Integration | Component | week glance', function (hooks) {
   });
 
   test('it renders blank', async function (assert) {
-    this.owner.register('service:user-events', this.blankEventsMock);
-    this.userEvents = this.owner.lookup('service:user-events');
+    setupBlankEvents(this);
 
     this.set('today', testDate.toJSDate());
     this.set('week', testDate.weekNumber);
@@ -158,8 +165,7 @@ module('Integration | Component | week glance', function (hooks) {
   });
 
   test('renders short title', async function (assert) {
-    this.owner.register('service:user-events', this.blankEventsMock);
-    this.userEvents = this.owner.lookup('service:user-events');
+    setupBlankEvents(this);
 
     this.set('today', testDate.toJSDate());
     this.set('week', testDate.weekNumber);
@@ -181,8 +187,7 @@ module('Integration | Component | week glance', function (hooks) {
   });
 
   test('it renders collapsed', async function (assert) {
-    this.owner.register('service:user-events', this.blankEventsMock);
-    this.userEvents = this.owner.lookup('service:user-events');
+    setupBlankEvents(this);
 
     this.set('today', testDate.toJSDate());
     this.set('week', testDate.weekNumber);
@@ -211,8 +216,7 @@ module('Integration | Component | week glance', function (hooks) {
 
   test('click to expand', async function (assert) {
     assert.expect(1);
-    this.owner.register('service:user-events', this.blankEventsMock);
-    this.userEvents = this.owner.lookup('service:user-events');
+    setupBlankEvents(this);
 
     this.set('today', testDate.toJSDate());
     this.set('toggle', (value) => {
@@ -233,8 +237,7 @@ module('Integration | Component | week glance', function (hooks) {
 
   test('click to collapse', async function (assert) {
     assert.expect(1);
-    this.owner.register('service:user-events', this.blankEventsMock);
-    this.userEvents = this.owner.lookup('service:user-events');
+    setupBlankEvents(this);
 
     this.set('today', testDate.toJSDate());
     this.set('toggle', (value) => {
@@ -258,7 +261,7 @@ module('Integration | Component | week glance', function (hooks) {
     const nextYear = testDate.plus({ years: 1 });
     let count = 1;
     const service = this.owner.lookup('service:locale-days');
-    class blankEventsMock extends Service {
+    class BlankEventsMock extends Service {
       async getEvents(fromStamp, toStamp) {
         const from = DateTime.fromSeconds(fromStamp);
         const to = DateTime.fromSeconds(toStamp);
@@ -289,8 +292,7 @@ module('Integration | Component | week glance', function (hooks) {
         return [];
       }
     }
-    this.owner.register('service:user-events', blankEventsMock);
-    this.userEvents = this.owner.lookup('service:user-events');
+    this.owner.register('service:user-events', BlankEventsMock);
 
     this.set('year', testDate.year);
     this.set('week', testDate.weekNumber);

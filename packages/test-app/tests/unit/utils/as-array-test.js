@@ -107,6 +107,7 @@ module('Unit | Utility | as-array', function () {
   });
 
   test('it works for ember object with toArray property [EmberObject]', function (assert) {
+    // eslint-disable-next-line ember/no-classic-classes
     const item = EmberObject.extend({
       toArray() {
         return [1, 2, 3];
@@ -157,6 +158,7 @@ module('Unit | Utility | as-array', function () {
   test('it not works for EmberObject as array', function (assert) {
     assert.expect(1);
     try {
+      // eslint-disable-next-line ember/no-classic-classes
       const item = EmberObject.extend({}).create();
       asArray(item);
     } catch (e) {

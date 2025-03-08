@@ -12,12 +12,12 @@ module('Integration | Component | course overview', function (hooks) {
 
   hooks.beforeEach(function () {
     this.intl = this.owner.lookup('service:intl');
-    const permissionCheckerMock = Service.extend({
+    class PermissionCheckerMock extends Service {
       async canCreateCourse() {
         return true;
-      },
-    });
-    this.owner.register('service:permissionChecker', permissionCheckerMock);
+      }
+    }
+    this.owner.register('service:permissionChecker', PermissionCheckerMock);
     this.store = this.owner.lookup('service:store');
   });
 

@@ -10,10 +10,10 @@ module('Integration | Component | ilios-navigation', function (hooks) {
   setupRenderingTest(hooks);
 
   test('it renders for privileged user', async function (assert) {
-    const currentUserMock = Service.extend({
-      performsNonLearnerFunction: true,
-    });
-    this.owner.register('service:currentUser', currentUserMock);
+    class CurrentUserMock extends Service {
+      performsNonLearnerFunction = true;
+    }
+    this.owner.register('service:currentUser', CurrentUserMock);
 
     await render(hbs`<IliosNavigation />`);
     await a11yAudit(this.element);
@@ -31,10 +31,10 @@ module('Integration | Component | ilios-navigation', function (hooks) {
   });
 
   test('navigation does not render for non-privileged user', async function (assert) {
-    const currentUserMock = Service.extend({
-      performsNonLearnerFunction: false,
-    });
-    this.owner.register('service:currentUser', currentUserMock);
+    class CurrentUserMock extends Service {
+      performsNonLearnerFunction = false;
+    }
+    this.owner.register('service:currentUser', CurrentUserMock);
 
     await render(hbs`<IliosNavigation />`);
     await a11yAudit(this.element);
@@ -44,11 +44,11 @@ module('Integration | Component | ilios-navigation', function (hooks) {
   });
 
   test('Super-privileged Users can access Admin', async function (assert) {
-    const currentUserMock = Service.extend({
-      performsNonLearnerFunction: true,
-      canCreateOrUpdateUserInAnySchool: true,
-    });
-    this.owner.register('service:currentUser', currentUserMock);
+    class CurrentUserMock extends Service {
+      performsNonLearnerFunction = true;
+      canCreateOrUpdateUserInAnySchool = true;
+    }
+    this.owner.register('service:currentUser', CurrentUserMock);
 
     await render(hbs`<IliosNavigation />`);
     await a11yAudit(this.element);

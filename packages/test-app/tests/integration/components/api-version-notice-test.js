@@ -9,12 +9,12 @@ module('Integration | Component | api-version-notice', function (hooks) {
   setupRenderingTest(hooks);
 
   test('hidden when version match', async function (assert) {
-    const apiVersionMock = Service.extend({
+    class ApiVersionMock extends Service {
       async getIsMismatched() {
         return false;
-      },
-    });
-    this.owner.register('service:apiVersion', apiVersionMock);
+      }
+    }
+    this.owner.register('service:apiVersion', ApiVersionMock);
     await render(hbs`<ApiVersionNotice />`);
     await waitFor('[data-test-load-finished]');
     assert.ok(component.isHidden);
@@ -23,12 +23,12 @@ module('Integration | Component | api-version-notice', function (hooks) {
   });
 
   test('visible when versions do not match', async function (assert) {
-    const apiVersionMock = Service.extend({
+    class ApiVersionMock extends Service {
       async getIsMismatched() {
         return true;
-      },
-    });
-    this.owner.register('service:apiVersion', apiVersionMock);
+      }
+    }
+    this.owner.register('service:apiVersion', ApiVersionMock);
     await render(hbs`<ApiVersionNotice />`);
     await waitFor('[data-test-load-finished]');
     assert.ok(component.isVisible);

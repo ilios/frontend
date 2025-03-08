@@ -6,7 +6,6 @@ import { hbs } from 'ember-cli-htmlbars';
 module('Integration | Helper | has-many-ids', function (hooks) {
   setupRenderingTest(hooks);
 
-  // Replace this with your real tests.
   test('it renders', async function (assert) {
     assert.expect(2);
     this.set('model', {
