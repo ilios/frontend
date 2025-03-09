@@ -1,4 +1,4 @@
-import { currentRouteName } from '@ember/test-helpers';
+import { currentRouteName, currentURL } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import page from 'frontend/tests/pages/reports';
 import { setupApplicationTest } from 'frontend/tests/helpers';
@@ -94,7 +94,7 @@ module('Acceptance | Reports - Curriculum Reports', function (hooks) {
   });
 
   test('run session objective report', async function (assert) {
-    assert.expect(6);
+    assert.expect(7);
     const course = this.server.create('course', {
       school: this.school,
       year: currentAcademicYear(),
@@ -149,10 +149,15 @@ module('Acceptance | Reports - Curriculum Reports', function (hooks) {
     assert.strictEqual(so.results.objectAt(0).sessionCount, '1');
     assert.strictEqual(so.results.objectAt(0).instructorCount, '4');
     assert.strictEqual(so.results.objectAt(0).objectiveCount, '1');
+
+    assert.strictEqual(
+      currentURL(),
+      '/reports/curriculum?courses=1&report=sessionObjectives&run=true',
+    );
   });
 
   test('run learner groups report', async function (assert) {
-    assert.expect(6);
+    assert.expect(7);
     const course = this.server.create('course', {
       school: this.school,
       year: currentAcademicYear(),
@@ -221,5 +226,7 @@ module('Acceptance | Reports - Curriculum Reports', function (hooks) {
     assert.strictEqual(lg.results.objectAt(0).sessionCount, '1');
     assert.strictEqual(lg.results.objectAt(0).instructorCount, '4');
     assert.strictEqual(lg.results.objectAt(0).learnerGroupCount, '4');
+
+    assert.strictEqual(currentURL(), '/reports/curriculum?courses=1&report=learnerGroups&run=true');
   });
 });

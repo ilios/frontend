@@ -76,7 +76,9 @@ general:
   confirmVocabularyRemoval: Are you sure you want to delete this vocabulary?
   connectionLost: Connection Lost.
   continue: Continue
+  copiedCurriculumReportUrl: Copied Curriculum Report Link successfully
   copy: Copy
+  copyCurriculumReportUrl: Copy Curriculum Report Link
   copyNewToken: Copy new token
   copyWithLearners: Copy with Learners
   copyWithoutLearners: Copy without Learners
