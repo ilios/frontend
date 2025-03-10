@@ -1,6 +1,8 @@
 import Component from '@glimmer/component';
+import { guidFor } from '@ember/object/internals';
 
 export default class ProgressBarComponent extends Component {
+  id = guidFor(this);
   get textKey() {
     if (this.args.item.isScheduled) {
       return 'general.scheduled';
