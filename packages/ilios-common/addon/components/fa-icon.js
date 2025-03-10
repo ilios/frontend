@@ -6,6 +6,10 @@ export default class FaIconComponent extends Component {
     return guidFor(this);
   }
 
+  get ariaLabeledBy() {
+    return this.args.ariaLabeledBy ?? this.titleId;
+  }
+
   get titleId() {
     if (!this.args.title) {
       return null;
@@ -15,11 +19,11 @@ export default class FaIconComponent extends Component {
   }
 
   get ariaHidden() {
-    return this.args.title ? 'false' : 'true';
+    return this.args.title || this.args.ariaLabeledBy ? 'false' : 'true';
   }
 
   get focusable() {
-    return this.args.title ? 'true' : 'false';
+    return this.args.title || this.args.ariaLabeledBy ? 'true' : 'false';
   }
 
   get flip() {
