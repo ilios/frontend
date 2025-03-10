@@ -13,9 +13,9 @@
             {{t "general.courseTitle"}}
           </SortableTh>
           <SortableTh
+            class="hide-from-small-screen"
             @align="center"
             @colspan="1"
-            @hideFromSmallScreen={{true}}
             @sortedAscending={{this.sortedAscending}}
             @sortedBy={{or (eq @sortBy "level") (eq @sortBy "level:desc")}}
             @sortType="numeric"
@@ -24,9 +24,9 @@
             {{t "general.level"}}
           </SortableTh>
           <SortableTh
+            class="hide-from-small-screen"
             @align="center"
             @colspan="2"
-            @hideFromSmallScreen={{true}}
             @sortedAscending={{this.sortedAscending}}
             @sortedBy={{or (eq @sortBy "startDate") (eq @sortBy "startDate:desc")}}
             @sortType="numeric"
@@ -35,9 +35,9 @@
             {{t "general.startDate"}}
           </SortableTh>
           <SortableTh
+            class="hide-from-small-screen"
             @align="center"
             @colspan="2"
-            @hideFromSmallScreen={{true}}
             @sortedAscending={{this.sortedAscending}}
             @sortedBy={{or (eq @sortBy "endDate") (eq @sortBy "endDate:desc")}}
             @sortType="numeric"
@@ -71,7 +71,7 @@
           />
           {{#if (includes course.id this.coursesForRemovalConfirmation)}}
             <tr class="confirm-removal">
-              <td colspan={{if (media "isLaptopAndUp") "15" "10"}}>
+              <ResponsiveTd @smallScreenSpan="10" @largeScreenSpan="15">
                 <div class="confirm-message">
                   {{t
                     "general.confirmRemoveCourse"
@@ -91,14 +91,14 @@
                     </button>
                   </div>
                 </div>
-              </td>
+              </ResponsiveTd>
             </tr>
           {{/if}}
         {{else}}
           <tr data-test-empty-list>
-            <td class="text-center" colspan={{if (media "isLaptopAndUp") "15" "10"}}>
+            <ResponsiveTd @smallScreenSpan="10" @largeScreenSpan="15" class="text-center">
               {{if @query (t "general.noResultsFound") (t "general.none")}}
-            </td>
+            </ResponsiveTd>
           </tr>
         {{/each}}
       </tbody>

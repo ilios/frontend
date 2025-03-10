@@ -27,7 +27,7 @@
 </tr>
 {{#if this.showRemoveConfirmation}}
   <tr class="confirm-removal" data-test-confirm-removal>
-    <td colspan={{if (media "isLaptopAndUp") "7" "5"}}>
+    <ResponsiveTd @smallScreenSpan="5" @largeScreenSpan="7">
       <div class="confirm-message" data-test-message>
         {{t "general.confirmRemoveProgram"}}
         <br />
@@ -50,6 +50,6 @@
           </button>
         </div>
       </div>
-    </td>
+    </ResponsiveTd>
   </tr>
 {{/if}}
