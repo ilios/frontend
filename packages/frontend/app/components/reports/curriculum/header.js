@@ -15,6 +15,14 @@ export default class ReportsCurriculumHeader extends Component {
     return document.getElementById(this.copyButtonId);
   }
 
+  get runButtonId() {
+    return `curriculum-report-run-button-${guidFor(this)}`;
+  }
+
+  get runButtonElement() {
+    return document.getElementById(this.runButtonId);
+  }
+
   get reportUrl() {
     return window.location.href;
   }
