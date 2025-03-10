@@ -11,7 +11,6 @@ module('Integration | Component | sortable heading', function (hooks) {
     await render(hbs`<SortableHeading>{{this.label}}</SortableHeading>`);
     assert.dom('button').hasText('Foo');
     assert.dom('button').hasClass('text-left');
-    assert.dom('button').hasNoClass('hide-from-small-screen');
     assert.dom('button').hasAttribute('title', '');
     assert.dom('svg').hasClass('fa-sort');
   });
@@ -21,19 +20,17 @@ module('Integration | Component | sortable heading', function (hooks) {
     const title = 'Bar';
     const align = 'right';
     this.set('title', title);
-    this.set('hideFromSmallScreen', true);
     this.set('align', 'right');
     this.set('sortedBy', true);
     this.set('sortedAscending', false);
     this.set('sortType', 'numeric');
     await render(
       hbs`<SortableHeading
-  class='ham-of-shame'
+  class='ham-of-shame hide-from-small-screen'
   @colspan={{this.colspan}}
   @align={{this.align}}
   @title={{this.title}}
   @onClick={{this.click}}
-  @hideFromSmallScreen={{this.hideFromSmallScreen}}
   @sortedBy={{this.sortedBy}}
   @sortedAscending={{this.sortedAscending}}
   @sortType={{this.sortType}}

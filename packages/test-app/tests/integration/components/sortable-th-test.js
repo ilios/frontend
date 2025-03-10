@@ -25,18 +25,17 @@ module('Integration | Component | sortable th', function (hooks) {
     const align = 'right';
     this.set('colspan', colspan);
     this.set('title', title);
-    this.set('hideFromSmallScreen', true);
     this.set('align', 'right');
     this.set('sortedBy', true);
     this.set('sortedAscending', true);
     this.set('sortType', 'numeric');
     await render(
       hbs`<SortableTh
+  class='hide-from-small-screen'
   @colspan={{this.colspan}}
   @align={{this.align}}
   @title={{this.title}}
   @onClick={{this.click}}
-  @hideFromSmallScreen={{this.hideFromSmallScreen}}
   @sortedBy={{this.sortedBy}}
   @sortedAscending={{this.sortedAscending}}
   @sortType={{this.sortType}}
