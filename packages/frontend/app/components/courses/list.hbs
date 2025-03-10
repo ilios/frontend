@@ -71,7 +71,7 @@
           />
           {{#if (includes course.id this.coursesForRemovalConfirmation)}}
             <tr class="confirm-removal">
-              <td colspan={{if (media "isLaptopAndUp") "15" "10"}}>
+              <ResponsiveTd @smallScreenSpan="10" @largeScreenSpan="15">
                 <div class="confirm-message">
                   {{t
                     "general.confirmRemoveCourse"
@@ -91,14 +91,14 @@
                     </button>
                   </div>
                 </div>
-              </td>
+              </ResponsiveTd>
             </tr>
           {{/if}}
         {{else}}
           <tr data-test-empty-list>
-            <td class="text-center" colspan={{if (media "isLaptopAndUp") "15" "10"}}>
+            <ResponsiveTd @smallScreenSpan="10" @largeScreenSpan="15" class="text-center">
               {{if @query (t "general.noResultsFound") (t "general.none")}}
-            </td>
+            </ResponsiveTd>
           </tr>
         {{/each}}
       </tbody>

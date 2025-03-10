@@ -47,9 +47,9 @@
         />
       {{else}}
         <tr data-test-empty-list>
-          <td class="text-center" colspan={{if (media "isLaptopAndUp") "16" "8"}}>
+          <ResponsiveTd @smallScreenSpan="8" @largeScreenSpan="16" class="text-center">
             {{t "general.none"}}
-          </td>
+          </ResponsiveTd>
         </tr>
       {{/each}}
     </tbody>

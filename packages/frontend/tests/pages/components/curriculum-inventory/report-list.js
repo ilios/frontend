@@ -24,7 +24,7 @@ const definition = {
     cancel: clickable('[data-test-cancel]'),
   },
   emptyList: {
-    scope: '[data-test-empty-list]',
+    scope: '[data-test-empty-list] td:nth-of-type(1)',
     text: text(),
   },
 };
