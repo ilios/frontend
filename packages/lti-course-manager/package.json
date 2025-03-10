@@ -85,7 +85,7 @@
     "eslint-plugin-prettier": "^5.2.3",
     "eslint-plugin-qunit": "^8.1.2",
     "eslint-plugin-yml": "^1.16.0",
-    "globals": "^15.14.0",
+    "globals": "^16.0.0",
     "ilios-common": "workspace:*",
     "loader.js": "^4.7.0",
     "papaparse": "^5.5.2",
