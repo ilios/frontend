@@ -42,14 +42,6 @@
   }
 }
 
-@mixin hide-from-tablet-screen {
-  display: none;
-
-  @include for-tablet-and-up {
-    display: revert;
-  }
-}
-
 @mixin hide-from-large-screen {
   display: none;
 
