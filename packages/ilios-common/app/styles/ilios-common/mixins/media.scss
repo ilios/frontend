@@ -33,3 +33,19 @@
     @content;
   }
 }
+
+@mixin hide-from-small-screen {
+  display: none;
+
+  @include for-laptop-and-up {
+    display: revert;
+  }
+}
+
+@mixin hide-from-large-screen {
+  display: none;
+
+  @include for-smaller-than-laptop {
+    display: revert;
+  }
+}

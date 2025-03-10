@@ -24,11 +24,7 @@
     {{#if (includes @course.id @savingCourseIds)}}
       <LoadingSpinner />
     {{else}}
-      <PublicationStatus
-        @item={{@course}}
-        @showText={{media "isLaptopAndUp"}}
-        @showIcon={{not (media "isLaptopAndUp")}}
-      />
+      <PublicationStatus @item={{@course}} />
       {{#if @course.locked}}
         {{#if this.canUnlock}}
           <button
