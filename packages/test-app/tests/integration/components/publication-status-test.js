@@ -14,6 +14,8 @@ module('Integration | Component | publication-status', function (hooks) {
       hbs`<PublicationStatus @item={{this.item}} @showIcon={{true}} @showText={{true}} />`,
     );
     assert.strictEqual(component.value, 'Published');
+    assert.ok(component.icon.isVisible);
+    assert.ok(component.text.isVisible);
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
   });

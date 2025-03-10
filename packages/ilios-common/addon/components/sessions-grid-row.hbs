@@ -101,7 +101,7 @@
         @title={{t "general.instructionalNotes"}}
       />
     {{/if}}
-    <PublicationStatus @item={{@session}} @showIcon={{true}} @showText={{false}} />
+    <PublicationStatus @item={{@session}} />
   </span>
   <span class="session-grid-actions" data-test-actions>
     {{#if (and this.canUpdate (not @session.prerequisiteCount))}}
