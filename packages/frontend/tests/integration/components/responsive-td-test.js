@@ -6,7 +6,7 @@ import { hbs } from 'ember-cli-htmlbars';
 module('Integration | Component | responsive-td', function (hooks) {
   setupRenderingTest(hooks);
 
-  test('it renders as is accissible', async function (assert) {
+  test('it renders as is accessible', async function (assert) {
     await render(hbs`<ResponsiveTd @largeScreenSpan={{3}} @smallScreenSpan={{2}} />`);
 
     assert.dom().hasText('');
