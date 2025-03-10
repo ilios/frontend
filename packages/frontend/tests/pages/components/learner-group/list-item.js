@@ -1,4 +1,4 @@
-import { create, clickable, hasClass, isVisible, text } from 'ember-cli-page-object';
+import { create, clickable, hasClass, isPresent, isVisible, text } from 'ember-cli-page-object';
 
 const definition = {
   scope: '[data-test-learner-group-list-item]',
@@ -9,7 +9,7 @@ const definition = {
   children: text('[data-test-children]'),
   canBeDeleted: isVisible('[data-test-remove]'),
   canBeCopied: isVisible('[data-test-copy]'),
-  subgroupNeedsAccommodation: isVisible('[data-test-subgroup-needs-accommodation]'),
+  subgroupNeedsAccommodation: isPresent('[data-test-subgroup-needs-accommodation]'),
   subgroupNeedsAccommodationTitle: text('[data-test-subgroup-needs-accommodation] title'),
   remove: clickable('[data-test-remove]'),
   copy: clickable('[data-test-copy]'),

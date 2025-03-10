@@ -12,7 +12,9 @@ const definition = {
   sortByStartDate: clickable('button', { scope: '[data-test-course-headings] th:nth-of-type(3)' }),
   sortByEndDate: clickable('button', { scope: '[data-test-course-headings] th:nth-of-type(4)' }),
   sortByStatus: clickable('button', { scope: '[data-test-course-headings] th:nth-of-type(5)' }),
-  confirmCourseRemoval: clickable('[data-test-courses] .confirm-removal button.remove'),
+  confirmCourseRemoval: clickable(
+    '[data-test-courses] .confirm-removal td:nth-of-type(1) button.remove',
+  ),
   isSortedByTitleAscending: hasClass(
     'fa-arrow-down-a-z',
     '[data-test-course-headings] th:eq(0) svg',
