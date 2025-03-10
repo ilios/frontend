@@ -76,7 +76,7 @@
         {{mouse-hover-toggle (set this "showRunTooltip")}}
         data-test-run
       >
-        <FaIcon @icon="play" />
+        <FaIcon @icon="play" @title={{t "general.runReport"}} />
       </button>
       {{#if this.showRunTooltip}}
         <IliosTooltip
