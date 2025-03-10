@@ -10,9 +10,9 @@
         {{t "general.learnerGroupTitle"}}
       </SortableTh>
       <SortableTh
+        class="hide-from-small-screen"
         @align="center"
         @colspan={{1}}
-        @hideFromSmallScreen={{true}}
         @sortedAscending={{this.sortedAscending}}
         @sortType="numeric"
         @onClick={{fn this.setSortBy "usersCount"}}
@@ -21,9 +21,9 @@
         {{t "general.members"}}
       </SortableTh>
       <SortableTh
+        class="hide-from-small-screen"
         @align="center"
         @colspan={{1}}
-        @hideFromSmallScreen={{true}}
         @sortedAscending={{this.sortedAscending}}
         @sortType="numeric"
         @onClick={{fn this.setSortBy "childrenCount"}}

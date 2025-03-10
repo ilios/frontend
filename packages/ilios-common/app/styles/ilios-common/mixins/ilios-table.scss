@@ -1,6 +1,5 @@
 @use "../colors" as c;
 @use "font-size";
-@use "media";
 
 @use "sass:color";
 
@@ -65,30 +64,6 @@
     th {
       margin: 0;
       padding: 0 0.1rem;
-    }
-  }
-
-  .hide-from-small-screen {
-    display: none;
-
-    @include media.for-laptop-and-up {
-      display: table-cell;
-    }
-  }
-
-  .hide-from-tablet-screen {
-    display: none;
-
-    @include media.for-tablet-and-up {
-      display: table-cell;
-    }
-  }
-
-  .hide-from-large-screen {
-    display: none;
-
-    @include media.for-smaller-than-laptop {
-      display: table-cell;
     }
   }
 

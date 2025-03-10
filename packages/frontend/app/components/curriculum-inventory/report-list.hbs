@@ -14,9 +14,9 @@
           {{t "general.program"}}
         </th>
         <SortableTh
+          class="hide-from-small-screen"
           @align="center"
           @colspan={{2}}
-          @hideFromSmallScreen={{true}}
           @sortedAscending={{this.sortedAscending}}
           @sortedBy={{or (eq this.sortBy "year") (eq this.sortBy "year:desc")}}
           @sortType="numeric"

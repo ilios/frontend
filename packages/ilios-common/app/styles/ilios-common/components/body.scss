@@ -121,3 +121,15 @@ p {
 .link-button {
   @include m.ilios-link-button;
 }
+
+.hide-from-small-screen {
+  @include m.hide-from-small-screen;
+}
+
+.hide-from-tablet-screen {
+  @include m.hide-from-tablet-screen;
+}
+
+.hide-from-large-screen {
+  @include m.hide-from-large-screen;
+}
