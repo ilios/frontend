@@ -418,8 +418,8 @@ importers:
         specifier: ^8.2.0
         version: 8.2.0(@babel/core@7.26.9)
       ember-cli-flash:
-        specifier: ^5.1.0
-        version: 5.1.0(@ember/string@4.0.1)(@embroider/macros@1.16.11)(ember-modifier@4.2.0(@babel/core@7.26.9)(ember-source@6.2.0(@glimmer/component@1.1.2(@babel/core@7.26.9))(rsvp@4.8.5)(webpack@5.98.0)))
+        specifier: ^6.0.0
+        version: 6.0.0(@ember/string@4.0.1)(@embroider/macros@1.16.11)(ember-modifier@4.2.0(@babel/core@7.26.9)(ember-source@6.2.0(@glimmer/component@1.1.2(@babel/core@7.26.9))(rsvp@4.8.5)(webpack@5.98.0)))
       ember-cli-htmlbars:
         specifier: ^6.3.0
         version: 6.3.0
@@ -5283,8 +5283,8 @@ packages:
     resolution: {integrity: sha512-x6vtuxruExD66qo/OvNldGbxZ3NTaeRSdL63Q9clJ/+JspLXeHtKxl5dDMqRNvl8sItVrZJqq9GYMJfPsg5SWA==}
     engines: {node: 12.* || 14.* || >= 16}
 
-  ember-cli-flash@5.1.0:
-    resolution: {integrity: sha512-PvwPdXQ9mZdqgvNI/vh9Yij95ydedcOO8YYvWJcCqnk6ZoOO3a2mEVZmXltW1asztzp0AgFkGaOV0EPQDlDv1A==}
+  ember-cli-flash@6.0.0:
+    resolution: {integrity: sha512-ig8V5HKqXyTobJgHsIfnViPAmmyqx1c8T77LB5qmarPlVrx1G+EhSjlRcTr/y16Kg/EZalSBldHiLvv9M/5t6g==}
     peerDependencies:
       '@ember/string': '>= 3.0.0'
       '@embroider/macros': ^1.13.2
@@ -15826,7 +15826,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  ember-cli-flash@5.1.0(@ember/string@4.0.1)(@embroider/macros@1.16.11)(ember-modifier@4.2.0(@babel/core@7.26.9)(ember-source@6.2.0(@glimmer/component@1.1.2(@babel/core@7.26.9))(rsvp@4.8.5)(webpack@5.98.0))):
+  ember-cli-flash@6.0.0(@ember/string@4.0.1)(@embroider/macros@1.16.11)(ember-modifier@4.2.0(@babel/core@7.26.9)(ember-source@6.2.0(@glimmer/component@1.1.2(@babel/core@7.26.9))(rsvp@4.8.5)(webpack@5.98.0))):
     dependencies:
       '@ember/string': 4.0.1
       '@embroider/addon-shim': 1.9.0
