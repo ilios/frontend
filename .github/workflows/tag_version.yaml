@@ -6,6 +6,12 @@ on:
       releaseType:
         description: "Semver Release Type (major,minor,patch)"
         required: true
+        default: "patch"
+        type: choice
+        options:
+          - patch
+          - minor
+          - major
 
 jobs:
   tag:
