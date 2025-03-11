@@ -37,7 +37,7 @@ export default class CourseRolloverComponent extends Component {
   }
 
   get isNewTitleSet() {
-    return typeof this.newTitle !== 'undefined';
+    return this.newTitle !== undefined;
   }
 
   get title() {
