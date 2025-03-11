@@ -170,15 +170,14 @@ export default class CourseRolloverComponent extends Component {
   @action
   changeSelectedYear(selectedYear) {
     this.selectedYear = Number(selectedYear);
-
     const from = DateTime.fromJSDate(this.args.course.startDate);
-
-    this.selectedStartDate = DateTime.fromObject({
+    const startDate = DateTime.fromObject({
       hour: 0,
       minute: 0,
       weekYear: Number(selectedYear),
       weekNumber: from.weekNumber,
       weekday: from.weekday,
     }).toJSDate();
+    this.changeStartDate(startDate);
   }
 }
