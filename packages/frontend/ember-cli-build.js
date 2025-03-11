@@ -70,6 +70,7 @@ module.exports = async function (defaults) {
     staticAddonTestSupportTrees: true,
     staticAddonTrees: true,
     staticInvokables: true,
+    staticEmberSource: true,
     // splitAtRoutes: [], disabled until https://github.com/embroider-build/embroider/issues/231 once again allows our loading routes to work
     packagerOptions: {
       webpackConfig: {

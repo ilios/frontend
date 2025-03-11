@@ -37,5 +37,6 @@ module.exports = async function (defaults) {
     staticAddonTestSupportTrees: true,
     staticAddonTrees: true,
     staticInvokables: true,
+    staticEmberSource: true,
   });
 };
