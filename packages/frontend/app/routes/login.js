@@ -69,8 +69,8 @@ export default class LoginRoute extends Route {
       });
     }
     if (response.status === 'noAccountExists') {
-      this.set('noAccountExistsError', true);
-      this.set('noAccountExistsAccount', response.userId);
+      this.noAccountExistsError = true;
+      this.noAccountExistsAccount = response.userId;
       return;
     }
     if (response.status === 'success') {
@@ -95,8 +95,8 @@ export default class LoginRoute extends Route {
       });
     }
     if (status === 'noAccountExists') {
-      this.set('noAccountExistsError', true);
-      this.set('noAccountExistsAccount', response.userId);
+      this.noAccountExistsError = true;
+      this.noAccountExistsAccount = response.userId;
       return;
     }
     if (status === 'success') {

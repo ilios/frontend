@@ -23,8 +23,7 @@ export default class CurriculumInventorySequenceBlockRoute extends Route {
     const permissionChecker = this.permissionChecker;
 
     const report = await model.get('report');
-    const canUpdate = await permissionChecker.canUpdateCurriculumInventoryReport(report);
-    this.set('canUpdate', canUpdate);
+    this.canUpdate = await permissionChecker.canUpdateCurriculumInventoryReport(report);
 
     //preload data to speed up rendering later
     return Promise.all([model.children, model.parent]);

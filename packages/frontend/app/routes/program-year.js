@@ -23,8 +23,7 @@ export default class ProgramYearRoute extends Route {
    */
   async afterModel(programYear) {
     const permissionChecker = this.permissionChecker;
-    const canUpdate = await permissionChecker.canUpdateProgramYear(programYear);
-    this.set('canUpdate', canUpdate);
+    this.canUpdate = await permissionChecker.canUpdateProgramYear(programYear);
     //pre load froala so it's available quickly when working in the course
     loadFroalaEditor();
   }

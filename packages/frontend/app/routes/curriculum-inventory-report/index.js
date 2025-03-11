@@ -12,8 +12,7 @@ export default class CurriculumInventoryReportIndexRoute extends Route {
 
   async afterModel(report) {
     const permissionChecker = this.permissionChecker;
-    const canUpdate = await permissionChecker.canUpdateCurriculumInventoryReport(report);
-    this.set('canUpdate', canUpdate);
+    this.canUpdate = await permissionChecker.canUpdateCurriculumInventoryReport(report);
   }
 
   setupController(controller, model) {

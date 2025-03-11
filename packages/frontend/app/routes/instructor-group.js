@@ -19,8 +19,7 @@ export default class InstructorGroupRoute extends Route {
 
   async afterModel(instructorGroup) {
     const permissionChecker = this.permissionChecker;
-    const canUpdate = await permissionChecker.canUpdateInstructorGroup(instructorGroup);
-    this.set('canUpdate', canUpdate);
+    this.canUpdate = await permissionChecker.canUpdateInstructorGroup(instructorGroup);
   }
 
   setupController(controller, model) {
