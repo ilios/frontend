@@ -117,9 +117,13 @@ export default class CourseRolloverComponent extends Component {
 
   save = dropTask(async () => {
     await timeout(1);
-    // if the user hasn't set a new title, then we do this on their behalf now.
+    // if the user hasn't set a new title, then do this now on their behalf.
     if (!this.isNewTitleSet) {
       this.changeTitle(this.args.course.title);
+    }
+    // if the user hasn't set a start date, then do this now on their behalf.
+    if (!this.isStartDateSet) {
+      this.updateStartDate(this.args.course.startDate);
     }
     this.addErrorDisplayForAllFields();
     const isValid = await this.isValid();
