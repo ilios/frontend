@@ -51,8 +51,6 @@ export default [
       reportUnusedDisableDirectives: 'error',
     },
     rules: {
-      'ember/no-mixins': 'off',
-      'ember/no-new-mixins': 'off',
       'no-duplicate-imports': 'error',
     },
   },
