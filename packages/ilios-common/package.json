@@ -108,7 +108,7 @@
     "@ember-data/store": "5.3.11",
     "@ember-data/tracking": "5.3.11",
     "@ember/optional-features": "^2.2.0",
-    "@ember/test-helpers": "^4.0.5",
+    "@ember/test-helpers": "^5.1.0",
     "@embroider/test-setup": "^4.0.0",
     "@eslint/js": "^9.22.0",
     "@warp-drive/build-config": "0.0.1",
