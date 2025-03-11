@@ -18,8 +18,7 @@ export default class ProgramRoute extends Route {
 
   async afterModel(program) {
     const permissionChecker = this.permissionChecker;
-    const canUpdate = await permissionChecker.canUpdateProgram(program);
-    this.set('canUpdate', canUpdate);
+    this.canUpdate = await permissionChecker.canUpdateProgram(program);
   }
 
   setupController(controller, model) {

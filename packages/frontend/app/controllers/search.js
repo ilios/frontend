@@ -39,7 +39,7 @@ export default class SearchController extends Controller {
   @action
   setIgnoredSchools(schools) {
     const str = schools.length ? schools.join('-') : null;
-    this.set('ignoredSchoolIds', str);
+    this.ignoredSchoolIds = str;
   }
 
   @action

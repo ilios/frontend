@@ -14,8 +14,7 @@ export default class ProgramYearIndexRoute extends Route {
   async afterModel(programYear) {
     await programYear.program;
     const permissionChecker = this.permissionChecker;
-    const canUpdate = await permissionChecker.canUpdateProgramYear(programYear);
-    this.set('canUpdate', canUpdate);
+    this.canUpdate = await permissionChecker.canUpdateProgramYear(programYear);
   }
 
   setupController(controller, model) {

@@ -51,7 +51,6 @@ export default [
       reportUnusedDisableDirectives: 'error',
     },
     rules: {
-      'ember/classic-decorator-no-classic-methods': 'off',
       'ember/no-mixins': 'off',
       'ember/no-new-mixins': 'off',
       'no-duplicate-imports': 'error',

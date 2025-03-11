@@ -73,34 +73,19 @@ export default class SchoolRoute extends Route {
   async loadPermissions(school) {
     const permissionChecker = this.permissionChecker;
 
-    const canUpdateSchool = await permissionChecker.canUpdateSchool(school);
-    const canUpdateCompetency = await permissionChecker.canUpdateCompetencyInSchool(school);
-    const canDeleteCompetency = await permissionChecker.canDeleteCompetencyInSchool(school);
-    const canCreateCompetency = await permissionChecker.canCreateCompetency(school);
-    const canUpdateVocabulary = await permissionChecker.canUpdateVocabularyInSchool(school);
-    const canDeleteVocabulary = await permissionChecker.canDeleteVocabularyInSchool(school);
-    const canCreateVocabulary = await permissionChecker.canCreateVocabulary(school);
-    const canUpdateTerm = await permissionChecker.canUpdateTermInSchool(school);
-    const canDeleteTerm = await permissionChecker.canDeleteTermInSchool(school);
-    const canCreateTerm = await permissionChecker.canCreateTerm(school);
-    const canUpdateSessionType = await permissionChecker.canUpdateSessionTypeInSchool(school);
-    const canDeleteSessionType = await permissionChecker.canDeleteSessionTypeInSchool(school);
-    const canCreateSessionType = await permissionChecker.canCreateSessionType(school);
-    const canUpdateSchoolConfig = await permissionChecker.canUpdateSchoolConfig(school);
-
-    this.set('canUpdateSchool', canUpdateSchool);
-    this.set('canUpdateCompetency', canUpdateCompetency);
-    this.set('canDeleteCompetency', canDeleteCompetency);
-    this.set('canCreateCompetency', canCreateCompetency);
-    this.set('canUpdateVocabulary', canUpdateVocabulary);
-    this.set('canDeleteVocabulary', canDeleteVocabulary);
-    this.set('canCreateVocabulary', canCreateVocabulary);
-    this.set('canUpdateTerm', canUpdateTerm);
-    this.set('canDeleteTerm', canDeleteTerm);
-    this.set('canCreateTerm', canCreateTerm);
-    this.set('canUpdateSessionType', canUpdateSessionType);
-    this.set('canDeleteSessionType', canDeleteSessionType);
-    this.set('canCreateSessionType', canCreateSessionType);
-    this.set('canUpdateSchoolConfig', canUpdateSchoolConfig);
+    this.canUpdateSchool = await permissionChecker.canUpdateSchool(school);
+    this.canUpdateCompetency = await permissionChecker.canUpdateCompetencyInSchool(school);
+    this.canDeleteCompetency = await permissionChecker.canDeleteCompetencyInSchool(school);
+    this.canCreateCompetency = await permissionChecker.canCreateCompetency(school);
+    this.canUpdateVocabulary = await permissionChecker.canUpdateVocabularyInSchool(school);
+    this.canDeleteVocabulary = await permissionChecker.canDeleteVocabularyInSchool(school);
+    this.canCreateVocabulary = await permissionChecker.canCreateVocabulary(school);
+    this.canUpdateTerm = await permissionChecker.canUpdateTermInSchool(school);
+    this.canDeleteTerm = await permissionChecker.canDeleteTermInSchool(school);
+    this.canCreateTerm = await permissionChecker.canCreateTerm(school);
+    this.canUpdateSessionType = await permissionChecker.canUpdateSessionTypeInSchool(school);
+    this.canDeleteSessionType = await permissionChecker.canDeleteSessionTypeInSchool(school);
+    this.canCreateSessionType = await permissionChecker.canCreateSessionType(school);
+    this.canUpdateSchoolConfig = await permissionChecker.canUpdateSchoolConfig(school);
   }
 }
