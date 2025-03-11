@@ -44,6 +44,16 @@ export default class CourseRolloverComponent extends Component {
     return this.isNewTitleSet ? this.newTitle : this.args.course.title;
   }
 
+  get isYearSet() {
+    return this.selectedYear !== undefined;
+  }
+
+  get year() {
+    return this.isYearSet
+      ? this.selectedYear
+      : (this.years.find((year) => !this.unavailableYears.includes(year)) ?? this.years[0]);
+  }
+
   @cached
   get academicYearCrossesCalendarYearBoundariesData() {
     return new TrackedAsyncData(
@@ -119,11 +129,15 @@ export default class CourseRolloverComponent extends Component {
     await timeout(1);
     // if the user hasn't set a new title, then do this now on their behalf.
     if (!this.isNewTitleSet) {
-      this.changeTitle(this.args.course.title);
+      this.changeTitle(this.title);
     }
-    // if the user hasn't set a start date, then do this now on their behalf.
+    // if the user hasn't selected a new year, then do this now on their behalf.
+    if (!this.isYearSet) {
+      this.changeSelectedYear(this.year);
+    }
+    // if the user hasn't selected a start date, then do this now on their behalf.
     if (!this.isStartDateSet) {
-      this.updateStartDate(this.args.course.startDate);
+      this.changeStartDate(this.startDate);
     }
     this.addErrorDisplayForAllFields();
     const isValid = await this.isValid();
@@ -135,7 +149,7 @@ export default class CourseRolloverComponent extends Component {
     const selectedCohortIds = mapBy(this.selectedCohorts, 'id');
 
     const data = {
-      year: this.selectedYear,
+      year: this.year,
       newCourseTitle: this.title,
     };
     if (this.selectedStartDate) {
