@@ -434,7 +434,6 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
         },
       };
     });
-    console.log('page', page);
     await page.subjects.list.newSubject.run();
     assert.strictEqual(
       page.subjects.runSubject.header.description,
