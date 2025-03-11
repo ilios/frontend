@@ -110,7 +110,7 @@ export default class CourseRolloverComponent extends Component {
   }
 
   @action
-  updateStartDate(newStartDate) {
+  changeStartDate(newStartDate) {
     // if a date is forced that isn't allowed
     this.selectedStartDate = newStartDate ? newStartDate : this.args.course.startDate;
   }
