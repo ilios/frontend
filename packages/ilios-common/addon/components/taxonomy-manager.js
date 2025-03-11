@@ -55,8 +55,23 @@ export default class TaxonomyManager extends Component {
     }
   }
 
+  @cached
+  get assignableVocabulariesData() {
+    return new TrackedAsyncData(this.getAssignableVocabularies(this.nonEmptyVocabularies));
+  }
+
   get assignableVocabularies() {
-    return this.nonEmptyVocabularies.filter((vocab) => vocab.active);
+    return this.assignableVocabulariesData.isResolved ? this.assignableVocabulariesData.value : [];
+  }
+
+  async getAssignableVocabularies(vocabularies) {
+    // Filter out inactive vocabularies.
+    const activeVocabularies = vocabularies.filter((vocab) => vocab.active);
+    // Filter out vocabularies where all top-level terms are inactive.
+    return filter(activeVocabularies, async (vocabulary) => {
+      const topLevelTerms = await vocabulary.getTopLevelTerms();
+      return !topLevelTerms.every((term) => !term.active);
+    });
   }
 
   get listableVocabularies() {

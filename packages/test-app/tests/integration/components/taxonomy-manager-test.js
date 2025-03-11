@@ -229,4 +229,19 @@ module('Integration | Component | taxonomy manager', function (hooks) {
     assert.strictEqual(component.availableTerms.length, 1);
     assert.strictEqual(component.availableTerms[0].name, 'Gamma');
   });
+
+  test('vocabulary without active top-level terms is not assignable', async function (assert) {
+    // deactivate all top-level terms in vocabulary 1
+    this.termModel1.set('active', false);
+    this.termModel2.set('active', false);
+
+    this.set('assignableVocabularies', [this.vocabModel1]);
+    await render(hbs`<TaxonomyManager
+  @vocabularies={{this.assignableVocabularies}}
+  @selectedTerms={{(array)}}
+  @add={{(noop)}}
+  @remove={{(noop)}}
+/>`);
+    assert.strictEqual(component.vocabulary.options.length, 0);
+  });
 });
