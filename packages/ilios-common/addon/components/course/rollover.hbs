@@ -1,8 +1,4 @@
-<div
-  class="course-rollover"
-  {{did-insert (perform this.load) @course}}
-  {{did-update (perform this.load) @course}}
->
+<div class="course-rollover">
   {{#if this.save.isRunning}}
     <WaitSaving
       @showProgress={{false}}

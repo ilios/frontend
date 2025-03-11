@@ -3,7 +3,7 @@ import { service } from '@ember/service';
 import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { validatable, Length, NotBlank } from 'ilios-common/decorators/validation';
-import { dropTask, restartableTask, timeout } from 'ember-concurrency';
+import { dropTask, timeout } from 'ember-concurrency';
 import { DateTime } from 'luxon';
 import { filterBy, mapBy } from 'ilios-common/utils/array-helpers';
 import { TrackedAsyncData } from 'ember-async-data';
@@ -96,15 +96,6 @@ export default class CourseRolloverComponent extends Component {
       },
     });
   }
-
-  load = restartableTask(async (event, [course]) => {
-    if (!course) {
-      return;
-    }
-    // set selectedYear to next valid year (or current if none found)
-    const validYear = this.years.find((year) => !this.unavailableYears.includes(year));
-    this.changeSelectedYear(validYear || this.years[0]);
-  });
 
   @action
   changeTitle(newTitle) {
