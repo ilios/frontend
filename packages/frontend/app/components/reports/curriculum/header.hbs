@@ -27,6 +27,27 @@
     </p>
   </div>
   <div class="input-buttons">
+    {{#if @countSelectedCourses}}
+      <CopyButton
+        @clipboardText={{this.reportUrl}}
+        @success={{perform this.textCopied}}
+        aria-label={{t "general.copyCurriculumReportUrl"}}
+        id={{this.copyButtonId}}
+        data-test-copy-url
+        {{mouse-hover-toggle (set this "showCopyTooltip")}}
+      >
+        <FaIcon @icon="copy" />
+      </CopyButton>
+      {{#if this.showCopyTooltip}}
+        <IliosTooltip
+          @target={{this.copyButtonElement}}
+          @options={{this.popperOptions}}
+          class="ics-feed-tooltip"
+        >
+          {{t "general.copyCurriculumReportUrl"}}
+        </IliosTooltip>
+      {{/if}}
+    {{/if}}
     {{#if @showReportResults}}
       {{#if @loading}}
         <button type="button" class="done text">
@@ -51,10 +72,21 @@
         class="done text"
         {{on "click" @runReport}}
         disabled={{not @countSelectedCourses}}
+        id={{this.runButtonId}}
+        {{mouse-hover-toggle (set this "showRunTooltip")}}
         data-test-run
       >
-        <FaIcon @icon="play" @title={{t "general.run"}} />
+        <FaIcon @icon="play" @title={{t "general.runReport"}} />
       </button>
+      {{#if this.showRunTooltip}}
+        <IliosTooltip
+          @target={{this.runButtonElement}}
+          @options={{this.popperOptions}}
+          class="ics-feed-tooltip"
+        >
+          {{t "general.runReport"}}
+        </IliosTooltip>
+      {{/if}}
     {{/if}}
   </div>
 </div>
