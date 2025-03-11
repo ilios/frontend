@@ -57,8 +57,12 @@ export default class CourseRolloverComponent extends Component {
       : false;
   }
 
+  get isStartDateSet() {
+    return this.selectedStartDate !== undefined;
+  }
+
   get startDate() {
-    return this.selectedStartDate ?? this.args.course.startDate;
+    return this.isStartDateSet ? this.startDate : this.args.course.startDate;
   }
 
   get allowedWeekdays() {
