@@ -21,9 +21,6 @@ export default class SessionService extends ESASessionService {
     //this is also done for authenticated users in the Application Route
     await this.store.findAll('school');
     Sentry.setUser({ id: user.id });
-    Sentry.metrics.increment('login', 1, {
-      tags: { userAgent: navigator.userAgent },
-    });
   }
 
   async handleInvalidation() {
