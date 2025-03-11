@@ -12,7 +12,6 @@ module('Acceptance | Reports - Curriculum Reports', function (hooks) {
   setupApplicationTest(hooks);
 
   hooks.beforeEach(async function () {
-    this.server.logging = true;
     this.school = this.server.create('school');
     await setupAuthentication({ school: this.school });
     this.server.post('api/graphql', ({ db }, { requestBody }) => {
