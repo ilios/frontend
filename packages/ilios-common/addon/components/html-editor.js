@@ -1,17 +1,17 @@
 import Component from '@glimmer/component';
 import { service } from '@ember/service';
-import { tracked } from '@glimmer/tracking';
+import { cached, tracked } from '@glimmer/tracking';
 import { loadFroalaEditor } from 'ilios-common/utils/load-froala-editor';
 import { guidFor } from '@ember/object/internals';
-import { restartableTask } from 'ember-concurrency';
 import { modifier } from 'ember-modifier';
+import { TrackedAsyncData } from 'ember-async-data';
 
 export default class HtmlEditorComponent extends Component {
   @service intl;
-  @tracked editor = null;
   @tracked editorId = null;
   @tracked loadFinished = false;
 
+  editor = null;
   defaultButtons = {
     moreText: {
       buttons: ['bold', 'italic', 'subscript', 'superscript', 'formatOL', 'formatUL', 'insertLink'],
@@ -28,12 +28,25 @@ export default class HtmlEditorComponent extends Component {
     this.editorId = guidFor(this);
   }
 
-  editorInserted = modifier((element, [options]) => {
-    this.getEditorData.perform(element, options);
-  });
+  @cached
+  get createEditor() {
+    return new TrackedAsyncData(loadFroalaEditor());
+  }
 
-  getEditorData = restartableTask(async (element, options) => {
-    await this.loadEditor(element, options);
+  editorInserted = modifier((element, [options]) => {
+    if (!this.editor) {
+      const { FroalaEditor } = this.createEditor.value;
+      const component = this;
+      this.editor = new FroalaEditor(element, options, function () {
+        this.html.set(component.args.content);
+        if (component.args.autoFocus) {
+          this.events.focus();
+        }
+        component.loadFinished = true;
+      });
+    }
+
+    return true;
   });
 
   get options() {
@@ -81,27 +94,5 @@ export default class HtmlEditorComponent extends Component {
       this.editor.destroy();
       this.editor = null;
     }
-  }
-  createEditor(element, options) {
-    return new Promise((resolve) => {
-      loadFroalaEditor().then(({ FroalaEditor }) => {
-        new FroalaEditor(element, options, function () {
-          resolve(this);
-        });
-      });
-    });
-  }
-
-  async loadEditor(element, options) {
-    if (!this.editor) {
-      this.editor = await this.createEditor(element, options);
-      this.editor.html.set(this.args.content);
-      if (this.args.autofocus) {
-        this.editor.events.focus();
-      }
-      this.loadFinished = true;
-    }
-
-    return true;
   }
 }
