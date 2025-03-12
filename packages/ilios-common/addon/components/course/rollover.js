@@ -1,28 +1,31 @@
 import Component from '@glimmer/component';
 import { service } from '@ember/service';
-import { tracked } from '@glimmer/tracking';
+import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
-import { validatable, Length, NotBlank } from 'ilios-common/decorators/validation';
-import { dropTask, restartableTask, timeout } from 'ember-concurrency';
+import YupValidations from 'ilios-common/classes/yup-validations';
+import { number, string } from 'yup';
+import { dropTask, timeout } from 'ember-concurrency';
 import { DateTime } from 'luxon';
 import { filterBy, mapBy } from 'ilios-common/utils/array-helpers';
+import { TrackedAsyncData } from 'ember-async-data';
 
-@validatable
 export default class CourseRolloverComponent extends Component {
   @service fetch;
   @service store;
   @service flashMessages;
   @service iliosConfig;
 
-  @Length(3, 200) @NotBlank() @tracked title;
-  @NotBlank() @tracked selectedYear;
+  @tracked newTitle;
+  @tracked selectedYear;
   @tracked years;
-  @tracked course;
   @tracked selectedStartDate;
   @tracked skipOfferings = false;
-  @tracked allCourses;
   @tracked selectedCohorts = [];
-  @tracked academicYearCrossesCalendarYearBoundaries = false;
+
+  validations = new YupValidations(this, {
+    title: string().min(3).max(200),
+    year: number(),
+  });
 
   constructor() {
     super(...arguments);
@@ -38,37 +41,71 @@ export default class CourseRolloverComponent extends Component {
     }
   }
 
+  get isNewTitleSet() {
+    return this.newTitle !== undefined;
+  }
+
+  get title() {
+    return this.isNewTitleSet ? this.newTitle : this.args.course.title;
+  }
+
+  get isYearSet() {
+    return this.selectedYear !== undefined;
+  }
+
+  get year() {
+    return this.isYearSet
+      ? this.selectedYear
+      : (this.years.find((year) => !this.unavailableYears.includes(year)) ?? this.years[0]);
+  }
+
+  @cached
+  get academicYearCrossesCalendarYearBoundariesData() {
+    return new TrackedAsyncData(
+      this.iliosConfig.itemFromConfig('academicYearCrossesCalendarYearBoundaries'),
+    );
+  }
+
+  get academicYearCrossesCalendarYearBoundaries() {
+    return this.academicYearCrossesCalendarYearBoundariesData.isResolved
+      ? this.academicYearCrossesCalendarYearBoundariesData.value
+      : false;
+  }
+
+  get isStartDateSet() {
+    return this.selectedStartDate !== undefined;
+  }
+
   get startDate() {
-    return this.selectedStartDate ?? this.args.course.startDate;
+    return this.isStartDateSet ? this.selectedStartDate : this.args.course.startDate;
   }
 
   get allowedWeekdays() {
     return [DateTime.fromJSDate(this.args.course.startDate).weekday];
   }
 
-  load = restartableTask(async (event, [course]) => {
-    if (!course) {
-      return;
-    }
-    this.title = course.title;
+  @cached
+  get allCoursesData() {
+    return new TrackedAsyncData(this.loadAllCourses(this.args.course));
+  }
+
+  get allCourses() {
+    return this.allCoursesData.isResolved ? this.allCoursesData.value : [];
+  }
+
+  async loadAllCourses(course) {
     const school = course.belongsTo('school').id();
-    this.academicYearCrossesCalendarYearBoundaries = await this.iliosConfig.itemFromConfig(
-      'academicYearCrossesCalendarYearBoundaries',
-    );
-    this.allCourses = await this.store.query('course', {
+    return this.store.query('course', {
       filters: {
         school,
       },
     });
-
-    // set selectedYear to next valid year (or current if none found)
-    const validYear = this.years.find((year) => !this.unavailableYears.includes(year));
-    this.changeSelectedYear(validYear || this.years[0]);
-  });
+  }
 
   @action
   changeTitle(newTitle) {
-    this.title = newTitle;
+    this.validations.addErrorDisplayFor('title');
+    this.newTitle = newTitle;
   }
   @action
   addCohort(cohort) {
@@ -80,29 +117,29 @@ export default class CourseRolloverComponent extends Component {
   }
 
   @action
-  updateStartDate(newStartDate) {
+  changeStartDate(newStartDate) {
     // if a date is forced that isn't allowed
     this.selectedStartDate = newStartDate ? newStartDate : this.args.course.startDate;
   }
 
   save = dropTask(async () => {
-    await timeout(1);
-    this.addErrorDisplayForAllFields();
-    const isValid = await this.isValid();
+    this.validations.addErrorDisplaysFor(['title', 'year']);
+    const isValid = await this.validations.isValid();
     if (!isValid) {
       return false;
     }
+    this.validations.clearErrorDisplay();
+    await timeout(1);
     const courseId = this.args.course.id;
 
     const selectedCohortIds = mapBy(this.selectedCohorts, 'id');
 
     const data = {
-      year: this.selectedYear,
+      year: this.year,
       newCourseTitle: this.title,
+      newStartDate: DateTime.fromJSDate(this.selectedStartDate).toFormat('yyyy-LL-dd'),
     };
-    if (this.selectedStartDate) {
-      data.newStartDate = DateTime.fromJSDate(this.selectedStartDate).toFormat('yyyy-LL-dd');
-    }
+
     if (this.skipOfferings) {
       data.skipOfferings = true;
     }
@@ -120,9 +157,6 @@ export default class CourseRolloverComponent extends Component {
   });
 
   get unavailableYears() {
-    if (!this.allCourses) {
-      return [];
-    }
     const existingCoursesWithTitle = filterBy(this.allCourses, 'title', this.title.trim());
     return mapBy(existingCoursesWithTitle, 'year');
   }
@@ -134,16 +168,16 @@ export default class CourseRolloverComponent extends Component {
 
   @action
   changeSelectedYear(selectedYear) {
+    this.validations.addErrorDisplayFor('year');
     this.selectedYear = Number(selectedYear);
-
     const from = DateTime.fromJSDate(this.args.course.startDate);
-
-    this.selectedStartDate = DateTime.fromObject({
+    const startDate = DateTime.fromObject({
       hour: 0,
       minute: 0,
       weekYear: Number(selectedYear),
       weekNumber: from.weekNumber,
       weekday: from.weekday,
     }).toJSDate();
+    this.changeStartDate(startDate);
   }
 }

@@ -4,7 +4,3 @@ add|ember-template-lint|no-at-ember-render-modifiers|3|2|3|2|1fb6f249958ee245e6a
 add|ember-template-lint|no-at-ember-render-modifiers|4|2|4|2|856162ce473b112534763bb641aae7a4422d8e2e|1731542400000|1762646400000|1793750400000|addon/components/session-copy.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|3|2|3|2|23cd787c79c34a628dadb6e96dd4004d42eebb79|1731542400000|1762646400000|1793750400000|addon/components/session-offerings-list.hbs
 add|ember-template-lint|no-at-ember-render-modifiers|4|2|4|2|60333f2ba463ca3d2ba17a04d799c8d66d8b99e2|1731542400000|1762646400000|1793750400000|addon/components/session-offerings-list.hbs
-add|ember-template-lint|no-at-ember-render-modifiers|4|2|4|2|2bbf15957242a9a3c1e26e14e5d022c858199fde|1731542400000|1762646400000|1793750400000|addon/components/course/rollover-date-picker.hbs
-add|ember-template-lint|no-at-ember-render-modifiers|5|2|5|2|167e8d9ede488c7f199cb748e81bc09b97617e71|1731542400000|1762646400000|1793750400000|addon/components/course/rollover-date-picker.hbs
-add|ember-template-lint|no-at-ember-render-modifiers|3|2|3|2|1009d3843f6aed52099f0e7fbd4eebb52bc176e5|1731542400000|1762646400000|1793750400000|addon/components/course/rollover.hbs
-add|ember-template-lint|no-at-ember-render-modifiers|4|2|4|2|84076f8cf85c554eaf0d9fdec26154bae5bceeb2|1731542400000|1762646400000|1793750400000|addon/components/course/rollover.hbs
