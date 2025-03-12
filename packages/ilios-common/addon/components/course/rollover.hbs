@@ -26,12 +26,15 @@
           type="text"
           value={{this.title}}
           {{on "input" (pick "target.value" (set this "newTitle"))}}
-          {{on "input" (fn this.addErrorDisplayFor "newTitle")}}
+          {{on "input" (fn this.validations.addErrorDisplayFor "title")}}
           disabled={{this.save.isRunning}}
           placeholder={{t "general.courseTitlePlaceholder"}}
           data-test-title
         >
-        <ValidationError @validatable={{this}} @property="newTitle" />
+        <YupValidationMessage
+          @description={{t 'general.title'}}
+          @validationErrors={{this.validations.errors.title}}
+        />
       </div>
       <div class="item year-select">
         <label for="year-{{templateId}}">
@@ -63,7 +66,10 @@
         {{else}}
           <LoadingSpinner />
         {{/if}}
-        <ValidationError @validatable={{this}} @property="selectedYear" />
+        <YupValidationMessage
+          @description={{t 'general.year'}}
+          @validationErrors={{this.validations.errors.year}}
+        />
       </div>
       <div class="advanced-options">
         <div class="item">

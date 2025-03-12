@@ -469,7 +469,7 @@ module('Integration | Component | course/rollover', function (hooks) {
 
     await fillIn(input, '');
     assert.dom('.validation-error-message').exists({ count: 1 });
-    assert.ok(find('.validation-error-message').textContent.includes('blank'));
+    assert.ok(find('.validation-error-message').textContent.includes('too short'));
   });
 
   test('rollover course with cohorts', async function (assert) {

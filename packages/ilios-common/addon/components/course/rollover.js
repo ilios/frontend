@@ -2,25 +2,30 @@ import Component from '@glimmer/component';
 import { service } from '@ember/service';
 import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
-import { validatable, Length, NotBlank } from 'ilios-common/decorators/validation';
+import YupValidations from 'ilios-common/classes/yup-validations';
+import { number, string } from 'yup';
 import { dropTask, timeout } from 'ember-concurrency';
 import { DateTime } from 'luxon';
 import { filterBy, mapBy } from 'ilios-common/utils/array-helpers';
 import { TrackedAsyncData } from 'ember-async-data';
 
-@validatable
 export default class CourseRolloverComponent extends Component {
   @service fetch;
   @service store;
   @service flashMessages;
   @service iliosConfig;
 
-  @Length(3, 200) @NotBlank() @tracked newTitle;
-  @NotBlank() @tracked selectedYear;
+  @tracked newTitle;
+  @tracked selectedYear;
   @tracked years;
   @tracked selectedStartDate;
   @tracked skipOfferings = false;
   @tracked selectedCohorts = [];
+
+  validations = new YupValidations(this, {
+    title: string().min(3).max(200),
+    year: number(),
+  });
 
   constructor() {
     super(...arguments);
@@ -99,6 +104,7 @@ export default class CourseRolloverComponent extends Component {
 
   @action
   changeTitle(newTitle) {
+    this.validations.addErrorDisplayFor('title');
     this.newTitle = newTitle;
   }
   @action
@@ -117,24 +123,13 @@ export default class CourseRolloverComponent extends Component {
   }
 
   save = dropTask(async () => {
-    await timeout(1);
-    // if the user hasn't set a new title, then do this now on their behalf.
-    if (!this.isNewTitleSet) {
-      this.changeTitle(this.title);
-    }
-    // if the user hasn't selected a new year, then do this now on their behalf.
-    if (!this.isYearSet) {
-      this.changeSelectedYear(this.year);
-    }
-    // if the user hasn't selected a start date, then do this now on their behalf.
-    if (!this.isStartDateSet) {
-      this.changeStartDate(this.startDate);
-    }
-    this.addErrorDisplayForAllFields();
-    const isValid = await this.isValid();
+    this.validations.addErrorDisplaysFor(['title', 'year']);
+    const isValid = await this.validations.isValid();
     if (!isValid) {
       return false;
     }
+    this.validations.clearErrorDisplay();
+    await timeout(1);
     const courseId = this.args.course.id;
 
     const selectedCohortIds = mapBy(this.selectedCohorts, 'id');
@@ -173,6 +168,7 @@ export default class CourseRolloverComponent extends Component {
 
   @action
   changeSelectedYear(selectedYear) {
+    this.validations.addErrorDisplayFor('year');
     this.selectedYear = Number(selectedYear);
     const from = DateTime.fromJSDate(this.args.course.startDate);
     const startDate = DateTime.fromObject({
