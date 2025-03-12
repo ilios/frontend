@@ -1,4 +1,4 @@
-{{#if this.allCoursesData.isResolved}}
+{{#if this.reportTitleData.isResolved}}
   <Reports::SubjectHeader
     @report={{@report}}
     @school={{@school}}
@@ -11,11 +11,13 @@
     @description={{@description}}
     @fetchDownloadData={{this.fetchDownloadData}}
     @readyToDownload={{this.allCoursesData.isResolved}}
+    @reportTitle={{this.reportTitle}}
+    @reportTitleData={{this.reportTitleData}}
     @resultsLength={{this.resultsLengthDisplay}}
   />
 {{/if}}
 <div data-test-reports-subject-course>
-  {{#if this.allCoursesData.isResolved}}
+  {{#if this.reportTitleData.isResolved}}
     <ul class="report-results{{if this.reportResultsExceedMax ' limited'}}" data-test-results>
       {{#each this.limitedCourses as |course|}}
         <li>
@@ -46,14 +48,9 @@
     </ul>
     {{#if this.reportResultsExceedMax}}
       <Reports::SubjectDownload
-        @report={{@report}}
-        @school={{@school}}
-        @subject={{@subject}}
-        @prepositionalObject={{@prepositionalObject}}
-        @prepositionalObjectTableRowId={{@prepositionalObjectTableRowId}}
         @fetchDownloadData={{this.fetchDownloadData}}
         @readyToDownload={{true}}
-        @reportTitleData={{this.reportTitleData}}
+        @reportTitle={{this.reportTitle}}
         @message={{t "general.reportResultsExceedMax"}}
       />
     {{/if}}

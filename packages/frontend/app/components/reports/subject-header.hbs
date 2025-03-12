@@ -1,9 +1,9 @@
 <div class="reports-subject-header" data-test-reports-subject-header>
   <h2 data-test-report-title>
-    {{#if (and @report this.reportTitleData.isResolved)}}
+    {{#if @reportTitleData.isResolved}}
       <EditableField
         data-test-title
-        @value={{this.reportTitle}}
+        @value={{@reportTitle}}
         @save={{perform this.changeTitle}}
         @close={{this.revertTitleChanges}}
         @saveOnEnter={{true}}
@@ -14,8 +14,8 @@
         <input
           aria-label={{t "general.reportTitle"}}
           type="text"
-          value={{this.reportTitle}}
-          placeholder={{this.reportTitleData.value}}
+          value={{@reportTitle}}
+          placeholder={{@reportTitleData.value}}
           disabled={{isSaving}}
           {{on "input" (pick "target.value" (set this "title"))}}
           {{on "keyup" (fn this.addErrorDisplayFor "title")}}
@@ -25,14 +25,9 @@
     {{/if}}
   </h2>
   <Reports::SubjectDownload
-    @report={{@report}}
-    @school={{@school}}
-    @subject={{@subject}}
-    @prepositionalObject={{@prepositionalObject}}
-    @prepositionalObjectTableRowId={{@prepositionalObjectTableRowId}}
     @fetchDownloadData={{@fetchDownloadData}}
     @readyToDownload={{@readyToDownload}}
-    @reportTitleData={{this.reportTitleData}}
+    @reportTitle={{@reportTitle}}
   />
   {{#if @showYearFilter}}
     <Reports::SubjectYearFilter @selectedYear={{@year}} @changeYear={{@changeYear}} />

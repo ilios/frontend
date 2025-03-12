@@ -12,6 +12,7 @@ export default class ReportsSubjectCourseComponent extends Component {
   @service iliosConfig;
   @service currentUser;
   @service intl;
+  @service reporting;
 
   crossesBoundaryConfig = new TrackedAsyncData(
     this.iliosConfig.itemFromConfig('academicYearCrossesCalendarYearBoundaries'),
@@ -31,6 +32,26 @@ export default class ReportsSubjectCourseComponent extends Component {
 
   get allCourses() {
     return this.allCoursesData.isResolved ? this.allCoursesData.value : [];
+  }
+
+  @cached
+  get reportTitleData() {
+    return new TrackedAsyncData(
+      this.reporting.buildReportTitle(
+        this.args.subject,
+        this.args.prepositionalObject,
+        this.args.prepositionalObjectTableRowId,
+        this.args.school,
+      ),
+    );
+  }
+
+  get reportTitle() {
+    if (this.args.report?.title) {
+      return this.args.report.title;
+    }
+
+    return this.reportTitleData.isResolved ? this.reportTitleData.value : null;
   }
 
   @cached
