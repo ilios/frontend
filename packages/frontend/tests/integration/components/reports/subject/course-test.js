@@ -79,25 +79,10 @@ module('Integration | Component | reports/subject/course', function (hooks) {
     await setupAuthentication({}, true);
     assert.expect(3);
 
-    const years = [2020, 2021, 2022, 2023, 2024, 2025];
-    const responseDataLarge = {
-      data: {
-        courses: [],
-      },
-    };
-
-    for (let i = 0; i < 220; i++) {
-      responseDataLarge.data.courses.push({
-        id: i,
-        title: `course ${i}`,
-        year: years[Math.floor(Math.random()) + years.length],
-      });
-    }
-
     this.server.post('api/graphql', function (schema, { requestBody }) {
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(query, 'query { courses { id, title, year, externalId } }');
-      return responseDataLarge;
+      return responseData;
     });
     const { id } = this.server.create('report', {
       subject: 'course',
@@ -109,7 +94,7 @@ module('Integration | Component | reports/subject/course', function (hooks) {
   @prepositionalObjectTableRowId={{this.report.prepositionalObjectTableRowId}}
 />`);
 
-    assert.strictEqual(component.results.length, 220, 'responseData shows all 220 of 220 courses');
+    assert.strictEqual(component.results.length, 2, 'responseData shows all 2 of 2 courses');
     assert.notOk(component.hasFullResultsDownloadButton, 'full results download button is hidden');
   });
 

@@ -37,26 +37,6 @@ export default class ReportsSubjectCourseComponent extends Component {
   }
 
   @cached
-  get reportTitleData() {
-    return new TrackedAsyncData(
-      this.reporting.buildReportTitle(
-        this.args.subject,
-        this.args.prepositionalObject,
-        this.args.prepositionalObjectTableRowId,
-        this.args.school,
-      ),
-    );
-  }
-
-  get reportTitle() {
-    if (this.args.report?.title) {
-      return this.args.report.title;
-    }
-
-    return this.reportTitleData.isResolved ? this.reportTitleData.value : null;
-  }
-
-  @cached
   get academicYearCrossesCalendarYearBoundaries() {
     return this.crossesBoundaryConfig.isResolved ? this.crossesBoundaryConfig.value : false;
   }

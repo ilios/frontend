@@ -1,17 +1,19 @@
-{{#if this.reportTitleData.isResolved}}
-  <Reports::SubjectHeader
-    @changeYear={{@changeYear}}
-    @year={{@year}}
-    @description={{@description}}
-    @showYearFilter={{not-eq @prepositionalObject "academic year"}}
-    @fetchDownloadData={{this.fetchDownloadData}}
-    @readyToDownload={{this.allCoursesData.isResolved}}
-    @reportTitle={{this.reportTitle}}
-    @resultsLength={{this.resultsLengthDisplay}}
-  />
-{{/if}}
+<Reports::SubjectHeader
+  @report={{@report}}
+  @subject={{@subject}}
+  @prepositionalObject={{@prepositionalObject}}
+  @prepositionalObjectTableRowId={{@prepositionalObjectTableRowId}}
+  @school={{@school}}
+  @changeYear={{@changeYear}}
+  @year={{@year}}
+  @description={{@description}}
+  @showYearFilter={{not-eq @prepositionalObject "academic year"}}
+  @fetchDownloadData={{this.fetchDownloadData}}
+  @readyToDownload={{this.allCoursesData.isResolved}}
+  @resultsLength={{this.resultsLengthDisplay}}
+/>
 <div data-test-reports-subject-course>
-  {{#if this.reportTitleData.isResolved}}
+  {{#if this.allCoursesData.isResolved}}
     <ul class="report-results{{if this.reportResultsExceedMax ' limited'}}" data-test-results>
       {{#each this.limitedCourses as |course|}}
         <li>
@@ -44,7 +46,6 @@
       <Reports::SubjectDownload
         @fetchDownloadData={{this.fetchDownloadData}}
         @readyToDownload={{true}}
-        @reportTitle={{this.reportTitle}}
         @message={{t "general.reportResultsExceedMax"}}
       />
     {{/if}}

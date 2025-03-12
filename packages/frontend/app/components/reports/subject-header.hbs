@@ -1,31 +1,32 @@
 <div class="reports-subject-header" data-test-reports-subject-header>
   <h2 data-test-report-title>
-    <EditableField
-      data-test-title
-      @value={{@reportTitle}}
-      @save={{perform this.changeTitle}}
-      @close={{this.revertTitleChanges}}
-      @saveOnEnter={{true}}
-      @showIcon={{false}}
-      @closeOnEscape={{true}}
-      as |isSaving|
-    >
-      <input
-        aria-label={{t "general.reportTitle"}}
-        type="text"
-        value={{@reportTitle}}
-        placeholder={{@reportTitle}}
-        disabled={{isSaving}}
-        {{on "input" (pick "target.value" (set this "title"))}}
-        {{on "keyup" (fn this.addErrorDisplayFor "title")}}
-      />
-      <ValidationError @validatable={{this}} @property="title" />
-    </EditableField>
+    {{#if (and @report this.reportTitleData.isResolved)}}
+      <EditableField
+        data-test-title
+        @value={{this.reportTitle}}
+        @save={{perform this.changeTitle}}
+        @close={{this.revertTitleChanges}}
+        @saveOnEnter={{true}}
+        @showIcon={{false}}
+        @closeOnEscape={{true}}
+        as |isSaving|
+      >
+        <input
+          aria-label={{t "general.reportTitle"}}
+          type="text"
+          value={{this.reportTitle}}
+          placeholder={{this.reportTitleData.value}}
+          disabled={{isSaving}}
+          {{on "input" (pick "target.value" (set this "title"))}}
+          {{on "keyup" (fn this.addErrorDisplayFor "title")}}
+        />
+        <ValidationError @validatable={{this}} @property="title" />
+      </EditableField>
+    {{/if}}
   </h2>
   <Reports::SubjectDownload
     @fetchDownloadData={{@fetchDownloadData}}
     @readyToDownload={{@readyToDownload}}
-    @reportTitle={{@reportTitle}}
   />
   {{#if @showYearFilter}}
     <Reports::SubjectYearFilter @selectedYear={{@year}} @changeYear={{@changeYear}} />
