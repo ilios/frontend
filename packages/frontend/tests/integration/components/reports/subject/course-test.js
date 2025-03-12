@@ -79,49 +79,20 @@ module('Integration | Component | reports/subject/course', function (hooks) {
     await setupAuthentication({}, true);
     assert.expect(3);
 
-    this.server.post('api/graphql', function (schema, { requestBody }) {
-      const { query } = JSON.parse(requestBody);
-      assert.strictEqual(query, 'query { courses { id, title, year, externalId } }');
-      return responseData;
-    });
-    const { id } = this.server.create('report', {
-      subject: 'course',
-    });
-    this.set('resultsLengthMax', 10);
-    this.set('report', await this.owner.lookup('service:store').findRecord('report', id));
-    await render(hbs`<Reports::Subject::Course
-  @subject={{this.report.subject}}
-  @prepositionalObject={{this.report.prepositionalObject}}
-  @prepositionalObjectTableRowId={{this.report.prepositionalObjectTableRowId}}
-  @resultsLengthMax={{this.resultsLengthMax}}
-/>`);
-
-    assert.strictEqual(component.results.length, 2, 'responseData shows all 2 of 2 courses');
-    assert.notOk(component.hasFullResultsDownloadButton, 'full results download button is hidden');
-  });
-
-  test('it renders limited results and an extra download button when resultsLengthMax is eclipsed', async function (assert) {
-    await setupAuthentication({}, true);
-    assert.expect(3);
-
+    const years = [2020, 2021, 2022, 2023, 2024, 2025];
     const responseDataLarge = {
       data: {
-        courses: [
-          { id: 1, title: 'First Course', year: 2020 },
-          { id: 2, title: 'Second Course', year: 2020 },
-          { id: 3, title: 'Third Course', year: 2020 },
-          { id: 4, title: 'Fourth Course', year: 2020 },
-          { id: 5, title: 'Fifth Course', year: 2021 },
-          { id: 6, title: 'Sixth Course', year: 2021 },
-          { id: 7, title: 'Seventh Course', year: 2021 },
-          { id: 8, title: 'Eighth Course', year: 2022 },
-          { id: 9, title: 'Ninth Course', year: 2023 },
-          { id: 10, title: 'Tenth Course', year: 2023 },
-          { id: 11, title: 'Eleventh Course', year: 2024 },
-          { id: 12, title: 'Twelfth Course', year: 2025 },
-        ],
+        courses: [],
       },
     };
+
+    for (let i = 0; i < 220; i++) {
+      responseDataLarge.data.courses.push({
+        id: i,
+        title: `course ${i}`,
+        year: years[Math.floor(Math.random()) + years.length],
+      });
+    }
 
     this.server.post('api/graphql', function (schema, { requestBody }) {
       const { query } = JSON.parse(requestBody);
@@ -131,19 +102,55 @@ module('Integration | Component | reports/subject/course', function (hooks) {
     const { id } = this.server.create('report', {
       subject: 'course',
     });
-    this.set('resultsLengthMax', 10);
     this.set('report', await this.owner.lookup('service:store').findRecord('report', id));
     await render(hbs`<Reports::Subject::Course
   @subject={{this.report.subject}}
   @prepositionalObject={{this.report.prepositionalObject}}
   @prepositionalObjectTableRowId={{this.report.prepositionalObjectTableRowId}}
-  @resultsLengthMax={{this.resultsLengthMax}}
+/>`);
+
+    assert.strictEqual(component.results.length, 220, 'responseData shows all 220 of 220 courses');
+    assert.notOk(component.hasFullResultsDownloadButton, 'full results download button is hidden');
+  });
+
+  test('it renders limited results and an extra download button when resultsLengthMax is eclipsed', async function (assert) {
+    await setupAuthentication({}, true);
+    assert.expect(3);
+
+    const years = [2020, 2021, 2022, 2023, 2024, 2025];
+    const responseDataLarge = {
+      data: {
+        courses: [],
+      },
+    };
+
+    for (let i = 0; i < 220; i++) {
+      responseDataLarge.data.courses.push({
+        id: i,
+        title: `course ${i}`,
+        year: years[Math.floor(Math.random()) + years.length],
+      });
+    }
+
+    this.server.post('api/graphql', function (schema, { requestBody }) {
+      const { query } = JSON.parse(requestBody);
+      assert.strictEqual(query, 'query { courses { id, title, year, externalId } }');
+      return responseDataLarge;
+    });
+    const { id } = this.server.create('report', {
+      subject: 'course',
+    });
+    this.set('report', await this.owner.lookup('service:store').findRecord('report', id));
+    await render(hbs`<Reports::Subject::Course
+  @subject={{this.report.subject}}
+  @prepositionalObject={{this.report.prepositionalObject}}
+  @prepositionalObjectTableRowId={{this.report.prepositionalObjectTableRowId}}
 />`);
 
     assert.strictEqual(
       component.results.length,
-      10,
-      'responseDataLarge shows only 10 of 12 courses',
+      200,
+      'responseDataLarge shows only 200 of 220 courses',
     );
     assert.ok(component.hasFullResultsDownloadButton, 'full results download button is present');
   });
