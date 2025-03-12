@@ -29,13 +29,13 @@ export default class HtmlEditorComponent extends Component {
   }
 
   @cached
-  get createEditor() {
+  get loadFroalaData() {
     return new TrackedAsyncData(loadFroalaEditor());
   }
 
   editorInserted = modifier((element, [options]) => {
     if (!this.editor) {
-      const { FroalaEditor } = this.createEditor.value;
+      const { FroalaEditor } = this.loadFroalaData.value;
       const component = this;
       this.editor = new FroalaEditor(element, options, function () {
         this.html.set(component.args.content);
