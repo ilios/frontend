@@ -37,6 +37,8 @@ export default class HtmlEditorComponent extends Component {
     if (!this.editor) {
       const { FroalaEditor } = this.loadFroalaData.value;
       const component = this;
+      // getting the Froala instance inside its constructor callback
+      // https://froala.com/wysiwyg-editor/examples/getHTML/
       this.editor = new FroalaEditor(element, options, function () {
         this.html.set(component.args.content);
         if (component.args.autoFocus) {
