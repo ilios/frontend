@@ -31,14 +31,9 @@ module('Integration | Component | reports/subject-download', function (hooks) {
     this.set('report', reportModel);
     this.set('message', this.intl.t('general.reportResultsExceedMax'));
     await render(hbs`<Reports::SubjectDownload
-  @report={{this.report}}
-  @school={{this.report.school}}
-  @subject={{this.report.subject}}
-  @prepositionalObject={{this.report.prepositionalObject}}
-  @prepositionalObjectTableRowId={{this.report.prepositionalObjectTableRowId}}
   @fetchDownloadData={{@fetchDownloadData}}
   @readyToDownload={{true}}
-  @reportTitleData={{this.reportTitleData}}
+  @reportTitle={{this.reportTitle}}
 />`);
 
     assert.notOk(component.message.displays);
@@ -58,14 +53,9 @@ module('Integration | Component | reports/subject-download', function (hooks) {
     this.set('report', reportModel);
     this.set('message', this.intl.t('general.reportResultsExceedMax'));
     await render(hbs`<Reports::SubjectDownload
-  @report={{this.report}}
-  @school={{this.report.school}}
-  @subject={{this.report.subject}}
-  @prepositionalObject={{this.report.prepositionalObject}}
-  @prepositionalObjectTableRowId={{this.report.prepositionalObjectTableRowId}}
   @fetchDownloadData={{@fetchDownloadData}}
   @readyToDownload={{true}}
-  @reportTitleData={{this.reportTitleData}}
+  @reportTitle={{this.reportTitle}}
   @message={{this.message}}
 />`);
 
@@ -84,13 +74,7 @@ module('Integration | Component | reports/subject-download', function (hooks) {
     });
     const reportModel = await this.owner.lookup('service:store').findRecord('report', report.id);
     this.set('report', reportModel);
-    await render(hbs`<Reports::SubjectDownload
-  @report={{this.report}}
-  @subject={{this.report.subject}}
-  @prepositionalObject={{this.report.prepositionalObject}}
-  @prepositionalObjectTableRowId={{this.report.prepositionalObjectTableRowId}}
-  @readyToDownload={{false}}
-/>`);
+    await render(hbs`<Reports::SubjectDownload @readyToDownload={{false}} />`);
     assert.ok(component.button.isDisabled);
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
@@ -105,13 +89,7 @@ module('Integration | Component | reports/subject-download', function (hooks) {
     });
     const reportModel = await this.owner.lookup('service:store').findRecord('report', report.id);
     this.set('report', reportModel);
-    await render(hbs`<Reports::SubjectDownload
-  @report={{this.report}}
-  @subject={{this.report.subject}}
-  @prepositionalObject={{this.report.prepositionalObject}}
-  @prepositionalObjectTableRowId={{this.report.prepositionalObjectTableRowId}}
-  @readyToDownload={{true}}
-/>`);
+    await render(hbs`<Reports::SubjectDownload @readyToDownload={{true}} />`);
     assert.notOk(component.button.isDisabled);
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
