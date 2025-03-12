@@ -51,7 +51,6 @@ export default [
       reportUnusedDisableDirectives: 'error',
     },
     rules: {
-      'ember/no-get': 'off',
       'no-duplicate-imports': 'error',
     },
   },

@@ -1,11 +1,10 @@
 import IliosSerializer from './ilios';
-import { get } from '@ember/object';
 
 export default class LearningMaterialSerializer extends IliosSerializer {
   serialize(snapshot, options) {
     const json = super.serialize(snapshot, options);
     //When POSTing new file learningMaterials we need to include the file hash
-    const fileHash = get(snapshot.record, 'fileHash');
+    const fileHash = snapshot.record?.fileHash;
     if (fileHash) {
       json.data.attributes.fileHash = fileHash;
     }
