@@ -34,6 +34,7 @@ module('Integration | Component | instructor-groups/list', function (hooks) {
 />`);
     assert.strictEqual(component.header.title.text, 'Instructor Group Title');
     assert.strictEqual(component.header.members.text, 'Members');
+    assert.ok(component.isPresent);
     assert.strictEqual(component.items.length, 3);
     assert.strictEqual(component.items[0].title, 'instructor group 0');
     assert.strictEqual(component.items[0].users, '0');
@@ -50,7 +51,7 @@ module('Integration | Component | instructor-groups/list', function (hooks) {
     );
 
     assert.strictEqual(component.items.length, 0);
-    assert.ok(component.isEmpty);
+    assert.notOk(component.isPresent);
   });
 
   test('remove', async function (assert) {

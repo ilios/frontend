@@ -1,10 +1,9 @@
-import { clickable, create, collection, hasClass, isPresent, text } from 'ember-cli-page-object';
+import { clickable, create, collection, hasClass, text } from 'ember-cli-page-object';
 import listItem from './list-item';
 
 const definition = {
   scope: '[data-test-instructor-groups-list]',
   items: collection('[data-test-instructor-groups-list-item]', listItem),
-  isEmpty: isPresent('[data-test-empty-list]'),
   header: {
     scope: 'thead',
     title: {

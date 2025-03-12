@@ -21,7 +21,7 @@ module('Acceptance | Learner Groups', function (hooks) {
   });
 
   test('list groups', async function (assert) {
-    assert.expect(8);
+    assert.expect(9);
     this.server.createList('user', 11);
     const program = this.server.create('program', { school: this.school });
     const programYear = this.server.create('program-year', { program });
@@ -51,6 +51,7 @@ module('Acceptance | Learner Groups', function (hooks) {
 
     await page.visit();
     await percySnapshot(assert);
+    assert.ok(page.list.isPresent);
     assert.strictEqual(page.headerTitle, 'Learner Groups (2)');
     assert.strictEqual(page.list.items.length, 2);
     assert.strictEqual(page.list.items[0].title, 'learner group 0');
@@ -77,7 +78,7 @@ module('Acceptance | Learner Groups', function (hooks) {
   });
 
   test('multiple options filter', async function (assert) {
-    assert.expect(31);
+    assert.expect(33);
     const program = this.server.create('program', { school: this.school });
     const programYear = this.server.create('program-year', { program });
     const cohort = this.server.create('cohort', { programYear });
@@ -117,15 +118,17 @@ module('Acceptance | Learner Groups', function (hooks) {
     assert.strictEqual(page.programYearFilter.selectedProgramYear, '3');
 
     assert.strictEqual(page.headerTitle, 'Learner Groups (0)');
-    assert.ok(page.list.isEmpty);
+    assert.notOk(page.list.isPresent);
 
     await page.programYearFilter.select(1);
+    assert.ok(page.list.isPresent);
     assert.strictEqual(page.headerTitle, 'Learner Groups (1)');
     assert.strictEqual(page.list.items.length, 1);
 
     assert.strictEqual(page.list.items[0].title, 'learner group 0');
 
     await page.programFilter.select(2);
+    assert.ok(page.list.isPresent);
     assert.notOk(page.programYearFilter.hasMany);
     assert.strictEqual(page.programYearFilter.text, 'cohort 2');
     assert.strictEqual(page.headerTitle, 'Learner Groups (1)');
@@ -186,7 +189,7 @@ module('Acceptance | Learner Groups', function (hooks) {
   });
 
   test('add new learnergroup', async function (assert) {
-    assert.expect(10);
+    assert.expect(11);
     this.user.update({ administeredSchools: [this.school] });
 
     const program = this.server.create('program', { school: this.school });
@@ -197,7 +200,7 @@ module('Acceptance | Learner Groups', function (hooks) {
     await page.visit();
     assert.strictEqual(page.headerTitle, 'Learner Groups (0)');
 
-    assert.ok(page.list.isEmpty);
+    assert.notOk(page.list.isPresent);
     await page.toggleNewLearnerGroupForm();
     await percySnapshot(assert);
     assert.ok(page.newLearnerGroupForm.single.isVisible);
@@ -206,6 +209,7 @@ module('Acceptance | Learner Groups', function (hooks) {
     await page.newLearnerGroupForm.single.save();
 
     assert.strictEqual(page.savedResult, `${newTitle} Saved Successfully`);
+    assert.ok(page.list.isPresent);
     assert.strictEqual(page.headerTitle, 'Learner Groups (1)');
     assert.strictEqual(page.list.items.length, 1);
     assert.strictEqual(page.list.items[0].title, newTitle);
@@ -254,7 +258,7 @@ module('Acceptance | Learner Groups', function (hooks) {
     await percySnapshot(assert);
     await page.list.confirmRemoval.confirm();
     assert.strictEqual(page.headerTitle, 'Learner Groups (0)');
-    assert.ok(page.list.isEmpty);
+    assert.notOk(page.list.isPresent);
   });
 
   test('cancel remove learnergroup', async function (assert) {
@@ -396,7 +400,7 @@ module('Acceptance | Learner Groups', function (hooks) {
 
     const newTitle = 'A New Test Title';
     await page.visit();
-    assert.ok(page.list.isEmpty);
+    assert.notOk(page.list.isPresent);
     await page.toggleNewLearnerGroupForm();
     assert.ok(page.newLearnerGroupForm.single.isVisible);
     await page.newLearnerGroupForm.single.title(newTitle);

@@ -1,5 +1,5 @@
 <div data-test-courses-list ...attributes>
-  {{#unless this.load.isRunning}}
+  {{#if @courses.length}}
     <table>
       <thead>
         <tr data-test-course-headings>
@@ -94,14 +94,8 @@
               </ResponsiveTd>
             </tr>
           {{/if}}
-        {{else}}
-          <tr data-test-empty-list>
-            <ResponsiveTd @smallScreenSpan="10" @largeScreenSpan="15" class="text-center">
-              {{if @query (t "general.noResultsFound") (t "general.none")}}
-            </ResponsiveTd>
-          </tr>
         {{/each}}
       </tbody>
     </table>
-  {{/unless}}
+  {{/if}}
 </div>

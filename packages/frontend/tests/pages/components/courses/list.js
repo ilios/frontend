@@ -1,12 +1,10 @@
-import { clickable, collection, create, hasClass } from 'ember-cli-page-object';
+import { clickable, collection, create, hasClass, isPresent } from 'ember-cli-page-object';
 import listItem from './list-item';
 
 const definition = {
   scope: '[data-test-courses-list]',
   courses: collection('[data-test-courses-list-item]', listItem),
-  emptyListRow: {
-    scope: '[data-test-empty-list]',
-  },
+  listIsPresent: isPresent('table'),
   sortByTitle: clickable('button', { scope: '[data-test-course-headings] th:nth-of-type(1)' }),
   sortByLevel: clickable('button', { scope: '[data-test-course-headings] th:nth-of-type(2)' }),
   sortByStartDate: clickable('button', { scope: '[data-test-course-headings] th:nth-of-type(3)' }),
