@@ -14,6 +14,8 @@ export default class ReportsSubjectCourseComponent extends Component {
   @service intl;
   @service reporting;
 
+  resultsLengthMax = 200;
+
   crossesBoundaryConfig = new TrackedAsyncData(
     this.iliosConfig.itemFromConfig('academicYearCrossesCalendarYearBoundaries'),
   );
@@ -94,7 +96,7 @@ export default class ReportsSubjectCourseComponent extends Component {
   }
 
   get limitedCourses() {
-    return this.sortedCourses.slice(0, this.args.resultsLengthMax);
+    return this.sortedCourses.slice(0, this.resultsLengthMax);
   }
 
   async getGraphQLFilters(prepositionalObject, prepositionalObjectTableRowId, school) {
@@ -154,7 +156,7 @@ export default class ReportsSubjectCourseComponent extends Component {
   }
 
   get reportResultsExceedMax() {
-    return this.filteredCourses.length > this.args.resultsLengthMax;
+    return this.filteredCourses.length > this.resultsLengthMax;
   }
 
   get resultsLengthDisplay() {
