@@ -44,6 +44,11 @@
     </ul>
     {{#if this.reportResultsExceedMax}}
       <Reports::SubjectDownload
+        @report={{@report}}
+        @subject={{@subject}}
+        @prepositionalObject={{@prepositionalObject}}
+        @prepositionalObjectTableRowId={{@prepositionalObjectTableRowId}}
+        @school={{@school}}
         @fetchDownloadData={{this.fetchDownloadData}}
         @readyToDownload={{true}}
         @message={{t "general.reportResultsExceedMax" resultsLengthMax=this.resultsLengthMax}}
