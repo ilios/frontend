@@ -1,16 +1,17 @@
 import Component from '@glimmer/component';
 import { service } from '@ember/service';
-import { tracked } from '@glimmer/tracking';
-import { restartableTask } from 'ember-concurrency';
+import { cached, tracked } from '@glimmer/tracking';
 import { loadFroalaEditor } from 'ilios-common/utils/load-froala-editor';
 import { guidFor } from '@ember/object/internals';
+import { modifier } from 'ember-modifier';
+import { TrackedAsyncData } from 'ember-async-data';
 
 export default class HtmlEditorComponent extends Component {
   @service intl;
-  @tracked editor = null;
   @tracked editorId = null;
   @tracked loadFinished = false;
 
+  editor = null;
   defaultButtons = {
     moreText: {
       buttons: ['bold', 'italic', 'subscript', 'superscript', 'formatOL', 'formatUL', 'insertLink'],
@@ -26,6 +27,29 @@ export default class HtmlEditorComponent extends Component {
     super(...arguments);
     this.editorId = guidFor(this);
   }
+
+  @cached
+  get loadFroalaData() {
+    return new TrackedAsyncData(loadFroalaEditor());
+  }
+
+  editorInserted = modifier((element, [options]) => {
+    if (!this.editor) {
+      const { FroalaEditor } = this.loadFroalaData.value;
+      const component = this;
+      // getting the Froala instance inside its constructor callback
+      // https://froala.com/wysiwyg-editor/examples/getHTML/
+      this.editor = new FroalaEditor(element, options, function () {
+        this.html.set(component.args.content);
+        if (component.args.autoFocus) {
+          this.events.focus();
+        }
+        component.loadFinished = true;
+      });
+    }
+
+    return true;
+  });
 
   get options() {
     return {
@@ -73,26 +97,4 @@ export default class HtmlEditorComponent extends Component {
       this.editor = null;
     }
   }
-  createEditor(element, options) {
-    return new Promise((resolve) => {
-      loadFroalaEditor().then(({ FroalaEditor }) => {
-        new FroalaEditor(element, options, function () {
-          resolve(this);
-        });
-      });
-    });
-  }
-
-  loadEditor = restartableTask(async (element, [options]) => {
-    if (!this.editor) {
-      this.editor = await this.createEditor(element, options);
-      this.editor.html.set(this.args.content);
-      if (this.args.autofocus) {
-        this.editor.events.focus();
-      }
-      this.loadFinished = true;
-    }
-
-    return true;
-  });
 }
