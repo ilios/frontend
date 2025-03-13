@@ -1,4 +1,3 @@
-import { get } from '@ember/object';
 import { service } from '@ember/service';
 import Base from 'ember-simple-auth/authenticators/base';
 import jwtDecode from 'ilios-common/utils/jwt-decode';
@@ -28,8 +27,7 @@ export default class IliosJWT extends Base {
 
   async restore(data) {
     const now = DateTime.now().toUnixInteger();
-    const jwt = get(data, 'jwt');
-    let exp = get(data, 'exp');
+    let { jwt, exp } = data;
 
     if (!exp) {
       // Fetch the expiration time from the token data since `exp` wasn't included in the data object that was passed in.

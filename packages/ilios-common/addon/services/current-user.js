@@ -21,7 +21,7 @@ export default class CurrentUserService extends Service {
     }
     const obj = jwtDecode(this.session.data.authenticated.jwt);
 
-    return get(obj, 'user_id');
+    return obj?.user_id;
   }
 
   async getModel() {

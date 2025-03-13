@@ -1,5 +1,5 @@
 // taken from Ember Composable Helpers (https://github.com/DockYard/ember-composable-helpers), then modified.
-import EmberObject, { get } from '@ember/object';
+import EmberObject from '@ember/object';
 
 function isIterable(value) {
   return Symbol.iterator in Object(value);
@@ -55,7 +55,7 @@ function _asArray(maybeArray) {
   }
   if (typeof maybeArray === 'object') {
     if (isPromiseProxyLike(maybeArray)) {
-      const content = get(maybeArray, 'content');
+      const { content } = maybeArray;
       if (typeof content !== 'object' || content === null) {
         throw new Error('Unknown content type in array-like object [ilios-common]');
       }
