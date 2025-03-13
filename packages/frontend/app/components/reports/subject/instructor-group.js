@@ -11,7 +11,7 @@ export default class ReportsSubjectInstructorGroupComponent extends Component {
   @service intl;
 
   @cached
-  get data() {
+  get allInstructorGroupsData() {
     return new TrackedAsyncData(
       this.getReportResults(
         this.args.subject,
@@ -22,10 +22,18 @@ export default class ReportsSubjectInstructorGroupComponent extends Component {
     );
   }
 
-  get sortedData() {
-    return this.data.value.sort((a, b) => {
+  get allInstructorGroups() {
+    return this.allInstructorGroupsData.isResolved ? this.allInstructorGroupsData.value : [];
+  }
+
+  get sortedInstructorGroups() {
+    return this.allInstructorGroups.sort((a, b) => {
       return a.localeCompare(b, this.intl.primaryLocale);
     });
+  }
+
+  get limitedInstructorGroups() {
+    return this.sortedInstructorGroups.slice(0, this.resultsLengthMax);
   }
 
   async getReportResults(subject, prepositionalObject, prepositionalObjectTableRowId, school) {
@@ -45,8 +53,23 @@ export default class ReportsSubjectInstructorGroupComponent extends Component {
     return result.data.instructorGroups.map(({ title }) => title);
   }
 
+  get reportResultsExceedMax() {
+    return this.allInstructorGroups.length > this.resultsLengthMax;
+  }
+
+  get resultsLengthDisplay() {
+    if (this.args.year) {
+      return `${this.sortedInstructorGroups.length}/${this.allInstructorGroups.length}`;
+    }
+
+    return this.allInstructorGroups.length;
+  }
+
   @action
   async fetchDownloadData() {
-    return [[this.intl.t('general.instructorGroups')], ...this.sortedData.map((v) => [v])];
+    return [
+      [this.intl.t('general.instructorGroups')],
+      ...this.sortedInstructorGroups.map((v) => [v]),
+    ];
   }
 }
