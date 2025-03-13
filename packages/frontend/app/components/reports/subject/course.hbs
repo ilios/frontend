@@ -46,7 +46,7 @@
       <Reports::SubjectDownload
         @fetchDownloadData={{this.fetchDownloadData}}
         @readyToDownload={{true}}
-        @message={{t "general.reportResultsExceedMax"}}
+        @message={{t "general.reportResultsExceedMax" resultsLengthMax=this.resultsLengthMax}}
       />
     {{/if}}
   {{else}}
