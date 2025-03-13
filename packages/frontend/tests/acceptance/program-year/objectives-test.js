@@ -14,7 +14,7 @@ module('Acceptance | Program Year - Objectives', function (hooks) {
       school: this.school,
     });
     const vocabulary = this.server.create('vocabulary', { school: this.school });
-    const term1 = this.server.create('term', { vocabulary });
+    const term1 = this.server.create('term', { vocabulary, active: true });
     const term2 = this.server.create('term', { vocabulary });
     const programYear = this.server.create('program-year', {
       program,
@@ -132,7 +132,7 @@ module('Acceptance | Program Year - Objectives', function (hooks) {
     );
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[1].selectedTerms.list[0].terms[0].name,
-      'term 1',
+      'term 1 (inactive)',
     );
 
     assert.strictEqual(
