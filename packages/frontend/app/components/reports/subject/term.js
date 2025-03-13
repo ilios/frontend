@@ -11,8 +11,10 @@ export default class ReportsSubjectTermComponent extends Component {
   @service graphql;
   @service intl;
 
+  resultsLengthMax = 200;
+
   @cached
-  get data() {
+  get allTermsData() {
     return new TrackedAsyncData(
       this.getReportResults(
         this.args.subject,
@@ -23,8 +25,16 @@ export default class ReportsSubjectTermComponent extends Component {
     );
   }
 
-  get sortedData() {
-    return sortBy(this.data.value, ['vocabulary.title', 'title']);
+  get allTerms() {
+    return this.allTermsData.isResolved ? this.allTermsData.value : [];
+  }
+
+  get sortedTerms() {
+    return sortBy(this.allTermsData.value, ['vocabulary.title', 'title']);
+  }
+
+  get limitedTerms() {
+    return this.sortedTerms.slice(0, this.resultsLengthMax);
   }
 
   async getReportResults(subject, prepositionalObject, prepositionalObjectTableRowId, school) {
@@ -44,11 +54,23 @@ export default class ReportsSubjectTermComponent extends Component {
     return result.data.terms;
   }
 
+  get reportResultsExceedMax() {
+    return this.allTerms.length > this.resultsLengthMax;
+  }
+
+  get resultsLengthDisplay() {
+    if (this.args.year) {
+      return `${this.sortedTerms.length}/${this.allTerms.length}`;
+    }
+
+    return this.allTerms.length;
+  }
+
   @action
   async fetchDownloadData() {
     return [
       [this.intl.t('general.vocabulary'), this.intl.t('general.term')],
-      ...this.sortedData.map(({ vocabulary, title }) => [vocabulary.title, title]),
+      ...this.sortedTerms.map(({ vocabulary, title }) => [vocabulary.title, title]),
     ];
   }
 }
