@@ -8,12 +8,13 @@
   @showYearFilter={{false}}
   @description={{@description}}
   @fetchDownloadData={{this.fetchDownloadData}}
-  @readyToDownload={{this.data.isResolved}}
+  @readyToDownload={{this.allProgramsData.isResolved}}
+  @resultsLength={{this.resultsLengthDisplay}}
 />
 <div data-test-reports-subject-program>
-  {{#if this.data.isResolved}}
-    <ul class="report-results" data-test-results>
-      {{#each this.sortedPrograms as |program|}}
+  {{#if this.allProgramsData.isResolved}}
+    <ul class="report-results{{if this.reportResultsExceedMax ' limited'}}" data-test-results>
+      {{#each this.limitedPrograms as |program|}}
         <li>
           {{#if this.showSchool}}
             <span data-test-school>
@@ -34,6 +35,18 @@
         <li>{{t "general.none"}}</li>
       {{/each}}
     </ul>
+    {{#if this.reportResultsExceedMax}}
+      <Reports::SubjectDownload
+        @report={{@report}}
+        @subject={{@subject}}
+        @prepositionalObject={{@prepositionalObject}}
+        @prepositionalObjectTableRowId={{@prepositionalObjectTableRowId}}
+        @school={{@school}}
+        @fetchDownloadData={{this.fetchDownloadData}}
+        @readyToDownload={{true}}
+        @message={{t "general.reportResultsExceedMax" resultsLengthMax=this.resultsLengthMax}}
+      />
+    {{/if}}
   {{else}}
     <LoadingSpinner />
   {{/if}}

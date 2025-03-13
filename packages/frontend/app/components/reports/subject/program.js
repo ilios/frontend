@@ -12,8 +12,10 @@ export default class ReportsSubjectProgramComponent extends Component {
   @service currentUser;
   @service intl;
 
+  resultsLengthMax = 200;
+
   @cached
-  get data() {
+  get allProgramsData() {
     return new TrackedAsyncData(
       this.getReportResults(
         this.args.subject,
@@ -22,6 +24,10 @@ export default class ReportsSubjectProgramComponent extends Component {
         this.args.school,
       ),
     );
+  }
+
+  get allPrograms() {
+    return this.allProgramsData.isResolved ? this.allProgramsData.value : [];
   }
 
   get canView() {
@@ -33,7 +39,11 @@ export default class ReportsSubjectProgramComponent extends Component {
   }
 
   get sortedPrograms() {
-    return sortBy(this.data.value, ['school.title', 'title']);
+    return sortBy(this.allPrograms, ['school.title', 'title']);
+  }
+
+  get limitedPrograms() {
+    return this.sortedPrograms.slice(0, this.resultsLengthMax);
   }
 
   async getReportResults(subject, prepositionalObject, prepositionalObjectTableRowId, school) {
@@ -51,6 +61,18 @@ export default class ReportsSubjectProgramComponent extends Component {
     }
     const result = await this.graphql.find('programs', filters, 'id, title, school { title }');
     return result.data.programs;
+  }
+
+  get reportResultsExceedMax() {
+    return this.allPrograms.length > this.resultsLengthMax;
+  }
+
+  get resultsLengthDisplay() {
+    if (this.args.year) {
+      return `${this.sortedPrograms.length}/${this.allPrograms.length}`;
+    }
+
+    return this.allPrograms.length;
   }
 
   @action
