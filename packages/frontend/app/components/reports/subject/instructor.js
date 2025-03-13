@@ -11,8 +11,10 @@ export default class ReportsSubjectInstructorComponent extends Component {
   @service graphql;
   @service intl;
 
+  resultsLengthMax = 200;
+
   @cached
-  get data() {
+  get allInstructorsData() {
     return new TrackedAsyncData(
       this.getReportResults(
         this.args.subject,
@@ -23,14 +25,12 @@ export default class ReportsSubjectInstructorComponent extends Component {
     );
   }
 
-  get sortedResults() {
-    return this.mappedResults.sort((a, b) => {
-      return a.localeCompare(b, this.intl.primaryLocale);
-    });
+  get allInstructors() {
+    return this.allInstructorsData.isResolved ? this.allInstructorsData.value : [];
   }
 
-  get mappedResults() {
-    return this.data.value.map(({ firstName, middleName, lastName, displayName }) => {
+  get mappedInstructors() {
+    return this.allInstructors.map(({ firstName, middleName, lastName, displayName }) => {
       if (displayName) {
         return displayName;
       }
@@ -43,6 +43,16 @@ export default class ReportsSubjectInstructorComponent extends Component {
         return `${firstName} ${lastName}`;
       }
     });
+  }
+
+  get sortedInstructors() {
+    return this.mappedInstructors.sort((a, b) => {
+      return a.localeCompare(b, this.intl.primaryLocale);
+    });
+  }
+
+  get limitedInstructors() {
+    return this.sortedInstructors.slice(0, this.resultsLengthMax);
   }
 
   async getGraphQLFilters(prepositionalObject, prepositionalObjectTableRowId, school) {
@@ -117,8 +127,20 @@ export default class ReportsSubjectInstructorComponent extends Component {
     return result.data.users;
   }
 
+  get reportResultsExceedMax() {
+    return this.allInstructors.length > this.resultsLengthMax;
+  }
+
+  get resultsLengthDisplay() {
+    if (this.args.year) {
+      return `${this.sortedInstructors.length}/${this.allInstructors.length}`;
+    }
+
+    return this.allInstructors.length;
+  }
+
   @action
   async fetchDownloadData() {
-    return [[this.intl.t('general.instructors')], ...this.sortedResults.map((v) => [v])];
+    return [[this.intl.t('general.instructors')], ...this.sortedInstructors.map((v) => [v])];
   }
 }
