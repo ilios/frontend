@@ -12,7 +12,6 @@ export default class ReportsSubjectCourseComponent extends Component {
   @service iliosConfig;
   @service currentUser;
   @service intl;
-  @service reporting;
 
   resultsLengthMax = 200;
 
