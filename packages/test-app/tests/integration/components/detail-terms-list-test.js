@@ -30,6 +30,7 @@ module('Integration | Component | detail terms list', function (hooks) {
     });
     this.server.create('term', {
       title: 'bar',
+      active: true,
       vocabulary,
     });
     this.server.create('term', {
@@ -54,7 +55,7 @@ module('Integration | Component | detail terms list', function (hooks) {
     assert.strictEqual(component.vocabularyName, 'Topics');
     assert.strictEqual(component.terms.length, 2);
     assert.strictEqual(component.terms[0].name, 'bar');
-    assert.strictEqual(component.terms[1].name, 'foo');
+    assert.strictEqual(component.terms[1].name, 'foo (inactive)');
   });
 
   test('empty list', async function (assert) {
