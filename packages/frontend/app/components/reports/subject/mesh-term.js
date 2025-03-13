@@ -10,8 +10,10 @@ export default class ReportsSubjectMeshTermComponent extends Component {
   @service graphql;
   @service intl;
 
+  resultsLengthMax = 200;
+
   @cached
-  get data() {
+  get allMeshTermsData() {
     return new TrackedAsyncData(
       this.getReportResults(
         this.args.subject,
@@ -22,10 +24,18 @@ export default class ReportsSubjectMeshTermComponent extends Component {
     );
   }
 
-  get sortedData() {
-    return this.data.value.sort((a, b) => {
+  get allMeshTerms() {
+    return this.allMeshTermsData.isResolved ? this.allMeshTermsData.value : [];
+  }
+
+  get sortedMeshTerms() {
+    return this.allMeshTermsData.value.sort((a, b) => {
       return a.localeCompare(b, this.intl.primaryLocale);
     });
+  }
+
+  get limitedMeshTerms() {
+    return this.sortedMeshTerms.slice(0, this.resultsLengthMax);
   }
 
   async getReportResults(subject, prepositionalObject, prepositionalObjectTableRowId, school) {
@@ -84,8 +94,20 @@ export default class ReportsSubjectMeshTermComponent extends Component {
     return [...new Set(ids)].sort().map((id) => `"${id}"`);
   }
 
+  get reportResultsExceedMax() {
+    return this.allMeshTerms.length > this.resultsLengthMax;
+  }
+
+  get resultsLengthDisplay() {
+    if (this.args.year) {
+      return `${this.sortedMeshTerms.length}/${this.allMeshTerms.length}`;
+    }
+
+    return this.allMeshTerms.length;
+  }
+
   @action
   async fetchDownloadData() {
-    return [[this.intl.t('general.meshTerms')], ...this.sortedData.map((v) => [v])];
+    return [[this.intl.t('general.meshTerms')], ...this.sortedMeshTerms.map((v) => [v])];
   }
 }
