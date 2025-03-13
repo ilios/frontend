@@ -407,7 +407,7 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
     assert.strictEqual(currentURL(), '/reports/subjects?showNewReportForm=true');
     assert.strictEqual(
       page.subjects.results.description,
-      'This report shows all Sessions associated with Course "course 0" (2015) in school 0.',
+      'This report shows all Sessions associated with Course "course 0" (2015) in school 0. (1)',
     );
     assert.strictEqual(page.subjects.results.results.length, 1);
     assert.strictEqual(page.subjects.results.results[0].text, 'course 0: session 0');
