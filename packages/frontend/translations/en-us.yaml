@@ -110,6 +110,7 @@ general:
   delete: Delete
   deleteCourse: Delete Course
   departments: Departments
+  deselectAllCourses: Deselect All Courses
   deselectUser: Deselect User
   details: Course Details
   developer: Developer
