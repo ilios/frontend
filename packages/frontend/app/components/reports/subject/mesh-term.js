@@ -29,7 +29,7 @@ export default class ReportsSubjectMeshTermComponent extends Component {
   }
 
   get sortedMeshTerms() {
-    return this.allMeshTermsData.value.sort((a, b) => {
+    return this.allMeshTerms.sort((a, b) => {
       return a.localeCompare(b, this.intl.primaryLocale);
     });
   }

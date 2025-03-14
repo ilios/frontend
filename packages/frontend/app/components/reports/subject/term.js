@@ -30,7 +30,7 @@ export default class ReportsSubjectTermComponent extends Component {
   }
 
   get sortedTerms() {
-    return sortBy(this.allTermsData.value, ['vocabulary.title', 'title']);
+    return sortBy(this.allTerms, ['vocabulary.title', 'title']);
   }
 
   get limitedTerms() {

@@ -61,6 +61,6 @@ export default class ReportsSubjectCompetencyComponent extends Component {
 
   @action
   async fetchDownloadData() {
-    return [[this.intl.t('general.competencies')], ...this.allCompetencies.map((v) => [v])];
+    return [[this.intl.t('general.competencies')], ...this.sortedCompetencies.map((v) => [v])];
   }
 }
