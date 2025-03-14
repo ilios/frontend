@@ -62,6 +62,7 @@ export default class ReportsCurriculumComponent extends Component {
   };
 
   removeAll = () => {
+    this.args.stop();
     this.args.setSelectedCourseIds();
   };
 
