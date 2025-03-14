@@ -37,6 +37,70 @@ module('Integration | Component | reports/subject/instructor-group', function (h
     assert.strictEqual(component.results[1].title, 'Second Group');
   });
 
+  test('it renders all results when resultsLengthMax is not reached', async function (assert) {
+    assert.expect(3);
+
+    this.server.post('api/graphql', function (schema, { requestBody }) {
+      const { query } = JSON.parse(requestBody);
+      assert.strictEqual(query, 'query { instructorGroups { title } }');
+      return responseData;
+    });
+    const { id } = this.server.create('report', {
+      subject: 'instructor group',
+    });
+    this.set('report', await this.owner.lookup('service:store').findRecord('report', id));
+    await render(hbs`<Reports::Subject::InstructorGroup
+  @subject={{this.report.subject}}
+  @prepositionalObject={{this.report.prepositionalObject}}
+  @prepositionalObjectTableRowId={{this.report.prepositionalObjectTableRowId}}
+/>`);
+
+    assert.strictEqual(
+      component.results.length,
+      2,
+      'responseData shows all 2 of 2 instructor groups',
+    );
+    assert.notOk(component.hasFullResultsDownloadButton, 'full results download button is hidden');
+  });
+
+  test('it renders limited results and an extra download button when resultsLengthMax is eclipsed', async function (assert) {
+    assert.expect(3);
+
+    const responseDataLarge = {
+      data: {
+        instructorGroups: [],
+      },
+    };
+
+    for (let i = 0; i < 220; i++) {
+      responseDataLarge.data.instructorGroups.push({
+        title: `instructor group ${i}`,
+      });
+    }
+
+    this.server.post('api/graphql', function (schema, { requestBody }) {
+      const { query } = JSON.parse(requestBody);
+      assert.strictEqual(query, 'query { instructorGroups { title } }');
+      return responseDataLarge;
+    });
+    const { id } = this.server.create('report', {
+      subject: 'instructor group',
+    });
+    this.set('report', await this.owner.lookup('service:store').findRecord('report', id));
+    await render(hbs`<Reports::Subject::InstructorGroup
+  @subject={{this.report.subject}}
+  @prepositionalObject={{this.report.prepositionalObject}}
+  @prepositionalObjectTableRowId={{this.report.prepositionalObjectTableRowId}}
+/>`);
+
+    assert.strictEqual(
+      component.results.length,
+      200,
+      'responseDataLarge shows only 200 of 220 instructor groups',
+    );
+    assert.ok(component.hasFullResultsDownloadButton, 'full results download button is present');
+  });
+
   test('filter by school', async function (assert) {
     assert.expect(1);
     this.server.post('api/graphql', function (schema, { requestBody }) {

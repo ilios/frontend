@@ -40,6 +40,69 @@ module('Integration | Component | reports/subject/instructor', function (hooks) 
     assert.strictEqual(component.results[1].name, 'First M. Last');
   });
 
+  test('it renders all results when resultsLengthMax is not reached', async function (assert) {
+    assert.expect(3);
+
+    this.server.post('api/graphql', function (schema, { requestBody }) {
+      const { query } = JSON.parse(requestBody);
+      assert.strictEqual(query, 'query { users { firstName,middleName,lastName,displayName } }');
+      return responseData;
+    });
+    const { id } = this.server.create('report', {
+      subject: 'instructor',
+    });
+    this.set('report', await this.owner.lookup('service:store').findRecord('report', id));
+    await render(hbs`<Reports::Subject::Instructor
+  @subject={{this.report.subject}}
+  @prepositionalObject={{this.report.prepositionalObject}}
+  @prepositionalObjectTableRowId={{this.report.prepositionalObjectTableRowId}}
+/>`);
+
+    assert.strictEqual(component.results.length, 2, 'responseData shows all 2 of 2 instructors');
+    assert.notOk(component.hasFullResultsDownloadButton, 'full results download button is hidden');
+  });
+
+  test('it renders limited results and an extra download button when resultsLengthMax is eclipsed', async function (assert) {
+    assert.expect(3);
+
+    const responseDataLarge = {
+      data: {
+        users: [],
+      },
+    };
+
+    for (let i = 0; i < 220; i++) {
+      responseDataLarge.data.users.push({
+        firstName: `First${i}`,
+        middleName: `Middle${i}`,
+        lastName: `Last${i}`,
+        displayName: `abc`,
+      });
+    }
+
+    this.server.post('api/graphql', function (schema, { requestBody }) {
+      const { query } = JSON.parse(requestBody);
+      assert.strictEqual(query, 'query { users { firstName,middleName,lastName,displayName } }');
+      return responseDataLarge;
+    });
+    const { id } = this.server.create('report', {
+      subject: 'instructor',
+    });
+    this.set('report', await this.owner.lookup('service:store').findRecord('report', id));
+    await render(hbs`<Reports::Subject::Instructor
+  @subject={{this.report.subject}}
+  @prepositionalObject={{this.report.prepositionalObject}}
+  @prepositionalObjectTableRowId={{this.report.prepositionalObjectTableRowId}}
+/>`);
+
+    assert.strictEqual(
+      component.results.length,
+      200,
+      'responseDataLarge shows only 200 of 220 instructors',
+    );
+    assert.ok(component.hasFullResultsDownloadButton, 'full results download button is present');
+  });
+
   test('filter by school', async function (assert) {
     assert.expect(1);
     this.server.post('api/graphql', function (schema, { requestBody }) {

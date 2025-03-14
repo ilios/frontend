@@ -40,6 +40,67 @@ module('Integration | Component | reports/subject/mesh-term', function (hooks) {
     assert.strictEqual(component.results[1].name, 'Second Term');
   });
 
+  test('it renders all results when resultsLengthMax is not reached', async function (assert) {
+    assert.expect(3);
+
+    this.server.post('api/graphql', function (schema, { requestBody }) {
+      const { query } = JSON.parse(requestBody);
+      assert.strictEqual(query, 'query { meshDescriptors { id, name } }');
+      return responseData;
+    });
+    const { id } = this.server.create('report', {
+      subject: 'mesh term',
+    });
+    this.set('report', await this.owner.lookup('service:store').findRecord('report', id));
+    await render(hbs`<Reports::Subject::MeshTerm
+  @subject={{this.report.subject}}
+  @prepositionalObject={{this.report.prepositionalObject}}
+  @prepositionalObjectTableRowId={{this.report.prepositionalObjectTableRowId}}
+/>`);
+
+    assert.strictEqual(component.results.length, 2, 'responseData shows all 2 of 2 mesh terms');
+    assert.notOk(component.hasFullResultsDownloadButton, 'full results download button is hidden');
+  });
+
+  test('it renders limited results and an extra download button when resultsLengthMax is eclipsed', async function (assert) {
+    assert.expect(3);
+
+    const responseDataLarge = {
+      data: {
+        meshDescriptors: [],
+      },
+    };
+
+    for (let i = 0; i < 220; i++) {
+      responseDataLarge.data.meshDescriptors.push({
+        id: i,
+        title: `mesh term ${i}`,
+      });
+    }
+
+    this.server.post('api/graphql', function (schema, { requestBody }) {
+      const { query } = JSON.parse(requestBody);
+      assert.strictEqual(query, 'query { meshDescriptors { id, name } }');
+      return responseDataLarge;
+    });
+    const { id } = this.server.create('report', {
+      subject: 'mesh term',
+    });
+    this.set('report', await this.owner.lookup('service:store').findRecord('report', id));
+    await render(hbs`<Reports::Subject::MeshTerm
+  @subject={{this.report.subject}}
+  @prepositionalObject={{this.report.prepositionalObject}}
+  @prepositionalObjectTableRowId={{this.report.prepositionalObjectTableRowId}}
+/>`);
+
+    assert.strictEqual(
+      component.results.length,
+      200,
+      'responseDataLarge shows only 200 of 220 mesh terms',
+    );
+    assert.ok(component.hasFullResultsDownloadButton, 'full results download button is present');
+  });
+
   test('filter by school', async function (assert) {
     assert.expect(1);
     this.server.post('api/graphql', function (schema, { requestBody }) {
@@ -106,6 +167,7 @@ module('Integration | Component | reports/subject/mesh-term', function (hooks) {
   @school={{this.school}}
 />`);
   });
+
   test('filter by course', async function (assert) {
     assert.expect(2);
     let graphQueryCounter = 0;

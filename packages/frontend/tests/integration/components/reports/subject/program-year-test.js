@@ -112,6 +112,83 @@ module('Integration | Component | reports/subject/program-year', function (hooks
     assert.strictEqual(component.results[2].title, '2022');
   });
 
+  test('it renders all results when resultsLengthMax is not reached', async function (assert) {
+    await setupAuthentication({}, true);
+    assert.expect(3);
+
+    this.server.post('api/graphql', function (schema, { requestBody }) {
+      const { query } = JSON.parse(requestBody);
+      assert.strictEqual(
+        query,
+        'query { programYears { id, startYear, program { id, title, duration, school { title } } } }',
+      );
+      return responseData;
+    });
+    const { id } = this.server.create('report', {
+      subject: 'program year',
+    });
+    this.set('report', await this.owner.lookup('service:store').findRecord('report', id));
+    await render(hbs`<Reports::Subject::ProgramYear
+  @subject={{this.report.subject}}
+  @prepositionalObject={{this.report.prepositionalObject}}
+  @prepositionalObjectTableRowId={{this.report.prepositionalObjectTableRowId}}
+/>`);
+
+    assert.strictEqual(component.results.length, 3, 'responseData shows all 3 of 3 program years');
+    assert.notOk(component.hasFullResultsDownloadButton, 'full results download button is hidden');
+  });
+
+  test('it renders limited results and an extra download button when resultsLengthMax is eclipsed', async function (assert) {
+    await setupAuthentication({}, true);
+    assert.expect(3);
+
+    const years = [2020, 2021, 2022, 2023, 2024, 2025];
+    const alphabet = [...Array(26).keys()].map((i) => String.fromCharCode(i + 65));
+    const responseDataLarge = {
+      data: {
+        programYears: [],
+      },
+    };
+
+    for (let i = 0; i < 220; i++) {
+      const letter = alphabet[Math.floor(Math.random() * alphabet.length)];
+      responseDataLarge.data.programYears.push({
+        id: i,
+        startYear: years[Math.floor(Math.random() * years.length)],
+        program: {
+          title: `program ${i}`,
+          duration: Math.floor(Math.random() * 100),
+          school: { title: `School ${letter}` },
+        },
+      });
+    }
+
+    this.server.post('api/graphql', function (schema, { requestBody }) {
+      const { query } = JSON.parse(requestBody);
+      assert.strictEqual(
+        query,
+        'query { programYears { id, startYear, program { id, title, duration, school { title } } } }',
+      );
+      return responseDataLarge;
+    });
+    const { id } = this.server.create('report', {
+      subject: 'program year',
+    });
+    this.set('report', await this.owner.lookup('service:store').findRecord('report', id));
+    await render(hbs`<Reports::Subject::ProgramYear
+  @subject={{this.report.subject}}
+  @prepositionalObject={{this.report.prepositionalObject}}
+  @prepositionalObjectTableRowId={{this.report.prepositionalObjectTableRowId}}
+/>`);
+
+    assert.strictEqual(
+      component.results.length,
+      200,
+      'responseDataLarge shows only 200 of 220 program years',
+    );
+    assert.ok(component.hasFullResultsDownloadButton, 'full results download button is present');
+  });
+
   test('filter by school', async function (assert) {
     assert.expect(8);
     this.server.post('api/graphql', function (schema, { requestBody }) {
