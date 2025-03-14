@@ -10,6 +10,7 @@ const definition = {
     hasSchool: isPresent('[data-test-school]'),
     school: text('[data-test-school]'),
   }),
+  hasFullResultsDownloadButton: isPresent('[data-test-results] + .download'),
 };
 
 export default definition;
