@@ -1,14 +1,10 @@
 <div
   data-test-user-profile-bio
   class="user-profile-bio small-component {{if this.hasRecentlySaved 'has-saved' 'has-not-saved'}}"
-  {{did-insert (perform this.load)}}
-  {{did-update (perform this.load) @user @isManaging}}
   ...attributes
 >
   {{#let (unique-id) as |templateId|}}
-    {{#if this.load.isRunning}}
-      <LoadingSpinner />
-    {{else}}
+    {{#if this.userAuthenticationData.isResolved}}
       <div class="actions">
         {{#if @isManaging}}
           <button
@@ -18,7 +14,6 @@
             {{on "click" (perform this.save)}}
             data-test-save
           >
-
             <FaIcon
               @icon={{if this.save.isRunning "spinner" "check"}}
               @spin={{if this.save.isRunning true false}}
@@ -42,12 +37,11 @@
             {{on "click" (fn @setIsManaging true)}}
             data-test-manage
           >
-
             <FaIcon @icon="pen-to-square" />
           </button>
         {{/if}}
       </div>
-      {{#unless @user.authentication.username}}
+      {{#unless this.userAuthentication.username}}
         <div class="error" data-test-username-missing>
           {{t "general.missingRequiredUsername"}}
         </div>
@@ -350,7 +344,7 @@
             {{/if}}
           {{else}}
             <span class="value">
-              {{@user.authentication.username}}
+              {{this.userAuthentication.username}}
             </span>
           {{/if}}
         </div>
@@ -415,7 +409,7 @@
               {{/if}}
             {{else}}
               <span class="value">
-                {{#if @user.authentication.username}}
+                {{#if this.userAuthentication.username}}
                   *********
                 {{/if}}
               </span>
@@ -423,6 +417,8 @@
           </div>
         {{/if}}
       </div>
+    {{else}}
+      <LoadingSpinner />
     {{/if}}
   {{/let}}
 </div>
