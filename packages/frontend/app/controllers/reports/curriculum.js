@@ -9,7 +9,7 @@ export default class ReportsCurriculumController extends Controller {
   @tracked run = false;
 
   get selectedCourseIds() {
-    return this.courses?.split('-');
+    return this.courses?.split('-') ?? [];
   }
 
   setSelectedCourseIds = (ids) => {

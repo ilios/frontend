@@ -16,33 +16,29 @@
       {{this.selectedSchool.title}}
     {{/if}}
   </div>
-  {{#each this.selectedSchool.years as |y|}}
-    <ul class="year {{if (eq y.year this.expandedYear) 'expanded' 'collapsed'}}" data-test-year>
+  {{#each this.selectedSchoolYears as |y|}}
+    <ul class="year {{if y.isExpanded 'expanded' 'collapsed'}}" data-test-year>
       <li>
+        <input
+          type="checkbox"
+          checked={{y.hasAllSelectedCourses}}
+          indeterminate={{y.hasSomeSelectedCourses}}
+          {{on "click" (fn this.toggleAllCoursesInYear y)}}
+          disabled={{eq y.courses.length 0}}
+          aria-label={{t "general.selectedAllOrNone"}}
+          data-test-toggle-all
+        />
         <button
           type="button"
-          aria-expanded={{if (eq y.year this.expandedYear) "true" "false"}}
+          aria-expanded={{if y.isExpanded "true" "false"}}
           {{on "click" (fn this.toggleYear y.year)}}
           data-test-expand
         >
           {{y.year}}
-          <FaIcon @icon={{if (eq y.year this.expandedYear) "caret-down" "caret-right"}} />
+          <FaIcon @icon={{if y.isExpanded "caret-down" "caret-right"}} />
         </button>
-        {{#if (eq y.year this.expandedYear)}}
+        {{#if y.isExpanded}}
           <ul class="courses" data-test-courses>
-            <li>
-              <label class="select-all">
-                <input
-                  type="checkbox"
-                  checked={{this.hasAllExpandedYearCourses}}
-                  indeterminate={{this.hasSomeExpandedYearCourses}}
-                  {{on "click" this.toggleAllExpandedYearCourseSelection}}
-                  disabled={{eq y.courses.length 0}}
-                  data-test-toggle-all
-                />
-                {{t "general.selectAllOrNone"}}
-              </label>
-            </li>
             {{#each (sort-by "title" y.courses) as |c|}}
               <li data-test-course>
                 <label>
