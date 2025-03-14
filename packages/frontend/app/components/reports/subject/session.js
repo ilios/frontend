@@ -14,12 +14,14 @@ export default class ReportsSubjectSessionComponent extends Component {
   @service currentUser;
   @service intl;
 
+  resultsLengthMax = 200;
+
   crossesBoundaryConfig = new TrackedAsyncData(
     this.iliosConfig.itemFromConfig('academicYearCrossesCalendarYearBoundaries'),
   );
 
   @cached
-  get data() {
+  get allSessionsData() {
     return new TrackedAsyncData(
       this.getReportResults(
         this.args.subject,
@@ -28,6 +30,10 @@ export default class ReportsSubjectSessionComponent extends Component {
         this.args.school,
       ),
     );
+  }
+
+  get allSessions() {
+    return this.allSessionsData.isResolved ? this.allSessionsData.value : [];
   }
 
   @cached
@@ -45,14 +51,18 @@ export default class ReportsSubjectSessionComponent extends Component {
 
   get filteredSessions() {
     if (this.args.year) {
-      return filterBy(this.data.value, 'year', Number(this.args.year));
+      return filterBy(this.allSessions, 'year', Number(this.args.year));
     }
 
-    return this.data.value;
+    return this.allSessions;
   }
 
   get sortedSessions() {
     return sortBy(this.filteredSessions, ['year', 'courseTitle', 'title']);
+  }
+
+  get limitedSessions() {
+    return this.sortedSessions.slice(0, this.resultsLengthMax);
   }
 
   async getGraphQLFilters(prepositionalObject, prepositionalObjectTableRowId, school) {
@@ -90,6 +100,18 @@ export default class ReportsSubjectSessionComponent extends Component {
     return result.data.sessions.map(({ id, title, course }) => {
       return { id, title, year: course.year, courseId: course.id, courseTitle: course.title };
     });
+  }
+
+  get reportResultsExceedMax() {
+    return this.filteredSessions.length > this.resultsLengthMax;
+  }
+
+  get resultsLengthDisplay() {
+    if (this.args.year) {
+      return `${this.filteredSessions.length}/${this.allSessions.length}`;
+    }
+
+    return this.allSessions.length;
   }
 
   @action

@@ -13,12 +13,14 @@ export default class ReportsSubjectCourseComponent extends Component {
   @service currentUser;
   @service intl;
 
+  resultsLengthMax = 200;
+
   crossesBoundaryConfig = new TrackedAsyncData(
     this.iliosConfig.itemFromConfig('academicYearCrossesCalendarYearBoundaries'),
   );
 
   @cached
-  get data() {
+  get allCoursesData() {
     return new TrackedAsyncData(
       this.getReportResults(
         this.args.subject,
@@ -27,6 +29,10 @@ export default class ReportsSubjectCourseComponent extends Component {
         this.args.school,
       ),
     );
+  }
+
+  get allCourses() {
+    return this.allCoursesData.isResolved ? this.allCoursesData.value : [];
   }
 
   @cached
@@ -40,6 +46,14 @@ export default class ReportsSubjectCourseComponent extends Component {
 
   get showYear() {
     return !this.args.year && this.args.prepositionalObject !== 'academic year';
+  }
+
+  get filteredCourses() {
+    if (this.args.year) {
+      return filterBy(this.allCourses, 'year', Number(this.args.year));
+    }
+
+    return this.allCourses;
   }
 
   get mappedCourses() {
@@ -56,16 +70,12 @@ export default class ReportsSubjectCourseComponent extends Component {
     }
   }
 
-  get filteredCourses() {
-    if (this.args.year) {
-      return filterBy(this.data.value, 'year', Number(this.args.year));
-    }
-
-    return this.data.value;
-  }
-
   get sortedCourses() {
     return sortBy(this.mappedCourses, ['year', 'title']);
+  }
+
+  get limitedCourses() {
+    return this.sortedCourses.slice(0, this.resultsLengthMax);
   }
 
   async getGraphQLFilters(prepositionalObject, prepositionalObjectTableRowId, school) {
@@ -120,7 +130,20 @@ export default class ReportsSubjectCourseComponent extends Component {
       throw new Error(`Report for ${subject} sent to ReportsSubjectCourseComponent`);
     }
     const result = await this.graphql.find('courses', filters, 'id, title, year, externalId');
+
     return result.data.courses;
+  }
+
+  get reportResultsExceedMax() {
+    return this.filteredCourses.length > this.resultsLengthMax;
+  }
+
+  get resultsLengthDisplay() {
+    if (this.args.year) {
+      return `${this.filteredCourses.length}/${this.allCourses.length}`;
+    }
+
+    return this.allCourses.length;
   }
 
   @action

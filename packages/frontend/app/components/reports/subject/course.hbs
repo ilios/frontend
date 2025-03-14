@@ -1,20 +1,21 @@
 <Reports::SubjectHeader
   @report={{@report}}
-  @school={{@school}}
   @subject={{@subject}}
   @prepositionalObject={{@prepositionalObject}}
   @prepositionalObjectTableRowId={{@prepositionalObjectTableRowId}}
-  @year={{@year}}
+  @school={{@school}}
   @changeYear={{@changeYear}}
-  @showYearFilter={{not-eq @prepositionalObject "academic year"}}
+  @year={{@year}}
   @description={{@description}}
+  @showYearFilter={{not-eq @prepositionalObject "academic year"}}
   @fetchDownloadData={{this.fetchDownloadData}}
-  @readyToDownload={{this.data.isResolved}}
+  @readyToDownload={{this.allCoursesData.isResolved}}
+  @resultsLength={{this.resultsLengthDisplay}}
 />
 <div data-test-reports-subject-course>
-  {{#if this.data.isResolved}}
-    <ul class="report-results" data-test-results>
-      {{#each this.sortedCourses as |course|}}
+  {{#if this.allCoursesData.isResolved}}
+    <ul class="report-results{{if this.reportResultsExceedMax ' limited'}}" data-test-results>
+      {{#each this.limitedCourses as |course|}}
         <li>
           {{#if this.showYear}}
             <span data-test-year>
@@ -41,6 +42,18 @@
         <li>{{t "general.none"}}</li>
       {{/each}}
     </ul>
+    {{#if this.reportResultsExceedMax}}
+      <Reports::SubjectDownload
+        @report={{@report}}
+        @subject={{@subject}}
+        @prepositionalObject={{@prepositionalObject}}
+        @prepositionalObjectTableRowId={{@prepositionalObjectTableRowId}}
+        @school={{@school}}
+        @fetchDownloadData={{this.fetchDownloadData}}
+        @readyToDownload={{true}}
+        @message={{t "general.reportResultsExceedMax" resultsLengthMax=this.resultsLengthMax}}
+      />
+    {{/if}}
   {{else}}
     <LoadingSpinner />
   {{/if}}

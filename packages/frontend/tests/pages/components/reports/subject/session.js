@@ -13,6 +13,7 @@ const definition = {
     hasYear: isPresent('[data-test-year]'),
     year: text('[data-test-year]'),
   }),
+  hasFullResultsDownloadButton: isPresent('[data-test-results] + .download'),
 };
 
 export default definition;

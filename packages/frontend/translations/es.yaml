@@ -352,6 +352,7 @@ general:
   reportDisplayTitleWithoutObject: "Todos {subject} en {school}"
   reportName: Nombre de Informe
   reportNamePlaceholder: Por favor Introduzca un Nombre de Informe
+  reportResultsExceedMax: Solo se muestran los primeros {resultsLengthMax} resultados. Descargar informe para ver todos los resultados.
   reports: Informes
   reportTitle: Título de Informe
   requiredInTrack: Requerido en Pista

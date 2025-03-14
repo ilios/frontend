@@ -10,8 +10,10 @@ export default class ReportsSubjectCompetencyComponent extends Component {
   @service graphql;
   @service intl;
 
+  resultsLengthMax = 200;
+
   @cached
-  get data() {
+  get allCompetenciesData() {
     return new TrackedAsyncData(
       this.getReportResults(
         this.args.subject,
@@ -22,10 +24,18 @@ export default class ReportsSubjectCompetencyComponent extends Component {
     );
   }
 
-  get sortedData() {
-    return this.data.value.sort((a, b) => {
+  get allCompetencies() {
+    return this.allCompetenciesData.isResolved ? this.allCompetenciesData.value : [];
+  }
+
+  get sortedCompetencies() {
+    return this.allCompetencies.sort((a, b) => {
       return a.localeCompare(b, this.intl.primaryLocale);
     });
+  }
+
+  get limitedCompetencies() {
+    return this.sortedCompetencies.slice(0, this.resultsLengthMax);
   }
 
   async getReportResults(subject, prepositionalObject, prepositionalObjectTableRowId, school) {
@@ -45,8 +55,12 @@ export default class ReportsSubjectCompetencyComponent extends Component {
     return result.data.competencies.map(({ title }) => title);
   }
 
+  get reportResultsExceedMax() {
+    return this.allCompetencies.length > this.resultsLengthMax;
+  }
+
   @action
   async fetchDownloadData() {
-    return [[this.intl.t('general.competencies')], ...this.sortedData.map((v) => [v])];
+    return [[this.intl.t('general.competencies')], ...this.sortedCompetencies.map((v) => [v])];
   }
 }

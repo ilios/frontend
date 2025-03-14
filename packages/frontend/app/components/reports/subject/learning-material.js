@@ -10,8 +10,10 @@ export default class ReportsSubjectLearningMaterialComponent extends Component {
   @service graphql;
   @service intl;
 
+  resultsLengthMax = 200;
+
   @cached
-  get data() {
+  get allLearningMaterialsData() {
     return new TrackedAsyncData(
       this.getReportResults(
         this.args.subject,
@@ -22,10 +24,18 @@ export default class ReportsSubjectLearningMaterialComponent extends Component {
     );
   }
 
-  get sortedData() {
-    return this.data.value.sort((a, b) => {
+  get allLearningMaterials() {
+    return this.allLearningMaterialsData.isResolved ? this.allLearningMaterialsData.value : [];
+  }
+
+  get sortedLearningMaterials() {
+    return this.allLearningMaterials.sort((a, b) => {
       return a.localeCompare(b, this.intl.primaryLocale);
     });
+  }
+
+  get limitedLearningMaterials() {
+    return this.sortedLearningMaterials.slice(0, this.resultsLengthMax);
   }
 
   async getGraphQLFilters(prepositionalObject, prepositionalObjectTableRowId, school) {
@@ -62,8 +72,15 @@ export default class ReportsSubjectLearningMaterialComponent extends Component {
     return result.data.learningMaterials.map(({ title }) => title);
   }
 
+  get reportResultsExceedMax() {
+    return this.allLearningMaterials.length > this.resultsLengthMax;
+  }
+
   @action
   async fetchDownloadData() {
-    return [[this.intl.t('general.learningMaterials')], ...this.sortedData.map((v) => [v])];
+    return [
+      [this.intl.t('general.learningMaterials')],
+      ...this.sortedLearningMaterials.map((v) => [v]),
+    ];
   }
 }

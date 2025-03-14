@@ -108,6 +108,71 @@ module('Integration | Component | reports/subject/session', function (hooks) {
     assert.strictEqual(component.results[2].sessionTitle, 'Second Session');
   });
 
+  test('it renders all results when resultsLengthMax is not reached', async function (assert) {
+    await setupAuthentication({}, true);
+    assert.expect(3);
+
+    this.server.post('api/graphql', function (schema, { requestBody }) {
+      const { query } = JSON.parse(requestBody);
+      assert.strictEqual(query, 'query { sessions { id, title, course { id, year, title } } }');
+      return responseData;
+    });
+    const { id } = this.server.create('report', {
+      subject: 'session',
+    });
+    this.set('report', await this.owner.lookup('service:store').findRecord('report', id));
+    await render(hbs`<Reports::Subject::Session
+  @subject={{this.report.subject}}
+  @prepositionalObject={{this.report.prepositionalObject}}
+  @prepositionalObjectTableRowId={{this.report.prepositionalObjectTableRowId}}
+/>`);
+
+    assert.strictEqual(component.results.length, 3, 'responseData shows all 3 of 3 courses');
+    assert.notOk(component.hasFullResultsDownloadButton, 'full results download button is hidden');
+  });
+
+  test('it renders limited results and an extra download button when resultsLengthMax is eclipsed', async function (assert) {
+    await setupAuthentication({}, true);
+    assert.expect(3);
+
+    const years = [2020, 2021, 2022, 2023, 2024, 2025];
+    const responseDataLarge = {
+      data: {
+        sessions: [],
+      },
+    };
+
+    for (let i = 0; i < 220; i++) {
+      responseDataLarge.data.sessions.push({
+        id: i,
+        title: `session ${i}`,
+        course: { id: 1, year: years[Math.floor(Math.random() * years.length)], title: 'Course' },
+      });
+    }
+
+    this.server.post('api/graphql', function (schema, { requestBody }) {
+      const { query } = JSON.parse(requestBody);
+      assert.strictEqual(query, 'query { sessions { id, title, course { id, year, title } } }');
+      return responseDataLarge;
+    });
+    const { id } = this.server.create('report', {
+      subject: 'session',
+    });
+    this.set('report', await this.owner.lookup('service:store').findRecord('report', id));
+    await render(hbs`<Reports::Subject::Session
+  @subject={{this.report.subject}}
+  @prepositionalObject={{this.report.prepositionalObject}}
+  @prepositionalObjectTableRowId={{this.report.prepositionalObjectTableRowId}}
+/>`);
+
+    assert.strictEqual(
+      component.results.length,
+      200,
+      'responseDataLarge shows only 200 of 220 sessions',
+    );
+    assert.ok(component.hasFullResultsDownloadButton, 'full results download button is present');
+  });
+
   test('it reads academic year config', async function (assert) {
     assert.expect(11);
     this.server.get('application/config', function () {

@@ -1,15 +1,14 @@
 import Component from '@glimmer/component';
 import { cached, tracked } from '@glimmer/tracking';
-import { action } from '@ember/object';
 import { service } from '@ember/service';
-import { dropTask } from 'ember-concurrency';
-import { validatable, Length } from 'ilios-common/decorators/validation';
+import { dropTask, timeout } from 'ember-concurrency';
+import createDownloadFile from 'ilios-common/utils/create-download-file';
+import PapaParse from 'papaparse';
 import { TrackedAsyncData } from 'ember-async-data';
 
-@validatable
-export default class ReportsSubjectHeader extends Component {
+export default class ReportsSubjectDownload extends Component {
   @service reporting;
-  @tracked @Length(1, 240) title = '';
+  @tracked finishedBuildingReport = false;
 
   @cached
   get reportTitleData() {
@@ -31,19 +30,12 @@ export default class ReportsSubjectHeader extends Component {
     return this.reportTitleData.isResolved ? this.reportTitleData.value : null;
   }
 
-  changeTitle = dropTask(async () => {
-    this.addErrorDisplayFor('title');
-    const isValid = await this.isValid('title');
-    if (!isValid) {
-      return false;
-    }
-    this.removeErrorDisplayFor('title');
-    this.args.report.title = this.title;
-    await this.args.report.save();
+  downloadReport = dropTask(async () => {
+    const data = await this.args.fetchDownloadData();
+    const csv = PapaParse.unparse(data);
+    this.finishedBuildingReport = true;
+    createDownloadFile(`${this.reportTitle}.csv`, csv, 'text/csv');
+    await timeout(2000);
+    this.finishedBuildingReport = false;
   });
-
-  @action
-  revertTitleChanges() {
-    this.title = this.reportTitle;
-  }
 }

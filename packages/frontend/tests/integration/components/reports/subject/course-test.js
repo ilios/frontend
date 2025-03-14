@@ -75,6 +75,71 @@ module('Integration | Component | reports/subject/course', function (hooks) {
     assert.strictEqual(component.results[1].courseTitle, 'First Course');
   });
 
+  test('it renders all results when resultsLengthMax is not reached', async function (assert) {
+    await setupAuthentication({}, true);
+    assert.expect(3);
+
+    this.server.post('api/graphql', function (schema, { requestBody }) {
+      const { query } = JSON.parse(requestBody);
+      assert.strictEqual(query, 'query { courses { id, title, year, externalId } }');
+      return responseData;
+    });
+    const { id } = this.server.create('report', {
+      subject: 'course',
+    });
+    this.set('report', await this.owner.lookup('service:store').findRecord('report', id));
+    await render(hbs`<Reports::Subject::Course
+  @subject={{this.report.subject}}
+  @prepositionalObject={{this.report.prepositionalObject}}
+  @prepositionalObjectTableRowId={{this.report.prepositionalObjectTableRowId}}
+/>`);
+
+    assert.strictEqual(component.results.length, 2, 'responseData shows all 2 of 2 courses');
+    assert.notOk(component.hasFullResultsDownloadButton, 'full results download button is hidden');
+  });
+
+  test('it renders limited results and an extra download button when resultsLengthMax is eclipsed', async function (assert) {
+    await setupAuthentication({}, true);
+    assert.expect(3);
+
+    const years = [2020, 2021, 2022, 2023, 2024, 2025];
+    const responseDataLarge = {
+      data: {
+        courses: [],
+      },
+    };
+
+    for (let i = 0; i < 220; i++) {
+      responseDataLarge.data.courses.push({
+        id: i,
+        title: `course ${i}`,
+        year: years[Math.floor(Math.random() * years.length)],
+      });
+    }
+
+    this.server.post('api/graphql', function (schema, { requestBody }) {
+      const { query } = JSON.parse(requestBody);
+      assert.strictEqual(query, 'query { courses { id, title, year, externalId } }');
+      return responseDataLarge;
+    });
+    const { id } = this.server.create('report', {
+      subject: 'course',
+    });
+    this.set('report', await this.owner.lookup('service:store').findRecord('report', id));
+    await render(hbs`<Reports::Subject::Course
+  @subject={{this.report.subject}}
+  @prepositionalObject={{this.report.prepositionalObject}}
+  @prepositionalObjectTableRowId={{this.report.prepositionalObjectTableRowId}}
+/>`);
+
+    assert.strictEqual(
+      component.results.length,
+      200,
+      'responseDataLarge shows only 200 of 220 courses',
+    );
+    assert.ok(component.hasFullResultsDownloadButton, 'full results download button is present');
+  });
+
   test('it reads academic year config', async function (assert) {
     assert.expect(6);
     this.server.get('application/config', function () {

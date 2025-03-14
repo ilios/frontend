@@ -12,8 +12,10 @@ export default class ReportsSubjectProgramYearComponent extends Component {
   @service currentUser;
   @service intl;
 
+  resultsLengthMax = 200;
+
   @cached
-  get data() {
+  get allProgramYearsData() {
     return new TrackedAsyncData(
       this.getReportResults(
         this.args.subject,
@@ -22,6 +24,10 @@ export default class ReportsSubjectProgramYearComponent extends Component {
         this.args.school,
       ),
     );
+  }
+
+  get allProgramYears() {
+    return this.allProgramYearsData.isResolved ? this.allProgramYearsData.value : [];
   }
 
   get canView() {
@@ -33,7 +39,11 @@ export default class ReportsSubjectProgramYearComponent extends Component {
   }
 
   get sortedProgramYears() {
-    return sortBy(this.data.value, ['program.school.title', 'program.title', 'classOfYear']);
+    return sortBy(this.allProgramYears, ['program.school.title', 'program.title', 'classOfYear']);
+  }
+
+  get limitedProgramYears() {
+    return this.sortedProgramYears.slice(0, this.resultsLengthMax);
   }
 
   async getReportResults(subject, prepositionalObject, prepositionalObjectTableRowId, school) {
@@ -60,6 +70,10 @@ export default class ReportsSubjectProgramYearComponent extends Component {
       obj.classOfYear = String(classOfYear);
       return obj;
     });
+  }
+
+  get reportResultsExceedMax() {
+    return this.allProgramYears.length > this.resultsLengthMax;
   }
 
   @action

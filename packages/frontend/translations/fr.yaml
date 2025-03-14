@@ -353,6 +353,7 @@ general:
   reportDisplayTitleWithoutObject: "tous {subject} en {school}"
   reportName: Nom de rapport
   reportNamePlaceholder: "Entrez S'il vous plait un nom de rapport."
+  reportResultsExceedMax: Seuls les {resultsLengthMax} premiers résultats affichés. Téléchargez le rapport pour consulter tous les résultats.
   reports: Rapports
   reportTitle: Titre du Rapport
   requiredInTrack: Requis en piste

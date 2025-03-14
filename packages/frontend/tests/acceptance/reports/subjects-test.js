@@ -407,7 +407,7 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
     assert.strictEqual(currentURL(), '/reports/subjects?showNewReportForm=true');
     assert.strictEqual(
       page.subjects.results.description,
-      'This report shows all Sessions associated with Course "course 0" (2015) in school 0.',
+      'This report shows all Sessions associated with Course "course 0" (2015) in school 0. (1)',
     );
     assert.strictEqual(page.subjects.results.results.length, 1);
     assert.strictEqual(page.subjects.results.results[0].text, 'course 0: session 0');
@@ -421,7 +421,11 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
     await page.subjects.list.newSubject.subjects.choose('course');
     this.server.post('api/graphql', ({ db }, { requestBody }) => {
       const { query } = JSON.parse(requestBody);
-      assert.strictEqual(query, 'query { courses(schools: [1]) { id, title, year, externalId } }');
+      assert.strictEqual(
+        query,
+        'query { courses(schools: [1]) { id, title, year, externalId } }',
+        'has correct graphql query',
+      );
       return {
         data: {
           courses: db.courses.map(({ id, title, year, externalId }) => {
@@ -433,7 +437,8 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
     await page.subjects.list.newSubject.run();
     assert.strictEqual(
       page.subjects.runSubject.header.description,
-      'This report shows all Courses in school 0.',
+      'This report shows all Courses in school 0. (2)',
+      'has correct report description',
     );
     assert.strictEqual(page.subjects.runSubject.results.results.length, 2);
     assert.strictEqual(
