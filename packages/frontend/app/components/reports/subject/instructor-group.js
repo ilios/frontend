@@ -10,6 +10,8 @@ export default class ReportsSubjectInstructorGroupComponent extends Component {
   @service graphql;
   @service intl;
 
+  resultsLengthMax = 200;
+
   @cached
   get allInstructorGroupsData() {
     return new TrackedAsyncData(
