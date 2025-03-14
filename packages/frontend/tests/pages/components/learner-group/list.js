@@ -28,7 +28,6 @@ const definition = {
     },
   },
   items: collection('[data-test-learner-group-list-item]', listItem),
-  isEmpty: isPresent('[data-test-empty-list]'),
   confirmRemoval: {
     scope: '[data-test-confirm-removal]',
     confirm: clickable('[data-test-confirm]'),

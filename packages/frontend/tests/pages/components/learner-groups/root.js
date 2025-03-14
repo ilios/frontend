@@ -41,7 +41,6 @@ const definition = {
   list,
   newLearnerGroupForm,
   savedResult: text('.saved-result'),
-  emptyListRowIsVisible: isVisible('[data-test-empty-list]'),
 };
 
 export default definition;

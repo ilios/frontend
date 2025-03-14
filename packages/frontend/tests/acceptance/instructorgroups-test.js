@@ -21,7 +21,7 @@ module('Acceptance | Instructor Groups', function (hooks) {
     });
 
     test('list groups', async function (assert) {
-      assert.expect(8);
+      assert.expect(9);
       this.server.createList('user', 5);
       this.server.createList('course', 2, { school: this.school });
       this.server.create('session', {
@@ -49,6 +49,7 @@ module('Acceptance | Instructor Groups', function (hooks) {
       await page.visit();
       await percySnapshot(assert);
       assert.strictEqual(page.headerTitle, 'Instructor Groups (2)');
+      assert.ok(page.listIsPresent);
       assert.strictEqual(page.list.items.length, 2);
       assert.strictEqual(page.list.items[0].title, firstInstructorGroup.title);
       assert.strictEqual(parseInt(page.list.items[0].users, 10), 5);
@@ -167,7 +168,7 @@ module('Acceptance | Instructor Groups', function (hooks) {
       await page.list.confirmRemoval.confirm();
       assert.strictEqual(page.headerTitle, 'Instructor Groups (0)');
       assert.strictEqual(page.list.items.length, 0);
-      assert.ok(page.emptyListRowIsVisible);
+      assert.notOk(page.listIsPresent);
     });
 
     test('cancel remove instructor group', async function (assert) {

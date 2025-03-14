@@ -59,7 +59,7 @@ module('Integration | Component | courses/list', function (hooks) {
   @unlock={{(noop)}}
 />`);
     assert.strictEqual(component.courses.length, 2);
-    assert.notOk(component.emptyListRow.isVisible);
+    assert.ok(component.listIsPresent);
   });
 
   test('it renders empty - no courses', async function (assert) {
@@ -75,8 +75,7 @@ module('Integration | Component | courses/list', function (hooks) {
   @unlock={{(noop)}}
 />`);
     assert.strictEqual(component.courses.length, 0);
-    assert.ok(component.emptyListRow.isVisible);
-    assert.ok(component.emptyListRow.text.includes('None'));
+    assert.notOk(component.listIsPresent);
   });
 
   test('it renders empty - no course match filter', async function (assert) {
@@ -92,8 +91,7 @@ module('Integration | Component | courses/list', function (hooks) {
   @unlock={{(noop)}}
 />`);
     assert.strictEqual(component.courses.length, 0);
-    assert.ok(component.emptyListRow.isVisible);
-    assert.ok(component.emptyListRow.text.includes('No results found. Please try again.'));
+    assert.notOk(component.listIsPresent);
   });
 
   test('sort by title', async function (assert) {

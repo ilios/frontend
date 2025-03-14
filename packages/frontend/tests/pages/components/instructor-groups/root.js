@@ -3,6 +3,7 @@ import {
   create,
   collection,
   fillable,
+  isPresent,
   isVisible,
   text,
   value,
@@ -25,7 +26,7 @@ const definition = {
   list,
   newInstructorGroupForm,
   savedResult: text('.saved-result'),
-  emptyListRowIsVisible: isVisible('[data-test-empty-list]'),
+  listIsPresent: isPresent('table'),
 };
 
 export default definition;
