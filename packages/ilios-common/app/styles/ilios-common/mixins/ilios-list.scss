@@ -145,18 +145,6 @@
   }
 }
 
-@mixin ilios-list-badges() {
-  @include ilios-removable-list;
-
-  li {
-    background-color: c.$culturedGrey;
-    border-radius: 4px;
-    font-weight: bold;
-    margin-top: 0.5rem;
-    padding: 1rem;
-  }
-}
-
 @mixin ilios-list-tree() {
   @include ilios-list-reset;
 
