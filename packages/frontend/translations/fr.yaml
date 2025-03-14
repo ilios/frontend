@@ -110,6 +110,7 @@ general:
   delete: Supprimer
   deleteCourse: Supprimer le cours
   departments: Facultés
+  deselectAllCourses: "Désélectionner tous les cours"
   deselectUser: "Désélectionner l'utilisateur "
   details: Détails de Cours
   developer: Administrateur
