@@ -1,3 +1,4 @@
+@use "../../ilios-common/colors" as c;
 @use "../../ilios-common/mixins" as cm;
 
 .reports-choose-course {
@@ -19,6 +20,12 @@
     ul {
       margin-top: 0.5rem;
     }
+  }
+
+  .deselect-all {
+    @include cm.ilios-button-reset;
+    @include cm.font-size("small");
+    color: c.$blueMunsell;
   }
 
   .select-all {
