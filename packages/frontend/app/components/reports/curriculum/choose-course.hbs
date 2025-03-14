@@ -15,6 +15,17 @@
     {{else}}
       {{this.selectedSchool.title}}
     {{/if}}
+    {{#if @selectedCourseIds.length}}
+      <button
+        type="button"
+        aria-label={{t "general.deselectAllCourses"}}
+        class="deselect-all"
+        {{on "click" @removeAll}}
+        data-test-deselect-all
+      >
+        {{t "general.deselectAllCourses"}}
+      </button>
+    {{/if}}
   </div>
   {{#each this.selectedSchoolYears as |y|}}
     <ul class="year {{if y.isExpanded 'expanded' 'collapsed'}}" data-test-year>
