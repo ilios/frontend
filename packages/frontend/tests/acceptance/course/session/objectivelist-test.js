@@ -30,18 +30,19 @@ module('Acceptance | Session - Objective List', function (hooks) {
     });
     const courseObjectives = this.server.createList('course-objective', 2);
     const meshDescriptors = this.server.createList('mesh-descriptor', 3);
-    const terms = this.server.createList('term', 2, { vocabulary });
+    const term1 = this.server.create('term', { vocabulary, active: true });
+    const term2 = this.server.create('term', { vocabulary });
     this.server.create('session-objective', {
       session,
       courseObjectives: [courseObjectives.shift()],
       meshDescriptors: [meshDescriptors.shift()],
-      terms: [terms.shift()],
+      terms: [term1],
     });
     this.server.create('session-objective', {
       session,
       courseObjectives,
       meshDescriptors,
-      terms: terms,
+      terms: [term2],
     });
     this.server.createList('session-objective', 11, { session });
     await page.visit({
@@ -121,7 +122,7 @@ module('Acceptance | Session - Objective List', function (hooks) {
     );
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[1].selectedTerms.list[0].terms[0].name,
-      'term 1',
+      'term 1 (inactive)',
     );
 
     for (let i = 2; i <= 12; i++) {

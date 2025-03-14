@@ -14,7 +14,7 @@ module('Integration | Component | course/objective-list', function (hooks) {
     const school = this.server.create('school');
     const course = this.server.create('course');
     const vocabulary = this.server.create('vocabulary', { school });
-    const term1 = this.server.create('term', { vocabulary });
+    const term1 = this.server.create('term', { vocabulary, active: true });
     const term2 = this.server.create('term', { vocabulary });
     this.server.create('course-objective', {
       course,
@@ -46,7 +46,10 @@ module('Integration | Component | course/objective-list', function (hooks) {
       component.objectives[0].selectedTerms.list[0].title,
       'Vocabulary 1 (school 0)',
     );
-    assert.strictEqual(component.objectives[0].selectedTerms.list[0].terms[0].name, 'term 1');
+    assert.strictEqual(
+      component.objectives[0].selectedTerms.list[0].terms[0].name,
+      'term 1 (inactive)',
+    );
     assert.strictEqual(component.objectives[1].description.text, 'Objective A');
     assert.strictEqual(
       component.objectives[1].selectedTerms.list[0].title,

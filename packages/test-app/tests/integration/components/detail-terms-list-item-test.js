@@ -86,7 +86,7 @@ module('Integration | Component | detail terms list item', function (hooks) {
     const termModel = await this.owner.lookup('service:store').findRecord('term', term.id);
     this.set('term', termModel);
     await render(hbs`<DetailTermsListItem @term={{this.term}} @canEdit={{false}} />`);
-    assert.dom('.inactive').doesNotExist();
+    assert.dom('.inactive').exists();
     assert.dom('.fa-xmark').doesNotExist();
   });
 });
