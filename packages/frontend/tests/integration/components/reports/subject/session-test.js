@@ -146,7 +146,7 @@ module('Integration | Component | reports/subject/session', function (hooks) {
       responseDataLarge.data.sessions.push({
         id: i,
         title: `session ${i}`,
-        course: { id: 1, year: years[Math.floor(Math.random()) + years.length], title: 'Course' },
+        course: { id: 1, year: years[Math.floor(Math.random() * years.length)], title: 'Course' },
       });
     }
 

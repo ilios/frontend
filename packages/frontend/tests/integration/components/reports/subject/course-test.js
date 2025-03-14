@@ -113,7 +113,7 @@ module('Integration | Component | reports/subject/course', function (hooks) {
       responseDataLarge.data.courses.push({
         id: i,
         title: `course ${i}`,
-        year: years[Math.floor(Math.random()) + years.length],
+        year: years[Math.floor(Math.random() * years.length)],
       });
     }
 
