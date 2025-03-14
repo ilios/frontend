@@ -58,14 +58,6 @@ export default class ReportsSubjectTermComponent extends Component {
     return this.allTerms.length > this.resultsLengthMax;
   }
 
-  get resultsLengthDisplay() {
-    if (this.args.year) {
-      return `${this.sortedTerms.length}/${this.allTerms.length}`;
-    }
-
-    return this.allTerms.length;
-  }
-
   @action
   async fetchDownloadData() {
     return [

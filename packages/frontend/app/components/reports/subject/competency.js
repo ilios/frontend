@@ -59,14 +59,6 @@ export default class ReportsSubjectCompetencyComponent extends Component {
     return this.allCompetencies.length > this.resultsLengthMax;
   }
 
-  get resultsLengthDisplay() {
-    if (this.args.year) {
-      return `${this.allCompetencies.length}/${this.allCompetencies.length}`;
-    }
-
-    return this.allCompetencies.length;
-  }
-
   @action
   async fetchDownloadData() {
     return [[this.intl.t('general.competencies')], ...this.allCompetencies.map((v) => [v])];

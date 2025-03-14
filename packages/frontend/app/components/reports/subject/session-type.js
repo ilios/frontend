@@ -73,14 +73,6 @@ export default class ReportsSubjectSessionTypeComponent extends Component {
     return this.allSessionTypes.length > this.resultsLengthMax;
   }
 
-  get resultsLengthDisplay() {
-    if (this.args.year) {
-      return `${this.sortedSessionTypes.length}/${this.allSessionTypes.length}`;
-    }
-
-    return this.allSessionTypes.length;
-  }
-
   @action
   async fetchDownloadData() {
     return [[this.intl.t('general.sessionTypes')], ...this.sortedSessionTypes.map((v) => [v])];

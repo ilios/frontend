@@ -57,14 +57,6 @@ export default class ReportsSubjectInstructorGroupComponent extends Component {
     return this.allInstructorGroups.length > this.resultsLengthMax;
   }
 
-  get resultsLengthDisplay() {
-    if (this.args.year) {
-      return `${this.sortedInstructorGroups.length}/${this.allInstructorGroups.length}`;
-    }
-
-    return this.allInstructorGroups.length;
-  }
-
   @action
   async fetchDownloadData() {
     return [

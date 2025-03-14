@@ -98,14 +98,6 @@ export default class ReportsSubjectMeshTermComponent extends Component {
     return this.allMeshTerms.length > this.resultsLengthMax;
   }
 
-  get resultsLengthDisplay() {
-    if (this.args.year) {
-      return `${this.sortedMeshTerms.length}/${this.allMeshTerms.length}`;
-    }
-
-    return this.allMeshTerms.length;
-  }
-
   @action
   async fetchDownloadData() {
     return [[this.intl.t('general.meshTerms')], ...this.sortedMeshTerms.map((v) => [v])];

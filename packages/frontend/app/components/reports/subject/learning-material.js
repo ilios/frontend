@@ -76,14 +76,6 @@ export default class ReportsSubjectLearningMaterialComponent extends Component {
     return this.allLearningMaterials.length > this.resultsLengthMax;
   }
 
-  get resultsLengthDisplay() {
-    if (this.args.year) {
-      return `${this.sortedLearningMaterials.length}/${this.allLearningMaterials.length}`;
-    }
-
-    return this.allLearningMaterials.length;
-  }
-
   @action
   async fetchDownloadData() {
     return [

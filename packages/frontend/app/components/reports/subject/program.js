@@ -67,14 +67,6 @@ export default class ReportsSubjectProgramComponent extends Component {
     return this.allPrograms.length > this.resultsLengthMax;
   }
 
-  get resultsLengthDisplay() {
-    if (this.args.year) {
-      return `${this.sortedPrograms.length}/${this.allPrograms.length}`;
-    }
-
-    return this.allPrograms.length;
-  }
-
   @action
   async fetchDownloadData() {
     return [
