@@ -30,8 +30,7 @@
             disabled={{isSaving}}
             type="text"
             value={{this.hours}}
-            {{on "key-press" (fn this.validations.addErrorDisplayFor "hours")}}
-            {{on "focusout" (fn this.validations.addErrorDisplayFor "hours")}}
+            {{this.validations.attach "hours"}}
             {{on "input" (pick "target.value" (set this "localHours"))}}
           >
           <YupValidationMessage

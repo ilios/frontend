@@ -14,8 +14,7 @@
           type="text"
           value={{this.title}}
           {{on "input" (pick "target.value" (set this "title"))}}
-          {{on "focusout" (fn this.validations.addErrorDisplayFor "title")}}
-          {{on "keyup" (fn this.validations.addErrorDisplayFor "title")}}
+          {{this.validations.attach "title"}}
         >
         <YupValidationMessage
           @description={{t 'general.title'}}

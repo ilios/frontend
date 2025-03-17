@@ -2,6 +2,7 @@ import { tracked } from '@glimmer/tracking';
 import { getProperties } from '@ember/object';
 import { object, setLocale } from 'yup';
 import { restartableTask, timeout } from 'ember-concurrency';
+import { modifier } from 'ember-modifier';
 
 const DEBOUNCE_MS = 100;
 
@@ -105,6 +106,23 @@ export default class YupValidations {
   #validationProperties() {
     return getProperties(this.context, ...Object.keys(this.shape));
   }
+
+  attach = modifier((element, [field]) => {
+    element.addEventListener(
+      'focusout',
+      () => {
+        this.addErrorDisplayFor(field);
+      },
+      { passive: true },
+    );
+    element.addEventListener(
+      'input',
+      () => {
+        this.runValidator.perform();
+      },
+      { passive: true },
+    );
+  });
 }
 //call this function to set the error messages and their locale one time when this file is loaded
 setupErrorMessages();
