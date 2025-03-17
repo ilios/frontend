@@ -1,6 +1,7 @@
 <div
   data-test-user-profile-bio
   class="user-profile-bio small-component {{if this.hasRecentlySaved 'has-saved' 'has-not-saved'}}"
+  {{this.getAuthUser}}
   ...attributes
 >
   {{#let (unique-id) as |templateId|}}

@@ -4,10 +4,11 @@ import { action } from '@ember/object';
 import { service } from '@ember/service';
 import { isEmpty } from '@ember/utils';
 import { all } from 'rsvp';
-import { dropTask, restartableTask } from 'ember-concurrency';
+import { dropTask } from 'ember-concurrency';
 import { TrackedAsyncData } from 'ember-async-data';
 import { ValidateIf } from 'class-validator';
 import { validatable, IsEmail, NotBlank, Length } from 'ilios-common/decorators/validation';
+import { modifier } from 'ember-modifier';
 
 @validatable
 export default class UserProfileBioComponent extends Component {
@@ -47,19 +48,27 @@ export default class UserProfileBioComponent extends Component {
   constructor() {
     super(...arguments);
 
-    this.firstName = this.args.user.firstName;
-    this.middleName = this.args.user.middleName;
-    this.lastName = this.args.user.lastName;
-    this.campusId = this.args.user.campusId;
-    this.otherId = this.args.user.otherId;
-    this.email = this.args.user.email;
-    this.displayName = this.args.user.displayName;
-    this.pronouns = this.args.user.pronouns;
-    this.preferredEmail = this.args.user.preferredEmail;
-    this.phone = this.args.user.phone;
+    const user = this.args.user;
 
-    this.load.perform();
+    this.firstName = user.firstName;
+    this.middleName = user.middleName;
+    this.lastName = user.lastName;
+    this.campusId = user.campusId;
+    this.otherId = user.otherId;
+    this.email = user.email;
+    this.displayName = user.displayName;
+    this.pronouns = user.pronouns;
+    this.preferredEmail = user.preferredEmail;
+    this.phone = user.phone;
   }
+
+  getAuthUser = modifier(() => {
+    if (this.userAuthentication) {
+      this.username = this.userAuthentication.username;
+      this.password = '';
+      this.passwordStrengthScore = 0;
+    }
+  });
 
   @cached
   get userAuthenticationData() {
@@ -147,15 +156,6 @@ export default class UserProfileBioComponent extends Component {
     this.password = password;
     await this.calculatePasswordStrengthScore();
   }
-
-  load = restartableTask(async () => {
-    const auth = await this.args.user.authentication;
-    if (auth) {
-      this.username = auth.username;
-      this.password = '';
-      this.passwordStrengthScore = 0;
-    }
-  });
 
   save = dropTask(async () => {
     const store = this.store;
