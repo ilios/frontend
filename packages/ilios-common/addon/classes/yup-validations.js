@@ -62,6 +62,15 @@ export default class YupValidations {
     return rhett;
   });
 
+  makeErrorsVisibleFor = restartableTask(async (fields) => {
+    const currentlyInvisible = fields.filter((field) => !this.visibleErrors.includes(field));
+    if (currentlyInvisible.length) {
+      //wait a tick so we don't double update values that have been used in a render
+      await timeout(1);
+      this.visibleErrors = [...this.visibleErrors, ...currentlyInvisible];
+    }
+  });
+
   async #validate() {
     try {
       await this.schema.validate(this.#validationProperties(), {
@@ -80,15 +89,15 @@ export default class YupValidations {
   }
 
   addErrorDisplaysFor = (fields) => {
-    fields.forEach((field) => this.addErrorDisplayFor(field));
+    this.runValidator.perform();
+    this.makeErrorsVisibleFor.perform(fields);
   };
 
   addErrorDisplayFor = (field) => {
     this.runValidator.perform();
-    if (!this.visibleErrors.includes(field)) {
-      this.visibleErrors = [...this.visibleErrors, field];
-    }
+    this.makeErrorsVisibleFor.perform([field]);
   };
+
   addErrorDisplayForAllFields = () => {
     this.showAllErrors = true;
   };
@@ -111,7 +120,7 @@ export default class YupValidations {
     element.addEventListener(
       'focusout',
       () => {
-        this.addErrorDisplayFor(field);
+        this.makeErrorsVisibleFor.perform([field]);
       },
       { passive: true },
     );
