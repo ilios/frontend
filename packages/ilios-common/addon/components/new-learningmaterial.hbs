@@ -14,7 +14,7 @@
           {{on "input" (pick "target.value" (set this "title"))}}
           {{on "keyup" (fn this.addErrorDisplayFor "title")}}
         />
-        <ValidationError @validatable={{this}} @property="title" />
+        <ValidationError @validatable={{this}} @property="title" data-test-title-validation-error-message=""/>
       </span>
     </div>
     <div class="item">
@@ -58,7 +58,7 @@
           {{on "focus-out" (fn this.addErrorDisplayFor "originalAuthor")}}
           {{on "input" (pick "target.value" (set this "originalAuthor"))}}
         />
-        <ValidationError @validatable={{this}} @property="originalAuthor" />
+        <ValidationError @validatable={{this}} @property="originalAuthor" data-test-author-validation-error-message="" />
       </span>
     </div>
     <div class="item">
