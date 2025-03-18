@@ -1,11 +1,12 @@
 import Component from '@glimmer/component';
 import { service } from '@ember/service';
 import { hash, all, filter } from 'rsvp';
-import { dropTask, restartableTask, timeout } from 'ember-concurrency';
+import { dropTask, timeout } from 'ember-concurrency';
 import { action } from '@ember/object';
-import { tracked } from '@glimmer/tracking';
+import { cached, tracked } from '@glimmer/tracking';
 import { DateTime } from 'luxon';
 import { findById, sortBy } from 'ilios-common/utils/array-helpers';
+import { TrackedAsyncData } from 'ember-async-data';
 
 export default class SessionCopyComponent extends Component {
   @service store;
@@ -17,7 +18,12 @@ export default class SessionCopyComponent extends Component {
   @tracked years;
   @tracked allCourses;
 
-  setup = restartableTask(async (element, [session]) => {
+  @cached
+  get allCoursesData() {
+    return new TrackedAsyncData(this.loadCourses(this.args.session));
+  }
+
+  async loadCourses(session) {
     if (!session) {
       return;
     }
@@ -40,7 +46,7 @@ export default class SessionCopyComponent extends Component {
     this.allCourses = await filter(schoolCourses, async (co) => {
       return this.permissionChecker.canCreateSession(co);
     });
-  });
+  }
 
   get bestSelectedYear() {
     if (this.selectedYear) {
