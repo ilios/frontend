@@ -48,9 +48,6 @@ module.exports = async function (defaults) {
       insertScriptsAt: 'auto-import-scripts',
       watchDependencies: ['ilios-common'],
     },
-    'ember-fetch': {
-      preferNative: true,
-    },
     sassOptions: {
       silenceDeprecations: ['mixed-decls'],
     },
