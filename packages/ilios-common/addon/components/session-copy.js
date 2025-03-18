@@ -1,6 +1,6 @@
 import Component from '@glimmer/component';
 import { service } from '@ember/service';
-import { hash, all, filter } from 'rsvp';
+import { all, filter } from 'rsvp';
 import { dropTask, timeout } from 'ember-concurrency';
 import { action } from '@ember/object';
 import { cached, tracked } from '@glimmer/tracking';
@@ -15,7 +15,6 @@ export default class SessionCopyComponent extends Component {
 
   @tracked selectedYear;
   @tracked selectedCourseId;
-  @tracked years;
 
   @cached
   get allCoursesData() {
@@ -26,26 +25,36 @@ export default class SessionCopyComponent extends Component {
     return this.allCoursesData.isResolved ? this.allCoursesData.value : [];
   }
 
+  @cached
+  get yearsData() {
+    return new TrackedAsyncData(this.store.findAll('academicYear'));
+  }
+
+  get years() {
+    if (this.yearsData.isResolved) {
+      const now = DateTime.now();
+      const thisYear = now.year;
+
+      return this.yearsData.value
+        .map((year) => Number(year.id))
+        .filter((year) => year >= thisYear - 1)
+        .sort();
+    } else {
+      return [];
+    }
+  }
+
   async loadCourses(session) {
     if (!session) {
       return;
     }
     const course = await session.course;
     const school = await course.school;
-    const { years, schoolCourses } = await hash({
-      years: this.store.findAll('academic-year'),
-      schoolCourses: this.store.query('course', {
-        filters: {
-          school: school.id,
-        },
-      }),
+    const schoolCourses = await this.store.query('course', {
+      filters: {
+        school: school.id,
+      },
     });
-    const now = DateTime.now();
-    const thisYear = now.year;
-    this.years = years
-      .map((year) => Number(year.id))
-      .filter((year) => year >= thisYear - 1)
-      .sort();
 
     return await filter(schoolCourses, async (co) => {
       return this.permissionChecker.canCreateSession(co);
