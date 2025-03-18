@@ -468,6 +468,7 @@ module('Integration | Component | course/rollover', function (hooks) {
     const input = `${title} input`;
 
     await fillIn(input, '');
+    await emberBlur(input);
     assert.dom('.validation-error-message').exists({ count: 1 });
     assert.ok(find('.validation-error-message').textContent.includes('too short'));
   });
