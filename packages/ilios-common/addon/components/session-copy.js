@@ -16,11 +16,14 @@ export default class SessionCopyComponent extends Component {
   @tracked selectedYear;
   @tracked selectedCourseId;
   @tracked years;
-  @tracked allCourses;
 
   @cached
   get allCoursesData() {
     return new TrackedAsyncData(this.loadCourses(this.args.session));
+  }
+
+  get allCourses() {
+    return this.allCoursesData.isResolved ? this.allCoursesData.value : [];
   }
 
   async loadCourses(session) {
@@ -43,7 +46,8 @@ export default class SessionCopyComponent extends Component {
       .map((year) => Number(year.id))
       .filter((year) => year >= thisYear - 1)
       .sort();
-    this.allCourses = await filter(schoolCourses, async (co) => {
+
+    return await filter(schoolCourses, async (co) => {
       return this.permissionChecker.canCreateSession(co);
     });
   }
