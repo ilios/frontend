@@ -4,7 +4,6 @@ import { action } from '@ember/object';
 import { service } from '@ember/service';
 import { isEmpty } from '@ember/utils';
 import { task } from 'ember-concurrency';
-import { DateTime } from 'luxon';
 import { findById, sortBy } from 'ilios-common/utils/array-helpers';
 import { TrackedAsyncData } from 'ember-async-data';
 import YupValidations from 'ilios-common/classes/yup-validations';
@@ -181,10 +180,6 @@ export default class SessionOverview extends Component {
       return this.sessionTypeData.isResolved ? this.sessionTypeData.value : null;
     }
     return this.localSessionType;
-  }
-
-  get updatedAt() {
-    return DateTime.fromJSDate(this.args.session.updatedAt).toFormat('D t');
   }
 
   get isLoaded() {

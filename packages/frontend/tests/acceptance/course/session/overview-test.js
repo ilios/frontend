@@ -224,24 +224,32 @@ module('Acceptance | Session - Overview', function (hooks) {
       },
       true,
     );
+    const updatedAt = DateTime.fromObject({
+      year: 2019,
+      month: 7,
+      day: 9,
+      hour: 17,
+      minute: 0,
+      second: 0,
+    }).toJSDate();
     this.server.create('session', {
       course: this.course,
       sessionType: this.sessionTypes[0],
-      updatedAt: DateTime.fromObject({
-        year: 2019,
-        month: 7,
-        day: 9,
-        hour: 17,
-        minute: 0,
-        second: 0,
-      }).toJSDate(),
+      updatedAt,
     });
     await page.visit({ courseId: 1, sessionId: 1 });
+    const updatedAtString = this.intl.formatDate(updatedAt, {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+    });
 
     assert.strictEqual(currentRouteName(), 'session.index');
     assert.strictEqual(
       page.details.overview.lastUpdated,
-      'Last Update Last Update: 7/9/2019 5:00 PM',
+      `Last Update Last Update: ${updatedAtString}`,
     );
   });
 
