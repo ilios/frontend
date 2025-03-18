@@ -62,9 +62,9 @@ export default class UserProfileBioComponent extends Component {
     this.phone = user.phone;
   }
 
-  getAuthUser = modifier(() => {
-    if (this.userAuthentication) {
-      this.username = this.userAuthentication.username;
+  getAuthUser = modifier((element, [userAuthentication]) => {
+    if (userAuthentication) {
+      this.username = userAuthentication.username;
       this.password = '';
       this.passwordStrengthScore = 0;
     }

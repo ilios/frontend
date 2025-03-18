@@ -1,11 +1,12 @@
-<div
-  data-test-user-profile-bio
-  class="user-profile-bio small-component {{if this.hasRecentlySaved 'has-saved' 'has-not-saved'}}"
-  {{this.getAuthUser}}
-  ...attributes
->
-  {{#let (unique-id) as |templateId|}}
-    {{#if this.userAuthenticationData.isResolved}}
+{{#if this.userAuthenticationData.isResolved}}
+  <div
+    data-test-user-profile-bio
+    class="user-profile-bio small-component
+      {{if this.hasRecentlySaved ' has-saved' ' has-not-saved'}}"
+    {{this.getAuthUser this.userAuthentication}}
+    ...attributes
+  >
+    {{#let (unique-id) as |templateId|}}
       <div class="actions">
         {{#if @isManaging}}
           <button
@@ -418,8 +419,8 @@
           </div>
         {{/if}}
       </div>
-    {{else}}
-      <LoadingSpinner />
-    {{/if}}
-  {{/let}}
-</div>
+    {{/let}}
+  </div>
+{{else}}
+  <LoadingSpinner />
+{{/if}}
