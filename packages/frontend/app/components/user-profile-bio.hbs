@@ -1,9 +1,9 @@
 {{#if this.userAuthenticationData.isResolved}}
   <div
-    data-test-user-profile-bio
     class="user-profile-bio small-component
-      {{if this.hasRecentlySaved ' has-saved' ' has-not-saved'}}"
+      {{if this.hasSavedRecently 'has-saved' 'has-not-saved'}}"
     {{this.getAuthUser this.userAuthentication}}
+    data-test-user-profile-bio
     ...attributes
   >
     {{#let (unique-id) as |templateId|}}

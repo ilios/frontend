@@ -4,7 +4,7 @@ import { action } from '@ember/object';
 import { service } from '@ember/service';
 import { isEmpty } from '@ember/utils';
 import { all } from 'rsvp';
-import { dropTask } from 'ember-concurrency';
+import { dropTask, timeout } from 'ember-concurrency';
 import { TrackedAsyncData } from 'ember-async-data';
 import { ValidateIf } from 'class-validator';
 import { validatable, IsEmail, NotBlank, Length } from 'ilios-common/decorators/validation';
@@ -42,6 +42,7 @@ export default class UserProfileBioComponent extends Component {
   @tracked changeUserPassword = false;
   @tracked updatedFieldsFromSync = [];
   @tracked passwordStrengthScore = 0;
+  @tracked hasSavedRecently = false;
 
   userSearchTypeConfig = new TrackedAsyncData(this.iliosConfig.getUserSearchType());
 
@@ -218,6 +219,9 @@ export default class UserProfileBioComponent extends Component {
     await all(pendingUpdates.map((update) => update.destroyRecord()));
     this.clearErrorDisplay();
     this.cancel();
+    this.hasSavedRecently = true;
+    await timeout(500);
+    this.hasSavedRecently = false;
   });
 
   directorySync = dropTask(async () => {
