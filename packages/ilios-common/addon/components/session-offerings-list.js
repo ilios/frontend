@@ -2,20 +2,20 @@ import Component from '@glimmer/component';
 import { service } from '@ember/service';
 import { action } from '@ember/object';
 import OfferingDateBlock from 'ilios-common/utils/offering-date-block';
-import { tracked } from '@glimmer/tracking';
-import { restartableTask } from 'ember-concurrency';
+import { cached } from '@glimmer/tracking';
+import { TrackedAsyncData } from 'ember-async-data';
 import { sortBy } from 'ilios-common/utils/array-helpers';
 
 export default class SessionOfferingsListComponent extends Component {
   @service store;
-  @tracked offeringsRelationship;
 
-  load = restartableTask(async () => {
-    this.offeringsRelationship = await this.args.session.offerings;
-  });
+  @cached
+  get offeringsData() {
+    return new TrackedAsyncData(this.args.session.offerings);
+  }
 
   get offerings() {
-    return this.offeringsRelationship ? this.offeringsRelationship : [];
+    return this.offeringsData.isResolved ? this.offeringsData.value : [];
   }
 
   get offeringBlocks() {
