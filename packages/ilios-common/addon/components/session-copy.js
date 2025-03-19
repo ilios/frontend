@@ -27,7 +27,7 @@ export default class SessionCopyComponent extends Component {
 
   @cached
   get yearsData() {
-    return new TrackedAsyncData(this.store.findAll('academicYear'));
+    return new TrackedAsyncData(this.store.findAll('academic-year'));
   }
 
   get years() {
@@ -128,7 +128,7 @@ export default class SessionCopyComponent extends Component {
     const ilmToCopy = await sessionToCopy.ilmSession;
     if (ilmToCopy) {
       const ilm = this.store.createRecord(
-        'ilmSession',
+        'ilm-session',
         ilmToCopy.getProperties('hours', 'dueDate'),
       );
       ilm.set('session', session);
