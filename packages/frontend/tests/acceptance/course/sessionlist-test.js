@@ -215,10 +215,14 @@ module('Acceptance | Course - Session List', function (hooks) {
     await page.visit({ courseId: this.course.id, details: true });
     const { sessions, expandedSessions } = page.courseSessions.sessionsGrid;
     await sessions[0].row.expand();
-    assert.strictEqual(
-      expandedSessions[0].lastUpdated,
-      'Last Update Last Update: 07/09/2019, 05:00 PM',
-    );
+    const updatedAt = this.intl.formatDate(this.session1.updatedAt, {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+    });
+    assert.strictEqual(expandedSessions[0].lastUpdated, `Last Update Last Update: ${updatedAt}`);
   });
 
   test('expand all sessions', async function (assert) {
