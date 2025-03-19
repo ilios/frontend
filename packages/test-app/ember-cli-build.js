@@ -6,9 +6,6 @@ const { Webpack } = require('@embroider/webpack');
 
 module.exports = async function (defaults) {
   const app = new EmberApp(defaults, {
-    'ember-fetch': {
-      preferNative: true,
-    },
     fingerprint: {
       extensions: broccoliAssetRevDefaults.extensions.concat(['svg']),
     },
