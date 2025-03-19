@@ -4,10 +4,11 @@ import { action } from '@ember/object';
 import { service } from '@ember/service';
 import { isEmpty } from '@ember/utils';
 import { all } from 'rsvp';
-import { dropTask, restartableTask } from 'ember-concurrency';
+import { dropTask, timeout } from 'ember-concurrency';
 import { TrackedAsyncData } from 'ember-async-data';
 import { ValidateIf } from 'class-validator';
 import { validatable, IsEmail, NotBlank, Length } from 'ilios-common/decorators/validation';
+import { modifier } from 'ember-modifier';
 
 @validatable
 export default class UserProfileBioComponent extends Component {
@@ -41,8 +42,43 @@ export default class UserProfileBioComponent extends Component {
   @tracked changeUserPassword = false;
   @tracked updatedFieldsFromSync = [];
   @tracked passwordStrengthScore = 0;
+  @tracked hasSavedRecently = false;
 
   userSearchTypeConfig = new TrackedAsyncData(this.iliosConfig.getUserSearchType());
+
+  constructor() {
+    super(...arguments);
+
+    const user = this.args.user;
+
+    this.firstName = user.firstName;
+    this.middleName = user.middleName;
+    this.lastName = user.lastName;
+    this.campusId = user.campusId;
+    this.otherId = user.otherId;
+    this.email = user.email;
+    this.displayName = user.displayName;
+    this.pronouns = user.pronouns;
+    this.preferredEmail = user.preferredEmail;
+    this.phone = user.phone;
+  }
+
+  getAuthUser = modifier((element, [userAuthentication]) => {
+    if (userAuthentication) {
+      this.username = userAuthentication.username;
+      this.password = '';
+      this.passwordStrengthScore = 0;
+    }
+  });
+
+  @cached
+  get userAuthenticationData() {
+    return new TrackedAsyncData(this.args.user.authentication);
+  }
+
+  get userAuthentication() {
+    return this.userAuthenticationData.isResolved ? this.userAuthenticationData.value : null;
+  }
 
   @cached
   get hasErrorForPasswordData() {
@@ -108,17 +144,6 @@ export default class UserProfileBioComponent extends Component {
 
   @action
   cancel() {
-    this.firstName = null;
-    this.lastName = null;
-    this.middleName = null;
-    this.campusId = null;
-    this.otherId = null;
-    this.email = null;
-    this.displayName = null;
-    this.pronouns = null;
-    this.preferredEmail = null;
-    this.phone = null;
-    this.username = null;
     this.password = null;
     this.passwordStrengthScore = 0;
     this.changeUserPassword = false;
@@ -132,25 +157,6 @@ export default class UserProfileBioComponent extends Component {
     this.password = password;
     await this.calculatePasswordStrengthScore();
   }
-
-  load = restartableTask(async () => {
-    this.firstName = this.args.user.firstName;
-    this.middleName = this.args.user.middleName;
-    this.lastName = this.args.user.lastName;
-    this.campusId = this.args.user.campusId;
-    this.otherId = this.args.user.otherId;
-    this.email = this.args.user.email;
-    this.displayName = this.args.user.displayName;
-    this.pronouns = this.args.user.pronouns;
-    this.preferredEmail = this.args.user.preferredEmail;
-    this.phone = this.args.user.phone;
-    const auth = await this.args.user.authentication;
-    if (auth) {
-      this.username = auth.username;
-      this.password = '';
-      this.passwordStrengthScore = 0;
-    }
-  });
 
   save = dropTask(async () => {
     const store = this.store;
@@ -213,6 +219,9 @@ export default class UserProfileBioComponent extends Component {
     await all(pendingUpdates.map((update) => update.destroyRecord()));
     this.clearErrorDisplay();
     this.cancel();
+    this.hasSavedRecently = true;
+    await timeout(500);
+    this.hasSavedRecently = false;
   });
 
   directorySync = dropTask(async () => {
