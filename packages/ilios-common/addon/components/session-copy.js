@@ -1,11 +1,12 @@
 import Component from '@glimmer/component';
 import { service } from '@ember/service';
-import { hash, all, filter } from 'rsvp';
-import { dropTask, restartableTask, timeout } from 'ember-concurrency';
+import { all, filter } from 'rsvp';
+import { dropTask, timeout } from 'ember-concurrency';
 import { action } from '@ember/object';
-import { tracked } from '@glimmer/tracking';
+import { cached, tracked } from '@glimmer/tracking';
 import { DateTime } from 'luxon';
 import { findById, sortBy } from 'ilios-common/utils/array-helpers';
+import { TrackedAsyncData } from 'ember-async-data';
 
 export default class SessionCopyComponent extends Component {
   @service store;
@@ -14,33 +15,51 @@ export default class SessionCopyComponent extends Component {
 
   @tracked selectedYear;
   @tracked selectedCourseId;
-  @tracked years;
-  @tracked allCourses;
 
-  setup = restartableTask(async (element, [session]) => {
+  @cached
+  get allCoursesData() {
+    return new TrackedAsyncData(this.loadCourses(this.args.session));
+  }
+
+  get allCourses() {
+    return this.allCoursesData.isResolved ? this.allCoursesData.value : [];
+  }
+
+  @cached
+  get yearsData() {
+    return new TrackedAsyncData(this.store.findAll('academicYear'));
+  }
+
+  get years() {
+    if (this.yearsData.isResolved) {
+      const now = DateTime.now();
+      const thisYear = now.year;
+
+      return this.yearsData.value
+        .map((year) => Number(year.id))
+        .filter((year) => year >= thisYear - 1)
+        .sort();
+    } else {
+      return [];
+    }
+  }
+
+  async loadCourses(session) {
     if (!session) {
       return;
     }
     const course = await session.course;
     const school = await course.school;
-    const { years, schoolCourses } = await hash({
-      years: this.store.findAll('academic-year'),
-      schoolCourses: this.store.query('course', {
-        filters: {
-          school: school.id,
-        },
-      }),
+    const schoolCourses = await this.store.query('course', {
+      filters: {
+        school: school.id,
+      },
     });
-    const now = DateTime.now();
-    const thisYear = now.year;
-    this.years = years
-      .map((year) => Number(year.id))
-      .filter((year) => year >= thisYear - 1)
-      .sort();
-    this.allCourses = await filter(schoolCourses, async (co) => {
+
+    return await filter(schoolCourses, async (co) => {
       return this.permissionChecker.canCreateSession(co);
     });
-  });
+  }
 
   get bestSelectedYear() {
     if (this.selectedYear) {
