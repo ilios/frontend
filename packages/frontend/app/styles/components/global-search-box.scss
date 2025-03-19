@@ -88,6 +88,7 @@
     white-space: nowrap;
     width: 100%;
 
+    &.active,
     &:hover {
       background-color: color.adjust(c.$blueMunsell, $lightness: 50%);
     }
