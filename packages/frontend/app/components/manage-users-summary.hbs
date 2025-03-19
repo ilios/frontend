@@ -41,7 +41,8 @@
       aria-label={{t "general.searchForIliosUsers"}}
       incremental="true"
       {{on "search" (perform this.searchForUsers)}}
-      {{on "keyup" (perform this.searchForUsers)}}
+      {{!-- {{on "keyup" (perform this.searchForUsers)}} --}}
+      {{on "keyup" this.keyboard}}
     />
     <ul
       class="results
