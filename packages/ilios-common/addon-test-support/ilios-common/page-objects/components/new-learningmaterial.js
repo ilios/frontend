@@ -23,7 +23,9 @@ const definition = {
   agreement: clickable('[data-test-copyright-agreement]'),
   save: clickable('.done'),
   cancel: clickable('.cancel'),
+  hasTitleValidationError: isVisible('[data-test-title-validation-error-message]'),
   hasAgreementValidationError: isVisible('[data-test-agreement-validation-error-message]'),
+  hasAuthorValidationError: isVisible('[data-test-author-validation-error-message]'),
   fileUpload: {
     scope: '[data-test-file]',
     validationErrors: collection('.validation-error-message'),

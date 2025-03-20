@@ -91,7 +91,62 @@ module('Integration | Component | new learningmaterial', function (hooks) {
     await component.save();
     assert.ok(component.hasAgreementValidationError);
     await component.agreement();
-    await component.save();
     assert.notOk(component.hasAgreementValidationError);
+    await component.agreement();
+    assert.ok(component.hasAgreementValidationError);
+    await component.rationale('rationale');
+    assert.notOk(component.hasAgreementValidationError);
+  });
+
+  test('validate original author', async function (assert) {
+    this.set('type', 'file');
+    await render(hbs`<NewLearningmaterial
+  @type={{this.type}}
+  @learningMaterialStatuses={{(array)}}
+  @learningMaterialUserRoles={{(array)}}
+  @save={{(noop)}}
+  @cancel={{(noop)}}
+/>`);
+    assert.notOk(component.hasAuthorValidationError);
+    await component.save();
+    assert.ok(component.hasAuthorValidationError);
+
+    await component.author('author');
+    assert.notOk(component.hasAuthorValidationError);
+
+    await component.author('a');
+    assert.ok(component.hasAuthorValidationError);
+
+    await component.author('longer author');
+    assert.notOk(component.hasAuthorValidationError);
+
+    await component.author('super long author'.repeat(20));
+    assert.ok(component.hasAuthorValidationError);
+  });
+
+  test('validate title', async function (assert) {
+    this.set('type', 'file');
+    await render(hbs`<NewLearningmaterial
+  @type={{this.type}}
+  @learningMaterialStatuses={{(array)}}
+  @learningMaterialUserRoles={{(array)}}
+  @save={{(noop)}}
+  @cancel={{(noop)}}
+/>`);
+    assert.notOk(component.hasTitleValidationError);
+    await component.save();
+    assert.ok(component.hasTitleValidationError);
+
+    await component.name('title');
+    assert.notOk(component.hasTitleValidationError);
+
+    await component.name('t');
+    assert.ok(component.hasTitleValidationError);
+
+    await component.name('longer title');
+    assert.notOk(component.hasTitleValidationError);
+
+    await component.name('super long title'.repeat(20));
+    assert.ok(component.hasTitleValidationError);
   });
 });

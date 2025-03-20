@@ -146,6 +146,7 @@ function setupErrorMessages() {
       min: min(['min']),
       max: max(['max']),
       email: isEmail(),
+      url: isURL(),
     },
     number: {
       moreThan: moreThan(),
@@ -188,6 +189,16 @@ function isEmail() {
     return {
       path: validationParams.path,
       messageKey: 'errors.email',
+      values: [],
+    };
+  };
+}
+
+function isURL() {
+  return (validationParams) => {
+    return {
+      path: validationParams.path,
+      messageKey: 'errors.url',
       values: [],
     };
   };

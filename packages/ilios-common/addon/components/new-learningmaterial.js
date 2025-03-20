@@ -3,63 +3,89 @@ import { service } from '@ember/service';
 import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { dropTask } from 'ember-concurrency';
-import {
-  validatable,
-  Custom,
-  Length,
-  NotBlank,
-  IsTrue,
-  IsURL,
-} from 'ilios-common/decorators/validation';
-import { ValidateIf } from 'class-validator';
 import { TrackedAsyncData } from 'ember-async-data';
 import { findBy, findById } from 'ilios-common/utils/array-helpers';
+import YupValidations from 'ilios-common/classes/yup-validations';
+import { boolean, string } from 'yup';
 
 const DEFAULT_URL_VALUE = 'https://';
 
-@validatable
 export default class NewLearningmaterialComponent extends Component {
   @service store;
   @service currentUser;
   @service iliosConfig;
   @service intl;
-  @ValidateIf((o) => o.isFile)
-  @Custom('validateFilenameCallback', 'validateFilenameMessageCallback')
-  @tracked
-  filename;
-  @ValidateIf((o) => o.isFile) @NotBlank() @tracked fileHash;
+  @tracked filename;
+  @tracked fileHash;
   @tracked statusId;
   @tracked userRoleId;
   @tracked description;
-  @NotBlank() @Length(2, 80) @tracked originalAuthor;
-  @NotBlank() @Length(4, 120) @tracked title;
-  @ValidateIf((o) => o.isLink)
-  @NotBlank()
-  @IsURL()
-  @Length(1, 256)
-  @tracked
-  link = DEFAULT_URL_VALUE;
-  @ValidateIf((o) => o.isFile && !o.copyrightRationale)
-  @IsTrue()
-  @tracked
-  copyrightPermission = false;
-  @ValidateIf((o) => o.isFile) @Length(2, 65000) @tracked copyrightRationale;
+  @tracked originalAuthor;
+  @tracked title;
+  @tracked link = DEFAULT_URL_VALUE;
+  @tracked copyrightPermission = false;
+  @tracked copyrightRationale;
   @tracked owner;
-  @ValidateIf((o) => o.isCitation) @NotBlank() @tracked citation;
+  @tracked citation;
   @tracked fileUploadErrorMessage = false;
 
+  get validationSchema() {
+    const base = {
+      originalAuthor: string().required().min(2).max(80),
+      title: string().required().min(4).max(120),
+    };
+
+    if (this.isLink) {
+      return {
+        ...base,
+        link: string().required().url().max(256),
+      };
+    }
+
+    if (this.isCitation) {
+      return {
+        ...base,
+        citation: string().required(),
+      };
+    }
+
+    if (this.isFile) {
+      return {
+        ...base,
+
+        filename: string().test(
+          'is-filename-valid',
+          (d) => {
+            return {
+              path: d.path,
+              messageKey: 'errors.missingFile',
+            };
+          },
+          (value) => value !== null && value !== undefined && value.trim() !== '',
+        ),
+        copyrightRationale: string().when('copyrightPermission', {
+          is: false,
+          then: (schema) => schema.required().min(2).max(65000),
+        }),
+        copyrightPermission: boolean().test(
+          'is-true',
+          (d) => {
+            return {
+              path: d.path,
+              messageKey: 'errors.agreementRequired',
+            };
+          },
+          (value) => this.copyrightRationale || value === true,
+        ),
+        fileHash: string().required(),
+      };
+    }
+
+    throw new Error('Unknown learning material type');
+  }
+
+  validations = new YupValidations(this, this.validationSchema);
   userModel = new TrackedAsyncData(this.currentUser.getModel());
-
-  @cached
-  get hasErrorForCopyrightPermissionData() {
-    return new TrackedAsyncData(this.hasErrorFor('copyrightPermission'));
-  }
-
-  get hasErrorForCopyrightPermission() {
-    return this.hasErrorForCopyrightPermissionData.isResolved
-      ? this.hasErrorForCopyrightPermissionData.value
-      : false;
-  }
 
   @cached
   get currentUserModel() {
@@ -107,8 +133,8 @@ export default class NewLearningmaterialComponent extends Component {
   }
 
   prepareSave = dropTask(async () => {
-    this.addErrorDisplayForAllFields();
-    const isValid = await this.isValid();
+    this.validations.addErrorDisplayForAllFields();
+    const isValid = await this.validations.isValid();
     if (!isValid) {
       return false;
     }
@@ -142,7 +168,7 @@ export default class NewLearningmaterialComponent extends Component {
     }
 
     await this.args.save(learningMaterial);
-    this.clearErrorDisplay();
+    this.validations.clearErrorDisplay();
   });
 
   @action
@@ -170,16 +196,5 @@ export default class NewLearningmaterialComponent extends Component {
     if (target.value === DEFAULT_URL_VALUE) {
       target.select();
     }
-  }
-
-  validateFilenameCallback() {
-    if (typeof this.filename === 'string') {
-      return this.filename.trim() !== '';
-    }
-    return this.filename !== null && this.filename !== undefined;
-  }
-
-  validateFilenameMessageCallback() {
-    return this.intl.t('errors.missingFile');
   }
 }
