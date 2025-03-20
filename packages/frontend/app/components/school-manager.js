@@ -2,19 +2,23 @@ import Component from '@glimmer/component';
 import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
-import { validatable, Length, NotBlank } from 'ilios-common/decorators/validation';
 import { dropTask } from 'ember-concurrency';
 import { TrackedAsyncData } from 'ember-async-data';
+import YupValidations from 'ilios-common/classes/yup-validations';
+import { string } from 'yup';
 
-@validatable
 export default class SchoolManagerComponent extends Component {
   @service flashMessages;
-  @tracked @NotBlank() @Length(1, 60) title;
+  @tracked title;
 
   constructor() {
     super(...arguments);
     this.title = this.args.school.title;
   }
+
+  validations = new YupValidations(this, {
+    title: string().required().max(60),
+  });
 
   @cached
   get institutionData() {
@@ -43,12 +47,12 @@ export default class SchoolManagerComponent extends Component {
   }
 
   changeTitle = dropTask(async () => {
-    this.addErrorDisplayFor('title');
-    const isValid = await this.isValid();
+    this.validations.addErrorDisplayForAllFields();
+    const isValid = await this.validations.isValid();
     if (!isValid) {
       return false;
     }
-    this.removeErrorDisplayFor('title');
+    this.validations.clearErrorDisplay();
 
     this.args.school.title = this.title;
     this.newSchool = await this.args.school.save();
