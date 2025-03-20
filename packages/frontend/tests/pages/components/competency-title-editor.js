@@ -9,8 +9,8 @@ const definition = {
     set: fillable('input'),
     save: clickable('.done'),
   },
-  hasError: isPresent('.validation-error-message'),
-  errorMessage: text('.validation-error-message'),
+  hasError: isPresent('[data-test-title-validation-error-message]'),
+  errorMessage: text('[data-test-title-validation-error-message]'),
 };
 
 export default definition;

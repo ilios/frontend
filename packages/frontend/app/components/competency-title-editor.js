@@ -2,16 +2,20 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { dropTask } from 'ember-concurrency';
-import { validatable, Length, NotBlank } from 'ilios-common/decorators/validation';
+import YupValidations from 'ilios-common/classes/yup-validations';
+import { string } from 'yup';
 
-@validatable
 export default class CompetencyTitleEditorComponent extends Component {
-  @Length(1, 200) @NotBlank() @tracked title;
+  @tracked title;
 
   constructor() {
     super(...arguments);
     this.title = this.args.competency.title;
   }
+
+  validations = new YupValidations(this, {
+    title: string().required().max(200),
+  });
 
   @action
   revert() {
@@ -19,12 +23,12 @@ export default class CompetencyTitleEditorComponent extends Component {
   }
 
   save = dropTask(async () => {
-    this.addErrorDisplayFor('title');
-    const isValid = await this.isValid('title');
+    this.validations.addErrorDisplayForAllFields();
+    const isValid = await this.validations.isValid();
     if (!isValid) {
       return false;
     }
-    this.args.competency.set('title', this.title);
-    this.removeErrorDisplayFor('title');
+    this.args.competency.title = this.title;
+    this.validations.clearErrorDisplay();
   });
 }
