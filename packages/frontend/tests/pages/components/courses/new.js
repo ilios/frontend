@@ -12,7 +12,10 @@ import {
 const definition = {
   scope: '[data-test-courses-new]',
   title: fillable('[data-test-title]'),
-  titleHasValidationError: isPresent('.validation-error-message', '[data-test-title]'),
+  titleHasValidationError: isPresent(
+    '[data-test-title-validation-error-message]',
+    '[data-test-title]',
+  ),
   chooseYear: fillable('[data-test-year]'),
   submitOnEnter: triggerable('keyup', '[data-test-title]', { eventProperties: { key: 'Enter' } }),
   save: clickable('[data-test-save]'),

@@ -16,13 +16,16 @@
             placeholder={{t "general.courseTitlePlaceholder"}}
             type="text"
             value={{this.title}}
-            {{on "focusout" (fn this.addErrorDisplayFor "title")}}
             {{on "keyup" this.keyboard}}
             {{on "input" (pick "target.value" (set this "title"))}}
-            {{on "keyup" (fn this.addErrorDisplayFor "title")}}
+            {{this.validations.attach "title"}}
             data-test-title
           />
-          <ValidationError @validatable={{this}} @property="title" />
+          <YupValidationMessage
+            @description={{t "general.title"}}
+            @validationErrors={{this.validations.errors.title}}
+            data-test-title-validation-error-message
+          />
         </div>
         <div class="item">
           <label for="year-{{templateId}}">
