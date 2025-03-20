@@ -7,7 +7,7 @@ const definition = {
     set: fillable('input'),
     value: value('input'),
     label: text('label'),
-    hasError: isVisible('.validation-error-message'),
+    hasError: isVisible('[data-test-title-validation-error-message]'),
     submit: triggerable('keyup', 'input', { eventProperties: { key: 'Enter' } }),
     cancel: triggerable('keyup', 'input', { eventProperties: { key: 'Escape' } }),
     inputControlIsVisible: isVisible('input'),
