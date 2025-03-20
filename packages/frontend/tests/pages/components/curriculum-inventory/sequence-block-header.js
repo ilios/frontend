@@ -9,7 +9,7 @@ const definition = {
     set: fillable('input'),
     save: clickable('.done'),
     cancel: clickable('.cancel'),
-    hasError: isVisible('.validation-error-message'),
+    hasError: isVisible('[data-test-title-validation-error-message]:first-of-type'),
     isEditable: isVisible('[data-test-edit]'),
   },
 };
