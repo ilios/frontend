@@ -110,6 +110,7 @@ general:
   delete: Eliminar
   deleteCourse: Eliminar el curso
   departments: Departmentos
+  deselectAllCourses: Deseleccionen Todos Cursos
   deselectUser: Deseleccione usuario
   details: Detalles de Curso
   developer: Desarrollador
