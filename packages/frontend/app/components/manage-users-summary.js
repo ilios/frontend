@@ -1,5 +1,6 @@
 import Component from '@glimmer/component';
 import Ember from 'ember';
+import { action } from '@ember/object';
 import { service } from '@ember/service';
 import { dropTask, restartableTask, timeout } from 'ember-concurrency';
 import { cleanQuery } from 'ilios-common/utils/query-utils';
@@ -49,6 +50,27 @@ export default class ManageUsersSummaryComponent extends Component {
     const { users } = await this.search.forUsers(q);
 
     return users;
+  }
+
+  @action
+  keyboard(event) {
+    event.preventDefault();
+
+    const { keyCode } = event;
+
+    if (this.isEscapeKey(keyCode)) {
+      this.clear();
+    }
+
+    this.searchForUsers.perform();
+  }
+
+  clear() {
+    this.searchValue = null;
+  }
+
+  isEscapeKey(keyCode) {
+    return keyCode === 27;
   }
 
   searchForUsers = restartableTask(async () => {

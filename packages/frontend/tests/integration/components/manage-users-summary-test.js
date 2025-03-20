@@ -1,6 +1,6 @@
 import { module, skip, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
-import { render, findAll, find, fillIn, triggerEvent } from '@ember/test-helpers';
+import { render, findAll, find, fillIn, triggerEvent, triggerKeyEvent } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import Service from '@ember/service';
 
@@ -28,6 +28,36 @@ module('Integration | Component | manage users summary', function (hooks) {
     assert.dom(findAll('a')[2]).hasText('Upload Multiple Users');
   });
 
+  test('show more input prompt', async function (assert) {
+    await render(hbs`<ManageUsersSummary />`);
+
+    const userSearch = '.user-search input';
+    const results = '.user-search .results li';
+
+    await fillIn(userSearch, '12');
+    await triggerEvent(userSearch, 'keyup');
+
+    assert.dom(results).exists({ count: 1 });
+    assert.dom(results).hasText('keep typing...');
+  });
+
+  test('escape key clears input and results', async function (assert) {
+    await render(hbs`<ManageUsersSummary />`);
+
+    const userSearch = '.user-search input';
+    const results = '.user-search .results li';
+
+    await fillIn(userSearch, '12');
+    await triggerEvent(userSearch, 'keyup');
+    assert.dom(results).exists({ count: 1 });
+    assert.dom(results).hasText('keep typing...');
+
+    await triggerKeyEvent(userSearch, 'keyup', 'Escape');
+
+    assert.dom(userSearch).hasText('');
+    assert.dom(results).exists({ count: 0 });
+  });
+
   /**
    * @todo Move the URL tests to an acceptance test so we don't
    * have to inject a working router which blows up ember-simple-auth
@@ -47,18 +77,5 @@ module('Integration | Component | manage users summary', function (hooks) {
       -1,
       `${findAll('a')[2].href} links to /users?addUsers=true`,
     );
-  });
-
-  test('show more input prompt', async function (assert) {
-    await render(hbs`<ManageUsersSummary />`);
-
-    const userSearch = '.user-search input';
-    const results = '.user-search .results li';
-
-    await fillIn(userSearch, '12');
-    await triggerEvent(userSearch, 'keyup');
-
-    assert.dom(results).exists({ count: 1 });
-    assert.dom(results).hasText('keep typing...');
   });
 });
