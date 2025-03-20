@@ -30,7 +30,9 @@
   },
   "pnpm": {
     "ignoredBuiltDependencies": [
-      "@percy/core"
+      "@parcel/watcher",
+      "@percy/core",
+      "core-js"
     ],
     "onlyBuiltDependencies": [
       "aws-sdk",
