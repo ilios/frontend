@@ -5,7 +5,8 @@
     value={{this.title}}
     disabled={{this.save.isRunning}}
     {{on "input" (pick "target.value" (set this "title"))}}
-    {{on "keyup" (queue (fn this.addErrorDisplayFor "title") (perform this.saveOnEnter))}}
+    {{on "keyup" (perform this.saveOnEnter)}}
+    {{this.validations.attach "title"}}
   />
   <button
     type="button"
@@ -19,5 +20,9 @@
       {{t "general.add"}}
     {{/if}}
   </button>
-  <ValidationError @validatable={{this}} @property="title" />
+  <YupValidationMessage
+    @description={{t "general.term"}}
+    @validationErrors={{this.validations.errors.title}}
+    data-test-title-validation-error-message
+  />
 </div>

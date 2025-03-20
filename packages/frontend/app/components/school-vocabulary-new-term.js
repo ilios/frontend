@@ -1,27 +1,39 @@
 import Component from '@glimmer/component';
-import { tracked } from '@glimmer/tracking';
+import { cached, tracked } from '@glimmer/tracking';
 import { service } from '@ember/service';
-import { validatable, Custom, Length, NotBlank } from 'ilios-common/decorators/validation';
-import { mapBy } from 'ilios-common/utils/array-helpers';
 import { dropTask } from 'ember-concurrency';
+import { TrackedAsyncData } from 'ember-async-data';
+import YupValidations from 'ilios-common/classes/yup-validations';
+import { string } from 'yup';
 
-@validatable
 export default class SchoolVocabularyNewTermComponent extends Component {
   @service store;
   @service intl;
-  @tracked
-  @NotBlank()
-  @Length(1, 200)
-  @Custom('validateTitleCallback', 'validateTitleMessageCallback')
-  title;
+  @tracked title;
+
+  validations = new YupValidations(this, {
+    title: string()
+      .required()
+      .max(200)
+      .test(
+        'is-title-unique',
+        (d) => {
+          return {
+            path: d.path,
+            messageKey: 'errors.exclusion',
+          };
+        },
+        (value) => value == null || !this.existingTitles.includes(value),
+      ),
+  });
 
   save = dropTask(async () => {
-    this.addErrorDisplayFor('title');
-    const isValid = await this.isValid();
+    this.validations.addErrorDisplayForAllFields();
+    const isValid = await this.validations.isValid();
     if (!isValid) {
       return false;
     }
-    this.removeErrorDisplayFor('title');
+    this.validations.clearErrorDisplay();
     await this.args.createTerm(this.title);
     this.title = null;
   });
@@ -33,14 +45,14 @@ export default class SchoolVocabularyNewTermComponent extends Component {
     }
   });
 
-  async validateTitleCallback() {
-    const terms = this.args.term
-      ? await this.args.term.children
-      : await this.args.vocabulary.getTopLevelTerms();
-    return !mapBy(terms, 'title').includes(this.title);
+  @cached
+  get getTermData() {
+    return new TrackedAsyncData(
+      this.args.term ? this.args.term.children : this.args.vocabulary.getTopLevelTerms(),
+    );
   }
 
-  validateTitleMessageCallback() {
-    return this.intl.t('errors.exclusion', { description: this.intl.t('general.term') });
+  get existingTitles() {
+    return this.getTermData.isResolved ? this.getTermData.value.map(({ title }) => title) : [];
   }
 }

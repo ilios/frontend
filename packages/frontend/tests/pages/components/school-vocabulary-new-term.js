@@ -4,8 +4,8 @@ const definition = {
   scope: '[data-test-school-vocabulary-new-term]',
   setTitle: fillable('input'),
   save: clickable('.save'),
-  hasError: isPresent('.validation-error-message'),
-  errorMessage: text('.validation-error-message'),
+  hasError: isPresent('[data-test-title-validation-error-message]'),
+  errorMessage: text('[data-test-title-validation-error-message]'),
 };
 
 export default definition;
