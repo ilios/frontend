@@ -56,18 +56,18 @@ module('Integration | Component | program/header', function (hooks) {
     assert.strictEqual(component.title.text, 'Aardvark');
     assert.ok(component.title.canEdit);
     await component.title.edit();
-    assert.notOk(component.title.hasError);
+    assert.strictEqual(component.title.errors.length, 0);
     await component.title.set('ab');
     await component.title.save();
-    assert.ok(component.title.hasError);
+    assert.strictEqual(component.title.errors.length, 1);
     assert.strictEqual(
-      component.title.errorText,
-      'This field is too short (minimum is 3 characters)',
+      component.title.errors[0].text,
+      'Title is too short (minimum is 3 characters)',
     );
   });
 
   test('update title fails - blank input', async function (assert) {
-    assert.expect(5);
+    assert.expect(6);
     const school = this.server.create('school', {});
     const program = this.server.create('program', {
       school,
@@ -81,11 +81,15 @@ module('Integration | Component | program/header', function (hooks) {
     assert.strictEqual(component.title.text, 'Aardvark');
     assert.ok(component.title.canEdit);
     await component.title.edit();
-    assert.notOk(component.title.hasError);
+    assert.strictEqual(component.title.errors.length, 0);
     await component.title.set('');
     await component.title.save();
-    assert.ok(component.title.hasError);
-    assert.strictEqual(component.title.errorText, 'This field can not be blank');
+    assert.strictEqual(component.title.errors.length, 2);
+    assert.strictEqual(component.title.errors[0].text, 'Title can not be blank');
+    assert.strictEqual(
+      component.title.errors[1].text,
+      'Title is too short (minimum is 3 characters)',
+    );
   });
 
   test('update title fails - title too long', async function (assert) {
@@ -103,13 +107,13 @@ module('Integration | Component | program/header', function (hooks) {
     assert.strictEqual(component.title.text, 'Aardvark');
     assert.ok(component.title.canEdit);
     await component.title.edit();
-    assert.notOk(component.title.hasError);
+    assert.strictEqual(component.title.errors.length, 0);
     await component.title.set('0123456789'.repeat(21));
     await component.title.save();
-    assert.ok(component.title.hasError);
+    assert.strictEqual(component.title.errors.length, 1);
     assert.strictEqual(
-      component.title.errorText,
-      'This field is too long (maximum is 200 characters)',
+      component.title.errors[0].text,
+      'Title is too long (maximum is 200 characters)',
     );
   });
 
