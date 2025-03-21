@@ -32,7 +32,7 @@ module('Integration | Component | instructor-groups/new', function (hooks) {
     assert.strictEqual(component.title.errors.length, 0);
     await component.done.click();
     assert.strictEqual(component.title.errors.length, 1);
-    assert.strictEqual(component.title.errors[0].text, 'This field can not be blank');
+    assert.strictEqual(component.title.errors[0].text, 'Title can not be blank');
   });
 
   test('validation fails, title too short', async function (assert) {
@@ -45,7 +45,7 @@ module('Integration | Component | instructor-groups/new', function (hooks) {
     assert.strictEqual(component.title.errors.length, 1);
     assert.strictEqual(
       component.title.errors[0].text,
-      'This field is too short (minimum is 3 characters)',
+      'Title is too short (minimum is 3 characters)',
     );
   });
 
@@ -59,7 +59,7 @@ module('Integration | Component | instructor-groups/new', function (hooks) {
     assert.strictEqual(component.title.errors.length, 1);
     assert.strictEqual(
       component.title.errors[0].text,
-      'This field is too long (maximum is 60 characters)',
+      'Title is too long (maximum is 60 characters)',
     );
   });
 

@@ -6,7 +6,7 @@ const definition = {
     scope: '[data-test-title]',
     label: text(),
     set: fillable('input'),
-    errors: collection('.validation-error-message'),
+    errors: collection('[data-test-title-validation-error-message]'),
   },
   done: {
     scope: '[data-test-done]',
