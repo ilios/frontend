@@ -174,7 +174,7 @@ module('Integration | Component | school vocabulary manager', function (hooks) {
     await component.terms.newTermForm.setTitle('');
     await component.terms.newTermForm.save();
     assert.ok(component.terms.newTermForm.hasError);
-    assert.strictEqual(component.terms.newTermForm.errorMessage, 'This field can not be blank');
+    assert.strictEqual(component.terms.newTermForm.errorMessage, 'Term can not be blank');
     assert.strictEqual(component.terms.list.length, 0);
   });
 

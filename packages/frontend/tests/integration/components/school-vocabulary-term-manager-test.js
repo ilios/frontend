@@ -303,7 +303,7 @@ module('Integration | Component | school vocabulary term manager', function (hoo
     await component.subTerms.newTermForm.save();
     assert.strictEqual(component.subTerms.list.length, 0);
     assert.ok(component.subTerms.newTermForm.hasError);
-    assert.strictEqual(component.subTerms.newTermForm.errorMessage, 'This field can not be blank');
+    assert.strictEqual(component.subTerms.newTermForm.errorMessage, 'Term can not be blank');
   });
 
   test("can't add term with duplicate title", async function (assert) {
