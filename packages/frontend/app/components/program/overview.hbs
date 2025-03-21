@@ -7,7 +7,7 @@
       <label for={{concat this.id "short-title"}}>
         {{t "general.programTitleShort"}}:
       </label>
-      <span>
+      <span data-test-value>
         {{#if @canUpdate}}
           <EditableField
             @value={{this.shortTitle}}
@@ -37,7 +37,7 @@
       <label for={{concat this.id "duration"}}>
         {{t "general.durationInYears"}}:
       </label>
-      <span>
+      <span data-test-value>
         {{#if @canUpdate}}
           <EditableField
             @value={{this.duration}}
