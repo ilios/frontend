@@ -1,0 +1,15 @@
+@use "../../ilios-common/mixins" as cm;
+@use "../../ilios-common/colors" as c;
+
+.courses-loading {
+  select,
+  input {
+    @include cm.loading-text;
+  }
+
+  .toggle-mycourses .toggle-buttons label {
+    @include cm.loading-text;
+    cursor: default;
+    background-color: c.$culturedGrey;
+  }
+}
