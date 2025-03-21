@@ -1,23 +1,27 @@
 import Component from '@glimmer/component';
 import { service } from '@ember/service';
-import { validatable, Length, NotBlank } from 'ilios-common/decorators/validation';
 import { tracked } from '@glimmer/tracking';
 import { dropTask } from 'ember-concurrency';
 import { action } from '@ember/object';
+import YupValidations from 'ilios-common/classes/yup-validations';
+import { string } from 'yup';
 
-@validatable
 export default class NewProgramComponent extends Component {
   @service store;
 
-  @tracked @Length(3, 200) @NotBlank() title;
+  @tracked title;
+
+  validations = new YupValidations(this, {
+    title: string().required().min(3).max(200),
+  });
 
   save = dropTask(async () => {
-    this.addErrorDisplayFor('title');
-    const isValid = await this.isValid();
+    this.validations.addErrorDisplayForAllFields();
+    const isValid = await this.validations.isValid();
     if (!isValid) {
       return false;
     }
-    this.removeErrorDisplayFor('title');
+    this.validations.clearErrorDisplay();
     const program = this.store.createRecord('program', {
       title: this.title,
     });
