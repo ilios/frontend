@@ -201,4 +201,32 @@ module('Integration | Component | reports/subject-header', function (hooks) {
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
   });
+
+  test('title too long', async function (assert) {
+    const report = this.server.create('report', {
+      subject: 'course',
+      prepositionalObject: 'instructor',
+      prepositionalObjectTableRowId: this.user.id,
+      user: this.user,
+    });
+    const reportModel = await this.owner.lookup('service:store').findRecord('report', report.id);
+    this.set('report', reportModel);
+    await render(hbs`<Reports::SubjectHeader
+  @report={{this.report}}
+  @subject={{this.report.subject}}
+  @prepositionalObject={{this.report.prepositionalObject}}
+  @prepositionalObjectTableRowId={{this.report.prepositionalObjectTableRowId}}
+  @year=''
+  @school={{null}}
+/>`);
+    assert.strictEqual(component.title.errors.length, 0);
+    await component.title.edit();
+    await component.title.set('a'.repeat(241));
+    await component.title.save();
+    assert.strictEqual(component.title.errors.length, 1);
+    assert.strictEqual(
+      component.title.errors[0].text,
+      'Title is too long (maximum is 240 characters)',
+    );
+  });
 });

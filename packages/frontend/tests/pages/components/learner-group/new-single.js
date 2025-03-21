@@ -1,4 +1,11 @@
-import { create, clickable, fillable, property, isVisible } from 'ember-cli-page-object';
+import {
+  create,
+  clickable,
+  collection,
+  fillable,
+  property,
+  isVisible,
+} from 'ember-cli-page-object';
 
 const definition = {
   scope: '[data-test-new-single-learner-group]',
@@ -10,6 +17,7 @@ const definition = {
   willFill: property('checked', '[data-test-fill] input'),
   fillWithCohort: clickable('[data-test-fill]'),
   doNotFillWithCohort: clickable('[data-test-no-fill]'),
+  titleErrors: collection('[data-test-title-validation-error-message]'),
 };
 
 export default definition;

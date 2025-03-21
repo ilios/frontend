@@ -16,11 +16,15 @@
             type="text"
             value={{this.title}}
             {{on "input" (pick "target.value" (set this "title"))}}
-            {{on "keypress" (fn this.addErrorDisplayFor "title")}}
+            {{this.validations.attach "title"}}
             disabled={{isSaving}}
           />
         </EditableField>
-        <ValidationError @validatable={{this}} @property="title" />
+        <YupValidationMessage
+          @description={{t "general.title"}}
+          @validationErrors={{this.validations.errors.title}}
+          data-test-title-validation-error-message
+        />
       {{else}}
         <h2>{{@program.title}}</h2>
       {{/if}}

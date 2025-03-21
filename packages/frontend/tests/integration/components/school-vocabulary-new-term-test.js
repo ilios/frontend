@@ -47,7 +47,26 @@ module('Integration | Component | school vocabulary new term', function (hooks) 
     await component.setTitle('');
     await component.save();
     assert.ok(component.hasError);
-    assert.strictEqual(component.errorMessage, 'This field can not be blank');
+    assert.strictEqual(component.errorMessage, 'Term can not be blank');
+  });
+
+  test("can't add term with long title", async function (assert) {
+    const school = this.server.create('school');
+    const vocabulary = this.server.create('vocabulary', { school });
+    const vocabularyModel = await this.owner
+      .lookup('service:store')
+      .findRecord('vocabulary', vocabulary.id);
+
+    this.set('vocabulary', vocabularyModel);
+    await render(
+      hbs`<SchoolVocabularyNewTerm @vocabulary={{this.vocabulary}} @createTerm={{true}} />`,
+    );
+
+    assert.notOk(component.hasError);
+    await component.setTitle('too long'.repeat(50));
+    await component.save();
+    assert.ok(component.hasError);
+    assert.strictEqual(component.errorMessage, 'Term is too long (maximum is 200 characters)');
   });
 
   test("can't add top-level term with duplicate title", async function (assert) {

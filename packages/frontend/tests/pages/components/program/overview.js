@@ -1,4 +1,4 @@
-import { create, clickable, fillable, collection } from 'ember-cli-page-object';
+import { create, clickable, isPresent, fillable, collection, text } from 'ember-cli-page-object';
 
 const definition = {
   scope: '[data-test-program-overview]',
@@ -7,6 +7,9 @@ const definition = {
     edit: clickable('[data-test-edit]'),
     set: fillable('input'),
     save: clickable('.done'),
+    editable: isPresent('[data-test-edit]'),
+    value: text('[data-test-value]'),
+    errors: collection('.validation-error-message'),
   },
   duration: {
     scope: '[data-test-duration]',
@@ -14,6 +17,8 @@ const definition = {
     set: fillable('select'),
     save: clickable('.done'),
     options: collection('select option'),
+    editable: isPresent('[data-test-edit]'),
+    value: text('[data-test-value]'),
   },
 };
 

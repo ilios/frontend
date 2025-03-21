@@ -9,8 +9,8 @@ const definition = {
     cancel: triggerable('keyup', null, { eventProperties: { key: 'Escape' } }),
   },
   save: clickable('[data-test-save]'),
-  hasError: isPresent('.validation-error-message'),
-  errorMessage: text('.validation-error-message'),
+  hasError: isPresent('[data-test-title-validation-error-message]'),
+  errorMessage: text('[data-test-title-validation-error-message]'),
 };
 
 export default definition;

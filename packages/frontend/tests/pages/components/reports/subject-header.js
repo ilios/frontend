@@ -16,7 +16,7 @@ const definition = {
     edit: clickable('[data-test-edit]'),
     set: fillable('input'),
     value: value('input'),
-    errors: collection('.validation-error-message'),
+    errors: collection('[data-test-title-validation-error-message]'),
     cancel: clickable('.cancel'),
     save: clickable('.done'),
   },

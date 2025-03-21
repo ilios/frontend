@@ -10,12 +10,15 @@
         disabled={{this.save.isRunning}}
         placeholder={{t "general.learnerGroupTitlePlaceholder"}}
         value={{this.title}}
-        {{on "focusout" (fn this.addErrorDisplayFor "title")}}
         {{on "keyup" this.keyboard}}
-        {{on "keyup" (fn this.addErrorDisplayFor "title")}}
         {{on "input" (pick "target.value" (set this "title"))}}
+        {{this.validations.attach "title"}}
       />
-      <ValidationError @validatable={{this}} @property="title" />
+      <YupValidationMessage
+        @description={{t "general.title"}}
+        @validationErrors={{this.validations.errors.title}}
+        data-test-title-validation-error-message
+      />
     </div>
     {{#if @fillModeSupported}}
       <div class="item">

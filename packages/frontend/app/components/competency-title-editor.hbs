@@ -15,10 +15,14 @@
         disabled={{isSaving}}
         aria-label={{t "general.title"}}
         {{on "input" (pick "target.value" (set this "title"))}}
-        {{on "keyup" (fn this.addErrorDisplayFor "title")}}
+        {{this.validations.attach "title"}}
       />
     </EditableField>
-    <ValidationError @validatable={{this}} @property="title" />
+    <YupValidationMessage
+      @description={{t "general.title"}}
+      @validationErrors={{this.validations.errors.title}}
+      data-test-title-validation-error-message
+    />
   {{else}}
     {{this.title}}
   {{/if}}

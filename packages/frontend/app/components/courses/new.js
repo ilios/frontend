@@ -3,18 +3,18 @@ import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
 import { DateTime } from 'luxon';
-import { validatable, Length, NotBlank } from 'ilios-common/decorators/validation';
 import { dropTask } from 'ember-concurrency';
 import { TrackedAsyncData } from 'ember-async-data';
+import YupValidations from 'ilios-common/classes/yup-validations';
+import { number, string } from 'yup';
 
-@validatable
 export default class CoursesNewComponent extends Component {
   @service intl;
   @service store;
   @service iliosConfig;
 
-  @tracked @NotBlank() selectedYear;
-  @tracked @NotBlank() @Length(3, 200) title;
+  @tracked selectedYear;
+  @tracked title;
   @tracked years;
 
   constructor() {
@@ -22,10 +22,15 @@ export default class CoursesNewComponent extends Component {
     const thisYear = DateTime.now().year;
     this.years = [thisYear - 2, thisYear - 1, thisYear, thisYear + 1, thisYear + 2];
 
-    if (this.args.currentYear && this.years.includes(parseInt(this.args.currentYear.id, 10))) {
+    if (this.args.currentYear && this.years.includes(Number(this.args.currentYear.id))) {
       this.setYear(this.args.currentYear.id);
     }
   }
+
+  validations = new YupValidations(this, {
+    title: string().required().min(3).max(200),
+    selectedYear: number().required(),
+  });
 
   @cached
   get academicYearCrossesCalendarYearBoundariesData() {
@@ -42,7 +47,7 @@ export default class CoursesNewComponent extends Component {
 
   @action
   setYear(year) {
-    this.selectedYear = parseInt(year, 10);
+    this.selectedYear = Number(year);
   }
 
   @action
@@ -63,12 +68,12 @@ export default class CoursesNewComponent extends Component {
   }
 
   saveCourse = dropTask(async () => {
-    this.addErrorDisplayFor('title');
-    const isValid = await this.isValid();
+    this.validations.addErrorDisplayForAllFields();
+    const isValid = await this.validations.isValid();
     if (!isValid) {
       return false;
     }
-    this.removeErrorDisplayFor('title');
+    this.validations.clearErrorDisplay();
     const course = this.store.createRecord('course', {
       level: 1,
       title: this.title,

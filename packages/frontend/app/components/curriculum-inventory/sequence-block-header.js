@@ -3,17 +3,21 @@ import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
 import { restartableTask } from 'ember-concurrency';
-import { validatable, Length, NotBlank } from 'ilios-common/decorators/validation';
+import YupValidations from 'ilios-common/classes/yup-validations';
+import { string } from 'yup';
 
-@validatable
 export default class CurriculumInventorySequenceBlockHeaderComponent extends Component {
   @service store;
-  @tracked @NotBlank() @Length(3, 200) title;
+  @tracked title;
 
   constructor() {
     super(...arguments);
     this.title = this.args.sequenceBlock.title;
   }
+
+  validations = new YupValidations(this, {
+    title: string().required().min(3).max(200),
+  });
 
   @action
   revertTitleChanges() {
@@ -21,12 +25,12 @@ export default class CurriculumInventorySequenceBlockHeaderComponent extends Com
   }
 
   changeTitle = restartableTask(async () => {
-    this.addErrorDisplayFor('title');
-    const isValid = await this.isValid('title');
+    this.validations.addErrorDisplayForAllFields();
+    const isValid = await this.validations.isValid();
     if (!isValid) {
       return false;
     }
-    this.removeErrorDisplayFor('title');
+    this.validations.clearErrorDisplay();
     this.args.sequenceBlock.title = this.title;
     await this.args.sequenceBlock.save();
   });
