@@ -5,8 +5,9 @@ import { tracked } from '@glimmer/tracking';
 export default class ReportsSubjectController extends Controller {
   @service store;
 
-  queryParams = ['report', 'reportYear'];
+  queryParams = ['report', 'reportYear', 'filterSchool'];
 
   @tracked report = null;
   @tracked reportYear = '';
+  @tracked filterSchool = null;
 }
