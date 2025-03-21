@@ -2,26 +2,30 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { service } from '@ember/service';
 import { action } from '@ember/object';
-import { validatable, Length, NotBlank } from 'ilios-common/decorators/validation';
 import { dropTask } from 'ember-concurrency';
+import YupValidations from 'ilios-common/classes/yup-validations';
+import { string } from 'yup';
 
-@validatable
 export default class InstructorGroupHeaderComponent extends Component {
   @service store;
-  @tracked @NotBlank() @Length(3, 60) title;
+  @tracked title;
 
   constructor() {
     super(...arguments);
     this.title = this.args.instructorGroup.title;
   }
 
+  validations = new YupValidations(this, {
+    title: string().required().min(3).max(60),
+  });
+
   changeTitle = dropTask(async () => {
-    this.addErrorDisplayFor('title');
-    const isValid = await this.isValid('title');
+    this.validations.addErrorDisplayForAllFields();
+    const isValid = await this.validations.isValid();
     if (!isValid) {
       return false;
     }
-    this.removeErrorDisplayFor('title');
+    this.validations.clearErrorDisplay();
     this.args.instructorGroup.title = this.title;
     await this.args.instructorGroup.save();
     this.title = this.args.instructorGroup.title;

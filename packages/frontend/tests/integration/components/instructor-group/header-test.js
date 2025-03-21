@@ -122,7 +122,7 @@ module('Integration | Component | instructor-group/header', function (hooks) {
     assert.strictEqual(component.title.value, 'lorem ipsum');
     await component.title.set('');
     await component.title.save();
-    assert.strictEqual(component.title.errors.length, 1);
+    assert.strictEqual(component.title.errors.length, 2);
   });
 
   test('cancel title changes', async function (assert) {
