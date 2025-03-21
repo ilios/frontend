@@ -2,14 +2,14 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { dropTask } from 'ember-concurrency';
 import { action } from '@ember/object';
-import { validatable, Length } from 'ilios-common/decorators/validation';
 import { guidFor } from '@ember/object/internals';
+import YupValidations from 'ilios-common/classes/yup-validations';
+import { string } from 'yup';
 
-@validatable
 export default class ProgramOverviewComponent extends Component {
   id = guidFor(this);
   @tracked duration;
-  @Length(2, 10) @tracked shortTitle;
+  @tracked shortTitle;
 
   constructor() {
     super(...arguments);
@@ -17,17 +17,21 @@ export default class ProgramOverviewComponent extends Component {
     this.shortTitle = this.args.program.shortTitle;
   }
 
+  validations = new YupValidations(this, {
+    shortTitle: string().required().min(2).max(10),
+  });
+
   changeShortTitle = dropTask(async () => {
     if (this.shortTitle !== this.args.program.shortTitle) {
-      this.addErrorDisplayFor('shortTitle');
-      const isValid = await this.isValid('shortTitle');
+      this.validations.addErrorDisplayForAllFields();
+      const isValid = await this.validations.isValid();
       if (!isValid) {
         return false;
       }
+      this.validations.clearErrorDisplay();
       this.args.program.set('shortTitle', this.shortTitle);
       await this.args.program.save();
       this.shortTitle = this.args.program.shortTitle;
-      this.removeErrorDisplayFor('shortTitle');
     }
   });
 
