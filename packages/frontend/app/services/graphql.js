@@ -38,15 +38,12 @@ export default class GraphqlService extends Service {
   }
 
   async find(endpoint, filters, attributes) {
-    console.log('GraphqlService find');
     const filterString = filters.length ? '(' + filters.join(', ') + ')' : '';
     const result = this.#query(`query { ${endpoint}${filterString} { ${attributes} } }`);
-    console.log('GraphqlService find completed', result);
     return waitForPromise(result);
   }
 
   findTask = task(async (endpoint, filters, attributes, signal) => {
-    console.log('GraphqlService findTask');
     const filterString = filters.length ? '(' + filters.join(', ') + ')' : '';
     const url = `${this.host}/api/graphql`;
     const headers = this.authHeaders;
@@ -79,7 +76,7 @@ export default class GraphqlService extends Service {
         error: 'bad stuff',
       };
     } finally {
-      console.log('Graphql findTask completed', response);
+      console.log('graphql findTask completed', response);
     }
   });
 }
