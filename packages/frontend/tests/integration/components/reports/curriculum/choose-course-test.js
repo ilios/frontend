@@ -61,6 +61,7 @@ module('Integration | Component | reports/curriculum/choose-course', function (h
   @schools={{this.schools}}
   @add={{(noop)}}
   @remove={{(noop)}}
+  @removeAll={{(noop)}}
 />`);
 
     assert.notOk(component.hasMultipleSchools);
@@ -108,6 +109,7 @@ module('Integration | Component | reports/curriculum/choose-course', function (h
   @schools={{this.schools}}
   @add={{(noop)}}
   @remove={{(noop)}}
+  @removeAll={{(noop)}}
 />`);
 
     assert.ok(component.hasMultipleSchools);
@@ -152,6 +154,7 @@ module('Integration | Component | reports/curriculum/choose-course', function (h
   @schools={{this.schools}}
   @add={{this.add}}
   @remove={{(noop)}}
+  @removeAll={{(noop)}}
 />`);
 
     assert.notOk(component.years[0].courses[0].isSelected);
@@ -177,10 +180,87 @@ module('Integration | Component | reports/curriculum/choose-course', function (h
   @schools={{this.schools}}
   @add={{(noop)}}
   @remove={{this.remove}}
+  @removeAll={{(noop)}}
 />`);
 
     assert.ok(component.years[0].courses[0].isSelected);
     await component.years[0].courses[0].pick();
+  });
+
+  test('deselect all button visible only when course is selected', async function (assert) {
+    assert.expect(3);
+    const school = this.server.create('school');
+    await setupAuthentication({ school });
+    this.server.create('academicYear', { id: 1984 });
+    const course = this.server.create('course', {
+      school,
+      year: 1984,
+    });
+    this.set('selectedCourseIds', [course.id]);
+    this.set('schools', buildSchoolsFromData(this.server));
+    this.set('add', (courseId) => {
+      this.set('selectedCourseIds', [...this.selectedCourseIds, courseId]);
+    });
+    this.set('remove', (courseId) => {
+      this.set(
+        'selectedCourseIds',
+        this.selectedCourseIds.filter((id) => id !== courseId),
+      );
+    });
+    this.set('removeAll', () => {
+      this.set('selectedCourseIds', []);
+    });
+    await render(hbs`<Reports::Curriculum::ChooseCourse
+  @selectedCourseIds={{this.selectedCourseIds}}
+  @schools={{this.schools}}
+  @add={{this.add}}
+  @remove={{this.remove}}
+  @removeAll={{this.removeAll}}
+/>`);
+
+    assert.ok(component.deselectAll.visible, 'deselect button is visible');
+    await component.years[0].courses[0].pick();
+    assert.notOk(component.deselectAll.visible, 'deselect button is not visible');
+    await component.years[0].courses[0].pick();
+    assert.ok(component.deselectAll.visible, 'deselect button is visible');
+  });
+
+  test('deselect all courses fires action', async function (assert) {
+    assert.expect(6);
+    const school = this.server.create('school');
+    await setupAuthentication({ school });
+    this.server.create('academicYear', { id: 1984 });
+    const course1 = this.server.create('course', {
+      school,
+      year: 1984,
+    });
+    const course2 = this.server.create('course', {
+      school,
+      year: 1985,
+    });
+    this.set('selectedCourseIds', [course1.id, course2.id]);
+    this.set('schools', buildSchoolsFromData(this.server));
+    this.set('removeAll', () => {
+      this.set('selectedCourseIds', []);
+    });
+    await render(hbs`<Reports::Curriculum::ChooseCourse
+  @selectedCourseIds={{this.selectedCourseIds}}
+  @schools={{this.schools}}
+  @add={{(noop)}}
+  @remove={{noop}}
+  @removeAll={{this.removeAll}}
+/>`);
+
+    assert.ok(component.years[0].isFullySelected, '1984 is fully selected');
+    assert.ok(component.years[1].isFullySelected, '1985 is fully selected');
+    assert.ok(component.years[1].courses[0].isSelected, '1985 course 1 is visible and selected');
+    await component.deselectAll.click();
+    assert.notOk(component.years[0].isFullySelected, '1984 is not selected');
+    assert.notOk(component.years[1].isFullySelected, '1985 is not selected');
+    assert.notOk(
+      component.years[1].courses[0].isSelected,
+      '1985 course 1 is visible and unselected',
+    );
   });
 
   test('select all fires action', async function (assert) {
@@ -201,6 +281,7 @@ module('Integration | Component | reports/curriculum/choose-course', function (h
   @schools={{this.schools}}
   @add={{this.add}}
   @remove={{(noop)}}
+  @removeAll={{(noop)}}
 />`);
 
     assert.ok(component.years[0].isPartiallySelected);
@@ -239,6 +320,7 @@ module('Integration | Component | reports/curriculum/choose-course', function (h
   @schools={{this.schools}}
   @add={{(noop)}}
   @remove={{this.remove}}
+  @removeAll={{(noop)}}
 />`);
 
     assert.notOk(component.years[0].isPartiallySelected);
