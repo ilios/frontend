@@ -26,7 +26,7 @@ module('Acceptance | Course - Objective List', function (hooks) {
       competency: competencies[0],
     });
     const programYearObjectiveWithoutCompetency = this.server.create('program-year-objective');
-    const term1 = this.server.create('term', { vocabulary });
+    const term1 = this.server.create('term', { vocabulary, active: true });
     const term2 = this.server.create('term', { vocabulary });
     const course = this.server.create('course', {
       year: 2013,
@@ -124,7 +124,7 @@ module('Acceptance | Course - Objective List', function (hooks) {
     );
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[1].selectedTerms.list[0].terms[0].name,
-      'term 1',
+      'term 1 (inactive)',
     );
 
     for (let i = 2; i <= 12; i++) {

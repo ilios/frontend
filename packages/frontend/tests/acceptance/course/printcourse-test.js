@@ -166,7 +166,7 @@ module('Acceptance | Course - Print Course', function (hooks) {
     const vocabulary = this.server.create('vocabulary', {
       school: this.school,
     });
-    const term = this.server.create('term', { vocabulary });
+    const term = this.server.create('term', { vocabulary, active: true });
     const sessionObjective = this.server.create('session-objective', {
       session,
       title: 'Session Objective 1',
@@ -213,7 +213,7 @@ module('Acceptance | Course - Print Course', function (hooks) {
     const vocabulary = this.server.create('vocabulary', {
       school: this.school,
     });
-    const term = this.server.create('term', { vocabulary });
+    const term = this.server.create('term', { vocabulary, active: true });
     const courseObjective = this.server.create('course-objective', {
       course: this.course,
       title: 'Course Objective 1',
@@ -286,10 +286,12 @@ module('Acceptance | Course - Print Course', function (hooks) {
     this.server.createList('term', 3, {
       vocabulary: vocabulary1,
       sessions: [session],
+      active: true,
     });
     this.server.createList('term', 2, {
       vocabulary: vocabulary2,
       sessions: [session],
+      active: true,
     });
 
     await visit('/course/1/print');
