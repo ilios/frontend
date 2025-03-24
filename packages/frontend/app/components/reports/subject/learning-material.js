@@ -14,6 +14,11 @@ export default class ReportsSubjectLearningMaterialComponent extends Component {
   controller = new AbortController();
   signal = this.controller.signal;
 
+  cancelCurrentRun() {
+    this.controller = new AbortController();
+    this.signal = this.controller.signal;
+  }
+
   @cached
   get allLearningMaterialsData() {
     return new TrackedAsyncData(
@@ -74,8 +79,7 @@ export default class ReportsSubjectLearningMaterialComponent extends Component {
     if (this.graphql.findTask.isRunning) {
       this.controller.abort('running query canceled so new one could run');
     }
-    this.controller = new AbortController();
-    this.signal = this.controller.signal;
+    this.cancelCurrentRun();
 
     const result = await this.graphql.findTask.perform(
       'learningMaterials',
