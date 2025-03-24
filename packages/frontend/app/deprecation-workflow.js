@@ -1,18 +1,24 @@
-import { registerDeprecationHandler } from '@ember/debug';
-import config from './config/environment';
+import setupDeprecationWorkflow from 'ember-cli-deprecation-workflow';
 
-const SHOULD_THROW = config.environment !== 'production';
-
-const SILENCED_DEPRECATIONS = [
-  // Add ids of deprecations we temporarily want to silence here.
-];
-
-registerDeprecationHandler((message, options, next) => {
-  if (SILENCED_DEPRECATIONS.includes(options.id)) {
-    return;
-  } else if (SHOULD_THROW) {
-    throw new Error(`Deprecation:  ${message} ++++ ID: ${options.id}`);
-  }
-
-  next(message, options);
+/**
+ * Docs: https://github.com/ember-cli/ember-cli-deprecation-workflow
+ */
+setupDeprecationWorkflow({
+  /**
+    false by default, but if a developer / team wants to be more aggressive about being proactive with
+    handling their deprecations, this should be set to "true"
+  */
+  throwOnUnhandled: true,
+  workflow: [
+    /* ... handlers ... */
+    /* to generate this list, run your app for a while (or run the test suite),
+     * and then run in the browser console:
+     *
+     *    deprecationWorkflow.flushDeprecations()
+     *
+     * And copy the handlers here
+     */
+    /* example: */
+    /* { handler: 'silence', matchId: 'template-action' }, */
+  ],
 });
