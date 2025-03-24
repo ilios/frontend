@@ -11,7 +11,6 @@ export default class ReportsSubjectComponent extends Component {
   @tracked myReportEditorOn = false;
 
   get reportDescriptionPromise() {
-    console.log('ReportsSubjectComponent promise');
     return this.reporting.buildReportDescription(
       this.args.report.subject,
       this.args.report.prepositionalObject,
