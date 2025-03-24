@@ -44,6 +44,7 @@ export default class GraphqlService extends Service {
   }
 
   findTask = task(async (endpoint, filters, attributes, signal) => {
+    console.log('graphql findTask started');
     const filterString = filters.length ? '(' + filters.join(', ') + ')' : '';
     const url = `${this.host}/api/graphql`;
     const headers = this.authHeaders;
