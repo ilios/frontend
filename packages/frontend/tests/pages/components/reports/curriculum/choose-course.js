@@ -3,6 +3,7 @@ import {
   create,
   collection,
   isPresent,
+  isVisible,
   fillable,
   property,
   text,
@@ -30,6 +31,11 @@ const definition = {
     isFullySelected: property('checked', '[data-test-toggle-all]'),
     toggleAll: clickable('[data-test-toggle-all]'),
   }),
+  deselectAll: {
+    scope: '[data-test-deselect-all]',
+    visible: isVisible(),
+    click: clickable(),
+  },
 };
 
 export default definition;
