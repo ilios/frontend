@@ -43,19 +43,7 @@
       {{on "search" (perform this.searchForUsers)}}
       {{on "keyup" this.keyboard}}
     />
-    <ul
-      class="results
-        {{if
-          (and
-            this.searchForUsers.isIdle
-            (or
-              (eq this.searchForUsers.performCount 0)
-              (eq this.searchForUsers.lastSuccessful.value.length 0)
-            )
-          )
-          'hidden'
-        }}"
-    >
+    <ul class="results{{if this.hideResults ' hidden'}}">
       {{#if this.searchForUsers.isRunning}}
         <li>
           {{t "general.currentlySearchingPrompt"}}
