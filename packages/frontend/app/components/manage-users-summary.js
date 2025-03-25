@@ -19,6 +19,7 @@ export default class ManageUsersSummaryComponent extends Component {
   @service store;
 
   @tracked searchValue;
+  @tracked activeUserId;
 
   userSearchTypeData = new TrackedAsyncData(this.iliosConfig.getUserSearchType());
 
@@ -79,24 +80,14 @@ export default class ManageUsersSummaryComponent extends Component {
 
   keyActions(keyCode, listArray, container) {
     if (this.isEnterKey(keyCode)) {
-      console.log('isEnterKey userId', this.getActiveUserId(listArray));
+      this.clickUser.perform({ id: this.activeUserId });
+    }
+
+    if (this.isVerticalKey(keyCode)) {
+      this.verticalKeyAction(keyCode, listArray, container);
     } else {
-      // if (this.isEnterKey(keyCode)) {
-      //   const activeUserId = this.getActiveUserId(listArray);
-      //   if (activeUserId) {
-      //     this.clickUser.perform(this.getActiveUserId(listArray));
-      //   } else {
-      //     if (cleanQuery(this.searchValue).length >= MIN_INPUT) {
-      //       this.searchForUsers.perform();
-      //     }
-      //   }
-      // } else {
-      if (this.isVerticalKey(keyCode)) {
-        this.verticalKeyAction(keyCode, listArray, container);
-      } else {
-        if (cleanQuery(this.searchValue).length >= MIN_INPUT && !this.isHorizontalKey(keyCode)) {
-          this.searchForUsers.perform();
-        }
+      if (cleanQuery(this.searchValue).length >= MIN_INPUT && !this.isHorizontalKey(keyCode)) {
+        this.searchForUsers.perform();
       }
     }
   }
@@ -134,6 +125,8 @@ export default class ManageUsersSummaryComponent extends Component {
       option.classList.add('active');
       this.scrollToActiveElement(option);
     }
+
+    this.activeUserId = this.getActiveUserId(listArray);
   }
 
   resultListAction(listArray, keyCode) {
