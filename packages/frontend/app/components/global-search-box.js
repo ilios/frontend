@@ -59,26 +59,33 @@ export default class GlobalSearchBox extends Component {
   }
 
   @action
-  keyboard(event) {
-    event.preventDefault();
+  onEscapeKey() {
+    this.clear();
+    if (this.router.currentRouteName === 'search') {
+      this.args.search('');
+    }
+  }
 
+  @action
+  onEnterKey() {
+    if (cleanQuery(this.computedQuery).length >= MIN_INPUT) {
+      this.args.search(this.computedQuery);
+      this.clear();
+    }
+  }
+
+  @action
+  onArrowKey(event) {
     const { keyCode, target } = event;
 
     const container = target.parentElement.parentElement;
     const list = container.getElementsByClassName('autocomplete-row');
     const listArray = Array.from(list);
 
-    if (this.isEscapeKey(keyCode)) {
-      this.clear();
-      if (this.router.currentRouteName === 'search') {
-        this.args.search('');
-      }
-    }
-
-    const isValid = this.isEnterKey(keyCode) || listArray.length > 0;
+    const isValid = listArray.length > 0;
 
     if (isValid) {
-      this.keyActions(keyCode, listArray, container);
+      this.verticalKeyAction(keyCode, listArray, container);
     }
   }
 
@@ -93,31 +100,6 @@ export default class GlobalSearchBox extends Component {
     this.internalQuery = null;
     this.autocompleteSelectedQuery = null;
     this.autocomplete.perform();
-  }
-
-  keyActions(keyCode, listArray, container) {
-    if (this.isVerticalKey(keyCode)) {
-      this.verticalKeyAction(keyCode, listArray, container);
-    }
-
-    if (this.isEnterKey(keyCode)) {
-      if (cleanQuery(this.computedQuery).length >= MIN_INPUT) {
-        this.args.search(this.computedQuery);
-        this.clear();
-      }
-    }
-  }
-
-  isVerticalKey(keyCode) {
-    return keyCode === 38 || keyCode === 40;
-  }
-
-  isEnterKey(keyCode) {
-    return keyCode === 13;
-  }
-
-  isEscapeKey(keyCode) {
-    return keyCode === 27;
   }
 
   verticalKeyAction(keyCode, listArray, container) {
