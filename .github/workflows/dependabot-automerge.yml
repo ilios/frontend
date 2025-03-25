@@ -15,9 +15,8 @@ jobs:
         uses: dependabot/fetch-metadata@v2.3.0
         with:
           github-token: "${{ secrets.GITHUB_TOKEN }}"
-      - uses: pnpm/action-setup@v4
       - run: >
-          pnpm dlx in-string-list ${{ steps.metadata.outputs.dependency-names }} ${{ env.SAFE_DEPENDENCIES }}
+          npx in-string-list ${{ steps.metadata.outputs.dependency-names }} ${{ env.SAFE_DEPENDENCIES }}
           && echo "isSafe=yes" >> "$GITHUB_ENV"
           || echo "Not marked as safe"
       - run: >
