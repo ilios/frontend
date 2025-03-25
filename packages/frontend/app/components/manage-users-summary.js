@@ -78,6 +78,14 @@ export default class ManageUsersSummaryComponent extends Component {
     }
   }
 
+  get hideResults() {
+    return (
+      this.searchForUsers.isIdle &&
+      (this.searchForUsers.performCount == 0 ||
+        this.searchForUsers.lastSuccessful.value.length == 0)
+    );
+  }
+
   keyActions(keyCode, listArray, container) {
     if (this.isEnterKey(keyCode)) {
       if (this.activeUserId) {
