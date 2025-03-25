@@ -1,5 +1,5 @@
 import CommonDashboardIndexRoute from 'ilios-common/routes/dashboard/index';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 
 export default class DashboardIndexRoute extends CommonDashboardIndexRoute {
   @service session;

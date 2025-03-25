@@ -20,5 +20,6 @@ setupDeprecationWorkflow({
      */
     /* example: */
     /* { handler: 'silence', matchId: 'template-action' }, */
+    { handler: 'silence', matchId: 'importing-inject-from-ember-service' },
   ],
 });
