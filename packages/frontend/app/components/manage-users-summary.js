@@ -52,25 +52,139 @@ export default class ManageUsersSummaryComponent extends Component {
     return users;
   }
 
+  clear() {
+    this.searchValue = null;
+  }
+
   @action
   keyboard(event) {
     event.preventDefault();
 
-    const { keyCode } = event;
+    const { keyCode, target } = event;
+
+    const container = target.parentElement.querySelector('.results');
+    const list = container.getElementsByClassName('user');
+    const listArray = Array.from(list);
 
     if (this.isEscapeKey(keyCode)) {
       this.clear();
     }
 
-    this.searchForUsers.perform();
+    const isValid = this.isEnterKey(keyCode) || listArray.length > 0;
+
+    if (isValid) {
+      this.keyActions(keyCode, listArray, container);
+    }
   }
 
-  clear() {
-    this.searchValue = null;
+  keyActions(keyCode, listArray, container) {
+    if (this.isEnterKey(keyCode)) {
+      console.log('isEnterKey userId', this.getActiveUserId(listArray));
+    } else {
+      // if (this.isEnterKey(keyCode)) {
+      //   const activeUserId = this.getActiveUserId(listArray);
+      //   if (activeUserId) {
+      //     this.clickUser.perform(this.getActiveUserId(listArray));
+      //   } else {
+      //     if (cleanQuery(this.searchValue).length >= MIN_INPUT) {
+      //       this.searchForUsers.perform();
+      //     }
+      //   }
+      // } else {
+      if (this.isVerticalKey(keyCode)) {
+        this.verticalKeyAction(keyCode, listArray, container);
+      } else {
+        if (cleanQuery(this.searchValue).length >= MIN_INPUT) {
+          this.searchForUsers.perform();
+        }
+      }
+    }
+  }
+
+  isVerticalKey(keyCode) {
+    return this.isUpArrow(keyCode) || this.isDownArrow(keyCode);
+  }
+
+  isUpArrow(keyCode) {
+    return keyCode === 38;
+  }
+
+  isDownArrow(keyCode) {
+    return keyCode === 40;
+  }
+
+  isEnterKey(keyCode) {
+    return keyCode === 13;
   }
 
   isEscapeKey(keyCode) {
     return keyCode === 27;
+  }
+
+  verticalKeyAction(keyCode, listArray, container) {
+    if (this.listHasFocus(listArray)) {
+      this.resultListAction(listArray, keyCode);
+    } else {
+      const index = this.isDownArrow(keyCode) ? 0 : listArray.length - 1;
+      const option = container.querySelectorAll('.user')[index];
+      option.classList.add('active');
+      this.scrollToActiveElement(option);
+    }
+  }
+
+  resultListAction(listArray, keyCode) {
+    if (this.hasFocusOnEdge(listArray, this.isDownArrow(keyCode))) {
+      this.removeActiveClass(listArray);
+      if (this.isDownArrow(keyCode)) {
+        listArray[0].classList.add('active');
+        this.scrollToActiveElement(listArray[0]);
+      } else {
+        listArray.slice().reverse()[0].classList.add('active');
+        this.scrollToActiveElement(listArray.slice().reverse()[0]);
+      }
+    } else {
+      this.addClassToNext(listArray, this.isUpArrow(keyCode));
+    }
+  }
+
+  listHasFocus(listArray) {
+    return Boolean(listArray.find((element) => element.classList.contains('active')));
+  }
+
+  hasFocusOnEdge(listArray, shouldReverse) {
+    const list = shouldReverse ? listArray.slice().reverse() : listArray;
+    return list[0].classList.contains('active');
+  }
+
+  removeActiveClass(listArray) {
+    listArray.forEach(({ classList }) => classList.remove('active'));
+  }
+
+  addClassToNext(listArray, shouldReverse) {
+    const list = shouldReverse ? listArray.slice().reverse() : listArray;
+    let shouldAddClass = false;
+    list.forEach((element) => {
+      const { classList } = element;
+
+      if (classList.contains('active')) {
+        shouldAddClass = true;
+        classList.remove('active');
+      } else if (shouldAddClass) {
+        classList.add('active');
+        shouldAddClass = false;
+        this.scrollToActiveElement(element);
+      }
+    });
+  }
+
+  scrollToActiveElement(element) {
+    element.scrollIntoView({ block: 'nearest', behavior: 'instant' });
+  }
+
+  getActiveUserId(listArray) {
+    const activeElement = listArray.find((element) => element.classList.contains('active'));
+
+    return activeElement ? activeElement.querySelector('button').dataset.userid : null;
   }
 
   searchForUsers = restartableTask(async () => {
@@ -126,7 +240,7 @@ export default class ManageUsersSummaryComponent extends Component {
         isManagingSchools: Ember.DEFAULT_VALUE,
       },
     });
-    this.searchValue = null;
+    this.clear();
     await this.searchForUsers.perform();
   });
 }
