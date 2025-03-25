@@ -94,7 +94,7 @@ export default class ManageUsersSummaryComponent extends Component {
       if (this.isVerticalKey(keyCode)) {
         this.verticalKeyAction(keyCode, listArray, container);
       } else {
-        if (cleanQuery(this.searchValue).length >= MIN_INPUT) {
+        if (cleanQuery(this.searchValue).length >= MIN_INPUT && !this.isHorizontalKey(keyCode)) {
           this.searchForUsers.perform();
         }
       }
@@ -103,6 +103,10 @@ export default class ManageUsersSummaryComponent extends Component {
 
   isVerticalKey(keyCode) {
     return this.isUpArrow(keyCode) || this.isDownArrow(keyCode);
+  }
+
+  isHorizontalKey(keyCode) {
+    return keyCode === 37 || keyCode == 39;
   }
 
   isUpArrow(keyCode) {
