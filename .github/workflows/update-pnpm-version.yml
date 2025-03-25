@@ -37,6 +37,7 @@ jobs:
           branch: update-pnpm-version
           labels: dependencies
       - name: Approve Pull Request
+        if: steps.cpr.outputs.pull-request-operation == 'created'
         run: gh pr review --approve -b "Auto Approved" ${{ steps.cpr.outputs.pull-request-number }}
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
