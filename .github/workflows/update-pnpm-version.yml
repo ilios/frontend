@@ -1,7 +1,7 @@
 name: Update pnpm Version
 on:
   schedule:
-    - cron: '0 23 * * 2' # Weekly on Tuesday afternoons (UTC)
+    - cron: "0 23 * * 2" # Weekly on Tuesday afternoons (UTC)
   workflow_dispatch:
 
 jobs:
@@ -36,11 +36,17 @@ jobs:
             [1]: https://github.com/peter-evans/create-pull-request
           branch: update-pnpm-version
           labels: dependencies
-      - name: Enable Pull Request Automerge
-        if: steps.cpr.outputs.pull-request-operation == 'created'
-        run: gh pr merge --merge --auto ${{ steps.cpr.outputs.pull-request-number }}
+      - name: Approve Pull Request
+        run: gh pr review --approve -b "Auto Approved" ${{ steps.cpr.outputs.pull-request-number }}
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Enable Pull Request Automerge and Label for Tests
+        if: steps.cpr.outputs.pull-request-operation == 'created'
+        run: |
+          gh pr edit --add-label "run ui tests" ${{ steps.cpr.outputs.pull-request-number }}
+          gh pr merge --merge --auto ${{ steps.cpr.outputs.pull-request-number }}
+        env:
+          GH_TOKEN: ${{ secrets.ZORGBORT_TOKEN }}
       - uses: act10ns/slack@v2
         if: failure()
         env:
