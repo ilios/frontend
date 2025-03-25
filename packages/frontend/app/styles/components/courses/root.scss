@@ -37,6 +37,7 @@
       }
 
       .actions {
+        min-height: 2rem;
         @include m.main-list-box-header-actions;
       }
     }
