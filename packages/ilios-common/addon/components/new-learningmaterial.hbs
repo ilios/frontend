@@ -10,11 +10,10 @@
           disabled={{this.prepareSave.isRunning}}
           type="text"
           value={{this.title}}
-          {{on "focus-out" (fn this.addErrorDisplayFor "title")}}
           {{on "input" (pick "target.value" (set this "title"))}}
-          {{on "keyup" (fn this.addErrorDisplayFor "title")}}
+          {{this.validations.attach 'title'}}
         />
-        <ValidationError @validatable={{this}} @property="title" />
+        <YupValidationMessage @description={{t 'general.title'}} @validationErrors={{this.validations.errors.title}} data-test-title-validation-error-message />
       </span>
     </div>
     <div class="item">
@@ -55,10 +54,10 @@
           disabled={{this.prepareSave.isRunning}}
           type="text"
           value={{this.originalAuthor}}
-          {{on "focus-out" (fn this.addErrorDisplayFor "originalAuthor")}}
           {{on "input" (pick "target.value" (set this "originalAuthor"))}}
+          {{this.validations.attach 'originalAuthor'}}
         />
-        <ValidationError @validatable={{this}} @property="originalAuthor" />
+        <YupValidationMessage @description={{t 'general.contentAuthor'}} @validationErrors={{this.validations.errors.originalAuthor}} data-test-author-validation-error-message />
       </span>
     </div>
     <div class="item">
@@ -93,10 +92,10 @@
             inputmode="url"
             disabled={{this.prepareSave.isRunning}}
             {{on "input" (pick "target.value" this.changeLink)}}
-            {{on "keyup" (fn this.addErrorDisplayFor "link")}}
             {{on "focus" this.selectAllText}}
+            {{this.validations.attach 'link'}}
           >
-          <ValidationError @validatable={{this}} @property="link" />
+          <YupValidationMessage @validationErrors={{this.validations.errors.link}} />
         </span>
       </div>
     {{/if}}
@@ -109,10 +108,10 @@
           <textarea
             id="citation-{{templateId}}"
             disabled={{this.prepareSave.isRunning}}
-            {{on "focus-out" (fn this.addErrorDisplayFor "citation")}}
             {{on "input" (pick "target.value" (set this "citation"))}}
+            {{this.validations.attach 'citation'}}
           >{{this.citation}}</textarea>
-          <ValidationError @validatable={{this}} @property="citation" />
+          <YupValidationMessage @description={{t 'general.citation'}} @validationErrors={{this.validations.errors.citation}} />
         </span>
       </div>
     {{/if}}
@@ -136,10 +135,11 @@
               type="checkbox"
               checked={{this.copyrightPermission}}
               {{on "click" (set this "copyrightPermission" (not this.copyrightPermission))}}
+              {{on "change" (perform this.validations.runValidator)}}
               data-test-copyright-agreement
             >
             {{t "general.copyrightAgreement"}}
-            {{#if this.hasErrorForCopyrightPermission}}
+            {{#if this.validations.errors.copyrightPermission}}
               <br>
               <span class="validation-error-message" data-test-agreement-validation-error-message>
                 {{t "errors.agreementRequired"}}
@@ -156,11 +156,11 @@
           <span>
             <textarea
               id="copyright-rationale-{{templateId}}"
-              {{on "focus-out" (fn this.addErrorDisplayFor "copyrightRationale")}}
               {{on "input" (pick "target.value" (set this "copyrightRationale"))}}
+              {{this.validations.attach 'copyrightRationale'}}
               data-test-copyright-rationale
             >{{this.copyrightRationale}}</textarea>
-          <ValidationError @validatable={{this}} @property="copyrightRationale" />
+          <YupValidationMessage @description={{t 'general.copyrightRationale'}} @validationErrors={{this.validations.errors.copyrightRationale}} />
           </span>
         </div>
       {{/unless}}
@@ -173,7 +173,7 @@
           @setFilename={{set this "filename"}}
           @setFileHash={{set this "fileHash"}}
         />
-        <ValidationError @validatable={{this}} @property="filename" />
+        <YupValidationMessage @description={{t 'general.file'}} @validationErrors={{this.validations.errors.filename}} />
       </div>
     {{/if}}
     <div class="buttons">
