@@ -135,7 +135,7 @@
     "terser-webpack-plugin": "^5.3.14",
     "testem-failure-only-reporter": "^1.0.0",
     "tracked-built-ins": "^3.4.0",
-    "validator": "^13.12.0",
+    "validator": "^13.15.0",
     "webpack": "^5.97.1",
     "webpack-bundle-analyzer": "^4.10.2",
     "webpack-retry-chunk-load-plugin": "^3.0.0",
