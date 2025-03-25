@@ -1,7 +1,9 @@
 <button
   {{! template-lint-disable no-inline-styles }}
   style={{this.style}}
-  class="weekly-calendar-event day-{{@day}} {{if this.isIlm "ilm"}} {{if this.clickable "clickable"}}"
+  class="weekly-calendar-event day-{{@day}}
+    {{if this.isIlm 'ilm'}}
+    {{if this.clickable 'clickable'}}"
   type="button"
   {{on "click" (if this.clickable @selectEvent (noop))}}
   id={{this.eventButtonId}}
@@ -24,17 +26,9 @@
       />
     {{/if}}
     {{#if (not @event.isPublished)}}
-      <FaIcon
-        @icon="file-signature"
-        @title={{t "general.notPublished"}}
-        data-test-draft-icon
-      />
+      <FaIcon @icon="file-signature" @title={{t "general.notPublished"}} data-test-draft-icon />
     {{else if @event.isScheduled}}
-      <FaIcon
-        @icon="clock"
-        @title={{t "general.scheduled" }}
-        data-test-scheduled-icon
-      />
+      <FaIcon @icon="clock" @title={{t "general.scheduled"}} data-test-scheduled-icon />
     {{/if}}
   </span>
   <span data-test-title>

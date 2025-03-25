@@ -23,10 +23,7 @@
       <tr>
         {{#if @showDirectors}}
           <td data-test-director-search>
-            <LeadershipSearch
-              @existingUsers={{@directors}}
-              @selectUser={{@addDirector}}
-            />
+            <LeadershipSearch @existingUsers={{@directors}} @selectUser={{@addDirector}} />
           </td>
         {{/if}}
         {{#if @showAdministrators}}
@@ -56,11 +53,8 @@
                     class="link-button"
                     type="button"
                     {{on "click" (fn @removeDirector user)}}
-                    >
-                    <FaIcon
-                      @icon="xmark"
-                      class="clickable remove"
-                    />
+                  >
+                    <FaIcon @icon="xmark" class="clickable remove" />
                   </button>
                   {{#unless user.enabled}}
                     <FaIcon
@@ -87,10 +81,7 @@
                     type="button"
                     {{on "click" (fn @removeAdministrator user)}}
                   >
-                    <FaIcon
-                      @icon="xmark"
-                      class="clickable remove"
-                    />
+                    <FaIcon @icon="xmark" class="clickable remove" />
                   </button>
                   {{#unless user.enabled}}
                     <FaIcon
@@ -117,10 +108,7 @@
                     type="button"
                     {{on "click" (fn @removeStudentAdvisor user)}}
                   >
-                    <FaIcon
-                      @icon="xmark"
-                      class="clickable remove"
-                    />
+                    <FaIcon @icon="xmark" class="clickable remove" />
                   </button>
                   {{#unless user.enabled}}
                     <FaIcon

@@ -1,4 +1,4 @@
-<div class="editinplace{{if this.isEditing " is-editing"}}" ...attributes>
+<div class="editinplace{{if this.isEditing ' is-editing'}}" ...attributes>
   <span class="content">
     {{#if this.isEditing}}
       <span
@@ -42,10 +42,7 @@
               data-test-edit
               {{on "click" (fn this.setIsEditing true)}}
             >
-              <FaIcon
-                @icon="pen-to-square"
-                class="enabled"
-              />
+              <FaIcon @icon="pen-to-square" class="enabled" />
             </button>
           {{else}}
             <FadeText
@@ -63,19 +60,12 @@
                 {{on "click" (fn this.setIsEditing true)}}
               >
                 <div class="display-text-wrapper{{if shouldFade ' faded'}}">
-                  <div
-                    class="display-text"
-                    {{on-resize updateTextDims}}
-                  >
+                  <div class="display-text" {{on-resize updateTextDims}}>
                     {{displayText}}
                   </div>
                 </div>
                 {{#if @showIcon}}
-                  <FaIcon
-                    data-test-edit-icon
-                    @icon="pen-to-square"
-                    class="enabled"
-                  />
+                  <FaIcon data-test-edit-icon @icon="pen-to-square" class="enabled" />
                 {{/if}}
               </button>
               {{#if shouldFade}}

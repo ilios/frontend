@@ -19,11 +19,15 @@
   {{else}}
     <Course::BackToCourses />
 
-    <section aria-hidden="true" class="course-loader" {{animate-loading "course" finalOpacity=".75"}}>
+    <section
+      aria-hidden="true"
+      class="course-loader"
+      {{animate-loading "course" finalOpacity=".75"}}
+    >
       <Course::Header @course={{@course}} @editable={{false}} />
       <Course::Overview @course={{@course}} @editable={{false}} />
 
-      <div class="mock-detail-box" >
+      <div class="mock-detail-box">
         <span>
           {{t "general.expandDetail"}}
           <FaIcon @icon="square-plus" class="expand-collapse-icon" />

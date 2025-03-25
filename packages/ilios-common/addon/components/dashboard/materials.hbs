@@ -1,7 +1,4 @@
-<div
-  class="dashboard-materials"
-  data-test-dashboard-materials
->
+<div class="dashboard-materials" data-test-dashboard-materials>
   <h2 class="title" data-test-materials-title>
     {{t "general.myMaterials"}}
   </h2>
@@ -16,26 +13,25 @@
     </div>
     <div class="material-list" data-test-materials-list>
       <span class="course-filter" data-test-course-filter>
-        <select
-          aria-label={{t "general.selectCourse"}}
-          {{on "change" this.changeCourseIdFilter}}
-        >
+        <select aria-label={{t "general.selectCourse"}} {{on "change" this.changeCourseIdFilter}}>
           <option value="">
             {{t "general.allCourses"}}
           </option>
           {{#if this.materialsLoaded}}
             {{#each this.courses as |courseObj|}}
-              <option
-                selected={{is-equal courseObj.id @courseIdFilter}}
-                value={{courseObj.id}}
-              >
+              <option selected={{is-equal courseObj.id @courseIdFilter}} value={{courseObj.id}}>
                 {{#if this.academicYearCrossesCalendarYearBoundaries}}
-                  {{courseObj.year}} - {{add courseObj.year 1}} |
+                  {{courseObj.year}}
+                  -
+                  {{add courseObj.year 1}}
+                  |
                 {{else}}
-                  {{courseObj.year}} |
+                  {{courseObj.year}}
+                  |
                 {{/if}}
                 {{#if courseObj.externalId}}
-                  [{{courseObj.externalId}}] | {{courseObj.title}}
+                  [{{courseObj.externalId}}] |
+                  {{courseObj.title}}
                 {{else}}
                   {{courseObj.title}}
                 {{/if}}
@@ -46,18 +42,25 @@
                 {{#if this.course}}
                   <option selected="selected" disabled>
                     {{#if this.academicYearCrossesCalendarYearBoundaries}}
-                      {{this.course.year}} - {{add this.course.year 1}} |
+                      {{this.course.year}}
+                      -
+                      {{add this.course.year 1}}
+                      |
                     {{else}}
-                      {{this.course.year}} |
+                      {{this.course.year}}
+                      |
                     {{/if}}
                     {{#if this.course.externalId}}
-                      [{{this.course.externalId}}] | {{this.course.title}}
+                      [{{this.course.externalId}}] |
+                      {{this.course.title}}
                     {{else}}
                       {{this.course.title}}
                     {{/if}}
                   </option>
                 {{else}}
-                  <option selected="selected" disabled>&ast;&ast; {{t "general.courseNotFound"}} &ast;&ast;</option>
+                  <option selected="selected" disabled>&ast;&ast;
+                    {{t "general.courseNotFound"}}
+                    &ast;&ast;</option>
                 {{/if}}
               {{/if}}
             {{/unless}}
@@ -72,7 +75,7 @@
           type="text"
           value={{@filter}}
           {{on "input" (perform this.setQuery value="target.value")}}
-        >
+        />
       </span>
       <nav class="paginator" aria-label={{t "general.topPagination"}} data-test-paginator-top>
         <PagedlistControls
@@ -99,10 +102,7 @@
               class="hide-from-small-screen"
               @colspan={{6}}
               @sortedAscending={{this.sortedAscending}}
-              @sortedBy={{or
-              (eq @sortBy "sessionTitle")
-              (eq @sortBy "sessionTitle:desc")
-            }}
+              @sortedBy={{or (eq @sortBy "sessionTitle") (eq @sortBy "sessionTitle:desc")}}
               @onClick={{fn this.sortBy "sessionTitle"}}
             >
               {{t "general.session"}}
@@ -111,10 +111,7 @@
               class="hide-from-small-screen"
               @colspan={{6}}
               @sortedAscending={{this.sortedAscending}}
-              @sortedBy={{or
-              (eq @sortBy "courseTitle")
-              (eq @sortBy "courseTitle:desc")
-            }}
+              @sortedBy={{or (eq @sortBy "courseTitle") (eq @sortBy "courseTitle:desc")}}
               @onClick={{fn this.sortBy "courseTitle"}}
             >
               {{t "general.course"}}
@@ -123,13 +120,12 @@
               class="hide-from-large-screen"
               @colspan={{6}}
               @sortedAscending={{this.sortedAscending}}
-              @sortedBy={{or
-              (eq @sortBy "courseTitle")
-              (eq @sortBy "courseTitle:desc")
-            }}
+              @sortedBy={{or (eq @sortBy "courseTitle") (eq @sortBy "courseTitle:desc")}}
               @onClick={{fn this.sortBy "courseTitle"}}
             >
-              {{t "general.course"}} :: {{t "general.session"}}
+              {{t "general.course"}}
+              ::
+              {{t "general.session"}}
             </SortableTh>
             <th colspan="3" class="hide-from-small-screen">
               {{t "general.instructor"}}
@@ -138,9 +134,9 @@
               @colspan={{4}}
               @sortedAscending={{this.sortedAscending}}
               @sortedBy={{or
-              (eq @sortBy "firstOfferingDate")
-              (eq @sortBy "firstOfferingDate:desc")
-            }}
+                (eq @sortBy "firstOfferingDate")
+                (eq @sortBy "firstOfferingDate:desc")
+              }}
               @sortType="numeric"
               @onClick={{fn this.sortBy "firstOfferingDate"}}
             >

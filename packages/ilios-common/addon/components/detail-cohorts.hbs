@@ -1,7 +1,4 @@
-<section
-  class="detail-cohorts"
-  data-test-detail-cohorts
->
+<section class="detail-cohorts" data-test-detail-cohorts>
   <div class="detail-cohorts-header">
     <div class="title">
       {{#if this.isManaging}}
@@ -9,7 +6,8 @@
           {{t "general.cohortsManageTitle"}}
         </span>
       {{else}}
-        {{t "general.programCohorts"}} ({{@course.cohorts.length}})
+        {{t "general.programCohorts"}}
+        ({{@course.cohorts.length}})
       {{/if}}
     </div>
     <div class="actions">

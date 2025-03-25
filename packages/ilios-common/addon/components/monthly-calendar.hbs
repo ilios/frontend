@@ -33,10 +33,7 @@
               @selectEvent={{fn @changeToDayView event.startDate}}
             />
           {{else}}
-            <IliosCalendarEventMonth
-              @event={{event}}
-              @selectEvent={{fn @selectEvent event}}
-            />
+            <IliosCalendarEventMonth @event={{event}} @selectEvent={{fn @selectEvent event}} />
           {{/if}}
         {{else}}
           <span class="no-events" data-test-no-events>{{t "general.noEvents"}}</span>

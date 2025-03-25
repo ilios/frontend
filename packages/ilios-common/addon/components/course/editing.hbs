@@ -32,14 +32,8 @@
       @expand={{fn @setCourseObjectiveDetails true}}
     />
   {{/if}}
-  <DetailLearningMaterials
-    @subject={{@course}}
-    @isCourse={{true}}
-    @editable={{@editable}}
-  />
-  {{#if
-    (or (eq (get @course.competencies "length") 0) @courseCompetencyDetails)
-  }}
+  <DetailLearningMaterials @subject={{@course}} @isCourse={{true}} @editable={{@editable}} />
+  {{#if (or (eq (get @course.competencies "length") 0) @courseCompetencyDetails)}}
     <DetailCompetencies
       @course={{@course}}
       @editable={{@editable}}
@@ -47,10 +41,7 @@
       @expand={{fn @setCourseCompetencyDetails true}}
     />
   {{else}}
-    <CollapsedCompetencies
-      @subject={{@course}}
-      @expand={{fn @setCourseCompetencyDetails true}}
-    />
+    <CollapsedCompetencies @subject={{@course}} @expand={{fn @setCourseCompetencyDetails true}} />
   {{/if}}
   {{#if (or (eq @course.terms.length 0) @courseTaxonomyDetails)}}
     <DetailTaxonomies
@@ -61,10 +52,7 @@
       @expand={{fn @setCourseTaxonomyDetails true}}
     />
   {{else}}
-    <CollapsedTaxonomies
-      @subject={{@course}}
-      @expand={{fn @setCourseTaxonomyDetails true}}
-    />
+    <CollapsedTaxonomies @subject={{@course}} @expand={{fn @setCourseTaxonomyDetails true}} />
   {{/if}}
   <DetailMesh @subject={{@course}} @isCourse={{true}} @editable={{@editable}} />
   <DetailCohorts @course={{@course}} @editable={{@editable}} />

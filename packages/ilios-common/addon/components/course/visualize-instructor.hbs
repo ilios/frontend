@@ -1,7 +1,4 @@
-<section
-  class="course-visualize-instructor"
-  data-test-course-visualize-instructor
->
+<section class="course-visualize-instructor" data-test-course-visualize-instructor>
   <div class="breadcrumbs" data-test-breadcrumb>
     <span>
       <LinkTo @route="course" @model={{@course}}>
@@ -35,32 +32,34 @@
     <LinkTo @route="course" @model={{@course}}>
       {{@course.title}}
       {{#if this.academicYearCrossesCalendarYearBoundaries}}
-        {{@course.year}} - {{add @course.year 1}}
+        {{@course.year}}
+        -
+        {{add @course.year 1}}
       {{else}}
         {{@course.year}}
       {{/if}}
     </LinkTo>
   </h3>
   <div class="visualizations">
-      <div>
-        <h4>
-          {{t "general.terms"}}
-        </h4>
-        <Course::VisualizeInstructorTermGraph
-          @course={{@course}}
-          @user={{@user}}
-          @showDataTable={{true}}
-        />
-      </div>
-      <div>
-        <h4>
-          {{t "general.sessionTypes"}}
-        </h4>
-        <Course::VisualizeInstructorSessionTypeGraph
-          @course={{@course}}
-          @user={{@user}}
-          @showDataTable={{true}}
-        />
-      </div>
+    <div>
+      <h4>
+        {{t "general.terms"}}
+      </h4>
+      <Course::VisualizeInstructorTermGraph
+        @course={{@course}}
+        @user={{@user}}
+        @showDataTable={{true}}
+      />
+    </div>
+    <div>
+      <h4>
+        {{t "general.sessionTypes"}}
+      </h4>
+      <Course::VisualizeInstructorSessionTypeGraph
+        @course={{@course}}
+        @user={{@user}}
+        @showDataTable={{true}}
+      />
+    </div>
   </div>
 </section>

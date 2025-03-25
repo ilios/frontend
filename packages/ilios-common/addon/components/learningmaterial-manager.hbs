@@ -15,7 +15,7 @@
             {{on "input" (pick "target.value" (set this "title"))}}
           />
           <YupValidationMessage
-            @description={{t 'general.title'}}
+            @description={{t "general.title"}}
             @validationErrors={{this.validations.errors.title}}
             data-test-title-validation-error-message
           />
@@ -30,12 +30,12 @@
           {{t "general.status"}}:
         </label>
         {{#if @editable}}
-          <select
-            id="status-{{templateId}}"
-            {{on "change" this.updateStatusId}}
-          >
+          <select id="status-{{templateId}}" {{on "change" this.updateStatusId}}>
             {{#each @learningMaterialStatuses as |status|}}
-              <option value={{status.id}} selected={{eq status.id this.statusId}}>{{status.title}}</option>
+              <option
+                value={{status.id}}
+                selected={{eq status.id this.statusId}}
+              >{{status.title}}</option>
             {{/each}}
           </select>
         {{else}}
@@ -117,10 +117,7 @@
         </label>
         <span class="description">
           {{#if (and @editable this.isLinkedOnlyOnce)}}
-            <HtmlEditor
-              @content={{this.description}}
-              @update={{set this "description"}}
-            />
+            <HtmlEditor @content={{this.description}} @update={{set this "description"}} />
           {{else}}
             {{! template-lint-disable no-triple-curlies }}
             <span>
@@ -194,7 +191,10 @@
                 {{this.filename}}
               </a>
             {{/if}}
-            <CopyButton @clipboardText={{this.absoluteFileUri}} @success={{perform this.textCopied}}>
+            <CopyButton
+              @clipboardText={{this.absoluteFileUri}}
+              @success={{perform this.textCopied}}
+            >
               <FaIcon @icon="copy" @title={{t "general.copyLink"}} />
             </CopyButton>
           </span>
@@ -219,10 +219,7 @@
               {{t "general.startDate"}}:
             </label>
             {{#if @editable}}
-              <DatePicker
-                @value={{this.startDate}}
-                @onChange={{fn this.updateDate "startDate"}}
-              />
+              <DatePicker @value={{this.startDate}} @onChange={{fn this.updateDate "startDate"}} />
             {{else}}
               {{format-date this.startDate day="2-digit" month="2-digit" year="numeric"}}
             {{/if}}
@@ -232,16 +229,25 @@
               {{t "general.startTime"}}:
             </label>
             {{#if @editable}}
-              <TimePicker
-                @date={{this.startDate}}
-                @action={{fn this.updateTime "startDate"}}
-              />
+              <TimePicker @date={{this.startDate}} @action={{fn this.updateTime "startDate"}} />
             {{else}}
-              {{format-date this.startDate day="2-digit" month="2-digit" year="numeric" hour12=true hour="2-digit" minute="2-digit"}}
+              {{format-date
+                this.startDate
+                day="2-digit"
+                month="2-digit"
+                year="numeric"
+                hour12=true
+                hour="2-digit"
+                minute="2-digit"
+              }}
             {{/if}}
           </div>
           {{#if @editable}}
-            <button class="remove-date" type="button" {{on "click" (fn (set this "startDate") null)}}>
+            <button
+              class="remove-date"
+              type="button"
+              {{on "click" (fn (set this "startDate") null)}}
+            >
               {{t "general.timedReleaseClearStartDate"}}
             </button>
           {{/if}}
@@ -263,10 +269,7 @@
               {{t "general.endDate"}}:
             </label>
             {{#if @editable}}
-              <DatePicker
-                @value={{this.endDate}}
-                @onChange={{fn this.updateDate "endDate"}}
-              />
+              <DatePicker @value={{this.endDate}} @onChange={{fn this.updateDate "endDate"}} />
             {{else}}
               {{format-date this.endDate day="2-digit" month="2-digit" year="numeric"}}
             {{/if}}
@@ -276,16 +279,21 @@
               {{t "general.endTime"}}:
             </label>
             {{#if @editable}}
-              <TimePicker
-                @date={{this.endDate}}
-                @action={{fn this.updateTime "endDate"}}
-              />
+              <TimePicker @date={{this.endDate}} @action={{fn this.updateTime "endDate"}} />
             {{else}}
-              {{format-date this.endDate day="2-digit" month="2-digit" year="numeric" hour12=true hour="2-digit" minute="2-digit"}}
+              {{format-date
+                this.endDate
+                day="2-digit"
+                month="2-digit"
+                year="numeric"
+                hour12=true
+                hour="2-digit"
+                minute="2-digit"
+              }}
             {{/if}}
           </div>
           <YupValidationMessage
-            @description={{t 'general.endDate'}}
+            @description={{t "general.endDate"}}
             @validationErrors={{this.validations.errors.endDate}}
             data-test-end-date-validation-error-message
           />

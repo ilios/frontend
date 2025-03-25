@@ -4,14 +4,8 @@
   </LinkTo>
 </div>
 
-<section
-  class="session-details"
-  data-test-session-details
->
-  <Session::Overview
-    @session={{@session}}
-    @editable={{@editable}}
-  />
+<section class="session-details" data-test-session-details>
+  <Session::Overview @session={{@session}} @editable={{@editable}} />
   {{#if @sessionLeadershipDetails}}
     <LeadershipExpanded
       @model={{@session}}
@@ -37,10 +31,7 @@
       @editable={{@editable}}
       @cohorts={{this.cohorts}}
     />
-    <DetailInstructors
-      @session={{@session}}
-      @editable={{@editable}}
-    />
+    <DetailInstructors @session={{@session}} @editable={{@editable}} />
   {{/if}}
   {{#if (or (eq @session.sessionObjectives.length 0) @sessionObjectiveDetails)}}
     <Session::Objectives
@@ -56,11 +47,7 @@
       @expand={{fn @setSessionObjectiveDetails true}}
     />
   {{/if}}
-  <DetailLearningMaterials
-    @subject={{@session}}
-    @isCourse={{false}}
-    @editable={{@editable}}
-  />
+  <DetailLearningMaterials @subject={{@session}} @isCourse={{false}} @editable={{@editable}} />
   {{#if (or (eq @session.terms.length 0) @sessionTaxonomyDetails)}}
     <DetailTaxonomies
       @subject={{@session}}
@@ -69,10 +56,7 @@
       @expand={{fn @setSessionTaxonomyDetails true}}
     />
   {{else}}
-    <CollapsedTaxonomies
-      @subject={{@session}}
-      @expand={{fn @setSessionTaxonomyDetails true}}
-    />
+    <CollapsedTaxonomies @subject={{@session}} @expand={{fn @setSessionTaxonomyDetails true}} />
   {{/if}}
   <DetailMesh @subject={{@session}} @isSession={{true}} @editable={{@editable}} />
   <SessionOfferings

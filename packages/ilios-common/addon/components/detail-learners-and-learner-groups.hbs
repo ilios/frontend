@@ -1,7 +1,4 @@
-<section
-    class="detail-learners-and-learner-groups"
-    data-test-detail-learners-and-learner-groups
->
+<section class="detail-learners-and-learner-groups" data-test-detail-learners-and-learner-groups>
   <div class="detail-learners-and-learner-groups-header">
     <div class="title" data-test-title>
       {{#if this.isManaging}}
@@ -9,7 +6,11 @@
           {{t "general.manageLearners"}}
         </span>
       {{else}}
-        {{t "general.learnersAndLearnerGroupsWithCount" learnerCount=this.learnerCount learnerGroupCount=this.learnerGroupCount}}
+        {{t
+          "general.learnersAndLearnerGroupsWithCount"
+          learnerCount=this.learnerCount
+          learnerGroupCount=this.learnerGroupCount
+        }}
       {{/if}}
     </div>
     <div class="actions">
@@ -42,10 +43,18 @@
       />
     {{else}}
       {{#if this.learnerGroupCount}}
-        <SelectedLearnerGroups @learnerGroups={{this.ilmLearnerGroups}} @isManaging={{false}} class="display-selected-learner-groups" />
+        <SelectedLearnerGroups
+          @learnerGroups={{this.ilmLearnerGroups}}
+          @isManaging={{false}}
+          class="display-selected-learner-groups"
+        />
       {{/if}}
       {{#if this.learnerCount}}
-        <SelectedLearners @learners={{this.ilmLearners}} @isManaging={{false}} class="display-selected-learners" />
+        <SelectedLearners
+          @learners={{this.ilmLearners}}
+          @isManaging={{false}}
+          class="display-selected-learners"
+        />
       {{/if}}
     {{/if}}
   </div>

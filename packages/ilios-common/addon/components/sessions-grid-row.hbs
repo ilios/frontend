@@ -11,7 +11,7 @@
       </button>
     {{else}}
       <button
-        class="link-button {{if (eq @session.offeringCount 0) "disabled"}}"
+        class="link-button {{if (eq @session.offeringCount 0) 'disabled'}}"
         disabled={{if (eq @session.offeringCount 0) "disabled"}}
         type="button"
         data-test-expand
@@ -47,13 +47,10 @@
         {{#if @session.hasPostrequisite}}
           <strong>
             {{t "general.ilm"}}:
-            <FaIcon @icon="user-clock"/>
+            <FaIcon @icon="user-clock" />
             {{t "general.duePriorTo"}}:
           </strong>
-          <LinkTo
-            @route="session"
-            @models={{array @session.course.id @session.postrequisite.id}}
-          >
+          <LinkTo @route="session" @models={{array @session.course.id @session.postrequisite.id}}>
             {{truncate @session.postrequisite.title 18 true}}
           </LinkTo>
         {{else}}
@@ -65,17 +62,22 @@
         {{/if}}
       {{else if @session.hasPostrequisite}}
         <strong>
-          <FaIcon @icon="user-clock"/>
+          <FaIcon @icon="user-clock" />
           {{t "general.duePriorTo"}}:
         </strong>
-        <LinkTo
-          @route="session"
-          @models={{array @session.course.id @session.postrequisite.id}}
-        >
+        <LinkTo @route="session" @models={{array @session.course.id @session.postrequisite.id}}>
           {{truncate @session.postrequisite.title 18 true}}
         </LinkTo>
       {{else}}
-        {{format-date @session.firstOfferingDate month="2-digit" day="2-digit" year="numeric" hour12=true hour="2-digit" minute="numeric"}}
+        {{format-date
+          @session.firstOfferingDate
+          month="2-digit"
+          day="2-digit"
+          year="numeric"
+          hour12=true
+          hour="2-digit"
+          minute="numeric"
+        }}
       {{/if}}
     {{/if}}
   </span>

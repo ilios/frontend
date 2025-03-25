@@ -1,11 +1,9 @@
-<div
-  class="leadership-expanded"
-  data-test-leadership-expanded
->
+<div class="leadership-expanded" data-test-leadership-expanded>
   <div class="leadership-expanded-header">
     {{#if @isManaging}}
       <h3 class="title" data-test-title>
-        {{t "general.leadership"}} ({{this.count}})
+        {{t "general.leadership"}}
+        ({{this.count}})
       </h3>
     {{else}}
       <button
@@ -15,7 +13,8 @@
         data-test-title
         {{on "click" @collapse}}
       >
-        {{t "general.leadership"}} ({{this.count}})
+        {{t "general.leadership"}}
+        ({{this.count}})
         <FaIcon @icon="caret-down" />
       </button>
     {{/if}}
@@ -38,30 +37,30 @@
     </div>
   </div>
   <div class="leadership-expanded-content">
-      {{#if @isManaging}}
-          <LeadershipManager
-            @directors={{this.directors}}
-            @showDirectors={{this.modelHasDirectors}}
-            @removeDirector={{this.removeDirector}}
-            @addDirector={{this.addDirector}}
-            @administrators={{this.administrators}}
-            @showAdministrators={{this.modelHasAdministrators}}
-            @removeAdministrator={{this.removeAdministrator}}
-            @addAdministrator={{this.addAdministrator}}
-            @studentAdvisors={{this.studentAdvisors}}
-            @showStudentAdvisors={{this.modelHasStudentAdvisors}}
-            @removeStudentAdvisor={{this.removeStudentAdvisor}}
-            @addStudentAdvisor={{this.addStudentAdvisor}}
-          />
-      {{else}}
-        <LeadershipList
-          @directors={{this.directors}}
-          @administrators={{this.administrators}}
-          @studentAdvisors={{this.studentAdvisors}}
-          @showAdministrators={{this.modelHasAdministrators}}
-          @showDirectors={{this.modelHasDirectors}}
-          @showStudentAdvisors={{this.modelHasStudentAdvisors}}
-        />
-      {{/if}}
+    {{#if @isManaging}}
+      <LeadershipManager
+        @directors={{this.directors}}
+        @showDirectors={{this.modelHasDirectors}}
+        @removeDirector={{this.removeDirector}}
+        @addDirector={{this.addDirector}}
+        @administrators={{this.administrators}}
+        @showAdministrators={{this.modelHasAdministrators}}
+        @removeAdministrator={{this.removeAdministrator}}
+        @addAdministrator={{this.addAdministrator}}
+        @studentAdvisors={{this.studentAdvisors}}
+        @showStudentAdvisors={{this.modelHasStudentAdvisors}}
+        @removeStudentAdvisor={{this.removeStudentAdvisor}}
+        @addStudentAdvisor={{this.addStudentAdvisor}}
+      />
+    {{else}}
+      <LeadershipList
+        @directors={{this.directors}}
+        @administrators={{this.administrators}}
+        @studentAdvisors={{this.studentAdvisors}}
+        @showAdministrators={{this.modelHasAdministrators}}
+        @showDirectors={{this.modelHasDirectors}}
+        @showStudentAdvisors={{this.modelHasStudentAdvisors}}
+      />
+    {{/if}}
   </div>
 </div>

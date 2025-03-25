@@ -1,7 +1,4 @@
-<section
-  class="course-overview"
-  data-test-course-overview
->
+<section class="course-overview" data-test-course-overview>
   {{#let (unique-id) as |templateId|}}
     <div class="course-overview-header">
       <div class="title">
@@ -21,19 +18,11 @@
           @query={{hash unpublished=true}}
           class="print"
         >
-          <FaIcon
-            @icon="print"
-            @title={{t "general.printSummary"}}
-            @fixedWidth={{true}}
-          />
+          <FaIcon @icon="print" @title={{t "general.printSummary"}} @fixedWidth={{true}} />
         </LinkTo>
         {{#if this.showRollover}}
           <LinkTo @route="course.rollover" @model={{@course}} class="rollover">
-            <FaIcon
-                @icon="shuffle"
-                @fixedWidth={{true}}
-                @title={{t "general.courseRollover"}}
-            />
+            <FaIcon @icon="shuffle" @fixedWidth={{true}} @title={{t "general.courseRollover"}} />
           </LinkTo>
         {{/if}}
         <LinkTo
@@ -55,7 +44,8 @@
               @save={{perform this.changeExternalId}}
               @close={{this.revertExternalIdChanges}}
               @saveOnEnter={{true}}
-              @closeOnEscape={{true}} as |isSaving|
+              @closeOnEscape={{true}}
+              as |isSaving|
             >
               <input
                 id="external-id-{{templateId}}"
@@ -85,19 +75,13 @@
                 id="clerkship-type-{{templateId}}"
                 {{on "change" this.setCourseClerkshipType}}
               >
-                <option
-                  value="null"
-                  selected={{is-empty this.selectedClerkshipType}}
-                >
+                <option value="null" selected={{is-empty this.selectedClerkshipType}}>
                   {{t "general.notAClerkship"}}
                 </option>
-                {{#each
-                  (sort-by "title" this.clerkshipTypeOptions) as |clerkshipType|
-                }}
+                {{#each (sort-by "title" this.clerkshipTypeOptions) as |clerkshipType|}}
                   <option
                     value={{clerkshipType.id}}
-                    selected={{eq clerkshipType this.selectedClerkshipType
-                    }}
+                    selected={{eq clerkshipType this.selectedClerkshipType}}
                   >
                     {{clerkshipType.title}}
                   </option>
@@ -160,16 +144,9 @@
               @save={{this.changeLevel}}
               @close={{this.revertLevelChanges}}
             >
-              <select
-                id="level-{{templateId}}"
-                {{on "change" this.setLevel}}
-              >
+              <select id="level-{{templateId}}" {{on "change" this.setLevel}}>
                 {{#each this.levelOptions as |levelOption|}}
-                  <option
-                    value={{levelOption}}
-                    selected={{eq levelOption this.level
-                    }}
-                  >
+                  <option value={{levelOption}} selected={{eq levelOption this.level}}>
                     {{levelOption}}
                   </option>
                 {{/each}}

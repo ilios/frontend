@@ -1,12 +1,6 @@
-<div
-  class="session-objective-list"
-  data-test-session-objective-list
->
+<div class="session-objective-list" data-test-session-objective-list>
   {{#if this.isSorting}}
-    <ObjectiveSortManager
-      @subject={{@session}}
-      @close={{set this "isSorting" false}}
-    />
+    <ObjectiveSortManager @subject={{@session}} @close={{set this "isSorting" false}} />
   {{/if}}
 
   {{#if (and this.sessionObjectiveCount (not this.isSorting))}}

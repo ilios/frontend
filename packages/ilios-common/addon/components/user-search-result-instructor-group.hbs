@@ -1,10 +1,6 @@
 {{#if (not (includes @group @currentlyActiveInstructorGroups))}}
   <li class="active" data-test-result>
-    <button
-      class="link-button"
-      type="button"
-      {{on "click" (fn @addInstructorGroup @group)}}
-    >
+    <button class="link-button" type="button" {{on "click" (fn @addInstructorGroup @group)}}>
       {{@group.title}}
     </button>
   </li>

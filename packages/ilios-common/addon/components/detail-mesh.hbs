@@ -7,7 +7,8 @@
             {{t "general.meshManageTitle"}}
           </span>
         {{else}}
-          {{t "general.mesh"}} ({{this.meshDescriptors.length}})
+          {{t "general.mesh"}}
+          ({{this.meshDescriptors.length}})
         {{/if}}
       </div>
       <div class="actions">
@@ -48,7 +49,8 @@
                     ({{t "general.deprecatedAbbreviation"}})
                   </span>
                 {{else if term.trees.length}}
-                  - <MeshDescriptorLastTreeNumber @descriptor={{term}} />
+                  -
+                  <MeshDescriptorLastTreeNumber @descriptor={{term}} />
                 {{/if}}
               </span>
             </li>

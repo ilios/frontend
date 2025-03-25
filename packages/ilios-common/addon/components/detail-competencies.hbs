@@ -7,7 +7,8 @@
       data-test-title
       {{on "click" this.collapse}}
     >
-      {{t "general.competencies"}} ({{this.competencyCount}})
+      {{t "general.competencies"}}
+      ({{this.competencyCount}})
       <FaIcon @icon="caret-down" />
     </button>
     <div class="detail-competencies-content">
@@ -28,7 +29,8 @@
     </div>
   {{else}}
     <div class="title" data-test-title>
-      {{t "general.competencies"}} ({{this.competencyCount}})
+      {{t "general.competencies"}}
+      ({{this.competencyCount}})
     </div>
   {{/if}}
 </section>

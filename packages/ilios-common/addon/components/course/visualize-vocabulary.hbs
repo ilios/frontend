@@ -1,8 +1,4 @@
-<section
-  class="course-visualize-vocabulary"
-  data-test-course-visualize-vocabulary
-  ...attributes
->
+<section class="course-visualize-vocabulary" data-test-course-visualize-vocabulary ...attributes>
   <div class="breadcrumbs" data-test-breadcrumb>
     <span>
       <LinkTo @route="course" @model={{@model.course}}>
@@ -30,7 +26,9 @@
     <LinkTo @route="course" @model={{@model.course}}>
       {{@model.course.title}}
       {{#if this.academicYearCrossesCalendarYearBoundaries}}
-        {{@model.course.year}} - {{add @model.course.year 1}}
+        {{@model.course.year}}
+        -
+        {{add @model.course.year 1}}
       {{else}}
         {{@model.course.year}}
       {{/if}}

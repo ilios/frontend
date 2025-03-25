@@ -2,7 +2,12 @@
   {{#if this.termsData.isResolved}}
     <div data-test-title>
       {{#if @manage}}
-        <button class="link-button" type="button" {{on "click" (fn @manage @vocabulary)}} data-test-manage>
+        <button
+          class="link-button"
+          type="button"
+          {{on "click" (fn @manage @vocabulary)}}
+          data-test-manage
+        >
           <strong>{{@vocabulary.title}}</strong>
         </button>
       {{else}}
@@ -15,14 +20,10 @@
         </span>
       {{/if}}
     </div>
-    <ul class="{{if @canEdit "removable-list"}} selected-taxonomy-terms">
+    <ul class="{{if @canEdit 'removable-list'}} selected-taxonomy-terms">
       {{#each this.terms as |term|}}
         {{#if @canEdit}}
-          <DetailTermsListItem
-            @canEdit={{true}}
-            @remove={{@remove}}
-            @term={{term}}
-          />
+          <DetailTermsListItem @canEdit={{true}} @remove={{@remove}} @term={{term}} />
         {{else}}
           <DetailTermsListItem @canEdit={{false}} @term={{term}} />
         {{/if}}

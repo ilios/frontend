@@ -1,7 +1,4 @@
-<section
-  class="course-visualize-objectives"
-  data-test-course-visualize-objectives
->
+<section class="course-visualize-objectives" data-test-course-visualize-objectives>
   <div class="breadcrumbs" data-test-breadcrumb>
     <span>
       <LinkTo @route="course" @model={{@model}}>
@@ -24,13 +21,15 @@
     <LinkTo @route="course" @model={{@model}}>
       {{@model.title}}
       {{#if this.academicYearCrossesCalendarYearBoundaries}}
-        {{@model.year}} - {{add @model.year 1}}
+        {{@model.year}}
+        -
+        {{add @model.year 1}}
       {{else}}
         {{@model.year}}
       {{/if}}
     </LinkTo>
   </h3>
   <div class="visualizations">
-    <Course::VisualizeObjectivesGraph @course={{@model}} @showDataTable={{true}}/>
+    <Course::VisualizeObjectivesGraph @course={{@model}} @showDataTable={{true}} />
   </div>
 </section>

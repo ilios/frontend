@@ -1,7 +1,4 @@
-<section
-  class="collapsed-taxonomies"
-  data-test-collapsed-taxonomies
->
+<section class="collapsed-taxonomies" data-test-collapsed-taxonomies>
   <div>
     <button
       class="title link-button"
@@ -10,7 +7,8 @@
       data-test-title
       {{on "click" @expand}}
     >
-      {{t "general.terms"}} ({{@subject.terms.length}})
+      {{t "general.terms"}}
+      ({{@subject.terms.length}})
       <FaIcon @icon="caret-right" />
     </button>
   </div>
@@ -40,7 +38,10 @@
                 {{vocab.school.title}}
               </td>
               <td class="text-center">
-                {{get (intersect (has-many-ids @subject "terms") (has-many-ids vocab "terms")) "length"}}
+                {{get
+                  (intersect (has-many-ids @subject "terms") (has-many-ids vocab "terms"))
+                  "length"
+                }}
               </td>
             </tr>
           {{/each}}

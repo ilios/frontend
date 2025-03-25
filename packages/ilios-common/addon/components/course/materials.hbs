@@ -1,10 +1,10 @@
-<div
-  class="course-materials"
-  data-test-course-materials
->
+<div class="course-materials" data-test-course-materials>
   <div class="material-list">
     <h3 class="course-material-title">
-      {{t "general.courseLearningMaterials"}} (<span data-test-course-materials-count>{{this.filteredCourseLearningMaterials.length}}</span>)
+      {{t "general.courseLearningMaterials"}}
+      (<span
+        data-test-course-materials-count
+      >{{this.filteredCourseLearningMaterials.length}}</span>)
     </h3>
     <span class="filter-course-lms">
       <input
@@ -13,7 +13,7 @@
         value={{this.courseQuery}}
         {{on "input" (perform this.setCourseQuery value="target.value")}}
         data-test-course-filter
-      >
+      />
     </span>
     <table data-test-course-table>
       <thead>
@@ -53,11 +53,7 @@
             </td>
           </tr>
         {{else}}
-          {{#each
-            (sort-by
-              @courseSort this.filteredCourseLearningMaterials
-            ) as |learningMaterial|
-          }}
+          {{#each (sort-by @courseSort this.filteredCourseLearningMaterials) as |learningMaterial|}}
             <tr>
               <td colspan="4">
                 {{#if (includes learningMaterial.type this.typesWithUrl)}}
@@ -66,7 +62,7 @@
                   </a>
                 {{else}}
                   {{learningMaterial.title}}
-                  <br>
+                  <br />
                   <small>
                     {{learningMaterial.citation}}
                   </small>
@@ -96,7 +92,10 @@
   </div>
   <div class="material-list">
     <h3 class="session-material-title">
-      {{t "general.sessionLearningMaterials"}} (<span data-test-session-materials-count>{{this.filteredSessionLearningMaterialObjects.length}}</span>)
+      {{t "general.sessionLearningMaterials"}}
+      (<span
+        data-test-session-materials-count
+      >{{this.filteredSessionLearningMaterialObjects.length}}</span>)
     </h3>
     <span class="filter-session-lms">
       <input
@@ -105,7 +104,7 @@
         value={{this.sessionQuery}}
         {{on "input" (perform this.setSessionQuery value="target.value")}}
         data-test-session-filter
-      >
+      />
     </span>
     <table data-test-session-table>
       <thead>
@@ -113,10 +112,7 @@
           <SortableTh
             @colspan={{3}}
             @sortedAscending={{this.slmSortedAscending}}
-            @sortedBy={{or
-              (eq @sessionSort "lm.title")
-              (eq @sessionSort "lm.title:desc")
-            }}
+            @sortedBy={{or (eq @sessionSort "lm.title") (eq @sessionSort "lm.title:desc")}}
             @onClick={{fn this.sessionSortBy "lm.title"}}
           >
             {{t "general.title"}}
@@ -124,8 +120,7 @@
           <SortableTh
             @colspan={{1}}
             @sortedAscending={{this.slmSortedAscending}}
-            @sortedBy={{or (eq @sessionSort "lm.type") (eq @sessionSort "lm.type:desc")
-            }}
+            @sortedBy={{or (eq @sessionSort "lm.type") (eq @sessionSort "lm.type:desc")}}
             @onClick={{fn this.sessionSortBy "lm.type"}}
           >
             {{t "general.type"}}
@@ -174,11 +169,7 @@
             </td>
           </tr>
         {{else}}
-          {{#each
-            (sort-by
-              @sessionSort this.filteredSessionLearningMaterialObjects
-            ) as |lmObject|
-          }}
+          {{#each (sort-by @sessionSort this.filteredSessionLearningMaterialObjects) as |lmObject|}}
             <tr>
               <td colspan="3">
                 {{#if (includes lmObject.lm.type this.typesWithUrl)}}
@@ -187,7 +178,7 @@
                   </a>
                 {{else}}
                   {{lmObject.lm.title}}
-                  <br>
+                  <br />
                   <small>
                     {{lmObject.lm.citation}}
                   </small>
@@ -204,7 +195,12 @@
               </td>
               <td>
                 {{#if lmObject.session.firstOfferingDate}}
-                  {{format-date lmObject.session.firstOfferingDate day="2-digit" month="2-digit" year="numeric"}}
+                  {{format-date
+                    lmObject.session.firstOfferingDate
+                    day="2-digit"
+                    month="2-digit"
+                    year="numeric"
+                  }}
                 {{else}}
                   {{t "general.none"}}
                 {{/if}}

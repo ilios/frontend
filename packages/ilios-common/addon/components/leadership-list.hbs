@@ -28,11 +28,7 @@
                 {{#each (sort-by "fullName" @directors) as |user|}}
                   <li>
                     {{#unless user.enabled}}
-                      <FaIcon
-                        @icon="user-xmark"
-                        @title={{t "general.disabled"}}
-                        class="error"
-                      />
+                      <FaIcon @icon="user-xmark" @title={{t "general.disabled"}} class="error" />
                     {{/unless}}
                     <UserNameInfo @user={{user}} />
                   </li>
@@ -51,15 +47,10 @@
           <td class="text-top" data-test-administrators>
             <ul>
               {{#if (is-array @administrators)}}
-                {{#each (sort-by "fullName" @administrators) as |user|
-                }}
+                {{#each (sort-by "fullName" @administrators) as |user|}}
                   <li>
                     {{#unless user.enabled}}
-                      <FaIcon
-                        @icon="user-xmark"
-                        @title={{t "general.disabled"}}
-                        class="error"
-                      />
+                      <FaIcon @icon="user-xmark" @title={{t "general.disabled"}} class="error" />
                     {{/unless}}
                     <UserNameInfo @user={{user}} />
                   </li>
@@ -78,15 +69,10 @@
           <td class="text-top" data-test-student-advisors>
             <ul>
               {{#if (is-array @studentAdvisors)}}
-                {{#each (sort-by "fullName" @studentAdvisors) as |user|
-                }}
+                {{#each (sort-by "fullName" @studentAdvisors) as |user|}}
                   <li>
                     {{#unless user.enabled}}
-                      <FaIcon
-                        @icon="user-xmark"
-                        @title={{t "general.disabled"}}
-                        class="error"
-                      />
+                      <FaIcon @icon="user-xmark" @title={{t "general.disabled"}} class="error" />
                     {{/unless}}
                     <UserNameInfo @user={{user}} />
                   </li>

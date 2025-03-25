@@ -5,22 +5,21 @@
     checked={{eq @userContext "instructor"}}
     {{on "click" (fn this.toggle "instructor")}}
     data-test-instructing-input
-  >
+  />
   <label
     for={{concat "instructing-toggle-" this.uniqueId}}
     class={{if (or (not @userContext) (eq @userContext "instructor")) "active"}}
-    title={{
-      if (eq @userContext "instructor")
-         (t "general.showAllMyActivities")
-         (t "general.showOnlyMyInstructorActivities")
+    title={{if
+      (eq @userContext "instructor")
+      (t "general.showAllMyActivities")
+      (t "general.showOnlyMyInstructorActivities")
     }}
-    aria-description={{
-      if (eq @userContext "instructor")
-         (t "general.showAllMyActivities")
-         (t "general.showOnlyMyInstructorActivities")
+    aria-description={{if
+      (eq @userContext "instructor")
+      (t "general.showAllMyActivities")
+      (t "general.showOnlyMyInstructorActivities")
     }}
     data-test-instructing-label
-
   >
     {{t "general.instructing"}}
   </label>
@@ -30,19 +29,19 @@
     checked={{eq @userContext "learner"}}
     {{on "click" (fn this.toggle "learner")}}
     data-test-learning-input
-  >
+  />
   <label
     for={{concat "learning-toggle-" this.uniqueId}}
     class={{if (or (not @userContext) (eq @userContext "learner")) "active"}}
-    title={{
-      if (eq @userContext "learner")
-         (t "general.showAllMyActivities")
-         (t "general.showOnlyMyLearnerActivities")
+    title={{if
+      (eq @userContext "learner")
+      (t "general.showAllMyActivities")
+      (t "general.showOnlyMyLearnerActivities")
     }}
-    aria-description={{
-      if (eq @userContext "learner")
-         (t "general.showAllMyActivities")
-         (t "general.showOnlyMyLearnerActivities")
+    aria-description={{if
+      (eq @userContext "learner")
+      (t "general.showAllMyActivities")
+      (t "general.showOnlyMyLearnerActivities")
     }}
     data-test-learning-label
   >
@@ -54,19 +53,19 @@
     checked={{eq @userContext "administrator"}}
     {{on "click" (fn this.toggle "administrator")}}
     data-test-admin-input
-  >
+  />
   <label
     for={{concat "admin-toggle-" this.uniqueId}}
     class={{if (or (not @userContext) (eq @userContext "administrator")) "active"}}
-    title={{
-      if (eq @userContext "administrator")
-         (t "general.showAllMyActivities")
-         (t "general.showOnlyMyAdminActivities")
+    title={{if
+      (eq @userContext "administrator")
+      (t "general.showAllMyActivities")
+      (t "general.showOnlyMyAdminActivities")
     }}
-    aria-description={{
-      if (eq @userContext "administrator")
-       (t "general.showAllMyActivities")
-       (t "general.showOnlyMyAdminActivities")
+    aria-description={{if
+      (eq @userContext "administrator")
+      (t "general.showAllMyActivities")
+      (t "general.showOnlyMyAdminActivities")
     }}
     data-test-admin-label
   >

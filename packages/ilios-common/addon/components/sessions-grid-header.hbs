@@ -1,22 +1,22 @@
-<div class="sessions-grid-header{{if @headerIsLocked " locked"}}" data-test-sessions-grid-header>
-    <span class="expand-collapse-control" data-test-expand-collapse-all>
-      {{#if @showExpandAll}}
-        <button
-          class="link-button"
-          type="button"
-          disabled={{this.expandAll.isRunning}}
-          {{on "click" (perform this.expandAll)}}
-        >
-          {{#if this.expandAll.isRunning}}
-            <LoadingSpinner />
-          {{else if @allSessionsExpanded}}
-            <FaIcon @icon="caret-down" class="clickable" />
-          {{else}}
-            <FaIcon @icon="caret-right" class="clickable" />
-          {{/if}}
-        </button>
-      {{/if}}
-    </span>
+<div class="sessions-grid-header{{if @headerIsLocked ' locked'}}" data-test-sessions-grid-header>
+  <span class="expand-collapse-control" data-test-expand-collapse-all>
+    {{#if @showExpandAll}}
+      <button
+        class="link-button"
+        type="button"
+        disabled={{this.expandAll.isRunning}}
+        {{on "click" (perform this.expandAll)}}
+      >
+        {{#if this.expandAll.isRunning}}
+          <LoadingSpinner />
+        {{else if @allSessionsExpanded}}
+          <FaIcon @icon="caret-down" class="clickable" />
+        {{else}}
+          <FaIcon @icon="caret-right" class="clickable" />
+        {{/if}}
+      </button>
+    {{/if}}
+  </span>
   <SortableHeading
     @onClick={{fn this.setSortBy "title"}}
     @sortedBy={{or (eq @sortBy "title") (eq @sortBy "title:desc")}}
@@ -29,10 +29,7 @@
   </SortableHeading>
   <SortableHeading
     @onClick={{fn this.setSortBy "sessionTypeTitle"}}
-    @sortedBy={{or
-      (eq @sortBy "sessionTypeTitle")
-      (eq @sortBy "sessionTypeTitle:desc")
-    }}
+    @sortedBy={{or (eq @sortBy "sessionTypeTitle") (eq @sortBy "sessionTypeTitle:desc")}}
     @sortedAscending={{this.sortedAscending}}
     @title={{t "general.type"}}
     class="session-grid-type"
@@ -43,10 +40,7 @@
   <SortableHeading
     @sortType="numeric"
     @onClick={{fn this.setSortBy "learnerGroupCount"}}
-    @sortedBy={{or
-      (eq @sortBy "learnerGroupCount")
-      (eq @sortBy "learnerGroupCount:desc")
-    }}
+    @sortedBy={{or (eq @sortBy "learnerGroupCount") (eq @sortBy "learnerGroupCount:desc")}}
     @sortedAscending={{this.sortedAscending}}
     @title={{t "general.groups"}}
     class="session-grid-groups"
@@ -57,8 +51,7 @@
   <SortableHeading
     @sortType="numeric"
     @onClick={{fn this.setSortBy "objectiveCount"}}
-    @sortedBy={{or (eq @sortBy "objectiveCount") (eq @sortBy "objectiveCount:desc")
-    }}
+    @sortedBy={{or (eq @sortBy "objectiveCount") (eq @sortBy "objectiveCount:desc")}}
     @sortedAscending={{this.sortedAscending}}
     @title={{t "general.objectives"}}
     class="session-grid-objectives"
@@ -80,10 +73,7 @@
   <SortableHeading
     @sortType="numeric"
     @onClick={{fn this.setSortBy "firstOfferingDate"}}
-    @sortedBy={{or
-      (eq @sortBy "firstOfferingDate")
-      (eq @sortBy "firstOfferingDate:desc")
-    }}
+    @sortedBy={{or (eq @sortBy "firstOfferingDate") (eq @sortBy "firstOfferingDate:desc")}}
     @sortedAscending={{this.sortedAscending}}
     @title={{t "general.firstOffering"}}
     class="session-grid-first-offering"

@@ -6,7 +6,9 @@
     {{t "general.courses"}}
     {{#if this.expandedYearWithoutTitleView}}
       {{#if this.academicYearCrossesCalendarYearBoundaries}}
-        ({{this.expandedYearWithoutTitleView}} - {{add this.expandedYearWithoutTitleView 1}})
+        ({{this.expandedYearWithoutTitleView}}
+        -
+        {{add this.expandedYearWithoutTitleView 1}})
       {{else}}
         ({{this.expandedYearWithoutTitleView}})
       {{/if}}
@@ -18,7 +20,7 @@
     {{else}}
       {{#each this.courseYears as |year|}}
         <div
-          class="year {{if (includes year.year this.expandedYears) "expanded" "collapsed"}}"
+          class="year {{if (includes year.year this.expandedYears) 'expanded' 'collapsed'}}"
           {{this.scrollToDefaultExpandedYear year.year}}
           {{in-viewport
             onEnter=(fn this.addYearInView year.year)
@@ -42,7 +44,9 @@
               {{on "click" (fn this.toggleYear year.year)}}
             >
               {{year.label}}
-              <FaIcon @icon={{if (includes year.year this.expandedYears) "caret-down" "caret-right"}} />
+              <FaIcon
+                @icon={{if (includes year.year this.expandedYears) "caret-down" "caret-right"}}
+              />
             </button>
           </h6>
           {{#if (includes year.year this.expandedYears)}}

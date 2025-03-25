@@ -9,10 +9,7 @@
       {{on "click" (fn @setManagedMaterial @lm)}}
       data-test-title-manage
     >
-      <LmTypeIcon
-        @type={{@lm.learningMaterial.type}}
-        @mimetype={{@lm.learningMaterial.mimetype}}
-      />
+      <LmTypeIcon @type={{@lm.learningMaterial.type}} @mimetype={{@lm.learningMaterial.mimetype}} />
       <span data-test-title>
         {{@lm.learningMaterial.title}}
       </span>
@@ -38,7 +35,11 @@
         {{t "general.yes"}}
       </span>
       {{#if @lm.publicNotes}}
-        <FaIcon @icon="eye" @title={{t "general.visibleToStudents"}} data-test-visible-to-students />
+        <FaIcon
+          @icon="eye"
+          @title={{t "general.visibleToStudents"}}
+          data-test-visible-to-students
+        />
       {{/if}}
     {{else}}
       <span class="remove" data-test-notes>
@@ -97,7 +98,7 @@
     <td colspan="14">
       <div class="confirm-message">
         {{t "general.confirmRemoval"}}
-        <br>
+        <br />
         <div class="confirm-buttons">
           <button
             class="remove text"

@@ -1,7 +1,4 @@
-<div
-  class="publish-all-sessions"
-  data-test-publish-all-sessions
->
+<div class="publish-all-sessions" data-test-publish-all-sessions>
   <section class="publish-all-sessions-unpublishable" data-test-unpublishable>
     <div>
       <button
@@ -12,7 +9,8 @@
         data-test-title
         {{on "click" (set this "unPublishableCollapsed" (not this.unPublishableCollapsed))}}
       >
-        {{t "general.incompleteSessions"}} ({{this.unPublishableSessions.length}})
+        {{t "general.incompleteSessions"}}
+        ({{this.unPublishableSessions.length}})
         <FaIcon @icon={{if this.unPublishableCollapsed "caret-right" "caret-down"}} />
       </button>
     </div>
@@ -48,7 +46,8 @@
                 </td>
                 {{#if session.offerings.length}}
                   <td class="yes" data-test-offerings>
-                    {{t "general.yes"}} ({{session.offerings.length}})
+                    {{t "general.yes"}}
+                    ({{session.offerings.length}})
                   </td>
                 {{else}}
                   <td class="no" data-test-offerings>
@@ -57,7 +56,8 @@
                 {{/if}}
                 {{#if session.terms.length}}
                   <td class="yes" data-test-terms>
-                    {{t "general.yes"}} ({{session.terms.length}})
+                    {{t "general.yes"}}
+                    ({{session.terms.length}})
                   </td>
                 {{else}}
                   <td class="no" data-test-terms>
@@ -66,7 +66,8 @@
                 {{/if}}
                 {{#if session.sessionObjectives.length}}
                   <td class="yes" data-test-objectives>
-                    {{t "general.yes"}} ({{session.sessionObjectives.length}})
+                    {{t "general.yes"}}
+                    ({{session.sessionObjectives.length}})
                     {{#if session.showUnlinkIcon}}
                       <button
                         class="link-button"
@@ -74,9 +75,7 @@
                         {{on "click" (fn this.transitionToSession session)}}
                         data-test-session-link
                       >
-                        <FaIcon
-                          @icon="link-slash"
-                        />
+                        <FaIcon @icon="link-slash" />
                       </button>
                     {{/if}}
                   </td>
@@ -87,7 +86,8 @@
                 {{/if}}
                 {{#if session.meshDescriptors.length}}
                   <td class="yes" data-test-mesh-descriptors>
-                    {{t "general.yes"}} ({{session.meshDescriptors.length}})
+                    {{t "general.yes"}}
+                    ({{session.meshDescriptors.length}})
                   </td>
                 {{else}}
                   <td class="no" data-test-mesh-descriptors>
@@ -111,7 +111,8 @@
         data-test-title
         {{on "click" (set this "publishableCollapsed" (not this.publishableCollapsed))}}
       >
-        {{t "general.completeSessions"}} ({{this.publishableSessions.length}})
+        {{t "general.completeSessions"}}
+        ({{this.publishableSessions.length}})
         <FaIcon @icon={{if this.publishableCollapsed "caret-right" "caret-down"}} />
       </button>
     </div>
@@ -147,7 +148,8 @@
                 </td>
                 {{#if session.offerings.length}}
                   <td class="yes" data-test-offerings>
-                    {{t "general.yes"}} ({{session.offerings.length}})
+                    {{t "general.yes"}}
+                    ({{session.offerings.length}})
                   </td>
                 {{else}}
                   <td class="no" data-test-offerings>
@@ -156,7 +158,8 @@
                 {{/if}}
                 {{#if session.terms.length}}
                   <td class="yes" data-test-terms>
-                    {{t "general.yes"}} ({{session.terms.length}})
+                    {{t "general.yes"}}
+                    ({{session.terms.length}})
                   </td>
                 {{else}}
                   <td class="no" data-test-terms>
@@ -165,7 +168,8 @@
                 {{/if}}
                 {{#if session.sessionObjectives.length}}
                   <td class="yes" data-test-objectives>
-                    {{t "general.yes"}} ({{session.sessionObjectives.length}})
+                    {{t "general.yes"}}
+                    ({{session.sessionObjectives.length}})
                     {{#if session.showUnlinkIcon}}
                       <button
                         class="link-button"
@@ -173,9 +177,7 @@
                         {{on "click" (fn this.transitionToSession session)}}
                         data-test-session-link
                       >
-                        <FaIcon
-                          @icon="link-slash"
-                        />
+                        <FaIcon @icon="link-slash" />
                       </button>
                     {{/if}}
                   </td>
@@ -186,7 +188,8 @@
                 {{/if}}
                 {{#if session.meshDescriptors.length}}
                   <td class="yes" data-test-mesh-descriptors>
-                    {{t "general.yes"}} ({{session.meshDescriptors.length}})
+                    {{t "general.yes"}}
+                    ({{session.meshDescriptors.length}})
                   </td>
                 {{else}}
                   <td class="no" data-test-mesh-descriptors>
@@ -202,7 +205,8 @@
   </section>
   <section class="publish-all-sessions-overridable" data-test-overridable>
     <div class="title" data-test-title>
-      {{t "general.reviewSessions"}} ({{this.overridableSessions.length}})
+      {{t "general.reviewSessions"}}
+      ({{this.overridableSessions.length}})
     </div>
     <div class="content">
       {{#if this.overridableSessions.length}}
@@ -257,7 +261,7 @@
                           checked={{includes session.id (map-by "id" this.sessionsToPublish)}}
                           {{on "click" (fn this.toggleSession session)}}
                           data-test-publish-as-is
-                        >
+                        />
                         {{t "general.publishAsIs"}}
                       </label>
                     </li>
@@ -268,8 +272,8 @@
                           checked={{includes session.id (map-by "id" this.sessionsToSchedule)}}
                           {{on "click" (fn this.toggleSession session)}}
                           data-test-mark-as-scheduled
-                        >
-                          {{t "general.markAsScheduled"}}
+                        />
+                        {{t "general.markAsScheduled"}}
                       </label>
                     </li>
                   </ul>
@@ -281,7 +285,8 @@
                 </td>
                 {{#if session.offerings.length}}
                   <td class="yes" data-test-offerings>
-                    {{t "general.yes"}} ({{session.offerings.length}})
+                    {{t "general.yes"}}
+                    ({{session.offerings.length}})
                   </td>
                 {{else}}
                   <td class="no" data-test-offerings>
@@ -290,7 +295,8 @@
                 {{/if}}
                 {{#if session.terms.length}}
                   <td class="yes" data-test-terms>
-                    {{t "general.yes"}} ({{session.terms.length}})
+                    {{t "general.yes"}}
+                    ({{session.terms.length}})
                   </td>
                 {{else}}
                   <td class="no" data-test-terms>
@@ -299,7 +305,8 @@
                 {{/if}}
                 {{#if session.sessionOjectives.length}}
                   <td class="yes" data-test-objectives>
-                    {{t "general.yes"}} ({{session.sessionObjectives.length}})
+                    {{t "general.yes"}}
+                    ({{session.sessionObjectives.length}})
                     {{#if session.showUnlinkIcon}}
                       <button
                         class="link-button"
@@ -307,9 +314,7 @@
                         {{on "click" (fn this.transitionToSession session)}}
                         data-test-session-link
                       >
-                        <FaIcon
-                          @icon="link-slash"
-                        />
+                        <FaIcon @icon="link-slash" />
                       </button>
                     {{/if}}
                   </td>
@@ -320,7 +325,8 @@
                 {{/if}}
                 {{#if session.meshDescriptors.length}}
                   <td class="yes" data-test-mesh-descriptors>
-                    {{t "general.yes"}} ({{session.meshDescriptors.length}})
+                    {{t "general.yes"}}
+                    ({{session.meshDescriptors.length}})
                   </td>
                 {{else}}
                   <td class="no" data-test-mesh-descriptors>
@@ -345,9 +351,7 @@
         {{on "click" this.transitionToCourse}}
         data-test-course-link
       >
-        <FaIcon
-          @icon="link-slash"
-        />
+        <FaIcon @icon="link-slash" />
       </button>
       <button
         class="link-button"
@@ -355,9 +359,7 @@
         {{on "click" this.transitionToVisualizeObjectives}}
         data-test-visualize
       >
-        <FaIcon
-          @icon="chart-column"
-        />
+        <FaIcon @icon="chart-column" />
       </button>
     {{/if}}
     <p data-test-confirmation>

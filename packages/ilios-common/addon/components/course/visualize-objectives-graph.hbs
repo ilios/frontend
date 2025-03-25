@@ -1,5 +1,5 @@
 <div
-  class="course-visualize-objectives-graph {{unless @isIcon "not-icon"}}"
+  class="course-visualize-objectives-graph {{unless @isIcon 'not-icon'}}"
   data-test-course-visualize-objectives-graph
   ...attributes
 >
@@ -10,7 +10,8 @@
         @isIcon={{@isIcon}}
         @data={{this.objectiveWithMinutes}}
         @hover={{perform this.donutHover}}
-        @leave={{perform this.donutHover}} as |chart|
+        @leave={{perform this.donutHover}}
+        as |chart|
       >
         {{#if this.tooltipContent}}
           <chart.tooltip @title={{this.tooltipTitle}}>
@@ -38,11 +39,7 @@
           {{t "general.objectivesWithNoHours"}}
         </p>
         <ul>
-          {{#each
-            (sort-by
-              "meta.courseObjective.title" this.objectiveWithoutMinutes
-            ) as |obj|
-          }}
+          {{#each (sort-by "meta.courseObjective.title" this.objectiveWithoutMinutes) as |obj|}}
             {{! template-lint-disable no-triple-curlies}}
             <li>
               {{{obj.meta.courseObjective.title}}}
@@ -54,12 +51,9 @@
     {{#if (and (not @isIcon) this.hasData @showDataTable)}}
       <div class="data-table" data-test-data-table>
         <div class="table-actions" data-test-data-table-actions>
-          <button
-            type="button"
-            {{on "click" (perform this.downloadData)}}
-            data-test-download-data
-          >
-            <FaIcon @icon="download" /> {{t "general.download"}}
+          <button type="button" {{on "click" (perform this.downloadData)}} data-test-download-data>
+            <FaIcon @icon="download" />
+            {{t "general.download"}}
           </button>
         </div>
         <table>
@@ -86,7 +80,10 @@
               <SortableTh
                 @colspan="2"
                 @sortedAscending={{this.sortedAscending}}
-                @sortedBy={{or (eq this.sortBy "competencies") (eq this.sortBy "competencies:desc")}}
+                @sortedBy={{or
+                  (eq this.sortBy "competencies")
+                  (eq this.sortBy "competencies:desc")
+                }}
                 @onClick={{fn this.setSortBy "competencies"}}
                 data-test-competencies
               >
@@ -95,7 +92,10 @@
               <SortableTh
                 @colspan="2"
                 @sortedAscending={{this.sortedAscending}}
-                @sortedBy={{or (eq this.sortBy "sessionTitles") (eq this.sortBy "sessionTitles:desc")}}
+                @sortedBy={{or
+                  (eq this.sortBy "sessionTitles")
+                  (eq this.sortBy "sessionTitles:desc")
+                }}
                 @onClick={{fn this.setSortBy "sessionTitles"}}
                 data-test-sessions
               >

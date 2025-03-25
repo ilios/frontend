@@ -7,12 +7,20 @@
         </LinkTo>
       </li>
       <li>
-        <LinkTo @route="dashboard.calendar" @query={{hash date=this.todayDate}} data-test-go-to-today>
+        <LinkTo
+          @route="dashboard.calendar"
+          @query={{hash date=this.todayDate}}
+          data-test-go-to-today
+        >
           {{t "general.today"}}
         </LinkTo>
       </li>
       <li>
-        <LinkTo @route="dashboard.calendar" @query={{hash date=this.forwardDate}} data-test-go-forward>
+        <LinkTo
+          @route="dashboard.calendar"
+          @query={{hash date=this.forwardDate}}
+          data-test-go-forward
+        >
           <FaIcon @title={{t "general.forward"}} @icon="forward" />
         </LinkTo>
       </li>
@@ -23,7 +31,9 @@
           {{#if (eq @selectedView viewType)}}
             {{t (concat "general." viewType)}}
           {{else}}
-            <LinkTo @route="dashboard.calendar" @query={{hash view=viewType}}>{{t (concat "general." viewType)}}</LinkTo>
+            <LinkTo @route="dashboard.calendar" @query={{hash view=viewType}}>{{t
+                (concat "general." viewType)
+              }}</LinkTo>
           {{/if}}
         </li>
       {{/each}}

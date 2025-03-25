@@ -18,15 +18,9 @@
             <label for="year-{{templateId}}">
               {{t "general.year"}}:
             </label>
-            <select
-              id="year-{{templateId}}"
-              {{on "change" this.changeSelectedYear}}
-            >
+            <select id="year-{{templateId}}" {{on "change" this.changeSelectedYear}}>
               {{#each this.years as |year|}}
-                <option
-                  value={{year}}
-                  selected={{is-equal year this.bestSelectedYear}}
-                >
+                <option value={{year}} selected={{is-equal year this.bestSelectedYear}}>
                   {{year}}
                   -
                   {{add year 1}}
@@ -39,17 +33,11 @@
               {{t "general.targetCourse"}}:
             </label>
             {{#if (get this.courses "length")}}
-              <select
-                id="course-{{templateId}}"
-                {{on "change" this.changeSelectedCourseId}}
-              >
+              <select id="course-{{templateId}}" {{on "change" this.changeSelectedCourseId}}>
                 {{#each (sort-by "title" this.courses) as |course|}}
                   <option
                     value={{course.id}}
-                    selected={{is-equal
-                      course.id
-                      this.bestSelectedCourse.id
-                    }}
+                    selected={{is-equal course.id this.bestSelectedCourse.id}}
                   >
                     {{course.title}}
                   </option>
@@ -64,11 +52,7 @@
               class="done text"
               type="button"
               disabled={{if
-                (or
-                  this.save.isRunning
-                  (not this.bestSelectedYear)
-                  (not this.bestSelectedCourse)
-                )
+                (or this.save.isRunning (not this.bestSelectedYear) (not this.bestSelectedCourse))
                 true
               }}
               {{on "click" (perform this.save)}}
