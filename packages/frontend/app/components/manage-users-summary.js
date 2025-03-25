@@ -80,7 +80,11 @@ export default class ManageUsersSummaryComponent extends Component {
 
   keyActions(keyCode, listArray, container) {
     if (this.isEnterKey(keyCode)) {
-      this.clickUser.perform({ id: this.activeUserId });
+      if (this.activeUserId) {
+        this.clickUser.perform({ id: this.activeUserId });
+      } else {
+        this.searchForUsers.perform();
+      }
     }
 
     if (this.isVerticalKey(keyCode)) {
