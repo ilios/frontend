@@ -20,12 +20,12 @@ const definition = {
   resultsRow1HasActiveClass: hasClass('active', '[data-test-autocomplete-row]:nth-of-type(1)'),
   resultsRow2HasActiveClass: hasClass('active', '[data-test-autocomplete-row]:nth-of-type(2)'),
   resultsRow3HasActiveClass: hasClass('active', '[data-test-autocomplete-row]:nth-of-type(3)'),
-  keyUp: {
+  keyDown: {
     scope: '[data-test-input]',
-    enter: triggerable('keyup', '', { eventProperties: { key: 'Enter' } }),
-    down: triggerable('keyup', '', { eventProperties: { key: 'ArrowDown' } }),
-    up: triggerable('keyup', '', { eventProperties: { key: 'ArrowUp' } }),
-    escape: triggerable('keyup', '', { eventProperties: { key: 'Escape' } }),
+    enter: triggerable('keydown', '', { eventProperties: { key: 'Enter' } }),
+    down: triggerable('keydown', '', { eventProperties: { key: 'ArrowDown' } }),
+    up: triggerable('keydown', '', { eventProperties: { key: 'ArrowUp' } }),
+    escape: triggerable('keydown', '', { eventProperties: { key: 'Escape' } }),
   },
 };
 
