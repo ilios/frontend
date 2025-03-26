@@ -25,7 +25,8 @@
       padding: 0.6rem;
       padding-left: 1rem;
 
-      &.active:hover {
+      &.active,
+      &:hover {
         background-color: color.adjust(c.$blueMunsell, $lightness: 50%);
         cursor: pointer;
       }
