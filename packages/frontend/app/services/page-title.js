@@ -10,11 +10,6 @@ export default class HeaderTitleService extends EmberPageTitleService {
   @tracked title = '';
 
   titleDidUpdate(title) {
-    // exception to avoid double-titling in reports
-    if (title == 'Ilios Curriculum Reports Subject Reports') {
-      this.title = 'Ilios Curriculum Reports';
-    } else {
-      this.title = title;
-    }
+    this.title = title;
   }
 }
