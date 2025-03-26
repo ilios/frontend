@@ -14,7 +14,10 @@
         (perform this.autocomplete)
       )
     }}
-    {{on "keyup" this.keyboard}}
+    {{on-key "Escape" this.onEscapeKey}}
+    {{on-key "Enter" this.onEnterKey}}
+    {{on-key "ArrowUp" this.onArrowKey}}
+    {{on-key "ArrowDown" this.onArrowKey}}
   />
   <button
     aria-label={{t "general.search"}}
