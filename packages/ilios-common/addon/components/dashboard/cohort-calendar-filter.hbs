@@ -1,4 +1,3 @@
-
 <div
   class="calendar-filter-list large-filter-list dashboard-cohort-calendar-filter"
   data-test-cohort-calendar-filter
@@ -13,7 +12,8 @@
           @remove={{fn @remove obj.id}}
           @targetId={{obj.id}}
         >
-          {{obj.displayTitle}} {{obj.programTitle}}
+          {{obj.displayTitle}}
+          {{obj.programTitle}}
         </Dashboard::FilterCheckbox>
       </li>
     {{else}}

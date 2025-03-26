@@ -33,7 +33,7 @@
         </div>
       </div>
     </div>
-    <div class="mock-detail-box" >
+    <div class="mock-detail-box">
       <span>
         {{t "general.expandDetail"}}
         <FaIcon @icon="square-plus" class="expand-collapse-icon" />
@@ -41,17 +41,21 @@
     </div>
   </div>
 
-  <section class="course-sessions course-sessions-loading" {{animate-loading "course-sessions" finalOpacity=".5"}}>
+  <section
+    class="course-sessions course-sessions-loading"
+    {{animate-loading "course-sessions" finalOpacity=".5"}}
+  >
     <div class="course-sessions-header">
-      {{!-- template-lint-disable no-bare-strings --}}
+      {{! template-lint-disable no-bare-strings }}
       <div class="title">
-        {{t "general.sessions"}} (xx)
+        {{t "general.sessions"}}
+        (xx)
       </div>
       <div class="actions"></div>
     </div>
     <div class="filter">
-      {{!-- template-lint-disable require-input-label --}}
-      <input disabled>
+      {{! template-lint-disable require-input-label }}
+      <input disabled />
     </div>
     <section>
       <div class="sessions-grid-header"></div>

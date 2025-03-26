@@ -1,7 +1,4 @@
-<section
-  class="detail-taxonomies taxonomy-manager"
-  data-test-detail-taxonomies
->
+<section class="detail-taxonomies taxonomy-manager" data-test-detail-taxonomies>
   <div class="detail-taxonomies-header">
     {{#if this.isManaging}}
       <h3 class="title" data-test-title>
@@ -18,12 +15,14 @@
           {{on "click" this.collapse}}
           data-test-title
         >
-          {{t "general.terms"}} ({{@subject.terms.length}})
-            <FaIcon @icon="caret-down" />
+          {{t "general.terms"}}
+          ({{@subject.terms.length}})
+          <FaIcon @icon="caret-down" />
         </button>
       {{else}}
         <h3 class="title" data-test-title>
-          {{t "general.terms"}} ({{@subject.terms.length}})
+          {{t "general.terms"}}
+          ({{@subject.terms.length}})
         </h3>
       {{/if}}
     {{/if}}
@@ -61,11 +60,7 @@
     {{else}}
       {{#each @subject.associatedVocabularies as |vocab|}}
         {{#if vocab.termCount}}
-          <DetailTermsList
-            @vocabulary={{vocab}}
-            @terms={{this.terms}}
-            @canEdit={{false}}
-          />
+          <DetailTermsList @vocabulary={{vocab}} @terms={{this.terms}} @canEdit={{false}} />
         {{/if}}
       {{/each}}
     {{/if}}

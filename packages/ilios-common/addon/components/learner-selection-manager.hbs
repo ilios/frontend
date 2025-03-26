@@ -1,9 +1,5 @@
 <div class="learner-selection-manager" data-test-learner-selection-manager>
-  <SelectedLearners
-    @learners={{@learners}}
-    @isManaging={{true}}
-    @remove={{@remove}}
-  />
+  <SelectedLearners @learners={{@learners}} @isManaging={{true}} @remove={{@remove}} />
   <div class="available-learners" data-test-available-learners>
     <label>
       {{t "general.availableLearners"}}:

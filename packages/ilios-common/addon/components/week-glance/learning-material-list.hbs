@@ -8,7 +8,7 @@
             {{event.name}}
           </LinkTo>
           <ul>
-            {{#each event.learningMaterials as |lm index| }}
+            {{#each event.learningMaterials as |lm index|}}
               <WeekGlance::LearningMaterialListItem
                 @event={{@event}}
                 @lm={{lm}}

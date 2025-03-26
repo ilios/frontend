@@ -9,22 +9,13 @@
       </span>
       {{@lm.title}}
       <span class="timed-release-info">
-        <TimedReleaseSchedule
-          @endDate={{@lm.endDate}}
-          @startDate={{@lm.startDate}}
-        />
+        <TimedReleaseSchedule @endDate={{@lm.endDate}} @startDate={{@lm.startDate}} />
       </span>
     {{else}}
-      <LmTypeIcon
-        @mimetype={{@lm.mimetype}}
-        @type={{lm-type @lm}}
-      />
+      <LmTypeIcon @mimetype={{@lm.mimetype}} @type={{lm-type @lm}} />
       {{#if @lm.absoluteFileUri}}
         {{#if (eq @lm.mimetype "application/pdf")}}
-          <a
-            href="{{@lm.absoluteFileUri}}?inline"
-            data-test-pdf-link
-          >
+          <a href="{{@lm.absoluteFileUri}}?inline" data-test-pdf-link>
             {{@lm.title}}
           </a>
           <a
@@ -51,17 +42,12 @@
           </a>
         {{/if}}
       {{else if @lm.link}}
-        <a
-          href={{@lm.link}}
-          rel="noopener noreferrer"
-          target="_blank"
-          data-test-link
-        >
+        <a href={{@lm.link}} rel="noopener noreferrer" target="_blank" data-test-link>
           {{@lm.title}}
         </a>
       {{else}}
         {{@lm.title}}
-        <br>
+        <br />
         <small>
           {{@lm.citation}}
         </small>
@@ -78,17 +64,13 @@
     {{#if (is-empty @lm.sessionTitle)}}
       {{@lm.courseTitle}}
     {{else}}
-      {{@lm.courseTitle}} :: {{@lm.sessionTitle}}
+      {{@lm.courseTitle}}
+      ::
+      {{@lm.sessionTitle}}
     {{/if}}
   </td>
   <td class="hide-from-small-screen" colspan="3" data-test-instructors>
-    <TruncateText
-      @length={{25}}
-      @text={{join
-      ", "
-      (sort-by this.sortString @lm.instructors)
-    }}
-    />
+    <TruncateText @length={{25}} @text={{join ", " (sort-by this.sortString @lm.instructors)}} />
   </td>
   <td colspan="4" data-test-date>
     {{#if @lm.firstOfferingDate}}

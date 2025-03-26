@@ -21,10 +21,7 @@
             {{on "click" (perform this.addLearningMaterial learningMaterial)}}
           >
             <div class="learning-material-title">
-              <LmTypeIcon
-                @type={{learningMaterial.type}}
-                @mimetype={{learningMaterial.mimetype}}
-              />
+              <LmTypeIcon @type={{learningMaterial.type}} @mimetype={{learningMaterial.mimetype}} />
               <span data-test-title>
                 {{learningMaterial.title}}
               </span>
@@ -34,9 +31,9 @@
               {{{learningMaterial.description}}}
             </span>
             {{#if learningMaterial.status.title}}
-            <span class="learning-material-status">
-              {{learningMaterial.status.title}}
-            </span>
+              <span class="learning-material-status">
+                {{learningMaterial.status.title}}
+              </span>
             {{/if}}
             <ul class="learning-material-properties">
               <li>
@@ -44,14 +41,19 @@
                 {{learningMaterial.owningUser.fullName}}
               </li>
               {{#if learningMaterial.originalAuthor}}
-              <li>
-                {{t "general.contentAuthor"}}:
-                {{learningMaterial.originalAuthor}}
-              </li>
+                <li>
+                  {{t "general.contentAuthor"}}:
+                  {{learningMaterial.originalAuthor}}
+                </li>
               {{/if}}
               <li>
                 {{t "general.uploadDate"}}:
-                {{format-date learningMaterial.uploadDate day="2-digit" month="2-digit" year="numeric"}}
+                {{format-date
+                  learningMaterial.uploadDate
+                  day="2-digit"
+                  month="2-digit"
+                  year="numeric"
+                }}
               </li>
             </ul>
           </button>

@@ -1,9 +1,12 @@
-
 <div class="session-ilm block" data-test-session-ilm>
   <label>{{t "general.independentLearning"}}:</label>
   <span class="ilm-value" data-test-ilm-value>
     {{#if @editable}}
-      <ToggleYesno @yes={{this.isIndependentLearning}} @toggle={{perform this.saveIndependentLearning}} data-test-ilm-toggle />
+      <ToggleYesno
+        @yes={{this.isIndependentLearning}}
+        @toggle={{perform this.saveIndependentLearning}}
+        data-test-ilm-toggle
+      />
     {{else}}
       {{#if this.isIndependentLearning}}
         <span class="add">{{t "general.yes"}}</span>
@@ -19,11 +22,12 @@
     <span>
       {{#if @editable}}
         <EditableField
-            @value={{this.hours}}
-            @save={{perform this.changeIlmHours}}
-            @close={{this.resetHours}}
-            @saveOnEnter={{true}}
-            @closeOnEscape={{true}} as |isSaving|
+          @value={{this.hours}}
+          @save={{perform this.changeIlmHours}}
+          @close={{this.resetHours}}
+          @saveOnEnter={{true}}
+          @closeOnEscape={{true}}
+          as |isSaving|
         >
           <input
             id="hours-{{this.uniqueId}}"
@@ -32,9 +36,9 @@
             value={{this.hours}}
             {{this.validations.attach "hours"}}
             {{on "input" (pick "target.value" (set this "localHours"))}}
-          >
+          />
           <YupValidationMessage
-            @description={{t 'general.hours'}}
+            @description={{t "general.hours"}}
             @validationErrors={{this.validations.errors.hours}}
           />
         </EditableField>

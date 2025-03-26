@@ -18,7 +18,7 @@
           {{@session.sessionType.title}}
         </div>
       </div>
-      <br>
+      <br />
       <div class="inline-label-data-block">
         <label for="supplemental-curriculum-{{@templateId}}">
           {{t "general.supplementalCurriculum"}}:
@@ -29,7 +29,7 @@
             type="checkbox"
             checked={{@session.supplemental}}
             disabled="disabled"
-          >
+          />
         </div>
       </div>
       <div class="inline-label-data-block">
@@ -41,7 +41,8 @@
             id="special-attire-{{@templateId}}"
             type="checkbox"
             checked={{@session.attireRequired}}
-            disabled="disabled">
+            disabled="disabled"
+          />
         </div>
       </div>
       <div class="inline-label-data-block">
@@ -54,7 +55,7 @@
             type="checkbox"
             checked={{@session.equipmentRequired}}
             disabled="disabled"
-          >
+          />
         </div>
       </div>
       <div class="inline-label-data-block">
@@ -67,10 +68,10 @@
             type="checkbox"
             checked={{@session.attendanceRequired}}
             disabled="disabled"
-          >
+          />
         </div>
       </div>
-      <br>
+      <br />
       <div class="inline-label-data-block">
         <label>
           {{t "general.description"}}:
@@ -83,73 +84,72 @@
   </section>
   <section class="block" data-test-session-objectives>
     <div class="title">
-      {{t "general.objectives"}} ({{this.sessionObjectives.length}})
+      {{t "general.objectives"}}
+      ({{this.sessionObjectives.length}})
     </div>
     {{#if this.sessionObjectives.length}}
       <div class="content">
-        <Session::ObjectiveList
-          @session={{@session}}
-          @editable={{false}}
-        />
+        <Session::ObjectiveList @session={{@session}} @editable={{false}} />
       </div>
     {{/if}}
   </section>
   <section class="block" data-test-session-learning-materials>
     <div class="title">
-      {{t "general.learningMaterials"}} ({{this.learningMaterials.length}})
+      {{t "general.learningMaterials"}}
+      ({{this.learningMaterials.length}})
     </div>
     <div class="content">
       {{#if this.learningMaterials.length}}
         <table>
           <thead>
-          <tr>
-            <th class="text-left" colspan="2">
-              {{t "general.displayName"}}
-            </th>
-            <th class="text-center">
-              {{t "general.type"}}
-            </th>
-            <th class="text-center">
-              {{t "general.required"}}
-            </th>
-            <th class="text-left">
-              {{t "general.notes"}}
-            </th>
-            <th class="text-left" colspan="4">
-              {{t "general.description"}}
-            </th>
-          </tr>
+            <tr>
+              <th class="text-left" colspan="2">
+                {{t "general.displayName"}}
+              </th>
+              <th class="text-center">
+                {{t "general.type"}}
+              </th>
+              <th class="text-center">
+                {{t "general.required"}}
+              </th>
+              <th class="text-left">
+                {{t "general.notes"}}
+              </th>
+              <th class="text-left" colspan="4">
+                {{t "general.description"}}
+              </th>
+            </tr>
           </thead>
           <tbody>
-          {{#each this.learningMaterials as |lm|}}
-            <tr>
-              <td class="text-left text-top" colspan="2">
-                {{lm.learningMaterial.title}}
-              </td>
-              <td class="text-center text-top">
-                {{lm.learningMaterial.type}}
-              </td>
-              <td class="text-center text-top">
-                {{#if lm.required}}
-                  <span class="add">
-                    {{t "general.yes"}}
-                  </span>
-                {{else}}
-                  <span class="remove">
-                    {{t "general.no"}}
-                  </span>
-                {{/if}}
-              </td>
-              <td class="text-left text-top">
-                {{lm.learningMaterial.notes}}
-              </td>
-              <td class="text-left text-top" colspan="4">
-                {{remove-html-tags lm.learningMaterial.description}}
-                <p></p>
-                {{lm.learningMaterial.citation}}
-              </td>
-            </tr>
-          {{/each}}
+            {{#each this.learningMaterials as |lm|}}
+              <tr>
+                <td class="text-left text-top" colspan="2">
+                  {{lm.learningMaterial.title}}
+                </td>
+                <td class="text-center text-top">
+                  {{lm.learningMaterial.type}}
+                </td>
+                <td class="text-center text-top">
+                  {{#if lm.required}}
+                    <span class="add">
+                      {{t "general.yes"}}
+                    </span>
+                  {{else}}
+                    <span class="remove">
+                      {{t "general.no"}}
+                    </span>
+                  {{/if}}
+                </td>
+                <td class="text-left text-top">
+                  {{lm.learningMaterial.notes}}
+                </td>
+                <td class="text-left text-top" colspan="4">
+                  {{remove-html-tags lm.learningMaterial.description}}
+                  <p></p>
+                  {{lm.learningMaterial.citation}}
+                </td>
+              </tr>
+            {{/each}}
           </tbody>
         </table>
       {{/if}}
@@ -157,23 +157,21 @@
   </section>
   <section class="block" data-test-session-terms>
     <div class="title">
-      {{t "general.terms"}} ({{this.terms.length}})
+      {{t "general.terms"}}
+      ({{this.terms.length}})
     </div>
     <div class="content">
       <div class="content">
         {{#each @session.associatedVocabularies as |vocab|}}
-          <DetailTermsList
-            @vocabulary={{vocab}}
-            @terms={{this.terms}}
-            @canEdit={{false}}
-          />
+          <DetailTermsList @vocabulary={{vocab}} @terms={{this.terms}} @canEdit={{false}} />
         {{/each}}
       </div>
     </div>
   </section>
   <section class="block">
     <div class="title">
-      {{t "general.mesh"}} ({{this.meshDescriptors.length}})
+      {{t "general.mesh"}}
+      ({{this.meshDescriptors.length}})
     </div>
     <div class="content">
       <ul class="inline-list">
@@ -193,24 +191,29 @@
       <div class="content">
         <table>
           <thead>
-          <tr>
-            <th>
-              {{t "general.hours"}}
-            </th>
-            <th>
-              {{t "general.dueBy"}}
-            </th>
-          </tr>
+            <tr>
+              <th>
+                {{t "general.hours"}}
+              </th>
+              <th>
+                {{t "general.dueBy"}}
+              </th>
+            </tr>
           </thead>
           <tbody>
-          <tr>
-            <td>
-              {{@session.ilmSession.hours}}
-            </td>
-            <td>
-              {{format-date @session.ilmSession.dueDate month="2-digit" day="2-digit" year="numeric"}}
-            </td>
-          </tr>
+            <tr>
+              <td>
+                {{@session.ilmSession.hours}}
+              </td>
+              <td>
+                {{format-date
+                  @session.ilmSession.dueDate
+                  month="2-digit"
+                  day="2-digit"
+                  year="numeric"
+                }}
+              </td>
+            </tr>
           </tbody>
         </table>
       </div>
@@ -218,46 +221,63 @@
   {{/if}}
   <section class="block">
     <div class="title">
-      {{t "general.offerings"}} ({{this.offerings.length}})
+      {{t "general.offerings"}}
+      ({{this.offerings.length}})
     </div>
     <div class="content">
       {{#if this.offerings.length}}
         <table>
           <thead>
-          <tr>
-            <th class="text-left">
-              {{t "general.time"}}
-            </th>
-            <th class="text-left">
-              {{t "general.location"}}
-            </th>
-            <th class="text-left">
-              {{t "general.instructors"}}
-            </th>
-          </tr>
+            <tr>
+              <th class="text-left">
+                {{t "general.time"}}
+              </th>
+              <th class="text-left">
+                {{t "general.location"}}
+              </th>
+              <th class="text-left">
+                {{t "general.instructors"}}
+              </th>
+            </tr>
           </thead>
           <tbody>
-          {{#each this.offerings as |offering|}}
-            <tr>
-              <td class="text-left">
-                {{format-date offering.startDate month="2-digit" day="2-digit" year="numeric" hour12=true hour="2-digit" minute="2-digit"}}
-                -
-                {{format-date offering.endDate month="2-digit" day="2-digit" year="numeric" hour12=true hour="2-digit" minute="2-digit"}}
-              </td>
-              <td class="text-left">
-                {{offering.room}}
-              </td>
-              <td class="text-left offering-instructors">
-                <ul>
-                  {{#each offering.allInstructors as |user|}}
-                    <li>
-                      {{user.fullName}}
-                    </li>
-                  {{/each}}
-                </ul>
-              </td>
-            </tr>
-          {{/each}}
+            {{#each this.offerings as |offering|}}
+              <tr>
+                <td class="text-left">
+                  {{format-date
+                    offering.startDate
+                    month="2-digit"
+                    day="2-digit"
+                    year="numeric"
+                    hour12=true
+                    hour="2-digit"
+                    minute="2-digit"
+                  }}
+                  -
+                  {{format-date
+                    offering.endDate
+                    month="2-digit"
+                    day="2-digit"
+                    year="numeric"
+                    hour12=true
+                    hour="2-digit"
+                    minute="2-digit"
+                  }}
+                </td>
+                <td class="text-left">
+                  {{offering.room}}
+                </td>
+                <td class="text-left offering-instructors">
+                  <ul>
+                    {{#each offering.allInstructors as |user|}}
+                      <li>
+                        {{user.fullName}}
+                      </li>
+                    {{/each}}
+                  </ul>
+                </td>
+              </tr>
+            {{/each}}
           </tbody>
         </table>
       {{else}}
@@ -268,5 +288,3 @@
     </div>
   </section>
 </div>
-
-

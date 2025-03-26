@@ -11,9 +11,13 @@
           type="text"
           value={{this.title}}
           {{on "input" (pick "target.value" (set this "title"))}}
-          {{this.validations.attach 'title'}}
+          {{this.validations.attach "title"}}
         />
-        <YupValidationMessage @description={{t 'general.title'}} @validationErrors={{this.validations.errors.title}} data-test-title-validation-error-message />
+        <YupValidationMessage
+          @description={{t "general.title"}}
+          @validationErrors={{this.validations.errors.title}}
+          data-test-title-validation-error-message
+        />
       </span>
     </div>
     <div class="item">
@@ -21,15 +25,9 @@
         {{t "general.status"}}:
       </label>
       <span>
-        <select
-          id="status-{{templateId}}"
-          {{on "change" this.changeStatusId}}
-        >
+        <select id="status-{{templateId}}" {{on "change" this.changeStatusId}}>
           {{#each @learningMaterialStatuses as |lmStatus|}}
-            <option
-              value={{lmStatus.id}}
-              selected={{is-equal lmStatus this.selectedStatus}}
-            >
+            <option value={{lmStatus.id}} selected={{is-equal lmStatus this.selectedStatus}}>
               {{lmStatus.title}}
             </option>
           {{/each}}
@@ -55,9 +53,13 @@
           type="text"
           value={{this.originalAuthor}}
           {{on "input" (pick "target.value" (set this "originalAuthor"))}}
-          {{this.validations.attach 'originalAuthor'}}
+          {{this.validations.attach "originalAuthor"}}
         />
-        <YupValidationMessage @description={{t 'general.contentAuthor'}} @validationErrors={{this.validations.errors.originalAuthor}} data-test-author-validation-error-message />
+        <YupValidationMessage
+          @description={{t "general.contentAuthor"}}
+          @validationErrors={{this.validations.errors.originalAuthor}}
+          data-test-author-validation-error-message
+        />
       </span>
     </div>
     <div class="item">
@@ -65,10 +67,7 @@
         {{t "general.userRole"}}:
       </label>
       <span>
-        <select
-          id="user-role-{{templateId}}"
-          {{on "change" this.changeUserRoleId}}
-        >
+        <select id="user-role-{{templateId}}" {{on "change" this.changeUserRoleId}}>
           {{#each @learningMaterialUserRoles as |role|}}
             <option value={{role.id}} selected={{is-equal role this.selectedUserRole}}>
               {{role.title}}
@@ -93,8 +92,8 @@
             disabled={{this.prepareSave.isRunning}}
             {{on "input" (pick "target.value" this.changeLink)}}
             {{on "focus" this.selectAllText}}
-            {{this.validations.attach 'link'}}
-          >
+            {{this.validations.attach "link"}}
+          />
           <YupValidationMessage @validationErrors={{this.validations.errors.link}} />
         </span>
       </div>
@@ -109,9 +108,12 @@
             id="citation-{{templateId}}"
             disabled={{this.prepareSave.isRunning}}
             {{on "input" (pick "target.value" (set this "citation"))}}
-            {{this.validations.attach 'citation'}}
+            {{this.validations.attach "citation"}}
           >{{this.citation}}</textarea>
-          <YupValidationMessage @description={{t 'general.citation'}} @validationErrors={{this.validations.errors.citation}} />
+          <YupValidationMessage
+            @description={{t "general.citation"}}
+            @validationErrors={{this.validations.errors.citation}}
+          />
         </span>
       </div>
     {{/if}}
@@ -137,10 +139,10 @@
               {{on "click" (set this "copyrightPermission" (not this.copyrightPermission))}}
               {{on "change" (perform this.validations.runValidator)}}
               data-test-copyright-agreement
-            >
+            />
             {{t "general.copyrightAgreement"}}
             {{#if this.validations.errors.copyrightPermission}}
-              <br>
+              <br />
               <span class="validation-error-message" data-test-agreement-validation-error-message>
                 {{t "errors.agreementRequired"}}
               </span>
@@ -157,10 +159,13 @@
             <textarea
               id="copyright-rationale-{{templateId}}"
               {{on "input" (pick "target.value" (set this "copyrightRationale"))}}
-              {{this.validations.attach 'copyrightRationale'}}
+              {{this.validations.attach "copyrightRationale"}}
               data-test-copyright-rationale
             >{{this.copyrightRationale}}</textarea>
-          <YupValidationMessage @description={{t 'general.copyrightRationale'}} @validationErrors={{this.validations.errors.copyrightRationale}} />
+            <YupValidationMessage
+              @description={{t "general.copyrightRationale"}}
+              @validationErrors={{this.validations.errors.copyrightRationale}}
+            />
           </span>
         </div>
       {{/unless}}
@@ -173,7 +178,10 @@
           @setFilename={{set this "filename"}}
           @setFileHash={{set this "fileHash"}}
         />
-        <YupValidationMessage @description={{t 'general.file'}} @validationErrors={{this.validations.errors.filename}} />
+        <YupValidationMessage
+          @description={{t "general.file"}}
+          @validationErrors={{this.validations.errors.filename}}
+        />
       </div>
     {{/if}}
     <div class="buttons">

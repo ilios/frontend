@@ -6,7 +6,8 @@
         @save={{perform this.changeTitle}}
         @close={{this.resetTitle}}
         @saveOnEnter={{true}}
-        @closeOnEscape={{true}} as |isSaving|
+        @closeOnEscape={{true}}
+        as |isSaving|
       >
         <input
           aria-label={{t "general.title"}}
@@ -15,9 +16,9 @@
           value={{this.title}}
           {{on "input" (pick "target.value" (set this "title"))}}
           {{this.validations.attach "title"}}
-        >
+        />
         <YupValidationMessage
-          @description={{t 'general.title'}}
+          @description={{t "general.title"}}
           @validationErrors={{this.validations.errors.title}}
         />
       </EditableField>

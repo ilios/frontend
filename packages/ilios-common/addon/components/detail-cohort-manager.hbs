@@ -1,13 +1,8 @@
-<section
-  class="detail-cohort-manager"
->
+<section class="detail-cohort-manager">
   <ul class="selected-cohorts">
     {{#each (sort-by "title" @selectedCohorts) as |cohort|}}
       <li>
-        <button
-          type="button"
-          {{on "click" (fn @remove cohort)}}
-        >
+        <button type="button" {{on "click" (fn @remove cohort)}}>
           {{cohort.programYear.program.school.title}}
           |
           {{cohort.programYear.program.title}}
@@ -22,10 +17,7 @@
     {{#if this.isLoaded}}
       {{#each this.sortedAvailableCohorts as |cohort|}}
         <li>
-          <button
-            type="button"
-            {{on "click" (fn @add cohort)}}
-          >
+          <button type="button" {{on "click" (fn @add cohort)}}>
             {{cohort.programYear.program.school.title}}
             |
             {{cohort.programYear.program.title}}

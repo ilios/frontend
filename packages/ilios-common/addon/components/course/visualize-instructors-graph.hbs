@@ -1,5 +1,5 @@
 <div
-  class="course-visualize-instructors-graph {{unless @isIcon "not-icon"}}"
+  class="course-visualize-instructors-graph {{unless @isIcon 'not-icon'}}"
   data-test-course-visualize-instructors-graph
   ...attributes
 >
@@ -11,7 +11,8 @@
         @data={{this.filteredChartData}}
         @onClick={{this.barClick}}
         @hover={{perform this.barHover}}
-        @leave={{perform this.barHover}} as |chart|
+        @leave={{perform this.barHover}}
+        as |chart|
       >
         {{#if this.tooltipContent}}
           <chart.tooltip @title={{this.tooltipTitle}}>
@@ -26,22 +27,22 @@
       </div>
     {{/if}}
     {{#if (and (not @isIcon) this.hasData @showDataTable)}}
-        <div class="data-table" data-test-data-table>
-          <div class="table-actions" data-test-data-table-actions>
-            <button
-              type="button"
-              {{on "click" (perform this.downloadData)}}
-              data-test-download-data
-            >
-              <FaIcon @icon="download" /> {{t "general.download"}}
-            </button>
-          </div>
-          <table>
-            <thead>
+      <div class="data-table" data-test-data-table>
+        <div class="table-actions" data-test-data-table-actions>
+          <button type="button" {{on "click" (perform this.downloadData)}} data-test-download-data>
+            <FaIcon @icon="download" />
+            {{t "general.download"}}
+          </button>
+        </div>
+        <table>
+          <thead>
             <tr>
               <SortableTh
                 @sortedAscending={{this.sortedAscending}}
-                @sortedBy={{or (eq this.sortBy "instructorName") (eq this.sortBy "instructorName:desc")}}
+                @sortedBy={{or
+                  (eq this.sortBy "instructorName")
+                  (eq this.sortBy "instructorName:desc")
+                }}
                 @onClick={{fn this.setSortBy "instructorName"}}
                 data-test-instructor
               >
@@ -50,7 +51,10 @@
               <SortableTh
                 @colspan="2"
                 @sortedAscending={{this.sortedAscending}}
-                @sortedBy={{or (eq this.sortBy "sessionTitles") (eq this.sortBy "sessionTitles:desc")}}
+                @sortedBy={{or
+                  (eq this.sortBy "sessionTitles")
+                  (eq this.sortBy "sessionTitles:desc")
+                }}
                 @onClick={{fn this.setSortBy "sessionTitles"}}
                 data-test-sessions
               >
@@ -66,12 +70,15 @@
                 {{t "general.minutes"}}
               </SortableTh>
             </tr>
-            </thead>
-            <tbody>
+          </thead>
+          <tbody>
             {{#each (sort-by this.sortBy this.tableData) as |row|}}
               <tr>
                 <td data-test-instructor>
-                  <LinkTo @route="course-visualize-instructor" @models={{array @course.id row.instructor.id}}>
+                  <LinkTo
+                    @route="course-visualize-instructor"
+                    @models={{array @course.id row.instructor.id}}
+                  >
                     {{row.instructorName}}
                   </LinkTo>
                 </td>
@@ -85,9 +92,9 @@
                 <td data-test-minutes>{{row.minutes}}</td>
               </tr>
             {{/each}}
-            </tbody>
-          </table>
-        </div>
+          </tbody>
+        </table>
+      </div>
     {{/if}}
   {{else}}
     <LoadingSpinner />

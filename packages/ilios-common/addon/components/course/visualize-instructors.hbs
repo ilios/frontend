@@ -1,7 +1,4 @@
-<section
-  class="course-visualize-instructors"
-  data-test-course-visualize-instructors
->
+<section class="course-visualize-instructors" data-test-course-visualize-instructors>
   {{#if this.academicYearCrossesCalendarYearBoundariesData.isResolved}}
     <div class="breadcrumbs" data-test-breadcrumb>
       <span>
@@ -25,7 +22,9 @@
       <LinkTo @route="course" @model={{@model}}>
         {{@model.title}}
         {{#if this.academicYearCrossesCalendarYearBoundaries}}
-          {{@model.year}} - {{add @model.year 1}}
+          {{@model.year}}
+          -
+          {{add @model.year 1}}
         {{else}}
           {{@model.year}}
         {{/if}}
@@ -39,7 +38,7 @@
         value={{this.name}}
         placeholder={{t "general.filterPlaceholder"}}
         {{on "input" (pick "target.value" (set this "name"))}}
-      >
+      />
     </div>
     <div class="visualizations">
       <Course::VisualizeInstructorsGraph

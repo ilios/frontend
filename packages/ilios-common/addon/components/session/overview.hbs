@@ -1,13 +1,24 @@
 <div data-test-session-overview>
   {{#let (unique-id) as |templateId|}}
     {{#if this.isLoaded}}
-      <Session::Header @session={{@session}} @editable={{@editable}} @hideCheckLink={{@hideCheckLink}} />
+      <Session::Header
+        @session={{@session}}
+        @editable={{@editable}}
+        @hideCheckLink={{@hideCheckLink}}
+      />
 
       <section class="session-overview">
         <div class="last-update" data-test-last-update>
           <FaIcon @icon="clock-rotate-left" @title={{t "general.lastUpdate"}} />
           {{t "general.lastUpdate"}}:
-          {{format-date @session.updatedAt month="2-digit" day="2-digit" year="numeric" hour="2-digit" minute="2-digit"}}
+          {{format-date
+            @session.updatedAt
+            month="2-digit"
+            day="2-digit"
+            year="numeric"
+            hour="2-digit"
+            minute="2-digit"
+          }}
         </div>
 
         <div class="session-overview-header">
@@ -40,10 +51,7 @@
                   @save={{this.changeSessionType}}
                   @close={{this.revertSessionTypeChanges}}
                 >
-                  <select
-                    id="session-type-{{templateId}}"
-                    {{on "change" this.setSessionType}}
-                  >
+                  <select id="session-type-{{templateId}}" {{on "change" this.setSessionType}}>
                     {{#each this.sortedSessionTypes as |sessionType|}}
                       <option
                         value={{sessionType.id}}
@@ -70,7 +78,7 @@
               <label>{{t "general.supplementalCurriculum"}}:</label>
               <span>
                 {{#if @editable}}
-                  <ToggleYesno @yes={{@session.supplemental}} @toggle={{this.changeSupplemental}}/>
+                  <ToggleYesno @yes={{@session.supplemental}} @toggle={{this.changeSupplemental}} />
                 {{else}}
                   {{#if @session.supplemental}}
                     <span class="add">{{t "general.yes"}}</span>
@@ -86,7 +94,10 @@
               <label>{{t "general.specialAttireRequired"}}:</label>
               <span>
                 {{#if @editable}}
-                  <ToggleYesno @yes={{@session.attireRequired}} @toggle={{this.changeSpecialAttire}}/>
+                  <ToggleYesno
+                    @yes={{@session.attireRequired}}
+                    @toggle={{this.changeSpecialAttire}}
+                  />
                 {{else}}
                   {{#if @session.attireRequired}}
                     <span class="add">{{t "general.yes"}}</span>
@@ -102,7 +113,10 @@
               <label>{{t "general.specialEquipmentRequired"}}:</label>
               <span>
                 {{#if @editable}}
-                  <ToggleYesno @yes={{@session.equipmentRequired}} @toggle={{this.changeSpecialEquipment}}/>
+                  <ToggleYesno
+                    @yes={{@session.equipmentRequired}}
+                    @toggle={{this.changeSpecialEquipment}}
+                  />
                 {{else}}
                   {{#if @session.equipmentRequired}}
                     <span class="add">{{t "general.yes"}}</span>
@@ -118,7 +132,10 @@
               <label>{{t "general.attendanceRequired"}}:</label>
               <span>
                 {{#if @editable}}
-                  <ToggleYesno @yes={{@session.attendanceRequired}} @toggle={{this.changeAttendanceRequired}}/>
+                  <ToggleYesno
+                    @yes={{@session.attendanceRequired}}
+                    @toggle={{this.changeAttendanceRequired}}
+                  />
                 {{else}}
                   {{#if @session.attendanceRequired}}
                     <span class="add">{{t "general.yes"}}</span>
@@ -129,7 +146,7 @@
               </span>
             </div>
           {{/if}}
-          <hr>
+          <hr />
           <Session::Ilm @session={{@session}} @editable={{@editable}} />
           <div class="postrequisite block" data-test-postrequisite>
             {{#if @editable}}
@@ -141,8 +158,12 @@
               {{else}}
                 <label>
                   {{#if @session.hasPostrequisite}}
-                    <LinkTo @route="session.index" @models={{array this.postrequisiteCourse this.postrequisite}}>
-                      <FaIcon @icon="square-up-right" /> {{t "general.duePriorTo"}}:
+                    <LinkTo
+                      @route="session.index"
+                      @models={{array this.postrequisiteCourse this.postrequisite}}
+                    >
+                      <FaIcon @icon="square-up-right" />
+                      {{t "general.duePriorTo"}}:
                     </LinkTo>
                   {{else}}
                     {{t "general.duePriorTo"}}:
@@ -164,8 +185,12 @@
             {{else}}
               <label>
                 {{#if @session.hasPostrequisite}}
-                  <LinkTo @route="session.index" @models={{array this.postrequisiteCourse this.postrequisite}}>
-                    <FaIcon @icon="square-up-right" /> {{t "general.duePriorTo"}}:
+                  <LinkTo
+                    @route="session.index"
+                    @models={{array this.postrequisiteCourse this.postrequisite}}
+                  >
+                    <FaIcon @icon="square-up-right" />
+                    {{t "general.duePriorTo"}}:
                   </LinkTo>>
                 {{else}}
                   {{t "general.duePriorTo"}}:
@@ -182,13 +207,18 @@
             <label>{{t "general.prerequisites"}}:</label>
             {{#if @session.hasPrerequisites}}
               <span>
-                {{#each this.prerequisites as |prerequisite index|~}}<LinkTo @route="session.index" @models={{array prerequisite.course prerequisite}}><FaIcon @icon="square-up-right" /> {{prerequisite.title}}</LinkTo>{{#if (not-eq index (sub this.prerequisites.length 1))}}, {{/if}}{{~/each}}
+                {{#each this.prerequisites as |prerequisite index|~}}<LinkTo
+                    @route="session.index"
+                    @models={{array prerequisite.course prerequisite}}
+                  ><FaIcon @icon="square-up-right" /> {{prerequisite.title}}</LinkTo>{{#if
+                    (not-eq index (sub this.prerequisites.length 1))
+                  }}, {{/if}}{{~/each}}
               </span>
             {{else}}
               {{t "general.none"}}
             {{/if}}
           </div>
-          <hr>
+          <hr />
           <div class="sessiondescription" data-test-description>
             <label>{{t "general.description"}}:</label>
             <span>
@@ -203,7 +233,7 @@
                 >
                   <HtmlEditor @content={{this.description}} @update={{this.changeDescription}} />
                   <YupValidationMessage
-                    @description={{t 'general.description'}}
+                    @description={{t "general.description"}}
                     @validationErrors={{this.validations.errors.description}}
                   />
                 </EditableField>
@@ -225,9 +255,12 @@
                   @close={{this.revertInstructionalNotesChanges}}
                   @clickPrompt={{t "general.clickToEdit"}}
                 >
-                  <HtmlEditor @content={{this.instructionalNotes}} @update={{this.changeInstructionalNotes}} />
+                  <HtmlEditor
+                    @content={{this.instructionalNotes}}
+                    @update={{this.changeInstructionalNotes}}
+                  />
                   <YupValidationMessage
-                    @description={{t 'general.instructionalNotes'}}
+                    @description={{t "general.instructionalNotes"}}
                     @validationErrors={{this.validations.errors.instructionalNotes}}
                   />
                 </EditableField>
@@ -238,7 +271,7 @@
             </span>
           </div>
           {{#unless this.isIndependentLearning}}
-            <br>
+            <br />
             <div class="sessionassociatedgroups" data-test-associated-groups>
               <label>{{t "general.associatedGroups"}}:</label>
               <span>

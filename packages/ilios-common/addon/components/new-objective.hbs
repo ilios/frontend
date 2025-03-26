@@ -8,9 +8,7 @@
     <ValidationError @validatable={{this}} @property="title" />
     <div class="buttons">
       <button
-        disabled={{or
-          this.saveObjective.isRunning
-        }}
+        disabled={{or this.saveObjective.isRunning}}
         class="done text"
         type="button"
         {{on "click" (perform this.saveObjective)}}

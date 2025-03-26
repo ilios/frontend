@@ -4,12 +4,7 @@
   aria-sort={{if this.sortedBy (if this.sortedAscending "ascending" "descending") "none"}}
   ...attributes
 >
-  <button
-    type="button"
-    title={{this.title}}
-    {{on "click" this.click}}
-  >
+  <button type="button" title={{this.title}} {{on "click" this.click}}>
     {{yield}}<FaIcon @icon={{this.sortIcon}} />
   </button>
 </th>
-

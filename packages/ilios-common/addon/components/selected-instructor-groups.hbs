@@ -11,18 +11,14 @@
         <ul class="instructor-group-title" data-test-instructor-group-title>
           <li>
             {{#if @isManaging}}
-              <button
-                type="button"
-                {{on "click" (fn @remove instructorGroup)}}
-                data-test-remove
-              >
+              <button type="button" {{on "click" (fn @remove instructorGroup)}} data-test-remove>
                 <FaIcon @icon="users" />
                 {{instructorGroup.title}}
                 <FaIcon @icon="xmark" class="remove" />
               </button>
             {{else}}
-                <FaIcon @icon="users" />
-                {{instructorGroup.title}}
+              <FaIcon @icon="users" />
+              {{instructorGroup.title}}
             {{/if}}
           </li>
         </ul>

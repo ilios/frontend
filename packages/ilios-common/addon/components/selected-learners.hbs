@@ -7,10 +7,7 @@
       {{#each (sort-by "fullName" @learners) as |user|}}
         {{#if @isManaging}}
           <li>
-            <button
-              type="button"
-              {{on "click" (fn @remove user)}}
-            >
+            <button type="button" {{on "click" (fn @remove user)}}>
               <UserNameInfo @user={{user}} />
               <FaIcon @icon="xmark" class="remove" />
             </button>

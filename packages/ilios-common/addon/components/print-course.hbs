@@ -6,7 +6,9 @@
       </h2>
       <h4 data-test-course-year>
         {{#if this.academicYearCrossesCalendarYearBoundaries}}
-          {{@course.year}} - {{add @course.year 1}}
+          {{@course.year}}
+          -
+          {{add @course.year 1}}
         {{else}}
           {{@course.year}}
         {{/if}}
@@ -50,8 +52,8 @@
             {{format-date @course.endDate day="2-digit" month="2-digit" year="numeric"}}
           </div>
         </div>
-        <br>
-        <br>
+        <br />
+        <br />
         <div class="inline-label-data-block">
           <label>
             {{t "general.directors"}}:
@@ -68,7 +70,8 @@
     </section>
     <section class="block" data-test-course-competencies>
       <div class="title">
-        {{t "general.competencies"}} ({{this.competencies.length}})
+        {{t "general.competencies"}}
+        ({{this.competencies.length}})
       </div>
       <div class="content">
         {{#if this.competencies.length}}
@@ -91,35 +94,30 @@
     </section>
     <section class="block" data-test-course-terms>
       <div class="title">
-        {{t "general.terms"}} ({{@course.terms.length}})
+        {{t "general.terms"}}
+        ({{@course.terms.length}})
       </div>
       <div class="content">
         {{#each @course.associatedVocabularies as |vocab|}}
-          <DetailTermsList
-            @vocabulary={{vocab}}
-            @terms={{this.terms}}
-            @canEdit={{false}}
-          />
+          <DetailTermsList @vocabulary={{vocab}} @terms={{this.terms}} @canEdit={{false}} />
         {{/each}}
       </div>
     </section>
     <section class="block" data-test-course-objectives>
       <div class="title">
-        {{t "general.objectives"}} ({{@course.courseObjectives.length}})
+        {{t "general.objectives"}}
+        ({{@course.courseObjectives.length}})
       </div>
       {{#if @course.courseObjectives.length}}
         <div class="content">
-          <Course::ObjectiveList
-            @course={{@course}}
-            @editable={{false}}
-            @printable={{true}}
-          />
+          <Course::ObjectiveList @course={{@course}} @editable={{false}} @printable={{true}} />
         </div>
       {{/if}}
     </section>
     <section class="block" data-test-course-learningmaterials>
       <div class="title">
-        {{t "general.learningMaterials"}} ({{this.courseLearningMaterials.length}})
+        {{t "general.learningMaterials"}}
+        ({{this.courseLearningMaterials.length}})
       </div>
       <div class="content">
         {{#if this.courseLearningMaterials}}
@@ -188,7 +186,8 @@
     </section>
     <section class="block" data-test-course-mesh>
       <div class="title">
-        {{t "general.mesh"}} ({{@course.meshDescriptors.length}})
+        {{t "general.mesh"}}
+        ({{@course.meshDescriptors.length}})
       </div>
       <div class="content">
         <ul class="inline-list">
@@ -201,7 +200,7 @@
       </div>
     </section>
     {{#each (sort-by "title" this.sessions) as |session|}}
-      <PrintCourseSession @session={{session}} @templatedId={{templateId}}/>
+      <PrintCourseSession @session={{session}} @templatedId={{templateId}} />
     {{/each}}
   {{/let}}
 </section>

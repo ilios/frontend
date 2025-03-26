@@ -8,4 +8,7 @@
 /coverage/
 !.*
 .*/
+/pnpm-lock.yaml
+ember-cli-update.json
+*.html
 

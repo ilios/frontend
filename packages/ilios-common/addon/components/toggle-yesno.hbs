@@ -1,7 +1,7 @@
 <button
-  aria-checked="{{if this.yes "true" "false"}}"
-  aria-label="{{if this.yes (t "general.yes") (t "general.no")}}"
-  class="toggle-yesno {{if this.yes "yes" "no"}}"
+  aria-checked="{{if this.yes 'true' 'false'}}"
+  aria-label="{{if this.yes (t 'general.yes') (t 'general.no')}}"
+  class="toggle-yesno {{if this.yes 'yes' 'no'}}"
   data-test-toggle-yesno
   role="switch"
   type="button"

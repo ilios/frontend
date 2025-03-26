@@ -1,8 +1,4 @@
-<li
-  class="detail-learnergroups-list-item"
-  data-test-detail-learnergroups-list-item
-  ...attributes
->
+<li class="detail-learnergroups-list-item" data-test-detail-learnergroups-list-item ...attributes>
   {{#if @isManaging}}
     <button
       class="remove-learnergroup"
@@ -14,7 +10,7 @@
         {{@group.title}}
       {{else}}
         {{#each this.allParentTitles as |title|}}
-        {{! template-lint-disable no-bare-strings}}
+          {{! template-lint-disable no-bare-strings}}
           <span class="muted">
             {{title}}
             &raquo;&nbsp;
@@ -28,16 +24,16 @@
           @icon="universal-access"
           @title={{t "general.accommodationIsRequiredForLearnersInThisGroup"}}
           data-test-needs-accommodation
-        ></FaIcon>
+        />
       {{/if}}
-      <FaIcon @icon="xmark" class="remove"></FaIcon>
+      <FaIcon @icon="xmark" class="remove" />
     </button>
   {{else}}
     {{#if @group.isTopLevel}}
       {{@group.title}}
     {{else}}
       {{#each this.allParentTitles as |title|}}
-      {{! template-lint-disable no-bare-strings}}
+        {{! template-lint-disable no-bare-strings}}
         <span class="muted">
           {{title}}
           &raquo;&nbsp;
@@ -51,7 +47,7 @@
         @icon="universal-access"
         @title={{t "general.accommodationIsRequiredForLearnersInThisGroup"}}
         data-test-needs-accommodation
-      ></FaIcon>
+      />
     {{/if}}
   {{/if}}
 </li>

@@ -8,12 +8,6 @@ module.exports = {
       options: {
         singleQuote: true,
         printWidth: 100,
-      },
-    },
-    {
-      files: '*.{gjs,gts}',
-      options: {
-        singleQuote: true,
         templateSingleQuote: false,
       },
     },

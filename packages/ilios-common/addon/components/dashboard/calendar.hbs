@@ -1,7 +1,4 @@
-<div
-  class="dashboard-calendar"
-  data-test-dashboard-calendar
->
+<div class="dashboard-calendar" data-test-dashboard-calendar>
   <div class="dashboard-calendar-content">
     <section class="calendar-controls" data-test-dashboard-calendar-controls>
       <div class="calendar-options-control togglemyschedule" data-test-myschedule>
@@ -33,19 +30,23 @@
       {{#if @mySchedule}}
         {{#if this.showUserContextFilters}}
           <div class="calendar-options-control toggle-user-context-filters" data-test-usercontexts>
-            <Dashboard::UserContextFilter @setUserContext={{set this "userContext"}} @userContext={{this.userContext}}/>
+            <Dashboard::UserContextFilter
+              @setUserContext={{set this "userContext"}}
+              @userContext={{this.userContext}}
+            />
           </div>
         {{/if}}
       {{else}}
         <div class="calendar-options-control calendar-school-picker" data-test-school-picker>
           <FaIcon @icon="building-columns" />
           {{#if this.hasMoreThanOneSchool}}
-            <select aria-label={{t "general.schools"}} {{on "change" this.changeSchool}} data-test-select-school>
+            <select
+              aria-label={{t "general.schools"}}
+              {{on "change" this.changeSchool}}
+              data-test-select-school
+            >
               {{#each (sort-by "title" @allSchools) as |school|}}
-                <option
-                  value={{school.id}}
-                  selected={{is-equal school this.bestSelectedSchool}}
-                >
+                <option value={{school.id}} selected={{is-equal school this.bestSelectedSchool}}>
                   {{school.title}}
                 </option>
               {{/each}}

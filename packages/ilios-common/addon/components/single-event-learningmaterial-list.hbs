@@ -1,4 +1,8 @@
-<div class="single-event-learningmaterial-list" data-test-single-event-learningmaterial-list ...attributes>
+<div
+  class="single-event-learningmaterial-list"
+  data-test-single-event-learningmaterial-list
+  ...attributes
+>
   {{#if @prework.length}}
     <ul class="static-list prework">
       {{#each @prework as |event|}}
@@ -7,7 +11,7 @@
           <LinkTo @route="events" @model={{event.slug}} data-test-name>
             {{event.name}}
           </LinkTo>
-          {{#each event.learningMaterials as |lm| }}
+          {{#each event.learningMaterials as |lm|}}
             <SingleEventLearningmaterialListItem @learningMaterial={{lm}} />
           {{/each}}
         </li>

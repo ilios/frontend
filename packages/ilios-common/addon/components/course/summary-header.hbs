@@ -10,19 +10,11 @@
         @query={{hash unpublished=true}}
         class="print"
       >
-        <FaIcon
-          @icon="print"
-          @title={{t "general.printSummary"}}
-          @fixedWidth={{true}}
-        />
+        <FaIcon @icon="print" @title={{t "general.printSummary"}} @fixedWidth={{true}} />
       </LinkTo>
       {{#if this.canRollover}}
         <LinkTo @route="course.rollover" @model={{@course}} class="rollover">
-          <FaIcon
-            @icon="shuffle"
-            @title={{t "general.courseRollover"}}
-            @fixedWidth={{true}}
-          />
+          <FaIcon @icon="shuffle" @title={{t "general.courseRollover"}} @fixedWidth={{true}} />
         </LinkTo>
       {{/if}}
     </div>

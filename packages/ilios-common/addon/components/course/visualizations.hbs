@@ -1,7 +1,4 @@
-<section
-  class="course-visualizations"
-  data-test-course-visualizations
->
+<section class="course-visualizations" data-test-course-visualizations>
   {{#if this.academicYearCrossesCalendarYearBoundariesData.isResolved}}
     <div class="breadcrumbs" data-test-breadcrumb>
       <span>
@@ -20,7 +17,9 @@
       <LinkTo @route="course" @model={{@model}}>
         {{@model.title}}
         {{#if this.academicYearCrossesCalendarYearBoundaries}}
-          {{@model.year}} - {{add @model.year 1}}
+          {{@model.year}}
+          -
+          {{add @model.year 1}}
         {{else}}
           {{@model.year}}
         {{/if}}
@@ -32,7 +31,11 @@
           <h4>
             {{t "general.objectives"}}
           </h4>
-          <Course::VisualizeObjectivesGraph @isIcon={{true}} @course={{@model}} @showDataTable={{false}} />
+          <Course::VisualizeObjectivesGraph
+            @isIcon={{true}}
+            @course={{@model}}
+            @showDataTable={{false}}
+          />
         </LinkTo>
       </div>
       <div data-test-visualize-session-types>
@@ -40,10 +43,7 @@
           <h4>
             {{t "general.sessionTypes"}}
           </h4>
-          <Course::VisualizeSessionTypesGraph
-            @isIcon={{true}}
-            @course={{@model}}
-          />
+          <Course::VisualizeSessionTypesGraph @isIcon={{true}} @course={{@model}} />
         </LinkTo>
       </div>
       <div data-test-visualize-vocabularies>
@@ -51,7 +51,11 @@
           <h4>
             {{t "general.vocabularies"}}
           </h4>
-          <Course::VisualizeVocabulariesGraph @isIcon={{true}} @course={{@model}} @showDataTable={{false}} />
+          <Course::VisualizeVocabulariesGraph
+            @isIcon={{true}}
+            @course={{@model}}
+            @showDataTable={{false}}
+          />
         </LinkTo>
       </div>
       <div data-test-visualize-instructors>
@@ -59,10 +63,7 @@
           <h4>
             {{t "general.instructors"}}
           </h4>
-          <Course::VisualizeInstructorsGraph
-            @isIcon={{true}}
-            @course={{@model}}
-          />
+          <Course::VisualizeInstructorsGraph @isIcon={{true}} @course={{@model}} />
         </LinkTo>
       </div>
     </div>

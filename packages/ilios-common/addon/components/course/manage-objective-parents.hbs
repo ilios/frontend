@@ -1,19 +1,15 @@
-<section
-  class="course-manage-objective-parents"
-  data-test-course-manage-objective-parents
->
+<section class="course-manage-objective-parents" data-test-course-manage-objective-parents>
   {{#if @cohortObjectives.length}}
     <label>
       {{t "general.chooseCohortTitle"}}:
       {{#if (gt @cohortObjectives.length 1)}}
-        <select {{on "change" this.chooseCohort}} data-test-cohort-selector data-test-selected-cohort-title>
-          {{#each
-            (sort-by "title" @cohortObjectives) as |cohort|
-          }}
-            <option
-              value={{cohort.id}}
-              selected={{eq cohort.id this.selectedCohort.id}}
-            >
+        <select
+          {{on "change" this.chooseCohort}}
+          data-test-cohort-selector
+          data-test-selected-cohort-title
+        >
+          {{#each (sort-by "title" @cohortObjectives) as |cohort|}}
+            <option value={{cohort.id}} selected={{eq cohort.id this.selectedCohort.id}}>
               {{cohort.title}}
             </option>
           {{/each}}
@@ -26,20 +22,16 @@
     {{#if this.selectedCohort}}
       <ul class="parent-picker" data-test-parent-picker>
         {{#each this.competenciesFromSelectedCohort as |competency|}}
-          <li class="competency {{if
-                (includes competency.id this.selectedCompetencyIdsInSelectedCohort)
-                "selected"
-              }}"
-              data-test-competency
+          <li
+            class="competency
+              {{if (includes competency.id this.selectedCompetencyIdsInSelectedCohort) 'selected'}}"
+            data-test-competency
           >
-            <h4
-              class="competency-title"
-              data-test-competency-title
-            >
+            <h4 class="competency-title" data-test-competency-title>
               {{competency.title}}
               {{#if competency.parent}}
                 <span class="domain-title">
-                ({{competency.parent.title}})
+                  ({{competency.parent.title}})
                 </span>
               {{/if}}
             </h4>
@@ -52,7 +44,11 @@
                       @allowMultipleParents={{this.selectedCohort.allowMultipleParents}}
                       @isSelected={{includes objective @selected}}
                       @add={{pipe
-                        (if this.selectedCohort.allowMultipleParents (noop) (fn @removeFromCohort this.selectedCohort))
+                        (if
+                          this.selectedCohort.allowMultipleParents
+                          (noop)
+                          (fn @removeFromCohort this.selectedCohort)
+                        )
                         (fn @add objective)
                       }}
                       @remove={{fn @remove objective}}

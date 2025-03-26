@@ -23,7 +23,11 @@
       <FaIcon @icon="play" @flip="horizontal" class={{if this.firstPage "disabled"}} />
     </button>
     {{#if @limitless}}
-      <select aria-labelledby="per-page-{{templateId}}" {{on "change" (pick "target.value" this.setLimit)}} data-test-limits>
+      <select
+        aria-labelledby="per-page-{{templateId}}"
+        {{on "change" (pick "target.value" this.setLimit)}}
+        data-test-limits
+      >
         {{#each this.offsetOptions as |o|}}
           <option value={{o}} selected={{is-equal o this.limit}} data-test-limit>
             {{o}}
@@ -55,9 +59,13 @@
         data-test-go-to-last
         {{on "click" this.goToLast}}
       >
-        <FaIcon @icon="forward-fast" class={{if this.lastPage "disabled"}}/>
+        <FaIcon @icon="forward-fast" class={{if this.lastPage "disabled"}} />
       </button>
-      <select aria-labelledby="per-page-{{templateId}}" {{on "change" (pick "target.value" this.setLimit)}} data-test-limits>
+      <select
+        aria-labelledby="per-page-{{templateId}}"
+        {{on "change" (pick "target.value" this.setLimit)}}
+        data-test-limits
+      >
         {{#each this.offsetOptions as |o|}}
           <option value={{o}} selected={{is-equal o this.limit}} data-test-limit>
             {{o}}

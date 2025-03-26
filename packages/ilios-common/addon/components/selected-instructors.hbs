@@ -9,15 +9,12 @@
     <ul class="instructors-list" data-test-selected-instructors-list>
       {{#each (sort-by "fullName" @instructors) as |user|}}
         {{#if @isManaging}}
-        <li>
-          <button
-            type="button"
-            {{on "click" (fn @remove user)}}
-          >
-            <UserNameInfo @user={{user}} />
-            <FaIcon @icon="xmark" class="remove" />
-          </button>
-        </li>
+          <li>
+            <button type="button" {{on "click" (fn @remove user)}}>
+              <UserNameInfo @user={{user}} />
+              <FaIcon @icon="xmark" class="remove" />
+            </button>
+          </li>
         {{else}}
           <li>
             <UserNameInfo @user={{user}} />

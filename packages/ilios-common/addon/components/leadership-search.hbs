@@ -9,12 +9,12 @@
     {{on "input" (perform this.searchForUsers value="target.value")}}
     {{on "search" (perform this.searchForUsers value="target.value")}}
     {{on "keyup" (perform this.searchForUsers value="target.value")}}
-  >
+  />
   <ul
     class="results
       {{unless
         (or this.searchForUsers.isRunning this.searchForUsers.lastSuccessful.value.length)
-        "hidden"
+        'hidden'
       }}"
   >
     {{#if this.searchForUsers.isRunning}}
@@ -35,20 +35,17 @@
         {{/if}}
         {{#if (eq result.type "user")}}
           <li
-            class="user {{unless (includes result.user.id this.existingUserIds) "clickable" "inactive"}}"
+            class="user
+              {{unless (includes result.user.id this.existingUserIds) 'clickable' 'inactive'}}"
             data-test-result-index={{index}}
             data-test-result
           >
             {{#if (includes result.user.id this.existingUserIds)}}
               <span class="name">
                 {{result.user.fullName}}
-                  {{#unless result.user.enabled}}
-                    <FaIcon
-                      @icon="user-xmark"
-                      @title={{t "general.disabled"}}
-                      class="error"
-                    />
-                  {{/unless}}
+                {{#unless result.user.enabled}}
+                  <FaIcon @icon="user-xmark" @title={{t "general.disabled"}} class="error" />
+                {{/unless}}
               </span>
               <span class="email">
                 {{result.user.email}}
@@ -63,11 +60,7 @@
                 <span class="name">
                   {{result.user.fullName}}
                   {{#unless result.user.enabled}}
-                    <FaIcon
-                      @icon="user-xmark"
-                      @title={{t "general.disabled"}}
-                      class="error"
-                    />
+                    <FaIcon @icon="user-xmark" @title={{t "general.disabled"}} class="error" />
                   {{/unless}}
                 </span>
                 <span class="email">

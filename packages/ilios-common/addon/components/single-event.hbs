@@ -11,17 +11,9 @@
           />
         {{/if}}
         {{#if (not @event.isPublished)}}
-          <FaIcon
-            @icon="file-signature"
-            @title={{t "general.notPublished"}}
-            data-test-draft-icon
-          />
+          <FaIcon @icon="file-signature" @title={{t "general.notPublished"}} data-test-draft-icon />
         {{else if @event.isScheduled}}
-          <FaIcon
-            @icon="clock"
-            @title={{t "general.scheduled" }}
-            data-test-scheduled-icon
-          />
+          <FaIcon @icon="clock" @title={{t "general.scheduled"}} data-test-scheduled-icon />
         {{/if}}
         <span data-test-header-title>
           {{@event.courseTitle}}
@@ -42,20 +34,70 @@
         {{#if (gt @event.postrequisites.length 0)}}
           <p>
             {{t "general.dueBefore"}}
-            <a href={{this.postrequisiteLink}}>{{get (object-at 0 @event.postrequisites) "name"}}</a>
-            ({{format-date (get (object-at 0 @event.postrequisites) "startDate") month="long" weekday="long" day="numeric" year="numeric" hour12=true hour="2-digit" minute="2-digit"}})
+            <a href={{this.postrequisiteLink}}>{{get
+                (object-at 0 @event.postrequisites)
+                "name"
+              }}</a>
+            ({{format-date
+              (get (object-at 0 @event.postrequisites) "startDate")
+              month="long"
+              weekday="long"
+              day="numeric"
+              year="numeric"
+              hour12=true
+              hour="2-digit"
+              minute="2-digit"
+            }})
           </p>
         {{/if}}
         {{#unless @event.ilmSession}}
           <p>
             {{#if (eq @event.startDate @event.endDate)}}
-              {{format-date @event.startDate month="long" weekday="long" day="numeric" year="numeric" hour12=true hour="2-digit" minute="2-digit"}}
+              {{format-date
+                @event.startDate
+                month="long"
+                weekday="long"
+                day="numeric"
+                year="numeric"
+                hour12=true
+                hour="2-digit"
+                minute="2-digit"
+              }}
             {{else if this.startsAndEndsOnSameDay}}
-              {{format-date @event.startDate month="long" weekday="long" day="numeric" year="numeric" hour12=true hour="2-digit" minute="2-digit"}}
-              - {{format-date @event.endDate hour12=true hour="2-digit" minute="2-digit"}}
+              {{format-date
+                @event.startDate
+                month="long"
+                weekday="long"
+                day="numeric"
+                year="numeric"
+                hour12=true
+                hour="2-digit"
+                minute="2-digit"
+              }}
+              -
+              {{format-date @event.endDate hour12=true hour="2-digit" minute="2-digit"}}
             {{else}}
-              {{format-date @event.startDate month="long" weekday="long" day="numeric" year="numeric" hour12=true hour="2-digit" minute="2-digit"}}
-              - {{format-date @event.endDate month="long" weekday="long" day="numeric" year="numeric" hour12=true hour="2-digit" minute="2-digit"}}
+              {{format-date
+                @event.startDate
+                month="long"
+                weekday="long"
+                day="numeric"
+                year="numeric"
+                hour12=true
+                hour="2-digit"
+                minute="2-digit"
+              }}
+              -
+              {{format-date
+                @event.endDate
+                month="long"
+                weekday="long"
+                day="numeric"
+                year="numeric"
+                hour12=true
+                hour="2-digit"
+                minute="2-digit"
+              }}
             {{/if}}
           </p>
         {{/unless}}
@@ -70,7 +112,7 @@
         </div>
       {{/if}}
       <div class="single-event-session-is">
-        <strong>{{ t "general.sessionType"}}:</strong>
+        <strong>{{t "general.sessionType"}}:</strong>
         {{@event.sessionTypeTitle}}
       </div>
       {{#if @event.equipmentRequired}}
@@ -95,10 +137,7 @@
         <div class="single-event-attendance-required">
           {{! template-lint-disable no-triple-curlies }}
           {{{t "general.attendanceIs_Required_"}}}
-          <FaIcon
-            @icon="calendar-check"
-            @title={{t "general.attendanceIsRequired"}}
-          />
+          <FaIcon @icon="calendar-check" @title={{t "general.attendanceIsRequired"}} />
         </div>
       {{/if}}
       {{#if @event.supplemental}}
@@ -106,16 +145,13 @@
           <strong>
             {{t "general.supplementalCurriculum"}}
           </strong>
-          <FaIcon
-            @icon="calendar-minus"
-            @title={{t "general.supplementalCurriculum"}}
-          />
+          <FaIcon @icon="calendar-minus" @title={{t "general.supplementalCurriculum"}} />
         </div>
       {{/if}}
       {{#if @event.sessionDescription}}
         {{! template-lint-disable no-triple-curlies }}
         {{{@event.sessionDescription}}}
-        <br>
+        <br />
       {{/if}}
     </div>
     <div class="single-event-learningmaterial-list" data-test-session-materials>
@@ -123,9 +159,16 @@
         <button
           class="expand-collapse-toggle-btn"
           aria-expanded={{if this.isSessionMaterialsListExpanded "true" "false"}}
-          aria-label={{if this.isSessionMaterialsListExpanded (t "general.hideSessionMaterials") (t "general.showSessionMaterials")}}
+          aria-label={{if
+            this.isSessionMaterialsListExpanded
+            (t "general.hideSessionMaterials")
+            (t "general.showSessionMaterials")
+          }}
           type="button"
-          {{on "click" (set this "isSessionMaterialsListExpanded" (not this.isSessionMaterialsListExpanded))}}
+          {{on
+            "click"
+            (set this "isSessionMaterialsListExpanded" (not this.isSessionMaterialsListExpanded))
+          }}
           data-test-expand-collapse
         >
           {{t "general.materials"}}
@@ -138,10 +181,7 @@
             data-test-link-to-all-materials
             {{on "click" this.transitionToMyMaterials}}
           >
-            <FaIcon
-              @icon="box-archive"
-              @title={{t "general.accessAllMaterialsForThisCourse"}}
-            />
+            <FaIcon @icon="box-archive" @title={{t "general.accessAllMaterialsForThisCourse"}} />
           </button>
         {{/if}}
       </h3>
@@ -166,9 +206,16 @@
         <button
           class="expand-collapse-toggle-btn"
           aria-expanded={{if this.isCourseMaterialsListExpanded "true" "false"}}
-          aria-label={{if this.isCourseMaterialsListExpanded (t "general.hideCourseMaterials") (t "general.showCourseMaterials")}}
+          aria-label={{if
+            this.isCourseMaterialsListExpanded
+            (t "general.hideCourseMaterials")
+            (t "general.showCourseMaterials")
+          }}
           type="button"
-          {{on "click" (set this "isCourseMaterialsListExpanded" (not this.isCourseMaterialsListExpanded))}}
+          {{on
+            "click"
+            (set this "isCourseMaterialsListExpanded" (not this.isCourseMaterialsListExpanded))
+          }}
           data-test-expand-collapse
         >
           {{t "general.courseMaterials"}}
@@ -176,9 +223,7 @@
         </button>
       </h3>
       {{#if this.isCourseMaterialsListExpanded}}
-        <SingleEventLearningmaterialList
-          @learningMaterials={{this.courseLearningMaterials}}
-        />
+        <SingleEventLearningmaterialList @learningMaterials={{this.courseLearningMaterials}} />
       {{/if}}
     </div>
     <div class="single-event-objective-list" data-test-course-objectives>

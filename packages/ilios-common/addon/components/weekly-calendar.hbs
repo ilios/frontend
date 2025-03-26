@@ -11,19 +11,18 @@
       ...
     {{else}}
       <span class="short" data-test-short>
-        {{format-date this.firstDayOfWeek month="2-digit" day="2-digit"}} &mdash;
+        {{format-date this.firstDayOfWeek month="2-digit" day="2-digit"}}
+        &mdash;
         {{format-date this.lastDayOfWeek month="2-digit" day="2-digit"}}
         {{format-date this.lastDayOfWeek year="numeric"}}
       </span>
-      <span class="long" data-test-long>{{t "general.weekOf" date=(format-date this.firstDayOfWeek month="long" day="numeric" year="numeric")}}</span>
+      <span class="long" data-test-long>{{t
+          "general.weekOf"
+          date=(format-date this.firstDayOfWeek month="long" day="numeric" year="numeric")
+        }}</span>
     {{/if}}
   </h2>
-  <div
-    class="days"
-    tabindex="0"
-    id="weekly-calendar-days"
-    {{this.scrollView this.earliestHour}}
-  >
+  <div class="days" tabindex="0" id="weekly-calendar-days" {{this.scrollView this.earliestHour}}>
     <div class="hours">
       {{#each this.hours as |hour|}}
         <span aria-hidden="true" class="hour hour-{{hour.hour}}">
@@ -35,10 +34,7 @@
     {{#each this.days as |day|}}
       <div class="events day-{{day.dayOfWeek}}" data-test-events-day>
         <h3 class="day-name" data-test-day-name>
-          <button
-            type="button"
-            {{on "click" (fn this.changeToDayView day.date)}}
-          >
+          <button type="button" {{on "click" (fn this.changeToDayView day.date)}}>
             {{format-date day.date weekday="long"}}
           </button>
         </h3>

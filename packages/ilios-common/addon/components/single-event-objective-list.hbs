@@ -1,7 +1,4 @@
-<div
-  class="single-event-objective-list"
-  data-test-single-event-objective-list
->
+<div class="single-event-objective-list" data-test-single-event-objective-list>
   <h3 class="title" data-test-title>
     <button
       class="expand-collapse-toggle-btn"
@@ -16,7 +13,8 @@
     </button>
     {{#if this.showDisplayModeToggle}}
       <button
-        class="display-mode-toggle-btn {{unless this.isExpanded "disabled" (if this.groupByCompetencies "active")}}"
+        class="display-mode-toggle-btn
+          {{unless this.isExpanded 'disabled' (if this.groupByCompetencies 'active')}}"
         type="button"
         disabled={{not this.isExpanded}}
         {{on "click" (set this "groupByCompetencies" (not this.groupByCompetencies))}}

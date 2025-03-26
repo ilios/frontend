@@ -1,8 +1,4 @@
-<div
-  class="new-session"
-  data-test-new-session
-  ...attributes
->
+<div class="new-session" data-test-new-session ...attributes>
   {{#let (unique-id) as |templateId|}}
     <h4 class="new-session-title">{{t "general.newSession"}}</h4>
     <div class="new-session-content">
@@ -20,9 +16,9 @@
           class={{if this.validations.errors.title "has-error"}}
           disabled={{this.saveNewSession.isRunning}}
           data-test-title
-        >
+        />
         <YupValidationMessage
-          @description={{t 'general.title'}}
+          @description={{t "general.title"}}
           @validationErrors={{this.validations.errors.title}}
         />
       </div>
@@ -33,7 +29,8 @@
         {{#if (is-array this.activeSessionTypes)}}
           <select
             id="session-type-{{templateId}}"
-            data-test-session-types {{on "change" this.changeSelectedSessionTypeId}}
+            data-test-session-types
+            {{on "change" this.changeSelectedSessionTypeId}}
           >
             {{#each (sort-by "title" this.activeSessionTypes) as |sessionType|}}
               <option

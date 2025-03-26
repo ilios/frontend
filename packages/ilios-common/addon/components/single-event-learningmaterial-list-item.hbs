@@ -5,16 +5,10 @@
 >
   {{#let (unique-id) as |templateId|}}
     {{#if @learningMaterial.isBlanked}}
-      <div
-        class="single-event-learningmaterial-item-title"
-        data-test-title
-      >
+      <div class="single-event-learningmaterial-item-title" data-test-title>
         {{@learningMaterial.title}}
       </div>
-      <div
-        class="single-event-learningmaterial-item-timing-info"
-        data-test-timing-info
-      >
+      <div class="single-event-learningmaterial-item-timing-info" data-test-timing-info>
         <TimedReleaseSchedule
           @startDate={{@learningMaterial.startDate}}
           @endDate={{@learningMaterial.endDate}}
@@ -42,7 +36,11 @@
                   href={{@learningMaterial.absoluteFileUri}}
                   rel="noopener noreferrer"
                   aria-label={{t "general.download"}}
-                  aria-labelledby="{{concat templateId @learningMaterial.id "lmdownload"}} {{concat templateId @learningMaterial.id "lm"}}"
+                  aria-labelledby="{{concat templateId @learningMaterial.id 'lmdownload'}} {{concat
+                    templateId
+                    @learningMaterial.id
+                    'lm'
+                  }}"
                   data-test-pdf-download-link
                 >
                   <FaIcon @icon="download" />
@@ -58,10 +56,7 @@
                   {{@learningMaterial.title}}
                 </a>
               {{/if}}
-              <span
-                class="single-event-learningmaterial-filesize"
-                data-test-filesize
-              >
+              <span class="single-event-learningmaterial-filesize" data-test-filesize>
                 {{#if @learningMaterial.filesize}}
                   ({{filesize @learningMaterial.filesize}})
                 {{/if}}
@@ -82,10 +77,7 @@
           {{else}}
             {{@learningMaterial.title}}
             {{#if @learningMaterial.absoluteFileUri}}
-              <span
-                class="single-event-learningmaterial-filesize"
-                data-test-filesize
-              >
+              <span class="single-event-learningmaterial-filesize" data-test-filesize>
                 {{#if @learningMaterial.filesize}}
                   ({{filesize @learningMaterial.filesize}})
                 {{/if}}
@@ -95,17 +87,11 @@
         </span>
       </div>
       {{#if @learningMaterial.citation}}
-        <div
-          class="single-event-learningmaterial-item-citation"
-          data-test-citation
-        >
+        <div class="single-event-learningmaterial-item-citation" data-test-citation>
           {{@learningMaterial.citation}}
         </div>
       {{/if}}
-      <div
-        class="single-event-learningmaterial-item-timing-info"
-        data-test-timing-info
-      >
+      <div class="single-event-learningmaterial-item-timing-info" data-test-timing-info>
         <TimedReleaseSchedule
           @startDate={{@learningMaterial.startDate}}
           @endDate={{@learningMaterial.endDate}}
@@ -113,19 +99,13 @@
         />
       </div>
       {{#if @learningMaterial.description}}
-        <div
-          class="single-event-learningmaterial-item-description"
-          data-test-description
-        >
+        <div class="single-event-learningmaterial-item-description" data-test-description>
           {{! template-lint-disable no-triple-curlies }}
           {{{@learningMaterial.description}}}
         </div>
       {{/if}}
       {{#if @learningMaterial.publicNotes}}
-        <div
-          class="single-event-learningmaterial-item-notes"
-          data-test-public-notes
-        >
+        <div class="single-event-learningmaterial-item-notes" data-test-public-notes>
           {{! template-lint-disable no-triple-curlies }}
           <FaIcon @icon="square-pen" />
           <p>

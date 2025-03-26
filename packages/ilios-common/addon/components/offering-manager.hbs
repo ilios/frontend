@@ -1,5 +1,5 @@
 <div
-  class="offering-manager {{if this.showRemoveConfirmation "show-remove-confirmation"}}"
+  class="offering-manager {{if this.showRemoveConfirmation 'show-remove-confirmation'}}"
   data-test-offering-manager
   ...attributes
 >
@@ -34,13 +34,16 @@
                 />
               {{/if}}
               {{#unless learnerGroup.isTopLevelGroup}}
-                {{#if (and
-                  (get this (concat "learnerGroupElement" learnerGroup.id))
-                  (includes learnerGroup.id this.hoveredGroups)
-                )}}
+                {{#if
+                  (and
+                    (get this (concat "learnerGroupElement" learnerGroup.id))
+                    (includes learnerGroup.id this.hoveredGroups)
+                  )
+                }}
                   <IliosTooltip @target={{get this (concat "learnerGroupElement" learnerGroup.id)}}>
                     <strong>
-                      {{if (eq learnerGroup.allParents.length 1)
+                      {{if
+                        (eq learnerGroup.allParents.length 1)
                         (t "general.parentGroup")
                         (t "general.parentGroups")
                       }}:
@@ -76,11 +79,7 @@
       </div>
       {{#if @editable}}
         <div class="offering-manager-actions">
-          <button
-            class="link-button edit"
-            type="button"
-            {{on "click" (toggle "isEditing" this)}}
-          >
+          <button class="link-button edit" type="button" {{on "click" (toggle "isEditing" this)}}>
             <FaIcon @icon="pen-to-square" class="enabled" />
           </button>
           {{#if @editable}}
@@ -99,16 +98,17 @@
       {{#if this.showRemoveConfirmation}}
         <div class="confirm-removal">
           <div class="confirm-message">
-            {{t
-              "general.confirmRemove"
-              learnerGroupCount=@offering.learnerGroups.length
-            }}
-            <br>
+            {{t "general.confirmRemove" learnerGroupCount=@offering.learnerGroups.length}}
+            <br />
             <div class="confirm-buttons">
               <button type="button" class="remove text" {{on "click" (fn @remove @offering)}}>
                 {{t "general.yes"}}
               </button>
-              <button type="button" class="cancel text" {{on "click" (set this "showRemoveConfirmation" false)}}>
+              <button
+                type="button"
+                class="cancel text"
+                {{on "click" (set this "showRemoveConfirmation" false)}}
+              >
                 {{t "general.cancel"}}
               </button>
             </div>

@@ -1,14 +1,15 @@
 <div class="event" data-test-week-glance-event>
   <h3 id={{concat "event" @event.slug}} class="event-title">
-    <span
-      id={{concat "event" @event.slug "title"}}
-      data-test-event-title
-    >
+    <span id={{concat "event" @event.slug "title"}} data-test-event-title>
       <LinkTo
         id={{concat "event" @event.slug "link"}}
         @route="events"
         @model={{@event.slug}}
-        aria-labelledby="{{concat "event" @event.slug "title"}} {{concat "event" @event.slug "date"}} {{concat "event" @event.slug "link"}}"
+        aria-labelledby="{{concat 'event' @event.slug 'title'}} {{concat
+          'event'
+          @event.slug
+          'date'
+        }} {{concat 'event' @event.slug 'link'}}"
       >
         {{@event.name}}
       </LinkTo>
@@ -28,7 +29,8 @@
     </span>
     {{#if @event.location}}
       <span class="location" data-test-location>
-        - {{@event.location}}
+        -
+        {{@event.location}}
       </span>
     {{/if}}
     <OfferingUrlDisplay @url={{@event.url}} class="url" data-test-url />
@@ -42,11 +44,7 @@
         />
       {{/if}}
       {{#if @event.equipmentRequired}}
-        <FaIcon
-          @icon="flask"
-          @ariaHidden={{false}}
-          @title={{t "general.specialEquipment"}}
-        />
+        <FaIcon @icon="flask" @ariaHidden={{false}} @title={{t "general.specialEquipment"}} />
       {{/if}}
       {{#if @event.attendanceRequired}}
         <FaIcon
@@ -74,7 +72,12 @@
   {{/if}}
   {{#if @event.sessionDescription.length}}
     <p class="description" data-test-description>
-      <TruncateText @text={{@event.sessionDescription}} @length={{50}} @slippage={{200}} @renderHtml={{true}} />
+      <TruncateText
+        @text={{@event.sessionDescription}}
+        @length={{50}}
+        @slippage={{200}}
+        @renderHtml={{true}}
+      />
     </p>
   {{/if}}
   {{#if (or this.preworkEvents this.sessionLearningMaterials)}}

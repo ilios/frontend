@@ -2,8 +2,5 @@
   <LinkTo @route="course" @model={{@model}} data-test-back-to-course>
     {{t "general.backToTitle" title=@model.title}}
   </LinkTo>
-  <PublishAllSessions
-    @course={{@model}}
-    @saved={{this.returnToList}}
-  />
+  <PublishAllSessions @course={{@model}} @saved={{this.returnToList}} />
 </section>

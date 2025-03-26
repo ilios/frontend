@@ -18,10 +18,7 @@
       <FaIcon @icon={{if @collapsed "caret-right" "caret-down"}} />
     </button>
   {{else}}
-    <h2 class="title"
-      role={{if @collapsible "button"}}
-      data-test-week-title
-    >
+    <h2 class="title" role={{if @collapsible "button"}} data-test-week-title>
       {{this.title}}
       {{#if @showFullTitle}}
         {{t "general.weekAtAGlance"}}

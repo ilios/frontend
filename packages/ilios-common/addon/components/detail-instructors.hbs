@@ -1,7 +1,4 @@
-<section
-  class="detail-instructors"
-  data-test-detail-instructors
->
+<section class="detail-instructors" data-test-detail-instructors>
   <div class="detail-instructors-header">
     <div class="title" data-test-title>
       {{#if this.isManaging}}
@@ -9,7 +6,11 @@
           {{t "general.instructorsManageTitle"}}
         </span>
       {{else}}
-        {{t "general.instructorsAndInstructorGroupsWithCount" instructorCount=this.instructorCount instructorGroupCount=this.instructorGroupCount}}
+        {{t
+          "general.instructorsAndInstructorGroupsWithCount"
+          instructorCount=this.instructorCount
+          instructorGroupCount=this.instructorGroupCount
+        }}
       {{/if}}
     </div>
     <div class="actions">

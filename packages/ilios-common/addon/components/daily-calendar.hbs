@@ -13,16 +13,17 @@
       <span class="short" data-test-short>
         {{format-date @date month="2-digit" day="2-digit" year="numeric"}}
       </span>
-      <span class="long" data-test-long>{{format-date @date weekday="long" month="long" day="numeric" year="numeric"}}</span>
+      <span class="long" data-test-long>{{format-date
+          @date
+          weekday="long"
+          month="long"
+          day="numeric"
+          year="numeric"
+        }}</span>
     {{/if}}
   </h2>
 
-  <div
-    class="day"
-    tabindex="0"
-    id="daily-calendar-events"
-    {{this.scrollView this.earliestHour}}
-  >
+  <div class="day" tabindex="0" id="daily-calendar-events" {{this.scrollView this.earliestHour}}>
     <div class="hours">
       {{#each this.hours as |hour|}}
         <span aria-hidden="true" class="hour hour-{{hour.hour}}">

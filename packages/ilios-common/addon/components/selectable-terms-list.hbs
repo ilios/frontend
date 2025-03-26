@@ -1,6 +1,7 @@
-<ul class="selectable-terms-list"
-    data-test-selectable-terms-list
-    data-test-selectable-terms-list-level={{this.level}}
+<ul
+  class="selectable-terms-list"
+  data-test-selectable-terms-list
+  data-test-selectable-terms-list-level={{this.level}}
 >
   {{#each (sort-by "title" this.terms) as |term|}}
     {{#if term.active}}

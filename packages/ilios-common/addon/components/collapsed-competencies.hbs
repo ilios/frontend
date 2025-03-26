@@ -1,7 +1,4 @@
-<section
-  class="collapsed-competencies"
-  data-test-collapsed-competencies
->
+<section class="collapsed-competencies" data-test-collapsed-competencies>
   <div>
     <button
       class="title link-button"
@@ -10,7 +7,8 @@
       data-test-title
       {{on "click" @expand}}
     >
-      {{t "general.competencies"}} ({{@subject.competencies.length}})
+      {{t "general.competencies"}}
+      ({{@subject.competencies.length}})
       <FaIcon @icon="caret-right" />
     </button>
   </div>

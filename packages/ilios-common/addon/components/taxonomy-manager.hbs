@@ -1,8 +1,4 @@
-<section
-  class="taxonomy-manager"
-  data-test-taxonomy-manager
-  ...attributes
->
+<section class="taxonomy-manager" data-test-taxonomy-manager ...attributes>
   {{#let (unique-id) as |templateId|}}
     {{#if @selectedTerms}}
       <div class="selected-terms">
@@ -22,13 +18,14 @@
           <label for="vocabulary-{{templateId}}">
             {{t "general.selectVocabulary"}}:
           </label>
-          <select
-            id="vocabulary-{{templateId}}"
-            {{on "change" this.changeSelectedVocabulary}}
-          >
+          <select id="vocabulary-{{templateId}}" {{on "change" this.changeSelectedVocabulary}}>
             {{#each this.assignableVocabularies as |vocab|}}
-              <option value={{vocab.id}} selected={{if (eq vocab.id this.selectedVocabularyId) "selected"}}>
-                {{vocab.title}} ({{vocab.school.title}})
+              <option
+                value={{vocab.id}}
+                selected={{if (eq vocab.id this.selectedVocabularyId) "selected"}}
+              >
+                {{vocab.title}}
+                ({{vocab.school.title}})
               </option>
             {{/each}}
           </select>
@@ -41,7 +38,7 @@
           placeholder={{t "general.filterPlaceholder"}}
           {{on "input" (perform this.setTermFilter value="target.value")}}
           data-test-filter
-        >
+        />
       </div>
       <div class="terms-picker tag-tree">
         <ul class="selectable-terms-list">

@@ -7,22 +7,19 @@
     {{else}}
       <label class="upload-button" for={{@for}}>
         {{t "general.chooseFile"}}
-        <input
-          type="file"
-          id={{@for}}
-          hidden
-          {{queue.selectFile}}
-        >
+        <input type="file" id={{@for}} hidden {{queue.selectFile}} />
       </label>
     {{/if}}
     {{#if this.upload.lastSuccessful.value}}
       <span class="upload-result">
-        {{this.upload.lastSuccessful.value}} <FaIcon @icon="check" class="add" />
+        {{this.upload.lastSuccessful.value}}
+        <FaIcon @icon="check" class="add" />
       </span>
     {{/if}}
     {{#if this.fileUploadErrorMessage}}
       <span class="upload-result validation-error-message">
-        <FaIcon @icon="circle-exclamation" class="warning" /> {{this.fileUploadErrorMessage}}
+        <FaIcon @icon="circle-exclamation" class="warning" />
+        {{this.fileUploadErrorMessage}}
       </span>
     {{/if}}
   {{/let}}

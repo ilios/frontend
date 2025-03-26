@@ -24,10 +24,7 @@
             <label>
               {{t "general.startDate"}}:
             </label>
-            <DatePicker
-              @value={{this.startDate}}
-              @onChange={{this.updateStartDate}}
-            />
+            <DatePicker @value={{this.startDate}} @onChange={{this.updateStartDate}} />
           </div>
           <div class="start-time">
             <label>
@@ -50,7 +47,7 @@
                     disabled={{this.saveOffering.isRunning}}
                     {{on "input" (perform this.updateDurationHours value="target.value")}}
                     {{on "keypress" (if @offering (perform this.saveOnEnter) (noop))}}
-                  >
+                  />
                   <label for="hours-{{templateId}}">
                     {{t "general.hours"}}
                   </label>
@@ -68,7 +65,7 @@
                     disabled={{this.saveOffering.isRunning}}
                     {{on "input" (perform this.updateDurationMinutes value="target.value")}}
                     {{on "keypress" (if @offering (perform this.saveOnEnter) (noop))}}
-                  >
+                  />
                   <label for="minutes-{{templateId}}">
                     {{t "general.minutes"}}
                   </label>
@@ -83,7 +80,14 @@
             </label>
             {{#if this.endDate}}
               <div class="text">
-                {{format-date this.endDate month="2-digit" day="2-digit" year="numeric" hour="2-digit" minute="2-digit"}}
+                {{format-date
+                  this.endDate
+                  month="2-digit"
+                  day="2-digit"
+                  year="numeric"
+                  hour="2-digit"
+                  minute="2-digit"
+                }}
               </div>
             {{/if}}
           </div>
@@ -93,12 +97,12 @@
             </label>
             {{#if this.isEditingTimezone}}
               <div class="picker">
-                <select
-                  id="timezone-{{templateId}}"
-                  {{on "change" this.changeTimezone}}
-                >
+                <select id="timezone-{{templateId}}" {{on "change" this.changeTimezone}}>
                   {{#each this.timezones as |timezone|}}
-                    <option value={{timezone.value}} selected={{is-equal timezone.value this.currentTimezone}}>
+                    <option
+                      value={{timezone.value}}
+                      selected={{is-equal timezone.value this.currentTimezone}}
+                    >
                       {{timezone.label}}
                     </option>
                   {{/each}}
@@ -115,10 +119,7 @@
                 </span>
               </div>
             {{else}}
-              <div
-                data-test-current-timezone
-                class="current-timezone"
-              >
+              <div data-test-current-timezone class="current-timezone">
                 <button
                   class="link-button"
                   type="button"
@@ -145,7 +146,8 @@
                     <div class="make-recurring-days">
                       {{#each this.recurringDayOptions as |obj i|}}
                         <div data-test-make-recurring-day>
-                          <input id="make-recurring-day-input-{{i}}-{{templateId}}"
+                          <input
+                            id="make-recurring-day-input-{{i}}-{{templateId}}"
                             type="checkbox"
                             checked={{or
                               (includes obj.day this.recurringDays)
@@ -154,7 +156,7 @@
                             disabled={{eq this.startDateDayOfWeek obj.day}}
                             data-test-recurring-day-input={{i}}
                             {{on "click" (fn this.toggleRecurringDay obj.day)}}
-                          >
+                          />
                           <label
                             class="day-of-week clickable"
                             for="make-recurring-day-input-{{i}}-{{templateId}}"
@@ -166,13 +168,14 @@
                       {{/each}}
                     </div>
                     <div class="make-recurring-input-container">
-                      <input type="text"
+                      <input
+                        type="text"
                         id="make-recurring-weeks-{{templateId}}"
                         value={{this.numberOfWeeks}}
                         class="make-recurring-input"
                         {{on "input" this.changeNumberOfWeeks}}
                         {{on "keyup" (fn this.addErrorDisplayFor "numberOfWeeks")}}
-                      >
+                      />
                       <label
                         class="make-recurring-input-label"
                         for="make-recurring-weeks-{{templateId}}"
@@ -202,7 +205,7 @@
                 {{on "input" this.changeRoom}}
                 {{on "keyup" (fn this.addErrorDisplayFor "room")}}
                 {{on "keypress" (if @offering (perform this.saveOnEnter) (noop))}}
-              >
+              />
               <ValidationError @validatable={{this}} @property="room" />
             </div>
             <div class="url" data-test-url>
@@ -214,17 +217,17 @@
               </label>
               {{! template-lint-disable no-bare-strings}}
               <input
-                  id="url-{{templateId}}"
-                  type="text"
-                  placeholder="https://example.com"
-                  value={{this.bestUrl}}
-                  inputmode="url"
-                  disabled={{this.saveOffering.isRunning}}
-                  {{on "input" (pick "target.value" this.changeURL)}}
-                  {{on "keyup" (fn this.addErrorDisplayFor "url")}}
-                  {{on "focus" this.selectAllText}}
-                  {{on "keypress" (if @offering (perform this.saveOnEnter) (noop))}}
-              >
+                id="url-{{templateId}}"
+                type="text"
+                placeholder="https://example.com"
+                value={{this.bestUrl}}
+                inputmode="url"
+                disabled={{this.saveOffering.isRunning}}
+                {{on "input" (pick "target.value" this.changeURL)}}
+                {{on "keyup" (fn this.addErrorDisplayFor "url")}}
+                {{on "focus" this.selectAllText}}
+                {{on "keypress" (if @offering (perform this.saveOnEnter) (noop))}}
+              />
               <ValidationError @validatable={{this}} @property="url" />
             </div>
           {{/if}}

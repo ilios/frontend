@@ -1,4 +1,7 @@
-<div class="course-objective-list-item-descriptors grid-item" data-test-objective-list-item-descriptors>
+<div
+  class="course-objective-list-item-descriptors grid-item"
+  data-test-objective-list-item-descriptors
+>
   {{#if @isManaging}}
     <button
       type="button"
@@ -28,13 +31,8 @@
       {{#each (sort-by "name" @meshDescriptors) as |descriptor|}}
         {{#if @editable}}
           <li data-test-term>
-            <button
-              type="button"
-              class="link-button"
-              {{on "click" @manage}}
-              data-test-manage
-              >
-                {{descriptor.name}}
+            <button type="button" class="link-button" {{on "click" @manage}} data-test-manage>
+              {{descriptor.name}}
             </button>
           </li>
         {{else}}
