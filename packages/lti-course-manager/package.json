@@ -48,7 +48,7 @@
     "@eslint/js": "^9.23.0",
     "@glimmer/component": "^2.0.0",
     "@glimmer/tracking": "^1.1.2",
-    "@warp-drive/build-config": "0.0.1",
+    "@warp-drive/build-config": "0.0.2",
     "broccoli-asset-rev": "^3.0.0",
     "broccoli-file-creator": "^2.1.1",
     "broccoli-merge-trees": "^4.2.0",
