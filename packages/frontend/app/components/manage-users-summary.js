@@ -58,23 +58,31 @@ export default class ManageUsersSummaryComponent extends Component {
   }
 
   @action
-  keyboard(event) {
-    event.preventDefault();
+  onEscapeKey() {
+    this.clear();
+  }
 
+  @action
+  onEnterKey() {
+    if (this.activeUserId) {
+      this.clickUser.perform({ id: this.activeUserId });
+    } else {
+      this.searchForUsers.perform();
+    }
+  }
+
+  @action
+  onArrowKey(event) {
     const { keyCode, target } = event;
 
     const container = target.parentElement.querySelector('.results');
     const list = container.getElementsByClassName('user');
     const listArray = Array.from(list);
 
-    if (this.isEscapeKey(keyCode)) {
-      this.clear();
-    }
-
-    const isValid = this.isEnterKey(keyCode) || listArray.length > 0;
+    const isValid = listArray.length > 0;
 
     if (isValid) {
-      this.keyActions(keyCode, listArray, container);
+      this.verticalKeyAction(keyCode, listArray, container);
     }
   }
 
@@ -82,34 +90,9 @@ export default class ManageUsersSummaryComponent extends Component {
     return (
       this.searchForUsers.isIdle &&
       (this.searchForUsers.performCount == 0 ||
-        this.searchForUsers.lastSuccessful.value.length == 0)
+        this.searchForUsers.lastSuccessful.value.length == 0 ||
+        !this.searchValue)
     );
-  }
-
-  keyActions(keyCode, listArray, container) {
-    if (this.isEnterKey(keyCode)) {
-      if (this.activeUserId) {
-        this.clickUser.perform({ id: this.activeUserId });
-      } else {
-        this.searchForUsers.perform();
-      }
-    }
-
-    if (this.isVerticalKey(keyCode)) {
-      this.verticalKeyAction(keyCode, listArray, container);
-    } else {
-      if (cleanQuery(this.searchValue).length >= MIN_INPUT && !this.isHorizontalKey(keyCode)) {
-        this.searchForUsers.perform();
-      }
-    }
-  }
-
-  isVerticalKey(keyCode) {
-    return this.isUpArrow(keyCode) || this.isDownArrow(keyCode);
-  }
-
-  isHorizontalKey(keyCode) {
-    return keyCode === 37 || keyCode == 39;
   }
 
   isUpArrow(keyCode) {
@@ -118,14 +101,6 @@ export default class ManageUsersSummaryComponent extends Component {
 
   isDownArrow(keyCode) {
     return keyCode === 40;
-  }
-
-  isEnterKey(keyCode) {
-    return keyCode === 13;
-  }
-
-  isEscapeKey(keyCode) {
-    return keyCode === 27;
   }
 
   verticalKeyAction(keyCode, listArray, container) {

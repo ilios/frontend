@@ -36,12 +36,17 @@
       autocomplete="name"
       type="search"
       value={{this.searchValue}}
-      {{on "input" (pick "target.value" (set this "searchValue"))}}
+      {{on
+        "input"
+        (queue (pick "target.value" (set this "searchValue")) (perform this.searchForUsers))
+      }}
       placeholder={{t "general.searchForIliosUsers"}}
       aria-label={{t "general.searchForIliosUsers"}}
       incremental="true"
-      {{on "search" (perform this.searchForUsers)}}
-      {{on "keyup" this.keyboard}}
+      {{on-key "Escape" this.onEscapeKey}}
+      {{on-key "Enter" this.onEnterKey}}
+      {{on-key "ArrowUp" this.onArrowKey}}
+      {{on-key "ArrowDown" this.onArrowKey}}
     />
     <ul class="results{{if this.hideResults ' hidden'}}">
       {{#if this.searchForUsers.isRunning}}
