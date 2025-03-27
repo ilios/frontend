@@ -78,7 +78,7 @@ general:
   continue: Continue
   copiedCurriculumReportUrl: Copied Curriculum Report Link successfully
   copy: Copy
-  copyCurriculumReportUrl: Copy Curriculum Report Link
+  copyCurriculumReportUrl: Copy link to this Curriculum Report
   copyNewToken: Copy new token
   copyWithLearners: Copy with Learners
   copyWithoutLearners: Copy without Learners
