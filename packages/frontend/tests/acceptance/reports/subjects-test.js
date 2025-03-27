@@ -494,7 +494,7 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
   });
 
   test('create new report for instructors by academic year #3594', async function (assert) {
-    assert.expect(14);
+    assert.expect(15);
     this.server.createList('user', 3);
     await page.visit();
     assert.strictEqual(page.subjects.list.table.reports.length, 2);
@@ -516,20 +516,36 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
       'All Instructors for 2015 - 2016 in school 0',
     );
 
+    let counter = 0;
     this.server.post('api/graphql', ({ db }, { requestBody }) => {
       const { query } = JSON.parse(requestBody);
-
-      assert.strictEqual(
-        query,
-        'query { users(schools: [1], instructedAcademicYears: [2015]) { firstName,middleName,lastName,displayName } }',
-      );
-      return {
-        data: {
-          users: db.users.map(({ firstName, middleName, lastName, displayName }) => {
-            return { firstName, middleName, lastName, displayName };
-          }),
-        },
-      };
+      const users = db.users.map(({ id, firstName, middleName, lastName, displayName }) => {
+        return { id, firstName, middleName, lastName, displayName };
+      });
+      counter++;
+      switch (counter) {
+        case 1:
+          assert.strictEqual(
+            query,
+            'query { courses(schools: [1], academicYears: [2015]) { id } }',
+          );
+          return {
+            data: {
+              courses: [{ id: 1 }, { id: 31 }],
+            },
+          };
+        case 2:
+          assert.ok(query.includes('query { courses(ids: [1,31])'));
+          return {
+            data: {
+              courses: [
+                { sessions: [{ offerings: [{ instructors: users, instructorGroups: [] }] }] },
+              ],
+            },
+          };
+        default:
+          assert.ok(false, 'too many queries');
+      }
     });
     await page.subjects.list.table.reports[0].select();
     assert.strictEqual(currentURL(), '/reports/subjects/3');
