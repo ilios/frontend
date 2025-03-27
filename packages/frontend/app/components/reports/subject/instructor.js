@@ -4,7 +4,7 @@ import { cached } from '@glimmer/tracking';
 import { service } from '@ember/service';
 import { pluralize } from 'ember-inflector';
 import { camelize, capitalize } from '@ember/string';
-import { uniqueById } from 'ilios-common/utils/array-helpers';
+import { chunk, uniqueById } from 'ilios-common/utils/array-helpers';
 import { action } from '@ember/object';
 
 export default class ReportsSubjectInstructorComponent extends Component {
@@ -72,12 +72,12 @@ export default class ReportsSubjectInstructorComponent extends Component {
     return rhett;
   }
 
-  async getResultsForCourse(courseId) {
+  async getResultsForCourses(courseIds) {
     const userInfo = '{ id firstName middleName lastName displayName }';
     const block = `instructorGroups {  users ${userInfo}} instructors ${userInfo}`;
     const results = await this.graphql.find(
       'courses',
-      [`id: ${courseId}`],
+      [`ids: [${courseIds.join(',')}]`],
       `sessions {
         ilmSession { ${block} }
         offerings { ${block} }
@@ -88,7 +88,9 @@ export default class ReportsSubjectInstructorComponent extends Component {
       return [];
     }
 
-    const users = results.data.courses[0].sessions.reduce((acc, session) => {
+    const sessions = results.data.courses.map(({ sessions }) => sessions).flat();
+
+    const users = sessions.reduce((acc, session) => {
       if (session.ilmSession) {
         acc.push(
           ...session.ilmSession.instructors,
@@ -108,13 +110,40 @@ export default class ReportsSubjectInstructorComponent extends Component {
     return uniqueById(users);
   }
 
+  async getResultsForAcademicYear(academicYearId, school) {
+    let filters = [];
+    if (school) {
+      filters.push(`schools: [${school.id}]`);
+    }
+    filters.push(`academicYears: [${academicYearId}]`);
+
+    const results = await this.graphql.find('courses', filters, 'id');
+
+    if (!results.data.courses.length) {
+      return [];
+    }
+
+    const ids = results.data.courses.map(({ id }) => id);
+
+    //fetch courses 5 at a time for performance on the API
+    //but send all the requests at once
+    const promises = chunk(ids, 5).map((chunk) => this.getResultsForCourses(chunk));
+
+    const users = await (await Promise.all(promises)).flat();
+    return uniqueById(users);
+  }
+
   async getReportResults(subject, prepositionalObject, prepositionalObjectTableRowId, school) {
     if (subject !== 'instructor') {
       throw new Error(`Report for ${subject} sent to ReportsSubjectInstructorComponent`);
     }
 
     if (prepositionalObject === 'course') {
-      return this.getResultsForCourse(prepositionalObjectTableRowId);
+      return this.getResultsForCourses([prepositionalObjectTableRowId]);
+    }
+
+    if (prepositionalObject === 'academic year') {
+      return this.getResultsForAcademicYear(prepositionalObjectTableRowId, school);
     }
 
     const filters = await this.getGraphQLFilters(
