@@ -147,21 +147,12 @@ module('Unit | Model | User', function (hooks) {
 
   test('gets all directed courses', async function (assert) {
     assert.expect(3);
-    const model = this.owner.lookup('service:store').createRecord('user');
     const store = this.owner.lookup('service:store');
-    const courses = [];
-    courses.push(
-      store.createRecord('course', {
-        directors: [model],
-        id: 1,
-      }),
-    );
-    courses.push(
-      store.createRecord('course', {
-        directors: [model],
-        id: 2,
-      }),
-    );
+    const model = store.createRecord('user');
+    const courses = [
+      store.createRecord('course', { directors: [model] }),
+      store.createRecord('course', { directors: [model] }),
+    ];
     const allRelatedCourses = await waitForResource(model, 'allRelatedCourses');
     assert.strictEqual(allRelatedCourses.length, courses.length);
     courses.forEach((course) => {
@@ -171,21 +162,12 @@ module('Unit | Model | User', function (hooks) {
 
   test('gets all administered courses', async function (assert) {
     assert.expect(3);
-    const model = this.owner.lookup('service:store').createRecord('user');
     const store = this.owner.lookup('service:store');
-    const courses = [];
-    courses.push(
-      store.createRecord('course', {
-        administrators: [model],
-        id: 1,
-      }),
-    );
-    courses.push(
-      store.createRecord('course', {
-        administrators: [model],
-        id: 2,
-      }),
-    );
+    const model = store.createRecord('user');
+    const courses = [
+      store.createRecord('course', { administrators: [model] }),
+      store.createRecord('course', { administrators: [model] }),
+    ];
     const allRelatedCourses = await waitForResource(model, 'allRelatedCourses');
     assert.strictEqual(allRelatedCourses.length, courses.length);
     courses.forEach((course) => {
@@ -388,11 +370,11 @@ module('Unit | Model | User', function (hooks) {
       course: course1,
     });
     const ilm1 = store.createRecord('ilm-session', {
-      id: 1,
+      id: '1',
       session: session1,
     });
     const ilm2 = store.createRecord('ilm-session', {
-      id: 2,
+      id: '2',
       session: session2,
     });
     store.createRecord('instructor-group', {
@@ -404,7 +386,7 @@ module('Unit | Model | User', function (hooks) {
       course: course2,
     });
     const ilm3 = store.createRecord('ilm-session', {
-      id: 3,
+      id: '3',
       session: session3,
     });
     store.createRecord('instructor-group', {
@@ -450,34 +432,28 @@ module('Unit | Model | User', function (hooks) {
   });
 
   test('isStudent - no roles', async function (assert) {
-    const model = this.owner.lookup('service:store').createRecord('user');
-    const isStudent = await waitForResource(model, 'isStudent');
+    const user = this.owner.lookup('service:store').createRecord('user');
+    const isStudent = await waitForResource(user, 'isStudent');
     assert.notOk(isStudent);
   });
 
   test('isStudent - roles, but no student role', async function (assert) {
-    const model = this.owner.lookup('service:store').createRecord('user');
     const store = this.owner.lookup('service:store');
-    const notAStudentRole = store.createRecord('user-role', {
+    const role1 = store.createRecord('user-role', {
       title: 'East-German Pie Eating Champion of 1997',
     });
-    const notAStudentRoleEither = store.createRecord('user-role', {
-      title: 'Alien Overlord',
-    });
-    (await model.roles).push(notAStudentRole, notAStudentRoleEither);
-    const isStudent = await waitForResource(model, 'isStudent');
+    const role2 = store.createRecord('user-role', { title: 'Alien Overlord' });
+    const user = store.createRecord('user', { roles: [role1, role2] });
+    const isStudent = await waitForResource(user, 'isStudent');
     assert.notOk(isStudent);
   });
 
   test('isStudent - has student role', async function (assert) {
-    const model = this.owner.lookup('service:store').createRecord('user');
     const store = this.owner.lookup('service:store');
-    const notAStudentRole = store.createRecord('user-role', {
-      title: 'Non-student',
-    });
+    const nonStudentRole = store.createRecord('user-role', { title: 'Non-student' });
     const studentRole = store.createRecord('user-role', { title: 'Student' });
-    (await model.roles).push(notAStudentRole, studentRole);
-    const isStudent = await waitForResource(model, 'isStudent');
+    const user = store.createRecord('user', { roles: [nonStudentRole, studentRole] });
+    const isStudent = await waitForResource(user, 'isStudent');
     assert.ok(isStudent);
   });
 
@@ -605,8 +581,8 @@ module('Unit | Model | User', function (hooks) {
 
   test('gets all instructor ilm courses', async function (assert) {
     assert.expect(3);
-    const model = this.owner.lookup('service:store').createRecord('user');
     const store = this.owner.lookup('service:store');
+    const model = store.createRecord('user');
     const course1 = store.createRecord('course');
     const session1 = store.createRecord('session', {
       course: course1,
@@ -633,23 +609,21 @@ module('Unit | Model | User', function (hooks) {
   });
 
   test('find lowest group at top of tree', async function (assert) {
-    const model = this.owner.lookup('service:store').createRecord('user');
     const store = this.owner.lookup('service:store');
+    const model = store.createRecord('user');
     const learnerGroup = store.createRecord('learner-group', {
-      id: 1,
+      id: '1',
       users: [model],
     });
     const learnerGroup2 = store.createRecord('learner-group', {
-      id: 2,
+      id: '2',
       parent: learnerGroup,
     });
     const learnerGroup3 = store.createRecord('learner-group', {
-      id: 3,
+      id: '3',
       parent: learnerGroup2,
     });
     const tree = [learnerGroup, learnerGroup2, learnerGroup3];
-    (await model.learnerGroups).push(learnerGroup);
-
     const lowestGroup = await model.getLowestMemberGroupInALearnerGroupTree(tree);
 
     assert.ok(lowestGroup);
@@ -657,24 +631,23 @@ module('Unit | Model | User', function (hooks) {
   });
 
   test('find lowest group in middle of tree', async function (assert) {
-    const model = this.owner.lookup('service:store').createRecord('user');
     const store = this.owner.lookup('service:store');
+    const model = store.createRecord('user');
+
     const learnerGroup = store.createRecord('learner-group', {
-      id: 1,
+      id: '1',
       users: [model],
     });
     const learnerGroup2 = store.createRecord('learner-group', {
-      id: 2,
+      id: '2',
       parent: learnerGroup,
       users: [model],
     });
     const learnerGroup3 = store.createRecord('learner-group', {
-      id: 3,
+      id: '3',
       parent: learnerGroup2,
     });
     const tree = [learnerGroup, learnerGroup2, learnerGroup3];
-    (await model.learnerGroups).push(learnerGroup, learnerGroup2);
-
     const lowestGroup = await model.getLowestMemberGroupInALearnerGroupTree(tree);
 
     assert.ok(lowestGroup);
@@ -682,25 +655,24 @@ module('Unit | Model | User', function (hooks) {
   });
 
   test('find lowest group in bottom of tree', async function (assert) {
-    const model = this.owner.lookup('service:store').createRecord('user');
     const store = this.owner.lookup('service:store');
+    const model = store.createRecord('user');
+
     const learnerGroup = store.createRecord('learner-group', {
-      id: 1,
+      id: '1',
       users: [model],
     });
     const learnerGroup2 = store.createRecord('learner-group', {
-      id: 2,
+      id: '2',
       parent: learnerGroup,
       users: [model],
     });
     const learnerGroup3 = store.createRecord('learner-group', {
-      id: 3,
+      id: '3',
       parent: learnerGroup2,
       users: [model],
     });
     const tree = [learnerGroup, learnerGroup2, learnerGroup3];
-    (await model.learnerGroups).push(learnerGroup, learnerGroup2, learnerGroup3);
-
     const lowestGroup = await model.getLowestMemberGroupInALearnerGroupTree(tree);
 
     assert.ok(lowestGroup);
@@ -708,15 +680,16 @@ module('Unit | Model | User', function (hooks) {
   });
 
   test('return null when there is no group in the tree', async function (assert) {
-    const model = this.owner.lookup('service:store').createRecord('user');
     const store = this.owner.lookup('service:store');
+    const model = store.createRecord('user');
+
     const learnerGroup = store.createRecord('learner-group');
     const learnerGroup2 = store.createRecord('learner-group', {
-      id: 2,
+      id: '2',
       parent: learnerGroup,
     });
     const learnerGroup3 = store.createRecord('learner-group', {
-      id: 3,
+      id: '3',
       parent: learnerGroup2,
     });
     const tree = [learnerGroup, learnerGroup2, learnerGroup3];
@@ -738,7 +711,6 @@ module('Unit | Model | User', function (hooks) {
       users: [model],
     });
     model.set('primaryCohort', primaryCohort);
-    (await model.cohorts).push(primaryCohort, secondaryCohort, anotherCohort);
 
     const cohorts = await waitForResource(model, 'secondaryCohorts');
     assert.strictEqual(cohorts.length, 2);

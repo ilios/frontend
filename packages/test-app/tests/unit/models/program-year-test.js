@@ -12,8 +12,8 @@ module('Unit | Model | ProgramYear', function (hooks) {
 
   test('classOf string', async function (assert) {
     const model = this.owner.lookup('service:store').createRecord('program-year');
-    var store = model.store;
-    const program = store.createRecord('program', { id: 99, duration: 1 });
+    const store = model.store;
+    const program = store.createRecord('program', { id: '99', duration: 1 });
     model.set('program', program);
     model.set('startYear', 2000);
     assert.strictEqual(await waitForResource(model, 'classOfYear'), '2001');
@@ -50,11 +50,10 @@ module('Unit | Model | ProgramYear', function (hooks) {
     const vocabulary2 = store.createRecord('vocabulary');
     store.createRecord('vocabulary');
 
-    const term1 = store.createRecord('term', { vocabulary: vocabulary1 });
-    const term2 = store.createRecord('term', { vocabulary: vocabulary1 });
-    const term3 = store.createRecord('term', { vocabulary: vocabulary1 });
-    const term4 = store.createRecord('term', { vocabulary: vocabulary2 });
-    (await programYear.terms).push(term1, term2, term3, term4);
+    store.createRecord('term', { vocabulary: vocabulary1, programYears: [programYear] });
+    store.createRecord('term', { vocabulary: vocabulary1, programYears: [programYear] });
+    store.createRecord('term', { vocabulary: vocabulary1, programYears: [programYear] });
+    store.createRecord('term', { vocabulary: vocabulary2, programYears: [programYear] });
 
     const vocabularies = await waitForResource(programYear, 'associatedVocabularies');
     assert.strictEqual(vocabularies.length, 2);

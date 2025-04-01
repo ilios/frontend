@@ -11,15 +11,14 @@ module('Unit | Model | term', function (hooks) {
   test('isTopLevel', function (assert) {
     const model = this.store.createRecord('term');
     assert.ok(model.get('isTopLevel'));
-    this.store.createRecord('term', { id: 1, children: [model] });
+    this.store.createRecord('term', { id: '1', children: [model] });
     assert.notOk(model.get('isTopLevel'));
   });
 
   test('hasChildren', async function (assert) {
     const model = this.store.createRecord('term');
     assert.notOk(model.get('hasChildren'));
-    const child = this.store.createRecord('term', { id: 1, parent: model });
-    (await model.children).push(child);
+    this.store.createRecord('term', { id: '1', parent: model });
     assert.ok(model.get('hasChildren'));
   });
 
@@ -120,8 +119,7 @@ module('Unit | Model | term', function (hooks) {
   test('childCount', async function (assert) {
     const model = this.store.createRecord('term');
     assert.strictEqual(model.get('childCount'), 0);
-    const child = this.store.createRecord('term', { id: 1, parent: model });
-    (await model.children).push(child);
+    this.store.createRecord('term', { id: '1', parent: model });
     assert.ok(model.get('childCount'), 1);
   });
 });

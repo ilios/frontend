@@ -7,24 +7,22 @@ module('Unit | Model | Offering', function (hooks) {
   setupTest(hooks);
 
   test('check allInstructors', async function (assert) {
-    const offering = this.owner.lookup('service:store').createRecord('offering');
     const store = this.owner.lookup('service:store');
+    const offering = store.createRecord('offering');
 
     let allInstructors = await waitForResource(offering, 'allInstructors');
 
     assert.strictEqual(allInstructors.length, 0);
 
-    const user1 = store.createRecord('user', { displayName: 'Beta' });
+    const user1 = store.createRecord('user', {
+      displayName: 'Beta',
+      instructedOfferings: [offering],
+    });
     const user2 = store.createRecord('user', { displayName: 'Alpha' });
     const user3 = store.createRecord('user', { displayName: 'Omega' });
-    (await offering.instructors).push(user1);
-    const instructorGroup1 = store.createRecord('instructor-group', {
-      users: [user2],
-    });
-    const instructorGroup2 = store.createRecord('instructor-group', {
-      users: [user3],
-    });
-    (await offering.instructorGroups).push(instructorGroup1, instructorGroup2);
+
+    store.createRecord('instructor-group', { users: [user2], offerings: [offering] });
+    store.createRecord('instructor-group', { users: [user3], offerings: [offering] });
 
     allInstructors = await waitForResource(offering, 'allInstructors');
 
@@ -33,16 +31,13 @@ module('Unit | Model | Offering', function (hooks) {
     assert.ok(allInstructors.includes(user2));
     assert.ok(allInstructors.includes(user3));
 
-    const user4 = store.createRecord('user', {
+    store.createRecord('user', {
       firstName: 'Larry',
       lastName: 'Lazy',
+      instructedOfferings: [offering],
     });
     const user5 = store.createRecord('user', { displayName: 'Gamma' });
-    (await offering.instructors).push(user4);
-    const instructorGroup3 = store.createRecord('instructor-group', {
-      users: [user5],
-    });
-    (await offering.instructorGroups).push(instructorGroup3);
+    store.createRecord('instructor-group', { users: [user5], offerings: [offering] });
 
     allInstructors = await waitForResource(offering, 'allInstructors');
 
@@ -79,23 +74,18 @@ module('Unit | Model | Offering', function (hooks) {
   });
 
   test('check allLearners', async function (assert) {
-    const offering = this.owner.lookup('service:store').createRecord('offering');
     const store = this.owner.lookup('service:store');
+    const offering = store.createRecord('offering');
 
     let allLearners = await waitForResource(offering, 'allLearners');
     assert.strictEqual(allLearners.length, 0);
 
-    const user1 = store.createRecord('user', { displayName: 'Beta' });
+    const user1 = store.createRecord('user', { displayName: 'Beta', offerings: [offering] });
     const user2 = store.createRecord('user', { displayName: 'Alpha' });
     const user3 = store.createRecord('user', { displayName: 'Omega' });
-    (await offering.learners).push(user1);
-    const learnerGroup1 = store.createRecord('learner-group', {
-      users: [user2],
-    });
-    const learnerGroup2 = store.createRecord('learner-group', {
-      users: [user3],
-    });
-    (await offering.learnerGroups).push(learnerGroup1, learnerGroup2);
+
+    store.createRecord('learner-group', { users: [user2], offerings: [offering] });
+    store.createRecord('learner-group', { users: [user3], offerings: [offering] });
 
     allLearners = await waitForResource(offering, 'allLearners');
 
@@ -104,16 +94,10 @@ module('Unit | Model | Offering', function (hooks) {
     assert.ok(allLearners.includes(user2));
     assert.ok(allLearners.includes(user3));
 
-    const user4 = store.createRecord('user', {
-      firstName: 'Larry',
-      lastName: 'Lazy',
-    });
+    store.createRecord('user', { firstName: 'Larry', lastName: 'Lazy', offerings: [offering] });
+
     const user5 = store.createRecord('user', { displayName: 'Gamma' });
-    (await offering.learners).push(user4);
-    const learnerGroup3 = store.createRecord('learner-group', {
-      users: [user5],
-    });
-    (await offering.learnerGroups).push(learnerGroup3);
+    store.createRecord('learner-group', { users: [user5], offerings: [offering] });
 
     allLearners = await waitForResource(offering, 'allLearners');
 

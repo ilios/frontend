@@ -15,13 +15,12 @@ module('Unit | Model | vocabulary', function (hooks) {
   });
 
   test('getTopLevelTerms', async function (assert) {
-    const model = this.owner.lookup('service:store').createRecord('vocabulary');
-    const store = model.store;
-    const term1 = store.createRecord('term', { id: 1 });
-    const term2 = store.createRecord('term', { id: 2 });
-    const term3 = store.createRecord('term', { id: 3, parent: term2 });
-    (await model.terms).push(term1, term2, term3);
-    const topLevelTerms = await model.getTopLevelTerms();
+    const store = this.owner.lookup('service:store');
+    const vocabulary = store.createRecord('vocabulary');
+    const term1 = store.createRecord('term', { id: '1', vocabulary });
+    const term2 = store.createRecord('term', { id: '2', vocabulary });
+    store.createRecord('term', { id: '3', parent: term2, vocabulary });
+    const topLevelTerms = await vocabulary.getTopLevelTerms();
     assert.strictEqual(topLevelTerms.length, 2);
     assert.ok(topLevelTerms.includes(term1));
     assert.ok(topLevelTerms.includes(term2));

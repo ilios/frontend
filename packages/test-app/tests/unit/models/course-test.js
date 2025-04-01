@@ -11,31 +11,29 @@ module('Unit | Model | Course', function (hooks) {
   });
 
   test('check required publication items', async function (assert) {
-    const model = this.owner.lookup('service:store').createRecord('course');
     const store = this.owner.lookup('service:store');
-    assert.strictEqual(model.get('requiredPublicationIssues').length, 3);
-    var cohort = store.createRecord('cohort');
-    (await model.cohorts).push(cohort);
-    assert.strictEqual(model.get('requiredPublicationIssues').length, 2);
-    model.set('startDate', 'nothing');
-    assert.strictEqual(model.get('requiredPublicationIssues').length, 1);
-    model.set('endDate', 'nothing');
-    assert.strictEqual(model.get('requiredPublicationIssues').length, 0);
+    const course = store.createRecord('course');
+
+    assert.strictEqual(course.get('requiredPublicationIssues').length, 3);
+    store.createRecord('cohort', { courses: [course] });
+    assert.strictEqual(course.get('requiredPublicationIssues').length, 2);
+    course.set('startDate', 'nothing');
+    assert.strictEqual(course.get('requiredPublicationIssues').length, 1);
+    course.set('endDate', 'nothing');
+    assert.strictEqual(course.get('requiredPublicationIssues').length, 0);
   });
 
   test('check optional publication items', async function (assert) {
     const store = this.owner.lookup('service:store');
-    const model = store.createRecord('course');
-    assert.strictEqual(model.get('optionalPublicationIssues').length, 3);
-    (await model.terms).push(store.createRecord('term'));
-    assert.strictEqual(model.get('optionalPublicationIssues').length, 2);
-    const courseObjective = store.createRecord('course-objective', {
-      course: model,
-    });
-    (await model.courseObjectives).push(courseObjective);
-    assert.strictEqual(model.get('optionalPublicationIssues').length, 1);
-    (await model.meshDescriptors).push(store.createRecord('mesh-descriptor'));
-    assert.strictEqual(model.get('optionalPublicationIssues').length, 0);
+    const course = store.createRecord('course');
+
+    assert.strictEqual(course.get('optionalPublicationIssues').length, 3);
+    store.createRecord('term', { courses: [course] });
+    assert.strictEqual(course.get('optionalPublicationIssues').length, 2);
+    store.createRecord('course-objective', { course });
+    assert.strictEqual(course.get('optionalPublicationIssues').length, 1);
+    store.createRecord('mesh-descriptor', { courses: [course] });
+    assert.strictEqual(course.get('optionalPublicationIssues').length, 0);
   });
 
   test('check empty competencies', async function (assert) {
@@ -46,8 +44,8 @@ module('Unit | Model | Course', function (hooks) {
   });
 
   test('check competencies', async function (assert) {
-    const course = this.owner.lookup('service:store').createRecord('course');
     const store = this.owner.lookup('service:store');
+    const course = store.createRecord('course');
 
     const competency1 = store.createRecord('competency');
     const competency2 = store.createRecord('competency');
@@ -79,8 +77,8 @@ module('Unit | Model | Course', function (hooks) {
   });
 
   test('check publishedSessionOfferingCounts count', async function (assert) {
-    const course = this.owner.lookup('service:store').createRecord('course');
     const store = this.owner.lookup('service:store');
+    const course = store.createRecord('course');
 
     const offering1 = store.createRecord('offering');
     const offering2 = store.createRecord('offering');
@@ -104,45 +102,45 @@ module('Unit | Model | Course', function (hooks) {
     });
 
     assert.strictEqual(await waitForResource(course, 'publishedOfferingCount'), 3);
-    const offering5 = store.createRecord('offering');
-    (await session1.offerings).push(offering5);
-    session3.set('published', true);
+    store.createRecord('offering', { session: session1 });
 
+    session3.set('published', true);
     assert.strictEqual(await waitForResource(course, 'publishedOfferingCount'), 5);
   });
 
   test('domains', async function (assert) {
-    const course = this.owner.lookup('service:store').createRecord('course');
     const store = this.owner.lookup('service:store');
+    const course = store.createRecord('course');
+
     const domain1 = store.createRecord('competency', {
-      id: 1,
+      id: '1',
       title: 'Zylinder',
     });
-    const domain2 = store.createRecord('competency', { id: 2, title: 'Anton' });
+    const domain2 = store.createRecord('competency', { id: '2', title: 'Anton' });
     const domain3 = store.createRecord('competency', {
-      id: 3,
+      id: '3',
       title: 'Lexicon',
     });
     const competency1 = store.createRecord('competency', {
-      id: 4,
+      id: '4',
       title: 'Zeppelin',
       parent: domain1,
     });
     const competency2 = store.createRecord('competency', {
-      id: 5,
+      id: '5',
       title: 'Aardvark',
       parent: domain1,
     });
     const competency3 = store.createRecord('competency', {
-      id: 6,
+      id: '6',
       title: 'Geflarknik',
       parent: domain2,
     });
     // competencies that are linked to these domains, but not to this course.
     // they should not appear in the output.
-    store.createRecord('competency', { id: 7, parent: domain1 });
-    store.createRecord('competency', { id: 8, parent: domain2 });
-    store.createRecord('competency', { id: 9, parent: domain3 });
+    store.createRecord('competency', { id: '7', parent: domain1 });
+    store.createRecord('competency', { id: '8', parent: domain2 });
+    store.createRecord('competency', { id: '9', parent: domain3 });
 
     const programYearObjective1 = store.createRecord('program-year-objective', {
       competency: competency1,
@@ -194,8 +192,9 @@ module('Unit | Model | Course', function (hooks) {
   });
 
   test('schools', async function (assert) {
-    const course = this.owner.lookup('service:store').createRecord('course');
     const store = this.owner.lookup('service:store');
+    const course = store.createRecord('course');
+
     const school1 = store.createRecord('school');
     const school2 = store.createRecord('school');
     const school3 = store.createRecord('school');
@@ -211,11 +210,10 @@ module('Unit | Model | Course', function (hooks) {
     const programYear3 = store.createRecord('program-year', {
       program: program3,
     });
-    const cohort1 = store.createRecord('cohort', { programYear: programYear1 });
-    const cohort2 = store.createRecord('cohort', { programYear: programYear2 });
-    const cohort3 = store.createRecord('cohort', { programYear: programYear3 });
+    store.createRecord('cohort', { programYear: programYear1, courses: [course] });
+    store.createRecord('cohort', { programYear: programYear2, courses: [course] });
+    store.createRecord('cohort', { programYear: programYear3, courses: [course] });
 
-    (await course.cohorts).push(cohort1, cohort2, cohort3);
     course.set('school', school1);
 
     const schools = await waitForResource(course, 'schools');
@@ -227,10 +225,12 @@ module('Unit | Model | Course', function (hooks) {
   });
 
   test('assignableVocabularies', async function (assert) {
-    const course = this.owner.lookup('service:store').createRecord('course');
     const store = this.owner.lookup('service:store');
+
     const school1 = store.createRecord('school', { title: 'Zylinder' });
     const school2 = store.createRecord('school', { title: 'Anton' });
+    const course = store.createRecord('course', { school: school2 });
+
     const vocabulary1 = store.createRecord('vocabulary', {
       title: 'Sowjetunion',
       school: school1,
@@ -249,9 +249,7 @@ module('Unit | Model | Course', function (hooks) {
     });
     const program = store.createRecord('program', { school: school1 });
     const programYear = store.createRecord('program-year', { program });
-    const cohort = store.createRecord('cohort', { programYear });
-    (await course.cohorts).push(cohort);
-    course.set('school', school2);
+    store.createRecord('cohort', { programYear, courses: [course] });
 
     const vocabularies = await waitForResource(course, 'assignableVocabularies');
     assert.strictEqual(vocabularies.length, 4);
@@ -265,19 +263,19 @@ module('Unit | Model | Course', function (hooks) {
     const store = this.owner.lookup('service:store');
     const course = store.createRecord('course');
     const sessionObjective1 = store.createRecord('course-objective', {
-      id: 1,
+      id: '1',
       course,
       title: 'Aardvark',
       position: 3,
     });
     const sessionObjective2 = store.createRecord('course-objective', {
-      id: 2,
+      id: '2',
       course,
       title: 'Bar',
       position: 2,
     });
     const sessionObjective3 = store.createRecord('course-objective', {
-      id: 3,
+      id: '3',
       course,
       title: 'Foo',
       position: 2,
@@ -290,17 +288,15 @@ module('Unit | Model | Course', function (hooks) {
   });
 
   test('associatedVocabularies', async function (assert) {
-    const course = this.owner.lookup('service:store').createRecord('course');
     const store = this.owner.lookup('service:store');
+    const course = store.createRecord('course');
     const vocabulary1 = store.createRecord('vocabulary');
     const vocabulary2 = store.createRecord('vocabulary');
     store.createRecord('vocabulary');
-
-    const term1 = store.createRecord('term', { vocabulary: vocabulary1 });
-    const term2 = store.createRecord('term', { vocabulary: vocabulary1 });
-    const term3 = store.createRecord('term', { vocabulary: vocabulary1 });
-    const term4 = store.createRecord('term', { vocabulary: vocabulary2 });
-    (await course.terms).push(term1, term2, term3, term4);
+    store.createRecord('term', { vocabulary: vocabulary1, courses: [course] });
+    store.createRecord('term', { vocabulary: vocabulary1, courses: [course] });
+    store.createRecord('term', { vocabulary: vocabulary1, courses: [course] });
+    store.createRecord('term', { vocabulary: vocabulary2, courses: [course] });
 
     const vocabularies = await waitForResource(course, 'associatedVocabularies');
     assert.strictEqual(vocabularies.length, 2);
