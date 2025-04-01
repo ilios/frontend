@@ -249,7 +249,7 @@ module('Unit | Service | reporting', function (hooks) {
 
     const store = this.owner.lookup('service:store');
     const reportModel = await store.findRecord('report', report.id);
-    const programYearModel = await store.findRecord('program year', programYear.id);
+    const programYearModel = await store.findRecord('program-year', programYear.id);
     const schoolModel = await store.findRecord('school', school.id);
     const title = await this.service.buildReportDescription(
       reportModel.subject,
