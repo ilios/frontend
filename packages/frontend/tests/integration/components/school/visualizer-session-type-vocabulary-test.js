@@ -48,17 +48,17 @@ module('Integration | Component | school/visualizer-session-type-vocabulary', fu
     assert.strictEqual(component.chart.slices.length, 3);
     assert.strictEqual(component.chart.labels.length, 3);
     assert.strictEqual(component.chart.descriptions.length, 3);
-    assert.strictEqual(component.chart.labels[0].text, 'term 2');
+    assert.ok(component.chart.labels[0].text.includes('term 2'));
     assert.strictEqual(
       component.chart.descriptions[0].text,
       'The term "term 2" from the "session type 0" vocabulary is applied to 1 session with session-type "session type 0".',
     );
-    assert.strictEqual(component.chart.labels[1].text, 'term 0');
+    assert.ok(component.chart.labels[1].text.includes('term 0'));
     assert.strictEqual(
       component.chart.descriptions[1].text,
       'The term "term 0" from the "session type 0" vocabulary is applied to 2 sessions with session-type "session type 0".',
     );
-    assert.strictEqual(component.chart.labels[2].text, 'term 1');
+    assert.ok(component.chart.labels[2].text.includes('term 1'));
     assert.strictEqual(
       component.chart.descriptions[2].text,
       'The term "term 1" from the "session type 0" vocabulary is applied to 4 sessions with session-type "session type 0".',

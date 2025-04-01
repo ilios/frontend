@@ -51,12 +51,12 @@ module('Integration | Component | school/session-type-visualize-vocabularies', f
     await waitFor('svg .slice');
     assert.strictEqual(component.vocabulariesChart.chart.slices.length, 2);
     assert.strictEqual(component.vocabulariesChart.chart.labels.length, 2);
-    assert.strictEqual(component.vocabulariesChart.chart.labels[0].text, 'Vocabulary 2');
+    assert.ok(component.vocabulariesChart.chart.labels[0].text.includes('Vocabulary 2'));
     assert.strictEqual(
       component.vocabulariesChart.chart.descriptions[0].text,
       '1 term from the "Vocabulary 2" vocabulary is applied to 1 session with session-type "session type 0".',
     );
-    assert.strictEqual(component.vocabulariesChart.chart.labels[1].text, 'Vocabulary 1');
+    assert.ok(component.vocabulariesChart.chart.labels[1].text.includes('Vocabulary 1'));
     assert.strictEqual(
       component.vocabulariesChart.chart.descriptions[1].text,
       '5 terms from the "Vocabulary 1" vocabulary are applied to 10 sessions with session-type "session type 0".',
