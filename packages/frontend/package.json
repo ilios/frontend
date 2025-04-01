@@ -115,7 +115,7 @@
     "globals": "^15.15.0",
     "ilios-common": "workspace:*",
     "loader.js": "^4.7.0",
-    "luxon": "^3.5.0",
+    "luxon": "^3.6.1",
     "miragejs": "^0.1.48",
     "mockdate": "^3.0.5",
     "pad": "^3.2.0",

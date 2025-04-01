@@ -82,7 +82,7 @@
     "globals": "^15.15.0",
     "ilios-common": "workspace:*",
     "loader.js": "^4.7.0",
-    "luxon": ">= 3.5.0",
+    "luxon": ">= 3.6.1",
     "miragejs": ">= 0.1.45",
     "papaparse": "^5.5.2",
     "prettier": "^3.5.3",
