@@ -12,8 +12,8 @@ module('Integration | Component | reports/subject/instructor', function (hooks) 
   const responseData = {
     data: {
       users: [
-        { firstName: 'First', middleName: 'Middle', lastName: 'Last', displayName: '' },
-        { firstName: 'Second', middleName: 'Middle', lastName: 'Last', displayName: 'abc' },
+        { id: 1, firstName: 'First', middleName: 'Middle', lastName: 'Last', displayName: '' },
+        { id: 2, firstName: 'Second', middleName: 'Middle', lastName: 'Last', displayName: 'abc' },
       ],
     },
   };
@@ -133,7 +133,7 @@ module('Integration | Component | reports/subject/instructor', function (hooks) 
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
-        `query { courses(id: 13) { sessions {
+        `query { courses(ids: [13]) { sessions {
         ilmSession { instructorGroups {  users { id firstName middleName lastName displayName }} instructors { id firstName middleName lastName displayName } }
         offerings { instructorGroups {  users { id firstName middleName lastName displayName }} instructors { id firstName middleName lastName displayName } }
       } } }`,
@@ -180,14 +180,41 @@ module('Integration | Component | reports/subject/instructor', function (hooks) 
   });
 
   test('filter by academic year', async function (assert) {
-    assert.expect(1);
+    assert.expect(5);
+    let counter = 0;
     this.server.post('api/graphql', function (schema, { requestBody }) {
       const { query } = JSON.parse(requestBody);
-      assert.strictEqual(
-        query,
-        'query { users(instructedAcademicYears: [2005]) { firstName,middleName,lastName,displayName } }',
-      );
-      return responseData;
+      counter++;
+      const { users } = responseData.data;
+      switch (counter) {
+        case 1:
+          assert.strictEqual(query, 'query { courses(academicYears: [2005]) { id } }');
+          return {
+            data: {
+              courses: [{ id: 1 }, { id: 31 }],
+            },
+          };
+        case 2:
+          assert.ok(query.includes('query { courses(ids: [1,31])'));
+          return {
+            data: {
+              courses: [
+                { sessions: [{ offerings: [{ instructors: [users[1]], instructorGroups: [] }] }] },
+                {
+                  sessions: [
+                    {
+                      ilmSession: { instructors: [users[0]], instructorGroups: [] },
+                      offerings: [],
+                      instructorGroups: [],
+                    },
+                  ],
+                },
+              ],
+            },
+          };
+        default:
+          assert.ok(false, 'too many queries');
+      }
     });
     const { id } = this.server.create('report', {
       subject: 'instructor',
@@ -200,6 +227,10 @@ module('Integration | Component | reports/subject/instructor', function (hooks) 
   @prepositionalObject={{this.report.prepositionalObject}}
   @prepositionalObjectTableRowId={{this.report.prepositionalObjectTableRowId}}
 />`);
+
+    assert.strictEqual(component.results.length, 2);
+    assert.strictEqual(component.results[0].name, 'abc');
+    assert.strictEqual(component.results[1].name, 'First M. Last');
   });
 
   test('filter by session types', async function (assert) {
