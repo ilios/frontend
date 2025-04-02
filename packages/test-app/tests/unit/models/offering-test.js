@@ -53,7 +53,7 @@ module('Unit | Model | Offering', function (hooks) {
   });
 
   test('duration', function (assert) {
-    const model = this.store.createRecord('offering', {});
+    const model = this.store.createRecord('offering');
     assert.strictEqual(model.get('durationHours'), 0);
     assert.strictEqual(model.get('durationMinutes'), 0);
     model.set('startDate', DateTime.now().toJSDate());

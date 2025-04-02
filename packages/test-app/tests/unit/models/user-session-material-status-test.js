@@ -9,7 +9,7 @@ module('Unit | Model | user session material status', function (hooks) {
   });
 
   test('it exists', function (assert) {
-    let model = this.store.createRecord('user-session-material-status', {});
+    let model = this.store.createRecord('user-session-material-status');
     assert.ok(model);
   });
 });
