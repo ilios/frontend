@@ -74,4 +74,78 @@ module('Integration | Component | session/overview', function (hooks) {
     assert.notOk(component.instructionalNotes.hasError);
     assert.notOk(component.instructionalNotes.savingIsDisabled);
   });
+
+  test('saving empty description and notes sets to null', async function (assert) {
+    const session = this.server.create('session', {
+      course: this.course,
+      sessionType: this.sessionTypes[0],
+      description: '',
+      instructionalNotes: '',
+    });
+    await setupAuthentication({
+      school: this.school,
+      administeredSchools: [this.school],
+    });
+    const sessionModel = await this.owner.lookup('service:store').findRecord('session', session.id);
+    this.set('session', sessionModel);
+    await render(hbs`<Session::Overview @session={{this.session}} @editable={{true}} />`);
+    assert.strictEqual(sessionModel.description, '');
+    assert.strictEqual(sessionModel.instructionalNotes, '');
+    assert.strictEqual(component.sessionDescription.value, 'Click to edit');
+    assert.strictEqual(component.instructionalNotes.value, 'Click to edit');
+    await component.sessionDescription.edit();
+    await component.sessionDescription.save();
+
+    await component.instructionalNotes.edit();
+    await component.instructionalNotes.save();
+
+    assert.strictEqual(sessionModel.description, null);
+    assert.strictEqual(sessionModel.instructionalNotes, null);
+  });
+
+  test('can save descrription when notes is empty string', async function (assert) {
+    const session = this.server.create('session', {
+      course: this.course,
+      sessionType: this.sessionTypes[0],
+      description: 'not empty',
+      instructionalNotes: '',
+    });
+    await setupAuthentication({
+      school: this.school,
+      administeredSchools: [this.school],
+    });
+    const sessionModel = await this.owner.lookup('service:store').findRecord('session', session.id);
+    this.set('session', sessionModel);
+    await render(hbs`<Session::Overview @session={{this.session}} @editable={{true}} />`);
+    assert.strictEqual(component.sessionDescription.value, 'not empty');
+    assert.strictEqual(component.instructionalNotes.value, 'Click to edit');
+    await component.sessionDescription.edit();
+    await component.sessionDescription.set('still not empty');
+    await component.sessionDescription.save();
+
+    assert.strictEqual(sessionModel.description, '<p>still not empty</p>');
+  });
+
+  test('can save notes when description is empty string', async function (assert) {
+    const session = this.server.create('session', {
+      course: this.course,
+      sessionType: this.sessionTypes[0],
+      description: '',
+      instructionalNotes: 'not empty',
+    });
+    await setupAuthentication({
+      school: this.school,
+      administeredSchools: [this.school],
+    });
+    const sessionModel = await this.owner.lookup('service:store').findRecord('session', session.id);
+    this.set('session', sessionModel);
+    await render(hbs`<Session::Overview @session={{this.session}} @editable={{true}} />`);
+    assert.strictEqual(component.sessionDescription.value, 'Click to edit');
+    assert.strictEqual(component.instructionalNotes.value, 'not empty');
+    await component.instructionalNotes.edit();
+    await component.instructionalNotes.set('still not empty');
+    await component.instructionalNotes.save();
+
+    assert.strictEqual(sessionModel.instructionalNotes, '<p>still not empty</p>');
+  });
 });
