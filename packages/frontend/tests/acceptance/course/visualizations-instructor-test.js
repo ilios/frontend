@@ -88,8 +88,8 @@ module('Acceptance | course visualizations - instructor', function (hooks) {
     assert.strictEqual(page.root.sessionTypesChart.chart.slices.length, 2);
     assert.strictEqual(page.root.sessionTypesChart.chart.labels.length, 2);
     assert.strictEqual(page.root.sessionTypesChart.chart.descriptions.length, 2);
-    assert.ok(page.root.sessionTypesChart.chart.labels[0].text.includes('session type 1'));
-    assert.ok(page.root.sessionTypesChart.chart.labels[1].text.includes('session type 0'));
+    assert.ok(page.root.sessionTypesChart.chart.labels[0].text.startsWith('session type 1'));
+    assert.ok(page.root.sessionTypesChart.chart.labels[1].text.startsWith('session type 0'));
 
     assert.strictEqual(
       page.root.sessionTypesChart.chart.descriptions[0].text,

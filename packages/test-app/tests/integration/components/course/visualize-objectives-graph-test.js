@@ -94,12 +94,12 @@ module('Integration | Component | course/visualize-objectives-graph', function (
     await waitFor('svg .slice');
 
     assert.strictEqual(component.chart.slices.length, 2);
-    assert.ok(component.chart.slices[0].label.includes('77.8%'));
+    assert.ok(component.chart.slices[0].label.startsWith('77.8%'));
     assert.strictEqual(
       component.chart.slices[0].description,
       'course objective 0 (competency 0, competency 1) - 630 Minutes',
     );
-    assert.ok(component.chart.slices[1].label.includes('22.2%'));
+    assert.ok(component.chart.slices[1].label.startsWith('22.2%'));
     assert.strictEqual(
       component.chart.slices[1].description,
       'course objective 1 (competency 1) - 180 Minutes',

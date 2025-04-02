@@ -72,12 +72,12 @@ module('Acceptance | course visualizations - objectives', function (hooks) {
     await waitFor('svg .chart');
     await percySnapshot(assert);
     assert.strictEqual(page.root.objectivesChart.chart.slices.length, 2);
-    assert.ok(page.root.objectivesChart.chart.slices[0].label.includes('77.8%'));
+    assert.ok(page.root.objectivesChart.chart.slices[0].label.startsWith('77.8%'));
     assert.strictEqual(
       page.root.objectivesChart.chart.slices[0].description,
       'course objective 0 - 630 Minutes',
     );
-    assert.ok(page.root.objectivesChart.chart.slices[1].label.includes('22.2%'));
+    assert.ok(page.root.objectivesChart.chart.slices[1].label.startsWith('22.2%'));
     assert.strictEqual(
       page.root.objectivesChart.chart.slices[1].description,
       'course objective 1 - 180 Minutes',

@@ -105,8 +105,8 @@ module(
       assert.strictEqual(component.chart.descriptions[0].text, 'Campaign - 180 Minutes');
       assert.strictEqual(component.chart.descriptions[1].text, 'Standalone - 630 Minutes');
       assert.strictEqual(component.chart.labels.length, 2);
-      assert.ok(component.chart.labels[0].text.includes('Campaign'));
-      assert.ok(component.chart.labels[1].text.includes('Standalone'));
+      assert.ok(component.chart.labels[0].text.startsWith('Campaign'));
+      assert.ok(component.chart.labels[1].text.startsWith('Standalone'));
       assert.ok(component.dataTable.actions.download.isVisible);
       assert.strictEqual(component.dataTable.rows.length, 2);
       assert.strictEqual(component.dataTable.rows[0].sessionType, 'Campaign');
