@@ -13,7 +13,7 @@ module('Unit | Model | ProgramYear', function (hooks) {
   test('classOf string', async function (assert) {
     const model = this.owner.lookup('service:store').createRecord('program-year');
     const store = model.store;
-    const program = store.createRecord('program', { id: '99', duration: 1 });
+    const program = store.createRecord('program', { duration: 1 });
     model.set('program', program);
     model.set('startYear', 2000);
     assert.strictEqual(await waitForResource(model, 'classOfYear'), '2001');

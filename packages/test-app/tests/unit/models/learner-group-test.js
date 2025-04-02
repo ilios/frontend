@@ -366,7 +366,7 @@ module('Unit | Model | LearnerGroup', function (hooks) {
     const groups = await waitForResource(learnerGroup, 'allParents');
     assert.strictEqual(groups.length, 0);
 
-    const user1 = store.createRecord('user', { id: '99' });
+    const user1 = store.createRecord('user');
     const subGroup1 = store.createRecord('learner-group', {
       parent: learnerGroup,
       users: [user1],
@@ -432,7 +432,7 @@ module('Unit | Model | LearnerGroup', function (hooks) {
   test('has learners in group with learners and but without learners in subgroups', async function (assert) {
     const store = this.owner.lookup('service:store');
     const learnerGroup = store.createRecord('learner-group');
-    store.createRecord('user', { id: '1', learnerGroups: [learnerGroup] });
+    store.createRecord('user', { learnerGroups: [learnerGroup] });
     const hasLearners = await waitForResource(learnerGroup, 'hasLearnersInGroupOrSubgroups');
     assert.ok(hasLearners);
   });
@@ -441,7 +441,6 @@ module('Unit | Model | LearnerGroup', function (hooks) {
     const store = this.owner.lookup('service:store');
     const learnerGroup = store.createRecord('learner-group');
     store.createRecord('learner-group', {
-      id: '2',
       parent: learnerGroup,
     });
     const hasLearners = await waitForResource(learnerGroup, 'hasLearnersInGroupOrSubgroups');
@@ -451,9 +450,8 @@ module('Unit | Model | LearnerGroup', function (hooks) {
   test('has learners with no learners in group but with learners in subgroups', async function (assert) {
     const store = this.owner.lookup('service:store');
     const learnerGroup = store.createRecord('learner-group');
-    const learner = store.createRecord('user', { id: '1' });
+    const learner = store.createRecord('user');
     store.createRecord('learner-group', {
-      id: '2',
       users: [learner],
       parent: learnerGroup,
     });
@@ -464,10 +462,9 @@ module('Unit | Model | LearnerGroup', function (hooks) {
   test('has learners with learners in group and with learners in subgroups', async function (assert) {
     const store = this.owner.lookup('service:store');
     const learnerGroup = store.createRecord('learner-group');
-    const learner = store.createRecord('user', { id: '1' });
-    store.createRecord('user', { id: '2', learnerGroups: [learnerGroup] });
+    const learner = store.createRecord('user');
+    store.createRecord('user', { learnerGroups: [learnerGroup] });
     store.createRecord('learner-group', {
-      id: '2',
       users: [learner],
       parent: learnerGroup,
     });
@@ -478,18 +475,16 @@ module('Unit | Model | LearnerGroup', function (hooks) {
   test('users only at this level', async function (assert) {
     const store = this.owner.lookup('service:store');
     const learnerGroup = store.createRecord('learner-group');
-    const user1 = store.createRecord('user', { id: '1', learnerGroups: [learnerGroup] });
-    const user2 = store.createRecord('user', { id: '2', learnerGroups: [learnerGroup] });
-    const user3 = store.createRecord('user', { id: '3', learnerGroups: [learnerGroup] });
-    const user4 = store.createRecord('user', { id: '4', learnerGroups: [learnerGroup] });
+    const user1 = store.createRecord('user', { learnerGroups: [learnerGroup] });
+    const user2 = store.createRecord('user', { learnerGroups: [learnerGroup] });
+    const user3 = store.createRecord('user', { learnerGroups: [learnerGroup] });
+    const user4 = store.createRecord('user', { learnerGroups: [learnerGroup] });
 
     const subgroup = store.createRecord('learner-group', {
-      id: '2',
       parent: learnerGroup,
       users: [user1, user3],
     });
     store.createRecord('learner-group', {
-      id: '3',
       parent: subgroup,
       users: [user4],
     });
@@ -501,18 +496,16 @@ module('Unit | Model | LearnerGroup', function (hooks) {
   test('get users only at this level', async function (assert) {
     const store = this.owner.lookup('service:store');
     const learnerGroup = store.createRecord('learner-group');
-    const user1 = store.createRecord('user', { id: '1', learnerGroups: [learnerGroup] });
-    const user2 = store.createRecord('user', { id: '2', learnerGroups: [learnerGroup] });
-    const user3 = store.createRecord('user', { id: '3', learnerGroups: [learnerGroup] });
-    const user4 = store.createRecord('user', { id: '4', learnerGroups: [learnerGroup] });
+    const user1 = store.createRecord('user', { learnerGroups: [learnerGroup] });
+    const user2 = store.createRecord('user', { learnerGroups: [learnerGroup] });
+    const user3 = store.createRecord('user', { learnerGroups: [learnerGroup] });
+    const user4 = store.createRecord('user', { learnerGroups: [learnerGroup] });
 
     const subgroup = store.createRecord('learner-group', {
-      id: '2',
       parent: learnerGroup,
       users: [user1, user3],
     });
     store.createRecord('learner-group', {
-      id: '3',
       parent: subgroup,
       users: [user4],
     });
@@ -614,10 +607,10 @@ module('Unit | Model | LearnerGroup', function (hooks) {
 
   test('usersCount', async function (assert) {
     const store = this.owner.lookup('service:store');
-    const learnerGroup = store.createRecord('learner-group', { id: '1' });
+    const learnerGroup = store.createRecord('learner-group');
     assert.strictEqual(learnerGroup.usersCount, 0);
-    store.createRecord('user', { id: '1', learnerGroups: [learnerGroup] });
-    store.createRecord('user', { id: '2', learnerGroups: [learnerGroup] });
+    store.createRecord('user', { learnerGroups: [learnerGroup] });
+    store.createRecord('user', { learnerGroups: [learnerGroup] });
 
     assert.strictEqual(await waitForResource(learnerGroup, 'usersCount'), 2);
   });
@@ -626,8 +619,8 @@ module('Unit | Model | LearnerGroup', function (hooks) {
     const store = this.owner.lookup('service:store');
     const learnerGroup = store.createRecord('learner-group');
     assert.strictEqual(learnerGroup.childrenCount, 0);
-    store.createRecord('learner-group', { id: '1', parent: learnerGroup });
-    store.createRecord('learner-group', { id: '2', parent: learnerGroup });
+    store.createRecord('learner-group', { parent: learnerGroup });
+    store.createRecord('learner-group', { parent: learnerGroup });
 
     assert.strictEqual(learnerGroup.childrenCount, 2);
   });

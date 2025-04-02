@@ -113,34 +113,29 @@ module('Unit | Model | Course', function (hooks) {
     const course = store.createRecord('course');
 
     const domain1 = store.createRecord('competency', {
-      id: '1',
       title: 'Zylinder',
     });
-    const domain2 = store.createRecord('competency', { id: '2', title: 'Anton' });
+    const domain2 = store.createRecord('competency', { title: 'Anton' });
     const domain3 = store.createRecord('competency', {
-      id: '3',
       title: 'Lexicon',
     });
     const competency1 = store.createRecord('competency', {
-      id: '4',
       title: 'Zeppelin',
       parent: domain1,
     });
     const competency2 = store.createRecord('competency', {
-      id: '5',
       title: 'Aardvark',
       parent: domain1,
     });
     const competency3 = store.createRecord('competency', {
-      id: '6',
       title: 'Geflarknik',
       parent: domain2,
     });
     // competencies that are linked to these domains, but not to this course.
     // they should not appear in the output.
-    store.createRecord('competency', { id: '7', parent: domain1 });
-    store.createRecord('competency', { id: '8', parent: domain2 });
-    store.createRecord('competency', { id: '9', parent: domain3 });
+    store.createRecord('competency', { parent: domain1 });
+    store.createRecord('competency', { parent: domain2 });
+    store.createRecord('competency', { parent: domain3 });
 
     const programYearObjective1 = store.createRecord('program-year-objective', {
       competency: competency1,

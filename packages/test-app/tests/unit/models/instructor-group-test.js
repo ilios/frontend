@@ -9,9 +9,9 @@ module('Unit | Model | InstructorGroup', function (hooks) {
     const store = this.owner.lookup('service:store');
     const instructorGroup = store.createRecord('instructor-group');
 
-    const course1 = store.createRecord('course', { title: 'course1', id: '1' });
-    const course2 = store.createRecord('course', { title: 'course2', id: '2' });
-    const course3 = store.createRecord('course', { title: 'course3', id: '3' });
+    const course1 = store.createRecord('course', { title: 'course1' });
+    const course2 = store.createRecord('course', { title: 'course2' });
+    const course3 = store.createRecord('course', { title: 'course3' });
     const session1 = store.createRecord('session', { course: course1 });
     const session2 = store.createRecord('session', { course: course1 });
     const session3 = store.createRecord('session', { course: course2 });

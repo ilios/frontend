@@ -17,9 +17,9 @@ module('Unit | Model | vocabulary', function (hooks) {
   test('getTopLevelTerms', async function (assert) {
     const store = this.owner.lookup('service:store');
     const vocabulary = store.createRecord('vocabulary');
-    const term1 = store.createRecord('term', { id: '1', vocabulary });
-    const term2 = store.createRecord('term', { id: '2', vocabulary });
-    store.createRecord('term', { id: '3', parent: term2, vocabulary });
+    const term1 = store.createRecord('term', { vocabulary });
+    const term2 = store.createRecord('term', { vocabulary });
+    store.createRecord('term', { parent: term2, vocabulary });
     const topLevelTerms = await vocabulary.getTopLevelTerms();
     assert.strictEqual(topLevelTerms.length, 2);
     assert.ok(topLevelTerms.includes(term1));

@@ -118,7 +118,7 @@ module('Unit | Model | Session', function (hooks) {
     const store = this.owner.lookup('service:store');
     const session = store.createRecord('session');
 
-    store.createRecord('ilm-session', { id: '13', session });
+    store.createRecord('ilm-session', { session });
     const groups = await waitForResource(session, 'associatedIlmLearnerGroups');
     assert.deepEqual(groups.length, 0);
   });
@@ -131,7 +131,6 @@ module('Unit | Model | Session', function (hooks) {
     const learnerGroup2 = store.createRecord('learner-group');
     const learnerGroup3 = store.createRecord('learner-group');
     store.createRecord('ilm-session', {
-      id: '11',
       learnerGroups: [learnerGroup1, learnerGroup2, learnerGroup3],
       session,
     });
@@ -160,7 +159,6 @@ module('Unit | Model | Session', function (hooks) {
     const learnerGroup5 = store.createRecord('learner-group');
 
     store.createRecord('ilm-session', {
-      id: '11',
       learnerGroups: [learnerGroup1, learnerGroup2, learnerGroup3, learnerGroup4],
       session,
     });
@@ -215,7 +213,7 @@ module('Unit | Model | Session', function (hooks) {
     const model = store.createRecord('session');
 
     assert.notOk(model.get('isIndependentLearning'));
-    await store.createRecord('ilm-session', { id: '1', session: model });
+    await store.createRecord('ilm-session', { session: model });
     assert.ok(await waitForResource(model, 'isIndependentLearning'));
   });
 
@@ -239,8 +237,8 @@ module('Unit | Model | Session', function (hooks) {
     const subject = store.createRecord('session');
 
     assert.strictEqual(subject.termCount, 0);
-    store.createRecord('term', { id: '1', sessions: [subject] });
-    store.createRecord('term', { id: '2', sessions: [subject] });
+    store.createRecord('term', { sessions: [subject] });
+    store.createRecord('term', { sessions: [subject] });
     assert.strictEqual(subject.termCount, 2);
   });
 
@@ -589,7 +587,7 @@ module('Unit | Model | Session', function (hooks) {
     const store = this.owner.lookup('service:store');
     const session = store.createRecord('session');
 
-    const ilmSession = store.createRecord('ilm-session', { id: '24', session });
+    const ilmSession = store.createRecord('ilm-session', { session });
     const instructorGroup = store.createRecord('instructor-group', {
       ilmSessions: [ilmSession],
     });
@@ -939,8 +937,8 @@ module('Unit | Model | Session', function (hooks) {
     const session = store.createRecord('session');
 
     assert.strictEqual(session.offeringCount, 0);
-    store.createRecord('offering', { id: '1', session });
-    store.createRecord('offering', { id: '2', session });
+    store.createRecord('offering', { session });
+    store.createRecord('offering', { session });
     assert.strictEqual(session.offeringCount, 2);
   });
 
@@ -949,8 +947,8 @@ module('Unit | Model | Session', function (hooks) {
     const session = store.createRecord('session');
 
     assert.strictEqual(session.objectiveCount, 0);
-    store.createRecord('session-objective', { id: '1', session });
-    store.createRecord('session-objective', { id: '2', session });
+    store.createRecord('session-objective', { session });
+    store.createRecord('session-objective', { session });
     assert.strictEqual(session.objectiveCount, 2);
   });
 
@@ -959,8 +957,8 @@ module('Unit | Model | Session', function (hooks) {
     const session = store.createRecord('session');
 
     assert.strictEqual(session.prerequisiteCount, 0);
-    store.createRecord('session', { id: '2', postrequisite: session });
-    store.createRecord('session', { id: '3', postrequisite: session });
+    store.createRecord('session', { postrequisite: session });
+    store.createRecord('session', { postrequisite: session });
     assert.strictEqual(session.prerequisiteCount, 2);
   });
 });
