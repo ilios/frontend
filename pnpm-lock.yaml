@@ -463,8 +463,8 @@ importers:
         specifier: ^3.0.1
         version: 3.0.1(@babel/core@7.26.10)
       ember-simple-auth:
-        specifier: ^7.1.3
-        version: 7.1.3(@ember/test-helpers@5.1.0(@babel/core@7.26.10)(ember-source@6.3.0(@glimmer/component@2.0.0)(rsvp@4.8.5)(webpack@5.98.0)))(ember-source@6.3.0(@glimmer/component@2.0.0)(rsvp@4.8.5)(webpack@5.98.0))
+        specifier: ^8.0.0
+        version: 8.0.0(@ember/test-helpers@5.1.0(@babel/core@7.26.10)(ember-source@6.3.0(@glimmer/component@2.0.0)(rsvp@4.8.5)(webpack@5.98.0)))(ember-source@6.3.0(@glimmer/component@2.0.0)(rsvp@4.8.5)(webpack@5.98.0))
       ember-simple-charts:
         specifier: ^12.1.0
         version: 12.1.1(@babel/core@7.26.10)(@glimmer/tracking@1.1.2)(ember-source@6.3.0(@glimmer/component@2.0.0)(rsvp@4.8.5)(webpack@5.98.0))(webpack@5.98.0)
@@ -5495,8 +5495,8 @@ packages:
   ember-set-helper@3.0.1:
     resolution: {integrity: sha512-Ord3CuttDiF88wiNpHNDjf4aFKPnHSkpeK7zFfH9nV7YdDFSJissDCZEg42A0ReWY1WuqWbc2hMl5XkgupdyZQ==}
 
-  ember-simple-auth@7.1.3:
-    resolution: {integrity: sha512-QMDc82evtQceEQFJ9C3RYptqAfGUY0Z5TenpVVsbmwdo5sC0mxlLolhkpj142JknvRLjTrtCWRtoML6V5pj1Dw==}
+  ember-simple-auth@8.0.0:
+    resolution: {integrity: sha512-ylFiMivRQgoBBOrTanml8AFiWivRy5LnHacmTMXdq8DEkWDqaswAE2xGzEejDnUbRKQXM9/T9Qym3dhnWmXUMw==}
     peerDependencies:
       '@ember/test-helpers': '>= 3 || > 2.7'
       ember-source: '>=4.0'
@@ -16228,15 +16228,13 @@ snapshots:
       - '@babel/core'
       - supports-color
 
-  ember-simple-auth@7.1.3(@ember/test-helpers@5.1.0(@babel/core@7.26.10)(ember-source@6.3.0(@glimmer/component@2.0.0)(rsvp@4.8.5)(webpack@5.98.0)))(ember-source@6.3.0(@glimmer/component@2.0.0)(rsvp@4.8.5)(webpack@5.98.0)):
+  ember-simple-auth@8.0.0(@ember/test-helpers@5.1.0(@babel/core@7.26.10)(ember-source@6.3.0(@glimmer/component@2.0.0)(rsvp@4.8.5)(webpack@5.98.0)))(ember-source@6.3.0(@glimmer/component@2.0.0)(rsvp@4.8.5)(webpack@5.98.0)):
     dependencies:
       '@ember/test-waiters': 3.1.0
       '@embroider/addon-shim': 1.9.0
       '@embroider/macros': 1.16.12
-      ember-cli-is-package-missing: 1.0.0
       ember-cookies: 1.3.0(ember-source@6.3.0(@glimmer/component@2.0.0)(rsvp@4.8.5)(webpack@5.98.0))
       ember-source: 6.3.0(@glimmer/component@2.0.0)(rsvp@4.8.5)(webpack@5.98.0)
-      silent-error: 1.1.1
     optionalDependencies:
       '@ember/test-helpers': 5.1.0(@babel/core@7.26.10)(ember-source@6.3.0(@glimmer/component@2.0.0)(rsvp@4.8.5)(webpack@5.98.0))
     transitivePeerDependencies:
