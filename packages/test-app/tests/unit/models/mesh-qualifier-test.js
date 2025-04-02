@@ -4,8 +4,12 @@ import { setupTest } from 'ember-qunit';
 module('Unit | Model | MeshQualifier', function (hooks) {
   setupTest(hooks);
 
+  hooks.beforeEach(function () {
+    this.store = this.owner.lookup('service:store');
+  });
+
   test('it exists', function (assert) {
-    const model = this.owner.lookup('service:store').createRecord('mesh-qualifier');
+    const model = this.store.createRecord('mesh-qualifier');
     assert.ok(!!model);
   });
 });

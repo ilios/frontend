@@ -4,8 +4,12 @@ import { setupTest } from 'ember-qunit';
 module('Unit | Model | Cohort', function (hooks) {
   setupTest(hooks);
 
+  hooks.beforeEach(function () {
+    this.store = this.owner.lookup('service:store');
+  });
+
   test('it exists', function (assert) {
-    const model = this.owner.lookup('service:store').createRecord('cohort');
+    const model = this.store.createRecord('cohort');
     assert.ok(!!model);
   });
 });

@@ -5,29 +5,31 @@ import { waitForResource } from 'ilios-common';
 module('Unit | Model | course objective', function (hooks) {
   setupTest(hooks);
 
+  hooks.beforeEach(function () {
+    this.store = this.owner.lookup('service:store');
+  });
+
   test('it exists', function (assert) {
-    const store = this.owner.lookup('service:store');
-    const model = store.createRecord('course-objective');
+    const model = this.store.createRecord('course-objective');
     assert.ok(model);
   });
 
   test('associatedVocabularies', async function (assert) {
-    const store = this.owner.lookup('service:store');
-    const courseObjective = store.createRecord('course-objective');
+    const courseObjective = this.store.createRecord('course-objective');
 
-    const vocab1 = store.createRecord('vocabulary', { title: 'Zeppelin' });
-    const vocab2 = store.createRecord('vocabulary', { title: 'Aardvark' });
-    store.createRecord('term', { vocabulary: vocab1, courseObjectives: [courseObjective] });
-    store.createRecord('term', { vocabulary: vocab1, courseObjectives: [courseObjective] });
-    store.createRecord('term', { vocabulary: vocab2, courseObjectives: [courseObjective] });
+    const vocab1 = this.store.createRecord('vocabulary', { title: 'Zeppelin' });
+    const vocab2 = this.store.createRecord('vocabulary', { title: 'Aardvark' });
+    this.store.createRecord('term', { vocabulary: vocab1, courseObjectives: [courseObjective] });
+    this.store.createRecord('term', { vocabulary: vocab1, courseObjectives: [courseObjective] });
+    this.store.createRecord('term', { vocabulary: vocab2, courseObjectives: [courseObjective] });
 
     const vocabularies = await waitForResource(courseObjective, 'associatedVocabularies');
     assert.strictEqual(vocabularies.length, 2);
     assert.strictEqual(vocabularies[0], vocab2);
     assert.strictEqual(vocabularies[1], vocab1);
 
-    const vocab3 = store.createRecord('vocabulary', { title: 'New(ish)' });
-    store.createRecord('term', { vocabulary: vocab3, courseObjectives: [courseObjective] });
+    const vocab3 = this.store.createRecord('vocabulary', { title: 'New(ish)' });
+    this.store.createRecord('term', { vocabulary: vocab3, courseObjectives: [courseObjective] });
 
     const vocabulariesAgain = await waitForResource(courseObjective, 'associatedVocabularies');
     assert.strictEqual(vocabulariesAgain.length, 3);
@@ -37,16 +39,15 @@ module('Unit | Model | course objective', function (hooks) {
   });
 
   test('treeCompetencies', async function (assert) {
-    const store = this.owner.lookup('service:store');
-    const courseObjective = store.createRecord('course-objective');
+    const courseObjective = this.store.createRecord('course-objective');
 
-    const competency1 = store.createRecord('competency');
-    const competency2 = store.createRecord('competency');
-    store.createRecord('program-year-objective', {
+    const competency1 = this.store.createRecord('competency');
+    const competency2 = this.store.createRecord('competency');
+    this.store.createRecord('program-year-objective', {
       competency: competency1,
       courseObjectives: [courseObjective],
     });
-    store.createRecord('program-year-objective', {
+    this.store.createRecord('program-year-objective', {
       competency: competency2,
       courseObjectives: [courseObjective],
     });

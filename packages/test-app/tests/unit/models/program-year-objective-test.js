@@ -5,27 +5,29 @@ import { waitForResource } from 'ilios-common';
 module('Unit | Model | program year objective', function (hooks) {
   setupTest(hooks);
 
+  hooks.beforeEach(function () {
+    this.store = this.owner.lookup('service:store');
+  });
+
   test('it exists', function (assert) {
-    const store = this.owner.lookup('service:store');
-    const model = store.createRecord('program-year-objective');
+    const model = this.store.createRecord('program-year-objective');
     assert.ok(model);
   });
 
   test('associatedVocabularies', async function (assert) {
-    const store = this.owner.lookup('service:store');
-    const programYearObjective = store.createRecord('program-year-objective');
+    const programYearObjective = this.store.createRecord('program-year-objective');
 
-    const vocab1 = store.createRecord('vocabulary', { title: 'Zeppelin' });
-    const vocab2 = store.createRecord('vocabulary', { title: 'Aardvark' });
-    store.createRecord('term', {
+    const vocab1 = this.store.createRecord('vocabulary', { title: 'Zeppelin' });
+    const vocab2 = this.store.createRecord('vocabulary', { title: 'Aardvark' });
+    this.store.createRecord('term', {
       vocabulary: vocab1,
       programYearObjectives: [programYearObjective],
     });
-    store.createRecord('term', {
+    this.store.createRecord('term', {
       vocabulary: vocab1,
       programYearObjectives: [programYearObjective],
     });
-    store.createRecord('term', {
+    this.store.createRecord('term', {
       vocabulary: vocab2,
       programYearObjectives: [programYearObjective],
     });
