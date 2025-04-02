@@ -162,17 +162,25 @@ export default class SessionOverview extends Component {
   }
 
   get instructionalNotes() {
-    if (this.localInstructionalNotes === undefined) {
-      return this.args.session.instructionalNotes;
+    const instructionalNotes =
+      this.localInstructionalNotes === undefined
+        ? this.args.session.instructionalNotes
+        : this.localInstructionalNotes;
+    if (instructionalNotes === '') {
+      return null;
     }
-    return this.localInstructionalNotes;
+
+    return instructionalNotes;
   }
 
   get description() {
-    if (this.localDescription === undefined) {
-      return this.args.session.description;
+    const description =
+      this.localDescription === undefined ? this.args.session.description : this.localDescription;
+    if (description === '') {
+      return null;
     }
-    return this.localDescription;
+
+    return description;
   }
 
   get sessionType() {
