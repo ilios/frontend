@@ -63,10 +63,6 @@ module.exports = function (environment) {
       // Here you can pass flags/options to your application instance
       // when it is created
     },
-    //using ember-feature-flags provided by common
-    featureFlags: {
-      programYearVisualizations: false,
-    },
   };
 
   if (environment === 'development') {
@@ -76,8 +72,6 @@ module.exports = function (environment) {
     ENV.APP.LOG_TRANSITIONS_INTERNAL = !!process.env.LOG_TRANSITIONS_INTERNAL;
     ENV.APP.LOG_VIEW_LOOKUPS = !!process.env.LOG_VIEW_LOOKUPS;
     ENV.redirectAfterShibLogin = false;
-
-    ENV.featureFlags['programYearVisualizations'] = true;
 
     //put ember concurrency tasks into debug mode to make errors much easier to spot
     ENV.EmberENV.DEBUG_TASKS = true;
@@ -99,13 +93,6 @@ module.exports = function (environment) {
     ENV.disableServiceWorker = true;
 
     ENV.APP.autoboot = false;
-  }
-
-  if (environment === 'production') {
-    // here you can enable a production-specific feature
-    if (process.env.ENABLE_PREVIEW_FEATURES) {
-      ENV.featureFlags['programYearVisualizations'] = true;
-    }
   }
 
   return ENV;
