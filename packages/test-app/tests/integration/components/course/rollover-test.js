@@ -78,12 +78,12 @@ module('Integration | Component | course/rollover', function (hooks) {
 
   test('rollover course', async function (assert) {
     assert.expect(6);
-    const startDate = DateTime.fromObject({ hour: 0, minute: 0, second: 0 }).toJSDate();
+    const courseStartDate = DateTime.fromObject({ hour: 0, minute: 0, second: 0 });
     const school = this.server.create('school');
     const course = this.server.create('course', {
       title: 'old title',
       school,
-      startDate,
+      startDate: courseStartDate.toFormat('yyyy-MM-dd'),
     });
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('course', courseModel);
@@ -95,7 +95,7 @@ module('Integration | Component | course/rollover', function (hooks) {
       assert.strictEqual(parseInt(data.year, 10), firstYear);
       assert.strictEqual(data.newCourseTitle, course.title);
       assert.ok('newStartDate' in data);
-      assert.strictEqual(DateTime.fromJSDate(startDate).toFormat('yyyy-LL-dd'), data.newStartDate);
+      assert.strictEqual(courseStartDate.toFormat('yyyy-LL-dd'), data.newStartDate);
       return this.serialize(
         schema.courses.create({
           id: 14,
