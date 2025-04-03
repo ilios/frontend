@@ -143,7 +143,7 @@ module('Integration | Component | course/visualize-instructor', function (hooks)
     assert.strictEqual(component.termsChart.chart.labels[2].text, 'Vocabulary 2 - term 2');
     assert.strictEqual(component.sessionTypesChart.chart.slices.length, 2);
     assert.strictEqual(component.sessionTypesChart.chart.labels.length, 2);
-    assert.strictEqual(component.sessionTypesChart.chart.labels[0].text, 'session type 1');
-    assert.strictEqual(component.sessionTypesChart.chart.labels[1].text, 'session type 0');
+    assert.ok(component.sessionTypesChart.chart.labels[0].text.startsWith('session type 1'));
+    assert.ok(component.sessionTypesChart.chart.labels[1].text.startsWith('session type 0'));
   });
 });

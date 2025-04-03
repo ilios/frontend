@@ -6,7 +6,7 @@ const definition = {
   chart: {
     scope: '.simple-chart',
     slices: collection('svg .slice', {
-      label: text('text'),
+      label: text('text > tspan'),
       description: text('desc'),
     }),
   },
