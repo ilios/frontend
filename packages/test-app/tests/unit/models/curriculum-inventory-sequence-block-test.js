@@ -4,15 +4,17 @@ import { setupTest } from 'ember-qunit';
 module('Unit | Model | CurriculumInventorySequenceBlock ', function (hooks) {
   setupTest(hooks);
 
+  hooks.beforeEach(function () {
+    this.store = this.owner.lookup('service:store');
+  });
+
   test('get all ancestors of nested sequence block', async function (assert) {
-    const model = this.owner
-      .lookup('service:store')
-      .createRecord('curriculum-inventory-sequence-block');
-    const store = this.owner.lookup('service:store');
-    const parentBlock = store.createRecord('curriculum-inventory-sequence-block', {
+    const model = this.store.createRecord('curriculum-inventory-sequence-block');
+
+    const parentBlock = this.store.createRecord('curriculum-inventory-sequence-block', {
       children: [model],
     });
-    const grandParent = store.createRecord('curriculum-inventory-sequence-block', {
+    const grandParent = this.store.createRecord('curriculum-inventory-sequence-block', {
       children: [parentBlock],
     });
     parentBlock.set('parent', grandParent);
@@ -24,9 +26,7 @@ module('Unit | Model | CurriculumInventorySequenceBlock ', function (hooks) {
   });
 
   test('list of ancestors is empty for top-level sequence block', async function (assert) {
-    const model = this.owner
-      .lookup('service:store')
-      .createRecord('curriculum-inventory-sequence-block');
+    const model = this.store.createRecord('curriculum-inventory-sequence-block');
     const ancestors = await model.getAllParents();
     assert.strictEqual(ancestors.length, 0);
   });

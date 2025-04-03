@@ -5,8 +5,12 @@ import { pluralize } from 'ember-inflector';
 module('Unit | Model | vocabulary', function (hooks) {
   setupTest(hooks);
 
+  hooks.beforeEach(function () {
+    this.store = this.owner.lookup('service:store');
+  });
+
   test('it exists', function (assert) {
-    const model = this.owner.lookup('service:store').createRecord('vocabulary');
+    const model = this.store.createRecord('vocabulary');
     assert.ok(!!model);
   });
 
@@ -15,13 +19,11 @@ module('Unit | Model | vocabulary', function (hooks) {
   });
 
   test('getTopLevelTerms', async function (assert) {
-    const model = this.owner.lookup('service:store').createRecord('vocabulary');
-    const store = model.store;
-    const term1 = store.createRecord('term', { id: 1 });
-    const term2 = store.createRecord('term', { id: 2 });
-    const term3 = store.createRecord('term', { id: 3, parent: term2 });
-    (await model.terms).push(term1, term2, term3);
-    const topLevelTerms = await model.getTopLevelTerms();
+    const vocabulary = this.store.createRecord('vocabulary');
+    const term1 = this.store.createRecord('term', { vocabulary });
+    const term2 = this.store.createRecord('term', { vocabulary });
+    this.store.createRecord('term', { parent: term2, vocabulary });
+    const topLevelTerms = await vocabulary.getTopLevelTerms();
     assert.strictEqual(topLevelTerms.length, 2);
     assert.ok(topLevelTerms.includes(term1));
     assert.ok(topLevelTerms.includes(term2));

@@ -4,8 +4,12 @@ import { setupTest } from 'ember-qunit';
 module('Unit | Model | AcademicYear', function (hooks) {
   setupTest(hooks);
 
+  hooks.beforeEach(function () {
+    this.store = this.owner.lookup('service:store');
+  });
+
   test('it exists', function (assert) {
-    const model = this.owner.lookup('service:store').createRecord('academic-year');
+    const model = this.store.createRecord('academic-year');
     assert.ok(!!model);
   });
 });

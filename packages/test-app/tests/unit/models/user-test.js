@@ -5,13 +5,17 @@ import { waitForResource } from 'ilios-common';
 module('Unit | Model | User', function (hooks) {
   setupTest(hooks);
 
+  hooks.beforeEach(function () {
+    this.store = this.owner.lookup('service:store');
+  });
+
   test('it exists', function (assert) {
-    const model = this.owner.lookup('service:store').createRecord('user');
+    const model = this.store.createRecord('user');
     assert.ok(!!model);
   });
 
   test('full name', function (assert) {
-    const model = this.owner.lookup('service:store').createRecord('user');
+    const model = this.store.createRecord('user');
     model.set('firstName', 'first');
     model.set('lastName', 'last');
     model.set('middleName', 'middle');
@@ -19,14 +23,14 @@ module('Unit | Model | User', function (hooks) {
   });
 
   test('full name no middle name', function (assert) {
-    const model = this.owner.lookup('service:store').createRecord('user');
+    const model = this.store.createRecord('user');
     model.set('firstName', 'first');
     model.set('lastName', 'last');
     assert.strictEqual(model.get('fullName'), 'first last');
   });
 
   test('fullNameFromFirstMiddleLastName', function (assert) {
-    const model = this.owner.lookup('service:store').createRecord('user');
+    const model = this.store.createRecord('user');
     model.set('firstName', 'first');
     model.set('lastName', 'last');
     model.set('middleName', 'middle');
@@ -34,7 +38,7 @@ module('Unit | Model | User', function (hooks) {
   });
 
   test('fullNameFromFirstMiddleInitialLastName', function (assert) {
-    const model = this.owner.lookup('service:store').createRecord('user');
+    const model = this.store.createRecord('user');
     model.set('firstName', 'first');
     model.set('lastName', 'last');
     model.set('middleName', 'middle');
@@ -42,7 +46,7 @@ module('Unit | Model | User', function (hooks) {
   });
 
   test('fullNameFromFirstLastName', function (assert) {
-    const model = this.owner.lookup('service:store').createRecord('user');
+    const model = this.store.createRecord('user');
     model.set('firstName', 'first');
     model.set('lastName', 'last');
     model.set('middleName', 'middle');
@@ -96,7 +100,7 @@ module('Unit | Model | User', function (hooks) {
     ];
     assert.expect(fixtures.length);
     fixtures.forEach((fixture) => {
-      const model = this.owner.lookup('service:store').createRecord('user');
+      const model = this.store.createRecord('user');
       model.set('firstName', fixture.firstName);
       model.set('lastName', fixture.lastName);
       model.set('middleName', fixture.middleName);
@@ -121,7 +125,7 @@ module('Unit | Model | User', function (hooks) {
     ];
     assert.expect(fixtures.length);
     fixtures.forEach((fixture) => {
-      const model = this.owner.lookup('service:store').createRecord('user');
+      const model = this.store.createRecord('user');
       model.set('firstName', fixture.firstName);
       model.set('lastName', fixture.lastName);
       model.set('middleName', fixture.middleName);
@@ -130,7 +134,7 @@ module('Unit | Model | User', function (hooks) {
   });
 
   test('full name with displayName', function (assert) {
-    const model = this.owner.lookup('service:store').createRecord('user');
+    const model = this.store.createRecord('user');
     model.set('displayName', 'something else');
     model.set('firstName', 'first');
     model.set('lastName', 'last');
@@ -138,7 +142,7 @@ module('Unit | Model | User', function (hooks) {
   });
 
   test('full name with empty displayName', function (assert) {
-    const model = this.owner.lookup('service:store').createRecord('user');
+    const model = this.store.createRecord('user');
     model.set('displayName', '');
     model.set('firstName', 'first');
     model.set('lastName', 'last');
@@ -147,21 +151,12 @@ module('Unit | Model | User', function (hooks) {
 
   test('gets all directed courses', async function (assert) {
     assert.expect(3);
-    const model = this.owner.lookup('service:store').createRecord('user');
-    const store = this.owner.lookup('service:store');
-    const courses = [];
-    courses.push(
-      store.createRecord('course', {
-        directors: [model],
-        id: 1,
-      }),
-    );
-    courses.push(
-      store.createRecord('course', {
-        directors: [model],
-        id: 2,
-      }),
-    );
+
+    const model = this.store.createRecord('user');
+    const courses = [
+      this.store.createRecord('course', { directors: [model] }),
+      this.store.createRecord('course', { directors: [model] }),
+    ];
     const allRelatedCourses = await waitForResource(model, 'allRelatedCourses');
     assert.strictEqual(allRelatedCourses.length, courses.length);
     courses.forEach((course) => {
@@ -171,21 +166,12 @@ module('Unit | Model | User', function (hooks) {
 
   test('gets all administered courses', async function (assert) {
     assert.expect(3);
-    const model = this.owner.lookup('service:store').createRecord('user');
-    const store = this.owner.lookup('service:store');
-    const courses = [];
-    courses.push(
-      store.createRecord('course', {
-        administrators: [model],
-        id: 1,
-      }),
-    );
-    courses.push(
-      store.createRecord('course', {
-        administrators: [model],
-        id: 2,
-      }),
-    );
+
+    const model = this.store.createRecord('user');
+    const courses = [
+      this.store.createRecord('course', { administrators: [model] }),
+      this.store.createRecord('course', { administrators: [model] }),
+    ];
     const allRelatedCourses = await waitForResource(model, 'allRelatedCourses');
     assert.strictEqual(allRelatedCourses.length, courses.length);
     courses.forEach((course) => {
@@ -195,30 +181,30 @@ module('Unit | Model | User', function (hooks) {
 
   test('gets all learner group courses', async function (assert) {
     assert.expect(3);
-    const store = this.owner.lookup('service:store');
-    const model = store.createRecord('user');
-    const course1 = store.createRecord('course');
-    const session1 = store.createRecord('session', {
+
+    const model = this.store.createRecord('user');
+    const course1 = this.store.createRecord('course');
+    const session1 = this.store.createRecord('session', {
       course: course1,
     });
-    const offering1 = store.createRecord('offering', {
+    const offering1 = this.store.createRecord('offering', {
       session: session1,
     });
-    const offering2 = store.createRecord('offering', {
+    const offering2 = this.store.createRecord('offering', {
       session: session1,
     });
-    store.createRecord('learner-group', {
+    this.store.createRecord('learner-group', {
       offerings: [offering1, offering2],
       users: [model],
     });
-    const course2 = store.createRecord('course');
-    const session2 = store.createRecord('session', {
+    const course2 = this.store.createRecord('course');
+    const session2 = this.store.createRecord('session', {
       course: course2,
     });
-    const offering3 = store.createRecord('offering', {
+    const offering3 = this.store.createRecord('offering', {
       session: session2,
     });
-    store.createRecord('learner-group', {
+    this.store.createRecord('learner-group', {
       offerings: [offering3],
       users: [model],
     });
@@ -233,30 +219,30 @@ module('Unit | Model | User', function (hooks) {
 
   test('gets all instructor group courses', async function (assert) {
     assert.expect(3);
-    const store = this.owner.lookup('service:store');
-    const model = store.createRecord('user');
-    const course1 = store.createRecord('course');
-    const session1 = store.createRecord('session', {
+
+    const model = this.store.createRecord('user');
+    const course1 = this.store.createRecord('course');
+    const session1 = this.store.createRecord('session', {
       course: course1,
     });
-    const offering1 = store.createRecord('offering', {
+    const offering1 = this.store.createRecord('offering', {
       session: session1,
     });
-    const offering2 = store.createRecord('offering', {
+    const offering2 = this.store.createRecord('offering', {
       session: session1,
     });
-    store.createRecord('instructor-group', {
+    this.store.createRecord('instructor-group', {
       offerings: [offering1, offering2],
       users: [model],
     });
-    const course2 = store.createRecord('course');
-    const session2 = store.createRecord('session', {
+    const course2 = this.store.createRecord('course');
+    const session2 = this.store.createRecord('session', {
       course: course2,
     });
-    const offering3 = store.createRecord('offering', {
+    const offering3 = this.store.createRecord('offering', {
       session: session2,
     });
-    store.createRecord('instructor-group', {
+    this.store.createRecord('instructor-group', {
       offerings: [offering3],
       users: [model],
     });
@@ -271,25 +257,25 @@ module('Unit | Model | User', function (hooks) {
 
   test('gets all instructed offering courses', async function (assert) {
     assert.expect(3);
-    const store = this.owner.lookup('service:store');
-    const model = store.createRecord('user');
-    const course1 = store.createRecord('course');
-    const session1 = store.createRecord('session', {
+
+    const model = this.store.createRecord('user');
+    const course1 = this.store.createRecord('course');
+    const session1 = this.store.createRecord('session', {
       course: course1,
     });
-    store.createRecord('offering', {
+    this.store.createRecord('offering', {
       session: session1,
       instructors: [model],
     });
-    store.createRecord('offering', {
+    this.store.createRecord('offering', {
       session: session1,
       instructors: [model],
     });
-    const course2 = store.createRecord('course');
-    const session2 = store.createRecord('session', {
+    const course2 = this.store.createRecord('course');
+    const session2 = this.store.createRecord('session', {
       course: course2,
     });
-    store.createRecord('offering', {
+    this.store.createRecord('offering', {
       session: session2,
       instructors: [model],
     });
@@ -304,25 +290,25 @@ module('Unit | Model | User', function (hooks) {
 
   test('gets all learner offering courses', async function (assert) {
     assert.expect(3);
-    const store = this.owner.lookup('service:store');
-    const model = store.createRecord('user');
-    const course1 = store.createRecord('course');
-    const session1 = store.createRecord('session', {
+
+    const model = this.store.createRecord('user');
+    const course1 = this.store.createRecord('course');
+    const session1 = this.store.createRecord('session', {
       course: course1,
     });
-    store.createRecord('offering', {
+    this.store.createRecord('offering', {
       session: session1,
       learners: [model],
     });
-    store.createRecord('offering', {
+    this.store.createRecord('offering', {
       session: session1,
       learners: [model],
     });
-    const course2 = store.createRecord('course');
-    const session2 = store.createRecord('session', {
+    const course2 = this.store.createRecord('course');
+    const session2 = this.store.createRecord('session', {
       course: course2,
     });
-    store.createRecord('offering', {
+    this.store.createRecord('offering', {
       session: session2,
       learners: [model],
     });
@@ -337,33 +323,33 @@ module('Unit | Model | User', function (hooks) {
 
   test('gets all learner group ILMSession courses', async function (assert) {
     assert.expect(3);
-    const store = this.owner.lookup('service:store');
-    const model = store.createRecord('user');
-    const course1 = store.createRecord('course');
-    const session1 = store.createRecord('session', {
+
+    const model = this.store.createRecord('user');
+    const course1 = this.store.createRecord('course');
+    const session1 = this.store.createRecord('session', {
       course: course1,
     });
-    const session2 = store.createRecord('session', {
+    const session2 = this.store.createRecord('session', {
       course: course1,
     });
-    const ilm1 = store.createRecord('ilm-session', {
+    const ilm1 = this.store.createRecord('ilm-session', {
       session: session1,
     });
-    const ilm2 = store.createRecord('ilm-session', {
+    const ilm2 = this.store.createRecord('ilm-session', {
       session: session2,
     });
-    store.createRecord('learner-group', {
+    this.store.createRecord('learner-group', {
       ilmSessions: [ilm1, ilm2],
       users: [model],
     });
-    const course2 = store.createRecord('course');
-    const session3 = store.createRecord('session', {
+    const course2 = this.store.createRecord('course');
+    const session3 = this.store.createRecord('session', {
       course: course2,
     });
-    const ilm3 = store.createRecord('ilm-session', {
+    const ilm3 = this.store.createRecord('ilm-session', {
       session: session3,
     });
-    store.createRecord('learner-group', {
+    this.store.createRecord('learner-group', {
       ilmSessions: [ilm3],
       users: [model],
     });
@@ -378,36 +364,36 @@ module('Unit | Model | User', function (hooks) {
 
   test('gets all instructor group ILMSession courses', async function (assert) {
     assert.expect(3);
-    const store = this.owner.lookup('service:store');
-    const model = store.createRecord('user');
-    const course1 = store.createRecord('course');
-    const session1 = store.createRecord('session', {
+
+    const model = this.store.createRecord('user');
+    const course1 = this.store.createRecord('course');
+    const session1 = this.store.createRecord('session', {
       course: course1,
     });
-    const session2 = store.createRecord('session', {
+    const session2 = this.store.createRecord('session', {
       course: course1,
     });
-    const ilm1 = store.createRecord('ilm-session', {
-      id: 1,
+    const ilm1 = this.store.createRecord('ilm-session', {
+      id: '1',
       session: session1,
     });
-    const ilm2 = store.createRecord('ilm-session', {
-      id: 2,
+    const ilm2 = this.store.createRecord('ilm-session', {
+      id: '2',
       session: session2,
     });
-    store.createRecord('instructor-group', {
+    this.store.createRecord('instructor-group', {
       ilmSessions: [ilm1, ilm2],
       users: [model],
     });
-    const course2 = store.createRecord('course');
-    const session3 = store.createRecord('session', {
+    const course2 = this.store.createRecord('course');
+    const session3 = this.store.createRecord('session', {
       course: course2,
     });
-    const ilm3 = store.createRecord('ilm-session', {
-      id: 3,
+    const ilm3 = this.store.createRecord('ilm-session', {
+      id: '3',
       session: session3,
     });
-    store.createRecord('instructor-group', {
+    this.store.createRecord('instructor-group', {
       ilmSessions: [ilm3],
       users: [model],
     });
@@ -422,21 +408,21 @@ module('Unit | Model | User', function (hooks) {
 
   test('gets all learner ilm courses', async function (assert) {
     assert.expect(3);
-    const model = this.owner.lookup('service:store').createRecord('user');
-    const store = this.owner.lookup('service:store');
-    const course1 = store.createRecord('course');
-    const session1 = store.createRecord('session', {
+    const model = this.store.createRecord('user');
+
+    const course1 = this.store.createRecord('course');
+    const session1 = this.store.createRecord('session', {
       course: course1,
     });
-    store.createRecord('ilm-session', {
+    this.store.createRecord('ilm-session', {
       session: session1,
       learners: [model],
     });
-    const course2 = store.createRecord('course');
-    const session2 = store.createRecord('session', {
+    const course2 = this.store.createRecord('course');
+    const session2 = this.store.createRecord('session', {
       course: course2,
     });
-    store.createRecord('ilm-session', {
+    this.store.createRecord('ilm-session', {
       session: session2,
       learners: [model],
     });
@@ -450,113 +436,95 @@ module('Unit | Model | User', function (hooks) {
   });
 
   test('isStudent - no roles', async function (assert) {
-    const model = this.owner.lookup('service:store').createRecord('user');
-    const isStudent = await waitForResource(model, 'isStudent');
+    const user = this.store.createRecord('user');
+    const isStudent = await waitForResource(user, 'isStudent');
     assert.notOk(isStudent);
   });
 
   test('isStudent - roles, but no student role', async function (assert) {
-    const model = this.owner.lookup('service:store').createRecord('user');
-    const store = this.owner.lookup('service:store');
-    const notAStudentRole = store.createRecord('user-role', {
+    const role1 = this.store.createRecord('user-role', {
       title: 'East-German Pie Eating Champion of 1997',
     });
-    const notAStudentRoleEither = store.createRecord('user-role', {
-      title: 'Alien Overlord',
-    });
-    (await model.roles).push(notAStudentRole, notAStudentRoleEither);
-    const isStudent = await waitForResource(model, 'isStudent');
+    const role2 = this.store.createRecord('user-role', { title: 'Alien Overlord' });
+    const user = this.store.createRecord('user', { roles: [role1, role2] });
+    const isStudent = await waitForResource(user, 'isStudent');
     assert.notOk(isStudent);
   });
 
   test('isStudent - has student role', async function (assert) {
-    const model = this.owner.lookup('service:store').createRecord('user');
-    const store = this.owner.lookup('service:store');
-    const notAStudentRole = store.createRecord('user-role', {
-      title: 'Non-student',
-    });
-    const studentRole = store.createRecord('user-role', { title: 'Student' });
-    (await model.roles).push(notAStudentRole, studentRole);
-    const isStudent = await waitForResource(model, 'isStudent');
+    const nonStudentRole = this.store.createRecord('user-role', { title: 'Non-student' });
+    const studentRole = this.store.createRecord('user-role', { title: 'Student' });
+    const user = this.store.createRecord('user', { roles: [nonStudentRole, studentRole] });
+    const isStudent = await waitForResource(user, 'isStudent');
     assert.ok(isStudent);
   });
 
   test('performsNonLearnerFunction - directedCourses', async function (assert) {
-    const store = this.owner.lookup('service:store');
-    const model = store.createRecord('user');
-    store.createRecord('course', { directors: [model] });
+    const model = this.store.createRecord('user');
+    this.store.createRecord('course', { directors: [model] });
     const performsNonLearnerFunction = await waitForResource(model, 'performsNonLearnerFunction');
     assert.ok(performsNonLearnerFunction);
   });
 
   test('performsNonLearnerFunction - administeredCourses', async function (assert) {
-    const store = this.owner.lookup('service:store');
-    const model = store.createRecord('user');
-    store.createRecord('course', { administrators: [model] });
+    const model = this.store.createRecord('user');
+    this.store.createRecord('course', { administrators: [model] });
     const performsNonLearnerFunction = await waitForResource(model, 'performsNonLearnerFunction');
     assert.ok(performsNonLearnerFunction);
   });
 
   test('performsNonLearnerFunction - administeredSessions', async function (assert) {
-    const store = this.owner.lookup('service:store');
-    const model = store.createRecord('user');
-    store.createRecord('session', { administrators: [model] });
+    const model = this.store.createRecord('user');
+    this.store.createRecord('session', { administrators: [model] });
     const performsNonLearnerFunction = await waitForResource(model, 'performsNonLearnerFunction');
     assert.ok(performsNonLearnerFunction);
   });
 
   test('performsNonLearnerFunction - instructedLearnerGroups', async function (assert) {
-    const store = this.owner.lookup('service:store');
-    const model = store.createRecord('user');
-    store.createRecord('learner-group', { instructors: [model] });
+    const model = this.store.createRecord('user');
+    this.store.createRecord('learner-group', { instructors: [model] });
     const performsNonLearnerFunction = await waitForResource(model, 'performsNonLearnerFunction');
     assert.ok(performsNonLearnerFunction);
   });
 
   test('performsNonLearnerFunction - instructorGroups', async function (assert) {
-    const store = this.owner.lookup('service:store');
-    const model = store.createRecord('user');
-    store.createRecord('instructor-group', { users: [model] });
+    const model = this.store.createRecord('user');
+    this.store.createRecord('instructor-group', { users: [model] });
     const performsNonLearnerFunction = await waitForResource(model, 'performsNonLearnerFunction');
     assert.ok(performsNonLearnerFunction);
   });
 
   test('performsNonLearnerFunction - instructedOfferings', async function (assert) {
-    const store = this.owner.lookup('service:store');
-    const model = store.createRecord('user');
-    store.createRecord('offering', { instructors: [model] });
+    const model = this.store.createRecord('user');
+    this.store.createRecord('offering', { instructors: [model] });
     const performsNonLearnerFunction = await waitForResource(model, 'performsNonLearnerFunction');
     assert.ok(performsNonLearnerFunction);
   });
 
   test('performsNonLearnerFunction - instructedIlmSessions', async function (assert) {
-    const store = this.owner.lookup('service:store');
-    const model = store.createRecord('user');
-    store.createRecord('ilm-session', { instructors: [model] });
+    const model = this.store.createRecord('user');
+    this.store.createRecord('ilm-session', { instructors: [model] });
     const performsNonLearnerFunction = await waitForResource(model, 'performsNonLearnerFunction');
     assert.ok(performsNonLearnerFunction);
   });
 
   test('performsNonLearnerFunction - directedPrograms', async function (assert) {
-    const store = this.owner.lookup('service:store');
-    const model = store.createRecord('user');
-    store.createRecord('program', { directors: [model] });
+    const model = this.store.createRecord('user');
+    this.store.createRecord('program', { directors: [model] });
     const performsNonLearnerFunction = await waitForResource(model, 'performsNonLearnerFunction');
     assert.ok(performsNonLearnerFunction);
   });
 
   test('performsNonLearnerFunction - programYears', async function (assert) {
-    const store = this.owner.lookup('service:store');
-    const model = store.createRecord('user');
-    store.createRecord('program-year', { directors: [model] });
+    const model = this.store.createRecord('user');
+    this.store.createRecord('program-year', { directors: [model] });
     const performsNonLearnerFunction = await waitForResource(model, 'performsNonLearnerFunction');
     assert.ok(performsNonLearnerFunction);
   });
 
   test('performsNonLearnerFunction - administeredCurriculumInventoryReports', async function (assert) {
-    const store = this.owner.lookup('service:store');
-    const model = store.createRecord('user');
-    store.createRecord('curriculum-inventory-report', {
+    const model = this.store.createRecord('user');
+    this.store.createRecord('curriculum-inventory-report', {
       administrators: [model],
     });
     const performsNonLearnerFunction = await waitForResource(model, 'performsNonLearnerFunction');
@@ -564,62 +532,57 @@ module('Unit | Model | User', function (hooks) {
   });
 
   test('performsNonLearnerFunction - directedSchools', async function (assert) {
-    const store = this.owner.lookup('service:store');
-    const model = store.createRecord('user');
-    store.createRecord('school', { directors: [model] });
+    const model = this.store.createRecord('user');
+    this.store.createRecord('school', { directors: [model] });
     const performsNonLearnerFunction = await waitForResource(model, 'performsNonLearnerFunction');
     assert.ok(performsNonLearnerFunction);
   });
 
   test('performsNonLearnerFunction - administeredSchools', async function (assert) {
-    const store = this.owner.lookup('service:store');
-    const model = store.createRecord('user');
-    store.createRecord('school', { administrators: [model] });
+    const model = this.store.createRecord('user');
+    this.store.createRecord('school', { administrators: [model] });
     const performsNonLearnerFunction = await waitForResource(model, 'performsNonLearnerFunction');
     assert.ok(performsNonLearnerFunction);
   });
 
   test('isLearner - cohorts', async function (assert) {
-    const store = this.owner.lookup('service:store');
-    const model = store.createRecord('user');
-    store.createRecord('cohort', { users: [model] });
+    const model = this.store.createRecord('user');
+    this.store.createRecord('cohort', { users: [model] });
     const isLearner = await waitForResource(model, 'isLearner');
     assert.ok(isLearner);
   });
 
   test('isLearner - offerings', async function (assert) {
-    const store = this.owner.lookup('service:store');
-    const model = store.createRecord('user');
-    store.createRecord('offering', { learners: [model] });
+    const model = this.store.createRecord('user');
+    this.store.createRecord('offering', { learners: [model] });
     const isLearner = await waitForResource(model, 'isLearner');
     assert.ok(isLearner);
   });
 
   test('isLearner - learnerIlmSessions', async function (assert) {
-    const store = this.owner.lookup('service:store');
-    const model = store.createRecord('user');
-    store.createRecord('ilm-session', { learners: [model] });
+    const model = this.store.createRecord('user');
+    this.store.createRecord('ilm-session', { learners: [model] });
     const isLearner = await waitForResource(model, 'isLearner');
     assert.ok(isLearner);
   });
 
   test('gets all instructor ilm courses', async function (assert) {
     assert.expect(3);
-    const model = this.owner.lookup('service:store').createRecord('user');
-    const store = this.owner.lookup('service:store');
-    const course1 = store.createRecord('course');
-    const session1 = store.createRecord('session', {
+
+    const model = this.store.createRecord('user');
+    const course1 = this.store.createRecord('course');
+    const session1 = this.store.createRecord('session', {
       course: course1,
     });
-    store.createRecord('ilm-session', {
+    this.store.createRecord('ilm-session', {
       session: session1,
       instructors: [model],
     });
-    const course2 = store.createRecord('course');
-    const session2 = store.createRecord('session', {
+    const course2 = this.store.createRecord('course');
+    const session2 = this.store.createRecord('session', {
       course: course2,
     });
-    store.createRecord('ilm-session', {
+    this.store.createRecord('ilm-session', {
       session: session2,
       instructors: [model],
     });
@@ -633,23 +596,20 @@ module('Unit | Model | User', function (hooks) {
   });
 
   test('find lowest group at top of tree', async function (assert) {
-    const model = this.owner.lookup('service:store').createRecord('user');
-    const store = this.owner.lookup('service:store');
-    const learnerGroup = store.createRecord('learner-group', {
-      id: 1,
+    const model = this.store.createRecord('user');
+    const learnerGroup = this.store.createRecord('learner-group', {
+      id: '1',
       users: [model],
     });
-    const learnerGroup2 = store.createRecord('learner-group', {
-      id: 2,
+    const learnerGroup2 = this.store.createRecord('learner-group', {
+      id: '2',
       parent: learnerGroup,
     });
-    const learnerGroup3 = store.createRecord('learner-group', {
-      id: 3,
+    const learnerGroup3 = this.store.createRecord('learner-group', {
+      id: '3',
       parent: learnerGroup2,
     });
     const tree = [learnerGroup, learnerGroup2, learnerGroup3];
-    (await model.learnerGroups).push(learnerGroup);
-
     const lowestGroup = await model.getLowestMemberGroupInALearnerGroupTree(tree);
 
     assert.ok(lowestGroup);
@@ -657,24 +617,22 @@ module('Unit | Model | User', function (hooks) {
   });
 
   test('find lowest group in middle of tree', async function (assert) {
-    const model = this.owner.lookup('service:store').createRecord('user');
-    const store = this.owner.lookup('service:store');
-    const learnerGroup = store.createRecord('learner-group', {
-      id: 1,
+    const model = this.store.createRecord('user');
+
+    const learnerGroup = this.store.createRecord('learner-group', {
+      id: '1',
       users: [model],
     });
-    const learnerGroup2 = store.createRecord('learner-group', {
-      id: 2,
+    const learnerGroup2 = this.store.createRecord('learner-group', {
+      id: '2',
       parent: learnerGroup,
       users: [model],
     });
-    const learnerGroup3 = store.createRecord('learner-group', {
-      id: 3,
+    const learnerGroup3 = this.store.createRecord('learner-group', {
+      id: '3',
       parent: learnerGroup2,
     });
     const tree = [learnerGroup, learnerGroup2, learnerGroup3];
-    (await model.learnerGroups).push(learnerGroup, learnerGroup2);
-
     const lowestGroup = await model.getLowestMemberGroupInALearnerGroupTree(tree);
 
     assert.ok(lowestGroup);
@@ -682,25 +640,23 @@ module('Unit | Model | User', function (hooks) {
   });
 
   test('find lowest group in bottom of tree', async function (assert) {
-    const model = this.owner.lookup('service:store').createRecord('user');
-    const store = this.owner.lookup('service:store');
-    const learnerGroup = store.createRecord('learner-group', {
-      id: 1,
+    const model = this.store.createRecord('user');
+
+    const learnerGroup = this.store.createRecord('learner-group', {
+      id: '1',
       users: [model],
     });
-    const learnerGroup2 = store.createRecord('learner-group', {
-      id: 2,
+    const learnerGroup2 = this.store.createRecord('learner-group', {
+      id: '2',
       parent: learnerGroup,
       users: [model],
     });
-    const learnerGroup3 = store.createRecord('learner-group', {
-      id: 3,
+    const learnerGroup3 = this.store.createRecord('learner-group', {
+      id: '3',
       parent: learnerGroup2,
       users: [model],
     });
     const tree = [learnerGroup, learnerGroup2, learnerGroup3];
-    (await model.learnerGroups).push(learnerGroup, learnerGroup2, learnerGroup3);
-
     const lowestGroup = await model.getLowestMemberGroupInALearnerGroupTree(tree);
 
     assert.ok(lowestGroup);
@@ -708,15 +664,15 @@ module('Unit | Model | User', function (hooks) {
   });
 
   test('return null when there is no group in the tree', async function (assert) {
-    const model = this.owner.lookup('service:store').createRecord('user');
-    const store = this.owner.lookup('service:store');
-    const learnerGroup = store.createRecord('learner-group');
-    const learnerGroup2 = store.createRecord('learner-group', {
-      id: 2,
+    const model = this.store.createRecord('user');
+
+    const learnerGroup = this.store.createRecord('learner-group');
+    const learnerGroup2 = this.store.createRecord('learner-group', {
+      id: '2',
       parent: learnerGroup,
     });
-    const learnerGroup3 = store.createRecord('learner-group', {
-      id: 3,
+    const learnerGroup3 = this.store.createRecord('learner-group', {
+      id: '3',
       parent: learnerGroup2,
     });
     const tree = [learnerGroup, learnerGroup2, learnerGroup3];
@@ -726,19 +682,18 @@ module('Unit | Model | User', function (hooks) {
   });
 
   test('gets secondary cohorts (all cohorts not the primary cohort)', async function (assert) {
-    const model = this.owner.lookup('service:store').createRecord('user');
-    const store = this.owner.lookup('service:store');
-    const primaryCohort = store.createRecord('cohort', {
+    const model = this.store.createRecord('user');
+
+    const primaryCohort = this.store.createRecord('cohort', {
       users: [model],
     });
-    const secondaryCohort = store.createRecord('cohort', {
+    const secondaryCohort = this.store.createRecord('cohort', {
       users: [model],
     });
-    const anotherCohort = store.createRecord('cohort', {
+    const anotherCohort = this.store.createRecord('cohort', {
       users: [model],
     });
     model.set('primaryCohort', primaryCohort);
-    (await model.cohorts).push(primaryCohort, secondaryCohort, anotherCohort);
 
     const cohorts = await waitForResource(model, 'secondaryCohorts');
     assert.strictEqual(cohorts.length, 2);
@@ -749,37 +704,37 @@ module('Unit | Model | User', function (hooks) {
 
   test('allInstructedCourses gets ALL instructed courses', async function (assert) {
     assert.expect(5);
-    const model = this.owner.lookup('service:store').createRecord('user');
-    const store = this.owner.lookup('service:store');
-    const course1 = store.createRecord('course');
-    const session1 = store.createRecord('session', { course: course1 });
-    store.createRecord('offering', {
+    const model = this.store.createRecord('user');
+
+    const course1 = this.store.createRecord('course');
+    const session1 = this.store.createRecord('session', { course: course1 });
+    this.store.createRecord('offering', {
       session: session1,
       instructors: [model],
     });
-    const course2 = store.createRecord('course');
-    const session2 = store.createRecord('session', { course: course2 });
-    const instructorGroup1 = store.createRecord('instructor-group', {
+    const course2 = this.store.createRecord('course');
+    const session2 = this.store.createRecord('session', { course: course2 });
+    const instructorGroup1 = this.store.createRecord('instructor-group', {
       users: [model],
     });
-    store.createRecord('offering', {
+    this.store.createRecord('offering', {
       session: session2,
       instructorGroups: [instructorGroup1],
     });
 
-    const course3 = store.createRecord('course');
-    const session3 = store.createRecord('session', { course: course3 });
-    store.createRecord('ilm-session', {
+    const course3 = this.store.createRecord('course');
+    const session3 = this.store.createRecord('session', { course: course3 });
+    this.store.createRecord('ilm-session', {
       session: session3,
       instructors: [model],
     });
 
-    const instructorGroup2 = store.createRecord('instructor-group', {
+    const instructorGroup2 = this.store.createRecord('instructor-group', {
       users: [model],
     });
-    const course4 = store.createRecord('course');
-    const session4 = store.createRecord('session', { course: course4 });
-    store.createRecord('ilm-session', {
+    const course4 = this.store.createRecord('course');
+    const session4 = this.store.createRecord('session', { course: course4 });
+    this.store.createRecord('ilm-session', {
       session: session4,
       instructorGroups: [instructorGroup2],
     });
@@ -794,42 +749,42 @@ module('Unit | Model | User', function (hooks) {
 
   test('allInstructedSessions gets ALL instructed sessions', async function (assert) {
     assert.expect(6);
-    const model = this.owner.lookup('service:store').createRecord('user');
-    const store = this.owner.lookup('service:store');
-    const session1 = store.createRecord('session');
-    store.createRecord('offering', {
+    const model = this.store.createRecord('user');
+
+    const session1 = this.store.createRecord('session');
+    this.store.createRecord('offering', {
       session: session1,
       instructors: [model],
     });
-    const session2 = store.createRecord('session');
-    const instructorGroup1 = store.createRecord('instructor-group', {
+    const session2 = this.store.createRecord('session');
+    const instructorGroup1 = this.store.createRecord('instructor-group', {
       users: [model],
     });
-    store.createRecord('offering', {
+    this.store.createRecord('offering', {
       session: session2,
       instructorGroups: [instructorGroup1],
     });
 
-    const session3 = store.createRecord('session');
-    store.createRecord('ilm-session', {
+    const session3 = this.store.createRecord('session');
+    this.store.createRecord('ilm-session', {
       session: session3,
       instructors: [model],
     });
 
-    const instructorGroup2 = store.createRecord('instructor-group', {
+    const instructorGroup2 = this.store.createRecord('instructor-group', {
       users: [model],
     });
-    const session4 = store.createRecord('session');
-    store.createRecord('ilm-session', {
+    const session4 = this.store.createRecord('session');
+    this.store.createRecord('ilm-session', {
       session: session4,
       instructorGroups: [instructorGroup2],
     });
 
-    const session5 = store.createRecord('session');
-    const learnerGroup1 = store.createRecord('learner-group', {
+    const session5 = this.store.createRecord('session');
+    const learnerGroup1 = this.store.createRecord('learner-group', {
       instructors: [model],
     });
-    store.createRecord('offering', {
+    this.store.createRecord('offering', {
       session: session5,
       learnerGroups: [learnerGroup1],
     });

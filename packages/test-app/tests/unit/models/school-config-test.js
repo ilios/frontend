@@ -4,13 +4,17 @@ import { setupTest } from 'ember-qunit';
 module('Unit | Model | School Config', function (hooks) {
   setupTest(hooks);
 
+  hooks.beforeEach(function () {
+    this.store = this.owner.lookup('service:store');
+  });
+
   test('it exists', function (assert) {
-    const model = this.owner.lookup('service:store').createRecord('school-config');
+    const model = this.store.createRecord('school-config');
     assert.ok(!!model);
   });
 
   test('getParsedValue boolean false', async function (assert) {
-    const model = this.owner.lookup('service:store').createRecord('school-config', {
+    const model = this.store.createRecord('school-config', {
       name: 'test-false',
       value: 'false',
     });
@@ -18,7 +22,7 @@ module('Unit | Model | School Config', function (hooks) {
   });
 
   test('getParsedValue boolean true', async function (assert) {
-    const model = this.owner.lookup('service:store').createRecord('school-config', {
+    const model = this.store.createRecord('school-config', {
       name: 'test-true',
       value: 'true',
     });

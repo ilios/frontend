@@ -6,25 +6,26 @@ import { waitForResource } from 'ilios-common';
 module('Unit | Model | Offering', function (hooks) {
   setupTest(hooks);
 
+  hooks.beforeEach(function () {
+    this.store = this.owner.lookup('service:store');
+  });
+
   test('check allInstructors', async function (assert) {
-    const offering = this.owner.lookup('service:store').createRecord('offering');
-    const store = this.owner.lookup('service:store');
+    const offering = this.store.createRecord('offering');
 
     let allInstructors = await waitForResource(offering, 'allInstructors');
 
     assert.strictEqual(allInstructors.length, 0);
 
-    const user1 = store.createRecord('user', { displayName: 'Beta' });
-    const user2 = store.createRecord('user', { displayName: 'Alpha' });
-    const user3 = store.createRecord('user', { displayName: 'Omega' });
-    (await offering.instructors).push(user1);
-    const instructorGroup1 = store.createRecord('instructor-group', {
-      users: [user2],
+    const user1 = this.store.createRecord('user', {
+      displayName: 'Beta',
+      instructedOfferings: [offering],
     });
-    const instructorGroup2 = store.createRecord('instructor-group', {
-      users: [user3],
-    });
-    (await offering.instructorGroups).push(instructorGroup1, instructorGroup2);
+    const user2 = this.store.createRecord('user', { displayName: 'Alpha' });
+    const user3 = this.store.createRecord('user', { displayName: 'Omega' });
+
+    this.store.createRecord('instructor-group', { users: [user2], offerings: [offering] });
+    this.store.createRecord('instructor-group', { users: [user3], offerings: [offering] });
 
     allInstructors = await waitForResource(offering, 'allInstructors');
 
@@ -33,16 +34,13 @@ module('Unit | Model | Offering', function (hooks) {
     assert.ok(allInstructors.includes(user2));
     assert.ok(allInstructors.includes(user3));
 
-    const user4 = store.createRecord('user', {
+    this.store.createRecord('user', {
       firstName: 'Larry',
       lastName: 'Lazy',
+      instructedOfferings: [offering],
     });
-    const user5 = store.createRecord('user', { displayName: 'Gamma' });
-    (await offering.instructors).push(user4);
-    const instructorGroup3 = store.createRecord('instructor-group', {
-      users: [user5],
-    });
-    (await offering.instructorGroups).push(instructorGroup3);
+    const user5 = this.store.createRecord('user', { displayName: 'Gamma' });
+    this.store.createRecord('instructor-group', { users: [user5], offerings: [offering] });
 
     allInstructors = await waitForResource(offering, 'allInstructors');
 
@@ -55,8 +53,7 @@ module('Unit | Model | Offering', function (hooks) {
   });
 
   test('duration', function (assert) {
-    const store = this.owner.lookup('service:store');
-    const model = store.createRecord('offering', {});
+    const model = this.store.createRecord('offering');
     assert.strictEqual(model.get('durationHours'), 0);
     assert.strictEqual(model.get('durationMinutes'), 0);
     model.set('startDate', DateTime.now().toJSDate());
@@ -79,23 +76,17 @@ module('Unit | Model | Offering', function (hooks) {
   });
 
   test('check allLearners', async function (assert) {
-    const offering = this.owner.lookup('service:store').createRecord('offering');
-    const store = this.owner.lookup('service:store');
+    const offering = this.store.createRecord('offering');
 
     let allLearners = await waitForResource(offering, 'allLearners');
     assert.strictEqual(allLearners.length, 0);
 
-    const user1 = store.createRecord('user', { displayName: 'Beta' });
-    const user2 = store.createRecord('user', { displayName: 'Alpha' });
-    const user3 = store.createRecord('user', { displayName: 'Omega' });
-    (await offering.learners).push(user1);
-    const learnerGroup1 = store.createRecord('learner-group', {
-      users: [user2],
-    });
-    const learnerGroup2 = store.createRecord('learner-group', {
-      users: [user3],
-    });
-    (await offering.learnerGroups).push(learnerGroup1, learnerGroup2);
+    const user1 = this.store.createRecord('user', { displayName: 'Beta', offerings: [offering] });
+    const user2 = this.store.createRecord('user', { displayName: 'Alpha' });
+    const user3 = this.store.createRecord('user', { displayName: 'Omega' });
+
+    this.store.createRecord('learner-group', { users: [user2], offerings: [offering] });
+    this.store.createRecord('learner-group', { users: [user3], offerings: [offering] });
 
     allLearners = await waitForResource(offering, 'allLearners');
 
@@ -104,16 +95,14 @@ module('Unit | Model | Offering', function (hooks) {
     assert.ok(allLearners.includes(user2));
     assert.ok(allLearners.includes(user3));
 
-    const user4 = store.createRecord('user', {
+    this.store.createRecord('user', {
       firstName: 'Larry',
       lastName: 'Lazy',
+      offerings: [offering],
     });
-    const user5 = store.createRecord('user', { displayName: 'Gamma' });
-    (await offering.learners).push(user4);
-    const learnerGroup3 = store.createRecord('learner-group', {
-      users: [user5],
-    });
-    (await offering.learnerGroups).push(learnerGroup3);
+
+    const user5 = this.store.createRecord('user', { displayName: 'Gamma' });
+    this.store.createRecord('learner-group', { users: [user5], offerings: [offering] });
 
     allLearners = await waitForResource(offering, 'allLearners');
 
@@ -127,73 +116,72 @@ module('Unit | Model | Offering', function (hooks) {
 
   test('startDayOfYear', function (assert) {
     const startDate = new Date('December 17, 1995 03:24:00');
-    const offering = this.owner.lookup('service:store').createRecord('offering', { startDate });
+    const offering = this.store.createRecord('offering', { startDate });
     const startDayOfYear = offering.startDayOfYear;
     assert.strictEqual(startDayOfYear, '351');
   });
 
   test('startYear', function (assert) {
     const startDate = new Date('December 17, 1995 03:24:00');
-    const offering = this.owner.lookup('service:store').createRecord('offering', { startDate });
+    const offering = this.store.createRecord('offering', { startDate });
     const startYear = offering.startYear;
     assert.strictEqual(startYear, '1995');
   });
 
   test('startTime', function (assert) {
     const startDate = new Date('December 17, 1995 03:24:00');
-    const offering = this.owner.lookup('service:store').createRecord('offering', { startDate });
+    const offering = this.store.createRecord('offering', { startDate });
     const startTime = offering.startTime;
     assert.strictEqual(startTime, '0324');
   });
 
   test('startYearAndDayOfYear', function (assert) {
     const startDate = new Date('December 17, 1995 03:24:00');
-    const offering = this.owner.lookup('service:store').createRecord('offering', { startDate });
+    const offering = this.store.createRecord('offering', { startDate });
     const startYearAndDayOfYear = offering.startYearAndDayOfYear;
     assert.strictEqual(startYearAndDayOfYear, '3511995');
   });
 
   test('endDayOfYear', function (assert) {
     const endDate = new Date('December 17, 1995 03:24:00');
-    const offering = this.owner.lookup('service:store').createRecord('offering', { endDate });
+    const offering = this.store.createRecord('offering', { endDate });
     const endDayOfYear = offering.endDayOfYear;
     assert.strictEqual(endDayOfYear, '351');
   });
 
   test('endYear', function (assert) {
     const endDate = new Date('December 17, 1995 03:24:00');
-    const offering = this.owner.lookup('service:store').createRecord('offering', { endDate });
+    const offering = this.store.createRecord('offering', { endDate });
     const endYear = offering.endYear;
     assert.strictEqual(endYear, '1995');
   });
 
   test('endTime', function (assert) {
     const endDate = new Date('December 17, 1995 03:24:00');
-    const offering = this.owner.lookup('service:store').createRecord('offering', { endDate });
+    const offering = this.store.createRecord('offering', { endDate });
     const endTime = offering.endTime;
     assert.strictEqual(endTime, '0324');
   });
 
   test('endYearAndDayOfYear', function (assert) {
     const endDate = new Date('December 17, 1995 03:24:00');
-    const offering = this.owner.lookup('service:store').createRecord('offering', { endDate });
+    const offering = this.store.createRecord('offering', { endDate });
     const endYearAndDayOfYear = offering.endYearAndDayOfYear;
     assert.strictEqual(endYearAndDayOfYear, '3511995');
   });
 
   test('getAllInstructors', async function (assert) {
-    const store = this.owner.lookup('service:store');
-    const instructor1 = store.createRecord('user');
-    const instructor2 = store.createRecord('user');
-    const instructor3 = store.createRecord('user');
-    const instructor4 = store.createRecord('user');
-    const instructorGroup1 = store.createRecord('instructor-group', {
+    const instructor1 = this.store.createRecord('user');
+    const instructor2 = this.store.createRecord('user');
+    const instructor3 = this.store.createRecord('user');
+    const instructor4 = this.store.createRecord('user');
+    const instructorGroup1 = this.store.createRecord('instructor-group', {
       users: [instructor1, instructor2],
     });
-    const instructorGroup2 = store.createRecord('instructor-group', {
+    const instructorGroup2 = this.store.createRecord('instructor-group', {
       users: [instructor3],
     });
-    const model = store.createRecord('offering', {
+    const model = this.store.createRecord('offering', {
       instructorGroups: [instructorGroup1, instructorGroup2],
       instructors: [instructor1, instructor3, instructor4],
     });
@@ -206,8 +194,7 @@ module('Unit | Model | Offering', function (hooks) {
   });
 
   test('getAllInstructors - no instructors', async function (assert) {
-    const store = this.owner.lookup('service:store');
-    const model = store.createRecord('offering');
+    const model = this.store.createRecord('offering');
     const allInstructors = await model.getAllInstructors();
     assert.strictEqual(allInstructors.length, 0);
   });
