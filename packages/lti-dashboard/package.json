@@ -71,7 +71,6 @@
     "ember-cli-terser": "^4.0.2",
     "ember-exam": "^9.0.0",
     "ember-load-initializers": "^3.0.1",
-    "ember-mirage": "^0.3.1",
     "ember-modifier": "^4.2.0",
     "ember-page-title": "^9.0.1",
     "ember-qunit": "^9.0.1",

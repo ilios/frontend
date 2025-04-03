@@ -7,6 +7,7 @@ import { pluralize, singularize } from 'ember-inflector';
 
 export default function (config) {
   let finalConfig = {
+    environment: 'test',
     ...config,
     models: commonModels,
     factories: commonFactories,
