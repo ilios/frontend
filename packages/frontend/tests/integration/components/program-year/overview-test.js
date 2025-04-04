@@ -5,7 +5,6 @@ import { hbs } from 'ember-cli-htmlbars';
 import { setupMirage } from 'frontend/tests/test-support/mirage';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
 import { component } from 'frontend/tests/pages/components/program-year/overview';
-import { getOwner } from '@ember/owner';
 
 module('Integration | Component | program-year/overview', function (hooks) {
   setupRenderingTest(hooks);
@@ -20,21 +19,8 @@ module('Integration | Component | program-year/overview', function (hooks) {
     this.set('program', programYearModel);
     await render(hbs`<ProgramYear::Overview @programYear={{this.programYear}} />`);
     assert.strictEqual(component.title, 'Overview');
-    assert.notOk(component.actions.visualizations.isPresent);
+    assert.ok(component.actions.visualizations.isPresent);
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
-  });
-
-  test('visualizations button present', async function (assert) {
-    const config = getOwner(this)?.resolveRegistration('config:environment');
-    config.featureFlags.programYearVisualizations = true;
-    const program = this.server.create('program');
-    const programYear = this.server.create('program-year', { program });
-    const programYearModel = await this.owner
-      .lookup('service:store')
-      .findRecord('program-year', programYear.id);
-    this.set('program', programYearModel);
-    await render(hbs`<ProgramYear::Overview @programYear={{this.programYear}} />`);
-    assert.ok(component.actions.visualizations.isPresent);
   });
 });

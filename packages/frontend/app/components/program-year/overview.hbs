@@ -4,16 +4,14 @@
       {{t "general.overview"}}
     </h5>
     <div class="programyear-overview-actions" data-test-actions>
-      {{#if this.showVisualizations}}
-        <LinkTo
-          @route="program-year-visualize-objectives"
-          @model={{@programYear}}
-          title={{t "general.programYearVisualizations"}}
-          data-test-go-to-visualizations
-        >
-          <FaIcon @icon="chart-column" />
-        </LinkTo>
-      {{/if}}
+      <LinkTo
+        @route="program-year-visualize-objectives"
+        @model={{@programYear}}
+        title={{t "general.programYearVisualizations"}}
+        data-test-go-to-visualizations
+      >
+        <FaIcon @icon="chart-column" />
+      </LinkTo>
     </div>
   </div>
 </div>
