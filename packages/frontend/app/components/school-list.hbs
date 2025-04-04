@@ -29,12 +29,13 @@
                 type="text"
                 value={{this.title}}
                 {{on "input" (pick "target.value" (set this "title"))}}
-                {{on
-                  "keyup"
-                  (queue (fn this.addErrorDisplayFor "title") (perform this.saveOrCancel))
-                }}
+                {{on "keyup" (perform this.saveOrCancel)}}
+                {{this.validations.attach "title"}}
               />
-              <ValidationError @validatable={{this}} @property="title" />
+              <YupValidationMessage
+                @description={{t "general.title"}}
+                @validationErrors={{this.validations.errors.title}}
+              />
             </div>
             <div class="item" data-test-email>
               <label for="email-{{templateId}}">
@@ -45,15 +46,13 @@
                 type="text"
                 value={{this.iliosAdministratorEmail}}
                 {{on "input" (pick "target.value" (set this "iliosAdministratorEmail"))}}
-                {{on
-                  "keyup"
-                  (queue
-                    (fn this.addErrorDisplayFor "iliosAdministratorEmail")
-                    (perform this.saveOrCancel)
-                  )
-                }}
+                {{on "keyup" (perform this.saveOrCancel)}}
+                {{this.validations.attach "iliosAdministratorEmail"}}
               />
-              <ValidationError @validatable={{this}} @property="iliosAdministratorEmail" />
+              <YupValidationMessage
+                @description={{t "general.administratorEmail"}}
+                @validationErrors={{this.validations.errors.iliosAdministratorEmail}}
+              />
             </div>
             <div class="buttons">
               <button
