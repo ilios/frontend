@@ -30,58 +30,58 @@ export default class NewLearningmaterialComponent extends Component {
   @tracked fileUploadErrorMessage = false;
 
   get validationSchema() {
-    const base = {
+    return {
       originalAuthor: string().required().min(2).max(80),
       title: string().required().min(4).max(120),
+      link: string().when('$isLink', {
+        is: true,
+        then: (schema) => schema.required().url().max(256),
+      }),
+      citation: string().when('$isCitation', {
+        is: true,
+        then: (schema) => schema.required(),
+      }),
+      filename: string().when('$isFile', {
+        is: true,
+        then: (schema) =>
+          schema.test(
+            'is-filename-valid',
+            (d) => {
+              return {
+                path: d.path,
+                messageKey: 'errors.missingFile',
+              };
+            },
+            (value) => value !== null && value !== undefined && value.trim() !== '',
+          ),
+      }),
+      copyrightRationale: string().when(
+        ['$isFile', 'copyrightPermission'],
+        ([isFile, copyrightPermission], schema) => {
+          if (isFile && !copyrightPermission) {
+            return schema.required().min(2).max(65000);
+          }
+        },
+      ),
+      copyrightPermission: boolean().when('$isFile', {
+        is: true,
+        then: (schema) =>
+          schema.test(
+            'is-true',
+            (d) => {
+              return {
+                path: d.path,
+                messageKey: 'errors.agreementRequired',
+              };
+            },
+            (value) => this.copyrightRationale || value === true,
+          ),
+      }),
+      fileHash: string().when('$isFile', {
+        is: true,
+        then: (schema) => schema.required(),
+      }),
     };
-
-    if (this.isLink) {
-      return {
-        ...base,
-        link: string().required().url().max(256),
-      };
-    }
-
-    if (this.isCitation) {
-      return {
-        ...base,
-        citation: string().required(),
-      };
-    }
-
-    if (this.isFile) {
-      return {
-        ...base,
-
-        filename: string().test(
-          'is-filename-valid',
-          (d) => {
-            return {
-              path: d.path,
-              messageKey: 'errors.missingFile',
-            };
-          },
-          (value) => value !== null && value !== undefined && value.trim() !== '',
-        ),
-        copyrightRationale: string().when('copyrightPermission', {
-          is: false,
-          then: (schema) => schema.required().min(2).max(65000),
-        }),
-        copyrightPermission: boolean().test(
-          'is-true',
-          (d) => {
-            return {
-              path: d.path,
-              messageKey: 'errors.agreementRequired',
-            };
-          },
-          (value) => this.copyrightRationale || value === true,
-        ),
-        fileHash: string().required(),
-      };
-    }
-
-    throw new Error('Unknown learning material type');
   }
 
   validations = new YupValidations(this, this.validationSchema);
