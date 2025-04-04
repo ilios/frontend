@@ -29,62 +29,58 @@ export default class NewLearningmaterialComponent extends Component {
   @tracked citation;
   @tracked fileUploadErrorMessage = false;
 
-  get validationSchema() {
-    return {
-      originalAuthor: string().required().min(2).max(80),
-      title: string().required().min(4).max(120),
-      link: string().when('$isLink', {
-        is: true,
-        then: (schema) => schema.required().url().max(256),
-      }),
-      citation: string().when('$isCitation', {
-        is: true,
-        then: (schema) => schema.required(),
-      }),
-      filename: string().when('$isFile', {
-        is: true,
-        then: (schema) =>
-          schema.test(
-            'is-filename-valid',
-            (d) => {
-              return {
-                path: d.path,
-                messageKey: 'errors.missingFile',
-              };
-            },
-            (value) => value !== null && value !== undefined && value.trim() !== '',
-          ),
-      }),
-      copyrightRationale: string().when(
-        ['$isFile', 'copyrightPermission'],
-        ([isFile, copyrightPermission], schema) => {
-          if (isFile && !copyrightPermission) {
-            return schema.required().min(2).max(65000);
-          }
-        },
-      ),
-      copyrightPermission: boolean().when('$isFile', {
-        is: true,
-        then: (schema) =>
-          schema.test(
-            'is-true',
-            (d) => {
-              return {
-                path: d.path,
-                messageKey: 'errors.agreementRequired',
-              };
-            },
-            (value) => this.copyrightRationale || value === true,
-          ),
-      }),
-      fileHash: string().when('$isFile', {
-        is: true,
-        then: (schema) => schema.required(),
-      }),
-    };
-  }
-
-  validations = new YupValidations(this, this.validationSchema);
+  validations = new YupValidations(this, {
+    originalAuthor: string().required().min(2).max(80),
+    title: string().required().min(4).max(120),
+    link: string().when('$isLink', {
+      is: true,
+      then: (schema) => schema.required().url().max(256),
+    }),
+    citation: string().when('$isCitation', {
+      is: true,
+      then: (schema) => schema.required(),
+    }),
+    filename: string().when('$isFile', {
+      is: true,
+      then: (schema) =>
+        schema.test(
+          'is-filename-valid',
+          (d) => {
+            return {
+              path: d.path,
+              messageKey: 'errors.missingFile',
+            };
+          },
+          (value) => value !== null && value !== undefined && value.trim() !== '',
+        ),
+    }),
+    copyrightRationale: string().when(
+      ['$isFile', 'copyrightPermission'],
+      ([isFile, copyrightPermission], schema) => {
+        if (isFile && !copyrightPermission) {
+          return schema.required().min(2).max(65000);
+        }
+      },
+    ),
+    copyrightPermission: boolean().when('$isFile', {
+      is: true,
+      then: (schema) =>
+        schema.test(
+          'is-true',
+          (d) => {
+            return {
+              path: d.path,
+              messageKey: 'errors.agreementRequired',
+            };
+          },
+          (value) => this.copyrightRationale || value === true,
+        ),
+    }),
+    fileHash: string().when('$isFile', {
+      is: true,
+      then: (schema) => schema.required(),
+    }),
+  });
   userModel = new TrackedAsyncData(this.currentUser.getModel());
 
   @cached
