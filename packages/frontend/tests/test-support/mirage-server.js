@@ -11,6 +11,7 @@ const { apiVersion } = ENV;
 
 export default function (config) {
   let finalConfig = {
+    environment: 'test',
     ...config,
     models: commonModels,
     factories: commonFactories,

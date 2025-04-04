@@ -1,9 +1,23 @@
-import { setupMirage as _setupMirage } from 'ember-mirage/test-support';
+import startMirage from './mirage-server';
+import { settled } from '@ember/test-helpers';
 
-import mirageConfig from './mirage-config';
+export function setupMirage(hooks) {
+  hooks.beforeEach(function () {
+    if (!this.owner) {
+      throw new Error(
+        'Must call one of the ember-qunit setupTest() / setupRenderingTest() / setupApplicationTest() first',
+      );
+    }
 
-export function setupMirage(hooks, options) {
-  options = options || {};
-  options.makeServer = options.makeServer || mirageConfig;
-  return _setupMirage(hooks, options);
+    this.server = startMirage();
+  });
+
+  hooks.afterEach(function () {
+    return settled().then(() => {
+      if (this.server) {
+        this.server.shutdown();
+        delete this.server;
+      }
+    });
+  });
 }
