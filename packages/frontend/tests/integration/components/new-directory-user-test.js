@@ -492,11 +492,11 @@ module('Integration | Component | new directory user', function (hooks) {
     assert.strictEqual(component.form.otherId.errors.length, 1);
     assert.strictEqual(
       component.form.otherId.errors[0].text,
-      'This field is too long (maximum is 16 characters)',
+      'Other ID is too long (maximum is 16 characters)',
     );
     assert.strictEqual(component.form.username.errors.length, 1);
-    assert.strictEqual(component.form.username.errors[0].text, 'This field can not be blank');
+    assert.strictEqual(component.form.username.errors[0].text, 'Username can not be blank');
     assert.strictEqual(component.form.password.errors.length, 1);
-    assert.strictEqual(component.form.password.errors[0].text, 'This field can not be blank');
+    assert.strictEqual(component.form.password.errors[0].text, 'Password can not be blank');
   });
 });

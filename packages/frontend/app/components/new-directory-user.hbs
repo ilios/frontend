@@ -75,9 +75,12 @@
             type="text"
             value={{this.otherId}}
             {{on "input" (pick "target.value" (set this "otherId"))}}
-            {{on "keyup" (fn this.addErrorDisplayFor "otherId")}}
+            {{this.validations.attach "otherId"}}
           />
-          <ValidationError @validatable={{this}} @property="otherId" />
+          <YupValidationMessage
+            @description={{t "general.otherId"}}
+            @validationErrors={{this.validations.errors.otherId}}
+          />
         </div>
         <div class="item" data-test-username>
           <label for="username-{{templateId}}">
@@ -89,10 +92,13 @@
               type="text"
               value={{this.username}}
               {{on "input" (pick "target.value" (set this "username"))}}
-              {{on "keyup" (fn this.addErrorDisplayFor "username")}}
               {{on "keyup" this.keyboard}}
+              {{this.validations.attach "username"}}
             />
-            <ValidationError @validatable={{this}} @property="username" />
+            <YupValidationMessage
+              @description={{t "general.username"}}
+              @validationErrors={{this.validations.errors.username}}
+            />
           {{else}}
             <span>
               {{this.username}}
@@ -109,10 +115,13 @@
               type="text"
               value={{this.password}}
               {{on "input" (pick "target.value" (set this "password"))}}
-              {{on "keyup" (fn this.addErrorDisplayFor "password")}}
               {{on "keyup" this.keyboard}}
+              {{this.validations.attach "password"}}
             />
-            <ValidationError @validatable={{this}} @property="password" />
+            <YupValidationMessage
+              @description={{t "general.password"}}
+              @validationErrors={{this.validations.errors.password}}
+            />
           </div>
         {{/if}}
         <div class="item" data-test-school>
