@@ -30,12 +30,44 @@ export default class ReportsSubjectCompetencyComponent extends Component {
 
   get sortedCompetencies() {
     return this.allCompetencies.sort((a, b) => {
-      return a.localeCompare(b, this.intl.primaryLocale);
+      if (a.school.id !== b.school.id) {
+        return a.school.title.localeCompare(b.school.title, this.intl.primaryLocale);
+      }
+      return a.title.localeCompare(b.title, this.intl.primaryLocale);
+    });
+  }
+
+  get filteredCompetencies() {
+    if (!this.args.filterSchool) {
+      return this.sortedCompetencies;
+    }
+
+    return this.sortedCompetencies.filter((competency) => {
+      return competency.school.id === this.args.filterSchool;
     });
   }
 
   get limitedCompetencies() {
-    return this.sortedCompetencies.slice(0, this.resultsLengthMax);
+    return this.filteredCompetencies.slice(0, this.resultsLengthMax);
+  }
+
+  get resultsLengthDisplay() {
+    const total = this.allCompetencies.length;
+    const filtered = this.filteredCompetencies.length;
+
+    if (total === filtered) {
+      return total;
+    }
+    return `${filtered}/${total}`;
+  }
+
+  get showSchoolFilter() {
+    if (this.args.school) {
+      return false;
+    }
+
+    const uniqueSchools = [...new Set(this.allCompetencies.map((o) => o.school.id))];
+    return uniqueSchools.length > 1;
   }
 
   async getReportResults(subject, prepositionalObject, prepositionalObjectTableRowId, school) {
@@ -51,8 +83,12 @@ export default class ReportsSubjectCompetencyComponent extends Component {
       const what = pluralize(camelize(prepositionalObject));
       filters.push(`${what}: [${prepositionalObjectTableRowId}]`);
     }
-    const result = await this.graphql.find('competencies', filters, 'id, title');
-    return result.data.competencies.map(({ title }) => title);
+    const result = await this.graphql.find(
+      'competencies',
+      filters,
+      'id, title, school { id, title }',
+    );
+    return result.data.competencies;
   }
 
   get reportResultsExceedMax() {
@@ -61,6 +97,20 @@ export default class ReportsSubjectCompetencyComponent extends Component {
 
   @action
   async fetchDownloadData() {
-    return [[this.intl.t('general.competencies')], ...this.sortedCompetencies.map((v) => [v])];
+    const headers = [];
+    if (!this.args.school) {
+      headers.push(this.intl.t('general.school'));
+    }
+    headers.push(this.intl.t('general.competency'));
+    const map = this.sortedCompetencies.map((o) => {
+      const rhett = [];
+      if (!this.args.school) {
+        rhett.push(o.school.title);
+      }
+      rhett.push(o.title);
+
+      return rhett;
+    });
+    return [headers, ...map];
   }
 }
