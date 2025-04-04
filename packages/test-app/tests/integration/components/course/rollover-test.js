@@ -77,12 +77,13 @@ module('Integration | Component | course/rollover', function (hooks) {
   });
 
   test('rollover course', async function (assert) {
-    assert.expect(5);
+    assert.expect(6);
+    const courseStartDate = DateTime.fromObject({ hour: 0, minute: 0, second: 0 });
     const school = this.server.create('school');
     const course = this.server.create('course', {
       title: 'old title',
       school,
-      startDate: DateTime.fromObject({ hour: 0, minute: 0, second: 0 }).toJSDate(),
+      startDate: courseStartDate.toFormat('yyyy-MM-dd'),
     });
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('course', courseModel);
@@ -94,6 +95,7 @@ module('Integration | Component | course/rollover', function (hooks) {
       assert.strictEqual(parseInt(data.year, 10), firstYear);
       assert.strictEqual(data.newCourseTitle, course.title);
       assert.ok('newStartDate' in data);
+      assert.strictEqual(courseStartDate.toFormat('yyyy-LL-dd'), data.newStartDate);
       return this.serialize(
         schema.courses.create({
           id: 14,
@@ -243,7 +245,7 @@ module('Integration | Component | course/rollover', function (hooks) {
   });
 
   test('rollover course with new start date', async function (assert) {
-    assert.expect(7);
+    assert.expect(8);
     const currentYear = DateTime.now().year;
     // ensure that rollover date and course start date fall on the same day of the week.
     const courseStartDate = DateTime.fromISO(`${currentYear}-W20-1`);
@@ -263,6 +265,8 @@ module('Integration | Component | course/rollover', function (hooks) {
       assert.ok('newStartDate' in data, 'A new start date was passed.');
       const newStartDate = DateTime.fromFormat(data.newStartDate, 'y-MM-dd');
       assert.ok(rolloverDate.hasSame(newStartDate, 'day'), 'New start date is rollover date.');
+      assert.strictEqual(rolloverDate.toFormat('yyyy-LL-dd'), data.newStartDate);
+
       return this.serialize(
         schema.courses.create({
           id: 14,

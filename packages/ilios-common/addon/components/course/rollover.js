@@ -137,7 +137,7 @@ export default class CourseRolloverComponent extends Component {
     const data = {
       year: this.year,
       newCourseTitle: this.title,
-      newStartDate: DateTime.fromJSDate(this.selectedStartDate).toFormat('yyyy-LL-dd'),
+      newStartDate: DateTime.fromJSDate(this.startDate).toFormat('yyyy-LL-dd'),
     };
 
     if (this.skipOfferings) {
