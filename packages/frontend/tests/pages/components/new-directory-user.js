@@ -41,7 +41,13 @@ const definition = {
     lastName: text('[data-test-last-name]'),
     displayName: text('[data-test-display-name]'),
     campusId: text('[data-test-campus-id]'),
-    otherId: text('[data-test-other-id]'),
+    otherId: {
+      scope: '[data-test-other-id]',
+      label: text('label'),
+      set: fillable('input'),
+      value: value('input'),
+      errors: collection('.validation-error-message'),
+    },
     email: text('[data-test-email]'),
     phone: text('[data-test-phone]'),
     username: {
@@ -52,6 +58,7 @@ const definition = {
       hasError: isVisible('.validation-error-message'),
       submit: triggerable('keyup', 'input', { eventProperties: { key: 'Enter' } }),
       cancel: triggerable('keyup', 'input', { eventProperties: { key: 'Escape' } }),
+      errors: collection('.validation-error-message'),
     },
     password: {
       scope: '[data-test-password]',
@@ -60,6 +67,7 @@ const definition = {
       hasError: isVisible('.validation-error-message'),
       submit: triggerable('keyup', 'input', { eventProperties: { key: 'Enter' } }),
       cancel: triggerable('keyup', 'input', { eventProperties: { key: 'Escape' } }),
+      errors: collection('.validation-error-message'),
     },
     school: {
       scope: '[data-test-school] select',
