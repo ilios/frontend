@@ -77,7 +77,7 @@ module('Integration | Component | new directory user', function (hooks) {
   });
 
   test('create new user', async function (assert) {
-    assert.expect(39);
+    assert.expect(40);
     this.server.create('user-role', {
       id: 4,
       title: 'Student',
@@ -144,7 +144,7 @@ module('Integration | Component | new directory user', function (hooks) {
       return {
         config: {
           locale: 'en',
-          type: 'ladp',
+          type: 'ldap',
           userSearchType: 'ldap',
         },
       };
@@ -196,7 +196,8 @@ module('Integration | Component | new directory user', function (hooks) {
     assert.strictEqual(component.form.campusId, `Campus ID: ${searchResult1.campusId}`);
     assert.strictEqual(component.form.email, `Email: ${searchResult1.email}`);
     assert.strictEqual(component.form.phone, `Phone: ${searchResult1.telephoneNumber}`);
-    assert.strictEqual(component.form.otherId, `Other ID:`);
+    assert.strictEqual(component.form.otherId.label, 'Other ID:');
+    assert.strictEqual(component.form.otherId.value, '');
     assert.strictEqual(component.form.username.text, `Username: ${searchResult1.username}`);
     assert.strictEqual(component.form.school.value, '1');
 
@@ -238,7 +239,7 @@ module('Integration | Component | new directory user', function (hooks) {
       return {
         config: {
           locale: 'en',
-          type: 'ladp',
+          type: 'ldap',
           userSearchType: 'ldap',
         },
       };
@@ -297,7 +298,7 @@ module('Integration | Component | new directory user', function (hooks) {
       return {
         config: {
           locale: 'en',
-          type: 'ladp',
+          type: 'ldap',
           userSearchType: 'ldap',
         },
       };
@@ -327,5 +328,175 @@ module('Integration | Component | new directory user', function (hooks) {
     const schoolModel = await userModel.school;
     assert.strictEqual(Number(userModel.id), 2);
     assert.strictEqual(Number(schoolModel.id), 2);
+  });
+
+  test('save with custom otherId', async function (assert) {
+    this.server.create('user-role', {
+      id: 4,
+      title: 'Student',
+    });
+    this.server.get('/application/config', () => {
+      return {
+        config: {
+          locale: 'en',
+          type: 'ldap',
+          userSearchType: 'ldap',
+        },
+      };
+    });
+    this.server.get('/application/directory/search', () => {
+      return {
+        results: [
+          {
+            firstName: 'first',
+            lastName: 'last',
+            displayName: '',
+            campusId: '123',
+            email: 'user1@example.edu',
+            telephoneNumber: '805',
+            username: null,
+            user: null,
+          },
+        ],
+      };
+    });
+    await render(hbs`<NewDirectoryUser
+  @close={{(noop)}}
+  @setSearchTerms={{(noop)}}
+  @transitionToUser={{(noop)}}
+  @searchTerms='searchterm'
+/>`);
+
+    assert.strictEqual(component.searchResults.length, 1);
+    assert.ok(component.searchResults[0].userCanBeAdded);
+    await component.searchResults[0].addUser();
+
+    assert.strictEqual(component.form.otherId.value, '');
+    await component.form.otherId.set('new-other-id');
+    await component.form.submit();
+
+    const userModel = await this.owner.lookup('service:store').findRecord('user', 2);
+    assert.strictEqual(Number(userModel.id), 2);
+    assert.strictEqual(userModel.otherId, 'new-other-id');
+  });
+
+  test('save with custom username and password', async function (assert) {
+    this.server.create('user-role', {
+      id: 4,
+      title: 'Student',
+    });
+    this.server.get('/application/config', () => {
+      return {
+        config: {
+          locale: 'en',
+          type: 'form',
+          userSearchType: 'ldap',
+        },
+      };
+    });
+    this.server.get('/application/directory/search', () => {
+      return {
+        results: [
+          {
+            firstName: 'first',
+            lastName: 'last',
+            displayName: '',
+            campusId: '123',
+            email: 'user1@example.edu',
+            telephoneNumber: '805',
+            username: null,
+            user: null,
+          },
+        ],
+      };
+    });
+    await render(hbs`<NewDirectoryUser
+  @close={{(noop)}}
+  @setSearchTerms={{(noop)}}
+  @transitionToUser={{(noop)}}
+  @searchTerms='searchterm'
+/>`);
+
+    assert.strictEqual(component.searchResults.length, 1);
+    assert.ok(component.searchResults[0].userCanBeAdded);
+    await component.searchResults[0].addUser();
+
+    assert.strictEqual(component.form.username.value, '');
+    assert.strictEqual(component.form.password.value, '');
+
+    await component.form.username.set('new-username');
+    await component.form.password.set('new-password');
+
+    await component.form.submit();
+
+    const userModel = await this.owner.lookup('service:store').findRecord('user', 2);
+    const authenticationModel = await userModel.authentication;
+    assert.strictEqual(Number(userModel.id), 2);
+    assert.strictEqual(authenticationModel.username, 'new-username');
+    assert.strictEqual(authenticationModel.password, 'new-password');
+  });
+
+  test('validation works', async function (assert) {
+    this.server.create('user-role', {
+      id: 4,
+      title: 'Student',
+    });
+    this.server.get('/application/config', () => {
+      return {
+        config: {
+          locale: 'en',
+          type: 'form',
+          userSearchType: 'ldap',
+        },
+      };
+    });
+    this.server.get('/application/directory/search', () => {
+      return {
+        results: [
+          {
+            firstName: 'first',
+            lastName: 'last',
+            displayName: '',
+            campusId: '123',
+            email: 'user1@example.edu',
+            telephoneNumber: '805',
+            username: null,
+            user: null,
+          },
+        ],
+      };
+    });
+    await render(hbs`<NewDirectoryUser
+  @close={{(noop)}}
+  @setSearchTerms={{(noop)}}
+  @transitionToUser={{(noop)}}
+  @searchTerms='searchterm'
+/>`);
+
+    assert.strictEqual(component.searchResults.length, 1);
+    assert.ok(component.searchResults[0].userCanBeAdded);
+    await component.searchResults[0].addUser();
+
+    assert.strictEqual(component.form.otherId.errors.length, 0);
+    assert.strictEqual(component.form.username.errors.length, 0);
+    assert.strictEqual(component.form.password.errors.length, 0);
+
+    assert.strictEqual(component.form.otherId.value, '');
+    assert.strictEqual(component.form.username.value, '');
+    assert.strictEqual(component.form.password.value, '');
+
+    await component.form.otherId.set('long'.repeat(5));
+
+    await component.form.submit();
+
+    assert.strictEqual(component.form.otherId.errors.length, 1);
+    assert.strictEqual(
+      component.form.otherId.errors[0].text,
+      'Other ID is too long (maximum is 16 characters)',
+    );
+    assert.strictEqual(component.form.username.errors.length, 1);
+    assert.strictEqual(component.form.username.errors[0].text, 'Username can not be blank');
+    assert.strictEqual(component.form.password.errors.length, 1);
+    assert.strictEqual(component.form.password.errors[0].text, 'Password can not be blank');
   });
 });

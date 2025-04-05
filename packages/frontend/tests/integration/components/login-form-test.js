@@ -127,9 +127,9 @@ module('Integration | Component | login-form', function (hooks) {
     assert.strictEqual(component.form.password.errors.length, 0);
     await component.form.password.submit();
     assert.strictEqual(component.form.username.errors.length, 1);
-    assert.strictEqual(component.form.username.errors[0].text, 'This field can not be blank');
+    assert.strictEqual(component.form.username.errors[0].text, 'Username can not be blank');
     assert.strictEqual(component.form.password.errors.length, 1);
-    assert.strictEqual(component.form.password.errors[0].text, 'This field can not be blank');
+    assert.strictEqual(component.form.password.errors[0].text, 'Password can not be blank');
     await component.form.username.set(username);
     await component.form.password.set(password);
     await component.form.password.submit();

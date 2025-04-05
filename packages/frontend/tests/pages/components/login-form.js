@@ -20,7 +20,7 @@ const definition = {
       set: fillable('input'),
       value: value('input'),
       submit: triggerable('keyup', 'input', { eventProperties: { key: 'Enter' } }),
-      errors: collection('.validation-error-message'),
+      errors: collection('[data-test-validation-error-message]'),
     },
     password: {
       scope: '[data-test-password]',
@@ -28,7 +28,7 @@ const definition = {
       set: fillable('input'),
       value: value('input'),
       submit: triggerable('keyup', 'input', { eventProperties: { key: 'Enter' } }),
-      errors: collection('.validation-error-message'),
+      errors: collection('[data-test-validation-error-message]'),
     },
     login: clickable('[data-test-login]'),
     submit: triggerable('keyup', '[data-test-username] input', {

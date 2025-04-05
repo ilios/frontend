@@ -3,21 +3,28 @@ import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
 import { task } from 'ember-concurrency';
-import { validatable, NotBlank } from 'ilios-common/decorators/validation';
+import YupValidations from 'ilios-common/classes/yup-validations';
+import { string } from 'yup';
 
-@validatable
 export default class LoginFormComponent extends Component {
   @service session;
   @tracked error;
-  @tracked @NotBlank() username;
-  @tracked @NotBlank() password;
+  @tracked username;
+  @tracked password;
+
+  validations = new YupValidations(this, {
+    username: string().required(),
+    password: string().required(),
+  });
 
   authenticate = task(async () => {
-    this.addErrorDisplaysFor(['username', 'password']);
-    const isValid = await this.isValid();
+    this.validations.addErrorDisplayForAllFields();
+    const isValid = await this.validations.isValid();
+
     if (!isValid) {
       return false;
     }
+
     try {
       this.error = null;
       const session = this.session;
@@ -32,7 +39,7 @@ export default class LoginFormComponent extends Component {
       });
       this.error = { keys };
     } finally {
-      this.clearErrorDisplay();
+      this.validations.clearErrorDisplay();
     }
   });
 

@@ -75,6 +75,7 @@ export default class YupValidations {
     try {
       await this.schema.validate(this.#validationProperties(), {
         abortEarly: false,
+        context: this.context,
       });
       this.error = null;
       return true;
