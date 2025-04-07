@@ -53,9 +53,12 @@
                 type="text"
                 value={{this.externalId}}
                 {{on "input" (pick "target.value" (set this "externalId"))}}
-                {{on "key-press" (fn this.addErrorDisplayFor "externalId")}}
+                {{this.validations.attach "externalId"}}
               />
-              <ValidationError @validatable={{this}} @property="externalId" />
+              <YupValidationMessage
+                @description={{t "general.externalId"}}
+                @validationErrors={{this.validations.errors.externalId}}
+              />
             </EditableField>
           {{else}}
             {{this.externalId}}&nbsp;
@@ -106,10 +109,16 @@
             >
               <DatePicker
                 @value={{this.startDate}}
-                @onChange={{pipe (set this "startDate") (fn this.addErrorDisplayFor "startDate")}}
+                @onChange={{pipe
+                  (set this "startDate")
+                  (fn this.validations.addErrorDisplayFor "startDate")
+                }}
               />
             </EditableField>
-            <ValidationError @validatable={{this}} @property="startDate" />
+            <YupValidationMessage
+              @description={{t "general.startDate"}}
+              @validationErrors={{this.validations.errors.startDate}}
+            />
           {{else}}
             {{format-date @course.startDate day="2-digit" month="2-digit" year="numeric"}}&nbsp;
           {{/if}}
@@ -126,10 +135,16 @@
             >
               <DatePicker
                 @value={{this.endDate}}
-                @onChange={{pipe (set this "endDate") (fn this.addErrorDisplayFor "endDate")}}
+                @onChange={{pipe
+                  (set this "endDate")
+                  (fn this.validations.addErrorDisplayFor "endDate")
+                }}
               />
             </EditableField>
-            <ValidationError @validatable={{this}} @property="endDate" />
+            <YupValidationMessage
+              @description={{t "general.endDate"}}
+              @validationErrors={{this.validations.errors.endDate}}
+            />
           {{else}}
             {{format-date @course.endDate day="2-digit" month="2-digit" year="numeric"}}&nbsp;
           {{/if}}

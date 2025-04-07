@@ -3,11 +3,12 @@ import { service } from '@ember/service';
 import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { restartableTask } from 'ember-concurrency';
-import { validatable, Length, BeforeDate, AfterDate } from 'ilios-common/decorators/validation';
 import { findById } from 'ilios-common/utils/array-helpers';
 import { TrackedAsyncData } from 'ember-async-data';
+import YupValidations from 'ilios-common/classes/yup-validations';
+import { string, date } from 'yup';
+import { DateTime } from 'luxon';
 
-@validatable
 export default class CourseOverview extends Component {
   @service currentUser;
   @service intl;
@@ -17,9 +18,9 @@ export default class CourseOverview extends Component {
 
   universalLocator = 'ILIOS';
 
-  @Length(2, 255) @tracked externalId = null;
-  @BeforeDate('endDate', { granularity: 'day' }) @tracked startDate = null;
-  @AfterDate('startDate', { granularity: 'day' }) @tracked endDate = null;
+  @tracked externalId = null;
+  @tracked startDate = null;
+  @tracked endDate = null;
   @tracked level = null;
   @tracked levelOptions = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   @tracked clerkshipTypeId;
@@ -35,6 +36,52 @@ export default class CourseOverview extends Component {
     this.level = course.level;
     this.clerkshipTypeId = course.belongsTo('clerkshipType').id();
   }
+
+  validations = new YupValidations(this, {
+    externalId: string()
+      .transform((value) => (value === '' ? null : value))
+      .nullable()
+      .min(2)
+      .max(255),
+    startDate: date()
+      .required()
+      .test(
+        'is-after-end-date',
+        (d) => {
+          return {
+            path: d.path,
+            messageKey: 'errors.after',
+            values: {
+              after: this.intl.t('general.endDate'),
+            },
+          };
+        },
+        (value) => {
+          const startDate = DateTime.fromJSDate(value);
+          const endDate = DateTime.fromJSDate(this.endDate);
+          return startDate.startOf('day') < endDate.startOf('day');
+        },
+      ),
+    endDate: date()
+      .required()
+      .test(
+        'is-before-start-date',
+        (d) => {
+          return {
+            path: d.path,
+            messageKey: 'errors.before',
+            values: {
+              before: this.intl.t('general.starDate'),
+            },
+          };
+        },
+        (value) => {
+          const endDate = DateTime.fromJSDate(value);
+          const startDate = DateTime.fromJSDate(this.startDate);
+          return startDate.startOf('day') < endDate.startOf('day');
+        },
+      ),
+  });
 
   @cached
   get schoolData() {
@@ -101,12 +148,12 @@ export default class CourseOverview extends Component {
   });
 
   changeStartDate = restartableTask(async () => {
-    this.addErrorDisplayFor('startDate');
-    const isValid = await this.isValid('startDate');
+    this.validations.addErrorDisplayFor('startDate');
+    const isValid = await this.validations.isValid();
     if (!isValid) {
       return false;
     }
-    this.removeErrorDisplayFor('startDate');
+    this.validations.removeErrorDisplayFor('startDate');
     this.args.course.set('startDate', this.startDate);
     await this.args.course.save();
     this.startDate = this.args.course.startDate;
@@ -118,12 +165,12 @@ export default class CourseOverview extends Component {
   }
 
   changeEndDate = restartableTask(async () => {
-    this.addErrorDisplayFor('endDate');
-    const isValid = await this.isValid('endDate');
+    this.validations.addErrorDisplayFor('endDate');
+    const isValid = await this.validations.isValid();
     if (!isValid) {
       return false;
     }
-    this.removeErrorDisplayFor('endDate');
+    this.validations.removeErrorDisplayFor('endDate');
     this.args.course.set('endDate', this.endDate);
     await this.args.course.save();
     this.endDate = this.args.course.endDate;
@@ -135,12 +182,12 @@ export default class CourseOverview extends Component {
   }
 
   changeExternalId = restartableTask(async () => {
-    this.addErrorDisplayFor('externalId');
-    const isValid = await this.isValid('externalId');
+    this.validations.addErrorDisplayFor('externalId');
+    const isValid = await this.validations.isValid();
     if (!isValid) {
       return false;
     }
-    this.removeErrorDisplayFor('externalId');
+    this.validations.removeErrorDisplayFor('externalId');
     this.args.course.set('externalId', this.externalId);
     await this.args.course.save();
     this.externalId = this.args.course.externalId;
