@@ -40,20 +40,22 @@ export default class NewLearningmaterialComponent extends Component {
       is: true,
       then: (schema) => schema.required(),
     }),
-    filename: string().when('$isFile', {
-      is: true,
-      then: (schema) =>
-        schema.test(
-          'is-filename-valid',
-          (d) => {
-            return {
-              path: d.path,
-              messageKey: 'errors.missingFile',
-            };
-          },
-          (value) => value !== null && value !== undefined && value.trim() !== '',
-        ),
-    }),
+    filename: string()
+      .nullable()
+      .when('$isFile', {
+        is: true,
+        then: (schema) =>
+          schema.test(
+            'is-filename-valid',
+            (d) => {
+              return {
+                path: d.path,
+                messageKey: 'errors.missingFile',
+              };
+            },
+            (value) => value !== null && value !== undefined && value.trim() !== '',
+          ),
+      }),
     copyrightRationale: string().when(
       ['$isFile', 'copyrightPermission'],
       ([isFile, copyrightPermission], schema) => {
@@ -76,10 +78,12 @@ export default class NewLearningmaterialComponent extends Component {
           (value) => this.copyrightRationale || value === true,
         ),
     }),
-    fileHash: string().when('$isFile', {
-      is: true,
-      then: (schema) => schema.required(),
-    }),
+    fileHash: string()
+      .nullable()
+      .when('$isFile', {
+        is: true,
+        then: (schema) => schema.required(),
+      }),
   });
   userModel = new TrackedAsyncData(this.currentUser.getModel());
 
