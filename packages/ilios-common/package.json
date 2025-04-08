@@ -42,7 +42,6 @@
     "ember-cli-page-object": "^2.3.0",
     "ember-click-outside": "^6.0.0",
     "ember-concurrency": "^4.0.2",
-    "ember-event-helpers": "^0.1.0",
     "ember-file-upload": "^9.0.0",
     "ember-focus-trap": "^1.0.0",
     "ember-in-element-polyfill": "^1.0.0",
