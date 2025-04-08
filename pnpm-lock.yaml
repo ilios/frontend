@@ -424,8 +424,8 @@ importers:
         specifier: ^4.0.2
         version: 4.0.3(@babel/core@7.26.10)(@glimmer/tracking@1.1.2)(ember-source@6.3.0(@glimmer/component@2.0.0)(rsvp@4.8.5)(webpack@5.98.0))
       ember-file-upload:
-        specifier: ^9.0.0
-        version: 9.3.0(@ember/test-helpers@5.2.1(@babel/core@7.26.10)(ember-source@6.3.0(@glimmer/component@2.0.0)(rsvp@4.8.5)(webpack@5.98.0)))(@glimmer/component@2.0.0)(@glimmer/tracking@1.1.2)(ember-modifier@4.2.0(@babel/core@7.26.10)(ember-source@6.3.0(@glimmer/component@2.0.0)(rsvp@4.8.5)(webpack@5.98.0)))(miragejs@0.1.48)(tracked-built-ins@3.4.0(@babel/core@7.26.10))(webpack@5.98.0)
+        specifier: ^9.4.0
+        version: 9.4.0(@ember/test-helpers@5.2.1(@babel/core@7.26.10)(ember-source@6.3.0(@glimmer/component@2.0.0)(rsvp@4.8.5)(webpack@5.98.0)))(@glimmer/component@2.0.0)(@glimmer/tracking@1.1.2)(ember-modifier@4.2.0(@babel/core@7.26.10)(ember-source@6.3.0(@glimmer/component@2.0.0)(rsvp@4.8.5)(webpack@5.98.0)))(miragejs@0.1.48)(tracked-built-ins@3.4.0(@babel/core@7.26.10))(webpack@5.98.0)
       ember-focus-trap:
         specifier: ^1.0.0
         version: 1.1.1(ember-source@6.3.0(@glimmer/component@2.0.0)(rsvp@4.8.5)(webpack@5.98.0))
@@ -5352,8 +5352,8 @@ packages:
       ember-source: '>= 4.0.0'
       qunit: '*'
 
-  ember-file-upload@9.3.0:
-    resolution: {integrity: sha512-175VVvj/5tC/6mIkRvyW6vdUWbPg/YhgKXiibTpyFYl9TJ56nOHcB6icbcO8KSZFMV5e9yPa5n+SIEbWUJcW3g==}
+  ember-file-upload@9.4.0:
+    resolution: {integrity: sha512-apL79XpUoEIq9TiArvMbfles11J3D7lx918seLmircyXTiPy5X9hDE1QflWScJ/Ikv/fiszxyBQK65S8ckxnpA==}
     engines: {node: 16.* || >= 18}
     peerDependencies:
       '@ember/test-helpers': ^2.9.3 || ^3.0.3 || ^4.0.4 || ^5.0.0
@@ -15991,7 +15991,7 @@ snapshots:
       - supports-color
       - webpack
 
-  ember-file-upload@9.3.0(@ember/test-helpers@5.2.1(@babel/core@7.26.10)(ember-source@6.3.0(@glimmer/component@2.0.0)(rsvp@4.8.5)(webpack@5.98.0)))(@glimmer/component@2.0.0)(@glimmer/tracking@1.1.2)(ember-modifier@4.2.0(@babel/core@7.26.10)(ember-source@6.3.0(@glimmer/component@2.0.0)(rsvp@4.8.5)(webpack@5.98.0)))(miragejs@0.1.48)(tracked-built-ins@3.4.0(@babel/core@7.26.10))(webpack@5.98.0):
+  ember-file-upload@9.4.0(@ember/test-helpers@5.2.1(@babel/core@7.26.10)(ember-source@6.3.0(@glimmer/component@2.0.0)(rsvp@4.8.5)(webpack@5.98.0)))(@glimmer/component@2.0.0)(@glimmer/tracking@1.1.2)(ember-modifier@4.2.0(@babel/core@7.26.10)(ember-source@6.3.0(@glimmer/component@2.0.0)(rsvp@4.8.5)(webpack@5.98.0)))(miragejs@0.1.48)(tracked-built-ins@3.4.0(@babel/core@7.26.10))(webpack@5.98.0):
     dependencies:
       '@ember/test-helpers': 5.2.1(@babel/core@7.26.10)(ember-source@6.3.0(@glimmer/component@2.0.0)(rsvp@4.8.5)(webpack@5.98.0))
       '@ember/test-waiters': 3.1.0
