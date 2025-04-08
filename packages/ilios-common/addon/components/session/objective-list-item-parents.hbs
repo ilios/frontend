@@ -32,34 +32,18 @@
         as |displayText expand collapse updateTextDims shouldFade expanded|
       >
         {{#if @editable}}
-<<<<<<< HEAD
           <span data-test-parent>
-            <button type="button" class="link-button" {{on "click" @manage}} data-test-manage>
+            <button
+              type="button"
+              class="link-button"
+              aria-label={{t "general.edit"}}
+              title={{t "general.edit"}}
+              {{on "click" @manage}}
+              data-test-manage
+            >
               <div class="display-text-wrapper{{if shouldFade ' faded'}}">
                 <div class="display-text" {{on-resize updateTextDims}}>
                   {{displayText}}
-=======
-          <li data-test-parent>
-            <FadeText
-              @text={{html-safe (remove-html-tags parent.title)}}
-              as |displayText expand collapse updateTextDims isFaded expanded|
-            >
-              <button
-                type="button"
-                class="link-button"
-                aria-label={{t "general.edit"}}
-                title={{t "general.edit"}}
-                {{on "click" @manage}}
-                data-test-manage
-              >
-                <div class="display-text-wrapper{{if isFaded ' is-faded'}}">
-                  <div
-                    class="display-text"
-                    {{on-resize updateTextDims}}
-                  >
-                    {{displayText}}
-                  </div>
->>>>>>> 0da317f60 (added title=edit attribute where applicable)
                 </div>
               </div>
               {{#if @showIcon}}

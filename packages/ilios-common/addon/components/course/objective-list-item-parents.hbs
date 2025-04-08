@@ -33,7 +33,14 @@
       >
         {{#if @editable}}
           <span data-test-parent>
-            <button type="button" class="link-button" {{on "click" @manage}} data-test-manage>
+            <button
+              type="button"
+              class="link-button"
+              aria-label={{t "general.edit"}}
+              title={{t "general.edit"}}
+              {{on "click" @manage}}
+              data-test-manage
+            >
               <div class="display-text-wrapper{{if shouldFade ' faded'}}">
                 <div class="display-text" {{on-resize updateTextDims}}>
                   {{displayText}}
