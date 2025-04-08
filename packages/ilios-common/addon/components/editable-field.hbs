@@ -1,4 +1,4 @@
-<div class="editinplace{{if this.isEditing ' is-editing'}}" ...attributes>
+<div class="editinplace{{if this.isEditing ' is-editing'}}" data-test-editable-field ...attributes>
   <span class="content">
     {{#if this.isEditing}}
       <span
@@ -55,7 +55,7 @@
               <button
                 class="link-button editable"
                 aria-label={{t "general.edit"}}
-                title={{t "general.edit"}}
+                title={{if @showTitle (t "general.edit")}}
                 data-test-edit
                 type="button"
                 {{on "click" (fn this.setIsEditing true)}}
