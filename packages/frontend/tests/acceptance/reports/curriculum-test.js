@@ -13,7 +13,7 @@ module('Acceptance | Reports - Curriculum Reports', function (hooks) {
 
   hooks.beforeEach(async function () {
     this.school = this.server.create('school');
-    await setupAuthentication({ school: this.school });
+    await setupAuthentication({ school: this.school }, true);
     this.server.post('api/graphql', ({ db }, { requestBody }) => {
       const { query } = JSON.parse(requestBody);
       if (query.includes('courses(academicYears:')) {
