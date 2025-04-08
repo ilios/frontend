@@ -5,13 +5,12 @@ import { service } from '@ember/service';
 import { isEmpty, isPresent } from '@ember/utils';
 import { filter } from 'rsvp';
 import { dropTask, restartableTask } from 'ember-concurrency';
-import { validatable, Length, NotBlank } from 'ilios-common/decorators/validation';
 import { findBy, findById } from 'ilios-common/utils/array-helpers';
-import { ValidateIf } from 'class-validator';
 import { TrackedAsyncData } from 'ember-async-data';
 import { DateTime } from 'luxon';
+import YupValidations from 'ilios-common/classes/yup-validations';
+import { string } from 'yup';
 
-@validatable
 export default class NewDirectoryUserComponent extends Component {
   @service fetch;
   @service iliosConfig;
@@ -31,10 +30,10 @@ export default class NewDirectoryUserComponent extends Component {
   @tracked lastName;
   @tracked displayName;
   @tracked campusId;
-  @tracked @Length(0, 16) otherId;
+  @tracked otherId;
   @tracked email;
-  @tracked @ValidateIf((o) => o.allowCustomUserName) @NotBlank() @Length(1, 100) username;
-  @tracked @ValidateIf((o) => o.allowCustomUserName) @NotBlank() password;
+  @tracked username;
+  @tracked password;
   @tracked phone;
   @tracked schoolId = null;
   @tracked primaryCohortId = null;
@@ -43,6 +42,20 @@ export default class NewDirectoryUserComponent extends Component {
 
   userModel = new TrackedAsyncData(this.currentUser.getModel());
   authTypeConfig = new TrackedAsyncData(this.iliosConfig.getAuthenticationType());
+
+  validations = new YupValidations(this, {
+    otherId: string().nullable().max(16),
+    username: string().when('$allowCustomUserName', {
+      is: true,
+      then: (schema) => schema.required().min(1).max(100),
+      otherwise: (schema) => schema.notRequired(),
+    }),
+    password: string().when('$allowCustomUserName', {
+      is: true,
+      then: (schema) => schema.required(),
+      otherwise: (schema) => schema.notRequired(),
+    }),
+  });
 
   constructor() {
     super(...arguments);
@@ -244,19 +257,8 @@ export default class NewDirectoryUserComponent extends Component {
   });
 
   save = dropTask(async () => {
-    this.addErrorDisplaysFor([
-      'firstName',
-      'middleName',
-      'lastName',
-      'displayName',
-      'campusId',
-      'otherId',
-      'email',
-      'phone',
-      'username',
-      'password',
-    ]);
-    const isValid = await this.isValid();
+    this.validations.addErrorDisplayForAllFields();
+    const isValid = await this.validations.isValid();
     if (!isValid) {
       return false;
     }
@@ -287,7 +289,7 @@ export default class NewDirectoryUserComponent extends Component {
       password: this.password,
     });
     await authentication.save();
-    this.clearErrorDisplay();
+    this.validations.clearErrorDisplay();
     this.flashMessages.success('general.saved');
     this.args.transitionToUser(user.id);
   });

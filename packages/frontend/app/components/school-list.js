@@ -3,18 +3,23 @@ import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
 import { dropTask } from 'ember-concurrency';
-import { validatable, IsEmail, Length, NotBlank } from 'ilios-common/decorators/validation';
+import YupValidations from 'ilios-common/classes/yup-validations';
+import { string } from 'yup';
 
-@validatable
 export default class SchoolListComponent extends Component {
   @service currentUser;
   @service store;
 
-  @tracked @IsEmail() @Length(1, 100) @NotBlank() iliosAdministratorEmail;
-  @tracked @Length(1, 60) @NotBlank() title;
+  @tracked iliosAdministratorEmail;
+  @tracked title;
   @tracked newSchool;
   @tracked isSavingNewSchool = false;
   @tracked showNewSchoolForm = false;
+
+  validations = new YupValidations(this, {
+    iliosAdministratorEmail: string().email().required().min(1).max(100),
+    title: string().required().min(1).max(60),
+  });
 
   @action
   toggleNewSchoolForm() {
@@ -32,8 +37,8 @@ export default class SchoolListComponent extends Component {
   }
 
   save = dropTask(async () => {
-    this.addErrorDisplaysFor(['title', 'iliosAdministratorEmail']);
-    const isValid = await this.isValid();
+    this.validations.addErrorDisplayForAllFields();
+    const isValid = await this.validations.isValid();
     if (!isValid) {
       return false;
     }
@@ -42,7 +47,7 @@ export default class SchoolListComponent extends Component {
       iliosAdministratorEmail: this.iliosAdministratorEmail,
     });
     this.newSchool = await newSchool.save();
-    this.clearErrorDisplay();
+    this.validations.clearErrorDisplay();
     this.title = null;
     this.iliosAdministratorEmail = null;
     this.showNewSchoolForm = false;
