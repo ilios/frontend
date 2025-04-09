@@ -48,7 +48,7 @@
       {{on-key "ArrowUp" this.onArrowKey}}
       {{on-key "ArrowDown" this.onArrowKey}}
     />
-    <ul class="results{{if this.hideResults ' hidden'}}">
+    <ul class="results{{if this.shouldHideResults ' hidden'}}">
       {{#if this.searchForUsers.isRunning}}
         <li>
           {{t "general.currentlySearchingPrompt"}}

@@ -86,7 +86,7 @@ export default class ManageUsersSummaryComponent extends Component {
     }
   }
 
-  get hideResults() {
+  get shouldHideResults() {
     return (
       this.searchForUsers.isIdle &&
       (this.searchForUsers.performCount == 0 ||
