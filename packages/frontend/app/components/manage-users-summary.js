@@ -60,6 +60,7 @@ export default class ManageUsersSummaryComponent extends Component {
   @action
   onEscapeKey() {
     this.clear();
+    this.searchForUsers.perform();
   }
 
   @action
