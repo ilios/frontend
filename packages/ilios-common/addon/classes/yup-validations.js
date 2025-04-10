@@ -3,6 +3,7 @@ import { getProperties } from '@ember/object';
 import { object, setLocale } from 'yup';
 import { restartableTask, timeout } from 'ember-concurrency';
 import { modifier } from 'ember-modifier';
+import { getOwner } from '@ember/application';
 
 const DEBOUNCE_MS = 100;
 
@@ -13,6 +14,7 @@ export default class YupValidations {
   context;
   schema;
   shape;
+  intl;
 
   @tracked error;
   @tracked showAllErrors = false;
@@ -22,6 +24,7 @@ export default class YupValidations {
     this.context = context;
     this.shape = shape;
     this.schema = object().shape(shape);
+    this.intl = getOwner(context).lookup('service:intl');
   }
 
   get errorsByKey() {
@@ -86,7 +89,26 @@ export default class YupValidations {
   }
 
   async isValid() {
-    return (await this.#validate()) === true;
+    const isValid = await this.#validate();
+    if (isValid === true) {
+      return true;
+    }
+    //find errors that are not visible and log them
+    //this makes it easier to find invisible errors when debugging
+    const invisibleErrors = Object.keys(this.errorsByKey).filter(
+      (key) => !this.visibleErrors.includes(key),
+    );
+    if (invisibleErrors.length) {
+      invisibleErrors.forEach((key) => {
+        const errors = this.errorsByKey[key].map(({ messageKey, values }) => {
+          values.description = key;
+          return this.intl.t(messageKey, values);
+        });
+        console.warn('Invisible errors prevented validation:\n  ' + errors.join('\n  '));
+      });
+    }
+
+    return false;
   }
 
   addErrorDisplaysFor = (fields) => {
