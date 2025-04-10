@@ -81,10 +81,11 @@ export default class ReportsSubjectLearningMaterialComponent extends Component {
     }
     this.cancelCurrentRun();
 
+    const attributes = ['id', 'title'];
     const result = await this.graphql.findTask.perform(
       'learningMaterials',
       filters,
-      'id, title',
+      attributes.join(','),
       this.signal,
     );
     return result.data.learningMaterials.map(({ title }) => title);
