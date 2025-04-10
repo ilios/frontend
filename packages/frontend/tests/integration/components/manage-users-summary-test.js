@@ -52,7 +52,7 @@ module('Integration | Component | manage users summary', function (hooks) {
     assert.dom(results).exists({ count: 1 });
     assert.dom(results).hasText('keep typing...');
 
-    await triggerKeyEvent(userSearch, 'keyup', 'Escape');
+    await triggerKeyEvent(userSearch, 'keydown', 'Escape');
 
     assert.dom(userSearch).hasText('');
     assert.dom(results).exists({ count: 0 });

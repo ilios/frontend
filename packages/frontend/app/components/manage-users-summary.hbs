@@ -36,26 +36,19 @@
       autocomplete="name"
       type="search"
       value={{this.searchValue}}
-      {{on "input" (pick "target.value" (set this "searchValue"))}}
+      {{on
+        "input"
+        (queue (pick "target.value" (set this "searchValue")) (perform this.searchForUsers))
+      }}
       placeholder={{t "general.searchForIliosUsers"}}
       aria-label={{t "general.searchForIliosUsers"}}
       incremental="true"
-      {{on "search" (perform this.searchForUsers)}}
-      {{on "keyup" this.keyboard}}
+      {{on-key "Escape" this.onEscapeKey}}
+      {{on-key "Enter" this.onEnterKey}}
+      {{on-key "ArrowUp" this.onArrowKey}}
+      {{on-key "ArrowDown" this.onArrowKey}}
     />
-    <ul
-      class="results
-        {{if
-          (and
-            this.searchForUsers.isIdle
-            (or
-              (eq this.searchForUsers.performCount 0)
-              (eq this.searchForUsers.lastSuccessful.value.length 0)
-            )
-          )
-          'hidden'
-        }}"
-    >
+    <ul class="results{{if this.shouldHideResults ' hidden'}}">
       {{#if this.searchForUsers.isRunning}}
         <li>
           {{t "general.currentlySearchingPrompt"}}
@@ -87,6 +80,7 @@
                 class="link-button"
                 type="button"
                 disabled={{this.clickUser.isRunning}}
+                data-userid={{result.user.id}}
                 {{on "click" (perform this.clickUser result.user)}}
               >
                 <span class="name">
