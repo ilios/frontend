@@ -157,8 +157,6 @@ module('Integration | Component | editable field', function (hooks) {
   });
 
   test('it has title property value only if @showTitle is true', async function (assert) {
-    this.intl = this.owner.lookup('service:intl');
-
     await render(hbs`<EditableField @value='lorem' />`);
 
     assert.strictEqual(component.editable.title, '');
@@ -166,6 +164,6 @@ module('Integration | Component | editable field', function (hooks) {
     this.set('showTitle', true);
     await render(hbs`<EditableField @value='lorem' @showTitle={{this.showTitle}} />`);
 
-    assert.strictEqual(component.editable.title, this.intl.t('general.edit'));
+    assert.strictEqual(component.editable.title, 'Edit');
   });
 });
