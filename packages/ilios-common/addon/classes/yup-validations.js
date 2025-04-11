@@ -24,7 +24,13 @@ export default class YupValidations {
     this.context = context;
     this.shape = shape;
     this.schema = object().shape(shape);
-    this.intl = getOwner(context).lookup('service:intl');
+    const owner = context.owner ?? getOwner(context);
+    if (!owner) {
+      throw new Error(
+        'No owner found for YupValidations. Either the context does not have an owner or the owner is not set.',
+      );
+    }
+    this.intl = owner.lookup('service:intl');
   }
 
   get errorsByKey() {
