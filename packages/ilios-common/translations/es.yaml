@@ -124,7 +124,7 @@ general:
   etAl: et al.
   eventNotFoundTitle: Evento no encontrado
   eventNotFoundExplanation: "El evento al que ha intentado acceder ya no está disponible o ha seguido un enlace de usuario personalizado que no se puede compartir. Si sigue teniendo problemas, póngase en contacto con el servicio de asistencia de Ilios."
-  expand: expandir
+  expand: Expandir
   expandDetail: Enseñar Detalles
   externalId: Identificación del Curso
   file: Archivo
