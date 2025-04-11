@@ -159,7 +159,7 @@ module('Integration | Component | editable field', function (hooks) {
   test('it has title property value only if @showTitle is true', async function (assert) {
     await render(hbs`<EditableField @value='lorem' />`);
 
-    assert.strictEqual(component.editable.title, '');
+    assert.strictEqual(component.editable.title, undefined);
 
     this.set('showTitle', true);
     await render(hbs`<EditableField @value='lorem' @showTitle={{this.showTitle}} />`);

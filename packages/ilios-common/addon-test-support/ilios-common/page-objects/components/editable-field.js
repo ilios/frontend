@@ -1,9 +1,9 @@
 import {
+  attribute,
   clickable,
   count,
   create,
   isVisible,
-  property,
   text,
   triggerable,
 } from 'ember-cli-page-object';
@@ -18,7 +18,7 @@ const definition = {
     scope: '[data-test-edit]',
     edit: clickable(),
     iconCount: count(),
-    title: property('title'),
+    title: attribute('title'),
   },
   enter: triggerable('keyup', 'input', { eventProperties: { key: 'Enter' } }),
   escape: triggerable('keyup', 'input', { eventProperties: { key: 'Escape' } }),
