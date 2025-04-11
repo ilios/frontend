@@ -101,6 +101,9 @@ export default class YupValidations {
     if (invisibleErrors.length) {
       invisibleErrors.forEach((key) => {
         const errors = this.errorsByKey[key].map(({ messageKey, values }) => {
+          if (!values) {
+            values = {};
+          }
           values.description = key;
           return this.intl.t(messageKey, values);
         });
@@ -212,7 +215,7 @@ function isEmail() {
     return {
       path: validationParams.path,
       messageKey: 'errors.email',
-      values: [],
+      values: {},
     };
   };
 }
@@ -222,7 +225,7 @@ function isURL() {
     return {
       path: validationParams.path,
       messageKey: 'errors.url',
-      values: [],
+      values: {},
     };
   };
 }
@@ -230,7 +233,7 @@ function isURL() {
 function notType() {
   return ({ type, path }) => {
     let messageKey,
-      values = [];
+      values = {};
     switch (type) {
       case 'number':
         messageKey = 'errors.notANumber';
