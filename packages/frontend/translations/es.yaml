@@ -192,6 +192,7 @@ general:
   learner: Aprendedor
   learnerAssignments: "{groupTitle} Asignaciónes de Aprendedores"
   learnerGroupsReportSummary: "informe para {courseCount, plural, one {un curso} other {# cursos}}. Cada grupo de alumnos adjunto se enumera junto con los instructores y los datos del curso."
+  learnerGroupsReportSummaryMultiSchool: "informe para {courseCount, plural, one {un curso} other {# cursos}}{schoolCount, plural, zero {} one {} other {, en # escuelas}}. Cada grupo de alumnos adjunto se enumera junto con los instructores y los datos del curso."
   learnerGroupTitle: Título de Grupo de Instructores
   learnerGroupTitleFilterPlaceholder: Aplicar un Filtro por Título de Grupo de Aprendedor
   learnerGroupTitlePlaceholder: Entre en un Título para este grupo de aprendedores
@@ -389,6 +390,7 @@ general:
   sessionAttributes: Atributos de la Sesión
   sessionObjectives: Objetivos de la sesión
   sessionObjectivesReportSummary: "informe para {courseCount, plural, one {un curso} other {# cursos}}. Se enumera el objetivo de cada sesión junto con los instructores y los datos del curso."
+  sessionObjectivesReportSummaryMultiSchool: "informe para {courseCount, plural, one {un curso} other {# cursos}}{schoolCount, plural, zero {} one {} other {, en # escuelas}}. Se enumera el objetivo de cada sesión junto con los instructores y los datos del curso."
   sessionTitlePlaceholder: Entre en un titulo para esta sesión
   sessionTypeConfirmRemoval: ¿Está seguro de que desea eliminar este tipo de sesión? Esta acción no se puede deshacer.
   sessionTypeTitlePlaceholder: Entre en un titulo para este tipo de sesión
