@@ -1,4 +1,7 @@
 <Reports::Curriculum::Header
+  @selectedSchoolIds={{@selectedSchoolIds}}
+  @countSelectedSchools={{@selectedSchoolIds.length}}
+  @hasMultipleSchools={{@hasMultipleSchools}}
   @countSelectedCourses={{@courses.length}}
   @showReportResults={{true}}
   @loading={{this.reportRunning}}
@@ -21,6 +24,7 @@
     <caption>{{t "general.resultsSummary"}}</caption>
     <thead>
       <tr>
+        <th>{{t "general.school"}}</th>
         <th>{{t "general.course"}}</th>
         <th>{{t "general.sessions"}}</th>
         <th>{{t "general.instructors"}}</th>
@@ -31,6 +35,7 @@
       {{#if this.reportRunning}}
         {{#each (sort-by "title" @courses) as |c|}}
           <tr>
+            <td>{{11}}</td>
             <td>
               <LinkTo @route="course" @model={{c.id}}>
                 {{c.title}}
@@ -44,6 +49,7 @@
       {{else}}
         {{#each (sort-by "courseTitle" this.summary) as |o|}}
           <tr data-test-result>
+            <td>{{o.schoolTitle}}</td>
             <td>
               <LinkTo @route="course" @model={{o.courseId}}>
                 {{o.courseTitle}}

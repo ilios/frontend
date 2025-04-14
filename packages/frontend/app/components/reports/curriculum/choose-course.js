@@ -67,6 +67,14 @@ export default class ReportsCurriculumChooseCourse extends Component {
     });
   }
 
+  updateChosenIds = (courseId, schoolId) => {
+    if (this.args.selectedCourseIds.includes(courseId)) {
+      this.args.remove(courseId, schoolId);
+    } else {
+      this.args.add(courseId, schoolId);
+    }
+  };
+
   toggleYear = (year) => {
     if (this.expandedYear === year) {
       this.expandedYear = null;
