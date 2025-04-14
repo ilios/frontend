@@ -26,7 +26,7 @@ export default class ReportsCurriculumLearnerGroupsComponent extends Component {
       `ilmSession { id, dueDate, hours, instructors { ${userData} }, instructorGroups { id, users { ${userData} } }, learnerGroups { id, title } }`,
     ].join(', ');
 
-    const data = ['id', 'title', 'year', `sessions { ${sessionData} }`];
+    const data = ['id', 'title', 'year', 'school { title }', `sessions { ${sessionData} }`];
 
     return chunks.map((courses) => {
       const courseIds = courses.map((c) => c.id);
@@ -81,6 +81,7 @@ export default class ReportsCurriculumLearnerGroupsComponent extends Component {
   get summary() {
     return this.reportWithLearnerGroups.map((c) => {
       return {
+        schoolTitle: c.school.title,
         courseId: c.id,
         courseTitle: c.title,
         sessionCount: c.sessions.length,
@@ -106,6 +107,7 @@ export default class ReportsCurriculumLearnerGroupsComponent extends Component {
         }
         s.learnerGroups.forEach((title) => {
           acc.push({
+            schoolTitle: c.school.title,
             courseId: c.id,
             courseTitle: c.title,
             year: c.year,
@@ -138,6 +140,7 @@ export default class ReportsCurriculumLearnerGroupsComponent extends Component {
   downloadReport = dropTask(async () => {
     const data = this.sortedResults.map((o) => {
       const rhett = {};
+      rhett[this.intl.t('general.school')] = o.schoolTitle;
       rhett[this.intl.t('general.id')] = o.courseId;
       rhett[this.intl.t('general.course')] = o.courseTitle;
       rhett[this.intl.t('general.year')] = o.year;

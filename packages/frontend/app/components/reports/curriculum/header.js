@@ -44,22 +44,43 @@ export default class ReportsCurriculumHeader extends Component {
   };
 
   get reportList() {
-    return [
-      {
-        value: 'sessionObjectives',
-        label: this.intl.t('general.sessionObjectives'),
-        summary: this.intl.t('general.sessionObjectivesReportSummary', {
-          courseCount: this.args.countSelectedCourses,
-        }),
-      },
-      {
-        value: 'learnerGroups',
-        label: this.intl.t('general.learnerGroups'),
-        summary: this.intl.t('general.learnerGroupsReportSummary', {
-          courseCount: this.args.countSelectedCourses,
-        }),
-      },
-    ];
+    if (this.args.hasMultipleSchools) {
+      return [
+        {
+          value: 'sessionObjectives',
+          label: this.intl.t('general.sessionObjectives'),
+          summary: this.intl.t('general.sessionObjectivesReportSummaryMultiSchool', {
+            courseCount: this.args.countSelectedCourses,
+            schoolCount: this.args.countSelectedSchools,
+          }),
+        },
+        {
+          value: 'learnerGroups',
+          label: this.intl.t('general.learnerGroups'),
+          summary: this.intl.t('general.learnerGroupsReportSummaryMultiSchool', {
+            courseCount: this.args.countSelectedCourses,
+            schoolCount: this.args.countSelectedSchools,
+          }),
+        },
+      ];
+    } else {
+      return [
+        {
+          value: 'sessionObjectives',
+          label: this.intl.t('general.sessionObjectives'),
+          summary: this.intl.t('general.sessionObjectivesReportSummary', {
+            courseCount: this.args.countSelectedCourses,
+          }),
+        },
+        {
+          value: 'learnerGroups',
+          label: this.intl.t('general.learnerGroups'),
+          summary: this.intl.t('general.learnerGroupsReportSummary', {
+            courseCount: this.args.countSelectedCourses,
+          }),
+        },
+      ];
+    }
   }
 
   get selectedReport() {

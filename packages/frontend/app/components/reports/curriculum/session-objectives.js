@@ -29,7 +29,7 @@ export default class ReportsCurriculumSessionObjectivesComponent extends Compone
       `ilmSession { id, dueDate, hours, instructors { ${userData} }, instructorGroups { id, users { ${userData} } } }`,
     ].join(', ');
 
-    const data = ['id', 'title', 'year', `sessions { ${sessionData} }`];
+    const data = ['id', 'title', 'year', 'school { title }', `sessions { ${sessionData} }`];
 
     return chunks.map((courses) => {
       const courseIds = courses.map((c) => c.id);
@@ -66,13 +66,19 @@ export default class ReportsCurriculumSessionObjectivesComponent extends Compone
 
   get summary() {
     return this.reportWithInstructors.map((c) => {
-      return {
+      const summary = {
         courseId: c.id,
         courseTitle: c.title,
         sessionCount: c.sessions.length,
         objectiveCount: c.sessions.reduce((acc, s) => acc + s.sessionObjectives.length, 0),
         instructorsCount: this.reporting.countUniqueValuesInArray(c.sessions, 'instructors'),
       };
+
+      if (this.args.hasMultipleSchools) {
+        summary.schoolTitle = c.school.title;
+      }
+
+      return summary;
     });
   }
 
@@ -98,6 +104,7 @@ export default class ReportsCurriculumSessionObjectivesComponent extends Compone
         s.sessionObjectives.forEach((o) => {
           const title = striptags(o.title);
           acc.push({
+            schoolTitle: c.school.title,
             courseId: c.id,
             courseTitle: c.title,
             sessionTitle: s.title,
@@ -131,6 +138,10 @@ export default class ReportsCurriculumSessionObjectivesComponent extends Compone
   downloadReport = dropTask(async () => {
     const data = this.sortedResults.map((o) => {
       const rhett = {};
+
+      if (this.args.hasMultipleSchools) {
+        rhett[this.intl.t('general.school')] = o.schoolTitle;
+      }
       rhett[this.intl.t('general.course')] = o.courseTitle;
       rhett[this.intl.t('general.session')] = o.sessionTitle;
       rhett[this.intl.t('general.sessionType')] = o.sessionType;
