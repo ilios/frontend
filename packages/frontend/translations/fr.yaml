@@ -192,6 +192,7 @@ general:
   learner: Apprenant
   learnerAssignments: "{groupTitle} affectations d'étudiant"
   learnerGroupsReportSummary: "Rapport de {courseCount, plural, one {one course} other {# courses}}. Chaque groupe d'étudiantes est listée avec des instructeurs et cours données."
+  learnerGroupsReportSummaryMultiSchool: "Rapport de {courseCount, plural, one {one course} other {# courses}}{schoolCount, plural, zero {} one {} other {, dans # écoles}}. Chaque groupe d'étudiantes est listée avec des instructeurs et cours données."
   learnerGroupTitle: "Titre de groupe d'apprenants"
   learnerGroupTitleFilterPlaceholder: "Filtre par titre de groupe d'apprenants"
   learnerGroupTitlePlaceholder: "Ajoutez une titre pour cette groupe d'apprenants"
@@ -390,6 +391,7 @@ general:
   sessionAttributes: Attributs de Séance
   sessionObjectives: Objectifs de séance
   sessionObjectivesReportSummary: "Rapport de {courseCount, plural, one {one course} other {# courses}}. Chaque objectif de séance est listée avec des instructeurs et cours données."
+  sessionObjectivesReportSummaryMultiSchool: "Rapport de {courseCount, plural, one {one course} other {# courses}}{schoolCount, plural, zero {} one {} other {, dans # écoles}}. Chaque objectif de séance est listée avec des instructeurs et cours données."
   sessionTitlePlaceholder: Ajoutez un titre pour ce session
   sessionTypeConfirmRemoval: "Voulez-vous vraiment supprimer ce type de session ? Cette action ne peut pas être annulée."
   sessionTypeTitlePlaceholder: Ajoutez un titre pour ce type de session
