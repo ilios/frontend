@@ -1,6 +1,9 @@
 <Reports::SubjectHeader
   @report={{@report}}
   @school={{@school}}
+  @changeFilterSchool={{@changeFilterSchool}}
+  @filterSchool={{@filterSchool}}
+  @showSchoolFilter={{this.showSchoolFilter}}
   @subject={{@subject}}
   @prepositionalObject={{@prepositionalObject}}
   @prepositionalObjectTableRowId={{@prepositionalObjectTableRowId}}
@@ -10,14 +13,17 @@
   @description={{@description}}
   @fetchDownloadData={{this.fetchDownloadData}}
   @readyToDownload={{this.allCompetenciesData.isResolved}}
-  @resultsLength={{this.allCompetencies.length}}
+  @resultsLength={{this.resultsLengthDisplay}}
 />
 <div data-test-reports-subject-competency>
   {{#if this.allCompetenciesData.isResolved}}
     <ul class="report-results{{if this.reportResultsExceedMax ' limited'}}" data-test-results>
-      {{#each this.limitedCompetencies as |title|}}
+      {{#each this.limitedCompetencies as |o|}}
         <li>
-          {{title}}
+          {{#if (and this.showSchoolFilter (not @filterSchool))}}
+            {{o.school.title}}:
+          {{/if}}
+          {{o.title}}
         </li>
       {{else}}
         <li>{{t "general.none"}}</li>
