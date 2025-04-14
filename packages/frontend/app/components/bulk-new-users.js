@@ -11,6 +11,7 @@ import { findById, mapBy } from 'ilios-common/utils/array-helpers';
 import { TrackedAsyncData } from 'ember-async-data';
 import YupValidations from 'ilios-common/classes/yup-validations';
 import { string } from 'yup';
+import { getOwner } from '@ember/application';
 
 export default class BulkNewUsersComponent extends Component {
   @service flashMessages;
@@ -203,6 +204,7 @@ export default class BulkNewUsersComponent extends Component {
               password: isPresent(arr[8]) ? arr[8] : null,
             },
             existingUsernames,
+            getOwner(this),
           );
         });
         const notHeaderRow = proposedUsers.filter(
@@ -346,37 +348,12 @@ export default class BulkNewUsersComponent extends Component {
 class ProposedUser {
   addedViaIlios = true;
   enabled = true;
+  owner = null;
+  validations = null;
+  existingUsernames = [];
 
-  validations = new YupValidations(this, {
-    firstName: string().required().min(1).max(50),
-    middleName: string().nullable().min(1).max(20),
-    lastName: string().required().min(1).max(50),
-    username: string()
-      .nullable()
-      .min(1)
-      .max(100)
-      .test(
-        'is-username-unique',
-        (d) => {
-          return {
-            path: d.path,
-            messageKey: 'errors.exclusion',
-          };
-        },
-        (value) => value == null || !this.existingUsernames.includes(this.username),
-      ),
-    password: string().when('username', {
-      is: (username) => !!username, // Check if the username field has a value
-      then: (schema) => schema.required(),
-      otherwise: (schema) => schema.notRequired(),
-    }),
-    campusId: string().nullable().min(1).max(16),
-    otherId: string().nullable().min(1).max(16),
-    email: string().nullable().email(),
-    phone: string().nullable().min(1).max(20),
-  });
-
-  constructor(userObj, existingUsernames) {
+  constructor(userObj, existingUsernames, owner) {
+    this.owner = owner;
     this.firstName = userObj.firstName;
     this.lastName = userObj.lastName;
     this.middleName = userObj.middleName;
@@ -388,6 +365,35 @@ class ProposedUser {
     this.password = userObj.password;
 
     this.existingUsernames = existingUsernames;
+
+    this.validations = new YupValidations(this, {
+      firstName: string().required().min(1).max(50),
+      middleName: string().nullable().min(1).max(20),
+      lastName: string().required().min(1).max(50),
+      username: string()
+        .nullable()
+        .min(1)
+        .max(100)
+        .test(
+          'is-username-unique',
+          (d) => {
+            return {
+              path: d.path,
+              messageKey: 'errors.exclusion',
+            };
+          },
+          (value) => value == null || !this.existingUsernames.includes(this.username),
+        ),
+      password: string().when('username', {
+        is: (username) => !!username, // Check if the username field has a value
+        then: (schema) => schema.required(),
+        otherwise: (schema) => schema.notRequired(),
+      }),
+      campusId: string().nullable().min(1).max(16),
+      otherId: string().nullable().min(1).max(16),
+      email: string().nullable().email(),
+      phone: string().nullable().min(1).max(20),
+    });
 
     this.validations.addErrorDisplayForAllFields();
   }
