@@ -106,8 +106,7 @@ export default class ReportsCurriculumLearnerGroupsComponent extends Component {
           firstOfferingDate = s.ilmSession.dueDate;
         }
         s.learnerGroups.forEach((title) => {
-          acc.push({
-            schoolTitle: c.school.title,
+          const learnerGroup = {
             courseId: c.id,
             courseTitle: c.title,
             year: c.year,
@@ -118,7 +117,13 @@ export default class ReportsCurriculumLearnerGroupsComponent extends Component {
             instructors: s.instructors,
             title,
             link: `${origin}${path}`,
-          });
+          };
+
+          if (this.args.hasMultipleSchools) {
+            learnerGroup.schoolTitle = c.school.title;
+          }
+
+          acc.push(learnerGroup);
         });
       });
       return acc;
