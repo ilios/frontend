@@ -22,13 +22,16 @@ export default class ReportsCurriculumController extends Controller {
     if (!ids || !ids.length) {
       this.schools = null;
     } else {
-      //use a Set to remove duplicates
-      this.schools = [...new Set(ids)].join('-');
+      this.schools = ids.join('-');
     }
   };
 
   get hasMultipleSchools() {
-    return this.selectedSchoolIds ? this.selectedSchoolIds.length > 1 : false;
+    return this.selectedSchoolIds ? this.countSelectedSchools > 1 : false;
+  }
+
+  get countSelectedSchools() {
+    return [...new Set(this.selectedSchoolIds)].length;
   }
 
   get selectedCourseIds() {

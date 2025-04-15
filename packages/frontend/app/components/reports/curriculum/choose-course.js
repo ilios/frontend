@@ -56,6 +56,8 @@ export default class ReportsCurriculumChooseCourse extends Component {
       const selectedCourses = courses.filter(({ id }) => this.args.selectedCourseIds.includes(id));
       const hasAllSelectedCourses = selectedCourses.length === courses.length;
       const hasSomeSelectedCourses = selectedCourses.length > 0 && !hasAllSelectedCourses;
+      const schoolId = Number(courses[0].school?.id);
+
       return {
         isExpanded: year === this.expandedYear,
         year,
@@ -63,6 +65,7 @@ export default class ReportsCurriculumChooseCourse extends Component {
         selectedCourses,
         hasSomeSelectedCourses,
         hasAllSelectedCourses,
+        schoolId,
       };
     });
   }
@@ -84,10 +87,11 @@ export default class ReportsCurriculumChooseCourse extends Component {
   };
 
   toggleAllCoursesInYear = (year) => {
+    const schoolId = year.schoolId;
     if (year.hasAllSelectedCourses) {
-      year.courses.forEach(({ id }) => this.args.remove(id));
+      year.courses.forEach(({ id }) => this.args.remove(id, schoolId));
     } else {
-      year.courses.forEach(({ id }) => this.args.add(id));
+      year.courses.forEach(({ id }) => this.args.add(id, schoolId));
     }
   };
 }

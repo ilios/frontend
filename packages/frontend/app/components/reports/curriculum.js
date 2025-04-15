@@ -56,16 +56,22 @@ export default class ReportsCurriculumComponent extends Component {
   }
 
   pickCourse = (courseId, schoolId) => {
+    console.log('pickCourse', courseId, schoolId);
     this.args.setSelectedCourseIds([...this.passedCourseIds, Number(courseId)].sort());
-    this.args.setSelectedSchoolIds([...this.passedSchoolIds, Number(schoolId)]);
+    this.args.setSelectedSchoolIds([...this.passedSchoolIds, Number(schoolId)].sort());
   };
 
   removeCourse = (courseId, schoolId) => {
+    console.log('removeCourse', courseId, schoolId, this.passedSchoolIds);
     this.args.stop();
     this.args.setSelectedCourseIds(
       this.passedCourseIds.filter((i) => i !== Number(courseId)).sort(),
     );
-    this.args.setSelectedSchoolIds(this.passedSchoolIds.filter((i) => i !== Number(schoolId)));
+    // save reference to schoolIds argument
+    const passedSchoolIds = this.passedSchoolIds;
+    // remove one instance of schoolId per courseId
+    passedSchoolIds.splice(this.passedSchoolIds.indexOf(Number(schoolId)), 1);
+    this.args.setSelectedSchoolIds(passedSchoolIds.sort());
   };
 
   removeAll = () => {

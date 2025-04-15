@@ -3,14 +3,14 @@
     <this.reportResultsComponent
       @courses={{this.selectedCourses}}
       @selectedSchoolIds={{@selectedSchoolIds}}
-      @countSelectedSchools={{@selectedSchoolIds.length}}
+      @countSelectedSchools={{@countSelectedSchools}}
       @hasMultipleSchools={{@hasMultipleSchools}}
       @close={{@stop}}
     />
   {{else}}
     <Reports::Curriculum::Header
       @selectedSchoolIds={{@selectedSchoolIds}}
-      @countSelectedSchools={{@selectedSchoolIds.length}}
+      @countSelectedSchools={{@countSelectedSchools}}
       @hasMultipleSchools={{@hasMultipleSchools}}
       @countSelectedCourses={{@selectedCourseIds.length}}
       @showReportResults={{@showReportResults}}
