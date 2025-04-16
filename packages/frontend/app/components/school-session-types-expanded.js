@@ -62,6 +62,8 @@ export default class SchoolSessionTypesExpandedComponent extends Component {
         active: isActive,
       });
 
+      this.args.setNewSavedSessionType(sessionType);
+
       await sessionType.save();
     },
   );

@@ -47,7 +47,22 @@
         @canUpdate={{true}}
         @save={{perform this.save}}
         @close={{fn @setSchoolNewSessionType false}}
+        @newSavedSessionType={{@newSavedSessionType}}
+        @setNewSavedSessionType={{@setNewSavedSessionType}}
       />
+    {{/if}}
+    {{#if @newSavedSessionType}}
+      <div class="saved-result">
+        <button
+          class="link-button"
+          type="button"
+          {{on "click" (fn @setSchoolManagedSessionType @newSavedSessionType.id)}}
+        >
+          <FaIcon @icon="square-up-right" />
+          {{@newSavedSessionType.title}}
+        </button>
+        {{t "general.savedSuccessfully"}}
+      </div>
     {{/if}}
     {{#if this.managedSessionType}}
       <SchoolSessionTypeManager

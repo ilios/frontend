@@ -19,6 +19,10 @@
   .school-session-types-expanded-content {
     @include m.detail-container-content;
 
+    .saved-result {
+      @include m.main-list-saved-new;
+    }
+
     table {
       @include m.ilios-table-structure;
       @include m.ilios-table-colors;
