@@ -264,6 +264,29 @@ module('Integration | Component | reports/subject/course', function (hooks) {
 />`);
   });
 
+  test('filter by program year', async function (assert) {
+    assert.expect(1);
+    this.server.post('api/graphql', function (schema, { requestBody }) {
+      const { query } = JSON.parse(requestBody);
+      assert.strictEqual(
+        query,
+        'query { courses(programYears: [13]) { id, title, year, externalId } }',
+      );
+      return responseData;
+    });
+    const { id } = this.server.create('report', {
+      subject: 'course',
+      prepositionalObject: 'program year',
+      prepositionalObjectTableRowId: 13,
+    });
+    this.set('report', await this.owner.lookup('service:store').findRecord('report', id));
+    await render(hbs`<Reports::Subject::Course
+  @subject={{this.report.subject}}
+  @prepositionalObject={{this.report.prepositionalObject}}
+  @prepositionalObjectTableRowId={{this.report.prepositionalObjectTableRowId}}
+/>`);
+  });
+
   test('filter by mesh', async function (assert) {
     assert.expect(2);
     let graphQueryCounter = 0;

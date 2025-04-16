@@ -112,7 +112,7 @@ export default class ReportsNewSubjectComponent extends Component {
     {
       value: 'program year',
       label: this.intl.t('general.programYear'),
-      subjects: ['term'],
+      subjects: ['course', 'term'],
     },
     {
       value: 'program',
