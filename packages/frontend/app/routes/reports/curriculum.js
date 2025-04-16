@@ -3,10 +3,11 @@ import { service } from '@ember/service';
 import { DateTime } from 'luxon';
 
 export default class ReportsCurriculumRoute extends Route {
+  @service currentUser;
+  @service router;
   @service session;
   @service store;
   @service graphql;
-  @service currentUser;
 
   queryParams = {
     courses: {
@@ -16,6 +17,11 @@ export default class ReportsCurriculumRoute extends Route {
 
   beforeModel(transition) {
     this.session.requireAuthentication(transition, 'login');
+    if (!this.currentUser.performsNonLearnerFunction) {
+      // Slash on the route name is necessary here due to this bug:
+      // https://github.com/emberjs/ember.js/issues/12945
+      this.router.replaceWith('/four-oh-four');
+    }
   }
 
   async model() {

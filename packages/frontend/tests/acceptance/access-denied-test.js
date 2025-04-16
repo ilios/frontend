@@ -32,6 +32,9 @@ module('Acceptance | Access Denied', function (hooks) {
       '/data/courses/1/terms/1',
       '/data/courses/1/vocabularies',
       '/data/courses/1/vocabularies/1',
+      '/reports/curriculum',
+      '/reports/subjects',
+      '/reports/subjects/1',
     ],
     async function (assert, url) {
       await visit(url);
