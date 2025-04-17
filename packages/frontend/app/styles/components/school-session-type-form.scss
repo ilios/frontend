@@ -4,7 +4,10 @@
 .school-session-type-form {
   .form {
     @include m.ilios-form;
-    width: 80%;
+    background-color: c.$slightWhite;
+    border: 1px solid c.$culturedGrey;
+    margin: 0.5rem 0;
+    padding: 1rem;
 
     .item {
       @include m.ilios-form-item;

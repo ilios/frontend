@@ -10,6 +10,7 @@
             id="title-{{templateId}}"
             type="text"
             value={{this.title}}
+            placeholder={{t "general.sessionTypeTitlePlaceholder"}}
             {{on "input" (pick "target.value" (set this "title"))}}
             {{on "keyup" (queue (fn this.addErrorDisplayFor "title") (perform this.saveOrCancel))}}
           />
