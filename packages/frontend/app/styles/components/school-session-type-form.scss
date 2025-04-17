@@ -4,7 +4,6 @@
 .school-session-type-form {
   .form {
     @include m.ilios-form;
-    display: block;
     width: 80%;
 
     .item {
