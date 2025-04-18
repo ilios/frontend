@@ -3,6 +3,7 @@ import { service } from '@ember/service';
 import { dropTask, restartableTask, timeout } from 'ember-concurrency';
 import { cleanQuery } from 'ilios-common/utils/query-utils';
 import { tracked } from '@glimmer/tracking';
+import { guidFor } from '@ember/object/internals';
 import { mapBy } from 'ilios-common/utils/array-helpers';
 
 const DEBOUNCE_MS = 250;
@@ -12,6 +13,14 @@ export default class LeadershipSearchComponent extends Component {
   @service store;
   @service intl;
   @tracked searchValue = null;
+
+  get searchInputId() {
+    return `leadership-search-input-${guidFor(this)}`;
+  }
+
+  get searchInputElement() {
+    return document.getElementById(this.searchInputId);
+  }
 
   get existingUserIds() {
     return mapBy(this.args.existingUsers, 'id');
@@ -73,5 +82,6 @@ export default class LeadershipSearchComponent extends Component {
     this.searchValue = null;
     await this.searchForUsers.perform(null);
     this.args.selectUser(user);
+    this.searchInputElement.focus();
   });
 }
