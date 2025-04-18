@@ -100,8 +100,8 @@ importers:
         specifier: ^9.10.1
         version: 9.12.0(ember-cli@6.3.1(babel-core@6.26.3)(ejs@3.1.10)(handlebars@4.7.8)(underscore@1.13.7))(webpack@5.99.5)
       '@warp-drive/build-config':
-        specifier: 0.0.2
-        version: 0.0.2
+        specifier: 5.4.1
+        version: 5.4.1
       broccoli-asset-rev:
         specifier: ^3.0.0
         version: 3.0.0
@@ -557,8 +557,8 @@ importers:
         specifier: ^9.23.0
         version: 9.24.0
       '@warp-drive/build-config':
-        specifier: 0.0.2
-        version: 0.0.2
+        specifier: 5.4.1
+        version: 5.4.1
       broccoli-asset-rev:
         specifier: ^3.0.0
         version: 3.0.0
@@ -722,8 +722,8 @@ importers:
         specifier: ^1.1.2
         version: 1.1.2
       '@warp-drive/build-config':
-        specifier: 0.0.2
-        version: 0.0.2
+        specifier: 5.4.1
+        version: 5.4.1
       broccoli-asset-rev:
         specifier: ^3.0.0
         version: 3.0.0
@@ -956,8 +956,8 @@ importers:
         specifier: ^1.1.2
         version: 1.1.2
       '@warp-drive/build-config':
-        specifier: 0.0.2
-        version: 0.0.2
+        specifier: 5.4.1
+        version: 5.4.1
       broccoli-asset-rev:
         specifier: ^3.0.0
         version: 3.0.0
@@ -1193,8 +1193,8 @@ importers:
         specifier: ^1.1.2
         version: 1.1.2
       '@warp-drive/build-config':
-        specifier: 0.0.2
-        version: 0.0.2
+        specifier: 5.4.1
+        version: 5.4.1
       broccoli-asset-rev:
         specifier: ^3.0.0
         version: 3.0.0
@@ -3206,6 +3206,10 @@ packages:
   '@warp-drive/build-config@0.0.2':
     resolution: {integrity: sha512-sPnLFRkN5a0sjr3wlEUysi3G0Gj9Si0HwYksva86hvtypGHY0tDd6rfLQFu9j4RxKAN/APDR0qa8EN2BsfdPeA==}
     engines: {node: '>= 18.20.7'}
+
+  '@warp-drive/build-config@5.4.1':
+    resolution: {integrity: sha512-qGwZOlLKJ2DECR8WwfFdS3zVVkXaDga/sa7+LtsArGQr9QgRJZ9xWWGDyi4xUTeD+faUwX2Ki2Kd4Dpy39foew==}
+    engines: {node: '>= 18.20.8'}
 
   '@warp-drive/core-types@0.0.2':
     resolution: {integrity: sha512-FG0OGN0c/uv6eGlahlwfK6m+ElEUGDyli7HycO34If/AWLPnjUyzQzR47WOshKYy1er0onJZ459MpRzc7u7WOg==}
@@ -12935,6 +12939,16 @@ snapshots:
       '@embroider/macros': 1.17.1
       babel-import-util: 2.1.1
       broccoli-funnel: 3.0.8
+      semver: 7.7.1
+    transitivePeerDependencies:
+      - '@glint/template'
+      - supports-color
+
+  '@warp-drive/build-config@5.4.1':
+    dependencies:
+      '@embroider/addon-shim': 1.10.0
+      '@embroider/macros': 1.17.1
+      babel-import-util: 2.1.1
       semver: 7.7.1
     transitivePeerDependencies:
       - '@glint/template'
