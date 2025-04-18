@@ -7,7 +7,7 @@ import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { TrackedAsyncData } from 'ember-async-data';
 
-export default class SchoolVisualizerSessionTypeVocabulariesGraphComponent extends Component {
+export default class SchoolVisualizeSessionTypeVocabulariesGraphComponent extends Component {
   @service router;
   @service intl;
   @tracked tooltipContent = null;

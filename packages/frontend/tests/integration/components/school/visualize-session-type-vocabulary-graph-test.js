@@ -3,10 +3,10 @@ import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render, waitFor } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import { setupMirage } from 'frontend/tests/test-support/mirage';
-import { component } from 'frontend/tests/pages/components/school/visualizer-session-type-vocabulary-graph';
+import { component } from 'frontend/tests/pages/components/school/visualize-session-type-vocabulary-graph';
 
 module(
-  'Integration | Component | school/visualizer-session-type-vocabulary-graph',
+  'Integration | Component | school/visualize-session-type-vocabulary-graph',
   function (hooks) {
     setupRenderingTest(hooks);
     setupMirage(hooks);
@@ -40,7 +40,7 @@ module(
       this.set('sessionType', this.sessionType);
       this.set('vocabulary', this.vocabulary);
       await render(
-        hbs`<School::VisualizerSessionTypeVocabularyGraph
+        hbs`<School::VisualizeSessionTypeVocabularyGraph
   @sessionType={{this.sessionType}}
   @vocabulary={{this.vocabulary}}
 />`,

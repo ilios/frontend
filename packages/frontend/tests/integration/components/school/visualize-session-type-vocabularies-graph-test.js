@@ -3,10 +3,10 @@ import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render, waitFor } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import { setupMirage } from 'frontend/tests/test-support/mirage';
-import { component } from 'frontend/tests/pages/components/school/visualizer-session-type-vocabularies-graph';
+import { component } from 'frontend/tests/pages/components/school/visualize-session-type-vocabularies-graph';
 
 module(
-  'Integration | Component | school/visualizer-session-type-vocabularies-graph',
+  'Integration | Component | school/visualize-session-type-vocabularies-graph',
   function (hooks) {
     setupRenderingTest(hooks);
     setupMirage(hooks);
@@ -44,7 +44,7 @@ module(
     test('it renders', async function (assert) {
       this.set('sessionType', this.sessionType);
       await render(
-        hbs`<School::VisualizerSessionTypeVocabulariesGraph @sessionType={{this.sessionType}} />`,
+        hbs`<School::VisualizeSessionTypeVocabulariesGraph @sessionType={{this.sessionType}} />`,
       );
 
       assert.dom('svg').exists({ count: 1 });
