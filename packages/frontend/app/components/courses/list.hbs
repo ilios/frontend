@@ -47,7 +47,7 @@
           </SortableTh>
           <SortableTh
             @align="right"
-            @colspan="2"
+            @colspan="3"
             @sortedAscending={{this.sortedAscending}}
             @sortedBy={{or (eq @sortBy "status") (eq @sortBy "status:desc")}}
             @onClick={{fn this.setSortBy "status"}}
