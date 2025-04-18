@@ -1,7 +1,7 @@
 import { collection, create, notHasClass } from 'ember-cli-page-object';
 
 const definition = {
-  scope: '[data-test-school-visualizer-session-type-vocabularies]',
+  scope: '[data-test-school-visualizer-session-type-vocabulary-graph]',
   isIcon: notHasClass('no-icon'),
   chart: {
     scope: '.simple-chart',
