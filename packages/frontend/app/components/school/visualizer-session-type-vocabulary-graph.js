@@ -5,7 +5,7 @@ import { filter, map } from 'rsvp';
 import { restartableTask, timeout } from 'ember-concurrency';
 import { cached, tracked } from '@glimmer/tracking';
 import { TrackedAsyncData } from 'ember-async-data';
-export default class SchoolVisualizerSessionTypeVocabularyComponent extends Component {
+export default class SchoolVisualizerSessionTypeVocabularyGraphComponent extends Component {
   @service router;
   @service intl;
   @tracked tooltipContent = null;
