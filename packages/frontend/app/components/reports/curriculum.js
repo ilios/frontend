@@ -17,6 +17,9 @@ export default class ReportsCurriculumComponent extends Component {
   get passedCourseIds() {
     return this.args.selectedCourseIds?.map(Number) ?? [];
   }
+  get passedSchoolIds() {
+    return this.args.selectedSchoolIds?.map(Number) ?? [];
+  }
 
   get selectedReportValue() {
     return this.args.report ?? 'sessionObjectives';
@@ -52,18 +55,29 @@ export default class ReportsCurriculumComponent extends Component {
     return false;
   }
 
-  pickCourse = (id) => {
-    this.args.setSelectedCourseIds([...this.passedCourseIds, Number(id)].sort());
+  pickCourse = (courseId, schoolId) => {
+    console.log('pickCourse', courseId, schoolId);
+    this.args.setSelectedCourseIds([...this.passedCourseIds, Number(courseId)].sort());
+    this.args.setSelectedSchoolIds([...this.passedSchoolIds, Number(schoolId)].sort());
   };
 
-  removeCourse = (id) => {
+  removeCourse = (courseId, schoolId) => {
+    console.log('removeCourse', courseId, schoolId, this.passedSchoolIds);
     this.args.stop();
-    this.args.setSelectedCourseIds(this.passedCourseIds.filter((i) => i !== Number(id)).sort());
+    this.args.setSelectedCourseIds(
+      this.passedCourseIds.filter((i) => i !== Number(courseId)).sort(),
+    );
+    // save reference to schoolIds argument
+    const passedSchoolIds = this.passedSchoolIds;
+    // remove one instance of schoolId per courseId
+    passedSchoolIds.splice(this.passedSchoolIds.indexOf(Number(schoolId)), 1);
+    this.args.setSelectedSchoolIds(passedSchoolIds.sort());
   };
 
   removeAll = () => {
     this.args.stop();
     this.args.setSelectedCourseIds();
+    this.args.setSelectedSchoolIds();
   };
 
   changeSelectedReport = (value) => {
