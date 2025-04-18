@@ -5,21 +5,27 @@
 >
   {{#if this.isLoaded}}
     {{#if (or @isIcon this.hasChartData)}}
-      <SimpleChart
-        @name="horz-bar"
-        @isIcon={{@isIcon}}
-        @data={{this.filteredChartData}}
-        @onClick={{this.barClick}}
-        @hover={{perform this.barHover}}
-        @leave={{perform this.barHover}}
-        as |chart|
-      >
-        {{#if this.tooltipContent}}
-          <chart.tooltip @title={{this.tooltipTitle}}>
-            {{this.tooltipContent}}
-          </chart.tooltip>
-        {{/if}}
-      </SimpleChart>
+      {{#if this.hasChartData}}
+        <SimpleChart
+          @name="horz-bar"
+          @isIcon={{@isIcon}}
+          @data={{this.filteredChartData}}
+          @onClick={{this.barClick}}
+          @hover={{perform this.barHover}}
+          @leave={{perform this.barHover}}
+          as |chart|
+        >
+          {{#if this.tooltipContent}}
+            <chart.tooltip @title={{this.tooltipTitle}}>
+              {{this.tooltipContent}}
+            </chart.tooltip>
+          {{/if}}
+        </SimpleChart>
+      {{else}}
+        <div class="no-data" data-test-no-data>
+          {{t "general.courseVisualizationsInstructorsGraphNoData"}}
+        </div>
+      {{/if}}
     {{/if}}
     {{#if (and (not @isIcon) (not this.hasData))}}
       <div class="no-data" data-test-no-data>
