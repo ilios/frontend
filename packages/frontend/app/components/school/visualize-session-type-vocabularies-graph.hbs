@@ -1,6 +1,6 @@
 <div
-  class="{{unless @isIcon 'not-icon'}} school-visualizer-session-type-vocabulary-graph"
-  data-test-school-visualizer-session-type-vocabulary-graph
+  class="school-visualize-session-type-vocabularies-graph not-icon"
+  data-test-school-visualize-session-type-vocabularies-graph
   ...attributes
 >
   {{#if this.isLoaded}}
@@ -9,6 +9,7 @@
         @name="donut"
         @isIcon={{@isIcon}}
         @data={{this.data}}
+        @onClick={{this.donutClick}}
         @hover={{perform this.donutHover}}
         @leave={{perform this.donutHover}}
         as |chart|
