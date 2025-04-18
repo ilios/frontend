@@ -1,11 +1,11 @@
 <div class="leadership-search" data-test-leadership-search>
   <input
-    aria-label={{t "general.searchForIliosUsers"}}
     autocomplete="name"
     type="search"
     value={{this.searchValue}}
     placeholder={{t "general.searchForIliosUsers"}}
     incremental="true"
+    id={{this.searchInputId}}
     {{on "input" (perform this.searchForUsers value="target.value")}}
     {{on "search" (perform this.searchForUsers value="target.value")}}
     {{on "keyup" (perform this.searchForUsers value="target.value")}}
