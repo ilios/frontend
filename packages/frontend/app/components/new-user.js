@@ -26,7 +26,10 @@ export default class NewUserComponent extends Component {
   @Length(1, 100)
   @NotBlank()
   username = null;
-  @tracked @NotBlank() password = null;
+  @tracked
+  @Length(5)
+  @NotBlank()
+  password = null;
   @tracked @Length(1, 20) phone = null;
   @tracked schoolId = null;
   @tracked primaryCohortId = null;
