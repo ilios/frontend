@@ -391,6 +391,7 @@ general:
   sessionObjectivesReportSummary: "report for {courseCount, plural, one {one course} other {# courses}}. Each session objective is listed along with instructors and course data."
   sessionTitlePlaceholder: Enter a title for this session
   sessionTypeConfirmRemoval: Are you sure you want to delete this session type? This action cannot be undone.
+  sessionTypeTitlePlaceholder: Enter a title for this session type
   showResultsFor: Show Results For
   showRolesInCourses: Show roles in courses
   showRolesInPrograms: Show roles in programs

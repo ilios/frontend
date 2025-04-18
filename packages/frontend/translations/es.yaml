@@ -391,6 +391,7 @@ general:
   sessionObjectivesReportSummary: "informe para {courseCount, plural, one {un curso} other {# cursos}}. Se enumera el objetivo de cada sesión junto con los instructores y los datos del curso."
   sessionTitlePlaceholder: Entre en un titulo para esta sesión
   sessionTypeConfirmRemoval: ¿Está seguro de que desea eliminar este tipo de sesión? Esta acción no se puede deshacer.
+  sessionTypeTitlePlaceholder: Entre en un titulo para este tipo de sesión
   showResultsFor: Mostrar Resultados Para
   showRolesInCourses: Mostrar roles en cursos
   showRolesInPrograms: Mostrar roles en programas

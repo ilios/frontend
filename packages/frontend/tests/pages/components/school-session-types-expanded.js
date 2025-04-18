@@ -8,6 +8,7 @@ const definition = {
   collapse: clickable('[data-test-header] [data-test-title]'),
   title: text('[data-test-header] [data-test-title]'),
   createNew: clickable('[data-test-expand-collapse-button] button'),
+  savedResult: text('[data-test-saved-result]'),
   newSessionType,
   manager,
   list,

@@ -10,6 +10,7 @@ import { string } from 'yup';
 export default class SchoolManagerComponent extends Component {
   @service flashMessages;
   @tracked title;
+  @tracked newSavedSessionType;
 
   constructor() {
     super(...arguments);
@@ -58,6 +59,11 @@ export default class SchoolManagerComponent extends Component {
     this.newSchool = await this.args.school.save();
     this.flashMessages.success('general.savedSuccessfully');
   });
+
+  @action
+  setNewSavedSessionType(sessionType) {
+    this.newSavedSessionType = sessionType;
+  }
 
   @action
   revertTitleChanges() {
