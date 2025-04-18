@@ -4,11 +4,11 @@
   ...attributes
 >
   {{#if this.isLoaded}}
-    {{#if (or @isIcon (gt this.data.length 0))}}
+    {{#if (or @isIcon this.hasChartData)}}
       <SimpleChart
         @name="donut"
         @isIcon={{@isIcon}}
-        @data={{this.data}}
+        @data={{this.chartData}}
         @onClick={{this.donutClick}}
         @hover={{perform this.donutHover}}
         @leave={{perform this.donutHover}}
@@ -20,11 +20,67 @@
           </chart.tooltip>
         {{/if}}
       </SimpleChart>
-    {{else}}
-      <div class="with-hours" data-test-no-data>
-        <h4>
-          <FaIcon @icon="face-meh" class="meh-o" />
-        </h4>
+    {{/if}}
+    {{#if (and (not @isIcon) (not this.hasData))}}
+      <div class="no-data" data-test-no-data>
+        {{t "general.schoolVisualizationsNoSessions"}}
+      </div>
+    {{/if}}
+    {{#if (and (not @isIcon) this.hasData @showDataTable)}}
+      <div class="data-table" data-test-data-table>
+        <div class="table-actions" data-test-data-table-actions>
+          <button type="button" {{on "click" (perform this.downloadData)}} data-test-download-data>
+            <FaIcon @icon="download" />
+            {{t "general.download"}}
+          </button>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <SortableTh
+                @sortedAscending={{this.sortedAscending}}
+                @sortedBy={{or
+                  (eq this.sortBy "vocabularyTitle")
+                  (eq this.sortBy "vocabularyTitle:desc")
+                }}
+                @onClick={{fn this.setSortBy "vocabularyTitle"}}
+                data-test-vocabulary-title
+              >
+                {{t "general.vocabulary"}}
+              </SortableTh>
+              <SortableTh
+                @sortedAscending={{this.sortedAscending}}
+                @sortedBy={{or (eq this.sortBy "termsCount") (eq this.sortBy "termsCount:desc")}}
+                @onClick={{fn this.setSortBy "termsCount"}}
+                @sortType="numeric"
+                data-test-terms-count
+              >
+                {{t "general.terms"}}
+              </SortableTh>
+              <SortableTh
+                @sortedAscending={{this.sortedAscending}}
+                @sortedBy={{or
+                  (eq this.sortBy "sessionsCount")
+                  (eq this.sortBy "sessionsCount:desc")
+                }}
+                @onClick={{fn this.setSortBy "sessionsCount"}}
+                @sortType="numeric"
+                data-test-sessions-count
+              >
+                {{t "general.sessions"}}
+              </SortableTh>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each (sort-by this.sortBy this.tableData) as |row|}}
+              <tr>
+                <td data-test-vocabulary-title>{{row.vocabularyTitle}}</td>
+                <td data-test-terms-count>{{row.termsCount}}</td>
+                <td data-test-sessionsCount-count>{{row.sessionsCount}}</td>
+              </tr>
+            {{/each}}
+          </tbody>
+        </table>
       </div>
     {{/if}}
   {{else}}

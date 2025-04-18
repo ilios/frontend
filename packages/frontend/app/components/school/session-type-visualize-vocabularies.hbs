@@ -31,6 +31,9 @@
     {{@model.title}}
   </h3>
   <div class="visualizations">
-    <School::VisualizeSessionTypeVocabulariesGraph @sessionType={{@model}} />
+    <School::VisualizeSessionTypeVocabulariesGraph
+      @sessionType={{@model}}
+      @showDataTable={{true}}
+    />
   </div>
 </section>
