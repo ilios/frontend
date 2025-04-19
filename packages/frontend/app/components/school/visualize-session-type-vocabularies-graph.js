@@ -42,7 +42,7 @@ export default class SchoolVisualizeSessionTypeVocabulariesGraphComponent extend
   }
 
   get tableData() {
-    return this.chartData.map((obj) => {
+    return this.data.map((obj) => {
       const rhett = {};
       rhett.vocabularyTitle = obj.label;
       rhett.termsCount = obj.data;
