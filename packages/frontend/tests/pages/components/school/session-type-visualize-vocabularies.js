@@ -1,5 +1,5 @@
 import { attribute, collection, create, text } from 'ember-cli-page-object';
-import vocabulariesChart from './visualizer-session-type-vocabularies';
+import vocabulariesChart from './visualize-session-type-vocabularies-graph';
 
 const definition = create({
   scope: '[data-test-school-session-type-visualize-vocabularies]',

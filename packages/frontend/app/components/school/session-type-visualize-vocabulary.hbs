@@ -37,9 +37,10 @@
     ({{@model.vocabulary.title}})
   </h3>
   <div class="visualizations">
-    <School::VisualizerSessionTypeVocabulary
+    <School::VisualizeSessionTypeVocabularyGraph
       @sessionType={{@model.sessionType}}
       @vocabulary={{@model.vocabulary}}
+      @showDataTable={{true}}
     />
   </div>
 </section>
