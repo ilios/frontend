@@ -34,6 +34,32 @@ module('Integration | Component | reports/curriculum/header', function (hooks) {
     assert.ok(true, 'no a11y errors found!');
   });
 
+  test('it renders for session objectives across multiple schools', async function (assert) {
+    await render(hbs`<Reports::Curriculum::Header
+  @countSelectedSchools={{2}}
+  @hasMultipleSchools={{true}}
+  @countSelectedCourses={{3}}
+  @showReportResults={{false}}
+  @selectedReportValue='sessionObjectives'
+  @changeSelectedReport={{(noop)}}
+  @runReport={{(noop)}}
+  @close={{(noop)}}
+/>`);
+    assert.ok(component.reportSelector.isPresent);
+    assert.strictEqual(component.reportSelector.options.length, 2);
+    assert.strictEqual(component.reportSelector.options[0].text, 'Session Objectives');
+    assert.ok(component.reportSelector.options[0].isSelected);
+    assert.strictEqual(component.reportSelector.options[1].text, 'Learner Groups');
+    assert.notOk(component.reportSelector.options[1].isSelected);
+    assert.ok(component.runSummaryText.includes('for 3 courses, across 2 schools'));
+    assert.ok(
+      component.runSummaryText.includes(
+        'Each session objective is listed along with instructors and course data.',
+      ),
+    );
+    assert.ok(component.runReport.isPresent);
+  });
+
   test('it renders for learner groups and is accessible', async function (assert) {
     await render(hbs`<Reports::Curriculum::Header
   @countSelectedCourses={{5}}
@@ -58,6 +84,32 @@ module('Integration | Component | reports/curriculum/header', function (hooks) {
     assert.ok(component.runReport.isPresent);
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
+  });
+
+  test('it renders for learner groups across multiple schools', async function (assert) {
+    await render(hbs`<Reports::Curriculum::Header
+  @countSelectedSchools={{3}}
+  @hasMultipleSchools={{true}}
+  @countSelectedCourses={{5}}
+  @showReportResults={{false}}
+  @selectedReportValue='learnerGroups'
+  @changeSelectedReport={{(noop)}}
+  @runReport={{(noop)}}
+  @close={{(noop)}}
+/>`);
+    assert.ok(component.reportSelector.isPresent);
+    assert.strictEqual(component.reportSelector.options.length, 2);
+    assert.strictEqual(component.reportSelector.options[0].text, 'Session Objectives');
+    assert.notOk(component.reportSelector.options[0].isSelected);
+    assert.strictEqual(component.reportSelector.options[1].text, 'Learner Groups');
+    assert.ok(component.reportSelector.options[1].isSelected);
+    assert.ok(component.runSummaryText.includes('for 5 courses, across 3 schools'));
+    assert.ok(
+      component.runSummaryText.includes(
+        'Each attached learner group is listed along with instructors and course data.',
+      ),
+    );
+    assert.ok(component.runReport.isPresent);
   });
 
   test('it changes selected report', async function (assert) {
