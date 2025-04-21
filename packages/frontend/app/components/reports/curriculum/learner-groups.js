@@ -26,7 +26,7 @@ export default class ReportsCurriculumLearnerGroupsComponent extends Component {
       `ilmSession { id, dueDate, hours, instructors { ${userData} }, instructorGroups { id, users { ${userData} } }, learnerGroups { id, title } }`,
     ].join(', ');
 
-    const data = ['id', 'title', 'year', 'school { title }', `sessions { ${sessionData} }`];
+    const data = ['id', 'title', 'year', 'school { id, title }', `sessions { ${sessionData} }`];
 
     return chunks.map((courses) => {
       const courseIds = courses.map((c) => c.id);

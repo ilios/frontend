@@ -56,7 +56,6 @@ export default class ReportsCurriculumChooseCourse extends Component {
       const selectedCourses = courses.filter(({ id }) => this.args.selectedCourseIds.includes(id));
       const hasAllSelectedCourses = selectedCourses.length === courses.length;
       const hasSomeSelectedCourses = selectedCourses.length > 0 && !hasAllSelectedCourses;
-      const schoolId = Number(courses[0].school?.id);
 
       return {
         isExpanded: year === this.expandedYear,
@@ -65,7 +64,6 @@ export default class ReportsCurriculumChooseCourse extends Component {
         selectedCourses,
         hasSomeSelectedCourses,
         hasAllSelectedCourses,
-        schoolId,
       };
     });
   }

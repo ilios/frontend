@@ -3,7 +3,11 @@ export function buildSchoolsFromData(server) {
   const allCourseData = server.db.courses;
   return schools.map((school) => {
     const courseIds = school.courseIds;
-    const courses = allCourseData.filter((course) => courseIds.includes(course.id));
+    let courses = allCourseData.filter((course) => courseIds.includes(course.id));
+    // add school's id in format expected by component
+    courses.map((course) => {
+      course.school = { id: course.schoolId };
+    });
     const years = courses.map(({ year }) => year);
     const uniqueYears = [...new Set(years)].sort().reverse().map(Number);
     return {

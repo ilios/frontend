@@ -106,12 +106,17 @@ module('Integration | Component | reports/curriculum', function (hooks) {
   });
 
   test('adding course works', async function (assert) {
-    assert.expect(1);
+    assert.expect(2);
     this.set('schools', buildSchoolsFromData(this.server));
+    this.set('setSelectedSchoolIds', (selectedSchoolIds) => {
+      assert.deepEqual(selectedSchoolIds, [1, 1]);
+    });
     this.set('setSelectedCourseIds', (selectedCourseIds) => {
       assert.deepEqual(selectedCourseIds, [1, 2]);
     });
     await render(hbs`<Reports::Curriculum
+  @selectedSchoolIds={{array '1'}}
+  @setSelectedSchoolIds={{this.setSelectedSchoolIds}}
   @selectedCourseIds={{array '1'}}
   @setSelectedCourseIds={{this.setSelectedCourseIds}}
   @report='sessionObjectives'
@@ -121,16 +126,22 @@ module('Integration | Component | reports/curriculum', function (hooks) {
   @stop={{(noop)}}
   @showReportResults={{false}}
 />`);
+
     await component.chooseCourse.years[0].courses[1].pick();
   });
 
   test('removing course works', async function (assert) {
-    assert.expect(1);
+    assert.expect(2);
     this.set('schools', buildSchoolsFromData(this.server));
+    this.set('setSelectedSchoolIds', (selectedSchoolIds) => {
+      assert.deepEqual(selectedSchoolIds, []);
+    });
     this.set('setSelectedCourseIds', (selectedCourseIds) => {
       assert.deepEqual(selectedCourseIds, [1]);
     });
     await render(hbs`<Reports::Curriculum
+  @selectedSchoolIds={{array '1'}}
+  @setSelectedSchoolIds={{this.setSelectedSchoolIds}}
   @selectedCourseIds={{array '1' '2'}}
   @setSelectedCourseIds={{this.setSelectedCourseIds}}
   @report='sessionObjectives'
