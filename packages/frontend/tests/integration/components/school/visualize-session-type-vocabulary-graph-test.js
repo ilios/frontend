@@ -16,13 +16,16 @@ module(
       const course = this.server.create('course');
       const sessions = this.server.createList('session', 5, { course, sessionType });
       const vocabulary = this.server.create('vocabulary');
+      const rootTerm = this.server.create('term', { vocabulary });
       this.server.create('term', {
         vocabulary,
         sessions: [sessions[0], sessions[1]],
+        parent: rootTerm,
       });
       this.server.create('term', {
         vocabulary,
         sessions: [sessions[1], sessions[2], sessions[3], sessions[4]],
+        parent: rootTerm,
       });
       this.server.create('term', {
         vocabulary,
@@ -51,28 +54,29 @@ module(
       assert.strictEqual(component.chart.slices.length, 3);
       assert.strictEqual(component.chart.labels.length, 3);
       assert.strictEqual(component.chart.descriptions.length, 3);
-      assert.ok(component.chart.labels[0].text.startsWith('term 2'));
+      console.log(component.chart.labels[0].text);
+      assert.ok(component.chart.labels[0].text.startsWith('term 3'));
       assert.strictEqual(
         component.chart.descriptions[0].text,
-        'The term "term 2" from the "session type 0" vocabulary is applied to 1 session with session-type "session type 0".',
+        'The term "term 3" from the "session type 0" vocabulary is applied to 1 session with session-type "session type 0".',
       );
-      assert.ok(component.chart.labels[1].text.startsWith('term 0'));
+      assert.ok(component.chart.labels[1].text.startsWith('term 0 > term 1'));
       assert.strictEqual(
         component.chart.descriptions[1].text,
-        'The term "term 0" from the "session type 0" vocabulary is applied to 2 sessions with session-type "session type 0".',
+        'The term "term 0 > term 1" from the "session type 0" vocabulary is applied to 2 sessions with session-type "session type 0".',
       );
-      assert.ok(component.chart.labels[2].text.startsWith('term 1'));
+      assert.ok(component.chart.labels[2].text.startsWith('term 0 > term 2'));
       assert.strictEqual(
         component.chart.descriptions[2].text,
-        'The term "term 1" from the "session type 0" vocabulary is applied to 4 sessions with session-type "session type 0".',
+        'The term "term 0 > term 2" from the "session type 0" vocabulary is applied to 4 sessions with session-type "session type 0".',
       );
       assert.ok(component.dataTable.actions.download.isVisible);
       assert.strictEqual(component.dataTable.rows.length, 3);
-      assert.strictEqual(component.dataTable.rows[0].term, 'term 0');
+      assert.strictEqual(component.dataTable.rows[0].term, 'term 0 > term 1');
       assert.strictEqual(component.dataTable.rows[0].sessionsCount, '2');
-      assert.strictEqual(component.dataTable.rows[1].term, 'term 1');
+      assert.strictEqual(component.dataTable.rows[1].term, 'term 0 > term 2');
       assert.strictEqual(component.dataTable.rows[1].sessionsCount, '4');
-      assert.strictEqual(component.dataTable.rows[2].term, 'term 2');
+      assert.strictEqual(component.dataTable.rows[2].term, 'term 3');
       assert.strictEqual(component.dataTable.rows[2].sessionsCount, '1');
     });
 
@@ -87,17 +91,17 @@ module(
 />`,
       );
 
-      assert.strictEqual(component.dataTable.rows[0].term, 'term 0');
-      assert.strictEqual(component.dataTable.rows[1].term, 'term 1');
-      assert.strictEqual(component.dataTable.rows[2].term, 'term 2');
+      assert.strictEqual(component.dataTable.rows[0].term, 'term 0 > term 1');
+      assert.strictEqual(component.dataTable.rows[1].term, 'term 0 > term 2');
+      assert.strictEqual(component.dataTable.rows[2].term, 'term 3');
       await component.dataTable.header.term.toggle();
-      assert.strictEqual(component.dataTable.rows[0].term, 'term 2');
-      assert.strictEqual(component.dataTable.rows[1].term, 'term 1');
-      assert.strictEqual(component.dataTable.rows[2].term, 'term 0');
+      assert.strictEqual(component.dataTable.rows[0].term, 'term 3');
+      assert.strictEqual(component.dataTable.rows[1].term, 'term 0 > term 2');
+      assert.strictEqual(component.dataTable.rows[2].term, 'term 0 > term 1');
       await component.dataTable.header.term.toggle();
-      assert.strictEqual(component.dataTable.rows[0].term, 'term 0');
-      assert.strictEqual(component.dataTable.rows[1].term, 'term 1');
-      assert.strictEqual(component.dataTable.rows[2].term, 'term 2');
+      assert.strictEqual(component.dataTable.rows[0].term, 'term 0 > term 1');
+      assert.strictEqual(component.dataTable.rows[1].term, 'term 0 > term 2');
+      assert.strictEqual(component.dataTable.rows[2].term, 'term 3');
     });
 
     test('sort data-table by sessions count', async function (assert) {

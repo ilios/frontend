@@ -101,22 +101,22 @@ export default class SchoolVisualizeSessionTypeVocabularyGraphComponent extends 
 
     const termData = Object.values(termObjects);
 
-    return termData
-      .map((obj) => {
-        return {
-          data: obj.sessionIds.size,
-          label: obj.term.title,
-          description: this.intl.t('general.termXappliedToYSessionsWithSessionTypeZ', {
-            term: obj.term.title,
-            vocabulary: vocabulary.title,
-            sessionsCount: obj.sessionIds.size,
-            sessionType: sessionType.title,
-          }),
-        };
-      })
-      .sort((first, second) => {
-        return first.data - second.data;
-      });
+    const rhett = await map(termData, async (obj) => {
+      const termTitle = await obj.term.getTitleWithParentTitles();
+      return {
+        data: obj.sessionIds.size,
+        label: termTitle,
+        description: this.intl.t('general.termXappliedToYSessionsWithSessionTypeZ', {
+          term: termTitle,
+          vocabulary: vocabulary.title,
+          sessionsCount: obj.sessionIds.size,
+          sessionType: sessionType.title,
+        }),
+      };
+    });
+    return rhett.sort((first, second) => {
+      return first.data - second.data;
+    });
   }
 
   donutHover = restartableTask(async (obj) => {
