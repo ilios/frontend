@@ -367,6 +367,8 @@ general:
   sampleFile: Fichier échantillon
   saved: Nouvel utilisateur enregistré avec succès
   schoolName: "Nom de l'école"
+  schoolSessionTypeVocabulariesVisualizationNoMapping: Ce type de session ne correspond à aucun terme de vocabulaire de cette école.
+  schoolSessionTypeVocabularyVisualizationNoMapping: Ce type de session ne correspond pas aux termes de ce vocabulaire.
   searchDirectory: Consultez le répertoire pour les utilisateurs nouvels
   searchTheCurriculum: Rechercher le curriculum
   searchUsers: Rechercher des utilisateurs

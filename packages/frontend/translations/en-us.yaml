@@ -366,6 +366,8 @@ general:
   sampleFile: Sample File
   saved: New User Saved Successfully
   schoolName: School Name
+  schoolSessionTypeVocabulariesVisualizationNoMapping: This session type does not map to any vocabulary terms in this school.
+  schoolSessionTypeVocabularyVisualizationNoMapping: This session type does not map to terms in this vocabulary.
   searchDirectory: Search directory for new users
   searchTheCurriculum: Search the curriculum
   searchUsers: Search for users

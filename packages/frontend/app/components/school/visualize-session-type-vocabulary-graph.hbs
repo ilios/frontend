@@ -22,7 +22,7 @@
     {{/if}}
     {{#if (and (not @isIcon) (not this.hasData))}}
       <div class="no-data" data-test-no-data>
-        {{t "general.schoolVisualizationsNoSessions"}}
+        {{t "general.schoolSessionTypeVocabularyVisualizationNoMapping"}}
       </div>
     {{/if}}
     {{#if (and (not @isIcon) this.hasData @showDataTable)}}
@@ -62,7 +62,7 @@
             {{#each (sort-by this.sortBy this.tableData) as |row|}}
               <tr>
                 <td data-test-term-title>{{row.termTitle}}</td>
-                <td data-test-sessionsCount-count>{{row.sessionsCount}}</td>
+                <td data-test-sessions-count>{{row.sessionsCount}}</td>
               </tr>
             {{/each}}
           </tbody>
