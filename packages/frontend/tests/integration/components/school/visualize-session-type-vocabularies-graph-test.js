@@ -22,15 +22,15 @@ module(
       });
       this.server.create('term', {
         vocabulary: vocabularies[1],
-        sessions: [sessions[1]],
-      });
-      this.server.create('term', {
-        vocabulary: vocabularies[1],
-        sessions: [sessions[2]],
+        sessions: [sessions[1], sessions[2], sessions[3]],
       });
       this.server.create('term', {
         vocabulary: vocabularies[1],
         sessions: [sessions[3]],
+      });
+      this.server.create('term', {
+        vocabulary: vocabularies[1],
+        sessions: [sessions[3], sessions[4]],
       });
       this.server.create('term', {
         vocabulary: vocabularies[0],
@@ -44,10 +44,9 @@ module(
     test('it renders', async function (assert) {
       this.set('sessionType', this.sessionType);
       await render(
-        hbs`<School::VisualizeSessionTypeVocabulariesGraph @sessionType={{this.sessionType}} />`,
+        hbs`<School::VisualizeSessionTypeVocabulariesGraph @sessionType={{this.sessionType}} @showDataTable={{true}}/>`,
       );
 
-      assert.dom('svg').exists({ count: 1 });
       await waitFor('.loaded');
       await waitFor('svg .slice');
       assert.strictEqual(component.chart.slices.length, 2);
@@ -61,8 +60,70 @@ module(
       assert.ok(component.chart.labels[1].text.startsWith('Vocabulary 2'));
       assert.strictEqual(
         component.chart.descriptions[1].text,
-        '3 terms from the "Vocabulary 2" vocabulary are applied to 3 sessions with session-type "session type 0".',
+        '3 terms from the "Vocabulary 2" vocabulary are applied to 4 sessions with session-type "session type 0".',
       );
+      assert.ok(component.dataTable.actions.download.isVisible);
+      assert.strictEqual(component.dataTable.rows.length, 2);
+      assert.strictEqual(component.dataTable.rows[0].vocabulary, 'Vocabulary 1');
+      assert.strictEqual(component.dataTable.rows[0].termsCount, '1');
+      assert.strictEqual(component.dataTable.rows[0].sessionsCount, '1');
+      assert.strictEqual(component.dataTable.rows[1].vocabulary, 'Vocabulary 2');
+      assert.strictEqual(component.dataTable.rows[1].termsCount, '3');
+      assert.strictEqual(component.dataTable.rows[1].sessionsCount, '4');
+    });
+
+    test('sort data-table by vocabulary title', async function (assert) {
+      this.set('sessionType', this.sessionType);
+      await render(
+        hbs`<School::VisualizeSessionTypeVocabulariesGraph @sessionType={{this.sessionType}} @showDataTable={{true}}/>`,
+      );
+
+      assert.strictEqual(component.dataTable.rows[0].vocabulary, 'Vocabulary 1');
+      assert.strictEqual(component.dataTable.rows[1].vocabulary, 'Vocabulary 2');
+      await component.dataTable.header.vocabulary.toggle();
+      assert.strictEqual(component.dataTable.rows[0].vocabulary, 'Vocabulary 2');
+      assert.strictEqual(component.dataTable.rows[1].vocabulary, 'Vocabulary 1');
+      await component.dataTable.header.vocabulary.toggle();
+      assert.strictEqual(component.dataTable.rows[0].vocabulary, 'Vocabulary 1');
+      assert.strictEqual(component.dataTable.rows[1].vocabulary, 'Vocabulary 2');
+    });
+
+    test('sort data-table by terms count', async function (assert) {
+      this.set('sessionType', this.sessionType);
+      await render(
+        hbs`<School::VisualizeSessionTypeVocabulariesGraph @sessionType={{this.sessionType}} @showDataTable={{true}}/>`,
+      );
+
+      assert.strictEqual(component.dataTable.rows[0].termsCount, '1');
+      assert.strictEqual(component.dataTable.rows[1].termsCount, '3');
+      await component.dataTable.header.termsCount.toggle();
+      assert.strictEqual(component.dataTable.rows[0].termsCount, '1');
+      assert.strictEqual(component.dataTable.rows[1].termsCount, '3');
+      await component.dataTable.header.termsCount.toggle();
+      assert.strictEqual(component.dataTable.rows[0].termsCount, '3');
+      assert.strictEqual(component.dataTable.rows[1].termsCount, '1');
+      await component.dataTable.header.termsCount.toggle();
+      assert.strictEqual(component.dataTable.rows[0].termsCount, '1');
+      assert.strictEqual(component.dataTable.rows[1].termsCount, '3');
+    });
+
+    test('sort data-table by sessions count', async function (assert) {
+      this.set('sessionType', this.sessionType);
+      await render(
+        hbs`<School::VisualizeSessionTypeVocabulariesGraph @sessionType={{this.sessionType}} @showDataTable={{true}}/>`,
+      );
+
+      assert.strictEqual(component.dataTable.rows[0].sessionsCount, '1');
+      assert.strictEqual(component.dataTable.rows[1].sessionsCount, '4');
+      await component.dataTable.header.sessionsCount.toggle();
+      assert.strictEqual(component.dataTable.rows[0].sessionsCount, '1');
+      assert.strictEqual(component.dataTable.rows[1].sessionsCount, '4');
+      await component.dataTable.header.sessionsCount.toggle();
+      assert.strictEqual(component.dataTable.rows[0].sessionsCount, '4');
+      assert.strictEqual(component.dataTable.rows[1].sessionsCount, '1');
+      await component.dataTable.header.sessionsCount.toggle();
+      assert.strictEqual(component.dataTable.rows[0].sessionsCount, '1');
+      assert.strictEqual(component.dataTable.rows[1].sessionsCount, '4');
     });
   },
 );
