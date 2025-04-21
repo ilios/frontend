@@ -92,7 +92,7 @@ module('Acceptance | Reports - Curriculum Reports', function (hooks) {
     await percySnapshot(getUniqueName(assert, 'school with current year'));
   });
 
-  test('run session objective report', async function (assert) {
+  test('run session objectives report', async function (assert) {
     assert.expect(7);
     const course = this.server.create('course', {
       school: this.school,
@@ -138,20 +138,31 @@ module('Acceptance | Reports - Curriculum Reports', function (hooks) {
       so.header.runSummaryText.includes(
         'Each session objective is listed along with instructors and course data.',
       ),
+      'Session objective summary text is correct',
     );
-    await percySnapshot(getUniqueName(assert, 'selected coureses'));
+    await percySnapshot(getUniqueName(assert, 'selected courses'));
 
     await page.curriculum.header.runReport.click();
     await percySnapshot(getUniqueName(assert, 'subject report results'));
-    assert.strictEqual(so.results.length, 1);
-    assert.strictEqual(so.results.objectAt(0).courseTitle, 'course 0');
-    assert.strictEqual(so.results.objectAt(0).sessionCount, '1');
-    assert.strictEqual(so.results.objectAt(0).instructorCount, '4');
-    assert.strictEqual(so.results.objectAt(0).objectiveCount, '1');
+
+    assert.strictEqual(so.results.length, 1, 'Test has 1 report result');
+    assert.strictEqual(so.results.objectAt(0).courseTitle, 'course 0', 'Test title is correct');
+    assert.strictEqual(so.results.objectAt(0).sessionCount, '1', 'Course session count is correct');
+    assert.strictEqual(
+      so.results.objectAt(0).instructorCount,
+      '4',
+      'Course instructor count is correct',
+    );
+    assert.strictEqual(
+      so.results.objectAt(0).objectiveCount,
+      '1',
+      'Course objective count is correct',
+    );
 
     assert.strictEqual(
       currentURL(),
-      '/reports/curriculum?courses=1&report=sessionObjectives&run=true',
+      '/reports/curriculum?courses=1&report=sessionObjectives&run=true&schools=1',
+      'current URL is correct',
     );
   });
 
@@ -216,16 +227,20 @@ module('Acceptance | Reports - Curriculum Reports', function (hooks) {
         'Each attached learner group is listed along with instructors and course data.',
       ),
     );
-    await percySnapshot(getUniqueName(assert, 'selected coureses'));
+    await percySnapshot(getUniqueName(assert, 'selected courses'));
 
     await page.curriculum.header.runReport.click();
     await percySnapshot(getUniqueName(assert, 'learner group report results'));
+
     assert.strictEqual(lg.results.length, 1);
     assert.strictEqual(lg.results.objectAt(0).courseTitle, 'course 0');
     assert.strictEqual(lg.results.objectAt(0).sessionCount, '1');
     assert.strictEqual(lg.results.objectAt(0).instructorCount, '4');
     assert.strictEqual(lg.results.objectAt(0).learnerGroupCount, '4');
 
-    assert.strictEqual(currentURL(), '/reports/curriculum?courses=1&report=learnerGroups&run=true');
+    assert.strictEqual(
+      currentURL(),
+      '/reports/curriculum?courses=1&report=learnerGroups&run=true&schools=1',
+    );
   });
 });
