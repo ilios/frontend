@@ -74,7 +74,14 @@
           <tbody>
             {{#each (sort-by this.sortBy this.tableData) as |row|}}
               <tr>
-                <td data-test-vocabulary-title>{{row.vocabularyTitle}}</td>
+                <td data-test-vocabulary-title>
+                  <LinkTo
+                    @route="session-type-visualize-vocabulary"
+                    @models={{array @sessionType.id row.vocabularyId}}
+                  >
+                    {{row.vocabularyTitle}}
+                  </LinkTo>
+                </td>
                 <td data-test-terms-count>{{row.termsCount}}</td>
                 <td data-test-sessions-count>{{row.sessionsCount}}</td>
               </tr>

@@ -45,6 +45,7 @@ export default class SchoolVisualizeSessionTypeVocabulariesGraphComponent extend
     return this.data.map((obj) => {
       const rhett = {};
       rhett.vocabularyTitle = obj.label;
+      rhett.vocabularyId = obj.meta.vocabulary.id;
       rhett.termsCount = obj.data;
       rhett.sessionsCount = obj.meta.sessionsCount;
       return rhett;

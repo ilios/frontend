@@ -1,4 +1,4 @@
-import { clickable, collection, create, notHasClass, text } from 'ember-cli-page-object';
+import { attribute, clickable, collection, create, notHasClass, text } from 'ember-cli-page-object';
 
 const definition = {
   scope: '[data-test-school-visualize-session-type-vocabularies-graph]',
@@ -36,7 +36,10 @@ const definition = {
       },
     },
     rows: collection('tbody tr', {
-      vocabulary: text('[data-test-vocabulary-title]'),
+      vocabulary: {
+        scope: '[data-test-vocabulary-title]',
+        url: attribute('href', 'a'),
+      },
       termsCount: text('[data-test-terms-count]'),
       sessionsCount: text('[data-test-sessions-count]'),
     }),

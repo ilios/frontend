@@ -64,10 +64,18 @@ module(
       );
       assert.ok(component.dataTable.actions.download.isVisible);
       assert.strictEqual(component.dataTable.rows.length, 2);
-      assert.strictEqual(component.dataTable.rows[0].vocabulary, 'Vocabulary 1');
+      assert.strictEqual(component.dataTable.rows[0].vocabulary.text, 'Vocabulary 1');
+      assert.strictEqual(
+        component.dataTable.rows[0].vocabulary.url,
+        '/data/sessiontype/1/vocabulary/1',
+      );
       assert.strictEqual(component.dataTable.rows[0].termsCount, '1');
       assert.strictEqual(component.dataTable.rows[0].sessionsCount, '1');
-      assert.strictEqual(component.dataTable.rows[1].vocabulary, 'Vocabulary 2');
+      assert.strictEqual(component.dataTable.rows[1].vocabulary.text, 'Vocabulary 2');
+      assert.strictEqual(
+        component.dataTable.rows[1].vocabulary.url,
+        '/data/sessiontype/1/vocabulary/2',
+      );
       assert.strictEqual(component.dataTable.rows[1].termsCount, '3');
       assert.strictEqual(component.dataTable.rows[1].sessionsCount, '4');
     });
@@ -78,14 +86,14 @@ module(
         hbs`<School::VisualizeSessionTypeVocabulariesGraph @sessionType={{this.sessionType}} @showDataTable={{true}}/>`,
       );
 
-      assert.strictEqual(component.dataTable.rows[0].vocabulary, 'Vocabulary 1');
-      assert.strictEqual(component.dataTable.rows[1].vocabulary, 'Vocabulary 2');
+      assert.strictEqual(component.dataTable.rows[0].vocabulary.text, 'Vocabulary 1');
+      assert.strictEqual(component.dataTable.rows[1].vocabulary.text, 'Vocabulary 2');
       await component.dataTable.header.vocabulary.toggle();
-      assert.strictEqual(component.dataTable.rows[0].vocabulary, 'Vocabulary 2');
-      assert.strictEqual(component.dataTable.rows[1].vocabulary, 'Vocabulary 1');
+      assert.strictEqual(component.dataTable.rows[0].vocabulary.text, 'Vocabulary 2');
+      assert.strictEqual(component.dataTable.rows[1].vocabulary.text, 'Vocabulary 1');
       await component.dataTable.header.vocabulary.toggle();
-      assert.strictEqual(component.dataTable.rows[0].vocabulary, 'Vocabulary 1');
-      assert.strictEqual(component.dataTable.rows[1].vocabulary, 'Vocabulary 2');
+      assert.strictEqual(component.dataTable.rows[0].vocabulary.text, 'Vocabulary 1');
+      assert.strictEqual(component.dataTable.rows[1].vocabulary.text, 'Vocabulary 2');
     });
 
     test('sort data-table by terms count', async function (assert) {
