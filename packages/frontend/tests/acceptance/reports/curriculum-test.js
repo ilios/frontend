@@ -73,7 +73,6 @@ module('Acceptance | Reports - Curriculum Reports', function (hooks) {
       year: currentAcademicYear() + 1,
     });
     await page.visitCurriculumReports();
-
     assert.strictEqual(currentRouteName(), 'reports.curriculum');
     assert.ok(page.switcher.curriculum.isActive);
     assert.notOk(page.switcher.subject.isActive);
@@ -128,15 +127,12 @@ module('Acceptance | Reports - Curriculum Reports', function (hooks) {
 
         return course;
       });
-
       return { data: { courses } };
     });
     const so = page.curriculum.sessionObjectivesResult;
 
     await page.visitCurriculumReports();
-
     await page.curriculum.chooseCourse.years[0].toggleAll();
-
     await page.curriculum.header.reportSelector.set('sessionObjectives');
     assert.ok(
       so.header.runSummaryText.includes(
@@ -147,9 +143,7 @@ module('Acceptance | Reports - Curriculum Reports', function (hooks) {
     await percySnapshot(getUniqueName(assert, 'selected courses'));
 
     await page.curriculum.header.runReport.click();
-
     await percySnapshot(getUniqueName(assert, 'session objectives report results'));
-
     assert.strictEqual(so.results.length, 1, 'Test has 1 report result');
     assert.strictEqual(so.results.objectAt(0).courseTitle, 'course 0', 'Test title is correct');
     assert.strictEqual(so.results.objectAt(0).sessionCount, '1', 'Course session count is correct');
@@ -361,7 +355,6 @@ module('Acceptance | Reports - Curriculum Reports', function (hooks) {
 
     await page.curriculum.header.runReport.click();
     await percySnapshot(getUniqueName(assert, 'learner group report results'));
-
     assert.strictEqual(lg.results.length, 1, 'There is 1 report result');
     assert.strictEqual(
       lg.results.objectAt(0).courseTitle,
