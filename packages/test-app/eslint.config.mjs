@@ -53,6 +53,7 @@ export default [
     rules: {
       'ember/no-get': 'off',
       'no-duplicate-imports': 'error',
+      'no-console': ['error', { allow: ['info', 'warn', 'error'] }],
     },
   },
   {
