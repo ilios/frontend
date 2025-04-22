@@ -76,8 +76,8 @@ importers:
         specifier: ^1.16.12
         version: 1.17.2
       '@embroider/router':
-        specifier: ^2.1.8
-        version: 2.1.8(@embroider/core@3.5.6)
+        specifier: ^3.0.1
+        version: 3.0.1(@embroider/core@3.5.6)
       '@embroider/webpack':
         specifier: ~4.1.0
         version: 4.1.0(@embroider/core@3.5.6)(webpack@5.99.6)
@@ -707,8 +707,8 @@ importers:
         specifier: ^1.16.12
         version: 1.17.2
       '@embroider/router':
-        specifier: ^2.1.8
-        version: 2.1.8(@embroider/core@3.5.6)
+        specifier: ^3.0.1
+        version: 3.0.1(@embroider/core@3.5.6)
       '@embroider/webpack':
         specifier: ~4.1.0
         version: 4.1.0(@embroider/core@3.5.6)(webpack@5.99.6)
@@ -941,8 +941,8 @@ importers:
         specifier: ^1.16.12
         version: 1.17.2
       '@embroider/router':
-        specifier: ^2.1.8
-        version: 2.1.8(@embroider/core@3.5.6)
+        specifier: ^3.0.1
+        version: 3.0.1(@embroider/core@3.5.6)
       '@embroider/webpack':
         specifier: ~4.1.0
         version: 4.1.0(@embroider/core@3.5.6)(webpack@5.99.6)
@@ -1175,8 +1175,8 @@ importers:
         specifier: ^1.16.12
         version: 1.17.2
       '@embroider/router':
-        specifier: ^2.1.8
-        version: 2.1.8(@embroider/core@3.5.6)
+        specifier: ^3.0.1
+        version: 3.0.1(@embroider/core@3.5.6)
       '@embroider/test-setup':
         specifier: ^4.0.0
         version: 4.0.0(@embroider/compat@3.8.5(@embroider/core@3.5.6))(@embroider/core@3.5.6)(@embroider/webpack@4.1.0(@embroider/core@3.5.6)(webpack@5.99.6))
@@ -2323,10 +2323,10 @@ packages:
       '@glint/template':
         optional: true
 
-  '@embroider/router@2.1.8':
-    resolution: {integrity: sha512-Dvp8YdqAWT6T0yzBZfUe6SyaVNH7xoXBlrxF1LbqoF/Q2buNzDy9oAQ5tTnbX1x+5KOrM0ryOjfeF0GoqkfobA==}
+  '@embroider/router@3.0.1':
+    resolution: {integrity: sha512-0+kzSvXNj8mLbbXbD9F+Y5MqtggPN/fEl71VtTa+j6bOP3lW/xvKQ1kje/H5EHF9MYsnlH8KitWDCsphbQz5Qw==}
     peerDependencies:
-      '@embroider/core': ^2.0.0||^3.0.0
+      '@embroider/core': ^2.0.0||^3.0.0||^4.0.0-alpha.0
     peerDependenciesMeta:
       '@embroider/core':
         optional: true
@@ -11655,7 +11655,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@embroider/router@2.1.8(@embroider/core@3.5.6)':
+  '@embroider/router@3.0.1(@embroider/core@3.5.6)':
     dependencies:
       '@ember/test-waiters': 3.1.0
       '@embroider/addon-shim': 1.10.0
