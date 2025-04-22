@@ -1,0 +1,8 @@
+# Set the default behavior
+* text=auto
+
+#enforce unix line-endings for EVERYTHING
+*.hbs text eol=lf
+*.js text eol=lf
+*.json text eol=lf
+*.scss text eol=lf
