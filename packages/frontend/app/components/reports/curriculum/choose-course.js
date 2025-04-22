@@ -85,7 +85,7 @@ export default class ReportsCurriculumChooseCourse extends Component {
   };
 
   toggleAllCoursesInYear = (year) => {
-    const schoolId = year.schoolId;
+    const schoolId = year.courses[0].school.id;
     if (year.hasAllSelectedCourses) {
       year.courses.forEach(({ id }) => this.args.remove(id, schoolId));
     } else {
