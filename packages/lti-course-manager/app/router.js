@@ -1,4 +1,4 @@
-import EmberRouter from '@embroider/router';
+import EmberRouter from '@ember/routing/router';
 import config from 'lti-course-manager/config/environment';
 
 export default class Router extends EmberRouter {
