@@ -54,7 +54,6 @@ module(
       assert.strictEqual(component.chart.slices.length, 3);
       assert.strictEqual(component.chart.labels.length, 3);
       assert.strictEqual(component.chart.descriptions.length, 3);
-      console.log(component.chart.labels[0].text);
       assert.ok(component.chart.labels[0].text.startsWith('term 3'));
       assert.strictEqual(
         component.chart.descriptions[0].text,
