@@ -189,7 +189,7 @@ const filterByQueryTerms = function (all, modelName, queryTerms) {
         comparisonString = obj.title.toLowerCase();
         break;
       default:
-        console.log('No "q" comparison defined for ' + modelName);
+        console.warn('No "q" comparison defined for ' + modelName);
         return false;
     }
     const matchedTerms = queryTerms.filter((term) => {

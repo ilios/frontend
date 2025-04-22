@@ -20,8 +20,8 @@ export async function launchWorker() {
       await new Promise((resolve) => setTimeout(resolve, 10));
     }
 
-    console.log('☀️ Ilios Service worker registered successfully');
+    console.info('☀️ Ilios Service worker registered successfully');
   } catch (err) {
-    console.log('😥 Ilios Service worker registration failed: ', err);
+    console.error('😥 Ilios Service worker registration failed: ', err);
   }
 }

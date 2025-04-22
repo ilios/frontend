@@ -14,9 +14,8 @@ export default class LoginRoute extends Route {
     const apiNameSpace = tokenData.apiNameSpace;
 
     if (audience !== 'ilios-lti-app' || !apiHost || !apiNameSpace) {
-      /*eslint no-console: 0*/
-      console.log('Unable to authenticate user');
-      console.log(tokenData);
+      console.error('Unable to authenticate user');
+      console.error(tokenData);
 
       this.router.transitionTo('login-error');
       return;

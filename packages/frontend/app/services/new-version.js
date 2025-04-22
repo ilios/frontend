@@ -50,7 +50,7 @@ export default class NewVersionService extends Service {
 
   onError(error) {
     if (!isTesting()) {
-      console.log(error);
+      console.error(error);
     }
   }
 }
