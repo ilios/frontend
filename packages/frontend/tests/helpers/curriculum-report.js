@@ -6,7 +6,7 @@ export function buildSchoolsFromData(server) {
     let courses = allCourseData.filter((course) => courseIds.includes(course.id));
     // add school's id in format expected by component
     courses.map((course) => {
-      course.school = { id: course.schoolId };
+      course.school = fetchSchool(course.schoolId);
     });
     const years = courses.map(({ year }) => year);
     const uniqueYears = [...new Set(years)].sort().reverse().map(Number);
@@ -23,10 +23,16 @@ export function buildSchoolsFromData(server) {
   });
 }
 
+const fetchSchool = (db, schoolId) => {
+  const { id, title } = db.schools.find(schoolId);
+  return { id, title };
+};
+
 const fetchCourse = (db, courseId) => {
-  const { id, title, year } = db.courses.find(courseId);
+  const { id, title, year, schoolId } = db.courses.find(courseId);
+  const school = fetchSchool(db, schoolId);
   const sessions = db.sessions.where({ courseId }).map((session) => fetchSession(db, session.id));
-  return { id, title, year, sessions };
+  return { id, title, year, school, sessions };
 };
 
 const fetchSession = (db, sessionId) => {
