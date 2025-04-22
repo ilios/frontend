@@ -4,10 +4,10 @@ import { action } from '@ember/object';
 import { service } from '@ember/service';
 import { dropTask } from 'ember-concurrency';
 import { TrackedAsyncData } from 'ember-async-data';
-import { validatable, Length, NotBlank } from 'ilios-common/decorators/validation';
 import { findBy, findById } from 'ilios-common/utils/array-helpers';
+import YupValidations from 'ilios-common/classes/yup-validations';
+import { string } from 'yup';
 
-@validatable
 export default class CurriculumInventoryReportRolloverComponent extends Component {
   @service fetch;
   @service flashMessages;
@@ -15,8 +15,8 @@ export default class CurriculumInventoryReportRolloverComponent extends Componen
   @service store;
 
   currentYear = new Date().getFullYear();
-  @tracked @NotBlank() @Length(3, 200) name;
-  @tracked @NotBlank() @Length(1, 21844) description;
+  @tracked name;
+  @tracked description;
   @tracked selectedYear;
   @tracked selectedProgram;
 
@@ -25,6 +25,11 @@ export default class CurriculumInventoryReportRolloverComponent extends Componen
     this.name = this.args.report.name;
     this.description = this.args.report.description;
   }
+
+  validations = new YupValidations(this, {
+    name: string().trim().required().max(60),
+    description: string().trim().required().max(21844),
+  });
 
   @cached
   get academicYearCrossesCalendarYearBoundariesData() {
@@ -128,11 +133,12 @@ export default class CurriculumInventoryReportRolloverComponent extends Componen
   }
 
   save = dropTask(async () => {
-    this.addErrorDisplaysFor(['name', 'description']);
-    const isValid = await this.isValid();
+    this.validations.addErrorDisplayForAllFields();
+    const isValid = await this.validations.isValid();
     if (!isValid) {
       return false;
     }
+    this.validations.clearErrorDisplay();
     const data = {
       name: this.name,
       description: this.description,
@@ -144,7 +150,6 @@ export default class CurriculumInventoryReportRolloverComponent extends Componen
     this.flashMessages.success('general.curriculumInventoryReportRolloverSuccess');
     this.store.pushPayload(newReportObj);
     const newReport = this.store.peekRecord('curriculum-inventory-report', newReportObj.data.id);
-    this.clearErrorDisplay();
     return this.args.visit(newReport);
   });
 }
