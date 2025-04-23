@@ -51,7 +51,13 @@ module('Integration | Component | reports/curriculum/session-objectives', functi
     this.set('courses', courseModels);
 
     await render(
-      hbs`<Reports::Curriculum::SessionObjectives @courses={{this.courses}} @close={{(noop)}} />`,
+      hbs`<Reports::Curriculum::SessionObjectives
+  @courses={{this.courses}}
+  @selectedSchoolIds={{array '1'}}
+  @countSelectedSchools={{1}}
+  @hasMultipleSchools={{false}}
+  @close={{(noop)}}
+/>`,
     );
 
     assert.strictEqual(
