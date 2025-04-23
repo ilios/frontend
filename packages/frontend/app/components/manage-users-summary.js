@@ -48,9 +48,15 @@ export default class ManageUsersSummaryComponent extends Component {
    * @param {string} q
    */
   async indexSearch(q) {
-    const { users } = await this.search.forUsers(q);
+    const search = await this.search.forUsers(q);
 
-    return users;
+    if (search) {
+      const { users } = await this.search.forUsers(q);
+
+      return users;
+    } else {
+      return null;
+    }
   }
 
   clear() {
@@ -191,6 +197,14 @@ export default class ManageUsersSummaryComponent extends Component {
     const searchEnabled = await this.iliosConfig.getSearchEnabled();
     const searchResults = searchEnabled ? await this.indexSearch(q) : await this.apiSearch(q);
 
+    if (!searchResults) {
+      return [
+        {
+          type: 'text',
+          text: this.intl.t('general.noSearchRun'),
+        },
+      ];
+    }
     if (searchResults.length === 0) {
       return [
         {
