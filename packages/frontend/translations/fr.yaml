@@ -269,6 +269,7 @@ general:
   noProgramYears: "Il n'y-a pas des années de diplôme dans ca diplôme"
   noResultsFound: Aucun résultat n’a été trouvé. Veuillez réessayer.
   noSearchResults: Votre recherche ne retourner pas aucune de resultats
+  noSearchRun: Votre recherche n'a pas pu être exécutée
   noSelectedCompetencies: "Il n'y a pas des compétences sélectionné"
   noSelectedLearnerGroups: "Il n'y a aucune groupes d'apprenants sélectionné"
   noSequenceBlocks: "Il n'y a aucun blocs séquence dans ce rapport"
