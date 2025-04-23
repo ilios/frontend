@@ -12,7 +12,8 @@ module('Integration | Component | reports/curriculum/learner-groups', function (
   setupMirage(hooks);
 
   hooks.beforeEach(function () {
-    const course = this.server.create('course');
+    this.school = this.server.create('school');
+    const course = this.server.create('course', { school: this.school });
     const sessionType = this.server.create('session-type');
     const session = this.server.create('session', { course, sessionType });
     const learnerGroups = this.server.createList('learner-group', 5);
