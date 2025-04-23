@@ -6,7 +6,7 @@ export function buildSchoolsFromData(server) {
     let courses = allCourseData.filter((course) => courseIds.includes(course.id));
     // add school's id in format expected by component
     courses.map((course) => {
-      course.school = fetchSchool(course.schoolId);
+      course.school = fetchSchool(server.db, course.schoolId);
     });
     const years = courses.map(({ year }) => year);
     const uniqueYears = [...new Set(years)].sort().reverse().map(Number);
