@@ -230,7 +230,7 @@ module('Acceptance | Reports - Curriculum Reports', function (hooks) {
     await page.curriculum.header.runReport.click();
     await percySnapshot(getUniqueName(assert, 'session objectives report results'));
 
-    assert.strictEqual(so.resultsMultiSchool.length, 2, 'There are 2 report results');
+    assert.strictEqual(so.resultsMultiSchool.length, 5, 'There are 5 report results');
     assert.strictEqual(
       so.resultsMultiSchool.objectAt(0).schoolTitle,
       'school 0',
@@ -258,27 +258,27 @@ module('Acceptance | Reports - Curriculum Reports', function (hooks) {
     );
 
     assert.strictEqual(
-      so.resultsMultiSchool.objectAt(1).schoolTitle,
+      so.resultsMultiSchool.objectAt(4).schoolTitle,
       'school 1',
       'Result 2 school title is correct',
     );
     assert.strictEqual(
-      so.resultsMultiSchool.objectAt(1).courseTitle,
-      'course 1',
+      so.resultsMultiSchool.objectAt(4).courseTitle,
+      'course 4',
       'Result 2 course title is correct',
     );
     assert.strictEqual(
-      so.resultsMultiSchool.objectAt(1).sessionCount,
+      so.resultsMultiSchool.objectAt(4).sessionCount,
       '0',
       'Result 2 session count is correct',
     );
     assert.strictEqual(
-      so.resultsMultiSchool.objectAt(1).instructorCount,
+      so.resultsMultiSchool.objectAt(4).instructorCount,
       '0',
       'Result 2 instructor count is correct',
     );
     assert.strictEqual(
-      so.resultsMultiSchool.objectAt(1).objectiveCount,
+      so.resultsMultiSchool.objectAt(4).objectiveCount,
       '0',
       'Result 2 objective count is correct',
     );
@@ -385,7 +385,7 @@ module('Acceptance | Reports - Curriculum Reports', function (hooks) {
   });
 
   test('run learner groups report, multiple schools', async function (assert) {
-    assert.expect(7);
+    assert.expect(13);
     const course = this.server.create('course', {
       school: this.school,
       year: currentAcademicYear(),
@@ -461,7 +461,7 @@ module('Acceptance | Reports - Curriculum Reports', function (hooks) {
     await page.curriculum.header.runReport.click();
     await percySnapshot(getUniqueName(assert, 'learner group report results'));
 
-    assert.strictEqual(lg.resultsMultiSchool.length, 2, 'There are 2 report results');
+    assert.strictEqual(lg.resultsMultiSchool.length, 5, 'There are 5 report results');
     assert.strictEqual(
       lg.resultsMultiSchool.objectAt(0).schoolTitle,
       'school 0',
@@ -489,27 +489,27 @@ module('Acceptance | Reports - Curriculum Reports', function (hooks) {
     );
 
     assert.strictEqual(
-      lg.resultsMultiSchool.objectAt(1).schoolTitle,
+      lg.resultsMultiSchool.objectAt(4).schoolTitle,
       'school 1',
       'Result 2 school title is correct',
     );
     assert.strictEqual(
-      lg.results.objectAt(1).courseTitle,
-      'course 1',
+      lg.resultsMultiSchool.objectAt(4).courseTitle,
+      'course 4',
       'Result 2 course title is correct',
     );
     assert.strictEqual(
-      lg.results.objectAt(1).sessionCount,
+      lg.resultsMultiSchool.objectAt(4).sessionCount,
       '0',
       'Result 2 session count is correct',
     );
     assert.strictEqual(
-      lg.results.objectAt(1).instructorCount,
+      lg.resultsMultiSchool.objectAt(4).instructorCount,
       '0',
       'Result 2 instructor count is correct',
     );
     assert.strictEqual(
-      lg.results.objectAt(1).learnerGroupCount,
+      lg.resultsMultiSchool.objectAt(4).learnerGroupCount,
       '0',
       'Result 2 learner group count is correct',
     );
