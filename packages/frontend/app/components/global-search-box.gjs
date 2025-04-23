@@ -225,12 +225,23 @@ export default class GlobalSearchBox extends Component {
 
     await timeout(DEBOUNCE_MS);
 
-    const { autocomplete } = await this.iliosSearch.forCurriculum(this.internalQuery, true);
-    this.autocompleteCache = [...this.autocompleteCache, { q: this.internalQuery, autocomplete }];
+    const search = await this.iliosSearch.forCurriculum(this.internalQuery, true);
 
-    this.results = autocomplete.map((text) => {
-      return { text };
-    });
+    if (search) {
+      const { autocomplete } = search;
+
+      this.autocompleteCache = [...this.autocompleteCache, { q: this.internalQuery, autocomplete }];
+
+      this.results = autocomplete.map((text) => {
+        return { text };
+      });
+    } else {
+      this.results = [
+        {
+          text: this.intl.t('general.noSearchRun'),
+        },
+      ];
+    }
     return this.results;
   });
   <template>
