@@ -3,19 +3,23 @@
   {{#if @user.pronouns}}
     <span data-test-pronouns>({{@user.pronouns}})</span>
   {{/if}}
-  {{#if (and this.showCampusNameOfRecord @user.hasDifferentDisplayName)}}
-    <span
-      data-test-info
-      id={{this.usernameInfoId}}
-      {{mouse-hover-toggle this.toggleUsernameInfoHover}}
-    >
-      <FaIcon @icon="circle-info" aria-label={{t "general.campusNameOfRecord"}} class="info" />
-      {{#if this.isHoveringOverUsernameInfo}}
-        <IliosTooltip @target={{this.usernameInfoElement}}>
-          <strong>{{t "general.campusNameOfRecord"}}:</strong>
-          {{@user.fullNameFromFirstMiddleLastName}}
-        </IliosTooltip>
-      {{/if}}
-    </span>
-  {{/if}}
+  <span
+    data-test-info
+    id={{this.usernameInfoId}}
+    {{mouse-hover-toggle this.toggleUsernameInfoHover}}
+  >
+    <FaIcon @icon="circle-info" aria-label={{t "general.campusNameOfRecord"}} class="info" />
+    {{#if this.isHoveringOverUsernameInfo}}
+      <IliosTooltip @target={{this.usernameInfoElement}}>
+        <strong>{{t "general.campusNameOfRecord"}}:</strong>
+        {{@user.fullNameFromFirstMiddleLastName}}<br />
+        <strong>{{t "general.email"}}:</strong>
+        {{@user.email}}<br />
+        <strong>{{t "general.id"}}:</strong>
+        {{@user.id}}<br />
+        <strong>{{t "general.campusId"}}:</strong>
+        {{@user.campusId}}<br />
+      </IliosTooltip>
+    {{/if}}
+  </span>
 </span>
