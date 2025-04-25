@@ -19,10 +19,15 @@
             disabled={{this.save.isRunning}}
             placeholder={{t "general.reportNamePlaceholder"}}
             {{on "input" (pick "target.value" this.changeName)}}
-            {{on "keyup" (queue (fn this.addErrorDisplayFor "name") this.saveOnEnter)}}
+            {{on "keyup" this.saveOnEnter}}
+            {{this.validations.attach "name"}}
           />
         {{/let}}
-        <ValidationError @validatable={{this}} @property="name" />
+        <YupValidationMessage
+          @description={{t "general.name"}}
+          @validationErrors={{this.validations.errors.name}}
+          data-test-name-validation-error-message
+        />
       </div>
       <div class="item description" data-test-description>
         {{#let (unique-id) as |descriptionId|}}
@@ -34,8 +39,13 @@
             {{on "input" (pick "target.value" (set this "description"))}}
             disabled={{this.save.isRunning}}
             placeholder={{t "general.reportDescriptionPlaceholder"}}
+            {{this.validations.attach "description"}}
           >{{this.description}}</textarea>
-          <ValidationError @validatable={{this}} @property="description" />
+          <YupValidationMessage
+            @description={{t "general.description"}}
+            @validationErrors={{this.validations.errors.description}}
+            data-test-description-validation-error-message
+          />
         {{/let}}
       </div>
       <div class="item years" data-test-years>
