@@ -19,9 +19,13 @@
           value={{this.name}}
           disabled={{isSaving}}
           {{on "input" (pick "target.value" (set this "name"))}}
-          {{on "keyup" (fn this.addErrorDisplayFor "name")}}
+          {{this.validations.attach "name"}}
         />
-        <ValidationError @validatable={{this}} @property="name" />
+        <YupValidationMessage
+          @description={{t "general.name"}}
+          @validationErrors={{this.validations.errors.name}}
+          data-test-name-validation-error-message
+        />
       </EditableField>
     {{else}}
       <h2 data-test-locked-name>

@@ -3,6 +3,7 @@ import {
   clickable,
   create,
   fillable,
+  isPresent,
   isVisible,
   property,
   text,
@@ -19,7 +20,7 @@ const definition = {
     set: fillable('input'),
     edit: clickable('[data-test-edit]'),
     save: clickable('.done'),
-    hasError: isVisible('.validation-error-message'),
+    hasError: isPresent('[data-test-name-validation-error-message]'),
   },
   downloadLink: {
     scope: '[data-test-download]',
