@@ -32,7 +32,7 @@ export default class ReportsCurriculumRoute extends Route {
     const result = await this.graphql.find(
       'courses',
       [`academicYears: [${years.join(', ')}]`],
-      'id, title, year, externalId, school { id, title }',
+      'id, title, year, externalId',
     );
     const allCourseData = result.data.courses;
 

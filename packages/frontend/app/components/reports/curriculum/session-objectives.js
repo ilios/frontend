@@ -67,7 +67,7 @@ export default class ReportsCurriculumSessionObjectivesComponent extends Compone
 
   get summary() {
     return this.reportWithInstructors.map((c) => {
-      const summary = {
+      return {
         schoolTitle: c.school?.title,
         courseId: c.id,
         courseTitle: c.title,
@@ -75,8 +75,6 @@ export default class ReportsCurriculumSessionObjectivesComponent extends Compone
         objectiveCount: c.sessions.reduce((acc, s) => acc + s.sessionObjectives.length, 0),
         instructorsCount: this.reporting.countUniqueValuesInArray(c.sessions, 'instructors'),
       };
-
-      return summary;
     });
   }
 
@@ -101,7 +99,7 @@ export default class ReportsCurriculumSessionObjectivesComponent extends Compone
         }
         s.sessionObjectives.forEach((o) => {
           const title = striptags(o.title);
-          const objective = {
+          acc.push({
             schoolTitle: c.school?.title,
             courseId: c.id,
             courseTitle: c.title,
@@ -114,9 +112,7 @@ export default class ReportsCurriculumSessionObjectivesComponent extends Compone
               ? DateTime.fromISO(firstOfferingDate).toLocaleString(this.intl.primaryLocale)
               : '',
             duration: duration?.toFixed(2) ?? 0,
-          };
-
-          acc.push(objective);
+          });
         });
       });
       return acc;

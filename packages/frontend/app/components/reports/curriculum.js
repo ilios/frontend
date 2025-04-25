@@ -17,9 +17,6 @@ export default class ReportsCurriculumComponent extends Component {
   get passedCourseIds() {
     return this.args.selectedCourseIds?.map(Number) ?? [];
   }
-  get passedSchoolIds() {
-    return this.args.selectedSchoolIds?.map(Number) ?? [];
-  }
 
   get selectedReportValue() {
     return this.args.report ?? 'sessionObjectives';
@@ -55,15 +52,13 @@ export default class ReportsCurriculumComponent extends Component {
     return false;
   }
 
-  pickCourse = (courseId) => {
-    this.args.setSelectedCourseIds([...this.passedCourseIds, Number(courseId)].sort());
+  pickCourse = (id) => {
+    this.args.setSelectedCourseIds([...this.passedCourseIds, Number(id)].sort());
   };
 
-  removeCourse = (courseId) => {
+  removeCourse = (id) => {
     this.args.stop();
-    this.args.setSelectedCourseIds(
-      this.passedCourseIds.filter((i) => i !== Number(courseId)).sort(),
-    );
+    this.args.setSelectedCourseIds(this.passedCourseIds.filter((i) => i !== Number(id)).sort());
   };
 
   removeAll = () => {
