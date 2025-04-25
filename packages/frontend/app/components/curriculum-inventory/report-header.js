@@ -1,25 +1,29 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
-import { NotBlank, Length, validatable } from 'ilios-common/decorators/validation';
 import { restartableTask } from 'ember-concurrency';
+import YupValidations from 'ilios-common/classes/yup-validations';
+import { string } from 'yup';
 
-@validatable
 export default class CurriculumInventoryReportHeaderComponent extends Component {
-  @NotBlank() @Length(3, 200) @tracked name;
+  @tracked name;
 
   constructor() {
     super(...arguments);
     this.name = this.args.report.name;
   }
 
+  validations = new YupValidations(this, {
+    name: string().trim().required().max(60),
+  });
+
   saveName = restartableTask(async () => {
-    this.addErrorDisplayFor('name');
-    const isValid = await this.isValid('name');
+    this.validations.addErrorDisplayForAllFields();
+    const isValid = await this.validations.isValid();
     if (!isValid) {
       return false;
     }
-    this.removeErrorDisplayFor('name');
+    this.validations.clearErrorDisplay();
     this.args.report.set('name', this.name);
     await this.args.report.save();
     this.name = this.args.report.name;

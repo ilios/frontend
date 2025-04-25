@@ -78,20 +78,6 @@ module('Integration | Component | curriculum-inventory/report-header', function 
     assert.ok(component.name.hasError);
   });
 
-  test('change name fails if name is too short', async function (assert) {
-    this.set('report', this.report);
-    await render(hbs`<CurriculumInventory::ReportHeader
-  @report={{this.report}}
-  @canUpdate={{true}}
-  @finalize={{(noop)}}
-/>`);
-    await component.name.edit();
-    assert.notOk(component.name.hasError);
-    await component.name.set('ab');
-    await component.name.save();
-    assert.ok(component.name.hasError);
-  });
-
   test('change name fails if name is too long', async function (assert) {
     this.set('report', this.report);
     await render(hbs`<CurriculumInventory::ReportHeader
