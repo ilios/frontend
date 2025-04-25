@@ -160,7 +160,7 @@ module('Acceptance | Reports - Curriculum Reports', function (hooks) {
 
     assert.strictEqual(
       currentURL(),
-      '/reports/curriculum?courses=1&report=sessionObjectives&run=true&schools=1',
+      '/reports/curriculum?courses=1&report=sessionObjectives&run=true',
       'current URL is correct',
     );
   });
@@ -285,7 +285,7 @@ module('Acceptance | Reports - Curriculum Reports', function (hooks) {
 
     assert.strictEqual(
       currentURL(),
-      '/reports/curriculum?courses=1-4&report=sessionObjectives&run=true&schools=1-2',
+      '/reports/curriculum?courses=1-4&report=sessionObjectives&run=true',
       'current URL is correct',
     );
   });
@@ -379,7 +379,7 @@ module('Acceptance | Reports - Curriculum Reports', function (hooks) {
 
     assert.strictEqual(
       currentURL(),
-      '/reports/curriculum?courses=1&report=learnerGroups&run=true&schools=1',
+      '/reports/curriculum?courses=1&report=learnerGroups&run=true',
       'current URL is correct',
     );
   });
@@ -516,7 +516,7 @@ module('Acceptance | Reports - Curriculum Reports', function (hooks) {
 
     assert.strictEqual(
       currentURL(),
-      '/reports/curriculum?courses=1-4&report=learnerGroups&run=true&schools=1-2',
+      '/reports/curriculum?courses=1-4&report=learnerGroups&run=true',
       'current URL is correct',
     );
   });
