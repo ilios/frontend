@@ -20,6 +20,7 @@
             placeholder={{t "general.reportNamePlaceholder"}}
             {{on "input" (pick "target.value" this.changeName)}}
             {{on "keyup" this.saveOnEnter}}
+            {{this.validations.attach "name"}}
           />
         {{/let}}
         <YupValidationMessage
@@ -38,6 +39,7 @@
             {{on "input" (pick "target.value" (set this "description"))}}
             disabled={{this.save.isRunning}}
             placeholder={{t "general.reportDescriptionPlaceholder"}}
+            {{this.validations.attach "description"}}
           >{{this.description}}</textarea>
           <YupValidationMessage
             @description={{t "general.description"}}
