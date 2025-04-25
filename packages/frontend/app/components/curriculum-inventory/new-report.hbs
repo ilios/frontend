@@ -15,12 +15,15 @@
           value={{this.name}}
           disabled={{this.save.isRunning}}
           placeholder={{t "general.reportNamePlaceholder"}}
-          {{on "focusout" (fn this.addErrorDisplayFor "name")}}
           {{on "keyup" (perform this.keyboard)}}
           {{on "input" (pick "target.value" (set this "name"))}}
-          {{on "keyup" (fn this.addErrorDisplayFor "name")}}
+          {{this.validations.attach "name"}}
         />
-        <ValidationError @validatable={{this}} @property="name" />
+        <YupValidationMessage
+          @description={{t "general.name"}}
+          @validationErrors={{this.validations.errors.name}}
+          data-test-name-validation-error-message
+        />
       </div>
       <div class="item" data-test-description>
         <label for="description-{{templateId}}">
@@ -31,8 +34,13 @@
           disabled={{this.save.isRunning}}
           placeholder={{t "general.reportDescriptionPlaceholder"}}
           {{on "input" (pick "target.value" (set this "description"))}}
+          {{this.validations.attach "description"}}
         >{{this.description}}</textarea>
-        <ValidationError @validatable={{this}} @property="description" />
+        <YupValidationMessage
+          @description={{t "general.description"}}
+          @validationErrors={{this.validations.errors.description}}
+          data-test-description-validation-error-message
+        />
       </div>
       <div class="item" data-test-program-title>
         <label>

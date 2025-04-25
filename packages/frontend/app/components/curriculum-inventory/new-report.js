@@ -4,17 +4,17 @@ import { action } from '@ember/object';
 import { service } from '@ember/service';
 import { dropTask } from 'ember-concurrency';
 import { TrackedAsyncData } from 'ember-async-data';
-import { validatable, Length, NotBlank } from 'ilios-common/decorators/validation';
+import YupValidations from 'ilios-common/classes/yup-validations';
+import { string } from 'yup';
 
-@validatable
 export default class CurriculumInventoryNewReportComponent extends Component {
   @service store;
   @service iliosConfig;
   @service intl;
 
   currentYear = new Date().getFullYear();
-  @tracked @NotBlank() @Length(1, 60) name;
-  @tracked @NotBlank() @Length(1, 21844) description;
+  @tracked name;
+  @tracked description;
   @tracked selectedYear;
 
   constructor() {
@@ -22,6 +22,11 @@ export default class CurriculumInventoryNewReportComponent extends Component {
     this.description = this.intl.t('general.curriculumInventoryReport');
     this.selectedYear = this.currentYear;
   }
+
+  validations = new YupValidations(this, {
+    name: string().trim().required().max(60),
+    description: string().trim().required().max(21844),
+  });
 
   @cached
   get academicYearCrossesCalendarYearBoundariesData() {
@@ -48,11 +53,12 @@ export default class CurriculumInventoryNewReportComponent extends Component {
   }
 
   save = dropTask(async () => {
-    this.addErrorDisplaysFor(['name', 'description']);
-    const isValid = await this.isValid();
+    this.validations.addErrorDisplayForAllFields();
+    const isValid = await this.validations.isValid();
     if (!isValid) {
       return false;
     }
+    this.validations.clearErrorDisplay();
     const year = this.selectedYear;
     const startDate = this.academicYearCrossesCalendarYearBoundaries
       ? new Date(year, 6, 1)
