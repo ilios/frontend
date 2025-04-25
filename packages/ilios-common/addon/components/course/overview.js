@@ -161,6 +161,7 @@ export default class CourseOverview extends Component {
 
   @action
   revertStartDateChanges() {
+    this.validations.removeErrorDisplayFor('startDate');
     this.startDate = this.args.course.startDate;
   }
 
@@ -178,6 +179,7 @@ export default class CourseOverview extends Component {
 
   @action
   revertEndDateChanges() {
+    this.validations.removeErrorDisplayFor('endDate');
     this.endDate = this.args.course.endDate;
   }
 

@@ -30,6 +30,7 @@ const definition = {
     edit: clickable('[data-test-edit]'),
     datePicker,
     save: clickable('.done'),
+    cancel: clickable('.cancel'),
     hasError: isVisible('.validation-error-message'),
   },
   endDate: {
@@ -38,6 +39,7 @@ const definition = {
     edit: clickable('[data-test-edit]'),
     datePicker,
     save: clickable('.done'),
+    cancel: clickable('.cancel'),
     hasError: isVisible('.validation-error-message'),
   },
   level: {
