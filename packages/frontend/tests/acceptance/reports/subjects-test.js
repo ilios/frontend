@@ -231,7 +231,6 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
     assert.strictEqual(page.subjects.list.table.reports[2].title, 'my report 0');
     let graphQueryCounter = 0;
     this.server.post('api/graphql', function ({ db }, { requestBody }) {
-      console.log(graphQueryCounter);
       graphQueryCounter++;
       const { query } = JSON.parse(requestBody);
       let rhett;

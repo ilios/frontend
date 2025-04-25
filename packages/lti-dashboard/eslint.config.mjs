@@ -50,7 +50,11 @@ export default [
     linterOptions: {
       reportUnusedDisableDirectives: 'error',
     },
+    rules: {
+      'no-console': ['error', { allow: ['info', 'warn', 'error'] }],
+    },
   },
+
   {
     files: ['**/*.js'],
     languageOptions: {
