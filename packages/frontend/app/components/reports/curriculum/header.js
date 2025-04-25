@@ -6,6 +6,7 @@ import { guidFor } from '@ember/object/internals';
 export default class ReportsCurriculumHeader extends Component {
   @service flashMessages;
   @service intl;
+  @service store;
 
   get copyButtonId() {
     return `curriculum-report-copy-button-${guidFor(this)}`;
@@ -43,15 +44,41 @@ export default class ReportsCurriculumHeader extends Component {
     ],
   };
 
+  get selectedSchoolIds() {
+    if (!this.args.selectedCourses) {
+      return [];
+    }
+    const schools = this.store.peekAll('school');
+    let schoolIds = [];
+    this.args.selectedCourses.map((course) => {
+      const schoolForCourse = schools.find((school) =>
+        school.hasMany('courses').ids().includes(course.id),
+      );
+
+      if (schoolForCourse) {
+        schoolIds = [...schoolIds, schoolForCourse.id];
+      }
+    });
+    return [...new Set(schoolIds)];
+  }
+
+  get countSelectedSchools() {
+    return this.selectedSchoolIds.length;
+  }
+
+  get hasMultipleSchools() {
+    return this.countSelectedSchools > 1;
+  }
+
   get reportList() {
-    if (this.args.hasMultipleSchools) {
+    if (this.hasMultipleSchools) {
       return [
         {
           value: 'sessionObjectives',
           label: this.intl.t('general.sessionObjectives'),
           summary: this.intl.t('general.sessionObjectivesReportSummaryMultiSchool', {
             courseCount: this.args.countSelectedCourses,
-            schoolCount: this.args.countSelectedSchools,
+            schoolCount: this.countSelectedSchools,
           }),
         },
         {
@@ -59,7 +86,7 @@ export default class ReportsCurriculumHeader extends Component {
           label: this.intl.t('general.learnerGroups'),
           summary: this.intl.t('general.learnerGroupsReportSummaryMultiSchool', {
             courseCount: this.args.countSelectedCourses,
-            schoolCount: this.args.countSelectedSchools,
+            schoolCount: this.countSelectedSchools,
           }),
         },
       ];

@@ -1,7 +1,5 @@
 <Reports::Curriculum::Header
-  @selectedSchoolIds={{@selectedSchoolIds}}
-  @countSelectedSchools={{@countSelectedSchools}}
-  @hasMultipleSchools={{@hasMultipleSchools}}
+  @selectedCourses={{@courses}}
   @countSelectedCourses={{@courses.length}}
   @showReportResults={{true}}
   @loading={{this.reportRunning}}
@@ -24,7 +22,7 @@
     <caption>{{t "general.resultsSummary"}}</caption>
     <thead>
       <tr>
-        {{#if @hasMultipleSchools}}
+        {{#if this.hasMultipleSchools}}
           <th>{{t "general.school"}}</th>
         {{/if}}
         <th>{{t "general.course"}}</th>
@@ -37,7 +35,7 @@
       {{#if this.reportRunning}}
         {{#each (sort-by "courseTitle" @courses) as |c|}}
           <tr>
-            {{#if @hasMultipleSchools}}
+            {{#if this.hasMultipleSchools}}
               <td>{{11}}</td>
             {{/if}}
             <td>
@@ -53,7 +51,7 @@
       {{else}}
         {{#each (sort-by "courseTitle" this.summary) as |o|}}
           <tr data-test-result>
-            {{#if @hasMultipleSchools}}
+            {{#if this.hasMultipleSchools}}
               <td>{{o.schoolTitle}}</td>
             {{/if}}
             <td>

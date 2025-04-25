@@ -12,6 +12,7 @@ import { chunk } from 'ilios-common/utils/array-helpers';
 export default class ReportsCurriculumSessionObjectivesComponent extends Component {
   @service router;
   @service intl;
+  @service store;
   @service graphql;
   @service reporting;
   @tracked finishedBuildingReport = false;
@@ -134,11 +135,37 @@ export default class ReportsCurriculumSessionObjectivesComponent extends Compone
     return a.sessionTitle.localeCompare(b.sessionTitle);
   };
 
+  get selectedSchoolIds() {
+    if (!this.args.courses) {
+      return [];
+    }
+    const schools = this.store.peekAll('school');
+    let schoolIds = [];
+    this.args.courses.map((course) => {
+      const schoolForCourse = schools.find((school) =>
+        school.hasMany('courses').ids().includes(course.id),
+      );
+
+      if (schoolForCourse) {
+        schoolIds = [...schoolIds, schoolForCourse.id];
+      }
+    });
+    return [...new Set(schoolIds)];
+  }
+
+  get countSelectedSchools() {
+    return this.selectedSchoolIds.length;
+  }
+
+  get hasMultipleSchools() {
+    return this.countSelectedSchools > 1;
+  }
+
   downloadReport = dropTask(async () => {
     const data = this.sortedResults.map((o) => {
       const rhett = {};
 
-      if (this.args.hasMultipleSchools) {
+      if (this.hasMultipleSchools) {
         rhett[this.intl.t('general.school')] = o.schoolTitle;
       }
       rhett[this.intl.t('general.course')] = o.courseTitle;
