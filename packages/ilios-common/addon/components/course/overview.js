@@ -71,7 +71,7 @@ export default class CourseOverview extends Component {
             path: d.path,
             messageKey: 'errors.before',
             values: {
-              before: this.intl.t('general.starDate'),
+              before: this.intl.t('general.startDate'),
             },
           };
         },
