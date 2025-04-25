@@ -41,6 +41,25 @@ export default class ReportsCurriculumComponent extends Component {
     return years.some((year) => year !== years[0]);
   }
 
+  get selectedSchoolIds() {
+    if (!this.selectedCourses) {
+      return [];
+    }
+    const schools = this.store.peekAll('school');
+    let schoolIds = [];
+    this.selectedCourses.map((course) => {
+      const schoolForCourse = schools.find((school) =>
+        school.hasMany('courses').ids().includes(course.id),
+      );
+
+      if (schoolForCourse) {
+        schoolIds = [...schoolIds, schoolForCourse.id];
+      }
+    });
+    //use a Set to remove duplicates
+    return [...new Set(schoolIds)];
+  }
+
   get reportResultsComponent() {
     switch (this.selectedReportValue) {
       case 'sessionObjectives':

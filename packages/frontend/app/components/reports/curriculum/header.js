@@ -44,26 +44,8 @@ export default class ReportsCurriculumHeader extends Component {
     ],
   };
 
-  get selectedSchoolIds() {
-    if (!this.args.selectedCourses) {
-      return [];
-    }
-    const schools = this.store.peekAll('school');
-    let schoolIds = [];
-    this.args.selectedCourses.map((course) => {
-      const schoolForCourse = schools.find((school) =>
-        school.hasMany('courses').ids().includes(course.id),
-      );
-
-      if (schoolForCourse) {
-        schoolIds = [...schoolIds, schoolForCourse.id];
-      }
-    });
-    return [...new Set(schoolIds)];
-  }
-
   get countSelectedSchools() {
-    return this.selectedSchoolIds.length;
+    return this.args.selectedSchoolIds ? this.args.selectedSchoolIds.length : 0;
   }
 
   get hasMultipleSchools() {
