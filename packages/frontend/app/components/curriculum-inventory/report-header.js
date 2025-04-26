@@ -18,12 +18,12 @@ export default class CurriculumInventoryReportHeaderComponent extends Component 
   });
 
   saveName = restartableTask(async () => {
-    this.validations.addErrorDisplayForAllFields();
+    this.validations.addErrorDisplayFor('name');
     const isValid = await this.validations.isValid();
     if (!isValid) {
       return false;
     }
-    this.validations.clearErrorDisplay();
+    this.validations.clearErrorDisplay('name');
     this.args.report.set('name', this.name);
     await this.args.report.save();
     this.name = this.args.report.name;
@@ -31,6 +31,7 @@ export default class CurriculumInventoryReportHeaderComponent extends Component 
 
   @action
   revertNameChanges() {
+    this.validations.clearErrorDisplay('name');
     this.name = this.args.report.name;
   }
 }

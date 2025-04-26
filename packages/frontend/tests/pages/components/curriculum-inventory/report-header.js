@@ -20,6 +20,7 @@ const definition = {
     set: fillable('input'),
     edit: clickable('[data-test-edit]'),
     save: clickable('.done'),
+    cancel: clickable('.cancel'),
     hasError: isPresent('[data-test-name-validation-error-message]'),
   },
   downloadLink: {
