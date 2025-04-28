@@ -36,16 +36,16 @@
         {{#each (sort-by "title" @courses) as |c|}}
           <tr>
             {{#if this.hasMultipleSchools}}
-              <td>{{this.schoolTitle c.id}}</td>
+              <td>{{this.schoolTitlePlaceholder}}</td>
             {{/if}}
             <td>
               <LinkTo @route="course" @model={{c.id}}>
                 {{c.title}}
               </LinkTo>
             </td>
-            <td>{{11}}</td>
-            <td>{{11}}</td>
-            <td>{{84}}</td>
+            <td>{{this.sessionCountPlaceholder}}</td>
+            <td>{{this.instructorsCountPlaceholder}}</td>
+            <td>{{this.objectiveCountPlaceholder}}</td>
           </tr>
         {{/each}}
       {{else}}

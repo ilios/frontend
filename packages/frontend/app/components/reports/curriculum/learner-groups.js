@@ -143,13 +143,6 @@ export default class ReportsCurriculumLearnerGroupsComponent extends Component {
     return a.sessionTitle.localeCompare(b.sessionTitle);
   };
 
-  schoolTitle = (courseId) => {
-    const schools = this.store.peekAll('school');
-    const school = schools.find((school) => school.hasMany('courses').ids().includes(courseId));
-
-    return school ? school.title : '11';
-  };
-
   get selectedSchoolIds() {
     if (!this.args.courses) {
       return [];
@@ -174,6 +167,22 @@ export default class ReportsCurriculumLearnerGroupsComponent extends Component {
 
   get hasMultipleSchools() {
     return this.countSelectedSchools > 1;
+  }
+
+  get schoolTitlePlaceholder() {
+    return 'School';
+  }
+
+  get sessionCountPlaceholder() {
+    return '5';
+  }
+
+  get instructorsCountPlaceholder() {
+    return '6';
+  }
+
+  get learnerGroupsCountPlaceholder() {
+    return '85';
   }
 
   downloadReport = dropTask(async () => {
