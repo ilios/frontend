@@ -29,7 +29,7 @@ export default class YupValidations {
       const key = validationError.path;
       if (!key || !validationError.messageKey) {
         throw new Error(
-          `No transaltion found for validation error: ${validationError}. It needs to be setup in the YupValidations class.`,
+          `No translation found for validation error: ${validationError}. It needs to be setup in the YupValidations class.`,
         );
       }
 
@@ -214,7 +214,7 @@ function notType() {
         messageKey = 'errors.notANumber';
         break;
       default:
-        throw new Error(`No translation found for incorect type: ${type}`);
+        throw new Error(`No translation found for incorrect type: ${type}`);
     }
 
     return { path, messageKey, values };
