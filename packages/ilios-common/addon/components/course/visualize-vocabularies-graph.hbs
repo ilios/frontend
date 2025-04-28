@@ -22,9 +22,11 @@
           {{/if}}
         </SimpleChart>
       {{else}}
-        <div class="no-data" data-test-no-data>
-          {{t "general.courseVisualizationsNoSessions"}}
-        </div>
+        {{#if @showNoChartDataError}}
+          <div class="no-data" data-test-no-data>
+            {{t "general.courseVisualizationsNoSessionsVocabularyData"}}
+          </div>
+        {{/if}}
       {{/if}}
     {{/if}}
     {{#if (and (not @isIcon) (not this.hasData))}}

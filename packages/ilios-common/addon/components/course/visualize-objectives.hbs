@@ -30,6 +30,10 @@
     </LinkTo>
   </h3>
   <div class="visualizations">
-    <Course::VisualizeObjectivesGraph @course={{@model}} @showDataTable={{true}} />
+    <Course::VisualizeObjectivesGraph
+      @course={{@model}}
+      @showDataTable={{true}}
+      @showNoChartDataError={{true}}
+    />
   </div>
 </section>

@@ -4,30 +4,60 @@
   ...attributes
 >
   {{#if this.isLoaded}}
-    {{#if (or @isIcon this.objectiveWithMinutes.length)}}
-      <SimpleChart
-        @name="donut"
-        @isIcon={{@isIcon}}
-        @data={{this.objectiveWithMinutes}}
-        @hover={{perform this.donutHover}}
-        @leave={{perform this.donutHover}}
-        as |chart|
-      >
-        {{#if this.tooltipContent}}
-          <chart.tooltip @title={{this.tooltipTitle}}>
-            {{this.tooltipContent}}
-          </chart.tooltip>
+    {{#if @isIcon}}
+      {{#if this.objectiveWithMinutes.length}}
+        <SimpleChart
+          @name="donut"
+          @isIcon={{@isIcon}}
+          @data={{this.objectiveWithMinutes}}
+          @hover={{perform this.donutHover}}
+          @leave={{perform this.donutHover}}
+          as |chart|
+        >
+          {{#if this.tooltipContent}}
+            <chart.tooltip @title={{this.tooltipTitle}}>
+              {{this.tooltipContent}}
+            </chart.tooltip>
+          {{/if}}
+        </SimpleChart>
+      {{else}}
+        {{#if @showNoChartDataError}}
+          <div class="with-hours" data-test-with-hours>
+            <p>
+              {{t "general.objectivesWithNoLink"}}
+            </p>
+            <h4>
+              <FaIcon @icon="meh" class="meh-o" />
+            </h4>
+          </div>
         {{/if}}
-      </SimpleChart>
+      {{/if}}
     {{else}}
-      <div class="with-hours" data-test-with-hours>
-        <p>
-          {{t "general.objectivesWithNoLink"}}
-        </p>
-        <h4>
-          <FaIcon @icon="meh" class="meh-o" />
-        </h4>
-      </div>
+      {{#if this.objectiveWithMinutes.length}}
+        <SimpleChart
+          @name="donut"
+          @isIcon={{@isIcon}}
+          @data={{this.objectiveWithMinutes}}
+          @hover={{perform this.donutHover}}
+          @leave={{perform this.donutHover}}
+          as |chart|
+        >
+          {{#if this.tooltipContent}}
+            <chart.tooltip @title={{this.tooltipTitle}}>
+              {{this.tooltipContent}}
+            </chart.tooltip>
+          {{/if}}
+        </SimpleChart>
+      {{else}}
+        <div class="with-hours" data-test-with-hours>
+          <p>
+            {{t "general.objectivesWithNoLink"}}
+          </p>
+          <h4>
+            <FaIcon @icon="meh" class="meh-o" />
+          </h4>
+        </div>
+      {{/if}}
     {{/if}}
     {{#if (and (not @isIcon) this.objectiveWithoutMinutes.length)}}
       <div class="zero-hours" data-test-zero-hours>

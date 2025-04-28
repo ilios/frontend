@@ -35,6 +35,7 @@
             @isIcon={{true}}
             @course={{@model}}
             @showDataTable={{false}}
+            @showNoChartDataError={{true}}
           />
         </LinkTo>
       </div>
@@ -43,7 +44,11 @@
           <h4>
             {{t "general.sessionTypes"}}
           </h4>
-          <Course::VisualizeSessionTypesGraph @isIcon={{true}} @course={{@model}} />
+          <Course::VisualizeSessionTypesGraph
+            @isIcon={{true}}
+            @course={{@model}}
+            @showNoChartDataError={{true}}
+          />
         </LinkTo>
       </div>
       <div data-test-visualize-vocabularies>
@@ -55,6 +60,7 @@
             @isIcon={{true}}
             @course={{@model}}
             @showDataTable={{false}}
+            @showNoChartDataError={{true}}
           />
         </LinkTo>
       </div>
@@ -63,7 +69,11 @@
           <h4>
             {{t "general.instructors"}}
           </h4>
-          <Course::VisualizeInstructorsGraph @isIcon={{true}} @course={{@model}} />
+          <Course::VisualizeInstructorsGraph
+            @isIcon={{true}}
+            @course={{@model}}
+            @showNoChartDataError={{true}}
+          />
         </LinkTo>
       </div>
     </div>
