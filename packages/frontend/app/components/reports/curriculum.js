@@ -47,7 +47,7 @@ export default class ReportsCurriculumComponent extends Component {
     }
     const schools = this.store.peekAll('school');
     let schoolIds = [];
-    this.selectedCourses.map((course) => {
+    this.selectedCourses.forEach((course) => {
       const schoolForCourse = schools.find((school) =>
         school.hasMany('courses').ids().includes(course.id),
       );
