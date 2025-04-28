@@ -76,6 +76,8 @@ module('Integration | Component | curriculum-inventory/report-header', function 
     await component.name.set('');
     await component.name.save();
     assert.ok(component.name.hasError);
+    await component.name.cancel();
+    assert.notOk(component.name.hasError);
   });
 
   test('change name fails if name is too long', async function (assert) {
