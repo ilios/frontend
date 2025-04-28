@@ -36,7 +36,7 @@
         {{#each (sort-by "courseTitle" @courses) as |c|}}
           <tr>
             {{#if this.hasMultipleSchools}}
-              <td>{{11}}</td>
+              <td>{{this.schoolTitle c.id}}</td>
             {{/if}}
             <td>
               <LinkTo @route="course" @model={{c.id}}>

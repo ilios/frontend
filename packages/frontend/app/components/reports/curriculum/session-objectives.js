@@ -131,6 +131,13 @@ export default class ReportsCurriculumSessionObjectivesComponent extends Compone
     return a.sessionTitle.localeCompare(b.sessionTitle);
   };
 
+  schoolTitle = (courseId) => {
+    const schools = this.store.peekAll('school');
+    const school = schools.find((school) => school.hasMany('courses').ids().includes(courseId));
+
+    return school ? school.title : '11';
+  };
+
   get selectedSchoolIds() {
     if (!this.args.courses) {
       return [];
