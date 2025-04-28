@@ -47,10 +47,6 @@ module('Integration | Component | reports/curriculum', function (hooks) {
   test('it renders and is accessible with courses selected', async function (assert) {
     this.set('schools', buildSchoolsFromData(this.server));
     await render(hbs`<Reports::Curriculum
-  @selectedSchoolIds={{array '1'}}
-  @setSelectedSchoolIds={{(noop)}}
-  @hasMultipleSchools={{false}}
-  @countSelectedSchools={{1}}
   @selectedCourseIds={{array '1'}}
   @setSelectedCourseIds={{(noop)}}
   @report='sessionObjectives'
