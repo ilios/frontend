@@ -19,19 +19,45 @@ module('Integration | Component | reports/subject/session', function (hooks) {
           id: 1,
           title: 'First Session',
           course: { id: 1, year: 2023, title: 'First Course' },
-          sessionObjectives: [],
+          description: 'First Session Description',
+          sessionObjectives: [
+            {
+              title: 'First Objective',
+            },
+          ],
+          attendanceRequired: false,
+          attireRequired: false,
+          equipmentRequired: true,
+          supplemental: true,
         },
         {
           id: 2,
           title: 'Second Session',
           course: { id: 1, year: 2023, title: 'First Course' },
-          sessionObjectives: [],
+          description: 'Session 2 Description',
+          sessionObjectives: [
+            {
+              title: 'First Objective',
+            },
+            {
+              title: 'Second Objective',
+            },
+          ],
+          attendanceRequired: false,
+          attireRequired: true,
+          equipmentRequired: false,
+          supplemental: true,
         },
         {
           id: 3,
           title: 'Third Session',
           course: { id: 2, year: 2020, title: 'Second Course' },
+          description: 'Three Session Description',
           sessionObjectives: [],
+          attendanceRequired: true,
+          attireRequired: false,
+          equipmentRequired: true,
+          supplemental: false,
         },
       ],
     },
@@ -420,13 +446,14 @@ module('Integration | Component | reports/subject/session', function (hooks) {
 
   test('download', async function (assert) {
     await setupAuthentication({}, true);
-    assert.expect(8);
+    assert.expect(9);
     this.server.post('api/graphql', () => responseData);
     const { id } = this.server.create('report', {
       subject: 'session',
     });
     this.set('report', await this.owner.lookup('service:store').findRecord('report', id));
 
+    let capturedBlob = null;
     const downloadMockUrl = 'blob:mock-url';
     const downloadFilename = 'All Sessions in All Schools.csv';
 
@@ -440,6 +467,7 @@ module('Integration | Component | reports/subject/session', function (hooks) {
     const originalCreateObjectURL = URL.createObjectURL;
     const originalRevokeObjectURL = URL.revokeObjectURL;
     URL.createObjectURL = (blob) => {
+      capturedBlob = blob;
       assert.ok(blob instanceof Blob, 'Blob passed to createObjectURL');
       return downloadMockUrl;
     };
@@ -471,6 +499,13 @@ module('Integration | Component | reports/subject/session', function (hooks) {
       appendedElement.download,
       downloadFilename,
       'appended element has correct filename',
+    );
+
+    const csvText = await capturedBlob.text();
+    assert.strictEqual(
+      csvText.trim(),
+      'Session,Course,Academic Year,Description,Attendance Required,Attire Required,Equipment Required,Supplemental Curriculum,Objective 1,Objective 2\r\nFirst Session,First Course,2023,First Session Description,false,false,true,true,First Objective\r\nSecond Session,First Course,2023,Session 2 Description,false,true,false,true,First Objective,Second Objective\r\nThird Session,Second Course,2020,Three Session Description,true,false,true,false',
+      'CSV content is correct',
     );
 
     // Restore original methods

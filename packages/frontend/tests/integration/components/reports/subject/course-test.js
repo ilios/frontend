@@ -369,13 +369,14 @@ module('Integration | Component | reports/subject/course', function (hooks) {
   //skipped because I can't figure out how to test the download functionality
   test('download', async function (assert) {
     await setupAuthentication({}, true);
-    assert.expect(8);
+    assert.expect(9);
     this.server.post('api/graphql', () => responseData);
     const { id } = this.server.create('report', {
       subject: 'course',
     });
     this.set('report', await this.owner.lookup('service:store').findRecord('report', id));
 
+    let capturedBlob = null;
     const downloadMockUrl = 'blob:mock-url';
     const downloadFilename = 'All Courses in All Schools.csv';
 
@@ -383,6 +384,7 @@ module('Integration | Component | reports/subject/course', function (hooks) {
     const originalCreateObjectURL = URL.createObjectURL;
     const originalRevokeObjectURL = URL.revokeObjectURL;
     URL.createObjectURL = (blob) => {
+      capturedBlob = blob;
       assert.ok(blob instanceof Blob, 'Blob passed to createObjectURL');
       return downloadMockUrl;
     };
@@ -420,6 +422,13 @@ module('Integration | Component | reports/subject/course', function (hooks) {
       appendedElement.download,
       downloadFilename,
       'appended element has correct filename',
+    );
+
+    const csvText = await capturedBlob.text();
+    assert.strictEqual(
+      csvText.trim(),
+      'Course,Academic Year,Course ID\r\nSecond Course,2020,ext ID 1\r\nFirst Course,2023,',
+      'CSV content is correct',
     );
 
     // Restore original methods
