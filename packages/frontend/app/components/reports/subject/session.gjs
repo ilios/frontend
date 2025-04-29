@@ -136,10 +136,12 @@ export default class ReportsSubjectSessionComponent extends Component {
       'description',
       'sessionObjectives { title }',
       'course { title, year }',
+      'attendanceRequired',
+      'attireRequired',
+      'equipmentRequired',
     ];
     const result = await this.graphql.find('sessions', filters, attributes.join(','));
     const sortedResults = sortBy(result.data.sessions, 'title');
-
     const objectives = sortedResults.map(({ sessionObjectives }) => {
       return mapBy(sessionObjectives, 'title');
     });
@@ -147,26 +149,42 @@ export default class ReportsSubjectSessionComponent extends Component {
       return current.length > longest.length ? current : longest;
     }, []).length;
 
-    const mappedResults = sortedResults.map(({ title, course, sessionObjectives, description }) => {
-      const results = [
+    const mappedResults = sortedResults.map(
+      ({
         title,
-        course.title,
-        this.academicYearCrossesCalendarYearBoundaries
-          ? `${course.year} - ${course.year + 1}`
-          : `${course.year}`,
-        striptags(description),
-      ];
-      sessionObjectives.forEach((objective) => {
-        results.push(striptags(objective.title));
-      });
-      return results;
-    });
+        course,
+        sessionObjectives,
+        description,
+        attendanceRequired,
+        attireRequired,
+        equipmentRequired,
+      }) => {
+        const results = [
+          title,
+          course.title,
+          this.academicYearCrossesCalendarYearBoundaries
+            ? `${course.year} - ${course.year + 1}`
+            : `${course.year}`,
+          striptags(description),
+          attendanceRequired,
+          attireRequired,
+          equipmentRequired,
+        ];
+        sessionObjectives.forEach((objective) => {
+          results.push(striptags(objective.title));
+        });
+        return results;
+      },
+    );
 
     const columns = [
       this.intl.t('general.session'),
       this.intl.t('general.course'),
       this.intl.t('general.academicYear'),
       this.intl.t('general.description'),
+      this.intl.t('general.attendanceRequired'),
+      this.intl.t('general.attireRequired'),
+      this.intl.t('general.equipmentRequired'),
     ];
     [...Array(maxObjectiveCount + 1).keys()].slice(1).map((key) => {
       columns.push(`${this.intl.t('general.objective')} ${key}`);

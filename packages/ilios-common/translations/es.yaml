@@ -20,6 +20,7 @@ general:
   attendanceIs_Required_: "Se '<strong><em>'require'</em></strong>' asistencia"
   attendanceIsRequired: Se require asistencia
   attendanceRequired: Asistencia Requerida
+  attireRequired: Atuendo Requerida
   author: Autor
   autoUpdatingSeconds: "{count, plural, =1 {Actualización automática en 1 segundo...} other {Actualización automática en # segundos...}}"
   availableInstructorsAndInstructorGroups: Instructores y Grupos de instructores Disponibles
@@ -122,6 +123,7 @@ general:
   endDate: Fecha de Cumplir
   ends: Termina
   endTime: Hora de Cumplir
+  equipmentRequired: Equipo Requerido
   etAl: et al.
   eventNotFoundTitle: Evento no encontrado
   eventNotFoundExplanation: "El evento al que ha intentado acceder ya no está disponible o ha seguido un enlace de usuario personalizado que no se puede compartir. Si sigue teniendo problemas, póngase en contacto con el servicio de asistencia de Ilios."
