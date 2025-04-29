@@ -130,6 +130,7 @@ export default class ReportsSubjectSessionComponent extends Component {
       'attendanceRequired',
       'attireRequired',
       'equipmentRequired',
+      'supplemental',
     ];
     const result = await this.graphql.find('sessions', filters, attributes.join(','));
     const sortedResults = sortBy(result.data.sessions, 'title');
@@ -149,6 +150,7 @@ export default class ReportsSubjectSessionComponent extends Component {
         attendanceRequired,
         attireRequired,
         equipmentRequired,
+        supplemental,
       }) => {
         const results = [
           title,
@@ -160,6 +162,7 @@ export default class ReportsSubjectSessionComponent extends Component {
           attendanceRequired,
           attireRequired,
           equipmentRequired,
+          supplemental,
         ];
         sessionObjectives.forEach((objective) => {
           results.push(striptags(objective.title));
@@ -176,6 +179,7 @@ export default class ReportsSubjectSessionComponent extends Component {
       this.intl.t('general.attendanceRequired'),
       this.intl.t('general.attireRequired'),
       this.intl.t('general.equipmentRequired'),
+      this.intl.t('general.supplementalCurriculum'),
     ];
     [...Array(maxObjectiveCount + 1).keys()].slice(1).map((key) => {
       columns.push(`${this.intl.t('general.objective')} ${key}`);
