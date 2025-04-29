@@ -8,6 +8,7 @@ export default function createDownloadFile(title, content, type) {
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
+    URL.revokeObjectURL(a);
   } else {
     location.href = 'data:application/octet-stream,' + encodeURIComponent(content);
   }
