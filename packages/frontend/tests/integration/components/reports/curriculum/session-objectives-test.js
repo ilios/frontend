@@ -12,7 +12,8 @@ module('Integration | Component | reports/curriculum/session-objectives', functi
   setupMirage(hooks);
 
   hooks.beforeEach(function () {
-    const course = this.server.create('course');
+    this.school = this.server.create('school');
+    const course = this.server.create('course', { school: this.school });
     const sessionType = this.server.create('sessionType');
     const session = this.server.create('session', { course, sessionType });
     this.server.create('sessionObjective', { session });
@@ -51,7 +52,13 @@ module('Integration | Component | reports/curriculum/session-objectives', functi
     this.set('courses', courseModels);
 
     await render(
-      hbs`<Reports::Curriculum::SessionObjectives @courses={{this.courses}} @close={{(noop)}} />`,
+      hbs`<Reports::Curriculum::SessionObjectives
+  @courses={{this.courses}}
+  @selectedSchoolIds={{array '1'}}
+  @countSelectedSchools={{1}}
+  @hasMultipleSchools={{false}}
+  @close={{(noop)}}
+/>`,
     );
 
     assert.strictEqual(

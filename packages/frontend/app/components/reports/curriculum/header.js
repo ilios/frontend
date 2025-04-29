@@ -6,6 +6,7 @@ import { guidFor } from '@ember/object/internals';
 export default class ReportsCurriculumHeader extends Component {
   @service flashMessages;
   @service intl;
+  @service store;
 
   get copyButtonId() {
     return `curriculum-report-copy-button-${guidFor(this)}`;
@@ -43,23 +44,52 @@ export default class ReportsCurriculumHeader extends Component {
     ],
   };
 
+  get countSelectedSchools() {
+    return this.args.selectedSchoolIds ? this.args.selectedSchoolIds.length : 0;
+  }
+
+  get hasMultipleSchools() {
+    return this.countSelectedSchools > 1;
+  }
+
   get reportList() {
-    return [
-      {
-        value: 'sessionObjectives',
-        label: this.intl.t('general.sessionObjectives'),
-        summary: this.intl.t('general.sessionObjectivesReportSummary', {
-          courseCount: this.args.countSelectedCourses,
-        }),
-      },
-      {
-        value: 'learnerGroups',
-        label: this.intl.t('general.learnerGroups'),
-        summary: this.intl.t('general.learnerGroupsReportSummary', {
-          courseCount: this.args.countSelectedCourses,
-        }),
-      },
-    ];
+    if (this.hasMultipleSchools) {
+      return [
+        {
+          value: 'sessionObjectives',
+          label: this.intl.t('general.sessionObjectives'),
+          summary: this.intl.t('general.sessionObjectivesReportSummaryMultiSchool', {
+            courseCount: this.args.countSelectedCourses,
+            schoolCount: this.countSelectedSchools,
+          }),
+        },
+        {
+          value: 'learnerGroups',
+          label: this.intl.t('general.learnerGroups'),
+          summary: this.intl.t('general.learnerGroupsReportSummaryMultiSchool', {
+            courseCount: this.args.countSelectedCourses,
+            schoolCount: this.countSelectedSchools,
+          }),
+        },
+      ];
+    } else {
+      return [
+        {
+          value: 'sessionObjectives',
+          label: this.intl.t('general.sessionObjectives'),
+          summary: this.intl.t('general.sessionObjectivesReportSummary', {
+            courseCount: this.args.countSelectedCourses,
+          }),
+        },
+        {
+          value: 'learnerGroups',
+          label: this.intl.t('general.learnerGroups'),
+          summary: this.intl.t('general.learnerGroupsReportSummary', {
+            courseCount: this.args.countSelectedCourses,
+          }),
+        },
+      ];
+    }
   }
 
   get selectedReport() {

@@ -3,6 +3,7 @@
     <this.reportResultsComponent @courses={{this.selectedCourses}} @close={{@stop}} />
   {{else}}
     <Reports::Curriculum::Header
+      @selectedSchoolIds={{this.selectedSchoolIds}}
       @countSelectedCourses={{@selectedCourseIds.length}}
       @showReportResults={{@showReportResults}}
       @selectedReportValue={{this.selectedReportValue}}

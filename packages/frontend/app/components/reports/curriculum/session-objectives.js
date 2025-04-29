@@ -12,6 +12,7 @@ import { chunk } from 'ilios-common/utils/array-helpers';
 export default class ReportsCurriculumSessionObjectivesComponent extends Component {
   @service router;
   @service intl;
+  @service store;
   @service graphql;
   @service reporting;
   @tracked finishedBuildingReport = false;
@@ -29,7 +30,7 @@ export default class ReportsCurriculumSessionObjectivesComponent extends Compone
       `ilmSession { id, dueDate, hours, instructors { ${userData} }, instructorGroups { id, users { ${userData} } } }`,
     ].join(', ');
 
-    const data = ['id', 'title', 'year', `sessions { ${sessionData} }`];
+    const data = ['id', 'title', 'year', 'school { id, title }', `sessions { ${sessionData} }`];
 
     return chunks.map((courses) => {
       const courseIds = courses.map((c) => c.id);
@@ -67,6 +68,7 @@ export default class ReportsCurriculumSessionObjectivesComponent extends Compone
   get summary() {
     return this.reportWithInstructors.map((c) => {
       return {
+        schoolTitle: c.school?.title,
         courseId: c.id,
         courseTitle: c.title,
         sessionCount: c.sessions.length,
@@ -98,6 +100,7 @@ export default class ReportsCurriculumSessionObjectivesComponent extends Compone
         s.sessionObjectives.forEach((o) => {
           const title = striptags(o.title);
           acc.push({
+            schoolTitle: c.school?.title,
             courseId: c.id,
             courseTitle: c.title,
             sessionTitle: s.title,
@@ -128,9 +131,55 @@ export default class ReportsCurriculumSessionObjectivesComponent extends Compone
     return a.sessionTitle.localeCompare(b.sessionTitle);
   };
 
+  get selectedSchoolIds() {
+    if (!this.args.courses) {
+      return [];
+    }
+    const schools = this.store.peekAll('school');
+    let schoolIds = [];
+    this.args.courses.map((course) => {
+      const schoolForCourse = schools.find((school) =>
+        school.hasMany('courses').ids().includes(course.id),
+      );
+
+      if (schoolForCourse) {
+        schoolIds = [...schoolIds, schoolForCourse.id];
+      }
+    });
+    return [...new Set(schoolIds)];
+  }
+
+  get countSelectedSchools() {
+    return this.selectedSchoolIds.length;
+  }
+
+  get hasMultipleSchools() {
+    return this.countSelectedSchools > 1;
+  }
+
+  get schoolTitlePlaceholder() {
+    return 'School';
+  }
+
+  get sessionCountPlaceholder() {
+    return '11';
+  }
+
+  get instructorsCountPlaceholder() {
+    return '11';
+  }
+
+  get objectiveCountPlaceholder() {
+    return '84';
+  }
+
   downloadReport = dropTask(async () => {
     const data = this.sortedResults.map((o) => {
       const rhett = {};
+
+      if (this.hasMultipleSchools) {
+        rhett[this.intl.t('general.school')] = o.schoolTitle;
+      }
       rhett[this.intl.t('general.course')] = o.courseTitle;
       rhett[this.intl.t('general.session')] = o.sessionTitle;
       rhett[this.intl.t('general.sessionType')] = o.sessionType;

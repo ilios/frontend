@@ -11,6 +11,7 @@ import { chunk, uniqueById } from 'ilios-common/utils/array-helpers';
 export default class ReportsCurriculumLearnerGroupsComponent extends Component {
   @service router;
   @service intl;
+  @service store;
   @service graphql;
   @service reporting;
   @tracked finishedBuildingReport = false;
@@ -26,7 +27,7 @@ export default class ReportsCurriculumLearnerGroupsComponent extends Component {
       `ilmSession { id, dueDate, hours, instructors { ${userData} }, instructorGroups { id, users { ${userData} } }, learnerGroups { id, title } }`,
     ].join(', ');
 
-    const data = ['id', 'title', 'year', `sessions { ${sessionData} }`];
+    const data = ['id', 'title', 'year', 'school { id, title }', `sessions { ${sessionData} }`];
 
     return chunks.map((courses) => {
       const courseIds = courses.map((c) => c.id);
@@ -81,6 +82,7 @@ export default class ReportsCurriculumLearnerGroupsComponent extends Component {
   get summary() {
     return this.reportWithLearnerGroups.map((c) => {
       return {
+        schoolTitle: c.school.title,
         courseId: c.id,
         courseTitle: c.title,
         sessionCount: c.sessions.length,
@@ -105,7 +107,7 @@ export default class ReportsCurriculumLearnerGroupsComponent extends Component {
           firstOfferingDate = s.ilmSession.dueDate;
         }
         s.learnerGroups.forEach((title) => {
-          acc.push({
+          const learnerGroup = {
             courseId: c.id,
             courseTitle: c.title,
             year: c.year,
@@ -116,7 +118,13 @@ export default class ReportsCurriculumLearnerGroupsComponent extends Component {
             instructors: s.instructors,
             title,
             link: `${origin}${path}`,
-          });
+          };
+
+          if (this.args.hasMultipleSchools) {
+            learnerGroup.schoolTitle = c.school.title;
+          }
+
+          acc.push(learnerGroup);
         });
       });
       return acc;
@@ -135,9 +143,55 @@ export default class ReportsCurriculumLearnerGroupsComponent extends Component {
     return a.sessionTitle.localeCompare(b.sessionTitle);
   };
 
+  get selectedSchoolIds() {
+    if (!this.args.courses) {
+      return [];
+    }
+    const schools = this.store.peekAll('school');
+    let schoolIds = [];
+    this.args.courses.map((course) => {
+      const schoolForCourse = schools.find((school) =>
+        school.hasMany('courses').ids().includes(course.id),
+      );
+
+      if (schoolForCourse) {
+        schoolIds = [...schoolIds, schoolForCourse.id];
+      }
+    });
+    return [...new Set(schoolIds)];
+  }
+
+  get countSelectedSchools() {
+    return this.selectedSchoolIds.length;
+  }
+
+  get hasMultipleSchools() {
+    return this.countSelectedSchools > 1;
+  }
+
+  get schoolTitlePlaceholder() {
+    return 'School';
+  }
+
+  get sessionCountPlaceholder() {
+    return '5';
+  }
+
+  get instructorsCountPlaceholder() {
+    return '6';
+  }
+
+  get learnerGroupsCountPlaceholder() {
+    return '85';
+  }
+
   downloadReport = dropTask(async () => {
     const data = this.sortedResults.map((o) => {
       const rhett = {};
+      if (this.hasMultipleSchools) {
+        rhett[this.intl.t('general.school')] = o.schoolTitle;
+      }
+      rhett[this.intl.t('general.school')] = o.schoolTitle;
       rhett[this.intl.t('general.id')] = o.courseId;
       rhett[this.intl.t('general.course')] = o.courseTitle;
       rhett[this.intl.t('general.year')] = o.year;
