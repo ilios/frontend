@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
-import { render } from '@ember/test-helpers';
+import { click, render } from '@ember/test-helpers';
 import { setupMirage } from 'frontend/tests/test-support/mirage';
 import { component } from 'frontend/tests/pages/components/reports/subject/session';
 import { component as headerComponent } from 'frontend/tests/pages/components/reports/subject-header';
@@ -14,16 +14,49 @@ module('Integration | Component | reports/subject/session', function (hooks) {
   const responseData = {
     data: {
       sessions: [
-        { id: 1, title: 'First Session', course: { id: 1, year: 2023, title: 'Course' } },
+        {
+          id: 1,
+          title: 'First Session',
+          course: { id: 1, year: 2023, title: 'First Course' },
+          description: 'First Session Description',
+          sessionObjectives: [
+            {
+              title: 'First Objective',
+            },
+          ],
+          attendanceRequired: false,
+          attireRequired: false,
+          equipmentRequired: true,
+          supplemental: true,
+        },
         {
           id: 2,
           title: 'Second Session',
-          course: { id: 1, year: 2023, title: 'Course' },
+          course: { id: 1, year: 2023, title: 'First Course' },
+          description: 'Session 2 Description',
+          sessionObjectives: [
+            {
+              title: 'First Objective',
+            },
+            {
+              title: 'Second Objective',
+            },
+          ],
+          attendanceRequired: false,
+          attireRequired: true,
+          equipmentRequired: false,
+          supplemental: true,
         },
         {
           id: 3,
           title: 'Third Session',
-          course: { id: 2, year: 2020, title: 'Course 2' },
+          course: { id: 2, year: 2020, title: 'Second Course' },
+          description: 'Three Session Description',
+          sessionObjectives: [],
+          attendanceRequired: true,
+          attireRequired: false,
+          equipmentRequired: true,
+          supplemental: false,
         },
       ],
     },
@@ -61,9 +94,9 @@ module('Integration | Component | reports/subject/session', function (hooks) {
     assert.strictEqual(component.results[0].year, '2020');
     assert.strictEqual(component.results[1].year, '2023');
     assert.strictEqual(component.results[2].year, '2023');
-    assert.strictEqual(component.results[0].courseTitle, 'Course 2:');
-    assert.strictEqual(component.results[1].courseTitle, 'Course:');
-    assert.strictEqual(component.results[2].courseTitle, 'Course:');
+    assert.strictEqual(component.results[0].courseTitle, 'Second Course:');
+    assert.strictEqual(component.results[1].courseTitle, 'First Course:');
+    assert.strictEqual(component.results[2].courseTitle, 'First Course:');
     assert.strictEqual(component.results[0].sessionTitle, 'Third Session');
     assert.strictEqual(component.results[1].sessionTitle, 'First Session');
     assert.strictEqual(component.results[2].sessionTitle, 'Second Session');
@@ -107,9 +140,9 @@ module('Integration | Component | reports/subject/session', function (hooks) {
     assert.strictEqual(component.results[0].year, '2020');
     assert.strictEqual(component.results[1].year, '2023');
     assert.strictEqual(component.results[2].year, '2023');
-    assert.strictEqual(component.results[0].courseTitle, 'Course 2:');
-    assert.strictEqual(component.results[1].courseTitle, 'Course:');
-    assert.strictEqual(component.results[2].courseTitle, 'Course:');
+    assert.strictEqual(component.results[0].courseTitle, 'Second Course:');
+    assert.strictEqual(component.results[1].courseTitle, 'First Course:');
+    assert.strictEqual(component.results[2].courseTitle, 'First Course:');
     assert.strictEqual(component.results[0].sessionTitle, 'Third Session');
     assert.strictEqual(component.results[1].sessionTitle, 'First Session');
     assert.strictEqual(component.results[2].sessionTitle, 'Second Session');
@@ -157,7 +190,11 @@ module('Integration | Component | reports/subject/session', function (hooks) {
       responseDataLarge.data.sessions.push({
         id: i,
         title: `session ${i}`,
-        course: { id: 1, year: years[Math.floor(Math.random() * years.length)], title: 'Course' },
+        course: {
+          id: 1,
+          year: years[Math.floor(Math.random() * years.length)],
+          title: 'First Course',
+        },
       });
     }
 
@@ -220,9 +257,9 @@ module('Integration | Component | reports/subject/session', function (hooks) {
     assert.strictEqual(component.results[0].year, '2020 - 2021');
     assert.strictEqual(component.results[1].year, '2023 - 2024');
     assert.strictEqual(component.results[2].year, '2023 - 2024');
-    assert.strictEqual(component.results[0].courseTitle, 'Course 2:');
-    assert.strictEqual(component.results[1].courseTitle, 'Course:');
-    assert.strictEqual(component.results[1].courseTitle, 'Course:');
+    assert.strictEqual(component.results[0].courseTitle, 'Second Course:');
+    assert.strictEqual(component.results[1].courseTitle, 'First Course:');
+    assert.strictEqual(component.results[1].courseTitle, 'First Course:');
     assert.strictEqual(component.results[0].sessionTitle, 'Third Session');
     assert.strictEqual(component.results[1].sessionTitle, 'First Session');
     assert.strictEqual(component.results[2].sessionTitle, 'Second Session');
@@ -456,5 +493,67 @@ module('Integration | Component | reports/subject/session', function (hooks) {
     );
 
     assert.notOk(headerComponent.hasYearFilter);
+  });
+
+  test('download', async function (assert) {
+    await setupAuthentication({}, true);
+    assert.expect(8);
+    this.server.post('api/graphql', () => responseData);
+    const { id } = this.server.create('report', {
+      subject: 'session',
+    });
+    this.set('report', await this.owner.lookup('service:store').findRecord('report', id));
+
+    const downloadMockUrl = 'blob:mock-url';
+    const downloadFilename = 'All Sessions in All Schools.csv';
+
+    await render(hbs`<Reports::Subject::Session
+  @subject={{this.report.subject}}
+  @prepositionalObject={{this.report.prepositionalObject}}
+  @prepositionalObjectTableRowId={{this.report.prepositionalObjectTableRowId}}
+/>`);
+
+    // Override URL methods
+    const originalCreateObjectURL = URL.createObjectURL;
+    const originalRevokeObjectURL = URL.revokeObjectURL;
+    URL.createObjectURL = (blob) => {
+      assert.ok(blob instanceof Blob, 'Blob passed to createObjectURL');
+      return downloadMockUrl;
+    };
+    URL.revokeObjectURL = (url) => {
+      assert.strictEqual(url.href, downloadMockUrl, 'revokeObjectURL has correct href');
+      assert.strictEqual(url.download, downloadFilename, 'revokeObjectURL has correct filename');
+    };
+
+    // Override document.body methods
+    let appendedElement;
+    const originalAppendChild = document.body.appendChild;
+    const originalRemoveChild = document.body.removeChild;
+    document.body.appendChild = (el) => {
+      // stub out click() to avoid `Not allowed to load local resource: blob:mock-url` error
+      el.click = () => {
+        assert.ok(true, 'Anchor click stubbed to prevent navigation');
+      };
+      appendedElement = el;
+      assert.ok(el instanceof HTMLAnchorElement, 'Anchor element was appended');
+    };
+    document.body.removeChild = (el) => {
+      assert.strictEqual(el, appendedElement, 'Anchor element was removed');
+    };
+
+    await click('[data-test-button]');
+
+    assert.strictEqual(appendedElement.href, downloadMockUrl, 'appended element has correct href');
+    assert.strictEqual(
+      appendedElement.download,
+      downloadFilename,
+      'appended element has correct filename',
+    );
+
+    // Restore original methods
+    URL.createObjectURL = originalCreateObjectURL;
+    URL.revokeObjectURL = originalRevokeObjectURL;
+    document.body.appendChild = originalAppendChild;
+    document.body.removeChild = originalRemoveChild;
   });
 });
