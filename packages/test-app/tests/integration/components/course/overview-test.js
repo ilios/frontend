@@ -72,6 +72,9 @@ module('Integration | Component | course overview', function (hooks) {
     await component.startDate.datePicker.set('2024-08-01');
     await component.startDate.save();
     assert.ok(component.startDate.hasError);
+    // verify that validation error clears after edit-mode has been cancelled.
+    await component.startDate.cancel();
+    assert.notOk(component.startDate.hasError);
   });
 
   test('end date validation fails when before start date', async function (assert) {
@@ -88,5 +91,8 @@ module('Integration | Component | course overview', function (hooks) {
     await component.endDate.datePicker.set('2023-12-11');
     await component.endDate.save();
     assert.ok(component.endDate.hasError);
+    // verify that validation error clears after edit-mode has been cancelled.
+    await component.endDate.cancel();
+    assert.notOk(component.endDate.hasError);
   });
 });

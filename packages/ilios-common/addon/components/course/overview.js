@@ -46,13 +46,13 @@ export default class CourseOverview extends Component {
     startDate: date()
       .required()
       .test(
-        'is-after-end-date',
+        'is-before-end-date',
         (d) => {
           return {
             path: d.path,
-            messageKey: 'errors.after',
+            messageKey: 'errors.before',
             values: {
-              after: this.intl.t('general.endDate'),
+              before: this.intl.t('general.endDate'),
             },
           };
         },
@@ -65,13 +65,13 @@ export default class CourseOverview extends Component {
     endDate: date()
       .required()
       .test(
-        'is-before-start-date',
+        'is-after-start-date',
         (d) => {
           return {
             path: d.path,
-            messageKey: 'errors.before',
+            messageKey: 'errors.after',
             values: {
-              before: this.intl.t('general.starDate'),
+              after: this.intl.t('general.startDate'),
             },
           };
         },
@@ -161,6 +161,7 @@ export default class CourseOverview extends Component {
 
   @action
   revertStartDateChanges() {
+    this.validations.removeErrorDisplayFor('startDate');
     this.startDate = this.args.course.startDate;
   }
 
@@ -178,6 +179,7 @@ export default class CourseOverview extends Component {
 
   @action
   revertEndDateChanges() {
+    this.validations.removeErrorDisplayFor('endDate');
     this.endDate = this.args.course.endDate;
   }
 
