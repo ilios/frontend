@@ -53,7 +53,7 @@ module('Integration | Component | curriculum-inventory/report-overview', functio
     assert.strictEqual(component.title, 'Overview', 'Component title is visible.');
     assert.ok(component.rolloverLink.isVisible, 'Rollover course button is visible.');
     assert.ok(component.verificationPreviewLink.isVisible, 'Verification preview link is visible.');
-    assert.strictEqual(component.startDate.label, 'Start:', 'Start date label is correct.');
+    assert.strictEqual(component.startDate.label, 'Start Date:', 'Start date label is correct.');
     assert.strictEqual(
       component.startDate.text,
       this.intl.formatDate(reportModel.startDate, {
@@ -63,7 +63,7 @@ module('Integration | Component | curriculum-inventory/report-overview', functio
       }),
       'Start date is visible.',
     );
-    assert.strictEqual(component.endDate.label, 'End:', 'End date label is correct.');
+    assert.strictEqual(component.endDate.label, 'End Date:', 'End date label is correct.');
     assert.strictEqual(
       component.endDate.text,
       this.intl.formatDate(reportModel.endDate, {
