@@ -205,7 +205,10 @@ module('Integration | Component | course/visualize-vocabularies-graph', function
     );
     assert.notOk(component.chart.isVisible);
     assert.notOk(component.dataTable.isVisible);
-    assert.strictEqual(component.noData.text, 'This course has no sessions.');
+    assert.strictEqual(
+      component.noData.text,
+      'No vocabularies have been linked to any sessions in this course.',
+    );
   });
 
   test('only zero time data', async function (assert) {

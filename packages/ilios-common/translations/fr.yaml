@@ -89,6 +89,7 @@ general:
   courseTitlePlaceholder: Ajoutez titre par ce cours
   courseVisualizations: Cours Visualisations
   courseVisualizationsNoSessions: Ce cours n'a pas de séances.
+  courseVisualizationsNoSessionVocabularyTerms: "Aucun vocabulaires n'a été lié à aucune session de ce cours."
   courseVisualizationsInstructorNoData: "{instructor} n'enseigne aucune séance dans ce cours."
   courseVisualizationsInstructorsGraphNoData: Aucun instructeur n'a été lié à aucune session de ce cours.
   courseVisualizationsSessionTypeGraphNoData: "Aucun terme de vocabulaire n'a été lié à une session {sessionType} dans ce cours."

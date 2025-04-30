@@ -5,25 +5,33 @@
 >
   {{#if this.isLoaded}}
     {{#if (or @isIcon this.hasChartData)}}
-      <SimpleChart
-        @name="horz-bar"
-        @isIcon={{@isIcon}}
-        @data={{this.chartData}}
-        @onClick={{this.barClick}}
-        @hover={{perform this.barHover}}
-        @leave={{perform this.barHover}}
-        as |chart|
-      >
-        {{#if this.tooltipContent}}
-          <chart.tooltip @title={{this.tooltipTitle}}>
-            {{this.tooltipContent}}
-          </chart.tooltip>
+      {{#if this.hasChartData}}
+        <SimpleChart
+          @name="horz-bar"
+          @isIcon={{@isIcon}}
+          @data={{this.chartData}}
+          @onClick={{this.barClick}}
+          @hover={{perform this.barHover}}
+          @leave={{perform this.barHover}}
+          as |chart|
+        >
+          {{#if this.tooltipContent}}
+            <chart.tooltip @title={{this.tooltipTitle}}>
+              {{this.tooltipContent}}
+            </chart.tooltip>
+          {{/if}}
+        </SimpleChart>
+      {{else}}
+        {{#if @showNoChartDataError}}
+          <div class="no-data" data-test-no-data>
+            {{t "general.courseVisualizationsNoSessionVocabularyTerms"}}
+          </div>
         {{/if}}
-      </SimpleChart>
+      {{/if}}
     {{/if}}
     {{#if (and (not @isIcon) (not this.hasData))}}
       <div class="no-data" data-test-no-data>
-        {{t "general.courseVisualizationsNoSessions"}}
+        {{t "general.courseVisualizationsNoSessionVocabularyTerms"}}
       </div>
     {{/if}}
     {{#if (and (not @isIcon) this.hasData @showDataTable)}}

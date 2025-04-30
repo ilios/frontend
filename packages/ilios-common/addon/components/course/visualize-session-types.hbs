@@ -29,21 +29,24 @@
       {{/if}}
     </LinkTo>
   </h3>
-  <div class="filter" data-test-filter>
-    <input
-      aria-label={{t "general.filterChartPlaceholder"}}
-      autocomplete="off"
-      type="search"
-      value={{this.title}}
-      placeholder={{t "general.filterPlaceholder"}}
-      {{on "input" (pick "target.value" (set this "title"))}}
-    />
-  </div>
+  {{#if @model.sessions.length}}
+    <div class="filter" data-test-filter>
+      <input
+        aria-label={{t "general.filterChartPlaceholder"}}
+        autocomplete="off"
+        type="search"
+        value={{this.title}}
+        placeholder={{t "general.filterPlaceholder"}}
+        {{on "input" (pick "target.value" (set this "title"))}}
+      />
+    </div>
+  {{/if}}
   <div class="visualizations">
     <Course::VisualizeSessionTypesGraph
       @filter={{this.title}}
       @course={{@model}}
       @showDataTable={{true}}
+      @showNoChartDataError={{true}}
     />
   </div>
 </section>
