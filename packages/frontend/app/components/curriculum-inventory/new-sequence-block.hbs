@@ -18,10 +18,15 @@
           value={{this.title}}
           disabled={{this.save.isRunning}}
           placeholder={{t "general.sequenceBlockTitlePlaceholder"}}
-          {{on "keyup" (queue (fn this.addErrorDisplayFor "title") this.saveOrCancel)}}
+          {{on "keyup" this.saveOrCancel}}
           {{on "input" (pick "target.value" (set this "title"))}}
+          {{this.validations.attach "title"}}
         />
-        <ValidationError @validatable={{this}} @property="title" />
+        <YupValidationMessage
+          @description={{t "general.title"}}
+          @validationErrors={{this.validations.errors.title}}
+          data-test-title-validation-error-message
+        />
       </div>
       <div class="item course" data-test-course>
         <label for="course-{{templateId}}">

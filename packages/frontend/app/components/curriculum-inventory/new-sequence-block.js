@@ -11,12 +11,11 @@ import {
   Custom,
   IsInt,
   Gte,
-  Length,
   NotBlank,
 } from 'ilios-common/decorators/validation';
 import { findById } from 'ilios-common/utils/array-helpers';
 import YupValidations from 'ilios-common/classes/yup-validations';
-import { number } from 'yup';
+import { string, number } from 'yup';
 
 @validatable
 export default class CurriculumInventoryNewSequenceBlock extends Component {
@@ -51,7 +50,7 @@ export default class CurriculumInventoryNewSequenceBlock extends Component {
   maximum = 0;
   @tracked @NotBlank() @IsInt() @Gte(0) minimum = 0;
   @tracked required;
-  @tracked @NotBlank() @Length(1, 200) title;
+  @tracked title;
   @tracked track = false;
   childSequenceOrderOptions = [
     { id: '1', title: this.intl.t('general.ordered') },
@@ -72,6 +71,7 @@ export default class CurriculumInventoryNewSequenceBlock extends Component {
   }
 
   validations = new YupValidations(this, {
+    title: string().trim().required().max(200),
     duration: number()
       .integer()
       .lessThan(1201)
@@ -365,7 +365,6 @@ export default class CurriculumInventoryNewSequenceBlock extends Component {
 
   save = dropTask(async () => {
     this.addErrorDisplaysFor([
-      'title',
       'startDate',
       'endDate',
       'minimum',

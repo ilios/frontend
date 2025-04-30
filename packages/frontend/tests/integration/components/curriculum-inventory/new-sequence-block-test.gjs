@@ -396,6 +396,48 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
     assert.strictEqual(component.endDate.value, '');
   });
 
+  test('save fails when title is blank', async function (assert) {
+    const reportModel = await this.owner
+      .lookup('service:store')
+      .findRecord('curriculum-inventory-report', this.report.id);
+    this.set('report', reportModel);
+
+    await render(
+      hbs`<CurriculumInventory::NewSequenceBlock
+  @report={{this.report}}
+  @save={{(noop)}}
+  @cancel={{(noop)}}
+/>`,
+    );
+
+    assert.notOk(component.title.hasError);
+    await component.title.set('');
+    await component.save();
+    assert.ok(component.title.hasError);
+    assert.strictEqual(component.title.error, 'Title can not be blank');
+  });
+
+  test('save fails when title is too long', async function (assert) {
+    const reportModel = await this.owner
+      .lookup('service:store')
+      .findRecord('curriculum-inventory-report', this.report.id);
+    this.set('report', reportModel);
+
+    await render(
+      hbs`<CurriculumInventory::NewSequenceBlock
+  @report={{this.report}}
+  @save={{(noop)}}
+  @cancel={{(noop)}}
+/>`,
+    );
+
+    assert.notOk(component.title.hasError);
+    await component.title.set('0123456789'.repeat(21));
+    await component.save();
+    assert.ok(component.title.hasError);
+    assert.strictEqual(component.title.error, 'Title is too long (maximum is 200 characters)');
+  });
+
   test('save fails when minimum is larger than maximum', async function (assert) {
     const reportModel = await this.owner
       .lookup('service:store')
