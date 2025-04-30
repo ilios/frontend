@@ -150,6 +150,9 @@ function setupErrorMessages() {
       url: isURL(),
     },
     number: {
+      equalOrMoreThan: equalToOrMoreThan(),
+      integer: isInteger(),
+      lessThan: lessThan(),
       moreThan: moreThan(),
     },
   });
@@ -229,6 +232,40 @@ function moreThan() {
       path: validationParams.path,
       messageKey: 'errors.greaterThan',
       values: { gt },
+    };
+  };
+}
+
+function lessThan() {
+  return (validationParams) => {
+    //our current translations expects this key to be named gt and not more as it is in yup
+    const lt = validationParams.less;
+    return {
+      path: validationParams.path,
+      messageKey: 'errors.lessThan',
+      values: { lt },
+    };
+  };
+}
+
+function equalToOrMoreThan() {
+  return (validationParams) => {
+    //our current translations expects this key to be named gt and not more as it is in yup
+    const gte = validationParams.gte;
+    return {
+      path: validationParams.path,
+      messageKey: 'errors.greaterThanOrEqualTo',
+      values: { gte },
+    };
+  };
+}
+
+function isInteger() {
+  return (validationParams) => {
+    return {
+      path: validationParams.path,
+      messageKey: 'errors.notAnInteger',
+      values: [],
     };
   };
 }

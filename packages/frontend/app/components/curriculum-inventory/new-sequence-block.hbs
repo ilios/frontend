@@ -120,10 +120,14 @@
           type="text"
           value={{this.duration}}
           disabled={{this.save.isRunning}}
-          {{on "keyup" (queue (fn this.addErrorDisplayFor "duration") this.saveOrCancel)}}
-          {{on "input" (pick "target.value" (set this "duration"))}}
+          {{on "input" (pick "target.value" this.setDuration)}}
+          {{this.validations.attach "duration"}}
         />
-        <ValidationError @validatable={{this}} @property="duration" />
+        <YupValidationMessage
+          @description={{t "general.duration"}}
+          @validationErrors={{this.validations.errors.duration}}
+          data-test-duration-validation-error-message
+        />
       </div>
       <div class="item clear-dates">
         <button type="button" {{on "click" this.clearDates}} data-test-clear-dates>

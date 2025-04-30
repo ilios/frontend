@@ -576,14 +576,15 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
         <NewSequenceBlock @report={{this.report}} @save={{(noop)}} @cancel={{(noop)}} />
       </template>,
     );
-
+    assert.notOk(component.duration.hasError);
     await component.title.set('Foo Bar');
     await component.description.set('Lorem Ipsum');
     await component.startDate.set(new Date('2016-11-12'));
     await component.endDate.set(new Date('2016-12-30'));
     await component.duration.set('');
     await component.save();
-    assert.strictEqual(component.duration.errors.length, 2);
+    assert.ok(component.duration.hasError);
+    assert.strictEqual(component.duration.error, 'Duration must be a number');
   });
 
   test('save fails on invalid duration', async function (assert) {
@@ -597,14 +598,37 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
         <NewSequenceBlock @report={{this.report}} @save={{(noop)}} @cancel={{(noop)}} />
       </template>,
     );
-
+    assert.notOk(component.duration.hasError);
     await component.title.set('Foo Bar');
     await component.description.set('Lorem Ipsum');
     await component.startDate.set(new Date('2016-11-12'));
     await component.endDate.set(new Date('2016-12-30'));
     await component.duration.set('WRONG');
     await component.save();
-    assert.strictEqual(component.duration.errors.length, 3);
+    assert.ok(component.duration.hasError);
+    assert.strictEqual(component.duration.error, 'Duration must be a number');
+  });
+
+  test('save fails on duration exceeds 1200 minutes', async function (assert) {
+    const reportModel = await this.owner
+      .lookup('service:store')
+      .findRecord('curriculum-inventory-report', this.report.id);
+    this.set('report', reportModel);
+
+    await render(
+      hbs`<CurriculumInventory::NewSequenceBlock
+  @report={{this.report}}
+  @save={{(noop)}}
+  @cancel={{(noop)}}
+/>`,
+    );
+    assert.notOk(component.duration.hasError);
+    await component.title.set('Foo Bar');
+    await component.description.set('Lorem Ipsum');
+    await component.duration.set('1201');
+    await component.save();
+    assert.ok(component.duration.hasError);
+    assert.strictEqual(component.duration.error, 'Duration must be less than 1201');
   });
 
   test('save fails if neither date range nor non-zero duration is provided', async function (assert) {
@@ -619,11 +643,13 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
       </template>,
     );
 
+    assert.notOk(component.duration.hasError);
     await component.title.set('Foo Bar');
     await component.description.set('Lorem Ipsum');
     await component.duration.set('');
     await component.save();
-    assert.strictEqual(component.duration.errors.length, 2);
+    assert.ok(component.duration.hasError);
+    assert.strictEqual(component.duration.error, 'Duration must be a number');
   });
 
   test('save fails if linked course is clerkship and start date is not provided', async function (assert) {
@@ -655,7 +681,7 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
     await component.save();
     assert.strictEqual(component.startDate.errors.length, 1);
     assert.strictEqual(component.endDate.errors.length, 0);
-    assert.strictEqual(component.duration.errors.length, 0);
+    assert.notOk(component.duration.hasError);
   });
 
   test('save fails if linked course is clerkship and duration is zero', async function (assert) {
@@ -689,11 +715,8 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
     await component.save();
     assert.strictEqual(component.startDate.errors.length, 0);
     assert.strictEqual(component.endDate.errors.length, 0);
-    assert.strictEqual(component.duration.errors.length, 1);
-    assert.strictEqual(
-      component.duration.errors[0].text,
-      'Duration must be greater than or equal to 1',
-    );
+    assert.ok(component.duration.hasError);
+    assert.strictEqual(component.duration.error, 'Duration must be greater than or equal to 1');
   });
 
   test('save fails if start-date is given but no end-date is provided', async function (assert) {

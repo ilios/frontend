@@ -12,10 +12,11 @@ import {
   IsInt,
   Gte,
   Length,
-  Lte,
   NotBlank,
 } from 'ilios-common/decorators/validation';
 import { findById } from 'ilios-common/utils/array-helpers';
+import YupValidations from 'ilios-common/classes/yup-validations';
+import { number } from 'yup';
 
 @validatable
 export default class CurriculumInventoryNewSequenceBlock extends Component {
@@ -31,12 +32,7 @@ export default class CurriculumInventoryNewSequenceBlock extends Component {
   @tracked childSequenceOrder;
   @tracked course;
   @tracked description;
-  @tracked
-  @NotBlank()
-  @IsInt()
-  @Custom('validateDurationCallback', 'validateDurationMessageCallback')
-  @Lte(1200)
-  duration = 0;
+  @tracked duration = 0;
   @tracked
   @ValidateIf((o) => o.hasZeroDuration || o.linkedCourseIsClerkship)
   @NotBlank()
@@ -74,6 +70,27 @@ export default class CurriculumInventoryNewSequenceBlock extends Component {
     this.childSequenceOrder = this.childSequenceOrderOptions[0];
     this.required = this.requiredOptions[0];
   }
+
+  validations = new YupValidations(this, {
+    duration: number()
+      .integer()
+      .lessThan(1201)
+      .test(
+        'clerkship-based-minimum',
+        (d) => {
+          return {
+            path: d.path,
+            messageKey: 'errors.greaterThanOrEqualTo',
+            values: {
+              gte: this.linkedCourseIsClerkship ? 1 : 0,
+            },
+          };
+        },
+        (value) => {
+          return this.linkedCourseIsClerkship ? value >= 1 : value >= 0;
+        },
+      ),
+  });
 
   @cached
   get siblingsData() {
@@ -267,6 +284,11 @@ export default class CurriculumInventoryNewSequenceBlock extends Component {
   }
 
   @action
+  setDuration(duration) {
+    this.duration = duration;
+  }
+
+  @action
   async saveOrCancel(event) {
     const keyCode = event.keyCode;
 
@@ -344,7 +366,6 @@ export default class CurriculumInventoryNewSequenceBlock extends Component {
   save = dropTask(async () => {
     this.addErrorDisplaysFor([
       'title',
-      'duration',
       'startDate',
       'endDate',
       'minimum',
@@ -352,10 +373,17 @@ export default class CurriculumInventoryNewSequenceBlock extends Component {
       'startingAcademicLevel',
       'endingAcademicLevel',
     ]);
-    const isValid = await this.isValid();
+    let isValid = await this.isValid();
     if (!isValid) {
       return false;
     }
+
+    this.validations.addErrorDisplayForAllFields();
+    isValid = await this.validations.isValid();
+    if (!isValid) {
+      return false;
+    }
+    this.validations.clearErrorDisplay();
 
     const defaultStartingAcademicLevel = await this.getDefaultStartingAcademicLevel(
       this.args.report,
