@@ -89,7 +89,7 @@ general:
   courseTitlePlaceholder: Entre en un título para este curso
   courseVisualizations: Visualizaciones de Cursos
   courseVisualizationsNoSessions: Este curso no tiene sesiones.
-  courseVisualizationsNoSessionVocabularyTerms: "Este curso no tiene términos de vocabulario de sesión."
+  courseVisualizationsNoSessionVocabularyTerms: No se han vinculado vocabularios a ninguna sesión de este curso.
   courseVisualizationsInstructorNoData: "{instructor} no está impartiendo ninguna sesión en este curso."
   courseVisualizationsInstructorsGraphNoData: No se han vinculado instructores a ninguna sesión de este curso.
   courseVisualizationsSessionTypeGraphNoData: "No se han vinculado términos de vocabulario a ninguna sesión {sessionType} en este curso."

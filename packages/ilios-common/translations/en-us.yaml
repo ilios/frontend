@@ -89,7 +89,7 @@ general:
   courseTitlePlaceholder: Enter a title for this course
   courseVisualizations: Course Visualizations
   courseVisualizationsNoSessions: "This course has no sessions."
-  courseVisualizationsNoSessionVocabularyTerms: "This course has no session vocabulary terms."
+  courseVisualizationsNoSessionVocabularyTerms: No vocabularies have been linked to any sessions in this course.
   courseVisualizationsInstructorNoData: "{instructor} is not instructing any sessions in this this course."
   courseVisualizationsInstructorsGraphNoData: No instructors have been linked to any sessions in this course.
   courseVisualizationsSessionTypeGraphNoData: "No vocabulary terms have been linked to any {sessionType} sessions in this course."
