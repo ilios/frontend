@@ -273,7 +273,8 @@ module('Integration | Component | reports/new-subject', function (hooks) {
       email: 'test@example.com',
       displayName: 'Aardvark',
     });
-    await render(hbs`<Reports::NewSubject @close={{(noop)}} />`);
+    await render(hbs`<Reports::NewSubject @close={{(noop)}}
+          @setSelectedSchoolId={{(noop)}} />`);
     assert.notOk(component.instructor.userSearch.isVisible);
     assert.notOk(component.instructor.hasSelectedInstructor);
     await component.schools.choose('null');

@@ -33,8 +33,11 @@ export default class ReportsNewSubjectComponent extends Component {
   @tracked selectedTitle;
 
   @tracked isSaving = false;
-  @tracked selectedSchool = null;
   @tracked schoolChanged = false;
+
+  get selectedSchoolId() {
+    return this.args.selectedSchoolId ?? null;
+  }
 
   @Custom('validatePrepositionalObjectCallback', 'validatePrepositionalObjectMessageCallback')
   get prepositionalObject() {
@@ -261,8 +264,8 @@ export default class ReportsNewSubjectComponent extends Component {
   }
 
   get currentSchool() {
-    if (this.selectedSchool) {
-      return this.selectedSchool;
+    if (this.selectedSchoolId) {
+      return findById(this.allSchools, this.selectedSchoolId);
     }
 
     //if the school has been set to null intentionally
@@ -369,7 +372,7 @@ export default class ReportsNewSubjectComponent extends Component {
 
   @action
   changeSchool(schoolId) {
-    this.selectedSchool = findById(this.allSchools, schoolId);
+    this.args.setSelectedSchoolId(schoolId);
     this.schoolChanged = true;
   }
 

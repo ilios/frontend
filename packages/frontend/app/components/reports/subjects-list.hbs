@@ -31,6 +31,8 @@
           @save={{perform this.saveNewSubjectReport}}
           @close={{@toggleNewReportForm}}
           @run={{perform this.runSubjectReport}}
+          @selectedSchoolId={{@selectedSchoolId}}
+          @setSelectedSchoolId={{@setSelectedSchoolId}}
         />
       {{/if}}
       {{#if this.newReport}}
