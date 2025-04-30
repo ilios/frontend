@@ -4,25 +4,21 @@ import { service } from '@ember/service';
 import { action } from '@ember/object';
 import { dropTask } from 'ember-concurrency';
 import { TrackedAsyncData } from 'ember-async-data';
-import {
-  AfterDate,
-  BeforeDate,
-  Length,
-  NotBlank,
-  validatable,
-} from 'ilios-common/decorators/validation';
+import YupValidations from 'ilios-common/classes/yup-validations';
+import { date, string } from 'yup';
+import { DateTime } from 'luxon';
 
-@validatable
 export default class CurriculumInventoryReportOverviewComponent extends Component {
   @service currentUser;
   @service iliosConfig;
   @service permissionChecker;
   @service router;
+  @service intl;
 
-  @tracked @NotBlank() @Length(1, 21844) description;
-  @BeforeDate('endDate', { granularity: 'minute' }) @tracked startDate;
-  @AfterDate('startDate', { granularity: 'minute' }) @tracked endDate;
-  @tracked year = null;
+  @tracked description;
+  @tracked startDate;
+  @tracked endDate;
+  @tracked year;
 
   constructor() {
     super(...arguments);
@@ -31,6 +27,48 @@ export default class CurriculumInventoryReportOverviewComponent extends Componen
     this.startDate = this.args.report.startDate;
     this.endDate = this.args.report.endDate;
   }
+
+  validations = new YupValidations(this, {
+    description: string().trim().required().max(21844),
+    startDate: date()
+      .required()
+      .test(
+        'is-before-end-date',
+        (d) => {
+          return {
+            path: d.path,
+            messageKey: 'errors.before',
+            values: {
+              before: this.intl.t('general.endDate'),
+            },
+          };
+        },
+        (value) => {
+          const startDate = DateTime.fromJSDate(value);
+          const endDate = DateTime.fromJSDate(this.endDate);
+          return startDate.startOf('day') < endDate.startOf('day');
+        },
+      ),
+    endDate: date()
+      .required()
+      .test(
+        'is-after-start-date',
+        (d) => {
+          return {
+            path: d.path,
+            messageKey: 'errors.after',
+            values: {
+              after: this.intl.t('general.startDate'),
+            },
+          };
+        },
+        (value) => {
+          const endDate = DateTime.fromJSDate(value);
+          const startDate = DateTime.fromJSDate(this.startDate);
+          return startDate.startOf('day') < endDate.startOf('day');
+        },
+      ),
+  });
 
   @cached
   get courseData() {
@@ -106,36 +144,36 @@ export default class CurriculumInventoryReportOverviewComponent extends Componen
   }
 
   changeStartDate = dropTask(async () => {
-    this.addErrorDisplayFor('startDate');
-    const isValid = await this.isValid();
+    this.validations.addErrorDisplayFor('startDate');
+    const isValid = await this.validations.isValid();
     if (!isValid) {
       return false;
     }
-    this.removeErrorDisplayFor('startDate');
+    this.validations.removeErrorDisplayFor('startDate');
     this.args.report.startDate = this.startDate;
     await this.args.report.save();
   });
 
   @action
   revertStartDateChanges() {
-    this.removeErrorDisplayFor('startDate');
+    this.validations.removeErrorDisplayFor('startDate');
     this.startDate = this.args.report.get.startDate;
   }
 
   changeEndDate = dropTask(async () => {
-    this.addErrorDisplayFor('endDate');
-    const isValid = await this.isValid();
+    this.validations.addErrorDisplayFor('endDate');
+    const isValid = await this.validations.isValid();
     if (!isValid) {
       return false;
     }
-    this.removeErrorDisplayFor('endDate');
+    this.validations.removeErrorDisplayFor('endDate');
     this.args.report.endDate = this.endDate;
     await this.args.report.save();
   });
 
   @action
   revertEndDateChanges() {
-    this.removeErrorDisplayFor('endDate');
+    this.validations.removeErrorDisplayFor('endDate');
     this.endDate = this.args.report.endDate;
   }
 
@@ -150,18 +188,19 @@ export default class CurriculumInventoryReportOverviewComponent extends Componen
   }
 
   changeDescription = dropTask(async () => {
-    this.addErrorDisplayFor('description');
-    const isValid = await this.isValid();
+    this.validations.addErrorDisplayFor('description');
+    const isValid = await this.validations.isValid();
     if (!isValid) {
       return false;
     }
-    this.removeErrorDisplayFor('description');
+    this.validations.removeErrorDisplayFor('description');
     this.args.report.description = this.description;
     await this.args.report.save();
   });
 
   @action
   revertDescriptionChanges() {
+    this.validations.removeErrorDisplayFor('description');
     this.description = this.args.report.description;
   }
 

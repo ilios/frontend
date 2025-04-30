@@ -41,7 +41,7 @@
     <div class="curriculum-inventory-report-overview-content">
       <div class="block start-date" data-test-start-date>
         <label>
-          {{t "general.start"}}:
+          {{t "general.startDate"}}:
         </label>
         <span>
           {{#if @canUpdate}}
@@ -52,11 +52,16 @@
             >
               <DatePicker
                 @value={{this.startDate}}
-                @onChange={{queue (set this "startDate") (fn this.addErrorDisplayFor "startDate")}}
+                @onChange={{set this "startDate"}}
+                {{this.validations.attach "startDate"}}
                 data-test-start-date-picker
               />
-              <ValidationError @validatable={{this}} @property="startDate" />
             </EditableField>
+            <YupValidationMessage
+              @description={{t "general.startDate"}}
+              @validationErrors={{this.validations.errors.startDate}}
+              data-test-start-date-validation-error-message
+            />
           {{else}}
             {{format-date @report.startDate day="2-digit" month="2-digit" year="numeric"}}
           {{/if}}
@@ -64,7 +69,7 @@
       </div>
       <div class="block end-date" data-test-end-date>
         <label>
-          {{t "general.end"}}:
+          {{t "general.endDate"}}:
         </label>
         <span>
           {{#if @canUpdate}}
@@ -75,11 +80,16 @@
             >
               <DatePicker
                 @value={{this.endDate}}
-                @onChange={{queue (set this "endDate") (fn this.addErrorDisplayFor "endDate")}}
+                @onChange={{set this "endDate"}}
+                {{this.validations.attach "endDate"}}
                 data-test-end-date-picker
               />
-              <ValidationError @validatable={{this}} @property="endDate" />
             </EditableField>
+            <YupValidationMessage
+              @description={{t "general.endDate"}}
+              @validationErrors={{this.validations.errors.endDate}}
+              data-test-end-date-validation-error-message
+            />
           {{else}}
             {{format-date @report.endDate day="2-digit" month="2-digit" year="numeric"}}
           {{/if}}
@@ -142,13 +152,17 @@
                 value={{this.description}}
                 disabled={{this.isSaving}}
                 {{on "input" (pick "target.value" (set this "description"))}}
-                {{on "keyup" (fn this.addErrorDisplayFor "description")}}
+                {{this.validations.attach "description"}}
                 placeholder={{t "general.reportDescriptionPlaceholder"}}
               >
                 {{this.description}}
               </textarea>
-              <ValidationError @validatable={{this}} @property="description" />
             </EditableField>
+            <YupValidationMessage
+              @description={{t "general.description"}}
+              @validationErrors={{this.validations.errors.description}}
+              data-test-description-validation-error-message
+            />
           {{else}}
             {{this.description}}
           {{/if}}
