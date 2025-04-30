@@ -38,8 +38,6 @@ export default class SearchService extends Service {
   async forUsers(q, size = 100, onlySuggestEnabled = false) {
     const search = await this.search('users', q, size, onlySuggestEnabled);
 
-    console.log('forUsers search', search);
-
     if (search) {
       const { users, autocomplete } = search;
 
@@ -64,9 +62,14 @@ export default class SearchService extends Service {
         headers: this.authHeaders,
       }),
     );
-    const { results } = await response.json();
 
-    return results;
+    if (response.ok) {
+      const { results } = await response.json();
+
+      return results;
+    } else {
+      return null;
+    }
   }
 
   getUserFullName(user) {
