@@ -9,12 +9,14 @@ export default class ReportsSubjectsController extends Controller {
     { titleFilter: 'filter' },
     { showNewReportForm: 'showNewReportForm' },
     { selectedSchoolId: 'selectedSchoolId' },
+    { selectedSubject: 'selectedSubject' },
   ];
 
   @tracked sortReportsBy = 'title';
   @tracked titleFilter = null;
   @tracked showNewReportForm = false;
   @tracked selectedSchoolId = null;
+  @tracked selectedSubject = null;
   @tracked runningSubjectReport = null;
 
   changeTitleFilter = restartableTask(async (value) => {

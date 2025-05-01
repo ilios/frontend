@@ -28,7 +28,6 @@ export default class ReportsNewSubjectComponent extends Component {
   @service dataLoader;
 
   @tracked selectedPrepositionalObject;
-  @tracked selectedSubject;
   @tracked selectedPrepositionalObjectId;
   @tracked selectedTitle;
 
@@ -54,7 +53,7 @@ export default class ReportsNewSubjectComponent extends Component {
   }
 
   get subject() {
-    return this.selectedSubject ?? this.args.report?.subject ?? 'course';
+    return this.args.selectedSubject ?? this.args.report?.subject ?? 'course';
   }
 
   @Length(1, 240)
@@ -283,7 +282,7 @@ export default class ReportsNewSubjectComponent extends Component {
 
   @action
   changeSubject(subject) {
-    this.selectedSubject = subject;
+    this.args.setSelectedSubject(subject);
 
     if (this.includeAnythingObject) {
       this.changePrepositionalObject(null);

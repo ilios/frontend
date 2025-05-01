@@ -15,6 +15,10 @@ module('Integration | Component | reports/new-subject', function (hooks) {
     const user = context.server.create('user', { school });
     const userModel = await context.owner.lookup('service:store').findRecord('user', user.id);
     const exceptedSubjects = ['instructor', 'mesh term'];
+    context.set('selectedSubject', null);
+    context.set('setSelectedSubject', (subject) => {
+      context.set('selectedSubject', subject);
+    });
 
     class CurrentUserMock extends Service {
       async getModel() {
@@ -23,18 +27,31 @@ module('Integration | Component | reports/new-subject', function (hooks) {
     }
 
     context.owner.register('service:current-user', CurrentUserMock);
-    await render(hbs`<Reports::NewSubject @close={{(noop)}} />`);
-    assert.strictEqual(component.subjects.items[subjectNum].value, subjectVal);
+    await render(
+      hbs`<Reports::NewSubject @close={{(noop)}}
+  @setSelectedSchoolId={{(noop)}}
+  @selectedSubject={{this.selectedSubject}}
+  @setSelectedSubject={{this.setSelectedSubject}} />`,
+    );
+    assert.strictEqual(
+      component.subjects.items[subjectNum].value,
+      subjectVal,
+      'subject dropdown value is correct',
+    );
     await component.subjects.choose(subjectVal);
     await component.objects.choose('null');
     if (!exceptedSubjects.includes(subjectVal)) {
       assert.strictEqual(component.objects.items[0].value, '', '"Anything" is first object option');
       expectedObjects.forEach((val, i) => {
-        assert.strictEqual(component.objects.items[i + 1].value, val, `${val} is object option`);
+        assert.strictEqual(
+          component.objects.items[i + 1].value,
+          val,
+          `${val} is next object option`,
+        );
       });
     } else {
       expectedObjects.forEach((val, i) => {
-        assert.strictEqual(component.objects.items[i].value, val, `${val} is object option`);
+        assert.strictEqual(component.objects.items[i].value, val, `${val} is next object option`);
       });
     }
   };
@@ -274,7 +291,7 @@ module('Integration | Component | reports/new-subject', function (hooks) {
       displayName: 'Aardvark',
     });
     await render(hbs`<Reports::NewSubject @close={{(noop)}}
-          @setSelectedSchoolId={{(noop)}} />`);
+          @setSelectedSchoolId={{(noop)}} @setSelectedSchool={{(noop)}} />`);
     assert.notOk(component.instructor.userSearch.isVisible);
     assert.notOk(component.instructor.hasSelectedInstructor);
     await component.schools.choose('null');
