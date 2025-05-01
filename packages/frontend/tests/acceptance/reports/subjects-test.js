@@ -405,7 +405,7 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
     await percySnapshot(assert);
     assert.strictEqual(
       currentURL(),
-      '/reports/subjects?selectedSchoolId=1&selectedSubject=session&showNewReportForm=true',
+      '/reports/subjects?selectedPrepositionalObject=course&selectedPrepositionalObjectId=1&selectedSchoolId=1&selectedSubject=session&showNewReportForm=true',
     );
     assert.strictEqual(
       page.subjects.results.description,

@@ -27,25 +27,21 @@ export default class ReportsNewSubjectComponent extends Component {
   @service store;
   @service dataLoader;
 
-  @tracked selectedPrepositionalObject;
-  @tracked selectedPrepositionalObjectId;
   @tracked selectedTitle;
 
   @tracked isSaving = false;
   @tracked schoolChanged = false;
 
-  get selectedSchoolId() {
-    return this.args.selectedSchoolId ?? null;
-  }
-
   @Custom('validatePrepositionalObjectCallback', 'validatePrepositionalObjectMessageCallback')
   get prepositionalObject() {
-    return this.selectedPrepositionalObject ?? this.args.report?.prepositionalObject;
+    return this.args.selectedPrepositionalObject ?? this.args.report?.prepositionalObject;
   }
 
   @Custom('validatePrepositionalObjectIdCallback', 'validatePrepositionalObjectIdMessageCallback')
   get prepositionalObjectId() {
-    return this.selectedPrepositionalObjectId ?? this.args.report?.prepositionalObjectTableRowId;
+    return (
+      this.args.selectedPrepositionalObjectId ?? this.args.report?.prepositionalObjectTableRowId
+    );
   }
 
   get prepositionalObjectIdMissing() {
@@ -275,34 +271,13 @@ export default class ReportsNewSubjectComponent extends Component {
     return this.usersPrimarySchool;
   }
 
+  get selectedSchoolId() {
+    return this.args.selectedSchoolId ?? null;
+  }
+
   get includeAnythingObject() {
     const exceptedSubjects = ['instructor', 'mesh term'];
     return !exceptedSubjects.includes(this.subject);
-  }
-
-  @action
-  changeSubject(subject) {
-    this.args.setSelectedSubject(subject);
-
-    if (this.includeAnythingObject) {
-      this.changePrepositionalObject(null);
-    } else {
-      const firstPrepositionalObjectLabel = Object.values(this.prepositionalObjectList)
-        .map((item) => item.label)
-        .sort()[0];
-      const firstPrepositionalObject = this.fullPrepositionalObjectList.filter(
-        (item) => item.label === firstPrepositionalObjectLabel,
-      )[0].value;
-
-      this.changePrepositionalObject(firstPrepositionalObject);
-    }
-  }
-
-  @action
-  changePrepositionalObject(object, id = null) {
-    this.selectedPrepositionalObject = object;
-    this.selectedPrepositionalObjectId = id;
-    this.clearErrorDisplay();
   }
 
   keyUp(event) {
@@ -373,6 +348,31 @@ export default class ReportsNewSubjectComponent extends Component {
   changeSchool(schoolId) {
     this.args.setSelectedSchoolId(schoolId);
     this.schoolChanged = true;
+  }
+
+  @action
+  changeSubject(subject) {
+    this.args.setSelectedSubject(subject);
+
+    if (this.includeAnythingObject) {
+      this.changePrepositionalObject(null);
+    } else {
+      const firstPrepositionalObjectLabel = Object.values(this.prepositionalObjectList)
+        .map((item) => item.label)
+        .sort()[0];
+      const firstPrepositionalObject = this.fullPrepositionalObjectList.filter(
+        (item) => item.label === firstPrepositionalObjectLabel,
+      )[0].value;
+
+      this.changePrepositionalObject(firstPrepositionalObject);
+    }
+  }
+
+  @action
+  changePrepositionalObject(object, id = null) {
+    this.args.setSelectedPrepositionalObject(object);
+    this.args.setSelectedPrepositionalObjectId(id);
+    this.clearErrorDisplay();
   }
 
   @action
