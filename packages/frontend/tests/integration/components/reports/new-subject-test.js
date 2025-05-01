@@ -35,16 +35,16 @@ module('Integration | Component | reports/new-subject', function (hooks) {
     }
 
     context.owner.register('service:current-user', CurrentUserMock);
-    await render(
-      hbs`<Reports::NewSubject @close={{(noop)}}
+    await render(hbs`<Reports::NewSubject
+  @close={{(noop)}}
   @setSelectedSchoolId={{(noop)}}
   @selectedSubject={{this.selectedSubject}}
   @setSelectedSubject={{this.setSelectedSubject}}
   @selectedPrepositionalObject={{this.selectedPrepositionalObject}}
   @setSelectedPrepositionalObject={{this.setSelectedPrepositionalObject}}
   @selectedPrepositionalObjectId={{this.selectedPrepositionalObjectId}}
-  @setSelectedPrepositionalObjectId={{this.setSelectedPrepositionalObjectId}} />`,
-    );
+  @setSelectedPrepositionalObjectId={{this.setSelectedPrepositionalObjectId}}
+/>`);
     assert.strictEqual(
       component.subjects.items[subjectNum].value,
       subjectVal,
@@ -147,11 +147,12 @@ module('Integration | Component | reports/new-subject', function (hooks) {
       this.set('selectedPrepositionalObjectId', id);
     });
     await render(hbs`<Reports::NewSubject
-      @close={{(noop)}}
-      @selectedPrepositionalObject={{this.selectedPrepositionalObject}}
+  @close={{(noop)}}
+  @selectedPrepositionalObject={{this.selectedPrepositionalObject}}
   @setSelectedPrepositionalObject={{this.setSelectedPrepositionalObject}}
   @selectedPrepositionalObjectId={{this.selectedPrepositionalObjectId}}
-  @setSelectedPrepositionalObjectId={{this.setSelectedPrepositionalObjectId}} />`);
+  @setSelectedPrepositionalObjectId={{this.setSelectedPrepositionalObjectId}}
+/>`);
     await component.objects.choose('mesh term');
     assert.notOk(component.meshTerm.hasSelectedTerm);
     await component.meshTerm.meshManager.search.set('descriptor 0');
@@ -172,11 +173,12 @@ module('Integration | Component | reports/new-subject', function (hooks) {
       this.set('selectedPrepositionalObjectId', id);
     });
     await render(hbs`<Reports::NewSubject
-      @close={{(noop)}}
-      @selectedPrepositionalObject={{this.selectedPrepositionalObject}}
+  @close={{(noop)}}
+  @selectedPrepositionalObject={{this.selectedPrepositionalObject}}
   @setSelectedPrepositionalObject={{this.setSelectedPrepositionalObject}}
   @selectedPrepositionalObjectId={{this.selectedPrepositionalObjectId}}
-  @setSelectedPrepositionalObjectId={{this.setSelectedPrepositionalObjectId}} />`);
+  @setSelectedPrepositionalObjectId={{this.setSelectedPrepositionalObjectId}}
+/>`);
 
     await component.objects.choose('instructor');
     assert.notOk(component.instructor.hasSelectedInstructor);
@@ -336,11 +338,15 @@ module('Integration | Component | reports/new-subject', function (hooks) {
     this.set('setSelectedPrepositionalObjectId', (id) => {
       this.set('selectedPrepositionalObjectId', id);
     });
-    await render(hbs`<Reports::NewSubject @close={{(noop)}}
-          @setSelectedSchoolId={{(noop)}} @setSelectedSchool={{(noop)}} @selectedPrepositionalObject={{this.selectedPrepositionalObject}}
+    await render(hbs`<Reports::NewSubject
+  @close={{(noop)}}
+  @setSelectedSchoolId={{(noop)}}
+  @setSelectedSchool={{(noop)}}
+  @selectedPrepositionalObject={{this.selectedPrepositionalObject}}
   @setSelectedPrepositionalObject={{this.setSelectedPrepositionalObject}}
   @selectedPrepositionalObjectId={{this.selectedPrepositionalObjectId}}
-  @setSelectedPrepositionalObjectId={{this.setSelectedPrepositionalObjectId}} />`);
+  @setSelectedPrepositionalObjectId={{this.setSelectedPrepositionalObjectId}}
+/>`);
     assert.notOk(component.instructor.userSearch.isVisible);
     assert.notOk(component.instructor.hasSelectedInstructor);
     await component.schools.choose('null');
@@ -423,10 +429,13 @@ module('Integration | Component | reports/new-subject', function (hooks) {
     this.set('setSelectedPrepositionalObjectId', (id) => {
       this.set('selectedPrepositionalObjectId', id);
     });
-    await render(hbs`<Reports::NewSubject @close={{(noop)}} @selectedPrepositionalObject={{this.selectedPrepositionalObject}}
+    await render(hbs`<Reports::NewSubject
+  @close={{(noop)}}
+  @selectedPrepositionalObject={{this.selectedPrepositionalObject}}
   @setSelectedPrepositionalObject={{this.setSelectedPrepositionalObject}}
   @selectedPrepositionalObjectId={{this.selectedPrepositionalObjectId}}
-  @setSelectedPrepositionalObjectId={{this.setSelectedPrepositionalObjectId}} />`);
+  @setSelectedPrepositionalObjectId={{this.setSelectedPrepositionalObjectId}}
+/>`);
     await component.objects.choose('instructor');
     assert.strictEqual(component.errors.length, 0);
     await component.save();
@@ -452,10 +461,13 @@ module('Integration | Component | reports/new-subject', function (hooks) {
     this.set('setSelectedPrepositionalObjectId', (id) => {
       this.set('selectedPrepositionalObjectId', id);
     });
-    await render(hbs`<Reports::NewSubject @close={{(noop)}} @selectedPrepositionalObject={{this.selectedPrepositionalObject}}
+    await render(hbs`<Reports::NewSubject
+  @close={{(noop)}}
+  @selectedPrepositionalObject={{this.selectedPrepositionalObject}}
   @setSelectedPrepositionalObject={{this.setSelectedPrepositionalObject}}
   @selectedPrepositionalObjectId={{this.selectedPrepositionalObjectId}}
-  @setSelectedPrepositionalObjectId={{this.setSelectedPrepositionalObjectId}} />`);
+  @setSelectedPrepositionalObjectId={{this.setSelectedPrepositionalObjectId}}
+/>`);
     await component.objects.choose('mesh term');
     assert.strictEqual(component.errors.length, 0);
     await component.save();
