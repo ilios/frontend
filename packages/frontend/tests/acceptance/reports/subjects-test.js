@@ -403,7 +403,10 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
     });
     await page.subjects.list.newSubject.run();
     await percySnapshot(assert);
-    assert.strictEqual(currentURL(), '/reports/subjects?showNewReportForm=true');
+    assert.strictEqual(
+      currentURL(),
+      '/reports/subjects?selectedPrepositionalObject=course&selectedPrepositionalObjectId=1&selectedSchoolId=1&selectedSubject=session&showNewReportForm=true',
+    );
     assert.strictEqual(
       page.subjects.results.description,
       'This report shows all Sessions associated with Course "course 0" (2015) in school 0. (1)',

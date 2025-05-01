@@ -31,6 +31,14 @@
           @save={{perform this.saveNewSubjectReport}}
           @close={{@toggleNewReportForm}}
           @run={{perform this.runSubjectReport}}
+          @selectedSchoolId={{@selectedSchoolId}}
+          @setSelectedSchoolId={{@setSelectedSchoolId}}
+          @selectedSubject={{@selectedSubject}}
+          @setSelectedSubject={{@setSelectedSubject}}
+          @selectedPrepositionalObject={{@selectedPrepositionalObject}}
+          @setSelectedPrepositionalObject={{@setSelectedPrepositionalObject}}
+          @selectedPrepositionalObjectId={{@selectedPrepositionalObjectId}}
+          @setSelectedPrepositionalObjectId={{@setSelectedPrepositionalObjectId}}
         />
       {{/if}}
       {{#if this.newReport}}
