@@ -18,14 +18,25 @@ module('Integration | Component | reports/new-subject', function (hooks) {
     context.set('selectedSubject', null);
     context.set('setSelectedSubject', (subject) => {
       context.set('selectedSubject', subject);
+      assert.strictEqual(context.selectedSubject, subject, 'selected subject is correct');
     });
     context.set('selectedPrepositionalObject', null);
     context.set('setSelectedPrepositionalObject', (object) => {
       context.set('selectedPrepositionalObject', object);
+      assert.strictEqual(
+        context.selectedPrepositionalObject,
+        object,
+        'selected prepositional object is correct',
+      );
     });
     context.set('selectedPrepositionalObjectId', null);
     context.set('setSelectedPrepositionalObjectId', (id) => {
       context.set('selectedPrepositionalObjectId', id);
+      assert.strictEqual(
+        context.selectedPrepositionalObjectId,
+        id,
+        'selected prepositional object id is correct',
+      );
     });
 
     class CurrentUserMock extends Service {
@@ -141,10 +152,20 @@ module('Integration | Component | reports/new-subject', function (hooks) {
     this.set('selectedPrepositionalObject', null);
     this.set('setSelectedPrepositionalObject', (object) => {
       this.set('selectedPrepositionalObject', object);
+      assert.strictEqual(
+        this.selectedPrepositionalObject,
+        object,
+        'prepositional object is correct',
+      );
     });
     this.set('selectedPrepositionalObjectId', null);
     this.set('setSelectedPrepositionalObjectId', (id) => {
       this.set('selectedPrepositionalObjectId', id);
+      assert.strictEqual(
+        this.selectedPrepositionalObjectId,
+        id,
+        'prepositional object id is correct',
+      );
     });
     await render(hbs`<Reports::NewSubject
   @close={{(noop)}}
@@ -154,12 +175,16 @@ module('Integration | Component | reports/new-subject', function (hooks) {
   @setSelectedPrepositionalObjectId={{this.setSelectedPrepositionalObjectId}}
 />`);
     await component.objects.choose('mesh term');
-    assert.notOk(component.meshTerm.hasSelectedTerm);
+    assert.notOk(component.meshTerm.hasSelectedTerm, 'no mesh term selected');
     await component.meshTerm.meshManager.search.set('descriptor 0');
     await component.meshTerm.meshManager.searchResults[0].add();
-    assert.strictEqual(component.meshTerm.selectedTerm, 'descriptor 0');
+    assert.strictEqual(
+      component.meshTerm.selectedTerm,
+      'descriptor 0',
+      'selected mesh term is correct',
+    );
     await component.meshTerm.removeSelectedTerm();
-    assert.notOk(component.meshTerm.hasSelectedTerm);
+    assert.notOk(component.meshTerm.hasSelectedTerm, 'no mesh term selected');
   });
 
   test('selecting and de-selecting an instructor as prepositional object', async function (assert) {
@@ -167,10 +192,20 @@ module('Integration | Component | reports/new-subject', function (hooks) {
     this.set('selectedPrepositionalObject', null);
     this.set('setSelectedPrepositionalObject', (object) => {
       this.set('selectedPrepositionalObject', object);
+      assert.strictEqual(
+        this.selectedPrepositionalObject,
+        object,
+        'prepositional object is correct',
+      );
     });
     this.set('selectedPrepositionalObjectId', null);
     this.set('setSelectedPrepositionalObjectId', (id) => {
       this.set('selectedPrepositionalObjectId', id);
+      assert.strictEqual(
+        this.selectedPrepositionalObjectId,
+        id,
+        'prepositional object id is correct',
+      );
     });
     await render(hbs`<Reports::NewSubject
   @close={{(noop)}}
@@ -190,7 +225,7 @@ module('Integration | Component | reports/new-subject', function (hooks) {
   });
 
   test('choosing course selects correct objects', function (assert) {
-    assert.expect(10);
+    assert.expect(15);
     return checkObjects(this, assert, 0, 'course', [
       'academic year',
       'competency',
@@ -204,7 +239,7 @@ module('Integration | Component | reports/new-subject', function (hooks) {
   });
 
   test('choosing session selects correct objects', function (assert) {
-    assert.expect(11);
+    assert.expect(16);
     return checkObjects(this, assert, 1, 'session', [
       'academic year',
       'competency',
@@ -219,17 +254,17 @@ module('Integration | Component | reports/new-subject', function (hooks) {
   });
 
   test('choosing programs selects correct objects', function (assert) {
-    assert.expect(4);
+    assert.expect(9);
     return checkObjects(this, assert, 2, 'program', ['course', 'session']);
   });
 
   test('choosing program years selects correct objects', function (assert) {
-    assert.expect(4);
+    assert.expect(9);
     return checkObjects(this, assert, 3, 'program year', ['course', 'session']);
   });
 
   test('choosing instructor selects correct objects', function (assert) {
-    assert.expect(7);
+    assert.expect(12);
     return checkObjects(this, assert, 4, 'instructor', [
       'academic year',
       'course',
@@ -241,7 +276,7 @@ module('Integration | Component | reports/new-subject', function (hooks) {
   });
 
   test('choosing instructor group selects correct objects', function (assert) {
-    assert.expect(8);
+    assert.expect(13);
     return checkObjects(this, assert, 5, 'instructor group', [
       'academic year',
       'course',
@@ -253,7 +288,7 @@ module('Integration | Component | reports/new-subject', function (hooks) {
   });
 
   test('choosing learning material selects correct objects', function (assert) {
-    assert.expect(8);
+    assert.expect(13);
     return checkObjects(this, assert, 6, 'learning material', [
       'course',
       'instructor',
@@ -265,7 +300,7 @@ module('Integration | Component | reports/new-subject', function (hooks) {
   });
 
   test('choosing competency selects correct objects', function (assert) {
-    assert.expect(6);
+    assert.expect(11);
     return checkObjects(this, assert, 7, 'competency', [
       'academic year',
       'course',
@@ -275,7 +310,7 @@ module('Integration | Component | reports/new-subject', function (hooks) {
   });
 
   test('choosing mesh term selects correct objects', function (assert) {
-    assert.expect(5);
+    assert.expect(10);
     return checkObjects(this, assert, 8, 'mesh term', [
       'course',
       'learning material',
@@ -285,7 +320,7 @@ module('Integration | Component | reports/new-subject', function (hooks) {
   });
 
   test('choosing term selects correct objects', function (assert) {
-    assert.expect(10);
+    assert.expect(15);
     return checkObjects(this, assert, 9, 'term', [
       'academic year',
       'competency',
@@ -299,7 +334,7 @@ module('Integration | Component | reports/new-subject', function (hooks) {
   });
 
   test('choosing session type selects correct objects', function (assert) {
-    assert.expect(11);
+    assert.expect(16);
     return checkObjects(this, assert, 10, 'session type', [
       'academic year',
       'competency',
@@ -333,10 +368,20 @@ module('Integration | Component | reports/new-subject', function (hooks) {
     this.set('selectedPrepositionalObject', null);
     this.set('setSelectedPrepositionalObject', (object) => {
       this.set('selectedPrepositionalObject', object);
+      assert.strictEqual(
+        this.selectedPrepositionalObject,
+        object,
+        'prepositional object is correct',
+      );
     });
     this.set('selectedPrepositionalObjectId', null);
     this.set('setSelectedPrepositionalObjectId', (id) => {
       this.set('selectedPrepositionalObjectId', id);
+      assert.strictEqual(
+        this.selectedPrepositionalObjectId,
+        id,
+        'prepositional object id is correct',
+      );
     });
     await render(hbs`<Reports::NewSubject
   @close={{(noop)}}
@@ -424,10 +469,20 @@ module('Integration | Component | reports/new-subject', function (hooks) {
     this.set('selectedPrepositionalObject', null);
     this.set('setSelectedPrepositionalObject', (object) => {
       this.set('selectedPrepositionalObject', object);
+      assert.strictEqual(
+        this.selectedPrepositionalObject,
+        object,
+        'prepositional object is correct',
+      );
     });
     this.set('selectedPrepositionalObjectId', null);
     this.set('setSelectedPrepositionalObjectId', (id) => {
       this.set('selectedPrepositionalObjectId', id);
+      assert.strictEqual(
+        this.selectedPrepositionalObjectId,
+        id,
+        'prepositional object id is correct',
+      );
     });
     await render(hbs`<Reports::NewSubject
   @close={{(noop)}}
@@ -456,10 +511,20 @@ module('Integration | Component | reports/new-subject', function (hooks) {
     this.set('selectedPrepositionalObject', null);
     this.set('setSelectedPrepositionalObject', (object) => {
       this.set('selectedPrepositionalObject', object);
+      assert.strictEqual(
+        this.selectedPrepositionalObject,
+        object,
+        'prepositional object is correct',
+      );
     });
     this.set('selectedPrepositionalObjectId', null);
     this.set('setSelectedPrepositionalObjectId', (id) => {
       this.set('selectedPrepositionalObjectId', id);
+      assert.strictEqual(
+        this.selectedPrepositionalObjectId,
+        id,
+        'prepositional object id is correct',
+      );
     });
     await render(hbs`<Reports::NewSubject
   @close={{(noop)}}
