@@ -37,6 +37,10 @@ export default class ReportsSubjectsController extends Controller {
   @action
   toggleNewReportForm() {
     this.runningSubjectReport = null;
+    this.selectedSchoolId = null;
+    this.selectedSubject = null;
+    this.selectedPrepositionalObject = null;
+    this.selectedPrepositionalObjectId = null;
     this.showNewReportForm = !this.showNewReportForm;
   }
 }
