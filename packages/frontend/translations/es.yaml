@@ -366,6 +366,8 @@ general:
   sampleFile: Archivo de Ejemplo
   saved: Nuevo Usuario Salvó con Éxito
   schoolName: Nombre de escuela
+  schoolSessionTypeVocabulariesVisualizationNoMapping: Este tipo de sesión no se corresponde con ningún término de vocabulario de esta escuela.
+  schoolSessionTypeVocabularyVisualizationNoMapping: Este tipo de sesión no se corresponde con los términos de este vocabulario.
   searchDirectory: Busque el directorio para nuevos usuarios
   searchTheCurriculum: "Buscar el plan de estudios "
   searchUsers: Buscar usuarios

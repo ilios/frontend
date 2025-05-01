@@ -1,0 +1,5 @@
+@use "../../ilios-common/mixins" as m;
+
+.school-visualize-session-type-vocabularies-graph {
+  @include m.graph-with-data-table;
+}

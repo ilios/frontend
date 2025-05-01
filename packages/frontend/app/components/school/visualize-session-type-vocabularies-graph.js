@@ -2,32 +2,71 @@ import Component from '@glimmer/component';
 import { service } from '@ember/service';
 import { htmlSafe } from '@ember/template';
 import { map } from 'rsvp';
-import { restartableTask, timeout } from 'ember-concurrency';
+import { dropTask, restartableTask, timeout } from 'ember-concurrency';
 import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { TrackedAsyncData } from 'ember-async-data';
+import PapaParse from 'papaparse';
+import createDownloadFile from 'ilios-common/utils/create-download-file';
 
-export default class SchoolVisualizerSessionTypeVocabulariesComponent extends Component {
+export default class SchoolVisualizeSessionTypeVocabulariesGraphComponent extends Component {
   @service router;
   @service intl;
   @tracked tooltipContent = null;
   @tracked tooltipTitle = null;
+  @tracked sortBy = 'vocabularyTitle';
 
   @cached
   get outputData() {
-    return new TrackedAsyncData(this.loadData(this.args.sessionType));
-  }
-
-  get data() {
-    return this.outputData.isResolved ? this.outputData.value : [];
+    return new TrackedAsyncData(this.getData(this.args.sessionType));
   }
 
   get isLoaded() {
     return this.outputData.isResolved;
   }
 
-  async loadData(sessionType) {
+  get data() {
+    return this.outputData.isResolved ? this.outputData.value : [];
+  }
+
+  get hasData() {
+    return this.data.length;
+  }
+
+  get chartData() {
+    return this.data.filter((obj) => obj.data);
+  }
+
+  get hasChartData() {
+    return this.chartData.length;
+  }
+
+  get tableData() {
+    return this.data.map((obj) => {
+      const rhett = {};
+      rhett.vocabularyTitle = obj.label;
+      rhett.vocabularyId = obj.meta.vocabulary.id;
+      rhett.termsCount = obj.data;
+      rhett.sessionsCount = obj.meta.sessionsCount;
+      return rhett;
+    });
+  }
+
+  get sortedAscending() {
+    return this.sortBy.search(/desc/) === -1;
+  }
+
+  @action
+  setSortBy(prop) {
+    if (this.sortBy === prop) {
+      prop += ':desc';
+    }
+    this.sortBy = prop;
+  }
+
+  async getData(sessionType) {
     const sessions = await sessionType.sessions;
+
     if (!sessions.length) {
       return [];
     }
@@ -83,10 +122,10 @@ export default class SchoolVisualizerSessionTypeVocabulariesComponent extends Co
           }),
           meta: {
             vocabulary: obj.vocabulary,
+            sessionsCount: obj.sessionIds.size,
           },
         };
       })
-      .filter((obj) => obj.data !== 0)
       .sort((first, second) => {
         return first.data - second.data;
       });
@@ -116,4 +155,22 @@ export default class SchoolVisualizerSessionTypeVocabulariesComponent extends Co
       obj.meta.vocabulary.id,
     );
   }
+
+  downloadData = dropTask(async () => {
+    const data = await this.getData(this.args.sessionType);
+    const output = data.map((obj) => {
+      const rhett = {};
+      rhett[this.intl.t('general.sessionType')] = this.args.sessionType.title;
+      rhett[this.intl.t('general.vocabulary')] = obj.label;
+      rhett[this.intl.t('general.terms')] = obj.data;
+      rhett[this.intl.t('general.sessions')] = obj.meta.sessionsCount;
+      return rhett;
+    });
+    const csv = PapaParse.unparse(output);
+    createDownloadFile(
+      `ilios-school-${this.args.sessionType.id}-session-type-vocabularies.csv`,
+      csv,
+      'text/csv',
+    );
+  });
 }

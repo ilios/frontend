@@ -48,7 +48,7 @@ module('Integration | Component | school/session-type-visualize-vocabulary', fun
     assert.strictEqual(component.breadcrumb.crumbs[4].text, 'Vocabularies');
     assert.strictEqual(component.breadcrumb.crumbs[4].link, '/data/sessiontype/1/vocabularies');
     assert.strictEqual(component.breadcrumb.crumbs[5].text, 'Vocabulary 1');
-    assert.dom('svg').exists({ count: 1 });
+
     await waitFor('.loaded');
     await waitFor('svg .slice');
     assert.strictEqual(component.termsChart.chart.slices.length, 5);
