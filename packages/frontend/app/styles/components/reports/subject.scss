@@ -6,6 +6,11 @@
   .content-container {
     .report-results {
       @include cm.ilios-list-reset;
+
+      span.school {
+        display: inline-block;
+        min-width: 80px;
+      }
     }
   }
 }
