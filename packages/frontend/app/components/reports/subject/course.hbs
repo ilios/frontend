@@ -17,6 +17,13 @@
     <ul class="report-results{{if this.reportResultsExceedMax ' limited'}}" data-test-results>
       {{#each this.limitedCourses as |course|}}
         <li>
+          {{#if this.showSchool}}
+            <span class="school" data-test-school>
+              <LinkTo @route="school" @model={{course.school.id}}>
+                {{course.school.title}}:
+              </LinkTo>
+            </span>
+          {{/if}}
           {{#if this.showYear}}
             <span data-test-year>
               {{course.year}}

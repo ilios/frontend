@@ -3,11 +3,20 @@ import { attribute, create, collection, isPresent, text } from 'ember-cli-page-o
 const definition = {
   scope: '[data-test-reports-subject-course]',
   results: collection('[data-test-results] li', {
-    courseTitle: text('[data-test-title]'),
-    link: attribute('href', 'a'),
-    hasLink: isPresent('a'),
-    hasYear: isPresent('[data-test-year]'),
-    year: text('[data-test-year]'),
+    school: {
+      scope: '[data-test-school]',
+      title: text(),
+    },
+    year: {
+      scope: '[data-test-year]',
+      title: text(),
+    },
+    course: {
+      scope: '[data-test-title]',
+      title: text(),
+      link: attribute('href', 'a'),
+      hasLink: isPresent('a'),
+    },
   }),
   hasFullResultsDownloadButton: isPresent('[data-test-results] + .download'),
 };
