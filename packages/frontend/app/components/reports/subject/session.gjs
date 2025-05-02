@@ -190,8 +190,8 @@ export default class ReportsSubjectSessionComponent extends Component {
       this.intl.t('general.equipmentRequired'),
       this.intl.t('general.supplementalCurriculum'),
     ];
-    [...Array(maxObjectiveCount + 1).keys()].slice(1).map((key) => {
-      columns.push(`${this.intl.t('general.objective')} ${key}`);
+    [...Array(maxObjectiveCount + 1).keys()].slice(1).map(() => {
+      columns.push(`${this.intl.t('general.objective')}`);
     });
 
     return [columns, ...mappedResults];
