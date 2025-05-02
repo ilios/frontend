@@ -50,6 +50,10 @@ export default class ReportsSubjectCourseComponent extends Component {
     return this.currentUser.performsNonLearnerFunction;
   }
 
+  get showSchool() {
+    return !this.args.school;
+  }
+
   get showYear() {
     return !this.args.year && this.args.prepositionalObject !== 'academic year';
   }
@@ -64,11 +68,12 @@ export default class ReportsSubjectCourseComponent extends Component {
 
   get mappedCourses() {
     if (this.academicYearCrossesCalendarYearBoundaries) {
-      return this.filteredCourses.map(({ title, year, externalId }) => {
+      return this.filteredCourses.map(({ title, year, externalId, school }) => {
         return {
           title,
           year: `${year} - ${year + 1}`,
           externalId,
+          school,
         };
       });
     } else {
@@ -135,7 +140,8 @@ export default class ReportsSubjectCourseComponent extends Component {
     if (subject !== 'course') {
       throw new Error(`Report for ${subject} sent to ReportsSubjectCourseComponent`);
     }
-    const result = await this.graphql.find('courses', filters, 'id, title, year, externalId');
+    const attributes = ['id', 'title', 'year', 'externalId', 'school { id, title }'];
+    const result = await this.graphql.find('courses', filters, attributes.join(', '));
 
     return result.data.courses;
   }
@@ -183,6 +189,13 @@ export default class ReportsSubjectCourseComponent extends Component {
         <ul class="report-results{{if this.reportResultsExceedMax ' limited'}}" data-test-results>
           {{#each this.limitedCourses as |course|}}
             <li>
+              {{#if this.showSchool}}
+                <span class="school" data-test-school>
+                  <LinkTo @route="school" @model={{course.school.id}}>
+                    {{course.school.title}}:
+                  </LinkTo>
+                </span>
+              {{/if}}
               {{#if this.showYear}}
                 <span data-test-year>
                   {{course.year}}

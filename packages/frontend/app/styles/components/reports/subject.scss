@@ -13,6 +13,11 @@
       }
 
       @include cm.ilios-zebra-list;
+
+      span.school {
+        display: inline-block;
+        min-width: 80px;
+      }
     }
   }
 }
