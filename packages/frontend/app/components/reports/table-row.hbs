@@ -1,10 +1,9 @@
 <tr
-  class="reports-table-row
-    {{if (includes @decoratedReport.report.id @reportsForRemovalConfirmation) 'confirm-removal'}}"
+  class="reports-table-row{{if this.showRemoveConfirmation ' confirm-removal'}}"
   data-test-reports-table-row
 >
   <td class="text-left" data-test-report-title>
-    {{#if (eq @decoratedReport.type "subject")}}
+    {{#if this.isSubjectReport}}
       <LinkTo @route="reports.subject" @model={{@decoratedReport.report}}>
         {{@decoratedReport.title}}
       </LinkTo>
