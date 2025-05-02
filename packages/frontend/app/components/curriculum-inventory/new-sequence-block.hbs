@@ -154,10 +154,15 @@
           type="text"
           value={{this.minimum}}
           disabled={{this.save.isRunning}}
-          {{on "keyup" (queue (fn this.addErrorDisplayFor "minimum") this.saveOrCancel)}}
+          {{on "keyup" this.saveOrCancel}}
           {{on "input" (pick "target.value" (set this "minimum"))}}
+          {{this.validations.attach "minimum"}}
         />
-        <ValidationError @validatable={{this}} @property="minimum" />
+        <YupValidationMessage
+          @description={{t "general.minimum"}}
+          @validationErrors={{this.validations.errors.minimum}}
+          data-test-minimum-validation-error-message
+        />
       </div>
       <div class="item maximum" data-test-maximum>
         <label for="maximum-{{templateId}}">

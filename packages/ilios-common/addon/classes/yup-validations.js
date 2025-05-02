@@ -150,9 +150,9 @@ function setupErrorMessages() {
       url: isURL(),
     },
     number: {
-      equalOrMoreThan: equalToOrMoreThan(),
       integer: isInteger(),
       lessThan: lessThan(),
+      min: minimum(),
       moreThan: moreThan(),
     },
   });
@@ -248,14 +248,14 @@ function lessThan() {
   };
 }
 
-function equalToOrMoreThan() {
+function minimum() {
   return (validationParams) => {
     //our current translations expects this key to be named gt and not more as it is in yup
-    const gte = validationParams.gte;
+    const min = validationParams.min;
     return {
       path: validationParams.path,
-      messageKey: 'errors.greaterThanOrEqualTo',
-      values: { gte },
+      messageKey: 'errors.minimum',
+      values: { min },
     };
   };
 }

@@ -48,7 +48,7 @@ export default class CurriculumInventoryNewSequenceBlock extends Component {
   @Gte(0)
   @Custom('validateMaximumCallback', 'validateMaximumMessageCallback')
   maximum = 0;
-  @tracked @NotBlank() @IsInt() @Gte(0) minimum = 0;
+  @tracked minimum = 0;
   @tracked required;
   @tracked title;
   @tracked track = false;
@@ -72,6 +72,7 @@ export default class CurriculumInventoryNewSequenceBlock extends Component {
 
   validations = new YupValidations(this, {
     title: string().trim().required().max(200),
+    minimum: number().required().integer().min(0),
     duration: number()
       .integer()
       .lessThan(1201)
@@ -367,7 +368,6 @@ export default class CurriculumInventoryNewSequenceBlock extends Component {
     this.addErrorDisplaysFor([
       'startDate',
       'endDate',
-      'minimum',
       'maximum',
       'startingAcademicLevel',
       'endingAcademicLevel',

@@ -472,11 +472,10 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
         <NewSequenceBlock @report={{this.report}} @save={{(noop)}} @cancel={{(noop)}} />
       </template>,
     );
-
-    assert.strictEqual(component.minimum.errors.length, 0);
+    assert.notOk(component.minimum.hasError);
     await component.minimum.set('-1');
     await component.save();
-    assert.strictEqual(component.minimum.errors.length, 1);
+    assert.strictEqual(component.minimum.error, 'Minimum must be greater than or equal to 0');
   });
 
   test('save fails when minimum is empty', async function (assert) {
@@ -491,10 +490,30 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
       </template>,
     );
 
-    assert.strictEqual(component.minimum.errors.length, 0);
+    assert.notOk(component.minimum.hasError);
     await component.minimum.set('');
     await component.save();
-    assert.strictEqual(component.minimum.errors.length, 1);
+    assert.strictEqual(component.minimum.error, 'Minimum must be a number');
+  });
+
+  test('save fails when minimum is not an integer', async function (assert) {
+    const reportModel = await this.owner
+      .lookup('service:store')
+      .findRecord('curriculum-inventory-report', this.report.id);
+    this.set('report', reportModel);
+
+    await render(
+      hbs`<CurriculumInventory::NewSequenceBlock
+  @report={{this.report}}
+  @save={{(noop)}}
+  @cancel={{(noop)}}
+/>`,
+    );
+
+    assert.notOk(component.minimum.hasError);
+    await component.minimum.set('1.5');
+    await component.save();
+    assert.strictEqual(component.minimum.error, 'Minimum must be an integer');
   });
 
   test('save fails when maximum is empty', async function (assert) {

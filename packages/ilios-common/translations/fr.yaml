@@ -433,7 +433,7 @@ errors:
   inclusion: "{description} ne figure pas dans la liste"
   invalid: "{description} est invalide"
   lessThan: "{description} doit être inférieure à {lt}"
-  lessThanOrEqualTo: "{description} doit être supérieure ou inférieure à {lte}"
+  minimum: "{description} doit être supérieur ou égal à {min}"
   missingFile: Fichier manquant
   notANumber: "{description} doit contenir une valeur numérique"
   notAnInteger: "{description} doit être un entier"
