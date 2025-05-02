@@ -173,10 +173,15 @@
           type="text"
           value={{this.maximum}}
           disabled={{this.save.isRunning}}
-          {{on "keyup" (queue (fn this.addErrorDisplayFor "maximum") this.saveOrCancel)}}
+          {{on "keyup" this.saveOrCancel}}
           {{on "input" (pick "target.value" (set this "maximum"))}}
+          {{this.validations.attach "maximum"}}
         />
-        <ValidationError @validatable={{this}} @property="maximum" />
+        <YupValidationMessage
+          @description={{t "general.maximum"}}
+          @validationErrors={{this.validations.errors.maximum}}
+          data-test-maximum-validation-error-message
+        />
       </div>
       <div class="item starting-academic-level" data-test-starting-academic-level>
         <label for="starting-academic-level-{{templateId}}">

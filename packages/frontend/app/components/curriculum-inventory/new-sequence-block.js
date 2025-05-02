@@ -5,14 +5,7 @@ import { service } from '@ember/service';
 import { dropTask } from 'ember-concurrency';
 import { ValidateIf } from 'class-validator';
 import { TrackedAsyncData } from 'ember-async-data';
-import {
-  validatable,
-  AfterDate,
-  Custom,
-  IsInt,
-  Gte,
-  NotBlank,
-} from 'ilios-common/decorators/validation';
+import { validatable, AfterDate, Custom, NotBlank } from 'ilios-common/decorators/validation';
 import { findById } from 'ilios-common/utils/array-helpers';
 import YupValidations from 'ilios-common/classes/yup-validations';
 import { string, number } from 'yup';
@@ -42,12 +35,7 @@ export default class CurriculumInventoryNewSequenceBlock extends Component {
   @AfterDate('startDate', { granularity: 'day' })
   endDate;
   @tracked orderInSequence = null;
-  @tracked
-  @NotBlank()
-  @IsInt()
-  @Gte(0)
-  @Custom('validateMaximumCallback', 'validateMaximumMessageCallback')
-  maximum = 0;
+  @tracked maximum = 0;
   @tracked minimum = 0;
   @tracked required;
   @tracked title;
@@ -73,6 +61,27 @@ export default class CurriculumInventoryNewSequenceBlock extends Component {
   validations = new YupValidations(this, {
     title: string().trim().required().max(200),
     minimum: number().required().integer().min(0),
+    maximum: number()
+      .required()
+      .integer()
+      .min(0)
+      .test(
+        'more-than-or-equal-to-minimum',
+        (d) => {
+          return {
+            path: d.path,
+            messageKey: 'errors.greaterThanOrEqualTo',
+            values: {
+              gte: this.intl.t('general.minimum'),
+            },
+          };
+        },
+        (value) => {
+          const max = parseInt(value, 10) || 0;
+          const min = parseInt(this.minimum, 10) || 0;
+          return max >= min;
+        },
+      ),
     duration: number()
       .integer()
       .lessThan(1201)
@@ -304,21 +313,6 @@ export default class CurriculumInventoryNewSequenceBlock extends Component {
   }
 
   @action
-  validateMaximumCallback() {
-    const max = parseInt(this.maximum, 10) || 0;
-    const min = parseInt(this.minimum, 10) || 0;
-    return max >= min;
-  }
-
-  @action
-  validateMaximumMessageCallback() {
-    return this.intl.t('errors.greaterThanOrEqualTo', {
-      gte: this.intl.t('general.minimum'),
-      description: this.intl.t('general.maximum'),
-    });
-  }
-
-  @action
   async validateStartingEndingLevelCallback() {
     // In case no user selection has been made (yet), we'll use default values for comparison.
     const defaultStartingAcademicLevel = await this.getDefaultStartingAcademicLevel(
@@ -350,25 +344,10 @@ export default class CurriculumInventoryNewSequenceBlock extends Component {
     });
   }
 
-  @action
-  validateDurationCallback() {
-    const duration = parseInt(this.duration, 10);
-    return this.linkedCourseIsClerkship ? duration >= 1 : duration >= 0;
-  }
-
-  @action
-  validateDurationMessageCallback() {
-    return this.intl.t('errors.greaterThanOrEqualTo', {
-      gte: this.linkedCourseIsClerkship ? 1 : 0,
-      description: this.intl.t('general.duration'),
-    });
-  }
-
   save = dropTask(async () => {
     this.addErrorDisplaysFor([
       'startDate',
       'endDate',
-      'maximum',
       'startingAcademicLevel',
       'endingAcademicLevel',
     ]);

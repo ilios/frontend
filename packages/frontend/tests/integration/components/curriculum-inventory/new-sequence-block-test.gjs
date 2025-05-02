@@ -450,15 +450,11 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
       </template>,
     );
 
-    assert.strictEqual(component.maximum.errors.length, 0);
+    assert.notOk(component.maximum.hasError);
     await component.minimum.set('10');
     await component.maximum.set('5');
     await component.save();
-    assert.strictEqual(component.maximum.errors.length, 1);
-    assert.strictEqual(
-      component.maximum.errors[0].text,
-      'Maximum must be greater than or equal to Minimum',
-    );
+    assert.strictEqual(component.maximum.error, 'Maximum must be greater than or equal to Minimum');
   });
 
   test('save fails when minimum is less than zero', async function (assert) {
@@ -528,10 +524,50 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
       </template>,
     );
 
-    assert.strictEqual(component.maximum.errors.length, 0);
+    assert.notOk(component.maximum.hasError);
     await component.maximum.set('');
     await component.save();
-    assert.strictEqual(component.maximum.errors.length, 1);
+    assert.strictEqual(component.maximum.error, 'Maximum must be a number');
+  });
+
+  test('save fails when maximum is not an integer', async function (assert) {
+    const reportModel = await this.owner
+      .lookup('service:store')
+      .findRecord('curriculum-inventory-report', this.report.id);
+    this.set('report', reportModel);
+
+    await render(
+      hbs`<CurriculumInventory::NewSequenceBlock
+  @report={{this.report}}
+  @save={{(noop)}}
+  @cancel={{(noop)}}
+/>`,
+    );
+
+    assert.notOk(component.maximum.hasError);
+    await component.maximum.set('1.5');
+    await component.save();
+    assert.strictEqual(component.maximum.error, 'Maximum must be an integer');
+  });
+
+  test('save fails when maximum is less than zero', async function (assert) {
+    const reportModel = await this.owner
+      .lookup('service:store')
+      .findRecord('curriculum-inventory-report', this.report.id);
+    this.set('report', reportModel);
+
+    await render(
+      hbs`<CurriculumInventory::NewSequenceBlock
+  @report={{this.report}}
+  @save={{(noop)}}
+  @cancel={{(noop)}}
+/>`,
+    );
+    assert.notOk(component.maximum.hasError);
+    await component.minimum.set('-1');
+    await component.maximum.set('-1');
+    await component.save();
+    assert.strictEqual(component.maximum.error, 'Maximum must be greater than or equal to 0');
   });
 
   test('save fails when starting level is higher than ending academic level', async function (assert) {
