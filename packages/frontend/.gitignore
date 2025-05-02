@@ -15,9 +15,6 @@
 /testem.log
 /yarn-error.log
 
-lcov.dat
-sauce-example.log
-
 # broccoli-debug
 /DEBUG/
 
