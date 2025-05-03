@@ -1,10 +1,12 @@
 import Controller from '@ember/controller';
+import { action } from '@ember/object';
 import { service } from '@ember/service';
 import { filter } from 'rsvp';
 import { cached, tracked } from '@glimmer/tracking';
 import { TrackedAsyncData } from 'ember-async-data';
 
 export default class UserController extends Controller {
+  @service router;
   @service store;
   @service permissionChecker;
   @service iliosConfig;
@@ -61,5 +63,10 @@ export default class UserController extends Controller {
       return this.permissionChecker.canCreateUser(school);
     });
     return schoolsWithCreateUserPermission.length > 0;
+  }
+
+  @action
+  selectEvent(event) {
+    this.router.transitionTo('events', event.slug);
   }
 }
