@@ -1,0 +1,14 @@
+<div class="school-filter" data-test-report-subject-school-filter>
+  <label>{{t "general.school"}}
+    <select data-test-school-filter {{on "change" (pick "target.value" @changeSchool)}}>
+      <option selected={{is-empty @selectedSchool}} value="">
+        {{t "general.allSchools"}}
+      </option>
+      {{#each (sort-by "title:desc" this.allSchools) as |school|}}
+        <option value={{school.id}} selected={{eq school.id @selectedSchool}}>
+          {{school.title}}
+        </option>
+      {{/each}}
+    </select>
+  </label>
+</div>

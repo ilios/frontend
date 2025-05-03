@@ -40,5 +40,11 @@
   {{#if @showYearFilter}}
     <Reports::SubjectYearFilter @selectedYear={{@year}} @changeYear={{@changeYear}} />
   {{/if}}
+  {{#if @showSchoolFilter}}
+    <Reports::Subject::SchoolFilter
+      @selectedSchool={{@filterSchool}}
+      @changeSchool={{@changeFilterSchool}}
+    />
+  {{/if}}
   <Reports::SubjectDescription @description={{@description}} @resultsLength={{@resultsLength}} />
 </div>
