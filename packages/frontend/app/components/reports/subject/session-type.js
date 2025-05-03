@@ -11,6 +11,13 @@ export default class ReportsSubjectSessionTypeComponent extends Component {
   @service intl;
 
   resultsLengthMax = 200;
+  controller = new AbortController();
+  signal = this.controller.signal;
+
+  cancelCurrentRun() {
+    this.controller = new AbortController();
+    this.signal = this.controller.signal;
+  }
 
   @cached
   get allSessionTypesData() {
@@ -65,7 +72,18 @@ export default class ReportsSubjectSessionTypeComponent extends Component {
       prepositionalObjectTableRowId,
       school,
     );
-    const result = await this.graphql.find('sessionTypes', filters, 'title');
+
+    if (this.graphql.findTask.isRunning) {
+      this.controller.abort('running query canceled so new one could run');
+    }
+    this.cancelCurrentRun();
+
+    const result = await this.graphql.findTask.perform(
+      'sessionTypes',
+      filters,
+      'title',
+      this.signal,
+    );
     return result.data.sessionTypes.map(({ title }) => title);
   }
 

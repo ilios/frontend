@@ -14,6 +14,13 @@ export default class ReportsSubjectCourseComponent extends Component {
   @service intl;
 
   resultsLengthMax = 200;
+  controller = new AbortController();
+  signal = this.controller.signal;
+
+  cancelCurrentRun() {
+    this.controller = new AbortController();
+    this.signal = this.controller.signal;
+  }
 
   crossesBoundaryConfig = new TrackedAsyncData(
     this.iliosConfig.itemFromConfig('academicYearCrossesCalendarYearBoundaries'),
@@ -121,15 +128,28 @@ export default class ReportsSubjectCourseComponent extends Component {
   }
 
   async getReportResults(subject, prepositionalObject, prepositionalObjectTableRowId, school) {
+    if (subject !== 'course') {
+      throw new Error(`Report for ${subject} sent to ReportsSubjectCourseComponent`);
+    }
+
     const filters = await this.getGraphQLFilters(
       prepositionalObject,
       prepositionalObjectTableRowId,
       school,
     );
-    if (subject !== 'course') {
-      throw new Error(`Report for ${subject} sent to ReportsSubjectCourseComponent`);
+
+    if (this.graphql.findTask.isRunning) {
+      this.controller.abort('running query canceled so new one could run');
     }
-    const result = await this.graphql.find('courses', filters, 'id, title, year, externalId');
+    this.cancelCurrentRun();
+
+    const attributes = ['id', 'title', 'year', 'externalId'];
+    const result = await this.graphql.findTask.perform(
+      'courses',
+      filters,
+      attributes.join(','),
+      this.signal,
+    );
 
     return result.data.courses;
   }

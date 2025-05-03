@@ -1,5 +1,6 @@
 import Service, { service } from '@ember/service';
 import { waitForPromise } from '@ember/test-waiters';
+import { task } from 'ember-concurrency';
 
 export default class GraphqlService extends Service {
   @service session;
@@ -38,6 +39,45 @@ export default class GraphqlService extends Service {
 
   async find(endpoint, filters, attributes) {
     const filterString = filters.length ? '(' + filters.join(', ') + ')' : '';
-    return waitForPromise(this.#query(`query { ${endpoint}${filterString} { ${attributes} } }`));
+    const result = this.#query(`query { ${endpoint}${filterString} { ${attributes} } }`);
+    return waitForPromise(result);
   }
+
+  findTask = task(async (endpoint, filters, attributes, signal) => {
+    console.log('graphql findTask started');
+    const filterString = filters.length ? '(' + filters.join(', ') + ')' : '';
+    const url = `${this.host}/api/graphql`;
+    const headers = this.authHeaders;
+    headers['Content-Type'] = 'application/json';
+    headers['Accept'] = 'application/json';
+    const q = `query { ${endpoint}${filterString} { ${attributes} } }`;
+
+    let response = null;
+    try {
+      response = await fetch(url, {
+        method: 'POST',
+        headers,
+        body: JSON.stringify({ query: q }),
+        signal,
+      });
+
+      return response.json();
+    } catch (e) {
+      if (signal.aborted) {
+        if (signal.reason) {
+          console.log(`graphql canceled with reason: ${signal.reason}`);
+        } else {
+          console.warn('graphql canceled but no reason was given.');
+        }
+      } else {
+        console.error('graphql failed due to unknown error', e);
+      }
+
+      return {
+        error: 'bad stuff',
+      };
+    } finally {
+      console.log('graphql findTask completed', response);
+    }
+  });
 }
