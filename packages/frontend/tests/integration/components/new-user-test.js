@@ -69,15 +69,15 @@ module('Integration | Component | new user', function (hooks) {
     await render(hbs`<NewUser @close={{(noop)}} />`);
     await component.submit();
 
-    assert.ok(component.firstName.hasError);
-    assert.notOk(component.middleName.hasError);
-    assert.ok(component.lastName.hasError);
-    assert.notOk(component.campusId.hasError);
-    assert.notOk(component.otherId.hasError);
-    assert.ok(component.email.hasError);
-    assert.notOk(component.phone.hasError);
-    assert.ok(component.username.hasError);
-    assert.ok(component.password.hasError);
+    assert.ok(component.firstName.hasError, 'first name has error');
+    assert.notOk(component.middleName.hasError, 'middle name has NO error');
+    assert.ok(component.lastName.hasError, 'last name has error');
+    assert.notOk(component.campusId.hasError, 'campusID has NO error');
+    assert.notOk(component.otherId.hasError, 'otherID has NO error');
+    assert.ok(component.email.hasError, 'email has error');
+    assert.notOk(component.phone.hasError, 'phone has NO error');
+    assert.ok(component.username.hasError, 'username has error');
+    assert.ok(component.password.hasError, 'password has error');
   });
 
   test('create new user', async function (assert) {
