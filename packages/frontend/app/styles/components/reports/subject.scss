@@ -1,8 +1,6 @@
 @use "../../ilios-common/colors" as c;
 @use "../../ilios-common/mixins" as cm;
 
-@use "sass:color";
-
 .reports-subject {
   @include cm.main-section;
 
