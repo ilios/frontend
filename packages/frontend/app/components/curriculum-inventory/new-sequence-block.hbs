@@ -187,41 +187,51 @@
         <label for="starting-academic-level-{{templateId}}">
           {{t "general.startLevel"}}:
         </label>
-        {{#if this.defaultStartingAcademicLevel}}
+        {{#if this.defaultStartLevel}}
           <select
             id="starting-academic-level-{{templateId}}"
             disabled={{this.save.isRunning}}
-            {{on "change" (pick "target.value" this.setStartingAcademicLevel)}}
+            {{on "change" (pick "target.value" this.setStartLevel)}}
+            {{this.validations.attach "startLevel"}}
           >
             {{#each (sort-by "level" this.academicLevels) as |obj|}}
               <option
                 value={{obj.id}}
-                selected={{eq obj.id this.defaultStartingAcademicLevel.id}}
+                selected={{eq obj.id this.defaultStartLevel.id}}
               >{{obj.name}}</option>
             {{/each}}
           </select>
         {{/if}}
-        <ValidationError @validatable={{this}} @property="startingAcademicLevel" />
+        <YupValidationMessage
+          @description={{t "general.startLevel"}}
+          @validationErrors={{this.validations.errors.startLevel}}
+          data-test-start-level-validation-error-message
+        />
       </div>
       <div class="item ending-academic-level" data-test-ending-academic-level>
         <label for="ending-academic-level-{{templateId}}">
           {{t "general.endLevel"}}:
         </label>
-        {{#if this.defaultEndingAcademicLevel}}
+        {{#if this.defaultEndLevel}}
           <select
             id="ending-academic-level-{{templateId}}"
             disabled={{this.save.isRunning}}
-            {{on "change" (pick "target.value" this.setEndingAcademicLevel)}}
+            {{on "change" (pick "target.value" this.setEndLevel)}}
+            {{this.validations.attach "endLevel"}}
           >
             {{#each (sort-by "level" this.academicLevels) as |obj|}}
               <option
                 value={{obj.id}}
-                selected={{eq obj.id this.defaultEndingAcademicLevel.id}}
+                selected={{eq obj.id this.defaultEndLevel.id}}
               >{{obj.name}}</option>
             {{/each}}
           </select>
         {{/if}}
-        <ValidationError @validatable={{this}} @property="endingAcademicLevel" />
+        <YupValidationMessage
+          @description={{t "general.endLevel"}}
+          @validationErrors={{this.validations.errors.endLevel}}
+          data-test-end-level-validation-error-message
+        />
       </div>
       <div class="item child-sequence-order" data-test-child-sequence-order>
         <label for="child-sequence-order-{{templateId}}">

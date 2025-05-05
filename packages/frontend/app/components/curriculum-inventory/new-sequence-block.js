@@ -5,22 +5,18 @@ import { service } from '@ember/service';
 import { dropTask } from 'ember-concurrency';
 import { ValidateIf } from 'class-validator';
 import { TrackedAsyncData } from 'ember-async-data';
-import { validatable, AfterDate, Custom, NotBlank } from 'ilios-common/decorators/validation';
+import { validatable, AfterDate, NotBlank } from 'ilios-common/decorators/validation';
 import { findById } from 'ilios-common/utils/array-helpers';
 import YupValidations from 'ilios-common/classes/yup-validations';
-import { string, number } from 'yup';
+import { string, mixed, number } from 'yup';
 
 @validatable
 export default class CurriculumInventoryNewSequenceBlock extends Component {
   @service intl;
   @service store;
 
-  @tracked
-  @Custom('validateStartingEndingLevelCallback', 'validateStartingLevelMessageCallback')
-  startingAcademicLevel;
-  @tracked
-  @Custom('validateStartingEndingLevelCallback', 'validateEndingLevelMessageCallback')
-  endingAcademicLevel;
+  @tracked startLevel;
+  @tracked endLevel;
   @tracked childSequenceOrder;
   @tracked course;
   @tracked description;
@@ -59,6 +55,52 @@ export default class CurriculumInventoryNewSequenceBlock extends Component {
   }
 
   validations = new YupValidations(this, {
+    startLevel: mixed().test(
+      'start-level-lte-end-level',
+      (d) => {
+        return {
+          path: d.path,
+          messageKey: 'errors.lessThanOrEqualTo',
+          values: {
+            lte: this.intl.t('general.endLevel'),
+          },
+        };
+      },
+      async (value) => {
+        // In case no user selection has been made (yet), we'll use default values for comparison.
+        const defaultStartLevel = await this.getDefaultStartLevel(
+          this.args.report,
+          this.args.parent,
+        );
+        const defaultEndLevel = await this.getDefaultEndLevel(this.args.report, this.args.parent);
+        const startLevel = value || defaultStartLevel;
+        const endLevel = this.endLevel || defaultEndLevel;
+        return endLevel.level >= startLevel.level;
+      },
+    ),
+    endLevel: mixed().test(
+      'end-level-gte-start-level',
+      (d) => {
+        return {
+          path: d.path,
+          messageKey: 'errors.greaterThanOrEqualTo',
+          values: {
+            gte: this.intl.t('general.startLevel'),
+          },
+        };
+      },
+      async (value) => {
+        // In case no user selection has been made (yet), we'll use default values for comparison.
+        const defaultStartLevel = await this.getDefaultStartLevel(
+          this.args.report,
+          this.args.parent,
+        );
+        const defaultEndLevel = await this.getDefaultEndLevel(this.args.report, this.args.parent);
+        const startLevel = this.startLevel || defaultStartLevel;
+        const endLevel = value || defaultEndLevel;
+        return endLevel.level >= startLevel.level;
+      },
+    ),
     title: string().trim().required().max(200),
     minimum: number().required().integer().min(0),
     maximum: number()
@@ -180,19 +222,15 @@ export default class CurriculumInventoryNewSequenceBlock extends Component {
   }
 
   @cached
-  get defaultStartingAcademicLevelData() {
-    return new TrackedAsyncData(
-      this.getDefaultStartingAcademicLevel(this.args.report, this.args.parent),
-    );
+  get defaultStartLevelData() {
+    return new TrackedAsyncData(this.getDefaultStartLevel(this.args.report, this.args.parent));
   }
 
-  get defaultStartingAcademicLevel() {
-    return this.defaultStartingAcademicLevelData.isResolved
-      ? this.defaultStartingAcademicLevelData.value
-      : null;
+  get defaultStartLevel() {
+    return this.defaultStartLevelData.isResolved ? this.defaultStartLevelData.value : null;
   }
 
-  async getDefaultStartingAcademicLevel(report, parent) {
+  async getDefaultStartLevel(report, parent) {
     if (parent) {
       return await parent.startingAcademicLevel;
     }
@@ -202,19 +240,15 @@ export default class CurriculumInventoryNewSequenceBlock extends Component {
   }
 
   @cached
-  get defaultEndingAcademicLevelData() {
-    return new TrackedAsyncData(
-      this.getDefaultEndingAcademicLevel(this.args.report, this.args.parent),
-    );
+  get defaultEndLevelData() {
+    return new TrackedAsyncData(this.getDefaultEndLevel(this.args.report, this.args.parent));
   }
 
-  get defaultEndingAcademicLevel() {
-    return this.defaultEndingAcademicLevelData.isResolved
-      ? this.defaultEndingAcademicLevelData.value
-      : null;
+  get defaultEndLevel() {
+    return this.defaultEndLevelData.isResolved ? this.defaultEndLevelData.value : null;
   }
 
-  async getDefaultEndingAcademicLevel(report, parent) {
+  async getDefaultEndLevel(report, parent) {
     if (parent) {
       return await parent.endingAcademicLevel;
     }
@@ -274,13 +308,13 @@ export default class CurriculumInventoryNewSequenceBlock extends Component {
   }
 
   @action
-  setStartingAcademicLevel(id) {
-    this.startingAcademicLevel = findById(this.academicLevels, id);
+  setStartLevel(id) {
+    this.startLevel = findById(this.academicLevels, id);
   }
 
   @action
-  setEndingAcademicLevel(id) {
-    this.endingAcademicLevel = findById(this.academicLevels, id);
+  setEndLevel(id) {
+    this.endLevel = findById(this.academicLevels, id);
   }
 
   @action
@@ -312,45 +346,8 @@ export default class CurriculumInventoryNewSequenceBlock extends Component {
     }
   }
 
-  @action
-  async validateStartingEndingLevelCallback() {
-    // In case no user selection has been made (yet), we'll use default values for comparison.
-    const defaultStartingAcademicLevel = await this.getDefaultStartingAcademicLevel(
-      this.args.report,
-      this.args.parent,
-    );
-    const defaultEndingAcademicLevel = await this.getDefaultEndingAcademicLevel(
-      this.args.report,
-      this.args.parent,
-    );
-    const startingAcademicLevel = this.startingAcademicLevel || defaultStartingAcademicLevel;
-    const endingAcademicLevel = this.endingAcademicLevel || defaultEndingAcademicLevel;
-    return endingAcademicLevel.level >= startingAcademicLevel.level;
-  }
-
-  @action
-  validateStartingLevelMessageCallback() {
-    return this.intl.t('errors.lessThanOrEqualTo', {
-      lte: this.intl.t('general.endLevel'),
-      description: this.intl.t('general.startLevel'),
-    });
-  }
-
-  @action
-  validateEndingLevelMessageCallback() {
-    return this.intl.t('errors.greaterThanOrEqualTo', {
-      gte: this.intl.t('general.startLevel'),
-      description: this.intl.t('general.endLevel'),
-    });
-  }
-
   save = dropTask(async () => {
-    this.addErrorDisplaysFor([
-      'startDate',
-      'endDate',
-      'startingAcademicLevel',
-      'endingAcademicLevel',
-    ]);
+    this.addErrorDisplaysFor(['startDate', 'endDate']);
     let isValid = await this.isValid();
     if (!isValid) {
       return false;
@@ -363,21 +360,15 @@ export default class CurriculumInventoryNewSequenceBlock extends Component {
     }
     this.validations.clearErrorDisplay();
 
-    const defaultStartingAcademicLevel = await this.getDefaultStartingAcademicLevel(
-      this.args.report,
-      this.args.parent,
-    );
-    const defaultEndingAcademicLevel = await this.getDefaultEndingAcademicLevel(
-      this.args.report,
-      this.args.parent,
-    );
+    const defaultStartLevel = await this.getDefaultStartLevel(this.args.report, this.args.parent);
+    const defaultEndLevel = await this.getDefaultEndLevel(this.args.report, this.args.parent);
 
     const block = this.store.createRecord('curriculum-inventory-sequence-block', {
       title: this.title,
       description: this.description,
       parent: this.args.parent,
-      startingAcademicLevel: this.startingAcademicLevel || defaultStartingAcademicLevel,
-      endingAcademicLevel: this.endingAcademicLevel || defaultEndingAcademicLevel,
+      startingAcademicLevel: this.startLevel || defaultStartLevel,
+      endingAcademicLevel: this.endLevel || defaultEndLevel,
       required: this.required.id,
       track: this.track,
       orderInSequence: this.orderInSequence ?? this.defaultOrderInSequence,

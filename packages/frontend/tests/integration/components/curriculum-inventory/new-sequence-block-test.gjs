@@ -581,13 +581,19 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
         <NewSequenceBlock @report={{this.report}} @save={{(noop)}} @cancel={{(noop)}} />
       </template>,
     );
-    assert.strictEqual(component.startLevel.errors.length, 0);
-    assert.strictEqual(component.endLevel.errors.length, 0);
+    assert.notOk(component.startLevel.hasError);
+    assert.notOk(component.endLevel.hasError);
     await component.startLevel.select(this.academicLevels[8].level);
     await component.endLevel.select(this.academicLevels[2].level);
     await component.save();
-    assert.strictEqual(component.startLevel.errors.length, 1);
-    assert.strictEqual(component.endLevel.errors.length, 1);
+    assert.strictEqual(
+      component.startLevel.error,
+      'Start Level must be less than or equal to End Level',
+    );
+    assert.strictEqual(
+      component.endLevel.error,
+      'End Level must be greater than or equal to Start Level',
+    );
   });
 
   test('save with date range and a zero duration', async function (assert) {

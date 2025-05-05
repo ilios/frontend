@@ -433,6 +433,7 @@ errors:
   inclusion: "{description} is not included in the list"
   invalid: "{description} is invalid"
   lessThan: "{description} must be less than {lt}"
+  lessThanOrEqualTo: "{description} must be less than or equal to {lte}"
   minimum: "{description} must be greater than or equal to {min}"
   missingFile: Missing file
   notANumber: "{description} must be a number"

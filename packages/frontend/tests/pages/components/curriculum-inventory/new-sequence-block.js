@@ -109,7 +109,8 @@ const definition = {
     options: collection('option', {
       isSelected: property('selected'),
     }),
-    errors: collection('.validation-error-message'),
+    hasError: isPresent('[data-test-start-level-validation-error-message]'),
+    error: text('[data-test-start-level-validation-error-message]'),
   },
   endLevel: {
     scope: '[data-test-ending-academic-level]',
@@ -119,7 +120,8 @@ const definition = {
     options: collection('option', {
       isSelected: property('selected'),
     }),
-    errors: collection('.validation-error-message'),
+    hasError: isPresent('[data-test-end-level-validation-error-message]'),
+    error: text('[data-test-end-level-validation-error-message]'),
   },
   childSequenceOrder: {
     scope: '[data-test-child-sequence-order]',
