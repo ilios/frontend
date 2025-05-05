@@ -52,12 +52,12 @@ module('Integration | Component | reports/new-subject', function (hooks) {
         <NewSubject
           @close={{(noop)}}
           @setSelectedSchoolId={{(noop)}}
-          @selectedSubject={{this.selectedSubject}}
-          @setSelectedSubject={{this.setSelectedSubject}}
-          @selectedPrepositionalObject={{this.selectedPrepositionalObject}}
-          @setSelectedPrepositionalObject={{this.setSelectedPrepositionalObject}}
-          @selectedPrepositionalObjectId={{this.selectedPrepositionalObjectId}}
-          @setSelectedPrepositionalObjectId={{this.setSelectedPrepositionalObjectId}}
+          @selectedSubject={{context.selectedSubject}}
+          @setSelectedSubject={{context.setSelectedSubject}}
+          @selectedPrepositionalObject={{context.selectedPrepositionalObject}}
+          @setSelectedPrepositionalObject={{context.setSelectedPrepositionalObject}}
+          @selectedPrepositionalObjectId={{context.selectedPrepositionalObjectId}}
+          @setSelectedPrepositionalObjectId={{context.setSelectedPrepositionalObjectId}}
         />
       </template>,
     );

@@ -48,11 +48,11 @@ module('Integration | Component | school session attributes manager', function (
     await render(
       <template>
         <SchoolSessionAttributesManager
-          @showSessionAttendanceRequired={{this.showSessionAttendanceRequired}}
-          @showSessionSupplemental={{this.showSessionSupplemental}}
-          @showSessionSpecialAttireRequired={{this.showSessionSpecialAttireRequired}}
-          @showSessionSpecialEquipmentRequired={{this.showSessionSpecialEquipmentRequired}}
-          @enable={{this.enable}}
+          @showSessionAttendanceRequired={{context.showSessionAttendanceRequired}}
+          @showSessionSupplemental={{context.showSessionSupplemental}}
+          @showSessionSpecialAttireRequired={{context.showSessionSpecialAttireRequired}}
+          @showSessionSpecialEquipmentRequired={{context.showSessionSpecialEquipmentRequired}}
+          @enable={{context.enable}}
           @disable={{(noop)}}
         />
       </template>,
@@ -105,12 +105,12 @@ module('Integration | Component | school session attributes manager', function (
     await render(
       <template>
         <SchoolSessionAttributesManager
-          @showSessionAttendanceRequired={{this.showSessionAttendanceRequired}}
-          @showSessionSupplemental={{this.showSessionSupplemental}}
-          @showSessionSpecialAttireRequired={{this.showSessionSpecialAttireRequired}}
-          @showSessionSpecialEquipmentRequired={{this.showSessionSpecialEquipmentRequired}}
+          @showSessionAttendanceRequired={{context.showSessionAttendanceRequired}}
+          @showSessionSupplemental={{context.showSessionSupplemental}}
+          @showSessionSpecialAttireRequired={{context.showSessionSpecialAttireRequired}}
+          @showSessionSpecialEquipmentRequired={{context.showSessionSpecialEquipmentRequired}}
           @enable={{(noop)}}
-          @disable={{this.disable}}
+          @disable={{context.disable}}
         />
       </template>,
     );
