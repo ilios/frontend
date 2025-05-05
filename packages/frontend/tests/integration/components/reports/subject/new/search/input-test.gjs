@@ -3,20 +3,25 @@ import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { component } from 'frontend/tests/pages/components/reports/subject/new/search/input';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
-import Input from 'frontend/components/reports/subject/new/search/input';
+import SearchInput from 'frontend/components/reports/subject/new/search/input';
 import { array } from '@ember/helper';
 
 module('Integration | Component | reports/subject/new/search/input', function (hooks) {
   setupRenderingTest(hooks);
 
   test('it renders and is accessible', async function (assert) {
-    await render(<template><Input /></template>);
+    await render(<template><SearchInput /></template>);
 
     await render(
       <template>
-        <Input @search={{this.search}} @results={{array 1 2 3}} @searchIsIdle={{true}} as |num|>
+        <SearchInput
+          @search={{this.search}}
+          @results={{array 1 2 3}}
+          @searchIsIdle={{true}}
+          as |num|
+        >
           {{num}}
-        </Input>
+        </SearchInput>
       </template>,
     );
     assert.ok(component.hasInput);
@@ -31,7 +36,7 @@ module('Integration | Component | reports/subject/new/search/input', function (h
     this.set('search', (value) => {
       assert.strictEqual(value, input);
     });
-    await render(<template><Input @search={{this.search}} /></template>);
+    await render(<template><SearchInput @search={{this.search}} /></template>);
     await component.input(input);
     await component.triggerInput();
   });
@@ -42,7 +47,9 @@ module('Integration | Component | reports/subject/new/search/input', function (h
     this.set('search', () => {
       assert.ok(false, 'search should not be called');
     });
-    await render(<template><Input @search={{this.search}} @searchIsIdle={{true}} /></template>);
+    await render(
+      <template><SearchInput @search={{this.search}} @searchIsIdle={{true}} /></template>,
+    );
     await component.input(input);
     await component.triggerInput();
     assert.strictEqual(component.text, 'keep typing...');
