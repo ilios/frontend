@@ -37,9 +37,6 @@
 
 @mixin ilios-zebra-list() {
   li {
-    margin-bottom: 0;
-    padding: 0.25rem 0.1rem;
-
     &:nth-child(even) {
       background-color: color.adjust(c.$culturedGrey, $lightness: 4%);
     }

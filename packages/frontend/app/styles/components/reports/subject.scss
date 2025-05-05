@@ -1,4 +1,3 @@
-@use "../../ilios-common/colors" as c;
 @use "../../ilios-common/mixins" as cm;
 
 .reports-subject {
@@ -7,6 +6,12 @@
   .content-container {
     .report-results {
       @include cm.ilios-list-reset;
+
+      li {
+        margin-bottom: 0;
+        padding: 0.25rem 0.1rem;
+      }
+
       @include cm.ilios-zebra-list;
     }
   }
