@@ -659,13 +659,13 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
       </template>,
     );
 
+    assert.notOk(component.endDate.hasError);
     await component.title.set('Foo Bar');
     await component.description.set('Lorem Ipsum');
     await component.startDate.set(new Date('2016-11-12'));
     await component.endDate.set(new Date('2011-12-30'));
     await component.save();
-    assert.strictEqual(component.startDate.errors.length, 0);
-    assert.strictEqual(component.endDate.errors.length, 1);
+    assert.strictEqual(component.endDate.error, 'End Date must be after Start Date');
   });
 
   test('save fails on missing duration', async function (assert) {
@@ -777,13 +777,16 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
         <NewSequenceBlock @report={{this.report}} @save={{(noop)}} @cancel={{(noop)}} />
       </template>,
     );
+    assert.notOk(component.startDate.hasError);
+    assert.notOk(component.endDate.hasError);
+    assert.notOk(component.duration.hasError);
     await component.title.set('Foo Bar');
     await component.description.set('Lorem Ipsum');
     await component.duration.set('10');
     await component.course.select(courseModel.id);
     await component.save();
-    assert.strictEqual(component.startDate.errors.length, 1);
-    assert.strictEqual(component.endDate.errors.length, 0);
+    assert.strictEqual(component.startDate.error, 'Start Date can not be blank');
+    assert.notOk(component.endDate.hasError);
     assert.notOk(component.duration.hasError);
   });
 
@@ -809,6 +812,9 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
         <NewSequenceBlock @report={{this.report}} @save={{(noop)}} @cancel={{(noop)}} />
       </template>,
     );
+    assert.notOk(component.startDate.hasError);
+    assert.notOk(component.endDate.hasError);
+    assert.notOk(component.duration.hasError);
     await component.title.set('Foo Bar');
     await component.description.set('Lorem Ipsum');
     await component.startDate.set(new Date('2016-11-12'));
@@ -816,8 +822,8 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
     await component.duration.set('0');
     await component.course.select(courseModel.id);
     await component.save();
-    assert.strictEqual(component.startDate.errors.length, 0);
-    assert.strictEqual(component.endDate.errors.length, 0);
+    assert.notOk(component.startDate.hasError);
+    assert.notOk(component.endDate.hasError);
     assert.ok(component.duration.hasError);
     assert.strictEqual(component.duration.error, 'Duration must be greater than or equal to 1');
   });
@@ -833,11 +839,11 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
         <NewSequenceBlock @report={{this.report}} @save={{(noop)}} @cancel={{(noop)}} />
       </template>,
     );
-
+    assert.notOk(component.endDate.hasError);
     await component.title.set('Foo Bar');
     await component.description.set('Lorem Ipsum');
     await component.startDate.set(new Date());
     await component.save();
-    assert.strictEqual(component.endDate.errors.length, 2);
+    assert.strictEqual(component.endDate.error, 'End Date can not be blank');
   });
 });

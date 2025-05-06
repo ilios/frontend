@@ -71,14 +71,16 @@ const definition = {
     label: text('label'),
     value: value('input'),
     set: flatpickrDatePicker('input'),
-    errors: collection('.validation-error-message'),
+    hasError: isPresent('[data-test-start-date-validation-error-message]'),
+    error: text('[data-test-start-date-validation-error-message]'),
   },
   endDate: {
     scope: '[data-test-enddate]',
     label: text('label'),
     value: value('input'),
     set: flatpickrDatePicker('input'),
-    errors: collection('.validation-error-message'),
+    hasError: isPresent('[data-test-end-date-validation-error-message]'),
+    error: text('[data-test-end-date-validation-error-message]'),
   },
   clearDates: clickable('[data-test-clear-dates]'),
   minimum: {

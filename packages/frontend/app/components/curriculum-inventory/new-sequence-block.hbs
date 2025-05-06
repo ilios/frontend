@@ -100,9 +100,14 @@
           id="start-date-{{templateId}}"
           @value={{this.startDate}}
           @onChange={{this.changeStartDate}}
+          {{this.validations.attach "startDate"}}
           data-test-start-date-picker
         />
-        <ValidationError @validatable={{this}} @property="startDate" />
+        <YupValidationMessage
+          @description={{t "general.startDate"}}
+          @validationErrors={{this.validations.errors.startDate}}
+          data-test-start-date-validation-error-message
+        />
       </div>
       <div class="item end-date" data-test-enddate>
         <label for="end-date-{{templateId}}">
@@ -112,9 +117,14 @@
           id="end-date-{{templateId}}"
           @value={{this.endDate}}
           @onChange={{this.changeEndDate}}
+          {{this.validations.attach "endDate"}}
           data-test-end-date-picker
         />
-        <ValidationError @validatable={{this}} @property="endDate" />
+        <YupValidationMessage
+          @description={{t "general.endDate"}}
+          @validationErrors={{this.validations.errors.endDate}}
+          data-test-end-date-validation-error-message
+        />
       </div>
       <div class="item duration" data-test-duration>
         <label for="duration-{{templateId}}">

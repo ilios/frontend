@@ -3,14 +3,12 @@ import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
 import { dropTask } from 'ember-concurrency';
-import { ValidateIf } from 'class-validator';
 import { TrackedAsyncData } from 'ember-async-data';
-import { validatable, AfterDate, NotBlank } from 'ilios-common/decorators/validation';
 import { findById } from 'ilios-common/utils/array-helpers';
 import YupValidations from 'ilios-common/classes/yup-validations';
-import { string, mixed, number } from 'yup';
+import { date, string, mixed, number } from 'yup';
+import { DateTime } from 'luxon';
 
-@validatable
 export default class CurriculumInventoryNewSequenceBlock extends Component {
   @service intl;
   @service store;
@@ -21,15 +19,8 @@ export default class CurriculumInventoryNewSequenceBlock extends Component {
   @tracked course;
   @tracked description;
   @tracked duration = 0;
-  @tracked
-  @ValidateIf((o) => o.hasZeroDuration || o.linkedCourseIsClerkship)
-  @NotBlank()
-  startDate;
-  @tracked
-  @ValidateIf((o) => o.startDate)
-  @NotBlank()
-  @AfterDate('startDate', { granularity: 'day' })
-  endDate;
+  @tracked startDate;
+  @tracked endDate;
   @tracked orderInSequence = null;
   @tracked maximum = 0;
   @tracked minimum = 0;
@@ -55,6 +46,33 @@ export default class CurriculumInventoryNewSequenceBlock extends Component {
   }
 
   validations = new YupValidations(this, {
+    startDate: date().when('$hasZeroDurationOrLinkedCourseIsClerkship', {
+      is: true,
+      then: (schema) => schema.required(),
+    }),
+    endDate: date().when('startDate', {
+      is: (startDate) => {
+        return !!startDate;
+      },
+      then: (schema) =>
+        schema.required().test(
+          'is-end-date-after-start-date',
+          (d) => {
+            return {
+              path: d.path,
+              messageKey: 'errors.after',
+              values: {
+                after: this.intl.t('general.startDate'),
+              },
+            };
+          },
+          (value) => {
+            const startDate = DateTime.fromJSDate(this.startDate);
+            const endDate = DateTime.fromJSDate(value);
+            return startDate.startOf('day') < endDate.startOf('day');
+          },
+        ),
+    }),
     startLevel: mixed().test(
       'start-level-lte-end-level',
       (d) => {
@@ -272,6 +290,10 @@ export default class CurriculumInventoryNewSequenceBlock extends Component {
     return 0 === num;
   }
 
+  get hasZeroDurationOrLinkedCourseIsClerkship() {
+    return this.hasZeroDuration || this.linkedCourseIsClerkship;
+  }
+
   get isInOrderedSequence() {
     return this.args.parent && this.args.parent.isOrdered;
   }
@@ -347,14 +369,8 @@ export default class CurriculumInventoryNewSequenceBlock extends Component {
   }
 
   save = dropTask(async () => {
-    this.addErrorDisplaysFor(['startDate', 'endDate']);
-    let isValid = await this.isValid();
-    if (!isValid) {
-      return false;
-    }
-
     this.validations.addErrorDisplayForAllFields();
-    isValid = await this.validations.isValid();
+    const isValid = await this.validations.isValid();
     if (!isValid) {
       return false;
     }
