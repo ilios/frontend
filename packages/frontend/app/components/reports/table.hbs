@@ -5,11 +5,12 @@
         data-test-report-title-heading
         @sortedAscending={{this.sortedAscending}}
         @sortedBy={{or (eq @sortBy "title") (eq @sortBy "title:desc")}}
+        @colspan="11"
         @onClick={{fn this.setSortBy "title"}}
       >
         {{t "general.title"}}
       </SortableTh>
-      <th class="text-right">{{t "general.actions"}}</th>
+      <th class="text-right" colspan="1">{{t "general.actions"}}</th>
     </tr>
   </thead>
   <tbody data-test-reports>
@@ -21,7 +22,7 @@
       />
       {{#if (includes decoratedReport.report.id this.reportsForRemovalConfirmation)}}
         <tr class="confirm-removal">
-          <td colspan="2">
+          <td colspan="12">
             <div class="confirm-message">
               {{t "general.reportConfirmRemove"}}
               <br />
