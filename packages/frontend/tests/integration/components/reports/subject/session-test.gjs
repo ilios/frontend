@@ -555,7 +555,7 @@ module('Integration | Component | reports/subject/session', function (hooks) {
     const csvText = await capturedBlob.text();
     assert.strictEqual(
       csvText.trim(),
-      'Session,Course,Academic Year,Description,Attendance Required,Attire Required,Equipment Required,Supplemental Curriculum,Objective 1,Objective 2\r\nFirst Session,First Course,2023,First Session Description,false,false,true,true,First Objective\r\nSecond Session,First Course,2023,Session 2 Description,false,true,false,true,First Objective,Second Objective\r\nThird Session,Second Course,2020,Three Session Description,true,false,true,false',
+      'Session,Course,Academic Year,Description,Attendance Required,Attire Required,Equipment Required,Supplemental Curriculum,Objective,Objective\r\nFirst Session,First Course,2023,First Session Description,false,false,true,true,First Objective\r\nSecond Session,First Course,2023,Session 2 Description,false,true,false,true,First Objective,Second Objective\r\nThird Session,Second Course,2020,Three Session Description,true,false,true,false',
       'CSV content is correct',
     );
 
