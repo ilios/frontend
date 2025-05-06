@@ -20,6 +20,7 @@ general:
   attendanceIs_Required_: "Présence '<strong><em>'requise'</em></strong>'"
   attendanceIsRequired: Présence requise
   attendanceRequired: Participation Requise
+  attireRequired: Tenue Requise
   author: Auteur
   autoUpdatingSeconds: "{count, plural, =1 { Mise à jour automatique en 1 seconde...} other { Mise à jour automatique en # secondes...}}"
   availableInstructorsAndInstructorGroups: "Instructeurs et groupes d'instructeurs disponibles"
@@ -122,6 +123,7 @@ general:
   endDate: Jour Terminé
   ends: Terminé
   endTime: Heure Terminé
+  equipmentRequired: Équipement Requis
   etAl: et al.
   expand: Étendre
   eventNotFoundTitle: Evénement introuvable

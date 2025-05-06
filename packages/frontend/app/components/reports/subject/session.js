@@ -127,30 +127,64 @@ export default class ReportsSubjectSessionComponent extends Component {
       'description',
       'sessionObjectives { title }',
       'course { title, year }',
+      'attendanceRequired',
+      'attireRequired',
+      'equipmentRequired',
+      'supplemental',
     ];
     const result = await this.graphql.find('sessions', filters, attributes.join(','));
     const sortedResults = sortBy(result.data.sessions, 'title');
-    const mappedResults = sortedResults.map(({ title, course, sessionObjectives, description }) => {
-      return [
+    const objectives = sortedResults.map(({ sessionObjectives }) => {
+      return mapBy(sessionObjectives, 'title');
+    });
+    const maxObjectiveCount = objectives.reduce((longest, current) => {
+      return current.length > longest.length ? current : longest;
+    }, []).length;
+
+    const mappedResults = sortedResults.map(
+      ({
         title,
-        course.title,
-        this.academicYearCrossesCalendarYearBoundaries
-          ? `${course.year} - ${course.year + 1}`
-          : `${course.year}`,
-        striptags(description),
-        striptags(mapBy(sessionObjectives, 'title').join()),
-      ];
+        course,
+        sessionObjectives,
+        description,
+        attendanceRequired,
+        attireRequired,
+        equipmentRequired,
+        supplemental,
+      }) => {
+        const results = [
+          title,
+          course.title,
+          this.academicYearCrossesCalendarYearBoundaries
+            ? `${course.year} - ${course.year + 1}`
+            : `${course.year}`,
+          striptags(description),
+          attendanceRequired,
+          attireRequired,
+          equipmentRequired,
+          supplemental,
+        ];
+        sessionObjectives.forEach((objective) => {
+          results.push(striptags(objective.title));
+        });
+        return results;
+      },
+    );
+
+    const columns = [
+      this.intl.t('general.session'),
+      this.intl.t('general.course'),
+      this.intl.t('general.academicYear'),
+      this.intl.t('general.description'),
+      this.intl.t('general.attendanceRequired'),
+      this.intl.t('general.attireRequired'),
+      this.intl.t('general.equipmentRequired'),
+      this.intl.t('general.supplementalCurriculum'),
+    ];
+    [...Array(maxObjectiveCount + 1).keys()].slice(1).map(() => {
+      columns.push(`${this.intl.t('general.objective')}`);
     });
 
-    return [
-      [
-        this.intl.t('general.session'),
-        this.intl.t('general.course'),
-        this.intl.t('general.academicYear'),
-        this.intl.t('general.description'),
-        this.intl.t('general.objectives'),
-      ],
-      ...mappedResults,
-    ];
+    return [columns, ...mappedResults];
   }
 }
