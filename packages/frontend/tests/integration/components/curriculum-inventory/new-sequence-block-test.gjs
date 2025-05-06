@@ -403,11 +403,9 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
     this.set('report', reportModel);
 
     await render(
-      hbs`<CurriculumInventory::NewSequenceBlock
-  @report={{this.report}}
-  @save={{(noop)}}
-  @cancel={{(noop)}}
-/>`,
+      <template>
+        <NewSequenceBlock @report={{this.report}} @save={{(noop)}} @cancel={{(noop)}} />
+      </template>,
     );
 
     assert.notOk(component.title.hasError);
@@ -424,11 +422,9 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
     this.set('report', reportModel);
 
     await render(
-      hbs`<CurriculumInventory::NewSequenceBlock
-  @report={{this.report}}
-  @save={{(noop)}}
-  @cancel={{(noop)}}
-/>`,
+      <template>
+        <NewSequenceBlock @report={{this.report}} @save={{(noop)}} @cancel={{(noop)}} />
+      </template>,
     );
 
     assert.notOk(component.title.hasError);
@@ -499,11 +495,9 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
     this.set('report', reportModel);
 
     await render(
-      hbs`<CurriculumInventory::NewSequenceBlock
-  @report={{this.report}}
-  @save={{(noop)}}
-  @cancel={{(noop)}}
-/>`,
+      <template>
+        <NewSequenceBlock @report={{this.report}} @save={{(noop)}} @cancel={{(noop)}} />
+      </template>,
     );
 
     assert.notOk(component.minimum.hasError);
@@ -537,11 +531,9 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
     this.set('report', reportModel);
 
     await render(
-      hbs`<CurriculumInventory::NewSequenceBlock
-  @report={{this.report}}
-  @save={{(noop)}}
-  @cancel={{(noop)}}
-/>`,
+      <template>
+        <NewSequenceBlock @report={{this.report}} @save={{(noop)}} @cancel={{(noop)}} />
+      </template>,
     );
 
     assert.notOk(component.maximum.hasError);
@@ -557,11 +549,9 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
     this.set('report', reportModel);
 
     await render(
-      hbs`<CurriculumInventory::NewSequenceBlock
-  @report={{this.report}}
-  @save={{(noop)}}
-  @cancel={{(noop)}}
-/>`,
+      <template>
+        <NewSequenceBlock @report={{this.report}} @save={{(noop)}} @cancel={{(noop)}} />
+      </template>,
     );
     assert.notOk(component.maximum.hasError);
     await component.minimum.set('-1');
@@ -719,11 +709,9 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
     this.set('report', reportModel);
 
     await render(
-      hbs`<CurriculumInventory::NewSequenceBlock
-  @report={{this.report}}
-  @save={{(noop)}}
-  @cancel={{(noop)}}
-/>`,
+      <template>
+        <NewSequenceBlock @report={{this.report}} @save={{(noop)}} @cancel={{(noop)}} />
+      </template>,
     );
     assert.notOk(component.duration.hasError);
     await component.title.set('Foo Bar');
