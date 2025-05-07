@@ -1106,13 +1106,12 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
     );
 
     await component.minimum.edit();
-    assert.strictEqual(component.minMaxEditor.maximum.errors.length, 0);
+    assert.notOk(component.minMaxEditor.maximum.hasError);
     await component.minMaxEditor.minimum.set('100');
     await component.minMaxEditor.maximum.set('50');
     await component.minMaxEditor.save();
-    assert.strictEqual(component.minMaxEditor.maximum.errors.length, 1);
     assert.strictEqual(
-      component.minMaxEditor.maximum.errors[0].text,
+      component.minMaxEditor.maximum.error,
       'Maximum must be greater than or equal to Minimum',
     );
   });
@@ -1155,10 +1154,13 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
     );
 
     await component.minimum.edit();
-    assert.strictEqual(component.minMaxEditor.minimum.errors.length, 0);
+    assert.notOk(component.minMaxEditor.minimum.hasError);
     await component.minMaxEditor.minimum.set('-1');
     await component.minMaxEditor.save();
-    assert.strictEqual(component.minMaxEditor.minimum.errors.length, 1);
+    assert.strictEqual(
+      component.minMaxEditor.minimum.error,
+      'Minimum must be greater than or equal to 0',
+    );
   });
 
   test('save fails when minimum is empty', async function (assert) {
@@ -1199,10 +1201,10 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
     );
 
     await component.minimum.edit();
-    assert.strictEqual(component.minMaxEditor.minimum.errors.length, 0);
+    assert.notOk(component.minMaxEditor.minimum.hasError);
     await component.minMaxEditor.minimum.set('');
     await component.minMaxEditor.save();
-    assert.strictEqual(component.minMaxEditor.minimum.errors.length, 1);
+    assert.strictEqual(component.minMaxEditor.minimum.error, 'Minimum must be a number');
   });
 
   test('save fails when maximum is empty', async function (assert) {
@@ -1243,10 +1245,10 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
     );
 
     await component.maximum.edit();
-    assert.strictEqual(component.minMaxEditor.maximum.errors.length, 0);
+    assert.notOk(component.minMaxEditor.maximum.hasError);
     await component.minMaxEditor.maximum.set('');
     await component.minMaxEditor.save();
-    assert.strictEqual(component.minMaxEditor.maximum.errors.length, 1);
+    assert.strictEqual(component.minMaxEditor.maximum.error, 'Maximum must be a number');
   });
 
   test('minimum field is set to 0 and disabled for electives', async function (assert) {
@@ -1561,11 +1563,11 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
     );
 
     await component.endDate.edit();
-    assert.strictEqual(component.durationEditor.endDate.errors.length, 0);
+    assert.notOk(component.durationEditor.endDate.hasError);
     await component.durationEditor.startDate.set('2016-10-30');
     await component.durationEditor.endDate.set('2013-11-02');
     await component.durationEditor.save();
-    assert.strictEqual(component.durationEditor.endDate.errors.length, 1);
+    assert.strictEqual(component.durationEditor.endDate.error, 'End Date must be after Start Date');
   });
 
   test('save fails on missing duration', async function (assert) {
@@ -1606,10 +1608,10 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
     );
 
     await component.duration.edit();
-    assert.strictEqual(component.durationEditor.duration.errors.length, 0);
+    assert.notOk(component.durationEditor.duration.hasError);
     await component.durationEditor.duration.set('');
     await component.durationEditor.save();
-    assert.strictEqual(component.durationEditor.duration.errors.length, 2);
+    assert.strictEqual(component.durationEditor.duration.error, 'Duration must be a number');
   });
 
   test('save fails on invalid duration', async function (assert) {
@@ -1650,10 +1652,13 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
     );
 
     await component.duration.edit();
-    assert.strictEqual(component.durationEditor.duration.errors.length, 0);
+    assert.notOk(component.durationEditor.duration.hasError);
     await component.durationEditor.duration.set('-10');
     await component.durationEditor.save();
-    assert.strictEqual(component.durationEditor.duration.errors.length, 1);
+    assert.strictEqual(
+      component.durationEditor.duration.error,
+      'Duration must be greater than or equal to 0',
+    );
   });
 
   test('save fails if neither date range nor duration is provided', async function (assert) {
@@ -1694,13 +1699,14 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
     );
 
     await component.duration.edit();
-    assert.strictEqual(component.durationEditor.startDate.errors.length, 0);
-    assert.strictEqual(component.durationEditor.endDate.errors.length, 0);
-    assert.strictEqual(component.durationEditor.duration.errors.length, 0);
+    assert.notOk(component.durationEditor.startDate.hasError);
+    assert.notOk(component.durationEditor.endDate.hasError);
+    assert.notOk(component.durationEditor.duration.hasError);
     await component.durationEditor.duration.set('');
     await component.durationEditor.save();
-    assert.strictEqual(component.durationEditor.startDate.errors.length, 1);
-    assert.strictEqual(component.durationEditor.duration.errors.length, 2);
+    assert.strictEqual(component.durationEditor.startDate.error, 'Start Date can not be blank');
+    assert.notOk(component.durationEditor.endDate.hasError);
+    assert.strictEqual(component.durationEditor.duration.error, 'Duration must be a number');
   });
 
   test('save fails if linked course is clerkship and start date is not provided', async function (assert) {
@@ -1751,15 +1757,15 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
     );
 
     await component.duration.edit();
-    assert.strictEqual(component.durationEditor.startDate.errors.length, 0);
-    assert.strictEqual(component.durationEditor.endDate.errors.length, 0);
-    assert.strictEqual(component.durationEditor.duration.errors.length, 0);
+    assert.notOk(component.durationEditor.startDate.hasError);
+    assert.notOk(component.durationEditor.endDate.hasError);
+    assert.notOk(component.durationEditor.duration.hasError);
     await component.durationEditor.startDate.set(null);
     await component.durationEditor.endDate.set(null);
     await component.durationEditor.save();
-    assert.strictEqual(component.durationEditor.startDate.errors.length, 1);
-    assert.strictEqual(component.durationEditor.endDate.errors.length, 0);
-    assert.strictEqual(component.durationEditor.duration.errors.length, 0);
+    assert.strictEqual(component.durationEditor.startDate.error, 'Start Date can not be blank');
+    assert.notOk(component.durationEditor.endDate.hasError);
+    assert.notOk(component.durationEditor.duration.hasError);
   });
 
   test('save fails if linked course is clerkship and duration is zero', async function (assert) {
@@ -1810,16 +1816,15 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
     );
 
     await component.duration.edit();
-    assert.strictEqual(component.durationEditor.startDate.errors.length, 0);
-    assert.strictEqual(component.durationEditor.endDate.errors.length, 0);
-    assert.strictEqual(component.durationEditor.duration.errors.length, 0);
+    assert.notOk(component.durationEditor.startDate.hasError);
+    assert.notOk(component.durationEditor.endDate.hasError);
+    assert.notOk(component.durationEditor.duration.hasError);
     await component.durationEditor.duration.set('0');
     await component.durationEditor.save();
-    assert.strictEqual(component.durationEditor.startDate.errors.length, 0);
-    assert.strictEqual(component.durationEditor.endDate.errors.length, 0);
-    assert.strictEqual(component.durationEditor.duration.errors.length, 1);
+    assert.notOk(component.durationEditor.startDate.hasError);
+    assert.notOk(component.durationEditor.endDate.hasError);
     assert.strictEqual(
-      component.durationEditor.duration.errors[0].text,
+      component.durationEditor.duration.error,
       'Duration must be greater than or equal to 1',
     );
   });
@@ -1862,10 +1867,10 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
     );
 
     await component.startDate.edit();
-    assert.strictEqual(component.durationEditor.endDate.errors.length, 0);
+    assert.notOk(component.durationEditor.endDate.hasError);
     await component.durationEditor.startDate.set(new Date());
     await component.durationEditor.save();
-    assert.strictEqual(component.durationEditor.endDate.errors.length, 2);
+    assert.strictEqual(component.durationEditor.endDate.error, 'End Date can not be blank');
   });
 
   test('cancel editing on escape in minimum input', async function (assert) {
