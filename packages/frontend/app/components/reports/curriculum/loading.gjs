@@ -79,7 +79,7 @@ export default class ReportsCurriculumLoading extends Component {
             </button>
             <ul class="courses">
               {{! template-lint-disable no-unused-block-params }}
-              {{#each (repeat 5) as |empty|}}
+              {{#each (repeat 5)}}
                 <li>
                   <label>
                     <input type="checkbox" disabled />

@@ -12,7 +12,7 @@ import FaIcon from 'ilios-common/components/fa-icon';
       </thead>
       <tbody>
         {{! template-lint-disable no-unused-block-params }}
-        {{#each (repeat @count) as |empty|}}
+        {{#each (repeat @count)}}
           <tr data-test-loading-item>
             <td class="text-left"></td>
             <td class="text-right"><FaIcon @icon="trash" class="disabled" /></td>

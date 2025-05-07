@@ -22,7 +22,7 @@ import random from 'ember-math-helpers/helpers/random';
     </thead>
     <tbody>
       {{! template-lint-disable no-unused-block-params }}
-      {{#each (repeat @count) as |empty|}}
+      {{#each (repeat @count)}}
         <tr class="is-loading">
           <td class="text-left" colspan="2">{{truncate
               (repeat (random 3 10) "ilios rocks")

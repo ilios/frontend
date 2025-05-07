@@ -15,8 +15,7 @@ export default class SessionsGridLoading extends Component {
       aria-hidden="true"
       {{animateLoading "course" finalOpacity=".75"}}
     >
-      {{! template-lint-disable no-unused-block-params }}
-      {{#each (repeat @count) as |empty|}}
+      {{#each (repeat @count)}}
         <div data-test-row>
           <span class="expand-collapse-control"></span>
           <span class="session-grid-title">
