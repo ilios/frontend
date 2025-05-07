@@ -135,6 +135,7 @@
           type="text"
           value={{this.duration}}
           disabled={{this.save.isRunning}}
+          {{on "keyup" this.saveOrCancel}}
           {{on "input" (pick "target.value" this.setDuration)}}
           {{this.validations.attach "duration"}}
         />
