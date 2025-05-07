@@ -9,7 +9,7 @@ import load from 'ember-async-data/helpers/load';
 import { on } from '@ember/modifier';
 import FaIcon from 'ilios-common/components/fa-icon';
 import LoadingSpinner from 'ilios-common/components/loading-spinner';
-import Input from 'frontend/components/reports/subject/new/search/input';
+import SearchInput from 'frontend/components/reports/subject/new/search/input';
 import perform from 'ember-concurrency/helpers/perform';
 import isArray from 'ember-truth-helpers/helpers/is-array';
 import { fn } from '@ember/helper';
@@ -109,7 +109,7 @@ export default class ReportsSubjectNewSessionComponent extends Component {
             {{/if}}
           {{/let}}
         {{else}}
-          <Input
+          <SearchInput
             id="{{this.uniqueId}}-session-search"
             @search={{perform this.search}}
             @searchIsRunning={{this.search.isRunning}}
@@ -128,7 +128,7 @@ export default class ReportsSubjectNewSessionComponent extends Component {
               {{session.course.title}}
             </button>
 
-          </Input>
+          </SearchInput>
         {{/if}}
       </p>
     </div>
