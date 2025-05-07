@@ -3,59 +3,29 @@ import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
 import { dropTask } from 'ember-concurrency';
-import { ValidateIf } from 'class-validator';
 import { TrackedAsyncData } from 'ember-async-data';
-import {
-  validatable,
-  AfterDate,
-  Custom,
-  IsInt,
-  Gte,
-  Length,
-  Lte,
-  NotBlank,
-} from 'ilios-common/decorators/validation';
 import { findById } from 'ilios-common/utils/array-helpers';
+import YupValidations from 'ilios-common/classes/yup-validations';
+import { date, string, mixed, number } from 'yup';
+import { DateTime } from 'luxon';
 
-@validatable
 export default class CurriculumInventoryNewSequenceBlock extends Component {
   @service intl;
   @service store;
 
-  @tracked
-  @Custom('validateStartingEndingLevelCallback', 'validateStartingLevelMessageCallback')
-  startingAcademicLevel;
-  @tracked
-  @Custom('validateStartingEndingLevelCallback', 'validateEndingLevelMessageCallback')
-  endingAcademicLevel;
+  @tracked startLevel;
+  @tracked endLevel;
   @tracked childSequenceOrder;
   @tracked course;
   @tracked description;
-  @tracked
-  @NotBlank()
-  @IsInt()
-  @Custom('validateDurationCallback', 'validateDurationMessageCallback')
-  @Lte(1200)
-  duration = 0;
-  @tracked
-  @ValidateIf((o) => o.hasZeroDuration || o.linkedCourseIsClerkship)
-  @NotBlank()
-  startDate;
-  @tracked
-  @ValidateIf((o) => o.startDate)
-  @NotBlank()
-  @AfterDate('startDate', { granularity: 'day' })
-  endDate;
+  @tracked duration = 0;
+  @tracked startDate;
+  @tracked endDate;
   @tracked orderInSequence = null;
-  @tracked
-  @NotBlank()
-  @IsInt()
-  @Gte(0)
-  @Custom('validateMaximumCallback', 'validateMaximumMessageCallback')
-  maximum = 0;
-  @tracked @NotBlank() @IsInt() @Gte(0) minimum = 0;
+  @tracked maximum = 0;
+  @tracked minimum = 0;
   @tracked required;
-  @tracked @NotBlank() @Length(1, 200) title;
+  @tracked title;
   @tracked track = false;
   childSequenceOrderOptions = [
     { id: '1', title: this.intl.t('general.ordered') },
@@ -74,6 +44,123 @@ export default class CurriculumInventoryNewSequenceBlock extends Component {
     this.childSequenceOrder = this.childSequenceOrderOptions[0];
     this.required = this.requiredOptions[0];
   }
+
+  validations = new YupValidations(this, {
+    startDate: date().when('$hasZeroDurationOrLinkedCourseIsClerkship', {
+      is: true,
+      then: (schema) => schema.required(),
+    }),
+    endDate: date().when('startDate', {
+      is: (startDate) => {
+        return !!startDate;
+      },
+      then: (schema) =>
+        schema.required().test(
+          'is-end-date-after-start-date',
+          (d) => {
+            return {
+              path: d.path,
+              messageKey: 'errors.after',
+              values: {
+                after: this.intl.t('general.startDate'),
+              },
+            };
+          },
+          (value) => {
+            const startDate = DateTime.fromJSDate(this.startDate);
+            const endDate = DateTime.fromJSDate(value);
+            return startDate.startOf('day') < endDate.startOf('day');
+          },
+        ),
+    }),
+    startLevel: mixed().test(
+      'start-level-lte-end-level',
+      (d) => {
+        return {
+          path: d.path,
+          messageKey: 'errors.lessThanOrEqualTo',
+          values: {
+            lte: this.intl.t('general.endLevel'),
+          },
+        };
+      },
+      async (value) => {
+        // In case no user selection has been made (yet), we'll use default values for comparison.
+        const defaultStartLevel = await this.getDefaultStartLevel(
+          this.args.report,
+          this.args.parent,
+        );
+        const defaultEndLevel = await this.getDefaultEndLevel(this.args.report, this.args.parent);
+        const startLevel = value || defaultStartLevel;
+        const endLevel = this.endLevel || defaultEndLevel;
+        return endLevel.level >= startLevel.level;
+      },
+    ),
+    endLevel: mixed().test(
+      'end-level-gte-start-level',
+      (d) => {
+        return {
+          path: d.path,
+          messageKey: 'errors.greaterThanOrEqualTo',
+          values: {
+            gte: this.intl.t('general.startLevel'),
+          },
+        };
+      },
+      async (value) => {
+        // In case no user selection has been made (yet), we'll use default values for comparison.
+        const defaultStartLevel = await this.getDefaultStartLevel(
+          this.args.report,
+          this.args.parent,
+        );
+        const defaultEndLevel = await this.getDefaultEndLevel(this.args.report, this.args.parent);
+        const startLevel = this.startLevel || defaultStartLevel;
+        const endLevel = value || defaultEndLevel;
+        return endLevel.level >= startLevel.level;
+      },
+    ),
+    title: string().trim().required().max(200),
+    minimum: number().required().integer().min(0),
+    maximum: number()
+      .required()
+      .integer()
+      .min(0)
+      .test(
+        'more-than-or-equal-to-minimum',
+        (d) => {
+          return {
+            path: d.path,
+            messageKey: 'errors.greaterThanOrEqualTo',
+            values: {
+              gte: this.intl.t('general.minimum'),
+            },
+          };
+        },
+        (value) => {
+          const max = parseInt(value, 10) || 0;
+          const min = parseInt(this.minimum, 10) || 0;
+          return max >= min;
+        },
+      ),
+    duration: number()
+      .integer()
+      .lessThan(1201)
+      .test(
+        'clerkship-based-minimum',
+        (d) => {
+          return {
+            path: d.path,
+            messageKey: 'errors.greaterThanOrEqualTo',
+            values: {
+              gte: this.linkedCourseIsClerkship ? 1 : 0,
+            },
+          };
+        },
+        (value) => {
+          return this.linkedCourseIsClerkship ? value >= 1 : value >= 0;
+        },
+      ),
+  });
 
   @cached
   get siblingsData() {
@@ -153,19 +240,15 @@ export default class CurriculumInventoryNewSequenceBlock extends Component {
   }
 
   @cached
-  get defaultStartingAcademicLevelData() {
-    return new TrackedAsyncData(
-      this.getDefaultStartingAcademicLevel(this.args.report, this.args.parent),
-    );
+  get defaultStartLevelData() {
+    return new TrackedAsyncData(this.getDefaultStartLevel(this.args.report, this.args.parent));
   }
 
-  get defaultStartingAcademicLevel() {
-    return this.defaultStartingAcademicLevelData.isResolved
-      ? this.defaultStartingAcademicLevelData.value
-      : null;
+  get defaultStartLevel() {
+    return this.defaultStartLevelData.isResolved ? this.defaultStartLevelData.value : null;
   }
 
-  async getDefaultStartingAcademicLevel(report, parent) {
+  async getDefaultStartLevel(report, parent) {
     if (parent) {
       return await parent.startingAcademicLevel;
     }
@@ -175,19 +258,15 @@ export default class CurriculumInventoryNewSequenceBlock extends Component {
   }
 
   @cached
-  get defaultEndingAcademicLevelData() {
-    return new TrackedAsyncData(
-      this.getDefaultEndingAcademicLevel(this.args.report, this.args.parent),
-    );
+  get defaultEndLevelData() {
+    return new TrackedAsyncData(this.getDefaultEndLevel(this.args.report, this.args.parent));
   }
 
-  get defaultEndingAcademicLevel() {
-    return this.defaultEndingAcademicLevelData.isResolved
-      ? this.defaultEndingAcademicLevelData.value
-      : null;
+  get defaultEndLevel() {
+    return this.defaultEndLevelData.isResolved ? this.defaultEndLevelData.value : null;
   }
 
-  async getDefaultEndingAcademicLevel(report, parent) {
+  async getDefaultEndLevel(report, parent) {
     if (parent) {
       return await parent.endingAcademicLevel;
     }
@@ -209,6 +288,10 @@ export default class CurriculumInventoryNewSequenceBlock extends Component {
       return false;
     }
     return 0 === num;
+  }
+
+  get hasZeroDurationOrLinkedCourseIsClerkship() {
+    return this.hasZeroDuration || this.linkedCourseIsClerkship;
   }
 
   get isInOrderedSequence() {
@@ -247,13 +330,13 @@ export default class CurriculumInventoryNewSequenceBlock extends Component {
   }
 
   @action
-  setStartingAcademicLevel(id) {
-    this.startingAcademicLevel = findById(this.academicLevels, id);
+  setStartLevel(id) {
+    this.startLevel = findById(this.academicLevels, id);
   }
 
   @action
-  setEndingAcademicLevel(id) {
-    this.endingAcademicLevel = findById(this.academicLevels, id);
+  setEndLevel(id) {
+    this.endLevel = findById(this.academicLevels, id);
   }
 
   @action
@@ -264,6 +347,11 @@ export default class CurriculumInventoryNewSequenceBlock extends Component {
   @action
   setOrderInSequence(id) {
     this.orderInSequence = Number(id);
+  }
+
+  @action
+  setDuration(duration) {
+    this.duration = duration;
   }
 
   @action
@@ -280,98 +368,23 @@ export default class CurriculumInventoryNewSequenceBlock extends Component {
     }
   }
 
-  @action
-  validateMaximumCallback() {
-    const max = parseInt(this.maximum, 10) || 0;
-    const min = parseInt(this.minimum, 10) || 0;
-    return max >= min;
-  }
-
-  @action
-  validateMaximumMessageCallback() {
-    return this.intl.t('errors.greaterThanOrEqualTo', {
-      gte: this.intl.t('general.minimum'),
-      description: this.intl.t('general.maximum'),
-    });
-  }
-
-  @action
-  async validateStartingEndingLevelCallback() {
-    // In case no user selection has been made (yet), we'll use default values for comparison.
-    const defaultStartingAcademicLevel = await this.getDefaultStartingAcademicLevel(
-      this.args.report,
-      this.args.parent,
-    );
-    const defaultEndingAcademicLevel = await this.getDefaultEndingAcademicLevel(
-      this.args.report,
-      this.args.parent,
-    );
-    const startingAcademicLevel = this.startingAcademicLevel || defaultStartingAcademicLevel;
-    const endingAcademicLevel = this.endingAcademicLevel || defaultEndingAcademicLevel;
-    return endingAcademicLevel.level >= startingAcademicLevel.level;
-  }
-
-  @action
-  validateStartingLevelMessageCallback() {
-    return this.intl.t('errors.lessThanOrEqualTo', {
-      lte: this.intl.t('general.endLevel'),
-      description: this.intl.t('general.startLevel'),
-    });
-  }
-
-  @action
-  validateEndingLevelMessageCallback() {
-    return this.intl.t('errors.greaterThanOrEqualTo', {
-      gte: this.intl.t('general.startLevel'),
-      description: this.intl.t('general.endLevel'),
-    });
-  }
-
-  @action
-  validateDurationCallback() {
-    const duration = parseInt(this.duration, 10);
-    return this.linkedCourseIsClerkship ? duration >= 1 : duration >= 0;
-  }
-
-  @action
-  validateDurationMessageCallback() {
-    return this.intl.t('errors.greaterThanOrEqualTo', {
-      gte: this.linkedCourseIsClerkship ? 1 : 0,
-      description: this.intl.t('general.duration'),
-    });
-  }
-
   save = dropTask(async () => {
-    this.addErrorDisplaysFor([
-      'title',
-      'duration',
-      'startDate',
-      'endDate',
-      'minimum',
-      'maximum',
-      'startingAcademicLevel',
-      'endingAcademicLevel',
-    ]);
-    const isValid = await this.isValid();
+    this.validations.addErrorDisplayForAllFields();
+    const isValid = await this.validations.isValid();
     if (!isValid) {
       return false;
     }
+    this.validations.clearErrorDisplay();
 
-    const defaultStartingAcademicLevel = await this.getDefaultStartingAcademicLevel(
-      this.args.report,
-      this.args.parent,
-    );
-    const defaultEndingAcademicLevel = await this.getDefaultEndingAcademicLevel(
-      this.args.report,
-      this.args.parent,
-    );
+    const defaultStartLevel = await this.getDefaultStartLevel(this.args.report, this.args.parent);
+    const defaultEndLevel = await this.getDefaultEndLevel(this.args.report, this.args.parent);
 
     const block = this.store.createRecord('curriculum-inventory-sequence-block', {
       title: this.title,
       description: this.description,
       parent: this.args.parent,
-      startingAcademicLevel: this.startingAcademicLevel || defaultStartingAcademicLevel,
-      endingAcademicLevel: this.endingAcademicLevel || defaultEndingAcademicLevel,
+      startingAcademicLevel: this.startLevel || defaultStartLevel,
+      endingAcademicLevel: this.endLevel || defaultEndLevel,
       required: this.required.id,
       track: this.track,
       orderInSequence: this.orderInSequence ?? this.defaultOrderInSequence,

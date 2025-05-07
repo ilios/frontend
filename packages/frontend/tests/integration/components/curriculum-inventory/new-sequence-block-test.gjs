@@ -396,6 +396,44 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
     assert.strictEqual(component.endDate.value, '');
   });
 
+  test('save fails when title is blank', async function (assert) {
+    const reportModel = await this.owner
+      .lookup('service:store')
+      .findRecord('curriculum-inventory-report', this.report.id);
+    this.set('report', reportModel);
+
+    await render(
+      <template>
+        <NewSequenceBlock @report={{this.report}} @save={{(noop)}} @cancel={{(noop)}} />
+      </template>,
+    );
+
+    assert.notOk(component.title.hasError);
+    await component.title.set('');
+    await component.save();
+    assert.ok(component.title.hasError);
+    assert.strictEqual(component.title.error, 'Title can not be blank');
+  });
+
+  test('save fails when title is too long', async function (assert) {
+    const reportModel = await this.owner
+      .lookup('service:store')
+      .findRecord('curriculum-inventory-report', this.report.id);
+    this.set('report', reportModel);
+
+    await render(
+      <template>
+        <NewSequenceBlock @report={{this.report}} @save={{(noop)}} @cancel={{(noop)}} />
+      </template>,
+    );
+
+    assert.notOk(component.title.hasError);
+    await component.title.set('0123456789'.repeat(21));
+    await component.save();
+    assert.ok(component.title.hasError);
+    assert.strictEqual(component.title.error, 'Title is too long (maximum is 200 characters)');
+  });
+
   test('save fails when minimum is larger than maximum', async function (assert) {
     const reportModel = await this.owner
       .lookup('service:store')
@@ -408,15 +446,11 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
       </template>,
     );
 
-    assert.strictEqual(component.maximum.errors.length, 0);
+    assert.notOk(component.maximum.hasError);
     await component.minimum.set('10');
     await component.maximum.set('5');
     await component.save();
-    assert.strictEqual(component.maximum.errors.length, 1);
-    assert.strictEqual(
-      component.maximum.errors[0].text,
-      'Maximum must be greater than or equal to Minimum',
-    );
+    assert.strictEqual(component.maximum.error, 'Maximum must be greater than or equal to Minimum');
   });
 
   test('save fails when minimum is less than zero', async function (assert) {
@@ -430,11 +464,10 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
         <NewSequenceBlock @report={{this.report}} @save={{(noop)}} @cancel={{(noop)}} />
       </template>,
     );
-
-    assert.strictEqual(component.minimum.errors.length, 0);
+    assert.notOk(component.minimum.hasError);
     await component.minimum.set('-1');
     await component.save();
-    assert.strictEqual(component.minimum.errors.length, 1);
+    assert.strictEqual(component.minimum.error, 'Minimum must be greater than or equal to 0');
   });
 
   test('save fails when minimum is empty', async function (assert) {
@@ -449,10 +482,28 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
       </template>,
     );
 
-    assert.strictEqual(component.minimum.errors.length, 0);
+    assert.notOk(component.minimum.hasError);
     await component.minimum.set('');
     await component.save();
-    assert.strictEqual(component.minimum.errors.length, 1);
+    assert.strictEqual(component.minimum.error, 'Minimum must be a number');
+  });
+
+  test('save fails when minimum is not an integer', async function (assert) {
+    const reportModel = await this.owner
+      .lookup('service:store')
+      .findRecord('curriculum-inventory-report', this.report.id);
+    this.set('report', reportModel);
+
+    await render(
+      <template>
+        <NewSequenceBlock @report={{this.report}} @save={{(noop)}} @cancel={{(noop)}} />
+      </template>,
+    );
+
+    assert.notOk(component.minimum.hasError);
+    await component.minimum.set('1.5');
+    await component.save();
+    assert.strictEqual(component.minimum.error, 'Minimum must be an integer');
   });
 
   test('save fails when maximum is empty', async function (assert) {
@@ -467,10 +518,46 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
       </template>,
     );
 
-    assert.strictEqual(component.maximum.errors.length, 0);
+    assert.notOk(component.maximum.hasError);
     await component.maximum.set('');
     await component.save();
-    assert.strictEqual(component.maximum.errors.length, 1);
+    assert.strictEqual(component.maximum.error, 'Maximum must be a number');
+  });
+
+  test('save fails when maximum is not an integer', async function (assert) {
+    const reportModel = await this.owner
+      .lookup('service:store')
+      .findRecord('curriculum-inventory-report', this.report.id);
+    this.set('report', reportModel);
+
+    await render(
+      <template>
+        <NewSequenceBlock @report={{this.report}} @save={{(noop)}} @cancel={{(noop)}} />
+      </template>,
+    );
+
+    assert.notOk(component.maximum.hasError);
+    await component.maximum.set('1.5');
+    await component.save();
+    assert.strictEqual(component.maximum.error, 'Maximum must be an integer');
+  });
+
+  test('save fails when maximum is less than zero', async function (assert) {
+    const reportModel = await this.owner
+      .lookup('service:store')
+      .findRecord('curriculum-inventory-report', this.report.id);
+    this.set('report', reportModel);
+
+    await render(
+      <template>
+        <NewSequenceBlock @report={{this.report}} @save={{(noop)}} @cancel={{(noop)}} />
+      </template>,
+    );
+    assert.notOk(component.maximum.hasError);
+    await component.minimum.set('-1');
+    await component.maximum.set('-1');
+    await component.save();
+    assert.strictEqual(component.maximum.error, 'Maximum must be greater than or equal to 0');
   });
 
   test('save fails when starting level is higher than ending academic level', async function (assert) {
@@ -484,13 +571,19 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
         <NewSequenceBlock @report={{this.report}} @save={{(noop)}} @cancel={{(noop)}} />
       </template>,
     );
-    assert.strictEqual(component.startLevel.errors.length, 0);
-    assert.strictEqual(component.endLevel.errors.length, 0);
+    assert.notOk(component.startLevel.hasError);
+    assert.notOk(component.endLevel.hasError);
     await component.startLevel.select(this.academicLevels[8].level);
     await component.endLevel.select(this.academicLevels[2].level);
     await component.save();
-    assert.strictEqual(component.startLevel.errors.length, 1);
-    assert.strictEqual(component.endLevel.errors.length, 1);
+    assert.strictEqual(
+      component.startLevel.error,
+      'Start Level must be less than or equal to End Level',
+    );
+    assert.strictEqual(
+      component.endLevel.error,
+      'End Level must be greater than or equal to Start Level',
+    );
   });
 
   test('save with date range and a zero duration', async function (assert) {
@@ -556,13 +649,13 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
       </template>,
     );
 
+    assert.notOk(component.endDate.hasError);
     await component.title.set('Foo Bar');
     await component.description.set('Lorem Ipsum');
     await component.startDate.set(new Date('2016-11-12'));
     await component.endDate.set(new Date('2011-12-30'));
     await component.save();
-    assert.strictEqual(component.startDate.errors.length, 0);
-    assert.strictEqual(component.endDate.errors.length, 1);
+    assert.strictEqual(component.endDate.error, 'End Date must be after Start Date');
   });
 
   test('save fails on missing duration', async function (assert) {
@@ -576,14 +669,15 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
         <NewSequenceBlock @report={{this.report}} @save={{(noop)}} @cancel={{(noop)}} />
       </template>,
     );
-
+    assert.notOk(component.duration.hasError);
     await component.title.set('Foo Bar');
     await component.description.set('Lorem Ipsum');
     await component.startDate.set(new Date('2016-11-12'));
     await component.endDate.set(new Date('2016-12-30'));
     await component.duration.set('');
     await component.save();
-    assert.strictEqual(component.duration.errors.length, 2);
+    assert.ok(component.duration.hasError);
+    assert.strictEqual(component.duration.error, 'Duration must be a number');
   });
 
   test('save fails on invalid duration', async function (assert) {
@@ -597,14 +691,35 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
         <NewSequenceBlock @report={{this.report}} @save={{(noop)}} @cancel={{(noop)}} />
       </template>,
     );
-
+    assert.notOk(component.duration.hasError);
     await component.title.set('Foo Bar');
     await component.description.set('Lorem Ipsum');
     await component.startDate.set(new Date('2016-11-12'));
     await component.endDate.set(new Date('2016-12-30'));
     await component.duration.set('WRONG');
     await component.save();
-    assert.strictEqual(component.duration.errors.length, 3);
+    assert.ok(component.duration.hasError);
+    assert.strictEqual(component.duration.error, 'Duration must be a number');
+  });
+
+  test('save fails on duration exceeds 1200 minutes', async function (assert) {
+    const reportModel = await this.owner
+      .lookup('service:store')
+      .findRecord('curriculum-inventory-report', this.report.id);
+    this.set('report', reportModel);
+
+    await render(
+      <template>
+        <NewSequenceBlock @report={{this.report}} @save={{(noop)}} @cancel={{(noop)}} />
+      </template>,
+    );
+    assert.notOk(component.duration.hasError);
+    await component.title.set('Foo Bar');
+    await component.description.set('Lorem Ipsum');
+    await component.duration.set('1201');
+    await component.save();
+    assert.ok(component.duration.hasError);
+    assert.strictEqual(component.duration.error, 'Duration must be less than 1201');
   });
 
   test('save fails if neither date range nor non-zero duration is provided', async function (assert) {
@@ -619,11 +734,13 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
       </template>,
     );
 
+    assert.notOk(component.duration.hasError);
     await component.title.set('Foo Bar');
     await component.description.set('Lorem Ipsum');
     await component.duration.set('');
     await component.save();
-    assert.strictEqual(component.duration.errors.length, 2);
+    assert.ok(component.duration.hasError);
+    assert.strictEqual(component.duration.error, 'Duration must be a number');
   });
 
   test('save fails if linked course is clerkship and start date is not provided', async function (assert) {
@@ -648,14 +765,17 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
         <NewSequenceBlock @report={{this.report}} @save={{(noop)}} @cancel={{(noop)}} />
       </template>,
     );
+    assert.notOk(component.startDate.hasError);
+    assert.notOk(component.endDate.hasError);
+    assert.notOk(component.duration.hasError);
     await component.title.set('Foo Bar');
     await component.description.set('Lorem Ipsum');
     await component.duration.set('10');
     await component.course.select(courseModel.id);
     await component.save();
-    assert.strictEqual(component.startDate.errors.length, 1);
-    assert.strictEqual(component.endDate.errors.length, 0);
-    assert.strictEqual(component.duration.errors.length, 0);
+    assert.strictEqual(component.startDate.error, 'Start Date can not be blank');
+    assert.notOk(component.endDate.hasError);
+    assert.notOk(component.duration.hasError);
   });
 
   test('save fails if linked course is clerkship and duration is zero', async function (assert) {
@@ -680,6 +800,9 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
         <NewSequenceBlock @report={{this.report}} @save={{(noop)}} @cancel={{(noop)}} />
       </template>,
     );
+    assert.notOk(component.startDate.hasError);
+    assert.notOk(component.endDate.hasError);
+    assert.notOk(component.duration.hasError);
     await component.title.set('Foo Bar');
     await component.description.set('Lorem Ipsum');
     await component.startDate.set(new Date('2016-11-12'));
@@ -687,13 +810,10 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
     await component.duration.set('0');
     await component.course.select(courseModel.id);
     await component.save();
-    assert.strictEqual(component.startDate.errors.length, 0);
-    assert.strictEqual(component.endDate.errors.length, 0);
-    assert.strictEqual(component.duration.errors.length, 1);
-    assert.strictEqual(
-      component.duration.errors[0].text,
-      'Duration must be greater than or equal to 1',
-    );
+    assert.notOk(component.startDate.hasError);
+    assert.notOk(component.endDate.hasError);
+    assert.ok(component.duration.hasError);
+    assert.strictEqual(component.duration.error, 'Duration must be greater than or equal to 1');
   });
 
   test('save fails if start-date is given but no end-date is provided', async function (assert) {
@@ -707,11 +827,11 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
         <NewSequenceBlock @report={{this.report}} @save={{(noop)}} @cancel={{(noop)}} />
       </template>,
     );
-
+    assert.notOk(component.endDate.hasError);
     await component.title.set('Foo Bar');
     await component.description.set('Lorem Ipsum');
     await component.startDate.set(new Date());
     await component.save();
-    assert.strictEqual(component.endDate.errors.length, 2);
+    assert.strictEqual(component.endDate.error, 'End Date can not be blank');
   });
 });
