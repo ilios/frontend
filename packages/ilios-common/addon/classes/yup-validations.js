@@ -238,7 +238,7 @@ function moreThan() {
 
 function lessThan() {
   return (validationParams) => {
-    //our current translations expects this key to be named gt and not more as it is in yup
+    //our current translations expects this key to be named lt and not less as it is in yup
     const lt = validationParams.less;
     return {
       path: validationParams.path,
