@@ -384,7 +384,7 @@ export default class CurriculumInventoryReportOverviewComponent extends Componen
                   <textarea
                     id="description-{{templateId}}"
                     value={{this.description}}
-                    disabled={{this.isSaving}}
+                    disabled={{isSaving}}
                     {{on "input" (pick "target.value" (set this "description"))}}
                     {{this.validations.attach "description"}}
                     placeholder={{t "general.reportDescriptionPlaceholder"}}

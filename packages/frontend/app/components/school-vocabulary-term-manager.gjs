@@ -261,7 +261,7 @@ export default class SchoolVocabularyTermManagerComponent extends Component {
                       id="description-{{templateId}}"
                       value={{this.description}}
                       {{on "input" (pick "target.value" (set this "descriptionValue"))}}
-                      disabled={{this.isSaving}}
+                      disabled={{isSaving}}
                     >
                       {{this.description}}
                     </textarea>
