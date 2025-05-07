@@ -13,6 +13,15 @@ module.exports = {
     const rootUrl = config.rootUrl || '';
     const script = this.getScript(rootUrl);
 
+    if (type === 'test-body') {
+      return `
+        <style type="text/css">
+          #ilios-loading-error {
+            display: none;
+          }
+        </style>
+      `;
+    }
     if (type === 'body') {
       return `
         <script>
