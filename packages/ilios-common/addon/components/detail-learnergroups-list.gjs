@@ -3,6 +3,8 @@ import { cached } from '@glimmer/tracking';
 import { filter, map } from 'rsvp';
 import { TrackedAsyncData } from 'ember-async-data';
 import { mapBy, uniqueValues } from 'ilios-common/utils/array-helpers';
+import DetailLearnergroupsListItem from 'ilios-common/components/detail-learnergroups-list-item';
+import LoadingSpinner from 'ilios-common/components/loading-spinner';
 
 export default class DetailLearnerGroupsListComponent extends Component {
   @cached
@@ -54,30 +56,31 @@ export default class DetailLearnerGroupsListComponent extends Component {
       };
     });
   }
+  <template>
+    <div class="detail-learnergroups-list" data-test-detail-learnergroups-list>
+      {{#if this.isLoaded}}
+        {{#each this.trees as |tree|}}
+          <div class="trees" data-test-trees>
+            <fieldset data-test-tree>
+              <legend>
+                {{tree.cohort.programYear.program.title}}
+                {{tree.cohort.title}}
+              </legend>
+              <ul class="selected-groups" data-test-selected-groups>
+                {{#each tree.groups as |group|}}
+                  <DetailLearnergroupsListItem
+                    @group={{group}}
+                    @remove={{@remove}}
+                    @isManaging={{@isManaging}}
+                  />
+                {{/each}}
+              </ul>
+            </fieldset>
+          </div>
+        {{/each}}
+      {{else}}
+        <LoadingSpinner />
+      {{/if}}
+    </div>
+  </template>
 }
-
-<div class="detail-learnergroups-list" data-test-detail-learnergroups-list>
-  {{#if this.isLoaded}}
-    {{#each this.trees as |tree|}}
-      <div class="trees" data-test-trees>
-        <fieldset data-test-tree>
-          <legend>
-            {{tree.cohort.programYear.program.title}}
-            {{tree.cohort.title}}
-          </legend>
-          <ul class="selected-groups" data-test-selected-groups>
-            {{#each tree.groups as |group|}}
-              <DetailLearnergroupsListItem
-                @group={{group}}
-                @remove={{@remove}}
-                @isManaging={{@isManaging}}
-              />
-            {{/each}}
-          </ul>
-        </fieldset>
-      </div>
-    {{/each}}
-  {{else}}
-    <LoadingSpinner />
-  {{/if}}
-</div>

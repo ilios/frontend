@@ -1,6 +1,9 @@
 import Component from '@glimmer/component';
 import { DateTime } from 'luxon';
 import { action } from '@ember/object';
+import isArray from 'ember-truth-helpers/helpers/is-array';
+import MonthlyCalendar from 'ilios-common/components/monthly-calendar';
+import IliosCalendarMultidayEvents from 'ilios-common/components/ilios-calendar-multiday-events';
 
 export default class IliosCalendarMonthComponent extends Component {
   get ilmPreWorkEvents() {
@@ -43,22 +46,23 @@ export default class IliosCalendarMonthComponent extends Component {
       this.args.changeView('day');
     }
   }
+  <template>
+    {{#if (isArray @calendarEvents)}}
+      <div class="ilios-calendar-month" data-test-ilios-calendar-month>
+        <MonthlyCalendar
+          @isLoadingEvents={{@isLoadingEvents}}
+          @date={{@date}}
+          @events={{this.singleDayEvents}}
+          @changeToDayView={{this.changeToDayView}}
+          @selectEvent={{@selectEvent}}
+        />
+
+        <IliosCalendarMultidayEvents
+          @events={{this.multiDayEventsList}}
+          @selectEvent={{@selectEvent}}
+          @areEventsSelectable={{@areDaysSelectable}}
+        />
+      </div>
+    {{/if}}
+  </template>
 }
-
-{{#if (is-array @calendarEvents)}}
-  <div class="ilios-calendar-month" data-test-ilios-calendar-month>
-    <MonthlyCalendar
-      @isLoadingEvents={{@isLoadingEvents}}
-      @date={{@date}}
-      @events={{this.singleDayEvents}}
-      @changeToDayView={{this.changeToDayView}}
-      @selectEvent={{@selectEvent}}
-    />
-
-    <IliosCalendarMultidayEvents
-      @events={{this.multiDayEventsList}}
-      @selectEvent={{@selectEvent}}
-      @areEventsSelectable={{@areDaysSelectable}}
-    />
-  </div>
-{{/if}}

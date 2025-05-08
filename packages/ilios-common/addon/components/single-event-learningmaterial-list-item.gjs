@@ -1,118 +1,129 @@
-<li
-  class="single-event-learningmaterial-item"
-  data-test-single-event-learningmaterial-list-item
-  ...attributes
->
-  {{#let (unique-id) as |templateId|}}
-    {{#if @learningMaterial.isBlanked}}
-      <div class="single-event-learningmaterial-item-title" data-test-title>
-        {{@learningMaterial.title}}
-      </div>
-      <div class="single-event-learningmaterial-item-timing-info" data-test-timing-info>
-        <TimedReleaseSchedule
-          @startDate={{@learningMaterial.startDate}}
-          @endDate={{@learningMaterial.endDate}}
-          @showNoSchedule={{false}}
-        />
-      </div>
-    {{else}}
-      <div class="single-event-learningmaterial-item-title">
-        <UserMaterialStatus @learningMaterial={{@learningMaterial}} @disabled={{not @linked}} />
-        <LmIcons @learningMaterial={{@learningMaterial}} />
-        <span data-test-title>
-          {{#if @linked}}
-            {{#if @learningMaterial.absoluteFileUri}}
-              {{#if (eq @learningMaterial.mimetype "application/pdf")}}
+import { uniqueId, concat } from '@ember/helper';
+import TimedReleaseSchedule from 'ilios-common/components/timed-release-schedule';
+import UserMaterialStatus from 'ilios-common/components/user-material-status';
+import not from 'ember-truth-helpers/helpers/not';
+import LmIcons from 'ilios-common/components/lm-icons';
+import eq from 'ember-truth-helpers/helpers/eq';
+import t from 'ember-intl/helpers/t';
+import FaIcon from 'ilios-common/components/fa-icon';
+import filesize from 'ilios-common/helpers/filesize';
+<template>
+  <li
+    class="single-event-learningmaterial-item"
+    data-test-single-event-learningmaterial-list-item
+    ...attributes
+  >
+    {{#let (uniqueId) as |templateId|}}
+      {{#if @learningMaterial.isBlanked}}
+        <div class="single-event-learningmaterial-item-title" data-test-title>
+          {{@learningMaterial.title}}
+        </div>
+        <div class="single-event-learningmaterial-item-timing-info" data-test-timing-info>
+          <TimedReleaseSchedule
+            @startDate={{@learningMaterial.startDate}}
+            @endDate={{@learningMaterial.endDate}}
+            @showNoSchedule={{false}}
+          />
+        </div>
+      {{else}}
+        <div class="single-event-learningmaterial-item-title">
+          <UserMaterialStatus @learningMaterial={{@learningMaterial}} @disabled={{not @linked}} />
+          <LmIcons @learningMaterial={{@learningMaterial}} />
+          <span data-test-title>
+            {{#if @linked}}
+              {{#if @learningMaterial.absoluteFileUri}}
+                {{#if (eq @learningMaterial.mimetype "application/pdf")}}
+                  <a
+                    id={{concat templateId @learningMaterial.id "lm"}}
+                    href="{{@learningMaterial.absoluteFileUri}}?inline"
+                    data-test-pdf-link
+                  >
+                    {{@learningMaterial.title}}
+                  </a>
+                  <a
+                    id={{concat templateId @learningMaterial.id "lmdownload"}}
+                    target="_blank"
+                    href={{@learningMaterial.absoluteFileUri}}
+                    rel="noopener noreferrer"
+                    aria-label={{t "general.download"}}
+                    aria-labelledby="{{concat
+                      templateId
+                      @learningMaterial.id
+                      'lmdownload'
+                    }} {{concat templateId @learningMaterial.id 'lm'}}"
+                    data-test-pdf-download-link
+                  >
+                    <FaIcon @icon="download" />
+                  </a>
+                {{else}}
+                  <a
+                    target="_blank"
+                    href={{@learningMaterial.absoluteFileUri}}
+                    rel="noopener
+                  noreferrer"
+                    data-test-file-link
+                  >
+                    {{@learningMaterial.title}}
+                  </a>
+                {{/if}}
+                <span class="single-event-learningmaterial-filesize" data-test-filesize>
+                  {{#if @learningMaterial.filesize}}
+                    ({{filesize @learningMaterial.filesize}})
+                  {{/if}}
+                </span>
+              {{else if @learningMaterial.link}}
                 <a
-                  id={{concat templateId @learningMaterial.id "lm"}}
-                  href="{{@learningMaterial.absoluteFileUri}}?inline"
-                  data-test-pdf-link
+                  target="_blank"
+                  href={{@learningMaterial.link}}
+                  rel="noopener
+                noreferrer"
+                  data-test-link
                 >
                   {{@learningMaterial.title}}
-                </a>
-                <a
-                  id={{concat templateId @learningMaterial.id "lmdownload"}}
-                  target="_blank"
-                  href={{@learningMaterial.absoluteFileUri}}
-                  rel="noopener noreferrer"
-                  aria-label={{t "general.download"}}
-                  aria-labelledby="{{concat templateId @learningMaterial.id 'lmdownload'}} {{concat
-                    templateId
-                    @learningMaterial.id
-                    'lm'
-                  }}"
-                  data-test-pdf-download-link
-                >
-                  <FaIcon @icon="download" />
                 </a>
               {{else}}
-                <a
-                  target="_blank"
-                  href={{@learningMaterial.absoluteFileUri}}
-                  rel="noopener
-                  noreferrer"
-                  data-test-file-link
-                >
-                  {{@learningMaterial.title}}
-                </a>
-              {{/if}}
-              <span class="single-event-learningmaterial-filesize" data-test-filesize>
-                {{#if @learningMaterial.filesize}}
-                  ({{filesize @learningMaterial.filesize}})
-                {{/if}}
-              </span>
-            {{else if @learningMaterial.link}}
-              <a
-                target="_blank"
-                href={{@learningMaterial.link}}
-                rel="noopener
-                noreferrer"
-                data-test-link
-              >
                 {{@learningMaterial.title}}
-              </a>
+              {{/if}}
             {{else}}
               {{@learningMaterial.title}}
+              {{#if @learningMaterial.absoluteFileUri}}
+                <span class="single-event-learningmaterial-filesize" data-test-filesize>
+                  {{#if @learningMaterial.filesize}}
+                    ({{filesize @learningMaterial.filesize}})
+                  {{/if}}
+                </span>
+              {{/if}}
             {{/if}}
-          {{else}}
-            {{@learningMaterial.title}}
-            {{#if @learningMaterial.absoluteFileUri}}
-              <span class="single-event-learningmaterial-filesize" data-test-filesize>
-                {{#if @learningMaterial.filesize}}
-                  ({{filesize @learningMaterial.filesize}})
-                {{/if}}
-              </span>
-            {{/if}}
-          {{/if}}
-        </span>
-      </div>
-      {{#if @learningMaterial.citation}}
-        <div class="single-event-learningmaterial-item-citation" data-test-citation>
-          {{@learningMaterial.citation}}
+          </span>
         </div>
-      {{/if}}
-      <div class="single-event-learningmaterial-item-timing-info" data-test-timing-info>
-        <TimedReleaseSchedule
-          @startDate={{@learningMaterial.startDate}}
-          @endDate={{@learningMaterial.endDate}}
-          @showNoSchedule={{false}}
-        />
-      </div>
-      {{#if @learningMaterial.description}}
-        <div class="single-event-learningmaterial-item-description" data-test-description>
-          {{! template-lint-disable no-triple-curlies }}
-          {{{@learningMaterial.description}}}
+        {{#if @learningMaterial.citation}}
+          <div class="single-event-learningmaterial-item-citation" data-test-citation>
+            {{@learningMaterial.citation}}
+          </div>
+        {{/if}}
+        <div class="single-event-learningmaterial-item-timing-info" data-test-timing-info>
+          <TimedReleaseSchedule
+            @startDate={{@learningMaterial.startDate}}
+            @endDate={{@learningMaterial.endDate}}
+            @showNoSchedule={{false}}
+          />
         </div>
+        {{#if @learningMaterial.description}}
+          <div class="single-event-learningmaterial-item-description" data-test-description>
+            {{! template-lint-disable no-triple-curlies }}
+            {{{@learningMaterial.description}}}
+          </div>
+        {{/if}}
+        {{#if @learningMaterial.publicNotes}}
+          <div class="single-event-learningmaterial-item-notes" data-test-public-notes>
+            {{! template-lint-disable no-triple-curlies }}
+            <FaIcon @icon="square-pen" />
+            <p>
+              {{{@learningMaterial.publicNotes}}}
+            </p>
+          </div>
+        {{/if}}
       {{/if}}
-      {{#if @learningMaterial.publicNotes}}
-        <div class="single-event-learningmaterial-item-notes" data-test-public-notes>
-          {{! template-lint-disable no-triple-curlies }}
-          <FaIcon @icon="square-pen" />
-          <p>
-            {{{@learningMaterial.publicNotes}}}
-          </p>
-        </div>
-      {{/if}}
-    {{/if}}
-  {{/let}}
-</li>
+    {{/let}}
+  </li>
+</template>

@@ -1,6 +1,12 @@
 import Component from '@glimmer/component';
 import { restartableTask, timeout } from 'ember-concurrency';
 import { guidFor } from '@ember/object/internals';
+import t from 'ember-intl/helpers/t';
+import CopyButton from 'ilios-common/components/copy-button';
+import perform from 'ember-concurrency/helpers/perform';
+import FaIcon from 'ilios-common/components/fa-icon';
+import IliosTooltip from 'ilios-common/components/ilios-tooltip';
+import { hash } from '@ember/helper';
 
 export default class OfferingUrlDisplayComponent extends Component {
   get copyButtonId() {
@@ -14,33 +20,34 @@ export default class OfferingUrlDisplayComponent extends Component {
   copy = restartableTask(async () => {
     await timeout(1500);
   });
-}
-
-{{#if @url}}
-  <span class="offering-url-display" ...attributes>
-    <a title={{@url}} href={{@url}}>{{t "general.virtualSessionLink"}}</a>
-    <CopyButton
-      title={{t "general.copyLink"}}
-      @clipboardText={{@url}}
-      @success={{perform this.copy}}
-      class={{if this.copy.isRunning "copying"}}
-      id={{this.copyButtonId}}
-      data-test-copy-url
-    >
+  <template>
+    {{#if @url}}
+      <span class="offering-url-display" ...attributes>
+        <a title={{@url}} href={{@url}}>{{t "general.virtualSessionLink"}}</a>
+        <CopyButton
+          title={{t "general.copyLink"}}
+          @clipboardText={{@url}}
+          @success={{perform this.copy}}
+          class={{if this.copy.isRunning "copying"}}
+          id={{this.copyButtonId}}
+          data-test-copy-url
+        >
+          {{#if this.copy.isRunning}}
+            <FaIcon @icon="check" />
+          {{else}}
+            <FaIcon @icon="copy" />
+          {{/if}}
+        </CopyButton>
+      </span>
       {{#if this.copy.isRunning}}
-        <FaIcon @icon="check" />
-      {{else}}
-        <FaIcon @icon="copy" />
+        <IliosTooltip
+          @target={{this.copyButtonElement}}
+          @options={{hash placement="right"}}
+          class="offering-url-display-success-message-tooltip"
+        >
+          {{t "general.copiedSuccessfully"}}
+        </IliosTooltip>
       {{/if}}
-    </CopyButton>
-  </span>
-  {{#if this.copy.isRunning}}
-    <IliosTooltip
-      @target={{this.copyButtonElement}}
-      @options={{hash placement="right"}}
-      class="offering-url-display-success-message-tooltip"
-    >
-      {{t "general.copiedSuccessfully"}}
-    </IliosTooltip>
-  {{/if}}
-{{/if}}
+    {{/if}}
+  </template>
+}

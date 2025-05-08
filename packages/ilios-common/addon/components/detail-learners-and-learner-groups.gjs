@@ -6,6 +6,14 @@ import { dropTask } from 'ember-concurrency';
 import { hash } from 'rsvp';
 import { uniqueValues } from 'ilios-common/utils/array-helpers';
 import { TrackedAsyncData } from 'ember-async-data';
+import t from 'ember-intl/helpers/t';
+import { on } from '@ember/modifier';
+import perform from 'ember-concurrency/helpers/perform';
+import FaIcon from 'ilios-common/components/fa-icon';
+import LearnergroupSelectionManager from 'ilios-common/components/learnergroup-selection-manager';
+import LearnerSelectionManager from 'ilios-common/components/learner-selection-manager';
+import SelectedLearnerGroups from 'ilios-common/components/selected-learner-groups';
+import SelectedLearners from 'ilios-common/components/selected-learners';
 
 export default class DetailLearnersAndLearnerGroupsComponent extends Component {
   @service currentUser;
@@ -147,66 +155,70 @@ export default class DetailLearnersAndLearnerGroupsComponent extends Component {
   removeLearnerFromBuffer(learner) {
     this.learnerBuffer = this.learnerBuffer.filter((obj) => obj.id !== learner.id);
   }
+  <template>
+    <section
+      class="detail-learners-and-learner-groups"
+      data-test-detail-learners-and-learner-groups
+    >
+      <div class="detail-learners-and-learner-groups-header">
+        <div class="title" data-test-title>
+          {{#if this.isManaging}}
+            <span class="detail-specific-title">
+              {{t "general.manageLearners"}}
+            </span>
+          {{else}}
+            {{t
+              "general.learnersAndLearnerGroupsWithCount"
+              learnerCount=this.learnerCount
+              learnerGroupCount=this.learnerGroupCount
+            }}
+          {{/if}}
+        </div>
+        <div class="actions">
+          {{#if this.isManaging}}
+            <button class="bigadd" type="button" {{on "click" (perform this.save)}} data-test-save>
+              <FaIcon @icon="check" />
+            </button>
+            <button class="bigcancel" type="button" {{on "click" this.cancel}} data-test-cancel>
+              <FaIcon @icon="arrow-rotate-left" />
+            </button>
+          {{else if @editable}}
+            <button type="button" {{on "click" (perform this.manage)}} data-test-manage>
+              {{t "general.manageLearners"}}
+            </button>
+          {{/if}}
+        </div>
+      </div>
+      <div class="detail-learners-and-learner-groups-content">
+        {{#if this.isManaging}}
+          <LearnergroupSelectionManager
+            @learnerGroups={{this.learnerGroupBuffer}}
+            @cohorts={{this.cohorts}}
+            @add={{this.addLearnerGroupToBuffer}}
+            @remove={{this.removeLearnerGroupFromBuffer}}
+          />
+          <LearnerSelectionManager
+            @learners={{this.learnerBuffer}}
+            @add={{this.addLearnerToBuffer}}
+            @remove={{this.removeLearnerFromBuffer}}
+          />
+        {{else}}
+          {{#if this.learnerGroupCount}}
+            <SelectedLearnerGroups
+              @learnerGroups={{this.ilmLearnerGroups}}
+              @isManaging={{false}}
+              class="display-selected-learner-groups"
+            />
+          {{/if}}
+          {{#if this.learnerCount}}
+            <SelectedLearners
+              @learners={{this.ilmLearners}}
+              @isManaging={{false}}
+              class="display-selected-learners"
+            />
+          {{/if}}
+        {{/if}}
+      </div>
+    </section>
+  </template>
 }
-
-<section class="detail-learners-and-learner-groups" data-test-detail-learners-and-learner-groups>
-  <div class="detail-learners-and-learner-groups-header">
-    <div class="title" data-test-title>
-      {{#if this.isManaging}}
-        <span class="detail-specific-title">
-          {{t "general.manageLearners"}}
-        </span>
-      {{else}}
-        {{t
-          "general.learnersAndLearnerGroupsWithCount"
-          learnerCount=this.learnerCount
-          learnerGroupCount=this.learnerGroupCount
-        }}
-      {{/if}}
-    </div>
-    <div class="actions">
-      {{#if this.isManaging}}
-        <button class="bigadd" type="button" {{on "click" (perform this.save)}} data-test-save>
-          <FaIcon @icon="check" />
-        </button>
-        <button class="bigcancel" type="button" {{on "click" this.cancel}} data-test-cancel>
-          <FaIcon @icon="arrow-rotate-left" />
-        </button>
-      {{else if @editable}}
-        <button type="button" {{on "click" (perform this.manage)}} data-test-manage>
-          {{t "general.manageLearners"}}
-        </button>
-      {{/if}}
-    </div>
-  </div>
-  <div class="detail-learners-and-learner-groups-content">
-    {{#if this.isManaging}}
-      <LearnergroupSelectionManager
-        @learnerGroups={{this.learnerGroupBuffer}}
-        @cohorts={{this.cohorts}}
-        @add={{this.addLearnerGroupToBuffer}}
-        @remove={{this.removeLearnerGroupFromBuffer}}
-      />
-      <LearnerSelectionManager
-        @learners={{this.learnerBuffer}}
-        @add={{this.addLearnerToBuffer}}
-        @remove={{this.removeLearnerFromBuffer}}
-      />
-    {{else}}
-      {{#if this.learnerGroupCount}}
-        <SelectedLearnerGroups
-          @learnerGroups={{this.ilmLearnerGroups}}
-          @isManaging={{false}}
-          class="display-selected-learner-groups"
-        />
-      {{/if}}
-      {{#if this.learnerCount}}
-        <SelectedLearners
-          @learners={{this.ilmLearners}}
-          @isManaging={{false}}
-          class="display-selected-learners"
-        />
-      {{/if}}
-    {{/if}}
-  </div>
-</section>

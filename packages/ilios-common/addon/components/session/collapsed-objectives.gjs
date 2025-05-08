@@ -1,6 +1,13 @@
 import Component from '@glimmer/component';
 import { cached } from '@glimmer/tracking';
 import { TrackedAsyncData } from 'ember-async-data';
+import { on } from '@ember/modifier';
+import t from 'ember-intl/helpers/t';
+import { get } from '@ember/helper';
+import FaIcon from 'ilios-common/components/fa-icon';
+import eq from 'ember-truth-helpers/helpers/eq';
+import gte from 'ember-truth-helpers/helpers/gte';
+import LoadingSpinner from 'ilios-common/components/loading-spinner';
 
 export default class SessionCollapsedObjectivesComponent extends Component {
   @cached
@@ -29,93 +36,98 @@ export default class SessionCollapsedObjectivesComponent extends Component {
       return objective.hasMany('terms').ids().length > 0;
     });
   }
+  <template>
+    <section class="session-collapsed-objectives" data-test-session-collapsed-objectives>
+      <div>
+        <button
+          class="title link-button"
+          type="button"
+          aria-expanded="false"
+          data-test-title
+          {{on "click" @expand}}
+        >
+          {{t "general.objectives"}}
+          ({{get this.objectives "length"}})
+          <FaIcon @icon="caret-right" />
+        </button>
+      </div>
+      {{#if this.objectivesData.isResolved}}
+        <div class="content">
+          <table>
+            <thead>
+              <tr>
+                <th class="text-left">
+                  {{t "general.summary"}}
+                </th>
+                <th class="text-center">
+                  {{t "general.parentObjectives"}}
+                </th>
+                <th class="text-center">
+                  {{t "general.vocabularyTerms"}}
+                </th>
+                <th class="text-center">
+                  {{t "general.meshTerms"}}
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td data-test-objective-count>
+                  {{t "general.objectiveCount" count=(get this.objectives "length")}}
+                </td>
+                <td class="text-middle text-center" rowspan="3" data-test-parent-status>
+                  {{#if
+                    (eq (get this.objectivesWithParents "length") (get this.objectives "length"))
+                  }}
+                    <FaIcon @icon="circle" class="yes" />
+                  {{else if (gte (get this.objectivesWithParents "length") 1)}}
+                    <FaIcon @icon="circle" class="maybe" />
+                  {{else}}
+                    <FaIcon @icon="ban" class="no" />
+                  {{/if}}
+                </td>
+                <td class="text-middle text-center" rowspan="3" data-test-term-status>
+                  {{#if
+                    (eq (get this.objectivesWithTerms "length") (get this.objectives "length"))
+                  }}
+                    <FaIcon @icon="circle" class="yes" />
+                  {{else if (gte (get this.objectivesWithTerms "length") 1)}}
+                    <FaIcon @icon="circle" class="maybe" />
+                  {{else}}
+                    <FaIcon @icon="ban" class="no" />
+                  {{/if}}
+                </td>
+                <td class="text-middle text-center" rowspan="3" data-test-mesh-status>
+                  {{#if (eq (get this.objectivesWithMesh "length") (get this.objectives "length"))}}
+                    <FaIcon @icon="circle" class="yes" />
+                  {{else if (gte (get this.objectivesWithMesh "length") 1)}}
+                    <FaIcon @icon="circle" class="maybe" />
+                  {{else}}
+                    <FaIcon @icon="ban" class="no" />
+                  {{/if}}
+                </td>
+              </tr>
+              <tr>
+                <td data-test-parent-count class="count">
+                  {{t "general.parentCount" count=(get this.objectivesWithParents "length")}}
+                </td>
+              </tr>
+              <tr>
+                <td data-test-term-count class="count">
+                  {{t "general.termCount" count=(get this.objectivesWithTerms "length")}}
+                </td>
+              </tr>
+              <tr>
+                <td data-test-mesh-count class="count">
+                  {{t "general.meshCount" count=(get this.objectivesWithMesh "length")}}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      {{else}}
+        <LoadingSpinner @tagName="h3" />
+      {{/if}}
+    </section>
+  </template>
 }
-
-<section class="session-collapsed-objectives" data-test-session-collapsed-objectives>
-  <div>
-    <button
-      class="title link-button"
-      type="button"
-      aria-expanded="false"
-      data-test-title
-      {{on "click" @expand}}
-    >
-      {{t "general.objectives"}}
-      ({{get this.objectives "length"}})
-      <FaIcon @icon="caret-right" />
-    </button>
-  </div>
-  {{#if this.objectivesData.isResolved}}
-    <div class="content">
-      <table>
-        <thead>
-          <tr>
-            <th class="text-left">
-              {{t "general.summary"}}
-            </th>
-            <th class="text-center">
-              {{t "general.parentObjectives"}}
-            </th>
-            <th class="text-center">
-              {{t "general.vocabularyTerms"}}
-            </th>
-            <th class="text-center">
-              {{t "general.meshTerms"}}
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td data-test-objective-count>
-              {{t "general.objectiveCount" count=(get this.objectives "length")}}
-            </td>
-            <td class="text-middle text-center" rowspan="3" data-test-parent-status>
-              {{#if (eq (get this.objectivesWithParents "length") (get this.objectives "length"))}}
-                <FaIcon @icon="circle" class="yes" />
-              {{else if (gte (get this.objectivesWithParents "length") 1)}}
-                <FaIcon @icon="circle" class="maybe" />
-              {{else}}
-                <FaIcon @icon="ban" class="no" />
-              {{/if}}
-            </td>
-            <td class="text-middle text-center" rowspan="3" data-test-term-status>
-              {{#if (eq (get this.objectivesWithTerms "length") (get this.objectives "length"))}}
-                <FaIcon @icon="circle" class="yes" />
-              {{else if (gte (get this.objectivesWithTerms "length") 1)}}
-                <FaIcon @icon="circle" class="maybe" />
-              {{else}}
-                <FaIcon @icon="ban" class="no" />
-              {{/if}}
-            </td>
-            <td class="text-middle text-center" rowspan="3" data-test-mesh-status>
-              {{#if (eq (get this.objectivesWithMesh "length") (get this.objectives "length"))}}
-                <FaIcon @icon="circle" class="yes" />
-              {{else if (gte (get this.objectivesWithMesh "length") 1)}}
-                <FaIcon @icon="circle" class="maybe" />
-              {{else}}
-                <FaIcon @icon="ban" class="no" />
-              {{/if}}
-            </td>
-          </tr>
-          <tr>
-            <td data-test-parent-count class="count">
-              {{t "general.parentCount" count=(get this.objectivesWithParents "length")}}
-            </td>
-          </tr>
-          <tr>
-            <td data-test-term-count class="count">
-              {{t "general.termCount" count=(get this.objectivesWithTerms "length")}}
-            </td>
-          </tr>
-          <tr>
-            <td data-test-mesh-count class="count">
-              {{t "general.meshCount" count=(get this.objectivesWithMesh "length")}}
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  {{else}}
-    <LoadingSpinner @tagName="h3" />
-  {{/if}}
-</section>

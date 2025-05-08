@@ -2,6 +2,10 @@ import Component from '@glimmer/component';
 import { cached } from '@glimmer/tracking';
 import { dropTask } from 'ember-concurrency';
 import { TrackedAsyncData } from 'ember-async-data';
+import or from 'ember-truth-helpers/helpers/or';
+import SchoolSessionAttributesExpanded from 'frontend/components/school-session-attributes-expanded';
+import perform from 'ember-concurrency/helpers/perform';
+import SchoolSessionAttributesCollapsed from 'frontend/components/school-session-attributes-collapsed';
 
 export default class SchoolSessionAttributesComponent extends Component {
   schoolConfigNames = [
@@ -57,30 +61,31 @@ export default class SchoolSessionAttributesComponent extends Component {
       this.args.manage(false);
     }
   });
+  <template>
+    <div class="school-session-attributes" data-test-school-session-attributes ...attributes>
+      {{#if (or this.schoolConfigsData.isResolved this.save.isRunning)}}
+        {{#if @details}}
+          <SchoolSessionAttributesExpanded
+            @canUpdate={{@canUpdate}}
+            @showSessionAttendanceRequired={{this.showSessionAttendanceRequired}}
+            @showSessionSupplemental={{this.showSessionSupplemental}}
+            @showSessionSpecialAttireRequired={{this.showSessionSpecialAttireRequired}}
+            @showSessionSpecialEquipmentRequired={{this.showSessionSpecialEquipmentRequired}}
+            @collapse={{@collapse}}
+            @isManaging={{@isManaging}}
+            @manage={{@manage}}
+            @saveAll={{perform this.save}}
+          />
+        {{else}}
+          <SchoolSessionAttributesCollapsed
+            @showSessionAttendanceRequired={{this.showSessionAttendanceRequired}}
+            @showSessionSupplemental={{this.showSessionSupplemental}}
+            @showSessionSpecialAttireRequired={{this.showSessionSpecialAttireRequired}}
+            @showSessionSpecialEquipmentRequired={{this.showSessionSpecialEquipmentRequired}}
+            @expand={{@expand}}
+          />
+        {{/if}}
+      {{/if}}
+    </div>
+  </template>
 }
-
-<div class="school-session-attributes" data-test-school-session-attributes ...attributes>
-  {{#if (or this.schoolConfigsData.isResolved this.save.isRunning)}}
-    {{#if @details}}
-      <SchoolSessionAttributesExpanded
-        @canUpdate={{@canUpdate}}
-        @showSessionAttendanceRequired={{this.showSessionAttendanceRequired}}
-        @showSessionSupplemental={{this.showSessionSupplemental}}
-        @showSessionSpecialAttireRequired={{this.showSessionSpecialAttireRequired}}
-        @showSessionSpecialEquipmentRequired={{this.showSessionSpecialEquipmentRequired}}
-        @collapse={{@collapse}}
-        @isManaging={{@isManaging}}
-        @manage={{@manage}}
-        @saveAll={{perform this.save}}
-      />
-    {{else}}
-      <SchoolSessionAttributesCollapsed
-        @showSessionAttendanceRequired={{this.showSessionAttendanceRequired}}
-        @showSessionSupplemental={{this.showSessionSupplemental}}
-        @showSessionSpecialAttireRequired={{this.showSessionSpecialAttireRequired}}
-        @showSessionSpecialEquipmentRequired={{this.showSessionSpecialEquipmentRequired}}
-        @expand={{@expand}}
-      />
-    {{/if}}
-  {{/if}}
-</div>

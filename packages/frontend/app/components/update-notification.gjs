@@ -1,6 +1,9 @@
 import Component from '@glimmer/component';
 import { service } from '@ember/service';
 import { restartableTask } from 'ember-concurrency';
+import { on } from '@ember/modifier';
+import perform from 'ember-concurrency/helpers/perform';
+import t from 'ember-intl/helpers/t';
 
 export default class UpdateNotificationComponent extends Component {
   @service newVersion;
@@ -20,12 +23,13 @@ export default class UpdateNotificationComponent extends Component {
       window.location.reload(true);
     }
   });
+  <template>
+    {{#if this.newVersion.isNewVersionAvailable}}
+      <div class="update-notification" data-test-update-notification>
+        <button type="button" {{on "click" (perform this.click)}}>
+          {{t "general.iliosUpdatePending"}}
+        </button>
+      </div>
+    {{/if}}
+  </template>
 }
-
-{{#if this.newVersion.isNewVersionAvailable}}
-  <div class="update-notification" data-test-update-notification>
-    <button type="button" {{on "click" (perform this.click)}}>
-      {{t "general.iliosUpdatePending"}}
-    </button>
-  </div>
-{{/if}}

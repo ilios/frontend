@@ -3,6 +3,10 @@ import { tracked } from '@glimmer/tracking';
 import { typeOf } from '@ember/utils';
 import { htmlSafe } from '@ember/template';
 import { action } from '@ember/object';
+import onResize from 'ember-on-resize-modifier/modifiers/on-resize';
+import t from 'ember-intl/helpers/t';
+import { on } from '@ember/modifier';
+import FaIcon from 'ilios-common/components/fa-icon';
 
 export default class FadeTextComponent extends Component {
   @tracked textHeight;
@@ -69,52 +73,53 @@ export default class FadeTextComponent extends Component {
   updateTextDims({ contentRect: { height } }) {
     this.textHeight = height;
   }
-}
-
-{{#if (has-block)}}
-  <span class="fade-text" data-test-fade-text ...attributes>
-    {{yield
-      this.displayText
-      this.expand
-      this.collapse
-      this.updateTextDims
-      this.shouldFade
-      this.expanded
-    }}
-  </span>
-{{else}}
-  <span class="fade-text" data-test-fade-text ...attributes>
-    <div class="display-text-wrapper{{if this.shouldFade ' faded'}}">
-      <div class="display-text" {{on-resize this.updateTextDims}}>
-        {{this.displayText}}
-      </div>
-    </div>
-    {{#if this.shouldFade}}
-      <div class="fade-text-control" data-test-fade-text-control>
-        <button
-          class="expand-text-button"
-          aria-label={{t "general.expand"}}
-          title={{t "general.expand"}}
-          type="button"
-          data-test-expand
-          {{on "click" this.expand}}
-        >
-          <FaIcon @icon="angles-down" />
-        </button>
-      </div>
+  <template>
+    {{#if (has-block)}}
+      <span class="fade-text" data-test-fade-text ...attributes>
+        {{yield
+          this.displayText
+          this.expand
+          this.collapse
+          this.updateTextDims
+          this.shouldFade
+          this.expanded
+        }}
+      </span>
     {{else}}
-      {{#if this.expanded}}
-        <button
-          class="expand-text-button"
-          aria-label={{t "general.collapse"}}
-          title={{t "general.collapse"}}
-          type="button"
-          data-test-collapse
-          {{on "click" this.collapse}}
-        >
-          <FaIcon @icon="angles-up" />
-        </button>
-      {{/if}}
+      <span class="fade-text" data-test-fade-text ...attributes>
+        <div class="display-text-wrapper{{if this.shouldFade ' faded'}}">
+          <div class="display-text" {{onResize this.updateTextDims}}>
+            {{this.displayText}}
+          </div>
+        </div>
+        {{#if this.shouldFade}}
+          <div class="fade-text-control" data-test-fade-text-control>
+            <button
+              class="expand-text-button"
+              aria-label={{t "general.expand"}}
+              title={{t "general.expand"}}
+              type="button"
+              data-test-expand
+              {{on "click" this.expand}}
+            >
+              <FaIcon @icon="angles-down" />
+            </button>
+          </div>
+        {{else}}
+          {{#if this.expanded}}
+            <button
+              class="expand-text-button"
+              aria-label={{t "general.collapse"}}
+              title={{t "general.collapse"}}
+              type="button"
+              data-test-collapse
+              {{on "click" this.collapse}}
+            >
+              <FaIcon @icon="angles-up" />
+            </button>
+          {{/if}}
+        {{/if}}
+      </span>
     {{/if}}
-  </span>
-{{/if}}
+  </template>
+}

@@ -5,6 +5,16 @@ import { service } from '@ember/service';
 import { TrackedAsyncData } from 'ember-async-data';
 import sortableByPosition from 'ilios-common/utils/sortable-by-position';
 import { findById } from 'ilios-common/utils/array-helpers';
+import ObjectiveSortManager from 'ilios-common/components/objective-sort-manager';
+import set from 'ember-set-helper/helpers/set';
+import and from 'ember-truth-helpers/helpers/and';
+import not from 'ember-truth-helpers/helpers/not';
+import gt from 'ember-truth-helpers/helpers/gt';
+import { on } from '@ember/modifier';
+import t from 'ember-intl/helpers/t';
+import isArray from 'ember-truth-helpers/helpers/is-array';
+import ObjectiveListItem from 'ilios-common/components/course/objective-list-item';
+import ObjectiveListLoading from 'ilios-common/components/course/objective-list-loading';
 export default class CourseObjectiveListComponent extends Component {
   @service store;
   @service intl;
@@ -117,43 +127,44 @@ export default class CourseObjectiveListComponent extends Component {
       };
     });
   }
-}
+  <template>
+    <div class="course-objective-list" data-test-course-objective-list>
+      {{#if this.isSorting}}
+        <ObjectiveSortManager @subject={{@course}} @close={{set this "isSorting" false}} />
+      {{/if}}
 
-<div class="course-objective-list" data-test-course-objective-list>
-  {{#if this.isSorting}}
-    <ObjectiveSortManager @subject={{@course}} @close={{set this "isSorting" false}} />
-  {{/if}}
-
-  {{#if (and this.courseObjectiveCount (not this.isSorting))}}
-    {{#if (and @editable (gt this.courseObjectiveCount 1))}}
-      <button
-        class="sort-button"
-        type="button"
-        {{on "click" (set this "isSorting" true)}}
-        data-test-sort
-      >
-        {{t "general.sortObjectives"}}
-      </button>
-    {{/if}}
-    <div class="grid-row headers" data-test-headers>
-      <span class="grid-item" data-test-header>{{t "general.description"}}</span>
-      <span class="grid-item" data-test-header>{{t "general.parentObjectives"}}</span>
-      <span class="grid-item" data-test-header>{{t "general.vocabularyTerms"}}</span>
-      <span class="grid-item" data-test-header>{{t "general.meshTerms"}}</span>
-      <span class="actions grid-item" data-test-header>{{t "general.actions"}}</span>
+      {{#if (and this.courseObjectiveCount (not this.isSorting))}}
+        {{#if (and @editable (gt this.courseObjectiveCount 1))}}
+          <button
+            class="sort-button"
+            type="button"
+            {{on "click" (set this "isSorting" true)}}
+            data-test-sort
+          >
+            {{t "general.sortObjectives"}}
+          </button>
+        {{/if}}
+        <div class="grid-row headers" data-test-headers>
+          <span class="grid-item" data-test-header>{{t "general.description"}}</span>
+          <span class="grid-item" data-test-header>{{t "general.parentObjectives"}}</span>
+          <span class="grid-item" data-test-header>{{t "general.vocabularyTerms"}}</span>
+          <span class="grid-item" data-test-header>{{t "general.meshTerms"}}</span>
+          <span class="actions grid-item" data-test-header>{{t "general.actions"}}</span>
+        </div>
+        {{#if (and (isArray this.courseObjectives) this.cohortObjectivesLoaded)}}
+          {{#each this.courseObjectives as |courseObjective|}}
+            <ObjectiveListItem
+              @courseObjective={{courseObjective}}
+              @editable={{@editable}}
+              @cohortObjectives={{this.cohortObjectives}}
+              @course={{@course}}
+              @printable={{@printable}}
+            />
+          {{/each}}
+        {{else}}
+          <ObjectiveListLoading @count={{this.courseObjectiveCount}} />
+        {{/if}}
+      {{/if}}
     </div>
-    {{#if (and (is-array this.courseObjectives) this.cohortObjectivesLoaded)}}
-      {{#each this.courseObjectives as |courseObjective|}}
-        <Course::ObjectiveListItem
-          @courseObjective={{courseObjective}}
-          @editable={{@editable}}
-          @cohortObjectives={{this.cohortObjectives}}
-          @course={{@course}}
-          @printable={{@printable}}
-        />
-      {{/each}}
-    {{else}}
-      <Course::ObjectiveListLoading @count={{this.courseObjectiveCount}} />
-    {{/if}}
-  {{/if}}
-</div>
+  </template>
+}

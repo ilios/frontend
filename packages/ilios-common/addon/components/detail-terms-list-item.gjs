@@ -2,6 +2,14 @@ import Component from '@glimmer/component';
 import { cached, tracked } from '@glimmer/tracking';
 import { TrackedAsyncData } from 'ember-async-data';
 import { guidFor } from '@ember/object/internals';
+import { on } from '@ember/modifier';
+import { fn } from '@ember/helper';
+import noop from 'ilios-common/helpers/noop';
+import mouseHoverToggle from 'ilios-common/modifiers/mouse-hover-toggle';
+import set from 'ember-set-helper/helpers/set';
+import IliosTooltip from 'ilios-common/components/ilios-tooltip';
+import t from 'ember-intl/helpers/t';
+import FaIcon from 'ilios-common/components/fa-icon';
 
 export default class DetailTermsListItem extends Component {
   @tracked isHovering;
@@ -42,39 +50,40 @@ export default class DetailTermsListItem extends Component {
     }
     return !this.parent;
   }
+  <template>
+    <li
+      {{! template-lint-disable no-invalid-interactive }}
+      class="detail-terms-list-item"
+      role={{if @canEdit "button"}}
+      {{on "click" (fn (if @canEdit @remove (noop)) @term)}}
+      {{mouseHoverToggle (set this "isHovering")}}
+      id={{this.detailTermsListItemId}}
+    >
+      {{#if this.showTooltip}}
+        <IliosTooltip @target={{this.detailTermsListItemElement}}>
+          {{@term.description}}
+        </IliosTooltip>
+      {{/if}}
+      {{#if @term.isTopLevel}}
+        {{@term.title}}
+      {{else}}
+        {{#each this.allParentTitles as |title|}}
+          {{! template-lint-disable no-bare-strings}}
+          <span class="muted">
+            {{title}}
+            &raquo;&nbsp;
+          </span>
+        {{/each}}
+        {{@term.title}}
+      {{/if}}
+      {{#unless @term.active}}
+        <span class="inactive">
+          ({{t "general.inactive"}})
+        </span>
+      {{/unless}}
+      {{#if @canEdit}}
+        <FaIcon @icon="xmark" class="remove" />
+      {{/if}}
+    </li>
+  </template>
 }
-
-<li
-  {{! template-lint-disable no-invalid-interactive }}
-  class="detail-terms-list-item"
-  role={{if @canEdit "button"}}
-  {{on "click" (fn (if @canEdit @remove (noop)) @term)}}
-  {{mouse-hover-toggle (set this "isHovering")}}
-  id={{this.detailTermsListItemId}}
->
-  {{#if this.showTooltip}}
-    <IliosTooltip @target={{this.detailTermsListItemElement}}>
-      {{@term.description}}
-    </IliosTooltip>
-  {{/if}}
-  {{#if @term.isTopLevel}}
-    {{@term.title}}
-  {{else}}
-    {{#each this.allParentTitles as |title|}}
-      {{! template-lint-disable no-bare-strings}}
-      <span class="muted">
-        {{title}}
-        &raquo;&nbsp;
-      </span>
-    {{/each}}
-    {{@term.title}}
-  {{/if}}
-  {{#unless @term.active}}
-    <span class="inactive">
-      ({{t "general.inactive"}})
-    </span>
-  {{/unless}}
-  {{#if @canEdit}}
-    <FaIcon @icon="xmark" class="remove" />
-  {{/if}}
-</li>

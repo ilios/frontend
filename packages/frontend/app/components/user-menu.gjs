@@ -4,6 +4,14 @@ import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { task, timeout } from 'ember-concurrency';
 import { TrackedAsyncData } from 'ember-async-data';
+import { uniqueId, get, hash } from '@ember/helper';
+import t from 'ember-intl/helpers/t';
+import { on } from '@ember/modifier';
+import FaIcon from 'ilios-common/components/fa-icon';
+import onClickOutside from 'ember-click-outside/modifiers/on-click-outside';
+import set from 'ember-set-helper/helpers/set';
+import focus from 'ilios-common/modifiers/focus';
+import LinkToWithAction from 'frontend/components/link-to-with-action';
 
 export default class UserMenuComponent extends Component {
   @service intl;
@@ -77,55 +85,56 @@ export default class UserMenuComponent extends Component {
       item?.parentElement.lastElementChild.querySelector('a').focus();
     }
   }
+  <template>
+    {{#let (uniqueId) as |templateId|}}
+      <nav
+        class="user-menu{{if this.isOpen ' is-open'}}"
+        aria-label={{t "general.userMenu"}}
+        {{! template-lint-disable no-invalid-interactive }}
+        {{on "keyup" this.keyUp}}
+        data-test-user-menu
+      >
+        <button
+          type="button"
+          class="toggle"
+          aria-labelledby="{{templateId}}-user-menu-title"
+          aria-haspopup="true"
+          aria-expanded={{if this.isOpen "true" "false"}}
+          data-test-toggle
+          {{on "click" this.toggleMenu}}
+        >
+          <FaIcon @icon="user" />
+          <span id="{{templateId}}-user-menu-title">
+            {{get this.model "fullName"}}
+          </span>
+          <FaIcon @icon={{if this.isOpen "caret-down" "caret-right"}} />
+        </button>
+        {{#if this.isOpen}}
+          <div {{onClickOutside (set this "isOpen" false)}}>
+            <ul class="menu">
+              <li tabindex="-1" data-test-item {{focus}}>
+                <LinkToWithAction
+                  @route="myprofile"
+                  @action={{set this "isOpen" false}}
+                  @queryParams={{hash invalidatetokens=null newtoken=null}}
+                  data-test-item-link
+                >
+                  {{t "general.myProfile"}}
+                </LinkToWithAction>
+              </li>
+              <li tabindex="-1" data-test-item>
+                <LinkToWithAction
+                  @route="logout"
+                  @action={{set this "isOpen" false}}
+                  data-test-item-link
+                >
+                  {{t "general.logout"}}
+                </LinkToWithAction>
+              </li>
+            </ul>
+          </div>
+        {{/if}}
+      </nav>
+    {{/let}}
+  </template>
 }
-
-{{#let (unique-id) as |templateId|}}
-  <nav
-    class="user-menu{{if this.isOpen ' is-open'}}"
-    aria-label={{t "general.userMenu"}}
-    {{! template-lint-disable no-invalid-interactive }}
-    {{on "keyup" this.keyUp}}
-    data-test-user-menu
-  >
-    <button
-      type="button"
-      class="toggle"
-      aria-labelledby="{{templateId}}-user-menu-title"
-      aria-haspopup="true"
-      aria-expanded={{if this.isOpen "true" "false"}}
-      data-test-toggle
-      {{on "click" this.toggleMenu}}
-    >
-      <FaIcon @icon="user" />
-      <span id="{{templateId}}-user-menu-title">
-        {{get this.model "fullName"}}
-      </span>
-      <FaIcon @icon={{if this.isOpen "caret-down" "caret-right"}} />
-    </button>
-    {{#if this.isOpen}}
-      <div {{on-click-outside (set this "isOpen" false)}}>
-        <ul class="menu">
-          <li tabindex="-1" data-test-item {{focus}}>
-            <LinkToWithAction
-              @route="myprofile"
-              @action={{set this "isOpen" false}}
-              @queryParams={{hash invalidatetokens=null newtoken=null}}
-              data-test-item-link
-            >
-              {{t "general.myProfile"}}
-            </LinkToWithAction>
-          </li>
-          <li tabindex="-1" data-test-item>
-            <LinkToWithAction
-              @route="logout"
-              @action={{set this "isOpen" false}}
-              data-test-item-link
-            >
-              {{t "general.logout"}}
-            </LinkToWithAction>
-          </li>
-        </ul>
-      </div>
-    {{/if}}
-  </nav>
-{{/let}}

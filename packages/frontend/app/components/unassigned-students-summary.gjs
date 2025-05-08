@@ -3,6 +3,17 @@ import { service } from '@ember/service';
 import { cached, tracked } from '@glimmer/tracking';
 import { findById } from 'ilios-common/utils/array-helpers';
 import { TrackedAsyncData } from 'ember-async-data';
+import { uniqueId, get, hash } from '@ember/helper';
+import FaIcon from 'ilios-common/components/fa-icon';
+import t from 'ember-intl/helpers/t';
+import gt from 'ember-truth-helpers/helpers/gt';
+import { on } from '@ember/modifier';
+import pick from 'ilios-common/helpers/pick';
+import set from 'ember-set-helper/helpers/set';
+import sortBy from 'ilios-common/helpers/sort-by';
+import eq from 'ember-truth-helpers/helpers/eq';
+import { LinkTo } from '@ember/routing';
+import LoadingSpinner from 'ilios-common/components/loading-spinner';
 
 export default class UnassignedStudentsSummaryComponent extends Component {
   @service currentUser;
@@ -63,58 +74,60 @@ export default class UnassignedStudentsSummaryComponent extends Component {
       this.unassignedStudentsData.isResolved
     );
   }
-}
-
-{{#let (unique-id) as |templateId|}}
-  <div
-    class="unassigned-students-summary small-component {{if this.hasUnassignedStudents 'alert'}}"
-    data-test-unassigned-students-summary
-  >
-    <h3 data-test-title>
-      {{#if this.hasUnassignedStudents}}
-        <FaIcon @icon="triangle-exclamation" class="no" />
-      {{/if}}
-      {{t "general.unassignedStudentsSummaryTitle"}}
-    </h3>
-    <div id="schoolsfilter" class="filter">
-      <label for="school-filter-{{templateId}}" class="inline-label">
-        <FaIcon @icon="building-columns" @title={{t "general.filterBySchool"}} />
-      </label>
-      <div id="school-selection" class="inline-data" data-test-schools>
-        {{#if (gt @schools.length 1)}}
-          <select
-            id="school-filter-{{templateId}}"
-            {{on "change" (pick "target.value" (set this "schoolId"))}}
-          >
-            {{#each (sort-by "title" @schools) as |school|}}
-              <option value={{school.id}} selected={{eq school.id this.selectedSchool.id}}>
-                {{school.title}}
-              </option>
-            {{/each}}
-          </select>
+  <template>
+    {{#let (uniqueId) as |templateId|}}
+      <div
+        class="unassigned-students-summary small-component
+          {{if this.hasUnassignedStudents 'alert'}}"
+        data-test-unassigned-students-summary
+      >
+        <h3 data-test-title>
+          {{#if this.hasUnassignedStudents}}
+            <FaIcon @icon="triangle-exclamation" class="no" />
+          {{/if}}
+          {{t "general.unassignedStudentsSummaryTitle"}}
+        </h3>
+        <div id="schoolsfilter" class="filter">
+          <label for="school-filter-{{templateId}}" class="inline-label">
+            <FaIcon @icon="building-columns" @title={{t "general.filterBySchool"}} />
+          </label>
+          <div id="school-selection" class="inline-data" data-test-schools>
+            {{#if (gt @schools.length 1)}}
+              <select
+                id="school-filter-{{templateId}}"
+                {{on "change" (pick "target.value" (set this "schoolId"))}}
+              >
+                {{#each (sortBy "title" @schools) as |school|}}
+                  <option value={{school.id}} selected={{eq school.id this.selectedSchool.id}}>
+                    {{school.title}}
+                  </option>
+                {{/each}}
+              </select>
+            {{else}}
+              {{get this.selectedSchool "title"}}
+            {{/if}}
+          </div>
+        </div>
+        {{#if this.isLoaded}}
+          <p data-test-summary-text>
+            {{t "general.unassignedStudentsSummary" count=this.unassignedStudents.length}}
+          </p>
+          {{#if (gt this.unassignedStudents.length 0)}}
+            <div class="actions">
+              <LinkTo
+                @route="assign-students"
+                @query={{hash schoolId=this.selectedSchool.id}}
+                class="manage-link"
+                data-test-manage-link
+              >
+                {{t "general.manage"}}
+              </LinkTo>
+            </div>
+          {{/if}}
         {{else}}
-          {{get this.selectedSchool "title"}}
+          <LoadingSpinner />
         {{/if}}
       </div>
-    </div>
-    {{#if this.isLoaded}}
-      <p data-test-summary-text>
-        {{t "general.unassignedStudentsSummary" count=this.unassignedStudents.length}}
-      </p>
-      {{#if (gt this.unassignedStudents.length 0)}}
-        <div class="actions">
-          <LinkTo
-            @route="assign-students"
-            @query={{hash schoolId=this.selectedSchool.id}}
-            class="manage-link"
-            data-test-manage-link
-          >
-            {{t "general.manage"}}
-          </LinkTo>
-        </div>
-      {{/if}}
-    {{else}}
-      <LoadingSpinner />
-    {{/if}}
-  </div>
-{{/let}}
+    {{/let}}
+  </template>
+}

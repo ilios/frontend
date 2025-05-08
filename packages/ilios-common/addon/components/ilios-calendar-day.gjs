@@ -2,6 +2,10 @@ import Component from '@glimmer/component';
 import { service } from '@ember/service';
 import { DateTime } from 'luxon';
 import { deprecate } from '@ember/debug';
+import isArray from 'ember-truth-helpers/helpers/is-array';
+import DailyCalendar from 'ilios-common/components/daily-calendar';
+import noop from 'ilios-common/helpers/noop';
+import IliosCalendarMultidayEvents from 'ilios-common/components/ilios-calendar-multiday-events';
 
 export default class IliosCalendarDayComponent extends Component {
   @service localeDays;
@@ -61,20 +65,21 @@ export default class IliosCalendarDayComponent extends Component {
       (event) => !DateTime.fromISO(event.startDate).hasSame(DateTime.fromISO(event.endDate), 'day'),
     );
   }
+  <template>
+    {{#if (isArray @calendarEvents)}}
+      <div class="ilios-calendar-day" data-test-ilios-calendar-day>
+        <DailyCalendar
+          @isLoadingEvents={{@isLoadingEvents}}
+          @date={{this.date}}
+          @events={{this.singleDayEvents}}
+          @selectEvent={{if @areEventsSelectable @selectEvent (noop)}}
+        />
+        <IliosCalendarMultidayEvents
+          @events={{this.multiDayEvents}}
+          @selectEvent={{@selectEvent}}
+          @areEventsSelectable={{@areEventsSelectable}}
+        />
+      </div>
+    {{/if}}
+  </template>
 }
-
-{{#if (is-array @calendarEvents)}}
-  <div class="ilios-calendar-day" data-test-ilios-calendar-day>
-    <DailyCalendar
-      @isLoadingEvents={{@isLoadingEvents}}
-      @date={{this.date}}
-      @events={{this.singleDayEvents}}
-      @selectEvent={{if @areEventsSelectable @selectEvent (noop)}}
-    />
-    <IliosCalendarMultidayEvents
-      @events={{this.multiDayEvents}}
-      @selectEvent={{@selectEvent}}
-      @areEventsSelectable={{@areEventsSelectable}}
-    />
-  </div>
-{{/if}}

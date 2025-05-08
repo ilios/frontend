@@ -6,6 +6,18 @@ import { service } from '@ember/service';
 import { TrackedAsyncData } from 'ember-async-data';
 import { mapBy, uniqueValues } from 'ilios-common/utils/array-helpers';
 import sortableByPosition from 'ilios-common/utils/sortable-by-position';
+import ObjectiveSortManager from 'ilios-common/components/objective-sort-manager';
+import set from 'ember-set-helper/helpers/set';
+import and from 'ember-truth-helpers/helpers/and';
+import not from 'ember-truth-helpers/helpers/not';
+import gt from 'ember-truth-helpers/helpers/gt';
+import { on } from '@ember/modifier';
+import t from 'ember-intl/helpers/t';
+import perform from 'ember-concurrency/helpers/perform';
+import FaIcon from 'ilios-common/components/fa-icon';
+import isArray from 'ember-truth-helpers/helpers/is-array';
+import ObjectiveListItem from 'frontend/components/program-year/objective-list-item';
+import ObjectiveListLoading from 'frontend/components/program-year/objective-list-loading';
 
 export default class ProgramYearObjectiveListComponent extends Component {
   @service iliosConfig;
@@ -94,52 +106,53 @@ export default class ProgramYearObjectiveListComponent extends Component {
     const blob = await response.blob();
     saveAs(blob, 'report.csv');
   });
-}
+  <template>
+    <div class="program-year-objective-list" data-test-program-year-objective-list>
+      {{#if this.isSorting}}
+        <ObjectiveSortManager @subject={{@programYear}} @close={{set this "isSorting" false}} />
+      {{/if}}
 
-<div class="program-year-objective-list" data-test-program-year-objective-list>
-  {{#if this.isSorting}}
-    <ObjectiveSortManager @subject={{@programYear}} @close={{set this "isSorting" false}} />
-  {{/if}}
+      {{#if (and this.programYearObjectiveCount (not this.isSorting))}}
+        {{#if (gt this.programYearObjectiveCount 1)}}
+          <button
+            class="sort-button"
+            type="button"
+            {{on "click" (set this "isSorting" true)}}
+            data-test-sort
+          >
+            {{t "general.sortObjectives"}}
+          </button>
+        {{/if}}
 
-  {{#if (and this.programYearObjectiveCount (not this.isSorting))}}
-    {{#if (gt this.programYearObjectiveCount 1)}}
-      <button
-        class="sort-button"
-        type="button"
-        {{on "click" (set this "isSorting" true)}}
-        data-test-sort
-      >
-        {{t "general.sortObjectives"}}
-      </button>
-    {{/if}}
+        <button type="button" class="download" {{on "click" (perform this.downloadReport)}}>
+          <FaIcon
+            @icon={{if this.downloadReport.isRunning "spinner" "download"}}
+            @spin={{this.downloadReport.isRunning}}
+          />
+          {{t "general.downloadCompetencyMap"}}
+        </button>
 
-    <button type="button" class="download" {{on "click" (perform this.downloadReport)}}>
-      <FaIcon
-        @icon={{if this.downloadReport.isRunning "spinner" "download"}}
-        @spin={{this.downloadReport.isRunning}}
-      />
-      {{t "general.downloadCompetencyMap"}}
-    </button>
-
-    <div class="grid-row headers" data-test-headers>
-      <span class="grid-item"></span>
-      <span class="grid-item" data-test-header>{{t "general.description"}}</span>
-      <span class="grid-item" data-test-header>{{t "general.competency"}}</span>
-      <span class="grid-item" data-test-header>{{t "general.vocabularyTerms"}}</span>
-      <span class="grid-item" data-test-header>{{t "general.meshTerms"}}</span>
-      <span class="actions grid-item" data-test-header>{{t "general.actions"}}</span>
+        <div class="grid-row headers" data-test-headers>
+          <span class="grid-item"></span>
+          <span class="grid-item" data-test-header>{{t "general.description"}}</span>
+          <span class="grid-item" data-test-header>{{t "general.competency"}}</span>
+          <span class="grid-item" data-test-header>{{t "general.vocabularyTerms"}}</span>
+          <span class="grid-item" data-test-header>{{t "general.meshTerms"}}</span>
+          <span class="actions grid-item" data-test-header>{{t "general.actions"}}</span>
+        </div>
+        {{#if (isArray this.domainTrees)}}
+          {{#each this.sortedProgramYearObjectives as |programYearObjective|}}
+            <ObjectiveListItem
+              @programYearObjective={{programYearObjective}}
+              @editable={{@editable}}
+              @domainTrees={{this.domainTrees}}
+              @programYearCompetencies={{this.programYearCompetencies}}
+            />
+          {{/each}}
+        {{else}}
+          <ObjectiveListLoading @count={{this.programYearObjectiveCount}} />
+        {{/if}}
+      {{/if}}
     </div>
-    {{#if (is-array this.domainTrees)}}
-      {{#each this.sortedProgramYearObjectives as |programYearObjective|}}
-        <ProgramYear::ObjectiveListItem
-          @programYearObjective={{programYearObjective}}
-          @editable={{@editable}}
-          @domainTrees={{this.domainTrees}}
-          @programYearCompetencies={{this.programYearCompetencies}}
-        />
-      {{/each}}
-    {{else}}
-      <ProgramYear::ObjectiveListLoading @count={{this.programYearObjectiveCount}} />
-    {{/if}}
-  {{/if}}
-</div>
+  </template>
+}

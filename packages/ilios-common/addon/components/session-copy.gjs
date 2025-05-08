@@ -7,6 +7,20 @@ import { cached, tracked } from '@glimmer/tracking';
 import { DateTime } from 'luxon';
 import { findById, sortBy } from 'ilios-common/utils/array-helpers';
 import { TrackedAsyncData } from 'ember-async-data';
+import { uniqueId, get } from '@ember/helper';
+import { LinkTo } from '@ember/routing';
+import t from 'ember-intl/helpers/t';
+import scrollIntoView from 'ilios-common/modifiers/scroll-into-view';
+import and from 'ember-truth-helpers/helpers/and';
+import isArray from 'ember-truth-helpers/helpers/is-array';
+import { on } from '@ember/modifier';
+import isEqual from 'ember-truth-helpers/helpers/is-equal';
+import add from 'ember-math-helpers/helpers/add';
+import sortBy0 from 'ilios-common/helpers/sort-by';
+import or from 'ember-truth-helpers/helpers/or';
+import not from 'ember-truth-helpers/helpers/not';
+import perform from 'ember-concurrency/helpers/perform';
+import LoadingSpinner from 'ilios-common/components/loading-spinner';
 
 export default class SessionCopyComponent extends Component {
   @service store;
@@ -178,84 +192,87 @@ export default class SessionCopyComponent extends Component {
     this.flashMessages.success('general.copySuccess');
     return this.args.visit(session);
   });
-}
-
-<div class="session-copy">
-  {{#if this.allCoursesData.isResolved}}
-    {{#let (unique-id) as |templateId|}}
-      <div class="backtolink">
-        <LinkTo @route="session" @model={{@session}}>
-          {{t "general.backToTitle" title=@session.title}}
-        </LinkTo>
-      </div>
-      <div class="copy-form" {{scroll-into-view}}>
-        <h3 class="title">
-          {{t "general.copySession"}}
-        </h3>
-        <p class="rollover-summary">
-          {{t "general.copySessionSummary"}}
-        </p>
-        {{#if (and (is-array this.years) (is-array this.courses))}}
-          <div class="item year-select">
-            <label for="year-{{templateId}}">
-              {{t "general.year"}}:
-            </label>
-            <select id="year-{{templateId}}" {{on "change" this.changeSelectedYear}}>
-              {{#each this.years as |year|}}
-                <option value={{year}} selected={{is-equal year this.bestSelectedYear}}>
-                  {{year}}
-                  -
-                  {{add year 1}}
-                </option>
-              {{/each}}
-            </select>
-          </div>
-          <div class="item course-select">
-            <label for="course-{{templateId}}">
-              {{t "general.targetCourse"}}:
-            </label>
-            {{#if (get this.courses "length")}}
-              <select id="course-{{templateId}}" {{on "change" this.changeSelectedCourseId}}>
-                {{#each (sort-by "title" this.courses) as |course|}}
-                  <option
-                    value={{course.id}}
-                    selected={{is-equal course.id this.bestSelectedCourse.id}}
-                  >
-                    {{course.title}}
-                  </option>
-                {{/each}}
-              </select>
-            {{else}}
-              {{t "general.none"}}
-            {{/if}}
-          </div>
-          <div class="buttons">
-            <button
-              class="done text"
-              type="button"
-              disabled={{if
-                (or this.save.isRunning (not this.bestSelectedYear) (not this.bestSelectedCourse))
-                true
-              }}
-              {{on "click" (perform this.save)}}
-              data-test-save
-            >
-              {{#if this.save.isRunning}}
-                <LoadingSpinner />
-              {{else}}
-                {{t "general.done"}}
-              {{/if}}
-            </button>
+  <template>
+    <div class="session-copy">
+      {{#if this.allCoursesData.isResolved}}
+        {{#let (uniqueId) as |templateId|}}
+          <div class="backtolink">
             <LinkTo @route="session" @model={{@session}}>
-              <button class="cancel text" type="button">
-                {{t "general.cancel"}}
-              </button>
+              {{t "general.backToTitle" title=@session.title}}
             </LinkTo>
           </div>
-        {{else}}
-          <LoadingSpinner />
-        {{/if}}
-      </div>
-    {{/let}}
-  {{/if}}
-</div>
+          <div class="copy-form" {{scrollIntoView}}>
+            <h3 class="title">
+              {{t "general.copySession"}}
+            </h3>
+            <p class="rollover-summary">
+              {{t "general.copySessionSummary"}}
+            </p>
+            {{#if (and (isArray this.years) (isArray this.courses))}}
+              <div class="item year-select">
+                <label for="year-{{templateId}}">
+                  {{t "general.year"}}:
+                </label>
+                <select id="year-{{templateId}}" {{on "change" this.changeSelectedYear}}>
+                  {{#each this.years as |year|}}
+                    <option value={{year}} selected={{isEqual year this.bestSelectedYear}}>
+                      {{year}}
+                      -
+                      {{add year 1}}
+                    </option>
+                  {{/each}}
+                </select>
+              </div>
+              <div class="item course-select">
+                <label for="course-{{templateId}}">
+                  {{t "general.targetCourse"}}:
+                </label>
+                {{#if (get this.courses "length")}}
+                  <select id="course-{{templateId}}" {{on "change" this.changeSelectedCourseId}}>
+                    {{#each (sortBy0 "title" this.courses) as |course|}}
+                      <option
+                        value={{course.id}}
+                        selected={{isEqual course.id this.bestSelectedCourse.id}}
+                      >
+                        {{course.title}}
+                      </option>
+                    {{/each}}
+                  </select>
+                {{else}}
+                  {{t "general.none"}}
+                {{/if}}
+              </div>
+              <div class="buttons">
+                <button
+                  class="done text"
+                  type="button"
+                  disabled={{if
+                    (or
+                      this.save.isRunning (not this.bestSelectedYear) (not this.bestSelectedCourse)
+                    )
+                    true
+                  }}
+                  {{on "click" (perform this.save)}}
+                  data-test-save
+                >
+                  {{#if this.save.isRunning}}
+                    <LoadingSpinner />
+                  {{else}}
+                    {{t "general.done"}}
+                  {{/if}}
+                </button>
+                <LinkTo @route="session" @model={{@session}}>
+                  <button class="cancel text" type="button">
+                    {{t "general.cancel"}}
+                  </button>
+                </LinkTo>
+              </div>
+            {{else}}
+              <LoadingSpinner />
+            {{/if}}
+          </div>
+        {{/let}}
+      {{/if}}
+    </div>
+  </template>
+}

@@ -1,4 +1,6 @@
 import Component from '@glimmer/component';
+import t from 'ember-intl/helpers/t';
+import add from 'ember-math-helpers/helpers/add';
 
 export default class CurriculumInventoryVerificationPreviewTable2Component extends Component {
   get methodTotals() {
@@ -32,78 +34,79 @@ export default class CurriculumInventoryVerificationPreviewTable2Component exten
     }, 0);
     return (sumTotal / 60).toFixed(2);
   }
-}
-
-<div
-  class="curriculum-inventory-verification-preview-table2"
-  id="table2"
-  data-test-curriculum-inventory-verification-preview-table2
-  ...attributes
->
-  <h4 data-test-title>
-    {{t "general.table2PrimaryInstructionalMethodByNonClerkshipSequenceBlock"}}
-  </h4>
-  <table>
-    <thead>
-      <tr>
-        <th colspan="2" rowspan="2">
-          {{t "general.nonClerkshipSequenceBlocks"}}
-        </th>
-        <th rowspan="2">
-          {{t "general.phasesStartToEnd"}}
-        </th>
-        <th colspan={{add 1 @data.methods.length}}>
-          {{t "general.numberOfFormalInstructionalHoursPerCourse"}}
-        </th>
-      </tr>
-      <tr>
-        {{#each @data.methods as |method|}}
-          <th>
-            {{method.title}}
-          </th>
-        {{/each}}
-        <th>
-          {{t "general.total"}}
-        </th>
-      </tr>
-    </thead>
-    <tbody>
-      {{#each this.nonClerkships as |clerkship|}}
-        <tr>
-          <td colspan="2">
-            {{clerkship.title}}
-          </td>
-          <td>
-            {{clerkship.startingLevel}}
-            -
-            {{clerkship.endingLevel}}
-          </td>
-          {{#each clerkship.methods as |method|}}
-            <td>
-              {{method}}
-            </td>
+  <template>
+    <div
+      class="curriculum-inventory-verification-preview-table2"
+      id="table2"
+      data-test-curriculum-inventory-verification-preview-table2
+      ...attributes
+    >
+      <h4 data-test-title>
+        {{t "general.table2PrimaryInstructionalMethodByNonClerkshipSequenceBlock"}}
+      </h4>
+      <table>
+        <thead>
+          <tr>
+            <th colspan="2" rowspan="2">
+              {{t "general.nonClerkshipSequenceBlocks"}}
+            </th>
+            <th rowspan="2">
+              {{t "general.phasesStartToEnd"}}
+            </th>
+            <th colspan={{add 1 @data.methods.length}}>
+              {{t "general.numberOfFormalInstructionalHoursPerCourse"}}
+            </th>
+          </tr>
+          <tr>
+            {{#each @data.methods as |method|}}
+              <th>
+                {{method.title}}
+              </th>
+            {{/each}}
+            <th>
+              {{t "general.total"}}
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each this.nonClerkships as |clerkship|}}
+            <tr>
+              <td colspan="2">
+                {{clerkship.title}}
+              </td>
+              <td>
+                {{clerkship.startingLevel}}
+                -
+                {{clerkship.endingLevel}}
+              </td>
+              {{#each clerkship.methods as |method|}}
+                <td>
+                  {{method}}
+                </td>
+              {{/each}}
+              <td>
+                {{clerkship.total}}
+              </td>
+            </tr>
           {{/each}}
-          <td>
-            {{clerkship.total}}
-          </td>
-        </tr>
-      {{/each}}
-    </tbody>
-    <tfoot>
-      <tr>
-        <td colspan="2">
-          {{t "general.total"}}
-        </td>
-        <td></td>
-        {{#each this.methodTotals as |total|}}
-          <td>
-            {{total}}
-          </td>
-        {{/each}}
-        <td>
-          {{this.sumTotal}}
-        </td>
-      </tr>
-    </tfoot>
-  </table>
-</div>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="2">
+              {{t "general.total"}}
+            </td>
+            <td></td>
+            {{#each this.methodTotals as |total|}}
+              <td>
+                {{total}}
+              </td>
+            {{/each}}
+            <td>
+              {{this.sumTotal}}
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </template>
+}

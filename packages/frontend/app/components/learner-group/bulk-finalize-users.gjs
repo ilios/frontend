@@ -3,6 +3,11 @@ import { dropTask, timeout } from 'ember-concurrency';
 import { all, map } from 'rsvp';
 import { service } from '@ember/service';
 import { findBy, uniqueValues } from 'ilios-common/utils/array-helpers';
+import t from 'ember-intl/helpers/t';
+import UserNameInfo from 'ilios-common/components/user-name-info';
+import { on } from '@ember/modifier';
+import perform from 'ember-concurrency/helpers/perform';
+import LoadingSpinner from 'ilios-common/components/loading-spinner';
 
 export default class LearnergroupBulkFinalizeUsersComponent extends Component {
   @service flashMessages;
@@ -37,52 +42,53 @@ export default class LearnergroupBulkFinalizeUsersComponent extends Component {
     this.flashMessages.success('general.savedSuccessfully');
     this.args.done();
   });
+  <template>
+    <div data-test-learner-group-bulk-finalize-users ...attributes>
+      <h3>
+        {{t "general.finalResults"}}
+      </h3>
+      <table data-test-final-data>
+        <thead>
+          <tr>
+            <th>
+              {{t "general.name"}}
+            </th>
+            <th>
+              {{t "general.campusId"}}
+            </th>
+            <th>
+              {{t "general.learnerGroups"}}
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each this.finalData as |obj|}}
+            <tr>
+              <td>
+                <UserNameInfo @user={{obj.user}} />
+              </td>
+              <td>
+                {{obj.user.campusId}}
+              </td>
+              <td>
+                {{obj.learnerGroup.title}}
+              </td>
+            </tr>
+          {{/each}}
+        </tbody>
+      </table>
+      <button
+        type="button"
+        disabled={{this.save.isRunning}}
+        data-test-finalize-users-submit
+        {{on "click" (perform this.save)}}
+      >
+        {{#if this.save.isRunning}}
+          <LoadingSpinner />
+        {{else}}
+          {{t "general.save"}}
+        {{/if}}
+      </button>
+    </div>
+  </template>
 }
-
-<div data-test-learner-group-bulk-finalize-users ...attributes>
-  <h3>
-    {{t "general.finalResults"}}
-  </h3>
-  <table data-test-final-data>
-    <thead>
-      <tr>
-        <th>
-          {{t "general.name"}}
-        </th>
-        <th>
-          {{t "general.campusId"}}
-        </th>
-        <th>
-          {{t "general.learnerGroups"}}
-        </th>
-      </tr>
-    </thead>
-    <tbody>
-      {{#each this.finalData as |obj|}}
-        <tr>
-          <td>
-            <UserNameInfo @user={{obj.user}} />
-          </td>
-          <td>
-            {{obj.user.campusId}}
-          </td>
-          <td>
-            {{obj.learnerGroup.title}}
-          </td>
-        </tr>
-      {{/each}}
-    </tbody>
-  </table>
-  <button
-    type="button"
-    disabled={{this.save.isRunning}}
-    data-test-finalize-users-submit
-    {{on "click" (perform this.save)}}
-  >
-    {{#if this.save.isRunning}}
-      <LoadingSpinner />
-    {{else}}
-      {{t "general.save"}}
-    {{/if}}
-  </button>
-</div>

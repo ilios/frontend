@@ -5,6 +5,10 @@ import { camelize } from '@ember/string';
 import { TrackedAsyncData } from 'ember-async-data';
 import { cached } from '@glimmer/tracking';
 import { action } from '@ember/object';
+import SubjectHeader from 'frontend/components/reports/subject-header';
+import t from 'ember-intl/helpers/t';
+import SubjectDownload from 'frontend/components/reports/subject-download';
+import LoadingSpinner from 'ilios-common/components/loading-spinner';
 
 export default class ReportsSubjectCompetencyComponent extends Component {
   @service graphql;
@@ -63,46 +67,47 @@ export default class ReportsSubjectCompetencyComponent extends Component {
   async fetchDownloadData() {
     return [[this.intl.t('general.competencies')], ...this.sortedCompetencies.map((v) => [v])];
   }
-}
-
-<Reports::SubjectHeader
-  @report={{@report}}
-  @school={{@school}}
-  @subject={{@subject}}
-  @prepositionalObject={{@prepositionalObject}}
-  @prepositionalObjectTableRowId={{@prepositionalObjectTableRowId}}
-  @year={{@year}}
-  @changeYear={{@changeYear}}
-  @showYearFilter={{false}}
-  @description={{@description}}
-  @fetchDownloadData={{this.fetchDownloadData}}
-  @readyToDownload={{this.allCompetenciesData.isResolved}}
-  @resultsLength={{this.allCompetencies.length}}
-/>
-<div data-test-reports-subject-competency>
-  {{#if this.allCompetenciesData.isResolved}}
-    <ul class="report-results{{if this.reportResultsExceedMax ' limited'}}" data-test-results>
-      {{#each this.limitedCompetencies as |title|}}
-        <li>
-          {{title}}
-        </li>
+  <template>
+    <SubjectHeader
+      @report={{@report}}
+      @school={{@school}}
+      @subject={{@subject}}
+      @prepositionalObject={{@prepositionalObject}}
+      @prepositionalObjectTableRowId={{@prepositionalObjectTableRowId}}
+      @year={{@year}}
+      @changeYear={{@changeYear}}
+      @showYearFilter={{false}}
+      @description={{@description}}
+      @fetchDownloadData={{this.fetchDownloadData}}
+      @readyToDownload={{this.allCompetenciesData.isResolved}}
+      @resultsLength={{this.allCompetencies.length}}
+    />
+    <div data-test-reports-subject-competency>
+      {{#if this.allCompetenciesData.isResolved}}
+        <ul class="report-results{{if this.reportResultsExceedMax ' limited'}}" data-test-results>
+          {{#each this.limitedCompetencies as |title|}}
+            <li>
+              {{title}}
+            </li>
+          {{else}}
+            <li>{{t "general.none"}}</li>
+          {{/each}}
+        </ul>
+        {{#if this.reportResultsExceedMax}}
+          <SubjectDownload
+            @report={{@report}}
+            @school={{@school}}
+            @subject={{@subject}}
+            @prepositionalObject={{@prepositionalObject}}
+            @prepositionalObjectTableRowId={{@prepositionalObjectTableRowId}}
+            @fetchDownloadData={{this.fetchDownloadData}}
+            @readyToDownload={{true}}
+            @message={{t "general.reportResultsExceedMax" resultsLengthMax=this.resultsLengthMax}}
+          />
+        {{/if}}
       {{else}}
-        <li>{{t "general.none"}}</li>
-      {{/each}}
-    </ul>
-    {{#if this.reportResultsExceedMax}}
-      <Reports::SubjectDownload
-        @report={{@report}}
-        @school={{@school}}
-        @subject={{@subject}}
-        @prepositionalObject={{@prepositionalObject}}
-        @prepositionalObjectTableRowId={{@prepositionalObjectTableRowId}}
-        @fetchDownloadData={{this.fetchDownloadData}}
-        @readyToDownload={{true}}
-        @message={{t "general.reportResultsExceedMax" resultsLengthMax=this.resultsLengthMax}}
-      />
-    {{/if}}
-  {{else}}
-    <LoadingSpinner />
-  {{/if}}
-</div>
+        <LoadingSpinner />
+      {{/if}}
+    </div>
+  </template>
+}

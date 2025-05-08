@@ -4,6 +4,12 @@ import { action } from '@ember/object';
 import { dropTask } from 'ember-concurrency';
 import { map, all } from 'rsvp';
 import { TrackedAsyncData } from 'ember-async-data';
+import t from 'ember-intl/helpers/t';
+import { on } from '@ember/modifier';
+import perform from 'ember-concurrency/helpers/perform';
+import FaIcon from 'ilios-common/components/fa-icon';
+import DetailCohortManager from 'ilios-common/components/detail-cohort-manager';
+import DetailCohortList from 'ilios-common/components/detail-cohort-list';
 
 export default class DetailCohortsComponent extends Component {
   @tracked isManaging = false;
@@ -56,48 +62,49 @@ export default class DetailCohortsComponent extends Component {
   removeCohortFromBuffer(cohort) {
     this.bufferedCohorts = this.bufferedCohorts.filter((obj) => obj.id !== cohort.id);
   }
-}
-
-<section class="detail-cohorts" data-test-detail-cohorts>
-  <div class="detail-cohorts-header">
-    <div class="title">
-      {{#if this.isManaging}}
-        <span class="specific-title">
-          {{t "general.cohortsManageTitle"}}
-        </span>
-      {{else}}
-        {{t "general.programCohorts"}}
-        ({{@course.cohorts.length}})
-      {{/if}}
-    </div>
-    <div class="actions">
-      {{#if this.isManaging}}
-        <button class="bigadd" type="button" {{on "click" (perform this.save)}}>
-          <FaIcon
-            @icon={{if this.save.isRunning "spinner" "check"}}
-            @spin={{this.save.isRunning}}
+  <template>
+    <section class="detail-cohorts" data-test-detail-cohorts>
+      <div class="detail-cohorts-header">
+        <div class="title">
+          {{#if this.isManaging}}
+            <span class="specific-title">
+              {{t "general.cohortsManageTitle"}}
+            </span>
+          {{else}}
+            {{t "general.programCohorts"}}
+            ({{@course.cohorts.length}})
+          {{/if}}
+        </div>
+        <div class="actions">
+          {{#if this.isManaging}}
+            <button class="bigadd" type="button" {{on "click" (perform this.save)}}>
+              <FaIcon
+                @icon={{if this.save.isRunning "spinner" "check"}}
+                @spin={{this.save.isRunning}}
+              />
+            </button>
+            <button class="bigcancel" type="button" {{on "click" this.cancel}}>
+              <FaIcon @icon="arrow-rotate-left" />
+            </button>
+          {{else if @editable}}
+            <button type="button" {{on "click" (perform this.manage)}}>
+              {{t "general.cohortsManageTitle"}}
+            </button>
+          {{/if}}
+        </div>
+      </div>
+      <div class="detail-cohorts-content">
+        {{#if this.isManaging}}
+          <DetailCohortManager
+            @course={{@course}}
+            @selectedCohorts={{this.bufferedCohorts}}
+            @add={{this.addCohortToBuffer}}
+            @remove={{this.removeCohortFromBuffer}}
           />
-        </button>
-        <button class="bigcancel" type="button" {{on "click" this.cancel}}>
-          <FaIcon @icon="arrow-rotate-left" />
-        </button>
-      {{else if @editable}}
-        <button type="button" {{on "click" (perform this.manage)}}>
-          {{t "general.cohortsManageTitle"}}
-        </button>
-      {{/if}}
-    </div>
-  </div>
-  <div class="detail-cohorts-content">
-    {{#if this.isManaging}}
-      <DetailCohortManager
-        @course={{@course}}
-        @selectedCohorts={{this.bufferedCohorts}}
-        @add={{this.addCohortToBuffer}}
-        @remove={{this.removeCohortFromBuffer}}
-      />
-    {{else}}
-      <DetailCohortList @cohorts={{this.cohorts}} />
-    {{/if}}
-  </div>
-</section>
+        {{else}}
+          <DetailCohortList @cohorts={{this.cohorts}} />
+        {{/if}}
+      </div>
+    </section>
+  </template>
+}

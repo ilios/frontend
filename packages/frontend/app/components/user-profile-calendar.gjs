@@ -5,6 +5,10 @@ import { tracked, cached } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { sortBy } from 'ilios-common/utils/array-helpers';
 import { TrackedAsyncData } from 'ember-async-data';
+import t from 'ember-intl/helpers/t';
+import { on } from '@ember/modifier';
+import FaIcon from 'ilios-common/components/fa-icon';
+import IliosCalendarWeek from 'ilios-common/components/ilios-calendar-week';
 
 export default class UserProfileCalendar extends Component {
   @service fetch;
@@ -57,45 +61,51 @@ export default class UserProfileCalendar extends Component {
   gotoToday() {
     this.date = new Date();
   }
+  <template>
+    <div class="user-profile-calendar" data-test-user-profile-calendar>
+      <ul class="calendar-time-picker">
+        <li>
+          <button
+            class="link-button"
+            type="button"
+            aria-label={{t "general.back"}}
+            {{on "click" this.goBack}}
+            data-test-go-back
+          >
+            <FaIcon @icon="backward" @title={{t "general.back"}} />
+          </button>
+        </li>
+        <li>
+          <button
+            class="link-button"
+            type="button"
+            {{on "click" this.gotoToday}}
+            data-test-go-today
+          >
+            {{t "general.today"}}
+          </button>
+        </li>
+        <li>
+          <button
+            class="link-button"
+            type="button"
+            aria-label={{t "general.forward"}}
+            {{on "click" this.goForward}}
+            data-test-go-forward
+          >
+            <FaIcon @icon="forward" @title={{t "general.forward"}} />
+          </button>
+        </li>
+      </ul>
+      <div class="ilios-calendar">
+        <IliosCalendarWeek
+          @calendarEvents={{this.calendarEvents}}
+          @date={{this.date}}
+          @areEventsSelectable={{false}}
+          @areDaysSelectable={{false}}
+          @isLoadingEvents={{this.eventsData.isPending}}
+        />
+      </div>
+    </div>
+  </template>
 }
-
-<div class="user-profile-calendar" data-test-user-profile-calendar>
-  <ul class="calendar-time-picker">
-    <li>
-      <button
-        class="link-button"
-        type="button"
-        aria-label={{t "general.back"}}
-        {{on "click" this.goBack}}
-        data-test-go-back
-      >
-        <FaIcon @icon="backward" @title={{t "general.back"}} />
-      </button>
-    </li>
-    <li>
-      <button class="link-button" type="button" {{on "click" this.gotoToday}} data-test-go-today>
-        {{t "general.today"}}
-      </button>
-    </li>
-    <li>
-      <button
-        class="link-button"
-        type="button"
-        aria-label={{t "general.forward"}}
-        {{on "click" this.goForward}}
-        data-test-go-forward
-      >
-        <FaIcon @icon="forward" @title={{t "general.forward"}} />
-      </button>
-    </li>
-  </ul>
-  <div class="ilios-calendar">
-    <IliosCalendarWeek
-      @calendarEvents={{this.calendarEvents}}
-      @date={{this.date}}
-      @areEventsSelectable={{false}}
-      @areDaysSelectable={{false}}
-      @isLoadingEvents={{this.eventsData.isPending}}
-    />
-  </div>
-</div>

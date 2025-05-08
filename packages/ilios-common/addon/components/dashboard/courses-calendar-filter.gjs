@@ -6,6 +6,16 @@ import { modifier } from 'ember-modifier';
 import { TrackedAsyncData } from 'ember-async-data';
 import { findBy, sortBy } from 'ilios-common/utils/array-helpers';
 import currentAcademicYear from 'ilios-common/utils/current-academic-year';
+import t from 'ember-intl/helpers/t';
+import add from 'ember-math-helpers/helpers/add';
+import LoadingSpinner from 'ilios-common/components/loading-spinner';
+import includes from 'ilios-common/helpers/includes';
+import inViewport from 'ember-in-viewport/modifiers/in-viewport';
+import { fn } from '@ember/helper';
+import { on } from '@ember/modifier';
+import FaIcon from 'ilios-common/components/fa-icon';
+import sortBy0 from 'ilios-common/helpers/sort-by';
+import FilterCheckbox from 'ilios-common/components/dashboard/filter-checkbox';
 
 export default class DashboardCoursesCalendarFilterComponent extends Component {
   @service dataLoader;
@@ -146,80 +156,81 @@ export default class DashboardCoursesCalendarFilterComponent extends Component {
   removeTitleInView(title) {
     this.titlesInView = this.titlesInView.filter((theTitle) => theTitle !== title);
   }
-}
-
-<div
-  class="calendar-filter-list large-filter-list dashboard-courses-calendar-filter"
-  data-test-courses-calendar-filter
->
-  <h5>
-    {{t "general.courses"}}
-    {{#if this.expandedYearWithoutTitleView}}
-      {{#if this.academicYearCrossesCalendarYearBoundaries}}
-        ({{this.expandedYearWithoutTitleView}}
-        -
-        {{add this.expandedYearWithoutTitleView 1}})
-      {{else}}
-        ({{this.expandedYearWithoutTitleView}})
-      {{/if}}
-    {{/if}}
-  </h5>
-  <div class="filters">
-    {{#if this.load.isRunning}}
-      <LoadingSpinner />
-    {{else}}
-      {{#each this.courseYears as |year|}}
-        <div
-          class="year {{if (includes year.year this.expandedYears) 'expanded' 'collapsed'}}"
-          {{this.scrollToDefaultExpandedYear year.year}}
-          {{in-viewport
-            onEnter=(fn this.addYearInView year.year)
-            onExit=(fn this.removeYearInView year.year)
-            viewportSpy=true
-          }}
-          data-test-year
-        >
-          <h6
-            class="year-title"
-            data-test-year-title
-            {{in-viewport
-              onEnter=(fn this.addTitleInView year.year)
-              onExit=(fn this.removeTitleInView year.year)
-              viewportSpy=true
-            }}
-          >
-            <button
-              type="button"
-              aria-expanded={{if (includes year.year this.expandedYears) "true" "false"}}
-              {{on "click" (fn this.toggleYear year.year)}}
-            >
-              {{year.label}}
-              <FaIcon
-                @icon={{if (includes year.year this.expandedYears) "caret-down" "caret-right"}}
-              />
-            </button>
-          </h6>
-          {{#if (includes year.year this.expandedYears)}}
-            <ul class="courses">
-              {{#each (sort-by "title" year.courses) as |course|}}
-                <li data-test-course>
-                  <Dashboard::FilterCheckbox
-                    @checked={{includes course.id @selectedCourseIds}}
-                    @add={{fn @add course.id}}
-                    @remove={{fn @remove course.id}}
-                    @targetId={{course.id}}
-                  >
-                    {{course.title}}
-                    {{#if course.externalId}}
-                      ({{course.externalId}})
-                    {{/if}}
-                  </Dashboard::FilterCheckbox>
-                </li>
-              {{/each}}
-            </ul>
+  <template>
+    <div
+      class="calendar-filter-list large-filter-list dashboard-courses-calendar-filter"
+      data-test-courses-calendar-filter
+    >
+      <h5>
+        {{t "general.courses"}}
+        {{#if this.expandedYearWithoutTitleView}}
+          {{#if this.academicYearCrossesCalendarYearBoundaries}}
+            ({{this.expandedYearWithoutTitleView}}
+            -
+            {{add this.expandedYearWithoutTitleView 1}})
+          {{else}}
+            ({{this.expandedYearWithoutTitleView}})
           {{/if}}
-        </div>
-      {{/each}}
-    {{/if}}
-  </div>
-</div>
+        {{/if}}
+      </h5>
+      <div class="filters">
+        {{#if this.load.isRunning}}
+          <LoadingSpinner />
+        {{else}}
+          {{#each this.courseYears as |year|}}
+            <div
+              class="year {{if (includes year.year this.expandedYears) 'expanded' 'collapsed'}}"
+              {{this.scrollToDefaultExpandedYear year.year}}
+              {{inViewport
+                onEnter=(fn this.addYearInView year.year)
+                onExit=(fn this.removeYearInView year.year)
+                viewportSpy=true
+              }}
+              data-test-year
+            >
+              <h6
+                class="year-title"
+                data-test-year-title
+                {{inViewport
+                  onEnter=(fn this.addTitleInView year.year)
+                  onExit=(fn this.removeTitleInView year.year)
+                  viewportSpy=true
+                }}
+              >
+                <button
+                  type="button"
+                  aria-expanded={{if (includes year.year this.expandedYears) "true" "false"}}
+                  {{on "click" (fn this.toggleYear year.year)}}
+                >
+                  {{year.label}}
+                  <FaIcon
+                    @icon={{if (includes year.year this.expandedYears) "caret-down" "caret-right"}}
+                  />
+                </button>
+              </h6>
+              {{#if (includes year.year this.expandedYears)}}
+                <ul class="courses">
+                  {{#each (sortBy0 "title" year.courses) as |course|}}
+                    <li data-test-course>
+                      <FilterCheckbox
+                        @checked={{includes course.id @selectedCourseIds}}
+                        @add={{fn @add course.id}}
+                        @remove={{fn @remove course.id}}
+                        @targetId={{course.id}}
+                      >
+                        {{course.title}}
+                        {{#if course.externalId}}
+                          ({{course.externalId}})
+                        {{/if}}
+                      </FilterCheckbox>
+                    </li>
+                  {{/each}}
+                </ul>
+              {{/if}}
+            </div>
+          {{/each}}
+        {{/if}}
+      </div>
+    </div>
+  </template>
+}

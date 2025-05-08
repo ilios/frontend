@@ -5,6 +5,10 @@ import { service } from '@ember/service';
 import { pluralize } from 'ember-inflector';
 import { camelize } from '@ember/string';
 import { action } from '@ember/object';
+import SubjectHeader from 'frontend/components/reports/subject-header';
+import t from 'ember-intl/helpers/t';
+import SubjectDownload from 'frontend/components/reports/subject-download';
+import LoadingSpinner from 'ilios-common/components/loading-spinner';
 
 export default class ReportsSubjectMeshTermComponent extends Component {
   @service graphql;
@@ -102,45 +106,46 @@ export default class ReportsSubjectMeshTermComponent extends Component {
   async fetchDownloadData() {
     return [[this.intl.t('general.meshTerms')], ...this.sortedMeshTerms.map((v) => [v])];
   }
-}
-
-<Reports::SubjectHeader
-  @report={{@report}}
-  @school={{@school}}
-  @subject={{@subject}}
-  @prepositionalObject={{@prepositionalObject}}
-  @prepositionalObjectTableRowId={{@prepositionalObjectTableRowId}}
-  @year={{@year}}
-  @showYearFilter={{false}}
-  @description={{@description}}
-  @fetchDownloadData={{this.fetchDownloadData}}
-  @readyToDownload={{this.allMeshTermsData.isResolved}}
-  @resultsLength={{this.allMeshTerms.length}}
-/>
-<div data-test-reports-subject-mesh-term>
-  {{#if this.allMeshTermsData.isResolved}}
-    <ul class="report-results{{if this.reportResultsExceedMax ' limited'}}" data-test-results>
-      {{#each this.limitedMeshTerms as |name|}}
-        <li>
-          {{name}}
-        </li>
+  <template>
+    <SubjectHeader
+      @report={{@report}}
+      @school={{@school}}
+      @subject={{@subject}}
+      @prepositionalObject={{@prepositionalObject}}
+      @prepositionalObjectTableRowId={{@prepositionalObjectTableRowId}}
+      @year={{@year}}
+      @showYearFilter={{false}}
+      @description={{@description}}
+      @fetchDownloadData={{this.fetchDownloadData}}
+      @readyToDownload={{this.allMeshTermsData.isResolved}}
+      @resultsLength={{this.allMeshTerms.length}}
+    />
+    <div data-test-reports-subject-mesh-term>
+      {{#if this.allMeshTermsData.isResolved}}
+        <ul class="report-results{{if this.reportResultsExceedMax ' limited'}}" data-test-results>
+          {{#each this.limitedMeshTerms as |name|}}
+            <li>
+              {{name}}
+            </li>
+          {{else}}
+            <li>{{t "general.none"}}</li>
+          {{/each}}
+        </ul>
+        {{#if this.reportResultsExceedMax}}
+          <SubjectDownload
+            @report={{@report}}
+            @subject={{@subject}}
+            @prepositionalObject={{@prepositionalObject}}
+            @prepositionalObjectTableRowId={{@prepositionalObjectTableRowId}}
+            @school={{@school}}
+            @fetchDownloadData={{this.fetchDownloadData}}
+            @readyToDownload={{true}}
+            @message={{t "general.reportResultsExceedMax" resultsLengthMax=this.resultsLengthMax}}
+          />
+        {{/if}}
       {{else}}
-        <li>{{t "general.none"}}</li>
-      {{/each}}
-    </ul>
-    {{#if this.reportResultsExceedMax}}
-      <Reports::SubjectDownload
-        @report={{@report}}
-        @subject={{@subject}}
-        @prepositionalObject={{@prepositionalObject}}
-        @prepositionalObjectTableRowId={{@prepositionalObjectTableRowId}}
-        @school={{@school}}
-        @fetchDownloadData={{this.fetchDownloadData}}
-        @readyToDownload={{true}}
-        @message={{t "general.reportResultsExceedMax" resultsLengthMax=this.resultsLengthMax}}
-      />
-    {{/if}}
-  {{else}}
-    <LoadingSpinner />
-  {{/if}}
-</div>
+        <LoadingSpinner />
+      {{/if}}
+    </div>
+  </template>
+}

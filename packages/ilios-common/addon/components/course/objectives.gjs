@@ -5,6 +5,15 @@ import { dropTask } from 'ember-concurrency';
 import { action } from '@ember/object';
 import { mapBy } from 'ilios-common/utils/array-helpers';
 import { TrackedAsyncData } from 'ember-async-data';
+import { on } from '@ember/modifier';
+import t from 'ember-intl/helpers/t';
+import FaIcon from 'ilios-common/components/fa-icon';
+import { LinkTo } from '@ember/routing';
+import VisualizeObjectivesGraph from 'ilios-common/components/course/visualize-objectives-graph';
+import ExpandCollapseButton from 'ilios-common/components/expand-collapse-button';
+import NewObjective from 'ilios-common/components/new-objective';
+import perform from 'ember-concurrency/helpers/perform';
+import ObjectiveList from 'ilios-common/components/course/objective-list';
 
 export default class CourseObjectivesComponent extends Component {
   @service store;
@@ -58,59 +67,60 @@ export default class CourseObjectivesComponent extends Component {
       this.args.collapse();
     }
   }
-}
-
-<section class="course-objectives" data-test-course-objectives>
-  <div class="header">
-    {{#if this.showCollapsible}}
-      <div>
-        <button
-          class="title link-button"
-          type="button"
-          aria-expanded="true"
-          data-test-title
-          {{on "click" this.collapse}}
-        >
-          {{t "general.objectives"}}
-          ({{this.objectives.length}})
-          <FaIcon @icon="caret-down" />
-        </button>
+  <template>
+    <section class="course-objectives" data-test-course-objectives>
+      <div class="header">
+        {{#if this.showCollapsible}}
+          <div>
+            <button
+              class="title link-button"
+              type="button"
+              aria-expanded="true"
+              data-test-title
+              {{on "click" this.collapse}}
+            >
+              {{t "general.objectives"}}
+              ({{this.objectives.length}})
+              <FaIcon @icon="caret-down" />
+            </button>
+          </div>
+        {{else}}
+          <h3 class="title" data-test-title>
+            {{t "general.objectives"}}
+            ({{this.objectives.length}})
+          </h3>
+        {{/if}}
+        {{#if @editable}}
+          <span data-test-actions>
+            <LinkTo
+              @route="course-visualize-objectives"
+              @model={{@course}}
+              aria-label={{t "general.visualizeCourseObjectives"}}
+            >
+              <VisualizeObjectivesGraph
+                @course={{@course}}
+                @width={{20}}
+                @height={{20}}
+                @isIcon={{true}}
+              />
+            </LinkTo>
+            <ExpandCollapseButton
+              @value={{this.newObjectiveEditorOn}}
+              @action={{this.toggleNewObjectiveEditor}}
+              @expandButtonLabel={{t "general.addNew"}}
+            />
+          </span>
+        {{/if}}
       </div>
-    {{else}}
-      <h3 class="title" data-test-title>
-        {{t "general.objectives"}}
-        ({{this.objectives.length}})
-      </h3>
-    {{/if}}
-    {{#if @editable}}
-      <span data-test-actions>
-        <LinkTo
-          @route="course-visualize-objectives"
-          @model={{@course}}
-          aria-label={{t "general.visualizeCourseObjectives"}}
-        >
-          <Course::VisualizeObjectivesGraph
-            @course={{@course}}
-            @width={{20}}
-            @height={{20}}
-            @isIcon={{true}}
+      <div class="content">
+        {{#if this.newObjectiveEditorOn}}
+          <NewObjective
+            @save={{perform this.saveNewObjective}}
+            @cancel={{this.toggleNewObjectiveEditor}}
           />
-        </LinkTo>
-        <ExpandCollapseButton
-          @value={{this.newObjectiveEditorOn}}
-          @action={{this.toggleNewObjectiveEditor}}
-          @expandButtonLabel={{t "general.addNew"}}
-        />
-      </span>
-    {{/if}}
-  </div>
-  <div class="content">
-    {{#if this.newObjectiveEditorOn}}
-      <NewObjective
-        @save={{perform this.saveNewObjective}}
-        @cancel={{this.toggleNewObjectiveEditor}}
-      />
-    {{/if}}
-    <Course::ObjectiveList @course={{@course}} @editable={{@editable}} />
-  </div>
-</section>
+        {{/if}}
+        <ObjectiveList @course={{@course}} @editable={{@editable}} />
+      </div>
+    </section>
+  </template>
+}

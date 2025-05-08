@@ -14,12 +14,13 @@ export default class MeshDescriptorLastTreeNumber extends Component {
     }
     return this.trees.value.slice().reverse()[0].treeNumber;
   }
+  <template>
+    <span
+      class="mesh-descriptor-last-tree-number"
+      data-test-mesh-descriptor-last-tree-number
+      ...attributes
+    >
+      {{this.value}}
+    </span>
+  </template>
 }
-
-<span
-  class="mesh-descriptor-last-tree-number"
-  data-test-mesh-descriptor-last-tree-number
-  ...attributes
->
-  {{this.value}}
-</span>

@@ -5,6 +5,23 @@ import { dropTask, restartableTask, timeout } from 'ember-concurrency';
 import { service } from '@ember/service';
 import { validatable, Length, HtmlNotBlank } from 'ilios-common/decorators/validation';
 import { TrackedAsyncData } from 'ember-async-data';
+import and from 'ember-truth-helpers/helpers/and';
+import not from 'ember-truth-helpers/helpers/not';
+import EditableField from 'ilios-common/components/editable-field';
+import perform from 'ember-concurrency/helpers/perform';
+import HtmlEditor from 'ilios-common/components/html-editor';
+import ValidationError from 'ilios-common/components/validation-error';
+import FadeText from 'ilios-common/components/fade-text';
+import ObjectiveListItemParents from 'ilios-common/components/session/objective-list-item-parents';
+import ObjectiveListItemTerms from 'ilios-common/components/objective-list-item-terms';
+import ObjectiveListItemDescriptors from 'ilios-common/components/session/objective-list-item-descriptors';
+import t from 'ember-intl/helpers/t';
+import { on } from '@ember/modifier';
+import set from 'ember-set-helper/helpers/set';
+import FaIcon from 'ilios-common/components/fa-icon';
+import ManageObjectiveParents from 'ilios-common/components/session/manage-objective-parents';
+import ManageObjectiveDescriptors from 'ilios-common/components/session/manage-objective-descriptors';
+import TaxonomyManager from 'ilios-common/components/taxonomy-manager';
 
 @validatable
 export default class SessionObjectiveListItemComponent extends Component {
@@ -166,153 +183,154 @@ export default class SessionObjectiveListItemComponent extends Component {
   deleteObjective = dropTask(async () => {
     await this.args.sessionObjective.destroyRecord();
   });
-}
-
-<div
-  id="objective-{{@sessionObjective.id}}"
-  class="grid-row objective-row{{if this.showRemoveConfirmation ' confirm-removal'}}{{if
-      this.highlightSave.isRunning
-      ' highlight-ok'
-    }}{{if this.isManaging ' is-managing'}}"
-  data-test-session-objective-list-item
->
-  <div class="description grid-item" data-test-description>
-    {{#if (and @editable (not this.isManaging) (not this.showRemoveConfirmation))}}
-      <EditableField
-        @value={{@sessionObjective.title}}
-        @renderHtml={{true}}
-        @isSaveDisabled={{this.hasErrorForTitle}}
-        @save={{perform this.saveTitleChanges}}
-        @close={{this.revertTitleChanges}}
+  <template>
+    <div
+      id="objective-{{@sessionObjective.id}}"
+      class="grid-row objective-row{{if this.showRemoveConfirmation ' confirm-removal'}}{{if
+          this.highlightSave.isRunning
+          ' highlight-ok'
+        }}{{if this.isManaging ' is-managing'}}"
+      data-test-session-objective-list-item
+    >
+      <div class="description grid-item" data-test-description>
+        {{#if (and @editable (not this.isManaging) (not this.showRemoveConfirmation))}}
+          <EditableField
+            @value={{@sessionObjective.title}}
+            @renderHtml={{true}}
+            @isSaveDisabled={{this.hasErrorForTitle}}
+            @save={{perform this.saveTitleChanges}}
+            @close={{this.revertTitleChanges}}
+            @fadeTextExpanded={{this.fadeTextExpanded}}
+            @onExpandAllFadeText={{this.expandAllFadeText}}
+            @showTitle={{true}}
+          >
+            <HtmlEditor
+              @content={{@sessionObjective.title}}
+              @update={{this.changeTitle}}
+              @autofocus={{true}}
+            />
+            <ValidationError @validatable={{this}} @property="title" />
+          </EditableField>
+        {{else}}
+          <FadeText
+            @text={{@sessionObjective.title}}
+            @expanded={{this.fadeTextExpanded}}
+            @onExpandAll={{this.expandAllFadeText}}
+          />
+        {{/if}}
+      </div>
+      <ObjectiveListItemParents
+        @parents={{this.parents}}
+        @editable={{and @editable (not this.isManaging) (not this.showRemoveConfirmation)}}
+        @manage={{perform this.manageParents}}
+        @isManaging={{this.isManagingParents}}
+        @save={{perform this.saveParents}}
+        @isSaving={{this.saveParents.isRunning}}
+        @cancel={{this.cancel}}
         @fadeTextExpanded={{this.fadeTextExpanded}}
         @onExpandAllFadeText={{this.expandAllFadeText}}
-        @showTitle={{true}}
-      >
-        <HtmlEditor
-          @content={{@sessionObjective.title}}
-          @update={{this.changeTitle}}
-          @autofocus={{true}}
-        />
-        <ValidationError @validatable={{this}} @property="title" />
-      </EditableField>
-    {{else}}
-      <FadeText
-        @text={{@sessionObjective.title}}
-        @expanded={{this.fadeTextExpanded}}
-        @onExpandAll={{this.expandAllFadeText}}
       />
-    {{/if}}
-  </div>
-  <Session::ObjectiveListItemParents
-    @parents={{this.parents}}
-    @editable={{and @editable (not this.isManaging) (not this.showRemoveConfirmation)}}
-    @manage={{perform this.manageParents}}
-    @isManaging={{this.isManagingParents}}
-    @save={{perform this.saveParents}}
-    @isSaving={{this.saveParents.isRunning}}
-    @cancel={{this.cancel}}
-    @fadeTextExpanded={{this.fadeTextExpanded}}
-    @onExpandAllFadeText={{this.expandAllFadeText}}
-  />
 
-  <ObjectiveListItemTerms
-    @subject={{@sessionObjective}}
-    @editable={{and @editable (not this.isManaging) (not this.showRemoveConfirmation)}}
-    @manage={{perform this.manageTerms}}
-    @isManaging={{this.isManagingTerms}}
-    @save={{perform this.saveTerms}}
-    @isSaving={{this.saveTerms.isRunning}}
-    @cancel={{this.cancel}}
-  />
+      <ObjectiveListItemTerms
+        @subject={{@sessionObjective}}
+        @editable={{and @editable (not this.isManaging) (not this.showRemoveConfirmation)}}
+        @manage={{perform this.manageTerms}}
+        @isManaging={{this.isManagingTerms}}
+        @save={{perform this.saveTerms}}
+        @isSaving={{this.saveTerms.isRunning}}
+        @cancel={{this.cancel}}
+      />
 
-  <Session::ObjectiveListItemDescriptors
-    @meshDescriptors={{this.meshDescriptors}}
-    @editable={{and @editable (not this.isManaging) (not this.showRemoveConfirmation)}}
-    @manage={{perform this.manageDescriptors}}
-    @isManaging={{this.isManagingDescriptors}}
-    @save={{perform this.saveDescriptors}}
-    @isSaving={{this.saveDescriptors.isRunning}}
-    @cancel={{this.cancel}}
-  />
+      <ObjectiveListItemDescriptors
+        @meshDescriptors={{this.meshDescriptors}}
+        @editable={{and @editable (not this.isManaging) (not this.showRemoveConfirmation)}}
+        @manage={{perform this.manageDescriptors}}
+        @isManaging={{this.isManagingDescriptors}}
+        @save={{perform this.saveDescriptors}}
+        @isSaving={{this.saveDescriptors.isRunning}}
+        @cancel={{this.cancel}}
+      />
 
-  <div class="actions grid-item" data-test-actions>
-    {{#if
-      (and
-        @editable
-        (not this.isManaging)
-        (not this.showRemoveConfirmation)
-        (not this.showRemoveConfirmation)
-      )
-    }}
-      <button
-        class="link-button"
-        type="button"
-        aria-label={{t "general.remove"}}
-        {{on "click" (set this "showRemoveConfirmation" true)}}
-        data-test-remove
-      >
-        <FaIcon @icon="trash" class="enabled remove" />
-      </button>
-    {{else}}
-      <FaIcon @icon="trash" class="disabled" />
-    {{/if}}
-  </div>
-
-  {{#if this.showRemoveConfirmation}}
-    <div class="confirm-message" data-test-confirm-removal>
-      {{t "general.confirmObjectiveRemoval"}}
-      <button
-        class="remove"
-        type="button"
-        data-test-confirm
-        {{on "click" (perform this.deleteObjective)}}
-      >
-        {{#if this.deleteObjective.isRunning}}
-          <FaIcon @icon="spinner" @spin={{true}} />
+      <div class="actions grid-item" data-test-actions>
+        {{#if
+          (and
+            @editable
+            (not this.isManaging)
+            (not this.showRemoveConfirmation)
+            (not this.showRemoveConfirmation)
+          )
+        }}
+          <button
+            class="link-button"
+            type="button"
+            aria-label={{t "general.remove"}}
+            {{on "click" (set this "showRemoveConfirmation" true)}}
+            data-test-remove
+          >
+            <FaIcon @icon="trash" class="enabled remove" />
+          </button>
         {{else}}
-          {{t "general.yes"}}
+          <FaIcon @icon="trash" class="disabled" />
         {{/if}}
-      </button>
-      <button
-        class="done"
-        type="button"
-        data-test-cancel
-        {{on "click" (set this "showRemoveConfirmation" false)}}
-      >
-        {{t "general.cancel"}}
-      </button>
-    </div>
-  {{/if}}
+      </div>
 
-  {{#if this.isManagingParents}}
-    <Session::ManageObjectiveParents
-      @courseObjectives={{@courseObjectives}}
-      @courseTitle={{@courseTitle}}
-      @selected={{this.parentsBuffer}}
-      @add={{this.addParentToBuffer}}
-      @remove={{this.removeParentFromBuffer}}
-    />
-  {{/if}}
-  {{#if this.isManagingDescriptors}}
-    <Session::ManageObjectiveDescriptors
-      @selected={{this.descriptorsBuffer}}
-      @add={{this.addDescriptorToBuffer}}
-      @remove={{this.removeDescriptorFromBuffer}}
-      @editable={{@editable}}
-      @save={{perform this.saveDescriptors}}
-      @cancel={{this.cancel}}
-    />
-  {{/if}}
-  {{#if this.isManagingTerms}}
-    <TaxonomyManager
-      @vocabularies={{@session.course.assignableVocabularies}}
-      @vocabulary={{this.selectedVocabulary}}
-      @selectedTerms={{this.termsBuffer}}
-      @add={{this.addTermToBuffer}}
-      @remove={{this.removeTermFromBuffer}}
-      @editable={{@editable}}
-      @save={{perform this.saveTerms}}
-      @cancel={{this.cancel}}
-    />
-  {{/if}}
-</div>
+      {{#if this.showRemoveConfirmation}}
+        <div class="confirm-message" data-test-confirm-removal>
+          {{t "general.confirmObjectiveRemoval"}}
+          <button
+            class="remove"
+            type="button"
+            data-test-confirm
+            {{on "click" (perform this.deleteObjective)}}
+          >
+            {{#if this.deleteObjective.isRunning}}
+              <FaIcon @icon="spinner" @spin={{true}} />
+            {{else}}
+              {{t "general.yes"}}
+            {{/if}}
+          </button>
+          <button
+            class="done"
+            type="button"
+            data-test-cancel
+            {{on "click" (set this "showRemoveConfirmation" false)}}
+          >
+            {{t "general.cancel"}}
+          </button>
+        </div>
+      {{/if}}
+
+      {{#if this.isManagingParents}}
+        <ManageObjectiveParents
+          @courseObjectives={{@courseObjectives}}
+          @courseTitle={{@courseTitle}}
+          @selected={{this.parentsBuffer}}
+          @add={{this.addParentToBuffer}}
+          @remove={{this.removeParentFromBuffer}}
+        />
+      {{/if}}
+      {{#if this.isManagingDescriptors}}
+        <ManageObjectiveDescriptors
+          @selected={{this.descriptorsBuffer}}
+          @add={{this.addDescriptorToBuffer}}
+          @remove={{this.removeDescriptorFromBuffer}}
+          @editable={{@editable}}
+          @save={{perform this.saveDescriptors}}
+          @cancel={{this.cancel}}
+        />
+      {{/if}}
+      {{#if this.isManagingTerms}}
+        <TaxonomyManager
+          @vocabularies={{@session.course.assignableVocabularies}}
+          @vocabulary={{this.selectedVocabulary}}
+          @selectedTerms={{this.termsBuffer}}
+          @add={{this.addTermToBuffer}}
+          @remove={{this.removeTermFromBuffer}}
+          @editable={{@editable}}
+          @save={{perform this.saveTerms}}
+          @cancel={{this.cancel}}
+        />
+      {{/if}}
+    </div>
+  </template>
+}

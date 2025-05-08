@@ -1,4 +1,5 @@
 import Component from '@glimmer/component';
+import t from 'ember-intl/helpers/t';
 
 export default class CurriculumInventoryVerificationPreviewTable6Component extends Component {
   get clerkships() {
@@ -16,71 +17,72 @@ export default class CurriculumInventoryVerificationPreviewTable6Component exten
       };
     });
   }
-}
-
-<div
-  class="curriculum-inventory-verification-preview-table6"
-  id="table6"
-  data-test-curriculum-inventory-verification-preview-table6
-  ...attributes
->
-  <h4 data-test-title id="verification-preview-table6">
-    {{t "general.table6ClerkshipSequenceBlockAssessmentMethods"}}
-  </h4>
-  <table>
-    <thead>
-      <tr>
-        <th colspan="2" rowspan="2">
-          {{t "general.clerkshipSequenceBlocks"}}
-        </th>
-        <th rowspan="2">
-          {{t "general.phasesStartToEnd"}}
-        </th>
-        <th colspan={{@data.methods.length}}>
-          {{t "general.includedInGrade"}}
-        </th>
-        <th colspan="2">
-          {{t "general.assessments"}}
-        </th>
-      </tr>
-      <tr>
-        {{#each @data.methods as |method|}}
-          <th>
-            {{method}}
-          </th>
-        {{/each}}
-        <th>
-          {{t "general.formative"}}
-        </th>
-        <th>
-          {{t "general.narrative"}}
-        </th>
-      </tr>
-    </thead>
-    <tbody>
-      {{#each this.clerkships as |clerkship|}}
-        <tr>
-          <td colspan="2">
-            {{clerkship.title}}
-          </td>
-          <td>
-            {{clerkship.startingLevel}}
-            -
-            {{clerkship.endingLevel}}
-          </td>
-          {{#each clerkship.methods as |method|}}
-            <td>
-              {{method}}
-            </td>
+  <template>
+    <div
+      class="curriculum-inventory-verification-preview-table6"
+      id="table6"
+      data-test-curriculum-inventory-verification-preview-table6
+      ...attributes
+    >
+      <h4 data-test-title id="verification-preview-table6">
+        {{t "general.table6ClerkshipSequenceBlockAssessmentMethods"}}
+      </h4>
+      <table>
+        <thead>
+          <tr>
+            <th colspan="2" rowspan="2">
+              {{t "general.clerkshipSequenceBlocks"}}
+            </th>
+            <th rowspan="2">
+              {{t "general.phasesStartToEnd"}}
+            </th>
+            <th colspan={{@data.methods.length}}>
+              {{t "general.includedInGrade"}}
+            </th>
+            <th colspan="2">
+              {{t "general.assessments"}}
+            </th>
+          </tr>
+          <tr>
+            {{#each @data.methods as |method|}}
+              <th>
+                {{method}}
+              </th>
+            {{/each}}
+            <th>
+              {{t "general.formative"}}
+            </th>
+            <th>
+              {{t "general.narrative"}}
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each this.clerkships as |clerkship|}}
+            <tr>
+              <td colspan="2">
+                {{clerkship.title}}
+              </td>
+              <td>
+                {{clerkship.startingLevel}}
+                -
+                {{clerkship.endingLevel}}
+              </td>
+              {{#each clerkship.methods as |method|}}
+                <td>
+                  {{method}}
+                </td>
+              {{/each}}
+              <td>
+                {{clerkship.hasFormativeAssessments}}
+              </td>
+              <td>
+                {{clerkship.hasNarrativeAssessments}}
+              </td>
+            </tr>
           {{/each}}
-          <td>
-            {{clerkship.hasFormativeAssessments}}
-          </td>
-          <td>
-            {{clerkship.hasNarrativeAssessments}}
-          </td>
-        </tr>
-      {{/each}}
-    </tbody>
-  </table>
-</div>
+        </tbody>
+      </table>
+    </div>
+  </template>
+}

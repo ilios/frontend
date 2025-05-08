@@ -9,6 +9,22 @@ import { TrackedAsyncData } from 'ember-async-data';
 import PapaParse from 'papaparse';
 import createDownloadFile from 'ilios-common/utils/create-download-file';
 import { findById, mapBy, sortBy, uniqueById } from 'ilios-common/utils/array-helpers';
+import or from 'ember-truth-helpers/helpers/or';
+import SimpleChart from 'ember-simple-charts/components/simple-chart';
+import perform from 'ember-concurrency/helpers/perform';
+import t from 'ember-intl/helpers/t';
+import and from 'ember-truth-helpers/helpers/and';
+import not from 'ember-truth-helpers/helpers/not';
+import { on } from '@ember/modifier';
+import FaIcon from 'ilios-common/components/fa-icon';
+import SortableTh from 'ilios-common/components/sortable-th';
+import eq from 'ember-truth-helpers/helpers/eq';
+import { fn, array } from '@ember/helper';
+import sortBy0 from 'ilios-common/helpers/sort-by';
+import { LinkTo } from '@ember/routing';
+import notEq from 'ember-truth-helpers/helpers/not-eq';
+import sub_ from 'ember-math-helpers/helpers/sub';
+import LoadingSpinner from 'ilios-common/components/loading-spinner';
 
 export default class CourseVisualizeVocabulariesGraph extends Component {
   @service router;
@@ -117,7 +133,9 @@ export default class CourseVisualizeVocabulariesGraph extends Component {
         return set;
       }, [])
       .map((obj) => {
-        obj.description = `${obj.meta.vocabulary.title} - ${obj.data} ${this.intl.t('general.minutes')}`;
+        obj.description = `${obj.meta.vocabulary.title} - ${obj.data} ${this.intl.t(
+          'general.minutes',
+        )}`;
         delete obj.id;
         return obj;
       })
@@ -164,115 +182,120 @@ export default class CourseVisualizeVocabulariesGraph extends Component {
     const csv = PapaParse.unparse(output);
     createDownloadFile(`ilios-course-${this.args.course.id}-vocabularies.csv`, csv, 'text/csv');
   });
-}
-
-<div
-  class="course-visualize-vocabularies-graph {{unless @isIcon 'not-icon'}}"
-  data-test-course-visualize-vocabularies-graph
-  ...attributes
->
-  {{#if this.isLoaded}}
-    {{#if (or @isIcon this.hasChartData)}}
-      {{#if this.hasChartData}}
-        <SimpleChart
-          @name="horz-bar"
-          @isIcon={{@isIcon}}
-          @data={{this.chartData}}
-          @onClick={{this.barClick}}
-          @hover={{perform this.barHover}}
-          @leave={{perform this.barHover}}
-          as |chart|
-        >
-          {{#if this.tooltipContent}}
-            <chart.tooltip @title={{this.tooltipTitle}}>
-              {{this.tooltipContent}}
-            </chart.tooltip>
+  <template>
+    <div
+      class="course-visualize-vocabularies-graph {{unless @isIcon 'not-icon'}}"
+      data-test-course-visualize-vocabularies-graph
+      ...attributes
+    >
+      {{#if this.isLoaded}}
+        {{#if (or @isIcon this.hasChartData)}}
+          {{#if this.hasChartData}}
+            <SimpleChart
+              @name="horz-bar"
+              @isIcon={{@isIcon}}
+              @data={{this.chartData}}
+              @onClick={{this.barClick}}
+              @hover={{perform this.barHover}}
+              @leave={{perform this.barHover}}
+              as |chart|
+            >
+              {{#if this.tooltipContent}}
+                <chart.tooltip @title={{this.tooltipTitle}}>
+                  {{this.tooltipContent}}
+                </chart.tooltip>
+              {{/if}}
+            </SimpleChart>
+          {{else}}
+            {{#if @showNoChartDataError}}
+              <div class="no-data" data-test-no-data>
+                {{t "general.courseVisualizationsNoSessionVocabularyTerms"}}
+              </div>
+            {{/if}}
           {{/if}}
-        </SimpleChart>
-      {{else}}
-        {{#if @showNoChartDataError}}
+        {{/if}}
+        {{#if (and (not @isIcon) (not this.hasData))}}
           <div class="no-data" data-test-no-data>
             {{t "general.courseVisualizationsNoSessionVocabularyTerms"}}
           </div>
         {{/if}}
-      {{/if}}
-    {{/if}}
-    {{#if (and (not @isIcon) (not this.hasData))}}
-      <div class="no-data" data-test-no-data>
-        {{t "general.courseVisualizationsNoSessionVocabularyTerms"}}
-      </div>
-    {{/if}}
-    {{#if (and (not @isIcon) this.hasData @showDataTable)}}
-      <div class="data-table" data-test-data-table>
-        <div class="table-actions" data-test-data-table-actions>
-          <button type="button" {{on "click" (perform this.downloadData)}} data-test-download-data>
-            <FaIcon @icon="download" />
-            {{t "general.download"}}
-          </button>
-        </div>
-        <table>
-          <thead>
-            <tr>
-              <SortableTh
-                @sortedAscending={{this.sortedAscending}}
-                @sortedBy={{or
-                  (eq this.sortBy "vocabularyTitle")
-                  (eq this.sortBy "vocabularyTitle:desc")
-                }}
-                @onClick={{fn this.setSortBy "vocabularyTitle"}}
-                data-test-vocabulary
+        {{#if (and (not @isIcon) this.hasData @showDataTable)}}
+          <div class="data-table" data-test-data-table>
+            <div class="table-actions" data-test-data-table-actions>
+              <button
+                type="button"
+                {{on "click" (perform this.downloadData)}}
+                data-test-download-data
               >
-                {{t "general.vocabulary"}}
-              </SortableTh>
-              <SortableTh
-                @colspan="2"
-                @sortedAscending={{this.sortedAscending}}
-                @sortedBy={{or
-                  (eq this.sortBy "sessionTitles")
-                  (eq this.sortBy "sessionTitles:desc")
-                }}
-                @onClick={{fn this.setSortBy "sessionTitles"}}
-                data-test-sessions
-              >
-                {{t "general.sessions"}}
-              </SortableTh>
-              <SortableTh
-                @sortedAscending={{this.sortedAscending}}
-                @sortedBy={{or (eq this.sortBy "minutes") (eq this.sortBy "minutes:desc")}}
-                @onClick={{fn this.setSortBy "minutes"}}
-                @sortType="numeric"
-                data-test-minutes
-              >
-                {{t "general.minutes"}}
-              </SortableTh>
-            </tr>
-          </thead>
-          <tbody>
-            {{#each (sort-by this.sortBy this.tableData) as |row|}}
-              <tr>
-                <td data-test-vocabulary>
-                  <LinkTo
-                    @route="course-visualize-vocabulary"
-                    @models={{array @course.id row.vocabulary.id}}
+                <FaIcon @icon="download" />
+                {{t "general.download"}}
+              </button>
+            </div>
+            <table>
+              <thead>
+                <tr>
+                  <SortableTh
+                    @sortedAscending={{this.sortedAscending}}
+                    @sortedBy={{or
+                      (eq this.sortBy "vocabularyTitle")
+                      (eq this.sortBy "vocabularyTitle:desc")
+                    }}
+                    @onClick={{fn this.setSortBy "vocabularyTitle"}}
+                    data-test-vocabulary
                   >
-                    {{row.vocabularyTitle}}
-                  </LinkTo>
-                </td>
-                <td colspan="2" data-test-sessions>
-                  {{#each row.sessions as |session index|}}
-                    <LinkTo @route="session" @models={{array @course session}}>
-                      {{session.title~}}
-                    </LinkTo>{{if (not-eq index (sub row.sessions.length 1)) ","}}
-                  {{/each}}
-                </td>
-                <td data-test-minutes>{{row.minutes}}</td>
-              </tr>
-            {{/each}}
-          </tbody>
-        </table>
-      </div>
-    {{/if}}
-  {{else}}
-    <LoadingSpinner />
-  {{/if}}
-</div>
+                    {{t "general.vocabulary"}}
+                  </SortableTh>
+                  <SortableTh
+                    @colspan="2"
+                    @sortedAscending={{this.sortedAscending}}
+                    @sortedBy={{or
+                      (eq this.sortBy "sessionTitles")
+                      (eq this.sortBy "sessionTitles:desc")
+                    }}
+                    @onClick={{fn this.setSortBy "sessionTitles"}}
+                    data-test-sessions
+                  >
+                    {{t "general.sessions"}}
+                  </SortableTh>
+                  <SortableTh
+                    @sortedAscending={{this.sortedAscending}}
+                    @sortedBy={{or (eq this.sortBy "minutes") (eq this.sortBy "minutes:desc")}}
+                    @onClick={{fn this.setSortBy "minutes"}}
+                    @sortType="numeric"
+                    data-test-minutes
+                  >
+                    {{t "general.minutes"}}
+                  </SortableTh>
+                </tr>
+              </thead>
+              <tbody>
+                {{#each (sortBy0 this.sortBy this.tableData) as |row|}}
+                  <tr>
+                    <td data-test-vocabulary>
+                      <LinkTo
+                        @route="course-visualize-vocabulary"
+                        @models={{array @course.id row.vocabulary.id}}
+                      >
+                        {{row.vocabularyTitle}}
+                      </LinkTo>
+                    </td>
+                    <td colspan="2" data-test-sessions>
+                      {{#each row.sessions as |session index|}}
+                        <LinkTo @route="session" @models={{array @course session}}>
+                          {{session.title~}}
+                        </LinkTo>{{if (notEq index (sub_ row.sessions.length 1)) ","}}
+                      {{/each}}
+                    </td>
+                    <td data-test-minutes>{{row.minutes}}</td>
+                  </tr>
+                {{/each}}
+              </tbody>
+            </table>
+          </div>
+        {{/if}}
+      {{else}}
+        <LoadingSpinner />
+      {{/if}}
+    </div>
+  </template>
+}

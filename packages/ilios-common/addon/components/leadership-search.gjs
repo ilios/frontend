@@ -5,6 +5,13 @@ import { cleanQuery } from 'ilios-common/utils/query-utils';
 import { tracked } from '@glimmer/tracking';
 import { guidFor } from '@ember/object/internals';
 import { mapBy } from 'ilios-common/utils/array-helpers';
+import t from 'ember-intl/helpers/t';
+import { on } from '@ember/modifier';
+import perform from 'ember-concurrency/helpers/perform';
+import or from 'ember-truth-helpers/helpers/or';
+import eq from 'ember-truth-helpers/helpers/eq';
+import includes from 'ilios-common/helpers/includes';
+import FaIcon from 'ilios-common/components/fa-icon';
 
 const DEBOUNCE_MS = 250;
 const MIN_INPUT = 3;
@@ -84,81 +91,82 @@ export default class LeadershipSearchComponent extends Component {
     this.args.selectUser(user);
     this.searchInputElement.focus();
   });
-}
-
-<div class="leadership-search" data-test-leadership-search>
-  <input
-    autocomplete="name"
-    type="search"
-    value={{this.searchValue}}
-    placeholder={{t "general.searchForIliosUsers"}}
-    incremental="true"
-    id={{this.searchInputId}}
-    {{on "input" (perform this.searchForUsers value="target.value")}}
-    {{on "search" (perform this.searchForUsers value="target.value")}}
-    {{on "keyup" (perform this.searchForUsers value="target.value")}}
-  />
-  <ul
-    class="results
-      {{unless
-        (or this.searchForUsers.isRunning this.searchForUsers.lastSuccessful.value.length)
-        'hidden'
-      }}"
-  >
-    {{#if this.searchForUsers.isRunning}}
-      <li>
-        {{t "general.currentlySearchingPrompt"}}
-      </li>
-    {{else}}
-      {{#each this.searchForUsers.lastSuccessful.value as |result index|}}
-        {{#if (eq result.type "text")}}
+  <template>
+    <div class="leadership-search" data-test-leadership-search>
+      <input
+        autocomplete="name"
+        type="search"
+        value={{this.searchValue}}
+        placeholder={{t "general.searchForIliosUsers"}}
+        incremental="true"
+        id={{this.searchInputId}}
+        {{on "input" (perform this.searchForUsers value="target.value")}}
+        {{on "search" (perform this.searchForUsers value="target.value")}}
+        {{on "keyup" (perform this.searchForUsers value="target.value")}}
+      />
+      <ul
+        class="results
+          {{unless
+            (or this.searchForUsers.isRunning this.searchForUsers.lastSuccessful.value.length)
+            'hidden'
+          }}"
+      >
+        {{#if this.searchForUsers.isRunning}}
           <li>
-            {{result.text}}
+            {{t "general.currentlySearchingPrompt"}}
           </li>
-        {{/if}}
-        {{#if (eq result.type "summary")}}
-          <li class="summary">
-            {{result.text}}
-          </li>
-        {{/if}}
-        {{#if (eq result.type "user")}}
-          <li
-            class="user
-              {{unless (includes result.user.id this.existingUserIds) 'clickable' 'inactive'}}"
-            data-test-result-index={{index}}
-            data-test-result
-          >
-            {{#if (includes result.user.id this.existingUserIds)}}
-              <span class="name">
-                {{result.user.fullName}}
-                {{#unless result.user.enabled}}
-                  <FaIcon @icon="user-xmark" @title={{t "general.disabled"}} class="error" />
-                {{/unless}}
-              </span>
-              <span class="email">
-                {{result.user.email}}
-              </span>
-            {{else}}
-              <button
-                class="select-user"
-                type="button"
-                {{on "click" (perform this.clickUser result.user)}}
-                data-test-select-user
-              >
-                <span class="name">
-                  {{result.user.fullName}}
-                  {{#unless result.user.enabled}}
-                    <FaIcon @icon="user-xmark" @title={{t "general.disabled"}} class="error" />
-                  {{/unless}}
-                </span>
-                <span class="email">
-                  {{result.user.email}}
-                </span>
-              </button>
+        {{else}}
+          {{#each this.searchForUsers.lastSuccessful.value as |result index|}}
+            {{#if (eq result.type "text")}}
+              <li>
+                {{result.text}}
+              </li>
             {{/if}}
-          </li>
+            {{#if (eq result.type "summary")}}
+              <li class="summary">
+                {{result.text}}
+              </li>
+            {{/if}}
+            {{#if (eq result.type "user")}}
+              <li
+                class="user
+                  {{unless (includes result.user.id this.existingUserIds) 'clickable' 'inactive'}}"
+                data-test-result-index={{index}}
+                data-test-result
+              >
+                {{#if (includes result.user.id this.existingUserIds)}}
+                  <span class="name">
+                    {{result.user.fullName}}
+                    {{#unless result.user.enabled}}
+                      <FaIcon @icon="user-xmark" @title={{t "general.disabled"}} class="error" />
+                    {{/unless}}
+                  </span>
+                  <span class="email">
+                    {{result.user.email}}
+                  </span>
+                {{else}}
+                  <button
+                    class="select-user"
+                    type="button"
+                    {{on "click" (perform this.clickUser result.user)}}
+                    data-test-select-user
+                  >
+                    <span class="name">
+                      {{result.user.fullName}}
+                      {{#unless result.user.enabled}}
+                        <FaIcon @icon="user-xmark" @title={{t "general.disabled"}} class="error" />
+                      {{/unless}}
+                    </span>
+                    <span class="email">
+                      {{result.user.email}}
+                    </span>
+                  </button>
+                {{/if}}
+              </li>
+            {{/if}}
+          {{/each}}
         {{/if}}
-      {{/each}}
-    {{/if}}
-  </ul>
-</div>
+      </ul>
+    </div>
+  </template>
+}

@@ -2,6 +2,16 @@ import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import scrollIntoView from 'scroll-into-view';
 import { service } from '@ember/service';
+import BackToCourses from 'ilios-common/components/course/back-to-courses';
+import animateLoading from 'ilios-common/modifiers/animate-loading';
+import Header from 'ilios-common/components/course/header';
+import and from 'ember-truth-helpers/helpers/and';
+import Overview from 'ilios-common/components/course/overview';
+import Editing from 'ilios-common/components/course/editing';
+import { on } from '@ember/modifier';
+import t from 'ember-intl/helpers/t';
+import FaIcon from 'ilios-common/components/fa-icon';
+import { fn } from '@ember/helper';
 
 export default class CourseDetailsComponent extends Component {
   @service router;
@@ -18,50 +28,51 @@ export default class CourseDetailsComponent extends Component {
   get notRolloverRoute() {
     return this.router.currentRouteName !== 'course.rollover';
   }
+  <template>
+    <BackToCourses />
+
+    <section
+      class="course-details"
+      id="course-top-section"
+      data-test-ilios-course-details
+      {{animateLoading "course" loadingTime=500}}
+      ...attributes
+    >
+      <Header @course={{@course}} @editable={{and @editable this.notRolloverRoute}} />
+      <Overview @course={{@course}} @editable={{and @editable this.notRolloverRoute}} />
+      {{#if @showDetails}}
+        <Editing
+          @course={{@course}}
+          @editable={{and @editable this.notRolloverRoute}}
+          @courseLeadershipDetails={{@courseLeadershipDetails}}
+          @courseObjectiveDetails={{@courseObjectiveDetails}}
+          @courseTaxonomyDetails={{@courseTaxonomyDetails}}
+          @courseCompetencyDetails={{@courseCompetencyDetails}}
+          @courseManageLeadership={{@courseManageLeadership}}
+          @setCourseObjectiveDetails={{@setCourseObjectiveDetails}}
+          @setCourseLeadershipDetails={{@setCourseLeadershipDetails}}
+          @setCourseTaxonomyDetails={{@setCourseTaxonomyDetails}}
+          @setCourseCompetencyDetails={{@setCourseCompetencyDetails}}
+          @setCourseManageLeadership={{@setCourseManageLeadership}}
+        />
+        <div class="detail-collapsed-control">
+          <button type="button" data-test-expand-course-details {{on "click" this.collapse}}>
+            {{t "general.collapseDetail"}}
+            <FaIcon @icon="square-minus" class="expand-collapse-icon" />
+          </button>
+        </div>
+      {{else}}
+        <div class="detail-collapsed-control">
+          <button
+            type="button"
+            data-test-expand-course-details
+            {{on "click" (fn @setShowDetails true)}}
+          >
+            {{t "general.expandDetail"}}
+            <FaIcon @icon="square-plus" class="expand-collapse-icon" />
+          </button>
+        </div>
+      {{/if}}
+    </section>
+  </template>
 }
-
-<Course::BackToCourses />
-
-<section
-  class="course-details"
-  id="course-top-section"
-  data-test-ilios-course-details
-  {{animate-loading "course" loadingTime=500}}
-  ...attributes
->
-  <Course::Header @course={{@course}} @editable={{and @editable this.notRolloverRoute}} />
-  <Course::Overview @course={{@course}} @editable={{and @editable this.notRolloverRoute}} />
-  {{#if @showDetails}}
-    <Course::Editing
-      @course={{@course}}
-      @editable={{and @editable this.notRolloverRoute}}
-      @courseLeadershipDetails={{@courseLeadershipDetails}}
-      @courseObjectiveDetails={{@courseObjectiveDetails}}
-      @courseTaxonomyDetails={{@courseTaxonomyDetails}}
-      @courseCompetencyDetails={{@courseCompetencyDetails}}
-      @courseManageLeadership={{@courseManageLeadership}}
-      @setCourseObjectiveDetails={{@setCourseObjectiveDetails}}
-      @setCourseLeadershipDetails={{@setCourseLeadershipDetails}}
-      @setCourseTaxonomyDetails={{@setCourseTaxonomyDetails}}
-      @setCourseCompetencyDetails={{@setCourseCompetencyDetails}}
-      @setCourseManageLeadership={{@setCourseManageLeadership}}
-    />
-    <div class="detail-collapsed-control">
-      <button type="button" data-test-expand-course-details {{on "click" this.collapse}}>
-        {{t "general.collapseDetail"}}
-        <FaIcon @icon="square-minus" class="expand-collapse-icon" />
-      </button>
-    </div>
-  {{else}}
-    <div class="detail-collapsed-control">
-      <button
-        type="button"
-        data-test-expand-course-details
-        {{on "click" (fn @setShowDetails true)}}
-      >
-        {{t "general.expandDetail"}}
-        <FaIcon @icon="square-plus" class="expand-collapse-icon" />
-      </button>
-    </div>
-  {{/if}}
-</section>

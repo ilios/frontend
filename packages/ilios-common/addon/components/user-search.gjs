@@ -4,6 +4,14 @@ import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { restartableTask } from 'ember-concurrency';
 import { TrackedAsyncData } from 'ember-async-data';
+import SearchBox from 'ilios-common/components/search-box';
+import perform from 'ember-concurrency/helpers/perform';
+import t from 'ember-intl/helpers/t';
+import and from 'ember-truth-helpers/helpers/and';
+import gt from 'ember-truth-helpers/helpers/gt';
+import eq from 'ember-truth-helpers/helpers/eq';
+import UserSearchResultUser from 'ilios-common/components/user-search-result-user';
+import UserSearchResultInstructorGroup from 'ilios-common/components/user-search-result-instructor-group';
 
 export default class UserSearch extends Component {
   @service store;
@@ -113,55 +121,56 @@ export default class UserSearch extends Component {
       return { user, type: 'user', sortTerm: user.fullName };
     });
   }
+  <template>
+    <div class="user-search" data-test-user-search>
+      <SearchBox
+        placeholder={{@placeholder}}
+        @search={{perform this.search}}
+        @clear={{perform this.search}}
+      />
+      {{#if this.search.isRunning}}
+        <ul class="results" data-test-results>
+          <li>
+            {{t "general.currentlySearchingPrompt"}}
+          </li>
+        </ul>
+      {{/if}}
+      {{#if (and this.search.isIdle this.showMoreInputPrompt)}}
+        <ul class="results" data-test-results>
+          <li>
+            {{t "general.moreInputRequiredPrompt"}}
+          </li>
+        </ul>
+      {{/if}}
+      {{#if (and this.search.isIdle (gt this.sortedResults.length 0))}}
+        <ul class="results" data-test-results>
+          <li class="results-count" data-test-results-count>
+            {{this.sortedResults.length}}
+            {{t "general.results"}}
+          </li>
+          {{#each this.sortedResults as |result|}}
+            {{#if (eq result.type "user")}}
+              <UserSearchResultUser
+                @user={{result.user}}
+                @addUser={{this.addUser}}
+                @currentlyActiveUsers={{this.currentlyActiveUsers}}
+              />
+            {{else}}
+              <UserSearchResultInstructorGroup
+                @group={{result.group}}
+                @addInstructorGroup={{this.addInstructorGroup}}
+                @currentlyActiveInstructorGroups={{this.currentlyActiveInstructorGroups}}
+              />
+            {{/if}}
+          {{/each}}
+        </ul>
+      {{else if this.searchReturned}}
+        <ul class="results" data-test-results>
+          <li>
+            {{t "general.noSearchResultsPrompt"}}
+          </li>
+        </ul>
+      {{/if}}
+    </div>
+  </template>
 }
-
-<div class="user-search" data-test-user-search>
-  <SearchBox
-    placeholder={{@placeholder}}
-    @search={{perform this.search}}
-    @clear={{perform this.search}}
-  />
-  {{#if this.search.isRunning}}
-    <ul class="results" data-test-results>
-      <li>
-        {{t "general.currentlySearchingPrompt"}}
-      </li>
-    </ul>
-  {{/if}}
-  {{#if (and this.search.isIdle this.showMoreInputPrompt)}}
-    <ul class="results" data-test-results>
-      <li>
-        {{t "general.moreInputRequiredPrompt"}}
-      </li>
-    </ul>
-  {{/if}}
-  {{#if (and this.search.isIdle (gt this.sortedResults.length 0))}}
-    <ul class="results" data-test-results>
-      <li class="results-count" data-test-results-count>
-        {{this.sortedResults.length}}
-        {{t "general.results"}}
-      </li>
-      {{#each this.sortedResults as |result|}}
-        {{#if (eq result.type "user")}}
-          <UserSearchResultUser
-            @user={{result.user}}
-            @addUser={{this.addUser}}
-            @currentlyActiveUsers={{this.currentlyActiveUsers}}
-          />
-        {{else}}
-          <UserSearchResultInstructorGroup
-            @group={{result.group}}
-            @addInstructorGroup={{this.addInstructorGroup}}
-            @currentlyActiveInstructorGroups={{this.currentlyActiveInstructorGroups}}
-          />
-        {{/if}}
-      {{/each}}
-    </ul>
-  {{else if this.searchReturned}}
-    <ul class="results" data-test-results>
-      <li>
-        {{t "general.noSearchResultsPrompt"}}
-      </li>
-    </ul>
-  {{/if}}
-</div>

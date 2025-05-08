@@ -3,6 +3,13 @@ import { dropTask } from 'ember-concurrency';
 import readableFileSize from 'ilios-common/utils/readable-file-size';
 import { service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
+import fileQueue from 'ember-file-upload/helpers/file-queue';
+import perform from 'ember-concurrency/helpers/perform';
+import and from 'ember-truth-helpers/helpers/and';
+import not from 'ember-truth-helpers/helpers/not';
+import LoadingSpinner from 'ilios-common/components/loading-spinner';
+import t from 'ember-intl/helpers/t';
+import FaIcon from 'ilios-common/components/fa-icon';
 
 export default class LearningMaterialUploaderComponent extends Component {
   @service fetch;
@@ -38,31 +45,32 @@ export default class LearningMaterialUploaderComponent extends Component {
 
     return false;
   });
+  <template>
+    <span class="learning-material-uploader" data-test-learning-material-uploader>
+      {{#let (fileQueue name=this.uploadQueueName onFileAdded=(perform this.upload)) as |queue|}}
+        {{#if (and (not this.fileUploadErrorMessage) queue.files.length)}}
+          <span class="upload-button">
+            <LoadingSpinner />{{queue.progress}}%
+          </span>
+        {{else}}
+          <label class="upload-button" for={{@for}}>
+            {{t "general.chooseFile"}}
+            <input type="file" id={{@for}} hidden {{queue.selectFile}} />
+          </label>
+        {{/if}}
+        {{#if this.upload.lastSuccessful.value}}
+          <span class="upload-result">
+            {{this.upload.lastSuccessful.value}}
+            <FaIcon @icon="check" class="add" />
+          </span>
+        {{/if}}
+        {{#if this.fileUploadErrorMessage}}
+          <span class="upload-result validation-error-message">
+            <FaIcon @icon="circle-exclamation" class="warning" />
+            {{this.fileUploadErrorMessage}}
+          </span>
+        {{/if}}
+      {{/let}}
+    </span>
+  </template>
 }
-
-<span class="learning-material-uploader" data-test-learning-material-uploader>
-  {{#let (file-queue name=this.uploadQueueName onFileAdded=(perform this.upload)) as |queue|}}
-    {{#if (and (not this.fileUploadErrorMessage) queue.files.length)}}
-      <span class="upload-button">
-        <LoadingSpinner />{{queue.progress}}%
-      </span>
-    {{else}}
-      <label class="upload-button" for={{@for}}>
-        {{t "general.chooseFile"}}
-        <input type="file" id={{@for}} hidden {{queue.selectFile}} />
-      </label>
-    {{/if}}
-    {{#if this.upload.lastSuccessful.value}}
-      <span class="upload-result">
-        {{this.upload.lastSuccessful.value}}
-        <FaIcon @icon="check" class="add" />
-      </span>
-    {{/if}}
-    {{#if this.fileUploadErrorMessage}}
-      <span class="upload-result validation-error-message">
-        <FaIcon @icon="circle-exclamation" class="warning" />
-        {{this.fileUploadErrorMessage}}
-      </span>
-    {{/if}}
-  {{/let}}
-</span>

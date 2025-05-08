@@ -1,6 +1,7 @@
 import Component from '@glimmer/component';
 import { service } from '@ember/service';
 import { action } from '@ember/object';
+import { on } from '@ember/modifier';
 
 export default class LinkToWithActionComponent extends Component {
   @service router;
@@ -27,13 +28,14 @@ export default class LinkToWithActionComponent extends Component {
       queryParams: this.queryParams,
     });
   }
+  <template>
+    <a
+      href={{this.href}}
+      class={{if this.isActive "active"}}
+      {{on "click" this.navigate}}
+      data-test-link-to-with-action
+    >
+      {{yield}}
+    </a>
+  </template>
 }
-
-<a
-  href={{this.href}}
-  class={{if this.isActive "active"}}
-  {{on "click" this.navigate}}
-  data-test-link-to-with-action
->
-  {{yield}}
-</a>

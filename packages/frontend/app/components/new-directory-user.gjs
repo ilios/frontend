@@ -10,6 +10,20 @@ import { TrackedAsyncData } from 'ember-async-data';
 import { DateTime } from 'luxon';
 import YupValidations from 'ilios-common/classes/yup-validations';
 import { string } from 'yup';
+import { uniqueId, fn } from '@ember/helper';
+import t from 'ember-intl/helpers/t';
+import ClickChoiceButtons from 'ilios-common/components/click-choice-buttons';
+import set from 'ember-set-helper/helpers/set';
+import not from 'ember-truth-helpers/helpers/not';
+import { on } from '@ember/modifier';
+import pick from 'ilios-common/helpers/pick';
+import YupValidationMessage from 'ilios-common/components/yup-validation-message';
+import sortBy from 'ilios-common/helpers/sort-by';
+import eq from 'ember-truth-helpers/helpers/eq';
+import perform from 'ember-concurrency/helpers/perform';
+import LoadingSpinner from 'ilios-common/components/loading-spinner';
+import FaIcon from 'ilios-common/components/fa-icon';
+import { LinkTo } from '@ember/routing';
 
 export default class NewDirectoryUserComponent extends Component {
   @service fetch;
@@ -293,291 +307,307 @@ export default class NewDirectoryUserComponent extends Component {
     this.flashMessages.success('general.saved');
     this.args.transitionToUser(user.id);
   });
-}
-
-{{! template-lint-disable no-bare-strings }}
-<div class="new-directory-user" data-test-new-directory-user>
-  {{#let (unique-id) as |templateId|}}
-    {{#if this.selectedUser}}
-      <div class="form" data-test-form>
-        <div class="choose-form-type">
-          <label>
-            {{t "general.createNew"}}:
-          </label>
-          <ClickChoiceButtons
-            @buttonContent1={{t "general.nonStudent"}}
-            @buttonContent2={{t "general.student"}}
-            @firstChoicePicked={{this.nonStudentMode}}
-            @toggle={{set this "nonStudentMode" (not this.nonStudentMode)}}
-          />
-        </div>
-        <div class="item" data-test-first-name>
-          <label>
-            {{t "general.firstName"}}:
-          </label>
-          <span>
-            {{this.firstName}}
-          </span>
-        </div>
-        <div class="item" data-test-last-name>
-          <label>
-            {{t "general.lastName"}}:
-          </label>
-          <span>
-            {{this.lastName}}
-          </span>
-        </div>
-        <div class="item" data-test-display-name>
-          <label>
-            {{t "general.displayName"}}:
-          </label>
-          <span>
-            {{this.displayName}}
-          </span>
-        </div>
-        <div class="item" data-test-campus-id>
-          <label>
-            {{t "general.campusId"}}:
-          </label>
-          <span>
-            {{this.campusId}}
-          </span>
-        </div>
-        <div class="item" data-test-email>
-          <label>
-            {{t "general.email"}}:
-          </label>
-          <span>
-            {{this.email}}
-          </span>
-        </div>
-        <div class="item" data-test-phone>
-          <label>
-            {{t "general.phone"}}:
-          </label>
-          <span>
-            {{#if this.phone.length}}
-              {{this.phone}}
-            {{else}}
-              &nbsp;
-            {{/if}}
-          </span>
-        </div>
-        <div class="item" data-test-other-id>
-          <label for="other-id-{{templateId}}">
-            {{t "general.otherId"}}:
-          </label>
-          <input
-            id="other-id-{{templateId}}"
-            type="text"
-            value={{this.otherId}}
-            {{on "input" (pick "target.value" (set this "otherId"))}}
-            {{this.validations.attach "otherId"}}
-          />
-          <YupValidationMessage
-            @description={{t "general.otherId"}}
-            @validationErrors={{this.validations.errors.otherId}}
-          />
-        </div>
-        <div class="item" data-test-username>
-          <label for="username-{{templateId}}">
-            {{t "general.username"}}:
-          </label>
-          {{#if this.allowCustomUserName}}
-            <input
-              id="username-{{templateId}}"
-              type="text"
-              value={{this.username}}
-              {{on "input" (pick "target.value" (set this "username"))}}
-              {{on "keyup" this.keyboard}}
-              {{this.validations.attach "username"}}
-            />
-            <YupValidationMessage
-              @description={{t "general.username"}}
-              @validationErrors={{this.validations.errors.username}}
-            />
-          {{else}}
-            <span>
-              {{this.username}}
-            </span>
-          {{/if}}
-        </div>
-        {{#if this.allowCustomUserName}}
-          <div class="item" data-test-password>
-            <label for="password-{{templateId}}">
-              {{t "general.password"}}:
-            </label>
-            <input
-              id="password-{{templateId}}"
-              type="text"
-              value={{this.password}}
-              {{on "input" (pick "target.value" (set this "password"))}}
-              {{on "keyup" this.keyboard}}
-              {{this.validations.attach "password"}}
-            />
-            <YupValidationMessage
-              @description={{t "general.password"}}
-              @validationErrors={{this.validations.errors.password}}
-            />
-          </div>
-        {{/if}}
-        <div class="item" data-test-school>
-          <label for="school-{{templateId}}">
-            {{t "general.primarySchool"}}:
-          </label>
-          <select id="school-{{templateId}}" {{on "change" (pick "target.value" this.setSchool)}}>
-            {{#each (sort-by "title" this.schools) as |school|}}
-              <option value={{school.id}} selected={{eq school this.bestSelectedSchool}}>
-                {{school.title}}
-              </option>
-            {{/each}}
-          </select>
-        </div>
-        {{#unless this.nonStudentMode}}
-          <div class="item" data-test-cohort>
-            <label for="cohort-{{templateId}}">
-              {{t "general.primaryCohort"}}:
-            </label>
-            <select
-              id="cohort-{{templateId}}"
-              {{on "change" (pick "target.value" this.setPrimaryCohort)}}
-            >
-              {{#each (sort-by "title" this.cohorts) as |cohort|}}
-                <option value={{cohort.id}} selected={{eq cohort.id this.bestSelectedCohort.id}}>
-                  {{cohort.title}}
-                </option>
-              {{/each}}
-            </select>
-          </div>
-        {{/unless}}
-        <div class="buttons">
-          <button
-            type="button"
-            class="done text"
-            disabled={{this.save.isRunning}}
-            data-test-submit
-            {{on "click" (perform this.save)}}
-          >
-            {{#if this.save.isRunning}}
-              <LoadingSpinner />
-            {{else}}
-              {{t "general.done"}}
-            {{/if}}
-          </button>
-          <button type="button" class="cancel text" data-test-cancel {{on "click" this.unPickUser}}>
-            {{t "general.cancel"}}
-          </button>
-        </div>
-      </div>
-    {{else}}
-      <h3>
-        {{t "general.newUser"}}
-      </h3>
-      <div class="new-directory-user-search-tools" data-test-search>
-        <input
-          aria-label={{t "general.search"}}
-          autocomplete="name"
-          type="search"
-          value={{@searchTerms}}
-          {{on "input" (pick "target.value" @setSearchTerms)}}
-          {{on "keyup" this.keyboard}}
-        />
-        <button
-          type="button"
-          data-test-submit
-          {{on "click" (perform this.findUsersInDirectory @searchTerms)}}
-        >
-          {{t "general.searchDirectory"}}
-        </button>
-      </div>
-      {{#if this.findUsersInDirectory.isRunning}}
-        <LoadingSpinner />{{t "general.currentlySearchingPrompt"}}
-      {{else if this.searchResultsReturned}}
-        {{#if this.searchResults.length}}
-          <section class="new-directory-user-search-results" data-test-search-results>
-            <div>
-              <table>
-                <thead>
-                  <tr>
-                    <th class="text-right" colspan="1"></th>
-                    <th class="text-left" colspan="3">
-                      {{t "general.fullName"}}
-                    </th>
-                    <th class="text-left" colspan="2">
-                      {{t "general.campusId"}}
-                    </th>
-                    <th class="text-left" colspan="5">
-                      {{t "general.email"}}
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {{#each this.searchResults as |user|}}
-                    <tr data-test-search-result>
-                      <td class="text-right" colspan="1" data-test-actions>
-                        {{#if user.user}}
-                          <button
-                            class="link-button"
-                            type="button"
-                            data-test-view
-                            {{on "click" (fn @transitionToUser user.user)}}
-                          >
-                            <FaIcon @icon="sun" class="warning" @title={{t "general.goToUser"}} />
-                          </button>
-                        {{else if user.addable}}
-                          <button
-                            class="link-button"
-                            type="button"
-                            data-test-add
-                            {{on "click" (fn this.pickUser user)}}
-                          >
-                            <FaIcon @icon="plus" class="yes" @title={{t "general.addNew"}} />
-                          </button>
-                        {{else}}
-                          <FaIcon
-                            @icon="truck-medical"
-                            class="no"
-                            data-test-cannot-be-added
-                            @title={{t "general.userNotAddableFromDirectory"}}
-                          />
-                        {{/if}}
-                      </td>
-                      <td class="text-left" colspan="3" data-test-name>
-                        {{#if user.user}}
-                          <LinkTo @route="user" @model={{user.user}}>
-                            {{user.fullName}}
-                          </LinkTo>
-                        {{else}}
-                          {{user.fullName}}
-                        {{/if}}
-                      </td>
-                      <td class="text-left" colspan="2" data-test-campus-id>
-                        {{user.campusId}}
-                      </td>
-                      <td class="text-left" colspan="5" data-test-email>
-                        {{user.email}}
-                      </td>
-                    </tr>
-                  {{/each}}
-                </tbody>
-              </table>
+  <template>
+    {{! template-lint-disable no-bare-strings }}
+    <div class="new-directory-user" data-test-new-directory-user>
+      {{#let (uniqueId) as |templateId|}}
+        {{#if this.selectedUser}}
+          <div class="form" data-test-form>
+            <div class="choose-form-type">
+              <label>
+                {{t "general.createNew"}}:
+              </label>
+              <ClickChoiceButtons
+                @buttonContent1={{t "general.nonStudent"}}
+                @buttonContent2={{t "general.student"}}
+                @firstChoicePicked={{this.nonStudentMode}}
+                @toggle={{set this "nonStudentMode" (not this.nonStudentMode)}}
+              />
             </div>
-          </section>
-          {{#if this.tooManyResults}}
-            <p data-test-too-many-results>
-              <em>
-                {{t "general.tooManyResults" count=50}}
-              </em>
-            </p>
-          {{/if}}
+            <div class="item" data-test-first-name>
+              <label>
+                {{t "general.firstName"}}:
+              </label>
+              <span>
+                {{this.firstName}}
+              </span>
+            </div>
+            <div class="item" data-test-last-name>
+              <label>
+                {{t "general.lastName"}}:
+              </label>
+              <span>
+                {{this.lastName}}
+              </span>
+            </div>
+            <div class="item" data-test-display-name>
+              <label>
+                {{t "general.displayName"}}:
+              </label>
+              <span>
+                {{this.displayName}}
+              </span>
+            </div>
+            <div class="item" data-test-campus-id>
+              <label>
+                {{t "general.campusId"}}:
+              </label>
+              <span>
+                {{this.campusId}}
+              </span>
+            </div>
+            <div class="item" data-test-email>
+              <label>
+                {{t "general.email"}}:
+              </label>
+              <span>
+                {{this.email}}
+              </span>
+            </div>
+            <div class="item" data-test-phone>
+              <label>
+                {{t "general.phone"}}:
+              </label>
+              <span>
+                {{#if this.phone.length}}
+                  {{this.phone}}
+                {{else}}
+                  &nbsp;
+                {{/if}}
+              </span>
+            </div>
+            <div class="item" data-test-other-id>
+              <label for="other-id-{{templateId}}">
+                {{t "general.otherId"}}:
+              </label>
+              <input
+                id="other-id-{{templateId}}"
+                type="text"
+                value={{this.otherId}}
+                {{on "input" (pick "target.value" (set this "otherId"))}}
+                {{this.validations.attach "otherId"}}
+              />
+              <YupValidationMessage
+                @description={{t "general.otherId"}}
+                @validationErrors={{this.validations.errors.otherId}}
+              />
+            </div>
+            <div class="item" data-test-username>
+              <label for="username-{{templateId}}">
+                {{t "general.username"}}:
+              </label>
+              {{#if this.allowCustomUserName}}
+                <input
+                  id="username-{{templateId}}"
+                  type="text"
+                  value={{this.username}}
+                  {{on "input" (pick "target.value" (set this "username"))}}
+                  {{on "keyup" this.keyboard}}
+                  {{this.validations.attach "username"}}
+                />
+                <YupValidationMessage
+                  @description={{t "general.username"}}
+                  @validationErrors={{this.validations.errors.username}}
+                />
+              {{else}}
+                <span>
+                  {{this.username}}
+                </span>
+              {{/if}}
+            </div>
+            {{#if this.allowCustomUserName}}
+              <div class="item" data-test-password>
+                <label for="password-{{templateId}}">
+                  {{t "general.password"}}:
+                </label>
+                <input
+                  id="password-{{templateId}}"
+                  type="text"
+                  value={{this.password}}
+                  {{on "input" (pick "target.value" (set this "password"))}}
+                  {{on "keyup" this.keyboard}}
+                  {{this.validations.attach "password"}}
+                />
+                <YupValidationMessage
+                  @description={{t "general.password"}}
+                  @validationErrors={{this.validations.errors.password}}
+                />
+              </div>
+            {{/if}}
+            <div class="item" data-test-school>
+              <label for="school-{{templateId}}">
+                {{t "general.primarySchool"}}:
+              </label>
+              <select
+                id="school-{{templateId}}"
+                {{on "change" (pick "target.value" this.setSchool)}}
+              >
+                {{#each (sortBy "title" this.schools) as |school|}}
+                  <option value={{school.id}} selected={{eq school this.bestSelectedSchool}}>
+                    {{school.title}}
+                  </option>
+                {{/each}}
+              </select>
+            </div>
+            {{#unless this.nonStudentMode}}
+              <div class="item" data-test-cohort>
+                <label for="cohort-{{templateId}}">
+                  {{t "general.primaryCohort"}}:
+                </label>
+                <select
+                  id="cohort-{{templateId}}"
+                  {{on "change" (pick "target.value" this.setPrimaryCohort)}}
+                >
+                  {{#each (sortBy "title" this.cohorts) as |cohort|}}
+                    <option
+                      value={{cohort.id}}
+                      selected={{eq cohort.id this.bestSelectedCohort.id}}
+                    >
+                      {{cohort.title}}
+                    </option>
+                  {{/each}}
+                </select>
+              </div>
+            {{/unless}}
+            <div class="buttons">
+              <button
+                type="button"
+                class="done text"
+                disabled={{this.save.isRunning}}
+                data-test-submit
+                {{on "click" (perform this.save)}}
+              >
+                {{#if this.save.isRunning}}
+                  <LoadingSpinner />
+                {{else}}
+                  {{t "general.done"}}
+                {{/if}}
+              </button>
+              <button
+                type="button"
+                class="cancel text"
+                data-test-cancel
+                {{on "click" this.unPickUser}}
+              >
+                {{t "general.cancel"}}
+              </button>
+            </div>
+          </div>
         {{else}}
-          <p data-test-no-results>
-            <em>
-              {{t "general.noResultsFound"}}
-            </em>
-          </p>
+          <h3>
+            {{t "general.newUser"}}
+          </h3>
+          <div class="new-directory-user-search-tools" data-test-search>
+            <input
+              aria-label={{t "general.search"}}
+              autocomplete="name"
+              type="search"
+              value={{@searchTerms}}
+              {{on "input" (pick "target.value" @setSearchTerms)}}
+              {{on "keyup" this.keyboard}}
+            />
+            <button
+              type="button"
+              data-test-submit
+              {{on "click" (perform this.findUsersInDirectory @searchTerms)}}
+            >
+              {{t "general.searchDirectory"}}
+            </button>
+          </div>
+          {{#if this.findUsersInDirectory.isRunning}}
+            <LoadingSpinner />{{t "general.currentlySearchingPrompt"}}
+          {{else if this.searchResultsReturned}}
+            {{#if this.searchResults.length}}
+              <section class="new-directory-user-search-results" data-test-search-results>
+                <div>
+                  <table>
+                    <thead>
+                      <tr>
+                        <th class="text-right" colspan="1"></th>
+                        <th class="text-left" colspan="3">
+                          {{t "general.fullName"}}
+                        </th>
+                        <th class="text-left" colspan="2">
+                          {{t "general.campusId"}}
+                        </th>
+                        <th class="text-left" colspan="5">
+                          {{t "general.email"}}
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {{#each this.searchResults as |user|}}
+                        <tr data-test-search-result>
+                          <td class="text-right" colspan="1" data-test-actions>
+                            {{#if user.user}}
+                              <button
+                                class="link-button"
+                                type="button"
+                                data-test-view
+                                {{on "click" (fn @transitionToUser user.user)}}
+                              >
+                                <FaIcon
+                                  @icon="sun"
+                                  class="warning"
+                                  @title={{t "general.goToUser"}}
+                                />
+                              </button>
+                            {{else if user.addable}}
+                              <button
+                                class="link-button"
+                                type="button"
+                                data-test-add
+                                {{on "click" (fn this.pickUser user)}}
+                              >
+                                <FaIcon @icon="plus" class="yes" @title={{t "general.addNew"}} />
+                              </button>
+                            {{else}}
+                              <FaIcon
+                                @icon="truck-medical"
+                                class="no"
+                                data-test-cannot-be-added
+                                @title={{t "general.userNotAddableFromDirectory"}}
+                              />
+                            {{/if}}
+                          </td>
+                          <td class="text-left" colspan="3" data-test-name>
+                            {{#if user.user}}
+                              <LinkTo @route="user" @model={{user.user}}>
+                                {{user.fullName}}
+                              </LinkTo>
+                            {{else}}
+                              {{user.fullName}}
+                            {{/if}}
+                          </td>
+                          <td class="text-left" colspan="2" data-test-campus-id>
+                            {{user.campusId}}
+                          </td>
+                          <td class="text-left" colspan="5" data-test-email>
+                            {{user.email}}
+                          </td>
+                        </tr>
+                      {{/each}}
+                    </tbody>
+                  </table>
+                </div>
+              </section>
+              {{#if this.tooManyResults}}
+                <p data-test-too-many-results>
+                  <em>
+                    {{t "general.tooManyResults" count=50}}
+                  </em>
+                </p>
+              {{/if}}
+            {{else}}
+              <p data-test-no-results>
+                <em>
+                  {{t "general.noResultsFound"}}
+                </em>
+              </p>
+            {{/if}}
+          {{/if}}
         {{/if}}
-      {{/if}}
-    {{/if}}
-  {{/let}}
-</div>
+      {{/let}}
+    </div>
+  </template>
+}

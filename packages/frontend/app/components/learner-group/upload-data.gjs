@@ -7,6 +7,16 @@ import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { TrackedAsyncData } from 'ember-async-data';
 import { filterBy, findBy, mapBy, uniqueValues } from 'ilios-common/utils/array-helpers';
+import { on } from '@ember/modifier';
+import t from 'ember-intl/helpers/t';
+import pick from 'ilios-common/helpers/pick';
+import LoadingSpinner from 'ilios-common/components/loading-spinner';
+import FaIcon from 'ilios-common/components/fa-icon';
+import notEq from 'ember-truth-helpers/helpers/not-eq';
+import and from 'ember-truth-helpers/helpers/and';
+import eq from 'ember-truth-helpers/helpers/eq';
+import gt from 'ember-truth-helpers/helpers/gt';
+import perform from 'ember-concurrency/helpers/perform';
 
 export default class LearnerGroupUploadDataComponent extends Component {
   @service store;
@@ -226,171 +236,172 @@ export default class LearnerGroupUploadDataComponent extends Component {
     this.args.sendValidUsers(this.validUsers);
     this.args.sendMatchedGroups(matchedGroups);
   });
-}
-
-<div class="learner-group-upload-data" data-test-learner-group-upload-data ...attributes>
-  {{#if this.data}}
-    <p>
-      <button type="button" {{on "click" this.reset}}>
-        {{t "general.startOver"}}
-      </button>
-    </p>
-  {{else}}
-    <label for="user-file">
-      {{t "general.uploadUsers"}}
-      (<a
-        target="_blank"
-        rel="noopener noreferrer"
-        download="SampleUserUpload.tsv"
-        href="data:application/octet-stream;charset=utf-8;base64,{{this.sampleData}}"
-      >
-        {{t "general.sampleFile"}}
-      </a>)
-    </label>
-    <input
-      id="user-file"
-      type="file"
-      accept=".csv, .tsv, .txt"
-      {{on "change" (pick "target.files" this.updateSelectedFile)}}
-      data-test-user-upload
-    />
-  {{/if}}
-  {{#if this.parseFile.isRunning}}
-    <LoadingSpinner class="loading-file" />
-  {{/if}}
-  {{#if this.invalidUsers}}
-    <p class="error">
-      {{t "general.canNotContinueWithInvalidRecords"}}
-    </p>
-    <table class="invalid-users" data-test-upload-data-invalid-users>
-      <caption>
-        {{t "general.invalidUsers"}}
-        ({{this.invalidUsers.length}})
-      </caption>
-      <thead>
-        <tr>
-          <th>
-            {{t "general.firstName"}}
-          </th>
-          <th>
-            {{t "general.lastName"}}
-          </th>
-          <th>
-            {{t "general.campusId"}}
-          </th>
-          <th>
-            {{t "general.subgroupName"}}
-          </th>
-          <th>
-            {{t "general.errors"}}
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        {{#each this.invalidUsers as |user|}}
-          <tr class={{unless user.isValid "invalid"}}>
-            <td>
-              {{user.firstName}}
-            </td>
-            <td>
-              {{user.lastName}}
-            </td>
-            <td>
-              {{user.campusId}}
-            </td>
-            <td>
-              {{user.subGroupName}}
-            </td>
-            <td class="error">
-              {{#each user.errors as |error|}}
-                {{error}}<br />
-              {{/each}}
-              {{#each user.warnings as |warning|}}
-                {{warning}}<br />
-              {{/each}}
-            </td>
-          </tr>
-        {{/each}}
-      </tbody>
-    </table>
-  {{/if}}
-  {{#if this.validUsers}}
-    <table class="valid-users" data-test-upload-data-valid-users>
-      <caption>
-        {{t "general.validUsers"}}
-        ({{this.validUsers.length}})
-      </caption>
-      <thead>
-        <tr>
-          <th colspan="1"></th>
-          <th colspan="3">
-            {{t "general.firstName"}}
-          </th>
-          <th colspan="3">
-            {{t "general.lastName"}}
-          </th>
-          <th colspan="3">
-            {{t "general.campusId"}}
-          </th>
-          <th colspan="3">
-            {{t "general.subgroupName"}}
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        {{#each this.validUsers as |user|}}
-          <tr>
-            <td colspan="1">
-              {{#if user.hasWarning}}
-                <FaIcon
-                  @icon="triangle-exclamation"
-                  class="warning"
-                  @title={{user.warning}}
-                  data-test-warning
-                />
-              {{else}}
-                <FaIcon @icon="check" class="yes" />
-              {{/if}}
-            </td>
-            <td colspan="3">
-              {{user.userRecord.firstName}}
-              {{#if (not-eq user.firstName user.userRecord.firstName)}}
-                <span class="issue">
-                  ({{user.firstName}})
-                </span>
-              {{/if}}
-            </td>
-            <td colspan="3">
-              {{user.userRecord.lastName}}
-              {{#if (not-eq user.lastName user.userRecord.lastName)}}
-                <span class="issue">
-                  ({{user.lastName}})
-                </span>
-              {{/if}}
-            </td>
-            <td colspan="3">
-              {{user.userRecord.campusId}}
-            </td>
-            <td colspan="3">
-              {{user.subGroupName}}
-            </td>
-          </tr>
-        {{/each}}
-      </tbody>
-    </table>
-  {{/if}}
-  {{#if (and (eq this.invalidUsers.length 0) (gt this.validUsers.length 0))}}
-    <button
-      type="button"
-      disabled={{this.continue.isRunning}}
-      data-test-upload-data-confirm
-      {{on "click" (perform this.continue)}}
-    >
-      {{#if this.continue.isRunning}}
-        <LoadingSpinner />
+  <template>
+    <div class="learner-group-upload-data" data-test-learner-group-upload-data ...attributes>
+      {{#if this.data}}
+        <p>
+          <button type="button" {{on "click" this.reset}}>
+            {{t "general.startOver"}}
+          </button>
+        </p>
       {{else}}
-        {{t "general.continue"}}
+        <label for="user-file">
+          {{t "general.uploadUsers"}}
+          (<a
+            target="_blank"
+            rel="noopener noreferrer"
+            download="SampleUserUpload.tsv"
+            href="data:application/octet-stream;charset=utf-8;base64,{{this.sampleData}}"
+          >
+            {{t "general.sampleFile"}}
+          </a>)
+        </label>
+        <input
+          id="user-file"
+          type="file"
+          accept=".csv, .tsv, .txt"
+          {{on "change" (pick "target.files" this.updateSelectedFile)}}
+          data-test-user-upload
+        />
       {{/if}}
-    </button>
-  {{/if}}
-</div>
+      {{#if this.parseFile.isRunning}}
+        <LoadingSpinner class="loading-file" />
+      {{/if}}
+      {{#if this.invalidUsers}}
+        <p class="error">
+          {{t "general.canNotContinueWithInvalidRecords"}}
+        </p>
+        <table class="invalid-users" data-test-upload-data-invalid-users>
+          <caption>
+            {{t "general.invalidUsers"}}
+            ({{this.invalidUsers.length}})
+          </caption>
+          <thead>
+            <tr>
+              <th>
+                {{t "general.firstName"}}
+              </th>
+              <th>
+                {{t "general.lastName"}}
+              </th>
+              <th>
+                {{t "general.campusId"}}
+              </th>
+              <th>
+                {{t "general.subgroupName"}}
+              </th>
+              <th>
+                {{t "general.errors"}}
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each this.invalidUsers as |user|}}
+              <tr class={{unless user.isValid "invalid"}}>
+                <td>
+                  {{user.firstName}}
+                </td>
+                <td>
+                  {{user.lastName}}
+                </td>
+                <td>
+                  {{user.campusId}}
+                </td>
+                <td>
+                  {{user.subGroupName}}
+                </td>
+                <td class="error">
+                  {{#each user.errors as |error|}}
+                    {{error}}<br />
+                  {{/each}}
+                  {{#each user.warnings as |warning|}}
+                    {{warning}}<br />
+                  {{/each}}
+                </td>
+              </tr>
+            {{/each}}
+          </tbody>
+        </table>
+      {{/if}}
+      {{#if this.validUsers}}
+        <table class="valid-users" data-test-upload-data-valid-users>
+          <caption>
+            {{t "general.validUsers"}}
+            ({{this.validUsers.length}})
+          </caption>
+          <thead>
+            <tr>
+              <th colspan="1"></th>
+              <th colspan="3">
+                {{t "general.firstName"}}
+              </th>
+              <th colspan="3">
+                {{t "general.lastName"}}
+              </th>
+              <th colspan="3">
+                {{t "general.campusId"}}
+              </th>
+              <th colspan="3">
+                {{t "general.subgroupName"}}
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each this.validUsers as |user|}}
+              <tr>
+                <td colspan="1">
+                  {{#if user.hasWarning}}
+                    <FaIcon
+                      @icon="triangle-exclamation"
+                      class="warning"
+                      @title={{user.warning}}
+                      data-test-warning
+                    />
+                  {{else}}
+                    <FaIcon @icon="check" class="yes" />
+                  {{/if}}
+                </td>
+                <td colspan="3">
+                  {{user.userRecord.firstName}}
+                  {{#if (notEq user.firstName user.userRecord.firstName)}}
+                    <span class="issue">
+                      ({{user.firstName}})
+                    </span>
+                  {{/if}}
+                </td>
+                <td colspan="3">
+                  {{user.userRecord.lastName}}
+                  {{#if (notEq user.lastName user.userRecord.lastName)}}
+                    <span class="issue">
+                      ({{user.lastName}})
+                    </span>
+                  {{/if}}
+                </td>
+                <td colspan="3">
+                  {{user.userRecord.campusId}}
+                </td>
+                <td colspan="3">
+                  {{user.subGroupName}}
+                </td>
+              </tr>
+            {{/each}}
+          </tbody>
+        </table>
+      {{/if}}
+      {{#if (and (eq this.invalidUsers.length 0) (gt this.validUsers.length 0))}}
+        <button
+          type="button"
+          disabled={{this.continue.isRunning}}
+          data-test-upload-data-confirm
+          {{on "click" (perform this.continue)}}
+        >
+          {{#if this.continue.isRunning}}
+            <LoadingSpinner />
+          {{else}}
+            {{t "general.continue"}}
+          {{/if}}
+        </button>
+      {{/if}}
+    </div>
+  </template>
+}

@@ -4,6 +4,15 @@ import { restartableTask } from 'ember-concurrency';
 import { tracked } from '@glimmer/tracking';
 import { guidFor } from '@ember/object/internals';
 import { action } from '@ember/object';
+import t from 'ember-intl/helpers/t';
+import load from 'ember-async-data/helpers/load';
+import { on } from '@ember/modifier';
+import FaIcon from 'ilios-common/components/fa-icon';
+import LoadingSpinner from 'ilios-common/components/loading-spinner';
+import Input from 'frontend/components/reports/subject/new/search/input';
+import perform from 'ember-concurrency/helpers/perform';
+import isArray from 'ember-truth-helpers/helpers/is-array';
+import { fn } from '@ember/helper';
 
 export default class ReportsSubjectNewSessionComponent extends Component {
   @service store;
@@ -69,23 +78,47 @@ export default class ReportsSubjectNewSessionComponent extends Component {
     this.sessions = false;
     this.args.changeId(null);
   }
-}
-
-<div class="new-subject-search" data-test-reports-subject-new-session>
-  <p data-test-search>
-    <label for="{{this.uniqueId}}-session-search">
-      {{t "general.whichIs"}}
-    </label>
-    {{#if @currentId}}
-      {{#let (load this.loadSession) as |p|}}
-        {{#if p.isResolved}}
-          {{#let p.value as |session|}}
-            <button
-              class="link-button"
-              type="button"
-              {{on "click" this.clear}}
-              data-test-selected-session
-            >
+  <template>
+    <div class="new-subject-search" data-test-reports-subject-new-session>
+      <p data-test-search>
+        <label for="{{this.uniqueId}}-session-search">
+          {{t "general.whichIs"}}
+        </label>
+        {{#if @currentId}}
+          {{#let (load this.loadSession) as |p|}}
+            {{#if p.isResolved}}
+              {{#let p.value as |session|}}
+                <button
+                  class="link-button"
+                  type="button"
+                  {{on "click" this.clear}}
+                  data-test-selected-session
+                >
+                  {{session.course.year}}
+                  |&nbsp;
+                  {{session.title}}
+                  {{#if session.course.externalId}}
+                    [{{session.course.externalId}}] |
+                  {{/if}}
+                  {{session.course.title}}
+                  <FaIcon @icon="xmark" class="remove" />
+                </button>
+              {{/let}}
+            {{else}}
+              <LoadingSpinner />
+            {{/if}}
+          {{/let}}
+        {{else}}
+          <Input
+            id="{{this.uniqueId}}-session-search"
+            @search={{perform this.search}}
+            @searchIsRunning={{this.search.isRunning}}
+            @searchIsIdle={{this.search.isIdle}}
+            @searchReturned={{isArray this.sessions}}
+            @results={{this.sortedSessions}}
+            as |session|
+          >
+            <button class="link-button" type="button" {{on "click" (fn @changeId session.id)}}>
               {{session.course.year}}
               |&nbsp;
               {{session.title}}
@@ -93,34 +126,11 @@ export default class ReportsSubjectNewSessionComponent extends Component {
                 [{{session.course.externalId}}] |
               {{/if}}
               {{session.course.title}}
-              <FaIcon @icon="xmark" class="remove" />
             </button>
-          {{/let}}
-        {{else}}
-          <LoadingSpinner />
-        {{/if}}
-      {{/let}}
-    {{else}}
-      <Reports::Subject::New::Search::Input
-        id="{{this.uniqueId}}-session-search"
-        @search={{perform this.search}}
-        @searchIsRunning={{this.search.isRunning}}
-        @searchIsIdle={{this.search.isIdle}}
-        @searchReturned={{is-array this.sessions}}
-        @results={{this.sortedSessions}}
-        as |session|
-      >
-        <button class="link-button" type="button" {{on "click" (fn @changeId session.id)}}>
-          {{session.course.year}}
-          |&nbsp;
-          {{session.title}}
-          {{#if session.course.externalId}}
-            [{{session.course.externalId}}] |
-          {{/if}}
-          {{session.course.title}}
-        </button>
 
-      </Reports::Subject::New::Search::Input>
-    {{/if}}
-  </p>
-</div>
+          </Input>
+        {{/if}}
+      </p>
+    </div>
+  </template>
+}

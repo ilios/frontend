@@ -11,6 +11,24 @@ import { findById, mapBy } from 'ilios-common/utils/array-helpers';
 import { TrackedAsyncData } from 'ember-async-data';
 import YupValidations from 'ilios-common/classes/yup-validations';
 import { string } from 'yup';
+import { uniqueId, fn } from '@ember/helper';
+import t from 'ember-intl/helpers/t';
+import sortBy from 'ilios-common/helpers/sort-by';
+import mapBy0 from 'ilios-common/helpers/map-by';
+import { LinkTo } from '@ember/routing';
+import ClickChoiceButtons from 'ilios-common/components/click-choice-buttons';
+import set from 'ember-set-helper/helpers/set';
+import not from 'ember-truth-helpers/helpers/not';
+import { on } from '@ember/modifier';
+import pick from 'ilios-common/helpers/pick';
+import perform from 'ember-concurrency/helpers/perform';
+import LoadingSpinner from 'ilios-common/components/loading-spinner';
+import gte from 'ember-truth-helpers/helpers/gte';
+import includes from 'ilios-common/helpers/includes';
+import eq from 'ember-truth-helpers/helpers/eq';
+import or from 'ember-truth-helpers/helpers/or';
+import lt from 'ember-truth-helpers/helpers/lt';
+import WaitSaving from 'ilios-common/components/wait-saving';
 
 export default class BulkNewUsersComponent extends Component {
   @service flashMessages;
@@ -341,6 +359,236 @@ export default class BulkNewUsersComponent extends Component {
     this.selectedUsers = [];
     this.proposedUsers = [];
   });
+  <template>
+    {{#let (uniqueId) as |templateId|}}
+      <div class="bulk-new-users" ...attributes>
+        {{#unless this.isLoading}}
+          {{#if this.savingUserErrors.length}}
+            <div class="saving-user-errors">
+              <p>
+                {{t "general.errorSavingUser"}}
+              </p>
+              <ul>
+                {{#each (sortBy "lastName" (mapBy0 "userInput" this.savingUserErrors)) as |obj|}}
+                  <li>
+                    {{obj.lastName}},
+                    {{obj.firstName}}
+                    ({{obj.email}})
+                  </li>
+                {{/each}}
+              </ul>
+            </div>
+          {{/if}}
+          {{#if this.savingAuthenticationErrors.length}}
+            <div class="saving-authentication-errors">
+              <p>
+                {{t "general.errorSavingAuthentication"}}
+              </p>
+              <ul>
+                {{#each
+                  (sortBy "lastName" (mapBy0 "user" this.savingAuthenticationErrors))
+                  as |user|
+                }}
+                  <li>
+                    <LinkTo @route="user" @model={{user}}>
+                      {{user.lastName}},
+                      {{user.firstName}}
+                      ({{user.email}})
+                    </LinkTo>
+                  </li>
+                {{/each}}
+              </ul>
+            </div>
+          {{/if}}
+          <h3>
+            {{t "general.newUser"}}
+          </h3>
+          <div class="new-user-form">
+            <div class="choose-form-type">
+              <label>
+                {{t "general.createNew"}}:
+              </label>
+              <ClickChoiceButtons
+                @buttonContent1={{t "general.nonStudent"}}
+                @buttonContent2={{t "general.student"}}
+                @firstChoicePicked={{this.nonStudentMode}}
+                @toggle={{set this "nonStudentMode" (not this.nonStudentMode)}}
+              />
+            </div>
+            <div class="upload-users">
+              <label for="upload-{{templateId}}">
+                {{t "general.uploadUsers"}}
+                (<a
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  download="SampleUserUpload.tsv"
+                  href="data:application/octet-stream;charset=utf-8;base64,{{this.sampleData}}"
+                >
+                  {{t "general.sampleFile"}}
+                </a>):
+              </label>
+              <input
+                id="upload-{{templateId}}"
+                type="file"
+                accept=".csv, .tsv, .txt"
+                {{on "change" (pick "target.files" (perform this.updateSelectedFile))}}
+                disabled={{this.updateSelectedFile.isRunning}}
+              />
+            </div>
+            {{#if this.updateSelectedFile.isRunning}}
+              <div class="file-is-loading">
+                <LoadingSpinner />
+              </div>
+            {{else if (gte this.proposedUsers.length 1)}}
+              <div class="proposed-new-users" data-test-proposed-new-users>
+                <table>
+                  <thead>
+                    <tr>
+                      <th></th>
+                      <th>
+                        {{t "general.firstName"}}
+                      </th>
+                      <th>
+                        {{t "general.lastName"}}
+                      </th>
+                      <th>
+                        {{t "general.middleName"}}
+                      </th>
+                      <th>
+                        {{t "general.phone"}}
+                      </th>
+                      <th>
+                        {{t "general.email"}}
+                      </th>
+                      <th>
+                        {{t "general.campusId"}}
+                      </th>
+                      <th>
+                        {{t "general.otherId"}}
+                      </th>
+                      <th>
+                        {{t "general.username"}}
+                      </th>
+                      <th>
+                        {{t "general.password"}}
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {{#each this.proposedUsers as |obj|}}
+                      <tr>
+                        <td>
+                          <input
+                            type="checkbox"
+                            checked={{includes obj this.selectedUsers}}
+                            {{on "click" (fn this.toggleUserSelection obj)}}
+                            disabled={{not (includes obj this.validUsers)}}
+                            aria-label={{t "general.select"}}
+                          />
+                        </td>
+                        <td class={{if obj.validations.errors.firstName "error"}}>
+                          {{obj.firstName}}
+                        </td>
+                        <td class={{if obj.validations.errors.lastName "error"}}>
+                          {{obj.lastName}}
+                        </td>
+                        <td class={{if obj.validations.errors.middleName "error"}}>
+                          {{obj.middleName}}
+                        </td>
+                        <td>
+                          {{obj.phone}}
+                        </td>
+                        <td class={{if obj.validations.errors.email "error"}}>
+                          {{obj.email}}
+                        </td>
+                        <td class={{if obj.validations.errors.campusId "error"}}>
+                          {{obj.campusId}}
+                        </td>
+                        <td class={{if obj.validations.errors.otherId "error"}}>
+                          {{obj.otherId}}
+                        </td>
+                        <td class={{if obj.validations.errors.username "error"}}>
+                          {{obj.username}}
+                        </td>
+                        <td class={{if obj.validations.errors.password "error"}}>
+                          {{obj.password}}
+                        </td>
+                      </tr>
+                    {{/each}}
+                  </tbody>
+                </table>
+              </div>
+            {{/if}}
+            <div class="item last">
+              <label for="primary-school-{{templateId}}">
+                {{t "general.primarySchool"}}:
+              </label>
+              <select
+                id="primary-school-{{templateId}}"
+                {{on "change" (pick "target.value" (perform this.setSchool))}}
+                data-test-schools
+              >
+                {{#each (sortBy "title" this.schoolsWithPermissionData.value) as |school|}}
+                  <option value={{school.id}} selected={{eq school.id this.bestSelectedSchool.id}}>
+                    {{school.title}}
+                  </option>
+                {{/each}}
+              </select>
+            </div>
+            {{#unless this.nonStudentMode}}
+              <div class="item last">
+                <label for="primary-cohort-{{templateId}}">
+                  {{t "general.primaryCohort"}}:
+                </label>
+                <select
+                  id="primary-cohort-{{templateId}}"
+                  {{on "change" (pick "target.value" this.setPrimaryCohort)}}
+                  data-test-cohorts
+                >
+                  {{#each (sortBy "title" this.cohorts) as |cohort|}}
+                    <option
+                      value={{cohort.id}}
+                      selected={{eq cohort.id this.bestSelectedCohort.id}}
+                    >
+                      {{cohort.title}}
+                    </option>
+                  {{/each}}
+                </select>
+              </div>
+            {{/unless}}
+            <div class="buttons">
+              <button
+                type="button"
+                class="done text"
+                disabled={{or
+                  (lt this.selectedUsers.length 1)
+                  this.save.isRunning
+                  this.load.isRunning
+                }}
+                {{on "click" (perform this.save)}}
+              >
+                {{#if this.save.isRunning}}
+                  <LoadingSpinner />
+                {{else}}
+                  {{t "general.done"}}
+                {{/if}}
+              </button>
+              <button type="button" class="cancel text" {{on "click" @close}}>
+                {{t "general.cancel"}}
+              </button>
+            </div>
+          </div>
+          {{#if this.save.isRunning}}
+            <WaitSaving
+              @showProgress={{true}}
+              @totalProgress={{this.selectedUsers.length}}
+              @currentProgress={{this.savedUserIds.length}}
+            />
+          {{/if}}
+        {{/unless}}
+      </div>
+    {{/let}}
+  </template>
 }
 
 class ProposedUser {
@@ -396,222 +644,3 @@ class ProposedUser {
     return this.validations.isValid();
   }
 }
-
-{{#let (unique-id) as |templateId|}}
-  <div class="bulk-new-users" ...attributes>
-    {{#unless this.isLoading}}
-      {{#if this.savingUserErrors.length}}
-        <div class="saving-user-errors">
-          <p>
-            {{t "general.errorSavingUser"}}
-          </p>
-          <ul>
-            {{#each (sort-by "lastName" (map-by "userInput" this.savingUserErrors)) as |obj|}}
-              <li>
-                {{obj.lastName}},
-                {{obj.firstName}}
-                ({{obj.email}})
-              </li>
-            {{/each}}
-          </ul>
-        </div>
-      {{/if}}
-      {{#if this.savingAuthenticationErrors.length}}
-        <div class="saving-authentication-errors">
-          <p>
-            {{t "general.errorSavingAuthentication"}}
-          </p>
-          <ul>
-            {{#each (sort-by "lastName" (map-by "user" this.savingAuthenticationErrors)) as |user|}}
-              <li>
-                <LinkTo @route="user" @model={{user}}>
-                  {{user.lastName}},
-                  {{user.firstName}}
-                  ({{user.email}})
-                </LinkTo>
-              </li>
-            {{/each}}
-          </ul>
-        </div>
-      {{/if}}
-      <h3>
-        {{t "general.newUser"}}
-      </h3>
-      <div class="new-user-form">
-        <div class="choose-form-type">
-          <label>
-            {{t "general.createNew"}}:
-          </label>
-          <ClickChoiceButtons
-            @buttonContent1={{t "general.nonStudent"}}
-            @buttonContent2={{t "general.student"}}
-            @firstChoicePicked={{this.nonStudentMode}}
-            @toggle={{set this "nonStudentMode" (not this.nonStudentMode)}}
-          />
-        </div>
-        <div class="upload-users">
-          <label for="upload-{{templateId}}">
-            {{t "general.uploadUsers"}}
-            (<a
-              target="_blank"
-              rel="noopener noreferrer"
-              download="SampleUserUpload.tsv"
-              href="data:application/octet-stream;charset=utf-8;base64,{{this.sampleData}}"
-            >
-              {{t "general.sampleFile"}}
-            </a>):
-          </label>
-          <input
-            id="upload-{{templateId}}"
-            type="file"
-            accept=".csv, .tsv, .txt"
-            {{on "change" (pick "target.files" (perform this.updateSelectedFile))}}
-            disabled={{this.updateSelectedFile.isRunning}}
-          />
-        </div>
-        {{#if this.updateSelectedFile.isRunning}}
-          <div class="file-is-loading">
-            <LoadingSpinner />
-          </div>
-        {{else if (gte this.proposedUsers.length 1)}}
-          <div class="proposed-new-users" data-test-proposed-new-users>
-            <table>
-              <thead>
-                <tr>
-                  <th></th>
-                  <th>
-                    {{t "general.firstName"}}
-                  </th>
-                  <th>
-                    {{t "general.lastName"}}
-                  </th>
-                  <th>
-                    {{t "general.middleName"}}
-                  </th>
-                  <th>
-                    {{t "general.phone"}}
-                  </th>
-                  <th>
-                    {{t "general.email"}}
-                  </th>
-                  <th>
-                    {{t "general.campusId"}}
-                  </th>
-                  <th>
-                    {{t "general.otherId"}}
-                  </th>
-                  <th>
-                    {{t "general.username"}}
-                  </th>
-                  <th>
-                    {{t "general.password"}}
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {{#each this.proposedUsers as |obj|}}
-                  <tr>
-                    <td>
-                      <input
-                        type="checkbox"
-                        checked={{includes obj this.selectedUsers}}
-                        {{on "click" (fn this.toggleUserSelection obj)}}
-                        disabled={{not (includes obj this.validUsers)}}
-                        aria-label={{t "general.select"}}
-                      />
-                    </td>
-                    <td class={{if obj.validations.errors.firstName "error"}}>
-                      {{obj.firstName}}
-                    </td>
-                    <td class={{if obj.validations.errors.lastName "error"}}>
-                      {{obj.lastName}}
-                    </td>
-                    <td class={{if obj.validations.errors.middleName "error"}}>
-                      {{obj.middleName}}
-                    </td>
-                    <td>
-                      {{obj.phone}}
-                    </td>
-                    <td class={{if obj.validations.errors.email "error"}}>
-                      {{obj.email}}
-                    </td>
-                    <td class={{if obj.validations.errors.campusId "error"}}>
-                      {{obj.campusId}}
-                    </td>
-                    <td class={{if obj.validations.errors.otherId "error"}}>
-                      {{obj.otherId}}
-                    </td>
-                    <td class={{if obj.validations.errors.username "error"}}>
-                      {{obj.username}}
-                    </td>
-                    <td class={{if obj.validations.errors.password "error"}}>
-                      {{obj.password}}
-                    </td>
-                  </tr>
-                {{/each}}
-              </tbody>
-            </table>
-          </div>
-        {{/if}}
-        <div class="item last">
-          <label for="primary-school-{{templateId}}">
-            {{t "general.primarySchool"}}:
-          </label>
-          <select
-            id="primary-school-{{templateId}}"
-            {{on "change" (pick "target.value" (perform this.setSchool))}}
-            data-test-schools
-          >
-            {{#each (sort-by "title" this.schoolsWithPermissionData.value) as |school|}}
-              <option value={{school.id}} selected={{eq school.id this.bestSelectedSchool.id}}>
-                {{school.title}}
-              </option>
-            {{/each}}
-          </select>
-        </div>
-        {{#unless this.nonStudentMode}}
-          <div class="item last">
-            <label for="primary-cohort-{{templateId}}">
-              {{t "general.primaryCohort"}}:
-            </label>
-            <select
-              id="primary-cohort-{{templateId}}"
-              {{on "change" (pick "target.value" this.setPrimaryCohort)}}
-              data-test-cohorts
-            >
-              {{#each (sort-by "title" this.cohorts) as |cohort|}}
-                <option value={{cohort.id}} selected={{eq cohort.id this.bestSelectedCohort.id}}>
-                  {{cohort.title}}
-                </option>
-              {{/each}}
-            </select>
-          </div>
-        {{/unless}}
-        <div class="buttons">
-          <button
-            type="button"
-            class="done text"
-            disabled={{or (lt this.selectedUsers.length 1) this.save.isRunning this.load.isRunning}}
-            {{on "click" (perform this.save)}}
-          >
-            {{#if this.save.isRunning}}
-              <LoadingSpinner />
-            {{else}}
-              {{t "general.done"}}
-            {{/if}}
-          </button>
-          <button type="button" class="cancel text" {{on "click" @close}}>
-            {{t "general.cancel"}}
-          </button>
-        </div>
-      </div>
-      {{#if this.save.isRunning}}
-        <WaitSaving
-          @showProgress={{true}}
-          @totalProgress={{this.selectedUsers.length}}
-          @currentProgress={{this.savedUserIds.length}}
-        />
-      {{/if}}
-    {{/unless}}
-  </div>
-{{/let}}

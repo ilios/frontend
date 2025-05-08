@@ -2,6 +2,11 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { service } from '@ember/service';
 import { dropTask, timeout } from 'ember-concurrency';
+import not from 'ember-truth-helpers/helpers/not';
+import FaIcon from 'ilios-common/components/fa-icon';
+import t from 'ember-intl/helpers/t';
+import { on } from '@ember/modifier';
+import perform from 'ember-concurrency/helpers/perform';
 
 export default class ApiVersionNoticeComponent extends Component {
   @service apiVersion;
@@ -59,42 +64,43 @@ export default class ApiVersionNoticeComponent extends Component {
     }
     await timeout(3000);
   });
+  <template>
+    <div
+      class="api-version-notice {{if this.mismatched 'mismatch'}}"
+      hidden={{not this.mismatched}}
+      role={{if this.mismatched "alert" false}}
+      data-test-load-finished={{this.check.lastSuccessful.value}}
+      data-test-api-version-notice
+    >
+      <h2>
+        <FaIcon @icon="circle-exclamation" />
+        {{t "general.apiVersionMismatch"}}
+      </h2>
+      <div class="details">
+        <p>
+          {{t "general.apiVersionMismatchDetails"}}
+        </p>
+        {{#if this.updateAvailable}}
+          <p>
+            {{t "general.autoUpdatingSeconds" count=this.countdownToUpdate}}
+            <button type="button" {{on "click" (perform this.update)}}>
+              {{t "general.updateNow"}}
+            </button>
+          </p>
+        {{/if}}
+        {{#if this.update.isRunning}}
+          <p>
+            {{t "general.updatePending"}}
+          </p>
+        {{/if}}
+        {{#if this.showReloadButton}}
+          <p>
+            <button type="button" {{on "click" this.reload}}>
+              {{t "general.updateNow"}}
+            </button>
+          </p>
+        {{/if}}
+      </div>
+    </div>
+  </template>
 }
-
-<div
-  class="api-version-notice {{if this.mismatched 'mismatch'}}"
-  hidden={{not this.mismatched}}
-  role={{if this.mismatched "alert" false}}
-  data-test-load-finished={{this.check.lastSuccessful.value}}
-  data-test-api-version-notice
->
-  <h2>
-    <FaIcon @icon="circle-exclamation" />
-    {{t "general.apiVersionMismatch"}}
-  </h2>
-  <div class="details">
-    <p>
-      {{t "general.apiVersionMismatchDetails"}}
-    </p>
-    {{#if this.updateAvailable}}
-      <p>
-        {{t "general.autoUpdatingSeconds" count=this.countdownToUpdate}}
-        <button type="button" {{on "click" (perform this.update)}}>
-          {{t "general.updateNow"}}
-        </button>
-      </p>
-    {{/if}}
-    {{#if this.update.isRunning}}
-      <p>
-        {{t "general.updatePending"}}
-      </p>
-    {{/if}}
-    {{#if this.showReloadButton}}
-      <p>
-        <button type="button" {{on "click" this.reload}}>
-          {{t "general.updateNow"}}
-        </button>
-      </p>
-    {{/if}}
-  </div>
-</div>

@@ -5,6 +5,18 @@ import { service } from '@ember/service';
 import { dropTask } from 'ember-concurrency';
 import { findById } from 'ilios-common/utils/array-helpers';
 import { TrackedAsyncData } from 'ember-async-data';
+import { on } from '@ember/modifier';
+import t from 'ember-intl/helpers/t';
+import FaIcon from 'ilios-common/components/fa-icon';
+import and from 'ember-truth-helpers/helpers/and';
+import not from 'ember-truth-helpers/helpers/not';
+import ExpandCollapseButton from 'ilios-common/components/expand-collapse-button';
+import { fn } from '@ember/helper';
+import SchoolNewVocabularyForm from 'frontend/components/school-new-vocabulary-form';
+import SchoolVocabularyTermManager from 'frontend/components/school-vocabulary-term-manager';
+import SchoolVocabularyManager from 'frontend/components/school-vocabulary-manager';
+import SchoolVocabulariesList from 'frontend/components/school-vocabularies-list';
+import LoadingSpinner from 'ilios-common/components/loading-spinner';
 
 export default class SchoolVocabulariesExpandedComponent extends Component {
   @service store;
@@ -95,75 +107,80 @@ export default class SchoolVocabulariesExpandedComponent extends Component {
     this.args.setSchoolNewVocabulary(null);
     await vocabulary.save();
   });
-}
-
-<section class="school-vocabularies-expanded" data-test-school-vocabularies-expanded ...attributes>
-  {{#if this.isLoaded}}
-    <div class="school-vocabularies-expanded-header">
-      {{#if this.isCollapsible}}
-        <button
-          class="title link-button"
-          type="button"
-          aria-expanded="true"
-          data-test-vocabularies-title
-          {{on "click" this.doCollapse}}
-        >
-          {{t "general.vocabularies"}}
-          ({{@school.vocabularies.length}})
-          <FaIcon @icon="caret-down" />
-        </button>
-      {{else}}
-        <div class="title" data-test-vocabularies-title>
-          {{t "general.vocabularies"}}
-          ({{@school.vocabularies.length}})
+  <template>
+    <section
+      class="school-vocabularies-expanded"
+      data-test-school-vocabularies-expanded
+      ...attributes
+    >
+      {{#if this.isLoaded}}
+        <div class="school-vocabularies-expanded-header">
+          {{#if this.isCollapsible}}
+            <button
+              class="title link-button"
+              type="button"
+              aria-expanded="true"
+              data-test-vocabularies-title
+              {{on "click" this.doCollapse}}
+            >
+              {{t "general.vocabularies"}}
+              ({{@school.vocabularies.length}})
+              <FaIcon @icon="caret-down" />
+            </button>
+          {{else}}
+            <div class="title" data-test-vocabularies-title>
+              {{t "general.vocabularies"}}
+              ({{@school.vocabularies.length}})
+            </div>
+          {{/if}}
+          <div class="actions">
+            {{#if (and @canCreateVocabulary (not this.managedTerm) (not this.managedVocabulary))}}
+              <ExpandCollapseButton
+                @value={{@schoolNewVocabulary}}
+                @action={{fn @setSchoolNewVocabulary (not @schoolNewVocabulary)}}
+                data-test-new-vocabulary
+              />
+            {{/if}}
+          </div>
         </div>
-      {{/if}}
-      <div class="actions">
-        {{#if (and @canCreateVocabulary (not this.managedTerm) (not this.managedVocabulary))}}
-          <ExpandCollapseButton
-            @value={{@schoolNewVocabulary}}
-            @action={{fn @setSchoolNewVocabulary (not @schoolNewVocabulary)}}
-            data-test-new-vocabulary
-          />
-        {{/if}}
-      </div>
-    </div>
-    <div class="school-vocabularies-expanded-content">
-      {{#if @schoolNewVocabulary}}
-        <SchoolNewVocabularyForm
-          @school={{@school}}
-          @close={{fn @setSchoolNewVocabulary null}}
-          @save={{this.saveNewVocabulary}}
-        />
-      {{/if}}
-      {{#if this.managedTerm}}
-        <SchoolVocabularyTermManager
-          @vocabulary={{this.managedVocabulary}}
-          @term={{this.managedTerm}}
-          @manageTerm={{@setSchoolManagedVocabularyTerm}}
-          @manageVocabulary={{@setSchoolManagedVocabulary}}
-          @canUpdate={{@canUpdateTerm}}
-          @canDelete={{@canDeleteTerm}}
-          @canCreate={{@canCreateTerm}}
-        />
-      {{else if this.managedVocabulary}}
-        <SchoolVocabularyManager
-          @vocabulary={{this.managedVocabulary}}
-          @manageTerm={{@setSchoolManagedVocabularyTerm}}
-          @manageVocabulary={{@setSchoolManagedVocabulary}}
-          @canUpdate={{@canUpdateVocabulary}}
-          @canCreate={{@canCreateTerm}}
-        />
+        <div class="school-vocabularies-expanded-content">
+          {{#if @schoolNewVocabulary}}
+            <SchoolNewVocabularyForm
+              @school={{@school}}
+              @close={{fn @setSchoolNewVocabulary null}}
+              @save={{this.saveNewVocabulary}}
+            />
+          {{/if}}
+          {{#if this.managedTerm}}
+            <SchoolVocabularyTermManager
+              @vocabulary={{this.managedVocabulary}}
+              @term={{this.managedTerm}}
+              @manageTerm={{@setSchoolManagedVocabularyTerm}}
+              @manageVocabulary={{@setSchoolManagedVocabulary}}
+              @canUpdate={{@canUpdateTerm}}
+              @canDelete={{@canDeleteTerm}}
+              @canCreate={{@canCreateTerm}}
+            />
+          {{else if this.managedVocabulary}}
+            <SchoolVocabularyManager
+              @vocabulary={{this.managedVocabulary}}
+              @manageTerm={{@setSchoolManagedVocabularyTerm}}
+              @manageVocabulary={{@setSchoolManagedVocabulary}}
+              @canUpdate={{@canUpdateVocabulary}}
+              @canCreate={{@canCreateTerm}}
+            />
+          {{else}}
+            <SchoolVocabulariesList
+              @school={{@school}}
+              @manageVocabulary={{@setSchoolManagedVocabulary}}
+              @canDelete={{@canDeleteVocabulary}}
+              @canCreate={{@canCreateVocabulary}}
+            />
+          {{/if}}
+        </div>
       {{else}}
-        <SchoolVocabulariesList
-          @school={{@school}}
-          @manageVocabulary={{@setSchoolManagedVocabulary}}
-          @canDelete={{@canDeleteVocabulary}}
-          @canCreate={{@canCreateVocabulary}}
-        />
+        <LoadingSpinner />
       {{/if}}
-    </div>
-  {{else}}
-    <LoadingSpinner />
-  {{/if}}
-</section>
+    </section>
+  </template>
+}

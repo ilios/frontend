@@ -5,6 +5,10 @@ import { isNone } from '@ember/utils';
 import { restartableTask, timeout } from 'ember-concurrency';
 import { service } from '@ember/service';
 import { guidFor } from '@ember/object/internals';
+import { on } from '@ember/modifier';
+import t from 'ember-intl/helpers/t';
+import perform from 'ember-concurrency/helpers/perform';
+import FaIcon from 'ilios-common/components/fa-icon';
 const DEBOUNCE_TIMEOUT = 250;
 
 export default class SearchBox extends Component {
@@ -70,27 +74,28 @@ export default class SearchBox extends Component {
     await timeout(DEBOUNCE_TIMEOUT);
     await this.args.search(this.value);
   });
+  <template>
+    <div class="search-box" id={{this.searchBoxId}} data-test-search-box>
+      <input
+        aria-label={{this.placeholder}}
+        autocomplete="off"
+        class="search-input"
+        type="search"
+        value={{this.value}}
+        placeholder={{this.placeholder}}
+        maxlength={{this.maxlength}}
+        {{on "input" this.update}}
+        {{on "keyup" this.keyUp}}
+      />
+      <button
+        aria-label={{t "general.search"}}
+        class="link-button search-icon"
+        type="button"
+        {{on "click" (perform this.searchTask)}}
+        data-test-submit-search
+      >
+        <FaIcon @icon="magnifying-glass" />
+      </button>
+    </div>
+  </template>
 }
-
-<div class="search-box" id={{this.searchBoxId}} data-test-search-box>
-  <input
-    aria-label={{this.placeholder}}
-    autocomplete="off"
-    class="search-input"
-    type="search"
-    value={{this.value}}
-    placeholder={{this.placeholder}}
-    maxlength={{this.maxlength}}
-    {{on "input" this.update}}
-    {{on "keyup" this.keyUp}}
-  />
-  <button
-    aria-label={{t "general.search"}}
-    class="link-button search-icon"
-    type="button"
-    {{on "click" (perform this.searchTask)}}
-    data-test-submit-search
-  >
-    <FaIcon @icon="magnifying-glass" />
-  </button>
-</div>

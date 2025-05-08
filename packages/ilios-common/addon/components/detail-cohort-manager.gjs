@@ -4,6 +4,11 @@ import { cached, tracked } from '@glimmer/tracking';
 import { map, filter } from 'rsvp';
 import { mapBy } from 'ilios-common/utils/array-helpers';
 import { TrackedAsyncData } from 'ember-async-data';
+import sortBy from 'ilios-common/helpers/sort-by';
+import { on } from '@ember/modifier';
+import { fn } from '@ember/helper';
+import FaIcon from 'ilios-common/components/fa-icon';
+import LoadingSpinner from 'ilios-common/components/loading-spinner';
 
 export default class DetailCohortManagerComponent extends Component {
   @service intl;
@@ -97,40 +102,41 @@ export default class DetailCohortManagerComponent extends Component {
       return !!(await this.permissionChecker.canUpdateProgramYear(obj.programYear));
     });
   }
+  <template>
+    <section class="detail-cohort-manager">
+      <ul class="selected-cohorts">
+        {{#each (sortBy "title" @selectedCohorts) as |cohort|}}
+          <li>
+            <button type="button" {{on "click" (fn @remove cohort)}}>
+              {{cohort.programYear.program.school.title}}
+              |
+              {{cohort.programYear.program.title}}
+              |
+              {{cohort.title}}
+              <FaIcon @icon="xmark" class="remove" />
+            </button>
+          </li>
+        {{/each}}
+      </ul>
+      <ul class="selectable-cohorts">
+        {{#if this.isLoaded}}
+          {{#each this.sortedAvailableCohorts as |cohort|}}
+            <li>
+              <button type="button" {{on "click" (fn @add cohort)}}>
+                {{cohort.programYear.program.school.title}}
+                |
+                {{cohort.programYear.program.title}}
+                |
+                {{cohort.title}}
+              </button>
+            </li>
+          {{/each}}
+        {{else}}
+          <li>
+            <LoadingSpinner />
+          </li>
+        {{/if}}
+      </ul>
+    </section>
+  </template>
 }
-
-<section class="detail-cohort-manager">
-  <ul class="selected-cohorts">
-    {{#each (sort-by "title" @selectedCohorts) as |cohort|}}
-      <li>
-        <button type="button" {{on "click" (fn @remove cohort)}}>
-          {{cohort.programYear.program.school.title}}
-          |
-          {{cohort.programYear.program.title}}
-          |
-          {{cohort.title}}
-          <FaIcon @icon="xmark" class="remove" />
-        </button>
-      </li>
-    {{/each}}
-  </ul>
-  <ul class="selectable-cohorts">
-    {{#if this.isLoaded}}
-      {{#each this.sortedAvailableCohorts as |cohort|}}
-        <li>
-          <button type="button" {{on "click" (fn @add cohort)}}>
-            {{cohort.programYear.program.school.title}}
-            |
-            {{cohort.programYear.program.title}}
-            |
-            {{cohort.title}}
-          </button>
-        </li>
-      {{/each}}
-    {{else}}
-      <li>
-        <LoadingSpinner />
-      </li>
-    {{/if}}
-  </ul>
-</section>

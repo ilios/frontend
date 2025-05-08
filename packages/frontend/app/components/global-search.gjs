@@ -4,6 +4,21 @@ import { findBy, findById, mapBy, sortBy, uniqueValues } from 'ilios-common/util
 import { action } from '@ember/object';
 import { TrackedAsyncData } from 'ember-async-data';
 import { cached } from '@glimmer/tracking';
+import GlobalSearchBox from 'frontend/components/global-search-box';
+import and from 'ember-truth-helpers/helpers/and';
+import not from 'ember-truth-helpers/helpers/not';
+import FaIcon from 'ilios-common/components/fa-icon';
+import t from 'ember-intl/helpers/t';
+import CourseSearchResult from 'frontend/components/course-search-result';
+import { on } from '@ember/modifier';
+import pick from 'ilios-common/helpers/pick';
+import eq from 'ember-truth-helpers/helpers/eq';
+import add from 'ember-math-helpers/helpers/add';
+import gt from 'ember-truth-helpers/helpers/gt';
+import { get, fn } from '@ember/helper';
+import or from 'ember-truth-helpers/helpers/or';
+import includes from 'ilios-common/helpers/includes';
+import PaginationLinks from 'frontend/components/pagination-links';
 
 export default class GlobalSearchComponent extends Component {
   @service iliosConfig;
@@ -123,77 +138,78 @@ export default class GlobalSearchComponent extends Component {
     this.args.onSelectPage(1);
     this.args.setIgnoredSchoolIds(ignoredSchoolIds);
   }
-}
-
-<div class="global-search" data-test-global-search ...attributes>
-  <GlobalSearchBox @query={{@query}} @search={{@setQuery}} />
-  <ul
-    class="results {{if (and this.resultsData.isPending (not this.hasResults)) 'hidden'}}"
-    data-test-results
-  >
-    {{#if this.resultsData.isPending}}
-      <li class="searching" data-test-searching>
-        <FaIcon @icon="spinner" class="orange" @spin={{true}} />
-        {{t "general.currentlySearchingPrompt"}}
-      </li>
-    {{else}}
-      {{#each this.paginatedResults as |course|}}
-        <CourseSearchResult @course={{course}} />
-      {{else}}
-        <li class="no-results">
-          {{t "general.noSearchResultsPrompt"}}
-        </li>
-      {{/each}}
-    {{/if}}
-  </ul>
-  {{#if this.hasResults}}
-    <fieldset class="filters">
-      <legend>
-        {{t "general.showResultsFor"}}
-      </legend>
-      <div class="year-filters">
-        <select
-          aria-label={{t "general.year"}}
-          data-test-academic-year-filter
-          {{on "change" (pick "target.value" this.setSelectedYear)}}
-        >
-          <option selected={{eq null @selectedYear}} value="">
-            {{t "general.allAcademicYears"}}
-          </option>
-          {{#each this.yearOptions as |year|}}
-            <option selected={{eq year @selectedYear}} value={{year}}>
-              {{year}}
-              -
-              {{add year 1}}
-            </option>
+  <template>
+    <div class="global-search" data-test-global-search ...attributes>
+      <GlobalSearchBox @query={{@query}} @search={{@setQuery}} />
+      <ul
+        class="results {{if (and this.resultsData.isPending (not this.hasResults)) 'hidden'}}"
+        data-test-results
+      >
+        {{#if this.resultsData.isPending}}
+          <li class="searching" data-test-searching>
+            <FaIcon @icon="spinner" class="orange" @spin={{true}} />
+            {{t "general.currentlySearchingPrompt"}}
+          </li>
+        {{else}}
+          {{#each this.paginatedResults as |course|}}
+            <CourseSearchResult @course={{course}} />
+          {{else}}
+            <li class="no-results">
+              {{t "general.noSearchResultsPrompt"}}
+            </li>
           {{/each}}
-        </select>
-      </div>
-      {{#if (gt (get this.schools "length") 1)}}
-        <div class="school-filters" data-test-school-filters>
-          {{#each this.schoolOptions as |obj index|}}
-            <span class="filter" data-test-school-filter>
-              <input
-                id="school={{index}}"
-                type="checkbox"
-                checked={{or (eq obj.results 0) (not (includes obj.id @ignoredSchoolIds))}}
-                {{on "click" (fn this.toggleSchoolSelection obj.id)}}
-                disabled={{eq obj.results 0}}
-              />
-              <label for="school={{index}}">
-                {{obj.title}}
-                ({{obj.results}})
-              </label>
-            </span>
-          {{/each}}
-        </div>
+        {{/if}}
+      </ul>
+      {{#if this.hasResults}}
+        <fieldset class="filters">
+          <legend>
+            {{t "general.showResultsFor"}}
+          </legend>
+          <div class="year-filters">
+            <select
+              aria-label={{t "general.year"}}
+              data-test-academic-year-filter
+              {{on "change" (pick "target.value" this.setSelectedYear)}}
+            >
+              <option selected={{eq null @selectedYear}} value>
+                {{t "general.allAcademicYears"}}
+              </option>
+              {{#each this.yearOptions as |year|}}
+                <option selected={{eq year @selectedYear}} value={{year}}>
+                  {{year}}
+                  -
+                  {{add year 1}}
+                </option>
+              {{/each}}
+            </select>
+          </div>
+          {{#if (gt (get this.schools "length") 1)}}
+            <div class="school-filters" data-test-school-filters>
+              {{#each this.schoolOptions as |obj index|}}
+                <span class="filter" data-test-school-filter>
+                  <input
+                    id="school={{index}}"
+                    type="checkbox"
+                    checked={{or (eq obj.results 0) (not (includes obj.id @ignoredSchoolIds))}}
+                    {{on "click" (fn this.toggleSchoolSelection obj.id)}}
+                    disabled={{eq obj.results 0}}
+                  />
+                  <label for="school={{index}}">
+                    {{obj.title}}
+                    ({{obj.results}})
+                  </label>
+                </span>
+              {{/each}}
+            </div>
+          {{/if}}
+        </fieldset>
       {{/if}}
-    </fieldset>
-  {{/if}}
-</div>
-<PaginationLinks
-  @page={{@page}}
-  @results={{this.filteredResults}}
-  @size={{this.size}}
-  @onSelectPage={{@onSelectPage}}
-/>
+    </div>
+    <PaginationLinks
+      @page={{@page}}
+      @results={{this.filteredResults}}
+      @size={{this.size}}
+      @onSelectPage={{@onSelectPage}}
+    />
+  </template>
+}

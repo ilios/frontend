@@ -5,6 +5,13 @@ import { dropTask } from 'ember-concurrency';
 import { TrackedAsyncData } from 'ember-async-data';
 import YupValidations from 'ilios-common/classes/yup-validations';
 import { string } from 'yup';
+import t from 'ember-intl/helpers/t';
+import { on } from '@ember/modifier';
+import pick from 'ilios-common/helpers/pick';
+import set from 'ember-set-helper/helpers/set';
+import perform from 'ember-concurrency/helpers/perform';
+import LoadingSpinner from 'ilios-common/components/loading-spinner';
+import YupValidationMessage from 'ilios-common/components/yup-validation-message';
 
 export default class SchoolVocabularyNewTermComponent extends Component {
   @service store;
@@ -55,33 +62,34 @@ export default class SchoolVocabularyNewTermComponent extends Component {
   get existingTitles() {
     return this.getTermData.isResolved ? this.getTermData.value.map(({ title }) => title) : [];
   }
+  <template>
+    <div class="school-vocabulary-new-term" data-test-school-vocabulary-new-term>
+      <input
+        aria-label={{t "general.title"}}
+        type="text"
+        value={{this.title}}
+        disabled={{this.save.isRunning}}
+        {{on "input" (pick "target.value" (set this "title"))}}
+        {{on "keyup" (perform this.saveOnEnter)}}
+        {{this.validations.attach "title"}}
+      />
+      <button
+        type="button"
+        class="save text"
+        disabled={{this.save.isRunning}}
+        {{on "click" (perform this.save)}}
+      >
+        {{#if this.save.isRunning}}
+          <LoadingSpinner />
+        {{else}}
+          {{t "general.add"}}
+        {{/if}}
+      </button>
+      <YupValidationMessage
+        @description={{t "general.term"}}
+        @validationErrors={{this.validations.errors.title}}
+        data-test-title-validation-error-message
+      />
+    </div>
+  </template>
 }
-
-<div class="school-vocabulary-new-term" data-test-school-vocabulary-new-term>
-  <input
-    aria-label={{t "general.title"}}
-    type="text"
-    value={{this.title}}
-    disabled={{this.save.isRunning}}
-    {{on "input" (pick "target.value" (set this "title"))}}
-    {{on "keyup" (perform this.saveOnEnter)}}
-    {{this.validations.attach "title"}}
-  />
-  <button
-    type="button"
-    class="save text"
-    disabled={{this.save.isRunning}}
-    {{on "click" (perform this.save)}}
-  >
-    {{#if this.save.isRunning}}
-      <LoadingSpinner />
-    {{else}}
-      {{t "general.add"}}
-    {{/if}}
-  </button>
-  <YupValidationMessage
-    @description={{t "general.term"}}
-    @validationErrors={{this.validations.errors.title}}
-    data-test-title-validation-error-message
-  />
-</div>

@@ -3,6 +3,8 @@ import { cached } from '@glimmer/tracking';
 import { TrackedAsyncData } from 'ember-async-data';
 import { map } from 'rsvp';
 import { sortBy } from 'ilios-common/utils/array-helpers';
+import t from 'ember-intl/helpers/t';
+import SchoolCompetenciesListItem from 'frontend/components/school-competencies-list-item';
 
 export default class SchoolCompetenciesListComponent extends Component {
   @cached
@@ -23,25 +25,26 @@ export default class SchoolCompetenciesListComponent extends Component {
       };
     });
   }
+  <template>
+    <div class="school-competencies-list" data-test-school-competencies-list ...attributes>
+      <div class="grid-row headers">
+        <div class="grid-item">{{t "general.competency"}}</div>
+        <div class="grid-item">{{t "general.aamcPcrs"}}</div>
+      </div>
+      {{#each this.proxies as |proxy|}}
+        <SchoolCompetenciesListItem
+          @competency={{proxy.domain}}
+          @isDomain={{true}}
+          @canUpdate={{@canUpdate}}
+        />
+        {{#each proxy.competencies as |competency|}}
+          <SchoolCompetenciesListItem
+            @competency={{competency}}
+            @isDomain={{false}}
+            @canUpdate={{@canUpdate}}
+          />
+        {{/each}}
+      {{/each}}
+    </div>
+  </template>
 }
-
-<div class="school-competencies-list" data-test-school-competencies-list ...attributes>
-  <div class="grid-row headers">
-    <div class="grid-item">{{t "general.competency"}}</div>
-    <div class="grid-item">{{t "general.aamcPcrs"}}</div>
-  </div>
-  {{#each this.proxies as |proxy|}}
-    <SchoolCompetenciesListItem
-      @competency={{proxy.domain}}
-      @isDomain={{true}}
-      @canUpdate={{@canUpdate}}
-    />
-    {{#each proxy.competencies as |competency|}}
-      <SchoolCompetenciesListItem
-        @competency={{competency}}
-        @isDomain={{false}}
-        @canUpdate={{@canUpdate}}
-      />
-    {{/each}}
-  {{/each}}
-</div>

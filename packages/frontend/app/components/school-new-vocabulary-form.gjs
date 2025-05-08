@@ -5,6 +5,14 @@ import { dropTask } from 'ember-concurrency';
 import YupValidations from 'ilios-common/classes/yup-validations';
 import { string } from 'yup';
 import { TrackedAsyncData } from 'ember-async-data';
+import { uniqueId } from '@ember/helper';
+import t from 'ember-intl/helpers/t';
+import { on } from '@ember/modifier';
+import pick from 'ilios-common/helpers/pick';
+import set from 'ember-set-helper/helpers/set';
+import perform from 'ember-concurrency/helpers/perform';
+import YupValidationMessage from 'ilios-common/components/yup-validation-message';
+import LoadingSpinner from 'ilios-common/components/loading-spinner';
 
 export default class SchoolNewVocabularyFormComponent extends Component {
   @service intl;
@@ -59,46 +67,47 @@ export default class SchoolNewVocabularyFormComponent extends Component {
       this.args.close();
     }
   });
+  <template>
+    {{#let (uniqueId) as |templateId|}}
+      <div class="school-new-vocabulary-form" data-test-school-new-vocabulary-form ...attributes>
+        <div class="form">
+          <div class="item" data-test-title>
+            <label for="title-{{templateId}}">
+              {{t "general.title"}}:
+            </label>
+            <input
+              id="title-{{templateId}}"
+              type="text"
+              value={{this.title}}
+              {{on "input" (pick "target.value" (set this "title"))}}
+              {{on "keyup" (perform this.saveOrCancel)}}
+              {{this.validations.attach "title"}}
+            />
+            <YupValidationMessage
+              @description={{t "general.vocabulary"}}
+              @validationErrors={{this.validations.errors.title}}
+              data-test-title-validation-error-message
+            />
+          </div>
+          <div class="buttons">
+            <button
+              type="button"
+              class="done text"
+              data-test-submit
+              {{on "click" (perform this.saveNew)}}
+            >
+              {{#if this.saveNew.isRunning}}
+                <LoadingSpinner />
+              {{else}}
+                {{t "general.done"}}
+              {{/if}}
+            </button>
+            <button type="button" class="cancel text" {{on "click" @close}} data-test-cancel>
+              {{t "general.cancel"}}
+            </button>
+          </div>
+        </div>
+      </div>
+    {{/let}}
+  </template>
 }
-
-{{#let (unique-id) as |templateId|}}
-  <div class="school-new-vocabulary-form" data-test-school-new-vocabulary-form ...attributes>
-    <div class="form">
-      <div class="item" data-test-title>
-        <label for="title-{{templateId}}">
-          {{t "general.title"}}:
-        </label>
-        <input
-          id="title-{{templateId}}"
-          type="text"
-          value={{this.title}}
-          {{on "input" (pick "target.value" (set this "title"))}}
-          {{on "keyup" (perform this.saveOrCancel)}}
-          {{this.validations.attach "title"}}
-        />
-        <YupValidationMessage
-          @description={{t "general.vocabulary"}}
-          @validationErrors={{this.validations.errors.title}}
-          data-test-title-validation-error-message
-        />
-      </div>
-      <div class="buttons">
-        <button
-          type="button"
-          class="done text"
-          data-test-submit
-          {{on "click" (perform this.saveNew)}}
-        >
-          {{#if this.saveNew.isRunning}}
-            <LoadingSpinner />
-          {{else}}
-            {{t "general.done"}}
-          {{/if}}
-        </button>
-        <button type="button" class="cancel text" {{on "click" @close}} data-test-cancel>
-          {{t "general.cancel"}}
-        </button>
-      </div>
-    </div>
-  </div>
-{{/let}}

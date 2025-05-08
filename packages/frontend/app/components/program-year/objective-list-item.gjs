@@ -6,6 +6,24 @@ import { service } from '@ember/service';
 import { TrackedAsyncData } from 'ember-async-data';
 import { validatable, Length, HtmlNotBlank } from 'ilios-common/decorators/validation';
 import { findById } from 'ilios-common/utils/array-helpers';
+import { on } from '@ember/modifier';
+import set from 'ember-set-helper/helpers/set';
+import not from 'ember-truth-helpers/helpers/not';
+import FaIcon from 'ilios-common/components/fa-icon';
+import t from 'ember-intl/helpers/t';
+import and from 'ember-truth-helpers/helpers/and';
+import EditableField from 'ilios-common/components/editable-field';
+import perform from 'ember-concurrency/helpers/perform';
+import HtmlEditor from 'ilios-common/components/html-editor';
+import ValidationError from 'ilios-common/components/validation-error';
+import ObjectiveListItemCompetency from 'frontend/components/program-year/objective-list-item-competency';
+import ObjectiveListItemTerms from 'ilios-common/components/objective-list-item-terms';
+import ObjectiveListItemDescriptors from 'frontend/components/program-year/objective-list-item-descriptors';
+import LoadingSpinner from 'ilios-common/components/loading-spinner';
+import ManageObjectiveCompetency from 'frontend/components/program-year/manage-objective-competency';
+import ManageObjectiveDescriptors from 'frontend/components/program-year/manage-objective-descriptors';
+import ObjectiveListItemExpanded from 'frontend/components/program-year/objective-list-item-expanded';
+import TaxonomyManager from 'ilios-common/components/taxonomy-manager';
 
 @validatable
 export default class ProgramYearObjectiveListItemComponent extends Component {
@@ -204,184 +222,187 @@ export default class ProgramYearObjectiveListItemComponent extends Component {
   deleteObjective = dropTask(async () => {
     await this.args.programYearObjective.destroyRecord();
   });
-}
-
-<div
-  id="objective-{{@programYearObjective.id}}"
-  class="grid-row objective-row
-    {{if this.showRemoveConfirmation 'confirm-removal'}}
-    {{if this.highlightSave.isRunning 'highlight-ok'}}
-    {{if this.isManaging 'is-managing'}}
-    {{unless @programYearObjective.active 'is-inactive'}}"
-  data-test-program-year-objective-list-item
->
-  <button
-    class="expand-row grid-item"
-    type="button"
-    {{on "click" (set this "isExpanded" (not this.isExpanded))}}
-    data-test-toggle-expand
-  >
-    {{#if this.isExpanded}}
-      <FaIcon @icon="caret-down" @title={{t "general.collapseDetail"}} />
-    {{else}}
-      <FaIcon @icon="caret-right" @title={{t "general.expand"}} />
-    {{/if}}
-  </button>
-  <div class="description grid-item" data-test-description>
-    {{#if (and @editable (not this.isManaging) (not this.showRemoveConfirmation))}}
-      <EditableField
-        @value={{this.title}}
-        @renderHtml={{true}}
-        @isSaveDisabled={{this.hasErrorForTitle}}
-        @save={{perform this.saveTitleChanges}}
-        @close={{this.revertTitleChanges}}
-        @fadeTextExpanded={{this.fadeTextExpanded}}
-        @onExpandAllFadeText={{this.expandAllFadeText}}
-      >
-        <HtmlEditor @content={{this.title}} @update={{this.changeTitle}} @autofocus={{true}} />
-        <ValidationError @validatable={{this}} @property="title" />
-      </EditableField>
-    {{else}}
-      {{! template-lint-disable no-triple-curlies }}
-      {{{@programYearObjective.title}}}
-    {{/if}}
-  </div>
-  <ProgramYear::ObjectiveListItemCompetency
-    @objective={{@programYearObjective}}
-    @editable={{and @editable (not this.isManaging) (not this.showRemoveConfirmation)}}
-    @manage={{perform this.manageCompetency}}
-    @isManaging={{this.isManagingCompetency}}
-    @save={{perform this.saveCompetency}}
-    @isSaving={{this.saveCompetency.isRunning}}
-    @cancel={{this.cancel}}
-  />
-
-  <ObjectiveListItemTerms
-    @subject={{@programYearObjective}}
-    @editable={{and @editable (not this.isManaging) (not this.showRemoveConfirmation)}}
-    @manage={{perform this.manageTerms}}
-    @isManaging={{this.isManagingTerms}}
-    @save={{perform this.saveTerms}}
-    @isSaving={{this.saveTerms.isRunning}}
-    @cancel={{this.cancel}}
-  />
-
-  <ProgramYear::ObjectiveListItemDescriptors
-    @meshDescriptors={{this.meshDescriptors}}
-    @editable={{and @editable (not this.isManaging) (not this.showRemoveConfirmation)}}
-    @manage={{perform this.manageDescriptors}}
-    @isManaging={{this.isManagingDescriptors}}
-    @save={{perform this.saveDescriptors}}
-    @isSaving={{this.saveDescriptors.isRunning}}
-    @cancel={{this.cancel}}
-  />
-
-  <div class="actions grid-item" data-test-actions>
-    {{#if (and @editable (not this.isManaging) (not this.showRemoveConfirmation))}}
-      {{#if this.saveIsActive.isRunning}}
-        <LoadingSpinner />
-      {{else}}
-        {{#if @programYearObjective.active}}
-          <button
-            class="active"
-            type="button"
-            {{on "click" (perform this.saveIsActive false)}}
-            data-test-deactivate
-          >
-            <FaIcon @icon="toggle-on" @title={{t "general.deactivate"}} />
-          </button>
-        {{else}}
-          <button
-            class="active"
-            type="button"
-            {{on "click" (perform this.saveIsActive true)}}
-            data-test-activate
-          >
-            <FaIcon @icon="toggle-off" @title={{t "general.activate"}} />
-          </button>
-        {{/if}}
-      {{/if}}
-    {{else}}
-      {{#if @programYearObjective.active}}
-        <FaIcon @icon="toggle-on" @title={{t "general.active"}} />
-      {{else}}
-        <FaIcon @icon="toggle-off" @title={{t "general.inactive"}} />
-      {{/if}}
-    {{/if}}
-    {{#if (and this.canDelete @editable (not this.isManaging) (not this.showRemoveConfirmation))}}
+  <template>
+    <div
+      id="objective-{{@programYearObjective.id}}"
+      class="grid-row objective-row
+        {{if this.showRemoveConfirmation 'confirm-removal'}}
+        {{if this.highlightSave.isRunning 'highlight-ok'}}
+        {{if this.isManaging 'is-managing'}}
+        {{unless @programYearObjective.active 'is-inactive'}}"
+      data-test-program-year-objective-list-item
+    >
       <button
-        class="link-button"
+        class="expand-row grid-item"
         type="button"
-        {{on "click" (set this "showRemoveConfirmation" true)}}
-        aria-label={{t "general.remove"}}
-        data-test-remove
+        {{on "click" (set this "isExpanded" (not this.isExpanded))}}
+        data-test-toggle-expand
       >
-        <FaIcon @icon="trash" class="enabled remove" />
-      </button>
-    {{else}}
-      <FaIcon @icon="trash" class="disabled" />
-    {{/if}}
-  </div>
-
-  {{#if this.showRemoveConfirmation}}
-    <div class="confirm-message" data-test-confirm-removal>
-      {{t "general.confirmObjectiveRemoval"}}
-      <button
-        class="remove"
-        type="button"
-        data-test-confirm
-        {{on "click" (perform this.deleteObjective)}}
-      >
-        {{#if this.deleteObjective.isRunning}}
-          <FaIcon @icon="spinner" @spin={{true}} />
+        {{#if this.isExpanded}}
+          <FaIcon @icon="caret-down" @title={{t "general.collapseDetail"}} />
         {{else}}
-          {{t "general.yes"}}
+          <FaIcon @icon="caret-right" @title={{t "general.expand"}} />
         {{/if}}
       </button>
-      <button
-        class="done"
-        type="button"
-        data-test-cancel
-        {{on "click" (set this "showRemoveConfirmation" false)}}
-      >
-        {{t "general.cancel"}}
-      </button>
+      <div class="description grid-item" data-test-description>
+        {{#if (and @editable (not this.isManaging) (not this.showRemoveConfirmation))}}
+          <EditableField
+            @value={{this.title}}
+            @renderHtml={{true}}
+            @isSaveDisabled={{this.hasErrorForTitle}}
+            @save={{perform this.saveTitleChanges}}
+            @close={{this.revertTitleChanges}}
+            @fadeTextExpanded={{this.fadeTextExpanded}}
+            @onExpandAllFadeText={{this.expandAllFadeText}}
+          >
+            <HtmlEditor @content={{this.title}} @update={{this.changeTitle}} @autofocus={{true}} />
+            <ValidationError @validatable={{this}} @property="title" />
+          </EditableField>
+        {{else}}
+          {{! template-lint-disable no-triple-curlies }}
+          {{{@programYearObjective.title}}}
+        {{/if}}
+      </div>
+      <ObjectiveListItemCompetency
+        @objective={{@programYearObjective}}
+        @editable={{and @editable (not this.isManaging) (not this.showRemoveConfirmation)}}
+        @manage={{perform this.manageCompetency}}
+        @isManaging={{this.isManagingCompetency}}
+        @save={{perform this.saveCompetency}}
+        @isSaving={{this.saveCompetency.isRunning}}
+        @cancel={{this.cancel}}
+      />
+
+      <ObjectiveListItemTerms
+        @subject={{@programYearObjective}}
+        @editable={{and @editable (not this.isManaging) (not this.showRemoveConfirmation)}}
+        @manage={{perform this.manageTerms}}
+        @isManaging={{this.isManagingTerms}}
+        @save={{perform this.saveTerms}}
+        @isSaving={{this.saveTerms.isRunning}}
+        @cancel={{this.cancel}}
+      />
+
+      <ObjectiveListItemDescriptors
+        @meshDescriptors={{this.meshDescriptors}}
+        @editable={{and @editable (not this.isManaging) (not this.showRemoveConfirmation)}}
+        @manage={{perform this.manageDescriptors}}
+        @isManaging={{this.isManagingDescriptors}}
+        @save={{perform this.saveDescriptors}}
+        @isSaving={{this.saveDescriptors.isRunning}}
+        @cancel={{this.cancel}}
+      />
+
+      <div class="actions grid-item" data-test-actions>
+        {{#if (and @editable (not this.isManaging) (not this.showRemoveConfirmation))}}
+          {{#if this.saveIsActive.isRunning}}
+            <LoadingSpinner />
+          {{else}}
+            {{#if @programYearObjective.active}}
+              <button
+                class="active"
+                type="button"
+                {{on "click" (perform this.saveIsActive false)}}
+                data-test-deactivate
+              >
+                <FaIcon @icon="toggle-on" @title={{t "general.deactivate"}} />
+              </button>
+            {{else}}
+              <button
+                class="active"
+                type="button"
+                {{on "click" (perform this.saveIsActive true)}}
+                data-test-activate
+              >
+                <FaIcon @icon="toggle-off" @title={{t "general.activate"}} />
+              </button>
+            {{/if}}
+          {{/if}}
+        {{else}}
+          {{#if @programYearObjective.active}}
+            <FaIcon @icon="toggle-on" @title={{t "general.active"}} />
+          {{else}}
+            <FaIcon @icon="toggle-off" @title={{t "general.inactive"}} />
+          {{/if}}
+        {{/if}}
+        {{#if
+          (and this.canDelete @editable (not this.isManaging) (not this.showRemoveConfirmation))
+        }}
+          <button
+            class="link-button"
+            type="button"
+            {{on "click" (set this "showRemoveConfirmation" true)}}
+            aria-label={{t "general.remove"}}
+            data-test-remove
+          >
+            <FaIcon @icon="trash" class="enabled remove" />
+          </button>
+        {{else}}
+          <FaIcon @icon="trash" class="disabled" />
+        {{/if}}
+      </div>
+
+      {{#if this.showRemoveConfirmation}}
+        <div class="confirm-message" data-test-confirm-removal>
+          {{t "general.confirmObjectiveRemoval"}}
+          <button
+            class="remove"
+            type="button"
+            data-test-confirm
+            {{on "click" (perform this.deleteObjective)}}
+          >
+            {{#if this.deleteObjective.isRunning}}
+              <FaIcon @icon="spinner" @spin={{true}} />
+            {{else}}
+              {{t "general.yes"}}
+            {{/if}}
+          </button>
+          <button
+            class="done"
+            type="button"
+            data-test-cancel
+            {{on "click" (set this "showRemoveConfirmation" false)}}
+          >
+            {{t "general.cancel"}}
+          </button>
+        </div>
+      {{/if}}
+
+      {{#if this.isManagingCompetency}}
+        <ManageObjectiveCompetency
+          @objective={{@programYearObjective}}
+          @domainTrees={{@domainTrees}}
+          @programYearCompetencies={{@programYearCompetencies}}
+          @selected={{this.competencyBuffer}}
+          @add={{this.setCompetencyBuffer}}
+          @remove={{set this "competencyBuffer" null}}
+        />
+      {{/if}}
+      {{#if this.isManagingDescriptors}}
+        <ManageObjectiveDescriptors
+          @selected={{this.descriptorsBuffer}}
+          @add={{this.addDescriptorToBuffer}}
+          @remove={{this.removeDescriptorFromBuffer}}
+          @editable={{@editable}}
+          @save={{perform this.saveDescriptors}}
+          @cancel={{this.cancel}}
+        />
+      {{/if}}
+      {{#if this.isExpanded}}
+        <ObjectiveListItemExpanded @objective={{@programYearObjective}} />
+      {{/if}}
+      {{#if this.isManagingTerms}}
+        <TaxonomyManager
+          @vocabularies={{this.assignableVocabularies}}
+          @vocabulary={{this.selectedVocabulary}}
+          @selectedTerms={{this.termsBuffer}}
+          @add={{this.addTermToBuffer}}
+          @remove={{this.removeTermFromBuffer}}
+          @editable={{@editable}}
+          @save={{perform this.saveTerms}}
+          @cancel={{this.cancel}}
+        />
+      {{/if}}
     </div>
-  {{/if}}
-
-  {{#if this.isManagingCompetency}}
-    <ProgramYear::ManageObjectiveCompetency
-      @objective={{@programYearObjective}}
-      @domainTrees={{@domainTrees}}
-      @programYearCompetencies={{@programYearCompetencies}}
-      @selected={{this.competencyBuffer}}
-      @add={{this.setCompetencyBuffer}}
-      @remove={{set this "competencyBuffer" null}}
-    />
-  {{/if}}
-  {{#if this.isManagingDescriptors}}
-    <ProgramYear::ManageObjectiveDescriptors
-      @selected={{this.descriptorsBuffer}}
-      @add={{this.addDescriptorToBuffer}}
-      @remove={{this.removeDescriptorFromBuffer}}
-      @editable={{@editable}}
-      @save={{perform this.saveDescriptors}}
-      @cancel={{this.cancel}}
-    />
-  {{/if}}
-  {{#if this.isExpanded}}
-    <ProgramYear::ObjectiveListItemExpanded @objective={{@programYearObjective}} />
-  {{/if}}
-  {{#if this.isManagingTerms}}
-    <TaxonomyManager
-      @vocabularies={{this.assignableVocabularies}}
-      @vocabulary={{this.selectedVocabulary}}
-      @selectedTerms={{this.termsBuffer}}
-      @add={{this.addTermToBuffer}}
-      @remove={{this.removeTermFromBuffer}}
-      @editable={{@editable}}
-      @save={{perform this.saveTerms}}
-      @cancel={{this.cancel}}
-    />
-  {{/if}}
-</div>
+  </template>
+}

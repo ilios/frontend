@@ -4,6 +4,11 @@ import { action } from '@ember/object';
 import { cached } from '@glimmer/tracking';
 import { service } from '@ember/service';
 import { sortBy } from 'ilios-common/utils/array-helpers';
+import t from 'ember-intl/helpers/t';
+import { on } from '@ember/modifier';
+import isEmpty from 'ember-truth-helpers/helpers/is-empty';
+import eq from 'ember-truth-helpers/helpers/eq';
+import LoadingSpinner from 'ilios-common/components/loading-spinner';
 
 export default class ReportsSubjectNewProgramComponent extends Component {
   @service store;
@@ -47,28 +52,29 @@ export default class ReportsSubjectNewProgramComponent extends Component {
       event.target.classList.remove('error');
     }
   }
+  <template>
+    <p data-test-reports-subject-new-program>
+      <label for="new-program">
+        {{t "general.whichIs"}}
+      </label>
+      {{#if this.allProgramsData.isResolved}}
+        <select
+          id="new-program"
+          data-test-prepositional-objects
+          {{on "change" this.updatePrepositionalObjectId}}
+        >
+          <option selected={{isEmpty @currentId}} value>
+            {{t "general.selectPolite"}}
+          </option>
+          {{#each this.sortedPrograms as |program|}}
+            <option selected={{eq program.id this.bestSelectedProgram}} value={{program.id}}>
+              {{program.title}}
+            </option>
+          {{/each}}
+        </select>
+      {{else}}
+        <LoadingSpinner />
+      {{/if}}
+    </p>
+  </template>
 }
-
-<p data-test-reports-subject-new-program>
-  <label for="new-program">
-    {{t "general.whichIs"}}
-  </label>
-  {{#if this.allProgramsData.isResolved}}
-    <select
-      id="new-program"
-      data-test-prepositional-objects
-      {{on "change" this.updatePrepositionalObjectId}}
-    >
-      <option selected={{is-empty @currentId}} value="">
-        {{t "general.selectPolite"}}
-      </option>
-      {{#each this.sortedPrograms as |program|}}
-        <option selected={{eq program.id this.bestSelectedProgram}} value={{program.id}}>
-          {{program.title}}
-        </option>
-      {{/each}}
-    </select>
-  {{else}}
-    <LoadingSpinner />
-  {{/if}}
-</p>

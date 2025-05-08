@@ -19,10 +19,11 @@ export default class YupValidationMessage extends Component {
       }) ?? []
     );
   }
+  <template>
+    {{#each this.messages as |m|}}
+      <span class="validation-error-message" data-test-validation-error-message ...attributes>
+        {{m}}
+      </span>
+    {{/each}}
+  </template>
 }
-
-{{#each this.messages as |m|}}
-  <span class="validation-error-message" data-test-validation-error-message ...attributes>
-    {{m}}
-  </span>
-{{/each}}

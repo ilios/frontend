@@ -7,6 +7,22 @@ import cloneLearnerGroup from 'frontend/utils/clone-learner-group';
 import { dropTask } from 'ember-concurrency';
 import { map } from 'rsvp';
 import { action } from '@ember/object';
+import FaIcon from 'ilios-common/components/fa-icon';
+import gt from 'ember-truth-helpers/helpers/gt';
+import t from 'ember-intl/helpers/t';
+import { on } from '@ember/modifier';
+import pick from 'ilios-common/helpers/pick';
+import sortBy0 from 'ilios-common/helpers/sort-by';
+import eq from 'ember-truth-helpers/helpers/eq';
+import perform from 'ember-concurrency/helpers/perform';
+import ExpandCollapseButton from 'ilios-common/components/expand-collapse-button';
+import set from 'ember-set-helper/helpers/set';
+import not from 'ember-truth-helpers/helpers/not';
+import New from 'frontend/components/learner-group/new';
+import { LinkTo } from '@ember/routing';
+import List from 'frontend/components/learner-group/list';
+import Loading from 'frontend/components/learner-groups/loading';
+import WaitSaving from 'ilios-common/components/wait-saving';
 
 export default class LearnerGroupsRootComponent extends Component {
   @service currentUser;
@@ -251,136 +267,137 @@ export default class LearnerGroupsRootComponent extends Component {
     this.args.setProgramId(program.id);
     this.args.setProgramYearId(programYear.id);
   });
-}
-
-<section class="learner-groups-root" data-test-learner-groups>
-  <div class="filters">
-    <div class="filter" data-test-school-filter>
-      <FaIcon @icon="building-columns" @fixedWidth={{true}} />
-      {{#if (gt @schools.length 1)}}
-        <select
-          {{on "change" (pick "target.value" this.setSchoolId)}}
-          aria-label={{t "general.schools"}}
-          data-test-school-selector
-        >
-          {{#each (sort-by "title" @schools) as |school|}}
-            <option selected={{eq school.id this.selectedSchool.id}} value={{school.id}}>
-              {{school.title}}
-            </option>
-          {{/each}}
-        </select>
-      {{else}}
-        {{this.selectedSchool.title}}
-      {{/if}}
-    </div>
-    <div class="filter" data-test-program-filter>
-      <FaIcon @icon="users" @fixedWidth={{true}} />
-      {{#if (gt this.programs.length 1)}}
-        <select
-          {{on "change" (pick "target.value" (perform this.setProgramId))}}
-          aria-label={{t "general.programs"}}
-          data-test-program-selector
-        >
-          {{#each (sort-by "title" this.programs) as |program|}}
-            <option selected={{eq program.id this.selectedProgram.id}} value={{program.id}}>
-              {{program.title}}
-            </option>
-          {{/each}}
-        </select>
-      {{else}}
-        {{this.selectedProgram.title}}
-      {{/if}}
-    </div>
-    <div class="filter" data-test-program-year-filter>
-      <FaIcon @icon="calendar" @fixedWidth={{true}} />
-      {{#if (gt this.programYears.length 1)}}
-        <select
-          {{on "change" (pick "target.value" (perform this.setProgramYearId))}}
-          aria-label={{t "general.programYears"}}
-          data-test-program-selector
-        >
-          {{#each (sort-by "startYear:desc" this.programYears) as |programYear|}}
-            <option
-              selected={{eq programYear.id this.selectedProgramYear.id}}
-              value={{programYear.id}}
+  <template>
+    <section class="learner-groups-root" data-test-learner-groups>
+      <div class="filters">
+        <div class="filter" data-test-school-filter>
+          <FaIcon @icon="building-columns" @fixedWidth={{true}} />
+          {{#if (gt @schools.length 1)}}
+            <select
+              {{on "change" (pick "target.value" this.setSchoolId)}}
+              aria-label={{t "general.schools"}}
+              data-test-school-selector
             >
-              {{programYear.cohort.title}}
-            </option>
-          {{/each}}
-        </select>
-      {{else}}
-        {{this.selectedProgramYear.cohort.title}}
-      {{/if}}
-    </div>
-    <div class="filter" data-test-title-filter>
-      <input
-        aria-label={{t "general.learnerGroupTitleFilterPlaceholder"}}
-        value={{@titleFilter}}
-        {{on "input" (pick "target.value" @setTitleFilter)}}
-        placeholder={{t "general.learnerGroupTitleFilterPlaceholder"}}
-        data-test-title-filter
-      />
-    </div>
-  </div>
-
-  <div class="main-list">
-    <div class="header">
-      <h2 class="title">
-        {{t "general.learnerGroups"}}
-        {{#if this.isLoaded}}
-          ({{this.filteredLearnerGroups.length}})
-        {{/if}}
-      </h2>
-      <div class="actions">
-        {{#if this.canCreate}}
-          <ExpandCollapseButton
-            @value={{this.showNewLearnerGroupForm}}
-            @action={{set this "showNewLearnerGroupForm" (not this.showNewLearnerGroupForm)}}
-            @expandButtonLabel={{t "general.expand"}}
-            @collapseButtonLabel={{t "general.close"}}
-          />
-        {{/if}}
-      </div>
-    </div>
-
-    <div class="new">
-      {{#if this.showNewLearnerGroupForm}}
-        <LearnerGroup::New
-          @save={{perform this.saveNewLearnerGroup}}
-          @cancel={{set this "showNewLearnerGroupForm" false}}
-          @fillModeSupported={{true}}
-        />
-      {{/if}}
-      {{#if this.newLearnerGroup}}
-        <div class="saved-result">
-          <LinkTo @route="learner-group" @model={{this.newLearnerGroup}}>
-            <FaIcon @icon="square-up-right" />
-            {{this.newLearnerGroup.title}}
-          </LinkTo>
-          {{t "general.savedSuccessfully"}}
+              {{#each (sortBy0 "title" @schools) as |school|}}
+                <option selected={{eq school.id this.selectedSchool.id}} value={{school.id}}>
+                  {{school.title}}
+                </option>
+              {{/each}}
+            </select>
+          {{else}}
+            {{this.selectedSchool.title}}
+          {{/if}}
         </div>
-      {{/if}}
-    </div>
-    <div class="list">
-      {{#if this.isLoaded}}
-        <LearnerGroup::List
-          @learnerGroups={{this.filteredLearnerGroups}}
-          @canCopyWithLearners={{true}}
-          @copyGroup={{perform this.copyGroup}}
-          @sortBy={{@sortBy}}
-          @setSortBy={{@setSortBy}}
-        />
-      {{else}}
-        <LearnerGroups::Loading @count={{2}} />
-      {{/if}}
-    </div>
-  </div>
-</section>
+        <div class="filter" data-test-program-filter>
+          <FaIcon @icon="users" @fixedWidth={{true}} />
+          {{#if (gt this.programs.length 1)}}
+            <select
+              {{on "change" (pick "target.value" (perform this.setProgramId))}}
+              aria-label={{t "general.programs"}}
+              data-test-program-selector
+            >
+              {{#each (sortBy0 "title" this.programs) as |program|}}
+                <option selected={{eq program.id this.selectedProgram.id}} value={{program.id}}>
+                  {{program.title}}
+                </option>
+              {{/each}}
+            </select>
+          {{else}}
+            {{this.selectedProgram.title}}
+          {{/if}}
+        </div>
+        <div class="filter" data-test-program-year-filter>
+          <FaIcon @icon="calendar" @fixedWidth={{true}} />
+          {{#if (gt this.programYears.length 1)}}
+            <select
+              {{on "change" (pick "target.value" (perform this.setProgramYearId))}}
+              aria-label={{t "general.programYears"}}
+              data-test-program-selector
+            >
+              {{#each (sortBy0 "startYear:desc" this.programYears) as |programYear|}}
+                <option
+                  selected={{eq programYear.id this.selectedProgramYear.id}}
+                  value={{programYear.id}}
+                >
+                  {{programYear.cohort.title}}
+                </option>
+              {{/each}}
+            </select>
+          {{else}}
+            {{this.selectedProgramYear.cohort.title}}
+          {{/if}}
+        </div>
+        <div class="filter" data-test-title-filter>
+          <input
+            aria-label={{t "general.learnerGroupTitleFilterPlaceholder"}}
+            value={{@titleFilter}}
+            {{on "input" (pick "target.value" @setTitleFilter)}}
+            placeholder={{t "general.learnerGroupTitleFilterPlaceholder"}}
+            data-test-title-filter
+          />
+        </div>
+      </div>
 
-{{#if this.copyGroup.isRunning}}
-  <WaitSaving
-    @showProgress={{true}}
-    @totalProgress={{this.totalGroupsToSave}}
-    @currentProgress={{this.currentGroupsSaved}}
-  />
-{{/if}}
+      <div class="main-list">
+        <div class="header">
+          <h2 class="title">
+            {{t "general.learnerGroups"}}
+            {{#if this.isLoaded}}
+              ({{this.filteredLearnerGroups.length}})
+            {{/if}}
+          </h2>
+          <div class="actions">
+            {{#if this.canCreate}}
+              <ExpandCollapseButton
+                @value={{this.showNewLearnerGroupForm}}
+                @action={{set this "showNewLearnerGroupForm" (not this.showNewLearnerGroupForm)}}
+                @expandButtonLabel={{t "general.expand"}}
+                @collapseButtonLabel={{t "general.close"}}
+              />
+            {{/if}}
+          </div>
+        </div>
+
+        <div class="new">
+          {{#if this.showNewLearnerGroupForm}}
+            <New
+              @save={{perform this.saveNewLearnerGroup}}
+              @cancel={{set this "showNewLearnerGroupForm" false}}
+              @fillModeSupported={{true}}
+            />
+          {{/if}}
+          {{#if this.newLearnerGroup}}
+            <div class="saved-result">
+              <LinkTo @route="learner-group" @model={{this.newLearnerGroup}}>
+                <FaIcon @icon="square-up-right" />
+                {{this.newLearnerGroup.title}}
+              </LinkTo>
+              {{t "general.savedSuccessfully"}}
+            </div>
+          {{/if}}
+        </div>
+        <div class="list">
+          {{#if this.isLoaded}}
+            <List
+              @learnerGroups={{this.filteredLearnerGroups}}
+              @canCopyWithLearners={{true}}
+              @copyGroup={{perform this.copyGroup}}
+              @sortBy={{@sortBy}}
+              @setSortBy={{@setSortBy}}
+            />
+          {{else}}
+            <Loading @count={{2}} />
+          {{/if}}
+        </div>
+      </div>
+    </section>
+
+    {{#if this.copyGroup.isRunning}}
+      <WaitSaving
+        @showProgress={{true}}
+        @totalProgress={{this.totalGroupsToSave}}
+        @currentProgress={{this.currentGroupsSaved}}
+      />
+    {{/if}}
+  </template>
+}

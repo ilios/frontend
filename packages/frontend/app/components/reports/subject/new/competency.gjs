@@ -4,6 +4,11 @@ import { cached } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
 import { sortBy } from 'ilios-common/utils/array-helpers';
+import t from 'ember-intl/helpers/t';
+import { on } from '@ember/modifier';
+import isEmpty from 'ember-truth-helpers/helpers/is-empty';
+import eq from 'ember-truth-helpers/helpers/eq';
+import LoadingSpinner from 'ilios-common/components/loading-spinner';
 
 export default class ReportsSubjectNewCompetencyComponent extends Component {
   @service store;
@@ -47,28 +52,32 @@ export default class ReportsSubjectNewCompetencyComponent extends Component {
       event.target.classList.remove('error');
     }
   }
+  <template>
+    <p data-test-reports-subject-new-competency>
+      <label for="new-competency">
+        {{t "general.whichIs"}}
+      </label>
+      {{#if this.allCompetenciesData.isResolved}}
+        <select
+          id="new-competency"
+          data-test-prepositional-objects
+          {{on "change" this.updatePrepositionalObjectId}}
+        >
+          <option selected={{isEmpty @currentId}} value>
+            {{t "general.selectPolite"}}
+          </option>
+          {{#each this.sortedCompetencies as |competency|}}
+            <option
+              selected={{eq competency.id this.bestSelectedCompetency}}
+              value={{competency.id}}
+            >
+              {{competency.title}}
+            </option>
+          {{/each}}
+        </select>
+      {{else}}
+        <LoadingSpinner />
+      {{/if}}
+    </p>
+  </template>
 }
-
-<p data-test-reports-subject-new-competency>
-  <label for="new-competency">
-    {{t "general.whichIs"}}
-  </label>
-  {{#if this.allCompetenciesData.isResolved}}
-    <select
-      id="new-competency"
-      data-test-prepositional-objects
-      {{on "change" this.updatePrepositionalObjectId}}
-    >
-      <option selected={{is-empty @currentId}} value="">
-        {{t "general.selectPolite"}}
-      </option>
-      {{#each this.sortedCompetencies as |competency|}}
-        <option selected={{eq competency.id this.bestSelectedCompetency}} value={{competency.id}}>
-          {{competency.title}}
-        </option>
-      {{/each}}
-    </select>
-  {{else}}
-    <LoadingSpinner />
-  {{/if}}
-</p>

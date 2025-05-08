@@ -6,6 +6,15 @@ import { DateTime } from 'luxon';
 import { all, map } from 'rsvp';
 import { mapBy } from 'ilios-common/utils/array-helpers';
 import { TrackedAsyncData } from 'ember-async-data';
+import ToggleYesno from 'ilios-common/components/toggle-yesno';
+import set from 'ember-set-helper/helpers/set';
+import { on } from '@ember/modifier';
+import { fn } from '@ember/helper';
+import not from 'ember-truth-helpers/helpers/not';
+import t from 'ember-intl/helpers/t';
+import FaIcon from 'ilios-common/components/fa-icon';
+import IliosCalendarWeek from 'ilios-common/components/ilios-calendar-week';
+import LoadingSpinner from 'ilios-common/components/loading-spinner';
 
 export default class LearnerGroupCalendarComponent extends Component {
   @service localeDays;
@@ -81,57 +90,63 @@ export default class LearnerGroupCalendarComponent extends Component {
   gotoToday() {
     this.selectedDate = DateTime.now();
   }
+  <template>
+    <div class="learner-group-calendar" data-test-learner-group-calendar>
+      <p class="learner-group-calendar-filter-options">
+        <span class="filter" data-test-learner-group-calendar-toggle-subgroup-events>
+          <ToggleYesno @yes={{this.showSubgroupEvents}} @toggle={{set this "showSubgroupEvents"}} />
+          <label {{on "click" (fn (set this "showSubgroupEvents") (not this.showSubgroupEvents))}}>
+            {{t "general.showSubgroupEvents"}}
+          </label>
+        </span>
+      </p>
+      <ul class="inline learner-group-calendar-time-picker">
+        <li>
+          <button
+            class="link-button"
+            type="button"
+            aria-label={{t "general.forward"}}
+            {{on "click" this.goBack}}
+            data-test-go-back
+          >
+            <FaIcon @icon="backward" />
+          </button>
+        </li>
+        <li>
+          <button
+            class="link-button"
+            type="button"
+            {{on "click" this.gotoToday}}
+            data-test-go-today
+          >
+            {{t "general.today"}}
+          </button>
+        </li>
+        <li>
+          <button
+            class="link-button"
+            type="button"
+            aria-label={{t "general.forward"}}
+            {{on "click" this.goForward}}
+            data-test-go-forward
+          >
+            <FaIcon @icon="forward" />
+          </button>
+        </li>
+      </ul>
+      <div class="ilios-calendar">
+        <IliosCalendarWeek
+          @calendarEvents={{this.events}}
+          @date={{this.date}}
+          @areEventsSelectable={{false}}
+          @areDaysSelectable={{false}}
+        />
+      </div>
+      <span class="loading-indicator {{unless this.load.isRunning 'loaded'}}">
+        <LoadingSpinner />
+        {{t "general.loadingEvents"}}
+        ...
+      </span>
+    </div>
+  </template>
 }
-
-<div class="learner-group-calendar" data-test-learner-group-calendar>
-  <p class="learner-group-calendar-filter-options">
-    <span class="filter" data-test-learner-group-calendar-toggle-subgroup-events>
-      <ToggleYesno @yes={{this.showSubgroupEvents}} @toggle={{set this "showSubgroupEvents"}} />
-      <label {{on "click" (fn (set this "showSubgroupEvents") (not this.showSubgroupEvents))}}>
-        {{t "general.showSubgroupEvents"}}
-      </label>
-    </span>
-  </p>
-  <ul class="inline learner-group-calendar-time-picker">
-    <li>
-      <button
-        class="link-button"
-        type="button"
-        aria-label={{t "general.forward"}}
-        {{on "click" this.goBack}}
-        data-test-go-back
-      >
-        <FaIcon @icon="backward" />
-      </button>
-    </li>
-    <li>
-      <button class="link-button" type="button" {{on "click" this.gotoToday}} data-test-go-today>
-        {{t "general.today"}}
-      </button>
-    </li>
-    <li>
-      <button
-        class="link-button"
-        type="button"
-        aria-label={{t "general.forward"}}
-        {{on "click" this.goForward}}
-        data-test-go-forward
-      >
-        <FaIcon @icon="forward" />
-      </button>
-    </li>
-  </ul>
-  <div class="ilios-calendar">
-    <IliosCalendarWeek
-      @calendarEvents={{this.events}}
-      @date={{this.date}}
-      @areEventsSelectable={{false}}
-      @areDaysSelectable={{false}}
-    />
-  </div>
-  <span class="loading-indicator {{unless this.load.isRunning 'loaded'}}">
-    <LoadingSpinner />
-    {{t "general.loadingEvents"}}
-    ...
-  </span>
-</div>

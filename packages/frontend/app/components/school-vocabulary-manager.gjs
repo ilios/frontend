@@ -6,6 +6,16 @@ import { validatable, Custom, Length, NotBlank } from 'ilios-common/decorators/v
 import { filterBy, mapBy, sortBy } from 'ilios-common/utils/array-helpers';
 import { dropTask } from 'ember-concurrency';
 import { TrackedAsyncData } from 'ember-async-data';
+import { uniqueId, fn } from '@ember/helper';
+import { on } from '@ember/modifier';
+import t from 'ember-intl/helpers/t';
+import EditableField from 'ilios-common/components/editable-field';
+import perform from 'ember-concurrency/helpers/perform';
+import pick from 'ilios-common/helpers/pick';
+import set from 'ember-set-helper/helpers/set';
+import ValidationError from 'ilios-common/components/validation-error';
+import FaIcon from 'ilios-common/components/fa-icon';
+import SchoolVocabularyNewTerm from 'frontend/components/school-vocabulary-new-term';
 
 @validatable
 export default class SchoolVocabularyManagerComponent extends Component {
@@ -81,96 +91,101 @@ export default class SchoolVocabularyManagerComponent extends Component {
   validateTitleMessageCallback() {
     return this.intl.t('errors.exclusion', { description: this.intl.t('general.vocabulary') });
   }
-}
-
-{{#let (unique-id) as |templateId|}}
-  <div class="school-vocabulary-manager" data-test-school-vocabulary-manager attributes...>
-    <div class="breadcrumbs" data-test-breadcrumbs>
-      <span>
-        <button
-          class="link-button"
-          type="button"
-          data-test-all
-          {{on "click" (fn @manageVocabulary null)}}
-        >
-          {{t "general.allVocabularies"}}
-        </button>
-      </span>
-      <span data-test-vocabulary>
-        {{@vocabulary.title}}
-      </span>
-    </div>
-    <br />
-    <div class="school-vocabulary-manager-title" data-test-title>
-      <label for="title-{{templateId}}">
-        {{t "general.title"}}:
-      </label>
-      {{#if @canUpdate}}
-        <EditableField
-          @value={{if this.title this.title (t "general.clickToEdit")}}
-          @save={{perform this.changeTitle}}
-          @close={{this.revertTitleChanges}}
-          @saveOnEnter={{true}}
-          @closeOnEscape={{true}}
-          as |isSaving|
-        >
-          <input
-            id="title-{{templateId}}"
-            type="text"
-            value={{this.titleValue}}
-            disabled={{isSaving}}
-            {{on "input" (pick "target.value" (set this "titleValue"))}}
-            {{on "keyup" (fn this.addErrorDisplayFor "titleValue")}}
-          />
-          <ValidationError @validatable={{this}} @property="titleValue" />
-        </EditableField>
-      {{else}}
-        {{this.title}}
-      {{/if}}
-      <span class="term-totals">({{t "general.countTotal" total=this.terms.length}})</span>
-    </div>
-    <h5>
-      {{t "general.terms"}}:
-    </h5>
-    <div class="terms" data-test-terms>
-      {{#if this.newTerm}}
-        <div class="saved-result">
-          <button class="link-button" type="button" {{on "click" (fn @manageTerm this.newTerm.id)}}>
-            <FaIcon @icon="square-up-right" />
-            {{this.newTerm.title}}
-          </button>
-          {{t "general.savedSuccessfully"}}
-        </div>
-      {{/if}}
-      {{#if @canCreate}}
-        <SchoolVocabularyNewTerm @createTerm={{this.createTerm}} @vocabulary={{@vocabulary}} />
-      {{/if}}
-      <ul data-test-term-list>
-        {{#each this.sortedTerms as |term|}}
-          <li>
+  <template>
+    {{#let (uniqueId) as |templateId|}}
+      <div class="school-vocabulary-manager" data-test-school-vocabulary-manager attributes...>
+        <div class="breadcrumbs" data-test-breadcrumbs>
+          <span>
             <button
               class="link-button"
               type="button"
-              data-test-term
-              {{on "click" (fn @manageTerm term.id)}}
+              data-test-all
+              {{on "click" (fn @manageVocabulary null)}}
             >
-              {{term.title}}
-              {{#if term.hasChildren}}
-                <FaIcon
-                  @icon="asterisk"
-                  data-test-has-children
-                  @title={{t "general.thisTermHasSubTerms"}}
-                />
-              {{/if}}
-              {{#unless term.active}}
-                <em>
-                  ({{t "general.inactive"}})
-                </em>
-              {{/unless}}
+              {{t "general.allVocabularies"}}
             </button>
-          </li>
-        {{/each}}
-      </ul>
-    </div>
-  </div>
-{{/let}}
+          </span>
+          <span data-test-vocabulary>
+            {{@vocabulary.title}}
+          </span>
+        </div>
+        <br />
+        <div class="school-vocabulary-manager-title" data-test-title>
+          <label for="title-{{templateId}}">
+            {{t "general.title"}}:
+          </label>
+          {{#if @canUpdate}}
+            <EditableField
+              @value={{if this.title this.title (t "general.clickToEdit")}}
+              @save={{perform this.changeTitle}}
+              @close={{this.revertTitleChanges}}
+              @saveOnEnter={{true}}
+              @closeOnEscape={{true}}
+              as |isSaving|
+            >
+              <input
+                id="title-{{templateId}}"
+                type="text"
+                value={{this.titleValue}}
+                disabled={{isSaving}}
+                {{on "input" (pick "target.value" (set this "titleValue"))}}
+                {{on "keyup" (fn this.addErrorDisplayFor "titleValue")}}
+              />
+              <ValidationError @validatable={{this}} @property="titleValue" />
+            </EditableField>
+          {{else}}
+            {{this.title}}
+          {{/if}}
+          <span class="term-totals">({{t "general.countTotal" total=this.terms.length}})</span>
+        </div>
+        <h5>
+          {{t "general.terms"}}:
+        </h5>
+        <div class="terms" data-test-terms>
+          {{#if this.newTerm}}
+            <div class="saved-result">
+              <button
+                class="link-button"
+                type="button"
+                {{on "click" (fn @manageTerm this.newTerm.id)}}
+              >
+                <FaIcon @icon="square-up-right" />
+                {{this.newTerm.title}}
+              </button>
+              {{t "general.savedSuccessfully"}}
+            </div>
+          {{/if}}
+          {{#if @canCreate}}
+            <SchoolVocabularyNewTerm @createTerm={{this.createTerm}} @vocabulary={{@vocabulary}} />
+          {{/if}}
+          <ul data-test-term-list>
+            {{#each this.sortedTerms as |term|}}
+              <li>
+                <button
+                  class="link-button"
+                  type="button"
+                  data-test-term
+                  {{on "click" (fn @manageTerm term.id)}}
+                >
+                  {{term.title}}
+                  {{#if term.hasChildren}}
+                    <FaIcon
+                      @icon="asterisk"
+                      data-test-has-children
+                      @title={{t "general.thisTermHasSubTerms"}}
+                    />
+                  {{/if}}
+                  {{#unless term.active}}
+                    <em>
+                      ({{t "general.inactive"}})
+                    </em>
+                  {{/unless}}
+                </button>
+              </li>
+            {{/each}}
+          </ul>
+        </div>
+      </div>
+    {{/let}}
+  </template>
+}

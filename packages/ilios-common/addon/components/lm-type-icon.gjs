@@ -1,4 +1,6 @@
 import Component from '@glimmer/component';
+import FaIcon from 'ilios-common/components/fa-icon';
+import t from 'ember-intl/helpers/t';
 
 export default class LmTypeIconComponent extends Component {
   get icon() {
@@ -36,13 +38,14 @@ export default class LmTypeIconComponent extends Component {
     }
     return 'file';
   }
+  <template>
+    <FaIcon
+      class="lm-type-icon"
+      @icon={{this.icon}}
+      @listItem={{@listItem}}
+      @fixedWidth={{@fixedWidth}}
+      @title={{t this.title}}
+      data-test-lm-type-icon
+    />
+  </template>
 }
-
-<FaIcon
-  class="lm-type-icon"
-  @icon={{this.icon}}
-  @listItem={{@listItem}}
-  @fixedWidth={{@fixedWidth}}
-  @title={{t this.title}}
-  data-test-lm-type-icon
-/>

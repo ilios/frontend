@@ -4,6 +4,15 @@ import { action } from '@ember/object';
 import { service } from '@ember/service';
 import { isEmpty, isPresent } from '@ember/utils';
 import { findBy, mapBy, uniqueValues } from 'ilios-common/utils/array-helpers';
+import t from 'ember-intl/helpers/t';
+import { on } from '@ember/modifier';
+import BulkGroupMatcher from 'frontend/components/learner-group/bulk-group-matcher';
+import sortBy from 'ilios-common/helpers/sort-by';
+import and from 'ember-truth-helpers/helpers/and';
+import gt from 'ember-truth-helpers/helpers/gt';
+import BulkFinalizeUsers from 'frontend/components/learner-group/bulk-finalize-users';
+import UploadData from 'frontend/components/learner-group/upload-data';
+import set from 'ember-set-helper/helpers/set';
 
 export default class LearnerGroupBulkAssignmentComponent extends Component {
   @service store;
@@ -57,59 +66,64 @@ export default class LearnerGroupBulkAssignmentComponent extends Component {
     this.validUsers = [];
     this.matchedGroups = [];
   }
+  <template>
+    <div
+      class="learner-group-bulk-assignment"
+      data-test-learner-group-bulk-assignment
+      ...attributes
+    >
+      {{#if this.validUsers}}
+        <p>
+          {{t "general.usersSelected" count=this.validUsers.length}}
+          <br />
+          <button type="button" {{on "click" this.clear}}>
+            {{t "general.startOver"}}
+          </button>
+        </p>
+        {{#if this.unmatchedGroups.length}}
+          <table class="group-matcher" data-test-match-groups-unmatched>
+            <caption>
+              {{t "general.matchGroups"}}
+            </caption>
+            <thead>
+              <tr>
+                <td>
+                  {{t "general.uploadedGroup"}}
+                </td>
+                <td>
+                  {{t "general.existingGroup"}}
+                </td>
+              </tr>
+            </thead>
+            <tbody>
+              {{#each this.unmatchedGroups as |name|}}
+                <BulkGroupMatcher
+                  @groupName={{name}}
+                  @setMatch={{this.addMatch}}
+                  @unsetMatch={{this.removeMatch}}
+                  @createGroup={{this.createGroup}}
+                  @matches={{this.matchedGroups}}
+                  @groups={{sortBy "title" @learnerGroup.allDescendants}}
+                />
+              {{/each}}
+            </tbody>
+          </table>
+        {{/if}}
+        {{#if (and this.allUnmatchedGroupsMatched (gt this.validUsers.length 0))}}
+          <BulkFinalizeUsers
+            @users={{this.validUsers}}
+            @matchedGroups={{this.matchedGroups}}
+            @learnerGroup={{@learnerGroup}}
+            @done={{@done}}
+          />
+        {{/if}}
+      {{else}}
+        <UploadData
+          @learnerGroup={{@learnerGroup}}
+          @sendValidUsers={{set this "validUsers"}}
+          @sendMatchedGroups={{set this "matchedGroups"}}
+        />
+      {{/if}}
+    </div>
+  </template>
 }
-
-<div class="learner-group-bulk-assignment" data-test-learner-group-bulk-assignment ...attributes>
-  {{#if this.validUsers}}
-    <p>
-      {{t "general.usersSelected" count=this.validUsers.length}}
-      <br />
-      <button type="button" {{on "click" this.clear}}>
-        {{t "general.startOver"}}
-      </button>
-    </p>
-    {{#if this.unmatchedGroups.length}}
-      <table class="group-matcher" data-test-match-groups-unmatched>
-        <caption>
-          {{t "general.matchGroups"}}
-        </caption>
-        <thead>
-          <tr>
-            <td>
-              {{t "general.uploadedGroup"}}
-            </td>
-            <td>
-              {{t "general.existingGroup"}}
-            </td>
-          </tr>
-        </thead>
-        <tbody>
-          {{#each this.unmatchedGroups as |name|}}
-            <LearnerGroup::BulkGroupMatcher
-              @groupName={{name}}
-              @setMatch={{this.addMatch}}
-              @unsetMatch={{this.removeMatch}}
-              @createGroup={{this.createGroup}}
-              @matches={{this.matchedGroups}}
-              @groups={{sort-by "title" @learnerGroup.allDescendants}}
-            />
-          {{/each}}
-        </tbody>
-      </table>
-    {{/if}}
-    {{#if (and this.allUnmatchedGroupsMatched (gt this.validUsers.length 0))}}
-      <LearnerGroup::BulkFinalizeUsers
-        @users={{this.validUsers}}
-        @matchedGroups={{this.matchedGroups}}
-        @learnerGroup={{@learnerGroup}}
-        @done={{@done}}
-      />
-    {{/if}}
-  {{else}}
-    <LearnerGroup::UploadData
-      @learnerGroup={{@learnerGroup}}
-      @sendValidUsers={{set this "validUsers"}}
-      @sendMatchedGroups={{set this "matchedGroups"}}
-    />
-  {{/if}}
-</div>

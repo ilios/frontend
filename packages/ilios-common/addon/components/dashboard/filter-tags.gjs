@@ -3,6 +3,11 @@ import { cached } from '@glimmer/tracking';
 import { service } from '@ember/service';
 import { findById } from 'ilios-common/utils/array-helpers';
 import { TrackedAsyncData } from 'ember-async-data';
+import t from 'ember-intl/helpers/t';
+import sortBy from 'ilios-common/helpers/sort-by';
+import { on } from '@ember/modifier';
+import { fn } from '@ember/helper';
+import FaIcon from 'ilios-common/components/fa-icon';
 
 export default class DashboardFilterTagsComponent extends Component {
   @service store;
@@ -121,36 +126,37 @@ export default class DashboardFilterTagsComponent extends Component {
   get courseTags() {
     return this.courseTagsData.isResolved ? this.courseTagsData.value : [];
   }
-}
-
-{{#if this.activeFilters.length}}
-  <section class="filters-list" data-test-dashboard-filter-tags>
-    {{#if this.filterTags}}
-      <header class="filters-header">
-        {{t "general.activeFilters"}}:
-      </header>
-      <div class="filter-tags">
-        {{#each (sort-by "name" this.filterTags) as |tag|}}
-          <button
-            class="filter-tag {{tag.class}}"
-            type="button"
-            {{on "click" (fn tag.remove tag.id)}}
-            data-test-filter-tag
-          >
-            {{tag.name}}
-            <FaIcon @icon="xmark" />
-          </button>
-        {{/each}}
-        <button
-          id="calendar-clear-filters"
-          class="filters-clear-filters"
-          type="button"
-          {{on "click" @clearFilters}}
-          data-test-clear-filters
-        >
-          {{t "general.clearFilters"}}
-        </button>
-      </div>
+  <template>
+    {{#if this.activeFilters.length}}
+      <section class="filters-list" data-test-dashboard-filter-tags>
+        {{#if this.filterTags}}
+          <header class="filters-header">
+            {{t "general.activeFilters"}}:
+          </header>
+          <div class="filter-tags">
+            {{#each (sortBy "name" this.filterTags) as |tag|}}
+              <button
+                class="filter-tag {{tag.class}}"
+                type="button"
+                {{on "click" (fn tag.remove tag.id)}}
+                data-test-filter-tag
+              >
+                {{tag.name}}
+                <FaIcon @icon="xmark" />
+              </button>
+            {{/each}}
+            <button
+              id="calendar-clear-filters"
+              class="filters-clear-filters"
+              type="button"
+              {{on "click" @clearFilters}}
+              data-test-clear-filters
+            >
+              {{t "general.clearFilters"}}
+            </button>
+          </div>
+        {{/if}}
+      </section>
     {{/if}}
-  </section>
-{{/if}}
+  </template>
+}

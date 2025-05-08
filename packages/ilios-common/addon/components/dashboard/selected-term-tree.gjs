@@ -1,6 +1,12 @@
 import Component from '@glimmer/component';
 import { TrackedAsyncData } from 'ember-async-data';
 import { cached } from '@glimmer/tracking';
+import FilterCheckbox from 'ilios-common/components/dashboard/filter-checkbox';
+import includes from 'ilios-common/helpers/includes';
+import { fn } from '@ember/helper';
+import sortBy from 'ilios-common/helpers/sort-by';
+import SelectedTermTree from 'ilios-common/components/dashboard/selected-term-tree';
+import add from 'ember-math-helpers/helpers/add';
 
 export default class DashboardSelectedTermTreeComponent extends Component {
   @cached
@@ -15,30 +21,31 @@ export default class DashboardSelectedTermTreeComponent extends Component {
   get level() {
     return this.args.level ?? 0;
   }
-}
-
-<ul
-  class="selected-term-tree"
-  data-test-selected-term-tree
-  data-test-selected-term-tree-level={{this.level}}
->
-  <li class="clickable">
-    <Dashboard::FilterCheckbox
-      @checked={{includes @term.id @selectedTermIds}}
-      @add={{fn @add @term.id}}
-      @remove={{fn @remove @term.id}}
-      @targetId={{@term.id}}
+  <template>
+    <ul
+      class="selected-term-tree"
+      data-test-selected-term-tree
+      data-test-selected-term-tree-level={{this.level}}
     >
-      {{@term.title}}
-    </Dashboard::FilterCheckbox>
-    {{#each (sort-by "title" this.children) as |term|}}
-      <Dashboard::SelectedTermTree
-        @term={{term}}
-        @selectedTermIds={{@selectedTermIds}}
-        @add={{@add}}
-        @remove={{@remove}}
-        @level={{add this.level 1}}
-      />
-    {{/each}}
-  </li>
-</ul>
+      <li class="clickable">
+        <FilterCheckbox
+          @checked={{includes @term.id @selectedTermIds}}
+          @add={{fn @add @term.id}}
+          @remove={{fn @remove @term.id}}
+          @targetId={{@term.id}}
+        >
+          {{@term.title}}
+        </FilterCheckbox>
+        {{#each (sortBy "title" this.children) as |term|}}
+          <SelectedTermTree
+            @term={{term}}
+            @selectedTermIds={{@selectedTermIds}}
+            @add={{@add}}
+            @remove={{@remove}}
+            @level={{add this.level 1}}
+          />
+        {{/each}}
+      </li>
+    </ul>
+  </template>
+}

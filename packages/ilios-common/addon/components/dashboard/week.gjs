@@ -1,5 +1,9 @@
 import Component from '@glimmer/component';
 import { DateTime } from 'luxon';
+import t from 'ember-intl/helpers/t';
+import { LinkTo } from '@ember/routing';
+import { hash } from '@ember/helper';
+import WeekGlance from 'ilios-common/components/week-glance';
 
 export default class DashboardWeekComponent extends Component {
   get expanded() {
@@ -34,22 +38,23 @@ export default class DashboardWeekComponent extends Component {
   get week() {
     return this.thisThursday.weekNumber;
   }
-}
-
-<div class="dashboard-week" data-test-dashboard-week>
-  <div class="dashboard-week-content">
-    <div class="weeklylink" data-test-weekly-link>
-      {{t "general.view"}}:
-      <LinkTo @route="weeklyevents" @query={{hash expanded=this.expanded week=this.week}}>
-        {{t "general.allWeeks"}}
-      </LinkTo>
+  <template>
+    <div class="dashboard-week" data-test-dashboard-week>
+      <div class="dashboard-week-content">
+        <div class="weeklylink" data-test-weekly-link>
+          {{t "general.view"}}:
+          <LinkTo @route="weeklyevents" @query={{hash expanded=this.expanded week=this.week}}>
+            {{t "general.allWeeks"}}
+          </LinkTo>
+        </div>
+        <WeekGlance
+          @collapsed={{false}}
+          @collapsible={{false}}
+          @showFullTitle={{true}}
+          @week={{this.week}}
+          @year={{this.year}}
+        />
+      </div>
     </div>
-    <WeekGlance
-      @collapsed={{false}}
-      @collapsible={{false}}
-      @showFullTitle={{true}}
-      @week={{this.week}}
-      @year={{this.year}}
-    />
-  </div>
-</div>
+  </template>
+}

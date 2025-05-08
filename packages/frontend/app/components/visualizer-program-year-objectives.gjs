@@ -6,6 +6,12 @@ import { cached, tracked } from '@glimmer/tracking';
 import { service } from '@ember/service';
 import { filterBy, uniqueValues } from 'ilios-common/utils/array-helpers';
 import { TrackedAsyncData } from 'ember-async-data';
+import or from 'ember-truth-helpers/helpers/or';
+import SimpleChart from 'ember-simple-charts/components/simple-chart';
+import perform from 'ember-concurrency/helpers/perform';
+import t from 'ember-intl/helpers/t';
+import truncate from 'ilios-common/helpers/truncate';
+import join from 'ilios-common/helpers/join';
 
 export default class VisualizerProgramYearObjectivesComponent extends Component {
   @service intl;
@@ -147,38 +153,39 @@ export default class VisualizerProgramYearObjectivesComponent extends Component 
     this.tooltipCourses = uniqueValues(allCourseTitles);
     this.tooltipSessions = uniqueValues(allSessionTitles);
   });
-}
-
-<div class="{{unless @isIcon 'not-icon'}} visualizer-program-year-objectives" ...attributes>
-  {{#if this.chartOutputData.isResolved}}
-    {{#if (or @isIcon this.chartOutput)}}
-      <SimpleChart
-        @name="tree"
-        @isIcon={{@isIcon}}
-        @data={{this.chartOutput}}
-        @hover={{perform this.nodeHover}}
-        @leave={{perform this.nodeHover}}
-        as |chart|
-      >
-        {{#if this.tooltipTitle}}
-          <chart.tooltip @title={{this.tooltipTitle}}>
-            <div>
-              <h5>
-                {{t "general.courses"}}
-                ({{this.tooltipCourses.length}})
-              </h5>
-              {{truncate (join ", " this.tooltipCourses) 200 true}}
-            </div>
-            <div>
-              <h5>
-                {{t "general.sessions"}}
-                ({{this.tooltipSessions.length}})
-              </h5>
-              {{truncate (join ", " this.tooltipSessions) 200 true}}
-            </div>
-          </chart.tooltip>
+  <template>
+    <div class="{{unless @isIcon 'not-icon'}} visualizer-program-year-objectives" ...attributes>
+      {{#if this.chartOutputData.isResolved}}
+        {{#if (or @isIcon this.chartOutput)}}
+          <SimpleChart
+            @name="tree"
+            @isIcon={{@isIcon}}
+            @data={{this.chartOutput}}
+            @hover={{perform this.nodeHover}}
+            @leave={{perform this.nodeHover}}
+            as |chart|
+          >
+            {{#if this.tooltipTitle}}
+              <chart.tooltip @title={{this.tooltipTitle}}>
+                <div>
+                  <h5>
+                    {{t "general.courses"}}
+                    ({{this.tooltipCourses.length}})
+                  </h5>
+                  {{truncate (join ", " this.tooltipCourses) 200 true}}
+                </div>
+                <div>
+                  <h5>
+                    {{t "general.sessions"}}
+                    ({{this.tooltipSessions.length}})
+                  </h5>
+                  {{truncate (join ", " this.tooltipSessions) 200 true}}
+                </div>
+              </chart.tooltip>
+            {{/if}}
+          </SimpleChart>
         {{/if}}
-      </SimpleChart>
-    {{/if}}
-  {{/if}}
-</div>
+      {{/if}}
+    </div>
+  </template>
+}

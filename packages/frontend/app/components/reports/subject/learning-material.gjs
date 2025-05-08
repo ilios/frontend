@@ -5,6 +5,10 @@ import { service } from '@ember/service';
 import { pluralize } from 'ember-inflector';
 import { camelize } from '@ember/string';
 import { action } from '@ember/object';
+import SubjectHeader from 'frontend/components/reports/subject-header';
+import t from 'ember-intl/helpers/t';
+import SubjectDownload from 'frontend/components/reports/subject-download';
+import LoadingSpinner from 'ilios-common/components/loading-spinner';
 
 export default class ReportsSubjectLearningMaterialComponent extends Component {
   @service graphql;
@@ -83,45 +87,46 @@ export default class ReportsSubjectLearningMaterialComponent extends Component {
       ...this.sortedLearningMaterials.map((v) => [v]),
     ];
   }
-}
-
-<Reports::SubjectHeader
-  @report={{@report}}
-  @school={{@school}}
-  @subject={{@subject}}
-  @prepositionalObject={{@prepositionalObject}}
-  @prepositionalObjectTableRowId={{@prepositionalObjectTableRowId}}
-  @year={{@year}}
-  @showYearFilter={{false}}
-  @description={{@description}}
-  @fetchDownloadData={{this.fetchDownloadData}}
-  @readyToDownload={{this.allLearningMaterialsData.isResolved}}
-  @resultsLength={{this.allLearningMaterials.length}}
-/>
-<div data-test-reports-subject-learning-material>
-  {{#if this.allLearningMaterialsData.isResolved}}
-    <ul class="report-results{{if this.reportResultsExceedMax ' limited'}}" data-test-results>
-      {{#each this.limitedLearningMaterials as |title|}}
-        <li>
-          {{title}}
-        </li>
+  <template>
+    <SubjectHeader
+      @report={{@report}}
+      @school={{@school}}
+      @subject={{@subject}}
+      @prepositionalObject={{@prepositionalObject}}
+      @prepositionalObjectTableRowId={{@prepositionalObjectTableRowId}}
+      @year={{@year}}
+      @showYearFilter={{false}}
+      @description={{@description}}
+      @fetchDownloadData={{this.fetchDownloadData}}
+      @readyToDownload={{this.allLearningMaterialsData.isResolved}}
+      @resultsLength={{this.allLearningMaterials.length}}
+    />
+    <div data-test-reports-subject-learning-material>
+      {{#if this.allLearningMaterialsData.isResolved}}
+        <ul class="report-results{{if this.reportResultsExceedMax ' limited'}}" data-test-results>
+          {{#each this.limitedLearningMaterials as |title|}}
+            <li>
+              {{title}}
+            </li>
+          {{else}}
+            <li>{{t "general.none"}}</li>
+          {{/each}}
+        </ul>
+        {{#if this.reportResultsExceedMax}}
+          <SubjectDownload
+            @report={{@report}}
+            @subject={{@subject}}
+            @prepositionalObject={{@prepositionalObject}}
+            @prepositionalObjectTableRowId={{@prepositionalObjectTableRowId}}
+            @school={{@school}}
+            @fetchDownloadData={{this.fetchDownloadData}}
+            @readyToDownload={{true}}
+            @message={{t "general.reportResultsExceedMax" resultsLengthMax=this.resultsLengthMax}}
+          />
+        {{/if}}
       {{else}}
-        <li>{{t "general.none"}}</li>
-      {{/each}}
-    </ul>
-    {{#if this.reportResultsExceedMax}}
-      <Reports::SubjectDownload
-        @report={{@report}}
-        @subject={{@subject}}
-        @prepositionalObject={{@prepositionalObject}}
-        @prepositionalObjectTableRowId={{@prepositionalObjectTableRowId}}
-        @school={{@school}}
-        @fetchDownloadData={{this.fetchDownloadData}}
-        @readyToDownload={{true}}
-        @message={{t "general.reportResultsExceedMax" resultsLengthMax=this.resultsLengthMax}}
-      />
-    {{/if}}
-  {{else}}
-    <LoadingSpinner />
-  {{/if}}
-</div>
+        <LoadingSpinner />
+      {{/if}}
+    </div>
+  </template>
+}

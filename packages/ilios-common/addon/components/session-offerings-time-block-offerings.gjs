@@ -3,6 +3,7 @@ import { cached } from '@glimmer/tracking';
 import { map } from 'rsvp';
 import { TrackedAsyncData } from 'ember-async-data';
 import { sortBy } from 'ilios-common/utils/array-helpers';
+import OfferingManager from 'ilios-common/components/offering-manager';
 
 export default class SessionOfferingsTimeBlockOfferingsComponent extends Component {
   @cached
@@ -24,13 +25,18 @@ export default class SessionOfferingsTimeBlockOfferingsComponent extends Compone
     });
     return sortBy(sortProxies, 'title').map((proxy) => proxy.offering);
   }
+  <template>
+    <div
+      class="session-offerings-time-block-offerings"
+      data-test-session-offerings-time-block-offerings
+    >
+      {{#each this.sortedOfferings as |offering|}}
+        <OfferingManager
+          @offering={{offering}}
+          @remove={{@removeOffering}}
+          @editable={{@editable}}
+        />
+      {{/each}}
+    </div>
+  </template>
 }
-
-<div
-  class="session-offerings-time-block-offerings"
-  data-test-session-offerings-time-block-offerings
->
-  {{#each this.sortedOfferings as |offering|}}
-    <OfferingManager @offering={{offering}} @remove={{@removeOffering}} @editable={{@editable}} />
-  {{/each}}
-</div>

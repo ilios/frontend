@@ -5,6 +5,23 @@ import { action } from '@ember/object';
 import { cached, tracked } from '@glimmer/tracking';
 import { TrackedAsyncData } from 'ember-async-data';
 import { mapBy } from 'ilios-common/utils/array-helpers';
+import animateLoading from 'ilios-common/modifiers/animate-loading';
+import t from 'ember-intl/helpers/t';
+import ExpandCollapseButton from 'ilios-common/components/expand-collapse-button';
+import toggle from 'ilios-common/helpers/toggle';
+import and from 'ember-truth-helpers/helpers/and';
+import gt from 'ember-truth-helpers/helpers/gt';
+import { LinkTo } from '@ember/routing';
+import NewSession from 'ilios-common/components/new-session';
+import perform from 'ember-concurrency/helpers/perform';
+import set from 'ember-set-helper/helpers/set';
+import { array, get, fn } from '@ember/helper';
+import FaIcon from 'ilios-common/components/fa-icon';
+import { on } from '@ember/modifier';
+import SessionsGridHeader from 'ilios-common/components/sessions-grid-header';
+import eq from 'ember-truth-helpers/helpers/eq';
+import SessionsGrid from 'ilios-common/components/sessions-grid';
+import SessionsGridLoading from 'ilios-common/components/sessions-grid-loading';
 
 const DEBOUNCE_DELAY = 250;
 
@@ -128,92 +145,93 @@ export default class CourseSessionsComponent extends Component {
       this.expandedSessionIds = mapBy(this.sessionsWithOfferings, 'id');
     }
   }
-}
-
-<section
-  class="course-sessions"
-  {{animate-loading "course-sessions" loadingTime=500}}
-  data-test-course-sessions
->
-  <div class="course-sessions-header" data-test-course-sessions-header>
-    <div class="title" data-test-title>
-      {{t "general.sessions"}}
-      ({{this.sessionsCount}})
-    </div>
-    <div class="actions" data-test-actions>
-      {{#if @canCreateSession}}
-        <ExpandCollapseButton
-          @value={{this.showNewSessionForm}}
-          @action={{toggle "showNewSessionForm" this}}
-        />
+  <template>
+    <section
+      class="course-sessions"
+      {{animateLoading "course-sessions" loadingTime=500}}
+      data-test-course-sessions
+    >
+      <div class="course-sessions-header" data-test-course-sessions-header>
+        <div class="title" data-test-title>
+          {{t "general.sessions"}}
+          ({{this.sessionsCount}})
+        </div>
+        <div class="actions" data-test-actions>
+          {{#if @canCreateSession}}
+            <ExpandCollapseButton
+              @value={{this.showNewSessionForm}}
+              @action={{toggle "showNewSessionForm" this}}
+            />
+          {{/if}}
+          {{#if (and @canUpdateCourse (gt this.sessionsCount 0))}}
+            <LinkTo @route="course.publishall" @model={{@course}} data-test-publish-all>
+              <button type="button">
+                {{t "general.publishAllSessions" sessionCount=this.sessionsCount}}
+              </button>
+            </LinkTo>
+          {{/if}}
+        </div>
+      </div>
+      {{#if this.showNewSessionForm}}
+        <div class="new-session-form">
+          <NewSession
+            @sessionTypes={{this.sessionTypes}}
+            @save={{perform this.saveSession}}
+            @cancel={{set this "showNewSessionForm" false}}
+          />
+        </div>
       {{/if}}
-      {{#if (and @canUpdateCourse (gt this.sessionsCount 0))}}
-        <LinkTo @route="course.publishall" @model={{@course}} data-test-publish-all>
-          <button type="button">
-            {{t "general.publishAllSessions" sessionCount=this.sessionsCount}}
-          </button>
-        </LinkTo>
+      {{#if this.saveSession.lastSuccessful.value}}
+        <div class="save-result" data-test-new-saved-session>
+          <LinkTo
+            @route="session.index"
+            @models={{array @course this.saveSession.lastSuccessful.value}}
+          >
+            <FaIcon @icon="square-up-right" />
+            {{get this.saveSession.lastSuccessful.value "title"}}
+          </LinkTo>
+          {{t "general.savedSuccessfully"}}
+        </div>
       {{/if}}
-    </div>
-  </div>
-  {{#if this.showNewSessionForm}}
-    <div class="new-session-form">
-      <NewSession
-        @sessionTypes={{this.sessionTypes}}
-        @save={{perform this.saveSession}}
-        @cancel={{set this "showNewSessionForm" false}}
-      />
-    </div>
-  {{/if}}
-  {{#if this.saveSession.lastSuccessful.value}}
-    <div class="save-result" data-test-new-saved-session>
-      <LinkTo
-        @route="session.index"
-        @models={{array @course this.saveSession.lastSuccessful.value}}
-      >
-        <FaIcon @icon="square-up-right" />
-        {{get this.saveSession.lastSuccessful.value "title"}}
-      </LinkTo>
-      {{t "general.savedSuccessfully"}}
-    </div>
-  {{/if}}
 
-  {{#if this.sessionsCount}}
-    <div class="filter">
-      <input
-        aria-label={{t "general.sessionTitleFilterPlaceholder"}}
-        value={{this.filterByDebounced}}
-        placeholder={{t "general.sessionTitleFilterPlaceholder"}}
-        data-test-session-filter
-        {{on "input" (fn (perform this.changeFilterBy))}}
-      />
-    </div>
-    <section>
-      <SessionsGridHeader
-        @showExpandAll={{this.showExpandAll}}
-        @setSortBy={{@setSortBy}}
-        @sortBy={{@sortBy}}
-        @allSessionsExpanded={{and
-          (eq this.expandedSessionIds.length this.sessionsWithOfferings.length)
-          (gt this.sessionsWithOfferings.length 0)
-        }}
-        @toggleExpandAll={{this.toggleExpandAll}}
-        @headerIsLocked={{this.tableHeadersLocked}}
-      />
-      {{#if this.sessions}}
-        <SessionsGrid
-          @sessions={{this.sessions}}
-          @sortBy={{@sortBy}}
-          @filterBy={{@filterBy}}
-          @expandedSessionIds={{this.expandedSessionIds}}
-          @closeSession={{perform this.closeSession}}
-          @expandSession={{perform this.expandSession}}
-          @headerIsLocked={{this.tableHeadersLocked}}
-          @setHeaderLockedStatus={{this.setHeaderLockedStatus}}
-        />
-      {{else}}
-        <SessionsGridLoading @count={{this.sessionsCount}} />
+      {{#if this.sessionsCount}}
+        <div class="filter">
+          <input
+            aria-label={{t "general.sessionTitleFilterPlaceholder"}}
+            value={{this.filterByDebounced}}
+            placeholder={{t "general.sessionTitleFilterPlaceholder"}}
+            data-test-session-filter
+            {{on "input" (fn (perform this.changeFilterBy))}}
+          />
+        </div>
+        <section>
+          <SessionsGridHeader
+            @showExpandAll={{this.showExpandAll}}
+            @setSortBy={{@setSortBy}}
+            @sortBy={{@sortBy}}
+            @allSessionsExpanded={{and
+              (eq this.expandedSessionIds.length this.sessionsWithOfferings.length)
+              (gt this.sessionsWithOfferings.length 0)
+            }}
+            @toggleExpandAll={{this.toggleExpandAll}}
+            @headerIsLocked={{this.tableHeadersLocked}}
+          />
+          {{#if this.sessions}}
+            <SessionsGrid
+              @sessions={{this.sessions}}
+              @sortBy={{@sortBy}}
+              @filterBy={{@filterBy}}
+              @expandedSessionIds={{this.expandedSessionIds}}
+              @closeSession={{perform this.closeSession}}
+              @expandSession={{perform this.expandSession}}
+              @headerIsLocked={{this.tableHeadersLocked}}
+              @setHeaderLockedStatus={{this.setHeaderLockedStatus}}
+            />
+          {{else}}
+            <SessionsGridLoading @count={{this.sessionsCount}} />
+          {{/if}}
+        </section>
       {{/if}}
     </section>
-  {{/if}}
-</section>
+  </template>
+}

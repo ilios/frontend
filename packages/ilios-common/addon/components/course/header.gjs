@@ -5,6 +5,18 @@ import { restartableTask } from 'ember-concurrency';
 import { validatable, Length, NotBlank } from 'ilios-common/decorators/validation';
 import { service } from '@ember/service';
 import { TrackedAsyncData } from 'ember-async-data';
+import EditableField from 'ilios-common/components/editable-field';
+import perform from 'ember-concurrency/helpers/perform';
+import set from 'ember-set-helper/helpers/set';
+import t from 'ember-intl/helpers/t';
+import { on } from '@ember/modifier';
+import pick from 'ilios-common/helpers/pick';
+import { fn } from '@ember/helper';
+import ValidationError from 'ilios-common/components/validation-error';
+import FaIcon from 'ilios-common/components/fa-icon';
+import add from 'ember-math-helpers/helpers/add';
+import PublicationMenu from 'ilios-common/components/course/publication-menu';
+import PublicationStatus from 'ilios-common/components/publication-status';
 
 @validatable
 export default class CourseHeaderComponent extends Component {
@@ -47,55 +59,56 @@ export default class CourseHeaderComponent extends Component {
   revertTitleChanges() {
     this.courseTitle = this.args.course.title;
   }
-}
-
-<div class="course-header" data-test-course-header>
-  <span class="title" data-test-title>
-    {{#if @editable}}
-      <EditableField
-        @value={{this.courseTitle}}
-        @save={{perform this.changeTitle}}
-        @close={{this.revertTitleChanges}}
-        @saveOnEnter={{true}}
-        @onEditingStatusChange={{set this "isEditingTitle"}}
-        @closeOnEscape={{true}}
-        as |isSaving|
-      >
-        <input
-          aria-label={{t "general.courseTitle"}}
-          disabled={{isSaving}}
-          type="text"
-          value={{this.courseTitle}}
-          {{on "input" (pick "target.value" (set this "courseTitle"))}}
-          {{on "keypress" (fn this.addErrorDisplayFor "courseTitle")}}
-        />
-        <ValidationError @validatable={{this}} @property="courseTitle" />
-      </EditableField>
-    {{else}}
-      <h2>
-        {{#if @course.locked}}
-          <FaIcon @icon="lock" />
-        {{/if}}
-        {{@course.title}}
-      </h2>
-    {{/if}}
-    {{#unless this.isEditingTitle}}
-      <h3 class="academic-year" data-test-academic-year>
-        {{#if this.academicYearCrossesCalendarYearBoundaries}}
-          {{@course.year}}
-          -
-          {{add @course.year 1}}
+  <template>
+    <div class="course-header" data-test-course-header>
+      <span class="title" data-test-title>
+        {{#if @editable}}
+          <EditableField
+            @value={{this.courseTitle}}
+            @save={{perform this.changeTitle}}
+            @close={{this.revertTitleChanges}}
+            @saveOnEnter={{true}}
+            @onEditingStatusChange={{set this "isEditingTitle"}}
+            @closeOnEscape={{true}}
+            as |isSaving|
+          >
+            <input
+              aria-label={{t "general.courseTitle"}}
+              disabled={{isSaving}}
+              type="text"
+              value={{this.courseTitle}}
+              {{on "input" (pick "target.value" (set this "courseTitle"))}}
+              {{on "keypress" (fn this.addErrorDisplayFor "courseTitle")}}
+            />
+            <ValidationError @validatable={{this}} @property="courseTitle" />
+          </EditableField>
         {{else}}
-          {{@course.year}}
+          <h2>
+            {{#if @course.locked}}
+              <FaIcon @icon="lock" />
+            {{/if}}
+            {{@course.title}}
+          </h2>
         {{/if}}
-      </h3>
-    {{/unless}}
-  </span>
-  <div class="course-publication">
-    {{#if @editable}}
-      <Course::PublicationMenu @course={{@course}} />
-    {{else}}
-      <PublicationStatus @item={{@course}} />
-    {{/if}}
-  </div>
-</div>
+        {{#unless this.isEditingTitle}}
+          <h3 class="academic-year" data-test-academic-year>
+            {{#if this.academicYearCrossesCalendarYearBoundaries}}
+              {{@course.year}}
+              -
+              {{add @course.year 1}}
+            {{else}}
+              {{@course.year}}
+            {{/if}}
+          </h3>
+        {{/unless}}
+      </span>
+      <div class="course-publication">
+        {{#if @editable}}
+          <PublicationMenu @course={{@course}} />
+        {{else}}
+          <PublicationStatus @item={{@course}} />
+        {{/if}}
+      </div>
+    </div>
+  </template>
+}

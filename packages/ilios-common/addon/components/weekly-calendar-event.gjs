@@ -5,6 +5,15 @@ import { htmlSafe } from '@ember/template';
 import calendarEventTooltip from 'ilios-common/utils/calendar-event-tooltip';
 import { service } from '@ember/service';
 import { guidFor } from '@ember/object/internals';
+import { on } from '@ember/modifier';
+import noop from 'ilios-common/helpers/noop';
+import mouseHoverToggle from 'ilios-common/modifiers/mouse-hover-toggle';
+import set from 'ember-set-helper/helpers/set';
+import IliosTooltip from 'ilios-common/components/ilios-tooltip';
+import FaIcon from 'ilios-common/components/fa-icon';
+import t from 'ember-intl/helpers/t';
+import not from 'ember-truth-helpers/helpers/not';
+import formatDate from 'ember-intl/helpers/format-date';
 
 export default class WeeklyCalendarEventComponent extends Component {
   @service intl;
@@ -114,70 +123,71 @@ export default class WeeklyCalendarEventComponent extends Component {
        grid-row-end: span ${this.totalMinutesRounded};`,
     );
   }
-}
-
-<button
-  {{! template-lint-disable no-inline-styles }}
-  style={{this.style}}
-  class="weekly-calendar-event day-{{@day}}
-    {{if this.isIlm 'ilm'}}
-    {{if this.clickable 'clickable'}}"
-  type="button"
-  {{on "click" (if this.clickable @selectEvent (noop))}}
-  id={{this.eventButtonId}}
-  {{mouse-hover-toggle (set this "showTooltip")}}
-  data-test-calendar-event
-  data-test-weekly-calendar-event
->
-  {{#if this.showTooltip}}
-    <IliosTooltip @target={{this.eventButtonElement}} data-test-ilios-calendar-event-tooltip>
-      {{this.tooltipContent}}
-    </IliosTooltip>
-  {{/if}}
-  <span class="ilios-calendar-event-icons">
-    {{#if this.recentlyUpdated}}
-      <FaIcon
-        @icon="circle-exclamation"
-        @title={{t "general.newUpdates"}}
-        class="recently-updated-icon"
-        data-test-recently-updated-icon
-      />
-    {{/if}}
-    {{#if (not @event.isPublished)}}
-      <FaIcon @icon="file-signature" @title={{t "general.notPublished"}} data-test-draft-icon />
-    {{else if @event.isScheduled}}
-      <FaIcon @icon="clock" @title={{t "general.scheduled"}} data-test-scheduled-icon />
-    {{/if}}
-  </span>
-  <span data-test-title>
-    <span class="ilios-calendar-event-time" data-test-time>
-      {{#if this.isIlm}}
-        <span class="ilios-calendar-event-start">
-          {{t "general.ilmDue"}}:
-          {{format-date this.startDate hour12=true hour="2-digit" minute="2-digit"}}
-        </span>
-      {{else}}
-        <span class="ilios-calendar-event-start">
-          {{format-date this.startDate hour12=true hour="2-digit" minute="2-digit"}}
-        </span>
+  <template>
+    <button
+      {{! template-lint-disable no-inline-styles }}
+      style={{this.style}}
+      class="weekly-calendar-event day-{{@day}}
+        {{if this.isIlm 'ilm'}}
+        {{if this.clickable 'clickable'}}"
+      type="button"
+      {{on "click" (if this.clickable @selectEvent (noop))}}
+      id={{this.eventButtonId}}
+      {{mouseHoverToggle (set this "showTooltip")}}
+      data-test-calendar-event
+      data-test-weekly-calendar-event
+    >
+      {{#if this.showTooltip}}
+        <IliosTooltip @target={{this.eventButtonElement}} data-test-ilios-calendar-event-tooltip>
+          {{this.tooltipContent}}
+        </IliosTooltip>
       {{/if}}
-    </span>
-    {{#unless @event.isMulti}}
-      <span class="ilios-calendar-event-location">
-        {{#if @event.location.length}}
-          {{@event.location}}:
+      <span class="ilios-calendar-event-icons">
+        {{#if this.recentlyUpdated}}
+          <FaIcon
+            @icon="circle-exclamation"
+            @title={{t "general.newUpdates"}}
+            class="recently-updated-icon"
+            data-test-recently-updated-icon
+          />
+        {{/if}}
+        {{#if (not @event.isPublished)}}
+          <FaIcon @icon="file-signature" @title={{t "general.notPublished"}} data-test-draft-icon />
+        {{else if @event.isScheduled}}
+          <FaIcon @icon="clock" @title={{t "general.scheduled"}} data-test-scheduled-icon />
         {{/if}}
       </span>
-    {{/unless}}
-    <span class="ilios-calendar-event-name" data-test-name>
-      {{#if @event.isMulti}}
-        {{@event.name}},
-        <em>
-          {{t "general.multiple"}}
-        </em>
-      {{else}}
-        {{@event.name}}
-      {{/if}}
-    </span>
-  </span>
-</button>
+      <span data-test-title>
+        <span class="ilios-calendar-event-time" data-test-time>
+          {{#if this.isIlm}}
+            <span class="ilios-calendar-event-start">
+              {{t "general.ilmDue"}}:
+              {{formatDate this.startDate hour12=true hour="2-digit" minute="2-digit"}}
+            </span>
+          {{else}}
+            <span class="ilios-calendar-event-start">
+              {{formatDate this.startDate hour12=true hour="2-digit" minute="2-digit"}}
+            </span>
+          {{/if}}
+        </span>
+        {{#unless @event.isMulti}}
+          <span class="ilios-calendar-event-location">
+            {{#if @event.location.length}}
+              {{@event.location}}:
+            {{/if}}
+          </span>
+        {{/unless}}
+        <span class="ilios-calendar-event-name" data-test-name>
+          {{#if @event.isMulti}}
+            {{@event.name}},
+            <em>
+              {{t "general.multiple"}}
+            </em>
+          {{else}}
+            {{@event.name}}
+          {{/if}}
+        </span>
+      </span>
+    </button>
+  </template>
+}

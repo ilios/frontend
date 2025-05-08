@@ -3,6 +3,15 @@ import { cached, tracked } from '@glimmer/tracking';
 import { map } from 'rsvp';
 import { DateTime } from 'luxon';
 import { TrackedAsyncData } from 'ember-async-data';
+import t from 'ember-intl/helpers/t';
+import ToggleYesno from 'ilios-common/components/toggle-yesno';
+import { fn } from '@ember/helper';
+import { on } from '@ember/modifier';
+import set from 'ember-set-helper/helpers/set';
+import not from 'ember-truth-helpers/helpers/not';
+import toggle from 'ilios-common/helpers/toggle';
+import IliosCalendarWeek from 'ilios-common/components/ilios-calendar-week';
+import LoadingSpinner from 'ilios-common/components/loading-spinner';
 
 export default class OfferingCalendar extends Component {
   @tracked showLearnerGroupEvents = true;
@@ -114,44 +123,50 @@ export default class OfferingCalendar extends Component {
 
     return [...filteredEvents, this.currentEvent];
   }
-}
-
-<div class="offering-calendar">
-  {{#if this.calendarEventsData.isResolved}}
-    <h2 class="offering-calendar-title">
-      {{t "general.calendar"}}
-    </h2>
-    <p class="offering-calendar-filter-options">
-      <span class="filter">
-        <ToggleYesno
-          @yes={{this.showLearnerGroupEvents}}
-          @toggle={{fn (mut this.showLearnerGroupEvents)}}
-        />
-        <label {{on "click" (set this "showLearnerGroupEvents" (not this.showLearnerGroupEvents))}}>
-          {{t "general.showLearnerGroupEvents"}}
-        </label>
-      </span>
-      <span class="filter">
-        <ToggleYesno @yes={{this.showSessionEvents}} @toggle={{fn (mut this.showSessionEvents)}} />
-        <label {{on "click" (toggle "showSessionEvents" this)}}>
-          {{! template-lint-disable no-triple-curlies }}
-          {{{t "general.showSessionEvents" sessionTitle=@session.title}}}
-        </label>
-      </span>
-    </p>
-    <div class="ilios-calendar">
-      <IliosCalendarWeek
-        @calendarEvents={{this.calendarEvents}}
-        @date={{@startDate}}
-        @areEventsSelectable={{false}}
-        @areDaysSelectable={{false}}
-      />
+  <template>
+    <div class="offering-calendar">
+      {{#if this.calendarEventsData.isResolved}}
+        <h2 class="offering-calendar-title">
+          {{t "general.calendar"}}
+        </h2>
+        <p class="offering-calendar-filter-options">
+          <span class="filter">
+            <ToggleYesno
+              @yes={{this.showLearnerGroupEvents}}
+              @toggle={{fn (mut this.showLearnerGroupEvents)}}
+            />
+            <label
+              {{on "click" (set this "showLearnerGroupEvents" (not this.showLearnerGroupEvents))}}
+            >
+              {{t "general.showLearnerGroupEvents"}}
+            </label>
+          </span>
+          <span class="filter">
+            <ToggleYesno
+              @yes={{this.showSessionEvents}}
+              @toggle={{fn (mut this.showSessionEvents)}}
+            />
+            <label {{on "click" (toggle "showSessionEvents" this)}}>
+              {{! template-lint-disable no-triple-curlies }}
+              {{{t "general.showSessionEvents" sessionTitle=@session.title}}}
+            </label>
+          </span>
+        </p>
+        <div class="ilios-calendar">
+          <IliosCalendarWeek
+            @calendarEvents={{this.calendarEvents}}
+            @date={{@startDate}}
+            @areEventsSelectable={{false}}
+            @areDaysSelectable={{false}}
+          />
+        </div>
+      {{else}}
+        <span class="loading-indicator">
+          <LoadingSpinner />
+          {{t "general.loadingEvents"}}
+          ...
+        </span>
+      {{/if}}
     </div>
-  {{else}}
-    <span class="loading-indicator">
-      <LoadingSpinner />
-      {{t "general.loadingEvents"}}
-      ...
-    </span>
-  {{/if}}
-</div>
+  </template>
+}

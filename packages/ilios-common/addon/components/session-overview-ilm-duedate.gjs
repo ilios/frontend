@@ -4,6 +4,13 @@ import { action } from '@ember/object';
 import { validatable, NotBlank } from 'ilios-common/decorators/validation';
 import { dropTask } from 'ember-concurrency';
 import { DateTime } from 'luxon';
+import t from 'ember-intl/helpers/t';
+import EditableField from 'ilios-common/components/editable-field';
+import formatDate from 'ember-intl/helpers/format-date';
+import perform from 'ember-concurrency/helpers/perform';
+import DatePicker from 'ilios-common/components/date-picker';
+import TimePicker from 'ilios-common/components/time-picker';
+import ValidationError from 'ilios-common/components/validation-error';
 
 @validatable
 export default class SessionOverviewIlmDuedateComponent extends Component {
@@ -41,41 +48,42 @@ export default class SessionOverviewIlmDuedateComponent extends Component {
     this.args.ilmSession.dueDate = this.dueDate;
     await this.args.ilmSession.save();
   });
+  <template>
+    <div class="session-overview-ilm-duedate" data-test-session-overview-ilm-duedate ...attributes>
+      <label>{{t "general.dueBy"}}:</label>
+      <span>
+        {{#if @ilmSession}}
+          {{#if @editable}}
+            <EditableField
+              @value={{formatDate
+                @ilmSession.dueDate
+                month="2-digit"
+                day="2-digit"
+                year="2-digit"
+                hour12=true
+                hour="2-digit"
+                minute="2-digit"
+              }}
+              @save={{perform this.save}}
+              @close={{this.revert}}
+            >
+              <DatePicker @value={{this.dueDate}} @onChange={{this.updateDate}} />
+              <TimePicker @date={{this.dueDate}} @action={{this.updateTime}} />
+              <ValidationError @validatable={{this}} @property="dueDate" />
+            </EditableField>
+          {{else}}
+            {{formatDate
+              @ilmSession.dueDate
+              month="2-digit"
+              day="2-digit"
+              year="2-digit"
+              hour12=true
+              hour="2-digit"
+              minute="2-digit"
+            }}
+          {{/if}}
+        {{/if}}
+      </span>
+    </div>
+  </template>
 }
-
-<div class="session-overview-ilm-duedate" data-test-session-overview-ilm-duedate ...attributes>
-  <label>{{t "general.dueBy"}}:</label>
-  <span>
-    {{#if @ilmSession}}
-      {{#if @editable}}
-        <EditableField
-          @value={{format-date
-            @ilmSession.dueDate
-            month="2-digit"
-            day="2-digit"
-            year="2-digit"
-            hour12=true
-            hour="2-digit"
-            minute="2-digit"
-          }}
-          @save={{perform this.save}}
-          @close={{this.revert}}
-        >
-          <DatePicker @value={{this.dueDate}} @onChange={{this.updateDate}} />
-          <TimePicker @date={{this.dueDate}} @action={{this.updateTime}} />
-          <ValidationError @validatable={{this}} @property="dueDate" />
-        </EditableField>
-      {{else}}
-        {{format-date
-          @ilmSession.dueDate
-          month="2-digit"
-          day="2-digit"
-          year="2-digit"
-          hour12=true
-          hour="2-digit"
-          minute="2-digit"
-        }}
-      {{/if}}
-    {{/if}}
-  </span>
-</div>

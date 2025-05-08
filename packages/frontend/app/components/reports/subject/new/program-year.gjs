@@ -5,6 +5,11 @@ import { service } from '@ember/service';
 import { sortBy } from 'ilios-common/utils/array-helpers';
 import { action } from '@ember/object';
 import { hash } from 'rsvp';
+import t from 'ember-intl/helpers/t';
+import { on } from '@ember/modifier';
+import isEmpty from 'ember-truth-helpers/helpers/is-empty';
+import eq from 'ember-truth-helpers/helpers/eq';
+import LoadingSpinner from 'ilios-common/components/loading-spinner';
 
 export default class ReportsSubjectNewProgramYearComponent extends Component {
   @service store;
@@ -76,32 +81,33 @@ export default class ReportsSubjectNewProgramYearComponent extends Component {
       event.target.classList.remove('error');
     }
   }
-}
-
-<p data-test-reports-subject-new-program-year>
-  <label for="new-program-year">
-    {{t "general.whichIs"}}
-  </label>
-  {{#if this.mappedProgramYearsData.isResolved}}
-    <select
-      id="new-program-year"
-      data-test-prepositional-objects
-      {{on "change" this.updatePrepositionalObjectId}}
-    >
-      <option selected={{is-empty @currentId}} value="">
-        {{t "general.selectPolite"}}
-      </option>
-      {{#each this.programYears as |programYear|}}
-        <option
-          selected={{eq programYear.id this.bestSelectedProgramYear}}
-          value={{programYear.id}}
+  <template>
+    <p data-test-reports-subject-new-program-year>
+      <label for="new-program-year">
+        {{t "general.whichIs"}}
+      </label>
+      {{#if this.mappedProgramYearsData.isResolved}}
+        <select
+          id="new-program-year"
+          data-test-prepositional-objects
+          {{on "change" this.updatePrepositionalObjectId}}
         >
-          {{programYear.classOfYear}}
-          {{programYear.program.title}}
-        </option>
-      {{/each}}
-    </select>
-  {{else}}
-    <LoadingSpinner />
-  {{/if}}
-</p>
+          <option selected={{isEmpty @currentId}} value>
+            {{t "general.selectPolite"}}
+          </option>
+          {{#each this.programYears as |programYear|}}
+            <option
+              selected={{eq programYear.id this.bestSelectedProgramYear}}
+              value={{programYear.id}}
+            >
+              {{programYear.classOfYear}}
+              {{programYear.program.title}}
+            </option>
+          {{/each}}
+        </select>
+      {{else}}
+        <LoadingSpinner />
+      {{/if}}
+    </p>
+  </template>
+}

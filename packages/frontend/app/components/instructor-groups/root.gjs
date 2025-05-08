@@ -4,6 +4,21 @@ import { cached, tracked } from '@glimmer/tracking';
 import { TrackedAsyncData } from 'ember-async-data';
 import { findById } from 'ilios-common/utils/array-helpers';
 import { dropTask } from 'ember-concurrency';
+import FaIcon from 'ilios-common/components/fa-icon';
+import gt from 'ember-truth-helpers/helpers/gt';
+import t from 'ember-intl/helpers/t';
+import { on } from '@ember/modifier';
+import pick from 'ilios-common/helpers/pick';
+import sortBy from 'ilios-common/helpers/sort-by';
+import eq from 'ember-truth-helpers/helpers/eq';
+import ExpandCollapseButton from 'ilios-common/components/expand-collapse-button';
+import set from 'ember-set-helper/helpers/set';
+import not from 'ember-truth-helpers/helpers/not';
+import New from 'frontend/components/instructor-groups/new';
+import perform from 'ember-concurrency/helpers/perform';
+import { LinkTo } from '@ember/routing';
+import List from 'frontend/components/instructor-groups/list';
+import Loading from 'frontend/components/instructor-groups/loading';
 
 export default class InstructorGroupsRootComponent extends Component {
   @service currentUser;
@@ -102,86 +117,91 @@ export default class InstructorGroupsRootComponent extends Component {
     this.newInstructorGroup = await newInstructorGroup.save();
     this.showNewInstructorGroupForm = false;
   });
-}
-
-<section class="instructor-groups-root" data-test-instructor-groups>
-  <div class="filters">
-    <div class="schools" data-test-school-filter>
-      <FaIcon @icon="building-columns" @fixedWidth={{true}} />
-      {{#if (gt @schools.length 1)}}
-        <select
-          {{on "change" (pick "target.value" @setSchoolId)}}
-          aria-label={{t "general.schools"}}
-          data-test-school-selector
-        >
-          {{#each (sort-by "title" @schools) as |school|}}
-            <option selected={{eq school.id this.bestSelectedSchool.id}} value={{school.id}}>
-              {{school.title}}
-            </option>
-          {{/each}}
-        </select>
-      {{else}}
-        {{this.bestSelectedSchool.title}}
-      {{/if}}
-    </div>
-    <div class="title" data-test-title-filter>
-      <input
-        aria-label={{t "general.instructorGroupTitleFilterPlaceholder"}}
-        value={{@titleFilter}}
-        {{on "input" (pick "target.value" @setTitleFilter)}}
-        placeholder={{t "general.instructorGroupTitleFilterPlaceholder"}}
-        data-test-title-filter
-      />
-    </div>
-  </div>
-
-  <div class="main-list">
-    <div class="header">
-      <h2 class="title">
-        {{t "general.instructorGroups"}}
-        {{#if this.isLoaded}}
-          ({{this.filteredInstructorGroups.length}})
-        {{/if}}
-      </h2>
-      <div class="actions">
-        {{#if this.canCreate}}
-          <ExpandCollapseButton
-            @value={{this.showNewInstructorGroupForm}}
-            @action={{set this "showNewInstructorGroupForm" (not this.showNewInstructorGroupForm)}}
-            @expandButtonLabel={{t "general.expand"}}
-            @collapseButtonLabel={{t "general.close"}}
-          />
-        {{/if}}
-      </div>
-    </div>
-
-    <div class="new">
-      {{#if this.showNewInstructorGroupForm}}
-        <InstructorGroups::New
-          @save={{perform this.saveNewInstructorGroup}}
-          @cancel={{set this "showNewInstructorGroupForm" false}}
-        />
-      {{/if}}
-      {{#if this.newInstructorGroup}}
-        <div class="saved-result">
-          <LinkTo @route="instructor-group" @model={{this.newInstructorGroup}}>
-            <FaIcon @icon="square-up-right" />
-            {{this.newInstructorGroup.title}}
-          </LinkTo>
-          {{t "general.savedSuccessfully"}}
+  <template>
+    <section class="instructor-groups-root" data-test-instructor-groups>
+      <div class="filters">
+        <div class="schools" data-test-school-filter>
+          <FaIcon @icon="building-columns" @fixedWidth={{true}} />
+          {{#if (gt @schools.length 1)}}
+            <select
+              {{on "change" (pick "target.value" @setSchoolId)}}
+              aria-label={{t "general.schools"}}
+              data-test-school-selector
+            >
+              {{#each (sortBy "title" @schools) as |school|}}
+                <option selected={{eq school.id this.bestSelectedSchool.id}} value={{school.id}}>
+                  {{school.title}}
+                </option>
+              {{/each}}
+            </select>
+          {{else}}
+            {{this.bestSelectedSchool.title}}
+          {{/if}}
         </div>
-      {{/if}}
-    </div>
-    <div class="list">
-      {{#if this.isLoaded}}
-        <InstructorGroups::List
-          @instructorGroups={{this.filteredInstructorGroups}}
-          @sortBy={{@sortBy}}
-          @setSortBy={{@setSortBy}}
-        />
-      {{else}}
-        <InstructorGroups::Loading @count={{this.countForSelectedSchool}} />
-      {{/if}}
-    </div>
-  </div>
-</section>
+        <div class="title" data-test-title-filter>
+          <input
+            aria-label={{t "general.instructorGroupTitleFilterPlaceholder"}}
+            value={{@titleFilter}}
+            {{on "input" (pick "target.value" @setTitleFilter)}}
+            placeholder={{t "general.instructorGroupTitleFilterPlaceholder"}}
+            data-test-title-filter
+          />
+        </div>
+      </div>
+
+      <div class="main-list">
+        <div class="header">
+          <h2 class="title">
+            {{t "general.instructorGroups"}}
+            {{#if this.isLoaded}}
+              ({{this.filteredInstructorGroups.length}})
+            {{/if}}
+          </h2>
+          <div class="actions">
+            {{#if this.canCreate}}
+              <ExpandCollapseButton
+                @value={{this.showNewInstructorGroupForm}}
+                @action={{set
+                  this
+                  "showNewInstructorGroupForm"
+                  (not this.showNewInstructorGroupForm)
+                }}
+                @expandButtonLabel={{t "general.expand"}}
+                @collapseButtonLabel={{t "general.close"}}
+              />
+            {{/if}}
+          </div>
+        </div>
+
+        <div class="new">
+          {{#if this.showNewInstructorGroupForm}}
+            <New
+              @save={{perform this.saveNewInstructorGroup}}
+              @cancel={{set this "showNewInstructorGroupForm" false}}
+            />
+          {{/if}}
+          {{#if this.newInstructorGroup}}
+            <div class="saved-result">
+              <LinkTo @route="instructor-group" @model={{this.newInstructorGroup}}>
+                <FaIcon @icon="square-up-right" />
+                {{this.newInstructorGroup.title}}
+              </LinkTo>
+              {{t "general.savedSuccessfully"}}
+            </div>
+          {{/if}}
+        </div>
+        <div class="list">
+          {{#if this.isLoaded}}
+            <List
+              @instructorGroups={{this.filteredInstructorGroups}}
+              @sortBy={{@sortBy}}
+              @setSortBy={{@setSortBy}}
+            />
+          {{else}}
+            <Loading @count={{this.countForSelectedSchool}} />
+          {{/if}}
+        </div>
+      </div>
+    </section>
+  </template>
+}

@@ -5,6 +5,18 @@ import { service } from '@ember/service';
 import { dropTask } from 'ember-concurrency';
 import YupValidations from 'ilios-common/classes/yup-validations';
 import { string } from 'yup';
+import { uniqueId } from '@ember/helper';
+import t from 'ember-intl/helpers/t';
+import ExpandCollapseButton from 'ilios-common/components/expand-collapse-button';
+import { on } from '@ember/modifier';
+import pick from 'ilios-common/helpers/pick';
+import set from 'ember-set-helper/helpers/set';
+import perform from 'ember-concurrency/helpers/perform';
+import YupValidationMessage from 'ilios-common/components/yup-validation-message';
+import LoadingSpinner from 'ilios-common/components/loading-spinner';
+import { LinkTo } from '@ember/routing';
+import FaIcon from 'ilios-common/components/fa-icon';
+import sortBy from 'ilios-common/helpers/sort-by';
 
 export default class SchoolListComponent extends Component {
   @service currentUser;
@@ -67,123 +79,124 @@ export default class SchoolListComponent extends Component {
       this.closeNewSchoolForm();
     }
   });
-}
-
-{{#let (unique-id) as |templateId|}}
-  <section class="school-list" data-test-school-list ...attributes>
-    <section class="schools">
-      <div class="header">
-        <h2 class="title">
-          {{t "general.schools"}}
-        </h2>
-        {{#if this.currentUser.isRoot}}
-          <div class="actions">
-            <ExpandCollapseButton
-              @value={{this.showNewSchoolForm}}
-              @action={{this.toggleNewSchoolForm}}
-            />
+  <template>
+    {{#let (uniqueId) as |templateId|}}
+      <section class="school-list" data-test-school-list ...attributes>
+        <section class="schools">
+          <div class="header">
+            <h2 class="title">
+              {{t "general.schools"}}
+            </h2>
+            {{#if this.currentUser.isRoot}}
+              <div class="actions">
+                <ExpandCollapseButton
+                  @value={{this.showNewSchoolForm}}
+                  @action={{this.toggleNewSchoolForm}}
+                />
+              </div>
+            {{/if}}
           </div>
-        {{/if}}
-      </div>
-      {{#if this.showNewSchoolForm}}
-        <section class="new" data-test-new-school-form>
-          <div class="new-result-title">
-            {{t "general.newSchool"}}
-          </div>
-          <div class="form">
-            <div class="item" data-test-title>
-              <label for="title-{{templateId}}">
-                {{t "general.title"}}:
-              </label>
-              <input
-                id="title-{{templateId}}"
-                type="text"
-                value={{this.title}}
-                {{on "input" (pick "target.value" (set this "title"))}}
-                {{on "keyup" (perform this.saveOrCancel)}}
-                {{this.validations.attach "title"}}
-              />
-              <YupValidationMessage
-                @description={{t "general.title"}}
-                @validationErrors={{this.validations.errors.title}}
-              />
+          {{#if this.showNewSchoolForm}}
+            <section class="new" data-test-new-school-form>
+              <div class="new-result-title">
+                {{t "general.newSchool"}}
+              </div>
+              <div class="form">
+                <div class="item" data-test-title>
+                  <label for="title-{{templateId}}">
+                    {{t "general.title"}}:
+                  </label>
+                  <input
+                    id="title-{{templateId}}"
+                    type="text"
+                    value={{this.title}}
+                    {{on "input" (pick "target.value" (set this "title"))}}
+                    {{on "keyup" (perform this.saveOrCancel)}}
+                    {{this.validations.attach "title"}}
+                  />
+                  <YupValidationMessage
+                    @description={{t "general.title"}}
+                    @validationErrors={{this.validations.errors.title}}
+                  />
+                </div>
+                <div class="item" data-test-email>
+                  <label for="email-{{templateId}}">
+                    {{t "general.administratorEmail"}}:
+                  </label>
+                  <input
+                    id="email-{{templateId}}"
+                    type="text"
+                    value={{this.iliosAdministratorEmail}}
+                    {{on "input" (pick "target.value" (set this "iliosAdministratorEmail"))}}
+                    {{on "keyup" (perform this.saveOrCancel)}}
+                    {{this.validations.attach "iliosAdministratorEmail"}}
+                  />
+                  <YupValidationMessage
+                    @description={{t "general.administratorEmail"}}
+                    @validationErrors={{this.validations.errors.iliosAdministratorEmail}}
+                  />
+                </div>
+                <div class="buttons">
+                  <button
+                    type="button"
+                    class="done text"
+                    disabled={{this.save.isRunning}}
+                    {{on "click" (perform this.save)}}
+                    data-test-submit
+                  >
+                    {{#if this.save.isRunning}}
+                      <LoadingSpinner />
+                    {{else}}
+                      {{t "general.done"}}
+                    {{/if}}
+                  </button>
+                  <button
+                    type="button"
+                    class="cancel text"
+                    {{on "click" this.closeNewSchoolForm}}
+                    data-test-cancel
+                  >
+                    {{t "general.cancel"}}
+                  </button>
+                </div>
+              </div>
+            </section>
+          {{/if}}
+          {{#if this.newSchool}}
+            <div class="savedschool" data-test-new-school>
+              <LinkTo @route="school" @model={{this.newSchool}} data-test-link-to-new-school>
+                <FaIcon @icon="square-up-right" />
+                {{this.newSchool.title}}
+              </LinkTo>
+              {{t "general.savedSuccessfully"}}
             </div>
-            <div class="item" data-test-email>
-              <label for="email-{{templateId}}">
-                {{t "general.administratorEmail"}}:
-              </label>
-              <input
-                id="email-{{templateId}}"
-                type="text"
-                value={{this.iliosAdministratorEmail}}
-                {{on "input" (pick "target.value" (set this "iliosAdministratorEmail"))}}
-                {{on "keyup" (perform this.saveOrCancel)}}
-                {{this.validations.attach "iliosAdministratorEmail"}}
-              />
-              <YupValidationMessage
-                @description={{t "general.administratorEmail"}}
-                @validationErrors={{this.validations.errors.iliosAdministratorEmail}}
-              />
-            </div>
-            <div class="buttons">
-              <button
-                type="button"
-                class="done text"
-                disabled={{this.save.isRunning}}
-                {{on "click" (perform this.save)}}
-                data-test-submit
-              >
-                {{#if this.save.isRunning}}
-                  <LoadingSpinner />
-                {{else}}
-                  {{t "general.done"}}
-                {{/if}}
-              </button>
-              <button
-                type="button"
-                class="cancel text"
-                {{on "click" this.closeNewSchoolForm}}
-                data-test-cancel
-              >
-                {{t "general.cancel"}}
-              </button>
-            </div>
+          {{/if}}
+          <div class="list">
+            {{#if @schools.length}}
+              <table>
+                <thead>
+                  <tr>
+                    <th class="text-left">
+                      {{t "general.school"}}
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {{#each (sortBy "title" @schools) as |school|}}
+                    <tr data-test-school>
+                      <td class="text-left" data-test-title>
+                        <LinkTo @route="school" @model={{school}}>
+                          {{school.title}}
+                        </LinkTo>
+                      </td>
+                    </tr>
+                  {{/each}}
+                </tbody>
+              </table>
+            {{/if}}
           </div>
         </section>
-      {{/if}}
-      {{#if this.newSchool}}
-        <div class="savedschool" data-test-new-school>
-          <LinkTo @route="school" @model={{this.newSchool}} data-test-link-to-new-school>
-            <FaIcon @icon="square-up-right" />
-            {{this.newSchool.title}}
-          </LinkTo>
-          {{t "general.savedSuccessfully"}}
-        </div>
-      {{/if}}
-      <div class="list">
-        {{#if @schools.length}}
-          <table>
-            <thead>
-              <tr>
-                <th class="text-left">
-                  {{t "general.school"}}
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {{#each (sort-by "title" @schools) as |school|}}
-                <tr data-test-school>
-                  <td class="text-left" data-test-title>
-                    <LinkTo @route="school" @model={{school}}>
-                      {{school.title}}
-                    </LinkTo>
-                  </td>
-                </tr>
-              {{/each}}
-            </tbody>
-          </table>
-        {{/if}}
-      </div>
-    </section>
-  </section>
-{{/let}}
+      </section>
+    {{/let}}
+  </template>
+}

@@ -4,6 +4,8 @@ import { cached, tracked } from '@glimmer/tracking';
 import { ensureSafeComponent } from '@embroider/util';
 import SessionObjectives from './curriculum/session-objectives';
 import LearnerGroups from './curriculum/learner-groups';
+import Header from 'frontend/components/reports/curriculum/header';
+import ChooseCourse from 'frontend/components/reports/curriculum/choose-course';
 
 export default class ReportsCurriculumComponent extends Component {
   @service store;
@@ -89,27 +91,28 @@ export default class ReportsCurriculumComponent extends Component {
     this.args.stop();
     this.args.setReport(value);
   };
+  <template>
+    <div class="reports-curriculum" data-test-reports-curriculum ...attributes>
+      {{#if @showReportResults}}
+        <this.reportResultsComponent @courses={{this.selectedCourses}} @close={{@stop}} />
+      {{else}}
+        <Header
+          @selectedSchoolIds={{this.selectedSchoolIds}}
+          @countSelectedCourses={{@selectedCourseIds.length}}
+          @showReportResults={{@showReportResults}}
+          @selectedReportValue={{this.selectedReportValue}}
+          @changeSelectedReport={{this.changeSelectedReport}}
+          @runReport={{@run}}
+          @close={{@stop}}
+        />
+        <ChooseCourse
+          @selectedCourseIds={{@selectedCourseIds}}
+          @schools={{@schools}}
+          @add={{this.pickCourse}}
+          @remove={{this.removeCourse}}
+          @removeAll={{this.removeAll}}
+        />
+      {{/if}}
+    </div>
+  </template>
 }
-
-<div class="reports-curriculum" data-test-reports-curriculum ...attributes>
-  {{#if @showReportResults}}
-    <this.reportResultsComponent @courses={{this.selectedCourses}} @close={{@stop}} />
-  {{else}}
-    <Reports::Curriculum::Header
-      @selectedSchoolIds={{this.selectedSchoolIds}}
-      @countSelectedCourses={{@selectedCourseIds.length}}
-      @showReportResults={{@showReportResults}}
-      @selectedReportValue={{this.selectedReportValue}}
-      @changeSelectedReport={{this.changeSelectedReport}}
-      @runReport={{@run}}
-      @close={{@stop}}
-    />
-    <Reports::Curriculum::ChooseCourse
-      @selectedCourseIds={{@selectedCourseIds}}
-      @schools={{@schools}}
-      @add={{this.pickCourse}}
-      @remove={{this.removeCourse}}
-      @removeAll={{this.removeAll}}
-    />
-  {{/if}}
-</div>

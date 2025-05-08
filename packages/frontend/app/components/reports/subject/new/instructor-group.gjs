@@ -4,6 +4,11 @@ import { action } from '@ember/object';
 import { cached } from '@glimmer/tracking';
 import { service } from '@ember/service';
 import { sortBy } from 'ilios-common/utils/array-helpers';
+import t from 'ember-intl/helpers/t';
+import { on } from '@ember/modifier';
+import isEmpty from 'ember-truth-helpers/helpers/is-empty';
+import eq from 'ember-truth-helpers/helpers/eq';
+import LoadingSpinner from 'ilios-common/components/loading-spinner';
 
 export default class ReportsSubjectNewInstructorGroupComponent extends Component {
   @service store;
@@ -49,31 +54,32 @@ export default class ReportsSubjectNewInstructorGroupComponent extends Component
       event.target.classList.remove('error');
     }
   }
-}
-
-<p data-test-reports-subject-new-instructor-group>
-  <label for="new-instructor-group">
-    {{t "general.whichIs"}}
-  </label>
-  {{#if this.allInstructorGroupsData.isResolved}}
-    <select
-      id="new-instructor-group"
-      data-test-prepositional-objects
-      {{on "change" this.updatePrepositionalObjectId}}
-    >
-      <option selected={{is-empty @currentId}} value="">
-        {{t "general.selectPolite"}}
-      </option>
-      {{#each this.sortedInstructorGroups as |instructorGroup|}}
-        <option
-          selected={{eq instructorGroup.id this.bestSelectedInstructorGroup}}
-          value={{instructorGroup.id}}
+  <template>
+    <p data-test-reports-subject-new-instructor-group>
+      <label for="new-instructor-group">
+        {{t "general.whichIs"}}
+      </label>
+      {{#if this.allInstructorGroupsData.isResolved}}
+        <select
+          id="new-instructor-group"
+          data-test-prepositional-objects
+          {{on "change" this.updatePrepositionalObjectId}}
         >
-          {{instructorGroup.title}}
-        </option>
-      {{/each}}
-    </select>
-  {{else}}
-    <LoadingSpinner />
-  {{/if}}
-</p>
+          <option selected={{isEmpty @currentId}} value>
+            {{t "general.selectPolite"}}
+          </option>
+          {{#each this.sortedInstructorGroups as |instructorGroup|}}
+            <option
+              selected={{eq instructorGroup.id this.bestSelectedInstructorGroup}}
+              value={{instructorGroup.id}}
+            >
+              {{instructorGroup.title}}
+            </option>
+          {{/each}}
+        </select>
+      {{else}}
+        <LoadingSpinner />
+      {{/if}}
+    </p>
+  </template>
+}

@@ -2,6 +2,8 @@ import Component from '@glimmer/component';
 import { cached, tracked } from '@glimmer/tracking';
 import { service } from '@ember/service';
 import { TrackedAsyncData } from 'ember-async-data';
+import load from 'ember-async-data/helpers/load';
+import SubjectResults from 'frontend/components/reports/subject-results';
 
 export default class ReportsSubjectComponent extends Component {
   @service currentUser;
@@ -46,23 +48,24 @@ export default class ReportsSubjectComponent extends Component {
 
     return null;
   }
+  <template>
+    {{#if this.allSchools.isResolved}}
+      <section class="reports-subject" data-test-reports-subject ...attributes>
+        {{#let (load this.reportDescriptionPromise) as |p|}}
+          {{#if p.isResolved}}
+            <SubjectResults
+              @report={{@report}}
+              @subject={{@report.subject}}
+              @prepositionalObject={{@report.prepositionalObject}}
+              @prepositionalObjectTableRowId={{@report.prepositionalObjectTableRowId}}
+              @school={{this.school}}
+              @description={{p.value}}
+              @year={{@year}}
+              @changeYear={{@changeYear}}
+            />
+          {{/if}}
+        {{/let}}
+      </section>
+    {{/if}}
+  </template>
 }
-
-{{#if this.allSchools.isResolved}}
-  <section class="reports-subject" data-test-reports-subject ...attributes>
-    {{#let (load this.reportDescriptionPromise) as |p|}}
-      {{#if p.isResolved}}
-        <Reports::SubjectResults
-          @report={{@report}}
-          @subject={{@report.subject}}
-          @prepositionalObject={{@report.prepositionalObject}}
-          @prepositionalObjectTableRowId={{@report.prepositionalObjectTableRowId}}
-          @school={{this.school}}
-          @description={{p.value}}
-          @year={{@year}}
-          @changeYear={{@changeYear}}
-        />
-      {{/if}}
-    {{/let}}
-  </section>
-{{/if}}

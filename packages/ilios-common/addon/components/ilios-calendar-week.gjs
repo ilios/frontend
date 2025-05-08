@@ -2,6 +2,10 @@ import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { deprecate } from '@ember/debug';
 import { DateTime } from 'luxon';
+import isArray from 'ember-truth-helpers/helpers/is-array';
+import WeeklyCalendar from 'ilios-common/components/weekly-calendar';
+import noop from 'ilios-common/helpers/noop';
+import IliosCalendarMultidayEvents from 'ilios-common/components/ilios-calendar-multiday-events';
 
 export default class IliosCalendarWeekComponent extends Component {
   get date() {
@@ -56,21 +60,22 @@ export default class IliosCalendarWeekComponent extends Component {
       this.args.changeView('day');
     }
   }
+  <template>
+    {{#if (isArray @calendarEvents)}}
+      <div class="ilios-calendar-week" data-test-ilios-calendar-week>
+        <WeeklyCalendar
+          @isLoadingEvents={{@isLoadingEvents}}
+          @date={{this.date}}
+          @events={{this.singleDayEvents}}
+          @changeToDayView={{if @areDaysSelectable this.changeToDayView (noop)}}
+          @selectEvent={{if @areEventsSelectable @selectEvent (noop)}}
+        />
+        <IliosCalendarMultidayEvents
+          @events={{this.multiDayEventsList}}
+          @selectEvent={{@selectEvent}}
+          @areEventsSelectable={{@areDaysSelectable}}
+        />
+      </div>
+    {{/if}}
+  </template>
 }
-
-{{#if (is-array @calendarEvents)}}
-  <div class="ilios-calendar-week" data-test-ilios-calendar-week>
-    <WeeklyCalendar
-      @isLoadingEvents={{@isLoadingEvents}}
-      @date={{this.date}}
-      @events={{this.singleDayEvents}}
-      @changeToDayView={{if @areDaysSelectable this.changeToDayView (noop)}}
-      @selectEvent={{if @areEventsSelectable @selectEvent (noop)}}
-    />
-    <IliosCalendarMultidayEvents
-      @events={{this.multiDayEventsList}}
-      @selectEvent={{@selectEvent}}
-      @areEventsSelectable={{@areDaysSelectable}}
-    />
-  </div>
-{{/if}}

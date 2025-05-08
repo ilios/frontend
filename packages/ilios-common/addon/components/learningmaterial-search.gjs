@@ -3,6 +3,14 @@ import { dropTask, enqueueTask, restartableTask } from 'ember-concurrency';
 import { service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
+import SearchBox from 'ilios-common/components/search-box';
+import t from 'ember-intl/helpers/t';
+import perform from 'ember-concurrency/helpers/perform';
+import includes from 'ilios-common/helpers/includes';
+import { on } from '@ember/modifier';
+import LmTypeIcon from 'ilios-common/components/lm-type-icon';
+import formatDate from 'ember-intl/helpers/format-date';
+import LoadingSpinner from 'ilios-common/components/loading-spinner';
 
 export default class LearningMaterialSearchComponent extends Component {
   @service store;
@@ -74,90 +82,94 @@ export default class LearningMaterialSearchComponent extends Component {
       await this.args.add(lm);
     }
   });
-}
-
-<div class="learningmaterial-search" data-test-learningmaterial-search>
-  <SearchBox
-    placeholder={{t "general.searchPlaceholder"}}
-    @liveSearch={{true}}
-    @search={{perform this.search}}
-    @clear={{this.clear}}
-  />
-  {{#if this.search.isRunning}}
-    <ul class="lm-search-results">
-      <li>
-        {{t "general.currentlySearchingPrompt"}}
-      </li>
-    </ul>
-  {{else if this.searchResults.length}}
-    <ul class="lm-search-results">
-      {{#each this.searchResults as |learningMaterial|}}
-        <li class={{if (includes learningMaterial.id @currentMaterialIds) "disabled"}}>
-          <button
-            class="result"
-            type="button"
-            {{on "click" (perform this.addLearningMaterial learningMaterial)}}
-          >
-            <div class="learning-material-title">
-              <LmTypeIcon @type={{learningMaterial.type}} @mimetype={{learningMaterial.mimetype}} />
-              <span data-test-title>
-                {{learningMaterial.title}}
-              </span>
-            </div>
-            <span class="learning-material-description">
-              {{! template-lint-disable no-triple-curlies }}
-              {{{learningMaterial.description}}}
-            </span>
-            {{#if learningMaterial.status.title}}
-              <span class="learning-material-status">
-                {{learningMaterial.status.title}}
-              </span>
-            {{/if}}
-            <ul class="learning-material-properties">
-              <li>
-                {{t "general.owner"}}:
-                {{learningMaterial.owningUser.fullName}}
-              </li>
-              {{#if learningMaterial.originalAuthor}}
-                <li>
-                  {{t "general.contentAuthor"}}:
-                  {{learningMaterial.originalAuthor}}
-                </li>
-              {{/if}}
-              <li>
-                {{t "general.uploadDate"}}:
-                {{format-date
-                  learningMaterial.uploadDate
-                  day="2-digit"
-                  month="2-digit"
-                  year="numeric"
-                }}
-              </li>
-            </ul>
-          </button>
-        </li>
-      {{/each}}
-      {{#if this.hasMoreSearchResults}}
-        <li>
-          <button
-            disabled={{if this.searchMore.isRunning true}}
-            type="button"
-            data-test-show-more
-            {{on "click" (perform this.searchMore)}}
-          >
-            {{#if this.searchMore.isRunning}}
-              <LoadingSpinner />
-            {{/if}}
-            {{t "general.showMore"}}
-          </button>
-        </li>
+  <template>
+    <div class="learningmaterial-search" data-test-learningmaterial-search>
+      <SearchBox
+        placeholder={{t "general.searchPlaceholder"}}
+        @liveSearch={{true}}
+        @search={{perform this.search}}
+        @clear={{this.clear}}
+      />
+      {{#if this.search.isRunning}}
+        <ul class="lm-search-results">
+          <li>
+            {{t "general.currentlySearchingPrompt"}}
+          </li>
+        </ul>
+      {{else if this.searchResults.length}}
+        <ul class="lm-search-results">
+          {{#each this.searchResults as |learningMaterial|}}
+            <li class={{if (includes learningMaterial.id @currentMaterialIds) "disabled"}}>
+              <button
+                class="result"
+                type="button"
+                {{on "click" (perform this.addLearningMaterial learningMaterial)}}
+              >
+                <div class="learning-material-title">
+                  <LmTypeIcon
+                    @type={{learningMaterial.type}}
+                    @mimetype={{learningMaterial.mimetype}}
+                  />
+                  <span data-test-title>
+                    {{learningMaterial.title}}
+                  </span>
+                </div>
+                <span class="learning-material-description">
+                  {{! template-lint-disable no-triple-curlies }}
+                  {{{learningMaterial.description}}}
+                </span>
+                {{#if learningMaterial.status.title}}
+                  <span class="learning-material-status">
+                    {{learningMaterial.status.title}}
+                  </span>
+                {{/if}}
+                <ul class="learning-material-properties">
+                  <li>
+                    {{t "general.owner"}}:
+                    {{learningMaterial.owningUser.fullName}}
+                  </li>
+                  {{#if learningMaterial.originalAuthor}}
+                    <li>
+                      {{t "general.contentAuthor"}}:
+                      {{learningMaterial.originalAuthor}}
+                    </li>
+                  {{/if}}
+                  <li>
+                    {{t "general.uploadDate"}}:
+                    {{formatDate
+                      learningMaterial.uploadDate
+                      day="2-digit"
+                      month="2-digit"
+                      year="numeric"
+                    }}
+                  </li>
+                </ul>
+              </button>
+            </li>
+          {{/each}}
+          {{#if this.hasMoreSearchResults}}
+            <li>
+              <button
+                disabled={{if this.searchMore.isRunning true}}
+                type="button"
+                data-test-show-more
+                {{on "click" (perform this.searchMore)}}
+              >
+                {{#if this.searchMore.isRunning}}
+                  <LoadingSpinner />
+                {{/if}}
+                {{t "general.showMore"}}
+              </button>
+            </li>
+          {{/if}}
+        </ul>
+      {{else if this.searchReturned}}
+        <ul class="lm-search-results">
+          <li>
+            {{t "general.noSearchResultsPrompt"}}
+          </li>
+        </ul>
       {{/if}}
-    </ul>
-  {{else if this.searchReturned}}
-    <ul class="lm-search-results">
-      <li>
-        {{t "general.noSearchResultsPrompt"}}
-      </li>
-    </ul>
-  {{/if}}
-</div>
+    </div>
+  </template>
+}

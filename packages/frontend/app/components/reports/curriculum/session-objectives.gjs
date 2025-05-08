@@ -8,6 +8,13 @@ import { DateTime } from 'luxon';
 import { cached, tracked } from '@glimmer/tracking';
 import { TrackedAsyncData } from 'ember-async-data';
 import { chunk } from 'ilios-common/utils/array-helpers';
+import Header from 'frontend/components/reports/curriculum/header';
+import noop from 'ilios-common/helpers/noop';
+import perform from 'ember-concurrency/helpers/perform';
+import add from 'ember-math-helpers/helpers/add';
+import t from 'ember-intl/helpers/t';
+import sortBy from 'ilios-common/helpers/sort-by';
+import { LinkTo } from '@ember/routing';
 
 export default class ReportsCurriculumSessionObjectivesComponent extends Component {
   @service router;
@@ -197,75 +204,76 @@ export default class ReportsCurriculumSessionObjectivesComponent extends Compone
     await timeout(2000);
     this.finishedBuildingReport = false;
   });
-}
-
-<Reports::Curriculum::Header
-  @selectedSchoolIds={{this.selectedSchoolIds}}
-  @countSelectedCourses={{@courses.length}}
-  @showReportResults={{true}}
-  @loading={{this.reportRunning}}
-  @selectedReportValue="sessionObjectives"
-  @changeSelectedReport={{(noop)}}
-  @close={{@close}}
-  @download={{perform this.downloadReport}}
-  @finished={{this.finishedBuildingReport}}
-/>
-<div class="progress-container">
-  {{#if this.reportRunning}}
-    <progress
-      value={{add 1 this.completedPromises.length}}
-      max={{add 1 this.queryPromises.length}}
-    ></progress>
-  {{/if}}
-</div>
-<div class="report-results {{if this.reportRunning 'running'}}" data-test-report-results>
-  <table>
-    <caption>{{t "general.resultsSummary"}}</caption>
-    <thead>
-      <tr>
-        {{#if this.hasMultipleSchools}}
-          <th>{{t "general.school"}}</th>
-        {{/if}}
-        <th>{{t "general.course"}}</th>
-        <th>{{t "general.sessions"}}</th>
-        <th>{{t "general.instructors"}}</th>
-        <th>{{t "general.objectives"}}</th>
-      </tr>
-    </thead>
-    <tbody>
+  <template>
+    <Header
+      @selectedSchoolIds={{this.selectedSchoolIds}}
+      @countSelectedCourses={{@courses.length}}
+      @showReportResults={{true}}
+      @loading={{this.reportRunning}}
+      @selectedReportValue="sessionObjectives"
+      @changeSelectedReport={{(noop)}}
+      @close={{@close}}
+      @download={{perform this.downloadReport}}
+      @finished={{this.finishedBuildingReport}}
+    />
+    <div class="progress-container">
       {{#if this.reportRunning}}
-        {{#each (sort-by "title" @courses) as |c|}}
+        <progress
+          value={{add 1 this.completedPromises.length}}
+          max={{add 1 this.queryPromises.length}}
+        ></progress>
+      {{/if}}
+    </div>
+    <div class="report-results {{if this.reportRunning 'running'}}" data-test-report-results>
+      <table>
+        <caption>{{t "general.resultsSummary"}}</caption>
+        <thead>
           <tr>
             {{#if this.hasMultipleSchools}}
-              <td>{{this.schoolTitlePlaceholder}}</td>
+              <th>{{t "general.school"}}</th>
             {{/if}}
-            <td>
-              <LinkTo @route="course" @model={{c.id}}>
-                {{c.title}}
-              </LinkTo>
-            </td>
-            <td>{{this.sessionCountPlaceholder}}</td>
-            <td>{{this.instructorsCountPlaceholder}}</td>
-            <td>{{this.objectiveCountPlaceholder}}</td>
+            <th>{{t "general.course"}}</th>
+            <th>{{t "general.sessions"}}</th>
+            <th>{{t "general.instructors"}}</th>
+            <th>{{t "general.objectives"}}</th>
           </tr>
-        {{/each}}
-      {{else}}
-        {{#each (sort-by "courseTitle" this.summary) as |o|}}
-          <tr data-test-result>
-            {{#if this.hasMultipleSchools}}
-              <td>{{o.schoolTitle}}</td>
-            {{/if}}
-            <td>
-              <LinkTo @route="course" @model={{o.courseId}}>
-                {{o.courseTitle}}
-              </LinkTo>
-            </td>
-            <td>{{o.sessionCount}}</td>
-            <td>{{o.instructorsCount}}</td>
-            <td>{{o.objectiveCount}}</td>
-          </tr>
-        {{/each}}
-      {{/if}}
-    </tbody>
-  </table>
-</div>
+        </thead>
+        <tbody>
+          {{#if this.reportRunning}}
+            {{#each (sortBy "title" @courses) as |c|}}
+              <tr>
+                {{#if this.hasMultipleSchools}}
+                  <td>{{this.schoolTitlePlaceholder}}</td>
+                {{/if}}
+                <td>
+                  <LinkTo @route="course" @model={{c.id}}>
+                    {{c.title}}
+                  </LinkTo>
+                </td>
+                <td>{{this.sessionCountPlaceholder}}</td>
+                <td>{{this.instructorsCountPlaceholder}}</td>
+                <td>{{this.objectiveCountPlaceholder}}</td>
+              </tr>
+            {{/each}}
+          {{else}}
+            {{#each (sortBy "courseTitle" this.summary) as |o|}}
+              <tr data-test-result>
+                {{#if this.hasMultipleSchools}}
+                  <td>{{o.schoolTitle}}</td>
+                {{/if}}
+                <td>
+                  <LinkTo @route="course" @model={{o.courseId}}>
+                    {{o.courseTitle}}
+                  </LinkTo>
+                </td>
+                <td>{{o.sessionCount}}</td>
+                <td>{{o.instructorsCount}}</td>
+                <td>{{o.objectiveCount}}</td>
+              </tr>
+            {{/each}}
+          {{/if}}
+        </tbody>
+      </table>
+    </div>
+  </template>
+}

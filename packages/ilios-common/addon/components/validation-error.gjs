@@ -11,10 +11,11 @@ export default class ValidationError extends Component {
   get errors() {
     return this.errorsForData.isResolved ? this.errorsForData.value : [];
   }
+  <template>
+    {{#each this.errors as |message|}}
+      <span class="validation-error-message" ...attributes>
+        {{message}}
+      </span>
+    {{/each}}
+  </template>
 }
-
-{{#each this.errors as |message|}}
-  <span class="validation-error-message" ...attributes>
-    {{message}}
-  </span>
-{{/each}}

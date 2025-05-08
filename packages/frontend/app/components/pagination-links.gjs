@@ -1,5 +1,11 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
+import gt from 'ember-truth-helpers/helpers/gt';
+import { on } from '@ember/modifier';
+import { fn } from '@ember/helper';
+import FaIcon from 'ilios-common/components/fa-icon';
+import t from 'ember-intl/helpers/t';
+import eq from 'ember-truth-helpers/helpers/eq';
 
 export default class PaginationLinksComponent extends Component {
   get disablePrev() {
@@ -46,46 +52,47 @@ export default class PaginationLinksComponent extends Component {
 
     return [1, '...', page - 1, page, page + 1, page + 2, '...', lastPage];
   }
-}
-
-<div class="pagination-links" data-test-pagination-links ...attributes>
-  {{#if (gt @results.length @size)}}
-    <button
-      type="button"
-      class="link-button prev"
-      {{on "click" (fn this.selectPage -1)}}
-      disabled={{this.disablePrev}}
-      data-test-prev
-    >
-      <FaIcon @icon="angle-left" />
-      {{t "general.prev"}}
-    </button>
-    {{#each this.pages as |pageNumber|}}
-      {{#if (eq pageNumber "...")}}
-        <FaIcon @icon="ellipsis" />
-      {{else}}
+  <template>
+    <div class="pagination-links" data-test-pagination-links ...attributes>
+      {{#if (gt @results.length @size)}}
         <button
           type="button"
-          class="page-button"
-          disabled={{eq @page pageNumber}}
-          {{on "click" (fn @onSelectPage pageNumber)}}
-          data-test-page-button
-          data-test-page-
-          {{pageNumber}}
+          class="link-button prev"
+          {{on "click" (fn this.selectPage -1)}}
+          disabled={{this.disablePrev}}
+          data-test-prev
         >
-          {{pageNumber}}
+          <FaIcon @icon="angle-left" />
+          {{t "general.prev"}}
+        </button>
+        {{#each this.pages as |pageNumber|}}
+          {{#if (eq pageNumber "...")}}
+            <FaIcon @icon="ellipsis" />
+          {{else}}
+            <button
+              type="button"
+              class="page-button"
+              disabled={{eq @page pageNumber}}
+              {{on "click" (fn @onSelectPage pageNumber)}}
+              data-test-page-button
+              data-test-page-
+              {{pageNumber}}
+            >
+              {{pageNumber}}
+            </button>
+          {{/if}}
+        {{/each}}
+        <button
+          type="button"
+          class="link-button next"
+          disabled={{this.disableNext}}
+          {{on "click" (fn this.selectPage 1)}}
+          data-test-next
+        >
+          {{t "general.next"}}
+          <FaIcon @icon="angle-right" />
         </button>
       {{/if}}
-    {{/each}}
-    <button
-      type="button"
-      class="link-button next"
-      disabled={{this.disableNext}}
-      {{on "click" (fn this.selectPage 1)}}
-      data-test-next
-    >
-      {{t "general.next"}}
-      <FaIcon @icon="angle-right" />
-    </button>
-  {{/if}}
-</div>
+    </div>
+  </template>
+}

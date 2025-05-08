@@ -4,6 +4,12 @@ import { action } from '@ember/object';
 import { sortBy } from 'ilios-common/utils/array-helpers';
 import { modifier } from 'ember-modifier';
 import { DateTime } from 'luxon';
+import FaIcon from 'ilios-common/components/fa-icon';
+import t from 'ember-intl/helpers/t';
+import formatDate from 'ember-intl/helpers/format-date';
+import { on } from '@ember/modifier';
+import { fn } from '@ember/helper';
+import WeeklyCalendarEvent from 'ilios-common/components/weekly-calendar-event';
 
 export default class WeeklyCalendarComponent extends Component {
   @service intl;
@@ -95,81 +101,87 @@ export default class WeeklyCalendarComponent extends Component {
   changeToDayView(date) {
     this.args.changeToDayView(DateTime.fromJSDate(date).toFormat('yyyy-MM-dd'));
   }
-}
-
-<section
-  class="weekly-calendar"
-  aria-busy={{if @isLoadingEvents "true" "false"}}
-  aria-live="polite"
-  data-test-weekly-calendar
->
-  <h2 class="week-of-year" data-test-week-of-year>
-    {{#if @isLoadingEvents}}
-      <FaIcon @icon="spinner" @spin={{true}} />
-      {{t "general.loadingEvents"}}
-      ...
-    {{else}}
-      <span class="short" data-test-short>
-        {{format-date this.firstDayOfWeek month="2-digit" day="2-digit"}}
-        &mdash;
-        {{format-date this.lastDayOfWeek month="2-digit" day="2-digit"}}
-        {{format-date this.lastDayOfWeek year="numeric"}}
-      </span>
-      <span class="long" data-test-long>{{t
-          "general.weekOf"
-          date=(format-date this.firstDayOfWeek month="long" day="numeric" year="numeric")
-        }}</span>
-    {{/if}}
-  </h2>
-  <div class="days" tabindex="0" id="weekly-calendar-days" {{this.scrollView this.earliestHour}}>
-    <div class="hours">
-      {{#each this.hours as |hour|}}
-        <span aria-hidden="true" class="hour hour-{{hour.hour}}">
-          <span class="long">{{hour.longName}}</span>
-          <span class="short">{{hour.shortName}}</span>
-        </span>
-      {{/each}}
-    </div>
-    {{#each this.days as |day|}}
-      <div class="events day-{{day.dayOfWeek}}" data-test-events-day>
-        <h3 class="day-name" data-test-day-name>
-          <button type="button" {{on "click" (fn this.changeToDayView day.date)}}>
-            {{format-date day.date weekday="long"}}
-          </button>
-        </h3>
-        {{#each day.events as |event|}}
-          <WeeklyCalendarEvent
-            @event={{event}}
-            @day={{day.dayOfWeek}}
-            @allDayEvents={{day.events}}
-            @selectEvent={{fn this.selectEvent event}}
-          />
+  <template>
+    <section
+      class="weekly-calendar"
+      aria-busy={{if @isLoadingEvents "true" "false"}}
+      aria-live="polite"
+      data-test-weekly-calendar
+    >
+      <h2 class="week-of-year" data-test-week-of-year>
+        {{#if @isLoadingEvents}}
+          <FaIcon @icon="spinner" @spin={{true}} />
+          {{t "general.loadingEvents"}}
+          ...
         {{else}}
-          <span class="no-events" data-test-no-events>{{t "general.noEvents"}}</span>
+          <span class="short" data-test-short>
+            {{formatDate this.firstDayOfWeek month="2-digit" day="2-digit"}}
+            &mdash;
+            {{formatDate this.lastDayOfWeek month="2-digit" day="2-digit"}}
+            {{formatDate this.lastDayOfWeek year="numeric"}}
+          </span>
+          <span class="long" data-test-long>{{t
+              "general.weekOf"
+              date=(formatDate this.firstDayOfWeek month="long" day="numeric" year="numeric")
+            }}</span>
+        {{/if}}
+      </h2>
+      <div
+        class="days"
+        tabindex="0"
+        id="weekly-calendar-days"
+        {{this.scrollView this.earliestHour}}
+      >
+        <div class="hours">
+          {{#each this.hours as |hour|}}
+            <span aria-hidden="true" class="hour hour-{{hour.hour}}">
+              <span class="long">{{hour.longName}}</span>
+              <span class="short">{{hour.shortName}}</span>
+            </span>
+          {{/each}}
+        </div>
+        {{#each this.days as |day|}}
+          <div class="events day-{{day.dayOfWeek}}" data-test-events-day>
+            <h3 class="day-name" data-test-day-name>
+              <button type="button" {{on "click" (fn this.changeToDayView day.date)}}>
+                {{formatDate day.date weekday="long"}}
+              </button>
+            </h3>
+            {{#each day.events as |event|}}
+              <WeeklyCalendarEvent
+                @event={{event}}
+                @day={{day.dayOfWeek}}
+                @allDayEvents={{day.events}}
+                @selectEvent={{fn this.selectEvent event}}
+              />
+            {{else}}
+              <span class="no-events" data-test-no-events>{{t "general.noEvents"}}</span>
+            {{/each}}
+          </div>
+        {{/each}}
+        {{#each this.hours as |hour|}}
+          <div class="hour-border hour-{{hour.hour}}" aria-hidden="true"></div>
+          <div class="half-hour-border half-hour-{{hour.hour}}" aria-hidden="true"></div>
         {{/each}}
       </div>
-    {{/each}}
-    {{#each this.hours as |hour|}}
-      <div class="hour-border hour-{{hour.hour}}" aria-hidden="true"></div>
-      <div class="half-hour-border half-hour-{{hour.hour}}" aria-hidden="true"></div>
-    {{/each}}
-  </div>
-  <div class="day-headings" aria-hidden="true" data-test-day-headings>
-    {{#each this.week as |day|}}
-      <div class="day-heading day-{{day.dayOfWeek}}">
-        <button
-          type="button"
-          {{on "click" (fn this.changeToDayView day.date)}}
-          tabindex="-1"
-          data-test-day
-          aria-label={{day.longName}}
-        >
-          <span class="long">{{format-date day.date weekday="long"}}</span>
-          <span class="short">{{format-date day.date weekday="short"}}</span>
-          <span class="long">{{format-date day.date month="short" day="numeric"}}</span>
-          <span class="short">{{format-date day.date day="numeric"}}</span>
-        </button>
+      <div class="day-headings" aria-hidden="true" data-test-day-headings>
+        {{#each this.week as |day|}}
+          <div class="day-heading day-{{day.dayOfWeek}}">
+            <button
+              type="button"
+              {{on "click" (fn this.changeToDayView day.date)}}
+              tabindex="-1"
+              data-test-day
+              aria-label={{day.longName}}
+            >
+              <span class="long">{{formatDate day.date weekday="long"}}</span>
+              <span class="short">{{formatDate day.date weekday="short"}}</span>
+              <span class="long">{{formatDate day.date month="short" day="numeric"}}</span>
+              <span class="short">{{formatDate day.date day="numeric"}}</span>
+            </button>
+          </div>
+        {{/each}}
       </div>
-    {{/each}}
-  </div>
-</section>
+    </section>
+  </template>
+}

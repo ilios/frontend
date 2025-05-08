@@ -6,6 +6,17 @@ import { TrackedAsyncData } from 'ember-async-data';
 import { cached, tracked } from '@glimmer/tracking';
 import { uniqueValues } from 'ilios-common/utils/array-helpers';
 import { action } from '@ember/object';
+import t from 'ember-intl/helpers/t';
+import { on } from '@ember/modifier';
+import FaIcon from 'ilios-common/components/fa-icon';
+import perform from 'ember-concurrency/helpers/perform';
+import { fn } from '@ember/helper';
+import sortBy from 'ilios-common/helpers/sort-by';
+import ManagedCompetencyListItem from 'frontend/components/program-year/managed-competency-list-item';
+import or from 'ember-truth-helpers/helpers/or';
+import includes from 'ilios-common/helpers/includes';
+import mapBy from 'ilios-common/helpers/map-by';
+import CompetencyListItem from 'frontend/components/program-year/competency-list-item';
 
 export default class ProgramYearCompetenciesComponent extends Component {
   @service flashMessages;
@@ -123,87 +134,93 @@ export default class ProgramYearCompetenciesComponent extends Component {
       this.args.expand();
     }
   });
-}
-
-<div class="program-year-competencies" ...attributes data-test-program-year-competencies>
-  <div class="header" data-test-header>
-    {{#if @isManaging}}
-      <div class="title" data-test-title>
-        <span class="specific-title">
-          {{t "general.competenciesManageTitle"}}
-        </span>
-      </div>
-    {{else}}
-      {{#if this.programYearCompetencies}}
-        <button
-          class="title link-button"
-          type="button"
-          aria-expanded="true"
-          data-test-title
-          {{on "click" @collapse}}
-        >
-          {{t "general.competencies"}}
-          ({{this.programYearCompetencies.length}})
-          <FaIcon @icon="caret-down" />
-        </button>
-      {{else}}
-        <div class="title" data-test-title>
-          {{t "general.competencies"}}
-          ({{this.programYearCompetencies.length}})
-        </div>
-      {{/if}}
-    {{/if}}
-    <div class="actions" data-test-actions>
-      {{#if @canUpdate}}
+  <template>
+    <div class="program-year-competencies" ...attributes data-test-program-year-competencies>
+      <div class="header" data-test-header>
         {{#if @isManaging}}
-          <button type="button" class="bigadd" {{on "click" (perform this.save)}} data-test-save>
-            <FaIcon
-              @icon={{if this.save.isRunning "spinner" "check"}}
-              @spin={{this.save.isRunning}}
-            />
-          </button>
-          <button type="button" class="bigcancel" {{on "click" this.cancel}} data-test-cancel>
-            <FaIcon @icon="arrow-rotate-left" />
-          </button>
+          <div class="title" data-test-title>
+            <span class="specific-title">
+              {{t "general.competenciesManageTitle"}}
+            </span>
+          </div>
         {{else}}
-          <button type="button" {{on "click" (fn @setIsManaging true)}} data-test-manage>
-            {{t "general.competenciesManageTitle"}}
-          </button>
-        {{/if}}
-      {{/if}}
-    </div>
-  </div>
-  <div class="content">
-    {{#if @isManaging}}
-      <ul class="managed-competency-list" data-test-managed-list>
-        {{#each (sort-by "title" this.domains) as |domain|}}
-          <ProgramYear::ManagedCompetencyListItem
-            @domain={{domain}}
-            @selectedCompetencies={{this.selectedCompetencies}}
-            @competenciesWithSelectedChildren={{this.competenciesWithSelectedChildren}}
-            @competencies={{this.competencies}}
-            @removeCompetencyFromBuffer={{this.removeCompetencyFromBuffer}}
-            @addCompetencyToBuffer={{this.addCompetencyToBuffer}}
-          />
-        {{/each}}
-      </ul>
-    {{else if this.programYearCompetencies.length}}
-      <ul class="competency-list" data-test-list>
-        {{#each (sort-by "title" this.domains) as |domain|}}
-          {{#if
-            (or
-              (includes domain.id (map-by "id" this.selectedCompetencies))
-              (includes domain this.competenciesWithSelectedChildren)
-            )
-          }}
-            <ProgramYear::CompetencyListItem
-              @domain={{domain}}
-              @selectedCompetencies={{this.selectedCompetencies}}
-              @competencies={{this.competencies}}
-            />
+          {{#if this.programYearCompetencies}}
+            <button
+              class="title link-button"
+              type="button"
+              aria-expanded="true"
+              data-test-title
+              {{on "click" @collapse}}
+            >
+              {{t "general.competencies"}}
+              ({{this.programYearCompetencies.length}})
+              <FaIcon @icon="caret-down" />
+            </button>
+          {{else}}
+            <div class="title" data-test-title>
+              {{t "general.competencies"}}
+              ({{this.programYearCompetencies.length}})
+            </div>
           {{/if}}
-        {{/each}}
-      </ul>
-    {{/if}}
-  </div>
-</div>
+        {{/if}}
+        <div class="actions" data-test-actions>
+          {{#if @canUpdate}}
+            {{#if @isManaging}}
+              <button
+                type="button"
+                class="bigadd"
+                {{on "click" (perform this.save)}}
+                data-test-save
+              >
+                <FaIcon
+                  @icon={{if this.save.isRunning "spinner" "check"}}
+                  @spin={{this.save.isRunning}}
+                />
+              </button>
+              <button type="button" class="bigcancel" {{on "click" this.cancel}} data-test-cancel>
+                <FaIcon @icon="arrow-rotate-left" />
+              </button>
+            {{else}}
+              <button type="button" {{on "click" (fn @setIsManaging true)}} data-test-manage>
+                {{t "general.competenciesManageTitle"}}
+              </button>
+            {{/if}}
+          {{/if}}
+        </div>
+      </div>
+      <div class="content">
+        {{#if @isManaging}}
+          <ul class="managed-competency-list" data-test-managed-list>
+            {{#each (sortBy "title" this.domains) as |domain|}}
+              <ManagedCompetencyListItem
+                @domain={{domain}}
+                @selectedCompetencies={{this.selectedCompetencies}}
+                @competenciesWithSelectedChildren={{this.competenciesWithSelectedChildren}}
+                @competencies={{this.competencies}}
+                @removeCompetencyFromBuffer={{this.removeCompetencyFromBuffer}}
+                @addCompetencyToBuffer={{this.addCompetencyToBuffer}}
+              />
+            {{/each}}
+          </ul>
+        {{else if this.programYearCompetencies.length}}
+          <ul class="competency-list" data-test-list>
+            {{#each (sortBy "title" this.domains) as |domain|}}
+              {{#if
+                (or
+                  (includes domain.id (mapBy "id" this.selectedCompetencies))
+                  (includes domain this.competenciesWithSelectedChildren)
+                )
+              }}
+                <CompetencyListItem
+                  @domain={{domain}}
+                  @selectedCompetencies={{this.selectedCompetencies}}
+                  @competencies={{this.competencies}}
+                />
+              {{/if}}
+            {{/each}}
+          </ul>
+        {{/if}}
+      </div>
+    </div>
+  </template>
+}

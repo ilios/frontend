@@ -1,5 +1,7 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
+import { on } from '@ember/modifier';
+import FaIcon from 'ilios-common/components/fa-icon';
 
 export default class SortableTh extends Component {
   get align() {
@@ -52,15 +54,16 @@ export default class SortableTh extends Component {
       this.args.onClick();
     }
   }
+  <template>
+    <th
+      class="sortable-th sortable text-{{this.align}}"
+      colspan={{this.colspan}}
+      aria-sort={{if this.sortedBy (if this.sortedAscending "ascending" "descending") "none"}}
+      ...attributes
+    >
+      <button type="button" title={{this.title}} {{on "click" this.click}}>
+        {{yield}}<FaIcon @icon={{this.sortIcon}} />
+      </button>
+    </th>
+  </template>
 }
-
-<th
-  class="sortable-th sortable text-{{this.align}}"
-  colspan={{this.colspan}}
-  aria-sort={{if this.sortedBy (if this.sortedAscending "ascending" "descending") "none"}}
-  ...attributes
->
-  <button type="button" title={{this.title}} {{on "click" this.click}}>
-    {{yield}}<FaIcon @icon={{this.sortIcon}} />
-  </button>
-</th>

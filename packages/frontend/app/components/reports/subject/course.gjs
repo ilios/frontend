@@ -6,6 +6,12 @@ import { service } from '@ember/service';
 import { pluralize } from 'ember-inflector';
 import { camelize } from '@ember/string';
 import { action } from '@ember/object';
+import SubjectHeader from 'frontend/components/reports/subject-header';
+import notEq from 'ember-truth-helpers/helpers/not-eq';
+import { LinkTo } from '@ember/routing';
+import t from 'ember-intl/helpers/t';
+import SubjectDownload from 'frontend/components/reports/subject-download';
+import LoadingSpinner from 'ilios-common/components/loading-spinner';
 
 export default class ReportsSubjectCourseComponent extends Component {
   @service graphql;
@@ -157,65 +163,66 @@ export default class ReportsSubjectCourseComponent extends Component {
       ...this.sortedCourses.map(({ title, year, externalId }) => [title, year, externalId]),
     ];
   }
-}
-
-<Reports::SubjectHeader
-  @report={{@report}}
-  @subject={{@subject}}
-  @prepositionalObject={{@prepositionalObject}}
-  @prepositionalObjectTableRowId={{@prepositionalObjectTableRowId}}
-  @school={{@school}}
-  @changeYear={{@changeYear}}
-  @year={{@year}}
-  @description={{@description}}
-  @showYearFilter={{not-eq @prepositionalObject "academic year"}}
-  @fetchDownloadData={{this.fetchDownloadData}}
-  @readyToDownload={{this.allCoursesData.isResolved}}
-  @resultsLength={{this.resultsLengthDisplay}}
-/>
-<div data-test-reports-subject-course>
-  {{#if this.allCoursesData.isResolved}}
-    <ul class="report-results{{if this.reportResultsExceedMax ' limited'}}" data-test-results>
-      {{#each this.limitedCourses as |course|}}
-        <li>
-          {{#if this.showYear}}
-            <span data-test-year>
-              {{course.year}}
-            </span>
-          {{/if}}
-          <span data-test-title>
-            {{#if this.canViewCourse}}
-              <LinkTo @route="course" @model={{course.id}}>
-                {{course.title}}
-                {{#if course.externalId}}
-                  ({{course.externalId}})
-                {{/if}}
-              </LinkTo>
-            {{else}}
-              {{course.title}}
-              {{#if course.externalId}}
-                ({{course.externalId}})
+  <template>
+    <SubjectHeader
+      @report={{@report}}
+      @subject={{@subject}}
+      @prepositionalObject={{@prepositionalObject}}
+      @prepositionalObjectTableRowId={{@prepositionalObjectTableRowId}}
+      @school={{@school}}
+      @changeYear={{@changeYear}}
+      @year={{@year}}
+      @description={{@description}}
+      @showYearFilter={{notEq @prepositionalObject "academic year"}}
+      @fetchDownloadData={{this.fetchDownloadData}}
+      @readyToDownload={{this.allCoursesData.isResolved}}
+      @resultsLength={{this.resultsLengthDisplay}}
+    />
+    <div data-test-reports-subject-course>
+      {{#if this.allCoursesData.isResolved}}
+        <ul class="report-results{{if this.reportResultsExceedMax ' limited'}}" data-test-results>
+          {{#each this.limitedCourses as |course|}}
+            <li>
+              {{#if this.showYear}}
+                <span data-test-year>
+                  {{course.year}}
+                </span>
               {{/if}}
-            {{/if}}
-          </span>
-        </li>
+              <span data-test-title>
+                {{#if this.canViewCourse}}
+                  <LinkTo @route="course" @model={{course.id}}>
+                    {{course.title}}
+                    {{#if course.externalId}}
+                      ({{course.externalId}})
+                    {{/if}}
+                  </LinkTo>
+                {{else}}
+                  {{course.title}}
+                  {{#if course.externalId}}
+                    ({{course.externalId}})
+                  {{/if}}
+                {{/if}}
+              </span>
+            </li>
+          {{else}}
+            <li>{{t "general.none"}}</li>
+          {{/each}}
+        </ul>
+        {{#if this.reportResultsExceedMax}}
+          <SubjectDownload
+            @report={{@report}}
+            @subject={{@subject}}
+            @prepositionalObject={{@prepositionalObject}}
+            @prepositionalObjectTableRowId={{@prepositionalObjectTableRowId}}
+            @school={{@school}}
+            @fetchDownloadData={{this.fetchDownloadData}}
+            @readyToDownload={{true}}
+            @message={{t "general.reportResultsExceedMax" resultsLengthMax=this.resultsLengthMax}}
+          />
+        {{/if}}
       {{else}}
-        <li>{{t "general.none"}}</li>
-      {{/each}}
-    </ul>
-    {{#if this.reportResultsExceedMax}}
-      <Reports::SubjectDownload
-        @report={{@report}}
-        @subject={{@subject}}
-        @prepositionalObject={{@prepositionalObject}}
-        @prepositionalObjectTableRowId={{@prepositionalObjectTableRowId}}
-        @school={{@school}}
-        @fetchDownloadData={{this.fetchDownloadData}}
-        @readyToDownload={{true}}
-        @message={{t "general.reportResultsExceedMax" resultsLengthMax=this.resultsLengthMax}}
-      />
-    {{/if}}
-  {{else}}
-    <LoadingSpinner />
-  {{/if}}
-</div>
+        <LoadingSpinner />
+      {{/if}}
+    </div>
+  </template>
+}

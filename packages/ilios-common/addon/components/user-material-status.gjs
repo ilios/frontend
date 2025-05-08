@@ -3,6 +3,11 @@ import { TrackedAsyncData } from 'ember-async-data';
 import { cached, tracked } from '@glimmer/tracking';
 import { service } from '@ember/service';
 import { restartableTask, timeout } from 'ember-concurrency';
+import and from 'ember-truth-helpers/helpers/and';
+import eq from 'ember-truth-helpers/helpers/eq';
+import t from 'ember-intl/helpers/t';
+import { on } from '@ember/modifier';
+import perform from 'ember-concurrency/helpers/perform';
 
 export default class UserMaterialStatusComponent extends Component {
   @service store;
@@ -82,33 +87,34 @@ export default class UserMaterialStatusComponent extends Component {
     await materialStatus.save();
     this.tmpStatus = null;
   });
-}
-
-{{#if (and this.isEnabled this.isSessionLearningMaterial this.isStatusLoaded)}}
-  <span class="user-material-status" data-test-user-material-status>
-    {{#if (eq this.status 0)}}
-      <input
-        aria-label={{t "general.notStarted"}}
-        type="checkbox"
-        disabled={{@disabled}}
-        {{on "click" (perform this.setStatus 1)}}
-      />
-    {{else if (eq this.status 1)}}
-      <input
-        aria-label={{t "general.inProgress"}}
-        indeterminate={{true}}
-        type="checkbox"
-        disabled={{@disabled}}
-        {{on "click" (perform this.setStatus 2)}}
-      />
-    {{else if (eq this.status 2)}}
-      <input
-        aria-label={{t "general.complete"}}
-        checked={{true}}
-        type="checkbox"
-        disabled={{@disabled}}
-        {{on "click" (perform this.setStatus 0)}}
-      />
+  <template>
+    {{#if (and this.isEnabled this.isSessionLearningMaterial this.isStatusLoaded)}}
+      <span class="user-material-status" data-test-user-material-status>
+        {{#if (eq this.status 0)}}
+          <input
+            aria-label={{t "general.notStarted"}}
+            type="checkbox"
+            disabled={{@disabled}}
+            {{on "click" (perform this.setStatus 1)}}
+          />
+        {{else if (eq this.status 1)}}
+          <input
+            aria-label={{t "general.inProgress"}}
+            indeterminate={{true}}
+            type="checkbox"
+            disabled={{@disabled}}
+            {{on "click" (perform this.setStatus 2)}}
+          />
+        {{else if (eq this.status 2)}}
+          <input
+            aria-label={{t "general.complete"}}
+            checked={{true}}
+            type="checkbox"
+            disabled={{@disabled}}
+            {{on "click" (perform this.setStatus 0)}}
+          />
+        {{/if}}
+      </span>
     {{/if}}
-  </span>
-{{/if}}
+  </template>
+}

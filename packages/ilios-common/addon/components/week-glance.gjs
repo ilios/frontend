@@ -4,6 +4,15 @@ import { isNone } from '@ember/utils';
 import { DateTime } from 'luxon';
 import { TrackedAsyncData } from 'ember-async-data';
 import { cached } from '@glimmer/tracking';
+import scrollIntoView from 'ilios-common/modifiers/scroll-into-view';
+import notEq from 'ember-truth-helpers/helpers/not-eq';
+import { on } from '@ember/modifier';
+import { fn } from '@ember/helper';
+import optional from 'ilios-common/helpers/optional';
+import t from 'ember-intl/helpers/t';
+import FaIcon from 'ilios-common/components/fa-icon';
+import gt from 'ember-truth-helpers/helpers/gt';
+import WeekGlanceEvent from 'ilios-common/components/week-glance-event';
 
 export default class WeeklyGlance extends Component {
   @service userEvents;
@@ -104,51 +113,52 @@ export default class WeeklyGlance extends Component {
       return ev.postrequisites.length === 0 || !ev.ilmSession;
     });
   }
-}
-
-<div
-  class="week-glance"
-  data-test-week-glance
-  {{scroll-into-view disabled=(not-eq @week @weekInFocus)}}
->
-  {{#if @collapsible}}
-    <button
-      type="button"
-      class="title collapsible"
-      aria-expanded={{if @collapsed "false" "true"}}
-      data-test-week-title
-      {{on "click" (fn (optional @toggleCollapsed) @collapsed)}}
+  <template>
+    <div
+      class="week-glance"
+      data-test-week-glance
+      {{scrollIntoView disabled=(notEq @week @weekInFocus)}}
     >
-      {{this.title}}
-      {{#if @showFullTitle}}
-        {{t "general.weekAtAGlance"}}
-      {{/if}}
-      <FaIcon @icon={{if @collapsed "caret-right" "caret-down"}} />
-    </button>
-  {{else}}
-    <h2 class="title" role={{if @collapsible "button"}} data-test-week-title>
-      {{this.title}}
-      {{#if @showFullTitle}}
-        {{t "general.weekAtAGlance"}}
-      {{/if}}
-    </h2>
-  {{/if}}
-  {{#unless @collapsed}}
-    {{#if this.eventsLoaded}}
-      {{#if (gt this.nonIlmPreWorkEvents.length 0)}}
-        {{#each this.nonIlmPreWorkEvents as |event|}}
-          <WeekGlanceEvent @event={{event}} />
-        {{/each}}
+      {{#if @collapsible}}
+        <button
+          type="button"
+          class="title collapsible"
+          aria-expanded={{if @collapsed "false" "true"}}
+          data-test-week-title
+          {{on "click" (fn (optional @toggleCollapsed) @collapsed)}}
+        >
+          {{this.title}}
+          {{#if @showFullTitle}}
+            {{t "general.weekAtAGlance"}}
+          {{/if}}
+          <FaIcon @icon={{if @collapsed "caret-right" "caret-down"}} />
+        </button>
       {{else}}
-        <p>
-          {{t "general.none"}}
-        </p>
+        <h2 class="title" role={{if @collapsible "button"}} data-test-week-title>
+          {{this.title}}
+          {{#if @showFullTitle}}
+            {{t "general.weekAtAGlance"}}
+          {{/if}}
+        </h2>
       {{/if}}
-    {{else}}
-      <p>
-        <FaIcon @icon="spinner" @spin={{true}} />
-        {{t "general.loadingEvents"}}
-      </p>
-    {{/if}}
-  {{/unless}}
-</div>
+      {{#unless @collapsed}}
+        {{#if this.eventsLoaded}}
+          {{#if (gt this.nonIlmPreWorkEvents.length 0)}}
+            {{#each this.nonIlmPreWorkEvents as |event|}}
+              <WeekGlanceEvent @event={{event}} />
+            {{/each}}
+          {{else}}
+            <p>
+              {{t "general.none"}}
+            </p>
+          {{/if}}
+        {{else}}
+          <p>
+            <FaIcon @icon="spinner" @spin={{true}} />
+            {{t "general.loadingEvents"}}
+          </p>
+        {{/if}}
+      {{/unless}}
+    </div>
+  </template>
+}

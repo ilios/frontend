@@ -5,6 +5,12 @@ import sortableByPosition from 'ilios-common/utils/sortable-by-position';
 import { all } from 'rsvp';
 import { action } from '@ember/object';
 import { TrackedAsyncData } from 'ember-async-data';
+import { on } from '@ember/modifier';
+import perform from 'ember-concurrency/helpers/perform';
+import FaIcon from 'ilios-common/components/fa-icon';
+import eq from 'ember-truth-helpers/helpers/eq';
+import { fn } from '@ember/helper';
+import FadeText from 'ilios-common/components/fade-text';
 
 export default class ObjectiveSortManagerComponent extends Component {
   @tracked totalObjectivesToSave;
@@ -105,59 +111,60 @@ export default class ObjectiveSortManagerComponent extends Component {
   toggleExpansion() {
     this.expanded = !this.expanded;
   }
-}
-
-<div class="objective-sort-manager">
-  <div class="actions">
-    <button
-      class="bigadd"
-      type="button"
-      disabled={{this.saveSortOrder.isRunning}}
-      {{on "click" (perform this.saveSortOrder)}}
-    >
-      {{#if this.saveSortOrder.isRunning}}
-        <FaIcon @icon="spinner" @spin={{true}} />
-        {{this.saveProgress}}%
-      {{else}}
-        <FaIcon @icon="check" />
-      {{/if}}
-    </button>
-    <button
-      class="bigcancel"
-      type="button"
-      disabled={{this.saveSortOrder.isRunning}}
-      {{on "click" @close}}
-    >
-      <FaIcon @icon="arrow-rotate-left" />
-    </button>
-  </div>
-  <div class="content">
-    <ul class="sortable-items">
-      {{#each this.items as |item|}}
-        <li
-          class="item{{if (eq this.draggingItem item) ' dragging-item'}}{{if
-              (eq this.draggedAboveItem item)
-              ' dragged-above'
-            }}{{if (eq this.draggedBelowItem item) ' dragged-below'}}"
-          draggable="true"
-          {{on "drag" (fn this.drag item)}}
-          {{on "dragend" this.dragEnd}}
-          {{on "dragover" (fn this.dragOver item)}}
+  <template>
+    <div class="objective-sort-manager">
+      <div class="actions">
+        <button
+          class="bigadd"
+          type="button"
+          disabled={{this.saveSortOrder.isRunning}}
+          {{on "click" (perform this.saveSortOrder)}}
         >
-          {{#unless this.saveSortOrder.isRunning}}
-            <FaIcon @icon="up-down-left-right" />
-          {{/unless}}
-          <span class="draggable-object-content">
-            <span>
-              <FadeText
-                @text={{item.title}}
-                @expanded={{this.expanded}}
-                @onExpandAll={{this.toggleExpansion}}
-              />
-            </span>
-          </span>
-        </li>
-      {{/each}}
-    </ul>
-  </div>
-</div>
+          {{#if this.saveSortOrder.isRunning}}
+            <FaIcon @icon="spinner" @spin={{true}} />
+            {{this.saveProgress}}%
+          {{else}}
+            <FaIcon @icon="check" />
+          {{/if}}
+        </button>
+        <button
+          class="bigcancel"
+          type="button"
+          disabled={{this.saveSortOrder.isRunning}}
+          {{on "click" @close}}
+        >
+          <FaIcon @icon="arrow-rotate-left" />
+        </button>
+      </div>
+      <div class="content">
+        <ul class="sortable-items">
+          {{#each this.items as |item|}}
+            <li
+              class="item{{if (eq this.draggingItem item) ' dragging-item'}}{{if
+                  (eq this.draggedAboveItem item)
+                  ' dragged-above'
+                }}{{if (eq this.draggedBelowItem item) ' dragged-below'}}"
+              draggable="true"
+              {{on "drag" (fn this.drag item)}}
+              {{on "dragend" this.dragEnd}}
+              {{on "dragover" (fn this.dragOver item)}}
+            >
+              {{#unless this.saveSortOrder.isRunning}}
+                <FaIcon @icon="up-down-left-right" />
+              {{/unless}}
+              <span class="draggable-object-content">
+                <span>
+                  <FadeText
+                    @text={{item.title}}
+                    @expanded={{this.expanded}}
+                    @onExpandAll={{this.toggleExpansion}}
+                  />
+                </span>
+              </span>
+            </li>
+          {{/each}}
+        </ul>
+      </div>
+    </div>
+  </template>
+}

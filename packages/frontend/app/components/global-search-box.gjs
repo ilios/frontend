@@ -6,6 +6,16 @@ import { isBlank } from '@ember/utils';
 import { findBy } from 'ilios-common/utils/array-helpers';
 import { cleanQuery } from 'ilios-common/utils/query-utils';
 import { restartableTask, timeout } from 'ember-concurrency';
+import t from 'ember-intl/helpers/t';
+import { on } from '@ember/modifier';
+import queue from 'ilios-common/helpers/queue';
+import pick from 'ilios-common/helpers/pick';
+import set from 'ember-set-helper/helpers/set';
+import perform from 'ember-concurrency/helpers/perform';
+import onKey from 'ember-keyboard/modifiers/on-key';
+import FaIcon from 'ilios-common/components/fa-icon';
+import onClickOutside from 'ember-click-outside/modifiers/on-click-outside';
+import { fn } from '@ember/helper';
 
 const DEBOUNCE_MS = 250;
 const MIN_INPUT = 3;
@@ -223,53 +233,54 @@ export default class GlobalSearchBox extends Component {
     });
     return this.results;
   });
-}
-
-<div class="global-search-box" data-test-global-search-box>
-  <input
-    aria-label={{t "general.searchTheCurriculum"}}
-    autocomplete="name"
-    class="global-search-input"
-    data-test-input
-    type="search"
-    value={{this.computedQuery}}
-    {{on
-      "input"
-      (queue
-        (pick "target.value" (set this "internalQuery"))
-        (set this "autocompleteSelectedQuery" null)
-        (perform this.autocomplete)
-      )
-    }}
-    {{on-key "Escape" this.onEscapeKey}}
-    {{on-key "Enter" this.onEnterKey}}
-    {{on-key "ArrowUp" this.onArrowKey}}
-    {{on-key "ArrowDown" this.onArrowKey}}
-  />
-  <button
-    aria-label={{t "general.search"}}
-    class="link-button search-icon"
-    type="button"
-    data-test-search-icon
-    {{on "click" this.focusAndSearch}}
-  >
-    <FaIcon @icon="magnifying-glass" />
-  </button>
-  {{#if this.hasResults}}
-    <div {{on-click-outside (set this "results" null)}}>
-      <div class="autocomplete" data-test-autocomplete>
-        {{#each this.results as |result|}}
-          <button
-            type="button"
-            class="autocomplete-row"
-            data-test-autocomplete-row
-            {{on "click" (fn this.searchFromResult result)}}
-          >
-            <FaIcon @icon="magnifying-glass" />
-            {{result.text}}
-          </button>
-        {{/each}}
-      </div>
+  <template>
+    <div class="global-search-box" data-test-global-search-box>
+      <input
+        aria-label={{t "general.searchTheCurriculum"}}
+        autocomplete="name"
+        class="global-search-input"
+        data-test-input
+        type="search"
+        value={{this.computedQuery}}
+        {{on
+          "input"
+          (queue
+            (pick "target.value" (set this "internalQuery"))
+            (set this "autocompleteSelectedQuery" null)
+            (perform this.autocomplete)
+          )
+        }}
+        {{onKey "Escape" this.onEscapeKey}}
+        {{onKey "Enter" this.onEnterKey}}
+        {{onKey "ArrowUp" this.onArrowKey}}
+        {{onKey "ArrowDown" this.onArrowKey}}
+      />
+      <button
+        aria-label={{t "general.search"}}
+        class="link-button search-icon"
+        type="button"
+        data-test-search-icon
+        {{on "click" this.focusAndSearch}}
+      >
+        <FaIcon @icon="magnifying-glass" />
+      </button>
+      {{#if this.hasResults}}
+        <div {{onClickOutside (set this "results" null)}}>
+          <div class="autocomplete" data-test-autocomplete>
+            {{#each this.results as |result|}}
+              <button
+                type="button"
+                class="autocomplete-row"
+                data-test-autocomplete-row
+                {{on "click" (fn this.searchFromResult result)}}
+              >
+                <FaIcon @icon="magnifying-glass" />
+                {{result.text}}
+              </button>
+            {{/each}}
+          </div>
+        </div>
+      {{/if}}
     </div>
-  {{/if}}
-</div>
+  </template>
+}

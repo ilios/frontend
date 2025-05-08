@@ -2,6 +2,9 @@ import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { deprecate } from '@ember/debug';
 import { DateTime } from 'luxon';
+import t from 'ember-intl/helpers/t';
+import { on } from '@ember/modifier';
+import isEqual from 'ember-truth-helpers/helpers/is-equal';
 
 export default class TimePicker extends Component {
   constructor() {
@@ -131,43 +134,44 @@ export default class TimePicker extends Component {
       }
     }
   }
+  <template>
+    <div class="time-picker" data-test-time-picker>
+      <select
+        class="hour"
+        aria-label={{t "general.hour"}}
+        {{on "change" this.changeHour}}
+        data-test-hour
+      >
+        {{#each this.hours as |listHour|}}
+          <option value={{listHour}} selected={{isEqual listHour this.hour}}>
+            {{listHour}}
+          </option>
+        {{/each}}
+      </select>
+      <select
+        class="minute"
+        aria-label={{t "general.minute"}}
+        {{on "change" this.changeMinute}}
+        data-test-minute
+      >
+        {{#each this.minutes as |listMinute|}}
+          <option value={{listMinute}} selected={{isEqual listMinute this.minute}}>
+            {{listMinute}}
+          </option>
+        {{/each}}
+      </select>
+      <select
+        class="ampm"
+        aria-label={{t "general.beforeOrAfterMidday"}}
+        {{on "change" this.changeAmPm}}
+        data-test-ampm
+      >
+        {{#each this.ampms as |listAmPm|}}
+          <option value={{listAmPm}} selected={{isEqual listAmPm this.ampm}}>
+            {{listAmPm}}
+          </option>
+        {{/each}}
+      </select>
+    </div>
+  </template>
 }
-
-<div class="time-picker" data-test-time-picker>
-  <select
-    class="hour"
-    aria-label={{t "general.hour"}}
-    {{on "change" this.changeHour}}
-    data-test-hour
-  >
-    {{#each this.hours as |listHour|}}
-      <option value={{listHour}} selected={{is-equal listHour this.hour}}>
-        {{listHour}}
-      </option>
-    {{/each}}
-  </select>
-  <select
-    class="minute"
-    aria-label={{t "general.minute"}}
-    {{on "change" this.changeMinute}}
-    data-test-minute
-  >
-    {{#each this.minutes as |listMinute|}}
-      <option value={{listMinute}} selected={{is-equal listMinute this.minute}}>
-        {{listMinute}}
-      </option>
-    {{/each}}
-  </select>
-  <select
-    class="ampm"
-    aria-label={{t "general.beforeOrAfterMidday"}}
-    {{on "change" this.changeAmPm}}
-    data-test-ampm
-  >
-    {{#each this.ampms as |listAmPm|}}
-      <option value={{listAmPm}} selected={{is-equal listAmPm this.ampm}}>
-        {{listAmPm}}
-      </option>
-    {{/each}}
-  </select>
-</div>
