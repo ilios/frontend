@@ -1,3 +1,26 @@
+import Component from '@glimmer/component';
+import { action } from '@ember/object';
+import { dropTask, timeout } from 'ember-concurrency';
+
+export default class SessionsGridHeader extends Component {
+  get sortedAscending() {
+    return this.args.sortBy.search(/desc/) === -1;
+  }
+
+  @action
+  setSortBy(what) {
+    if (this.args.sortBy === what) {
+      what += ':desc';
+    }
+    this.args.setSortBy(what);
+  }
+
+  expandAll = dropTask(async () => {
+    await timeout(100);
+    this.args.toggleExpandAll();
+  });
+}
+
 <div class="sessions-grid-header{{if @headerIsLocked ' locked'}}" data-test-sessions-grid-header>
   <span class="expand-collapse-control" data-test-expand-collapse-all>
     {{#if @showExpandAll}}

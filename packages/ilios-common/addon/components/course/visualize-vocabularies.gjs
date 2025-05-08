@@ -1,3 +1,21 @@
+import Component from '@glimmer/component';
+import { service } from '@ember/service';
+import { TrackedAsyncData } from 'ember-async-data';
+import { cached } from '@glimmer/tracking';
+
+export default class CourseVisualizeVocabulariesComponent extends Component {
+  @service iliosConfig;
+
+  crossesBoundaryConfig = new TrackedAsyncData(
+    this.iliosConfig.itemFromConfig('academicYearCrossesCalendarYearBoundaries'),
+  );
+
+  @cached
+  get academicYearCrossesCalendarYearBoundaries() {
+    return this.crossesBoundaryConfig.isResolved ? this.crossesBoundaryConfig.value : null;
+  }
+}
+
 <section
   class="course-visualize-vocabularies"
   data-test-course-visualize-vocabularies

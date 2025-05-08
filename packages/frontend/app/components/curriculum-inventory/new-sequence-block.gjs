@@ -1,3 +1,406 @@
+import Component from '@glimmer/component';
+import { cached, tracked } from '@glimmer/tracking';
+import { action } from '@ember/object';
+import { service } from '@ember/service';
+import { dropTask } from 'ember-concurrency';
+import { TrackedAsyncData } from 'ember-async-data';
+import { findById } from 'ilios-common/utils/array-helpers';
+import YupValidations from 'ilios-common/classes/yup-validations';
+import { date, string, mixed, number } from 'yup';
+import { DateTime } from 'luxon';
+
+export default class CurriculumInventoryNewSequenceBlock extends Component {
+  @service intl;
+  @service store;
+
+  @tracked startLevel;
+  @tracked endLevel;
+  @tracked childSequenceOrder;
+  @tracked course;
+  @tracked description;
+  @tracked duration = 0;
+  @tracked startDate;
+  @tracked endDate;
+  @tracked orderInSequence = null;
+  @tracked maximum = 0;
+  @tracked minimum = 0;
+  @tracked required;
+  @tracked title;
+  @tracked track = false;
+  childSequenceOrderOptions = [
+    { id: '1', title: this.intl.t('general.ordered') },
+    { id: '2', title: this.intl.t('general.unordered') },
+    { id: '3', title: this.intl.t('general.parallel') },
+  ];
+
+  requiredOptions = [
+    { id: '1', title: this.intl.t('general.required') },
+    { id: '2', title: this.intl.t('general.optionalElective') },
+    { id: '3', title: this.intl.t('general.requiredInTrack') },
+  ];
+
+  constructor() {
+    super(...arguments);
+    this.childSequenceOrder = this.childSequenceOrderOptions[0];
+    this.required = this.requiredOptions[0];
+  }
+
+  validations = new YupValidations(this, {
+    startDate: date().when('$hasZeroDurationOrLinkedCourseIsClerkship', {
+      is: true,
+      then: (schema) => schema.required(),
+    }),
+    endDate: date().when('startDate', {
+      is: (startDate) => {
+        return !!startDate;
+      },
+      then: (schema) =>
+        schema.required().test(
+          'is-end-date-after-start-date',
+          (d) => {
+            return {
+              path: d.path,
+              messageKey: 'errors.after',
+              values: {
+                after: this.intl.t('general.startDate'),
+              },
+            };
+          },
+          (value) => {
+            const startDate = DateTime.fromJSDate(this.startDate);
+            const endDate = DateTime.fromJSDate(value);
+            return startDate.startOf('day') < endDate.startOf('day');
+          },
+        ),
+    }),
+    startLevel: mixed().test(
+      'start-level-lte-end-level',
+      (d) => {
+        return {
+          path: d.path,
+          messageKey: 'errors.lessThanOrEqualTo',
+          values: {
+            lte: this.intl.t('general.endLevel'),
+          },
+        };
+      },
+      async (value) => {
+        // In case no user selection has been made (yet), we'll use default values for comparison.
+        const defaultStartLevel = await this.getDefaultStartLevel(
+          this.args.report,
+          this.args.parent,
+        );
+        const defaultEndLevel = await this.getDefaultEndLevel(this.args.report, this.args.parent);
+        const startLevel = value || defaultStartLevel;
+        const endLevel = this.endLevel || defaultEndLevel;
+        return endLevel.level >= startLevel.level;
+      },
+    ),
+    endLevel: mixed().test(
+      'end-level-gte-start-level',
+      (d) => {
+        return {
+          path: d.path,
+          messageKey: 'errors.greaterThanOrEqualTo',
+          values: {
+            gte: this.intl.t('general.startLevel'),
+          },
+        };
+      },
+      async (value) => {
+        // In case no user selection has been made (yet), we'll use default values for comparison.
+        const defaultStartLevel = await this.getDefaultStartLevel(
+          this.args.report,
+          this.args.parent,
+        );
+        const defaultEndLevel = await this.getDefaultEndLevel(this.args.report, this.args.parent);
+        const startLevel = this.startLevel || defaultStartLevel;
+        const endLevel = value || defaultEndLevel;
+        return endLevel.level >= startLevel.level;
+      },
+    ),
+    title: string().trim().required().max(200),
+    minimum: number().required().integer().min(0),
+    maximum: number()
+      .required()
+      .integer()
+      .min(0)
+      .test(
+        'more-than-or-equal-to-minimum',
+        (d) => {
+          return {
+            path: d.path,
+            messageKey: 'errors.greaterThanOrEqualTo',
+            values: {
+              gte: this.intl.t('general.minimum'),
+            },
+          };
+        },
+        (value) => {
+          const max = parseInt(value, 10) || 0;
+          const min = parseInt(this.minimum, 10) || 0;
+          return max >= min;
+        },
+      ),
+    duration: number()
+      .integer()
+      .lessThan(1201)
+      .test(
+        'clerkship-based-minimum',
+        (d) => {
+          return {
+            path: d.path,
+            messageKey: 'errors.greaterThanOrEqualTo',
+            values: {
+              gte: this.linkedCourseIsClerkship ? 1 : 0,
+            },
+          };
+        },
+        (value) => {
+          return this.linkedCourseIsClerkship ? value >= 1 : value >= 0;
+        },
+      ),
+  });
+
+  @cached
+  get siblingsData() {
+    return new TrackedAsyncData(this.args.parent ? this.args.parent.children : []);
+  }
+
+  get siblings() {
+    return this.siblingsData.isResolved ? this.siblingsData.value : [];
+  }
+
+  get defaultOrderInSequence() {
+    if (!this.isInOrderedSequence || !this.args.parent) {
+      return 0;
+    }
+    return 1;
+  }
+
+  @cached
+  get orderInSequenceOptionsData() {
+    return new TrackedAsyncData(
+      this.getOrderInSequenceOptions(this.isInOrderedSequence, this.siblings),
+    );
+  }
+
+  get orderInSequenceOptions() {
+    return this.orderInSequenceOptionsData.isResolved ? this.orderInSequenceOptionsData.value : [];
+  }
+
+  async getOrderInSequenceOptions(isInOrderedSequence, siblings) {
+    const rhett = [];
+    if (!isInOrderedSequence || !parent) {
+      return rhett;
+    }
+    for (let i = 0, n = siblings.length + 1; i < n; i++) {
+      rhett.push(i + 1);
+    }
+    return rhett;
+  }
+
+  @cached
+  get linkableCoursesData() {
+    // We're only referencing the parent sequence block's course value here
+    // so that a re-computation is triggered if/when that value changes.
+    return new TrackedAsyncData(
+      this.getLinkableCourses(this.args.report, this.args.parent?.course),
+    );
+  }
+
+  get linkableCourses() {
+    return this.linkableCoursesData.isResolved ? this.linkableCoursesData.value : [];
+  }
+
+  async getLinkableCourses(report) {
+    const program = await report.program;
+    const schoolId = program.belongsTo('school').id();
+    const linkedCourses = await report.getLinkedCourses();
+    const allLinkableCourses = await this.store.query('course', {
+      filters: {
+        school: [schoolId],
+        published: true,
+        year: report.year,
+      },
+    });
+    // Filter out all courses that are linked to (sequence blocks in) this report.
+    return allLinkableCourses.filter((course) => {
+      return !linkedCourses.includes(course);
+    });
+  }
+
+  @cached
+  get academicLevelsData() {
+    return new TrackedAsyncData(this.args.report.academicLevels);
+  }
+
+  get academicLevels() {
+    return this.academicLevelsData.isResolved ? this.academicLevelsData.value : [];
+  }
+
+  @cached
+  get defaultStartLevelData() {
+    return new TrackedAsyncData(this.getDefaultStartLevel(this.args.report, this.args.parent));
+  }
+
+  get defaultStartLevel() {
+    return this.defaultStartLevelData.isResolved ? this.defaultStartLevelData.value : null;
+  }
+
+  async getDefaultStartLevel(report, parent) {
+    if (parent) {
+      return await parent.startingAcademicLevel;
+    }
+
+    const academicLevels = await report.academicLevels;
+    return academicLevels[0];
+  }
+
+  @cached
+  get defaultEndLevelData() {
+    return new TrackedAsyncData(this.getDefaultEndLevel(this.args.report, this.args.parent));
+  }
+
+  get defaultEndLevel() {
+    return this.defaultEndLevelData.isResolved ? this.defaultEndLevelData.value : null;
+  }
+
+  async getDefaultEndLevel(report, parent) {
+    if (parent) {
+      return await parent.endingAcademicLevel;
+    }
+
+    const academicLevels = await report.academicLevels;
+    return academicLevels[0];
+  }
+
+  get linkedCourseIsClerkship() {
+    if (!this.course) {
+      return false;
+    }
+    return !!this.course.belongsTo('clerkshipType').id();
+  }
+
+  get hasZeroDuration() {
+    const num = Number(this.duration);
+    if (Number.isNaN(num)) {
+      return false;
+    }
+    return 0 === num;
+  }
+
+  get hasZeroDurationOrLinkedCourseIsClerkship() {
+    return this.hasZeroDuration || this.linkedCourseIsClerkship;
+  }
+
+  get isInOrderedSequence() {
+    return this.args.parent && this.args.parent.isOrdered;
+  }
+
+  @action
+  changeTrack(track) {
+    this.track = track;
+  }
+
+  @action
+  changeStartDate(startDate) {
+    this.startDate = startDate;
+  }
+
+  @action
+  changeEndDate(endDate) {
+    this.endDate = endDate;
+  }
+
+  @action
+  clearDates() {
+    this.endDate = null;
+    this.startDate = null;
+  }
+
+  @action
+  setCourse(id) {
+    this.course = id ? findById(this.linkableCourses, id) : null;
+  }
+
+  @action
+  setRequired(id) {
+    this.required = findById(this.requiredOptions, id);
+  }
+
+  @action
+  setStartLevel(id) {
+    this.startLevel = findById(this.academicLevels, id);
+  }
+
+  @action
+  setEndLevel(id) {
+    this.endLevel = findById(this.academicLevels, id);
+  }
+
+  @action
+  setChildSequenceOrder(id) {
+    this.childSequenceOrder = findById(this.childSequenceOrderOptions, id);
+  }
+
+  @action
+  setOrderInSequence(id) {
+    this.orderInSequence = Number(id);
+  }
+
+  @action
+  setDuration(duration) {
+    this.duration = duration;
+  }
+
+  @action
+  async saveOrCancel(event) {
+    const keyCode = event.keyCode;
+
+    if (13 === keyCode) {
+      await this.save.perform();
+      return;
+    }
+
+    if (27 === keyCode) {
+      this.args.cancel();
+    }
+  }
+
+  save = dropTask(async () => {
+    this.validations.addErrorDisplayForAllFields();
+    const isValid = await this.validations.isValid();
+    if (!isValid) {
+      return false;
+    }
+    this.validations.clearErrorDisplay();
+
+    const defaultStartLevel = await this.getDefaultStartLevel(this.args.report, this.args.parent);
+    const defaultEndLevel = await this.getDefaultEndLevel(this.args.report, this.args.parent);
+
+    const block = this.store.createRecord('curriculum-inventory-sequence-block', {
+      title: this.title,
+      description: this.description,
+      parent: this.args.parent,
+      startingAcademicLevel: this.startLevel || defaultStartLevel,
+      endingAcademicLevel: this.endLevel || defaultEndLevel,
+      required: this.required.id,
+      track: this.track,
+      orderInSequence: this.orderInSequence ?? this.defaultOrderInSequence,
+      childSequenceOrder: this.childSequenceOrder.id,
+      startDate: this.startDate,
+      endDate: this.endDate,
+      minimum: this.minimum,
+      maximum: this.maximum,
+      course: this.course,
+      duration: this.duration || 0,
+      report: this.args.report,
+    });
+    await this.args.save(block);
+  });
+}
+
 <section
   class="curriculum-inventory-new-sequence-block"
   data-test-curriculum-inventory-new-sequence-block

@@ -1,3 +1,21 @@
+import Component from '@glimmer/component';
+import { TrackedAsyncData } from 'ember-async-data';
+import { cached } from '@glimmer/tracking';
+import { service } from '@ember/service';
+
+export default class InstructorGroupCoursesComponent extends Component {
+  @service iliosConfig;
+
+  crossesBoundaryConfig = new TrackedAsyncData(
+    this.iliosConfig.itemFromConfig('academicYearCrossesCalendarYearBoundaries'),
+  );
+
+  @cached
+  get academicYearCrossesCalendarYearBoundaries() {
+    return this.crossesBoundaryConfig.isResolved ? this.crossesBoundaryConfig.value : false;
+  }
+}
+
 <section class="instructor-group-courses" data-test-instructor-group-courses ...attributes>
   <div class="instructor-group-courses-header">
     <h3 class="title" data-test-title>

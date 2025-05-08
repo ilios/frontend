@@ -1,3 +1,40 @@
+import Component from '@glimmer/component';
+import { action } from '@ember/object';
+import { sortBy, uniqueValues } from 'ilios-common/utils/array-helpers';
+
+export default class SchoolCompetenciesManagerComponent extends Component {
+  get domains() {
+    if (!this.args.competencies) {
+      return [];
+    }
+    const domains = this.args.competencies.filter((competency) => {
+      return !competency.belongsTo('parent').id();
+    });
+    const objs = uniqueValues(domains).map((domain) => {
+      if (!domain.id) {
+        return {
+          domain,
+          competencies: [],
+        };
+      }
+      const domainCompetencies = this.args.competencies.filter(
+        (competency) => competency.belongsTo('parent').id() === domain.id,
+      );
+      return {
+        domain,
+        competencies: sortBy(domainCompetencies, 'title'),
+      };
+    });
+
+    return sortBy(objs, 'domain.title');
+  }
+
+  @action
+  changeCompetencyTitle(value, competency) {
+    competency.set('title', value);
+  }
+}
+
 <div class="school-competencies-manager" data-test-school-competencies-manager ...attributes>
   {{#each this.domains as |obj|}}
     <div class="domain" data-test-domain>

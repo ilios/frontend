@@ -1,3 +1,9 @@
+import Component from '@glimmer/component';
+
+export default class SessionsGridLoading extends Component {
+  now = new Date();
+}
+
 <div
   class="sessions-grid-loading"
   role="presentation"

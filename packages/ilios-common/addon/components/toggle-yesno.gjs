@@ -1,3 +1,17 @@
+import Component from '@glimmer/component';
+import { action } from '@ember/object';
+
+export default class ToggleYesno extends Component {
+  get yes() {
+    return !!this.args.yes;
+  }
+
+  @action
+  click() {
+    this.args.toggle(!this.yes);
+  }
+}
+
 <button
   aria-checked="{{if this.yes 'true' 'false'}}"
   aria-label="{{if this.yes (t 'general.yes') (t 'general.no')}}"

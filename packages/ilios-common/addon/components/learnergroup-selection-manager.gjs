@@ -1,3 +1,10 @@
+import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
+
+export default class LearnergroupSelectionManagerComponent extends Component {
+  @tracked filter = '';
+}
+
 <div class="learnergroup-selection-manager" data-test-learnergroup-selection-manager>
   <SelectedLearnerGroups
     @learnerGroups={{@learnerGroups}}

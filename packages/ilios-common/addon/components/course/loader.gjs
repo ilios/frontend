@@ -1,3 +1,11 @@
+import Component from '@glimmer/component';
+import { service } from '@ember/service';
+
+export default class CourseLoaderComponent extends Component {
+  @service dataLoader;
+  courseLoadingPromise = this.dataLoader.loadCourse(this.args.course.id);
+}
+
 {{#let (load this.courseLoadingPromise) as |p|}}
   {{#if p.isResolved}}
     <Course::Details

@@ -1,3 +1,15 @@
+import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
+import { dropTask } from 'ember-concurrency';
+
+export default class SchoolSessionTypesListItemComponent extends Component {
+  @tracked showRemoveConfirmation = false;
+
+  remove = dropTask(async () => {
+    await this.args.sessionType.destroyRecord();
+  });
+}
+
 <tr class="school-session-types-list-item" data-test-school-session-types-list-item ...attributes>
   <td colspan="3" data-test-title>
     <button

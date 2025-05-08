@@ -1,3 +1,10 @@
+import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
+
+export default class LearnerGroupNewComponent extends Component {
+  @tracked singleMode = true;
+}
+
 <div class="new-learner-group" data-test-new-learner-group ...attributes>
   <div class="detail-content">
     {{#if @multiModeSupported}}

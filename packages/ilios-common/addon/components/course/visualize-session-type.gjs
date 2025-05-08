@@ -1,3 +1,26 @@
+import Component from '@glimmer/component';
+import { cached, tracked } from '@glimmer/tracking';
+import { service } from '@ember/service';
+import { TrackedAsyncData } from 'ember-async-data';
+
+export default class CourseVisualizeSessionTypeComponent extends Component {
+  @service iliosConfig;
+  @tracked title;
+
+  @cached
+  get academicYearCrossesCalendarYearBoundariesData() {
+    return new TrackedAsyncData(
+      this.iliosConfig.itemFromConfig('academicYearCrossesCalendarYearBoundaries'),
+    );
+  }
+
+  get academicYearCrossesCalendarYearBoundaries() {
+    return this.academicYearCrossesCalendarYearBoundariesData.isResolved
+      ? this.academicYearCrossesCalendarYearBoundariesData.value
+      : false;
+  }
+}
+
 <section class="course-visualize-session-type" data-test-course-visualize-session-type>
   {{#if this.academicYearCrossesCalendarYearBoundariesData.isResolved}}
     <div class="breadcrumbs" data-test-breadcrumb>

@@ -1,3 +1,15 @@
+import Component from '@glimmer/component';
+import sortableByPosition from 'ilios-common/utils/sortable-by-position';
+
+export default class CourseObjectiveListItemParentsComponent extends Component {
+  get parents() {
+    return this.args.parents
+      .slice()
+      .sort(sortableByPosition)
+      .map((t) => t.title);
+  }
+}
+
 <div class="course-objective-list-item-parents grid-item" data-test-objective-list-item-parents>
   {{#if @isManaging}}
     <button
