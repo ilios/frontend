@@ -106,11 +106,18 @@ export default class YupValidations {
     this.showAllErrors = false;
     this.visibleErrors = [];
   };
-  removeErrorDisplayFor = (field) => {
+
+  removeErrorDisplaysFor = (fields) => {
     this.showAllErrors = false;
-    if (this.visibleErrors.includes(field)) {
-      this.visibleErrors = this.visibleErrors.filter((f) => f !== field);
-    }
+    fields.forEach((field) => {
+      if (this.visibleErrors.includes(field)) {
+        this.visibleErrors = this.visibleErrors.filter((f) => f !== field);
+      }
+    });
+  };
+
+  removeErrorDisplayFor = (field) => {
+    this.removeErrorDisplaysFor([field]);
   };
 
   #validationProperties() {

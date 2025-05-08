@@ -147,8 +147,13 @@
                 id="startdate-{{templateId}}"
                 @value={{this.startDate}}
                 @onChange={{this.changeStartDate}}
+                {{this.validations.attach "startDate"}}
               />
-              <ValidationError @validatable={{this}} @property="startDate" />
+              <YupValidationMessage
+                @description={{t "general.startDate"}}
+                @validationErrors={{this.validations.errors.startDate}}
+                data-test-start-date-validation-error-message
+              />
             </div>
             <div class="item end-date" data-test-enddate>
               <label for="enddate-{{templateId}}">
@@ -158,8 +163,13 @@
                 id="enddate-{{templateId}}"
                 @value={{this.endDate}}
                 @onChange={{this.changeEndDate}}
+                {{this.validations.attach "endDate"}}
               />
-              <ValidationError @validatable={{this}} @property="endDate" />
+              <YupValidationMessage
+                @description={{t "general.endDate"}}
+                @validationErrors={{this.validations.errors.endDate}}
+                data-test-end-date-validation-error-message
+              />
             </div>
             <div class="item duration" data-test-duration>
               <label for="duration-{{templateId}}">
@@ -171,12 +181,14 @@
                 value={{this.duration}}
                 disabled={{this.saveDuration.isRunning}}
                 {{on "input" (pick "target.value" (set this "duration"))}}
-                {{on
-                  "keyup"
-                  (queue (fn this.addErrorDisplayFor "duration") this.saveOrCancelDuration)
-                }}
+                {{on "keyup" this.saveOrCancelDuration}}
+                {{this.validations.attach "duration"}}
               />
-              <ValidationError @validatable={{this}} @property="duration" />
+              <YupValidationMessage
+                @description={{t "general.duration"}}
+                @validationErrors={{this.validations.errors.duration}}
+                data-test-duration-validation-error-message
+              />
             </div>
             <div class="buttons">
               <button
@@ -363,50 +375,60 @@
           <label for="academic-level-{{templateId}}">{{t "general.startLevel"}}:</label>
           {{#if @canUpdate}}
             <EditableField
-              @value={{this.startingAcademicLevel.name}}
-              @save={{perform this.changeStartingAcademicLevel}}
-              @close={{this.revertStartingAcademicLevelChanges}}
+              @value={{@sequenceBlock.startingAcademicLevel.name}}
+              @save={{perform this.changeStartLevel}}
+              @close={{this.revertStartLevelChanges}}
             >
               <select
                 id="starting-academic-level-{{templateId}}"
-                {{on "change" this.setStartingAcademicLevel}}
+                {{on "change" this.setStartLevel}}
+                {{this.validations.attach "startLevel"}}
               >
                 {{#each (sort-by "level" this.academicLevels) as |obj|}}
                   <option
                     value={{obj.id}}
-                    selected={{eq obj.id this.startingAcademicLevel.id}}
+                    selected={{eq obj.id @sequenceBlock.startingAcademicLevel.id}}
                   >{{obj.name}}</option>
                 {{/each}}
               </select>
-              <ValidationError @validatable={{this}} @property="selectedStartingAcademicLevel" />
+              <YupValidationMessage
+                @description={{t "general.startLevel"}}
+                @validationErrors={{this.validations.errors.startLevel}}
+                data-test-start-level-validation-error-message
+              />
             </EditableField>
           {{else}}
-            <span>{{this.startingAcademicLevel.name}}</span>
+            <span>{{@sequenceBlock.startingAcademicLevel.name}}</span>
           {{/if}}
         </div>
         <div class="block ending-academic-level" data-test-ending-academic-level>
           <label for="academic-level-{{templateId}}">{{t "general.endLevel"}}:</label>
           {{#if @canUpdate}}
             <EditableField
-              @value={{this.endingAcademicLevel.name}}
-              @save={{perform this.changeEndingAcademicLevel}}
-              @close={{this.revertEndingAcademicLevelChanges}}
+              @value={{@sequenceBlock.endingAcademicLevel.name}}
+              @save={{perform this.changeEndLevel}}
+              @close={{this.revertEndLevelChanges}}
             >
               <select
                 id="ending-academic-level-{{templateId}}"
-                {{on "change" this.setEndingAcademicLevel}}
+                {{on "change" this.setEndLevel}}
+                {{this.validations.attach "endLevel"}}
               >
                 {{#each (sort-by "level" this.academicLevels) as |obj|}}
                   <option
                     value={{obj.id}}
-                    selected={{eq obj.id this.endingAcademicLevel.id}}
+                    selected={{eq obj.id @sequenceBlock.endingAcademicLevel.id}}
                   >{{obj.name}}</option>
                 {{/each}}
               </select>
-              <ValidationError @validatable={{this}} @property="selectedEndingAcademicLevel" />
+              <YupValidationMessage
+                @description={{t "general.endLevel"}}
+                @validationErrors={{this.validations.errors.endLevel}}
+                data-test-end-level-validation-error-message
+              />
             </EditableField>
           {{else}}
-            <span>{{this.endingAcademicLevel.name}}</span>
+            <span>{{@sequenceBlock.endingAcademicLevel.name}}</span>
           {{/if}}
         </div>
         <div class="block is-selective {{unless this.isSelective 'hidden'}}" data-test-is-selective>
@@ -427,12 +449,14 @@
                 value={{if this.isElective "0" this.minimum}}
                 disabled={{or this.isElective this.saveMinMax.isRunning}}
                 {{on "input" (pick "target.value" (set this "minimum"))}}
-                {{on
-                  "keyup"
-                  (queue (fn this.addErrorDisplayFor "minimum") this.saveOrCancelMinMax)
-                }}
+                {{on "keyup" this.saveOrCancelMinMax}}
+                {{this.validations.attach "minimum"}}
               />
-              <ValidationError @validatable={{this}} @property="minimum" />
+              <YupValidationMessage
+                @description={{t "general.minimum"}}
+                @validationErrors={{this.validations.errors.minimum}}
+                data-test-minimum-validation-error-message
+              />
             </div>
             <div class="item maximum" data-test-maximum>
               <label for="maximum-{{templateId}}">
@@ -444,12 +468,14 @@
                 value={{this.maximum}}
                 disabled={{this.saveMinMax.isRunning}}
                 {{on "input" (pick "target.value" (set this "maximum"))}}
-                {{on
-                  "keyup"
-                  (queue (fn this.addErrorDisplayFor "maximum") this.saveOrCancelMinMax)
-                }}
+                {{on "keyup" this.saveOrCancelMinMax}}
+                {{this.validations.attach "maximum"}}
               />
-              <ValidationError @validatable={{this}} @property="maximum" />
+              <YupValidationMessage
+                @description={{t "general.maximum"}}
+                @validationErrors={{this.validations.errors.maximum}}
+                data-test-maximum-validation-error-message
+              />
             </div>
             <div class="buttons">
               <button
