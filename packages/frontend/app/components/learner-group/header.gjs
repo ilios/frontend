@@ -2,7 +2,6 @@ import Component from '@glimmer/component';
 import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { dropTask } from 'ember-concurrency';
-import { validatable, Length, NotBlank } from 'ilios-common/decorators/validation';
 import { TrackedAsyncData } from 'ember-async-data';
 import EditableField from 'ilios-common/components/editable-field';
 import t from 'ember-intl/helpers/t';
@@ -10,19 +9,24 @@ import perform from 'ember-concurrency/helpers/perform';
 import { on } from '@ember/modifier';
 import pick from 'ilios-common/helpers/pick';
 import set from 'ember-set-helper/helpers/set';
-import { fn, hash } from '@ember/helper';
-import ValidationError from 'ilios-common/components/validation-error';
+import { hash } from '@ember/helper';
 import { LinkTo } from '@ember/routing';
 import reverse from 'ilios-common/helpers/reverse';
+import YupValidations from 'ilios-common/classes/yup-validations';
+import YupValidationMessage from 'ilios-common/components/yup-validation-message';
+import { string } from 'yup';
 
-@validatable
 export default class LearnerGroupHeaderComponent extends Component {
-  @tracked @NotBlank() @Length(3, 60) title;
+  @tracked title;
 
   constructor() {
     super(...arguments);
     this.title = this.args.learnerGroup.title;
   }
+
+  validations = new YupValidations(this, {
+    title: string().trim().min(3).max(60),
+  });
 
   @cached
   get upstreamRelationshipsData() {
@@ -62,16 +66,17 @@ export default class LearnerGroupHeaderComponent extends Component {
 
   @action
   revertTitleChanges() {
+    this.validations.removeErrorDisplayFor('title');
     this.title = this.args.learnerGroup.title;
   }
 
   changeTitle = dropTask(async () => {
-    this.addErrorDisplayFor('title');
-    const isValid = await this.isValid('title');
+    this.validations.addErrorDisplayFor('title');
+    const isValid = await this.validations.isValid();
     if (!isValid) {
       return false;
     }
-    this.removeErrorDisplayFor('title');
+    this.validations.removeErrorDisplayFor('title');
     this.args.learnerGroup.title = this.title;
     await this.args.learnerGroup.save();
   });
@@ -95,9 +100,13 @@ export default class LearnerGroupHeaderComponent extends Component {
                 value={{this.title}}
                 disabled={{isSaving}}
                 {{on "input" (pick "target.value" (set this "title"))}}
-                {{on "keyup" (fn this.addErrorDisplayFor "title")}}
+                {{this.validations.attach "title"}}
               />
-              <ValidationError @validatable={{this}} @property="title" />
+              <YupValidationMessage
+                @description={{t "general.title"}}
+                @validationErrors={{this.validations.errors.title}}
+                data-test-title-validation-error-message
+              />
             </EditableField>
           {{else}}
             <h2 data-test-title>{{this.title}}</h2>

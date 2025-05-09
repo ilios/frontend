@@ -654,23 +654,25 @@ module('Integration | Component | learner-group/root', function (hooks) {
     assert.strictEqual(component.defaultUrl.text, 'Default Virtual Learning Link: Click to edit');
     await component.defaultUrl.edit();
     assert.strictEqual(component.defaultUrl.value, 'https://');
-    assert.strictEqual(component.defaultUrl.errors.length, 0);
+    assert.notOk(component.defaultUrl.hasError);
     await component.defaultUrl.set('thisisnotanurl');
     await component.defaultUrl.save();
-    assert.strictEqual(component.defaultUrl.errors.length, 1);
-    assert.strictEqual(component.defaultUrl.errors[0].text, 'This field must be a valid url');
+    assert.strictEqual(
+      component.defaultUrl.error,
+      'Default Virtual Learning Link must be a valid url',
+    );
     await component.defaultUrl.set('www.stillnotavalidurlwithoutprotocol.com');
     await component.defaultUrl.save();
-    assert.strictEqual(component.defaultUrl.errors.length, 1);
-    assert.strictEqual(component.defaultUrl.errors[0].text, 'This field must be a valid url');
+    assert.strictEqual(
+      component.defaultUrl.error,
+      'Default Virtual Learning Link must be a valid url',
+    );
     await component.defaultUrl.set('https://' + 'abcdefghij'.repeat(200) + '.org');
     await component.defaultUrl.save();
-    assert.strictEqual(component.defaultUrl.errors.length, 2);
     assert.strictEqual(
-      component.defaultUrl.errors[0].text,
-      'This field is too long (maximum is 2000 characters)',
+      component.defaultUrl.error,
+      'Default Virtual Learning Link is too long (maximum is 2000 characters)',
     );
-    assert.strictEqual(component.defaultUrl.errors[1].text, 'This field must be a valid url');
     await component.defaultUrl.set('https://abcdefghij.org');
     await component.defaultUrl.save();
     assert.strictEqual(

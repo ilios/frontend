@@ -92,11 +92,11 @@ module('Integration | Component | learner-group/header', function (hooks) {
 
     assert.strictEqual(component.title.text, 'lorem ipsum');
     await component.title.edit();
-    assert.strictEqual(component.title.errors.length, 0);
+    assert.notOk(component.title.hasError);
     assert.strictEqual(component.title.value, 'lorem ipsum');
     await component.title.set('01234567890'.repeat(1000));
     await component.title.save();
-    assert.strictEqual(component.title.errors.length, 1);
+    assert.strictEqual(component.title.error, 'Title is too long (maximum is 60 characters)');
   });
 
   test('changing title fails if new title is too short', async function (assert) {
@@ -111,11 +111,11 @@ module('Integration | Component | learner-group/header', function (hooks) {
 
     assert.strictEqual(component.title.text, 'lorem ipsum');
     await component.title.edit();
-    assert.strictEqual(component.title.errors.length, 0);
+    assert.notOk(component.title.hasErrors);
     assert.strictEqual(component.title.value, 'lorem ipsum');
     await component.title.set('AB');
     await component.title.save();
-    assert.strictEqual(component.title.errors.length, 1);
+    assert.strictEqual(component.title.error, 'Title is too short (minimum is 3 characters)');
   });
 
   test('changing title fails if title is blank', async function (assert) {
@@ -130,11 +130,11 @@ module('Integration | Component | learner-group/header', function (hooks) {
 
     assert.strictEqual(component.title.text, 'lorem ipsum');
     await component.title.edit();
-    assert.strictEqual(component.title.errors.length, 0);
+    assert.notOk(component.title.hasErrors);
     assert.strictEqual(component.title.value, 'lorem ipsum');
     await component.title.set('');
     await component.title.save();
-    assert.strictEqual(component.title.errors.length, 1);
+    assert.strictEqual(component.title.error, 'Title is too short (minimum is 3 characters)');
   });
 
   test('cancel title changes', async function (assert) {
@@ -149,7 +149,7 @@ module('Integration | Component | learner-group/header', function (hooks) {
 
     assert.strictEqual(component.title.text, 'lorem ipsum');
     await component.title.edit();
-    assert.strictEqual(component.title.errors.length, 0);
+    assert.notOk(component.title.hasError);
     assert.strictEqual(component.title.value, 'lorem ipsum');
     await component.title.set('foo bar');
     await component.title.cancel();

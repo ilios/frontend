@@ -161,6 +161,7 @@ function setupErrorMessages() {
       integer: isInteger(),
       lessThan: lessThan(),
       min: minimum(),
+      max: maximum(),
       moreThan: moreThan(),
     },
   });
@@ -258,12 +259,23 @@ function lessThan() {
 
 function minimum() {
   return (validationParams) => {
-    //our current translations expects this key to be named gt and not more as it is in yup
     const min = validationParams.min;
     return {
       path: validationParams.path,
       messageKey: 'errors.minimum',
       values: { min },
+    };
+  };
+}
+
+function maximum() {
+  //our current translations expects this key to be named lte and not max as it is in yup
+  return (validationParams) => {
+    const lte = validationParams.max;
+    return {
+      path: validationParams.path,
+      messageKey: 'errors.lessThanOrEqualTo',
+      values: { lte },
     };
   };
 }

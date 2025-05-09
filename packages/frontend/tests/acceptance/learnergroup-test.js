@@ -116,7 +116,7 @@ module('Acceptance | Learner Group', function (hooks) {
     assert.ok(page.root.subgroups.newLearnerGroupForm.singleGroupSelected);
     assert.notOk(page.root.subgroups.newLearnerGroupForm.multipleGroupSelected);
     await page.root.subgroups.newLearnerGroupForm.chooseMultipleGroups();
-    await page.root.subgroups.newLearnerGroupForm.multiple.setNumberOfGroups(5);
+    await page.root.subgroups.newLearnerGroupForm.multiple.set('5');
     await page.root.subgroups.newLearnerGroupForm.multiple.save();
 
     assert.strictEqual(page.root.subgroups.list.items.length, 7);
@@ -131,7 +131,7 @@ module('Acceptance | Learner Group', function (hooks) {
     // add two more subgroups
     await page.root.subgroups.toggleNewLearnerGroupForm();
     await page.root.subgroups.newLearnerGroupForm.chooseMultipleGroups();
-    await page.root.subgroups.newLearnerGroupForm.multiple.setNumberOfGroups(2);
+    await page.root.subgroups.newLearnerGroupForm.multiple.set('2');
     await page.root.subgroups.newLearnerGroupForm.multiple.save();
     await percySnapshot(getUniqueName(assert, 'toggleNewLearnerGroupForm +2 subgroups'));
 

@@ -7,7 +7,6 @@ import { all, map } from 'rsvp';
 import { dropTask, enqueueTask, restartableTask, task } from 'ember-concurrency';
 import pad from 'pad';
 import { TrackedAsyncData } from 'ember-async-data';
-import { Length, IsURL, validatable } from 'ilios-common/decorators/validation';
 import { findById, mapBy, uniqueValues } from 'ilios-common/utils/array-helpers';
 import cloneLearnerGroup from '../../utils/clone-learner-group';
 import countDigits from '../../utils/count-digits';
@@ -21,7 +20,6 @@ import EditableField from 'ilios-common/components/editable-field';
 import { on } from '@ember/modifier';
 import pick from 'ilios-common/helpers/pick';
 import set from 'ember-set-helper/helpers/set';
-import ValidationError from 'ilios-common/components/validation-error';
 import sortBy from 'ilios-common/helpers/sort-by';
 import { LinkTo } from '@ember/routing';
 import add from 'ember-math-helpers/helpers/add';
@@ -43,17 +41,18 @@ import FaIcon from 'ilios-common/components/fa-icon';
 import eq from 'ember-truth-helpers/helpers/eq';
 import List from 'frontend/components/learner-group/list';
 import CohortUserManager from 'frontend/components/learner-group/cohort-user-manager';
-
+import YupValidations from 'ilios-common/classes/yup-validations';
+import YupValidationMessage from 'ilios-common/components/yup-validation-message';
+import { string } from 'yup';
 const DEFAULT_URL_VALUE = 'https://';
 
-@validatable
 export default class LearnerGroupRootComponent extends Component {
   @service flashMessages;
   @service intl;
   @service store;
   @service iliosConfig;
   @tracked location = null;
-  @IsURL() @Length(2, 2000) @tracked url = null;
+  @tracked url = null;
   @tracked showLearnerGroupCalendar = false;
   @tracked sortGroupsBy = 'title';
   @tracked isSavingGroups = false;
@@ -68,6 +67,10 @@ export default class LearnerGroupRootComponent extends Component {
     this.location = this.args.learnerGroup.location;
     this.url = this.args.learnerGroup.url;
   }
+
+  validations = new YupValidations(this, {
+    bestUrl: string().trim().url().min(2).max(2000),
+  });
 
   get learnerGroupId() {
     return this.args.learnerGroup.id;
@@ -218,12 +221,6 @@ export default class LearnerGroupRootComponent extends Component {
   });
 
   changeLocation = restartableTask(async () => {
-    this.addErrorDisplayFor('location');
-    const isValid = await this.isValid('location');
-    if (!isValid) {
-      return false;
-    }
-    this.removeErrorDisplayFor('location');
     this.args.learnerGroup.set('location', this.location);
     await this.args.learnerGroup.save();
     this.location = this.args.learnerGroup.location;
@@ -277,12 +274,12 @@ export default class LearnerGroupRootComponent extends Component {
   }
 
   saveUrlChanges = restartableTask(async () => {
-    this.addErrorDisplayFor('url');
-    const isValid = await this.isValid('url');
+    this.validations.addErrorDisplayFor('url');
+    const isValid = await this.validations.isValid();
     if (!isValid) {
       return false;
     }
-    this.removeErrorDisplayFor('url');
+    this.validations.removeErrorDisplayFor('url');
     this.args.learnerGroup.set('url', this.url);
     await this.args.learnerGroup.save();
     this.url = this.args.learnerGroup.url;
@@ -290,6 +287,7 @@ export default class LearnerGroupRootComponent extends Component {
 
   @action
   revertUrlChanges() {
+    this.validations.removeErrorDisplayFor('url');
     this.url = this.args.learnerGroup.url;
   }
 
@@ -574,9 +572,7 @@ export default class LearnerGroupRootComponent extends Component {
                     value={{this.location}}
                     disabled={{isSaving}}
                     {{on "input" (pick "target.value" (set this "location"))}}
-                    {{on "keyup" (fn this.addErrorDisplayFor "location")}}
                   />
-                  <ValidationError @validatable={{this}} @property="location" />
                 </EditableField>
               {{else if this.location}}
                 {{this.location}}
@@ -605,13 +601,17 @@ export default class LearnerGroupRootComponent extends Component {
                     type="text"
                     placeholder="https://example.com"
                     value={{this.bestUrl}}
+                    disabled={{isSaving}}
                     inputmode="url"
                     {{on "input" (pick "target.value" this.changeUrl)}}
-                    {{on "keyup" (fn this.addErrorDisplayFor "url")}}
                     {{on "focus" this.selectAllText}}
-                    disabled={{isSaving}}
+                    {{this.validations.attach "bestUrl"}}
                   />
-                  <ValidationError @validatable={{this}} @property="url" />
+                  <YupValidationMessage
+                    @description={{t "general.defaultVirtualLearningLink"}}
+                    @validationErrors={{this.validations.errors.bestUrl}}
+                    data-test-url-validation-error-message
+                  />
                 </EditableField>
               {{else if this.url}}
                 {{this.url}}
