@@ -107,4 +107,26 @@ module('Integration | Component | curriculum-inventory/report-header', function 
     );
     await component.finalize();
   });
+
+  test('#i6159 validation status', async function (assert) {
+    this.set('report', this.report);
+    await render(
+      <template>
+        <ReportHeader @report={{this.report}} @canUpdate={{true}} @finalize={{(noop)}} />
+      </template>,
+    );
+    assert.ok(component.name.isVisible);
+    assert.strictEqual(component.name.value, 'Report name');
+    await component.name.edit();
+    await component.name.set('');
+    await component.name.save();
+    assert.ok(component.name.hasError);
+    await component.name.cancel();
+    assert.strictEqual(component.name.value, 'Report name');
+    await component.name.edit();
+    assert.notOk(component.name.hasError);
+    assert.strictEqual(component.name.inputValue, 'Report name');
+    await component.name.blur();
+    assert.notOk(component.name.hasError);
+  });
 });
