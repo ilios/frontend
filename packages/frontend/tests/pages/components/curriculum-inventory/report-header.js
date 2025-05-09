@@ -1,5 +1,6 @@
 import {
   attribute,
+  blurrable,
   clickable,
   create,
   fillable,
@@ -7,6 +8,7 @@ import {
   isVisible,
   property,
   text,
+  value,
 } from 'ember-cli-page-object';
 
 const definition = {
@@ -22,6 +24,8 @@ const definition = {
     save: clickable('.done'),
     cancel: clickable('.cancel'),
     hasError: isPresent('[data-test-name-validation-error-message]'),
+    inputValue: value('input'),
+    blur: blurrable('input'),
   },
   downloadLink: {
     scope: '[data-test-download]',

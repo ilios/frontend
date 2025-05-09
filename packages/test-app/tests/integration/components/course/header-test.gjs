@@ -147,4 +147,25 @@ module('Integration | Component | course/header', function (hooks) {
     await render(<template><Header @course={{this.course}} @editable={{true}} /></template>);
     assert.strictEqual(component.academicYear, '2021 - 2022');
   });
+
+  test('#i6159 validation status', async function (assert) {
+    const course = this.server.create('course');
+    const courseModel = await this.store.findRecord('course', course.id);
+    this.set('course', courseModel);
+    await render(<template><Header @course={{this.course}} @editable={{true}} /></template>);
+
+    assert.ok(component.title.isVisible);
+    assert.strictEqual(component.title.value, 'course 0');
+    await component.title.edit();
+    await component.title.set('');
+    await component.title.save();
+    assert.ok(component.title.hasError);
+    await component.title.cancel();
+    assert.strictEqual(component.title.value, 'course 0');
+    await component.title.edit();
+    assert.notOk(component.title.hasError);
+    assert.strictEqual(component.title.inputValue, 'course 0');
+    await component.title.blur();
+    assert.notOk(component.title.hasError);
+  });
 });

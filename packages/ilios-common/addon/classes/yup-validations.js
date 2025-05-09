@@ -128,9 +128,10 @@ export default class YupValidations {
     element.addEventListener(
       'focusout',
       () => {
+        this.#validate();
         this.makeErrorsVisibleFor.perform([field]);
       },
-      { passive: true },
+      { passive: true, once: true },
     );
     element.addEventListener(
       'input',

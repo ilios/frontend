@@ -1,4 +1,12 @@
-import { create, clickable, fillable, text, isVisible } from 'ember-cli-page-object';
+import {
+  blurrable,
+  create,
+  clickable,
+  fillable,
+  text,
+  isVisible,
+  value,
+} from 'ember-cli-page-object';
 import publicationMenu from './publication-menu';
 import publicationStatus from '../publication-status';
 const definition = {
@@ -10,6 +18,8 @@ const definition = {
     set: fillable('input'),
     save: clickable('.done'),
     cancel: clickable('.cancel'),
+    inputValue: value('input'),
+    blur: blurrable('input'),
     hasError: isVisible('.validation-error-message'),
   },
   academicYear: text('[data-test-academic-year]'),
