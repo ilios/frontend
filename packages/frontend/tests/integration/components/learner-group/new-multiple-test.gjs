@@ -13,8 +13,49 @@ module('Integration | Component | learner-group/new-multiple', function (hooks) 
     await render(
       <template><NewMultiple @cancel={{(noop)}} @generateNewLearnerGroups={{(noop)}} /></template>,
     );
+    assert.strictEqual(component.numb);
     assert.ok(component.isVisible);
     await a11yAudit(this.element);
+  });
+
+  test('save fails if number of groups is blank', async function (assert) {
+    await render(
+      <template><NewMultiple @cancel={{(noop)}} @generateNewLearnerGroups={{(noop)}} /></template>,
+    );
+    assert.notOk(component.hasError);
+    await component.set('');
+    await component.save();
+    assert.strictEqual(component.error, 'Number of Groups must be a number');
+  });
+
+  test('save fails if number of groups is not an integer', async function (assert) {
+    await render(
+      <template><NewMultiple @cancel={{(noop)}} @generateNewLearnerGroups={{(noop)}} /></template>,
+    );
+    assert.notOk(component.hasError);
+    await component.set('1.4');
+    await component.save();
+    assert.strictEqual(component.error, 'Number of Groups must be an integer');
+  });
+
+  test('save fails if number of groups must be positive', async function (assert) {
+    await render(
+      <template><NewMultiple @cancel={{(noop)}} @generateNewLearnerGroups={{(noop)}} /></template>,
+    );
+    assert.notOk(component.hasError);
+    await component.set('0');
+    await component.save();
+    assert.strictEqual(component.error, 'Number of Groups must be greater than or equal to 1');
+  });
+
+  test('save fails if number of groups is too large', async function (assert) {
+    await render(
+      <template><NewMultiple @cancel={{(noop)}} @generateNewLearnerGroups={{(noop)}} /></template>,
+    );
+    assert.notOk(component.hasError);
+    await component.set('51');
+    await component.save();
+    assert.strictEqual(component.error, 'Number of Groups must be less than or equal to 50');
   });
 
   test('save', async function (assert) {
@@ -27,7 +68,7 @@ module('Integration | Component | learner-group/new-multiple', function (hooks) 
         <NewMultiple @generateNewLearnerGroups={{this.save}} @cancel={{(noop)}} />
       </template>,
     );
-    await component.setNumberOfGroups(13);
+    await component.set('13');
     await component.save();
   });
 });

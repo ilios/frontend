@@ -1,29 +1,33 @@
 import Component from '@glimmer/component';
-import { validatable, IsInt, Gt, Lte, NotBlank } from 'ilios-common/decorators/validation';
 import { tracked } from '@glimmer/tracking';
 import { dropTask } from 'ember-concurrency';
 import { action } from '@ember/object';
-import { uniqueId, fn } from '@ember/helper';
+import { uniqueId } from '@ember/helper';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
 import pick from 'ilios-common/helpers/pick';
 import set from 'ember-set-helper/helpers/set';
-import ValidationError from 'ilios-common/components/validation-error';
 import perform from 'ember-concurrency/helpers/perform';
 import LoadingSpinner from 'ilios-common/components/loading-spinner';
+import YupValidations from 'ilios-common/classes/yup-validations';
+import YupValidationMessage from 'ilios-common/components/yup-validation-message';
+import { number } from 'yup';
 
-@validatable
 export default class LearnerGroupNewMultipleComponent extends Component {
-  @tracked @IsInt() @Gt(0) @NotBlank() @Lte(50) numberOfGroups;
+  @tracked numberOfGroups;
   @tracked fillWithCohort = false;
 
+  validations = new YupValidations(this, {
+    numberOfGroups: number().required().integer().min(1).max(50),
+  });
+
   save = dropTask(async () => {
-    this.addErrorDisplayFor('numberOfGroups');
-    const isValid = await this.isValid();
+    this.validations.addErrorDisplayFor('numberOfGroups');
+    const isValid = await this.validations.isValid();
     if (!isValid) {
       return false;
     }
-    this.removeErrorDisplayFor('numberOfGroups');
+    this.validations.removeErrorDisplayFor('numberOfGroups');
     await this.args.generateNewLearnerGroups(this.numberOfGroups);
   });
 
@@ -51,13 +55,15 @@ export default class LearnerGroupNewMultipleComponent extends Component {
             disabled={{this.save.isRunning}}
             placeholder={{t "general.numberOfGroupsToGenerate"}}
             value={{this.numberOfGroups}}
-            {{on "focusout" (fn this.addErrorDisplayFor "numberOfGroups")}}
             {{on "keyup" this.keyboard}}
-            {{on "keyup" (fn this.addErrorDisplayFor "numberOfGroups")}}
             {{on "input" (pick "target.value" (set this "numberOfGroups"))}}
-            data-test-number-of-groups
+            {{this.validations.attach "numberOfGroups"}}
           />
-          <ValidationError @validatable={{this}} @property="numberOfGroups" />
+          <YupValidationMessage
+            @description={{t "general.numberOfGroups"}}
+            @validationErrors={{this.validations.errors.numberOfGroups}}
+            data-test-number-of-groups-validation-error-message
+          />
         </div>
         <div class="buttons">
           <button type="button" class="done text" {{on "click" (perform this.save)}} data-test-save>
