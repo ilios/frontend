@@ -62,7 +62,11 @@ module('Integration | Component | user profile bio manager', function (hooks) {
 
     await render(
       <template>
-        <UserProfileBioManager @user={{this.user}} @userAuthentication={{authenticationModel}} />
+        <UserProfileBioManager
+          @user={{this.user}}
+          @userAuthentication={{authenticationModel}}
+          @canEditUsernameAndPassword={{false}}
+        />
       </template>,
     );
 
@@ -71,56 +75,27 @@ module('Integration | Component | user profile bio manager', function (hooks) {
       `Primary School: ${schoolModel.title}`,
       'school title is correct',
     );
-
+    assert.strictEqual(component.firstName.value, userModel.firstName, 'first name is correct');
+    assert.strictEqual(component.middleName.value, userModel.middleName, 'middle name is correct');
+    assert.strictEqual(component.lastName.value, userModel.lastName, 'last name is correct');
+    assert.strictEqual(component.campusId.value, userModel.campusId, 'campus id is correct');
+    assert.strictEqual(component.otherId.value, userModel.otherId, 'other id is correct');
+    assert.strictEqual(component.email.value, userModel.email, 'email is correct');
     assert.strictEqual(
-      component.firstName.text,
-      `First Name: ${userModel.firstName}`,
-      'first name is correct',
-    );
-    assert.strictEqual(
-      component.middleName.text,
-      `Middle Name: ${userModel.middleName}`,
-      'middle name is correct',
-    );
-    assert.strictEqual(
-      component.lastName.text,
-      `Last Name: ${userModel.lastName}`,
-      'last name is correct',
-    );
-    assert.strictEqual(
-      component.campusId.text,
-      `Campus ID: ${userModel.campusId}`,
-      'campus id is correct',
-    );
-    assert.strictEqual(
-      component.otherId.text,
-      `Other ID: ${userModel.otherId}`,
-      'other id is correct',
-    );
-    assert.strictEqual(component.email.text, `Email: ${userModel.email}`, 'email is correct');
-    assert.strictEqual(
-      component.displayName.text,
-      `Display Name: ${userModel.displayName}`,
+      component.displayName.value,
+      userModel.displayName,
       'display name is correct',
     );
+    assert.strictEqual(component.pronouns.value, userModel.pronouns, 'pronouns are correct');
     assert.strictEqual(
-      component.pronouns.text,
-      `Pronouns: ${userModel.pronouns}`,
-      'pronouns are correct',
-    );
-    assert.strictEqual(
-      component.preferredEmail.text,
-      `Preferred Email: ${userModel.preferredEmail}`,
+      component.preferredEmail.value,
+      userModel.preferredEmail,
       'preferred email is correct',
     );
+    assert.strictEqual(component.phone.value, userModel.phone, 'phone number is correct');
     assert.strictEqual(
-      component.phone.text,
-      `Phone: ${userModel.phone}`,
-      'phone number is correct',
-    );
-    assert.strictEqual(
-      component.username.text,
-      `Username: ${authenticationModel.username}`,
+      component.username.value,
+      authenticationModel.username,
       'username is correct',
     );
     assert.notOk(component.password.isVisible, 'password is not visible');
@@ -139,65 +114,48 @@ module('Integration | Component | user profile bio manager', function (hooks) {
       .findRecord('authentication', this.authentication.id);
     this.set('user', userModel);
 
-    await render(<template><UserProfileBioManager @user={{this.user}} /></template>);
+    await render(
+      <template>
+        <UserProfileBioManager
+          @user={{this.user}}
+          @userAuthentication={{authenticationModel}}
+          @canEditUsernameAndPassword={{true}}
+        />
+      </template>,
+    );
 
     assert.strictEqual(
       component.school,
       `Primary School: ${schoolModel.title}`,
       'school is correct',
     );
+    assert.strictEqual(component.firstName.value, userModel.firstName, 'first name is correct');
+    assert.strictEqual(component.middleName.value, userModel.middleName, 'middle name is correct');
+    assert.strictEqual(component.lastName.value, userModel.lastName, 'last name is correct');
+    assert.strictEqual(component.campusId.value, userModel.campusId, 'campus id is correct');
+    assert.strictEqual(component.otherId.value, userModel.otherId, 'other id is correct');
+    assert.strictEqual(component.email.value, userModel.email, 'email is correct');
     assert.strictEqual(
-      component.firstName.text,
-      `First Name: ${userModel.firstName}`,
-      'first name is correct',
-    );
-    assert.strictEqual(
-      component.middleName.text,
-      `Middle Name: ${userModel.middleName}`,
-      'middle name is correct',
-    );
-    assert.strictEqual(
-      component.lastName.text,
-      `Last Name: ${userModel.lastName}`,
-      'last name is correct',
-    );
-    assert.strictEqual(
-      component.campusId.text,
-      `Campus ID: ${userModel.campusId}`,
-      'campus id is correct',
-    );
-    assert.strictEqual(
-      component.otherId.text,
-      `Other ID: ${userModel.otherId}`,
-      'other id is correct',
-    );
-    assert.strictEqual(component.email.text, `Email: ${userModel.email}`, 'email is correct');
-    assert.strictEqual(
-      component.displayName.text,
-      `Display Name: ${userModel.displayName}`,
+      component.displayName.value,
+      userModel.displayName,
       'display name is correct',
     );
+    assert.strictEqual(component.pronouns.value, userModel.pronouns, 'pronouns are correct');
     assert.strictEqual(
-      component.pronouns.text,
-      `Pronouns: ${userModel.pronouns}`,
-      'pronouns are correct',
-    );
-    assert.strictEqual(
-      component.preferredEmail.text,
-      `Preferred Email: ${userModel.preferredEmail}`,
+      component.preferredEmail.value,
+      userModel.preferredEmail,
       'preferred email is correct',
     );
     assert.strictEqual(
-      component.phone.text,
-      `Phone: ${userModel.phone}`,
-      'phone number is correct',
-    );
-    assert.strictEqual(
-      component.username.text,
-      `Username: ${authenticationModel.username}`,
+      component.username.value,
+      authenticationModel.username,
       'username is correct',
     );
-    assert.strictEqual(component.password.text, 'Password: *********', 'password is obscured');
+    assert.strictEqual(
+      component.password.text,
+      'Password: Click here to reset password.',
+      'password is obscured',
+    );
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
   });
@@ -224,6 +182,7 @@ module('Integration | Component | user profile bio manager', function (hooks) {
           @user={{this.user}}
           @userAuthentication={{authenticationModel}}
           @setIsManaging={{(noop)}}
+          @canEditUsernameAndPassword={{false}}
         />
       </template>,
     );
@@ -291,6 +250,7 @@ module('Integration | Component | user profile bio manager', function (hooks) {
           @user={{this.user}}
           @userAuthentication={{authenticationModel}}
           @setIsManaging={{(noop)}}
+          @canEditUsernameAndPassword={{true}}
         />
       </template>,
     );
@@ -352,6 +312,7 @@ module('Integration | Component | user profile bio manager', function (hooks) {
           @user={{this.user}}
           @userAuthentication={{authenticationModel}}
           @setIsManaging={{(noop)}}
+          @canEditUsernameAndPassword={{true}}
         />
       </template>,
     );
@@ -412,7 +373,13 @@ module('Integration | Component | user profile bio manager', function (hooks) {
     this.set('user', userModel);
 
     await render(
-      <template><UserProfileBioManager @user={{this.user}} @setIsManaging={{(noop)}} /></template>,
+      <template>
+        <UserProfileBioManager
+          @user={{this.user}}
+          @setIsManaging={{(noop)}}
+          @canEditUsernameAndPassword={{true}}
+        />
+      </template>,
     );
 
     await component.password.edit();
@@ -429,7 +396,13 @@ module('Integration | Component | user profile bio manager', function (hooks) {
     this.set('user', userModel);
 
     await render(
-      <template><UserProfileBioManager @user={{this.user}} @setIsManaging={{(noop)}} /></template>,
+      <template>
+        <UserProfileBioManager
+          @user={{this.user}}
+          @setIsManaging={{(noop)}}
+          @canEditUsernameAndPassword={{true}}
+        />
+      </template>,
     );
 
     await component.password.edit();
@@ -448,7 +421,13 @@ module('Integration | Component | user profile bio manager', function (hooks) {
     this.set('user', userModel);
 
     await render(
-      <template><UserProfileBioManager @user={{this.user}} @setIsManaging={{(noop)}} /></template>,
+      <template>
+        <UserProfileBioManager
+          @user={{this.user}}
+          @setIsManaging={{(noop)}}
+          @canEditUsernameAndPassword={{true}}
+        />
+      </template>,
     );
 
     await component.password.edit();
@@ -464,7 +443,13 @@ module('Integration | Component | user profile bio manager', function (hooks) {
     this.set('user', userModel);
 
     await render(
-      <template><UserProfileBioManager @user={{this.user}} @setIsManaging={{(noop)}} /></template>,
+      <template>
+        <UserProfileBioManager
+          @user={{this.user}}
+          @setIsManaging={{(noop)}}
+          @canEditUsernameAndPassword={{true}}
+        />
+      </template>,
     );
 
     await component.password.edit();
@@ -480,7 +465,13 @@ module('Integration | Component | user profile bio manager', function (hooks) {
     this.set('user', userModel);
 
     await render(
-      <template><UserProfileBioManager @user={{this.user}} @setIsManaging={{(noop)}} /></template>,
+      <template>
+        <UserProfileBioManager
+          @user={{this.user}}
+          @setIsManaging={{(noop)}}
+          @canEditUsernameAndPassword={{true}}
+        />
+      </template>,
     );
 
     await component.password.edit();
@@ -497,7 +488,13 @@ module('Integration | Component | user profile bio manager', function (hooks) {
     this.set('user', userModel);
 
     await render(
-      <template><UserProfileBioManager @user={{this.user}} @setIsManaging={{(noop)}} /></template>,
+      <template>
+        <UserProfileBioManager
+          @user={{this.user}}
+          @setIsManaging={{(noop)}}
+          @canEditUsernameAndPassword={{true}}
+        />
+      </template>,
     );
 
     await component.password.edit();
@@ -514,7 +511,13 @@ module('Integration | Component | user profile bio manager', function (hooks) {
     this.set('user', userModel);
 
     await render(
-      <template><UserProfileBioManager @user={{this.user}} @setIsManaging={{(noop)}} /></template>,
+      <template>
+        <UserProfileBioManager
+          @user={{this.user}}
+          @setIsManaging={{(noop)}}
+          @canEditUsernameAndPassword={{true}}
+        />
+      </template>,
     );
 
     await component.password.edit();
@@ -525,7 +528,7 @@ module('Integration | Component | user profile bio manager', function (hooks) {
   });
 
   test('sync user from directory', async function (assert) {
-    assert.expect(31);
+    assert.expect(32);
     setupApplicationConfig('ldap', this);
     const userModel = await this.owner.lookup('service:store').findRecord('user', this.user.id);
     this.set('user', userModel);
@@ -546,13 +549,6 @@ module('Integration | Component | user profile bio manager', function (hooks) {
         },
       };
     });
-    this.set('updatedFieldsFromSync', []);
-    this.set('addUpdatedFieldFromSync', (field) => {
-      this.updatedFieldsFromSync = [...this.updatedFieldsFromSync, field];
-    });
-    this.set('resetUpdatedFieldsFromSync', () => {
-      this.updatedFieldsFromSync = [];
-    });
 
     await render(
       <template>
@@ -560,9 +556,7 @@ module('Integration | Component | user profile bio manager', function (hooks) {
           @user={{this.user}}
           @userAuthentication={{null}}
           @setIsManaging={{(noop)}}
-          @updatedFieldsFromSync={{this.updatedFieldsFromSync}}
-          @addUpdatedFieldFromSync={{this.addUpdatedFieldFromSync}}
-          @resetUpdatedFieldsFromSync={{this.resetUpdatedFieldsFromSync}}
+          @canEditUsernameAndPassword={{false}}
         />
       </template>,
     );
@@ -582,8 +576,6 @@ module('Integration | Component | user profile bio manager', function (hooks) {
     );
     assert.strictEqual(component.phone.value, 'x1234', 'phone number is correct');
     assert.strictEqual(component.username.value, 'test-username', 'username is correct');
-
-    // await pauseTest();
 
     await component.syncWithDirectory.click();
 
@@ -676,7 +668,13 @@ module('Integration | Component | user profile bio manager', function (hooks) {
     this.set('user', userModel);
 
     await render(
-      <template><UserProfileBioManager @user={{this.user}} @setIsManaging={{(noop)}} /></template>,
+      <template>
+        <UserProfileBioManager
+          @user={{this.user}}
+          @setIsManaging={{(noop)}}
+          @canEditUsernameAndPassword={{true}}
+        />
+      </template>,
     );
     assert.notOk(component.username.hasError);
     await component.username.set('geflarknik');

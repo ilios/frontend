@@ -61,7 +61,11 @@ module('Integration | Component | user profile bio details', function (hooks) {
 
     await render(
       <template>
-        <UserProfileBioDetails @user={{this.user}} @userAuthentication={{authenticationModel}} />
+        <UserProfileBioDetails
+          @user={{this.user}}
+          @userAuthentication={{authenticationModel}}
+          @canEditUsernameAndPassword={{false}}
+        />
       </template>,
     );
 
@@ -139,7 +143,11 @@ module('Integration | Component | user profile bio details', function (hooks) {
 
     await render(
       <template>
-        <UserProfileBioDetails @user={{this.user}} @userAuthentication={{authenticationModel}} />
+        <UserProfileBioDetails
+          @user={{this.user}}
+          @userAuthentication={{authenticationModel}}
+          @canEditUsernameAndPassword={{true}}
+        />
       </template>,
     );
 
