@@ -139,4 +139,14 @@ module('Acceptance | Reports - Subject Report', function (hooks) {
     assert.strictEqual(page.report.results[0].text, 'course 1: session 1');
     assert.strictEqual(currentURL(), '/reports/subjects/2?reportYear=2016');
   });
+
+  test('copy new button works', async function (assert) {
+    this.server.post('api/graphql', async () => this.getReportData(['1', '2']));
+    await page.visit({ reportId: this.termReport.id });
+    await page.report.copyNew.button.click();
+    assert.strictEqual(
+      currentURL(),
+      '/reports/subjects?selectedPrepositionalObject=term&selectedPrepositionalObjectId=1&selectedSchoolId=1&selectedSubject=session&showNewReportForm=true',
+    );
+  });
 });
