@@ -3,7 +3,6 @@ import { cached, tracked } from '@glimmer/tracking';
 import { service } from '@ember/service';
 import { TrackedAsyncData } from 'ember-async-data';
 import { modifier } from 'ember-modifier';
-import t from 'ember-intl/helpers/t';
 import LoadingSpinner from 'ilios-common/components/loading-spinner';
 import UserProfileBioDetails from 'frontend/components/user-profile-bio-details';
 import UserProfileBioManager from 'frontend/components/user-profile-bio-manager';
@@ -59,12 +58,6 @@ export default class UserProfileBioComponent extends Component {
         data-test-user-profile-bio
         ...attributes
       >
-        {{#unless this.userAuthentication.username}}
-          <div class="error" data-test-username-missing>
-            {{t "general.missingRequiredUsername"}}
-          </div>
-        {{/unless}}
-
         {{#if @isManaging}}
           <UserProfileBioManager
             @user={{@user}}

@@ -18,6 +18,12 @@ import FaIcon from 'ilios-common/components/fa-icon';
       {{/if}}
     </div>
 
+    {{#unless @userAuthentication.username}}
+      <div class="error" data-test-username-missing>
+        {{t "general.missingRequiredUsername"}}
+      </div>
+    {{/unless}}
+
     <p class="primary-school" data-test-school>
       <strong>
         {{t "general.primarySchool"}}:
