@@ -177,7 +177,7 @@ module('Acceptance | User', function (hooks) {
       authentication: this.server.create('authentication'),
     });
     await page.visit({ userId: user1.id });
-    assert.strictEqual(page.bio.username.text, 'Username: username1');
+    assert.strictEqual(page.bioDetails.username.text, 'Username: username1');
     assert.strictEqual(page.roles.student.value, 'No');
     assert.strictEqual(page.roles.formerStudent.value, 'Yes');
     assert.strictEqual(page.roles.enabled.value, 'Yes');
@@ -188,7 +188,7 @@ module('Acceptance | User', function (hooks) {
     await page.cohorts.cancel();
 
     await page.visit({ userId: user2.id });
-    assert.strictEqual(page.bio.username.text, 'Username: username2');
+    assert.strictEqual(page.bioDetails.username.text, 'Username: username2');
     assert.strictEqual(page.roles.student.value, 'Yes');
     assert.strictEqual(page.roles.formerStudent.value, 'No');
     assert.strictEqual(page.roles.enabled.value, 'No');
