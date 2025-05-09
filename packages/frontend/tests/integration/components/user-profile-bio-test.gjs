@@ -5,7 +5,6 @@ import { setupMirage } from 'frontend/tests/test-support/mirage';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
 import { component } from 'frontend/tests/pages/components/user-profile-bio';
 import UserProfileBio from 'frontend/components/user-profile-bio';
-import noop from 'ilios-common/helpers/noop';
 
 module('Integration | Component | user profile bio', function (hooks) {
   setupRenderingTest(hooks);
@@ -49,528 +48,56 @@ module('Integration | Component | user profile bio', function (hooks) {
     });
   });
 
-  test('it renders for ldap user search', async function (assert) {
-    setupApplicationConfig('ldap', this);
-    const userModel = await this.owner.lookup('service:store').findRecord('user', this.user.id);
-    const schoolModel = await this.owner
-      .lookup('service:store')
-      .findRecord('school', this.school.id);
-    const authenticationModel = await this.owner
-      .lookup('service:store')
-      .findRecord('authentication', this.authentication.id);
-    this.set('user', userModel);
-
-    await render(<template><UserProfileBio @user={{this.user}} /></template>);
-
-    assert.strictEqual(component.school, `Primary School: ${schoolModel.title}`);
-    assert.strictEqual(component.firstName.text, `First Name: ${userModel.firstName}`);
-    assert.strictEqual(component.middleName.text, `Middle Name: ${userModel.middleName}`);
-    assert.strictEqual(component.lastName.text, `Last Name: ${userModel.lastName}`);
-    assert.strictEqual(component.campusId.text, `Campus ID: ${userModel.campusId}`);
-    assert.strictEqual(component.otherId.text, `Other ID: ${userModel.otherId}`);
-    assert.strictEqual(component.email.text, `Email: ${userModel.email}`);
-    assert.strictEqual(component.displayName.text, `Display Name: ${userModel.displayName}`);
-    assert.strictEqual(component.pronouns.text, `Pronouns: ${userModel.pronouns}`);
-    assert.strictEqual(
-      component.preferredEmail.text,
-      `Preferred Email: ${userModel.preferredEmail}`,
-    );
-    assert.strictEqual(component.phone.text, `Phone: ${userModel.phone}`);
-    assert.strictEqual(component.username.text, `Username: ${authenticationModel.username}`);
-    assert.notOk(component.password.isVisible);
-    await a11yAudit(this.element);
-    assert.ok(true, 'no a11y errors found!');
-  });
-
-  test('it renders for non ldap user search', async function (assert) {
-    setupApplicationConfig('form', this);
-    const userModel = await this.owner.lookup('service:store').findRecord('user', this.user.id);
-    const schoolModel = await this.owner
-      .lookup('service:store')
-      .findRecord('school', this.school.id);
-    const authenticationModel = await this.owner
-      .lookup('service:store')
-      .findRecord('authentication', this.authentication.id);
-    this.set('user', userModel);
-
-    await render(<template><UserProfileBio @user={{this.user}} /></template>);
-
-    assert.strictEqual(component.school, `Primary School: ${schoolModel.title}`);
-    assert.strictEqual(component.firstName.text, `First Name: ${userModel.firstName}`);
-    assert.strictEqual(component.middleName.text, `Middle Name: ${userModel.middleName}`);
-    assert.strictEqual(component.lastName.text, `Last Name: ${userModel.lastName}`);
-    assert.strictEqual(component.campusId.text, `Campus ID: ${userModel.campusId}`);
-    assert.strictEqual(component.otherId.text, `Other ID: ${userModel.otherId}`);
-    assert.strictEqual(component.email.text, `Email: ${userModel.email}`);
-    assert.strictEqual(component.displayName.text, `Display Name: ${userModel.displayName}`);
-    assert.strictEqual(component.pronouns.text, `Pronouns: ${userModel.pronouns}`);
-    assert.strictEqual(
-      component.preferredEmail.text,
-      `Preferred Email: ${userModel.preferredEmail}`,
-    );
-    assert.strictEqual(component.phone.text, `Phone: ${userModel.phone}`);
-    assert.strictEqual(component.username.text, `Username: ${authenticationModel.username}`);
-    assert.strictEqual(component.password.text, 'Password: *********');
-    await a11yAudit(this.element);
-    assert.ok(true, 'no a11y errors found!');
-  });
-
-  test('clicking manage sends the action', async function (assert) {
-    assert.expect(1);
-    this.set('manage', (what) => {
-      assert.ok(what, 'received boolean true value');
-    });
-    const userModel = await this.owner.lookup('service:store').findRecord('user', this.user.id);
-    this.set('user', userModel);
-
-    await render(
-      <template>
-        <UserProfileBio @user={{this.user}} @isManageable={{true}} @setIsManaging={{this.manage}} />
-      </template>,
-    );
-
-    await component.manage();
-  });
-
-  test('can edit user bio for ldap config', async function (assert) {
-    setupApplicationConfig('ldap', this);
-    this.server.create('pending-user-update', {
-      user: this.user,
-    });
-    this.server.create('pending-user-update', {
-      user: this.user,
-    });
-    const userModel = await this.owner.lookup('service:store').findRecord('user', this.user.id);
-    const updates = await userModel.pendingUserUpdates;
-
-    const authenticationModel = await this.owner
-      .lookup('service:store')
-      .findRecord('authentication', this.authentication.id);
-    this.set('user', userModel);
-
-    await render(
-      <template>
-        <UserProfileBio @isManaging={{true}} @user={{this.user}} @setIsManaging={{(noop)}} />
-      </template>,
-    );
-
-    await a11yAudit(this.element);
-    assert.ok(true, 'no a11y errors found!');
-    assert.strictEqual(updates.length, 2);
-    assert.strictEqual(component.firstName.value, 'Test Person');
-    assert.strictEqual(component.middleName.value, 'Name');
-    assert.strictEqual(component.lastName.value, 'Thing');
-    assert.strictEqual(component.campusId.value, 'idC');
-    assert.strictEqual(component.otherId.value, 'idO');
-    assert.strictEqual(component.email.value, 'test@test.com');
-    assert.strictEqual(component.displayName.value, 'Best Name');
-    assert.strictEqual(component.pronouns.value, 'they/them/tay');
-    assert.strictEqual(component.preferredEmail.value, 'test2@test.com');
-    assert.strictEqual(component.phone.value, 'x1234');
-    assert.strictEqual(component.username.value, 'test-username');
-    assert.ok(component.username.isDisabled);
-    assert.ok(component.syncWithDirectory.isPresent);
-    await component.firstName.set('new first');
-    await component.middleName.set('new middle');
-    await component.lastName.set('new last');
-    await component.campusId.set('new campusId');
-    await component.otherId.set('new otherId');
-    await component.email.set('e@e.com');
-    await component.displayName.set('new best name');
-    await component.pronouns.set('me/my/him');
-    await component.preferredEmail.set('e2@e.com');
-    await component.phone.set('12345x');
-    await component.save();
-    assert.strictEqual(userModel.firstName, 'new first');
-    assert.strictEqual(userModel.middleName, 'new middle');
-    assert.strictEqual(userModel.lastName, 'new last');
-    assert.strictEqual(userModel.campusId, 'new campusId');
-    assert.strictEqual(userModel.otherId, 'new otherId');
-    assert.strictEqual(userModel.email, 'e@e.com');
-    assert.strictEqual(userModel.displayName, 'new best name');
-    assert.strictEqual(userModel.pronouns, 'me/my/him');
-    assert.strictEqual(userModel.preferredEmail, 'e2@e.com');
-    assert.strictEqual(userModel.phone, '12345x');
-    assert.strictEqual(updates.length, 0);
-    assert.strictEqual(authenticationModel.username, 'test-username');
-    assert.notOk(authenticationModel.password);
-  });
-
-  test('can edit non-ldap without setting a password', async function (assert) {
-    setupApplicationConfig('form', this);
-    const userModel = await this.owner.lookup('service:store').findRecord('user', this.user.id);
-    const authenticationModel = await this.owner
-      .lookup('service:store')
-      .findRecord('authentication', this.authentication.id);
-    this.set('user', userModel);
-
-    await render(
-      <template>
-        <UserProfileBio @isManaging={{true}} @user={{this.user}} @setIsManaging={{(noop)}} />
-      </template>,
-    );
-
-    await a11yAudit(this.element);
-    assert.ok(true, 'no a11y errors found!');
-    assert.strictEqual(component.firstName.value, 'Test Person');
-    assert.strictEqual(component.middleName.value, 'Name');
-    assert.strictEqual(component.lastName.value, 'Thing');
-    assert.strictEqual(component.campusId.value, 'idC');
-    assert.strictEqual(component.otherId.value, 'idO');
-    assert.strictEqual(component.email.value, 'test@test.com');
-    assert.strictEqual(component.displayName.value, 'Best Name');
-    assert.strictEqual(component.pronouns.value, 'they/them/tay');
-    assert.strictEqual(component.preferredEmail.value, 'test2@test.com');
-    assert.strictEqual(component.phone.value, 'x1234');
-    assert.strictEqual(component.username.value, 'test-username');
-    await component.firstName.set('new first');
-    await component.middleName.set('new middle');
-    await component.lastName.set('new last');
-    await component.campusId.set('new campusId');
-    await component.otherId.set('new otherId');
-    await component.email.set('e@e.com');
-    await component.displayName.set('new best name');
-    await component.pronouns.set('she/her');
-    await component.preferredEmail.set('e2@e.com');
-    await component.phone.set('12345x');
-    await component.username.set('new-test-user');
-    await component.save();
-    assert.strictEqual(userModel.firstName, 'new first');
-    assert.strictEqual(userModel.middleName, 'new middle');
-    assert.strictEqual(userModel.lastName, 'new last');
-    assert.strictEqual(userModel.campusId, 'new campusId');
-    assert.strictEqual(userModel.otherId, 'new otherId');
-    assert.strictEqual(userModel.email, 'e@e.com');
-    assert.strictEqual(userModel.displayName, 'new best name');
-    assert.strictEqual(userModel.pronouns, 'she/her');
-    assert.strictEqual(userModel.preferredEmail, 'e2@e.com');
-    assert.strictEqual(userModel.phone, '12345x');
-    assert.strictEqual(authenticationModel.username, 'new-test-user');
-    assert.notOk(authenticationModel.password);
-  });
-
-  test('can edit user bio for non-ldap config', async function (assert) {
-    setupApplicationConfig('form', this);
-    const userModel = await this.owner.lookup('service:store').findRecord('user', this.user.id);
-    const authenticationModel = await this.owner
-      .lookup('service:store')
-      .findRecord('authentication', this.authentication.id);
-    this.set('user', userModel);
-
-    await render(
-      <template>
-        <UserProfileBio @isManaging={{true}} @user={{this.user}} @setIsManaging={{(noop)}} />
-      </template>,
-    );
-
-    await a11yAudit(this.element);
-    assert.ok(true, 'no a11y errors found!');
-    assert.strictEqual(component.firstName.value, 'Test Person');
-    assert.strictEqual(component.middleName.value, 'Name');
-    assert.strictEqual(component.lastName.value, 'Thing');
-    assert.strictEqual(component.campusId.value, 'idC');
-    assert.strictEqual(component.otherId.value, 'idO');
-    assert.strictEqual(component.email.value, 'test@test.com');
-    assert.strictEqual(component.displayName.value, 'Best Name');
-    assert.strictEqual(component.pronouns.value, 'they/them/tay');
-    assert.strictEqual(component.preferredEmail.value, 'test2@test.com');
-    assert.strictEqual(component.phone.value, 'x1234');
-    assert.strictEqual(component.username.value, 'test-username');
-    assert.notOk(component.syncWithDirectory.isPresent);
-    await component.password.edit();
-    assert.strictEqual(component.password.value, '');
-    await component.firstName.set('new first');
-    await component.middleName.set('new middle');
-    await component.lastName.set('new last');
-    await component.campusId.set('new campusId');
-    await component.otherId.set('new otherId');
-    await component.email.set('e@e.com');
-    await component.displayName.set('new best name');
-    await component.pronouns.set('');
-    await component.preferredEmail.set('e2@e.com');
-    await component.phone.set('12345x');
-    await component.username.set('new-test-user');
-    await component.password.set('new-password');
-    await component.save();
-    assert.strictEqual(userModel.firstName, 'new first');
-    assert.strictEqual(userModel.middleName, 'new middle');
-    assert.strictEqual(userModel.lastName, 'new last');
-    assert.strictEqual(userModel.campusId, 'new campusId');
-    assert.strictEqual(userModel.otherId, 'new otherId');
-    assert.strictEqual(userModel.email, 'e@e.com');
-    assert.strictEqual(userModel.displayName, 'new best name');
-    assert.strictEqual(userModel.pronouns, '');
-    assert.strictEqual(userModel.preferredEmail, 'e2@e.com');
-    assert.strictEqual(userModel.phone, '12345x');
-    assert.strictEqual(authenticationModel.username, 'new-test-user');
-    assert.strictEqual(authenticationModel.password, 'new-password');
-  });
-
-  test('closing password box clears input', async function (assert) {
-    setupApplicationConfig('form', this);
-    const userModel = await this.owner.lookup('service:store').findRecord('user', this.user.id);
-    this.set('user', userModel);
-
-    await render(
-      <template>
-        <UserProfileBio @isManaging={{true}} @user={{this.user}} @setIsManaging={{(noop)}} />
-      </template>,
-    );
-
-    await component.password.edit();
-    assert.strictEqual(component.password.value, '');
-    await component.password.set('new-password');
-    await component.password.cancel();
-    await component.password.edit();
-    assert.strictEqual(component.password.value, '');
-  });
-
-  test('password validation', async function (assert) {
-    setupApplicationConfig('form', this);
-    const userModel = await this.owner.lookup('service:store').findRecord('user', this.user.id);
-    this.set('user', userModel);
-
-    await render(
-      <template>
-        <UserProfileBio @isManaging={{true}} @user={{this.user}} @setIsManaging={{(noop)}} />
-      </template>,
-    );
-
-    await component.password.edit();
-    assert.notOk(component.password.hasError);
-    await component.password.set('');
-    await component.save();
-    assert.ok(component.password.hasError);
-    await component.password.set('abcdef');
-    await component.save();
-    assert.notOk(component.password.hasError);
-  });
-
-  test('password strength 0 display', async function (assert) {
-    setupApplicationConfig('form', this);
-    const userModel = await this.owner.lookup('service:store').findRecord('user', this.user.id);
-    this.set('user', userModel);
-
-    await render(
-      <template>
-        <UserProfileBio @isManaging={{true}} @user={{this.user}} @setIsManaging={{(noop)}} />
-      </template>,
-    );
-
-    await component.password.edit();
-    await component.password.set('12345');
-    assert.strictEqual(component.password.meter.value, 0);
-    assert.strictEqual(component.password.strength.text, 'Try Harder');
-    assert.ok(component.password.strength.hasZeroClass);
-  });
-
-  test('password strength 1 display', async function (assert) {
-    setupApplicationConfig('form', this);
-    const userModel = await this.owner.lookup('service:store').findRecord('user', this.user.id);
-    this.set('user', userModel);
-
-    await render(
-      <template>
-        <UserProfileBio @isManaging={{true}} @user={{this.user}} @setIsManaging={{(noop)}} />
-      </template>,
-    );
-
-    await component.password.edit();
-    await component.password.set('12345ab');
-    assert.strictEqual(component.password.meter.value, 1);
-    assert.strictEqual(component.password.strength.text, 'Bad');
-    assert.ok(component.password.strength.hasOneClass);
-  });
-
-  test('password strength 2 display', async function (assert) {
-    setupApplicationConfig('form', this);
-    const userModel = await this.owner.lookup('service:store').findRecord('user', this.user.id);
-    this.set('user', userModel);
-
-    await render(
-      <template>
-        <UserProfileBio @isManaging={{true}} @user={{this.user}} @setIsManaging={{(noop)}} />
-      </template>,
-    );
-
-    await component.password.edit();
-    await component.password.set('12345ab13&');
-    assert.strictEqual(component.password.meter.value, 2);
-    assert.strictEqual(component.password.strength.text, 'Weak');
-    assert.ok(component.password.strength.hasTwoClass);
-  });
-
-  test('password strength 3 display', async function (assert) {
-    assert.expect(3);
-    setupApplicationConfig('form', this);
-    const userModel = await this.owner.lookup('service:store').findRecord('user', this.user.id);
-    this.set('user', userModel);
-
-    await render(
-      <template>
-        <UserProfileBio @isManaging={{true}} @user={{this.user}} @setIsManaging={{(noop)}} />
-      </template>,
-    );
-
-    await component.password.edit();
-    await component.password.set('12345ab13&!!');
-    assert.strictEqual(component.password.meter.value, 3);
-    assert.strictEqual(component.password.strength.text, 'Good');
-    assert.ok(component.password.strength.hasThreeClass);
-  });
-
-  test('password strength 4 display', async function (assert) {
-    assert.expect(3);
-    setupApplicationConfig('form', this);
-    const userModel = await this.owner.lookup('service:store').findRecord('user', this.user.id);
-    this.set('user', userModel);
-
-    await render(
-      <template>
-        <UserProfileBio @isManaging={{true}} @user={{this.user}} @setIsManaging={{(noop)}} />
-      </template>,
-    );
-
-    await component.password.edit();
-    await component.password.set('12345ab14&HHtB');
-    assert.strictEqual(component.password.meter.value, 4);
-    assert.strictEqual(component.password.strength.text, 'Strong');
-    assert.ok(component.password.strength.hasFourClass);
-  });
-
-  test('sync user from directory', async function (assert) {
-    assert.expect(31);
+  test('it renders details', async function (assert) {
     setupApplicationConfig('ldap', this);
     const userModel = await this.owner.lookup('service:store').findRecord('user', this.user.id);
     this.set('user', userModel);
-    this.server.get(`application/directory/find/:id`, (scheme, { params }) => {
-      assert.ok('id' in params);
-      assert.strictEqual(parseInt(params.id, 10), 13);
-      return {
-        result: {
-          firstName: 'new-first-name',
-          lastName: 'new-last-name',
-          displayName: 'new-best-name',
-          pronouns: 'new-pronouns',
-          email: 'new-email',
-          phone: 'new-phone',
-          campusId: 'new-campus-id',
-          username: 'new-username',
-        },
-      };
+
+    await render(<template><UserProfileBio @user={{this.user}} @isManaging={{false}} /></template>);
+
+    assert.ok(component.bioDetails.isPresent, 'details component loaded');
+    assert.notOk(component.bioManager.isPresent, 'manager component not loaded');
+    await a11yAudit(this.element);
+    assert.ok(true, 'no a11y errors found!');
+  });
+
+  test('it renders manager', async function (assert) {
+    setupApplicationConfig('ldap', this);
+    const userModel = await this.owner.lookup('service:store').findRecord('user', this.user.id);
+    this.set('user', userModel);
+
+    await render(<template><UserProfileBio @user={{this.user}} @isManaging={{true}} /></template>);
+
+    assert.notOk(component.bioDetails.isPresent, 'details component not loaded');
+    assert.ok(component.bioManager.isPresent, 'manager component loaded');
+    await a11yAudit(this.element);
+    assert.ok(true, 'no a11y errors found!');
+  });
+
+  test('it switches modes', async function (assert) {
+    setupApplicationConfig('ldap', this);
+    const userModel = await this.owner.lookup('service:store').findRecord('user', this.user.id);
+    this.set('user', userModel);
+    this.set('isManaging', false);
+    this.set('setIsManagingBio', () => {
+      this.set('isManaging', !this.isManaging);
     });
 
     await render(
       <template>
-        <UserProfileBio @isManaging={{true}} @user={{this.user}} @setIsManaging={{(noop)}} />
+        <UserProfileBio
+          @user={{this.user}}
+          @isManageable={{true}}
+          @isManaging={{this.isManaging}}
+          @setIsManaging={{this.setIsManagingBio}}
+        />
       </template>,
     );
 
-    assert.strictEqual(component.firstName.value, 'Test Person');
-    assert.strictEqual(component.middleName.value, 'Name');
-    assert.strictEqual(component.lastName.value, 'Thing');
-    assert.strictEqual(component.campusId.value, 'idC');
-    assert.strictEqual(component.otherId.value, 'idO');
-    assert.strictEqual(component.email.value, 'test@test.com');
-    assert.strictEqual(component.displayName.value, 'Best Name');
-    assert.strictEqual(component.pronouns.value, 'they/them/tay');
-    assert.strictEqual(component.preferredEmail.value, 'test2@test.com');
-    assert.strictEqual(component.phone.value, 'x1234');
-    assert.strictEqual(component.username.value, 'test-username');
-    await component.syncWithDirectory.click();
-    assert.strictEqual(component.firstName.value, 'new-first-name');
-    assert.strictEqual(component.middleName.value, 'Name');
-    assert.strictEqual(component.lastName.value, 'new-last-name');
-    assert.strictEqual(component.campusId.value, 'new-campus-id');
-    assert.strictEqual(component.otherId.value, 'idO');
-    assert.strictEqual(component.email.value, 'new-email');
-    assert.strictEqual(component.displayName.value, 'new-best-name');
-    assert.strictEqual(component.pronouns.value, 'new-pronouns');
-    assert.strictEqual(component.preferredEmail.value, 'test2@test.com');
-    assert.strictEqual(component.phone.value, 'new-phone');
-    assert.strictEqual(component.username.value, 'new-username');
-    assert.ok(component.firstName.hasBeenSyncedFromDirectory);
-    assert.ok(component.lastName.hasBeenSyncedFromDirectory);
-    assert.ok(component.email.hasBeenSyncedFromDirectory);
-    assert.ok(component.phone.hasBeenSyncedFromDirectory);
-    assert.ok(component.displayName.hasBeenSyncedFromDirectory);
-    assert.ok(component.campusId.hasBeenSyncedFromDirectory);
-    assert.ok(component.username.hasBeenSyncedFromDirectory);
-  });
-
-  test('preferred email can be blanked', async function (assert) {
-    setupApplicationConfig('form', this);
-    const userModel = await this.owner.lookup('service:store').findRecord('user', this.user.id);
-    this.set('user', userModel);
-
-    await render(
-      <template>
-        <UserProfileBio @isManaging={{true}} @user={{this.user}} @setIsManaging={{(noop)}} />
-      </template>,
-    );
-
-    assert.strictEqual(component.preferredEmail.value, 'test2@test.com');
-    await component.preferredEmail.set('');
-    await component.save();
-    assert.strictEqual(userModel.preferredEmail, '');
-  });
-
-  test('display name can be blanked', async function (assert) {
-    setupApplicationConfig('form', this);
-    const userModel = await this.owner.lookup('service:store').findRecord('user', this.user.id);
-    this.set('user', userModel);
-
-    await render(
-      <template>
-        <UserProfileBio @isManaging={{true}} @user={{this.user}} @setIsManaging={{(noop)}} />
-      </template>,
-    );
-
-    assert.strictEqual(component.displayName.value, 'Best Name');
-    await component.displayName.set('');
-    await component.save();
-    assert.strictEqual(userModel.displayName, '');
-  });
-
-  test('pronouns can be blanked', async function (assert) {
-    setupApplicationConfig('form', this);
-    const userModel = await this.owner.lookup('service:store').findRecord('user', this.user.id);
-    this.set('user', userModel);
-
-    await render(
-      <template>
-        <UserProfileBio @isManaging={{true}} @user={{this.user}} @setIsManaging={{(noop)}} />
-      </template>,
-    );
-
-    assert.strictEqual(component.pronouns.value, 'they/them/tay');
-    await component.pronouns.set('');
-    await component.save();
-    assert.strictEqual(userModel.pronouns, '');
-  });
-
-  test('validate username', async function (assert) {
-    const user = this.server.create('user');
-    this.server.create('authentication', { username: 'geflarknik', user });
-    setupApplicationConfig('form', this);
-    const userModel = await this.owner.lookup('service:store').findRecord('user', this.user.id);
-    this.set('user', userModel);
-
-    await render(
-      <template>
-        <UserProfileBio @isManaging={{true}} @user={{this.user}} @setIsManaging={{(noop)}} />
-      </template>,
-    );
-    assert.notOk(component.username.hasError);
-    await component.username.set('geflarknik');
-    await component.username.submit();
-    assert.ok(component.username.hasError);
-    assert.strictEqual(
-      component.username.errors,
-      'This username is already taken by another user account.',
-    );
-    await component.username.set('geflarknik2');
-    await component.username.submit();
-    assert.notOk(component.username.hasError);
+    assert.ok(component.bioDetails.isPresent, 'details component loaded');
+    assert.notOk(component.bioManager.isPresent, 'manager component not loaded');
+    await component.bioDetails.manage();
+    assert.notOk(component.bioDetails.isPresent, 'details component not loaded');
+    assert.ok(component.bioManager.isPresent, 'manager component loaded');
   });
 });
