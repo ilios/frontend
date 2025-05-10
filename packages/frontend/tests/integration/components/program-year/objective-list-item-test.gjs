@@ -172,14 +172,17 @@ module('Integration | Component | program-year/objective-list-item', function (h
     );
     await component.description.openEditor();
     assert.notOk(component.description.hasError);
-    assert.notOk(component.description.savingIsDisabled);
-    await component.description.edit('a'.repeat(65000));
+    await component.description.edit('a');
     await settled();
-    assert.ok(component.description.hasValidationError);
-    assert.ok(component.description.savingIsDisabled);
+    assert.strictEqual(component.description.error, 'Title is too short (minimum is 3 characters)');
+    await component.description.edit('a'.repeat(65001));
+    await settled();
+    assert.strictEqual(
+      component.description.error,
+      'Title is too long (maximum is 65000 characters)',
+    );
     await component.description.edit('lorem ipsum');
     await settled();
-    assert.notOk(component.description.hasValidationError);
-    assert.notOk(component.description.savingIsDisabled);
+    assert.notOk(component.description.hasError);
   });
 });

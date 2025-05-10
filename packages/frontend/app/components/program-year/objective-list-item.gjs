@@ -4,7 +4,6 @@ import { action } from '@ember/object';
 import { dropTask, restartableTask, timeout } from 'ember-concurrency';
 import { service } from '@ember/service';
 import { TrackedAsyncData } from 'ember-async-data';
-import { validatable, Length, HtmlNotBlank } from 'ilios-common/decorators/validation';
 import { findById } from 'ilios-common/utils/array-helpers';
 import { on } from '@ember/modifier';
 import set from 'ember-set-helper/helpers/set';
@@ -15,7 +14,6 @@ import and from 'ember-truth-helpers/helpers/and';
 import EditableField from 'ilios-common/components/editable-field';
 import perform from 'ember-concurrency/helpers/perform';
 import HtmlEditor from 'ilios-common/components/html-editor';
-import ValidationError from 'ilios-common/components/validation-error';
 import ObjectiveListItemCompetency from 'frontend/components/program-year/objective-list-item-competency';
 import ObjectiveListItemTerms from 'ilios-common/components/objective-list-item-terms';
 import ObjectiveListItemDescriptors from 'frontend/components/program-year/objective-list-item-descriptors';
@@ -24,12 +22,16 @@ import ManageObjectiveCompetency from 'frontend/components/program-year/manage-o
 import ManageObjectiveDescriptors from 'frontend/components/program-year/manage-objective-descriptors';
 import ObjectiveListItemExpanded from 'frontend/components/program-year/objective-list-item-expanded';
 import TaxonomyManager from 'ilios-common/components/taxonomy-manager';
+import YupValidations from 'ilios-common/classes/yup-validations';
+import YupValidationMessage from 'ilios-common/components/yup-validation-message';
+import stripMarkup from 'ilios-common/utils/strip-markup';
+import { string } from 'yup';
 
-@validatable
 export default class ProgramYearObjectiveListItemComponent extends Component {
   @service store;
+  @service intl;
 
-  @Length(3, 65000) @HtmlNotBlank() @tracked title;
+  @tracked title;
   @tracked isManagingCompetency;
   @tracked competencyBuffer;
   @tracked isManagingDescriptors;
@@ -45,13 +47,12 @@ export default class ProgramYearObjectiveListItemComponent extends Component {
     this.title = this.args.programYearObjective.title;
   }
 
-  @cached
-  get hasErrorForTitleData() {
-    return new TrackedAsyncData(this.hasErrorFor('title'));
-  }
+  validations = new YupValidations(this, {
+    titleWithoutMarkup: string().trim().min(3).max(65000),
+  });
 
-  get hasErrorForTitle() {
-    return this.hasErrorForTitleData.isResolved ? this.hasErrorForTitleData.value : false;
+  get titleWithoutMarkup() {
+    return stripMarkup(this.title);
   }
 
   @cached
@@ -111,12 +112,12 @@ export default class ProgramYearObjectiveListItemComponent extends Component {
   }
 
   saveTitleChanges = dropTask(async () => {
-    this.addErrorDisplayFor('title');
-    const isValid = await this.isValid('title');
+    this.validations.addErrorDisplayFor('titleWithoutMarkup');
+    const isValid = await this.validations.isValid();
     if (!isValid) {
       return false;
     }
-    this.removeErrorDisplayFor('title');
+    this.validations.removeErrorDisplayFor('titleWithoutMarkup');
     this.args.programYearObjective.set('title', this.title);
     await this.args.programYearObjective.save();
     this.highlightSave.perform();
@@ -181,12 +182,12 @@ export default class ProgramYearObjectiveListItemComponent extends Component {
   @action
   revertTitleChanges() {
     this.title = this.args.programYearObjective.title;
-    this.removeErrorDisplayFor('title');
+    this.validations.removeErrorDisplayFor('titleWithoutMarkup');
   }
   @action
   changeTitle(contents) {
     this.title = contents;
-    this.addErrorDisplayFor('title');
+    this.validations.addErrorDisplayFor('titleWithoutMarkup');
   }
   @action
   setCompetencyBuffer(competencyId) {
@@ -249,14 +250,17 @@ export default class ProgramYearObjectiveListItemComponent extends Component {
           <EditableField
             @value={{this.title}}
             @renderHtml={{true}}
-            @isSaveDisabled={{this.hasErrorForTitle}}
             @save={{perform this.saveTitleChanges}}
             @close={{this.revertTitleChanges}}
             @fadeTextExpanded={{this.fadeTextExpanded}}
             @onExpandAllFadeText={{this.expandAllFadeText}}
           >
             <HtmlEditor @content={{this.title}} @update={{this.changeTitle}} @autofocus={{true}} />
-            <ValidationError @validatable={{this}} @property="title" />
+            <YupValidationMessage
+              @description={{t "general.title"}}
+              @validationErrors={{this.validations.errors.titleWithoutMarkup}}
+              data-test-title-validation-error-message
+            />
           </EditableField>
         {{else}}
           {{! template-lint-disable no-triple-curlies }}
