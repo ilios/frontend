@@ -501,15 +501,15 @@ module('Acceptance | Program Year - Objectives', function (hooks) {
       'program-year objective 0',
     );
     await page.details.objectives.createNew();
-    assert.notOk(page.details.objectives.newObjective.hasValidationError);
-    await page.details.objectives.newObjective.description(
-      '<p>&nbsp</p><div></div><span>  </span>',
+    assert.notOk(page.details.objectives.newObjective.description.hasError);
+    await page.details.objectives.newObjective.description.set(
+      '<p>&nbsp;</p><div></div><span>  </span>',
     );
     await page.details.objectives.newObjective.save();
-    assert.ok(page.details.objectives.newObjective.hasValidationError);
+    assert.ok(page.details.objectives.newObjective.description.hasError);
     assert.strictEqual(
-      page.details.objectives.newObjective.validationError,
-      'This field can not be blank',
+      page.details.objectives.newObjective.description.error,
+      'Description is too short (minimum is 3 characters)',
     );
   });
 

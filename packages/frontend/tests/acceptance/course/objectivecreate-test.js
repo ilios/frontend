@@ -35,7 +35,7 @@ module('Acceptance | Course - Objective Create', function (hooks) {
       'course objective 0',
     );
     await page.details.objectives.createNew();
-    await page.details.objectives.newObjective.description(newObjectiveDescription);
+    await page.details.objectives.newObjective.description.set(newObjectiveDescription);
     await page.details.objectives.newObjective.save();
 
     assert.strictEqual(page.details.objectives.objectiveList.objectives.length, 2);
@@ -71,7 +71,7 @@ module('Acceptance | Course - Objective Create', function (hooks) {
       'course objective 0',
     );
     await page.details.objectives.createNew();
-    await page.details.objectives.newObjective.description('junk');
+    await page.details.objectives.newObjective.description.set('junk');
     await page.details.objectives.newObjective.cancel();
 
     assert.strictEqual(page.details.objectives.objectiveList.objectives.length, 1);
@@ -101,15 +101,15 @@ module('Acceptance | Course - Objective Create', function (hooks) {
       'course objective 0',
     );
     await page.details.objectives.createNew();
-    assert.notOk(page.details.objectives.newObjective.hasValidationError);
-    await page.details.objectives.newObjective.description(
-      '<p>&nbsp</p><div></div><span>  </span>',
+    assert.notOk(page.details.objectives.newObjective.description.hasError);
+    await page.details.objectives.newObjective.description.set(
+      '<p>&nbsp;</p><div></div><span>  </span>',
     );
     await page.details.objectives.newObjective.save();
-    assert.ok(page.details.objectives.newObjective.hasValidationError);
+    assert.ok(page.details.objectives.newObjective.description.hasError);
     assert.strictEqual(
-      page.details.objectives.newObjective.validationError,
-      'This field can not be blank',
+      page.details.objectives.newObjective.description.error,
+      'Description is too short (minimum is 3 characters)',
     );
   });
 
@@ -128,7 +128,7 @@ module('Acceptance | Course - Objective Create', function (hooks) {
     });
     assert.strictEqual(page.details.objectives.objectiveList.objectives.length, 0);
     await page.details.objectives.createNew();
-    await page.details.objectives.newObjective.description(newObjectiveDescription);
+    await page.details.objectives.newObjective.description.set(newObjectiveDescription);
     await page.details.objectives.newObjective.save();
 
     assert.strictEqual(page.details.objectives.objectiveList.objectives.length, 1);
