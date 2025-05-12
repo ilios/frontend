@@ -35,12 +35,13 @@ export default class ReportsSubjectCopyNew extends Component {
         <LinkTo
           @route="reports.subjects"
           @query={{hash
-            showNewReportForm=true
-            title=this.reportTitle
+            editReport=true
             selectedSchoolId=@school.id
             selectedSubject=@subject
             selectedPrepositionalObject=@prepositionalObject
             selectedPrepositionalObjectId=@prepositionalObjectTableRowId
+            showNewReportForm=true
+            title=this.reportTitle
           }}
           class="button"
           data-test-button

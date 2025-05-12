@@ -461,7 +461,11 @@ export default class ReportsNewSubjectComponent extends Component {
     {{#let (uniqueId) as |templateId|}}
       <div class="reports-new-subject" data-test-reports-new-subject ...attributes>
         <div class="title" data-test-component-title>
-          {{t "general.newReport"}}
+          {{#if @editReport}}
+            {{t "general.editReport"}}
+          {{else}}
+            {{t "general.newReport"}}
+          {{/if}}
         </div>
         <div class="new-subject-content">
           <p data-test-title>

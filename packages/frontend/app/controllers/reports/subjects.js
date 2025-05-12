@@ -13,6 +13,7 @@ export default class ReportsSubjectsController extends Controller {
     { selectedSubject: 'selectedSubject' },
     { selectedPrepositionalObject: 'selectedPrepositionalObject' },
     { selectedPrepositionalObjectId: 'selectedPrepositionalObjectId' },
+    { editReport: 'editReport' },
   ];
 
   @tracked sortReportsBy = 'title';
@@ -23,6 +24,7 @@ export default class ReportsSubjectsController extends Controller {
   @tracked selectedSubject = null;
   @tracked selectedPrepositionalObject = null;
   @tracked selectedPrepositionalObjectId = null;
+  @tracked editReport = false;
   @tracked runningSubjectReport = null;
 
   changeTitleFilter = restartableTask(async (value) => {
@@ -45,5 +47,6 @@ export default class ReportsSubjectsController extends Controller {
     this.selectedPrepositionalObject = null;
     this.selectedPrepositionalObjectId = null;
     this.showNewReportForm = !this.showNewReportForm;
+    this.editReport = false;
   }
 }

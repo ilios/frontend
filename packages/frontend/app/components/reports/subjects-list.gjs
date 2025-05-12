@@ -196,6 +196,7 @@ export default class ReportsSubjectsListComponent extends Component {
               @setSelectedPrepositionalObject={{@setSelectedPrepositionalObject}}
               @selectedPrepositionalObjectId={{@selectedPrepositionalObjectId}}
               @setSelectedPrepositionalObjectId={{@setSelectedPrepositionalObjectId}}
+              @editReport={{@editReport}}
             />
           {{/if}}
           {{#if this.newReport}}

@@ -123,6 +123,7 @@ general:
   draft: Draft
   durationInDays: Duration (in Days)
   durationInYears: Duration (in Years)
+  editReport: Edit Report
   educationalYear: Educational Year
   email: Email
   emails: Emails
