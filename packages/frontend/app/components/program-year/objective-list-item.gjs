@@ -52,7 +52,7 @@ export default class ProgramYearObjectiveListItemComponent extends Component {
   });
 
   get descriptionWithoutMarkup() {
-    return striptags(this.description ?? '');
+    return striptags(this.description ?? '').replace(/&nbsp;/gi, '');
   }
 
   @cached

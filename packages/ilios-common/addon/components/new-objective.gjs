@@ -23,7 +23,7 @@ export default class NewObjectiveComponent extends Component {
   });
 
   get titleWithoutMarkup() {
-    return striptags(this.title ?? '');
+    return striptags(this.title ?? '').replace(/&nbsp;/gi, '');
   }
 
   saveObjective = dropTask(async () => {
