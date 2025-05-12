@@ -213,11 +213,15 @@ module('Integration | Component | reports/subject/course', function (hooks) {
       subject: 'course',
     });
     this.set('report', await this.owner.lookup('service:store').findRecord('report', id));
-    await render(hbs`<Reports::Subject::Course
-  @subject={{this.report.subject}}
-  @prepositionalObject={{this.report.prepositionalObject}}
-  @prepositionalObjectTableRowId={{this.report.prepositionalObjectTableRowId}}
-/>`);
+    await render(
+      <template>
+        <Course
+          @subject={{this.report.subject}}
+          @prepositionalObject={{this.report.prepositionalObject}}
+          @prepositionalObjectTableRowId={{this.report.prepositionalObjectTableRowId}}
+        />
+      </template>,
+    );
 
     assert.ok(component.results[0].school.isPresent);
     assert.strictEqual(component.results[0].school.title, 'Second School:');
