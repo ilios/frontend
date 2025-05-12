@@ -186,6 +186,8 @@ export default class ReportsSubjectsListComponent extends Component {
               @save={{perform this.saveNewSubjectReport}}
               @close={{@toggleNewReportForm}}
               @run={{perform this.runSubjectReport}}
+              @title={{@title}}
+              @setTitle={{@setTitle}}
               @selectedSchoolId={{@selectedSchoolId}}
               @setSelectedSchoolId={{@setSelectedSchoolId}}
               @selectedSubject={{@selectedSubject}}

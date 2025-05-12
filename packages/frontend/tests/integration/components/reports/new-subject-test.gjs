@@ -448,11 +448,21 @@ module('Integration | Component | reports/new-subject', function (hooks) {
       }
     }
     this.owner.register('service:current-user', CurrentUserMock);
+    this.title = 'lorem ipsum';
     this.set('save', (report) => {
-      assert.strictEqual(report.title, 'lorem ipsum');
+      assert.strictEqual(report.title, this.title, 'saved report title is correct');
     });
-    await render(<template><NewSubject @save={{this.save}} @close={{(noop)}} /></template>);
-    await component.title.set('lorem ipsum');
+    await render(
+      <template>
+        <NewSubject
+          @save={{this.save}}
+          @title={{this.title}}
+          @setTitle={{(noop)}}
+          @close={{(noop)}}
+        />
+      </template>,
+    );
+    await component.title.set(this.title);
     await component.save();
   });
 
@@ -466,11 +476,27 @@ module('Integration | Component | reports/new-subject', function (hooks) {
       }
     }
     this.owner.register('service:current-user', CurrentUserMock);
-    await render(<template><NewSubject @close={{(noop)}} /></template>);
-    assert.strictEqual(component.title.errors.length, 0);
-    await component.title.set('0123456789'.repeat(25));
+    this.set('title', '0123456789');
+    this.set('setTitle', (title) => {
+      this.set('title', title);
+    });
+    this.set('save', (report) => {
+      assert.strictEqual(report.title, this.title.repeat(25), 'saved report title is correct');
+    });
+    await render(
+      <template>
+        <NewSubject
+          @save={{this.save}}
+          @title={{this.title}}
+          @setTitle={{this.setTitle}}
+          @close={{(noop)}}
+        />
+      </template>,
+    );
+    assert.strictEqual(component.title.errors.length, 0, 'title has no error');
+    await component.title.set(this.title.repeat(25));
     await component.save();
-    assert.strictEqual(component.title.errors.length, 1);
+    assert.strictEqual(component.title.errors.length, 1, 'title has error');
   });
 
   test('instructor missing', async function (assert) {

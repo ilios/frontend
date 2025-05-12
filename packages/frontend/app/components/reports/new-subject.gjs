@@ -23,7 +23,6 @@ import { uniqueId, fn } from '@ember/helper';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
 import pick from 'ilios-common/helpers/pick';
-import set from 'ember-set-helper/helpers/set';
 import ValidationError from 'ilios-common/components/validation-error';
 import eq from 'ember-truth-helpers/helpers/eq';
 import sortBy from 'ilios-common/helpers/sort-by';
@@ -36,8 +35,6 @@ export default class ReportsNewSubjectComponent extends Component {
   @service intl;
   @service store;
   @service dataLoader;
-
-  @tracked selectedTitle;
 
   @tracked isSaving = false;
   @tracked schoolChanged = false;
@@ -64,7 +61,7 @@ export default class ReportsNewSubjectComponent extends Component {
 
   @Length(1, 240)
   get title() {
-    return this.selectedTitle ?? this.args.report?.title;
+    return this.args.title ?? this.args.report?.title;
   }
 
   get subjectList() {
@@ -361,6 +358,11 @@ export default class ReportsNewSubjectComponent extends Component {
   });
 
   @action
+  changeTitle(title) {
+    this.args.setTitle(title);
+  }
+
+  @action
   changeSchool(schoolId) {
     this.args.setSelectedSchoolId(schoolId);
     this.schoolChanged = true;
@@ -472,7 +474,7 @@ export default class ReportsNewSubjectComponent extends Component {
                 type="text"
                 value={{this.title}}
                 {{on "focusout" (fn this.addErrorDisplayFor "title")}}
-                {{on "input" (pick "target.value" (set this "selectedTitle"))}}
+                {{on "input" (pick "target.value" this.changeTitle)}}
                 {{on "keyup" (fn this.addErrorDisplayFor "title")}}
               />
               <ValidationError @validatable={{this}} @property="title" />
