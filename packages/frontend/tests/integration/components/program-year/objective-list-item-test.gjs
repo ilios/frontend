@@ -174,12 +174,15 @@ module('Integration | Component | program-year/objective-list-item', function (h
     assert.notOk(component.description.hasError);
     await component.description.edit('a');
     await settled();
-    assert.strictEqual(component.description.error, 'Title is too short (minimum is 3 characters)');
+    assert.strictEqual(
+      component.description.error,
+      'Description is too short (minimum is 3 characters)',
+    );
     await component.description.edit('a'.repeat(65001));
     await settled();
     assert.strictEqual(
       component.description.error,
-      'Title is too long (maximum is 65000 characters)',
+      'Description is too long (maximum is 65000 characters)',
     );
     await component.description.edit('lorem ipsum');
     await settled();

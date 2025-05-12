@@ -31,7 +31,7 @@ export default class ProgramYearObjectiveListItemComponent extends Component {
   @service store;
   @service intl;
 
-  @tracked title;
+  @tracked description;
   @tracked isManagingCompetency;
   @tracked competencyBuffer;
   @tracked isManagingDescriptors;
@@ -44,15 +44,15 @@ export default class ProgramYearObjectiveListItemComponent extends Component {
 
   constructor() {
     super(...arguments);
-    this.title = this.args.programYearObjective.title;
+    this.description = this.args.programYearObjective.title;
   }
 
   validations = new YupValidations(this, {
-    titleWithoutMarkup: string().trim().min(3).max(65000),
+    descriptionWithoutMarkup: string().trim().min(3).max(65000),
   });
 
-  get titleWithoutMarkup() {
-    return striptags(this.title ?? '');
+  get descriptionWithoutMarkup() {
+    return striptags(this.description ?? '');
   }
 
   @cached
@@ -111,14 +111,14 @@ export default class ProgramYearObjectiveListItemComponent extends Component {
     return { meshDescriptors, programYear, program, school, vocabularies };
   }
 
-  saveTitleChanges = dropTask(async () => {
-    this.validations.addErrorDisplayFor('titleWithoutMarkup');
+  saveDescriptionChanges = dropTask(async () => {
+    this.validations.addErrorDisplayFor('descriptionWithoutMarkup');
     const isValid = await this.validations.isValid();
     if (!isValid) {
       return false;
     }
-    this.validations.removeErrorDisplayFor('titleWithoutMarkup');
-    this.args.programYearObjective.set('title', this.title);
+    this.validations.removeErrorDisplayFor('descriptionWithoutMarkup');
+    this.args.programYearObjective.set('title', this.description);
     await this.args.programYearObjective.save();
     this.highlightSave.perform();
   });
@@ -180,14 +180,14 @@ export default class ProgramYearObjectiveListItemComponent extends Component {
     this.fadeTextExpanded = isExpanded;
   }
   @action
-  revertTitleChanges() {
-    this.title = this.args.programYearObjective.title;
-    this.validations.removeErrorDisplayFor('titleWithoutMarkup');
+  revertDescriptionChanges() {
+    this.description = this.args.programYearObjective.title;
+    this.validations.removeErrorDisplayFor('descriptionWithoutMarkup');
   }
   @action
-  changeTitle(contents) {
-    this.title = contents;
-    this.validations.addErrorDisplayFor('titleWithoutMarkup');
+  changeDescription(contents) {
+    this.description = contents;
+    this.validations.addErrorDisplayFor('descriptionWithoutMarkup');
   }
   @action
   setCompetencyBuffer(competencyId) {
@@ -248,18 +248,22 @@ export default class ProgramYearObjectiveListItemComponent extends Component {
       <div class="description grid-item" data-test-description>
         {{#if (and @editable (not this.isManaging) (not this.showRemoveConfirmation))}}
           <EditableField
-            @value={{this.title}}
+            @value={{this.description}}
             @renderHtml={{true}}
-            @save={{perform this.saveTitleChanges}}
-            @close={{this.revertTitleChanges}}
+            @save={{perform this.saveDescriptionChanges}}
+            @close={{this.revertDescriptionChanges}}
             @fadeTextExpanded={{this.fadeTextExpanded}}
             @onExpandAllFadeText={{this.expandAllFadeText}}
           >
-            <HtmlEditor @content={{this.title}} @update={{this.changeTitle}} @autofocus={{true}} />
+            <HtmlEditor
+              @content={{this.description}}
+              @update={{this.changeDescription}}
+              @autofocus={{true}}
+            />
             <YupValidationMessage
-              @description={{t "general.title"}}
-              @validationErrors={{this.validations.errors.titleWithoutMarkup}}
-              data-test-title-validation-error-message
+              @description={{t "general.description"}}
+              @validationErrors={{this.validations.errors.descriptionWithoutMarkup}}
+              data-test-description-validation-error-message
             />
           </EditableField>
         {{else}}
