@@ -39,7 +39,7 @@ module('Integration | Component | course/objective-list-item', function (hooks) 
     assert.ok(true, 'no a11y errors found!');
   });
 
-  test('can change title', async function (assert) {
+  test('can change description', async function (assert) {
     const school = this.server.create('school');
     const course = this.server.create('course', { school });
     const courseObjective = this.server.create('course-objective', { course });
@@ -180,14 +180,20 @@ module('Integration | Component | course/objective-list-item', function (hooks) 
     );
     await component.description.openEditor();
     assert.notOk(component.description.hasError);
-    assert.notOk(component.description.savingIsDisabled);
-    await component.description.edit('a'.repeat(65000));
+    await component.description.edit('a');
     await settled();
-    assert.ok(component.description.hasValidationError);
-    assert.ok(component.description.savingIsDisabled);
+    assert.strictEqual(
+      component.description.error,
+      'Description is too short (minimum is 3 characters)',
+    );
+    await component.description.edit('a'.repeat(65001));
+    await settled();
+    assert.strictEqual(
+      component.description.error,
+      'Description is too long (maximum is 65000 characters)',
+    );
     await component.description.edit('lorem ipsum');
     await settled();
-    assert.notOk(component.description.hasValidationError);
-    assert.notOk(component.description.savingIsDisabled);
+    assert.notOk(component.description.hasError);
   });
 });
