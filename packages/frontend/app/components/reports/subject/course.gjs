@@ -191,9 +191,10 @@ export default class ReportsSubjectCourseComponent extends Component {
             <li>
               {{#if this.showSchool}}
                 <span class="school" data-test-school>
-                  <LinkTo @route="school" @model={{course.school.id}}>
-                    {{course.school.title}}:
-                  </LinkTo>
+                  <LinkTo
+                    @route="school"
+                    @model={{course.school.id}}
+                  >{{course.school.title}}</LinkTo>
                 </span>
               {{/if}}
               {{#if this.showYear}}
