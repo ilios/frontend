@@ -24,8 +24,8 @@ import ObjectiveListItemExpanded from 'frontend/components/program-year/objectiv
 import TaxonomyManager from 'ilios-common/components/taxonomy-manager';
 import YupValidations from 'ilios-common/classes/yup-validations';
 import YupValidationMessage from 'ilios-common/components/yup-validation-message';
-import stripMarkup from 'ilios-common/utils/strip-markup';
 import { string } from 'yup';
+import striptags from 'striptags';
 
 export default class ProgramYearObjectiveListItemComponent extends Component {
   @service store;
@@ -52,7 +52,7 @@ export default class ProgramYearObjectiveListItemComponent extends Component {
   });
 
   get titleWithoutMarkup() {
-    return stripMarkup(this.title);
+    return striptags(this.title ?? '');
   }
 
   @cached
