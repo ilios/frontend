@@ -36,6 +36,7 @@ export default class ReportsSubjectCopyNew extends Component {
           @route="reports.subjects"
           @query={{hash
             showNewReportForm=true
+            title=this.reportTitle
             selectedSchoolId=@school.id
             selectedSubject=@subject
             selectedPrepositionalObject=@prepositionalObject
