@@ -1,37 +1,57 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
-import { render, click } from '@ember/test-helpers';
+import { render } from '@ember/test-helpers';
 import NewObjective from 'ilios-common/components/new-objective';
+import noop from 'ilios-common/helpers/noop';
+import { component } from 'ilios-common/page-objects/components/new-objective';
 
 module('Integration | Component | new objective', function (hooks) {
   setupRenderingTest(hooks);
 
   test('it renders', async function (assert) {
-    this.set('cancel', () => {});
-
-    await render(<template><NewObjective @cancel={{this.cancel}} /></template>);
-    const content = this.element.textContent.trim();
-    assert.ok(content.includes('New Objective'));
-    assert.ok(content.includes('Description'));
+    await render(<template><NewObjective @cancel={{(noop)}} /></template>);
+    assert.strictEqual(component.title, 'New Objective');
+    assert.strictEqual(component.description.label, 'Description:');
   });
 
-  test('errors do not show up initially', async function (assert) {
+  test('validation fails if description is too short', async function (assert) {
+    await render(<template><NewObjective @cancel={{(noop)}} /></template>);
+    assert.notOk(component.description.hasError);
+    await component.description.set('a');
+    await component.save();
+    assert.strictEqual(
+      component.description.error,
+      'Description is too short (minimum is 3 characters)',
+    );
+  });
+
+  test('validation fails if description is too long', async function (assert) {
+    await render(<template><NewObjective @cancel={{(noop)}} /></template>);
+    assert.notOk(component.description.hasError);
+    await component.description.set('a'.repeat(65001));
+    await component.save();
+    assert.strictEqual(
+      component.description.error,
+      'Description is too long (maximum is 65000 characters)',
+    );
+  });
+
+  test('save triggers', async function (assert) {
+    assert.expect(1);
+    this.set('save', (value) => {
+      assert.strictEqual(value, '<p>yoo hoo</p>');
+    });
+    await render(<template><NewObjective @save={{this.save}} @cancel={{(noop)}} /></template>);
+    await component.description.set('yoo hoo');
+    await component.save();
+  });
+
+  test('cancel triggers', async function (assert) {
     assert.expect(1);
     this.set('cancel', () => {
-      assert.ok(false); //shouldn't be called
+      assert.ok(true, 'Cancel triggered');
     });
     await render(<template><NewObjective @cancel={{this.cancel}} /></template>);
-    assert.dom('.validation-error-message').doesNotExist();
-  });
-
-  test('errors show up', async function (assert) {
-    assert.expect(2);
-    this.set('cancel', () => {
-      assert.ok(false); //shouldn't be called
-    });
-    await render(<template><NewObjective @cancel={{this.cancel}} /></template>);
-    await click('.done');
-    assert.dom('.validation-error-message').exists();
-    assert.dom('.validation-error-message').includesText('blank');
+    await component.cancel();
   });
 });
