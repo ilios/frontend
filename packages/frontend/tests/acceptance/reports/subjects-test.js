@@ -258,7 +258,7 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
         case 2:
           assert.strictEqual(
             query,
-            'query { courses(schools: [1], ids: [1, 2]) { id, title, year, externalId } }',
+            'query { courses(schools: [1], ids: [1, 2]) { id, title, year, externalId, school { id, title } } }',
           );
           rhett = {
             data: {
@@ -341,7 +341,10 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
     this.server.post('api/graphql', ({ db }, { requestBody }) => {
       const { query } = JSON.parse(requestBody);
 
-      assert.strictEqual(query, 'query { courses { id, title, year, externalId } }');
+      assert.strictEqual(
+        query,
+        'query { courses { id, title, year, externalId, school { id, title } } }',
+      );
       return {
         data: {
           courses: db.courses.map(({ id, title, year, externalId }) => {
@@ -425,7 +428,7 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
-        'query { courses(schools: [1]) { id, title, year, externalId } }',
+        'query { courses(schools: [1]) { id, title, year, externalId, school { id, title } } }',
         'has correct graphql query',
       );
       return {
@@ -575,7 +578,7 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
-        'query { courses(academicYears: [2015]) { id, title, year, externalId } }',
+        'query { courses(academicYears: [2015]) { id, title, year, externalId, school { id, title } } }',
       );
       const coursesIn2015 = db.courses.filter(({ year }) => year === 2015);
       return {
