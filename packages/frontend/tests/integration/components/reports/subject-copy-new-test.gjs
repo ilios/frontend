@@ -44,7 +44,7 @@ module('Integration | Component | reports/subject-copy-new', function (hooks) {
     assert.strictEqual(component.button.label, this.intl.t('general.edit'));
     assert.strictEqual(
       component.button.link,
-      '/reports/subjects?selectedPrepositionalObject=instructor&selectedPrepositionalObjectId=100&selectedSubject=course&showNewReportForm=true',
+      '/reports/subjects?selectedPrepositionalObject=instructor&selectedPrepositionalObjectId=100&selectedSubject=course&showNewReportForm=true&title=All%20Courses%20for%200%20guy%20M.%20Mc0son%20in%20',
     );
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
