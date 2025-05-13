@@ -86,12 +86,12 @@ module('Integration | Component | reports/subject-results', function (hooks) {
     assert.strictEqual(component.results.length, 2, 'result count is correct');
     assert.strictEqual(
       component.results[0].text,
-      'school 0 2013 course 0',
+      'school 0: 2013 course 0',
       'first result text is correct',
     );
     assert.strictEqual(
       component.results[1].text,
-      'school 1 2013 course 1',
+      'school 1: 2013 course 1',
       'second result text is correct',
     );
 
