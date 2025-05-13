@@ -60,7 +60,7 @@
     "class-validator": "^0.14.0",
     "ember-a11y-refocus": "4.1.4",
     "ember-a11y-testing": "^7.0.0",
-    "ember-async-data": "^2.0.0",
+    "ember-async-data": "^2.0.1",
     "ember-auto-import": "^2.4.3",
     "ember-cli": "~6.4.0",
     "ember-cli-app-version": "^7.0.0",
