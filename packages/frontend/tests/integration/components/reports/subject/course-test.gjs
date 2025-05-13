@@ -224,9 +224,9 @@ module('Integration | Component | reports/subject/course', function (hooks) {
     );
 
     assert.ok(component.results[0].school.isPresent);
-    assert.strictEqual(component.results[0].school.title, 'Second School:');
+    assert.strictEqual(component.results[0].school.title, 'Second School');
     assert.ok(component.results[1].school.isPresent);
-    assert.strictEqual(component.results[1].school.title, 'First School:');
+    assert.strictEqual(component.results[1].school.title, 'First School');
   });
 
   test('it reads academic year config', async function (assert) {
