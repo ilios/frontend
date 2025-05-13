@@ -2,7 +2,6 @@ import Component from '@glimmer/component';
 import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
-import { validatable, Custom, Length, NotBlank } from 'ilios-common/decorators/validation';
 import { filterBy, mapBy, sortBy } from 'ilios-common/utils/array-helpers';
 import { dropTask } from 'ember-concurrency';
 import { TrackedAsyncData } from 'ember-async-data';
@@ -13,20 +12,43 @@ import EditableField from 'ilios-common/components/editable-field';
 import perform from 'ember-concurrency/helpers/perform';
 import pick from 'ilios-common/helpers/pick';
 import set from 'ember-set-helper/helpers/set';
-import ValidationError from 'ilios-common/components/validation-error';
 import FaIcon from 'ilios-common/components/fa-icon';
 import SchoolVocabularyNewTerm from 'frontend/components/school-vocabulary-new-term';
+import YupValidationMessage from 'ilios-common/components/yup-validation-message';
+import YupValidations from 'ilios-common/classes/yup-validations';
+import { string } from 'yup';
 
-@validatable
 export default class SchoolVocabularyManagerComponent extends Component {
   @service store;
   @service intl;
-  @tracked
-  @NotBlank()
-  @Length(1, 200)
-  @Custom('validateTitleCallback', 'validateTitleMessageCallback')
-  titleValue;
+  @tracked titleValue;
   @tracked newTerm;
+
+  validations = new YupValidations(this, {
+    titleValue: string()
+      .ensure()
+      .trim()
+      .required()
+      .max(200)
+      .test(
+        'vocabulary-title-uniqueness-per-school',
+        (d) => {
+          return {
+            path: d.path,
+            messageKey: 'errors.exclusion',
+          };
+        },
+        async (value) => {
+          const school = await this.args.vocabulary.school;
+          const allVocabsInSchool = await school.vocabularies;
+          const siblings = allVocabsInSchool.filter((vocab) => {
+            return vocab !== this.args.vocabulary;
+          });
+          const siblingTitles = mapBy(siblings, 'title');
+          return !siblingTitles.includes(value);
+        },
+      ),
+  });
 
   @cached
   get termsData() {
@@ -52,12 +74,12 @@ export default class SchoolVocabularyManagerComponent extends Component {
   }
 
   changeTitle = dropTask(async () => {
-    this.addErrorDisplayFor('titleValue');
-    const isValid = await this.isValid();
+    this.validations.addErrorDisplayFor('titleValue');
+    const isValid = await this.validations.isValid();
     if (!isValid) {
       return false;
     }
-    this.removeErrorDisplayFor('titleValue');
+    this.validations.removeErrorDisplayFor('titleValue');
     this.args.vocabulary.title = this.title;
     await this.args.vocabulary.save();
   });
@@ -78,19 +100,6 @@ export default class SchoolVocabularyManagerComponent extends Component {
     this.newTerm = await term.save();
   }
 
-  async validateTitleCallback() {
-    const school = await this.args.vocabulary.school;
-    const allVocabsInSchool = await school.vocabularies;
-    const siblings = allVocabsInSchool.filter((vocab) => {
-      return vocab !== this.args.vocabulary;
-    });
-    const siblingTitles = mapBy(siblings, 'title');
-    return !siblingTitles.includes(this.titleValue);
-  }
-
-  validateTitleMessageCallback() {
-    return this.intl.t('errors.exclusion', { description: this.intl.t('general.vocabulary') });
-  }
   <template>
     {{#let (uniqueId) as |templateId|}}
       <div class="school-vocabulary-manager" data-test-school-vocabulary-manager attributes...>
@@ -129,9 +138,13 @@ export default class SchoolVocabularyManagerComponent extends Component {
                 value={{this.titleValue}}
                 disabled={{isSaving}}
                 {{on "input" (pick "target.value" (set this "titleValue"))}}
-                {{on "keyup" (fn this.addErrorDisplayFor "titleValue")}}
+                {{this.validations.attach "titleValue"}}
               />
-              <ValidationError @validatable={{this}} @property="titleValue" />
+              <YupValidationMessage
+                @description={{t "general.title"}}
+                @validationErrors={{this.validations.errors.titleValue}}
+                data-test-title-validation-error-message
+              />
             </EditableField>
           {{else}}
             {{this.title}}
