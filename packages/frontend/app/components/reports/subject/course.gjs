@@ -140,9 +140,8 @@ export default class ReportsSubjectCourseComponent extends Component {
     if (subject !== 'course') {
       throw new Error(`Report for ${subject} sent to ReportsSubjectCourseComponent`);
     }
-    const attributes = ['id', 'title', 'year', 'externalId', 'school { id, title }'];
+    const attributes = ['id', 'title', 'year', 'externalId', 'school { title }'];
     const result = await this.graphql.find('courses', filters, attributes.join(', '));
-
     return result.data.courses;
   }
 
