@@ -20,6 +20,7 @@ import ValidationError from 'ilios-common/components/validation-error';
 import sortBy from 'ilios-common/helpers/sort-by';
 import eq from 'ember-truth-helpers/helpers/eq';
 import LoadingSpinner from 'ilios-common/components/loading-spinner';
+import PasswordValidator from 'frontend/components/password-validator';
 
 @validatable
 export default class NewUserComponent extends Component {
@@ -364,20 +365,7 @@ export default class NewUserComponent extends Component {
             {{/if}}
           </div>
           <div class="item" data-test-password>
-            <label for="password-{{templateId}}">
-              {{t "general.password"}}:
-            </label>
-            <input
-              id="password-{{templateId}}"
-              type="text"
-              value={{this.password}}
-              {{on "input" (pick "target.value" (set this "password"))}}
-              {{on
-                "keyup"
-                (queue (fn this.addErrorDisplayFor "password") (perform this.saveOrCancel))
-              }}
-            />
-            <ValidationError @validatable={{this}} @property="password" />
+            <PasswordValidator {{on "keyup" (pick this.password this.setPassword)}} />
           </div>
           <div class="item" data-test-school>
             <label for="primary-school-{{templateId}}">
