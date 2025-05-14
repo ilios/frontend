@@ -105,7 +105,7 @@ export default class ReportsSubjectSessionComponent extends Component {
       prepositionalObjectTableRowId,
       school,
     );
-    const attributes = ['id', 'title', 'course { id, year, title, school { id, title } }'];
+    const attributes = ['id', 'title', 'course { id, year, title, school { title } }'];
     const result = await this.graphql.find('sessions', filters, attributes.join(', '));
 
     return result.data.sessions.map(({ id, title, course }) => {
