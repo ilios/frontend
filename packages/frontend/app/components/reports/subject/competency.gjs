@@ -1,4 +1,5 @@
 import Component from '@glimmer/component';
+import { sortBy } from 'ilios-common/utils/array-helpers';
 import { service } from '@ember/service';
 import { pluralize } from 'ember-inflector';
 import { camelize } from '@ember/string';
@@ -33,13 +34,19 @@ export default class ReportsSubjectCompetencyComponent extends Component {
   }
 
   get sortedCompetencies() {
-    return this.allCompetencies.sort((a, b) => {
-      return a.localeCompare(b, this.intl.primaryLocale);
-    });
+    if (this.showSchool) {
+      return sortBy(this.allCompetencies, ['school.title', 'title']);
+    }
+
+    return sortBy(this.allCompetencies, ['title']);
   }
 
   get limitedCompetencies() {
     return this.sortedCompetencies.slice(0, this.resultsLengthMax);
+  }
+
+  get showSchool() {
+    return !this.args.school;
   }
 
   async getReportResults(subject, prepositionalObject, prepositionalObjectTableRowId, school) {
@@ -55,8 +62,9 @@ export default class ReportsSubjectCompetencyComponent extends Component {
       const what = pluralize(camelize(prepositionalObject));
       filters.push(`${what}: [${prepositionalObjectTableRowId}]`);
     }
-    const result = await this.graphql.find('competencies', filters, 'id, title');
-    return result.data.competencies.map(({ title }) => title);
+    const attributes = ['id', 'title', 'school { title }'];
+    const result = await this.graphql.find('competencies', filters, attributes.join(', '));
+    return result.data.competencies;
   }
 
   get reportResultsExceedMax() {
@@ -85,9 +93,14 @@ export default class ReportsSubjectCompetencyComponent extends Component {
     <div data-test-reports-subject-competency>
       {{#if this.allCompetenciesData.isResolved}}
         <ul class="report-results{{if this.reportResultsExceedMax ' limited'}}" data-test-results>
-          {{#each this.limitedCompetencies as |title|}}
+          {{#each this.limitedCompetencies as |competency|}}
             <li>
-              {{title}}
+              {{#if this.showSchool}}
+                <span class="school" data-test-school>
+                  {{competency.school.title}}:
+                </span>
+              {{/if}}
+              {{competency.title}}
             </li>
           {{else}}
             <li>{{t "general.none"}}</li>

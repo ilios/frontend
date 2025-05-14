@@ -1,4 +1,5 @@
 import Component from '@glimmer/component';
+import { sortBy } from 'ilios-common/utils/array-helpers';
 import { TrackedAsyncData } from 'ember-async-data';
 import { cached } from '@glimmer/tracking';
 import { service } from '@ember/service';
@@ -33,13 +34,19 @@ export default class ReportsSubjectInstructorGroupComponent extends Component {
   }
 
   get sortedInstructorGroups() {
-    return this.allInstructorGroups.sort((a, b) => {
-      return a.localeCompare(b, this.intl.primaryLocale);
-    });
+    if (this.showSchool) {
+      return sortBy(this.allInstructorGroups, ['school.title', 'title']);
+    }
+
+    return sortBy(this.allInstructorGroups, ['title']);
   }
 
   get limitedInstructorGroups() {
     return this.sortedInstructorGroups.slice(0, this.resultsLengthMax);
+  }
+
+  get showSchool() {
+    return !this.args.school;
   }
 
   async getReportResults(subject, prepositionalObject, prepositionalObjectTableRowId, school) {
@@ -55,8 +62,9 @@ export default class ReportsSubjectInstructorGroupComponent extends Component {
       const what = pluralize(camelize(prepositionalObject));
       filters.push(`${what}: [${prepositionalObjectTableRowId}]`);
     }
-    const result = await this.graphql.find('instructorGroups', filters, 'title');
-    return result.data.instructorGroups.map(({ title }) => title);
+    const attributes = ['title', 'school { title }'];
+    const result = await this.graphql.find('instructorGroups', filters, attributes.join(', '));
+    return result.data.instructorGroups;
   }
 
   get reportResultsExceedMax() {
@@ -87,9 +95,14 @@ export default class ReportsSubjectInstructorGroupComponent extends Component {
     <div data-test-reports-subject-instructor-group>
       {{#if this.allInstructorGroupsData.isResolved}}
         <ul class="report-results{{if this.reportResultsExceedMax ' limited'}}" data-test-results>
-          {{#each this.limitedInstructorGroups as |title|}}
+          {{#each this.limitedInstructorGroups as |instructorGroup|}}
             <li>
-              {{title}}
+              {{#if this.showSchool}}
+                <span class="school" data-test-school>
+                  {{instructorGroup.school.title}}:
+                </span>
+              {{/if}}
+              {{instructorGroup.title}}
             </li>
           {{else}}
             <li>{{t "general.none"}}</li>
