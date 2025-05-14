@@ -36,15 +36,21 @@ export default class SearchService extends Service {
    * @param {number} size
    */
   async forUsers(q, size = 100, onlySuggestEnabled = false) {
-    const { users, autocomplete } = await this.search('users', q, size, onlySuggestEnabled);
+    const search = await this.search('users', q, size, onlySuggestEnabled);
 
-    const mappedUsers = users.map((user) => {
-      user.fullName = this.getUserFullName(user);
+    if (search) {
+      const { users, autocomplete } = search;
 
-      return user;
-    });
+      const mappedUsers = users.map((user) => {
+        user.fullName = this.getUserFullName(user);
 
-    return { autocomplete, users: mappedUsers };
+        return user;
+      });
+
+      return { autocomplete, users: mappedUsers };
+    } else {
+      return null;
+    }
   }
 
   async search(type, q, size, onlySuggestEnabled) {
@@ -56,9 +62,14 @@ export default class SearchService extends Service {
         headers: this.authHeaders,
       }),
     );
-    const { results } = await response.json();
 
-    return results;
+    if (response.ok) {
+      const { results } = await response.json();
+
+      return results;
+    } else {
+      return null;
+    }
   }
 
   getUserFullName(user) {
