@@ -86,7 +86,7 @@ export default class SchoolVocabularyManagerComponent extends Component {
 
   @action
   revertTitleChanges() {
-    this.removeErrorDisplayFor('title');
+    this.validations.removeErrorDisplayFor('title');
     this.titleValue = this.args.vocabulary.title;
   }
 

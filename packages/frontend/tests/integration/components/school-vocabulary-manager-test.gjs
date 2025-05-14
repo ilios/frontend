@@ -77,6 +77,33 @@ module('Integration | Component | school vocabulary manager', function (hooks) {
     assert.strictEqual(this.server.db.vocabularies[0].title, 'new title');
   });
 
+  test('cancel vocabulary title changes', async function (assert) {
+    assert.expect(2);
+
+    const school = this.server.create('school');
+    const vocabulary = this.server.create('vocabulary', { school });
+    const vocabularyModel = await this.owner
+      .lookup('service:store')
+      .findRecord('vocabulary', vocabulary.id);
+
+    this.set('vocabulary', vocabularyModel);
+    await render(
+      <template>
+        <SchoolVocabularyManager
+          @vocabulary={{this.vocabulary}}
+          @manageTerm={{(noop)}}
+          @manageVocabulary={{(noop)}}
+          @canUpdate={{true}}
+        />
+      </template>,
+    );
+    assert.strictEqual(component.title, `Title: ${vocabulary.title} (0 total)`);
+    await component.editTitle();
+    await component.changeTitle('new title');
+    await component.cancelTitleChanges();
+    assert.strictEqual(component.title, `Title: ${vocabulary.title} (0 total)`);
+  });
+
   test('validation fails if vocabulary title is blank', async function (assert) {
     assert.expect(5);
 
