@@ -355,6 +355,32 @@ module('Integration | Component | school session type form', function (hooks) {
     assert.strictEqual(component.aamcMethod.readonlyValue, 'lorem ipsum (inactive)');
   });
 
+  test('validation fails if title is blank', async function (assert) {
+    await render(
+      <template>
+        <SchoolSessionTypeForm
+          @assessment={{false}}
+          @assessmentOption={{null}}
+          @assessmentOptions={{(array)}}
+          @canUpdate={{true}}
+          @canEditTitle={{true}}
+          @canEditCalendarColor={{false}}
+          @calendarColor="#ffffff"
+          @save={{(noop)}}
+          @close={{(noop)}}
+        />
+      </template>,
+    );
+    assert.notOk(component.title.hasError);
+    await component.title.set('');
+    await component.title.submit();
+    assert.strictEqual(component.title.error, 'Title can not be blank');
+    await component.title.set('a'.repeat(101));
+    assert.strictEqual(component.title.error, 'Title is too long (maximum is 100 characters)');
+    await component.title.set('foo bar');
+    assert.notOk(component.title.hasError);
+  });
+
   // Skipped as it appears impossible to provide invalid input to color input fields.
   // @todo: check if we can get rid of validation modifiers for this field altogether[ST 2020/12/08]
   skip('calendar color input validation', async function (assert) {

@@ -3,31 +3,40 @@ import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
 import { dropTask } from 'ember-concurrency';
-import { validatable, IsHexColor, Length, NotBlank } from 'ilios-common/decorators/validation';
 import { findById, sortBy } from 'ilios-common/utils/array-helpers';
-import { uniqueId, fn, concat } from '@ember/helper';
+import { uniqueId, concat } from '@ember/helper';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
 import pick from 'ilios-common/helpers/pick';
 import set from 'ember-set-helper/helpers/set';
-import queue from 'ilios-common/helpers/queue';
 import perform from 'ember-concurrency/helpers/perform';
-import ValidationError from 'ilios-common/components/validation-error';
 import not from 'ember-truth-helpers/helpers/not';
 import sortBy0 from 'ilios-common/helpers/sort-by';
 import eq from 'ember-truth-helpers/helpers/eq';
 import ToggleYesno from 'ilios-common/components/toggle-yesno';
 import LoadingSpinner from 'ilios-common/components/loading-spinner';
+import YupValidationMessage from 'ilios-common/components/yup-validation-message';
+import YupValidations from 'ilios-common/classes/yup-validations';
+import { string } from 'yup';
 
-@validatable
 export default class SchoolSessionTypeFormComponent extends Component {
   @service store;
+  @service intl;
+
   @tracked assessment = this.args.assessment ?? false;
-  @tracked @NotBlank() @IsHexColor() calendarColor = this.args.calendarColor || null;
+  @tracked calendarColor = this.args.calendarColor || null;
   @tracked isActive = this.args.isActive ?? true;
   @tracked selectedAamcMethodId = this.args.selectedAamcMethodId || null;
   @tracked selectedAssessmentOptionId = this.args.selectedAssessmentOptionId || null;
-  @tracked @NotBlank() @Length(1, 100) title = this.args.title || '';
+  @tracked title = this.args.title || '';
+
+  validations = new YupValidations(this, {
+    calendarColor: string()
+      .ensure()
+      .required()
+      .matches(/^#[a-fA-F0-9]{6}$/, { excludeEmptyString: true }),
+    title: string().ensure().trim().required().max(100),
+  });
 
   get assessmentOptions() {
     return this.store.peekAll('assessment-option');
@@ -75,12 +84,12 @@ export default class SchoolSessionTypeFormComponent extends Component {
   }
 
   saveSessionType = dropTask(async () => {
-    this.addErrorDisplaysFor(['title', 'calendarColor']);
-    const isValid = await this.isValid();
+    this.validations.addErrorDisplayForAllFields();
+    const isValid = await this.validations.isValid();
     if (!isValid) {
       return false;
     }
-    this.clearErrorDisplay();
+    this.validations.clearErrorDisplay();
     await this.args.save(
       this.title,
       this.calendarColor,
@@ -116,12 +125,14 @@ export default class SchoolSessionTypeFormComponent extends Component {
                 value={{this.title}}
                 placeholder={{t "general.sessionTypeTitlePlaceholder"}}
                 {{on "input" (pick "target.value" (set this "title"))}}
-                {{on
-                  "keyup"
-                  (queue (fn this.addErrorDisplayFor "title") (perform this.saveOrCancel))
-                }}
+                {{on "keyup" (perform this.saveOrCancel)}}
+                {{this.validations.attach "title"}}
               />
-              <ValidationError @validatable={{this}} @property="title" />
+              <YupValidationMessage
+                @description={{t "general.title"}}
+                @validationErrors={{this.validations.errors.title}}
+                data-test-title-validation-error-message
+              />
             {{else}}
               <span class="value">
                 {{this.title}}
@@ -169,12 +180,14 @@ export default class SchoolSessionTypeFormComponent extends Component {
                 type="color"
                 value={{this.calendarColor}}
                 {{on "input" (pick "target.value" (set this "calendarColor"))}}
-                {{on
-                  "keyup"
-                  (queue (fn this.addErrorDisplayFor "calendarColor") (perform this.saveOrCancel))
-                }}
+                {{on "keyup" (perform this.saveOrCancel)}}
+                {{this.validations.attach "calendarColor"}}
               />
-              <ValidationError @validatable={{this}} @property="calendarColor" />
+              <YupValidationMessage
+                @description={{t "general.color"}}
+                @validationErrors={{this.validations.errors.calendarColor}}
+                data-test-calendar-color-validation-error-message
+              />
             {{else}}
               <span class="value">
                 {{! template-lint-disable no-inline-styles style-concatenation no-triple-curlies}}
