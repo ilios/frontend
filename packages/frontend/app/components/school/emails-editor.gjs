@@ -1,31 +1,49 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { dropTask } from 'ember-concurrency';
-import { validatable, Custom, IsEmail, Length, NotBlank } from 'ilios-common/decorators/validation';
-import { action } from '@ember/object';
 import { service } from '@ember/service';
-import { isBlank, typeOf } from '@ember/utils';
+import { isBlank } from '@ember/utils';
 import EmailValidator from 'validator/es/lib/isEmail';
-import { uniqueId, fn } from '@ember/helper';
+import { uniqueId } from '@ember/helper';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
 import perform from 'ember-concurrency/helpers/perform';
 import FaIcon from 'ilios-common/components/fa-icon';
 import pick from 'ilios-common/helpers/pick';
 import set from 'ember-set-helper/helpers/set';
-import queue from 'ilios-common/helpers/queue';
-import ValidationError from 'ilios-common/components/validation-error';
+import YupValidationMessage from 'ilios-common/components/yup-validation-message';
+import YupValidations from 'ilios-common/classes/yup-validations';
+import { string } from 'yup';
 
-@validatable
 export default class SchoolEmailsEditorComponent extends Component {
   @service intl;
 
-  @tracked @Length(1, 100) @NotBlank() @IsEmail() administratorEmail =
-    this.args.school.iliosAdministratorEmail || '';
-  @tracked
-  @Length(0, 300)
-  @Custom('validateChangeAlertRecipientsCallBack', 'validateChangeAlertRecipientsMessageCallBack')
-  changeAlertRecipients = this.args.school.changeAlertRecipients || '';
+  @tracked administratorEmail = this.args.school.iliosAdministratorEmail || '';
+  @tracked changeAlertRecipients = this.args.school.changeAlertRecipients || '';
+
+  validations = new YupValidations(this, {
+    administratorEmail: string().ensure().trim().required().max(100).email(),
+    changeAlertRecipients: string()
+      .ensure()
+      .trim()
+      .max(300)
+      .test(
+        'list-of-valid-emails',
+        (d) => {
+          return {
+            path: d.path,
+            messageKey: 'errors.invalidChangeAlertRecipients',
+          };
+        },
+        (value) => {
+          const emails = value
+            .split(',')
+            .map((email) => email.trim())
+            .filter((email) => !isBlank(email));
+          return emails.reduce((valid, email) => EmailValidator(email) && valid, true);
+        },
+      ),
+  });
 
   get changeAlertRecipientsFormatted() {
     return this.changeAlertRecipients
@@ -36,33 +54,15 @@ export default class SchoolEmailsEditorComponent extends Component {
       .join(', ');
   }
 
-  @action
-  validateChangeAlertRecipientsCallBack() {
-    if ('string' !== typeOf(this.changeAlertRecipients)) {
-      return true;
-    }
-    const emails = this.changeAlertRecipients
-      .trim()
-      .split(',')
-      .map((email) => email.trim())
-      .filter((email) => !isBlank(email));
-    return emails.reduce((valid, email) => EmailValidator(email) && valid, true);
-  }
-
-  @action
-  validateChangeAlertRecipientsMessageCallBack() {
-    return this.intl.t('errors.invalidChangeAlertRecipients');
-  }
-
   save = dropTask(async () => {
-    this.addErrorDisplaysFor(['administratorEmail', 'changeAlertRecipients']);
-    const isValid = await this.isValid();
+    this.validations.addErrorDisplayForAllFields();
+    const isValid = await this.validations.isValid();
     if (!isValid) {
       return false;
     }
-
+    this.validations.clearErrorDisplay();
     await this.args.save(this.administratorEmail, this.changeAlertRecipientsFormatted);
-    this.clearErrorDisplay();
+
     this.args.cancel();
   });
 
@@ -103,14 +103,14 @@ export default class SchoolEmailsEditorComponent extends Component {
                 value={{this.administratorEmail}}
                 placeholder={{this.administratorEmailPlaceholder}}
                 {{on "input" (pick "target.value" (set this "administratorEmail"))}}
-                {{on
-                  "keyup"
-                  (queue
-                    (fn this.addErrorDisplayFor "administratorEmail") (perform this.saveOrCancel)
-                  )
-                }}
+                {{on "keyup" (perform this.saveOrCancel)}}
+                {{this.validations.attach "administratorEmail"}}
               />
-              <ValidationError @validatable={{this}} @property="administratorEmail" />
+              <YupValidationMessage
+                @description={{t "general.administratorEmail"}}
+                @validationErrors={{this.validations.errors.administratorEmail}}
+                data-test-administrator-email-validation-error-message
+              />
             </div>
             <div class="item" data-test-change-alert-recipients>
               <label for="change-alert-recipients-{{templateId}}">
@@ -122,14 +122,13 @@ export default class SchoolEmailsEditorComponent extends Component {
                 value={{this.changeAlertRecipients}}
                 placeholder={{this.changeAlertRecipientsPlaceholder}}
                 {{on "input" (pick "target.value" (set this "changeAlertRecipients"))}}
-                {{on
-                  "keyup"
-                  (queue
-                    (fn this.addErrorDisplayFor "changeAlertRecipients") (perform this.saveOrCancel)
-                  )
-                }}
+                {{on "keyup" (perform this.saveOrCancel)}}
               />
-              <ValidationError @validatable={{this}} @property="changeAlertRecipients" />
+              <YupValidationMessage
+                @description={{t "general.changeAlertRecipients"}}
+                @validationErrors={{this.validations.errors.changeAlertRecipients}}
+                data-test-change-alert-recipients-validation-error-message
+              />
             </div>
           </div>
         </div>
