@@ -54,6 +54,10 @@ export default class ReportsSubjectSessionComponent extends Component {
     return this.currentUser.performsNonLearnerFunction;
   }
 
+  get showSchool() {
+    return !this.args.school;
+  }
+
   get showYear() {
     return !this.args.year && this.args.prepositionalObject !== 'course';
   }
@@ -101,13 +105,18 @@ export default class ReportsSubjectSessionComponent extends Component {
       prepositionalObjectTableRowId,
       school,
     );
-    const result = await this.graphql.find(
-      'sessions',
-      filters,
-      'id, title, course { id, year, title }',
-    );
+    const attributes = ['id', 'title', 'course { id, year, title, school { id, title } }'];
+    const result = await this.graphql.find('sessions', filters, attributes.join(', '));
+
     return result.data.sessions.map(({ id, title, course }) => {
-      return { id, title, year: course.year, courseId: course.id, courseTitle: course.title };
+      return {
+        id,
+        title,
+        year: course.year,
+        courseId: course.id,
+        courseTitle: course.title,
+        schoolTitle: course.school.title,
+      };
     });
   }
 
@@ -251,34 +260,41 @@ export default class ReportsSubjectSessionComponent extends Component {
     <div data-test-reports-subject-session>
       {{#if (and this.allSessionsData.isResolved this.schoolConfigsData.isResolved)}}
         <ul class="report-results{{if this.reportResultsExceedMax ' limited'}}" data-test-results>
-          {{#each this.limitedSessions as |obj|}}
+          {{#each this.limitedSessions as |session|}}
             <li>
+              {{#if this.showSchool}}
+                <span class="school" data-test-school>
+                  {{session.schoolTitle}}:
+                </span>
+              {{/if}}
               {{#if this.showYear}}
                 <span data-test-year>
                   {{#if this.academicYearCrossesCalendarYearBoundaries}}
-                    {{obj.year}}
+                    {{session.year}}
                     -
-                    {{add obj.year 1}}
+                    {{add session.year 1}}
                   {{else}}
-                    {{obj.year}}
+                    {{session.year}}
                   {{/if}}
                 </span>
               {{/if}}
               <span data-test-course-title>
                 {{#if this.canViewCourse}}
-                  <LinkTo @route="course" @model={{obj.courseId}}>{{obj.courseTitle}}:</LinkTo>
+                  <LinkTo @route="course" @model={{session.courseId}}>
+                    {{session.courseTitle}}:
+                  </LinkTo>
                 {{else}}
-                  {{obj.courseTitle}}:
+                  {{session.courseTitle}}:
                 {{/if}}
               </span>
 
               <span data-test-session-title>
                 {{#if this.canViewCourse}}
-                  <LinkTo @route="session" @models={{array obj.courseId obj.id}}>
-                    {{obj.title}}
+                  <LinkTo @route="session" @models={{array session.courseId session.id}}>
+                    {{session.title}}
                   </LinkTo>
                 {{else}}
-                  {{obj.title}}
+                  {{session.title}}
                 {{/if}}
               </span>
             </li>
