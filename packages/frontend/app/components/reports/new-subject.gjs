@@ -204,9 +204,11 @@ export default class ReportsNewSubjectComponent extends Component {
     ];
   }
 
-  userModelData = new TrackedAsyncData(this.currentUser.getModel());
-
   @cached
+  get userModelData() {
+    return new TrackedAsyncData(this.currentUser.getModel());
+  }
+
   get userModel() {
     return this.userModelData.isResolved ? this.userModelData.value : null;
   }
