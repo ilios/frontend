@@ -34,16 +34,25 @@ export default class ReportsSubjectInstructorComponent extends Component {
   }
 
   get mappedInstructors() {
-    return this.allInstructors.map(({ firstName, middleName, lastName, displayName }) => {
+    return this.allInstructors.map(({ firstName, middleName, lastName, displayName, school }) => {
       if (displayName) {
+        if (this.showSchool) {
+          return `${school.title}: ${displayName}`;
+        }
         return displayName;
       }
 
       const middleInitial = middleName ? middleName.charAt(0) : false;
 
       if (middleInitial) {
+        if (this.showSchool) {
+          return `${school.title}: ${firstName} ${middleInitial}. ${lastName}`;
+        }
         return `${firstName} ${middleInitial}. ${lastName}`;
       } else {
+        if (this.showSchool) {
+          return `${school.title}: ${firstName} ${lastName}`;
+        }
         return `${firstName} ${lastName}`;
       }
     });
@@ -57,6 +66,10 @@ export default class ReportsSubjectInstructorComponent extends Component {
 
   get limitedInstructors() {
     return this.sortedInstructors.slice(0, this.resultsLengthMax);
+  }
+
+  get showSchool() {
+    return !this.args.school;
   }
 
   async getGraphQLFilters(prepositionalObject, prepositionalObjectTableRowId, school) {
@@ -155,8 +168,8 @@ export default class ReportsSubjectInstructorComponent extends Component {
       prepositionalObjectTableRowId,
       school,
     );
-    const attributes = ['firstName', 'middleName', 'lastName', 'displayName'];
-    const result = await this.graphql.find('users', filters, attributes.join(','));
+    const attributes = ['firstName', 'middleName', 'lastName', 'displayName', 'school { title }'];
+    const result = await this.graphql.find('users', filters, attributes.join(', '));
     return result.data.users;
   }
 
