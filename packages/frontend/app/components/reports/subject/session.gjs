@@ -168,10 +168,10 @@ export default class ReportsSubjectSessionComponent extends Component {
             ? `${course.year} - ${course.year + 1}`
             : `${course.year}`,
           striptags(description),
-          attendanceRequired,
-          attireRequired,
-          equipmentRequired,
-          supplemental,
+          attendanceRequired ? this.intl.t('general.yes') : this.intl.t('general.no'),
+          attireRequired ? this.intl.t('general.yes') : this.intl.t('general.no'),
+          equipmentRequired ? this.intl.t('general.yes') : this.intl.t('general.no'),
+          supplemental ? this.intl.t('general.yes') : this.intl.t('general.no'),
         ];
         sessionObjectives.forEach((objective) => {
           results.push(striptags(objective.title));
