@@ -508,11 +508,15 @@ module('Integration | Component | reports/subject/session', function (hooks) {
     const downloadMockUrl = 'blob:mock-url';
     const downloadFilename = 'All Sessions in All Schools.csv';
 
-    await render(hbs`<Reports::Subject::Session
-  @subject={{this.report.subject}}
-  @prepositionalObject={{this.report.prepositionalObject}}
-  @prepositionalObjectTableRowId={{this.report.prepositionalObjectTableRowId}}
-/>`);
+    await render(
+      <template>
+        <Session
+          @subject={{this.report.subject}}
+          @prepositionalObject={{this.report.prepositionalObject}}
+          @prepositionalObjectTableRowId={{this.report.prepositionalObjectTableRowId}}
+        />
+      </template>,
+    );
 
     // Override URL methods
     const originalCreateObjectURL = URL.createObjectURL;
