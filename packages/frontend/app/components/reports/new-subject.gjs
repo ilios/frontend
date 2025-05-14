@@ -67,138 +67,142 @@ export default class ReportsNewSubjectComponent extends Component {
     return this.selectedTitle ?? this.args.report?.title;
   }
 
-  subjectList = [
-    { value: 'course', label: this.intl.t('general.courses') },
-    { value: 'session', label: this.intl.t('general.sessions') },
-    { value: 'program', label: this.intl.t('general.programs') },
-    { value: 'program year', label: this.intl.t('general.programYears') },
-    { value: 'instructor', label: this.intl.t('general.instructors') },
-    {
-      value: 'instructor group',
-      label: this.intl.t('general.instructorGroups'),
-    },
-    {
-      value: 'learning material',
-      label: this.intl.t('general.learningMaterials'),
-    },
-    { value: 'competency', label: this.intl.t('general.competencies') },
-    { value: 'mesh term', label: this.intl.t('general.meshTerms') },
-    { value: 'term', label: this.intl.t('general.terms') },
-    { value: 'session type', label: this.intl.t('general.sessionTypes') },
-  ];
-  fullPrepositionalObjectList = [
-    {
-      value: 'course',
-      label: this.intl.t('general.course'),
-      subjects: [
-        'session',
-        'program',
-        'program year',
-        'instructor',
-        'instructor group',
-        'learning material',
-        'competency',
-        'mesh term',
-        'session type',
-        'term',
-      ],
-    },
-    {
-      value: 'session',
-      label: this.intl.t('general.session'),
-      subjects: [
-        'program',
-        'program year',
-        'instructor',
-        'instructor group',
-        'learning material',
-        'competency',
-        'mesh term',
-        'term',
-      ],
-    },
-    {
-      value: 'program year',
-      label: this.intl.t('general.programYear'),
-      subjects: ['course', 'term'],
-    },
-    {
-      value: 'program',
-      label: this.intl.t('general.program'),
-      subjects: ['course', 'session', 'session type', 'term'],
-    },
-    {
-      value: 'instructor',
-      label: this.intl.t('general.instructor'),
-      subjects: [
-        'course',
-        'session',
-        'instructor group',
-        'learning material',
-        'session type',
-        'term',
-      ],
-    },
-    {
-      value: 'instructor group',
-      label: this.intl.t('general.instructorGroup'),
-      subjects: ['course', 'session', 'instructor', 'learning material', 'session type'],
-    },
-    {
-      value: 'learning material',
-      label: this.intl.t('general.learningMaterial'),
-      subjects: [
-        'course',
-        'session',
-        'instructor',
-        'instructor group',
-        'mesh term',
-        'session type',
-        'term',
-      ],
-    },
-    {
-      value: 'competency',
-      label: this.intl.t('general.competency'),
-      subjects: ['course', 'session', 'session type', 'term'],
-    },
-    {
-      value: 'mesh term',
-      label: this.intl.t('general.meshTerm'),
-      subjects: ['course', 'session', 'learning material', 'session type'],
-    },
-    {
-      value: 'session type',
-      label: this.intl.t('general.sessionType'),
-      subjects: [
-        'session',
-        'instructor',
-        'instructor group',
-        'learning material',
-        'competency',
-        'mesh term',
-        'term',
-      ],
-    },
-    {
-      value: 'term',
-      label: this.intl.t('general.term'),
-      subjects: ['course', 'session', 'program', 'program year', 'session type'],
-    },
-    {
-      value: 'academic year',
-      label: this.intl.t('general.academicYear'),
-      subjects: [
-        'course',
-        'session',
-        'instructor',
-        'instructor group',
-        'competency',
-        'session type',
-        'term',
-      ],
-    },
-  ];
+  get subjectList() {
+    return [
+      { value: 'course', label: this.intl.t('general.courses') },
+      { value: 'session', label: this.intl.t('general.sessions') },
+      { value: 'program', label: this.intl.t('general.programs') },
+      { value: 'program year', label: this.intl.t('general.programYears') },
+      { value: 'instructor', label: this.intl.t('general.instructors') },
+      {
+        value: 'instructor group',
+        label: this.intl.t('general.instructorGroups'),
+      },
+      {
+        value: 'learning material',
+        label: this.intl.t('general.learningMaterials'),
+      },
+      { value: 'competency', label: this.intl.t('general.competencies') },
+      { value: 'mesh term', label: this.intl.t('general.meshTerms') },
+      { value: 'term', label: this.intl.t('general.terms') },
+      { value: 'session type', label: this.intl.t('general.sessionTypes') },
+    ];
+  }
+  get fullPrepositionalObjectList() {
+    return [
+      {
+        value: 'course',
+        label: this.intl.t('general.course'),
+        subjects: [
+          'session',
+          'program',
+          'program year',
+          'instructor',
+          'instructor group',
+          'learning material',
+          'competency',
+          'mesh term',
+          'session type',
+          'term',
+        ],
+      },
+      {
+        value: 'session',
+        label: this.intl.t('general.session'),
+        subjects: [
+          'program',
+          'program year',
+          'instructor',
+          'instructor group',
+          'learning material',
+          'competency',
+          'mesh term',
+          'term',
+        ],
+      },
+      {
+        value: 'program year',
+        label: this.intl.t('general.programYear'),
+        subjects: ['course', 'term'],
+      },
+      {
+        value: 'program',
+        label: this.intl.t('general.program'),
+        subjects: ['course', 'session', 'session type', 'term'],
+      },
+      {
+        value: 'instructor',
+        label: this.intl.t('general.instructor'),
+        subjects: [
+          'course',
+          'session',
+          'instructor group',
+          'learning material',
+          'session type',
+          'term',
+        ],
+      },
+      {
+        value: 'instructor group',
+        label: this.intl.t('general.instructorGroup'),
+        subjects: ['course', 'session', 'instructor', 'learning material', 'session type'],
+      },
+      {
+        value: 'learning material',
+        label: this.intl.t('general.learningMaterial'),
+        subjects: [
+          'course',
+          'session',
+          'instructor',
+          'instructor group',
+          'mesh term',
+          'session type',
+          'term',
+        ],
+      },
+      {
+        value: 'competency',
+        label: this.intl.t('general.competency'),
+        subjects: ['course', 'session', 'session type', 'term'],
+      },
+      {
+        value: 'mesh term',
+        label: this.intl.t('general.meshTerm'),
+        subjects: ['course', 'session', 'learning material', 'session type'],
+      },
+      {
+        value: 'session type',
+        label: this.intl.t('general.sessionType'),
+        subjects: [
+          'session',
+          'instructor',
+          'instructor group',
+          'learning material',
+          'competency',
+          'mesh term',
+          'term',
+        ],
+      },
+      {
+        value: 'term',
+        label: this.intl.t('general.term'),
+        subjects: ['course', 'session', 'program', 'program year', 'session type'],
+      },
+      {
+        value: 'academic year',
+        label: this.intl.t('general.academicYear'),
+        subjects: [
+          'course',
+          'session',
+          'instructor',
+          'instructor group',
+          'competency',
+          'session type',
+          'term',
+        ],
+      },
+    ];
+  }
 
   userModelData = new TrackedAsyncData(this.currentUser.getModel());
 
