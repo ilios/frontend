@@ -39,8 +39,6 @@ const definition = {
     scope: '[data-test-color]',
     set: fillable('input'),
     value: value('input'),
-    hasError: isPresent('[data-test-calendar-color-validation-error-message]'),
-    error: text('[data-test-calendar-color-validation-error-message]'),
     submit: triggerable('keyup', 'input', { eventProperties: { key: 'Enter' } }),
     cancel: triggerable('keyup', 'input', { eventProperties: { key: 'Escape' } }),
     inputControlIsVisible: isVisible('input'),

@@ -1,4 +1,4 @@
-import { module, skip, test } from 'qunit';
+import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { setupMirage } from 'frontend/tests/test-support/mirage';
@@ -379,40 +379,5 @@ module('Integration | Component | school session type form', function (hooks) {
     assert.strictEqual(component.title.error, 'Title is too long (maximum is 100 characters)');
     await component.title.set('foo bar');
     assert.notOk(component.title.hasError);
-  });
-
-  // Skipped as it appears impossible to provide invalid input to color input fields.
-  // @todo: check if we can get rid of validation modifiers for this field altogether[ST 2020/12/08]
-  skip('calendar color input validation', async function (assert) {
-    await render(
-      <template>
-        <SchoolSessionTypeForm
-          @assessment={{false}}
-          @assessmentOption={{null}}
-          @assessmentOptions={{(array)}}
-          @canUpdate={{true}}
-          @canEditCalendarColor={{true}}
-          @calendarColor="#ffffff"
-          @save={{(noop)}}
-          @close={{(noop)}}
-        />
-      </template>,
-    );
-
-    assert.strictEqual(component.calendarColor.value, '#ffffff');
-    assert.notOk(component.calendarColor.hasError);
-    // blank the input
-    //  blanking the input seems to be impossible, FF and Chrome fill it with Black '#000000'
-    assert.strictEqual(component.calendarColor.value, '');
-    assert.ok(component.calendarColor.hasError);
-
-    // reset to valid input
-    assert.strictEqual(component.calendarColor.value, '#ffffff');
-    assert.notOk(component.calendarColor.hasError);
-
-    // provide invalid input
-    // [ST 2020/12/08]: likewise, non-hex color values result in the browser defaulting to Black as well.
-    await component.calendarColor.set('geflarknik');
-    assert.ok(component.calendarColor.hasError);
   });
 });

@@ -31,10 +31,6 @@ export default class SchoolSessionTypeFormComponent extends Component {
   @tracked title = this.args.title || '';
 
   validations = new YupValidations(this, {
-    calendarColor: string()
-      .ensure()
-      .required()
-      .matches(/^#[a-fA-F0-9]{6}$/, { excludeEmptyString: true }),
     title: string().ensure().trim().required().max(100),
   });
 
@@ -181,12 +177,6 @@ export default class SchoolSessionTypeFormComponent extends Component {
                 value={{this.calendarColor}}
                 {{on "input" (pick "target.value" (set this "calendarColor"))}}
                 {{on "keyup" (perform this.saveOrCancel)}}
-                {{this.validations.attach "calendarColor"}}
-              />
-              <YupValidationMessage
-                @description={{t "general.color"}}
-                @validationErrors={{this.validations.errors.calendarColor}}
-                data-test-calendar-color-validation-error-message
               />
             {{else}}
               <span class="value">
