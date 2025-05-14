@@ -232,9 +232,7 @@ export default class ReportsSubjectSessionComponent extends Component {
               {{/if}}
               <span data-test-course-title>
                 {{#if this.canViewCourse}}
-                  <LinkTo @route="course" @model={{obj.courseId}}>
-                    {{obj.courseTitle}}:
-                  </LinkTo>
+                  <LinkTo @route="course" @model={{obj.courseId}}>{{obj.courseTitle}}:</LinkTo>
                 {{else}}
                   {{obj.courseTitle}}:
                 {{/if}}
