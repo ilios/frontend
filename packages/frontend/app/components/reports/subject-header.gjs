@@ -14,7 +14,7 @@ import { on } from '@ember/modifier';
 import pick from 'ilios-common/helpers/pick';
 import set from 'ember-set-helper/helpers/set';
 import YupValidationMessage from 'ilios-common/components/yup-validation-message';
-import SubjectCopyNew from 'frontend/components/reports/subject-copy-new';
+import SubjectCopy from 'frontend/components/reports/subject-copy';
 import SubjectDownload from 'frontend/components/reports/subject-download';
 import SubjectYearFilter from 'frontend/components/reports/subject-year-filter';
 import SubjectDescription from 'frontend/components/reports/subject-description';
@@ -99,7 +99,7 @@ export default class ReportsSubjectHeader extends Component {
         {{/if}}
       </h2>
       {{#if this.isReportDetail}}
-        <SubjectCopyNew
+        <SubjectCopy
           @report={{@report}}
           @subject={{@subject}}
           @prepositionalObject={{@prepositionalObject}}

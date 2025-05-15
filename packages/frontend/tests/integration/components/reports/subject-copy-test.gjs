@@ -3,11 +3,11 @@ import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { setupMirage } from 'frontend/tests/test-support/mirage';
 import { setupAuthentication } from 'ilios-common';
-import { component } from 'frontend/tests/pages/components/reports/subject-copy-new';
+import { component } from 'frontend/tests/pages/components/reports/subject-copy';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
-import SubjectCopyNew from 'frontend/components/reports/subject-copy-new';
+import SubjectCopy from 'frontend/components/reports/subject-copy';
 
-module('Integration | Component | reports/subject-copy-new', function (hooks) {
+module('Integration | Component | reports/subject-copy', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
@@ -31,7 +31,7 @@ module('Integration | Component | reports/subject-copy-new', function (hooks) {
     this.set('report', reportModel);
     await render(
       <template>
-        <SubjectCopyNew
+        <SubjectCopy
           @report={{this.report}}
           @subject={{this.report.subject}}
           @prepositionalObject={{this.report.prepositionalObject}}
@@ -62,7 +62,7 @@ module('Integration | Component | reports/subject-copy-new', function (hooks) {
     this.set('report', reportModel);
     await render(
       <template>
-        <SubjectCopyNew
+        <SubjectCopy
           @report={{this.report}}
           @subject={{this.report.subject}}
           @prepositionalObject={{this.report.prepositionalObject}}

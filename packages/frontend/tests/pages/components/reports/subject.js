@@ -9,7 +9,7 @@ import {
   value,
 } from 'ember-cli-page-object';
 import academicYears from './subject-year-filter';
-import copyNew from './subject-copy-new';
+import copy from './subject-copy';
 
 const definition = {
   scope: '[data-test-reports-subject]',
@@ -27,7 +27,7 @@ const definition = {
   },
   academicYears,
   description: text('[data-test-report-description]'),
-  copyNew,
+  copy,
   download: clickable('[data-test-download]'),
   results: collection('[data-test-results] li', {
     link: attribute('href', 'a'),

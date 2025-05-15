@@ -6,7 +6,7 @@ import { LinkTo } from '@ember/routing';
 import FaIcon from 'ilios-common/components/fa-icon';
 import t from 'ember-intl/helpers/t';
 
-export default class ReportsSubjectCopyNew extends Component {
+export default class ReportsSubjectCopy extends Component {
   @service reporting;
   @service intl;
 
@@ -47,7 +47,7 @@ export default class ReportsSubjectCopyNew extends Component {
   }
   <template>
     {{#if this.reportTitleData.isResolved}}
-      <div class="copy-new" data-test-subject-report-copy-new>
+      <div class="copy-report" data-test-subject-report-copy>
         <LinkTo @route="reports.subjects" @query={{this.linkQuery}} class="button" data-test-button>
           <FaIcon @icon="copy" />
           {{t "general.copyReport"}}

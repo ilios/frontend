@@ -151,7 +151,7 @@ module('Acceptance | Reports - Subject Report', function (hooks) {
   test('copy report button works with auto-generated title', async function (assert) {
     this.server.post('api/graphql', async () => this.getReportData(['1', '2']));
     await page.visit({ reportId: this.courseNoTitleReport.id });
-    await page.report.copyNew.button.click();
+    await page.report.copy.button.click();
     assert.strictEqual(
       currentURL(),
       '/reports/subjects?selectedPrepositionalObject=course&selectedPrepositionalObjectId=1&selectedSchoolId=1&selectedSubject=session&showNewReportForm=true',
@@ -161,7 +161,7 @@ module('Acceptance | Reports - Subject Report', function (hooks) {
   test('copy report button works with custom title', async function (assert) {
     this.server.post('api/graphql', async () => this.getReportData(['1', '2']));
     await page.visit({ reportId: this.courseReport.id });
-    await page.report.copyNew.button.click();
+    await page.report.copy.button.click();
     assert.strictEqual(
       currentURL(),
       '/reports/subjects?selectedPrepositionalObject=course&selectedPrepositionalObjectId=1&selectedSchoolId=1&selectedSubject=session&showNewReportForm=true&title=my%20report%200%20(Copy)',
