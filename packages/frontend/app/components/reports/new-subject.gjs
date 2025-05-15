@@ -316,7 +316,7 @@ export default class ReportsNewSubjectComponent extends Component {
 
     const report = this.store.createRecord('report', {
       title: this.title,
-      user: this.userModel,
+      user: this.userModel ?? (await this.currentUser.getModel()),
       subject: this.subject,
       prepositionalObject: this.prepositionalObject,
       prepositionalObjectTableRowId: this.prepositionalObjectId,
