@@ -32,7 +32,7 @@ export default class ReportsSubjectCopyNew extends Component {
 
   get linkQuery() {
     const query = {
-      selectedSchoolId: this.args.school.id,
+      selectedSchoolId: this.args.school?.id,
       selectedSubject: this.args.subject,
       selectedPrepositionalObject: this.args.prepositionalObject,
       selectedPrepositionalObjectId: this.args.prepositionalObjectTableRowId,
