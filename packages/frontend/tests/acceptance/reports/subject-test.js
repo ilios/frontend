@@ -54,8 +54,16 @@ module('Acceptance | Reports - Subject Report', function (hooks) {
       user,
       school,
     });
+    const courseNoTitleReport = this.server.create('report', {
+      subject: 'session',
+      prepositionalObject: 'course',
+      prepositionalObjectTableRowId: firstCourse.id,
+      user,
+      school,
+    });
     const store = this.owner.lookup('service:store');
     this.courseReport = await store.findRecord('report', courseReport.id);
+    this.courseNoTitleReport = await store.findRecord('report', courseNoTitleReport.id);
     this.termReport = await this.owner.lookup('service:store').findRecord('report', termReport.id);
 
     this.getReportData = async (sessionIds) => {
@@ -140,13 +148,23 @@ module('Acceptance | Reports - Subject Report', function (hooks) {
     assert.strictEqual(currentURL(), '/reports/subjects/2?reportYear=2016');
   });
 
-  test('copy new button works', async function (assert) {
+  test('copy report button works with auto-generated title', async function (assert) {
     this.server.post('api/graphql', async () => this.getReportData(['1', '2']));
-    await page.visit({ reportId: this.termReport.id });
+    await page.visit({ reportId: this.courseNoTitleReport.id });
     await page.report.copyNew.button.click();
     assert.strictEqual(
       currentURL(),
-      '/reports/subjects?selectedPrepositionalObject=term&selectedPrepositionalObjectId=1&selectedSchoolId=1&selectedSubject=session&showNewReportForm=true&title=All%20Sessions%20for%20term%200%20in%20school%200',
+      '/reports/subjects?selectedPrepositionalObject=course&selectedPrepositionalObjectId=1&selectedSchoolId=1&selectedSubject=session&showNewReportForm=true',
+    );
+  });
+
+  test('copy report button works with custom title', async function (assert) {
+    this.server.post('api/graphql', async () => this.getReportData(['1', '2']));
+    await page.visit({ reportId: this.courseReport.id });
+    await page.report.copyNew.button.click();
+    assert.strictEqual(
+      currentURL(),
+      '/reports/subjects?selectedPrepositionalObject=course&selectedPrepositionalObjectId=1&selectedSchoolId=1&selectedSubject=session&showNewReportForm=true&title=my%20report%200%20(Copy)',
     );
   });
 });

@@ -318,26 +318,40 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
     assert.strictEqual(page.subjects.list.table.reports[2].title, 'my report 0');
   });
 
-  test('course external Id in report', async function (assert) {
+  test('course external id in report', async function (assert) {
     assert.expect(13);
     await page.visit();
-    assert.strictEqual(page.subjects.list.table.reports.length, 2);
+    assert.strictEqual(page.subjects.list.table.reports.length, 2, 'report count is correct');
     assert.strictEqual(
       page.subjects.list.table.reports[0].title,
       'All Sessions for term 0 in school 0',
+      'first report title is correct',
     );
-    assert.strictEqual(page.subjects.list.table.reports[1].title, 'my report 0');
+    assert.strictEqual(
+      page.subjects.list.table.reports[1].title,
+      'my report 0',
+      'second report title is correct',
+    );
     await page.subjects.list.toggleNewSubjectReportForm();
     await page.subjects.list.newSubject.schools.choose('All Schools');
     await page.subjects.list.newSubject.subjects.choose('course');
     await page.subjects.list.newSubject.save();
-    assert.strictEqual(page.subjects.list.table.reports.length, 3);
-    assert.strictEqual(page.subjects.list.table.reports[0].title, 'All Courses in All Schools');
+    assert.strictEqual(page.subjects.list.table.reports.length, 3, 'report count is correct');
+    assert.strictEqual(
+      page.subjects.list.table.reports[0].title,
+      'All Courses in All Schools',
+      'first report title is correct',
+    );
     assert.strictEqual(
       page.subjects.list.table.reports[1].title,
       'All Sessions for term 0 in school 0',
+      'second report title is correct',
     );
-    assert.strictEqual(page.subjects.list.table.reports[2].title, 'my report 0');
+    assert.strictEqual(
+      page.subjects.list.table.reports[2].title,
+      'my report 0',
+      'third report title is correct',
+    );
     this.server.post('api/graphql', ({ db }, { requestBody }) => {
       const { query } = JSON.parse(requestBody);
 
@@ -576,6 +590,7 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
       assert.strictEqual(
         query,
         'query { courses(academicYears: [2015]) { id, title, year, externalId } }',
+        'graphql query is correct',
       );
       const coursesIn2015 = db.courses.filter(({ year }) => year === 2015);
       return {
@@ -587,8 +602,11 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
       };
     });
     await page.subjects.list.table.reports[0].select();
-    assert.strictEqual(currentURL(), '/reports/subjects/3');
-    assert.notOk(subjectReportPage.report.academicYears.isVisible);
+    assert.strictEqual(currentURL(), '/reports/subjects/3', 'report detail URL is correct');
+    assert.notOk(
+      subjectReportPage.report.academicYears.isVisible,
+      'academic years dropdown is visible',
+    );
     assert.strictEqual(subjectReportPage.report.results.length, 1);
     assert.strictEqual(subjectReportPage.report.results[0].text, 'course 0 (Theoretical Phys Ed)');
   });

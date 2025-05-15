@@ -20,7 +20,7 @@ module('Integration | Component | reports/subject-copy-new', function (hooks) {
     });
   });
 
-  test('it renders', async function (assert) {
+  test('it renders with auto-generated title', async function (assert) {
     const report = this.server.create('report', {
       subject: 'course',
       prepositionalObject: 'instructor',
@@ -41,10 +41,41 @@ module('Integration | Component | reports/subject-copy-new', function (hooks) {
       </template>,
     );
 
-    assert.strictEqual(component.button.label, this.intl.t('general.edit'));
+    assert.strictEqual(component.button.label, this.intl.t('general.copyReport'));
     assert.strictEqual(
       component.button.link,
-      '/reports/subjects?selectedPrepositionalObject=instructor&selectedPrepositionalObjectId=100&selectedSubject=course&showNewReportForm=true&title=All%20Courses%20for%200%20guy%20M.%20Mc0son%20in%20',
+      '/reports/subjects?selectedPrepositionalObject=instructor&selectedPrepositionalObjectId=100&selectedSubject=course&showNewReportForm=true',
+    );
+    await a11yAudit(this.element);
+    assert.ok(true, 'no a11y errors found!');
+  });
+
+  test('it renders with custom title', async function (assert) {
+    const report = this.server.create('report', {
+      subject: 'course',
+      prepositionalObject: 'instructor',
+      prepositionalObjectTableRowId: this.user.id,
+      title: 'All Courses for 0 guy M. Mc0son in ',
+      user: this.user,
+    });
+    const reportModel = await this.owner.lookup('service:store').findRecord('report', report.id);
+    this.set('report', reportModel);
+    await render(
+      <template>
+        <SubjectCopyNew
+          @report={{this.report}}
+          @subject={{this.report.subject}}
+          @prepositionalObject={{this.report.prepositionalObject}}
+          @prepositionalObjectTableRowId={{this.report.prepositionalObjectTableRowId}}
+          @school={{this.report.school}}
+        />
+      </template>,
+    );
+
+    assert.strictEqual(component.button.label, this.intl.t('general.copyReport'));
+    assert.strictEqual(
+      component.button.link,
+      '/reports/subjects?selectedPrepositionalObject=instructor&selectedPrepositionalObjectId=100&selectedSubject=course&showNewReportForm=true&title=All%20Courses%20for%200%20guy%20M.%20Mc0son%20in%20%20(Copy)',
     );
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
