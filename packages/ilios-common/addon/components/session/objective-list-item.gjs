@@ -3,14 +3,12 @@ import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { dropTask, restartableTask, timeout } from 'ember-concurrency';
 import { service } from '@ember/service';
-import { validatable, Length, HtmlNotBlank } from 'ilios-common/decorators/validation';
 import { TrackedAsyncData } from 'ember-async-data';
 import and from 'ember-truth-helpers/helpers/and';
 import not from 'ember-truth-helpers/helpers/not';
 import EditableField from 'ilios-common/components/editable-field';
 import perform from 'ember-concurrency/helpers/perform';
 import HtmlEditor from 'ilios-common/components/html-editor';
-import ValidationError from 'ilios-common/components/validation-error';
 import FadeText from 'ilios-common/components/fade-text';
 import ObjectiveListItemParents from 'ilios-common/components/session/objective-list-item-parents';
 import ObjectiveListItemTerms from 'ilios-common/components/objective-list-item-terms';
@@ -22,12 +20,16 @@ import FaIcon from 'ilios-common/components/fa-icon';
 import ManageObjectiveParents from 'ilios-common/components/session/manage-objective-parents';
 import ManageObjectiveDescriptors from 'ilios-common/components/session/manage-objective-descriptors';
 import TaxonomyManager from 'ilios-common/components/taxonomy-manager';
+import YupValidations from 'ilios-common/classes/yup-validations';
+import YupValidationMessage from 'ilios-common/components/yup-validation-message';
+import { string } from 'yup';
+import striptags from 'striptags';
 
-@validatable
 export default class SessionObjectiveListItemComponent extends Component {
   @service store;
+  @service intl;
 
-  @Length(3, 65000) @HtmlNotBlank() @tracked title;
+  @tracked description;
   @tracked isManagingParents;
   @tracked parentsBuffer = [];
   @tracked isManagingDescriptors;
@@ -39,16 +41,15 @@ export default class SessionObjectiveListItemComponent extends Component {
 
   constructor() {
     super(...arguments);
-    this.title = this.args.sessionObjective.title;
+    this.description = this.args.sessionObjective.title;
   }
 
-  @cached
-  get hasErrorForTitleData() {
-    return new TrackedAsyncData(this.hasErrorFor('title'));
-  }
+  validations = new YupValidations(this, {
+    descriptionWithoutMarkup: string().trim().min(3).max(65000),
+  });
 
-  get hasErrorForTitle() {
-    return this.hasErrorForTitleData.isResolved ? this.hasErrorForTitleData.value : false;
+  get descriptionWithoutMarkup() {
+    return striptags(this.description ?? '').replace(/&nbsp;/gi, '');
   }
 
   @cached
@@ -73,14 +74,14 @@ export default class SessionObjectiveListItemComponent extends Component {
     return this.isManagingParents || this.isManagingDescriptors || this.isManagingTerms;
   }
 
-  saveTitleChanges = dropTask(async () => {
-    this.addErrorDisplayFor('title');
-    const isValid = await this.isValid('title');
+  saveDescriptionChanges = dropTask(async () => {
+    this.validations.addErrorDisplayFor('descriptionWithoutMarkup');
+    const isValid = await this.validations.isValid();
     if (!isValid) {
       return false;
     }
-    this.removeErrorDisplayFor('title');
-    this.args.sessionObjective.set('title', this.title);
+    this.validations.removeErrorDisplayFor('descriptionWithoutMarkup');
+    this.args.sessionObjective.set('title', this.description);
     await this.args.sessionObjective.save();
   });
 
@@ -136,14 +137,14 @@ export default class SessionObjectiveListItemComponent extends Component {
     this.fadeTextExpanded = isExpanded;
   }
   @action
-  revertTitleChanges() {
-    this.title = this.args.sessionObjective.title;
-    this.removeErrorDisplayFor('title');
+  revertDescriptionChanges() {
+    this.description = this.args.sessionObjective.title;
+    this.validations.addErrorDisplayFor('descriptionWithoutMarkup');
   }
   @action
-  changeTitle(contents) {
-    this.title = contents;
-    this.addErrorDisplayFor('title');
+  changeDescription(contents) {
+    this.description = contents;
+    this.validations.addErrorDisplayFor('descriptionWithoutMarkup');
   }
   @action
   addParentToBuffer(objective) {
@@ -195,21 +196,24 @@ export default class SessionObjectiveListItemComponent extends Component {
       <div class="description grid-item" data-test-description>
         {{#if (and @editable (not this.isManaging) (not this.showRemoveConfirmation))}}
           <EditableField
-            @value={{@sessionObjective.title}}
+            @value={{this.description}}
             @renderHtml={{true}}
-            @isSaveDisabled={{this.hasErrorForTitle}}
-            @save={{perform this.saveTitleChanges}}
-            @close={{this.revertTitleChanges}}
+            @save={{perform this.saveDescriptionChanges}}
+            @close={{this.revertDescriptionChanges}}
             @fadeTextExpanded={{this.fadeTextExpanded}}
             @onExpandAllFadeText={{this.expandAllFadeText}}
             @showTitle={{true}}
           >
             <HtmlEditor
-              @content={{@sessionObjective.title}}
-              @update={{this.changeTitle}}
+              @content={{this.description}}
+              @update={{this.changeDescription}}
               @autofocus={{true}}
             />
-            <ValidationError @validatable={{this}} @property="title" />
+            <YupValidationMessage
+              @description={{t "general.description"}}
+              @validationErrors={{this.validations.errors.descriptionWithoutMarkup}}
+              data-test-description-validation-error-message
+            />
           </EditableField>
         {{else}}
           <FadeText

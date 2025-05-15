@@ -1,19 +1,12 @@
-import { clickable, create, isVisible, property, text } from 'ember-cli-page-object';
-import { pageObjectFillInFroalaEditor } from 'ilios-common';
+import { clickable, create, text } from 'ember-cli-page-object';
+import newObjective from 'ilios-common/page-objects/components/new-objective';
 import objectiveList from './objective-list';
 
 const definition = {
   scope: '[data-test-program-year-objectives]',
   title: text('[data-test-title]'),
   createNew: clickable('[data-test-actions] [data-test-expand-collapse-button] button'),
-  newObjective: {
-    description: pageObjectFillInFroalaEditor('[data-test-html-editor]'),
-    save: clickable('.done'),
-    cancel: clickable('.cancel'),
-    canSave: property('disabled', '.done'),
-    validationError: text('.validation-error-message'),
-    hasValidationError: isVisible('.validation-error-message'),
-  },
+  newObjective,
   objectiveList,
 };
 

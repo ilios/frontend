@@ -206,18 +206,16 @@ module('Acceptance | Course - Objective List', function (hooks) {
       courseObjectiveDetails: true,
     });
     assert.strictEqual(page.details.objectives.objectiveList.objectives.length, 1);
-    assert.notOk(
-      page.details.objectives.objectiveList.objectives[0].description.hasValidationError,
-    );
+    assert.notOk(page.details.objectives.objectiveList.objectives[0].description.hasError);
     await page.details.objectives.objectiveList.objectives[0].description.openEditor();
     await page.details.objectives.objectiveList.objectives[0].description.edit(
-      '<p>&nbsp</p><div></div><span>  </span>',
+      '<p>&nbsp;</p><div></div><span>  </span>',
     );
     await page.details.objectives.objectiveList.objectives[0].description.save();
-    assert.ok(page.details.objectives.objectiveList.objectives[0].description.hasValidationError);
+    assert.ok(page.details.objectives.objectiveList.objectives[0].description.hasError);
     assert.strictEqual(
-      page.details.objectives.objectiveList.objectives[0].description.validationError,
-      'This field can not be blank',
+      page.details.objectives.objectiveList.objectives[0].description.error,
+      'Description is too short (minimum is 3 characters)',
     );
   });
 });

@@ -1,4 +1,4 @@
-import { clickable, create, hasClass, isVisible, property, text } from 'ember-cli-page-object';
+import { clickable, create, hasClass, isPresent, isVisible, text } from 'ember-cli-page-object';
 import { pageObjectFillInFroalaEditor, pageObjectFroalaEditorValue } from 'ilios-common';
 import fadeText from '../fade-text';
 import meshManager from './manage-objective-descriptors';
@@ -18,9 +18,8 @@ const definition = {
     editorContents: pageObjectFroalaEditorValue('[data-test-html-editor]'),
     edit: pageObjectFillInFroalaEditor('[data-test-html-editor]'),
     save: clickable('.done'),
-    savingIsDisabled: property('disabled', '.done'),
-    validationError: text('.validation-error-message'),
-    hasValidationError: isVisible('.validation-error-message'),
+    hasError: isPresent('[data-test-description-validation-error-message]'),
+    error: text('[data-test-description-validation-error-message]'),
   },
   parents,
   meshDescriptors,
