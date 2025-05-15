@@ -259,11 +259,12 @@ module('Integration | Component | new user', function (hooks) {
     await component.username.submit();
     assert.ok(component.username.hasError);
     assert.strictEqual(
-      component.username.errors,
+      component.username.error,
       'This username is already taken by another user account.',
     );
     await component.username.set('geflarknik2');
     await component.username.submit();
+
     assert.notOk(component.username.hasError);
   });
 
