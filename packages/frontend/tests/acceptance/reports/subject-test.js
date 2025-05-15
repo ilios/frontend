@@ -146,7 +146,7 @@ module('Acceptance | Reports - Subject Report', function (hooks) {
     await page.report.copyNew.button.click();
     assert.strictEqual(
       currentURL(),
-      '/reports/subjects?editReport=true&selectedPrepositionalObject=term&selectedPrepositionalObjectId=1&selectedSchoolId=1&selectedSubject=session&showNewReportForm=true&title=All%20Sessions%20for%20term%200%20in%20school%200',
+      '/reports/subjects?selectedPrepositionalObject=term&selectedPrepositionalObjectId=1&selectedSchoolId=1&selectedSubject=session&showNewReportForm=true&title=All%20Sessions%20for%20term%200%20in%20school%200',
     );
   });
 });

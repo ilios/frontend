@@ -80,6 +80,7 @@ general:
   copy: Copiar
   copyCurriculumReportUrl: Copiar Enlace a este Inventario de plan de Estudios
   copyNewToken: Copiar nuevo token
+  copyReport: Copiar Reporte
   copyWithLearners: Copiar Con Alumnos
   copyWithoutLearners: Copiar Sin Alumnos
   couldNotFindUserCampusId: "No se pudo encontrar un usuario con el campusId {campusId}"
@@ -123,7 +124,6 @@ general:
   draft: Borrador
   durationInDays: Duración (en Días)
   durationInYears: Duración (en Años)
-  editReport: Editar Reporte
   educationalYear: Año Escolar
   email: Correo
   emails: Correos

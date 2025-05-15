@@ -80,6 +80,7 @@ general:
   copy: Copy
   copyCurriculumReportUrl: Copy link to this Curriculum Report
   copyNewToken: Copy new token
+  copyReport: Copy Report
   copyWithLearners: Copy with Learners
   copyWithoutLearners: Copy without Learners
   couldNotFindUserCampusId: "Could not find a user with the campusId {campusId}"
@@ -123,7 +124,6 @@ general:
   draft: Draft
   durationInDays: Duration (in Days)
   durationInYears: Duration (in Years)
-  editReport: Edit Report
   educationalYear: Educational Year
   email: Email
   emails: Emails
