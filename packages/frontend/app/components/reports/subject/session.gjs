@@ -125,14 +125,14 @@ export default class ReportsSubjectSessionComponent extends Component {
 
   @cached
   get schoolConfigsData() {
-    return new TrackedAsyncData(this.args.school.configurations);
+    return new TrackedAsyncData(this.args.school?.configurations);
   }
 
   @cached
   get schoolConfigs() {
     const rhett = new Map();
     if (this.schoolConfigsData.isResolved) {
-      this.schoolConfigsData.value.forEach((config) => {
+      this.schoolConfigsData.value?.forEach((config) => {
         rhett.set(config.name, JSON.parse(config.value));
       });
     }
