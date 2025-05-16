@@ -43,6 +43,7 @@
 
     a {
       @include cm.ilios-button;
+      font-weight: 400;
 
       &:hover {
         text-decoration: none;
