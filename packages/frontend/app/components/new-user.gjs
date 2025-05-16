@@ -20,6 +20,7 @@ import LoadingSpinner from 'ilios-common/components/loading-spinner';
 import YupValidations from 'ilios-common/classes/yup-validations';
 import YupValidationMessage from 'ilios-common/components/yup-validation-message';
 import { string } from 'yup';
+import isEmail from 'validator/lib/isEmail';
 
 export default class NewUserComponent extends Component {
   @service intl;
@@ -48,7 +49,31 @@ export default class NewUserComponent extends Component {
     lastName: string().ensure().trim().required().max(50),
     campusId: string().ensure().trim().max(16),
     otherId: string().ensure().trim().max(16),
-    email: string().ensure().trim().required().max(100).email(),
+    email: string()
+      .ensure()
+      .trim()
+      .required()
+      .max(100)
+      .test(
+        'email',
+        (d) => {
+          return {
+            path: d.path,
+            messageKey: 'errors.email',
+          };
+        },
+        (value) => {
+          // short-circuit on empty input - this is being caught by `required()` already.
+          // that way, we don't end up with two separate validation errors on empty input.
+          if ('' === value) {
+            return true;
+          }
+          // Yup's email validation is misaligned with our backend counterpart.
+          // See https://github.com/jquense/yup?tab=readme-ov-file#stringemailmessage-string--function-schema
+          // So we'll continue using the email validation provided by validator.js.
+          return isEmail(value);
+        },
+      ),
     username: string()
       .ensure()
       .trim()
