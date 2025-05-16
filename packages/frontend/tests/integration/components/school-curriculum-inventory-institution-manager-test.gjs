@@ -251,7 +251,7 @@ module(
       assert.ok(component.content.name.hasError);
       assert.strictEqual(
         component.content.name.error,
-        'School Name is too short (minimum is 1 characters)',
+        'School Name is too short (minimum is 1 character)',
       );
       assert.ok(component.content.aamcCode.hasError);
       assert.strictEqual(
@@ -261,27 +261,27 @@ module(
       assert.ok(component.content.addressStreet.hasError);
       assert.strictEqual(
         component.content.addressStreet.error,
-        'Street is too short (minimum is 1 characters)',
+        'Street is too short (minimum is 1 character)',
       );
       assert.ok(component.content.addressCity.hasError);
       assert.strictEqual(
         component.content.addressCity.error,
-        'City is too short (minimum is 1 characters)',
+        'City is too short (minimum is 1 character)',
       );
       assert.ok(component.content.addressStateOrProvince.hasError);
       assert.strictEqual(
         component.content.addressStateOrProvince.error,
-        'State or Province is too short (minimum is 1 characters)',
+        'State or Province is too short (minimum is 1 character)',
       );
       assert.ok(component.content.addressZipCode.hasError);
       assert.strictEqual(
         component.content.addressZipCode.error,
-        'ZIP Code is too short (minimum is 1 characters)',
+        'ZIP Code is too short (minimum is 1 character)',
       );
       assert.ok(component.content.addressCountryCode.hasError);
       assert.strictEqual(
         component.content.addressCountryCode.error,
-        'Country Code is too short (minimum is 1 characters)',
+        'Country Code is too short (minimum is 1 character)',
       );
 
       await component.content.name.change('a'.repeat(101));
