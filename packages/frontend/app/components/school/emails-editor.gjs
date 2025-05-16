@@ -3,7 +3,6 @@ import { tracked } from '@glimmer/tracking';
 import { dropTask } from 'ember-concurrency';
 import { service } from '@ember/service';
 import { isBlank } from '@ember/utils';
-import EmailValidator from 'validator/es/lib/isEmail';
 import { uniqueId } from '@ember/helper';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
@@ -14,6 +13,7 @@ import set from 'ember-set-helper/helpers/set';
 import YupValidationMessage from 'ilios-common/components/yup-validation-message';
 import YupValidations from 'ilios-common/classes/yup-validations';
 import { string } from 'yup';
+import isEmail from 'validator/lib/isEmail';
 
 export default class SchoolEmailsEditorComponent extends Component {
   @service intl;
@@ -22,7 +22,31 @@ export default class SchoolEmailsEditorComponent extends Component {
   @tracked changeAlertRecipients = this.args.school.changeAlertRecipients || '';
 
   validations = new YupValidations(this, {
-    administratorEmail: string().ensure().trim().required().max(100).email(),
+    administratorEmail: string()
+      .ensure()
+      .trim()
+      .required()
+      .max(100)
+      .test(
+        'email',
+        (d) => {
+          return {
+            path: d.path,
+            messageKey: 'errors.email',
+          };
+        },
+        (value) => {
+          // short-circuit on empty input - this is being caught by `required()` already.
+          // that way, we don't end up with two separate validation errors on empty input.
+          if ('' === value) {
+            return true;
+          }
+          // Yup's email validation is misaligned with our backend counterpart.
+          // See https://github.com/jquense/yup?tab=readme-ov-file#stringemailmessage-string--function-schema
+          // So we'll continue using the email validation provided by validator.js.
+          return isEmail(value);
+        },
+      ),
     changeAlertRecipients: string()
       .ensure()
       .trim()
@@ -40,7 +64,7 @@ export default class SchoolEmailsEditorComponent extends Component {
             .split(',')
             .map((email) => email.trim())
             .filter((email) => !isBlank(email));
-          return emails.reduce((valid, email) => EmailValidator(email) && valid, true);
+          return emails.reduce((valid, email) => isEmail(email) && valid, true);
         },
       ),
   });
