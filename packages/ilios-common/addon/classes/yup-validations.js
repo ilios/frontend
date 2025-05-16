@@ -13,17 +13,15 @@ export default class YupValidations {
   context;
   schema;
   shape;
-  options;
 
   @tracked error;
   @tracked showAllErrors = false;
   @tracked visibleErrors = [];
 
-  constructor(context, shape, options) {
+  constructor(context, shape) {
     this.context = context;
     this.shape = shape;
     this.schema = object().shape(shape);
-    this.options = options;
   }
 
   get errorsByKey() {
@@ -76,7 +74,7 @@ export default class YupValidations {
   async #validate() {
     try {
       await this.schema.validate(this.#validationProperties(), {
-        abortEarly: this.options?.abortEarly ?? false,
+        abortEarly: false,
         context: this.context,
       });
       this.error = null;
