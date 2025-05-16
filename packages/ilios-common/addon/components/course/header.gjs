@@ -59,7 +59,7 @@ export default class CourseHeaderComponent extends Component {
     if (!isValid) {
       return false;
     }
-    this.validations.clearErrorForDisplay();
+    this.validations.clearErrorDisplay('courseTitle');
     this.args.course.set('title', this.courseTitle);
     await this.args.course.save();
   });
@@ -67,6 +67,7 @@ export default class CourseHeaderComponent extends Component {
   @action
   revertTitleChanges() {
     this.courseTitle = this.args.course.title;
+    this.validations.clearErrorDisplay('courseTitle');
   }
   <template>
     <div class="course-header" data-test-course-header>
