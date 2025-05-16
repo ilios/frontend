@@ -7,8 +7,9 @@ const definition = {
   editTitle: clickable('[data-test-title] [data-test-edit]'),
   changeTitle: fillable('[data-test-title] input'),
   saveTitle: clickable('[data-test-title] .done'),
-  hasError: isPresent('[data-test-title] .validation-error-message'),
-  errorMessage: text('[data-test-title] .validation-error-message'),
+  cancelTitleChanges: clickable('[data-test-title] .cancel'),
+  hasError: isPresent('[data-test-title-validation-error-message]'),
+  error: text('[data-test-title-validation-error-message]'),
   breadcrumbs: {
     scope: '[data-test-breadcrumbs]',
     all: text('[data-test-all]'),

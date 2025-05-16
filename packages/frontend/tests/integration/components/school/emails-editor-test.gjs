@@ -106,7 +106,7 @@ module('Integration | Component | school/emails-editor', function (hooks) {
     assert.notOk(component.changeAlertRecipients.hasError);
     await component.administratorEmail.set('');
     await component.save();
-    assert.ok(component.administratorEmail.hasError);
+    assert.strictEqual(component.administratorEmail.error, 'Administrator Email can not be blank');
     assert.notOk(component.changeAlertRecipients.hasError);
   });
 
@@ -124,8 +124,14 @@ module('Integration | Component | school/emails-editor', function (hooks) {
     await component.administratorEmail.set('not an email');
     await component.changeAlertRecipients.set('email1@school.edu,not an email,email2@school.edu');
     await component.save();
-    assert.ok(component.administratorEmail.hasError);
-    assert.ok(component.changeAlertRecipients.hasError);
+    assert.strictEqual(
+      component.administratorEmail.error,
+      'Administrator Email must be a valid email address',
+    );
+    assert.strictEqual(
+      component.changeAlertRecipients.error,
+      'This list of change-alerts recipients contains invalid email addresses.',
+    );
   });
 
   test('cancel', async function (assert) {

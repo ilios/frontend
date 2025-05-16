@@ -147,7 +147,7 @@ module('Integration | Component | school vocabulary term manager', function (hoo
     assert.notOk(this.server.db.terms[0].active);
   });
 
-  test('change title', async function (assert) {
+  test('change term title', async function (assert) {
     assert.expect(2);
 
     const vocabulary = this.server.create('vocabulary');
@@ -182,7 +182,42 @@ module('Integration | Component | school vocabulary term manager', function (hoo
     assert.strictEqual(this.server.db.terms[0].title, 'new title');
   });
 
-  test("can't set empty term title", async function (assert) {
+  test('change term title', async function (assert) {
+    assert.expect(2);
+
+    const vocabulary = this.server.create('vocabulary');
+    const term = this.server.create('term', {
+      vocabulary,
+      active: true,
+    });
+    const vocabularyModel = await this.owner
+      .lookup('service:store')
+      .findRecord('vocabulary', vocabulary.id);
+    const termModel = await this.owner.lookup('service:store').findRecord('term', term.id);
+
+    this.set('vocabulary', vocabularyModel);
+    this.set('term', termModel);
+    await render(
+      <template>
+        <SchoolVocabularyTermManager
+          @term={{this.term}}
+          @vocabulary={{this.vocabulary}}
+          @manageTerm={{(noop)}}
+          @manageVocabulary={{(noop)}}
+          @canUpdate={{true}}
+          @canDelete={{true}}
+          @canCreate={{true}}
+        />
+      </template>,
+    );
+    assert.strictEqual(component.title, `Title: ${term.title}`);
+    await component.editTitle();
+    await component.changeTitle('new title');
+    await component.cancelTitleChanges();
+    assert.strictEqual(component.title, `Title: ${term.title}`);
+  });
+
+  test('validation fails if term title is blank', async function (assert) {
     assert.expect(5);
 
     const vocabulary = this.server.create('vocabulary');
@@ -216,7 +251,45 @@ module('Integration | Component | school vocabulary term manager', function (hoo
     await component.changeTitle('');
     await component.saveTitle();
     assert.ok(component.hasError);
-    assert.strictEqual(component.errorMessage, 'This field can not be blank');
+    assert.strictEqual(component.error, 'Title can not be blank');
+    assert.strictEqual(this.server.db.terms[0].title, 'term 0');
+  });
+
+  test('validation fails if term title is too long', async function (assert) {
+    assert.expect(5);
+
+    const vocabulary = this.server.create('vocabulary');
+    const term = this.server.create('term', {
+      vocabulary,
+      active: true,
+    });
+    const vocabularyModel = await this.owner
+      .lookup('service:store')
+      .findRecord('vocabulary', vocabulary.id);
+    const termModel = await this.owner.lookup('service:store').findRecord('term', term.id);
+
+    this.set('vocabulary', vocabularyModel);
+    this.set('term', termModel);
+    await render(
+      <template>
+        <SchoolVocabularyTermManager
+          @term={{this.term}}
+          @vocabulary={{this.vocabulary}}
+          @manageTerm={{(noop)}}
+          @manageVocabulary={{(noop)}}
+          @canUpdate={{true}}
+          @canDelete={{true}}
+          @canCreate={{true}}
+        />
+      </template>,
+    );
+    assert.strictEqual(component.title, `Title: ${term.title}`);
+    assert.notOk(component.hasError);
+    await component.editTitle();
+    await component.changeTitle('a'.repeat(201));
+    await component.saveTitle();
+    assert.ok(component.hasError);
+    assert.strictEqual(component.error, 'Title is too long (maximum is 200 characters)');
     assert.strictEqual(this.server.db.terms[0].title, 'term 0');
   });
 
@@ -259,7 +332,7 @@ module('Integration | Component | school vocabulary term manager', function (hoo
     await component.changeTitle('duplicate one');
     await component.saveTitle();
     assert.ok(component.hasError);
-    assert.strictEqual(component.errorMessage, 'Term is a duplicate');
+    assert.strictEqual(component.error, 'Title is a duplicate');
     assert.strictEqual(this.server.db.terms[0].title, 'term 0');
   });
 

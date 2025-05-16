@@ -59,7 +59,7 @@ module(
       assert.strictEqual(component.content.addressStateOrProvince.value, 'XY');
       assert.strictEqual(component.content.addressZipCode.label, 'ZIP Code');
       assert.strictEqual(component.content.addressZipCode.value, '99999');
-      assert.strictEqual(component.content.addressCountryCode.label, 'Country');
+      assert.strictEqual(component.content.addressCountryCode.label, 'Country Code');
       assert.strictEqual(component.content.addressCountryCode.value, 'US');
     });
 
@@ -249,34 +249,96 @@ module(
       await component.header.save();
 
       assert.ok(component.content.name.hasError);
-      assert.strictEqual(component.content.name.errorMessage, 'This field can not be blank');
+      assert.strictEqual(
+        component.content.name.error,
+        'School Name is too short (minimum is 1 characters)',
+      );
       assert.ok(component.content.aamcCode.hasError);
       assert.strictEqual(
-        component.content.aamcCode.errorMessage,
-        'This field must be greater than or equal to 1',
+        component.content.aamcCode.error,
+        'AAMC School ID (e.g. "Institution ID") must be a number',
       );
       assert.ok(component.content.addressStreet.hasError);
       assert.strictEqual(
-        component.content.addressStreet.errorMessage,
-        'This field can not be blank',
+        component.content.addressStreet.error,
+        'Street is too short (minimum is 1 characters)',
       );
       assert.ok(component.content.addressCity.hasError);
-      assert.strictEqual(component.content.addressCity.errorMessage, 'This field can not be blank');
+      assert.strictEqual(
+        component.content.addressCity.error,
+        'City is too short (minimum is 1 characters)',
+      );
       assert.ok(component.content.addressStateOrProvince.hasError);
       assert.strictEqual(
-        component.content.addressStateOrProvince.errorMessage,
-        'This field can not be blank',
+        component.content.addressStateOrProvince.error,
+        'State or Province is too short (minimum is 1 characters)',
       );
       assert.ok(component.content.addressZipCode.hasError);
       assert.strictEqual(
-        component.content.addressZipCode.errorMessage,
-        'This field can not be blank',
+        component.content.addressZipCode.error,
+        'ZIP Code is too short (minimum is 1 characters)',
       );
       assert.ok(component.content.addressCountryCode.hasError);
       assert.strictEqual(
-        component.content.addressCountryCode.errorMessage,
-        'This field can not be blank',
+        component.content.addressCountryCode.error,
+        'Country Code is too short (minimum is 1 characters)',
       );
+
+      await component.content.name.change('a'.repeat(101));
+      assert.strictEqual(
+        component.content.name.error,
+        'School Name is too long (maximum is 100 characters)',
+      );
+      await component.content.name.change('aa');
+      assert.notOk(component.content.name.hasError);
+
+      await component.content.aamcCode.change('0');
+      assert.strictEqual(
+        component.content.aamcCode.error,
+        'AAMC School ID (e.g. "Institution ID") must be greater than or equal to 1',
+      );
+      await component.content.aamcCode.change('1.5');
+      assert.strictEqual(
+        component.content.aamcCode.error,
+        'AAMC School ID (e.g. "Institution ID") must be an integer',
+      );
+      await component.content.aamcCode.change('12345');
+      assert.notOk(component.content.aamcCode.hasError);
+
+      await component.content.addressStreet.change('a'.repeat(101));
+      assert.strictEqual(
+        component.content.addressStreet.error,
+        'Street is too long (maximum is 100 characters)',
+      );
+      await component.content.addressStreet.change('123 main');
+      assert.notOk(component.content.addressStreet.hasError);
+
+      await component.content.addressCity.change('a'.repeat(101));
+      assert.strictEqual(
+        component.content.addressCity.error,
+        'City is too long (maximum is 100 characters)',
+      );
+      await component.content.addressCity.change('Citytown');
+      assert.notOk(component.content.addressCity.hasError);
+
+      await component.content.addressStateOrProvince.change('a'.repeat(51));
+      assert.strictEqual(
+        component.content.addressStateOrProvince.error,
+        'State or Province is too long (maximum is 50 characters)',
+      );
+      await component.content.addressStateOrProvince.change('Freestate');
+      assert.notOk(component.content.addressStateOrProvince.hasError);
+
+      await component.content.addressZipCode.change('a'.repeat(11));
+      assert.strictEqual(
+        component.content.addressZipCode.error,
+        'ZIP Code is too long (maximum is 10 characters)',
+      );
+      await component.content.addressZipCode.change('12345');
+      assert.notOk(component.content.addressZipCode.hasError);
+
+      await component.content.addressCountryCode.change('XY');
+      assert.notOk(component.content.addressCountryCode.hasError);
     });
 
     test('no save button in read-only mode', async function (assert) {

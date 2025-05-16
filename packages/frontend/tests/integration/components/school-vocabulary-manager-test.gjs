@@ -77,7 +77,34 @@ module('Integration | Component | school vocabulary manager', function (hooks) {
     assert.strictEqual(this.server.db.vocabularies[0].title, 'new title');
   });
 
-  test('cant set empty vocabulary title', async function (assert) {
+  test('cancel vocabulary title changes', async function (assert) {
+    assert.expect(2);
+
+    const school = this.server.create('school');
+    const vocabulary = this.server.create('vocabulary', { school });
+    const vocabularyModel = await this.owner
+      .lookup('service:store')
+      .findRecord('vocabulary', vocabulary.id);
+
+    this.set('vocabulary', vocabularyModel);
+    await render(
+      <template>
+        <SchoolVocabularyManager
+          @vocabulary={{this.vocabulary}}
+          @manageTerm={{(noop)}}
+          @manageVocabulary={{(noop)}}
+          @canUpdate={{true}}
+        />
+      </template>,
+    );
+    assert.strictEqual(component.title, `Title: ${vocabulary.title} (0 total)`);
+    await component.editTitle();
+    await component.changeTitle('new title');
+    await component.cancelTitleChanges();
+    assert.strictEqual(component.title, `Title: ${vocabulary.title} (0 total)`);
+  });
+
+  test('validation fails if vocabulary title is blank', async function (assert) {
     assert.expect(5);
 
     const school = this.server.create('school');
@@ -103,7 +130,37 @@ module('Integration | Component | school vocabulary manager', function (hooks) {
     await component.changeTitle('');
     await component.saveTitle();
     assert.ok(component.hasError);
-    assert.strictEqual(component.errorMessage, 'This field can not be blank');
+    assert.strictEqual(component.error, 'Title can not be blank');
+    assert.strictEqual(this.server.db.vocabularies[0].title, 'Vocabulary 1');
+  });
+
+  test('validation fails if vocabulary title is too long', async function (assert) {
+    assert.expect(5);
+
+    const school = this.server.create('school');
+    const vocabulary = this.server.create('vocabulary', { school });
+    const vocabularyModel = await this.owner
+      .lookup('service:store')
+      .findRecord('vocabulary', vocabulary.id);
+
+    this.set('vocabulary', vocabularyModel);
+    await render(
+      <template>
+        <SchoolVocabularyManager
+          @vocabulary={{this.vocabulary}}
+          @manageTerm={{(noop)}}
+          @manageVocabulary={{(noop)}}
+          @canUpdate={{true}}
+        />
+      </template>,
+    );
+    assert.strictEqual(component.title, `Title: ${vocabulary.title} (0 total)`);
+    assert.notOk(component.hasError);
+    await component.editTitle();
+    await component.changeTitle('a'.repeat(201));
+    await component.saveTitle();
+    assert.ok(component.hasError);
+    assert.strictEqual(component.error, 'Title is too long (maximum is 200 characters)');
     assert.strictEqual(this.server.db.vocabularies[0].title, 'Vocabulary 1');
   });
 
@@ -137,7 +194,7 @@ module('Integration | Component | school vocabulary manager', function (hooks) {
     await component.changeTitle('duplicate one');
     await component.saveTitle();
     assert.ok(component.hasError);
-    assert.strictEqual(component.errorMessage, 'Vocabulary is a duplicate');
+    assert.strictEqual(component.error, 'Title is a duplicate');
     assert.strictEqual(this.server.db.vocabularies[0].title, 'Vocabulary 1');
   });
 

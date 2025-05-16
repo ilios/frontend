@@ -18,8 +18,8 @@ const definition = create({
     label: text('label'),
     set: fillable('input'),
     value: value('input'),
-    hasError: isPresent('.validation-error-message'),
-    errorMessage: text('.validation-error-message'),
+    hasError: isPresent('[data-test-administrator-email-validation-error-message]'),
+    error: text('[data-test-administrator-email-validation-error-message]'),
     save: triggerable('keyup', 'input', { eventProperties: { key: 'Enter' } }),
   },
   changeAlertRecipients: {
@@ -27,8 +27,8 @@ const definition = create({
     label: text('label'),
     set: fillable('input'),
     value: value('input'),
-    hasError: isPresent('.validation-error-message'),
-    errorMessage: text('.validation-error-message'),
+    hasError: isPresent('[data-test-change-alert-recipients-validation-error-message]'),
+    error: text('[data-test-change-alert-recipients-validation-error-message]'),
     save: triggerable('keyup', 'input', { eventProperties: { key: 'Enter' } }),
   },
 });
