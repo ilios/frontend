@@ -208,7 +208,7 @@ export default class SchoolCurriculumInventoryInstitutionManagerComponent extend
             </div>
             <div class="item" data-test-institution-address-country-code>
               <label for="country-{{templateId}}">
-                {{t "general.country"}}
+                {{t "general.countryCode"}}
               </label>
               <input
                 id="country-{{templateId}}"
@@ -220,7 +220,7 @@ export default class SchoolCurriculumInventoryInstitutionManagerComponent extend
                 {{this.validations.attach "addressCountryCode"}}
               />
               <YupValidationMessage
-                @description={{t "general.country"}}
+                @description={{t "general.countryCode"}}
                 @validationErrors={{this.validations.errors.addressCountryCode}}
                 data-test-address-country-code-validation-error-message
               />

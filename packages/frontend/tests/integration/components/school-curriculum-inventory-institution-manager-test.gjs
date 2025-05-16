@@ -59,7 +59,7 @@ module(
       assert.strictEqual(component.content.addressStateOrProvince.value, 'XY');
       assert.strictEqual(component.content.addressZipCode.label, 'ZIP Code');
       assert.strictEqual(component.content.addressZipCode.value, '99999');
-      assert.strictEqual(component.content.addressCountryCode.label, 'Country');
+      assert.strictEqual(component.content.addressCountryCode.label, 'Country Code');
       assert.strictEqual(component.content.addressCountryCode.value, 'US');
     });
 
@@ -281,7 +281,7 @@ module(
       assert.ok(component.content.addressCountryCode.hasError);
       assert.strictEqual(
         component.content.addressCountryCode.error,
-        'Country is too short (minimum is 1 characters)',
+        'Country Code is too short (minimum is 1 characters)',
       );
 
       await component.content.name.change('a'.repeat(101));

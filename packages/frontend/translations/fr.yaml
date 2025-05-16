@@ -86,6 +86,7 @@ general:
   countAsOneOffering: Comptent pour une offre
   countTotal: "{total} au total"
   country: Pays
+  countryCode: Code du pays
   courseDirector: Directeur de Cours
   courseTitleFilterPlaceholder: Filtre par titre de cours
   create: Créez un nouvel utilisateur
