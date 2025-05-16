@@ -56,7 +56,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-header', f
     assert.strictEqual(component.title.value, newTitle);
   });
 
-  test('change title fails on empty value', async function (assert) {
+  test('validation fails if title is blank', async function (assert) {
     this.set('sequenceBlock', this.blockModel);
     await render(
       <template>
@@ -67,10 +67,10 @@ module('Integration | Component | curriculum-inventory/sequence-block-header', f
     assert.notOk(component.title.hasError);
     await component.title.set('');
     await component.title.save();
-    assert.ok(component.title.hasError);
+    assert.strictEqual(component.title.error, 'Title is too short (minimum is 3 characters)');
   });
 
-  test('change title fails on too-short value', async function (assert) {
+  test('validation fails if title is too short', async function (assert) {
     this.set('sequenceBlock', this.blockModel);
     await render(
       <template>
@@ -81,10 +81,10 @@ module('Integration | Component | curriculum-inventory/sequence-block-header', f
     assert.notOk(component.title.hasError);
     await component.title.set('ab');
     await component.title.save();
-    assert.ok(component.title.hasError);
+    assert.strictEqual(component.title.error, 'Title is too short (minimum is 3 characters)');
   });
 
-  test('change title fails on overlong value', async function (assert) {
+  test('validation fails if title is too long', async function (assert) {
     this.set('sequenceBlock', this.blockModel);
     await render(
       <template>
@@ -95,7 +95,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-header', f
     assert.notOk(component.title.hasError);
     await component.title.set('0123456789'.repeat(21));
     await component.title.save();
-    assert.ok(component.title.hasError);
+    assert.strictEqual(component.title.error, 'Title is too long (maximum is 200 characters)');
   });
 
   test('cancel title changes', async function (assert) {
