@@ -3,25 +3,25 @@ import { cached, tracked } from '@glimmer/tracking';
 import { service } from '@ember/service';
 import { filter } from 'rsvp';
 import { dropTask } from 'ember-concurrency';
-import { validatable, IsEmail, Length, NotBlank } from 'ilios-common/decorators/validation';
 import { findBy, findById } from 'ilios-common/utils/array-helpers';
 import { TrackedAsyncData } from 'ember-async-data';
 import { DateTime } from 'luxon';
-import { uniqueId, fn } from '@ember/helper';
+import { uniqueId } from '@ember/helper';
 import t from 'ember-intl/helpers/t';
 import ClickChoiceButtons from 'ilios-common/components/click-choice-buttons';
 import set from 'ember-set-helper/helpers/set';
 import not from 'ember-truth-helpers/helpers/not';
 import { on } from '@ember/modifier';
 import pick from 'ilios-common/helpers/pick';
-import queue from 'ilios-common/helpers/queue';
 import perform from 'ember-concurrency/helpers/perform';
-import ValidationError from 'ilios-common/components/validation-error';
 import sortBy from 'ilios-common/helpers/sort-by';
 import eq from 'ember-truth-helpers/helpers/eq';
 import LoadingSpinner from 'ilios-common/components/loading-spinner';
+import YupValidations from 'ilios-common/classes/yup-validations';
+import YupValidationMessage from 'ilios-common/components/yup-validation-message';
+import { string } from 'yup';
+import isEmail from 'validator/lib/isEmail';
 
-@validatable
 export default class NewUserComponent extends Component {
   @service intl;
   @service store;
@@ -29,23 +29,74 @@ export default class NewUserComponent extends Component {
   @service flashMessages;
   @service permissionChecker;
 
-  @tracked @Length(1, 50) @NotBlank() firstName = null;
-  @tracked @Length(1, 20) middleName = null;
-  @tracked @Length(1, 50) @NotBlank() lastName = null;
-  @tracked @Length(1, 16) campusId = null;
-  @tracked @Length(1, 16) otherId = null;
-  @tracked @IsEmail() @Length(1, 100) @NotBlank() email = null;
-  @tracked
-  @Length(1, 100)
-  @NotBlank()
-  username = null;
-  @tracked @NotBlank() password = null;
-  @tracked @Length(1, 20) phone = null;
+  @tracked firstName = null;
+  @tracked middleName = null;
+  @tracked lastName = null;
+  @tracked campusId = null;
+  @tracked otherId = null;
+  @tracked email = null;
+  @tracked username = null;
+  @tracked password = null;
+  @tracked phone = null;
   @tracked schoolId = null;
   @tracked primaryCohortId = null;
   @tracked isSaving = false;
   @tracked nonStudentMode = true;
-  @tracked showUsernameTakenErrorMessage = false;
+
+  validations = new YupValidations(this, {
+    firstName: string().ensure().trim().required().max(50),
+    middleName: string().ensure().trim().max(20),
+    lastName: string().ensure().trim().required().max(50),
+    campusId: string().ensure().trim().max(16),
+    otherId: string().ensure().trim().max(16),
+    email: string()
+      .ensure()
+      .trim()
+      .required()
+      .max(100)
+      .test(
+        'email',
+        (d) => {
+          return {
+            path: d.path,
+            messageKey: 'errors.email',
+          };
+        },
+        (value) => {
+          // short-circuit on empty input - this is being caught by `required()` already.
+          // that way, we don't end up with two separate validation errors on empty input.
+          if ('' === value) {
+            return true;
+          }
+          // Yup's email validation is misaligned with our backend counterpart.
+          // See https://github.com/jquense/yup?tab=readme-ov-file#stringemailmessage-string--function-schema
+          // So we'll continue using the email validation provided by validator.js.
+          return isEmail(value);
+        },
+      ),
+    username: string()
+      .ensure()
+      .trim()
+      .required()
+      .max(100)
+      .test(
+        'username-uniqueness',
+        (d) => {
+          return {
+            path: d.path,
+            messageKey: 'errors.duplicateUsername',
+          };
+        },
+        async (value) => {
+          const auths = await this.store.query('authentication', {
+            filters: { username: value },
+          });
+          return !auths.length;
+        },
+      ),
+    password: string().ensure().trim().required(),
+    phone: string().ensure().trim().max(20),
+  });
 
   userModel = new TrackedAsyncData(this.currentUser.getModel());
   get allSchools() {
@@ -151,27 +202,12 @@ export default class NewUserComponent extends Component {
   }
 
   save = dropTask(async () => {
-    this.addErrorDisplaysFor([
-      'firstName',
-      'middleName',
-      'lastName',
-      'campusId',
-      'otherId',
-      'email',
-      'phone',
-      'username',
-      'password',
-    ]);
-    const isValid = await this.isValid();
+    this.validations.addErrorDisplayForAllFields();
+    const isValid = await this.validations.isValid();
     if (!isValid) {
       return false;
     }
-    const isUsernameTaken = await this.isUsernameTaken(this.username);
-    if (isUsernameTaken) {
-      this.clearErrorDisplay();
-      this.showUsernameTakenErrorMessage = true;
-      return false;
-    }
+    this.validations.clearErrorDisplay();
     const roles = await this.store.findAll('user-role');
     const primaryCohort = this.bestSelectedCohort;
     let user = this.store.createRecord('user', {
@@ -198,7 +234,6 @@ export default class NewUserComponent extends Component {
       password: this.password,
     });
     await authentication.save();
-    this.clearErrorDisplay();
     this.flashMessages.success('general.saved');
     this.args.transitionToUser(user.get('id'));
   });
@@ -238,12 +273,14 @@ export default class NewUserComponent extends Component {
               type="text"
               value={{this.firstName}}
               {{on "input" (pick "target.value" (set this "firstName"))}}
-              {{on
-                "keyup"
-                (queue (fn this.addErrorDisplayFor "firstName") (perform this.saveOrCancel))
-              }}
+              {{on "keyup" (perform this.saveOrCancel)}}
+              {{this.validations.attach "firstName"}}
             />
-            <ValidationError @validatable={{this}} @property="firstName" />
+            <YupValidationMessage
+              @description={{t "general.firstName"}}
+              @validationErrors={{this.validations.errors.firstName}}
+              data-test-first-name-validation-error-message
+            />
           </div>
           <div class="item" data-test-middle-name>
             <label for="middle-{{templateId}}">
@@ -254,12 +291,14 @@ export default class NewUserComponent extends Component {
               type="text"
               value={{this.middleName}}
               {{on "input" (pick "target.value" (set this "middleName"))}}
-              {{on
-                "keyup"
-                (queue (fn this.addErrorDisplayFor "middleName") (perform this.saveOrCancel))
-              }}
+              {{on "keyup" (perform this.saveOrCancel)}}
+              {{this.validations.attach "middleName"}}
             />
-            <ValidationError @validatable={{this}} @property="middleName" />
+            <YupValidationMessage
+              @description={{t "general.middleName"}}
+              @validationErrors={{this.validations.errors.middleName}}
+              data-test-middle-name-validation-error-message
+            />
           </div>
           <div class="item" data-test-last-name>
             <label for="last-{{templateId}}">
@@ -270,12 +309,14 @@ export default class NewUserComponent extends Component {
               type="text"
               value={{this.lastName}}
               {{on "input" (pick "target.value" (set this "lastName"))}}
-              {{on
-                "keyup"
-                (queue (fn this.addErrorDisplayFor "lastName") (perform this.saveOrCancel))
-              }}
+              {{on "keyup" (perform this.saveOrCancel)}}
+              {{this.validations.attach "lastName"}}
             />
-            <ValidationError @validatable={{this}} @property="lastName" />
+            <YupValidationMessage
+              @description={{t "general.lastName"}}
+              @validationErrors={{this.validations.errors.lastName}}
+              data-test-last-name-validation-error-message
+            />
           </div>
           <div class="item" data-test-campus-id>
             <label for="campus-{{templateId}}">
@@ -286,12 +327,14 @@ export default class NewUserComponent extends Component {
               type="text"
               value={{this.campusId}}
               {{on "input" (pick "target.value" (set this "campusId"))}}
-              {{on
-                "keyup"
-                (queue (fn this.addErrorDisplayFor "campusId") (perform this.saveOrCancel))
-              }}
+              {{on "keyup" (perform this.saveOrCancel)}}
+              {{this.validations.attach "campusId"}}
             />
-            <ValidationError @validatable={{this}} @property="campusId" />
+            <YupValidationMessage
+              @description={{t "general.campusId"}}
+              @validationErrors={{this.validations.errors.campusId}}
+              data-test-campus-id-validation-error-message
+            />
           </div>
           <div class="item" data-test-other-id>
             <label for="other-{{templateId}}">
@@ -302,12 +345,14 @@ export default class NewUserComponent extends Component {
               type="text"
               value={{this.otherId}}
               {{on "input" (pick "target.value" (set this "otherId"))}}
-              {{on
-                "keyup"
-                (queue (fn this.addErrorDisplayFor "otherId") (perform this.saveOrCancel))
-              }}
+              {{on "keyup" (perform this.saveOrCancel)}}
+              {{this.validations.attach "otherId"}}
             />
-            <ValidationError @validatable={{this}} @property="otherId" />
+            <YupValidationMessage
+              @description={{t "general.otherId"}}
+              @validationErrors={{this.validations.errors.otherId}}
+              data-test-other-id-validation-error-message
+            />
           </div>
           <div class="item" data-test-email>
             <label for="email-{{templateId}}">
@@ -318,12 +363,14 @@ export default class NewUserComponent extends Component {
               type="text"
               value={{this.email}}
               {{on "input" (pick "target.value" (set this "email"))}}
-              {{on
-                "keyup"
-                (queue (fn this.addErrorDisplayFor "email") (perform this.saveOrCancel))
-              }}
+              {{on "keyup" (perform this.saveOrCancel)}}
+              {{this.validations.attach "email"}}
             />
-            <ValidationError @validatable={{this}} @property="email" />
+            <YupValidationMessage
+              @description={{t "general.email"}}
+              @validationErrors={{this.validations.errors.email}}
+              data-test-email-validation-error-message
+            />
           </div>
           <div class="item" data-test-phone>
             <label for="phone-{{templateId}}">
@@ -334,12 +381,14 @@ export default class NewUserComponent extends Component {
               type="text"
               value={{this.phone}}
               {{on "input" (pick "target.value" (set this "phone"))}}
-              {{on
-                "keyup"
-                (queue (fn this.addErrorDisplayFor "phone") (perform this.saveOrCancel))
-              }}
+              {{on "keyup" (perform this.saveOrCancel)}}
+              {{this.validations.attach "phone"}}
             />
-            <ValidationError @validatable={{this}} @property="phone" />
+            <YupValidationMessage
+              @description={{t "general.phone"}}
+              @validationErrors={{this.validations.errors.phone}}
+              data-test-phone-validation-error-message
+            />
           </div>
           <div class="item" data-test-username>
             <label for="username-{{templateId}}">
@@ -350,18 +399,14 @@ export default class NewUserComponent extends Component {
               type="text"
               value={{this.username}}
               {{on "input" (pick "target.value" (set this "username"))}}
-              {{on "input" (set this "showUsernameTakenErrorMessage" false)}}
-              {{on
-                "keyup"
-                (queue (fn this.addErrorDisplayFor "username") (perform this.saveOrCancel))
-              }}
+              {{on "keyup" (perform this.saveOrCancel)}}
+              {{this.validations.attach "username"}}
             />
-            <ValidationError @validatable={{this}} @property="username" />
-            {{#if this.showUsernameTakenErrorMessage}}
-              <span class="validation-error-message" data-test-duplicate-username>
-                {{t "errors.duplicateUsername"}}
-              </span>
-            {{/if}}
+            <YupValidationMessage
+              @description={{t "general.username"}}
+              @validationErrors={{this.validations.errors.username}}
+              data-test-username-validation-error-message
+            />
           </div>
           <div class="item" data-test-password>
             <label for="password-{{templateId}}">
@@ -372,12 +417,14 @@ export default class NewUserComponent extends Component {
               type="text"
               value={{this.password}}
               {{on "input" (pick "target.value" (set this "password"))}}
-              {{on
-                "keyup"
-                (queue (fn this.addErrorDisplayFor "password") (perform this.saveOrCancel))
-              }}
+              {{on "keyup" (perform this.saveOrCancel)}}
+              {{this.validations.attach "password"}}
             />
-            <ValidationError @validatable={{this}} @property="password" />
+            <YupValidationMessage
+              @description={{t "general.password"}}
+              @validationErrors={{this.validations.errors.password}}
+              data-test-password-validation-error-message
+            />
           </div>
           <div class="item" data-test-school>
             <label for="primary-school-{{templateId}}">
