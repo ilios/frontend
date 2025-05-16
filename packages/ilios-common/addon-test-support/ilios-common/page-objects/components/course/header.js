@@ -4,7 +4,7 @@ import {
   clickable,
   fillable,
   text,
-  isVisible,
+  isPresent,
   value,
 } from 'ember-cli-page-object';
 import publicationMenu from './publication-menu';
@@ -20,7 +20,7 @@ const definition = {
     cancel: clickable('.cancel'),
     inputValue: value('input'),
     blur: blurrable('input'),
-    hasError: isVisible('.validation-error-message'),
+    hasError: isPresent('[data-test-title-validation-error-message]'),
   },
   academicYear: text('[data-test-academic-year]'),
   publicationMenu,
