@@ -80,6 +80,7 @@ general:
   copy: Copie
   copyCurriculumReportUrl: Copier le lien vers ce rapport d'inventaire des programmes d'études
   copyNewToken: Copier nouveau jeton
+  copyReport: Copier le Rapport
   copyWithLearners: Copiér avec étudiants
   copyWithoutLearners: Copiér sans étudiants
   couldNotFindUserCampusId: "Ne pouvait pas trouver utilisateur avec le Campus ID {campusId}"

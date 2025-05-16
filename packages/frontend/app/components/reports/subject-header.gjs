@@ -14,11 +14,13 @@ import { on } from '@ember/modifier';
 import pick from 'ilios-common/helpers/pick';
 import set from 'ember-set-helper/helpers/set';
 import YupValidationMessage from 'ilios-common/components/yup-validation-message';
+import SubjectCopy from 'frontend/components/reports/subject-copy';
 import SubjectDownload from 'frontend/components/reports/subject-download';
 import SubjectYearFilter from 'frontend/components/reports/subject-year-filter';
 import SubjectDescription from 'frontend/components/reports/subject-description';
 
 export default class ReportsSubjectHeader extends Component {
+  @service router;
   @service reporting;
   @tracked title = '';
 
@@ -44,6 +46,10 @@ export default class ReportsSubjectHeader extends Component {
     }
 
     return this.reportTitleData.isResolved ? this.reportTitleData.value : null;
+  }
+
+  get isReportDetail() {
+    return this.router.currentRouteName == 'reports.subject';
   }
 
   changeTitle = dropTask(async () => {
@@ -92,6 +98,15 @@ export default class ReportsSubjectHeader extends Component {
           </EditableField>
         {{/if}}
       </h2>
+      {{#if this.isReportDetail}}
+        <SubjectCopy
+          @report={{@report}}
+          @subject={{@subject}}
+          @prepositionalObject={{@prepositionalObject}}
+          @prepositionalObjectTableRowId={{@prepositionalObjectTableRowId}}
+          @school={{@school}}
+        />
+      {{/if}}
       <SubjectDownload
         @report={{@report}}
         @subject={{@subject}}

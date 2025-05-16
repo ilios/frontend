@@ -8,6 +8,7 @@
     "title"
     "description"
     "years-filter"
+    "edit"
     "download";
   row-gap: 0.25rem;
   margin: 0 0.8rem 0.25rem 0;
@@ -15,9 +16,9 @@
 
   @include cm.for-tablet-and-up {
     grid-template-areas:
-      "title download"
-      "description description"
-      "years-filter years-filter";
+      "title edit download"
+      "description description description"
+      "years-filter years-filter years-filter";
     grid-template-columns: 4fr 1fr;
     justify-content: space-between;
     row-gap: 0;
@@ -29,6 +30,24 @@
 
     input {
       width: 90%;
+    }
+  }
+
+  .copy-report {
+    grid-area: edit;
+
+    @include cm.for-tablet-and-up {
+      margin-right: 0.5em;
+      text-align: right;
+    }
+
+    a {
+      @include cm.ilios-button;
+      font-weight: 400;
+
+      &:hover {
+        text-decoration: none;
+      }
     }
   }
 

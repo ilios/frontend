@@ -7,6 +7,7 @@ export default class ReportsSubjectsController extends Controller {
   queryParams = [
     { sortReportsBy: 'sortBy' },
     { titleFilter: 'filter' },
+    { title: 'title' },
     { showNewReportForm: 'showNewReportForm' },
     { selectedSchoolId: 'selectedSchoolId' },
     { selectedSubject: 'selectedSubject' },
@@ -17,6 +18,7 @@ export default class ReportsSubjectsController extends Controller {
   @tracked sortReportsBy = 'title';
   @tracked titleFilter = null;
   @tracked showNewReportForm = false;
+  @tracked title = null;
   @tracked selectedSchoolId = null;
   @tracked selectedSubject = null;
   @tracked selectedPrepositionalObject = null;
@@ -37,6 +39,7 @@ export default class ReportsSubjectsController extends Controller {
   @action
   toggleNewReportForm() {
     this.runningSubjectReport = null;
+    this.title = null;
     this.selectedSchoolId = null;
     this.selectedSubject = null;
     this.selectedPrepositionalObject = null;
