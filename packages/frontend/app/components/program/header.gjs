@@ -59,12 +59,12 @@ export default class ProgramHeaderComponent extends Component {
                 {{this.validations.attach "title"}}
                 disabled={{isSaving}}
               />
+              <YupValidationMessage
+                @description={{t "general.title"}}
+                @validationErrors={{this.validations.errors.title}}
+                data-test-title-validation-error-message
+              />
             </EditableField>
-            <YupValidationMessage
-              @description={{t "general.title"}}
-              @validationErrors={{this.validations.errors.title}}
-              data-test-title-validation-error-message
-            />
           {{else}}
             <h2>{{@program.title}}</h2>
           {{/if}}
