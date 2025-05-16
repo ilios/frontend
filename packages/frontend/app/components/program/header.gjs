@@ -21,7 +21,7 @@ export default class ProgramHeaderComponent extends Component {
   }
 
   validations = new YupValidations(this, {
-    title: string().required().min(3).max(200),
+    title: string().ensure().trim().min(3).max(200),
   });
 
   changeTitle = dropTask(async () => {
@@ -59,12 +59,12 @@ export default class ProgramHeaderComponent extends Component {
                 {{this.validations.attach "title"}}
                 disabled={{isSaving}}
               />
+              <YupValidationMessage
+                @description={{t "general.title"}}
+                @validationErrors={{this.validations.errors.title}}
+                data-test-title-validation-error-message
+              />
             </EditableField>
-            <YupValidationMessage
-              @description={{t "general.title"}}
-              @validationErrors={{this.validations.errors.title}}
-              data-test-title-validation-error-message
-            />
           {{else}}
             <h2>{{@program.title}}</h2>
           {{/if}}
