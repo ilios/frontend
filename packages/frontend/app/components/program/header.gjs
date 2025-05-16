@@ -21,7 +21,7 @@ export default class ProgramHeaderComponent extends Component {
   }
 
   validations = new YupValidations(this, {
-    title: string().required().min(3).max(200),
+    title: string().ensure().trim().min(3).max(200),
   });
 
   changeTitle = dropTask(async () => {

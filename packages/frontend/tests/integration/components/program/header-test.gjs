@@ -41,8 +41,7 @@ module('Integration | Component | program/header', function (hooks) {
     assert.notOk(component.title.canEdit);
   });
 
-  test('update title fails - title too short', async function (assert) {
-    assert.expect(5);
+  test('validation fails if title is too short', async function (assert) {
     const school = this.server.create('school', {});
     const program = this.server.create('program', {
       school,
@@ -56,18 +55,14 @@ module('Integration | Component | program/header', function (hooks) {
     assert.strictEqual(component.title.text, 'Aardvark');
     assert.ok(component.title.canEdit);
     await component.title.edit();
-    assert.strictEqual(component.title.errors.length, 0);
+    assert.notOk(component.title.hasError);
     await component.title.set('ab');
     await component.title.save();
-    assert.strictEqual(component.title.errors.length, 1);
-    assert.strictEqual(
-      component.title.errors[0].text,
-      'Title is too short (minimum is 3 characters)',
-    );
+    assert.ok(component.title.hasError);
+    assert.strictEqual(component.title.error, 'Title is too short (minimum is 3 characters)');
   });
 
-  test('update title fails - blank input', async function (assert) {
-    assert.expect(6);
+  test('validation fails if title is blank', async function (assert) {
     const school = this.server.create('school', {});
     const program = this.server.create('program', {
       school,
@@ -81,19 +76,14 @@ module('Integration | Component | program/header', function (hooks) {
     assert.strictEqual(component.title.text, 'Aardvark');
     assert.ok(component.title.canEdit);
     await component.title.edit();
-    assert.strictEqual(component.title.errors.length, 0);
+    assert.notOk(component.title.hasError);
     await component.title.set('');
     await component.title.save();
-    assert.strictEqual(component.title.errors.length, 2);
-    assert.strictEqual(component.title.errors[0].text, 'Title can not be blank');
-    assert.strictEqual(
-      component.title.errors[1].text,
-      'Title is too short (minimum is 3 characters)',
-    );
+    assert.ok(component.title.hasError);
+    assert.strictEqual(component.title.error, 'Title is too short (minimum is 3 characters)');
   });
 
   test('update title fails - title too long', async function (assert) {
-    assert.expect(5);
     const school = this.server.create('school', {});
     const program = this.server.create('program', {
       school,
@@ -107,14 +97,11 @@ module('Integration | Component | program/header', function (hooks) {
     assert.strictEqual(component.title.text, 'Aardvark');
     assert.ok(component.title.canEdit);
     await component.title.edit();
-    assert.strictEqual(component.title.errors.length, 0);
+    assert.notOk(component.title.hasError);
     await component.title.set('0123456789'.repeat(21));
     await component.title.save();
-    assert.strictEqual(component.title.errors.length, 1);
-    assert.strictEqual(
-      component.title.errors[0].text,
-      'Title is too long (maximum is 200 characters)',
-    );
+    assert.ok(component.title.hasError);
+    assert.strictEqual(component.title.error, 'Title is too long (maximum is 200 characters)');
   });
 
   test('update title, then save', async function (assert) {
