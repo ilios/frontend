@@ -25,7 +25,7 @@ export default class InstructorGroupHeaderComponent extends Component {
   }
 
   validations = new YupValidations(this, {
-    title: string().required().min(3).max(60),
+    title: string().ensure().trim().min(3).max(60),
   });
 
   changeTitle = dropTask(async () => {
