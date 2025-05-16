@@ -31,13 +31,9 @@ export default class CourseHeaderComponent extends Component {
     this.courseTitle = this.args.course.title;
   }
 
-  validations = new YupValidations(
-    this,
-    {
-      courseTitle: string().trim().required().min(3).max(200),
-    },
-    { abortEarly: true },
-  );
+  validations = new YupValidations(this, {
+    courseTitle: string().ensure().trim().min(3).max(200),
+  });
 
   @cached
   get academicYearCrossesCalendarYearBoundariesData() {
