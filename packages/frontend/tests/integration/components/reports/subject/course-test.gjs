@@ -1,4 +1,4 @@
-import { module, test, skip } from 'qunit';
+import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { click, render } from '@ember/test-helpers';
 import { setupMirage } from 'frontend/tests/test-support/mirage';
@@ -415,9 +415,9 @@ module('Integration | Component | reports/subject/course', function (hooks) {
   });
 
   //skipped because I can't figure out how to test the download functionality
-  skip('download', async function (assert) {
+  test('download', async function (assert) {
     await setupAuthentication({}, true);
-    assert.expect(10);
+    assert.expect(9);
     this.server.post('api/graphql', () => responseData);
     const { id } = this.server.create('report', {
       subject: 'course',
@@ -433,6 +433,69 @@ module('Integration | Component | reports/subject/course', function (hooks) {
       </template>,
     );
 
-    await click('[data-test-download]');
+    let capturedBlob = null;
+    const downloadMockUrl = 'blob:mock-url';
+    const downloadFilename = 'All Courses in All Schools.csv';
+
+    // Override URL methods
+    const originalCreateObjectURL = URL.createObjectURL;
+    const originalRevokeObjectURL = URL.revokeObjectURL;
+    URL.createObjectURL = (blob) => {
+      capturedBlob = blob;
+      assert.ok(blob instanceof Blob, 'Blob passed to createObjectURL');
+      return downloadMockUrl;
+    };
+    URL.revokeObjectURL = (url) => {
+      assert.strictEqual(url.href, downloadMockUrl, 'revokeObjectURL has correct href');
+      assert.strictEqual(url.download, downloadFilename, 'revokeObjectURL has correct filename');
+    };
+
+    // Override document.body methods
+    let appendedElement;
+    const originalAppendChild = document.body.appendChild;
+    const originalRemoveChild = document.body.removeChild;
+    document.body.appendChild = (el) => {
+      // stub out click() to avoid `Not allowed to load local resource: blob:mock-url` error
+      el.click = () => {
+        assert.ok(true, 'Anchor click stubbed to prevent navigation');
+      };
+      appendedElement = el;
+      assert.ok(el instanceof HTMLAnchorElement, 'Anchor element was appended');
+    };
+    document.body.removeChild = (el) => {
+      assert.strictEqual(el, appendedElement, 'Anchor element was removed');
+    };
+
+    await render(
+      <template>
+        <Course
+          @subject={{this.report.subject}}
+          @prepositionalObject={{this.report.prepositionalObject}}
+          @prepositionalObjectTableRowId={{this.report.prepositionalObjectTableRowId}}
+        />
+      </template>,
+    );
+
+    await click('[data-test-button]');
+
+    assert.strictEqual(appendedElement.href, downloadMockUrl, 'appended element has correct href');
+    assert.strictEqual(
+      appendedElement.download,
+      downloadFilename,
+      'appended element has correct filename',
+    );
+
+    const csvText = await capturedBlob.text();
+    assert.strictEqual(
+      csvText.trim(),
+      'Course,Academic Year,Course ID\r\nSecond Course,2020,ext ID 1\r\nFirst Course,2023,',
+      'CSV content is correct',
+    );
+
+    // Restore original methods
+    URL.createObjectURL = originalCreateObjectURL;
+    URL.revokeObjectURL = originalRevokeObjectURL;
+    document.body.appendChild = originalAppendChild;
+    document.body.removeChild = originalRemoveChild;
   });
 });

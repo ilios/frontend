@@ -123,6 +123,22 @@ export default class ReportsSubjectSessionComponent extends Component {
     return this.allSessions.length;
   }
 
+  @cached
+  get schoolConfigsData() {
+    return new TrackedAsyncData(this.args.school?.configurations);
+  }
+
+  @cached
+  get schoolConfigs() {
+    const rhett = new Map();
+    if (this.schoolConfigsData.isResolved) {
+      this.schoolConfigsData.value?.forEach((config) => {
+        rhett.set(config.name, JSON.parse(config.value));
+      });
+    }
+    return rhett;
+  }
+
   @action
   async fetchDownloadData() {
     const filters = await this.getGraphQLFilters(
@@ -136,31 +152,83 @@ export default class ReportsSubjectSessionComponent extends Component {
       'description',
       'sessionObjectives { title }',
       'course { title, year }',
+      'attendanceRequired',
+      'attireRequired',
+      'equipmentRequired',
+      'supplemental',
     ];
     const result = await this.graphql.find('sessions', filters, attributes.join(','));
     const sortedResults = sortBy(result.data.sessions, 'title');
-    const mappedResults = sortedResults.map(({ title, course, sessionObjectives, description }) => {
-      return [
+    const objectives = sortedResults.map(({ sessionObjectives }) => {
+      return mapBy(sessionObjectives, 'title');
+    });
+    const maxObjectiveCount = objectives.reduce((longest, current) => {
+      return current.length > longest.length ? current : longest;
+    }, []).length;
+
+    const mappedResults = sortedResults.map(
+      ({
         title,
-        course.title,
-        this.academicYearCrossesCalendarYearBoundaries
-          ? `${course.year} - ${course.year + 1}`
-          : `${course.year}`,
-        striptags(description),
-        striptags(mapBy(sessionObjectives, 'title').join()),
-      ];
+        course,
+        sessionObjectives,
+        description,
+        attendanceRequired,
+        attireRequired,
+        equipmentRequired,
+        supplemental,
+      }) => {
+        const results = [
+          title,
+          course.title,
+          this.academicYearCrossesCalendarYearBoundaries
+            ? `${course.year} - ${course.year + 1}`
+            : `${course.year}`,
+          striptags(description),
+        ];
+        if (this.schoolConfigs.get('showSessionAttendanceRequired')) {
+          results.push(attendanceRequired ? this.intl.t('general.yes') : this.intl.t('general.no'));
+        }
+        if (this.schoolConfigs.get('showSessionSpecialAttireRequired')) {
+          results.push(attireRequired ? this.intl.t('general.yes') : this.intl.t('general.no'));
+        }
+        if (this.schoolConfigs.get('showSessionSpecialEquipmentRequired')) {
+          results.push(equipmentRequired ? this.intl.t('general.yes') : this.intl.t('general.no'));
+        }
+        if (this.schoolConfigs.get('showSessionSupplemental')) {
+          results.push(supplemental ? this.intl.t('general.yes') : this.intl.t('general.no'));
+        }
+        sessionObjectives.forEach((objective) => {
+          results.push(striptags(objective.title));
+        });
+        return results;
+      },
+    );
+
+    const columns = [
+      this.intl.t('general.session'),
+      this.intl.t('general.course'),
+      this.intl.t('general.academicYear'),
+      this.intl.t('general.description'),
+    ];
+
+    if (this.schoolConfigs.get('showSessionAttendanceRequired')) {
+      columns.push(this.intl.t('general.attendanceRequired'));
+    }
+    if (this.schoolConfigs.get('showSessionSpecialAttireRequired')) {
+      columns.push(this.intl.t('general.attireRequired'));
+    }
+    if (this.schoolConfigs.get('showSessionSpecialEquipmentRequired')) {
+      columns.push(this.intl.t('general.equipmentRequired'));
+    }
+    if (this.schoolConfigs.get('showSessionSupplemental')) {
+      columns.push(this.intl.t('general.supplementalCurriculum'));
+    }
+
+    [...Array(maxObjectiveCount + 1).keys()].slice(1).map(() => {
+      columns.push(`${this.intl.t('general.objective')}`);
     });
 
-    return [
-      [
-        this.intl.t('general.session'),
-        this.intl.t('general.course'),
-        this.intl.t('general.academicYear'),
-        this.intl.t('general.description'),
-        this.intl.t('general.objectives'),
-      ],
-      ...mappedResults,
-    ];
+    return [columns, ...mappedResults];
   }
   <template>
     <SubjectHeader
@@ -181,7 +249,7 @@ export default class ReportsSubjectSessionComponent extends Component {
       @resultsLength={{this.resultsLengthDisplay}}
     />
     <div data-test-reports-subject-session>
-      {{#if this.allSessionsData.isResolved}}
+      {{#if (and this.allSessionsData.isResolved this.schoolConfigsData.isResolved)}}
         <ul class="report-results{{if this.reportResultsExceedMax ' limited'}}" data-test-results>
           {{#each this.limitedSessions as |obj|}}
             <li>
@@ -198,9 +266,7 @@ export default class ReportsSubjectSessionComponent extends Component {
               {{/if}}
               <span data-test-course-title>
                 {{#if this.canViewCourse}}
-                  <LinkTo @route="course" @model={{obj.courseId}}>
-                    {{obj.courseTitle}}:
-                  </LinkTo>
+                  <LinkTo @route="course" @model={{obj.courseId}}>{{obj.courseTitle}}:</LinkTo>
                 {{else}}
                   {{obj.courseTitle}}:
                 {{/if}}
