@@ -26,12 +26,12 @@ export default class SchoolCurriculumInventoryInstitutionManagerComponent extend
 
   validations = new YupValidations(this, {
     name: string().ensure().trim().min(1).max(100),
-    aamcCode: number().integer().min(1).max(99999),
+    aamcCode: number().integer().min(1),
     addressStreet: string().ensure().trim().min(1).max(100),
     addressCity: string().ensure().trim().min(1).max(100),
     addressStateOrProvince: string().ensure().trim().min(1).max(50),
     addressZipCode: string().ensure().trim().min(1).max(10),
-    addressCountryCode: string().ensure().trim().min(1).max(2),
+    addressCountryCode: string().ensure().trim().min(1),
   });
 
   save = dropTask(async () => {
