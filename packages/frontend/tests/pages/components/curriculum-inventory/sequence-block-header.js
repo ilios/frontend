@@ -1,4 +1,4 @@
-import { create, clickable, fillable, text, isVisible } from 'ember-cli-page-object';
+import { create, clickable, fillable, isPresent, isVisible, text } from 'ember-cli-page-object';
 
 const definition = {
   scope: '[data-test-curriculum-inventory-sequence-block-header]',
@@ -9,7 +9,8 @@ const definition = {
     set: fillable('input'),
     save: clickable('.done'),
     cancel: clickable('.cancel'),
-    hasError: isVisible('[data-test-title-validation-error-message]:first-of-type'),
+    hasError: isPresent('[data-test-title-validation-error-message]'),
+    error: text('[data-test-title-validation-error-message]'),
     isEditable: isVisible('[data-test-edit]'),
   },
 };

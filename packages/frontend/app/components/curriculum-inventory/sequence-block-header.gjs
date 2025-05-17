@@ -24,7 +24,7 @@ export default class CurriculumInventorySequenceBlockHeaderComponent extends Com
   }
 
   validations = new YupValidations(this, {
-    title: string().required().min(3).max(200),
+    title: string().ensure().trim().min(3).max(200),
   });
 
   @action
