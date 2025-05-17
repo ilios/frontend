@@ -80,7 +80,7 @@ module('Integration | Component | instructor-group/header', function (hooks) {
     assert.strictEqual(component.title.text, 'foo bar');
   });
 
-  test('changing title fails if new title is too long', async function (assert) {
+  test('validation fails if title is too long', async function (assert) {
     this.set('instructorGroup', this.instructorGroup);
     this.set('canUpdate', true);
 
@@ -92,14 +92,14 @@ module('Integration | Component | instructor-group/header', function (hooks) {
 
     assert.strictEqual(component.title.text, 'lorem ipsum');
     await component.title.edit();
-    assert.strictEqual(component.title.errors.length, 0);
+    assert.notOk(component.title.hasError);
     assert.strictEqual(component.title.value, 'lorem ipsum');
-    await component.title.set('01234567890'.repeat(1000));
+    await component.title.set('a'.repeat(61));
     await component.title.save();
-    assert.strictEqual(component.title.errors.length, 1);
+    assert.strictEqual(component.title.error, 'Title is too long (maximum is 60 characters)');
   });
 
-  test('changing title fails if new title is too short', async function (assert) {
+  test('validation fails if title is too short', async function (assert) {
     this.set('instructorGroup', this.instructorGroup);
     this.set('canUpdate', true);
 
@@ -111,14 +111,14 @@ module('Integration | Component | instructor-group/header', function (hooks) {
 
     assert.strictEqual(component.title.text, 'lorem ipsum');
     await component.title.edit();
-    assert.strictEqual(component.title.errors.length, 0);
+    assert.notOk(component.title.hasError);
     assert.strictEqual(component.title.value, 'lorem ipsum');
     await component.title.set('AB');
     await component.title.save();
-    assert.strictEqual(component.title.errors.length, 1);
+    assert.strictEqual(component.title.error, 'Title is too short (minimum is 3 characters)');
   });
 
-  test('changing title fails if title is blank', async function (assert) {
+  test('validation fails if title is blank', async function (assert) {
     this.set('instructorGroup', this.instructorGroup);
     this.set('canUpdate', true);
 
@@ -130,11 +130,11 @@ module('Integration | Component | instructor-group/header', function (hooks) {
 
     assert.strictEqual(component.title.text, 'lorem ipsum');
     await component.title.edit();
-    assert.strictEqual(component.title.errors.length, 0);
+    assert.notOk(component.title.hasError);
     assert.strictEqual(component.title.value, 'lorem ipsum');
     await component.title.set('');
     await component.title.save();
-    assert.strictEqual(component.title.errors.length, 2);
+    assert.strictEqual(component.title.error, 'Title is too short (minimum is 3 characters)');
   });
 
   test('cancel title changes', async function (assert) {
@@ -149,7 +149,7 @@ module('Integration | Component | instructor-group/header', function (hooks) {
 
     assert.strictEqual(component.title.text, 'lorem ipsum');
     await component.title.edit();
-    assert.strictEqual(component.title.errors.length, 0);
+    assert.notOk(component.title.hasError);
     assert.strictEqual(component.title.value, 'lorem ipsum');
     await component.title.set('foo bar');
     await component.title.cancel();
