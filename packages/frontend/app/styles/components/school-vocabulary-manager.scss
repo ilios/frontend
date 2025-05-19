@@ -39,10 +39,6 @@
       border: 1px solid c.$fernGreen;
       margin: 1rem;
       padding: 1rem;
-
-      @include m.for-laptop-and-up {
-        width: 40%;
-      }
     }
 
     ul {
