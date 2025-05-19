@@ -42,13 +42,13 @@ module('Integration | Component | course/header', function (hooks) {
     this.set('course', courseModel);
     await render(<template><Header @course={{this.course}} @editable={{true}} /></template>);
 
-    assert.ok(component.title.isVisible);
-    assert.strictEqual(component.title.value, 'course 0');
+    assert.ok(component.title.isVisible, 'course title is visible');
+    assert.strictEqual(component.title.value, 'course 0', 'course title is correct');
     await component.title.edit();
-    assert.notOk(component.title.hasError);
+    assert.notOk(component.title.hasError, 'no error message displayed');
     await component.title.set('');
     await component.title.save();
-    assert.ok(component.title.hasError);
+    assert.ok(component.title.hasError, 'error message is displayed');
   });
 
   test('course title validation fails if value is too short', async function (assert) {
@@ -56,14 +56,13 @@ module('Integration | Component | course/header', function (hooks) {
     const courseModel = await this.store.findRecord('course', course.id);
     this.set('course', courseModel);
     await render(<template><Header @course={{this.course}} @editable={{true}} /></template>);
-
-    assert.ok(component.title.isVisible);
-    assert.strictEqual(component.title.value, 'course 0');
+    assert.ok(component.title.isVisible, 'course title is visible');
+    assert.strictEqual(component.title.value, 'course 0', 'course title is correct');
     await component.title.edit();
-    assert.notOk(component.title.hasError);
+    assert.notOk(component.title.hasError, 'no error message displayed');
     await component.title.set('a');
     await component.title.save();
-    assert.ok(component.title.hasError);
+    assert.ok(component.title.hasError, 'error message displayed');
   });
 
   test('course title validation fails if value is too long', async function (assert) {
