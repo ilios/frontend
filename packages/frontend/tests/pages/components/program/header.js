@@ -1,4 +1,4 @@
-import { create, clickable, collection, fillable, isVisible } from 'ember-cli-page-object';
+import { create, clickable, fillable, isPresent, isVisible, text } from 'ember-cli-page-object';
 
 const definition = {
   scope: '[data-test-program-header]',
@@ -9,7 +9,8 @@ const definition = {
     save: clickable('.done'),
     cancel: clickable('.cancel'),
     canEdit: isVisible('[data-test-edit]'),
-    errors: collection('[data-test-title-validation-error-message]'),
+    hasError: isPresent('[data-test-title-validation-error-message]'),
+    error: text('[data-test-title-validation-error-message]'),
   },
 };
 
