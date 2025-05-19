@@ -2,7 +2,6 @@ import Component from '@glimmer/component';
 import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { restartableTask } from 'ember-concurrency';
-import { validatable } from 'ilios-common/decorators/validation';
 import { service } from '@ember/service';
 import { TrackedAsyncData } from 'ember-async-data';
 import YupValidations from 'ilios-common/classes/yup-validations';
@@ -19,7 +18,6 @@ import add from 'ember-math-helpers/helpers/add';
 import PublicationMenu from 'ilios-common/components/course/publication-menu';
 import PublicationStatus from 'ilios-common/components/publication-status';
 
-@validatable
 export default class CourseHeaderComponent extends Component {
   @service iliosConfig;
 
