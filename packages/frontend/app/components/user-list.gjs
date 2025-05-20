@@ -2,8 +2,6 @@ import Component from '@glimmer/component';
 import { cached } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { fn } from '@ember/helper';
-import { map } from 'rsvp';
-import { sortBy } from 'ilios-common/utils/array-helpers';
 import or from 'ember-truth-helpers/helpers/or';
 import eq from 'ember-truth-helpers/helpers/eq';
 import t from 'ember-intl/helpers/t';
