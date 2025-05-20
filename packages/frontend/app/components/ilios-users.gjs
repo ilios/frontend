@@ -180,7 +180,11 @@ export default class IliosUsersComponent extends Component {
               <LoadingSpinner />
             {{else}}
               {{#if (gt this.searchForUsers.lastSuccessful.value.length 0)}}
-                <UserList @users={{this.searchForUsers.lastSuccessful.value}} />
+                <UserList
+                  @users={{this.searchForUsers.lastSuccessful.value}}
+                  @sortBy={{@sortBy}}
+                  @setSortBy={{@setSortBy}}
+                />
               {{else}}
                 <span class="no-results">
                   {{t "general.noResultsFound"}}
