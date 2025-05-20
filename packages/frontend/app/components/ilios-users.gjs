@@ -6,13 +6,11 @@ import { TrackedAsyncData } from 'ember-async-data';
 import { tracked, cached } from '@glimmer/tracking';
 import { ensureSafeComponent } from '@embroider/util';
 import { action } from '@ember/object';
-import NewDirectoryUser from './new-directory-user';
-import NewUser from './new-user';
-import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
+import { fn } from '@ember/helper';
+import t from 'ember-intl/helpers/t';
 import pick from 'ilios-common/helpers/pick';
 import or from 'ember-truth-helpers/helpers/or';
-import { fn } from '@ember/helper';
 import FaIcon from 'ilios-common/components/fa-icon';
 import notEq from 'ember-truth-helpers/helpers/not-eq';
 import load from 'ember-async-data/helpers/load';
@@ -20,6 +18,8 @@ import BulkNewUsers from 'frontend/components/bulk-new-users';
 import LoadingSpinner from 'ilios-common/components/loading-spinner';
 import PagedlistControls from 'ilios-common/components/pagedlist-controls';
 import UserList from 'frontend/components/user-list';
+import NewDirectoryUser from './new-directory-user';
+import NewUser from './new-user';
 
 const DEBOUNCE_TIMEOUT = 250;
 
