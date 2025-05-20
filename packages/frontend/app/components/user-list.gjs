@@ -33,68 +33,6 @@ export default class UserList extends Component {
     return this.sortedUsersData.isResolved ? this.sortedUsersData.value : [];
   }
 
-  async sortUsers(users, sortInfo) {
-    switch (sortInfo.column) {
-      case 'fullName':
-        return this.sortByFullName(users, sortInfo);
-      case 'campusId':
-        return this.sortByCampusId(users, sortInfo);
-      case 'email':
-        return this.sortByEmail(users, sortInfo);
-      case 'primarySchool':
-        return this.sortByPrimarySchool(users, sortInfo);
-      default:
-        if (sortInfo.descending) {
-          return sortBy(users, sortInfo.column).reverse();
-        }
-        return sortBy(users, sortInfo.column);
-    }
-  }
-
-  async sortByFullName(users, sortInfo) {
-    const sortProxies = await map(users, async (user) => {
-      return {
-        user,
-        fullName: user.fullName,
-      };
-    });
-    const sortedUsers = sortBy(sortProxies, 'fullName').map((proxy) => proxy.user);
-    return sortInfo.descending ? sortedUsers.reverse() : sortedUsers;
-  }
-
-  async sortByCampusId(users, sortInfo) {
-    const sortProxies = await map(users, async (user) => {
-      return {
-        user,
-        campusId: user.campusId,
-      };
-    });
-    const sortedUsers = sortBy(sortProxies, 'campusId').map((proxy) => proxy.user);
-    return sortInfo.descending ? sortedUsers.reverse() : sortedUsers;
-  }
-
-  async sortByEmail(users, sortInfo) {
-    const sortProxies = await map(users, async (user) => {
-      return {
-        user,
-        email: user.email,
-      };
-    });
-    const sortedUsers = sortBy(sortProxies, 'email').map((proxy) => proxy.user);
-    return sortInfo.descending ? sortedUsers.reverse() : sortedUsers;
-  }
-
-  async sortByPrimarySchool(users, sortInfo) {
-    const sortProxies = await map(users, async (user) => {
-      return {
-        user,
-        primarySchool: user.school.title,
-      };
-    });
-    const sortedUsers = sortBy(sortProxies, 'primarySchool').map((proxy) => proxy.user);
-    return sortInfo.descending ? sortedUsers.reverse() : sortedUsers;
-  }
-
   get sortInfo() {
     const parts = this.args.sortBy.split(':');
     const column = parts[0];
