@@ -408,7 +408,7 @@ module('Acceptance | Learner Groups', function (hooks) {
     assert.ok(page.newLearnerGroupForm.single.willFill);
     await page.newLearnerGroupForm.single.save();
 
-    assert.strictEqual(page.savedResult, `${newTitle} Saved Successfully`);
+    assert.strictEqual(page.savedResult, `${newTitle} saved successfully`);
     assert.strictEqual(page.list.items.length, 1);
     assert.strictEqual(page.list.items[0].title, newTitle);
     assert.strictEqual(page.list.items[0].users, '5');
