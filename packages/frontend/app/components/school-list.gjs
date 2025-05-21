@@ -168,7 +168,7 @@ export default class SchoolListComponent extends Component {
                 <FaIcon @icon="square-up-right" />
                 {{this.newSchool.title}}
               </LinkTo>
-              {{t "general.savedSuccessfullyWithTitle"}}
+              {{t "general.savedSuccessfully"}}
             </div>
           {{/if}}
           <div class="list">

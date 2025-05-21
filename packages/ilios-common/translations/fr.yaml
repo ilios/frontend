@@ -298,8 +298,7 @@ general:
   reviewSessions: Séances à faire réviser
   saturday: Samedi
   save: Enregistrer
-  savedSuccessfully: Enregistré avec succès
-  savedSuccessfullyWithTitle: enregistré avec succès
+  savedSuccessfully: enregistré avec succès
   scheduled: Prevu
   scheduledSuccessfully: Faire à prévu réussi
   scheduling: Planification

@@ -169,7 +169,7 @@ export default class ProgramYearListComponent extends Component {
                   {{this.savedProgramYear.startYear}}
                 {{/if}}
               </LinkTo>
-              {{t "general.savedSuccessfullyWithTitle"}}
+              {{t "general.savedSuccessfully"}}
             </div>
           {{/if}}
         </section>

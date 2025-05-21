@@ -209,7 +209,7 @@ export default class ReportsSubjectsListComponent extends Component {
                 <FaIcon @icon="square-up-right" />
                 {{this.newReport.title}}
               </LinkTo>
-              {{t "general.savedSuccessfullyWithTitle"}}
+              {{t "general.savedSuccessfully"}}
             </div>
           {{/if}}
         </section>

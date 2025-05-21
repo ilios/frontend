@@ -2,6 +2,7 @@ import Component from '@glimmer/component';
 import { filter, map } from 'rsvp';
 import { task, timeout } from 'ember-concurrency';
 import { service } from '@ember/service';
+import { capitalize } from '@ember/string';
 import { TrackedAsyncData } from 'ember-async-data';
 import { cached, tracked } from '@glimmer/tracking';
 import { uniqueValues } from 'ilios-common/utils/array-helpers';
@@ -129,7 +130,7 @@ export default class ProgramYearCompetenciesComponent extends Component {
     try {
       await this.args.programYear.save();
     } finally {
-      this.flashMessages.success('general.savedSuccessfully');
+      this.flashMessages.success(capitalize('general.savedSuccessfully'));
       this.args.setIsManaging(false);
       this.args.expand();
     }

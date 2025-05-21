@@ -298,8 +298,7 @@ general:
   reviewSessions: Sessions Requiring Review
   saturday: Saturday
   save: Save
-  savedSuccessfully: Saved successfully
-  savedSuccessfullyWithTitle: saved successfully
+  savedSuccessfully: saved successfully
   scheduled: Scheduled
   scheduledSuccessfully: Scheduled successfully
   scheduling: Scheduling

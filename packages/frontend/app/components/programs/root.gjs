@@ -119,7 +119,7 @@ export default class ProgramRootComponent extends Component {
                 <FaIcon @icon="square-up-right" />
                 {{this.newProgram.title}}
               </LinkTo>
-              {{t "general.savedSuccessfullyWithTitle"}}
+              {{t "general.savedSuccessfully"}}
             </div>
           {{/if}}
         </div>

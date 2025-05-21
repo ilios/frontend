@@ -2,6 +2,7 @@ import Component from '@glimmer/component';
 import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
+import { capitalize } from '@ember/string';
 import { TrackedAsyncData } from 'ember-async-data';
 import { uniqueValues } from 'ilios-common/utils/array-helpers';
 import SchoolCompetenciesListItemPcrs from 'frontend/components/school-competencies-list-item-pcrs';
@@ -79,7 +80,7 @@ export default class SchoolCompetenciesListItemComponent extends Component {
     try {
       await this.args.competency.save();
     } finally {
-      this.flashMessages.success('general.savedSuccessfully');
+      this.flashMessages.success(capitalize('general.savedSuccessfully'));
       this.cancel();
     }
   }

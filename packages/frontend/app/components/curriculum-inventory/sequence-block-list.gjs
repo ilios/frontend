@@ -79,7 +79,7 @@ export default class SequenceBlockListComponent extends Component {
               <FaIcon @icon="square-up-right" />
               {{this.savedBlock.title}}
             </LinkTo>
-            {{t "general.savedSuccessfullyWithTitle"}}
+            {{t "general.savedSuccessfully"}}
           </div>
         {{/if}}
       </div>

@@ -285,7 +285,7 @@ export default class CoursesRootComponent extends Component {
                 <FaIcon @icon="square-up-right" />
                 {{this.newCourse.title}}
               </LinkTo>
-              {{t "general.savedSuccessfullyWithTitle"}}
+              {{t "general.savedSuccessfully"}}
             </div>
           {{/if}}
         </section>
