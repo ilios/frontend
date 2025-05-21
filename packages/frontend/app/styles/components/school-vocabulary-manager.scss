@@ -37,6 +37,8 @@
 
     .saved-result {
       border: 1px solid c.$fernGreen;
+      display: flex;
+      gap: 0.25rem;
       margin: 1rem;
       padding: 1rem;
     }
