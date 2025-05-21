@@ -299,6 +299,7 @@ general:
   saturday: Sábado
   save: Guardar
   savedSuccessfully: Ahorrado con éxito
+  savedSuccessfullyWithTitle: ahorrado con éxito
   scheduled: Programado
   scheduledSuccessfully: Programdo con éxito
   scheduling: Programación

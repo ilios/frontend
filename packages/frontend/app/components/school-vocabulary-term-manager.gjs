@@ -298,7 +298,7 @@ export default class SchoolVocabularyTermManagerComponent extends Component {
                   <FaIcon @icon="square-up-right" />
                   {{this.newTerm.title}}
                 </button>
-                {{t "general.savedSuccessfully"}}
+                {{t "general.savedSuccessfullyWithTitle"}}
               </div>
             {{/if}}
             {{#if @canCreate}}

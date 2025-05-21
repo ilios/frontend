@@ -209,7 +209,7 @@ export default class CurriculumInventoryReportsComponent extends Component {
                 <FaIcon @icon="square-up-right" />
                 {{this.newReport.name}}
               </LinkTo>
-              {{t "general.savedSuccessfully"}}
+              {{t "general.savedSuccessfullyWithTitle"}}
             </div>
           {{/if}}
         </section>

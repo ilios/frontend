@@ -61,8 +61,8 @@ general:
   confirmRemove: "Êtes-vous sûr vous voulez supprimer cette offre avec {learnerGroupCount} groupes d'apprenants?  Ça action ne peut pas être défait."
   confirmSessionRemoval: Êtes vous sûr de vouloir supprimer cette séance?
   contentAuthor: Auteur
-  copiedIcsFeedUrl: Copié mon lien ICS avec succès
-  copiedSuccessfully: Copié avec succès
+  copiedIcsFeedUrl: Copié mon lien ICS réussi
+  copiedSuccessfully: Copié réussi
   copyIcsFeedUrl: Copier mon lien ICS
   copyLink: Copier le lien
   copyrightAgreement: "Le fichier J'envoie est ma propre ou j'avoir la permission expresse de reproduire et / ou distribuer cet article, ou l'utilisation de celui-ci ici a été jugée admissible par la doctrine juridique de l'utilisation équitable. Ce fichier ne contient pas protégé information sur la santé, et l'utilisation de celui-ci ici est en conformité avec le gouvernement et l'Université des politiques sur le droit d'auteur et à la sécurité de l'information et les directives de mon institution pour la conduite professionnelle."
@@ -70,7 +70,7 @@ general:
   copyrightRationale: "Raison du droit d'auteur"
   copySession: Copier Séance
   copySessionSummary: 'Vous êtes sur le point la copie sur cette séance (sans données de calendrier) dans le cours choisi. La nouvelle seéance inclura tous les objectifs, des termes et les matériels d''étude. Continuer le clic "oui". Retourner à votre clic de session actuel "annul".'
-  copySuccess: Copie achevée avec succès
+  copySuccess: Copie achevée réussi
   course: Cours
   courseLearningMaterials: "Matériels d'Étude du Cours"
   courseLevel: "Niveau du cours {level}"
@@ -81,7 +81,7 @@ general:
   courseObjectives: Objectifs du Cours
   courseOrSessionType: Cours / Type de séance
   courseRollover: Roulement Cours
-  courseRolloverSuccess: Roulement achevée avec succès
+  courseRolloverSuccess: Roulement achevée réussi
   courseRolloverSummary: 'Vous êtes sur le point le roulement ce cours dans l''année universitaire choisie, avec toutes les options choisies. Continuer, cliquer "done". Pour retourner à votre cours actuel, le clic "annul"'
   courseRolloverYearUnavailable: Cours déja existant
   courses: Les Cours
@@ -285,8 +285,8 @@ general:
   publishAllSessions: "Publier {sessionCount} des séances"
   publishAsIs: 'Publier "as-is"'
   publishCourse: Publier Cours
-  published: Publier
-  publishedSuccessfully: Publier réussi
+  published: Publié
+  publishedSuccessfully: Publié réussi
   publishSession: Publier Session
   remove: Supprîme
   removeAll: Supprimer Tous
@@ -298,7 +298,8 @@ general:
   reviewSessions: Séances à faire réviser
   saturday: Samedi
   save: Enregistrer
-  savedSuccessfully: Réussie Sauvé
+  savedSuccessfully: Sauvé réussi
+  savedSuccessfullyWithTitle: sauvé réussi
   scheduled: Prevu
   scheduledSuccessfully: Faire à prévu réussi
   scheduling: Planification

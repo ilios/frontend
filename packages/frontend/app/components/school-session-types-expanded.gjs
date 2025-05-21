@@ -160,7 +160,7 @@ export default class SchoolSessionTypesExpandedComponent extends Component {
               <FaIcon @icon="square-up-right" />
               {{@newSavedSessionType.title}}
             </button>
-            {{t "general.savedSuccessfully"}}
+            {{t "general.savedSuccessfullyWithTitle"}}
           </div>
         {{/if}}
         {{#if this.managedSessionType}}

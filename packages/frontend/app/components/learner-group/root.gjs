@@ -777,7 +777,7 @@ export default class LearnerGroupRootComponent extends Component {
                     <FaIcon @icon="square-up-right" />
                     {{this.newLearnerGroup.title}}
                   </LinkTo>
-                  {{t "general.savedSuccessfully"}}
+                  {{t "general.savedSuccessfullyWithTitle"}}
                 </div>
               {{/if}}
             </div>

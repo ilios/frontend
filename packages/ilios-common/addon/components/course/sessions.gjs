@@ -190,7 +190,7 @@ export default class CourseSessionsComponent extends Component {
             <FaIcon @icon="square-up-right" />
             {{get this.saveSession.lastSuccessful.value "title"}}
           </LinkTo>
-          {{t "general.savedSuccessfully"}}
+          {{t "general.savedSuccessfullyWithTitle"}}
         </div>
       {{/if}}
 

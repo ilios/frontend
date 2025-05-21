@@ -129,7 +129,7 @@ module('Acceptance | Instructor Groups', function (hooks) {
       await page.toggleNewInstructorGroupForm();
       await page.newInstructorGroupForm.title.set(newTitle);
       await page.newInstructorGroupForm.done.click();
-      assert.strictEqual(page.savedResult, newTitle + ' Saved Successfully');
+      assert.strictEqual(page.savedResult, newTitle + ' saved successfully');
       assert.strictEqual(page.headerTitle, 'Instructor Groups (1)');
       assert.strictEqual(page.list.items.length, 1);
       assert.strictEqual(page.list.items[0].title, newTitle);
