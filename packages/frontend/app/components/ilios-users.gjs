@@ -179,6 +179,7 @@ export default class IliosUsersComponent extends Component {
         <div class="list">
           <UserList
             @users={{this.searchForUsers.lastSuccessful.value}}
+            @headerIsLocked={{true}}
             @searchForUsers={{this.searchForUsers}}
             @sortBy={{@sortBy}}
             @setSortBy={{@setSortBy}}

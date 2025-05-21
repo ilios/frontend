@@ -47,8 +47,8 @@ export default class UserList extends Component {
     this.args.setSortBy(what);
   }
   <template>
-    <table class="user-list{{if @headerIsLocked ' locked'}}" data-test-user-list ...attributes>
-      <thead>
+    <table class="user-list" data-test-user-list ...attributes>
+      <thead class={{if @headerIsLocked "locked"}}>
         <tr>
           <th colspan="1" class="user-list-disabled" data-test-user-list-disabled></th>
           <SortableTh
