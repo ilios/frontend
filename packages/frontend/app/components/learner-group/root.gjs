@@ -45,6 +45,7 @@ import YupValidations from 'ilios-common/classes/yup-validations';
 import YupValidationMessage from 'ilios-common/components/yup-validation-message';
 import { string } from 'yup';
 const DEFAULT_URL_VALUE = 'https://';
+import { modifier } from 'ember-modifier';
 
 export default class LearnerGroupRootComponent extends Component {
   @service flashMessages;
@@ -67,6 +68,14 @@ export default class LearnerGroupRootComponent extends Component {
     this.location = this.args.learnerGroup.location;
     this.url = this.args.learnerGroup.url;
   }
+
+  updateLocation = modifier((element, [location]) => {
+    this.location = location;
+  });
+
+  updateUrl = modifier((element, [url]) => {
+    this.url = url;
+  });
 
   validations = new YupValidations(this, {
     bestUrl: string().trim().url().min(2).max(2000),
@@ -521,7 +530,13 @@ export default class LearnerGroupRootComponent extends Component {
   }
   <template>
     {{#let (uniqueId) as |templateId|}}
-      <section class="learner-group-root" data-test-learner-group-root ...attributes>
+      <section
+        class="learner-group-root"
+        data-test-learner-group-root
+        {{this.updateLocation @learnerGroup.location}}
+        {{this.updateUrl @learnerGroup.url}}
+        ...attributes
+      >
         {{#if this.isSavingGroups}}
           <WaitSaving
             @showProgress={{true}}
