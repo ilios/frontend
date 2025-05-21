@@ -46,9 +46,9 @@ export default class UserProfileComponent extends Component {
           @toggle={{@setShowCalendar}}
         />
       </div>
-      <div class="admin-block">
-        {{#if @showCalendar}}
-          <UserProfileCalendar @user={{@user}} />
+      <div class="blocks">
+        {{#if this.showCalendar}}
+          <UserProfileCalendar @user={{@user}} @selectEvent={{@selectEvent}} />
         {{/if}}
         <UserProfileBio
           @user={{@user}}

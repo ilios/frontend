@@ -104,9 +104,10 @@ export default class UserProfileCalendar extends Component {
         <IliosCalendarWeek
           @calendarEvents={{this.calendarEvents}}
           @date={{this.date}}
-          @areEventsSelectable={{false}}
+          @areEventsSelectable={{true}}
           @areDaysSelectable={{false}}
           @isLoadingEvents={{this.eventsData.isPending}}
+          @selectEvent={{@selectEvent}}
         />
       </div>
     </div>
