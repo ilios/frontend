@@ -28,6 +28,9 @@ export default class UserList extends Component {
   }
 
   get sortedUsers() {
+    if (this.args.users) {
+      return this.args.users;
+    }
     return this.sortedUsersData.isResolved ? this.sortedUsersData.value : [];
   }
 
