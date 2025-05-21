@@ -12,6 +12,7 @@ import IliosCalendarWeek from 'ilios-common/components/ilios-calendar-week';
 
 export default class UserProfileCalendar extends Component {
   @service fetch;
+  @service router;
   @service iliosConfig;
   @service userEvents;
   @service localeDays;
@@ -62,6 +63,10 @@ export default class UserProfileCalendar extends Component {
   gotoToday() {
     this.date = new Date();
   }
+  @action
+  selectEvent(event) {
+    this.router.transitionTo('events', event.slug);
+  }
   <template>
     <div class="user-profile-calendar" data-test-user-profile-calendar>
       <ul class="calendar-time-picker">
@@ -105,7 +110,7 @@ export default class UserProfileCalendar extends Component {
           @areEventsSelectable={{true}}
           @areDaysSelectable={{false}}
           @isLoadingEvents={{this.eventsData.isPending}}
-          @selectEvent={{@selectEvent}}
+          @selectEvent={{this.selectEvent}}
         />
       </div>
     </div>
