@@ -120,7 +120,7 @@ export default class UserList extends Component {
               <td colspan="5" class="text-left hide-from-small-screen" data-test-email>
                 {{user.email}}
               </td>
-              <td colspan="2" class="text-left hide-from-small-screen" data-test-primary-school>
+              <td colspan="2" class="text-left hide-from-small-screen" data-test-school>
                 {{user.school.title}}
               </td>
             </tr>

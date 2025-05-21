@@ -16,6 +16,7 @@ module('Integration | Component | ilios users', function (hooks) {
     await render(
       <template>
         <IliosUsers
+          @sortBy="fullName"
           @limit="25"
           @offset="25"
           @query=""
@@ -45,6 +46,7 @@ module('Integration | Component | ilios users', function (hooks) {
     await render(
       <template>
         <IliosUsers
+          @sortBy="fullName"
           @limit="25"
           @offset="25"
           @query={{this.value}}
@@ -96,6 +98,7 @@ module('Integration | Component | ilios users', function (hooks) {
     await render(
       <template>
         <IliosUsers
+          @sortBy="fullName"
           @showNewUserForm={{true}}
           @searchTerms={{(array)}}
           @setQuery={{(noop)}}
@@ -148,6 +151,7 @@ module('Integration | Component | ilios users', function (hooks) {
     await render(
       <template>
         <IliosUsers
+          @sortBy="fullName"
           @showNewUserForm={{true}}
           @searchTerms={{(array)}}
           @setQuery={{(noop)}}
@@ -199,6 +203,7 @@ module('Integration | Component | ilios users', function (hooks) {
     await render(
       <template>
         <IliosUsers
+          @sortBy="fullName"
           @showBulkNewUserForm={{true}}
           @searchTerms={{(array)}}
           @setQuery={{(noop)}}
@@ -248,6 +253,7 @@ module('Integration | Component | ilios users', function (hooks) {
     await render(
       <template>
         <IliosUsers
+          @sortBy="fullName"
           @showNewUserForm={{true}}
           @searchTerms={{(array)}}
           @setQuery={{(noop)}}
@@ -299,6 +305,7 @@ module('Integration | Component | ilios users', function (hooks) {
     await render(
       <template>
         <IliosUsers
+          @sortBy="fullName"
           @showBulkNewUserForm={{true}}
           @searchTerms={{(array)}}
           @setQuery={{(noop)}}
