@@ -45,14 +45,15 @@ import YupValidations from 'ilios-common/classes/yup-validations';
 import YupValidationMessage from 'ilios-common/components/yup-validation-message';
 import { string } from 'yup';
 const DEFAULT_URL_VALUE = 'https://';
+import { isNone } from '@ember/utils';
 
 export default class LearnerGroupRootComponent extends Component {
   @service flashMessages;
   @service intl;
   @service store;
   @service iliosConfig;
-  @tracked location = null;
-  @tracked url = null;
+  @tracked locationBuffer = null;
+  @tracked urlBuffer = null;
   @tracked showLearnerGroupCalendar = false;
   @tracked sortGroupsBy = 'title';
   @tracked isSavingGroups = false;
@@ -62,10 +63,12 @@ export default class LearnerGroupRootComponent extends Component {
   @tracked totalGroupsToSave = 0;
   @tracked isManagingInstructors = false;
 
-  constructor() {
-    super(...arguments);
-    this.location = this.args.learnerGroup.location;
-    this.url = this.args.learnerGroup.url;
+  get location() {
+    return isNone(this.locationBuffer) ? this.args.learnerGroup.location : this.locationBuffer;
+  }
+
+  get url() {
+    return isNone(this.urlBuffer) ? this.args.learnerGroup.url : this.urlBuffer;
   }
 
   validations = new YupValidations(this, {
@@ -223,7 +226,7 @@ export default class LearnerGroupRootComponent extends Component {
   changeLocation = restartableTask(async () => {
     this.args.learnerGroup.set('location', this.location);
     await this.args.learnerGroup.save();
-    this.location = this.args.learnerGroup.location;
+    this.locationBuffer = null;
   });
 
   @action
@@ -263,7 +266,7 @@ export default class LearnerGroupRootComponent extends Component {
 
   @action
   revertLocationChanges() {
-    this.location = this.args.learnerGroup.location;
+    this.locationBuffer = null;
   }
 
   @action
@@ -282,13 +285,13 @@ export default class LearnerGroupRootComponent extends Component {
     this.validations.removeErrorDisplayFor('url');
     this.args.learnerGroup.set('url', this.url);
     await this.args.learnerGroup.save();
-    this.url = this.args.learnerGroup.url;
+    this.urlBuffer = null;
   });
 
   @action
   revertUrlChanges() {
     this.validations.removeErrorDisplayFor('url');
-    this.url = this.args.learnerGroup.url;
+    this.urlBuffer = null;
   }
 
   @action
@@ -298,7 +301,7 @@ export default class LearnerGroupRootComponent extends Component {
     if (regex.test(value)) {
       value = value.substring(8);
     }
-    this.url = value;
+    this.urlBuffer = value;
     this.urlChanged = true;
   }
 
@@ -559,7 +562,11 @@ export default class LearnerGroupRootComponent extends Component {
             <span>
               {{#if @canUpdate}}
                 <EditableField
-                  @value={{if this.location this.location (t "general.clickToEdit")}}
+                  @value={{if
+                    @learnerGroup.location
+                    @learnerGroup.location
+                    (t "general.clickToEdit")
+                  }}
                   @save={{perform this.changeLocation}}
                   @close={{this.revertLocationChanges}}
                   @saveOnEnter={{true}}
@@ -571,11 +578,11 @@ export default class LearnerGroupRootComponent extends Component {
                     type="text"
                     value={{this.location}}
                     disabled={{isSaving}}
-                    {{on "input" (pick "target.value" (set this "location"))}}
+                    {{on "input" (pick "target.value" (set this "locationBuffer"))}}
                   />
                 </EditableField>
-              {{else if this.location}}
-                {{this.location}}
+              {{else if @learnerGroup.location}}
+                {{@learnerGroup.location}}
               {{else}}
                 {{t "general.none"}}
               {{/if}}
@@ -588,7 +595,7 @@ export default class LearnerGroupRootComponent extends Component {
             <span>
               {{#if @canUpdate}}
                 <EditableField
-                  @value={{if this.url this.url (t "general.clickToEdit")}}
+                  @value={{if @learnerGroup.url @learnerGroup.url (t "general.clickToEdit")}}
                   @save={{perform this.saveUrlChanges}}
                   @close={{this.revertUrlChanges}}
                   @saveOnEnter={{true}}
@@ -613,8 +620,8 @@ export default class LearnerGroupRootComponent extends Component {
                     data-test-url-validation-error-message
                   />
                 </EditableField>
-              {{else if this.url}}
-                {{this.url}}
+              {{else if @learnerGroup.url}}
+                {{@learnerGroup.url}}
               {{else}}
                 {{t "general.none"}}
               {{/if}}
