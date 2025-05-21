@@ -122,16 +122,21 @@ export default class LearnerGroupCohortUserManagerComponent extends Component {
               <thead data-test-headers>
                 <tr>
                   <th class="text-left" colspan="1">
-                    <input
-                      type="checkbox"
-                      checked={{and (includes @users this.selectedUsers) this.selectedUsers.length}}
-                      indeterminate={{and
-                        (not (includes @users this.selectedUsers))
-                        this.selectedUsers.length
-                      }}
-                      aria-label={{t "general.selectAllOrNone"}}
-                      {{on "click" this.toggleUserSelectionAllOrNone}}
-                    />
+                    {{#if @canUpdate}}
+                      <input
+                        type="checkbox"
+                        checked={{and
+                          (includes @users this.selectedUsers)
+                          this.selectedUsers.length
+                        }}
+                        indeterminate={{and
+                          (not (includes @users this.selectedUsers))
+                          this.selectedUsers.length
+                        }}
+                        aria-label={{t "general.selectAllOrNone"}}
+                        {{on "click" this.toggleUserSelectionAllOrNone}}
+                      />
+                    {{/if}}
                   </th>
                   <SortableTh
                     @colspan={{4}}
@@ -148,7 +153,9 @@ export default class LearnerGroupCohortUserManagerComponent extends Component {
                     {{t "general.email"}}
                   </th>
                   <th class="text-left" colspan="1">
-                    {{t "general.actions"}}
+                    {{#if @canUpdate}}
+                      {{t "general.actions"}}
+                    {{/if}}
                   </th>
                 </tr>
               </thead>
