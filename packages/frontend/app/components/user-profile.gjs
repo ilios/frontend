@@ -52,7 +52,7 @@ export default class UserProfileComponent extends Component {
       </div>
       <div class="blocks">
         {{#if this.showCalendar}}
-          <UserProfileCalendar @user={{@user}} />
+          <UserProfileCalendar @user={{@user}} @selectEvent={{@selectEvent}} />
         {{/if}}
         <UserProfileBio
           @user={{@user}}
