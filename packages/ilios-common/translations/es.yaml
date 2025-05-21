@@ -61,8 +61,8 @@ general:
   confirmRemove: "¿Estás seguro que quieres borrar este ofrecimiento con {learnerGroupCount} grupos de aprendedores? Esta acción no se puede deshacer."
   confirmSessionRemoval: ¿Está seguro que desea eliminar este sessión?
   contentAuthor: Autor del Contenido
-  copiedIcsFeedUrl: Copiado Mi Enlace ICS con Éxito
-  copiedSuccessfully: Copiado con Éxito
+  copiedIcsFeedUrl: Copiado Mi Enlace ICS con éxito
+  copiedSuccessfully: Copiado con éxito
   copyIcsFeedUrl: Copiar Mi Enlace ICS
   copyLink: Copiar el enlace
   copyrightAgreement: "El archivo que estoy subiendo es mío o tengo permiso expreso para reproducir y / o distribuir este artículo, o su uso aquí ha sido evaluado como permisible por la doctrina del uso justo. Este archivo no contiene ninguna información protegida de la salud, y su utilización aquí está en conformidad con las políticas del gobierno y Universidad sobre derechos de autor y de seguridad de la información y las directrices de mi institución para la conducta profesional."
@@ -70,7 +70,7 @@ general:
   copyrightRationale: Justificación para Derechos de Autor
   copySession: Copiar una Sesión
   copySessionSummary: 'Usted va a copiar esta sesión (sin datos del horario) en el curso seleccionado. La sesión nueva va a incluir todos los objectivos, terminos, y materiales de aprendizaje.  Para continuar haga click en "cumplido".  Para regresar a su sesión corriente, haga click en "cancelar".'
-  copySuccess: La Copia se ha Completado con Éxito
+  copySuccess: La Copia se ha Completado con éxito
   course: Curso
   courseLearningMaterials: Materiales de Aprendizaje del Curso
   courseLevel: "Nivel del curso {level}"
@@ -81,7 +81,7 @@ general:
   courseObjectives: Objetivos del Curso
   courseOrSessionType: Curso / Tipo de Sesión
   courseRollover: Copiar Curso
-  courseRolloverSuccess: Curso Copiado con Éxito
+  courseRolloverSuccess: Curso Copiado con éxito
   courseRolloverSummary: 'Va a rodar este curso en el seleccionado año académico, junto con todas las opciones seleccionadas.. Para continuar, haga clic en "done". Para volver a su curso corriente, haga clic en "cancel"'
   courseRolloverYearUnavailable: El Curso Ya Existe
   courses: Cursos
@@ -286,7 +286,7 @@ general:
   publishAsIs: Publique Como Es
   publishCourse: Publique Curso
   published: Publicado
-  publishedSuccessfully: Publicado con Éxito
+  publishedSuccessfully: Publicado con éxito
   publishSession: Publique La Sesión
   remove: Remover
   removeAll: Quitar Todos
@@ -298,9 +298,9 @@ general:
   reviewSessions: Sesiónes a Revisar
   saturday: Sábado
   save: Guardar
-  savedSuccessfully: Ahorrado Con Éxito
+  savedSuccessfully: Ahorrado con éxito
   scheduled: Programado
-  scheduledSuccessfully: Programdo con Éxito
+  scheduledSuccessfully: Programdo con éxito
   scheduling: Programación
   school: Escuela
   schools: Escuelas
@@ -385,7 +385,7 @@ general:
   universalLocator: Localizador universal de
   unlinkedObjectives: Este curso tiene objetivo(s) no vinculados
   unPublishCourse: No Publique El Curso
-  unPublishedSuccessfully: No Publicado con Éxito
+  unPublishedSuccessfully: No Publicado con éxito
   unPublishSession: No Publique La Sesión
   unusedObjectives: Objetivos no Utilizados
   upcomingActivities: "Mis Actividades para los próximos {days} días"
