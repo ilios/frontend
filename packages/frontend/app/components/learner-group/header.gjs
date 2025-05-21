@@ -1,7 +1,6 @@
 import Component from '@glimmer/component';
 import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
-import { isNone } from '@ember/utils';
 import { dropTask } from 'ember-concurrency';
 import { TrackedAsyncData } from 'ember-async-data';
 import EditableField from 'ilios-common/components/editable-field';
@@ -25,7 +24,7 @@ export default class LearnerGroupHeaderComponent extends Component {
   });
 
   get title() {
-    return isNone(this.titleBuffer) ? this.args.learnerGroup.title : this.titleBuffer;
+    return this.titleBuffer ?? this.args.learnerGroup.title;
   }
 
   @cached
