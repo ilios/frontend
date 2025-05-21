@@ -15,14 +15,14 @@ import reverse from 'ilios-common/helpers/reverse';
 import YupValidations from 'ilios-common/classes/yup-validations';
 import YupValidationMessage from 'ilios-common/components/yup-validation-message';
 import { string } from 'yup';
+import { modifier } from 'ember-modifier';
 
 export default class LearnerGroupHeaderComponent extends Component {
   @tracked title;
 
-  constructor() {
-    super(...arguments);
-    this.title = this.args.learnerGroup.title;
-  }
+  updateTitle = modifier((element, [title]) => {
+    this.title = title;
+  });
 
   validations = new YupValidations(this, {
     title: string().trim().min(3).max(60),
@@ -81,7 +81,12 @@ export default class LearnerGroupHeaderComponent extends Component {
     await this.args.learnerGroup.save();
   });
   <template>
-    <header class="learner-group-header" data-test-learner-group-header ...attributes>
+    <header
+      class="learner-group-header"
+      data-test-learner-group-header
+      {{this.updateTitle @learnerGroup.title}}
+      ...attributes
+    >
       <div class="header-bar">
         <span class="title">
           {{#if @canUpdate}}
