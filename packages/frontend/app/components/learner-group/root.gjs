@@ -45,7 +45,6 @@ import YupValidations from 'ilios-common/classes/yup-validations';
 import YupValidationMessage from 'ilios-common/components/yup-validation-message';
 import { string } from 'yup';
 const DEFAULT_URL_VALUE = 'https://';
-import { isNone } from '@ember/utils';
 
 export default class LearnerGroupRootComponent extends Component {
   @service flashMessages;
@@ -64,11 +63,11 @@ export default class LearnerGroupRootComponent extends Component {
   @tracked isManagingInstructors = false;
 
   get location() {
-    return isNone(this.locationBuffer) ? this.args.learnerGroup.location : this.locationBuffer;
+    return this.locationBuffer ?? this.args.learnerGroup.location;
   }
 
   get url() {
-    return isNone(this.urlBuffer) ? this.args.learnerGroup.url : this.urlBuffer;
+    return this.urlBuffer ?? this.args.learnerGroup.url;
   }
 
   validations = new YupValidations(this, {
