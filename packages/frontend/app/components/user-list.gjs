@@ -96,38 +96,46 @@ export default class UserList extends Component {
         </tr>
       </thead>
       <tbody>
-        {{#if this.sortedUsers.length}}
-          {{#each this.sortedUsers as |user|}}
-            <tr
-              class="user-list-row{{unless user.enabled ' disabled-user-account'}}"
-              data-test-user
-            >
-              <td colspan="1" class="text-left" data-test-user-disabled>
-                {{#unless user.enabled}}
-                  <FaIcon
-                    @icon="user-xmark"
-                    @title={{t "general.disabled"}}
-                    class="error"
-                    data-test-disabled-user-icon
-                  />
-                {{/unless}}
-              </td>
-              <td colspan="3" class="text-left" data-test-full-name>
-                <LinkTo @route="user" @model={{user}} data-test-user-link>
-                  <UserNameInfo @user={{user}} />
-                </LinkTo>
-              </td>
-              <td colspan="2" class="text-left hide-from-small-screen" data-test-campus-id>
-                {{user.campusId}}
-              </td>
-              <td colspan="5" class="text-left hide-from-small-screen" data-test-email>
-                {{user.email}}
-              </td>
-              <td colspan="2" class="text-left hide-from-small-screen" data-test-school>
-                {{user.school.title}}
+        {{#if this.sortedUsersData.isResolved}}
+          {{#if this.sortedUsers.length}}
+            {{#each this.sortedUsers as |user|}}
+              <tr
+                class="user-list-row{{unless user.enabled ' disabled-user-account'}}"
+                data-test-user
+              >
+                <td colspan="1" class="text-left" data-test-user-disabled>
+                  {{#unless user.enabled}}
+                    <FaIcon
+                      @icon="user-xmark"
+                      @title={{t "general.disabled"}}
+                      class="error"
+                      data-test-disabled-user-icon
+                    />
+                  {{/unless}}
+                </td>
+                <td colspan="3" class="text-left" data-test-full-name>
+                  <LinkTo @route="user" @model={{user}} data-test-user-link>
+                    <UserNameInfo @user={{user}} />
+                  </LinkTo>
+                </td>
+                <td colspan="2" class="text-left hide-from-small-screen" data-test-campus-id>
+                  {{user.campusId}}
+                </td>
+                <td colspan="5" class="text-left hide-from-small-screen" data-test-email>
+                  {{user.email}}
+                </td>
+                <td colspan="2" class="text-left hide-from-small-screen" data-test-school>
+                  {{user.school.title}}
+                </td>
+              </tr>
+            {{/each}}
+          {{else}}
+            <tr>
+              <td colspan="13" class="no-results">
+                {{t "general.noResultsFound"}}
               </td>
             </tr>
-          {{/each}}
+          {{/if}}
         {{else}}
           <LoadingSpinner />
         {{/if}}
