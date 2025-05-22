@@ -83,16 +83,9 @@ export default class UserList extends Component {
           >
             {{t "general.email"}}
           </SortableTh>
-          <SortableTh
-            class="hide-from-small-screen"
-            @align="left"
-            @colspan={{2}}
-            @sortedAscending={{this.sortedAscending}}
-            @onClick={{fn this.setSortBy "primarySchool"}}
-            @sortedBy={{or (eq @sortBy "primarySchool") (eq @sortBy "primarySchool:desc")}}
-          >
-            {{t "general.primarySchool"}}
-          </SortableTh>
+          <th colspan="2" class="hide-from-small-screen" data-test-user-list-school>{{t
+              "general.primarySchool"
+            }}</th>
         </tr>
       </thead>
       <tbody>
