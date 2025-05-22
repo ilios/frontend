@@ -1,0 +1,37 @@
+@use "../colors" as c;
+@use "../mixins" as m;
+
+.user-list {
+  .no-results {
+    margin: 0.5rem 0;
+    padding: 0.25rem 0;
+    text-align: center;
+  }
+
+  .user-list-row {
+    &:nth-of-type(even) {
+      background-color: c.$culturedGrey;
+    }
+
+    .user-list-campus-id,
+    .user-list-email,
+    .user-list-primary-school {
+      display: none;
+    }
+
+    .user-list-fullname,
+    .user-list-campus-id,
+    .user-list-email,
+    .user-list-primary-school {
+      text-align: left;
+    }
+
+    @include m.for-tablet-and-up {
+      .user-list-campus-id,
+      .user-list-email,
+      .user-list-primary-school {
+        display: inline;
+      }
+    }
+  }
+}

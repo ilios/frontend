@@ -34,6 +34,15 @@
   .list {
     @include m.main-list-box-table;
 
+    .user-list {
+      thead {
+        &.locked {
+          position: sticky;
+          top: 0;
+        }
+      }
+    }
+
     i {
       margin-left: 0.5rem;
     }

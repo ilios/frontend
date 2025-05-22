@@ -6,21 +6,20 @@ import { TrackedAsyncData } from 'ember-async-data';
 import { tracked, cached } from '@glimmer/tracking';
 import { ensureSafeComponent } from '@embroider/util';
 import { action } from '@ember/object';
-import NewDirectoryUser from './new-directory-user';
-import NewUser from './new-user';
-import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
+import { fn } from '@ember/helper';
+import t from 'ember-intl/helpers/t';
 import pick from 'ilios-common/helpers/pick';
 import or from 'ember-truth-helpers/helpers/or';
-import { fn } from '@ember/helper';
 import FaIcon from 'ilios-common/components/fa-icon';
 import notEq from 'ember-truth-helpers/helpers/not-eq';
 import load from 'ember-async-data/helpers/load';
 import BulkNewUsers from 'frontend/components/bulk-new-users';
 import LoadingSpinner from 'ilios-common/components/loading-spinner';
 import PagedlistControls from 'ilios-common/components/pagedlist-controls';
-import gt from 'ember-truth-helpers/helpers/gt';
 import UserList from 'frontend/components/user-list';
+import NewDirectoryUser from './new-directory-user';
+import NewUser from './new-user';
 
 const DEBOUNCE_TIMEOUT = 250;
 
@@ -35,7 +34,6 @@ export default class IliosUsersComponent extends Component {
   constructor() {
     super(...arguments);
     this.query = this.args.query;
-    this.searchForUsers.perform();
   }
 
   @cached
@@ -53,17 +51,21 @@ export default class IliosUsersComponent extends Component {
     return ensureSafeComponent(component, this);
   }
 
-  searchForUsers = restartableTask(async () => {
+  searchForUsers = restartableTask(async (sort = 'lastName', sortDir = 'ASC') => {
     const q = cleanQuery(this.args.query);
-    await timeout(DEBOUNCE_TIMEOUT);
-    return this.store.query('user', {
+    const orderPrimary = `order_by[${sort === 'fullName' ? 'lastName' : sort}]`;
+    const orderSecondary = 'order_by[firstName]';
+    const query = {
       // overfetch for nextPage functionality
       limit: this.args.limit + 1,
       q,
       offset: this.args.offset,
-      'order_by[lastName]': 'ASC',
-      'order_by[firstName]': 'ASC',
-    });
+    };
+    query[orderPrimary] = sortDir;
+    query[orderSecondary] = sortDir;
+
+    await timeout(DEBOUNCE_TIMEOUT);
+    return this.store.query('user', query);
   });
 
   @action
@@ -164,43 +166,34 @@ export default class IliosUsersComponent extends Component {
             {{/let}}
           {{/if}}
         </section>
-        {{#if this.searchForUsers.lastSuccessful}}
-          <div data-test-top-paged-list-controls>
-            <PagedlistControls
-              @total={{this.searchForUsers.lastSuccessful.value.length}}
-              @offset={{@offset}}
-              @limit={{@limit}}
-              @limitless={{true}}
-              @setOffset={{this.setOffset}}
-              @setLimit={{this.setLimit}}
-            />
-          </div>
-          <div class="list">
-            {{#if this.searchForUsers.isRunning}}
-              <LoadingSpinner />
-            {{else}}
-              {{#if (gt this.searchForUsers.lastSuccessful.value.length 0)}}
-                <UserList @users={{this.searchForUsers.lastSuccessful.value}} />
-              {{else}}
-                <span class="no-results">
-                  {{t "general.noResultsFound"}}
-                </span>
-              {{/if}}
-            {{/if}}
-          </div>
-          <div data-test-bottom-paged-list-controls>
-            <PagedlistControls
-              @total={{this.searchForUsers.lastSuccessful.value.length}}
-              @offset={{@offset}}
-              @limit={{@limit}}
-              @limitless={{true}}
-              @setOffset={{this.setOffset}}
-              @setLimit={{this.setLimit}}
-            />
-          </div>
-        {{else}}
-          <LoadingSpinner />
-        {{/if}}
+        <div data-test-top-paged-list-controls>
+          <PagedlistControls
+            @total={{this.searchForUsers.lastSuccessful.value.length}}
+            @offset={{@offset}}
+            @limit={{@limit}}
+            @limitless={{true}}
+            @setOffset={{this.setOffset}}
+            @setLimit={{this.setLimit}}
+          />
+        </div>
+        <div class="list">
+          <UserList
+            @headerIsLocked={{true}}
+            @searchForUsers={{this.searchForUsers}}
+            @sortBy={{@sortBy}}
+            @setSortBy={{@setSortBy}}
+          />
+        </div>
+        <div data-test-bottom-paged-list-controls>
+          <PagedlistControls
+            @total={{this.searchForUsers.lastSuccessful.value.length}}
+            @offset={{@offset}}
+            @limit={{@limit}}
+            @limitless={{true}}
+            @setOffset={{this.setOffset}}
+            @setLimit={{this.setLimit}}
+          />
+        </div>
       </section>
     </div>
   </template>

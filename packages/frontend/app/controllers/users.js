@@ -7,6 +7,7 @@ export default class UsersController extends Controller {
 
   queryParams = [
     {
+      sortBy: 'sortBy',
       offset: 'offset',
       limit: 'limit',
       query: 'filter',
@@ -15,6 +16,7 @@ export default class UsersController extends Controller {
       searchTerms: 'search',
     },
   ];
+  sortBy = 'fullName';
   offset = 0;
   limit = 25;
   query = null;
