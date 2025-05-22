@@ -89,7 +89,7 @@ export default class UserList extends Component {
         </tr>
       </thead>
       <tbody>
-        {{#if this.sortedUsersData.isResolved}}
+        {{#if (or @users this.sortedUsersData.isResolved)}}
           {{#if this.sortedUsers.length}}
             {{#each this.sortedUsers as |user|}}
               <tr
