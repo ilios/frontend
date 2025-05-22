@@ -1,27 +1,25 @@
 import Component from '@glimmer/component';
-import { cached, tracked } from '@glimmer/tracking';
+import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
 import { isEmpty } from '@ember/utils';
 import { all } from 'rsvp';
-import { TrackedAsyncData } from 'ember-async-data';
 import { dropTask, timeout } from 'ember-concurrency';
-import { ValidateIf } from 'class-validator';
-import { validatable, IsEmail, NotBlank, Length } from 'ilios-common/decorators/validation';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
 import perform from 'ember-concurrency/helpers/perform';
 import FaIcon from 'ilios-common/components/fa-icon';
-import { uniqueId, fn, concat } from '@ember/helper';
+import { uniqueId, concat } from '@ember/helper';
 import includes from 'ilios-common/helpers/includes';
 import pick from 'ilios-common/helpers/pick';
 import set from 'ember-set-helper/helpers/set';
-import ValidationError from 'ilios-common/components/validation-error';
 import not from 'ember-truth-helpers/helpers/not';
-import gt from 'ember-truth-helpers/helpers/gt';
 import eq from 'ember-truth-helpers/helpers/eq';
+import YupValidations from 'ilios-common/classes/yup-validations';
+import YupValidationMessage from 'ilios-common/components/yup-validation-message';
+import { string } from 'yup';
+import isEmail from 'validator/lib/isEmail';
 
-@validatable
 export default class UserProfileBioManagerComponent extends Component {
   @service currentUser;
   @service iliosConfig;
@@ -29,26 +27,18 @@ export default class UserProfileBioManagerComponent extends Component {
   @service fetch;
   @service store;
 
-  @tracked @Length(1, 50) @NotBlank() firstName;
-  @tracked @Length(0, 20) middleName;
-  @tracked @Length(1, 50) @NotBlank() lastName;
-  @tracked @Length(0, 16) campusId;
-  @tracked @Length(0, 16) otherId;
-  @tracked @IsEmail() @Length(1, 100) @NotBlank() email;
-  @tracked @Length(0, 200) displayName;
-  @tracked @Length(0, 50) pronouns;
-  @tracked @IsEmail() @Length(0, 100) preferredEmail;
-  @tracked @Length(0, 20) phone;
-  @tracked
-  @Length(1, 100)
-  @NotBlank()
-  username;
-  @tracked
-  @ValidateIf((o) => o.args.canEditUsernameAndPassword && o.changeUserPassword)
-  @Length(5)
-  @NotBlank()
-  password;
-
+  @tracked firstName;
+  @tracked middleName;
+  @tracked lastName;
+  @tracked campusId;
+  @tracked otherId;
+  @tracked email;
+  @tracked displayName;
+  @tracked pronouns;
+  @tracked preferredEmail;
+  @tracked phone;
+  @tracked username;
+  @tracked password;
   @tracked updatedFieldsFromSync = [];
   @tracked showSyncErrorMessage = false;
   @tracked showUsernameTakenErrorMessage = false;
@@ -80,12 +70,90 @@ export default class UserProfileBioManagerComponent extends Component {
     }
   }
 
-  @cached
-  get hasErrorForPasswordData() {
-    return new TrackedAsyncData(this.hasErrorFor('password'));
+  validations = new YupValidations(this, {
+    firstName: string().ensure().trim().required().max(50),
+    middleName: string().ensure().trim().max(20),
+    lastName: string().ensure().trim().required().max(50),
+    campusId: string().ensure().trim().max(16),
+    otherId: string().ensure().trim().max(16),
+    email: string()
+      .ensure()
+      .trim()
+      .required()
+      .max(100)
+      .test('email', this.validateEmailMessage, this.validateEmail),
+    displayName: string().ensure().trim().max(200),
+    pronouns: string().ensure().trim().max(50),
+    preferredEmail: string()
+      .ensure()
+      .trim()
+      .max(100)
+      .test('preferred-email', this.validateEmailMessage, this.validateEmail),
+    phone: string().ensure().trim().max(20),
+    username: string()
+      .ensure()
+      .trim()
+      .required()
+      .max(100)
+      .test(
+        'username-uniqueness',
+        (d) => {
+          return {
+            path: d.path,
+            messageKey: 'errors.duplicateUsername',
+          };
+        },
+        async (value) => {
+          const auths = await this.store.query('authentication', {
+            filters: { username: value },
+          });
+          return !auths.some((auth) => auth.belongsTo('user').id() !== this.args.user.id);
+        },
+      ),
+    password: string().when(['$args.canEditUsernameAndPassword', '$changeUserPassword'], {
+      is: true,
+      // the password cannot be a blank string (after trimming) and has to be at least 5 characters long.
+      then: (schema) =>
+        schema
+          .ensure()
+          .test(
+            'blank-password',
+            (d) => {
+              return {
+                path: d.path,
+                messageKey: 'errors.empty',
+              };
+            },
+            (value) => '' !== value.trim(),
+          )
+          .min(5),
+      otherwise: (schema) => schema.notRequired(),
+    }),
+  });
+
+  get checkPasswordStrength() {
+    // The password is eligible for a strength check if it is not a blank string (after trimming),
+    // and if its length is at least 5 characters.
+    return '' !== this.password?.trim() && this.password?.length >= 5;
   }
-  get hasErrorForPassword() {
-    return this.hasErrorForPasswordData.isResolved ? this.hasErrorForPasswordData.value : false;
+
+  validateEmail(value) {
+    // short-circuit on empty input - this is being caught by `required()` already.
+    // that way, we don't end up with two separate validation errors on empty input.
+    if ('' === value) {
+      return true;
+    }
+    // Yup's email validation is misaligned with our backend counterpart.
+    // See https://github.com/jquense/yup?tab=readme-ov-file#stringemailmessage-string--function-schema
+    // So we'll continue using the email validation provided by validator.js.
+    return isEmail(value);
+  }
+
+  validateEmailMessage(d) {
+    return {
+      path: d.path,
+      messageKey: 'errors.email',
+    };
   }
 
   async calculatePasswordStrengthScore() {
@@ -95,19 +163,12 @@ export default class UserProfileBioManagerComponent extends Component {
     this.passwordStrengthScore = obj.score;
   }
 
-  async isUsernameTaken(username, userId) {
-    const auths = await this.store.query('authentication', {
-      filters: { username },
-    });
-    return auths.some((auth) => auth.belongsTo('user').id() !== userId);
-  }
-
   @action
   cancelChangeUserPassword() {
     this.changeUserPassword = false;
     this.password = null;
     this.passwordStrengthScore = 0;
-    this.removeErrorDisplayFor('password');
+    this.validations.removeErrorDisplayFor('password');
   }
 
   @action
@@ -147,31 +208,12 @@ export default class UserProfileBioManagerComponent extends Component {
 
   save = dropTask(async () => {
     const store = this.store;
-    this.addErrorDisplaysFor([
-      'firstName',
-      'middleName',
-      'lastName',
-      'campusId',
-      'otherId',
-      'email',
-      'displayName',
-      'pronouns',
-      'preferredEmail',
-      'phone',
-      'username',
-      'password',
-    ]);
-    const isValid = await this.isValid();
+    this.validations.addErrorDisplayForAllFields();
+    const isValid = await this.validations.isValid();
     if (!isValid) {
       return false;
     }
-
-    const isUsernameTaken = await this.isUsernameTaken(this.username, this.args.user.id);
-    if (isUsernameTaken) {
-      this.clearErrorDisplay();
-      this.showUsernameTakenErrorMessage = true;
-      return false;
-    }
+    this.validations.clearErrorDisplay();
 
     const user = this.args.user;
     user.set('firstName', this.firstName);
@@ -204,10 +246,7 @@ export default class UserProfileBioManagerComponent extends Component {
     await user.save();
     const pendingUpdates = await user.pendingUserUpdates;
     await all(pendingUpdates.map((update) => update.destroyRecord()));
-    this.clearErrorDisplay();
-    this.hasSavedRecently = true;
     await timeout(500);
-    this.hasSavedRecently = false;
     this.cancel();
   });
 
@@ -321,11 +360,15 @@ export default class UserProfileBioManagerComponent extends Component {
               type="text"
               value={{this.firstName}}
               {{on "input" (pick "target.value" (set this "firstName"))}}
-              {{on "keyup" (fn this.addErrorDisplayFor "firstName")}}
               {{on "keyup" this.keyboard}}
-              data-test-first-name-input
+              {{this.validations.attach "firstName"}}
+              data-test-firstname-input
             />
-            <ValidationError @validatable={{this}} @property="firstName" />
+            <YupValidationMessage
+              @description={{t "general.firstName"}}
+              @validationErrors={{this.validations.errors.firstName}}
+              data-test-firstname-validation-error-message
+            />
           </div>
           <div class="item" data-test-middlename>
             <label for="middlename-{{templateId}}">
@@ -336,11 +379,15 @@ export default class UserProfileBioManagerComponent extends Component {
               type="text"
               value={{this.middleName}}
               {{on "input" (pick "target.value" (set this "middleName"))}}
-              {{on "keyup" (fn this.addErrorDisplayFor "middleName")}}
               {{on "keyup" this.keyboard}}
-              data-test-middle-name-input
+              {{this.validations.attach "middleName"}}
+              data-test-middlename-input
             />
-            <ValidationError @validatable={{this}} @property="middleName" />
+            <YupValidationMessage
+              @description={{t "general.middleName"}}
+              @validationErrors={{this.validations.errors.middleName}}
+              data-test-middlename-validation-error-message
+            />
           </div>
           <div
             class="item{{if
@@ -357,11 +404,15 @@ export default class UserProfileBioManagerComponent extends Component {
               type="text"
               value={{this.lastName}}
               {{on "input" (pick "target.value" (set this "lastName"))}}
-              {{on "keyup" (fn this.addErrorDisplayFor "lastName")}}
               {{on "keyup" this.keyboard}}
-              data-test-last-name-input
+              {{this.validations.attach "lastName"}}
+              data-test-lastname-input
             />
-            <ValidationError @validatable={{this}} @property="lastName" />
+            <YupValidationMessage
+              @description={{t "general.lastName"}}
+              @validationErrors={{this.validations.errors.lastName}}
+              data-test-lastname-validation-error-message
+            />
           </div>
           <div
             class="item campus-id{{if
@@ -379,8 +430,8 @@ export default class UserProfileBioManagerComponent extends Component {
                 type="text"
                 value={{this.campusId}}
                 {{on "input" (pick "target.value" (set this "campusId"))}}
-                {{on "keyup" (fn this.addErrorDisplayFor "campusId")}}
                 {{on "keyup" this.keyboard}}
+                {{this.validations.attach "campusId"}}
                 data-test-campus-id-input
               />
               {{#unless @canEditUsernameAndPassword}}
@@ -398,7 +449,11 @@ export default class UserProfileBioManagerComponent extends Component {
                   />
                 </button>
               {{/unless}}
-              <ValidationError @validatable={{this}} @property="campusId" />
+              <YupValidationMessage
+                @description={{t "general.campusId"}}
+                @validationErrors={{this.validations.errors.campusId}}
+                data-test-campus-id-validation-error-message
+              />
             </div>
             {{#if this.showSyncErrorMessage}}
               <span class="validation-error-message" data-test-sync-error>
@@ -415,11 +470,15 @@ export default class UserProfileBioManagerComponent extends Component {
               type="text"
               value={{this.otherId}}
               {{on "input" (pick "target.value" (set this "otherId"))}}
-              {{on "keyup" (fn this.addErrorDisplayFor "otherId")}}
               {{on "keyup" this.keyboard}}
+              {{this.validations.attach "otherId"}}
               data-test-other-id-input
             />
-            <ValidationError @validatable={{this}} @property="otherId" />
+            <YupValidationMessage
+              @description={{t "general.otherId"}}
+              @validationErrors={{this.validations.errors.otherId}}
+              data-test-other-id-validation-error-message
+            />
           </div>
           <div
             class="item{{if
@@ -436,11 +495,15 @@ export default class UserProfileBioManagerComponent extends Component {
               type="text"
               value={{this.email}}
               {{on "input" (pick "target.value" (set this "email"))}}
-              {{on "keyup" (fn this.addErrorDisplayFor "email")}}
               {{on "keyup" this.keyboard}}
+              {{this.validations.attach "email"}}
               data-test-email-input
             />
-            <ValidationError @validatable={{this}} @property="email" />
+            <YupValidationMessage
+              @description={{t "general.email"}}
+              @validationErrors={{this.validations.errors.email}}
+              data-test-email-validation-error-message
+            />
           </div>
           <div
             class="item{{if
@@ -457,11 +520,15 @@ export default class UserProfileBioManagerComponent extends Component {
               type="text"
               value={{this.displayName}}
               {{on "input" (pick "target.value" (set this "displayName"))}}
-              {{on "keyup" (fn this.addErrorDisplayFor "displayName")}}
               {{on "keyup" this.keyboard}}
-              data-test-display-name-input
+              {{this.validations.attach "displayName"}}
+              data-test-displayname-input
             />
-            <ValidationError @validatable={{this}} @property="displayName" />
+            <YupValidationMessage
+              @description={{t "general.displayName"}}
+              @validationErrors={{this.validations.errors.displayName}}
+              data-test-displayname-validation-error-message
+            />
           </div>
           <div
             class="item{{if
@@ -478,11 +545,15 @@ export default class UserProfileBioManagerComponent extends Component {
               type="text"
               value={{this.pronouns}}
               {{on "input" (pick "target.value" (set this "pronouns"))}}
-              {{on "keyup" (fn this.addErrorDisplayFor "pronouns")}}
               {{on "keyup" this.keyboard}}
+              {{this.validations.attach "pronouns"}}
               data-test-pronouns-input
             />
-            <ValidationError @validatable={{this}} @property="pronouns" />
+            <YupValidationMessage
+              @description={{t "general.pronouns"}}
+              @validationErrors={{this.validations.errors.pronouns}}
+              data-test-pronouns-validation-error-message
+            />
           </div>
           <div
             class="item{{if
@@ -499,11 +570,15 @@ export default class UserProfileBioManagerComponent extends Component {
               type="text"
               value={{this.preferredEmail}}
               {{on "input" (pick "target.value" (set this "preferredEmail"))}}
-              {{on "keyup" (fn this.addErrorDisplayFor "preferredEmail")}}
               {{on "keyup" this.keyboard}}
+              {{this.validations.attach "preferredEmail"}}
               data-test-preferred-email-input
             />
-            <ValidationError @validatable={{this}} @property="preferredEmail" />
+            <YupValidationMessage
+              @description={{t "general.preferredEmail"}}
+              @validationErrors={{this.validations.errors.preferredEmail}}
+              data-test-preferred-email-validation-error-message
+            />
           </div>
           <div
             class="item{{if
@@ -520,11 +595,15 @@ export default class UserProfileBioManagerComponent extends Component {
               type="text"
               value={{this.phone}}
               {{on "input" (pick "target.value" (set this "phone"))}}
-              {{on "keyup" (fn this.addErrorDisplayFor "phone")}}
               {{on "keyup" this.keyboard}}
+              {{this.validations.attach "phone"}}
               data-test-phone-input
             />
-            <ValidationError @validatable={{this}} @property="phone" />
+            <YupValidationMessage
+              @description={{t "general.phone"}}
+              @validationErrors={{this.validations.errors.phone}}
+              data-test-phone-validation-error-message
+            />
           </div>
           <div
             class="item{{if
@@ -541,18 +620,16 @@ export default class UserProfileBioManagerComponent extends Component {
               type="text"
               value={{this.username}}
               {{on "input" (pick "target.value" (set this "username"))}}
-              {{on "input" (set this "showUsernameTakenErrorMessage" false)}}
-              {{on "keyup" (fn this.addErrorDisplayFor "username")}}
               {{on "keyup" this.keyboard}}
+              {{this.validations.attach "username"}}
               disabled={{not @canEditUsernameAndPassword}}
               data-test-username-input
             />
-            <ValidationError @validatable={{this}} @property="username" />
-            {{#if this.showUsernameTakenErrorMessage}}
-              <span class="validation-error-message" data-test-duplicate-username>
-                {{t "errors.duplicateUsername"}}
-              </span>
-            {{/if}}
+            <YupValidationMessage
+              @description={{t "general.username"}}
+              @validationErrors={{this.validations.errors.username}}
+              data-test-username-validation-error-message
+            />
           </div>
           {{#if @canEditUsernameAndPassword}}
             <div class="item password" data-test-password>
@@ -565,13 +642,16 @@ export default class UserProfileBioManagerComponent extends Component {
                   type="password"
                   value={{this.password}}
                   {{on "input" (pick "target.value" this.setPassword)}}
-                  {{on "keyup" (fn this.addErrorDisplayFor "password")}}
                   {{on "keyup" this.keyboard}}
+                  {{this.validations.attach "password"}}
                   data-test-password-input
                 />
-                {{#if this.hasErrorForPassword}}
-                  <ValidationError @validatable={{this}} @property="password" />
-                {{else if (gt this.password.length 0)}}
+                <YupValidationMessage
+                  @description={{t "general.password"}}
+                  @validationErrors={{this.validations.errors.password}}
+                  data-test-password-validation-error-message
+                />
+                {{#if this.checkPasswordStrength}}
                   <span
                     class="password-strength {{concat 'strength-' this.passwordStrengthScore}}"
                     data-test-password-strength-text

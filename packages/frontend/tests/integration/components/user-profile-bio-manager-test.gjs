@@ -409,7 +409,18 @@ module('Integration | Component | user profile bio manager', function (hooks) {
     assert.notOk(component.password.hasError);
     await component.password.set('');
     await component.save();
-    assert.ok(component.password.hasError);
+    assert.strictEqual(component.password.errors.length, 2);
+    assert.strictEqual(component.password.errors[0].text, 'Password can not be empty');
+    assert.strictEqual(
+      component.password.errors[1].text,
+      'Password is too short (minimum is 5 characters)',
+    );
+    await component.password.set('a');
+    assert.strictEqual(component.password.errors.length, 1);
+    assert.strictEqual(
+      component.password.errors[0].text,
+      'Password is too short (minimum is 5 characters)',
+    );
     await component.password.set('abcdef');
     await component.save();
     assert.notOk(component.password.hasError);
@@ -679,9 +690,8 @@ module('Integration | Component | user profile bio manager', function (hooks) {
     assert.notOk(component.username.hasError);
     await component.username.set('geflarknik');
     await component.username.submit();
-    assert.ok(component.username.hasError);
     assert.strictEqual(
-      component.username.errors,
+      component.username.error,
       'This username is already taken by another user account.',
     );
     await component.username.set('geflarknik2');
