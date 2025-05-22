@@ -98,6 +98,7 @@ export default class SessionIlmComponent extends Component {
           <ToggleYesno
             @yes={{this.isIndependentLearning}}
             @toggle={{perform this.saveIndependentLearning}}
+            @disabled={{@session.ilmSession.content}}
             data-test-ilm-toggle
           />
         {{else}}
