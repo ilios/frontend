@@ -17,16 +17,15 @@ import YupValidationMessage from 'ilios-common/components/yup-validation-message
 import { string } from 'yup';
 
 export default class LearnerGroupHeaderComponent extends Component {
-  @tracked title;
-
-  constructor() {
-    super(...arguments);
-    this.title = this.args.learnerGroup.title;
-  }
+  @tracked titleBuffer;
 
   validations = new YupValidations(this, {
     title: string().trim().min(3).max(60),
   });
+
+  get title() {
+    return this.titleBuffer ?? this.args.learnerGroup.title;
+  }
 
   @cached
   get upstreamRelationshipsData() {
@@ -67,7 +66,7 @@ export default class LearnerGroupHeaderComponent extends Component {
   @action
   revertTitleChanges() {
     this.validations.removeErrorDisplayFor('title');
-    this.title = this.args.learnerGroup.title;
+    this.titleBuffer = null;
   }
 
   changeTitle = dropTask(async () => {
@@ -79,6 +78,7 @@ export default class LearnerGroupHeaderComponent extends Component {
     this.validations.removeErrorDisplayFor('title');
     this.args.learnerGroup.title = this.title;
     await this.args.learnerGroup.save();
+    this.titleBuffer = null;
   });
   <template>
     <header class="learner-group-header" data-test-learner-group-header ...attributes>
@@ -87,7 +87,7 @@ export default class LearnerGroupHeaderComponent extends Component {
           {{#if @canUpdate}}
             <EditableField
               data-test-title
-              @value={{if this.title this.title (t "general.clickToEdit")}}
+              @value={{if @learnerGroup.title @learnerGroup.title (t "general.clickToEdit")}}
               @save={{perform this.changeTitle}}
               @close={{this.revertTitleChanges}}
               @saveOnEnter={{true}}
@@ -99,7 +99,7 @@ export default class LearnerGroupHeaderComponent extends Component {
                 type="text"
                 value={{this.title}}
                 disabled={{isSaving}}
-                {{on "input" (pick "target.value" (set this "title"))}}
+                {{on "input" (pick "target.value" (set this "titleBuffer"))}}
                 {{this.validations.attach "title"}}
               />
               <YupValidationMessage
@@ -109,7 +109,7 @@ export default class LearnerGroupHeaderComponent extends Component {
               />
             </EditableField>
           {{else}}
-            <h2 data-test-title>{{this.title}}</h2>
+            <h2 data-test-title>{{@learnerGroup.title}}</h2>
           {{/if}}
         </span>
         <span class="info" data-test-members>
