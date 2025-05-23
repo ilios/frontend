@@ -76,4 +76,85 @@ module('Integration | Component | sessions-grid-offering', function (hooks) {
     assert.strictEqual(component.instructors, '(5) 0 guy M. Mc0son, 1 guy...');
     assert.ok(component.edit.isPresent);
   });
+
+  test('change location and save', async function (assert) {
+    const offering = this.server.create('offering', {
+      session: this.session,
+      room: 'Room 101',
+    });
+
+    const model = await this.owner.lookup('service:store').findRecord('offering', offering.id);
+    this.set('offering', model);
+    await render(
+      <template><SessionsGridOffering @offering={{this.offering}} @canUpdate={{true}} /></template>,
+    );
+    assert.strictEqual(component.room.text, 'Room 101');
+    await component.room.edit();
+    assert.notOk(component.room.hasError);
+    await component.room.set('some other room');
+    await component.room.save();
+    assert.strictEqual(component.room.text, 'some other room');
+  });
+
+  test('change location and cancel', async function (assert) {
+    const offering = this.server.create('offering', {
+      session: this.session,
+      room: 'Room 101',
+    });
+
+    const model = await this.owner.lookup('service:store').findRecord('offering', offering.id);
+    this.set('offering', model);
+    await render(
+      <template><SessionsGridOffering @offering={{this.offering}} @canUpdate={{true}} /></template>,
+    );
+    assert.strictEqual(component.room.text, 'Room 101');
+    await component.room.edit();
+    assert.notOk(component.room.hasError);
+    await component.room.set('');
+    await component.room.save();
+    assert.ok(component.room.hasError);
+    await component.room.cancel();
+    assert.strictEqual(component.room.text, 'Room 101');
+    // go back into edit mode to verify that previous error message has been cleared.
+    await component.room.edit();
+    assert.notOk(component.room.hasError);
+  });
+
+  test('change location - validation fails on empty value', async function (assert) {
+    const offering = this.server.create('offering', {
+      session: this.session,
+      room: 'Room 101',
+    });
+
+    const model = await this.owner.lookup('service:store').findRecord('offering', offering.id);
+    this.set('offering', model);
+    await render(
+      <template><SessionsGridOffering @offering={{this.offering}} @canUpdate={{true}} /></template>,
+    );
+    assert.strictEqual(component.room.text, 'Room 101');
+    await component.room.edit();
+    assert.notOk(component.room.hasError);
+    await component.room.set('');
+    await component.room.save();
+    assert.strictEqual(component.room.error, 'Location can not be blank');
+  });
+
+  test('change location - validation fails if value is too long', async function (assert) {
+    const offering = this.server.create('offering', {
+      session: this.session,
+      room: 'Room 101',
+    });
+
+    const model = await this.owner.lookup('service:store').findRecord('offering', offering.id);
+    this.set('offering', model);
+    await render(
+      <template><SessionsGridOffering @offering={{this.offering}} @canUpdate={{true}} /></template>,
+    );
+    assert.strictEqual(component.room.text, 'Room 101');
+    await component.room.edit();
+    assert.notOk(component.room.hasError);
+    await component.room.set('a'.repeat(256));
+    await component.room.save();
+    assert.strictEqual(component.room.error, 'Location is too long (maximum is 255 characters)');
+  });
 });

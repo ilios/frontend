@@ -208,7 +208,7 @@ export default class SessionsGridOffering extends Component {
                   {{this.validations.attach "room"}}
                 />
                 <YupValidationMessage
-                  @description={{t "general.room"}}
+                  @description={{t "general.location"}}
                   @validationErrors={{this.validations.errors.room}}
                   data-test-room-validation-error-message
                 />
