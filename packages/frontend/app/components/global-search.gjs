@@ -196,7 +196,6 @@ export default class GlobalSearchComponent extends Component {
                   />
                   <label for="school={{index}}">
                     {{obj.title}}
-                    ({{obj.results}})
                   </label>
                 </span>
               {{/each}}

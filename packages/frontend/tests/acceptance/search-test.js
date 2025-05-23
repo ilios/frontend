@@ -262,11 +262,11 @@ module('Acceptance | search', function (hooks) {
     assert.strictEqual(page.globalSearch.searchResults.length, 1);
     assert.strictEqual(page.globalSearch.searchResults[0].courseTitle, '2019 Course 1');
     assert.strictEqual(page.globalSearch.schoolFilters.length, 3);
-    assert.strictEqual(page.globalSearch.schoolFilters[0].school, 'school 0 (1)');
+    assert.strictEqual(page.globalSearch.schoolFilters[0].school, 'school 0');
     assert.notOk(page.globalSearch.schoolFilters[0].isSelected);
-    assert.strictEqual(page.globalSearch.schoolFilters[1].school, 'school 1 (1)');
+    assert.strictEqual(page.globalSearch.schoolFilters[1].school, 'school 1');
     assert.ok(page.globalSearch.schoolFilters[1].isSelected);
-    assert.strictEqual(page.globalSearch.schoolFilters[2].school, 'school 2 (1)');
+    assert.strictEqual(page.globalSearch.schoolFilters[2].school, 'school 2');
     assert.notOk(page.globalSearch.schoolFilters[2].isSelected);
   });
 
