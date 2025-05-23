@@ -89,6 +89,11 @@ export default class SessionsGridOffering extends Component {
     });
   }
 
+  @action
+  revertRoomChanges() {
+    this.room = this.args.offering.room;
+  }
+
   changeRoom = dropTask(async () => {
     await timeout(10);
     this.validations.addErrorDisplayFor('room');
