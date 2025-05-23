@@ -1,7 +1,6 @@
 import Component from '@glimmer/component';
 import { service } from '@ember/service';
 import { dropTask } from 'ember-concurrency';
-import { validatable, Custom } from 'ilios-common/decorators/validation';
 import { TrackedAsyncData } from 'ember-async-data';
 import { cached, tracked } from '@glimmer/tracking';
 import { findById } from 'ilios-common/utils/array-helpers';
@@ -23,7 +22,6 @@ import { uniqueId } from '@ember/helper';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
 import pick from 'ilios-common/helpers/pick';
-import ValidationError from 'ilios-common/components/validation-error';
 import eq from 'ember-truth-helpers/helpers/eq';
 import sortBy from 'ilios-common/helpers/sort-by';
 import perform from 'ember-concurrency/helpers/perform';
@@ -32,7 +30,6 @@ import YupValidationMessage from 'ilios-common/components/yup-validation-message
 import YupValidations from 'ilios-common/classes/yup-validations';
 import { string } from 'yup';
 
-@validatable
 export default class ReportsNewSubjectComponent extends Component {
   @service currentUser;
   @service intl;
@@ -91,6 +88,50 @@ export default class ReportsNewSubjectComponent extends Component {
         return true;
       },
     ),
+    prepositionalObjectId: string().test(
+      'prepositional-object-id',
+      (d) => {
+        let messageKey;
+        if (this.prepositionalObjectIdMissing) {
+          switch (this.prepositionalObject) {
+            case 'academic year':
+              messageKey = 'errors.reportMissingAcademicYear';
+              break;
+            case 'competency':
+              messageKey = 'errors.reportMissingCompetency';
+              break;
+            case 'instructor':
+              messageKey = 'errors.reportMissingInstructor';
+              break;
+            case 'instructor group':
+              messageKey = 'errors.reportMissingInstructorGroup';
+              break;
+            case 'mesh term':
+              messageKey = 'errors.reportMissingMeshTerm';
+              break;
+            case 'program':
+              messageKey = 'errors.reportMissingProgram';
+              break;
+            case 'program year':
+              messageKey = 'errors.reportMissingProgramYear';
+              break;
+            case 'session type':
+              messageKey = 'errors.reportMissingSessionType';
+              break;
+            case 'term':
+              messageKey = 'errors.reportMissingTerm';
+              break;
+          }
+        }
+        return {
+          path: d.path,
+          messageKey,
+        };
+      },
+      (value) => {
+        return !(this.prepositionalObject && !value);
+      },
+    ),
   });
 
   get title() {
@@ -101,7 +142,6 @@ export default class ReportsNewSubjectComponent extends Component {
     return this.args.selectedPrepositionalObject ?? this.args.report?.prepositionalObject;
   }
 
-  @Custom('validatePrepositionalObjectIdCallback', 'validatePrepositionalObjectIdMessageCallback')
   get prepositionalObjectId() {
     return (
       this.args.selectedPrepositionalObjectId ?? this.args.report?.prepositionalObjectTableRowId
@@ -359,21 +399,12 @@ export default class ReportsNewSubjectComponent extends Component {
   }
 
   save = dropTask(async () => {
-    // new-style form validation.
     this.validations.addErrorDisplayForAllFields();
     let isValid = await this.validations.isValid();
     if (!isValid) {
       return false;
     }
     this.validations.clearErrorDisplay();
-
-    // old-style form validation.
-    this.addErrorDisplaysFor(['prepositionalObjectId']);
-    isValid = await this.isValid();
-    if (!isValid) {
-      return false;
-    }
-    this.clearErrorDisplay();
 
     const report = this.store.createRecord('report', {
       title: this.title,
@@ -388,15 +419,10 @@ export default class ReportsNewSubjectComponent extends Component {
   });
 
   run = dropTask(async () => {
-    // new-style form validation.
     this.validations.addErrorDisplayForAllFields();
-    const isValidNew = await this.validations.isValid();
+    const isValid = await this.validations.isValid();
 
-    // old-style form validation.
-    this.addErrorDisplaysFor(['prepositionalObjectId']);
-    const isValidOld = await this.isValid();
-
-    if (!isValidNew || !isValidOld) {
+    if (!isValid) {
       const dropdownObjectTypes = [
         'academic year',
         'competency',
@@ -414,7 +440,6 @@ export default class ReportsNewSubjectComponent extends Component {
       }
       return false;
     }
-    this.clearErrorDisplay();
     this.validations.clearErrorDisplay();
 
     this.args.run(
@@ -459,37 +484,6 @@ export default class ReportsNewSubjectComponent extends Component {
     this.args.setSelectedPrepositionalObject(object);
     this.args.setSelectedPrepositionalObjectId(id);
     this.validations.clearErrorDisplay();
-  }
-
-  @action
-  validatePrepositionalObjectIdCallback() {
-    return !(this.prepositionalObject && !this.prepositionalObjectId);
-  }
-
-  @action
-  validatePrepositionalObjectIdMessageCallback() {
-    if (this.prepositionalObjectIdMissing) {
-      switch (this.prepositionalObject) {
-        case 'academic year':
-          return this.intl.t('errors.reportMissingAcademicYear');
-        case 'competency':
-          return this.intl.t('errors.reportMissingCompetency');
-        case 'instructor':
-          return this.intl.t('errors.reportMissingInstructor');
-        case 'instructor group':
-          return this.intl.t('errors.reportMissingInstructorGroup');
-        case 'mesh term':
-          return this.intl.t('errors.reportMissingMeshTerm');
-        case 'program':
-          return this.intl.t('errors.reportMissingProgram');
-        case 'program year':
-          return this.intl.t('errors.reportMissingProgramYear');
-        case 'session type':
-          return this.intl.t('errors.reportMissingSessionType');
-        case 'term':
-          return this.intl.t('errors.reportMissingTerm');
-      }
-    }
   }
   <template>
     {{#let (uniqueId) as |templateId|}}
@@ -580,10 +574,10 @@ export default class ReportsNewSubjectComponent extends Component {
             @changeId={{@setSelectedPrepositionalObjectId}}
           />
           <div class="input-buttons">
-            <ValidationError
-              @validatable={{this}}
-              @property="prepositionalObjectId"
-              data-test-validation-error
+            <YupValidationMessage
+              @description={{t "general.title"}}
+              @validationErrors={{this.validations.errors.prepositionalObjectId}}
+              data-test-prepositional-object-id-validation-error-message
             />
             <button
               type="button"

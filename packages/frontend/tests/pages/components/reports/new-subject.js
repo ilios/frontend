@@ -65,8 +65,13 @@ const definition = {
     items: collection('option', {
       isSelected: property('selected'),
     }),
+    hasError: isPresent('[data-test-prepositional-object-id-validation-error-message]', {
+      resetScope: true,
+    }),
+    error: text('[data-test-prepositional-object-id-validation-error-message]', {
+      resetScope: true,
+    }),
   },
-  errors: collection('[data-test-validation-error]'),
   cancel: clickable('[data-test-cancel]'),
   save: clickable('[data-test-save]'),
   run: clickable('[data-test-run]'),
