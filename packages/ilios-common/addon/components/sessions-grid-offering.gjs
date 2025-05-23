@@ -26,18 +26,17 @@ import YupValidationMessage from 'ilios-common/components/yup-validation-message
 import { string } from 'yup';
 
 export default class SessionsGridOffering extends Component {
-  @tracked room;
+  @tracked roomBuffer;
   @tracked isEditing = false;
   @tracked wasUpdated = false;
-
-  constructor() {
-    super(...arguments);
-    this.room = this.args.offering.room;
-  }
 
   validations = new YupValidations(this, {
     room: string().ensure().trim().required().max(255),
   });
+
+  get room() {
+    return this.roomBuffer ?? this.args.offering.room;
+  }
 
   @cached
   get sessionData() {
@@ -91,7 +90,7 @@ export default class SessionsGridOffering extends Component {
 
   @action
   revertRoomChanges() {
-    this.room = this.args.offering.room;
+    this.roomBuffer = null;
     this.validations.removeErrorDisplayFor('room');
   }
 
@@ -105,6 +104,7 @@ export default class SessionsGridOffering extends Component {
     this.validations.removeErrorDisplayFor('room');
     this.args.offering.set('room', this.room);
     await this.args.offering.save();
+    this.roomBuffer = null;
   });
 
   save = dropTask(
@@ -131,6 +131,7 @@ export default class SessionsGridOffering extends Component {
       });
       this.toggleEditing();
       await this.args.offering.save();
+      this.roomBuffer = null;
       this.updateUi.perform();
     },
   );
@@ -204,7 +205,7 @@ export default class SessionsGridOffering extends Component {
                   class="change-room"
                   value={{this.room}}
                   disabled={{isSaving}}
-                  {{on "input" (pick "target.value" (set this "room"))}}
+                  {{on "input" (pick "target.value" (set this "roomBuffer"))}}
                   {{this.validations.attach "room"}}
                 />
                 <YupValidationMessage
