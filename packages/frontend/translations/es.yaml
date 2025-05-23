@@ -492,8 +492,10 @@ errors:
   invalidChangeAlertRecipients: Esta lista de destinatarios de alertas de cambios contiene direcciones de correo electrónico no válidas.
   reportMissingAcademicYear: Año Academico es Necesario
   reportMissingCompetency: Competencia es Necesario
+  reportMissingCourse: Curso es Necesario
   reportMissingInstructor: Instructor es Necesario
   reportMissingInstructorGroup: Grupo de Instructor es Necesario
+  reportMissingLearningMaterial: Material de Aprendizaje es Necesario
   reportMissingMeshTerm: Término de MeSH es Necesario
   reportMissingObjectForCompetency: Asociación es Necesario Cuando Competencia es el Sujeto
   reportMissingObjectForInstructor: Asociación es Necesario Cuando Instructor es el Sujeto
@@ -504,5 +506,6 @@ errors:
   reportMissingObjectForTerm: Asociación es Necesario Cuando Término es el Sujeto
   reportMissingProgram: Programa es Necesario
   reportMissingProgramYear: Año Programa es Necesario
+  reportMissingSession: Sesión es Necesario
   reportMissingSessionType: Tipo de Sesión es Necesario
   reportMissingTerm: Término es Necesario
