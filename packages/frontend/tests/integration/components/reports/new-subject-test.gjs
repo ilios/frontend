@@ -493,10 +493,10 @@ module('Integration | Component | reports/new-subject', function (hooks) {
         />
       </template>,
     );
-    assert.strictEqual(component.title.errors.length, 0, 'title has no error');
+    assert.notOk(component.title.hasError);
     await component.title.set(this.title.repeat(25));
     await component.save();
-    assert.strictEqual(component.title.errors.length, 1, 'title has error');
+    assert.strictEqual(component.title.error, 'Title is too long (maximum is 240 characters)');
   });
 
   test('instructor missing', async function (assert) {

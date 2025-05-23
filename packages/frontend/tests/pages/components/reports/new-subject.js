@@ -1,4 +1,12 @@
-import { clickable, create, collection, fillable, property, text } from 'ember-cli-page-object';
+import {
+  clickable,
+  create,
+  collection,
+  fillable,
+  isPresent,
+  property,
+  text,
+} from 'ember-cli-page-object';
 import meshTerm from './subject/new/mesh-term';
 import instructor from './subject/new/instructor';
 import course from './subject/new/course';
@@ -11,7 +19,8 @@ const definition = {
     label: text('label'),
     scope: '[data-test-title]',
     set: fillable('input'),
-    errors: collection('.validation-error-message'),
+    hasError: isPresent('[data-test-title-validation-error-message]'),
+    error: text('[data-test-title-validation-error-message]'),
   },
   schools: {
     label: text('label'),

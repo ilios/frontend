@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
 import { service } from '@ember/service';
 import { dropTask } from 'ember-concurrency';
-import { validatable, Length, Custom } from 'ilios-common/decorators/validation';
+import { validatable, Custom } from 'ilios-common/decorators/validation';
 import { TrackedAsyncData } from 'ember-async-data';
 import { cached, tracked } from '@glimmer/tracking';
 import { findById } from 'ilios-common/utils/array-helpers';
@@ -19,7 +19,7 @@ import NewSessionComponent from './subject/new/session';
 import NewSessionTypeComponent from './subject/new/session-type';
 import NewTermComponent from './subject/new/term';
 import NewAcademicYearComponent from './subject/new/academic-year';
-import { uniqueId, fn } from '@ember/helper';
+import { uniqueId } from '@ember/helper';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
 import pick from 'ilios-common/helpers/pick';
@@ -28,6 +28,9 @@ import eq from 'ember-truth-helpers/helpers/eq';
 import sortBy from 'ilios-common/helpers/sort-by';
 import perform from 'ember-concurrency/helpers/perform';
 import LoadingSpinner from 'ilios-common/components/loading-spinner';
+import YupValidationMessage from 'ilios-common/components/yup-validation-message';
+import YupValidations from 'ilios-common/classes/yup-validations';
+import { string } from 'yup';
 
 @validatable
 export default class ReportsNewSubjectComponent extends Component {
@@ -38,6 +41,14 @@ export default class ReportsNewSubjectComponent extends Component {
 
   @tracked isSaving = false;
   @tracked schoolChanged = false;
+
+  validations = new YupValidations(this, {
+    title: string().ensure().trim().optional().max(240),
+  });
+
+  get title() {
+    return this.args.title ?? this.args.report?.title;
+  }
 
   @Custom('validatePrepositionalObjectCallback', 'validatePrepositionalObjectMessageCallback')
   get prepositionalObject() {
@@ -57,11 +68,6 @@ export default class ReportsNewSubjectComponent extends Component {
 
   get subject() {
     return this.args.selectedSubject ?? this.args.report?.subject ?? 'course';
-  }
-
-  @Length(1, 240)
-  get title() {
-    return this.args.title ?? this.args.report?.title;
   }
 
   get subjectList() {
@@ -307,8 +313,17 @@ export default class ReportsNewSubjectComponent extends Component {
   }
 
   save = dropTask(async () => {
-    this.addErrorDisplaysFor(['title', 'prepositionalObject', 'prepositionalObjectId']);
-    const isValid = await this.isValid();
+    // new-style form validation.
+    this.validations.addErrorDisplayForAllFields();
+    let isValid = await this.validations.isValid();
+    if (!isValid) {
+      return false;
+    }
+    this.validations.clearErrorDisplay();
+
+    // old-style form validation.
+    this.addErrorDisplaysFor(['prepositionalObject', 'prepositionalObjectId']);
+    isValid = await this.isValid();
     if (!isValid) {
       return false;
     }
@@ -327,8 +342,17 @@ export default class ReportsNewSubjectComponent extends Component {
   });
 
   run = dropTask(async () => {
-    this.addErrorDisplaysFor(['title', 'prepositionalObject', 'prepositionalObjectId']);
-    const isValid = await this.isValid();
+    // new-style form validation.
+    this.validations.addErrorDisplayForAllFields();
+    let isValid = await this.validations.isValid();
+    if (!isValid) {
+      return false;
+    }
+    this.validations.clearErrorDisplay();
+
+    // old-style form validation.
+    this.addErrorDisplaysFor(['prepositionalObject', 'prepositionalObjectId']);
+    isValid = await this.isValid();
     if (!isValid) {
       const dropdownObjectTypes = [
         'academic year',
@@ -473,11 +497,14 @@ export default class ReportsNewSubjectComponent extends Component {
                 id="title-{{templateId}}"
                 type="text"
                 value={{this.title}}
-                {{on "focusout" (fn this.addErrorDisplayFor "title")}}
                 {{on "input" (pick "target.value" this.changeTitle)}}
-                {{on "keyup" (fn this.addErrorDisplayFor "title")}}
+                {{this.validations.attach "title"}}
               />
-              <ValidationError @validatable={{this}} @property="title" />
+              <YupValidationMessage
+                @description={{t "general.title"}}
+                @validationErrors={{this.validations.errors.title}}
+                data-test-title-validation-error-message
+              />
             </div>
           </p>
           <p data-test-school>
