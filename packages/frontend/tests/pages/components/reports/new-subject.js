@@ -45,7 +45,8 @@ const definition = {
     items: collection('option', {
       isSelected: property('selected'),
     }),
-    errors: collection('.validation-error-message'),
+    hasError: isPresent('[data-test-prepositional-object-validation-error-message]'),
+    error: text('[data-test-prepositional-object-validation-error-message]'),
   },
   academicYears: {
     scope: '[data-test-report-academic-years]',

@@ -44,13 +44,59 @@ export default class ReportsNewSubjectComponent extends Component {
 
   validations = new YupValidations(this, {
     title: string().ensure().trim().optional().max(240),
+    prepositionalObject: string().test(
+      'prepositional-object',
+      (d) => {
+        let messageKey;
+        if (this.subject && !this.prepositionalObject) {
+          switch (this.subject) {
+            case 'academic year':
+              messageKey = 'errors.reportMissingObjectForAcademicYear';
+              break;
+            case 'competency':
+              messageKey = 'errors.reportMissingObjectForCompetency';
+              break;
+            case 'instructor':
+              messageKey = 'errors.reportMissingObjectForInstructor';
+              break;
+            case 'instructor group':
+              messageKey = 'errors.reportMissingObjectForInstructorGroup';
+              break;
+            case 'mesh term':
+              messageKey = 'errors.reportMissingObjectForMeshTerm';
+              break;
+            case 'program':
+              messageKey = 'errors.reportMissingObjectForProgram';
+              break;
+            case 'program year':
+              messageKey = 'errors.reportMissingObjectForProgramYear';
+              break;
+            case 'session type':
+              messageKey = 'errors.reportMissingObjectForSessionType';
+              break;
+            case 'term':
+              messageKey = 'errors.reportMissingObjectForTerm';
+              break;
+          }
+        }
+        return {
+          path: d.path,
+          messageKey,
+        };
+      },
+      (value) => {
+        if (this.subject && !value) {
+          return this.includeAnythingObject;
+        }
+        return true;
+      },
+    ),
   });
 
   get title() {
     return this.args.title ?? this.args.report?.title;
   }
 
-  @Custom('validatePrepositionalObjectCallback', 'validatePrepositionalObjectMessageCallback')
   get prepositionalObject() {
     return this.args.selectedPrepositionalObject ?? this.args.report?.prepositionalObject;
   }
@@ -322,7 +368,7 @@ export default class ReportsNewSubjectComponent extends Component {
     this.validations.clearErrorDisplay();
 
     // old-style form validation.
-    this.addErrorDisplaysFor(['prepositionalObject', 'prepositionalObjectId']);
+    this.addErrorDisplaysFor(['prepositionalObjectId']);
     isValid = await this.isValid();
     if (!isValid) {
       return false;
@@ -344,16 +390,13 @@ export default class ReportsNewSubjectComponent extends Component {
   run = dropTask(async () => {
     // new-style form validation.
     this.validations.addErrorDisplayForAllFields();
-    let isValid = await this.validations.isValid();
-    if (!isValid) {
-      return false;
-    }
-    this.validations.clearErrorDisplay();
+    const isValidNew = await this.validations.isValid();
 
     // old-style form validation.
-    this.addErrorDisplaysFor(['prepositionalObject', 'prepositionalObjectId']);
-    isValid = await this.isValid();
-    if (!isValid) {
+    this.addErrorDisplaysFor(['prepositionalObjectId']);
+    const isValidOld = await this.isValid();
+
+    if (!isValidNew || !isValidOld) {
       const dropdownObjectTypes = [
         'academic year',
         'competency',
@@ -372,6 +415,7 @@ export default class ReportsNewSubjectComponent extends Component {
       return false;
     }
     this.clearErrorDisplay();
+    this.validations.clearErrorDisplay();
 
     this.args.run(
       this.subject,
@@ -414,7 +458,7 @@ export default class ReportsNewSubjectComponent extends Component {
   changePrepositionalObject(object, id = null) {
     this.args.setSelectedPrepositionalObject(object);
     this.args.setSelectedPrepositionalObjectId(id);
-    this.clearErrorDisplay();
+    this.validations.clearErrorDisplay();
   }
 
   @action
@@ -444,40 +488,6 @@ export default class ReportsNewSubjectComponent extends Component {
           return this.intl.t('errors.reportMissingSessionType');
         case 'term':
           return this.intl.t('errors.reportMissingTerm');
-      }
-    }
-  }
-
-  @action
-  validatePrepositionalObjectCallback() {
-    if (this.subject && !this.prepositionalObject) {
-      return this.includeAnythingObject;
-    }
-    return true;
-  }
-
-  @action
-  validatePrepositionalObjectMessageCallback() {
-    if (this.subject && !this.prepositionalObject) {
-      switch (this.subject) {
-        case 'academic year':
-          return this.intl.t('errors.reportMissingObjectForAcademicYear');
-        case 'competency':
-          return this.intl.t('errors.reportMissingObjectForCompetency');
-        case 'instructor':
-          return this.intl.t('errors.reportMissingObjectForInstructor');
-        case 'instructor group':
-          return this.intl.t('errors.reportMissingObjectForInstructorGroup');
-        case 'mesh term':
-          return this.intl.t('errors.reportMissingObjectForMeshTerm');
-        case 'program':
-          return this.intl.t('errors.reportMissingObjectForProgram');
-        case 'program year':
-          return this.intl.t('errors.reportMissingObjectForProgramYear');
-        case 'session type':
-          return this.intl.t('errors.reportMissingObjectForSessionType');
-        case 'term':
-          return this.intl.t('errors.reportMissingObjectForTerm');
       }
     }
   }
@@ -557,7 +567,10 @@ export default class ReportsNewSubjectComponent extends Component {
                   </option>
                 {{/each}}
               </select>
-              <ValidationError @validatable={{this}} @property="prepositionalObject" />
+              <YupValidationMessage
+                @validationErrors={{this.validations.errors.prepositionalObject}}
+                data-test-prepositional-object-validation-error-message
+              />
             </div>
           </p>
           <this.newPrepositionalObjectComponent
