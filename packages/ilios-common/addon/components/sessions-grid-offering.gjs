@@ -2,7 +2,6 @@ import Component from '@glimmer/component';
 import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { restartableTask, dropTask, timeout } from 'ember-concurrency';
-import { validatable, Length, NotBlank } from 'ilios-common/decorators/validation';
 import scrollIntoView from 'scroll-into-view';
 import { TrackedAsyncData } from 'ember-async-data';
 import and from 'ember-truth-helpers/helpers/and';
@@ -14,26 +13,29 @@ import gt from 'ember-truth-helpers/helpers/gt';
 import lt from 'ember-truth-helpers/helpers/lt';
 import EditableField from 'ilios-common/components/editable-field';
 import { on } from '@ember/modifier';
-import { fn } from '@ember/helper';
 import pick from 'ilios-common/helpers/pick';
 import set from 'ember-set-helper/helpers/set';
-import ValidationError from 'ilios-common/components/validation-error';
 import TruncateText from 'ilios-common/components/truncate-text';
 import join from 'ilios-common/helpers/join';
 import mapBy from 'ilios-common/helpers/map-by';
 import sortBy from 'ilios-common/helpers/sort-by';
 import truncate from 'ilios-common/helpers/truncate';
 import FaIcon from 'ilios-common/components/fa-icon';
+import YupValidations from 'ilios-common/classes/yup-validations';
+import YupValidationMessage from 'ilios-common/components/yup-validation-message';
+import { string } from 'yup';
 
-@validatable
 export default class SessionsGridOffering extends Component {
-  @Length(1, 255) @NotBlank() @tracked room;
+  @tracked roomBuffer;
   @tracked isEditing = false;
   @tracked wasUpdated = false;
 
-  constructor() {
-    super(...arguments);
-    this.room = this.args.offering.room;
+  validations = new YupValidations(this, {
+    room: string().ensure().trim().required().max(255),
+  });
+
+  get room() {
+    return this.roomBuffer ?? this.args.offering.room;
   }
 
   @cached
@@ -86,16 +88,23 @@ export default class SessionsGridOffering extends Component {
     });
   }
 
+  @action
+  revertRoomChanges() {
+    this.roomBuffer = null;
+    this.validations.removeErrorDisplayFor('room');
+  }
+
   changeRoom = dropTask(async () => {
     await timeout(10);
-    this.addErrorDisplayFor('room');
-    const isValid = await this.isValid('room');
+    this.validations.addErrorDisplayFor('room');
+    const isValid = await this.validations.isValid('room');
     if (!isValid) {
       return false;
     }
-    this.removeErrorDisplayFor('room');
+    this.validations.removeErrorDisplayFor('room');
     this.args.offering.set('room', this.room);
     await this.args.offering.save();
+    this.roomBuffer = null;
   });
 
   save = dropTask(
@@ -122,6 +131,7 @@ export default class SessionsGridOffering extends Component {
       });
       this.toggleEditing();
       await this.args.offering.save();
+      this.roomBuffer = null;
       this.updateUi.perform();
     },
   );
@@ -179,7 +189,7 @@ export default class SessionsGridOffering extends Component {
               </span>
             </td>
           {{/if}}
-          <td class="room">
+          <td class="room" data-test-room>
             {{#if @canUpdate}}
               <EditableField
                 @value={{this.room}}
@@ -195,10 +205,14 @@ export default class SessionsGridOffering extends Component {
                   class="change-room"
                   value={{this.room}}
                   disabled={{isSaving}}
-                  {{on "key-press" (fn this.addErrorDisplayFor "room")}}
-                  {{on "input" (pick "target.value" (set this "room"))}}
+                  {{on "input" (pick "target.value" (set this "roomBuffer"))}}
+                  {{this.validations.attach "room"}}
                 />
-                <ValidationError @validatable={{this}} @property="room" />
+                <YupValidationMessage
+                  @description={{t "general.location"}}
+                  @validationErrors={{this.validations.errors.room}}
+                  data-test-room-validation-error-message
+                />
               </EditableField>
             {{else}}
               <TruncateText @text={{this.room}} @length={{10}} />
@@ -207,13 +221,18 @@ export default class SessionsGridOffering extends Component {
           <td
             colspan="2"
             title={{join ", " (mapBy "fullName" (sortBy "fullName" @offering.allLearners))}}
+            data-test-learners
           >
             {{#if @offering.allLearners.length}}
               <strong>({{@offering.allLearners.length}})</strong>
             {{/if}}
             {{truncate (join ", " (mapBy "fullName" (sortBy "fullName" @offering.allLearners))) 25}}
           </td>
-          <td colspan="2" title={{join ", " (mapBy "title" (sortBy "title" this.learnerGroups))}}>
+          <td
+            colspan="2"
+            title={{join ", " (mapBy "title" (sortBy "title" this.learnerGroups))}}
+            data-test-learnergroups
+          >
             {{#if this.learnerGroups.length}}
               <strong>({{this.learnerGroups.length}})</strong>
             {{/if}}
@@ -222,6 +241,7 @@ export default class SessionsGridOffering extends Component {
           <td
             colspan="2"
             title={{join ", " (mapBy "fullName" (sortBy "fullName" @offering.allInstructors))}}
+            data-test-instructors
           >
             {{#if @offering.allInstructors.length}}
               <strong>({{@offering.allInstructors.length}})</strong>
