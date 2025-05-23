@@ -92,6 +92,7 @@ export default class SessionsGridOffering extends Component {
   @action
   revertRoomChanges() {
     this.room = this.args.offering.room;
+    this.validations.removeErrorDisplayFor('room');
   }
 
   changeRoom = dropTask(async () => {
