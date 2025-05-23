@@ -187,7 +187,7 @@ export default class SessionsGridOffering extends Component {
               </span>
             </td>
           {{/if}}
-          <td class="room">
+          <td class="room" data-test-room>
             {{#if @canUpdate}}
               <EditableField
                 @value={{this.room}}
@@ -219,13 +219,18 @@ export default class SessionsGridOffering extends Component {
           <td
             colspan="2"
             title={{join ", " (mapBy "fullName" (sortBy "fullName" @offering.allLearners))}}
+            data-test-learners
           >
             {{#if @offering.allLearners.length}}
               <strong>({{@offering.allLearners.length}})</strong>
             {{/if}}
             {{truncate (join ", " (mapBy "fullName" (sortBy "fullName" @offering.allLearners))) 25}}
           </td>
-          <td colspan="2" title={{join ", " (mapBy "title" (sortBy "title" this.learnerGroups))}}>
+          <td
+            colspan="2"
+            title={{join ", " (mapBy "title" (sortBy "title" this.learnerGroups))}}
+            data-test-learnergroups
+          >
             {{#if this.learnerGroups.length}}
               <strong>({{this.learnerGroups.length}})</strong>
             {{/if}}
@@ -234,6 +239,7 @@ export default class SessionsGridOffering extends Component {
           <td
             colspan="2"
             title={{join ", " (mapBy "fullName" (sortBy "fullName" @offering.allInstructors))}}
+            data-test-instructors
           >
             {{#if @offering.allInstructors.length}}
               <strong>({{@offering.allInstructors.length}})</strong>
