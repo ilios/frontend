@@ -2,7 +2,6 @@ import Component from '@glimmer/component';
 import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { restartableTask, dropTask, timeout } from 'ember-concurrency';
-import { validatable, Length, NotBlank } from 'ilios-common/decorators/validation';
 import scrollIntoView from 'scroll-into-view';
 import { TrackedAsyncData } from 'ember-async-data';
 import and from 'ember-truth-helpers/helpers/and';
@@ -14,20 +13,20 @@ import gt from 'ember-truth-helpers/helpers/gt';
 import lt from 'ember-truth-helpers/helpers/lt';
 import EditableField from 'ilios-common/components/editable-field';
 import { on } from '@ember/modifier';
-import { fn } from '@ember/helper';
 import pick from 'ilios-common/helpers/pick';
 import set from 'ember-set-helper/helpers/set';
-import ValidationError from 'ilios-common/components/validation-error';
 import TruncateText from 'ilios-common/components/truncate-text';
 import join from 'ilios-common/helpers/join';
 import mapBy from 'ilios-common/helpers/map-by';
 import sortBy from 'ilios-common/helpers/sort-by';
 import truncate from 'ilios-common/helpers/truncate';
 import FaIcon from 'ilios-common/components/fa-icon';
+import YupValidations from 'ilios-common/classes/yup-validations';
+import YupValidationMessage from 'ilios-common/components/yup-validation-message';
+import { string } from 'yup';
 
-@validatable
 export default class SessionsGridOffering extends Component {
-  @Length(1, 255) @NotBlank() @tracked room;
+  @tracked room;
   @tracked isEditing = false;
   @tracked wasUpdated = false;
 
@@ -35,6 +34,10 @@ export default class SessionsGridOffering extends Component {
     super(...arguments);
     this.room = this.args.offering.room;
   }
+
+  validations = new YupValidations(this, {
+    room: string().ensure().trim().required().max(255),
+  });
 
   @cached
   get sessionData() {
@@ -88,12 +91,12 @@ export default class SessionsGridOffering extends Component {
 
   changeRoom = dropTask(async () => {
     await timeout(10);
-    this.addErrorDisplayFor('room');
-    const isValid = await this.isValid('room');
+    this.validations.addErrorDisplayFor('room');
+    const isValid = await this.validations.isValid('room');
     if (!isValid) {
       return false;
     }
-    this.removeErrorDisplayFor('room');
+    this.validations.removeErrorDisplayFor('room');
     this.args.offering.set('room', this.room);
     await this.args.offering.save();
   });
@@ -195,10 +198,14 @@ export default class SessionsGridOffering extends Component {
                   class="change-room"
                   value={{this.room}}
                   disabled={{isSaving}}
-                  {{on "key-press" (fn this.addErrorDisplayFor "room")}}
                   {{on "input" (pick "target.value" (set this "room"))}}
+                  {{this.validations.attach "room"}}
                 />
-                <ValidationError @validatable={{this}} @property="room" />
+                <YupValidationMessage
+                  @description={{t "general.room"}}
+                  @validationErrors={{this.validations.errors.room}}
+                  data-test-room-validation-error-message
+                />
               </EditableField>
             {{else}}
               <TruncateText @text={{this.room}} @length={{10}} />
