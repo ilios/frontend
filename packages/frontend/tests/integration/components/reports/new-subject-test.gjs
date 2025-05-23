@@ -493,10 +493,10 @@ module('Integration | Component | reports/new-subject', function (hooks) {
         />
       </template>,
     );
-    assert.strictEqual(component.title.errors.length, 0, 'title has no error');
+    assert.notOk(component.title.hasError);
     await component.title.set(this.title.repeat(25));
     await component.save();
-    assert.strictEqual(component.title.errors.length, 1, 'title has error');
+    assert.strictEqual(component.title.error, 'Title is too long (maximum is 240 characters)');
   });
 
   test('instructor missing', async function (assert) {
@@ -539,10 +539,9 @@ module('Integration | Component | reports/new-subject', function (hooks) {
       </template>,
     );
     await component.objects.choose('instructor');
-    assert.strictEqual(component.errors.length, 0);
+    assert.notOk(component.prepositionalObjects.hasError);
     await component.save();
-    assert.strictEqual(component.errors.length, 1);
-    assert.strictEqual(component.errors[0].text, 'Instructor is Required');
+    assert.strictEqual(component.prepositionalObjects.error, 'Instructor is Required');
   });
 
   test('missing MeSH term', async function (assert) {
@@ -585,9 +584,8 @@ module('Integration | Component | reports/new-subject', function (hooks) {
       </template>,
     );
     await component.objects.choose('mesh term');
-    assert.strictEqual(component.errors.length, 0);
+    assert.notOk(component.prepositionalObjects.hasError);
     await component.save();
-    assert.strictEqual(component.errors.length, 1);
-    assert.strictEqual(component.errors[0].text, 'MeSH Term is Required');
+    assert.strictEqual(component.prepositionalObjects.error, 'MeSH Term is Required');
   });
 });
