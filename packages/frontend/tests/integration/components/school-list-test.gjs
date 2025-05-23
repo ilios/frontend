@@ -79,7 +79,7 @@ module('Integration | Component | school list', function (hooks) {
     component.newSchoolForm.email.set('rocketsurgeongeneral@hoekacademy.edu');
     await component.newSchoolForm.submit();
     assert.ok(component.savedSchool.isVisible);
-    assert.strictEqual(component.savedSchool.text, 'school of rocket surgery Saved Successfully');
+    assert.strictEqual(component.savedSchool.text, 'school of rocket surgery saved successfully');
     schools = await this.owner.lookup('service:store').findAll('school');
     assert.strictEqual(schools.length, 3);
     assert.strictEqual(schools[2].title, 'school of rocket surgery');

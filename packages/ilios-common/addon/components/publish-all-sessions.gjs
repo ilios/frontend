@@ -2,6 +2,7 @@ import Component from '@glimmer/component';
 import { service } from '@ember/service';
 import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
+import { capitalize } from '@ember/string';
 import { all } from 'rsvp';
 import { dropTask, timeout } from 'ember-concurrency';
 import { TrackedAsyncData } from 'ember-async-data';
@@ -193,7 +194,7 @@ export default class PublishAllSessionsComponent extends Component {
     this.currentSessionsSaved = 0;
 
     await this.saveSomeSessions(sessionsToSave);
-    this.flashMessages.success('general.savedSuccessfully');
+    this.flashMessages.success(capitalize('general.savedSuccessfully'));
     await timeout(500);
     this.args.saved();
   });

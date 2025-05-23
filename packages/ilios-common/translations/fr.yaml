@@ -285,8 +285,8 @@ general:
   publishAllSessions: "Publier {sessionCount} des séances"
   publishAsIs: 'Publier "as-is"'
   publishCourse: Publier Cours
-  published: Publier
-  publishedSuccessfully: Publier réussi
+  published: Publié
+  publishedSuccessfully: Publié réussi
   publishSession: Publier Session
   remove: Supprîme
   removeAll: Supprimer Tous
@@ -298,7 +298,7 @@ general:
   reviewSessions: Séances à faire réviser
   saturday: Samedi
   save: Enregistrer
-  savedSuccessfully: Réussie Sauvé
+  savedSuccessfully: enregistré avec succès
   scheduled: Prevu
   scheduledSuccessfully: Faire à prévu réussi
   scheduling: Planification

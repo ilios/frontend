@@ -1,5 +1,6 @@
 import Controller from '@ember/controller';
 import { service } from '@ember/service';
+import { capitalize } from '@ember/string';
 import { tracked } from '@glimmer/tracking';
 import { task } from 'ember-concurrency';
 import { findById } from 'ilios-common/utils/array-helpers';
@@ -61,7 +62,7 @@ export default class PendingUserUpdatesController extends Controller {
     await update.destroyRecord();
     this.deletedUpdates = [...this.deletedUpdates, update];
     this.updatesBeingSaved = this.updatesBeingSaved.filter((u) => u !== update);
-    this.flashMessages.success('general.savedSuccessfully');
+    this.flashMessages.success(capitalize('general.savedSuccessfully'));
   });
 
   disableUser = task(async (update) => {
@@ -75,7 +76,7 @@ export default class PendingUserUpdatesController extends Controller {
 
     this.deletedUpdates = [...this.deletedUpdates, ...updates];
     this.updatesBeingSaved = this.updatesBeingSaved.filter((u) => u !== update);
-    this.flashMessages.success('general.savedSuccessfully');
+    this.flashMessages.success(capitalize('general.savedSuccessfully'));
   });
 
   excludeFromSync = task(async (update) => {
@@ -89,6 +90,6 @@ export default class PendingUserUpdatesController extends Controller {
 
     this.deletedUpdates = [...this.deletedUpdates, ...updates];
     this.updatesBeingSaved = this.updatesBeingSaved.filter((u) => u !== update);
-    this.flashMessages.success('general.savedSuccessfully');
+    this.flashMessages.success(capitalize('general.savedSuccessfully'));
   });
 }

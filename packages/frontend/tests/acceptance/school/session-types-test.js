@@ -124,7 +124,7 @@ module('Acceptance | School - Session Types', function (hooks) {
     assert.notOk(e.list.sessionTypes[0].isAssessment);
     assert.strictEqual(e.list.sessionTypes[0].aamcMethod, 'aamc method 1');
     assert.strictEqual(e.list.sessionTypes[0].calendarColor, 'background-color: #cc6699');
-    assert.strictEqual(e.savedResult, 'lorem ipsum Saved Successfully');
+    assert.strictEqual(e.savedResult, 'lorem ipsum saved successfully');
   });
 
   test('new session type - assessment', async function (assert) {
@@ -153,6 +153,6 @@ module('Acceptance | School - Session Types', function (hooks) {
     assert.strictEqual(e.list.sessionTypes[0].assessmentOption, 'summative');
     assert.strictEqual(e.list.sessionTypes[0].aamcMethod, 'aamc method 3');
     assert.strictEqual(e.list.sessionTypes[0].calendarColor, 'background-color: #ccff00');
-    assert.strictEqual(e.savedResult, 'lorem ipsum Saved Successfully');
+    assert.strictEqual(e.savedResult, 'lorem ipsum saved successfully');
   });
 });

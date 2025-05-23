@@ -3,6 +3,7 @@ import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import ObjectProxy from '@ember/object/proxy';
 import { service } from '@ember/service';
+import { capitalize } from '@ember/string';
 import { all, map } from 'rsvp';
 import { dropTask, enqueueTask, restartableTask, task } from 'ember-concurrency';
 import pad from 'pad';
@@ -256,7 +257,7 @@ export default class LearnerGroupRootComponent extends Component {
         await saveSomeGroups(groupsToSave);
       } else {
         this.isSaving = false;
-        this.flashMessages.success('general.savedSuccessfully');
+        this.flashMessages.success(capitalize('general.savedSuccessfully'));
         this.showNewLearnerGroupForm = false;
       }
     };
