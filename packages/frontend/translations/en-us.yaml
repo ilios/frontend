@@ -492,8 +492,10 @@ errors:
   invalidChangeAlertRecipients: This list of change-alerts recipients contains invalid email addresses.
   reportMissingAcademicYear: Academic Year is Required
   reportMissingCompetency: Competency is Required
+  reportMissingCourse: Course is Required
   reportMissingInstructor: Instructor is Required
   reportMissingInstructorGroup: Instructor Group is Required
+  reportMissingLearningMaterial: Learning Material is Required
   reportMissingMeshTerm: MeSH Term is Required
   reportMissingObjectForCompetency: Association is required when Competency is the subject
   reportMissingObjectForInstructor: Association is required when Instructor is the subject
@@ -504,5 +506,6 @@ errors:
   reportMissingObjectForTerm: Association is required when Term is the subject
   reportMissingProgram: Program is Required
   reportMissingProgramYear: Program Year is Required
+  reportMissingSession: Session is Required
   reportMissingSessionType: Session Type is Required
   reportMissingTerm: Term is Required

@@ -100,11 +100,17 @@ export default class ReportsNewSubjectComponent extends Component {
             case 'competency':
               messageKey = 'errors.reportMissingCompetency';
               break;
+            case 'course':
+              messageKey = 'errors.reportMissingCourse';
+              break;
             case 'instructor':
               messageKey = 'errors.reportMissingInstructor';
               break;
             case 'instructor group':
               messageKey = 'errors.reportMissingInstructorGroup';
+              break;
+            case 'learning material':
+              messageKey = 'errors.reportMissingLearningMaterial';
               break;
             case 'mesh term':
               messageKey = 'errors.reportMissingMeshTerm';
@@ -114,6 +120,9 @@ export default class ReportsNewSubjectComponent extends Component {
               break;
             case 'program year':
               messageKey = 'errors.reportMissingProgramYear';
+              break;
+            case 'session':
+              messageKey = 'errors.reportMissingSession';
               break;
             case 'session type':
               messageKey = 'errors.reportMissingSessionType';

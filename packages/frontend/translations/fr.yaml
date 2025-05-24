@@ -493,8 +493,10 @@ errors:
   invalidChangeAlertRecipients: "Cette liste de destinataires d'alertes de changement contient des adresses e-mail invalides."
   reportMissingAcademicYear: Année Scolaire requis
   reportMissingCompetency: Compétence requis
+  reportMissingCourse: Cours is requis
   reportMissingInstructor: Instructeur requis
   reportMissingInstructorGroup: Groupe des Instructeurs requis
+  reportMissingLearningMaterial: "Matériel d'Étude requis"
   reportMissingMeshTerm: terme de MeSH requis
   reportMissingObjectForCompetency: connexion requis quand `compétence` est le sujet
   reportMissingObjectForInstructor: connexion requis quand `instructeur` est le sujet
@@ -505,5 +507,6 @@ errors:
   reportMissingObjectForTerm: connexion requis quand `terme` est le sujet
   reportMissingProgram: Diplôme requis
   reportMissingProgramYear: Année Diplôme requis
+  reportMissingSession: Seance requis
   reportMissingSessionType: Type de Seance requis
   reportMissingTerm: Terme requis
