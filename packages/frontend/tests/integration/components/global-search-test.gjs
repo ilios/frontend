@@ -151,29 +151,29 @@ module('Integration | Component | global-search', function (hooks) {
     assert.strictEqual(component.searchResults[2].courseTitle, '2021 Course 3');
     assert.strictEqual(component.searchResults[3].courseTitle, '2021 Course 4');
     assert.strictEqual(component.schoolFilters.length, 2);
-    assert.strictEqual(component.schoolFilters[0].school, 'Medicine (2)');
-    assert.strictEqual(component.schoolFilters[1].school, 'Pharmacy (2)');
+    assert.strictEqual(component.schoolFilters[0].school, 'Medicine');
+    assert.strictEqual(component.schoolFilters[1].school, 'Pharmacy');
     await component.selectAcademicYear('2021');
     assert.strictEqual(component.searchResults.length, 2);
     assert.strictEqual(component.searchResults[0].courseTitle, '2021 Course 3');
     assert.strictEqual(component.searchResults[1].courseTitle, '2021 Course 4');
     assert.strictEqual(component.schoolFilters.length, 2);
-    assert.strictEqual(component.schoolFilters[0].school, 'Medicine (1)');
-    assert.strictEqual(component.schoolFilters[1].school, 'Pharmacy (1)');
+    assert.strictEqual(component.schoolFilters[0].school, 'Medicine');
+    assert.strictEqual(component.schoolFilters[1].school, 'Pharmacy');
     await component.selectAcademicYear('2020');
     assert.strictEqual(component.academicYear, '2020');
     assert.strictEqual(component.searchResults.length, 1);
     assert.strictEqual(component.searchResults[0].courseTitle, '2020 Course 2');
     assert.strictEqual(component.schoolFilters.length, 2);
-    assert.strictEqual(component.schoolFilters[0].school, 'Medicine (0)');
-    assert.strictEqual(component.schoolFilters[1].school, 'Pharmacy (1)');
+    assert.strictEqual(component.schoolFilters[0].school, 'Medicine');
+    assert.strictEqual(component.schoolFilters[1].school, 'Pharmacy');
     await component.selectAcademicYear('2019');
     assert.strictEqual(component.academicYear, '2019');
     assert.strictEqual(component.searchResults.length, 1);
     assert.strictEqual(component.searchResults[0].courseTitle, '2019 Course 1');
     assert.strictEqual(component.schoolFilters.length, 2);
-    assert.strictEqual(component.schoolFilters[0].school, 'Medicine (1)');
-    assert.strictEqual(component.schoolFilters[1].school, 'Pharmacy (0)');
+    assert.strictEqual(component.schoolFilters[0].school, 'Medicine');
+    assert.strictEqual(component.schoolFilters[1].school, 'Pharmacy');
   });
 
   test('school filter works properly', async function (assert) {
@@ -236,11 +236,11 @@ module('Integration | Component | global-search', function (hooks) {
     assert.strictEqual(component.searchResults[2].courseTitle, '2021 Course 3');
     assert.strictEqual(component.searchResults[3].courseTitle, '2021 Course 4');
     assert.strictEqual(component.schoolFilters.length, 3);
-    assert.strictEqual(component.schoolFilters[0].school, 'Dentistry (1)');
+    assert.strictEqual(component.schoolFilters[0].school, 'Dentistry');
     assert.ok(component.schoolFilters[0].isSelected);
-    assert.strictEqual(component.schoolFilters[1].school, 'Medicine (2)');
+    assert.strictEqual(component.schoolFilters[1].school, 'Medicine');
     assert.ok(component.schoolFilters[1].isSelected);
-    assert.strictEqual(component.schoolFilters[2].school, 'Pharmacy (1)');
+    assert.strictEqual(component.schoolFilters[2].school, 'Pharmacy');
     assert.ok(component.schoolFilters[2].isSelected);
 
     await component.schoolFilters[1].toggle();
@@ -249,11 +249,11 @@ module('Integration | Component | global-search', function (hooks) {
     assert.strictEqual(component.searchResults[0].courseTitle, '2021 Course 3');
     assert.strictEqual(component.searchResults[1].courseTitle, '2021 Course 4');
     assert.strictEqual(component.schoolFilters.length, 3);
-    assert.strictEqual(component.schoolFilters[0].school, 'Dentistry (1)');
+    assert.strictEqual(component.schoolFilters[0].school, 'Dentistry');
     assert.ok(component.schoolFilters[0].isSelected);
-    assert.strictEqual(component.schoolFilters[1].school, 'Medicine (2)');
+    assert.strictEqual(component.schoolFilters[1].school, 'Medicine');
     assert.notOk(component.schoolFilters[1].isSelected);
-    assert.strictEqual(component.schoolFilters[2].school, 'Pharmacy (1)');
+    assert.strictEqual(component.schoolFilters[2].school, 'Pharmacy');
     assert.ok(component.schoolFilters[2].isSelected);
 
     await component.schoolFilters[0].toggle();
@@ -261,22 +261,22 @@ module('Integration | Component | global-search', function (hooks) {
     assert.strictEqual(component.searchResults.length, 1);
     assert.strictEqual(component.searchResults[0].courseTitle, '2021 Course 3');
     assert.strictEqual(component.schoolFilters.length, 3);
-    assert.strictEqual(component.schoolFilters[0].school, 'Dentistry (1)');
+    assert.strictEqual(component.schoolFilters[0].school, 'Dentistry');
     assert.notOk(component.schoolFilters[0].isSelected);
-    assert.strictEqual(component.schoolFilters[1].school, 'Medicine (2)');
+    assert.strictEqual(component.schoolFilters[1].school, 'Medicine');
     assert.notOk(component.schoolFilters[1].isSelected);
-    assert.strictEqual(component.schoolFilters[2].school, 'Pharmacy (1)');
+    assert.strictEqual(component.schoolFilters[2].school, 'Pharmacy');
     assert.ok(component.schoolFilters[2].isSelected);
 
     await component.schoolFilters[2].toggle();
 
     assert.strictEqual(component.searchResults.length, 0);
     assert.strictEqual(component.schoolFilters.length, 3);
-    assert.strictEqual(component.schoolFilters[0].school, 'Dentistry (1)');
+    assert.strictEqual(component.schoolFilters[0].school, 'Dentistry');
     assert.notOk(component.schoolFilters[0].isSelected);
-    assert.strictEqual(component.schoolFilters[1].school, 'Medicine (2)');
+    assert.strictEqual(component.schoolFilters[1].school, 'Medicine');
     assert.notOk(component.schoolFilters[1].isSelected);
-    assert.strictEqual(component.schoolFilters[2].school, 'Pharmacy (1)');
+    assert.strictEqual(component.schoolFilters[2].school, 'Pharmacy');
     assert.notOk(component.schoolFilters[2].isSelected);
 
     await component.schoolFilters[0].toggle();
@@ -289,11 +289,11 @@ module('Integration | Component | global-search', function (hooks) {
     assert.strictEqual(component.searchResults[2].courseTitle, '2021 Course 3');
     assert.strictEqual(component.searchResults[3].courseTitle, '2021 Course 4');
     assert.strictEqual(component.schoolFilters.length, 3);
-    assert.strictEqual(component.schoolFilters[0].school, 'Dentistry (1)');
+    assert.strictEqual(component.schoolFilters[0].school, 'Dentistry');
     assert.ok(component.schoolFilters[0].isSelected);
-    assert.strictEqual(component.schoolFilters[1].school, 'Medicine (2)');
+    assert.strictEqual(component.schoolFilters[1].school, 'Medicine');
     assert.ok(component.schoolFilters[1].isSelected);
-    assert.strictEqual(component.schoolFilters[2].school, 'Pharmacy (1)');
+    assert.strictEqual(component.schoolFilters[2].school, 'Pharmacy');
     assert.ok(component.schoolFilters[2].isSelected);
   });
 
@@ -332,11 +332,11 @@ module('Integration | Component | global-search', function (hooks) {
     assert.strictEqual(component.searchResults.length, 1);
     assert.strictEqual(component.searchResults[0].courseTitle, '2019 Course 1');
     assert.strictEqual(component.schoolFilters.length, 3);
-    assert.strictEqual(component.schoolFilters[0].school, 'school 0 (0)');
+    assert.strictEqual(component.schoolFilters[0].school, 'school 0');
     assert.ok(component.schoolFilters[0].isDisabled);
-    assert.strictEqual(component.schoolFilters[1].school, 'school 1 (1)');
+    assert.strictEqual(component.schoolFilters[1].school, 'school 1');
     assert.notOk(component.schoolFilters[1].isDisabled);
-    assert.strictEqual(component.schoolFilters[2].school, 'school 2 (0)');
+    assert.strictEqual(component.schoolFilters[2].school, 'school 2');
     assert.ok(component.schoolFilters[2].isDisabled);
   });
 
