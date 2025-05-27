@@ -1,7 +1,6 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
-import { validatable, NotBlank } from 'ilios-common/decorators/validation';
 import { dropTask } from 'ember-concurrency';
 import { DateTime } from 'luxon';
 import t from 'ember-intl/helpers/t';
@@ -10,21 +9,23 @@ import formatDate from 'ember-intl/helpers/format-date';
 import perform from 'ember-concurrency/helpers/perform';
 import DatePicker from 'ilios-common/components/date-picker';
 import TimePicker from 'ilios-common/components/time-picker';
-import ValidationError from 'ilios-common/components/validation-error';
 
-@validatable
 export default class SessionOverviewIlmDuedateComponent extends Component {
-  @tracked @NotBlank() dueDate = this.args.ilmSession?.dueDate;
+  @tracked dueDateBuffer;
+
+  get dueDate() {
+    return this.dueDateBuffer ?? this.args.ilmSession.dueDate;
+  }
 
   @action
   revert() {
-    this.dueDate = this.args.ilmSession.dueDate;
+    this.dueDateBuffer = null;
   }
 
   @action
   updateDate(date) {
     const currentDueDate = DateTime.fromJSDate(this.dueDate);
-    this.dueDate = DateTime.fromJSDate(date)
+    this.dueDateBuffer = DateTime.fromJSDate(date)
       .set({
         hour: currentDueDate.hour,
         minute: currentDueDate.minute,
@@ -35,18 +36,13 @@ export default class SessionOverviewIlmDuedateComponent extends Component {
   @action
   updateTime(value, type) {
     const update = 'hour' === type ? { hour: value } : { minute: value };
-    this.dueDate = DateTime.fromJSDate(this.dueDate).set(update).toJSDate();
+    this.dueDateBuffer = DateTime.fromJSDate(this.dueDate).set(update).toJSDate();
   }
 
   save = dropTask(async () => {
-    this.addErrorDisplayFor('dueDate');
-    const isValid = await this.isValid('dueDate');
-    if (!isValid) {
-      return false;
-    }
-    this.removeErrorDisplayFor('dueDate');
     this.args.ilmSession.dueDate = this.dueDate;
     await this.args.ilmSession.save();
+    this.dueDateBuffer = null;
   });
   <template>
     <div class="session-overview-ilm-duedate" data-test-session-overview-ilm-duedate ...attributes>
@@ -69,7 +65,6 @@ export default class SessionOverviewIlmDuedateComponent extends Component {
             >
               <DatePicker @value={{this.dueDate}} @onChange={{this.updateDate}} />
               <TimePicker @date={{this.dueDate}} @action={{this.updateTime}} />
-              <ValidationError @validatable={{this}} @property="dueDate" />
             </EditableField>
           {{else}}
             {{formatDate
