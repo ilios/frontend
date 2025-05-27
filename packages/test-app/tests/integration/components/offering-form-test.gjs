@@ -97,14 +97,14 @@ module('Integration | Component | offering form', function (hooks) {
     await render(<template><OfferingForm @close={{(noop)}} @showRoom={{true}} /></template>);
     await component.url.set('not a url');
     await component.save();
-    assert.ok(component.url.hasError);
+    assert.strictEqual(component.url.error, 'Virtual Learning Link must be a valid url');
   });
 
   test('url validation errors when URL contains backslash', async function (assert) {
     await render(<template><OfferingForm @close={{(noop)}} @showRoom={{true}} /></template>);
     await component.url.set('https://totallyfineurl.edu/hahajustjokingthisisinvalid\\');
     await component.save();
-    assert.ok(component.url.hasError);
+    assert.strictEqual(component.url.error, 'Virtual Learning Link must be a valid url');
   });
 
   test('recurring options does not show by default', async function (assert) {
@@ -700,7 +700,7 @@ module('Integration | Component | offering form', function (hooks) {
     await render(<template><OfferingForm @close={{(noop)}} @showRoom={{true}} /></template>);
     assert.notOk(component.url.hasError);
     await component.url.set('http://example.com?jayden=awesome/');
-    assert.ok(component.url.hasError);
+    assert.strictEqual(component.url.error, 'Virtual Learning Link must be a valid url');
   });
 
   test('learner groups sort order', async function (assert) {

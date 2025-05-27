@@ -14,8 +14,6 @@ import {
   Lte,
   Gte,
   Gt,
-  Length,
-  IsURL,
   validatable,
 } from 'ilios-common/decorators/validation';
 import { ValidateIf } from 'class-validator';
@@ -64,7 +62,7 @@ export default class OfferingForm extends Component {
   @tracked startDate = null;
   @tracked endDate = null;
   @tracked room = null;
-  @IsURL() @Length(1, 2000) @tracked url = null;
+  @tracked url = null;
   @ValidateIf((o) => o.args.smallGroupMode)
   @ArrayNotEmpty()
   @tracked
@@ -107,6 +105,7 @@ export default class OfferingForm extends Component {
 
   validations = new YupValidations(this, {
     room: string().ensure().trim().max(255),
+    url: string().ensure().trim().max(2000).url(),
   });
 
   get hasOffering() {
@@ -356,6 +355,7 @@ export default class OfferingForm extends Component {
 
   @action
   changeURL(value) {
+    this.validations.addErrorDisplayFor('url');
     value = value.trim();
     const regex = RegExp('https://http[s]?:');
     if (regex.test(value)) {
@@ -380,9 +380,8 @@ export default class OfferingForm extends Component {
   });
 
   saveOffering = dropTask(async () => {
-    this.validations.addErrorDisplaysFor(['room']);
+    this.validations.addErrorDisplaysFor(['room', 'url']);
     this.addErrorDisplaysFor([
-      'url',
       'numberOfWeeks',
       'durationHours',
       'durationMinutes',
@@ -834,11 +833,15 @@ export default class OfferingForm extends Component {
                     inputmode="url"
                     disabled={{this.saveOffering.isRunning}}
                     {{on "input" (pick "target.value" this.changeURL)}}
-                    {{on "keyup" (fn this.addErrorDisplayFor "url")}}
                     {{on "focus" this.selectAllText}}
                     {{on "keypress" (if @offering (perform this.saveOnEnter) (noop))}}
+                    {{this.validations.attach "url"}}
                   />
-                  <ValidationError @validatable={{this}} @property="url" />
+                  <YupValidationMessage
+                    @description={{t "general.virtualLearningLink"}}
+                    @validationErrors={{this.validations.errors.url}}
+                    data-test-url-validation-error-message
+                  />
                 </div>
               {{/if}}
             </fieldset>

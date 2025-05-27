@@ -82,7 +82,8 @@ const definition = {
     scope: '[data-test-url]',
     set: fillable('input'),
     value: value('input'),
-    hasError: isVisible('.validation-error-message'),
+    hasError: isPresent('[data-test-url-validation-error-message]'),
+    error: text('[data-test-url-validation-error-message]'),
     submit: triggerable('keypress', 'input', {
       eventProperties: { key: 'Enter' },
     }),
