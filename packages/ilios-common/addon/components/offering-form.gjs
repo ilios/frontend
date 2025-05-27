@@ -5,6 +5,7 @@ import { service } from '@ember/service';
 import { isEmpty, isPresent } from '@ember/utils';
 import { hash, map } from 'rsvp';
 import { DateTime } from 'luxon';
+import { string } from 'yup';
 import { dropTask, restartableTask, timeout } from 'ember-concurrency';
 import {
   ArrayNotEmpty,
@@ -45,6 +46,8 @@ import InstructorSelectionManager from 'ilios-common/components/instructor-selec
 import LearnergroupSelectionManager from 'ilios-common/components/learnergroup-selection-manager';
 import LearnerSelectionManager from 'ilios-common/components/learner-selection-manager';
 import SaveButton from 'ilios-common/components/save-button';
+import YupValidations from 'ilios-common/classes/yup-validations';
+import YupValidationMessage from 'ilios-common/components/yup-validation-message';
 
 const DEBOUNCE_DELAY = 600;
 const DEFAULT_URL_VALUE = 'https://';
@@ -60,7 +63,7 @@ export default class OfferingForm extends Component {
   @tracked timezones = null;
   @tracked startDate = null;
   @tracked endDate = null;
-  @Length(1, 255) @tracked room = null;
+  @tracked room = null;
   @IsURL() @Length(1, 2000) @tracked url = null;
   @ValidateIf((o) => o.args.smallGroupMode)
   @ArrayNotEmpty()
@@ -101,6 +104,10 @@ export default class OfferingForm extends Component {
       { day: 6, t: 'general.saturday' },
     ];
   }
+
+  validations = new YupValidations(this, {
+    room: string().ensure().trim().max(255),
+  });
 
   get hasOffering() {
     return !!this.args.offering;
@@ -343,6 +350,7 @@ export default class OfferingForm extends Component {
 
   @action
   changeRoom(event) {
+    this.validations.addErrorDisplayFor('room');
     this.room = event.target.value;
   }
 
@@ -372,8 +380,8 @@ export default class OfferingForm extends Component {
   });
 
   saveOffering = dropTask(async () => {
+    this.validations.addErrorDisplaysFor(['room']);
     this.addErrorDisplaysFor([
-      'room',
       'url',
       'numberOfWeeks',
       'durationHours',
@@ -381,8 +389,9 @@ export default class OfferingForm extends Component {
       'learnerGroups',
     ]);
 
-    const isValid = await this.isValid();
-    if (!isValid) {
+    const isValidNew = await this.validations.isValid();
+    const isValidOld = await this.isValid();
+    if (!isValidNew || !isValidOld) {
       return false;
     }
     this.saveProgressPercent = 1;
@@ -435,6 +444,7 @@ export default class OfferingForm extends Component {
     }
     this.saveProgressPercent = 100;
     await timeout(500);
+    this.validations.clearErrorDisplay();
     this.clearErrorDisplay();
     this.args.close();
   });
@@ -799,10 +809,14 @@ export default class OfferingForm extends Component {
                     value={{this.room}}
                     disabled={{this.saveOffering.isRunning}}
                     {{on "input" this.changeRoom}}
-                    {{on "keyup" (fn this.addErrorDisplayFor "room")}}
+                    {{this.validations.attach "room"}}
                     {{on "keypress" (if @offering (perform this.saveOnEnter) (noop))}}
                   />
-                  <ValidationError @validatable={{this}} @property="room" />
+                  <YupValidationMessage
+                    @description={{t "general.location"}}
+                    @validationErrors={{this.validations.errors.room}}
+                    data-test-room-validation-error-message
+                  />
                 </div>
                 <div class="url" data-test-url>
                   <label for="url-{{templateId}}">

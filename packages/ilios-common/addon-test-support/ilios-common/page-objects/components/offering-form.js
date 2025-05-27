@@ -72,7 +72,8 @@ const definition = {
     scope: '.room',
     set: fillable('input'),
     value: value('input'),
-    hasError: isVisible('.validation-error-message'),
+    hasError: isPresent('[data-test-room-validation-error-message]'),
+    error: text('[data-test-room-validation-error-message]'),
     submit: triggerable('keypress', 'input', {
       eventProperties: { key: 'Enter' },
     }),

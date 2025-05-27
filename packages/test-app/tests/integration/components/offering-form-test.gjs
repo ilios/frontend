@@ -73,7 +73,10 @@ module('Integration | Component | offering form', function (hooks) {
     await render(<template><OfferingForm @close={{(noop)}} @showRoom={{true}} /></template>);
     await component.location.set('a'.repeat(300));
     await component.save();
-    assert.ok(component.location.hasError);
+    assert.strictEqual(
+      component.location.error,
+      'Location is too long (maximum is 255 characters)',
+    );
   });
 
   test('room validation succeeds on blank value', async function (assert) {
