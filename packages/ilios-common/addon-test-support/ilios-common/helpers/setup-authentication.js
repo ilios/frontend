@@ -11,7 +11,24 @@ export default async function (
   const jwtObject = {
     user_id: userId,
   };
-  if (performsNonLearnerFunction) {
+  const nonLearnerFunctions = [
+    'directedCourses',
+    'administeredCourses',
+    'administeredSessions',
+    'instructorGroups',
+    'instructedOfferings',
+    'instructorIlmSessions',
+    'instructedLearnerGroups',
+    'directedPrograms',
+    'programYears',
+    'administeredCurriculumInventoryReports',
+    'directedSchools',
+    'administeredSchools',
+  ];
+  const hasNonLearnerFunctionInPassedData = nonLearnerFunctions.some((key) => {
+    return key in userObject && Array.isArray(userObject[key]) && userObject[key].length > 0;
+  });
+  if (performsNonLearnerFunction || hasNonLearnerFunctionInPassedData) {
     jwtObject['performs_non_learner_function'] = true;
   }
   const encodedData = window.btoa('') + '.' + window.btoa(JSON.stringify(jwtObject)) + '.';
