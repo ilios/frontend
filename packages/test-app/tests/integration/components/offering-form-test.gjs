@@ -575,7 +575,7 @@ module('Integration | Component | offering form', function (hooks) {
   test('learnerGroup validation errors show up when saving', async function (assert) {
     await render(<template><OfferingForm @close={{(noop)}} @smallGroupMode={{true}} /></template>);
     await component.save();
-    assert.ok(component.learnerManager.hasError);
+    assert.strictEqual(component.learnerManager.error, 'Learner Groups can not be empty');
   });
 
   test('renders when an offering is provided', async function (assert) {

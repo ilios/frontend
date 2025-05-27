@@ -109,7 +109,8 @@ const definition = {
     scope: '[data-test-learner-management]',
     learnerSelectionManager,
     learnergroupSelectionManager,
-    hasError: isPresent('.validation-error-message'),
+    hasError: isPresent('[data-test-learner-groups-validation-error-message]'),
+    error: text('[data-test-learner-groups-validation-error-message]'),
   },
 
   save: clickable('.done'),

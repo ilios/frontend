@@ -5,17 +5,9 @@ import { service } from '@ember/service';
 import { isEmpty, isPresent } from '@ember/utils';
 import { hash, map } from 'rsvp';
 import { DateTime } from 'luxon';
-import { number, string } from 'yup';
+import { mixed, number, string } from 'yup';
 import { dropTask, restartableTask, timeout } from 'ember-concurrency';
-import {
-  ArrayNotEmpty,
-  Custom,
-  IsInt,
-  Lte,
-  Gte,
-  validatable,
-} from 'ilios-common/decorators/validation';
-import { ValidateIf } from 'class-validator';
+import { Custom, IsInt, Lte, Gte, validatable } from 'ilios-common/decorators/validation';
 import { uniqueValues } from 'ilios-common/utils/array-helpers';
 import { TrackedAsyncData } from 'ember-async-data';
 import { uniqueId, fn } from '@ember/helper';
@@ -62,10 +54,7 @@ export default class OfferingForm extends Component {
   @tracked endDate = null;
   @tracked room = null;
   @tracked url = null;
-  @ValidateIf((o) => o.args.smallGroupMode)
-  @ArrayNotEmpty()
-  @tracked
-  learnerGroups = [];
+  @tracked learnerGroups = [];
   @tracked learners = [];
   @tracked showOfferingCalendar = false;
   @tracked makeRecurring = false;
@@ -104,6 +93,22 @@ export default class OfferingForm extends Component {
     numberOfWeeks: number().when('$makeRecurring', {
       is: true,
       then: (schema) => schema.integer().min(1),
+    }),
+    learnerGroups: mixed().when('$args.smallGroupMode', {
+      is: true,
+      then: (schema) =>
+        schema.test(
+          'is-array',
+          (d) => {
+            return {
+              path: d.path,
+              messageKey: 'errors.empty',
+            };
+          },
+          (value) => {
+            return Array.isArray(value) && !!value.length;
+          },
+        ),
     }),
   });
 
@@ -246,6 +251,7 @@ export default class OfferingForm extends Component {
 
   @action
   async addLearnerGroup(learnerGroup, cascade) {
+    this.validations.addErrorDisplayFor('learnerGroups');
     if (cascade) {
       const descendants = await learnerGroup.getAllDescendants();
       this.learnerGroups = uniqueValues([...this.learnerGroups, ...descendants, learnerGroup]);
@@ -256,6 +262,7 @@ export default class OfferingForm extends Component {
 
   @action
   async removeLearnerGroup(learnerGroup, cascade) {
+    this.validations.addErrorDisplayFor('learnerGroups');
     let groupsToRemove = [learnerGroup];
     if (cascade) {
       const descendants = await learnerGroup.getAllDescendants();
@@ -380,8 +387,8 @@ export default class OfferingForm extends Component {
   });
 
   saveOffering = dropTask(async () => {
-    this.validations.addErrorDisplaysFor(['room', 'url', 'numberOfWeeks']);
-    this.addErrorDisplaysFor(['durationHours', 'durationMinutes', 'learnerGroups']);
+    this.validations.addErrorDisplaysFor(['room', 'url', 'numberOfWeeks', 'learnerGroups']);
+    this.addErrorDisplaysFor(['durationHours', 'durationMinutes']);
 
     const isValidNew = await this.validations.isValid();
     const isValidOld = await this.isValid();
@@ -867,7 +874,11 @@ export default class OfferingForm extends Component {
                 @add={{this.addLearnerGroup}}
                 @remove={{this.removeLearnerGroup}}
               />
-              <ValidationError @validatable={{this}} @property="learnerGroups" />
+              <YupValidationMessage
+                @description={{t "general.learnerGroups"}}
+                @validationErrors={{this.validations.errors.learnerGroups}}
+                data-test-learner-groups-validation-error-message
+              />
               {{#unless @smallGroupMode}}
                 <LearnerSelectionManager
                   @learners={{this.learners}}
