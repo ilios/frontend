@@ -92,7 +92,8 @@ const definition = {
     scope: '.make-recurring',
     yesNoToggle,
     setWeeks: fillable('.make-recurring-input'),
-    hasError: isVisible('.validation-error-message'),
+    hasError: isPresent('[data-test-number-of-weeks-validation-error-message]'),
+    error: text('[data-test-number-of-weeks-validation-error-message]'),
     weekdays: collection('[data-test-make-recurring-day]', {
       label: text('[data-test-recurring-day-label]'),
       input: {

@@ -148,7 +148,10 @@ module('Integration | Component | offering form', function (hooks) {
     await component.recurring.yesNoToggle.click();
     await component.recurring.setWeeks('0');
     await component.save();
-    assert.ok(component.recurring.hasError);
+    assert.strictEqual(component.recurring.error, 'Weeks must be greater than or equal to 1');
+    await component.recurring.setWeeks('1.5');
+    await component.save();
+    assert.strictEqual(component.recurring.error, 'Weeks must be an integer');
   });
 
   test('recurring default day is disabled and checked', async function (assert) {

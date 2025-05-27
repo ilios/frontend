@@ -5,7 +5,7 @@ import { service } from '@ember/service';
 import { isEmpty, isPresent } from '@ember/utils';
 import { hash, map } from 'rsvp';
 import { DateTime } from 'luxon';
-import { string } from 'yup';
+import { number, string } from 'yup';
 import { dropTask, restartableTask, timeout } from 'ember-concurrency';
 import {
   ArrayNotEmpty,
@@ -13,7 +13,6 @@ import {
   IsInt,
   Lte,
   Gte,
-  Gt,
   validatable,
 } from 'ilios-common/decorators/validation';
 import { ValidateIf } from 'class-validator';
@@ -71,11 +70,7 @@ export default class OfferingForm extends Component {
   @tracked showOfferingCalendar = false;
   @tracked makeRecurring = false;
   @tracked recurringDays = null;
-  @ValidateIf((o) => o.makeRecurring)
-  @IsInt()
-  @Gt(0)
-  @tracked
-  numberOfWeeks = 1;
+  @tracked numberOfWeeks = 1;
   @tracked instructors = [];
   @tracked instructorGroups = [];
   @tracked offeringsToSave = 0;
@@ -106,6 +101,10 @@ export default class OfferingForm extends Component {
   validations = new YupValidations(this, {
     room: string().ensure().trim().max(255),
     url: string().ensure().trim().max(2000).url(),
+    numberOfWeeks: number().when('$makeRecurring', {
+      is: true,
+      then: (schema) => schema.integer().min(1),
+    }),
   });
 
   get hasOffering() {
@@ -344,6 +343,7 @@ export default class OfferingForm extends Component {
 
   @action
   changeNumberOfWeeks(event) {
+    this.validations.addErrorDisplayFor('numberOfWeeks');
     this.numberOfWeeks = event.target.value;
   }
 
@@ -380,13 +380,8 @@ export default class OfferingForm extends Component {
   });
 
   saveOffering = dropTask(async () => {
-    this.validations.addErrorDisplaysFor(['room', 'url']);
-    this.addErrorDisplaysFor([
-      'numberOfWeeks',
-      'durationHours',
-      'durationMinutes',
-      'learnerGroups',
-    ]);
+    this.validations.addErrorDisplaysFor(['room', 'url', 'numberOfWeeks']);
+    this.addErrorDisplaysFor(['durationHours', 'durationMinutes', 'learnerGroups']);
 
     const isValidNew = await this.validations.isValid();
     const isValidOld = await this.isValid();
@@ -779,7 +774,7 @@ export default class OfferingForm extends Component {
                             value={{this.numberOfWeeks}}
                             class="make-recurring-input"
                             {{on "input" this.changeNumberOfWeeks}}
-                            {{on "keyup" (fn this.addErrorDisplayFor "numberOfWeeks")}}
+                            {{this.validations.attach "numberOfWeeks"}}
                           />
                           <label
                             class="make-recurring-input-label"
@@ -787,7 +782,11 @@ export default class OfferingForm extends Component {
                           >
                             {{t "general.weeks"}}
                           </label>
-                          <ValidationError @validatable={{this}} @property="numberOfWeeks" />
+                          <YupValidationMessage
+                            @description={{t "general.weeks"}}
+                            @validationErrors={{this.validations.errors.numberOfWeeks}}
+                            data-test-number-of-weeks-validation-error-message
+                          />
                         </div>
                       </div>
                     {{/if}}
