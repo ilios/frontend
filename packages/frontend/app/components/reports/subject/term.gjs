@@ -62,7 +62,7 @@ export default class ReportsSubjectTermComponent extends Component {
       const what = pluralize(camelize(prepositionalObject));
       filters.push(`${what}: [${prepositionalObjectTableRowId}]`);
     }
-    const attributes = ['id', 'title', 'vocabulary { id, title, school { title} }'];
+    const attributes = ['id', 'title', 'vocabulary { id, title, school { title } }'];
     const result = await this.graphql.find('terms', filters, attributes.join(', '));
     return result.data.terms;
   }

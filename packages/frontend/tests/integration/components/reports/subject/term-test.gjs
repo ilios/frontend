@@ -23,7 +23,10 @@ module('Integration | Component | reports/subject/term', function (hooks) {
     assert.expect(5);
     this.server.post('api/graphql', function (schema, { requestBody }) {
       const { query } = JSON.parse(requestBody);
-      assert.strictEqual(query, 'query { terms { id, title, vocabulary { id, title } } }');
+      assert.strictEqual(
+        query,
+        'query { terms { id, title, vocabulary { id, title, school { title } } } }',
+      );
       return responseData;
     });
     const { id } = this.server.create('report', {
@@ -51,7 +54,10 @@ module('Integration | Component | reports/subject/term', function (hooks) {
 
     this.server.post('api/graphql', function (schema, { requestBody }) {
       const { query } = JSON.parse(requestBody);
-      assert.strictEqual(query, 'query { terms { id, title, vocabulary { id, title } } }');
+      assert.strictEqual(
+        query,
+        'query { terms { id, title, vocabulary { id, title, school { title } } } }',
+      );
       return responseData;
     });
     const { id } = this.server.create('report', {
@@ -96,7 +102,10 @@ module('Integration | Component | reports/subject/term', function (hooks) {
 
     this.server.post('api/graphql', function (schema, { requestBody }) {
       const { query } = JSON.parse(requestBody);
-      assert.strictEqual(query, 'query { terms { id, title, vocabulary { id, title } } }');
+      assert.strictEqual(
+        query,
+        'query { terms { id, title, vocabulary { id, title, school { title } } } }',
+      );
       return responseDataLarge;
     });
     const { id } = this.server.create('report', {
@@ -127,7 +136,7 @@ module('Integration | Component | reports/subject/term', function (hooks) {
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
-        'query { terms(schools: [33]) { id, title, vocabulary { id, title } } }',
+        'query { terms(schools: [33]) { id, title, vocabulary { id, title, school { title } } } }',
       );
       return responseData;
     });
@@ -155,7 +164,7 @@ module('Integration | Component | reports/subject/term', function (hooks) {
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
-        'query { terms(courses: [13]) { id, title, vocabulary { id, title } } }',
+        'query { terms(courses: [13]) { id, title, vocabulary { id, title, school { title } } } }',
       );
       return responseData;
     });
@@ -182,7 +191,7 @@ module('Integration | Component | reports/subject/term', function (hooks) {
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
-        'query { terms(schools: [24], sessions: [13]) { id, title, vocabulary { id, title } } }',
+        'query { terms(schools: [24], sessions: [13]) { id, title, vocabulary { id, title, school { title } } } }',
       );
       return responseData;
     });

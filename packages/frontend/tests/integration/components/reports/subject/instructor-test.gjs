@@ -22,7 +22,10 @@ module('Integration | Component | reports/subject/instructor', function (hooks) 
     assert.expect(4);
     this.server.post('api/graphql', function (schema, { requestBody }) {
       const { query } = JSON.parse(requestBody);
-      assert.strictEqual(query, 'query { users { firstName,middleName,lastName,displayName } }');
+      assert.strictEqual(
+        query,
+        'query { users { firstName, middleName, lastName, displayName, school { title } } }',
+      );
       return responseData;
     });
     const { id } = this.server.create('report', {
@@ -49,7 +52,10 @@ module('Integration | Component | reports/subject/instructor', function (hooks) 
 
     this.server.post('api/graphql', function (schema, { requestBody }) {
       const { query } = JSON.parse(requestBody);
-      assert.strictEqual(query, 'query { users { firstName,middleName,lastName,displayName } }');
+      assert.strictEqual(
+        query,
+        'query { users { firstName, middleName, lastName, displayName, school { title } } }',
+      );
       return responseData;
     });
     const { id } = this.server.create('report', {
@@ -90,7 +96,10 @@ module('Integration | Component | reports/subject/instructor', function (hooks) 
 
     this.server.post('api/graphql', function (schema, { requestBody }) {
       const { query } = JSON.parse(requestBody);
-      assert.strictEqual(query, 'query { users { firstName,middleName,lastName,displayName } }');
+      assert.strictEqual(
+        query,
+        'query { users { firstName, middleName, lastName, displayName, school { title } } }',
+      );
       return responseDataLarge;
     });
     const { id } = this.server.create('report', {
@@ -121,7 +130,7 @@ module('Integration | Component | reports/subject/instructor', function (hooks) 
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
-        'query { users(schools: [33]) { firstName,middleName,lastName,displayName } }',
+        'query { users(schools: [33]) { firstName, middleName, lastName, displayName, school { title } } }',
       );
       return responseData;
     });
@@ -150,9 +159,9 @@ module('Integration | Component | reports/subject/instructor', function (hooks) 
       assert.strictEqual(
         query,
         `query { courses(ids: [13]) { sessions {
-        ilmSession { instructorGroups {  users { id firstName middleName lastName displayName }} instructors { id firstName middleName lastName displayName } }
-        offerings { instructorGroups {  users { id firstName middleName lastName displayName }} instructors { id firstName middleName lastName displayName } }
-      } } }`,
+        ilmSession { instructorGroups {  users { id firstName middleName lastName displayName school { title } }} instructors { id firstName middleName lastName displayName school { title } } }
+        offerings { instructorGroups {  users { id firstName middleName lastName displayName school { title } }} instructors { id firstName middleName lastName displayName school { title } } }
+      }, school { title } } }`,
       );
       return responseData;
     });
@@ -179,7 +188,7 @@ module('Integration | Component | reports/subject/instructor', function (hooks) 
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
-        'query { users(schools: [24], instructedSessions: [13]) { firstName,middleName,lastName,displayName } }',
+        'query { users(schools: [24], instructedSessions: [13]) { firstName, middleName, lastName, displayName, school { title } } }',
       );
       return responseData;
     });
@@ -212,7 +221,10 @@ module('Integration | Component | reports/subject/instructor', function (hooks) 
       const { users } = responseData.data;
       switch (counter) {
         case 1:
-          assert.strictEqual(query, 'query { courses(academicYears: [2005]) { id } }');
+          assert.strictEqual(
+            query,
+            'query { courses(academicYears: [2005]) { id, school { title } } }',
+          );
           return {
             data: {
               courses: [{ id: 1 }, { id: 31 }],
@@ -267,7 +279,7 @@ module('Integration | Component | reports/subject/instructor', function (hooks) 
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
-        'query { users(instructedSessionTypes: [4]) { firstName,middleName,lastName,displayName } }',
+        'query { users(instructedSessionTypes: [4]) { firstName, middleName, lastName, displayName, school { title } } }',
       );
       return responseData;
     });

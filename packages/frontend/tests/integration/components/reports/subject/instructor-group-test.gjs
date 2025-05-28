@@ -19,7 +19,7 @@ module('Integration | Component | reports/subject/instructor-group', function (h
     assert.expect(4);
     this.server.post('api/graphql', function (schema, { requestBody }) {
       const { query } = JSON.parse(requestBody);
-      assert.strictEqual(query, 'query { instructorGroups { title } }');
+      assert.strictEqual(query, 'query { instructorGroups { title, school { title } } }');
       return responseData;
     });
     const { id } = this.server.create('report', {
@@ -46,7 +46,7 @@ module('Integration | Component | reports/subject/instructor-group', function (h
 
     this.server.post('api/graphql', function (schema, { requestBody }) {
       const { query } = JSON.parse(requestBody);
-      assert.strictEqual(query, 'query { instructorGroups { title } }');
+      assert.strictEqual(query, 'query { instructorGroups { title, school { title } } }');
       return responseData;
     });
     const { id } = this.server.create('report', {
@@ -88,7 +88,7 @@ module('Integration | Component | reports/subject/instructor-group', function (h
 
     this.server.post('api/graphql', function (schema, { requestBody }) {
       const { query } = JSON.parse(requestBody);
-      assert.strictEqual(query, 'query { instructorGroups { title } }');
+      assert.strictEqual(query, 'query { instructorGroups { title, school { title } } }');
       return responseDataLarge;
     });
     const { id } = this.server.create('report', {
@@ -117,7 +117,10 @@ module('Integration | Component | reports/subject/instructor-group', function (h
     assert.expect(1);
     this.server.post('api/graphql', function (schema, { requestBody }) {
       const { query } = JSON.parse(requestBody);
-      assert.strictEqual(query, 'query { instructorGroups(schools: [33]) { title } }');
+      assert.strictEqual(
+        query,
+        'query { instructorGroups(schools: [33]) { title, school { title } } }',
+      );
       return responseData;
     });
     const { id } = this.server.create('report', {
@@ -142,7 +145,10 @@ module('Integration | Component | reports/subject/instructor-group', function (h
     assert.expect(1);
     this.server.post('api/graphql', function (schema, { requestBody }) {
       const { query } = JSON.parse(requestBody);
-      assert.strictEqual(query, 'query { instructorGroups(courses: [13]) { title } }');
+      assert.strictEqual(
+        query,
+        'query { instructorGroups(courses: [13]) { title, school { title } } }',
+      );
       return responseData;
     });
     const { id } = this.server.create('report', {
@@ -168,7 +174,7 @@ module('Integration | Component | reports/subject/instructor-group', function (h
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
-        'query { instructorGroups(schools: [24], sessions: [13]) { title } }',
+        'query { instructorGroups(schools: [24], sessions: [13]) { title, school { title } } }',
       );
       return responseData;
     });

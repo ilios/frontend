@@ -56,7 +56,7 @@ module('Integration | Component | reports/subject', function (hooks) {
 
       assert.strictEqual(
         query,
-        'query { courses(schools: [1], instructors: [100]) { id, title, year, externalId, school { id, title } } }',
+        'query { courses(schools: [1], instructors: [100]) { id, title, year, externalId, school { title } } }',
       );
       return {
         data: {
