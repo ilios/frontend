@@ -73,6 +73,20 @@ export default class ReportsSubjectTermComponent extends Component {
 
   @action
   async fetchDownloadData() {
+    if (this.showSchool) {
+      return [
+        [
+          this.intl.t('general.school'),
+          this.intl.t('general.vocabulary'),
+          this.intl.t('general.term'),
+        ],
+        ...this.sortedTerms.map(({ vocabulary, title }) => [
+          vocabulary.school.title,
+          vocabulary.title,
+          title,
+        ]),
+      ];
+    }
     return [
       [this.intl.t('general.vocabulary'), this.intl.t('general.term')],
       ...this.sortedTerms.map(({ vocabulary, title }) => [vocabulary.title, title]),

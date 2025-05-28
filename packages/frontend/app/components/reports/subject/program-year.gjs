@@ -81,13 +81,23 @@ export default class ReportsSubjectProgramYearComponent extends Component {
 
   @action
   async fetchDownloadData() {
+    if (this.showSchool) {
+      return [
+        [
+          this.intl.t('general.school'),
+          this.intl.t('general.year'),
+          this.intl.t('general.program'),
+        ],
+        ...this.sortedProgramYears.map(({ classOfYear, program }) => [
+          program.school.title,
+          classOfYear,
+          program.title,
+        ]),
+      ];
+    }
     return [
-      [this.intl.t('general.year'), this.intl.t('general.program'), this.intl.t('general.school')],
-      ...this.sortedProgramYears.map(({ classOfYear, program }) => [
-        classOfYear,
-        program.title,
-        program.school.title,
-      ]),
+      [this.intl.t('general.year'), this.intl.t('general.program')],
+      ...this.sortedProgramYears.map(({ classOfYear, program }) => [classOfYear, program.title]),
     ];
   }
   <template>

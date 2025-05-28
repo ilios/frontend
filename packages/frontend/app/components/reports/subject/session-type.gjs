@@ -87,7 +87,17 @@ export default class ReportsSubjectSessionTypeComponent extends Component {
 
   @action
   async fetchDownloadData() {
-    return [[this.intl.t('general.sessionTypes')], ...this.sortedSessionTypes.map((v) => [v])];
+    if (this.showSchool) {
+      return [
+        [this.intl.t('general.school'), this.intl.t('general.sessionTypes')],
+        ...this.sortedSessionTypes.map(({ school, title }) => [school.title, title]),
+      ];
+    }
+
+    return [
+      [this.intl.t('general.sessionTypes')],
+      ...this.sortedSessionTypes.map(({ title }) => [title]),
+    ];
   }
   <template>
     <SubjectHeader

@@ -73,9 +73,15 @@ export default class ReportsSubjectInstructorGroupComponent extends Component {
 
   @action
   async fetchDownloadData() {
+    if (this.showSchool) {
+      return [
+        [this.intl.t('general.school'), this.intl.t('general.instructorGroups')],
+        ...this.sortedInstructorGroups.map(({ school, title }) => [school.title, title]),
+      ];
+    }
     return [
       [this.intl.t('general.instructorGroups')],
-      ...this.sortedInstructorGroups.map((v) => [v]),
+      ...this.sortedInstructorGroups.map(({ title }) => [title]),
     ];
   }
   <template>

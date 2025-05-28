@@ -75,10 +75,14 @@ export default class ReportsSubjectProgramComponent extends Component {
 
   @action
   async fetchDownloadData() {
-    return [
-      [this.intl.t('general.program'), this.intl.t('general.school')],
-      ...this.sortedPrograms.map(({ title, school }) => [title, school.title]),
-    ];
+    if (this.showSchool) {
+      return [
+        [this.intl.t('general.school'), this.intl.t('general.program')],
+        ...this.sortedPrograms.map(({ school, title }) => [school.title, title]),
+      ];
+    }
+
+    return [[this.intl.t('general.program')], ...this.sortedPrograms.map(({ title }) => [title])];
   }
   <template>
     <SubjectHeader
@@ -101,7 +105,7 @@ export default class ReportsSubjectProgramComponent extends Component {
             <li>
               {{#if this.showSchool}}
                 <span data-test-school>
-                  {{program.school.title}}
+                  {{program.school.title}}:
                 </span>
               {{/if}}
               <span data-test-title>
