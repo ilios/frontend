@@ -71,6 +71,9 @@ export default class ReportsSubjectSessionComponent extends Component {
   }
 
   get sortedSessions() {
+    if (this.showSchool) {
+      return sortBy(this.filteredSessions, ['schoolTitle', 'year', 'courseTitle', 'title']);
+    }
     return sortBy(this.filteredSessions, ['year', 'courseTitle', 'title']);
   }
 
@@ -160,14 +163,19 @@ export default class ReportsSubjectSessionComponent extends Component {
       'title',
       'description',
       'sessionObjectives { title }',
-      'course { title, year }',
+      'course { title, year, school { title } }',
       'attendanceRequired',
       'attireRequired',
       'equipmentRequired',
       'supplemental',
     ];
     const result = await this.graphql.find('sessions', filters, attributes.join(','));
-    const sortedResults = sortBy(result.data.sessions, 'title');
+    let sortedResults = [];
+    if (this.showSchool) {
+      sortedResults = sortBy(result.data.sessions, 'course.school.title');
+    } else {
+      sortedResults = sortBy(result.data.sessions, 'title');
+    }
     const objectives = sortedResults.map(({ sessionObjectives }) => {
       return mapBy(sessionObjectives, 'title');
     });
@@ -186,14 +194,19 @@ export default class ReportsSubjectSessionComponent extends Component {
         equipmentRequired,
         supplemental,
       }) => {
-        const results = [
+        const results = [];
+        if (this.showSchool) {
+          results.push(course.school.title);
+        }
+        results.concat([
           title,
           course.title,
           this.academicYearCrossesCalendarYearBoundaries
             ? `${course.year} - ${course.year + 1}`
             : `${course.year}`,
-          striptags(description),
-        ];
+        ]);
+        results.push(striptags(description));
+
         if (this.schoolConfigs.get('showSessionAttendanceRequired')) {
           results.push(attendanceRequired ? this.intl.t('general.yes') : this.intl.t('general.no'));
         }
@@ -213,12 +226,16 @@ export default class ReportsSubjectSessionComponent extends Component {
       },
     );
 
-    const columns = [
+    const columns = [];
+    if (this.showSchool) {
+      columns.push(this.intl.t('general.school'));
+    }
+    columns.concat([
       this.intl.t('general.session'),
       this.intl.t('general.course'),
       this.intl.t('general.academicYear'),
       this.intl.t('general.description'),
-    ];
+    ]);
 
     if (this.schoolConfigs.get('showSessionAttendanceRequired')) {
       columns.push(this.intl.t('general.attendanceRequired'));
