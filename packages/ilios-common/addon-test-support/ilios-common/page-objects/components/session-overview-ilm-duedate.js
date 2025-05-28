@@ -12,7 +12,6 @@ const definition = {
   timePicker,
   save: clickable('.done'),
   cancel: clickable('.cancel'),
-  hasError: isVisible('.validation-error-message'),
 };
 
 export default definition;
