@@ -16,20 +16,20 @@ import FaIcon from 'ilios-common/components/fa-icon';
 
 export default class CurriculumInventorySequenceBlockHeaderComponent extends Component {
   @service store;
-  @tracked title;
-
-  constructor() {
-    super(...arguments);
-    this.title = this.args.sequenceBlock.title;
-  }
+  @tracked titleBuffer;
 
   validations = new YupValidations(this, {
     title: string().ensure().trim().min(3).max(200),
   });
 
+  get title() {
+    return this.titleBuffer ?? this.args.sequenceBlock.title;
+  }
+
   @action
   revertTitleChanges() {
-    this.title = this.args.sequenceBlock.title;
+    this.validations.removeErrorDisplayFor('title');
+    this.titleBuffer = null;
   }
 
   changeTitle = restartableTask(async () => {
@@ -40,6 +40,7 @@ export default class CurriculumInventorySequenceBlockHeaderComponent extends Com
     }
     this.validations.clearErrorDisplay();
     this.args.sequenceBlock.title = this.title;
+    this.titleBuffer = null;
     await this.args.sequenceBlock.save();
   });
   <template>
@@ -63,7 +64,7 @@ export default class CurriculumInventorySequenceBlockHeaderComponent extends Com
               type="text"
               value={{this.title}}
               disabled={{isSaving}}
-              {{on "input" (pick "target.value" (set this "title"))}}
+              {{on "input" (pick "target.value" (set this "titleBuffer"))}}
               {{this.validations.attach "title"}}
             />
             <YupValidationMessage
