@@ -4,7 +4,6 @@ import {
   create,
   fillable,
   isPresent,
-  isVisible,
   property,
   text,
   triggerable,
@@ -41,7 +40,8 @@ const definition = {
         eventProperties: { key: 'Enter' },
       }),
       value: value('input'),
-      hasError: isVisible('.validation-error-message'),
+      hasError: isPresent('[data-test-duration-hours-validation-error-message]'),
+      error: text('[data-test-duration-hours-validation-error-message]'),
     },
     minutes: {
       scope: '.minutes',
@@ -50,7 +50,8 @@ const definition = {
         eventProperties: { key: 'Enter' },
       }),
       value: value('input'),
-      hasError: isVisible('.validation-error-message'),
+      hasError: isPresent('[data-test-duration-minutes-validation-error-message]'),
+      error: text('[data-test-duration-minutes-validation-error-message]'),
     },
   },
   timezoneEditor: {
@@ -72,7 +73,8 @@ const definition = {
     scope: '.room',
     set: fillable('input'),
     value: value('input'),
-    hasError: isVisible('.validation-error-message'),
+    hasError: isPresent('[data-test-room-validation-error-message]'),
+    error: text('[data-test-room-validation-error-message]'),
     submit: triggerable('keypress', 'input', {
       eventProperties: { key: 'Enter' },
     }),
@@ -81,7 +83,8 @@ const definition = {
     scope: '[data-test-url]',
     set: fillable('input'),
     value: value('input'),
-    hasError: isVisible('.validation-error-message'),
+    hasError: isPresent('[data-test-url-validation-error-message]'),
+    error: text('[data-test-url-validation-error-message]'),
     submit: triggerable('keypress', 'input', {
       eventProperties: { key: 'Enter' },
     }),
@@ -90,7 +93,8 @@ const definition = {
     scope: '.make-recurring',
     yesNoToggle,
     setWeeks: fillable('.make-recurring-input'),
-    hasError: isVisible('.validation-error-message'),
+    hasError: isPresent('[data-test-number-of-weeks-validation-error-message]'),
+    error: text('[data-test-number-of-weeks-validation-error-message]'),
     weekdays: collection('[data-test-make-recurring-day]', {
       label: text('[data-test-recurring-day-label]'),
       input: {
@@ -106,7 +110,8 @@ const definition = {
     scope: '[data-test-learner-management]',
     learnerSelectionManager,
     learnergroupSelectionManager,
-    hasError: isPresent('.validation-error-message'),
+    hasError: isPresent('[data-test-learner-groups-validation-error-message]'),
+    error: text('[data-test-learner-groups-validation-error-message]'),
   },
 
   save: clickable('.done'),

@@ -73,7 +73,10 @@ module('Integration | Component | offering form', function (hooks) {
     await render(<template><OfferingForm @close={{(noop)}} @showRoom={{true}} /></template>);
     await component.location.set('a'.repeat(300));
     await component.save();
-    assert.ok(component.location.hasError);
+    assert.strictEqual(
+      component.location.error,
+      'Location is too long (maximum is 255 characters)',
+    );
   });
 
   test('room validation succeeds on blank value', async function (assert) {
@@ -94,14 +97,14 @@ module('Integration | Component | offering form', function (hooks) {
     await render(<template><OfferingForm @close={{(noop)}} @showRoom={{true}} /></template>);
     await component.url.set('not a url');
     await component.save();
-    assert.ok(component.url.hasError);
+    assert.strictEqual(component.url.error, 'Virtual Learning Link must be a valid url');
   });
 
   test('url validation errors when URL contains backslash', async function (assert) {
     await render(<template><OfferingForm @close={{(noop)}} @showRoom={{true}} /></template>);
     await component.url.set('https://totallyfineurl.edu/hahajustjokingthisisinvalid\\');
     await component.save();
-    assert.ok(component.url.hasError);
+    assert.strictEqual(component.url.error, 'Virtual Learning Link must be a valid url');
   });
 
   test('recurring options does not show by default', async function (assert) {
@@ -145,7 +148,10 @@ module('Integration | Component | offering form', function (hooks) {
     await component.recurring.yesNoToggle.click();
     await component.recurring.setWeeks('0');
     await component.save();
-    assert.ok(component.recurring.hasError);
+    assert.strictEqual(component.recurring.error, 'Weeks must be greater than or equal to 1');
+    await component.recurring.setWeeks('1.5');
+    await component.save();
+    assert.strictEqual(component.recurring.error, 'Weeks must be an integer');
   });
 
   test('recurring default day is disabled and checked', async function (assert) {
@@ -497,8 +503,11 @@ module('Integration | Component | offering form', function (hooks) {
     await component.duration.hours.set('0');
     await component.duration.minutes.set('0');
     await component.save();
-    assert.ok(component.duration.hours.hasError);
-    assert.ok(component.duration.minutes.hasError);
+    assert.strictEqual(component.duration.hours.error, 'Hours must be greater than or equal to 0');
+    assert.strictEqual(
+      component.duration.minutes.error,
+      'Minutes must be greater than or equal to 0',
+    );
   });
 
   test('blanking minutes or hours is ignored', async function (assert) {
@@ -569,7 +578,7 @@ module('Integration | Component | offering form', function (hooks) {
   test('learnerGroup validation errors show up when saving', async function (assert) {
     await render(<template><OfferingForm @close={{(noop)}} @smallGroupMode={{true}} /></template>);
     await component.save();
-    assert.ok(component.learnerManager.hasError);
+    assert.strictEqual(component.learnerManager.error, 'Learner Groups can not be empty');
   });
 
   test('renders when an offering is provided', async function (assert) {
@@ -697,7 +706,7 @@ module('Integration | Component | offering form', function (hooks) {
     await render(<template><OfferingForm @close={{(noop)}} @showRoom={{true}} /></template>);
     assert.notOk(component.url.hasError);
     await component.url.set('http://example.com?jayden=awesome/');
-    assert.ok(component.url.hasError);
+    assert.strictEqual(component.url.error, 'Virtual Learning Link must be a valid url');
   });
 
   test('learner groups sort order', async function (assert) {
