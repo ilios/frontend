@@ -168,7 +168,6 @@ export default class ReportsSubjectCourseComponent extends Component {
           this.intl.t('general.school'),
           this.intl.t('general.academicYear'),
           this.intl.t('general.course'),
-
           this.intl.t('general.externalId'),
         ],
         ...this.sortedCourses.map(({ school, year, title, externalId }) => [

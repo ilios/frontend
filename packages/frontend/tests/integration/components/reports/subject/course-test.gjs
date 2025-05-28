@@ -32,7 +32,7 @@ module('Integration | Component | reports/subject/course', function (hooks) {
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
-        'query { courses { id, title, year, externalId, school { id, title } } }',
+        'query { courses { id, title, year, externalId, school { title } } }',
       );
       return responseData;
     });
@@ -53,34 +53,34 @@ module('Integration | Component | reports/subject/course', function (hooks) {
     assert.strictEqual(component.results.length, 2, 'result length is correct');
     assert.strictEqual(
       component.results[0].year.title,
-      '2020',
+      '2023',
       'first result year text is correct',
     );
     assert.strictEqual(
       component.results[1].year.title,
-      '2023',
+      '2020',
       'second result year text is correct',
     );
     assert.ok(component.results[0].course.hasLink, 'first result has course link');
     assert.ok(component.results[1].course.hasLink, 'second result has course link');
     assert.strictEqual(
       component.results[0].course.title,
-      'Second Course (ext ID 1)',
+      'First Course',
       'first result has correct course title',
     );
     assert.strictEqual(
       component.results[1].course.title,
-      'First Course',
+      'Second Course (ext ID 1)',
       'second result has correct course title',
     );
     assert.strictEqual(
       component.results[0].course.link,
-      '/courses/2',
+      '/courses/1',
       'first result has correct course link',
     );
     assert.strictEqual(
       component.results[1].course.link,
-      '/courses/1',
+      '/courses/2',
       'second result has correct course link',
     );
   });
@@ -92,7 +92,7 @@ module('Integration | Component | reports/subject/course', function (hooks) {
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
-        'query { courses { id, title, year, externalId, school { id, title } } }',
+        'query { courses { id, title, year, externalId, school { title } } }',
       );
       return responseData;
     });
@@ -111,12 +111,12 @@ module('Integration | Component | reports/subject/course', function (hooks) {
     );
 
     assert.strictEqual(component.results.length, 2);
-    assert.strictEqual(component.results[0].year.title, '2020');
-    assert.strictEqual(component.results[1].year.title, '2023');
+    assert.strictEqual(component.results[0].year.title, '2023');
+    assert.strictEqual(component.results[1].year.title, '2020');
     assert.notOk(component.results[0].course.hasLink);
     assert.notOk(component.results[1].course.hasLink);
-    assert.strictEqual(component.results[0].course.title, 'Second Course (ext ID 1)');
-    assert.strictEqual(component.results[1].course.title, 'First Course');
+    assert.strictEqual(component.results[0].course.title, 'First Course');
+    assert.strictEqual(component.results[1].course.title, 'Second Course (ext ID 1)');
   });
 
   test('it renders all results when resultsLengthMax is not reached', async function (assert) {
@@ -127,7 +127,7 @@ module('Integration | Component | reports/subject/course', function (hooks) {
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
-        'query { courses { id, title, year, externalId, school { id, title } } }',
+        'query { courses { id, title, year, externalId, school { title } } }',
       );
       return responseData;
     });
@@ -172,7 +172,7 @@ module('Integration | Component | reports/subject/course', function (hooks) {
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
-        'query { courses { id, title, year, externalId, school { id, title } } }',
+        'query { courses { id, title, year, externalId, school { title } } }',
       );
       return responseDataLarge;
     });
@@ -205,7 +205,7 @@ module('Integration | Component | reports/subject/course', function (hooks) {
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
-        'query { courses { id, title, year, externalId, school { id, title } } }',
+        'query { courses { id, title, year, externalId, school { title } } }',
       );
       return responseData;
     });
@@ -224,9 +224,9 @@ module('Integration | Component | reports/subject/course', function (hooks) {
     );
 
     assert.ok(component.results[0].school.isPresent);
-    assert.strictEqual(component.results[0].school.title, 'Second School:');
+    assert.strictEqual(component.results[0].school.title, 'First School:');
     assert.ok(component.results[1].school.isPresent);
-    assert.strictEqual(component.results[1].school.title, 'First School:');
+    assert.strictEqual(component.results[1].school.title, 'Second School:');
   });
 
   test('it reads academic year config', async function (assert) {
@@ -242,7 +242,7 @@ module('Integration | Component | reports/subject/course', function (hooks) {
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
-        'query { courses { id, title, year, externalId, school { id, title } } }',
+        'query { courses { id, title, year, externalId, school { title } } }',
       );
       return responseData;
     });
@@ -261,10 +261,10 @@ module('Integration | Component | reports/subject/course', function (hooks) {
     );
 
     assert.strictEqual(component.results.length, 2);
-    assert.strictEqual(component.results[0].year.title, '2020 - 2021');
-    assert.strictEqual(component.results[1].year.title, '2023 - 2024');
-    assert.strictEqual(component.results[0].course.title, 'Second Course (ext ID 1)');
-    assert.strictEqual(component.results[1].course.title, 'First Course');
+    assert.strictEqual(component.results[0].year.title, '2023 - 2024');
+    assert.strictEqual(component.results[1].year.title, '2020 - 2021');
+    assert.strictEqual(component.results[0].course.title, 'First Course');
+    assert.strictEqual(component.results[1].course.title, 'Second Course (ext ID 1)');
   });
 
   test('year filter works', async function (assert) {
@@ -273,7 +273,7 @@ module('Integration | Component | reports/subject/course', function (hooks) {
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
-        'query { courses { id, title, year, externalId, school { id, title } } }',
+        'query { courses { id, title, year, externalId, school { title } } }',
       );
       return responseData;
     });
@@ -303,7 +303,7 @@ module('Integration | Component | reports/subject/course', function (hooks) {
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
-        'query { courses(schools: [33]) { id, title, year, externalId, school { id, title } } }',
+        'query { courses(schools: [33]) { id, title, year, externalId, school { title } } }',
       );
       return responseData;
     });
@@ -331,7 +331,7 @@ module('Integration | Component | reports/subject/course', function (hooks) {
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
-        'query { courses(programs: [13]) { id, title, year, externalId, school { id, title } } }',
+        'query { courses(programs: [13]) { id, title, year, externalId, school { title } } }',
       );
       return responseData;
     });
@@ -358,7 +358,7 @@ module('Integration | Component | reports/subject/course', function (hooks) {
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
-        'query { courses(schools: [24], programs: [13]) { id, title, year, externalId, school { id, title } } }',
+        'query { courses(schools: [24], programs: [13]) { id, title, year, externalId, school { title } } }',
       );
       return responseData;
     });
@@ -388,7 +388,7 @@ module('Integration | Component | reports/subject/course', function (hooks) {
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
-        'query { courses(programYears: [13]) { id, title, year, externalId, school { id, title } } }',
+        'query { courses(programYears: [13]) { id, title, year, externalId, school { title } } }',
       );
       return responseData;
     });
@@ -438,7 +438,7 @@ module('Integration | Component | reports/subject/course', function (hooks) {
         case 2:
           assert.strictEqual(
             query,
-            'query { courses(ids: [1, 2, 3, 4, 5, 6]) { id, title, year, externalId, school { id, title } } }',
+            'query { courses(ids: [1, 2, 3, 4, 5, 6]) { id, title, year, externalId, school { title } } }',
           );
           rhett = responseData;
           break;
@@ -471,7 +471,7 @@ module('Integration | Component | reports/subject/course', function (hooks) {
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
-        'query { courses(academicYears: [2015]) { id, title, year, externalId, school { id, title } } }',
+        'query { courses(academicYears: [2015]) { id, title, year, externalId, school { title } } }',
       );
       return {
         data: {
@@ -496,7 +496,6 @@ module('Integration | Component | reports/subject/course', function (hooks) {
     );
   });
 
-  //skipped because I can't figure out how to test the download functionality
   test('download', async function (assert) {
     await setupAuthentication({}, true);
     assert.expect(9);
@@ -570,7 +569,7 @@ module('Integration | Component | reports/subject/course', function (hooks) {
     const csvText = await capturedBlob.text();
     assert.strictEqual(
       csvText.trim(),
-      'Course,Academic Year,Course ID\r\nSecond Course,2020,ext ID 1\r\nFirst Course,2023,',
+      'School,Academic Year,Course,Course ID\r\nFirst School,2023,First Course,\r\nSecond School,2020,Second Course,ext ID 1',
       'CSV content is correct',
     );
 

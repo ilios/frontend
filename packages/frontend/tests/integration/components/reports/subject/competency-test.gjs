@@ -22,7 +22,7 @@ module('Integration | Component | reports/subject/competency', function (hooks) 
     assert.expect(4);
     this.server.post('api/graphql', function (schema, { requestBody }) {
       const { query } = JSON.parse(requestBody);
-      assert.strictEqual(query, 'query { competencies { id, title } }');
+      assert.strictEqual(query, 'query { competencies { id, title, school { title } } }');
       return responseData;
     });
     const { id } = this.server.create('report', {
@@ -49,7 +49,7 @@ module('Integration | Component | reports/subject/competency', function (hooks) 
 
     this.server.post('api/graphql', function (schema, { requestBody }) {
       const { query } = JSON.parse(requestBody);
-      assert.strictEqual(query, 'query { competencies { id, title } }');
+      assert.strictEqual(query, 'query { competencies { id, title, school { title } } }');
       return responseData;
     });
     const { id } = this.server.create('report', {
@@ -88,7 +88,7 @@ module('Integration | Component | reports/subject/competency', function (hooks) 
 
     this.server.post('api/graphql', function (schema, { requestBody }) {
       const { query } = JSON.parse(requestBody);
-      assert.strictEqual(query, 'query { competencies { id, title } }');
+      assert.strictEqual(query, 'query { competencies { id, title, school { title } } }');
       return responseDataLarge;
     });
     const { id } = this.server.create('report', {
@@ -117,7 +117,10 @@ module('Integration | Component | reports/subject/competency', function (hooks) 
     assert.expect(1);
     this.server.post('api/graphql', function (schema, { requestBody }) {
       const { query } = JSON.parse(requestBody);
-      assert.strictEqual(query, 'query { competencies(schools: [33]) { id, title } }');
+      assert.strictEqual(
+        query,
+        'query { competencies(schools: [33]) { id, title, school { title } } }',
+      );
       return responseData;
     });
     const { id } = this.server.create('report', {
@@ -142,7 +145,10 @@ module('Integration | Component | reports/subject/competency', function (hooks) 
     assert.expect(1);
     this.server.post('api/graphql', function (schema, { requestBody }) {
       const { query } = JSON.parse(requestBody);
-      assert.strictEqual(query, 'query { competencies(courses: [13]) { id, title } }');
+      assert.strictEqual(
+        query,
+        'query { competencies(courses: [13]) { id, title, school { title } } }',
+      );
       return responseData;
     });
     const { id } = this.server.create('report', {
@@ -168,7 +174,7 @@ module('Integration | Component | reports/subject/competency', function (hooks) 
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
-        'query { competencies(schools: [24], sessions: [13]) { id, title } }',
+        'query { competencies(schools: [24], sessions: [13]) { id, title, school { title } } }',
       );
       return responseData;
     });
