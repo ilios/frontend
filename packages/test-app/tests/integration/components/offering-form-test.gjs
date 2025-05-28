@@ -503,8 +503,11 @@ module('Integration | Component | offering form', function (hooks) {
     await component.duration.hours.set('0');
     await component.duration.minutes.set('0');
     await component.save();
-    assert.ok(component.duration.hours.hasError);
-    assert.ok(component.duration.minutes.hasError);
+    assert.strictEqual(component.duration.hours.error, 'Hours must be greater than or equal to 0');
+    assert.strictEqual(
+      component.duration.minutes.error,
+      'Minutes must be greater than or equal to 0',
+    );
   });
 
   test('blanking minutes or hours is ignored', async function (assert) {

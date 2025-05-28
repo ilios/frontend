@@ -7,7 +7,6 @@ import { hash, map } from 'rsvp';
 import { DateTime } from 'luxon';
 import { mixed, number, string } from 'yup';
 import { dropTask, restartableTask, timeout } from 'ember-concurrency';
-import { Custom, IsInt, Lte, Gte, validatable } from 'ilios-common/decorators/validation';
 import { uniqueValues } from 'ilios-common/utils/array-helpers';
 import { TrackedAsyncData } from 'ember-async-data';
 import { uniqueId, fn } from '@ember/helper';
@@ -21,7 +20,6 @@ import TimePicker from 'ilios-common/components/time-picker';
 import { on } from '@ember/modifier';
 import perform from 'ember-concurrency/helpers/perform';
 import noop from 'ilios-common/helpers/noop';
-import ValidationError from 'ilios-common/components/validation-error';
 import formatDate from 'ember-intl/helpers/format-date';
 import isEqual from 'ember-truth-helpers/helpers/is-equal';
 import set from 'ember-set-helper/helpers/set';
@@ -41,7 +39,6 @@ import YupValidationMessage from 'ilios-common/components/yup-validation-message
 const DEBOUNCE_DELAY = 600;
 const DEFAULT_URL_VALUE = 'https://';
 
-@validatable
 export default class OfferingForm extends Component {
   @service currentUser;
   @service timezone;
@@ -110,7 +107,50 @@ export default class OfferingForm extends Component {
           },
         ),
     }),
+    durationHours: number()
+      .integer()
+      .min(0)
+      .test(
+        'duration-hours',
+        (d) => {
+          return {
+            path: d.path,
+            messageKey: 'errors.greaterThanOrEqualTo',
+            values: {
+              gte: '0',
+            },
+          };
+        },
+        (value) => {
+          return this.hasZeroDuration(value, this.durationMinutes);
+        },
+      ),
+    durationMinutes: number()
+      .integer()
+      .min(0)
+      .max(59)
+      .test(
+        'duration-minutes',
+        (d) => {
+          return {
+            path: d.path,
+            messageKey: 'errors.greaterThanOrEqualTo',
+            values: {
+              gte: '0',
+            },
+          };
+        },
+        (value) => {
+          return this.hasZeroDuration(this.durationHours, value);
+        },
+      ),
   });
+
+  hasZeroDuration(hours, minutes) {
+    const hrs = parseInt(hours, 10) || 0;
+    const mins = parseInt(minutes, 10) || 0;
+    return !!(hrs + mins);
+  }
 
   get hasOffering() {
     return !!this.args.offering;
@@ -132,9 +172,6 @@ export default class OfferingForm extends Component {
     return DateTime.fromJSDate(this.startDate).weekday;
   }
 
-  @IsInt()
-  @Gte(0)
-  @Custom('validateDurationCallback', 'validateDurationMessageCallback')
   get durationHours() {
     const startDate = this.startDate;
     const endDate = this.endDate;
@@ -147,10 +184,6 @@ export default class OfferingForm extends Component {
     );
   }
 
-  @IsInt()
-  @Gte(0)
-  @Lte(59)
-  @Custom('validateDurationCallback', 'validateDurationMessageCallback')
   get durationMinutes() {
     const startDate = this.startDate;
     const endDate = this.endDate;
@@ -387,12 +420,16 @@ export default class OfferingForm extends Component {
   });
 
   saveOffering = dropTask(async () => {
-    this.validations.addErrorDisplaysFor(['room', 'url', 'numberOfWeeks', 'learnerGroups']);
-    this.addErrorDisplaysFor(['durationHours', 'durationMinutes']);
-
-    const isValidNew = await this.validations.isValid();
-    const isValidOld = await this.isValid();
-    if (!isValidNew || !isValidOld) {
+    this.validations.addErrorDisplaysFor([
+      'room',
+      'url',
+      'numberOfWeeks',
+      'learnerGroups',
+      'durationHours',
+      'durationMinutes',
+    ]);
+    const isValid = await this.validations.isValid();
+    if (!isValid) {
       return false;
     }
     this.saveProgressPercent = 1;
@@ -446,7 +483,6 @@ export default class OfferingForm extends Component {
     this.saveProgressPercent = 100;
     await timeout(500);
     this.validations.clearErrorDisplay();
-    this.clearErrorDisplay();
     this.args.close();
   });
 
@@ -553,14 +589,15 @@ export default class OfferingForm extends Component {
   }
 
   updateDurationHours = restartableTask(async (hours) => {
+    this.validations.addErrorDisplayFor('durationHours');
     // The corresponding input field passes an empty string if the input blank or invalid.
     // Here, we ignore invalid input and exit early.
     if ('' === hours) {
       return;
     }
     await timeout(DEBOUNCE_DELAY);
-    this.addErrorDisplayFor('durationHours');
-    this.addErrorDisplayFor('durationMinutes');
+    this.validations.addErrorDisplayFor('durationHours');
+    this.validations.addErrorDisplayFor('durationMinutes');
     const minutes = this.durationMinutes;
     this.endDate = DateTime.fromJSDate(this.startDate)
       .plus({ hour: hours, minute: minutes })
@@ -574,8 +611,8 @@ export default class OfferingForm extends Component {
       return;
     }
     await timeout(DEBOUNCE_DELAY);
-    this.addErrorDisplayFor('durationHours');
-    this.addErrorDisplayFor('durationMinutes');
+    this.validations.addErrorDisplayFor('durationHours');
+    this.validations.addErrorDisplayFor('durationMinutes');
     const hours = this.durationHours;
     this.endDate = DateTime.fromJSDate(this.startDate)
       .plus({ hour: hours, minute: minutes })
@@ -587,21 +624,6 @@ export default class OfferingForm extends Component {
     const locale = this.intl.get('locale');
     return learnerGroupA.title.localeCompare(learnerGroupB.title, locale, {
       numeric: true,
-    });
-  }
-
-  @action
-  validateDurationCallback() {
-    const hrs = parseInt(this.durationHours, 10) || 0;
-    const mins = parseInt(this.durationMinutes, 10) || 0;
-    return !!(hrs + mins);
-  }
-
-  @action
-  validateDurationMessageCallback() {
-    return this.intl.t('errors.greaterThanOrEqualTo', {
-      gte: '0',
-      description: this.intl.t('general.duration'),
     });
   }
   <template>
@@ -654,12 +676,17 @@ export default class OfferingForm extends Component {
                         disabled={{this.saveOffering.isRunning}}
                         {{on "input" (perform this.updateDurationHours value="target.value")}}
                         {{on "keypress" (if @offering (perform this.saveOnEnter) (noop))}}
+                        {{this.validations.attach "durationHours"}}
                       />
                       <label for="hours-{{templateId}}">
                         {{t "general.hours"}}
                       </label>
                     </div>
-                    <ValidationError @validatable={{this}} @property="durationHours" />
+                    <YupValidationMessage
+                      @description={{t "general.hours"}}
+                      @validationErrors={{this.validations.errors.durationHours}}
+                      data-test-duration-hours-validation-error-message
+                    />
                   </div>
                   <div class="minutes">
                     <div class="minutes-container">
@@ -672,12 +699,17 @@ export default class OfferingForm extends Component {
                         disabled={{this.saveOffering.isRunning}}
                         {{on "input" (perform this.updateDurationMinutes value="target.value")}}
                         {{on "keypress" (if @offering (perform this.saveOnEnter) (noop))}}
+                        {{this.validations.attach "durationMinutes"}}
                       />
                       <label for="minutes-{{templateId}}">
                         {{t "general.minutes"}}
                       </label>
                     </div>
-                    <ValidationError @validatable={{this}} @property="durationMinutes" />
+                    <YupValidationMessage
+                      @description={{t "general.minutes"}}
+                      @validationErrors={{this.validations.errors.durationMinutes}}
+                      data-test-duration-minutes-validation-error-message
+                    />
                   </div>
                 </div>
               </div>

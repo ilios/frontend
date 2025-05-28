@@ -4,7 +4,6 @@ import {
   create,
   fillable,
   isPresent,
-  isVisible,
   property,
   text,
   triggerable,
@@ -41,7 +40,8 @@ const definition = {
         eventProperties: { key: 'Enter' },
       }),
       value: value('input'),
-      hasError: isVisible('.validation-error-message'),
+      hasError: isPresent('[data-test-duration-hours-validation-error-message]'),
+      error: text('[data-test-duration-hours-validation-error-message]'),
     },
     minutes: {
       scope: '.minutes',
@@ -50,7 +50,8 @@ const definition = {
         eventProperties: { key: 'Enter' },
       }),
       value: value('input'),
-      hasError: isVisible('.validation-error-message'),
+      hasError: isPresent('[data-test-duration-minutes-validation-error-message]'),
+      error: text('[data-test-duration-minutes-validation-error-message]'),
     },
   },
   timezoneEditor: {
