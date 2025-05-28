@@ -82,6 +82,9 @@ export default class ReportsSubjectCourseComponent extends Component {
   }
 
   get sortedCourses() {
+    if (this.showSchool) {
+      return sortBy(this.mappedCourses, ['school.title', 'year', 'title']);
+    }
     return sortBy(this.mappedCourses, ['year', 'title']);
   }
 
@@ -159,13 +162,30 @@ export default class ReportsSubjectCourseComponent extends Component {
 
   @action
   async fetchDownloadData() {
+    if (this.showSchool) {
+      return [
+        [
+          this.intl.t('general.school'),
+          this.intl.t('general.academicYear'),
+          this.intl.t('general.course'),
+
+          this.intl.t('general.externalId'),
+        ],
+        ...this.sortedCourses.map(({ school, year, title, externalId }) => [
+          school.title,
+          year,
+          title,
+          externalId,
+        ]),
+      ];
+    }
     return [
       [
-        this.intl.t('general.course'),
         this.intl.t('general.academicYear'),
+        this.intl.t('general.course'),
         this.intl.t('general.externalId'),
       ],
-      ...this.sortedCourses.map(({ title, year, externalId }) => [title, year, externalId]),
+      ...this.sortedCourses.map(({ year, title, externalId }) => [year, title, externalId]),
     ];
   }
   <template>
