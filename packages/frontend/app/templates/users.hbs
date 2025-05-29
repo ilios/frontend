@@ -1,6 +1,8 @@
 {{page-title (t "general.admin")}}
 <BackToAdminDashboard />
 <IliosUsers
+  @sortBy={{this.sortBy}}
+  @setSortBy={{set this "sortBy"}}
   @offset={{this.offset}}
   @setOffset={{set this "offset"}}
   @limit={{this.limit}}
