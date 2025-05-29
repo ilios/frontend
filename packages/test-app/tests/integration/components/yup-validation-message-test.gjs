@@ -17,7 +17,7 @@ module('Integration | Component | yup-validation-message', function (hooks) {
     assert.dom(this.element).hasText('');
   });
 
-  test('it renders with errors', async function (assert) {
+  test('it renders with the first error by default', async function (assert) {
     const errors = [
       {
         messageKey: 'errors.tooShort',
@@ -31,6 +31,28 @@ module('Integration | Component | yup-validation-message', function (hooks) {
     this.set('errors', errors);
 
     await render(<template><YupValidationMessage @validationErrors={{this.errors}} /></template>);
+
+    assert.dom(this.element).hasText('This field is too short (minimum is 3 characters)');
+  });
+
+  test('it renders with the all errors', async function (assert) {
+    const errors = [
+      {
+        messageKey: 'errors.tooShort',
+        values: { min: 3 },
+      },
+      {
+        messageKey: 'errors.tooLong',
+        values: { max: 17 },
+      },
+    ];
+    this.set('errors', errors);
+
+    await render(
+      <template>
+        <YupValidationMessage @validationErrors={{this.errors}} @showAll={{true}} />
+      </template>,
+    );
 
     assert.dom(this.element).includesText('This field is too short (minimum is 3 characters)');
     assert.dom(this.element).includesText('This field is too long (maximum is 17 characters)');
