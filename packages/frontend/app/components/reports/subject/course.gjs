@@ -50,6 +50,10 @@ export default class ReportsSubjectCourseComponent extends Component {
     return this.currentUser.performsNonLearnerFunction;
   }
 
+  get showSchool() {
+    return !this.args.school;
+  }
+
   get showYear() {
     return !this.args.year && this.args.prepositionalObject !== 'academic year';
   }
@@ -64,11 +68,12 @@ export default class ReportsSubjectCourseComponent extends Component {
 
   get mappedCourses() {
     if (this.academicYearCrossesCalendarYearBoundaries) {
-      return this.filteredCourses.map(({ title, year, externalId }) => {
+      return this.filteredCourses.map(({ title, year, externalId, school }) => {
         return {
           title,
           year: `${year} - ${year + 1}`,
           externalId,
+          school,
         };
       });
     } else {
@@ -77,6 +82,9 @@ export default class ReportsSubjectCourseComponent extends Component {
   }
 
   get sortedCourses() {
+    if (this.showSchool) {
+      return sortBy(this.mappedCourses, ['school.title', 'year', 'title']);
+    }
     return sortBy(this.mappedCourses, ['year', 'title']);
   }
 
@@ -135,8 +143,8 @@ export default class ReportsSubjectCourseComponent extends Component {
     if (subject !== 'course') {
       throw new Error(`Report for ${subject} sent to ReportsSubjectCourseComponent`);
     }
-    const result = await this.graphql.find('courses', filters, 'id, title, year, externalId');
-
+    const attributes = ['id', 'title', 'year', 'externalId', 'school { title }'];
+    const result = await this.graphql.find('courses', filters, attributes.join(', '));
     return result.data.courses;
   }
 
@@ -154,13 +162,29 @@ export default class ReportsSubjectCourseComponent extends Component {
 
   @action
   async fetchDownloadData() {
+    if (this.showSchool) {
+      return [
+        [
+          this.intl.t('general.school'),
+          this.intl.t('general.academicYear'),
+          this.intl.t('general.course'),
+          this.intl.t('general.externalId'),
+        ],
+        ...this.sortedCourses.map(({ school, year, title, externalId }) => [
+          school.title,
+          year,
+          title,
+          externalId,
+        ]),
+      ];
+    }
     return [
       [
-        this.intl.t('general.course'),
         this.intl.t('general.academicYear'),
+        this.intl.t('general.course'),
         this.intl.t('general.externalId'),
       ],
-      ...this.sortedCourses.map(({ title, year, externalId }) => [title, year, externalId]),
+      ...this.sortedCourses.map(({ year, title, externalId }) => [year, title, externalId]),
     ];
   }
   <template>
@@ -183,6 +207,11 @@ export default class ReportsSubjectCourseComponent extends Component {
         <ul class="report-results{{if this.reportResultsExceedMax ' limited'}}" data-test-results>
           {{#each this.limitedCourses as |course|}}
             <li>
+              {{#if this.showSchool}}
+                <span class="school" data-test-school>
+                  {{course.school.title}}:
+                </span>
+              {{/if}}
               {{#if this.showYear}}
                 <span data-test-year>
                   {{course.year}}

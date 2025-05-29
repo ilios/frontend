@@ -22,7 +22,7 @@ module('Integration | Component | reports/subject/mesh-term', function (hooks) {
     assert.expect(4);
     this.server.post('api/graphql', function (schema, { requestBody }) {
       const { query } = JSON.parse(requestBody);
-      assert.strictEqual(query, 'query { meshDescriptors { id, name } }');
+      assert.strictEqual(query, 'query { meshDescriptors { name } }');
       return responseData;
     });
     const { id } = this.server.create('report', {
@@ -49,7 +49,7 @@ module('Integration | Component | reports/subject/mesh-term', function (hooks) {
 
     this.server.post('api/graphql', function (schema, { requestBody }) {
       const { query } = JSON.parse(requestBody);
-      assert.strictEqual(query, 'query { meshDescriptors { id, name } }');
+      assert.strictEqual(query, 'query { meshDescriptors { name } }');
       return responseData;
     });
     const { id } = this.server.create('report', {
@@ -88,7 +88,7 @@ module('Integration | Component | reports/subject/mesh-term', function (hooks) {
 
     this.server.post('api/graphql', function (schema, { requestBody }) {
       const { query } = JSON.parse(requestBody);
-      assert.strictEqual(query, 'query { meshDescriptors { id, name } }');
+      assert.strictEqual(query, 'query { meshDescriptors { name } }');
       return responseDataLarge;
     });
     const { id } = this.server.create('report', {
@@ -117,7 +117,7 @@ module('Integration | Component | reports/subject/mesh-term', function (hooks) {
     assert.expect(1);
     this.server.post('api/graphql', function (schema, { requestBody }) {
       const { query } = JSON.parse(requestBody);
-      assert.strictEqual(query, 'query { meshDescriptors(schools: [33]) { id, name } }');
+      assert.strictEqual(query, 'query { meshDescriptors(schools: [33]) { name } }');
       return responseData;
     });
     const { id } = this.server.create('report', {
@@ -142,7 +142,7 @@ module('Integration | Component | reports/subject/mesh-term', function (hooks) {
     assert.expect(1);
     this.server.post('api/graphql', function (schema, { requestBody }) {
       const { query } = JSON.parse(requestBody);
-      assert.strictEqual(query, 'query { meshDescriptors(sessions: [13]) { id, name } }');
+      assert.strictEqual(query, 'query { meshDescriptors(sessions: [13]) { name } }');
       return responseData;
     });
     const { id } = this.server.create('report', {
@@ -168,7 +168,7 @@ module('Integration | Component | reports/subject/mesh-term', function (hooks) {
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
-        'query { meshDescriptors(schools: [24], sessions: [13]) { id, name } }',
+        'query { meshDescriptors(schools: [24], sessions: [13]) { name } }',
       );
       return responseData;
     });
@@ -250,7 +250,7 @@ module('Integration | Component | reports/subject/mesh-term', function (hooks) {
         case 2:
           assert.strictEqual(
             query,
-            'query { meshDescriptors(ids: ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m"]) { id, name } }',
+            'query { meshDescriptors(ids: ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m"]) { name } }',
           );
           rhett = responseData;
           break;

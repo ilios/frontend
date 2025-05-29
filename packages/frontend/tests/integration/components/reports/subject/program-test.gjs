@@ -44,8 +44,8 @@ module('Integration | Component | reports/subject/program', function (hooks) {
     assert.strictEqual(component.results.length, 2);
     assert.ok(component.results[0].hasLink);
     assert.ok(component.results[1].hasLink);
-    assert.strictEqual(component.results[0].school, 'School A');
-    assert.strictEqual(component.results[1].school, 'School B');
+    assert.strictEqual(component.results[0].school, 'School A:');
+    assert.strictEqual(component.results[1].school, 'School B:');
     assert.strictEqual(component.results[0].title, 'Second Program');
     assert.strictEqual(component.results[1].title, 'First Program');
     assert.strictEqual(component.results[0].link, '/programs/2');
@@ -77,8 +77,8 @@ module('Integration | Component | reports/subject/program', function (hooks) {
     assert.strictEqual(component.results.length, 2);
     assert.notOk(component.results[0].hasLink);
     assert.notOk(component.results[1].hasLink);
-    assert.strictEqual(component.results[0].school, 'School A');
-    assert.strictEqual(component.results[1].school, 'School B');
+    assert.strictEqual(component.results[0].school, 'School A:');
+    assert.strictEqual(component.results[1].school, 'School B:');
     assert.strictEqual(component.results[0].title, 'Second Program');
     assert.strictEqual(component.results[1].title, 'First Program');
   });

@@ -67,7 +67,10 @@ module('Integration | Component | reports/subject/session', function (hooks) {
     assert.expect(23);
     this.server.post('api/graphql', function (schema, { requestBody }) {
       const { query } = JSON.parse(requestBody);
-      assert.strictEqual(query, 'query { sessions { id, title, course { id, year, title } } }');
+      assert.strictEqual(
+        query,
+        'query { sessions { id, title, course { id, year, title, school { title } } } }',
+      );
       return responseData;
     });
     const { id } = this.server.create('report', {
@@ -113,7 +116,10 @@ module('Integration | Component | reports/subject/session', function (hooks) {
     assert.expect(17);
     this.server.post('api/graphql', function (schema, { requestBody }) {
       const { query } = JSON.parse(requestBody);
-      assert.strictEqual(query, 'query { sessions { id, title, course { id, year, title } } }');
+      assert.strictEqual(
+        query,
+        'query { sessions { id, title, course { id, year, title, school { title } } } }',
+      );
       return responseData;
     });
     const { id } = this.server.create('report', {
@@ -154,7 +160,10 @@ module('Integration | Component | reports/subject/session', function (hooks) {
 
     this.server.post('api/graphql', function (schema, { requestBody }) {
       const { query } = JSON.parse(requestBody);
-      assert.strictEqual(query, 'query { sessions { id, title, course { id, year, title } } }');
+      assert.strictEqual(
+        query,
+        'query { sessions { id, title, course { id, year, title, school { title } } } }',
+      );
       return responseData;
     });
     const { id } = this.server.create('report', {
@@ -200,7 +209,10 @@ module('Integration | Component | reports/subject/session', function (hooks) {
 
     this.server.post('api/graphql', function (schema, { requestBody }) {
       const { query } = JSON.parse(requestBody);
-      assert.strictEqual(query, 'query { sessions { id, title, course { id, year, title } } }');
+      assert.strictEqual(
+        query,
+        'query { sessions { id, title, course { id, year, title, school { title } } } }',
+      );
       return responseDataLarge;
     });
     const { id } = this.server.create('report', {
@@ -236,7 +248,10 @@ module('Integration | Component | reports/subject/session', function (hooks) {
     });
     this.server.post('api/graphql', function (schema, { requestBody }) {
       const { query } = JSON.parse(requestBody);
-      assert.strictEqual(query, 'query { sessions { id, title, course { id, year, title } } }');
+      assert.strictEqual(
+        query,
+        'query { sessions { id, title, course { id, year, title, school { title } } } }',
+      );
       return responseData;
     });
     const { id } = this.server.create('report', {
@@ -269,7 +284,10 @@ module('Integration | Component | reports/subject/session', function (hooks) {
     assert.expect(6);
     this.server.post('api/graphql', function (schema, { requestBody }) {
       const { query } = JSON.parse(requestBody);
-      assert.strictEqual(query, 'query { sessions { id, title, course { id, year, title } } }');
+      assert.strictEqual(
+        query,
+        'query { sessions { id, title, course { id, year, title, school { title } } } }',
+      );
       return responseData;
     });
     const { id } = this.server.create('report', {
@@ -300,7 +318,7 @@ module('Integration | Component | reports/subject/session', function (hooks) {
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
-        'query { sessions(schools: [33]) { id, title, course { id, year, title } } }',
+        'query { sessions(schools: [33]) { id, title, course { id, year, title, school { title } } } }',
       );
       return responseData;
     });
@@ -329,7 +347,7 @@ module('Integration | Component | reports/subject/session', function (hooks) {
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
-        'query { sessions(programs: [13]) { id, title, course { id, year, title } } }',
+        'query { sessions(programs: [13]) { id, title, course { id, year, title, school { title } } } }',
       );
       return responseData;
     });
@@ -357,7 +375,7 @@ module('Integration | Component | reports/subject/session', function (hooks) {
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
-        'query { sessions(schools: [24], programs: [13]) { id, title, course { id, year, title } } }',
+        'query { sessions(schools: [24], programs: [13]) { id, title, course { id, year, title, school { title } } } }',
       );
       return responseData;
     });
@@ -388,7 +406,7 @@ module('Integration | Component | reports/subject/session', function (hooks) {
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
-        'query { sessions(courses: [13]) { id, title, course { id, year, title } } }',
+        'query { sessions(courses: [13]) { id, title, course { id, year, title, school { title } } } }',
       );
       return responseData;
     });
@@ -416,7 +434,7 @@ module('Integration | Component | reports/subject/session', function (hooks) {
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
-        'query { sessions(sessionTypes: [13]) { id, title, course { id, year, title } } }',
+        'query { sessions(sessionTypes: [13]) { id, title, course { id, year, title, school { title } } } }',
       );
       return responseData;
     });
@@ -444,7 +462,7 @@ module('Integration | Component | reports/subject/session', function (hooks) {
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
-        'query { sessions(meshDescriptors: ["ABC"]) { id, title, course { id, year, title } } }',
+        'query { sessions(meshDescriptors: ["ABC"]) { id, title, course { id, year, title, school { title } } } }',
       );
       return responseData;
     });
@@ -472,7 +490,7 @@ module('Integration | Component | reports/subject/session', function (hooks) {
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
-        'query { sessions(academicYears: [2005]) { id, title, course { id, year, title } } }',
+        'query { sessions(academicYears: [2005]) { id, title, course { id, year, title, school { title } } } }',
       );
       return responseData;
     });
