@@ -27,41 +27,26 @@ module('Integration | Component | instructor-groups/new', function (hooks) {
   });
 
   test('validation fails, no title', async function (assert) {
-    assert.expect(3);
-
     await render(<template><New @save={{(noop)}} @cancel={{(noop)}} /></template>);
-    assert.strictEqual(component.title.errors.length, 0);
+    assert.notOk(component.title.hasError);
     await component.done.click();
-    assert.strictEqual(component.title.errors.length, 1);
-    assert.strictEqual(component.title.errors[0].text, 'Title can not be blank');
+    assert.strictEqual(component.title.error, 'Title can not be blank');
   });
 
   test('validation fails, title too short', async function (assert) {
-    assert.expect(3);
-
     await render(<template><New @save={{(noop)}} @cancel={{(noop)}} /></template>);
-    assert.strictEqual(component.title.errors.length, 0);
+    assert.notOk(component.title.hasError);
     await component.title.set('Aa');
     await component.done.click();
-    assert.strictEqual(component.title.errors.length, 1);
-    assert.strictEqual(
-      component.title.errors[0].text,
-      'Title is too short (minimum is 3 characters)',
-    );
+    assert.strictEqual(component.title.error, 'Title is too short (minimum is 3 characters)');
   });
 
   test('validation fails, title too long', async function (assert) {
-    assert.expect(3);
-
     await render(<template><New @save={{(noop)}} @cancel={{(noop)}} /></template>);
-    assert.strictEqual(component.title.errors.length, 0);
+    assert.notOk(component.title.hasError);
     await component.title.set('0123456789'.repeat(21));
     await component.done.click();
-    assert.strictEqual(component.title.errors.length, 1);
-    assert.strictEqual(
-      component.title.errors[0].text,
-      'Title is too long (maximum is 60 characters)',
-    );
+    assert.strictEqual(component.title.error, 'Title is too long (maximum is 60 characters)');
   });
 
   test('save', async function (assert) {
