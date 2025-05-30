@@ -61,25 +61,17 @@ module('Integration | Component | learner-group/new-single', function (hooks) {
 
   test('validation fails if title is too short', async function (assert) {
     await render(<template><NewSingle @save={{(noop)}} @cancel={{(noop)}} /></template>);
-    assert.strictEqual(component.titleErrors.length, 0);
+    assert.notOk(component.hasError);
     await component.title('a');
     await component.save();
-    assert.strictEqual(component.titleErrors.length, 1);
-    assert.strictEqual(
-      component.titleErrors[0].text,
-      'Title is too short (minimum is 3 characters)',
-    );
+    assert.strictEqual(component.error, 'Title is too short (minimum is 3 characters)');
   });
 
   test('validation fails if title is too long', async function (assert) {
     await render(<template><NewSingle @save={{(noop)}} @cancel={{(noop)}} /></template>);
-    assert.strictEqual(component.titleErrors.length, 0);
+    assert.notOk(component.hasError);
     await component.title('0123456789'.repeat(21));
     await component.save();
-    assert.strictEqual(component.titleErrors.length, 1);
-    assert.strictEqual(
-      component.titleErrors[0].text,
-      'Title is too long (maximum is 60 characters)',
-    );
+    assert.strictEqual(component.error, 'Title is too long (maximum is 60 characters)');
   });
 });
