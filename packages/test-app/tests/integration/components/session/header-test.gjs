@@ -18,9 +18,9 @@ module('Integration | Component | session/header', function (hooks) {
       </template>,
     );
     assert.notOk(component.title.isEditable);
-    assert.deepEqual(component.title.value, 'session 0');
+    assert.strictEqual(component.title.value, 'session 0');
     assert.notOk(component.publicationMenu.isPresent);
-    assert.deepEqual(component.publicationStatus.value, 'Not Published');
+    assert.strictEqual(component.publicationStatus.value, 'Not Published');
 
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
@@ -34,10 +34,10 @@ module('Integration | Component | session/header', function (hooks) {
       </template>,
     );
     assert.ok(component.title.isEditable);
-    assert.deepEqual(component.title.title, 'session 0');
-    assert.deepEqual(component.title.validationErrors.length, 0);
+    assert.strictEqual(component.title.title, 'session 0');
+    assert.notOk(component.title.hasError);
     assert.ok(component.publicationMenu.isPresent);
-    assert.deepEqual(component.publicationMenu.text, 'Not Published');
+    assert.strictEqual(component.publicationMenu.text, 'Not Published');
 
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
@@ -50,12 +50,12 @@ module('Integration | Component | session/header', function (hooks) {
         <Header @session={{this.session}} @editable={{true}} @hideCheckLink={{true}} />
       </template>,
     );
-    assert.deepEqual(component.title.title, 'session 0');
+    assert.strictEqual(component.title.title, 'session 0');
     await component.title.edit();
     await component.title.set('new title');
     await component.title.save();
-    assert.deepEqual(component.title.title, 'new title');
-    assert.deepEqual(this.server.db.sessions[0].title, 'new title');
+    assert.strictEqual(component.title.title, 'new title');
+    assert.strictEqual(this.server.db.sessions[0].title, 'new title');
   });
 
   test('cancel change title', async function (assert) {
@@ -65,12 +65,12 @@ module('Integration | Component | session/header', function (hooks) {
         <Header @session={{this.session}} @editable={{true}} @hideCheckLink={{true}} />
       </template>,
     );
-    assert.deepEqual(component.title.title, 'session 0');
+    assert.strictEqual(component.title.title, 'session 0');
     await component.title.edit();
     await component.title.set('new title');
     await component.title.cancel();
-    assert.deepEqual(component.title.title, 'session 0');
-    assert.deepEqual(this.server.db.sessions[0].title, 'session 0');
+    assert.strictEqual(component.title.title, 'session 0');
+    assert.strictEqual(this.server.db.sessions[0].title, 'session 0');
   });
 
   test('validate too short', async function (assert) {
@@ -80,17 +80,13 @@ module('Integration | Component | session/header', function (hooks) {
         <Header @session={{this.session}} @editable={{true}} @hideCheckLink={{true}} />
       </template>,
     );
-    assert.deepEqual(component.title.title, 'session 0');
+    assert.strictEqual(component.title.title, 'session 0');
     await component.title.edit();
     await component.title.set('a');
     await component.title.save();
-    assert.deepEqual(component.title.validationErrors.length, 1);
-    assert.deepEqual(
-      component.title.validationErrors[0].text,
-      'Title is too short (minimum is 3 characters)',
-    );
+    assert.strictEqual(component.title.error, 'Title is too short (minimum is 3 characters)');
 
-    assert.deepEqual(this.server.db.sessions[0].title, 'session 0');
+    assert.strictEqual(this.server.db.sessions[0].title, 'session 0');
   });
 
   test('validate too long', async function (assert) {
@@ -100,16 +96,12 @@ module('Integration | Component | session/header', function (hooks) {
         <Header @session={{this.session}} @editable={{true}} @hideCheckLink={{true}} />
       </template>,
     );
-    assert.deepEqual(component.title.title, 'session 0');
+    assert.strictEqual(component.title.title, 'session 0');
     await component.title.edit();
     await component.title.set('new title'.repeat(100));
     await component.title.save();
-    assert.deepEqual(component.title.validationErrors.length, 1);
-    assert.deepEqual(
-      component.title.validationErrors[0].text,
-      'Title is too long (maximum is 200 characters)',
-    );
+    assert.strictEqual(component.title.error, 'Title is too long (maximum is 200 characters)');
 
-    assert.deepEqual(this.server.db.sessions[0].title, 'session 0');
+    assert.strictEqual(this.server.db.sessions[0].title, 'session 0');
   });
 });
