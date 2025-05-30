@@ -2,12 +2,10 @@
 
 .school-vocabulary-new-term {
   @include m.ilios-form;
+  @include m.ilios-form-error;
+
   display: flex;
   margin-bottom: 0.5rem;
-
-  .item {
-    @include m.ilios-form-item;
-  }
 
   button {
     margin-left: 0.5rem;
