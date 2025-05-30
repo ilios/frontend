@@ -219,15 +219,15 @@ export default class SchoolVocabularyTermManagerComponent extends Component {
                       {{on "input" (pick "target.value" (set this "titleBuffer"))}}
                       {{this.validations.attach "title"}}
                     />
+                    <YupValidationMessage
+                      @description={{t "general.title"}}
+                      @validationErrors={{this.validations.errors.title}}
+                      data-test-title-validation-error-message
+                    />
                   </EditableField>
                 {{else}}
                   {{this.title}}
                 {{/if}}
-                <YupValidationMessage
-                  @description={{t "general.title"}}
-                  @validationErrors={{this.validations.errors.title}}
-                  data-test-title-validation-error-message
-                />
                 {{#if (and @canDelete (not this.children.length) (not @term.hasAssociations))}}
                   <FaIcon
                     @icon="trash"
