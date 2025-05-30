@@ -409,18 +409,9 @@ module('Integration | Component | user profile bio manager', function (hooks) {
     assert.notOk(component.password.hasError);
     await component.password.set('');
     await component.save();
-    assert.strictEqual(component.password.errors.length, 2);
-    assert.strictEqual(component.password.errors[0].text, 'Password can not be empty');
-    assert.strictEqual(
-      component.password.errors[1].text,
-      'Password is too short (minimum is 5 characters)',
-    );
+    assert.strictEqual(component.password.error, 'Password can not be empty');
     await component.password.set('a');
-    assert.strictEqual(component.password.errors.length, 1);
-    assert.strictEqual(
-      component.password.errors[0].text,
-      'Password is too short (minimum is 5 characters)',
-    );
+    assert.strictEqual(component.password.error, 'Password is too short (minimum is 5 characters)');
     await component.password.set('abcdef');
     await component.save();
     assert.notOk(component.password.hasError);
