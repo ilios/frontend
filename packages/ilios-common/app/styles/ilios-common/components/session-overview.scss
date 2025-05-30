@@ -97,6 +97,10 @@
     @include m.ilios-browser-defaults;
     grid-column: 1 / -1;
     margin-top: 1em;
+
+    .fade-text-control {
+      background-image: linear-gradient(to bottom, transparent, c.$lightBlue);
+    }
   }
 
   .sessionassociatedgroups {
