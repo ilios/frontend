@@ -435,10 +435,10 @@ export default class ReportsNewSubjectComponent extends Component {
       const dropdownObjectTypes = [
         'academic year',
         'competency',
-        'instructor-group',
+        'instructor group',
         'program',
         'program year',
-        'session-type',
+        'session type',
         'term',
       ];
 
