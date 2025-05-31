@@ -185,15 +185,15 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
       'search box is hidden while new group are being added',
     );
 
-    await page.details.learningMaterials.newLearningMaterial.name(testTitle);
+    await page.details.learningMaterials.newLearningMaterial.displayName.set(testTitle);
     assert.strictEqual(
       page.details.learningMaterials.newLearningMaterial.owningUser.userNameInfo.fullName,
       '0 guy M. Mc0son',
     );
-    await page.details.learningMaterials.newLearningMaterial.author(testAuthor);
+    await page.details.learningMaterials.newLearningMaterial.author.set(testAuthor);
     await page.details.learningMaterials.newLearningMaterial.url.set(testUrl);
-    await page.details.learningMaterials.newLearningMaterial.status('2');
-    await page.details.learningMaterials.newLearningMaterial.role('2');
+    await page.details.learningMaterials.newLearningMaterial.status.select('2');
+    await page.details.learningMaterials.newLearningMaterial.role.select('2');
     await page.details.learningMaterials.newLearningMaterial.description(testDescription);
     await page.details.learningMaterials.newLearningMaterial.save();
 
@@ -221,15 +221,15 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
       'search box is hidden while new group are being added',
     );
 
-    await page.details.learningMaterials.newLearningMaterial.name(testTitle);
+    await page.details.learningMaterials.newLearningMaterial.displayName.set(testTitle);
     assert.strictEqual(
       page.details.learningMaterials.newLearningMaterial.owningUser.userNameInfo.fullName,
       '0 guy M. Mc0son',
     );
-    await page.details.learningMaterials.newLearningMaterial.author(testAuthor);
-    await page.details.learningMaterials.newLearningMaterial.citation(testCitation);
-    await page.details.learningMaterials.newLearningMaterial.status('2');
-    await page.details.learningMaterials.newLearningMaterial.role('2');
+    await page.details.learningMaterials.newLearningMaterial.author.set(testAuthor);
+    await page.details.learningMaterials.newLearningMaterial.citation.set(testCitation);
+    await page.details.learningMaterials.newLearningMaterial.status.select('2');
+    await page.details.learningMaterials.newLearningMaterial.role.select('2');
     await page.details.learningMaterials.newLearningMaterial.description(testDescription);
     await page.details.learningMaterials.newLearningMaterial.save();
 
@@ -768,15 +768,21 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
     await page.details.learningMaterials.createNew();
     await page.details.learningMaterials.pickNew('File');
 
-    assert.notOk(page.details.learningMaterials.newLearningMaterial.hasAgreementValidationError);
+    assert.notOk(page.details.learningMaterials.newLearningMaterial.copyrightPermission.hasError);
     await page.details.learningMaterials.newLearningMaterial.save();
-    assert.ok(page.details.learningMaterials.newLearningMaterial.hasAgreementValidationError);
-    await page.details.learningMaterials.newLearningMaterial.agreement();
-    assert.notOk(page.details.learningMaterials.newLearningMaterial.hasAgreementValidationError);
-    await page.details.learningMaterials.newLearningMaterial.agreement();
-    assert.ok(page.details.learningMaterials.newLearningMaterial.hasAgreementValidationError);
-    await page.details.learningMaterials.newLearningMaterial.rationale('mine!');
-    assert.notOk(page.details.learningMaterials.newLearningMaterial.hasAgreementValidationError);
+    assert.strictEqual(
+      page.details.learningMaterials.newLearningMaterial.copyrightPermission.error,
+      'Agreement or alternate rationale is required for upload',
+    );
+    await page.details.learningMaterials.newLearningMaterial.copyrightPermission.toggle();
+    assert.notOk(page.details.learningMaterials.newLearningMaterial.copyrightPermission.hasError);
+    await page.details.learningMaterials.newLearningMaterial.copyrightPermission.toggle();
+    assert.strictEqual(
+      page.details.learningMaterials.newLearningMaterial.copyrightPermission.error,
+      'Agreement or alternate rationale is required for upload',
+    );
+    await page.details.learningMaterials.newLearningMaterial.copyrightRationale.set('mine!');
+    assert.notOk(page.details.learningMaterials.newLearningMaterial.copyrightPermission.hasError);
   });
 
   test('list double linked learning materials', async function (assert) {

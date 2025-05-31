@@ -213,7 +213,7 @@ export default class NewLearningmaterialComponent extends Component {
   <template>
     <div class="new-learningmaterial" data-test-new-learningmaterial>
       {{#let (uniqueId) as |templateId|}}
-        <div class="item">
+        <div class="item" data-test-display-name>
           <label for="display-name-{{templateId}}">
             {{t "general.displayName"}}:
           </label>
@@ -227,13 +227,13 @@ export default class NewLearningmaterialComponent extends Component {
               {{this.validations.attach "title"}}
             />
             <YupValidationMessage
-              @description={{t "general.title"}}
+              @description={{t "general.displayName"}}
               @validationErrors={{this.validations.errors.title}}
-              data-test-title-validation-error-message
+              data-test-display-name-validation-error-message
             />
           </span>
         </div>
-        <div class="item">
+        <div class="item" data-test-status>
           <label for="status-{{templateId}}">
             {{t "general.status"}}:
           </label>
@@ -255,7 +255,7 @@ export default class NewLearningmaterialComponent extends Component {
             <UserNameInfo @user={{this.currentUserModel}} />
           </span>
         </div>
-        <div class="item">
+        <div class="item" data-test-author>
           <label for="original-author-{{templateId}}">
             {{t "general.contentAuthor"}}:
           </label>
@@ -275,7 +275,7 @@ export default class NewLearningmaterialComponent extends Component {
             />
           </span>
         </div>
-        <div class="item">
+        <div class="item" data-test-role>
           <label for="user-role-{{templateId}}">
             {{t "general.userRole"}}:
           </label>
@@ -307,12 +307,16 @@ export default class NewLearningmaterialComponent extends Component {
                 {{on "focus" this.selectAllText}}
                 {{this.validations.attach "link"}}
               />
-              <YupValidationMessage @validationErrors={{this.validations.errors.link}} />
+              <YupValidationMessage
+                @description={{t "general.url"}}
+                @validationErrors={{this.validations.errors.link}}
+                data-test-url-validation-error-message
+              />
             </span>
           </div>
         {{/if}}
         {{#if this.isCitation}}
-          <div class="item">
+          <div class="item" data-test-citation>
             <label for="citation-{{templateId}}">
               {{t "general.citation"}}:
             </label>
@@ -326,6 +330,7 @@ export default class NewLearningmaterialComponent extends Component {
               <YupValidationMessage
                 @description={{t "general.citation"}}
                 @validationErrors={{this.validations.errors.citation}}
+                data-test-citation-validation-error-message
               />
             </span>
           </div>
@@ -339,26 +344,26 @@ export default class NewLearningmaterialComponent extends Component {
           </span>
         </div>
         {{#if this.isFile}}
-          <div class="item">
+          <div class="item" data-test-copyright-permission>
             <label for="copyright-permission-{{templateId}}">
               {{t "general.copyrightPermission"}}:
             </label>
             <span>
-              <p id="lm-copyright-agreement-text">
+              <p id="lm-copyright-permissions-text">
                 <input
                   id="copyright-permission-{{templateId}}"
                   type="checkbox"
                   checked={{this.copyrightPermission}}
                   {{on "click" (set this "copyrightPermission" (not this.copyrightPermission))}}
                   {{on "change" (perform this.validations.runValidator)}}
-                  data-test-copyright-agreement
+                  data-test-copyright-permission
                 />
                 {{t "general.copyrightAgreement"}}
                 {{#if this.validations.errors.copyrightPermission}}
                   <br />
                   <span
                     class="validation-error-message"
-                    data-test-agreement-validation-error-message
+                    data-test-copyright-permission-validation-error-message
                   >
                     {{t "errors.agreementRequired"}}
                   </span>
@@ -367,7 +372,7 @@ export default class NewLearningmaterialComponent extends Component {
             </span>
           </div>
           {{#unless this.copyrightPermission}}
-            <div class="item">
+            <div class="item" data-test-copyright-rationale>
               <label for="copyright-rationale-{{templateId}}">
                 {{t "general.copyrightRationale"}}:
               </label>
@@ -376,11 +381,11 @@ export default class NewLearningmaterialComponent extends Component {
                   id="copyright-rationale-{{templateId}}"
                   {{on "input" (pick "target.value" (set this "copyrightRationale"))}}
                   {{this.validations.attach "copyrightRationale"}}
-                  data-test-copyright-rationale
                 >{{this.copyrightRationale}}</textarea>
                 <YupValidationMessage
                   @description={{t "general.copyrightRationale"}}
                   @validationErrors={{this.validations.errors.copyrightRationale}}
+                  data-test-copyright-rationale-validation-error-message
                 />
               </span>
             </div>
@@ -397,6 +402,7 @@ export default class NewLearningmaterialComponent extends Component {
             <YupValidationMessage
               @description={{t "general.file"}}
               @validationErrors={{this.validations.errors.filename}}
+              data-test-file-validation-error-message
             />
           </div>
         {{/if}}

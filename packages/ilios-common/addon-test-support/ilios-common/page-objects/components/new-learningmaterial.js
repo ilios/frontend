@@ -1,35 +1,65 @@
-import { collection, clickable, create, fillable, isVisible } from 'ember-cli-page-object';
+import { clickable, create, fillable, isPresent, text } from 'ember-cli-page-object';
 import { pageObjectFillInFroalaEditor } from 'ilios-common';
 import userNameInfo from './user-name-info';
 
 const definition = {
   scope: '[data-test-new-learningmaterial]',
-  name: fillable('input', { at: 0 }),
-  author: fillable('input', { at: 1 }),
+  displayName: {
+    scope: '[data-test-display-name]',
+    set: fillable('input'),
+    hasError: isPresent('[data-test-display-name-validation-error-message]'),
+    error: text('[data-test-display-name-validation-error-message]'),
+  },
+  author: {
+    scope: '[data-test-author]',
+    set: fillable('input'),
+    hasError: isPresent('[data-test-author-validation-error-message]'),
+    error: text('[data-test-author-validation-error-message]'),
+  },
   url: {
     scope: '[data-test-link]',
     set: fillable('input'),
-    validationErrors: collection('.validation-error-message'),
+    hasError: isPresent('[data-test-url-validation-error-message]'),
+    error: text('[data-test-url-validation-error-message]'),
   },
-  citation: fillable('textarea'),
+  citation: {
+    scope: '[data-test-citation]',
+    set: fillable('textarea'),
+    hasError: isPresent('[data-test-citation-validation-error-message]'),
+    error: text('[data-test-citation-validation-error-message]'),
+  },
   owningUser: {
     scope: '[data-test-owninguser]',
     userNameInfo,
   },
-  status: fillable('select', { at: 0 }),
-  role: fillable('select', { at: 1 }),
+  status: {
+    scope: '[data-test-status]',
+    select: fillable('select'),
+  },
+  role: {
+    scope: '[data-test-role]',
+    select: fillable('select'),
+  },
   description: pageObjectFillInFroalaEditor('[data-test-html-editor]'),
-  rationale: fillable('[data-test-copyright-rationale]'),
-  agreement: clickable('[data-test-copyright-agreement]'),
-  save: clickable('.done'),
-  cancel: clickable('.cancel'),
-  hasTitleValidationError: isVisible('[data-test-title-validation-error-message]'),
-  hasAgreementValidationError: isVisible('[data-test-agreement-validation-error-message]'),
-  hasAuthorValidationError: isVisible('[data-test-author-validation-error-message]'),
+  copyrightPermission: {
+    scope: '[data-test-copyright-permission]',
+    toggle: clickable('input'),
+    hasError: isPresent('[data-test-copyright-permission-validation-error-message]'),
+    error: text('[data-test-copyright-permission-validation-error-message]'),
+  },
+  copyrightRationale: {
+    scope: '[data-test-copyright-rationale]',
+    set: fillable('textarea'),
+    hasError: isPresent('[data-test-copyright-rationale-validation-error-message]'),
+    error: text('[data-test-copyright-rationale-validation-error-message]'),
+  },
   fileUpload: {
     scope: '[data-test-file]',
-    validationErrors: collection('.validation-error-message'),
+    hasError: isPresent('[data-test-file-validation-error-message]'),
+    error: text('[data-test-file-validation-error-message]'),
   },
+  save: clickable('.done'),
+  cancel: clickable('.cancel'),
 };
 
 export default definition;

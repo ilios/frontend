@@ -1,4 +1,4 @@
-import { clickable, collection, create, fillable, isPresent, text } from 'ember-cli-page-object';
+import { clickable, create, fillable, isPresent, text } from 'ember-cli-page-object';
 import publicationStatus from '../publication-status';
 import publicationMenu from './publication-menu';
 
@@ -13,7 +13,8 @@ const definition = {
     cancel: clickable('.cancel'),
     value: text(),
     isEditable: isPresent('.editable'),
-    validationErrors: collection('[data-test-validation-error-message]'),
+    hasError: isPresent('[data-test-validation-error-message]'),
+    error: text('[data-test-validation-error-message]'),
   },
   publicationStatus,
   publicationMenu,
