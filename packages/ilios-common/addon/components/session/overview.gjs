@@ -40,6 +40,8 @@ export default class SessionOverview extends Component {
   @tracked localDescription;
   @tracked localSessionType;
   @tracked isEditingPostRequisite = false;
+  @tracked descriptionFadeTextExpanded = false;
+  @tracked notesFadeTextExpanded = false;
 
   validations = new YupValidations(this, {
     instructionalNotes: string().nullable().min(3).max(65000),
@@ -254,6 +256,16 @@ export default class SessionOverview extends Component {
     }
 
     return false;
+  }
+
+  @action
+  expandAllDescriptionFadeText(isExpanded) {
+    this.descriptionFadeTextExpanded = isExpanded;
+  }
+
+  @action
+  expandAllNotesFadeText(isExpanded) {
+    this.notesFadeTextExpanded = isExpanded;
   }
 
   @action
@@ -591,6 +603,8 @@ export default class SessionOverview extends Component {
                       @isSaveDisabled={{this.validations.errors.description}}
                       @save={{perform this.saveDescription}}
                       @close={{this.revertDescriptionChanges}}
+                      @fadeTextExpanded={{this.descriptionFadeTextExpanded}}
+                      @onExpandAllFadeText={{this.expandAllDescriptionFadeText}}
                       @clickPrompt={{t "general.clickToEdit"}}
                     >
                       <HtmlEditor
@@ -618,6 +632,8 @@ export default class SessionOverview extends Component {
                       @isSaveDisabled={{this.validations.errors.instructionalNotes}}
                       @save={{perform this.saveInstructionalNotes}}
                       @close={{this.revertInstructionalNotesChanges}}
+                      @fadeTextExpanded={{this.notesFadeTextExpanded}}
+                      @onExpandAllFadeText={{this.expandAllNotesFadeText}}
                       @clickPrompt={{t "general.clickToEdit"}}
                     >
                       <HtmlEditor
