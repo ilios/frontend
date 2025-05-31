@@ -55,6 +55,19 @@ module('Integration | Component | fade-text', function (hooks) {
     assert.dom(this.element).hasText(shortText);
   });
 
+  test('it ignores fading behavior on tall text if tracking variable is missing', async function (assert) {
+    this.set('longHtml', this.longHtml);
+
+    this.set('expanded', false);
+    this.set('onExpandAll', (isExpanded) => {
+      this.set('expanded', isExpanded);
+    });
+    await render(<template><FadeText @text={{this.longHtml}} /></template>);
+
+    assert.dom('.display-text-wrapper', this.element).doesNotHaveClass(this.fadedClass);
+    assert.notOk(component.control.expand.isVisible, 'expand button is not visible');
+  });
+
   test('it fades tall text given as component argument', async function (assert) {
     this.set('longHtml', this.longHtml);
 
@@ -75,7 +88,7 @@ module('Integration | Component | fade-text', function (hooks) {
     // slight delay to allow for proper loading of component
     await waitFor(this.fadedSelector);
 
-    assert.false(this.expanded);
+    assert.false(this.expanded, 'text is not expanded');
     assert.dom('.display-text-wrapper', this.element).hasClass(this.fadedClass);
 
     await component.control.expand.click();
