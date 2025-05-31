@@ -21,11 +21,11 @@ import { string } from 'yup';
 export default class SchoolVocabularyManagerComponent extends Component {
   @service store;
   @service intl;
-  @tracked titleValue;
+  @tracked titleBuffer;
   @tracked newTerm;
 
   validations = new YupValidations(this, {
-    titleValue: string()
+    title: string()
       .ensure()
       .trim()
       .required()
@@ -70,24 +70,25 @@ export default class SchoolVocabularyManagerComponent extends Component {
   }
 
   get title() {
-    return this.titleValue || this.args.vocabulary.title;
+    return this.titleBuffer ?? this.args.vocabulary.title;
   }
 
   changeTitle = dropTask(async () => {
-    this.validations.addErrorDisplayFor('titleValue');
+    this.validations.addErrorDisplayFor('title');
     const isValid = await this.validations.isValid();
     if (!isValid) {
       return false;
     }
-    this.validations.removeErrorDisplayFor('titleValue');
+    this.validations.removeErrorDisplayFor('title');
     this.args.vocabulary.title = this.title;
+    this.titleBuffer = null;
     await this.args.vocabulary.save();
   });
 
   @action
   revertTitleChanges() {
     this.validations.removeErrorDisplayFor('title');
-    this.titleValue = this.args.vocabulary.title;
+    this.titleBuffer = null;
   }
 
   @action
@@ -135,14 +136,14 @@ export default class SchoolVocabularyManagerComponent extends Component {
               <input
                 id="title-{{templateId}}"
                 type="text"
-                value={{this.titleValue}}
+                value={{this.title}}
                 disabled={{isSaving}}
-                {{on "input" (pick "target.value" (set this "titleValue"))}}
-                {{this.validations.attach "titleValue"}}
+                {{on "input" (pick "target.value" (set this "titleBuffer"))}}
+                {{this.validations.attach "title"}}
               />
               <YupValidationMessage
                 @description={{t "general.title"}}
-                @validationErrors={{this.validations.errors.titleValue}}
+                @validationErrors={{this.validations.errors.title}}
                 data-test-title-validation-error-message
               />
             </EditableField>
