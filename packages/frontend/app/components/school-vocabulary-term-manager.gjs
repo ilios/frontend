@@ -28,12 +28,12 @@ export default class SchoolVocabularyTermManagerComponent extends Component {
   @service flashMessages;
   @service intl;
 
-  @tracked titleValue;
-  @tracked descriptionValue;
+  @tracked titleBuffer;
+  @tracked descriptionBuffer;
   @tracked newTerm;
 
   validations = new YupValidations(this, {
-    titleValue: string()
+    title: string()
       .ensure()
       .trim()
       .required()
@@ -54,11 +54,11 @@ export default class SchoolVocabularyTermManagerComponent extends Component {
   });
 
   get title() {
-    return this.titleValue || this.args.term.title;
+    return this.titleBuffer ?? this.args.term.title;
   }
 
   get description() {
-    return this.descriptionValue || this.args.term.description;
+    return this.descriptionBuffer ?? this.args.term.description;
   }
 
   @cached
@@ -85,30 +85,32 @@ export default class SchoolVocabularyTermManagerComponent extends Component {
   }
 
   changeTitle = dropTask(async () => {
-    this.validations.addErrorDisplayFor('titleValue');
+    this.validations.addErrorDisplayFor('title');
     const isValid = await this.validations.isValid();
     if (!isValid) {
       return false;
     }
-    this.validations.removeErrorDisplayFor('titleValue');
+    this.validations.removeErrorDisplayFor('title');
     this.args.term.title = this.title;
-    return this.args.term.save();
+    await this.args.term.save();
+    this.titleBuffer = null;
   });
 
   @action
   revertTitleChanges() {
-    this.validations.removeErrorDisplayFor('titleValue');
-    this.titleValue = this.args.term.title;
+    this.validations.removeErrorDisplayFor('title');
+    this.titleBuffer = null;
   }
 
   changeDescription = dropTask(async () => {
     this.args.term.set('description', this.description);
     await this.args.term.save();
+    this.descriptionBuffer = null;
   });
 
   @action
   revertDescriptionChanges() {
-    this.descriptionValue = this.args.term.description;
+    this.descriptionBuffer = null;
   }
 
   @action
@@ -214,18 +216,18 @@ export default class SchoolVocabularyTermManagerComponent extends Component {
                       type="text"
                       value={{this.title}}
                       disabled={{isSaving}}
-                      {{on "input" (pick "target.value" (set this "titleValue"))}}
-                      {{this.validations.attach "titleValue"}}
+                      {{on "input" (pick "target.value" (set this "titleBuffer"))}}
+                      {{this.validations.attach "title"}}
+                    />
+                    <YupValidationMessage
+                      @description={{t "general.title"}}
+                      @validationErrors={{this.validations.errors.title}}
+                      data-test-title-validation-error-message
                     />
                   </EditableField>
                 {{else}}
                   {{this.title}}
                 {{/if}}
-                <YupValidationMessage
-                  @description={{t "general.title"}}
-                  @validationErrors={{this.validations.errors.titleValue}}
-                  data-test-title-validation-error-message
-                />
                 {{#if (and @canDelete (not this.children.length) (not @term.hasAssociations))}}
                   <FaIcon
                     @icon="trash"
@@ -272,7 +274,7 @@ export default class SchoolVocabularyTermManagerComponent extends Component {
                     <textarea
                       id="description-{{templateId}}"
                       value={{this.description}}
-                      {{on "input" (pick "target.value" (set this "descriptionValue"))}}
+                      {{on "input" (pick "target.value" (set this "descriptionBuffer"))}}
                       disabled={{isSaving}}
                     >
                       {{this.description}}
