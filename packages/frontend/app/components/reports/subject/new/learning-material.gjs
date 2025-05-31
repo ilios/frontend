@@ -87,7 +87,6 @@ export default class ReportsSubjectNewLearningMaterialComponent extends Componen
             <button class="link-button" type="button" {{on "click" (fn @changeId material.id)}}>
               {{material.title}}
             </button>
-
           </SearchInput>
         {{/if}}
       </p>
