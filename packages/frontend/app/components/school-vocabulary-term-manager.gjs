@@ -4,7 +4,6 @@ import { service } from '@ember/service';
 import { action } from '@ember/object';
 import { isEmpty } from '@ember/utils';
 import { TrackedAsyncData } from 'ember-async-data';
-import { mapBy } from 'ilios-common/utils/array-helpers';
 import { dropTask } from 'ember-concurrency';
 import { uniqueId, fn } from '@ember/helper';
 import LoadingSpinner from 'ilios-common/components/loading-spinner';
@@ -47,8 +46,18 @@ export default class SchoolVocabularyTermManagerComponent extends Component {
           };
         },
         async (value) => {
-          const terms = await this.args.term.children;
-          return !mapBy(terms, 'title').includes(value);
+          let terms;
+          if (this.args.term.isTopLevel) {
+            const vocab = await this.args.term.vocabulary;
+            terms = await vocab.getTopLevelTerms();
+          } else {
+            const parent = await this.args.term.parent;
+            terms = await parent.children;
+          }
+          // check if another term with the same title exists at the same level as the given term and the given title.
+          return !terms.filter((term) => {
+            return term.id !== this.args.term.id && term.title === value;
+          }).length;
         },
       ),
   });
