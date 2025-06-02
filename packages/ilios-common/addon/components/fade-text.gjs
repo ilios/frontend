@@ -42,6 +42,10 @@ export default class FadeTextComponent extends Component {
   }
 
   get shouldFade() {
+    // short-circuit fading if no tracked property passed (i.e. doesn't make sense to fade text)
+    if (this.args.expanded === undefined) {
+      return false;
+    }
     if (this.expanded !== undefined) {
       return this.expanded ? false : this.exceedsHeight;
     }
