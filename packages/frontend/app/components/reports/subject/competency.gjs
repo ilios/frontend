@@ -109,7 +109,9 @@ export default class ReportsSubjectCompetencyComponent extends Component {
                   {{competency.school.title}}:
                 </span>
               {{/if}}
-              {{competency.title}}
+              <span data-test-title>
+                {{competency.title}}
+              </span>
             </li>
           {{else}}
             <li>{{t "general.none"}}</li>

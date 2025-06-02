@@ -220,7 +220,9 @@ export default class ReportsSubjectInstructorComponent extends Component {
                   {{instructor.schoolTitle}}:
                 </span>
               {{/if}}
-              {{instructor.name}}
+              <span data-test-name>
+                {{instructor.name}}
+              </span>
             </li>
           {{else}}
             <li>{{t "general.none"}}</li>

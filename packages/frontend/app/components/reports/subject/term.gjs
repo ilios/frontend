@@ -116,9 +116,11 @@ export default class ReportsSubjectTermComponent extends Component {
                   {{term.vocabulary.school.title}}:
                 </span>
               {{/if}}
-              {{term.vocabulary.title}}
-              &gt;
-              {{term.title}}
+              <span data-test-title>
+                {{term.vocabulary.title}}
+                &gt;
+                {{term.title}}
+              </span>
             </li>
           {{else}}
             <li>{{t "general.none"}}</li>

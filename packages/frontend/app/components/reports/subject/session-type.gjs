@@ -123,7 +123,9 @@ export default class ReportsSubjectSessionTypeComponent extends Component {
                   {{sessionType.school.title}}:
                 </span>
               {{/if}}
-              {{sessionType.title}}
+              <span data-test-title>
+                {{sessionType.title}}
+              </span>
             </li>
           {{else}}
             <li>{{t "general.none"}}</li>

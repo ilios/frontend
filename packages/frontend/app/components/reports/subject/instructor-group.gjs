@@ -108,7 +108,9 @@ export default class ReportsSubjectInstructorGroupComponent extends Component {
                   {{instructorGroup.school.title}}:
                 </span>
               {{/if}}
-              {{instructorGroup.title}}
+              <span data-test-title>
+                {{instructorGroup.title}}
+              </span>
             </li>
           {{else}}
             <li>{{t "general.none"}}</li>
