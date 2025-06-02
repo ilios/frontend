@@ -120,7 +120,7 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
 
       assert.strictEqual(
         query,
-        'query { sessions(schools: [1], courses: [1]) { id, title, course { id, year, title } } }',
+        'query { sessions(schools: [1], courses: [1]) { id, title, course { id, year, title, school { title } } } }',
       );
       return {
         data: {
@@ -187,7 +187,7 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
 
       assert.strictEqual(
         query,
-        'query { terms(schools: [1], sessions: [2]) { id, title, vocabulary { id, title } } }',
+        'query { terms(schools: [1], sessions: [2]) { id, title, vocabulary { id, title, school { title } } } }',
       );
       return {
         data: {
@@ -603,7 +603,7 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
-        'query { courses(academicYears: [2015]) { id, title, year, externalId, school { id, title } } }',
+        'query { courses(academicYears: [2015]) { id, title, year, externalId, school { title } } }',
       );
       const coursesIn2015 = db.courses.filter(({ year }) => year === 2015);
       return {

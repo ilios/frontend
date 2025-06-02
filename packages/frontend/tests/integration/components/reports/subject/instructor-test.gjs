@@ -12,8 +12,22 @@ module('Integration | Component | reports/subject/instructor', function (hooks) 
   const responseData = {
     data: {
       users: [
-        { id: 1, firstName: 'First', middleName: 'Middle', lastName: 'Last', displayName: '' },
-        { id: 2, firstName: 'Second', middleName: 'Middle', lastName: 'Last', displayName: 'abc' },
+        {
+          id: 1,
+          firstName: 'First',
+          middleName: 'Middle',
+          lastName: 'Last',
+          displayName: '',
+          school: { title: 'School 1' },
+        },
+        {
+          id: 2,
+          firstName: 'Second',
+          middleName: 'Middle',
+          lastName: 'Last',
+          displayName: 'abc',
+          school: { title: 'School 2' },
+        },
       ],
     },
   };
@@ -91,6 +105,7 @@ module('Integration | Component | reports/subject/instructor', function (hooks) 
         middleName: `Middle${i}`,
         lastName: `Last${i}`,
         displayName: `abc`,
+        school: { title: `School ${i}` },
       });
     }
 

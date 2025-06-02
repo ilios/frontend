@@ -194,11 +194,11 @@ export default class ReportsSubjectSessionComponent extends Component {
         equipmentRequired,
         supplemental,
       }) => {
-        const results = [];
+        let results = [];
         if (this.showSchool) {
           results.push(course.school.title);
         }
-        results.concat([
+        results = results.concat([
           title,
           course.title,
           this.academicYearCrossesCalendarYearBoundaries
@@ -226,11 +226,11 @@ export default class ReportsSubjectSessionComponent extends Component {
       },
     );
 
-    const columns = [];
+    let columns = [];
     if (this.showSchool) {
       columns.push(this.intl.t('general.school'));
     }
-    columns.concat([
+    columns = columns.concat([
       this.intl.t('general.session'),
       this.intl.t('general.course'),
       this.intl.t('general.academicYear'),
