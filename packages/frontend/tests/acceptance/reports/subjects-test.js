@@ -86,13 +86,21 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
   test('create new report', async function (assert) {
     assert.expect(15);
     await page.visit();
-    assert.strictEqual(page.subjects.list.table.reports.length, 2);
+    assert.strictEqual(page.subjects.list.table.reports.length, 2, 'report count is correct');
     assert.strictEqual(
       page.subjects.list.table.reports[0].title,
       'All Sessions for term 0 in school 0',
+      'first report title is correct',
     );
-    assert.strictEqual(page.subjects.list.table.reports[1].title, 'my report 0');
-    assert.ok(page.subjects.list.newReportLinkIsHidden);
+    assert.strictEqual(
+      page.subjects.list.table.reports[1].title,
+      'my report 0',
+      'second report title is correct',
+    );
+    assert.ok(
+      page.subjects.list.newReportLinkIsHidden,
+      'new report link notification is not displayed',
+    );
     await page.subjects.list.toggleNewSubjectReportForm();
     await page.subjects.list.newSubject.title.set('aardvark');
     await page.subjects.list.newSubject.schools.choose('1');
@@ -103,15 +111,35 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
     await percySnapshot(getUniqueName(assert, 'pre-save form'));
     await page.subjects.list.newSubject.save();
     await percySnapshot(getUniqueName(assert, 'post-save form'));
-    assert.strictEqual(page.subjects.list.table.reports.length, 3);
-    assert.strictEqual(page.subjects.list.table.reports[0].title, 'aardvark');
+    assert.strictEqual(
+      page.subjects.list.table.reports.length,
+      3,
+      'report count is correct after adding new report',
+    );
+    assert.strictEqual(
+      page.subjects.list.table.reports[0].title,
+      'aardvark',
+      'new first report title is correct',
+    );
     assert.strictEqual(
       page.subjects.list.table.reports[1].title,
       'All Sessions for term 0 in school 0',
+      'changed second report title is correct',
     );
-    assert.strictEqual(page.subjects.list.table.reports[2].title, 'my report 0');
-    assert.notOk(page.subjects.list.newReportLinkIsHidden);
-    assert.strictEqual(page.subjects.list.newReportLink, 'aardvark');
+    assert.strictEqual(
+      page.subjects.list.table.reports[2].title,
+      'my report 0',
+      'new third report title is correct',
+    );
+    assert.notOk(
+      page.subjects.list.newReportLinkIsHidden,
+      'new report link notification is displayed',
+    );
+    assert.strictEqual(
+      page.subjects.list.newReportLink,
+      'aardvark',
+      'new report link has correct link title',
+    );
 
     this.server.post('api/graphql', ({ db }, { requestBody }) => {
       const { query } = JSON.parse(requestBody);
@@ -121,19 +149,34 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
       assert.strictEqual(
         query,
         'query { sessions(schools: [1], courses: [1]) { id, title, course { id, year, title, school { title } } } }',
+        'graphql query is correct',
       );
       return {
         data: {
           sessions: [
-            { id, title, course: { id: course.id, title: course.title, year: course.year } },
+            {
+              id,
+              title,
+              course: {
+                id: course.id,
+                title: course.title,
+                year: course.year,
+                school: db.schools.find(course.schoolId),
+              },
+            },
           ],
         },
       };
     });
     await page.subjects.list.table.reports[0].select();
     await percySnapshot(assert);
-    assert.strictEqual(currentURL(), '/reports/subjects/3');
-    assert.strictEqual(subjectReportPage.report.title.text, 'aardvark');
+
+    assert.strictEqual(currentURL(), '/reports/subjects/3', 'current report url is correct');
+    assert.strictEqual(
+      subjectReportPage.report.title.text,
+      'aardvark',
+      'current report title is correct',
+    );
     assert.strictEqual(subjectReportPage.report.results.length, 1);
     assert.strictEqual(subjectReportPage.report.results[0].text, 'course 0: session 0');
   });
@@ -258,7 +301,7 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
         case 2:
           assert.strictEqual(
             query,
-            'query { courses(schools: [1], ids: [1, 2]) { id, title, year, externalId, school { id, title } } }',
+            'query { courses(schools: [1], ids: [1, 2]) { id, title, year, externalId, school { title } } }',
           );
           rhett = {
             data: {
@@ -357,7 +400,7 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
 
       assert.strictEqual(
         query,
-        'query { courses { id, title, year, externalId, school { id, title } } }',
+        'query { courses { id, title, year, externalId, school { title } } }',
       );
       return {
         data: {
@@ -419,12 +462,21 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
 
       assert.strictEqual(
         query,
-        'query { sessions(schools: [1], courses: [1]) { id, title, course { id, year, title } } }',
+        'query { sessions(schools: [1], courses: [1]) { id, title, course { id, year, title, school { title } } } }',
       );
       return {
         data: {
           sessions: [
-            { id, title, course: { id: course.id, title: course.title, year: course.year } },
+            {
+              id,
+              title,
+              course: {
+                id: course.id,
+                title: course.title,
+                year: course.year,
+                school: db.schools.find(course.schoolId),
+              },
+            },
           ],
         },
       };
@@ -453,7 +505,7 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
-        'query { courses(schools: [1]) { id, title, year, externalId, school { id, title } } }',
+        'query { courses(schools: [1]) { id, title, year, externalId, school { title } } }',
         'has correct graphql query',
       );
       return {
@@ -557,7 +609,7 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
         case 1:
           assert.strictEqual(
             query,
-            'query { courses(schools: [1], academicYears: [2015]) { id } }',
+            'query { courses(schools: [1], academicYears: [2015]) { id, school { title } } }',
           );
           return {
             data: {

@@ -80,6 +80,7 @@ module('Acceptance | Reports - Subject Report', function (hooks) {
               id: course.id,
               title: course.title,
               year: course.year,
+              school: school,
             },
           };
         });
