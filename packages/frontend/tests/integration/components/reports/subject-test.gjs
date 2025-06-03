@@ -185,4 +185,49 @@ module('Integration | Component | reports/subject', function (hooks) {
     assert.strictEqual(component.results.length, 1);
     assert.strictEqual(component.academicYears.value, '2015');
   });
+
+  test('validation - report title too long', async function (assert) {
+    this.server.create('academic-year', {
+      id: 2015,
+    });
+    const school = this.server.create('school');
+    this.server.create('course', {
+      school,
+      year: 2015,
+    });
+    const report = this.server.create('report', {
+      title: 'my report 0',
+      subject: 'course',
+      user: this.user,
+      school,
+    });
+    this.set('setReportYear', (year) => this.set('selectedYear', year));
+    const reportModel = await this.owner.lookup('service:store').findRecord('report', report.id);
+    this.set('selectedReport', reportModel);
+    this.set('selectedYear', '');
+    this.server.post('api/graphql', ({ db }) => {
+      return {
+        data: {
+          courses: db.courses.map(({ id, title, year, externalId }) => {
+            return { id, title, year, externalId };
+          }),
+        },
+      };
+    });
+    await render(
+      <template>
+        <Subject
+          @report={{this.selectedReport}}
+          @year={{this.selectedYear}}
+          @changeYear={{(noop)}}
+        />
+      </template>,
+    );
+    assert.strictEqual(component.title.text, 'my report 0');
+    await component.title.edit();
+    assert.notOk(component.title.hasError);
+    await component.title.set('a'.repeat(241));
+    await component.title.save();
+    assert.strictEqual(component.title.error, 'Title is too long (maximum is 240 characters)');
+  });
 });
