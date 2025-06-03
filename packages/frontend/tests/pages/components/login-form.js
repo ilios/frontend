@@ -3,6 +3,7 @@ import {
   collection,
   create,
   fillable,
+  isPresent,
   text,
   triggerable,
   value,
@@ -20,7 +21,8 @@ const definition = {
       set: fillable('input'),
       value: value('input'),
       submit: triggerable('keyup', 'input', { eventProperties: { key: 'Enter' } }),
-      errors: collection('[data-test-validation-error-message]'),
+      hasError: isPresent('[data-test-validation-error-message]'),
+      error: text('[data-test-validation-error-message]'),
     },
     password: {
       scope: '[data-test-password]',
@@ -28,7 +30,8 @@ const definition = {
       set: fillable('input'),
       value: value('input'),
       submit: triggerable('keyup', 'input', { eventProperties: { key: 'Enter' } }),
-      errors: collection('[data-test-validation-error-message]'),
+      hasError: isPresent('[data-test-validation-error-message]'),
+      error: text('[data-test-validation-error-message]'),
     },
     login: clickable('[data-test-login]'),
     submit: triggerable('keyup', '[data-test-username] input', {

@@ -114,7 +114,6 @@ module('Integration | Component | login-form', function (hooks) {
   });
 
   test('input validation', async function (assert) {
-    assert.expect(10);
     const username = 'Foo';
     const password = 'Bar';
     const sessionMock = class extends Service {
@@ -125,17 +124,15 @@ module('Integration | Component | login-form', function (hooks) {
     };
     this.owner.register('service:session', sessionMock);
     await render(<template><LoginForm /></template>);
-    assert.strictEqual(component.form.username.errors.length, 0);
-    assert.strictEqual(component.form.password.errors.length, 0);
+    assert.notOk(component.form.username.hasError);
+    assert.notOk(component.form.password.hasError);
     await component.form.password.submit();
-    assert.strictEqual(component.form.username.errors.length, 1);
-    assert.strictEqual(component.form.username.errors[0].text, 'Username can not be blank');
-    assert.strictEqual(component.form.password.errors.length, 1);
-    assert.strictEqual(component.form.password.errors[0].text, 'Password can not be blank');
+    assert.strictEqual(component.form.username.error, 'Username can not be blank');
+    assert.strictEqual(component.form.password.error, 'Password can not be blank');
     await component.form.username.set(username);
     await component.form.password.set(password);
     await component.form.password.submit();
-    assert.strictEqual(component.form.username.errors.length, 0);
-    assert.strictEqual(component.form.password.errors.length, 0);
+    assert.notOk(component.form.username.hasError);
+    assert.notOk(component.form.password.hasError);
   });
 });
