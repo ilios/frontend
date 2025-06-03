@@ -247,14 +247,10 @@ module('Integration | Component | reports/subject-header', function (hooks) {
         />
       </template>,
     );
-    assert.strictEqual(component.title.errors.length, 0);
+    assert.notOk(component.title.hasError);
     await component.title.edit();
     await component.title.set('a'.repeat(241));
     await component.title.save();
-    assert.strictEqual(component.title.errors.length, 1);
-    assert.strictEqual(
-      component.title.errors[0].text,
-      'Title is too long (maximum is 240 characters)',
-    );
+    assert.strictEqual(component.title.error, 'Title is too long (maximum is 240 characters)');
   });
 });
