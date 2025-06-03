@@ -68,11 +68,11 @@ module('Integration | Component | program/overview', function (hooks) {
     await render(<template><Overview @program={{this.program}} @canUpdate={{true}} /></template>);
 
     await component.shortTitle.edit();
+    assert.notOk(component.shortTitle.hasError);
     await component.shortTitle.set('a');
     await component.shortTitle.save();
-    assert.strictEqual(component.shortTitle.errors.length, 1);
     assert.strictEqual(
-      component.shortTitle.errors[0].text,
+      component.shortTitle.error,
       'This field is too short (minimum is 2 characters)',
     );
   });
@@ -82,11 +82,11 @@ module('Integration | Component | program/overview', function (hooks) {
     await render(<template><Overview @program={{this.program}} @canUpdate={{true}} /></template>);
 
     await component.shortTitle.edit();
+    assert.notOk(component.shortTitle.hasError);
     await component.shortTitle.set('a'.repeat(11));
     await component.shortTitle.save();
-    assert.strictEqual(component.shortTitle.errors.length, 1);
     assert.strictEqual(
-      component.shortTitle.errors[0].text,
+      component.shortTitle.error,
       'This field is too long (maximum is 10 characters)',
     );
   });
