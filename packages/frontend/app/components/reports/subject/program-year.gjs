@@ -65,11 +65,8 @@ export default class ReportsSubjectProgramYearComponent extends Component {
       const what = pluralize(camelize(prepositionalObject));
       filters.push(`${what}: [${prepositionalObjectTableRowId}]`);
     }
-    const result = await this.graphql.find(
-      'programYears',
-      filters,
-      'id, startYear, program { id, title, duration, school { title } }',
-    );
+    const attributes = ['id', 'startYear', 'program { id, title, duration, school { title } }'];
+    const result = await this.graphql.find('programYears', filters, attributes.join(', '));
 
     return result.data.programYears.map((obj) => {
       const classOfYear = Number(obj.startYear) + Number(obj.program.duration);
@@ -84,13 +81,23 @@ export default class ReportsSubjectProgramYearComponent extends Component {
 
   @action
   async fetchDownloadData() {
+    if (this.showSchool) {
+      return [
+        [
+          this.intl.t('general.school'),
+          this.intl.t('general.year'),
+          this.intl.t('general.program'),
+        ],
+        ...this.sortedProgramYears.map(({ classOfYear, program }) => [
+          program.school.title,
+          classOfYear,
+          program.title,
+        ]),
+      ];
+    }
     return [
-      [this.intl.t('general.year'), this.intl.t('general.program'), this.intl.t('general.school')],
-      ...this.sortedProgramYears.map(({ classOfYear, program }) => [
-        classOfYear,
-        program.title,
-        program.school.title,
-      ]),
+      [this.intl.t('general.year'), this.intl.t('general.program')],
+      ...this.sortedProgramYears.map(({ classOfYear, program }) => [classOfYear, program.title]),
     ];
   }
   <template>
@@ -110,24 +117,26 @@ export default class ReportsSubjectProgramYearComponent extends Component {
     <div data-test-reports-subject-program-year>
       {{#if this.allProgramYearsData.isResolved}}
         <ul class="report-results{{if this.reportResultsExceedMax ' limited'}}" data-test-results>
-          {{#each this.limitedProgramYears as |obj|}}
+          {{#each this.limitedProgramYears as |programYear|}}
             <li>
               {{#if this.showSchool}}
                 <span data-test-school>
-                  {{obj.program.school.title}}
-                  -
+                  {{programYear.program.school.title}}:
                 </span>
               {{/if}}
               <span data-test-program>
-                {{obj.program.title}}:
+                {{programYear.program.title}}:
               </span>
               <span data-test-title>
                 {{#if this.canView}}
-                  <LinkTo @route="program-year" @models={{array obj.program.id obj.id}}>
-                    {{obj.classOfYear}}
+                  <LinkTo
+                    @route="program-year"
+                    @models={{array programYear.program.id programYear.id}}
+                  >
+                    {{programYear.classOfYear}}
                   </LinkTo>
                 {{else}}
-                  {{obj.classOfYear}}
+                  {{programYear.classOfYear}}
                 {{/if}}
               </span>
             </li>

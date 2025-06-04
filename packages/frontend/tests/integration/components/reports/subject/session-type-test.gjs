@@ -19,7 +19,7 @@ module('Integration | Component | reports/subject/session-type', function (hooks
     assert.expect(4);
     this.server.post('api/graphql', function (schema, { requestBody }) {
       const { query } = JSON.parse(requestBody);
-      assert.strictEqual(query, 'query { sessionTypes { title } }');
+      assert.strictEqual(query, 'query { sessionTypes { title, school { title } } }');
       return responseData;
     });
     const { id } = this.server.create('report', {
@@ -46,7 +46,7 @@ module('Integration | Component | reports/subject/session-type', function (hooks
 
     this.server.post('api/graphql', function (schema, { requestBody }) {
       const { query } = JSON.parse(requestBody);
-      assert.strictEqual(query, 'query { sessionTypes { title } }');
+      assert.strictEqual(query, 'query { sessionTypes { title, school { title } } }');
       return responseData;
     });
     const { id } = this.server.create('report', {
@@ -84,7 +84,7 @@ module('Integration | Component | reports/subject/session-type', function (hooks
 
     this.server.post('api/graphql', function (schema, { requestBody }) {
       const { query } = JSON.parse(requestBody);
-      assert.strictEqual(query, 'query { sessionTypes { title } }');
+      assert.strictEqual(query, 'query { sessionTypes { title, school { title } } }');
       return responseDataLarge;
     });
     const { id } = this.server.create('report', {
@@ -113,7 +113,10 @@ module('Integration | Component | reports/subject/session-type', function (hooks
     assert.expect(1);
     this.server.post('api/graphql', function (schema, { requestBody }) {
       const { query } = JSON.parse(requestBody);
-      assert.strictEqual(query, 'query { sessionTypes(schools: [33]) { title } }');
+      assert.strictEqual(
+        query,
+        'query { sessionTypes(schools: [33]) { title, school { title } } }',
+      );
       return responseData;
     });
     const { id } = this.server.create('report', {
@@ -138,7 +141,10 @@ module('Integration | Component | reports/subject/session-type', function (hooks
     assert.expect(1);
     this.server.post('api/graphql', function (schema, { requestBody }) {
       const { query } = JSON.parse(requestBody);
-      assert.strictEqual(query, 'query { sessionTypes(courses: [13]) { title } }');
+      assert.strictEqual(
+        query,
+        'query { sessionTypes(courses: [13]) { title, school { title } } }',
+      );
       return responseData;
     });
     const { id } = this.server.create('report', {
@@ -162,7 +168,10 @@ module('Integration | Component | reports/subject/session-type', function (hooks
     assert.expect(1);
     this.server.post('api/graphql', function (schema, { requestBody }) {
       const { query } = JSON.parse(requestBody);
-      assert.strictEqual(query, 'query { sessionTypes(schools: [24], sessions: [13]) { title } }');
+      assert.strictEqual(
+        query,
+        'query { sessionTypes(schools: [24], sessions: [13]) { title, school { title } } }',
+      );
       return responseData;
     });
     const { id } = this.server.create('report', {
@@ -189,7 +198,10 @@ module('Integration | Component | reports/subject/session-type', function (hooks
     assert.expect(1);
     this.server.post('api/graphql', function (schema, { requestBody }) {
       const { query } = JSON.parse(requestBody);
-      assert.strictEqual(query, 'query { sessionTypes(meshDescriptors: ["ABC"]) { title } }');
+      assert.strictEqual(
+        query,
+        'query { sessionTypes(meshDescriptors: ["ABC"]) { title, school { title } } }',
+      );
       return responseData;
     });
     const { id } = this.server.create('report', {

@@ -34,11 +34,19 @@ export default class ReportsSubjectTermComponent extends Component {
   }
 
   get sortedTerms() {
+    if (this.showSchool) {
+      return sortBy(this.allTerms, ['vocabulary.school.title', 'vocabulary.title', 'title']);
+    }
+
     return sortBy(this.allTerms, ['vocabulary.title', 'title']);
   }
 
   get limitedTerms() {
     return this.sortedTerms.slice(0, this.resultsLengthMax);
+  }
+
+  get showSchool() {
+    return !this.args.school;
   }
 
   async getReportResults(subject, prepositionalObject, prepositionalObjectTableRowId, school) {
@@ -54,7 +62,8 @@ export default class ReportsSubjectTermComponent extends Component {
       const what = pluralize(camelize(prepositionalObject));
       filters.push(`${what}: [${prepositionalObjectTableRowId}]`);
     }
-    const result = await this.graphql.find('terms', filters, 'id, title, vocabulary { id, title }');
+    const attributes = ['id', 'title', 'vocabulary { id, title, school { title } }'];
+    const result = await this.graphql.find('terms', filters, attributes.join(', '));
     return result.data.terms;
   }
 
@@ -64,6 +73,20 @@ export default class ReportsSubjectTermComponent extends Component {
 
   @action
   async fetchDownloadData() {
+    if (this.showSchool) {
+      return [
+        [
+          this.intl.t('general.school'),
+          this.intl.t('general.vocabulary'),
+          this.intl.t('general.term'),
+        ],
+        ...this.sortedTerms.map(({ vocabulary, title }) => [
+          vocabulary.school.title,
+          vocabulary.title,
+          title,
+        ]),
+      ];
+    }
     return [
       [this.intl.t('general.vocabulary'), this.intl.t('general.term')],
       ...this.sortedTerms.map(({ vocabulary, title }) => [vocabulary.title, title]),
@@ -86,11 +109,18 @@ export default class ReportsSubjectTermComponent extends Component {
     <div data-test-reports-subject-term>
       {{#if this.allTermsData.isResolved}}
         <ul class="report-results{{if this.reportResultsExceedMax ' limited'}}" data-test-results>
-          {{#each this.limitedTerms as |obj|}}
+          {{#each this.limitedTerms as |term|}}
             <li>
-              {{obj.vocabulary.title}}
-              &gt;
-              {{obj.title}}
+              {{#if this.showSchool}}
+                <span data-test-school>
+                  {{term.vocabulary.school.title}}:
+                </span>
+              {{/if}}
+              <span data-test-title>
+                {{term.vocabulary.title}}
+                &gt;
+                {{term.title}}
+              </span>
             </li>
           {{else}}
             <li>{{t "general.none"}}</li>

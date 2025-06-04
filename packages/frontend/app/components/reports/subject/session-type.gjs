@@ -1,4 +1,5 @@
 import Component from '@glimmer/component';
+import { sortBy } from 'ilios-common/utils/array-helpers';
 import { TrackedAsyncData } from 'ember-async-data';
 import { cached } from '@glimmer/tracking';
 import { service } from '@ember/service';
@@ -33,13 +34,19 @@ export default class ReportsSubjectSessionTypeComponent extends Component {
   }
 
   get sortedSessionTypes() {
-    return this.allSessionTypes.sort((a, b) => {
-      return a.localeCompare(b, this.intl.primaryLocale);
-    });
+    if (this.showSchool) {
+      return sortBy(this.allSessionTypes, ['school.title', 'title']);
+    }
+
+    return sortBy(this.allSessionTypes, ['title']);
   }
 
   get limitedSessionTypes() {
     return this.sortedSessionTypes.slice(0, this.resultsLengthMax);
+  }
+
+  get showSchool() {
+    return !this.args.school;
   }
 
   async getGraphQLFilters(prepositionalObject, prepositionalObjectTableRowId, school) {
@@ -69,8 +76,9 @@ export default class ReportsSubjectSessionTypeComponent extends Component {
       prepositionalObjectTableRowId,
       school,
     );
-    const result = await this.graphql.find('sessionTypes', filters, 'title');
-    return result.data.sessionTypes.map(({ title }) => title);
+    const attributes = ['title', 'school { title }'];
+    const result = await this.graphql.find('sessionTypes', filters, attributes.join(', '));
+    return result.data.sessionTypes;
   }
 
   get reportResultsExceedMax() {
@@ -79,7 +87,17 @@ export default class ReportsSubjectSessionTypeComponent extends Component {
 
   @action
   async fetchDownloadData() {
-    return [[this.intl.t('general.sessionTypes')], ...this.sortedSessionTypes.map((v) => [v])];
+    if (this.showSchool) {
+      return [
+        [this.intl.t('general.school'), this.intl.t('general.sessionTypes')],
+        ...this.sortedSessionTypes.map(({ school, title }) => [school.title, title]),
+      ];
+    }
+
+    return [
+      [this.intl.t('general.sessionTypes')],
+      ...this.sortedSessionTypes.map(({ title }) => [title]),
+    ];
   }
   <template>
     <SubjectHeader
@@ -98,9 +116,16 @@ export default class ReportsSubjectSessionTypeComponent extends Component {
     <div data-test-reports-subject-session-type>
       {{#if this.allSessionTypesData.isResolved}}
         <ul class="report-results{{if this.reportResultsExceedMax ' limited'}}" data-test-results>
-          {{#each this.limitedSessionTypes as |title|}}
+          {{#each this.limitedSessionTypes as |sessionType|}}
             <li>
-              {{title}}
+              {{#if this.showSchool}}
+                <span class="school" data-test-school>
+                  {{sessionType.school.title}}:
+                </span>
+              {{/if}}
+              <span data-test-title>
+                {{sessionType.title}}
+              </span>
             </li>
           {{else}}
             <li>{{t "general.none"}}</li>

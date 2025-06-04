@@ -4,7 +4,7 @@ import { cached } from '@glimmer/tracking';
 import { service } from '@ember/service';
 import { pluralize } from 'ember-inflector';
 import { camelize, capitalize } from '@ember/string';
-import { chunk, uniqueById } from 'ilios-common/utils/array-helpers';
+import { chunk, uniqueById, sortBy } from 'ilios-common/utils/array-helpers';
 import { action } from '@ember/object';
 import SubjectHeader from 'frontend/components/reports/subject-header';
 import t from 'ember-intl/helpers/t';
@@ -34,29 +34,44 @@ export default class ReportsSubjectInstructorComponent extends Component {
   }
 
   get mappedInstructors() {
-    return this.allInstructors.map(({ firstName, middleName, lastName, displayName }) => {
+    return this.allInstructors.map(({ firstName, middleName, lastName, displayName, school }) => {
       if (displayName) {
-        return displayName;
+        if (this.showSchool) {
+          return { schoolTitle: school.title, name: displayName };
+        }
+        return { name: displayName };
       }
 
       const middleInitial = middleName ? middleName.charAt(0) : false;
 
       if (middleInitial) {
-        return `${firstName} ${middleInitial}. ${lastName}`;
+        if (this.showSchool) {
+          return { schoolTitle: school.title, name: `${firstName} ${middleInitial}. ${lastName}` };
+        }
+        return { name: `${firstName} ${middleInitial}. ${lastName}` };
       } else {
-        return `${firstName} ${lastName}`;
+        if (this.showSchool) {
+          return { schoolTitle: school.title, name: `${firstName} ${lastName}` };
+        }
+        return { name: `${firstName} ${lastName}` };
       }
     });
   }
 
   get sortedInstructors() {
-    return this.mappedInstructors.sort((a, b) => {
-      return a.localeCompare(b, this.intl.primaryLocale);
-    });
+    if (this.showSchool) {
+      return sortBy(this.mappedInstructors, ['schoolTitle', 'name']);
+    }
+
+    return sortBy(this.mappedInstructors, ['name']);
   }
 
   get limitedInstructors() {
     return this.sortedInstructors.slice(0, this.resultsLengthMax);
+  }
+
+  get showSchool() {
+    return !this.args.school;
   }
 
   async getGraphQLFilters(prepositionalObject, prepositionalObjectTableRowId, school) {
@@ -77,16 +92,19 @@ export default class ReportsSubjectInstructorComponent extends Component {
   }
 
   async getResultsForCourses(courseIds) {
-    const userInfo = '{ id firstName middleName lastName displayName }';
+    const userInfo = '{ id firstName middleName lastName displayName school { title } }';
     const block = `instructorGroups {  users ${userInfo}} instructors ${userInfo}`;
-    const results = await this.graphql.find(
-      'courses',
-      [`ids: [${courseIds.join(',')}]`],
+
+    const filters = [`ids: [${courseIds.join(',')}]`];
+    const attributes = [
       `sessions {
         ilmSession { ${block} }
         offerings { ${block} }
       }`,
-    );
+      'school { title }',
+    ];
+
+    const results = await this.graphql.find('courses', filters, attributes.join(', '));
 
     if (!results.data.courses.length) {
       return [];
@@ -121,7 +139,8 @@ export default class ReportsSubjectInstructorComponent extends Component {
     }
     filters.push(`academicYears: [${academicYearId}]`);
 
-    const results = await this.graphql.find('courses', filters, 'id');
+    const attributes = ['id', 'school { title }'];
+    const results = await this.graphql.find('courses', filters, attributes.join(', '));
 
     if (!results.data.courses.length) {
       return [];
@@ -155,8 +174,8 @@ export default class ReportsSubjectInstructorComponent extends Component {
       prepositionalObjectTableRowId,
       school,
     );
-    const attributes = ['firstName', 'middleName', 'lastName', 'displayName'];
-    const result = await this.graphql.find('users', filters, attributes.join(','));
+    const attributes = ['firstName', 'middleName', 'lastName', 'displayName', 'school { title }'];
+    const result = await this.graphql.find('users', filters, attributes.join(', '));
     return result.data.users;
   }
 
@@ -166,7 +185,16 @@ export default class ReportsSubjectInstructorComponent extends Component {
 
   @action
   async fetchDownloadData() {
-    return [[this.intl.t('general.instructors')], ...this.sortedInstructors.map((v) => [v])];
+    if (this.showSchool) {
+      return [
+        [this.intl.t('general.school'), this.intl.t('general.instructors')],
+        ...this.sortedInstructors.map(({ schoolTitle, name }) => [schoolTitle, name]),
+      ];
+    }
+    return [
+      [this.intl.t('general.instructors')],
+      ...this.sortedInstructors.map(({ name }) => [name]),
+    ];
   }
   <template>
     <SubjectHeader
@@ -185,9 +213,16 @@ export default class ReportsSubjectInstructorComponent extends Component {
     <div data-test-reports-subject-instructor>
       {{#if this.allInstructorsData.isResolved}}
         <ul class="report-results{{if this.reportResultsExceedMax ' limited'}}" data-test-results>
-          {{#each this.limitedInstructors as |name|}}
+          {{#each this.limitedInstructors as |instructor|}}
             <li>
-              {{name}}
+              {{#if this.showSchool}}
+                <span class="school" data-test-school>
+                  {{instructor.schoolTitle}}:
+                </span>
+              {{/if}}
+              <span data-test-name>
+                {{instructor.name}}
+              </span>
             </li>
           {{else}}
             <li>{{t "general.none"}}</li>

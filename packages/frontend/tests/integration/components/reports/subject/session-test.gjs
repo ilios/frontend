@@ -17,7 +17,12 @@ module('Integration | Component | reports/subject/session', function (hooks) {
         {
           id: 1,
           title: 'First Session',
-          course: { id: 1, year: 2023, title: 'First Course' },
+          course: {
+            id: 1,
+            year: 2023,
+            title: 'First Course',
+            school: { id: 1, title: 'First School' },
+          },
           description: 'First Session Description',
           sessionObjectives: [
             {
@@ -32,7 +37,12 @@ module('Integration | Component | reports/subject/session', function (hooks) {
         {
           id: 2,
           title: 'Second Session',
-          course: { id: 1, year: 2023, title: 'First Course' },
+          course: {
+            id: 1,
+            year: 2023,
+            title: 'First Course',
+            school: { id: 1, title: 'First School' },
+          },
           description: 'Session 2 Description',
           sessionObjectives: [
             {
@@ -50,7 +60,12 @@ module('Integration | Component | reports/subject/session', function (hooks) {
         {
           id: 3,
           title: 'Third Session',
-          course: { id: 2, year: 2020, title: 'Second Course' },
+          course: {
+            id: 2,
+            year: 2020,
+            title: 'Second Course',
+            school: { id: 2, title: 'Second School' },
+          },
           description: 'Three Session Description',
           sessionObjectives: [],
           attendanceRequired: true,
@@ -67,7 +82,11 @@ module('Integration | Component | reports/subject/session', function (hooks) {
     assert.expect(23);
     this.server.post('api/graphql', function (schema, { requestBody }) {
       const { query } = JSON.parse(requestBody);
-      assert.strictEqual(query, 'query { sessions { id, title, course { id, year, title } } }');
+      assert.strictEqual(
+        query,
+        'query { sessions { id, title, course { id, year, title, school { title } } } }',
+        'graphql query is correct',
+      );
       return responseData;
     });
     const { id } = this.server.create('report', {
@@ -84,28 +103,76 @@ module('Integration | Component | reports/subject/session', function (hooks) {
       </template>,
     );
 
-    assert.strictEqual(component.results.length, 3);
-    assert.ok(component.results[0].hasCourseLink);
-    assert.ok(component.results[1].hasCourseLink);
-    assert.ok(component.results[2].hasCourseLink);
-    assert.ok(component.results[0].hasSessionLink);
-    assert.ok(component.results[1].hasSessionLink);
-    assert.ok(component.results[2].hasSessionLink);
-    assert.strictEqual(component.results[0].year, '2020');
-    assert.strictEqual(component.results[1].year, '2023');
-    assert.strictEqual(component.results[2].year, '2023');
-    assert.strictEqual(component.results[0].courseTitle, 'Second Course:');
-    assert.strictEqual(component.results[1].courseTitle, 'First Course:');
-    assert.strictEqual(component.results[2].courseTitle, 'First Course:');
-    assert.strictEqual(component.results[0].sessionTitle, 'Third Session');
-    assert.strictEqual(component.results[1].sessionTitle, 'First Session');
-    assert.strictEqual(component.results[2].sessionTitle, 'Second Session');
-    assert.strictEqual(component.results[0].courseLink, '/courses/2');
-    assert.strictEqual(component.results[1].courseLink, '/courses/1');
-    assert.strictEqual(component.results[2].courseLink, '/courses/1');
-    assert.strictEqual(component.results[0].sessionLink, '/courses/2/sessions/3');
-    assert.strictEqual(component.results[1].sessionLink, '/courses/1/sessions/1');
-    assert.strictEqual(component.results[2].sessionLink, '/courses/1/sessions/2');
+    assert.strictEqual(component.results.length, 3, 'results count is correct');
+    assert.ok(component.results[0].hasCourseLink, 'first result has course link');
+    assert.ok(component.results[1].hasCourseLink, 'second result has course link');
+    assert.ok(component.results[2].hasCourseLink, 'third result has course link');
+    assert.ok(component.results[0].hasSessionLink, 'first result has session link');
+    assert.ok(component.results[1].hasSessionLink, 'second result has session link');
+    assert.ok(component.results[2].hasSessionLink, 'third result has session link');
+    assert.strictEqual(component.results[0].year, '2023', 'first result has correct year');
+    assert.strictEqual(component.results[1].year, '2023', 'second result has correct year');
+    assert.strictEqual(component.results[2].year, '2020', 'third result has correct year');
+    assert.strictEqual(
+      component.results[0].courseTitle,
+      'First Course:',
+      'first result has correct course title',
+    );
+    assert.strictEqual(
+      component.results[1].courseTitle,
+      'First Course:',
+      'second result has correct course title',
+    );
+    assert.strictEqual(
+      component.results[2].courseTitle,
+      'Second Course:',
+      'third result has correct course title',
+    );
+    assert.strictEqual(
+      component.results[0].sessionTitle,
+      'First Session',
+      'first result has correct session title',
+    );
+    assert.strictEqual(
+      component.results[1].sessionTitle,
+      'Second Session',
+      'second result has correct session title',
+    );
+    assert.strictEqual(
+      component.results[2].sessionTitle,
+      'Third Session',
+      'third result has correct session title',
+    );
+    assert.strictEqual(
+      component.results[0].courseLink,
+      '/courses/1',
+      'first result has correct course link',
+    );
+    assert.strictEqual(
+      component.results[1].courseLink,
+      '/courses/1',
+      'second result has correct course link',
+    );
+    assert.strictEqual(
+      component.results[2].courseLink,
+      '/courses/2',
+      'third result has correct course link',
+    );
+    assert.strictEqual(
+      component.results[0].sessionLink,
+      '/courses/1/sessions/1',
+      'first result has correct session link',
+    );
+    assert.strictEqual(
+      component.results[1].sessionLink,
+      '/courses/1/sessions/2',
+      'second result has correct session link',
+    );
+    assert.strictEqual(
+      component.results[2].sessionLink,
+      '/courses/2/sessions/3',
+      'third result has correct session link',
+    );
   });
 
   test('it renders for user with no permissions', async function (assert) {
@@ -113,7 +180,11 @@ module('Integration | Component | reports/subject/session', function (hooks) {
     assert.expect(17);
     this.server.post('api/graphql', function (schema, { requestBody }) {
       const { query } = JSON.parse(requestBody);
-      assert.strictEqual(query, 'query { sessions { id, title, course { id, year, title } } }');
+      assert.strictEqual(
+        query,
+        'query { sessions { id, title, course { id, year, title, school { title } } } }',
+        'graphql query is correct',
+      );
       return responseData;
     });
     const { id } = this.server.create('report', {
@@ -130,22 +201,46 @@ module('Integration | Component | reports/subject/session', function (hooks) {
       </template>,
     );
 
-    assert.strictEqual(component.results.length, 3);
-    assert.notOk(component.results[0].hasCourseLink);
-    assert.notOk(component.results[1].hasCourseLink);
-    assert.notOk(component.results[2].hasCourseLink);
-    assert.notOk(component.results[0].hasSessionLink);
-    assert.notOk(component.results[1].hasSessionLink);
-    assert.notOk(component.results[2].hasSessionLink);
-    assert.strictEqual(component.results[0].year, '2020');
-    assert.strictEqual(component.results[1].year, '2023');
-    assert.strictEqual(component.results[2].year, '2023');
-    assert.strictEqual(component.results[0].courseTitle, 'Second Course:');
-    assert.strictEqual(component.results[1].courseTitle, 'First Course:');
-    assert.strictEqual(component.results[2].courseTitle, 'First Course:');
-    assert.strictEqual(component.results[0].sessionTitle, 'Third Session');
-    assert.strictEqual(component.results[1].sessionTitle, 'First Session');
-    assert.strictEqual(component.results[2].sessionTitle, 'Second Session');
+    assert.strictEqual(component.results.length, 3, 'results count is correct');
+    assert.notOk(component.results[0].hasCourseLink, 'first result has course link');
+    assert.notOk(component.results[1].hasCourseLink, 'second result has course link');
+    assert.notOk(component.results[2].hasCourseLink, 'third result has course link');
+    assert.notOk(component.results[0].hasSessionLink, 'first result has session link');
+    assert.notOk(component.results[1].hasSessionLink, 'second result has session link');
+    assert.notOk(component.results[2].hasSessionLink, 'third result has session link');
+    assert.strictEqual(component.results[0].year, '2023', 'first result has correct year');
+    assert.strictEqual(component.results[1].year, '2023', 'second result has correct year');
+    assert.strictEqual(component.results[2].year, '2020', 'third result has correct year');
+    assert.strictEqual(
+      component.results[0].courseTitle,
+      'First Course:',
+      'first result has correct course title',
+    );
+    assert.strictEqual(
+      component.results[1].courseTitle,
+      'First Course:',
+      'second result has correct course title',
+    );
+    assert.strictEqual(
+      component.results[2].courseTitle,
+      'Second Course:',
+      'third result has correct course title',
+    );
+    assert.strictEqual(
+      component.results[0].sessionTitle,
+      'First Session',
+      'first result has correct session title',
+    );
+    assert.strictEqual(
+      component.results[1].sessionTitle,
+      'Second Session',
+      'second result has correct session title',
+    );
+    assert.strictEqual(
+      component.results[2].sessionTitle,
+      'Third Session',
+      'third result has correct session title',
+    );
   });
 
   test('it renders all results when resultsLengthMax is not reached', async function (assert) {
@@ -154,7 +249,10 @@ module('Integration | Component | reports/subject/session', function (hooks) {
 
     this.server.post('api/graphql', function (schema, { requestBody }) {
       const { query } = JSON.parse(requestBody);
-      assert.strictEqual(query, 'query { sessions { id, title, course { id, year, title } } }');
+      assert.strictEqual(
+        query,
+        'query { sessions { id, title, course { id, year, title, school { title } } } }',
+      );
       return responseData;
     });
     const { id } = this.server.create('report', {
@@ -194,13 +292,17 @@ module('Integration | Component | reports/subject/session', function (hooks) {
           id: 1,
           year: years[Math.floor(Math.random() * years.length)],
           title: 'First Course',
+          school: { title: `School ${i}` },
         },
       });
     }
 
     this.server.post('api/graphql', function (schema, { requestBody }) {
       const { query } = JSON.parse(requestBody);
-      assert.strictEqual(query, 'query { sessions { id, title, course { id, year, title } } }');
+      assert.strictEqual(
+        query,
+        'query { sessions { id, title, course { id, year, title, school { title } } } }',
+      );
       return responseDataLarge;
     });
     const { id } = this.server.create('report', {
@@ -236,7 +338,10 @@ module('Integration | Component | reports/subject/session', function (hooks) {
     });
     this.server.post('api/graphql', function (schema, { requestBody }) {
       const { query } = JSON.parse(requestBody);
-      assert.strictEqual(query, 'query { sessions { id, title, course { id, year, title } } }');
+      assert.strictEqual(
+        query,
+        'query { sessions { id, title, course { id, year, title, school { title } } } }',
+      );
       return responseData;
     });
     const { id } = this.server.create('report', {
@@ -254,22 +359,25 @@ module('Integration | Component | reports/subject/session', function (hooks) {
     );
 
     assert.strictEqual(component.results.length, 3);
-    assert.strictEqual(component.results[0].year, '2020 - 2021');
+    assert.strictEqual(component.results[0].year, '2023 - 2024');
     assert.strictEqual(component.results[1].year, '2023 - 2024');
-    assert.strictEqual(component.results[2].year, '2023 - 2024');
-    assert.strictEqual(component.results[0].courseTitle, 'Second Course:');
+    assert.strictEqual(component.results[2].year, '2020 - 2021');
+    assert.strictEqual(component.results[0].courseTitle, 'First Course:');
     assert.strictEqual(component.results[1].courseTitle, 'First Course:');
     assert.strictEqual(component.results[1].courseTitle, 'First Course:');
-    assert.strictEqual(component.results[0].sessionTitle, 'Third Session');
-    assert.strictEqual(component.results[1].sessionTitle, 'First Session');
-    assert.strictEqual(component.results[2].sessionTitle, 'Second Session');
+    assert.strictEqual(component.results[0].sessionTitle, 'First Session');
+    assert.strictEqual(component.results[1].sessionTitle, 'Second Session');
+    assert.strictEqual(component.results[2].sessionTitle, 'Third Session');
   });
 
   test('year filter works', async function (assert) {
     assert.expect(6);
     this.server.post('api/graphql', function (schema, { requestBody }) {
       const { query } = JSON.parse(requestBody);
-      assert.strictEqual(query, 'query { sessions { id, title, course { id, year, title } } }');
+      assert.strictEqual(
+        query,
+        'query { sessions { id, title, course { id, year, title, school { title } } } }',
+      );
       return responseData;
     });
     const { id } = this.server.create('report', {
@@ -300,7 +408,7 @@ module('Integration | Component | reports/subject/session', function (hooks) {
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
-        'query { sessions(schools: [33]) { id, title, course { id, year, title } } }',
+        'query { sessions(schools: [33]) { id, title, course { id, year, title, school { title } } } }',
       );
       return responseData;
     });
@@ -329,7 +437,7 @@ module('Integration | Component | reports/subject/session', function (hooks) {
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
-        'query { sessions(programs: [13]) { id, title, course { id, year, title } } }',
+        'query { sessions(programs: [13]) { id, title, course { id, year, title, school { title } } } }',
       );
       return responseData;
     });
@@ -357,7 +465,7 @@ module('Integration | Component | reports/subject/session', function (hooks) {
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
-        'query { sessions(schools: [24], programs: [13]) { id, title, course { id, year, title } } }',
+        'query { sessions(schools: [24], programs: [13]) { id, title, course { id, year, title, school { title } } } }',
       );
       return responseData;
     });
@@ -388,7 +496,7 @@ module('Integration | Component | reports/subject/session', function (hooks) {
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
-        'query { sessions(courses: [13]) { id, title, course { id, year, title } } }',
+        'query { sessions(courses: [13]) { id, title, course { id, year, title, school { title } } } }',
       );
       return responseData;
     });
@@ -416,7 +524,7 @@ module('Integration | Component | reports/subject/session', function (hooks) {
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
-        'query { sessions(sessionTypes: [13]) { id, title, course { id, year, title } } }',
+        'query { sessions(sessionTypes: [13]) { id, title, course { id, year, title, school { title } } } }',
       );
       return responseData;
     });
@@ -444,7 +552,7 @@ module('Integration | Component | reports/subject/session', function (hooks) {
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
-        'query { sessions(meshDescriptors: ["ABC"]) { id, title, course { id, year, title } } }',
+        'query { sessions(meshDescriptors: ["ABC"]) { id, title, course { id, year, title, school { title } } } }',
       );
       return responseData;
     });
@@ -472,7 +580,7 @@ module('Integration | Component | reports/subject/session', function (hooks) {
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
-        'query { sessions(academicYears: [2005]) { id, title, course { id, year, title } } }',
+        'query { sessions(academicYears: [2005]) { id, title, course { id, year, title, school { title } } } }',
       );
       return responseData;
     });
@@ -557,11 +665,14 @@ module('Integration | Component | reports/subject/session', function (hooks) {
     );
 
     const csvText = await capturedBlob.text();
-    assert.strictEqual(
-      csvText.trim(),
-      'Session,Course,Academic Year,Description,Objective,Objective\r\nFirst Session,First Course,2023,First Session Description,First Objective\r\nSecond Session,First Course,2023,Session 2 Description,First Objective,Second Objective\r\nThird Session,Second Course,2020,Three Session Description',
-      'CSV content is correct',
-    );
+    let csvOutput = '';
+    csvOutput += 'School,Session,Course,Academic Year,Description,Objective,Objective\r\n';
+    csvOutput +=
+      'First School,First Session,First Course,2023,First Session Description,First Objective\r\n';
+    csvOutput +=
+      'First School,Second Session,First Course,2023,Session 2 Description,First Objective,Second Objective\r\n';
+    csvOutput += 'Second School,Third Session,Second Course,2020,Three Session Description';
+    assert.strictEqual(csvText.trim(), csvOutput, 'CSV content is correct');
 
     // Restore original methods
     URL.createObjectURL = originalCreateObjectURL;

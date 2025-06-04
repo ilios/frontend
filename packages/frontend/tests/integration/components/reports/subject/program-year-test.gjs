@@ -63,9 +63,9 @@ module('Integration | Component | reports/subject/program-year', function (hooks
     assert.ok(component.results[0].hasSchool);
     assert.ok(component.results[1].hasSchool);
     assert.ok(component.results[2].hasSchool);
-    assert.strictEqual(component.results[0].school, 'School A -');
-    assert.strictEqual(component.results[1].school, 'School B -');
-    assert.strictEqual(component.results[2].school, 'School B -');
+    assert.strictEqual(component.results[0].school, 'School A:');
+    assert.strictEqual(component.results[1].school, 'School B:');
+    assert.strictEqual(component.results[2].school, 'School B:');
     assert.strictEqual(component.results[0].program, 'Program 2:');
     assert.strictEqual(component.results[1].program, 'Program 1:');
     assert.strictEqual(component.results[2].program, 'Program 1:');
@@ -109,9 +109,9 @@ module('Integration | Component | reports/subject/program-year', function (hooks
     assert.ok(component.results[0].hasSchool);
     assert.ok(component.results[1].hasSchool);
     assert.ok(component.results[2].hasSchool);
-    assert.strictEqual(component.results[0].school, 'School A -');
-    assert.strictEqual(component.results[1].school, 'School B -');
-    assert.strictEqual(component.results[2].school, 'School B -');
+    assert.strictEqual(component.results[0].school, 'School A:');
+    assert.strictEqual(component.results[1].school, 'School B:');
+    assert.strictEqual(component.results[2].school, 'School B:');
     assert.strictEqual(component.results[0].program, 'Program 2:');
     assert.strictEqual(component.results[1].program, 'Program 1:');
     assert.strictEqual(component.results[2].program, 'Program 1:');

@@ -60,7 +60,8 @@ export default class ReportsSubjectMeshTermComponent extends Component {
         filters.push(`${what}: [${prepositionalObjectTableRowId}]`);
       }
     }
-    const result = await this.graphql.find('meshDescriptors', filters, 'id, name');
+    const attributes = ['name'];
+    const result = await this.graphql.find('meshDescriptors', filters, attributes.join(', '));
     return result.data.meshDescriptors.map(({ name }) => name);
   }
 

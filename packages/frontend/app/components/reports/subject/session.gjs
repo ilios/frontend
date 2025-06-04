@@ -54,6 +54,10 @@ export default class ReportsSubjectSessionComponent extends Component {
     return this.currentUser.performsNonLearnerFunction;
   }
 
+  get showSchool() {
+    return !this.args.school;
+  }
+
   get showYear() {
     return !this.args.year && this.args.prepositionalObject !== 'course';
   }
@@ -67,6 +71,9 @@ export default class ReportsSubjectSessionComponent extends Component {
   }
 
   get sortedSessions() {
+    if (this.showSchool) {
+      return sortBy(this.filteredSessions, ['schoolTitle', 'year', 'courseTitle', 'title']);
+    }
     return sortBy(this.filteredSessions, ['year', 'courseTitle', 'title']);
   }
 
@@ -101,13 +108,18 @@ export default class ReportsSubjectSessionComponent extends Component {
       prepositionalObjectTableRowId,
       school,
     );
-    const result = await this.graphql.find(
-      'sessions',
-      filters,
-      'id, title, course { id, year, title }',
-    );
+    const attributes = ['id', 'title', 'course { id, year, title, school { title } }'];
+    const result = await this.graphql.find('sessions', filters, attributes.join(', '));
+
     return result.data.sessions.map(({ id, title, course }) => {
-      return { id, title, year: course.year, courseId: course.id, courseTitle: course.title };
+      return {
+        id,
+        title,
+        year: course.year,
+        courseId: course.id,
+        courseTitle: course.title,
+        schoolTitle: course.school.title,
+      };
     });
   }
 
@@ -151,14 +163,19 @@ export default class ReportsSubjectSessionComponent extends Component {
       'title',
       'description',
       'sessionObjectives { title }',
-      'course { title, year }',
+      'course { title, year, school { title } }',
       'attendanceRequired',
       'attireRequired',
       'equipmentRequired',
       'supplemental',
     ];
     const result = await this.graphql.find('sessions', filters, attributes.join(','));
-    const sortedResults = sortBy(result.data.sessions, 'title');
+    let sortedResults = [];
+    if (this.showSchool) {
+      sortedResults = sortBy(result.data.sessions, 'course.school.title');
+    } else {
+      sortedResults = sortBy(result.data.sessions, 'title');
+    }
     const objectives = sortedResults.map(({ sessionObjectives }) => {
       return mapBy(sessionObjectives, 'title');
     });
@@ -177,14 +194,19 @@ export default class ReportsSubjectSessionComponent extends Component {
         equipmentRequired,
         supplemental,
       }) => {
-        const results = [
+        let results = [];
+        if (this.showSchool) {
+          results.push(course.school.title);
+        }
+        results = results.concat([
           title,
           course.title,
           this.academicYearCrossesCalendarYearBoundaries
             ? `${course.year} - ${course.year + 1}`
             : `${course.year}`,
-          striptags(description),
-        ];
+        ]);
+        results.push(striptags(description));
+
         if (this.schoolConfigs.get('showSessionAttendanceRequired')) {
           results.push(attendanceRequired ? this.intl.t('general.yes') : this.intl.t('general.no'));
         }
@@ -204,12 +226,16 @@ export default class ReportsSubjectSessionComponent extends Component {
       },
     );
 
-    const columns = [
+    let columns = [];
+    if (this.showSchool) {
+      columns.push(this.intl.t('general.school'));
+    }
+    columns = columns.concat([
       this.intl.t('general.session'),
       this.intl.t('general.course'),
       this.intl.t('general.academicYear'),
       this.intl.t('general.description'),
-    ];
+    ]);
 
     if (this.schoolConfigs.get('showSessionAttendanceRequired')) {
       columns.push(this.intl.t('general.attendanceRequired'));
@@ -251,34 +277,41 @@ export default class ReportsSubjectSessionComponent extends Component {
     <div data-test-reports-subject-session>
       {{#if (and this.allSessionsData.isResolved this.schoolConfigsData.isResolved)}}
         <ul class="report-results{{if this.reportResultsExceedMax ' limited'}}" data-test-results>
-          {{#each this.limitedSessions as |obj|}}
+          {{#each this.limitedSessions as |session|}}
             <li>
+              {{#if this.showSchool}}
+                <span class="school" data-test-school>
+                  {{session.schoolTitle}}:
+                </span>
+              {{/if}}
               {{#if this.showYear}}
                 <span data-test-year>
                   {{#if this.academicYearCrossesCalendarYearBoundaries}}
-                    {{obj.year}}
+                    {{session.year}}
                     -
-                    {{add obj.year 1}}
+                    {{add session.year 1}}
                   {{else}}
-                    {{obj.year}}
+                    {{session.year}}
                   {{/if}}
                 </span>
               {{/if}}
               <span data-test-course-title>
                 {{#if this.canViewCourse}}
-                  <LinkTo @route="course" @model={{obj.courseId}}>{{obj.courseTitle}}:</LinkTo>
+                  <LinkTo @route="course" @model={{session.courseId}}>
+                    {{session.courseTitle}}:
+                  </LinkTo>
                 {{else}}
-                  {{obj.courseTitle}}:
+                  {{session.courseTitle}}:
                 {{/if}}
               </span>
 
               <span data-test-session-title>
                 {{#if this.canViewCourse}}
-                  <LinkTo @route="session" @models={{array obj.courseId obj.id}}>
-                    {{obj.title}}
+                  <LinkTo @route="session" @models={{array session.courseId session.id}}>
+                    {{session.title}}
                   </LinkTo>
                 {{else}}
-                  {{obj.title}}
+                  {{session.title}}
                 {{/if}}
               </span>
             </li>
