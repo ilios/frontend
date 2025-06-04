@@ -60,7 +60,7 @@ export default class ReportsSubjectInstructorComponent extends Component {
 
   get sortedInstructors() {
     if (this.showSchool) {
-      return sortBy(this.mappedInstructors, ['school.title', 'name']);
+      return sortBy(this.mappedInstructors, ['schoolTitle', 'name']);
     }
 
     return sortBy(this.mappedInstructors, ['name']);
