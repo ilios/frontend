@@ -33,7 +33,7 @@ module('Integration | Component | reports/subject/instructor', function (hooks) 
   };
 
   test('it renders', async function (assert) {
-    assert.expect(4);
+    assert.expect(6);
     this.server.post('api/graphql', function (schema, { requestBody }) {
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
@@ -57,8 +57,10 @@ module('Integration | Component | reports/subject/instructor', function (hooks) 
     );
 
     assert.strictEqual(component.results.length, 2);
-    assert.strictEqual(component.results[0].name, 'abc');
-    assert.strictEqual(component.results[1].name, 'First M. Last');
+    assert.strictEqual(component.results[0].school, 'School 1:');
+    assert.strictEqual(component.results[0].name, 'First M. Last');
+    assert.strictEqual(component.results[1].school, 'School 2:');
+    assert.strictEqual(component.results[1].name, 'abc');
   });
 
   test('it renders all results when resultsLengthMax is not reached', async function (assert) {
@@ -228,7 +230,7 @@ module('Integration | Component | reports/subject/instructor', function (hooks) 
   });
 
   test('filter by academic year', async function (assert) {
-    assert.expect(5);
+    assert.expect(7);
     let counter = 0;
     this.server.post('api/graphql', function (schema, { requestBody }) {
       const { query } = JSON.parse(requestBody);
@@ -284,8 +286,10 @@ module('Integration | Component | reports/subject/instructor', function (hooks) 
     );
 
     assert.strictEqual(component.results.length, 2);
-    assert.strictEqual(component.results[0].name, 'abc');
-    assert.strictEqual(component.results[1].name, 'First M. Last');
+    assert.strictEqual(component.results[0].school, 'School 1:');
+    assert.strictEqual(component.results[0].name, 'First M. Last');
+    assert.strictEqual(component.results[1].school, 'School 2:');
+    assert.strictEqual(component.results[1].name, 'abc');
   });
 
   test('filter by session types', async function (assert) {
