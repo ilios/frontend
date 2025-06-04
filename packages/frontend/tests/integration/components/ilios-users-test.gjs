@@ -34,6 +34,38 @@ module('Integration | Component | ilios users', function (hooks) {
     assert.strictEqual(component.title.text, 'Users');
   });
 
+  test('it shows/hides new user creation buttons depending on user permission', async function (assert) {
+    this.set('canCreate', false);
+
+    await render(
+      <template>
+        <IliosUsers
+          @sortBy="fullName"
+          @limit="25"
+          @offset="25"
+          @query=""
+          @canCreate={{this.canCreate}}
+          @searchTerms={{(array)}}
+          @setQuery={{(noop)}}
+          @setLimit={{(noop)}}
+          @setOffset={{(noop)}}
+          @setShowNewUserForm={{(noop)}}
+          @setShowBulkNewUserForm={{(noop)}}
+          @setSearchTerms={{(noop)}}
+          @transitionToUser={{(noop)}}
+        />
+      </template>,
+    );
+
+    assert.notOk(component.showNewUserFormButton.isVisible);
+    assert.notOk(component.showBulkUsersFormButton.isVisible);
+
+    this.set('canCreate', true);
+
+    assert.ok(component.showNewUserFormButton.isVisible);
+    assert.ok(component.showBulkUsersFormButton.isVisible);
+  });
+
   test('param passing', async function (assert) {
     assert.expect(2);
 
@@ -306,6 +338,7 @@ module('Integration | Component | ilios users', function (hooks) {
       <template>
         <IliosUsers
           @sortBy="fullName"
+          @canCreate={{true}}
           @showBulkNewUserForm={{true}}
           @searchTerms={{(array)}}
           @setQuery={{(noop)}}

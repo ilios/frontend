@@ -110,37 +110,39 @@ export default class IliosUsersComponent extends Component {
             {{t "general.users"}}
           </span>
           <div class="actions">
-            {{#if (or @showNewUserForm @showBulkNewUserForm)}}
-              <button
-                type="button"
-                {{on
-                  "click"
-                  (if
-                    @showNewUserForm
-                    (fn @setShowNewUserForm false)
-                    (fn @setShowBulkNewUserForm false)
-                  )
-                }}
-                data-test-collapse
-              >
-                <FaIcon @icon="minus" />
-              </button>
-            {{else}}
-              <button
-                type="button"
-                {{on "click" (fn @setShowNewUserForm true)}}
-                data-test-show-new-user-form
-              >
-                {{t "general.create"}}
-              </button>
-              {{#if (notEq this.userSearchType "ldap")}}
+            {{#if @canCreate}}
+              {{#if (or @showNewUserForm @showBulkNewUserForm)}}
                 <button
                   type="button"
-                  {{on "click" (fn @setShowBulkNewUserForm true)}}
-                  data-test-show-bulk-new-user-form
+                  {{on
+                    "click"
+                    (if
+                      @showNewUserForm
+                      (fn @setShowNewUserForm false)
+                      (fn @setShowBulkNewUserForm false)
+                    )
+                  }}
+                  data-test-collapse
                 >
-                  {{t "general.createBulk"}}
+                  <FaIcon @icon="minus" />
                 </button>
+              {{else}}
+                <button
+                  type="button"
+                  {{on "click" (fn @setShowNewUserForm true)}}
+                  data-test-show-new-user-form
+                >
+                  {{t "general.create"}}
+                </button>
+                {{#if (notEq this.userSearchType "ldap")}}
+                  <button
+                    type="button"
+                    {{on "click" (fn @setShowBulkNewUserForm true)}}
+                    data-test-show-bulk-new-user-form
+                  >
+                    {{t "general.createBulk"}}
+                  </button>
+                {{/if}}
               {{/if}}
             {{/if}}
           </div>

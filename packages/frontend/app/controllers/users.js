@@ -3,6 +3,7 @@ import { action } from '@ember/object';
 import { service } from '@ember/service';
 
 export default class UsersController extends Controller {
+  @service store;
   @service router;
 
   queryParams = [
