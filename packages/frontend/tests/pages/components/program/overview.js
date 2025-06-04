@@ -9,7 +9,8 @@ const definition = {
     save: clickable('.done'),
     editable: isPresent('[data-test-edit]'),
     value: text('[data-test-value]'),
-    errors: collection('.validation-error-message'),
+    hasError: isPresent('[data-test-title-validation-error-message]'),
+    error: text('[data-test-title-validation-error-message]'),
   },
   duration: {
     scope: '[data-test-duration]',

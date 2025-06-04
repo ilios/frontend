@@ -1,10 +1,11 @@
 import {
   create,
   clickable,
-  collection,
   fillable,
   property,
+  isPresent,
   isVisible,
+  text,
 } from 'ember-cli-page-object';
 
 const definition = {
@@ -17,7 +18,8 @@ const definition = {
   willFill: property('checked', '[data-test-fill] input'),
   fillWithCohort: clickable('[data-test-fill]'),
   doNotFillWithCohort: clickable('[data-test-no-fill]'),
-  titleErrors: collection('[data-test-title-validation-error-message]'),
+  hasError: isPresent('[data-test-title-validation-error-message]'),
+  error: text('[data-test-title-validation-error-message]'),
 };
 
 export default definition;

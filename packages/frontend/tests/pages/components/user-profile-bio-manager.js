@@ -1,6 +1,5 @@
 import {
   clickable,
-  collection,
   create,
   isPresent,
   fillable,
@@ -147,7 +146,7 @@ const definition = {
     value: value('input'),
     isDisabled: property('disabled', 'input'),
     hasError: isPresent('[data-test-password-validation-error-message]'),
-    errors: collection('[data-test-password-validation-error-message]'),
+    error: text('[data-test-password-validation-error-message]'),
     submit: triggerable('keyup', 'input', { eventProperties: { key: 'Enter' } }),
     cancel: triggerable('keyup', 'input', { eventProperties: { key: 'Escape' } }),
     strength: {

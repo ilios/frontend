@@ -512,9 +512,9 @@ module('Integration | Component | new directory user', function (hooks) {
     assert.ok(component.searchResults[0].userCanBeAdded);
     await component.searchResults[0].addUser();
 
-    assert.strictEqual(component.form.otherId.errors.length, 0);
-    assert.strictEqual(component.form.username.errors.length, 0);
-    assert.strictEqual(component.form.password.errors.length, 0);
+    assert.notOk(component.form.otherId.hasError);
+    assert.notOk(component.form.username.hasError);
+    assert.notOk(component.form.password.hasError);
 
     assert.strictEqual(component.form.otherId.value, '');
     assert.strictEqual(component.form.username.value, '');
@@ -523,15 +523,11 @@ module('Integration | Component | new directory user', function (hooks) {
     await component.form.otherId.set('long'.repeat(5));
 
     await component.form.submit();
-
-    assert.strictEqual(component.form.otherId.errors.length, 1);
     assert.strictEqual(
-      component.form.otherId.errors[0].text,
+      component.form.otherId.error,
       'Other ID is too long (maximum is 16 characters)',
     );
-    assert.strictEqual(component.form.username.errors.length, 1);
-    assert.strictEqual(component.form.username.errors[0].text, 'Username can not be blank');
-    assert.strictEqual(component.form.password.errors.length, 1);
-    assert.strictEqual(component.form.password.errors[0].text, 'Password can not be blank');
+    assert.strictEqual(component.form.username.error, 'Username can not be blank');
+    assert.strictEqual(component.form.password.error, 'Password can not be blank');
   });
 });

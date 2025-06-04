@@ -4,11 +4,11 @@ import { setupAuthentication } from 'ilios-common';
 import { render } from '@ember/test-helpers';
 import { component } from 'ilios-common/page-objects/components/new-learningmaterial';
 import { setupMirage } from 'test-app/tests/test-support/mirage';
-
-// @todo flesh this integration test out [ST 2020/09/02]
 import NewLearningmaterial from 'ilios-common/components/new-learningmaterial';
 import { array } from '@ember/helper';
 import noop from 'ilios-common/helpers/noop';
+
+// @todo flesh this integration test out [ST 2020/09/02]
 module('Integration | Component | new learningmaterial', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
@@ -60,18 +60,13 @@ module('Integration | Component | new learningmaterial', function (hooks) {
         />
       </template>,
     );
-    assert.strictEqual(component.url.validationErrors.length, 0);
+    assert.notOk(component.url.hasError);
     await component.save();
-    assert.strictEqual(component.url.validationErrors.length, 1);
-    assert.strictEqual(component.url.validationErrors[0].text, 'This field must be a valid url');
+    assert.strictEqual(component.url.error, 'URL must be a valid url');
     await component.url.set('https://validurl.edu/');
-    assert.strictEqual(component.url.validationErrors.length, 0);
+    assert.notOk(component.url.hasError);
     await component.url.set('https://validurl.edu/but-way-too-long/' + '0123456789'.repeat(25));
-    assert.strictEqual(component.url.validationErrors.length, 1);
-    assert.strictEqual(
-      component.url.validationErrors[0].text,
-      'This field is too long (maximum is 256 characters)',
-    );
+    assert.strictEqual(component.url.error, 'URL is too long (maximum is 256 characters)');
   });
 
   test('missing file', async function (assert) {
@@ -87,9 +82,9 @@ module('Integration | Component | new learningmaterial', function (hooks) {
         />
       </template>,
     );
-    assert.strictEqual(component.fileUpload.validationErrors.length, 0);
+    assert.notOk(component.fileUpload.hasError);
     await component.save();
-    assert.strictEqual(component.fileUpload.validationErrors[0].text, 'Missing file');
+    assert.strictEqual(component.fileUpload.error, 'Missing file');
   });
 
   test('validate copyright permission', async function (assert) {
@@ -105,15 +100,43 @@ module('Integration | Component | new learningmaterial', function (hooks) {
         />
       </template>,
     );
-    assert.notOk(component.hasAgreementValidationError);
+    assert.notOk(component.copyrightPermission.hasError);
+    assert.notOk(component.copyrightRationale.hasError);
     await component.save();
-    assert.ok(component.hasAgreementValidationError);
-    await component.agreement();
-    assert.notOk(component.hasAgreementValidationError);
-    await component.agreement();
-    assert.ok(component.hasAgreementValidationError);
-    await component.rationale('rationale');
-    assert.notOk(component.hasAgreementValidationError);
+    assert.strictEqual(
+      component.copyrightPermission.error,
+      'Agreement or alternate rationale is required for upload',
+    );
+    assert.strictEqual(component.copyrightRationale.error, 'Copyright Rationale can not be blank');
+    await component.copyrightPermission.toggle();
+    assert.notOk(component.copyrightPermission.hasError);
+    assert.notOk(component.copyrightRationale.isVisible);
+  });
+
+  test('validate copyright rationale', async function (assert) {
+    this.set('type', 'file');
+    await render(
+      <template>
+        <NewLearningmaterial
+          @type={{this.type}}
+          @learningMaterialStatuses={{(array)}}
+          @learningMaterialUserRoles={{(array)}}
+          @save={{(noop)}}
+          @cancel={{(noop)}}
+        />
+      </template>,
+    );
+    assert.notOk(component.copyrightPermission.hasError);
+    assert.notOk(component.copyrightRationale.hasError);
+    await component.save();
+    assert.strictEqual(
+      component.copyrightPermission.error,
+      'Agreement or alternate rationale is required for upload',
+    );
+    assert.strictEqual(component.copyrightRationale.error, 'Copyright Rationale can not be blank');
+    await component.copyrightRationale.set('my rationale');
+    assert.notOk(component.copyrightRationale.hasError);
+    assert.notOk(component.copyrightPermission.hasError);
   });
 
   test('validate original author', async function (assert) {
@@ -129,24 +152,23 @@ module('Integration | Component | new learningmaterial', function (hooks) {
         />
       </template>,
     );
-    assert.notOk(component.hasAuthorValidationError);
+    assert.notOk(component.author.hasError);
     await component.save();
-    assert.ok(component.hasAuthorValidationError);
-
-    await component.author('author');
-    assert.notOk(component.hasAuthorValidationError);
-
-    await component.author('a');
-    assert.ok(component.hasAuthorValidationError);
-
-    await component.author('longer author');
-    assert.notOk(component.hasAuthorValidationError);
-
-    await component.author('super long author'.repeat(20));
-    assert.ok(component.hasAuthorValidationError);
+    assert.strictEqual(component.author.error, 'Content Author can not be blank');
+    await component.author.set('author');
+    assert.notOk(component.hasError);
+    await component.author.set('a');
+    assert.ok(component.author.error, '');
+    await component.author.set('longer author');
+    assert.notOk(component.author.hasError);
+    await component.author.set('super long author'.repeat(20));
+    assert.strictEqual(
+      component.author.error,
+      'Content Author is too long (maximum is 80 characters)',
+    );
   });
 
-  test('validate title', async function (assert) {
+  test('validate display name', async function (assert) {
     this.set('type', 'file');
     await render(
       <template>
@@ -159,20 +181,20 @@ module('Integration | Component | new learningmaterial', function (hooks) {
         />
       </template>,
     );
-    assert.notOk(component.hasTitleValidationError);
+    assert.notOk(component.displayName.hasError);
     await component.save();
-    assert.ok(component.hasTitleValidationError);
-
-    await component.name('title');
-    assert.notOk(component.hasTitleValidationError);
-
-    await component.name('t');
-    assert.ok(component.hasTitleValidationError);
-
-    await component.name('longer title');
-    assert.notOk(component.hasTitleValidationError);
-
-    await component.name('super long title'.repeat(20));
-    assert.ok(component.hasTitleValidationError);
+    assert.strictEqual(component.displayName.error, 'Display Name can not be blank');
+    await component.displayName.set('t');
+    assert.strictEqual(
+      component.displayName.error,
+      'Display Name is too short (minimum is 4 characters)',
+    );
+    await component.displayName.set('super long title'.repeat(20));
+    assert.strictEqual(
+      component.displayName.error,
+      'Display Name is too long (maximum is 120 characters)',
+    );
+    await component.displayName.set('display name');
+    assert.notOk(component.displayName.hasError);
   });
 });

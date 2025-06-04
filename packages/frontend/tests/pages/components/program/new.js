@@ -1,4 +1,4 @@
-import { create, collection, clickable, fillable, text } from 'ember-cli-page-object';
+import { create, clickable, fillable, isPresent, text } from 'ember-cli-page-object';
 
 const definition = {
   scope: '[data-test-program-new]',
@@ -6,7 +6,8 @@ const definition = {
     scope: '[data-test-title]',
     label: text(),
     set: fillable('input'),
-    errors: collection('[data-test-title-validation-error-message]'),
+    hasError: isPresent('[data-test-title-validation-error-message]'),
+    error: text('[data-test-title-validation-error-message]'),
   },
   done: {
     scope: '[data-test-done]',
