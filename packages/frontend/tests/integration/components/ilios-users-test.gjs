@@ -40,6 +40,7 @@ module('Integration | Component | ilios users', function (hooks) {
     await render(
       <template>
         <IliosUsers
+          @sortBy="fullName"
           @limit="25"
           @offset="25"
           @query=""
