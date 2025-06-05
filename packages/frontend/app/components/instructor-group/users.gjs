@@ -92,6 +92,13 @@ export default class InstructorGroupUsersComponent extends Component {
           <ul class="instructor-group-users-list" data-test-users-list>
             {{#each (sortBy "fullName" this.users) as |user|}}
               <li data-test-user>
+                {{#unless user.enabled}}
+                  <FaIcon
+                    @icon="user-xmark"
+                    @title={{t "general.disabled"}}
+                    class="disabled-user"
+                  />
+                {{/unless}}
                 <UserNameInfo @user={{user}} />
               </li>
             {{/each}}

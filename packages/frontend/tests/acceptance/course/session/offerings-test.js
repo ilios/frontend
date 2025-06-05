@@ -29,7 +29,10 @@ module('Acceptance | Session - Offerings', function (hooks) {
     this.server.create('session-type', {
       school: this.school,
     });
-    const users = this.server.createList('user', 8);
+    const users = [
+      ...this.server.createList('user', 7),
+      this.server.create('user', { enabled: false }),
+    ];
     const instructorGroup1 = this.server.create('instructor-group', {
       users: [users[0], users[1], users[4], users[5]],
       school: this.school,
@@ -197,34 +200,46 @@ module('Acceptance | Session - Offerings', function (hooks) {
       blocks[0].timeBlockOfferings.offerings[0].instructors[0].userNameInfo.fullName,
       '1 guy M. Mc1son',
     );
+    assert.notOk(blocks[0].timeBlockOfferings.offerings[0].instructors[0].isDisabled);
+
     assert.strictEqual(
       blocks[0].timeBlockOfferings.offerings[0].instructors[1].userNameInfo.fullName,
       '2 guy M. Mc2son',
     );
+    assert.notOk(blocks[0].timeBlockOfferings.offerings[0].instructors[1].isDisabled);
+
     assert.strictEqual(
       blocks[0].timeBlockOfferings.offerings[0].instructors[2].userNameInfo.fullName,
       '3 guy M. Mc3son',
     );
+    assert.notOk(blocks[0].timeBlockOfferings.offerings[0].instructors[2].isDisabled);
+
     assert.strictEqual(
       blocks[0].timeBlockOfferings.offerings[0].instructors[3].userNameInfo.fullName,
       '4 guy M. Mc4son',
     );
+    assert.notOk(blocks[0].timeBlockOfferings.offerings[0].instructors[3].isDisabled);
+
     assert.strictEqual(
       blocks[0].timeBlockOfferings.offerings[0].instructors[4].userNameInfo.fullName,
       '5 guy M. Mc5son',
     );
+    assert.notOk(blocks[0].timeBlockOfferings.offerings[0].instructors[4].isDisabled);
     assert.strictEqual(
       blocks[0].timeBlockOfferings.offerings[0].instructors[5].userNameInfo.fullName,
       '6 guy M. Mc6son',
     );
+    assert.notOk(blocks[0].timeBlockOfferings.offerings[0].instructors[5].isDisabled);
     assert.strictEqual(
       blocks[0].timeBlockOfferings.offerings[0].instructors[6].userNameInfo.fullName,
       '7 guy M. Mc7son',
     );
+    assert.notOk(blocks[0].timeBlockOfferings.offerings[0].instructors[6].isDisabled);
     assert.strictEqual(
       blocks[0].timeBlockOfferings.offerings[0].instructors[7].userNameInfo.fullName,
       '8 guy M. Mc8son',
     );
+    assert.ok(blocks[0].timeBlockOfferings.offerings[0].instructors[7].isDisabled);
 
     assert.strictEqual(blocks[1].timeBlockOfferings.offerings[0].learnerGroups.length, 1);
     assert.strictEqual(

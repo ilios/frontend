@@ -1,3 +1,4 @@
+@use "../../ilios-common/colors" as c;
 @use "../../ilios-common/mixins" as m;
 
 .instructor-group-instructor-manager {
@@ -21,5 +22,9 @@
 
   .selected-instructors {
     margin-bottom: 0.5rem;
+
+    .disabled-user {
+      color: c.$davysGrey;
+    }
   }
 }

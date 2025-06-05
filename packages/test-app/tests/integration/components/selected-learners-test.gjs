@@ -15,6 +15,7 @@ module('Integration | Component | selected-learners', function (hooks) {
       firstName: 'Joe',
       lastName: 'Doe',
       middleName: 'Michael',
+      enabled: false,
     });
     const learner2 = this.server.create('user', {
       firstName: 'Jane',
@@ -35,6 +36,12 @@ module('Integration | Component | selected-learners', function (hooks) {
     await render(<template><SelectedLearners @learners={{this.learners}} /></template>);
     assert.strictEqual(component.heading, 'Selected Learners:');
     assert.strictEqual(component.learners.length, 3);
+    assert.strictEqual(component.learners[0].userNameInfo.fullName, 'Clem Chowder');
+    assert.notOk(component.learners[0].isDisabled);
+    assert.strictEqual(component.learners[1].userNameInfo.fullName, 'Jane A. Doe');
+    assert.notOk(component.learners[1].isDisabled);
+    assert.strictEqual(component.learners[2].userNameInfo.fullName, 'Joe M. Doe');
+    assert.ok(component.learners[2].isDisabled);
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
   });

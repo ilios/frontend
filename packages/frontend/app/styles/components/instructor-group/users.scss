@@ -21,6 +21,10 @@
 
     .instructor-group-users-list {
       @include m.ilios-tag-list;
+
+      .disabled-user {
+        color: c.$davysGrey;
+      }
     }
   }
 }
