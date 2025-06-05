@@ -188,6 +188,13 @@ export default class OfferingManagerComponent extends Component {
             <ul>
               {{#each @offering.allInstructors as |user|}}
                 <li data-test-instructor>
+                  {{#unless user.enabled}}
+                    <FaIcon
+                      @icon="user-xmark"
+                      @title={{t "general.disabled"}}
+                      class="disabled-user"
+                    />
+                  {{/unless}}
                   <UserNameInfo @user={{user}} />
                 </li>
               {{else}}

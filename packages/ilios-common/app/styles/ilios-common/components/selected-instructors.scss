@@ -1,8 +1,13 @@
+@use "../colors" as c;
 @use "../mixins" as m;
 
 .selected-instructors {
   .instructors-list {
     @include m.ilios-removable-list;
+
+    .disabled-user {
+      color: c.$davysGrey;
+    }
   }
   margin-bottom: 1rem;
 
