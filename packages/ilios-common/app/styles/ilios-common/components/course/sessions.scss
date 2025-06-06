@@ -10,10 +10,7 @@
 
   .course-sessions-header {
     @include m.detail-container-header;
-    height: 2rem;
-    @include m.for-phone-only {
-      height: 3rem;
-    }
+    padding-bottom: 0.5rem;
   }
 
   .title {
@@ -26,20 +23,6 @@
 
   .save-result {
     @include m.main-list-saved-new;
-  }
-
-  .filter {
-    display: block;
-    margin: 1rem 0 0.5rem 0;
-    text-align: right;
-    width: 100%;
-
-    input {
-      width: 90%;
-      @include m.for-tablet-and-up {
-        width: 300px;
-      }
-    }
   }
 
   .course-sessions-table {
