@@ -156,7 +156,19 @@ export default class CourseSessionsComponent extends Component {
           {{t "general.sessions"}}
           ({{this.sessionsCount}})
         </div>
+
         <div class="actions" data-test-actions>
+          {{#if this.sessionsCount}}
+            <div class="filter">
+              <input
+                aria-label={{t "general.sessionTitleFilterPlaceholder"}}
+                value={{this.filterByDebounced}}
+                placeholder={{t "general.sessionTitleFilterPlaceholder"}}
+                data-test-session-filter
+                {{on "input" (fn (perform this.changeFilterBy))}}
+              />
+            </div>
+          {{/if}}
           {{#if @canCreateSession}}
             <ExpandCollapseButton
               @value={{this.showNewSessionForm}}
@@ -195,15 +207,6 @@ export default class CourseSessionsComponent extends Component {
       {{/if}}
 
       {{#if this.sessionsCount}}
-        <div class="filter">
-          <input
-            aria-label={{t "general.sessionTitleFilterPlaceholder"}}
-            value={{this.filterByDebounced}}
-            placeholder={{t "general.sessionTitleFilterPlaceholder"}}
-            data-test-session-filter
-            {{on "input" (fn (perform this.changeFilterBy))}}
-          />
-        </div>
         <section>
           <SessionsGridHeader
             @showExpandAll={{this.showExpandAll}}
