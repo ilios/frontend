@@ -293,49 +293,6 @@ module('Integration | Component | school vocabulary term manager', function (hoo
     assert.strictEqual(this.server.db.terms[0].title, 'term 0');
   });
 
-  test('prevent duplicate term title', async function (assert) {
-    assert.expect(5);
-
-    const vocabulary = this.server.create('vocabulary');
-    const term = this.server.create('term', {
-      vocabulary,
-      active: true,
-    });
-    this.server.create('term', {
-      parent: term,
-      title: 'duplicate one',
-      vocabulary,
-    });
-    const vocabularyModel = await this.owner
-      .lookup('service:store')
-      .findRecord('vocabulary', vocabulary.id);
-    const termModel = await this.owner.lookup('service:store').findRecord('term', term.id);
-
-    this.set('vocabulary', vocabularyModel);
-    this.set('term', termModel);
-    await render(
-      <template>
-        <SchoolVocabularyTermManager
-          @term={{this.term}}
-          @vocabulary={{this.vocabulary}}
-          @manageTerm={{(noop)}}
-          @manageVocabulary={{(noop)}}
-          @canUpdate={{true}}
-          @canDelete={{true}}
-          @canCreate={{true}}
-        />
-      </template>,
-    );
-    assert.strictEqual(component.title, `Title: ${term.title}`);
-    assert.notOk(component.hasError);
-    await component.editTitle();
-    await component.changeTitle('duplicate one');
-    await component.saveTitle();
-    assert.ok(component.hasError);
-    assert.strictEqual(component.error, 'Title is a duplicate');
-    assert.strictEqual(this.server.db.terms[0].title, 'term 0');
-  });
-
   test('add term', async function (assert) {
     assert.expect(5);
     const vocabulary = this.server.create('vocabulary');
@@ -412,17 +369,22 @@ module('Integration | Component | school vocabulary term manager', function (hoo
     assert.strictEqual(component.subTerms.newTermForm.errorMessage, 'Term can not be blank');
   });
 
-  test("can't add term with duplicate title", async function (assert) {
-    assert.expect(6);
+  test("can't rename nested term with duplicate title", async function (assert) {
     const vocabulary = this.server.create('vocabulary');
+    const topLevelTerm = this.server.create('term', {
+      vocabulary,
+    });
     const term = this.server.create('term', {
       vocabulary,
+      title: 'term',
       active: true,
+      parent: topLevelTerm,
     });
     this.server.create('term', {
-      title: 'duplicate term',
       vocabulary,
-      parent: term,
+      title: 'duplicate term',
+      active: true,
+      parent: topLevelTerm,
     });
 
     const vocabularyModel = await this.owner
@@ -446,13 +408,53 @@ module('Integration | Component | school vocabulary term manager', function (hoo
       </template>,
     );
     assert.strictEqual(component.title, `Title: ${term.title}`);
-    assert.strictEqual(component.subTerms.list.length, 1);
+    assert.notOk(component.hasError);
+    await component.editTitle();
+    await component.changeTitle('duplicate term');
+    await component.saveTitle();
+    assert.ok(component.hasError);
+    assert.strictEqual(component.error, 'Title is a duplicate');
+  });
 
-    assert.notOk(component.subTerms.newTermForm.hasError);
-    await component.subTerms.newTermForm.setTitle('duplicate term');
-    await component.subTerms.newTermForm.save();
-    assert.strictEqual(component.subTerms.list.length, 1);
-    assert.ok(component.subTerms.newTermForm.hasError);
-    assert.strictEqual(component.subTerms.newTermForm.errorMessage, 'Term is a duplicate');
+  test("can't rename top-level term with duplicate title", async function (assert) {
+    const vocabulary = this.server.create('vocabulary');
+    const term = this.server.create('term', {
+      vocabulary,
+      title: 'term',
+      active: true,
+    });
+    this.server.create('term', {
+      vocabulary,
+      title: 'duplicate term',
+      active: true,
+    });
+
+    const vocabularyModel = await this.owner
+      .lookup('service:store')
+      .findRecord('vocabulary', vocabulary.id);
+    const termModel = await this.owner.lookup('service:store').findRecord('term', term.id);
+
+    this.set('vocabulary', vocabularyModel);
+    this.set('term', termModel);
+    await render(
+      <template>
+        <SchoolVocabularyTermManager
+          @term={{this.term}}
+          @vocabulary={{this.vocabulary}}
+          @manageTerm={{(noop)}}
+          @manageVocabulary={{(noop)}}
+          @canUpdate={{true}}
+          @canDelete={{true}}
+          @canCreate={{true}}
+        />
+      </template>,
+    );
+    assert.strictEqual(component.title, `Title: ${term.title}`);
+    assert.notOk(component.hasError);
+    await component.editTitle();
+    await component.changeTitle('duplicate term');
+    await component.saveTitle();
+    assert.ok(component.hasError);
+    assert.strictEqual(component.error, 'Title is a duplicate');
   });
 });
