@@ -23,6 +23,7 @@ module('Integration | Component | learner-group/instructors-list', function (hoo
       firstName: 'test',
       lastName: 'person',
       middleName: '',
+      enabled: false,
     });
     const instructor2 = this.server.create('user', {
       firstName: 'zeb',
@@ -62,10 +63,13 @@ module('Integration | Component | learner-group/instructors-list', function (hoo
     assert.strictEqual(component.title, 'Default Instructors (3)');
     assert.strictEqual(component.assignedInstructors.length, 3);
     assert.strictEqual(component.assignedInstructors[0].userNameInfo.fullName, 'aardvark');
+    assert.notOk(component.assignedInstructors[0].isDisabled);
     assert.ok(component.assignedInstructors[0].userNameInfo.hasAdditionalInfo);
     assert.strictEqual(component.assignedInstructors[1].userNameInfo.fullName, 'test person');
+    assert.ok(component.assignedInstructors[1].isDisabled);
     assert.notOk(component.assignedInstructors[1].userNameInfo.hasAdditionalInfo);
     assert.strictEqual(component.assignedInstructors[2].userNameInfo.fullName, 'test person2');
+    assert.notOk(component.assignedInstructors[2].isDisabled);
     assert.notOk(component.assignedInstructors[2].userNameInfo.hasAdditionalInfo);
   });
 

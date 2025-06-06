@@ -15,6 +15,7 @@ module('Integration | Component | selected-instructors', function (hooks) {
       firstName: 'Joe',
       lastName: 'Doe',
       middleName: 'Michael',
+      enabled: false,
     });
     const instructor2 = this.server.create('user', {
       firstName: 'Jane',
@@ -63,7 +64,7 @@ module('Integration | Component | selected-instructors', function (hooks) {
   });
 
   test('remove selected instructor', async function (assert) {
-    assert.expect(4);
+    assert.expect(7);
     this.set('instructors', [this.instructorModel1, this.instructorModel2]);
     this.set('remove', (user) => {
       assert.strictEqual(user.id, this.instructorModel1.id);
@@ -79,7 +80,10 @@ module('Integration | Component | selected-instructors', function (hooks) {
     );
     assert.strictEqual(component.heading, 'Selected Instructors:');
     assert.strictEqual(component.instructors.length, 2);
+    assert.strictEqual(component.instructors[0].userNameInfo.fullName, 'Jane A. Doe');
+    assert.notOk(component.instructors[0].isDisabled);
     assert.strictEqual(component.instructors[1].userNameInfo.fullName, 'Joe M. Doe');
+    assert.ok(component.instructors[1].isDisabled);
     await component.instructors[1].remove();
   });
 });

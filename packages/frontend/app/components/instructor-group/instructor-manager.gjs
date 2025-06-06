@@ -18,6 +18,13 @@ import UserSearch from 'ilios-common/components/user-search';
           {{#each (sortBy "fullName" @instructors) as |user|}}
             <li data-test-selected-instructor>
               <button type="button" {{on "click" (fn @remove user)}} data-test-remove>
+                {{#unless user.enabled}}
+                  <FaIcon
+                    @icon="user-xmark"
+                    @title={{t "general.disabled"}}
+                    class="disabled-user"
+                  />
+                {{/unless}}
                 <UserNameInfo @user={{user}} />
                 <FaIcon @icon="xmark" class="remove" />
               </button>

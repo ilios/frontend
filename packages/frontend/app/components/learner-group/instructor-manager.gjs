@@ -77,6 +77,13 @@ export default class LearnerGroupInstructorManagerComponent extends Component {
                   {{on "click" (fn this.removeInstructor user)}}
                   data-test-selected-instructor
                 >
+                  {{#unless user.enabled}}
+                    <FaIcon
+                      @icon="user-xmark"
+                      @title={{t "general.disabled"}}
+                      class="disabled-user"
+                    />
+                  {{/unless}}
                   <UserNameInfo @user={{user}} />
                   <FaIcon @icon="xmark" class="remove" />
                 </button>
