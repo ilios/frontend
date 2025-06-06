@@ -264,7 +264,7 @@ export default class LearnerGroupUploadDataComponent extends Component {
           data-test-user-upload
         />
       {{/if}}
-      {{#if this.parseFile.isRunning}}
+      {{#if this.uploadData.isPending}}
         <LoadingSpinner class="loading-file" />
       {{/if}}
       {{#if this.invalidUsers}}
