@@ -268,6 +268,7 @@ general:
   noPrintDraft: Courses which are in draft status cannot be printed
   noProgramYears: There are no program years in this program
   noSearchResults: Your search did not return any results
+  noSearchRun: Your search could not be run
   noSelectedCompetencies: There are no selected competencies
   noSelectedLearnerGroups: There are no selected learner groups
   noSequenceBlocks: There are no sequence blocks in this report.
