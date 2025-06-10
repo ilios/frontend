@@ -39,7 +39,7 @@ export default class ReportsSubjectNewInstructorComponent extends Component {
           </button>
         {{/if}}
       {{else}}
-        <UserSearch @addUser={{this.chooseInstructor}} />
+        <UserSearch @addUser={{this.chooseInstructor}} @canAddDisabledUser={{true}} />
       {{/if}}
     </p>
   </template>
