@@ -35,7 +35,11 @@ import LoadingSpinner from 'ilios-common/components/loading-spinner';
                   {{#each (sortBy "fullName" @directors) as |user|}}
                     <li>
                       {{#unless user.enabled}}
-                        <FaIcon @icon="user-xmark" @title={{t "general.disabled"}} class="error" />
+                        <FaIcon
+                          @icon="user-xmark"
+                          @title={{t "general.disabled"}}
+                          class="disabled-user"
+                        />
                       {{/unless}}
                       <UserNameInfo @user={{user}} />
                     </li>
@@ -57,7 +61,11 @@ import LoadingSpinner from 'ilios-common/components/loading-spinner';
                   {{#each (sortBy "fullName" @administrators) as |user|}}
                     <li>
                       {{#unless user.enabled}}
-                        <FaIcon @icon="user-xmark" @title={{t "general.disabled"}} class="error" />
+                        <FaIcon
+                          @icon="user-xmark"
+                          @title={{t "general.disabled"}}
+                          class="disabled-user"
+                        />
                       {{/unless}}
                       <UserNameInfo @user={{user}} />
                     </li>
@@ -79,7 +87,11 @@ import LoadingSpinner from 'ilios-common/components/loading-spinner';
                   {{#each (sortBy "fullName" @studentAdvisors) as |user|}}
                     <li>
                       {{#unless user.enabled}}
-                        <FaIcon @icon="user-xmark" @title={{t "general.disabled"}} class="error" />
+                        <FaIcon
+                          @icon="user-xmark"
+                          @title={{t "general.disabled"}}
+                          class="disabled-user"
+                        />
                       {{/unless}}
                       <UserNameInfo @user={{user}} />
                     </li>

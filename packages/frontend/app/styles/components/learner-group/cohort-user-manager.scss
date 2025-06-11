@@ -29,6 +29,10 @@
       @include m.main-list-box-table;
       max-height: 360px;
       overflow: auto;
+
+      .disabled-user {
+        color: c.$davysGrey;
+      }
     }
   }
 

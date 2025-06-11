@@ -19,7 +19,7 @@ export default class UserSearchResultUser extends Component {
           <div class="name">
             {{@user.fullName}}
             {{#unless @user.enabled}}
-              <FaIcon @icon="user-xmark" @title={{t "general.disabled"}} class="error" />
+              <FaIcon @icon="user-xmark" @title={{t "general.disabled"}} class="disabled-user" />
             {{/unless}}
           </div>
           <div class="email">
@@ -32,7 +32,7 @@ export default class UserSearchResultUser extends Component {
         <div class="name">
           {{@user.fullName}}
           {{#unless @user.enabled}}
-            <FaIcon @icon="user-xmark" @title={{t "general.disabled"}} class="error" />
+            <FaIcon @icon="user-xmark" @title={{t "general.disabled"}} class="disabled-user" />
           {{/unless}}
         </div>
         <div class="email">

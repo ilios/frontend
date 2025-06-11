@@ -1,3 +1,4 @@
+@use "../colors" as c;
 @use "../mixins" as m;
 
 .leadership-list {
@@ -7,6 +8,10 @@
 
     ul {
       @include m.ilios-list-reset;
+    }
+
+    .disabled-user {
+      color: c.$davysGrey;
     }
   }
 }
