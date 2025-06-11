@@ -2,9 +2,9 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { service } from '@ember/service';
 import ManageUsersSummary from 'frontend/components/manage-users-summary';
-import FaIcon from 'ilios-common/components/fa-icon';
 import t from 'ember-intl/helpers/t';
 import UserNameInfo from 'ilios-common/components/user-name-info';
+import UserStatus from 'ilios-common/components/user-status';
 import PendingSingleUserUpdate from 'frontend/components/pending-single-user-update';
 import ToggleButtons from 'ilios-common/components/toggle-buttons';
 import not from 'ember-truth-helpers/helpers/not';
@@ -27,10 +27,8 @@ export default class UserProfileComponent extends Component {
       <div class="blocks">
         <ManageUsersSummary @canCreate={{@canCreate}} />
       </div>
-      <h1 class="user-display-name">
-        {{#unless @user.enabled}}
-          <FaIcon @icon="user-xmark" class="disabled-user" @title={{t "general.disabled"}} />
-        {{/unless}}
+      <h1 class="user-display-name" data-test-user-profile-title>
+        <UserStatus @user={{@user}} />
         <UserNameInfo @user={{@user}} />
       </h1>
       <div class="user-roles">

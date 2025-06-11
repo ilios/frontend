@@ -41,7 +41,7 @@ module('Integration | Component | user-search-result-user', function (hooks) {
   });
 
   test('add active user', async function (assert) {
-    assert.expect(3);
+    assert.expect(4);
     const user = this.server.create('user');
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     this.set('user', userModel);
@@ -58,6 +58,7 @@ module('Integration | Component | user-search-result-user', function (hooks) {
       </template>,
     );
     assert.strictEqual(component.text, '0 guy M. Mc0son user@example.edu');
+    assert.notOk(component.userStatus.accountIsDisabled);
     assert.ok(component.isActive);
     await component.click();
   });
@@ -76,12 +77,13 @@ module('Integration | Component | user-search-result-user', function (hooks) {
       </template>,
     );
     assert.strictEqual(component.text, '0 guy M. Mc0son disabled user@example.edu');
+    assert.ok(component.userStatus.accountIsDisabled);
     assert.notOk(component.isActive);
     assert.notOk(component.canAdd);
   });
 
   test('add inactive user if allowed', async function (assert) {
-    assert.expect(4);
+    assert.expect(5);
     const user = this.server.create('user', { enabled: false });
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     this.set('user', userModel);
@@ -99,6 +101,7 @@ module('Integration | Component | user-search-result-user', function (hooks) {
       </template>,
     );
     assert.strictEqual(component.text, '0 guy M. Mc0son disabled user@example.edu');
+    assert.ok(component.userStatus.accountIsDisabled);
     assert.ok(component.isActive);
     assert.ok(component.canAdd);
     await component.click();

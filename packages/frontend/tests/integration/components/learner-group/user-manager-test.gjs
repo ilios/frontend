@@ -73,12 +73,12 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
     assert.ok(component.usersInCurrentGroup[0].name.isClickable);
     assert.ok(component.usersInCurrentGroup[0].campusId.isClickable);
     assert.ok(component.usersInCurrentGroup[0].email.isClickable);
-    assert.notOk(component.usersInCurrentGroup[0].isDisabled);
+    assert.notOk(component.usersInCurrentGroup[0].name.userStatus.accountIsDisabled);
     assert.ok(component.usersInCurrentGroup[0].canBeSelected);
     assert.notOk(component.usersInCurrentGroup[0].isSelected);
     assert.strictEqual(component.usersInCurrentGroup[0].campusId.text, '1234');
     assert.strictEqual(component.usersInCurrentGroup[0].email.text, 'testemail');
-    assert.notOk(component.usersInCurrentGroup[0].isDisabled);
+    assert.notOk(component.usersInCurrentGroup[0].name.userStatus.accountIsDisabled);
     assert.strictEqual(
       component.usersInCurrentGroup[1].name.userNameInfo.fullName,
       'Jackson M. Doggy',
@@ -89,7 +89,7 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
     assert.ok(component.usersInCurrentGroup[1].name.isClickable);
     assert.ok(component.usersInCurrentGroup[1].campusId.isClickable);
     assert.ok(component.usersInCurrentGroup[1].email.isClickable);
-    assert.ok(component.usersInCurrentGroup[1].isDisabled);
+    assert.ok(component.usersInCurrentGroup[1].name.userStatus.accountIsDisabled);
   });
 
   test('sort by full name', async function (assert) {

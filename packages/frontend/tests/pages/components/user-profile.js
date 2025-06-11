@@ -8,6 +8,8 @@ import learnerGroups from 'frontend/tests/pages/components/user-profile/learner-
 import permissions from 'frontend/tests/pages/components/user-profile-permissions';
 import roles from 'frontend/tests/pages/components/user-profile-roles';
 import toggleButtons from 'ilios-common/page-objects/components/toggle-buttons';
+import userNameInfo from 'ilios-common/page-objects//components/user-name-info';
+import userStatus from 'ilios-common/page-objects/components/user-status';
 
 // @todo flesh this out. [ST 2023/09/08]
 const definition = {
@@ -15,6 +17,11 @@ const definition = {
   actions: {
     scope: '[data-test-user-profile-actions]',
     calendarToggle: toggleButtons,
+  },
+  title: {
+    scope: '[data-test-user-profile-title]',
+    userNameInfo,
+    userStatus,
   },
   bio,
   calendar,

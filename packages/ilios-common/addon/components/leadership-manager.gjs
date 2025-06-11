@@ -5,6 +5,8 @@ import { on } from '@ember/modifier';
 import { fn } from '@ember/helper';
 import FaIcon from 'ilios-common/components/fa-icon';
 import UserNameInfo from 'ilios-common/components/user-name-info';
+import UserStatus from 'ilios-common/components/user-status';
+
 <template>
   <div class="leadership-manager" data-test-leadership-manager>
     <table>
@@ -64,13 +66,7 @@ import UserNameInfo from 'ilios-common/components/user-name-info';
                     >
                       <FaIcon @icon="xmark" class="clickable remove" />
                     </button>
-                    {{#unless user.enabled}}
-                      <FaIcon
-                        @icon="user-xmark"
-                        @title={{t "general.disabled"}}
-                        class="disabled-user"
-                      />
-                    {{/unless}}
+                    <UserStatus @user={{user}} />
                     <UserNameInfo @user={{user}} />
                   </li>
                 {{else}}
@@ -91,13 +87,7 @@ import UserNameInfo from 'ilios-common/components/user-name-info';
                     >
                       <FaIcon @icon="xmark" class="clickable remove" />
                     </button>
-                    {{#unless user.enabled}}
-                      <FaIcon
-                        @icon="user-xmark"
-                        @title={{t "general.disabled"}}
-                        class="disabled-user"
-                      />
-                    {{/unless}}
+                    <UserStatus @user={{user}} />
                     <UserNameInfo @user={{user}} />
                   </li>
                 {{else}}
@@ -118,13 +108,7 @@ import UserNameInfo from 'ilios-common/components/user-name-info';
                     >
                       <FaIcon @icon="xmark" class="clickable remove" />
                     </button>
-                    {{#unless user.enabled}}
-                      <FaIcon
-                        @icon="user-xmark"
-                        @title={{t "general.disabled"}}
-                        class="disabled-user"
-                      />
-                    {{/unless}}
+                    <UserStatus @user={{user}} />
                     <UserNameInfo @user={{user}} />
                   </li>
                 {{else}}

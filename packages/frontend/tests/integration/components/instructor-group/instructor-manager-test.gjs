@@ -35,17 +35,17 @@ module('Integration | Component | instructor-group/instructor-manager', function
       component.selectedInstructors.users[0].userNameInfo.fullName,
       '0 guy M. Mc0son',
     );
-    assert.notOk(component.selectedInstructors.users[0].isDisabled);
+    assert.notOk(component.selectedInstructors.users[0].userStatus.accountIsDisabled);
     assert.strictEqual(
       component.selectedInstructors.users[1].userNameInfo.fullName,
       '2 guy M. Mc2son',
     );
-    assert.notOk(component.selectedInstructors.users[1].isDisabled);
+    assert.notOk(component.selectedInstructors.users[1].userStatus.accountIsDisabled);
     assert.strictEqual(
       component.selectedInstructors.users[2].userNameInfo.fullName,
       'Aaron Aardvark',
     );
-    assert.ok(component.selectedInstructors.users[2].isDisabled);
+    assert.ok(component.selectedInstructors.users[2].userStatus.accountIsDisabled);
     assert.notOk(component.noSelectedInstructors.isVisible);
     assert.strictEqual(component.availableInstructors.label, 'Available Instructors:');
     await a11yAudit(this.element);

@@ -17,7 +17,7 @@ import set from 'ember-set-helper/helpers/set';
 import perform from 'ember-concurrency/helpers/perform';
 import onKey from 'ember-keyboard/modifiers/on-key';
 import eq from 'ember-truth-helpers/helpers/eq';
-import FaIcon from 'ilios-common/components/fa-icon';
+import UserStatus from 'ilios-common/components/user-status';
 
 const DEBOUNCE_MS = 250;
 const MIN_INPUT = 3;
@@ -332,13 +332,7 @@ export default class ManageUsersSummaryComponent extends Component {
                   >
                     <span class="name">
                       {{result.user.fullName}}
-                      {{#unless result.user.enabled}}
-                        <FaIcon
-                          @icon="user-xmark"
-                          @title={{t "general.disabled"}}
-                          class="disabled-user"
-                        />
-                      {{/unless}}
+                      <UserStatus @user={{result.user}} />
                     </span>
                     <span class="email">
                       {{result.user.email}}

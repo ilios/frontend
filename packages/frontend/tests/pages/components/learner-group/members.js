@@ -1,5 +1,6 @@
 import { clickable, collection, create, fillable, isPresent } from 'ember-cli-page-object';
 import userNameInfo from 'ilios-common/page-objects/components/user-name-info';
+import userStatus from 'ilios-common/page-objects/components/user-status';
 
 const definition = {
   scope: '[data-test-learner-group-members]',
@@ -9,8 +10,8 @@ const definition = {
       scope: 'td:eq(0)',
       isClickable: isPresent('button'),
       click: clickable('button'),
-      isDisabled: isPresent('[data-test-is-disabled]'),
       userNameInfo,
+      userStatus,
     },
     campusId: {
       scope: 'td:eq(1)',

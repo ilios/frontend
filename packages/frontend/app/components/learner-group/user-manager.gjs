@@ -15,6 +15,7 @@ import sortBy from 'ilios-common/helpers/sort-by';
 import includes from 'ilios-common/helpers/includes';
 import FaIcon from 'ilios-common/components/fa-icon';
 import UserNameInfo from 'ilios-common/components/user-name-info';
+import UserStatus from 'ilios-common/components/user-status';
 import { LinkTo } from '@ember/routing';
 import LoadingSpinner from 'ilios-common/components/loading-spinner';
 import perform from 'ember-concurrency/helpers/perform';
@@ -295,14 +296,7 @@ export default class LearnerGroupUserManagerComponent extends Component {
                             id="selected-username-{{index}}-{{templateId}}"
                             @user={{user}}
                           />
-                          {{#unless user.enabled}}
-                            <FaIcon
-                              @icon="user-xmark"
-                              @title={{t "general.disabled"}}
-                              class="disabled-user"
-                              data-test-is-disabled
-                            />
-                          {{/unless}}
+                          <UserStatus @user={{user}} />
                         </button>
                       </td>
                       <td class="text-left" colspan="2">
@@ -419,14 +413,7 @@ export default class LearnerGroupUserManagerComponent extends Component {
                           checked={{includes user.content this.selectedNonGroupUsers}}
                           {{on "click" (fn this.toggleNonGroupUserSelection user.content)}}
                         />
-                        {{#unless user.enabled}}
-                          <FaIcon
-                            @icon="user-xmark"
-                            @title={{t "general.disabled"}}
-                            class="disabled-user"
-                            data-test-is-disabled
-                          />
-                        {{/unless}}
+                        <UserStatus @user={{user}} />
                       </td>
                       <td class="text-left" colspan="4">
                         <button
@@ -438,14 +425,7 @@ export default class LearnerGroupUserManagerComponent extends Component {
                             id="cohort-username-{{index}}-{{templateId}}"
                             @user={{user}}
                           />
-                          {{#unless user.enabled}}
-                            <FaIcon
-                              @icon="user-xmark"
-                              @title={{t "general.disabled"}}
-                              class="disabled-user"
-                              data-test-is-disabled
-                            />
-                          {{/unless}}
+                          <UserStatus @user={{user}} />
                         </button>
                       </td>
                       <td class="text-left" colspan="2">

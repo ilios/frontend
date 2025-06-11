@@ -1,8 +1,9 @@
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
 import sortBy from 'ilios-common/helpers/sort-by';
-import FaIcon from 'ilios-common/components/fa-icon';
 import UserNameInfo from 'ilios-common/components/user-name-info';
+import UserStatus from 'ilios-common/components/user-status';
+
 <template>
   <div
     class="learner-group-instructors-list"
@@ -25,9 +26,7 @@ import UserNameInfo from 'ilios-common/components/user-name-info';
         <ul class="assigned-instructors">
           {{#each (sortBy "fullName" @learnerGroup.allInstructors) as |instructor|}}
             <li data-test-assigned-instructor>
-              {{#unless instructor.enabled}}
-                <FaIcon @icon="user-xmark" @title={{t "general.disabled"}} class="disabled-user" />
-              {{/unless}}
+              <UserStatus @user={{instructor}} />
               <UserNameInfo @user={{instructor}} />
             </li>
           {{/each}}

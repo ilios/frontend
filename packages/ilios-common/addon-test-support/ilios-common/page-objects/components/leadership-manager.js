@@ -4,10 +4,10 @@ import {
   create,
   fillable,
   hasClass,
-  isPresent,
   notHasClass,
 } from 'ember-cli-page-object';
 import userNameInfo from './user-name-info';
+import userStatus from './user-status';
 
 const definition = {
   scope: '[data-test-leadership-manager]',
@@ -41,17 +41,17 @@ const definition = {
   selectedDirectors: collection('[data-test-directors] ul li', {
     userNameInfo,
     remove: clickable('.remove'),
-    isDisabled: isPresent('.disabled-user'),
+    userStatus,
   }),
   selectedAdministrators: collection('[data-test-administrators] ul li', {
     userNameInfo,
     remove: clickable('.remove'),
-    isDisabled: isPresent('.disabled-user'),
+    userStatus,
   }),
   selectedStudentAdvisors: collection('[data-test-student-advisors] ul li', {
     userNameInfo,
     remove: clickable('.remove'),
-    isDisabled: isPresent('.disabled-user'),
+    userStatus,
   }),
 };
 

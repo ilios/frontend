@@ -48,19 +48,19 @@ module('Integration | Component | learner-group/cohort-user-manager', function (
     assert.strictEqual(component.title, 'Cohort Members NOT assigned to top level group (2)');
     assert.strictEqual(component.users.length, 2);
     assert.strictEqual(component.users[0].name.userNameInfo.fullName, 'Jasper M. Dog');
+    assert.notOk(component.users[0].name.userStatus.accountIsDisabled);
     assert.strictEqual(component.users[0].campusId.text, '1234');
     assert.strictEqual(component.users[0].email.text, 'testemail');
     assert.ok(component.users[0].name.isClickable);
     assert.ok(component.users[0].campusId.isClickable);
     assert.ok(component.users[0].email.isClickable);
-    assert.notOk(component.users[0].isDisabled);
     assert.strictEqual(component.users[1].name.userNameInfo.fullName, 'Jackson M. Doggy');
     assert.strictEqual(component.users[1].campusId.text, '123');
     assert.strictEqual(component.users[1].email.text, 'testemail2');
     assert.ok(component.users[1].name.isClickable);
     assert.ok(component.users[1].campusId.isClickable);
     assert.ok(component.users[1].email.isClickable);
-    assert.ok(component.users[1].isDisabled);
+    assert.ok(component.users[1].name.userStatus.accountIsDisabled);
   });
 
   test('sort by full name', async function (assert) {

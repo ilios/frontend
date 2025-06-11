@@ -4,7 +4,7 @@ import { render, findAll, find, fillIn, triggerEvent, triggerKeyEvent } from '@e
 import Service from '@ember/service';
 import ManageUsersSummary from 'frontend/components/manage-users-summary';
 
-module('Integration | Component | manage users summary', function (hooks) {
+module('Integration | Component | manage-users-summary', function (hooks) {
   setupRenderingTest(hooks);
 
   hooks.beforeEach(async function () {

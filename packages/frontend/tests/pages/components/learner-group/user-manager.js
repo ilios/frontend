@@ -9,6 +9,7 @@ import {
   text,
 } from 'ember-cli-page-object';
 import userNameInfo from 'ilios-common/page-objects/components/user-name-info';
+import userStatus from 'ilios-common/page-objects/components/user-status';
 
 const definition = {
   scope: '[data-test-learner-group-user-manager]',
@@ -36,6 +37,7 @@ const definition = {
       isClickable: isPresent('button'),
       click: clickable('button'),
       userNameInfo,
+      userStatus,
     },
     campusId: {
       scope: 'td:eq(2)',
@@ -52,7 +54,6 @@ const definition = {
       linkTitle: attribute('title', 'a'),
       linkAriaLabel: attribute('aria-label', 'a'),
     },
-    isDisabled: isPresent('td:nth-of-type(2) [data-test-is-disabled]'),
     remove: clickable('[data-test-remove-user]'),
     canBeRemoved: isPresent('[data-test-remove-user]'),
   }),
@@ -65,6 +66,7 @@ const definition = {
       isClickable: isPresent('button'),
       click: clickable('button'),
       userNameInfo,
+      userStatus,
     },
     campusId: {
       scope: 'td:eq(2)',
@@ -81,7 +83,6 @@ const definition = {
       linkTitle: attribute('title', 'a'),
       linkAriaLabel: attribute('aria-label', 'a'),
     },
-    isDisabled: isPresent('td:nth-of-type(1) [data-test-is-disabled]'),
     add: clickable('[data-test-add-user]'),
     canBeAdded: isPresent('[data-test-add-user]'),
   }),

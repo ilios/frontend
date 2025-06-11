@@ -8,6 +8,7 @@ import {
   text,
 } from 'ember-cli-page-object';
 import userNameInfo from 'ilios-common/page-objects/components/user-name-info';
+import userStatus from 'ilios-common/page-objects/components/user-status';
 
 const definition = {
   scope: '[data-test-learner-group-cohort-user-manager]',
@@ -28,6 +29,7 @@ const definition = {
       isClickable: isPresent('button'),
       click: clickable('button'),
       userNameInfo,
+      userStatus,
     },
     campusId: {
       scope: 'td:eq(2)',
@@ -39,7 +41,6 @@ const definition = {
       isClickable: isPresent('button'),
       click: clickable('button'),
     },
-    isDisabled: isPresent('td:nth-of-type(2) [data-test-is-disabled]'),
     add: clickable('[data-test-add-user]'),
     canBeAdded: isPresent('[data-test-add-user]'),
   }),

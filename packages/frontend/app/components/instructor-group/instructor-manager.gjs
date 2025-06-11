@@ -5,6 +5,8 @@ import { fn } from '@ember/helper';
 import UserNameInfo from 'ilios-common/components/user-name-info';
 import FaIcon from 'ilios-common/components/fa-icon';
 import UserSearch from 'ilios-common/components/user-search';
+import UserStatus from 'ilios-common/components/user-status';
+
 <template>
   <section
     class="instructor-group-instructor-manager"
@@ -18,13 +20,7 @@ import UserSearch from 'ilios-common/components/user-search';
           {{#each (sortBy "fullName" @instructors) as |user|}}
             <li data-test-selected-instructor>
               <button type="button" {{on "click" (fn @remove user)}} data-test-remove>
-                {{#unless user.enabled}}
-                  <FaIcon
-                    @icon="user-xmark"
-                    @title={{t "general.disabled"}}
-                    class="disabled-user"
-                  />
-                {{/unless}}
+                <UserStatus @user={{user}} />
                 <UserNameInfo @user={{user}} />
                 <FaIcon @icon="xmark" class="remove" />
               </button>

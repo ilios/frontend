@@ -5,7 +5,7 @@ import { component } from 'frontend/tests/pages/components/user-list';
 import { setupMirage } from 'frontend/tests/test-support/mirage';
 import UserList from 'frontend/components/user-list';
 
-module('Integration | Component | user list', function (hooks) {
+module('Integration | Component | user-list', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
@@ -26,15 +26,13 @@ module('Integration | Component | user list', function (hooks) {
     this.set('users', [userModel1, userModel2]);
     await render(<template><UserList @users={{this.users}} /></template>);
     assert.strictEqual(component.users.length, 2);
-    assert.ok(component.users[0].isDisabled);
-    assert.ok(component.users[0].disabledUserIcon.isVisible);
+    assert.ok(component.users[0].userStatus.accountIsDisabled);
     assert.ok(component.users[0].userNameInfo.hasAdditionalInfo);
     assert.strictEqual(component.users[0].userNameInfo.fullName, 'Aardvark');
     assert.strictEqual(component.users[0].campusId.text, '1112222');
     assert.strictEqual(component.users[0].email.text, 'aardvark@test.edu');
     assert.strictEqual(component.users[0].school.text, 'school 0');
-    assert.notOk(component.users[1].isDisabled);
-    assert.notOk(component.users[1].disabledUserIcon.isVisible);
+    assert.notOk(component.users[1].userStatus.accountIsDisabled);
     assert.notOk(component.users[1].userNameInfo.hasAdditionalInfo);
     assert.strictEqual(component.users[1].userNameInfo.fullName, '1 guy M. Mc1son');
     assert.strictEqual(component.users[1].campusId.text, '1abc');

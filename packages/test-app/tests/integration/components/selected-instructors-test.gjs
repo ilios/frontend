@@ -81,9 +81,9 @@ module('Integration | Component | selected-instructors', function (hooks) {
     assert.strictEqual(component.heading, 'Selected Instructors:');
     assert.strictEqual(component.instructors.length, 2);
     assert.strictEqual(component.instructors[0].userNameInfo.fullName, 'Jane A. Doe');
-    assert.notOk(component.instructors[0].isDisabled);
+    assert.notOk(component.instructors[0].userStatus.accountIsDisabled);
     assert.strictEqual(component.instructors[1].userNameInfo.fullName, 'Joe M. Doe');
-    assert.ok(component.instructors[1].isDisabled);
+    assert.ok(component.instructors[1].userStatus.accountIsDisabled);
     await component.instructors[1].remove();
   });
 });
