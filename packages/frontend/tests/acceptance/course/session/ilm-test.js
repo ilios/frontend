@@ -599,6 +599,34 @@ module('Acceptance | Session - Independent Learning', function (hooks) {
     assert.ok(page.details.overview.ilm.ilmDueDateAndTime.isHidden);
   });
 
+  test('ilm toggle disabled if ilm-only subcomponents have values', async function (assert) {
+    this.user.update({ administeredSchools: [this.school] });
+    await page.visit({
+      courseId: 1,
+      sessionId: 1,
+      sessionLearnergroupDetails: true,
+    });
+    assert.strictEqual(currentRouteName(), 'session.index');
+
+    // due to hooks.beforeEach(), we have instructors and instructorGroups, so ilm toggle is disabled until we remove them
+    assert.ok(page.details.instructors.selectedInstructors.instructors.length);
+    assert.ok(page.details.instructors.selectedInstructorGroups.instructorGroups.length);
+    assert.ok(page.details.overview.ilm.toggleIlm.yesNoToggle.disabled);
+
+    await page.details.instructors.manage();
+    const { manager } = page.details.instructors;
+
+    while (manager.selectedInstructors.instructors.length) {
+      await manager.selectedInstructors.instructors[0].remove();
+    }
+    while (manager.selectedInstructorGroups.instructorGroups.length) {
+      await manager.selectedInstructorGroups.instructorGroups[0].remove();
+    }
+    await page.details.instructors.save();
+
+    assert.notOk(page.details.overview.ilm.toggleIlm.yesNoToggle.disabled);
+  });
+
   test('ilm-only subcomponents disappear/reappear if ilm gets toggled off/on', async function (assert) {
     this.user.update({ administeredSchools: [this.school] });
     await page.visit({
@@ -608,8 +636,26 @@ module('Acceptance | Session - Independent Learning', function (hooks) {
     });
     assert.strictEqual(currentRouteName(), 'session.index');
 
-    assert.ok(page.details.learnersAreVisible);
-    assert.ok(page.details.instructorsAreVisible);
+    // due to hooks.beforeEach(), we have instructors and instructorGroups, so ilm toggle is disabled until we remove them
+    assert.ok(page.details.instructors.selectedInstructors.instructors.length);
+    assert.ok(page.details.instructors.selectedInstructorGroups.instructorGroups.length);
+    assert.ok(page.details.overview.ilm.toggleIlm.yesNoToggle.disabled);
+
+    await page.details.instructors.manage();
+    const { manager } = page.details.instructors;
+
+    while (manager.selectedInstructors.instructors.length) {
+      await manager.selectedInstructors.instructors[0].remove();
+      assert.ok(page.details.overview.ilm.toggleIlm.yesNoToggle.disabled);
+    }
+    while (manager.selectedInstructorGroups.instructorGroups.length) {
+      await manager.selectedInstructorGroups.instructorGroups[0].remove();
+      assert.ok(page.details.overview.ilm.toggleIlm.yesNoToggle.disabled);
+    }
+
+    await page.details.instructors.save();
+
+    assert.notOk(page.details.overview.ilm.toggleIlm.yesNoToggle.disabled);
 
     await page.details.overview.ilm.toggleIlm.yesNoToggle.click();
 
