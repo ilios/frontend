@@ -21,10 +21,6 @@
   .detail-content {
     .assigned-instructors {
       @include m.ilios-tag-list;
-
-      .disabled-user {
-        color: c.$davysGrey;
-      }
     }
   }
 }

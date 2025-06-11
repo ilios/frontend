@@ -1,11 +1,6 @@
-@use "../colors" as c;
 @use "../mixins" as m;
 
 .selected-learners {
-  .disabled-user {
-    color: c.$davysGrey;
-  }
-
   .learners-list {
     @include m.ilios-removable-list;
   }

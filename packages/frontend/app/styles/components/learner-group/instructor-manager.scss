@@ -21,9 +21,6 @@
     .removable-instructors {
       @include m.ilios-removable-list;
       margin-bottom: 1rem;
-      .disabled-user {
-        color: c.$davysGrey;
-      }
     }
 
     .removable-instructor-group {

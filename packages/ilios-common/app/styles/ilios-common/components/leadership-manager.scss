@@ -8,10 +8,6 @@
 
     ul {
       @include m.ilios-list-reset;
-
-      .disabled-user {
-        color: c.$davysGrey;
-      }
     }
   }
 
