@@ -101,7 +101,7 @@ export default class UserList extends Component {
                     <FaIcon
                       @icon="user-xmark"
                       @title={{t "general.disabled"}}
-                      class="error"
+                      class="disabled-user"
                       data-test-disabled-user-icon
                     />
                   {{/unless}}

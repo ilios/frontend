@@ -103,7 +103,7 @@ export default class LearnerGroupUserMembersComponent extends Component {
                           <FaIcon
                             @icon="user-xmark"
                             @title={{t "general.disabled"}}
-                            class="error"
+                            class="disabled-user"
                             data-test-is-disabled
                           />
                         {{/unless}}

@@ -138,7 +138,11 @@ export default class LeadershipSearchComponent extends Component {
                   <span class="name">
                     {{result.user.fullName}}
                     {{#unless result.user.enabled}}
-                      <FaIcon @icon="user-xmark" @title={{t "general.disabled"}} class="error" />
+                      <FaIcon
+                        @icon="user-xmark"
+                        @title={{t "general.disabled"}}
+                        class="disabled-user"
+                      />
                     {{/unless}}
                   </span>
                   <span class="email">
@@ -154,7 +158,11 @@ export default class LeadershipSearchComponent extends Component {
                     <span class="name">
                       {{result.user.fullName}}
                       {{#unless result.user.enabled}}
-                        <FaIcon @icon="user-xmark" @title={{t "general.disabled"}} class="error" />
+                        <FaIcon
+                          @icon="user-xmark"
+                          @title={{t "general.disabled"}}
+                          class="disabled-user"
+                        />
                       {{/unless}}
                     </span>
                     <span class="email">

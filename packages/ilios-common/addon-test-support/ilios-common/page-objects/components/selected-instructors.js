@@ -5,6 +5,7 @@ const definition = {
   scope: '[data-test-selected-instructors]',
   heading: text('[data-test-heading]'),
   instructors: collection('li', {
+    isDisabled: isPresent('.disabled-user'),
     remove: clickable('button'),
     isRemovable: isPresent('button'),
     userNameInfo,

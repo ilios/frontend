@@ -15,12 +15,22 @@ import FaIcon from 'ilios-common/components/fa-icon';
           {{#if @isManaging}}
             <li>
               <button type="button" {{on "click" (fn @remove user)}}>
+                {{#unless user.enabled}}
+                  <FaIcon
+                    @icon="user-xmark"
+                    @title={{t "general.disabled"}}
+                    class="disabled-user"
+                  />
+                {{/unless}}
                 <UserNameInfo @user={{user}} />
                 <FaIcon @icon="xmark" class="remove" />
               </button>
             </li>
           {{else}}
             <li>
+              {{#unless user.enabled}}
+                <FaIcon @icon="user-xmark" @title={{t "general.disabled"}} class="disabled-user" />
+              {{/unless}}
               <UserNameInfo @user={{user}} />
             </li>
           {{/if}}

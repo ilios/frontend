@@ -11,7 +11,10 @@ module('Integration | Component | instructor-group/users', function (hooks) {
   setupMirage(hooks);
 
   test('it renders', async function (assert) {
-    const users = this.server.createList('user', 3);
+    const users = [
+      ...this.server.createList('user', 2),
+      this.server.create('user', { enabled: false }),
+    ];
     const instructorGroup = this.server.create('instructor-group', { users });
     const instructorGroupModel = await this.owner
       .lookup('service:store')
@@ -28,8 +31,11 @@ module('Integration | Component | instructor-group/users', function (hooks) {
     assert.notOk(component.manager.isVisible);
     assert.strictEqual(component.users.length, 3);
     assert.strictEqual(component.users[0].userNameInfo.fullName, '0 guy M. Mc0son');
+    assert.notOk(component.users[0].isDisabled);
     assert.strictEqual(component.users[1].userNameInfo.fullName, '1 guy M. Mc1son');
+    assert.notOk(component.users[1].isDisabled);
     assert.strictEqual(component.users[2].userNameInfo.fullName, '2 guy M. Mc2son');
+    assert.ok(component.users[2].isDisabled);
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
   });
