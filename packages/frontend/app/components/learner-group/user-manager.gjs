@@ -284,14 +284,6 @@ export default class LearnerGroupUserManagerComponent extends Component {
                           checked={{includes user.content this.selectedGroupUsers}}
                           {{on "click" (fn this.toggleGroupUserSelection user.content)}}
                         />
-                        {{#unless user.enabled}}
-                          <FaIcon
-                            @icon="user-xmark"
-                            @title={{t "general.disabled"}}
-                            class="disabled-user"
-                            data-test-is-disabled
-                          />
-                        {{/unless}}
                       </td>
                       <td class="text-left" colspan="4">
                         <button
@@ -303,6 +295,14 @@ export default class LearnerGroupUserManagerComponent extends Component {
                             id="selected-username-{{index}}-{{templateId}}"
                             @user={{user}}
                           />
+                          {{#unless user.enabled}}
+                            <FaIcon
+                              @icon="user-xmark"
+                              @title={{t "general.disabled"}}
+                              class="disabled-user"
+                              data-test-is-disabled
+                            />
+                          {{/unless}}
                         </button>
                       </td>
                       <td class="text-left" colspan="2">
@@ -438,6 +438,14 @@ export default class LearnerGroupUserManagerComponent extends Component {
                             id="cohort-username-{{index}}-{{templateId}}"
                             @user={{user}}
                           />
+                          {{#unless user.enabled}}
+                            <FaIcon
+                              @icon="user-xmark"
+                              @title={{t "general.disabled"}}
+                              class="disabled-user"
+                              data-test-is-disabled
+                            />
+                          {{/unless}}
                         </button>
                       </td>
                       <td class="text-left" colspan="2">

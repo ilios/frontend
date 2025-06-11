@@ -171,14 +171,6 @@ export default class LearnerGroupCohortUserManagerComponent extends Component {
                           {{on "click" (fn this.toggleUserSelection user)}}
                         />
                       {{/if}}
-                      {{#unless user.enabled}}
-                        <FaIcon
-                          @icon="user-xmark"
-                          @title={{t "general.disabled"}}
-                          class="disabled-user"
-                          data-test-is-disabled
-                        />
-                      {{/unless}}
                     </td>
                     <td class="text-left" colspan="4">
                       {{#if @canUpdate}}
@@ -188,6 +180,14 @@ export default class LearnerGroupCohortUserManagerComponent extends Component {
                           {{on "click" (fn this.toggleUserSelection user)}}
                         >
                           <UserNameInfo id="username-{{index}}-{{templateId}}" @user={{user}} />
+                          {{#unless user.enabled}}
+                            <FaIcon
+                              @icon="user-xmark"
+                              @title={{t "general.disabled"}}
+                              class="disabled-user"
+                              data-test-is-disabled
+                            />
+                          {{/unless}}
                         </button>
                       {{else}}
                         <UserNameInfo id="username-{{index}}-{{templateId}}" @user={{user}} />

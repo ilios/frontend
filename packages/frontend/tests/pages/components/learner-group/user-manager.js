@@ -52,7 +52,7 @@ const definition = {
       linkTitle: attribute('title', 'a'),
       linkAriaLabel: attribute('aria-label', 'a'),
     },
-    isDisabled: isPresent('td:nth-of-type(1) [data-test-is-disabled]'),
+    isDisabled: isPresent('td:nth-of-type(2) [data-test-is-disabled]'),
     remove: clickable('[data-test-remove-user]'),
     canBeRemoved: isPresent('[data-test-remove-user]'),
   }),
