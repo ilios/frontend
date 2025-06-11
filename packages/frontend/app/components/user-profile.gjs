@@ -29,7 +29,7 @@ export default class UserProfileComponent extends Component {
       </div>
       <h1 class="user-display-name">
         {{#unless @user.enabled}}
-          <FaIcon @icon="ban" class="no" @title={{t "general.disabled"}} />
+          <FaIcon @icon="user-xmark" class="disabled-user" @title={{t "general.disabled"}} />
         {{/unless}}
         <UserNameInfo @user={{@user}} />
       </h1>
