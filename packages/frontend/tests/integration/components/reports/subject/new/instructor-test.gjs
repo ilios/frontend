@@ -10,11 +10,13 @@ module('Integration | Component | reports/subject/new/instructor', function (hoo
   setupMirage(hooks);
 
   hooks.beforeEach(function () {
-    this.server.createList('user', 5, { school: this.server.create('school') });
+    const school = this.server.create('school');
+    this.server.createList('user', 4, { school });
+    this.server.create('user', { school, enabled: false });
   });
 
   test('it works', async function (assert) {
-    assert.expect(5);
+    assert.expect(6);
     this.set('currentId', null);
     this.set('changeId', (userId) => {
       assert.strictEqual(userId, '3');
@@ -26,9 +28,35 @@ module('Integration | Component | reports/subject/new/instructor', function (hoo
     assert.notOk(component.hasSelectedInstructor);
     await component.userSearch.searchBox.set('guy');
     assert.strictEqual(component.userSearch.results.items.length, 5);
+    assert.strictEqual(
+      component.userSearch.results.items[2].text,
+      '2 guy M. Mc2son user@example.edu',
+    );
     await component.userSearch.results.items[2].click();
     assert.ok(component.hasSelectedInstructor);
     assert.strictEqual(component.selectedInstructor, '2 guy M. Mc2son');
+  });
+
+  test('it works with inactive user', async function (assert) {
+    assert.expect(6);
+    this.set('currentId', null);
+    this.set('changeId', (userId) => {
+      assert.strictEqual(userId, '5');
+      this.set('currentId', userId);
+    });
+    await render(
+      <template><Instructor @currentId={{this.currentId}} @changeId={{this.changeId}} /></template>,
+    );
+    assert.notOk(component.hasSelectedInstructor);
+    await component.userSearch.searchBox.set('guy');
+    assert.strictEqual(component.userSearch.results.items.length, 5);
+    assert.strictEqual(
+      component.userSearch.results.items[4].text,
+      '4 guy M. Mc4son disabled user@example.edu',
+    );
+    await component.userSearch.results.items[4].click();
+    assert.ok(component.hasSelectedInstructor);
+    assert.strictEqual(component.selectedInstructor, '4 guy M. Mc4son');
   });
 
   test('removing instructor clears value', async function (assert) {

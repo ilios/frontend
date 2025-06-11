@@ -153,6 +153,7 @@ export default class UserSearch extends Component {
               <UserSearchResultUser
                 @user={{result.user}}
                 @addUser={{this.addUser}}
+                @canAddDisabledUser={{@canAddDisabledUser}}
                 @currentlyActiveUsers={{this.currentlyActiveUsers}}
               />
             {{else}}

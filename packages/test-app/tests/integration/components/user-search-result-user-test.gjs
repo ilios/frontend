@@ -40,13 +40,13 @@ module('Integration | Component | user-search-result-user', function (hooks) {
     assert.notOk(component.isActive);
   });
 
-  test('click fires action', async function (assert) {
+  test('add active user', async function (assert) {
     assert.expect(3);
     const user = this.server.create('user');
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     this.set('user', userModel);
-    this.set('add', (add) => {
-      assert.strictEqual(add, userModel);
+    this.set('add', (user) => {
+      assert.strictEqual(user, userModel);
     });
     await render(
       <template>
@@ -59,6 +59,48 @@ module('Integration | Component | user-search-result-user', function (hooks) {
     );
     assert.strictEqual(component.text, '0 guy M. Mc0son user@example.edu');
     assert.ok(component.isActive);
+    await component.click();
+  });
+
+  test('cannot add inactive user by default', async function (assert) {
+    const user = this.server.create('user', { enabled: false });
+    const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
+    this.set('user', userModel);
+    await render(
+      <template>
+        <UserSearchResultUser
+          @user={{this.user}}
+          @addUser={{this.add}}
+          @currentlyActiveUsers={{(array)}}
+        />
+      </template>,
+    );
+    assert.strictEqual(component.text, '0 guy M. Mc0son disabled user@example.edu');
+    assert.notOk(component.isActive);
+    assert.notOk(component.canAdd);
+  });
+
+  test('add inactive user if allowed', async function (assert) {
+    assert.expect(4);
+    const user = this.server.create('user', { enabled: false });
+    const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
+    this.set('user', userModel);
+    this.set('add', (user) => {
+      assert.strictEqual(user, userModel);
+    });
+    await render(
+      <template>
+        <UserSearchResultUser
+          @user={{this.user}}
+          @addUser={{this.add}}
+          @currentlyActiveUsers={{(array)}}
+          @canAddDisabledUser={{true}}
+        />
+      </template>,
+    );
+    assert.strictEqual(component.text, '0 guy M. Mc0son disabled user@example.edu');
+    assert.ok(component.isActive);
+    assert.ok(component.canAdd);
     await component.click();
   });
 });
