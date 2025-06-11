@@ -29,6 +29,10 @@
       @include m.main-list-box-table;
       max-height: 360px;
       overflow: auto;
+
+      th:nth-child(1) {
+        width: 1.5rem;
+      }
     }
   }
 

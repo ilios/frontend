@@ -39,7 +39,7 @@ const definition = {
       isClickable: isPresent('button'),
       click: clickable('button'),
     },
-    isDisabled: isPresent('td:nth-of-type(1) [data-test-is-disabled]'),
+    isDisabled: isPresent('td:nth-of-type(2) [data-test-is-disabled]'),
     add: clickable('[data-test-add-user]'),
     canBeAdded: isPresent('[data-test-add-user]'),
   }),

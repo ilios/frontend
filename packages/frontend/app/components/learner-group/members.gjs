@@ -77,8 +77,6 @@ export default class LearnerGroupUserMembersComponent extends Component {
               <table>
                 <thead>
                   <tr>
-                    <th class="text-left" colspan="1">
-                    </th>
                     <SortableTh
                       @colspan={{4}}
                       @onClick={{fn this.setSortBy "fullName"}}
@@ -98,7 +96,11 @@ export default class LearnerGroupUserMembersComponent extends Component {
                 <tbody>
                   {{#each (sortBy @sortBy this.filteredUsers) as |user index|}}
                     <tr class={{unless user.enabled "disabled-user-account" ""}}>
-                      <td class="text-left" colspan="1">
+                      <td class="text-left" colspan="4">
+                        <UserNameInfo
+                          id="selected-username-{{index}}-{{templateId}}"
+                          @user={{user}}
+                        />
                         {{#unless user.enabled}}
                           <FaIcon
                             @icon="user-xmark"
@@ -107,12 +109,6 @@ export default class LearnerGroupUserMembersComponent extends Component {
                             data-test-is-disabled
                           />
                         {{/unless}}
-                      </td>
-                      <td class="text-left" colspan="4">
-                        <UserNameInfo
-                          id="selected-username-{{index}}-{{templateId}}"
-                          @user={{user}}
-                        />
                       </td>
                       <td class="text-left" colspan="2">
                         {{user.campusId}}
