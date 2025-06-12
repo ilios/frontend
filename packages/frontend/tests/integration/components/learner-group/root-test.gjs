@@ -54,6 +54,7 @@ module('Integration | Component | learner-group/root', function (hooks) {
     const subGroup = this.server.create('learner-group', {
       title: 'test sub-group',
       cohort,
+      users: [user3, user4],
     });
 
     const course = this.server.create('course');
