@@ -673,7 +673,7 @@ export default class LearnerGroupRootComponent extends Component {
                 {{t "general.uploadGroupAssignments"}}
               {{else}}
                 {{t "general.members"}}
-                ({{this.usersForUserManager.length}})
+                ({{this.usersForMembersList.length}})
               {{/if}}
             </div>
             <span class="actions" data-test-buttons>
