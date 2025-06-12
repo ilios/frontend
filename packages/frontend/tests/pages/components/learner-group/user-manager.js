@@ -3,7 +3,6 @@ import {
   clickable,
   collection,
   create,
-  fillable,
   isPresent,
   property,
   text,
@@ -13,7 +12,6 @@ import userStatus from 'ilios-common/page-objects/components/user-status';
 
 const definition = {
   scope: '[data-test-learner-group-user-manager]',
-  filter: fillable('[data-test-filter]'),
   groupMembers: text('[data-test-group-members]'),
   allOtherMembers: text('[data-test-all-other-members]'),
   selectAllUsersInGroup: {

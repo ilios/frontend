@@ -1004,4 +1004,84 @@ module('Integration | Component | learner-group/root', function (hooks) {
     await component.instructorManager.save.click();
     assert.strictEqual(component.instructorsList.assignedInstructors.length, 1);
   });
+
+  test('filter applies', async function (assert) {
+    const learnerGroup = this.server.create('learner-group', { id: 1 });
+    const subgroup = this.server.create('learner-group', { id: 2, parent: learnerGroup });
+    this.server.create('user', {
+      firstName: 'Jasper',
+      lastName: 'Dog',
+      email: 'jasper.dog@example.edu',
+      learnerGroups: [learnerGroup],
+    });
+    this.server.create('user', {
+      firstName: 'Jayden',
+      lastName: 'Pup',
+      displayName: 'Just Jayden',
+      email: 'jayden@example.edu',
+      learnerGroups: [learnerGroup],
+    });
+    this.server.create('user', {
+      firstName: 'Jackson',
+      lastName: 'Doggy',
+      email: 'jackson.doggy@example.edu',
+      learnerGroups: [subgroup],
+    });
+    this.server.create('user', {
+      firstName: 'Beetlejuice',
+      lastName: 'Beetlejuice',
+      displayName: 'Beet',
+      email: 'beet@example.edu',
+      learnerGroups: [subgroup],
+    });
+    const learnerGroupModel = await this.owner
+      .lookup('service:store')
+      .findRecord('learner-group', learnerGroup.id);
+
+    this.set('learnerGroup', learnerGroupModel);
+    await render(
+      <template>
+        <Root
+          @canUpdate={{true}}
+          @setIsEditing={{(noop)}}
+          @setSortUsersBy={{(noop)}}
+          @setIsBulkAssigning={{(noop)}}
+          @sortUsersBy="fullName"
+          @learnerGroup={{this.learnerGroup}}
+          @isEditing={{true}}
+          @isBulkAssigning={{false}}
+        />
+      </template>,
+    );
+    assert.strictEqual(component.userManager.usersInCurrentGroup.length, 2);
+    assert.strictEqual(
+      component.userManager.usersInCurrentGroup[0].name.userNameInfo.fullName,
+      'Jasper M. Dog',
+    );
+    assert.strictEqual(
+      component.userManager.usersInCurrentGroup[1].name.userNameInfo.fullName,
+      'Just Jayden',
+    );
+    assert.strictEqual(component.userManager.usersNotInCurrentGroup.length, 2);
+    assert.strictEqual(
+      component.userManager.usersNotInCurrentGroup[0].name.userNameInfo.fullName,
+      'Beet',
+    );
+    assert.strictEqual(
+      component.userManager.usersNotInCurrentGroup[1].name.userNameInfo.fullName,
+      'Jackson M. Doggy',
+    );
+
+    await component.actions.filter('dog');
+    assert.strictEqual(component.userManager.usersInCurrentGroup.length, 1);
+    assert.strictEqual(
+      component.userManager.usersInCurrentGroup[0].name.userNameInfo.fullName,
+      'Jasper M. Dog',
+    );
+    assert.strictEqual(component.userManager.usersNotInCurrentGroup.length, 1);
+    assert.strictEqual(
+      component.userManager.usersNotInCurrentGroup[0].name.userNameInfo.fullName,
+      'Jackson M. Doggy',
+    );
+  });
 });

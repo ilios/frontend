@@ -6,8 +6,6 @@ import { mapBy } from 'ilios-common/utils/array-helpers';
 import { uniqueId, fn, hash } from '@ember/helper';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
-import pick from 'ilios-common/helpers/pick';
-import set from 'ember-set-helper/helpers/set';
 import SortableTh from 'ilios-common/components/sortable-th';
 import or from 'ember-truth-helpers/helpers/or';
 import eq from 'ember-truth-helpers/helpers/eq';
@@ -22,7 +20,6 @@ import perform from 'ember-concurrency/helpers/perform';
 import gt from 'ember-truth-helpers/helpers/gt';
 
 export default class LearnerGroupUserManagerComponent extends Component {
-  @tracked filter = '';
   @tracked selectedGroupUsers = [];
   @tracked selectedNonGroupUsers = [];
   @tracked usersBeingAddedToGroup = [];
@@ -34,6 +31,10 @@ export default class LearnerGroupUserManagerComponent extends Component {
 
   get selectableUsers() {
     return mapBy(this.args.users, 'content');
+  }
+
+  get filter() {
+    return this.args.filter ?? '';
   }
 
   get filteredUsers() {
@@ -216,16 +217,6 @@ export default class LearnerGroupUserManagerComponent extends Component {
     {{#let (uniqueId) as |templateId|}}
       <div class="learner-group-user-manager" data-test-learner-group-user-manager ...attributes>
         {{#if @users.length}}
-          <div class="actions">
-            <input
-              type="text"
-              value={{this.filter}}
-              placeholder={{t "general.filterByNameOrEmail"}}
-              aria-label={{t "general.filterByNameOrEmail"}}
-              {{on "input" (pick "target.value" (set this "filter"))}}
-              data-test-filter
-            />
-          </div>
           <div class="learner-group-user-manager-content">
             <div class="list">
               <div class="title" data-test-group-members>

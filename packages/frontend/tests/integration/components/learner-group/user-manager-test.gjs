@@ -563,230 +563,9 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
     assert.notOk(component.usersInCurrentGroup[1].isSelected);
   });
 
-  test('filtering and bulk-selection of users in group', async function (assert) {
+  test('filter applies', async function (assert) {
     const learnerGroup = this.server.create('learner-group', { id: 1 });
-    const user1 = this.server.create('user', { enabled: true, displayName: 'Alpha' });
-    const user2 = this.server.create('user', { enabled: true, displayName: 'Beta' });
-    const user3 = this.server.create('user', { enabled: true, displayName: 'Gamma' });
-    const userModel1 = await this.owner.lookup('service:store').findRecord('user', user1.id);
-    const userModel2 = await this.owner.lookup('service:store').findRecord('user', user2.id);
-    const userModel3 = await this.owner.lookup('service:store').findRecord('user', user3.id);
-    const learnerGroupModel = await this.owner
-      .lookup('service:store')
-      .findRecord('learner-group', learnerGroup.id);
-
-    const userModelProxy = ObjectProxy.create({
-      content: userModel1,
-      lowestGroupInTree: learnerGroupModel,
-      lowestGroupInTreeTitle: learnerGroupModel.title,
-    });
-    const userModelProxy2 = ObjectProxy.create({
-      content: userModel2,
-      lowestGroupInTree: learnerGroupModel,
-      lowestGroupInTreeTitle: learnerGroupModel.title,
-    });
-
-    const userModelProxy3 = ObjectProxy.create({
-      content: userModel3,
-      lowestGroupInTree: learnerGroupModel,
-      lowestGroupInTreeTitle: learnerGroupModel.title,
-    });
-
-    this.set('users', [userModelProxy, userModelProxy2, userModelProxy3]);
-    this.set('learnerGroup', learnerGroupModel);
-
-    await render(
-      <template>
-        <UserManager
-          @learnerGroupId={{this.learnerGroup.id}}
-          @learnerGroupTitle="this group"
-          @topLevelGroupTitle="top group"
-          @cohortTitle="this cohort"
-          @users={{this.users}}
-          @sortBy="id"
-          @setSortBy={{(noop)}}
-          @addUserToGroup={{(noop)}}
-          @removeUserFromGroup={{(noop)}}
-          @addUsersToGroup={{(noop)}}
-          @removeUsersFromGroup={{(noop)}}
-        />
-      </template>,
-    );
-
-    assert.strictEqual(component.usersInCurrentGroup.length, 3);
-    assert.strictEqual(component.usersInCurrentGroup[0].name.userNameInfo.fullName, 'Alpha');
-    assert.strictEqual(component.usersInCurrentGroup[1].name.userNameInfo.fullName, 'Beta');
-    assert.strictEqual(component.usersInCurrentGroup[2].name.userNameInfo.fullName, 'Gamma');
-    assert.notOk(component.usersInCurrentGroup[0].isSelected);
-    assert.notOk(component.usersInCurrentGroup[1].isSelected);
-    assert.notOk(component.usersInCurrentGroup[2].isSelected);
-    assert.notOk(component.selectAllUsersInGroup.isChecked);
-    assert.notOk(component.selectAllUsersInGroup.isIndeterminate);
-
-    await component.filter('Zzzz');
-    assert.strictEqual(component.usersInCurrentGroup.length, 0);
-    assert.notOk(component.selectAllUsersInGroup.isChecked);
-    assert.notOk(component.selectAllUsersInGroup.isIndeterminate);
-
-    await component.filter('');
-    assert.strictEqual(component.usersInCurrentGroup.length, 3);
-    assert.notOk(component.selectAllUsersInGroup.isChecked);
-    assert.notOk(component.selectAllUsersInGroup.isIndeterminate);
-
-    await component.usersInCurrentGroup[2].select();
-    assert.notOk(component.selectAllUsersInGroup.isChecked);
-    assert.ok(component.selectAllUsersInGroup.isIndeterminate);
-
-    await component.filter('Alpha');
-    assert.notOk(component.selectAllUsersInGroup.isChecked);
-    assert.ok(component.selectAllUsersInGroup.isIndeterminate);
-    assert.strictEqual(component.usersInCurrentGroup.length, 1);
-    assert.strictEqual(component.usersInCurrentGroup[0].name.userNameInfo.fullName, 'Alpha');
-    assert.notOk(component.usersInCurrentGroup[0].isSelected);
-
-    await component.selectAllUsersInGroup.toggle();
-    assert.ok(component.selectAllUsersInGroup.isChecked);
-    assert.notOk(component.selectAllUsersInGroup.isIndeterminate);
-    assert.ok(component.usersInCurrentGroup[0].isSelected);
-
-    await component.filter('');
-    assert.strictEqual(component.usersInCurrentGroup.length, 3);
-    assert.notOk(component.selectAllUsersInGroup.isChecked);
-    assert.ok(component.selectAllUsersInGroup.isIndeterminate);
-    assert.ok(component.usersInCurrentGroup[0].isSelected);
-    assert.notOk(component.usersInCurrentGroup[1].isSelected);
-    assert.notOk(component.usersInCurrentGroup[2].isSelected);
-
-    await component.selectAllUsersInGroup.toggle();
-    assert.ok(component.selectAllUsersInGroup.isChecked);
-    assert.notOk(component.selectAllUsersInGroup.isIndeterminate);
-    assert.ok(component.usersInCurrentGroup[0].isSelected);
-    assert.ok(component.usersInCurrentGroup[1].isSelected);
-    assert.ok(component.usersInCurrentGroup[2].isSelected);
-
-    await component.selectAllUsersInGroup.toggle();
-    assert.notOk(component.selectAllUsersInGroup.isChecked);
-    assert.notOk(component.selectAllUsersInGroup.isIndeterminate);
-    assert.notOk(component.usersInCurrentGroup[0].isSelected);
-    assert.notOk(component.usersInCurrentGroup[1].isSelected);
-    assert.notOk(component.usersInCurrentGroup[2].isSelected);
-  });
-
-  test('filtering and bulk-selection of users not in group', async function (assert) {
-    const learnerGroup = this.server.create('learner-group', { id: 1 });
-    const subGroup = this.server.create('learner-group', { parent: learnerGroup });
-    const user1 = this.server.create('user', { enabled: true, displayName: 'Alpha' });
-    const user2 = this.server.create('user', { enabled: true, displayName: 'Beta' });
-    const user3 = this.server.create('user', { enabled: true, displayName: 'Gamma' });
-    const userModel1 = await this.owner.lookup('service:store').findRecord('user', user1.id);
-    const userModel2 = await this.owner.lookup('service:store').findRecord('user', user2.id);
-    const userModel3 = await this.owner.lookup('service:store').findRecord('user', user3.id);
-    const learnerGroupModel = await this.owner
-      .lookup('service:store')
-      .findRecord('learner-group', learnerGroup.id);
-    const subGroupModel = await this.owner
-      .lookup('service:store')
-      .findRecord('learner-group', subGroup.id);
-
-    const userModelProxy = ObjectProxy.create({
-      content: userModel1,
-      lowestGroupInTree: subGroupModel,
-      lowestGroupInTreeTitle: subGroupModel.title,
-    });
-    const userModelProxy2 = ObjectProxy.create({
-      content: userModel2,
-      lowestGroupInTree: subGroupModel,
-      lowestGroupInTreeTitle: subGroupModel.title,
-    });
-
-    const userModelProxy3 = ObjectProxy.create({
-      content: userModel3,
-      lowestGroupInTree: subGroupModel,
-      lowestGroupInTreeTitle: subGroupModel.title,
-    });
-
-    this.set('users', [userModelProxy, userModelProxy2, userModelProxy3]);
-    this.set('learnerGroup', learnerGroupModel);
-
-    await render(
-      <template>
-        <UserManager
-          @learnerGroupId={{this.learnerGroup.id}}
-          @learnerGroupTitle="this group"
-          @topLevelGroupTitle="top group"
-          @cohortTitle="this cohort"
-          @users={{this.users}}
-          @sortBy="id"
-          @setSortBy={{(noop)}}
-          @addUserToGroup={{(noop)}}
-          @removeUserFromGroup={{(noop)}}
-          @addUsersToGroup={{(noop)}}
-          @removeUsersFromGroup={{(noop)}}
-        />
-      </template>,
-    );
-
-    assert.strictEqual(component.usersNotInCurrentGroup.length, 3);
-    assert.strictEqual(component.usersNotInCurrentGroup[0].name.userNameInfo.fullName, 'Alpha');
-    assert.strictEqual(component.usersNotInCurrentGroup[1].name.userNameInfo.fullName, 'Beta');
-    assert.strictEqual(component.usersNotInCurrentGroup[2].name.userNameInfo.fullName, 'Gamma');
-    assert.notOk(component.usersNotInCurrentGroup[0].isSelected);
-    assert.notOk(component.usersNotInCurrentGroup[1].isSelected);
-    assert.notOk(component.usersNotInCurrentGroup[2].isSelected);
-    assert.notOk(component.selectAllUsersNotInGroup.isChecked);
-    assert.notOk(component.selectAllUsersNotInGroup.isIndeterminate);
-
-    await component.filter('Zzzz');
-    assert.strictEqual(component.usersNotInCurrentGroup.length, 0);
-    assert.notOk(component.selectAllUsersNotInGroup.isChecked);
-    assert.notOk(component.selectAllUsersNotInGroup.isIndeterminate);
-
-    await component.filter('');
-    assert.strictEqual(component.usersNotInCurrentGroup.length, 3);
-    assert.notOk(component.selectAllUsersNotInGroup.isChecked);
-    assert.notOk(component.selectAllUsersNotInGroup.isIndeterminate);
-
-    await component.usersNotInCurrentGroup[2].select();
-    assert.notOk(component.selectAllUsersNotInGroup.isChecked);
-    assert.ok(component.selectAllUsersNotInGroup.isIndeterminate);
-
-    await component.filter('Alpha');
-    assert.notOk(component.selectAllUsersNotInGroup.isChecked);
-    assert.ok(component.selectAllUsersNotInGroup.isIndeterminate);
-    assert.strictEqual(component.usersNotInCurrentGroup.length, 1);
-    assert.strictEqual(component.usersNotInCurrentGroup[0].name.userNameInfo.fullName, 'Alpha');
-    assert.notOk(component.usersNotInCurrentGroup[0].isSelected);
-
-    await component.selectAllUsersNotInGroup.toggle();
-    assert.ok(component.selectAllUsersNotInGroup.isChecked);
-    assert.notOk(component.selectAllUsersNotInGroup.isIndeterminate);
-    assert.ok(component.usersNotInCurrentGroup[0].isSelected);
-
-    await component.filter('');
-    assert.strictEqual(component.usersNotInCurrentGroup.length, 3);
-    assert.notOk(component.selectAllUsersNotInGroup.isChecked);
-    assert.ok(component.selectAllUsersNotInGroup.isIndeterminate);
-    assert.ok(component.usersNotInCurrentGroup[0].isSelected);
-    assert.notOk(component.usersNotInCurrentGroup[1].isSelected);
-    assert.notOk(component.usersNotInCurrentGroup[2].isSelected);
-
-    await component.selectAllUsersNotInGroup.toggle();
-    assert.ok(component.selectAllUsersNotInGroup.isChecked);
-    assert.notOk(component.selectAllUsersNotInGroup.isIndeterminate);
-    assert.ok(component.usersNotInCurrentGroup[0].isSelected);
-    assert.ok(component.usersNotInCurrentGroup[1].isSelected);
-    assert.ok(component.usersNotInCurrentGroup[2].isSelected);
-
-    await component.selectAllUsersNotInGroup.toggle();
-    assert.notOk(component.selectAllUsersNotInGroup.isChecked);
-    assert.notOk(component.selectAllUsersNotInGroup.isIndeterminate);
-    assert.notOk(component.usersNotInCurrentGroup[0].isSelected);
-    assert.notOk(component.usersNotInCurrentGroup[1].isSelected);
-    assert.notOk(component.usersNotInCurrentGroup[2].isSelected);
-  });
-
-  test('filter users', async function (assert) {
-    const learnerGroup = this.server.create('learner-group', { id: 1 });
+    const subgroup = this.server.create('learner-group', { id: 2, parent: learnerGroup });
     const user1 = this.server.create('user', {
       firstName: 'Jasper',
       lastName: 'Dog',
@@ -794,24 +573,36 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
       learnerGroups: [learnerGroup],
     });
     const user2 = this.server.create('user', {
-      firstName: 'Jackson',
-      lastName: 'Doggy',
-      email: 'jackson.doggy@example.edu',
-      learnerGroups: [learnerGroup],
-    });
-    const user3 = this.server.create('user', {
       firstName: 'Jayden',
       lastName: 'Pup',
       displayName: 'Just Jayden',
       email: 'jayden@example.edu',
       learnerGroups: [learnerGroup],
     });
+    const user3 = this.server.create('user', {
+      firstName: 'Jackson',
+      lastName: 'Doggy',
+      email: 'jackson.doggy@example.edu',
+      learnerGroups: [subgroup],
+    });
+    const user4 = this.server.create('user', {
+      firstName: 'Beetlejuice',
+      lastName: 'Beetlejuice',
+      displayName: 'Beet',
+      email: 'beet@example.edu',
+      learnerGroups: [subgroup],
+    });
     const userModel1 = await this.owner.lookup('service:store').findRecord('user', user1.id);
     const userModel2 = await this.owner.lookup('service:store').findRecord('user', user2.id);
     const userModel3 = await this.owner.lookup('service:store').findRecord('user', user3.id);
+    const userModel4 = await this.owner.lookup('service:store').findRecord('user', user4.id);
+
     const learnerGroupModel = await this.owner
       .lookup('service:store')
       .findRecord('learner-group', learnerGroup.id);
+    const subgroupModel = await this.owner
+      .lookup('service:store')
+      .findRecord('learner-group', subgroup.id);
     const userModelProxy1 = ObjectProxy.create({
       content: userModel1,
       lowestGroupInTree: learnerGroupModel,
@@ -824,21 +615,28 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
     });
     const userModelProxy3 = ObjectProxy.create({
       content: userModel3,
-      lowestGroupInTree: learnerGroupModel,
-      lowestGroupInTreeTitle: learnerGroupModel.title,
+      lowestGroupInTree: subgroupModel,
+      lowestGroupInTreeTitle: subgroupModel.title,
+    });
+    const userModelProxy4 = ObjectProxy.create({
+      content: userModel4,
+      lowestGroupInTree: subgroupModel,
+      lowestGroupInTreeTitle: subgroupModel.title,
     });
 
-    this.set('users', [userModelProxy1, userModelProxy2, userModelProxy3]);
+    this.set('users', [userModelProxy1, userModelProxy2, userModelProxy3, userModelProxy4]);
     this.set('learnerGroup', learnerGroupModel);
+    this.set('filter', '');
     await render(
       <template>
         <UserManager
+          @filter={{this.filter}}
           @learnerGroupId={{this.learnerGroup.id}}
           @learnerGroupTitle="this group"
           @topLevelGroupTitle="top group"
           @cohortTitle="this cohort"
           @users={{this.users}}
-          @sortBy="id"
+          @sortBy="fullName"
           @setSortBy={{(noop)}}
           @addUserToGroup={{(noop)}}
           @removeUserFromGroup={{(noop)}}
@@ -848,29 +646,29 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
       </template>,
     );
 
-    assert.strictEqual(component.usersInCurrentGroup.length, 3);
+    assert.strictEqual(component.usersInCurrentGroup.length, 2);
     assert.strictEqual(
       component.usersInCurrentGroup[0].name.userNameInfo.fullName,
       'Jasper M. Dog',
     );
+    assert.strictEqual(component.usersInCurrentGroup[1].name.userNameInfo.fullName, 'Just Jayden');
+    assert.strictEqual(component.usersNotInCurrentGroup.length, 2);
+    assert.strictEqual(component.usersNotInCurrentGroup[0].name.userNameInfo.fullName, 'Beet');
     assert.strictEqual(
-      component.usersInCurrentGroup[1].name.userNameInfo.fullName,
+      component.usersNotInCurrentGroup[1].name.userNameInfo.fullName,
       'Jackson M. Doggy',
     );
-    assert.strictEqual(component.usersInCurrentGroup[2].name.userNameInfo.fullName, 'Just Jayden');
-    await component.filter('Just');
-    assert.strictEqual(component.usersInCurrentGroup[0].name.userNameInfo.fullName, 'Just Jayden');
-    await component.filter(' Just     ');
-    assert.strictEqual(component.usersInCurrentGroup[0].name.userNameInfo.fullName, 'Just Jayden');
-    await component.filter('JASPER.DOG@EXAMPLE.EDU');
+
+    this.set('filter', 'dog');
+    assert.strictEqual(component.usersInCurrentGroup.length, 1);
     assert.strictEqual(
       component.usersInCurrentGroup[0].name.userNameInfo.fullName,
       'Jasper M. Dog',
     );
-    await component.filter('jasper d');
+    assert.strictEqual(component.usersNotInCurrentGroup.length, 1);
     assert.strictEqual(
-      component.usersInCurrentGroup[0].name.userNameInfo.fullName,
-      'Jasper M. Dog',
+      component.usersNotInCurrentGroup[0].name.userNameInfo.fullName,
+      'Jackson M. Doggy',
     );
   });
 

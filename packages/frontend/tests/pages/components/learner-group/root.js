@@ -64,6 +64,7 @@ const definition = {
   actions: {
     scope: '[data-test-overview-actions]',
     title: text('[data-test-title]'),
+    filter: fillable('[data-test-filter]'),
     buttons: {
       scope: '[data-test-buttons]',
       close: {
