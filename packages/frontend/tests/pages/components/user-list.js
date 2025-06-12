@@ -1,14 +1,12 @@
-import { clickable, collection, create, hasClass } from 'ember-cli-page-object';
+import { clickable, collection, create } from 'ember-cli-page-object';
 import userNameInfo from 'ilios-common/page-objects/components/user-name-info';
+import userStatus from 'ilios-common/page-objects/components/user-status';
 
 const definition = {
   scope: '[data-test-user-list]',
   users: collection('[data-test-user]', {
-    isDisabled: hasClass('disabled-user-account'),
-    disabledUserIcon: {
-      scope: '[data-test-disabled-user-icon]',
-    },
     viewUserDetails: clickable('[data-test-user-link]'),
+    userStatus,
     userNameInfo,
     campusId: {
       scope: '[data-test-campus-id]',

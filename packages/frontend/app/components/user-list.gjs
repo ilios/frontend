@@ -5,9 +5,9 @@ import { fn } from '@ember/helper';
 import or from 'ember-truth-helpers/helpers/or';
 import eq from 'ember-truth-helpers/helpers/eq';
 import t from 'ember-intl/helpers/t';
-import FaIcon from 'ilios-common/components/fa-icon';
 import { LinkTo } from '@ember/routing';
 import { TrackedAsyncData } from 'ember-async-data';
+import UserStatus from 'ilios-common/components/user-status';
 import UserNameInfo from 'ilios-common/components/user-name-info';
 import SortableTh from 'ilios-common/components/sortable-th';
 import LoadingSpinner from 'ilios-common/components/loading-spinner';
@@ -97,14 +97,7 @@ export default class UserList extends Component {
                 data-test-user
               >
                 <td colspan="1" class="text-left" data-test-user-disabled>
-                  {{#unless user.enabled}}
-                    <FaIcon
-                      @icon="user-xmark"
-                      @title={{t "general.disabled"}}
-                      class="disabled-user"
-                      data-test-disabled-user-icon
-                    />
-                  {{/unless}}
+                  <UserStatus @user={{user}} />
                 </td>
                 <td colspan="3" class="text-left" data-test-full-name>
                   <LinkTo @route="user" @model={{user}} data-test-user-link>

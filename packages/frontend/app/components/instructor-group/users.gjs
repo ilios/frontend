@@ -11,6 +11,7 @@ import set from 'ember-set-helper/helpers/set';
 import InstructorManager from 'frontend/components/instructor-group/instructor-manager';
 import sortBy from 'ilios-common/helpers/sort-by';
 import UserNameInfo from 'ilios-common/components/user-name-info';
+import UserStatus from 'ilios-common/components/user-status';
 
 export default class InstructorGroupUsersComponent extends Component {
   @tracked usersBuffer = [];
@@ -92,13 +93,7 @@ export default class InstructorGroupUsersComponent extends Component {
           <ul class="instructor-group-users-list" data-test-users-list>
             {{#each (sortBy "fullName" this.users) as |user|}}
               <li data-test-user>
-                {{#unless user.enabled}}
-                  <FaIcon
-                    @icon="user-xmark"
-                    @title={{t "general.disabled"}}
-                    class="disabled-user"
-                  />
-                {{/unless}}
+                <UserStatus @user={{user}} />
                 <UserNameInfo @user={{user}} />
               </li>
             {{/each}}

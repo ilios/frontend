@@ -37,11 +37,11 @@ module('Integration | Component | selected-learners', function (hooks) {
     assert.strictEqual(component.heading, 'Selected Learners:');
     assert.strictEqual(component.learners.length, 3);
     assert.strictEqual(component.learners[0].userNameInfo.fullName, 'Clem Chowder');
-    assert.notOk(component.learners[0].isDisabled);
+    assert.notOk(component.learners[0].userStatus.accountIsDisabled);
     assert.strictEqual(component.learners[1].userNameInfo.fullName, 'Jane A. Doe');
-    assert.notOk(component.learners[1].isDisabled);
+    assert.notOk(component.learners[1].userStatus.accountIsDisabled);
     assert.strictEqual(component.learners[2].userNameInfo.fullName, 'Joe M. Doe');
-    assert.ok(component.learners[2].isDisabled);
+    assert.ok(component.learners[2].userStatus.accountIsDisabled);
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
   });

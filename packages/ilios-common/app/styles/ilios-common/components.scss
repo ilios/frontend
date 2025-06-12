@@ -29,7 +29,6 @@
 @forward "components/detail-objectives";
 @forward "components/detail-taxonomies";
 @forward "components/detail-terms-list";
-@forward "components/disabled-user";
 @forward "components/editinplace";
 @forward "components/ellipsis-icon";
 @forward "components/event-not-found";
@@ -105,8 +104,9 @@
 @forward "components/toggle-yesno";
 @forward "components/truncate-text";
 @forward "components/user-list";
-@forward "components/user-search";
 @forward "components/user-material-status";
+@forward "components/user-search";
+@forward "components/user-status";
 @forward "components/wait-saving";
 @forward "components/week-glance";
 @forward "components/weekly-calendar";

@@ -63,11 +63,11 @@ module('Integration | Component | learner-group/members', function (hooks) {
     assert.strictEqual(component.users[0].name.userNameInfo.fullName, 'Jasper M. Dog');
     assert.strictEqual(component.users[0].campusId.text, '1234');
     assert.strictEqual(component.users[0].email.text, 'testemail');
-    assert.notOk(component.users[0].name.isDisabled);
+    assert.notOk(component.users[0].name.userStatus.accountIsDisabled);
     assert.strictEqual(component.users[1].name.userNameInfo.fullName, 'Jackson M. Doggy');
     assert.strictEqual(component.users[1].campusId.text, '123');
     assert.strictEqual(component.users[1].email.text, 'testemail2');
-    assert.ok(component.users[1].name.isDisabled);
+    assert.ok(component.users[1].name.userStatus.accountIsDisabled);
   });
 
   test('filtering', async function (assert) {

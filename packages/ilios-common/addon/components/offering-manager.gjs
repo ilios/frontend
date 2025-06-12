@@ -20,6 +20,7 @@ import reverse from 'ilios-common/helpers/reverse';
 import mapBy from 'ilios-common/helpers/map-by';
 import TruncateText from 'ilios-common/components/truncate-text';
 import OfferingUrlDisplay from 'ilios-common/components/offering-url-display';
+import UserStatus from 'ilios-common/components/user-status';
 import UserNameInfo from 'ilios-common/components/user-name-info';
 import { on } from '@ember/modifier';
 import set0 from 'ember-set-helper/helpers/set';
@@ -188,13 +189,7 @@ export default class OfferingManagerComponent extends Component {
             <ul>
               {{#each @offering.allInstructors as |user|}}
                 <li data-test-instructor>
-                  {{#unless user.enabled}}
-                    <FaIcon
-                      @icon="user-xmark"
-                      @title={{t "general.disabled"}}
-                      class="disabled-user"
-                    />
-                  {{/unless}}
+                  <UserStatus @user={{user}} />
                   <UserNameInfo @user={{user}} />
                 </li>
               {{else}}

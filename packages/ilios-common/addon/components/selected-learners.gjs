@@ -3,6 +3,7 @@ import sortBy from 'ilios-common/helpers/sort-by';
 import { on } from '@ember/modifier';
 import { fn } from '@ember/helper';
 import UserNameInfo from 'ilios-common/components/user-name-info';
+import UserStatus from 'ilios-common/components/user-status';
 import FaIcon from 'ilios-common/components/fa-icon';
 <template>
   <div class="selected-learners" data-test-selected-learners ...attributes>
@@ -15,22 +16,14 @@ import FaIcon from 'ilios-common/components/fa-icon';
           {{#if @isManaging}}
             <li>
               <button type="button" {{on "click" (fn @remove user)}}>
-                {{#unless user.enabled}}
-                  <FaIcon
-                    @icon="user-xmark"
-                    @title={{t "general.disabled"}}
-                    class="disabled-user"
-                  />
-                {{/unless}}
+                <UserStatus @user={{user}} />
                 <UserNameInfo @user={{user}} />
                 <FaIcon @icon="xmark" class="remove" />
               </button>
             </li>
           {{else}}
             <li>
-              {{#unless user.enabled}}
-                <FaIcon @icon="user-xmark" @title={{t "general.disabled"}} class="disabled-user" />
-              {{/unless}}
+              <UserStatus @user={{user}} />
               <UserNameInfo @user={{user}} />
             </li>
           {{/if}}

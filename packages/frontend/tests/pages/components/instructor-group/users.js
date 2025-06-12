@@ -1,6 +1,7 @@
-import { collection, create, isPresent, text } from 'ember-cli-page-object';
+import { collection, create, text } from 'ember-cli-page-object';
 import manager from './instructor-manager';
 import userNameInfo from 'ilios-common/page-objects/components/user-name-info';
+import userStatus from 'ilios-common/page-objects/components/user-status';
 
 const definition = {
   scope: '[data-test-instructor-group-users]',
@@ -16,7 +17,7 @@ const definition = {
   },
   manager,
   users: collection('[data-test-users-list] [data-test-user]', {
-    isDisabled: isPresent('.disabled-user'),
+    userStatus,
     userNameInfo,
   }),
 };

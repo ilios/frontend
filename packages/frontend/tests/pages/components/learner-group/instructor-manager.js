@@ -1,13 +1,6 @@
-import {
-  clickable,
-  collection,
-  create,
-  fillable,
-  hasClass,
-  isPresent,
-  text,
-} from 'ember-cli-page-object';
+import { clickable, collection, create, fillable, hasClass, text } from 'ember-cli-page-object';
 import userNameInfo from 'ilios-common/page-objects/components/user-name-info';
+import userStatus from 'ilios-common/page-objects/components/user-status';
 import membersList from './instructor-group-members-list';
 
 const definition = {
@@ -20,7 +13,7 @@ const definition = {
     scope: '[data-test-save]',
   },
   selectedInstructors: collection('[data-test-selected-instructor]', {
-    isDisabled: isPresent('.disabled-user'),
+    userStatus,
     userNameInfo,
     remove: clickable(),
   }),

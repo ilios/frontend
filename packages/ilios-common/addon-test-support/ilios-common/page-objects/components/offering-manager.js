@@ -3,13 +3,13 @@ import {
   create,
   clickable,
   hasClass,
-  isPresent,
   isVisible,
   property,
   text,
   triggerable,
 } from 'ember-cli-page-object';
 import userNameInfo from './user-name-info';
+import userStatus from './user-status';
 import offeringForm from './offering-form';
 
 const definition = {
@@ -27,7 +27,7 @@ const definition = {
   url: property('href', '[data-test-url] a'),
   hasUrl: isVisible('[data-test-url]'),
   instructors: collection('.offering-manager-instructors [data-test-instructor]', {
-    isDisabled: isPresent('.disabled-user'),
+    userStatus,
     userNameInfo,
   }),
   edit: clickable('.edit'),

@@ -30,6 +30,72 @@ module('Integration | Component | user-profile', function (hooks) {
     this.owner.register('service:currentUser', CurrentUserMock);
   });
 
+  test('profile title - enabled user account', async function (assert) {
+    const user = this.server.create('user');
+    const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
+    this.set('user', userModel);
+
+    await render(
+      <template>
+        <UserProfile
+          @user={{this.user}}
+          @canUpdate={{false}}
+          @canCreate={{false}}
+          @isManagingBio={{false}}
+          @setIsManagingBio={{(noop)}}
+          @isManagingRoles={{false}}
+          @setIsManagingRoles={{(noop)}}
+          @isManagingCohorts={{false}}
+          @setIsManagingCohorts={{(noop)}}
+          @isManagingIcs={{false}}
+          @setIsManagingIcs={{(noop)}}
+          @isManagingSchools={{false}}
+          @setIsManagingSchools={{(noop)}}
+          @permissionsSchool={{null}}
+          @permissionsYear={{null}}
+          @setPermissionsSchool={{(noop)}}
+          @setPermissionsYear={{(noop)}}
+        />
+      </template>,
+    );
+
+    assert.strictEqual(component.title.userNameInfo.fullName, '1 guy M. Mc1son');
+    assert.notOk(component.title.userStatus.accountIsDisabled);
+  });
+
+  test('profile title - disabled user account', async function (assert) {
+    const user = this.server.create('user', { enabled: false });
+    const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
+    this.set('user', userModel);
+
+    await render(
+      <template>
+        <UserProfile
+          @user={{this.user}}
+          @canUpdate={{false}}
+          @canCreate={{false}}
+          @isManagingBio={{false}}
+          @setIsManagingBio={{(noop)}}
+          @isManagingRoles={{false}}
+          @setIsManagingRoles={{(noop)}}
+          @isManagingCohorts={{false}}
+          @setIsManagingCohorts={{(noop)}}
+          @isManagingIcs={{false}}
+          @setIsManagingIcs={{(noop)}}
+          @isManagingSchools={{false}}
+          @setIsManagingSchools={{(noop)}}
+          @permissionsSchool={{null}}
+          @permissionsYear={{null}}
+          @setPermissionsSchool={{(noop)}}
+          @setPermissionsYear={{(noop)}}
+        />
+      </template>,
+    );
+
+    assert.strictEqual(component.title.userNameInfo.fullName, '1 guy M. Mc1son');
+    assert.ok(component.title.userStatus.accountIsDisabled);
+  });
+
   test('user profile calendar', async function (assert) {
     const user = this.server.create('user');
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);

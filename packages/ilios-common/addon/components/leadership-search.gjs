@@ -11,7 +11,7 @@ import perform from 'ember-concurrency/helpers/perform';
 import or from 'ember-truth-helpers/helpers/or';
 import eq from 'ember-truth-helpers/helpers/eq';
 import includes from 'ilios-common/helpers/includes';
-import FaIcon from 'ilios-common/components/fa-icon';
+import UserStatus from 'ilios-common/components/user-status';
 
 const DEBOUNCE_MS = 250;
 const MIN_INPUT = 3;
@@ -103,6 +103,7 @@ export default class LeadershipSearchComponent extends Component {
         {{on "input" (perform this.searchForUsers value="target.value")}}
         {{on "search" (perform this.searchForUsers value="target.value")}}
         {{on "keyup" (perform this.searchForUsers value="target.value")}}
+        data-test-search-input
       />
       <ul
         class="results
@@ -135,17 +136,11 @@ export default class LeadershipSearchComponent extends Component {
                 data-test-result
               >
                 {{#if (includes result.user.id this.existingUserIds)}}
-                  <span class="name">
-                    {{result.user.fullName}}
-                    {{#unless result.user.enabled}}
-                      <FaIcon
-                        @icon="user-xmark"
-                        @title={{t "general.disabled"}}
-                        class="disabled-user"
-                      />
-                    {{/unless}}
+                  <span class="name" data-test-name>
+                    <span data-test-fullname>{{result.user.fullName}}</span>
+                    <UserStatus @user={{result.user}} />
                   </span>
-                  <span class="email">
+                  <span class="email" data-test-email>
                     {{result.user.email}}
                   </span>
                 {{else}}
@@ -155,17 +150,11 @@ export default class LeadershipSearchComponent extends Component {
                     {{on "click" (perform this.clickUser result.user)}}
                     data-test-select-user
                   >
-                    <span class="name">
-                      {{result.user.fullName}}
-                      {{#unless result.user.enabled}}
-                        <FaIcon
-                          @icon="user-xmark"
-                          @title={{t "general.disabled"}}
-                          class="disabled-user"
-                        />
-                      {{/unless}}
+                    <span class="name" data-test-name>
+                      <span data-test-fullname>{{result.user.fullName}}</span>
+                      <UserStatus @user={{result.user}} />
                     </span>
-                    <span class="email">
+                    <span class="email" data-test-email>
                       {{result.user.email}}
                     </span>
                   </button>

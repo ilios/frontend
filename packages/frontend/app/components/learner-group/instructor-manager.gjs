@@ -9,6 +9,7 @@ import sortBy from 'ilios-common/helpers/sort-by';
 import UserNameInfo from 'ilios-common/components/user-name-info';
 import InstructorGroupMembersList from 'frontend/components/learner-group/instructor-group-members-list';
 import UserSearch from 'ilios-common/components/user-search';
+import UserStatus from 'ilios-common/components/user-status';
 
 export default class LearnerGroupInstructorManagerComponent extends Component {
   @tracked instructors = [];
@@ -77,13 +78,7 @@ export default class LearnerGroupInstructorManagerComponent extends Component {
                   {{on "click" (fn this.removeInstructor user)}}
                   data-test-selected-instructor
                 >
-                  {{#unless user.enabled}}
-                    <FaIcon
-                      @icon="user-xmark"
-                      @title={{t "general.disabled"}}
-                      class="disabled-user"
-                    />
-                  {{/unless}}
+                  <UserStatus @user={{user}} />
                   <UserNameInfo @user={{user}} />
                   <FaIcon @icon="xmark" class="remove" />
                 </button>

@@ -31,11 +31,11 @@ module('Integration | Component | instructor-group/users', function (hooks) {
     assert.notOk(component.manager.isVisible);
     assert.strictEqual(component.users.length, 3);
     assert.strictEqual(component.users[0].userNameInfo.fullName, '0 guy M. Mc0son');
-    assert.notOk(component.users[0].isDisabled);
+    assert.notOk(component.users[0].userStatus.accountIsDisabled);
     assert.strictEqual(component.users[1].userNameInfo.fullName, '1 guy M. Mc1son');
-    assert.notOk(component.users[1].isDisabled);
+    assert.notOk(component.users[1].userStatus.accountIsDisabled);
     assert.strictEqual(component.users[2].userNameInfo.fullName, '2 guy M. Mc2son');
-    assert.ok(component.users[2].isDisabled);
+    assert.ok(component.users[2].userStatus.accountIsDisabled);
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
   });

@@ -17,6 +17,7 @@ import eq from 'ember-truth-helpers/helpers/eq';
 import sortBy from 'ilios-common/helpers/sort-by';
 import FaIcon from 'ilios-common/components/fa-icon';
 import UserNameInfo from 'ilios-common/components/user-name-info';
+import UserStatus from 'ilios-common/components/user-status';
 import LoadingSpinner from 'ilios-common/components/loading-spinner';
 import perform from 'ember-concurrency/helpers/perform';
 import gt from 'ember-truth-helpers/helpers/gt';
@@ -180,17 +181,11 @@ export default class LearnerGroupCohortUserManagerComponent extends Component {
                           {{on "click" (fn this.toggleUserSelection user)}}
                         >
                           <UserNameInfo id="username-{{index}}-{{templateId}}" @user={{user}} />
-                          {{#unless user.enabled}}
-                            <FaIcon
-                              @icon="user-xmark"
-                              @title={{t "general.disabled"}}
-                              class="disabled-user"
-                              data-test-is-disabled
-                            />
-                          {{/unless}}
+                          <UserStatus @user={{user}} />
                         </button>
                       {{else}}
                         <UserNameInfo id="username-{{index}}-{{templateId}}" @user={{user}} />
+                        <UserStatus @user={{user}} />
                       {{/if}}
                     </td>
                     <td class="text-left" colspan="2">

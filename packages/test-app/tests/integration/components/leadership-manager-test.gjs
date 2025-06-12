@@ -6,7 +6,7 @@ import { component } from 'ilios-common/page-objects/components/leadership-manag
 import LeadershipManager from 'ilios-common/components/leadership-manager';
 import noop from 'ilios-common/helpers/noop';
 
-module('Integration | Component | leadership manager', function (hooks) {
+module('Integration | Component | leadership-manager', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
@@ -324,7 +324,7 @@ module('Integration | Component | leadership manager', function (hooks) {
     );
   });
 
-  test('disabled users are indicated with an icon', async function (assert) {
+  test('disabled user accounts are indicated with an icon', async function (assert) {
     this.server.create('user', {
       enabled: true,
     });
@@ -352,18 +352,18 @@ module('Integration | Component | leadership manager', function (hooks) {
     );
     assert.strictEqual(component.selectedDirectors.length, 1);
     assert.strictEqual(component.selectedDirectors[0].userNameInfo.fullName, '0 guy M. Mc0son');
-    assert.notOk(component.selectedDirectors[0].isDisabled);
+    assert.notOk(component.selectedDirectors[0].userStatus.accountIsDisabled);
     assert.strictEqual(component.selectedAdministrators.length, 2);
     assert.strictEqual(
       component.selectedAdministrators[0].userNameInfo.fullName,
       '0 guy M. Mc0son',
     );
-    assert.notOk(component.selectedAdministrators[0].isDisabled);
+    assert.notOk(component.selectedAdministrators[0].userStatus.accountIsDisabled);
     assert.strictEqual(
       component.selectedAdministrators[1].userNameInfo.fullName,
       '1 guy M. Mc1son',
     );
-    assert.ok(component.selectedAdministrators[1].isDisabled);
+    assert.ok(component.selectedAdministrators[1].userStatus.accountIsDisabled);
   });
 
   test('users are sorted by full name', async function (assert) {

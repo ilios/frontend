@@ -11,8 +11,8 @@ import set from 'ember-set-helper/helpers/set';
 import SortableTh from 'ilios-common/components/sortable-th';
 import or from 'ember-truth-helpers/helpers/or';
 import sortBy from 'ilios-common/helpers/sort-by';
-import FaIcon from 'ilios-common/components/fa-icon';
 import UserNameInfo from 'ilios-common/components/user-name-info';
+import UserStatus from 'ilios-common/components/user-status';
 
 export default class LearnerGroupUserMembersComponent extends Component {
   @service currentUser;
@@ -101,14 +101,7 @@ export default class LearnerGroupUserMembersComponent extends Component {
                           id="selected-username-{{index}}-{{templateId}}"
                           @user={{user}}
                         />
-                        {{#unless user.enabled}}
-                          <FaIcon
-                            @icon="user-xmark"
-                            @title={{t "general.disabled"}}
-                            class="disabled-user"
-                            data-test-is-disabled
-                          />
-                        {{/unless}}
+                        <UserStatus @user={{user}} />
                       </td>
                       <td class="text-left" colspan="2">
                         {{user.campusId}}

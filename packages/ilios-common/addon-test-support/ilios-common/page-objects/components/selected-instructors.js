@@ -1,13 +1,14 @@
 import { clickable, collection, create, isPresent, text } from 'ember-cli-page-object';
 import userNameInfo from './user-name-info';
+import userStatus from './user-status';
 
 const definition = {
   scope: '[data-test-selected-instructors]',
   heading: text('[data-test-heading]'),
   instructors: collection('li', {
-    isDisabled: isPresent('.disabled-user'),
     remove: clickable('button'),
     isRemovable: isPresent('button'),
+    userStatus,
     userNameInfo,
   }),
   noInstructors: {
