@@ -14,7 +14,6 @@ module('Integration | Component | user-status', function (hooks) {
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     this.set('user', userModel);
     await render(<template><UserStatus @user={{this.user}} /></template>);
-    //await pauseTest();
     assert.ok(component.accountIsDisabled);
     assert.strictEqual(component.title, 'disabled');
   });
