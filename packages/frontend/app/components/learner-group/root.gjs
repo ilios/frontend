@@ -62,6 +62,7 @@ export default class LearnerGroupRootComponent extends Component {
   @tracked currentGroupsSaved = 0;
   @tracked totalGroupsToSave = 0;
   @tracked isManagingInstructors = false;
+  @tracked filter = '';
 
   get location() {
     return this.locationBuffer ?? this.args.learnerGroup.location;
@@ -678,6 +679,16 @@ export default class LearnerGroupRootComponent extends Component {
             </div>
             <span class="actions" data-test-buttons>
               {{#if (or @isEditing @isBulkAssigning)}}
+                {{#if @isEditing}}
+                  <input
+                    type="text"
+                    value={{this.filter}}
+                    placeholder={{t "general.filterByNameOrEmail"}}
+                    aria-label={{t "general.filterByNameOrEmail"}}
+                    {{on "input" (pick "target.value" (set this "filter"))}}
+                    data-test-filter
+                  />
+                {{/if}}
                 <button
                   class="close"
                   type="button"
@@ -722,6 +733,7 @@ export default class LearnerGroupRootComponent extends Component {
           {{else if @isEditing}}
             <div class="learner-group-overview-content">
               <UserManager
+                @filter={{this.filter}}
                 @learnerGroupId={{this.learnerGroupId}}
                 @learnerGroupTitle={{this.learnerGroupTitle}}
                 @topLevelGroupTitle={{this.topLevelGroupTitle}}
