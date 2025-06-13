@@ -76,7 +76,7 @@ module('Integration | Component | user-search-result-user', function (hooks) {
         />
       </template>,
     );
-    assert.strictEqual(component.text, '0 guy M. Mc0son disabled user@example.edu');
+    assert.strictEqual(component.text, '0 guy M. Mc0son disabled user account user@example.edu');
     assert.ok(component.userStatus.accountIsDisabled);
     assert.notOk(component.isActive);
     assert.notOk(component.canAdd);
@@ -100,7 +100,7 @@ module('Integration | Component | user-search-result-user', function (hooks) {
         />
       </template>,
     );
-    assert.strictEqual(component.text, '0 guy M. Mc0son disabled user@example.edu');
+    assert.strictEqual(component.text, '0 guy M. Mc0son disabled user account user@example.edu');
     assert.ok(component.userStatus.accountIsDisabled);
     assert.ok(component.isActive);
     assert.ok(component.canAdd);

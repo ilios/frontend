@@ -15,7 +15,7 @@ module('Integration | Component | user-status', function (hooks) {
     this.set('user', userModel);
     await render(<template><UserStatus @user={{this.user}} /></template>);
     assert.ok(component.accountIsDisabled);
-    assert.strictEqual(component.title, 'disabled');
+    assert.strictEqual(component.title, 'disabled user account');
   });
 
   test('user account is enabled', async function (assert) {

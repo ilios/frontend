@@ -52,7 +52,7 @@ module('Integration | Component | reports/subject/new/instructor', function (hoo
     assert.strictEqual(component.userSearch.results.items.length, 5);
     assert.strictEqual(
       component.userSearch.results.items[4].text,
-      '4 guy M. Mc4son disabled user@example.edu',
+      '4 guy M. Mc4son disabled user account user@example.edu',
     );
     await component.userSearch.results.items[4].click();
     assert.ok(component.hasSelectedInstructor);

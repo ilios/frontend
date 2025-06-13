@@ -109,6 +109,7 @@ general:
   directorCount: "Hay {count, plural, =1 {1 director} other {# directores}}"
   directors: Directores
   disabled: desactivado
+  disabledUserAccount: cuenta de usuario deshabilitada
   displayName: Nombre de Mostrar
   done: Acabado
   download: Descargar
