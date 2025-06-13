@@ -678,17 +678,15 @@ export default class LearnerGroupRootComponent extends Component {
               {{/if}}
             </div>
             <span class="actions" data-test-buttons>
+              <input
+                type="text"
+                value={{this.filter}}
+                placeholder={{t "general.filterByNameOrEmail"}}
+                aria-label={{t "general.filterByNameOrEmail"}}
+                {{on "input" (pick "target.value" (set this "filter"))}}
+                data-test-filter
+              />
               {{#if (or @isEditing @isBulkAssigning)}}
-                {{#if @isEditing}}
-                  <input
-                    type="text"
-                    value={{this.filter}}
-                    placeholder={{t "general.filterByNameOrEmail"}}
-                    aria-label={{t "general.filterByNameOrEmail"}}
-                    {{on "input" (pick "target.value" (set this "filter"))}}
-                    data-test-filter
-                  />
-                {{/if}}
                 <button
                   class="close"
                   type="button"
@@ -753,6 +751,7 @@ export default class LearnerGroupRootComponent extends Component {
             {{/if}}
             <div class="learner-group-overview-content">
               <Members
+                @filter={{this.filter}}
                 @learnerGroupId={{this.learnerGroupId}}
                 @setSortBy={{@setSortUsersBy}}
                 @sortBy={{this.sortUsersBy}}

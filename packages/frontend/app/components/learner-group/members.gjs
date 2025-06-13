@@ -1,13 +1,9 @@
 import Component from '@glimmer/component';
 import { service } from '@ember/service';
-import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { uniqueId, fn } from '@ember/helper';
 import eq from 'ember-truth-helpers/helpers/eq';
 import t from 'ember-intl/helpers/t';
-import { on } from '@ember/modifier';
-import pick from 'ilios-common/helpers/pick';
-import set from 'ember-set-helper/helpers/set';
 import SortableTh from 'ilios-common/components/sortable-th';
 import or from 'ember-truth-helpers/helpers/or';
 import sortBy from 'ilios-common/helpers/sort-by';
@@ -16,7 +12,10 @@ import UserStatus from 'ilios-common/components/user-status';
 
 export default class LearnerGroupUserMembersComponent extends Component {
   @service currentUser;
-  @tracked filter = '';
+
+  get filter() {
+    return this.args.filter ?? '';
+  }
 
   get sortedAscending() {
     return this.args.sortBy.search(/desc/) === -1;
@@ -62,16 +61,6 @@ export default class LearnerGroupUserMembersComponent extends Component {
         data-test-learner-group-members
       >
         {{#if this.usersInGroup.length}}
-          <div class="actions">
-            <input
-              type="text"
-              value={{this.filter}}
-              placeholder={{t "general.filterByNameOrEmail"}}
-              aria-label={{t "general.filterByNameOrEmail"}}
-              {{on "input" (pick "target.value" (set this "filter"))}}
-              data-test-filter
-            />
-          </div>
           <div class="learner-group-members-content">
             <div class="list">
               <table>

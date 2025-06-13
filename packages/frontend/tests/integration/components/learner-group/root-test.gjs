@@ -1005,7 +1005,7 @@ module('Integration | Component | learner-group/root', function (hooks) {
     assert.strictEqual(component.instructorsList.assignedInstructors.length, 1);
   });
 
-  test('filter applies', async function (assert) {
+  test('filter applies in edit mode', async function (assert) {
     const learnerGroup = this.server.create('learner-group', { id: 1 });
     const subgroup = this.server.create('learner-group', { id: 2, parent: learnerGroup });
     this.server.create('user', {
@@ -1083,5 +1083,47 @@ module('Integration | Component | learner-group/root', function (hooks) {
       component.userManager.usersNotInCurrentGroup[0].name.userNameInfo.fullName,
       'Jackson M. Doggy',
     );
+  });
+
+  test('filter applies in view mode', async function (assert) {
+    const learnerGroup = this.server.create('learner-group', { id: 1 });
+    this.server.create('user', {
+      firstName: 'Jasper',
+      lastName: 'Dog',
+      email: 'jasper.dog@example.edu',
+      learnerGroups: [learnerGroup],
+    });
+    this.server.create('user', {
+      firstName: 'Jayden',
+      lastName: 'Pup',
+      displayName: 'Just Jayden',
+      email: 'jayden@example.edu',
+      learnerGroups: [learnerGroup],
+    });
+    const learnerGroupModel = await this.owner
+      .lookup('service:store')
+      .findRecord('learner-group', learnerGroup.id);
+
+    this.set('learnerGroup', learnerGroupModel);
+    await render(
+      <template>
+        <Root
+          @canUpdate={{true}}
+          @setIsEditing={{(noop)}}
+          @setSortUsersBy={{(noop)}}
+          @setIsBulkAssigning={{(noop)}}
+          @sortUsersBy="fullName"
+          @learnerGroup={{this.learnerGroup}}
+          @isEditing={{false}}
+          @isBulkAssigning={{false}}
+        />
+      </template>,
+    );
+    assert.strictEqual(component.members.users.length, 2);
+    assert.strictEqual(component.members.users[0].name.userNameInfo.fullName, 'Jasper M. Dog');
+    assert.strictEqual(component.members.users[1].name.userNameInfo.fullName, 'Just Jayden');
+    await component.actions.filter('dog');
+    assert.strictEqual(component.members.users.length, 1);
+    assert.strictEqual(component.members.users[0].name.userNameInfo.fullName, 'Jasper M. Dog');
   });
 });
