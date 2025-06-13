@@ -73,9 +73,11 @@ module('Integration | Component | learner-group/members', function (hooks) {
   test('filtering', async function (assert) {
     this.set('users', [this.userProxy1, this.userProxy2]);
     this.set('learnerGroup', this.learnerGroup);
+    this.set('filter', '');
     await render(
       <template>
         <Members
+          @filter={{this.filter}}
           @learnerGroupId={{this.learnerGroup.id}}
           @users={{this.users}}
           @sortBy="id"
@@ -86,10 +88,10 @@ module('Integration | Component | learner-group/members', function (hooks) {
     assert.strictEqual(component.users.length, 2);
     assert.strictEqual(component.users[0].name.userNameInfo.fullName, 'Jasper M. Dog');
     assert.strictEqual(component.users[1].name.userNameInfo.fullName, 'Jackson M. Doggy');
-    await component.filter('Jackson');
+    this.set('filter', 'Jackson');
     assert.strictEqual(component.users.length, 1);
     assert.strictEqual(component.users[0].name.userNameInfo.fullName, 'Jackson M. Doggy');
-    await component.filter('');
+    this.set('filter', '');
     assert.strictEqual(component.users.length, 2);
     assert.strictEqual(component.users[0].name.userNameInfo.fullName, 'Jasper M. Dog');
     assert.strictEqual(component.users[1].name.userNameInfo.fullName, 'Jackson M. Doggy');
