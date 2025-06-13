@@ -433,6 +433,7 @@ module('Integration | Component | new-directory-user', function (hooks) {
   });
 
   test('save with custom username and password', async function (assert) {
+    assert.expect(8);
     this.server.create('user-role', {
       id: 4,
       title: 'Student',
@@ -462,11 +463,14 @@ module('Integration | Component | new-directory-user', function (hooks) {
         ],
       };
     });
+    this.set('setSearchTerms', (what) => {
+      assert.strictEqual(what, '');
+    });
     await render(
       <template>
         <NewDirectoryUser
           @close={{(noop)}}
-          @setSearchTerms={{(noop)}}
+          @setSearchTerms={{this.setSearchTerms}}
           @transitionToUser={{(noop)}}
           @searchTerms="searchterm"
         />

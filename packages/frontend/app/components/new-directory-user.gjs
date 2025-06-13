@@ -304,6 +304,7 @@ export default class NewDirectoryUserComponent extends Component {
     });
     await authentication.save();
     this.validations.clearErrorDisplay();
+    this.args.setSearchTerms('');
     this.flashMessages.success('general.saved');
     this.args.transitionToUser(user.id);
   });
