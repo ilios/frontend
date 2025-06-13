@@ -109,6 +109,7 @@ general:
   directorCount: "Il y a {count, plural, =1 {un directeur} other {# directeurs}}"
   directors: Directeurs
   disabled: désactivée
+  disabledUserAccount: compte utilisateur désactivé
   displayName: Nom d’Affichage
   done: Fini
   download: Télécharger
