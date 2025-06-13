@@ -8,7 +8,7 @@ import IliosUsers from 'frontend/components/ilios-users';
 import { array } from '@ember/helper';
 import noop from 'ilios-common/helpers/noop';
 
-module('Integration | Component | ilios users', function (hooks) {
+module('Integration | Component | ilios-users', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
@@ -198,6 +198,60 @@ module('Integration | Component | ilios users', function (hooks) {
     );
     assert.notOk(component.newUserForm.isPresent, 'the new user form is not present');
     assert.ok(component.newDirectoryUserForm.isPresent, 'the new directory form is present');
+  });
+
+  test('closing directory search form resets search terms', async function (assert) {
+    assert.expect(1);
+    const { apiVersion } = this.owner.resolveRegistration('config:environment');
+    this.server.get('application/config', function () {
+      return {
+        config: {
+          type: 'form',
+          userSearchType: 'ldap',
+          apiVersion,
+        },
+      };
+    });
+
+    const school = this.server.create('school');
+    const user = this.server.create('user', {
+      school,
+    });
+    const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
+
+    class CurrentUserMock extends Service {
+      async getModel() {
+        return userModel;
+      }
+      getRolesInSchool() {
+        return [];
+      }
+    }
+
+    this.owner.register('service:current-user', CurrentUserMock);
+
+    this.set('setSearchTerms', (what) => {
+      assert.strictEqual(what, '');
+    });
+
+    await render(
+      <template>
+        <IliosUsers
+          @sortBy="fullName"
+          @canCreate={{true}}
+          @showNewUserForm={{true}}
+          @searchTerms={{(array)}}
+          @setQuery={{(noop)}}
+          @setLimit={{(noop)}}
+          @setOffset={{(noop)}}
+          @setShowNewUserForm={{(noop)}}
+          @setShowBulkNewUserForm={{(noop)}}
+          @setSearchTerms={{this.setSearchTerms}}
+          @transitionToUser={{(noop)}}
+        />
+      </template>,
+    );
+    await component.collapseForm();
   });
 
   test('close bulk new users form callback fires', async function (assert) {

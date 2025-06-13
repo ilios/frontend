@@ -90,6 +90,12 @@ export default class IliosUsersComponent extends Component {
     this.args.setOffset(offset);
     this.searchForUsers.perform();
   }
+
+  @action
+  closeNewUserForm() {
+    this.args.setSearchTerms('');
+    this.args.setShowNewUserForm(false);
+  }
   <template>
     <div class="ilios-users" data-test-ilios-users ...attributes>
       <div class="filters" data-test-filters>
@@ -116,11 +122,7 @@ export default class IliosUsersComponent extends Component {
                   type="button"
                   {{on
                     "click"
-                    (if
-                      @showNewUserForm
-                      (fn @setShowNewUserForm false)
-                      (fn @setShowBulkNewUserForm false)
-                    )
+                    (if @showNewUserForm this.closeNewUserForm (fn @setShowBulkNewUserForm false))
                   }}
                   data-test-collapse
                 >

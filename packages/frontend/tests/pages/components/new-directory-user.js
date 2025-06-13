@@ -23,6 +23,9 @@ const definition = {
     submitOnEnter: triggerable('keyup', 'input[type="search"]', {
       eventProperties: { key: 'Enter' },
     }),
+    clearOnEscape: triggerable('keyup', 'input[type="search"]', {
+      eventProperties: { key: 'Escape' },
+    }),
   },
   searchResults: collection('[data-test-search-result]', {
     addUser: clickable('[data-test-add]'),
