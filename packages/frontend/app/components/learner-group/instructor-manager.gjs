@@ -51,17 +51,26 @@ export default class LearnerGroupInstructorManagerComponent extends Component {
           {{t "general.manageDefaultInstructors"}}
         </div>
         <div class="actions">
-          <button
-            type="button"
-            class="bigadd"
-            {{on "click" (fn @save this.instructors this.instructorGroups)}}
-            data-test-save
-          >
-            <FaIcon @icon="check" />
-          </button>
-          <button type="button" class="bigcancel" {{on "click" @cancel}} data-test-cancel>
-            <FaIcon @icon="arrow-rotate-left" />
-          </button>
+          <UserSearch
+            @addUser={{this.addInstructor}}
+            @addInstructorGroup={{this.addInstructorGroup}}
+            @currentlyActiveUsers={{this.instructors}}
+            @availableInstructorGroups={{@availableInstructorGroups}}
+            @currentlyActiveInstructorGroups={{this.instructorGroups}}
+          />
+          <div>
+            <button
+              type="button"
+              class="bigadd"
+              {{on "click" (fn @save this.instructors this.instructorGroups)}}
+              data-test-save
+            >
+              <FaIcon @icon="check" />
+            </button>
+            <button type="button" class="bigcancel" {{on "click" @cancel}} data-test-cancel>
+              <FaIcon @icon="arrow-rotate-left" />
+            </button>
+          </div>
         </div>
       </div>
       <div class="detail-content">
@@ -109,13 +118,6 @@ export default class LearnerGroupInstructorManagerComponent extends Component {
             {{/each}}
           </div>
         {{/if}}
-        <UserSearch
-          @addUser={{this.addInstructor}}
-          @addInstructorGroup={{this.addInstructorGroup}}
-          @currentlyActiveUsers={{this.instructors}}
-          @availableInstructorGroups={{@availableInstructorGroups}}
-          @currentlyActiveInstructorGroups={{this.instructorGroups}}
-        />
       </div>
     </div>
   </template>
