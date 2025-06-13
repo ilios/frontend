@@ -241,7 +241,7 @@ export default class NewDirectoryUserComponent extends Component {
       }
 
       if (27 === keyCode) {
-        this.searchTerms = '';
+        this.args.setSearchTerms('');
       }
     }
   }

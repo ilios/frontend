@@ -8,7 +8,7 @@ import { component } from 'frontend/tests/pages/components/new-directory-user';
 import NewDirectoryUser from 'frontend/components/new-directory-user';
 import noop from 'ilios-common/helpers/noop';
 
-module('Integration | Component | new directory user', function (hooks) {
+module('Integration | Component | new-directory-user', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
@@ -85,6 +85,31 @@ module('Integration | Component | new directory user', function (hooks) {
       </template>,
     );
     assert.strictEqual(component.search.value, startingSearchTerms);
+  });
+
+  test('pressing escape in search box clears search term', async function (assert) {
+    assert.expect(2);
+    const startingSearchTerms = 'start here';
+    this.server.get(`/application/directory/search`, () => {
+      return {
+        results: [],
+      };
+    });
+    this.set('startingSearchTerms', startingSearchTerms);
+    this.set('setSearchTerms', (what) => {
+      assert.strictEqual(what, '');
+    });
+    await render(
+      <template>
+        <NewDirectoryUser
+          @close={{(noop)}}
+          @setSearchTerms={{this.setSearchTerms}}
+          @searchTerms={{this.startingSearchTerms}}
+        />
+      </template>,
+    );
+    assert.strictEqual(component.search.value, startingSearchTerms);
+    await component.search.clearOnEscape();
   });
 
   test('create new user', async function (assert) {
