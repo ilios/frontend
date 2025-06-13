@@ -14,6 +14,16 @@
 
     .actions {
       @include m.detail-container-actions;
+      flex-grow: 1;
+
+      .user-search {
+        flex-grow: 1;
+        padding-left: 1rem;
+        padding-right: 1rem;
+        input {
+          width: 100%;
+        }
+      }
     }
   }
 
@@ -40,10 +50,6 @@
         }
       }
       margin: 1rem 0;
-    }
-
-    .user-search {
-      margin-top: 1rem;
     }
   }
 }
