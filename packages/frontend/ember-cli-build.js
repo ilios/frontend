@@ -50,6 +50,7 @@ module.exports = async function (defaults) {
     },
     sassOptions: {
       silenceDeprecations: ['mixed-decls'],
+      includePaths: ['node_modules/ember-a11y-refocus/dist/styles'],
     },
   };
 
