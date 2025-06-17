@@ -21,5 +21,9 @@ setupDeprecationWorkflow({
     /* example: */
     /* { handler: 'silence', matchId: 'template-action' }, */
     { handler: 'silence', matchId: 'importing-inject-from-ember-service' },
+    { handler: 'silence', matchId: 'deprecate-import--set-classic-decorator-from-ember' },
+    { handler: 'silence', matchId: 'deprecate-import-env-from-ember' },
+    { handler: 'silence', matchId: 'deprecate-import-onerror-from-ember' },
+    { handler: 'silence', matchId: 'deprecate-import-default-value-from-ember' },
   ],
 });
