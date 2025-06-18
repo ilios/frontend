@@ -4,7 +4,7 @@ import { action } from '@ember/object';
 import { dropTask, restartableTask, timeout } from 'ember-concurrency';
 import { service } from '@ember/service';
 import { TrackedAsyncData } from 'ember-async-data';
-import { findById } from 'ilios-common/utils/array-helpers';
+import { findById, sortBy } from 'ilios-common/utils/array-helpers';
 import { on } from '@ember/modifier';
 import set from 'ember-set-helper/helpers/set';
 import not from 'ember-truth-helpers/helpers/not';
@@ -108,7 +108,13 @@ export default class ProgramYearObjectiveListItemComponent extends Component {
     const school = await program.school;
     const vocabularies = await school.vocabularies;
 
-    return { meshDescriptors, programYear, program, school, vocabularies };
+    return {
+      meshDescriptors,
+      programYear,
+      program,
+      school,
+      vocabularies: sortBy(vocabularies, 'title'),
+    };
   }
 
   saveDescriptionChanges = dropTask(async () => {
