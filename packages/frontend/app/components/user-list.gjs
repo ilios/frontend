@@ -53,7 +53,6 @@ export default class UserList extends Component {
     <table class="user-list" data-test-user-list ...attributes>
       <thead class={{if @headerIsLocked "locked"}}>
         <tr>
-          <th colspan="1" class="user-list-disabled" data-test-user-list-disabled></th>
           <SortableTh
             @align="left"
             @colspan={{3}}
@@ -96,13 +95,11 @@ export default class UserList extends Component {
                 class="user-list-row{{unless user.enabled ' disabled-user-account'}}"
                 data-test-user
               >
-                <td colspan="1" class="text-left" data-test-user-disabled>
-                  <UserStatus @user={{user}} />
-                </td>
                 <td colspan="3" class="text-left" data-test-full-name>
                   <LinkTo @route="user" @model={{user}} data-test-user-link>
                     <UserNameInfo @user={{user}} />
                   </LinkTo>
+                  <UserStatus @user={{user}} />
                 </td>
                 <td colspan="2" class="text-left hide-from-small-screen" data-test-campus-id>
                   {{user.campusId}}
