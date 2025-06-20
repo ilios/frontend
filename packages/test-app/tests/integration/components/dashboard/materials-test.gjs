@@ -322,11 +322,7 @@ module('Integration | Component | dashboard/materials', function (hooks) {
       </template>,
     );
 
-    assert.strictEqual(component.courseFilter.options.length, 1);
-    assert.strictEqual(component.courseFilter.options[0].text, 'All Courses');
-    assert.strictEqual(component.topPaginator.controls.pagerDetails.text, 'Showing 1 - 0 of 0');
-    assert.strictEqual(component.bottomPaginator.controls.pagerDetails.text, 'Showing 1 - 0 of 0');
-    assert.strictEqual(component.table.rows.length, 0);
+    assert.strictEqual(component.text, 'My Materials None');
   });
 
   test('filter by course', async function (assert) {
