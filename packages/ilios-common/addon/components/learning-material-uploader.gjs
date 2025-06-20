@@ -46,7 +46,7 @@ export default class LearningMaterialUploaderComponent extends Component {
     return false;
   });
   <template>
-    <span class="learning-material-uploader" data-test-learning-material-uploader>
+    <span class="learning-material-uploader" data-test-learning-material-uploader ...attributes>
       {{#let (fileQueue name=this.uploadQueueName onFileAdded=(perform this.upload)) as |queue|}}
         {{#if (and (not this.fileUploadErrorMessage) queue.files.length)}}
           <span class="upload-button">
