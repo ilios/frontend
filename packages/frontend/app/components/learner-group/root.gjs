@@ -816,7 +816,6 @@ export default class LearnerGroupRootComponent extends Component {
               @users={{this.usersForCohortManager}}
               @canUpdate={{@canUpdate}}
               @learnerGroupTitle={{this.learnerGroupTitle}}
-              @topLevelGroupTitle={{this.topLevelGroupTitle}}
               @sortBy={{this.sortUsersBy}}
               @setSortBy={{@setSortUsersBy}}
               @addUserToGroup={{perform this.addUserToGroup}}
