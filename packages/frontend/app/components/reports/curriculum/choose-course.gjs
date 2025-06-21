@@ -20,11 +20,11 @@ export default class ReportsCurriculumChooseCourse extends Component {
   @service currentUser;
 
   @tracked selectedSchoolId = null;
-  @tracked expandedYear;
+  @tracked expandedYears = [];
 
   constructor() {
     super(...arguments);
-    this.expandedYear = currentAcademicYear();
+    this.expandedYears.push(currentAcademicYear());
   }
 
   userModel = new TrackedAsyncData(this.currentUser.getModel());
@@ -82,7 +82,7 @@ export default class ReportsCurriculumChooseCourse extends Component {
       const hasAllSelectedCourses = selectedCourses.length === courses.length;
       const hasSomeSelectedCourses = selectedCourses.length > 0 && !hasAllSelectedCourses;
       return {
-        isExpanded: year === this.expandedYear,
+        isExpanded: this.expandedYears.includes(year),
         year,
         courses,
         selectedCourses,
@@ -92,11 +92,11 @@ export default class ReportsCurriculumChooseCourse extends Component {
     });
   }
 
-  toggleYear = (year) => {
-    if (this.expandedYear === year) {
-      this.expandedYear = null;
+  toggleYear = (year, isExpanded) => {
+    if (isExpanded) {
+      this.expandedYears = this.expandedYears.filter((y) => y !== year);
     } else {
-      this.expandedYear = year;
+      this.expandedYears = [...this.expandedYears, year];
     }
   };
 
@@ -152,7 +152,7 @@ export default class ReportsCurriculumChooseCourse extends Component {
             <button
               type="button"
               aria-expanded={{if y.isExpanded "true" "false"}}
-              {{on "click" (fn this.toggleYear y.year)}}
+              {{on "click" (fn this.toggleYear y.year y.isExpanded)}}
               data-test-expand
             >
               {{y.year}}

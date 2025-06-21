@@ -23,6 +23,7 @@ const definition = {
   },
   years: collection('[data-test-year]', {
     title: text('[data-test-expand]'),
+    toggle: clickable('[data-test-expand]'),
     isExpanded: isPresent('[data-test-courses]'),
     courses: collection('[data-test-course]', {
       isSelected: property('checked', 'input'),
