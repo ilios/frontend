@@ -144,6 +144,54 @@ module('Integration | Component | reports/curriculum/choose-course', function (h
     assert.ok(true, 'no a11y errors found!');
   });
 
+  test('it renders with selected courses across multiple schools', async function (assert) {
+    const school = this.server.create('school', { title: 'Pharmacy' });
+    const school2 = this.server.create('school', { title: 'Medicine' });
+    await setupAuthentication({ school });
+
+    this.server.create('academicYear', { id: 1984 });
+    const course1 = this.server.create('course', {
+      school,
+      year: 1984,
+    });
+    const course2 = this.server.create('course', {
+      school: school2,
+      year: 1984,
+    });
+    this.set('schools', buildSchoolsFromData(this.server));
+    this.set('selectedCourseIds', [course1.id, course2.id]);
+    await render(
+      <template>
+        <ChooseCourse
+          @selectedCourseIds={{this.selectedCourseIds}}
+          @schools={{this.schools}}
+          @add={{(noop)}}
+          @remove={{(noop)}}
+          @removeAll={{(noop)}}
+        />
+      </template>,
+    );
+
+    assert.ok(component.hasMultipleSchools);
+    assert.strictEqual(component.schoolSelector.options.length, 2);
+    assert.strictEqual(component.schoolSelector.value, school2.id);
+    assert.strictEqual(component.schoolSelector.options[0].text, school2.title);
+    assert.ok(component.schoolSelector.options[0].isSelected);
+    assert.strictEqual(component.schoolSelector.options[1].text, school.title);
+    assert.notOk(component.schoolSelector.options[1].isSelected);
+
+    assert.strictEqual(component.years.length, 1);
+    assert.strictEqual(component.years[0].title, '1984');
+    assert.ok(component.years[0].isExpanded);
+
+    assert.ok(component.years[0].isFullySelected);
+    assert.notOk(component.years[0].isPartiallySelected);
+
+    assert.strictEqual(component.years[0].courses.length, 1);
+    assert.strictEqual(component.years[0].courses[0].text, 'course 1');
+    assert.ok(component.years[0].courses[0].isSelected);
+  });
+
   test('select course fires action', async function (assert) {
     assert.expect(2);
     const school = this.server.create('school');
