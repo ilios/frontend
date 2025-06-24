@@ -101,9 +101,17 @@ module('Integration | Component | dashboard/week', function (hooks) {
     const expectedTitle = this.getTitle();
     assert.strictEqual(component.weeklyLink, 'All Weeks');
     assert.strictEqual(component.weekGlance.title, expectedTitle);
-    assert.strictEqual(component.weekGlance.events.length, 2, 'Blank events are not shown');
-    assert.strictEqual(component.weekGlance.events[0].title, 'Learn to Learn');
-    assert.strictEqual(component.weekGlance.events[1].title, 'Finding the Point in Life');
+    assert.strictEqual(component.weekGlance.eventsByDate.length, 1);
+    assert.strictEqual(
+      component.weekGlance.eventsByDate[0].events.length,
+      2,
+      'Blank events are not shown',
+    );
+    assert.strictEqual(component.weekGlance.eventsByDate[0].events[0].title, 'Learn to Learn');
+    assert.strictEqual(
+      component.weekGlance.eventsByDate[0].events[1].title,
+      'Finding the Point in Life',
+    );
   });
 
   test('it renders blank', async function (assert) {
@@ -112,7 +120,7 @@ module('Integration | Component | dashboard/week', function (hooks) {
     const expectedTitle = this.getTitle();
     assert.strictEqual(component.weeklyLink, 'All Weeks');
     assert.strictEqual(component.weekGlance.title, expectedTitle);
-    assert.strictEqual(component.weekGlance.events.length, 0);
+    assert.strictEqual(component.weekGlance.eventsByDate.length, 0);
   });
 
   test('right week on sunday #5308', async function (assert) {
