@@ -5,6 +5,7 @@ import { TrackedAsyncData } from 'ember-async-data';
 import { cached } from '@glimmer/tracking';
 import { uniqueId, fn } from '@ember/helper';
 import includes from 'ilios-common/helpers/includes';
+import escapeRegExp from 'ilios-common/utils/escape-reg-exp';
 import { on } from '@ember/modifier';
 import FaIcon from 'ilios-common/components/fa-icon';
 import t from 'ember-intl/helpers/t';
@@ -35,7 +36,7 @@ export default class LearnergroupTree extends Component {
 
   get filterMatch() {
     if (this.args.filter && this.args.filter.length > 0) {
-      const exp = new RegExp(this.args.filter, 'gi');
+      const exp = new RegExp(escapeRegExp(this.args.filter), 'gi');
       return this.args.learnerGroup.filterTitle.match(exp) != null;
     }
 
