@@ -35,6 +35,7 @@ import BulkAssignment from 'frontend/components/learner-group/bulk-assignment';
 import UserManager from 'frontend/components/learner-group/user-manager';
 import Calendar from 'frontend/components/learner-group/calendar';
 import Members from 'frontend/components/learner-group/members';
+import CourseAssociations from 'frontend/components/learner-group/course-associations';
 import ExpandCollapseButton from 'ilios-common/components/expand-collapse-button';
 import New from 'frontend/components/learner-group/new';
 import FaIcon from 'ilios-common/components/fa-icon';
@@ -640,7 +641,7 @@ export default class LearnerGroupRootComponent extends Component {
               {{/if}}
             </span>
           </div>
-          <div class="block associatedcourses" data-test-courses>
+          <div class="block associatedcourses" data-test-associated-courses>
             <label>
               {{t "general.associatedCourses"}}
               ({{this.courses.length}}):
@@ -662,6 +663,7 @@ export default class LearnerGroupRootComponent extends Component {
               {{/each}}
             </ul>
           </div>
+          <CourseAssociations @learnerGroup={{@learnerGroup}} />
           {{#if (and this.dataForInstructorGroupManagerLoaded this.isManagingInstructors)}}
             <InstructorManager
               @learnerGroup={{@learnerGroup}}
