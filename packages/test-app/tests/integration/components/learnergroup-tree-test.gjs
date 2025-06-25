@@ -33,9 +33,17 @@ module('Integration | Component | learnergroup-tree', function (hooks) {
     const secondLevelLearnerGroup3 = this.server.create('learner-group', {
       title: 'Second 10',
     });
+    const secondLevelLearnerGroup4 = this.server.create('learner-group', {
+      title: 'Second \\11',
+    });
     const topLevelLearnerGroup = this.server.create('learner-group', {
       title: 'Top Group',
-      children: [secondLevelLearnerGroup1, secondLevelLearnerGroup2, secondLevelLearnerGroup3],
+      children: [
+        secondLevelLearnerGroup1,
+        secondLevelLearnerGroup2,
+        secondLevelLearnerGroup3,
+        secondLevelLearnerGroup4,
+      ],
       needsAccommodation: true,
     });
 
@@ -80,27 +88,30 @@ module('Integration | Component | learnergroup-tree', function (hooks) {
     );
     assert.strictEqual(component.title, 'Top Group');
     assert.ok(component.needsAccommodation);
-    assert.strictEqual(component.subgroups.length, 3);
-    assert.strictEqual(component.subgroups[0].title, 'Second 1');
+    assert.strictEqual(component.subgroups.length, 4);
+    assert.strictEqual(component.subgroups[0].title, 'Second \\11');
     assert.notOk(component.subgroups[0].isChecked);
     assert.notOk(component.subgroups[0].needsAccommodation);
-    assert.strictEqual(component.subgroups[0].subgroups.length, 2);
-    assert.strictEqual(component.subgroups[0].subgroups[0].title, 'Third 1');
-    assert.notOk(component.subgroups[0].subgroups[0].isChecked);
-    assert.notOk(component.subgroups[0].subgroups[0].needsAccommodation);
-    assert.strictEqual(component.subgroups[0].subgroups[1].title, 'Third 2');
-    assert.ok(component.subgroups[0].subgroups[1].isChecked);
-    assert.notOk(component.subgroups[0].subgroups[1].needsAccommodation);
-    assert.strictEqual(component.subgroups[0].subgroups.length, 2);
-    assert.strictEqual(component.subgroups[1].subgroups[0].title, 'Third 10');
-    assert.ok(component.subgroups[1].subgroups[0].isChecked);
-    assert.ok(component.subgroups[1].subgroups[0].needsAccommodation);
-    assert.strictEqual(component.subgroups[1].title, 'Second 2');
-    assert.notOk(component.subgroups[0].isChecked);
+    assert.strictEqual(component.subgroups[1].title, 'Second 1');
+    assert.notOk(component.subgroups[1].isChecked);
     assert.notOk(component.subgroups[1].needsAccommodation);
-    assert.strictEqual(component.subgroups[2].title, 'Second 10');
-    assert.notOk(component.subgroups[2].isChecked);
+    assert.strictEqual(component.subgroups[1].subgroups.length, 2);
+    assert.strictEqual(component.subgroups[1].subgroups[0].title, 'Third 1');
+    assert.notOk(component.subgroups[1].subgroups[0].isChecked);
+    assert.notOk(component.subgroups[1].subgroups[0].needsAccommodation);
+    assert.strictEqual(component.subgroups[1].subgroups[1].title, 'Third 2');
+    assert.ok(component.subgroups[1].subgroups[1].isChecked);
+    assert.notOk(component.subgroups[1].subgroups[1].needsAccommodation);
+    assert.strictEqual(component.subgroups[1].subgroups.length, 2);
+    assert.strictEqual(component.subgroups[2].subgroups[0].title, 'Third 10');
+    assert.ok(component.subgroups[2].subgroups[0].isChecked);
+    assert.ok(component.subgroups[2].subgroups[0].needsAccommodation);
+    assert.strictEqual(component.subgroups[2].title, 'Second 2');
+    assert.ok(component.subgroups[2].isChecked);
     assert.notOk(component.subgroups[2].needsAccommodation);
+    assert.strictEqual(component.subgroups[3].title, 'Second 10');
+    assert.notOk(component.subgroups[3].isChecked);
+    assert.notOk(component.subgroups[3].needsAccommodation);
   });
 
   test('branches and leaves are styled accordingly', async function (assert) {
@@ -115,14 +126,17 @@ module('Integration | Component | learnergroup-tree', function (hooks) {
         />
       </template>,
     );
+
     assert.ok(component.isStyledAsBranch);
     assert.notOk(component.isStyledAsLeaf);
-    assert.ok(component.subgroups[0].isStyledAsBranch);
-    assert.notOk(component.subgroups[0].isStyledAsLeaf);
+    assert.notOk(component.subgroups[0].isStyledAsBranch);
+    assert.ok(component.subgroups[0].isStyledAsLeaf);
     assert.ok(component.subgroups[1].isStyledAsBranch);
     assert.notOk(component.subgroups[1].isStyledAsLeaf);
-    assert.notOk(component.subgroups[2].isStyledAsBranch);
-    assert.ok(component.subgroups[2].isStyledAsLeaf);
+    assert.ok(component.subgroups[2].isStyledAsBranch);
+    assert.notOk(component.subgroups[2].isStyledAsLeaf);
+    assert.notOk(component.subgroups[3].isStyledAsBranch);
+    assert.ok(component.subgroups[3].isStyledAsLeaf);
   });
 
   test('filter by learner group title', async function (assert) {
@@ -141,11 +155,36 @@ module('Integration | Component | learnergroup-tree', function (hooks) {
     );
     assert.notOk(component.isHidden);
     assert.ok(component.subgroups[0].isHidden);
-    assert.ok(component.subgroups[0].subgroups[0].isHidden);
-    assert.ok(component.subgroups[0].subgroups[1].isHidden);
-    assert.notOk(component.subgroups[1].isHidden);
-    assert.notOk(component.subgroups[1].subgroups[0].isHidden);
+    assert.ok(component.subgroups[1].isHidden);
+    assert.ok(component.subgroups[1].subgroups[0].isHidden);
+    assert.ok(component.subgroups[1].subgroups[1].isHidden);
+    assert.notOk(component.subgroups[2].isHidden);
+    assert.notOk(component.subgroups[2].subgroups[0].isHidden);
+    assert.ok(component.subgroups[3].isHidden);
+  });
+
+  test('regular expression escaping works during filtering', async function (assert) {
+    this.set('learnerGroup', this.topLevelLearnerGroup);
+    this.set('selectedGroups', []);
+    this.set('filter', '\\11');
+    await render(
+      <template>
+        <LearnergroupTree
+          @learnerGroup={{this.learnerGroup}}
+          @selectedGroups={{this.selectedGroups}}
+          @filter={{this.filter}}
+          @add={{(noop)}}
+        />
+      </template>,
+    );
+    assert.notOk(component.isHidden);
+    assert.notOk(component.subgroups[0].isHidden);
+    assert.ok(component.subgroups[1].isHidden);
+    assert.ok(component.subgroups[1].subgroups[0].isHidden);
+    assert.ok(component.subgroups[1].subgroups[1].isHidden);
     assert.ok(component.subgroups[2].isHidden);
+    assert.ok(component.subgroups[2].subgroups[0].isHidden);
+    assert.ok(component.subgroups[3].isHidden);
   });
 
   test('add group by clicking on checkbox', async function (assert) {
@@ -165,7 +204,7 @@ module('Integration | Component | learnergroup-tree', function (hooks) {
         />
       </template>,
     );
-    await component.subgroups[0].subgroups[1].toggle();
+    await component.subgroups[1].subgroups[1].toggle();
   });
 
   test('add group by clicking on checkbox label', async function (assert) {
@@ -185,7 +224,7 @@ module('Integration | Component | learnergroup-tree', function (hooks) {
         />
       </template>,
     );
-    await component.subgroups[0].subgroups[1].toggleTitle();
+    await component.subgroups[1].subgroups[1].toggleTitle();
   });
 
   test('shift-click on checkbox to add group without cascading selection', async function (assert) {
@@ -293,7 +332,7 @@ module('Integration | Component | learnergroup-tree', function (hooks) {
         />
       </template>,
     );
-    await component.subgroups[0].subgroups[1].toggle();
+    await component.subgroups[1].subgroups[1].toggle();
   });
 
   test('remove group by clicking on checkbox label', async function (assert) {
@@ -313,7 +352,7 @@ module('Integration | Component | learnergroup-tree', function (hooks) {
         />
       </template>,
     );
-    await component.subgroups[0].subgroups[1].toggleTitle();
+    await component.subgroups[1].subgroups[1].toggleTitle();
   });
 
   test('shift-click on checkbox to remove group without cascading selection', async function (assert) {
