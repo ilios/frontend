@@ -26,8 +26,8 @@ export default class SearchService extends Service {
    * Find courses
    * @param {string} q
    */
-  async forCurriculum(q, onlySuggestEnabled = false) {
-    return this.search('curriculum', q, 1000, onlySuggestEnabled);
+  async forCurriculum(q, onlySuggestEnabled = false, size = 25, from = 0) {
+    return this.search('curriculum', q, onlySuggestEnabled, size, from);
   }
 
   /**
@@ -35,8 +35,8 @@ export default class SearchService extends Service {
    * @param {string} q
    * @param {number} size
    */
-  async forUsers(q, size = 100, onlySuggestEnabled = false) {
-    const { users, autocomplete } = await this.search('users', q, size, onlySuggestEnabled);
+  async forUsers(q, size = 100, from = 0, onlySuggestEnabled = false) {
+    const { users, autocomplete } = await this.search('users', q, onlySuggestEnabled, size, from);
 
     const mappedUsers = users.map((user) => {
       user.fullName = this.getUserFullName(user);
@@ -47,9 +47,9 @@ export default class SearchService extends Service {
     return { autocomplete, users: mappedUsers };
   }
 
-  async search(type, q, size, onlySuggestEnabled) {
+  async search(type, q, onlySuggestEnabled, size, from) {
     const onlySuggest = onlySuggestEnabled ? '&onlySuggest=true' : '';
-    const url = `${this.host}/api/search/v1/${type}?q=${q}&size=${size}${onlySuggest}`;
+    const url = `${this.host}/api/search/v1/${type}?q=${q}&size=${size}&from=${from}${onlySuggest}`;
 
     const response = await waitForPromise(
       fetch(url, {

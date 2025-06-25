@@ -31,7 +31,9 @@ export default class GlobalSearchComponent extends Component {
   @cached
   get resultsData() {
     return new TrackedAsyncData(
-      this.args.query ? this.iliosSearch.forCurriculum(this.args.query) : null,
+      this.args.query
+        ? this.iliosSearch.forCurriculum(this.args.query, false, this.size, this.from)
+        : null,
     );
   }
 
@@ -40,9 +42,22 @@ export default class GlobalSearchComponent extends Component {
     return new TrackedAsyncData(this.store.findAll('school'));
   }
 
+  get from() {
+    return (this.args.page - 1) * this.size;
+  }
+
   get results() {
     if (this.resultsData.isResolved && this.resultsData.value) {
       return this.resultsData.value.courses;
+    }
+
+    return [];
+  }
+
+  get totalResults() {
+    if (this.resultsData.isResolved && this.resultsData.value) {
+      //the PaginationLinks component expects an array of results, we get a number so fake that up into an array
+      return Array.from(Array(this.resultsData.value.totalCourses).keys());
     }
 
     return [];
@@ -81,13 +96,6 @@ export default class GlobalSearchComponent extends Component {
   get filteredResults() {
     return this.yearFilteredResults.filter(
       (course) => !this.ignoredSchoolTitles.includes(course.school),
-    );
-  }
-
-  get paginatedResults() {
-    return this.filteredResults.slice(
-      this.args.page * this.size - this.size,
-      this.args.page * this.size,
     );
   }
 
@@ -151,7 +159,7 @@ export default class GlobalSearchComponent extends Component {
             {{t "general.currentlySearchingPrompt"}}
           </li>
         {{else}}
-          {{#each this.paginatedResults as |course|}}
+          {{#each this.results as |course|}}
             <CourseSearchResult @course={{course}} />
           {{else}}
             <li class="no-results">
@@ -206,7 +214,7 @@ export default class GlobalSearchComponent extends Component {
     </div>
     <PaginationLinks
       @page={{@page}}
-      @results={{this.filteredResults}}
+      @results={{this.totalResults}}
       @size={{this.size}}
       @onSelectPage={{@onSelectPage}}
     />
