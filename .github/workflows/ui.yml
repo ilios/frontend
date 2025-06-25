@@ -108,6 +108,6 @@ jobs:
           cache: pnpm
       - run: pnpm install
       - name: Run Percy Tests
-        run: pnpm --filter ${{ matrix.workspace }} exec percy exec -- ember test
+        run: pnpm --filter ${{ matrix.workspace }} exec percy exec -- ember test --filter="Acceptance"
         env:
           PERCY_TOKEN: "web_1899a9764a4891f3a19b87e52aa1ae038359e28ba550daa6bad00d0e0a230a33"
