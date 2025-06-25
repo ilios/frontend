@@ -10,6 +10,7 @@ import { on } from '@ember/modifier';
 import pick from 'ilios-common/helpers/pick';
 import set from 'ember-set-helper/helpers/set';
 import sortBy from 'ilios-common/helpers/sort-by';
+import { sortBy as uSortBy } from 'ilios-common/utils/array-helpers';
 import eq from 'ember-truth-helpers/helpers/eq';
 import { fn } from '@ember/helper';
 import includes from 'ilios-common/helpers/includes';
@@ -47,9 +48,23 @@ export default class ReportsCurriculumChooseCourse extends Component {
   }
 
   get bestSelectedSchoolId() {
+    // if the user explicitly selected a school from the dropdown, then use that one.
     if (this.selectedSchoolId) {
       return this.selectedSchoolId;
     }
+
+    // otherwise: if there were selected courses in the component input, then pick the first school by title
+    // amongst the schools that these selected courses belong to.
+    const schoolsWithSelectedCourses = this.args.schools.filter((school) => {
+      return school.years.some((year) => {
+        return year.courses.some((course) => this.args.selectedCourseIds.includes(course.id));
+      });
+    });
+    if (schoolsWithSelectedCourses.length) {
+      return uSortBy(schoolsWithSelectedCourses, 'title')[0].id;
+    }
+
+    // otherwise: pick the current user's primary school.
     return this.primarySchool?.id;
   }
 
