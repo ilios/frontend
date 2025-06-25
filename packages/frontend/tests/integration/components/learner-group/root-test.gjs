@@ -13,12 +13,12 @@ module('Integration | Component | learner-group/root', function (hooks) {
   setupMirage(hooks);
 
   hooks.beforeEach(async function () {
-    const school = this.server.create('school');
-    const program = this.server.create('program', { school });
+    this.school = this.server.create('school');
+    const program = this.server.create('program', { school: this.school });
     this.programYear = this.server.create('program-year', { program });
     this.cohort = this.server.create('cohort', { programYear: this.programYear });
 
-    const user = this.server.create('user', { school });
+    const user = this.server.create('user', { school: this.school });
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     class CurrentUserMock extends Service {
       async getModel() {
@@ -57,11 +57,11 @@ module('Integration | Component | learner-group/root', function (hooks) {
       users: [user3, user4],
     });
 
-    const course = this.server.create('course');
+    const course = this.server.create('course', { school: this.school });
     const session = this.server.create('session', { course });
     const offering = this.server.create('offering', { session });
 
-    const course2 = this.server.create('course');
+    const course2 = this.server.create('course', { school: this.school });
     const session2 = this.server.create('session', { course: course2 });
     const ilm = this.server.create('ilm-session', { session: session2 });
 
@@ -178,11 +178,11 @@ module('Integration | Component | learner-group/root', function (hooks) {
       cohort,
     });
 
-    const course = this.server.create('course');
+    const course = this.server.create('course', { school: this.school });
     const session = this.server.create('session', { course });
     const offering = this.server.create('offering', { session });
 
-    const course2 = this.server.create('course');
+    const course2 = this.server.create('course', { school: this.school });
     const session2 = this.server.create('session', { course: course2 });
     const ilm = this.server.create('ilm-session', { session: session2 });
 
@@ -255,11 +255,11 @@ module('Integration | Component | learner-group/root', function (hooks) {
       cohort,
     });
 
-    const course = this.server.create('course');
+    const course = this.server.create('course', { school: this.school });
     const session = this.server.create('session', { course });
     const offering = this.server.create('offering', { session });
 
-    const course2 = this.server.create('course');
+    const course2 = this.server.create('course', { school: this.school });
     const session2 = this.server.create('session', { course: course2 });
     const ilm = this.server.create('ilm-session', { session: session2 });
 
@@ -302,9 +302,82 @@ module('Integration | Component | learner-group/root', function (hooks) {
         />
       </template>,
     );
-
     assert.strictEqual(component.associatedCourses.courses[0].text, 'course 0 (2013 - 2014)');
     assert.strictEqual(component.associatedCourses.courses[1].text, 'course 1 (2013 - 2014)');
+  });
+
+  test('renders course and session associations', async function (assert) {
+    const user1 = this.server.create('user');
+    const user2 = this.server.create('user');
+    const user3 = this.server.create('user');
+    const user4 = this.server.create('user');
+    const user5 = this.server.create('user', {
+      firstName: 'Walther',
+      middleName: 'von der',
+      lastName: 'Vogelweide',
+    });
+    const user6 = this.server.create('user', {
+      firstName: 'Zeb',
+      lastName: 'Zoober',
+      displayName: 'Aardvark',
+    });
+    const cohort = this.server.create('cohort', {
+      title: 'this cohort',
+      users: [user1, user2, user3, user4],
+      programYear: this.programYear,
+    });
+    const subGroup = this.server.create('learner-group', {
+      title: 'test sub-group',
+      cohort,
+    });
+
+    const course = this.server.create('course', { school: this.school });
+    const session = this.server.create('session', { course });
+    const offering = this.server.create('offering', { session });
+
+    const course2 = this.server.create('course', { school: this.school });
+    const session2 = this.server.create('session', { course: course2 });
+    const ilm = this.server.create('ilm-session', { session: session2 });
+
+    const learnerGroup = this.server.create('learner-group', {
+      title: 'test group',
+      location: 'test location',
+      children: [subGroup],
+      instructors: [user5, user6],
+      users: [user1, user2],
+      offerings: [offering],
+      ilmSessions: [ilm],
+      cohort,
+    });
+    const learnerGroupModel = await this.owner
+      .lookup('service:store')
+      .findRecord('learner-group', learnerGroup.id);
+
+    this.set('learnerGroup', learnerGroupModel);
+    await render(
+      <template>
+        <Root
+          @canUpdate={{true}}
+          @setIsEditing={{(noop)}}
+          @setSortUsersBy={{(noop)}}
+          @setIsBulkAssigning={{(noop)}}
+          @sortUsersBy="fullName"
+          @learnerGroup={{this.learnerGroup}}
+          @isEditing={{false}}
+          @isBulkAssigning={{false}}
+        />
+      </template>,
+    );
+
+    assert.strictEqual(component.courseAssociations.associations.length, 2);
+    assert.strictEqual(component.courseAssociations.associations[0].school, 'school 0');
+    assert.strictEqual(component.courseAssociations.associations[0].course.text, 'course 0 (2013)');
+    assert.strictEqual(component.courseAssociations.associations[0].sessions.length, 1);
+    assert.strictEqual(component.courseAssociations.associations[0].sessions[0].text, 'session 0');
+    assert.strictEqual(component.courseAssociations.associations[1].school, 'school 0');
+    assert.strictEqual(component.courseAssociations.associations[1].course.text, 'course 1 (2013)');
+    assert.strictEqual(component.courseAssociations.associations[1].sessions.length, 1);
+    assert.strictEqual(component.courseAssociations.associations[1].sessions[0].text, 'session 1');
   });
 
   test('Needs accommodation', async function (assert) {
@@ -554,8 +627,8 @@ module('Integration | Component | learner-group/root', function (hooks) {
       title: 'this cohort',
       programYear: this.programYear,
     });
-    const course = this.server.create('course');
-    const course2 = this.server.create('course');
+    const course = this.server.create('course', { school: this.school });
+    const course2 = this.server.create('course', { school: this.school });
     const session = this.server.create('session', { course });
     const session2 = this.server.create('session', { course: course2 });
     const offering1 = this.server.create('offering', { session });
