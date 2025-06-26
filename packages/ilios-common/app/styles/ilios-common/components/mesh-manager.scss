@@ -76,6 +76,11 @@
 
     input[type="search"] {
       @include m.ilios-input;
+
+      &.error {
+        border: 1px solid c.$crimson;
+        outline-color: c.$crimson;
+      }
     }
 
     label {
