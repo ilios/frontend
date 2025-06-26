@@ -36,7 +36,6 @@ module('Integration | Component | learner-group/cohort-user-manager', function (
           @users={{this.users}}
           @canUpdate={{true}}
           @learnerGroupTitle="this group"
-          @topLevelGroupTitle="top level group"
           @sortBy="lastName"
           @setSortBy={{(noop)}}
           @addUserToGroup={{(noop)}}
@@ -45,7 +44,7 @@ module('Integration | Component | learner-group/cohort-user-manager', function (
       </template>,
     );
 
-    assert.strictEqual(component.title, 'Cohort Members NOT assigned to top level group (2)');
+    assert.strictEqual(component.title, 'Cohort Members NOT assigned to this group (2)');
     assert.strictEqual(component.users.length, 2);
     assert.strictEqual(component.users[0].name.userNameInfo.fullName, 'Jasper M. Dog');
     assert.notOk(component.users[0].name.userStatus.accountIsDisabled);
@@ -79,7 +78,6 @@ module('Integration | Component | learner-group/cohort-user-manager', function (
           @users={{this.users}}
           @canUpdate={{true}}
           @learnerGroupTitle="this group"
-          @topLevelGroupTitle="top level group"
           @sortBy="fullName"
           @setSortBy={{(noop)}}
           @addUserToGroup={{(noop)}}
@@ -111,7 +109,6 @@ module('Integration | Component | learner-group/cohort-user-manager', function (
           @users={{this.users}}
           @canUpdate={{true}}
           @learnerGroupTitle="this group"
-          @topLevelGroupTitle="top level group"
           @sortBy="firstName"
           @setSortBy={{(noop)}}
           @addUserToGroup={{(noop)}}
@@ -145,7 +142,6 @@ module('Integration | Component | learner-group/cohort-user-manager', function (
           @users={{this.users}}
           @canUpdate={{true}}
           @learnerGroupTitle="this group"
-          @topLevelGroupTitle="top level group"
           @sortBy="firstName"
           @setSortBy={{(noop)}}
           @addUserToGroup={{this.addOne}}
@@ -171,7 +167,6 @@ module('Integration | Component | learner-group/cohort-user-manager', function (
           @users={{this.users}}
           @canUpdate={{true}}
           @learnerGroupTitle="this group"
-          @topLevelGroupTitle="top level group"
           @sortBy="firstName"
           @setSortBy={{(noop)}}
           @addUserToGroup={{(noop)}}
@@ -205,7 +200,6 @@ module('Integration | Component | learner-group/cohort-user-manager', function (
           @users={{this.users}}
           @canUpdate={{true}}
           @learnerGroupTitle="this group"
-          @topLevelGroupTitle="top level group"
           @sortBy="firstName"
           @setSortBy={{(noop)}}
           @addUserToGroup={{(noop)}}
@@ -237,7 +231,6 @@ module('Integration | Component | learner-group/cohort-user-manager', function (
           @users={{this.users}}
           @canUpdate={{true}}
           @learnerGroupTitle="this group"
-          @topLevelGroupTitle="top level group"
           @sortBy="firstName"
           @setSortBy={{(noop)}}
           @addUserToGroup={{(noop)}}
@@ -279,7 +272,6 @@ module('Integration | Component | learner-group/cohort-user-manager', function (
           @users={{this.users}}
           @canUpdate={{true}}
           @learnerGroupTitle="this group"
-          @topLevelGroupTitle="top level group"
           @sortBy="firstName"
           @setSortBy={{(noop)}}
           @addUserToGroup={{(noop)}}
@@ -375,7 +367,6 @@ module('Integration | Component | learner-group/cohort-user-manager', function (
           @users={{this.users}}
           @canUpdate={{true}}
           @learnerGroupTitle="this group"
-          @topLevelGroupTitle="top level group"
           @sortBy="lastName"
           @setSortBy={{(noop)}}
           @addUserToGroup={{(noop)}}
@@ -408,7 +399,6 @@ module('Integration | Component | learner-group/cohort-user-manager', function (
           @users={{this.users}}
           @canUpdate={{true}}
           @learnerGroupTitle="this group"
-          @topLevelGroupTitle="top level group"
           @sortBy="firstName"
           @setSortBy={{(noop)}}
           @addUserToGroup={{(noop)}}
@@ -431,7 +421,6 @@ module('Integration | Component | learner-group/cohort-user-manager', function (
           @users={{this.users}}
           @canUpdate={{true}}
           @learnerGroupTitle="this group"
-          @topLevelGroupTitle="top level group"
           @sortBy="firstName"
           @setSortBy={{(noop)}}
           @addUserToGroup={{(noop)}}
@@ -454,7 +443,6 @@ module('Integration | Component | learner-group/cohort-user-manager', function (
           @users={{this.users}}
           @canUpdate={{true}}
           @learnerGroupTitle="this group"
-          @topLevelGroupTitle="top level group"
           @sortBy="firstName"
           @setSortBy={{(noop)}}
           @addUserToGroup={{(noop)}}
