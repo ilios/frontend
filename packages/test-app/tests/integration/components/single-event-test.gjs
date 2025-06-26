@@ -148,7 +148,7 @@ module('Integration | Component | ilios calendar single event', function (hooks)
     );
     assert.strictEqual(
       component.courseObjectives.objectiveList.title.expandCollapseSwitcher.ariaLabel,
-      'Show objectives',
+      'Show course objectives',
     );
     assert.strictEqual(
       component.courseLearningMaterials.expandCollapseSwitcher.ariaExpanded,
