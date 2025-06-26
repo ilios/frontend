@@ -153,6 +153,7 @@ general:
   groups: Groups
   hideCalendar: Hide Calendar
   hideCourseMaterials: Hide course materials
+  hideCourseObjectives: Hide course objectives
   hideFilters: Hide Filters
   hideIcsFeed: Hide ICS Feed Options
   hideObjectives: Hide objectives
@@ -328,6 +329,7 @@ general:
   showAllMyActivities: Show all my activities
   showCalendar: Show Calendar
   showCourseMaterials: Show course materials
+  showCourseObjectives: Show course objectives
   showFilters: Show Filters
   showIcsFeed: Show ICS Feed Options
   showLearnerGroupEvents: Show all events for assigned learner groups
