@@ -55,11 +55,7 @@ export default class SingleEventObjectiveList extends Component {
       <h3 class="title" data-test-title>
         <button
           class="expand-collapse-toggle-btn"
-          aria-label={{if
-            this.isExpanded
-            (t "general.hideObjectives")
-            (t "general.showObjectives")
-          }}
+          aria-label={{if this.isExpanded @ariaLabelHide @ariaLabelShow}}
           aria-expanded={{if this.isExpanded "true" "false"}}
           type="button"
           {{on "click" (set this "isExpanded" (not this.isExpanded))}}
