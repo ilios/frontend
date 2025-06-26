@@ -492,6 +492,8 @@ export default class SingleEvent extends Component {
             @listByPriorityPhrase={{t "general.listByPriority"}}
             @objectives={{this.sessionObjectives}}
             @title={{t "general.objectives"}}
+            @ariaLabelShow={{t "general.showObjectives"}}
+            @ariaLabelHide={{t "general.hideObjectives"}}
             @isExpandedByDefault={{true}}
           />
         </div>
@@ -526,6 +528,8 @@ export default class SingleEvent extends Component {
             @listByPriorityPhrase={{t "general.listByPriority"}}
             @objectives={{this.courseObjectives}}
             @title={{t "general.courseObjectives"}}
+            @ariaLabelShow={{t "general.showCourseObjectives"}}
+            @ariaLabelHide={{t "general.hideCourseObjectives"}}
             @isExpandedByDefault={{false}}
           />
         </div>
