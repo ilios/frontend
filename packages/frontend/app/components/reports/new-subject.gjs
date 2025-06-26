@@ -451,9 +451,12 @@ export default class ReportsNewSubjectComponent extends Component {
       const searchObjectTypes = ['course', 'instructor', 'learning material', 'mesh term'];
 
       if (searchObjectTypes.includes(this.prepositionalObject) && !this.prepositionalObjectId) {
-        const search = document.querySelector('[data-test-search-box] input');
-        search.classList.add('error');
-        search.focus();
+        const input = document.querySelector('[data-test-reports-new-subject] input.search-input');
+
+        if (input) {
+          input.classList.add('error');
+          input.focus();
+        }
       }
 
       return false;
