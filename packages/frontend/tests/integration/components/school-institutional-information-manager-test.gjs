@@ -40,7 +40,7 @@ module('Integration | Component | school-institutional-information-manager', fun
       </template>,
     );
 
-    assert.strictEqual(component.header.title, 'Curriculum Inventory Institutional Information');
+    assert.strictEqual(component.header.title, 'Institutional Information');
     assert.ok(component.header.hasSaveButton);
     assert.strictEqual(component.content.name.label, 'School Name');
     assert.strictEqual(component.content.name.value, 'School of Rocket Surgery');

@@ -12,12 +12,12 @@ import { fn } from '@ember/helper';
       class="school-institutional-information-details-header"
     >
       <div class="title">
-        {{t "general.curriculumInventoryInstitutionalInfo"}}
+        {{t "general.institutionalInformation"}}
       </div>
       <div class="actions">
         {{#if @canUpdate}}
           <button type="button" {{on "click" (fn @manage true)}}>
-            {{t "general.manageInstitutionalInfo"}}
+            {{t "general.manageInstitutionalInformation"}}
           </button>
         {{/if}}
       </div>
@@ -85,7 +85,7 @@ import { fn } from '@ember/helper';
         </div>
       {{else}}
         <div class="block" data-test-institution-none-exists-message>
-          {{t "general.noCurriculumInventoryInstitutionalInfo"}}
+          {{t "general.noInstitutionalInformation"}}
         </div>
       {{/if}}
     </div>

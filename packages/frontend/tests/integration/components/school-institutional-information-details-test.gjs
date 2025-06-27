@@ -37,8 +37,8 @@ module('Integration | Component | school-institutional-information-details', fun
       </template>,
     );
 
-    assert.strictEqual(component.header.title, 'Curriculum Inventory Institutional Information');
-    assert.strictEqual(component.header.manageTitle, 'Manage CIR Institutional Info');
+    assert.strictEqual(component.header.title, 'Institutional Information');
+    assert.strictEqual(component.header.manageTitle, 'Manage Institutional Information');
     assert.strictEqual(component.content.nameLabel, 'School Name:');
     assert.strictEqual(component.content.name, 'School of Rocket Surgery');
     assert.strictEqual(component.content.aamcCodeLabel, 'AAMC School ID (e.g. "Institution ID"):');
