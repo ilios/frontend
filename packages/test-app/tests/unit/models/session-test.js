@@ -182,6 +182,7 @@ module('Unit | Model | Session', function (hooks) {
     const learnerGroup1 = this.store.createRecord('learner-group');
     const learnerGroup2 = this.store.createRecord('learner-group');
     const learnerGroup3 = this.store.createRecord('learner-group');
+    const learnerGroup4 = this.store.createRecord('learner-group');
     const offering1 = this.store.createRecord('offering', {
       learnerGroups: [learnerGroup1, learnerGroup2],
       session,
@@ -191,16 +192,22 @@ module('Unit | Model | Session', function (hooks) {
       session,
     });
 
-    assert.strictEqual(await waitForResource(session, 'learnerGroupCount'), 3);
+    this.store.createRecord('ilm-session', {
+      id: '1',
+      learnerGroups: [learnerGroup1, learnerGroup4],
+      session,
+    });
 
-    const learnerGroup4 = this.store.createRecord('learner-group');
+    assert.strictEqual(await waitForResource(session, 'learnerGroupCount'), 4);
+
+    const learnerGroup5 = this.store.createRecord('learner-group');
     this.store.createRecord('offering', {
-      learnerGroups: [learnerGroup4],
+      learnerGroups: [learnerGroup5],
       session,
     });
     this.store.createRecord('learner-group', { offerings: [offering1] });
 
-    assert.strictEqual(await waitForResource(session, 'learnerGroupCount'), 5);
+    assert.strictEqual(await waitForResource(session, 'learnerGroupCount'), 6);
   });
 
   test('isIndependentLearning', async function (assert) {
