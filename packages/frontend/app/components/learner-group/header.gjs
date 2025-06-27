@@ -132,6 +132,19 @@ export default class LearnerGroupHeaderComponent extends Component {
             {{t "general.learnerGroups"}}
           </LinkTo>
         </span>
+        <span>
+          <LinkTo
+            @route="learner-groups"
+            @query={{hash
+              school=this.school.id
+              program=this.program.id
+              programYear=this.programYear.id
+            }}
+          >
+            {{this.program.title}}
+            {{this.programYear.cohort.title}}
+          </LinkTo>
+        </span>
         {{#if @learnerGroup.allParents}}
           {{#each (reverse @learnerGroup.allParents) as |parent|}}
             <span>
