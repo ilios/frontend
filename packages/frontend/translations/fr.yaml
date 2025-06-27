@@ -98,7 +98,6 @@ general:
   curriculumReports: "Rapports des programmes d'études"
   currentSchool: Écôle Actuelle
   curriculumInventory: "Inventaire des programmes d'études"
-  curriculumInventoryInstitutionalInfo: "Inventaire des programmes d'études informations institutionnelles"
   curriculumInventoryReport: "Rapport d'inventaire des programmes d'études"
   curriculumInventoryReportRollover: "Roulement Rapport d'inventaire des programmes d'études"
   curriculumInventoryReportRolloverSummary: "Cette action copiera la structure de ce rapport à utiliser dans votre année cible. Il ne copiera pas les informations de cours, uniquement la structure de bloc de séquence de niveau supérieur. Vous devrez ajouter les informations de cours appropriées et modifier les dates de début et de fin du bloc de séquence une fois que vous aurez reconduit la structure de rapport existante."
@@ -173,6 +172,7 @@ general:
   iliosUpdatePending: "hourra! Nous avons fait Ilios mieux. Vous obtiendrez le nouveau truc sur votre connexion prochaine, ou cliquerez pour mettre à jour maintenant."
   in: en
   includedInGrade: Inclus dans le grade
+  institutionalInformation: "Inventaire des programmes d'études informations institutionnelles"
   instructionalMethod: "Modalité d'Instruction"
   instructionalMethods: "Modalités d'Instruction"
   instructorGroup: Groupe des Instructeurs
@@ -211,7 +211,7 @@ general:
   manageDefaultInstructors: Gérer les instructeurs par défaut
   manageEmails: Gérer les emails
   manageGroupMembership: "Gérer l'appartenance au groupe"
-  manageInstitutionalInfo: Manager les informations institutionnelles du CIR
+  manageInstitutionalInformation: Manager les informations institutionnelles
   manageSessionAttributes: Gérer Attributs de Séance
   manageUsers: Gérer les utilisateurs
   manageUsersSummaryTitle: "utilisateurs d'Ilios"
@@ -258,7 +258,7 @@ general:
   noAvailableCohorts: Pas des Cohortes disponsibles
   noCohortsAvailableForStudentAssignment: "Il n'y a pas de cohortes disponibles pour l'affectation des étudiants dans cette école."
   noCourses: "Il n'y a aucun des cours dans cette école."
-  noCurriculumInventoryInstitutionalInfo: "Aucune information institutionnelle n'a été configurée pour cette école."
+  noInstitutionalInformation: "Aucune information institutionnelle n'a été configurée pour cette école."
   noLearnerGroups: Pas de groupes des Étudiants
   nonClerkshipSequenceBlocks: Blocs de séquence non stage
   nonStudent: Non étudiant

@@ -77,7 +77,7 @@ export default class SchoolInstitutionalInformationManagerComponent extends Comp
           class="school-institutional-information-manager-header"
         >
           <div class="title">
-            {{t "general.curriculumInventoryInstitutionalInfo"}}
+            {{t "general.institutionalInformation"}}
           </div>
           <div class="actions">
             {{#if @canUpdate}}
