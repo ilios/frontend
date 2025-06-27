@@ -146,7 +146,7 @@ export default class ReportsCurriculumChooseCourse extends Component {
               indeterminate={{y.hasSomeSelectedCourses}}
               {{on "click" (fn this.toggleAllCoursesInYear y)}}
               disabled={{eq y.courses.length 0}}
-              aria-label={{t "general.selectedAllOrNone"}}
+              aria-label={{t "general.selectAllOrNone"}}
               data-test-toggle-all
             />
             <button

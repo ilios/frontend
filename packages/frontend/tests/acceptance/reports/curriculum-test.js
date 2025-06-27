@@ -132,7 +132,7 @@ module('Acceptance | Reports - Curriculum Reports', function (hooks) {
     const so = page.curriculum.sessionObjectivesResult;
 
     await page.visitCurriculumReports();
-    await page.curriculum.chooseCourse.years[0].toggleAll();
+    await page.curriculum.chooseCourse.years[0].toggleAll.click();
     await page.curriculum.header.reportSelector.set('sessionObjectives');
     assert.ok(
       so.header.runSummaryText.includes(
@@ -344,7 +344,7 @@ module('Acceptance | Reports - Curriculum Reports', function (hooks) {
     const lg = page.curriculum.learnerGroupsResult;
 
     await page.visitCurriculumReports();
-    await page.curriculum.chooseCourse.years[0].toggleAll();
+    await page.curriculum.chooseCourse.years[0].toggleAll.click();
     await page.curriculum.header.reportSelector.set('learnerGroups');
     assert.ok(
       lg.header.runSummaryText.includes(
