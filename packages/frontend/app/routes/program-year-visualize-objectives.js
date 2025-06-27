@@ -10,6 +10,10 @@ export default class ProgramYearVisualizeObjectivesRoute extends Route {
     this.session.requireAuthentication(transition, 'login');
   }
 
+  model(params) {
+    return this.store.findRecord('program-year', params.program_year_id);
+  }
+
   /**
    * Prefetch related data to limit network requests
    */
