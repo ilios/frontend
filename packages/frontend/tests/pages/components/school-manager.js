@@ -6,8 +6,8 @@ import schoolVocabulariesCollapsed from './school-vocabularies-collapsed';
 import schoolSessionTypesExpanded from './school-session-types-expanded';
 import schoolSessionTypesCollapsed from './school-session-types-collapsed';
 import schoolSessionAttributes from './school-session-attributes';
-import schoolCurriculumInventoryInstitutionManager from './school-curriculum-inventory-institution-manager';
-import schoolCurriculumInventoryInstitutionDetails from './school-curriculum-inventory-institution-details';
+import schoolInstitutionalInformationManager from './school-institutional-information-manager';
+import schoolInstitutionalInformationDetails from './school-institutional-information-details';
 import schoolLeadershipCollapsed from 'ilios-common/page-objects/components/leadership-collapsed';
 import schoolLeadershipExpanded from 'ilios-common/page-objects/components/leadership-expanded';
 import emails from './school/emails';
@@ -33,8 +33,8 @@ const definition = {
   schoolSessionTypesExpanded,
   schoolSessionTypesCollapsed,
   schoolSessionAttributes,
-  schoolCurriculumInventoryInstitutionManager,
-  schoolCurriculumInventoryInstitutionDetails,
+  schoolInstitutionalInformationDetails,
+  schoolInstitutionalInformationManager,
   emails,
   emailsEditor,
 };
