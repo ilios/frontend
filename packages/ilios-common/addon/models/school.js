@@ -23,7 +23,7 @@ export default class School extends Model {
   @hasMany('instructor-group', { async: true, inverse: 'school' })
   instructorGroups;
   @belongsTo('curriculum-inventory-institution', { async: true, inverse: 'school' })
-  curriculumInventoryInstitution;
+  institutionalInformation;
   @hasMany('session-type', { async: true, inverse: 'school' })
   sessionTypes;
   @hasMany('user', { async: true, inverse: 'directedSchools' })

@@ -32,8 +32,8 @@ import SchoolSessionTypesCollapsed from 'frontend/components/school-session-type
 import SchoolSessionAttributes from 'frontend/components/school-session-attributes';
 import EmailsEditor from 'frontend/components/school/emails-editor';
 import Emails from 'frontend/components/school/emails';
-import SchoolCurriculumInventoryInstitutionManager from 'frontend/components/school-curriculum-inventory-institution-manager';
-import SchoolCurriculumInventoryInstitutionDetails from 'frontend/components/school-curriculum-inventory-institution-details';
+import SchoolInstitutionalInformationManager from 'frontend/components/school-institutional-information-manager';
+import SchoolInstitutionalInformationDetails from 'frontend/components/school-institutional-information-details';
 
 export default class SchoolManagerComponent extends Component {
   @service flashMessages;
@@ -50,16 +50,18 @@ export default class SchoolManagerComponent extends Component {
   });
 
   @cached
-  get institutionData() {
-    return new TrackedAsyncData(this.args.school.curriculumInventoryInstitution);
+  get institutionalInformationData() {
+    return new TrackedAsyncData(this.args.school.institutionalInformation);
   }
 
-  get institutionLoaded() {
-    return this.institutionData.isResolved;
+  get institutionalInformationLoaded() {
+    return this.institutionalInformationData.isResolved;
   }
 
-  get institution() {
-    return this.institutionData.isResolved ? this.institutionData.value : null;
+  get institutionalInformation() {
+    return this.institutionalInformationData.isResolved
+      ? this.institutionalInformationData.value
+      : null;
   }
 
   @cached
@@ -259,19 +261,19 @@ export default class SchoolManagerComponent extends Component {
             @school={{@school}}
           />
         {{/if}}
-        {{#if @schoolManageInstitution}}
-          {{#if this.institutionLoaded}}
-            <SchoolCurriculumInventoryInstitutionManager
+        {{#if @schoolManageInstitutionalInformation}}
+          {{#if this.institutionalInformationLoaded}}
+            <SchoolInstitutionalInformationManager
               @canUpdate={{@canUpdateSchool}}
-              @manage={{@setSchoolManageInstitution}}
-              @institution={{this.institution}}
-              @save={{this.saveInstitution}}
+              @manage={{@setSchoolManageInstitutionalInformation}}
+              @institutionalInformation={{this.institutionalInformation}}
+              @save={{this.saveInstitutionalInformationalInformation}}
             />
           {{/if}}
         {{else}}
-          <SchoolCurriculumInventoryInstitutionDetails
+          <SchoolInstitutionalInformationDetails
             @canUpdate={{@canUpdateSchool}}
-            @manage={{@setSchoolManageInstitution}}
+            @manage={{@setSchoolManageInstitutionalInformation}}
             @school={{@school}}
           />
         {{/if}}

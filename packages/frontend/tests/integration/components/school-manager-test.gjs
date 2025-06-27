@@ -85,8 +85,8 @@ module('Integration | Component | school manager', function (hooks) {
     assert.notOk(component.schoolSessionTypesCollapsed.isVisible);
     assert.ok(component.schoolSessionAttributes.expanded.isVisible);
     assert.notOk(component.schoolSessionAttributes.collapsed.isVisible);
-    assert.ok(component.schoolCurriculumInventoryInstitutionManager.isVisible);
-    assert.notOk(component.schoolCurriculumInventoryInstitutionDetails.isVisible);
+    assert.ok(component.schoolInstitutionalInformationDetails.isVisible);
+    assert.notOk(component.schoolInstitutionalInformationManager.isVisible);
     assert.ok(component.emailsEditor.isVisible);
     assert.notOk(component.emails.isVisible);
   });
@@ -155,8 +155,8 @@ module('Integration | Component | school manager', function (hooks) {
     assert.ok(component.schoolSessionTypesCollapsed.isVisible);
     assert.notOk(component.schoolSessionAttributes.expanded.isVisible);
     assert.ok(component.schoolSessionAttributes.collapsed.isVisible);
-    assert.notOk(component.schoolCurriculumInventoryInstitutionManager.isVisible);
-    assert.ok(component.schoolCurriculumInventoryInstitutionDetails.isVisible);
+    assert.notOk(component.schoolInstitutionalInformationManager.isVisible);
+    assert.ok(component.schoolInstitutionalInformationDetails.isVisible);
     assert.notOk(component.emailsEditor.isVisible);
     assert.ok(component.emails.isVisible);
   });

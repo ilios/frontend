@@ -22,6 +22,6 @@ export default class CurriculumInventoryInstitution extends Model {
   @attr('string')
   addressCountryCode;
 
-  @belongsTo('school', { async: true, inverse: 'curriculumInventoryInstitution' })
+  @belongsTo('school', { async: true, inverse: 'institutionalInformation' })
   school;
 }

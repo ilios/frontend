@@ -14,15 +14,16 @@ import YupValidations from 'ilios-common/classes/yup-validations';
 import YupValidationMessage from 'ilios-common/components/yup-validation-message';
 import { number, string } from 'yup';
 
-export default class SchoolCurriculumInventoryInstitutionManagerComponent extends Component {
+export default class SchoolInstitutionalInformationManagerComponent extends Component {
   @service store;
-  @tracked name = this.args.institution?.name ?? '';
-  @tracked aamcCode = this.args.institution?.aamcCode ?? '';
-  @tracked addressStreet = this.args.institution?.addressStreet ?? '';
-  @tracked addressCity = this.args.institution?.addressCity ?? '';
-  @tracked addressStateOrProvince = this.args.institution?.addressStateOrProvince ?? '';
-  @tracked addressZipCode = this.args.institution?.addressZipCode ?? '';
-  @tracked addressCountryCode = this.args.institution?.addressCountryCode ?? '';
+  @tracked name = this.args.institutionalInformation?.name ?? '';
+  @tracked aamcCode = this.args.institutionalInformation?.aamcCode ?? '';
+  @tracked addressStreet = this.args.institutionalInformation?.addressStreet ?? '';
+  @tracked addressCity = this.args.institutionalInformation?.addressCity ?? '';
+  @tracked addressStateOrProvince =
+    this.args.institutionalInformation?.addressStateOrProvince ?? '';
+  @tracked addressZipCode = this.args.institutionalInformation?.addressZipCode ?? '';
+  @tracked addressCountryCode = this.args.institutionalInformation?.addressCountryCode ?? '';
 
   validations = new YupValidations(this, {
     name: string().ensure().trim().min(1).max(100),
@@ -41,18 +42,18 @@ export default class SchoolCurriculumInventoryInstitutionManagerComponent extend
       return false;
     }
     this.validations.clearErrorDisplay();
-    let institution = this.args.institution;
-    if (!institution) {
-      institution = this.store.createRecord('curriculum-inventory-institution');
+    let institutionalInformation = this.args.institutionalInformation;
+    if (!institutionalInformation) {
+      institutionalInformation = this.store.createRecord('curriculum-inventory-institution');
     }
-    institution.set('name', this.name);
-    institution.set('aamcCode', this.aamcCode);
-    institution.set('addressStreet', this.addressStreet);
-    institution.set('addressCity', this.addressCity);
-    institution.set('addressStateOrProvince', this.addressStateOrProvince);
-    institution.set('addressZipCode', this.addressZipCode);
-    institution.set('addressCountryCode', this.addressCountryCode);
-    await this.args.save(institution);
+    institutionalInformation.set('name', this.name);
+    institutionalInformation.set('aamcCode', this.aamcCode);
+    institutionalInformation.set('addressStreet', this.addressStreet);
+    institutionalInformation.set('addressCity', this.addressCity);
+    institutionalInformation.set('addressStateOrProvince', this.addressStateOrProvince);
+    institutionalInformation.set('addressZipCode', this.addressZipCode);
+    institutionalInformation.set('addressCountryCode', this.addressCountryCode);
+    await this.args.save(institutionalInformation);
     this.args.manage(false);
   });
 
@@ -67,13 +68,13 @@ export default class SchoolCurriculumInventoryInstitutionManagerComponent extend
   <template>
     {{#let (uniqueId) as |templateId|}}
       <div
-        class="school-curriculum-inventory-institution-manager"
-        data-test-school-curriculum-inventory-institution-manager
+        class="school-institutional-information-manager"
+        data-test-school-institutional-information-manager
         ...attributes
       >
         <div
-          data-test-school-curriculum-inventory-institution-manager-header
-          class="school-curriculum-inventory-institution-manager-header"
+          data-test-school-institutional-information-manager-header
+          class="school-institutional-information-manager-header"
         >
           <div class="title">
             {{t "general.curriculumInventoryInstitutionalInfo"}}
@@ -93,8 +94,8 @@ export default class SchoolCurriculumInventoryInstitutionManagerComponent extend
           </div>
         </div>
         <div
-          data-test-school-curriculum-inventory-institution-manager-content
-          class="school-curriculum-inventory-institution-manager-content"
+          data-test-school-institutional-information-manager-content
+          class="school-institutional-information-manager-content"
         >
           <div class="form">
             <div class="item" data-test-institution-name>
@@ -106,7 +107,7 @@ export default class SchoolCurriculumInventoryInstitutionManagerComponent extend
                 type="text"
                 value={{this.name}}
                 {{on "input" (pick "target.value" (set this "name"))}}
-                {{on "keyup" (if @institution (perform this.saveOrCancel) (noop))}}
+                {{on "keyup" (if @institutionalInformation (perform this.saveOrCancel) (noop))}}
                 {{this.validations.attach "name"}}
               />
               <YupValidationMessage
@@ -125,7 +126,7 @@ export default class SchoolCurriculumInventoryInstitutionManagerComponent extend
                 maxlength="5"
                 value={{this.aamcCode}}
                 {{on "input" (pick "target.value" (set this "aamcCode"))}}
-                {{on "keyup" (if @institution (perform this.saveOrCancel) (noop))}}
+                {{on "keyup" (if @institutionalInformation (perform this.saveOrCancel) (noop))}}
                 {{this.validations.attach "aamcCode"}}
               />
               <YupValidationMessage
@@ -143,7 +144,7 @@ export default class SchoolCurriculumInventoryInstitutionManagerComponent extend
                 type="text"
                 value={{this.addressStreet}}
                 {{on "input" (pick "target.value" (set this "addressStreet"))}}
-                {{on "keyup" (if @institution (perform this.saveOrCancel) (noop))}}
+                {{on "keyup" (if @institutionalInformation (perform this.saveOrCancel) (noop))}}
                 {{this.validations.attach "addressStreet"}}
               />
               <YupValidationMessage
@@ -161,7 +162,7 @@ export default class SchoolCurriculumInventoryInstitutionManagerComponent extend
                 type="text"
                 value={{this.addressCity}}
                 {{on "input" (pick "target.value" (set this "addressCity"))}}
-                {{on "keyup" (if @institution (perform this.saveOrCancel) (noop))}}
+                {{on "keyup" (if @institutionalInformation (perform this.saveOrCancel) (noop))}}
                 {{this.validations.attach "addressCity"}}
               />
               <YupValidationMessage
@@ -179,7 +180,7 @@ export default class SchoolCurriculumInventoryInstitutionManagerComponent extend
                 type="text"
                 value={{this.addressStateOrProvince}}
                 {{on "input" (pick "target.value" (set this "addressStateOrProvince"))}}
-                {{on "keyup" (if @institution (perform this.saveOrCancel) (noop))}}
+                {{on "keyup" (if @institutionalInformation (perform this.saveOrCancel) (noop))}}
                 {{this.validations.attach "addressStateOrProvince"}}
               />
               <YupValidationMessage
@@ -197,7 +198,7 @@ export default class SchoolCurriculumInventoryInstitutionManagerComponent extend
                 type="text"
                 value={{this.addressZipCode}}
                 {{on "input" (pick "target.value" (set this "addressZipCode"))}}
-                {{on "keyup" (if @institution (perform this.saveOrCancel) (noop))}}
+                {{on "keyup" (if @institutionalInformation (perform this.saveOrCancel) (noop))}}
                 {{this.validations.attach "addressZipCode"}}
               />
               <YupValidationMessage
@@ -216,7 +217,7 @@ export default class SchoolCurriculumInventoryInstitutionManagerComponent extend
                 maxlength="2"
                 value={{this.addressCountryCode}}
                 {{on "input" (pick "target.value" (set this "addressCountryCode"))}}
-                {{on "keyup" (if @institution (perform this.saveOrCancel) (noop))}}
+                {{on "keyup" (if @institutionalInformation (perform this.saveOrCancel) (noop))}}
                 {{this.validations.attach "addressCountryCode"}}
               />
               <YupValidationMessage
