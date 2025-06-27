@@ -5,13 +5,12 @@ import { DateTime } from 'luxon';
 import { TrackedAsyncData } from 'ember-async-data';
 import { cached } from '@glimmer/tracking';
 import scrollIntoView from 'ilios-common/modifiers/scroll-into-view';
-import notEq from 'ember-truth-helpers/helpers/not-eq';
+import { gt, notEq } from 'ember-truth-helpers';
 import { on } from '@ember/modifier';
 import { fn } from '@ember/helper';
 import optional from 'ilios-common/helpers/optional';
 import t from 'ember-intl/helpers/t';
 import FaIcon from 'ilios-common/components/fa-icon';
-import gt from 'ember-truth-helpers/helpers/gt';
 import WeekGlanceEvent from 'ilios-common/components/week-glance-event';
 
 export default class WeeklyGlance extends Component {
@@ -113,6 +112,21 @@ export default class WeeklyGlance extends Component {
       return ev.postrequisites.length === 0 || !ev.ilmSession;
     });
   }
+
+  get nonPreWorkEventsByDay() {
+    // This transforms the list of events
+    // into a map that groups events by the same start date.
+    const eventsByDate = new Map();
+    this.nonIlmPreWorkEvents.forEach((event) => {
+      const startDate = DateTime.fromISO(event.startDate);
+      const date = startDate.toISODate();
+      if (!eventsByDate.has(date)) {
+        eventsByDate.set(date, []);
+      }
+      eventsByDate.get(date).push(event);
+    });
+    return eventsByDate;
+  }
   <template>
     <div
       class="week-glance"
@@ -144,9 +158,13 @@ export default class WeeklyGlance extends Component {
       {{#unless @collapsed}}
         {{#if this.eventsLoaded}}
           {{#if (gt this.nonIlmPreWorkEvents.length 0)}}
-            {{#each this.nonIlmPreWorkEvents as |event|}}
-              <WeekGlanceEvent @event={{event}} />
-            {{/each}}
+            {{#each-in this.nonPreWorkEventsByDay as |date eventsByDay|}}
+              <div class="events-by-date" data-test-events-by-date>
+                {{#each eventsByDay as |event|}}
+                  <WeekGlanceEvent @event={{event}} />
+                {{/each}}
+              </div>
+            {{/each-in}}
           {{else}}
             <p>
               {{t "general.none"}}

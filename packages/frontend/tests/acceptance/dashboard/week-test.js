@@ -1,4 +1,4 @@
-import { currentRouteName, findAll } from '@ember/test-helpers';
+import { currentRouteName } from '@ember/test-helpers';
 import { DateTime } from 'luxon';
 import { module, test } from 'qunit';
 import { setupAuthentication, freezeDateAt, unfreezeDate } from 'ilios-common';
@@ -23,7 +23,7 @@ module('Acceptance | Dashboard Week at a Glance', function (hooks) {
   });
 
   test('shows events', async function (assert) {
-    assert.expect(4);
+    assert.expect(6);
     const aug16th2023 = DateTime.fromObject({
       year: 2023,
       month: 8,
@@ -57,13 +57,15 @@ module('Acceptance | Dashboard Week at a Glance', function (hooks) {
     await percySnapshot(assert);
     assert.strictEqual(currentRouteName(), 'dashboard.week');
 
-    assert.strictEqual(page.week.weekGlance.events.length, 2);
-    assert.strictEqual(page.week.weekGlance.events[0].title, 'start of week');
-    assert.strictEqual(page.week.weekGlance.events[1].title, 'end of week');
+    assert.strictEqual(page.week.weekGlance.eventsByDate.length, 2);
+    assert.strictEqual(page.week.weekGlance.eventsByDate[0].events.length, 1);
+    assert.strictEqual(page.week.weekGlance.eventsByDate[0].events[0].title, 'start of week');
+    assert.strictEqual(page.week.weekGlance.eventsByDate[1].events.length, 1);
+    assert.strictEqual(page.week.weekGlance.eventsByDate[1].events[0].title, 'end of week');
   });
 
   test('shows all pre work', async function (assert) {
-    assert.expect(13);
+    assert.expect(14);
     const prerequisites = [1, 2, 3].map((id) => {
       return {
         user: Number(this.user.id),
@@ -117,8 +119,9 @@ module('Acceptance | Dashboard Week at a Glance', function (hooks) {
     await percySnapshot(assert);
     assert.strictEqual(currentRouteName(), 'dashboard.week');
 
-    assert.strictEqual(page.week.weekGlance.events.length, 1);
-    const { learningMaterials } = page.week.weekGlance.events[0];
+    assert.strictEqual(page.week.weekGlance.eventsByDate.length, 1);
+    assert.strictEqual(page.week.weekGlance.eventsByDate[0].events.length, 1);
+    const { learningMaterials } = page.week.weekGlance.eventsByDate[0].events[0];
     assert.strictEqual(learningMaterials.prework.length, 3);
     assert.strictEqual(learningMaterials.prework[0].name, 'pre 1');
     assert.strictEqual(learningMaterials.prework[0].materials.length, 2);
@@ -136,7 +139,7 @@ module('Acceptance | Dashboard Week at a Glance', function (hooks) {
   });
 
   test('week summary displays the whole week', async function (assert) {
-    assert.expect(3);
+    assert.expect(5);
     const startOfTheWeek = DateTime.fromJSDate(
       this.owner.lookup('service:locale-days').firstDayOfThisWeek,
     ).set({ minute: 2 });
@@ -158,24 +161,22 @@ module('Acceptance | Dashboard Week at a Glance', function (hooks) {
       offering: 2,
       isPublished: true,
     });
-    const dashboard = '.dashboard-week';
-    const events = `${dashboard} .event`;
 
     await page.visit();
-
-    const eventBLocks = findAll(events);
-    assert.strictEqual(eventBLocks.length, 2);
     const options = {
       weekday: 'long',
       hour: 'numeric',
       minute: 'numeric',
     };
+    assert.strictEqual(page.week.weekGlance.eventsByDate.length, 2);
+    assert.strictEqual(page.week.weekGlance.eventsByDate[0].events.length, 1);
     assert.strictEqual(
-      page.week.weekGlance.events[0].text,
+      page.week.weekGlance.eventsByDate[0].events[0].text,
       'event 0 ' + this.intl.formatTime(startOfTheWeek.toJSDate(), options),
     );
+    assert.strictEqual(page.week.weekGlance.eventsByDate[1].events.length, 1);
     assert.strictEqual(
-      page.week.weekGlance.events[1].text,
+      page.week.weekGlance.eventsByDate[1].events[0].text,
       'event 1 ' + this.intl.formatTime(endOfTheWeek.toJSDate(), options),
     );
   });

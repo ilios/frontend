@@ -10,7 +10,7 @@ import { setLocale, setupIntl } from 'ember-intl/test-support';
 import WeekGlance from 'ilios-common/components/week-glance';
 import formatDate from 'ember-intl/helpers/format-date';
 
-module('Integration | Component | week glance', function (hooks) {
+module('Integration | Component | week-glance', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
   setupIntl(hooks, 'en-us');
@@ -56,7 +56,7 @@ module('Integration | Component | week glance', function (hooks) {
     });
     this.server.create('userevent', {
       name: 'Finding the Point in Life',
-      startDate: testDate.toISO(),
+      startDate: testDate.plus({ day: 1 }).toISO(),
       isBlanked: false,
       isPublished: true,
       isScheduled: false,
@@ -81,7 +81,7 @@ module('Integration | Component | week glance', function (hooks) {
     });
     this.server.create('userevent', {
       name: 'Schedule some materials',
-      startDate: testDate.toISO(),
+      startDate: testDate.plus({ day: 1 }).toISO(),
       location: 'Room 123',
       isBlanked: false,
       isPublished: true,
@@ -134,11 +134,12 @@ module('Integration | Component | week glance', function (hooks) {
     );
 
     assert.strictEqual(component.title, this.getTitle(true));
-
-    assert.strictEqual(component.events.length, 3);
-    assert.strictEqual(component.events[0].title, 'Learn to Learn');
-    assert.strictEqual(component.events[1].title, 'Finding the Point in Life');
-    assert.strictEqual(component.events[2].title, 'Schedule some materials');
+    assert.strictEqual(component.eventsByDate.length, 2);
+    assert.strictEqual(component.eventsByDate[0].events.length, 1);
+    assert.strictEqual(component.eventsByDate[0].events[0].title, 'Learn to Learn');
+    assert.strictEqual(component.eventsByDate[1].events.length, 2);
+    assert.strictEqual(component.eventsByDate[1].events[0].title, 'Finding the Point in Life');
+    assert.strictEqual(component.eventsByDate[1].events[1].title, 'Schedule some materials');
 
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
