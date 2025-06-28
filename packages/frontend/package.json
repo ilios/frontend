@@ -50,7 +50,7 @@
     "@glimmer/tracking": "^1.1.2",
     "@percy/cli": "^1.30.7",
     "@percy/ember": "^4.2.0",
-    "@sentry/ember": "^9.25.0",
+    "@sentry/ember": "^9.31.0",
     "@warp-drive/build-config": "5.5.0",
     "broccoli-asset-rev": "^3.0.0",
     "broccoli-file-creator": "^2.1.1",
