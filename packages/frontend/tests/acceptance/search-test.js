@@ -136,22 +136,42 @@ module('Acceptance | search', function (hooks) {
       };
     });
     await page.visit();
-    assert.strictEqual(currentURL(), '/search');
+    assert.strictEqual(currentURL(), '/search', 'url is correct');
     await page.globalSearch.searchBox.input(firstInput);
     await page.globalSearch.searchBox.clickIcon();
     await page.paginationLinks.pageLinks[1].click();
-    assert.strictEqual(page.globalSearch.searchResults.length, 10);
-    assert.strictEqual(page.globalSearch.searchResults[0].courseTitle, '2019 course 11');
-    assert.strictEqual(page.globalSearch.searchBox.inputValue, firstInput);
-    assert.strictEqual(currentURL(), `/search?page=2&q=${firstInput}`);
+    assert.strictEqual(
+      page.globalSearch.searchResults.length,
+      10,
+      'search result count is correct',
+    );
+    assert.strictEqual(
+      page.globalSearch.searchResults[0].courseTitle,
+      '2019 course 11',
+      'first result title is correct',
+    );
+    assert.strictEqual(
+      page.globalSearch.searchBox.inputValue,
+      firstInput,
+      'search input value maintained after pagination change',
+    );
+    assert.strictEqual(currentURL(), `/search?page=2&q=${firstInput}`, 'url is correct');
     await page.globalSearch.searchResults[0].clickCourse();
-    assert.strictEqual(currentURL(), `/courses/11`);
+    assert.strictEqual(currentURL(), `/courses/11`, 'course url is correct');
     await page.visit({
       page: 2,
       q: firstInput,
     });
-    assert.strictEqual(page.globalSearch.searchResults.length, 10);
-    assert.strictEqual(page.globalSearch.searchResults[0].courseTitle, '2019 course 11');
+    assert.strictEqual(
+      page.globalSearch.searchResults.length,
+      10,
+      'search result count is still correct',
+    );
+    assert.strictEqual(
+      page.globalSearch.searchResults[0].courseTitle,
+      '2019 course 11',
+      'first result title is still correct',
+    );
   });
 
   test('clicking back on search updates results and input #4759', async function (assert) {
