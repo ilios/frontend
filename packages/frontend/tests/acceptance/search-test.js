@@ -5,6 +5,7 @@ import { setupAuthentication } from 'ilios-common';
 import page from 'frontend/tests/pages/search';
 import dashboardPage from 'frontend/tests/pages/dashboard';
 import percySnapshot from '@percy/ember';
+import currentAcademicYear from 'ilios-common/utils/current-academic-year';
 
 module('Acceptance | search', function (hooks) {
   setupApplicationTest(hooks);
@@ -115,12 +116,13 @@ module('Acceptance | search', function (hooks) {
 
     const school = this.server.create('school');
     this.server.createList('course', 25, { school });
+    const year = currentAcademicYear();
     const courses = [];
     for (let i = 1; i < 25; i++) {
       courses.push({
         id: i,
         title: `course ${i}`,
-        year: 2019,
+        year,
         school: school.title,
         sessions: [],
       });
@@ -147,7 +149,7 @@ module('Acceptance | search', function (hooks) {
     );
     assert.strictEqual(
       page.globalSearch.searchResults[0].courseTitle,
-      '2019 course 11',
+      `${year} course 11`,
       'first result title is correct',
     );
     assert.strictEqual(
@@ -169,7 +171,7 @@ module('Acceptance | search', function (hooks) {
     );
     assert.strictEqual(
       page.globalSearch.searchResults[0].courseTitle,
-      '2019 course 11',
+      `${year} course 11`,
       'first result title is still correct',
     );
   });
@@ -256,10 +258,11 @@ module('Acceptance | search', function (hooks) {
 
     const schools = this.server.createList('school', 3);
     const courses = [];
+    const year = currentAcademicYear();
     for (let i = 0; i < 3; i++) {
       courses.push({
         title: `Course ${i}`,
-        year: 2019,
+        year,
         school: schools[i].title,
         sessions: [],
       });
@@ -280,7 +283,7 @@ module('Acceptance | search', function (hooks) {
     });
     await percySnapshot(assert);
     assert.strictEqual(page.globalSearch.searchResults.length, 1);
-    assert.strictEqual(page.globalSearch.searchResults[0].courseTitle, '2019 Course 1');
+    assert.strictEqual(page.globalSearch.searchResults[0].courseTitle, `${year} Course 1`);
     assert.strictEqual(page.globalSearch.schoolFilters.length, 3);
     assert.strictEqual(page.globalSearch.schoolFilters[0].school, 'school 0');
     assert.notOk(page.globalSearch.schoolFilters[0].isSelected);
