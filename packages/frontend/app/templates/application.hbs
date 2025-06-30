@@ -15,7 +15,7 @@
   {{#if this.session.isAuthenticated}}
     <IliosNavigation />
   {{/if}}
-  <main id="main">
+  <main id="main" {{scroll-observer}}>
     {{#if this.showErrorDisplay}}
       <ErrorDisplay @errors={{this.errors}} @clearErrors={{this.clearErrors}} />
     {{else}}
