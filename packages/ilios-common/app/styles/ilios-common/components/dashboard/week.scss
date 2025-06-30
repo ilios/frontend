@@ -1,4 +1,5 @@
 @use "../../mixins" as m;
+@use "../../colors" as c;
 
 .dashboard-week {
   @include m.dashboard-component;
@@ -18,5 +19,12 @@
         margin-left: 0.25rem;
       }
     }
+  }
+
+  .back-to-top {
+    bottom: 1.25em;
+    padding: 0.5em;
+    position: fixed;
+    right: 0;
   }
 }
