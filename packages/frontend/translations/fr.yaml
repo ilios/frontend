@@ -404,7 +404,6 @@ general:
   sessionTypeConfirmRemoval: "Voulez-vous vraiment supprimer ce type de session ? Cette action ne peut pas être annulée."
   sessionTypeTitlePlaceholder: Ajoutez un titre pour ce type de session
   showAssociatedCourses: Afficher les cours associés
-  showResultsFor: Afficher les résultats pour
   showRolesInCourses: Afficher les rôles dans les cours
   showRolesInPrograms: Afficher les rôles dans les programmes
   showRolesInProgramYears: Afficher les rôles dans les années du programme

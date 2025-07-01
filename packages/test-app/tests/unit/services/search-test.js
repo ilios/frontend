@@ -12,12 +12,15 @@ module('Unit | Service | search', function (hooks) {
   });
 
   test('test search for curriculum', async function (assert) {
-    assert.expect(3);
+    assert.expect(6);
     const courses = [{ id: 1, title: 'Sweet', sessions: [] }];
     const autocomplete = ['one', 'two'];
-    this.server.get('api/search/v1/curriculum', (schema, { queryParams }) => {
+    this.server.get('api/search/v2/curriculum', (schema, { queryParams }) => {
       assert.strictEqual(queryParams.q, 'codejam');
-      assert.strictEqual(parseInt(queryParams.size, 10), 1000);
+      assert.strictEqual(Number(queryParams.size), 10);
+      assert.strictEqual(Number(queryParams.from), 11);
+      assert.strictEqual(queryParams.schools, '1-2');
+      assert.strictEqual(queryParams.years, '2021-2028');
       return {
         results: {
           courses,
@@ -26,7 +29,7 @@ module('Unit | Service | search', function (hooks) {
       };
     });
     const service = this.owner.lookup('service:search');
-    const results = await service.forCurriculum('codejam');
+    const results = await service.forCurriculum('codejam', 10, 11, [1, 2], [2021, 2028]);
     assert.deepEqual(results, { courses, autocomplete });
   });
 
@@ -88,7 +91,7 @@ module('Unit | Service | search', function (hooks) {
     assert.expect(3);
     this.server.get('api/search/v1/users', (schema, { queryParams }) => {
       assert.strictEqual(queryParams.q, 'codejam');
-      assert.strictEqual(parseInt(queryParams.size, 10), 19);
+      assert.strictEqual(Number(queryParams.size), 19);
       assert.strictEqual(queryParams.onlySuggest, 'true');
       return {
         results: {
@@ -99,22 +102,5 @@ module('Unit | Service | search', function (hooks) {
     });
     const service = this.owner.lookup('service:search');
     await service.forUsers('codejam', 19, true);
-  });
-
-  test('test search for curriculum with onlySuggest parameters', async function (assert) {
-    assert.expect(3);
-    this.server.get('api/search/v1/curriculum', (schema, { queryParams }) => {
-      assert.strictEqual(queryParams.q, 'codejam');
-      assert.strictEqual(parseInt(queryParams.size, 10), 1000);
-      assert.strictEqual(queryParams.onlySuggest, 'true');
-      return {
-        results: {
-          courses: [],
-          autocomplete: ['one', 'two'],
-        },
-      };
-    });
-    const service = this.owner.lookup('service:search');
-    await service.forCurriculum('codejam', true);
   });
 });

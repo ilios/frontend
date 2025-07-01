@@ -24,32 +24,11 @@ export default class SearchService extends Service {
 
   /**
    * Find courses
-   * @param {string} q
    */
-  async forCurriculum(q, onlySuggestEnabled = false, size = 25, from = 0) {
-    return this.search('curriculum', q, onlySuggestEnabled, size, from);
-  }
-
-  /**
-   * Find users
-   * @param {string} q
-   * @param {number} size
-   */
-  async forUsers(q, size = 100, from = 0, onlySuggestEnabled = false) {
-    const { users, autocomplete } = await this.search('users', q, onlySuggestEnabled, size, from);
-
-    const mappedUsers = users.map((user) => {
-      user.fullName = this.getUserFullName(user);
-
-      return user;
-    });
-
-    return { autocomplete, users: mappedUsers };
-  }
-
-  async search(type, q, onlySuggestEnabled, size, from) {
-    const onlySuggest = onlySuggestEnabled ? '&onlySuggest=true' : '';
-    const url = `${this.host}/api/search/v1/${type}?q=${q}&size=${size}&from=${from}${onlySuggest}`;
+  async forCurriculum(q, size, from, schools, years) {
+    const schoolQuery = schools ? `&schools=${schools.join('-')}` : '';
+    const yearQuery = years ? `&years=${years.join('-')}` : '';
+    const url = `${this.host}/api/search/v2/curriculum?q=${q}&size=${size}&from=${from}${schoolQuery}${yearQuery}`;
 
     const response = await waitForPromise(
       fetch(url, {
@@ -59,6 +38,31 @@ export default class SearchService extends Service {
     const { results } = await response.json();
 
     return results;
+  }
+
+  /**
+   * Find users
+   */
+  async forUsers(q, size = 100, onlySuggestEnabled = false) {
+    const onlySuggest = onlySuggestEnabled ? '&onlySuggest=true' : '';
+    const url = `${this.host}/api/search/v1/users?q=${q}&size=${size}${onlySuggest}`;
+
+    const response = await waitForPromise(
+      fetch(url, {
+        headers: this.authHeaders,
+      }),
+    );
+    const { results } = await response.json();
+
+    const { users, autocomplete } = results;
+
+    const mappedUsers = users.map((user) => {
+      user.fullName = this.getUserFullName(user);
+
+      return user;
+    });
+
+    return { autocomplete, users: mappedUsers };
   }
 
   getUserFullName(user) {
