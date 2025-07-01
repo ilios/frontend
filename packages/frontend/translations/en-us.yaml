@@ -97,7 +97,6 @@ general:
   currentCompetency: Current Competency
   currentSchool: Current School
   curriculumInventory: Curriculum Inventory
-  curriculumInventoryInstitutionalInfo: Curriculum Inventory Institutional Information
   curriculumInventoryReport: Curriculum Inventory Report
   curriculumInventoryReportRollover: Rollover Report
   curriculumInventoryReportRolloverSummary: "This action will copy the structure of this report to be used in your target year. It will not copy course information, only the higher level sequence block structure. You will need to add the appropriate course information and modify the sequence block start and end dates once you have rolled over the existing report structure."
@@ -173,6 +172,7 @@ general:
   iliosUpdatePending: "Huzzah! We've made Ilios better. You will get the new stuff on your next login, or click to update now."
   in: in
   includedInGrade: Included in Grade
+  institutionalInformation: Institutional Information
   instructionalMethod: Instructional Method
   instructionalMethods: Instructional Methods
   instructorGroup: Instructor Group
@@ -211,7 +211,7 @@ general:
   manageDefaultInstructors: Manage Default Instructors
   manageEmails: Manage Emails
   manageGroupMembership: Manage Group Membership
-  manageInstitutionalInfo: Manage CIR Institutional Info
+  manageInstitutionalInformation: Manage Institutional Information
   manageSessionAttributes: Manage Session Attributes
   manageUsers: Manage Users
   manageUsersSummaryTitle: Ilios Users
@@ -258,7 +258,7 @@ general:
   noAvailableCohorts: No available cohorts
   noCohortsAvailableForStudentAssignment: There are no cohorts available for student assignment in this school.
   noCourses: There are no courses in this school
-  noCurriculumInventoryInstitutionalInfo: No institutional information has been configured for this school.
+  noInstitutionalInformation: No institutional information has been configured for this school.
   noLearnerGroups: No learner groups
   nonClerkshipSequenceBlocks: Non-Clerkship Sequence Blocks
   nonStudent: Non-Student

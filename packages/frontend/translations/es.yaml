@@ -98,7 +98,6 @@ general:
   curriculumReports: Informes Curriculares
   currentSchool: Escuela Actual
   curriculumInventory: Inventario de plan de Estudios
-  curriculumInventoryInstitutionalInfo: Inventario de plan de Estudios Información Institucional
   curriculumInventoryReport: Informe de Inventario de Plan de Estudios
   curriculumInventoryReportRollover: Copiar Inventario de plan de Estudios
   curriculumInventoryReportRolloverSummary: "Esta acción copiará la estructura de este informe que se utilizará en su año objetivo. No copiará la información del curso, solo la estructura del bloque de secuencia de nivel superior. Deberá agregar la información del curso adecuada y modificar las fechas de inicio y finalización del bloque de secuencia una vez que haya cambiado la estructura del informe existente."
@@ -173,6 +172,7 @@ general:
   iliosUpdatePending: "¡Huzzah, hemos hecho Ilios mejor! Obtendrá las cosas nuevas en su próximo inicio de sesión, o haga clic para actualizar ahora."
   in: en
   includedInGrade: Incluido en Grado
+  institutionalInformation: Información Institucional
   instructionalMethod: Método de Instrucción
   instructionalMethods: Métodos de Instrucción
   instructorGroup: Grupo de Instructores
@@ -211,7 +211,7 @@ general:
   manageDefaultInstructors: Maneje instructores predeterminados
   manageEmails: Administrar correos electrónicos
   manageGroupMembership: Administrar membresía de grupo
-  manageInstitutionalInfo: Administrar información institucional del CIR
+  manageInstitutionalInformation: Administrar información institucional
   manageSessionAttributes: Maneje Atributos de la Sesión
   manageUsers: Administrar Usuarios
   manageUsersSummaryTitle: Usuarios de Ilios
@@ -258,7 +258,7 @@ general:
   noAvailableCohorts: Ningun Clase de La Graduación Disponible
   noCohortsAvailableForStudentAssignment: "No hay cohortes disponibles para la asignación de estudiantes en esta escuela."
   noCourses: No hay ningún curso en esta escuela
-  noCurriculumInventoryInstitutionalInfo: No se ha configurado información institucional para esta escuela.
+  noInstitutionalInformation: No se ha configurado información institucional para esta escuela.
   noLearnerGroups: No Grupos de Aprendedores
   nonClerkshipSequenceBlocks: Bloques de secuencia que no son de la rotación
   nonStudent: No estudiante

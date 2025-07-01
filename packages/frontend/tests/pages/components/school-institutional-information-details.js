@@ -1,16 +1,16 @@
 import { clickable, create, text, isPresent } from 'ember-cli-page-object';
 
 const definition = {
-  scope: '[data-test-school-curriculum-inventory-institution-details]',
+  scope: '[data-test-school-institutional-information-details]',
   header: {
-    scope: '[data-test-school-curriculum-inventory-institution-details-header]',
+    scope: '[data-test-school-institutional-information-details-header]',
     manage: clickable('.actions button'),
     manageTitle: text('.actions button'),
     hasManageAction: isPresent('.actions button'),
     title: text('.title'),
   },
   content: {
-    scope: '[data-test-school-curriculum-inventory-institution-details-content]',
+    scope: '[data-test-school-institutional-information-details-content]',
     name: text('[data-test-institution-name] span'),
     nameLabel: text('[data-test-institution-name] label'),
     aamcCode: text('[data-test-institution-aamc-code] span'),
