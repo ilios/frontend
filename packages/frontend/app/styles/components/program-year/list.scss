@@ -25,6 +25,11 @@
 
   .list {
     @include m.main-list-box-table;
+
+    .default-message {
+      display: inline-block;
+      padding: 1em 0;
+    }
   }
 
   .new .saved-result {
