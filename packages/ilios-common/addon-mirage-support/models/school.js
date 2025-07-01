@@ -6,7 +6,7 @@ export default Model.extend({
   programs: hasMany('program', { inverse: 'school' }),
   vocabularies: hasMany('vocabulary', { inverse: 'school' }),
   instructorGroups: hasMany('instructor-group', { inverse: 'school' }),
-  institutionalInformation: belongsTo('curriculum-inventory-institution', {
+  curriculumInventoryInstitution: belongsTo('curriculum-inventory-institution', {
     inverse: 'school',
   }),
   sessionTypes: hasMany('session-type', { inverse: 'school' }),

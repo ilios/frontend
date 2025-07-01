@@ -54,7 +54,6 @@ export default class SchoolInstitutionalInformationManagerComponent extends Comp
     institutionalInformation.set('addressZipCode', this.addressZipCode);
     institutionalInformation.set('addressCountryCode', this.addressCountryCode);
     await this.args.save(institutionalInformation);
-    this.args.manage(false);
   });
 
   saveOrCancel = dropTask(async (event) => {

@@ -147,7 +147,7 @@ export default class DataLoaderService extends CommonDataLoaderService {
         'directors',
         'sessionTypes',
         'vocabularies.terms.children.children.children',
-        'institutionalInformation',
+        'curriculumInventoryInstitution',
         'programs.programYears.programYearObjectives',
       ];
       const include = relationships.join(',');

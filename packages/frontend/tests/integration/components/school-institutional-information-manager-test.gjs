@@ -67,7 +67,7 @@ module('Integration | Component | school-institutional-information-manager', fun
     await render(
       <template>
         <SchoolInstitutionalInformationManager
-          @institution={{this.school.institutionalInformation}}
+          @institution={{this.school.curriculumInventoryInstitution}}
           @canUpdate={{this.canUpdate}}
           @manage={{(noop)}}
         />
@@ -100,7 +100,7 @@ module('Integration | Component | school-institutional-information-manager', fun
     await render(
       <template>
         <SchoolInstitutionalInformationManager
-          @institution={{this.school.institutionalInformation}}
+          @institution={{this.school.curriculumInventoryInstitution}}
           @canUpdate={{this.canUpdate}}
           @manage={{this.manage}}
         />
@@ -159,13 +159,13 @@ module('Integration | Component | school-institutional-information-manager', fun
       </template>,
     );
 
-    component.content.name.change(newName);
-    component.content.aamcCode.change(newAamcCode);
-    component.content.addressStreet.change(newAddressStreet);
-    component.content.addressCity.change(newAddressCity);
-    component.content.addressStateOrProvince.change(newAddressStateOrProvince);
-    component.content.addressZipCode.change(newAddressZipCode);
-    component.content.addressCountryCode.change(newAddressCountryCode);
+    await component.content.name.change(newName);
+    await component.content.aamcCode.change(newAamcCode);
+    await component.content.addressStreet.change(newAddressStreet);
+    await component.content.addressCity.change(newAddressCity);
+    await component.content.addressStateOrProvince.change(newAddressStateOrProvince);
+    await component.content.addressZipCode.change(newAddressZipCode);
+    await component.content.addressCountryCode.change(newAddressCountryCode);
 
     await component.header.save();
   });
@@ -206,13 +206,13 @@ module('Integration | Component | school-institutional-information-manager', fun
       </template>,
     );
 
-    component.content.name.change(newName);
-    component.content.aamcCode.change(newAamcCode);
-    component.content.addressStreet.change(newAddressStreet);
-    component.content.addressCity.change(newAddressCity);
-    component.content.addressStateOrProvince.change(newAddressStateOrProvince);
-    component.content.addressZipCode.change(newAddressZipCode);
-    component.content.addressCountryCode.change(newAddressCountryCode);
+    await component.content.name.change(newName);
+    await component.content.aamcCode.change(newAamcCode);
+    await component.content.addressStreet.change(newAddressStreet);
+    await component.content.addressCity.change(newAddressCity);
+    await component.content.addressStateOrProvince.change(newAddressStateOrProvince);
+    await component.content.addressZipCode.change(newAddressZipCode);
+    await component.content.addressCountryCode.change(newAddressCountryCode);
 
     await component.header.save();
   });
@@ -347,7 +347,7 @@ module('Integration | Component | school-institutional-information-manager', fun
     await render(
       <template>
         <SchoolInstitutionalInformationManager
-          @institutionalInformation={{this.school.institutionalInformation}}
+          @institutionalInformation={{this.school.curriculumInventoryInstitution}}
           @canUpdate={{this.canUpdate}}
           @manage={{(noop)}}
         />

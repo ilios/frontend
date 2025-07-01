@@ -26,13 +26,13 @@ import { fn } from '@ember/helper';
       data-test-school-institutional-information-details-content
       class="school-institutional-information-details-content"
     >
-      {{#if @school.institutionalInformation}}
+      {{#if @school.curriculumInventoryInstitution}}
         <div class="block" data-test-institution-name>
           <label>
             {{t "general.schoolName"}}:
           </label>
           <span>
-            {{@school.institutionalInformation.name}}
+            {{@school.curriculumInventoryInstitution.name}}
           </span>
         </div>
         <div class="block" data-test-institution-aamc-code>
@@ -40,7 +40,7 @@ import { fn } from '@ember/helper';
             {{t "general.aamcSchoolId"}}:
           </label>
           <span>
-            {{@school.institutionalInformation.aamcCode}}
+            {{@school.curriculumInventoryInstitution.aamcCode}}
           </span>
         </div>
         <div class="block" data-test-institution-address-street>
@@ -48,7 +48,7 @@ import { fn } from '@ember/helper';
             {{t "general.street"}}:
           </label>
           <span>
-            {{@school.institutionalInformation.addressStreet}}
+            {{@school.curriculumInventoryInstitution.addressStreet}}
           </span>
         </div>
         <div class="block" data-test-institution-address-city>
@@ -56,7 +56,7 @@ import { fn } from '@ember/helper';
             {{t "general.city"}}:
           </label>
           <span>
-            {{@school.institutionalInformation.addressCity}}
+            {{@school.curriculumInventoryInstitution.addressCity}}
           </span>
         </div>
         <div class="block" data-test-institution-address-state-or-province>
@@ -64,7 +64,7 @@ import { fn } from '@ember/helper';
             {{t "general.stateOrProvince"}}:
           </label>
           <span>
-            {{@school.institutionalInformation.addressStateOrProvince}}
+            {{@school.curriculumInventoryInstitution.addressStateOrProvince}}
           </span>
         </div>
         <div class="block" data-test-institution-address-zip-code>
@@ -72,7 +72,7 @@ import { fn } from '@ember/helper';
             {{t "general.zipCode"}}:
           </label>
           <span>
-            {{@school.institutionalInformation.addressZipCode}}
+            {{@school.curriculumInventoryInstitution.addressZipCode}}
           </span>
         </div>
         <div class="block" data-test-institution-address-country-code>
@@ -80,7 +80,7 @@ import { fn } from '@ember/helper';
             {{t "general.country"}}:
           </label>
           <span>
-            {{@school.institutionalInformation.addressCountryCode}}
+            {{@school.curriculumInventoryInstitution.addressCountryCode}}
           </span>
         </div>
       {{else}}

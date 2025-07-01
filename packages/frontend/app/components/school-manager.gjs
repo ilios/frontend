@@ -51,7 +51,7 @@ export default class SchoolManagerComponent extends Component {
 
   @cached
   get institutionalInformationData() {
-    return new TrackedAsyncData(this.args.school.institutionalInformation);
+    return new TrackedAsyncData(this.args.school.curriculumInventoryInstitution);
   }
 
   get institutionalInformationLoaded() {
@@ -101,11 +101,12 @@ export default class SchoolManagerComponent extends Component {
   }
 
   @action
-  async saveInstitution(institution) {
+  async saveInstitutionalInformation(institution) {
     if (!institution.belongsTo('school').id()) {
       institution.school = this.args.school;
     }
     await institution.save();
+    this.args.setSchoolManageInstitutionalInformation(false);
   }
 
   @action
@@ -267,7 +268,7 @@ export default class SchoolManagerComponent extends Component {
               @canUpdate={{@canUpdateSchool}}
               @manage={{@setSchoolManageInstitutionalInformation}}
               @institutionalInformation={{this.institutionalInformation}}
-              @save={{this.saveInstitutionalInformationalInformation}}
+              @save={{this.saveInstitutionalInformation}}
             />
           {{/if}}
         {{else}}

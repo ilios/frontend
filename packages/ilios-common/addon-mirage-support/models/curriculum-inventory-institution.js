@@ -1,5 +1,5 @@
 import { Model, belongsTo } from 'miragejs';
 
 export default Model.extend({
-  school: belongsTo('school', { inverse: 'institutionalInformation' }),
+  school: belongsTo('school', { inverse: 'curriculumInventoryInstitution' }),
 });
