@@ -17,7 +17,7 @@ module('Integration | Component | global-search', function (hooks) {
 
     await render(
       <template>
-        <GlobalSearch @setQuery={{(noop)}} @onSelectPage={{(noop)}} @setSelectedYear={{(noop)}} />
+        <GlobalSearch @setQuery={{(noop)}} @setPage={{(noop)}} @setSelectedYear={{(noop)}} />
       </template>,
     );
     assert.dom('[data-test-global-search-box]').exists({ count: 1 });
@@ -25,7 +25,7 @@ module('Integration | Component | global-search', function (hooks) {
 
   test('handles empty and non-empty query', async function (assert) {
     assert.expect(4);
-    this.server.get('api/search/v1/curriculum', (schema, { queryParams: { q, onlySuggest } }) => {
+    this.server.get('api/search/v2/curriculum', (schema, { queryParams: { q, onlySuggest } }) => {
       assert.strictEqual(q, 'hello world');
       assert.notOk(onlySuggest);
       return {
@@ -50,7 +50,7 @@ module('Integration | Component | global-search', function (hooks) {
           @query={{this.query}}
           @page="1"
           @setQuery={{(noop)}}
-          @onSelectPage={{(noop)}}
+          @setPage={{(noop)}}
           @setSelectedYear={{(noop)}}
         />
       </template>,
@@ -62,26 +62,11 @@ module('Integration | Component | global-search', function (hooks) {
   });
 
   test('bubbles action properly', async function (assert) {
-    assert.expect(3);
-    this.server.get('api/search/v1/curriculum', (schema, { queryParams: { q, onlySuggest } }) => {
-      assert.strictEqual(q, 'typed it');
-      assert.ok(onlySuggest);
-      return {
-        results: {
-          autocomplete: [],
-          courses: [],
-        },
-      };
-    });
-
+    assert.expect(1);
     this.set('query', (value) => assert.strictEqual(value, 'typed it'));
     await render(
       <template>
-        <GlobalSearch
-          @setQuery={{this.query}}
-          @onSelectPage={{(noop)}}
-          @setSelectedYear={{(noop)}}
-        />
+        <GlobalSearch @setQuery={{this.query}} @setPage={{(noop)}} @setSelectedYear={{(noop)}} />
       </template>,
     );
     await component.searchBox.input('typed it');
@@ -89,273 +74,159 @@ module('Integration | Component | global-search', function (hooks) {
   });
 
   test('academic year filter works properly', async function (assert) {
-    assert.expect(28);
-    this.server.create('school', { title: 'Medicine' });
-    this.server.create('school', { title: 'Pharmacy' });
-    this.server.get('api/search/v1/curriculum', () => {
-      return {
-        results: {
-          autocomplete: ['first', 'second', 'third'],
-          courses: [
-            {
-              title: 'Course 1',
-              year: 2019,
-              sessions: [],
-              school: 'Medicine',
-            },
-            {
-              title: 'Course 2',
-              year: 2020,
-              sessions: [],
-              school: 'Pharmacy',
-            },
-            {
-              title: 'Course 3',
-              year: 2021,
-              sessions: [],
-              school: 'Pharmacy',
-            },
-            {
-              title: 'Course 4',
-              year: 2021,
-              sessions: [],
-              school: 'Medicine',
-            },
-          ],
-        },
-      };
-    });
+    assert.expect(26);
+
+    this.server.create('academic-year', { id: 2019 });
+    this.server.create('academic-year', { id: 2020 });
+    this.server.create('academic-year', { id: 2021 });
+    const testYears = (years) => {
+      this.server.get('api/search/v2/curriculum', (schema, { queryParams }) => {
+        const queryYears = queryParams.years ? queryParams.years.split('-').map(Number) : [];
+        assert.deepEqual(queryYears.sort(), years);
+        return {
+          results: {
+            courses: [],
+            totalCourses: 0,
+            didYouMean: [],
+          },
+        };
+      });
+    };
 
     this.set('query', 'hello world');
-    this.set('selectedYear', null);
+    this.set('years', [2019, 2020, 2021]);
+    testYears([2019, 2020, 2021]);
     await render(
       <template>
         <GlobalSearch
           @page="1"
           @query={{this.query}}
           @setQuery={{(noop)}}
-          @onSelectPage={{(noop)}}
-          @selectedYear={{this.selectedYear}}
-          @setSelectedYear={{set this "selectedYear"}}
+          @setPage={{(noop)}}
+          @selectedYears={{this.years}}
+          @setYears={{set this "years"}}
         />
       </template>,
     );
-    assert.strictEqual(component.academicYear, '');
-    assert.strictEqual(
-      component.academicYearOptions,
-      'All Academic Years 2021 - 2022 2020 - 2021 2019 - 2020',
-    );
-    assert.strictEqual(component.searchResults.length, 4);
-    assert.strictEqual(component.searchResults[0].courseTitle, '2019 Course 1');
-    assert.strictEqual(component.searchResults[1].courseTitle, '2020 Course 2');
-    assert.strictEqual(component.searchResults[2].courseTitle, '2021 Course 3');
-    assert.strictEqual(component.searchResults[3].courseTitle, '2021 Course 4');
-    assert.strictEqual(component.schoolFilters.length, 2);
-    assert.strictEqual(component.schoolFilters[0].school, 'Medicine');
-    assert.strictEqual(component.schoolFilters[1].school, 'Pharmacy');
-    await component.selectAcademicYear('2021');
-    assert.strictEqual(component.searchResults.length, 2);
-    assert.strictEqual(component.searchResults[0].courseTitle, '2021 Course 3');
-    assert.strictEqual(component.searchResults[1].courseTitle, '2021 Course 4');
-    assert.strictEqual(component.schoolFilters.length, 2);
-    assert.strictEqual(component.schoolFilters[0].school, 'Medicine');
-    assert.strictEqual(component.schoolFilters[1].school, 'Pharmacy');
-    await component.selectAcademicYear('2020');
-    assert.strictEqual(component.academicYear, '2020');
-    assert.strictEqual(component.searchResults.length, 1);
-    assert.strictEqual(component.searchResults[0].courseTitle, '2020 Course 2');
-    assert.strictEqual(component.schoolFilters.length, 2);
-    assert.strictEqual(component.schoolFilters[0].school, 'Medicine');
-    assert.strictEqual(component.schoolFilters[1].school, 'Pharmacy');
-    await component.selectAcademicYear('2019');
-    assert.strictEqual(component.academicYear, '2019');
-    assert.strictEqual(component.searchResults.length, 1);
-    assert.strictEqual(component.searchResults[0].courseTitle, '2019 Course 1');
-    assert.strictEqual(component.schoolFilters.length, 2);
-    assert.strictEqual(component.schoolFilters[0].school, 'Medicine');
-    assert.strictEqual(component.schoolFilters[1].school, 'Pharmacy');
+    assert.strictEqual(component.yearFilters.length, 3);
+    assert.strictEqual(component.yearFilters[0].year, '2021');
+    assert.ok(component.yearFilters[0].isSelected);
+    assert.strictEqual(component.yearFilters[1].year, '2020');
+    assert.ok(component.yearFilters[1].isSelected);
+    assert.strictEqual(component.yearFilters[2].year, '2019');
+    assert.ok(component.yearFilters[2].isSelected);
+
+    testYears([2019, 2021]);
+    await component.yearFilters[1].toggle();
+    assert.ok(component.yearFilters[0].isSelected);
+    assert.notOk(component.yearFilters[1].isSelected);
+    assert.ok(component.yearFilters[2].isSelected);
+
+    testYears([2019]);
+    await component.yearFilters[0].toggle();
+    assert.notOk(component.yearFilters[0].isSelected);
+    assert.notOk(component.yearFilters[1].isSelected);
+    assert.ok(component.yearFilters[2].isSelected);
+
+    testYears([]);
+    await component.yearFilters[2].toggle();
+    assert.notOk(component.yearFilters[0].isSelected);
+    assert.notOk(component.yearFilters[1].isSelected);
+    assert.notOk(component.yearFilters[2].isSelected);
+
+    testYears([2021]);
+    await component.yearFilters[0].toggle();
+    testYears([2020, 2021]);
+    await component.yearFilters[1].toggle();
+    testYears([2019, 2020, 2021]);
+    await component.yearFilters[2].toggle();
+
+    assert.ok(component.yearFilters[0].isSelected);
+    assert.ok(component.yearFilters[1].isSelected);
+    assert.ok(component.yearFilters[2].isSelected);
   });
 
   test('school filter works properly', async function (assert) {
-    assert.expect(51);
-    this.server.create('school', { title: 'Medicine' });
-    this.server.create('school', { title: 'Dentistry' });
-    this.server.create('school', { title: 'Pharmacy' });
+    assert.expect(26);
 
-    this.server.get('api/search/v1/curriculum', () => {
-      return {
-        results: {
-          autocomplete: ['first', 'second', 'third'],
-          courses: [
-            {
-              title: 'Course 1',
-              year: 2019,
-              school: 'Medicine',
-              sessions: [],
-            },
-            {
-              title: 'Course 2',
-              year: 2020,
-              school: 'Medicine',
-              sessions: [],
-            },
-            {
-              title: 'Course 3',
-              year: 2021,
-              school: 'Pharmacy',
-              sessions: [],
-            },
-            {
-              title: 'Course 4',
-              year: 2021,
-              school: 'Dentistry',
-              sessions: [],
-            },
-          ],
-        },
-      };
-    });
-
-    this.set('query', 'hello world');
-    this.set('ignoredSchoolIds', []);
-    await render(
-      <template>
-        <GlobalSearch
-          @page="1"
-          @query={{this.query}}
-          @setQuery={{(noop)}}
-          @onSelectPage={{(noop)}}
-          @ignoredSchoolIds={{this.ignoredSchoolIds}}
-          @setIgnoredSchoolIds={{set this "ignoredSchoolIds"}}
-        />
-      </template>,
-    );
-    assert.strictEqual(component.searchResults.length, 4);
-    assert.strictEqual(component.searchResults[0].courseTitle, '2019 Course 1');
-    assert.strictEqual(component.searchResults[1].courseTitle, '2020 Course 2');
-    assert.strictEqual(component.searchResults[2].courseTitle, '2021 Course 3');
-    assert.strictEqual(component.searchResults[3].courseTitle, '2021 Course 4');
-    assert.strictEqual(component.schoolFilters.length, 3);
-    assert.strictEqual(component.schoolFilters[0].school, 'Dentistry');
-    assert.ok(component.schoolFilters[0].isSelected);
-    assert.strictEqual(component.schoolFilters[1].school, 'Medicine');
-    assert.ok(component.schoolFilters[1].isSelected);
-    assert.strictEqual(component.schoolFilters[2].school, 'Pharmacy');
-    assert.ok(component.schoolFilters[2].isSelected);
-
-    await component.schoolFilters[1].toggle();
-
-    assert.strictEqual(component.searchResults.length, 2);
-    assert.strictEqual(component.searchResults[0].courseTitle, '2021 Course 3');
-    assert.strictEqual(component.searchResults[1].courseTitle, '2021 Course 4');
-    assert.strictEqual(component.schoolFilters.length, 3);
-    assert.strictEqual(component.schoolFilters[0].school, 'Dentistry');
-    assert.ok(component.schoolFilters[0].isSelected);
-    assert.strictEqual(component.schoolFilters[1].school, 'Medicine');
-    assert.notOk(component.schoolFilters[1].isSelected);
-    assert.strictEqual(component.schoolFilters[2].school, 'Pharmacy');
-    assert.ok(component.schoolFilters[2].isSelected);
-
-    await component.schoolFilters[0].toggle();
-
-    assert.strictEqual(component.searchResults.length, 1);
-    assert.strictEqual(component.searchResults[0].courseTitle, '2021 Course 3');
-    assert.strictEqual(component.schoolFilters.length, 3);
-    assert.strictEqual(component.schoolFilters[0].school, 'Dentistry');
-    assert.notOk(component.schoolFilters[0].isSelected);
-    assert.strictEqual(component.schoolFilters[1].school, 'Medicine');
-    assert.notOk(component.schoolFilters[1].isSelected);
-    assert.strictEqual(component.schoolFilters[2].school, 'Pharmacy');
-    assert.ok(component.schoolFilters[2].isSelected);
-
-    await component.schoolFilters[2].toggle();
-
-    assert.strictEqual(component.searchResults.length, 0);
-    assert.strictEqual(component.schoolFilters.length, 3);
-    assert.strictEqual(component.schoolFilters[0].school, 'Dentistry');
-    assert.notOk(component.schoolFilters[0].isSelected);
-    assert.strictEqual(component.schoolFilters[1].school, 'Medicine');
-    assert.notOk(component.schoolFilters[1].isSelected);
-    assert.strictEqual(component.schoolFilters[2].school, 'Pharmacy');
-    assert.notOk(component.schoolFilters[2].isSelected);
-
-    await component.schoolFilters[0].toggle();
-    await component.schoolFilters[1].toggle();
-    await component.schoolFilters[2].toggle();
-
-    assert.strictEqual(component.searchResults.length, 4);
-    assert.strictEqual(component.searchResults[0].courseTitle, '2019 Course 1');
-    assert.strictEqual(component.searchResults[1].courseTitle, '2020 Course 2');
-    assert.strictEqual(component.searchResults[2].courseTitle, '2021 Course 3');
-    assert.strictEqual(component.searchResults[3].courseTitle, '2021 Course 4');
-    assert.strictEqual(component.schoolFilters.length, 3);
-    assert.strictEqual(component.schoolFilters[0].school, 'Dentistry');
-    assert.ok(component.schoolFilters[0].isSelected);
-    assert.strictEqual(component.schoolFilters[1].school, 'Medicine');
-    assert.ok(component.schoolFilters[1].isSelected);
-    assert.strictEqual(component.schoolFilters[2].school, 'Pharmacy');
-    assert.ok(component.schoolFilters[2].isSelected);
-  });
-
-  test('all schools show up in filter', async function (assert) {
-    assert.expect(9);
     this.server.createList('school', 3);
-
-    this.server.get('api/search/v1/curriculum', () => {
-      return {
-        results: {
-          autocomplete: ['first', 'second', 'third'],
-          courses: [
-            {
-              title: 'Course 1',
-              year: 2019,
-              school: 'school 1',
-              sessions: [],
-            },
-          ],
-        },
-      };
-    });
+    const testSchools = (schools) => {
+      this.server.get('api/search/v2/curriculum', (schema, { queryParams }) => {
+        const querySchools = queryParams.schools ? queryParams.schools.split('-').map(Number) : [];
+        assert.deepEqual(querySchools, schools);
+        return {
+          results: {
+            courses: [],
+            totalCourses: 0,
+            didYouMean: [],
+          },
+        };
+      });
+    };
 
     this.set('query', 'hello world');
+    this.set('schools', ['1', '2', '3']);
+    testSchools([1, 2, 3]);
     await render(
       <template>
         <GlobalSearch
           @page="1"
           @query={{this.query}}
           @setQuery={{(noop)}}
-          @onSelectPage={{(noop)}}
-          @setSelectedYear={{(noop)}}
+          @setPage={{(noop)}}
+          @selectedSchools={{this.schools}}
+          @setSchools={{set this "schools"}}
         />
       </template>,
     );
-    assert.strictEqual(component.searchResults.length, 1);
-    assert.strictEqual(component.searchResults[0].courseTitle, '2019 Course 1');
     assert.strictEqual(component.schoolFilters.length, 3);
     assert.strictEqual(component.schoolFilters[0].school, 'school 0');
-    assert.ok(component.schoolFilters[0].isDisabled);
+    assert.ok(component.schoolFilters[0].isSelected);
     assert.strictEqual(component.schoolFilters[1].school, 'school 1');
-    assert.notOk(component.schoolFilters[1].isDisabled);
+    assert.ok(component.schoolFilters[1].isSelected);
     assert.strictEqual(component.schoolFilters[2].school, 'school 2');
-    assert.ok(component.schoolFilters[2].isDisabled);
+    assert.ok(component.schoolFilters[2].isSelected);
+
+    testSchools([1, 3]);
+    await component.schoolFilters[1].toggle();
+    assert.ok(component.schoolFilters[0].isSelected);
+    assert.notOk(component.schoolFilters[1].isSelected);
+    assert.ok(component.schoolFilters[2].isSelected);
+
+    testSchools([3]);
+    await component.schoolFilters[0].toggle();
+    assert.notOk(component.schoolFilters[0].isSelected);
+    assert.notOk(component.schoolFilters[1].isSelected);
+    assert.ok(component.schoolFilters[2].isSelected);
+
+    testSchools([]);
+    await component.schoolFilters[2].toggle();
+    assert.notOk(component.schoolFilters[0].isSelected);
+    assert.notOk(component.schoolFilters[1].isSelected);
+    assert.notOk(component.schoolFilters[2].isSelected);
+
+    testSchools([1]);
+    await component.schoolFilters[0].toggle();
+    testSchools([1, 2]);
+    await component.schoolFilters[1].toggle();
+    testSchools([1, 2, 3]);
+    await component.schoolFilters[2].toggle();
+
+    assert.ok(component.schoolFilters[0].isSelected);
+    assert.ok(component.schoolFilters[1].isSelected);
+    assert.ok(component.schoolFilters[2].isSelected);
   });
 
   test('if only one school in system no school filter', async function (assert) {
-    assert.expect(3);
+    assert.expect(1);
     this.server.create('school');
 
-    this.server.get('api/search/v1/curriculum', () => {
+    this.server.get('api/search/v2/curriculum', () => {
       return {
         results: {
-          autocomplete: ['first', 'second', 'third'],
-          courses: [
-            {
-              title: 'Course 1',
-              year: 2019,
-              school: 'school 1',
-              sessions: [],
-            },
-          ],
+          courses: [],
+          totalCourses: 0,
+          didYouMean: [],
         },
       };
     });
@@ -367,13 +238,11 @@ module('Integration | Component | global-search', function (hooks) {
           @page="1"
           @query={{this.query}}
           @setQuery={{(noop)}}
-          @onSelectPage={{(noop)}}
+          @setPage={{(noop)}}
           @setSelectedYear={{(noop)}}
         />
       </template>,
     );
-    assert.strictEqual(component.searchResults.length, 1);
-    assert.strictEqual(component.searchResults[0].courseTitle, '2019 Course 1');
     assert.strictEqual(component.schoolFilters.length, 0);
   });
 
@@ -397,7 +266,7 @@ module('Integration | Component | global-search', function (hooks) {
           @query={{this.query}}
           @page="1"
           @setQuery={{(noop)}}
-          @onSelectPage={{(noop)}}
+          @setPage={{(noop)}}
           @setSelectedYear={{(noop)}}
         />
       </template>,

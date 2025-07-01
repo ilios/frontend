@@ -2,24 +2,12 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { component } from 'frontend/tests/pages/components/global-search-box';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
 import GlobalSearchBox from 'frontend/components/global-search-box';
 import noop from 'ilios-common/helpers/noop';
 
 module('Integration | Component | global search box', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
-
-  hooks.beforeEach(function () {
-    this.server.get('api/search/v1/curriculum', () => {
-      return {
-        results: {
-          autocomplete: ['first', 'second', 'third'],
-        },
-      };
-    });
-  });
 
   test('it renders and is accessible', async function (assert) {
     await render(<template><GlobalSearchBox @search={{(noop)}} /></template>);
@@ -47,33 +35,8 @@ module('Integration | Component | global search box', function (hooks) {
     assert.strictEqual(component.inputValue, 'course');
   });
 
-  test('typing start autocomplete', async function (assert) {
-    assert.expect(5);
-    const input = 'typed it';
-    this.server.get('api/search/v1/curriculum', (schema, { queryParams }) => {
-      assert.ok(queryParams.q);
-      assert.ok(queryParams.onlySuggest);
-      assert.strictEqual(queryParams.q, input);
-      assert.strictEqual(queryParams.onlySuggest, 'true');
-
-      return {
-        results: {
-          autocomplete: ['one', 'two', 'three'],
-        },
-      };
-    });
-
-    this.set('search', (value) => {
-      assert.strictEqual(value, input);
-    });
-    await render(<template><GlobalSearchBox @search={{this.search}} /></template>);
-    await component.input(input);
-    await component.triggerInput();
-    assert.strictEqual(component.autocompleteResults.length, 3);
-  });
-
   test('clicking enter triggers search', async function (assert) {
-    assert.expect(3);
+    assert.expect(2);
     this.set('search', (value) => {
       assert.strictEqual(value, 'typed it');
       assert.ok(true, 'search action gets called');
@@ -81,78 +44,13 @@ module('Integration | Component | global search box', function (hooks) {
     await render(<template><GlobalSearchBox @search={{this.search}} /></template>);
     await component.input('typed it');
     await component.keyDown.enter();
-    assert.strictEqual(component.autocompleteResults.length, 0);
   });
 
   test('escape calls clears query', async function (assert) {
     await render(<template><GlobalSearchBox @search={{(noop)}} /></template>);
     await component.input('typed it');
-    assert.strictEqual(component.autocompleteResults.length, 3);
     await component.keyDown.escape();
-    assert.strictEqual(component.autocompleteResults.length, 0);
     assert.strictEqual(component.inputValue, '');
-  });
-
-  test('vertical triggers work', async function (assert) {
-    assert.expect(38);
-    let inputValue = 'first';
-    this.set('search', (value) => {
-      assert.strictEqual(value, inputValue);
-      assert.ok(true, 'search action gets called');
-    });
-    await render(<template><GlobalSearchBox @search={{this.search}} /></template>);
-    await component.input('typed it');
-    await component.keyDown.down();
-    assert.ok(component.resultsRow1HasActiveClass);
-    assert.notOk(component.resultsRow2HasActiveClass);
-    assert.notOk(component.resultsRow3HasActiveClass);
-    assert.strictEqual(component.inputValue, 'first');
-    await component.keyDown.down();
-    assert.notOk(component.resultsRow1HasActiveClass);
-    assert.ok(component.resultsRow2HasActiveClass);
-    assert.notOk(component.resultsRow3HasActiveClass);
-    assert.strictEqual(component.inputValue, 'second');
-    await component.keyDown.down();
-    assert.notOk(component.resultsRow1HasActiveClass);
-    assert.notOk(component.resultsRow2HasActiveClass);
-    assert.ok(component.resultsRow3HasActiveClass);
-    assert.strictEqual(component.inputValue, 'third');
-    await component.keyDown.down();
-    assert.notOk(component.resultsRow1HasActiveClass);
-    assert.notOk(component.resultsRow2HasActiveClass);
-    assert.notOk(component.resultsRow3HasActiveClass);
-    assert.strictEqual(component.inputValue, 'typed it');
-    await component.keyDown.up();
-    assert.notOk(component.resultsRow1HasActiveClass);
-    assert.notOk(component.resultsRow2HasActiveClass);
-    assert.ok(component.resultsRow3HasActiveClass);
-    assert.strictEqual(component.inputValue, 'third');
-    await component.keyDown.up();
-    assert.notOk(component.resultsRow1HasActiveClass);
-    assert.ok(component.resultsRow2HasActiveClass);
-    assert.notOk(component.resultsRow3HasActiveClass);
-    assert.strictEqual(component.inputValue, 'second');
-    await component.keyDown.up();
-    assert.ok(component.resultsRow1HasActiveClass);
-    assert.notOk(component.resultsRow2HasActiveClass);
-    assert.notOk(component.resultsRow3HasActiveClass);
-    assert.strictEqual(component.inputValue, 'first');
-    await component.keyDown.up();
-    assert.notOk(component.resultsRow1HasActiveClass);
-    assert.notOk(component.resultsRow2HasActiveClass);
-    assert.notOk(component.resultsRow3HasActiveClass);
-    assert.strictEqual(component.inputValue, 'typed it');
-    await component.keyDown.down();
-    await component.keyDown.enter();
-    inputValue = 'second';
-    await component.input('typed it');
-    await component.keyDown.down();
-    await component.keyDown.down();
-    await component.keyDown.enter();
-    inputValue = 'third';
-    await component.input('typed it');
-    await component.keyDown.up();
-    await component.keyDown.enter();
   });
 
   test('can empty with backspace', async function (assert) {
@@ -163,30 +61,5 @@ module('Integration | Component | global search box', function (hooks) {
     assert.strictEqual(component.inputValue, 'typed it');
     await component.input('');
     assert.strictEqual(component.inputValue, '');
-  });
-
-  test('can empty with backspace after choosing autocomplete', async function (assert) {
-    this.set('query', 'test value');
-    await render(<template><GlobalSearchBox @query={{this.query}} /></template>);
-    assert.strictEqual(component.inputValue, 'test value');
-    await component.input('typed it');
-    assert.strictEqual(component.inputValue, 'typed it');
-    await component.keyDown.down();
-    assert.strictEqual(component.inputValue, 'first');
-    await component.input('');
-    assert.strictEqual(component.inputValue, '');
-  });
-
-  test('require at least three chars to run autocomplete #4769', async function (assert) {
-    assert.expect(2);
-    const input = 'ty';
-    this.set('search', () => {
-      assert.ok(false, 'search should not be called');
-    });
-    await render(<template><GlobalSearchBox @search={{this.search}} /></template>);
-    await component.input(input);
-    await component.triggerInput();
-    assert.strictEqual(component.autocompleteResults.length, 1);
-    assert.strictEqual(component.autocompleteResults[0].text, 'keep typing...');
   });
 });
