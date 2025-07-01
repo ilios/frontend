@@ -78,9 +78,9 @@ module('Integration | Component | reports/curriculum/choose-course', function (h
     assert.strictEqual(component.years[2].title, '1983');
     assert.notOk(component.years[2].isExpanded);
 
-    assert.ok(component.years[1].isPartiallySelected);
-    assert.notOk(component.years[1].isFullySelected);
-    assert.strictEqual(component.years[1].toggleAriaLabel, 'Select All or None');
+    assert.ok(component.years[1].toggleAll.isPartiallySelected);
+    assert.notOk(component.years[1].toggleAll.isFullySelected);
+    assert.strictEqual(component.years[1].toggleAll.ariaLabel, 'Select All or None');
 
     assert.strictEqual(component.years[1].courses.length, 3);
     assert.strictEqual(component.years[1].courses[0].text, 'course 0');
@@ -134,8 +134,8 @@ module('Integration | Component | reports/curriculum/choose-course', function (h
     assert.strictEqual(component.years[0].title, '1984');
     assert.ok(component.years[0].isExpanded);
 
-    assert.notOk(component.years[0].isPartiallySelected);
-    assert.notOk(component.years[0].isFullySelected);
+    assert.notOk(component.years[0].toggleAll.isPartiallySelected);
+    assert.notOk(component.years[0].toggleAll.isFullySelected);
 
     assert.strictEqual(component.years[0].courses.length, 1);
     assert.strictEqual(component.years[0].courses[0].text, 'course 0');
@@ -185,8 +185,8 @@ module('Integration | Component | reports/curriculum/choose-course', function (h
     assert.strictEqual(component.years[0].title, '1984');
     assert.ok(component.years[0].isExpanded);
 
-    assert.ok(component.years[0].isFullySelected);
-    assert.notOk(component.years[0].isPartiallySelected);
+    assert.ok(component.years[0].toggleAll.isFullySelected);
+    assert.notOk(component.years[0].toggleAll.isPartiallySelected);
 
     assert.strictEqual(component.years[0].courses.length, 1);
     assert.strictEqual(component.years[0].courses[0].text, 'course 1');
@@ -325,12 +325,12 @@ module('Integration | Component | reports/curriculum/choose-course', function (h
       </template>,
     );
 
-    assert.ok(component.years[0].isFullySelected, '1984 is fully selected');
-    assert.ok(component.years[1].isFullySelected, '1985 is fully selected');
+    assert.ok(component.years[0].toggleAll.isFullySelected, '1984 is fully selected');
+    assert.ok(component.years[1].toggleAll.isFullySelected, '1985 is fully selected');
     assert.ok(component.years[1].courses[0].isSelected, '1985 course 1 is visible and selected');
     await component.deselectAll.click();
-    assert.notOk(component.years[0].isFullySelected, '1984 is not selected');
-    assert.notOk(component.years[1].isFullySelected, '1985 is not selected');
+    assert.notOk(component.years[0].toggleAll.isFullySelected, '1984 is not selected');
+    assert.notOk(component.years[1].toggleAll.isFullySelected, '1985 is not selected');
     assert.notOk(
       component.years[1].courses[0].isSelected,
       '1985 course 1 is visible and unselected',
@@ -362,14 +362,14 @@ module('Integration | Component | reports/curriculum/choose-course', function (h
       </template>,
     );
 
-    assert.ok(component.years[0].isPartiallySelected);
-    assert.notOk(component.years[0].isFullySelected);
+    assert.ok(component.years[0].toggleAll.isPartiallySelected);
+    assert.notOk(component.years[0].toggleAll.isFullySelected);
     assert.ok(component.years[0].courses[0].isSelected);
     assert.notOk(component.years[0].courses[1].isSelected);
-    await component.years[0].toggleAll();
-    assert.ok(component.years[0].isFullySelected);
-    assert.notOk(component.years[0].isPartiallySelected);
-    assert.ok(component.years[0].isFullySelected);
+    await component.years[0].toggleAll.click();
+    assert.ok(component.years[0].toggleAll.isFullySelected);
+    assert.notOk(component.years[0].toggleAll.isPartiallySelected);
+    assert.ok(component.years[0].toggleAll.isFullySelected);
     assert.ok(component.years[0].courses[0].isSelected);
     assert.ok(component.years[0].courses[1].isSelected);
   });
@@ -405,13 +405,13 @@ module('Integration | Component | reports/curriculum/choose-course', function (h
       </template>,
     );
 
-    assert.notOk(component.years[0].isPartiallySelected);
-    assert.ok(component.years[0].isFullySelected);
+    assert.notOk(component.years[0].toggleAll.isPartiallySelected);
+    assert.ok(component.years[0].toggleAll.isFullySelected);
     assert.ok(component.years[0].courses[0].isSelected);
     assert.ok(component.years[0].courses[1].isSelected);
-    await component.years[0].toggleAll();
-    assert.notOk(component.years[0].isPartiallySelected);
-    assert.notOk(component.years[0].isFullySelected);
+    await component.years[0].toggleAll.click();
+    assert.notOk(component.years[0].toggleAll.isPartiallySelected);
+    assert.notOk(component.years[0].toggleAll.isFullySelected);
     assert.notOk(component.years[0].courses[0].isSelected);
     assert.notOk(component.years[0].courses[1].isSelected);
   });
