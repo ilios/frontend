@@ -209,6 +209,7 @@ general:
   meshCount: "{count, plural, =1 {1 a des MeSH} other {# ont MeSH}}"
   meshManageTitle: Manager MeSH
   meshTerms: Termes de MeSH
+  metaDescription: Gestion des Programmes pour les Professions de la Santé.
   minute: Minute
   minutes: Minutes
   missingCohortMessage: "S'il vous plait ajouter au moins un cohort à ce cours."
