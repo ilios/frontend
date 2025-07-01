@@ -412,8 +412,8 @@ importers:
         specifier: ^4.0.2
         version: 4.0.4(@babel/core@7.27.4)
       ember-file-upload:
-        specifier: ^9.4.0
-        version: 9.4.1(@ember/test-helpers@5.2.2(@babel/core@7.27.4))(@glimmer/component@2.0.0)(ember-modifier@4.2.2(@babel/core@7.27.4))(miragejs@0.1.48)(tracked-built-ins@3.4.0(@babel/core@7.27.4))
+        specifier: ^9.5.0
+        version: 9.5.0(@ember/test-helpers@5.2.2(@babel/core@7.27.4))(@glimmer/component@2.0.0)(ember-modifier@4.2.2(@babel/core@7.27.4))(miragejs@0.1.48)(tracked-built-ins@3.4.0(@babel/core@7.27.4))
       ember-focus-trap:
         specifier: ^1.0.0
         version: 1.1.1(ember-source@6.5.0(@glimmer/component@2.0.0)(rsvp@4.8.5))
@@ -5350,8 +5350,8 @@ packages:
       ember-source: '>= 4.0.0'
       qunit: '*'
 
-  ember-file-upload@9.4.1:
-    resolution: {integrity: sha512-xguqFju5cgdNyRGLB005+4nA0IsNxsMgcIZrHWqm8wNyh39+aBWOczNW0Sgzw25a8kbOIwD0/vIeIc0FmxDBLg==}
+  ember-file-upload@9.5.0:
+    resolution: {integrity: sha512-qcYAuaA4MsmGzTaGgaC/KWAPh3Gc/rwl3h9YgI8pHP2AbLSrJ3Ichi73nr71NrUerYLZ3ccmT6M0ohPKaTeXIg==}
     engines: {node: 16.* || >= 18}
     peerDependencies:
       '@ember/test-helpers': ^2.9.3 || ^3.0.3 || ^4.0.4 || ^5.0.0
@@ -16075,7 +16075,7 @@ snapshots:
       - supports-color
       - webpack
 
-  ember-file-upload@9.4.1(@ember/test-helpers@5.2.2(@babel/core@7.27.4))(@glimmer/component@2.0.0)(ember-modifier@4.2.2(@babel/core@7.27.4))(miragejs@0.1.48)(tracked-built-ins@3.4.0(@babel/core@7.27.4)):
+  ember-file-upload@9.5.0(@ember/test-helpers@5.2.2(@babel/core@7.27.4))(@glimmer/component@2.0.0)(ember-modifier@4.2.2(@babel/core@7.27.4))(miragejs@0.1.48)(tracked-built-ins@3.4.0(@babel/core@7.27.4)):
     dependencies:
       '@ember/test-helpers': 5.2.2(@babel/core@7.27.4)
       '@ember/test-waiters': 4.1.0
