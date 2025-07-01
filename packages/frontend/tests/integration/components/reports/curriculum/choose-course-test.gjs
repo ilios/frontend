@@ -80,6 +80,7 @@ module('Integration | Component | reports/curriculum/choose-course', function (h
 
     assert.ok(component.years[1].isPartiallySelected);
     assert.notOk(component.years[1].isFullySelected);
+    assert.strictEqual(component.years[1].toggleAriaLabel, 'Select All or None');
 
     assert.strictEqual(component.years[1].courses.length, 3);
     assert.strictEqual(component.years[1].courses[0].text, 'course 0');
