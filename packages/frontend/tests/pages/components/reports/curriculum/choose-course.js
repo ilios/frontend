@@ -1,4 +1,5 @@
 import {
+  attribute,
   clickable,
   create,
   collection,
@@ -30,6 +31,7 @@ const definition = {
     isPartiallySelected: property('indeterminate', '[data-test-toggle-all]'),
     isFullySelected: property('checked', '[data-test-toggle-all]'),
     toggleAll: clickable('[data-test-toggle-all]'),
+    toggleAriaLabel: attribute('aria-label', '[data-test-toggle-all]'),
   }),
   deselectAll: {
     scope: '[data-test-deselect-all]',
