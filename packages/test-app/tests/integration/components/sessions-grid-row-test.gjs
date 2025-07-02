@@ -33,6 +33,12 @@ module('Integration | Component | sessions-grid-row', function (hooks) {
     });
     this.server.create('learner-group', { offerings: [offering1] });
     this.server.createList('learner-group', 3, { offerings: [offering2] });
+    const ilmSession = this.server.create('ilm-session', {
+      id: '1',
+      session,
+      dueDate: date.toJSDate(),
+    });
+    this.server.create('learner-group', { ilmSessions: [ilmSession] });
     const model = await this.owner.lookup('service:store').findRecord('session', session.id);
     this.set('session', model);
     await render(
@@ -49,7 +55,7 @@ module('Integration | Component | sessions-grid-row', function (hooks) {
     assert.ok(component.isCollapsed);
     assert.strictEqual(component.title, 'session 0');
     assert.strictEqual(component.type, 'session type 0');
-    assert.strictEqual(component.groupCount, '4');
+    assert.strictEqual(component.groupCount, '5');
     assert.strictEqual(component.objectiveCount, '3');
     assert.strictEqual(component.termCount, '2');
     assert.strictEqual(component.offeringCount, '2');
@@ -57,13 +63,12 @@ module('Integration | Component | sessions-grid-row', function (hooks) {
     assert.notOk(component.hasPrerequisites);
     assert.strictEqual(
       component.firstOffering,
-      this.intl.formatDate(date.toJSDate(), {
-        month: '2-digit',
-        day: '2-digit',
-        year: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit',
-      }),
+      'ILM: Due By ' +
+        this.intl.formatDate(date.toJSDate(), {
+          month: '2-digit',
+          day: '2-digit',
+          year: 'numeric',
+        }),
     );
   });
 
