@@ -35,14 +35,11 @@
       padding: 0 0 0 0.5rem;
     }
 
-    .year-filters,
-    .school-filters {
-      margin-left: 1rem;
-    }
-
-    .school-filters {
+    .school-filters,
+    .year-filters {
       display: flex;
       justify-content: flex-start;
+      margin-left: 1rem;
       margin-top: 0.5rem;
       flex-direction: column;
 
