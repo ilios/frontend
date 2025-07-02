@@ -1,6 +1,7 @@
 import Controller from '@ember/controller';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
+import currentAcademicYear from 'ilios-common/utils/current-academic-year';
 
 export default class SearchController extends Controller {
   queryParams = [
@@ -15,7 +16,7 @@ export default class SearchController extends Controller {
   @tracked page = 1;
   @tracked query = '';
   @tracked ignoredSchoolIds = null;
-  @tracked selectedYear = null;
+  @tracked selectedYear = currentAcademicYear();
 
   get ignoredSchoolIdsArray() {
     return this.ignoredSchoolIds ? this.ignoredSchoolIds.split('-') : [];
