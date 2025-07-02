@@ -94,6 +94,7 @@ import TimedReleaseSchedule from 'ilios-common/components/timed-release-schedule
       {{/if}}
       {{#if @lm.publicNotes}}
         <p class="public-notes" data-test-public-notes>
+          -
           <TruncateText @text={{@lm.publicNotes}} @length={{50}} />
         </p>
       {{/if}}
