@@ -3,9 +3,12 @@ import { DateTime } from 'luxon';
 import t from 'ember-intl/helpers/t';
 import { LinkTo } from '@ember/routing';
 import { hash } from '@ember/helper';
+import { service } from '@ember/service';
 import WeekGlance from 'ilios-common/components/week-glance';
 
 export default class DashboardWeekComponent extends Component {
+  @service globalScroll;
+
   get expanded() {
     const lastWeek = this.thisThursday.minus({ week: 1 }).toFormat('W');
     const thisWeek = this.thisThursday.toFormat('W');
@@ -55,6 +58,11 @@ export default class DashboardWeekComponent extends Component {
           @year={{this.year}}
         />
       </div>
+      {{#if this.globalScroll.displayBackToTop}}
+        <div class="back-to-top">
+          <a href="#top">{{t "general.backToTop"}}</a>
+        </div>
+      {{/if}}
     </div>
   </template>
 }
