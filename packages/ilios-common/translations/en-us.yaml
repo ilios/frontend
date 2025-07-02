@@ -209,6 +209,7 @@ general:
   meshCount: "{count, plural, =1 {1 has MeSH} other {# have MesH}}"
   meshManageTitle: Manage MeSH
   meshTerms: MeSH Terms
+  metaDescription: Curriculum Management for the Health Professions.
   minute: Minute
   minutes: Minutes
   missingCohortMessage: Please add at least one cohort to this course.
