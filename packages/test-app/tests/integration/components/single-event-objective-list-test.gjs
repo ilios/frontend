@@ -30,6 +30,8 @@ module('Integration | Component | ilios calendar single event objective list', f
           @groupByCompetenciesPhrase={{this.groupByCompetenciesPhrase}}
           @listByPriorityPhrase={{this.listByPriorityPhrase}}
           @title={{this.title}}
+          @ariaLabelShow="Show objectives"
+          @ariaLabelHide="Hide objectives"
           @isExpandedByDefault={{true}}
         />
       </template>,
@@ -113,7 +115,12 @@ module('Integration | Component | ilios calendar single event objective list', f
 
     await render(
       <template>
-        <SingleEventObjectiveList @objectives={{this.objectives}} @isExpandedByDefault={{false}} />
+        <SingleEventObjectiveList
+          @objectives={{this.objectives}}
+          @isExpandedByDefault={{false}}
+          @ariaLabelShow="Show objectives"
+          @ariaLabelHide="Hide objectives"
+        />
       </template>,
     );
 

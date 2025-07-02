@@ -153,6 +153,7 @@ general:
   groups: Groupes
   hideCalendar: Cacher Calendrier
   hideCourseMaterials: Masquer les supports de cours
+  hideCourseObjectives: Masquer les objectifs de cours
   hideFilters: Cachez les Filtres
   hideIcsFeed: "Masquer les options d'alimentation ICS"
   hideObjectives: Masquer les objectifs
@@ -329,6 +330,7 @@ general:
   showAllMyActivities: Afficher toutes mes activités
   showCalendar: Afficher Calendrier
   showCourseMaterials: Afficher les supports de cours
+  showCourseObjectives: Afficher les objectifs de cours
   showFilters: Montrez les Filtres
   showIcsFeed: "Afficher les options d'alimentation ICS"
   showLearnerGroupEvents: "Montrez tous les événements pour les groupes d'étudiants affectés"
