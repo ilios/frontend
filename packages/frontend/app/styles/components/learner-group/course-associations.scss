@@ -1,0 +1,33 @@
+@use "../../ilios-common/colors" as c;
+@use "../../ilios-common/mixins" as m;
+
+.learner-group-course-associations {
+  @include m.detail-container-content;
+  border-top: 1px dotted c.$orange;
+
+  .header {
+    @include m.detail-container-header;
+
+    .title {
+      @include m.detail-container-title;
+    }
+  }
+
+  .content {
+    @include m.main-list-box-table;
+
+    .no-data {
+      text-align: center;
+    }
+
+    .sessions-list {
+      @include m.ilios-tag-list;
+    }
+
+    tbody {
+      td {
+        vertical-align: top;
+      }
+    }
+  }
+}
