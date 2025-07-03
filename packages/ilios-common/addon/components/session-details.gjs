@@ -20,6 +20,7 @@ import DetailTaxonomies from 'ilios-common/components/detail-taxonomies';
 import CollapsedTaxonomies from 'ilios-common/components/collapsed-taxonomies';
 import DetailMesh from 'ilios-common/components/detail-mesh';
 import SessionOfferings from 'ilios-common/components/session-offerings';
+import { pageTitle } from 'ember-page-title';
 
 export default class SessionDetailsComponent extends Component {
   @cached
@@ -40,6 +41,8 @@ export default class SessionDetailsComponent extends Component {
     return this.cohortsData.isResolved ? this.cohortsData.value : null;
   }
   <template>
+    {{pageTitle " | Session: " @session.title}}
+
     <div class="back-to-session" {{scrollIntoView}}>
       <LinkTo @route="course" @model={{@session.course}} data-test-back-to-sessions>
         {{t "general.backToSessionList"}}
