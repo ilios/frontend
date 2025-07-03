@@ -1,9 +1,8 @@
 import Component from '@glimmer/component';
-import { cached, tracked } from '@glimmer/tracking';
+import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { restartableTask } from 'ember-concurrency';
 import { service } from '@ember/service';
-import { TrackedAsyncData } from 'ember-async-data';
 import YupValidations from 'ilios-common/classes/yup-validations';
 import YupValidationMessage from 'ilios-common/components/yup-validation-message';
 import { string } from 'yup';
@@ -14,7 +13,6 @@ import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
 import pick from 'ilios-common/helpers/pick';
 import FaIcon from 'ilios-common/components/fa-icon';
-import add from 'ember-math-helpers/helpers/add';
 import PublicationMenu from 'ilios-common/components/course/publication-menu';
 import PublicationStatus from 'ilios-common/components/publication-status';
 
@@ -32,19 +30,6 @@ export default class CourseHeaderComponent extends Component {
   validations = new YupValidations(this, {
     courseTitle: string().ensure().trim().min(3).max(200),
   });
-
-  @cached
-  get academicYearCrossesCalendarYearBoundariesData() {
-    return new TrackedAsyncData(
-      this.iliosConfig.itemFromConfig('academicYearCrossesCalendarYearBoundaries'),
-    );
-  }
-
-  get academicYearCrossesCalendarYearBoundaries() {
-    return this.academicYearCrossesCalendarYearBoundariesData.isResolved
-      ? this.academicYearCrossesCalendarYearBoundariesData.value
-      : false;
-  }
 
   changeTitle = restartableTask(async () => {
     this.courseTitle = this.courseTitle.trim();
@@ -100,13 +85,7 @@ export default class CourseHeaderComponent extends Component {
         {{/if}}
         {{#unless this.isEditingTitle}}
           <h3 class="academic-year" data-test-academic-year>
-            {{#if this.academicYearCrossesCalendarYearBoundaries}}
-              {{@course.year}}
-              -
-              {{add @course.year 1}}
-            {{else}}
-              {{@course.year}}
-            {{/if}}
+            {{@academicYear}}
           </h3>
         {{/unless}}
       </span>
