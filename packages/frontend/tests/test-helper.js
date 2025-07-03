@@ -8,7 +8,12 @@ import { setupEmberOnerrorValidation } from 'ember-qunit';
 import { forceModulesToBeLoaded, sendCoverage } from 'ember-cli-code-coverage/test-support';
 import DefaultAdapter from 'ember-cli-page-object/adapters/rfc268';
 import { setAdapter } from 'ember-cli-page-object/adapters';
-import { setRunOptions } from 'ember-a11y-testing/test-support';
+import {
+  setRunOptions,
+  setupGlobalA11yHooks,
+  setupQUnitA11yAuditToggle,
+} from 'ember-a11y-testing/test-support';
+
 import start from 'ember-exam/test-support/start';
 import 'qunit-theme-ember/qunit.css';
 import './helpers/percy-snapshot-name';
@@ -16,6 +21,8 @@ import './helpers/percy-snapshot-name';
 setRunOptions({
   preload: false,
 });
+setupGlobalA11yHooks(() => true);
+setupQUnitA11yAuditToggle(QUnit);
 
 //Needed for: https://github.com/testem/testem/issues/1577
 //See: https://github.com/ember-cli-code-coverage/ember-cli-code-coverage/issues/420

@@ -32,12 +32,6 @@ module.exports = function (environment) {
       completeExistingMessages: true,
       showFileInfo: true,
     },
-    'ember-a11y-testing': {
-      componentOptions: {
-        turnAuditOff: process.env.SKIP_A11Y || false,
-        visualNoiseLevel: 1,
-      },
-    },
     fontawesome: {
       enableExperimentalBuildTimeTransform: false,
       defaultPrefix: 'fas',
