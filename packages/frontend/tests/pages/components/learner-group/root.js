@@ -1,7 +1,5 @@
 import {
-  attribute,
   clickable,
-  collection,
   create,
   fillable,
   isPresent,
@@ -53,13 +51,6 @@ const definition = {
     cancel: clickable('.cancel'),
     save: clickable('.done'),
     isEditable: isPresent('[data-test-edit]'),
-  },
-  associatedCourses: {
-    scope: '[data-test-associated-courses]',
-    label: text('label'),
-    courses: collection('li', {
-      linksTo: attribute('href', 'a'),
-    }),
   },
   instructorsList,
   instructorManager,
