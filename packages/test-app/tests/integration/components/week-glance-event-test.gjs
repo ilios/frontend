@@ -74,7 +74,7 @@ module('Integration | Component | week-glance-event', function (hooks) {
     assert.ok(component.learningMaterials.materials[0].hasCitation);
     assert.strictEqual(component.learningMaterials.materials[0].citation, 'citationtext');
     assert.ok(component.learningMaterials.materials[0].hasPublicNotes);
-    assert.strictEqual(component.learningMaterials.materials[0].publicNotes, 'This is cool.');
+    assert.strictEqual(component.learningMaterials.materials[0].publicNotes, '- This is cool.');
 
     assert.strictEqual(component.learningMaterials.materials[1].title, 'Link LM');
     assert.ok(component.learningMaterials.materials[1].typeIcon.isPresent);
@@ -141,7 +141,7 @@ module('Integration | Component | week-glance-event', function (hooks) {
     assert.ok(component.learningMaterials.materials[0].typeIcon.isPdf);
     assert.notOk(component.learningMaterials.materials[0].hasCitation);
     assert.ok(component.learningMaterials.materials[0].hasPublicNotes);
-    assert.strictEqual(component.learningMaterials.materials[0].publicNotes, 'slide notes');
+    assert.strictEqual(component.learningMaterials.materials[0].publicNotes, '- slide notes');
     assert.strictEqual(
       component.learningMaterials.materials[0].url,
       'http://myhost.com/url1?inline',
