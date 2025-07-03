@@ -4,9 +4,12 @@ import Header from 'frontend/components/program/header';
 import Overview from 'frontend/components/program/overview';
 import LeadershipExpanded from 'ilios-common/components/leadership-expanded';
 import { fn } from '@ember/helper';
+import { pageTitle } from 'ember-page-title';
 import LeadershipCollapsed from 'ilios-common/components/leadership-collapsed';
 import hasManyLength from 'ilios-common/helpers/has-many-length';
 <template>
+  {{pageTitle " | " @program.title prepend=false}}
+
   <section class="program" data-test-program-details ...attributes>
     <div class="backtolink">
       <LinkTo @route="programs" data-test-back-link>
