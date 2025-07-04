@@ -250,6 +250,7 @@ general:
   noSessionLearningMaterialsAvailable: "Aucun Matériels D'étude de Séance"
   notAClerkship: Pas une stage
   notes: Notes
+  notFound: Non Trouvé
   notFoundMessage: "Zut! Je ne pouvais pas trouver cette chôse. S'il vous plaît vérifier votre adresse de la page et essayez à nouveau."
   notPublished: Non Publier
   notStarted: Non Commencé
