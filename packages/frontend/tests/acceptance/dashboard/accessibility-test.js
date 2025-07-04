@@ -25,4 +25,12 @@ module('Acceptance | dashboard accessibility', function (hooks) {
     assert.dom('#ember-a11y-refocus-skip-link').exists();
     assert.dom('#ember-a11y-refocus-skip-link').hasProperty('tabIndex', 0);
   });
+
+  test('meets a11y standards in calendar view', async function (assert) {
+    assert.expect(2);
+    await visit('/dashboard/calendar');
+    assert.strictEqual(currentURL(), '/dashboard/calendar');
+    await a11yAudit();
+    assert.ok(true);
+  });
 });
