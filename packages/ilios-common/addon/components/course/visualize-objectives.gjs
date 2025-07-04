@@ -5,6 +5,7 @@ import { cached } from '@glimmer/tracking';
 import { LinkTo } from '@ember/routing';
 import t from 'ember-intl/helpers/t';
 import add from 'ember-math-helpers/helpers/add';
+import { pageTitle } from 'ember-page-title';
 import VisualizeObjectivesGraph from 'ilios-common/components/course/visualize-objectives-graph';
 
 export default class CourseVisualizeObjectivesComponent extends Component {
@@ -19,6 +20,16 @@ export default class CourseVisualizeObjectivesComponent extends Component {
     return this.crossesBoundaryConfig.isResolved ? this.crossesBoundaryConfig.value : null;
   }
   <template>
+    {{pageTitle
+      (t "general.courses")
+      " | "
+      @model.title
+      " | "
+      (t "general.visualizations")
+      " | "
+      (t "general.objectives")
+    }}
+
     <section class="course-visualize-objectives" data-test-course-visualize-objectives>
       <div class="breadcrumbs" data-test-breadcrumb>
         <span>
