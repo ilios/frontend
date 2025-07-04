@@ -45,6 +45,8 @@ import CohortUserManager from 'frontend/components/learner-group/cohort-user-man
 import YupValidations from 'ilios-common/classes/yup-validations';
 import YupValidationMessage from 'ilios-common/components/yup-validation-message';
 import { string } from 'yup';
+import { pageTitle } from 'ember-page-title';
+import reverse from 'ilios-common/helpers/reverse';
 const DEFAULT_URL_VALUE = 'https://';
 
 export default class LearnerGroupRootComponent extends Component {
@@ -524,6 +526,15 @@ export default class LearnerGroupRootComponent extends Component {
     return this.crossesBoundaryConfig.isResolved ? this.crossesBoundaryConfig.value : false;
   }
   <template>
+    {{#if @learnerGroup.allParents}}
+      {{#each (reverse @learnerGroup.allParents) as |parent|}}
+        {{pageTitle " | " parent.title prepend=false}}
+      {{/each}}
+      {{pageTitle " | " @learnerGroup.title prepend=false}}
+    {{else}}
+      {{pageTitle " | " @learnerGroup.title prepend=false}}
+    {{/if}}
+
     {{#let (uniqueId) as |templateId|}}
       <section class="learner-group-root" data-test-learner-group-root ...attributes>
         {{#if this.isSavingGroups}}

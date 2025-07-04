@@ -250,6 +250,7 @@ general:
   noSessionLearningMaterialsAvailable: No Session Learning Materials Available
   notAClerkship: Not a Clerkship
   notes: Notes
+  notFound: Not Found
   notFoundMessage: "Rats! I couldn't find that. Please check your page address, and try again."
   notPublished: Not Published
   notStarted: Not Started

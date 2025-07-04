@@ -8,6 +8,7 @@ import add from 'ember-math-helpers/helpers/add';
 import { on } from '@ember/modifier';
 import pick from 'ilios-common/helpers/pick';
 import set from 'ember-set-helper/helpers/set';
+import { pageTitle } from 'ember-page-title';
 import VisualizeInstructorsGraph from 'ilios-common/components/course/visualize-instructors-graph';
 
 export default class CourseVisualizeInstructorsComponent extends Component {
@@ -27,6 +28,16 @@ export default class CourseVisualizeInstructorsComponent extends Component {
       : false;
   }
   <template>
+    {{pageTitle
+      (t "general.courses")
+      " | "
+      @model.title
+      " | "
+      (t "general.visualizations")
+      " | "
+      (t "general.instructors")
+    }}
+
     <section class="course-visualize-instructors" data-test-course-visualize-instructors>
       {{#if this.academicYearCrossesCalendarYearBoundariesData.isResolved}}
         <div class="breadcrumbs" data-test-breadcrumb>

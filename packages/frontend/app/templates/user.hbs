@@ -1,4 +1,4 @@
-{{page-title (t "general.admin")}}
+{{page-title (t "general.admin") " | " (t "general.users") " | " @model.fullName}}
 <UserProfile
   @user={{@model}}
   @canUpdate={{this.canUpdate}}
