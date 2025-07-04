@@ -17,6 +17,7 @@ import sortBy from 'ilios-common/helpers/sort-by';
 import includes from 'ilios-common/helpers/includes';
 import capitalize from 'ilios-common/helpers/capitalize';
 import formatDate from 'ember-intl/helpers/format-date';
+import { pageTitle } from 'ember-page-title';
 
 const DEBOUNCE_DELAY = 250;
 
@@ -167,6 +168,14 @@ export default class CourseMaterialsComponent extends Component {
     this.sessionQuery = q;
   });
   <template>
+    {{pageTitle
+      (t "general.courses")
+      " | "
+      @course.title
+      " | "
+      (t "general.courseLearningMaterials")
+    }}
+
     <div class="course-materials" data-test-course-materials>
       <div class="material-list">
         <h3 class="course-material-title">
