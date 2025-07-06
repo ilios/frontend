@@ -8,7 +8,6 @@ import { setupEmberOnerrorValidation } from 'ember-qunit';
 import start from 'ember-exam/test-support/start';
 import DefaultAdapter from 'ember-cli-page-object/adapters/rfc268';
 import { setAdapter } from 'ember-cli-page-object/adapters';
-import 'qunit-theme-ember/qunit.css';
 import { forceModulesToBeLoaded, sendCoverage } from 'ember-cli-code-coverage/test-support';
 
 //Needed for: https://github.com/testem/testem/issues/1577
