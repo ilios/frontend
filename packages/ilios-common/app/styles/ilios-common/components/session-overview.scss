@@ -3,7 +3,8 @@
 @use "../mixins" as m;
 
 .session-header {
-  background-color: c.$culturedGrey;
+  border-top: 1px solid c.$culturedGrey;
+  border-bottom: 1px solid c.$tealBlue;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
