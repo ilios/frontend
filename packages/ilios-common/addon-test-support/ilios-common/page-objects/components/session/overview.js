@@ -18,7 +18,7 @@ const definition = {
   scope: '[data-test-session-overview]',
   title: {
     scope: '[data-test-title]',
-    title: text('.editable'),
+    title: text(),
     edit: clickable('[data-test-edit]'),
     set: fillable('input'),
     save: clickable('.done'),

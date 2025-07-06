@@ -131,7 +131,7 @@ export default class EditableFieldComponent extends Component {
                   as |displayText expand collapse updateTextDims shouldFade expanded|
                 >
                   <button
-                    class="link-button editable"
+                    class="link-button"
                     aria-label={{t "general.edit"}}
                     title={{if @showTitle (t "general.edit")}}
                     data-test-edit
@@ -183,7 +183,7 @@ export default class EditableFieldComponent extends Component {
               {{/if}}
             {{else}}
               <button
-                class="link-button editable"
+                class="link-button"
                 aria-label={{t "general.edit"}}
                 data-test-edit
                 type="button"
