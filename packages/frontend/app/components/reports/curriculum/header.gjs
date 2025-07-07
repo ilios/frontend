@@ -18,6 +18,14 @@ export default class ReportsCurriculumHeader extends Component {
   @service intl;
   @service store;
 
+  get reportUrl() {
+    const urlObj = new URL(window.location.href);
+
+    urlObj.searchParams.set('report', this.args.selectedReportValue);
+
+    return urlObj.href;
+  }
+
   get copyButtonId() {
     return `curriculum-report-copy-button-${guidFor(this)}`;
   }
@@ -32,10 +40,6 @@ export default class ReportsCurriculumHeader extends Component {
 
   get runButtonElement() {
     return document.getElementById(this.runButtonId);
-  }
-
-  get reportUrl() {
-    return window.location.href;
   }
 
   textCopied = restartableTask(async () => {
