@@ -1,14 +1,17 @@
 import Component from '@glimmer/component';
 import { cached, tracked } from '@glimmer/tracking';
 import { array, fn } from '@ember/helper';
+import { on } from '@ember/modifier';
 import { action } from '@ember/object';
 import { LinkTo } from '@ember/routing';
 import { service } from '@ember/service';
 import { TrackedAsyncData } from 'ember-async-data';
 import t from 'ember-intl/helpers/t';
 import add from 'ember-math-helpers/helpers/add';
-import or from 'ember-truth-helpers/helpers/or';
+import set from 'ember-set-helper/helpers/set';
 import eq from 'ember-truth-helpers/helpers/eq';
+import or from 'ember-truth-helpers/helpers/or';
+import FaIcon from 'ilios-common/components/fa-icon';
 import SortableTh from 'ilios-common/components/sortable-th';
 import sortBy from 'ilios-common/helpers/sort-by';
 import { mapBy, uniqueValues } from 'ilios-common/utils/array-helpers';
@@ -17,6 +20,7 @@ export default class LearnerGroupCourseAssociationsComponent extends Component {
   @service iliosConfig;
   @service intl;
   @tracked sortBy = 'school';
+  @tracked isExpanded = false;
 
   crossesBoundaryConfig = new TrackedAsyncData(
     this.iliosConfig.itemFromConfig('academicYearCrossesCalendarYearBoundaries'),
@@ -62,6 +66,10 @@ export default class LearnerGroupCourseAssociationsComponent extends Component {
 
   get associations() {
     return this.associationsData.isResolved ? this.associationsData.value : [];
+  }
+
+  get hasAssociations() {
+    return !!this.associations.length;
   }
 
   get isLoaded() {
@@ -111,71 +119,95 @@ export default class LearnerGroupCourseAssociationsComponent extends Component {
 
   <template>
     <section class="learner-group-course-associations" data-test-learner-group-course-associations>
-      <div class="header">
-        <h3 class="title" data-test-title>
-          {{t "general.associatedSessions"}}
-        </h3>
-      </div>
-      <div class="content">
-        {{#if this.isLoaded}}
-          {{#if this.associations.length}}
-            <table data-test-associations>
-              <thead>
-                <tr>
-                  <SortableTh
-                    @sortedAscending={{this.sortedAscending}}
-                    @onClick={{fn this.setSortBy "school"}}
-                    @sortedBy={{or (eq this.sortBy "school") (eq this.sortBy "school:desc")}}
-                  >
-                    {{t "general.school"}}
-                  </SortableTh>
-                  <SortableTh
-                    colspan="3"
-                    @sortedAscending={{this.sortedAscending}}
-                    @onClick={{fn this.setSortBy "course"}}
-                    @sortedBy={{or (eq this.sortBy "course") (eq this.sortBy "course:desc")}}
-                  >
-                    {{t "general.course"}}
-                  </SortableTh>
-                  <th colspan="3">{{t "general.sessions"}}</th>
-                </tr>
-              </thead>
-              <tbody>
-                {{#each (sortBy this.sortAssociations this.associations) as |association|}}
+      {{#if this.isLoaded}}
+        <div class="header" data-test-header>
+          <h3 class="title" data-test-title>
+            {{#if this.isExpanded}}
+              <button
+                class="title link-button"
+                type="button"
+                aria-expanded="true"
+                data-test-collapse
+                {{on "click" (set this "isExpanded" false)}}
+              >
+                {{t "general.associatedSessions"}}
+                <FaIcon @icon="caret-down" />
+              </button>
+            {{else}}
+              <button
+                class="title link-button"
+                type="button"
+                aria-expanded="false"
+                data-test-expand
+                {{on "click" (set this "isExpanded" true)}}
+              >
+                {{t "general.associatedSessions"}}
+                <FaIcon @icon="caret-right" />
+              </button>
+            {{/if}}
+          </h3>
+        </div>
+        {{#if this.isExpanded}}
+          <div class="content" data-test-content>
+            {{#if this.hasAssociations}}
+              <table data-test-associations>
+                <thead>
                   <tr>
-                    <td>{{association.school.title}}</td>
-                    <td colspan="3">
-                      <LinkTo @route="course" @model={{association.course}}>
-                        {{association.course.title}}
-                        {{#if this.academicYearCrossesCalendarYearBoundaries}}
-                          ({{association.course.year}}
-                          -
-                          {{add association.course.year 1}})
-                        {{else}}
-                          ({{association.course.year}})
-                        {{/if}}
-                      </LinkTo>
-                    </td>
-                    <td colspan="3">
-                      <ul class="sessions-list">
-                        {{#each association.sessions as |session|}}
-                          <li data-test-session>
-                            <LinkTo @route="session" @models={{array session.course session}}>
-                              {{session.title}}
-                            </LinkTo>
-                          </li>
-                        {{/each}}
-                      </ul>
-                    </td>
+                    <SortableTh
+                      @sortedAscending={{this.sortedAscending}}
+                      @onClick={{fn this.setSortBy "school"}}
+                      @sortedBy={{or (eq this.sortBy "school") (eq this.sortBy "school:desc")}}
+                    >
+                      {{t "general.school"}}
+                    </SortableTh>
+                    <SortableTh
+                      colspan="3"
+                      @sortedAscending={{this.sortedAscending}}
+                      @onClick={{fn this.setSortBy "course"}}
+                      @sortedBy={{or (eq this.sortBy "course") (eq this.sortBy "course:desc")}}
+                    >
+                      {{t "general.course"}}
+                    </SortableTh>
+                    <th colspan="3">{{t "general.sessions"}}</th>
                   </tr>
-                {{/each}}
-              </tbody>
-            </table>
-          {{else}}
-            <div class="no-data" data-test-no-associations>{{t "general.none"}}</div>
-          {{/if}}
+                </thead>
+                <tbody>
+                  {{#each (sortBy this.sortAssociations this.associations) as |association|}}
+                    <tr>
+                      <td>{{association.school.title}}</td>
+                      <td colspan="3">
+                        <LinkTo @route="course" @model={{association.course}}>
+                          {{association.course.title}}
+                          {{#if this.academicYearCrossesCalendarYearBoundaries}}
+                            ({{association.course.year}}
+                            -
+                            {{add association.course.year 1}})
+                          {{else}}
+                            ({{association.course.year}})
+                          {{/if}}
+                        </LinkTo>
+                      </td>
+                      <td colspan="3">
+                        <ul class="sessions-list">
+                          {{#each association.sessions as |session|}}
+                            <li data-test-session>
+                              <LinkTo @route="session" @models={{array session.course session}}>
+                                {{session.title}}
+                              </LinkTo>
+                            </li>
+                          {{/each}}
+                        </ul>
+                      </td>
+                    </tr>
+                  {{/each}}
+                </tbody>
+              </table>
+            {{else}}
+              <div class="no-data" data-test-no-associations>{{t "general.none"}}</div>
+            {{/if}}
+          </div>
         {{/if}}
-      </div>
+      {{/if}}
     </section>
   </template>
 }

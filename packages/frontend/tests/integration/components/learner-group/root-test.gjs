@@ -215,15 +215,36 @@ module('Integration | Component | learner-group/root', function (hooks) {
       </template>,
     );
 
-    assert.strictEqual(component.courseAssociations.associations.length, 2);
-    assert.strictEqual(component.courseAssociations.associations[0].school, 'school 0');
-    assert.strictEqual(component.courseAssociations.associations[0].course.text, 'course 0 (2013)');
-    assert.strictEqual(component.courseAssociations.associations[0].sessions.length, 1);
-    assert.strictEqual(component.courseAssociations.associations[0].sessions[0].text, 'session 0');
-    assert.strictEqual(component.courseAssociations.associations[1].school, 'school 0');
-    assert.strictEqual(component.courseAssociations.associations[1].course.text, 'course 1 (2013)');
-    assert.strictEqual(component.courseAssociations.associations[1].sessions.length, 1);
-    assert.strictEqual(component.courseAssociations.associations[1].sessions[0].text, 'session 1');
+    assert.ok(component.courseAssociations.header.isCollapsed);
+    assert.notOk(component.courseAssociations.content.isPresent);
+    assert.strictEqual(component.courseAssociations.header.title, 'Associated Sessions');
+
+    await component.courseAssociations.header.expand();
+
+    assert.strictEqual(component.courseAssociations.header.title, 'Associated Sessions');
+    assert.ok(component.courseAssociations.header.isExpanded);
+    assert.ok(component.courseAssociations.content.isPresent);
+    assert.strictEqual(component.courseAssociations.content.associations.length, 2);
+    assert.strictEqual(component.courseAssociations.content.associations[0].school, 'school 0');
+    assert.strictEqual(
+      component.courseAssociations.content.associations[0].course.text,
+      'course 0 (2013)',
+    );
+    assert.strictEqual(component.courseAssociations.content.associations[0].sessions.length, 1);
+    assert.strictEqual(
+      component.courseAssociations.content.associations[0].sessions[0].text,
+      'session 0',
+    );
+    assert.strictEqual(component.courseAssociations.content.associations[1].school, 'school 0');
+    assert.strictEqual(
+      component.courseAssociations.content.associations[1].course.text,
+      'course 1 (2013)',
+    );
+    assert.strictEqual(component.courseAssociations.content.associations[1].sessions.length, 1);
+    assert.strictEqual(
+      component.courseAssociations.content.associations[1].sessions[0].text,
+      'session 1',
+    );
   });
 
   test('Needs accommodation', async function (assert) {

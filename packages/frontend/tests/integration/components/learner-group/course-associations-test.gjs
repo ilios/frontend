@@ -55,34 +55,51 @@ module('Integration | Component | learner-group/course-associations', function (
     this.set('learnerGroup', learnerGroup);
     await render(<template><CourseAssociations @learnerGroup={{this.learnerGroup}} /></template>);
 
-    assert.strictEqual(component.headers.school.text, 'School');
-    assert.strictEqual(component.headers.course.text, 'Course');
-    assert.strictEqual(component.headers.sessions.text, 'Sessions');
-
-    assert.strictEqual(component.associations.length, 3);
-    assert.strictEqual(component.associations[0].school, 'school 1');
-    assert.strictEqual(component.associations[0].course.text, 'course 1 (2025)');
-    assert.strictEqual(component.associations[0].course.link, '/courses/2');
-    assert.strictEqual(component.associations[0].sessions.length, 2);
-    assert.strictEqual(component.associations[0].sessions[0].text, 'session 1');
-    assert.strictEqual(component.associations[0].sessions[0].link, '/courses/2/sessions/2');
-    assert.strictEqual(component.associations[0].sessions[1].text, 'session 2');
-    assert.strictEqual(component.associations[0].sessions[1].link, '/courses/2/sessions/3');
-    assert.strictEqual(component.associations[1].school, 'school 1');
-    assert.strictEqual(component.associations[1].course.text, 'course 0 (2025)');
-    assert.strictEqual(component.associations[1].course.link, '/courses/1');
-    assert.strictEqual(component.associations[1].sessions.length, 1);
-    assert.strictEqual(component.associations[1].sessions[0].text, 'session 0');
-    assert.strictEqual(component.associations[1].sessions[0].link, '/courses/1/sessions/1');
-    assert.strictEqual(component.associations[2].school, 'school 2');
-    assert.strictEqual(component.associations[2].course.text, 'course 2 (2025)');
-    assert.strictEqual(component.associations[2].course.link, '/courses/3');
-    assert.strictEqual(component.associations[2].sessions.length, 1);
-    assert.strictEqual(component.associations[2].sessions[0].text, 'session 3');
-    assert.strictEqual(component.associations[2].sessions[0].link, '/courses/3/sessions/4');
-    assert.notOk(component.noAssociations.isPresent);
+    assert.ok(component.header.isCollapsed);
+    assert.notOk(component.content.isPresent);
+    assert.strictEqual(component.header.title, 'Associated Sessions');
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
+
+    await component.header.expand();
+
+    assert.ok(component.header.isExpanded);
+    assert.ok(component.content.isPresent);
+    assert.strictEqual(component.header.title, 'Associated Sessions');
+
+    assert.strictEqual(component.content.headers.school.text, 'School');
+    assert.strictEqual(component.content.headers.course.text, 'Course');
+    assert.strictEqual(component.content.headers.sessions.text, 'Sessions');
+
+    assert.strictEqual(component.content.associations.length, 3);
+    assert.strictEqual(component.content.associations[0].school, 'school 1');
+    assert.strictEqual(component.content.associations[0].course.text, 'course 1 (2025)');
+    assert.strictEqual(component.content.associations[0].course.link, '/courses/2');
+    assert.strictEqual(component.content.associations[0].sessions.length, 2);
+    assert.strictEqual(component.content.associations[0].sessions[0].text, 'session 1');
+    assert.strictEqual(component.content.associations[0].sessions[0].link, '/courses/2/sessions/2');
+    assert.strictEqual(component.content.associations[0].sessions[1].text, 'session 2');
+    assert.strictEqual(component.content.associations[0].sessions[1].link, '/courses/2/sessions/3');
+    assert.strictEqual(component.content.associations[1].school, 'school 1');
+    assert.strictEqual(component.content.associations[1].course.text, 'course 0 (2025)');
+    assert.strictEqual(component.content.associations[1].course.link, '/courses/1');
+    assert.strictEqual(component.content.associations[1].sessions.length, 1);
+    assert.strictEqual(component.content.associations[1].sessions[0].text, 'session 0');
+    assert.strictEqual(component.content.associations[1].sessions[0].link, '/courses/1/sessions/1');
+    assert.strictEqual(component.content.associations[2].school, 'school 2');
+    assert.strictEqual(component.content.associations[2].course.text, 'course 2 (2025)');
+    assert.strictEqual(component.content.associations[2].course.link, '/courses/3');
+    assert.strictEqual(component.content.associations[2].sessions.length, 1);
+    assert.strictEqual(component.content.associations[2].sessions[0].text, 'session 3');
+    assert.strictEqual(component.content.associations[2].sessions[0].link, '/courses/3/sessions/4');
+    assert.notOk(component.content.noAssociations.isPresent);
+    await a11yAudit(this.element);
+    assert.ok(true, 'no a11y errors found!');
+
+    await component.header.collapse();
+
+    assert.ok(component.header.isCollapsed);
+    assert.notOk(component.content.isPresent);
   });
 
   test('it renders without data', async function (assert) {
@@ -91,10 +108,13 @@ module('Integration | Component | learner-group/course-associations', function (
       .findRecord('learner-group', this.learnerGroup.id);
     this.set('learnerGroup', learnerGroup);
     await render(<template><CourseAssociations @learnerGroup={{this.learnerGroup}} /></template>);
-    assert.notOk(component.headers.isPresent);
-    assert.strictEqual(component.associations.length, 0);
-    assert.ok(component.noAssociations.isPresent);
-    assert.ok(component.noAssociations.text, 'No Data');
+
+    await component.header.expand();
+
+    assert.notOk(component.content.headers.isPresent);
+    assert.strictEqual(component.content.associations.length, 0);
+    assert.ok(component.content.noAssociations.isPresent);
+    assert.ok(component.content.noAssociations.text, 'No Data');
   });
 
   test('sorting works', async function (assert) {
@@ -110,53 +130,56 @@ module('Integration | Component | learner-group/course-associations', function (
       .findRecord('learner-group', this.learnerGroup.id);
     this.set('learnerGroup', learnerGroup);
     await render(<template><CourseAssociations @learnerGroup={{this.learnerGroup}} /></template>);
-    assert.strictEqual(component.associations.length, 2);
-    assert.ok(component.headers.school.isSortedAscending);
-    assert.ok(component.headers.course.isNotSorted);
-    assert.strictEqual(component.associations[0].school, 'school 1');
-    assert.strictEqual(component.associations[0].course.text, 'course 0 (2025)');
-    assert.strictEqual(component.associations[1].school, 'school 2');
-    assert.strictEqual(component.associations[1].course.text, 'course 1 (2025)');
 
-    await component.headers.school.sort();
-    assert.ok(component.headers.school.isSortedDescending);
-    assert.ok(component.headers.course.isNotSorted);
-    assert.strictEqual(component.associations[0].school, 'school 2');
-    assert.strictEqual(component.associations[0].course.text, 'course 1 (2025)');
-    assert.strictEqual(component.associations[1].school, 'school 1');
-    assert.strictEqual(component.associations[1].course.text, 'course 0 (2025)');
+    await component.header.expand();
 
-    await component.headers.school.sort();
-    assert.ok(component.headers.school.isSortedAscending);
-    assert.ok(component.headers.course.isNotSorted);
-    assert.strictEqual(component.associations[0].school, 'school 1');
-    assert.strictEqual(component.associations[0].course.text, 'course 0 (2025)');
-    assert.strictEqual(component.associations[1].school, 'school 2');
-    assert.strictEqual(component.associations[1].course.text, 'course 1 (2025)');
+    assert.strictEqual(component.content.associations.length, 2);
+    assert.ok(component.content.headers.school.isSortedAscending);
+    assert.ok(component.content.headers.course.isNotSorted);
+    assert.strictEqual(component.content.associations[0].school, 'school 1');
+    assert.strictEqual(component.content.associations[0].course.text, 'course 0 (2025)');
+    assert.strictEqual(component.content.associations[1].school, 'school 2');
+    assert.strictEqual(component.content.associations[1].course.text, 'course 1 (2025)');
 
-    await component.headers.course.sort();
-    assert.ok(component.headers.school.isNotSorted);
-    assert.ok(component.headers.course.isSortedAscending);
-    assert.strictEqual(component.associations[0].school, 'school 1');
-    assert.strictEqual(component.associations[0].course.text, 'course 0 (2025)');
-    assert.strictEqual(component.associations[1].school, 'school 2');
-    assert.strictEqual(component.associations[1].course.text, 'course 1 (2025)');
+    await component.content.headers.school.sort();
+    assert.ok(component.content.headers.school.isSortedDescending);
+    assert.ok(component.content.headers.course.isNotSorted);
+    assert.strictEqual(component.content.associations[0].school, 'school 2');
+    assert.strictEqual(component.content.associations[0].course.text, 'course 1 (2025)');
+    assert.strictEqual(component.content.associations[1].school, 'school 1');
+    assert.strictEqual(component.content.associations[1].course.text, 'course 0 (2025)');
 
-    await component.headers.course.sort();
-    assert.ok(component.headers.school.isNotSorted);
-    assert.ok(component.headers.course.isSortedDescending);
-    assert.strictEqual(component.associations[0].school, 'school 2');
-    assert.strictEqual(component.associations[0].course.text, 'course 1 (2025)');
-    assert.strictEqual(component.associations[1].school, 'school 1');
-    assert.strictEqual(component.associations[1].course.text, 'course 0 (2025)');
+    await component.content.headers.school.sort();
+    assert.ok(component.content.headers.school.isSortedAscending);
+    assert.ok(component.content.headers.course.isNotSorted);
+    assert.strictEqual(component.content.associations[0].school, 'school 1');
+    assert.strictEqual(component.content.associations[0].course.text, 'course 0 (2025)');
+    assert.strictEqual(component.content.associations[1].school, 'school 2');
+    assert.strictEqual(component.content.associations[1].course.text, 'course 1 (2025)');
 
-    await component.headers.course.sort();
-    assert.ok(component.headers.school.isNotSorted);
-    assert.ok(component.headers.course.isSortedAscending);
-    assert.strictEqual(component.associations[0].school, 'school 1');
-    assert.strictEqual(component.associations[0].course.text, 'course 0 (2025)');
-    assert.strictEqual(component.associations[1].school, 'school 2');
-    assert.strictEqual(component.associations[1].course.text, 'course 1 (2025)');
+    await component.content.headers.course.sort();
+    assert.ok(component.content.headers.school.isNotSorted);
+    assert.ok(component.content.headers.course.isSortedAscending);
+    assert.strictEqual(component.content.associations[0].school, 'school 1');
+    assert.strictEqual(component.content.associations[0].course.text, 'course 0 (2025)');
+    assert.strictEqual(component.content.associations[1].school, 'school 2');
+    assert.strictEqual(component.content.associations[1].course.text, 'course 1 (2025)');
+
+    await component.content.headers.course.sort();
+    assert.ok(component.content.headers.school.isNotSorted);
+    assert.ok(component.content.headers.course.isSortedDescending);
+    assert.strictEqual(component.content.associations[0].school, 'school 2');
+    assert.strictEqual(component.content.associations[0].course.text, 'course 1 (2025)');
+    assert.strictEqual(component.content.associations[1].school, 'school 1');
+    assert.strictEqual(component.content.associations[1].course.text, 'course 0 (2025)');
+
+    await component.content.headers.course.sort();
+    assert.ok(component.content.headers.school.isNotSorted);
+    assert.ok(component.content.headers.course.isSortedAscending);
+    assert.strictEqual(component.content.associations[0].school, 'school 1');
+    assert.strictEqual(component.content.associations[0].course.text, 'course 0 (2025)');
+    assert.strictEqual(component.content.associations[1].school, 'school 2');
+    assert.strictEqual(component.content.associations[1].course.text, 'course 1 (2025)');
   });
 
   test('crossing academic year boundaries is correctly reflected', async function (assert) {
@@ -178,7 +201,10 @@ module('Integration | Component | learner-group/course-associations', function (
       };
     });
     await render(<template><CourseAssociations @learnerGroup={{this.learnerGroup}} /></template>);
-    assert.strictEqual(component.associations.length, 1);
-    assert.strictEqual(component.associations[0].course.text, 'course 0 (2025 - 2026)');
+
+    await component.header.expand();
+
+    assert.strictEqual(component.content.associations.length, 1);
+    assert.strictEqual(component.content.associations[0].course.text, 'course 0 (2025 - 2026)');
   });
 });
