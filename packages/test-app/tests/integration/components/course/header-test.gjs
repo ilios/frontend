@@ -17,10 +17,15 @@ module('Integration | Component | course/header', function (hooks) {
   test('it renders and is accessible', async function (assert) {
     const course = this.server.create('course', {
       published: true,
+      year: 2025,
     });
     const courseModel = await this.store.findRecord('course', course.id);
     this.set('course', courseModel);
-    await render(<template><Header @course={{this.course}} @editable={{true}} /></template>);
+    await render(
+      <template>
+        <Header @course={{this.course}} @editable={{true}} @academicYear={{course.year}} />
+      </template>,
+    );
     await a11yAudit(this.element);
     assert.ok(true, 'not a11y violations');
   });
@@ -28,10 +33,15 @@ module('Integration | Component | course/header', function (hooks) {
   test('it renders and is accessible when not editable', async function (assert) {
     const course = this.server.create('course', {
       published: true,
+      year: 2025,
     });
     const courseModel = await this.store.findRecord('course', course.id);
     this.set('course', courseModel);
-    await render(<template><Header @course={{this.course}} @editable={{false}} /></template>);
+    await render(
+      <template>
+        <Header @course={{this.course}} @editable={{false}} @academicYear={{course.year}} />
+      </template>,
+    );
     await a11yAudit(this.element);
     assert.ok(true, 'not a11y violations');
   });
@@ -128,7 +138,11 @@ module('Integration | Component | course/header', function (hooks) {
     const course = this.server.create('course', { year: 2021 });
     const courseModel = await this.store.findRecord('course', course.id);
     this.set('course', courseModel);
-    await render(<template><Header @course={{this.course}} @editable={{true}} /></template>);
+    await render(
+      <template>
+        <Header @course={{this.course}} @editable={{true}} @academicYear={{course.year}} />
+      </template>,
+    );
     assert.strictEqual(component.academicYear, '2021');
   });
 
@@ -142,8 +156,13 @@ module('Integration | Component | course/header', function (hooks) {
     });
     const course = this.server.create('course', { year: 2021 });
     const courseModel = await this.store.findRecord('course', course.id);
+    const year = `${course.year} - ${course.year + 1}`;
     this.set('course', courseModel);
-    await render(<template><Header @course={{this.course}} @editable={{true}} /></template>);
+    await render(
+      <template>
+        <Header @course={{this.course}} @editable={{true}} @academicYear={{year}} />
+      </template>,
+    );
     assert.strictEqual(component.academicYear, '2021 - 2022');
   });
 
