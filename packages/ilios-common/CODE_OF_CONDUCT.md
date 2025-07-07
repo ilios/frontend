@@ -51,7 +51,6 @@ report it by emailing
   and we conduct ourselves professionally. Be kind to others. Do not insult or
   put down other participants. Harassment and other exclusionary behavior
   aren't acceptable. This includes, but is not limited to:
-
   - Violent threats or language directed against another person.
   - Discriminatory jokes and language.
   - Posting sexually explicit or violent material.
