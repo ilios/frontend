@@ -89,7 +89,7 @@ export default class ReportsCurriculumLearnerGroupsComponent extends Component {
   get summary() {
     return this.reportWithLearnerGroups.map((c) => {
       return {
-        schoolTitle: c.school.title,
+        schoolTitle: c.school?.title,
         courseId: c.id,
         courseTitle: c.title,
         sessionCount: c.sessions.length,
@@ -127,8 +127,8 @@ export default class ReportsCurriculumLearnerGroupsComponent extends Component {
             link: `${origin}${path}`,
           };
 
-          if (this.args.hasMultipleSchools) {
-            learnerGroup.schoolTitle = c.school.title;
+          if (this.hasMultipleSchools) {
+            learnerGroup.schoolTitle = c.school?.title;
           }
 
           acc.push(learnerGroup);
@@ -195,11 +195,10 @@ export default class ReportsCurriculumLearnerGroupsComponent extends Component {
   downloadReport = dropTask(async () => {
     const data = this.sortedResults.map((o) => {
       const rhett = {};
+
       if (this.hasMultipleSchools) {
         rhett[this.intl.t('general.school')] = o.schoolTitle;
       }
-      rhett[this.intl.t('general.school')] = o.schoolTitle;
-      rhett[this.intl.t('general.id')] = o.courseId;
       rhett[this.intl.t('general.course')] = o.courseTitle;
       rhett[this.intl.t('general.year')] = o.year;
       rhett[this.intl.t('general.session')] = o.sessionTitle;
