@@ -9,7 +9,7 @@
     @include m.detail-container-header;
 
     .title {
-      @include m.detail-container-title;
+      @include m.collapsed-container-title;
     }
   }
 
