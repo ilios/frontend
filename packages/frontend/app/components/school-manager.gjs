@@ -36,7 +36,6 @@ import SchoolInstitutionalInformationDetails from 'frontend/components/school-in
 
 export default class SchoolManagerComponent extends Component {
   @service flashMessages;
-  @service intl;
   @tracked title;
   @tracked newSavedSessionType;
 
