@@ -149,7 +149,6 @@ export default class ReportsCurriculumHeader extends Component {
             @success={{perform this.textCopied}}
             aria-label={{t "general.copyCurriculumReportUrl"}}
             id={{this.copyButtonId}}
-            data-test-copy-url
             {{mouseHoverToggle (set this "showCopyTooltip")}}
           >
             <FaIcon @icon="copy" />

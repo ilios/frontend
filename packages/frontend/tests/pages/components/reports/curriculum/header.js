@@ -24,7 +24,7 @@ const definition = {
     click: clickable(),
   },
   copy: {
-    scope: '[data-test-copy-url]',
+    scope: '[data-test-copy-button]',
     click: clickable(),
   },
 };

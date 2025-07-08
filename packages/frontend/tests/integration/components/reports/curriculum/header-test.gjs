@@ -60,6 +60,7 @@ module('Integration | Component | reports/curriculum/header', function (hooks) {
       ),
     );
     assert.ok(component.runReport.isPresent);
+    assert.ok(component.copy.isPresent);
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
   });
@@ -117,6 +118,7 @@ module('Integration | Component | reports/curriculum/header', function (hooks) {
       ),
     );
     assert.ok(component.runReport.isPresent);
+    assert.ok(component.copy.isPresent);
   });
 
   test('it renders for learner groups and is accessible', async function (assert) {
@@ -145,6 +147,7 @@ module('Integration | Component | reports/curriculum/header', function (hooks) {
       ),
     );
     assert.ok(component.runReport.isPresent);
+    assert.ok(component.copy.isPresent);
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
   });
@@ -193,7 +196,8 @@ module('Integration | Component | reports/curriculum/header', function (hooks) {
         'Each attached learner group is listed along with instructors and course data.',
       ),
     );
-    assert.ok(component.runReport.isPresent, 'report results are visible');
+    assert.ok(component.runReport.isPresent, 'report results button is visible');
+    assert.ok(component.copy.isPresent, 'copy report url button is visible');
   });
 
   test('it changes selected report', async function (assert) {
@@ -246,14 +250,17 @@ module('Integration | Component | reports/curriculum/header', function (hooks) {
     );
 
     assert.ok(component.runReport.isPresent);
+    assert.ok(component.copy.isPresent);
     assert.notOk(component.close.isPresent);
     assert.notOk(component.download.isPresent);
     await component.runReport.click();
     assert.ok(component.close.isPresent);
+    assert.ok(component.copy.isPresent);
     assert.ok(component.download.isPresent);
     assert.notOk(component.runReport.isPresent);
     await component.close.click();
     assert.ok(component.runReport.isPresent);
+    assert.ok(component.copy.isPresent);
     assert.notOk(component.close.isPresent);
     assert.notOk(component.download.isPresent);
   });
