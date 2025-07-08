@@ -447,6 +447,18 @@ export default class ReportsNewSubjectComponent extends Component {
         select.classList.add('error');
         select.focus();
       }
+
+      const searchObjectTypes = ['course', 'instructor', 'learning material', 'mesh term'];
+
+      if (searchObjectTypes.includes(this.prepositionalObject) && !this.prepositionalObjectId) {
+        const input = document.querySelector('[data-test-reports-new-subject] input.search-input');
+
+        if (input) {
+          input.classList.add('error');
+          input.focus();
+        }
+      }
+
       return false;
     }
     this.validations.clearErrorDisplay();

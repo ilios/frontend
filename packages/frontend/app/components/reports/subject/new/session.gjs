@@ -127,7 +127,6 @@ export default class ReportsSubjectNewSessionComponent extends Component {
               {{/if}}
               {{session.course.title}}
             </button>
-
           </SearchInput>
         {{/if}}
       </p>
