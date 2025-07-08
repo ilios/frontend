@@ -89,7 +89,7 @@ export default class ReportsCurriculumLearnerGroupsComponent extends Component {
   get summary() {
     return this.reportWithLearnerGroups.map((c) => {
       return {
-        schoolTitle: c.school?.title,
+        schoolTitle: c.school.title,
         courseId: c.id,
         courseTitle: c.title,
         sessionCount: c.sessions.length,
@@ -128,7 +128,7 @@ export default class ReportsCurriculumLearnerGroupsComponent extends Component {
           };
 
           if (this.hasMultipleSchools) {
-            learnerGroup.schoolTitle = c.school?.title;
+            learnerGroup.schoolTitle = c.school.title;
           }
 
           acc.push(learnerGroup);

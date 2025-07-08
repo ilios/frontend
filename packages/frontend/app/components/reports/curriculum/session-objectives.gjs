@@ -75,7 +75,7 @@ export default class ReportsCurriculumSessionObjectivesComponent extends Compone
   get summary() {
     return this.reportWithInstructors.map((c) => {
       return {
-        schoolTitle: c.school?.title,
+        schoolTitle: c.school.title,
         courseId: c.id,
         courseTitle: c.title,
         sessionCount: c.sessions.length,
@@ -120,7 +120,7 @@ export default class ReportsCurriculumSessionObjectivesComponent extends Compone
           };
 
           if (this.hasMultipleSchools) {
-            sessionObjective.schoolTitle = c.school?.title;
+            sessionObjective.schoolTitle = c.school.title;
           }
 
           acc.push(sessionObjective);
