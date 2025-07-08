@@ -4,6 +4,7 @@ import t from 'ember-intl/helpers/t';
 import { LinkTo } from '@ember/routing';
 import { hash } from '@ember/helper';
 import { service } from '@ember/service';
+import FaIcon from 'ilios-common/components/fa-icon';
 import WeekGlance from 'ilios-common/components/week-glance';
 
 export default class DashboardWeekComponent extends Component {
@@ -59,9 +60,10 @@ export default class DashboardWeekComponent extends Component {
         />
       </div>
       {{#if this.globalScroll.displayBackToTop}}
-        <div class="back-to-top">
-          <a href="#top">{{t "general.backToTop"}}</a>
-        </div>
+        <a href="#top" class="back-to-top">
+          <FaIcon @icon="chevron-up" />
+          <span>{{t "general.backToTop"}}</span>
+        </a>
       {{/if}}
     </div>
   </template>
