@@ -300,9 +300,6 @@ importers:
       qunit-dom:
         specifier: ^3.4.0
         version: 3.4.0
-      qunit-theme-ember:
-        specifier: ^1.0.0
-        version: 1.0.0
       sass:
         specifier: ^1.89.2
         version: 1.89.2
@@ -838,9 +835,6 @@ importers:
       qunit-dom:
         specifier: ^3.4.0
         version: 3.4.0
-      qunit-theme-ember:
-        specifier: ^1.0.0
-        version: 1.0.0
       sass:
         specifier: ^1.89.2
         version: 1.89.2
@@ -1066,9 +1060,6 @@ importers:
       qunit-dom:
         specifier: ^3.4.0
         version: 3.4.0
-      qunit-theme-ember:
-        specifier: ^1.0.0
-        version: 1.0.0
       sass:
         specifier: ^1.89.2
         version: 1.89.2
@@ -1291,9 +1282,6 @@ importers:
       qunit-dom:
         specifier: ^3.4.0
         version: 3.4.0
-      qunit-theme-ember:
-        specifier: ^1.0.0
-        version: 1.0.0
       stylelint:
         specifier: ^16.20.0
         version: 16.21.1(typescript@5.8.3)

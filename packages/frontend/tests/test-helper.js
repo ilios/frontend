@@ -16,7 +16,6 @@ import {
 } from 'ember-a11y-testing/test-support';
 
 import start from 'ember-exam/test-support/start';
-import 'qunit-theme-ember/qunit.css';
 import './helpers/percy-snapshot-name';
 
 setupConsoleLogger();

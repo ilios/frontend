@@ -7,7 +7,6 @@ import { setupEmberOnerrorValidation } from 'ember-qunit';
 
 import start from 'ember-exam/test-support/start';
 import { setRunOptions } from 'ember-a11y-testing/test-support';
-import 'qunit-theme-ember/qunit.css';
 import { forceModulesToBeLoaded, sendCoverage } from 'ember-cli-code-coverage/test-support';
 
 setRunOptions({

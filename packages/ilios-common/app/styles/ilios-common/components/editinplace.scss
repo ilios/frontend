@@ -2,16 +2,6 @@
 @use "../mixins" as m;
 
 .editinplace {
-  .editable {
-    color: c.$blueMunsell;
-    cursor: pointer;
-    display: block;
-
-    &.prompt {
-      font-style: italic;
-    }
-  }
-
   .editor {
     @include m.ilios-form-error;
     align-items: center;
