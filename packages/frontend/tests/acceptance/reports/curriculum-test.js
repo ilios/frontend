@@ -615,7 +615,7 @@ module('Acceptance | Reports - Curriculum Reports', function (hooks) {
       return { data: { courses } };
     });
     await page.visitCurriculumReports();
-    await page.curriculum.chooseCourse.years[0].toggleAll();
+    await page.curriculum.chooseCourse.years[0].toggleAll.click();
 
     // Make sure copy button is grabbing correct report type
     const writeText = navigator.clipboard.writeText;
