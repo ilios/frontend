@@ -93,7 +93,7 @@ module('Acceptance | Reports - Curriculum Reports', function (hooks) {
   });
 
   test('run session objectives report, single school', async function (assert) {
-    assert.expect(7);
+    assert.expect(8);
     const course = this.server.create('course', {
       school: this.school,
       year: currentAcademicYear(),
@@ -163,10 +163,24 @@ module('Acceptance | Reports - Curriculum Reports', function (hooks) {
       '/reports/curriculum?courses=1&report=sessionObjectives&run=true',
       'current URL is correct',
     );
+
+    // Make sure copy button is grabbing correct report type
+    const writeText = navigator.clipboard.writeText;
+    navigator.clipboard.writeText = (text) => {
+      const reportType = text.split('report=')[1];
+      assert.strictEqual(
+        reportType,
+        'sessionObjectives',
+        'Correct report type was copied to clipboard',
+      );
+      return Promise.resolve();
+    };
+    await page.curriculum.header.copy.click();
+    navigator.clipboard.writeText = writeText;
   });
 
   test('run session objectives report, multiple schools', async function (assert) {
-    assert.expect(13);
+    assert.expect(14);
     const course = this.server.create('course', {
       school: this.school,
       year: currentAcademicYear(),
@@ -282,16 +296,30 @@ module('Acceptance | Reports - Curriculum Reports', function (hooks) {
       '0',
       'Result 2 objective count is correct',
     );
-
+    //localhost:4301/tests?nocontainer=&moduleId=1582286f&report=sessionObjectives
     assert.strictEqual(
       currentURL(),
       '/reports/curriculum?courses=1-4&report=sessionObjectives&run=true',
       'current URL is correct',
     );
+
+    // Make sure copy button is grabbing correct report type
+    const writeText = navigator.clipboard.writeText;
+    navigator.clipboard.writeText = (text) => {
+      const reportType = text.split('report=')[1];
+      assert.strictEqual(
+        reportType,
+        'sessionObjectives',
+        'Correct report type was copied to clipboard',
+      );
+      return Promise.resolve();
+    };
+    await page.curriculum.header.copy.click();
+    navigator.clipboard.writeText = writeText;
   });
 
   test('run learner groups report, single school', async function (assert) {
-    assert.expect(7);
+    assert.expect(8);
     const course = this.server.create('course', {
       school: this.school,
       year: currentAcademicYear(),
@@ -382,10 +410,24 @@ module('Acceptance | Reports - Curriculum Reports', function (hooks) {
       '/reports/curriculum?courses=1&report=learnerGroups&run=true',
       'current URL is correct',
     );
+
+    // Make sure copy button is grabbing correct report type
+    const writeText = navigator.clipboard.writeText;
+    navigator.clipboard.writeText = (text) => {
+      const reportType = text.split('report=')[1];
+      assert.strictEqual(
+        reportType,
+        'learnerGroups',
+        'Correct report type was copied to clipboard',
+      );
+      return Promise.resolve();
+    };
+    await page.curriculum.header.copy.click();
+    navigator.clipboard.writeText = writeText;
   });
 
   test('run learner groups report, multiple schools', async function (assert) {
-    assert.expect(13);
+    assert.expect(14);
     const course = this.server.create('course', {
       school: this.school,
       year: currentAcademicYear(),
@@ -519,5 +561,98 @@ module('Acceptance | Reports - Curriculum Reports', function (hooks) {
       '/reports/curriculum?courses=1-4&report=learnerGroups&run=true',
       'current URL is correct',
     );
+
+    // Make sure copy button is grabbing correct report type
+    const writeText = navigator.clipboard.writeText;
+    navigator.clipboard.writeText = (text) => {
+      const reportType = text.split('report=')[1];
+      assert.strictEqual(
+        reportType,
+        'learnerGroups',
+        'Correct report type was copied to clipboard',
+      );
+      return Promise.resolve();
+    };
+    await page.curriculum.header.copy.click();
+    navigator.clipboard.writeText = writeText;
+  });
+
+  test('copy url changes if report type changes', async function (assert) {
+    assert.expect(3);
+    const course = this.server.create('course', {
+      school: this.school,
+      year: currentAcademicYear(),
+    });
+    const sessionType = this.server.create('sessionType');
+    const session = this.server.create('session', { course, sessionType });
+    this.server.create('sessionObjective', { session });
+    const offering = this.server.create('offering', { session });
+    const offeringInstructorGroup = this.server.create('instructorGroup', {
+      offerings: [offering],
+    });
+    this.server.create('user', { instructorGroups: [offeringInstructorGroup] });
+    this.server.create('user', { instructedOfferings: [offering] });
+
+    const ilmSession = this.server.create('ilmSession', { session });
+    const ilmSessionInstructorGroup = this.server.create('instructorGroup', {
+      ilmSessions: [ilmSession],
+    });
+    this.server.create('user', { instructorGroups: [ilmSessionInstructorGroup] });
+    this.server.create('user', { instructorIlmSessions: [ilmSession] });
+    this.server.post('api/graphql', (schema) => {
+      //use all the courses, getting the id filter from graphQL is a bit tricky
+      const courseIds = schema.db.courses.map((c) => c.id);
+      const rawCourses = courseIds.map((id) => graphQL.fetchCourse(schema.db, id));
+      const courses = rawCourses.map((course) => {
+        course.sessions.forEach((session) => {
+          session.sessionObjectives = schema.db.sessionObjectives
+            .where({ sessionId: session.id })
+            .map(({ id, title }) => ({ id, title }));
+        });
+
+        return course;
+      });
+      return { data: { courses } };
+    });
+    await page.visitCurriculumReports();
+    await page.curriculum.chooseCourse.years[0].toggleAll();
+
+    // Make sure copy button is grabbing correct report type
+    const writeText = navigator.clipboard.writeText;
+    navigator.clipboard.writeText = (text) => {
+      const reportType = text.split('report=')[1];
+      assert.strictEqual(
+        reportType,
+        'sessionObjectives',
+        'Correct report type was copied to clipboard',
+      );
+      return Promise.resolve();
+    };
+    await page.curriculum.header.reportSelector.set('sessionObjectives');
+    await page.curriculum.header.copy.click();
+    navigator.clipboard.writeText = (text) => {
+      const reportType = text.split('report=')[1];
+      assert.strictEqual(
+        reportType,
+        'learnerGroups',
+        'Correct report type was copied to clipboard',
+      );
+      return Promise.resolve();
+    };
+    await page.curriculum.header.reportSelector.set('learnerGroups');
+    await page.curriculum.header.copy.click();
+    navigator.clipboard.writeText = (text) => {
+      const reportType = text.split('report=')[1];
+      assert.strictEqual(
+        reportType,
+        'sessionObjectives',
+        'Correct report type was copied to clipboard',
+      );
+      return Promise.resolve();
+    };
+    await page.curriculum.header.reportSelector.set('sessionObjectives');
+    await page.curriculum.header.copy.click();
+
+    navigator.clipboard.writeText = writeText;
   });
 });
