@@ -2,7 +2,6 @@ import Component from '@glimmer/component';
 import { dropTask, timeout } from 'ember-concurrency';
 import { all, map } from 'rsvp';
 import { service } from '@ember/service';
-import { capitalize } from '@ember/string';
 import { findBy, uniqueValues } from 'ilios-common/utils/array-helpers';
 import t from 'ember-intl/helpers/t';
 import UserNameInfo from 'ilios-common/components/user-name-info';
@@ -40,7 +39,9 @@ export default class LearnergroupBulkFinalizeUsersComponent extends Component {
     }, []);
 
     await all(uniqueValues(flat).map((o) => o.save()));
-    this.flashMessages.success(capitalize('general.savedSuccessfully'));
+    this.flashMessages.success('general.savedSuccessfully', {
+      capitalize: true,
+    });
     this.args.done();
   });
   <template>

@@ -1,7 +1,6 @@
 import Component from '@glimmer/component';
 import { all } from 'rsvp';
 import { service } from '@ember/service';
-import { capitalize } from '@ember/string';
 import { dropTask } from 'ember-concurrency';
 import { TrackedAsyncData } from 'ember-async-data';
 import { cached } from '@glimmer/tracking';
@@ -37,7 +36,9 @@ export default class PendingSingleUserUpdateComponent extends Component {
     this.args.user.set('email', update.value);
     await this.args.user.save();
     await update.destroyRecord();
-    this.flashMessages.success(capitalize('general.savedSuccessfully'));
+    this.flashMessages.success('general.savedSuccessfully', {
+      capitalize: true,
+    });
   });
 
   disableUser = dropTask(async () => {
@@ -45,7 +46,9 @@ export default class PendingSingleUserUpdateComponent extends Component {
     this.args.user.set('enabled', false);
     await this.args.user.save();
     await all(updates.map((update) => update.destroyRecord()));
-    this.flashMessages.success(capitalize('general.savedSuccessfully'));
+    this.flashMessages.success('general.savedSuccessfully', {
+      capitalize: true,
+    });
   });
 
   excludeFromSync = dropTask(async () => {
@@ -53,7 +56,9 @@ export default class PendingSingleUserUpdateComponent extends Component {
     this.args.user.set('userSyncIgnore', true);
     await this.args.user.save();
     await all(updates.map((update) => update.destroyRecord()));
-    this.flashMessages.success(capitalize('general.savedSuccessfully'));
+    this.flashMessages.success('general.savedSuccessfully', {
+      capitalize: true,
+    });
   });
   <template>
     <div class="pending-single-user-updates" data-test-pending-single-user-update ...attributes>

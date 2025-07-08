@@ -2,7 +2,6 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { isBlank } from '@ember/utils';
 import { action } from '@ember/object';
-import { capitalize } from '@ember/string';
 import { dropTask, restartableTask, timeout } from 'ember-concurrency';
 import { findById, mapBy, sortBy, uniqueValues } from 'ilios-common/utils/array-helpers';
 import { service } from '@ember/service';
@@ -100,7 +99,9 @@ export default class AssignStudentsRootComponent extends Component {
     );
     this.selectedUserIds = [];
 
-    this.flashMessages.success(capitalize('general.savedSuccessfully'));
+    this.flashMessages.success('general.savedSuccessfully', {
+      capitalize: true,
+    });
   });
 
   @action

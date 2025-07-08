@@ -2,7 +2,6 @@ import Component from '@glimmer/component';
 import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
-import { capitalize } from '@ember/string';
 import { dropTask } from 'ember-concurrency';
 import { TrackedAsyncData } from 'ember-async-data';
 import YupValidations from 'ilios-common/classes/yup-validations';
@@ -37,6 +36,7 @@ import SchoolInstitutionalInformationDetails from 'frontend/components/school-in
 
 export default class SchoolManagerComponent extends Component {
   @service flashMessages;
+  @service intl;
   @tracked title;
   @tracked newSavedSessionType;
 
@@ -87,7 +87,9 @@ export default class SchoolManagerComponent extends Component {
 
     this.args.school.title = this.title;
     this.newSchool = await this.args.school.save();
-    this.flashMessages.success(capitalize('general.savedSuccessfully'));
+    this.flashMessages.success('general.savedSuccessfully', {
+      capitalize: true,
+    });
   });
 
   @action
