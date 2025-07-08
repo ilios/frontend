@@ -6,6 +6,7 @@ const definition = {
     scope: '[data-test-handle]',
   },
   checked: attribute('aria-checked'),
+  disabled: attribute('disabled'),
 };
 
 export default definition;

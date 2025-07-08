@@ -18,6 +18,10 @@
     background-color: c.$fernGreen;
   }
 
+  &:disabled {
+    background-color: c.$fernGreenDisabled;
+  }
+
   .switch-handle {
     background: c.$white;
     border-radius: 10px;

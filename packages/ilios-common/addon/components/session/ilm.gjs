@@ -12,6 +12,7 @@ import ToggleYesno from 'ilios-common/components/toggle-yesno';
 import perform from 'ember-concurrency/helpers/perform';
 import EditableField from 'ilios-common/components/editable-field';
 import { on } from '@ember/modifier';
+import and from 'ember-truth-helpers/helpers/and';
 import pick from 'ilios-common/helpers/pick';
 import set from 'ember-set-helper/helpers/set';
 import YupValidationMessage from 'ilios-common/components/yup-validation-message';
@@ -48,6 +49,15 @@ export default class SessionIlmComponent extends Component {
 
   get isIndependentLearning() {
     return this.ilmSession !== null;
+  }
+
+  get hasGroups() {
+    return (
+      this.ilmSession.instructors.length ||
+      this.ilmSession.instructorGroups.length ||
+      this.ilmSession.learners.length ||
+      this.ilmSession.learnerGroups.length
+    );
   }
 
   saveIndependentLearning = dropTask(async (value) => {
@@ -98,6 +108,7 @@ export default class SessionIlmComponent extends Component {
           <ToggleYesno
             @yes={{this.isIndependentLearning}}
             @toggle={{perform this.saveIndependentLearning}}
+            @disabled={{if (and this.isIndependentLearning this.hasGroups) "true"}}
             data-test-ilm-toggle
           />
         {{else}}

@@ -21,6 +21,7 @@ export default class ToggleYesno extends Component {
       data-test-toggle-yesno
       role="switch"
       type="button"
+      disabled={{@disabled}}
       {{on "click" this.click}}
     >
       <span class="switch-handle" data-test-handle>
