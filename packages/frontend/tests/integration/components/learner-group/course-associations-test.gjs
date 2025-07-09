@@ -61,6 +61,7 @@ module('Integration | Component | learner-group/course-associations', function (
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
 
+    assert.ok(component.header.isCollapsibleAndExpandable);
     await component.header.expand();
 
     assert.ok(component.header.isExpanded);
@@ -109,13 +110,9 @@ module('Integration | Component | learner-group/course-associations', function (
     this.set('learnerGroup', learnerGroup);
     await render(<template><CourseAssociations @learnerGroup={{this.learnerGroup}} /></template>);
 
-    await component.header.expand();
-
+    assert.notOk(component.header.isCollapsibleAndExpandable);
     assert.strictEqual(component.header.title, 'Associated Courses (0)');
-    assert.notOk(component.content.headers.isPresent);
-    assert.strictEqual(component.content.associations.length, 0);
-    assert.ok(component.content.noAssociations.isPresent);
-    assert.ok(component.content.noAssociations.text, 'No Data');
+    assert.notOk(component.content.isPresent);
   });
 
   test('sorting works', async function (assert) {
