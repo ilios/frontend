@@ -10,9 +10,7 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    padding: calc(constants.$golden-ratio-large * 1rem) 0
-      calc(constants.$golden-ratio-small * 1rem) 0;
-    margin: 0 0.8rem 0 1.3rem;
+    margin: 0 1.5rem;
 
     @include m.for-tablet-and-up {
       flex-direction: row;
@@ -24,21 +22,16 @@
 
       @include m.for-tablet-and-up {
         flex-direction: row;
+        gap: 0.5rem;
       }
 
       .editable,
-      h5 {
+      h3 {
         display: block;
         @include m.font-size("large");
 
         @include m.for-laptop-and-up {
           display: inline;
-        }
-      }
-
-      @include m.for-tablet-and-up {
-        h5 {
-          margin-left: 1rem;
         }
       }
     }

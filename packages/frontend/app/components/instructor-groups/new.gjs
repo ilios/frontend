@@ -50,9 +50,9 @@ export default class InstructorGroupsNewComponent extends Component {
   <template>
     {{#let (uniqueId) as |templateId|}}
       <div class="new-instructor-group" data-test-instructor-groups-new>
-        <h4>
+        <h3>
           {{t "general.newInstructorGroup"}}
-        </h4>
+        </h3>
         <div class="form">
           <div class="item title" data-test-title>
             <label for="title-{{templateId}}">

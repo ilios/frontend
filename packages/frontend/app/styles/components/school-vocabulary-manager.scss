@@ -26,6 +26,10 @@
     }
   }
 
+  .terms-title {
+    @include m.ilios-heading-h5;
+  }
+
   .terms {
     background-color: c.$white;
     border: 1px solid c.$blueMunsell;

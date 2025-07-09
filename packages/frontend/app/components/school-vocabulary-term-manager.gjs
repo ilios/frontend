@@ -295,9 +295,9 @@ export default class SchoolVocabularyTermManagerComponent extends Component {
               </div>
             </div>
           {{/if}}
-          <h5>
+          <h3 class="subterms-title">
             {{t "general.subTerms"}}:
-          </h5>
+          </h3>
           <div class="terms" data-test-sub-terms>
             {{#if this.newTerm}}
               <div class="saved-result">

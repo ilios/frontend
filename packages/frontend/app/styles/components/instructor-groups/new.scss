@@ -7,7 +7,8 @@
   margin: 0.5rem 0;
   padding: 1rem;
 
-  h4 {
+  h3 {
+    @include m.ilios-heading-h4;
     margin-bottom: 1rem;
   }
 

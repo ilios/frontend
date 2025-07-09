@@ -174,9 +174,9 @@ export default class CurriculumInventoryReportRolloverComponent extends Componen
     >
       {{#unless this.load.isRunning}}
         <div class="rollover-form" {{scrollIntoView}}>
-          <h3 class="title">
+          <h2 class="title">
             {{t "general.curriculumInventoryReportRollover"}}
-          </h3>
+          </h2>
           <p class="rollover-summary">
             {{t "general.curriculumInventoryReportRolloverSummary"}}
           </p>

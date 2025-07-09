@@ -152,9 +152,9 @@ export default class SchoolVocabularyManagerComponent extends Component {
           {{/if}}
           <span class="term-totals">({{t "general.countTotal" total=this.terms.length}})</span>
         </div>
-        <h5>
+        <h3 class="terms-title">
           {{t "general.terms"}}:
-        </h5>
+        </h3>
         <div class="terms" data-test-terms>
           {{#if this.newTerm}}
             <div class="saved-result">

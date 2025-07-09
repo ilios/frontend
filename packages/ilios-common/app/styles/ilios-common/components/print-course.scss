@@ -3,25 +3,9 @@
 
 .print-course {
   .header {
+    @include m.course-header;
     background-color: c.$culturedGrey;
-    padding: 0 0.5rem;
-    width: 100%;
-
-    h2 {
-      @include m.ilios-heading-h2;
-      display: inline-block;
-    }
-
-    h4 {
-      @include m.ilios-heading-h4;
-      display: inline-block;
-      margin-left: 1rem;
-    }
-
-    .publication-status {
-      display: inline-block;
-      margin: 0 5rem;
-    }
+    padding: 0.5rem;
   }
 
   .block {
