@@ -131,6 +131,7 @@ export default class LearnerGroupCourseAssociationsComponent extends Component {
                 {{on "click" (set this "isExpanded" false)}}
               >
                 {{t "general.associatedCourses"}}
+                ({{this.associations.length}})
                 <FaIcon @icon="caret-down" />
               </button>
             {{else}}
@@ -142,6 +143,7 @@ export default class LearnerGroupCourseAssociationsComponent extends Component {
                 {{on "click" (set this "isExpanded" true)}}
               >
                 {{t "general.associatedCourses"}}
+                ({{this.associations.length}})
                 <FaIcon @icon="caret-right" />
               </button>
             {{/if}}

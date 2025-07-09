@@ -217,11 +217,11 @@ module('Integration | Component | learner-group/root', function (hooks) {
 
     assert.ok(component.courseAssociations.header.isCollapsed);
     assert.notOk(component.courseAssociations.content.isPresent);
-    assert.strictEqual(component.courseAssociations.header.title, 'Associated Courses');
+    assert.strictEqual(component.courseAssociations.header.title, 'Associated Courses (2)');
 
     await component.courseAssociations.header.expand();
 
-    assert.strictEqual(component.courseAssociations.header.title, 'Associated Courses');
+    assert.strictEqual(component.courseAssociations.header.title, 'Associated Courses (2)');
     assert.ok(component.courseAssociations.header.isExpanded);
     assert.ok(component.courseAssociations.content.isPresent);
     assert.strictEqual(component.courseAssociations.content.associations.length, 2);
