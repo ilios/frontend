@@ -288,6 +288,13 @@ export default class LearningMaterialManagerComponent extends Component {
   textCopied = restartableTask(async () => {
     this.flashMessages.success('general.copiedSuccessfully');
   });
+
+  getLearningMaterialLink = () => {
+    return this.link;
+  };
+  getLearningMaterialAbsoluteFileUri = () => {
+    return this.absoluteFileUri;
+  };
   <template>
     <div class="learningmaterial-manager">
       {{#if this.isLoaded}}
@@ -460,7 +467,10 @@ export default class LearningMaterialManagerComponent extends Component {
               </label>
               <span class="link">
                 <a href={{this.link}} target="_blank" rel="noopener noreferrer">{{this.link}}</a>
-                <CopyButton @clipboardText={{this.link}} @success={{perform this.textCopied}}>
+                <CopyButton
+                  @getClipboardText={{this.getLearningMaterialLink}}
+                  @success={{perform this.textCopied}}
+                >
                   <FaIcon @icon="copy" @title={{t "general.copyLink"}} />
                 </CopyButton>
               </span>
@@ -483,7 +493,7 @@ export default class LearningMaterialManagerComponent extends Component {
                   </a>
                 {{/if}}
                 <CopyButton
-                  @clipboardText={{this.absoluteFileUri}}
+                  @getClipboardText={{this.getLearningMaterialAbsoluteFileUri}}
                   @success={{perform this.textCopied}}
                 >
                   <FaIcon @icon="copy" @title={{t "general.copyLink"}} />
