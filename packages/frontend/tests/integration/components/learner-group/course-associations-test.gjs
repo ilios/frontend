@@ -57,7 +57,7 @@ module('Integration | Component | learner-group/course-associations', function (
 
     assert.ok(component.header.isCollapsed);
     assert.notOk(component.content.isPresent);
-    assert.strictEqual(component.header.title, 'Associated Courses');
+    assert.strictEqual(component.header.title, 'Associated Courses (3)');
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
 
@@ -65,7 +65,7 @@ module('Integration | Component | learner-group/course-associations', function (
 
     assert.ok(component.header.isExpanded);
     assert.ok(component.content.isPresent);
-    assert.strictEqual(component.header.title, 'Associated Courses');
+    assert.strictEqual(component.header.title, 'Associated Courses (3)');
 
     assert.strictEqual(component.content.headers.school.text, 'School');
     assert.strictEqual(component.content.headers.course.text, 'Course');
@@ -111,6 +111,7 @@ module('Integration | Component | learner-group/course-associations', function (
 
     await component.header.expand();
 
+    assert.strictEqual(component.header.title, 'Associated Courses (0)');
     assert.notOk(component.content.headers.isPresent);
     assert.strictEqual(component.content.associations.length, 0);
     assert.ok(component.content.noAssociations.isPresent);
