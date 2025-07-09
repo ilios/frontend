@@ -122,36 +122,41 @@ export default class LearnerGroupCourseAssociationsComponent extends Component {
       {{#if this.isLoaded}}
         <div class="header" data-test-header>
           <h3 class="title" data-test-title>
-            {{#if this.isExpanded}}
-              <button
-                class="title link-button"
-                type="button"
-                aria-expanded="true"
-                data-test-collapse
-                {{on "click" (set this "isExpanded" false)}}
-              >
-                {{t "general.associatedCourses"}}
-                ({{this.associations.length}})
-                <FaIcon @icon="caret-down" />
-              </button>
+            {{#if this.hasAssociations}}
+              {{#if this.isExpanded}}
+                <button
+                  class="title link-button"
+                  type="button"
+                  aria-expanded="true"
+                  data-test-collapse
+                  {{on "click" (set this "isExpanded" false)}}
+                >
+                  {{t "general.associatedCourses"}}
+                  ({{this.associations.length}})
+                  <FaIcon @icon="caret-down" />
+                </button>
+              {{else}}
+                <button
+                  class="title link-button"
+                  type="button"
+                  aria-expanded="false"
+                  data-test-expand
+                  {{on "click" (set this "isExpanded" true)}}
+                >
+                  {{t "general.associatedCourses"}}
+                  ({{this.associations.length}})
+                  <FaIcon @icon="caret-right" />
+                </button>
+              {{/if}}
             {{else}}
-              <button
-                class="title link-button"
-                type="button"
-                aria-expanded="false"
-                data-test-expand
-                {{on "click" (set this "isExpanded" true)}}
-              >
-                {{t "general.associatedCourses"}}
-                ({{this.associations.length}})
-                <FaIcon @icon="caret-right" />
-              </button>
+              {{t "general.associatedCourses"}}
+              ({{this.associations.length}})
             {{/if}}
           </h3>
         </div>
-        {{#if this.isExpanded}}
-          <div class="content" data-test-content>
-            {{#if this.hasAssociations}}
+        {{#if this.hasAssociations}}
+          {{#if this.isExpanded}}
+            <div class="content" data-test-content>
               <table data-test-associations>
                 <thead>
                   <tr>
@@ -204,10 +209,8 @@ export default class LearnerGroupCourseAssociationsComponent extends Component {
                   {{/each}}
                 </tbody>
               </table>
-            {{else}}
-              <div class="no-data" data-test-no-associations>{{t "general.none"}}</div>
-            {{/if}}
-          </div>
+            </div>
+          {{/if}}
         {{/if}}
       {{/if}}
     </section>

@@ -17,6 +17,7 @@ const definition = {
     expand: clickable('[data-test-expand]'),
     isCollapsed: isPresent('[data-test-expand]'),
     isExpanded: isPresent('[data-test-collapse]'),
+    isCollapsibleAndExpandable: isPresent('button'),
   },
   content: {
     scope: '[data-test-content]',
