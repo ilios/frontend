@@ -1,6 +1,8 @@
 import Component from '@glimmer/component';
 import { DateTime } from 'luxon';
+import { action } from '@ember/object';
 import t from 'ember-intl/helpers/t';
+import { on } from '@ember/modifier';
 import { LinkTo } from '@ember/routing';
 import { hash } from '@ember/helper';
 import { service } from '@ember/service';
@@ -42,6 +44,12 @@ export default class DashboardWeekComponent extends Component {
   get week() {
     return this.thisThursday.weekNumber;
   }
+
+  @action
+  backToTop() {
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  }
+
   <template>
     <div class="dashboard-week" data-test-dashboard-week>
       <div class="dashboard-week-content">
@@ -59,12 +67,16 @@ export default class DashboardWeekComponent extends Component {
           @year={{this.year}}
         />
       </div>
-      {{#if this.globalScroll.displayBackToTop}}
-        <a href="#top" class="back-to-top">
-          <FaIcon @icon="chevron-up" />
-          <span>{{t "general.backToTop"}}</span>
-        </a>
-      {{/if}}
+      <button
+        type="button"
+        class="{{if this.globalScroll.displayBackToTop 'back-to-top' 'back-to-top hidden'}}"
+        aria-label={{t "general.backToTop"}}
+        hidden
+        {{on "click" this.backToTop}}
+      >
+        <FaIcon @icon="chevron-up" aria-hidden="true" />
+        <span>{{t "general.backToTop"}}</span>
+      </button>
     </div>
   </template>
 }
