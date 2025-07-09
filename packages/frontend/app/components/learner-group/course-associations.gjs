@@ -165,7 +165,7 @@ export default class LearnerGroupCourseAssociationsComponent extends Component {
           {{#if this.hasAssociations}}
             <div
               id="content-{{templateId}}"
-              class="content {{if this.isExpanded '' 'hidden'}}"
+              class="content{{if this.isExpanded '' ' hidden'}}"
               data-test-content
               hidden={{this.isExpanded}}
             >
