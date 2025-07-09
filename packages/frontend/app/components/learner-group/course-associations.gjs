@@ -130,7 +130,7 @@ export default class LearnerGroupCourseAssociationsComponent extends Component {
                 data-test-collapse
                 {{on "click" (set this "isExpanded" false)}}
               >
-                {{t "general.associatedSessions"}}
+                {{t "general.associatedCourses"}}
                 <FaIcon @icon="caret-down" />
               </button>
             {{else}}
@@ -141,7 +141,7 @@ export default class LearnerGroupCourseAssociationsComponent extends Component {
                 data-test-expand
                 {{on "click" (set this "isExpanded" true)}}
               >
-                {{t "general.associatedSessions"}}
+                {{t "general.associatedCourses"}}
                 <FaIcon @icon="caret-right" />
               </button>
             {{/if}}
