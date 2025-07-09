@@ -1,7 +1,5 @@
 import {
-  attribute,
   clickable,
-  collection,
   create,
   fillable,
   isPresent,
@@ -10,6 +8,7 @@ import {
   value,
 } from 'ember-cli-page-object';
 import header from './header';
+import courseAssociations from './course-associations';
 import cohortUserManager from './cohort-user-manager';
 import instructorManager from './instructor-manager';
 import instructorsList from './instructors-list';
@@ -25,6 +24,7 @@ import toggleYesNo from 'ilios-common/page-objects/components/toggle-yesno';
 const definition = {
   scope: '[data-test-learner-group-root]',
   header,
+  courseAssociations,
   needsAccommodation: {
     scope: '[data-test-needs-accommodation]',
     label: text('label'),
@@ -51,13 +51,6 @@ const definition = {
     cancel: clickable('.cancel'),
     save: clickable('.done'),
     isEditable: isPresent('[data-test-edit]'),
-  },
-  associatedCourses: {
-    scope: '[data-test-courses]',
-    label: text('label'),
-    courses: collection('li', {
-      linksTo: attribute('href', 'a'),
-    }),
   },
   instructorsList,
   instructorManager,
