@@ -16,8 +16,8 @@
   .content {
     @include m.main-list-box-table;
 
-    .no-data {
-      text-align: center;
+    &.hidden {
+      display: none;
     }
 
     .sessions-list {

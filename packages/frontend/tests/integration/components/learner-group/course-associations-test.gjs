@@ -55,17 +55,24 @@ module('Integration | Component | learner-group/course-associations', function (
     this.set('learnerGroup', learnerGroup);
     await render(<template><CourseAssociations @learnerGroup={{this.learnerGroup}} /></template>);
 
-    assert.ok(component.header.isCollapsed);
-    assert.notOk(component.content.isPresent);
+    assert.strictEqual(component.header.toggle.ariaControls, component.content.id);
+    assert.ok(component.header.toggle.isCollapsed);
+    assert.notOk(component.header.toggle.isExpanded);
+    assert.strictEqual(component.header.toggle.ariaExpanded, 'false');
+    assert.strictEqual(component.header.toggle.ariaLabel, 'Show associated courses');
+    assert.ok(component.content.isHidden);
     assert.strictEqual(component.header.title, 'Associated Courses (3)');
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
 
-    assert.ok(component.header.isCollapsibleAndExpandable);
-    await component.header.expand();
+    await component.header.toggle.click();
 
-    assert.ok(component.header.isExpanded);
-    assert.ok(component.content.isPresent);
+    assert.strictEqual(component.header.toggle.ariaControls, component.content.id);
+    assert.notOk(component.header.toggle.isCollapsed);
+    assert.ok(component.header.toggle.isExpanded);
+    assert.strictEqual(component.header.toggle.ariaExpanded, 'true');
+    assert.strictEqual(component.header.toggle.ariaLabel, 'Hide associated courses');
+    assert.notOk(component.content.isHidden);
     assert.strictEqual(component.header.title, 'Associated Courses (3)');
 
     assert.strictEqual(component.content.headers.school.text, 'School');
@@ -97,10 +104,10 @@ module('Integration | Component | learner-group/course-associations', function (
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
 
-    await component.header.collapse();
+    await component.header.toggle.click();
 
-    assert.ok(component.header.isCollapsed);
-    assert.notOk(component.content.isPresent);
+    assert.ok(component.header.toggle.isCollapsed);
+    assert.ok(component.content.isHidden);
   });
 
   test('it renders without data', async function (assert) {
@@ -110,7 +117,7 @@ module('Integration | Component | learner-group/course-associations', function (
     this.set('learnerGroup', learnerGroup);
     await render(<template><CourseAssociations @learnerGroup={{this.learnerGroup}} /></template>);
 
-    assert.notOk(component.header.isCollapsibleAndExpandable);
+    assert.notOk(component.header.toggle.isPresent);
     assert.strictEqual(component.header.title, 'Associated Courses (0)');
     assert.notOk(component.content.isPresent);
   });
@@ -129,7 +136,7 @@ module('Integration | Component | learner-group/course-associations', function (
     this.set('learnerGroup', learnerGroup);
     await render(<template><CourseAssociations @learnerGroup={{this.learnerGroup}} /></template>);
 
-    await component.header.expand();
+    await component.header.toggle.click();
 
     assert.strictEqual(component.content.associations.length, 2);
     assert.ok(component.content.headers.school.isSortedAscending);
@@ -200,7 +207,7 @@ module('Integration | Component | learner-group/course-associations', function (
     });
     await render(<template><CourseAssociations @learnerGroup={{this.learnerGroup}} /></template>);
 
-    await component.header.expand();
+    await component.header.toggle.click();
 
     assert.strictEqual(component.content.associations.length, 1);
     assert.strictEqual(component.content.associations[0].course.text, 'course 0 (2025 - 2026)');

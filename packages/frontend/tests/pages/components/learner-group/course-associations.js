@@ -13,14 +13,19 @@ const definition = {
   header: {
     scope: '[data-test-header]',
     title: text('[data-test-title]'),
-    collapse: clickable('[data-test-collapse]'),
-    expand: clickable('[data-test-expand]'),
-    isCollapsed: isPresent('[data-test-expand]'),
-    isExpanded: isPresent('[data-test-collapse]'),
-    isCollapsibleAndExpandable: isPresent('button'),
+    toggle: {
+      scope: '[data-test-toggle]',
+      isCollapsed: isPresent('[data-icon="caret-right"]'),
+      isExpanded: isPresent('[data-icon="caret-down"]'),
+      ariaExpanded: attribute('aria-expanded'),
+      ariaControls: attribute('aria-controls'),
+      ariaLabel: attribute('aria-label'),
+    },
   },
   content: {
     scope: '[data-test-content]',
+    id: attribute('id'),
+    isHidden: hasClass('hidden'),
     headers: {
       scope: '[data-test-associations] thead tr:nth-of-type(1)',
       school: {

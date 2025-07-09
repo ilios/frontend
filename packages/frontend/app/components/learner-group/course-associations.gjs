@@ -1,6 +1,6 @@
 import Component from '@glimmer/component';
 import { cached, tracked } from '@glimmer/tracking';
-import { array, fn } from '@ember/helper';
+import { array, fn, uniqueId } from '@ember/helper';
 import { on } from '@ember/modifier';
 import { action } from '@ember/object';
 import { LinkTo } from '@ember/routing';
@@ -118,45 +118,57 @@ export default class LearnerGroupCourseAssociationsComponent extends Component {
   }
 
   <template>
-    <section class="learner-group-course-associations" data-test-learner-group-course-associations>
-      {{#if this.isLoaded}}
-        <div class="header" data-test-header>
-          <h3 class="title" data-test-title>
-            {{#if this.hasAssociations}}
-              {{#if this.isExpanded}}
-                <button
-                  class="title link-button"
-                  type="button"
-                  aria-expanded="true"
-                  data-test-collapse
-                  {{on "click" (set this "isExpanded" false)}}
-                >
-                  {{t "general.associatedCourses"}}
-                  ({{this.associations.length}})
-                  <FaIcon @icon="caret-down" />
-                </button>
+    {{#let (uniqueId) as |templateId|}}
+      <section
+        class="learner-group-course-associations"
+        data-test-learner-group-course-associations
+      >
+        {{#if this.isLoaded}}
+          <div class="header" data-test-header>
+            <h3 class="title" data-test-title>
+              {{#if this.hasAssociations}}
+                {{#if this.isExpanded}}
+                  <button
+                    class="title link-button"
+                    type="button"
+                    aria-expanded="true"
+                    aria-controls="content-{{templateId}}"
+                    aria-label={{t "general.hideAssociatedCourses"}}
+                    data-test-toggle
+                    {{on "click" (set this "isExpanded" false)}}
+                  >
+                    {{t "general.associatedCourses"}}
+                    ({{this.associations.length}})
+                    <FaIcon @icon="caret-down" />
+                  </button>
+                {{else}}
+                  <button
+                    class="title link-button"
+                    type="button"
+                    aria-expanded="false"
+                    aria-controls="content-{{templateId}}"
+                    aria-label={{t "general.showAssociatedCourses"}}
+                    data-test-toggle
+                    {{on "click" (set this "isExpanded" true)}}
+                  >
+                    {{t "general.associatedCourses"}}
+                    ({{this.associations.length}})
+                    <FaIcon @icon="caret-right" />
+                  </button>
+                {{/if}}
               {{else}}
-                <button
-                  class="title link-button"
-                  type="button"
-                  aria-expanded="false"
-                  data-test-expand
-                  {{on "click" (set this "isExpanded" true)}}
-                >
-                  {{t "general.associatedCourses"}}
-                  ({{this.associations.length}})
-                  <FaIcon @icon="caret-right" />
-                </button>
+                {{t "general.associatedCourses"}}
+                ({{this.associations.length}})
               {{/if}}
-            {{else}}
-              {{t "general.associatedCourses"}}
-              ({{this.associations.length}})
-            {{/if}}
-          </h3>
-        </div>
-        {{#if this.hasAssociations}}
-          {{#if this.isExpanded}}
-            <div class="content" data-test-content>
+            </h3>
+          </div>
+          {{#if this.hasAssociations}}
+            <div
+              id="content-{{templateId}}"
+              class="content {{if this.isExpanded '' 'hidden'}}"
+              data-test-content
+              hidden={{this.isExpanded}}
+            >
               <table data-test-associations>
                 <thead>
                   <tr>
@@ -212,7 +224,7 @@ export default class LearnerGroupCourseAssociationsComponent extends Component {
             </div>
           {{/if}}
         {{/if}}
-      {{/if}}
-    </section>
+      </section>
+    {{/let}}
   </template>
 }
