@@ -215,15 +215,15 @@ module('Integration | Component | learner-group/root', function (hooks) {
       </template>,
     );
 
-    assert.ok(component.courseAssociations.header.isCollapsed);
-    assert.notOk(component.courseAssociations.content.isPresent);
+    assert.ok(component.courseAssociations.header.toggle.isCollapsed);
+    assert.ok(component.courseAssociations.content.isHidden);
     assert.strictEqual(component.courseAssociations.header.title, 'Associated Courses (2)');
 
-    await component.courseAssociations.header.expand();
+    await component.courseAssociations.header.toggle.click();
 
     assert.strictEqual(component.courseAssociations.header.title, 'Associated Courses (2)');
-    assert.ok(component.courseAssociations.header.isExpanded);
-    assert.ok(component.courseAssociations.content.isPresent);
+    assert.ok(component.courseAssociations.header.toggle.isExpanded);
+    assert.notOk(component.courseAssociations.content.isHidden);
     assert.strictEqual(component.courseAssociations.content.associations.length, 2);
     assert.strictEqual(component.courseAssociations.content.associations[0].school, 'school 0');
     assert.strictEqual(
