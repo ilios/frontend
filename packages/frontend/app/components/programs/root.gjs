@@ -101,6 +101,8 @@ export default class ProgramRootComponent extends Component {
               <ExpandCollapseButton
                 @value={{this.showNewProgramForm}}
                 @action={{set this "showNewProgramForm" (not this.showNewProgramForm)}}
+                @expandButtonLabel={{t "general.newProgram"}}
+                @collapseButtonLabel={{t "general.cancel"}}
               />
             {{/if}}
           </div>

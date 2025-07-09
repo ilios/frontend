@@ -36,9 +36,9 @@ export default class SessionsGridHeader extends Component {
       <span class="expand-collapse-control" data-test-expand-collapse-all>
         {{#if @showExpandAll}}
           <button
-            class="link-button"
             type="button"
             disabled={{this.expandAll.isRunning}}
+            aria-label={{if @allSessionsExpanded (t "general.collapse") (t "general.expand")}}
             {{on "click" (perform this.expandAll)}}
           >
             {{#if this.expandAll.isRunning}}

@@ -51,6 +51,7 @@ export default class SchoolCompetenciesManagerComponent extends Component {
               <button
                 type="button"
                 class="link-button"
+                aria-label={{t "general.remove"}}
                 {{on "click" (fn @remove obj.domain)}}
                 data-test-remove-domain
               >
@@ -68,6 +69,7 @@ export default class SchoolCompetenciesManagerComponent extends Component {
                   <button
                     type="button"
                     class="link-button"
+                    aria-label={{t "general.remove"}}
                     {{on "click" (fn @remove competency)}}
                     data-test-remove-competency
                   >

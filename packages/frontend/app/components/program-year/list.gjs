@@ -144,6 +144,8 @@ export default class ProgramYearListComponent extends Component {
               <ExpandCollapseButton
                 @value={{this.editorOn}}
                 @action={{set this "editorOn" (not this.editorOn)}}
+                @expandButtonLabel={{t "general.newProgramYear"}}
+                @collapseButtonLabel={{t "general.close"}}
               />
             </div>
           {{/if}}

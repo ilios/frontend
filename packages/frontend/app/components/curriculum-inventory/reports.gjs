@@ -191,6 +191,8 @@ export default class CurriculumInventoryReportsComponent extends Component {
               <ExpandCollapseButton
                 @value={{this.showNewCurriculumInventoryReportForm}}
                 @action={{this.toggleNewCurriculumInventoryReportForm}}
+                @expandButtonLabel={{t "general.newReport"}}
+                @collapseButtonLabel={{t "general.close"}}
               />
             </div>
           {{/if}}

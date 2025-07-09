@@ -171,6 +171,7 @@ export default class ProgramYearCompetenciesComponent extends Component {
               <button
                 type="button"
                 class="bigadd"
+                aria-label={{t "general.save"}}
                 {{on "click" (perform this.save)}}
                 data-test-save
               >
@@ -179,7 +180,13 @@ export default class ProgramYearCompetenciesComponent extends Component {
                   @spin={{this.save.isRunning}}
                 />
               </button>
-              <button type="button" class="bigcancel" {{on "click" this.cancel}} data-test-cancel>
+              <button
+                type="button"
+                class="bigcancel"
+                aria-label={{t "general.cancel"}}
+                {{on "click" this.cancel}}
+                data-test-cancel
+              >
                 <FaIcon @icon="arrow-rotate-left" />
               </button>
             {{else}}

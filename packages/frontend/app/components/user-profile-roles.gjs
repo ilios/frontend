@@ -107,7 +107,13 @@ export default class UserProfileRolesComponent extends Component {
     >
       <div class="actions">
         {{#if @isManaging}}
-          <button type="button" class="bigadd" data-test-save {{on "click" (perform this.save)}}>
+          <button
+            type="button"
+            class="bigadd"
+            data-test-save
+            aria-label={{t "general.save"}}
+            {{on "click" (perform this.save)}}
+          >
             <FaIcon
               @icon={{if this.save.isRunning "spinner" "check"}}
               @spin={{this.save.isRunning}}
@@ -117,12 +123,14 @@ export default class UserProfileRolesComponent extends Component {
             type="button"
             disabled={{this.save.isRunning}}
             class="bigcancel"
+            aria-label={{t "general.cancel"}}
             {{on "click" this.cancel}}
           >
             <FaIcon @icon="arrow-rotate-left" />
           </button>
         {{else if @isManageable}}
           <button
+            aria-label={{t "general.manage"}}
             type="button"
             class="manage"
             data-test-manage

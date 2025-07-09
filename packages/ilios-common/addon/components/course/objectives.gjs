@@ -108,6 +108,7 @@ export default class CourseObjectivesComponent extends Component {
               @value={{this.newObjectiveEditorOn}}
               @action={{this.toggleNewObjectiveEditor}}
               @expandButtonLabel={{t "general.addNew"}}
+              @collapseButtonLabel={{t "general.cancel"}}
             />
           </span>
         {{/if}}

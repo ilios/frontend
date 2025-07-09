@@ -138,6 +138,8 @@ export default class SchoolVocabulariesExpandedComponent extends Component {
               <ExpandCollapseButton
                 @value={{@schoolNewVocabulary}}
                 @action={{fn @setSchoolNewVocabulary (not @schoolNewVocabulary)}}
+                @expandButtonLabel={{t "general.newVocabulary"}}
+                @collapseButtonLabel={{t "general.close"}}
                 data-test-new-vocabulary
               />
             {{/if}}

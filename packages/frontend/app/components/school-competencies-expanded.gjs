@@ -147,7 +147,13 @@ export default class SchoolCompetenciesExpandedComponent extends Component {
         {{/if}}
         <div class="actions" data-test-actions>
           {{#if @isManaging}}
-            <button type="button" class="bigadd" {{on "click" (perform this.save)}} data-test-save>
+            <button
+              type="button"
+              class="bigadd"
+              aria-label={{t "general.save"}}
+              {{on "click" (perform this.save)}}
+              data-test-save
+            >
               <FaIcon
                 @icon={{if this.save.isRunning "spinner" "check"}}
                 @spin={{this.save.isRunning}}
@@ -156,6 +162,7 @@ export default class SchoolCompetenciesExpandedComponent extends Component {
             <button
               type="button"
               class="bigcancel"
+              aria-label={{t "general.cancel"}}
               {{on "click" this.stopManaging}}
               data-test-cancel
             >

@@ -155,12 +155,19 @@ export default class SequenceBlockSessionManagerComponent extends Component {
         <button
           type="button"
           class="bigadd"
+          aria-label={{t "general.save"}}
           {{on "click" (fn @save this.linkedSessions this.excludedSessions)}}
           data-test-save
         >
           <FaIcon @icon="check" />
         </button>
-        <button type="button" class="bigcancel" {{on "click" @cancel}} data-test-cancel>
+        <button
+          type="button"
+          class="bigcancel"
+          aria-label={{t "general.cancel"}}
+          {{on "click" @cancel}}
+          data-test-cancel
+        >
           <FaIcon @icon="arrow-rotate-left" />
         </button>
       </div>

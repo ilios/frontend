@@ -202,6 +202,7 @@ general:
   lmDescriptorTitle: "Choisi MeSH pour les matériels d'étude"
   loading: Chargement Ilios
   loadingSessionTypes: Chargement des genres de session...
+  lock: Verrouiller
   lockCourse: Verrouiller le cours
   logo: Ilios Logo
   logout: Déconnexion
@@ -250,10 +251,12 @@ general:
   newSchool: École nouvelle
   newSequenceBlock: Nouveau bloc de séquence
   newTerm: Nouveau terme
+  newSessionType: Nuevo type de session
   newToken: Nouveau jeton
   newUser: Nouvel utilisateur
   newUsersCreatedSuccessfully: Nouveaux utilisateurs crées avec succès
   newUsersCreatedWarning: "Certains utilisateurs ont été créés, mais il y avait des erreurs."
+  newVocabulary: Nuevo vocabulaire
   noAccountExists: "Votre compte d'utilisateur {accountName} ne correspond pas à ceux des utilisateur enregistre en Ilios. Si vous avez besoin d'aide, n'hesitez pas à communiquer avec votre administrateur  d'Ilios."
   noAvailableCohorts: Pas des Cohortes disponsibles
   noCohortsAvailableForStudentAssignment: "Il n'y a pas de cohortes disponibles pour l'affectation des étudiants dans cette école."
@@ -456,6 +459,7 @@ general:
   unassignedStudentsSummary: "{count, plural, =1 {Il y a un étudiant qui a besoin affectation à une cohorte} other {Il y a # étudiants qui ont besoin affectation à une cohorte}}"
   unassignedStudentsSummaryTitle: Étudiants qui ont besoin affectation à une cohorte
   undo: Defaît
+  unlock: Débloquer
   unlockCourse: Débloquer le cours
   unordered: Non ordonnée
   unPublishProgram: Faire à Dépublier Diplôme

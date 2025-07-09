@@ -204,6 +204,7 @@ export default class OfferingManagerComponent extends Component {
               <button
                 class="link-button edit"
                 type="button"
+                title={{t "general.edit"}}
                 {{on "click" (toggle "isEditing" this)}}
               >
                 <FaIcon @icon="pen-to-square" class="enabled" />
@@ -212,6 +213,7 @@ export default class OfferingManagerComponent extends Component {
                 <button
                   class="link-button remove"
                   type="button"
+                  title={{t "general.remove"}}
                   {{on "click" (set0 this "showRemoveConfirmation" true)}}
                 >
                   <FaIcon @icon="trash" class="enabled" />

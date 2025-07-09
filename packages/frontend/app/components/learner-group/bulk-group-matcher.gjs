@@ -49,8 +49,8 @@ export default class LearnerGroupBulkGroupMatcherComponent extends Component {
         </td>
         <td>
           <select
+            aria-label={{t "general.existingGroup"}}
             {{on "change" (pick "target.value" this.matchGroup)}}
-            id="sub-group-{{templateId}}"
           >
             <option value="null" selected={{eq null this.matchedGroupId}}></option>
             {{#each @groups as |learnerGroup|}}

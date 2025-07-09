@@ -50,6 +50,7 @@ export default class ProgramListItemComponent extends Component {
         {{#if this.canDelete}}
           <button
             type="button"
+            aria-label={{t "general.remove"}}
             {{on "click" (set this "showRemoveConfirmation" true)}}
             data-test-remove
           >
