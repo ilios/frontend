@@ -18,14 +18,6 @@ export default class ReportsCurriculumHeader extends Component {
   @service intl;
   @service store;
 
-  get reportUrl() {
-    const urlObj = new URL(window.location.href);
-
-    urlObj.searchParams.set('report', this.args.selectedReportValue);
-
-    return urlObj.href;
-  }
-
   get copyButtonId() {
     return `curriculum-report-copy-button-${guidFor(this)}`;
   }
@@ -113,6 +105,13 @@ export default class ReportsCurriculumHeader extends Component {
   changeSelectedReport = ({ target }) => {
     this.args.changeSelectedReport(target.value);
   };
+  getReportUrl = () => {
+    const urlObj = new URL(window.location.href);
+
+    urlObj.searchParams.set('report', this.args.selectedReportValue);
+
+    return urlObj.href;
+  };
   <template>
     <div class="reports-curriculum-header" data-test-reports-curriculum-header>
       <div class="run">
@@ -145,7 +144,7 @@ export default class ReportsCurriculumHeader extends Component {
       <div class="input-buttons">
         {{#if @countSelectedCourses}}
           <CopyButton
-            @clipboardText={{this.reportUrl}}
+            @getClipboardText={{this.getReportUrl}}
             @success={{perform this.textCopied}}
             aria-label={{t "general.copyCurriculumReportUrl"}}
             id={{this.copyButtonId}}

@@ -5,7 +5,7 @@ import perform from 'ember-concurrency/helpers/perform';
 
 export default class CopyButtonComponent extends Component {
   copy = restartableTask(async () => {
-    await navigator.clipboard.writeText(this.args.clipboardText);
+    await navigator.clipboard.writeText(this.args.getClipboardText());
     if (this.args.success) {
       this.args.success();
     }

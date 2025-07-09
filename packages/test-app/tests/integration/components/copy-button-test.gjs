@@ -27,20 +27,22 @@ module('Integration | Component | copy-button', function (hooks) {
       return;
     }
     assert.expect(2);
-    const text = 'lorem ipsum';
+    const getClipboardText = () => {
+      return 'lorem ipsum';
+    };
     // temporarily overwrite the writeText method.
     const writeText = navigator.clipboard.writeText;
     navigator.clipboard.writeText = (value) => {
-      assert.strictEqual(text, value);
+      assert.strictEqual(getClipboardText(), value);
     };
-    this.set('text', text);
+    this.set('text', getClipboardText);
     this.set('content', 'copy this!');
     this.set('success', () => {
       assert.ok(true);
     });
     await render(
       <template>
-        <CopyButton @clipboardText={{this.text}} @success={{this.success}}>
+        <CopyButton @getClipboardText={{this.text}} @success={{this.success}}>
           {{this.content}}
         </CopyButton>
       </template>,
