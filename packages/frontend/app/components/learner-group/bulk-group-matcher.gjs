@@ -2,7 +2,7 @@ import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { isPresent } from '@ember/utils';
 import { findBy } from 'ilios-common/utils/array-helpers';
-import { uniqueId, fn } from '@ember/helper';
+import { fn } from '@ember/helper';
 import { on } from '@ember/modifier';
 import t from 'ember-intl/helpers/t';
 import pick from 'ilios-common/helpers/pick';
@@ -32,35 +32,29 @@ export default class LearnerGroupBulkGroupMatcherComponent extends Component {
       data-test-learner-group-bulk-group-matcher
       ...attributes
     >
-      {{#let (uniqueId) as |templateId|}}
-        <td>
-          <span data-test-group-name>
-            {{@groupName}}
-          </span>
-          {{#if this.noGroupWithThisName}}
-            <button
-              type="button"
-              data-test-create-group
-              {{on "click" (fn @createGroup @groupName)}}
-            >
-              {{t "general.createNewGroup" title=@groupName}}
-            </button>
-          {{/if}}
-        </td>
-        <td>
-          <select
-            aria-label={{t "general.existingGroup"}}
-            {{on "change" (pick "target.value" this.matchGroup)}}
-          >
-            <option value="null" selected={{eq null this.matchedGroupId}}></option>
-            {{#each @groups as |learnerGroup|}}
-              <option value={{learnerGroup.id}} selected={{eq learnerGroup.id this.matchedGroupId}}>
-                {{learnerGroup.title}}
-              </option>
-            {{/each}}
-          </select>
-        </td>
-      {{/let}}
+      <td>
+        <span data-test-group-name>
+          {{@groupName}}
+        </span>
+        {{#if this.noGroupWithThisName}}
+          <button type="button" data-test-create-group {{on "click" (fn @createGroup @groupName)}}>
+            {{t "general.createNewGroup" title=@groupName}}
+          </button>
+        {{/if}}
+      </td>
+      <td>
+        <select
+          aria-label={{t "general.existingGroup"}}
+          {{on "change" (pick "target.value" this.matchGroup)}}
+        >
+          <option value="null" selected={{eq null this.matchedGroupId}}></option>
+          {{#each @groups as |learnerGroup|}}
+            <option value={{learnerGroup.id}} selected={{eq learnerGroup.id this.matchedGroupId}}>
+              {{learnerGroup.title}}
+            </option>
+          {{/each}}
+        </select>
+      </td>
     </tr>
   </template>
 }
