@@ -37,6 +37,7 @@ export default class SessionsGridHeader extends Component {
         {{#if @showExpandAll}}
           <button
             type="button"
+            class="link-button"
             disabled={{this.expandAll.isRunning}}
             aria-label={{if @allSessionsExpanded (t "general.collapse") (t "general.expand")}}
             {{on "click" (perform this.expandAll)}}

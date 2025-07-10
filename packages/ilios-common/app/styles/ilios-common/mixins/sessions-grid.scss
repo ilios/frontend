@@ -50,7 +50,9 @@
 
   .expand-collapse-control {
     @include font-size.font-size("medium");
-    margin-left: 0.25rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
 
     & > .active {
       color: c.$blueMunsell;

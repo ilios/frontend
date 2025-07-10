@@ -20,8 +20,8 @@
   }
 
   .expand-collapse-control {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
+    button {
+      color: c.$white;
+    }
   }
 }
