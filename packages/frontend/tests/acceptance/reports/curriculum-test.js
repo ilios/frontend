@@ -296,7 +296,6 @@ module('Acceptance | Reports - Curriculum Reports', function (hooks) {
       '0',
       'Result 2 objective count is correct',
     );
-    //localhost:4301/tests?nocontainer=&moduleId=1582286f&report=sessionObjectives
     assert.strictEqual(
       currentURL(),
       '/reports/curriculum?courses=1-4&report=sessionObjectives&run=true',
