@@ -11,6 +11,7 @@ import course from './factories/course';
 import curriculumInventoryAcademicLevel from './factories/curriculum-inventory-academic-level';
 import curriculumInventoryReport from './factories/curriculum-inventory-report';
 import curriculumInventorySequence from './factories/curriculum-inventory-sequence';
+import curriculumInventorySequenceBlock from './factories/curriculum-inventory-sequence-block';
 import ilmSession from './factories/ilm-session';
 import instructorGroup from './factories/instructor-group';
 import learnerGroup from './factories/learner-group';
@@ -54,6 +55,7 @@ export default {
   curriculumInventoryAcademicLevel,
   curriculumInventoryReport,
   curriculumInventorySequence,
+  curriculumInventorySequenceBlock,
   ilmSession,
   instructorGroup,
   learnerGroup,
