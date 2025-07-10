@@ -12,14 +12,13 @@ import not from 'ember-truth-helpers/helpers/not';
 import t from 'ember-intl/helpers/t';
 import FaIcon from 'ilios-common/components/fa-icon';
 import { LinkTo } from '@ember/routing';
-import { fn } from '@ember/helper';
+import { fn, hash } from '@ember/helper';
 import includes from 'ilios-common/helpers/includes';
 import mapBy from 'ilios-common/helpers/map-by';
 import SaveButton from 'ilios-common/components/save-button';
 import perform from 'ember-concurrency/helpers/perform';
 
 export default class PublishAllSessionsComponent extends Component {
-  @service router;
   @service store;
   @service flashMessages;
 
@@ -200,22 +199,6 @@ export default class PublishAllSessionsComponent extends Component {
     this.args.saved();
   });
 
-  @action
-  async transitionToCourse() {
-    const queryParams = { courseObjectiveDetails: true, details: true };
-    this.router.transitionTo('course', this.args.course, { queryParams });
-  }
-
-  @action
-  async transitionToVisualizeObjectives() {
-    this.router.transitionTo('course-visualize-objectives', this.args.course);
-  }
-
-  @action
-  transitionToSession(session) {
-    const queryParams = { sessionObjectiveDetails: true };
-    this.router.transitionTo('session', session, { queryParams });
-  }
   <template>
     <div class="publish-all-sessions" data-test-publish-all-sessions>
       <section class="publish-all-sessions-unpublishable" data-test-unpublishable>
@@ -288,14 +271,15 @@ export default class PublishAllSessionsComponent extends Component {
                         {{t "general.yes"}}
                         ({{session.sessionObjectives.length}})
                         {{#if session.showUnlinkIcon}}
-                          <button
-                            class="link-button"
-                            type="button"
-                            {{on "click" (fn this.transitionToSession session)}}
+                          <LinkTo
+                            @route="session"
+                            @model={{session}}
+                            @query={{hash sessionObjectiveDetails=true}}
+                            aria-label={{t "general.backToTitle" title=session.title}}
                             data-test-session-link
                           >
                             <FaIcon @icon="link-slash" />
-                          </button>
+                          </LinkTo>
                         {{/if}}
                       </td>
                     {{else}}
@@ -390,14 +374,15 @@ export default class PublishAllSessionsComponent extends Component {
                         {{t "general.yes"}}
                         ({{session.sessionObjectives.length}})
                         {{#if session.showUnlinkIcon}}
-                          <button
-                            class="link-button"
-                            type="button"
-                            {{on "click" (fn this.transitionToSession session)}}
+                          <LinkTo
+                            @route="session"
+                            @model={{session}}
+                            @query={{hash sessionObjectiveDetails=true}}
+                            aria-label={{t "general.backToTitle" title=session.title}}
                             data-test-session-link
                           >
                             <FaIcon @icon="link-slash" />
-                          </button>
+                          </LinkTo>
                         {{/if}}
                       </td>
                     {{else}}
@@ -527,14 +512,15 @@ export default class PublishAllSessionsComponent extends Component {
                         {{t "general.yes"}}
                         ({{session.sessionObjectives.length}})
                         {{#if session.showUnlinkIcon}}
-                          <button
-                            class="link-button"
-                            type="button"
-                            {{on "click" (fn this.transitionToSession session)}}
+                          <LinkTo
+                            @route="session"
+                            @model={{session}}
+                            @query={{hash sessionObjectiveDetails=true}}
+                            aria-label={{t "general.backToTitle" title=session.title}}
                             data-test-session-link
                           >
                             <FaIcon @icon="link-slash" />
-                          </button>
+                          </LinkTo>
                         {{/if}}
                       </td>
                     {{else}}
@@ -564,22 +550,23 @@ export default class PublishAllSessionsComponent extends Component {
           <span class="unlinked-warning" data-test-unlinked-warning>
             {{t "general.unlinkedObjectives"}}
           </span>
-          <button
-            class="link-button"
-            type="button"
-            {{on "click" this.transitionToCourse}}
+          <LinkTo
+            @route="course"
+            @model={{@course}}
+            @query={{hash details=true courseObjectiveDetails=true}}
+            title={{t "general.backToTitle" title=@course.title}}
             data-test-course-link
           >
             <FaIcon @icon="link-slash" />
-          </button>
-          <button
-            class="link-button"
-            type="button"
-            {{on "click" this.transitionToVisualizeObjectives}}
+          </LinkTo>
+          <LinkTo
+            @route="course-visualize-objectives"
+            @model={{@course}}
+            title={{t "general.courseVisualizations"}}
             data-test-visualize
           >
             <FaIcon @icon="chart-column" />
-          </button>
+          </LinkTo>
         {{/if}}
         <p data-test-confirmation>
           {{t
