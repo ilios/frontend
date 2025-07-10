@@ -107,7 +107,6 @@ export default class SessionPostrequisiteEditorComponent extends Component {
         <table data-test-postrequisites>
           <thead>
             <tr>
-              <th></th>
               <th colspan="10">{{t "general.session"}}</th>
               <th colspan="3">{{t "general.firstOffering"}}</th>
             </tr>
@@ -118,25 +117,6 @@ export default class SessionPostrequisiteEditorComponent extends Component {
                 class={{if (eq postrequisite.id this.selectedPostrequisite.id) "active"}}
                 data-test-postrequisite
               >
-                <td>
-                  <button
-                    type="button"
-                    {{on
-                      "click"
-                      (set
-                        this
-                        "userSelectedPostrequisite"
-                        (if (eq postrequisite.id this.selectedPostrequisite.id) null postrequisite)
-                      )
-                    }}
-                  >
-                    {{#if (eq postrequisite.id this.selectedPostrequisite.id)}}
-                      <FaIcon @icon="minus" />
-                    {{else}}
-                      <FaIcon @icon="plus" class="add" />
-                    {{/if}}
-                  </button>
-                </td>
                 <td colspan="10">
                   <button
                     type="button"
@@ -149,12 +129,18 @@ export default class SessionPostrequisiteEditorComponent extends Component {
                       )
                     }}
                   >
-                    {{postrequisite.title}}
+                    {{#if (eq postrequisite.id this.selectedPostrequisite.id)}}
+                      <FaIcon @icon="minus" @title={{t "general.remove"}} />
+                    {{else}}
+                      <FaIcon @icon="plus" class="add" @title={{t "general.add"}} />
+                    {{/if}}
+                    <span data-test-title>{{postrequisite.title}}</span>
                   </button>
                 </td>
                 <td colspan="3">
                   <button
                     type="button"
+                    aria-label={{t "general.add"}}
                     {{on
                       "click"
                       (set
