@@ -202,6 +202,7 @@ general:
   lmDescriptorTitle: Select MeSH Descriptors for Learning Materials
   loading: Loading Ilios
   loadingSessionTypes: Loading Session Types...
+  lock: Lock
   lockCourse: Lock Course
   logo: Ilios Logo
   logout: Logout
@@ -249,11 +250,13 @@ general:
   newReport: New Report
   newSchool: New School
   newSequenceBlock: New Sequence Block
+  newSessionType: New Session Type
   newTerm: New Term
   newToken: New Token
   newUser: New User
   newUsersCreatedSuccessfully: New users created successfully
   newUsersCreatedWarning: "Some users were created, but there were errors."
+  newVocabulary: New Vocabulary
   noAccountExists: "Your account {accountName} does not match any user records in Ilios. If you need further assistance, please contact your school’s Ilios administrator."
   noAvailableCohorts: No available cohorts
   noCohortsAvailableForStudentAssignment: There are no cohorts available for student assignment in this school.
@@ -455,6 +458,7 @@ general:
   unassignedStudentsSummary: "{count, plural, =1 {There is one student needing assignment to a cohort} other {There are # students needing assignment to a cohort}}"
   unassignedStudentsSummaryTitle: Students Requiring Cohort Assignment
   undo: Undo
+  unlock: Unlock
   unlockCourse: Unlock course
   unordered: Unordered
   unPublishProgram: UnPublish Program

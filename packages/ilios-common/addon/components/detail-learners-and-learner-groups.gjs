@@ -176,10 +176,22 @@ export default class DetailLearnersAndLearnerGroupsComponent extends Component {
         </div>
         <div class="actions">
           {{#if this.isManaging}}
-            <button class="bigadd" type="button" {{on "click" (perform this.save)}} data-test-save>
+            <button
+              class="bigadd"
+              type="button"
+              aria-label={{t "general.save"}}
+              {{on "click" (perform this.save)}}
+              data-test-save
+            >
               <FaIcon @icon="check" />
             </button>
-            <button class="bigcancel" type="button" {{on "click" this.cancel}} data-test-cancel>
+            <button
+              class="bigcancel"
+              type="button"
+              aria-label={{t "general.cancel"}}
+              {{on "click" this.cancel}}
+              data-test-cancel
+            >
               <FaIcon @icon="arrow-rotate-left" />
             </button>
           {{else if @editable}}

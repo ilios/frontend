@@ -36,6 +36,8 @@ export default class SessionOfferingsComponent extends Component {
             <ExpandCollapseButton
               @value={{@showNewOfferingForm}}
               @action={{@toggleShowNewOfferingForm}}
+              @expandButtonLabel={{t "general.expand"}}
+              @collapseButtonLabel={{t "general.close"}}
             />
           {{/if}}
         </div>

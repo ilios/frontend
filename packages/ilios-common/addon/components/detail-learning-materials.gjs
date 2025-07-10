@@ -227,6 +227,7 @@ export default class DetailCohortsComponent extends Component {
             <button
               class="collapse-button"
               type="button"
+              aria-label={{t "general.cancel"}}
               {{on "click" (fn (mut this.displayAddNewForm) false)}}
             >
               <FaIcon @icon="minus" />

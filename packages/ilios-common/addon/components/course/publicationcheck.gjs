@@ -94,6 +94,7 @@ export default class CoursePublicationCheckComponent extends Component {
                         @route="course"
                         @model={{@course}}
                         @query={{hash details=true courseObjectiveDetails=true}}
+                        aria-label={{t "general.backToCourse"}}
                         data-test-unlink
                       >
                         <FaIcon @icon="link-slash" />

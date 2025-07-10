@@ -100,6 +100,7 @@ export default class DetailTaxonomiesComponent extends Component {
             <button
               class="bigadd"
               type="button"
+              aria-label={{t "general.save"}}
               {{on "click" (perform this.save)}}
               {{scrollIntoView}}
             >
@@ -108,7 +109,12 @@ export default class DetailTaxonomiesComponent extends Component {
                 @spin={{this.save.isRunning}}
               />
             </button>
-            <button class="bigcancel" type="button" {{on "click" this.cancel}}>
+            <button
+              class="bigcancel"
+              type="button"
+              aria-label={{t "general.cancel"}}
+              {{on "click" this.cancel}}
+            >
               <FaIcon @icon="arrow-rotate-left" />
             </button>
           {{else if @editable}}

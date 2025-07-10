@@ -73,6 +73,7 @@ export default class SchoolSessionTypesListItemComponent extends Component {
         <button
           type="button"
           class="link-button"
+          aria-label={{t "general.manage"}}
           data-test-manage
           {{on "click" (fn @manageSessionType @sessionType.id)}}
         >
@@ -83,6 +84,7 @@ export default class SchoolSessionTypesListItemComponent extends Component {
             <button
               type="button"
               class="link-button"
+              aria-label={{t "general.remove"}}
               disabled={{or (this.showRemoveConfirmation this.deleteSessionType.isRunning)}}
               data-test-delete
               {{on "click" (set this "showRemoveConfirmation" true)}}
@@ -101,7 +103,7 @@ export default class SchoolSessionTypesListItemComponent extends Component {
           <FaIcon @icon="trash" class="disabled" />
         {{/if}}
         <LinkTo @route="session-type-visualize-vocabularies" @model={{@sessionType}}>
-          <FaIcon @icon="chart-column" class="enabled" />
+          <FaIcon @icon="chart-column" class="enabled" @title={{t "general.vocabularies"}} />
         </LinkTo>
       </td>
     </tr>

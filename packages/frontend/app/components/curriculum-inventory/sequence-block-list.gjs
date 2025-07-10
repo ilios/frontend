@@ -60,7 +60,12 @@ export default class SequenceBlockListComponent extends Component {
         </div>
         <div class="actions">
           {{#if @canUpdate}}
-            <ExpandCollapseButton @value={{this.editorOn}} @action={{this.toggleEditor}} />
+            <ExpandCollapseButton
+              @value={{this.editorOn}}
+              @action={{this.toggleEditor}}
+              @expandButtonLabel={{t "general.newSequenceBlock"}}
+              @collapseButtonLabel={{t "general.close"}}
+            />
           {{/if}}
         </div>
       </div>

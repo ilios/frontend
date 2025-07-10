@@ -42,6 +42,7 @@ export default class SessionsGridRowComponent extends Component {
           <button
             class="link-button"
             type="button"
+            aria-label={{t "general.expand"}}
             data-test-collapse
             {{on "click" (fn @closeSession @session)}}
           >
@@ -52,6 +53,7 @@ export default class SessionsGridRowComponent extends Component {
             class="link-button {{if (eq @session.offeringCount 0) 'disabled'}}"
             disabled={{if (eq @session.offeringCount 0) "disabled"}}
             type="button"
+            aria-label={{t "general.close"}}
             data-test-expand
             {{on "click" (fn @expandSession @session)}}
           >

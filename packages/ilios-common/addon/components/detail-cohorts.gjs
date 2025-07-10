@@ -77,13 +77,23 @@ export default class DetailCohortsComponent extends Component {
         </div>
         <div class="actions">
           {{#if this.isManaging}}
-            <button class="bigadd" type="button" {{on "click" (perform this.save)}}>
+            <button
+              class="bigadd"
+              aria-label={{t "general.save"}}
+              type="button"
+              {{on "click" (perform this.save)}}
+            >
               <FaIcon
                 @icon={{if this.save.isRunning "spinner" "check"}}
                 @spin={{this.save.isRunning}}
               />
             </button>
-            <button class="bigcancel" type="button" {{on "click" this.cancel}}>
+            <button
+              class="bigcancel"
+              type="button"
+              aria-label={{t "general.cancel"}}
+              {{on "click" this.cancel}}
+            >
               <FaIcon @icon="arrow-rotate-left" />
             </button>
           {{else if @editable}}

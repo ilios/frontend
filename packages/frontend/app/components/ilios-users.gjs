@@ -124,6 +124,7 @@ export default class IliosUsersComponent extends Component {
                     "click"
                     (if @showNewUserForm this.closeNewUserForm (fn @setShowBulkNewUserForm false))
                   }}
+                  aria-label={{t "general.cancel"}}
                   data-test-collapse
                 >
                   <FaIcon @icon="minus" />

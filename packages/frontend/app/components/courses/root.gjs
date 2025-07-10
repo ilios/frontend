@@ -266,6 +266,8 @@ export default class CoursesRootComponent extends Component {
               <ExpandCollapseButton
                 @value={{this.showNewCourseForm}}
                 @action={{set this "showNewCourseForm" (not this.showNewCourseForm)}}
+                @expandButtonLabel={{t "general.newCourse"}}
+                @collapseButtonLabel={{t "general.close"}}
               />
             {{/if}}
           </div>

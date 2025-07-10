@@ -177,6 +177,7 @@ export default class UserProfileCohortsComponent extends Component {
                 type="button"
                 disabled={{or this.save.isRunning this.cancel.isRunning}}
                 class="bigadd"
+                aria-label={{t "general.save"}}
                 {{on "click" (perform this.save)}}
                 data-test-save
               >
@@ -189,6 +190,7 @@ export default class UserProfileCohortsComponent extends Component {
                 type="button"
                 disabled={{or this.save.isRunning this.cancel.isRunning}}
                 class="bigcancel"
+                aria-label={{t "general.cancel"}}
                 {{on "click" (perform this.cancel)}}
                 data-test-cancel
               >
@@ -196,6 +198,7 @@ export default class UserProfileCohortsComponent extends Component {
               </button>
             {{else if @isManageable}}
               <button
+                aria-label={{t "general.manage"}}
                 type="button"
                 class="manage"
                 {{on "click" (fn @setIsManaging true)}}

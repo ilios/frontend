@@ -173,6 +173,8 @@ export default class CourseSessionsComponent extends Component {
             <ExpandCollapseButton
               @value={{this.showNewSessionForm}}
               @action={{toggle "showNewSessionForm" this}}
+              @expandButtonLabel={{t "general.newSession"}}
+              @collapseButtonLabel={{t "general.close"}}
             />
           {{/if}}
           {{#if (and @canUpdateCourse (gt this.sessionsCount 0))}}

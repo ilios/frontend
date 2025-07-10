@@ -59,7 +59,13 @@ export default class InstructorGroupUsersComponent extends Component {
         </h3>
         <div class="actions">
           {{#if this.isManaging}}
-            <button class="bigadd" type="button" {{on "click" (perform this.save)}} data-test-save>
+            <button
+              class="bigadd"
+              type="button"
+              aria-label={{t "general.save"}}
+              {{on "click" (perform this.save)}}
+              data-test-save
+            >
               <FaIcon
                 @icon={{if this.save.isRunning "spinner" "check"}}
                 @spin={{this.save.isRunning}}
@@ -68,6 +74,7 @@ export default class InstructorGroupUsersComponent extends Component {
             <button
               class="bigcancel"
               type="button"
+              aria-label={{t "general.cancel"}}
               {{on "click" (set this "isManaging" false)}}
               data-test-cancel
             >

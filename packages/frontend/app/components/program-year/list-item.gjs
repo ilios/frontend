@@ -174,6 +174,7 @@ export default class ProgramYearListItemComponent extends Component {
                 <button
                   type="button"
                   class="link-button"
+                  aria-label={{t "general.unlock"}}
                   {{on "click" (perform this.unlock)}}
                   data-test-unlock
                 >
@@ -186,6 +187,7 @@ export default class ProgramYearListItemComponent extends Component {
               <button
                 type="button"
                 class="link-button"
+                aria-label={{t "general.lock"}}
                 {{on "click" (perform this.lock)}}
                 data-test-lock
               >
@@ -198,6 +200,7 @@ export default class ProgramYearListItemComponent extends Component {
               <button
                 type="button"
                 class="link-button"
+                aria-label={{t "general.remove"}}
                 {{on "click" (set this "showRemoveConfirmation" true)}}
                 data-test-remove
               >

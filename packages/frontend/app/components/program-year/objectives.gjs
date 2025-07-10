@@ -90,6 +90,7 @@ export default class ProgramYearObjectivesComponent extends Component {
               @value={{this.newObjectiveEditorOn}}
               @action={{this.toggleNewObjectiveEditor}}
               @expandButtonLabel={{t "general.addNew"}}
+              @collapseButtonLabel={{t "general.close"}}
             />
           </span>
         {{/if}}

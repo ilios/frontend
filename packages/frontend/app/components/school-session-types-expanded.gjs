@@ -126,6 +126,8 @@ export default class SchoolSessionTypesExpandedComponent extends Component {
             <ExpandCollapseButton
               @value={{@schoolNewSessionType}}
               @action={{fn @setSchoolNewSessionType (not @schoolNewSessionType)}}
+              @expandButtonLabel={{t "general.newSessionType"}}
+              @collapseButtonLabel={{t "general.close"}}
             />
           {{/if}}
         </div>

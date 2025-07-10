@@ -62,6 +62,7 @@ import UserStatus from 'ilios-common/components/user-status';
                     <button
                       class="link-button"
                       type="button"
+                      aria-label={{t "general.remove"}}
                       {{on "click" (fn @removeDirector user)}}
                     >
                       <FaIcon @icon="xmark" class="clickable remove" />
@@ -83,6 +84,7 @@ import UserStatus from 'ilios-common/components/user-status';
                     <button
                       class="link-button"
                       type="button"
+                      aria-label={{t "general.remove"}}
                       {{on "click" (fn @removeAdministrator user)}}
                     >
                       <FaIcon @icon="xmark" class="clickable remove" />
@@ -104,6 +106,7 @@ import UserStatus from 'ilios-common/components/user-status';
                     <button
                       class="link-button"
                       type="button"
+                      aria-label={{t "general.remove"}}
                       {{on "click" (fn @removeStudentAdvisor user)}}
                     >
                       <FaIcon @icon="xmark" class="clickable remove" />

@@ -1034,7 +1034,9 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
               </span>
             </div>
             <div class="block starting-academic-level" data-test-starting-academic-level>
-              <label for="academic-level-{{templateId}}">{{t "general.startLevel"}}:</label>
+              <label for="starting-academic-level-{{templateId}}">{{t
+                  "general.startLevel"
+                }}:</label>
               {{#if @canUpdate}}
                 <EditableField
                   @value={{@sequenceBlock.startingAcademicLevel.name}}
@@ -1064,7 +1066,7 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
               {{/if}}
             </div>
             <div class="block ending-academic-level" data-test-ending-academic-level>
-              <label for="academic-level-{{templateId}}">{{t "general.endLevel"}}:</label>
+              <label for="ending-academic-level-{{templateId}}">{{t "general.endLevel"}}:</label>
               {{#if @canUpdate}}
                 <EditableField
                   @value={{@sequenceBlock.endingAcademicLevel.name}}
