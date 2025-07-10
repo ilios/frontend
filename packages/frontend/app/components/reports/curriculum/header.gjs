@@ -106,11 +106,7 @@ export default class ReportsCurriculumHeader extends Component {
     this.args.changeSelectedReport(target.value);
   };
   getReportUrl = () => {
-    const urlObj = new URL(window.location.href);
-
-    urlObj.searchParams.set('report', this.args.selectedReportValue);
-
-    return urlObj.href;
+    return window.location.href;
   };
   <template>
     <div class="reports-curriculum-header" data-test-reports-curriculum-header>
