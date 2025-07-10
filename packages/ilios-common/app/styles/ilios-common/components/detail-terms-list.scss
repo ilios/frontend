@@ -1,5 +1,6 @@
 @use "../colors" as c;
 @use "../mixins" as m;
+@use "../constants" as constants;
 
 @use "sass:color";
 
@@ -16,10 +17,16 @@
     button {
       background-color: c.$culturedGrey;
       color: c.$raisinBlack;
+      padding: calc(constants.$golden-ratio-small * 0.5rem)
+        calc(constants.$golden-ratio-large * 0.5rem);
     }
 
     &.removable-list {
       @include m.ilios-removable-list;
+
+      li {
+        padding: 0;
+      }
     }
 
     .muted {
