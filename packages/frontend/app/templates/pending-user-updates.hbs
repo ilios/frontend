@@ -40,7 +40,6 @@
             <th class="text-left" colspan="6">
               {{t "general.description"}}
             </th>
-            <th></th>
             <th class="text-left" colspan="3">
               {{t "general.actions"}}
             </th>
@@ -65,7 +64,6 @@
                   {{t (concat "general.pendingUserUpdates." update.type)}}
                 {{/if}}
               </td>
-              <td></td>
               <td class="text-left" colspan="3">
                 {{#if (includes update this.updatesBeingSaved)}}
                   <LoadingSpinner />

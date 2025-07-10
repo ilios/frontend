@@ -210,7 +210,7 @@ export default class MeshManagerComponent extends Component {
                       {{#each term.concepts as |concept|}}
                         {{#if concept.scopeNote}}
                           <li
-                            class="{{unless term.isActive 'disabled'}}
+                            class="{{if (includes term.id (mapBy0 'id' this.terms)) 'disabled'}}
                               {{if concept.hasTruncatedScopeNote 'truncated'}}"
                           >
                             {{concept.truncatedScopeNote}}
