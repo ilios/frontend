@@ -8,6 +8,7 @@ import removeHtmlTags from 'ilios-common/helpers/remove-html-tags';
 import DetailTermsList from 'ilios-common/components/detail-terms-list';
 import sortBy from 'ilios-common/helpers/sort-by';
 import formatDate from 'ember-intl/helpers/format-date';
+import { guidFor } from '@ember/object/internals';
 
 export default class PrintCourseSessionComponent extends Component {
   @cached
@@ -54,6 +55,9 @@ export default class PrintCourseSessionComponent extends Component {
   get terms() {
     return this.termsData.isResolved ? this.termsData.value : [];
   }
+  get uniqueId() {
+    return guidFor(this);
+  }
   <template>
     <div class="print-course-session" data-test-print-course-session>
       <div class="header" data-test-session-header>
@@ -77,12 +81,12 @@ export default class PrintCourseSessionComponent extends Component {
           </div>
           <br />
           <div class="inline-label-data-block">
-            <label for="supplemental-curriculum-{{@templateId}}">
+            <label for="supplemental-curriculum-{{this.uniqueId}}">
               {{t "general.supplementalCurriculum"}}:
             </label>
             <div>
               <input
-                id="supplemental-curriculum-{{@templateId}}"
+                id="supplemental-curriculum-{{this.uniqueId}}"
                 type="checkbox"
                 checked={{@session.supplemental}}
                 disabled="disabled"
@@ -90,12 +94,12 @@ export default class PrintCourseSessionComponent extends Component {
             </div>
           </div>
           <div class="inline-label-data-block">
-            <label for="special-attire-{{@templateId}}">
+            <label for="special-attire-{{this.uniqueId}}">
               {{t "general.specialAttireRequired"}}:
             </label>
             <div>
               <input
-                id="special-attire-{{@templateId}}"
+                id="special-attire-{{this.uniqueId}}"
                 type="checkbox"
                 checked={{@session.attireRequired}}
                 disabled="disabled"
@@ -103,12 +107,12 @@ export default class PrintCourseSessionComponent extends Component {
             </div>
           </div>
           <div class="inline-label-data-block">
-            <label for="special-equipment-{{@templateId}}">
+            <label for="special-equipment-{{this.uniqueId}}">
               {{t "general.specialEquipmentRequired"}}:
             </label>
             <div>
               <input
-                id="special-equipment-{{@templateId}}"
+                id="special-equipment-{{this.uniqueId}}"
                 type="checkbox"
                 checked={{@session.equipmentRequired}}
                 disabled="disabled"
@@ -116,12 +120,12 @@ export default class PrintCourseSessionComponent extends Component {
             </div>
           </div>
           <div class="inline-label-data-block">
-            <label for="attendance-{{@templateId}}">
+            <label for="attendance-{{this.uniqueId}}">
               {{t "general.attendanceRequired"}}:
             </label>
             <div>
               <input
-                id="attendance-{{@templateId}}"
+                id="attendance-{{this.uniqueId}}"
                 type="checkbox"
                 checked={{@session.attendanceRequired}}
                 disabled="disabled"
