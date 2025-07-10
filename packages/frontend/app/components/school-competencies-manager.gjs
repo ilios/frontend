@@ -81,7 +81,9 @@ export default class SchoolCompetenciesManagerComponent extends Component {
               </li>
             {{/each}}
             {{#if (and obj.domain.id @canCreate)}}
-              <NewCompetency @add={{fn @add obj.domain}} />
+              <li>
+                <NewCompetency @add={{fn @add obj.domain}} />
+              </li>
             {{/if}}
           </ul>
         </div>
