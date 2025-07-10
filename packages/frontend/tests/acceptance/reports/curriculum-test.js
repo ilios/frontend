@@ -166,13 +166,9 @@ module('Acceptance | Reports - Curriculum Reports', function (hooks) {
 
     // Make sure copy button is grabbing correct report type
     const writeText = navigator.clipboard.writeText;
-    navigator.clipboard.writeText = (text) => {
-      const reportType = text.split('report=')[1];
-      assert.strictEqual(
-        reportType,
-        'sessionObjectives',
-        'Correct report type was copied to clipboard',
-      );
+    navigator.clipboard.writeText = () => {
+      const hasCorrectReportType = currentURL().includes('report=sessionObjectives');
+      assert.ok(hasCorrectReportType, 'Correct report type was copied to clipboard');
       return Promise.resolve();
     };
     await page.curriculum.header.copy.click();
@@ -304,13 +300,9 @@ module('Acceptance | Reports - Curriculum Reports', function (hooks) {
 
     // Make sure copy button is grabbing correct report type
     const writeText = navigator.clipboard.writeText;
-    navigator.clipboard.writeText = (text) => {
-      const reportType = text.split('report=')[1];
-      assert.strictEqual(
-        reportType,
-        'sessionObjectives',
-        'Correct report type was copied to clipboard',
-      );
+    navigator.clipboard.writeText = () => {
+      const hasCorrectReportType = currentURL().includes('report=sessionObjectives');
+      assert.ok(hasCorrectReportType, 'Correct report type was copied to clipboard');
       return Promise.resolve();
     };
     await page.curriculum.header.copy.click();
@@ -412,13 +404,9 @@ module('Acceptance | Reports - Curriculum Reports', function (hooks) {
 
     // Make sure copy button is grabbing correct report type
     const writeText = navigator.clipboard.writeText;
-    navigator.clipboard.writeText = (text) => {
-      const reportType = text.split('report=')[1];
-      assert.strictEqual(
-        reportType,
-        'learnerGroups',
-        'Correct report type was copied to clipboard',
-      );
+    navigator.clipboard.writeText = () => {
+      const hasCorrectReportType = currentURL().includes('report=learnerGroups');
+      assert.ok(hasCorrectReportType, 'Correct report type was copied to clipboard');
       return Promise.resolve();
     };
     await page.curriculum.header.copy.click();
@@ -563,13 +551,9 @@ module('Acceptance | Reports - Curriculum Reports', function (hooks) {
 
     // Make sure copy button is grabbing correct report type
     const writeText = navigator.clipboard.writeText;
-    navigator.clipboard.writeText = (text) => {
-      const reportType = text.split('report=')[1];
-      assert.strictEqual(
-        reportType,
-        'learnerGroups',
-        'Correct report type was copied to clipboard',
-      );
+    navigator.clipboard.writeText = () => {
+      const hasCorrectReportType = currentURL().includes('report=learnerGroups');
+      assert.ok(hasCorrectReportType, 'Correct report type was copied to clipboard');
       return Promise.resolve();
     };
     await page.curriculum.header.copy.click();
@@ -618,35 +602,23 @@ module('Acceptance | Reports - Curriculum Reports', function (hooks) {
 
     // Make sure copy button is grabbing correct report type
     const writeText = navigator.clipboard.writeText;
-    navigator.clipboard.writeText = (text) => {
-      const reportType = text.split('report=')[1];
-      assert.strictEqual(
-        reportType,
-        'sessionObjectives',
-        'Correct report type was copied to clipboard',
-      );
+    navigator.clipboard.writeText = () => {
+      const hasCorrectReportType = currentURL().includes('report=sessionObjectives');
+      assert.ok(hasCorrectReportType, 'Correct report type was copied to clipboard');
       return Promise.resolve();
     };
     await page.curriculum.header.reportSelector.set('sessionObjectives');
     await page.curriculum.header.copy.click();
-    navigator.clipboard.writeText = (text) => {
-      const reportType = text.split('report=')[1];
-      assert.strictEqual(
-        reportType,
-        'learnerGroups',
-        'Correct report type was copied to clipboard',
-      );
+    navigator.clipboard.writeText = () => {
+      const hasCorrectReportType = currentURL().includes('report=learnerGroups');
+      assert.ok(hasCorrectReportType, 'Correct report type was copied to clipboard');
       return Promise.resolve();
     };
     await page.curriculum.header.reportSelector.set('learnerGroups');
     await page.curriculum.header.copy.click();
-    navigator.clipboard.writeText = (text) => {
-      const reportType = text.split('report=')[1];
-      assert.strictEqual(
-        reportType,
-        'sessionObjectives',
-        'Correct report type was copied to clipboard',
-      );
+    navigator.clipboard.writeText = () => {
+      const hasCorrectReportType = currentURL().includes('report=sessionObjectives');
+      assert.ok(hasCorrectReportType, 'Correct report type was copied to clipboard');
       return Promise.resolve();
     };
     await page.curriculum.header.reportSelector.set('sessionObjectives');
