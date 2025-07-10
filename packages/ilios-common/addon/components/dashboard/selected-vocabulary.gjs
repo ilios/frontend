@@ -14,10 +14,10 @@ export default class DashboardSelectedVocabularyComponent extends Component {
     return this.topLevelTermsData.isResolved ? this.topLevelTermsData.value : [];
   }
   <template>
-    <div data-test-dashboard-selected-vocabulary>
-      <h6 data-test-title>
+    <li data-test-dashboard-selected-vocabulary>
+      <h3 data-test-title>
         {{@vocabulary.title}}
-      </h6>
+      </h3>
       {{#each (sortBy "title" this.topLevelTerms) as |term|}}
         <SelectedTermTree
           @selectedTermIds={{@selectedTermIds}}
@@ -26,6 +26,6 @@ export default class DashboardSelectedVocabularyComponent extends Component {
           @remove={{@remove}}
         />
       {{/each}}
-    </div>
+    </li>
   </template>
 }
