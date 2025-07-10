@@ -10,7 +10,7 @@
 
   .session {
     &:nth-of-type(even) {
-      background-color: c.$culturedGrey;
+      background-color: c.$lightBlue;
     }
 
     &.is-expanded {
@@ -21,7 +21,7 @@
 
     .confirm-removal {
       background-color: c.$lavenderBlush;
-      color: c.$crimson;
+      color: c.$rosewood;
       font-weight: bold;
       margin: 0;
       padding: 1rem 8rem;

@@ -13,6 +13,11 @@
   .selected-taxonomy-terms {
     @include m.ilios-tag-list;
 
+    button {
+      background-color: c.$culturedGrey;
+      color: c.$raisinBlack;
+    }
+
     &.removable-list {
       @include m.ilios-removable-list;
     }

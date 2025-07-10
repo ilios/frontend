@@ -2,7 +2,7 @@
 @use "../../ilios-common/mixins" as m;
 
 .curriculum-inventory-sequence-block-header {
-  background-color: c.$culturedGrey;
+  border-bottom: 1px solid c.$culturedGrey;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
