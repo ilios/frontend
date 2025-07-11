@@ -227,7 +227,7 @@ export default class SessionModel extends Model {
   }
 
   get learnerGroupCount() {
-    return this.associatedOfferingLearnerGroups.length;
+    return this.associatedLearnerGroups.length;
   }
 
   get assignableVocabularies() {
