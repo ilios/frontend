@@ -7,7 +7,7 @@ const definition = {
   manage: clickable('[data-test-manage]'),
   terms: collection('.selected-taxonomy-terms li', {
     name: text(),
-    remove: clickable(),
+    remove: clickable('button'),
     isSelected: hasClass('selected'),
     hasDeleteIcon: isPresent('.fa-xmark'),
   }),
