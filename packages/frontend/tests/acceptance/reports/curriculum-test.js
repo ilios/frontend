@@ -164,6 +164,10 @@ module('Acceptance | Reports - Curriculum Reports', function (hooks) {
       'current URL is correct',
     );
 
+    // Skip the copy test if we can't access the clipboard
+    if (!navigator.clipboard) {
+      return;
+    }
     // Make sure copy button is grabbing correct report type
     const writeText = navigator.clipboard.writeText;
     navigator.clipboard.writeText = () => {
@@ -298,6 +302,10 @@ module('Acceptance | Reports - Curriculum Reports', function (hooks) {
       'current URL is correct',
     );
 
+    // Skip the copy test if we can't access the clipboard
+    if (!navigator.clipboard) {
+      return;
+    }
     // Make sure copy button is grabbing correct report type
     const writeText = navigator.clipboard.writeText;
     navigator.clipboard.writeText = () => {
@@ -402,6 +410,10 @@ module('Acceptance | Reports - Curriculum Reports', function (hooks) {
       'current URL is correct',
     );
 
+    // Skip the copy test if we can't access the clipboard
+    if (!navigator.clipboard) {
+      return;
+    }
     // Make sure copy button is grabbing correct report type
     const writeText = navigator.clipboard.writeText;
     navigator.clipboard.writeText = () => {
@@ -549,6 +561,10 @@ module('Acceptance | Reports - Curriculum Reports', function (hooks) {
       'current URL is correct',
     );
 
+    // Skip the copy test if we can't access the clipboard
+    if (!navigator.clipboard) {
+      return;
+    }
     // Make sure copy button is grabbing correct report type
     const writeText = navigator.clipboard.writeText;
     navigator.clipboard.writeText = () => {
@@ -561,7 +577,7 @@ module('Acceptance | Reports - Curriculum Reports', function (hooks) {
   });
 
   test('copy url changes if report type changes', async function (assert) {
-    //skip this test if we can't access the clipboard
+    // Skip the copy test if we can't access the clipboard
     if (!navigator.clipboard) {
       assert.expect(0);
       return;
