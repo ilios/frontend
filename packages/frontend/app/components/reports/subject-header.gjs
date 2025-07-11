@@ -11,6 +11,7 @@ import EditableField from 'ilios-common/components/editable-field';
 import perform from 'ember-concurrency/helpers/perform';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
+import { pageTitle } from 'ember-page-title';
 import pick from 'ilios-common/helpers/pick';
 import set from 'ember-set-helper/helpers/set';
 import YupValidationMessage from 'ilios-common/components/yup-validation-message';
@@ -68,6 +69,8 @@ export default class ReportsSubjectHeader extends Component {
     this.title = this.reportTitle;
   }
   <template>
+    {{pageTitle " | " this.reportTitle prepend=false}}
+
     <div class="reports-subject-header" data-test-reports-subject-header>
       <h2 data-test-report-title>
         {{#if (and @report this.reportTitleData.isResolved)}}

@@ -11,6 +11,7 @@ import t from 'ember-intl/helpers/t';
 import EditableField from 'ilios-common/components/editable-field';
 import perform from 'ember-concurrency/helpers/perform';
 import { on } from '@ember/modifier';
+import { pageTitle } from 'ember-page-title';
 import pick from 'ilios-common/helpers/pick';
 import set from 'ember-set-helper/helpers/set';
 import YupValidationMessage from 'ilios-common/components/yup-validation-message';
@@ -117,6 +118,8 @@ export default class SchoolManagerComponent extends Component {
     await this.args.school.save();
   }
   <template>
+    {{pageTitle " | " this.title prepend=false}}
+
     <section class="school-manager" data-test-school-manager ...attributes>
       <div class="backtolink">
         <LinkTo @route="schools">

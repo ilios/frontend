@@ -8,6 +8,7 @@ import add from 'ember-math-helpers/helpers/add';
 import { on } from '@ember/modifier';
 import pick from 'ilios-common/helpers/pick';
 import set from 'ember-set-helper/helpers/set';
+import { pageTitle } from 'ember-page-title';
 import VisualizeSessionTypesGraph from 'ilios-common/components/course/visualize-session-types-graph';
 
 export default class CourseVisualizeSessionTypesComponent extends Component {
@@ -22,6 +23,16 @@ export default class CourseVisualizeSessionTypesComponent extends Component {
     return this.crossesBoundaryConfig.isResolved ? this.crossesBoundaryConfig.value : null;
   }
   <template>
+    {{pageTitle
+      (t "general.courses")
+      " | "
+      @model.title
+      " | "
+      (t "general.visualizations")
+      " | "
+      (t "general.sessionTypes")
+    }}
+
     <section class="course-visualize-session-types" data-test-course-visualize-session-types>
       <div class="breadcrumbs" data-test-breadcrumb>
         <span>

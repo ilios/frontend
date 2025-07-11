@@ -6,6 +6,7 @@ import { LinkTo } from '@ember/routing';
 import t from 'ember-intl/helpers/t';
 import FaIcon from 'ilios-common/components/fa-icon';
 import add from 'ember-math-helpers/helpers/add';
+import { pageTitle } from 'ember-page-title';
 
 export default class ProgramYearHeaderComponent extends Component {
   @service iliosConfig;
@@ -19,6 +20,8 @@ export default class ProgramYearHeaderComponent extends Component {
     return this.crossesBoundaryConfig.isResolved ? this.crossesBoundaryConfig.value : false;
   }
   <template>
+    {{pageTitle " | " @programYear.cohort.title prepend=false}}
+
     <div class="programyear-header" data-test-programyear-header ...attributes>
       <div class="backtolink">
         <LinkTo @route="program" data-test-back-to-program>

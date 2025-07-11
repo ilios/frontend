@@ -5,6 +5,7 @@ import SequenceBlockHeader from 'frontend/components/curriculum-inventory/sequen
 import { LinkTo } from '@ember/routing';
 import t from 'ember-intl/helpers/t';
 import reverse from 'ilios-common/helpers/reverse';
+import { pageTitle } from 'ember-page-title';
 import SequenceBlockOverview from 'frontend/components/curriculum-inventory/sequence-block-overview';
 
 export default class CurriculumInventorySequenceBlockDetailsComponent extends Component {
@@ -16,7 +17,25 @@ export default class CurriculumInventorySequenceBlockDetailsComponent extends Co
   get allParents() {
     return this.allParentsData.isResolved ? this.allParentsData.value : [];
   }
+
+  get associatedReportTitle() {
+    return this.args.sequenceBlock.report.content.name;
+  }
+
   <template>
+    {{pageTitle
+      (t "general.curriculumInventoryReports")
+      " | "
+      this.associatedReportTitle
+      prepend=false
+    }}
+    {{#if this.allParents.length}}
+      {{#each this.allParents as |parent|}}
+        {{pageTitle " | " parent.title prepend=true}}
+      {{/each}}
+    {{/if}}
+    {{pageTitle " | " @sequenceBlock.title prepend=true}}
+
     <div data-test-curriculum-inventory-sequence-block-details ...attributes>
       <SequenceBlockHeader @canUpdate={{@canUpdate}} @sequenceBlock={{@sequenceBlock}} />
       <div class="breadcrumbs" data-test-breadcrumbs>

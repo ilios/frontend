@@ -5,6 +5,7 @@ import { cached } from '@glimmer/tracking';
 import { LinkTo } from '@ember/routing';
 import t from 'ember-intl/helpers/t';
 import add from 'ember-math-helpers/helpers/add';
+import { pageTitle } from 'ember-page-title';
 import VisualizeVocabulariesGraph from 'ilios-common/components/course/visualize-vocabularies-graph';
 
 export default class CourseVisualizeVocabulariesComponent extends Component {
@@ -19,6 +20,16 @@ export default class CourseVisualizeVocabulariesComponent extends Component {
     return this.crossesBoundaryConfig.isResolved ? this.crossesBoundaryConfig.value : null;
   }
   <template>
+    {{pageTitle
+      (t "general.courses")
+      " | "
+      @model.title
+      " | "
+      (t "general.visualizations")
+      " | "
+      (t "general.vocabularies")
+    }}
+
     <section
       class="course-visualize-vocabularies"
       data-test-course-visualize-vocabularies

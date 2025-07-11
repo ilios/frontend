@@ -11,10 +11,12 @@ import FaIcon from 'ilios-common/components/fa-icon';
 
 export default class CourseLoaderComponent extends Component {
   @service dataLoader;
+
   courseLoadingPromise = this.dataLoader.loadCourse(this.args.course.id);
   <template>
     {{#let (load this.courseLoadingPromise) as |p|}}
       {{#if p.isResolved}}
+        {{this.academicYearCrossesCalendarYearBoundariesData.value}}
         <Details
           @course={{@course}}
           @editable={{@editable}}
