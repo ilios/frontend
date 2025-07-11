@@ -72,8 +72,8 @@ export default class ReportsSubjectHeader extends Component {
     {{pageTitle " | " this.reportTitle prepend=false}}
 
     <div class="reports-subject-header" data-test-reports-subject-header>
-      <h2 data-test-report-title>
-        {{#if (and @report this.reportTitleData.isResolved)}}
+      {{#if (and @report this.reportTitleData.isResolved)}}
+        <h2 data-test-report-title>
           <EditableField
             data-test-title
             @value={{this.reportTitle}}
@@ -99,8 +99,8 @@ export default class ReportsSubjectHeader extends Component {
               data-test-title-validation-error-message
             />
           </EditableField>
-        {{/if}}
-      </h2>
+        </h2>
+      {{/if}}
       {{#if this.isReportDetail}}
         <SubjectCopy
           @report={{@report}}
