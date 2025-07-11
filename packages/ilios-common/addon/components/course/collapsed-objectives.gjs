@@ -53,7 +53,7 @@ export default class CourseCollapsedObjectivesComponent extends Component {
       </div>
       {{#if this.objectives.length}}
         <div class="content">
-          <table>
+          <table class="condensed">
             <thead>
               <tr>
                 <th class="text-left">
