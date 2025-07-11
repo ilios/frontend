@@ -85,10 +85,10 @@ export default class CourseObjectivesComponent extends Component {
             </button>
           </div>
         {{else}}
-          <h3 class="title" data-test-title>
+          <h2 class="title" data-test-title>
             {{t "general.objectives"}}
             ({{this.objectives.length}})
-          </h3>
+          </h2>
         {{/if}}
         {{#if @editable}}
           <span data-test-actions>

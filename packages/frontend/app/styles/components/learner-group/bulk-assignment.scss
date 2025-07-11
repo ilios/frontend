@@ -58,6 +58,13 @@
     }
   }
 
+  .bulk-finalize-users {
+    h2 {
+      @include m.ilios-heading-h4;
+      margin-top: 1rem;
+    }
+  }
+
   table {
     @include m.ilios-table-structure;
     @include m.ilios-table-colors;

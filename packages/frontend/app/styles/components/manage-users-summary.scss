@@ -17,14 +17,6 @@
       text-align: left;
     }
 
-    h2 {
-      @include m.ilios-heading-h3;
-
-      a {
-        display: inline-block;
-      }
-    }
-
     .actions {
       button {
         margin-top: 0.5rem;
@@ -32,6 +24,14 @@
           margin-top: 0;
         }
       }
+    }
+  }
+
+  &.large-component .header h2.title {
+    @include m.ilios-heading-h3;
+
+    a {
+      display: inline-block;
     }
   }
 

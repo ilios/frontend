@@ -2,22 +2,27 @@
 @use "../ilios-common/mixins" as m;
 
 .user-profile-permissions {
+  .title {
+    @include m.ilios-heading-h3;
+    margin-bottom: 0.5rem;
+  }
+
   span {
     white-space: nowrap;
   }
 
-  p {
+  .section {
     padding: 0.25rem;
 
     button {
       @include m.ilios-button-reset;
     }
 
-    h4 {
+    h3.title {
       @include m.ilios-heading-h5;
     }
 
-    h5 {
+    h4 {
       @include m.ilios-heading-h6;
       margin: 0.5rem 0 0 0.5rem;
     }

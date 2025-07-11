@@ -249,9 +249,9 @@ export default class NewUserComponent extends Component {
   <template>
     {{#let (uniqueId) as |templateId|}}
       <div class="new-user" data-test-new-user ...attributes>
-        <h4 class="title">
+        <h2 class="title">
           {{t "general.newUser"}}
-        </h4>
+        </h2>
         <div class="new-user-form">
           <div class="choose-form-type" data-test-user-type>
             <label>

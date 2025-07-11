@@ -24,9 +24,9 @@ export default class LearnerGroupNewComponent extends Component {
             />
           </div>
         {{else}}
-          <h4>
+          <h3>
             {{t "general.newLearnerGroup"}}
-          </h4>
+          </h3>
         {{/if}}
         {{#if this.singleMode}}
           <NewSingle

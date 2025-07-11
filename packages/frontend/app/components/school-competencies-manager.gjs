@@ -88,9 +88,9 @@ export default class SchoolCompetenciesManagerComponent extends Component {
       {{/each}}
       {{#if @canCreate}}
         <div data-test-new-domain>
-          <h5>
+          <h3 class="new-domain">
             {{t "general.newDomain"}}
-          </h5>
+          </h3>
           <NewCompetency @add={{fn @add null}} />
         </div>
       {{/if}}

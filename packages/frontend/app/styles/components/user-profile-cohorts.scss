@@ -4,6 +4,10 @@
   .user-profile-cohorts-header {
     @include m.detail-container-header;
 
+    h2 {
+      @include m.ilios-heading-h3;
+    }
+
     .actions {
       @include m.detail-container-actions;
     }
@@ -25,7 +29,7 @@
     @include m.ilios-label;
   }
 
-  h4 {
+  h3 {
     @include m.ilios-heading-h5;
   }
 

@@ -78,14 +78,14 @@ export default class CourseManageObjectiveParentsComponent extends Component {
                   }}"
                 data-test-competency
               >
-                <h4 class="competency-title" data-test-competency-title>
+                <h3 class="competency-title" data-test-competency-title>
                   {{competency.title}}
                   {{#if competency.parent}}
                     <span class="domain-title">
                       ({{competency.parent.title}})
                     </span>
                   {{/if}}
-                </h4>
+                </h3>
                 <ul>
                   {{#each (sortBy0 "title" competency.objectives) as |objective|}}
                     {{#if (or (includes objective @selected) objective.active)}}

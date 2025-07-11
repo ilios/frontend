@@ -69,9 +69,9 @@ export default class DashboardCalendarFiltersComponent extends Component {
           class="calendar-filter-list sessiontypefilter"
           data-test-session-type-filter
         >
-          <h5>
+          <h2>
             {{t "general.sessionTypes"}}
-          </h5>
+          </h2>
           <div class="filters">
             {{#if this.sessionTypesLoaded}}
               <ul>
@@ -94,9 +94,9 @@ export default class DashboardCalendarFiltersComponent extends Component {
           </div>
         </div>
         <div class="calendar-filter-list vocabularyfilter" data-test-vocabulary-filter>
-          <h5>
+          <h2>
             {{t "general.terms"}}
-          </h5>
+          </h2>
           <div class="filters">
             {{#if this.vocabulariesLoaded}}
               <ul>
@@ -120,9 +120,9 @@ export default class DashboardCalendarFiltersComponent extends Component {
           class="calendar-filter-list sessiontypefilter"
           data-test-session-type-filter
         >
-          <h5>
+          <h2>
             {{t "general.sessionTypes"}}
-          </h5>
+          </h2>
           <div class="filters">
             {{#if this.sessionTypesLoaded}}
               <ul>
@@ -149,9 +149,9 @@ export default class DashboardCalendarFiltersComponent extends Component {
           class="calendar-filter-list courselevelfilter"
           data-test-course-level-filter
         >
-          <h5>
+          <h2>
             {{t "general.courseLevels"}}
-          </h5>
+          </h2>
           <div class="filters">
             <ul>
               {{#each this.courseLevels as |level|}}

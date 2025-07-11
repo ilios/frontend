@@ -20,9 +20,9 @@ export default class UserProfileCohortsDetailsComponent extends Component {
   <template>
     <div class="user-profile-cohorts-details" data-test-user-profile-cohorts-details>
       <p data-test-primary-cohort>
-        <h4>
+        <h3>
           {{t "general.primaryCohort"}}:
-        </h4>
+        </h3>
         <span data-test-title>
           {{#if @primaryCohort}}
             {{@primaryCohort.programYear.program.school.title}}
@@ -36,9 +36,9 @@ export default class UserProfileCohortsDetailsComponent extends Component {
         </span>
       </p>
       <p data-test-secondary-cohorts>
-        <h4>
+        <h3>
           {{t "general.secondaryCohorts"}}:
-        </h4>
+        </h3>
         {{#if this.sortedSecondaryCohortsLoaded}}
           <ul>
             {{#each this.sortedSecondaryCohorts as |cohort|}}

@@ -37,10 +37,10 @@ export default class LearnergroupSelectionCohortManagerComponent extends Compone
       data-test-learnergroup-selection-cohort-manager
     >
       {{#if this.learnerGroups.isResolved}}
-        <h5 class="cohort-title" data-test-title-cohort-title>
+        <h4 class="cohort-title" data-test-title-cohort-title>
           {{@cohort.programYear.program.title}}
           {{@cohort.title}}
-        </h5>
+        </h4>
         <ul class="tree-groups-list" data-test-tree-groups-list>
           {{#each (sortBy this.sortByTitle this.rootLevelLearnerGroups) as |learnerGroup|}}
             <LearnergroupTree

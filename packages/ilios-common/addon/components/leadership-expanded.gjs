@@ -172,10 +172,10 @@ export default class LeadershipExpandedComponent extends Component {
     <div class="leadership-expanded" data-test-leadership-expanded>
       <div class="leadership-expanded-header">
         {{#if @isManaging}}
-          <h3 class="title" data-test-title>
+          <h2 class="title" data-test-title>
             {{t "general.leadership"}}
             ({{this.count}})
-          </h3>
+          </h2>
         {{else}}
           <button
             class="title link-button"

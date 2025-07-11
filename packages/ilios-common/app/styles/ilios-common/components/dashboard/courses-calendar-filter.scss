@@ -5,6 +5,10 @@
     position: relative;
   }
   .year {
+    .year-title {
+      @include m.ilios-heading-h6;
+    }
+
     button {
       @include m.ilios-button-reset;
     }

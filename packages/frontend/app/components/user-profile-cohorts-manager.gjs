@@ -75,9 +75,9 @@ export default class UserProfileCohortsManagerComponent extends Component {
   <template>
     <div class="user-profile-cohorts-manager" data-test-user-profile-cohorts-manager>
       <p data-test-primary-cohort>
-        <h4>
+        <h3>
           {{t "general.primaryCohort"}}:
-        </h4>
+        </h3>
         {{#if @primaryCohort}}
           <button
             type="button"
@@ -103,9 +103,9 @@ export default class UserProfileCohortsManagerComponent extends Component {
         {{/if}}
       </p>
       <p data-test-secondary-cohorts>
-        <h4>
+        <h3>
           {{t "general.secondaryCohorts"}}:
-        </h4>
+        </h3>
         <ul>
           {{#each this.secondaryCohorts as |cohort|}}
             <li>
@@ -151,9 +151,9 @@ export default class UserProfileCohortsManagerComponent extends Component {
         </ul>
       </p>
       <p class="select-available-cohort">
-        <h4>
+        <h3>
           {{t "general.availableCohorts"}}
-        </h4>
+        </h3>
         <div class="schoolsfilter" data-test-schools>
           <FaIcon @icon="building-columns" @fixedWidth={{true}} />
           {{#if (gt @schools.length 1)}}

@@ -44,7 +44,7 @@ export default class NewObjectiveComponent extends Component {
   }
   <template>
     <section class="new-objective" data-test-new-objective>
-      <h4 class="title" data-test-title>{{t "general.newObjective"}}</h4>
+      <h3 class="title" data-test-title>{{t "general.newObjective"}}</h3>
       <div class="new-objective-form" data-test-description>
         <label class="form-label">
           {{t "general.description"}}:

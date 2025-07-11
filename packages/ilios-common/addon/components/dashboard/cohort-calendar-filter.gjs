@@ -9,7 +9,7 @@ import LoadingSpinner from 'ilios-common/components/loading-spinner';
     class="calendar-filter-list large-filter-list dashboard-cohort-calendar-filter"
     data-test-cohort-calendar-filter
   >
-    <h5>{{t "general.programAndCohort"}}</h5>
+    <h2>{{t "general.programAndCohort"}}</h2>
     <ul class="cohorts filters">
       {{#each (sortBy "classOfYear:desc" @cohortProxies) as |obj|}}
         <li data-test-cohort>

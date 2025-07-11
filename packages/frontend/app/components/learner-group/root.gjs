@@ -773,10 +773,10 @@ export default class LearnerGroupRootComponent extends Component {
           {{/if}}
           <section class="subgroups" data-test-subgroups>
             <div class="header">
-              <h3 class="title">
+              <h2 class="title">
                 {{t "general.subgroups"}}
                 ({{this.learnerGroups.length}})
-              </h3>
+              </h2>
               <div class="actions">
                 {{#if @canCreate}}
                   <ExpandCollapseButton

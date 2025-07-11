@@ -161,7 +161,7 @@ export default class DashboardCoursesCalendarFilterComponent extends Component {
       class="calendar-filter-list large-filter-list dashboard-courses-calendar-filter"
       data-test-courses-calendar-filter
     >
-      <h5>
+      <h2>
         {{t "general.courses"}}
         {{#if this.expandedYearWithoutTitleView}}
           {{#if this.academicYearCrossesCalendarYearBoundaries}}
@@ -172,7 +172,7 @@ export default class DashboardCoursesCalendarFilterComponent extends Component {
             ({{this.expandedYearWithoutTitleView}})
           {{/if}}
         {{/if}}
-      </h5>
+      </h2>
       <div class="filters">
         {{#if this.load.isRunning}}
           <LoadingSpinner />
@@ -188,7 +188,7 @@ export default class DashboardCoursesCalendarFilterComponent extends Component {
               }}
               data-test-year
             >
-              <h6
+              <h3
                 class="year-title"
                 data-test-year-title
                 {{inViewport
@@ -207,7 +207,7 @@ export default class DashboardCoursesCalendarFilterComponent extends Component {
                     @icon={{if (includes year.year this.expandedYears) "caret-down" "caret-right"}}
                   />
                 </button>
-              </h6>
+              </h3>
               {{#if (includes year.year this.expandedYears)}}
                 <ul class="courses">
                   {{#each (sortBy0 "title" year.courses) as |course|}}

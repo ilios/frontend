@@ -73,9 +73,9 @@ export default class ErrorDisplayComponent extends Component {
               </h3>
               {{#each @errors as |error|}}
                 <div class="error-details">
-                  <h5 class="error-main-message">
+                  <h4 class="error-main-message">
                     {{error.mainMessage}}
-                  </h5>
+                  </h4>
                   {{#if error.statusCode}}
                     <span class="error-status-code">
                       {{t "general.statusCode"}}:

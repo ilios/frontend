@@ -107,9 +107,9 @@ export default class CurriculumInventoryNewReportComponent extends Component {
     {{! template-lint-disable attribute-indentation }}
     <div class="curriculum-inventory-new-report" data-test-curriculum-inventory-new-report>
       {{#let (uniqueId) as |templateId|}}
-        <h4>
+        <h3>
           {{t "general.newCurriculumInventoryReport"}}
-        </h4>
+        </h3>
         <div class="form">
           <div class="item" data-test-name>
             <label for="name-{{templateId}}">

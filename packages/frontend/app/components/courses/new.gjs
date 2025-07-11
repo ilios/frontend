@@ -98,9 +98,9 @@ export default class CoursesNewComponent extends Component {
     {{#let (uniqueId) as |templateId|}}
       <div class="courses-new" data-test-courses-new>
         {{#unless this.load.isRunning}}
-          <h4>
+          <h3>
             {{t "general.newCourse"}}
-          </h4>
+          </h3>
           <div>
             <div class="item">
               <label for="title-{{templateId}}">

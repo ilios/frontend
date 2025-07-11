@@ -168,9 +168,9 @@ export default class UserProfileCohortsComponent extends Component {
     >
       {{#if this.isLoaded}}
         <div class="user-profile-cohorts-header">
-          <h3 class="title" data-test-title>
+          <h2 class="title" data-test-title>
             {{t "general.cohorts"}}
-          </h3>
+          </h2>
           <div class="actions">
             {{#if @isManaging}}
               <button

@@ -45,10 +45,10 @@ export default class LearnergroupBulkFinalizeUsersComponent extends Component {
     this.args.done();
   });
   <template>
-    <div data-test-learner-group-bulk-finalize-users ...attributes>
-      <h3>
+    <div class="bulk-finalize-users" data-test-learner-group-bulk-finalize-users ...attributes>
+      <h2>
         {{t "general.finalResults"}}
-      </h3>
+      </h2>
       <table data-test-final-data>
         <thead>
           <tr>

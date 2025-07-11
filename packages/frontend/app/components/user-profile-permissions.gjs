@@ -465,12 +465,12 @@ export default class UserProfilePermissionsComponent extends Component {
       data-test-user-profile-permissions
       ...attributes
     >
-      <h3 class="title" data-test-title>
+      <h2 class="title" data-test-title>
         {{t "general.permissions"}}
         {{#unless this.isLoaded}}
           <LoadingSpinner />
         {{/unless}}
-      </h3>
+      </h2>
       {{#if this.isLoaded}}
         <span>
           <FaIcon @icon="building-columns" @fixedWidth={{true}} />
@@ -501,11 +501,11 @@ export default class UserProfilePermissionsComponent extends Component {
           </select>
         </span>
 
-        <p data-test-school-permissions>
-          <h4 data-test-title>
+        <p class="section" data-test-school-permissions>
+          <h3 class="title" data-test-title>
             {{t "general.school"}}
             ({{this.bestSelectedSchool.title}})
-          </h4>
+          </h3>
           <span class="hide-on-collapse" data-test-director>
             <strong>
               {{t "general.director"}}:
@@ -522,8 +522,8 @@ export default class UserProfilePermissionsComponent extends Component {
           </span>
         </p>
 
-        <p data-test-program-permissions>
-          <h4 data-test-title>
+        <p class="section" data-test-program-permissions>
+          <h3 class="title" data-test-title>
             {{#if this.directedPrograms.length}}
               <button
                 aria-label={{if
@@ -547,11 +547,11 @@ export default class UserProfilePermissionsComponent extends Component {
               {{t "general.programs"}}
               ({{this.directedPrograms.length}})
             {{/if}}
-          </h4>
+          </h3>
           {{#if (and this.directedPrograms.length this.programExpanded)}}
-            <h5>
+            <h4>
               {{t "general.director"}}
-            </h5>
+            </h4>
             <ul data-test-directors>
               {{#each (sortBy0 "title" this.directedPrograms) as |program|}}
                 <li data-test-program>
@@ -561,8 +561,8 @@ export default class UserProfilePermissionsComponent extends Component {
             </ul>
           {{/if}}
         </p>
-        <p data-test-program-year-permissions>
-          <h4 data-test-title>
+        <p class="section" data-test-program-year-permissions>
+          <h3 class="title" data-test-title>
             {{#if this.directedProgramYears.length}}
               <button
                 aria-label={{if
@@ -586,11 +586,11 @@ export default class UserProfilePermissionsComponent extends Component {
               {{t "general.programYears"}}
               ({{this.directedProgramYears.length}})
             {{/if}}
-          </h4>
+          </h3>
           {{#if (and this.directedProgramYears.length this.programYearExpanded)}}
-            <h5>
+            <h4>
               {{t "general.director"}}
-            </h5>
+            </h4>
             <ul data-test-directors>
               {{#each (sortBy0 "program.title" "title" this.directedProgramYears) as |programYear|}}
                 <li data-test-program>
@@ -603,8 +603,8 @@ export default class UserProfilePermissionsComponent extends Component {
             </ul>
           {{/if}}
         </p>
-        <p data-test-course-permissions>
-          <h4 data-test-title>
+        <p class="section" data-test-course-permissions>
+          <h3 class="title" data-test-title>
             {{#if this.courseCount}}
               <button
                 aria-label={{if
@@ -628,11 +628,11 @@ export default class UserProfilePermissionsComponent extends Component {
               {{t "general.courses"}}
               ({{this.courseCount}})
             {{/if}}
-          </h4>
+          </h3>
           {{#if (and this.courseCount this.courseExpanded)}}
-            <h5>
+            <h4>
               {{t "general.director"}}
-            </h5>
+            </h4>
             <ul data-test-directors>
               {{#each (sortBy0 "title" this.directedCourses) as |course|}}
                 <li data-test-course>
@@ -653,9 +653,9 @@ export default class UserProfilePermissionsComponent extends Component {
                 </li>
               {{/each}}
             </ul>
-            <h5>
+            <h4>
               {{t "general.administrator"}}
-            </h5>
+            </h4>
             <ul data-test-administrators>
               {{#each (sortBy0 "title" this.administeredCourses) as |course|}}
                 <li data-test-course>
@@ -676,9 +676,9 @@ export default class UserProfilePermissionsComponent extends Component {
                 </li>
               {{/each}}
             </ul>
-            <h5>
+            <h4>
               {{t "general.instructor"}}
-            </h5>
+            </h4>
             <ul data-test-instructors>
               {{#each (sortBy0 "title" this.instructedCourses) as |course|}}
                 <li data-test-course>
@@ -699,9 +699,9 @@ export default class UserProfilePermissionsComponent extends Component {
                 </li>
               {{/each}}
             </ul>
-            <h5>
+            <h4>
               {{t "general.studentAdvisors"}}
-            </h5>
+            </h4>
             <ul data-test-student-advisors>
               {{#each this.studentAdvisedCourses as |course|}}
                 <li data-test-course>
@@ -724,8 +724,8 @@ export default class UserProfilePermissionsComponent extends Component {
             </ul>
           {{/if}}
         </p>
-        <p data-test-session-permissions>
-          <h4 data-test-title>
+        <p class="section" data-test-session-permissions>
+          <h3 class="title" data-test-title>
             {{#if this.sessionCount}}
               <button
                 aria-label={{if
@@ -749,11 +749,11 @@ export default class UserProfilePermissionsComponent extends Component {
               {{t "general.sessions"}}
               ({{this.sessionCount}})
             {{/if}}
-          </h4>
+          </h3>
           {{#if (and this.sessionCount this.sessionExpanded)}}
-            <h5>
+            <h4>
               {{t "general.administrator"}}
-            </h5>
+            </h4>
             <ul data-test-administrators>
               {{#each this.administeredSessions as |session|}}
                 {{! template-lint-disable no-bare-strings }}
@@ -777,9 +777,9 @@ export default class UserProfilePermissionsComponent extends Component {
                 </li>
               {{/each}}
             </ul>
-            <h5>
+            <h4>
               {{t "general.instructor"}}
-            </h5>
+            </h4>
             <ul data-test-instructors>
               {{#each
                 (sortBy0 "course.year:desc" "course.title" "title" this.instructedSessions)
@@ -805,9 +805,9 @@ export default class UserProfilePermissionsComponent extends Component {
                 </li>
               {{/each}}
             </ul>
-            <h5>
+            <h4>
               {{t "general.studentAdvisors"}}
-            </h5>
+            </h4>
             <ul data-test-student-advisors>
               {{#each this.studentAdvisedSessions as |session|}}
                 <li data-test-course>
