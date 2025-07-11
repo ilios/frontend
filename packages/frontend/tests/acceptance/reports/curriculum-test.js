@@ -561,6 +561,11 @@ module('Acceptance | Reports - Curriculum Reports', function (hooks) {
   });
 
   test('copy url changes if report type changes', async function (assert) {
+    //skip this test if we can't access the clipboard
+    if (!navigator.clipboard) {
+      assert.expect(0);
+      return;
+    }
     assert.expect(3);
     const course = this.server.create('course', {
       school: this.school,
