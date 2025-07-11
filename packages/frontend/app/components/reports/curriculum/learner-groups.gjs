@@ -127,7 +127,7 @@ export default class ReportsCurriculumLearnerGroupsComponent extends Component {
             link: `${origin}${path}`,
           };
 
-          if (this.args.hasMultipleSchools) {
+          if (this.hasMultipleSchools) {
             learnerGroup.schoolTitle = c.school.title;
           }
 
@@ -195,11 +195,10 @@ export default class ReportsCurriculumLearnerGroupsComponent extends Component {
   downloadReport = dropTask(async () => {
     const data = this.sortedResults.map((o) => {
       const rhett = {};
+
       if (this.hasMultipleSchools) {
         rhett[this.intl.t('general.school')] = o.schoolTitle;
       }
-      rhett[this.intl.t('general.school')] = o.schoolTitle;
-      rhett[this.intl.t('general.id')] = o.courseId;
       rhett[this.intl.t('general.course')] = o.courseTitle;
       rhett[this.intl.t('general.year')] = o.year;
       rhett[this.intl.t('general.session')] = o.sessionTitle;
