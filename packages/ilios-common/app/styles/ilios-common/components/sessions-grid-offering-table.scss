@@ -5,13 +5,12 @@
 
 .sessions-grid-offering-table {
   @include m.ilios-table-structure;
-  @include m.ilios-table-colors(c.$blueMunsell);
+  @include m.ilios-table-colors();
 
   margin: auto;
   width: 95%;
 
   thead {
-    color: c.$white;
     top: 2rem;
 
     &.locked {

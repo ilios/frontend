@@ -43,7 +43,7 @@
 
     .confirm-message {
       background-color: c.$lavenderBlush;
-      color: c.$crimson;
+      color: c.$rosewood;
       font-weight: bold;
       margin: 0;
       padding: 1rem 8rem;
@@ -55,13 +55,14 @@
       padding-top: 1.1rem;
     }
 
-    &:hover {
-      background-color: c.$lavenderBlush;
-    }
-
     .remove {
       background-color: c.$white;
-      color: c.$crimson;
+      color: c.$rosewood;
+
+      &:hover {
+        background-color: c.$crimson;
+        color: white;
+      }
     }
   }
 

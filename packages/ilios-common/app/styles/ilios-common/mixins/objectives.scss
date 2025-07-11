@@ -120,7 +120,7 @@
     &.is-managing {
       border: 2px solid c.$blueMunsell;
       .grid-item {
-        background-color: c.$culturedGrey;
+        background-color: c.$lightBlue;
         border: 0;
       }
     }
@@ -156,7 +156,7 @@
       }
 
       .confirm-message {
-        color: c.$crimson;
+        color: c.$rosewood;
         grid-column: 1 / -1;
         font-weight: bold;
         text-align: center;
@@ -165,7 +165,7 @@
 
       .remove {
         background-color: c.$white;
-        color: c.$crimson;
+        color: c.$rosewood;
 
         &:hover {
           background-color: c.$crimson;
