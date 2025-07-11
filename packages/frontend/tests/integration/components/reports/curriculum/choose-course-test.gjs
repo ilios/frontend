@@ -193,6 +193,50 @@ module('Integration | Component | reports/curriculum/choose-course', function (h
     assert.ok(component.years[0].courses[0].isSelected);
   });
 
+  test('expand and collapse', async function (assert) {
+    const school = this.server.create('school');
+    await setupAuthentication({ school });
+    this.server.create('course', {
+      school,
+      year: 1985,
+    });
+    this.server.create('course', {
+      school,
+      year: 1984,
+    });
+    this.set('schools', buildSchoolsFromData(this.server));
+    this.set('selectedCourseIds', []);
+    await render(
+      <template>
+        <ChooseCourse
+          @selectedCourseIds={{this.selectedCourseIds}}
+          @schools={{this.schools}}
+          @add={{(noop)}}
+          @remove={{(noop)}}
+          @removeAll={{(noop)}}
+        />
+      </template>,
+    );
+
+    assert.strictEqual(component.years.length, 2);
+    assert.strictEqual(component.years[0].title, '1985');
+    assert.strictEqual(component.years[1].title, '1984');
+    assert.notOk(component.years[0].isExpanded);
+    assert.ok(component.years[1].isExpanded);
+    await component.years[0].toggle();
+    assert.ok(component.years[0].isExpanded);
+    assert.ok(component.years[1].isExpanded);
+    await component.years[1].toggle();
+    assert.ok(component.years[0].isExpanded);
+    assert.notOk(component.years[1].isExpanded);
+    await component.years[0].toggle();
+    assert.notOk(component.years[0].isExpanded);
+    assert.notOk(component.years[1].isExpanded);
+    await component.years[1].toggle();
+    assert.notOk(component.years[0].isExpanded);
+    assert.ok(component.years[1].isExpanded);
+  });
+
   test('select course fires action', async function (assert) {
     assert.expect(2);
     const school = this.server.create('school');
