@@ -20,16 +20,20 @@ export default class OfferingUrlDisplayComponent extends Component {
   copy = restartableTask(async () => {
     await timeout(1500);
   });
+
+  getOfferingLink = () => {
+    return this.args.url;
+  };
   <template>
     {{#if @url}}
       <span class="offering-url-display" ...attributes>
         <a title={{@url}} href={{@url}}>{{t "general.virtualSessionLink"}}</a>
         <CopyButton
-          title={{t "general.copyLink"}}
-          @clipboardText={{@url}}
+          @getClipboardText={{this.getOfferingLink}}
           @success={{perform this.copy}}
           class={{if this.copy.isRunning "copying"}}
           id={{this.copyButtonId}}
+          title={{t "general.copyLink"}}
           data-test-copy-url
         >
           {{#if this.copy.isRunning}}

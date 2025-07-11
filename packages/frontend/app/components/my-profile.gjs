@@ -99,6 +99,10 @@ export default class MyProfileComponent extends Component {
       this.args.toggleShowInvalidateTokens();
     }
   });
+
+  getGeneratedJwtToken = () => {
+    return this.generatedJwt;
+  };
   <template>
     {{#let (uniqueId) as |templateId|}}
       <div class="my-profile" ...attributes data-test-my-profile>
@@ -182,7 +186,10 @@ export default class MyProfileComponent extends Component {
                     {{t "general.newToken"}}:
                   </label>
                   <input id="new-token-{{templateId}}" readonly value={{this.generatedJwt}} />
-                  <CopyButton @success={{this.tokenCopied}} @clipboardText={{this.generatedJwt}}>
+                  <CopyButton
+                    @getClipboardText={{this.getGeneratedJwtToken}}
+                    @success={{this.tokenCopied}}
+                  >
                     <FaIcon @icon="copy" @title={{t "general.copyNewToken"}} />
                   </CopyButton>
                   <button

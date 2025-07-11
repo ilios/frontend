@@ -86,6 +86,10 @@ export default class UserProfileIcsComponent extends Component {
     await timeout(3000);
     this.showCopySuccessMessage = false;
   });
+
+  getIcsFeedUrl = () => {
+    return this.icsFeedUrl;
+  };
   <template>
     <div
       class="user-profile-ics small-component
@@ -138,7 +142,10 @@ export default class UserProfileIcsComponent extends Component {
             {{t "general.icsAdminInstructions"}}
           </p>
           <p data-test-copy>
-            <CopyButton @clipboardText={{this.icsFeedUrl}} @success={{perform this.textCopied}}>
+            <CopyButton
+              @getClipboardText={{this.getIcsFeedUrl}}
+              @success={{perform this.textCopied}}
+            >
               <FaIcon @icon="copy" />
               {{t "general.link"}}
             </CopyButton>
