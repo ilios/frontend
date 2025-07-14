@@ -235,7 +235,7 @@ export default class LearnerGroupRootComponent extends Component {
   async generateNewLearnerGroups(num) {
     this.savedGroup = null;
     this.currentGroupsSaved = 0;
-    this.isSaving = true;
+    this.isSavingGroups = true;
     this.totalGroupsToSave = num;
     const offset = await this.args.learnerGroup.getSubgroupNumberingOffset();
     const cohort = await this.args.learnerGroup.cohort;
@@ -258,7 +258,7 @@ export default class LearnerGroupRootComponent extends Component {
         this.currentGroupsSaved = this.currentGroupsSaved + chunk.length;
         await saveSomeGroups(groupsToSave);
       } else {
-        this.isSaving = false;
+        this.isSavingGroups = false;
         this.flashMessages.success('general.savedSuccessfully', {
           capitalize: true,
         });
