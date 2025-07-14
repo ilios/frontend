@@ -32,9 +32,13 @@
       }
 
       &.inactive {
-        color: color.adjust(c.$culturedGrey, $lightness: -20%);
+        color: c.$davysGrey;
         cursor: default;
         font-style: italic;
+
+        &:hover {
+          background-color: c.$white;
+        }
       }
 
       &.results-count {

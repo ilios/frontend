@@ -97,7 +97,7 @@
   }
 
   li {
-    color: c.$blueMunsell;
+    color: c.$tealBlue;
     cursor: pointer;
 
     &.static {
@@ -106,7 +106,7 @@
     }
 
     &.disabled {
-      color: color.adjust(c.$raisinBlack, $lightness: 40%);
+      color: c.$davysGrey;
       cursor: default;
     }
   }

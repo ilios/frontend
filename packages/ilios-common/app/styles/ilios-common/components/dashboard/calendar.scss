@@ -67,7 +67,7 @@
           @include m.ilios-list-reset;
 
           li {
-            color: c.$blueMunsell;
+            color: c.$tealBlue;
             cursor: pointer;
           }
         }
@@ -100,12 +100,12 @@
     }
 
     .filters-list {
-      background: c.$culturedGrey;
       clear: both;
       margin-bottom: 1em;
       padding: 5px;
 
       .filters-header {
+        background: c.$culturedGrey;
         border-bottom: 1px solid c.$davysGrey;
         @include m.font-size("small");
       }
@@ -146,7 +146,7 @@
         .filters-clear-filters {
           @include m.ilios-button-reset;
           @include m.font-size("small");
-          color: c.$blueMunsell;
+          color: c.$tealBlue;
         }
       }
     }
