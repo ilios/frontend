@@ -53,9 +53,9 @@ export default class NewProgramYearComponent extends Component {
   });
   <template>
     <div class="new-program-year" data-test-new-program-year ...attributes>
-      <h4 class="title" data-test-title>
+      <h3 class="title" data-test-title>
         {{t "general.newProgramYear"}}
-      </h4>
+      </h3>
       <div class="form">
         <div class="startyear-select" data-test-start-year>
           {{#let (uniqueId) as |yearId|}}

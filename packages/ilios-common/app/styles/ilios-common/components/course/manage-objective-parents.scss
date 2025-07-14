@@ -13,6 +13,7 @@
       border-left: 10px solid transparent;
 
       .competency-title {
+        @include m.ilios-heading-h4;
         margin: 0.5rem 0 0 0.5rem;
         padding: 0;
 

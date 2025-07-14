@@ -50,9 +50,9 @@ export default class NewProgramComponent extends Component {
   <template>
     {{#let (uniqueId) as |templateId|}}
       <div class="new-program" data-test-program-new>
-        <h4>
+        <h3>
           {{t "general.newProgram"}}
-        </h4>
+        </h3>
         <div class="form">
           <div class="title" data-test-title>
             <label for="title-{{templateId}}">

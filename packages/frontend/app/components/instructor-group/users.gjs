@@ -49,14 +49,14 @@ export default class InstructorGroupUsersComponent extends Component {
   <template>
     <section class="instructor-group-users" data-test-instructor-group-users ...attributes>
       <div class="instructor-group-users-header" data-test-header>
-        <h3 class="title" data-test-title>
+        <h2 class="title" data-test-title>
           {{#if this.isManaging}}
             {{t "general.instructorsManageTitle"}}
           {{else}}
             {{t "general.instructors"}}
             ({{@instructorGroup.users.length}})
           {{/if}}
-        </h3>
+        </h2>
         <div class="actions">
           {{#if this.isManaging}}
             <button

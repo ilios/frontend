@@ -1,5 +1,6 @@
 @use "../ilios-common/colors" as c;
 @use "../ilios-common/mixins" as m;
+@use "../ilios-common/constants";
 
 .programyear-overview {
   @include m.ilios-overview(c.$orange);
@@ -8,12 +9,12 @@
   border-bottom: 0;
   margin: 0 1.5rem;
   padding: 0 0.8rem 1rem 0.8rem;
+
   .programyear-overview-header {
     @include m.ilios-overview-header;
 
-    h5 {
+    h4 {
       @include m.ilios-overview-title;
-      margin-top: 0.5rem;
     }
 
     .programyear-overview-actions {

@@ -114,7 +114,7 @@ export default class PrintCourseComponent extends Component {
         <h2 data-test-course-title>
           {{@course.title}}
         </h2>
-        <h4 data-test-course-year>
+        <h3 data-test-course-year>
           {{#if this.academicYearCrossesCalendarYearBoundaries}}
             {{@course.year}}
             -
@@ -122,7 +122,7 @@ export default class PrintCourseComponent extends Component {
           {{else}}
             {{@course.year}}
           {{/if}}
-        </h4>
+        </h3>
         <PublicationStatus @item={{@course}} />
       </div>
       <section class="overview block" data-test-course-overview>
