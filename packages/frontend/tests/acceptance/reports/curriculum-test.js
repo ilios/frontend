@@ -93,7 +93,7 @@ module('Acceptance | Reports - Curriculum Reports', function (hooks) {
   });
 
   test('run session objectives report, single school', async function (assert) {
-    assert.expect(8);
+    assert.expect(7);
     const course = this.server.create('course', {
       school: this.school,
       year: currentAcademicYear(),
@@ -163,24 +163,10 @@ module('Acceptance | Reports - Curriculum Reports', function (hooks) {
       '/reports/curriculum?courses=1&report=sessionObjectives&run=true',
       'current URL is correct',
     );
-
-    // Skip the copy test if we can't access the clipboard
-    if (!navigator.clipboard) {
-      return;
-    }
-    // Make sure copy button is grabbing correct report type
-    const writeText = navigator.clipboard.writeText;
-    navigator.clipboard.writeText = () => {
-      const hasCorrectReportType = currentURL().includes('report=sessionObjectives');
-      assert.ok(hasCorrectReportType, 'Correct report type was copied to clipboard');
-      return Promise.resolve();
-    };
-    await page.curriculum.header.copy.click();
-    navigator.clipboard.writeText = writeText;
   });
 
   test('run session objectives report, multiple schools', async function (assert) {
-    assert.expect(14);
+    assert.expect(13);
     const course = this.server.create('course', {
       school: this.school,
       year: currentAcademicYear(),
@@ -301,24 +287,10 @@ module('Acceptance | Reports - Curriculum Reports', function (hooks) {
       '/reports/curriculum?courses=1-4&report=sessionObjectives&run=true',
       'current URL is correct',
     );
-
-    // Skip the copy test if we can't access the clipboard
-    if (!navigator.clipboard) {
-      return;
-    }
-    // Make sure copy button is grabbing correct report type
-    const writeText = navigator.clipboard.writeText;
-    navigator.clipboard.writeText = () => {
-      const hasCorrectReportType = currentURL().includes('report=sessionObjectives');
-      assert.ok(hasCorrectReportType, 'Correct report type was copied to clipboard');
-      return Promise.resolve();
-    };
-    await page.curriculum.header.copy.click();
-    navigator.clipboard.writeText = writeText;
   });
 
   test('run learner groups report, single school', async function (assert) {
-    assert.expect(8);
+    assert.expect(7);
     const course = this.server.create('course', {
       school: this.school,
       year: currentAcademicYear(),
@@ -409,24 +381,10 @@ module('Acceptance | Reports - Curriculum Reports', function (hooks) {
       '/reports/curriculum?courses=1&report=learnerGroups&run=true',
       'current URL is correct',
     );
-
-    // Skip the copy test if we can't access the clipboard
-    if (!navigator.clipboard) {
-      return;
-    }
-    // Make sure copy button is grabbing correct report type
-    const writeText = navigator.clipboard.writeText;
-    navigator.clipboard.writeText = () => {
-      const hasCorrectReportType = currentURL().includes('report=learnerGroups');
-      assert.ok(hasCorrectReportType, 'Correct report type was copied to clipboard');
-      return Promise.resolve();
-    };
-    await page.curriculum.header.copy.click();
-    navigator.clipboard.writeText = writeText;
   });
 
   test('run learner groups report, multiple schools', async function (assert) {
-    assert.expect(14);
+    assert.expect(13);
     const course = this.server.create('course', {
       school: this.school,
       year: currentAcademicYear(),
@@ -560,20 +518,6 @@ module('Acceptance | Reports - Curriculum Reports', function (hooks) {
       '/reports/curriculum?courses=1-4&report=learnerGroups&run=true',
       'current URL is correct',
     );
-
-    // Skip the copy test if we can't access the clipboard
-    if (!navigator.clipboard) {
-      return;
-    }
-    // Make sure copy button is grabbing correct report type
-    const writeText = navigator.clipboard.writeText;
-    navigator.clipboard.writeText = () => {
-      const hasCorrectReportType = currentURL().includes('report=learnerGroups');
-      assert.ok(hasCorrectReportType, 'Correct report type was copied to clipboard');
-      return Promise.resolve();
-    };
-    await page.curriculum.header.copy.click();
-    navigator.clipboard.writeText = writeText;
   });
 
   test('copy url changes if report type changes', async function (assert) {
