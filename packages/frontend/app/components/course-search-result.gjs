@@ -48,14 +48,16 @@ export default class CourseSearchResultComponent extends Component {
           </li>
         {{/each}}
         {{#if (and (not this.showMore) (gt @course.sessions.length 3))}}
-          <button
-            class="show-more link-button"
-            type="button"
-            {{on "click" (set this "showMore" true)}}
-          >
-            <FaIcon @icon="angle-down" />
-            {{t "general.showMore"}}
-          </button>
+          <li>
+            <button
+              class="show-more link-button"
+              type="button"
+              {{on "click" (set this "showMore" true)}}
+            >
+              <FaIcon @icon="angle-down" />
+              {{t "general.showMore"}}
+            </button>
+          </li>
         {{/if}}
       </ul>
     </li>

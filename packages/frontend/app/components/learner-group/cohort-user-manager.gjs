@@ -122,8 +122,8 @@ export default class LearnerGroupCohortUserManagerComponent extends Component {
             <table>
               <thead data-test-headers>
                 <tr>
-                  <th class="text-left" colspan="1">
-                    {{#if @canUpdate}}
+                  {{#if @canUpdate}}
+                    <th class="text-left checks">
                       <input
                         type="checkbox"
                         checked={{and
@@ -137,8 +137,8 @@ export default class LearnerGroupCohortUserManagerComponent extends Component {
                         aria-label={{t "general.selectAllOrNone"}}
                         {{on "click" this.toggleUserSelectionAllOrNone}}
                       />
-                    {{/if}}
-                  </th>
+                    </th>
+                  {{/if}}
                   <SortableTh
                     @colspan={{4}}
                     @onClick={{fn this.setSortBy "fullName"}}
@@ -153,26 +153,26 @@ export default class LearnerGroupCohortUserManagerComponent extends Component {
                   <th class="text-left hide-from-small-screen" colspan="5">
                     {{t "general.email"}}
                   </th>
-                  <th class="text-left" colspan="1">
-                    {{#if @canUpdate}}
+                  {{#if @canUpdate}}
+                    <th class="text-left">
                       {{t "general.actions"}}
-                    {{/if}}
-                  </th>
+                    </th>
+                  {{/if}}
                 </tr>
               </thead>
               <tbody data-test-users>
                 {{#each (sortBy @sortBy this.filteredUsers) as |user index|}}
                   <tr class={{unless user.enabled "disabled-user-account"}}>
-                    <td class="text-left" colspan="1">
-                      {{#if @canUpdate}}
+                    {{#if @canUpdate}}
+                      <td class="text-left checks">
                         <input
                           type="checkbox"
                           checked={{includes user this.selectedUsers}}
                           aria-labelledby="username-{{index}}-{{templateId}}"
                           {{on "click" (fn this.toggleUserSelection user)}}
                         />
-                      {{/if}}
-                    </td>
+                      </td>
+                    {{/if}}
                     <td class="text-left" colspan="4">
                       {{#if @canUpdate}}
                         <button
@@ -214,24 +214,30 @@ export default class LearnerGroupCohortUserManagerComponent extends Component {
                         {{user.email}}
                       {{/if}}
                     </td>
-                    <td class="text-left" colspan="1">
-                      {{#if (includes user this.usersBeingMoved)}}
-                        <LoadingSpinner />
-                      {{else if (and @canUpdate (eq this.selectedUsers.length 0))}}
-                        <button
-                          type="button"
-                          class="inline-button"
-                          {{on "click" (perform this.addSingleUser user)}}
-                          data-test-add-user
-                        >
-                          <FaIcon
-                            @icon="plus"
-                            class="yes"
-                            @title={{t "general.moveToGroup" groupTitle=@learnerGroupTitle count=1}}
-                          />
-                        </button>
-                      {{/if}}
-                    </td>
+                    {{#if @canUpdate}}
+                      <td class="text-left">
+                        {{#if (includes user this.usersBeingMoved)}}
+                          <LoadingSpinner />
+                        {{else if (eq this.selectedUsers.length 0)}}
+                          <button
+                            type="button"
+                            class="inline-button"
+                            {{on "click" (perform this.addSingleUser user)}}
+                            data-test-add-user
+                          >
+                            <FaIcon
+                              @icon="plus"
+                              class="yes"
+                              @title={{t
+                                "general.moveToGroup"
+                                groupTitle=@learnerGroupTitle
+                                count=1
+                              }}
+                            />
+                          </button>
+                        {{/if}}
+                      </td>
+                    {{/if}}
                   </tr>
                 {{/each}}
               </tbody>

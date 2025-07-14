@@ -8,7 +8,7 @@ const definition = {
   filterBy: fillable('[data-test-filter]'),
   postRequisites: collection('[data-test-postrequisites] [data-test-postrequisite]', {
     isSelected: hasClass('active'),
-    title: text('td', { at: 1 }),
+    title: text('[data-test-title]'),
     click: clickable('td:eq(0) button'),
   }),
   close: clickable('[data-test-cancel]'),
