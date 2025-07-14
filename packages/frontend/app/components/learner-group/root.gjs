@@ -579,7 +579,11 @@ export default class LearnerGroupRootComponent extends Component {
               {{/if}}
             </span>
           </div>
-          <CourseAssociations @learnerGroup={{@learnerGroup}} />
+          <CourseAssociations
+            @learnerGroup={{@learnerGroup}}
+            @isExpanded={{@showCourseAssociations}}
+            @setIsExpanded={{@setShowCourseAssociations}}
+          />
           {{#if (and this.dataForInstructorGroupManagerLoaded this.isManagingInstructors)}}
             <InstructorManager
               @learnerGroup={{@learnerGroup}}

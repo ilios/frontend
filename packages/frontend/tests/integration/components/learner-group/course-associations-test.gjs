@@ -5,6 +5,7 @@ import { render } from '@ember/test-helpers';
 import { component } from 'frontend/tests/pages/components/learner-group/course-associations';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
 import CourseAssociations from 'frontend/components/learner-group/course-associations';
+import noop from 'ilios-common/helpers/noop';
 
 module('Integration | Component | learner-group/course-associations', function (hooks) {
   setupRenderingTest(hooks);
@@ -18,7 +19,7 @@ module('Integration | Component | learner-group/course-associations', function (
     this.learnerGroup = this.server.create('learner-group', { cohort });
   });
 
-  test('it renders with data', async function (assert) {
+  test('it renders expanded with data', async function (assert) {
     const schools = this.server.createList('school', 2);
     const coursesInSchool1 = this.server.createList('course', 2, {
       school: schools[0],
@@ -53,19 +54,15 @@ module('Integration | Component | learner-group/course-associations', function (
       .lookup('service:store')
       .findRecord('learner-group', this.learnerGroup.id);
     this.set('learnerGroup', learnerGroup);
-    await render(<template><CourseAssociations @learnerGroup={{this.learnerGroup}} /></template>);
-
-    assert.strictEqual(component.header.toggle.ariaControls, component.content.id);
-    assert.ok(component.header.toggle.isCollapsed);
-    assert.notOk(component.header.toggle.isExpanded);
-    assert.strictEqual(component.header.toggle.ariaExpanded, 'false');
-    assert.strictEqual(component.header.toggle.ariaLabel, 'Show associated courses');
-    assert.ok(component.content.isHidden);
-    assert.strictEqual(component.header.title, 'Associated Courses (3)');
-    await a11yAudit(this.element);
-    assert.ok(true, 'no a11y errors found!');
-
-    await component.header.toggle.click();
+    await render(
+      <template>
+        <CourseAssociations
+          @learnerGroup={{this.learnerGroup}}
+          @isExpanded={{true}}
+          @setIsExpanded={{(noop)}}
+        />
+      </template>,
+    );
 
     assert.strictEqual(component.header.toggle.ariaControls, component.content.id);
     assert.notOk(component.header.toggle.isCollapsed);
@@ -103,11 +100,62 @@ module('Integration | Component | learner-group/course-associations', function (
     assert.notOk(component.content.noAssociations.isPresent);
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
+  });
 
-    await component.header.toggle.click();
+  test('it renders collapsed with data', async function (assert) {
+    const schools = this.server.createList('school', 2);
+    const coursesInSchool1 = this.server.createList('course', 2, {
+      school: schools[0],
+      year: 2025,
+    });
+    const courseInSchool2 = this.server.create('course', { school: schools[1], year: 2025 });
+    const sessionInCourse1 = this.server.create('session', { course: coursesInSchool1[0] });
+    const sessionsInCourse2 = this.server.createList('session', 2, { course: coursesInSchool1[1] });
+    const sessionInCourse3 = this.server.create('session', { course: courseInSchool2 });
+    this.server.create('ilmSession', {
+      session: sessionsInCourse2[0],
+      learnerGroups: [this.learnerGroup],
+    });
+    this.server.create('ilmSession', {
+      session: sessionInCourse3,
+      learnerGroups: [this.learnerGroup],
+    });
+    this.server.createList('offering', 2, {
+      session: sessionsInCourse2[0],
+      learnerGroups: [this.learnerGroup],
+    });
+    this.server.createList('offering', 2, {
+      session: sessionsInCourse2[1],
+      learnerGroups: [this.learnerGroup],
+    });
+    this.server.createList('offering', 2, {
+      session: sessionInCourse1,
+      learnerGroups: [this.learnerGroup],
+    });
 
+    const learnerGroup = await this.owner
+      .lookup('service:store')
+      .findRecord('learner-group', this.learnerGroup.id);
+    this.set('learnerGroup', learnerGroup);
+    await render(
+      <template>
+        <CourseAssociations
+          @learnerGroup={{this.learnerGroup}}
+          @isExpanded={{false}}
+          @setIsExpanded={{(noop)}}
+        />
+      </template>,
+    );
+
+    assert.strictEqual(component.header.toggle.ariaControls, component.content.id);
     assert.ok(component.header.toggle.isCollapsed);
+    assert.notOk(component.header.toggle.isExpanded);
+    assert.strictEqual(component.header.toggle.ariaExpanded, 'false');
+    assert.strictEqual(component.header.toggle.ariaLabel, 'Show associated courses');
     assert.ok(component.content.isHidden);
+    assert.strictEqual(component.header.title, 'Associated Courses (3)');
+    await a11yAudit(this.element);
+    assert.ok(true, 'no a11y errors found!');
   });
 
   test('it renders without data', async function (assert) {
@@ -134,9 +182,15 @@ module('Integration | Component | learner-group/course-associations', function (
       .lookup('service:store')
       .findRecord('learner-group', this.learnerGroup.id);
     this.set('learnerGroup', learnerGroup);
-    await render(<template><CourseAssociations @learnerGroup={{this.learnerGroup}} /></template>);
-
-    await component.header.toggle.click();
+    await render(
+      <template>
+        <CourseAssociations
+          @learnerGroup={{this.learnerGroup}}
+          @isExpanded={{true}}
+          @setIsExpanded={{(noop)}}
+        />
+      </template>,
+    );
 
     assert.strictEqual(component.content.associations.length, 2);
     assert.ok(component.content.headers.school.isSortedAscending);
@@ -205,11 +259,69 @@ module('Integration | Component | learner-group/course-associations', function (
         },
       };
     });
-    await render(<template><CourseAssociations @learnerGroup={{this.learnerGroup}} /></template>);
-
-    await component.header.toggle.click();
+    await render(
+      <template>
+        <CourseAssociations
+          @learnerGroup={{this.learnerGroup}}
+          @isExpanded={{true}}
+          @setIsExpanded={{(noop)}}
+        />
+      </template>,
+    );
 
     assert.strictEqual(component.content.associations.length, 1);
     assert.strictEqual(component.content.associations[0].course.text, 'course 0 (2025 - 2026)');
+  });
+
+  test('collapse action fires', async function (assert) {
+    assert.expect(1);
+    const school = this.server.create('school');
+    const course = this.server.create('course', { school, year: 2025 });
+    const session = this.server.create('session', { course });
+    this.server.create('offering', { session, learnerGroups: [this.learnerGroup] });
+    const learnerGroup = await this.owner
+      .lookup('service:store')
+      .findRecord('learner-group', this.learnerGroup.id);
+    this.set('learnerGroup', learnerGroup);
+    this.set('setIsExpanded', (value) => {
+      assert.notOk(value);
+    });
+    await render(
+      <template>
+        <CourseAssociations
+          @learnerGroup={{this.learnerGroup}}
+          @isExpanded={{true}}
+          @setIsExpanded={{this.setIsExpanded}}
+        />
+      </template>,
+    );
+
+    await component.header.toggle.click();
+  });
+
+  test('expand action fires', async function (assert) {
+    assert.expect(1);
+    const school = this.server.create('school');
+    const course = this.server.create('course', { school, year: 2025 });
+    const session = this.server.create('session', { course });
+    this.server.create('offering', { session, learnerGroups: [this.learnerGroup] });
+    const learnerGroup = await this.owner
+      .lookup('service:store')
+      .findRecord('learner-group', this.learnerGroup.id);
+    this.set('learnerGroup', learnerGroup);
+    this.set('setIsExpanded', (value) => {
+      assert.ok(value);
+    });
+    await render(
+      <template>
+        <CourseAssociations
+          @learnerGroup={{this.learnerGroup}}
+          @isExpanded={{false}}
+          @setIsExpanded={{this.setIsExpanded}}
+        />
+      </template>,
+    );
+
+    await component.header.toggle.click();
   });
 });

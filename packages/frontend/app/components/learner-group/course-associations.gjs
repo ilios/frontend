@@ -8,7 +8,6 @@ import { service } from '@ember/service';
 import { TrackedAsyncData } from 'ember-async-data';
 import t from 'ember-intl/helpers/t';
 import add from 'ember-math-helpers/helpers/add';
-import set from 'ember-set-helper/helpers/set';
 import eq from 'ember-truth-helpers/helpers/eq';
 import or from 'ember-truth-helpers/helpers/or';
 import FaIcon from 'ilios-common/components/fa-icon';
@@ -20,7 +19,6 @@ export default class LearnerGroupCourseAssociationsComponent extends Component {
   @service iliosConfig;
   @service intl;
   @tracked sortBy = 'school';
-  @tracked isExpanded = false;
 
   crossesBoundaryConfig = new TrackedAsyncData(
     this.iliosConfig.itemFromConfig('academicYearCrossesCalendarYearBoundaries'),
@@ -127,7 +125,7 @@ export default class LearnerGroupCourseAssociationsComponent extends Component {
           <div class="header" data-test-header>
             <h3 class="title" data-test-title>
               {{#if this.hasAssociations}}
-                {{#if this.isExpanded}}
+                {{#if @isExpanded}}
                   <button
                     class="title link-button"
                     type="button"
@@ -135,7 +133,7 @@ export default class LearnerGroupCourseAssociationsComponent extends Component {
                     aria-controls="content-{{templateId}}"
                     aria-label={{t "general.hideAssociatedCourses"}}
                     data-test-toggle
-                    {{on "click" (set this "isExpanded" false)}}
+                    {{on "click" (fn @setIsExpanded false)}}
                   >
                     {{t "general.associatedCourses"}}
                     ({{this.associations.length}})
@@ -149,7 +147,7 @@ export default class LearnerGroupCourseAssociationsComponent extends Component {
                     aria-controls="content-{{templateId}}"
                     aria-label={{t "general.showAssociatedCourses"}}
                     data-test-toggle
-                    {{on "click" (set this "isExpanded" true)}}
+                    {{on "click" (fn @setIsExpanded true)}}
                   >
                     {{t "general.associatedCourses"}}
                     ({{this.associations.length}})
@@ -165,9 +163,9 @@ export default class LearnerGroupCourseAssociationsComponent extends Component {
           {{#if this.hasAssociations}}
             <div
               id="content-{{templateId}}"
-              class="content{{if this.isExpanded '' ' hidden'}}"
+              class="content{{if @isExpanded '' ' hidden'}}"
               data-test-content
-              hidden={{this.isExpanded}}
+              hidden={{@isExpanded}}
             >
               <table data-test-associations>
                 <thead>
