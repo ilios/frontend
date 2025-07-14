@@ -84,9 +84,9 @@ export default class CourseHeaderComponent extends Component {
           </h2>
         {{/if}}
         {{#unless this.isEditingTitle}}
-          <h3 class="academic-year" data-test-academic-year>
+          <h2 class="academic-year" data-test-academic-year>
             {{@academicYear}}
-          </h3>
+          </h2>
         {{/unless}}
       </span>
       <div class="course-publication">
