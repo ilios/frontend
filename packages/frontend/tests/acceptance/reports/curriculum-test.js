@@ -282,7 +282,6 @@ module('Acceptance | Reports - Curriculum Reports', function (hooks) {
       '0',
       'Result 2 objective count is correct',
     );
-
     assert.strictEqual(
       currentURL(),
       '/reports/curriculum?courses=1-4&report=sessionObjectives&run=true',
@@ -519,5 +518,77 @@ module('Acceptance | Reports - Curriculum Reports', function (hooks) {
       '/reports/curriculum?courses=1-4&report=learnerGroups&run=true',
       'current URL is correct',
     );
+  });
+
+  test('copy url changes if report type changes', async function (assert) {
+    // Skip the copy test if we can't access the clipboard
+    if (!navigator.clipboard) {
+      assert.expect(0);
+      return;
+    }
+    assert.expect(3);
+    const course = this.server.create('course', {
+      school: this.school,
+      year: currentAcademicYear(),
+    });
+    const sessionType = this.server.create('sessionType');
+    const session = this.server.create('session', { course, sessionType });
+    this.server.create('sessionObjective', { session });
+    const offering = this.server.create('offering', { session });
+    const offeringInstructorGroup = this.server.create('instructorGroup', {
+      offerings: [offering],
+    });
+    this.server.create('user', { instructorGroups: [offeringInstructorGroup] });
+    this.server.create('user', { instructedOfferings: [offering] });
+
+    const ilmSession = this.server.create('ilmSession', { session });
+    const ilmSessionInstructorGroup = this.server.create('instructorGroup', {
+      ilmSessions: [ilmSession],
+    });
+    this.server.create('user', { instructorGroups: [ilmSessionInstructorGroup] });
+    this.server.create('user', { instructorIlmSessions: [ilmSession] });
+    this.server.post('api/graphql', (schema) => {
+      //use all the courses, getting the id filter from graphQL is a bit tricky
+      const courseIds = schema.db.courses.map((c) => c.id);
+      const rawCourses = courseIds.map((id) => graphQL.fetchCourse(schema.db, id));
+      const courses = rawCourses.map((course) => {
+        course.sessions.forEach((session) => {
+          session.sessionObjectives = schema.db.sessionObjectives
+            .where({ sessionId: session.id })
+            .map(({ id, title }) => ({ id, title }));
+        });
+
+        return course;
+      });
+      return { data: { courses } };
+    });
+    await page.visitCurriculumReports();
+    await page.curriculum.chooseCourse.years[0].toggleAll.click();
+
+    // Make sure copy button is grabbing correct report type
+    const writeText = navigator.clipboard.writeText;
+    navigator.clipboard.writeText = () => {
+      const hasCorrectReportType = currentURL().includes('report=sessionObjectives');
+      assert.ok(hasCorrectReportType, 'Correct report type was copied to clipboard');
+      return Promise.resolve();
+    };
+    await page.curriculum.header.reportSelector.set('sessionObjectives');
+    await page.curriculum.header.copy.click();
+    navigator.clipboard.writeText = () => {
+      const hasCorrectReportType = currentURL().includes('report=learnerGroups');
+      assert.ok(hasCorrectReportType, 'Correct report type was copied to clipboard');
+      return Promise.resolve();
+    };
+    await page.curriculum.header.reportSelector.set('learnerGroups');
+    await page.curriculum.header.copy.click();
+    navigator.clipboard.writeText = () => {
+      const hasCorrectReportType = currentURL().includes('report=sessionObjectives');
+      assert.ok(hasCorrectReportType, 'Correct report type was copied to clipboard');
+      return Promise.resolve();
+    };
+    await page.curriculum.header.reportSelector.set('sessionObjectives');
+    await page.curriculum.header.copy.click();
+
+    navigator.clipboard.writeText = writeText;
   });
 });

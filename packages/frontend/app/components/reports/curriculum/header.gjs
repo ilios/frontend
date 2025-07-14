@@ -34,10 +34,6 @@ export default class ReportsCurriculumHeader extends Component {
     return document.getElementById(this.runButtonId);
   }
 
-  get reportUrl() {
-    return window.location.href;
-  }
-
   textCopied = restartableTask(async () => {
     this.flashMessages.success('general.copiedCurriculumReportUrl');
   });
@@ -109,6 +105,9 @@ export default class ReportsCurriculumHeader extends Component {
   changeSelectedReport = ({ target }) => {
     this.args.changeSelectedReport(target.value);
   };
+  getReportUrl = () => {
+    return window.location.href;
+  };
   <template>
     <div class="reports-curriculum-header" data-test-reports-curriculum-header>
       <div class="run">
@@ -141,11 +140,10 @@ export default class ReportsCurriculumHeader extends Component {
       <div class="input-buttons">
         {{#if @countSelectedCourses}}
           <CopyButton
-            @clipboardText={{this.reportUrl}}
+            @getClipboardText={{this.getReportUrl}}
             @success={{perform this.textCopied}}
             aria-label={{t "general.copyCurriculumReportUrl"}}
             id={{this.copyButtonId}}
-            data-test-copy-url
             {{mouseHoverToggle (set this "showCopyTooltip")}}
           >
             <FaIcon @icon="copy" />

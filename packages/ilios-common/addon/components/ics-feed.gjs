@@ -36,10 +36,14 @@ export default class IcsFeedComponent extends Component {
       },
     ],
   };
+
+  getIcsFeedUrl = () => {
+    return this.args.url;
+  };
   <template>
     <div class="ilios-calendar-ics-feed" data-test-ics-feed ...attributes>
       <CopyButton
-        @clipboardText={{@url}}
+        @getClipboardText={{this.getIcsFeedUrl}}
         @success={{perform this.textCopied}}
         aria-label={{if @instructions @instructions (t "general.copyIcsFeedUrl")}}
         class="link-button highlight"
