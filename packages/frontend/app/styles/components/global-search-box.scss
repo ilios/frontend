@@ -90,7 +90,7 @@
 
     &.active,
     &:hover {
-      background-color: color.adjust(c.$blueMunsell, $lightness: 50%);
+      background-color: hsl(from c.$blueMunsell h s calc(l + 50));
     }
   }
 }

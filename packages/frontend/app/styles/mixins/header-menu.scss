@@ -3,7 +3,7 @@
 
 @use "sass:color";
 
-$header-menu-background-color: color.adjust(c.$slightWhite, $lightness: -3%);
+$header-menu-background-color: hsl(from c.$slightWhite h s calc(l - 3));
 
 @mixin header-menu() {
   margin: 0 0 0 0.5rem;
@@ -68,7 +68,7 @@ $header-menu-background-color: color.adjust(c.$slightWhite, $lightness: -3%);
 
   &[aria-checked="true"],
   &.active {
-    background-color: color.adjust(c.$fernGreen, $lightness: 25%);
+    background-color: hsl(from c.$fernGreen h s calc(l + 25));
   }
 
   &:hover,
@@ -76,7 +76,7 @@ $header-menu-background-color: color.adjust(c.$slightWhite, $lightness: -3%);
     background-color: c.$white;
     &[aria-checked="true"],
     &.active {
-      background-color: color.adjust(c.$fernGreen, $lightness: 15%);
+      background-color: hsl(from c.$fernGreen h s calc(l + 15));
     }
   }
 }

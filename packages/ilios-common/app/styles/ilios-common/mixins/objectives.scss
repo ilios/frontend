@@ -114,7 +114,7 @@
 
     &.highlight-ok {
       transition: none;
-      background-color: color.adjust(c.$fernGreen, $lightness: 60%);
+      background-color: hsl(from c.$fernGreen h s calc(l + 60));
     }
 
     &.is-managing {

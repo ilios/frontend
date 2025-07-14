@@ -52,7 +52,7 @@
   }
 
   .has-saved {
-    background-color: color.adjust(c.$fernGreen, $lightness: 30%);
+    background-color: hsl(from c.$fernGreen h s calc(l + 30));
     transition: background-color 0.5s ease-out;
   }
 

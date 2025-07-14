@@ -83,7 +83,7 @@
   }
 
   th {
-    border-bottom: 1px solid color.adjust(c.$culturedGrey, $lightness: -15%);
+    border-bottom: 1px solid hsl(from c.$culturedGrey h s calc(l - 15));
     background-color: $backgroundColor;
   }
 }
@@ -126,6 +126,6 @@
 
 @mixin ilios-zebra-table() {
   tbody tr:nth-child(even) {
-    background-color: color.adjust(c.$culturedGrey, $lightness: 4%);
+    background-color: hsl(from c.$culturedGrey h s calc(l + 4));
   }
 }

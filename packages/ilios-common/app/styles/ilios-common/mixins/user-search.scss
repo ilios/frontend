@@ -29,7 +29,7 @@
     width: 100%;
 
     &.inactive {
-      color: color.adjust(c.$culturedGrey, $lightness: -20%);
+      color: hsl(from c.$culturedGrey h s calc(l - 20));
       font-style: italic;
     }
 
@@ -40,7 +40,7 @@
     a,
     &.clickable {
       &:hover {
-        background-color: color.adjust(c.$blueMunsell, $lightness: 50%);
+        background-color: hsl(from c.$blueMunsell h s calc(l + 50));
       }
     }
 

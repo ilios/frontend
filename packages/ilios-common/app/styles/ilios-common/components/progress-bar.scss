@@ -8,12 +8,12 @@
   $progress-border: 1px solid $progress-border-color;
   $progress-meter-border-color: c.$orange;
   $progress-meter-border: 1px solid
-    color.adjust($progress-meter-border-color, $lightness: -15%);
+    hsl(from $progress-meter-border-color h s calc(l - 15));
   $progress-meter-color: $progress-meter-border-color;
-  $progress-background: color.adjust(c.$slightWhite, $lightness: -5%);
+  $progress-background: hsl(from c.$slightWhite h s calc(l - 5));
   $progress-animation-duration: 0.7s;
   $progress-color: c.$white;
-  $box-shadow-color: color.adjust($progress-background, $lightness: -50%);
+  $box-shadow-color: hsl(from $progress-background h s calc(l - 50));
 
   background-color: $progress-background;
   border: $progress-border;

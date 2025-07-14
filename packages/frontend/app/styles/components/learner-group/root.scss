@@ -91,7 +91,7 @@
       .confirm-copy,
       .confirm-copy:nth-child(even),
       .confirm-copy:nth-child(odd) {
-        background-color: color.adjust(c.$blueMunsell, $lightness: 60%);
+        background-color: hsl(from c.$blueMunsell h s calc(l + 60));
         border: 2px solid c.$blueMunsell;
 
         &.actions-row {

@@ -49,11 +49,11 @@
       }
 
       &.matched {
-        background-color: color.adjust(c.$fernGreen, $lightness: 15%);
+        background-color: hsl(from c.$fernGreen h s calc(l + 15));
       }
 
       &.not-matched {
-        background-color: color.adjust(c.$gold, $lightness: 15%);
+        background-color: hsl(from c.$gold h s calc(l + 15));
       }
     }
   }

@@ -55,10 +55,10 @@
   .sessions-grid-offering {
     transition: background-color 0.5s ease-out;
     &.even {
-      background-color: color.adjust(c.$lightBlue, $lightness: -10%);
+      background-color: hsl(from c.$lightBlue h s calc(l - 10));
     }
     &.was-updated {
-      background-color: color.adjust(c.$fernGreen, $lightness: 30%);
+      background-color: hsl(from c.$fernGreen h s calc(l + 30));
     }
     .room {
       overflow-wrap: anywhere;

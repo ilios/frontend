@@ -33,7 +33,7 @@
       }
 
       &.synced-from-directory input {
-        background-color: color.adjust(c.$fernGreen, $lightness: 40%);
+        background-color: hsl(from c.$fernGreen h s calc(l + 40));
         transition: background-color 500ms ease;
       }
     }

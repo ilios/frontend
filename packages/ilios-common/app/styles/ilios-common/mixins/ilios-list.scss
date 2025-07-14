@@ -38,7 +38,7 @@
 @mixin ilios-zebra-list() {
   li {
     &:nth-child(even) {
-      background-color: color.adjust(c.$culturedGrey, $lightness: 4%);
+      background-color: hsl(from c.$culturedGrey h s calc(l + 4));
     }
   }
 }
