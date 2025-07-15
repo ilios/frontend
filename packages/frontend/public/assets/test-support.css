@@ -1,0 +1,66 @@
+:root {
+  --color-gray-100: #f4f6f8;
+  --color-gray-700: #42474f;
+  --color-gray-900: #1c1e24;
+  --color-red: #e84646;
+  --color-green: #41c351;
+  --color-success: #d9f9e3;
+  --color-danger: #ffd8e1;
+
+  --spacing-2: 1rem;
+}
+
+#qunit {
+  margin: 0;
+  padding: 0 !important;
+}
+
+#qunit-header {
+  border-radius: 0 !important;
+}
+
+#qunit-tests {
+  .qunit-assert-list {
+    border-radius: 0 !important;
+    padding: 0 !important;
+  }
+
+  .pass {
+    color: var(--color-gray-900) !important;
+
+    .test-name {
+      color: var(--color-gray-700) !important;
+    }
+  }
+
+  li {
+    &.fail {
+      background-color: var(--color-danger);
+    }
+
+    &.pass {
+      background-color: var(--color-success);
+    }
+
+    li {
+      &.fail {
+        border-left: 10px solid var(--color-red) !important;
+        color: #710909;
+      }
+
+      &.pass {
+        border-left: 10px solid var(--color-green) !important;
+        color: var(--color-text-success);
+      }
+    }
+  }
+
+  .test-expected pre,
+  .test-actual pre,
+  .test-diff pre {
+    background: var(--color-gray-100) !important;
+    padding: var(--spacing-2) var(--spacing-2);
+    border-radius: 6px;
+    color: var(--color-gray-900);
+  }
+}
