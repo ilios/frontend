@@ -4,7 +4,7 @@
   button {
     background-color: c.$culturedGrey;
     border: 1px outset c.$davysGrey;
-    color: c.$raisinBlack;
+    color: var(--raisin-black);
 
     &.active {
       background-color: c.$tealBlue;

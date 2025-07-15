@@ -46,7 +46,7 @@
   thead,
   th {
     background-color: c.$culturedGrey;
-    color: c.$raisinBlack;
+    color: var(--raisin-black);
   }
 
   td:first-of-type {

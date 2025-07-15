@@ -61,7 +61,7 @@
       background: var(--slight-white);
       border: 1px solid c.$davysGrey;
       border-radius: 0.125rem;
-      color: c.$raisinBlack;
+      color: var(--raisin-black);
       display: inline-block;
       @include m.font-size("smallest");
       margin-right: 0.375rem;

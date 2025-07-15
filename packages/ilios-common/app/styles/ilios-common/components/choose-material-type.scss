@@ -11,7 +11,7 @@
     background-color: transparent;
     border: 1px solid var(--slight-white);
     border-radius: 0.2rem;
-    color: c.$raisinBlack;
+    color: var(--raisin-black);
     font-weight: normal;
     padding: 0.25rem 0.5rem;
   }
@@ -32,7 +32,7 @@
     button {
       border: 0;
       background-color: var(--slight-white);
-      color: c.$raisinBlack;
+      color: var(--raisin-black);
       display: block;
       outline: none;
       padding: 0.5rem 1rem;

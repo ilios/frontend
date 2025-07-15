@@ -101,7 +101,7 @@
     cursor: pointer;
 
     &.static {
-      color: c.$raisinBlack;
+      color: var(--raisin-black);
       cursor: default;
     }
 
@@ -152,7 +152,7 @@
   @include ilios-list-reset;
 
   li {
-    color: c.$raisinBlack;
+    color: var(--raisin-black);
     margin-left: 20px;
 
     &.branch {

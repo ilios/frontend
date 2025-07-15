@@ -16,7 +16,7 @@
     background-color: hsl(from var(--slight-white) h s calc(l - 3));
     border: 1px solid m.$header-menu-background-color;
     border-radius: 0.2rem;
-    color: c.$raisinBlack;
+    color: var(--raisin-black);
     display: flex;
     @include cm.font-size("smallest");
     font-weight: 100;

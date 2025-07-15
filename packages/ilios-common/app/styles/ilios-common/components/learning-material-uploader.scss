@@ -6,7 +6,7 @@
     background: var(--slight-white);
     border: 1px solid c.$black;
     border-radius: 3px;
-    color: c.$raisinBlack;
+    color: var(--raisin-black);
     cursor: pointer;
     display: inline-block;
     @include m.font-size("base");

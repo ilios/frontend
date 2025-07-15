@@ -64,7 +64,7 @@
     border: 1px solid c.$tealBlue;
     border-radius: 0 0 3px 3px;
     box-shadow: 0 2px 2px hsl(from c.$black h s l / 0.8);
-    color: c.$raisinBlack;
+    color: var(--raisin-black);
     cursor: pointer;
     max-height: 23rem;
     max-width: 40rem;

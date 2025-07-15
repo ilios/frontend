@@ -8,7 +8,7 @@ $form-input-text-types: 'input[type="text"], input[type="password"], input[type=
   background: c.$white;
   border: 1px solid c.$culturedGrey;
   border-radius: 3px;
-  color: c.$raisinBlack;
+  color: var(--raisin-black);
   cursor: pointer;
   font-style: italic;
   min-width: 220px;

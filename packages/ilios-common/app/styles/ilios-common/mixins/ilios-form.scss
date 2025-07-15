@@ -79,7 +79,7 @@
     &.done {
       background-color: c.$white;
       border-color: c.$fernGreen;
-      color: c.$raisinBlack;
+      color: var(--raisin-black);
 
       &:enabled {
         &:hover,
