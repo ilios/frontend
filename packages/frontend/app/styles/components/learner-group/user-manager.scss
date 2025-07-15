@@ -2,7 +2,7 @@
 @use "../../ilios-common/mixins" as m;
 
 .learner-group-user-manager {
-  @include m.detail-container(c.$tealBlue);
+  @include m.detail-container(var(--teal-blue));
   border-bottom: 0;
   display: grid;
   grid-template-columns: 3fr 1fr;

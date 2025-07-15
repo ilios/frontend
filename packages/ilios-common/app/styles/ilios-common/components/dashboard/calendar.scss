@@ -67,7 +67,7 @@
           @include m.ilios-list-reset;
 
           li {
-            color: c.$tealBlue;
+            color: var(--teal-blue);
             cursor: pointer;
           }
         }
@@ -146,7 +146,7 @@
         .filters-clear-filters {
           @include m.ilios-button-reset;
           @include m.font-size("small");
-          color: c.$tealBlue;
+          color: var(--teal-blue);
         }
       }
     }

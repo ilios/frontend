@@ -3,7 +3,7 @@
 
 .sessions-grid-header {
   @include m.sessions-grid;
-  background-color: c.$tealBlue;
+  background-color: var(--teal-blue);
   border-bottom: 1px solid c.$davysGrey;
   color: var(--white);
   @include m.font-size("small");

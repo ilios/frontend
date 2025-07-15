@@ -14,7 +14,7 @@
 
     button {
       @include m.ilios-button-reset;
-      background-color: c.$tealBlue;
+      background-color: var(--teal-blue);
       border-bottom-left-radius: 5px;
       border-bottom-right-radius: 5px;
       box-shadow:

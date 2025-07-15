@@ -10,7 +10,7 @@
 
   input[type="search"] {
     background-color: var(--white);
-    border: 1px solid c.$tealBlue;
+    border: 1px solid var(--teal-blue);
     border-radius: 3px;
     height: 80%;
     padding: 0 0.5rem 0 1.5rem;
@@ -61,7 +61,7 @@
   .autocomplete {
     @include m.ilios-list-reset;
     background: var(--white);
-    border: 1px solid c.$tealBlue;
+    border: 1px solid var(--teal-blue);
     border-radius: 0 0 3px 3px;
     box-shadow: 0 2px 2px hsl(from var(--black) h s l / 0.8);
     color: var(--raisin-black);

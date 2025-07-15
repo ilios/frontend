@@ -42,14 +42,14 @@
 
       &:hover,
       &:focus {
-        background-color: c.$tealBlue;
+        background-color: var(--teal-blue);
         color: var(--white);
       }
     }
   }
 
   .toggle {
-    background-color: c.$tealBlue;
+    background-color: var(--teal-blue);
     color: var(--white);
 
     &[aria-expanded="true"] {

@@ -25,7 +25,7 @@
   .deselect-all {
     @include cm.ilios-button-reset;
     @include cm.font-size("small");
-    color: c.$tealBlue;
+    color: var(--teal-blue);
   }
 
   .select-all {

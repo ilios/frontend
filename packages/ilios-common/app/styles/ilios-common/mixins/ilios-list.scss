@@ -97,7 +97,7 @@
   }
 
   li {
-    color: c.$tealBlue;
+    color: var(--teal-blue);
     cursor: pointer;
 
     &.static {

@@ -73,7 +73,7 @@
         }
         button {
           &.expand-text-button {
-            background: c.$tealBlue;
+            background: var(--teal-blue);
             border-radius: 3px;
             color: var(--white);
             padding: 0.3em 1em;

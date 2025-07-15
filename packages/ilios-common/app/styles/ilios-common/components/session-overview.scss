@@ -4,7 +4,7 @@
 
 .session-header {
   border-top: 1px solid c.$culturedGrey;
-  border-bottom: 1px solid c.$tealBlue;
+  border-bottom: 1px solid var(--teal-blue);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -32,7 +32,7 @@
 }
 
 .session-overview {
-  @include m.ilios-overview(c.$tealBlue);
+  @include m.ilios-overview(var(--teal-blue));
   border-bottom: 1px dotted var(--orange);
 
   .last-update {

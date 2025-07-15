@@ -11,7 +11,7 @@
 
   label {
     background-color: var(--white);
-    color: c.$tealBlue;
+    color: var(--teal-blue);
     border: 1px solid rgba(var(--black), 0.2);
     display: inline-block;
     @include font-size.font-size("small");
@@ -35,7 +35,7 @@
   }
 
   input:checked + label {
-    background-color: c.$tealBlue;
+    background-color: var(--teal-blue);
     color: var(--white);
   }
 }

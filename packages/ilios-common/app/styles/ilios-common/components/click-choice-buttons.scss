@@ -7,8 +7,8 @@
     color: var(--raisin-black);
 
     &.active {
-      background-color: c.$tealBlue;
-      border: 1px inset c.$tealBlue;
+      background-color: var(--teal-blue);
+      border: 1px inset var(--teal-blue);
       color: var(--white);
     }
   }
