@@ -2,7 +2,7 @@
 @use "../ilios-common/mixins" as m;
 
 .update-notification {
-  background-color: c.$pearl;
+  background-color: var(--pearl);
   border: 1px solid var(--slight-white);
   left: 0;
   padding: 15px;
