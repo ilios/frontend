@@ -11,6 +11,10 @@
 
     .block {
       @include m.ilios-overview-block;
+
+      &.defaulturl {
+        padding-bottom: 0.5rem;
+      }
     }
 
     .learner-group-overview-actions {
