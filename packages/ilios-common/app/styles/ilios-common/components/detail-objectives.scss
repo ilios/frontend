@@ -2,7 +2,7 @@
 @use "../mixins" as m;
 
 .detail-objectives {
-  @include m.detail-container(c.$orange);
+  @include m.detail-container(var(--orange));
 
   .detail-objectives-header {
     @include m.detail-container-header;
@@ -22,7 +22,7 @@
   }
 
   .new-objective {
-    border: 1px solid c.$culturedGrey;
+    border: 1px solid var(--cultured-grey);
     margin: 0.5rem;
     padding: 1rem;
 

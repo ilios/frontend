@@ -3,8 +3,8 @@
 @use "../mixins" as m;
 
 .session-header {
-  border-top: 1px solid c.$culturedGrey;
-  border-bottom: 1px solid c.$tealBlue;
+  border-top: 1px solid var(--cultured-grey);
+  border-bottom: 1px solid var(--teal-blue);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -32,11 +32,11 @@
 }
 
 .session-overview {
-  @include m.ilios-overview(c.$tealBlue);
-  border-bottom: 1px dotted c.$orange;
+  @include m.ilios-overview(var(--teal-blue));
+  border-bottom: 1px dotted var(--orange);
 
   .last-update {
-    color: c.$davysGrey;
+    color: var(--davys-grey);
     margin-right: 1rem;
     text-align: right;
   }
@@ -100,7 +100,11 @@
     margin-top: 1em;
 
     .fade-text-control {
-      background-image: linear-gradient(to bottom, transparent, c.$lightBlue);
+      background-image: linear-gradient(
+        to bottom,
+        transparent,
+        var(--light-blue)
+      );
     }
   }
 
@@ -109,7 +113,7 @@
   }
 
   .fa-copy {
-    color: c.$fernGreen;
+    color: var(--fern-green);
   }
 
   .post-requisite-edit {

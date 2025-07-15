@@ -3,7 +3,7 @@
 
 .curriculum-inventory-sequence-block-overview {
   .curriculum-inventory-sequence-block-overview-wrapper {
-    @include m.ilios-overview(c.$orange);
+    @include m.ilios-overview(var(--orange));
     padding: 0.5rem;
 
     .block {

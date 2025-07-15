@@ -2,7 +2,7 @@
 @use "../../ilios-common/mixins" as m;
 
 .program-year-competencies {
-  @include m.detail-container(c.$orange);
+  @include m.detail-container(var(--orange));
 
   .header {
     @include m.detail-container-header;
@@ -23,7 +23,7 @@
   .competency-list,
   .managed-competency-list {
     @include m.ilios-list-tree;
-    border: 1px solid c.$culturedGrey;
+    border: 1px solid var(--cultured-grey);
     border-radius: 3px;
     margin: 2rem;
 

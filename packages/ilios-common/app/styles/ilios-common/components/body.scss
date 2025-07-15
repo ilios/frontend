@@ -12,8 +12,8 @@ html {
 }
 
 body {
-  background-color: c.$slightWhite;
-  color: c.$raisinBlack;
+  background-color: var(--slight-white);
+  color: var(--raisin-black);
   font-family: Nunito, serif;
   margin: 0;
   padding: 0;
@@ -53,7 +53,7 @@ h6 {
 }
 
 select {
-  color: c.$raisinBlack;
+  color: var(--raisin-black);
   font-family: "Nunito Sans", sans-serif;
 }
 
@@ -74,22 +74,22 @@ p {
 
 .add,
 .yes {
-  color: c.$fernGreen;
+  color: var(--fern-green);
 }
 
 .remove,
 .no {
-  color: c.$rosewood;
+  color: var(--rosewood);
 }
 
 .error,
 .is-error {
-  color: c.$rosewood;
+  color: var(--rosewood);
 }
 
 .warning,
 .is-warning {
-  color: c.$gold;
+  color: var(--gold);
 }
 
 .clickable,
@@ -99,19 +99,19 @@ p {
 
 .editable,
 .is-editable {
-  color: c.$tealBlue;
+  color: var(--teal-blue);
 }
 
 .published {
-  color: c.$fernGreen;
+  color: var(--fern-green);
 }
 
 .notpublished {
-  color: c.$davysGrey;
+  color: var(--davys-grey);
 }
 
 .scheduled {
-  color: c.$sepia;
+  color: var(--sepia);
 }
 
 .backtolink {

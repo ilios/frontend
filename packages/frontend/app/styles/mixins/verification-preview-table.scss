@@ -5,7 +5,7 @@
 @mixin verification-preview-table() {
   td,
   th {
-    border: 1px solid color.adjust(c.$culturedGrey, $lightness: -15%);
+    border: 1px solid hsl(from var(--cultured-grey) h s calc(l - 15));
   }
 
   th {

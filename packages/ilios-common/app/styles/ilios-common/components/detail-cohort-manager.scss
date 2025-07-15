@@ -12,8 +12,8 @@
 
   .selectable-cohorts {
     @include m.ilios-selectable-list;
-    background-color: c.$white;
-    border: 1px solid c.$blueMunsell;
+    background-color: var(--white);
+    border: 1px solid var(--blue-munsell);
     height: 10rem;
     margin-bottom: 1rem;
     overflow-y: scroll;

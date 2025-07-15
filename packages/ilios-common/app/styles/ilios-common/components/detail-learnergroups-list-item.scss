@@ -4,6 +4,6 @@
 
 .detail-learnergroups-list-item {
   .muted {
-    color: color.adjust(c.$raisinBlack, $lightness: 30%);
+    color: hsl(from var(--raisin-black) h s calc(l + 30));
   }
 }

@@ -2,7 +2,7 @@
 @use "../mixins" as m;
 
 .detail-learners-and-learner-groups {
-  @include m.detail-container(c.$tealBlue);
+  @include m.detail-container(var(--teal-blue));
   padding: 1rem 0.5rem;
 
   .detail-learners-and-learner-groups-header {

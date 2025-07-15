@@ -7,14 +7,14 @@
     justify-content: flex-end;
 
     .bigadd {
-      background-color: c.$fernGreen;
-      color: c.$white;
+      background-color: var(--fern-green);
+      color: var(--white);
       margin-right: 0.25rem;
     }
 
     .bigcancel {
-      background-color: c.$crimson;
-      color: c.$white;
+      background-color: var(--crimson);
+      color: var(--white);
     }
   }
 

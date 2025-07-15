@@ -2,11 +2,11 @@
 
 @mixin icon {
   &.enabled {
-    color: c.$blueMunsell;
+    color: var(--blue-munsell);
     cursor: pointer;
   }
 
   &.disabled {
-    color: c.$davysGrey;
+    color: var(--davys-grey);
   }
 }

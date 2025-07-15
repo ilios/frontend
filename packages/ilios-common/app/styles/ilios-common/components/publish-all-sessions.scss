@@ -2,12 +2,12 @@
 @use "../mixins" as m;
 
 .publish-all-sessions {
-  background-color: c.$slightWhite;
-  border: 1px solid c.$culturedGrey;
+  background-color: var(--slight-white);
+  border: 1px solid var(--cultured-grey);
   padding-left: 1rem;
 
   section {
-    @include m.detail-container(c.$orange);
+    @include m.detail-container(var(--orange));
 
     .title {
       @include m.detail-container-title;
@@ -43,7 +43,7 @@
   }
 
   .publish-all-sessions-review {
-    border: 1px solid c.$fernGreen;
+    border: 1px solid var(--fern-green);
     clear: both;
     @include m.font-size("large");
     margin: 1rem;
@@ -51,30 +51,30 @@
     text-align: center;
 
     .unlinked-warning {
-      color: c.$sepia;
+      color: var(--sepia);
       @include m.font-size("base");
     }
 
     .fa-chart-column {
-      color: c.$blueMunsell;
+      color: var(--blue-munsell);
       @include m.font-size("small");
     }
 
     p {
-      color: c.$fernGreen;
+      color: var(--fern-green);
       font-weight: bold;
       margin: 0;
       margin-bottom: 1rem;
     }
 
     button {
-      background: c.$fernGreen;
-      color: c.$white;
+      background: var(--fern-green);
+      color: var(--white);
     }
   }
 
   .fa-link-slash {
-    color: c.$black;
+    color: var(--black);
     @include m.font-size("small");
   }
 }

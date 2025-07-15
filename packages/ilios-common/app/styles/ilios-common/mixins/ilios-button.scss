@@ -4,11 +4,11 @@
 
 @mixin ilios-button() {
   appearance: none;
-  background-color: c.$tealBlue;
+  background-color: var(--teal-blue);
   border: 0;
   border-radius: 3px;
   box-sizing: border-box;
-  color: c.$white;
+  color: var(--white);
   cursor: pointer;
   display: inline-block;
   padding: 0.3em 1em;
@@ -36,6 +36,6 @@
 
 @mixin ilios-link-button() {
   @include ilios-button-reset;
-  color: c.$tealBlue;
+  color: var(--teal-blue);
   text-align: left;
 }

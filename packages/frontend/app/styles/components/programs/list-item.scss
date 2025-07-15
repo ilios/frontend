@@ -5,7 +5,7 @@
   .actions {
     button {
       @include m.ilios-button-reset;
-      color: c.$crimson;
+      color: var(--crimson);
     }
   }
 }

@@ -33,7 +33,7 @@
       }
 
       &.synced-from-directory input {
-        background-color: color.adjust(c.$fernGreen, $lightness: 40%);
+        background-color: hsl(from var(--fern-green) h s calc(l + 40));
         transition: background-color 500ms ease;
       }
     }
@@ -43,7 +43,7 @@
     display: flex;
 
     button {
-      background-color: c.$blueMunsell;
+      background-color: var(--blue-munsell);
       height: 2rem;
       margin-bottom: 0.25rem;
       margin-left: 0.5rem;
@@ -58,8 +58,8 @@
 
   meter {
     background: none;
-    background-color: c.$white;
-    border: 0.5px solid c.$raisinBlack;
+    background-color: var(--white);
+    border: 0.5px solid var(--raisin-black);
     height: 0.75rem;
     margin: 0.25rem 0;
     width: 60%;
@@ -71,39 +71,39 @@
 
   meter::-webkit-meter-bar {
     background: none;
-    background-color: c.$white;
+    background-color: var(--white);
   }
 
   meter[value="0"]::-webkit-meter-optimum-value {
-    background: c.$crimson;
+    background: var(--crimson);
   }
   meter[value="1"]::-webkit-meter-optimum-value {
-    background: c.$crimson;
+    background: var(--crimson);
   }
   meter[value="2"]::-webkit-meter-optimum-value {
-    background: c.$orange;
+    background: var(--orange);
   }
   meter[value="3"]::-webkit-meter-optimum-value {
-    background: c.$gold;
+    background: var(--gold);
   }
   meter[value="4"]::-webkit-meter-optimum-value {
-    background: c.$fernGreen;
+    background: var(--fern-green);
   }
 
   meter[value="0"]:-moz-meter-bar {
-    background: c.$crimson;
+    background: var(--crimson);
   }
   meter[value="1"]:-moz-meter-bar {
-    background: c.$crimson;
+    background: var(--crimson);
   }
   meter[value="2"]:-moz-meter-bar {
-    background: c.$orange;
+    background: var(--orange);
   }
   meter[value="3"]:-moz-meter-bar {
-    background: c.$gold;
+    background: var(--gold);
   }
   meter[value="4"]:-moz-meter-bar {
-    background: c.$fernGreen;
+    background: var(--fern-green);
   }
 
   .password-strength {
@@ -114,24 +114,24 @@
     width: 10%;
 
     &.strength-0 {
-      color: c.$crimson;
+      color: var(--crimson);
       width: 20%;
     }
 
     &.strength-1 {
-      color: c.$crimson;
+      color: var(--crimson);
     }
 
     &.strength-2 {
-      color: c.$orange;
+      color: var(--orange);
     }
 
     &.strength-3 {
-      color: c.$gold;
+      color: var(--gold);
     }
 
     &.strength-4 {
-      color: c.$fernGreen;
+      color: var(--fern-green);
     }
   }
 }

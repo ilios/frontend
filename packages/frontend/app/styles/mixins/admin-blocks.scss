@@ -13,16 +13,16 @@
 
   .small-component,
   .large-component {
-    background-color: c.$culturedGrey;
-    border: 1px solid c.$blueMunsell;
+    background-color: var(--cultured-grey);
+    border: 1px solid var(--blue-munsell);
     border-radius: 5px;
     margin-bottom: 1rem;
     min-height: 5rem;
     padding: 0.5rem;
 
     &.alert {
-      background-color: c.$white;
-      border: 3px solid c.$gold;
+      background-color: var(--white);
+      border: 3px solid var(--gold);
     }
 
     p {
@@ -52,7 +52,7 @@
   }
 
   .has-saved {
-    background-color: color.adjust(c.$fernGreen, $lightness: 30%);
+    background-color: hsl(from var(--fern-green) h s calc(l + 30));
     transition: background-color 0.5s ease-out;
   }
 

@@ -8,11 +8,11 @@
 
   .display-mode-toggle-btn {
     &.active {
-      background-color: c.$fernGreen;
+      background-color: var(--fern-green);
     }
     &.disabled {
       cursor: default;
-      background-color: c.$davysGrey;
+      background-color: var(--davys-grey);
     }
   }
 
@@ -64,7 +64,7 @@
   }
 
   .objective {
-    border-bottom: 1px dotted c.$orange;
+    border-bottom: 1px dotted var(--orange);
     &:last-of-type {
       border-bottom: 0;
     }

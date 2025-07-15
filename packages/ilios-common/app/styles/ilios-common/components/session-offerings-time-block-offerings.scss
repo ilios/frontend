@@ -4,7 +4,7 @@
   grid-column: 2 / -1;
 
   .offering-manager {
-    border-bottom: 1px dotted c.$davysGrey;
+    border-bottom: 1px dotted var(--davys-grey);
     &:last-of-type {
       border-bottom: 0;
     }

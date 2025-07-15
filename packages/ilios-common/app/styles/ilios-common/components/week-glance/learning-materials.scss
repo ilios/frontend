@@ -18,7 +18,7 @@
     }
 
     .fa-external-link-square {
-      color: c.$orange;
+      color: var(--orange);
       @include m.font-size("small");
     }
 

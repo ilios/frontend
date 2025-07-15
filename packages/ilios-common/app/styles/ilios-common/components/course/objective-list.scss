@@ -5,7 +5,7 @@
   @include m.objective-list;
 
   .fade-text-control {
-    background-image: linear-gradient(to bottom, transparent, c.$white);
+    background-image: linear-gradient(to bottom, transparent, var(--white));
   }
 
   .objective-row {
@@ -14,7 +14,7 @@
         background-image: linear-gradient(
           to bottom,
           transparent,
-          c.$culturedGrey
+          var(--cultured-grey)
         );
       }
     }

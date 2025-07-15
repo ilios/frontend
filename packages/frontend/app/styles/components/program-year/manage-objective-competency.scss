@@ -10,17 +10,17 @@
     height: auto;
 
     .domain {
-      border-left: 10px solid c.$slightWhite;
+      border-left: 10px solid var(--slight-white);
 
       .domain-title {
         margin: 0.5rem 0 0 0.5rem;
         padding: 0;
       }
       &.selected {
-        border-left: 10px solid c.$orange;
+        border-left: 10px solid var(--orange);
 
         .domain-title {
-          color: c.$fernGreen;
+          color: var(--fern-green);
           font-weight: bold;
         }
       }
@@ -41,7 +41,7 @@
   }
 
   .no-cohorts {
-    color: c.$gold;
+    color: var(--gold);
     font-weight: bold;
   }
 }

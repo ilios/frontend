@@ -8,15 +8,15 @@
   margin-bottom: 1rem;
 
   .inactive {
-    color: c.$rosewood;
+    color: var(--rosewood);
   }
 
   .selected-taxonomy-terms {
     @include m.ilios-tag-list;
 
     button {
-      background-color: c.$culturedGrey;
-      color: c.$raisinBlack;
+      background-color: var(--cultured-grey);
+      color: var(--raisin-black);
       padding: calc(constants.$golden-ratio-small * 0.5rem)
         calc(constants.$golden-ratio-large * 0.5rem);
     }
@@ -30,7 +30,7 @@
     }
 
     .muted {
-      color: color.adjust(c.$raisinBlack, $lightness: 30%);
+      color: hsl(from var(--raisin-black) h s calc(l + 30));
     }
   }
 }

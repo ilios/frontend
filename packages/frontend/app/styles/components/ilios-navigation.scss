@@ -5,7 +5,7 @@
 /* stylelint-disable property-disallowed-list */
 @use "sass:color";
 .ilios-navigation {
-  background-color: c.$davysGrey;
+  background-color: var(--davys-grey);
   display: grid;
   grid-auto-flow: column;
   grid-template-columns: 2rem auto;
@@ -33,7 +33,7 @@
 
         &:first-of-type {
           padding-top: 2px;
-          border-top: 2px solid c.$davysGrey;
+          border-top: 2px solid var(--davys-grey);
         }
       }
     }
@@ -52,10 +52,10 @@
       justify-content: center;
 
       .expander {
-        color: c.$slightWhite;
+        color: var(--slight-white);
 
         &:hover {
-          background-color: c.$blueMunsell;
+          background-color: var(--blue-munsell);
         }
       }
     }
@@ -85,13 +85,14 @@
 
   @include m.for-smaller-than-laptop {
     a.active {
-      background-color: c.$blueMunsell;
+      background-color: var(--blue-munsell);
     }
   }
 
   @include m.for-laptop-and-up {
     display: block;
-    border-bottom: calc(20px * constants.$golden-ratio-large) solid c.$orange;
+    border-bottom: calc(20px * constants.$golden-ratio-large) solid
+      var(--orange);
 
     ul {
       bottom: 0;
@@ -132,7 +133,7 @@
       }
 
       .if-active {
-        color: c.$blueMunsell;
+        color: var(--blue-munsell);
         justify-self: end;
         font-weight: bold;
       }
@@ -141,7 +142,7 @@
         .if-active {
           display: inline;
         }
-        color: c.$blueMunsell;
+        color: var(--blue-munsell);
 
         .text {
           color: hsl(0, 0%, 92%);
@@ -150,7 +151,7 @@
     }
 
     &:hover {
-      background-color: c.$blueMunsell;
+      background-color: var(--blue-munsell);
       color: hsl(0, 0%, 92%);
 
       .if-active {

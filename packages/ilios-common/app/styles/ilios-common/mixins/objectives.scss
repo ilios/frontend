@@ -38,8 +38,8 @@
   }
 
   .new-objective {
-    background-color: c.$slightWhite;
-    border: 1px solid c.$culturedGrey;
+    background-color: var(--slight-white);
+    border: 1px solid var(--cultured-grey);
     margin: 0.5rem 0;
     padding: 1rem;
 
@@ -70,7 +70,7 @@
     grid-template-rows: auto;
 
     .grid-item {
-      border-bottom: 1px solid c.$davysGrey;
+      border-bottom: 1px solid var(--davys-grey);
       padding: 0.5em 0.25em;
 
       &:has(.faded) {
@@ -105,7 +105,7 @@
 
       .grid-item {
         color: transparent;
-        text-shadow: rgba(0, 0, 0, 0.3) 0px 0px 10px;
+        text-shadow: hsl(from var(--black) h s l / 0.3) 0px 0px 10px;
       }
     }
   }
@@ -114,13 +114,13 @@
 
     &.highlight-ok {
       transition: none;
-      background-color: color.adjust(c.$fernGreen, $lightness: 60%);
+      background-color: hsl(from var(--fern-green) h s calc(l + 60));
     }
 
     &.is-managing {
-      border: 2px solid c.$blueMunsell;
+      border: 2px solid var(--blue-munsell);
       .grid-item {
-        background-color: c.$lightBlue;
+        background-color: var(--light-blue);
         border: 0;
       }
     }
@@ -149,14 +149,14 @@
     }
 
     &.confirm-removal {
-      background-color: c.$lavenderBlush;
+      background-color: var(--lavender-blush);
 
       .grid-item {
         border: 0;
       }
 
       .confirm-message {
-        color: c.$rosewood;
+        color: var(--rosewood);
         grid-column: 1 / -1;
         font-weight: bold;
         text-align: center;
@@ -164,11 +164,11 @@
       }
 
       .remove {
-        background-color: c.$white;
-        color: c.$rosewood;
+        background-color: var(--white);
+        color: var(--rosewood);
 
         &:hover {
-          background-color: c.$crimson;
+          background-color: var(--crimson);
           color: white;
         }
       }
@@ -203,13 +203,13 @@
   }
 
   .bigadd {
-    background-color: c.$fernGreen;
-    color: c.$white;
+    background-color: var(--fern-green);
+    color: var(--white);
   }
 
   .bigcancel {
-    background-color: c.$crimson;
-    color: c.$white;
+    background-color: var(--crimson);
+    color: var(--white);
     margin-left: 0.5em;
   }
 

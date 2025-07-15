@@ -2,7 +2,7 @@
 @use "../mixins" as m;
 
 .offering-calendar {
-  border: 1px solid c.$black;
+  border: 1px solid var(--black);
   border-radius: 5px;
   box-sizing: border-box;
   clear: both;

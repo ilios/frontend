@@ -2,7 +2,7 @@
 @use "../../ilios-common/mixins" as m;
 
 .curriculum-inventory-report-details {
-  @include m.detail-container(c.$orange);
+  @include m.detail-container(var(--orange));
   margin: 0 0.5rem;
 
   .title {
@@ -10,10 +10,10 @@
   }
 
   .confirm-finalize {
-    background-color: c.$lavenderBlush;
+    background-color: var(--lavender-blush);
 
     .confirm-message {
-      color: c.$rosewood;
+      color: var(--rosewood);
       font-weight: bold;
       padding: 1rem 10%;
       text-align: center;
@@ -24,12 +24,12 @@
     }
 
     .finalize {
-      background-color: c.$white;
-      color: c.$rosewood;
+      background-color: var(--white);
+      color: var(--rosewood);
 
       &:hover {
-        background-color: c.$crimson;
-        color: c.$white;
+        background-color: var(--crimson);
+        color: var(--white);
       }
     }
   }

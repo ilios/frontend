@@ -3,7 +3,7 @@
 @use "../../mixins" as m;
 
 .dashboard-navigation {
-  border-bottom: 1px solid c.$culturedGrey;
+  border-bottom: 1px solid var(--cultured-grey);
   margin: 0.5rem 0 0 0.5rem;
 
   ul {
@@ -31,7 +31,7 @@
         .highlight {
           align-items: center;
           display: flex;
-          color: c.$orange;
+          color: var(--orange);
           @include m.font-size("large");
 
           @include m.for-phone-only {
@@ -66,7 +66,7 @@
     }
 
     &.active {
-      background-color: c.$fernGreen;
+      background-color: var(--fern-green);
     }
   }
 }

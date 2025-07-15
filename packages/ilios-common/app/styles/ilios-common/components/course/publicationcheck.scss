@@ -5,7 +5,7 @@
   @include m.main-section;
 
   .course-publicationcheck-details {
-    @include m.detail-container(c.$orange);
+    @include m.detail-container(var(--orange));
 
     .title {
       @include m.detail-container-title;
@@ -16,7 +16,7 @@
     }
 
     .fa-link-slash {
-      color: c.$black;
+      color: var(--black);
       @include m.font-size("small");
     }
   }

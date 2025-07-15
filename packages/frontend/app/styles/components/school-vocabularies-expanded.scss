@@ -2,7 +2,7 @@
 @use "../ilios-common/mixins" as m;
 
 .school-vocabularies-expanded {
-  @include m.detail-container(c.$orange);
+  @include m.detail-container(var(--orange));
 
   .school-vocabularies-expanded-header {
     @include m.detail-container-header;
@@ -20,8 +20,8 @@
     @include m.detail-container-content;
 
     .hierarchical-list {
-      background-color: c.$culturedGrey;
-      border: 1px solid c.$black;
+      background-color: var(--cultured-grey);
+      border: 1px solid var(--black);
       margin: 1rem;
       padding: 1rem;
 

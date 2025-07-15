@@ -45,16 +45,16 @@
 
   thead,
   th {
-    background-color: c.$culturedGrey;
-    color: c.$raisinBlack;
+    background-color: var(--cultured-grey);
+    color: var(--raisin-black);
   }
 
   td:first-of-type {
-    color: c.$sepia;
+    color: var(--sepia);
     font-weight: bold;
   }
 
   .maybe {
-    color: c.$gold;
+    color: var(--gold);
   }
 }

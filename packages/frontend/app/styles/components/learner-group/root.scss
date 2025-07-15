@@ -7,7 +7,7 @@
   @include m.main-section;
 
   .learner-group-overview {
-    @include m.ilios-overview(c.$orange);
+    @include m.ilios-overview(var(--orange));
 
     .block {
       @include m.ilios-overview-block;
@@ -61,7 +61,7 @@
     }
 
     .learner-group-overview-content {
-      border-bottom: 1px dotted c.$orange;
+      border-bottom: 1px dotted var(--orange);
     }
   }
 
@@ -91,8 +91,8 @@
       .confirm-copy,
       .confirm-copy:nth-child(even),
       .confirm-copy:nth-child(odd) {
-        background-color: color.adjust(c.$blueMunsell, $lightness: 60%);
-        border: 2px solid c.$blueMunsell;
+        background-color: hsl(from var(--blue-munsell) h s calc(l + 60));
+        border: 2px solid var(--blue-munsell);
 
         &.actions-row {
           border-top: 0;

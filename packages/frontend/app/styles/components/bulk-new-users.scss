@@ -52,8 +52,8 @@
       overflow-y: scroll;
 
       .error {
-        border: 1px solid c.$crimson;
-        color: c.$crimson;
+        border: 1px solid var(--crimson);
+        color: var(--crimson);
       }
 
       table {
@@ -72,13 +72,13 @@
 
   .saving-user-errors,
   .saving-authentication-errors {
-    border: 1px solid c.$crimson;
-    border-top: 10px solid c.$crimson;
+    border: 1px solid var(--crimson);
+    border-top: 10px solid var(--crimson);
     margin: 1rem 4rem;
     padding: 0 1rem 1rem;
 
     p {
-      color: c.$crimson;
+      color: var(--crimson);
     }
 
     li {

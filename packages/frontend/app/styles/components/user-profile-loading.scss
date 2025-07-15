@@ -8,7 +8,7 @@
     color: transparent;
     margin-bottom: 1rem;
     text-align: center;
-    text-shadow: rgba(0, 0, 0, 0.3) 0px 0px 10px;
+    text-shadow: hsl(from var(--black) h s l / 0.3) 0px 0px 10px;
   }
 
   .blocks {

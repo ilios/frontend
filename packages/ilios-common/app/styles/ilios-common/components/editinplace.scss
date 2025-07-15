@@ -8,10 +8,10 @@
     display: flex;
 
     #{m.$form-input-text-types} {
-      background: c.$white;
-      border: 1px solid c.$culturedGrey;
+      background: var(--white);
+      border: 1px solid var(--cultured-grey);
       border-radius: 3px;
-      color: c.$raisinBlack;
+      color: var(--raisin-black);
       cursor: pointer;
       display: inline;
       outline: none;
@@ -35,22 +35,22 @@
         padding: 0 0.2rem;
 
         &:enabled:hover {
-          color: c.$white;
+          color: var(--white);
         }
 
         &.done {
-          color: c.$fernGreen;
+          color: var(--fern-green);
 
           &:enabled:hover {
-            background-color: c.$fernGreen;
+            background-color: var(--fern-green);
           }
         }
 
         &.cancel {
-          color: c.$crimson;
+          color: var(--crimson);
 
           &:enabled:hover {
-            background-color: c.$crimson;
+            background-color: var(--crimson);
           }
         }
       }

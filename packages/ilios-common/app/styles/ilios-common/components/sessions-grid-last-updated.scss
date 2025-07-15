@@ -1,7 +1,7 @@
 @use "../colors" as c;
 
 .sessions-grid-last-updated {
-  color: c.$davysGrey;
+  color: var(--davys-grey);
   margin: auto;
   padding-bottom: 0.5rem;
   text-align: right;

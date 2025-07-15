@@ -10,7 +10,7 @@
       @include m.ilios-button-reset;
       display: flex;
       justify-content: flex-start;
-      border-bottom: 1px solid c.$davysGrey;
+      border-bottom: 1px solid var(--davys-grey);
       padding: 0.5em 0.25em;
     }
   }
@@ -18,7 +18,7 @@
   .objective-row {
     &.is-inactive {
       .grid-item {
-        background-color: c.$lavenderBlush;
+        background-color: var(--lavender-blush);
       }
     }
     .actions {
@@ -30,7 +30,7 @@
         width: 1rem;
 
         &.active {
-          color: c.$blueMunsell;
+          color: var(--blue-munsell);
         }
       }
 

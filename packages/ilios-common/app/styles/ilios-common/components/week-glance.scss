@@ -14,16 +14,16 @@
   }
 
   .events-by-date {
-    border-top: 1px dotted c.$orange;
+    border-top: 1px dotted var(--orange);
   }
 
   .event {
     padding: 0 0.25rem;
     margin: 1rem 0;
-    border-left: 3px solid c.$lightBlue;
+    border-left: 3px solid var(--light-blue);
 
     &:nth-of-type(even) {
-      border-left: 3px solid c.$lavenderBlush;
+      border-left: 3px solid var(--lavender-blush);
     }
 
     p {

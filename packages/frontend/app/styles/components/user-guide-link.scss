@@ -3,7 +3,7 @@
 
 @use "sass:color";
 
-$header-menu-background-color: color.adjust(c.$slightWhite, $lightness: -3%);
+$header-menu-background-color: hsl(from var(--slight-white) h s calc(l - 3));
 
 .user-guide-link {
   margin-right: 0.85rem;
@@ -17,7 +17,7 @@ $header-menu-background-color: color.adjust(c.$slightWhite, $lightness: -3%);
     background-color: $header-menu-background-color;
     border: 1px solid $header-menu-background-color;
     border-radius: 0.2rem;
-    color: c.$raisinBlack;
+    color: var(--raisin-black);
     @include cm.font-size("small");
     font-weight: normal;
     margin-left: 0.8rem;
@@ -25,7 +25,7 @@ $header-menu-background-color: color.adjust(c.$slightWhite, $lightness: -3%);
 
     &:hover,
     &:focus {
-      background-color: c.$white;
+      background-color: var(--white);
     }
 
     @include cm.for-tablet-and-up {

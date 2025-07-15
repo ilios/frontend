@@ -7,14 +7,14 @@
     justify-content: flex-end;
 
     .bigadd {
-      background-color: c.$fernGreen;
-      color: c.$white;
+      background-color: var(--fern-green);
+      color: var(--white);
       margin-left: 0.5rem;
     }
 
     .bigcancel {
-      background-color: c.$crimson;
-      color: c.$white;
+      background-color: var(--crimson);
+      color: var(--white);
       margin: 0 0.5em;
     }
   }
@@ -28,7 +28,7 @@
           background-image: linear-gradient(
             to bottom,
             transparent,
-            c.$culturedGrey
+            var(--cultured-grey)
           );
         }
       }
@@ -39,7 +39,7 @@
     list-style-type: none;
     .item {
       align-items: center;
-      background-color: c.$culturedGrey;
+      background-color: var(--cultured-grey);
       border-radius: 4px;
       box-sizing: border-box;
       cursor: pointer;
@@ -73,9 +73,9 @@
         }
         button {
           &.expand-text-button {
-            background: c.$tealBlue;
+            background: var(--teal-blue);
             border-radius: 3px;
-            color: c.$white;
+            color: var(--white);
             padding: 0.3em 1em;
           }
         }
@@ -85,13 +85,13 @@
         opacity: 0.3;
       }
       &.dragged-above {
-        border-top: 0.7rem solid c.$orange;
+        border-top: 0.7rem solid var(--orange);
         border-top-left-radius: 0;
         border-top-right-radius: 0;
         padding: 0.3rem 1rem 1rem 1rem;
       }
       &.dragged-below {
-        border-bottom: 0.7rem solid c.$orange;
+        border-bottom: 0.7rem solid var(--orange);
         border-bottom-left-radius: 0;
         border-bottom-right-radius: 0;
         padding: 1rem 1rem 0.3rem 1rem;

@@ -31,12 +31,12 @@
     float: right;
 
     .highlight {
-      color: c.$orange;
+      color: var(--orange);
       @include m.font-size("medium");
     }
 
     .on {
-      color: c.$fernGreen;
+      color: var(--fern-green);
     }
   }
 

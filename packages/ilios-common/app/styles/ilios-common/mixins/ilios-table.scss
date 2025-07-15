@@ -77,13 +77,13 @@
   }
 }
 
-@mixin ilios-table-colors($backgroundColor: c.$slightWhite) {
+@mixin ilios-table-colors($backgroundColor: var(--slight-white)) {
   thead {
     background-color: $backgroundColor;
   }
 
   th {
-    border-bottom: 1px solid color.adjust(c.$culturedGrey, $lightness: -15%);
+    border-bottom: 1px solid hsl(from var(--cultured-grey) h s calc(l - 15));
     background-color: $backgroundColor;
   }
 }
@@ -91,10 +91,10 @@
 @mixin ilios-removable-table() {
   tbody {
     .confirm-removal {
-      background-color: c.$lavenderBlush;
+      background-color: var(--lavender-blush);
 
       .confirm-message {
-        color: c.$rosewood;
+        color: var(--rosewood);
         font-weight: bold;
         padding-left: 8em;
         padding-right: 8em;
@@ -108,16 +108,16 @@
       }
 
       &:hover {
-        background-color: c.$lavenderBlush;
+        background-color: var(--lavender-blush);
       }
 
       .remove {
-        background-color: c.$white;
-        color: c.$rosewood;
+        background-color: var(--white);
+        color: var(--rosewood);
 
         &:hover {
-          background-color: c.$crimson;
-          color: c.$white;
+          background-color: var(--crimson);
+          color: var(--white);
         }
       }
     }
@@ -126,6 +126,6 @@
 
 @mixin ilios-zebra-table() {
   tbody tr:nth-child(even) {
-    background-color: color.adjust(c.$culturedGrey, $lightness: 4%);
+    background-color: hsl(from var(--cultured-grey) h s calc(l + 4));
   }
 }

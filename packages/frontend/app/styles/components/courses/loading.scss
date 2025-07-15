@@ -5,6 +5,6 @@
   .toggle-mycourses .toggle-buttons label {
     @include cm.loading-text;
     cursor: default;
-    background-color: c.$culturedGrey;
+    background-color: var(--cultured-grey);
   }
 }

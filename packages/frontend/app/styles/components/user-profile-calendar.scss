@@ -2,7 +2,7 @@
 @use "../ilios-common/mixins" as m;
 
 .user-profile-calendar {
-  border: 1px solid c.$black;
+  border: 1px solid var(--black);
   border-radius: 5px;
   grid-column: 1 / -1;
   margin-bottom: 1rem;

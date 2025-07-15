@@ -5,7 +5,7 @@
   @include m.multi-button;
 
   label.active {
-    background-color: c.$tealBlue;
-    color: c.$white;
+    background-color: var(--teal-blue);
+    color: var(--white);
   }
 }

@@ -3,17 +3,17 @@
 
 .learning-material-uploader {
   .upload-button {
-    background: c.$slightWhite;
-    border: 1px solid c.$black;
+    background: var(--slight-white);
+    border: 1px solid var(--black);
     border-radius: 3px;
-    color: c.$raisinBlack;
+    color: var(--raisin-black);
     cursor: pointer;
     display: inline-block;
     @include m.font-size("base");
     padding: 0.3em 1em;
     &:hover {
-      background-color: c.$davysGrey;
-      color: c.$white;
+      background-color: var(--davys-grey);
+      color: var(--white);
     }
   }
 

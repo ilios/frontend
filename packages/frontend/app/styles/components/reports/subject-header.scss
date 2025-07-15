@@ -2,7 +2,7 @@
 @use "../../ilios-common/colors" as c;
 
 .reports-subject-header {
-  border-bottom: 1px solid c.$culturedGrey;
+  border-bottom: 1px solid var(--cultured-grey);
   display: grid;
   grid-template-areas:
     "title"
@@ -55,7 +55,7 @@
     grid-area: download;
     &:disabled {
       cursor: default;
-      background-color: c.$davysGrey;
+      background-color: var(--davys-grey);
     }
   }
 

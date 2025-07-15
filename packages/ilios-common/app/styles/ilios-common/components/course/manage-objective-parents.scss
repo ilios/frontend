@@ -23,10 +23,10 @@
       }
 
       &.selected {
-        border-left: 10px solid c.$orange;
+        border-left: 10px solid var(--orange);
 
         .competency-title {
-          color: c.$fernGreen;
+          color: var(--fern-green);
           font-weight: bold;
         }
       }
@@ -47,7 +47,7 @@
   }
 
   .no-cohorts {
-    color: c.$sepia;
+    color: var(--sepia);
     font-weight: bold;
   }
 }

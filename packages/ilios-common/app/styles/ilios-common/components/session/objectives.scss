@@ -2,6 +2,6 @@
 @use "../../mixins" as m;
 
 .session-objectives {
-  @include m.detail-container(c.$orange);
+  @include m.detail-container(var(--orange));
   @include m.objectives;
 }

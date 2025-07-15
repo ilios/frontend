@@ -5,7 +5,7 @@
 @use "sass:color";
 
 .ilios-footer {
-  background-color: c.$orange;
+  background-color: var(--orange);
   display: flex;
   height: 20px;
   justify-content: flex-end;
@@ -13,10 +13,10 @@
 
   .version {
     align-items: center;
-    background-color: color.adjust(c.$slightWhite, $lightness: -3%);
+    background-color: hsl(from var(--slight-white) h s calc(l - 3));
     border: 1px solid m.$header-menu-background-color;
     border-radius: 0.2rem;
-    color: c.$raisinBlack;
+    color: var(--raisin-black);
     display: flex;
     @include cm.font-size("smallest");
     font-weight: 100;

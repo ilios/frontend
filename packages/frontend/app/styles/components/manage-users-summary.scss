@@ -42,8 +42,8 @@
     width: 90%;
 
     input[type="search"] {
-      background-color: c.$white;
-      border: 1px solid c.$tealBlue;
+      background-color: var(--white);
+      border: 1px solid var(--teal-blue);
       border-radius: 3px;
       height: 2rem;
       width: 100%;
@@ -57,8 +57,8 @@
       }
 
       button:active {
-        background-color: c.$culturedGrey;
-        border-bottom: 1px solid c.$culturedGrey;
+        background-color: var(--cultured-grey);
+        border-bottom: 1px solid var(--cultured-grey);
       }
     }
   }

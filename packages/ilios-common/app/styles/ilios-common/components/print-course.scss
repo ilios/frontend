@@ -4,13 +4,13 @@
 .print-course {
   .header {
     @include m.course-header;
-    background-color: c.$culturedGrey;
+    background-color: var(--cultured-grey);
     padding: 0.5rem;
   }
 
   .block {
-    @include m.detail-container(c.$orange);
-    background-color: c.$white;
+    @include m.detail-container(var(--orange));
+    background-color: var(--white);
     padding: 0.5rem;
 
     .title {

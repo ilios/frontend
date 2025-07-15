@@ -14,7 +14,7 @@
     margin-right: 0.5rem;
 
     .grid-item {
-      border-bottom: 1px solid c.$davysGrey;
+      border-bottom: 1px solid var(--davys-grey);
       padding: 0.5rem 0.25rem;
 
       &.competency {
@@ -38,13 +38,13 @@
       }
 
       .bigadd {
-        background-color: c.$fernGreen;
-        color: c.$white;
+        background-color: var(--fern-green);
+        color: var(--white);
       }
 
       .bigcancel {
-        background-color: c.$crimson;
-        color: c.$white;
+        background-color: var(--crimson);
+        color: var(--white);
         margin-left: 0.5rem;
       }
     }
@@ -61,26 +61,26 @@
 
     &.highlight-ok {
       transition: none;
-      background-color: color.adjust(c.$fernGreen, $lightness: 60%);
+      background-color: hsl(from var(--fern-green) h s calc(l + 60));
     }
 
     &.is-managing {
-      border: 2px solid c.$blueMunsell;
+      border: 2px solid var(--blue-munsell);
       .grid-item {
-        background-color: c.$culturedGrey;
+        background-color: var(--cultured-grey);
         border: 0;
       }
     }
 
     &.confirm-removal {
-      background-color: c.$lavenderBlush;
+      background-color: var(--lavender-blush);
 
       .grid-item {
         border: 0;
       }
 
       .confirm-message {
-        color: c.$crimson;
+        color: var(--crimson);
         grid-column: 1 / -1;
         font-weight: bold;
         text-align: center;
@@ -88,11 +88,11 @@
       }
 
       .remove {
-        background-color: c.$white;
-        color: c.$crimson;
+        background-color: var(--white);
+        color: var(--crimson);
 
         &:hover {
-          background-color: c.$crimson;
+          background-color: var(--crimson);
           color: white;
         }
       }

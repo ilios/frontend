@@ -9,8 +9,8 @@
   position: relative;
 
   input[type="search"] {
-    background-color: c.$white;
-    border: 1px solid c.$tealBlue;
+    background-color: var(--white);
+    border: 1px solid var(--teal-blue);
     border-radius: 3px;
     height: 80%;
     padding: 0 0.5rem 0 1.5rem;
@@ -36,7 +36,7 @@
   }
 
   .search-icon {
-    color: c.$blueMunsell;
+    color: var(--blue-munsell);
     cursor: pointer;
     display: inline-block;
     /* stylelint-disable-next-line property-disallowed-list */
@@ -60,11 +60,11 @@
 
   .autocomplete {
     @include m.ilios-list-reset;
-    background: c.$white;
-    border: 1px solid c.$tealBlue;
+    background: var(--white);
+    border: 1px solid var(--teal-blue);
     border-radius: 0 0 3px 3px;
-    box-shadow: 0 2px 2px color.adjust(c.$black, $alpha: 0.8);
-    color: c.$raisinBlack;
+    box-shadow: 0 2px 2px hsl(from var(--black) h s l / 0.8);
+    color: var(--raisin-black);
     cursor: pointer;
     max-height: 23rem;
     max-width: 40rem;
@@ -90,7 +90,7 @@
 
     &.active,
     &:hover {
-      background-color: color.adjust(c.$blueMunsell, $lightness: 50%);
+      background-color: hsl(from var(--blue-munsell) h s calc(l + 50));
     }
   }
 }

@@ -5,11 +5,11 @@
   .flatpickr-month,
   .flatpickr-next-month,
   .flatpickr-prev-month {
-    color: c.$white;
-    background: c.$orange;
+    color: var(--white);
+    background: var(--orange);
 
     svg {
-      fill: c.$white;
+      fill: var(--white);
     }
   }
 
@@ -27,7 +27,7 @@
       text-align-last: right;
 
       option {
-        color: c.$raisinBlack;
+        color: var(--raisin-black);
       }
     }
 
@@ -43,10 +43,10 @@
 .flatpickr-weekdays,
 span.flatpickr-weekday,
 .flatpickr-day.selected {
-  color: c.$white;
-  background: c.$orange;
+  color: var(--white);
+  background: var(--orange);
 }
 
 .flatpickr-day.selected {
-  border-color: c.$orange;
+  border-color: var(--orange);
 }

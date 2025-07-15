@@ -2,19 +2,19 @@
 @use "../colors" as c;
 
 @mixin ilios-link() {
-  color: c.$tealBlue;
+  color: var(--teal-blue);
   cursor: pointer;
   font-weight: 600;
   text-decoration: none;
 
   &:visited {
-    color: c.$tealBlue;
+    color: var(--teal-blue);
   }
 
   &:hover,
   &:active,
   &:focus {
-    color: c.$blueMunsell;
+    color: var(--blue-munsell);
     outline: thin dotted;
     text-decoration: underline;
   }

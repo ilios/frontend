@@ -2,10 +2,14 @@
 @use "../../ilios-common/mixins" as m;
 
 .program-year-objectives {
-  @include m.detail-container(c.$orange);
+  @include m.detail-container(var(--orange));
   @include m.objectives;
 
   .fade-text-control {
-    background-image: linear-gradient(to bottom, transparent, c.$slightWhite);
+    background-image: linear-gradient(
+      to bottom,
+      transparent,
+      var(--slight-white)
+    );
   }
 }

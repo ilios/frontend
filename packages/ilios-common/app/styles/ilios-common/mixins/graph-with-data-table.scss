@@ -21,7 +21,7 @@
       @include t.ilios-zebra-table;
 
       thead {
-        background-color: c.$culturedGrey;
+        background-color: var(--cultured-grey);
       }
 
       td {

@@ -5,11 +5,11 @@
 @use "media";
 
 @mixin user-search-results() {
-  background: c.$white;
-  border: 1px solid c.$slightWhite;
+  background: var(--white);
+  border: 1px solid var(--slight-white);
   border-radius: 3px;
-  box-shadow: 0 2px 2px color.adjust(c.$black, $alpha: -0.8);
-  color: c.$raisinBlack;
+  box-shadow: 0 2px 2px hsl(from var(--black) h s l / 0.2);
+  color: var(--raisin-black);
   max-height: 23rem;
   overflow-y: scroll;
   position: absolute;
@@ -22,25 +22,25 @@
   }
 
   li {
-    border-bottom: 1px solid c.$culturedGrey;
-    color: c.$blueMunsell;
+    border-bottom: 1px solid var(--cultured-grey);
+    color: var(--blue-munsell);
     display: block;
     padding: 0.1rem;
     width: 100%;
 
     &.inactive {
-      color: color.adjust(c.$culturedGrey, $lightness: -20%);
+      color: hsl(from var(--cultured-grey) h s calc(l - 20));
       font-style: italic;
     }
 
     &.summary {
-      color: c.$fernGreen;
+      color: var(--fern-green);
     }
 
     a,
     &.clickable {
       &:hover {
-        background-color: color.adjust(c.$blueMunsell, $lightness: 50%);
+        background-color: hsl(from var(--blue-munsell) h s calc(l + 50));
       }
     }
 
@@ -59,7 +59,7 @@
     }
 
     .email {
-      color: c.$davysGrey;
+      color: var(--davys-grey);
       font-style: italic;
     }
   }

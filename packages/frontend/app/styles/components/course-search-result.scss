@@ -6,10 +6,10 @@
   padding: 0.5rem 0;
 
   .course-flag {
-    background: c.$fernGreen;
+    background: var(--fern-green);
     border-radius: 2px;
     bottom: 2px;
-    color: c.$white;
+    color: var(--white);
     display: inline-block;
     @include m.font-size("smallest");
     padding: 2px 3px 1px;
@@ -17,10 +17,10 @@
   }
 
   .school-flag {
-    background: c.$fernGreen;
+    background: var(--fern-green);
     border-radius: 2px;
     bottom: 2px;
-    color: c.$white;
+    color: var(--white);
     display: inline-block;
     @include m.font-size("smallest");
     padding: 2px 3px 1px;
@@ -32,7 +32,7 @@
     padding: 0.25rem 0.75rem 0;
 
     .sessions {
-      color: c.$davysGrey;
+      color: var(--davys-grey);
       @include m.font-size("small");
     }
   }
@@ -58,10 +58,10 @@
     overflow: hidden;
 
     .global-search-tag {
-      background: c.$slightWhite;
-      border: 1px solid c.$davysGrey;
+      background: var(--slight-white);
+      border: 1px solid var(--davys-grey);
       border-radius: 0.125rem;
-      color: c.$raisinBlack;
+      color: var(--raisin-black);
       display: inline-block;
       @include m.font-size("smallest");
       margin-right: 0.375rem;

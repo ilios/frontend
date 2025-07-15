@@ -3,7 +3,7 @@
 @use "../ilios-common/mixins" as m;
 
 .ilios-logo {
-  background-color: c.$orange;
+  background-color: var(--orange);
 
   @include m.for-laptop-and-up {
     padding-bottom: calc(constants.$golden-ratio-small * 1rem);

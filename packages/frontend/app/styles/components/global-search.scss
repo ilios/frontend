@@ -58,7 +58,7 @@
   }
 
   .results {
-    border-right: 1px solid c.$raisinBlack;
+    border-right: 1px solid var(--raisin-black);
     grid-area: results;
     list-style-type: none;
     padding: 0 2rem;
@@ -69,7 +69,7 @@
       text-transform: capitalize;
 
       .fa-spinner.orange {
-        color: c.$orange;
+        color: var(--orange);
       }
     }
   }

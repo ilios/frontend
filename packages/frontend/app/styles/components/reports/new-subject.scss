@@ -3,8 +3,8 @@
 @use "sass:color";
 
 .reports-new-subject {
-  background-color: c.$slightWhite;
-  border: 1px solid c.$culturedGrey;
+  background-color: var(--slight-white);
+  border: 1px solid var(--cultured-grey);
   margin: 0.5rem 0;
   padding: 1rem 1rem 3rem;
 
@@ -36,8 +36,8 @@
       }
 
       select.error {
-        border: 1px solid c.$crimson;
-        outline-color: c.$crimson;
+        border: 1px solid var(--crimson);
+        outline-color: var(--crimson);
       }
 
       .mesh-search {
@@ -49,14 +49,14 @@
 
     button {
       &.disabled {
-        background-color: c.$davysGrey;
+        background-color: var(--davys-grey);
         cursor: default;
       }
 
       &:disabled {
-        background-color: c.$culturedGrey;
-        border-color: c.$davysGrey;
-        color: c.$white;
+        background-color: var(--cultured-grey);
+        border-color: var(--davys-grey);
+        color: var(--white);
         cursor: default;
       }
     }
@@ -70,18 +70,18 @@
         @include m.ilios-list-reset;
         margin-top: -0.25rem;
         grid-column: 2;
-        background: c.$white;
+        background: var(--white);
         border-width: 0 1px 1px 1px;
         border-style: solid;
-        border-color: c.$slightWhite;
-        box-shadow: 0 2px 2px color.adjust(c.$black, $alpha: -0.8);
-        color: c.$raisinBlack;
+        border-color: var(--slight-white);
+        box-shadow: 0 2px 2px hsl(from var(--black) h s l / 0.2);
+        color: var(--raisin-black);
         max-height: 15rem;
         overflow-y: scroll;
         transition: all 0.2s ease-in-out;
 
         li {
-          border-bottom: 1px solid c.$culturedGrey;
+          border-bottom: 1px solid var(--cultured-grey);
           width: 100%;
 
           button {
@@ -90,7 +90,7 @@
             padding: 0.6rem 0 0 1rem;
 
             &:hover {
-              background-color: c.$culturedGrey;
+              background-color: var(--cultured-grey);
             }
           }
 
@@ -99,7 +99,7 @@
           }
 
           &.results-count {
-            color: c.$fernGreen;
+            color: var(--fern-green);
           }
         }
       }

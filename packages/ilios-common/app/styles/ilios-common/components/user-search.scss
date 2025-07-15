@@ -8,11 +8,11 @@
 
   .results {
     @include m.ilios-list-reset;
-    background: c.$white;
-    border: 1px solid c.$slightWhite;
+    background: var(--white);
+    border: 1px solid var(--slight-white);
     border-radius: 3px;
-    box-shadow: 0 2px 2px color.adjust(c.$black, $alpha: -0.8);
-    color: c.$raisinBlack;
+    box-shadow: 0 2px 2px hsl(from var(--black) h s l / 0.2);
+    color: var(--raisin-black);
     left: 0;
     max-height: 15rem;
     overflow: scroll;
@@ -21,33 +21,33 @@
     z-index: 100;
 
     li {
-      border-bottom: 1px solid c.$culturedGrey;
+      border-bottom: 1px solid var(--cultured-grey);
       padding: 0.6rem;
       padding-left: 1rem;
 
       &.active,
       &:hover {
-        background-color: color.adjust(c.$blueMunsell, $lightness: 50%);
+        background-color: hsl(from var(--blue-munsell) h s calc(l + 50));
         cursor: pointer;
       }
 
       &.inactive {
-        color: c.$davysGrey;
+        color: var(--davys-grey);
         cursor: default;
         font-style: italic;
 
         &:hover {
-          background-color: c.$white;
+          background-color: var(--white);
         }
       }
 
       &.results-count {
-        color: c.$fernGreen;
+        color: var(--fern-green);
       }
     }
 
     .email {
-      color: c.$davysGrey;
+      color: var(--davys-grey);
       font-style: italic;
       padding-right: 0.2rem;
     }

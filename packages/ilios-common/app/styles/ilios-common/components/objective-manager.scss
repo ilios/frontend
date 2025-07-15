@@ -7,14 +7,14 @@
   }
 
   h2 {
-    background-color: c.$slightWhite;
+    background-color: var(--slight-white);
     margin-bottom: 1rem;
     padding: 0.5rem;
   }
 
   .selected {
-    background-color: c.$orange;
-    color: c.$white;
+    background-color: var(--orange);
+    color: var(--white);
   }
 
   .parent-picker {
@@ -34,7 +34,7 @@
   }
 
   .no-group {
-    color: c.$orange;
+    color: var(--orange);
     font-weight: bold;
   }
 

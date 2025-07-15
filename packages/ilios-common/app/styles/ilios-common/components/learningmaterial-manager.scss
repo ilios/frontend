@@ -16,7 +16,7 @@
   }
 
   .copy-btn {
-    background-color: c.$fernGreen;
+    background-color: var(--fern-green);
   }
 
   .notes,
@@ -34,7 +34,7 @@
 
   h2 {
     @include m.ilios-heading;
-    color: c.$raisinBlack;
+    color: var(--raisin-black);
     @include m.font-size("base");
     font-weight: bold;
   }
@@ -62,13 +62,13 @@
     }
 
     .add-date {
-      border: 1px solid c.$fernGreen;
-      color: c.$fernGreen;
+      border: 1px solid var(--fern-green);
+      color: var(--fern-green);
     }
 
     .remove-date {
-      border: 1px solid c.$rosewood;
-      color: c.$rosewood;
+      border: 1px solid var(--rosewood);
+      color: var(--rosewood);
     }
   }
 

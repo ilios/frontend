@@ -73,31 +73,31 @@
     transition: all 0.08s linear;
 
     &:enabled:hover {
-      color: c.$white;
+      color: var(--white);
     }
 
     &.done {
-      background-color: c.$white;
-      border-color: c.$fernGreen;
-      color: c.$raisinBlack;
+      background-color: var(--white);
+      border-color: var(--fern-green);
+      color: var(--raisin-black);
 
       &:enabled {
         &:hover,
         &:active,
         &.active {
-          background-color: c.$fernGreen;
-          color: c.$white;
+          background-color: var(--fern-green);
+          color: var(--white);
         }
       }
     }
 
     &.cancel {
-      background-color: c.$white;
-      border-color: c.$crimson;
-      color: c.$crimson;
+      background-color: var(--white);
+      border-color: var(--crimson);
+      color: var(--crimson);
 
       &:enabled:hover {
-        background-color: c.$crimson;
+        background-color: var(--crimson);
       }
     }
   }
@@ -114,13 +114,13 @@
 
 @mixin ilios-form-error {
   .validation-error-message {
-    color: c.$rosewood;
+    color: var(--rosewood);
     @include font-size.font-size("small");
   }
 
   input {
     &.has-error {
-      border-color: c.$crimson;
+      border-color: var(--crimson);
     }
   }
 }

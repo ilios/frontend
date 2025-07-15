@@ -85,13 +85,13 @@
 
           button.cancel {
             background: transparent;
-            color: c.$crimson;
+            color: var(--crimson);
             margin: 0;
             padding: 0 0.2rem;
 
             &:enabled:hover {
-              color: c.$white;
-              background-color: c.$crimson;
+              color: var(--white);
+              background-color: var(--crimson);
             }
           }
         }
@@ -121,7 +121,7 @@
         width: 5rem;
 
         &:invalid {
-          border: 1px c.$crimson solid;
+          border: 1px var(--crimson) solid;
         }
       }
     }
@@ -151,7 +151,7 @@
     }
 
     .validation-error-message {
-      color: c.$rosewood;
+      color: var(--rosewood);
       display: block;
       @include m.font-size("small");
       font-style: italic;

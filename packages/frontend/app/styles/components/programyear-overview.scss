@@ -3,9 +3,9 @@
 @use "../ilios-common/constants";
 
 .programyear-overview {
-  @include m.ilios-overview(c.$orange);
-  background: c.$slightWhite;
-  border-top: 1px dotted c.$orange;
+  @include m.ilios-overview(var(--orange));
+  background: var(--slight-white);
+  border-top: 1px dotted var(--orange);
   border-bottom: 0;
   margin: 0 1.5rem;
   padding: 0 0.8rem 1rem 0.8rem;
@@ -21,7 +21,7 @@
       @include m.ilios-overview-actions;
 
       a {
-        color: c.$blueMunsell;
+        color: var(--blue-munsell);
         @include m.font-size("medium");
       }
     }

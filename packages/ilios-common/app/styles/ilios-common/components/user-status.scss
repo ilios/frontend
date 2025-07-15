@@ -1,5 +1,5 @@
 @use "../colors" as c;
 
 .user-status {
-  color: c.$davysGrey;
+  color: var(--davys-grey);
 }

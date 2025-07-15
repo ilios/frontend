@@ -55,12 +55,12 @@
     justify-content: space-around;
 
     & > .active {
-      color: c.$blueMunsell;
+      color: var(--blue-munsell);
       cursor: pointer;
     }
 
     & > .disabled {
-      color: c.$davysGrey;
+      color: var(--davys-grey);
     }
   }
 

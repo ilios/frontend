@@ -5,7 +5,7 @@
   padding-left: 0.8rem;
 
   .material-list {
-    border-top: 1px dotted c.$orange;
+    border-top: 1px dotted var(--orange);
     padding-top: 0.5rem;
 
     table {
@@ -34,6 +34,6 @@
   }
 
   .fa-spinner.orange {
-    color: c.$orange;
+    color: var(--orange);
   }
 }

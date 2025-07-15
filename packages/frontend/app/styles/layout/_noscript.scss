@@ -3,9 +3,9 @@
 
 noscript {
   p {
-    background-color: c.$slightWhite;
-    border: 2px dashed c.$orange;
-    color: c.$raisinBlack;
+    background-color: var(--slight-white);
+    border: 2px dashed var(--orange);
+    color: var(--raisin-black);
     @include m.font-size("xxl");
     font-weight: bold;
     margin: 2rem;
