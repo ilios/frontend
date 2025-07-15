@@ -4,29 +4,18 @@
 @use "sass:math";
 
 .progress-bar {
-  $progress-border-color: c.$culturedGrey;
-  $progress-border: 1px solid $progress-border-color;
-  $progress-meter-border-color: c.$orange;
-  $progress-meter-border: 1px solid
-    hsl(from $progress-meter-border-color h s calc(l - 15));
-  $progress-meter-color: $progress-meter-border-color;
-  $progress-background: hsl(from c.$slightWhite h s calc(l - 5));
-  $progress-animation-duration: 0.7s;
-  $progress-color: c.$white;
-  $box-shadow-color: hsl(from $progress-background h s calc(l - 50));
-
-  background-color: $progress-background;
-  border: $progress-border;
+  background-color: hsl(from c.$slightWhite h s calc(l - 5));
+  border: 1px solid c.$culturedGrey;
   border-radius: 3px;
-  box-shadow: inset 0 0 3px 0 rgba($box-shadow-color, 0.15);
+  box-shadow: inset 0 0 3px 0 hsl(from c.$slightWhite h s calc(l - 55) / 0.15);
   margin: 0 auto;
   width: 100%;
 
   > .meter {
-    background-color: $progress-meter-color;
+    background-color: c.$orange;
     background-repeat: repeat-x;
     background-size: 40px 40px;
-    border: $progress-meter-border;
+    border: 1px solid hsl(from c.$orange h s calc(l - 15));
     border-radius: math.div(3px, 1.5);
     border-bottom-right-radius: 0;
     border-top-right-radius: 0;
@@ -37,7 +26,7 @@
   }
 
   p {
-    color: $progress-color;
+    color: c.$white;
     margin: 0;
     padding: 0.1rem 0.5rem;
     text-shadow: 0 0 1px c.$black;

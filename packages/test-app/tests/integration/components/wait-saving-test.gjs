@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
-import { fillIn, render, waitFor, settled } from '@ember/test-helpers';
+import { fillIn, render, waitFor, settled, find } from '@ember/test-helpers';
 import WaitSaving from 'ilios-common/components/wait-saving';
 
 module('Integration | Component | wait saving', function (hooks) {
@@ -10,6 +10,22 @@ module('Integration | Component | wait saving', function (hooks) {
     await render(<template><WaitSaving /></template>);
 
     assert.dom(this.element).hasText('saving... one moment...');
+  });
+
+  test('it renders progress bar', async function (assert) {
+    this.set('currentProgress', 25);
+    await render(
+      <template>
+        <WaitSaving
+          @showProgress={{true}}
+          @totalProgress={{100}}
+          @currentProgress={{this.currentProgress}}
+        />
+      </template>,
+    );
+    assert.strictEqual(find('.meter').getAttribute('style'), 'width: 25%');
+    this.set('currentProgress', 42);
+    assert.strictEqual(find('.meter').getAttribute('style'), 'width: 42%');
   });
 
   test('it in block form', async function (assert) {
