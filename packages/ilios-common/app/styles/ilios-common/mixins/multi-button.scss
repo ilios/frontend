@@ -12,7 +12,7 @@
   label {
     background-color: var(--white);
     color: var(--teal-blue);
-    border: 1px solid rgba(var(--black), 0.2);
+    border: 1px solid hsl(from var(--black) h s l / 0.2);
     display: inline-block;
     @include font-size.font-size("small");
     font-weight: 600;
