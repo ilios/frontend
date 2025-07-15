@@ -22,7 +22,7 @@
   }
 
   .ilios-calendar-event-time {
-    color: c.$rosewood;
+    color: var(--rosewood);
     display: block;
     @include m.font-size("small");
     font-weight: bold;

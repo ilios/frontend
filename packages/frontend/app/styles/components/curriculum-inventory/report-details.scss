@@ -13,7 +13,7 @@
     background-color: var(--lavender-blush);
 
     .confirm-message {
-      color: c.$rosewood;
+      color: var(--rosewood);
       font-weight: bold;
       padding: 1rem 10%;
       text-align: center;
@@ -25,7 +25,7 @@
 
     .finalize {
       background-color: var(--white);
-      color: c.$rosewood;
+      color: var(--rosewood);
 
       &:hover {
         background-color: var(--crimson);

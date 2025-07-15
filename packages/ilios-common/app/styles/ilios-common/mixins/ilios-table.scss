@@ -94,7 +94,7 @@
       background-color: var(--lavender-blush);
 
       .confirm-message {
-        color: c.$rosewood;
+        color: var(--rosewood);
         font-weight: bold;
         padding-left: 8em;
         padding-right: 8em;
@@ -113,7 +113,7 @@
 
       .remove {
         background-color: var(--white);
-        color: c.$rosewood;
+        color: var(--rosewood);
 
         &:hover {
           background-color: var(--crimson);

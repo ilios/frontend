@@ -30,7 +30,7 @@
     }
 
     .validation-error-message {
-      color: c.$rosewood;
+      color: var(--rosewood);
       display: block;
       @include m.font-size("small");
       font-style: italic;

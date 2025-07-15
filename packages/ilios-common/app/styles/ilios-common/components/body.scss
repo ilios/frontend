@@ -79,12 +79,12 @@ p {
 
 .remove,
 .no {
-  color: c.$rosewood;
+  color: var(--rosewood);
 }
 
 .error,
 .is-error {
-  color: c.$rosewood;
+  color: var(--rosewood);
 }
 
 .warning,

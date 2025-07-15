@@ -34,14 +34,14 @@
       }
 
       .recently-updated-icon {
-        color: c.$rosewood;
+        color: var(--rosewood);
         position: absolute;
         right: 2px;
         top: 2px;
       }
 
       .recently-updated-icon-event {
-        color: c.$rosewood;
+        color: var(--rosewood);
       }
     }
 
