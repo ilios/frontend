@@ -74,7 +74,7 @@
         border-width: 0 1px 1px 1px;
         border-style: solid;
         border-color: c.$slightWhite;
-        box-shadow: 0 2px 2px color.adjust(c.$black, $alpha: -0.8);
+        box-shadow: 0 2px 2px hsl(from c.$black h s l / 0.2);
         color: c.$raisinBlack;
         max-height: 15rem;
         overflow-y: scroll;

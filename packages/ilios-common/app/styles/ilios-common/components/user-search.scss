@@ -11,7 +11,7 @@
     background: c.$white;
     border: 1px solid c.$slightWhite;
     border-radius: 3px;
-    box-shadow: 0 2px 2px color.adjust(c.$black, $alpha: -0.8);
+    box-shadow: 0 2px 2px hsl(from c.$black h s l / 0.2);
     color: c.$raisinBlack;
     left: 0;
     max-height: 15rem;
