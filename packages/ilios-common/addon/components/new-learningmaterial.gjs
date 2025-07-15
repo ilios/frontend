@@ -5,7 +5,6 @@ import { action } from '@ember/object';
 import { guidFor } from '@ember/object/internals';
 import { dropTask } from 'ember-concurrency';
 import { TrackedAsyncData } from 'ember-async-data';
-import scrollIntoView from 'scroll-into-view';
 import { findBy, findById } from 'ilios-common/utils/array-helpers';
 import YupValidations from 'ilios-common/classes/yup-validations';
 import { boolean, string } from 'yup';
@@ -183,13 +182,11 @@ export default class NewLearningmaterialComponent extends Component {
     return this.link ?? DEFAULT_URL_VALUE;
   }
 
-  scrollTo(idPrefix) {
+  focusOn(idPrefix) {
     const id = idPrefix + '-' + this.uniqueId;
     const element = document.getElementById(id);
     if (element) {
-      scrollIntoView(element);
-      // Setting focus doesn't work.
-      // element.focus();
+      element.focus();
     }
   }
 
@@ -198,19 +195,19 @@ export default class NewLearningmaterialComponent extends Component {
     const isValid = await this.validations.isValid();
     if (!isValid) {
       if (this.hasValidationErrorForTitle) {
-        this.scrollTo('display-name');
+        this.focusOn('display-name');
       } else if (this.hasValidationErrorForOriginalAuthor) {
-        this.scrollTo('original-author');
+        this.focusOn('original-author');
       } else if (this.hasValidationErrorForCopyrightPermission) {
-        this.scrollTo('copyright-permission');
+        this.focusOn('copyright-permission');
       } else if (this.hasValidationErrorForCopyrightRationale) {
-        this.scrollTo('copyright-rationale');
+        this.focusOn('copyright-rationale');
       } else if (this.hasValidationErrorForFileHash || this.hasValidationErrorForFilename) {
-        this.scrollTo('learning-material-uploader');
+        this.focusOn('learning-material-uploader');
       } else if (this.hasValidationErrorForLink) {
-        this.scrollTo('url');
+        this.focusOn('url');
       } else if (this.hasValidationErrorForCitation) {
-        this.scrollTo('citation');
+        this.focusOn('citation');
       }
       return false;
     }
