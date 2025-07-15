@@ -85,13 +85,13 @@
         opacity: 0.3;
       }
       &.dragged-above {
-        border-top: 0.7rem solid c.$orange;
+        border-top: 0.7rem solid var(--orange);
         border-top-left-radius: 0;
         border-top-right-radius: 0;
         padding: 0.3rem 1rem 1rem 1rem;
       }
       &.dragged-below {
-        border-bottom: 0.7rem solid c.$orange;
+        border-bottom: 0.7rem solid var(--orange);
         border-bottom-left-radius: 0;
         border-bottom-right-radius: 0;
         padding: 1rem 1rem 0.3rem 1rem;

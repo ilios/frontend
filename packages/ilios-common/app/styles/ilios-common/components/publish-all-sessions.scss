@@ -7,7 +7,7 @@
   padding-left: 1rem;
 
   section {
-    @include m.detail-container(c.$orange);
+    @include m.detail-container(var(--orange));
 
     .title {
       @include m.detail-container-title;

@@ -9,7 +9,7 @@
   }
 
   .block {
-    @include m.detail-container(c.$orange);
+    @include m.detail-container(var(--orange));
     background-color: var(--white);
     padding: 0.5rem;
 

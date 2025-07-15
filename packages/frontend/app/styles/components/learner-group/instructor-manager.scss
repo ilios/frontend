@@ -2,8 +2,8 @@
 @use "../../ilios-common/mixins" as m;
 
 .learner-group-instructor-manager {
-  @include m.detail-container(c.$orange);
-  border-top: 1px dotted c.$orange;
+  @include m.detail-container(var(--orange));
+  border-top: 1px dotted var(--orange);
 
   .detail-header {
     @include m.detail-container-header;

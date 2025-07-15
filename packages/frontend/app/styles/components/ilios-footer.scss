@@ -5,7 +5,7 @@
 @use "sass:color";
 
 .ilios-footer {
-  background-color: c.$orange;
+  background-color: var(--orange);
   display: flex;
   height: 20px;
   justify-content: flex-end;

@@ -4,7 +4,7 @@
 @use "sass:color";
 
 .learner-group-bulk-assignment {
-  border-bottom: 1px solid c.$orange;
+  border-bottom: 1px solid var(--orange);
   margin-bottom: 2rem;
   padding: 1rem;
 

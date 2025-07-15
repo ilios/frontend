@@ -2,7 +2,7 @@
 @use "../../ilios-common/mixins" as m;
 
 .school-emails-editor {
-  @include m.detail-container(c.$orange);
+  @include m.detail-container(var(--orange));
 
   .header {
     @include m.detail-container-header;

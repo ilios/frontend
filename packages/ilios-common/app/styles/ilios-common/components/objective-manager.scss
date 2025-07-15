@@ -13,7 +13,7 @@
   }
 
   .selected {
-    background-color: c.$orange;
+    background-color: var(--orange);
     color: var(--white);
   }
 
@@ -34,7 +34,7 @@
   }
 
   .no-group {
-    color: c.$orange;
+    color: var(--orange);
     font-weight: bold;
   }
 

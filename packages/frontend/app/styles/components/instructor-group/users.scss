@@ -2,7 +2,7 @@
 @use "../../ilios-common/mixins" as m;
 
 .instructor-group-users {
-  @include m.detail-container(c.$orange);
+  @include m.detail-container(var(--orange));
 
   .instructor-group-users-header {
     @include m.detail-container-header;

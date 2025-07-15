@@ -4,7 +4,7 @@
 @use "../ilios-form";
 
 @mixin course-overview() {
-  @include ilios-overview.ilios-overview(c.$orange);
+  @include ilios-overview.ilios-overview(var(--orange));
   padding: 0.5rem 0;
   @include ilios-form.ilios-form-error;
 

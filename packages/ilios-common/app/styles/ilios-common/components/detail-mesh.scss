@@ -2,7 +2,7 @@
 @use "../mixins" as m;
 
 .detail-mesh {
-  @include m.detail-container(c.$orange);
+  @include m.detail-container(var(--orange));
 
   .detail-mesh-header {
     @include m.detail-container-header;

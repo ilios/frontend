@@ -69,7 +69,7 @@
       text-transform: capitalize;
 
       .fa-spinner.orange {
-        color: c.$orange;
+        color: var(--orange);
       }
     }
   }

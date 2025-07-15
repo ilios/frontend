@@ -17,7 +17,7 @@
       grid-column: 1 / -1;
 
       .offering-block-date-dayofweek {
-        color: c.$orange;
+        color: var(--orange);
         display: block;
         @include m.font-size("medium");
         font-weight: bold;

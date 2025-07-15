@@ -2,7 +2,7 @@
 @use "../ilios-common/mixins" as m;
 
 .school-competencies-expanded {
-  @include m.detail-container(c.$orange);
+  @include m.detail-container(var(--orange));
 
   .school-competencies-expanded-header {
     @include m.detail-container-header;

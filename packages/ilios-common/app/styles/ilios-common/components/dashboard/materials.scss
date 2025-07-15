@@ -17,7 +17,7 @@
     }
 
     .material-list {
-      border-bottom: 1px dotted c.$orange;
+      border-bottom: 1px dotted var(--orange);
       display: grid;
       margin-bottom: 2rem;
       padding-bottom: 1rem;
@@ -65,7 +65,7 @@
     }
 
     .fa-spinner.orange {
-      color: c.$orange;
+      color: var(--orange);
     }
 
     .paginator {

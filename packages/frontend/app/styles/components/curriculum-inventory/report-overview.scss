@@ -2,8 +2,8 @@
 @use "../../ilios-common/mixins" as m;
 
 .curriculum-inventory-report-overview {
-  @include m.ilios-overview(c.$orange);
-  border-bottom: 1px dotted c.$orange;
+  @include m.ilios-overview(var(--orange));
+  border-bottom: 1px dotted var(--orange);
   display: block;
 
   .report-overview-header {

@@ -81,7 +81,7 @@
     background: c.$crimson;
   }
   meter[value="2"]::-webkit-meter-optimum-value {
-    background: c.$orange;
+    background: var(--orange);
   }
   meter[value="3"]::-webkit-meter-optimum-value {
     background: c.$gold;
@@ -97,7 +97,7 @@
     background: c.$crimson;
   }
   meter[value="2"]:-moz-meter-bar {
-    background: c.$orange;
+    background: var(--orange);
   }
   meter[value="3"]:-moz-meter-bar {
     background: c.$gold;
@@ -123,7 +123,7 @@
     }
 
     &.strength-2 {
-      color: c.$orange;
+      color: var(--orange);
     }
 
     &.strength-3 {

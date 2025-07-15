@@ -4,7 +4,7 @@
 noscript {
   p {
     background-color: var(--slight-white);
-    border: 2px dashed c.$orange;
+    border: 2px dashed var(--orange);
     color: var(--raisin-black);
     @include m.font-size("xxl");
     font-weight: bold;

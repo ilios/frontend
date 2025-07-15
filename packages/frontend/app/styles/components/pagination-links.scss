@@ -47,8 +47,8 @@
     padding: 0.125rem 0;
 
     &:hover {
-      background: c.$orange;
-      border: 1px solid c.$orange;
+      background: var(--orange);
+      border: 1px solid var(--orange);
       color: var(--white);
     }
 

@@ -2,7 +2,7 @@
 @use "../mixins" as m;
 
 .detail-cohorts {
-  @include m.detail-container(c.$orange);
+  @include m.detail-container(var(--orange));
 
   .detail-cohorts-header {
     @include m.detail-container-header;

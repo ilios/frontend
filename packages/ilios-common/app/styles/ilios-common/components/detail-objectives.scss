@@ -2,7 +2,7 @@
 @use "../mixins" as m;
 
 .detail-objectives {
-  @include m.detail-container(c.$orange);
+  @include m.detail-container(var(--orange));
 
   .detail-objectives-header {
     @include m.detail-container-header;

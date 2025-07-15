@@ -2,7 +2,7 @@
 @use "../mixins" as m;
 
 .leadership-expanded {
-  @include m.detail-container(c.$orange);
+  @include m.detail-container(var(--orange));
 
   .leadership-expanded-header {
     @include m.detail-container-header;

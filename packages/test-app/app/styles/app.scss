@@ -35,12 +35,12 @@
 
   & > .logo {
     grid-area: logo;
-    background-color: c.$orange;
+    background-color: var(--orange);
   }
 
   & > header {
     grid-area: header;
-    background-color: c.$orange;
+    background-color: var(--orange);
   }
 
   & > main {

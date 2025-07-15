@@ -31,7 +31,7 @@
         .highlight {
           align-items: center;
           display: flex;
-          color: c.$orange;
+          color: var(--orange);
           @include m.font-size("large");
 
           @include m.for-phone-only {

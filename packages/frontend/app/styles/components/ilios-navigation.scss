@@ -91,7 +91,8 @@
 
   @include m.for-laptop-and-up {
     display: block;
-    border-bottom: calc(20px * constants.$golden-ratio-large) solid c.$orange;
+    border-bottom: calc(20px * constants.$golden-ratio-large) solid
+      var(--orange);
 
     ul {
       bottom: 0;

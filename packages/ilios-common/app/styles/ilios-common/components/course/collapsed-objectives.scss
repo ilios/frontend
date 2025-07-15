@@ -2,7 +2,7 @@
 @use "../../mixins" as m;
 
 .course-collapsed-objectives {
-  @include m.collapsed-container(c.$orange);
+  @include m.collapsed-container(var(--orange));
 
   .title {
     @include m.collapsed-container-title;

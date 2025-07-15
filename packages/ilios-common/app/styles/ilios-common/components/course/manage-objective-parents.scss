@@ -23,7 +23,7 @@
       }
 
       &.selected {
-        border-left: 10px solid c.$orange;
+        border-left: 10px solid var(--orange);
 
         .competency-title {
           color: c.$fernGreen;

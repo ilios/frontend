@@ -2,7 +2,7 @@
 @use "../ilios-common/mixins" as m;
 
 .school-competencies-collapsed {
-  @include m.collapsed-container(c.$orange);
+  @include m.collapsed-container(var(--orange));
 
   .title {
     @include m.collapsed-container-title;

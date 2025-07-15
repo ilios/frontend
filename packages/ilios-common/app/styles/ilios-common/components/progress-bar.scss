@@ -13,10 +13,10 @@
   width: 100%;
 
   > .meter {
-    background-color: c.$orange;
+    background-color: var(--orange);
     background-repeat: repeat-x;
     background-size: 40px 40px;
-    border: 1px solid hsl(from c.$orange h s calc(l - 15));
+    border: 1px solid hsl(from var(--orange) h s calc(l - 15));
     border-radius: math.div(3px, 1.5);
     border-bottom-right-radius: 0;
     border-top-right-radius: 0;

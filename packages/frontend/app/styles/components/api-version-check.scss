@@ -1,10 +1,6 @@
 @use "../ilios-common/colors" as c;
 @use "../ilios-common/mixins" as m;
 
-.api-version-check-warning {
-  background-color: rgba(c.$orange, 0.95);
-}
-
 .api-version-check-container {
   width: 80%;
 

@@ -17,7 +17,7 @@
         padding: 0;
       }
       &.selected {
-        border-left: 10px solid c.$orange;
+        border-left: 10px solid var(--orange);
 
         .domain-title {
           color: c.$fernGreen;

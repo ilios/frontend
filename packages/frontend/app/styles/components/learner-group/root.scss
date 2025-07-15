@@ -7,7 +7,7 @@
   @include m.main-section;
 
   .learner-group-overview {
-    @include m.ilios-overview(c.$orange);
+    @include m.ilios-overview(var(--orange));
 
     .block {
       @include m.ilios-overview-block;
@@ -61,7 +61,7 @@
     }
 
     .learner-group-overview-content {
-      border-bottom: 1px dotted c.$orange;
+      border-bottom: 1px dotted var(--orange);
     }
   }
 

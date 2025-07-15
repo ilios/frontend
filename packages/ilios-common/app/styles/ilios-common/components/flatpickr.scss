@@ -6,7 +6,7 @@
   .flatpickr-next-month,
   .flatpickr-prev-month {
     color: var(--white);
-    background: c.$orange;
+    background: var(--orange);
 
     svg {
       fill: var(--white);
@@ -44,9 +44,9 @@
 span.flatpickr-weekday,
 .flatpickr-day.selected {
   color: var(--white);
-  background: c.$orange;
+  background: var(--orange);
 }
 
 .flatpickr-day.selected {
-  border-color: c.$orange;
+  border-color: var(--orange);
 }
