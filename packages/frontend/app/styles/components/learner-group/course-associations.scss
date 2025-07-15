@@ -3,7 +3,7 @@
 
 .learner-group-course-associations {
   @include m.detail-container-content;
-  border-top: 1px dotted c.$orange;
+  border-top: 1px dotted (var(--orange));
 
   .header {
     @include m.detail-container-header;
