@@ -14,7 +14,7 @@
   .small-component,
   .large-component {
     background-color: c.$culturedGrey;
-    border: 1px solid c.$blueMunsell;
+    border: 1px solid var(--blue-munsell);
     border-radius: 5px;
     margin-bottom: 1rem;
     min-height: 5rem;

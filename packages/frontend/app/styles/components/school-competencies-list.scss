@@ -65,7 +65,7 @@
     }
 
     &.is-managing {
-      border: 2px solid c.$blueMunsell;
+      border: 2px solid var(--blue-munsell);
       .grid-item {
         background-color: c.$culturedGrey;
         border: 0;

@@ -14,7 +14,7 @@
   &:hover,
   &:active,
   &:focus {
-    color: c.$blueMunsell;
+    color: var(--blue-munsell);
     outline: thin dotted;
     text-decoration: underline;
   }

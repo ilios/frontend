@@ -15,7 +15,7 @@
       width: 100%;
 
       i {
-        color: c.$blueMunsell;
+        color: var(--blue-munsell);
         @include m.font-size("xxl");
         font-weight: 600;
         margin: 0;

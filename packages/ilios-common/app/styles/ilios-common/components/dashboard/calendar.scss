@@ -37,7 +37,7 @@
       }
 
       .calendar-filter-list {
-        border: 1px solid c.$blueMunsell;
+        border: 1px solid var(--blue-munsell);
         float: left;
         @include m.font-size("small");
         margin-bottom: 1em;
@@ -124,23 +124,23 @@
         }
 
         .tag-session-type {
-          background-color: hsl(from c.$blueMunsell h s calc(l + 30));
+          background-color: hsl(from var(--blue-munsell) h s calc(l + 30));
         }
 
         .tag-course-level {
-          background-color: hsl(from c.$blueMunsell h s calc(l + 40));
+          background-color: hsl(from var(--blue-munsell) h s calc(l + 40));
         }
 
         .tag-cohort {
-          background-color: hsl(from c.$blueMunsell h s calc(l + 50));
+          background-color: hsl(from var(--blue-munsell) h s calc(l + 50));
         }
 
         .tag-course {
-          background-color: hsl(from c.$blueMunsell h s calc(l + 60));
+          background-color: hsl(from var(--blue-munsell) h s calc(l + 60));
         }
 
         .tag-term {
-          background-color: hsl(from c.$blueMunsell h s calc(l + 40));
+          background-color: hsl(from var(--blue-munsell) h s calc(l + 40));
         }
 
         .filters-clear-filters {

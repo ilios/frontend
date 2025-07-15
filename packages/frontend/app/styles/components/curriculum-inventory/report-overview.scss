@@ -18,7 +18,7 @@
 
       a,
       span {
-        color: c.$blueMunsell;
+        color: var(--blue-munsell);
         @include m.font-size("medium");
         margin-right: 0.5rem;
       }

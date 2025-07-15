@@ -2,7 +2,7 @@
 @use "../mixins" as m;
 
 .ilios-calendar-multiday-events {
-  border: 1px dotted c.$blueMunsell;
+  border: 1px dotted var(--blue-munsell);
   margin-top: 1em;
   padding: 1em 0;
 

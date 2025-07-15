@@ -24,7 +24,7 @@
     @include ilios-overview.ilios-overview-actions;
 
     span {
-      color: c.$blueMunsell;
+      color: var(--blue-munsell);
     }
 
     a,

@@ -2,7 +2,7 @@
 @use "../mixins" as m;
 
 .learnergroup-selection-cohort-manager {
-  border: 1px solid c.$blueMunsell;
+  border: 1px solid var(--blue-munsell);
 
   h5 {
     margin-bottom: 0.5rem;

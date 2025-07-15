@@ -55,7 +55,7 @@
         color: var(--slight-white);
 
         &:hover {
-          background-color: c.$blueMunsell;
+          background-color: var(--blue-munsell);
         }
       }
     }
@@ -85,7 +85,7 @@
 
   @include m.for-smaller-than-laptop {
     a.active {
-      background-color: c.$blueMunsell;
+      background-color: var(--blue-munsell);
     }
   }
 
@@ -133,7 +133,7 @@
       }
 
       .if-active {
-        color: c.$blueMunsell;
+        color: var(--blue-munsell);
         justify-self: end;
         font-weight: bold;
       }
@@ -142,7 +142,7 @@
         .if-active {
           display: inline;
         }
-        color: c.$blueMunsell;
+        color: var(--blue-munsell);
 
         .text {
           color: hsl(0, 0%, 92%);
@@ -151,7 +151,7 @@
     }
 
     &:hover {
-      background-color: c.$blueMunsell;
+      background-color: var(--blue-munsell);
       color: hsl(0, 0%, 92%);
 
       .if-active {

@@ -14,7 +14,7 @@
     }
 
     &.is-expanded {
-      border: 1px solid c.$blueMunsell;
+      border: 1px solid var(--blue-munsell);
       background-color: c.$lightBlue;
       margin: 0.5rem 0;
     }

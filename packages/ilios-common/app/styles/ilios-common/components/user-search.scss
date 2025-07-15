@@ -27,7 +27,7 @@
 
       &.active,
       &:hover {
-        background-color: hsl(from c.$blueMunsell h s calc(l + 50));
+        background-color: hsl(from var(--blue-munsell) h s calc(l + 50));
         cursor: pointer;
       }
 

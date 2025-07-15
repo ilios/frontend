@@ -56,7 +56,7 @@
     }
 
     .fa-chart-column {
-      color: c.$blueMunsell;
+      color: var(--blue-munsell);
       @include m.font-size("small");
     }
 
