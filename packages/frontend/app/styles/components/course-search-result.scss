@@ -32,7 +32,7 @@
     padding: 0.25rem 0.75rem 0;
 
     .sessions {
-      color: c.$davysGrey;
+      color: var(--davys-grey);
       @include m.font-size("small");
     }
   }
@@ -59,7 +59,7 @@
 
     .global-search-tag {
       background: var(--slight-white);
-      border: 1px solid c.$davysGrey;
+      border: 1px solid var(--davys-grey);
       border-radius: 0.125rem;
       color: var(--raisin-black);
       display: inline-block;

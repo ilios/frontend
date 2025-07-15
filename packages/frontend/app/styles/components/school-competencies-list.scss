@@ -14,7 +14,7 @@
     margin-right: 0.5rem;
 
     .grid-item {
-      border-bottom: 1px solid c.$davysGrey;
+      border-bottom: 1px solid var(--davys-grey);
       padding: 0.5rem 0.25rem;
 
       &.competency {

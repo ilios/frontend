@@ -49,13 +49,13 @@
 
     button {
       &.disabled {
-        background-color: c.$davysGrey;
+        background-color: var(--davys-grey);
         cursor: default;
       }
 
       &:disabled {
         background-color: c.$culturedGrey;
-        border-color: c.$davysGrey;
+        border-color: var(--davys-grey);
         color: var(--white);
         cursor: default;
       }

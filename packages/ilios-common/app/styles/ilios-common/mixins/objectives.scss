@@ -70,7 +70,7 @@
     grid-template-rows: auto;
 
     .grid-item {
-      border-bottom: 1px solid c.$davysGrey;
+      border-bottom: 1px solid var(--davys-grey);
       padding: 0.5em 0.25em;
 
       &:has(.faded) {

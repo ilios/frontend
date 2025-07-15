@@ -48,7 +48,7 @@
           @include m.font-size("base");
           display: block;
           background-color: c.$culturedGrey;
-          border-bottom: 0.5px solid c.$davysGrey;
+          border-bottom: 0.5px solid var(--davys-grey);
           height: 7vh;
           padding: 0.25em;
           width: 100%;
@@ -106,7 +106,7 @@
 
       .filters-header {
         background: c.$culturedGrey;
-        border-bottom: 1px solid c.$davysGrey;
+        border-bottom: 1px solid var(--davys-grey);
         @include m.font-size("small");
       }
 

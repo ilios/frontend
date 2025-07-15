@@ -30,7 +30,7 @@
 
   & > nav {
     grid-area: nav;
-    background-color: c.$davysGrey;
+    background-color: var(--davys-grey);
   }
 
   & > .logo {

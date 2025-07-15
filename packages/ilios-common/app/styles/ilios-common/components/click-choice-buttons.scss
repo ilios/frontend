@@ -3,7 +3,7 @@
 .click-choice-buttons {
   button {
     background-color: c.$culturedGrey;
-    border: 1px outset c.$davysGrey;
+    border: 1px outset var(--davys-grey);
     color: var(--raisin-black);
 
     &.active {

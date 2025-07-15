@@ -5,7 +5,7 @@
 /* stylelint-disable property-disallowed-list */
 @use "sass:color";
 .ilios-navigation {
-  background-color: c.$davysGrey;
+  background-color: var(--davys-grey);
   display: grid;
   grid-auto-flow: column;
   grid-template-columns: 2rem auto;
@@ -33,7 +33,7 @@
 
         &:first-of-type {
           padding-top: 2px;
-          border-top: 2px solid c.$davysGrey;
+          border-top: 2px solid var(--davys-grey);
         }
       }
     }

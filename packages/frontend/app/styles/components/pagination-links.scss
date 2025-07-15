@@ -11,7 +11,7 @@
     text-transform: uppercase;
 
     &:disabled {
-      color: c.$davysGrey;
+      color: var(--davys-grey);
       cursor: default;
     }
 
@@ -39,8 +39,8 @@
 
   .page-button {
     background: var(--slight-white);
-    border: 1px solid c.$davysGrey;
-    color: c.$davysGrey;
+    border: 1px solid var(--davys-grey);
+    color: var(--davys-grey);
     display: inline-block;
     min-width: 2rem;
     outline: none;

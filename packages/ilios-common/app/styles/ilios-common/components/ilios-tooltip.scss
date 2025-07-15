@@ -7,7 +7,7 @@
   .content {
     background: var(--slight-white);
     padding: 0.25rem 0.5rem;
-    border: 1px solid c.$davysGrey;
+    border: 1px solid var(--davys-grey);
     border-radius: 4px;
     max-width: 80%;
 
@@ -22,8 +22,8 @@
     .arrow::before {
       content: "";
       transform: rotate(45deg);
-      background: c.$davysGrey;
-      border: 1px solid c.$davysGrey;
+      background: var(--davys-grey);
+      border: 1px solid var(--davys-grey);
     }
   }
   &[data-popper-placement^="top"] .arrow {

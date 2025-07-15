@@ -12,7 +12,7 @@
     }
     &.disabled {
       cursor: default;
-      background-color: c.$davysGrey;
+      background-color: var(--davys-grey);
     }
   }
 

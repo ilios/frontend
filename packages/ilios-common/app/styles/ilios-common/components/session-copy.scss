@@ -22,8 +22,8 @@
       @include m.ilios-form-buttons;
 
       button:disabled {
-        background-color: c.$davysGrey;
-        border-color: c.$davysGrey;
+        background-color: var(--davys-grey);
+        border-color: var(--davys-grey);
         color: var(--white);
         cursor: default;
       }

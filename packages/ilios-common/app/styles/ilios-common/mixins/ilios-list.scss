@@ -106,7 +106,7 @@
     }
 
     &.disabled {
-      color: c.$davysGrey;
+      color: var(--davys-grey);
       cursor: default;
     }
   }
@@ -172,7 +172,7 @@
     }
 
     &.disabled {
-      color: c.$davysGrey;
+      color: var(--davys-grey);
     }
   }
 }

@@ -107,7 +107,7 @@ p {
 }
 
 .notpublished {
-  color: c.$davysGrey;
+  color: var(--davys-grey);
 }
 
 .scheduled {

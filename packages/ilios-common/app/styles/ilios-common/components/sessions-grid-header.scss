@@ -4,7 +4,7 @@
 .sessions-grid-header {
   @include m.sessions-grid;
   background-color: var(--teal-blue);
-  border-bottom: 1px solid c.$davysGrey;
+  border-bottom: 1px solid var(--davys-grey);
   color: var(--white);
   @include m.font-size("small");
   font-weight: normal;

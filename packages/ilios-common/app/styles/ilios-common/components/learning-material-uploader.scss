@@ -12,7 +12,7 @@
     @include m.font-size("base");
     padding: 0.3em 1em;
     &:hover {
-      background-color: c.$davysGrey;
+      background-color: var(--davys-grey);
       color: var(--white);
     }
   }
