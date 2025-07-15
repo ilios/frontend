@@ -1,20 +1,15 @@
 import Component from '@glimmer/component';
-import { service } from '@ember/service';
-import { action } from '@ember/object';
 import { TrackedAsyncData } from 'ember-async-data';
 import { cached } from '@glimmer/tracking';
 import Overview from 'ilios-common/components/session/overview';
 import { LinkTo } from '@ember/routing';
-import { array } from '@ember/helper';
+import { array, hash } from '@ember/helper';
 import FaIcon from 'ilios-common/components/fa-icon';
 import t from 'ember-intl/helpers/t';
 import scrollIntoView from 'ilios-common/modifiers/scroll-into-view';
 import hasManyLength from 'ilios-common/helpers/has-many-length';
-import { on } from '@ember/modifier';
 
 export default class SessionPublicationCheckComponent extends Component {
-  @service router;
-
   @cached
   get courseData() {
     return new TrackedAsyncData(this.args.session.course);
@@ -59,11 +54,6 @@ export default class SessionPublicationCheckComponent extends Component {
     return objectivesWithoutParents.length > 0;
   }
 
-  @action
-  transitionToSession() {
-    const queryParams = { sessionObjectiveDetails: true };
-    this.router.transitionTo('session', this.args.session, { queryParams });
-  }
   <template>
     <div class="session-publicationcheck" data-test-session-publicationcheck>
       <Overview @session={{@session}} @hideCheckLink={{true}} @sessionTypes={{this.sessionTypes}} />
@@ -133,14 +123,15 @@ export default class SessionPublicationCheckComponent extends Component {
                     {{t "general.yes"}}
                     ({{hasManyLength @session "sessionObjectives"}})
                     {{#if this.showUnlinkIcon}}
-                      <button
-                        class="link-button"
-                        type="button"
-                        {{on "click" this.transitionToSession}}
+                      <LinkTo
+                        @route="session"
+                        @model={{@session}}
+                        @query={{hash sessionObjectiveDetails=true}}
+                        aria-label={{t "general.backToTitle" title=@session.title}}
                         data-test-unlink
                       >
                         <FaIcon @icon="link-slash" />
-                      </button>
+                      </LinkTo>
                     {{/if}}
                   </td>
                 {{else}}
