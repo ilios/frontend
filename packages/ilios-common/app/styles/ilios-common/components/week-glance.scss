@@ -23,7 +23,7 @@
     border-left: 3px solid var(--light-blue);
 
     &:nth-of-type(even) {
-      border-left: 3px solid c.$lavenderBlush;
+      border-left: 3px solid var(--lavender-blush);
     }
 
     p {

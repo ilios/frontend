@@ -33,16 +33,16 @@
   }
 
   &.show-remove-confirmation {
-    background-color: c.$lavenderBlush;
+    background-color: var(--lavender-blush);
     border: 1px solid var(--crimson);
   }
 
   .confirm-removal {
-    background-color: c.$lavenderBlush;
+    background-color: var(--lavender-blush);
     grid-column: 1 / -1;
 
     .confirm-message {
-      background-color: c.$lavenderBlush;
+      background-color: var(--lavender-blush);
       color: c.$rosewood;
       font-weight: bold;
       margin: 0;

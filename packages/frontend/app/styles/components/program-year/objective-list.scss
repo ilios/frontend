@@ -18,7 +18,7 @@
   .objective-row {
     &.is-inactive {
       .grid-item {
-        background-color: c.$lavenderBlush;
+        background-color: var(--lavender-blush);
       }
     }
     .actions {

@@ -91,7 +91,7 @@
 @mixin ilios-removable-table() {
   tbody {
     .confirm-removal {
-      background-color: c.$lavenderBlush;
+      background-color: var(--lavender-blush);
 
       .confirm-message {
         color: c.$rosewood;
@@ -108,7 +108,7 @@
       }
 
       &:hover {
-        background-color: c.$lavenderBlush;
+        background-color: var(--lavender-blush);
       }
 
       .remove {
