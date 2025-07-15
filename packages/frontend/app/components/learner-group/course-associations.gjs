@@ -123,7 +123,7 @@ export default class LearnerGroupCourseAssociationsComponent extends Component {
       >
         {{#if this.isLoaded}}
           <div class="header" data-test-header>
-            <h3 class="title" data-test-title>
+            <h2 class="title" data-test-title>
               {{#if this.hasAssociations}}
                 {{#if @isExpanded}}
                   <button
@@ -158,7 +158,7 @@ export default class LearnerGroupCourseAssociationsComponent extends Component {
                 {{t "general.associatedCourses"}}
                 ({{this.associations.length}})
               {{/if}}
-            </h3>
+            </h2>
           </div>
           {{#if this.hasAssociations}}
             <div
