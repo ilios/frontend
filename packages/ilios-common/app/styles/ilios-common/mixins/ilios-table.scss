@@ -77,7 +77,7 @@
   }
 }
 
-@mixin ilios-table-colors($backgroundColor: c.$slightWhite) {
+@mixin ilios-table-colors($backgroundColor: var(--slight-white)) {
   thead {
     background-color: $backgroundColor;
   }

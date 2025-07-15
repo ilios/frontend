@@ -6,7 +6,7 @@
   $breadcrumb-border: 1px solid $breadcrumb-border-color;
   $breadcrumb-height: 2rem;
   $breadcrumb-arrow-color: $breadcrumb-border-color;
-  $breadcrumb-background: c.$slightWhite;
+  $breadcrumb-background: var(--slight-white);
   $breadcrumb-color: c.$tealBlue;
   $breadcrumb-link-color-hover: c.$orange;
 

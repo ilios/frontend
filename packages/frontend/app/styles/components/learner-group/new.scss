@@ -2,7 +2,7 @@
 @use "../../ilios-common/mixins" as m;
 
 .new-learner-group {
-  background-color: c.$slightWhite;
+  background-color: var(--slight-white);
   border: 1px solid c.$culturedGrey;
   margin: 0.5rem 0;
   padding: 1rem;

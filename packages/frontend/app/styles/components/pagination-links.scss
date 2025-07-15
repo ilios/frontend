@@ -38,7 +38,7 @@
   }
 
   .page-button {
-    background: c.$slightWhite;
+    background: var(--slight-white);
     border: 1px solid c.$davysGrey;
     color: c.$davysGrey;
     display: inline-block;

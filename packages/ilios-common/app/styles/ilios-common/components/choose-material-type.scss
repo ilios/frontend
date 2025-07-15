@@ -9,7 +9,7 @@
 
   button {
     background-color: transparent;
-    border: 1px solid c.$slightWhite;
+    border: 1px solid var(--slight-white);
     border-radius: 0.2rem;
     color: c.$raisinBlack;
     font-weight: normal;
@@ -17,7 +17,7 @@
   }
 
   .menu {
-    background-color: c.$slightWhite;
+    background-color: var(--slight-white);
     box-shadow: 0 2px 2px hsl(from c.$black h s l / 0.8);
     display: flex;
     flex-direction: column;
@@ -31,7 +31,7 @@
 
     button {
       border: 0;
-      background-color: c.$slightWhite;
+      background-color: var(--slight-white);
       color: c.$raisinBlack;
       display: block;
       outline: none;

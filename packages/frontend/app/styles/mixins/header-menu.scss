@@ -3,7 +3,7 @@
 
 @use "sass:color";
 
-$header-menu-background-color: hsl(from c.$slightWhite h s calc(l - 3));
+$header-menu-background-color: hsl(from var(--slight-white) h s calc(l - 3));
 
 @mixin header-menu() {
   margin: 0 0 0 0.5rem;

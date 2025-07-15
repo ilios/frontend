@@ -3,7 +3,7 @@
 
 noscript {
   p {
-    background-color: c.$slightWhite;
+    background-color: var(--slight-white);
     border: 2px dashed c.$orange;
     color: c.$raisinBlack;
     @include m.font-size("xxl");

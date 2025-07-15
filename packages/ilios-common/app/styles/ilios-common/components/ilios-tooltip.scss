@@ -5,7 +5,7 @@
   z-index: 100;
 
   .content {
-    background: c.$slightWhite;
+    background: var(--slight-white);
     padding: 0.25rem 0.5rem;
     border: 1px solid c.$davysGrey;
     border-radius: 4px;

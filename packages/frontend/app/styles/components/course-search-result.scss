@@ -58,7 +58,7 @@
     overflow: hidden;
 
     .global-search-tag {
-      background: c.$slightWhite;
+      background: var(--slight-white);
       border: 1px solid c.$davysGrey;
       border-radius: 0.125rem;
       color: c.$raisinBlack;
