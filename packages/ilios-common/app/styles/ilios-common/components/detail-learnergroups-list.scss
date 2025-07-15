@@ -13,7 +13,7 @@
       @include m.ilios-removable-list;
 
       .top-level-group {
-        background-color: c.$gold;
+        background-color: var(--gold);
         color: var(--black);
       }
     }

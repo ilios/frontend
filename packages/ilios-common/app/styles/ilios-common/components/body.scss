@@ -89,7 +89,7 @@ p {
 
 .warning,
 .is-warning {
-  color: c.$gold;
+  color: var(--gold);
 }
 
 .clickable,

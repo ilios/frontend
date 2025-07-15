@@ -3,7 +3,7 @@
 
 .connection-status {
   $height: 2.5rem;
-  @include m.critical-notice(c.$gold, var(--raisin-black), $height);
+  @include m.critical-notice(var(--gold), var(--raisin-black), $height);
 
   display: none;
 
