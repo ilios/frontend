@@ -4,7 +4,7 @@
 .print-course {
   .header {
     @include m.course-header;
-    background-color: c.$culturedGrey;
+    background-color: var(--cultured-grey);
     padding: 0.5rem;
   }
 

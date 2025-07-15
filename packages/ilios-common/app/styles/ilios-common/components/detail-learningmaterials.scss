@@ -39,7 +39,7 @@
       z-index: 10;
 
       li {
-        border-bottom: 1px solid c.$culturedGrey;
+        border-bottom: 1px solid var(--cultured-grey);
         min-height: 3.25rem;
         position: relative;
 
@@ -49,7 +49,7 @@
         }
 
         &:hover {
-          background: c.$culturedGrey;
+          background: var(--cultured-grey);
         }
 
         &:last-of-type {

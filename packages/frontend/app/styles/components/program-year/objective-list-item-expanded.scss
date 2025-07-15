@@ -7,12 +7,12 @@
   grid-column: 1 / -1;
 
   thead {
-    background-color: c.$culturedGrey;
+    background-color: var(--cultured-grey);
   }
 
   tbody tr {
     &:nth-of-type(even) {
-      background-color: c.$culturedGrey;
+      background-color: var(--cultured-grey);
     }
     ul {
       @include m.ilios-list-reset;

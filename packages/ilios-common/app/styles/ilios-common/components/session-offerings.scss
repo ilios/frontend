@@ -21,7 +21,7 @@
   }
 
   .session-offerings-header {
-    background-color: c.$culturedGrey;
+    background-color: var(--cultured-grey);
     display: grid;
     font-weight: bold;
     grid-template-columns: repeat(5, 1fr);

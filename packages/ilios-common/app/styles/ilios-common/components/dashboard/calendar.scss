@@ -47,7 +47,7 @@
           @include m.ilios-heading;
           @include m.font-size("base");
           display: block;
-          background-color: c.$culturedGrey;
+          background-color: var(--cultured-grey);
           border-bottom: 0.5px solid var(--davys-grey);
           height: 7vh;
           padding: 0.25em;
@@ -105,7 +105,7 @@
       padding: 5px;
 
       .filters-header {
-        background: c.$culturedGrey;
+        background: var(--cultured-grey);
         border-bottom: 1px solid var(--davys-grey);
         @include m.font-size("small");
       }
@@ -120,7 +120,7 @@
         }
 
         .fa-close {
-          color: c.$culturedGrey;
+          color: var(--cultured-grey);
         }
 
         .tag-session-type {

@@ -28,7 +28,7 @@
           background-image: linear-gradient(
             to bottom,
             transparent,
-            c.$culturedGrey
+            var(--cultured-grey)
           );
         }
       }
@@ -39,7 +39,7 @@
     list-style-type: none;
     .item {
       align-items: center;
-      background-color: c.$culturedGrey;
+      background-color: var(--cultured-grey);
       border-radius: 4px;
       box-sizing: border-box;
       cursor: pointer;

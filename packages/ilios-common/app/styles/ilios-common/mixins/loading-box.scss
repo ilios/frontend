@@ -2,7 +2,7 @@
 
 @mixin loading-box() {
   animation: fadein;
-  background-color: c.$culturedGrey;
+  background-color: var(--cultured-grey);
   border: 1px dotted var(--davys-grey);
   transition: opacity 2s ease-out;
 

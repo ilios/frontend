@@ -6,7 +6,7 @@
     @include m.sessions-grid;
 
     &:nth-child(even) {
-      background-color: c.$culturedGrey;
+      background-color: var(--cultured-grey);
     }
   }
   span {

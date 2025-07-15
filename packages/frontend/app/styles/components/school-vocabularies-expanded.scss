@@ -20,7 +20,7 @@
     @include m.detail-container-content;
 
     .hierarchical-list {
-      background-color: c.$culturedGrey;
+      background-color: var(--cultured-grey);
       border: 1px solid var(--black);
       margin: 1rem;
       padding: 1rem;

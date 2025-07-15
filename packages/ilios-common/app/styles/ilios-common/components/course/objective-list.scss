@@ -14,7 +14,7 @@
         background-image: linear-gradient(
           to bottom,
           transparent,
-          c.$culturedGrey
+          var(--cultured-grey)
         );
       }
     }

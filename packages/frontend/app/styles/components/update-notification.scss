@@ -15,6 +15,10 @@
   button {
     @include m.ilios-button-reset;
     $height: 2.5rem;
-    @include m.critical-notice(var(--blue-munsell), c.$culturedGrey, $height);
+    @include m.critical-notice(
+      var(--blue-munsell),
+      var(--cultured-grey),
+      $height
+    );
   }
 }

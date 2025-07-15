@@ -3,7 +3,7 @@
 @use "../mixins" as m;
 
 .filter-tools {
-  $filter-tools-border-color: c.$culturedGrey;
+  $filter-tools-border-color: var(--cultured-grey);
 
   @include m.clearfix;
   border-radius: 3px;

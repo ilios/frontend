@@ -48,7 +48,7 @@
   }
 
   .offering-block-date {
-    border-top: 1px solid c.$culturedGrey;
+    border-top: 1px solid var(--cultured-grey);
     font-weight: bold;
   }
 
@@ -75,7 +75,7 @@
 
   .offering-form {
     background-color: var(--white);
-    border: 1px solid c.$culturedGrey;
+    border: 1px solid var(--cultured-grey);
     padding: 0.5rem;
   }
 }

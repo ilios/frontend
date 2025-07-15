@@ -58,7 +58,7 @@
 }
 
 @mixin main-list-box-header() {
-  border-bottom: 1px solid c.$culturedGrey;
+  border-bottom: 1px solid var(--cultured-grey);
   display: flex;
   flex-direction: column;
   padding: 0 0 0.5rem;
@@ -113,7 +113,7 @@
     @include ilios-table.ilios-zebra-table;
 
     thead {
-      background-color: c.$culturedGrey;
+      background-color: var(--cultured-grey);
     }
   }
 }

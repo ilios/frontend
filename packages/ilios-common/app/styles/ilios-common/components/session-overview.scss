@@ -3,7 +3,7 @@
 @use "../mixins" as m;
 
 .session-header {
-  border-top: 1px solid c.$culturedGrey;
+  border-top: 1px solid var(--cultured-grey);
   border-bottom: 1px solid var(--teal-blue);
   display: flex;
   flex-direction: column;
