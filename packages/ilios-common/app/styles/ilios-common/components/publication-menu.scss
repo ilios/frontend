@@ -90,8 +90,8 @@
   &.scheduled {
     .toggle,
     .menu {
-      border-color: c.$sepia;
-      color: c.$sepia;
+      border-color: var(--sepia);
+      color: var(--sepia);
     }
   }
 }

@@ -51,7 +51,7 @@
     text-align: center;
 
     .unlinked-warning {
-      color: c.$sepia;
+      color: var(--sepia);
       @include m.font-size("base");
     }
 
