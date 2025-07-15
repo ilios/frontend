@@ -7,7 +7,7 @@ import { all, map } from 'rsvp';
 import { dropTask, enqueueTask, restartableTask, task } from 'ember-concurrency';
 import pad from 'pad';
 import { TrackedAsyncData } from 'ember-async-data';
-import { findById, mapBy, uniqueValues } from 'ilios-common/utils/array-helpers';
+import { uniqueValues } from 'ilios-common/utils/array-helpers';
 import cloneLearnerGroup from '../../utils/clone-learner-group';
 import countDigits from '../../utils/count-digits';
 import { uniqueId, fn } from '@ember/helper';
@@ -20,9 +20,7 @@ import EditableField from 'ilios-common/components/editable-field';
 import { on } from '@ember/modifier';
 import pick from 'ilios-common/helpers/pick';
 import set from 'ember-set-helper/helpers/set';
-import sortBy from 'ilios-common/helpers/sort-by';
 import { LinkTo } from '@ember/routing';
-import add from 'ember-math-helpers/helpers/add';
 import and from 'ember-truth-helpers/helpers/and';
 import InstructorManager from 'frontend/components/learner-group/instructor-manager';
 import InstructorsList from 'frontend/components/learner-group/instructors-list';
@@ -35,6 +33,7 @@ import BulkAssignment from 'frontend/components/learner-group/bulk-assignment';
 import UserManager from 'frontend/components/learner-group/user-manager';
 import Calendar from 'frontend/components/learner-group/calendar';
 import Members from 'frontend/components/learner-group/members';
+import CourseAssociations from 'frontend/components/learner-group/course-associations';
 import ExpandCollapseButton from 'ilios-common/components/expand-collapse-button';
 import New from 'frontend/components/learner-group/new';
 import FaIcon from 'ilios-common/components/fa-icon';
@@ -83,17 +82,6 @@ export default class LearnerGroupRootComponent extends Component {
 
   get learnerGroupTitle() {
     return this.args.learnerGroup.title;
-  }
-
-  @cached
-  get coursesData() {
-    return new TrackedAsyncData(
-      this.getCoursesForGroupWithSubgroupName(null, this.args.learnerGroup),
-    );
-  }
-
-  get courses() {
-    return this.coursesData.isResolved ? this.coursesData.value : [];
   }
 
   @cached
@@ -477,55 +465,6 @@ export default class LearnerGroupRootComponent extends Component {
     this.savedGroup = newGroups[0];
   });
 
-  async getCoursesForGroupWithSubgroupName(prefix, learnerGroup) {
-    const offerings = await learnerGroup.offerings;
-    const ilms = await learnerGroup.ilmSessions;
-    const arr = [].concat(offerings, ilms);
-    const sessions = await Promise.all(mapBy(arr, 'session'));
-    const filteredSessions = uniqueValues(sessions.filter(Boolean));
-    const courses = await Promise.all(mapBy(filteredSessions, 'course'));
-    const courseObjects = courses.map((course) => {
-      const obj = {
-        id: course.id,
-        courseTitle: course.title,
-        groups: [],
-        course,
-      };
-      if (prefix) {
-        obj.groups.push(`${prefix}>${learnerGroup.title}`);
-      }
-      return obj;
-    });
-    const children = await learnerGroup.children;
-    const childCourses = await map(children, async (child) => {
-      return await this.getCoursesForGroupWithSubgroupName(learnerGroup.title, child);
-    });
-    const comb = [...courseObjects, ...childCourses.flat()];
-    return comb.reduce((arr, obj) => {
-      let courseObj = findById(arr, obj.id);
-      if (!courseObj) {
-        courseObj = {
-          id: obj.id,
-          courseTitle: obj.courseTitle,
-          groups: [],
-          course: obj.course,
-        };
-        arr.push(courseObj);
-      }
-      courseObj.groups = [...courseObj.groups, ...obj.groups];
-      uniqueValues(courseObj.groups);
-      return arr;
-    }, []);
-  }
-
-  crossesBoundaryConfig = new TrackedAsyncData(
-    this.iliosConfig.itemFromConfig('academicYearCrossesCalendarYearBoundaries'),
-  );
-
-  @cached
-  get academicYearCrossesCalendarYearBoundaries() {
-    return this.crossesBoundaryConfig.isResolved ? this.crossesBoundaryConfig.value : false;
-  }
   <template>
     {{#if @learnerGroup.allParents}}
       {{#each (reverse @learnerGroup.allParents) as |parent|}}
@@ -640,28 +579,11 @@ export default class LearnerGroupRootComponent extends Component {
               {{/if}}
             </span>
           </div>
-          <div class="block associatedcourses" data-test-courses>
-            <label>
-              {{t "general.associatedCourses"}}
-              ({{this.courses.length}}):
-            </label>
-            <ul>
-              {{#each (sortBy "courseTitle" this.courses) as |obj|}}
-                <li>
-                  <LinkTo @route="course" @model={{obj.course}}>
-                    {{obj.courseTitle}}
-                    {{#if this.academicYearCrossesCalendarYearBoundaries}}
-                      ({{obj.course.year}}
-                      -
-                      {{add obj.course.year 1}})
-                    {{else}}
-                      ({{obj.course.year}})
-                    {{/if}}
-                  </LinkTo>
-                </li>
-              {{/each}}
-            </ul>
-          </div>
+          <CourseAssociations
+            @learnerGroup={{@learnerGroup}}
+            @isExpanded={{@showCourseAssociations}}
+            @setIsExpanded={{@setShowCourseAssociations}}
+          />
           {{#if (and this.dataForInstructorGroupManagerLoaded this.isManagingInstructors)}}
             <InstructorManager
               @learnerGroup={{@learnerGroup}}

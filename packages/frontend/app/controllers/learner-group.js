@@ -5,11 +5,16 @@ import { service } from '@ember/service';
 
 export default class LearnerGroupController extends Controller {
   @service permissionChecker;
-  queryParams = [{ isEditing: 'edit' }, { isBulkAssigning: 'bulkupload', sortUsersBy: 'usersBy' }];
+  queryParams = [
+    { isEditing: 'edit' },
+    { isBulkAssigning: 'bulkupload', sortUsersBy: 'usersBy' },
+    'showCourseAssociations',
+  ];
 
   @tracked isEditing = false;
   @tracked isBulkAssigning = false;
   @tracked sortUsersBy = 'fullName';
+  @tracked showCourseAssociations = false;
 
   @cached
   get canDeleteData() {

@@ -528,4 +528,50 @@ module('Acceptance | Learner Group', function (hooks) {
       'name of first user in current group correct',
     );
   });
+
+  test('expand and collapse course associations', async function (assert) {
+    this.user.update({ administeredSchools: [this.school] });
+    const programYear = this.server.create('program-year', { program: this.program });
+    const cohort = this.server.create('cohort', { programYear });
+    const learnerGroup = this.server.create('learner-group', { cohort });
+    const course = this.server.create('course', { school: this.school });
+    const session = this.server.create('session', { course });
+    this.server.create('offering', { session, learnerGroups: [learnerGroup] });
+    const learnerGroupId = learnerGroup.id;
+
+    await page.visit({ learnerGroupId: learnerGroup.id });
+
+    assert.strictEqual(currentURL(), `/learnergroups/${learnerGroupId}`);
+    assert.ok(page.root.courseAssociations.header.toggle.isCollapsed);
+
+    await page.root.courseAssociations.header.toggle.click();
+    assert.ok(page.root.courseAssociations.header.toggle.isExpanded);
+    assert.strictEqual(
+      currentURL(),
+      `/learnergroups/${learnerGroupId}?showCourseAssociations=true`,
+    );
+
+    await page.root.courseAssociations.header.toggle.click();
+    assert.ok(page.root.courseAssociations.header.toggle.isCollapsed);
+    assert.strictEqual(currentURL(), `/learnergroups/${learnerGroupId}`);
+  });
+
+  test('course associations are expanded if URL contains corresponding parameter', async function (assert) {
+    this.user.update({ administeredSchools: [this.school] });
+    const programYear = this.server.create('program-year', { program: this.program });
+    const cohort = this.server.create('cohort', { programYear });
+    const learnerGroup = this.server.create('learner-group', { cohort });
+    const course = this.server.create('course', { school: this.school });
+    const session = this.server.create('session', { course });
+    this.server.create('offering', { session, learnerGroups: [learnerGroup] });
+    const learnerGroupId = learnerGroup.id;
+
+    await page.visit({ learnerGroupId, showCourseAssociations: 'true' });
+
+    assert.strictEqual(
+      currentURL(),
+      `/learnergroups/${learnerGroupId}?showCourseAssociations=true`,
+    );
+    assert.ok(page.root.courseAssociations.header.toggle.isExpanded);
+  });
 });

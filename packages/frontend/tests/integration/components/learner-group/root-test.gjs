@@ -13,12 +13,12 @@ module('Integration | Component | learner-group/root', function (hooks) {
   setupMirage(hooks);
 
   hooks.beforeEach(async function () {
-    const school = this.server.create('school');
-    const program = this.server.create('program', { school });
+    this.school = this.server.create('school');
+    const program = this.server.create('program', { school: this.school });
     this.programYear = this.server.create('program-year', { program });
     this.cohort = this.server.create('cohort', { programYear: this.programYear });
 
-    const user = this.server.create('user', { school });
+    const user = this.server.create('user', { school: this.school });
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     class CurrentUserMock extends Service {
       async getModel() {
@@ -57,11 +57,11 @@ module('Integration | Component | learner-group/root', function (hooks) {
       users: [user3, user4],
     });
 
-    const course = this.server.create('course');
+    const course = this.server.create('course', { school: this.school });
     const session = this.server.create('session', { course });
     const offering = this.server.create('offering', { session });
 
-    const course2 = this.server.create('course');
+    const course2 = this.server.create('course', { school: this.school });
     const session2 = this.server.create('session', { course: course2 });
     const ilm = this.server.create('ilm-session', { session: session2 });
 
@@ -108,7 +108,6 @@ module('Integration | Component | learner-group/root', function (hooks) {
       'Walther v. Vogelweide',
     );
     assert.notOk(component.instructorsList.assignedInstructors[1].userNameInfo.hasAdditionalInfo);
-    assert.strictEqual(component.associatedCourses.courses.length, 2);
     assert.ok(component.actions.buttons.toggle.isVisible);
     assert.ok(component.actions.buttons.bulkAssignment.isVisible);
     assert.ok(component.actions.buttons.manageUsers.isVisible);
@@ -153,7 +152,7 @@ module('Integration | Component | learner-group/root', function (hooks) {
     assert.strictEqual(component.actions.title, 'Members (0)');
   });
 
-  test('renders associated courses display with single course year if calendar year boundary IS NOT crossed', async function (assert) {
+  test('it renders expanded course associations', async function (assert) {
     const user1 = this.server.create('user');
     const user2 = this.server.create('user');
     const user3 = this.server.create('user');
@@ -178,11 +177,11 @@ module('Integration | Component | learner-group/root', function (hooks) {
       cohort,
     });
 
-    const course = this.server.create('course');
+    const course = this.server.create('course', { school: this.school });
     const session = this.server.create('session', { course });
     const offering = this.server.create('offering', { session });
 
-    const course2 = this.server.create('course');
+    const course2 = this.server.create('course', { school: this.school });
     const session2 = this.server.create('session', { course: course2 });
     const ilm = this.server.create('ilm-session', { session: session2 });
 
@@ -201,16 +200,6 @@ module('Integration | Component | learner-group/root', function (hooks) {
       .findRecord('learner-group', learnerGroup.id);
 
     this.set('learnerGroup', learnerGroupModel);
-    const { apiVersion } = this.owner.resolveRegistration('config:environment');
-    this.server.get('application/config', function () {
-      return {
-        config: {
-          academicYearCrossesCalendarYearBoundaries: false,
-          apiVersion,
-        },
-      };
-    });
-
     await render(
       <template>
         <Root
@@ -222,15 +211,38 @@ module('Integration | Component | learner-group/root', function (hooks) {
           @learnerGroup={{this.learnerGroup}}
           @isEditing={{false}}
           @isBulkAssigning={{false}}
+          @showCourseAssociations={{true}}
+          @setShowCourseAssociations={{(noop)}}
         />
       </template>,
     );
-
-    assert.strictEqual(component.associatedCourses.courses[0].text, 'course 0 (2013)');
-    assert.strictEqual(component.associatedCourses.courses[1].text, 'course 1 (2013)');
+    assert.strictEqual(component.courseAssociations.header.title, 'Associated Courses (2)');
+    assert.ok(component.courseAssociations.header.toggle.isExpanded);
+    assert.notOk(component.courseAssociations.content.isHidden);
+    assert.strictEqual(component.courseAssociations.content.associations.length, 2);
+    assert.strictEqual(component.courseAssociations.content.associations[0].school, 'school 0');
+    assert.strictEqual(
+      component.courseAssociations.content.associations[0].course.text,
+      'course 0 (2013)',
+    );
+    assert.strictEqual(component.courseAssociations.content.associations[0].sessions.length, 1);
+    assert.strictEqual(
+      component.courseAssociations.content.associations[0].sessions[0].text,
+      'session 0',
+    );
+    assert.strictEqual(component.courseAssociations.content.associations[1].school, 'school 0');
+    assert.strictEqual(
+      component.courseAssociations.content.associations[1].course.text,
+      'course 1 (2013)',
+    );
+    assert.strictEqual(component.courseAssociations.content.associations[1].sessions.length, 1);
+    assert.strictEqual(
+      component.courseAssociations.content.associations[1].sessions[0].text,
+      'session 1',
+    );
   });
 
-  test('renders associated courses display with course year range if calendar year boundary IS crossed', async function (assert) {
+  test('it renders collapsed course associations', async function (assert) {
     const user1 = this.server.create('user');
     const user2 = this.server.create('user');
     const user3 = this.server.create('user');
@@ -255,11 +267,11 @@ module('Integration | Component | learner-group/root', function (hooks) {
       cohort,
     });
 
-    const course = this.server.create('course');
+    const course = this.server.create('course', { school: this.school });
     const session = this.server.create('session', { course });
     const offering = this.server.create('offering', { session });
 
-    const course2 = this.server.create('course');
+    const course2 = this.server.create('course', { school: this.school });
     const session2 = this.server.create('session', { course: course2 });
     const ilm = this.server.create('ilm-session', { session: session2 });
 
@@ -278,16 +290,6 @@ module('Integration | Component | learner-group/root', function (hooks) {
       .findRecord('learner-group', learnerGroup.id);
 
     this.set('learnerGroup', learnerGroupModel);
-    const { apiVersion } = this.owner.resolveRegistration('config:environment');
-    this.server.get('application/config', function () {
-      return {
-        config: {
-          academicYearCrossesCalendarYearBoundaries: true,
-          apiVersion,
-        },
-      };
-    });
-
     await render(
       <template>
         <Root
@@ -299,12 +301,159 @@ module('Integration | Component | learner-group/root', function (hooks) {
           @learnerGroup={{this.learnerGroup}}
           @isEditing={{false}}
           @isBulkAssigning={{false}}
+          @showCourseAssociations={{false}}
+          @setShowCourseAssociations={{(noop)}}
         />
       </template>,
     );
 
-    assert.strictEqual(component.associatedCourses.courses[0].text, 'course 0 (2013 - 2014)');
-    assert.strictEqual(component.associatedCourses.courses[1].text, 'course 1 (2013 - 2014)');
+    assert.ok(component.courseAssociations.header.toggle.isCollapsed);
+    assert.ok(component.courseAssociations.content.isHidden);
+    assert.strictEqual(component.courseAssociations.header.title, 'Associated Courses (2)');
+  });
+
+  test('collapsing course associations fires', async function (assert) {
+    assert.expect(1);
+    const user1 = this.server.create('user');
+    const user2 = this.server.create('user');
+    const user3 = this.server.create('user');
+    const user4 = this.server.create('user');
+    const user5 = this.server.create('user', {
+      firstName: 'Walther',
+      middleName: 'von der',
+      lastName: 'Vogelweide',
+    });
+    const user6 = this.server.create('user', {
+      firstName: 'Zeb',
+      lastName: 'Zoober',
+      displayName: 'Aardvark',
+    });
+    const cohort = this.server.create('cohort', {
+      title: 'this cohort',
+      users: [user1, user2, user3, user4],
+      programYear: this.programYear,
+    });
+    const subGroup = this.server.create('learner-group', {
+      title: 'test sub-group',
+      cohort,
+    });
+
+    const course = this.server.create('course', { school: this.school });
+    const session = this.server.create('session', { course });
+    const offering = this.server.create('offering', { session });
+
+    const course2 = this.server.create('course', { school: this.school });
+    const session2 = this.server.create('session', { course: course2 });
+    const ilm = this.server.create('ilm-session', { session: session2 });
+
+    const learnerGroup = this.server.create('learner-group', {
+      title: 'test group',
+      location: 'test location',
+      children: [subGroup],
+      instructors: [user5, user6],
+      users: [user1, user2],
+      offerings: [offering],
+      ilmSessions: [ilm],
+      cohort,
+    });
+    const learnerGroupModel = await this.owner
+      .lookup('service:store')
+      .findRecord('learner-group', learnerGroup.id);
+
+    this.set('learnerGroup', learnerGroupModel);
+    this.set('setShowCourseAssociations', (value) => {
+      assert.notOk(value);
+    });
+    await render(
+      <template>
+        <Root
+          @canUpdate={{true}}
+          @setIsEditing={{(noop)}}
+          @setSortUsersBy={{(noop)}}
+          @setIsBulkAssigning={{(noop)}}
+          @sortUsersBy="fullName"
+          @learnerGroup={{this.learnerGroup}}
+          @isEditing={{false}}
+          @isBulkAssigning={{false}}
+          @showCourseAssociations={{true}}
+          @setShowCourseAssociations={{this.setShowCourseAssociations}}
+        />
+      </template>,
+    );
+
+    component.courseAssociations.header.toggle.click();
+  });
+
+  test('expanding course associations fires', async function (assert) {
+    assert.expect(1);
+    const user1 = this.server.create('user');
+    const user2 = this.server.create('user');
+    const user3 = this.server.create('user');
+    const user4 = this.server.create('user');
+    const user5 = this.server.create('user', {
+      firstName: 'Walther',
+      middleName: 'von der',
+      lastName: 'Vogelweide',
+    });
+    const user6 = this.server.create('user', {
+      firstName: 'Zeb',
+      lastName: 'Zoober',
+      displayName: 'Aardvark',
+    });
+    const cohort = this.server.create('cohort', {
+      title: 'this cohort',
+      users: [user1, user2, user3, user4],
+      programYear: this.programYear,
+    });
+    const subGroup = this.server.create('learner-group', {
+      title: 'test sub-group',
+      cohort,
+    });
+
+    const course = this.server.create('course', { school: this.school });
+    const session = this.server.create('session', { course });
+    const offering = this.server.create('offering', { session });
+
+    const course2 = this.server.create('course', { school: this.school });
+    const session2 = this.server.create('session', { course: course2 });
+    const ilm = this.server.create('ilm-session', { session: session2 });
+
+    const learnerGroup = this.server.create('learner-group', {
+      title: 'test group',
+      location: 'test location',
+      children: [subGroup],
+      instructors: [user5, user6],
+      users: [user1, user2],
+      offerings: [offering],
+      ilmSessions: [ilm],
+      cohort,
+    });
+    const learnerGroupModel = await this.owner
+      .lookup('service:store')
+      .findRecord('learner-group', learnerGroup.id);
+
+    this.set('learnerGroup', learnerGroupModel);
+    this.set('setShowCourseAssociations', (value) => {
+      assert.ok(value);
+    });
+    await render(
+      <template>
+        <Root
+          @canUpdate={{true}}
+          @setIsEditing={{(noop)}}
+          @setSortUsersBy={{(noop)}}
+          @setIsBulkAssigning={{(noop)}}
+          @sortUsersBy="fullName"
+          @learnerGroup={{this.learnerGroup}}
+          @isEditing={{false}}
+          @isBulkAssigning={{false}}
+          @showCourseAssociations={{false}}
+          @setShowCourseAssociations={{this.setShowCourseAssociations}}
+        />
+      </template>,
+    );
+
+    component.courseAssociations.header.toggle.click();
   });
 
   test('Needs accommodation', async function (assert) {
@@ -500,94 +649,6 @@ module('Integration | Component | learner-group/root', function (hooks) {
     await component.defaultLocation.set('');
     await component.defaultLocation.save();
     assert.strictEqual(component.defaultLocation.text, 'Default Location: Click to edit');
-  });
-
-  test('each course is only shown once', async function (assert) {
-    const cohort = this.server.create('cohort', {
-      title: 'this cohort',
-      programYear: this.programYear,
-    });
-    const course = this.server.create('course');
-    const session = this.server.create('session', { course });
-    const offerings = this.server.createList('offering', 5, { session });
-    const session2 = this.server.create('session', { course });
-    const session3 = this.server.create('session', { course });
-    const offering1 = this.server.create('offering', { session: session2 });
-    const offering2 = this.server.create('offering', { session: session3 });
-    const learnerGroup = this.server.create('learner-group', {
-      cohort,
-      offerings: [offering1, offering2],
-    });
-    for (let i = 0; i < 3; i++) {
-      this.server.create('learner-group', {
-        offerings: [offerings[i]],
-        parent: learnerGroup,
-        cohort,
-      });
-    }
-
-    const learnerGroupModel = await this.owner
-      .lookup('service:store')
-      .findRecord('learner-group', learnerGroup.id);
-
-    this.set('learnerGroup', learnerGroupModel);
-
-    await render(
-      <template>
-        <Root
-          @setIsEditing={{(noop)}}
-          @setSortUsersBy={{(noop)}}
-          @setIsBulkAssigning={{(noop)}}
-          @sortUsersBy="firstName"
-          @learnerGroup={{this.learnerGroup}}
-          @isEditing={{false}}
-          @isBulkAssigning={{false}}
-        />
-      </template>,
-    );
-
-    assert.strictEqual(component.associatedCourses.courses.length, 1);
-  });
-
-  test('associated courses are linked to course pages', async function (assert) {
-    const cohort = this.server.create('cohort', {
-      title: 'this cohort',
-      programYear: this.programYear,
-    });
-    const course = this.server.create('course');
-    const course2 = this.server.create('course');
-    const session = this.server.create('session', { course });
-    const session2 = this.server.create('session', { course: course2 });
-    const offering1 = this.server.create('offering', { session });
-    const offering2 = this.server.create('offering', { session: session2 });
-    const learnerGroup = this.server.create('learner-group', {
-      cohort,
-      offerings: [offering1, offering2],
-    });
-
-    const learnerGroupModel = await this.owner
-      .lookup('service:store')
-      .findRecord('learner-group', learnerGroup.id);
-
-    this.set('learnerGroup', learnerGroupModel);
-
-    await render(
-      <template>
-        <Root
-          @setIsEditing={{(noop)}}
-          @setSortUsersBy={{(noop)}}
-          @setIsBulkAssigning={{(noop)}}
-          @sortUsersBy="firstName"
-          @learnerGroup={{this.learnerGroup}}
-          @isEditing={{false}}
-          @isBulkAssigning={{false}}
-        />
-      </template>,
-    );
-
-    assert.strictEqual(component.associatedCourses.courses.length, 2);
-    assert.strictEqual(component.associatedCourses.courses[0].linksTo, '/courses/1');
-    assert.strictEqual(component.associatedCourses.courses[1].linksTo, '/courses/2');
   });
 
   test('Update default URL', async function (assert) {
