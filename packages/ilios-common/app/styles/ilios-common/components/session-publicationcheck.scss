@@ -2,7 +2,7 @@
 @use "../mixins" as m;
 
 .session-publicationcheck {
-  background-color: c.$lightBlue;
+  background-color: var(--light-blue);
   border-color: c.$culturedGrey;
   border-style: solid;
   border-top: 0;
@@ -15,7 +15,7 @@
   }
 
   .results {
-    background-color: c.$lightBlue;
+    background-color: var(--light-blue);
     @include m.detail-container(var(--orange));
 
     .title {

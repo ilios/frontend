@@ -10,12 +10,12 @@
 
   .session {
     &:nth-of-type(even) {
-      background-color: c.$lightBlue;
+      background-color: var(--light-blue);
     }
 
     &.is-expanded {
       border: 1px solid var(--blue-munsell);
-      background-color: c.$lightBlue;
+      background-color: var(--light-blue);
       margin: 0.5rem 0;
     }
 

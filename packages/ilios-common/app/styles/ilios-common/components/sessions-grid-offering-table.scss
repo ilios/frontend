@@ -28,7 +28,7 @@
     padding: 0.2rem 0.5rem;
 
     &.expanded-offering-manager {
-      background-color: c.$lightBlue;
+      background-color: var(--light-blue);
       padding: 0;
     }
 
@@ -55,7 +55,7 @@
   .sessions-grid-offering {
     transition: background-color 0.5s ease-out;
     &.even {
-      background-color: hsl(from c.$lightBlue h s calc(l - 10));
+      background-color: hsl(from var(--light-blue) h s calc(l - 10));
     }
     &.was-updated {
       background-color: hsl(from var(--fern-green) h s calc(l + 30));
