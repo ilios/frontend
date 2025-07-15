@@ -1,6 +1,6 @@
 // app/modifiers/global-scroll.js
 import Modifier from 'ember-modifier';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 
 export default class ScrollObserverModifier extends Modifier {
   @service globalScroll;
