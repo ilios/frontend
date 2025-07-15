@@ -282,7 +282,6 @@ export default class NewLearningmaterialComponent extends Component {
         <span>
           <input
             id="display-name-{{this.uniqueId}}"
-            disabled={{this.prepareSave.isRunning}}
             type="text"
             value={{this.title}}
             {{on "input" (pick "target.value" (set this "title"))}}
@@ -324,7 +323,6 @@ export default class NewLearningmaterialComponent extends Component {
         <span>
           <input
             id="original-author-{{this.uniqueId}}"
-            disabled={{this.prepareSave.isRunning}}
             type="text"
             value={{this.originalAuthor}}
             {{on "input" (pick "target.value" (set this "originalAuthor"))}}
@@ -364,7 +362,6 @@ export default class NewLearningmaterialComponent extends Component {
               placeholder="https://example.com"
               value={{this.bestLink}}
               inputmode="url"
-              disabled={{this.prepareSave.isRunning}}
               {{on "input" (pick "target.value" this.changeLink)}}
               {{on "focus" this.selectAllText}}
               {{this.validations.attach "link"}}
@@ -385,7 +382,6 @@ export default class NewLearningmaterialComponent extends Component {
           <span class="citation">
             <textarea
               id="citation-{{this.uniqueId}}"
-              disabled={{this.prepareSave.isRunning}}
               {{on "input" (pick "target.value" (set this "citation"))}}
               {{this.validations.attach "citation"}}
             >{{this.citation}}</textarea>
