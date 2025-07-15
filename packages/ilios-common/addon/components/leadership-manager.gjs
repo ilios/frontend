@@ -71,7 +71,7 @@ import UserStatus from 'ilios-common/components/user-status';
                     <UserNameInfo @user={{user}} />
                   </li>
                 {{else}}
-                  {{t "general.none"}}
+                  <li>{{t "general.none"}}</li>
                 {{/each}}
               </ul>
             </td>
@@ -93,7 +93,7 @@ import UserStatus from 'ilios-common/components/user-status';
                     <UserNameInfo @user={{user}} />
                   </li>
                 {{else}}
-                  {{t "general.none"}}
+                  <li>{{t "general.none"}}</li>
                 {{/each}}
               </ul>
             </td>
@@ -115,7 +115,7 @@ import UserStatus from 'ilios-common/components/user-status';
                     <UserNameInfo @user={{user}} />
                   </li>
                 {{else}}
-                  {{t "general.none"}}
+                  <li>{{t "general.none"}}</li>
                 {{/each}}
               </ul>
             </td>
