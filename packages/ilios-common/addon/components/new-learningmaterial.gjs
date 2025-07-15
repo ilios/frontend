@@ -279,6 +279,7 @@ export default class NewLearningmaterialComponent extends Component {
         <span>
           <input
             id="display-name-{{this.uniqueId}}"
+            class={{if this.hasValidationErrorForTitle "error" ""}}
             type="text"
             value={{this.title}}
             {{on "input" (pick "target.value" (set this "title"))}}
@@ -320,6 +321,7 @@ export default class NewLearningmaterialComponent extends Component {
         <span>
           <input
             id="original-author-{{this.uniqueId}}"
+            class={{if this.hasValidationErrorForOriginalAuthor "error" ""}}
             type="text"
             value={{this.originalAuthor}}
             {{on "input" (pick "target.value" (set this "originalAuthor"))}}
@@ -355,6 +357,7 @@ export default class NewLearningmaterialComponent extends Component {
             {{! template-lint-disable no-bare-strings}}
             <input
               id="url-{{this.uniqueId}}"
+              class={{if this.hasValidationErrorForLink "error" ""}}
               type="text"
               placeholder="https://example.com"
               value={{this.bestLink}}
@@ -379,6 +382,7 @@ export default class NewLearningmaterialComponent extends Component {
           <span class="citation">
             <textarea
               id="citation-{{this.uniqueId}}"
+              class={{if this.hasValidationErrorForCitation "error" ""}}
               {{on "input" (pick "target.value" (set this "citation"))}}
               {{this.validations.attach "citation"}}
             >{{this.citation}}</textarea>
@@ -407,6 +411,7 @@ export default class NewLearningmaterialComponent extends Component {
             <p id="lm-copyright-permissions-text">
               <input
                 id="copyright-permission-{{this.uniqueId}}"
+                class={{if this.hasValidationErrorForCopyrightPermission "error" ""}}
                 type="checkbox"
                 checked={{this.copyrightPermission}}
                 {{on "click" (set this "copyrightPermission" (not this.copyrightPermission))}}
@@ -434,6 +439,7 @@ export default class NewLearningmaterialComponent extends Component {
             <span>
               <textarea
                 id="copyright-rationale-{{this.uniqueId}}"
+                class={{if this.hasValidationErrorForCopyrightRationale "error" ""}}
                 {{on "input" (pick "target.value" (set this "copyrightRationale"))}}
                 {{this.validations.attach "copyrightRationale"}}
               >{{this.copyrightRationale}}</textarea>
@@ -451,6 +457,7 @@ export default class NewLearningmaterialComponent extends Component {
           </label>
           <LearningMaterialUploader
             id="learning-material-uploader-{{this.uniqueId}}"
+            class={{if this.hasValidationErrorForFilename "error" ""}}
             @for="file-upload-{{this.uniqueId}}"
             @setFilename={{set this "filename"}}
             @setFileHash={{set this "fileHash"}}

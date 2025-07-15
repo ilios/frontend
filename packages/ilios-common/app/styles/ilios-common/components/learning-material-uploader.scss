@@ -17,6 +17,13 @@
     }
   }
 
+  &.error {
+    .upload-button {
+      border: 1px solid var(--crimson);
+      outline-color: var(--crimson);
+    }
+  }
+
   .upload-result {
     margin-left: 1rem;
     word-break: break-all;

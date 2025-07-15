@@ -17,4 +17,12 @@
   .description {
     @include m.ilios-browser-defaults;
   }
+
+  input,
+  textarea {
+    &.error {
+      border: 1px solid var(--crimson);
+      outline-color: var(--crimson);
+    }
+  }
 }
