@@ -11,31 +11,6 @@
 
     .block {
       @include m.ilios-overview-block;
-
-      &.associatedcourses {
-        align-items: flex-start;
-        margin-bottom: 0.5rem;
-        margin-top: 0.3rem;
-
-        label {
-          white-space: nowrap;
-        }
-        ul {
-          @include m.ilios-tag-list;
-
-          li {
-            margin-top: 0;
-          }
-        }
-      }
-
-      > span {
-        flex-grow: 1;
-      }
-
-      input {
-        width: 100%;
-      }
     }
 
     .learner-group-overview-actions {
