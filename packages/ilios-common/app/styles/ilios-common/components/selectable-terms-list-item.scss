@@ -15,7 +15,7 @@
   &:focus,
   &:hover {
     background-color: c.$culturedGrey;
-    border: 1px c.$black solid;
+    border: 1px var(--black) solid;
   }
 
   &.selected {

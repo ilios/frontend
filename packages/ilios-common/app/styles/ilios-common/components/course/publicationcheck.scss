@@ -16,7 +16,7 @@
     }
 
     .fa-link-slash {
-      color: c.$black;
+      color: var(--black);
       @include m.font-size("small");
     }
   }

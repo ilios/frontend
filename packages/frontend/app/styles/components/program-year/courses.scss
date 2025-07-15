@@ -19,7 +19,7 @@
       @include m.ilios-tag-list;
 
       a {
-        color: c.$black;
+        color: var(--black);
       }
     }
   }
