@@ -49,7 +49,7 @@
       }
 
       &.matched {
-        background-color: hsl(from c.$fernGreen h s calc(l + 15));
+        background-color: hsl(from var(--fern-green) h s calc(l + 15));
       }
 
       &.not-matched {

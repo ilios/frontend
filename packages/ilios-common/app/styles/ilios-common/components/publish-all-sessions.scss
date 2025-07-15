@@ -43,7 +43,7 @@
   }
 
   .publish-all-sessions-review {
-    border: 1px solid c.$fernGreen;
+    border: 1px solid var(--fern-green);
     clear: both;
     @include m.font-size("large");
     margin: 1rem;
@@ -61,14 +61,14 @@
     }
 
     p {
-      color: c.$fernGreen;
+      color: var(--fern-green);
       font-weight: bold;
       margin: 0;
       margin-bottom: 1rem;
     }
 
     button {
-      background: c.$fernGreen;
+      background: var(--fern-green);
       color: var(--white);
     }
   }

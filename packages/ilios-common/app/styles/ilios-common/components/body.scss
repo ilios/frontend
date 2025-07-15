@@ -74,7 +74,7 @@ p {
 
 .add,
 .yes {
-  color: c.$fernGreen;
+  color: var(--fern-green);
 }
 
 .remove,
@@ -103,7 +103,7 @@ p {
 }
 
 .published {
-  color: c.$fernGreen;
+  color: var(--fern-green);
 }
 
 .notpublished {

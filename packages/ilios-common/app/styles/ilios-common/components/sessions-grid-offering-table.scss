@@ -58,7 +58,7 @@
       background-color: hsl(from c.$lightBlue h s calc(l - 10));
     }
     &.was-updated {
-      background-color: hsl(from c.$fernGreen h s calc(l + 30));
+      background-color: hsl(from var(--fern-green) h s calc(l + 30));
     }
     .room {
       overflow-wrap: anywhere;

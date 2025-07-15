@@ -8,7 +8,7 @@
 
   .display-mode-toggle-btn {
     &.active {
-      background-color: c.$fernGreen;
+      background-color: var(--fern-green);
     }
     &.disabled {
       cursor: default;

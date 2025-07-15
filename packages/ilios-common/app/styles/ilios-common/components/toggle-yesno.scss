@@ -15,7 +15,7 @@
   padding: 0;
 
   &.yes {
-    background-color: c.$fernGreen;
+    background-color: var(--fern-green);
   }
 
   .switch-handle {

@@ -36,7 +36,7 @@
   }
 
   .alert-success {
-    @include flash(c.$fernGreen);
+    @include flash(var(--fern-green));
   }
 
   .alert-warning {

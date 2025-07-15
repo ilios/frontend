@@ -48,7 +48,7 @@
       &.good {
         &:hover,
         &:focus {
-          background-color: c.$fernGreen;
+          background-color: var(--fern-green);
           color: var(--white);
         }
       }
@@ -74,8 +74,8 @@
   &.published {
     .toggle,
     .menu {
-      border-color: c.$fernGreen;
-      color: c.$fernGreen;
+      border-color: var(--fern-green);
+      color: var(--fern-green);
     }
   }
 
