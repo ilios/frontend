@@ -21,7 +21,7 @@
     padding: 0.5rem;
 
     &.alert {
-      background-color: c.$white;
+      background-color: var(--white);
       border: 3px solid c.$gold;
     }
 

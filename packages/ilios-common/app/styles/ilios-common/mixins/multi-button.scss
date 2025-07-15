@@ -10,7 +10,7 @@
   }
 
   label {
-    background-color: c.$white;
+    background-color: var(--white);
     color: c.$tealBlue;
     border: 1px solid rgba(c.$black, 0.2);
     display: inline-block;
@@ -36,6 +36,6 @@
 
   input:checked + label {
     background-color: c.$tealBlue;
-    color: c.$white;
+    color: var(--white);
   }
 }

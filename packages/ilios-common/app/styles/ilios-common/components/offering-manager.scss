@@ -56,7 +56,7 @@
     }
 
     .remove {
-      background-color: c.$white;
+      background-color: var(--white);
       color: c.$rosewood;
 
       &:hover {

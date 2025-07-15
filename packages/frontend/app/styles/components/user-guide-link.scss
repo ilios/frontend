@@ -25,7 +25,7 @@ $header-menu-background-color: hsl(from var(--slight-white) h s calc(l - 3));
 
     &:hover,
     &:focus {
-      background-color: c.$white;
+      background-color: var(--white);
     }
 
     @include cm.for-tablet-and-up {

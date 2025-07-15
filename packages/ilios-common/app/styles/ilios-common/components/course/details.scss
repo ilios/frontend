@@ -20,7 +20,7 @@
       box-shadow:
         0 2px $collapse-control-shadow-grey,
         inset 0 1px 2px $collapse-control-shadow-black;
-      color: c.$white;
+      color: var(--white);
       cursor: pointer;
       padding: 0.25rem 4rem;
 

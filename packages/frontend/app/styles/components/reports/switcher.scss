@@ -7,7 +7,7 @@
   margin: 1em;
   a {
     @include cm.ilios-link-button;
-    background-color: c.$white;
+    background-color: var(--white);
     color: c.$tealBlue;
     border: 1px solid rgba(c.$black, 0.2);
     @include cm.font-size("medium");
@@ -22,7 +22,7 @@
 
     &.active {
       background-color: c.$tealBlue;
-      color: c.$white;
+      color: var(--white);
     }
   }
 }

@@ -13,7 +13,7 @@
     padding: 0.3em 1em;
     &:hover {
       background-color: c.$davysGrey;
-      color: c.$white;
+      color: var(--white);
     }
   }
 

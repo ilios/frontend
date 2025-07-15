@@ -16,7 +16,7 @@
 
 @mixin ilios-static-list() {
   @include ilios-list-reset;
-  background-color: c.$white;
+  background-color: var(--white);
   border: 1px solid c.$culturedGrey;
   border-radius: 3px;
   padding: 1em 2em;
@@ -126,7 +126,7 @@
 
   li {
     div {
-      background-color: c.$white;
+      background-color: var(--white);
       border: 1px c.$culturedGrey solid;
       border-radius: 4px;
       margin-top: 5px;

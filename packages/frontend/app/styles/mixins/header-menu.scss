@@ -46,7 +46,7 @@ $header-menu-background-color: hsl(from var(--slight-white) h s calc(l - 3));
 
     &:hover,
     &[aria-expanded="true"] {
-      background-color: c.$white;
+      background-color: var(--white);
     }
     &[aria-expanded="true"] {
       border-bottom-right-radius: 0;
@@ -73,7 +73,7 @@ $header-menu-background-color: hsl(from var(--slight-white) h s calc(l - 3));
 
   &:hover,
   &:focus {
-    background-color: c.$white;
+    background-color: var(--white);
     &[aria-checked="true"],
     &.active {
       background-color: hsl(from c.$fernGreen h s calc(l + 15));

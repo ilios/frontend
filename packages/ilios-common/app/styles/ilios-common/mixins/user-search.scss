@@ -5,7 +5,7 @@
 @use "media";
 
 @mixin user-search-results() {
-  background: c.$white;
+  background: var(--white);
   border: 1px solid var(--slight-white);
   border-radius: 3px;
   box-shadow: 0 2px 2px hsl(from c.$black h s l / 0.2);

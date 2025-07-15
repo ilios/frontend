@@ -28,8 +28,8 @@
 
     div {
       background-color: c.$tealBlue;
-      border-right: 1px solid c.$white;
-      color: c.$white;
+      border-right: 1px solid var(--white);
+      color: var(--white);
       overflow: hidden;
       padding: 0.5rem 0.25rem;
       white-space: nowrap;

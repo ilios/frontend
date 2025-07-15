@@ -5,7 +5,7 @@
   @include m.sessions-grid;
   background-color: c.$tealBlue;
   border-bottom: 1px solid c.$davysGrey;
-  color: c.$white;
+  color: var(--white);
   @include m.font-size("small");
   font-weight: normal;
   top: 0;
@@ -21,7 +21,7 @@
 
   .expand-collapse-control {
     button {
-      color: c.$white;
+      color: var(--white);
     }
   }
 }

@@ -24,12 +24,12 @@
     }
 
     .finalize {
-      background-color: c.$white;
+      background-color: var(--white);
       color: c.$rosewood;
 
       &:hover {
         background-color: c.$crimson;
-        color: c.$white;
+        color: var(--white);
       }
     }
   }

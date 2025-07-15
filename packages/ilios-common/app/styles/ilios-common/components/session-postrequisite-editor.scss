@@ -13,7 +13,7 @@
       position: relative;
       th {
         background-color: c.$tealBlue;
-        color: c.$white;
+        color: var(--white);
         position: sticky;
         top: 0;
       }
@@ -25,7 +25,7 @@
       tbody tr {
         &.active {
           background-color: c.$fernGreen;
-          color: c.$white;
+          color: var(--white);
         }
         &:hover {
           outline: 1px solid c.$fernGreen;

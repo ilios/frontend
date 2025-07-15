@@ -19,7 +19,7 @@
   }
 
   .switch-handle {
-    background: c.$white;
+    background: var(--white);
     border-radius: 10px;
     height: var(--switch);
     left: var(--switch-diff);

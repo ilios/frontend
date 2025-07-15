@@ -11,7 +11,7 @@
   grid-template-rows: 42px auto 20px;
   height: 100vh;
   width: 100%;
-  background-color: c.$white;
+  background-color: var(--white);
 
   & > .ilios-logo {
     grid-area: logo;
@@ -26,7 +26,7 @@
   }
 
   & > main {
-    background-color: c.$white;
+    background-color: var(--white);
     grid-area: main;
   }
 

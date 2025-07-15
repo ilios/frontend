@@ -13,7 +13,7 @@
 
   @mixin flash($color) {
     background-color: $color;
-    color: c.$white;
+    color: var(--white);
     display: block;
     opacity: 1;
     padding: 0.5rem;

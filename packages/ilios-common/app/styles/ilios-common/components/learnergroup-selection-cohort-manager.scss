@@ -11,7 +11,7 @@
 
   & > ul {
     @include m.ilios-list-tree;
-    background-color: c.$white;
+    background-color: var(--white);
     height: 15rem;
     margin-bottom: 1rem;
     overflow-y: scroll;

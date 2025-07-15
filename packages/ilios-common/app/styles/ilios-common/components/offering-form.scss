@@ -90,7 +90,7 @@
             padding: 0 0.2rem;
 
             &:enabled:hover {
-              color: c.$white;
+              color: var(--white);
               background-color: c.$crimson;
             }
           }

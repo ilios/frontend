@@ -13,7 +13,7 @@
   }
 
   .menu {
-    background-color: c.$white;
+    background-color: var(--white);
     border-style: solid;
     border-width: 1px;
     display: flex;
@@ -28,7 +28,7 @@
 
     button {
       border: 0;
-      background-color: c.$white;
+      background-color: var(--white);
       color: var(--raisin-black);
       display: block;
       outline: none;
@@ -41,7 +41,7 @@
         &:hover,
         &:focus {
           background-color: c.$crimson;
-          color: c.$white;
+          color: var(--white);
         }
       }
 
@@ -49,17 +49,17 @@
         &:hover,
         &:focus {
           background-color: c.$fernGreen;
-          color: c.$white;
+          color: var(--white);
         }
       }
     }
   }
 
   .toggle {
-    background-color: c.$white;
+    background-color: var(--white);
     border-style: solid;
     border-width: 1px;
-    color: c.$white;
+    color: var(--white);
     position: relative;
 
     &[aria-expanded="true"] {

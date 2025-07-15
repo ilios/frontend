@@ -5,11 +5,11 @@
   .flatpickr-month,
   .flatpickr-next-month,
   .flatpickr-prev-month {
-    color: c.$white;
+    color: var(--white);
     background: c.$orange;
 
     svg {
-      fill: c.$white;
+      fill: var(--white);
     }
   }
 
@@ -43,7 +43,7 @@
 .flatpickr-weekdays,
 span.flatpickr-weekday,
 .flatpickr-day.selected {
-  color: c.$white;
+  color: var(--white);
   background: c.$orange;
 }
 

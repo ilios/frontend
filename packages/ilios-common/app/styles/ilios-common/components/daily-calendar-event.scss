@@ -10,7 +10,7 @@
   justify-content: start;
   color: var(--raisin-black);
   @include m.font-size("small");
-  border: 1px solid c.$white;
+  border: 1px solid var(--white);
   margin: 1px;
   padding: 0.25rem;
   text-align: left;

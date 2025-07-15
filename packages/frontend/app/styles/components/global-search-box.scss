@@ -9,7 +9,7 @@
   position: relative;
 
   input[type="search"] {
-    background-color: c.$white;
+    background-color: var(--white);
     border: 1px solid c.$tealBlue;
     border-radius: 3px;
     height: 80%;
@@ -60,7 +60,7 @@
 
   .autocomplete {
     @include m.ilios-list-reset;
-    background: c.$white;
+    background: var(--white);
     border: 1px solid c.$tealBlue;
     border-radius: 0 0 3px 3px;
     box-shadow: 0 2px 2px hsl(from c.$black h s l / 0.8);

@@ -58,7 +58,7 @@
 
   meter {
     background: none;
-    background-color: c.$white;
+    background-color: var(--white);
     border: 0.5px solid var(--raisin-black);
     height: 0.75rem;
     margin: 0.25rem 0;
@@ -71,7 +71,7 @@
 
   meter::-webkit-meter-bar {
     background: none;
-    background-color: c.$white;
+    background-color: var(--white);
   }
 
   meter[value="0"]::-webkit-meter-optimum-value {

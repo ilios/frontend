@@ -39,12 +39,12 @@
 
       .bigadd {
         background-color: c.$fernGreen;
-        color: c.$white;
+        color: var(--white);
       }
 
       .bigcancel {
         background-color: c.$crimson;
-        color: c.$white;
+        color: var(--white);
         margin-left: 0.5rem;
       }
     }
@@ -88,7 +88,7 @@
       }
 
       .remove {
-        background-color: c.$white;
+        background-color: var(--white);
         color: c.$crimson;
 
         &:hover {

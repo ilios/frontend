@@ -73,11 +73,11 @@
     transition: all 0.08s linear;
 
     &:enabled:hover {
-      color: c.$white;
+      color: var(--white);
     }
 
     &.done {
-      background-color: c.$white;
+      background-color: var(--white);
       border-color: c.$fernGreen;
       color: var(--raisin-black);
 
@@ -86,13 +86,13 @@
         &:active,
         &.active {
           background-color: c.$fernGreen;
-          color: c.$white;
+          color: var(--white);
         }
       }
     }
 
     &.cancel {
-      background-color: c.$white;
+      background-color: var(--white);
       border-color: c.$crimson;
       color: c.$crimson;
 

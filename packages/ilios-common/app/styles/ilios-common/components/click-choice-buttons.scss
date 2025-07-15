@@ -9,7 +9,7 @@
     &.active {
       background-color: c.$tealBlue;
       border: 1px inset c.$tealBlue;
-      color: c.$white;
+      color: var(--white);
     }
   }
 }

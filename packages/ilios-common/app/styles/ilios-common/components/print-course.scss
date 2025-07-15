@@ -10,7 +10,7 @@
 
   .block {
     @include m.detail-container(c.$orange);
-    background-color: c.$white;
+    background-color: var(--white);
     padding: 0.5rem;
 
     .title {

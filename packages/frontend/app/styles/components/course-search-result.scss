@@ -9,7 +9,7 @@
     background: c.$fernGreen;
     border-radius: 2px;
     bottom: 2px;
-    color: c.$white;
+    color: var(--white);
     display: inline-block;
     @include m.font-size("smallest");
     padding: 2px 3px 1px;
@@ -20,7 +20,7 @@
     background: c.$fernGreen;
     border-radius: 2px;
     bottom: 2px;
-    color: c.$white;
+    color: var(--white);
     display: inline-block;
     @include m.font-size("smallest");
     padding: 2px 3px 1px;

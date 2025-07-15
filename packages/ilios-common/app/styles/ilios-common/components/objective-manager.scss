@@ -14,7 +14,7 @@
 
   .selected {
     background-color: c.$orange;
-    color: c.$white;
+    color: var(--white);
   }
 
   .parent-picker {

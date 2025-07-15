@@ -30,7 +30,7 @@
 
     .lm-search-results {
       @include m.ilios-selectable-list;
-      background-color: c.$white;
+      background-color: var(--white);
       border: 1px solid c.$blueMunsell;
       margin: 0;
       max-height: 15rem;

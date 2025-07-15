@@ -24,7 +24,7 @@
       button:disabled {
         background-color: c.$davysGrey;
         border-color: c.$davysGrey;
-        color: c.$white;
+        color: var(--white);
         cursor: default;
       }
     }

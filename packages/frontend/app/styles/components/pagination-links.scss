@@ -49,7 +49,7 @@
     &:hover {
       background: c.$orange;
       border: 1px solid c.$orange;
-      color: c.$white;
+      color: var(--white);
     }
 
     @include m.for-phone-only {
@@ -57,7 +57,7 @@
     }
 
     &:disabled {
-      background: c.$white;
+      background: var(--white);
       border: none;
       color: var(--raisin-black);
       cursor: default;
