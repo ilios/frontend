@@ -28,7 +28,7 @@
       color: c.$rosewood;
 
       &:hover {
-        background-color: c.$crimson;
+        background-color: var(--crimson);
         color: var(--white);
       }
     }

@@ -168,7 +168,7 @@
         color: c.$rosewood;
 
         &:hover {
-          background-color: c.$crimson;
+          background-color: var(--crimson);
           color: white;
         }
       }
@@ -208,7 +208,7 @@
   }
 
   .bigcancel {
-    background-color: c.$crimson;
+    background-color: var(--crimson);
     color: var(--white);
     margin-left: 0.5em;
   }

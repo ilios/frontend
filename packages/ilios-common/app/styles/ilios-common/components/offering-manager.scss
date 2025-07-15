@@ -34,7 +34,7 @@
 
   &.show-remove-confirmation {
     background-color: c.$lavenderBlush;
-    border: 1px solid c.$crimson;
+    border: 1px solid var(--crimson);
   }
 
   .confirm-removal {
@@ -60,7 +60,7 @@
       color: c.$rosewood;
 
       &:hover {
-        background-color: c.$crimson;
+        background-color: var(--crimson);
         color: white;
       }
     }

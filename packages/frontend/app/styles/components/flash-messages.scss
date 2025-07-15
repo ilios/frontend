@@ -48,7 +48,7 @@
   }
 
   .alert-alert {
-    @include flash(c.$crimson);
+    @include flash(var(--crimson));
   }
 
   .alert:last-of-type {

@@ -75,10 +75,10 @@
   }
 
   meter[value="0"]::-webkit-meter-optimum-value {
-    background: c.$crimson;
+    background: var(--crimson);
   }
   meter[value="1"]::-webkit-meter-optimum-value {
-    background: c.$crimson;
+    background: var(--crimson);
   }
   meter[value="2"]::-webkit-meter-optimum-value {
     background: var(--orange);
@@ -91,10 +91,10 @@
   }
 
   meter[value="0"]:-moz-meter-bar {
-    background: c.$crimson;
+    background: var(--crimson);
   }
   meter[value="1"]:-moz-meter-bar {
-    background: c.$crimson;
+    background: var(--crimson);
   }
   meter[value="2"]:-moz-meter-bar {
     background: var(--orange);
@@ -114,12 +114,12 @@
     width: 10%;
 
     &.strength-0 {
-      color: c.$crimson;
+      color: var(--crimson);
       width: 20%;
     }
 
     &.strength-1 {
-      color: c.$crimson;
+      color: var(--crimson);
     }
 
     &.strength-2 {

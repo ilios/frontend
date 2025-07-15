@@ -43,7 +43,7 @@
       }
 
       .bigcancel {
-        background-color: c.$crimson;
+        background-color: var(--crimson);
         color: var(--white);
         margin-left: 0.5rem;
       }
@@ -80,7 +80,7 @@
       }
 
       .confirm-message {
-        color: c.$crimson;
+        color: var(--crimson);
         grid-column: 1 / -1;
         font-weight: bold;
         text-align: center;
@@ -89,10 +89,10 @@
 
       .remove {
         background-color: var(--white);
-        color: c.$crimson;
+        color: var(--crimson);
 
         &:hover {
-          background-color: c.$crimson;
+          background-color: var(--crimson);
           color: white;
         }
       }

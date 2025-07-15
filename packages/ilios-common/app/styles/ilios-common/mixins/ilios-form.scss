@@ -93,11 +93,11 @@
 
     &.cancel {
       background-color: var(--white);
-      border-color: c.$crimson;
-      color: c.$crimson;
+      border-color: var(--crimson);
+      color: var(--crimson);
 
       &:enabled:hover {
-        background-color: c.$crimson;
+        background-color: var(--crimson);
       }
     }
   }
@@ -120,7 +120,7 @@
 
   input {
     &.has-error {
-      border-color: c.$crimson;
+      border-color: var(--crimson);
     }
   }
 }

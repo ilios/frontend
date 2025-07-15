@@ -78,7 +78,7 @@
       }
 
       .learning-material-status {
-        color: c.$crimson;
+        color: var(--crimson);
         @include m.font-size("small");
         position: absolute;
         right: 5px;
@@ -122,7 +122,7 @@
       @include m.ilios-button-reset;
       color: var(--blue-munsell);
       &.remove {
-        color: c.$crimson;
+        color: var(--crimson);
       }
     }
   }

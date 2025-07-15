@@ -51,7 +51,7 @@
       @include m.ilios-selectable-list;
 
       em {
-        color: c.$crimson;
+        color: var(--crimson);
       }
     }
   }

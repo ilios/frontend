@@ -78,8 +78,8 @@
       @include m.ilios-input;
 
       &.error {
-        border: 1px solid c.$crimson;
-        outline-color: c.$crimson;
+        border: 1px solid var(--crimson);
+        outline-color: var(--crimson);
       }
     }
 

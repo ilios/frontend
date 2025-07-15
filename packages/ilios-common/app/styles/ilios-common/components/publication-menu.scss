@@ -40,7 +40,7 @@
       &.danger {
         &:hover,
         &:focus {
-          background-color: c.$crimson;
+          background-color: var(--crimson);
           color: var(--white);
         }
       }
