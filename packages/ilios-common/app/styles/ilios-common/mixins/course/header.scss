@@ -18,8 +18,7 @@
     height: 2rem;
   }
 
-  h2,
-  h3 {
+  h2 {
     @include ilios-heading.ilios-heading-h4;
     @include font-size.text-align-bottom;
   }
