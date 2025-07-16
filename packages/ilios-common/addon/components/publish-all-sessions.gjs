@@ -275,7 +275,7 @@ export default class PublishAllSessionsComponent extends Component {
                             @route="session"
                             @model={{session}}
                             @query={{hash sessionObjectiveDetails=true}}
-                            aria-label={{t "general.backToTitle" title=session.title}}
+                            title={{t "general.backToTitle" title=session.title}}
                             data-test-session-link
                           >
                             <FaIcon @icon="link-slash" />
@@ -378,7 +378,7 @@ export default class PublishAllSessionsComponent extends Component {
                             @route="session"
                             @model={{session}}
                             @query={{hash sessionObjectiveDetails=true}}
-                            aria-label={{t "general.backToTitle" title=session.title}}
+                            title={{t "general.backToTitle" title=session.title}}
                             data-test-session-link
                           >
                             <FaIcon @icon="link-slash" />
@@ -516,7 +516,7 @@ export default class PublishAllSessionsComponent extends Component {
                             @route="session"
                             @model={{session}}
                             @query={{hash sessionObjectiveDetails=true}}
-                            aria-label={{t "general.backToTitle" title=session.title}}
+                            title={{t "general.backToTitle" title=session.title}}
                             data-test-session-link
                           >
                             <FaIcon @icon="link-slash" />
