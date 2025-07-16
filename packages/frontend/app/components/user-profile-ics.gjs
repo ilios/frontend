@@ -120,6 +120,7 @@ export default class UserProfileIcsComponent extends Component {
             disabled={{this.refreshKey.isRunning}}
             class="bigcancel"
             data-test-cancel
+            title={{t "general.close"}}
             {{on "click" (fn @setIsManaging false)}}
           >
             <FaIcon @icon="arrow-rotate-left" />
