@@ -67,7 +67,9 @@ export default class NewLearningmaterialComponent extends Component {
                 messageKey: 'errors.missingFile',
               };
             },
-            (value) => value !== null && value !== undefined && value.trim() !== '',
+            (value) => {
+              return value !== null && value !== undefined && value.trim() !== '';
+            },
           ),
       }),
     copyrightRationale: string().when(
@@ -148,6 +150,18 @@ export default class NewLearningmaterialComponent extends Component {
 
   get bestLink() {
     return this.link ?? DEFAULT_URL_VALUE;
+  }
+
+  @action
+  async setFilename(filename) {
+    this.filename = filename;
+    await this.validations.isValid();
+  }
+
+  @action
+  async setFileHash(fileHash) {
+    this.fileHash = fileHash;
+    await this.validations.isValid();
   }
 
   focusOnFirstElementWithError() {
@@ -418,8 +432,8 @@ export default class NewLearningmaterialComponent extends Component {
             id="learning-material-uploader-{{this.uniqueId}}"
             class={{if this.validations.errors.filename "error" ""}}
             @for="file-upload-{{this.uniqueId}}"
-            @setFilename={{set this "filename"}}
-            @setFileHash={{set this "fileHash"}}
+            @setFilename={{this.setFilename}}
+            @setFileHash={{this.setFileHash}}
           />
           <YupValidationMessage
             @description={{t "general.file"}}
