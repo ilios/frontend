@@ -160,9 +160,9 @@ export default class ReportsCurriculumHeader extends Component {
         {{/if}}
         {{#if @showReportResults}}
           {{#if @loading}}
-            <button type="button" class="done text">
+            <div class="loading-results">
               <FaIcon @icon="spinner" @spin={{true}} />
-            </button>
+            </div>
           {{else}}
             <button type="button" {{on "click" @download}} data-test-download>
               {{#if @finished}}

@@ -12,13 +12,18 @@
     width: 100%;
     margin-top: 0.5rem;
     justify-content: flex-end;
-    button {
+    button,
+    div {
       margin-left: 0.5rem;
 
       &:disabled {
         cursor: default;
         background-color: var(--davys-grey);
       }
+    }
+    .loading-results {
+      @include cm.ilios-button;
+      cursor: default;
     }
   }
 }
