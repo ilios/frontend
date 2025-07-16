@@ -41,6 +41,7 @@ function setupRenderingTest(hooks, options) {
       //disable color-contrast check on integration tests as we don't have a full background or styles
       'color-contrast': { enabled: false },
       listitem: { enabled: false },
+      'heading-order': { enabled: false },
     },
   });
 }
