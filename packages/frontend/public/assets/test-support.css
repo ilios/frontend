@@ -1,4 +1,4 @@
-:root {
+#qunit {
   --color-gray-100: #f4f6f8;
   --color-gray-700: #42474f;
   --color-gray-900: #1c1e24;
@@ -8,9 +8,7 @@
   --color-danger: #ffd8e1;
 
   --spacing-2: 1rem;
-}
 
-#qunit {
   margin: 0;
   padding: 0 !important;
 }
