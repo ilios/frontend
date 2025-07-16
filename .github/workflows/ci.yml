@@ -39,7 +39,8 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     needs: [lint]
-
+    env:
+      ENABLE_A11Y_AUDIT: true
     strategy:
       fail-fast: false
       matrix:
