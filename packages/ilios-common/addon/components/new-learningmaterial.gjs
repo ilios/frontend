@@ -182,9 +182,10 @@ export default class NewLearningmaterialComponent extends Component {
     return this.link ?? DEFAULT_URL_VALUE;
   }
 
-  focusOn(idPrefix) {
-    const id = idPrefix + '-' + this.uniqueId;
-    const element = document.getElementById(id);
+  focusOnFirstElementWithError() {
+    const element = document
+      .getElementById(`new-learningmaterial-${this.uniqueId}`)
+      .querySelector('.error');
     if (element) {
       element.focus();
     }
@@ -194,21 +195,7 @@ export default class NewLearningmaterialComponent extends Component {
     this.validations.addErrorDisplayForAllFields();
     const isValid = await this.validations.isValid();
     if (!isValid) {
-      if (this.hasValidationErrorForTitle) {
-        this.focusOn('display-name');
-      } else if (this.hasValidationErrorForOriginalAuthor) {
-        this.focusOn('original-author');
-      } else if (this.hasValidationErrorForCopyrightPermission) {
-        this.focusOn('copyright-permission');
-      } else if (this.hasValidationErrorForCopyrightRationale) {
-        this.focusOn('copyright-rationale');
-      } else if (this.hasValidationErrorForFileHash || this.hasValidationErrorForFilename) {
-        this.focusOn('learning-material-uploader');
-      } else if (this.hasValidationErrorForLink) {
-        this.focusOn('url');
-      } else if (this.hasValidationErrorForCitation) {
-        this.focusOn('citation');
-      }
+      this.focusOnFirstElementWithError();
       return false;
     }
     const owningUser = await this.currentUser.getModel();
@@ -271,7 +258,11 @@ export default class NewLearningmaterialComponent extends Component {
     }
   }
   <template>
-    <div class="new-learningmaterial" data-test-new-learningmaterial>
+    <div
+      class="new-learningmaterial"
+      id="new-learningmaterial-{{this.uniqueId}}"
+      data-test-new-learningmaterial
+    >
       <div class="item" data-test-display-name>
         <label for="display-name-{{this.uniqueId}}">
           {{t "general.displayName"}}:
