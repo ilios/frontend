@@ -99,7 +99,7 @@ export default class SessionObjectiveListItemParentsComponent extends Component 
             {{else}}
               {{#if expanded}}
                 <button
-                  class="expand-text-button"
+                  class="collapse-text-button"
                   title={{t "general.collapse"}}
                   type="button"
                   data-test-collapse

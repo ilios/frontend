@@ -168,7 +168,7 @@ export default class EditableFieldComponent extends Component {
                   {{else}}
                     {{#if expanded}}
                       <button
-                        class="expand-text-button"
+                        class="collapse-text-button"
                         aria-label={{t "general.collapse"}}
                         title={{t "general.collapse"}}
                         type="button"

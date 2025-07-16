@@ -112,7 +112,7 @@ export default class FadeTextComponent extends Component {
         {{else}}
           {{#if this.expanded}}
             <button
-              class="expand-text-button"
+              class="collapse-text-button"
               aria-label={{t "general.collapse"}}
               title={{t "general.collapse"}}
               type="button"
