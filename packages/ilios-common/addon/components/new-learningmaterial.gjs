@@ -105,38 +105,6 @@ export default class NewLearningmaterialComponent extends Component {
     return guidFor(this);
   }
 
-  get hasValidationErrorForOriginalAuthor() {
-    return Object.hasOwn(this.validations.errors, 'originalAuthor');
-  }
-
-  get hasValidationErrorForTitle() {
-    return Object.hasOwn(this.validations.errors, 'title');
-  }
-
-  get hasValidationErrorForLink() {
-    return Object.hasOwn(this.validations.errors, 'link');
-  }
-
-  get hasValidationErrorForCitation() {
-    return Object.hasOwn(this.validations.errors, 'citation');
-  }
-
-  get hasValidationErrorForFilename() {
-    return Object.hasOwn(this.validations.errors, 'filename');
-  }
-
-  get hasValidationErrorForCopyrightPermission() {
-    return Object.hasOwn(this.validations.errors, 'copyrightPermission');
-  }
-
-  get hasValidationErrorForCopyrightRationale() {
-    return Object.hasOwn(this.validations.errors, 'copyrightRationale');
-  }
-
-  get hasValidationErrorForFileHash() {
-    return Object.hasOwn(this.validations.errors, 'fileHash');
-  }
-
   @cached
   get currentUserModel() {
     return this.userModel.isResolved ? this.userModel.value : null;
