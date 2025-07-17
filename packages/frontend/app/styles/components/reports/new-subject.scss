@@ -3,7 +3,7 @@
 @use "sass:color";
 
 .reports-new-subject {
-  background-color: var(--slight-white);
+  background-color: var(--white);
   border: 1px solid var(--cultured-grey);
   margin: 0.5rem 0;
   padding: 1rem 1rem 3rem;
@@ -73,7 +73,7 @@
         background: var(--white);
         border-width: 0 1px 1px 1px;
         border-style: solid;
-        border-color: var(--slight-white);
+        border-color: var(--white);
         box-shadow: 0 2px 2px hsl(from var(--black) h s l / 0.2);
         color: var(--raisin-black);
         max-height: 15rem;

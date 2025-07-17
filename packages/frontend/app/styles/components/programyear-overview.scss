@@ -4,7 +4,7 @@
 
 .programyear-overview {
   @include m.ilios-overview(var(--orange));
-  background: var(--slight-white);
+  background: var(--white);
   border-top: 1px dotted var(--orange);
   border-bottom: 0;
   margin: 0 1.5rem;
