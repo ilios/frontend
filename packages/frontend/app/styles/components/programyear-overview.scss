@@ -21,7 +21,7 @@
       @include m.ilios-overview-actions;
 
       a {
-        color: var(--blue-munsell);
+        color: var(--light-blue);
         @include m.font-size("medium");
       }
     }

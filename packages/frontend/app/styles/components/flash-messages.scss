@@ -44,7 +44,7 @@
   }
 
   .alert-info {
-    @include flash(var(--blue-munsell));
+    @include flash(var(--light-blue));
   }
 
   .alert-alert {

@@ -23,7 +23,7 @@
 
   li {
     border-bottom: 1px solid var(--cultured-grey);
-    color: var(--blue-munsell);
+    color: var(--light-blue);
     display: block;
     padding: 0.1rem;
     width: 100%;
@@ -40,7 +40,7 @@
     a,
     &.clickable {
       &:hover {
-        background-color: hsl(from var(--blue-munsell) h s calc(l + 50));
+        background-color: hsl(from var(--light-blue) h s calc(l + 50));
       }
     }
 
