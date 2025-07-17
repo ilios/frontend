@@ -1,55 +1,44 @@
 import Controller from '@ember/controller';
-import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
-import currentAcademicYear from 'ilios-common/utils/current-academic-year';
 
 export default class SearchController extends Controller {
   queryParams = [
     {
       page: 'page',
       query: 'q',
-      ignoredSchoolIds: 'ignoredSchools',
-      selectedYear: 'year',
+      schools: 'schools',
+      years: 'years',
     },
   ];
 
   @tracked page = 1;
   @tracked query = '';
-  @tracked ignoredSchoolIds = null;
-  @tracked selectedYear = currentAcademicYear();
+  @tracked schools = null;
+  @tracked years = null;
 
-  get ignoredSchoolIdsArray() {
-    return this.ignoredSchoolIds ? this.ignoredSchoolIds.split('-') : [];
+  get schoolIdsArray() {
+    return this.schools ? this.schools.split('-') : [];
   }
 
-  get selectedYearInt() {
-    return this.selectedYear ? parseInt(this.selectedYear, 10) : null;
+  get selectedYearsArray() {
+    return this.years ? this.years.split('-').map(Number) : [];
   }
 
-  @action
-  setQuery(query) {
+  setQuery = (query) => {
     // don't reset the page when returning back to the same query
     if (query !== this.query) {
       this.page = 1;
       this.query = query;
-      this.ignoredSchoolIds = null;
-      this.selectedYear = null;
     }
-  }
+  };
 
-  @action
-  setIgnoredSchools(schools) {
+  setSchools = (schools) => {
     const str = schools.length ? schools.join('-') : null;
-    this.ignoredSchoolIds = str;
-  }
+    this.schools = str;
+  };
 
-  @action
-  setSelectedYear(year) {
-    this.selectedYear = year;
-  }
-
-  @action
-  setPage(page) {
-    this.page = page;
-  }
+  setYears = (years) => {
+    const str = years.length ? years.join('-') : null;
+    this.years = str;
+  };
 }

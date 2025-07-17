@@ -11,7 +11,8 @@ module('Acceptance | search', function (hooks) {
   setupApplicationTest(hooks);
 
   hooks.beforeEach(async function () {
-    await setupAuthentication({}, true);
+    const school = this.server.create('school');
+    await setupAuthentication({ school }, true);
     const { apiVersion } = this.owner.resolveRegistration('config:environment');
     this.server.get('application/config', function () {
       return {
@@ -24,17 +25,18 @@ module('Acceptance | search', function (hooks) {
   });
 
   test('visiting /search', async function (assert) {
-    assert.expect(8);
+    assert.expect(6);
     const input = 'hello';
 
-    this.server.get('api/search/v1/curriculum', (schema, { queryParams }) => {
+    this.server.get('api/search/v2/curriculum', (schema, { queryParams }) => {
       assert.ok(queryParams.q);
       assert.strictEqual(queryParams.q, input);
 
       return {
         results: {
-          autocomplete: [],
           courses: [],
+          totalCourses: 0,
+          didYouMean: [],
         },
       };
     });
@@ -51,14 +53,15 @@ module('Acceptance | search', function (hooks) {
   test('visiting /search?q', async function (assert) {
     assert.expect(3);
     const test = 'hello';
-    this.server.get('api/search/v1/curriculum', (schema, { queryParams }) => {
+    this.server.get('api/search/v2/curriculum', (schema, { queryParams }) => {
       assert.ok(queryParams.q);
       assert.strictEqual(queryParams.q, test);
 
       return {
         results: {
-          autocomplete: [],
           courses: [],
+          totalCourses: 0,
+          didYouMean: [],
         },
       };
     });
@@ -72,11 +75,12 @@ module('Acceptance | search', function (hooks) {
 
     const input = 'H&L+foo=bar';
 
-    this.server.get('api/search/v1/curriculum', () => {
+    this.server.get('api/search/v2/curriculum', () => {
       return {
         results: {
-          autocomplete: [],
           courses: [],
+          totalCourses: 0,
+          didYouMean: [],
         },
       };
     });
@@ -95,11 +99,12 @@ module('Acceptance | search', function (hooks) {
 
     const input = 'H&L+foo=bar';
 
-    this.server.get('api/search/v1/curriculum', () => {
+    this.server.get('api/search/v2/curriculum', () => {
       return {
         results: {
-          autocomplete: [],
           courses: [],
+          totalCourses: 0,
+          didYouMean: [],
         },
       };
     });
@@ -107,12 +112,15 @@ module('Acceptance | search', function (hooks) {
     assert.strictEqual(currentURL(), '/dashboard/week');
     await dashboardPage.iliosHeader.searchBox.input(input);
     await dashboardPage.iliosHeader.searchBox.clickIcon();
-    assert.strictEqual(currentURL(), `/search?q=${encodeURIComponent(input)}`);
+    assert.strictEqual(
+      currentURL(),
+      `/search?q=${encodeURIComponent(input)}&schools=1&years=${currentAcademicYear()}-${currentAcademicYear() - 1}`,
+    );
     assert.strictEqual(page.globalSearch.searchBox.inputValue, input);
   });
 
   test('clicking back from course to search works #4768', async function (assert) {
-    assert.expect(8);
+    assert.expect(14);
 
     const school = this.server.create('school');
     this.server.createList('course', 25, { school });
@@ -129,11 +137,16 @@ module('Acceptance | search', function (hooks) {
     }
     const firstInput = 'first';
 
-    this.server.get('api/search/v1/curriculum', () => {
+    this.server.get('api/search/v2/curriculum', (schema, { queryParams }) => {
+      assert.ok(queryParams.size);
+      assert.ok(queryParams.from);
+      const from = Number(queryParams.from);
+      const size = Number(queryParams.size);
       return {
         results: {
-          autocomplete: [],
-          courses,
+          courses: courses.slice(from, from + size),
+          totalCourses: courses.length,
+          didYouMean: [],
         },
       };
     });
@@ -177,22 +190,20 @@ module('Acceptance | search', function (hooks) {
   });
 
   test('clicking back on search updates results and input #4759', async function (assert) {
-    assert.expect(15);
+    assert.expect(14);
 
     const firstInput = 'first';
     const secondInput = 'second';
 
     let searchRun = 0;
-    this.server.get('api/search/v1/curriculum', (schema, { queryParams }) => {
+    this.server.get('api/search/v2/curriculum', (schema, { queryParams }) => {
       const rhett = {
         results: {
-          autocomplete: [queryParams.q],
           courses: [],
+          totalCourses: 0,
+          didYouMean: [],
         },
       };
-      if (queryParams.onlySuggest) {
-        return rhett;
-      }
       assert.ok(searchRun <= 2);
       let input, message;
       switch (searchRun) {
@@ -226,37 +237,14 @@ module('Acceptance | search', function (hooks) {
     await page.visit({ q: firstInput });
     assert.strictEqual(currentURL(), `/search?q=${firstInput}`);
     assert.strictEqual(page.globalSearch.searchBox.inputValue, firstInput);
-    assert.strictEqual(page.globalSearch.searchBox.autocompleteResults.length, 0);
     assert.strictEqual(searchRun, 3, 'search was run three times');
   });
 
-  test('search requires three chars #4769', async function (assert) {
-    assert.expect(3);
-    const input = 'br';
-
-    await page.visit();
-    await page.globalSearch.searchBox.input(input);
-    assert.strictEqual(page.globalSearch.searchBox.autocompleteResults.length, 1);
-    assert.strictEqual(page.globalSearch.searchBox.autocompleteResults[0].text, 'keep typing...');
-    await page.globalSearch.searchBox.clickIcon();
-    assert.strictEqual(page.globalSearch.searchResults.length, 0);
-  });
-
-  test('search requires three chars in URL #4769', async function (assert) {
-    assert.expect(2);
-    const input = 'br';
-
-    await page.visit({ q: input });
-    await percySnapshot(assert);
-    assert.strictEqual(page.globalSearch.searchBox.inputValue, input);
-    await page.globalSearch.searchBox.clickIcon();
-    assert.strictEqual(page.globalSearch.searchResults.length, 0);
-  });
-
   test('school filter in query param', async function (assert) {
-    assert.expect(9);
+    assert.expect(11);
 
-    const schools = this.server.createList('school', 3);
+    this.server.createList('school', 2);
+    const schools = this.server.schema.schools.all().models;
     const courses = [];
     const year = currentAcademicYear();
     for (let i = 0; i < 3; i++) {
@@ -268,18 +256,22 @@ module('Acceptance | search', function (hooks) {
       });
     }
 
-    this.server.get('api/search/v1/curriculum', () => {
+    this.server.get('api/search/v2/curriculum', (schema, { queryParams }) => {
+      assert.ok(queryParams.schools);
+      const schoolIds = queryParams.schools.split('-').map(Number);
+      assert.deepEqual(schoolIds, [2]);
       return {
         results: {
-          autocomplete: [],
-          courses,
+          courses: courses.slice(1, 2),
+          totalCourses: courses.length,
+          didYouMean: [],
         },
       };
     });
 
     await page.visit({
       q: 'something',
-      ignoredSchools: '1-3',
+      schools: '2',
     });
     await percySnapshot(assert);
     assert.strictEqual(page.globalSearch.searchResults.length, 1);
@@ -294,36 +286,43 @@ module('Acceptance | search', function (hooks) {
   });
 
   test('year filter in query param', async function (assert) {
-    assert.expect(3);
+    assert.expect(11);
+    this.server.create('academic-year', { id: 2025, title: '2025' });
+    this.server.create('academic-year', { id: 2024, title: '2024' });
+    this.server.create('academic-year', { id: 2023, title: '2023' });
 
-    this.server.get('api/search/v1/curriculum', () => {
+    this.server.get('api/search/v2/curriculum', (schema, { queryParams }) => {
+      assert.ok(queryParams.years);
+      const years = queryParams.years.split('-').map(Number);
+      assert.deepEqual(years, [2024]);
       return {
         results: {
-          autocomplete: [],
           courses: [
             {
-              title: 'course 1',
-              year: 2019,
-              school: 'school 1',
-              sessions: [],
-            },
-            {
               title: 'course 2',
-              year: 2020,
+              year: 2024,
               school: 'school 1',
               sessions: [],
             },
           ],
+          totalCourses: 1,
+          didYouMean: [],
         },
       };
     });
 
     await page.visit({
       q: 'something',
-      year: '2020',
+      years: '2024',
     });
     assert.strictEqual(page.globalSearch.searchResults.length, 1);
-    assert.strictEqual(page.globalSearch.searchResults[0].courseTitle, '2020 course 2');
-    assert.strictEqual(page.globalSearch.academicYear, '2020');
+    assert.strictEqual(page.globalSearch.searchResults[0].courseTitle, '2024 course 2');
+    assert.strictEqual(page.globalSearch.yearFilters.length, 3);
+    assert.strictEqual(page.globalSearch.yearFilters[0].year, '2025');
+    assert.notOk(page.globalSearch.yearFilters[0].isSelected);
+    assert.strictEqual(page.globalSearch.yearFilters[1].year, '2024');
+    assert.ok(page.globalSearch.yearFilters[1].isSelected);
+    assert.strictEqual(page.globalSearch.yearFilters[2].year, '2023');
+    assert.notOk(page.globalSearch.yearFilters[2].isSelected);
   });
 });

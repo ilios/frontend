@@ -403,7 +403,6 @@ general:
   sessionTypeConfirmRemoval: ¿Está seguro de que desea eliminar este tipo de sesión? Esta acción no se puede deshacer.
   sessionTypeTitlePlaceholder: Entre en un titulo para este tipo de sesión
   showAssociatedCourses: Mostrar cursos asociados
-  showResultsFor: Mostrar Resultados Para
   showRolesInCourses: Mostrar roles en cursos
   showRolesInPrograms: Mostrar roles en programas
   showRolesInProgramYears: Mostrar roles en años de programa
