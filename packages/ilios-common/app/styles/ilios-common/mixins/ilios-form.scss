@@ -78,14 +78,14 @@
 
     &.done {
       background-color: var(--white);
-      border-color: var(--fern-green);
+      border-color: var(--green);
       color: var(--black);
 
       &:enabled {
         &:hover,
         &:active,
         &.active {
-          background-color: var(--fern-green);
+          background-color: var(--green);
           color: var(--white);
         }
       }

@@ -68,7 +68,7 @@ $header-menu-background-color: hsl(from var(--white) h s calc(l - 3));
 
   &[aria-checked="true"],
   &.active {
-    background-color: hsl(from var(--fern-green) h s calc(l + 25));
+    background-color: hsl(from var(--green) h s calc(l + 25));
   }
 
   &:hover,
@@ -76,7 +76,7 @@ $header-menu-background-color: hsl(from var(--white) h s calc(l - 3));
     background-color: var(--white);
     &[aria-checked="true"],
     &.active {
-      background-color: hsl(from var(--fern-green) h s calc(l + 15));
+      background-color: hsl(from var(--green) h s calc(l + 15));
     }
   }
 }

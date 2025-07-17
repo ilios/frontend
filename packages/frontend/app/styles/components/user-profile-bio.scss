@@ -33,7 +33,7 @@
       }
 
       &.synced-from-directory input {
-        background-color: hsl(from var(--fern-green) h s calc(l + 40));
+        background-color: hsl(from var(--green) h s calc(l + 40));
         transition: background-color 500ms ease;
       }
     }
@@ -87,7 +87,7 @@
     background: var(--gold);
   }
   meter[value="4"]::-webkit-meter-optimum-value {
-    background: var(--fern-green);
+    background: var(--green);
   }
 
   meter[value="0"]:-moz-meter-bar {
@@ -103,7 +103,7 @@
     background: var(--gold);
   }
   meter[value="4"]:-moz-meter-bar {
-    background: var(--fern-green);
+    background: var(--green);
   }
 
   .password-strength {
@@ -131,7 +131,7 @@
     }
 
     &.strength-4 {
-      color: var(--fern-green);
+      color: var(--green);
     }
   }
 }

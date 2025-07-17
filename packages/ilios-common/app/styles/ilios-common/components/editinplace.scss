@@ -39,10 +39,10 @@
         }
 
         &.done {
-          color: var(--fern-green);
+          color: var(--green);
 
           &:enabled:hover {
-            background-color: var(--fern-green);
+            background-color: var(--green);
           }
         }
 
