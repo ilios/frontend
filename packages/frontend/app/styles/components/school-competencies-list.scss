@@ -38,7 +38,7 @@
       }
 
       .bigadd {
-        background-color: var(--fern-green);
+        background-color: var(--green);
         color: var(--white);
       }
 
@@ -61,7 +61,7 @@
 
     &.highlight-ok {
       transition: none;
-      background-color: hsl(from var(--fern-green) h s calc(l + 60));
+      background-color: hsl(from var(--green) h s calc(l + 60));
     }
 
     &.is-managing {
