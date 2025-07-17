@@ -71,7 +71,7 @@
       }
 
       .learning-material-description {
-        color: var(--davys-grey);
+        color: var(--grey);
         display: block;
         @include m.font-size("small");
         margin-left: 1.9em;
@@ -90,7 +90,7 @@
 
         li {
           border: 0;
-          color: var(--davys-grey);
+          color: var(--grey);
           cursor: inherit;
           display: list-item;
           @include m.font-size("small");
