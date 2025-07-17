@@ -34,7 +34,7 @@
 
   h2 {
     @include m.ilios-heading;
-    color: var(--raisin-black);
+    color: var(--black);
     @include m.font-size("base");
     font-weight: bold;
   }

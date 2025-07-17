@@ -2,7 +2,7 @@
 @use "../ilios-common/mixins" as m;
 
 .pagination-links {
-  color: var(--raisin-black);
+  color: var(--black);
   margin: 2rem 0;
   text-align: center;
 
@@ -59,7 +59,7 @@
     &:disabled {
       background: var(--white);
       border: none;
-      color: var(--raisin-black);
+      color: var(--black);
       cursor: default;
     }
   }
