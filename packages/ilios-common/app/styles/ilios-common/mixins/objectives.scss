@@ -156,7 +156,7 @@
       }
 
       .confirm-message {
-        color: var(--rosewood);
+        color: var(--darker-red);
         grid-column: 1 / -1;
         font-weight: bold;
         text-align: center;
@@ -165,7 +165,7 @@
 
       .remove {
         background-color: var(--white);
-        color: var(--rosewood);
+        color: var(--darker-red);
 
         &:hover {
           background-color: var(--red);
