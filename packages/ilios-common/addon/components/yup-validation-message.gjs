@@ -27,10 +27,14 @@ export default class YupValidationMessage extends Component {
     return [];
   }
   <template>
-    {{#each this.messages as |m|}}
-      <span class="validation-error-message" data-test-validation-error-message ...attributes>
-        {{m}}
+    {{#if this.messages.length}}
+      <span ...attributes>
+        {{#each this.messages as |m|}}
+          <span class="validation-error-message" data-test-validation-error-message>
+            {{m}}
+          </span>
+        {{/each}}
       </span>
-    {{/each}}
+    {{/if}}
   </template>
 }
