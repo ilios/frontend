@@ -47,10 +47,10 @@
         }
 
         &.cancel {
-          color: var(--crimson);
+          color: var(--red);
 
           &:enabled:hover {
-            background-color: var(--crimson);
+            background-color: var(--red);
           }
         }
       }
