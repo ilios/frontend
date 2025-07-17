@@ -36,7 +36,7 @@
 
   .sessions-grid-header {
     @include m.loading-text;
-    background-color: hsl(from var(--grey) h s calc(l + 50));
+    background-color: var(--lighter-grey);
     height: 2rem;
   }
 }
@@ -51,11 +51,11 @@
     width: 100%;
 
     span {
-      background-color: hsl(from var(--grey) h s calc(l + 50));
+      background-color: var(--lighter-grey);
       border-bottom-left-radius: 5px;
       border-bottom-right-radius: 5px;
       padding: 0.25rem 4rem;
-      color: hsl(from var(--grey) h s calc(l + 50));
+      color: var(--lighter-grey);
 
       .expand-collapse-icon {
         margin-left: 0.5rem;
