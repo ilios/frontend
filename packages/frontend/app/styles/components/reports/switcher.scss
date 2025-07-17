@@ -9,7 +9,7 @@
     @include cm.ilios-link-button;
     background-color: var(--white);
     color: var(--blue);
-    border: 1px solid hsl(from var(--black) h s l / 0.2);
+    border: 1px solid var(--very-transparent-black);
     @include cm.font-size("medium");
     font-weight: 600;
     padding: 0.25em 0.5em;
