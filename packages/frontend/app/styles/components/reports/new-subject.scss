@@ -4,7 +4,7 @@
 
 .reports-new-subject {
   background-color: var(--white);
-  border: 1px solid var(--cultured-grey);
+  border: 1px solid var(--lightest-grey);
   margin: 0.5rem 0;
   padding: 1rem 1rem 3rem;
 
@@ -54,7 +54,7 @@
       }
 
       &:disabled {
-        background-color: var(--cultured-grey);
+        background-color: var(--lightest-grey);
         border-color: var(--grey);
         color: var(--white);
         cursor: default;
@@ -81,7 +81,7 @@
         transition: all 0.2s ease-in-out;
 
         li {
-          border-bottom: 1px solid var(--cultured-grey);
+          border-bottom: 1px solid var(--lightest-grey);
           width: 100%;
 
           button {
@@ -90,7 +90,7 @@
             padding: 0.6rem 0 0 1rem;
 
             &:hover {
-              background-color: var(--cultured-grey);
+              background-color: var(--lightest-grey);
             }
           }
 

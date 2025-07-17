@@ -62,7 +62,7 @@
       grid-row: 1 / -1;
       grid-template-columns: repeat(50, 1fr);
       grid-template-rows: repeat($minute-rows, $hour-height);
-      border: 1px solid var(--cultured-grey);
+      border: 1px solid var(--lightest-grey);
       @for $day from 1 through 7 {
         &.day-#{$day} {
           grid-column: ($day + 1);
@@ -85,7 +85,7 @@
 
     .hour-border,
     .half-hour-border {
-      border-top: 1px solid var(--cultured-grey);
+      border-top: 1px solid var(--lightest-grey);
       grid-column: 2 / -1;
     }
 

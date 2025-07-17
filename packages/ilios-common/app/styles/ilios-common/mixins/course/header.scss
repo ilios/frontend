@@ -6,7 +6,7 @@
 @use "../media";
 
 @mixin course-header {
-  border-bottom: 1px solid var(--cultured-grey);
+  border-bottom: 1px solid var(--lightest-grey);
   display: flex;
   flex-direction: column;
   justify-content: space-between;

@@ -3,7 +3,7 @@
 
 .selectable-terms-list-item {
   @include m.ilios-button-reset;
-  border: 1px var(--cultured-grey) solid;
+  border: 1px var(--lightest-grey) solid;
   border-radius: 4px;
   display: block;
   margin-top: 5px;
@@ -14,12 +14,12 @@
 
   &:focus,
   &:hover {
-    background-color: var(--cultured-grey);
+    background-color: var(--lightest-grey);
     border: 1px var(--black) solid;
   }
 
   &.selected {
-    background-color: var(--cultured-grey);
+    background-color: var(--lightest-grey);
   }
 
   .actions {

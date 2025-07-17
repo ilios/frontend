@@ -2,7 +2,7 @@
 @use "../ilios-common/mixins" as m;
 
 .program-overview {
-  @include m.ilios-overview(var(--cultured-grey));
+  @include m.ilios-overview(var(--lightest-grey));
 
   h2 {
     @include m.ilios-overview-title;
