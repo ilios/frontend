@@ -21,7 +21,7 @@ $header-menu-background-color: hsl(from var(--white) h s calc(l - 3));
 
   .menu {
     background-color: $header-menu-background-color;
-    box-shadow: 0 2px 2px hsl(from var(--black) h s l / 0.2);
+    box-shadow: 0 2px 2px var(--very-transparent-black);
     display: flex;
     flex-direction: column;
     list-style-type: none;

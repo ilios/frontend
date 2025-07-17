@@ -11,6 +11,6 @@
   }
   span {
     color: transparent;
-    text-shadow: hsl(from var(--black) h s l / 0.3) 0px 0px 10px;
+    text-shadow: var(--very-transparent-black) 0px 0px 10px;
   }
 }
