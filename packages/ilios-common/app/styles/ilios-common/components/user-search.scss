@@ -32,7 +32,7 @@
       }
 
       &.inactive {
-        color: var(--davys-grey);
+        color: var(--grey);
         cursor: default;
         font-style: italic;
 
@@ -47,7 +47,7 @@
     }
 
     .email {
-      color: var(--davys-grey);
+      color: var(--grey);
       font-style: italic;
       padding-right: 0.2rem;
     }

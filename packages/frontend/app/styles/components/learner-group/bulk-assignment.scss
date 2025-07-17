@@ -24,13 +24,13 @@
     }
 
     .issue {
-      color: var(--davys-grey);
+      color: var(--grey);
       margin-left: 1rem;
     }
   }
 
   .group-matcher {
-    border: 1px solid var(--davys-grey);
+    border: 1px solid var(--grey);
 
     th:nth-child(1),
     td:nth-child(1) {
@@ -42,7 +42,7 @@
     }
 
     .learner-group-bulk-group-matcher {
-      border: 1px solid var(--davys-grey);
+      border: 1px solid var(--grey);
 
       select {
         width: 100%;
