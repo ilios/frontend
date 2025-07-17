@@ -11,7 +11,7 @@
 
   label {
     background-color: var(--white);
-    color: var(--teal-blue);
+    color: var(--blue);
     border: 1px solid hsl(from var(--black) h s l / 0.2);
     display: inline-block;
     @include font-size.font-size("small");
@@ -35,7 +35,7 @@
   }
 
   input:checked + label {
-    background-color: var(--teal-blue);
+    background-color: var(--blue);
     color: var(--white);
   }
 }
