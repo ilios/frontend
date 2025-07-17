@@ -2,7 +2,7 @@
 
 @mixin icon {
   &.enabled {
-    color: var(--blue-munsell);
+    color: var(--light-blue);
     cursor: pointer;
   }
 

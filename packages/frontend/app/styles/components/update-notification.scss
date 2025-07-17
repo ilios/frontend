@@ -3,7 +3,7 @@
 
 .update-notification {
   button {
-    @include m.critical-notice(var(--teal-blue), var(--white), 3rem);
+    @include m.critical-notice(var(--blue), var(--white), 3rem);
     @include m.font-size("large");
   }
 }

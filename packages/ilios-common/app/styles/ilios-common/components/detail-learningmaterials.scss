@@ -31,7 +31,7 @@
     .lm-search-results {
       @include m.ilios-selectable-list;
       background-color: var(--white);
-      border: 1px solid var(--blue-munsell);
+      border: 1px solid var(--light-blue);
       margin: 0;
       max-height: 15rem;
       overflow-y: scroll;
@@ -120,7 +120,7 @@
 
     .icon-button {
       @include m.ilios-button-reset;
-      color: var(--blue-munsell);
+      color: var(--light-blue);
       &.remove {
         color: var(--crimson);
       }
