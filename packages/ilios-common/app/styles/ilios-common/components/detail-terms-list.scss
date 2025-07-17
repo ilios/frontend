@@ -15,7 +15,7 @@
     @include m.ilios-tag-list;
 
     button {
-      background-color: var(--cultured-grey);
+      background-color: var(--lightest-grey);
       color: var(--black);
       padding: calc(constants.$golden-ratio-small * 0.5rem)
         calc(constants.$golden-ratio-large * 0.5rem);

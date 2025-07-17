@@ -22,14 +22,14 @@
   }
 
   li {
-    border-bottom: 1px solid var(--cultured-grey);
+    border-bottom: 1px solid var(--lightest-grey);
     color: var(--light-blue);
     display: block;
     padding: 0.1rem;
     width: 100%;
 
     &.inactive {
-      color: hsl(from var(--cultured-grey) h s calc(l - 20));
+      color: hsl(from var(--lightest-grey) h s calc(l - 20));
       font-style: italic;
     }
 
