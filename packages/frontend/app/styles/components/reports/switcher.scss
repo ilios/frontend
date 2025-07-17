@@ -8,7 +8,7 @@
   a {
     @include cm.ilios-link-button;
     background-color: var(--white);
-    color: var(--teal-blue);
+    color: var(--blue);
     border: 1px solid hsl(from var(--black) h s l / 0.2);
     @include cm.font-size("medium");
     font-weight: 600;
@@ -21,7 +21,7 @@
     }
 
     &.active {
-      background-color: var(--teal-blue);
+      background-color: var(--blue);
       color: var(--white);
     }
   }

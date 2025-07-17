@@ -2,7 +2,7 @@
 @use "../mixins" as m;
 
 .session-offerings {
-  @include m.detail-container(var(--teal-blue));
+  @include m.detail-container(var(--blue));
 
   .offering-section-top {
     @include m.detail-container-header;
@@ -27,7 +27,7 @@
     grid-template-columns: repeat(5, 1fr);
 
     div {
-      background-color: var(--teal-blue);
+      background-color: var(--blue);
       border-right: 1px solid var(--white);
       color: var(--white);
       overflow: hidden;
