@@ -114,7 +114,7 @@
 
 @mixin ilios-form-error {
   .validation-error-message {
-    color: var(--rosewood);
+    color: var(--darker-red);
     @include font-size.font-size("small");
   }
 
