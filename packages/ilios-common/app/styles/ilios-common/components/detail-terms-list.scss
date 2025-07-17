@@ -16,7 +16,7 @@
 
     button {
       background-color: var(--cultured-grey);
-      color: var(--raisin-black);
+      color: var(--black);
       padding: calc(constants.$golden-ratio-small * 0.5rem)
         calc(constants.$golden-ratio-large * 0.5rem);
     }
@@ -30,7 +30,7 @@
     }
 
     .muted {
-      color: hsl(from var(--raisin-black) h s calc(l + 30));
+      color: hsl(from var(--black) h s calc(l + 30));
     }
   }
 }

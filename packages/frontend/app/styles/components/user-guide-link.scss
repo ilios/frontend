@@ -17,7 +17,7 @@ $header-menu-background-color: hsl(from var(--white) h s calc(l - 3));
     background-color: $header-menu-background-color;
     border: 1px solid $header-menu-background-color;
     border-radius: 0.2rem;
-    color: var(--raisin-black);
+    color: var(--black);
     @include cm.font-size("small");
     font-weight: normal;
     margin-left: 0.8rem;
