@@ -12,7 +12,7 @@ module('Integration | Component | error display', function (hooks) {
 
     const errors = [
       {
-        message: 'this is an error',
+        mainMessage: 'this is an error',
       },
     ];
 
@@ -51,7 +51,7 @@ module('Integration | Component | error display', function (hooks) {
 
     const errors = [
       {
-        message: 'this is an error',
+        mainMessage: 'this is an error',
       },
     ];
 

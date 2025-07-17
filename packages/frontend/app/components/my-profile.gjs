@@ -195,6 +195,7 @@ export default class MyProfileComponent extends Component {
                   <button
                     type="button"
                     class="bigcancel"
+                    aria-label={{t "general.cancel"}}
                     data-test-result-reset
                     {{on "click" (pipe @toggleShowCreateNewToken this.reset)}}
                   >
@@ -215,6 +216,7 @@ export default class MyProfileComponent extends Component {
                   <button
                     type="button"
                     class="bigadd"
+                    aria-label={{t "general.newToken"}}
                     data-test-new-token-create
                     {{on "click" (perform this.createNewToken)}}
                   >
@@ -227,6 +229,7 @@ export default class MyProfileComponent extends Component {
                   <button
                     type="button"
                     class="bigcancel"
+                    aria-label={{t "general.cancel"}}
                     data-test-new-token-cancel
                     {{on "click" (pipe @toggleShowCreateNewToken this.reset)}}
                   >

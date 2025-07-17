@@ -15,13 +15,16 @@ import UserProfileRoles from 'frontend/components/user-profile-roles';
 import UserProfileCohorts from 'frontend/components/user-profile-cohorts';
 import UserProfileIcs from 'frontend/components/user-profile-ics';
 import and from 'ember-truth-helpers/helpers/and';
-import eq from 'ember-truth-helpers/helpers/eq';
 import UserProfilePermissions from 'frontend/components/user-profile-permissions';
 import LearnerGroups from 'frontend/components/user-profile/learner-groups';
 
 export default class UserProfileComponent extends Component {
   @service currentUser;
   @tracked showCalendar = false;
+
+  get userIsTheCurrentUser() {
+    return Number(this.currentUser.currentUserId) === Number(this.args.user.id);
+  }
   <template>
     <div class="user-profile" data-test-user-profile ...attributes>
       <div class="blocks">
@@ -71,7 +74,7 @@ export default class UserProfileComponent extends Component {
         />
         <UserProfileIcs
           @user={{@user}}
-          @isManageable={{and @canUpdate (eq this.currentUser.currentUserId @user.id)}}
+          @isManageable={{and @canUpdate this.userIsTheCurrentUser}}
           @isManaging={{@isManagingIcs}}
           @setIsManaging={{@setIsManagingIcs}}
         />

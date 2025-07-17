@@ -92,6 +92,8 @@ export default class SchoolListComponent extends Component {
                 <ExpandCollapseButton
                   @value={{this.showNewSchoolForm}}
                   @action={{this.toggleNewSchoolForm}}
+                  @expandButtonLabel={{t "general.newSchool"}}
+                  @collapseButtonLabel={{t "general.close"}}
                 />
               </div>
             {{/if}}

@@ -62,12 +62,19 @@ export default class LearnerGroupInstructorManagerComponent extends Component {
             <button
               type="button"
               class="bigadd"
+              aria-label={{t "general.save"}}
               {{on "click" (fn @save this.instructors this.instructorGroups)}}
               data-test-save
             >
               <FaIcon @icon="check" />
             </button>
-            <button type="button" class="bigcancel" {{on "click" @cancel}} data-test-cancel>
+            <button
+              type="button"
+              class="bigcancel"
+              aria-label={{t "general.cancel"}}
+              {{on "click" @cancel}}
+              data-test-cancel
+            >
               <FaIcon @icon="arrow-rotate-left" />
             </button>
           </div>
