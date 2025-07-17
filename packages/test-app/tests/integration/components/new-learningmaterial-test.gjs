@@ -61,12 +61,19 @@ module('Integration | Component | new learningmaterial', function (hooks) {
       </template>,
     );
     assert.notOk(component.url.hasError);
+    assert.strictEqual(component.url.ariaInvalid, 'false');
+
     await component.save();
     assert.strictEqual(component.url.error, 'URL must be a valid url');
+    assert.strictEqual(component.url.ariaInvalid, 'true');
+
     await component.url.set('https://validurl.edu/');
     assert.notOk(component.url.hasError);
+    assert.strictEqual(component.url.ariaInvalid, 'false');
+
     await component.url.set('https://validurl.edu/but-way-too-long/' + '0123456789'.repeat(25));
     assert.strictEqual(component.url.error, 'URL is too long (maximum is 256 characters)');
+    assert.strictEqual(component.url.ariaInvalid, 'true');
   });
 
   test('missing file', async function (assert) {
@@ -101,15 +108,22 @@ module('Integration | Component | new learningmaterial', function (hooks) {
       </template>,
     );
     assert.notOk(component.copyrightPermission.hasError);
+    assert.equal(component.copyrightPermission.ariaInvalid, 'false');
     assert.notOk(component.copyrightRationale.hasError);
+    assert.equal(component.copyrightRationale.ariaInvalid, 'false');
+
     await component.save();
     assert.strictEqual(
       component.copyrightPermission.error,
       'Agreement or alternate rationale is required for upload',
     );
+    assert.equal(component.copyrightPermission.ariaInvalid, 'true');
     assert.strictEqual(component.copyrightRationale.error, 'Copyright Rationale can not be blank');
+    assert.equal(component.copyrightRationale.ariaInvalid, 'true');
+
     await component.copyrightPermission.toggle();
     assert.notOk(component.copyrightPermission.hasError);
+    assert.equal(component.copyrightPermission.ariaInvalid, 'false');
     assert.notOk(component.copyrightRationale.isVisible);
   });
 
@@ -128,15 +142,20 @@ module('Integration | Component | new learningmaterial', function (hooks) {
     );
     assert.notOk(component.copyrightPermission.hasError);
     assert.notOk(component.copyrightRationale.hasError);
+    assert.equal(component.copyrightRationale.ariaInvalid, 'false');
+
     await component.save();
     assert.strictEqual(
       component.copyrightPermission.error,
       'Agreement or alternate rationale is required for upload',
     );
     assert.strictEqual(component.copyrightRationale.error, 'Copyright Rationale can not be blank');
+    assert.equal(component.copyrightRationale.ariaInvalid, 'true');
+
     await component.copyrightRationale.set('my rationale');
-    assert.notOk(component.copyrightRationale.hasError);
     assert.notOk(component.copyrightPermission.hasError);
+    assert.notOk(component.copyrightRationale.hasError);
+    assert.equal(component.copyrightRationale.ariaInvalid, 'false');
   });
 
   test('validate original author', async function (assert) {
@@ -153,19 +172,29 @@ module('Integration | Component | new learningmaterial', function (hooks) {
       </template>,
     );
     assert.notOk(component.author.hasError);
+    assert.strictEqual(component.author.ariaInvalid, 'false');
+
     await component.save();
     assert.strictEqual(component.author.error, 'Content Author can not be blank');
+
     await component.author.set('author');
     assert.notOk(component.hasError);
+    assert.strictEqual(component.author.ariaInvalid, 'false');
+
     await component.author.set('a');
-    assert.ok(component.author.error, '');
+    assert.ok(component.author.hasError);
+    assert.strictEqual(component.author.ariaInvalid, 'true');
+
     await component.author.set('longer author');
     assert.notOk(component.author.hasError);
+    assert.strictEqual(component.author.ariaInvalid, 'false');
+
     await component.author.set('super long author'.repeat(20));
     assert.strictEqual(
       component.author.error,
       'Content Author is too long (maximum is 80 characters)',
     );
+    assert.strictEqual(component.author.ariaInvalid, 'true');
   });
 
   test('validate display name', async function (assert) {
@@ -182,19 +211,28 @@ module('Integration | Component | new learningmaterial', function (hooks) {
       </template>,
     );
     assert.notOk(component.displayName.hasError);
+    assert.strictEqual(component.displayName.ariaInvalid, 'false');
+
     await component.save();
     assert.strictEqual(component.displayName.error, 'Display Name can not be blank');
+    assert.strictEqual(component.displayName.ariaInvalid, 'true');
+
     await component.displayName.set('t');
     assert.strictEqual(
       component.displayName.error,
       'Display Name is too short (minimum is 4 characters)',
     );
+    assert.strictEqual(component.displayName.ariaInvalid, 'true');
+
     await component.displayName.set('super long title'.repeat(20));
     assert.strictEqual(
       component.displayName.error,
       'Display Name is too long (maximum is 120 characters)',
     );
+    assert.strictEqual(component.displayName.ariaInvalid, 'true');
+
     await component.displayName.set('display name');
     assert.notOk(component.displayName.hasError);
+    assert.strictEqual(component.displayName.ariaInvalid, 'false');
   });
 });
