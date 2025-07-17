@@ -9,7 +9,7 @@
   .results {
     @include m.ilios-list-reset;
     background: var(--white);
-    border: 1px solid var(--slight-white);
+    border: 1px solid var(--white);
     border-radius: 3px;
     box-shadow: 0 2px 2px hsl(from var(--black) h s l / 0.2);
     color: var(--raisin-black);
