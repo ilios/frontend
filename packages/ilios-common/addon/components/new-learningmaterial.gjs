@@ -253,12 +253,15 @@ export default class NewLearningmaterialComponent extends Component {
           <input
             id="display-name-{{this.uniqueId}}"
             class={{if this.validations.errors.title "error" ""}}
+            aria-invalid={{if this.validations.errors.title "true" "false"}}
+            aria-errormessage="display-name-error-{{this.uniqueId}}"
             type="text"
             value={{this.title}}
             {{on "input" (pick "target.value" (set this "title"))}}
             {{this.validations.attach "title"}}
           />
           <YupValidationMessage
+            id="display-name-error-{{this.uniqueId}}"
             @description={{t "general.displayName"}}
             @validationErrors={{this.validations.errors.title}}
             data-test-display-name-validation-error-message
@@ -295,12 +298,15 @@ export default class NewLearningmaterialComponent extends Component {
           <input
             id="original-author-{{this.uniqueId}}"
             class={{if this.validations.errors.originalAuthor "error" ""}}
+            aria-invalid={{if this.validations.errors.originalAuthor "true" "false"}}
+            aria-errormessage="original-author-error-{{this.uniqueId}}"
             type="text"
             value={{this.originalAuthor}}
             {{on "input" (pick "target.value" (set this "originalAuthor"))}}
             {{this.validations.attach "originalAuthor"}}
           />
           <YupValidationMessage
+            id="original-author-error-{{this.uniqueId}}"
             @description={{t "general.contentAuthor"}}
             @validationErrors={{this.validations.errors.originalAuthor}}
             data-test-author-validation-error-message
@@ -331,6 +337,8 @@ export default class NewLearningmaterialComponent extends Component {
             <input
               id="url-{{this.uniqueId}}"
               class={{if this.validations.errors.link "error" ""}}
+              aria-invalid={{if this.validations.errors.link "true" "false"}}
+              aria-errormessage="url-error-{{this.uniqueId}}"
               type="text"
               placeholder="https://example.com"
               value={{this.bestLink}}
@@ -340,6 +348,7 @@ export default class NewLearningmaterialComponent extends Component {
               {{this.validations.attach "link"}}
             />
             <YupValidationMessage
+              id="url-error-{{this.uniqueId}}"
               @description={{t "general.url"}}
               @validationErrors={{this.validations.errors.link}}
               data-test-url-validation-error-message
@@ -355,11 +364,14 @@ export default class NewLearningmaterialComponent extends Component {
           <span class="citation">
             <textarea
               id="citation-{{this.uniqueId}}"
+              aria-invalid={{if this.validations.errors.citation "true" "false"}}
+              aria-errormessage="citation-error-{{this.uniqueId}}"
               class={{if this.validations.errors.citation "error" ""}}
               {{on "input" (pick "target.value" (set this "citation"))}}
               {{this.validations.attach "citation"}}
             >{{this.citation}}</textarea>
             <YupValidationMessage
+              id="citation-error-{{this.uniqueId}}"
               @description={{t "general.citation"}}
               @validationErrors={{this.validations.errors.citation}}
               data-test-citation-validation-error-message
@@ -384,6 +396,8 @@ export default class NewLearningmaterialComponent extends Component {
             <p id="lm-copyright-permissions-text">
               <input
                 id="copyright-permission-{{this.uniqueId}}"
+                aria-invalid={{if this.validations.errors.copyrightPermission "true" "false"}}
+                aria-errormessage="copyright-permission-error-{{this.uniqueId}}"
                 class={{if this.validations.errors.copyrightPermission "error" ""}}
                 type="checkbox"
                 checked={{this.copyrightPermission}}
@@ -395,6 +409,7 @@ export default class NewLearningmaterialComponent extends Component {
               {{#if this.validations.errors.copyrightPermission}}
                 <br />
                 <span
+                  id="copyright-permission-error-{{this.uniqueId}}"
                   class="validation-error-message"
                   data-test-copyright-permission-validation-error-message
                 >
@@ -412,11 +427,14 @@ export default class NewLearningmaterialComponent extends Component {
             <span>
               <textarea
                 id="copyright-rationale-{{this.uniqueId}}"
+                aria-invalid={{if this.validations.errors.copyrightRationale "true" "false"}}
+                aria-errormessage="copyright-rationale-error-{{this.uniqueId}}"
                 class={{if this.validations.errors.copyrightRationale "error" ""}}
                 {{on "input" (pick "target.value" (set this "copyrightRationale"))}}
                 {{this.validations.attach "copyrightRationale"}}
               >{{this.copyrightRationale}}</textarea>
               <YupValidationMessage
+                aria-errormessage="copyright-rationale-error-{{this.uniqueId}}"
                 @description={{t "general.copyrightRationale"}}
                 @validationErrors={{this.validations.errors.copyrightRationale}}
                 data-test-copyright-rationale-validation-error-message
