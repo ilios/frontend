@@ -58,7 +58,7 @@ import UserStatus from 'ilios-common/components/user-status';
             <td class="text-top" data-test-directors>
               <ul>
                 {{#each (sortBy "fullName" @directors) as |user|}}
-                  <li>
+                  <li data-test-director>
                     <button
                       class="link-button"
                       type="button"
@@ -82,7 +82,7 @@ import UserStatus from 'ilios-common/components/user-status';
             <td class="text-top" data-test-administrators>
               <ul>
                 {{#each (sortBy "fullName" @administrators) as |user|}}
-                  <li>
+                  <li data-test-administrator>
                     <button
                       class="link-button"
                       type="button"
@@ -106,7 +106,7 @@ import UserStatus from 'ilios-common/components/user-status';
             <td class="text-top" data-test-student-advisors>
               <ul>
                 {{#each (sortBy "fullName" @studentAdvisors) as |user|}}
-                  <li>
+                  <li data-test-student-advisor>
                     <button
                       class="link-button"
                       type="button"

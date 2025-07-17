@@ -38,21 +38,24 @@ const definition = {
       isSelected: notHasClass('clickable'),
     }),
   },
-  selectedDirectors: collection('[data-test-directors] ul li', {
+  selectedDirectors: collection('[data-test-directors] ul li[data-test-director]', {
     userNameInfo,
     remove: clickable('.remove'),
     userStatus,
   }),
-  selectedAdministrators: collection('[data-test-administrators] ul li', {
+  selectedAdministrators: collection('[data-test-administrators] ul li[data-test-administrator]', {
     userNameInfo,
     remove: clickable('.remove'),
     userStatus,
   }),
-  selectedStudentAdvisors: collection('[data-test-student-advisors] ul li', {
-    userNameInfo,
-    remove: clickable('.remove'),
-    userStatus,
-  }),
+  selectedStudentAdvisors: collection(
+    '[data-test-student-advisors] ul li[data-test-student-advisor]',
+    {
+      userNameInfo,
+      remove: clickable('.remove'),
+      userStatus,
+    },
+  ),
 };
 
 export default definition;
