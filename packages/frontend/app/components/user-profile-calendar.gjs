@@ -26,13 +26,14 @@ export default class UserProfileCalendar extends Component {
   }
 
   get calendarEvents() {
-    if (this.eventsData.isResolved) {
+    if (this.eventsData.isResolved && this.eventsData.value) {
       return sortBy(
         this.eventsData.value.map((obj) => this.userEvents.createEventFromData(obj, true)),
         ['startDate', 'name'],
       );
+    } else {
+      return [];
     }
-    return [];
   }
 
   async loadEvents(date, apiNameSpace, userId) {
