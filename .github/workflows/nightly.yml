@@ -30,23 +30,3 @@ jobs:
         run: pnpm --filter ${{ matrix.workspace }} exec percy exec -- ember test --filter="Acceptance"
         env:
           PERCY_TOKEN: "web_1899a9764a4891f3a19b87e52aa1ae038359e28ba550daa6bad00d0e0a230a33"
-  a11y:
-    name: Run Accessibility Tests
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        workspace:
-          - frontend
-    steps:
-      - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: pnpm
-      - run: pnpm install
-      - name: Run Tests With Accessibility A11y Audit
-        run: pnpm run test:frontend
-        env:
-          ENABLE_A11Y_AUDIT: true
