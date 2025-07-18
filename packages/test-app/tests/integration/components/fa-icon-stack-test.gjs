@@ -1,9 +1,9 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
+import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { htmlSafe } from '@ember/template';
-import { component } from 'rs-common/page-objects/components/fa-icon-stack';
-import FaIconStack from 'frontend/components/fa-icon-stack';
+import { component } from 'ilios-common/page-objects/components/fa-icon-stack';
+import FaIconStack from 'ilios-common/components/fa-icon-stack';
 
 module('Integration | Component | fa-icon-stack', function (hooks) {
   setupRenderingTest(hooks);
@@ -18,10 +18,10 @@ module('Integration | Component | fa-icon-stack', function (hooks) {
     assert.strictEqual(component.icons.length, 2);
     assert.strictEqual(component.icons[0].type, 'circle-check');
     assert.ok(component.icons[0].innerUse);
-    assert.ok(component.icons[0].innerUse.href, '/assets/fontawesome/solid.svg#circle-check');
+    assert.ok(component.icons[0].innerUse.href, '/fontawesome/solid.svg#circle-check');
     assert.strictEqual(component.icons[1].type, 'slash');
     assert.ok(component.icons[1].innerUse);
-    assert.ok(component.icons[1].innerUse.href, '/assets/fontawesome/solid.svg#slash');
+    assert.ok(component.icons[1].innerUse.href, '/fontawesome/solid.svg#slash');
   });
 
   test('it renders extra classes', async function (assert) {

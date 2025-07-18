@@ -1,6 +1,6 @@
 import Component from '@glimmer/component';
 import or from 'ember-truth-helpers/helpers/or';
-import FaIcon from 'frontend/components/fa-icon';
+import FaIcon from 'ilios-common/components/fa-icon';
 
 export default class FaIconStackComponent extends Component {
   get titleId() {

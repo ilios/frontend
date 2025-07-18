@@ -1,5 +1,5 @@
 import { collection, create } from 'ember-cli-page-object';
-import faIcon from 'rs-common/page-objects/components/fa-icon';
+import faIcon from 'ilios-common/page-objects/components/fa-icon';
 
 const definition = {
   scope: '[data-test-awesome-icon-stack]',
