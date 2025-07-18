@@ -3,6 +3,7 @@ import { service } from '@ember/service';
 
 export default class YupValidationMessage extends Component {
   @service intl;
+
   get messages() {
     const messages = this.args.validationErrors?.map(({ messageKey, values }) => {
       if (!values) {
