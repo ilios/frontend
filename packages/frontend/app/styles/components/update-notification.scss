@@ -2,23 +2,8 @@
 @use "../ilios-common/mixins" as m;
 
 .update-notification {
-  background-color: var(--pearl);
-  border: 1px solid var(--slight-white);
-  left: 0;
-  padding: 15px;
-  position: fixed;
-  right: 0;
-  text-align: center;
-  top: 0;
-  z-index: 9999;
-
   button {
-    @include m.ilios-button-reset;
-    $height: 2.5rem;
-    @include m.critical-notice(
-      var(--blue-munsell),
-      var(--cultured-grey),
-      $height
-    );
+    @include m.critical-notice(var(--teal-blue), var(--white), 3rem);
+    @include m.font-size("large");
   }
 }
