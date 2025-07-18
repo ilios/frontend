@@ -10,6 +10,7 @@ import perform from 'ember-concurrency/helpers/perform';
 import FaIcon from 'ilios-common/components/fa-icon';
 import eq from 'ember-truth-helpers/helpers/eq';
 import { fn } from '@ember/helper';
+import t from 'ember-intl/helpers/t';
 import FadeText from 'ilios-common/components/fade-text';
 
 export default class ObjectiveSortManagerComponent extends Component {
@@ -118,6 +119,7 @@ export default class ObjectiveSortManagerComponent extends Component {
           class="bigadd"
           type="button"
           disabled={{this.saveSortOrder.isRunning}}
+          aria-label={{t "general.save"}}
           {{on "click" (perform this.saveSortOrder)}}
         >
           {{#if this.saveSortOrder.isRunning}}
@@ -131,6 +133,7 @@ export default class ObjectiveSortManagerComponent extends Component {
           class="bigcancel"
           type="button"
           disabled={{this.saveSortOrder.isRunning}}
+          aria-label={{t "general.cancel"}}
           {{on "click" @close}}
         >
           <FaIcon @icon="arrow-rotate-left" />

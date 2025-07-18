@@ -5,13 +5,22 @@ import { setApplication } from '@ember/test-helpers';
 import { setup } from 'qunit-dom';
 import { setupEmberOnerrorValidation } from 'ember-qunit';
 
-import start from 'ember-exam/test-support/start';
-import { setRunOptions } from 'ember-a11y-testing/test-support';
 import { forceModulesToBeLoaded, sendCoverage } from 'ember-cli-code-coverage/test-support';
+import {
+  setRunOptions,
+  setupGlobalA11yHooks,
+  setupQUnitA11yAuditToggle,
+  setupConsoleLogger,
+} from 'ember-a11y-testing/test-support';
 
+import start from 'ember-exam/test-support/start';
+
+setupConsoleLogger();
 setRunOptions({
   preload: false,
 });
+setupGlobalA11yHooks(() => true);
+setupQUnitA11yAuditToggle(QUnit);
 
 //Needed for: https://github.com/testem/testem/issues/1577
 //See: https://github.com/ember-cli-code-coverage/ember-cli-code-coverage/issues/420

@@ -88,6 +88,7 @@ export default class LearningMaterialsSortManagerComponent extends Component {
           <button
             class="bigadd"
             type="button"
+            aria-label={{t "general.save"}}
             {{on "click" (perform this.callSave)}}
             data-test-save
           >
@@ -96,7 +97,13 @@ export default class LearningMaterialsSortManagerComponent extends Component {
               @spin={{this.callSave.isRunning}}
             />
           </button>
-          <button class="bigcancel" type="button" {{on "click" @cancel}} data-test-cancel>
+          <button
+            class="bigcancel"
+            type="button"
+            aria-label={{t "general.cancel"}}
+            {{on "click" @cancel}}
+            data-test-cancel
+          >
             <FaIcon @icon="arrow-rotate-left" />
           </button>
         </div>

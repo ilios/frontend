@@ -11,9 +11,10 @@ module('Integration | Helper | noop', function (hooks) {
 
   test('It successfully renders and does nothing when clicked', async function (assert) {
     assert.expect(0);
+    this.set('label', 'foobar');
     await render(
       <template>
-        <button type="button" {{on "click" (noop)}}></button>
+        <button type="button" aria-label={{this.label}} {{on "click" (noop)}}></button>
       </template>,
     );
     await click('button');

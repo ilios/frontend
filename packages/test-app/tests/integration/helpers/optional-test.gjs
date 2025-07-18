@@ -11,11 +11,19 @@ import { fn } from '@ember/helper';
 module('Integration | Helper | optional', function (hooks) {
   setupRenderingTest(hooks);
 
+  hooks.beforeEach(function () {
+    this.set('label', 'foobar');
+  });
+
   test('If the action does not exist, it passes a no-op function', async function (assert) {
     assert.expect(0);
     await render(
       <template>
-        <button type="button" {{on "click" (optional this.handler)}}></button>
+        <button
+          type="button"
+          aria-label={{this.label}}
+          {{on "click" (optional this.handler)}}
+        ></button>
       </template>,
     );
     await click('button');
@@ -26,7 +34,11 @@ module('Integration | Helper | optional', function (hooks) {
     this.set('handler', () => assert.ok(true));
     await render(
       <template>
-        <button type="button" {{on "click" (optional this.handler)}}></button>
+        <button
+          type="button"
+          aria-label={{this.label}}
+          {{on "click" (optional this.handler)}}
+        ></button>
       </template>,
     );
     await click('button');
@@ -39,6 +51,7 @@ module('Integration | Helper | optional', function (hooks) {
       <template>
         <button
           type="button"
+          aria-label={{this.label}}
           {{on "click" (pipe (optional this.handler) (fn this.check 42))}}
         ></button>
       </template>,

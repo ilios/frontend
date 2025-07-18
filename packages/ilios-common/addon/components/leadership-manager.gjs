@@ -56,74 +56,74 @@ import UserStatus from 'ilios-common/components/user-status';
         <tr>
           {{#if @showDirectors}}
             <td class="text-top" data-test-directors>
-              {{#if @directors.length}}
-                <ul>
-                  {{#each (sortBy "fullName" @directors) as |user|}}
-                    <li>
-                      <button
-                        class="link-button"
-                        type="button"
-                        aria-label={{t "general.remove"}}
-                        {{on "click" (fn @removeDirector user)}}
-                      >
-                        <FaIcon @icon="xmark" class="clickable remove" />
-                      </button>
-                      <UserStatus @user={{user}} />
-                      <UserNameInfo @user={{user}} />
-                    </li>
-                  {{/each}}
-                </ul>
-              {{else}}
-                {{t "general.none"}}
-              {{/if}}
+              <ul>
+                {{#each (sortBy "fullName" @directors) as |user|}}
+                  <li data-test-director>
+                    <button
+                      class="link-button"
+                      type="button"
+                      aria-label={{t "general.remove"}}
+                      {{on "click" (fn @removeDirector user)}}
+                    >
+                      <FaIcon @icon="xmark" class="clickable remove" />
+                    </button>
+                    <UserStatus @user={{user}} />
+                    <UserNameInfo @user={{user}} />
+                  </li>
+                {{else}}
+                  <li>
+                    {{t "general.none"}}
+                  </li>
+                {{/each}}
+              </ul>
             </td>
           {{/if}}
           {{#if @showAdministrators}}
             <td class="text-top" data-test-administrators>
-              {{#if @administrators.length}}
-                <ul>
-                  {{#each (sortBy "fullName" @administrators) as |user|}}
-                    <li>
-                      <button
-                        class="link-button"
-                        type="button"
-                        aria-label={{t "general.remove"}}
-                        {{on "click" (fn @removeAdministrator user)}}
-                      >
-                        <FaIcon @icon="xmark" class="clickable remove" />
-                      </button>
-                      <UserStatus @user={{user}} />
-                      <UserNameInfo @user={{user}} />
-                    </li>
-                  {{/each}}
-                </ul>
-              {{else}}
-                {{t "general.none"}}
-              {{/if}}
+              <ul>
+                {{#each (sortBy "fullName" @administrators) as |user|}}
+                  <li data-test-administrator>
+                    <button
+                      class="link-button"
+                      type="button"
+                      aria-label={{t "general.remove"}}
+                      {{on "click" (fn @removeAdministrator user)}}
+                    >
+                      <FaIcon @icon="xmark" class="clickable remove" />
+                    </button>
+                    <UserStatus @user={{user}} />
+                    <UserNameInfo @user={{user}} />
+                  </li>
+                {{else}}
+                  <li>
+                    {{t "general.none"}}
+                  </li>
+                {{/each}}
+              </ul>
             </td>
           {{/if}}
           {{#if @showStudentAdvisors}}
             <td class="text-top" data-test-student-advisors>
-              {{#if @studentAdvisors.length}}
-                <ul>
-                  {{#each (sortBy "fullName" @studentAdvisors) as |user|}}
-                    <li>
-                      <button
-                        class="link-button"
-                        type="button"
-                        aria-label={{t "general.remove"}}
-                        {{on "click" (fn @removeStudentAdvisor user)}}
-                      >
-                        <FaIcon @icon="xmark" class="clickable remove" />
-                      </button>
-                      <UserStatus @user={{user}} />
-                      <UserNameInfo @user={{user}} />
-                    </li>
-                  {{/each}}
-                </ul>
-              {{else}}
-                {{t "general.none"}}
-              {{/if}}
+              <ul>
+                {{#each (sortBy "fullName" @studentAdvisors) as |user|}}
+                  <li data-test-student-advisor>
+                    <button
+                      class="link-button"
+                      type="button"
+                      aria-label={{t "general.remove"}}
+                      {{on "click" (fn @removeStudentAdvisor user)}}
+                    >
+                      <FaIcon @icon="xmark" class="clickable remove" />
+                    </button>
+                    <UserStatus @user={{user}} />
+                    <UserNameInfo @user={{user}} />
+                  </li>
+                {{else}}
+                  <li>
+                    {{t "general.none"}}
+                  </li>
+                {{/each}}
+              </ul>
             </td>
           {{/if}}
         </tr>

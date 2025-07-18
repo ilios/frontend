@@ -39,6 +39,7 @@ export default class WeeklyEvents extends Component {
           <button
             class="link-button"
             type="button"
+            aria-label={{t "general.goToPreviousYear"}}
             {{on "click" this.decrementYear}}
             data-test-previous
           >
@@ -48,6 +49,7 @@ export default class WeeklyEvents extends Component {
           <button
             class="link-button"
             type="button"
+            aria-label={{t "general.goToNextYear"}}
             {{on "click" this.incrementYear}}
             data-test-next
           >
@@ -70,6 +72,7 @@ export default class WeeklyEvents extends Component {
           <button
             class="link-button"
             type="button"
+            aria-label={{t "general.goToPreviousYear"}}
             {{on "click" this.decrementYear}}
             data-test-previous
           >
@@ -79,6 +82,7 @@ export default class WeeklyEvents extends Component {
           <button
             class="link-button"
             type="button"
+            aria-label={{t "general.goToNextYear"}}
             {{on "click" this.incrementYear}}
             data-test-next
           >

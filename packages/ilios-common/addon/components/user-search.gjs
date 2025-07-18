@@ -143,7 +143,7 @@ export default class UserSearch extends Component {
         </ul>
       {{/if}}
       {{#if (and this.search.isIdle (gt this.sortedResults.length 0))}}
-        <ul class="results" data-test-results>
+        <ul class="results" tabindex="0" data-test-results>
           <li class="results-count" data-test-results-count>
             {{this.sortedResults.length}}
             {{t "general.results"}}

@@ -15,13 +15,22 @@ module('Integration | Component | expand collapse button', function (hooks) {
   test('clicking changes the icon and sends the action', async function (assert) {
     assert.expect(5);
 
+    this.collapseButtonLabel = 'Collapse';
+    this.expandButtonLabel = 'Expand';
     this.set('value', false);
     this.set('click', () => {
       assert.ok(true, 'button was clicked');
       this.set('value', !this.value);
     });
     await render(
-      <template><ExpandCollapseButton @value={{this.value}} @action={{this.click}} /></template>,
+      <template>
+        <ExpandCollapseButton
+          @value={{this.value}}
+          @action={{this.click}}
+          @collapseButtonLabel={{this.collapseButtonLabel}}
+          @expandButtonLabel={{this.expandButtonLabel}}
+        />
+      </template>,
     );
     assert.dom('svg').hasClass('fa-plus');
 

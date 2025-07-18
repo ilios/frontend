@@ -124,7 +124,11 @@ module('Integration | Component | course/header', function (hooks) {
     const course = this.server.create('course');
     const courseModel = await this.store.findRecord('course', course.id);
     this.set('course', courseModel);
-    await render(<template><Header @course={{this.course}} @editable={{true}} /></template>);
+    await render(
+      <template>
+        <Header @course={{this.course}} @editable={{true}} @academicYear={{course.year}} />
+      </template>,
+    );
 
     assert.ok(component.title.isVisible);
     assert.strictEqual(component.title.value, 'course 0');
@@ -170,7 +174,11 @@ module('Integration | Component | course/header', function (hooks) {
     const course = this.server.create('course');
     const courseModel = await this.store.findRecord('course', course.id);
     this.set('course', courseModel);
-    await render(<template><Header @course={{this.course}} @editable={{true}} /></template>);
+    await render(
+      <template>
+        <Header @course={{this.course}} @editable={{true}} @academicYear={{course.year}} />
+      </template>,
+    );
 
     assert.ok(component.title.isVisible);
     assert.strictEqual(component.title.value, 'course 0');

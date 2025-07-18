@@ -108,6 +108,8 @@ module('Integration | Component | fade-text', function (hooks) {
   test('it fades tall text given as block', async function (assert) {
     this.set('longHtml', this.longHtml);
 
+    this.set('expandLabel', 'Expand');
+    this.set('collapseLabel', 'Collapse');
     this.set('expanded', false);
     this.set('onExpandAll', (isExpanded) => {
       this.set('expanded', isExpanded);
@@ -128,11 +130,21 @@ module('Integration | Component | fade-text', function (hooks) {
           </div>
           {{#if shouldFade}}
             <div class="fade-text-control" data-test-fade-text-control>
-              <button type="button" data-test-expand {{on "click" expand}}></button>
+              <button
+                type="button"
+                aria-label={{this.expandLabel}}
+                data-test-expand
+                {{on "click" expand}}
+              ></button>
             </div>
           {{else}}
             {{#if expanded}}
-              <button type="button" data-test-collapse {{on "click" collapse}}></button>
+              <button
+                type="button"
+                aria-label={{this.collapseLabel}}
+                data-test-collapse
+                {{on "click" collapse}}
+              ></button>
             {{/if}}
           {{/if}}
         </FadeText>

@@ -13,17 +13,21 @@ module('Integration | Helper | pick', function (hooks) {
   test('Works when used with {{on}} modifier and pipe', async function (assert) {
     assert.expect(1);
 
+    this.set('label', 'foo bar');
     this.set('onFocus', function (value) {
       assert.strictEqual(value, 'pizza party', 'The action receives the correct value');
     });
 
     await render(
       <template>
-        <input
-          id="test-input"
-          value="pizza party"
-          {{on "focusin" (pipe (pick "target.value") this.onFocus)}}
-        />
+        <label>
+          <input
+            id="test-input"
+            value="pizza party"
+            {{on "focusin" (pipe (pick "target.value") this.onFocus)}}
+          />
+          {{this.label}}
+        </label>
       </template>,
     );
 
@@ -33,17 +37,21 @@ module('Integration | Helper | pick', function (hooks) {
   test('Shorthand works when used with {{on}} modifier and optional action is provided', async function (assert) {
     assert.expect(1);
 
+    this.set('label', 'foo bar');
     this.set('onFocus', function (value) {
       assert.strictEqual(value, 'pizza party', 'The action receives the correct value');
     });
 
     await render(
       <template>
-        <input
-          id="test-input"
-          value="pizza party"
-          {{on "focusin" (pick "target.value" this.onFocus)}}
-        />
+        <label>
+          <input
+            id="test-input"
+            value="pizza party"
+            {{on "focusin" (pick "target.value" this.onFocus)}}
+          />
+          {{this.label}}
+        </label>
       </template>,
     );
 

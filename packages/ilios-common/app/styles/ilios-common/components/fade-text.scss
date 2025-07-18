@@ -13,7 +13,8 @@
   }
 
   button {
-    &.expand-text-button {
+    &.expand-text-button,
+    &.collapse-text-button {
       @include m.ilios-link-button;
       display: block;
     }

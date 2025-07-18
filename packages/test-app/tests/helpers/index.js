@@ -5,6 +5,8 @@ import {
 } from 'ember-qunit';
 import { setupMirage } from 'test-app/tests/test-support/mirage';
 import { setupIntl } from 'ember-intl/test-support';
+import { setRunOptions } from 'ember-a11y-testing/test-support';
+
 // This file exists to provide wrappers around ember-qunit's
 // test setup functions. This way, you can easily extend the setup that is
 // needed per test type.
@@ -29,10 +31,18 @@ function setupApplicationTest(hooks, options) {
 }
 
 function setupRenderingTest(hooks, options) {
-  upstreamSetupRenderingTest(hooks, options); // ember-intl
+  upstreamSetupRenderingTest(hooks, options);
   setupIntl(hooks, 'en-us'); // ember-intl
 
   // Additional setup for rendering tests can be done here.
+  setRunOptions({
+    rules: {
+      //disable color-contrast check on integration tests as we don't have a full background or styles
+      'color-contrast': { enabled: false },
+      listitem: { enabled: false },
+      'heading-order': { enabled: false },
+    },
+  });
 }
 
 function setupTest(hooks, options) {
