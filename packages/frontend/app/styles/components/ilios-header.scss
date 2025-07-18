@@ -31,25 +31,14 @@
       padding: 0.2rem 0 0;
     }
 
-    .global-search-box,
-    .locale-chooser,
-    .user-menu,
-    .user-guide-link {
-      & button,
-      & input {
-        @include m.for-laptop-and-up {
-          /* stylelint-disable property-disallowed-list */
-          font-size: 16px;
-        }
-      }
-    }
-
     .locale-chooser,
     .user-menu,
     .user-guide-link {
       button {
         @include m.for-laptop-and-up {
           padding: 4px;
+          /* stylelint-disable property-disallowed-list */
+          font-size: 16px;
         }
       }
     }
@@ -68,27 +57,6 @@
     .global-search-box {
       grid-area: search;
       height: 100%;
-
-      @include m.for-phone-only {
-        width: 10rem;
-      }
-
-      .autocomplete {
-        width: 25rem;
-
-        @include m.for-smaller-than-laptop {
-          right: 0rem;
-        }
-
-        @media screen and (max-width: 550px) {
-          left: -7rem;
-          right: auto;
-        }
-      }
-
-      input[type="search"] {
-        border: 1px solid var(--white);
-      }
     }
   }
 }
