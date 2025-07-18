@@ -62,6 +62,10 @@ export default class FaIconComponent extends Component {
       classes.push(this.flip);
     }
 
+    if (this.args.extraClasses) {
+      classes.push(this.args.extraClasses);
+    }
+
     return classes.length ? ` ${classes.join(' ')}` : '';
   }
   //prettier-ignore
@@ -73,6 +77,7 @@ export default class FaIconComponent extends Component {
     role="img"
     fill="currentColor"
     aria-labelledby={{this.ariaLabeledBy}}
+    data-test-awesome-icon
     ...attributes
   >
     {{#if @title}}
