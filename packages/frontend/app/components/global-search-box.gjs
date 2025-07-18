@@ -68,6 +68,14 @@ export default class GlobalSearchBox extends Component {
 
   <template>
     <div class="global-search-box" data-test-global-search-box>
+      <button
+        aria-label={{t "general.search"}}
+        type="button"
+        data-test-search-icon
+        {{on "click" this.focusAndSearch}}
+      >
+        <FaIcon @icon="magnifying-glass" />
+      </button>
       <input
         aria-label={{t "general.searchTheCurriculum"}}
         class="global-search-input"
@@ -80,15 +88,6 @@ export default class GlobalSearchBox extends Component {
         {{onKey "ArrowUp" this.onArrowKey}}
         {{onKey "ArrowDown" this.onArrowKey}}
       />
-      <button
-        aria-label={{t "general.search"}}
-        class="link-button search-icon"
-        type="button"
-        data-test-search-icon
-        {{on "click" this.focusAndSearch}}
-      >
-        <FaIcon @icon="magnifying-glass" />
-      </button>
     </div>
   </template>
 }
