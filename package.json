@@ -23,7 +23,7 @@
     "prepare": "husky"
   },
   "engines": {
-    "node": ">= 20",
+    "node": ">= 22",
     "yarn": "use pnpm",
     "npm": "use pnpm"
   },
