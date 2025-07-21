@@ -174,6 +174,7 @@ export default class SingleEvent extends Component {
         name: ev.name,
         slug: ev.slug,
         learningMaterials: [],
+        isPublished: ev.isPublished,
       };
       rhett.learningMaterials = this.getTypedLearningMaterialProxies(ev.learningMaterials)
         .filter((lm) => Boolean(lm.sessionLearningMaterial))

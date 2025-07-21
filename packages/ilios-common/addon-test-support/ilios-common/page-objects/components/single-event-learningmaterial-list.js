@@ -1,4 +1,4 @@
-import { collection, create, property, text } from 'ember-cli-page-object';
+import { collection, create, isPresent, property, text } from 'ember-cli-page-object';
 import item from './single-event-learningmaterial-list-item';
 
 const definition = {
@@ -7,6 +7,7 @@ const definition = {
   prework: collection('[data-test-prework-event]', {
     url: property('href', 'a'),
     name: text('[data-test-name]'),
+    isUnPublished: isPresent('.awesome-icon-stack.circle-check_slash'),
     items: collection('[data-test-single-event-learningmaterial-list-item]', item),
   }),
   noContent: {

@@ -96,7 +96,7 @@ module('Integration | Component | single-event-learningmaterial-list', function 
         name: 'prework 2',
         slug: 'prework2',
         isBlanked: false,
-        isPublished: true,
+        isPublished: false,
         isScheduled: false,
         learningMaterials: [
           {
@@ -120,11 +120,13 @@ module('Integration | Component | single-event-learningmaterial-list', function 
     assert.strictEqual(component.items.length, 5);
     assert.strictEqual(component.prework.length, 2);
     assert.strictEqual(component.prework[0].name, 'prework 1');
+    assert.notOk(component.prework[0].isUnPublished);
     assert.ok(component.prework[0].url.endsWith('/events/prework1'));
     assert.strictEqual(component.prework[0].items.length, 2);
     assert.strictEqual(component.prework[0].items[0].title, 'aardvark');
     assert.strictEqual(component.prework[0].items[1].title, 'foo bar');
     assert.strictEqual(component.prework[1].name, 'prework 2');
+    assert.ok(component.prework[1].isUnPublished);
     assert.strictEqual(component.prework[1].items.length, 1);
     assert.strictEqual(component.prework[1].items[0].title, 'readme');
     assert.ok(component.prework[1].url.endsWith('/events/prework2'));
