@@ -10,8 +10,15 @@ export default class FaIconStackComponent extends Component {
 
     return `inline-title-${this.uniqueId}`;
   }
+  get iconClasses() {
+    return this.args.icons.join('_');
+  }
   <template>
-    <span class="fa-layers fa-fw awesome-icon-stack" data-test-awesome-icon-stack ...attributes>
+    <span
+      class="fa-layers fa-fw awesome-icon-stack {{this.iconClasses}}"
+      data-test-awesome-icon-stack
+      ...attributes
+    >
       {{#each @icons as |icon|}}
         <FaIcon
           @icon={{icon}}
