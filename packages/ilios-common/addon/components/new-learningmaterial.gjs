@@ -408,15 +408,12 @@ export default class NewLearningmaterialComponent extends Component {
               {{t "general.copyrightAgreement"}}
               {{#if this.validations.errors.copyrightPermission}}
                 <br />
-                <span
-                  id="copyright-permission-error-{{this.uniqueId}}"
-                  aria-live="polite"
-                  class="validation-error-message"
-                  data-test-copyright-permission-validation-error-message
-                >
-                  {{t "errors.agreementRequired"}}
-                </span>
               {{/if}}
+              <YupValidationMessage
+                id="copyright-permission-error-{{this.uniqueId}}"
+                @validationErrors={{this.validations.errors.copyrightPermission}}
+                data-test-copyright-permission-validation-error-message
+              />
             </p>
           </span>
         </div>
