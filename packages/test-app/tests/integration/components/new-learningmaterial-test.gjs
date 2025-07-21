@@ -64,6 +64,7 @@ module('Integration | Component | new learningmaterial', function (hooks) {
     assert.strictEqual(component.url.ariaInvalid, 'false');
 
     await component.save();
+    assert.strictEqual(component.url.ariaErrorMessage, component.url.errorMessage.id);
     assert.strictEqual(component.url.errorMessage.text, 'URL must be a valid url');
     assert.strictEqual(component.url.ariaInvalid, 'true');
 
@@ -117,6 +118,10 @@ module('Integration | Component | new learningmaterial', function (hooks) {
 
     await component.save();
     assert.strictEqual(
+      component.copyrightPermission.ariaErrorMessage,
+      component.copyrightPermission.errorMessage.id,
+    );
+    assert.strictEqual(
       component.copyrightPermission.errorMessage.text,
       'Agreement or alternate rationale is required for upload',
     );
@@ -152,6 +157,11 @@ module('Integration | Component | new learningmaterial', function (hooks) {
 
     await component.save();
     assert.strictEqual(
+      component.copyrightRationale.ariaErrorMessage,
+      component.copyrightRationale.errorMessage.id,
+    );
+
+    assert.strictEqual(
       component.copyrightPermission.errorMessage.text,
       'Agreement or alternate rationale is required for upload',
     );
@@ -184,6 +194,7 @@ module('Integration | Component | new learningmaterial', function (hooks) {
     assert.strictEqual(component.author.ariaInvalid, 'false');
 
     await component.save();
+    assert.strictEqual(component.author.ariaErrorMessage, component.author.errorMessage.id);
     assert.strictEqual(component.author.errorMessage.text, 'Content Author can not be blank');
 
     await component.author.set('author');
@@ -223,6 +234,10 @@ module('Integration | Component | new learningmaterial', function (hooks) {
     assert.strictEqual(component.displayName.ariaInvalid, 'false');
 
     await component.save();
+    assert.strictEqual(
+      component.displayName.ariaErrorMessage,
+      component.displayName.errorMessage.id,
+    );
     assert.strictEqual(component.displayName.errorMessage.text, 'Display Name can not be blank');
     assert.strictEqual(component.displayName.ariaInvalid, 'true');
 

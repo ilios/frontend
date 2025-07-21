@@ -434,7 +434,7 @@ export default class NewLearningmaterialComponent extends Component {
                 {{this.validations.attach "copyrightRationale"}}
               >{{this.copyrightRationale}}</textarea>
               <YupValidationMessage
-                aria-errormessage="copyright-rationale-error-{{this.uniqueId}}"
+                id="copyright-rationale-error-{{this.uniqueId}}"
                 @description={{t "general.copyrightRationale"}}
                 @validationErrors={{this.validations.errors.copyrightRationale}}
                 data-test-copyright-rationale-validation-error-message

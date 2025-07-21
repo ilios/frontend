@@ -9,7 +9,9 @@ const definition = {
     set: fillable('input'),
     hasError: isPresent('[data-test-display-name-validation-error-message]'),
     ariaInvalid: attribute('aria-invalid', 'input'),
+    ariaErrorMessage: attribute('aria-errormessage', 'input'),
     errorMessage: {
+      id: attribute('id'),
       scope: '[data-test-display-name-validation-error-message]',
     },
   },
@@ -17,7 +19,9 @@ const definition = {
     scope: '[data-test-author]',
     set: fillable('input'),
     ariaInvalid: attribute('aria-invalid', 'input'),
+    ariaErrorMessage: attribute('aria-errormessage', 'input'),
     errorMessage: {
+      id: attribute('id'),
       scope: '[data-test-author-validation-error-message]',
     },
   },
@@ -25,7 +29,9 @@ const definition = {
     scope: '[data-test-link]',
     set: fillable('input'),
     ariaInvalid: attribute('aria-invalid', 'input'),
+    ariaErrorMessage: attribute('aria-errormessage', 'input'),
     errorMessage: {
+      id: attribute('id'),
       scope: '[data-test-url-validation-error-message]',
     },
   },
@@ -33,7 +39,9 @@ const definition = {
     scope: '[data-test-citation]',
     set: fillable('textarea'),
     ariaInvalid: attribute('aria-invalid', 'input'),
+    ariaErrorMessage: attribute('aria-errormessage', 'input'),
     errorMessage: {
+      id: attribute('id'),
       scope: '[data-test-citation-validation-error-message]',
     },
   },
@@ -54,7 +62,9 @@ const definition = {
     scope: '[data-test-copyright-permission]',
     toggle: clickable('input'),
     ariaInvalid: attribute('aria-invalid', 'input'),
+    ariaErrorMessage: attribute('aria-errormessage', 'input'),
     errorMessage: {
+      id: attribute('id'),
       scope: '[data-test-copyright-permission-validation-error-message]',
     },
   },
@@ -62,7 +72,9 @@ const definition = {
     scope: '[data-test-copyright-rationale]',
     set: fillable('textarea'),
     ariaInvalid: attribute('aria-invalid', 'textarea'),
+    ariaErrorMessage: attribute('aria-errormessage', 'textarea'),
     errorMessage: {
+      id: attribute('id'),
       scope: '[data-test-copyright-rationale-validation-error-message]',
     },
   },
