@@ -410,6 +410,7 @@ export default class NewLearningmaterialComponent extends Component {
                 <br />
                 <span
                   id="copyright-permission-error-{{this.uniqueId}}"
+                  aria-live="polite"
                   class="validation-error-message"
                   data-test-copyright-permission-validation-error-message
                 >
