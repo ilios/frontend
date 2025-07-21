@@ -252,7 +252,7 @@ export default class NewLearningmaterialComponent extends Component {
         <span>
           <input
             id="display-name-{{this.uniqueId}}"
-            class={{if this.validations.errors.title "error" ""}}
+            class={{if this.validations.errors.title "error"}}
             aria-invalid={{if this.validations.errors.title "true" "false"}}
             aria-errormessage="display-name-error-{{this.uniqueId}}"
             type="text"
@@ -297,7 +297,7 @@ export default class NewLearningmaterialComponent extends Component {
         <span>
           <input
             id="original-author-{{this.uniqueId}}"
-            class={{if this.validations.errors.originalAuthor "error" ""}}
+            class={{if this.validations.errors.originalAuthor "error"}}
             aria-invalid={{if this.validations.errors.originalAuthor "true" "false"}}
             aria-errormessage="original-author-error-{{this.uniqueId}}"
             type="text"
@@ -336,7 +336,7 @@ export default class NewLearningmaterialComponent extends Component {
             {{! template-lint-disable no-bare-strings}}
             <input
               id="url-{{this.uniqueId}}"
-              class={{if this.validations.errors.link "error" ""}}
+              class={{if this.validations.errors.link "error"}}
               aria-invalid={{if this.validations.errors.link "true" "false"}}
               aria-errormessage="url-error-{{this.uniqueId}}"
               type="text"
@@ -366,7 +366,7 @@ export default class NewLearningmaterialComponent extends Component {
               id="citation-{{this.uniqueId}}"
               aria-invalid={{if this.validations.errors.citation "true" "false"}}
               aria-errormessage="citation-error-{{this.uniqueId}}"
-              class={{if this.validations.errors.citation "error" ""}}
+              class={{if this.validations.errors.citation "error"}}
               {{on "input" (pick "target.value" (set this "citation"))}}
               {{this.validations.attach "citation"}}
             >{{this.citation}}</textarea>
@@ -398,7 +398,7 @@ export default class NewLearningmaterialComponent extends Component {
                 id="copyright-permission-{{this.uniqueId}}"
                 aria-invalid={{if this.validations.errors.copyrightPermission "true" "false"}}
                 aria-errormessage="copyright-permission-error-{{this.uniqueId}}"
-                class={{if this.validations.errors.copyrightPermission "error" ""}}
+                class={{if this.validations.errors.copyrightPermission "error"}}
                 type="checkbox"
                 checked={{this.copyrightPermission}}
                 {{on "click" (set this "copyrightPermission" (not this.copyrightPermission))}}
@@ -429,7 +429,7 @@ export default class NewLearningmaterialComponent extends Component {
                 id="copyright-rationale-{{this.uniqueId}}"
                 aria-invalid={{if this.validations.errors.copyrightRationale "true" "false"}}
                 aria-errormessage="copyright-rationale-error-{{this.uniqueId}}"
-                class={{if this.validations.errors.copyrightRationale "error" ""}}
+                class={{if this.validations.errors.copyrightRationale "error"}}
                 {{on "input" (pick "target.value" (set this "copyrightRationale"))}}
                 {{this.validations.attach "copyrightRationale"}}
               >{{this.copyrightRationale}}</textarea>
@@ -448,7 +448,7 @@ export default class NewLearningmaterialComponent extends Component {
           </label>
           <LearningMaterialUploader
             id="learning-material-uploader-{{this.uniqueId}}"
-            class={{if this.validations.errors.filename "error" ""}}
+            class={{if this.validations.errors.filename "error"}}
             @for="file-upload-{{this.uniqueId}}"
             @setFilename={{this.setFilename}}
             @setFileHash={{this.setFileHash}}
