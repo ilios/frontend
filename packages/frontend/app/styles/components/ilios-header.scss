@@ -27,10 +27,6 @@
       "search search search search";
     row-gap: 0.25rem;
 
-    @include m.for-phone-and-up {
-      padding: 0.2rem 0 0;
-    }
-
     .locale-chooser,
     .user-menu,
     .user-guide-link {

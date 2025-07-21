@@ -41,6 +41,9 @@
       "main main"
       "footer footer";
     grid-template-rows: auto auto 1fr 20px;
+    grid-template-columns:
+      min(calc(100vw * constants.$golden-ratio-small), 125px)
+      minmax(calc(100vw * constants.$golden-ratio-large), auto);
 
     & > header {
       @include m.for-tablet-and-up {
