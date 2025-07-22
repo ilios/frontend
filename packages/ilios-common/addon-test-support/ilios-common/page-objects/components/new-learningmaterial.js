@@ -1,4 +1,4 @@
-import { clickable, create, fillable, isPresent, text } from 'ember-cli-page-object';
+import { attribute, clickable, create, fillable, isPresent } from 'ember-cli-page-object';
 import { pageObjectFillInFroalaEditor } from 'ilios-common';
 import userNameInfo from './user-name-info';
 
@@ -8,25 +8,42 @@ const definition = {
     scope: '[data-test-display-name]',
     set: fillable('input'),
     hasError: isPresent('[data-test-display-name-validation-error-message]'),
-    error: text('[data-test-display-name-validation-error-message]'),
+    ariaInvalid: attribute('aria-invalid', 'input'),
+    ariaErrorMessage: attribute('aria-errormessage', 'input'),
+    errorMessage: {
+      id: attribute('id'),
+      scope: '[data-test-display-name-validation-error-message]',
+    },
   },
   author: {
     scope: '[data-test-author]',
     set: fillable('input'),
-    hasError: isPresent('[data-test-author-validation-error-message]'),
-    error: text('[data-test-author-validation-error-message]'),
+    ariaInvalid: attribute('aria-invalid', 'input'),
+    ariaErrorMessage: attribute('aria-errormessage', 'input'),
+    errorMessage: {
+      id: attribute('id'),
+      scope: '[data-test-author-validation-error-message]',
+    },
   },
   url: {
     scope: '[data-test-link]',
     set: fillable('input'),
-    hasError: isPresent('[data-test-url-validation-error-message]'),
-    error: text('[data-test-url-validation-error-message]'),
+    ariaInvalid: attribute('aria-invalid', 'input'),
+    ariaErrorMessage: attribute('aria-errormessage', 'input'),
+    errorMessage: {
+      id: attribute('id'),
+      scope: '[data-test-url-validation-error-message]',
+    },
   },
   citation: {
     scope: '[data-test-citation]',
     set: fillable('textarea'),
-    hasError: isPresent('[data-test-citation-validation-error-message]'),
-    error: text('[data-test-citation-validation-error-message]'),
+    ariaInvalid: attribute('aria-invalid', 'input'),
+    ariaErrorMessage: attribute('aria-errormessage', 'input'),
+    errorMessage: {
+      id: attribute('id'),
+      scope: '[data-test-citation-validation-error-message]',
+    },
   },
   owningUser: {
     scope: '[data-test-owninguser]',
@@ -44,19 +61,28 @@ const definition = {
   copyrightPermission: {
     scope: '[data-test-copyright-permission]',
     toggle: clickable('input'),
-    hasError: isPresent('[data-test-copyright-permission-validation-error-message]'),
-    error: text('[data-test-copyright-permission-validation-error-message]'),
+    ariaInvalid: attribute('aria-invalid', 'input'),
+    ariaErrorMessage: attribute('aria-errormessage', 'input'),
+    errorMessage: {
+      id: attribute('id'),
+      scope: '[data-test-copyright-permission-validation-error-message]',
+    },
   },
   copyrightRationale: {
     scope: '[data-test-copyright-rationale]',
     set: fillable('textarea'),
-    hasError: isPresent('[data-test-copyright-rationale-validation-error-message]'),
-    error: text('[data-test-copyright-rationale-validation-error-message]'),
+    ariaInvalid: attribute('aria-invalid', 'textarea'),
+    ariaErrorMessage: attribute('aria-errormessage', 'textarea'),
+    errorMessage: {
+      id: attribute('id'),
+      scope: '[data-test-copyright-rationale-validation-error-message]',
+    },
   },
   fileUpload: {
     scope: '[data-test-file]',
-    hasError: isPresent('[data-test-file-validation-error-message]'),
-    error: text('[data-test-file-validation-error-message]'),
+    errorMessage: {
+      scope: '[data-test-file-validation-error-message]',
+    },
   },
   save: clickable('.done'),
   cancel: clickable('.cancel'),

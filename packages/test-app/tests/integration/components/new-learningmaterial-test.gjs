@@ -60,13 +60,24 @@ module('Integration | Component | new learningmaterial', function (hooks) {
         />
       </template>,
     );
-    assert.notOk(component.url.hasError);
+    assert.notOk(component.url.errorMessage.isPresent);
+    assert.strictEqual(component.url.ariaInvalid, 'false');
+
     await component.save();
-    assert.strictEqual(component.url.error, 'URL must be a valid url');
+    assert.strictEqual(component.url.ariaErrorMessage, component.url.errorMessage.id);
+    assert.strictEqual(component.url.errorMessage.text, 'URL must be a valid url');
+    assert.strictEqual(component.url.ariaInvalid, 'true');
+
     await component.url.set('https://validurl.edu/');
-    assert.notOk(component.url.hasError);
+    assert.notOk(component.url.errorMessage.isPresent);
+    assert.strictEqual(component.url.ariaInvalid, 'false');
+
     await component.url.set('https://validurl.edu/but-way-too-long/' + '0123456789'.repeat(25));
-    assert.strictEqual(component.url.error, 'URL is too long (maximum is 256 characters)');
+    assert.strictEqual(
+      component.url.errorMessage.text,
+      'URL is too long (maximum is 256 characters)',
+    );
+    assert.strictEqual(component.url.ariaInvalid, 'true');
   });
 
   test('missing file', async function (assert) {
@@ -82,9 +93,9 @@ module('Integration | Component | new learningmaterial', function (hooks) {
         />
       </template>,
     );
-    assert.notOk(component.fileUpload.hasError);
+    assert.notOk(component.fileUpload.errorMessage.isPresent);
     await component.save();
-    assert.strictEqual(component.fileUpload.error, 'Missing file');
+    assert.strictEqual(component.fileUpload.errorMessage.text, 'Missing file');
   });
 
   test('validate copyright permission', async function (assert) {
@@ -100,16 +111,30 @@ module('Integration | Component | new learningmaterial', function (hooks) {
         />
       </template>,
     );
-    assert.notOk(component.copyrightPermission.hasError);
-    assert.notOk(component.copyrightRationale.hasError);
+    assert.notOk(component.copyrightPermission.errorMessage.isPresent);
+    assert.equal(component.copyrightPermission.ariaInvalid, 'false');
+    assert.notOk(component.copyrightRationale.errorMessage.isPresent);
+    assert.equal(component.copyrightRationale.ariaInvalid, 'false');
+
     await component.save();
     assert.strictEqual(
-      component.copyrightPermission.error,
+      component.copyrightPermission.ariaErrorMessage,
+      component.copyrightPermission.errorMessage.id,
+    );
+    assert.strictEqual(
+      component.copyrightPermission.errorMessage.text,
       'Agreement or alternate rationale is required for upload',
     );
-    assert.strictEqual(component.copyrightRationale.error, 'Copyright Rationale can not be blank');
+    assert.equal(component.copyrightPermission.ariaInvalid, 'true');
+    assert.strictEqual(
+      component.copyrightRationale.errorMessage.text,
+      'Copyright Rationale can not be blank',
+    );
+    assert.equal(component.copyrightRationale.ariaInvalid, 'true');
+
     await component.copyrightPermission.toggle();
-    assert.notOk(component.copyrightPermission.hasError);
+    assert.notOk(component.copyrightPermission.errorMessage.isPresent);
+    assert.equal(component.copyrightPermission.ariaInvalid, 'false');
     assert.notOk(component.copyrightRationale.isVisible);
   });
 
@@ -126,17 +151,30 @@ module('Integration | Component | new learningmaterial', function (hooks) {
         />
       </template>,
     );
-    assert.notOk(component.copyrightPermission.hasError);
-    assert.notOk(component.copyrightRationale.hasError);
+    assert.notOk(component.copyrightPermission.errorMessage.isPresent);
+    assert.notOk(component.copyrightRationale.errorMessage.isPresent);
+    assert.equal(component.copyrightRationale.ariaInvalid, 'false');
+
     await component.save();
     assert.strictEqual(
-      component.copyrightPermission.error,
+      component.copyrightRationale.ariaErrorMessage,
+      component.copyrightRationale.errorMessage.id,
+    );
+
+    assert.strictEqual(
+      component.copyrightPermission.errorMessage.text,
       'Agreement or alternate rationale is required for upload',
     );
-    assert.strictEqual(component.copyrightRationale.error, 'Copyright Rationale can not be blank');
+    assert.strictEqual(
+      component.copyrightRationale.errorMessage.text,
+      'Copyright Rationale can not be blank',
+    );
+    assert.equal(component.copyrightRationale.ariaInvalid, 'true');
+
     await component.copyrightRationale.set('my rationale');
-    assert.notOk(component.copyrightRationale.hasError);
-    assert.notOk(component.copyrightPermission.hasError);
+    assert.notOk(component.copyrightPermission.errorMessage.isPresent);
+    assert.notOk(component.copyrightRationale.errorMessage.isPresent);
+    assert.equal(component.copyrightRationale.ariaInvalid, 'false');
   });
 
   test('validate original author', async function (assert) {
@@ -152,20 +190,31 @@ module('Integration | Component | new learningmaterial', function (hooks) {
         />
       </template>,
     );
-    assert.notOk(component.author.hasError);
+    assert.notOk(component.author.errorMessage.isPresent);
+    assert.strictEqual(component.author.ariaInvalid, 'false');
+
     await component.save();
-    assert.strictEqual(component.author.error, 'Content Author can not be blank');
+    assert.strictEqual(component.author.ariaErrorMessage, component.author.errorMessage.id);
+    assert.strictEqual(component.author.errorMessage.text, 'Content Author can not be blank');
+
     await component.author.set('author');
-    assert.notOk(component.hasError);
+    assert.notOk(component.author.errorMessage.isPresent);
+    assert.strictEqual(component.author.ariaInvalid, 'false');
+
     await component.author.set('a');
-    assert.ok(component.author.error, '');
+    assert.ok(component.author.errorMessage.isPresent);
+    assert.strictEqual(component.author.ariaInvalid, 'true');
+
     await component.author.set('longer author');
-    assert.notOk(component.author.hasError);
+    assert.notOk(component.author.errorMessage.isPresent);
+    assert.strictEqual(component.author.ariaInvalid, 'false');
+
     await component.author.set('super long author'.repeat(20));
     assert.strictEqual(
-      component.author.error,
+      component.author.errorMessage.text,
       'Content Author is too long (maximum is 80 characters)',
     );
+    assert.strictEqual(component.author.ariaInvalid, 'true');
   });
 
   test('validate display name', async function (assert) {
@@ -181,20 +230,33 @@ module('Integration | Component | new learningmaterial', function (hooks) {
         />
       </template>,
     );
-    assert.notOk(component.displayName.hasError);
+    assert.notOk(component.displayName.errorMessage.isPresent);
+    assert.strictEqual(component.displayName.ariaInvalid, 'false');
+
     await component.save();
-    assert.strictEqual(component.displayName.error, 'Display Name can not be blank');
+    assert.strictEqual(
+      component.displayName.ariaErrorMessage,
+      component.displayName.errorMessage.id,
+    );
+    assert.strictEqual(component.displayName.errorMessage.text, 'Display Name can not be blank');
+    assert.strictEqual(component.displayName.ariaInvalid, 'true');
+
     await component.displayName.set('t');
     assert.strictEqual(
-      component.displayName.error,
+      component.displayName.errorMessage.text,
       'Display Name is too short (minimum is 4 characters)',
     );
+    assert.strictEqual(component.displayName.ariaInvalid, 'true');
+
     await component.displayName.set('super long title'.repeat(20));
     assert.strictEqual(
-      component.displayName.error,
+      component.displayName.errorMessage.text,
       'Display Name is too long (maximum is 120 characters)',
     );
+    assert.strictEqual(component.displayName.ariaInvalid, 'true');
+
     await component.displayName.set('display name');
-    assert.notOk(component.displayName.hasError);
+    assert.notOk(component.displayName.errorMessage.isPresent);
+    assert.strictEqual(component.displayName.ariaInvalid, 'false');
   });
 });

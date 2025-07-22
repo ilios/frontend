@@ -2,12 +2,13 @@ import Component from '@glimmer/component';
 import { service } from '@ember/service';
 import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
+import { guidFor } from '@ember/object/internals';
 import { dropTask } from 'ember-concurrency';
 import { TrackedAsyncData } from 'ember-async-data';
 import { findBy, findById } from 'ilios-common/utils/array-helpers';
 import YupValidations from 'ilios-common/classes/yup-validations';
 import { boolean, string } from 'yup';
-import { uniqueId, fn } from '@ember/helper';
+import { fn } from '@ember/helper';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
 import pick from 'ilios-common/helpers/pick';
@@ -66,7 +67,9 @@ export default class NewLearningmaterialComponent extends Component {
                 messageKey: 'errors.missingFile',
               };
             },
-            (value) => value !== null && value !== undefined && value.trim() !== '',
+            (value) => {
+              return value !== null && value !== undefined && value.trim() !== '';
+            },
           ),
       }),
     copyrightRationale: string().when(
@@ -99,6 +102,10 @@ export default class NewLearningmaterialComponent extends Component {
       }),
   });
   userModel = new TrackedAsyncData(this.currentUser.getModel());
+
+  get uniqueId() {
+    return guidFor(this);
+  }
 
   @cached
   get currentUserModel() {
@@ -145,10 +152,32 @@ export default class NewLearningmaterialComponent extends Component {
     return this.link ?? DEFAULT_URL_VALUE;
   }
 
+  @action
+  async setFilename(filename) {
+    this.filename = filename;
+    await this.validations.isValid();
+  }
+
+  @action
+  async setFileHash(fileHash) {
+    this.fileHash = fileHash;
+    await this.validations.isValid();
+  }
+
+  focusOnFirstElementWithError() {
+    const element = document
+      .getElementById(`new-learningmaterial-${this.uniqueId}`)
+      .querySelector('.error');
+    if (element) {
+      element.focus();
+    }
+  }
+
   prepareSave = dropTask(async () => {
     this.validations.addErrorDisplayForAllFields();
     const isValid = await this.validations.isValid();
     if (!isValid) {
+      this.focusOnFirstElementWithError();
       return false;
     }
     const owningUser = await this.currentUser.getModel();
@@ -211,214 +240,236 @@ export default class NewLearningmaterialComponent extends Component {
     }
   }
   <template>
-    <div class="new-learningmaterial" data-test-new-learningmaterial>
-      {{#let (uniqueId) as |templateId|}}
-        <div class="item" data-test-display-name>
-          <label for="display-name-{{templateId}}">
-            {{t "general.displayName"}}:
+    <div
+      class="new-learningmaterial"
+      id="new-learningmaterial-{{this.uniqueId}}"
+      data-test-new-learningmaterial
+    >
+      <div class="item" data-test-display-name>
+        <label for="display-name-{{this.uniqueId}}">
+          {{t "general.displayName"}}:
+        </label>
+        <span>
+          <input
+            id="display-name-{{this.uniqueId}}"
+            class={{if this.validations.errors.title "error"}}
+            aria-invalid={{if this.validations.errors.title "true" "false"}}
+            aria-errormessage="display-name-error-{{this.uniqueId}}"
+            type="text"
+            value={{this.title}}
+            {{on "input" (pick "target.value" (set this "title"))}}
+            {{this.validations.attach "title"}}
+          />
+          <YupValidationMessage
+            id="display-name-error-{{this.uniqueId}}"
+            @description={{t "general.displayName"}}
+            @validationErrors={{this.validations.errors.title}}
+            data-test-display-name-validation-error-message
+          />
+        </span>
+      </div>
+      <div class="item" data-test-status>
+        <label for="status-{{this.uniqueId}}">
+          {{t "general.status"}}:
+        </label>
+        <span>
+          <select id="status-{{this.uniqueId}}" {{on "change" this.changeStatusId}}>
+            {{#each @learningMaterialStatuses as |lmStatus|}}
+              <option value={{lmStatus.id}} selected={{isEqual lmStatus this.selectedStatus}}>
+                {{lmStatus.title}}
+              </option>
+            {{/each}}
+          </select>
+        </span>
+      </div>
+      <div class="item" data-test-owninguser>
+        <label>
+          {{t "general.owner"}}:
+        </label>
+        <span class="owninguser">
+          <UserNameInfo @user={{this.currentUserModel}} />
+        </span>
+      </div>
+      <div class="item" data-test-author>
+        <label for="original-author-{{this.uniqueId}}">
+          {{t "general.contentAuthor"}}:
+        </label>
+        <span>
+          <input
+            id="original-author-{{this.uniqueId}}"
+            class={{if this.validations.errors.originalAuthor "error"}}
+            aria-invalid={{if this.validations.errors.originalAuthor "true" "false"}}
+            aria-errormessage="original-author-error-{{this.uniqueId}}"
+            type="text"
+            value={{this.originalAuthor}}
+            {{on "input" (pick "target.value" (set this "originalAuthor"))}}
+            {{this.validations.attach "originalAuthor"}}
+          />
+          <YupValidationMessage
+            id="original-author-error-{{this.uniqueId}}"
+            @description={{t "general.contentAuthor"}}
+            @validationErrors={{this.validations.errors.originalAuthor}}
+            data-test-author-validation-error-message
+          />
+        </span>
+      </div>
+      <div class="item" data-test-role>
+        <label for="user-role-{{this.uniqueId}}">
+          {{t "general.userRole"}}:
+        </label>
+        <span>
+          <select id="user-role-{{this.uniqueId}}" {{on "change" this.changeUserRoleId}}>
+            {{#each @learningMaterialUserRoles as |role|}}
+              <option value={{role.id}} selected={{isEqual role this.selectedUserRole}}>
+                {{role.title}}
+              </option>
+            {{/each}}
+          </select>
+        </span>
+      </div>
+      {{#if this.isLink}}
+        <div class="item" data-test-link>
+          <label for="url-{{this.uniqueId}}">
+            {{t "general.url"}}:
           </label>
           <span>
+            {{! template-lint-disable no-bare-strings}}
             <input
-              id="display-name-{{templateId}}"
-              disabled={{this.prepareSave.isRunning}}
+              id="url-{{this.uniqueId}}"
+              class={{if this.validations.errors.link "error"}}
+              aria-invalid={{if this.validations.errors.link "true" "false"}}
+              aria-errormessage="url-error-{{this.uniqueId}}"
               type="text"
-              value={{this.title}}
-              {{on "input" (pick "target.value" (set this "title"))}}
-              {{this.validations.attach "title"}}
+              placeholder="https://example.com"
+              value={{this.bestLink}}
+              inputmode="url"
+              {{on "input" (pick "target.value" this.changeLink)}}
+              {{on "focus" this.selectAllText}}
+              {{this.validations.attach "link"}}
             />
             <YupValidationMessage
-              @description={{t "general.displayName"}}
-              @validationErrors={{this.validations.errors.title}}
-              data-test-display-name-validation-error-message
+              id="url-error-{{this.uniqueId}}"
+              @description={{t "general.url"}}
+              @validationErrors={{this.validations.errors.link}}
+              data-test-url-validation-error-message
             />
           </span>
         </div>
-        <div class="item" data-test-status>
-          <label for="status-{{templateId}}">
-            {{t "general.status"}}:
+      {{/if}}
+      {{#if this.isCitation}}
+        <div class="item" data-test-citation>
+          <label for="citation-{{this.uniqueId}}">
+            {{t "general.citation"}}:
           </label>
-          <span>
-            <select id="status-{{templateId}}" {{on "change" this.changeStatusId}}>
-              {{#each @learningMaterialStatuses as |lmStatus|}}
-                <option value={{lmStatus.id}} selected={{isEqual lmStatus this.selectedStatus}}>
-                  {{lmStatus.title}}
-                </option>
-              {{/each}}
-            </select>
-          </span>
-        </div>
-        <div class="item" data-test-owninguser>
-          <label>
-            {{t "general.owner"}}:
-          </label>
-          <span class="owninguser">
-            <UserNameInfo @user={{this.currentUserModel}} />
-          </span>
-        </div>
-        <div class="item" data-test-author>
-          <label for="original-author-{{templateId}}">
-            {{t "general.contentAuthor"}}:
-          </label>
-          <span>
-            <input
-              id="original-author-{{templateId}}"
-              disabled={{this.prepareSave.isRunning}}
-              type="text"
-              value={{this.originalAuthor}}
-              {{on "input" (pick "target.value" (set this "originalAuthor"))}}
-              {{this.validations.attach "originalAuthor"}}
-            />
+          <span class="citation">
+            <textarea
+              id="citation-{{this.uniqueId}}"
+              aria-invalid={{if this.validations.errors.citation "true" "false"}}
+              aria-errormessage="citation-error-{{this.uniqueId}}"
+              class={{if this.validations.errors.citation "error"}}
+              {{on "input" (pick "target.value" (set this "citation"))}}
+              {{this.validations.attach "citation"}}
+            >{{this.citation}}</textarea>
             <YupValidationMessage
-              @description={{t "general.contentAuthor"}}
-              @validationErrors={{this.validations.errors.originalAuthor}}
-              data-test-author-validation-error-message
+              id="citation-error-{{this.uniqueId}}"
+              @description={{t "general.citation"}}
+              @validationErrors={{this.validations.errors.citation}}
+              data-test-citation-validation-error-message
             />
           </span>
         </div>
-        <div class="item" data-test-role>
-          <label for="user-role-{{templateId}}">
-            {{t "general.userRole"}}:
+      {{/if}}
+      <div class="item">
+        <label>
+          {{t "general.description"}}:
+        </label>
+        <span>
+          <HtmlEditor @content={{this.description}} @update={{fn (mut this.description)}} />
+        </span>
+      </div>
+      {{#if this.isFile}}
+        <div class="item" data-test-copyright-permission>
+          <label for="copyright-permission-{{this.uniqueId}}">
+            {{t "general.copyrightPermission"}}:
           </label>
           <span>
-            <select id="user-role-{{templateId}}" {{on "change" this.changeUserRoleId}}>
-              {{#each @learningMaterialUserRoles as |role|}}
-                <option value={{role.id}} selected={{isEqual role this.selectedUserRole}}>
-                  {{role.title}}
-                </option>
-              {{/each}}
-            </select>
-          </span>
-        </div>
-        {{#if this.isLink}}
-          <div class="item" data-test-link>
-            <label for="url-{{templateId}}">
-              {{t "general.url"}}:
-            </label>
-            <span>
-              {{! template-lint-disable no-bare-strings}}
+            <p id="lm-copyright-permissions-text">
               <input
-                id="url-{{templateId}}"
-                type="text"
-                placeholder="https://example.com"
-                value={{this.bestLink}}
-                inputmode="url"
-                disabled={{this.prepareSave.isRunning}}
-                {{on "input" (pick "target.value" this.changeLink)}}
-                {{on "focus" this.selectAllText}}
-                {{this.validations.attach "link"}}
+                id="copyright-permission-{{this.uniqueId}}"
+                aria-invalid={{if this.validations.errors.copyrightPermission "true" "false"}}
+                aria-errormessage="copyright-permission-error-{{this.uniqueId}}"
+                class={{if this.validations.errors.copyrightPermission "error"}}
+                type="checkbox"
+                checked={{this.copyrightPermission}}
+                {{on "click" (set this "copyrightPermission" (not this.copyrightPermission))}}
+                {{on "change" (perform this.validations.runValidator)}}
+                data-test-copyright-permission
               />
+              {{t "general.copyrightAgreement"}}
+              {{#if this.validations.errors.copyrightPermission}}
+                <br />
+              {{/if}}
               <YupValidationMessage
-                @description={{t "general.url"}}
-                @validationErrors={{this.validations.errors.link}}
-                data-test-url-validation-error-message
+                id="copyright-permission-error-{{this.uniqueId}}"
+                @validationErrors={{this.validations.errors.copyrightPermission}}
+                data-test-copyright-permission-validation-error-message
               />
-            </span>
-          </div>
-        {{/if}}
-        {{#if this.isCitation}}
-          <div class="item" data-test-citation>
-            <label for="citation-{{templateId}}">
-              {{t "general.citation"}}:
-            </label>
-            <span class="citation">
-              <textarea
-                id="citation-{{templateId}}"
-                disabled={{this.prepareSave.isRunning}}
-                {{on "input" (pick "target.value" (set this "citation"))}}
-                {{this.validations.attach "citation"}}
-              >{{this.citation}}</textarea>
-              <YupValidationMessage
-                @description={{t "general.citation"}}
-                @validationErrors={{this.validations.errors.citation}}
-                data-test-citation-validation-error-message
-              />
-            </span>
-          </div>
-        {{/if}}
-        <div class="item">
-          <label>
-            {{t "general.description"}}:
-          </label>
-          <span>
-            <HtmlEditor @content={{this.description}} @update={{fn (mut this.description)}} />
+            </p>
           </span>
         </div>
-        {{#if this.isFile}}
-          <div class="item" data-test-copyright-permission>
-            <label for="copyright-permission-{{templateId}}">
-              {{t "general.copyrightPermission"}}:
+        {{#unless this.copyrightPermission}}
+          <div class="item" data-test-copyright-rationale>
+            <label for="copyright-rationale-{{this.uniqueId}}">
+              {{t "general.copyrightRationale"}}:
             </label>
             <span>
-              <p id="lm-copyright-permissions-text">
-                <input
-                  id="copyright-permission-{{templateId}}"
-                  type="checkbox"
-                  checked={{this.copyrightPermission}}
-                  {{on "click" (set this "copyrightPermission" (not this.copyrightPermission))}}
-                  {{on "change" (perform this.validations.runValidator)}}
-                  data-test-copyright-permission
-                />
-                {{t "general.copyrightAgreement"}}
-                {{#if this.validations.errors.copyrightPermission}}
-                  <br />
-                  <span
-                    class="validation-error-message"
-                    data-test-copyright-permission-validation-error-message
-                  >
-                    {{t "errors.agreementRequired"}}
-                  </span>
-                {{/if}}
-              </p>
+              <textarea
+                id="copyright-rationale-{{this.uniqueId}}"
+                aria-invalid={{if this.validations.errors.copyrightRationale "true" "false"}}
+                aria-errormessage="copyright-rationale-error-{{this.uniqueId}}"
+                class={{if this.validations.errors.copyrightRationale "error"}}
+                {{on "input" (pick "target.value" (set this "copyrightRationale"))}}
+                {{this.validations.attach "copyrightRationale"}}
+              >{{this.copyrightRationale}}</textarea>
+              <YupValidationMessage
+                id="copyright-rationale-error-{{this.uniqueId}}"
+                @description={{t "general.copyrightRationale"}}
+                @validationErrors={{this.validations.errors.copyrightRationale}}
+                data-test-copyright-rationale-validation-error-message
+              />
             </span>
           </div>
-          {{#unless this.copyrightPermission}}
-            <div class="item" data-test-copyright-rationale>
-              <label for="copyright-rationale-{{templateId}}">
-                {{t "general.copyrightRationale"}}:
-              </label>
-              <span>
-                <textarea
-                  id="copyright-rationale-{{templateId}}"
-                  {{on "input" (pick "target.value" (set this "copyrightRationale"))}}
-                  {{this.validations.attach "copyrightRationale"}}
-                >{{this.copyrightRationale}}</textarea>
-                <YupValidationMessage
-                  @description={{t "general.copyrightRationale"}}
-                  @validationErrors={{this.validations.errors.copyrightRationale}}
-                  data-test-copyright-rationale-validation-error-message
-                />
-              </span>
-            </div>
-          {{/unless}}
-          <div class="item" data-test-file>
-            <label>
-              {{t "general.file"}}:
-            </label>
-            <LearningMaterialUploader
-              @for="file-upload-{{this.templateId}}"
-              @setFilename={{set this "filename"}}
-              @setFileHash={{set this "fileHash"}}
-            />
-            <YupValidationMessage
-              @description={{t "general.file"}}
-              @validationErrors={{this.validations.errors.filename}}
-              data-test-file-validation-error-message
-            />
-          </div>
-        {{/if}}
-        <div class="buttons">
-          <button class="done text" type="button" {{on "click" (perform this.prepareSave)}}>
-            {{#if this.prepareSave.isRunning}}
-              <LoadingSpinner />
-            {{else}}
-              {{t "general.done"}}
-            {{/if}}
-          </button>
-          <button class="cancel text" type="button" {{on "click" @cancel}}>
-            {{t "general.cancel"}}
-          </button>
+        {{/unless}}
+        <div class="item" data-test-file>
+          <label>
+            {{t "general.file"}}:
+          </label>
+          <LearningMaterialUploader
+            id="learning-material-uploader-{{this.uniqueId}}"
+            class={{if this.validations.errors.filename "error"}}
+            @for="file-upload-{{this.uniqueId}}"
+            @setFilename={{this.setFilename}}
+            @setFileHash={{this.setFileHash}}
+          />
+          <YupValidationMessage
+            @description={{t "general.file"}}
+            @validationErrors={{this.validations.errors.filename}}
+            data-test-file-validation-error-message
+          />
         </div>
-      {{/let}}
+      {{/if}}
+      <div class="buttons">
+        <button class="done text" type="button" {{on "click" (perform this.prepareSave)}}>
+          {{#if this.prepareSave.isRunning}}
+            <LoadingSpinner />
+          {{else}}
+            {{t "general.done"}}
+          {{/if}}
+        </button>
+        <button class="cancel text" type="button" {{on "click" @cancel}}>
+          {{t "general.cancel"}}
+        </button>
+      </div>
     </div>
   </template>
 }

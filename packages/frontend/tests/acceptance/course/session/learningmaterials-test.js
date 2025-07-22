@@ -781,21 +781,27 @@ module('Acceptance | Session - Learning Materials', function (hooks) {
     await page.details.learningMaterials.createNew();
     await page.details.learningMaterials.pickNew('File');
 
-    assert.notOk(page.details.learningMaterials.newLearningMaterial.copyrightPermission.hasError);
+    assert.notOk(
+      page.details.learningMaterials.newLearningMaterial.copyrightPermission.errorMessage.isPresent,
+    );
     await page.details.learningMaterials.newLearningMaterial.save();
     assert.strictEqual(
-      page.details.learningMaterials.newLearningMaterial.copyrightPermission.error,
+      page.details.learningMaterials.newLearningMaterial.copyrightPermission.errorMessage.text,
       'Agreement or alternate rationale is required for upload',
     );
     await page.details.learningMaterials.newLearningMaterial.copyrightPermission.toggle();
-    assert.notOk(page.details.learningMaterials.newLearningMaterial.copyrightPermission.hasError);
+    assert.notOk(
+      page.details.learningMaterials.newLearningMaterial.copyrightPermission.errorMessage.isPresent,
+    );
     await page.details.learningMaterials.newLearningMaterial.copyrightPermission.toggle();
     assert.strictEqual(
-      page.details.learningMaterials.newLearningMaterial.copyrightPermission.error,
+      page.details.learningMaterials.newLearningMaterial.copyrightPermission.errorMessage.text,
       'Agreement or alternate rationale is required for upload',
     );
     await page.details.learningMaterials.newLearningMaterial.copyrightRationale.set('mine!');
-    assert.notOk(page.details.learningMaterials.newLearningMaterial.copyrightPermission.hasError);
+    assert.notOk(
+      page.details.learningMaterials.newLearningMaterial.copyrightPermission.errorMessage.isPresent,
+    );
   });
 
   test('list double linked learning materials', async function (assert) {
