@@ -5,6 +5,7 @@ import { setupMirage } from 'frontend/tests/test-support/mirage';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
 import { component } from 'frontend/tests/pages/components/instructor-group/root';
 import Root from 'frontend/components/instructor-group/root';
+import noop from 'ilios-common/helpers/noop';
 
 module('Integration | Component | instructor-group/root', function (hooks) {
   setupRenderingTest(hooks);
@@ -18,10 +19,9 @@ module('Integration | Component | instructor-group/root', function (hooks) {
       displayName: 'Aardvark',
     });
     const school = this.server.create('school');
-    const course1 = this.server.create('course', { title: 'Foundations 1' });
-    const course2 = this.server.create('course', { title: 'Introduction 101' });
-    const session1 = this.server.create('session', { course: course1 });
-    const session2 = this.server.create('session', { course: course2 });
+    const courses = this.server.createList('course', 2, { school });
+    const session1 = this.server.create('session', { course: courses[0] });
+    const session2 = this.server.create('session', { course: courses[1] });
     const offering1 = this.server.create('offering', { session: session1 });
     const offering2 = this.server.create('offering', { session: session2 });
     const instructorGroup = this.server.create('instructor-group', {
@@ -36,7 +36,16 @@ module('Integration | Component | instructor-group/root', function (hooks) {
 
   test('it renders', async function (assert) {
     this.set('group', this.instructorGroup);
-    await render(<template><Root @instructorGroup={{this.group}} @canUpdate={{true}} /></template>);
+    await render(
+      <template>
+        <Root
+          @instructorGroup={{this.group}}
+          @canUpdate={{true}}
+          @showCourseAssociations={{false}}
+          @setShowCourseAssociations={{(noop)}}
+        />
+      </template>,
+    );
     assert.strictEqual(component.header.title.text, 'instructor group 0');
     assert.strictEqual(component.header.members, 'Members: 2');
     assert.strictEqual(component.header.breadcrumb.crumbs.length, 3);
@@ -57,7 +66,14 @@ module('Integration | Component | instructor-group/root', function (hooks) {
   test('it renders in read-only mode', async function (assert) {
     this.set('group', this.instructorGroup);
     await render(
-      <template><Root @instructorGroup={{this.group}} @canUpdate={{false}} /></template>,
+      <template>
+        <Root
+          @instructorGroup={{this.group}}
+          @canUpdate={{false}}
+          @showCourseAssociations={{false}}
+          @setShowCourseAssociations={{(noop)}}
+        />
+      </template>,
     );
     assert.strictEqual(component.header.title.text, 'instructor group 0');
     assert.strictEqual(component.header.members, 'Members: 2');
@@ -76,43 +92,49 @@ module('Integration | Component | instructor-group/root', function (hooks) {
     assert.ok(true, 'no a11y errors found!');
   });
 
-  test('it displays single course year if calendar year boundary IS NOT crossed', async function (assert) {
+  test('it renders course associations collapsed, and expand action fires', async function (assert) {
+    assert.expect(4);
     this.set('group', this.instructorGroup);
-    const { apiVersion } = this.owner.resolveRegistration('config:environment');
-    this.server.get('application/config', function () {
-      return {
-        config: {
-          academicYearCrossesCalendarYearBoundaries: false,
-          apiVersion,
-        },
-      };
+    this.set('toggle', (value) => {
+      assert.ok(value);
     });
-    await render(<template><Root @instructorGroup={{this.group}} @canUpdate={{true}} /></template>);
-    assert.strictEqual(component.courses.title, 'Associated Courses (2)');
-    assert.strictEqual(component.courses.courses.length, 2);
-    assert.strictEqual(component.courses.courses[0].text, 'Foundations 1 (2013)');
-    assert.strictEqual(component.courses.courses[1].text, 'Introduction 101 (2013)');
+    await render(
+      <template>
+        <Root
+          @instructorGroup={{this.group}}
+          @canUpdate={{true}}
+          @showCourseAssociations={{false}}
+          @setShowCourseAssociations={{this.toggle}}
+        />
+      </template>,
+    );
+    assert.strictEqual(component.courseAssociations.header.title, 'Associated Courses (2)');
+    assert.ok(component.courseAssociations.header.toggle.isCollapsed);
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
+    await component.courseAssociations.header.toggle.click();
   });
 
-  test('it displays course year range if calendar year boundary IS crossed', async function (assert) {
+  test('it renders course associations expanded, and collapse action fires', async function (assert) {
+    assert.expect(4);
     this.set('group', this.instructorGroup);
-    const { apiVersion } = this.owner.resolveRegistration('config:environment');
-    this.server.get('application/config', function () {
-      return {
-        config: {
-          academicYearCrossesCalendarYearBoundaries: true,
-          apiVersion,
-        },
-      };
+    this.set('toggle', (value) => {
+      assert.notOk(value);
     });
-    await render(<template><Root @instructorGroup={{this.group}} @canUpdate={{true}} /></template>);
-    assert.strictEqual(component.courses.title, 'Associated Courses (2)');
-    assert.strictEqual(component.courses.courses.length, 2);
-    assert.strictEqual(component.courses.courses[0].text, 'Foundations 1 (2013 - 2014)');
-    assert.strictEqual(component.courses.courses[1].text, 'Introduction 101 (2013 - 2014)');
+    await render(
+      <template>
+        <Root
+          @instructorGroup={{this.group}}
+          @canUpdate={{true}}
+          @showCourseAssociations={{true}}
+          @setShowCourseAssociations={{this.toggle}}
+        />
+      </template>,
+    );
+    assert.strictEqual(component.courseAssociations.header.title, 'Associated Courses (2)');
+    assert.ok(component.courseAssociations.header.toggle.isExpanded);
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
+    await component.courseAssociations.header.toggle.click();
   });
 });

@@ -1,13 +1,13 @@
 import { create } from 'ember-cli-page-object';
 import header from './header';
 import users from './users';
-import courses from './courses';
+import courseAssociations from './course-associations';
 
 const definition = {
   scope: '[data-test-instructor-group-root]',
   header,
   users,
-  courses,
+  courseAssociations,
   // overview: {
   //   scope: '[data-test-overview]',
   //   title: text('[data-test-title]'),
