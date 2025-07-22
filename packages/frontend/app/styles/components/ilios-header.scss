@@ -20,14 +20,13 @@
     background: transparent;
     grid-area: tools;
     margin-right: 0.25rem;
-    padding: 0 0 0.25rem 0;
+    padding: 0.25rem 0;
     display: grid;
     justify-content: end;
     grid-template-areas:
       ". locale user guide"
       "search search search search";
     grid-template-rows: 1fr min-content;
-    gap: 0.25rem;
 
     @include m.for-tablet-and-up {
       grid-template-areas: "search locale user guide";
@@ -61,6 +60,11 @@
     .global-search-box {
       grid-area: search;
       height: 100%;
+      padding-top: 0.25rem;
+
+      @include m.for-tablet-and-up {
+        padding: 0;
+      }
     }
   }
 }
