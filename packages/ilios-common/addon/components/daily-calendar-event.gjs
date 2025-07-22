@@ -17,6 +17,7 @@ import formatDate from 'ember-intl/helpers/format-date';
 
 export default class DailyCalendarEventComponent extends Component {
   @service intl;
+
   constructor() {
     super(...arguments);
     const allMinutesInDay = Array(60 * 24).fill(0);
