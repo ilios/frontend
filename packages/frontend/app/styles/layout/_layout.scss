@@ -46,6 +46,11 @@
       "main main"
       "footer footer";
     grid-template-rows: auto auto 1fr 1.25rem;
+    grid-template-columns: 3.5rem auto;
+
+    @include m.for-phone-and-up {
+      grid-template-columns: 5rem auto;
+    }
 
     @include m.for-tablet-and-up {
       grid-template-rows: 2.5rem auto 1fr 1.25rem;
