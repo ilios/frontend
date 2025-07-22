@@ -62,10 +62,6 @@ export default class FaIconComponent extends Component {
       classes.push(this.flip);
     }
 
-    if (this.args.extraClasses) {
-      classes.push(this.args.extraClasses);
-    }
-
     return classes.length ? ` ${classes.join(' ')}` : '';
   }
   //prettier-ignore
