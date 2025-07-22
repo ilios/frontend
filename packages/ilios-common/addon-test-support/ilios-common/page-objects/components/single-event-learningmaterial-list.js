@@ -7,7 +7,7 @@ const definition = {
   prework: collection('[data-test-prework-event]', {
     url: property('href', 'a'),
     name: text('[data-test-name]'),
-    isUnPublished: isPresent('.awesome-icon-stack.circle-check_slash'),
+    isUnPublished: isPresent('.fa-file-signature'),
     items: collection('[data-test-single-event-learningmaterial-list-item]', item),
   }),
   noContent: {

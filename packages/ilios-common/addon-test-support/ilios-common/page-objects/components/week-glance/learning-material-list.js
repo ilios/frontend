@@ -1,5 +1,4 @@
 import { collection, create, isPresent, text } from 'ember-cli-page-object';
-
 import learningMaterial from './learning-material';
 
 const definition = {
@@ -9,7 +8,7 @@ const definition = {
   ),
   prework: collection('[data-test-learning-materials] [data-test-prework-event]', {
     name: text('a'),
-    isUnPublished: isPresent('.awesome-icon-stack.circle-check_slash'),
+    isUnPublished: isPresent('.fa-file-signature'),
     hasLink: isPresent('a'),
     materials: collection('[data-test-prework-learning-material]', learningMaterial),
   }),

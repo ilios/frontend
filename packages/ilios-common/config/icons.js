@@ -41,6 +41,7 @@ module.exports = function () {
       'file-audio',
       'file-pdf',
       'file-powerpoint',
+      'file-signature',
       'file-video',
       'flask',
       'forward',

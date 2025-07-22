@@ -8,7 +8,6 @@ import { findById } from 'ilios-common/utils/array-helpers';
 import createTypedLearningMaterialProxy from 'ilios-common/utils/create-typed-learning-material-proxy';
 import { TrackedAsyncData } from 'ember-async-data';
 import FaIcon from 'ilios-common/components/fa-icon';
-import FaIconStack from 'ilios-common/components/fa-icon-stack';
 import t from 'ember-intl/helpers/t';
 import not from 'ember-truth-helpers/helpers/not';
 import and from 'ember-truth-helpers/helpers/and';
@@ -35,7 +34,6 @@ export default class SingleEvent extends Component {
   @tracked isCourseMaterialsListExpanded = false;
 
   userIsStudentData = new TrackedAsyncData(this.currentUser.getIsStudent());
-  iconLayers = ['circle-check', 'slash'];
 
   @cached
   get userIsStudent() {
@@ -299,8 +297,8 @@ export default class SingleEvent extends Component {
               />
             {{/if}}
             {{#if (not @event.isPublished)}}
-              <FaIconStack
-                @icons={{this.iconLayers}}
+              <FaIcon
+                @icon="file-signature"
                 @title={{t "general.notPublished"}}
                 data-test-draft-icon
               />

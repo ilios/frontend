@@ -11,15 +11,12 @@ import mouseHoverToggle from 'ilios-common/modifiers/mouse-hover-toggle';
 import set from 'ember-set-helper/helpers/set';
 import IliosTooltip from 'ilios-common/components/ilios-tooltip';
 import FaIcon from 'ilios-common/components/fa-icon';
-import FaIconStack from 'ilios-common/components/fa-icon-stack';
 import t from 'ember-intl/helpers/t';
 import not from 'ember-truth-helpers/helpers/not';
 import formatDate from 'ember-intl/helpers/format-date';
 
 export default class WeeklyCalendarEventComponent extends Component {
   @service intl;
-
-  iconLayers = ['circle-check', 'slash'];
 
   get eventButtonId() {
     return `weekly-calendar-event-button-${guidFor(this)}`;
@@ -155,11 +152,7 @@ export default class WeeklyCalendarEventComponent extends Component {
           />
         {{/if}}
         {{#if (not @event.isPublished)}}
-          <FaIconStack
-            @icons={{this.iconLayers}}
-            @title={{t "general.notPublished"}}
-            data-test-draft-icon
-          />
+          <FaIcon @icon="file-signature" @title={{t "general.notPublished"}} data-test-draft-icon />
         {{else if @event.isScheduled}}
           <FaIcon @icon="clock" @title={{t "general.scheduled"}} data-test-scheduled-icon />
         {{/if}}
