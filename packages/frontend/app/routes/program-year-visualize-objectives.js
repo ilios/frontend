@@ -2,6 +2,8 @@ import { service } from '@ember/service';
 import Route from '@ember/routing/route';
 import { all } from 'rsvp';
 
+import { findRecord } from '@ember-data/legacy-compat/builders';
+
 export default class ProgramYearVisualizeObjectivesRoute extends Route {
   @service store;
   @service session;
@@ -10,8 +12,8 @@ export default class ProgramYearVisualizeObjectivesRoute extends Route {
     this.session.requireAuthentication(transition, 'login');
   }
 
-  model(params) {
-    return this.store.findRecord('program-year', params.program_year_id);
+  async model(params) {
+    return (await this.store.request(findRecord('program-year', params.program_year_id))).content;
   }
 
   /**

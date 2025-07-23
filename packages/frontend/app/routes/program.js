@@ -1,6 +1,8 @@
 import Route from '@ember/routing/route';
 import { service } from '@ember/service';
 
+import { findRecord } from '@ember-data/legacy-compat/builders';
+
 export default class ProgramRoute extends Route {
   @service permissionChecker;
   @service session;
@@ -12,8 +14,8 @@ export default class ProgramRoute extends Route {
     this.session.requireAuthentication(transition, 'login');
   }
 
-  model(params) {
-    return this.store.findRecord('program', params.program_id);
+  async model(params) {
+    return (await this.store.request(findRecord('program', params.program_id))).content;
   }
 
   async afterModel(program) {

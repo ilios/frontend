@@ -1,6 +1,8 @@
 import { service } from '@ember/service';
 import Route from '@ember/routing/route';
 
+import { query } from '@ember-data/json-api/request';
+
 export default class SchoolsRoute extends Route {
   @service store;
   @service session;
@@ -9,7 +11,7 @@ export default class SchoolsRoute extends Route {
     this.session.requireAuthentication(transition, 'login');
   }
 
-  model() {
-    return this.store.findAll('school');
+  async model() {
+    return (await this.store.request(query('school'))).content.data;
   }
 }

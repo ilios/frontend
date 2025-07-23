@@ -2,6 +2,8 @@ import { service } from '@ember/service';
 import Route from '@ember/routing/route';
 import { all, map } from 'rsvp';
 
+import { findRecord } from '@ember-data/legacy-compat/builders';
+
 export default class CourseVisualizeSessionTypeRoute extends Route {
   @service session;
   @service store;
@@ -11,8 +13,12 @@ export default class CourseVisualizeSessionTypeRoute extends Route {
   titleToken = 'general.coursesAndSessions';
 
   async model(params) {
-    const course = await this.store.findRecord('course', params.course_id);
-    const sessionType = await this.store.findRecord('session-type', params['session-type_id']);
+    const {
+      content: course
+    } = await this.store.request(findRecord('course', params.course_id));
+    const {
+      content: sessionType
+    } = await this.store.request(findRecord('session-type', params['session-type_id']));
 
     return { course, sessionType };
   }

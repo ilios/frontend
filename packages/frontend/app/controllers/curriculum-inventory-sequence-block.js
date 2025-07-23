@@ -4,6 +4,8 @@ import { action } from '@ember/object';
 import { service } from '@ember/service';
 import { TrackedAsyncData } from 'ember-async-data';
 
+import { findRecord } from '@ember-data/legacy-compat/builders';
+
 export default class CurriculumInventorySequenceBlockController extends Controller {
   @service store;
   queryParams = ['sortSessionsBy'];
@@ -35,10 +37,10 @@ export default class CurriculumInventorySequenceBlockController extends Controll
     // inside an "ordered" sequence block. they all get re-sorted server-side.
     // therefore, we must reload them here in order to get those updated sort order values.
     // [ST 2021/03/16]
-    await this.store.findRecord('curriculum-inventory-sequence-block', this.model.id, {
+    await this.store.request(findRecord('curriculum-inventory-sequence-block', this.model.id, {
       include: 'children',
       reload: true,
-    });
+    }));
   }
 
   @action

@@ -2,6 +2,8 @@ import Route from '@ember/routing/route';
 import { service } from '@ember/service';
 import { filter } from 'rsvp';
 
+import { findAll } from '@ember-data/legacy-compat/builders';
+
 export default class PendingUserUpdatesRoute extends Route {
   @service currentUser;
   @service permissionChecker;
@@ -19,15 +21,19 @@ export default class PendingUserUpdatesRoute extends Route {
   }
 
   async model() {
-    const allSchools = await this.store.findAll('school');
+    const {
+      content: allSchools
+    } = await this.store.request(findAll('school'));
     const schools = await filter(allSchools, async (school) => {
       return this.permissionChecker.canUpdateUserInSchool(school);
     });
     const user = await this.currentUser.getModel();
     const primarySchool = await user.school;
-    const allPendingUpdates = await this.store.findAll('pending-user-update', {
+    const {
+      content: allPendingUpdates
+    } = await this.store.request(findAll('pending-user-update', {
       include: 'user',
-    });
+    }));
     return { primarySchool, schools, allPendingUpdates };
   }
 }

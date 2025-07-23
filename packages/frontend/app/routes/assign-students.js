@@ -2,6 +2,8 @@ import Route from '@ember/routing/route';
 import { service } from '@ember/service';
 import { filter } from 'rsvp';
 
+import { query } from '@ember-data/legacy-compat/builders';
+
 export default class AssignStudentsRoute extends Route {
   @service currentUser;
   @service permissionChecker;
@@ -27,13 +29,15 @@ export default class AssignStudentsRoute extends Route {
       return this.permissionChecker.canUpdateUserInSchool(school);
     });
 
-    const unassignedStudents = await this.store.query('user', {
+    const {
+      content: unassignedStudents
+    } = await this.store.request(query('user', {
       filters: {
         cohorts: null,
         enabled: true,
         roles: [4],
       },
-    });
+    }));
 
     return {
       primarySchool,

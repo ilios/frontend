@@ -6,10 +6,15 @@ import loadInitializers from 'ember-load-initializers';
 import config from 'frontend/config/environment';
 import { startSentry } from './sentry';
 import { importSync, isDevelopingApp, macroCondition } from '@embroider/macros';
+import { setBuildURLConfig } from '@ember-data/request-utils';
 
 if (macroCondition(isDevelopingApp())) {
   importSync('./deprecation-workflow');
 }
+setBuildURLConfig({
+  host: 'https://demo.iliosproject.org',
+  namespace: 'api/v3'
+});
 
 startSentry(config);
 

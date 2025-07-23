@@ -1,6 +1,8 @@
 import Route from '@ember/routing/route';
 import { service } from '@ember/service';
 
+import { findRecord } from '@ember-data/legacy-compat/builders';
+
 export default class CurriculumInventorySequenceBlockRoute extends Route {
   @service permissionChecker;
   @service session;
@@ -12,11 +14,11 @@ export default class CurriculumInventorySequenceBlockRoute extends Route {
     this.session.requireAuthentication(transition, 'login');
   }
 
-  model(params) {
-    return this.store.findRecord(
+  async model(params) {
+    return (await this.store.request(findRecord(
       'curriculum-inventory-sequence-block',
-      params.curriculum_inventory_sequence_block_id,
-    );
+      params.curriculum_inventory_sequence_block_id
+    ))).content;
   }
 
   async afterModel(model) {

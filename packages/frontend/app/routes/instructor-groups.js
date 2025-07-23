@@ -1,6 +1,8 @@
 import Route from '@ember/routing/route';
 import { service } from '@ember/service';
 
+import { findAll } from '@ember-data/legacy-compat/builders';
+
 export default class InstructorGroupsRoute extends Route {
   @service store;
   @service session;
@@ -16,6 +18,6 @@ export default class InstructorGroupsRoute extends Route {
   }
 
   async model() {
-    return this.store.findAll('school');
+    return (await this.store.request(findAll('school'))).content;
   }
 }

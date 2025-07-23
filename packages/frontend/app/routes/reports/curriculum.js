@@ -2,6 +2,8 @@ import Route from '@ember/routing/route';
 import { service } from '@ember/service';
 import { DateTime } from 'luxon';
 
+import { findAll } from '@ember-data/legacy-compat/builders';
+
 export default class ReportsCurriculumRoute extends Route {
   @service currentUser;
   @service router;
@@ -25,7 +27,9 @@ export default class ReportsCurriculumRoute extends Route {
   }
 
   async model() {
-    const schools = await this.store.findAll('school');
+    const {
+      content: schools
+    } = await this.store.request(findAll('school'));
     const threeYearsAgo = DateTime.now().year - 3;
     // Limit query to surrounding years
     const years = [...Array(7).keys()].map((i) => threeYearsAgo + i);

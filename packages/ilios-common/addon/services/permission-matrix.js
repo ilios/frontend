@@ -1,6 +1,8 @@
 import Service, { service } from '@ember/service';
 import { mapBy } from 'ilios-common/utils/array-helpers';
 
+import { findAll } from '@ember-data/legacy-compat/builders';
+
 export default class PermissionMatrixService extends Service {
   @service store;
 
@@ -13,7 +15,9 @@ export default class PermissionMatrixService extends Service {
     return await this._permissionMatrixPromise;
   }
   async _fillMatrix() {
-    const schools = await this.store.findAll('school');
+    const {
+      content: schools
+    } = await this.store.request(findAll('school'));
     const schoolIds = mapBy(schools, 'id');
     const matrix = {};
     schoolIds.forEach((id) => {

@@ -1,6 +1,8 @@
 import Service, { service } from '@ember/service';
 import { dasherize } from '@ember/string';
 
+import { findRecord } from '@ember-data/legacy-compat/builders';
+
 const subjectTranslations = {
   course: 'general.courses',
   session: 'general.sessions',
@@ -98,7 +100,9 @@ export default class ReportingService extends Service {
         model = 'mesh-descriptor';
       }
 
-      const record = await this.store.findRecord(model, prepositionalObjectTableRowId);
+      const {
+        content: record
+      } = await this.store.request(findRecord(model, prepositionalObjectTableRowId));
       const objectKey = objectTranslations[prepositionalObject];
       const objectTranslation = this.intl.t(objectKey);
       let object;

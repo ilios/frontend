@@ -5,6 +5,8 @@ import * as Sentry from '@sentry/ember';
 import { loadPolyfills } from 'ilios-common/utils/load-polyfills';
 import { launchWorker } from '../utils/launch-worker';
 
+import { findAll } from '@ember-data/legacy-compat/builders';
+
 export default class AuthenticatedRoute extends Route {
   @service currentUser;
   @service intl;
@@ -28,7 +30,7 @@ export default class AuthenticatedRoute extends Route {
     if (this.session.isAuthenticated) {
       //preload all the schools, we need these everywhere
       //this is also done when a user is first authetnicated in app/services/session.js
-      await this.store.findAll('school');
+      await this.store.request(findAll('school'));
     }
   }
 

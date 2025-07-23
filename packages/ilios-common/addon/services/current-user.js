@@ -5,6 +5,8 @@ import { DateTime } from 'luxon';
 import jwtDecode from 'ilios-common/utils/jwt-decode';
 import { uniqueValues } from 'ilios-common/utils/array-helpers';
 
+import { query } from '@ember-data/legacy-compat/builders';
+
 export default class CurrentUserService extends Service {
   @service store;
   @service session;
@@ -73,14 +75,14 @@ export default class CurrentUserService extends Service {
     }
     const previousYear = currentYear - 1;
     const nextYear = currentYear + 1;
-    return await this.store.query('course', {
+    return (await this.store.request(query('course', {
       my: true,
       filters: {
         year: [previousYear, currentYear, nextYear],
         locked: false,
         archived: false,
       },
-    });
+    }))).content;
   }
 
   getBooleanAttributeFromToken(attribute) {

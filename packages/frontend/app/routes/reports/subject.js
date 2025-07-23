@@ -1,6 +1,8 @@
 import Route from '@ember/routing/route';
 import { service } from '@ember/service';
 
+import { findRecord } from '@ember-data/legacy-compat/builders';
+
 export default class ReportsSubjectRoute extends Route {
   @service currentUser;
   @service router;
@@ -17,8 +19,8 @@ export default class ReportsSubjectRoute extends Route {
     }
   }
 
-  model(params) {
-    return this.store.findRecord('report', params.report_id);
+  async model(params) {
+    return (await this.store.request(findRecord('report', params.report_id))).content;
   }
 
   async afterModel(report) {

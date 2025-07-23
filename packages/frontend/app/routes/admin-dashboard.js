@@ -2,6 +2,8 @@ import Route from '@ember/routing/route';
 import { filter } from 'rsvp';
 import { service } from '@ember/service';
 
+import { findAll } from '@ember-data/legacy-compat/builders';
+
 export default class AdminDashboardRoute extends Route {
   @service store;
   @service permissionChecker;
@@ -21,7 +23,9 @@ export default class AdminDashboardRoute extends Route {
   async model() {
     const store = this.store;
     const permissionChecker = this.permissionChecker;
-    const schools = await store.findAll('school');
+    const {
+      content: schools
+    } = await store.request(findAll('school'));
     const schoolsWithCreateUserPermission = await filter(schools, async (school) => {
       return permissionChecker.canCreateUser(school);
     });

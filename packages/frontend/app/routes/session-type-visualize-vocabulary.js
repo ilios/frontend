@@ -1,6 +1,8 @@
 import { service } from '@ember/service';
 import Route from '@ember/routing/route';
 
+import { findRecord } from '@ember-data/legacy-compat/builders';
+
 export default class SessionTypeVisualizeVocabularyRoute extends Route {
   @service store;
   @service session;
@@ -33,7 +35,7 @@ export default class SessionTypeVisualizeVocabularyRoute extends Route {
 
     return {
       sessionType: await this._loadedSessionTypes[sessionTypeId],
-      vocabulary: await this.store.findRecord('vocabulary', vocabularyId),
+      vocabulary: await this.store.request(findRecord('vocabulary', vocabularyId)),
     };
   }
 }

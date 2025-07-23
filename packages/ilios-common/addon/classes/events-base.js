@@ -2,6 +2,8 @@ import Service from '@ember/service';
 import { DateTime } from 'luxon';
 import { mapBy, sortBy, uniqueValues } from 'ilios-common/utils/array-helpers';
 
+import { findRecord } from '@ember-data/legacy-compat/builders';
+
 export default class EventsBase extends Service {
   /**
    * Returns the session for a given event.
@@ -12,9 +14,9 @@ export default class EventsBase extends Service {
   async getSessionForEvent(event) {
     let intermediary;
     if (event.offering) {
-      intermediary = await this.store.findRecord('offering', event.offering);
+      intermediary = await this.store.request(findRecord('offering', event.offering));
     } else {
-      intermediary = await this.store.findRecord('ilm-session', event.ilmSession);
+      intermediary = await this.store.request(findRecord('ilm-session', event.ilmSession));
     }
     return await intermediary.get('session');
   }
@@ -26,7 +28,7 @@ export default class EventsBase extends Service {
    * @return {Promise.<Object>}
    */
   async getCourseForEvent(event) {
-    return await this.store.findRecord('course', event.course);
+    return (await this.store.request(findRecord('course', event.course))).content;
   }
 
   /**
