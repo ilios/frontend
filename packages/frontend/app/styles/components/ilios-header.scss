@@ -23,13 +23,10 @@
     padding: 0.25rem 0;
     display: grid;
     justify-content: end;
-    grid-template-areas:
-      ". locale user guide"
-      "search search search search";
     grid-template-rows: 1fr min-content;
+    row-gap: 0.25rem;
 
     @include m.for-tablet-and-up {
-      grid-template-areas: "search locale user guide";
       grid-template-rows: 1fr;
       padding: 0;
     }
@@ -47,23 +44,26 @@
     }
 
     .locale-chooser {
-      grid-area: locale;
+      grid-row: 1;
+      grid-column: 2;
     }
     .user-menu {
-      grid-area: user;
+      grid-row: 1;
+      grid-column: 3;
     }
     .user-guide-link {
       display: flex;
-      grid-area: guide;
+      grid-row: 1;
+      grid-column: 4;
     }
 
     .global-search-box {
-      grid-area: search;
       height: 100%;
-      padding-top: 0.25rem;
-
+      grid-row: 2;
+      grid-column: 1 / span 4;
       @include m.for-tablet-and-up {
-        padding: 0;
+        grid-column: 1;
+        grid-row: 1;
       }
     }
   }
