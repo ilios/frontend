@@ -76,19 +76,21 @@ class NormalizeHandler {
 
     const result = await next(request);
 
-    if (result) {
-      if (result.data) {
-        if (Array.isArray(result.data)) {
-          result.data.forEach(v => normalizeResource(store, v));
+    if (result.content) {
+      if (result.content.data) {
+        if (Array.isArray(result.content.data)) {
+          result.content.data.forEach(v => normalizeResource(store, v));
         } else {
-          normalizeResource(store, result.data);
+          normalizeResource(store, result.content.data);
         }
       }
 
-      if (Array.isArray(result.included)) {
-        result.included.forEach((v) => normalizeResource(store, v));
+      if (Array.isArray(result.content.included)) {
+        result.content.included.forEach((v) => normalizeResource(store, v));
       }
     }
+
+    return result;
   }
 };
 
