@@ -91,4 +91,37 @@
       }
     }
   }
+
+  + .back-to-top {
+    @include m.ilios-button;
+    align-items: center;
+    bottom: 1.75em;
+    display: flex;
+    opacity: 1;
+    padding-bottom: 0.5em;
+    padding-top: 0.5em;
+    position: fixed;
+    right: 0.5em;
+    transition: opacity 0.25s ease;
+
+    &.hidden {
+      opacity: 0;
+    }
+
+    .awesome-icon {
+      margin-right: 0;
+
+      @include m.for-tablet-and-up {
+        margin-right: 0.5em;
+      }
+    }
+
+    span {
+      display: none;
+
+      @include m.for-tablet-and-up {
+        display: inline;
+      }
+    }
+  }
 }
