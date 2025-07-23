@@ -1,11 +1,18 @@
 import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
 import { DateTime } from 'luxon';
+import { action } from '@ember/object';
 import t from 'ember-intl/helpers/t';
+import { on } from '@ember/modifier';
 import { LinkTo } from '@ember/routing';
-import { hash } from '@ember/helper';
+import { fn, hash } from '@ember/helper';
+import inViewport from 'ember-in-viewport/modifiers/in-viewport';
+import FaIcon from 'ilios-common/components/fa-icon';
 import WeekGlance from 'ilios-common/components/week-glance';
 
 export default class DashboardWeekComponent extends Component {
+  @tracked displayBackToTop = false;
+
   get expanded() {
     const lastWeek = this.thisThursday.minus({ week: 1 }).toFormat('W');
     const thisWeek = this.thisThursday.toFormat('W');
@@ -39,10 +46,32 @@ export default class DashboardWeekComponent extends Component {
     return this.thisThursday.weekNumber;
   }
 
+  get backToTopClasses() {
+    return this.displayBackToTop ? 'back-to-top' : 'back-to-top hidden';
+  }
+
+  @action
+  toggleBackToTop(visibility) {
+    this.displayBackToTop = visibility;
+  }
+
+  @action
+  backToTop() {
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  }
+
   <template>
     <div class="dashboard-week" data-test-dashboard-week>
       <div class="dashboard-week-content">
-        <div class="weeklylink" data-test-weekly-link>
+        <div
+          class="weeklylink"
+          {{inViewport
+            onExit=(fn this.toggleBackToTop true)
+            onEnter=(fn this.toggleBackToTop false)
+            viewportSpy=true
+          }}
+          data-test-weekly-link
+        >
           {{t "general.view"}}:
           <LinkTo @route="weeklyevents" @query={{hash expanded=this.expanded week=this.week}}>
             {{t "general.allWeeks"}}
@@ -56,6 +85,16 @@ export default class DashboardWeekComponent extends Component {
           @year={{this.year}}
         />
       </div>
+      <button
+        type="button"
+        class={{this.backToTopClasses}}
+        aria-label={{t "general.backToTop"}}
+        hidden
+        {{on "click" this.backToTop}}
+      >
+        <FaIcon @icon="chevron-up" aria-hidden="true" />
+        <span>{{t "general.backToTop"}}</span>
+      </button>
     </div>
   </template>
 }
