@@ -8,6 +8,7 @@
   align-items: center;
   max-width: 40rem;
   border-radius: 3px;
+  flex-direction: row-reverse;
 
   &:focus-within {
     outline: 2px solid var(--blue-munsell);
