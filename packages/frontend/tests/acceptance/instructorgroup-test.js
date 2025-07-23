@@ -49,6 +49,9 @@ module('Acceptance | Instructor Group', function (hooks) {
       session: session2,
       instructorGroups: [instructorGroup1],
     });
+    this.instructorGroup1 = await this.owner
+      .lookup('service:store')
+      .findRecord('instructor-group', instructorGroup1.id);
   });
 
   test('it renders', async function (assert) {
@@ -66,41 +69,9 @@ module('Acceptance | Instructor Group', function (hooks) {
     assert.strictEqual(page.root.users.users[0].userNameInfo.fullName, '1 guy M. Mc1son');
     assert.strictEqual(page.root.users.users[0].userNameInfo.fullName, '1 guy M. Mc1son');
     assert.strictEqual(page.root.users.users[1].userNameInfo.fullName, '2 guy M. Mc2son');
-    assert.strictEqual(page.root.courses.courses.length, 2);
+    assert.strictEqual(page.root.courseAssociations.header.title, 'Associated Courses (2)');
     await a11yAudit();
     assert.ok(true, 'no a11y errors found!');
-  });
-
-  test('course year shows as single year if calendar year boundary IS NOT crossed', async function (assert) {
-    await setupAuthentication({ school: this.school });
-    const { apiVersion } = this.owner.resolveRegistration('config:environment');
-    this.server.get('application/config', function () {
-      return {
-        config: {
-          academicYearCrossesCalendarYearBoundaries: false,
-          apiVersion,
-        },
-      };
-    });
-    await visit(url);
-    assert.strictEqual(page.root.courses.courses[0].text, 'course 0 (2013)');
-    assert.strictEqual(page.root.courses.courses[1].text, 'course 1 (2013)');
-  });
-
-  test('course year shows as range if calendar year boundary IS crossed', async function (assert) {
-    await setupAuthentication({ school: this.school });
-    const { apiVersion } = this.owner.resolveRegistration('config:environment');
-    this.server.get('application/config', function () {
-      return {
-        config: {
-          academicYearCrossesCalendarYearBoundaries: true,
-          apiVersion,
-        },
-      };
-    });
-    await visit(url);
-    assert.strictEqual(page.root.courses.courses[0].text, 'course 0 (2013 - 2014)');
-    assert.strictEqual(page.root.courses.courses[1].text, 'course 1 (2013 - 2014)');
   });
 
   test('change title', async function (assert) {
@@ -207,19 +178,34 @@ module('Acceptance | Instructor Group', function (hooks) {
     assert.strictEqual(page.root.header.members, 'Members: 1');
   });
 
-  test('follow link to course', async function (assert) {
-    await visit(url);
-    await page.root.courses.courses[0].visit();
-    assert.strictEqual(currentURL(), '/courses/1');
+  test('expand and collapse course associations', async function (assert) {
+    await page.visit({ instructorGroupId: this.instructorGroup1.id });
+
+    assert.strictEqual(currentURL(), `/instructorgroups/${this.instructorGroup1.id}`);
+    assert.ok(page.root.courseAssociations.header.toggle.isCollapsed);
+
+    await page.root.courseAssociations.header.toggle.click();
+    assert.ok(page.root.courseAssociations.header.toggle.isExpanded);
+    assert.strictEqual(
+      currentURL(),
+      `/instructorgroups/${this.instructorGroup1.id}?showCourseAssociations=true`,
+    );
+
+    await page.root.courseAssociations.header.toggle.click();
+    assert.ok(page.root.courseAssociations.header.toggle.isCollapsed);
+    assert.strictEqual(currentURL(), `/instructorgroups/${this.instructorGroup1.id}`);
   });
 
-  test('no associated courses', async function (assert) {
-    await visit('/instructorgroups/3');
-    assert.strictEqual(page.root.header.breadcrumb.crumbs.length, 3);
-    assert.strictEqual(page.root.header.breadcrumb.crumbs[0].text, 'Instructor Groups');
-    assert.strictEqual(page.root.header.breadcrumb.crumbs[1].text, 'school 0');
-    assert.strictEqual(page.root.header.breadcrumb.crumbs[2].text, 'instructor group 2');
-    assert.strictEqual(page.root.courses.title, 'Associated Courses (0)');
-    assert.strictEqual(page.root.courses.courses.length, 0);
+  test('course associations are expanded if URL contains corresponding parameter', async function (assert) {
+    await page.visit({
+      instructorGroupId: this.instructorGroup1.id,
+      showCourseAssociations: 'true',
+    });
+
+    assert.strictEqual(
+      currentURL(),
+      `/instructorgroups/${this.instructorGroup1.id}?showCourseAssociations=true`,
+    );
+    assert.ok(page.root.courseAssociations.header.toggle.isExpanded);
   });
 });
