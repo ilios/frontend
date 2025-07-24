@@ -40,7 +40,7 @@
   }
 
   .alert-warning {
-    @include flash(var(--gold));
+    @include flash(var(--dark-yellow));
   }
 
   .alert-info {
