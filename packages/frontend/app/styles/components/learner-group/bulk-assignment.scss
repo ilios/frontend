@@ -49,7 +49,7 @@
       }
 
       &.matched {
-        background-color: hsl(from var(--green) h s calc(l + 15));
+        background-color: var(--transparent-green);
       }
 
       &.not-matched {
