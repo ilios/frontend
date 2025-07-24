@@ -11,7 +11,7 @@
   button {
     background-color: transparent;
     border: 1px solid var(--super-light-grey);
-    border-radius: 0.2rem;
+    border-radius: 0;
     color: var(--black);
     font-weight: normal;
     padding: 0.25rem;
@@ -66,15 +66,18 @@
 
   &[aria-checked="true"],
   &.active {
-    background-color: hsl(from var(--green) h s calc(l + 25));
+    background-color: var(--green);
+    color: var(--white);
   }
 
   &:hover,
   &:focus {
-    background-color: var(--white);
+    background-color: var(--blue);
+    color: var(--white);
     &[aria-checked="true"],
     &.active {
-      background-color: hsl(from var(--green) h s calc(l + 15));
+      background-color: var(--green);
+      cursor: default;
     }
   }
 }
