@@ -26,15 +26,17 @@
     align-items: center;
     bottom: 1.75em;
     display: flex;
-    opacity: 1;
+    opacity: 0;
     padding-bottom: 0.5em;
     padding-top: 0.5em;
     position: fixed;
     right: 0.5em;
     transition: opacity 0.25s ease;
+    visibility: hidden;
 
-    &.hidden {
-      opacity: 0;
+    &.visible {
+      opacity: 1;
+      visibility: visible;
     }
 
     .awesome-icon {

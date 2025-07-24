@@ -83,9 +83,8 @@ export default class DashboardWeekComponent extends Component {
       </div>
       <button
         type="button"
-        class="back-to-top{{unless this.displayBackToTop ' hidden'}}"
+        class="back-to-top{{if this.displayBackToTop ' visible'}}"
         aria-label={{t "general.backToTop"}}
-        hidden
         {{on "click" this.backToTop}}
       >
         <FaIcon @icon="chevron-up" />
