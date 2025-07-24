@@ -82,7 +82,6 @@ export default class GlobalSearchBox extends Component {
       />
       <button
         aria-label={{t "general.search"}}
-        class="link-button search-icon"
         type="button"
         data-test-search-icon
         {{on "click" this.focusAndSearch}}

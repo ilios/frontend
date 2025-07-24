@@ -4,14 +4,20 @@
 
 .ilios-logo {
   background-color: var(--orange);
+  a {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: start;
+    width: 100%;
+    height: 100%;
 
-  @include m.for-laptop-and-up {
-    padding-bottom: calc(constants.$golden-ratio-small * 1rem);
-  }
+    @include m.for-phone-and-up {
+      justify-content: end;
+    }
 
-  img {
-    display: block;
-    height: 95%;
-    max-height: 4rem;
+    img {
+      max-width: 7rem;
+    }
   }
 }

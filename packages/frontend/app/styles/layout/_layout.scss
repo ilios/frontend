@@ -8,10 +8,15 @@
     "logo header"
     "main main"
     "footer footer";
-  grid-template-rows: 42px auto 20px;
+  grid-template-rows: 2.5rem auto 1.25rem;
+  grid-template-columns: 2.5rem 1fr;
   height: 100vh;
   width: 100%;
   background-color: var(--white);
+
+  @include m.for-phone-and-up {
+    grid-template-columns: 4rem 1fr;
+  }
 
   & > .ilios-logo {
     grid-area: logo;
@@ -40,32 +45,15 @@
       "nav nav"
       "main main"
       "footer footer";
-    grid-template-rows: auto auto 1fr 20px;
+    grid-template-rows: auto auto 1fr 1.25rem;
+    grid-template-columns: 3.5rem auto;
 
-    & > header {
-      @include m.for-tablet-and-up {
-        display: block;
-      }
-
-      & > .tools {
-        padding: 0.25rem 0 0;
-
-        @include m.for-phone-and-up {
-          padding: 0.4rem 0;
-        }
-
-        @include m.for-tablet-and-up {
-          grid-template-areas: "search locale user guide";
-        }
-
-        @include m.for-laptop-and-up {
-          padding: 6.4px 0;
-        }
-      }
+    @include m.for-phone-and-up {
+      grid-template-columns: 5rem auto;
     }
 
     @include m.for-tablet-and-up {
-      grid-template-rows: 42px auto 1fr 20px;
+      grid-template-rows: 2.5rem auto 1fr 1.25rem;
     }
 
     @include m.for-laptop-and-up {
@@ -76,8 +64,8 @@
         "footer footer";
       grid-template-columns: auto 1fr;
       grid-template-rows:
-        42px calc(42px * constants.$golden-ratio-small)
-        auto 20px;
+        2.5rem calc(2.5rem * constants.$golden-ratio-small)
+        auto 1.25rem;
     }
 
     @include m.for-desktop-and-up {
@@ -88,8 +76,8 @@
         "footer footer  footer";
       grid-template-columns: auto 1fr 1fr;
       grid-template-rows:
-        42px calc(42px * constants.$golden-ratio-large)
-        auto 20px;
+        2.5rem calc(2.5rem * constants.$golden-ratio-small)
+        auto 1.25rem;
     }
 
     & > nav {

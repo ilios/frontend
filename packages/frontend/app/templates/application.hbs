@@ -8,8 +8,15 @@
   <IliosHeader />
   <div class="ilios-logo">
     <LinkTo @route="dashboard" title={{t "general.dashboard"}}>
-      {{! template-lint-disable require-valid-alt-text }}
-      <img src="/assets/images/ilios-logo.svg" alt="" />
+      <picture>
+        <source
+          srcset="/assets/images/ilios-logo.svg"
+          media="(min-width: 400px)"
+          alt={{t "general.logo"}}
+        />
+        <img src="/assets/images/sunburst.svg" alt={{t "general.logo"}} />
+      </picture>
+
     </LinkTo>
   </div>
   {{#if this.session.isAuthenticated}}

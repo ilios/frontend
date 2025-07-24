@@ -4,93 +4,40 @@
 @use "sass:color";
 
 .global-search-box {
-  display: inline-block;
+  display: flex;
+  align-items: center;
   max-width: 40rem;
-  position: relative;
+  border-radius: 3px;
+  flex-direction: row-reverse;
+
+  &:focus-within {
+    outline: 2px solid var(--blue-munsell);
+  }
+
+  button {
+    @include m.ilios-button-reset;
+    align-items: center;
+    background-color: var(--white);
+    border: 0;
+    border-radius: 3px 0 0 3px;
+    color: var(--blue-munsell);
+    cursor: pointer;
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    padding: 0 0.5rem;
+  }
 
   input[type="search"] {
     background-color: var(--white);
-    border: 1px solid var(--teal-blue);
-    border-radius: 3px;
-    height: 80%;
-    padding: 0 0.5rem 0 1.5rem;
-    width: 100%;
+    border: 0;
+    border-radius: 0 3px 3px 0;
+    flex-grow: 1;
+    height: 100%;
+    outline: 0;
 
     @include m.for-phone-only {
-      outline-offset: 0;
-    }
-
-    @include m.for-phone-and-up {
-      height: 100%;
-    }
-
-    @include m.for-laptop-and-up {
-      padding-left: 24px;
-      padding-right: 8px;
-    }
-
-    &.has-results {
-      border-bottom: 0;
-      border-radius: 3px 3px 0 0;
-    }
-  }
-
-  .search-icon {
-    color: var(--blue-munsell);
-    cursor: pointer;
-    display: inline-block;
-    /* stylelint-disable-next-line property-disallowed-list */
-    font-size: 3vw;
-    left: 0;
-    margin-right: 2px;
-    padding-left: 6px;
-    position: absolute;
-    top: 12%;
-
-    @include m.for-phone-and-up {
-      /* stylelint-disable-next-line property-disallowed-list */
-      font-size: inherit;
-      top: 20%;
-    }
-
-    @include m.for-tablet-and-up {
-      top: 25%;
-    }
-  }
-
-  .autocomplete {
-    @include m.ilios-list-reset;
-    background: var(--white);
-    border: 1px solid var(--teal-blue);
-    border-radius: 0 0 3px 3px;
-    box-shadow: 0 2px 2px hsl(from var(--black) h s l / 0.8);
-    color: var(--raisin-black);
-    cursor: pointer;
-    max-height: 23rem;
-    max-width: 40rem;
-    overflow-y: scroll;
-    position: absolute;
-    transition: all 0.2s ease-in-out;
-    width: 100%;
-    z-index: 100;
-
-    &.hidden {
-      display: none;
-    }
-  }
-
-  .autocomplete-row {
-    @include m.ilios-button-reset;
-    overflow: hidden;
-    padding: 0.25rem 0.375rem;
-    text-align: left;
-    vertical-align: top;
-    white-space: nowrap;
-    width: 100%;
-
-    &.active,
-    &:hover {
-      background-color: hsl(from var(--blue-munsell) h s calc(l + 50));
+      width: 75%;
     }
   }
 }
