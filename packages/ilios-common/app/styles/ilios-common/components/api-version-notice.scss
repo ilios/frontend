@@ -2,7 +2,7 @@
 @use "../mixins" as m;
 
 .api-version-notice {
-  @include m.critical-notice(var(--gold), var(--black), 1rem);
+  @include m.critical-notice(var(--dark-yellow), var(--black), 1rem);
 
   display: none;
   padding: 0.25rem 1rem;
