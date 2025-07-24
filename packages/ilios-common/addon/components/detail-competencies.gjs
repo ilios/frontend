@@ -48,13 +48,15 @@ export default class DetailCompetenciesComponent extends Component {
             {{#each @course.domainsWithSubcompetencies as |domain|}}
               <li data-test-domain>
                 {{domain.title}}
-                <ul>
-                  {{#each domain.subCompetencies as |competency|}}
-                    <li data-test-competency>
-                      {{competency.title}}
-                    </li>
-                  {{/each}}
-                </ul>
+                {{#if domain.subCompetencies}}
+                  <ul>
+                    {{#each domain.subCompetencies as |competency|}}
+                      <li data-test-competency>
+                        {{competency.title}}
+                      </li>
+                    {{/each}}
+                  </ul>
+                {{/if}}
               </li>
             {{/each}}
           </ul>

@@ -189,13 +189,15 @@ export default class PrintCourseComponent extends Component {
               {{#each @course.domainsWithSubcompetencies as |domain|}}
                 <li>
                   {{domain.title}}
-                  <ul>
-                    {{#each domain.subCompetencies as |competency|}}
-                      <li>
-                        {{competency.title}}
-                      </li>
-                    {{/each}}
-                  </ul>
+                  {{#if domain.subCompetencies}}
+                    <ul>
+                      {{#each domain.subCompetencies as |competency|}}
+                        <li>
+                          {{competency.title}}
+                        </li>
+                      {{/each}}
+                    </ul>
+                  {{/if}}
                 </li>
               {{/each}}
             </ul>
