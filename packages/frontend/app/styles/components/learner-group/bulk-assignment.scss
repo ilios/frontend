@@ -53,7 +53,7 @@
       }
 
       &.not-matched {
-        background-color: hsl(from var(--dark-yellow) h s calc(l + 15));
+        background-color: var(--yellow);
       }
     }
   }
