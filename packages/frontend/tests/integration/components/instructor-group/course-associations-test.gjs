@@ -16,15 +16,14 @@ module('Integration | Component | instructor-group/course-associations', functio
   });
 
   test('it renders expanded with data', async function (assert) {
-    const schools = this.server.createList('school', 2);
-    const coursesInSchool1 = this.server.createList('course', 2, {
-      school: schools[0],
+    const school = this.server.create('school');
+    const courses = this.server.createList('course', 3, {
+      school,
       year: 2025,
     });
-    const courseInSchool2 = this.server.create('course', { school: schools[1], year: 2025 });
-    const sessionInCourse1 = this.server.create('session', { course: coursesInSchool1[0] });
-    const sessionsInCourse2 = this.server.createList('session', 2, { course: coursesInSchool1[1] });
-    const sessionInCourse3 = this.server.create('session', { course: courseInSchool2 });
+    const sessionInCourse1 = this.server.create('session', { course: courses[0] });
+    const sessionsInCourse2 = this.server.createList('session', 2, { course: courses[1] });
+    const sessionInCourse3 = this.server.create('session', { course: courses[2] });
     this.server.create('ilmSession', {
       session: sessionsInCourse2[0],
       instructorGroups: [this.instructorGroup],
@@ -68,26 +67,22 @@ module('Integration | Component | instructor-group/course-associations', functio
     assert.notOk(component.content.isHidden);
     assert.strictEqual(component.header.title, 'Associated Courses (3)');
 
-    assert.strictEqual(component.content.headers.school.text, 'School');
     assert.strictEqual(component.content.headers.course.text, 'Course');
     assert.strictEqual(component.content.headers.sessions.text, 'Sessions');
 
     assert.strictEqual(component.content.associations.length, 3);
-    assert.strictEqual(component.content.associations[0].school, 'school 0');
-    assert.strictEqual(component.content.associations[0].course.text, 'course 1 (2025)');
-    assert.strictEqual(component.content.associations[0].course.link, '/courses/2');
-    assert.strictEqual(component.content.associations[0].sessions.length, 2);
-    assert.strictEqual(component.content.associations[0].sessions[0].text, 'session 1');
-    assert.strictEqual(component.content.associations[0].sessions[0].link, '/courses/2/sessions/2');
-    assert.strictEqual(component.content.associations[0].sessions[1].text, 'session 2');
-    assert.strictEqual(component.content.associations[0].sessions[1].link, '/courses/2/sessions/3');
-    assert.strictEqual(component.content.associations[1].school, 'school 0');
-    assert.strictEqual(component.content.associations[1].course.text, 'course 0 (2025)');
-    assert.strictEqual(component.content.associations[1].course.link, '/courses/1');
-    assert.strictEqual(component.content.associations[1].sessions.length, 1);
-    assert.strictEqual(component.content.associations[1].sessions[0].text, 'session 0');
-    assert.strictEqual(component.content.associations[1].sessions[0].link, '/courses/1/sessions/1');
-    assert.strictEqual(component.content.associations[2].school, 'school 1');
+    assert.strictEqual(component.content.associations[0].course.text, 'course 0 (2025)');
+    assert.strictEqual(component.content.associations[0].course.link, '/courses/1');
+    assert.strictEqual(component.content.associations[0].sessions.length, 1);
+    assert.strictEqual(component.content.associations[0].sessions[0].text, 'session 0');
+    assert.strictEqual(component.content.associations[0].sessions[0].link, '/courses/1/sessions/1');
+    assert.strictEqual(component.content.associations[1].course.text, 'course 1 (2025)');
+    assert.strictEqual(component.content.associations[1].course.link, '/courses/2');
+    assert.strictEqual(component.content.associations[1].sessions.length, 2);
+    assert.strictEqual(component.content.associations[1].sessions[0].text, 'session 1');
+    assert.strictEqual(component.content.associations[1].sessions[0].link, '/courses/2/sessions/2');
+    assert.strictEqual(component.content.associations[1].sessions[1].text, 'session 2');
+    assert.strictEqual(component.content.associations[1].sessions[1].link, '/courses/2/sessions/3');
     assert.strictEqual(component.content.associations[2].course.text, 'course 2 (2025)');
     assert.strictEqual(component.content.associations[2].course.link, '/courses/3');
     assert.strictEqual(component.content.associations[2].sessions.length, 1);
@@ -190,51 +185,18 @@ module('Integration | Component | instructor-group/course-associations', functio
     );
 
     assert.strictEqual(component.content.associations.length, 2);
-    assert.ok(component.content.headers.school.isSortedAscending);
-    assert.ok(component.content.headers.course.isNotSorted);
-    assert.strictEqual(component.content.associations[0].school, 'school 0');
-    assert.strictEqual(component.content.associations[0].course.text, 'course 0 (2025)');
-    assert.strictEqual(component.content.associations[1].school, 'school 1');
-    assert.strictEqual(component.content.associations[1].course.text, 'course 1 (2025)');
-
-    await component.content.headers.school.sort();
-    assert.ok(component.content.headers.school.isSortedDescending);
-    assert.ok(component.content.headers.course.isNotSorted);
-    assert.strictEqual(component.content.associations[0].school, 'school 1');
-    assert.strictEqual(component.content.associations[0].course.text, 'course 1 (2025)');
-    assert.strictEqual(component.content.associations[1].school, 'school 0');
-    assert.strictEqual(component.content.associations[1].course.text, 'course 0 (2025)');
-
-    await component.content.headers.school.sort();
-    assert.ok(component.content.headers.school.isSortedAscending);
-    assert.ok(component.content.headers.course.isNotSorted);
-    assert.strictEqual(component.content.associations[0].school, 'school 0');
-    assert.strictEqual(component.content.associations[0].course.text, 'course 0 (2025)');
-    assert.strictEqual(component.content.associations[1].school, 'school 1');
-    assert.strictEqual(component.content.associations[1].course.text, 'course 1 (2025)');
-
-    await component.content.headers.course.sort();
-    assert.ok(component.content.headers.school.isNotSorted);
     assert.ok(component.content.headers.course.isSortedAscending);
-    assert.strictEqual(component.content.associations[0].school, 'school 0');
     assert.strictEqual(component.content.associations[0].course.text, 'course 0 (2025)');
-    assert.strictEqual(component.content.associations[1].school, 'school 1');
     assert.strictEqual(component.content.associations[1].course.text, 'course 1 (2025)');
 
     await component.content.headers.course.sort();
-    assert.ok(component.content.headers.school.isNotSorted);
     assert.ok(component.content.headers.course.isSortedDescending);
-    assert.strictEqual(component.content.associations[0].school, 'school 1');
     assert.strictEqual(component.content.associations[0].course.text, 'course 1 (2025)');
-    assert.strictEqual(component.content.associations[1].school, 'school 0');
     assert.strictEqual(component.content.associations[1].course.text, 'course 0 (2025)');
 
     await component.content.headers.course.sort();
-    assert.ok(component.content.headers.school.isNotSorted);
     assert.ok(component.content.headers.course.isSortedAscending);
-    assert.strictEqual(component.content.associations[0].school, 'school 0');
     assert.strictEqual(component.content.associations[0].course.text, 'course 0 (2025)');
-    assert.strictEqual(component.content.associations[1].school, 'school 1');
     assert.strictEqual(component.content.associations[1].course.text, 'course 1 (2025)');
   });
 
