@@ -16,7 +16,7 @@ export default class CourseRoute extends Route {
 
   beforeModel(transition) {
     this.session.requireAuthentication(transition, 'login');
-    if (!this.currentUser.performsNonLearnerFunction) {
+    if (this.session.isAuthenticated && !this.currentUser.performsNonLearnerFunction) {
       // Slash on the route name is necessary here due to this bug:
       // https://github.com/emberjs/ember.js/issues/12945
       this.router.replaceWith('/four-oh-four');

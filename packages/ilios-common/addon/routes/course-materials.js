@@ -24,7 +24,7 @@ export default class CourseMaterialsRoute extends Route {
 
   beforeModel(transition) {
     this.session.requireAuthentication(transition, 'login');
-    if (!this.currentUser.performsNonLearnerFunction) {
+    if (this.session.isAuthenticated && !this.currentUser.performsNonLearnerFunction) {
       this.router.replaceWith('/four-oh-four');
     }
   }
