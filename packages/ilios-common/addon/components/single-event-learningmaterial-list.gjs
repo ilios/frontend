@@ -15,6 +15,9 @@ import not from 'ember-truth-helpers/helpers/not';
         {{#each @prework as |event|}}
           <li data-test-prework-event>
             <FaIcon @title={{t "general.preWork"}} @icon="person-chalkboard" />
+            {{#unless event.isPublished}}
+              <FaIcon @title={{t "general.notPublished"}} @icon="file-signature" />
+            {{/unless}}
             <LinkTo @route="events" @model={{event.slug}} data-test-name>
               {{event.name}}
             </LinkTo>

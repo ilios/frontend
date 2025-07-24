@@ -96,7 +96,7 @@ module('Integration | Component | single-event-learningmaterial-list', function 
         name: 'prework 2',
         slug: 'prework2',
         isBlanked: false,
-        isPublished: true,
+        isPublished: false,
         isScheduled: false,
         learningMaterials: [
           {
@@ -117,19 +117,43 @@ module('Integration | Component | single-event-learningmaterial-list', function 
         />
       </template>,
     );
-    assert.strictEqual(component.items.length, 5);
-    assert.strictEqual(component.prework.length, 2);
-    assert.strictEqual(component.prework[0].name, 'prework 1');
-    assert.ok(component.prework[0].url.endsWith('/events/prework1'));
-    assert.strictEqual(component.prework[0].items.length, 2);
-    assert.strictEqual(component.prework[0].items[0].title, 'aardvark');
-    assert.strictEqual(component.prework[0].items[1].title, 'foo bar');
-    assert.strictEqual(component.prework[1].name, 'prework 2');
-    assert.strictEqual(component.prework[1].items.length, 1);
-    assert.strictEqual(component.prework[1].items[0].title, 'readme');
-    assert.ok(component.prework[1].url.endsWith('/events/prework2'));
-    assert.strictEqual(component.items[3].title, 'first one');
-    assert.strictEqual(component.items[4].title, 'second one');
+    assert.strictEqual(component.items.length, 5, 'list item count is correct');
+    assert.strictEqual(component.prework.length, 2, 'prework count is correct');
+    assert.strictEqual(component.prework[0].name, 'prework 1', 'first prework name is correct');
+    assert.notOk(component.prework[0].isUnPublished, 'first prework item is not published');
+    assert.ok(
+      component.prework[0].url.endsWith('/events/prework1'),
+      'first prework item url is correct',
+    );
+    assert.strictEqual(component.prework[0].items.length, 2, 'first prework item count is correct');
+    assert.strictEqual(
+      component.prework[0].items[0].title,
+      'aardvark',
+      'first prework, first item title is correct',
+    );
+    assert.strictEqual(
+      component.prework[0].items[1].title,
+      'foo bar',
+      'first prework, second item title is correct',
+    );
+    assert.strictEqual(component.prework[1].name, 'prework 2', 'second prework name is correct');
+    assert.ok(component.prework[1].isUnPublished, 'second prework item is published');
+    assert.strictEqual(
+      component.prework[1].items.length,
+      1,
+      'second prework item count is correct',
+    );
+    assert.strictEqual(
+      component.prework[1].items[0].title,
+      'readme',
+      'second prework, first item title is correct',
+    );
+    assert.ok(
+      component.prework[1].url.endsWith('/events/prework2'),
+      'second prework, first item url is correct',
+    );
+    assert.strictEqual(component.items[3].title, 'first one', 'third material title is correct');
+    assert.strictEqual(component.items[4].title, 'second one', 'fourth material title is correct');
     assert.notOk(component.noContent.isVisible);
   });
 });

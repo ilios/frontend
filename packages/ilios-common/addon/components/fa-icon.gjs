@@ -73,6 +73,7 @@ export default class FaIconComponent extends Component {
     role="img"
     fill="currentColor"
     aria-labelledby={{this.ariaLabeledBy}}
+    data-test-awesome-icon
     ...attributes
   >
     {{#if @title}}
