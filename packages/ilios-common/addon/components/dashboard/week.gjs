@@ -46,10 +46,6 @@ export default class DashboardWeekComponent extends Component {
     return this.thisThursday.weekNumber;
   }
 
-  get backToTopClasses() {
-    return this.displayBackToTop ? 'back-to-top' : 'back-to-top hidden';
-  }
-
   @action
   toggleBackToTop(visibility) {
     this.displayBackToTop = visibility;
@@ -87,7 +83,7 @@ export default class DashboardWeekComponent extends Component {
       </div>
       <button
         type="button"
-        class={{this.backToTopClasses}}
+        class="back-to-top{{unless this.displayBackToTop ' hidden'}}"
         aria-label={{t "general.backToTop"}}
         hidden
         {{on "click" this.backToTop}}
