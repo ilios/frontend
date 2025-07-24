@@ -13,8 +13,8 @@
 
   .version {
     align-items: center;
-    background-color: hsl(from var(--white) h s calc(l - 3));
-    border: 1px solid m.$header-menu-background-color;
+    background-color: var(--super-light-grey);
+    border: 1px solid var(--super-light-grey);
     border-radius: 0.2rem;
     color: var(--black);
     display: flex;
