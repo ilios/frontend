@@ -3,8 +3,6 @@
 
 @use "sass:color";
 
-$header-menu-background-color: hsl(from var(--white) h s calc(l - 3));
-
 @mixin header-menu() {
   margin: 0 0 0 0.5rem;
   position: relative;
@@ -12,7 +10,7 @@ $header-menu-background-color: hsl(from var(--white) h s calc(l - 3));
 
   button {
     background-color: transparent;
-    border: 1px solid $header-menu-background-color;
+    border: 1px solid var(--super-light-grey);
     border-radius: 0.2rem;
     color: var(--black);
     font-weight: normal;
@@ -20,7 +18,7 @@ $header-menu-background-color: hsl(from var(--white) h s calc(l - 3));
   }
 
   .menu {
-    background-color: $header-menu-background-color;
+    background-color: var(--super-light-grey);
     box-shadow: 0 2px 2px var(--very-transparent-black);
     display: flex;
     flex-direction: column;
@@ -34,7 +32,7 @@ $header-menu-background-color: hsl(from var(--white) h s calc(l - 3));
   }
 
   .toggle {
-    background-color: $header-menu-background-color;
+    background-color: var(--super-light-grey);
     span {
       display: none;
 
@@ -57,7 +55,7 @@ $header-menu-background-color: hsl(from var(--white) h s calc(l - 3));
 
 @mixin header-menu-item() {
   border: 0;
-  background-color: $header-menu-background-color;
+  background-color: var(--super-light-grey);
   color: var(--black);
   display: block;
   outline: none;
