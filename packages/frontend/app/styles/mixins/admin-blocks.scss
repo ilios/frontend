@@ -52,7 +52,7 @@
   }
 
   .has-saved {
-    background-color: hsl(from var(--green) h s calc(l + 30));
+    background-color: var(--transparent-green);
     transition: background-color 0.5s ease-out;
   }
 

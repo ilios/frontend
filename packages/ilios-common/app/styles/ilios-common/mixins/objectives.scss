@@ -114,7 +114,7 @@
 
     &.highlight-ok {
       transition: none;
-      background-color: hsl(from var(--green) h s calc(l + 60));
+      background-color: var(--transparent-green);
     }
 
     &.is-managing {
