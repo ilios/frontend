@@ -1,4 +1,5 @@
 @use "../../mixins" as m;
+@use "../../colors" as c;
 
 .dashboard-week {
   @include m.dashboard-component;
@@ -16,6 +17,41 @@
 
       a {
         margin-left: 0.25rem;
+      }
+    }
+  }
+
+  .back-to-top {
+    @include m.ilios-button;
+    align-items: center;
+    bottom: 1.75em;
+    display: flex;
+    opacity: 0;
+    padding-bottom: 0.5em;
+    padding-top: 0.5em;
+    position: fixed;
+    right: 0.5em;
+    transition: opacity 0.25s ease;
+    visibility: hidden;
+
+    &.visible {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .awesome-icon {
+      margin-right: 0;
+
+      @include m.for-tablet-and-up {
+        margin-right: 0.5em;
+      }
+    }
+
+    span {
+      display: none;
+
+      @include m.for-tablet-and-up {
+        display: inline;
       }
     }
   }

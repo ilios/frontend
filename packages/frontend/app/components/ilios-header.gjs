@@ -17,6 +17,7 @@ export default class IliosHeaderComponent extends Component {
   @service router;
   @service iliosConfig;
   @service pageTitle;
+
   searchConfig = new TrackedAsyncData(this.iliosConfig.getSearchEnabled());
 
   @cached
