@@ -47,7 +47,7 @@
       .confirm-copy,
       .confirm-copy:nth-child(even),
       .confirm-copy:nth-child(odd) {
-        background-color: hsl(from var(--light-blue) h s calc(l + 60));
+        background-color: var(--lightest-blue);
         border: 2px solid var(--light-blue);
 
         &.actions-row {

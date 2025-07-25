@@ -40,7 +40,7 @@
     a,
     &.clickable {
       &:hover {
-        background-color: hsl(from var(--light-blue) h s calc(l + 50));
+        background-color: var(--lightest-blue);
       }
     }
 
