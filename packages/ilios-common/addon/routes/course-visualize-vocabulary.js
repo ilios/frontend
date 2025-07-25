@@ -24,9 +24,6 @@ export default class CourseVisualizeVocabularyRoute extends Route {
   }
 
   beforeModel(transition) {
-    this.session.requireAuthentication(transition, 'login');
-    if (this.session.isAuthenticated && !this.currentUser.performsNonLearnerFunction) {
-      this.router.replaceWith('/four-oh-four');
-    }
+    this.currentUser.requireNonLearner(transition);
   }
 }
