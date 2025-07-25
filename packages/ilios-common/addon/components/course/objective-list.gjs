@@ -144,12 +144,14 @@ export default class CourseObjectiveListComponent extends Component {
             {{t "general.sortObjectives"}}
           </button>
         {{/if}}
-        <div class="grid-row headers" data-test-headers>
+        <div class="grid-row headers{{unless @editable ' no-actions'}}" data-test-headers>
           <span class="grid-item" data-test-header>{{t "general.description"}}</span>
           <span class="grid-item" data-test-header>{{t "general.parentObjectives"}}</span>
           <span class="grid-item" data-test-header>{{t "general.vocabularyTerms"}}</span>
           <span class="grid-item" data-test-header>{{t "general.meshTerms"}}</span>
-          <span class="actions grid-item" data-test-header>{{t "general.actions"}}</span>
+          {{#if @editable}}
+            <span class="actions grid-item" data-test-header>{{t "general.actions"}}</span>
+          {{/if}}
         </div>
         {{#if (and (isArray this.courseObjectives) this.cohortObjectivesLoaded)}}
           {{#each this.courseObjectives as |courseObjective|}}

@@ -62,12 +62,14 @@ export default class SessionObjectiveListComponent extends Component {
             {{t "general.sortObjectives"}}
           </button>
         {{/if}}
-        <div class="grid-row headers" data-test-headers>
+        <div class="grid-row headers{{unless @editable ' no-actions'}}" data-test-headers>
           <span class="grid-item" data-test-header>{{t "general.description"}}</span>
           <span class="grid-item" data-test-header>{{t "general.parentObjectives"}}</span>
           <span class="grid-item" data-test-header>{{t "general.vocabularyTerms"}}</span>
           <span class="grid-item" data-test-header>{{t "general.meshTerms"}}</span>
-          <span class="actions grid-item" data-test-header>{{t "general.actions"}}</span>
+          {{#if @editable}}
+            <span class="actions grid-item" data-test-header>{{t "general.actions"}}</span>
+          {{/if}}
         </div>
         {{#if (and (isArray this.sessionObjectives) (isArray this.courseObjectives))}}
           {{#each this.sessionObjectives as |sessionObjective|}}
