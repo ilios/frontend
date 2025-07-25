@@ -14,6 +14,7 @@ import FaIcon from 'ilios-common/components/fa-icon';
 import t from 'ember-intl/helpers/t';
 import not from 'ember-truth-helpers/helpers/not';
 import formatDate from 'ember-intl/helpers/format-date';
+import Color from 'color';
 
 export default class WeeklyCalendarEventComponent extends Component {
   @service intl;
@@ -115,9 +116,13 @@ export default class WeeklyCalendarEventComponent extends Component {
     const { color } = this.args.event;
     const darkcolor = colorChange(color, -0.15);
 
+    const isLight = Color(color).isLight();
+    const textColor = isLight ? '--black' : '--white';
+
     return new htmlSafe(
       `background-color: ${color};
        border-left: .25rem solid ${darkcolor};
+       color: var(${textColor});
        grid-column-start: span ${this.span};
        grid-row-start: ${this.startMinuteRounded + 1};
        grid-row-end: span ${this.totalMinutesRounded};`,
