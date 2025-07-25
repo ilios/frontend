@@ -5,9 +5,9 @@
   z-index: 100;
 
   .content {
-    background: var(--slight-white);
+    background: var(--white);
     padding: 0.25rem 0.5rem;
-    border: 1px solid var(--davys-grey);
+    border: 1px solid var(--grey);
     border-radius: 4px;
     max-width: 80%;
 
@@ -22,8 +22,8 @@
     .arrow::before {
       content: "";
       transform: rotate(45deg);
-      background: var(--davys-grey);
-      border: 1px solid var(--davys-grey);
+      background: var(--grey);
+      border: 1px solid var(--grey);
     }
   }
   &[data-popper-placement^="top"] .arrow {

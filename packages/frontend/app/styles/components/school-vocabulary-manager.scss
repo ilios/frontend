@@ -32,7 +32,7 @@
 
   .terms {
     background-color: var(--white);
-    border: 1px solid var(--blue-munsell);
+    border: 1px solid var(--light-blue);
     height: 10rem;
     margin-bottom: 1rem;
     overflow-y: scroll;
@@ -40,7 +40,7 @@
     width: 80%;
 
     .saved-result {
-      border: 1px solid var(--fern-green);
+      border: 1px solid var(--green);
       display: flex;
       gap: 0.25rem;
       margin: 1rem;
@@ -51,7 +51,7 @@
       @include m.ilios-selectable-list;
 
       em {
-        color: var(--crimson);
+        color: var(--red);
       }
     }
   }

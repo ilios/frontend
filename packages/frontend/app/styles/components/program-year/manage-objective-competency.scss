@@ -10,7 +10,7 @@
     height: auto;
 
     .domain {
-      border-left: 10px solid var(--slight-white);
+      border-left: 10px solid var(--white);
 
       .domain-title {
         margin: 0.5rem 0 0 0.5rem;
@@ -20,7 +20,7 @@
         border-left: 10px solid var(--orange);
 
         .domain-title {
-          color: var(--fern-green);
+          color: var(--green);
           font-weight: bold;
         }
       }
@@ -41,7 +41,7 @@
   }
 
   .no-cohorts {
-    color: var(--gold);
+    color: var(--dark-yellow);
     font-weight: bold;
   }
 }

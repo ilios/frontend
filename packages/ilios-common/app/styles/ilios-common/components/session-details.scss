@@ -5,8 +5,8 @@
 }
 
 .session-details {
-  background-color: var(--light-blue);
-  border-color: var(--cultured-grey);
+  background-color: var(--lightest-blue);
+  border-color: var(--lightest-grey);
   border-style: solid;
   border-top: 0;
   border-width: 0 2px 2px;
@@ -14,7 +14,7 @@
   table {
     thead,
     th {
-      background-color: var(--teal-blue);
+      background-color: var(--blue);
       color: var(--white);
     }
   }

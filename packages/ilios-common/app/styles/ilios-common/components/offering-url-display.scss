@@ -7,7 +7,7 @@
     margin-left: 0.25em;
 
     &.copying {
-      color: var(--fern-green);
+      color: var(--green);
     }
   }
 }
@@ -19,7 +19,7 @@
     display: none;
   }
   .content {
-    background-color: var(--fern-green);
+    background-color: var(--green);
     color: var(--white);
   }
 }

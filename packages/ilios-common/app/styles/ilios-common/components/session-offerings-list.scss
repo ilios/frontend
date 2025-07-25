@@ -25,12 +25,12 @@
       }
 
       .offering-block-date-dayofmonth {
-        color: var(--davys-grey);
+        color: var(--grey);
       }
     }
 
     .offering-block-time {
-      border-bottom: 1px dotted var(--davys-grey);
+      border-bottom: 1px dotted var(--grey);
       display: grid;
       grid-column: 1 / -1;
       grid-template-columns: repeat(5, 1fr);
@@ -44,7 +44,7 @@
       .offering-block-time-time-starttime,
       .offering-block-time-time-ends,
       .offering-block-time-time-endtime {
-        color: var(--davys-grey);
+        color: var(--grey);
         display: block;
         font-weight: bold;
       }

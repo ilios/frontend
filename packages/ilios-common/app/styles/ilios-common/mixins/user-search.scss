@@ -6,10 +6,10 @@
 
 @mixin user-search-results() {
   background: var(--white);
-  border: 1px solid var(--slight-white);
+  border: 1px solid var(--white);
   border-radius: 3px;
-  box-shadow: 0 2px 2px hsl(from var(--black) h s l / 0.2);
-  color: var(--raisin-black);
+  box-shadow: 0 2px 2px var(--very-transparent-black);
+  color: var(--black);
   max-height: 23rem;
   overflow-y: scroll;
   position: absolute;
@@ -22,25 +22,25 @@
   }
 
   li {
-    border-bottom: 1px solid var(--cultured-grey);
-    color: var(--blue-munsell);
+    border-bottom: 1px solid var(--lightest-grey);
+    color: var(--light-blue);
     display: block;
     padding: 0.1rem;
     width: 100%;
 
     &.inactive {
-      color: hsl(from var(--cultured-grey) h s calc(l - 20));
+      color: var(--light-grey);
       font-style: italic;
     }
 
     &.summary {
-      color: var(--fern-green);
+      color: var(--green);
     }
 
     a,
     &.clickable {
       &:hover {
-        background-color: hsl(from var(--blue-munsell) h s calc(l + 50));
+        background-color: var(--lightest-blue);
       }
     }
 
@@ -59,7 +59,7 @@
     }
 
     .email {
-      color: var(--davys-grey);
+      color: var(--grey);
       font-style: italic;
     }
   }

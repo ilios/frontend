@@ -4,11 +4,10 @@
 @use "sass:math";
 
 .progress-bar {
-  background-color: hsl(from var(--slight-white) h s calc(l - 5));
-  border: 1px solid var(--cultured-grey);
+  background-color: var(--super-light-grey);
+  border: 1px solid var(--lightest-grey);
   border-radius: 3px;
-  box-shadow: inset 0 0 3px 0
-    hsl(from var(--slight-white) h s calc(l - 55) / 0.15);
+  box-shadow: inset 0 0 3px 0 var(--very-transparent-black);
   margin: 0 auto;
   width: 100%;
 
@@ -16,7 +15,7 @@
     background-color: var(--orange);
     background-repeat: repeat-x;
     background-size: 40px 40px;
-    border: 1px solid hsl(from var(--orange) h s calc(l - 15));
+    border: 1px solid var(--dark-orange);
     border-radius: math.div(3px, 1.5);
     border-bottom-right-radius: 0;
     border-top-right-radius: 0;

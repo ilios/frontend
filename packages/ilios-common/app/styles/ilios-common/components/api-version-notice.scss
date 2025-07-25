@@ -2,7 +2,7 @@
 @use "../mixins" as m;
 
 .api-version-notice {
-  @include m.critical-notice(var(--gold), var(--raisin-black), 1rem);
+  @include m.critical-notice(var(--dark-yellow), var(--black), 1rem);
 
   display: none;
   padding: 0.25rem 1rem;
@@ -13,7 +13,7 @@
 
   .details {
     button {
-      background-color: var(--raisin-black);
+      background-color: var(--black);
       border: 0;
       color: var(--white);
       display: inline-block;

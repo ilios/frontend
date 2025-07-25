@@ -36,19 +36,19 @@
   }
 
   .alert-success {
-    @include flash(var(--fern-green));
+    @include flash(var(--green));
   }
 
   .alert-warning {
-    @include flash(var(--gold));
+    @include flash(var(--dark-yellow));
   }
 
   .alert-info {
-    @include flash(var(--blue-munsell));
+    @include flash(var(--light-blue));
   }
 
   .alert-alert {
-    @include flash(var(--crimson));
+    @include flash(var(--red));
   }
 
   .alert:last-of-type {

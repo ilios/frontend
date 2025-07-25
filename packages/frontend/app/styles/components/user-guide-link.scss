@@ -3,8 +3,6 @@
 
 @use "sass:color";
 
-$header-menu-background-color: hsl(from var(--slight-white) h s calc(l - 3));
-
 .user-guide-link {
   margin-right: 0.85rem;
 
@@ -14,10 +12,10 @@ $header-menu-background-color: hsl(from var(--slight-white) h s calc(l - 3));
 
   a {
     @include cm.ilios-link-button;
-    background-color: $header-menu-background-color;
-    border: 1px solid $header-menu-background-color;
+    background-color: var(--super-light-grey);
+    border: 1px solid var(--super-light-grey);
     border-radius: 0.2rem;
-    color: var(--raisin-black);
+    color: var(--black);
     @include cm.font-size("small");
     font-weight: normal;
     margin-left: 0.8rem;

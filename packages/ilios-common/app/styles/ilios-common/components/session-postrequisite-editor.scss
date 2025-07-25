@@ -12,7 +12,7 @@
       margin: 0;
       position: relative;
       th {
-        background-color: var(--teal-blue);
+        background-color: var(--blue);
         color: var(--white);
         position: sticky;
         top: 0;
@@ -24,11 +24,11 @@
 
       tbody tr {
         &.active {
-          background-color: var(--fern-green);
+          background-color: var(--green);
           color: var(--white);
         }
         &:hover {
-          outline: 1px solid var(--fern-green);
+          outline: 1px solid var(--green);
         }
 
         button {
@@ -41,7 +41,7 @@
   }
   button.remove {
     @include m.ilios-link-button;
-    color: var(--crimson);
+    color: var(--red);
   }
   .info {
     display: flex;

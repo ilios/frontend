@@ -2,8 +2,8 @@
 
 @mixin loading-box() {
   animation: fadein;
-  background-color: var(--cultured-grey);
-  border: 1px dotted var(--davys-grey);
+  background-color: var(--lightest-grey);
+  border: 1px dotted var(--grey);
   transition: opacity 2s ease-out;
 
   @keyframes fadein {

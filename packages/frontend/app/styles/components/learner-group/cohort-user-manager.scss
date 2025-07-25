@@ -2,7 +2,7 @@
 @use "../../ilios-common/mixins" as m;
 
 .learner-group-cohort-user-manager {
-  @include m.detail-container(var(--teal-blue));
+  @include m.detail-container(var(--blue));
   border-bottom: 0;
   border-top: 1px dotted var(--orange);
   padding-left: 0;

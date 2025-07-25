@@ -5,7 +5,7 @@
   @include m.main-section;
 
   $collapse-control-shadow-grey: #e2e2e2;
-  $collapse-control-shadow-black: hsl(from var(--black) h s l / 0.34);
+  $collapse-control-shadow-black: var(--very-transparent-black);
 
   .detail-collapsed-control {
     display: flex;
@@ -14,7 +14,7 @@
 
     button {
       @include m.ilios-button-reset;
-      background-color: var(--teal-blue);
+      background-color: var(--blue);
       border-bottom-left-radius: 5px;
       border-bottom-right-radius: 5px;
       box-shadow:

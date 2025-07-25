@@ -2,13 +2,13 @@
 
 .click-choice-buttons {
   button {
-    background-color: var(--cultured-grey);
-    border: 1px outset var(--davys-grey);
-    color: var(--raisin-black);
+    background-color: var(--lightest-grey);
+    border: 1px outset var(--grey);
+    color: var(--black);
 
     &.active {
-      background-color: var(--teal-blue);
-      border: 1px inset var(--teal-blue);
+      background-color: var(--blue);
+      border: 1px inset var(--blue);
       color: var(--white);
     }
   }
