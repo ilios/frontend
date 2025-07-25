@@ -268,7 +268,7 @@ module('Integration | Service | Current User', function (hooks) {
     assert.notOk(isTeachingSession2);
   });
 
-  todo('requireNonLearner', function (assert) {
-    assert.ok(true, 'to be implemented');
+  todo('requireNonLearner', function (/* assert */) {
+    // TODO: implement.
   });
 });
