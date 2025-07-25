@@ -51,18 +51,14 @@ module('Integration | Component | program-year/course-associations', function (h
     assert.notOk(component.content.isHidden);
     assert.strictEqual(component.header.title, 'Associated Courses (3)');
 
-    assert.strictEqual(component.content.headers.school.text, 'School');
     assert.strictEqual(component.content.headers.course.text, 'Course');
 
     assert.strictEqual(component.content.associations.length, 3);
-    assert.strictEqual(component.content.associations[0].school, 'school 0');
-    assert.strictEqual(component.content.associations[0].course.text, 'course 0 (2025)');
+    assert.strictEqual(component.content.associations[0].course.text, 'school 0 | course 0 (2025)');
     assert.strictEqual(component.content.associations[0].course.link, '/courses/1');
-    assert.strictEqual(component.content.associations[1].school, 'school 0');
-    assert.strictEqual(component.content.associations[1].course.text, 'course 1 (2025)');
+    assert.strictEqual(component.content.associations[1].course.text, 'school 0 | course 1 (2025)');
     assert.strictEqual(component.content.associations[1].course.link, '/courses/2');
-    assert.strictEqual(component.content.associations[2].school, 'school 1');
-    assert.strictEqual(component.content.associations[2].course.text, 'course 2 (2025)');
+    assert.strictEqual(component.content.associations[2].course.text, 'school 1 | course 2 (2025)');
     assert.strictEqual(component.content.associations[2].course.link, '/courses/3');
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
@@ -146,52 +142,19 @@ module('Integration | Component | program-year/course-associations', function (h
     );
 
     assert.strictEqual(component.content.associations.length, 2);
-    assert.ok(component.content.headers.school.isSortedAscending);
-    assert.ok(component.content.headers.course.isNotSorted);
-    assert.strictEqual(component.content.associations[0].school, 'school 0');
-    assert.strictEqual(component.content.associations[0].course.text, 'course 0 (2025)');
-    assert.strictEqual(component.content.associations[1].school, 'school 1');
-    assert.strictEqual(component.content.associations[1].course.text, 'course 1 (2025)');
-
-    await component.content.headers.school.sort();
-    assert.ok(component.content.headers.school.isSortedDescending);
-    assert.ok(component.content.headers.course.isNotSorted);
-    assert.strictEqual(component.content.associations[0].school, 'school 1');
-    assert.strictEqual(component.content.associations[0].course.text, 'course 1 (2025)');
-    assert.strictEqual(component.content.associations[1].school, 'school 0');
-    assert.strictEqual(component.content.associations[1].course.text, 'course 0 (2025)');
-
-    await component.content.headers.school.sort();
-    assert.ok(component.content.headers.school.isSortedAscending);
-    assert.ok(component.content.headers.course.isNotSorted);
-    assert.strictEqual(component.content.associations[0].school, 'school 0');
-    assert.strictEqual(component.content.associations[0].course.text, 'course 0 (2025)');
-    assert.strictEqual(component.content.associations[1].school, 'school 1');
-    assert.strictEqual(component.content.associations[1].course.text, 'course 1 (2025)');
-
-    await component.content.headers.course.sort();
-    assert.ok(component.content.headers.school.isNotSorted);
     assert.ok(component.content.headers.course.isSortedAscending);
-    assert.strictEqual(component.content.associations[0].school, 'school 0');
-    assert.strictEqual(component.content.associations[0].course.text, 'course 0 (2025)');
-    assert.strictEqual(component.content.associations[1].school, 'school 1');
-    assert.strictEqual(component.content.associations[1].course.text, 'course 1 (2025)');
+    assert.strictEqual(component.content.associations[0].course.text, 'school 0 | course 0 (2025)');
+    assert.strictEqual(component.content.associations[1].course.text, 'school 1 | course 1 (2025)');
 
     await component.content.headers.course.sort();
-    assert.ok(component.content.headers.school.isNotSorted);
     assert.ok(component.content.headers.course.isSortedDescending);
-    assert.strictEqual(component.content.associations[0].school, 'school 1');
-    assert.strictEqual(component.content.associations[0].course.text, 'course 1 (2025)');
-    assert.strictEqual(component.content.associations[1].school, 'school 0');
-    assert.strictEqual(component.content.associations[1].course.text, 'course 0 (2025)');
+    assert.strictEqual(component.content.associations[0].course.text, 'school 1 | course 1 (2025)');
+    assert.strictEqual(component.content.associations[1].course.text, 'school 0 | course 0 (2025)');
 
     await component.content.headers.course.sort();
-    assert.ok(component.content.headers.school.isNotSorted);
     assert.ok(component.content.headers.course.isSortedAscending);
-    assert.strictEqual(component.content.associations[0].school, 'school 0');
-    assert.strictEqual(component.content.associations[0].course.text, 'course 0 (2025)');
-    assert.strictEqual(component.content.associations[1].school, 'school 1');
-    assert.strictEqual(component.content.associations[1].course.text, 'course 1 (2025)');
+    assert.strictEqual(component.content.associations[0].course.text, 'school 0 | course 0 (2025)');
+    assert.strictEqual(component.content.associations[1].course.text, 'school 1 | course 1 (2025)');
   });
 
   test('crossing academic year boundaries is correctly reflected', async function (assert) {
@@ -224,7 +187,10 @@ module('Integration | Component | program-year/course-associations', function (h
     );
 
     assert.strictEqual(component.content.associations.length, 1);
-    assert.strictEqual(component.content.associations[0].course.text, 'course 0 (2025 - 2026)');
+    assert.strictEqual(
+      component.content.associations[0].course.text,
+      'school 0 | course 0 (2025 - 2026)',
+    );
   });
 
   test('collapse action fires', async function (assert) {

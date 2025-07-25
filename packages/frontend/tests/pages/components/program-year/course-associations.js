@@ -28,15 +28,8 @@ const definition = {
     isHidden: hasClass('hidden'),
     headers: {
       scope: '[data-test-associations] thead tr:nth-of-type(1)',
-      school: {
-        scope: 'th:nth-of-type(1)',
-        isSortedAscending: hasClass('fa-arrow-down-a-z', 'svg'),
-        isSortedDescending: hasClass('fa-arrow-down-z-a', 'svg'),
-        isNotSorted: hasClass('fa-sort', 'svg'),
-        sort: clickable('button'),
-      },
       course: {
-        scope: 'th:nth-of-type(2)',
+        scope: 'th:nth-of-type(1)',
         isSortedAscending: hasClass('fa-arrow-down-a-z', 'svg'),
         isSortedDescending: hasClass('fa-arrow-down-z-a', 'svg'),
         isNotSorted: hasClass('fa-sort', 'svg'),
@@ -44,9 +37,8 @@ const definition = {
       },
     },
     associations: collection('[data-test-associations] tbody tr', {
-      school: text('td:nth-of-type(1)'),
       course: {
-        scope: 'td:nth-of-type(2)',
+        scope: 'td:nth-of-type(1)',
         link: attribute('href', 'a'),
       },
     }),
