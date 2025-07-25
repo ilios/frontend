@@ -59,6 +59,7 @@
     }
 
     button {
+      &.collapse-text-button,
       &.expand-text-button {
         display: none;
       }
