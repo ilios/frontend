@@ -51,6 +51,7 @@ general:
   cohortsManageTitle: Manager des Cohortes
   collapse: réduire
   collapseDetail: Masquer Détails
+  collapseTitle: "Masquer {title}"
   competencies: Compétences
   competency: Compétence
   complete: Accompli
@@ -130,6 +131,7 @@ general:
   eventNotFoundTitle: Evénement introuvable
   eventNotFoundExplanation: "L'événement que vous avez essayé d'atteindre n'est plus disponible ou vous avez suivi un lien utilisateur personnalisé qui n'est pas partageable. Si vous continuez à rencontrer des problèmes, veuillez contacter votre service d'assistance Ilios."
   expandDetail: Afficher Détails
+  expandTitle: "Afficher {title}"
   externalId: ID de Cours
   file: Fichier
   file-audio: Fichier audio
