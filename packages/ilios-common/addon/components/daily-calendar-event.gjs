@@ -1,6 +1,5 @@
 import Component from '@glimmer/component';
 import { DateTime } from 'luxon';
-import colorChange from 'ilios-common/utils/color-change';
 import { htmlSafe } from '@ember/template';
 import calendarEventTooltip from 'ilios-common/utils/calendar-event-tooltip';
 import { service } from '@ember/service';
@@ -104,7 +103,7 @@ export default class DailyCalendarEventComponent extends Component {
 
   get style() {
     const { color } = this.args.event;
-    const darkcolor = colorChange(color, -0.15);
+    const darkcolor = `hsl(from ${color} h s calc(l - 15));`;
 
     return new htmlSafe(
       `background-color: ${color};
