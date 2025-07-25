@@ -54,11 +54,12 @@
     .display-text-wrapper {
       &.faded {
         max-height: none;
-        overflow: auto;
+        overflow: visible;
       }
     }
 
     button {
+      &.collapse-text-button,
       &.expand-text-button {
         display: none;
       }
