@@ -15,7 +15,7 @@
     background-color: var(--orange);
     background-repeat: repeat-x;
     background-size: 40px 40px;
-    border: 1px solid hsl(from var(--orange) h s calc(l - 15));
+    border: 1px solid var(--dark-orange);
     border-radius: math.div(3px, 1.5);
     border-bottom-right-radius: 0;
     border-top-right-radius: 0;
