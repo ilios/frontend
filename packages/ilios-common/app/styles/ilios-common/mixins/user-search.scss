@@ -29,7 +29,7 @@
     width: 100%;
 
     &.inactive {
-      color: hsl(from var(--lightest-grey) h s calc(l - 20));
+      color: var(--light-grey);
       font-style: italic;
     }
 
