@@ -93,7 +93,6 @@ module('Integration | Component | learner-group/course-associations', function (
     assert.strictEqual(component.content.associations[2].sessions.length, 1);
     assert.strictEqual(component.content.associations[2].sessions[0].text, 'session 3');
     assert.strictEqual(component.content.associations[2].sessions[0].link, '/courses/3/sessions/4');
-    assert.notOk(component.content.noAssociations.isPresent);
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
   });

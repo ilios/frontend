@@ -48,9 +48,6 @@ const definition = {
         link: attribute('href', 'a'),
       }),
     }),
-    noAssociations: {
-      scope: '[data-test-no-associations]',
-    },
   },
 };
 
