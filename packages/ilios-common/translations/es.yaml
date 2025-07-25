@@ -51,6 +51,7 @@ general:
   cohortsManageTitle: Administrar Clases de La Graduación
   collapse: colapsar
   collapseDetail: Esconder Detalles
+  collapseTitle: "Escconder {title}"
   competencies: Competencias
   competency: Competencia
   complete: Completo
@@ -130,6 +131,7 @@ general:
   eventNotFoundExplanation: "El evento al que ha intentado acceder ya no está disponible o ha seguido un enlace de usuario personalizado que no se puede compartir. Si sigue teniendo problemas, póngase en contacto con el servicio de asistencia de Ilios."
   expand: Expandir
   expandDetail: Enseñar Detalles
+  expandTitle: "Enseñar {title}"
   externalId: Identificación del Curso
   file: Archivo
   file-audio: Archivo de audio
