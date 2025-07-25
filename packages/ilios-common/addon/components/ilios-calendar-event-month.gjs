@@ -4,7 +4,6 @@ import { action } from '@ember/object';
 import { htmlSafe } from '@ember/template';
 import { DateTime } from 'luxon';
 import { guidFor } from '@ember/object/internals';
-import colorChange from 'ilios-common/utils/color-change';
 import calendarEventTooltip from 'ilios-common/utils/calendar-event-tooltip';
 import { on } from '@ember/modifier';
 import noop from 'ilios-common/helpers/noop';
@@ -44,7 +43,7 @@ export default class IliosCalendarEventMonthComponent extends Component {
 
   get style() {
     const { color } = this.args.event;
-    const darkcolor = colorChange(color, -0.15);
+    const darkcolor = `hsl(from ${color} h s calc(l - 15));`;
 
     return new htmlSafe(
       `background-color: ${color};
