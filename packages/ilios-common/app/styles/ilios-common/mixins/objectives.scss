@@ -69,6 +69,10 @@
     grid-template-columns: 5fr 3fr 3fr 3fr 1fr;
     grid-template-rows: auto;
 
+    &.no-actions {
+      grid-template-columns: 5fr 3fr 3fr 3fr;
+    }
+
     .grid-item {
       border-bottom: 1px solid var(--davys-grey);
       padding: 0.5em 0.25em;

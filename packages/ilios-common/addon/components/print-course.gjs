@@ -312,7 +312,7 @@ export default class PrintCourseComponent extends Component {
         </div>
       </section>
       {{#each (sortBy "title" this.sessions) as |session|}}
-        <PrintCourseSession @session={{session}} />
+        <PrintCourseSession @session={{session}} @editable={{false}} />
       {{/each}}
     </section>
   </template>
