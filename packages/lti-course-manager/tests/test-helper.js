@@ -1,3 +1,5 @@
+import '@warp-drive/ember/install'; // must be first in this file
+
 import Application from 'lti-course-manager/app';
 import config from 'lti-course-manager/config/environment';
 import * as QUnit from 'qunit';
