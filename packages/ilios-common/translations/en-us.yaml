@@ -91,7 +91,7 @@ general:
   courseVisualizations: Course Visualizations
   courseVisualizationsNoSessions: "This course has no sessions."
   courseVisualizationsNoSessionVocabularyTerms: No vocabularies have been linked to any sessions in this course.
-  courseVisualizationsInstructorNoData: "{instructor} is not instructing any sessions in this this course."
+  courseVisualizationsInstructorNoData: "{instructor} is not instructing any sessions in this course."
   courseVisualizationsInstructorsGraphNoData: No instructors have been linked to any sessions in this course.
   courseVisualizationsSessionTypeGraphNoData: "No vocabulary terms have been linked to any {sessionType} sessions in this course."
   courseVisualizationsTermGraphNoData: "The vocabulary term {term} has not been linked to any sessions in this course."
