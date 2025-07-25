@@ -1,4 +1,4 @@
-import { module, test } from 'qunit';
+import { module, test, todo } from 'qunit';
 import { setupTest } from 'ember-qunit';
 import { setupMirage } from 'test-app/tests/test-support/mirage';
 import { authenticateSession, invalidateSession } from 'ember-simple-auth/test-support';
@@ -266,5 +266,9 @@ module('Integration | Service | Current User', function (hooks) {
     const isTeachingSession2 = await subject.isTeachingSession(sessionModel2);
     assert.ok(isTeachingSession1);
     assert.notOk(isTeachingSession2);
+  });
+
+  todo('requireNonLearner', function (assert) {
+    assert.ok(true, 'to be implemented');
   });
 });
