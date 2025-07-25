@@ -245,7 +245,7 @@ module('Integration | Component | course/visualize-instructor-term-graph', funct
     assert.notOk(component.dataTable.isVisible);
     assert.strictEqual(
       component.noData.text,
-      '0 guy M. Mc0son is not instructing any sessions in this this course.',
+      '0 guy M. Mc0son is not instructing any sessions in this course.',
     );
   });
 
