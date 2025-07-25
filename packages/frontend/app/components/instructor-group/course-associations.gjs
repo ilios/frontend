@@ -18,7 +18,7 @@ import { mapBy, uniqueValues } from 'ilios-common/utils/array-helpers';
 export default class InstructorGroupCourseAssociationsComponent extends Component {
   @service iliosConfig;
   @service intl;
-  @tracked sortBy = 'school';
+  @tracked sortBy = 'course';
 
   crossesBoundaryConfig = new TrackedAsyncData(
     this.iliosConfig.itemFromConfig('academicYearCrossesCalendarYearBoundaries'),
@@ -45,10 +45,6 @@ export default class InstructorGroupCourseAssociationsComponent extends Componen
   sortAssociations(a, b) {
     const locale = this.intl.get('primaryLocale');
     switch (this.sortBy) {
-      case 'school':
-        return a.school.title.localeCompare(b.school.title, locale);
-      case 'school:desc':
-        return b.school.title.localeCompare(a.school.title, locale);
       case 'course':
         return a.course.title.localeCompare(b.course.title, locale);
       case 'course:desc':
@@ -86,17 +82,15 @@ export default class InstructorGroupCourseAssociationsComponent extends Componen
     const sessionsWithCourseAndSchool = await Promise.all(
       uniqueSessions.map(async (session) => {
         const course = await session.course;
-        const school = await course.school;
-        return { session, course, school };
+        return { session, course };
       }),
     );
     // group these sessions by their owning courses
     const map = new Map();
-    sessionsWithCourseAndSchool.forEach(({ session, course, school }) => {
+    sessionsWithCourseAndSchool.forEach(({ session, course }) => {
       if (!map.has(course.id)) {
         map.set(course.id, {
           course,
-          school,
           sessions: [],
         });
       }
@@ -172,27 +166,18 @@ export default class InstructorGroupCourseAssociationsComponent extends Componen
                   <tr>
                     <SortableTh
                       @sortedAscending={{this.sortedAscending}}
-                      @onClick={{fn this.setSortBy "school"}}
-                      @sortedBy={{or (eq this.sortBy "school") (eq this.sortBy "school:desc")}}
-                    >
-                      {{t "general.school"}}
-                    </SortableTh>
-                    <SortableTh
-                      colspan="3"
-                      @sortedAscending={{this.sortedAscending}}
                       @onClick={{fn this.setSortBy "course"}}
                       @sortedBy={{or (eq this.sortBy "course") (eq this.sortBy "course:desc")}}
                     >
                       {{t "general.course"}}
                     </SortableTh>
-                    <th colspan="3">{{t "general.sessions"}}</th>
+                    <th colspan="2">{{t "general.sessions"}}</th>
                   </tr>
                 </thead>
                 <tbody>
                   {{#each (sortBy this.sortAssociations this.associations) as |association|}}
                     <tr>
-                      <td>{{association.school.title}}</td>
-                      <td colspan="3">
+                      <td>
                         <LinkTo @route="course" @model={{association.course}}>
                           {{association.course.title}}
                           {{#if this.academicYearCrossesCalendarYearBoundaries}}
@@ -204,7 +189,7 @@ export default class InstructorGroupCourseAssociationsComponent extends Componen
                           {{/if}}
                         </LinkTo>
                       </td>
-                      <td colspan="3">
+                      <td colspan="2">
                         <ul class="sessions-list">
                           {{#each association.sessions as |session|}}
                             <li data-test-session>
