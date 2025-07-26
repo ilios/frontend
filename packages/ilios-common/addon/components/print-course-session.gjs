@@ -229,7 +229,7 @@ export default class PrintCourseSessionComponent extends Component {
           </div>
         </div>
       </section>
-      <section class="block">
+      <section class="block" data-test-session-mesh-terms>
         <div class="title">
           {{t "general.mesh"}}
           ({{this.meshDescriptors.length}})
@@ -280,7 +280,7 @@ export default class PrintCourseSessionComponent extends Component {
           </div>
         </section>
       {{/if}}
-      <section class="block">
+      <section class="block" data-test-session-offerings>
         <div class="title">
           {{t "general.offerings"}}
           ({{this.offerings.length}})
