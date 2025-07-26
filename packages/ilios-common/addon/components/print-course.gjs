@@ -7,6 +7,7 @@ import add from 'ember-math-helpers/helpers/add';
 import PublicationStatus from 'ilios-common/components/publication-status';
 import t from 'ember-intl/helpers/t';
 import formatDate from 'ember-intl/helpers/format-date';
+import { sortBy as sortArrayBy } from 'ilios-common/utils/array-helpers';
 import sortBy from 'ilios-common/helpers/sort-by';
 import DetailTermsList from 'ilios-common/components/detail-terms-list';
 import ObjectiveList from 'ilios-common/components/course/objective-list';
@@ -63,7 +64,11 @@ export default class PrintCourseComponent extends Component {
   }
 
   get directors() {
-    return this.directorsData.isResolved ? this.directorsData.value : [];
+    return this.directorsData.isResolved
+      ? sortArrayBy(this.directorsData.value, 'fullName')
+          .map((director) => director.fullName)
+          .join(', ')
+      : '';
   }
 
   get courseLearningMaterialsRelationship() {
@@ -168,13 +173,11 @@ export default class PrintCourseComponent extends Component {
             <label>
               {{t "general.directors"}}:
             </label>
-            <div>
-              <span>
-                {{#each (sortBy "fullName" this.directors) as |user|}}
-                  {{user.fullName}},
-                {{/each}}
-              </span>
-            </div>
+            {{#if this.directorsData.isResolved}}
+              <div>
+                <span>{{this.directors}}</span>
+              </div>
+            {{/if}}
           </div>
         </div>
       </section>
