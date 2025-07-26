@@ -143,6 +143,29 @@
           background-color: hsl(from var(--blue) h s calc(l + 40));
         }
 
+        //Support for Safari < 18.x
+        @supports (color: hsl(from orange h s calc(l + 15%))) {
+          .tag-session-type {
+            background-color: hsl(from var(--blue) h s calc(l + 30%));
+          }
+
+          .tag-course-level {
+            background-color: hsl(from var(--blue) h s calc(l + 40%));
+          }
+
+          .tag-cohort {
+            background-color: hsl(from var(--blue) h s calc(l + 50%));
+          }
+
+          .tag-course {
+            background-color: hsl(from var(--blue) h s calc(l + 60%));
+          }
+
+          .tag-term {
+            background-color: hsl(from var(--blue) h s calc(l + 40%));
+          }
+        }
+
         .filters-clear-filters {
           @include m.ilios-button-reset;
           @include m.font-size("small");
