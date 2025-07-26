@@ -8,6 +8,7 @@ import PublicationStatus from 'ilios-common/components/publication-status';
 import t from 'ember-intl/helpers/t';
 import formatDate from 'ember-intl/helpers/format-date';
 import { sortBy as sortArrayBy } from 'ilios-common/utils/array-helpers';
+import and from 'ember-truth-helpers/helpers/and';
 import sortBy from 'ilios-common/helpers/sort-by';
 import DetailTermsList from 'ilios-common/components/detail-terms-list';
 import ObjectiveList from 'ilios-common/components/course/objective-list';
@@ -173,7 +174,7 @@ export default class PrintCourseComponent extends Component {
             <label>
               {{t "general.directors"}}:
             </label>
-            {{#if this.directorsData.isResolved}}
+            {{#if (and this.directorsData.isResolved this.directorsData.value.length)}}
               <div>
                 <span>{{this.directors}}</span>
               </div>
