@@ -16,12 +16,7 @@ export default class ReportsCurriculumRoute extends Route {
   };
 
   beforeModel(transition) {
-    this.session.requireAuthentication(transition, 'login');
-    if (!this.currentUser.performsNonLearnerFunction) {
-      // Slash on the route name is necessary here due to this bug:
-      // https://github.com/emberjs/ember.js/issues/12945
-      this.router.replaceWith('/four-oh-four');
-    }
+    this.currentUser.requireNonLearner(transition);
   }
 
   async model() {

@@ -7,9 +7,6 @@ export default class CoursePublicationCheckRoute extends Route {
   @service router;
 
   beforeModel(transition) {
-    this.session.requireAuthentication(transition, 'login');
-    if (!this.currentUser.performsNonLearnerFunction) {
-      this.router.replaceWith('/four-oh-four');
-    }
+    this.currentUser.requireNonLearner(transition);
   }
 }

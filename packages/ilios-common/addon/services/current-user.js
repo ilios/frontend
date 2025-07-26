@@ -8,6 +8,8 @@ import { uniqueValues } from 'ilios-common/utils/array-helpers';
 export default class CurrentUserService extends Service {
   @service store;
   @service session;
+  @service router;
+
   _userPromise = null;
 
   get currentUserId() {
@@ -450,5 +452,29 @@ export default class CurrentUserService extends Service {
         ...learnerGroupsOfferingsSessions,
       ].filter(Boolean),
     );
+  }
+
+  /**
+   * Utility method for checking that the current user is properly authenticated and authorized.
+   * Re-route the user to the login screen if unauthenticated, or to the 404/Not-found page if unauthorized.
+   * Invoke this method in `beforeModel()` hooks of our administration routes.
+   * @param {object} transition See https://api.emberjs.com/ember/release/classes/transition/.
+   * @return {boolean} TRUE if authentication and authorization checks passed successfully, FALSE otherwise.
+   */
+  requireNonLearner(transition) {
+    // Authentication check.
+    if (!this.session.requireAuthentication(transition, 'login')) {
+      return false;
+    }
+
+    // Authorization check.
+    if (!this.performsNonLearnerFunction) {
+      // Slash on the route name is necessary here due to this bug:
+      // https://github.com/emberjs/ember.js/issues/12945
+      this.router.replaceWith('/four-oh-four');
+      return false;
+    }
+
+    return true;
   }
 }
