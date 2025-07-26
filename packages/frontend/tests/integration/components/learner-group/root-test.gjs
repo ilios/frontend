@@ -220,20 +220,18 @@ module('Integration | Component | learner-group/root', function (hooks) {
     assert.ok(component.courseAssociations.header.toggle.isExpanded);
     assert.notOk(component.courseAssociations.content.isHidden);
     assert.strictEqual(component.courseAssociations.content.associations.length, 2);
-    assert.strictEqual(component.courseAssociations.content.associations[0].school, 'school 0');
     assert.strictEqual(
       component.courseAssociations.content.associations[0].course.text,
-      'course 0 (2013)',
+      'school 0 | course 0 (2013)',
     );
     assert.strictEqual(component.courseAssociations.content.associations[0].sessions.length, 1);
     assert.strictEqual(
       component.courseAssociations.content.associations[0].sessions[0].text,
       'session 0',
     );
-    assert.strictEqual(component.courseAssociations.content.associations[1].school, 'school 0');
     assert.strictEqual(
       component.courseAssociations.content.associations[1].course.text,
-      'course 1 (2013)',
+      'school 0 | course 1 (2013)',
     );
     assert.strictEqual(component.courseAssociations.content.associations[1].sessions.length, 1);
     assert.strictEqual(
