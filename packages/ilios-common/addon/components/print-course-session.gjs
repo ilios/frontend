@@ -235,13 +235,15 @@ export default class PrintCourseSessionComponent extends Component {
           ({{this.meshDescriptors.length}})
         </div>
         <div class="content">
-          <ul class="inline-list">
-            {{#each (sortBy "title" this.meshDescriptors) as |descriptor|}}
-              <li>
-                {{descriptor.name}}
-              </li>
-            {{/each}}
-          </ul>
+          {{#if this.meshDescriptors.length}}
+            <ul class="inline-list">
+              {{#each (sortBy "title" this.meshDescriptors) as |descriptor|}}
+                <li>
+                  {{descriptor.name}}
+                </li>
+              {{/each}}
+            </ul>
+          {{/if}}
         </div>
       </section>
       {{#if @session.isIndependentLearning}}
