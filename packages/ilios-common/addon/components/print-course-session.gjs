@@ -331,13 +331,15 @@ export default class PrintCourseSessionComponent extends Component {
                       {{offering.room}}
                     </td>
                     <td class="text-left offering-instructors">
-                      <ul>
-                        {{#each offering.allInstructors as |user|}}
-                          <li>
-                            {{user.fullName}}
-                          </li>
-                        {{/each}}
-                      </ul>
+                      {{#if offering.allInstructors.length}}
+                        <ul>
+                          {{#each offering.allInstructors as |user|}}
+                            <li>
+                              {{user.fullName}}
+                            </li>
+                          {{/each}}
+                        </ul>
+                      {{/if}}
                     </td>
                   </tr>
                 {{/each}}
