@@ -76,7 +76,7 @@ export default class CourseRolloverComponent extends Component {
   get year() {
     return this.isYearSet
       ? this.selectedYear
-      : this.years.find((year) => !this.unavailableYears.includes(year)) ?? this.years[0];
+      : (this.years.find((year) => !this.unavailableYears.includes(year)) ?? this.years[0]);
   }
 
   @cached
