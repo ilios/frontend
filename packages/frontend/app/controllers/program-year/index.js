@@ -10,6 +10,7 @@ export default class ProgramYearIndexController extends Controller {
     'pyLeadershipDetails',
     'managePyCompetencies',
     'managePyLeadership',
+    'showCourseAssociations',
   ];
 
   @tracked canUpdate = false;
@@ -19,6 +20,7 @@ export default class ProgramYearIndexController extends Controller {
   @tracked pyLeadershipDetails = false;
   @tracked managePyCompetencies = false;
   @tracked managePyLeadership = false;
+  @tracked showCourseAssociations = false;
 
   @cached
   get programData() {
