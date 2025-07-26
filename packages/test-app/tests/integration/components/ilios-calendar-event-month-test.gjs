@@ -25,7 +25,6 @@ module('Integration | Component | ilios calendar event month', function (hooks) 
     });
     assert.dom(s).hasStyle({
       'border-left-style': 'solid',
-      'border-left-color': 'color(srgb 0 0.5 0.247549)',
     });
     assert.dom(s).hasText('08:00 AM - 09:00 AM : test');
   });

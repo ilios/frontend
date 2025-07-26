@@ -41,9 +41,23 @@ export default class IliosCalendarEventMonthComponent extends Component {
     return calendarEventTooltip(this.args.event, this.intl, 'h:mma');
   }
 
+  get needsOlderSyntax() {
+    const ua = navigator.userAgent;
+    const isSafari = ua.includes('Safari');
+
+    if (!isSafari) {
+      return false;
+    }
+
+    const versionMatch = ua.match(/Version\/(\d+)\./);
+    return Number(versionMatch[1]) < 18;
+  }
+
   get style() {
     const { color } = this.args.event;
-    const darkcolor = `hsl(from ${color} h s calc(l - 15));`;
+    const darkcolor = this.needsOlderSyntax
+      ? `hsl(from ${color} h s calc(l - 15%));`
+      : `hsl(from ${color} h s calc(l - 15));`;
 
     return new htmlSafe(
       `background-color: ${color};
