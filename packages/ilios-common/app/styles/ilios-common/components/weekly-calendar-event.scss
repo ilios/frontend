@@ -8,7 +8,6 @@
   display: flex;
   flex-direction: column;
   justify-content: start;
-  color: var(--raisin-black);
   @include m.font-size("small");
   border: 1px solid var(--white);
   margin: 1px;
@@ -22,7 +21,6 @@
   }
 
   .ilios-calendar-event-time {
-    color: var(--rosewood);
     display: block;
     @include m.font-size("small");
     font-weight: bold;
