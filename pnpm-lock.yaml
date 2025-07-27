@@ -251,7 +251,7 @@ importers:
         version: 12.7.0(@babel/core@7.28.0)(eslint@9.32.0)
       eslint-plugin-n:
         specifier: ^17.19.0
-        version: 17.21.0(eslint@9.32.0)(typescript@5.8.3)
+        version: 17.21.2(eslint@9.32.0)(typescript@5.8.3)
       eslint-plugin-qunit:
         specifier: ^8.1.2
         version: 8.2.4(eslint@9.32.0)
@@ -591,7 +591,7 @@ importers:
         version: 12.7.0(@babel/core@7.28.0)(eslint@9.32.0)
       eslint-plugin-n:
         specifier: ^17.19.0
-        version: 17.21.0(eslint@9.32.0)(typescript@5.8.3)
+        version: 17.21.2(eslint@9.32.0)(typescript@5.8.3)
       eslint-plugin-qunit:
         specifier: ^8.1.2
         version: 8.2.4(eslint@9.32.0)
@@ -804,7 +804,7 @@ importers:
         version: 12.7.0(@babel/core@7.28.0)(eslint@9.32.0)
       eslint-plugin-n:
         specifier: ^17.19.0
-        version: 17.21.0(eslint@9.32.0)(typescript@5.8.3)
+        version: 17.21.2(eslint@9.32.0)(typescript@5.8.3)
       eslint-plugin-qunit:
         specifier: ^8.1.2
         version: 8.2.4(eslint@9.32.0)
@@ -1029,7 +1029,7 @@ importers:
         version: 12.7.0(@babel/core@7.28.0)(eslint@9.32.0)
       eslint-plugin-n:
         specifier: ^17.19.0
-        version: 17.21.0(eslint@9.32.0)(typescript@5.8.3)
+        version: 17.21.2(eslint@9.32.0)(typescript@5.8.3)
       eslint-plugin-qunit:
         specifier: ^8.1.2
         version: 8.2.4(eslint@9.32.0)
@@ -1242,7 +1242,7 @@ importers:
         version: 12.7.0(@babel/core@7.28.0)(eslint@9.32.0)
       eslint-plugin-n:
         specifier: ^17.19.0
-        version: 17.21.0(eslint@9.32.0)(typescript@5.8.3)
+        version: 17.21.2(eslint@9.32.0)(typescript@5.8.3)
       eslint-plugin-qunit:
         specifier: ^8.1.2
         version: 8.2.4(eslint@9.32.0)
@@ -5728,8 +5728,8 @@ packages:
     peerDependencies:
       eslint: '>=8'
 
-  eslint-plugin-n@17.21.0:
-    resolution: {integrity: sha512-1+iZ8We4ZlwVMtb/DcHG3y5/bZOdazIpa/4TySo22MLKdwrLcfrX0hbadnCvykSQCCmkAnWmIP8jZVb2AAq29A==}
+  eslint-plugin-n@17.21.2:
+    resolution: {integrity: sha512-s3ai4Msfk5mbSvOgCkYo6k5+zP3W/OK+AvLmMmx++Ki4a5CPO7luIDwOnjUZm/t+oZYP0YADTxe+u4JqnT8+Dg==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
     peerDependencies:
       eslint: '>=8.23.0'
@@ -6538,8 +6538,8 @@ packages:
     resolution: {integrity: sha512-eSmmWE5bZTK2Nou4g0AI3zZ9rswp7GRKoKXS1BLUkvPviOqs4YTN1djQIqrXy9k5gEtdLPy86JjRwsNM9tnDcA==}
     engines: {node: '>=0.10.0'}
 
-  hookified@1.10.0:
-    resolution: {integrity: sha512-dJw0492Iddsj56U1JsSTm9E/0B/29a1AuoSLRAte8vQg/kaTGF3IgjEWT8c8yG4cC10+HisE1x5QAwR0Xwc+DA==}
+  hookified@1.11.0:
+    resolution: {integrity: sha512-aDdIN3GyU5I6wextPplYdfmWCo+aLmjjVbntmX6HLD5RCi/xKsivYEBhnRD+d9224zFf008ZpLMPlWF0ZodYZw==}
 
   hosted-git-info@8.1.0:
     resolution: {integrity: sha512-Rw/B2DNQaPBICNXEm8balFz9a6WpZrkCGpcWFpy7nCj+NyhSdqXipmfvtmWt9xGfp0wZnBxB+iVpLmQMYt47Tw==}
@@ -12907,7 +12907,7 @@ snapshots:
 
   '@types/glob@9.0.0':
     dependencies:
-      glob: 8.1.0
+      glob: 10.4.5
 
   '@types/http-errors@2.0.5': {}
 
@@ -14250,7 +14250,7 @@ snapshots:
   buffer@4.9.2:
     dependencies:
       base64-js: 1.5.1
-      ieee754: 1.1.13
+      ieee754: 1.2.1
       isarray: 1.0.0
 
   buffer@5.7.1:
@@ -14296,7 +14296,7 @@ snapshots:
 
   cacheable@1.10.3:
     dependencies:
-      hookified: 1.10.0
+      hookified: 1.11.0
       keyv: 5.4.0
 
   calculate-cache-key-for-tree@2.0.0:
@@ -14715,7 +14715,7 @@ snapshots:
     dependencies:
       cipher-base: 1.0.6
       inherits: 2.0.4
-      ripemd160: 2.0.1
+      ripemd160: 2.0.2
       sha.js: 2.4.12
 
   create-hash@1.2.0:
@@ -16651,7 +16651,7 @@ snapshots:
       eslint: 9.32.0
       eslint-compat-utils: 0.5.1(eslint@9.32.0)
 
-  eslint-plugin-n@17.21.0(eslint@9.32.0)(typescript@5.8.3):
+  eslint-plugin-n@17.21.2(eslint@9.32.0)(typescript@5.8.3):
     dependencies:
       '@eslint-community/eslint-utils': 4.7.0(eslint@9.32.0)
       enhanced-resolve: 5.18.2
@@ -16659,8 +16659,8 @@ snapshots:
       eslint-plugin-es-x: 7.8.0(eslint@9.32.0)
       get-tsconfig: 4.10.1
       globals: 15.15.0
+      globrex: 0.1.2
       ignore: 5.3.2
-      minimatch: 9.0.5
       semver: 7.7.2
       ts-declaration-location: 1.0.7(typescript@5.8.3)
     transitivePeerDependencies:
@@ -17204,7 +17204,7 @@ snapshots:
     dependencies:
       cacheable: 1.10.3
       flatted: 3.3.3
-      hookified: 1.10.0
+      hookified: 1.11.0
 
   flatpickr@4.6.13: {}
 
@@ -17751,7 +17751,7 @@ snapshots:
     dependencies:
       parse-passwd: 1.0.0
 
-  hookified@1.10.0: {}
+  hookified@1.11.0: {}
 
   hosted-git-info@8.1.0:
     dependencies:
