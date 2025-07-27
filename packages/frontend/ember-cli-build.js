@@ -67,6 +67,7 @@ module.exports = async function (defaults) {
       // https://deprecations.emberjs.com/id/ember-data-deprecate-store-extends-ember-object
       // before upgrading to Ember Data 6.0
       DEPRECATE_STORE_EXTENDS_EMBER_OBJECT: false,
+      DEPRECATE_TRACKING_PACKAGE: false,
     },
   });
 

@@ -1,3 +1,5 @@
+import '@warp-drive/ember/install'; // must be first in this file
+
 import Application from 'lti-dashboard/app';
 import config from 'lti-dashboard/config/environment';
 import * as QUnit from 'qunit';

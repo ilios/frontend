@@ -40,6 +40,7 @@ module.exports = async function (defaults) {
     compatWith: '5.2',
     deprecations: {
       DEPRECATE_STORE_EXTENDS_EMBER_OBJECT: false,
+      DEPRECATE_TRACKING_PACKAGE: false,
     },
   });
 
