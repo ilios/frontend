@@ -23,6 +23,14 @@
 
     .content {
       @include m.detail-container-content;
+      .inline-label-data-block {
+        display: flex;
+
+        label {
+          font-weight: bold;
+          margin-right: 0.25rem;
+        }
+      }
     }
 
     .static-list {
@@ -44,6 +52,10 @@
 
   .offering-instructors {
     @include m.ilios-list-reset;
+
+    ul {
+      margin-left: 0;
+    }
   }
 
   .fade-text {

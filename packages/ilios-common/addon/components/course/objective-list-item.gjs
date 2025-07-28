@@ -204,10 +204,10 @@ export default class CourseObjectiveListItemComponent extends Component {
   <template>
     <div
       id="objective-{{@courseObjective.id}}"
-      class="grid-row objective-row{{if this.showRemoveConfirmation ' confirm-removal'}}{{if
-          this.highlightSave.isRunning
-          ' highlight-ok'
-        }}{{if this.isManaging ' is-managing'}}"
+      class="grid-row objective-row{{if this.showRemoveConfirmation ' confirm-removal'}}{{unless
+          @editable
+          ' no-actions'
+        }}{{if this.highlightSave.isRunning ' highlight-ok'}}{{if this.isManaging ' is-managing'}}"
       data-test-course-objective-list-item
     >
       <div class="description grid-item" data-test-description>
@@ -272,28 +272,30 @@ export default class CourseObjectiveListItemComponent extends Component {
         @cancel={{this.cancel}}
       />
 
-      <div class="actions grid-item" data-test-actions>
-        {{#if
-          (and
-            @editable
-            (not this.isManaging)
-            (not this.showRemoveConfirmation)
-            (not this.showRemoveConfirmation)
-          )
-        }}
-          <button
-            class="link-button"
-            type="button"
-            aria-label={{t "general.remove"}}
-            {{on "click" (set this "showRemoveConfirmation" true)}}
-            data-test-remove
-          >
-            <FaIcon @icon="trash" class="enabled remove" />
-          </button>
-        {{else}}
-          <FaIcon @icon="trash" class="disabled" />
-        {{/if}}
-      </div>
+      {{#if @editable}}
+        <div class="actions grid-item" data-test-actions>
+          {{#if
+            (and
+              @editable
+              (not this.isManaging)
+              (not this.showRemoveConfirmation)
+              (not this.showRemoveConfirmation)
+            )
+          }}
+            <button
+              class="link-button"
+              type="button"
+              aria-label={{t "general.remove"}}
+              {{on "click" (set this "showRemoveConfirmation" true)}}
+              data-test-remove
+            >
+              <FaIcon @icon="trash" class="enabled remove" />
+            </button>
+          {{else}}
+            <FaIcon @icon="trash" class="disabled" />
+          {{/if}}
+        </div>
+      {{/if}}
 
       {{#if this.showRemoveConfirmation}}
         <div class="confirm-message" data-test-confirm-removal>

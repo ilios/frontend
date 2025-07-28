@@ -19,18 +19,23 @@
   background-color: var(--white);
   border: 1px solid var(--cultured-grey);
   border-radius: 3px;
-  padding: 1em 2em;
+  padding: 1em;
   width: 80%;
 
   li {
     font-weight: bold;
-  }
 
-  ul {
-    margin-left: 1em;
+    ul,
+    ol {
+      margin-left: 1em;
 
-    li {
-      font-weight: normal;
+      li {
+        font-weight: normal;
+      }
+    }
+
+    &:last-of-type {
+      margin-bottom: 0;
     }
   }
 }
@@ -52,6 +57,7 @@
   li {
     background-color: var(--cultured-grey);
     border-radius: 4px;
+    margin-bottom: 0;
     margin-right: 0.3em;
     margin-top: 10px;
     padding: 0.2em 0.4em 0.2em 0.6em;

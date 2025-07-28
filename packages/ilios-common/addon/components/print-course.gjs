@@ -7,6 +7,8 @@ import add from 'ember-math-helpers/helpers/add';
 import PublicationStatus from 'ilios-common/components/publication-status';
 import t from 'ember-intl/helpers/t';
 import formatDate from 'ember-intl/helpers/format-date';
+import { sortBy as sortArrayBy } from 'ilios-common/utils/array-helpers';
+import and from 'ember-truth-helpers/helpers/and';
 import sortBy from 'ilios-common/helpers/sort-by';
 import DetailTermsList from 'ilios-common/components/detail-terms-list';
 import ObjectiveList from 'ilios-common/components/course/objective-list';
@@ -63,7 +65,11 @@ export default class PrintCourseComponent extends Component {
   }
 
   get directors() {
-    return this.directorsData.isResolved ? this.directorsData.value : [];
+    return this.directorsData.isResolved
+      ? sortArrayBy(this.directorsData.value, 'fullName')
+          .map((director) => director.fullName)
+          .join(', ')
+      : '';
   }
 
   get courseLearningMaterialsRelationship() {
@@ -168,13 +174,11 @@ export default class PrintCourseComponent extends Component {
             <label>
               {{t "general.directors"}}:
             </label>
-            <div>
-              <span>
-                {{#each (sortBy "fullName" this.directors) as |user|}}
-                  {{user.fullName}},
-                {{/each}}
-              </span>
-            </div>
+            {{#if (and this.directorsData.isResolved this.directorsData.value.length)}}
+              <div>
+                <span>{{this.directors}}</span>
+              </div>
+            {{/if}}
           </div>
         </div>
       </section>
@@ -183,8 +187,8 @@ export default class PrintCourseComponent extends Component {
           {{t "general.competencies"}}
           ({{this.competencies.length}})
         </div>
-        <div class="content">
-          {{#if this.competencies.length}}
+        {{#if this.competencies.length}}
+          <div class="content">
             <ul class="static-list">
               {{#each @course.domainsWithSubcompetencies as |domain|}}
                 <li>
@@ -201,19 +205,21 @@ export default class PrintCourseComponent extends Component {
                 </li>
               {{/each}}
             </ul>
-          {{/if}}
-        </div>
+          </div>
+        {{/if}}
       </section>
       <section class="block" data-test-course-terms>
         <div class="title">
           {{t "general.terms"}}
           ({{@course.terms.length}})
         </div>
-        <div class="content">
-          {{#each @course.associatedVocabularies as |vocab|}}
-            <DetailTermsList @vocabulary={{vocab}} @terms={{this.terms}} @canEdit={{false}} />
-          {{/each}}
-        </div>
+        {{#if @course.associatedVocabularies.length}}
+          <div class="content">
+            {{#each @course.associatedVocabularies as |vocab|}}
+              <DetailTermsList @vocabulary={{vocab}} @terms={{this.terms}} @canEdit={{false}} />
+            {{/each}}
+          </div>
+        {{/if}}
       </section>
       <section class="block" data-test-course-objectives>
         <div class="title">
@@ -231,8 +237,8 @@ export default class PrintCourseComponent extends Component {
           {{t "general.learningMaterials"}}
           ({{this.courseLearningMaterials.length}})
         </div>
-        <div class="content">
-          {{#if this.courseLearningMaterials}}
+        {{#if this.courseLearningMaterials}}
+          <div class="content">
             <table>
               <thead>
                 <tr>
@@ -293,26 +299,28 @@ export default class PrintCourseComponent extends Component {
                 {{/each}}
               </tbody>
             </table>
-          {{/if}}
-        </div>
+          </div>
+        {{/if}}
       </section>
       <section class="block" data-test-course-mesh>
         <div class="title">
           {{t "general.mesh"}}
           ({{@course.meshDescriptors.length}})
         </div>
-        <div class="content">
-          <ul class="inline-list">
-            {{#each (sortBy "title" this.meshDescriptors) as |descriptor|}}
-              <li>
-                {{descriptor.name}}
-              </li>
-            {{/each}}
-          </ul>
-        </div>
+        {{#if @course.meshDescriptors.length}}
+          <div class="content">
+            <ul class="inline-list">
+              {{#each (sortBy "title" this.meshDescriptors) as |descriptor|}}
+                <li>
+                  {{descriptor.name}}
+                </li>
+              {{/each}}
+            </ul>
+          </div>
+        {{/if}}
       </section>
       {{#each (sortBy "title" this.sessions) as |session|}}
-        <PrintCourseSession @session={{session}} />
+        <PrintCourseSession @session={{session}} @editable={{false}} />
       {{/each}}
     </section>
   </template>

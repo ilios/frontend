@@ -159,8 +159,8 @@ export default class PrintCourseSessionComponent extends Component {
           {{t "general.learningMaterials"}}
           ({{this.learningMaterials.length}})
         </div>
-        <div class="content">
-          {{#if this.learningMaterials.length}}
+        {{#if this.learningMaterials.length}}
+          <div class="content">
             <table>
               <thead>
                 <tr>
@@ -213,36 +213,38 @@ export default class PrintCourseSessionComponent extends Component {
                 {{/each}}
               </tbody>
             </table>
-          {{/if}}
-        </div>
+          </div>
+        {{/if}}
       </section>
       <section class="block" data-test-session-terms>
         <div class="title">
           {{t "general.terms"}}
           ({{this.terms.length}})
         </div>
-        <div class="content">
+        {{#if @session.associatedVocabularies.length}}
           <div class="content">
             {{#each @session.associatedVocabularies as |vocab|}}
               <DetailTermsList @vocabulary={{vocab}} @terms={{this.terms}} @canEdit={{false}} />
             {{/each}}
           </div>
-        </div>
+        {{/if}}
       </section>
-      <section class="block">
+      <section class="block" data-test-session-mesh-terms>
         <div class="title">
           {{t "general.mesh"}}
           ({{this.meshDescriptors.length}})
         </div>
-        <div class="content">
-          <ul class="inline-list">
-            {{#each (sortBy "title" this.meshDescriptors) as |descriptor|}}
-              <li>
-                {{descriptor.name}}
-              </li>
-            {{/each}}
-          </ul>
-        </div>
+        {{#if this.meshDescriptors.length}}
+          <div class="content">
+            <ul class="inline-list">
+              {{#each (sortBy "title" this.meshDescriptors) as |descriptor|}}
+                <li>
+                  {{descriptor.name}}
+                </li>
+              {{/each}}
+            </ul>
+          </div>
+        {{/if}}
       </section>
       {{#if @session.isIndependentLearning}}
         <section class="block" data-test-session-ilm-section>
@@ -280,13 +282,13 @@ export default class PrintCourseSessionComponent extends Component {
           </div>
         </section>
       {{/if}}
-      <section class="block">
+      <section class="block" data-test-session-offerings>
         <div class="title">
           {{t "general.offerings"}}
           ({{this.offerings.length}})
         </div>
-        <div class="content">
-          {{#if this.offerings.length}}
+        {{#if this.offerings.length}}
+          <div class="content">
             <table>
               <thead>
                 <tr>
@@ -329,24 +331,26 @@ export default class PrintCourseSessionComponent extends Component {
                       {{offering.room}}
                     </td>
                     <td class="text-left offering-instructors">
-                      <ul>
-                        {{#each offering.allInstructors as |user|}}
-                          <li>
-                            {{user.fullName}}
-                          </li>
-                        {{/each}}
-                      </ul>
+                      {{#if offering.allInstructors.length}}
+                        <ul>
+                          {{#each offering.allInstructors as |user|}}
+                            <li>
+                              {{user.fullName}}
+                            </li>
+                          {{/each}}
+                        </ul>
+                      {{/if}}
                     </td>
                   </tr>
                 {{/each}}
               </tbody>
             </table>
-          {{else}}
-            <p>
-              {{t "general.noOfferings"}}
-            </p>
-          {{/if}}
-        </div>
+          </div>
+        {{else}}
+          <p>
+            {{t "general.noOfferings"}}
+          </p>
+        {{/if}}
       </section>
     </div>
   </template>
