@@ -9,4 +9,5 @@ export default Factory.extend({
   courseObjectives: [],
   prerequisites: [],
   postrequisites: [],
+  color: '#ffffff',
 });

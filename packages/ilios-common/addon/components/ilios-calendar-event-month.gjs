@@ -14,6 +14,7 @@ import IliosTooltip from 'ilios-common/components/ilios-tooltip';
 import FaIcon from 'ilios-common/components/fa-icon';
 import t from 'ember-intl/helpers/t';
 import formatDate from 'ember-intl/helpers/format-date';
+import Color from 'color';
 
 export default class IliosCalendarEventMonthComponent extends Component {
   @service intl;
@@ -46,8 +47,12 @@ export default class IliosCalendarEventMonthComponent extends Component {
     const { color } = this.args.event;
     const darkcolor = colorChange(color, -0.15);
 
+    const isLight = Color(color).isLight();
+    const textColor = isLight ? '--black' : '--white';
+
     return new htmlSafe(
       `background-color: ${color};
+       color: var(${textColor});
        border-left: 4px solid ${darkcolor};`,
     );
   }
