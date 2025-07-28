@@ -7,7 +7,6 @@ import { LinkTo } from '@ember/routing';
 import { service } from '@ember/service';
 import { TrackedAsyncData } from 'ember-async-data';
 import t from 'ember-intl/helpers/t';
-import add from 'ember-math-helpers/helpers/add';
 import eq from 'ember-truth-helpers/helpers/eq';
 import or from 'ember-truth-helpers/helpers/or';
 import FaIcon from 'ilios-common/components/fa-icon';
@@ -18,7 +17,7 @@ import { mapBy, uniqueValues } from 'ilios-common/utils/array-helpers';
 export default class InstructorGroupCourseAssociationsComponent extends Component {
   @service iliosConfig;
   @service intl;
-  @tracked sortBy = 'course';
+  @tracked sortBy = 'title';
 
   crossesBoundaryConfig = new TrackedAsyncData(
     this.iliosConfig.itemFromConfig('academicYearCrossesCalendarYearBoundaries'),
@@ -41,21 +40,14 @@ export default class InstructorGroupCourseAssociationsComponent extends Componen
     this.sortBy = what;
   }
 
-  @action
-  sortAssociations(a, b) {
-    const locale = this.intl.get('primaryLocale');
-    switch (this.sortBy) {
-      case 'course':
-        return a.course.title.localeCompare(b.course.title, locale);
-      case 'course:desc':
-        return b.course.title.localeCompare(a.course.title, locale);
-    }
-    return 0;
-  }
-
   @cached
   get associationsData() {
-    return new TrackedAsyncData(this.getAssociations(this.args.instructorGroup));
+    return new TrackedAsyncData(
+      this.getAssociations(
+        this.args.instructorGroup,
+        this.academicYearCrossesCalendarYearBoundaries,
+      ),
+    );
   }
 
   get associations() {
@@ -70,7 +62,7 @@ export default class InstructorGroupCourseAssociationsComponent extends Componen
     return this.associationsData.isResolved;
   }
 
-  async getAssociations(instructorGroup) {
+  async getAssociations(instructorGroup, academicYearCrossesBoundaries) {
     // get sessions from the offerings and ILMs associated with the given instructor group.
     const offerings = await instructorGroup.offerings;
     const ilms = await instructorGroup.ilmSessions;
@@ -88,9 +80,16 @@ export default class InstructorGroupCourseAssociationsComponent extends Componen
     // group these sessions by their owning courses
     const map = new Map();
     sessionsWithCourseAndSchool.forEach(({ session, course }) => {
+      let title = `${course.title}`;
+      if (academicYearCrossesBoundaries) {
+        title += ` (${course.year} - ${course.year + 1})`;
+      } else {
+        title += ` (${course.year})`;
+      }
       if (!map.has(course.id)) {
         map.set(course.id, {
           course,
+          title,
           sessions: [],
         });
       }
@@ -166,8 +165,8 @@ export default class InstructorGroupCourseAssociationsComponent extends Componen
                   <tr>
                     <SortableTh
                       @sortedAscending={{this.sortedAscending}}
-                      @onClick={{fn this.setSortBy "course"}}
-                      @sortedBy={{or (eq this.sortBy "course") (eq this.sortBy "course:desc")}}
+                      @onClick={{fn this.setSortBy "title"}}
+                      @sortedBy={{or (eq this.sortBy "title") (eq this.sortBy "title:desc")}}
                     >
                       {{t "general.course"}}
                     </SortableTh>
@@ -175,18 +174,11 @@ export default class InstructorGroupCourseAssociationsComponent extends Componen
                   </tr>
                 </thead>
                 <tbody>
-                  {{#each (sortBy this.sortAssociations this.associations) as |association|}}
+                  {{#each (sortBy this.sortBy this.associations) as |association|}}
                     <tr>
                       <td>
                         <LinkTo @route="course" @model={{association.course}}>
-                          {{association.course.title}}
-                          {{#if this.academicYearCrossesCalendarYearBoundaries}}
-                            ({{association.course.year}}
-                            -
-                            {{add association.course.year 1}})
-                          {{else}}
-                            ({{association.course.year}})
-                          {{/if}}
+                          {{association.title}}
                         </LinkTo>
                       </td>
                       <td colspan="2">
