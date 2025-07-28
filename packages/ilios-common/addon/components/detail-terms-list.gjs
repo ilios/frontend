@@ -66,7 +66,7 @@ export default class DetailTermsListComponent extends Component {
             </span>
           {{/if}}
         </div>
-        <ul class="{{if @canEdit 'removable-list'}} selected-taxonomy-terms">
+        <ul class="selected-taxonomy-terms{{if @canEdit ' removable-list'}}">
           {{#each this.terms as |term|}}
             {{#if @canEdit}}
               <DetailTermsListItem @canEdit={{true}} @remove={{@remove}} @term={{term}} />
