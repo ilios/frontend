@@ -222,11 +222,9 @@ export default class PrintCourseSessionComponent extends Component {
           ({{this.terms.length}})
         </div>
         <div class="content">
-          <div class="content">
-            {{#each @session.associatedVocabularies as |vocab|}}
-              <DetailTermsList @vocabulary={{vocab}} @terms={{this.terms}} @canEdit={{false}} />
-            {{/each}}
-          </div>
+          {{#each @session.associatedVocabularies as |vocab|}}
+            <DetailTermsList @vocabulary={{vocab}} @terms={{this.terms}} @canEdit={{false}} />
+          {{/each}}
         </div>
       </section>
       <section class="block" data-test-session-mesh-terms>
