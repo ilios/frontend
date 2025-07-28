@@ -25,17 +25,17 @@
   li {
     font-weight: bold;
 
+    ul,
+    ol {
+      margin-left: 1em;
+
+      li {
+        font-weight: normal;
+      }
+    }
+
     &:last-of-type {
       margin-bottom: 0;
-    }
-  }
-
-  ul {
-    margin-left: 1em;
-
-    /* stylelint-disable-next-line no-descending-specificity */
-    li {
-      font-weight: normal;
     }
   }
 }
