@@ -187,8 +187,8 @@ export default class PrintCourseComponent extends Component {
           {{t "general.competencies"}}
           ({{this.competencies.length}})
         </div>
-        <div class="content">
-          {{#if this.competencies.length}}
+        {{#if this.competencies.length}}
+          <div class="content">
             <ul class="static-list">
               {{#each @course.domainsWithSubcompetencies as |domain|}}
                 <li>
@@ -205,19 +205,21 @@ export default class PrintCourseComponent extends Component {
                 </li>
               {{/each}}
             </ul>
-          {{/if}}
-        </div>
+          </div>
+        {{/if}}
       </section>
       <section class="block" data-test-course-terms>
         <div class="title">
           {{t "general.terms"}}
           ({{@course.terms.length}})
         </div>
-        <div class="content">
-          {{#each @course.associatedVocabularies as |vocab|}}
-            <DetailTermsList @vocabulary={{vocab}} @terms={{this.terms}} @canEdit={{false}} />
-          {{/each}}
-        </div>
+        {{#if @course.associatedVocabularies.length}}
+          <div class="content">
+            {{#each @course.associatedVocabularies as |vocab|}}
+              <DetailTermsList @vocabulary={{vocab}} @terms={{this.terms}} @canEdit={{false}} />
+            {{/each}}
+          </div>
+        {{/if}}
       </section>
       <section class="block" data-test-course-objectives>
         <div class="title">
@@ -235,8 +237,8 @@ export default class PrintCourseComponent extends Component {
           {{t "general.learningMaterials"}}
           ({{this.courseLearningMaterials.length}})
         </div>
-        <div class="content">
-          {{#if this.courseLearningMaterials}}
+        {{#if this.courseLearningMaterials}}
+          <div class="content">
             <table>
               <thead>
                 <tr>
@@ -297,23 +299,25 @@ export default class PrintCourseComponent extends Component {
                 {{/each}}
               </tbody>
             </table>
-          {{/if}}
-        </div>
+          </div>
+        {{/if}}
       </section>
       <section class="block" data-test-course-mesh>
         <div class="title">
           {{t "general.mesh"}}
           ({{@course.meshDescriptors.length}})
         </div>
-        <div class="content">
-          <ul class="inline-list">
-            {{#each (sortBy "title" this.meshDescriptors) as |descriptor|}}
-              <li>
-                {{descriptor.name}}
-              </li>
-            {{/each}}
-          </ul>
-        </div>
+        {{#if @course.meshDescriptors.length}}
+          <div class="content">
+            <ul class="inline-list">
+              {{#each (sortBy "title" this.meshDescriptors) as |descriptor|}}
+                <li>
+                  {{descriptor.name}}
+                </li>
+              {{/each}}
+            </ul>
+          </div>
+        {{/if}}
       </section>
       {{#each (sortBy "title" this.sessions) as |session|}}
         <PrintCourseSession @session={{session}} @editable={{false}} />
