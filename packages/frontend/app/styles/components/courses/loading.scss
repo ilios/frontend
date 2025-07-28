@@ -7,4 +7,9 @@
     cursor: default;
     background-color: var(--cultured-grey);
   }
+
+  select {
+    @include cm.loading-text;
+    cursor: default;
+  }
 }
