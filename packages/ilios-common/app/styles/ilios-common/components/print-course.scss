@@ -52,6 +52,10 @@
 
   .offering-instructors {
     @include m.ilios-list-reset;
+
+    ul {
+      margin-left: 0;
+    }
   }
 
   .fade-text {
