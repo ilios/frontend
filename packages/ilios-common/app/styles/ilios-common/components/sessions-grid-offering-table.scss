@@ -55,7 +55,7 @@
   .sessions-grid-offering {
     transition: background-color 0.5s ease-out;
     &.even {
-      background-color: var(--ligher-blue);
+      background-color: var(--lighter-blue);
     }
     &.was-updated {
       background-color: var(--transparent-green);
