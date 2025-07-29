@@ -5,6 +5,15 @@ export default class ProgramYearIndexRoute extends Route {
   @service permissionChecker;
   @service session;
 
+  queryParams = {
+    pyObjectiveDetails: { replace: true },
+    pyTaxonomyDetails: { replace: true },
+    pyCompetencyDetails: { replace: true },
+    pyLeadershipDetails: { replace: true },
+    managePyCompetencies: { replace: true },
+    managePyLeadership: { replace: true },
+  };
+
   canUpdate = false;
 
   beforeModel(transition) {

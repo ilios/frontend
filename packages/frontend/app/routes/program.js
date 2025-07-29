@@ -6,6 +6,15 @@ export default class ProgramRoute extends Route {
   @service session;
   @service store;
 
+  queryParams = {
+    leadershipDetails: {
+      replace: true,
+    },
+    manageLeadership: {
+      replace: true,
+    },
+  };
+
   canUpdate = false;
 
   beforeModel(transition) {

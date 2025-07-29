@@ -7,6 +7,10 @@ export default class InstructorGroupRoute extends Route {
   @service store;
   @service dataLoader;
 
+  queryParams = {
+    showCourseAssociations: { replace: true },
+  };
+
   canUpdate = false;
 
   beforeModel(transition) {

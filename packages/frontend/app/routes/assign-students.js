@@ -13,6 +13,9 @@ export default class AssignStudentsRoute extends Route {
     query: {
       replace: true,
     },
+    schoolId: {
+      replace: true,
+    },
   };
 
   beforeModel(transition) {

@@ -12,6 +12,9 @@ export default class PendingUserUpdatesRoute extends Route {
     filter: {
       replace: true,
     },
+    school: {
+      replace: true,
+    },
   };
 
   beforeModel(transition) {
