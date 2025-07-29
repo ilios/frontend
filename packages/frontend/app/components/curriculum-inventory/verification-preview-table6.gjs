@@ -58,29 +58,35 @@ export default class CurriculumInventoryVerificationPreviewTable6Component exten
           </tr>
         </thead>
         <tbody>
-          {{#each this.clerkships as |clerkship|}}
-            <tr>
-              <td colspan="2">
-                {{clerkship.title}}
-              </td>
-              <td>
-                {{clerkship.startingLevel}}
-                -
-                {{clerkship.endingLevel}}
-              </td>
-              {{#each clerkship.methods as |method|}}
-                <td>
-                  {{method}}
+          {{#if this.clerkships.length}}
+            {{#each this.clerkships as |clerkship|}}
+              <tr>
+                <td colspan="2">
+                  {{clerkship.title}}
                 </td>
-              {{/each}}
-              <td>
-                {{clerkship.hasFormativeAssessments}}
-              </td>
-              <td>
-                {{clerkship.hasNarrativeAssessments}}
-              </td>
+                <td>
+                  {{clerkship.startingLevel}}
+                  -
+                  {{clerkship.endingLevel}}
+                </td>
+                {{#each clerkship.methods as |method|}}
+                  <td>
+                    {{method}}
+                  </td>
+                {{/each}}
+                <td>
+                  {{clerkship.hasFormativeAssessments}}
+                </td>
+                <td>
+                  {{clerkship.hasNarrativeAssessments}}
+                </td>
+              </tr>
+            {{/each}}
+          {{else}}
+            <tr>
+              <td colspan="11">{{t "general.none"}}</td>
             </tr>
-          {{/each}}
+          {{/if}}
         </tbody>
       </table>
     </div>

@@ -63,32 +63,38 @@ export default class CurriculumInventoryVerificationPreviewTable5Component exten
           </tr>
         </thead>
         <tbody>
-          {{#each this.nonClerkships as |nonClerkship|}}
-            <tr>
-              <td colspan="2">
-                {{nonClerkship.title}}
-              </td>
-              <td>
-                {{nonClerkship.startingLevel}}
-                -
-                {{nonClerkship.endingLevel}}
-              </td>
-              <td>
-                {{nonClerkship.numExams}}
-              </td>
-              {{#each nonClerkship.methods as |method|}}
-                <td>
-                  {{method}}
+          {{#if this.nonClerkships.length}}
+            {{#each this.nonClerkships as |nonClerkship|}}
+              <tr>
+                <td colspan="2">
+                  {{nonClerkship.title}}
                 </td>
-              {{/each}}
-              <td>
-                {{nonClerkship.hasFormativeAssessments}}
-              </td>
-              <td>
-                {{nonClerkship.hasNarrativeAssessments}}
-              </td>
+                <td>
+                  {{nonClerkship.startingLevel}}
+                  -
+                  {{nonClerkship.endingLevel}}
+                </td>
+                <td>
+                  {{nonClerkship.numExams}}
+                </td>
+                {{#each nonClerkship.methods as |method|}}
+                  <td>
+                    {{method}}
+                  </td>
+                {{/each}}
+                <td>
+                  {{nonClerkship.hasFormativeAssessments}}
+                </td>
+                <td>
+                  {{nonClerkship.hasNarrativeAssessments}}
+                </td>
+              </tr>
+            {{/each}}
+          {{else}}
+            <tr>
+              <td colspan="13">{{t "general.none"}}</td>
             </tr>
-          {{/each}}
+          {{/if}}
         </tbody>
       </table>
     </div>

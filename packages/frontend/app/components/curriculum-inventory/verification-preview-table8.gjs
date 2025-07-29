@@ -24,19 +24,25 @@ import t from 'ember-intl/helpers/t';
         </tr>
       </thead>
       <tbody>
-        {{#each @data as |row|}}
+        {{#if @data.length}}
+          {{#each @data as |row|}}
+            <tr>
+              <td>
+                {{row.id}}
+              </td>
+              <td colspan="2">
+                {{row.title}}
+              </td>
+              <td>
+                {{row.count}}
+              </td>
+            </tr>
+          {{/each}}
+        {{else}}
           <tr>
-            <td>
-              {{row.id}}
-            </td>
-            <td colspan="2">
-              {{row.title}}
-            </td>
-            <td>
-              {{row.count}}
-            </td>
+            <td colspan="4">{{t "general.none"}}</td>
           </tr>
-        {{/each}}
+        {{/if}}
       </tbody>
     </table>
   </div>

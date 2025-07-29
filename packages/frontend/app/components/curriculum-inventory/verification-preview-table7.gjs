@@ -41,22 +41,28 @@ export default class CurriculumInventoryVerificationPreviewTable7Component exten
           </tr>
         </thead>
         <tbody>
-          {{#each @data as |row|}}
+          {{#if @data.length}}
+            {{#each @data as |row|}}
+              <tr>
+                <td>
+                  {{row.id}}
+                </td>
+                <td colspan="2">
+                  {{row.title}}
+                </td>
+                <td>
+                  {{row.num_summative_assessments}}
+                </td>
+                <td>
+                  {{row.num_formative_assessments}}
+                </td>
+              </tr>
+            {{/each}}
+          {{else}}
             <tr>
-              <td>
-                {{row.id}}
-              </td>
-              <td colspan="2">
-                {{row.title}}
-              </td>
-              <td>
-                {{row.num_summative_assessments}}
-              </td>
-              <td>
-                {{row.num_formative_assessments}}
-              </td>
+              <td colspan="5">{{t "general.none"}}</td>
             </tr>
-          {{/each}}
+          {{/if}}
         </tbody>
         <tfoot>
           <tr>

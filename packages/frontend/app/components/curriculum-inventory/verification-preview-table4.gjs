@@ -41,22 +41,28 @@ export default class CurriculumInventoryVerificationPreviewTable4Component exten
           </tr>
         </thead>
         <tbody>
-          {{#each @data as |row|}}
+          {{#if @data.length}}
+            {{#each @data as |row|}}
+              <tr>
+                <td>
+                  {{row.id}}
+                </td>
+                <td colspan="2">
+                  {{row.title}}
+                </td>
+                <td>
+                  {{row.num_events_primary_method}}
+                </td>
+                <td>
+                  {{row.num_events_non_primary_method}}
+                </td>
+              </tr>
+            {{/each}}
+          {{else}}
             <tr>
-              <td>
-                {{row.id}}
-              </td>
-              <td colspan="2">
-                {{row.title}}
-              </td>
-              <td>
-                {{row.num_events_primary_method}}
-              </td>
-              <td>
-                {{row.num_events_non_primary_method}}
-              </td>
+              <td colspan="5">{{t "general.none"}}</td>
             </tr>
-          {{/each}}
+          {{/if}}
         </tbody>
         <tfoot>
           <tr>

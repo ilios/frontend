@@ -25,26 +25,32 @@ import t from 'ember-intl/helpers/t';
         </tr>
       </thead>
       <tbody>
-        {{#each @data as |row|}}
+        {{#if @data.length}}
+          {{#each @data as |row|}}
+            <tr>
+              <td>
+                {{t "general.notApplicableAbbr"}}
+              </td>
+              <td colspan="3">
+                {{! template-lint-disable no-triple-curlies}}
+                {{{row.title}}}
+              </td>
+              <td colspan="2">
+                <ul>
+                  {{#each row.pcrs as |pcrs|}}
+                    <li>
+                      {{pcrs}}
+                    </li>
+                  {{/each}}
+                </ul>
+              </td>
+            </tr>
+          {{/each}}
+        {{else}}
           <tr>
-            <td>
-              {{t "general.notApplicableAbbr"}}
-            </td>
-            <td colspan="3">
-              {{! template-lint-disable no-triple-curlies}}
-              {{{row.title}}}
-            </td>
-            <td colspan="2">
-              <ul>
-                {{#each row.pcrs as |pcrs|}}
-                  <li>
-                    {{pcrs}}
-                  </li>
-                {{/each}}
-              </ul>
-            </td>
+            <td colspan="6">{{t "general.none"}}</td>
           </tr>
-        {{/each}}
+        {{/if}}
       </tbody>
     </table>
   </div>

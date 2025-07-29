@@ -27,24 +27,30 @@ import t from 'ember-intl/helpers/t';
         </tr>
       </thead>
       <tbody>
-        {{#each @data as |row|}}
+        {{#if @data.length}}
+          {{#each @data as |row|}}
+            <tr>
+              <td colspan="2">
+                {{row.title}}
+              </td>
+              <td>
+                {{row.starting_level}}
+                -
+                {{row.ending_level}}
+              </td>
+              <td>
+                {{row.weeks}}
+              </td>
+              <td>
+                {{row.avg}}
+              </td>
+            </tr>
+          {{/each}}
+        {{else}}
           <tr>
-            <td colspan="2">
-              {{row.title}}
-            </td>
-            <td>
-              {{row.starting_level}}
-              -
-              {{row.ending_level}}
-            </td>
-            <td>
-              {{row.weeks}}
-            </td>
-            <td>
-              {{row.avg}}
-            </td>
+            <td colspan="5">{{t "general.none"}}</td>
           </tr>
-        {{/each}}
+        {{/if}}
       </tbody>
     </table>
   </div>
