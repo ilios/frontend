@@ -41,7 +41,7 @@
   }
   button.remove {
     @include m.ilios-link-button;
-    color: var(--red);
+    color: var(--darker-red);
   }
   .info {
     display: flex;
