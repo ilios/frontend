@@ -26,9 +26,9 @@ export default class CurriculumInventoryVerificationPreviewTable5Component exten
       data-test-curriculum-inventory-verification-preview-table5
       ...attributes
     >
-      <h4 data-test-title id="verification-preview-table5">
+      <h3 data-test-title id="verification-preview-table5">
         {{t "general.table5NonClerkshipSequenceBlockAssessmentMethods"}}
-      </h4>
+      </h3>
       <table>
         <thead>
           <tr>

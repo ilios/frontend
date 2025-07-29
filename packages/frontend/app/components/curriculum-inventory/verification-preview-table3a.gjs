@@ -6,9 +6,9 @@ import t from 'ember-intl/helpers/t';
     data-test-curriculum-inventory-verification-preview-table3a
     ...attributes
   >
-    <h4 data-test-title>
+    <h3 data-test-title>
       {{t "general.table3aNonClerkshipSequenceBlockInstructionalTime"}}
-    </h4>
+    </h3>
     <table>
       <thead>
         <tr>

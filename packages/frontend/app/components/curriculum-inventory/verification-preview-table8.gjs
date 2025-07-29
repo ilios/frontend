@@ -6,9 +6,9 @@ import t from 'ember-intl/helpers/t';
     data-test-curriculum-inventory-verification-preview-table8
     ...attributes
   >
-    <h4 data-test-title id="verification-preview-table8">
+    <h3 data-test-title id="verification-preview-table8">
       {{t "general.table8AllResourceTypes"}}
-    </h4>
+    </h3>
     <table>
       <thead>
         <tr>

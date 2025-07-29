@@ -20,9 +20,9 @@ export default class CurriculumInventoryVerificationPreviewTable7Component exten
       data-test-curriculum-inventory-verification-preview-table7
       ...attributes
     >
-      <h4 data-test-title id="verification-preview-table7">
+      <h3 data-test-title id="verification-preview-table7">
         {{t "general.table7AllEventsWithAssessmentsTaggedAsFormativeOrSummative"}}
-      </h4>
+      </h3>
       <table>
         <thead>
           <tr>
