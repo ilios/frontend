@@ -3,7 +3,7 @@
 
 .mesh-manager {
   .deprecated {
-    color: var(--darker-red);
+    color: var(--red);
     font-weight: bolder;
   }
 
@@ -78,8 +78,8 @@
       @include m.ilios-input;
 
       &.error {
-        border: 1px solid var(--red);
-        outline-color: var(--red);
+        border: 1px solid var(--light-red);
+        outline-color: var(--light-red);
       }
     }
 

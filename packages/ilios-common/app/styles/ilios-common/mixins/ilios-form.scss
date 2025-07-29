@@ -93,11 +93,11 @@
 
     &.cancel {
       background-color: var(--white);
-      border-color: var(--red);
-      color: var(--red);
+      border-color: var(--light-red);
+      color: var(--light-red);
 
       &:enabled:hover {
-        background-color: var(--red);
+        background-color: var(--light-red);
       }
     }
   }
@@ -114,13 +114,13 @@
 
 @mixin ilios-form-error {
   .validation-error-message {
-    color: var(--darker-red);
+    color: var(--red);
     @include font-size.font-size("small");
   }
 
   input {
     &.has-error {
-      border-color: var(--red);
+      border-color: var(--light-red);
     }
   }
 }

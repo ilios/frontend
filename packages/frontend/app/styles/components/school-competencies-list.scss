@@ -43,7 +43,7 @@
       }
 
       .bigcancel {
-        background-color: var(--darker-red);
+        background-color: var(--red);
         color: var(--white);
         margin-left: 0.5rem;
       }
@@ -80,7 +80,7 @@
       }
 
       .confirm-message {
-        color: var(--red);
+        color: var(--light-red);
         grid-column: 1 / -1;
         font-weight: bold;
         text-align: center;
@@ -89,10 +89,10 @@
 
       .remove {
         background-color: var(--white);
-        color: var(--red);
+        color: var(--light-red);
 
         &:hover {
-          background-color: var(--red);
+          background-color: var(--light-red);
           color: white;
         }
       }

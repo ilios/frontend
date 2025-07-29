@@ -78,7 +78,7 @@
       }
 
       .learning-material-status {
-        color: var(--darker-red);
+        color: var(--red);
         @include m.font-size("small");
         position: absolute;
         right: 5px;

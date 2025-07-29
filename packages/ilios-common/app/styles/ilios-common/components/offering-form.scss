@@ -85,13 +85,13 @@
 
           button.cancel {
             background: transparent;
-            color: var(--darker-red);
+            color: var(--red);
             margin: 0;
             padding: 0 0.2rem;
 
             &:enabled:hover {
               color: var(--white);
-              background-color: var(--darker-red);
+              background-color: var(--red);
             }
           }
         }
@@ -121,7 +121,7 @@
         width: 5rem;
 
         &:invalid {
-          border: 1px var(--red) solid;
+          border: 1px var(--light-red) solid;
         }
       }
     }
@@ -151,7 +151,7 @@
     }
 
     .validation-error-message {
-      color: var(--darker-red);
+      color: var(--red);
       display: block;
       @include m.font-size("small");
       font-style: italic;

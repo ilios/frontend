@@ -58,7 +58,7 @@
   }
 
   .alert-alert {
-    @include flash(var(--red));
+    @include flash(var(--light-red));
   }
 
   .alert:last-of-type {

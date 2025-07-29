@@ -75,10 +75,10 @@
   }
 
   meter[value="0"]::-webkit-meter-optimum-value {
-    background: var(--red);
+    background: var(--light-red);
   }
   meter[value="1"]::-webkit-meter-optimum-value {
-    background: var(--red);
+    background: var(--light-red);
   }
   meter[value="2"]::-webkit-meter-optimum-value {
     background: var(--orange);
@@ -91,10 +91,10 @@
   }
 
   meter[value="0"]:-moz-meter-bar {
-    background: var(--red);
+    background: var(--light-red);
   }
   meter[value="1"]:-moz-meter-bar {
-    background: var(--red);
+    background: var(--light-red);
   }
   meter[value="2"]:-moz-meter-bar {
     background: var(--orange);
@@ -114,12 +114,12 @@
     width: 10%;
 
     &.strength-0 {
-      color: var(--red);
+      color: var(--light-red);
       width: 20%;
     }
 
     &.strength-1 {
-      color: var(--red);
+      color: var(--light-red);
     }
 
     &.strength-2 {

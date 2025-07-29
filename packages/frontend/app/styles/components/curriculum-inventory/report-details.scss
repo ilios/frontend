@@ -13,7 +13,7 @@
     background-color: var(--lightest-red);
 
     .confirm-message {
-      color: var(--darker-red);
+      color: var(--red);
       font-weight: bold;
       padding: 1rem 10%;
       text-align: center;
@@ -25,10 +25,10 @@
 
     .finalize {
       background-color: var(--white);
-      color: var(--darker-red);
+      color: var(--red);
 
       &:hover {
-        background-color: var(--red);
+        background-color: var(--light-red);
         color: var(--white);
       }
     }

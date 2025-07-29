@@ -94,7 +94,7 @@
       background-color: var(--lightest-red);
 
       .confirm-message {
-        color: var(--darker-red);
+        color: var(--red);
         font-weight: bold;
         padding-left: 8em;
         padding-right: 8em;
@@ -113,10 +113,10 @@
 
       .remove {
         background-color: var(--white);
-        color: var(--darker-red);
+        color: var(--red);
 
         &:hover {
-          background-color: var(--red);
+          background-color: var(--light-red);
           color: var(--white);
         }
       }

@@ -34,7 +34,7 @@
 
   &.show-remove-confirmation {
     background-color: var(--lightest-red);
-    border: 1px solid var(--red);
+    border: 1px solid var(--light-red);
   }
 
   .confirm-removal {
@@ -43,7 +43,7 @@
 
     .confirm-message {
       background-color: var(--lightest-red);
-      color: var(--darker-red);
+      color: var(--red);
       font-weight: bold;
       margin: 0;
       padding: 1rem 8rem;
@@ -57,10 +57,10 @@
 
     .remove {
       background-color: var(--white);
-      color: var(--darker-red);
+      color: var(--red);
 
       &:hover {
-        background-color: var(--red);
+        background-color: var(--light-red);
         color: white;
       }
     }
