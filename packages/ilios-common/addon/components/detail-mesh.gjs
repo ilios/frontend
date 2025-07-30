@@ -101,27 +101,30 @@ export default class DetailMeshComponent extends Component {
               @remove={{this.removeDescriptorFromBuffer}}
             />
           {{else}}
-            <ul class="selected-mesh-terms">
-              {{#each (sortBy "name" this.meshDescriptors) as |term|}}
-                <li>
-                  <span class="term-title">
-                    {{term.name}}
-                  </span>
-                  <span class="term-details">
-                    {{term.id}}
-                    {{#if term.deleted}}
-                      -
-                      <span class="deprecated">
-                        ({{t "general.deprecatedAbbreviation"}})
-                      </span>
-                    {{else if term.trees.length}}
-                      -
-                      <MeshDescriptorLastTreeNumber @descriptor={{term}} />
-                    {{/if}}
-                  </span>
-                </li>
-              {{/each}}
-            </ul>
+            {{#if this.meshDescriptors.length}}
+              <ul class="selected-mesh-terms">
+
+                {{#each (sortBy "name" this.meshDescriptors) as |term|}}
+                  <li>
+                    <span class="term-title">
+                      {{term.name}}
+                    </span>
+                    <span class="term-details">
+                      {{term.id}}
+                      {{#if term.deleted}}
+                        -
+                        <span class="deprecated">
+                          ({{t "general.deprecatedAbbreviation"}})
+                        </span>
+                      {{else if term.trees.length}}
+                        -
+                        <MeshDescriptorLastTreeNumber @descriptor={{term}} />
+                      {{/if}}
+                    </span>
+                  </li>
+                {{/each}}
+              </ul>
+            {{/if}}
           {{/if}}
         </div>
       {{/if}}
