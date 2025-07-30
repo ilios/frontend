@@ -2,7 +2,6 @@ import Component from '@glimmer/component';
 import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { restartableTask, dropTask, timeout } from 'ember-concurrency';
-import scrollIntoView from 'scroll-into-view';
 import { TrackedAsyncData } from 'ember-async-data';
 import and from 'ember-truth-helpers/helpers/and';
 import OfferingForm from 'ilios-common/components/offering-form';
@@ -20,6 +19,7 @@ import join from 'ilios-common/helpers/join';
 import mapBy from 'ilios-common/helpers/map-by';
 import sortBy from 'ilios-common/helpers/sort-by';
 import truncate from 'ilios-common/helpers/truncate';
+import scrollIntoView from 'ilios-common/utils/scroll-into-view';
 import FaIcon from 'ilios-common/components/fa-icon';
 import YupValidations from 'ilios-common/classes/yup-validations';
 import YupValidationMessage from 'ilios-common/components/yup-validation-message';
@@ -82,10 +82,10 @@ export default class SessionsGridOffering extends Component {
   close({ target }) {
     this.isEditing = false;
     this.args.setHeaderLockedStatus(this.isEditing);
-    const row = target.parentElement.parentElement.parentElement.parentElement.parentElement;
-    scrollIntoView(row, {
-      behavior: 'smooth',
-    });
+    const row =
+      target.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement
+        .parentElement;
+    scrollIntoView(row);
   }
 
   @action

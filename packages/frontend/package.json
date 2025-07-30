@@ -122,7 +122,6 @@
     "qunit": "^2.24.1",
     "qunit-dom": "^3.4.0",
     "sass": "^1.89.2",
-    "scroll-into-view": "^1.16.2",
     "striptags": "^3.2.0",
     "stylelint": "^16.20.0",
     "stylelint-config-recommended-scss": "^15.0.0",
