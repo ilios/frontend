@@ -11,7 +11,7 @@ import { fn } from '@ember/helper';
 
 export default class WeeklyEvents extends Component {
   get weeksInYear() {
-    const { weeksInWeekYear } = DateTime.fromObject({ year: this.args.year });
+    const { weeksInWeekYear } = DateTime.fromObject({ weekYear: this.args.year });
     const weeks = [];
     for (let i = 1; i <= weeksInWeekYear; i++) {
       weeks.push(`${i}`);
