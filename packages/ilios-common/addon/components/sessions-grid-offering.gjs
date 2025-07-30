@@ -83,7 +83,7 @@ export default class SessionsGridOffering extends Component {
     this.isEditing = false;
     this.args.setHeaderLockedStatus(this.isEditing);
     const row = target.parentElement.parentElement.parentElement.parentElement.parentElement;
-    scrollIntoView(row);
+    scrollIntoView(row, { opts: { block: 'center' } });
   }
 
   @action
