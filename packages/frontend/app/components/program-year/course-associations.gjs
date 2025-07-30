@@ -92,7 +92,6 @@ export default class ProgramYearCourseAssociationsComponent extends Component {
                     type="button"
                     aria-expanded="true"
                     aria-controls="content-{{templateId}}"
-                    aria-label={{t "general.hideAssociatedCourses"}}
                     data-test-toggle
                     {{on "click" (fn @setIsExpanded false)}}
                   >
@@ -106,7 +105,6 @@ export default class ProgramYearCourseAssociationsComponent extends Component {
                     type="button"
                     aria-expanded="false"
                     aria-controls="content-{{templateId}}"
-                    aria-label={{t "general.showAssociatedCourses"}}
                     data-test-toggle
                     {{on "click" (fn @setIsExpanded true)}}
                   >

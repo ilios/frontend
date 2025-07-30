@@ -19,7 +19,6 @@ const definition = {
       isExpanded: isPresent('[data-icon="caret-down"]'),
       ariaExpanded: attribute('aria-expanded'),
       ariaControls: attribute('aria-controls'),
-      ariaLabel: attribute('aria-label'),
     },
   },
   content: {
