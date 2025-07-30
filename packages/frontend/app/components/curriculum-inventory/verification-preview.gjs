@@ -3,7 +3,6 @@ import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
 import { task } from 'ember-concurrency';
-import scrollIntoView from 'scroll-into-view';
 import { on } from '@ember/modifier';
 import { fn } from '@ember/helper';
 import t from 'ember-intl/helpers/t';
@@ -17,6 +16,7 @@ import VerificationPreviewTable6 from 'frontend/components/curriculum-inventory/
 import VerificationPreviewTable7 from 'frontend/components/curriculum-inventory/verification-preview-table7';
 import VerificationPreviewTable8 from 'frontend/components/curriculum-inventory/verification-preview-table8';
 import LoadingSpinner from 'ilios-common/components/loading-spinner';
+import scrollIntoView from 'ilios-common/utils/scroll-into-view';
 
 export default class CurriculumInventoryVerificationPreviewComponent extends Component {
   @service fetch;
@@ -36,9 +36,7 @@ export default class CurriculumInventoryVerificationPreviewComponent extends Com
 
   @action
   scrollTo(key) {
-    scrollIntoView(document.getElementById(key), {
-      behavior: 'smooth',
-    });
+    scrollIntoView(document.getElementById(key));
   }
   <template>
     <div

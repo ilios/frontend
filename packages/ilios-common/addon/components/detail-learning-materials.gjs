@@ -5,9 +5,9 @@ import { guidFor } from '@ember/object/internals';
 import { action } from '@ember/object';
 import { dropTask } from 'ember-concurrency';
 import { all } from 'rsvp';
-import scrollIntoView from 'scroll-into-view';
 import { TrackedAsyncData } from 'ember-async-data';
 import { mapBy } from 'ilios-common/utils/array-helpers';
+import scrollIntoView from 'ilios-common/utils/scroll-into-view';
 import sortableByPosition from 'ilios-common/utils/sortable-by-position';
 import t from 'ember-intl/helpers/t';
 import LearningmaterialSearch from 'ilios-common/components/learningmaterial-search';
@@ -100,17 +100,13 @@ export default class DetailCohortsComponent extends Component {
   @action
   closeLearningmaterialManager() {
     this.setManagedMaterial(null);
-    scrollIntoView(this.title, {
-      align: { top: 0 },
-    });
+    scrollIntoView(this.title);
   }
 
   @action
   closeNewLearningmaterial() {
     this.displayAddNewForm = false;
-    scrollIntoView(this.title, {
-      align: { top: 0 },
-    });
+    scrollIntoView(this.title);
   }
 
   saveNewLearningMaterial = dropTask(async (lm) => {
@@ -137,9 +133,7 @@ export default class DetailCohortsComponent extends Component {
     await lmSubject.save();
     this.displayAddNewForm = false;
     this.type = null;
-    scrollIntoView(this.title, {
-      align: { top: 0 },
-    });
+    scrollIntoView(this.title);
   });
 
   saveSortOrder = dropTask(async (learningMaterials) => {
@@ -155,9 +149,7 @@ export default class DetailCohortsComponent extends Component {
 
     await this.saveSomeMaterials(materialsToSave);
     this.isSorting = false;
-    scrollIntoView(this.title, {
-      align: { top: 0 },
-    });
+    scrollIntoView(this.title);
   });
 
   addLearningMaterial = dropTask(async (parentLearningMaterial) => {

@@ -1,11 +1,11 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { cached } from '@glimmer/tracking';
-import scrollIntoView from 'scroll-into-view';
 import { service } from '@ember/service';
 import { TrackedAsyncData } from 'ember-async-data';
 import BackToCourses from 'ilios-common/components/course/back-to-courses';
 import animateLoading from 'ilios-common/modifiers/animate-loading';
+import scrollIntoView from 'ilios-common/utils/scroll-into-view';
 import Header from 'ilios-common/components/course/header';
 import and from 'ember-truth-helpers/helpers/and';
 import Overview from 'ilios-common/components/course/overview';
@@ -42,9 +42,7 @@ export default class CourseDetailsComponent extends Component {
   @action
   collapse() {
     //when the button is clicked to collapse, animate the focus to the top of the page
-    scrollIntoView(document.getElementById('course-top-section'), {
-      behavior: 'smooth',
-    });
+    scrollIntoView(document.getElementById('course-top-section'));
     this.args.setShowDetails(false);
   }
 
