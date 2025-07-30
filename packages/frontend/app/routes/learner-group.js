@@ -5,6 +5,10 @@ export default class LearnerGroupRoute extends Route {
   @service session;
   @service dataLoader;
 
+  queryParams = {
+    showCourseAssociations: { replace: true },
+  };
+
   beforeModel(transition) {
     this.session.requireAuthentication(transition, 'login');
   }
