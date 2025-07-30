@@ -10,7 +10,8 @@ import Objectives from 'frontend/components/program-year/objectives';
 import CollapsedObjectives from 'frontend/components/program-year/collapsed-objectives';
 import DetailTaxonomies from 'ilios-common/components/detail-taxonomies';
 import CollapsedTaxonomies from 'ilios-common/components/collapsed-taxonomies';
-import Courses from 'frontend/components/program-year/courses';
+import CourseAssociations from 'frontend/components/program-year/course-associations';
+
 <template>
   <div class="programyear-details" data-test-program-year-details ...attributes>
     {{#if @programYearLeadershipDetails}}
@@ -68,6 +69,10 @@ import Courses from 'frontend/components/program-year/courses';
     {{else}}
       <CollapsedTaxonomies @subject={{@programYear}} @expand={{fn @setPyTaxonomyDetails true}} />
     {{/if}}
-    <Courses @programYear={{@programYear}} />
+    <CourseAssociations
+      @programYear={{@programYear}}
+      @isExpanded={{@showCourseAssociations}}
+      @setIsExpanded={{@setShowCourseAssociations}}
+    />
   </div>
 </template>
