@@ -17,7 +17,7 @@
 @mixin ilios-static-list() {
   @include ilios-list-reset;
   background-color: var(--white);
-  border: 1px solid var(--cultured-grey);
+  border: 1px solid var(--lightest-grey);
   border-radius: 3px;
   padding: 1em;
   width: 80%;
@@ -43,7 +43,7 @@
 @mixin ilios-zebra-list() {
   li {
     &:nth-child(even) {
-      background-color: hsl(from var(--cultured-grey) h s calc(l + 4));
+      background-color: var(--super-light-grey);
     }
   }
 }
@@ -55,7 +55,7 @@
   flex-wrap: wrap;
 
   li {
-    background-color: var(--cultured-grey);
+    background-color: var(--lightest-grey);
     border-radius: 4px;
     margin-bottom: 0;
     margin-right: 0.3em;
@@ -103,16 +103,16 @@
   }
 
   li {
-    color: var(--teal-blue);
+    color: var(--blue);
     cursor: pointer;
 
     &.static {
-      color: var(--raisin-black);
+      color: var(--black);
       cursor: default;
     }
 
     &.disabled {
-      color: var(--davys-grey);
+      color: var(--grey);
       cursor: default;
     }
   }
@@ -133,14 +133,14 @@
   li {
     div {
       background-color: var(--white);
-      border: 1px var(--cultured-grey) solid;
+      border: 1px var(--lightest-grey) solid;
       border-radius: 4px;
       margin-top: 5px;
       padding: 0.2em 0.4em 0.2em 0.6em;
       vertical-align: middle;
 
       &.selected {
-        background-color: var(--cultured-grey);
+        background-color: var(--lightest-grey);
       }
     }
 
@@ -158,7 +158,7 @@
   @include ilios-list-reset;
 
   li {
-    color: var(--raisin-black);
+    color: var(--black);
     margin-left: 20px;
 
     &.branch {
@@ -178,7 +178,7 @@
     }
 
     &.disabled {
-      color: var(--davys-grey);
+      color: var(--grey);
     }
   }
 }

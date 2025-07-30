@@ -6,10 +6,6 @@
   @include m.objectives;
 
   .fade-text-control {
-    background-image: linear-gradient(
-      to bottom,
-      transparent,
-      var(--slight-white)
-    );
+    background-image: linear-gradient(to bottom, transparent, var(--white));
   }
 }

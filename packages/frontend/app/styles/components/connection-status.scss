@@ -3,7 +3,7 @@
 
 .connection-status {
   $height: 2.5rem;
-  @include m.critical-notice(var(--gold), var(--raisin-black), $height);
+  @include m.critical-notice(var(--dark-yellow), var(--black), $height);
 
   display: none;
 
@@ -20,7 +20,7 @@
     height: $height;
 
     button {
-      background-color: var(--raisin-black);
+      background-color: var(--black);
       border: 0;
       color: var(--white);
       display: inline-block;

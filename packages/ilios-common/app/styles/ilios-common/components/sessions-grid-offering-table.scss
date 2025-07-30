@@ -28,7 +28,7 @@
     padding: 0.2rem 0.5rem;
 
     &.expanded-offering-manager {
-      background-color: var(--light-blue);
+      background-color: var(--lightest-blue);
       padding: 0;
     }
 
@@ -48,17 +48,17 @@
   }
 
   .offering-block-date {
-    border-top: 1px solid var(--cultured-grey);
+    border-top: 1px solid var(--lightest-grey);
     font-weight: bold;
   }
 
   .sessions-grid-offering {
     transition: background-color 0.5s ease-out;
     &.even {
-      background-color: hsl(from var(--light-blue) h s calc(l - 10));
+      background-color: var(--lighter-blue);
     }
     &.was-updated {
-      background-color: hsl(from var(--fern-green) h s calc(l + 30));
+      background-color: var(--transparent-green);
     }
     .room {
       overflow-wrap: anywhere;
@@ -75,7 +75,7 @@
 
   .offering-form {
     background-color: var(--white);
-    border: 1px solid var(--cultured-grey);
+    border: 1px solid var(--lightest-grey);
     padding: 0.5rem;
   }
 }

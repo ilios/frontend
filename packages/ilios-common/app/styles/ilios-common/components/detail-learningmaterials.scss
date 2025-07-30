@@ -31,7 +31,7 @@
     .lm-search-results {
       @include m.ilios-selectable-list;
       background-color: var(--white);
-      border: 1px solid var(--blue-munsell);
+      border: 1px solid var(--light-blue);
       margin: 0;
       max-height: 15rem;
       overflow-y: scroll;
@@ -39,7 +39,7 @@
       z-index: 10;
 
       li {
-        border-bottom: 1px solid var(--cultured-grey);
+        border-bottom: 1px solid var(--lightest-grey);
         min-height: 3.25rem;
         position: relative;
 
@@ -49,7 +49,7 @@
         }
 
         &:hover {
-          background: var(--cultured-grey);
+          background: var(--lightest-grey);
         }
 
         &:last-of-type {
@@ -71,14 +71,14 @@
       }
 
       .learning-material-description {
-        color: var(--davys-grey);
+        color: var(--grey);
         display: block;
         @include m.font-size("small");
         margin-left: 1.9em;
       }
 
       .learning-material-status {
-        color: var(--crimson);
+        color: var(--red);
         @include m.font-size("small");
         position: absolute;
         right: 5px;
@@ -90,7 +90,7 @@
 
         li {
           border: 0;
-          color: var(--davys-grey);
+          color: var(--grey);
           cursor: inherit;
           display: list-item;
           @include m.font-size("small");
@@ -120,10 +120,7 @@
 
     .icon-button {
       @include m.ilios-button-reset;
-      color: var(--blue-munsell);
-      &.remove {
-        color: var(--crimson);
-      }
+      color: var(--light-blue);
     }
   }
 }

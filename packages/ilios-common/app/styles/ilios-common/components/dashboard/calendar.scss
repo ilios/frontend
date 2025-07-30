@@ -37,7 +37,7 @@
       }
 
       .calendar-filter-list {
-        border: 1px solid var(--blue-munsell);
+        border: 1px solid var(--light-blue);
         float: left;
         @include m.font-size("small");
         margin-bottom: 1em;
@@ -47,8 +47,8 @@
           @include m.ilios-heading;
           @include m.font-size("base");
           display: block;
-          background-color: var(--cultured-grey);
-          border-bottom: 0.5px solid var(--davys-grey);
+          background-color: var(--lightest-grey);
+          border-bottom: 0.5px solid var(--grey);
           height: 7vh;
           padding: 0.25em;
           width: 100%;
@@ -67,7 +67,7 @@
           @include m.ilios-list-reset;
 
           li {
-            color: var(--teal-blue);
+            color: var(--blue);
             cursor: pointer;
           }
         }
@@ -105,8 +105,8 @@
       padding: 5px;
 
       .filters-header {
-        background: var(--cultured-grey);
-        border-bottom: 1px solid var(--davys-grey);
+        background: var(--lightest-grey);
+        border-bottom: 1px solid var(--grey);
         @include m.font-size("small");
       }
 
@@ -120,33 +120,56 @@
         }
 
         .fa-close {
-          color: var(--cultured-grey);
+          color: var(--lightest-grey);
         }
 
         .tag-session-type {
-          background-color: hsl(from var(--blue-munsell) h s calc(l + 30));
+          background-color: hsl(from var(--blue) h s calc(l + 30));
         }
 
         .tag-course-level {
-          background-color: hsl(from var(--blue-munsell) h s calc(l + 40));
+          background-color: hsl(from var(--blue) h s calc(l + 40));
         }
 
         .tag-cohort {
-          background-color: hsl(from var(--blue-munsell) h s calc(l + 50));
+          background-color: hsl(from var(--blue) h s calc(l + 50));
         }
 
         .tag-course {
-          background-color: hsl(from var(--blue-munsell) h s calc(l + 60));
+          background-color: hsl(from var(--blue) h s calc(l + 60));
         }
 
         .tag-term {
-          background-color: hsl(from var(--blue-munsell) h s calc(l + 40));
+          background-color: hsl(from var(--blue) h s calc(l + 40));
+        }
+
+        //Support for Safari < 18.x
+        @supports (color: hsl(from orange h s calc(l + 15%))) {
+          .tag-session-type {
+            background-color: hsl(from var(--blue) h s calc(l + 30%));
+          }
+
+          .tag-course-level {
+            background-color: hsl(from var(--blue) h s calc(l + 40%));
+          }
+
+          .tag-cohort {
+            background-color: hsl(from var(--blue) h s calc(l + 50%));
+          }
+
+          .tag-course {
+            background-color: hsl(from var(--blue) h s calc(l + 60%));
+          }
+
+          .tag-term {
+            background-color: hsl(from var(--blue) h s calc(l + 40%));
+          }
         }
 
         .filters-clear-filters {
           @include m.ilios-button-reset;
           @include m.font-size("small");
-          color: var(--teal-blue);
+          color: var(--blue);
         }
       }
     }

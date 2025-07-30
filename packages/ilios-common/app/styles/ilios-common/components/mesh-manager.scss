@@ -3,7 +3,7 @@
 
 .mesh-manager {
   .deprecated {
-    color: var(--rosewood);
+    color: var(--red);
     font-weight: bolder;
   }
 
@@ -16,7 +16,7 @@
     @include m.ilios-selectable-list;
 
     background-color: var(--white);
-    border: 1px solid var(--blue-munsell);
+    border: 1px solid var(--light-blue);
     height: 10rem;
     margin-bottom: 1rem;
     overflow-y: scroll;
@@ -78,8 +78,8 @@
       @include m.ilios-input;
 
       &.error {
-        border: 1px solid var(--crimson);
-        outline-color: var(--crimson);
+        border: 1px solid var(--light-red);
+        outline-color: var(--light-red);
       }
     }
 

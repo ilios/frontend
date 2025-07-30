@@ -43,7 +43,7 @@
 
     input[type="search"] {
       background-color: var(--white);
-      border: 1px solid var(--teal-blue);
+      border: 1px solid var(--blue);
       border-radius: 3px;
       height: 2rem;
       width: 100%;
@@ -57,8 +57,8 @@
       }
 
       button:active {
-        background-color: var(--cultured-grey);
-        border-bottom: 1px solid var(--cultured-grey);
+        background-color: var(--lightest-grey);
+        border-bottom: 1px solid var(--lightest-grey);
       }
     }
   }

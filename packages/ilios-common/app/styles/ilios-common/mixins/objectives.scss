@@ -38,8 +38,8 @@
   }
 
   .new-objective {
-    background-color: var(--slight-white);
-    border: 1px solid var(--cultured-grey);
+    background-color: var(--white);
+    border: 1px solid var(--lightest-grey);
     margin: 0.5rem 0;
     padding: 1rem;
 
@@ -74,7 +74,7 @@
     }
 
     .grid-item {
-      border-bottom: 1px solid var(--davys-grey);
+      border-bottom: 1px solid var(--grey);
       padding: 0.5em 0.25em;
 
       &:has(.faded) {
@@ -109,7 +109,7 @@
 
       .grid-item {
         color: transparent;
-        text-shadow: hsl(from var(--black) h s l / 0.3) 0px 0px 10px;
+        text-shadow: var(--very-transparent-black) 0px 0px 10px;
       }
     }
   }
@@ -118,13 +118,13 @@
 
     &.highlight-ok {
       transition: none;
-      background-color: hsl(from var(--fern-green) h s calc(l + 60));
+      background-color: var(--transparent-green);
     }
 
     &.is-managing {
-      border: 2px solid var(--blue-munsell);
+      border: 2px solid var(--light-blue);
       .grid-item {
-        background-color: var(--light-blue);
+        background-color: var(--lightest-blue);
         border: 0;
       }
     }
@@ -153,14 +153,14 @@
     }
 
     &.confirm-removal {
-      background-color: var(--lavender-blush);
+      background-color: var(--lightest-red);
 
       .grid-item {
         border: 0;
       }
 
       .confirm-message {
-        color: var(--rosewood);
+        color: var(--red);
         grid-column: 1 / -1;
         font-weight: bold;
         text-align: center;
@@ -169,10 +169,10 @@
 
       .remove {
         background-color: var(--white);
-        color: var(--rosewood);
+        color: var(--red);
 
         &:hover {
-          background-color: var(--crimson);
+          background-color: var(--light-red);
           color: white;
         }
       }
@@ -207,12 +207,12 @@
   }
 
   .bigadd {
-    background-color: var(--fern-green);
+    background-color: var(--green);
     color: var(--white);
   }
 
   .bigcancel {
-    background-color: var(--crimson);
+    background-color: var(--red);
     color: var(--white);
     margin-left: 0.5em;
   }

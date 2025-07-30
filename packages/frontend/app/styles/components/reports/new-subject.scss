@@ -3,8 +3,8 @@
 @use "sass:color";
 
 .reports-new-subject {
-  background-color: var(--slight-white);
-  border: 1px solid var(--cultured-grey);
+  background-color: var(--white);
+  border: 1px solid var(--lightest-grey);
   margin: 0.5rem 0;
   padding: 1rem 1rem 3rem;
 
@@ -36,8 +36,8 @@
       }
 
       select.error {
-        border: 1px solid var(--crimson);
-        outline-color: var(--crimson);
+        border: 1px solid var(--light-red);
+        outline-color: var(--light-red);
       }
 
       .mesh-search {
@@ -49,13 +49,13 @@
 
     button {
       &.disabled {
-        background-color: var(--davys-grey);
+        background-color: var(--grey);
         cursor: default;
       }
 
       &:disabled {
-        background-color: var(--cultured-grey);
-        border-color: var(--davys-grey);
+        background-color: var(--lightest-grey);
+        border-color: var(--grey);
         color: var(--white);
         cursor: default;
       }
@@ -73,15 +73,15 @@
         background: var(--white);
         border-width: 0 1px 1px 1px;
         border-style: solid;
-        border-color: var(--slight-white);
-        box-shadow: 0 2px 2px hsl(from var(--black) h s l / 0.2);
-        color: var(--raisin-black);
+        border-color: var(--white);
+        box-shadow: 0 2px 2px var(--very-transparent-black);
+        color: var(--black);
         max-height: 15rem;
         overflow-y: scroll;
         transition: all 0.2s ease-in-out;
 
         li {
-          border-bottom: 1px solid var(--cultured-grey);
+          border-bottom: 1px solid var(--lightest-grey);
           width: 100%;
 
           button {
@@ -90,7 +90,7 @@
             padding: 0.6rem 0 0 1rem;
 
             &:hover {
-              background-color: var(--cultured-grey);
+              background-color: var(--lightest-grey);
             }
           }
 
@@ -99,7 +99,7 @@
           }
 
           &.results-count {
-            color: var(--fern-green);
+            color: var(--green);
           }
         }
       }

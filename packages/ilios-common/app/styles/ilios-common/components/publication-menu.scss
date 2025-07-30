@@ -29,7 +29,7 @@
     button {
       border: 0;
       background-color: var(--white);
-      color: var(--raisin-black);
+      color: var(--black);
       display: block;
       outline: none;
       padding: 0.5rem 1rem;
@@ -40,7 +40,7 @@
       &.danger {
         &:hover,
         &:focus {
-          background-color: var(--crimson);
+          background-color: var(--light-red);
           color: var(--white);
         }
       }
@@ -48,7 +48,7 @@
       &.good {
         &:hover,
         &:focus {
-          background-color: var(--fern-green);
+          background-color: var(--green);
           color: var(--white);
         }
       }
@@ -74,24 +74,24 @@
   &.published {
     .toggle,
     .menu {
-      border-color: var(--fern-green);
-      color: var(--fern-green);
+      border-color: var(--green);
+      color: var(--green);
     }
   }
 
   &.notpublished {
     .toggle,
     .menu {
-      border-color: var(--davys-grey);
-      color: var(--davys-grey);
+      border-color: var(--grey);
+      color: var(--grey);
     }
   }
 
   &.scheduled {
     .toggle,
     .menu {
-      border-color: var(--sepia);
-      color: var(--sepia);
+      border-color: var(--dark-orange);
+      color: var(--dark-orange);
     }
   }
 }

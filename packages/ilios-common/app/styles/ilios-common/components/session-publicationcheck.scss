@@ -2,8 +2,8 @@
 @use "../mixins" as m;
 
 .session-publicationcheck {
-  background-color: var(--light-blue);
-  border-color: var(--cultured-grey);
+  background-color: var(--lightest-blue);
+  border-color: var(--lightest-grey);
   border-style: solid;
   border-top: 0;
   border-width: 0 2px 2px;
@@ -15,7 +15,7 @@
   }
 
   .results {
-    background-color: var(--light-blue);
+    background-color: var(--lightest-blue);
     @include m.detail-container(var(--orange));
 
     .title {
@@ -26,7 +26,7 @@
       @include m.detail-container-content;
 
       thead {
-        background-color: var(--cultured-grey);
+        background-color: var(--lightest-grey);
       }
     }
   }

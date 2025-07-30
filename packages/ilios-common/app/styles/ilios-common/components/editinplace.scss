@@ -9,9 +9,9 @@
 
     #{m.$form-input-text-types} {
       background: var(--white);
-      border: 1px solid var(--cultured-grey);
+      border: 1px solid var(--lightest-grey);
       border-radius: 3px;
-      color: var(--raisin-black);
+      color: var(--black);
       cursor: pointer;
       display: inline;
       outline: none;
@@ -39,18 +39,18 @@
         }
 
         &.done {
-          color: var(--fern-green);
+          color: var(--green);
 
           &:enabled:hover {
-            background-color: var(--fern-green);
+            background-color: var(--green);
           }
         }
 
         &.cancel {
-          color: var(--crimson);
+          color: var(--red);
 
           &:enabled:hover {
-            background-color: var(--crimson);
+            background-color: var(--red);
           }
         }
       }

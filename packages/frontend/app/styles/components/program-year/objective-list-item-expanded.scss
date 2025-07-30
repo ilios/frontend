@@ -7,12 +7,12 @@
   grid-column: 1 / -1;
 
   thead {
-    background-color: var(--cultured-grey);
+    background-color: var(--lightest-grey);
   }
 
   tbody tr {
     &:nth-of-type(even) {
-      background-color: var(--cultured-grey);
+      background-color: var(--lightest-grey);
     }
     ul {
       @include m.ilios-list-reset;
@@ -22,7 +22,7 @@
       }
 
       li {
-        border-top: 1px solid var(--davys-grey);
+        border-top: 1px solid var(--grey);
         padding-top: 1rem;
       }
 

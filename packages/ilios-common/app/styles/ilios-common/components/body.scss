@@ -12,8 +12,8 @@ html {
 }
 
 body {
-  background-color: var(--slight-white);
-  color: var(--raisin-black);
+  background-color: var(--white);
+  color: var(--black);
   font-family: Nunito, serif;
   margin: 0;
   padding: 0;
@@ -53,7 +53,7 @@ h6 {
 }
 
 select {
-  color: var(--raisin-black);
+  color: var(--black);
   font-family: "Nunito Sans", sans-serif;
 }
 
@@ -74,22 +74,22 @@ p {
 
 .add,
 .yes {
-  color: var(--fern-green);
+  color: var(--green);
 }
 
 .remove,
 .no {
-  color: var(--rosewood);
+  color: var(--red);
 }
 
 .error,
 .is-error {
-  color: var(--rosewood);
+  color: var(--red);
 }
 
 .warning,
 .is-warning {
-  color: var(--gold);
+  color: var(--yellow);
 }
 
 .clickable,
@@ -99,19 +99,19 @@ p {
 
 .editable,
 .is-editable {
-  color: var(--teal-blue);
+  color: var(--blue);
 }
 
 .published {
-  color: var(--fern-green);
+  color: var(--green);
 }
 
 .notpublished {
-  color: var(--davys-grey);
+  color: var(--grey);
 }
 
 .scheduled {
-  color: var(--sepia);
+  color: var(--dark-orange);
 }
 
 .backtolink {

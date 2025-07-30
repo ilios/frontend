@@ -2,8 +2,8 @@
 @use "../mixins" as m;
 
 .publish-all-sessions {
-  background-color: var(--slight-white);
-  border: 1px solid var(--cultured-grey);
+  background-color: var(--white);
+  border: 1px solid var(--lightest-grey);
   padding-left: 1rem;
 
   section {
@@ -43,7 +43,7 @@
   }
 
   .publish-all-sessions-review {
-    border: 1px solid var(--fern-green);
+    border: 1px solid var(--green);
     clear: both;
     @include m.font-size("large");
     margin: 1rem;
@@ -51,24 +51,24 @@
     text-align: center;
 
     .unlinked-warning {
-      color: var(--sepia);
+      color: var(--dark-orange);
       @include m.font-size("base");
     }
 
     .fa-chart-column {
-      color: var(--blue-munsell);
+      color: var(--light-blue);
       @include m.font-size("small");
     }
 
     p {
-      color: var(--fern-green);
+      color: var(--green);
       font-weight: bold;
       margin: 0;
       margin-bottom: 1rem;
     }
 
     button {
-      background: var(--fern-green);
+      background: var(--green);
       color: var(--white);
     }
   }

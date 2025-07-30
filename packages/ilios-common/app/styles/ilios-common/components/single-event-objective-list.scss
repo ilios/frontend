@@ -8,11 +8,11 @@
 
   .display-mode-toggle-btn {
     &.active {
-      background-color: var(--fern-green);
+      background-color: var(--green);
     }
     &.disabled {
       cursor: default;
-      background-color: var(--davys-grey);
+      background-color: var(--grey);
     }
   }
 

@@ -1,18 +1,32 @@
 :root {
-  --slight-white: hsl(0, 0%, 98%);
-  --raisin-black: hsl(345, 6%, 13%);
-  --white: hsl(0, 100%, 100%);
-  --black: hsl(0, 0%, 0%);
+  --white: hsl(0, 0%, 98%);
+
+  --grey: hsl(0, 0%, 30%);
+  --light-grey: hsl(0, 0%, 50%);
+  --lighter-grey: hsl(0, 0%, 80%);
+  --lightest-grey: hsl(0, 0%, 90%);
+  --super-light-grey: hsl(0, 0%, 95%);
+
+  --red: hsl(0, 100%, 30%);
+  --light-red: hsl(0, 100%, 40%);
+  --lightest-red: hsl(0, 100%, 97%);
+
   --orange: hsl(30, 100%, 40%);
-  --sepia: hsl(30, 100%, 20%);
-  --fern-green: hsl(103, 23%, 36%);
-  --gold: hsl(48, 93%, 44%);
-  --blue-munsell: hsl(195, 53%, 43%);
-  --teal-blue: hsl(195, 52%, 36%);
-  --light-blue: hsl(195, 51%, 92%);
-  --davys-grey: hsl(0, 0%, 32%);
-  --cultured-grey: hsl(200, 15%, 92%);
-  --crimson: hsl(346, 82%, 48%);
-  --lavender-blush: hsl(346, 80%, 96%);
-  --rosewood: hsl(346, 80%, 20%);
+  --dark-orange: hsl(30, 100%, 20%);
+
+  --yellow: hsl(45, 100%, 60%);
+  --dark-yellow: hsl(45, 100%, 45%);
+  --darker-yellow: hsl(45, 100%, 20%);
+
+  --green: hsl(115, 100%, 20%);
+  --transparent-green: hsl(115, 50%, 50%, 20%);
+
+  --blue: hsl(195, 50%, 35%);
+  --light-blue: hsl(195, 50%, 45%);
+  --lighter-blue: hsl(195, 50%, 80%);
+  --lightest-blue: hsl(195, 50%, 92%);
+
+  --black: hsl(345, 6%, 13%);
+  --slightly-transparent-black: hsl(from var(--black) h s l / 0.8);
+  --very-transparent-black: hsl(from var(--black) h s l / 0.2);
 }

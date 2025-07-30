@@ -10,18 +10,18 @@
 
   .session {
     &:nth-of-type(even) {
-      background-color: var(--light-blue);
+      background-color: var(--lightest-blue);
     }
 
     &.is-expanded {
-      border: 1px solid var(--blue-munsell);
-      background-color: var(--light-blue);
+      border: 1px solid var(--light-blue);
+      background-color: var(--lightest-blue);
       margin: 0.5rem 0;
     }
 
     .confirm-removal {
-      background-color: var(--lavender-blush);
-      color: var(--rosewood);
+      background-color: var(--lightest-red);
+      color: var(--red);
       font-weight: bold;
       margin: 0;
       padding: 1rem 8rem;

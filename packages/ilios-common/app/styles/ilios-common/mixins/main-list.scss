@@ -58,7 +58,7 @@
 }
 
 @mixin main-list-box-header() {
-  border-bottom: 1px solid var(--cultured-grey);
+  border-bottom: 1px solid var(--lightest-grey);
   display: flex;
   flex-direction: column;
   padding: 0 0 0.5rem;
@@ -92,7 +92,7 @@
 }
 
 @mixin main-list-saved-new() {
-  border: 1px solid var(--fern-green);
+  border: 1px solid var(--green);
   margin: 1rem;
   padding: 1rem;
 }
@@ -113,7 +113,7 @@
     @include ilios-table.ilios-zebra-table;
 
     thead {
-      background-color: var(--cultured-grey);
+      background-color: var(--lightest-grey);
     }
   }
 }
@@ -134,6 +134,6 @@
 
   td {
     color: transparent;
-    text-shadow: hsl(from var(--black) h s l / 0.3) 0px 0px 10px;
+    text-shadow: var(--very-transparent-black) 0px 0px 10px;
   }
 }

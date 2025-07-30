@@ -5,7 +5,7 @@
   .toggle-mycourses .toggle-buttons label {
     @include cm.loading-text;
     cursor: default;
-    background-color: var(--cultured-grey);
+    background-color: var(--lightest-grey);
   }
 
   select {

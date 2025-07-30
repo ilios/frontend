@@ -12,14 +12,14 @@
       padding-left: 1.5rem;
 
       &.error {
-        border: 1px solid var(--crimson);
-        outline-color: var(--crimson);
+        border: 1px solid var(--light-red);
+        outline-color: var(--light-red);
       }
     }
   }
 
   .search-icon {
-    color: var(--blue-munsell);
+    color: var(--light-blue);
     display: inline-block;
     left: 0;
     margin-right: 2px;

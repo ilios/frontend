@@ -3,16 +3,16 @@
 
 .learning-material-uploader {
   .upload-button {
-    background: var(--slight-white);
+    background: var(--white);
     border: 1px solid var(--black);
     border-radius: 3px;
-    color: var(--raisin-black);
+    color: var(--black);
     cursor: pointer;
     display: inline-block;
     @include m.font-size("base");
     padding: 0.3em 1em;
     &:hover {
-      background-color: var(--davys-grey);
+      background-color: var(--grey);
       color: var(--white);
     }
   }

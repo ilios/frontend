@@ -10,10 +10,10 @@
   }
 
   .confirm-finalize {
-    background-color: var(--lavender-blush);
+    background-color: var(--lightest-red);
 
     .confirm-message {
-      color: var(--rosewood);
+      color: var(--red);
       font-weight: bold;
       padding: 1rem 10%;
       text-align: center;
@@ -25,10 +25,10 @@
 
     .finalize {
       background-color: var(--white);
-      color: var(--rosewood);
+      color: var(--red);
 
       &:hover {
-        background-color: var(--crimson);
+        background-color: var(--light-red);
         color: var(--white);
       }
     }

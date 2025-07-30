@@ -11,11 +11,11 @@
   height: var(--height);
   position: relative;
   width: var(--width);
-  background-color: var(--rosewood);
+  background-color: var(--red);
   padding: 0;
 
   &.yes {
-    background-color: var(--fern-green);
+    background-color: var(--green);
   }
 
   .switch-handle {

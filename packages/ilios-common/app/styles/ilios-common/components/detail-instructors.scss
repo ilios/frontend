@@ -2,7 +2,7 @@
 @use "../mixins" as m;
 
 .detail-instructors {
-  @include m.detail-container(var(--teal-blue));
+  @include m.detail-container(var(--blue));
   padding: 1rem 0.5rem;
 
   .detail-instructors-header {
