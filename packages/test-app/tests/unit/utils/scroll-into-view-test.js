@@ -10,7 +10,7 @@ module('Unit | Utility | scroll into view', function () {
         assert.strictEqual(Object.keys(options).length, 3);
         assert.strictEqual(options.block, 'start');
         assert.strictEqual(options.inline, 'nearest');
-        assert.strictEqual(options.behavior, 'smooth');
+        assert.strictEqual(options.behavior, 'instant');
       },
     };
     scrollIntoView(mockElement);
@@ -22,12 +22,12 @@ module('Unit | Utility | scroll into view', function () {
     const mockElement = {
       scrollIntoView(options) {
         assert.strictEqual(Object.keys(options).length, 3);
-        assert.strictEqual(options.behavior, 'instant');
+        assert.strictEqual(options.behavior, 'smooth');
         assert.strictEqual(options.inline, 'nearest');
         assert.strictEqual(options.block, 'end');
       },
     };
-    scrollIntoView(mockElement, { opts: { behavior: 'instant', block: 'end' } });
+    scrollIntoView(mockElement, { opts: { behavior: 'smooth', block: 'end' } });
     await settled();
   });
 

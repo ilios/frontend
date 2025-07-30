@@ -18,7 +18,7 @@ export default function scrollIntoView(element, options) {
   const defaultOpts = {
     block: 'start',
     inline: 'nearest',
-    behavior: 'smooth',
+    behavior: 'instant',
   };
   // Merge default options with any given overrides.
   const opts = options?.opts ? { ...defaultOpts, ...options.opts } : defaultOpts;
