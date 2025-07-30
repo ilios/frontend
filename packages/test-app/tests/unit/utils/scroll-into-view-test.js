@@ -17,14 +17,17 @@ module('Unit | Utility | scroll into view', function () {
     await settled();
   });
 
-  test('override scroll behavior', async function (assert) {
-    assert.expect(1);
+  test('overrides', async function (assert) {
+    assert.expect(4);
     const mockElement = {
       scrollIntoView(options) {
+        assert.strictEqual(Object.keys(options).length, 3);
         assert.strictEqual(options.behavior, 'instant');
+        assert.strictEqual(options.inline, 'nearest');
+        assert.strictEqual(options.block, 'end');
       },
     };
-    scrollIntoView(mockElement, { scrollBehavior: 'instant' });
+    scrollIntoView(mockElement, { opts: { behavior: 'instant', block: 'end' } });
     await settled();
   });
 
