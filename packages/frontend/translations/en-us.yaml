@@ -116,6 +116,7 @@ general:
   deselectUser: Deselect User
   details: Course Details
   developer: Developer
+  didYouMean: Did you mean <a href="{href}">{suggestion}</a>?
   director: Director
   disableUser: Disable User
   doesNotMatchUserRecord: 'Uploaded {description} does not match the information in Ilios, which is "{record}"'
