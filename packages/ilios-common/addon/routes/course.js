@@ -10,6 +10,27 @@ export default class CourseRoute extends Route {
   @service router;
   @service currentUser;
 
+  queryParams = {
+    details: {
+      replace: true,
+    },
+    courseLeadershipDetails: {
+      replace: true,
+    },
+    courseObjectiveDetails: {
+      replace: true,
+    },
+    courseTaxonomyDetails: {
+      replace: true,
+    },
+    courseCompetencyDetails: {
+      replace: true,
+    },
+    courseManageLeadership: {
+      replace: true,
+    },
+  };
+
   titleToken = 'general.coursesAndSessions';
   editable = false;
   #preloadTopLevel = null;
