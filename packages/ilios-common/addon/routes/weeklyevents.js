@@ -11,9 +11,6 @@ export default class WeeklyeventsRoute extends Route {
     week: {
       replace: true,
     },
-    year: {
-      replace: true,
-    },
   };
 
   beforeModel(transition) {
