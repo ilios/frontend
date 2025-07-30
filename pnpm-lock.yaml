@@ -303,9 +303,6 @@ importers:
       sass:
         specifier: ^1.89.2
         version: 1.89.2
-      scroll-into-view:
-        specifier: ^1.16.2
-        version: 1.16.2
       striptags:
         specifier: ^3.2.0
         version: 3.2.0
@@ -480,9 +477,6 @@ importers:
       query-string:
         specifier: '>= 9.1.0'
         version: 9.2.2
-      scroll-into-view:
-        specifier: '>= 1.16.0'
-        version: 1.16.2
       striptags:
         specifier: '>= 3.2.0'
         version: 3.2.0
@@ -8711,9 +8705,6 @@ packages:
   schema-utils@4.3.2:
     resolution: {integrity: sha512-Gn/JaSk/Mt9gYubxTtSn/QCV4em9mpAPiR1rqy/Ocu19u/G9J5WWdNoUT4SiV6mFC3y6cxyFcFwdzPM3FgxGAQ==}
     engines: {node: '>= 10.13.0'}
-
-  scroll-into-view@1.16.2:
-    resolution: {integrity: sha512-vyTE0i27o6eldt9xinjHec41Dw05y+faoI+s2zNKJAVOdbA5M2XZrYq/obJ8E+QDQulJ2gDjgui9w9m9RZSRng==}
 
   semver@5.7.2:
     resolution: {integrity: sha512-cBznnQ9KjJqU67B52RMC65CMarK2600WFnbkcaiwWq3xy/5haFJlshgnpjovMVJ+Hff49d8GEn0b87C5pDQ10g==}
@@ -20044,8 +20035,6 @@ snapshots:
       ajv: 8.17.1
       ajv-formats: 2.1.1(ajv@8.17.1)
       ajv-keywords: 5.1.0(ajv@8.17.1)
-
-  scroll-into-view@1.16.2: {}
 
   semver@5.7.2: {}
 
