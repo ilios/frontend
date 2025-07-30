@@ -41,9 +41,9 @@ export default class CurriculumInventoryVerificationPreviewTable2Component exten
       data-test-curriculum-inventory-verification-preview-table2
       ...attributes
     >
-      <h4 data-test-title>
+      <h3 data-test-title>
         {{t "general.table2PrimaryInstructionalMethodByNonClerkshipSequenceBlock"}}
-      </h4>
+      </h3>
       <table>
         <thead>
           <tr>
@@ -87,6 +87,10 @@ export default class CurriculumInventoryVerificationPreviewTable2Component exten
               <td>
                 {{clerkship.total}}
               </td>
+            </tr>
+          {{else}}
+            <tr>
+              <td colspan="4">{{t "general.none"}}</td>
             </tr>
           {{/each}}
         </tbody>

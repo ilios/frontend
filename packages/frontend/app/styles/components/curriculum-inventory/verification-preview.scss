@@ -1,3 +1,5 @@
+@use "../../ilios-common/mixins" as m;
+
 .curriculum-inventory-verification-preview {
   .back-to-toc {
     display: block;
@@ -8,5 +10,9 @@
     list-style-type: none;
     margin-left: 0;
     padding-left: 1rem;
+  }
+
+  h3 {
+    @include m.ilios-heading-h4;
   }
 }

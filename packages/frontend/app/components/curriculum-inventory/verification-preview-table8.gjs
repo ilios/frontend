@@ -6,9 +6,9 @@ import t from 'ember-intl/helpers/t';
     data-test-curriculum-inventory-verification-preview-table8
     ...attributes
   >
-    <h4 data-test-title id="verification-preview-table8">
+    <h3 data-test-title id="verification-preview-table8">
       {{t "general.table8AllResourceTypes"}}
-    </h4>
+    </h3>
     <table>
       <thead>
         <tr>
@@ -35,6 +35,10 @@ import t from 'ember-intl/helpers/t';
             <td>
               {{row.count}}
             </td>
+          </tr>
+        {{else}}
+          <tr>
+            <td colspan="4">{{t "general.none"}}</td>
           </tr>
         {{/each}}
       </tbody>

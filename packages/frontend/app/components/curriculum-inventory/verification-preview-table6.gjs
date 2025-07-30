@@ -24,9 +24,9 @@ export default class CurriculumInventoryVerificationPreviewTable6Component exten
       data-test-curriculum-inventory-verification-preview-table6
       ...attributes
     >
-      <h4 data-test-title id="verification-preview-table6">
+      <h3 data-test-title id="verification-preview-table6">
         {{t "general.table6ClerkshipSequenceBlockAssessmentMethods"}}
-      </h4>
+      </h3>
       <table>
         <thead>
           <tr>
@@ -79,6 +79,10 @@ export default class CurriculumInventoryVerificationPreviewTable6Component exten
               <td>
                 {{clerkship.hasNarrativeAssessments}}
               </td>
+            </tr>
+          {{else}}
+            <tr>
+              <td colspan="11">{{t "general.none"}}</td>
             </tr>
           {{/each}}
         </tbody>

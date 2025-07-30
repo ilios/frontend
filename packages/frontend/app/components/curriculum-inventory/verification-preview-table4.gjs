@@ -20,9 +20,9 @@ export default class CurriculumInventoryVerificationPreviewTable4Component exten
       data-test-curriculum-inventory-verification-preview-table4
       ...attributes
     >
-      <h4 data-test-title>
+      <h3 data-test-title>
         {{t "general.table4InstructionalMethodCounts"}}
-      </h4>
+      </h3>
       <table>
         <thead>
           <tr>
@@ -55,6 +55,10 @@ export default class CurriculumInventoryVerificationPreviewTable4Component exten
               <td>
                 {{row.num_events_non_primary_method}}
               </td>
+            </tr>
+          {{else}}
+            <tr>
+              <td colspan="5">{{t "general.none"}}</td>
             </tr>
           {{/each}}
         </tbody>

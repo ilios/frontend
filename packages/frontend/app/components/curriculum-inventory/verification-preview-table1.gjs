@@ -6,9 +6,9 @@ import t from 'ember-intl/helpers/t';
     data-test-curriculum-inventory-verification-preview-table1
     ...attributes
   >
-    <h4 data-test-title>
+    <h3 data-test-title>
       {{t "general.table1ProgramExpectationsMappedToPcrs"}}
-    </h4>
+    </h3>
     <table>
       <thead>
         <tr>
@@ -43,6 +43,10 @@ import t from 'ember-intl/helpers/t';
                 {{/each}}
               </ul>
             </td>
+          </tr>
+        {{else}}
+          <tr>
+            <td colspan="6">{{t "general.none"}}</td>
           </tr>
         {{/each}}
       </tbody>

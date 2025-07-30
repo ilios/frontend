@@ -12,8 +12,10 @@
       vertical-align: top;
     }
 
-    td:nth-last-child(1) {
-      font-weight: bold;
+    tfoot {
+      td:nth-last-child(1) {
+        font-weight: bold;
+      }
     }
   }
 }
