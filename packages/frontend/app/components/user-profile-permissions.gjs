@@ -525,11 +525,6 @@ export default class UserProfilePermissionsComponent extends Component {
           {{#if this.directedPrograms.length}}
             <h3 class="title" data-test-title>
               <button
-                aria-label={{if
-                  this.programCollapsed
-                  (t "general.showRolesInPrograms")
-                  (t "general.hideRolesInPrograms")
-                }}
                 aria-expanded={{if this.programCollapsed "false" "true"}}
                 class="toggle-button {{if this.programCollapsed 'collapsed' 'expanded'}}"
                 type="button"
@@ -567,11 +562,6 @@ export default class UserProfilePermissionsComponent extends Component {
           {{#if this.directedProgramYears.length}}
             <h3 class="title" data-test-title>
               <button
-                aria-label={{if
-                  this.programYearCollapsed
-                  (t "general.showRolesInProgramYears")
-                  (t "general.hideRolesInProgramYears")
-                }}
                 aria-expanded={{if this.programYearCollapsed "false" "true"}}
                 class="toggle-button {{if this.programYearCollapsed 'collapsed' 'expanded'}}"
                 type="button"
@@ -615,11 +605,6 @@ export default class UserProfilePermissionsComponent extends Component {
           {{#if this.courseCount}}
             <h3 class="title" data-test-title>
               <button
-                aria-label={{if
-                  this.courseCollapsed
-                  (t "general.showRolesInCourses")
-                  (t "general.hideRolesInCourses")
-                }}
                 aria-expanded={{if this.courseCollapsed "false" "true"}}
                 class="toggle-button {{if this.courseCollapsed 'collapsed' 'expanded'}}"
                 type="button"
@@ -739,11 +724,6 @@ export default class UserProfilePermissionsComponent extends Component {
           {{#if this.sessionCount}}
             <h3 class="title" data-test-title>
               <button
-                aria-label={{if
-                  this.sessionCollapsed
-                  (t "general.showRolesInSessions")
-                  (t "general.hideRolesInSessions")
-                }}
                 aria-expanded={{if this.sessionCollapsed "false" "true"}}
                 class="toggle-button {{if this.sessionCollapsed 'collapsed' 'expanded'}}"
                 type="button"
