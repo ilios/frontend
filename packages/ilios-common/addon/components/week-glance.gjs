@@ -138,11 +138,6 @@ export default class WeeklyGlance extends Component {
           type="button"
           class="title collapsible"
           aria-expanded={{if @collapsed "false" "true"}}
-          aria-labelledby={{if
-            @collapsed
-            (t "general.expandTitle" title=this.title)
-            (t "general.collapseTitle" title=this.title)
-          }}
           data-test-week-title
           {{on "click" (fn (optional @toggleCollapsed) @collapsed)}}
         >
@@ -150,14 +145,7 @@ export default class WeeklyGlance extends Component {
           {{#if @showFullTitle}}
             {{t "general.weekAtAGlance"}}
           {{/if}}
-          <FaIcon
-            @icon={{if @collapsed "caret-right" "caret-down"}}
-            @title={{if
-              @collapsed
-              (t "general.expandTitle" title=this.title)
-              (t "general.collapseTitle" title=this.title)
-            }}
-          />
+          <FaIcon @icon={{if @collapsed "caret-right" "caret-down"}} />
         </button>
       {{else}}
         <h2 class="title" role={{if @collapsible "button"}} data-test-week-title>
