@@ -116,42 +116,42 @@ export default class InstructorGroupCourseAssociationsComponent extends Componen
       >
         {{#if this.isLoaded}}
           <div class="header" data-test-header>
-            <h2 class="title" data-test-title>
-              {{#if this.hasAssociations}}
-                {{#if @isExpanded}}
-                  <button
-                    class="title link-button"
-                    type="button"
-                    aria-expanded="true"
-                    aria-controls="content-{{templateId}}"
-                    aria-label={{t "general.hideAssociatedCourses"}}
-                    data-test-toggle
-                    {{on "click" (fn @setIsExpanded false)}}
-                  >
-                    {{t "general.associatedCourses"}}
-                    ({{this.associations.length}})
-                    <FaIcon @icon="caret-down" />
-                  </button>
-                {{else}}
-                  <button
-                    class="title link-button"
-                    type="button"
-                    aria-expanded="false"
-                    aria-controls="content-{{templateId}}"
-                    aria-label={{t "general.showAssociatedCourses"}}
-                    data-test-toggle
-                    {{on "click" (fn @setIsExpanded true)}}
-                  >
-                    {{t "general.associatedCourses"}}
-                    ({{this.associations.length}})
-                    <FaIcon @icon="caret-right" />
-                  </button>
-                {{/if}}
+            {{#if this.hasAssociations}}
+              {{#if @isExpanded}}
+                <button
+                  class="title link-button"
+                  type="button"
+                  aria-expanded="true"
+                  aria-controls="content-{{templateId}}"
+                  aria-label={{t "general.hideAssociatedCourses"}}
+                  data-test-toggle
+                  {{on "click" (fn @setIsExpanded false)}}
+                >
+                  {{t "general.associatedCourses"}}
+                  ({{this.associations.length}})
+                  <FaIcon @icon="caret-down" />
+                </button>
               {{else}}
+                <button
+                  class="title link-button"
+                  type="button"
+                  aria-expanded="false"
+                  aria-controls="content-{{templateId}}"
+                  aria-label={{t "general.showAssociatedCourses"}}
+                  data-test-toggle
+                  {{on "click" (fn @setIsExpanded true)}}
+                >
+                  {{t "general.associatedCourses"}}
+                  ({{this.associations.length}})
+                  <FaIcon @icon="caret-right" />
+                </button>
+              {{/if}}
+            {{else}}
+              <div class="title">
                 {{t "general.associatedCourses"}}
                 ({{this.associations.length}})
-              {{/if}}
-            </h2>
+              </div>
+            {{/if}}
           </div>
           {{#if this.hasAssociations}}
             <div

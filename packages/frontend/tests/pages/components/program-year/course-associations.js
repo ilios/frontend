@@ -12,7 +12,7 @@ const definition = {
   scope: '[data-test-program-year-course-associations]',
   header: {
     scope: '[data-test-header]',
-    title: text('[data-test-title]'),
+    title: text('.title'),
     toggle: {
       scope: '[data-test-toggle]',
       isCollapsed: isPresent('[data-icon="caret-right"]'),

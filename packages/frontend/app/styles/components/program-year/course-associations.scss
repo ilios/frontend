@@ -2,15 +2,10 @@
 @use "../../ilios-common/mixins" as m;
 
 .program-year-course-associations {
-  @include m.detail-container-content;
-  border-top: 1px dotted (var(--orange));
+  @include m.collapsed-container(var(--orange));
 
-  .header {
-    @include m.detail-container-header;
-
-    .title {
-      @include m.collapsed-container-title;
-    }
+  .title {
+    @include m.collapsed-container-title;
   }
 
   .content {
