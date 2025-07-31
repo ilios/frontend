@@ -14,11 +14,8 @@ module('Integration | Component | user-menu', function (hooks) {
   // My Profile and Logout
   const linkCount = 2;
 
-  hooks.beforeEach(async function () {
-    await setupAuthentication();
-  });
-
   test('it renders and is accessible', async function (assert) {
+    await setupAuthentication();
     await render(<template><UserMenu /></template>);
 
     await a11yAudit(this.element);
@@ -31,6 +28,7 @@ module('Integration | Component | user-menu', function (hooks) {
   });
 
   test('click opens menu', async function (assert) {
+    await setupAuthentication();
     await render(<template><UserMenu /></template>);
 
     assert.strictEqual(component.links.length, 0);
@@ -39,6 +37,7 @@ module('Integration | Component | user-menu', function (hooks) {
   });
 
   test('down opens menu', async function (assert) {
+    await setupAuthentication();
     await render(<template><UserMenu /></template>);
 
     assert.strictEqual(component.links.length, 0);
@@ -47,6 +46,7 @@ module('Integration | Component | user-menu', function (hooks) {
   });
 
   test('escape closes menu', async function (assert) {
+    await setupAuthentication();
     await render(<template><UserMenu /></template>);
 
     await component.toggle.down();
@@ -56,6 +56,7 @@ module('Integration | Component | user-menu', function (hooks) {
   });
 
   test('click closes menu', async function (assert) {
+    await setupAuthentication();
     await render(<template><UserMenu /></template>);
 
     await component.toggle.down();
@@ -65,6 +66,7 @@ module('Integration | Component | user-menu', function (hooks) {
   });
 
   test('keyboard navigation', async function (assert) {
+    await setupAuthentication();
     await render(<template><UserMenu /></template>);
     await component.toggle.click();
     assert.strictEqual(component.links.length, linkCount, `has ${linkCount} links`);
@@ -116,5 +118,14 @@ module('Integration | Component | user-menu', function (hooks) {
     assert.ok(component.links[0].link.hasFocus);
     await component.links[0].tab();
     assert.strictEqual(component.links.length, 0);
+  });
+
+  test('it renders fallback text when no logged in user', async function (assert) {
+    await render(<template><UserMenu /></template>);
+
+    await a11yAudit(this.element);
+    assert.strictEqual(component.text, 'User menu');
+
+    assert.ok(true, 'no a11y errors found!');
   });
 });

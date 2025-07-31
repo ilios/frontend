@@ -4,7 +4,7 @@ import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { task, timeout } from 'ember-concurrency';
 import { TrackedAsyncData } from 'ember-async-data';
-import { uniqueId, get, hash } from '@ember/helper';
+import { uniqueId, hash } from '@ember/helper';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
 import FaIcon from 'ilios-common/components/fa-icon';
@@ -23,6 +23,10 @@ export default class UserMenuComponent extends Component {
   @cached
   get model() {
     return this.userModel.isResolved ? this.userModel.value : null;
+  }
+
+  get menuTitle() {
+    return this.model?.fullName || this.intl.t('general.userMenu');
   }
 
   focusFirstLink = task(async () => {
@@ -105,7 +109,7 @@ export default class UserMenuComponent extends Component {
         >
           <FaIcon @icon="user" />
           <span id="{{templateId}}-user-menu-title">
-            {{get this.model "fullName"}}
+            {{this.menuTitle}}
           </span>
           <FaIcon @icon={{if this.isOpen "caret-down" "caret-right"}} />
         </button>
