@@ -3,7 +3,7 @@
 
 .user-profile-permissions {
   .title {
-    @include m.ilios-heading-h3;
+    @include m.ilios-heading-h5;
     margin-bottom: 0.5rem;
   }
 
@@ -20,6 +20,10 @@
 
     h3.title {
       @include m.ilios-heading-h5;
+
+      button {
+        @include m.ilios-heading-h5;
+      }
     }
 
     h4 {
