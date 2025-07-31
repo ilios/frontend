@@ -3,7 +3,6 @@
 
 .program-year-course-associations {
   @include m.detail-container-content;
-  border-top: 1px dotted (var(--orange));
 
   .header {
     @include m.detail-container-header;
