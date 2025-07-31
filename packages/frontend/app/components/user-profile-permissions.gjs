@@ -17,7 +17,6 @@ import reverse from 'ilios-common/helpers/reverse';
 import YesNo from 'frontend/components/yes-no';
 import set from 'ember-set-helper/helpers/set';
 import not from 'ember-truth-helpers/helpers/not';
-import and from 'ember-truth-helpers/helpers/and';
 import add from 'ember-math-helpers/helpers/add';
 import { LinkTo } from '@ember/routing';
 import { array } from '@ember/helper';
@@ -523,8 +522,8 @@ export default class UserProfilePermissionsComponent extends Component {
         </p>
 
         <p class="section" data-test-program-permissions>
-          <h3 class="title" data-test-title>
-            {{#if this.directedPrograms.length}}
+          {{#if this.directedPrograms.length}}
+            <h3 class="title" data-test-title>
               <button
                 aria-label={{if
                   this.programCollapsed
@@ -543,27 +542,30 @@ export default class UserProfilePermissionsComponent extends Component {
                   class="disabled"
                 />
               </button>
-            {{else}}
+            </h3>
+            {{#if this.programExpanded}}
+              <h4>
+                {{t "general.director"}}
+              </h4>
+              <ul data-test-directors>
+                {{#each (sortBy0 "title" this.directedPrograms) as |program|}}
+                  <li data-test-program>
+                    {{program.title}}
+                  </li>
+                {{/each}}
+              </ul>
+            {{/if}}
+          {{else}}
+            <span class="title" data-test-title>
               {{t "general.programs"}}
               ({{this.directedPrograms.length}})
-            {{/if}}
-          </h3>
-          {{#if (and this.directedPrograms.length this.programExpanded)}}
-            <h4>
-              {{t "general.director"}}
-            </h4>
-            <ul data-test-directors>
-              {{#each (sortBy0 "title" this.directedPrograms) as |program|}}
-                <li data-test-program>
-                  {{program.title}}
-                </li>
-              {{/each}}
-            </ul>
+            </span>
           {{/if}}
         </p>
+
         <p class="section" data-test-program-year-permissions>
-          <h3 class="title" data-test-title>
-            {{#if this.directedProgramYears.length}}
+          {{#if this.directedProgramYears.length}}
+            <h3 class="title" data-test-title>
               <button
                 aria-label={{if
                   this.programYearCollapsed
@@ -582,30 +584,36 @@ export default class UserProfilePermissionsComponent extends Component {
                   class="disabled"
                 />
               </button>
-            {{else}}
+            </h3>
+            {{#if this.programYearExpanded}}
+              <h4>
+                {{t "general.director"}}
+              </h4>
+              <ul data-test-directors>
+                {{#each
+                  (sortBy0 "program.title" "title" this.directedProgramYears)
+                  as |programYear|
+                }}
+                  <li data-test-program>
+                    {{programYear.program.title}}
+                    <strong>
+                      {{programYear.cohort.title}}
+                    </strong>
+                  </li>
+                {{/each}}
+              </ul>
+            {{/if}}
+          {{else}}
+            <span class="title" data-test-title>
               {{t "general.programYears"}}
               ({{this.directedProgramYears.length}})
-            {{/if}}
-          </h3>
-          {{#if (and this.directedProgramYears.length this.programYearExpanded)}}
-            <h4>
-              {{t "general.director"}}
-            </h4>
-            <ul data-test-directors>
-              {{#each (sortBy0 "program.title" "title" this.directedProgramYears) as |programYear|}}
-                <li data-test-program>
-                  {{programYear.program.title}}
-                  <strong>
-                    {{programYear.cohort.title}}
-                  </strong>
-                </li>
-              {{/each}}
-            </ul>
+            </span>
           {{/if}}
         </p>
+
         <p class="section" data-test-course-permissions>
-          <h3 class="title" data-test-title>
-            {{#if this.courseCount}}
+          {{#if this.courseCount}}
+            <h3 class="title" data-test-title>
               <button
                 aria-label={{if
                   this.courseCollapsed
@@ -624,109 +632,112 @@ export default class UserProfilePermissionsComponent extends Component {
                   class="disabled"
                 />
               </button>
-            {{else}}
+            </h3>
+            {{#if this.courseExpanded}}
+              <h4>
+                {{t "general.director"}}
+              </h4>
+              <ul data-test-directors>
+                {{#each (sortBy0 "title" this.directedCourses) as |course|}}
+                  <li data-test-course>
+                    {{#if this.academicYearCrossesCalendarYearBoundaries}}
+                      {{course.year}}
+                      -
+                      {{add course.year 1}}
+                    {{else}}
+                      {{course.year}}
+                    {{/if}}
+                    <LinkTo @route="course" @model={{course}}>
+                      {{course.title}}
+                    </LinkTo>
+                  </li>
+                {{else}}
+                  <li data-test-none>
+                    {{t "general.none"}}
+                  </li>
+                {{/each}}
+              </ul>
+              <h4>
+                {{t "general.administrator"}}
+              </h4>
+              <ul data-test-administrators>
+                {{#each (sortBy0 "title" this.administeredCourses) as |course|}}
+                  <li data-test-course>
+                    {{#if this.academicYearCrossesCalendarYearBoundaries}}
+                      {{course.year}}
+                      -
+                      {{add course.year 1}}
+                    {{else}}
+                      {{course.year}}
+                    {{/if}}
+                    <LinkTo @route="course" @model={{course}}>
+                      {{course.title}}
+                    </LinkTo>
+                  </li>
+                {{else}}
+                  <li data-test-none>
+                    {{t "general.none"}}
+                  </li>
+                {{/each}}
+              </ul>
+              <h4>
+                {{t "general.instructor"}}
+              </h4>
+              <ul data-test-instructors>
+                {{#each (sortBy0 "title" this.instructedCourses) as |course|}}
+                  <li data-test-course>
+                    {{#if this.academicYearCrossesCalendarYearBoundaries}}
+                      {{course.year}}
+                      -
+                      {{add course.year 1}}
+                    {{else}}
+                      {{course.year}}
+                    {{/if}}
+                    <LinkTo @route="course" @model={{course}}>
+                      {{course.title}}
+                    </LinkTo>
+                  </li>
+                {{else}}
+                  <li data-test-none>
+                    {{t "general.none"}}
+                  </li>
+                {{/each}}
+              </ul>
+              <h4>
+                {{t "general.studentAdvisors"}}
+              </h4>
+              <ul data-test-student-advisors>
+                {{#each this.studentAdvisedCourses as |course|}}
+                  <li data-test-course>
+                    {{#if this.academicYearCrossesCalendarYearBoundaries}}
+                      {{course.year}}
+                      -
+                      {{add course.year 1}}
+                    {{else}}
+                      {{course.year}}
+                    {{/if}}
+                    <LinkTo @route="course" @model={{course}}>
+                      {{course.title}}
+                    </LinkTo>
+                  </li>
+                {{else}}
+                  <li data-test-none>
+                    {{t "general.none"}}
+                  </li>
+                {{/each}}
+              </ul>
+            {{/if}}
+          {{else}}
+            <span class="title" data-test-title>
               {{t "general.courses"}}
               ({{this.courseCount}})
-            {{/if}}
-          </h3>
-          {{#if (and this.courseCount this.courseExpanded)}}
-            <h4>
-              {{t "general.director"}}
-            </h4>
-            <ul data-test-directors>
-              {{#each (sortBy0 "title" this.directedCourses) as |course|}}
-                <li data-test-course>
-                  {{#if this.academicYearCrossesCalendarYearBoundaries}}
-                    {{course.year}}
-                    -
-                    {{add course.year 1}}
-                  {{else}}
-                    {{course.year}}
-                  {{/if}}
-                  <LinkTo @route="course" @model={{course}}>
-                    {{course.title}}
-                  </LinkTo>
-                </li>
-              {{else}}
-                <li data-test-none>
-                  {{t "general.none"}}
-                </li>
-              {{/each}}
-            </ul>
-            <h4>
-              {{t "general.administrator"}}
-            </h4>
-            <ul data-test-administrators>
-              {{#each (sortBy0 "title" this.administeredCourses) as |course|}}
-                <li data-test-course>
-                  {{#if this.academicYearCrossesCalendarYearBoundaries}}
-                    {{course.year}}
-                    -
-                    {{add course.year 1}}
-                  {{else}}
-                    {{course.year}}
-                  {{/if}}
-                  <LinkTo @route="course" @model={{course}}>
-                    {{course.title}}
-                  </LinkTo>
-                </li>
-              {{else}}
-                <li data-test-none>
-                  {{t "general.none"}}
-                </li>
-              {{/each}}
-            </ul>
-            <h4>
-              {{t "general.instructor"}}
-            </h4>
-            <ul data-test-instructors>
-              {{#each (sortBy0 "title" this.instructedCourses) as |course|}}
-                <li data-test-course>
-                  {{#if this.academicYearCrossesCalendarYearBoundaries}}
-                    {{course.year}}
-                    -
-                    {{add course.year 1}}
-                  {{else}}
-                    {{course.year}}
-                  {{/if}}
-                  <LinkTo @route="course" @model={{course}}>
-                    {{course.title}}
-                  </LinkTo>
-                </li>
-              {{else}}
-                <li data-test-none>
-                  {{t "general.none"}}
-                </li>
-              {{/each}}
-            </ul>
-            <h4>
-              {{t "general.studentAdvisors"}}
-            </h4>
-            <ul data-test-student-advisors>
-              {{#each this.studentAdvisedCourses as |course|}}
-                <li data-test-course>
-                  {{#if this.academicYearCrossesCalendarYearBoundaries}}
-                    {{course.year}}
-                    -
-                    {{add course.year 1}}
-                  {{else}}
-                    {{course.year}}
-                  {{/if}}
-                  <LinkTo @route="course" @model={{course}}>
-                    {{course.title}}
-                  </LinkTo>
-                </li>
-              {{else}}
-                <li data-test-none>
-                  {{t "general.none"}}
-                </li>
-              {{/each}}
-            </ul>
+            </span>
           {{/if}}
         </p>
+
         <p class="section" data-test-session-permissions>
-          <h3 class="title" data-test-title>
-            {{#if this.sessionCount}}
+          {{#if this.sessionCount}}
+            <h3 class="title" data-test-title>
               <button
                 aria-label={{if
                   this.sessionCollapsed
@@ -745,91 +756,93 @@ export default class UserProfilePermissionsComponent extends Component {
                   class="disabled"
                 />
               </button>
-            {{else}}
+            </h3>
+            {{#if this.sessionExpanded}}
+              <h4>
+                {{t "general.administrator"}}
+              </h4>
+              <ul data-test-administrators>
+                {{#each this.administeredSessions as |session|}}
+                  {{! template-lint-disable no-bare-strings }}
+                  <li data-test-course>
+                    {{#if this.academicYearCrossesCalendarYearBoundaries}}
+                      {{session.course.year}}
+                      -
+                      {{add session.course.year 1}}
+                    {{else}}
+                      {{session.course.year}}
+                    {{/if}}
+                    {{session.course.title}}
+                    &raquo;
+                    <LinkTo @route="session" @models={{array session.course session}}>
+                      {{session.title}}
+                    </LinkTo>
+                  </li>
+                {{else}}
+                  <li data-test-none>
+                    {{t "general.none"}}
+                  </li>
+                {{/each}}
+              </ul>
+              <h4>
+                {{t "general.instructor"}}
+              </h4>
+              <ul data-test-instructors>
+                {{#each
+                  (sortBy0 "course.year:desc" "course.title" "title" this.instructedSessions)
+                  as |session|
+                }}
+                  <li data-test-course>
+                    {{#if this.academicYearCrossesCalendarYearBoundaries}}
+                      {{session.course.year}}
+                      -
+                      {{add session.course.year 1}}
+                    {{else}}
+                      {{session.course.year}}
+                    {{/if}}
+                    {{session.course.title}}
+                    &raquo;
+                    <LinkTo @route="session" @models={{array session.course session}}>
+                      {{session.title}}
+                    </LinkTo>
+                  </li>
+                {{else}}
+                  <li data-test-none>
+                    {{t "general.none"}}
+                  </li>
+                {{/each}}
+              </ul>
+              <h4>
+                {{t "general.studentAdvisors"}}
+              </h4>
+              <ul data-test-student-advisors>
+                {{#each this.studentAdvisedSessions as |session|}}
+                  <li data-test-course>
+                    {{#if this.academicYearCrossesCalendarYearBoundaries}}
+                      {{session.course.year}}
+                      -
+                      {{add session.course.year 1}}
+                    {{else}}
+                      {{session.course.year}}
+                    {{/if}}
+                    {{session.course.title}}
+                    &raquo;
+                    <LinkTo @route="session" @models={{array session.course session}}>
+                      {{session.title}}
+                    </LinkTo>
+                  </li>
+                {{else}}
+                  <li data-test-none>
+                    {{t "general.none"}}
+                  </li>
+                {{/each}}
+              </ul>
+            {{/if}}
+          {{else}}
+            <span class="title" data-test-title>
               {{t "general.sessions"}}
               ({{this.sessionCount}})
-            {{/if}}
-          </h3>
-          {{#if (and this.sessionCount this.sessionExpanded)}}
-            <h4>
-              {{t "general.administrator"}}
-            </h4>
-            <ul data-test-administrators>
-              {{#each this.administeredSessions as |session|}}
-                {{! template-lint-disable no-bare-strings }}
-                <li data-test-course>
-                  {{#if this.academicYearCrossesCalendarYearBoundaries}}
-                    {{session.course.year}}
-                    -
-                    {{add session.course.year 1}}
-                  {{else}}
-                    {{session.course.year}}
-                  {{/if}}
-                  {{session.course.title}}
-                  &raquo;
-                  <LinkTo @route="session" @models={{array session.course session}}>
-                    {{session.title}}
-                  </LinkTo>
-                </li>
-              {{else}}
-                <li data-test-none>
-                  {{t "general.none"}}
-                </li>
-              {{/each}}
-            </ul>
-            <h4>
-              {{t "general.instructor"}}
-            </h4>
-            <ul data-test-instructors>
-              {{#each
-                (sortBy0 "course.year:desc" "course.title" "title" this.instructedSessions)
-                as |session|
-              }}
-                <li data-test-course>
-                  {{#if this.academicYearCrossesCalendarYearBoundaries}}
-                    {{session.course.year}}
-                    -
-                    {{add session.course.year 1}}
-                  {{else}}
-                    {{session.course.year}}
-                  {{/if}}
-                  {{session.course.title}}
-                  &raquo;
-                  <LinkTo @route="session" @models={{array session.course session}}>
-                    {{session.title}}
-                  </LinkTo>
-                </li>
-              {{else}}
-                <li data-test-none>
-                  {{t "general.none"}}
-                </li>
-              {{/each}}
-            </ul>
-            <h4>
-              {{t "general.studentAdvisors"}}
-            </h4>
-            <ul data-test-student-advisors>
-              {{#each this.studentAdvisedSessions as |session|}}
-                <li data-test-course>
-                  {{#if this.academicYearCrossesCalendarYearBoundaries}}
-                    {{session.course.year}}
-                    -
-                    {{add session.course.year 1}}
-                  {{else}}
-                    {{session.course.year}}
-                  {{/if}}
-                  {{session.course.title}}
-                  &raquo;
-                  <LinkTo @route="session" @models={{array session.course session}}>
-                    {{session.title}}
-                  </LinkTo>
-                </li>
-              {{else}}
-                <li data-test-none>
-                  {{t "general.none"}}
-                </li>
-              {{/each}}
-            </ul>
+            </span>
           {{/if}}
         </p>
       {{/if}}
