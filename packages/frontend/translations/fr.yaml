@@ -161,7 +161,6 @@ general:
   good: Bon
   goToUser: "Présentant enregistrement d'utilisateur en Ilios"
   groupMembers: Membres du groupe courant
-  hideAssociatedCourses: Masquer les cours associés
   hideRolesInCourses: Masquer les rôles dans les cours
   hideRolesInPrograms: Masquer les rôles dans les programmes
   hideRolesInProgramYears: Masquer les rôles dans les années du programme
@@ -404,7 +403,6 @@ general:
   sessionTitlePlaceholder: Ajoutez un titre pour ce session
   sessionTypeConfirmRemoval: "Voulez-vous vraiment supprimer ce type de session ? Cette action ne peut pas être annulée."
   sessionTypeTitlePlaceholder: Ajoutez un titre pour ce type de session
-  showAssociatedCourses: Afficher les cours associés
   showRolesInCourses: Afficher les rôles dans les cours
   showRolesInPrograms: Afficher les rôles dans les programmes
   showRolesInProgramYears: Afficher les rôles dans les années du programme

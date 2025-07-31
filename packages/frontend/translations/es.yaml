@@ -161,7 +161,6 @@ general:
   good: Bueno
   goToUser: Mostrar registro de usuario en Ilios
   groupMembers: Miembros de grupo corriente
-  hideAssociatedCourses: Ocultar cursos asociados
   hideRolesInCourses: Ocultar roles en cursos
   hideRolesInPrograms: Ocultar roles en programas
   hideRolesInProgramYears: Ocultar roles en los años del programa
@@ -403,7 +402,6 @@ general:
   sessionTitlePlaceholder: Entre en un titulo para esta sesión
   sessionTypeConfirmRemoval: ¿Está seguro de que desea eliminar este tipo de sesión? Esta acción no se puede deshacer.
   sessionTypeTitlePlaceholder: Entre en un titulo para este tipo de sesión
-  showAssociatedCourses: Mostrar cursos asociados
   showRolesInCourses: Mostrar roles en cursos
   showRolesInPrograms: Mostrar roles en programas
   showRolesInProgramYears: Mostrar roles en años de programa

@@ -47,7 +47,6 @@ module('Integration | Component | program-year/course-associations', function (h
     assert.notOk(component.header.toggle.isCollapsed);
     assert.ok(component.header.toggle.isExpanded);
     assert.strictEqual(component.header.toggle.ariaExpanded, 'true');
-    assert.strictEqual(component.header.toggle.ariaLabel, 'Hide associated courses');
     assert.notOk(component.content.isHidden);
     assert.strictEqual(component.header.title, 'Associated Courses (3)');
 
@@ -91,7 +90,6 @@ module('Integration | Component | program-year/course-associations', function (h
     assert.ok(component.header.toggle.isCollapsed);
     assert.notOk(component.header.toggle.isExpanded);
     assert.strictEqual(component.header.toggle.ariaExpanded, 'false');
-    assert.strictEqual(component.header.toggle.ariaLabel, 'Show associated courses');
     assert.ok(component.content.isHidden);
     assert.strictEqual(component.header.title, 'Associated Courses (3)');
     await a11yAudit(this.element);
