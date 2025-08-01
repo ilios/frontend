@@ -193,7 +193,7 @@ export default class CoursesListComponent extends Component {
               />
               {{#if (includes course.id this.coursesForRemovalConfirmation)}}
                 <tr class="confirm-removal">
-                  <ResponsiveTd @smallScreenSpan="10" @largeScreenSpan="15">
+                  <ResponsiveTd @smallScreenSpan="11" @largeScreenSpan="16">
                     <div class="confirm-message">
                       {{t
                         "general.confirmRemoveCourse"

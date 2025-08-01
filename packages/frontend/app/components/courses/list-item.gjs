@@ -48,8 +48,10 @@ export default class CoursesListItemComponent extends Component {
   }
   <template>
     <tr
-      class="courses-list-item
-        {{if (includes @course.id @coursesForRemovalConfirmation) 'confirm-removal'}}"
+      class="courses-list-item{{if
+          (includes @course.id @coursesForRemovalConfirmation)
+          ' confirm-removal'
+        }}"
       data-test-courses-list-item
     >
       <td class="text-left" colspan="8" data-test-course-title>
