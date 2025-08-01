@@ -4,7 +4,6 @@ import { action } from '@ember/object';
 import { TrackedAsyncData } from 'ember-async-data';
 import { on } from '@ember/modifier';
 import { fn } from '@ember/helper';
-import countRelated from 'ilios-common/helpers/count-related';
 import FaIcon from 'ilios-common/components/fa-icon';
 import t from 'ember-intl/helpers/t';
 
@@ -46,7 +45,7 @@ export default class DetailLearnergroupsListItemComponent extends Component {
               </span>
             {{/each}}
             {{@group.title}}
-            ({{countRelated @group "users"}})
+            ({{@group.usersOnlyAtThisLevelCount}})
           {{/if}}
           {{#if @group.needsAccommodation}}
             <FaIcon
@@ -69,7 +68,7 @@ export default class DetailLearnergroupsListItemComponent extends Component {
             </span>
           {{/each}}
           {{@group.title}}
-          ({{countRelated @group "users"}})
+          ({{@group.usersOnlyAtThisLevelCount}})
         {{/if}}
         {{#if @group.needsAccommodation}}
           <FaIcon
