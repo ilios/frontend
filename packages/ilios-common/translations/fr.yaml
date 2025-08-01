@@ -49,7 +49,7 @@ general:
   cohort: Cohorte
   cohorts: Cohortes
   cohortsManageTitle: Manager des Cohortes
-  collapse: réduire
+  collapse: Réduire
   collapseDetail: Masquer Détails
   competencies: Compétences
   competency: Compétence
@@ -126,9 +126,9 @@ general:
   endTime: Heure Terminé
   equipmentRequired: Équipement Requis
   etAl: et al.
-  expand: Étendre
-  eventNotFoundTitle: Evénement introuvable
   eventNotFoundExplanation: "L'événement que vous avez essayé d'atteindre n'est plus disponible ou vous avez suivi un lien utilisateur personnalisé qui n'est pas partageable. Si vous continuez à rencontrer des problèmes, veuillez contacter votre service d'assistance Ilios."
+  eventNotFoundTitle: Evénement introuvable
+  expand: Étendre
   expandDetail: Afficher Détails
   externalId: ID de Cours
   file: Fichier

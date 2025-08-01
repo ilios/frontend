@@ -137,7 +137,6 @@ export default class WeeklyGlance extends Component {
         <button
           type="button"
           class="title collapsible"
-          aria-label={{if @collapsed (t "general.expand") (t "general.collapse")}}
           aria-expanded={{if @collapsed "false" "true"}}
           data-test-week-title
           {{on "click" (fn (optional @toggleCollapsed) @collapsed)}}
