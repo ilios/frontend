@@ -30,6 +30,10 @@
 }
 
 .user-profile-learnergroups {
+  h2.title {
+    @include cm.ilios-heading-h3;
+  }
+
   p {
     margin-bottom: 2rem;
   }
