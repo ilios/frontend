@@ -51,7 +51,6 @@ general:
   cohortsManageTitle: Manager des Cohortes
   collapse: Réduire
   collapseDetail: Masquer Détails
-  collapseTitle: "Masquer {title}"
   competencies: Compétences
   competency: Compétence
   complete: Accompli
@@ -131,7 +130,6 @@ general:
   eventNotFoundTitle: Evénement introuvable
   expand: Étendre
   expandDetail: Afficher Détails
-  expandTitle: "Afficher {title}"
   externalId: ID de Cours
   file: Fichier
   file-audio: Fichier audio
