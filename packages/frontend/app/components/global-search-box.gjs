@@ -6,7 +6,8 @@ import { cleanQuery } from 'ilios-common/utils/query-utils';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
 import pick from 'ilios-common/helpers/pick';
-import set from 'ember-set-helper/helpers/set';
+import perform from 'ember-concurrency/helpers/perform';
+import { restartableTask } from 'ember-concurrency';
 import onKey from 'ember-keyboard/modifiers/on-key';
 import FaIcon from 'ilios-common/components/fa-icon';
 
@@ -56,6 +57,15 @@ export default class GlobalSearchBox extends Component {
     }
   }
 
+  setInternalQuery = restartableTask(async (q) => {
+    this.internalQuery = q;
+    if (this.router.currentRouteName === 'search') {
+      if (q === '') {
+        this.args.search('');
+      }
+    }
+  });
+
   /**
    * Clear all the caches and query local copies
    * This component is complicated by the many types of user interaction
@@ -74,7 +84,7 @@ export default class GlobalSearchBox extends Component {
         data-test-input
         type="search"
         value={{this.computedQuery}}
-        {{on "input" (pick "target.value" (set this "internalQuery"))}}
+        {{on "input" (pick "target.value" (perform this.setInternalQuery))}}
         {{onKey "Escape" this.onEscapeKey}}
         {{onKey "Enter" this.onEnterKey}}
         {{onKey "ArrowUp" this.onArrowKey}}
