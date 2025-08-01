@@ -18,6 +18,10 @@
       @include m.ilios-button-reset;
     }
 
+    span.title {
+      @include m.ilios-heading-h5;
+    }
+
     h3.title {
       @include m.ilios-heading-h5;
 
