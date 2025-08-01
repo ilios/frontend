@@ -21,7 +21,11 @@
     grid-area: search;
     margin: 0.75rem 0 1rem 10%;
     width: 80%;
-    border: 1px solid var(--davys-grey);
+    border: 1px solid var(--light-grey);
+
+    &:focus-within {
+      outline: 2px solid var(--light-blue);
+    }
   }
 
   .filters {

@@ -47,7 +47,6 @@ export default class IliosHeaderComponent extends Component {
     return (
       this.searchEnabled &&
       this.session.isAuthenticated &&
-      this.router.currentRouteName !== 'search' &&
       this.currentUser.performsNonLearnerFunction &&
       this.userModelData.isResolved &&
       this.primarySchoolData.isResolved
