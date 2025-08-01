@@ -30,7 +30,6 @@ module('Integration | Component | global-search', function (hooks) {
       assert.notOk(onlySuggest);
       return {
         results: {
-          autocomplete: [],
           courses: [
             {
               title: 'Course 1',
@@ -275,5 +274,68 @@ module('Integration | Component | global-search', function (hooks) {
     this.set('query', 'hello world');
     assert.ok(component.searchIsRunning);
     resolveTestPromise();
+  });
+
+  test('did you mean only shows up if score is high enough', async function (assert) {
+    assert.expect(2);
+    this.server.get('api/search/v2/curriculum', () => {
+      return {
+        results: {
+          courses: [],
+          didYouMean: {
+            score: 0.03,
+            highlighted: '',
+            didYouMean: '',
+          },
+        },
+      };
+    });
+
+    this.set('query', 'jasper');
+    await render(
+      <template>
+        <GlobalSearch
+          @query={{this.query}}
+          @page="1"
+          @setQuery={{(noop)}}
+          @setPage={{(noop)}}
+          @setSelectedYear={{(noop)}}
+        />
+      </template>,
+    );
+    assert.ok(component.noResultsIsVisible);
+    assert.notOk(component.didYouMean.isVisible);
+  });
+
+  test('did you mean works', async function (assert) {
+    assert.expect(4);
+    this.server.get('api/search/v2/curriculum', () => {
+      return {
+        results: {
+          courses: [],
+          didYouMean: {
+            score: 0.05,
+            highlighted: '<span class="highlight">Jackson</span>',
+            didYouMean: 'Jackson',
+          },
+        },
+      };
+    });
+
+    await render(
+      <template>
+        <GlobalSearch
+          @query="jayden"
+          @page="1"
+          @setQuery={{(noop)}}
+          @setPage={{(noop)}}
+          @setSelectedYear={{(noop)}}
+        />
+      </template>,
+    );
+    assert.ok(component.noResultsIsVisible);
+    assert.ok(component.didYouMean.isVisible);
+    assert.strictEqual(component.didYouMean.text, 'Did you mean Jackson?');
+    assert.ok(component.didYouMean.url.includes('Jackson'));
   });
 });
