@@ -477,6 +477,25 @@ module('Unit | Model | LearnerGroup', function (hooks) {
     assert.ok(users.includes(user2));
   });
 
+  test('count users only at this level', async function (assert) {
+    const learnerGroup = this.store.createRecord('learner-group');
+    const user1 = this.store.createRecord('user', { learnerGroups: [learnerGroup] });
+    const user2 = this.store.createRecord('user', { learnerGroups: [learnerGroup] });
+    const user3 = this.store.createRecord('user', { learnerGroups: [learnerGroup] });
+    this.store.createRecord('user', { learnerGroups: [learnerGroup] });
+
+    const subgroup = this.store.createRecord('learner-group', {
+      parent: learnerGroup,
+      users: [user1, user2],
+    });
+    this.store.createRecord('learner-group', {
+      parent: subgroup,
+      users: [user3],
+    });
+    const c = await waitForResource(learnerGroup, 'usersOnlyAtThisLevelCount');
+    assert.strictEqual(c, 1);
+  });
+
   test('get users only at this level', async function (assert) {
     const learnerGroup = this.store.createRecord('learner-group');
     const user1 = this.store.createRecord('user', { learnerGroups: [learnerGroup] });

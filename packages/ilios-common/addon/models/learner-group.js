@@ -239,6 +239,10 @@ export default class LearnerGroup extends Model {
     return this._usersData.value.filter((user) => !descendantUsers.includes(user));
   }
 
+  get usersOnlyAtThisLevelCount() {
+    return this.usersOnlyAtThisLevel?.length || 0;
+  }
+
   async getUsersOnlyAtThisLevel() {
     const users = await this.users;
     const descendantsUsers = await this._getDescendantUsers();
