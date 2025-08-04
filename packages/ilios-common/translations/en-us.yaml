@@ -160,6 +160,31 @@ general:
   hideSessionMaterials: Hide session materials
   hour: Hour
   hours: Hours
+  htmlEditor:
+    labels:
+      bold: bold
+      italic: italic
+      insert: insert
+      insertLink: link
+      linkNewTarget: new tab
+      listOrdered: "list: ordered"
+      listUnordered: "list: bullet"
+      redo: redo
+      subscript: subscript
+      superscript: superscript
+      undo: undo
+    titles:
+      bold: Bold (⌘B)
+      italic: Italic (⌘I)
+      insert: Insert
+      insertLink: Insert Link
+      linkNewTarget: Open in new tab
+      listOrdered: Ordered List
+      listUnordered: Unordered List
+      redo: Redo (⌘⇧Z)
+      subscript: Subscript
+      superscript: Superscript
+      undo: Undo (⌘Z)
   icsInstructions: "To add your Ilios calendar to another application or service, use this URL.  This URL is like a password. Anyone who knows it can view your calendar!"
   ilios: Ilios
   iliosUserGuide: Ilios User Guide
@@ -368,6 +393,7 @@ general:
   termCount: "{count, plural, =1 {1 has vocabulary terms} other {# have vocabulary terms}}"
   terms: Terms
   termsManageTitle: Manage Terms
+  text: Text
   thursday: Thursday
   time: Time
   timedRelease: Timed Release
