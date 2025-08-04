@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'frontend/tests/helpers';
+import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render } from '@ember/test-helpers';
-import HtmlEditor from 'frontend/components/html-editor';
+import HtmlEditor from 'ilios-common/components/html-editor';
 
 module('Integration | Component | html editor', function (hooks) {
   setupRenderingTest(hooks);
