@@ -1,1 +1,1 @@
-export { loadFroalaEditor } from 'ilios-common/utils/load-froala-editor';
+export { loadQuillEditor } from 'ilios-common/utils/load-quill-editor';

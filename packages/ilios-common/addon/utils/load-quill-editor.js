@@ -1,8 +1,8 @@
 export async function loadQuillEditor() {
-  const { default: Quill } = await import('quill');
+  const { default: QuillEditor } = await import('quill');
 
   // Quill doesn't include redo/undo icons by default, so gotta hack 'em in
-  const icons = Quill.import('ui/icons');
+  const icons = QuillEditor.import('ui/icons');
   icons['undo'] = `
     <svg viewbox="0 0 18 18">
       <polygon class="ql-fill ql-stroke" points="6 10 4 12 2 10 6 10"></polygon>
@@ -17,6 +17,6 @@ export async function loadQuillEditor() {
   `;
 
   return {
-    Quill,
+    QuillEditor,
   };
 }
