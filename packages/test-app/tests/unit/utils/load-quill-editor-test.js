@@ -1,4 +1,4 @@
-import { loadQuillEditor } from 'rs-common/utils/load-quill-editor';
+import { loadQuillEditor } from 'ilios-common/utils/load-quill-editor';
 import { module, test } from 'qunit';
 
 module('Unit | Utility | load-froala-editor', function () {
