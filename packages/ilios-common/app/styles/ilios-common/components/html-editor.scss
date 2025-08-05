@@ -69,7 +69,10 @@
 .ql-container {
   background-color: var(--white);
   height: auto;
-  min-height: 150px;
+  min-height: 100px;
+}
+.ql-editor {
+  min-height: 100px;
 }
 .ql-toolbar {
   background-color: var(--super-light-grey);
