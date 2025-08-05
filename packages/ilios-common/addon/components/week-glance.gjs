@@ -12,6 +12,7 @@ import optional from 'ilios-common/helpers/optional';
 import t from 'ember-intl/helpers/t';
 import FaIcon from 'ilios-common/components/fa-icon';
 import WeekGlanceEvent from 'ilios-common/components/week-glance-event';
+import formatDate from 'ember-intl/helpers/format-date';
 
 export default class WeeklyGlance extends Component {
   @service userEvents;
@@ -121,12 +122,16 @@ export default class WeeklyGlance extends Component {
       const startDate = DateTime.fromISO(event.startDate);
       const date = startDate.toISODate();
       if (!eventsByDate.has(date)) {
-        eventsByDate.set(date, []);
+        eventsByDate.set(date, {
+          events: [],
+          startDate,
+        });
       }
-      eventsByDate.get(date).push(event);
+      eventsByDate.get(date).events.push(event);
     });
-    return eventsByDate;
+    return eventsByDate.values();
   }
+
   <template>
     <div
       class="week-glance"
@@ -158,13 +163,24 @@ export default class WeeklyGlance extends Component {
       {{#unless @collapsed}}
         {{#if this.eventsLoaded}}
           {{#if (gt this.nonIlmPreWorkEvents.length 0)}}
-            {{#each-in this.nonPreWorkEventsByDay as |date eventsByDay|}}
+            {{#each this.nonPreWorkEventsByDay as |date|}}
               <div class="events-by-date" data-test-events-by-date>
-                {{#each eventsByDay as |event|}}
-                  <WeekGlanceEvent @event={{event}} />
-                {{/each}}
+                <h3 class="day long" data-test-day>{{formatDate date.startDate weekday="long"}}</h3>
+                <h3 class="day short" data-test-day>{{formatDate
+                    date.startDate
+                    weekday="short"
+                  }}</h3>
+                <h3 class="day narrow" data-test-day>{{formatDate
+                    date.startDate
+                    weekday="narrow"
+                  }}</h3>
+                <ul>
+                  {{#each date.events as |event|}}
+                    <WeekGlanceEvent @event={{event}} />
+                  {{/each}}
+                </ul>
               </div>
-            {{/each-in}}
+            {{/each}}
           {{else}}
             <p>
               {{t "general.none"}}

@@ -69,8 +69,8 @@ export default class WeekGlanceEvent extends Component {
     return 0;
   }
   <template>
-    <div class="event" data-test-week-glance-event>
-      <h3 id={{concat "event" @event.slug}} class="event-title">
+    <li class="event" data-test-week-glance-event>
+      <h4 id={{concat "event" @event.slug}} class="event-title">
         <span id={{concat "event" @event.slug "title"}} data-test-event-title>
           <LinkTo
             id={{concat "event" @event.slug "link"}}
@@ -91,9 +91,9 @@ export default class WeekGlanceEvent extends Component {
               {{t "general.dueBy"}}
             </span>
           {{/if}}
-          {{formatDate @event.startDate weekday="long" hour="2-digit" minute="2-digit"}}
+          {{formatDate @event.startDate hour="2-digit" minute="2-digit"}}
         </span>
-      </h3>
+      </h4>
       <div>
         <span class="sessiontype" data-test-session-type>
           {{@event.sessionTypeTitle}}
@@ -158,6 +158,6 @@ export default class WeekGlanceEvent extends Component {
           @learningMaterials={{this.sessionLearningMaterials}}
         />
       {{/if}}
-    </div>
+    </li>
   </template>
 }

@@ -164,7 +164,6 @@ module('Acceptance | Dashboard Week at a Glance', function (hooks) {
 
     await page.visit();
     const options = {
-      weekday: 'long',
       hour: 'numeric',
       minute: 'numeric',
     };

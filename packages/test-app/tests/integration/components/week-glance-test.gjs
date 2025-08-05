@@ -135,8 +135,14 @@ module('Integration | Component | week-glance', function (hooks) {
 
     assert.strictEqual(component.title, this.getTitle(true));
     assert.strictEqual(component.eventsByDate.length, 2);
+    assert.strictEqual(component.eventsByDate[0].days[0].text, 'Thursday');
+    assert.strictEqual(component.eventsByDate[0].days[1].text, 'Thu');
+    assert.strictEqual(component.eventsByDate[0].days[2].text, 'T');
     assert.strictEqual(component.eventsByDate[0].events.length, 1);
     assert.strictEqual(component.eventsByDate[0].events[0].title, 'Learn to Learn');
+    assert.strictEqual(component.eventsByDate[1].days[0].text, 'Friday');
+    assert.strictEqual(component.eventsByDate[1].days[1].text, 'Fri');
+    assert.strictEqual(component.eventsByDate[1].days[2].text, 'F');
     assert.strictEqual(component.eventsByDate[1].events.length, 2);
     assert.strictEqual(component.eventsByDate[1].events[0].title, 'Finding the Point in Life');
     assert.strictEqual(component.eventsByDate[1].events[1].title, 'Schedule some materials');

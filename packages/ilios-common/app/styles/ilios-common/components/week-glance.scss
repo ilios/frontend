@@ -15,6 +15,49 @@
 
   .events-by-date {
     border-top: 1px dotted var(--orange);
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    .day {
+      @include m.ilios-heading-h4;
+      align-self: flex-start;
+      position: sticky;
+      top: 0.25rem;
+
+      @include m.for-phone-only {
+        &.narrow {
+          display: block;
+        }
+        &.long,
+        &.short {
+          display: none;
+        }
+      }
+
+      @include m.for-phone-and-up {
+        &.short {
+          display: block;
+        }
+        &.long,
+        &.narrow {
+          display: none;
+        }
+      }
+
+      @include m.for-tablet-and-up {
+        &.long {
+          display: block;
+        }
+        &.short,
+        &.narrow {
+          display: none;
+        }
+      }
+    }
+
+    ul {
+      margin: 0;
+    }
   }
 
   .event {
