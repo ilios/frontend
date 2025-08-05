@@ -15,7 +15,7 @@ import newLearningMaterial from './new-learningmaterial';
 import datePicker from './date-picker';
 import timePicker from './time-picker';
 import items from './detail-learning-materials-item';
-import { pageObjectFillInFroalaEditor, pageObjectFroalaEditorValue } from 'ilios-common';
+import { pageObjectFillInQuillEditor, pageObjectQuillEditorValue } from 'ilios-common';
 
 const definition = {
   scope: '[data-test-detail-learning-materials]',
@@ -44,8 +44,8 @@ const definition = {
     description: {
       scope: '.description',
       value: text(),
-      update: pageObjectFillInFroalaEditor('[data-test-html-editor]'),
-      editorValue: pageObjectFroalaEditorValue('[data-test-html-editor]'),
+      update: pageObjectFillInQuillEditor('[data-test-html-editor]'),
+      editorValue: pageObjectQuillEditorValue('[data-test-html-editor]'),
     },
     copyrightPermission: text('.copyrightpermission'),
     copyrightRationale: text('.copyrightrationale'),
@@ -65,8 +65,8 @@ const definition = {
     statusValue: value('select', { at: 0 }),
     notes: {
       scope: '.notes',
-      update: pageObjectFillInFroalaEditor('[data-test-html-editor]'),
-      value: pageObjectFroalaEditorValue('[data-test-html-editor]'),
+      update: pageObjectFillInQuillEditor('[data-test-html-editor]'),
+      value: pageObjectQuillEditorValue('[data-test-html-editor]'),
     },
     addStartDate: clickable('[data-test-add-start-date]'),
     addEndDate: clickable('[data-test-add-end-date]'),
