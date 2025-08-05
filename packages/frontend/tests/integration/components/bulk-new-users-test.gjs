@@ -174,7 +174,7 @@ module('Integration | Component | bulk new users', function (hooks) {
   });
 
   test('saves valid faculty users', async function (assert) {
-    assert.expect(30);
+    assert.expect(32);
     this.server.create('user-role', { id: 4 });
 
     await render(<template><BulkNewUsers @close={{(noop)}} /></template>);
@@ -217,6 +217,7 @@ module('Integration | Component | bulk new users', function (hooks) {
     assert.true(this.server.db.users[1].enabled);
     assert.strictEqual(this.server.db.users[1].roleIds, null);
     assert.strictEqual(this.server.db.users[1].cohortIds, null);
+    assert.strictEqual(this.server.db.users[1].primaryCohortId, null);
     assert.strictEqual(this.server.db.users[1].authenticationId, '2');
 
     assert.strictEqual(this.server.db.authentications[1].username, 'jasper');
@@ -234,6 +235,7 @@ module('Integration | Component | bulk new users', function (hooks) {
     assert.true(this.server.db.users[2].enabled);
     assert.strictEqual(this.server.db.users[2].roleIds, null);
     assert.strictEqual(this.server.db.users[2].cohortIds, null);
+    assert.strictEqual(this.server.db.users[2].primaryCohortId, null);
     assert.strictEqual(this.server.db.users[2].authenticationId, '3');
 
     assert.strictEqual(this.server.db.authentications[2].username, 'jck');
@@ -242,7 +244,7 @@ module('Integration | Component | bulk new users', function (hooks) {
   });
 
   test('saves valid student users', async function (assert) {
-    assert.expect(28);
+    assert.expect(30);
     this.server.create('user-role', { id: 4 });
 
     await render(<template><BulkNewUsers @close={{(noop)}} /></template>);
@@ -286,6 +288,7 @@ module('Integration | Component | bulk new users', function (hooks) {
     assert.true(this.server.db.users[1].addedViaIlios);
     assert.true(this.server.db.users[1].enabled);
     assert.deepEqual(this.server.db.users[1].roleIds, ['4']);
+    assert.strictEqual(this.server.db.users[1].primaryCohortId, '1');
     assert.strictEqual(this.server.db.users[1].authenticationId, '2');
 
     assert.strictEqual(this.server.db.authentications[1].username, 'jasper');
@@ -302,6 +305,7 @@ module('Integration | Component | bulk new users', function (hooks) {
     assert.true(this.server.db.users[2].addedViaIlios);
     assert.true(this.server.db.users[2].enabled);
     assert.deepEqual(this.server.db.users[2].roleIds, ['4']);
+    assert.strictEqual(this.server.db.users[2].primaryCohortId, '1');
     assert.strictEqual(this.server.db.users[2].authenticationId, '3');
 
     assert.strictEqual(this.server.db.authentications[2].username, 'jck');

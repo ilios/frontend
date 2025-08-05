@@ -304,7 +304,7 @@ export default class BulkNewUsersComponent extends Component {
       user.set('school', selectedSchool);
 
       if (!nonStudentMode) {
-        user.set('primaryCohort', selectedCohort?.cohortModel);
+        user.set('primaryCohort', selectedCohort.model);
         user.set('roles', [studentRole]);
       }
 
