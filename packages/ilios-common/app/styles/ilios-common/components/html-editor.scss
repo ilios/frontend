@@ -1,6 +1,8 @@
 @use "../mixins" as m;
 
 .html-editor {
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
   flex-grow: 1;
 
   input[type="text"] {
@@ -54,6 +56,14 @@
 .ql-snow.ql-toolbar button,
 .ql-snow .ql-toolbar button {
   padding: 3px 5px !important;
+
+  &:disabled {
+    cursor: default;
+
+    .ql-stroke {
+      stroke: var(--lighter-grey);
+    }
+  }
 }
 
 .ql-container {
@@ -65,18 +75,17 @@
   background-color: var(--super-light-grey);
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
+  display: flex;
   height: auto;
 
   button:not(:disabled):not(.disabled):hover {
     background-color: #e8e8e8;
   }
 
-  @include m.for-laptop-and-up {
-    &.ql-snow .ql-formats {
-      &:last-of-type {
-        display: flex;
-        justify-content: flex-end;
-      }
+  &.ql-snow .ql-formats {
+    &:last-of-type {
+      margin-left: auto;
+      margin-right: 0;
     }
   }
 }
