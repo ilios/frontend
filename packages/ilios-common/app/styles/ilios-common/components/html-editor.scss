@@ -48,8 +48,17 @@
   }
 
   button {
+    background-color: transparent;
+    color: var(--blue);
+    display: flex;
+    justify-content: flex-end;
+    margin-left: auto;
     margin-top: 1em;
     width: auto;
+
+    &:hover {
+      background-color: var(--lightest-grey);
+    }
   }
 }
 
