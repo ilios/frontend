@@ -125,13 +125,14 @@ export default class HtmlEditorComponent extends Component {
 
   @action
   togglePopup() {
-    const editor = document.querySelector(`#${this.editorId}`);
     const popup = document.querySelector(`#${this.popupId}`);
-    popup.classList.toggle('ql-active');
 
-    if (popup.classList.contains('ql-active')) {
+    if (!popup.classList.contains('ql-active')) {
+      popup.classList.add('ql-active');
+
+      const editor = document.querySelector(`#${this.editorId}`);
       popup.style.left = `${this.toolbarLinkPosition}px`;
-      popup.style.top = `${editor.offsetTop - 8}px`;
+      popup.style.top = `${editor.offsetTop - 18}px`;
 
       const quill = this.editor;
       const range = quill.getSelection(true);
@@ -141,6 +142,15 @@ export default class HtmlEditorComponent extends Component {
       }
 
       popup.querySelector('input').focus();
+
+      const closePopup = document.addEventListener('click', ({ target }) => {
+        if (!target.closest('.ql-popup') && !target.closest('.ql-link')) {
+          popup.classList.remove('ql-active');
+          document.removeEventListener('click', closePopup);
+        }
+      });
+    } else {
+      popup.classList.remove('ql-active');
     }
   }
 
@@ -230,7 +240,6 @@ export default class HtmlEditorComponent extends Component {
       </div>
 
       <div id={{this.popupId}} class="ql-popup">
-        <h4>{{t "general.htmlEditor.titles.insertLink"}}</h4>
         <label for={{this.popupUrlId}}>
           <input
             type="text"
