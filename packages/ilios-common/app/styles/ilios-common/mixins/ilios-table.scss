@@ -94,8 +94,11 @@
       background-color: var(--lightest-red);
 
       .confirm-message {
+        background-color: var(--lightest-red);
         color: var(--red);
         font-weight: bold;
+        padding-bottom: 0;
+        padding-top: 0.75em;
         padding-left: 8em;
         padding-right: 8em;
         text-align: center;
@@ -103,12 +106,8 @@
       }
 
       .confirm-buttons {
-        padding-bottom: 1.5em;
+        padding-bottom: 1.1em;
         padding-top: 1.1em;
-      }
-
-      &:hover {
-        background-color: var(--lightest-red);
       }
 
       .remove {
