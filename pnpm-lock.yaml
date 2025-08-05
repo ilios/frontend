@@ -465,9 +465,6 @@ importers:
       flatpickr:
         specifier: '>= 4.0.0'
         version: 4.6.13
-      froala-editor:
-        specifier: ~4.5.2
-        version: 4.5.2
       luxon:
         specifier: '>= 3.6.1'
         version: 3.7.1
@@ -6211,9 +6208,6 @@ packages:
   fresh@0.5.2:
     resolution: {integrity: sha512-zJ2mQYM18rEFOudeV4GShTGIQ7RbzA7ozbU9I/XBpm7kqgMywgmylMwXHxZJmkVoYkna9d2pVXVXPdYTP9ej8Q==}
     engines: {node: '>= 0.6'}
-
-  froala-editor@4.5.2:
-    resolution: {integrity: sha512-Nkfll8jkZEtxTDO6bbmOVXHZIrH5yIO7jIDEkMc68uQjRZJwYZM+MuOhUZspDY2U1PR+kEI+o3NOymD5isizjQ==}
 
   from2@2.3.0:
     resolution: {integrity: sha512-OMcX/4IC/uqEPVgGeyfN22LJk6AZrMkRZHxcHBMBvHScDGgwTm2GT2Wkgtocyd3JfZffjj2kYUDXXII0Fk9W0g==}
@@ -17363,8 +17357,6 @@ snapshots:
       map-cache: 0.2.2
 
   fresh@0.5.2: {}
-
-  froala-editor@4.5.2: {}
 
   from2@2.3.0:
     dependencies:
