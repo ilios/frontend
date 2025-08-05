@@ -18,6 +18,8 @@ export default class HtmlEditorComponent extends Component {
   @tracked popupUrlValue;
   @tracked popupTextValue;
   @tracked popupLinkNewTarget;
+  @tracked editorHasNoRedo = true;
+  @tracked editorHasNoUndo = true;
 
   editor = null;
 
@@ -33,6 +35,8 @@ export default class HtmlEditorComponent extends Component {
 
       this.editor.on('text-change', () => {
         if (!this.isDestroyed && !this.isDestroying) {
+          this.editorHasNoRedo = !this.editor.history.stack.redo.length;
+          this.editorHasNoUndo = !this.editor.history.stack.undo.length;
           // make sure to retain multiple spaces
           this.args.update(this.editor.root.innerHTML.split('  ').join(' &nbsp;'));
         }
@@ -59,8 +63,12 @@ export default class HtmlEditorComponent extends Component {
         toolbar: {
           container: this.toolbarId,
           handlers: {
-            undo: () => this.editor.history.undo(),
-            redo: () => this.editor.history.redo(),
+            undo: () => {
+              this.editor.history.undo();
+            },
+            redo: () => {
+              this.editor.history.redo();
+            },
             link: () => {
               this.togglePopup();
             },
@@ -200,12 +208,14 @@ export default class HtmlEditorComponent extends Component {
               class="ql-undo"
               title={{t "general.htmlEditor.titles.undo"}}
               aria-label={{t "general.htmlEditor.labels.undo"}}
+              disabled={{this.editorHasNoUndo}}
             ></button>
             <button
               type="button"
               class="ql-redo"
               title={{t "general.htmlEditor.titles.redo"}}
               aria-label={{t "general.htmlEditor.labels.redo"}}
+              disabled={{this.editorHasNoRedo}}
             ></button>
           </div>
         </div>
