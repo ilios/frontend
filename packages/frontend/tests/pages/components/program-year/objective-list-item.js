@@ -1,5 +1,5 @@
 import { clickable, create, hasClass, isPresent, isVisible, text } from 'ember-cli-page-object';
-import { pageObjectFillInFroalaEditor, pageObjectFroalaEditorValue } from 'ilios-common';
+import { pageObjectFillInQuillEditor, pageObjectQuillEditorValue } from 'ilios-common';
 import meshManager from './manage-objective-descriptors';
 import competencyManager from './manage-objective-competency';
 import meshDescriptors from './objective-list-item-descriptors';
@@ -14,8 +14,8 @@ const definition = {
   description: {
     scope: '[data-test-description]',
     openEditor: clickable('[data-test-edit]'),
-    editorContents: pageObjectFroalaEditorValue('[data-test-html-editor]'),
-    edit: pageObjectFillInFroalaEditor('[data-test-html-editor]'),
+    editorContents: pageObjectQuillEditorValue('[data-test-html-editor]'),
+    edit: pageObjectFillInQuillEditor('[data-test-html-editor]'),
     save: clickable('.done'),
     hasError: isPresent('[data-test-description-validation-error-message]'),
     error: text('[data-test-description-validation-error-message]'),

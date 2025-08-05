@@ -7,7 +7,7 @@ import {
   property,
   text,
 } from 'ember-cli-page-object';
-import { pageObjectFillInFroalaEditor } from 'ilios-common';
+import { pageObjectFillInQuillEditor } from 'ilios-common';
 import postrequisiteEditor from './postrequisite-editor';
 import yesNoToggle from '../toggle-yesno';
 import ilm from './ilm';
@@ -42,7 +42,7 @@ const definition = {
     scope: '[data-test-description]',
     value: text('span', { at: 0 }),
     edit: clickable('[data-test-edit]'),
-    set: pageObjectFillInFroalaEditor('[data-test-html-editor]'),
+    set: pageObjectFillInQuillEditor('[data-test-html-editor]'),
     save: clickable('.done'),
     savingIsDisabled: property('disabled', '.done'),
     cancel: clickable('.cancel'),
@@ -52,7 +52,7 @@ const definition = {
     scope: '[data-test-instructional-notes]',
     value: text('span', { at: 0 }),
     edit: clickable('[data-test-edit]'),
-    set: pageObjectFillInFroalaEditor('[data-test-html-editor]'),
+    set: pageObjectFillInQuillEditor('[data-test-html-editor]'),
     save: clickable('.done'),
     savingIsDisabled: property('disabled', '.done'),
     cancel: clickable('.cancel'),

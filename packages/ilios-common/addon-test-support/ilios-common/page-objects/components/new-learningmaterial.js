@@ -1,5 +1,5 @@
 import { attribute, clickable, create, fillable, isPresent } from 'ember-cli-page-object';
-import { pageObjectFillInFroalaEditor } from 'ilios-common';
+import { pageObjectFillInQuillEditor } from 'ilios-common';
 import userNameInfo from './user-name-info';
 
 const definition = {
@@ -57,7 +57,7 @@ const definition = {
     scope: '[data-test-role]',
     select: fillable('select'),
   },
-  description: pageObjectFillInFroalaEditor('[data-test-html-editor]'),
+  description: pageObjectFillInQuillEditor('[data-test-html-editor]'),
   copyrightPermission: {
     scope: '[data-test-copyright-permission]',
     toggle: clickable('input'),
