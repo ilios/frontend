@@ -163,19 +163,21 @@ export default class HtmlEditorComponent extends Component {
   <template>
     {{#if this.loadQuillData.isResolved}}
       <div class="quill-html-editor" data-test-quill-html-editor>
-        <div id="{{this.editorId}}-toolbar">
+        <div id="{{this.editorId}}-toolbar" data-test-toolbar>
           <div class="ql-formats">
             <button
               type="button"
               class="ql-bold"
               title={{t "general.htmlEditor.titles.bold"}}
               aria-label={{t "general.htmlEditor.labels.bold"}}
+              data-test-toolbar-bold
             ></button>
             <button
               type="button"
               class="ql-italic"
               title={{t "general.htmlEditor.titles.italic"}}
               aria-label={{t "general.htmlEditor.labels.italic"}}
+              data-test-toolbar-italic
             ></button>
             <button
               type="button"
@@ -183,6 +185,7 @@ export default class HtmlEditorComponent extends Component {
               value="sub"
               title={{t "general.htmlEditor.titles.subscript"}}
               aria-label={{t "general.htmlEditor.labels.subscript"}}
+              data-test-toolbar-subscript
             ></button>
             <button
               type="button"
@@ -190,6 +193,7 @@ export default class HtmlEditorComponent extends Component {
               value="super"
               title={{t "general.htmlEditor.titles.superscript"}}
               aria-label={{t "general.htmlEditor.labels.superscript"}}
+              data-test-toolbar-superscript
             ></button>
             <button
               type="button"
@@ -197,6 +201,7 @@ export default class HtmlEditorComponent extends Component {
               value="ordered"
               title={{t "general.htmlEditor.titles.listOrdered"}}
               aria-label={{t "general.htmlEditor.labels.listOrdered"}}
+              data-test-toolbar-list-ordered
             ></button>
             <button
               type="button"
@@ -204,12 +209,14 @@ export default class HtmlEditorComponent extends Component {
               value="bullet"
               title={{t "general.htmlEditor.titles.listUnordered"}}
               aria-label={{t "general.htmlEditor.labels.listUnordered"}}
+              data-test-toolbar-list-unordered
             ></button>
             <button
               type="button"
               class="ql-link"
               title={{t "general.htmlEditor.titles.insertLink"}}
               aria-label={{t "general.htmlEditor.labels.insertLink"}}
+              data-test-toolbar-link
             ></button>
           </div>
           <div class="ql-formats">
@@ -219,6 +226,7 @@ export default class HtmlEditorComponent extends Component {
               title={{t "general.htmlEditor.titles.undo"}}
               aria-label={{t "general.htmlEditor.labels.undo"}}
               disabled={{this.editorHasNoUndo}}
+              data-test-toolbar-undo
             ></button>
             <button
               type="button"
@@ -226,6 +234,7 @@ export default class HtmlEditorComponent extends Component {
               title={{t "general.htmlEditor.titles.redo"}}
               aria-label={{t "general.htmlEditor.labels.redo"}}
               disabled={{this.editorHasNoRedo}}
+              data-test-toolbar-redo
             ></button>
           </div>
         </div>
@@ -237,41 +246,48 @@ export default class HtmlEditorComponent extends Component {
           data-test-load-finished={{this.loadFinished}}
         >
         </div>
-      </div>
-
-      <div id={{this.popupId}} class="ql-popup">
-        <label for={{this.popupUrlId}}>
-          <input
-            type="text"
-            id={{this.popupUrlId}}
-            aria-label={{t "general.url"}}
-            placeholder={{t "general.url"}}
-            value={{this.popupUrlValue}}
-            {{on "input" (pick "target.value" (set this "popupUrlValue"))}}
-          />
-        </label>
-        <br />
-        <label for={{this.popupTextId}}>
-          <input
-            type="text"
-            id={{this.popupTextId}}
-            aria-label={{t "general.text"}}
-            placeholder={{t "general.text"}}
-            value={{this.popupTextValue}}
-            {{on "input" (pick "target.value" (set this "popupTextValue"))}}
-          />
-        </label>
-        <br />
-        <div class="form-group">
-          <input type="checkbox" id={{this.popupLinkNewTargetId}} checked disabled />
-          <label for={{this.popupLinkNewTargetId}}>
-            {{t "general.htmlEditor.titles.linkNewTarget"}}
+        <div id={{this.popupId}} class="ql-popup" data-test-insert-link-popup>
+          <label for={{this.popupUrlId}}>
+            <input
+              type="text"
+              id={{this.popupUrlId}}
+              aria-label={{t "general.url"}}
+              placeholder={{t "general.url"}}
+              value={{this.popupUrlValue}}
+              {{on "input" (pick "target.value" (set this "popupUrlValue"))}}
+              data-test-url
+            />
           </label>
-        </div>
+          <br />
+          <label for={{this.popupTextId}}>
+            <input
+              type="text"
+              id={{this.popupTextId}}
+              aria-label={{t "general.text"}}
+              placeholder={{t "general.text"}}
+              value={{this.popupTextValue}}
+              {{on "input" (pick "target.value" (set this "popupTextValue"))}}
+              data-test-text
+            />
+          </label>
+          <br />
+          <div class="form-group">
+            <input
+              type="checkbox"
+              id={{this.popupLinkNewTargetId}}
+              checked
+              disabled
+              data-test-link-new-target
+            />
+            <label for={{this.popupLinkNewTargetId}}>
+              {{t "general.htmlEditor.titles.linkNewTarget"}}
+            </label>
+          </div>
 
-        <button type="button" {{on "click" this.addLink}}>{{t
-            "general.htmlEditor.titles.insert"
-          }}</button>
+          <button type="button" {{on "click" this.addLink}} data-test-submit>{{t
+              "general.htmlEditor.titles.insert"
+            }}</button>
+        </div>
       </div>
     {{/if}}
   </template>
