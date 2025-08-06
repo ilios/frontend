@@ -141,7 +141,7 @@ export default class GlobalSearchComponent extends Component {
       </ul>
       <fieldset class="filters">
         {{#if (gt this.schools.length 1)}}
-          <h3>{{t "general.schools"}}</h3>
+          <h2>{{t "general.schools"}}</h2>
           <div class="school-filters" data-test-school-filters>
             {{#each this.schools as |school index|}}
               <span class="filter" data-test-school-filter>
@@ -158,7 +158,7 @@ export default class GlobalSearchComponent extends Component {
             {{/each}}
           </div>
         {{/if}}
-        <h3>{{t "general.academicYears"}}</h3>
+        <h2>{{t "general.academicYears"}}</h2>
         <div class="year-filters" data-test-year-filters>
           {{#each this.visibleAcademicYears as |year index|}}
             <span class="filter" data-test-year-filter>
