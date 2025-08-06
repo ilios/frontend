@@ -24,7 +24,7 @@
     border: 1px solid var(--light-grey);
 
     &:focus-within {
-      outline: 2px solid var(--light-blue);
+      border-color: transparent;
     }
   }
 
