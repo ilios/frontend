@@ -5,21 +5,22 @@
   display: grid;
   grid-template-areas:
     "search"
+    "did-you-mean"
     "filters"
     "results";
-  grid-column-gap: 0;
-  grid-row-gap: 1rem;
 
   @include m.for-tablet-and-up {
     grid-template-areas:
       "search search"
+      "did-you-mean filters"
       "results filters";
     grid-template-columns: 1fr auto;
+    grid-template-rows: min-content 1rem 1fr;
   }
 
   .global-search-box {
     grid-area: search;
-    margin: 0.75rem 0 1rem 10%;
+    margin: 0.75rem 0 0.5rem 10%;
     width: 80%;
     border: 1px solid var(--light-grey);
 
@@ -77,6 +78,18 @@
       .fa-spinner.orange {
         color: var(--orange);
       }
+    }
+  }
+
+  .did-you-mean {
+    grid-area: did-you-mean;
+    text-align: center;
+    .original {
+      font-weight: 600;
+    }
+
+    .highlight {
+      font-style: italic;
     }
   }
 }

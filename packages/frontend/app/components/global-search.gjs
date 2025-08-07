@@ -14,6 +14,8 @@ import add from 'ember-math-helpers/helpers/add';
 import { fn } from '@ember/helper';
 import includes from 'ilios-common/helpers/includes';
 import PaginationLinks from 'frontend/components/pagination-links';
+import { htmlSafe } from '@ember/template';
+import { modifier } from 'ember-modifier';
 
 const COURSES_PER_PAGE = 10;
 
@@ -80,6 +82,14 @@ export default class GlobalSearchComponent extends Component {
     return [];
   }
 
+  get didYouMeanResults() {
+    if (this.resultsData.isResolved && this.resultsData.value) {
+      return this.resultsData.value.didYouMean;
+    }
+
+    return [];
+  }
+
   get totalResults() {
     if (this.resultsData.isResolved && this.resultsData.value) {
       //the PaginationLinks component expects an array of results, we get a number so fake that up into an array
@@ -120,6 +130,11 @@ export default class GlobalSearchComponent extends Component {
   <template>
     <div class="global-search" data-test-global-search ...attributes>
       <GlobalSearchBox @query={{@query}} @search={{@setQuery}} />
+      <DidYouMean
+        @results={{this.didYouMeanResults}}
+        @selectedSchools={{@selectedSchools}}
+        @selectedYears={{@selectedYears}}
+      />
       <ul
         class="results {{if (and this.resultsData.isPending (not this.hasResults)) 'hidden'}}"
         data-test-results
@@ -188,5 +203,58 @@ export default class GlobalSearchComponent extends Component {
       @size={{COURSES_PER_PAGE}}
       @onSelectPage={{@setPage}}
     />
+  </template>
+}
+
+class DidYouMean extends Component {
+  @service router;
+
+  get shouldDisplay() {
+    return this.args.results?.score > 0.03;
+  }
+
+  get highlightedSafe() {
+    return htmlSafe(this.args.results.highlighted);
+  }
+
+  get href() {
+    return this.router.urlFor('search', {
+      queryParams: {
+        q: this.args.results.didYouMean,
+        schools: this.args.selectedSchools?.length ? this.args.selectedSchools.join('-') : null,
+        years: this.args.selectedYears?.length ? this.args.selectedYears.join('-') : null,
+      },
+    });
+  }
+
+  /**
+   * We can't reliable pass a link into a translation
+   * without it causing a full page load when it is clicked.
+   * As a fallback we find the link in the DOM and use the router to make the transition
+   **/
+  overrideLink = modifier((element) => {
+    const link = element.querySelector('a');
+    link.addEventListener(
+      'click',
+      (e) => {
+        e.preventDefault();
+        this.router.transitionTo('search', {
+          queryParams: {
+            q: this.args.results.didYouMean,
+            schools: this.args.selectedSchools.length ? this.args.selectedSchools.join('-') : null,
+            years: this.args.selectedYears.length ? this.args.selectedYears.join('-') : null,
+          },
+        });
+      },
+      { passive: false, once: true },
+    );
+  });
+
+  <template>
+    {{#if this.shouldDisplay}}
+      <div class="did-you-mean" {{this.overrideLink}} data-test-did-you-mean>
+        {{t "general.didYouMean" suggestion=this.highlightedSafe href=this.href htmlSafe=true}}
+      </div>
+    {{/if}}
   </template>
 }
