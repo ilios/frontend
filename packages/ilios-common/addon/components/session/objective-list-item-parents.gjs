@@ -55,7 +55,6 @@ export default class SessionObjectiveListItemParentsComponent extends Component 
                 <button
                   type="button"
                   class="link-button"
-                  aria-label={{t "general.edit"}}
                   title={{t "general.edit"}}
                   {{on "click" @manage}}
                   data-test-manage
