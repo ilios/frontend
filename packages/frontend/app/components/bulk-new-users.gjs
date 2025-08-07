@@ -401,7 +401,7 @@ export default class BulkNewUsersComponent extends Component {
             </div>
           {{/if}}
           <h2>
-            {{t "general.newUser"}}
+            {{t "general.createBulk"}}
           </h2>
           <div class="new-user-form">
             <div class="choose-form-type">
