@@ -104,20 +104,22 @@ export default class DetailCohortManagerComponent extends Component {
   }
   <template>
     <section class="detail-cohort-manager">
-      <ul class="selected-cohorts">
-        {{#each (sortBy "title" @selectedCohorts) as |cohort|}}
-          <li>
-            <button type="button" {{on "click" (fn @remove cohort)}}>
-              {{cohort.programYear.program.school.title}}
-              |
-              {{cohort.programYear.program.title}}
-              |
-              {{cohort.title}}
-              <FaIcon @icon="xmark" class="remove" />
-            </button>
-          </li>
-        {{/each}}
-      </ul>
+      {{#if @selectedCohorts.length}}
+        <ul class="selected-cohorts">
+          {{#each (sortBy "title" @selectedCohorts) as |cohort|}}
+            <li>
+              <button type="button" {{on "click" (fn @remove cohort)}}>
+                {{cohort.programYear.program.school.title}}
+                |
+                {{cohort.programYear.program.title}}
+                |
+                {{cohort.title}}
+                <FaIcon @icon="xmark" class="remove" />
+              </button>
+            </li>
+          {{/each}}
+        </ul>
+      {{/if}}
       <ul class="selectable-cohorts">
         {{#if this.isLoaded}}
           {{#each this.sortedAvailableCohorts as |cohort|}}
