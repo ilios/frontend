@@ -36,6 +36,9 @@ export default class DetailLearnergroupsListItemComponent extends Component {
         >
           {{#if @group.isTopLevelGroup}}
             {{@group.title}}
+            {{#if @group.usersOnlyAtThisLevelCount}}
+              ({{@group.usersOnlyAtThisLevelCount}})
+            {{/if}}
           {{else}}
             {{#each this.allParentTitles as |title|}}
               {{! template-lint-disable no-bare-strings}}
@@ -59,6 +62,9 @@ export default class DetailLearnergroupsListItemComponent extends Component {
       {{else}}
         {{#if @group.isTopLevelGroup}}
           {{@group.title}}
+          {{#if @group.usersOnlyAtThisLevelCount}}
+            ({{@group.usersOnlyAtThisLevelCount}})
+          {{/if}}
         {{else}}
           {{#each this.allParentTitles as |title|}}
             {{! template-lint-disable no-bare-strings}}

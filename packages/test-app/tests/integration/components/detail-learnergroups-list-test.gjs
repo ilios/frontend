@@ -77,7 +77,7 @@ module('Integration | Component | detail-learnergroups-list', function (hooks) {
     );
     assert.strictEqual(component.trees[1].title, 'program 0 cohort 1');
     assert.strictEqual(component.trees[1].items.length, 2);
-    assert.strictEqual(component.trees[1].items[0].text, 'tlg2');
+    assert.strictEqual(component.trees[1].items[0].text, 'tlg2 (2)');
     assert.strictEqual(component.trees[1].items[1].text, 'tlg2 » sub group 2 (0)');
   });
 
