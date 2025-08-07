@@ -56,7 +56,7 @@
     }
 
     ul {
-      margin: 0;
+      margin: 0.25rem 0 0 0;
     }
   }
 
@@ -67,6 +67,10 @@
 
     &:nth-of-type(even) {
       border-left: 3px solid var(--lightest-red);
+    }
+
+    &:first-of-type {
+      margin-top: 0;
     }
 
     p {
