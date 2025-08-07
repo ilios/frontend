@@ -4,7 +4,8 @@
 .bulk-new-users {
   padding: 1rem 0;
 
-  h3 {
+  h2 {
+    @include m.ilios-heading-h4;
     margin: 0.5rem 0;
   }
 
