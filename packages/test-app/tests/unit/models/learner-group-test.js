@@ -620,6 +620,13 @@ module('Unit | Model | LearnerGroup', function (hooks) {
     assert.strictEqual(learnerGroup.childrenCount, 2);
   });
 
+  test('hasChildren', async function (assert) {
+    const learnerGroup = this.store.createRecord('learner-group');
+    assert.notOk(learnerGroup.hasChildren);
+    this.store.createRecord('learner-group', { parent: learnerGroup });
+    assert.ok(learnerGroup.hasChildren);
+  });
+
   test('has no needs in group without subgroups', async function (assert) {
     const learnerGroup = this.store.createRecord('learner-group');
     const hasNeeds = await waitForResource(learnerGroup, 'hasSubgroupsInNeedOfAccommodation');

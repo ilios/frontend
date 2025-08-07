@@ -6,6 +6,8 @@ import { on } from '@ember/modifier';
 import { fn } from '@ember/helper';
 import FaIcon from 'ilios-common/components/fa-icon';
 import t from 'ember-intl/helpers/t';
+import not from 'ember-truth-helpers/helpers/not';
+import or from 'ember-truth-helpers/helpers/or';
 
 export default class DetailLearnergroupsListItemComponent extends Component {
   @cached
@@ -45,7 +47,9 @@ export default class DetailLearnergroupsListItemComponent extends Component {
               </span>
             {{/each}}
             {{@group.title}}
-            ({{@group.usersOnlyAtThisLevelCount}})
+            {{#if (or @group.usersOnlyAtThisLevelCount (not @group.hasChildren))}}
+              ({{@group.usersOnlyAtThisLevelCount}})
+            {{/if}}
           {{/if}}
           {{#if @group.needsAccommodation}}
             <FaIcon
@@ -68,7 +72,9 @@ export default class DetailLearnergroupsListItemComponent extends Component {
             </span>
           {{/each}}
           {{@group.title}}
-          ({{@group.usersOnlyAtThisLevelCount}})
+          {{#if (or @group.usersOnlyAtThisLevelCount (not @group.hasChildren))}}
+            ({{@group.usersOnlyAtThisLevelCount}})
+          {{/if}}
         {{/if}}
         {{#if @group.needsAccommodation}}
           <FaIcon

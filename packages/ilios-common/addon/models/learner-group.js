@@ -441,6 +441,10 @@ export default class LearnerGroup extends Model {
     return this.hasMany('children').ids().length;
   }
 
+  get hasChildren() {
+    return !!this.childrenCount;
+  }
+
   /**
    * Takes a user out of  a group and then traverses child groups recursively
    * to remove the user from them as well and returns the entire tree for saving.
