@@ -15,6 +15,50 @@
 
   .events-by-date {
     border-top: 1px dotted var(--orange);
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    .day {
+      @include m.ilios-heading-h4;
+      align-self: flex-start;
+      position: sticky;
+      top: 0.25rem;
+
+      @include m.for-phone-only {
+        &.narrow {
+          display: block;
+        }
+        &.long,
+        &.short {
+          display: none;
+        }
+      }
+
+      @include m.for-phone-and-up {
+        &.short {
+          display: block;
+        }
+        &.long,
+        &.narrow {
+          display: none;
+        }
+      }
+
+      @include m.for-tablet-and-up {
+        &.long {
+          display: block;
+        }
+        &.short,
+        &.narrow {
+          display: none;
+        }
+      }
+    }
+
+    ul {
+      @include m.ilios-list-reset;
+      margin-top: 0.25rem;
+    }
   }
 
   .event {
@@ -24,6 +68,10 @@
 
     &:nth-of-type(even) {
       border-left: 3px solid var(--lightest-red);
+    }
+
+    &:first-of-type {
+      margin-top: 0;
     }
 
     p {

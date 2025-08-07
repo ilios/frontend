@@ -6,6 +6,7 @@ const definition = {
   title: text('[data-test-week-title]'),
   eventsByDate: collection('[data-test-events-by-date]', {
     events: collection('[data-test-week-glance-event]', weekGlanceEvent),
+    days: collection('[data-test-day]'),
   }),
 };
 
