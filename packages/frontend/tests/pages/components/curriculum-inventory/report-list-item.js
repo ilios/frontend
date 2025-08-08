@@ -10,6 +10,7 @@ const definition = {
   endDate: text('[data-test-end-date]'),
   status: text('[data-test-status]'),
   remove: clickable('[data-test-remove]'),
+  download: clickable('[data-test-download]'),
   isDeletable: isPresent('[data-test-remove]'),
   confirmRemoval: {
     resetScope: true,
