@@ -58,6 +58,10 @@
           }
         }
 
+        h3 {
+          @include m.ilios-heading-h6;
+        }
+
         h6 {
           @include m.ilios-heading-h6;
           padding-bottom: 0.25em;
