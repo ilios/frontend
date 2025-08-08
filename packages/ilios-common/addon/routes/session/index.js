@@ -10,6 +10,24 @@ export default class SessionIndexRoute extends Route {
 
   canUpdate = false;
 
+  queryParams = {
+    sessionObjectiveDetails: {
+      replace: true,
+    },
+    sessionTaxonomyDetails: {
+      replace: true,
+    },
+    sessionLeadershipDetails: {
+      replace: true,
+    },
+    sessionManageLeadership: {
+      replace: true,
+    },
+    addOffering: {
+      replace: true,
+    },
+  };
+
   async afterModel(session) {
     this.canUpdate = await this.permissionChecker.canUpdateSession(session);
   }
