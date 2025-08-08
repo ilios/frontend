@@ -6,6 +6,7 @@ import { render, click, find, findAll, fillIn, blur as emberBlur } from '@ember/
 import { DateTime } from 'luxon';
 import { setupMirage } from 'test-app/tests/test-support/mirage';
 import queryString from 'query-string';
+import a11yAudit from 'ember-a11y-testing/test-support/audit';
 import { freezeDateAt, unfreezeDate } from 'ilios-common';
 import Rollover from 'ilios-common/components/course/rollover';
 import noop from 'ilios-common/helpers/noop';
@@ -479,7 +480,7 @@ module('Integration | Component | course/rollover', function (hooks) {
   });
 
   test('rollover course with cohorts', async function (assert) {
-    assert.expect(2);
+    assert.expect(5);
     const school = this.server.create('school', {
       title: 'SOM',
     });
@@ -506,8 +507,8 @@ module('Integration | Component | course/rollover', function (hooks) {
       const data = queryString.parse(request.requestBody, {
         arrayFormat: 'bracket',
       });
-      assert.ok('newCohorts' in data);
-      assert.deepEqual(data.newCohorts, ['1']);
+      assert.ok('newCohorts' in data, 'newCohorts key found in rollover found in posted data');
+      assert.deepEqual(data.newCohorts, ['1'], 'posted data correct');
       return this.serialize(
         schema.courses.create({
           id: 14,
@@ -523,10 +524,16 @@ module('Integration | Component | course/rollover', function (hooks) {
     this.set('course', course);
     await render(<template><Rollover @course={{this.course}} @visit={{(noop)}} /></template>);
     const advancedOptions = '.advanced-options';
+    const selectedCohorts = `${advancedOptions} .selected-cohorts`;
+    assert.dom(selectedCohorts).doesNotExist();
     const firstCohort = `${advancedOptions} .selectable-cohorts li:nth-of-type(1) button`;
 
     await click(firstCohort);
+    assert.dom(selectedCohorts).exists();
     await click('.done');
+
+    await a11yAudit();
+    assert.ok(true, 'no a11y errors found!');
   });
 
   test('dates are correct in December', async function (assert) {
