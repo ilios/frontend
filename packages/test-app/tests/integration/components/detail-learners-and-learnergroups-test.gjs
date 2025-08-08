@@ -139,7 +139,7 @@ module('Integration | Component | detail-learners-and-learner-groups', function 
     );
     assert.strictEqual(
       component.selectedLearnerGroups.detailLearnergroupsList.trees[1].items[0].text,
-      'Top Group 3 (0)',
+      'Top Group 3',
     );
   });
 
@@ -208,7 +208,7 @@ module('Integration | Component | detail-learners-and-learner-groups', function 
     );
     assert.strictEqual(
       component.selectedLearnerGroups.detailLearnergroupsList.trees[1].items[0].text,
-      'Top Group 3 (0)',
+      'Top Group 3',
     );
     assert.strictEqual(component.learnergroupSelectionManager.availableGroups.cohorts.length, 2);
     assert.strictEqual(

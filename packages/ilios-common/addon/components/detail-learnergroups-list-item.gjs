@@ -34,8 +34,11 @@ export default class DetailLearnergroupsListItemComponent extends Component {
           {{on "click" (fn this.remove @group)}}
           data-test-remove-learnergroup
         >
-          {{#if @group.isTopLevel}}
+          {{#if @group.isTopLevelGroup}}
             {{@group.title}}
+            {{#if @group.usersOnlyAtThisLevelCount}}
+              ({{@group.usersOnlyAtThisLevelCount}})
+            {{/if}}
           {{else}}
             {{#each this.allParentTitles as |title|}}
               {{! template-lint-disable no-bare-strings}}
@@ -57,8 +60,11 @@ export default class DetailLearnergroupsListItemComponent extends Component {
           <FaIcon @icon="xmark" class="remove" />
         </button>
       {{else}}
-        {{#if @group.isTopLevel}}
+        {{#if @group.isTopLevelGroup}}
           {{@group.title}}
+          {{#if @group.usersOnlyAtThisLevelCount}}
+            ({{@group.usersOnlyAtThisLevelCount}})
+          {{/if}}
         {{else}}
           {{#each this.allParentTitles as |title|}}
             {{! template-lint-disable no-bare-strings}}
