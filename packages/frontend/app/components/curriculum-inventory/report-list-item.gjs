@@ -89,6 +89,7 @@ export default class CurriculumInventoryReportListItemComponent extends Componen
             download="report.xml"
             href={{@report.absoluteFileUri}}
             rel="noopener noreferrer"
+            aria-label={{t "general.download"}}
             target="_blank"
           >
             <FaIcon @icon="download" class="enabled" />
