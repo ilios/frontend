@@ -8,7 +8,6 @@ import { fn } from '@ember/helper';
 import t from 'ember-intl/helpers/t';
 import sortBy from 'ilios-common/helpers/sort-by';
 import ReportListItem from 'frontend/components/curriculum-inventory/report-list-item';
-import ResponsiveTd from 'frontend/components/responsive-td';
 
 export default class CurriculumInventoryReportListComponent extends Component {
   @service currentUser;
@@ -77,9 +76,15 @@ export default class CurriculumInventoryReportListComponent extends Component {
             <ReportListItem @report={{report}} @edit={{@edit}} @remove={{@remove}} />
           {{else}}
             <tr data-test-empty-list>
-              <ResponsiveTd @smallScreenSpan="8" @largeScreenSpan="16" class="text-center">
+              <td class="text-left" colspan="4" data-test-name>
                 {{t "general.none"}}
-              </ResponsiveTd>
+              </td>
+              <td class="text-center hide-from-small-screen" colspan="2" data-test-program></td>
+              <td class="text-center hide-from-small-screen" colspan="2" data-test-year></td>
+              <td class="text-center hide-from-small-screen" colspan="2" data-test-start-date></td>
+              <td class="text-center hide-from-small-screen" colspan="2" data-test-end-date></td>
+              <td class="text-center" colspan="2" data-test-status></td>
+              <td class="text-right report-actions" colspan="2" data-test-actions></td>
             </tr>
           {{/each}}
         </tbody>
