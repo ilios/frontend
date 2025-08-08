@@ -16,7 +16,10 @@ module('Acceptance | Session - Objective Parents - Faded Status Sync', function 
     this.fadedSelector = '.faded';
 
     this.school = this.server.create('school');
-    this.user = await setupAuthentication({ school: this.school }, true);
+    this.user = await setupAuthentication({
+      school: this.school,
+      administeredSchools: [this.school],
+    });
     const program = this.server.create('program', { school: this.school });
     const programYear = this.server.create('program-year', { program });
     const cohort = this.server.create('cohort', { programYear });
@@ -84,8 +87,6 @@ module('Acceptance | Session - Objective Parents - Faded Status Sync', function 
 
   test('objective description and parent objectives faded statuses are synced', async function (assert) {
     assert.expect(52);
-    this.user.update({ administeredSchools: [this.school] });
-
     await page.visit({
       courseId: 1,
       sessionId: 1,

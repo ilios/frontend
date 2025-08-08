@@ -8,8 +8,11 @@ import percySnapshot from '@percy/ember';
 module('Acceptance | Course - Competencies', function (hooks) {
   setupApplicationTest(hooks);
   hooks.beforeEach(async function () {
-    this.user = await setupAuthentication({}, true);
     this.school = this.server.create('school');
+    this.user = await setupAuthentication({
+      school: this.school,
+      administeredSchools: [this.school],
+    });
     const program = this.server.create('program', { school: this.school });
     const programYear = this.server.create('program-year', {
       program,
@@ -52,7 +55,6 @@ module('Acceptance | Course - Competencies', function (hooks) {
 
   test('collapsed competencies renders', async function (assert) {
     assert.expect(5);
-    this.user.update({ administeredSchools: [this.school] });
     await page.visit({ courseId: this.course.id, details: true });
     await percySnapshot(assert);
     assert.strictEqual(page.details.collapsedCompetencies.title, 'Competencies (1)');
@@ -63,7 +65,6 @@ module('Acceptance | Course - Competencies', function (hooks) {
   });
 
   test('changing objective parent changes summary', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     await page.visit({
       courseId: this.course.id,
       details: true,

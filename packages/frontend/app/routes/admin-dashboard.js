@@ -10,10 +10,7 @@ export default class AdminDashboardRoute extends Route {
   @service session;
 
   beforeModel(transition) {
-    this.session.requireAuthentication(transition, 'login');
-    const currentUser = this.currentUser;
-    const performsNonLearnerFunction = currentUser.get('performsNonLearnerFunction');
-    if (!performsNonLearnerFunction) {
+    if (!this.currentUser.requireNonLearner(transition)) {
       this.router.transitionTo('dashboard');
     }
   }

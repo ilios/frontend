@@ -9,7 +9,7 @@ module('Acceptance | Program - Publication Check', function (hooks) {
 
   hooks.beforeEach(async function () {
     const school = this.server.create('school');
-    await setupAuthentication({ school });
+    await setupAuthentication({ school, administeredSchools: [school] });
     const program = this.server.create('program', {
       startYear: 2013,
       school,

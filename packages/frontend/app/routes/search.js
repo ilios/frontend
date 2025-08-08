@@ -9,9 +9,8 @@ export default class SearchRoute extends Route {
   @service store;
 
   async beforeModel(transition) {
-    this.session.requireAuthentication(transition, 'login');
     const searchEnabled = await this.iliosConfig.getSearchEnabled();
-    if (!searchEnabled || !this.currentUser.performsNonLearnerFunction) {
+    if (!searchEnabled || !this.currentUser.requireNonLearner(transition)) {
       this.router.transitionTo('dashboard');
     }
   }

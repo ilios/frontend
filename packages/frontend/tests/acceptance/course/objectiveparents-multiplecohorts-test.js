@@ -6,8 +6,11 @@ import page from 'ilios-common/page-objects/course';
 module('Acceptance | Course with multiple Cohorts - Objective Parents', function (hooks) {
   setupApplicationTest(hooks);
   hooks.beforeEach(async function () {
-    this.user = await setupAuthentication({}, true);
     this.school = this.server.create('school');
+    this.user = await setupAuthentication({
+      school: this.school,
+      administeredSchools: [this.school],
+    });
     const program = this.server.create('program', { school: this.school });
 
     const programYears = this.server.createList('programYear', 2, {
@@ -54,7 +57,6 @@ module('Acceptance | Course with multiple Cohorts - Objective Parents', function
   });
 
   test('list parent objectives by competency', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     await page.visit({
       courseId: this.course.id,
       details: true,
@@ -116,7 +118,6 @@ module('Acceptance | Course with multiple Cohorts - Objective Parents', function
   });
 
   test('save changes', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     await page.visit({
       courseId: this.course.id,
       details: true,
@@ -166,7 +167,6 @@ module('Acceptance | Course with multiple Cohorts - Objective Parents', function
   });
 
   test('cancel changes', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     await page.visit({
       courseId: this.course.id,
       details: true,

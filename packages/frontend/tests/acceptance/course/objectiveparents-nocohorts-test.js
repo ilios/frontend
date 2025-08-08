@@ -7,8 +7,11 @@ import page from 'ilios-common/page-objects/course';
 module('Acceptance | Course with no cohorts - Objective Parents', function (hooks) {
   setupApplicationTest(hooks);
   hooks.beforeEach(async function () {
-    this.user = await setupAuthentication({}, true);
     this.school = this.server.create('school');
+    this.user = await setupAuthentication({
+      school: this.school,
+      administeredSchools: [this.school],
+    });
     const program = this.server.create('program', { school: this.school });
 
     const year = new Date().getFullYear();
@@ -30,7 +33,6 @@ module('Acceptance | Course with no cohorts - Objective Parents', function (hook
   });
 
   test('add and remove a new cohort', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     await page.visit({
       courseId: this.course.id,
       details: true,

@@ -7,8 +7,8 @@ module('Acceptance | Session - Objective Vocabulary Terms', function (hooks) {
   setupApplicationTest(hooks);
 
   hooks.beforeEach(async function () {
-    this.user = await setupAuthentication({}, true);
     const school = this.server.create('school');
+    this.user = await setupAuthentication({ school, administeredSchools: [school] });
     this.server.create('academic-year', { id: 2013 });
     const program = this.server.create('program', { school });
     const programYear = this.server.create('program-year', { program });
@@ -27,7 +27,6 @@ module('Acceptance | Session - Objective Vocabulary Terms', function (hooks) {
 
   test('manage and save terms', async function (assert) {
     assert.expect(24);
-    this.user.update({ administeredSchools: [this.school] });
     await page.visit({
       courseId: 1,
       sessionId: 1,
@@ -135,7 +134,6 @@ module('Acceptance | Session - Objective Vocabulary Terms', function (hooks) {
   });
 
   test('manage and cancel terms', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     await page.visit({
       courseId: 1,
       sessionId: 1,

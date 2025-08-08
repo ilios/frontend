@@ -8,7 +8,10 @@ module('Acceptance | Session - Terms', function (hooks) {
   setupApplicationTest(hooks);
   hooks.beforeEach(async function () {
     this.school = this.server.create('school');
-    this.user = await setupAuthentication({ school: this.school }, true);
+    this.user = await setupAuthentication({
+      school: this.school,
+      administeredSchools: [this.school],
+    });
     const vocabulary = this.server.create('vocabulary', {
       school: this.school,
       active: true,
@@ -62,7 +65,6 @@ module('Acceptance | Session - Terms', function (hooks) {
   });
 
   test('manage terms', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     await page.visit({
       courseId: 1,
       sessionId: 1,
@@ -87,7 +89,6 @@ module('Acceptance | Session - Terms', function (hooks) {
   });
 
   test('save term changes', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     await page.visit({
       courseId: 1,
       sessionId: 1,
@@ -106,7 +107,6 @@ module('Acceptance | Session - Terms', function (hooks) {
   });
 
   test('cancel term changes', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     await page.visit({
       courseId: 1,
       sessionId: 1,

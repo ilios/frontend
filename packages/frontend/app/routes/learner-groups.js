@@ -2,6 +2,7 @@ import Route from '@ember/routing/route';
 import { service } from '@ember/service';
 
 export default class LearnerGroupsRoute extends Route {
+  @service currentUser;
   @service dataLoader;
   @service session;
 
@@ -12,7 +13,7 @@ export default class LearnerGroupsRoute extends Route {
   };
 
   beforeModel(transition) {
-    this.session.requireAuthentication(transition, 'login');
+    this.currentUser.requireNonLearner(transition);
   }
 
   model() {

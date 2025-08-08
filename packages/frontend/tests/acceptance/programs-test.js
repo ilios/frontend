@@ -13,7 +13,10 @@ module('Acceptance | Programs', function (hooks) {
   module('User in single school with no special permissions', function (hooks) {
     hooks.beforeEach(async function () {
       this.school = this.server.create('school');
-      this.user = await setupAuthentication({ school: this.school });
+      this.user = await setupAuthentication({
+        school: this.school,
+        administeredSchools: [this.school],
+      });
     });
 
     test('visiting /programs', async function (assert) {
@@ -24,7 +27,6 @@ module('Acceptance | Programs', function (hooks) {
     });
 
     test('add new program', async function (assert) {
-      this.user.update({ administeredSchools: [this.school] });
       assert.expect(6);
       await page.visit();
 
@@ -42,7 +44,6 @@ module('Acceptance | Programs', function (hooks) {
     });
 
     test('remove program', async function (assert) {
-      this.user.update({ administeredSchools: [this.school] });
       assert.expect(6);
       this.server.create('program', {
         school: this.school,
@@ -59,7 +60,6 @@ module('Acceptance | Programs', function (hooks) {
     });
 
     test('cancel remove program', async function (assert) {
-      this.user.update({ administeredSchools: [this.school] });
       this.server.create('program', {
         school: this.school,
       });
@@ -89,7 +89,10 @@ module('Acceptance | Programs', function (hooks) {
       this.school2 = this.server.create('school');
       this.program1 = this.server.create('program', { school: this.school1 });
       this.program2 = this.server.create('program', { school: this.school2 });
-      this.user = await setupAuthentication();
+      this.user = await setupAuthentication({
+        school: this.school1,
+        administeredSchools: [this.school1],
+      });
     });
 
     test('remember non-default school filter choice', async function (assert) {
@@ -112,15 +115,13 @@ module('Acceptance | Programs', function (hooks) {
       assert.strictEqual(page.root.schoolFilter.selectedSchool, '2');
       assert.strictEqual(currentURL(), '/programs?school=2');
     });
-  });
 
-  test('filters options', async function (assert) {
-    const schools = this.server.createList('school', 2);
-    await setupAuthentication({ school: schools[1] });
-    await page.visit();
-    assert.strictEqual(page.root.schoolFilter.schools.length, 2);
-    assert.strictEqual(page.root.schoolFilter.schools[0].text, 'school 0');
-    assert.strictEqual(page.root.schoolFilter.schools[1].text, 'school 1');
-    assert.strictEqual(page.root.schoolFilter.selectedSchool, '2');
+    test('filters options', async function (assert) {
+      await page.visit();
+      assert.strictEqual(page.root.schoolFilter.schools.length, 2);
+      assert.strictEqual(page.root.schoolFilter.schools[0].text, 'school 0');
+      assert.strictEqual(page.root.schoolFilter.schools[1].text, 'school 1');
+      assert.strictEqual(page.root.schoolFilter.selectedSchool, this.school1.id);
+    });
   });
 });

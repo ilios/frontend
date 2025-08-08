@@ -12,7 +12,10 @@ module('Acceptance | Instructor Groups', function (hooks) {
   module('User in single school', function (hooks) {
     hooks.beforeEach(async function () {
       this.school = this.server.create('school');
-      this.user = await setupAuthentication({ school: this.school });
+      this.user = await setupAuthentication({
+        school: this.school,
+        administeredSchools: [this.school],
+      });
     });
 
     test('visiting /instructorgroups', async function (assert) {
@@ -122,7 +125,6 @@ module('Acceptance | Instructor Groups', function (hooks) {
 
     test('add new instructorgroup', async function (assert) {
       assert.expect(7);
-      this.user.update({ administeredSchools: [this.school] });
       await page.visit();
       assert.strictEqual(page.headerTitle, 'Instructor Groups (0)');
       const newTitle = 'new test title';
@@ -139,7 +141,6 @@ module('Acceptance | Instructor Groups', function (hooks) {
 
     test('cancel adding new instructor group', async function (assert) {
       assert.expect(6);
-      this.user.update({ administeredSchools: [this.school] });
       this.server.create('instructor-group', {
         school: this.school,
       });
@@ -156,7 +157,6 @@ module('Acceptance | Instructor Groups', function (hooks) {
 
     test('remove instructor group', async function (assert) {
       assert.expect(6);
-      this.user.update({ administeredSchools: [this.school] });
       this.server.create('instructor-group', {
         school: this.school,
       });
@@ -173,7 +173,6 @@ module('Acceptance | Instructor Groups', function (hooks) {
 
     test('cancel remove instructor group', async function (assert) {
       assert.expect(4);
-      this.user.update({ administeredSchools: [this.school] });
       this.server.create('instructor-group', {
         school: this.school,
       });
@@ -188,7 +187,6 @@ module('Acceptance | Instructor Groups', function (hooks) {
 
     test('confirmation of remove message', async function (assert) {
       assert.expect(3);
-      this.user.update({ administeredSchools: [this.school] });
       const users = this.server.createList('user', 5);
       this.server.create('instructor-group', {
         school: this.school,
@@ -231,7 +229,6 @@ module('Acceptance | Instructor Groups', function (hooks) {
 
     test('cannot delete instructor group with attached courses #3767', async function (assert) {
       assert.expect(5);
-      this.user.update({ administeredSchools: [this.school] });
       const group1 = this.server.create('instructor-group', {
         school: this.school,
       });
@@ -252,18 +249,24 @@ module('Acceptance | Instructor Groups', function (hooks) {
     });
   });
 
-  test('filters options', async function (assert) {
-    assert.expect(4);
-    const schools = this.server.createList('school', 2);
-    await setupAuthentication({
-      school: schools[1],
+  module('User in multiple schools', function (hooks) {
+    hooks.beforeEach(async function () {
+      this.school1 = this.server.create('school');
+      this.school2 = this.server.create('school');
+      this.user = await setupAuthentication({
+        school: this.school2,
+        administeredSchools: [this.school1],
+      });
     });
 
-    await page.visit();
-    await percySnapshot(assert);
-    assert.strictEqual(page.schoolFilter.schools.length, 2);
-    assert.strictEqual(page.schoolFilter.schools[0].text, 'school 0');
-    assert.strictEqual(page.schoolFilter.schools[1].text, 'school 1');
-    assert.strictEqual(parseInt(page.schoolFilter.selectedSchool, 10), 2);
+    test('filters options', async function (assert) {
+      assert.expect(4);
+      await page.visit();
+      await percySnapshot(assert);
+      assert.strictEqual(page.schoolFilter.schools.length, 2);
+      assert.strictEqual(page.schoolFilter.schools[0].text, 'school 0');
+      assert.strictEqual(page.schoolFilter.schools[1].text, 'school 1');
+      assert.strictEqual(parseInt(page.schoolFilter.selectedSchool, 10), 2);
+    });
   });
 });

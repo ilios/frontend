@@ -7,8 +7,11 @@ import page from 'ilios-common/page-objects/course';
 module('Acceptance | Course - Terms', function (hooks) {
   setupApplicationTest(hooks);
   hooks.beforeEach(async function () {
-    this.user = await setupAuthentication({}, true);
     this.school = this.server.create('school');
+    this.user = await setupAuthentication({
+      school: this.school,
+      administeredSchools: [this.school],
+    });
     this.server.create('vocabulary', {
       school: this.school,
       active: true,
@@ -66,7 +69,6 @@ module('Acceptance | Course - Terms', function (hooks) {
 
   test('manage terms', async function (assert) {
     assert.expect(10);
-    this.user.update({ administeredSchools: [this.school] });
     await page.visit({
       courseId: this.course.id,
       details: true,
@@ -90,7 +92,6 @@ module('Acceptance | Course - Terms', function (hooks) {
   });
 
   test('save term changes', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     await page.visit({
       courseId: this.course.id,
       details: true,
@@ -109,7 +110,6 @@ module('Acceptance | Course - Terms', function (hooks) {
   });
 
   test('cancel term changes', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     await page.visit({
       courseId: this.course.id,
       details: true,
