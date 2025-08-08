@@ -91,14 +91,12 @@ export default class CurriculumInventoryReportListItemComponent extends Componen
             rel="noopener noreferrer"
             target="_blank"
             data-test-download
-          >
-            <FaIcon
+          ><FaIcon
               @icon="download"
               @title={{t "general.download"}}
               class="enabled"
               aria-label={{t "general.download"}}
-            />
-          </a>
+            /></a>
         </span>
         {{#if (and this.canDelete (not this.showRemoveConfirmation))}}
           <button
