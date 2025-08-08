@@ -24,6 +24,24 @@ export default class SchoolRoute extends Route {
 
   #preloadPromise;
 
+  queryParams = {
+    schoolCompetencyDetails: { replace: true },
+    schoolManageCompetencies: { replace: true },
+    schoolVocabularyDetails: { replace: true },
+    schoolManagedVocabulary: { replace: true },
+    schoolManagedVocabularyTerm: { replace: true },
+    schoolLeadershipDetails: { replace: true },
+    schoolManageLeadership: { replace: true },
+    schoolManageSessionAttributes: { replace: true },
+    schoolSessionAttributesDetails: { replace: true },
+    schoolSessionTypeDetails: { replace: true },
+    schoolManagedSessionType: { replace: true },
+    schoolNewSessionType: { replace: true },
+    schoolManageInstitutionalInformation: { replace: true },
+    schoolNewVocabulary: { replace: true },
+    schoolManageEmails: { replace: true },
+  };
+
   beforeModel(transition) {
     this.session.requireAuthentication(transition, 'login');
   }
