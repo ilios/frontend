@@ -60,6 +60,7 @@ module('Integration | Component | curriculum-inventory/report-list-item', functi
       }),
     );
     assert.strictEqual(component.status, 'Draft');
+    assert.ok(component.isDownloadable);
     assert.ok(component.isDeletable);
     assert.notOk(component.confirmRemoval.isVisible);
   });

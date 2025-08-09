@@ -90,9 +90,13 @@ export default class CurriculumInventoryReportListItemComponent extends Componen
             href={{@report.absoluteFileUri}}
             rel="noopener noreferrer"
             target="_blank"
-          >
-            <FaIcon @icon="download" class="enabled" />
-          </a>
+            data-test-download
+          ><FaIcon
+              @icon="download"
+              @title={{t "general.download"}}
+              class="enabled"
+              aria-label={{t "general.download"}}
+            /></a>
         </span>
         {{#if (and this.canDelete (not this.showRemoveConfirmation))}}
           <button
