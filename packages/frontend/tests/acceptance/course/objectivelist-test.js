@@ -9,7 +9,7 @@ module('Acceptance | Course - Objective List', function (hooks) {
   hooks.beforeEach(async function () {
     this.school = this.server.create('school');
     this.user = await setupAuthentication({
-      school: this.schoo,
+      school: this.school,
       administeredSchools: [this.school],
     });
     this.server.create('academic-year', { id: 2013 });
