@@ -11,6 +11,7 @@ import { on } from '@ember/modifier';
 import set from 'ember-set-helper/helpers/set';
 import FaIcon from 'ilios-common/components/fa-icon';
 import { fn } from '@ember/helper';
+import ResponsiveTd from 'frontend/components/responsive-td';
 
 export default class CurriculumInventorySequenceBlockListItemComponent extends Component {
   @service intl;
@@ -89,7 +90,7 @@ export default class CurriculumInventorySequenceBlockListItemComponent extends C
     </tr>
     {{#if this.showRemoveConfirmation}}
       <tr class="confirm-removal" data-test-confirm-removal>
-        <td colspan="15">
+        <ResponsiveTd @smallScreenSpan="9" @largeScreenSpan="15">
           <div class="confirm-message">
             {{t "general.sequenceBlockConfirmRemove"}}
             <br />
@@ -112,7 +113,7 @@ export default class CurriculumInventorySequenceBlockListItemComponent extends C
               </button>
             </div>
           </div>
-        </td>
+        </ResponsiveTd>
       </tr>
     {{/if}}
   </template>
