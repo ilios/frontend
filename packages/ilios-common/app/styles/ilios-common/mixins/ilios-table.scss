@@ -1,5 +1,6 @@
 @use "../colors" as c;
 @use "font-size";
+@use "media";
 
 @use "sass:color";
 
@@ -99,10 +100,15 @@
         font-weight: bold;
         padding-bottom: 0;
         padding-top: 0.75em;
-        padding-left: 8em;
-        padding-right: 8em;
+        padding-left: 3em;
+        padding-right: 3em;
         text-align: center;
         width: 100%;
+
+        @include media.for-tablet-and-up {
+          padding-left: 8em;
+          padding-right: 8em;
+        }
       }
 
       .confirm-buttons {

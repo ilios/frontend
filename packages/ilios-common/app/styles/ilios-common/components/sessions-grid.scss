@@ -24,9 +24,13 @@
       color: var(--red);
       font-weight: bold;
       margin: 0;
-      padding: 1rem 8rem;
+      padding: 1rem 4rem;
       text-align: center;
       width: 100%;
+
+      @include m.for-tablet-and-up {
+        padding: 1rem 8rem;
+      }
 
       .confirm-buttons {
         @include m.ilios-form-buttons;

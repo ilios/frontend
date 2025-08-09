@@ -4,6 +4,7 @@
 @use "ilios-form";
 @use "ilios-heading";
 @use "ilios-list";
+@use "media";
 
 @use "sass:color";
 
@@ -165,6 +166,11 @@
         font-weight: bold;
         text-align: center;
         margin-bottom: 1em;
+        padding: 1rem 4rem;
+
+        @include media.for-tablet-and-up {
+          padding: 1rem 8rem;
+        }
       }
 
       .remove {
