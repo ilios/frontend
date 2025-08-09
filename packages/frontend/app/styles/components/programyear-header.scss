@@ -35,11 +35,5 @@
         }
       }
     }
-
-    .programyear-publication {
-      @include m.for-laptop-and-up {
-        text-align: right;
-      }
-    }
   }
 }

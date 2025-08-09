@@ -24,17 +24,7 @@ Router.map(function () {
       resetNamespace: true,
     },
     function () {
-      this.route('publication-check', { path: '/publicationcheck' });
-      this.route(
-        'program-year',
-        {
-          path: '/programyears/:program_year_id',
-          resetNamespace: true,
-        },
-        function () {
-          this.route('publication-check', { path: '/publicationcheck' });
-        },
-      );
+      this.route('program-year', { path: '/programyears/:program_year_id', resetNamespace: true });
     },
   );
   this.route('admin-dashboard', { path: '/admin' });
