@@ -6,13 +6,15 @@ import page from 'ilios-common/page-objects/course';
 module('Acceptance | Course - Publish', function (hooks) {
   setupApplicationTest(hooks);
   hooks.beforeEach(async function () {
-    this.user = await setupAuthentication({}, true);
     this.school = this.server.create('school');
+    this.user = await setupAuthentication({
+      school: this.school,
+      administeredSchools: [this.school],
+    });
     this.cohort = this.server.create('cohort');
   });
 
   test('check publish draft course', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     const course = this.server.create('course', {
       year: 2013,
       school: this.school,
@@ -26,7 +28,6 @@ module('Acceptance | Course - Publish', function (hooks) {
   });
 
   test('check schedule draft course', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     const course = this.server.create('course', {
       year: 2013,
       school: this.school,
@@ -40,7 +41,6 @@ module('Acceptance | Course - Publish', function (hooks) {
   });
 
   test('check publish scheduled course', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     const course = this.server.create('course', {
       year: 2013,
       school: this.school,
@@ -56,7 +56,6 @@ module('Acceptance | Course - Publish', function (hooks) {
   });
 
   test('check unpublish scheduled course', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     const course = this.server.create('course', {
       year: 2013,
       school: this.school,
@@ -72,7 +71,6 @@ module('Acceptance | Course - Publish', function (hooks) {
   });
 
   test('check schedule published course', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     const course = this.server.create('course', {
       year: 2013,
       school: this.school,
@@ -87,7 +85,6 @@ module('Acceptance | Course - Publish', function (hooks) {
   });
 
   test('check unpublish published course', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     const course = this.server.create('course', {
       year: 2013,
       school: this.school,

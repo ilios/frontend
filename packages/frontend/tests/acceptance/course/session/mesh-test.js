@@ -8,7 +8,10 @@ module('Acceptance | Session - Mesh Terms', function (hooks) {
   setupApplicationTest(hooks);
   hooks.beforeEach(async function () {
     this.school = this.server.create('school');
-    this.user = await setupAuthentication({ school: this.school }, true);
+    this.user = await setupAuthentication({
+      school: this.school,
+      administeredSchools: [this.school],
+    });
     this.server.create('academic-year');
     this.server.createList('meshTree', 3);
     this.server.createList('meshConcept', 3);
@@ -47,7 +50,6 @@ module('Acceptance | Session - Mesh Terms', function (hooks) {
 
   test('manage terms', async function (assert) {
     assert.expect(24);
-    this.user.update({ administeredSchools: [this.school] });
     await page.visit({ courseId: 1, sessionId: 1 });
     assert.strictEqual(page.details.meshTerms.current.length, 3);
     await page.details.meshTerms.manage();
@@ -79,7 +81,6 @@ module('Acceptance | Session - Mesh Terms', function (hooks) {
   });
 
   test('save terms', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     await page.visit({ courseId: 1, sessionId: 1 });
     assert.strictEqual(page.details.meshTerms.current.length, 3);
     await page.details.meshTerms.manage();
@@ -101,7 +102,6 @@ module('Acceptance | Session - Mesh Terms', function (hooks) {
   });
 
   test('cancel term changes', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     await page.visit({ courseId: 1, sessionId: 1 });
     assert.strictEqual(page.details.meshTerms.current.length, 3);
     assert.strictEqual(page.details.meshTerms.current[0].title, 'descriptor 0');

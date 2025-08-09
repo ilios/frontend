@@ -2,11 +2,12 @@ import { service } from '@ember/service';
 import Route from '@ember/routing/route';
 
 export default class VerificationPreviewRoute extends Route {
+  @service currentUser;
   @service session;
   @service store;
 
-  async beforeModel(transition) {
-    this.session.requireAuthentication(transition, 'login');
+  beforeModel(transition) {
+    this.currentUser.requireNonLearner(transition);
   }
 
   model(params) {

@@ -3,6 +3,7 @@ import { filter } from 'rsvp';
 import Route from '@ember/routing/route';
 
 export default class UsersRoute extends Route {
+  @service currentUser;
   @service store;
   @service permissionChecker;
   @service session;
@@ -18,8 +19,8 @@ export default class UsersRoute extends Route {
     },
   };
 
-  async beforeModel(transition) {
-    this.session.requireAuthentication(transition, 'login');
+  beforeModel(transition) {
+    this.currentUser.requireNonLearner(transition);
   }
 
   async model() {

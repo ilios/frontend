@@ -7,7 +7,7 @@ export default class CurriculumInventoryReportsRoute extends Route {
   @service session;
 
   beforeModel(transition) {
-    this.session.requireAuthentication(transition, 'login');
+    this.currentUser.requireNonLearner(transition);
   }
 
   async model() {

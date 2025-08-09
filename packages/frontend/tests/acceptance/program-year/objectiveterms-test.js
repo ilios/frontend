@@ -8,8 +8,8 @@ module('Acceptance | Program Year - Objective Vocabulary Terms', function (hooks
   setupApplicationTest(hooks);
 
   hooks.beforeEach(async function () {
-    this.user = await setupAuthentication();
     const school = this.server.create('school');
+    this.user = await setupAuthentication({ school, administeredSchools: [school] });
     this.server.create('academic-year', { id: 2013 });
     const program = this.server.create('program', { school });
     const programYear = this.server.create('program-year', { program });
@@ -29,7 +29,6 @@ module('Acceptance | Program Year - Objective Vocabulary Terms', function (hooks
 
   test('manage and save terms', async function (assert) {
     assert.expect(29);
-    this.user.update({ administeredSchools: [this.school] });
     await page.visit({ programId: 1, programYearId: 1, pyObjectiveDetails: true });
     await percySnapshot(assert);
     assert.strictEqual(
@@ -158,7 +157,6 @@ module('Acceptance | Program Year - Objective Vocabulary Terms', function (hooks
 
   test('manage and cancel terms', async function (assert) {
     assert.expect(24);
-    this.user.update({ administeredSchools: [this.school] });
     await page.visit({ programId: 1, programYearId: 1, pyObjectiveDetails: true });
     assert.strictEqual(
       page.details.objectives.objectiveList.objectives[0].selectedTerms.list.length,

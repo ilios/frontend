@@ -10,7 +10,7 @@ module('Acceptance | School - Session Attributes', function (hooks) {
 
   hooks.beforeEach(async function () {
     this.school = this.server.create('school');
-    await setupAuthentication({ school: this.school });
+    await setupAuthentication({ school: this.school, administeredSchools: [this.school] });
   });
 
   test('check fields collapsed', async function (assert) {

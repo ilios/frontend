@@ -18,7 +18,7 @@ export default class PendingUserUpdatesRoute extends Route {
   };
 
   beforeModel(transition) {
-    this.session.requireAuthentication(transition, 'login');
+    this.currentUser.requireNonLearner(transition);
   }
 
   async model() {

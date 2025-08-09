@@ -11,14 +11,16 @@ module('Acceptance | Course - Overview', function (hooks) {
   setupApplicationTest(hooks);
   hooks.beforeEach(async function () {
     this.intl = this.owner.lookup('service:intl');
-    this.user = await setupAuthentication({}, true);
     this.school = this.server.create('school');
+    this.user = await setupAuthentication({
+      school: this.school,
+      administeredSchools: [this.school],
+    });
     this.server.createList('course-clerkship-type', 2);
   });
 
   module('check fields', function (hooks2) {
     hooks2.beforeEach(function () {
-      this.user.update({ administeredSchools: [this.school] });
       this.clerkshipType = this.server.create('course-clerkship-type');
       this.course = this.server.create('course', {
         year: 2013,
@@ -128,7 +130,6 @@ module('Acceptance | Course - Overview', function (hooks) {
   });
 
   test('pick clerkship type', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     const course = this.server.create('course', {
       year: 2013,
       school: this.school,
@@ -150,7 +151,6 @@ module('Acceptance | Course - Overview', function (hooks) {
   });
 
   test('remove clerkship type', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     const clerkshipType = this.server.create('course-clerkship-type');
     const course = this.server.create('course', {
       year: 2013,
@@ -174,7 +174,6 @@ module('Acceptance | Course - Overview', function (hooks) {
   });
 
   test('change title', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     const course = this.server.create('course', {
       year: 2013,
       school: this.school,
@@ -189,7 +188,6 @@ module('Acceptance | Course - Overview', function (hooks) {
   });
 
   test('change start date', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     const course = this.server.create('course', {
       year: 2013,
       startDate: '2013-03-23',
@@ -207,7 +205,6 @@ module('Acceptance | Course - Overview', function (hooks) {
   });
 
   test('start date validation', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     const course = this.server.create('course', {
       year: 2013,
       startDate: '2013-03-23',
@@ -226,7 +223,6 @@ module('Acceptance | Course - Overview', function (hooks) {
   });
 
   test('change end date', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     const course = this.server.create('course', {
       year: 2013,
       startDate: '2013-03-23',
@@ -244,7 +240,6 @@ module('Acceptance | Course - Overview', function (hooks) {
   });
 
   test('end date validation', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     const course = this.server.create('course', {
       year: 2013,
       startDate: '2013-03-23',
@@ -264,7 +259,6 @@ module('Acceptance | Course - Overview', function (hooks) {
 
   test('change externalId', async function (assert) {
     const externalId = 'abc123';
-    this.user.update({ administeredSchools: [this.school] });
     const course = this.server.create('course', {
       year: 2013,
       school: this.school,
@@ -282,7 +276,6 @@ module('Acceptance | Course - Overview', function (hooks) {
   });
 
   test('change to empty externalId', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     const course = this.server.create('course', {
       year: 2013,
       school: this.school,
@@ -304,7 +297,6 @@ module('Acceptance | Course - Overview', function (hooks) {
   });
 
   test('renders with empty externalId', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     const course = this.server.create('course', {
       year: 2013,
       school: this.school,
@@ -318,7 +310,6 @@ module('Acceptance | Course - Overview', function (hooks) {
   });
 
   test('change level', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     const course = this.server.create('course', {
       year: 2013,
       school: this.school,
@@ -336,7 +327,6 @@ module('Acceptance | Course - Overview', function (hooks) {
   });
 
   test('click rollover', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     const course = this.server.create('course', {
       year: 2013,
       school: this.school,
@@ -349,18 +339,7 @@ module('Acceptance | Course - Overview', function (hooks) {
     assert.strictEqual(currentRouteName(), 'course.rollover');
   });
 
-  test('rollover hidden from unprivileged users', async function (assert) {
-    const course = this.server.create('course', {
-      year: 2013,
-      school: this.school,
-    });
-    const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
-    await page.visit({ courseId: courseModel.id, details: true });
-    assert.notOk(page.details.overview.rollover.isVisible);
-  });
-
   test('rollover visible to privileged users', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     const course = this.server.create('course', {
       year: 2013,
       school: this.school,
@@ -371,7 +350,6 @@ module('Acceptance | Course - Overview', function (hooks) {
   });
 
   test('rollover hidden on rollover route', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     const course = this.server.create('course', {
       year: 2013,
       school: this.school,

@@ -8,7 +8,10 @@ module('Acceptance | Session - Independent Learning', function (hooks) {
   setupApplicationTest(hooks);
   hooks.beforeEach(async function () {
     this.school = this.server.create('school');
-    this.user = await setupAuthentication({ school: this.school }, true);
+    this.user = await setupAuthentication({
+      school: this.school,
+      administeredSchools: [this.school],
+    });
     this.server.createList('user', 6);
     this.server.create('academic-year');
     this.course = this.server.create('course', { school: this.school });
@@ -102,7 +105,6 @@ module('Acceptance | Session - Independent Learning', function (hooks) {
   });
 
   test('manage instructors lists', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     await page.visit({
       courseId: 1,
       sessionId: 1,
@@ -173,7 +175,6 @@ module('Acceptance | Session - Independent Learning', function (hooks) {
   });
 
   test('manage instructors search users', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     await page.visit({
       courseId: 1,
       sessionId: 1,
@@ -212,7 +213,6 @@ module('Acceptance | Session - Independent Learning', function (hooks) {
   });
 
   test('manage instructors search groups', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     await page.visit({
       courseId: 1,
       sessionId: 1,
@@ -237,7 +237,6 @@ module('Acceptance | Session - Independent Learning', function (hooks) {
   });
 
   test('add instructor group', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     await page.visit({
       courseId: 1,
       sessionId: 1,
@@ -319,7 +318,6 @@ module('Acceptance | Session - Independent Learning', function (hooks) {
   });
 
   test('add instructor', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     await page.visit({
       courseId: 1,
       sessionId: 1,
@@ -401,7 +399,6 @@ module('Acceptance | Session - Independent Learning', function (hooks) {
   });
 
   test('remove instructor group', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     await page.visit({
       courseId: 1,
       sessionId: 1,
@@ -466,7 +463,6 @@ module('Acceptance | Session - Independent Learning', function (hooks) {
   });
 
   test('remove instructor', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     await page.visit({
       courseId: 1,
       sessionId: 1,
@@ -531,7 +527,6 @@ module('Acceptance | Session - Independent Learning', function (hooks) {
   });
 
   test('undo instructor/group changes', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     await page.visit({
       courseId: 1,
       sessionId: 1,
@@ -600,7 +595,6 @@ module('Acceptance | Session - Independent Learning', function (hooks) {
   });
 
   test('ilm-only subcomponents disappear/reappear if ilm gets toggled off/on', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     await page.visit({
       courseId: 1,
       sessionId: 1,

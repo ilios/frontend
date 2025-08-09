@@ -3,11 +3,12 @@ import Route from '@ember/routing/route';
 import { all } from 'rsvp';
 
 export default class ProgramYearVisualizeObjectivesRoute extends Route {
+  @service currentUser;
   @service store;
   @service session;
 
   beforeModel(transition) {
-    this.session.requireAuthentication(transition, 'login');
+    this.currentUser.requireNonLearner(transition);
   }
 
   model(params) {

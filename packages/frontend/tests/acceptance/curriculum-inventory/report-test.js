@@ -9,11 +9,13 @@ module('Acceptance | curriculum inventory report', function (hooks) {
 
   hooks.beforeEach(async function () {
     this.school = this.server.create('school');
-    this.user = await setupAuthentication({ school: this.school });
+    this.user = await setupAuthentication({
+      school: this.school,
+      administeredSchools: [this.school],
+    });
   });
 
   test('create new sequence block Issue #2108', async function (assert) {
-    this.user.update({ directedSchools: [this.school] });
     const program = this.server.create('program', { school: this.school });
     const report = this.server.create('curriculum-inventory-report', { program });
     this.server.create('curriculumInventorySequence', { report });
@@ -27,27 +29,7 @@ module('Acceptance | curriculum inventory report', function (hooks) {
     assert.ok(page.blocks.newBlock.form.isVisible);
   });
 
-  test('rollover button hidden from unprivileged users', async function (assert) {
-    const program = this.server.create('program', {
-      school: this.school,
-      title: 'Doctor of Medicine',
-    });
-    const report = this.server.create('curriculum-inventory-report', {
-      year: 2013,
-      name: 'foo bar',
-      description: 'lorem ipsum',
-      program,
-    });
-    const reportModel = await this.owner
-      .lookup('service:store')
-      .findRecord('curriculum-inventory-report', report.id);
-    await page.visit({ reportId: reportModel.id });
-    assert.strictEqual(currentRouteName(), 'curriculum-inventory-report.index');
-    assert.notOk(page.details.overview.rolloverLink.isVisible);
-  });
-
   test('rollover button visible to privileged users', async function (assert) {
-    this.user.update({ directedSchools: [this.school] });
     const program = this.server.create('program', {
       school: this.school,
       title: 'Doctor of Medicine',
@@ -67,7 +49,6 @@ module('Acceptance | curriculum inventory report', function (hooks) {
   });
 
   test('finalizing report locks things down', async function (assert) {
-    this.user.update({ directedSchools: [this.school] });
     const program = this.server.create('program', {
       school: this.school,
       title: 'Doctor of Medicine',

@@ -13,7 +13,10 @@ module('Acceptance | Instructor Group', function (hooks) {
 
   hooks.beforeEach(async function () {
     this.school = this.server.create('school');
-    this.user = await setupAuthentication({ school: this.school }, true);
+    this.user = await setupAuthentication({
+      school: this.school,
+      administeredSchools: [this.school],
+    });
     const users = this.server.createList('user', 4);
     const courses = this.server.createList('course', 2, {
       school: this.school,
@@ -75,7 +78,6 @@ module('Acceptance | Instructor Group', function (hooks) {
   });
 
   test('change title', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     await visit(url);
     assert.strictEqual(page.root.header.title.text, 'instructor group 0');
     await page.root.header.title.edit();
@@ -86,7 +88,6 @@ module('Acceptance | Instructor Group', function (hooks) {
   });
 
   test('add instructor', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     await visit(url);
     assert.strictEqual(page.root.users.users.length, 2);
     assert.strictEqual(page.root.users.users[0].userNameInfo.fullName, '1 guy M. Mc1son');
@@ -150,7 +151,6 @@ module('Acceptance | Instructor Group', function (hooks) {
   });
 
   test('remove instructor', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     await visit(url);
     assert.strictEqual(page.root.users.users.length, 2);
     assert.strictEqual(page.root.users.users[0].userNameInfo.fullName, '1 guy M. Mc1son');

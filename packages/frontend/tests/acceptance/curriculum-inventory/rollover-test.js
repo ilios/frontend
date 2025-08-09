@@ -11,11 +11,13 @@ module('Acceptance | curriculum inventory report/rollover', function (hooks) {
 
   hooks.beforeEach(async function () {
     this.school = this.server.create('school');
-    this.user = await setupAuthentication({ school: this.school });
+    this.user = await setupAuthentication({
+      school: this.school,
+      administeredSchools: [this.school],
+    });
   });
 
   test('rollover button hidden on rollover route', async function (assert) {
-    this.user.update({ directedSchools: [this.school] });
     const program = this.server.create('program', {
       school: this.school,
       title: 'Doctor of Medicine',
@@ -36,7 +38,6 @@ module('Acceptance | curriculum inventory report/rollover', function (hooks) {
 
   test('rollover', async function (assert) {
     assert.expect(6);
-    this.user.update({ directedSchools: [this.school] });
     const thisYear = DateTime.fromObject({ hour: 8 }).year;
     const program = this.server.create('program', {
       school: this.school,

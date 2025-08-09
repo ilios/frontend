@@ -8,8 +8,11 @@ import percySnapshot from '@percy/ember';
 module('Acceptance | Course - Objective Parents', function (hooks) {
   setupApplicationTest(hooks);
   hooks.beforeEach(async function () {
-    this.user = await setupAuthentication({}, true);
     this.school = this.server.create('school');
+    this.user = await setupAuthentication({
+      school: this.school,
+      administeredSchools: [this.school],
+    });
     const program = this.server.create('program', { school: this.school });
     const programYear = this.server.create('program-year', { program });
     const cohort = this.server.create('cohort', { programYear });
@@ -47,7 +50,6 @@ module('Acceptance | Course - Objective Parents', function (hooks) {
 
   test('list parent objectives by competency', async function (assert) {
     assert.expect(18);
-    this.user.update({ administeredSchools: [this.school] });
 
     await page.visit({
       courseId: this.course.id,
@@ -88,7 +90,6 @@ module('Acceptance | Course - Objective Parents', function (hooks) {
 
   test('save changes', async function (assert) {
     assert.expect(10);
-    this.user.update({ administeredSchools: [this.school] });
 
     await page.visit({
       courseId: this.course.id,
@@ -132,7 +133,6 @@ module('Acceptance | Course - Objective Parents', function (hooks) {
 
   test('cancel changes', async function (assert) {
     assert.expect(10);
-    this.user.update({ administeredSchools: [this.school] });
 
     await page.visit({
       courseId: this.course.id,

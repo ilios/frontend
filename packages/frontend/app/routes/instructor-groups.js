@@ -2,6 +2,7 @@ import Route from '@ember/routing/route';
 import { service } from '@ember/service';
 
 export default class InstructorGroupsRoute extends Route {
+  @service currentUser;
   @service store;
   @service session;
 
@@ -12,7 +13,7 @@ export default class InstructorGroupsRoute extends Route {
   };
 
   beforeModel(transition) {
-    this.session.requireAuthentication(transition, 'login');
+    this.currentUser.requireNonLearner(transition);
   }
 
   async model() {

@@ -2,6 +2,7 @@ import Route from '@ember/routing/route';
 import { service } from '@ember/service';
 
 export default class InstructorGroupRoute extends Route {
+  @service currentUser;
   @service permissionChecker;
   @service session;
   @service store;
@@ -14,7 +15,7 @@ export default class InstructorGroupRoute extends Route {
   canUpdate = false;
 
   beforeModel(transition) {
-    this.session.requireAuthentication(transition, 'login');
+    this.currentUser.requireNonLearner(transition);
   }
 
   model(params) {

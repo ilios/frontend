@@ -9,7 +9,10 @@ module('Acceptance | Program Year - Terms', function (hooks) {
 
   hooks.beforeEach(async function () {
     this.school = this.server.create('school');
-    this.user = await setupAuthentication({ school: this.school });
+    this.user = await setupAuthentication({
+      school: this.school,
+      administeredSchools: [this.school],
+    });
     const vocabulary = this.server.create('vocabulary', {
       school: this.school,
       active: true,
@@ -49,7 +52,6 @@ module('Acceptance | Program Year - Terms', function (hooks) {
 
   test('manage terms', async function (assert) {
     assert.expect(7);
-    this.user.update({ administeredSchools: [this.school] });
     await page.visit({
       programId: this.program.id,
       programYearId: this.programYear.id,
@@ -73,7 +75,6 @@ module('Acceptance | Program Year - Terms', function (hooks) {
   });
 
   test('save term changes', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     await page.visit({
       programId: this.program.id,
       programYearId: this.programYear.id,
@@ -90,7 +91,6 @@ module('Acceptance | Program Year - Terms', function (hooks) {
   });
 
   test('cancel term changes', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     await page.visit({
       programId: this.program.id,
       programYearId: this.programYear.id,
