@@ -8,6 +8,7 @@ import { on } from '@ember/modifier';
 import t from 'ember-intl/helpers/t';
 import pick from 'ilios-common/helpers/pick';
 import set from 'ember-set-helper/helpers/set';
+import onKey from 'ember-keyboard/modifiers/on-key';
 import { TrackedAsyncData } from 'ember-async-data';
 import { loadQuillEditor } from 'ilios-common/utils/load-quill-editor';
 
@@ -100,6 +101,11 @@ export default class HtmlEditorComponent extends Component {
   }
 
   @action
+  onEscapeKey() {
+    this.togglePopup();
+  }
+
+  @action
   addLink() {
     const quill = this.editor;
     const range = quill.getSelection(true);
@@ -161,7 +167,11 @@ export default class HtmlEditorComponent extends Component {
   }
   <template>
     {{#if this.loadQuillData.isResolved}}
-      <div class="quill-html-editor" data-test-quill-html-editor>
+      <div
+        class="quill-html-editor"
+        {{onKey "Escape" this.onEscapeKey}}
+        data-test-quill-html-editor
+      >
         <div id="{{this.editorId}}-toolbar" data-test-toolbar>
           <div class="ql-formats">
             <button
