@@ -8,6 +8,8 @@ export async function fillInQuillEditor(element, html) {
 }
 export async function quillEditorValue(element) {
   const editor = await getEditorInstance(element);
+  // easiest way to get the HTML in an editor, maintain multiple spaces, and make sure it's empty empty, as Quill leaves `<p><br></p>` even if the editor is "empty"
+  // not using editor.getContents() as it returns custom Delta object that doesn't actually have the HTML markup: https://quilljs.com/docs/api#getcontents
   return editor.root.innerHTML.split('  ').join(' &nbsp;').replaceAll('<p><br></p>', '');
 }
 
