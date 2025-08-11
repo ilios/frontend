@@ -12,7 +12,7 @@ module('Acceptance | Instructor Groups', function (hooks) {
   module('User in single school', function (hooks) {
     hooks.beforeEach(async function () {
       this.school = this.server.create('school');
-      this.user = await setupAuthentication({ school: this.school });
+      this.user = await setupAuthentication({ school: this.school }, true);
     });
 
     test('visiting /instructorgroups', async function (assert) {
@@ -255,9 +255,7 @@ module('Acceptance | Instructor Groups', function (hooks) {
   test('filters options', async function (assert) {
     assert.expect(4);
     const schools = this.server.createList('school', 2);
-    await setupAuthentication({
-      school: schools[1],
-    });
+    await setupAuthentication({ school: schools[1] }, true);
 
     await page.visit();
     await percySnapshot(assert);

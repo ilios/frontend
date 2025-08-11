@@ -13,7 +13,7 @@ module('Acceptance | Programs', function (hooks) {
   module('User in single school with no special permissions', function (hooks) {
     hooks.beforeEach(async function () {
       this.school = this.server.create('school');
-      this.user = await setupAuthentication({ school: this.school });
+      this.user = await setupAuthentication({ school: this.school }, true);
     });
 
     test('visiting /programs', async function (assert) {
@@ -93,6 +93,7 @@ module('Acceptance | Programs', function (hooks) {
     });
 
     test('remember non-default school filter choice', async function (assert) {
+      await setupAuthentication({}, true);
       await page.visit();
 
       assert.strictEqual(currentURL(), '/programs');
@@ -116,7 +117,7 @@ module('Acceptance | Programs', function (hooks) {
 
   test('filters options', async function (assert) {
     const schools = this.server.createList('school', 2);
-    await setupAuthentication({ school: schools[1] });
+    await setupAuthentication({ school: schools[1] }, true);
     await page.visit();
     assert.strictEqual(page.root.schoolFilter.schools.length, 2);
     assert.strictEqual(page.root.schoolFilter.schools[0].text, 'school 0');

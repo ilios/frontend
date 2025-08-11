@@ -3,6 +3,7 @@ import { service } from '@ember/service';
 import { loadFroalaEditor } from 'ilios-common/utils/load-froala-editor';
 
 export default class ProgramYearRoute extends Route {
+  @service currentUser;
   @service permissionChecker;
   @service session;
   @service store;
@@ -19,7 +20,7 @@ export default class ProgramYearRoute extends Route {
   };
 
   beforeModel(transition) {
-    this.session.requireAuthentication(transition, 'login');
+    this.currentUser.requireNonLearner(transition);
   }
 
   model(params) {

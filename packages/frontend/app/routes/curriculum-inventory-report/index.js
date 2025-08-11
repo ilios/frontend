@@ -2,12 +2,13 @@ import Route from '@ember/routing/route';
 import { service } from '@ember/service';
 
 export default class CurriculumInventoryReportIndexRoute extends Route {
+  @service currentUser;
   @service permissionChecker;
   @service session;
   canUpdate = false;
 
   beforeModel(transition) {
-    this.session.requireAuthentication(transition, 'login');
+    this.currentUser.requireNonLearner(transition);
   }
 
   async afterModel(report) {

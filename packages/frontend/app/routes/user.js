@@ -8,8 +8,8 @@ export default class UserRoute extends Route {
   @service session;
   @service dataLoader;
 
-  async beforeModel(transition) {
-    this.session.requireAuthentication(transition, 'login');
+  beforeModel(transition) {
+    this.currentUser.requireNonLearner(transition);
   }
 
   model(params) {

@@ -12,7 +12,7 @@ module('Acceptance | Program - ProgramYear List', function (hooks) {
 
   hooks.beforeEach(async function () {
     this.school = this.server.create('school');
-    this.user = await setupAuthentication({ school: this.school });
+    this.user = await setupAuthentication({ school: this.school }, true);
     this.program = this.server.create('program', { school: this.school });
   });
 
