@@ -33,9 +33,10 @@
     .week-glance-learning-material-list-item {
       align-items: center;
       display: flex;
+      margin: 0.5rem 0;
 
-      &.fa-download {
-        margin-left: 0.1rem;
+      .fa-download {
+        margin-left: 0.5rem;
       }
     }
   }
