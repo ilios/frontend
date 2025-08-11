@@ -14,7 +14,6 @@ import { loadQuillEditor } from 'ilios-common/utils/load-quill-editor';
 export default class HtmlEditorComponent extends Component {
   @service intl;
   @tracked editorId = null;
-  @tracked loadFinished = false;
   @tracked popupUrlValue;
   @tracked popupTextValue;
   @tracked popupLinkNewTarget;
@@ -31,7 +30,6 @@ export default class HtmlEditorComponent extends Component {
       if (this.args.autofocus) {
         this.editor.focus();
       }
-      this.loadFinished = true;
 
       this.editor.on('text-change', () => {
         if (!this.isDestroyed && !this.isDestroying) {
@@ -244,7 +242,6 @@ export default class HtmlEditorComponent extends Component {
           id={{this.editorId}}
           class="html-editor"
           data-test-html-editor
-          data-test-load-finished={{this.loadFinished}}
         >
         </div>
         <div id={{this.popupId}} class="ql-popup" data-test-insert-link-popup>
