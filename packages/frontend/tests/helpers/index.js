@@ -7,6 +7,18 @@ import { setupMSW } from 'ilios-common/msw';
 import { setupIntl } from 'ember-intl/test-support';
 import { setRunOptions } from 'ember-a11y-testing/test-support';
 
+/**
+ * In order to get wcag22 rules we have to specify the tags manually.
+ * see: https://github.com/dequelabs/axe-core/blob/develop/doc/rule-descriptions.md#wcag-22-level-a--aa-rules
+ *
+ * There is no supported way to add tags, only to send the entire list.
+ * see https://github.com/dequelabs/axe-core/issues/4717
+ */
+const runOnly = {
+  type: 'tag',
+  values: ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'best-practice', 'wcag22a', 'wcag22aa'],
+};
+
 // This file exists to provide wrappers around ember-qunit's
 // test setup functions. This way, you can easily extend the setup that is
 // needed per test type.
@@ -28,6 +40,13 @@ function setupApplicationTest(hooks, options) {
   //
   setupIntl(hooks, 'en-us'); // ember-intl
   setupMSW(hooks);
+
+  hooks.before(() => {
+    setRunOptions({
+      preload: false,
+      runOnly,
+    });
+  });
 }
 
 function setupRenderingTest(hooks, options) {
@@ -42,6 +61,8 @@ function setupRenderingTest(hooks, options) {
    */
   hooks.before(() => {
     setRunOptions({
+      preload: false,
+      runOnly,
       rules: {
         'color-contrast': { enabled: false },
         listitem: { enabled: false },
