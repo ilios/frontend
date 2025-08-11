@@ -37,7 +37,8 @@ export default class HtmlEditorComponent extends Component {
         if (!this.isDestroyed && !this.isDestroying) {
           this.editorHasNoRedo = !this.editor.history.stack.redo.length;
           this.editorHasNoUndo = !this.editor.history.stack.undo.length;
-          // make sure to retain multiple spaces
+          // use editor.root.innerHTML to get actual HTML, as editor.getContents() returns custom Delta object that doesn't actually have the HTML markup: https://quilljs.com/docs/api#getcontents
+          // also, retain multiple spaces in content
           this.args.update(this.editor.root.innerHTML.split('  ').join(' &nbsp;'));
         }
       });
