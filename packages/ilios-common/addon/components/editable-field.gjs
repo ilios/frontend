@@ -132,7 +132,6 @@ export default class EditableFieldComponent extends Component {
                 >
                   <button
                     class="link-button"
-                    aria-label={{t "general.edit"}}
                     title={{if @showTitle (t "general.edit")}}
                     data-test-edit
                     type="button"
