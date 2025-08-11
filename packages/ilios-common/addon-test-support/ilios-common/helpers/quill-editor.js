@@ -5,7 +5,6 @@ import { later } from '@ember/runloop';
 export async function fillInQuillEditor(element, html) {
   const editor = await getEditorInstance(element);
   editor.setContents(editor.clipboard.convert({ html }));
-  // editor.undo.saveStep();
 }
 export async function quillEditorValue(element) {
   const editor = await getEditorInstance(element);
