@@ -15,8 +15,8 @@ const definition = {
   confirmRemoval: {
     resetScope: true,
     scope: '[data-test-confirm-removal]',
-    confirm: clickable('[data-test-confirm]'),
-    cancel: clickable('[data-test-cancel]'),
+    confirm: clickable('[data-test-confirm]', { visible: true }),
+    cancel: clickable('[data-test-cancel]', { visible: true }),
   },
 };
 

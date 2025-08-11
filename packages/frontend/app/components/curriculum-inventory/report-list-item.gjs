@@ -11,6 +11,7 @@ import not from 'ember-truth-helpers/helpers/not';
 import { on } from '@ember/modifier';
 import set from 'ember-set-helper/helpers/set';
 import { fn } from '@ember/helper';
+import ResponsiveTd from 'frontend/components/responsive-td';
 
 export default class CurriculumInventoryReportListItemComponent extends Component {
   @service iliosConfig;
@@ -115,7 +116,7 @@ export default class CurriculumInventoryReportListItemComponent extends Componen
     </tr>
     {{#if this.showRemoveConfirmation}}
       <tr class="confirm-removal" data-test-confirm-removal>
-        <td colspan="16">
+        <ResponsiveTd @smallScreenSpan="8" @largeScreenSpan="16">
           <div class="confirm-message">
             {{t "general.reportConfirmRemove"}}
             <br />
@@ -138,7 +139,7 @@ export default class CurriculumInventoryReportListItemComponent extends Componen
               </button>
             </div>
           </div>
-        </td>
+        </ResponsiveTd>
       </tr>
     {{/if}}
   </template>
