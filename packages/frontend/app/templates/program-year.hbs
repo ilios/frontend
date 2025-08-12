@@ -1,3 +1,21 @@
 <ProgramYear::Header @programYear={{@model}} />
 <ProgramYear::Overview @programYear={{@model}} @canUpdate={{this.canUpdate}} />
-{{outlet}}
+<ProgramYear::Details
+  @program={{this.program}}
+  @canUpdate={{this.canUpdate}}
+  @programYear={{@model}}
+  @pyObjectiveDetails={{this.pyObjectiveDetails}}
+  @pyTaxonomyDetails={{this.pyTaxonomyDetails}}
+  @pyCompetencyDetails={{this.pyCompetencyDetails}}
+  @managePyCompetencies={{this.managePyCompetencies}}
+  @setPyObjectiveDetails={{set this "pyObjectiveDetails"}}
+  @setPyTaxonomyDetails={{set this "pyTaxonomyDetails"}}
+  @setPyCompetencyDetails={{set this "pyCompetencyDetails"}}
+  @setManagePyCompetencies={{set this "managePyCompetencies"}}
+  @programYearLeadershipDetails={{this.pyLeadershipDetails}}
+  @setProgramYearLeadershipDetails={{set this "pyLeadershipDetails"}}
+  @manageProgramYearLeadership={{this.managePyLeadership}}
+  @setManageProgramYearLeadership={{set this "managePyLeadership"}}
+  @showCourseAssociations={{this.showCourseAssociations}}
+  @setShowCourseAssociations={{set this "showCourseAssociations"}}
+/>

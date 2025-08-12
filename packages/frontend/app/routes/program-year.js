@@ -9,6 +9,15 @@ export default class ProgramYearRoute extends Route {
 
   canUpdate = false;
 
+  queryParams = {
+    pyObjectiveDetails: { replace: true },
+    pyTaxonomyDetails: { replace: true },
+    pyCompetencyDetails: { replace: true },
+    pyLeadershipDetails: { replace: true },
+    managePyCompetencies: { replace: true },
+    managePyLeadership: { replace: true },
+  };
+
   beforeModel(transition) {
     this.session.requireAuthentication(transition, 'login');
   }
