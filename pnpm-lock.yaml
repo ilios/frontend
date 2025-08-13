@@ -1290,6 +1290,9 @@ importers:
       query-string:
         specifier: ">= 9.1.0"
         version: 9.2.2
+      quill:
+        specifier: ^2.0.3
+        version: 2.0.3
       qunit:
         specifier: ^2.24.1
         version: 2.24.1
