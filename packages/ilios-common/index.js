@@ -26,9 +26,11 @@ module.exports = {
     // Import normalize.css style
     this.import(path.join('node_modules', 'normalize.css', 'normalize.css'));
 
-    // Import the quill editor styles
+    // Import the quill editor style, and extra icons for redo/undo
     const quillPath = path.join('node_modules', 'quill');
     this.import(path.join(quillPath, 'dist', 'quill.snow.css'));
+    this.import(path.join(quillPath, 'assets/icons', 'redo.svg'));
+    this.import(path.join(quillPath, 'assets/icons', 'undo.svg'));
 
     this.import(path.join('node_modules', 'flatpickr', 'dist', 'flatpickr.css'));
   },
