@@ -9,8 +9,8 @@ import FilterCheckbox from 'ilios-common/components/dashboard/filter-checkbox';
 import includes from 'ilios-common/helpers/includes';
 import { fn } from '@ember/helper';
 import FaIcon from 'ilios-common/components/fa-icon';
-import SelectedVocabulary from 'ilios-common/components/dashboard/selected-vocabulary';
 import CohortCalendarFilter from 'ilios-common/components/dashboard/cohort-calendar-filter';
+import TermsCalendarFilter from 'ilios-common/components/dashboard/terms-calendar-filter';
 
 export default class DashboardCalendarFiltersComponent extends Component {
   @service dataLoader;
@@ -93,27 +93,13 @@ export default class DashboardCalendarFiltersComponent extends Component {
             {{/if}}
           </div>
         </div>
-        <div class="calendar-filter-list vocabularyfilter" data-test-vocabulary-filter>
-          <h2>
-            {{t "general.terms"}}
-          </h2>
-          <div class="filters">
-            {{#if this.vocabulariesLoaded}}
-              <ul>
-                {{#each this.vocabularies as |vocabulary|}}
-                  <SelectedVocabulary
-                    @selectedTermIds={{@selectedTermIds}}
-                    @vocabulary={{vocabulary}}
-                    @add={{@addTermId}}
-                    @remove={{@removeTermId}}
-                  />
-                {{/each}}
-              </ul>
-            {{else}}
-              <FaIcon @icon="spinner" @spin={{true}} />
-            {{/if}}
-          </div>
-        </div>
+        <TermsCalendarFilter
+          @addTermId={{@addTermId}}
+          @removeTermId={{@removeTermId}}
+          @selectedTermIds={{@selectedTermIds}}
+          @vocabularies={{this.vocabularies}}
+          @school={{@school}}
+        />
       {{else}}
         <div
           id="calendar-sessiontypefilter"
