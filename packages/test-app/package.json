@@ -85,6 +85,7 @@
     "prettier": "^3.5.3",
     "prettier-plugin-ember-template-tag": "^2.0.6",
     "query-string": ">= 9.1.0",
+    "quill": "^2.0.3",
     "qunit": "^2.24.1",
     "qunit-dom": "^3.4.0",
     "stylelint": "^16.20.0",
