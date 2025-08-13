@@ -97,14 +97,16 @@ export default class InstructorGroupUsersComponent extends Component {
             />
           {{/unless}}
         {{else}}
-          <ul class="instructor-group-users-list" data-test-users-list>
-            {{#each (sortBy "fullName" this.users) as |user|}}
-              <li data-test-user>
-                <UserStatus @user={{user}} />
-                <UserNameInfo @user={{user}} />
-              </li>
-            {{/each}}
-          </ul>
+          {{#if this.users.length}}
+            <ul class="instructor-group-users-list" data-test-users-list>
+              {{#each (sortBy "fullName" this.users) as |user|}}
+                <li data-test-user>
+                  <UserStatus @user={{user}} />
+                  <UserNameInfo @user={{user}} />
+                </li>
+              {{/each}}
+            </ul>
+          {{/if}}
         {{/if}}
       </div>
     </section>
