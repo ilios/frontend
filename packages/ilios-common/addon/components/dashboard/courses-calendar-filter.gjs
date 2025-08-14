@@ -174,9 +174,7 @@ export default class DashboardCoursesCalendarFilterComponent extends Component {
         {{/if}}
       </h2>
       <div class="filters">
-        {{#if this.load.isRunning}}
-          <LoadingSpinner />
-        {{else}}
+        {{#if this.coursesRelationshipData.isResolved}}
           {{#each this.courseYears as |year|}}
             <div
               class="year {{if (includes year.year this.expandedYears) 'expanded' 'collapsed'}}"
@@ -229,6 +227,8 @@ export default class DashboardCoursesCalendarFilterComponent extends Component {
               {{/if}}
             </div>
           {{/each}}
+        {{else}}
+          <LoadingSpinner />
         {{/if}}
       </div>
     </div>
