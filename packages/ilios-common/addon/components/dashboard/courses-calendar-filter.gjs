@@ -49,15 +49,6 @@ export default class DashboardCoursesCalendarFilterComponent extends Component {
   }
 
   @cached
-  get schoolCalendarData() {
-    return new TrackedAsyncData(this.dataLoader.loadSchoolForCalendar(this.args.school.id));
-  }
-
-  get schoolCalendar() {
-    return this.schoolCalendarData.isResolved ? this.schoolCalendarData.value : null;
-  }
-
-  @cached
   get coursesRelationshipData() {
     return new TrackedAsyncData(this.args.school.courses);
   }
