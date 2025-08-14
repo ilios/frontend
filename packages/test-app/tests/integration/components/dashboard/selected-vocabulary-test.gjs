@@ -41,6 +41,10 @@ module('Integration | Component | dashboard/selected-vocabulary', function (hook
           @selectedTermIds={{this.selectedTermIds}}
           @add={{(noop)}}
           @remove={{(noop)}}
+          @addVocabularyInView={{(noop)}}
+          @removeVocabularyInView={{(noop)}}
+          @addTitleInView={{(noop)}}
+          @removeTitleInView={{(noop)}}
         />
       </template>,
     );
@@ -68,6 +72,10 @@ module('Integration | Component | dashboard/selected-vocabulary', function (hook
           @selectedTermIds={{(array)}}
           @add={{this.add}}
           @remove={{(noop)}}
+          @addVocabularyInView={{(noop)}}
+          @removeVocabularyInView={{(noop)}}
+          @addTitleInView={{(noop)}}
+          @removeTitleInView={{(noop)}}
         />
       </template>,
     );
@@ -88,6 +96,10 @@ module('Integration | Component | dashboard/selected-vocabulary', function (hook
           @selectedTermIds={{this.selectedTermIds}}
           @add={{(noop)}}
           @remove={{this.remove}}
+          @addVocabularyInView={{(noop)}}
+          @removeVocabularyInView={{(noop)}}
+          @addTitleInView={{(noop)}}
+          @removeTitleInView={{(noop)}}
         />
       </template>,
     );
