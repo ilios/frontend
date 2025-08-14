@@ -49,14 +49,6 @@ export default class GlobalSearchBox extends Component {
     }
   }
 
-  @action
-  onEnterKey() {
-    if (cleanQuery(this.computedQuery).length >= MIN_INPUT) {
-      this.args.search(this.computedQuery);
-      this.clear();
-    }
-  }
-
   setInternalQuery = restartableTask(async (q) => {
     this.internalQuery = q;
     if (this.router.currentRouteName === 'search') {
@@ -86,7 +78,7 @@ export default class GlobalSearchBox extends Component {
         value={{this.computedQuery}}
         {{on "input" (pick "target.value" (perform this.setInternalQuery))}}
         {{onKey "Escape" this.onEscapeKey}}
-        {{onKey "Enter" this.onEnterKey}}
+        {{onKey "Enter" this.search}}
         {{onKey "ArrowUp" this.onArrowKey}}
         {{onKey "ArrowDown" this.onArrowKey}}
       />
