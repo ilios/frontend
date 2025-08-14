@@ -98,7 +98,6 @@ export default class DashboardCalendarFiltersComponent extends Component {
           @removeTermId={{@removeTermId}}
           @selectedTermIds={{@selectedTermIds}}
           @vocabularies={{this.vocabularies}}
-          @school={{@school}}
         />
       {{else}}
         <div
