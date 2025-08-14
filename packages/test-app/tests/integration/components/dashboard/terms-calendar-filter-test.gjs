@@ -1,4 +1,4 @@
-import { module, skip, test } from 'qunit';
+import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { setupMirage } from 'test-app/tests/test-support/mirage';
@@ -14,90 +14,135 @@ module('Integration | Component | dashboard/terms-calendar-filter', function (ho
 
   hooks.beforeEach(async function () {
     this.school = this.server.create('school');
-    this.server.create('vocabulary', {
+    this.vocab1 = this.server.create('vocabulary', {
       school: this.school,
       active: true,
     });
-    this.server.create('vocabulary', {
+    const term1 = this.server.create('term', {
+      vocabulary: this.vocab1,
+      active: true,
+    });
+    const term2 = this.server.create('term', {
+      vocabulary: this.vocab1,
+      active: true,
+    });
+    this.vocab2 = this.server.create('vocabulary', {
       school: this.school,
       active: true,
     });
-    this.server.create('term', {
-      vocabularyId: 1,
+    const term3 = this.server.create('term', {
+      vocabulary: this.vocab2,
       active: true,
     });
-    this.server.create('term', {
-      vocabularyId: 1,
+    const term4 = this.server.create('term', {
+      vocabulary: this.vocab2,
       active: true,
     });
-    this.server.create('term', {
-      vocabularyId: 2,
-      active: true,
+    this.server.create('course', {
+      year: 2024,
+      school: this.school,
+      terms: [term1, term2],
     });
-    this.server.create('term', {
-      vocabularyId: 2,
-      active: true,
+    this.server.create('course', {
+      year: 2025,
+      school: this.school,
+      terms: [term3, term4],
     });
+
+    this.vocabModel1 = await this.owner
+      .lookup('service:store')
+      .findRecord('vocabulary', this.vocab1.id);
+    this.vocabModel2 = await this.owner
+      .lookup('service:store')
+      .findRecord('vocabulary', this.vocab2.id);
   });
 
   test('it renders and is accessible', async function (assert) {
     await render(
       <template>
         <TermsCalendarFilter
-          @school={{this.school}}
           @addTermId={{(noop)}}
           @removeTermId={{(noop)}}
-          @vocabularies={{this.vocabularies}}
+          @vocabularies={{array this.vocabModel1 this.vocabModel2}}
         />
       </template>,
     );
 
-    // assert.strictEqual(component.vocabularies.length, 2);
-    // assert.strictEqual(parseInt(component.years[0].title, 10), thisYear + 1);
-    // assert.strictEqual(parseInt(component.years[1].title, 10), thisYear);
-    // assert.strictEqual(parseInt(component.years[2].title, 10), thisYear - 1);
+    assert.strictEqual(component.vocabularies.length, 2, 'vocabulary count is correct');
+    assert.strictEqual(
+      component.vocabularies[0].title,
+      'Vocabulary 1',
+      'first vocabulary title is correct',
+    );
+    assert.strictEqual(
+      component.vocabularies[1].title,
+      'Vocabulary 2',
+      'second vocabulary title is correct',
+    );
 
-    // assert.ok(component.years[0].isExpanded);
-    // assert.notOk(component.years[1].isExpanded);
-    // assert.notOk(component.years[2].isExpanded);
+    assert.strictEqual(
+      component.vocabularies[0].terms.length,
+      2,
+      'first vocabulary terms count is correct',
+    );
+    assert.strictEqual(
+      component.vocabularies[0].terms[0].title,
+      'term 0',
+      'first vocabulary, first term title is correct',
+    );
+    assert.strictEqual(
+      component.vocabularies[0].terms[1].title,
+      'term 1',
+      'first vocabulary, second term title is correct',
+    );
 
-    // assert.strictEqual(component.years[0].courses.length, 2);
-    // assert.strictEqual(component.years[1].courses.length, 0);
-    // assert.strictEqual(component.years[2].courses.length, 0);
-
-    // assert.strictEqual(component.years[0].courses[0].title, 'course 2 (1)');
-    // assert.strictEqual(component.years[0].courses[1].title, 'course 3 (1)');
+    assert.strictEqual(
+      component.vocabularies[1].terms.length,
+      2,
+      'second vocabulary terms count is correct',
+    );
+    assert.strictEqual(
+      component.vocabularies[1].terms[0].title,
+      'term 2',
+      'second vocabulary, first term title is correct',
+    );
+    assert.strictEqual(
+      component.vocabularies[1].terms[1].title,
+      'term 3',
+      'second vocabulary, second term title is correct',
+    );
 
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
   });
 
-  skip('selected terms are checked', async function (assert) {
+  test('selected terms are checked', async function (assert) {
     await render(
       <template>
         <TermsCalendarFilter
-          @school={{this.school}}
           @selectedTermIds={{array "2" "3"}}
           @addTermId={{(noop)}}
           @removeTermId={{(noop)}}
+          @vocabularies={{array this.vocabModel1 this.vocabModel2}}
         />
       </template>,
     );
-    assert.strictEqual(component.years[0].courses.length, 4);
-    assert.strictEqual(component.years[0].courses[0].title, 'course 0');
-    assert.notOk(component.years[0].courses[0].isChecked);
+    assert.strictEqual(component.vocabularies[0].terms.length, 2);
 
-    assert.strictEqual(component.years[0].courses[1].title, 'course 1');
-    assert.ok(component.years[0].courses[1].isChecked);
+    assert.strictEqual(component.vocabularies[0].terms[0].title, 'term 0');
+    assert.notOk(component.vocabularies[0].terms[0].isChecked);
 
-    assert.strictEqual(component.years[0].courses[2].title, 'course 2');
-    assert.ok(component.years[0].courses[2].isChecked);
+    assert.strictEqual(component.vocabularies[0].terms[1].title, 'term 1');
+    assert.ok(component.vocabularies[0].terms[1].isChecked);
 
-    assert.strictEqual(component.years[0].courses[3].title, 'course 3');
-    assert.notOk(component.years[0].courses[3].isChecked);
+    assert.strictEqual(component.vocabularies[1].terms[0].title, 'term 2');
+    assert.ok(component.vocabularies[1].terms[0].isChecked);
+
+    assert.strictEqual(component.vocabularies[1].terms[1].title, 'term 3');
+    assert.notOk(component.vocabularies[1].terms[1].isChecked);
   });
 
-  skip('selected terms toggle remove', async function (assert) {
+  test('selected terms toggle remove', async function (assert) {
     assert.expect(2);
     this.set('remove', (id) => {
       assert.strictEqual(id, '1');
@@ -105,18 +150,18 @@ module('Integration | Component | dashboard/terms-calendar-filter', function (ho
     await render(
       <template>
         <TermsCalendarFilter
-          @school={{this.school}}
           @selectedTermIds={{array "1"}}
           @addTermId={{(noop)}}
           @removeTermId={{this.remove}}
+          @vocabularies={{array this.vocabModel1 this.vocabModel2}}
         />
       </template>,
     );
-    assert.ok(component.years[0].courses[0].isChecked);
-    await component.years[0].courses[0].toggle();
+    assert.ok(component.vocabularies[0].terms[0].isChecked);
+    await component.vocabularies[0].terms[0].toggle();
   });
 
-  skip('unselected terms toggle add', async function (assert) {
+  test('unselected terms toggle add', async function (assert) {
     assert.expect(2);
     this.set('add', (id) => {
       assert.strictEqual(id, '1');
@@ -124,13 +169,13 @@ module('Integration | Component | dashboard/terms-calendar-filter', function (ho
     await render(
       <template>
         <TermsCalendarFilter
-          @school={{this.school}}
           @addTermId={{this.add}}
           @removeTermId={{(noop)}}
+          @vocabularies={{array this.vocabModel1 this.vocabModel2}}
         />
       </template>,
     );
-    assert.notOk(component.years[0].courses[0].isChecked);
-    await component.years[0].courses[0].toggle();
+    assert.notOk(component.vocabularies[0].terms[0].isChecked);
+    await component.vocabularies[0].terms[0].toggle();
   });
 });
