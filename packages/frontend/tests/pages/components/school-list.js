@@ -3,6 +3,7 @@ import {
   clickable,
   collection,
   create,
+  focusable,
   isVisible,
   fillable,
   text,
@@ -34,7 +35,11 @@ const definition = {
       submit: triggerable('keyup', 'input', { eventProperties: { key: 'Enter' } }),
       cancel: triggerable('keyup', 'input', { eventProperties: { key: 'Escape' } }),
     },
-    submit: clickable('[data-test-submit]'),
+    submit: {
+      scope: '[data-test-submit]',
+      focus: focusable(),
+      click: clickable(),
+    },
     cancel: clickable('[data-test-cancel]'),
   },
   savedSchool: {
