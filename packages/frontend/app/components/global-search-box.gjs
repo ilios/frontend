@@ -2,7 +2,6 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
-import { cleanQuery } from 'ilios-common/utils/query-utils';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
 import pick from 'ilios-common/helpers/pick';
@@ -10,8 +9,6 @@ import perform from 'ember-concurrency/helpers/perform';
 import { restartableTask } from 'ember-concurrency';
 import onKey from 'ember-keyboard/modifiers/on-key';
 import FaIcon from 'ilios-common/components/fa-icon';
-
-const MIN_INPUT = 3;
 
 export default class GlobalSearchBox extends Component {
   @service router;
@@ -35,10 +32,8 @@ export default class GlobalSearchBox extends Component {
 
   @action
   search() {
-    if (cleanQuery(this.computedQuery).length >= MIN_INPUT) {
-      this.args.search(this.computedQuery);
-      this.clear();
-    }
+    this.args.search(this.computedQuery);
+    this.clear();
   }
 
   @action
