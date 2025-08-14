@@ -1,11 +1,9 @@
 import Component from '@glimmer/component';
-import { cached, tracked } from '@glimmer/tracking';
+import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
-import { TrackedAsyncData } from 'ember-async-data';
-import { mapBy, sortBy } from 'ilios-common/utils/array-helpers';
 import t from 'ember-intl/helpers/t';
-import FaIcon from 'ilios-common/components/fa-icon';
+import LoadingSpinner from 'ilios-common/components/loading-spinner';
 import SelectedVocabulary from 'ilios-common/components/dashboard/selected-vocabulary';
 
 export default class DashboardTermsCalendarFilterComponent extends Component {
@@ -14,26 +12,6 @@ export default class DashboardTermsCalendarFilterComponent extends Component {
 
   @tracked vocabulariesInView = [];
   @tracked titlesInView = [];
-
-  @cached
-  get vocabulariesData() {
-    return new TrackedAsyncData(this.loadVocabularies(this.args.school));
-  }
-
-  get vocabularies() {
-    return this.vocabulariesData.isResolved ? this.vocabulariesData.value : [];
-  }
-
-  get vocabulariesLoaded() {
-    return this.vocabulariesData.isResolved;
-  }
-
-  async loadVocabularies(school) {
-    await this.dataLoader.loadSchoolForCalendar(school.id);
-    const vocabularies = await school.vocabularies;
-    await Promise.all(mapBy(vocabularies, 'terms'));
-    return sortBy(vocabularies, 'title');
-  }
 
   @action
   addVocabularyInView(vocabulary) {
@@ -81,7 +59,7 @@ export default class DashboardTermsCalendarFilterComponent extends Component {
         {{/if}}
       </h2>
       <div class="filters">
-        {{#if this.vocabulariesLoaded}}
+        {{#if @vocabularies}}
           <ul>
             {{#each @vocabularies as |vocabulary|}}
               <SelectedVocabulary
@@ -97,7 +75,7 @@ export default class DashboardTermsCalendarFilterComponent extends Component {
             {{/each}}
           </ul>
         {{else}}
-          <FaIcon @icon="spinner" @spin={{true}} />
+          <LoadingSpinner />
         {{/if}}
       </div>
     </div>
