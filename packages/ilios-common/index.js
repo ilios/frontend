@@ -26,12 +26,9 @@ module.exports = {
     // Import normalize.css style
     this.import(path.join('node_modules', 'normalize.css', 'normalize.css'));
 
-    // Import the froala editor styles
-    const froalaPath = path.join('node_modules', 'froala-editor');
-    this.import(path.join(froalaPath, 'css', 'froala_editor.css'));
-    this.import(path.join(froalaPath, 'css', 'froala_style.css'));
-    this.import(path.join(froalaPath, 'css', 'themes', 'gray.css'));
-    this.import(path.join(froalaPath, 'css', 'plugins', 'code_view.css'));
+    // Import the quill editor style
+    const quillPath = path.join('node_modules', 'quill');
+    this.import(path.join(quillPath, 'dist', 'quill.snow.css'));
 
     this.import(path.join('node_modules', 'flatpickr', 'dist', 'flatpickr.css'));
   },
@@ -72,6 +69,13 @@ module.exports = {
       destDir: 'assets/fonts/nunito-sans',
     });
     trees.push(nunitoSansTree);
+
+    // Include quill redo/undo svg files into public
+    const quillSvgDir = path.join('node_modules', 'quill', 'assets', 'icons');
+    const quillSvgTree = new Funnel(quillSvgDir, {
+      destDir: 'assets/images/quill',
+    });
+    trees.push(quillSvgTree);
 
     return MergeTrees(trees);
   },
