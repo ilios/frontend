@@ -1,18 +1,22 @@
-<Course::Loader
-  @course={{@model}}
-  @editable={{this.editable}}
-  @showDetails={{this.details}}
-  @setShowDetails={{set this "details"}}
-  @courseLeadershipDetails={{this.courseLeadershipDetails}}
-  @courseObjectiveDetails={{this.courseObjectiveDetails}}
-  @courseTaxonomyDetails={{this.courseTaxonomyDetails}}
-  @courseCompetencyDetails={{this.courseCompetencyDetails}}
-  @courseManageLeadership={{this.courseManageLeadership}}
-  @setCourseLeadershipDetails={{set this "courseLeadershipDetails"}}
-  @setCourseObjectiveDetails={{set this "courseObjectiveDetails"}}
-  @setCourseTaxonomyDetails={{set this "courseTaxonomyDetails"}}
-  @setCourseCompetencyDetails={{set this "courseCompetencyDetails"}}
-  @setCourseManageLeadership={{set this "courseManageLeadership"}}
-/>
+import Loader from 'ilios-common/components/course/loader';
+import set from 'ember-set-helper/helpers/set';
+<template>
+  <Loader
+    @course={{@model}}
+    @editable={{@controller.editable}}
+    @showDetails={{@controller.details}}
+    @setShowDetails={{set @controller "details"}}
+    @courseLeadershipDetails={{@controller.courseLeadershipDetails}}
+    @courseObjectiveDetails={{@controller.courseObjectiveDetails}}
+    @courseTaxonomyDetails={{@controller.courseTaxonomyDetails}}
+    @courseCompetencyDetails={{@controller.courseCompetencyDetails}}
+    @courseManageLeadership={{@controller.courseManageLeadership}}
+    @setCourseLeadershipDetails={{set @controller "courseLeadershipDetails"}}
+    @setCourseObjectiveDetails={{set @controller "courseObjectiveDetails"}}
+    @setCourseTaxonomyDetails={{set @controller "courseTaxonomyDetails"}}
+    @setCourseCompetencyDetails={{set @controller "courseCompetencyDetails"}}
+    @setCourseManageLeadership={{set @controller "courseManageLeadership"}}
+  />
 
-{{outlet}}
+  {{outlet}}
+</template>

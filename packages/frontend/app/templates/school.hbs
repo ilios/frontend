@@ -1,50 +1,59 @@
-{{page-title (t "general.schools")}}
-<SchoolManager
-  @school={{@model}}
-  @canUpdateSchool={{this.canUpdateSchool}}
-  @canUpdateCompetency={{this.canUpdateCompetency}}
-  @canDeleteCompetency={{this.canDeleteCompetency}}
-  @canCreateCompetency={{this.canCreateCompetency}}
-  @canUpdateVocabulary={{this.canUpdateVocabulary}}
-  @canDeleteVocabulary={{this.canDeleteVocabulary}}
-  @canCreateVocabulary={{this.canCreateVocabulary}}
-  @canUpdateTerm={{this.canUpdateTerm}}
-  @canDeleteTerm={{this.canDeleteTerm}}
-  @canCreateTerm={{this.canCreateTerm}}
-  @canUpdateSessionType={{this.canUpdateSessionType}}
-  @canDeleteSessionType={{this.canDeleteSessionType}}
-  @canCreateSessionType={{this.canCreateSessionType}}
-  @canUpdateSchoolConfig={{this.canUpdateSchoolConfig}}
-  @schoolCompetencyDetails={{this.schoolCompetencyDetails}}
-  @setSchoolCompetencyDetails={{set this "schoolCompetencyDetails"}}
-  @schoolManageCompetencies={{this.schoolManageCompetencies}}
-  @setSchoolManageCompetencies={{set this "schoolManageCompetencies"}}
-  @schoolMapCompetencies={{this.schoolMapCompetencies}}
-  @setSchoolMapCompetencies={{set this "schoolMapCompetencies"}}
-  @schoolVocabularyDetails={{this.schoolVocabularyDetails}}
-  @setSchoolVocabularyDetails={{set this "schoolVocabularyDetails"}}
-  @schoolManagedVocabulary={{this.schoolManagedVocabulary}}
-  @setSchoolManagedVocabulary={{set this "schoolManagedVocabulary"}}
-  @schoolManagedVocabularyTerm={{this.schoolManagedVocabularyTerm}}
-  @setSchoolManagedVocabularyTerm={{set this "schoolManagedVocabularyTerm"}}
-  @schoolLeadershipDetails={{this.schoolLeadershipDetails}}
-  @setSchoolLeadershipDetails={{set this "schoolLeadershipDetails"}}
-  @schoolManageLeadership={{this.schoolManageLeadership}}
-  @setSchoolManageLeadership={{set this "schoolManageLeadership"}}
-  @schoolSessionAttributesDetails={{this.schoolSessionAttributesDetails}}
-  @setSchoolSessionAttributesDetails={{set this "schoolSessionAttributesDetails"}}
-  @schoolManageSessionAttributes={{this.schoolManageSessionAttributes}}
-  @setSchoolManageSessionAttributes={{set this "schoolManageSessionAttributes"}}
-  @schoolSessionTypeDetails={{this.schoolSessionTypeDetails}}
-  @setSchoolSessionTypeDetails={{set this "schoolSessionTypeDetails"}}
-  @schoolManagedSessionType={{this.schoolManagedSessionType}}
-  @setSchoolManagedSessionType={{set this "schoolManagedSessionType"}}
-  @schoolNewSessionType={{this.schoolNewSessionType}}
-  @setSchoolNewSessionType={{set this "schoolNewSessionType"}}
-  @schoolManageInstitutionalInformation={{this.schoolManageInstitutionalInformation}}
-  @setSchoolManageInstitutionalInformation={{set this "schoolManageInstitutionalInformation"}}
-  @schoolNewVocabulary={{this.schoolNewVocabulary}}
-  @setSchoolNewVocabulary={{set this "schoolNewVocabulary"}}
-  @schoolManageEmails={{this.schoolManageEmails}}
-  @setSchoolManageEmails={{set this "schoolManageEmails"}}
-/>
+import pageTitle from 'ember-page-title/helpers/page-title';
+import t from 'ember-intl/helpers/t';
+import SchoolManager from 'frontend/components/school-manager';
+import set from 'ember-set-helper/helpers/set';
+<template>
+  {{pageTitle (t "general.schools")}}
+  <SchoolManager
+    @school={{@model}}
+    @canUpdateSchool={{@controller.canUpdateSchool}}
+    @canUpdateCompetency={{@controller.canUpdateCompetency}}
+    @canDeleteCompetency={{@controller.canDeleteCompetency}}
+    @canCreateCompetency={{@controller.canCreateCompetency}}
+    @canUpdateVocabulary={{@controller.canUpdateVocabulary}}
+    @canDeleteVocabulary={{@controller.canDeleteVocabulary}}
+    @canCreateVocabulary={{@controller.canCreateVocabulary}}
+    @canUpdateTerm={{@controller.canUpdateTerm}}
+    @canDeleteTerm={{@controller.canDeleteTerm}}
+    @canCreateTerm={{@controller.canCreateTerm}}
+    @canUpdateSessionType={{@controller.canUpdateSessionType}}
+    @canDeleteSessionType={{@controller.canDeleteSessionType}}
+    @canCreateSessionType={{@controller.canCreateSessionType}}
+    @canUpdateSchoolConfig={{@controller.canUpdateSchoolConfig}}
+    @schoolCompetencyDetails={{@controller.schoolCompetencyDetails}}
+    @setSchoolCompetencyDetails={{set @controller "schoolCompetencyDetails"}}
+    @schoolManageCompetencies={{@controller.schoolManageCompetencies}}
+    @setSchoolManageCompetencies={{set @controller "schoolManageCompetencies"}}
+    @schoolMapCompetencies={{@controller.schoolMapCompetencies}}
+    @setSchoolMapCompetencies={{set @controller "schoolMapCompetencies"}}
+    @schoolVocabularyDetails={{@controller.schoolVocabularyDetails}}
+    @setSchoolVocabularyDetails={{set @controller "schoolVocabularyDetails"}}
+    @schoolManagedVocabulary={{@controller.schoolManagedVocabulary}}
+    @setSchoolManagedVocabulary={{set @controller "schoolManagedVocabulary"}}
+    @schoolManagedVocabularyTerm={{@controller.schoolManagedVocabularyTerm}}
+    @setSchoolManagedVocabularyTerm={{set @controller "schoolManagedVocabularyTerm"}}
+    @schoolLeadershipDetails={{@controller.schoolLeadershipDetails}}
+    @setSchoolLeadershipDetails={{set @controller "schoolLeadershipDetails"}}
+    @schoolManageLeadership={{@controller.schoolManageLeadership}}
+    @setSchoolManageLeadership={{set @controller "schoolManageLeadership"}}
+    @schoolSessionAttributesDetails={{@controller.schoolSessionAttributesDetails}}
+    @setSchoolSessionAttributesDetails={{set @controller "schoolSessionAttributesDetails"}}
+    @schoolManageSessionAttributes={{@controller.schoolManageSessionAttributes}}
+    @setSchoolManageSessionAttributes={{set @controller "schoolManageSessionAttributes"}}
+    @schoolSessionTypeDetails={{@controller.schoolSessionTypeDetails}}
+    @setSchoolSessionTypeDetails={{set @controller "schoolSessionTypeDetails"}}
+    @schoolManagedSessionType={{@controller.schoolManagedSessionType}}
+    @setSchoolManagedSessionType={{set @controller "schoolManagedSessionType"}}
+    @schoolNewSessionType={{@controller.schoolNewSessionType}}
+    @setSchoolNewSessionType={{set @controller "schoolNewSessionType"}}
+    @schoolManageInstitutionalInformation={{@controller.schoolManageInstitutionalInformation}}
+    @setSchoolManageInstitutionalInformation={{set
+      @controller
+      "schoolManageInstitutionalInformation"
+    }}
+    @schoolNewVocabulary={{@controller.schoolNewVocabulary}}
+    @setSchoolNewVocabulary={{set @controller "schoolNewVocabulary"}}
+    @schoolManageEmails={{@controller.schoolManageEmails}}
+    @setSchoolManageEmails={{set @controller "schoolManageEmails"}}
+  />
+</template>

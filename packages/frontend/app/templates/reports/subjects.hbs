@@ -1,21 +1,28 @@
-{{page-title (t "general.subjectReports")}}
-<Reports::SubjectsList
-  @sortReportsBy={{this.sortReportsBy}}
-  @setSortReportsBy={{set this "sortReportsBy"}}
-  @titleFilter={{this.titleFilter}}
-  @changeTitleFilter={{perform this.changeTitleFilter}}
-  @showNewReportForm={{this.showNewReportForm}}
-  @title={{this.title}}
-  @setTitle={{set this "title"}}
-  @selectedSchoolId={{this.selectedSchoolId}}
-  @setSelectedSchoolId={{set this "selectedSchoolId"}}
-  @selectedSubject={{this.selectedSubject}}
-  @setSelectedSubject={{set this "selectedSubject"}}
-  @selectedPrepositionalObject={{this.selectedPrepositionalObject}}
-  @setSelectedPrepositionalObject={{set this "selectedPrepositionalObject"}}
-  @selectedPrepositionalObjectId={{this.selectedPrepositionalObjectId}}
-  @setSelectedPrepositionalObjectId={{set this "selectedPrepositionalObjectId"}}
-  @toggleNewReportForm={{this.toggleNewReportForm}}
-  @runningSubjectReport={{this.runningSubjectReport}}
-  @setRunningSubjectReport={{this.setRunningSubjectReport}}
-/>
+import pageTitle from 'ember-page-title/helpers/page-title';
+import t from 'ember-intl/helpers/t';
+import SubjectsList from 'frontend/components/reports/subjects-list';
+import set from 'ember-set-helper/helpers/set';
+import perform from 'ember-concurrency/helpers/perform';
+<template>
+  {{pageTitle (t "general.subjectReports")}}
+  <SubjectsList
+    @sortReportsBy={{@controller.sortReportsBy}}
+    @setSortReportsBy={{set @controller "sortReportsBy"}}
+    @titleFilter={{@controller.titleFilter}}
+    @changeTitleFilter={{perform @controller.changeTitleFilter}}
+    @showNewReportForm={{@controller.showNewReportForm}}
+    @title={{@controller.title}}
+    @setTitle={{set @controller "title"}}
+    @selectedSchoolId={{@controller.selectedSchoolId}}
+    @setSelectedSchoolId={{set @controller "selectedSchoolId"}}
+    @selectedSubject={{@controller.selectedSubject}}
+    @setSelectedSubject={{set @controller "selectedSubject"}}
+    @selectedPrepositionalObject={{@controller.selectedPrepositionalObject}}
+    @setSelectedPrepositionalObject={{set @controller "selectedPrepositionalObject"}}
+    @selectedPrepositionalObjectId={{@controller.selectedPrepositionalObjectId}}
+    @setSelectedPrepositionalObjectId={{set @controller "selectedPrepositionalObjectId"}}
+    @toggleNewReportForm={{@controller.toggleNewReportForm}}
+    @runningSubjectReport={{@controller.runningSubjectReport}}
+    @setRunningSubjectReport={{@controller.setRunningSubjectReport}}
+  />
+</template>
