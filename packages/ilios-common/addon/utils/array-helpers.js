@@ -1,6 +1,9 @@
 import { get } from '@ember/object';
 import { assert } from '@ember/debug';
 
+const ASC_SUFFIX = ':asc';
+const DESC_SUFFIX = ':desc';
+
 export function mapBy(arr, path) {
   if (arr !== null && typeof arr === 'object') {
     if ('slice' in arr) {
@@ -42,12 +45,19 @@ export function sortBy(arr, sortKeys) {
 
   return arr.sort((objA, objB) => {
     for (let i = 0; i < sortKeys.length; i++) {
-      const key = sortKeys[i];
+      let key = sortKeys[i];
+      let sortAscending = true;
+      if (key.endsWith(DESC_SUFFIX)) {
+        sortAscending = false;
+        key = key.slice(0, -1 * DESC_SUFFIX.length);
+      } else if (key.endsWith(ASC_SUFFIX)) {
+        key = key.slice(0, -1 * ASC_SUFFIX.length);
+      }
       const a = get(objA ?? {}, key);
       const b = get(objB ?? {}, key);
 
       // return 1 or -1 else continue to the next sortKey
-      const compareValue = compare(a, b);
+      const compareValue = sortAscending ? compare(a, b) : compare(b, a);
 
       if (compareValue) {
         return compareValue;
