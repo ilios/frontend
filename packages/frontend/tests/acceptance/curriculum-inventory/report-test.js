@@ -9,7 +9,7 @@ module('Acceptance | curriculum inventory report', function (hooks) {
 
   hooks.beforeEach(async function () {
     this.school = this.server.create('school');
-    this.user = await setupAuthentication({ school: this.school });
+    this.user = await setupAuthentication({ school: this.school }, true);
   });
 
   test('create new sequence block Issue #2108', async function (assert) {

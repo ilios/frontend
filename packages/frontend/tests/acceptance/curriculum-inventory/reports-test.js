@@ -12,7 +12,7 @@ module('Acceptance | curriculum inventory reports', function (hooks) {
   hooks.beforeEach(async function () {
     this.school = this.server.create('school');
     this.program = this.server.create('program', { school: this.school });
-    this.user = await setupAuthentication({ school: this.school });
+    this.user = await setupAuthentication({ school: this.school }, true);
     this.user.update({ directedSchools: [this.school] });
   });
 

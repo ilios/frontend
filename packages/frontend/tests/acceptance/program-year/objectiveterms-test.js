@@ -8,7 +8,7 @@ module('Acceptance | Program Year - Objective Vocabulary Terms', function (hooks
   setupApplicationTest(hooks);
 
   hooks.beforeEach(async function () {
-    this.user = await setupAuthentication();
+    this.user = await setupAuthentication({}, true);
     const school = this.server.create('school');
     this.server.create('academic-year', { id: 2013 });
     const program = this.server.create('program', { school });

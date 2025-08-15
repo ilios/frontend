@@ -10,7 +10,7 @@ module('Acceptance | Program Year - Course associations', function (hooks) {
 
   hooks.beforeEach(async function () {
     const school = this.server.create('school');
-    await setupAuthentication({ school });
+    await setupAuthentication({ school }, true);
     const program = this.server.create('program', { school });
     const programYear = this.server.create('program-year', { program });
     const cohort = this.server.create('cohort', { programYear });

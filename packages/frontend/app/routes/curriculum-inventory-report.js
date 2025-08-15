@@ -2,11 +2,12 @@ import Route from '@ember/routing/route';
 import { service } from '@ember/service';
 
 export default class CurriculumInventoryReportReport extends Route {
+  @service currentUser;
   @service session;
   @service store;
 
   beforeModel(transition) {
-    this.session.requireAuthentication(transition, 'login');
+    this.currentUser.requireNonLearner(transition);
   }
 
   model(params) {

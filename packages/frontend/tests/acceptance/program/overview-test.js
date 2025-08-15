@@ -10,7 +10,7 @@ module('Acceptance | Program - Overview', function (hooks) {
 
   hooks.beforeEach(async function () {
     this.school = this.server.create('school');
-    this.user = await setupAuthentication({ school: this.school });
+    this.user = await setupAuthentication({ school: this.school }, true);
   });
 
   test('non editable fields', async function (assert) {

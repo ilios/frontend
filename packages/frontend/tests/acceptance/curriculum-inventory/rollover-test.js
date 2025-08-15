@@ -11,7 +11,7 @@ module('Acceptance | curriculum inventory report/rollover', function (hooks) {
 
   hooks.beforeEach(async function () {
     this.school = this.server.create('school');
-    this.user = await setupAuthentication({ school: this.school });
+    this.user = await setupAuthentication({ school: this.school }, true);
   });
 
   test('rollover button hidden on rollover route', async function (assert) {

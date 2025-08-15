@@ -3,13 +3,14 @@ import { service } from '@ember/service';
 import { all } from 'rsvp';
 
 export default class ProgramIndexRoute extends Route {
+  @service currentUser;
   @service permissionChecker;
   @service session;
 
   canCreate = false;
 
   beforeModel(transition) {
-    this.session.requireAuthentication(transition, 'login');
+    this.currentUser.requireNonLearner(transition);
   }
 
   async afterModel(program) {
