@@ -112,8 +112,8 @@ module('Acceptance | Reports - Subject Report', function (hooks) {
       'This report shows all Sessions associated with Term "term 0" in school 0. (2)',
     );
     assert.strictEqual(page.report.results.length, 2);
-    assert.strictEqual(page.report.results[0].text, '2015 course 0: session 0');
-    assert.strictEqual(page.report.results[1].text, '2016 course 1: session 1');
+    assert.strictEqual(page.report.results[0].text, '2016 course 1: session 1');
+    assert.strictEqual(page.report.results[1].text, '2015 course 0: session 0');
   });
 
   test('academic years is shown as range as applicable by configuration', async function (assert) {
@@ -127,8 +127,8 @@ module('Acceptance | Reports - Subject Report', function (hooks) {
       };
     });
     await page.visit({ reportId: this.termReport.id });
-    assert.strictEqual(page.report.results[0].text, '2015 - 2016 course 0: session 0');
-    assert.strictEqual(page.report.results[1].text, '2016 - 2017 course 1: session 1');
+    assert.strictEqual(page.report.results[0].text, '2016 - 2017 course 1: session 1');
+    assert.strictEqual(page.report.results[1].text, '2015 - 2016 course 0: session 0');
   });
 
   test('no academic years filter on reports with a course prepositional object', async function (assert) {
@@ -141,8 +141,8 @@ module('Acceptance | Reports - Subject Report', function (hooks) {
     await page.visit({ reportId: this.termReport.id });
     assert.strictEqual(currentURL(), '/reports/subjects/2');
     assert.strictEqual(page.report.results.length, 2);
-    assert.strictEqual(page.report.results[0].text, '2015 course 0: session 0');
-    assert.strictEqual(page.report.results[1].text, '2016 course 1: session 1');
+    assert.strictEqual(page.report.results[0].text, '2016 course 1: session 1');
+    assert.strictEqual(page.report.results[1].text, '2015 course 0: session 0');
     await page.report.academicYears.choose('2016');
     assert.strictEqual(page.report.results.length, 1);
     assert.strictEqual(page.report.results[0].text, 'course 1: session 1');
