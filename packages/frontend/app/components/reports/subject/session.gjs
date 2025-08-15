@@ -72,9 +72,9 @@ export default class ReportsSubjectSessionComponent extends Component {
 
   get sortedSessions() {
     if (this.showSchool) {
-      return sortBy(this.filteredSessions, ['schoolTitle', 'year', 'courseTitle', 'title']);
+      return sortBy(this.filteredSessions, ['schoolTitle', 'year:desc', 'courseTitle', 'title']);
     }
-    return sortBy(this.filteredSessions, ['year', 'courseTitle', 'title']);
+    return sortBy(this.filteredSessions, ['year:desc', 'courseTitle', 'title']);
   }
 
   get limitedSessions() {
