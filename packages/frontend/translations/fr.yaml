@@ -116,6 +116,7 @@ general:
   deselectUser: "Désélectionner l'utilisateur "
   details: Détails de Cours
   developer: Administrateur
+  didYouMean: Confirmez-vous <a href="{href}">{suggestion}</a>?
   director: Directeur
   disableUser: Désactiver compte d’utilisateur
   doesNotMatchUserRecord: 'Téléchargé {description} ne correspond pas aux informations dans Ilios, qui est "{record}"'

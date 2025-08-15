@@ -22,6 +22,10 @@ const definition = {
   }),
   searchResults: collection('[data-test-course-search-result]', courseSearchResult),
   searchIsRunning: isVisible('[data-test-searching]'),
+  didYouMean: {
+    scope: '[data-test-did-you-mean]',
+    url: property('href', 'a'),
+  },
 };
 
 export default definition;
