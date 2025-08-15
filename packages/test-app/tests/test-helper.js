@@ -7,7 +7,6 @@ import { setupEmberOnerrorValidation } from 'ember-qunit';
 
 import { forceModulesToBeLoaded, sendCoverage } from 'ember-cli-code-coverage/test-support';
 import {
-  setRunOptions,
   setupGlobalA11yHooks,
   setupQUnitA11yAuditToggle,
   setupConsoleLogger,
@@ -16,9 +15,6 @@ import {
 import start from 'ember-exam/test-support/start';
 
 setupConsoleLogger();
-setRunOptions({
-  preload: false,
-});
 setupGlobalA11yHooks(() => true);
 setupQUnitA11yAuditToggle(QUnit);
 
