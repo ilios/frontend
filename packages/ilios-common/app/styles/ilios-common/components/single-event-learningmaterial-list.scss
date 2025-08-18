@@ -29,7 +29,7 @@
 
   .single-event-learningmaterial-item-timing-info {
     @include m.font-size("small");
-    font-weight: normal;
+    font-weight: 400;
   }
   .single-event-learningmaterial-item-notes {
     @include m.font-size("small");

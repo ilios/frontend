@@ -92,7 +92,7 @@
         span {
           background-color: transparent;
           @include m.font-size("smallest");
-          font-weight: normal;
+          font-weight: 400;
         }
 
         .ilios-calendar-event-time {
