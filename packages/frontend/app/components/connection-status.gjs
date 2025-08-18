@@ -61,6 +61,7 @@ export default class ConnectionStatusComponent extends Component {
   });
 
   reconnect = restartableTask(async (force) => {
+    await timeout(1);
     if (navigator.onLine) {
       this.changeConnectionState.perform(true);
     }
@@ -89,18 +90,18 @@ export default class ConnectionStatusComponent extends Component {
     <div class="connection-status{{unless this.isOnline ' offline'}}" aria-hidden={{this.isOnline}}>
       {{#unless this.isOnline}}
         {{#if this.unableToReconnect}}
-          <span>
+          <p class="unable-to-reconnect">
             <FaIcon @icon="triangle-exclamation" />
             {{t "general.unableToReconnect"}}
-          </span>
+          </p>
         {{else}}
-          <span>
+          <p>
             <FaIcon @icon="circle-exclamation" />
             {{t "general.connectionLost"}}
             {{#unless this.stopAttemptingToReconnect}}
               {{t "general.reconnectionSeconds" count=this.timer}}
             {{/unless}}
-          </span>
+          </p>
           <div class="buttons">
             <button type="button" {{on "click" (perform this.reconnect true)}}>
               {{t "general.reconnectNow"}}
