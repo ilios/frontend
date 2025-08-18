@@ -32,7 +32,7 @@ jobs:
     if: needs.check.outputs.shouldMerge == 'yes'
     name: Approve, label, and merge
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - run: |
           gh pr merge --merge --auto ${{ github.event.number }}
           gh pr edit --add-label "run ui tests"  ${{ github.event.number }}
