@@ -33,7 +33,7 @@
 @mixin ilios-overview-title() {
   color: var(--blue);
   @include font-size.font-size("base");
-  font-weight: bold;
+  font-weight: 600;
 }
 
 @mixin ilios-overview-actions() {

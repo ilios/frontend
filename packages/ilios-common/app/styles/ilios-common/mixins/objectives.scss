@@ -51,7 +51,7 @@
 
     .new-objective-form {
       label {
-        font-weight: bold;
+        font-weight: 600;
         margin: 0.25em;
       }
       .buttons {
@@ -63,7 +63,7 @@
 
 @mixin objective-list() {
   .headers {
-    font-weight: bold;
+    font-weight: 600;
   }
   .grid-row {
     display: grid;
@@ -163,7 +163,7 @@
       .confirm-message {
         color: var(--red);
         grid-column: 1 / -1;
-        font-weight: bold;
+        font-weight: 600;
         text-align: center;
         margin-bottom: 1em;
         padding: 1rem 4rem;

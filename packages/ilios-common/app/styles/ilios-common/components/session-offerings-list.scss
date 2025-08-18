@@ -20,7 +20,7 @@
         color: var(--orange);
         display: block;
         @include m.font-size("medium");
-        font-weight: bold;
+        font-weight: 600;
         width: 100%;
       }
 
@@ -46,7 +46,7 @@
       .offering-block-time-time-endtime {
         color: var(--grey);
         display: block;
-        font-weight: bold;
+        font-weight: 600;
       }
 
       .offering-block-time-time-starttime-label,

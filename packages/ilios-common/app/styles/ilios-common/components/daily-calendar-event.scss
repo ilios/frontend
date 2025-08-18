@@ -23,13 +23,13 @@
   .ilios-calendar-event-time {
     display: block;
     @include m.font-size("small");
-    font-weight: bold;
+    font-weight: 600;
     padding-bottom: 0.5em;
   }
 
   .ilios-calendar-event-location {
     display: inline;
-    font-weight: bold;
+    font-weight: 600;
   }
 
   &.ilm {

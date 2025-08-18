@@ -27,7 +27,7 @@
 
         .competency-title {
           color: var(--green);
-          font-weight: bold;
+          font-weight: 600;
         }
       }
     }
@@ -40,7 +40,7 @@
         padding-left: 0.5rem;
 
         .selected {
-          font-weight: bold;
+          font-weight: 600;
         }
       }
     }
@@ -48,6 +48,6 @@
 
   .no-cohorts {
     color: var(--dark-orange);
-    font-weight: bold;
+    font-weight: 600;
   }
 }

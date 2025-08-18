@@ -36,7 +36,7 @@
     @include m.ilios-heading;
     color: var(--black);
     @include m.font-size("base");
-    font-weight: bold;
+    font-weight: 600;
   }
 
   .mesh-manager {
