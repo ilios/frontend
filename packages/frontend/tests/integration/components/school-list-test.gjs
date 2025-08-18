@@ -73,17 +73,36 @@ module('Integration | Component | school list', function (hooks) {
     await component.expandCollapseButton.toggle();
 
     let schools = await this.owner.lookup('service:store').findAll('school');
-    assert.strictEqual(schools.length, 2);
-    assert.notOk(component.savedSchool.isVisible);
+    assert.strictEqual(schools.length, 2, 'school count is correct');
+    assert.notOk(component.savedSchool.isVisible, 'new saved school notification is not visible');
     component.newSchoolForm.title.set('school of rocket surgery');
     component.newSchoolForm.email.set('rocketsurgeongeneral@hoekacademy.edu');
-    await component.newSchoolForm.submit();
-    assert.ok(component.savedSchool.isVisible);
-    assert.strictEqual(component.savedSchool.text, 'school of rocket surgery saved successfully');
+    // focus first, click second is required so that when running this test in a browser
+    // it works even if the browser is unfocused
+    await component.newSchoolForm.submit.focus();
+    await component.newSchoolForm.submit.click();
+
+    assert.ok(component.savedSchool.isVisible, 'new saved school notification is visible');
+
+    assert.strictEqual(
+      component.savedSchool.text,
+      'school of rocket surgery saved successfully',
+      'new saved school notification text is correct',
+    );
+
     schools = await this.owner.lookup('service:store').findAll('school');
-    assert.strictEqual(schools.length, 3);
-    assert.strictEqual(schools[2].title, 'school of rocket surgery');
-    assert.strictEqual(schools[2].iliosAdministratorEmail, 'rocketsurgeongeneral@hoekacademy.edu');
+
+    assert.strictEqual(schools.length, 3, 'post-save school count is correct');
+    assert.strictEqual(
+      schools[2].title,
+      'school of rocket surgery',
+      'post-save new school title is correct',
+    );
+    assert.strictEqual(
+      schools[2].iliosAdministratorEmail,
+      'rocketsurgeongeneral@hoekacademy.edu',
+      'post-save new school email is correct',
+    );
   });
 
   test('submit empty form fails', async function (assert) {
@@ -96,7 +115,7 @@ module('Integration | Component | school list', function (hooks) {
     await component.expandCollapseButton.toggle();
     assert.notOk(component.newSchoolForm.title.hasError);
     assert.notOk(component.newSchoolForm.email.hasError);
-    await component.newSchoolForm.submit();
+    await component.newSchoolForm.submit.click();
     assert.ok(component.newSchoolForm.title.hasError);
     assert.ok(component.newSchoolForm.email.hasError);
   });
