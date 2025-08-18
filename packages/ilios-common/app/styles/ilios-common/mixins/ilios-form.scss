@@ -104,7 +104,7 @@
 }
 
 @mixin ilios-label() {
-  font-weight: bold;
+  font-weight: 600;
 
   .label-description {
     @include font-size.font-size("small");

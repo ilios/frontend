@@ -3,7 +3,7 @@
 .selected-instructor-groups {
   .instructor-group-title {
     @include m.ilios-tag-list;
-    font-weight: bold;
+    font-weight: 600;
 
     button {
       @include m.ilios-button-reset;
