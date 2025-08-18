@@ -1,3 +1,5 @@
+/* stylelint-disable scales/font-weights */
+
 /* nunito-sans-200normal - latin */
 @font-face {
   font-family: "Nunito Sans";
@@ -14,6 +16,25 @@
   font-display: swap;
   font-weight: 200;
   src: url("fonts/nunito-sans/nunito-sans-latin-200italic.woff2")
+    format("woff2");
+}
+
+/* nunito-sans-300normal - latin */
+@font-face {
+  font-family: "Nunito Sans";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 300;
+  src: url("fonts/nunito-sans/nunito-sans-latin-300.woff2") format("woff2");
+}
+
+/* nunito-sans-300italic - latin */
+@font-face {
+  font-family: "Nunito Sans";
+  font-style: italic;
+  font-display: swap;
+  font-weight: 300;
+  src: url("fonts/nunito-sans/nunito-sans-latin-300italic.woff2")
     format("woff2");
 }
 
@@ -52,5 +73,62 @@
   font-display: swap;
   font-weight: 600;
   src: url("fonts/nunito-sans/nunito-sans-latin-600italic.woff2")
+    format("woff2");
+}
+
+/* nunito-sans-700normal - latin */
+@font-face {
+  font-family: "Nunito Sans";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 700;
+  src: url("fonts/nunito-sans/nunito-sans-latin-700.woff2") format("woff2");
+}
+
+/* nunito-sans-700italic - latin */
+@font-face {
+  font-family: "Nunito Sans";
+  font-style: italic;
+  font-display: swap;
+  font-weight: 700;
+  src: url("fonts/nunito-sans/nunito-sans-latin-700italic.woff2")
+    format("woff2");
+}
+
+/* nunito-sans-800normal - latin */
+@font-face {
+  font-family: "Nunito Sans";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 800;
+  src: url("fonts/nunito-sans/nunito-sans-latin-800.woff2") format("woff2");
+}
+
+/* nunito-sans-800italic - latin */
+@font-face {
+  font-family: "Nunito Sans";
+  font-style: italic;
+  font-display: swap;
+  font-weight: 800;
+  src: url("fonts/nunito-sans/nunito-sans-latin-800italic.woff2")
+    format("woff2");
+}
+
+/* nunito-sans-900normal - latin */
+@font-face {
+  font-family: "Nunito Sans";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 900;
+  src: url("fonts/nunito-sans/nunito-sans-latin-900.woff2") format("woff2");
+}
+
+/* nunito-sans-900italic - latin */
+@font-face {
+  font-family: "Nunito Sans";
+  font-style: italic;
+  font-display: swap;
+  font-weight: 900;
+  src: url("fonts/nunito-sans/nunito-sans-latin-900italic.woff2")
     format("woff2");
 }
