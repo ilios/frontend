@@ -69,7 +69,10 @@ export default class DashboardWeekComponent extends Component {
           data-test-weekly-link
         >
           {{t "general.view"}}:
-          <LinkTo @route="weeklyevents" @query={{hash expanded=this.expanded week=this.week}}>
+          <LinkTo
+            @route="weeklyevents"
+            @query={{hash expanded=this.expanded week=this.week year=this.year}}
+          >
             {{t "general.allWeeks"}}
           </LinkTo>
         </div>
