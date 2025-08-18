@@ -10,7 +10,7 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    margin: 0 1.5rem;
+    margin: 0 0.5rem;
 
     @include m.for-tablet-and-up {
       flex-direction: row;
