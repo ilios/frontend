@@ -126,6 +126,7 @@
     "stylelint": "^16.20.0",
     "stylelint-config-recommended-scss": "^15.0.0",
     "stylelint-config-standard": "^36.0.1",
+    "stylelint-scales": "^5.0.0",
     "stylelint-scss": "^6.11.0",
     "terser-webpack-plugin": "^5.3.14",
     "testem-failure-only-reporter": "^1.0.0",
