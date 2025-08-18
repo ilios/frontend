@@ -70,13 +70,6 @@ module.exports = {
     });
     trees.push(nunitoSansTree);
 
-    // Include quill redo/undo svg files into public
-    const quillSvgDir = path.join('node_modules', 'quill', 'assets', 'icons');
-    const quillSvgTree = new Funnel(quillSvgDir, {
-      destDir: 'assets/images/quill',
-    });
-    trees.push(quillSvgTree);
-
     return MergeTrees(trees);
   },
 
