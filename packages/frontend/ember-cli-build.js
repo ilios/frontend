@@ -94,6 +94,14 @@ module.exports = async function (defaults) {
             }),
           ],
         },
+        module: {
+          rules: [
+            {
+              test: /\.svg$/,
+              type: 'asset/source', // This will import SVG files as text
+            },
+          ],
+        },
       },
     },
   });
