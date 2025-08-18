@@ -6,6 +6,6 @@ module.exports = {
   rules: {
     'property-disallowed-list': ['font-size', 'line-height'],
     'font-weight-notation': 'numeric',
-    'scales/font-weights': [400, 600],
+    'scales/font-weights': [200, 400, 600],
   },
 };
