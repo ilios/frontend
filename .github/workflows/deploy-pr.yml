@@ -14,7 +14,7 @@ jobs:
     timeout-minutes: 60
     if: contains(github.event.pull_request.labels.*.name, 'safe to deploy')
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           ref: ${{ github.event.pull_request.head.sha }}
       - uses: pnpm/action-setup@v4
