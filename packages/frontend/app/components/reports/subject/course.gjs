@@ -83,9 +83,9 @@ export default class ReportsSubjectCourseComponent extends Component {
 
   get sortedCourses() {
     if (this.showSchool) {
-      return sortBy(this.mappedCourses, ['school.title', 'year', 'title']);
+      return sortBy(this.mappedCourses, ['school.title', 'year:desc', 'title']);
     }
-    return sortBy(this.mappedCourses, ['year', 'title']);
+    return sortBy(this.mappedCourses, ['year:desc', 'title']);
   }
 
   get limitedCourses() {

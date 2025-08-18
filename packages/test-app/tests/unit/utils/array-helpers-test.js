@@ -216,6 +216,20 @@ module('Unit | Utility | array-helpers', function () {
     assert.strictEqual(result[2].name, 'jackson');
   });
 
+  test('sortBy with explicit ascending order', function (assert) {
+    const result = sortBy(getDogs(), ['name:asc']);
+    assert.strictEqual(result[0].name, 'jackson');
+    assert.strictEqual(result[1].name, 'jasper');
+    assert.strictEqual(result[2].name, 'jayden');
+  });
+
+  test('sortBy with explicit descending order', function (assert) {
+    const result = sortBy(getDogs(), ['name:desc']);
+    assert.strictEqual(result[0].name, 'jayden');
+    assert.strictEqual(result[1].name, 'jasper');
+    assert.strictEqual(result[2].name, 'jackson');
+  });
+
   test('uniqueBy', function (assert) {
     const arr = [...getDogs(), ...getDogs(), ...getDogs()];
     assert.strictEqual(arr.length, 9);

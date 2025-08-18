@@ -81,8 +81,8 @@ module('Integration | Component | reports/subject', function (hooks) {
       'This report shows all Courses associated with Instructor "0 guy M. Mc0son" in school 0. (2)',
     );
     assert.strictEqual(component.results.length, 2);
-    assert.strictEqual(component.results[0].text, '2015 course 0');
-    assert.strictEqual(component.results[1].text, '2016 course 1');
+    assert.strictEqual(component.results[0].text, '2016 course 1');
+    assert.strictEqual(component.results[1].text, '2015 course 0');
     await component.academicYears.choose('2016');
     assert.strictEqual(component.results.length, 1);
     assert.strictEqual(component.results[0].text, 'course 1');

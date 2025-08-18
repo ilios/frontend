@@ -325,11 +325,11 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
     );
     assert.ok(subjectReportPage.report.academicYears.isVisible);
     assert.strictEqual(subjectReportPage.report.results.length, 2);
+    assert.strictEqual(subjectReportPage.report.results[0].text, '2016 course 1');
     assert.strictEqual(
-      subjectReportPage.report.results[0].text,
+      subjectReportPage.report.results[1].text,
       '2015 course 0 (Theoretical Phys Ed)',
     );
-    assert.strictEqual(subjectReportPage.report.results[1].text, '2016 course 1');
   });
 
   test('Prepositional object resets when a new type is selected', async function (assert) {
@@ -422,13 +422,13 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
     assert.strictEqual(subjectReportPage.report.results.length, 2, 'report results count correct');
     assert.strictEqual(
       subjectReportPage.report.results[0].text,
-      'school 0: 2015 course 0 (Theoretical Phys Ed)',
-      'first report result title correct',
+      'school 0: 2016 course 1',
+      'second report result title correct',
     );
     assert.strictEqual(
       subjectReportPage.report.results[1].text,
-      'school 0: 2016 course 1',
-      'second report result title correct',
+      'school 0: 2015 course 0 (Theoretical Phys Ed)',
+      'first report result title correct',
     );
   });
 
@@ -523,22 +523,22 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
       'has correct report description',
     );
     assert.strictEqual(page.subjects.runSubject.results.results.length, 2);
+    assert.strictEqual(page.subjects.runSubject.results.results[0].text, '2016 course 1');
     assert.strictEqual(
-      page.subjects.runSubject.results.results[0].text,
+      page.subjects.runSubject.results.results[1].text,
       '2015 course 0 (Theoretical Phys Ed)',
     );
-    assert.strictEqual(page.subjects.runSubject.results.results[1].text, '2016 course 1');
     assert.ok(page.subjects.runSubject.header.academicYears.isVisible);
     await page.subjects.runSubject.header.academicYears.choose('2016');
     assert.strictEqual(page.subjects.runSubject.results.results.length, 1);
     assert.strictEqual(page.subjects.runSubject.results.results[0].text, 'course 1');
     await page.subjects.list.newSubject.run();
     assert.strictEqual(page.subjects.runSubject.results.results.length, 2);
+    assert.strictEqual(page.subjects.runSubject.results.results[0].text, '2016 course 1');
     assert.strictEqual(
-      page.subjects.runSubject.results.results[0].text,
+      page.subjects.runSubject.results.results[1].text,
       '2015 course 0 (Theoretical Phys Ed)',
     );
-    assert.strictEqual(page.subjects.runSubject.results.results[1].text, '2016 course 1');
   });
 
   test('remove report title', async function (assert) {
