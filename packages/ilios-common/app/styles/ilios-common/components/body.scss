@@ -28,6 +28,10 @@ button {
   @include m.ilios-button;
 }
 
+input {
+  accent-color: var(--blue);
+}
+
 h1 {
   @include m.ilios-heading-h1;
 }
