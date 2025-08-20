@@ -26,11 +26,11 @@
 
     h2 {
       @include m.ilios-heading-h3;
-      font-weight: normal;
+      font-weight: 400;
 
       em {
         font-style: normal;
-        font-weight: bold;
+        font-weight: 600;
       }
 
       .recently-updated-icon {
@@ -55,7 +55,7 @@
   }
 
   .single-event-offered-at {
-    font-weight: bold;
+    font-weight: 600;
   }
 
   .single-event-instructors {

@@ -23,14 +23,14 @@
   width: 80%;
 
   li {
-    font-weight: bold;
+    font-weight: 600;
 
     ul,
     ol {
       margin-left: 1em;
 
       li {
-        font-weight: normal;
+        font-weight: 400;
       }
     }
 
@@ -162,15 +162,15 @@
     margin-left: 20px;
 
     &.branch {
-      font-weight: bold;
+      font-weight: 600;
 
       li {
-        font-weight: normal;
+        font-weight: 400;
       }
     }
 
     &.leaf {
-      font-weight: bold;
+      font-weight: 600;
 
       li {
         font-style: normal;

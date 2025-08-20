@@ -76,6 +76,11 @@ p {
   }
 }
 
+strong,
+b {
+  font-weight: 600;
+}
+
 .add,
 .yes {
   color: var(--green);
