@@ -23,6 +23,7 @@ import set from 'ember-set-helper/helpers/set';
 import SingleEventLearningmaterialList from 'ilios-common/components/single-event-learningmaterial-list';
 import SingleEventObjectiveList from 'ilios-common/components/single-event-objective-list';
 import NotFound from 'ilios-common/components/not-found';
+import { htmlSafe } from '@ember/template';
 
 export default class SingleEvent extends Component {
   @service currentUser;
@@ -215,6 +216,10 @@ export default class SingleEvent extends Component {
     return this.currentUser.performsNonLearnerFunction;
   }
 
+  get sessionDescription() {
+    return htmlSafe(this.args.event.sessionDescription);
+  }
+
   @action
   transitionToMyMaterials() {
     this.router.transitionTo('dashboard.materials', {
@@ -322,7 +327,7 @@ export default class SingleEvent extends Component {
           </h2>
           <div class="single-event-offered-at" data-test-offered-at>
             {{#if (gt @event.postrequisites.length 0)}}
-              <p>
+              <span>
                 {{t "general.dueBefore"}}
                 <a href={{this.postrequisiteLink}}>{{get
                     (objectAt 0 @event.postrequisites)
@@ -338,10 +343,10 @@ export default class SingleEvent extends Component {
                   hour="2-digit"
                   minute="2-digit"
                 }})
-              </p>
+              </span>
             {{/if}}
             {{#unless @event.ilmSession}}
-              <p>
+              <span>
                 {{#if (eq @event.startDate @event.endDate)}}
                   {{formatDate
                     @event.startDate
@@ -389,12 +394,12 @@ export default class SingleEvent extends Component {
                     minute="2-digit"
                   }}
                 {{/if}}
-              </p>
+              </span>
             {{/unless}}
-          </div>
-          <div class="single-event-location">
-            <OfferingUrlDisplay @url={{@event.url}} />
-            {{@event.location}}
+            <span class="single-event-location">
+              <OfferingUrlDisplay @url={{@event.url}} />
+              {{@event.location}}
+            </span>
           </div>
           {{#if this.taughtBy}}
             <div class="single-event-instructors">
@@ -402,45 +407,39 @@ export default class SingleEvent extends Component {
             </div>
           {{/if}}
           <div class="single-event-session-is">
-            <strong>{{t "general.sessionType"}}:</strong>
+            {{t "general.sessionType"}}:
             {{@event.sessionTypeTitle}}
           </div>
           {{#if @event.equipmentRequired}}
             <div class="single-event-equipment-required">
-              {{! template-lint-disable no-triple-curlies }}
-              {{{t "general.specialEquipmentIs_Required_"}}}
               <FaIcon @icon="flask" @title={{t "general.specialEquipment"}} />
+              {{t "general.specialEquipmentIsRequired"}}
             </div>
           {{/if}}
           {{#if @event.attireRequired}}
             <div class="single-event-attire-required">
-              {{! template-lint-disable no-triple-curlies }}
-              {{{t "general.specialAttireIs_Required_"}}}
               <FaIcon
                 @icon="black-tie"
                 @prefix="brands"
                 @title={{t "general.whitecoatsSlashSpecialAttire"}}
               />
+              {{t "general.specialAttireIsRequired"}}
             </div>
           {{/if}}
           {{#if @event.attendanceRequired}}
             <div class="single-event-attendance-required">
-              {{! template-lint-disable no-triple-curlies }}
-              {{{t "general.attendanceIs_Required_"}}}
               <FaIcon @icon="calendar-check" @title={{t "general.attendanceIsRequired"}} />
+              {{t "general.attendanceIsRequired"}}
             </div>
           {{/if}}
           {{#if @event.supplemental}}
             <div class="single-event-supplemental">
-              <strong>
-                {{t "general.supplementalCurriculum"}}
-              </strong>
               <FaIcon @icon="calendar-minus" @title={{t "general.supplementalCurriculum"}} />
+              {{t "general.supplementalCurriculum"}}
             </div>
           {{/if}}
           {{#if @event.sessionDescription}}
-            {{! template-lint-disable no-triple-curlies }}
-            {{{@event.sessionDescription}}}
+            {{this.sessionDescription}}
             <br />
           {{/if}}
         </div>

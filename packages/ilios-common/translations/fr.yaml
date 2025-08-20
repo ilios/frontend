@@ -17,7 +17,6 @@ general:
   apiVersionMismatchDetails: "Il s'agit généralement d'une erreur temporaire dans votre navigateur; Ilios est en mode lecture seule jusqu'à ce qu'il soit résolu. Si la mise à jour ne vous aide pas, veuillez aviser un administrateur ou le propriétaire de la technologie du système de cette erreur. Vous pouvez également essayer un autre navigateur."
   assignedTerms: Termes assignées
   associatedGroups: Groupes Associés
-  attendanceIs_Required_: "Présence '<strong><em>'requise'</em></strong>'"
   attendanceIsRequired: Présence requise
   attendanceRequired: Participation Requise
   attireRequired: Tenue Requise
@@ -347,10 +346,10 @@ general:
   smallGroups: Groupes Particulaires
   sortMaterials: Trier les matériaux
   sortObjectives: Trier les objectifs
-  specialAttireIs_Required_: "Vêtements particuliers est '<strong><em>'requis'</em></strong>'"
+  specialAttireIsRequired: "Vêtements particuliers est requis"
   specialAttireRequired: Vêtements particuliers requis
   specialEquipment: Équipage particulier
-  specialEquipmentIs_Required_: "Équipage particulier est '<strong><em>'requis'</em></strong>'"
+  specialEquipmentIsRequired: "Équipage particulier est requis"
   specialEquipmentRequired: Équipage particulier requis
   start: Commencer
   startDate: Jour Commencer
