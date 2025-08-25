@@ -2,7 +2,7 @@
 @use "../mixins" as m;
 
 .session-offerings {
-  @include m.detail-container(var(--blue));
+  @include m.detail-container("transparent");
 
   .offering-section-top {
     @include m.detail-container-header;
