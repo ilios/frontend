@@ -65,7 +65,7 @@ export default class SessionObjectivesComponent extends Component {
   }
   <template>
     <section class="session-objectives" data-test-session-objectives>
-      <div class="header">
+      <div class="header{{unless this.objectiveCount ' empty'}}">
         {{#if this.showCollapsible}}
           <div>
             <button
