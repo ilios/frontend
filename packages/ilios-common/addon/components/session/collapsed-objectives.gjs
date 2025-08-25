@@ -53,7 +53,7 @@ export default class SessionCollapsedObjectivesComponent extends Component {
       </div>
       {{#if this.objectivesData.isResolved}}
         <div class="content">
-          <table>
+          <table class="condensed">
             <thead>
               <tr>
                 <th class="text-left">
