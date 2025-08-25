@@ -194,7 +194,7 @@ export default class DetailCohortsComponent extends Component {
   }
   <template>
     <section
-      class="detail-learningmaterials {{if this.displaySearchBox 'display-search-box'}}"
+      class="detail-learningmaterials{{if this.displaySearchBox ' display-search-box'}}"
       data-test-detail-learning-materials
     >
       <div class="detail-learningmaterials-header">
