@@ -18,5 +18,13 @@
 
   .content {
     @include m.detail-container-content;
+
+    &.empty {
+      padding: 0 0.5em;
+    }
+
+    .detail-terms-list {
+      margin-bottom: 0;
+    }
   }
 }

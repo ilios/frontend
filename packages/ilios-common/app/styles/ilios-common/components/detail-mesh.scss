@@ -19,8 +19,17 @@
   .content {
     @include m.detail-container-content;
 
+    &.empty {
+      padding: 0 0.5em;
+    }
+
+    .mesh-manager {
+      padding: 0 0.5em;
+    }
+
     .selected-mesh-terms {
       @include m.ilios-tag-list;
+      padding: 0 0.5em;
 
       .term-title {
         font-weight: bold;
