@@ -18,6 +18,10 @@
 
   .session-offerings-content {
     @include m.detail-container-content;
+
+    p {
+      margin: 0;
+    }
   }
 
   .session-offerings-header {
