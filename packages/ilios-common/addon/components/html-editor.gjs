@@ -117,7 +117,20 @@ export default class HtmlEditorComponent extends Component {
       }
 
       quill.setSelection(range.index, this.popupTextValue.length);
-      quill.theme.tooltip.edit('link', this.popupUrlValue);
+
+      // create URL out of url string to make sure it is parsed correctly
+      if (/^[a-z0-9]+(?:\.[a-z0-9]+)+$/.test(this.popupUrlValue)) {
+        this.popupUrlValue = `http://${this.popupUrlValue}`;
+      }
+
+      const url = new URL(this.popupUrlValue, window.location.href);
+
+      // double check that the url has a protocol (default to http)
+      if (!url.protocol) {
+        url.protocol = 'http://';
+      }
+
+      quill.theme.tooltip.edit('link', url.href);
       quill.theme.tooltip.save();
       this.editor.setSelection(range.index + this.popupTextValue.length);
 
