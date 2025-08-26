@@ -10,6 +10,21 @@ export async function loadQuillEditor() {
   icons['undo'] = undoIcon.default;
   icons['redo'] = redoIcon.default;
 
+  // Quill automatically adds target="_blank" to inserted links.
+  // This removes the target attribute
+  const Link = QuillEditor.import('formats/link');
+  class NoTargetLink extends Link {
+    static create(value) {
+      let node = super.create(value);
+      value = this.sanitize(value);
+      node.setAttribute('href', value);
+      // Remove the target attribute (or set as desired)
+      node.removeAttribute('target');
+      return node;
+    }
+  }
+  QuillEditor.register(NoTargetLink, true);
+
   return {
     QuillEditor,
   };
