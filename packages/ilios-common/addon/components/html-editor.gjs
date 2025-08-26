@@ -296,7 +296,6 @@ export default class HtmlEditorComponent extends Component {
             <input
               type="checkbox"
               id={{this.popupLinkNewTargetId}}
-              checked
               disabled
               data-test-link-new-target
             />
