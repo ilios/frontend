@@ -10,20 +10,40 @@ export async function loadQuillEditor() {
   icons['undo'] = undoIcon.default;
   icons['redo'] = redoIcon.default;
 
-  // Quill automatically adds target="_blank" to inserted links.
-  // This removes the target attribute
+  // Quill automatically adds target="_blank" to inserted links by default.
+  // This overrides the base Link Blot to allow for the target to be customized.
   const Link = QuillEditor.import('formats/link');
-  class NoTargetLink extends Link {
+  class SmartLinkBlot extends Link {
     static create(value) {
-      let node = super.create(value);
-      value = this.sanitize(value);
-      node.setAttribute('href', value);
-      // Remove the target attribute (or set as desired)
-      node.removeAttribute('target');
+      const node = super.create(value);
+      const { href, blank } = value || {};
+
+      node.setAttribute('href', href);
+
+      if (blank) {
+        node.setAttribute('target', '_blank');
+      } else {
+        node.removeAttribute('target');
+      }
+
       return node;
     }
+    static formats(domNode) {
+      return { href: domNode.getAttribute('href'), blank: domNode.getAttribute('target') };
+    }
+    format(name, value) {
+      if (name !== this.statics.blotName || !value) {
+        super.format(name, value);
+      } else {
+        const { href, blank } = value;
+        this.domNode.setAttribute('href', this.constructor.sanitize(href));
+        if (blank) {
+          this.domNode.setAttribute('target', '_blank');
+        }
+      }
+    }
   }
-  QuillEditor.register(NoTargetLink, true);
+  QuillEditor.register(SmartLinkBlot, true);
 
   return {
     QuillEditor,
