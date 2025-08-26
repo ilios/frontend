@@ -8,6 +8,7 @@ import { on } from '@ember/modifier';
 import t from 'ember-intl/helpers/t';
 import pick from 'ilios-common/helpers/pick';
 import set from 'ember-set-helper/helpers/set';
+import not from 'ember-truth-helpers/helpers/not';
 import onKey from 'ember-keyboard/modifiers/on-key';
 import { TrackedAsyncData } from 'ember-async-data';
 import { loadQuillEditor } from 'ilios-common/utils/load-quill-editor';
@@ -17,7 +18,7 @@ export default class HtmlEditorComponent extends Component {
   @tracked editorId = null;
   @tracked popupUrlValue;
   @tracked popupTextValue;
-  @tracked popupLinkNewTarget;
+  @tracked popupLinkNewTarget = false;
   @tracked editorHasNoRedo = true;
   @tracked editorHasNoUndo = true;
 
@@ -130,9 +131,10 @@ export default class HtmlEditorComponent extends Component {
         url.protocol = 'http://';
       }
 
-      quill.theme.tooltip.edit('link', url.href);
-      quill.theme.tooltip.save();
-      this.editor.setSelection(range.index + this.popupTextValue.length);
+      const attrs = this.popupLinkNewTarget ? { href: url.href, blank: true } : { href: url.href };
+      quill.formatText(range.index, this.popupTextValue.length, 'link', attrs);
+
+      quill.setSelection(range.index + this.popupTextValue.length);
 
       this.popupUrlValue = '';
       this.popupTextValue = '';
@@ -296,7 +298,8 @@ export default class HtmlEditorComponent extends Component {
             <input
               type="checkbox"
               id={{this.popupLinkNewTargetId}}
-              disabled
+              checked={{this.popupLinkNewTarget}}
+              {{on "click" (set this "popupLinkNewTarget" (not this.popupLinkNewTarget))}}
               data-test-link-new-target
             />
             <label for={{this.popupLinkNewTargetId}}>
