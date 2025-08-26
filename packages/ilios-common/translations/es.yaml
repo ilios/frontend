@@ -17,7 +17,6 @@ general:
   apiVersionMismatchDetails: "Por lo general, se trata de un error temporal de su navegador; Ilios está en modo de solo lectura hasta que se resuelva. Si la actualización no soluciona el problema, notifique a un administrador o al propietario técnico del sistema sobre este error. También puede probar con otro navegador."
   assignedTerms: Términos asignados
   associatedGroups: Grupos Associados
-  attendanceIs_Required_: "Se '<strong><em>'require'</em></strong>' asistencia"
   attendanceIsRequired: Se require asistencia
   attendanceRequired: Asistencia Requerida
   attireRequired: Atuendo Requerida
@@ -347,10 +346,10 @@ general:
   showOnlyMyInstructorActivities: Mostrar solo las actividades de mi instructor
   showOnlyMyLearnerActivities: Mostrar solo mis actividades de aprendizaje
   sortObjectives: Clasificar los objetivos
-  specialAttireIs_Required_: "Se '<strong><em>'require'</em></strong>' vestimenta especial"
+  specialAttireIsRequired: "Se require vestimenta especial"
   specialAttireRequired: Vestimenta Especial Requerido
   specialEquipment: Equipo especial
-  specialEquipmentIs_Required_: "Se '<strong><em>'require'</em></strong>' equipo especial"
+  specialEquipmentIsRequired: "Se require equipo especial"
   specialEquipmentRequired: Equipo Especial Requerido
   start: Inicio
   startDate: Fecha de Iniciar
