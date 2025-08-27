@@ -180,11 +180,10 @@ export default class HtmlEditorComponent extends Component {
       popup.style.left = `${this.toolbarLinkPosition}px`;
       popup.style.top = `${editor.offsetTop - 18}px`;
 
-      const quill = this.editor;
-      const range = quill.getSelection(true);
+      const range = this.editor.getSelection(true);
 
       if (range.length) {
-        this.popupTextValue = quill.getText(range.index, range.length);
+        this.popupTextValue = this.editor.getText(range.index, range.length);
       }
 
       popup.querySelector('input').focus();
@@ -197,6 +196,7 @@ export default class HtmlEditorComponent extends Component {
       });
     } else {
       popup.classList.remove('ql-active');
+      this.editor.focus();
     }
   }
 
