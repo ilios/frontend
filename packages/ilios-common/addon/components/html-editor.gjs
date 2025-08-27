@@ -28,7 +28,10 @@ export default class HtmlEditorComponent extends Component {
     if (!this.editor) {
       const { QuillEditor } = this.loadQuillData.value;
       this.editor = new QuillEditor(element, options);
-      this.editor.setContents(this.editor.clipboard.convert({ html: this.args.content }));
+      // create Quill Delta object from saved content so it can be re-added to editor
+      // https://quilljs.com/docs/delta
+      const delta = this.editor.clipboard.convert({ html: this.args.content });
+      this.editor.setContents(delta);
       if (this.args.autofocus) {
         this.editor.focus();
       }
