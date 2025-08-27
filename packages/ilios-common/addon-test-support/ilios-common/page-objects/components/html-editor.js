@@ -1,6 +1,7 @@
 import {
   attribute,
   clickable,
+  collection,
   create,
   fillable,
   isVisible,
@@ -45,6 +46,7 @@ const definition = {
   },
   popup: {
     scope: '[data-test-insert-link-popup]',
+    errors: collection('.validation-error-message'),
     activated: isVisible(),
     form: {
       url: {

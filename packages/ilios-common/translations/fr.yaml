@@ -161,6 +161,9 @@ general:
   hour: Heure
   hours: Heures
   htmlEditor:
+    errors:
+      linkText: Texte de lien
+      linkUrl: URL de lien
     labels:
       bold: gras
       italic: italique

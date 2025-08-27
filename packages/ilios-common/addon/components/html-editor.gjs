@@ -10,6 +10,11 @@ import pick from 'ilios-common/helpers/pick';
 import set from 'ember-set-helper/helpers/set';
 import not from 'ember-truth-helpers/helpers/not';
 import onKey from 'ember-keyboard/modifiers/on-key';
+import { task } from 'ember-concurrency';
+import perform from 'ember-concurrency/helpers/perform';
+import YupValidations from 'ilios-common/classes/yup-validations';
+import { string } from 'yup';
+import YupValidationMessage from 'ilios-common/components/yup-validation-message';
 import { TrackedAsyncData } from 'ember-async-data';
 import { loadQuillEditor } from 'ilios-common/utils/load-quill-editor';
 
@@ -28,10 +33,12 @@ export default class HtmlEditorComponent extends Component {
     if (!this.editor) {
       const { QuillEditor } = this.loadQuillData.value;
       this.editor = new QuillEditor(element, options);
+
       // create Quill Delta object from saved content so it can be re-added to editor
       // https://quilljs.com/docs/delta
       const delta = this.editor.clipboard.convert({ html: this.args.content });
       this.editor.setContents(delta);
+
       if (this.args.autofocus) {
         this.editor.focus();
       }
@@ -96,20 +103,20 @@ export default class HtmlEditorComponent extends Component {
   get popupLinkNewTargetId() {
     return `${this.editorId}-popup-new-target`;
   }
+
   get toolbarId() {
     return `#${this.editorId}-toolbar`;
   }
-
   get toolbarLinkPosition() {
     return document.querySelector(`#${this.editorId}-toolbar .ql-link`).offsetLeft;
   }
 
   @action
-  onEnterKey(event) {
+  async submitOnEnter(event) {
     // don't send an actual Enter/Return to Quill
     event.preventDefault();
 
-    this.addLink();
+    await this.addLink.perform();
   }
 
   @action
@@ -121,42 +128,46 @@ export default class HtmlEditorComponent extends Component {
     }
   }
 
-  @action
-  addLink() {
+  addLink = task(async () => {
+    this.popupValidations.addErrorDisplayForAllFields();
+    const isValid = await this.popupValidations.isValid();
+
+    if (!isValid) {
+      return false;
+    }
+
     const quill = this.editor;
     const range = quill.getSelection(true);
 
-    if (this.popupUrlValue && this.popupTextValue) {
-      // no text yet, add text and link around it
-      if (!range.length) {
-        quill.insertText(range.index, this.popupTextValue, 'user');
-      }
-
-      quill.setSelection(range.index, this.popupTextValue.length);
-
-      // create URL out of url string to make sure it is parsed correctly
-      if (/^[a-z0-9]+(?:\.[a-z0-9]+)+$/.test(this.popupUrlValue)) {
-        this.popupUrlValue = `http://${this.popupUrlValue}`;
-      }
-
-      const url = new URL(this.popupUrlValue, window.location.href);
-
-      // double check that the url has a protocol (default to http)
-      if (!url.protocol) {
-        url.protocol = 'http://';
-      }
-
-      const attrs = this.popupLinkNewTarget ? { href: url.href, blank: true } : { href: url.href };
-      quill.formatText(range.index, this.popupTextValue.length, 'link', attrs);
-
-      quill.setSelection(range.index + this.popupTextValue.length);
-
-      this.popupUrlValue = '';
-      this.popupTextValue = '';
-
-      this.togglePopup();
+    // no text yet, add text and link around it
+    if (!range.length) {
+      quill.insertText(range.index, this.popupTextValue, 'user');
     }
-  }
+
+    quill.setSelection(range.index, this.popupTextValue.length);
+
+    // create URL out of url string to make sure it is parsed correctly
+    if (/^[a-z0-9]+(?:\.[a-z0-9]+)+$/.test(this.popupUrlValue)) {
+      this.popupUrlValue = `http://${this.popupUrlValue}`;
+    }
+
+    const url = new URL(this.popupUrlValue, window.location.href);
+
+    // double check that the url has a protocol (default to http)
+    if (!url.protocol) {
+      url.protocol = 'http://';
+    }
+
+    const attrs = this.popupLinkNewTarget ? { href: url.href, blank: true } : { href: url.href };
+    quill.formatText(range.index, this.popupTextValue.length, 'link', attrs);
+
+    quill.setSelection(range.index + this.popupTextValue.length);
+
+    this.popupUrlValue = '';
+    this.popupTextValue = '';
+
+    this.togglePopup();
+  });
 
   @action
   togglePopup() {
@@ -188,6 +199,11 @@ export default class HtmlEditorComponent extends Component {
       popup.classList.remove('ql-active');
     }
   }
+
+  popupValidations = new YupValidations(this, {
+    popupUrlValue: string().required(),
+    popupTextValue: string().required(),
+  });
 
   willDestroy() {
     super.willDestroy(...arguments);
@@ -277,6 +293,7 @@ export default class HtmlEditorComponent extends Component {
             ></button>
           </div>
         </div>
+
         <div
           {{this.editorInserted this.options}}
           id={{this.editorId}}
@@ -284,52 +301,67 @@ export default class HtmlEditorComponent extends Component {
           data-test-html-editor
         >
         </div>
-        <div
-          id={{this.popupId}}
-          class="ql-popup"
-          {{onKey "Enter" this.onEnterKey}}
-          data-test-insert-link-popup
-        >
-          <label for={{this.popupUrlId}}>
-            <input
-              type="text"
-              id={{this.popupUrlId}}
-              aria-label={{t "general.url"}}
-              placeholder={{t "general.url"}}
-              value={{this.popupUrlValue}}
-              {{on "input" (pick "target.value" (set this "popupUrlValue"))}}
-              data-test-url
-            />
-          </label>
-          <br />
-          <label for={{this.popupTextId}}>
-            <input
-              type="text"
-              id={{this.popupTextId}}
-              aria-label={{t "general.text"}}
-              placeholder={{t "general.text"}}
-              value={{this.popupTextValue}}
-              {{on "input" (pick "target.value" (set this "popupTextValue"))}}
-              data-test-text
-            />
-          </label>
-          <br />
-          <div class="form-group">
-            <input
-              type="checkbox"
-              id={{this.popupLinkNewTargetId}}
-              checked={{this.popupLinkNewTarget}}
-              {{on "click" (set this "popupLinkNewTarget" (not this.popupLinkNewTarget))}}
-              data-test-link-new-target
-            />
-            <label for={{this.popupLinkNewTargetId}}>
-              {{t "general.htmlEditor.titles.linkNewTarget"}}
-            </label>
-          </div>
 
-          <button type="button" {{on "click" this.addLink}} data-test-submit>{{t
-              "general.htmlEditor.titles.insert"
-            }}</button>
+        <div id={{this.popupId}} class="ql-popup" data-test-insert-link-popup>
+          <form data-test-form>
+            <label for={{this.popupUrlId}}>
+              <input
+                type="text"
+                id={{this.popupUrlId}}
+                aria-label={{t "general.url"}}
+                placeholder={{t "general.url"}}
+                value={{this.popupUrlValue}}
+                disabled={{if this.addLink.isRunning "disabled"}}
+                {{on "input" (pick "target.value" (set this "popupUrlValue"))}}
+                {{onKey "Enter" this.submitOnEnter}}
+                {{this.popupValidations.attach "popupUrlValue"}}
+                data-test-url
+              />
+              <YupValidationMessage
+                @description={{t "general.htmlEditor.errors.linkUrl"}}
+                @validationErrors={{this.popupValidations.errors.popupUrlValue}}
+              />
+            </label>
+            <br />
+            <label for={{this.popupTextId}}>
+              <input
+                type="text"
+                id={{this.popupTextId}}
+                aria-label={{t "general.text"}}
+                placeholder={{t "general.text"}}
+                value={{this.popupTextValue}}
+                disabled={{if this.addLink.isRunning "disabled"}}
+                {{on "input" (pick "target.value" (set this "popupTextValue"))}}
+                {{onKey "Enter" this.submitOnEnter}}
+                {{this.popupValidations.attach "popupTextValue"}}
+                data-test-text
+              />
+              <YupValidationMessage
+                @description={{t "general.htmlEditor.errors.linkText"}}
+                @validationErrors={{this.popupValidations.errors.popupTextValue}}
+              />
+            </label>
+            <br />
+            <div class="form-group">
+              <input
+                type="checkbox"
+                id={{this.popupLinkNewTargetId}}
+                checked={{this.popupLinkNewTarget}}
+                {{on "click" (set this "popupLinkNewTarget" (not this.popupLinkNewTarget))}}
+                data-test-link-new-target
+              />
+              <label for={{this.popupLinkNewTargetId}}>
+                {{t "general.htmlEditor.titles.linkNewTarget"}}
+              </label>
+            </div>
+
+            <button
+              type="button"
+              disabled={{if this.addLink.isRunning "disabled"}}
+              {{on "click" (perform this.addLink)}}
+              data-test-submit
+            >{{t "general.htmlEditor.titles.insert"}}</button>
+          </form>
         </div>
       </div>
     {{/if}}
