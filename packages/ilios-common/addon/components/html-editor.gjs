@@ -106,7 +106,10 @@ export default class HtmlEditorComponent extends Component {
 
   @action
   onEscapeKey() {
-    this.togglePopup();
+    const popup = document.querySelector(`#${this.popupId}`);
+    if (popup.classList.contains('ql-active')) {
+      this.togglePopup();
+    }
   }
 
   @action
