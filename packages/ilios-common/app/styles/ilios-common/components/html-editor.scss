@@ -80,6 +80,13 @@
   }
 }
 
+// this gets overridden by our editinplace style
+// so need to re-add
+.ql-snow .ql-tooltip input[type="text"] {
+  border: 1px solid var(--lighter-grey);
+  display: none;
+}
+
 .ql-container {
   background-color: var(--white);
   height: auto;

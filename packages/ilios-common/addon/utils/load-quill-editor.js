@@ -16,6 +16,7 @@ export async function loadQuillEditor() {
   class SmartLinkBlot extends Link {
     static create(value) {
       const node = super.create(value);
+
       const { href, blank } = value || {};
 
       node.setAttribute('href', href);
@@ -35,10 +36,18 @@ export async function loadQuillEditor() {
       if (name !== this.statics.blotName || !value) {
         super.format(name, value);
       } else {
-        const { href, blank } = value;
-        this.domNode.setAttribute('href', this.constructor.sanitize(href));
-        if (blank) {
-          this.domNode.setAttribute('target', '_blank');
+        // passed in when creating a new link
+        if (typeof value === 'object') {
+          const { href, blank } = value;
+          this.domNode.setAttribute('href', this.constructor.sanitize(href));
+
+          if (blank) {
+            this.domNode.setAttribute('target', '_blank');
+          }
+        }
+        // passed in when editing an existing link
+        else {
+          this.domNode.setAttribute('href', this.constructor.sanitize(value));
         }
       }
     }
