@@ -4,6 +4,7 @@ import {
   collection,
   create,
   fillable,
+  focusable,
   isVisible,
   isPresent,
   property,
@@ -37,11 +38,17 @@ const definition = {
   },
   editor: {
     scope: '[data-test-html-editor]',
-    edit: fillable('.ql-editor'),
     content: {
       scope: '.ql-editor',
+      edit: fillable(),
+      focus: focusable(),
       textContent: text(),
       htmlContent: property('innerHTML'),
+      linkTooltip: {
+        scope: '.ql-tooltip',
+        openEditor: clickable('.ql-action'),
+        edit: fillable('input'),
+      },
     },
   },
   popup: {
