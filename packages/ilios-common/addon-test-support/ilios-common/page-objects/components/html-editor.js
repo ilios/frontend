@@ -5,6 +5,7 @@ import {
   fillable,
   isVisible,
   isPresent,
+  property,
   text,
 } from 'ember-cli-page-object';
 
@@ -36,14 +37,24 @@ const definition = {
   editor: {
     scope: '[data-test-html-editor]',
     edit: fillable('.ql-editor'),
-    content: text('.ql-editor'),
+    content: {
+      scope: '.ql-editor',
+      textContent: text(),
+      htmlContent: property('innerHTML'),
+    },
   },
   popup: {
     scope: '[data-test-insert-link-popup]',
     activated: isVisible(),
     form: {
-      url: isPresent('[data-test-url]'),
-      text: isPresent('[data-test-text]'),
+      url: {
+        scope: '[data-test-url]',
+        edit: fillable(),
+      },
+      text: {
+        scope: '[data-test-text]',
+        edit: fillable(),
+      },
       linkNewTarget: isPresent('[data-test-link-new-target]'),
       insert: {
         scope: '[data-test-submit]',
