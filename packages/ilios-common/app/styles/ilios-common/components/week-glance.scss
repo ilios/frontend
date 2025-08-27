@@ -104,5 +104,13 @@
         font-weight: 600;
       }
     }
+
+    .description {
+      strong,
+      b {
+        /* stylelint-disable scales/font-weights */
+        font-weight: 700;
+      }
+    }
   }
 }

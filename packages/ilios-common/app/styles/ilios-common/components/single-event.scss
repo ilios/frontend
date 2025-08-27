@@ -71,4 +71,17 @@
     @include m.font-size("small");
     font-style: italic;
   }
+
+  .single-event-session-description,
+  .single-event-objective-list {
+    strong,
+    b {
+      /* stylelint-disable scales/font-weights */
+      font-weight: 700;
+    }
+  }
+
+  .single-event-session-description {
+    margin-bottom: 1rem;
+  }
 }
