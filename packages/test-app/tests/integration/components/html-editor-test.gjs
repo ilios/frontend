@@ -118,6 +118,22 @@ module('Integration | Component | html editor', function (hooks) {
     );
   });
 
+  test('it fails to add link if missing link text or URL', async function (assert) {
+    await render(<template><HtmlEditor /></template>);
+
+    assert.notOk(component.popup.activated, 'popup is not visible');
+    await component.toolbar.link.click();
+    assert.ok(component.popup.activated, 'popup is visible');
+    assert.strictEqual(component.popup.errors.length, 0);
+
+    await component.popup.form.insert.submit();
+
+    assert.ok(component.popup.activated, 'popup is still visible');
+    assert.strictEqual(component.popup.errors.length, 2);
+    assert.strictEqual(component.popup.errors[0].text, 'Link URL can not be blank');
+    assert.strictEqual(component.popup.errors[1].text, 'Link Text can not be blank');
+  });
+
   test('undo/redo', async function (assert) {
     const newText = 'Hello universe!';
     this.set('content', '');
