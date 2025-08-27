@@ -105,6 +105,14 @@ export default class HtmlEditorComponent extends Component {
   }
 
   @action
+  onEnterKey(event) {
+    // don't send an actual Enter/Return to Quill
+    event.preventDefault();
+
+    this.addLink();
+  }
+
+  @action
   onEscapeKey() {
     const popup = document.querySelector(`#${this.popupId}`);
     if (popup.classList.contains('ql-active')) {
@@ -275,7 +283,12 @@ export default class HtmlEditorComponent extends Component {
           data-test-html-editor
         >
         </div>
-        <div id={{this.popupId}} class="ql-popup" data-test-insert-link-popup>
+        <div
+          id={{this.popupId}}
+          class="ql-popup"
+          {{onKey "Enter" this.onEnterKey}}
+          data-test-insert-link-popup
+        >
           <label for={{this.popupUrlId}}>
             <input
               type="text"
