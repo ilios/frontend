@@ -99,7 +99,7 @@ module('Integration | Component | dashboard/week', function (hooks) {
 
     await render(<template><Week /></template>);
     const expectedTitle = this.getTitle();
-    assert.strictEqual(component.weeklyLink, 'All Weeks');
+    assert.strictEqual(component.weeklyLink.text, 'All Weeks');
     assert.strictEqual(component.weekGlance.title, expectedTitle);
     assert.strictEqual(component.weekGlance.eventsByDate.length, 1);
     assert.strictEqual(
@@ -118,7 +118,7 @@ module('Integration | Component | dashboard/week', function (hooks) {
     this.setupEvents([]);
     await render(<template><Week /></template>);
     const expectedTitle = this.getTitle();
-    assert.strictEqual(component.weeklyLink, 'All Weeks');
+    assert.strictEqual(component.weeklyLink.text, 'All Weeks');
     assert.strictEqual(component.weekGlance.title, expectedTitle);
     assert.strictEqual(component.weekGlance.eventsByDate.length, 0);
   });
@@ -233,5 +233,21 @@ module('Integration | Component | dashboard/week', function (hooks) {
       { year: 2005, month: 6, day: 24 },
       'June 19-25 Week at a Glance',
     );
+  });
+
+  test('link to weeklyevent without year', async function (assert) {
+    this.setupEvents([]);
+    const dt = DateTime.fromObject({ year: 2024, month: 12, day: 23 });
+    freezeDateAt(dt.toJSDate());
+    await render(<template><Week /></template>);
+    assert.strictEqual(component.weeklyLink.url, '/weeklyevents?expanded=51-52-1&week=52');
+  });
+
+  test('link to weeklyevent with year', async function (assert) {
+    this.setupEvents([]);
+    const dt = DateTime.fromObject({ year: 2024, month: 12, day: 30 });
+    freezeDateAt(dt.toJSDate());
+    await render(<template><Week /></template>);
+    assert.strictEqual(component.weeklyLink.url, '/weeklyevents?expanded=52-1-2&week=1&year=2025');
   });
 });

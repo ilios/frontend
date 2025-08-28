@@ -1,9 +1,12 @@
-import { create, text } from 'ember-cli-page-object';
+import { attribute, create } from 'ember-cli-page-object';
 import weekGlance from '../week-glance';
 
 const definition = {
   scope: '[data-test-dashboard-week]',
-  weeklyLink: text('[data-test-weekly-link] a'),
+  weeklyLink: {
+    scope: '[data-test-weekly-link] a',
+    url: attribute('href'),
+  },
   weekGlance,
 };
 
