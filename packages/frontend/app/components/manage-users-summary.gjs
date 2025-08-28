@@ -332,6 +332,7 @@ export default class ManageUsersSummaryComponent extends Component {
                   >
                     <span class="name">
                       {{result.user.fullName}}
+                      [{{result.user.id}}]
                       <UserStatus @user={{result.user}} />
                     </span>
                     <span class="email">
