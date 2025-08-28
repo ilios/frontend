@@ -18,6 +18,8 @@ import YupValidationMessage from 'ilios-common/components/yup-validation-message
 import { TrackedAsyncData } from 'ember-async-data';
 import { loadQuillEditor } from 'ilios-common/utils/load-quill-editor';
 
+const DEFAULT_URL_VALUE = 'https://';
+
 export default class HtmlEditorComponent extends Component {
   @service intl;
   @tracked editorId = null;
@@ -26,6 +28,7 @@ export default class HtmlEditorComponent extends Component {
   @tracked popupLinkNewTarget = false;
   @tracked editorHasNoRedo = true;
   @tracked editorHasNoUndo = true;
+  @tracked urlChanged = false;
 
   editor = null;
 
@@ -111,6 +114,20 @@ export default class HtmlEditorComponent extends Component {
     return document.querySelector(`#${this.editorId}-toolbar .ql-link`).offsetLeft;
   }
 
+  get bestUrl() {
+    if (this.popupUrlValue || this.urlChanged) {
+      return this.popupUrlValue;
+    }
+
+    return DEFAULT_URL_VALUE;
+  }
+
+  @action
+  clearPopupValues() {
+    this.popupUrlValue = '';
+    this.popupTextValue = '';
+  }
+
   @action
   async submitOnEnter(event) {
     // don't send an actual Enter/Return to Quill
@@ -124,7 +141,6 @@ export default class HtmlEditorComponent extends Component {
     const popup = document.querySelector(`#${this.popupId}`);
     if (popup.classList.contains('ql-active')) {
       this.togglePopup();
-      this.editor.focus();
     }
   }
 
@@ -163,8 +179,7 @@ export default class HtmlEditorComponent extends Component {
 
     quill.setSelection(range.index + this.popupTextValue.length);
 
-    this.popupUrlValue = '';
-    this.popupTextValue = '';
+    this.clearPopupValues();
 
     this.togglePopup();
   });
@@ -191,6 +206,9 @@ export default class HtmlEditorComponent extends Component {
       const closePopup = document.addEventListener('click', ({ target }) => {
         if (!target.closest('.ql-popup') && !target.closest('.ql-link')) {
           popup.classList.remove('ql-active');
+
+          this.clearPopupValues();
+
           document.removeEventListener('click', closePopup);
         }
       });
@@ -200,8 +218,15 @@ export default class HtmlEditorComponent extends Component {
     }
   }
 
+  @action
+  selectAllText({ target }) {
+    if (target.value === DEFAULT_URL_VALUE) {
+      target.select();
+    }
+  }
+
   popupValidations = new YupValidations(this, {
-    popupUrlValue: string().required(),
+    popupUrlValue: string().ensure().trim().max(2000).url(),
     popupTextValue: string().required(),
   });
 
@@ -305,14 +330,17 @@ export default class HtmlEditorComponent extends Component {
         <div id={{this.popupId}} class="ql-popup" data-test-insert-link-popup>
           <form data-test-form>
             <label for={{this.popupUrlId}}>
+              {{! template-lint-disable no-bare-strings}}
               <input
                 type="text"
                 id={{this.popupUrlId}}
                 aria-label={{t "general.url"}}
-                placeholder={{t "general.url"}}
-                value={{this.popupUrlValue}}
+                placeholder="https://example.com"
+                inputmode="url"
+                value={{this.bestUrl}}
                 disabled={{if this.addLink.isRunning "disabled"}}
                 {{on "input" (pick "target.value" (set this "popupUrlValue"))}}
+                {{on "focus" this.selectAllText}}
                 {{onKey "Enter" this.submitOnEnter}}
                 {{this.popupValidations.attach "popupUrlValue"}}
                 data-test-url
