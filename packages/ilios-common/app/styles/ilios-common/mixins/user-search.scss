@@ -25,7 +25,8 @@
     border-bottom: 1px solid var(--lightest-grey);
     color: var(--light-blue);
     display: block;
-    padding: 0.1rem;
+    margin: 0.1rem 0;
+    padding: 0.2rem;
     width: 100%;
 
     &.inactive {
