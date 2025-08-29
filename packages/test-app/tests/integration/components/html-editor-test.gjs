@@ -1,4 +1,4 @@
-import { module, test, skip } from 'qunit';
+import { module, test, todo } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render, triggerKeyEvent } from '@ember/test-helpers';
 import { component } from 'ilios-common/page-objects/components/html-editor';
@@ -141,7 +141,7 @@ module('Integration | Component | html editor', function (hooks) {
     assert.strictEqual(component.popup.errors[1].text, 'Link Text can not be blank');
   });
 
-  skip('it edits existing link and retains properties', async function (assert) {
+  todo('it edits existing link and retains properties', async function (assert) {
     const editor = '.html-editor';
     const tooltip = '.ql-tooltip';
     const link1 = { href: 'https://iliosproject.org', text: 'Ilios Project' };
@@ -173,7 +173,10 @@ module('Integration | Component | html editor', function (hooks) {
       'editor has correct html',
     );
 
-    // this moves the cursor to the left position, which will trigger the tooltip
+    // TODO: can't get any keyboard or mouse triggers to work in editor
+    //       after submitting the link
+    // this should move the cursor to the left position
+    // which will trigger the tooltip to edit link
     await component.editor.content.focus();
     await triggerKeyEvent(editor, 'keyup', 'ArrowLeft');
     await component.editor.content.linkTooltip.openEditor();
