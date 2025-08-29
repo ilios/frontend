@@ -92,15 +92,17 @@ export default class DetailMeshComponent extends Component {
             {{/if}}
           </div>
         </div>
-        <div class="content">
-          {{#if this.isManaging}}
+        {{#if this.isManaging}}
+          <div class="content">
             <MeshManager
               @editable={{@editable}}
               @terms={{this.bufferedDescriptors}}
               @add={{this.addDescriptorToBuffer}}
               @remove={{this.removeDescriptorFromBuffer}}
             />
-          {{else}}
+          </div>
+        {{else}}
+          <div class="content{{unless this.meshDescriptors.length ' empty'}}">
             {{#if this.meshDescriptors.length}}
               <ul class="selected-mesh-terms">
 
@@ -125,8 +127,8 @@ export default class DetailMeshComponent extends Component {
                 {{/each}}
               </ul>
             {{/if}}
-          {{/if}}
-        </div>
+          </div>
+        {{/if}}
       {{/if}}
     </section>
   </template>

@@ -124,22 +124,24 @@ export default class DetailTaxonomiesComponent extends Component {
           {{/if}}
         </div>
       </div>
-      <div class="content">
-        {{#if this.isManaging}}
+      {{#if this.isManaging}}
+        <div class="content">
           <TaxonomyManager
             @vocabularies={{@subject.assignableVocabularies}}
             @selectedTerms={{this.bufferedTerms}}
             @add={{this.addTermToBuffer}}
             @remove={{this.removeTermFromBuffer}}
           />
-        {{else}}
+        </div>
+      {{else}}
+        <div class="content{{unless this.terms.length ' empty'}}">
           {{#each @subject.associatedVocabularies as |vocab|}}
             {{#if vocab.termCount}}
               <DetailTermsList @vocabulary={{vocab}} @terms={{this.terms}} @canEdit={{false}} />
             {{/if}}
           {{/each}}
-        {{/if}}
-      </div>
+        </div>
+      {{/if}}
     </section>
   </template>
 }
