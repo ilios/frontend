@@ -4,8 +4,6 @@ import { LinkTo } from '@ember/routing';
 import t from 'ember-intl/helpers/t';
 import GlobalSearchTags from 'frontend/components/global-search-tags';
 import { array } from '@ember/helper';
-import and from 'ember-truth-helpers/helpers/and';
-import not from 'ember-truth-helpers/helpers/not';
 import gt from 'ember-truth-helpers/helpers/gt';
 import { on } from '@ember/modifier';
 import set from 'ember-set-helper/helpers/set';
@@ -47,17 +45,30 @@ export default class CourseSearchResultComponent extends Component {
             <GlobalSearchTags @tags={{session.matchedIn}} />
           </li>
         {{/each}}
-        {{#if (and (not this.showMore) (gt @course.sessions.length 3))}}
-          <li>
-            <button
-              class="show-more link-button"
-              type="button"
-              {{on "click" (set this "showMore" true)}}
-            >
-              <FaIcon @icon="angle-down" />
-              {{t "general.showMore"}}
-            </button>
-          </li>
+        {{#if (gt @course.sessions.length 3)}}
+          {{#if this.showMore}}
+            <li>
+              <button
+                class="show-less link-button"
+                type="button"
+                {{on "click" (set this "showMore" false)}}
+              >
+                <FaIcon @icon="angle-up" />
+                {{t "general.showLess"}}
+              </button>
+            </li>
+          {{else}}
+            <li>
+              <button
+                class="show-more link-button"
+                type="button"
+                {{on "click" (set this "showMore" true)}}
+              >
+                <FaIcon @icon="angle-down" />
+                {{t "general.showMore"}}
+              </button>
+            </li>
+          {{/if}}
         {{/if}}
       </ul>
     </li>

@@ -8,7 +8,7 @@ module('Integration | Component | course-search-result', function (hooks) {
   setupRenderingTest(hooks);
 
   test('it display course and session info properly', async function (assert) {
-    assert.expect(9);
+    assert.expect(15);
 
     const course = {
       id: 1,
@@ -42,9 +42,19 @@ module('Integration | Component | course-search-result', function (hooks) {
     assert.strictEqual(component.sessions[1].text, 'Session 2');
     assert.strictEqual(component.sessions[2].text, 'Session 3');
     assert.strictEqual(component.sessions.length, 3);
+
+    assert.notOk(component.showLessIsVisible);
     assert.ok(component.showMoreIsVisible);
     await component.showMore();
+
+    assert.ok(component.showLessIsVisible);
+    assert.notOk(component.showMoreIsVisible);
     assert.strictEqual(component.sessions[3].text, 'Session 4');
     assert.strictEqual(component.sessions.length, 4);
+
+    await component.showLess();
+    assert.notOk(component.showLessIsVisible);
+    assert.ok(component.showMoreIsVisible);
+    assert.strictEqual(component.sessions.length, 3);
   });
 });

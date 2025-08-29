@@ -334,6 +334,7 @@ general:
   showFilters: Montrez les Filtres
   showIcsFeed: "Afficher les options d'alimentation ICS"
   showLearnerGroupEvents: "Montrez tous les événements pour les groupes d'étudiants affectés"
+  showLess: Afficher moins
   showMore: Afficher plus
   showNotesToStudents: Afficher notes aux étudiantes
   showObjectives: Afficher les objectifs
