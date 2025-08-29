@@ -41,7 +41,8 @@
     @include m.font-size("small");
   }
 
-  .show-more {
+  .show-more,
+  .show-less {
     @include m.font-size("small");
     text-transform: capitalize;
 

@@ -334,6 +334,7 @@ general:
   showFilters: Show Filters
   showIcsFeed: Show ICS Feed Options
   showLearnerGroupEvents: Show all events for assigned learner groups
+  showLess: Show less
   showMore: Show more
   showNotesToStudents: Show Notes to Students
   showObjectives: Show objectives
