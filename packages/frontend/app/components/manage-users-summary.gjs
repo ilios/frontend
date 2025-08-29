@@ -330,8 +330,9 @@ export default class ManageUsersSummaryComponent extends Component {
                     data-userid={{result.user.id}}
                     {{on "click" (perform this.clickUser result.user)}}
                   >
-                    <span class="name">
+                    <span class="name-and-id">
                       {{result.user.fullName}}
+                      [{{result.user.id}}]
                       <UserStatus @user={{result.user}} />
                     </span>
                     <span class="email">

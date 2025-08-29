@@ -32,7 +32,7 @@ module('Acceptance | Admin', function (hooks) {
 
     const userSearch = '.user-search input';
     const secondResult = '.user-search .results li:nth-of-type(3)';
-    const secondResultUsername = `${secondResult} .name`;
+    const secondResultUsername = `${secondResult} .name-and-id`;
     const secondResultEmail = `${secondResult} .email`;
     const name = '.user-display-name';
 
@@ -41,7 +41,7 @@ module('Acceptance | Admin', function (hooks) {
     await fillIn(userSearch, 'son');
     await triggerEvent(userSearch, 'keyup');
     await percySnapshot(getUniqueName(assert, 'search results dropdown'));
-    assert.dom(secondResultUsername).hasText('1 guy M. Mc1son', 'user name is correct');
+    assert.dom(secondResultUsername).hasText('1 guy M. Mc1son [2]', 'user name and id is correct');
     assert.dom(secondResultEmail).hasText('user@example.edu', 'user email is correct');
 
     await click(secondResultUsername);
