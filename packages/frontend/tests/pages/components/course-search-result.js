@@ -5,9 +5,12 @@ const definition = {
   courseTitle: text('[data-test-course-title]'),
   clickCourse: clickable('[data-test-course-title]'),
   sessions: collection('.session-title-link'),
-  showMoreIsVisible: isVisible('.show-more'),
-  showMoreIsHidden: isHidden('.show-more'),
+  showLess: clickable('.show-less'),
+  showLessIsHidden: isHidden('.show-less'),
+  showLessIsVisible: isVisible('.show-less'),
   showMore: clickable('.show-more'),
+  showMoreIsHidden: isHidden('.show-more'),
+  showMoreIsVisible: isVisible('.show-more'),
 };
 
 export default definition;
