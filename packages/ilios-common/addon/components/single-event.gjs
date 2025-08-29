@@ -439,8 +439,9 @@ export default class SingleEvent extends Component {
             </div>
           {{/if}}
           {{#if @event.sessionDescription}}
-            {{this.sessionDescription}}
-            <br />
+            <div class="single-event-session-description">
+              {{this.sessionDescription}}
+            </div>
           {{/if}}
         </div>
         <div class="single-event-learningmaterial-list" data-test-session-materials>

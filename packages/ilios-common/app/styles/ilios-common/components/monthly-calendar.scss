@@ -21,7 +21,7 @@
     width: 100%;
 
     .day-heading {
-      font-weight: bold;
+      font-weight: 600;
       @for $i from 1 through 7 {
         &.day-#{$i} {
           grid-column: $i;
@@ -92,7 +92,7 @@
         span {
           background-color: transparent;
           @include m.font-size("smallest");
-          font-weight: normal;
+          font-weight: 400;
         }
 
         .ilios-calendar-event-time {

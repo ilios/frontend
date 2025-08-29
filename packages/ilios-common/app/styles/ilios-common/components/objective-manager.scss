@@ -35,12 +35,12 @@
 
   .no-group {
     color: var(--orange);
-    font-weight: bold;
+    font-weight: 600;
   }
 
   h5 {
     @include m.font-size("small");
-    font-weight: bold;
+    font-weight: 600;
     margin: 0.8rem;
     padding: 0.2rem 0.5rem;
   }

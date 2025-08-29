@@ -8,7 +8,7 @@
 
   .title {
     @include m.font-size("medium");
-    font-weight: bold;
+    font-weight: 600;
     margin-top: 0;
     padding-left: 1rem;
   }

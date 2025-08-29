@@ -26,11 +26,11 @@
 
     h2 {
       @include m.ilios-heading-h3;
-      font-weight: normal;
+      font-weight: 400;
 
       em {
         font-style: normal;
-        font-weight: bold;
+        font-weight: 600;
       }
 
       .recently-updated-icon {
@@ -55,7 +55,7 @@
   }
 
   .single-event-offered-at {
-    font-weight: bold;
+    font-weight: 600;
     margin: 0.5rem 0;
   }
 
@@ -70,5 +70,18 @@
   .single-event-learningmaterial-filesize {
     @include m.font-size("small");
     font-style: italic;
+  }
+
+  .single-event-session-description,
+  .single-event-objective-list {
+    strong,
+    b {
+      /* stylelint-disable scales/font-weights */
+      font-weight: 700;
+    }
+  }
+
+  .single-event-session-description {
+    margin-bottom: 1rem;
   }
 }

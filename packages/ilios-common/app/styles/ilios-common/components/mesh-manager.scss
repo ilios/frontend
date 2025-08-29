@@ -4,7 +4,7 @@
 .mesh-manager {
   .deprecated {
     color: var(--red);
-    font-weight: bolder;
+    font-weight: 600;
   }
 
   .results,
@@ -29,7 +29,7 @@
 
     .descriptor-name {
       display: block;
-      font-weight: bold;
+      font-weight: 600;
     }
 
     .descriptor-id {
@@ -63,7 +63,7 @@
     }
 
     .term-title {
-      font-weight: bold;
+      font-weight: 600;
     }
 
     .term-details {

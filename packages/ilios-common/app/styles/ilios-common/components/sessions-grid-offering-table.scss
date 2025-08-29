@@ -19,7 +19,7 @@
 
     th {
       @include m.font-size("small");
-      font-weight: normal;
+      font-weight: 400;
       padding: 0.2rem 0.5rem;
     }
   }
@@ -49,7 +49,7 @@
 
   .offering-block-date {
     border-top: 1px solid var(--lightest-grey);
-    font-weight: bold;
+    font-weight: 600;
   }
 
   .sessions-grid-offering {

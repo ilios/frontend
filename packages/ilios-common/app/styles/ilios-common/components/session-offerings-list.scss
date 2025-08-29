@@ -17,10 +17,10 @@
       grid-column: 1 / -1;
 
       .offering-block-date-dayofweek {
-        color: var(--orange);
+        color: var(--dark-orange);
         display: block;
         @include m.font-size("medium");
-        font-weight: bold;
+        font-weight: 600;
         width: 100%;
       }
 
@@ -46,18 +46,18 @@
       .offering-block-time-time-endtime {
         color: var(--grey);
         display: block;
-        font-weight: bold;
+        font-weight: 600;
       }
 
       .offering-block-time-time-starttime-label,
       .offering-block-time-time-endtime-label {
-        font-weight: normal;
+        font-weight: 400;
       }
 
       .offering-block-time-time-starts-label,
       .offering-block-time-time-ends-label {
         display: block;
-        font-weight: normal;
+        font-weight: 400;
       }
     }
   }

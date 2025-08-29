@@ -7,7 +7,7 @@ noscript {
     border: 2px dashed var(--orange);
     color: var(--black);
     @include m.font-size("xxl");
-    font-weight: bold;
+    font-weight: 600;
     margin: 2rem;
     padding: 2rem;
   }

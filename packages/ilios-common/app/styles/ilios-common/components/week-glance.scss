@@ -81,7 +81,7 @@
 
     .event-title {
       @include m.ilios-heading-h5;
-      font-weight: 700;
+      font-weight: 600;
       margin-bottom: 0;
 
       .date {
@@ -102,6 +102,14 @@
     .instructors {
       label {
         font-weight: 600;
+      }
+    }
+
+    .description {
+      strong,
+      b {
+        /* stylelint-disable scales/font-weights */
+        font-weight: 700;
       }
     }
   }

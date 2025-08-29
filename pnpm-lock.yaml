@@ -315,6 +315,9 @@ importers:
       stylelint-config-standard:
         specifier: ^36.0.1
         version: 36.0.1(stylelint@16.23.1(typescript@5.9.2))
+      stylelint-scales:
+        specifier: ^5.0.0
+        version: 5.0.0(postcss@8.5.6)
       stylelint-scss:
         specifier: ^6.11.0
         version: 6.12.1(stylelint@16.23.1(typescript@5.9.2))
@@ -619,6 +622,9 @@ importers:
       stylelint-config-standard:
         specifier: ^36.0.1
         version: 36.0.1(stylelint@16.23.1(typescript@5.9.2))
+      stylelint-scales:
+        specifier: ^5.0.0
+        version: 5.0.0(postcss@8.5.6)
       stylelint-scss:
         specifier: ^6.11.0
         version: 6.12.1(stylelint@16.23.1(typescript@5.9.2))
@@ -844,6 +850,9 @@ importers:
       stylelint-config-standard:
         specifier: ^36.0.1
         version: 36.0.1(stylelint@16.23.1(typescript@5.9.2))
+      stylelint-scales:
+        specifier: ^5.0.0
+        version: 5.0.0(postcss@8.5.6)
       stylelint-scss:
         specifier: ^6.11.0
         version: 6.12.1(stylelint@16.23.1(typescript@5.9.2))
@@ -1069,6 +1078,9 @@ importers:
       stylelint-config-standard:
         specifier: ^36.0.1
         version: 36.0.1(stylelint@16.23.1(typescript@5.9.2))
+      stylelint-scales:
+        specifier: ^5.0.0
+        version: 5.0.0(postcss@8.5.6)
       stylelint-scss:
         specifier: ^6.11.0
         version: 6.12.1(stylelint@16.23.1(typescript@5.9.2))
@@ -1288,6 +1300,9 @@ importers:
       stylelint-config-standard:
         specifier: ^36.0.1
         version: 36.0.1(stylelint@16.23.1(typescript@5.9.2))
+      stylelint-scales:
+        specifier: ^5.0.0
+        version: 5.0.0(postcss@8.5.6)
       stylelint-scss:
         specifier: ^6.11.0
         version: 6.12.1(stylelint@16.23.1(typescript@5.9.2))
@@ -6995,6 +7010,10 @@ packages:
     resolution: {integrity: sha512-knxG2q4UC3u8stRGyAVJCOdxFmv5DZiRcdlIaAQXAbSfJya+OhopNotLQrstBhququ4ZpuKbDc/8S6mgXgPFPw==}
     engines: {node: '>=10'}
 
+  is-url-superb@4.0.0:
+    resolution: {integrity: sha512-GI+WjezhPPcbM+tqE9LnmsY5qqjwHzTvjJ36wxYX5ujNXefSUJ/T17r5bqDV8yLhcgB59KTPNOc9O9cmHTPWsA==}
+    engines: {node: '>=10'}
+
   is-weakmap@2.0.2:
     resolution: {integrity: sha512-K5pXYOm9wqY1RgjpL3YTkF39tni1XajUIkawTLUo9EZEVUFga5gSQJF8nNS7ZwJQ02y+1YCNYcMh+HIf1ZqE+w==}
     engines: {node: '>= 0.4'}
@@ -8196,6 +8215,12 @@ packages:
   postcss-value-parser@4.2.0:
     resolution: {integrity: sha512-1NNCs6uurfkVbeXG4S8JFT9t19m45ICnif8zWLd5oPSZ50QnwMfK+H3jv408d4jw/7Bttv5axS5IiHoLaVNHeQ==}
 
+  postcss-values-parser@6.0.2:
+    resolution: {integrity: sha512-YLJpK0N1brcNJrs9WatuJFtHaV9q5aAOj+S4DI5S7jgHlRfm0PIbDCAFRYMQD5SHq7Fy6xsDhyutgS0QOAs0qw==}
+    engines: {node: '>=10'}
+    peerDependencies:
+      postcss: ^8.2.9
+
   postcss@8.5.6:
     resolution: {integrity: sha512-3Ybi1tAuwAP9s0r1UQ2J4n5Y0G05bJkpUIO0/bI9MhwmD70S5aTWbXGBwxHrelT+XM1k6dM0pk+SwNkpTRN7Pg==}
     engines: {node: ^10 || ^12 || >=14}
@@ -8362,6 +8387,9 @@ packages:
     resolution: {integrity: sha512-Eu0k/5JDjx0QnqxsE1WavnDNDgL1zgMZKsMw/AoAxnsl9p4RgyLODyo2N7abZY7CEAnvl5YUqFZdkImzbgXzSg==}
     engines: {node: '>=10'}
     hasBin: true
+
+  quote-unquote@1.0.0:
+    resolution: {integrity: sha512-twwRO/ilhlG/FIgYeKGFqyHhoEhqgnKVkcmqMKi2r524gz3ZbDTcyFt38E9xjJI2vT+KbRNHVbnJ/e0I25Azwg==}
 
   raf-pool@0.1.4:
     resolution: {integrity: sha512-BBPamTVuSprPq7CUmgxc+ycbsYUtUYnQtJYEfMHXMaostPaNpQzipLfSa/rwjmlgjBPiD7G+I+8W340sLOPu6g==}
@@ -9137,6 +9165,10 @@ packages:
     engines: {node: '>=18.12.0'}
     peerDependencies:
       stylelint: ^16.1.0
+
+  stylelint-scales@5.0.0:
+    resolution: {integrity: sha512-bdeA0ZcVSQunLfqk+x/MpQeyBYXdw5EUb0sH4zG3x55tjbYnd5oyfgJXTF96FRXbrSjSOAOx4QiSUlLS7V1btw==}
+    engines: {node: '>=18'}
 
   stylelint-scss@6.12.1:
     resolution: {integrity: sha512-UJUfBFIvXfly8WKIgmqfmkGKPilKB4L5j38JfsDd+OCg2GBdU0vGUV08Uw82tsRZzd4TbsUURVVNGeOhJVF7pA==}
@@ -18249,6 +18281,8 @@ snapshots:
 
   is-unicode-supported@0.1.0: {}
 
+  is-url-superb@4.0.0: {}
+
   is-weakmap@2.0.2: {}
 
   is-weakref@1.1.1:
@@ -19499,6 +19533,13 @@ snapshots:
 
   postcss-value-parser@4.2.0: {}
 
+  postcss-values-parser@6.0.2(postcss@8.5.6):
+    dependencies:
+      color-name: 1.1.4
+      is-url-superb: 4.0.0
+      postcss: 8.5.6
+      quote-unquote: 1.0.0
+
   postcss@8.5.6:
     dependencies:
       nanoid: 3.3.11
@@ -19662,6 +19703,8 @@ snapshots:
       commander: 7.2.0
       node-watch: 0.7.3
       tiny-glob: 0.2.9
+
+  quote-unquote@1.0.0: {}
 
   raf-pool@0.1.4: {}
 
@@ -20601,6 +20644,12 @@ snapshots:
     dependencies:
       stylelint: 16.23.1(typescript@5.9.2)
       stylelint-config-recommended: 14.0.1(stylelint@16.23.1(typescript@5.9.2))
+
+  stylelint-scales@5.0.0(postcss@8.5.6):
+    dependencies:
+      postcss-values-parser: 6.0.2(postcss@8.5.6)
+    transitivePeerDependencies:
+      - postcss
 
   stylelint-scss@6.12.1(stylelint@16.23.1(typescript@5.9.2)):
     dependencies:
