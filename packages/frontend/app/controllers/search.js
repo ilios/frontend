@@ -25,11 +25,8 @@ export default class SearchController extends Controller {
   }
 
   setQuery = (query) => {
-    // don't reset the page when returning back to the same query
-    if (query !== this.query) {
-      this.page = 1;
-      this.query = query;
-    }
+    this.page = 1;
+    this.query = query;
   };
 
   setSchools = (schools) => {
