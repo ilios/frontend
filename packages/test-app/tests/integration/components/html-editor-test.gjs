@@ -94,6 +94,7 @@ module('Integration | Component | html editor', function (hooks) {
 
   test('it enters link from popup into editor via Enter key', async function (assert) {
     const link = { href: 'https://iliosproject.org', text: 'Ilios Project' };
+    const popup = '.ql-popup';
 
     this.set('description', '');
     this.set('changeDescription', (value) => {
@@ -108,9 +109,11 @@ module('Integration | Component | html editor', function (hooks) {
     assert.notOk(component.popup.activated, 'popup is not visible');
     await component.toolbar.link.click();
     assert.ok(component.popup.activated, 'popup is visible');
+
     await component.popup.form.url.edit(link.href);
     await component.popup.form.text.edit(link.text);
-    await triggerKeyEvent('.ql-popup', 'keydown', 'Enter');
+
+    await triggerKeyEvent(popup, 'keydown', 'Enter');
 
     assert.notOk(component.popup.activated, 'popup closed');
     assert.strictEqual(
