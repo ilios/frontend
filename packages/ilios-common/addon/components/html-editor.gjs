@@ -24,11 +24,11 @@ export default class HtmlEditorComponent extends Component {
   @service intl;
   @tracked editorId = null;
   @tracked popupUrlValue;
+  @tracked popupUrlValueChanged = false;
   @tracked popupTextValue;
   @tracked popupLinkNewTarget = false;
   @tracked editorHasNoRedo = true;
   @tracked editorHasNoUndo = true;
-  @tracked urlChanged = false;
 
   editor = null;
 
@@ -58,6 +58,11 @@ export default class HtmlEditorComponent extends Component {
     }
 
     return true;
+  });
+
+  popupValidations = new YupValidations(this, {
+    popupUrlValue: string().required().trim().max(2000).url(),
+    popupTextValue: string().required(),
   });
 
   constructor() {
@@ -115,7 +120,7 @@ export default class HtmlEditorComponent extends Component {
   }
 
   get bestUrl() {
-    if (this.popupUrlValue || this.urlChanged) {
+    if (this.popupUrlValue || this.popupUrlValueChanged) {
       return this.popupUrlValue;
     }
 
@@ -129,7 +134,7 @@ export default class HtmlEditorComponent extends Component {
   }
 
   @action
-  async submitOnEnter(event) {
+  async saveOnEnter(event) {
     // don't send an actual Enter/Return to Quill
     event.preventDefault();
 
@@ -225,10 +230,17 @@ export default class HtmlEditorComponent extends Component {
     }
   }
 
-  popupValidations = new YupValidations(this, {
-    popupUrlValue: string().ensure().trim().max(2000).url(),
-    popupTextValue: string().required(),
-  });
+  @action
+  changeURL(value) {
+    this.popupValidations.addErrorDisplayFor('popupUrlValue');
+    value = value.trim();
+    const regex = RegExp('https://http[s]?:');
+    if (regex.test(value)) {
+      value = value.substring(8);
+    }
+    this.popupUrlValue = value;
+    this.popupUrlValueChanged = true;
+  }
 
   willDestroy() {
     super.willDestroy(...arguments);
@@ -327,21 +339,25 @@ export default class HtmlEditorComponent extends Component {
         >
         </div>
 
-        <div id={{this.popupId}} class="ql-popup" data-test-insert-link-popup>
+        <div
+          id={{this.popupId}}
+          class="ql-popup"
+          {{onKey "Enter" this.saveOnEnter}}
+          data-test-insert-link-popup
+        >
           <form data-test-form>
             <label for={{this.popupUrlId}}>
               {{! template-lint-disable no-bare-strings}}
               <input
-                type="text"
                 id={{this.popupUrlId}}
+                type="text"
                 aria-label={{t "general.url"}}
                 placeholder="https://example.com"
-                inputmode="url"
                 value={{this.bestUrl}}
+                inputmode="url"
                 disabled={{if this.addLink.isRunning "disabled"}}
-                {{on "input" (pick "target.value" (set this "popupUrlValue"))}}
+                {{on "input" (pick "target.value" this.changeURL)}}
                 {{on "focus" this.selectAllText}}
-                {{onKey "Enter" this.submitOnEnter}}
                 {{this.popupValidations.attach "popupUrlValue"}}
                 data-test-url
               />
@@ -353,14 +369,13 @@ export default class HtmlEditorComponent extends Component {
             <br />
             <label for={{this.popupTextId}}>
               <input
-                type="text"
                 id={{this.popupTextId}}
+                type="text"
                 aria-label={{t "general.text"}}
                 placeholder={{t "general.text"}}
                 value={{this.popupTextValue}}
                 disabled={{if this.addLink.isRunning "disabled"}}
                 {{on "input" (pick "target.value" (set this "popupTextValue"))}}
-                {{onKey "Enter" this.submitOnEnter}}
                 {{this.popupValidations.attach "popupTextValue"}}
                 data-test-text
               />
