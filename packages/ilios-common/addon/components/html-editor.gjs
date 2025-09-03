@@ -39,8 +39,8 @@ export default class HtmlEditorComponent extends Component {
 
       // create Quill Delta object from saved content so it can be re-added to editor
       // https://quilljs.com/docs/delta
-      const delta = this.editor.clipboard.convert({ html: this.args.content });
-      this.editor.setContents(delta);
+      const contentToLoad = this.editor.clipboard.convert({ html: this.args.content });
+      this.editor.setContents(contentToLoad);
 
       if (this.args.autofocus) {
         this.editor.focus();
@@ -50,9 +50,29 @@ export default class HtmlEditorComponent extends Component {
         if (!this.isDestroyed && !this.isDestroying) {
           this.editorHasNoRedo = !this.editor.history.stack.redo.length;
           this.editorHasNoUndo = !this.editor.history.stack.undo.length;
-          // use editor.root.innerHTML to get actual HTML, as editor.getContents() returns custom Delta object that doesn't actually have the HTML markup: https://quilljs.com/docs/api#getcontents
-          // also, retain multiple spaces in content
-          this.args.update(this.editor.root.innerHTML.split('  ').join(' &nbsp;'));
+
+          // get version of content suitable for saving to database
+          // https://quilljs.com/docs/api#getsemantichtml
+          let contentToSave = this.editor.getSemanticHTML();
+          // Quill is turning ' ' into `&nbsp;`
+          // so we need to massage this to only use the entity when needed
+          const regex = /(?:&nbsp;|\u00A0)+/g;
+
+          const spaceReplacer = (match) => {
+            const count = (match.match(/(?:&nbsp;|\u00A0)/g) || []).length;
+            const pairs = Math.floor(count / 2);
+            const extra = count % 2;
+
+            // Create ' &nbsp;' for each pair
+            let result = ' &nbsp;'.repeat(pairs);
+
+            // Add an extra space if there is a leftover single
+            if (extra) result += ' ';
+
+            return result;
+          };
+          contentToSave = contentToSave.replace(regex, spaceReplacer);
+          this.args.update(contentToSave);
         }
       });
     }
