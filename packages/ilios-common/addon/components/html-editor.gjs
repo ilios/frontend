@@ -80,7 +80,7 @@ export default class HtmlEditorComponent extends Component {
     return true;
   });
 
-  popupValidations = new YupValidations(this, {
+  validations = new YupValidations(this, {
     popupUrlValue: string().required().trim().max(2000).url(),
     popupTextValue: string().required(),
   });
@@ -169,8 +169,8 @@ export default class HtmlEditorComponent extends Component {
   }
 
   addLink = task(async () => {
-    this.popupValidations.addErrorDisplayForAllFields();
-    const isValid = await this.popupValidations.isValid();
+    this.validations.addErrorDisplayForAllFields();
+    const isValid = await this.validations.isValid();
 
     if (!isValid) {
       return false;
@@ -251,7 +251,7 @@ export default class HtmlEditorComponent extends Component {
 
   @action
   changeURL(value) {
-    this.popupValidations.addErrorDisplayFor('popupUrlValue');
+    this.validations.addErrorDisplayFor('popupUrlValue');
     value = value.trim();
     const regex = RegExp('https://http[s]?:');
     if (regex.test(value)) {
@@ -377,12 +377,12 @@ export default class HtmlEditorComponent extends Component {
                 disabled={{if this.addLink.isRunning "disabled"}}
                 {{on "input" (pick "target.value" this.changeURL)}}
                 {{on "focus" this.selectAllText}}
-                {{this.popupValidations.attach "popupUrlValue"}}
+                {{this.validations.attach "popupUrlValue"}}
                 data-test-url
               />
               <YupValidationMessage
                 @description={{t "general.htmlEditor.errors.linkUrl"}}
-                @validationErrors={{this.popupValidations.errors.popupUrlValue}}
+                @validationErrors={{this.validations.errors.popupUrlValue}}
               />
             </label>
             <br />
@@ -395,12 +395,12 @@ export default class HtmlEditorComponent extends Component {
                 value={{this.popupTextValue}}
                 disabled={{if this.addLink.isRunning "disabled"}}
                 {{on "input" (pick "target.value" (set this "popupTextValue"))}}
-                {{this.popupValidations.attach "popupTextValue"}}
+                {{this.validations.attach "popupTextValue"}}
                 data-test-text
               />
               <YupValidationMessage
                 @description={{t "general.htmlEditor.errors.linkText"}}
-                @validationErrors={{this.popupValidations.errors.popupTextValue}}
+                @validationErrors={{this.validations.errors.popupTextValue}}
               />
             </label>
             <br />
