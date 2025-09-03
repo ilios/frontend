@@ -97,7 +97,6 @@ export default class HtmlEditorComponent extends Component {
 
   get options() {
     return {
-      debug: 'warn',
       modules: {
         toolbar: {
           container: this.toolbarId,
