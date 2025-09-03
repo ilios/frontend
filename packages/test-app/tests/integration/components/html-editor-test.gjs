@@ -23,6 +23,65 @@ module('Integration | Component | html editor', function (hooks) {
     assert.ok(component.editor, 'editor area exists');
   });
 
+  test('it passes valid data from editor to database', async function (assert) {
+    /* eslint-disable no-useless-escape */
+    const dataToInsert = `<p>hello from <strong>Quill</strong></p><p>some      text with multiple   spaces   between some words</p><p>plain text, <strong>bolded text</strong>, <em>italic text</em>, <sup>supertext</sup>, <sub>subtext</sub>, <strong>mix</strong>ed <strong><em>tex</em></strong>t</p><p>more <sup>super</sup>mi<strong>xed</strong> text that is <em>not</em> <sub><em>sub</em></sub>par, <a href="https://google.com">linked text to google</a></p><p>some text that is 'single quoted', some text that is "double quoted"</p><p>some text that is \`backticked\`, some text that is 'single "and double" quoted, \`heh heh\`'</p><p>some text in &lt;brackets&gt;, [braces], {curlies}</p><p>here are some other symbols: ~!@#$%^&amp;*()_+-=|\/?</p><p>ordered list:</p><ol><li>first ordered</li><li>second ordered</li><li>third ordered, but starting unordered<ul><li>first unordered list item inside an ordered list</li><li>second unordered list item inside an ordered list</li></ul></li></ol><p>unordered list:</p><ul><li>first unordered</li><li>second unordered</li><li>third unordered, but starting ordered<ol><li>first ordered list item inside an unordered list</li><li>second ordered list item inside an unordered list</li></ol></li></ul>`;
+    const dataToSave = `<p>hello from <strong>Quill</strong></p><p>some &nbsp; &nbsp; &nbsp;text with multiple &nbsp; spaces &nbsp; between some words</p><p>plain text, <strong>bolded text</strong>, <em>italic text</em>, <sup>supertext</sup>, <sub>subtext</sub>, <strong>mix</strong>ed <strong><em>tex</em></strong>t</p><p>more <sup>super</sup>mi<strong>xed</strong> text that is <em>not</em> <sub><em>sub</em></sub>par, <a href=\"https://google.com\">linked text to google</a></p><p>some text that is &#39;single quoted&#39;, some text that is &quot;double quoted&quot;</p><p>some text that is \`backticked\`, some text that is &#39;single &quot;and double&quot; quoted, \`heh heh\`&#39;</p><p>some text in &lt;brackets&gt;, [braces], {curlies}</p><p>here are some other symbols: ~!@#$%^&amp;*()_+-=|/?</p><p>ordered list:</p><ul><li>first ordered</li><li>second ordered</li><li>third ordered, but starting unordered</li></ul><p>unordered list:</p><p></p>`;
+
+    this.set('content', '');
+    this.set('updateContent', (value) => {
+      this.content = value;
+    });
+    await render(
+      <template><HtmlEditor @content={{this.content}} @update={{this.updateContent}} /></template>,
+    );
+
+    await component.editor.content.edit(dataToInsert);
+    assert.strictEqual(this.content, dataToSave, 'data passed to database is valid');
+  });
+
+  test('undo/redo', async function (assert) {
+    const newText = 'Hello universe!';
+    this.set('content', '');
+    this.set('updateContent', (value) => {
+      this.content = value;
+    });
+    await render(
+      <template><HtmlEditor @content={{this.content}} @update={{this.updateContent}} /></template>,
+    );
+
+    assert.strictEqual(component.editor.content.textContent, '', 'editor has no text currently');
+    assert.ok(component.toolbar.undo.disabled, 'undo is disabled');
+    assert.ok(component.toolbar.redo.disabled, 'redo is disabled');
+
+    await component.editor.content.edit(newText);
+    assert.strictEqual(
+      component.editor.content.textContent,
+      newText,
+      'editor has correct text inserted',
+    );
+    assert.ok(component.toolbar.redo.disabled, 'redo is still disabled');
+    assert.notOk(component.toolbar.undo.disabled, 'undo is not disabled anymore');
+
+    await component.toolbar.undo.click();
+    assert.strictEqual(
+      component.editor.content.textContent,
+      '',
+      'editor text is back to no text after undoing',
+    );
+    assert.ok(component.toolbar.undo.disabled, 'undo is disabled now');
+    assert.notOk(component.toolbar.redo.disabled, 'redo is not disabled after using undo');
+
+    await component.toolbar.redo.click();
+    assert.strictEqual(
+      component.editor.content.textContent,
+      newText,
+      'editor has text back after redo',
+    );
+    assert.notOk(component.toolbar.undo.disabled, 'undo is not disabled after redo');
+    assert.ok(component.toolbar.redo.disabled, 'redo is disabled after using it');
+  });
+
   test('it toggles popup open when link button is clicked', async function (assert) {
     await render(<template><HtmlEditor /></template>);
 
@@ -197,47 +256,5 @@ module('Integration | Component | html editor', function (hooks) {
       '<p><a href="https://github.com/ilios" rel="noopener noreferrer">Ilios Project</a></p>',
       'editor has correct html',
     );
-  });
-
-  test('undo/redo', async function (assert) {
-    const newText = 'Hello universe!';
-    this.set('content', '');
-    this.set('updateContent', (value) => {
-      this.content = value;
-    });
-    await render(
-      <template><HtmlEditor @content={{this.content}} @update={{this.updateContent}} /></template>,
-    );
-
-    assert.strictEqual(component.editor.content.textContent, '', 'editor has no text currently');
-    assert.ok(component.toolbar.undo.disabled, 'undo is disabled');
-    assert.ok(component.toolbar.redo.disabled, 'redo is disabled');
-
-    await component.editor.content.edit(newText);
-    assert.strictEqual(
-      component.editor.content.textContent,
-      newText,
-      'editor has correct text inserted',
-    );
-    assert.ok(component.toolbar.redo.disabled, 'redo is still disabled');
-    assert.notOk(component.toolbar.undo.disabled, 'undo is not disabled anymore');
-
-    await component.toolbar.undo.click();
-    assert.strictEqual(
-      component.editor.content.textContent,
-      '',
-      'editor text is back to no text after undoing',
-    );
-    assert.ok(component.toolbar.undo.disabled, 'undo is disabled now');
-    assert.notOk(component.toolbar.redo.disabled, 'redo is not disabled after using undo');
-
-    await component.toolbar.redo.click();
-    assert.strictEqual(
-      component.editor.content.textContent,
-      newText,
-      'editor has text back after redo',
-    );
-    assert.notOk(component.toolbar.undo.disabled, 'undo is not disabled after redo');
-    assert.ok(component.toolbar.redo.disabled, 'redo is disabled after using it');
   });
 });
