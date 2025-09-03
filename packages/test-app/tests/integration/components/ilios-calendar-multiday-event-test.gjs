@@ -16,6 +16,10 @@ module('Integration | Component | ilios calendar multiday event', function (hook
       endDate: DateTime.fromISO('1984-11-12').toISO(),
       name: 'Cheramie is born',
       location: 'Lancaster, CA',
+      attireRequired: true,
+      equipmentRequired: true,
+      attendanceRequired: true,
+      supplemental: true,
     };
   });
 
@@ -32,9 +36,14 @@ module('Integration | Component | ilios calendar multiday event', function (hook
       </template>,
     );
     assert.strictEqual(
-      component.text,
+      component.button.text,
       '11/11/84, 12:00 AM – 11/12/84, 12:00 AM Cheramie is born Lancaster, CA',
     );
+    assert.strictEqual(component.sessionAttributes.length, 4);
+    assert.ok(component.sessionAttributes[0].attire);
+    assert.ok(component.sessionAttributes[1].equipment);
+    assert.ok(component.sessionAttributes[2].attendance);
+    assert.ok(component.sessionAttributes[3].supplemental);
     await a11yAudit(this.element);
   });
 
@@ -54,7 +63,7 @@ module('Integration | Component | ilios calendar multiday event', function (hook
       </template>,
     );
     assert.notOk(component.isDisabled);
-    await component.click();
+    await component.button.click();
   });
 
   test('event is disabled for scheduled events', async function (assert) {
