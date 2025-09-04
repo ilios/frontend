@@ -1,7 +1,6 @@
 @use "../mixins" as m;
 
 .learningmaterial-manager {
-  margin-left: 2rem;
   min-height: 25vh;
 
   @include m.ilios-form;
