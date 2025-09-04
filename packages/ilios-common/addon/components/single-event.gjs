@@ -24,6 +24,7 @@ import SingleEventLearningmaterialList from 'ilios-common/components/single-even
 import SingleEventObjectiveList from 'ilios-common/components/single-event-objective-list';
 import NotFound from 'ilios-common/components/not-found';
 import { htmlSafe } from '@ember/template';
+import { pageTitle } from 'ember-page-title';
 
 export default class SingleEvent extends Component {
   @service currentUser;
@@ -289,6 +290,8 @@ export default class SingleEvent extends Component {
     return 0;
   }
   <template>
+    {{pageTitle " | " (t "general.event") ": " @event.slug prepend=false}}
+
     <div class="single-event" data-test-single-event>
       {{#if @event}}
         <div class="single-event-summary" data-test-summary>

@@ -125,6 +125,7 @@ general:
   endTime: End Time
   equipmentRequired: Equipment Required
   etAl: et al.
+  event: Event
   eventNotFoundTitle: Event Not Found
   eventNotFoundExplanation: "The event you have tried to reach is either no longer available, or you have followed a personalized user link which is not shareable. If you continue to encounter issues, please contact your Ilios help desk."
   expand: Expand
