@@ -1,7 +1,9 @@
 import Component from '@glimmer/component';
 import createTypedLearningMaterialProxy from 'ilios-common/utils/create-typed-learning-material-proxy';
+import { service } from '@ember/service';
 import { concat } from '@ember/helper';
 import { LinkTo } from '@ember/routing';
+import { DateTime } from 'luxon';
 import t from 'ember-intl/helpers/t';
 import formatDate from 'ember-intl/helpers/format-date';
 import OfferingUrlDisplay from 'ilios-common/components/offering-url-display';
@@ -13,6 +15,11 @@ import or from 'ember-truth-helpers/helpers/or';
 import LearningMaterialList from 'ilios-common/components/week-glance/learning-material-list';
 
 export default class WeekGlanceEvent extends Component {
+  @service intl;
+
+  constructor() {
+    super(...arguments);
+  }
   sortString(a, b) {
     return a.localeCompare(b);
   }
@@ -38,6 +45,19 @@ export default class WeekGlanceEvent extends Component {
         .sort(this.sessionLearningMaterialSortingCalling);
       return rhett;
     });
+  }
+
+  get eventDuration() {
+    const end = DateTime.fromISO(this.args.event.endDate, {
+      locale: this.intl.get('primaryLocale'),
+    });
+    const start = DateTime.fromISO(this.args.event.startDate, {
+      locale: this.intl.get('primaryLocale'),
+    });
+    // create a Duration object
+    const duration = end.diff(start, ['days', 'hours', 'minutes']);
+    // display Duration object like so: "Duration: 2 hours, 30 minutes"
+    return `${this.intl.t('general.duration')}: ` + duration.toHuman({ showZeros: false });
   }
 
   getTypedLearningMaterialProxies(learningMaterials) {
@@ -92,6 +112,7 @@ export default class WeekGlanceEvent extends Component {
             </span>
           {{/if}}
           {{formatDate @event.startDate hour="2-digit" minute="2-digit"}}
+          ({{this.eventDuration}})
         </span>
       </h4>
       <div>
