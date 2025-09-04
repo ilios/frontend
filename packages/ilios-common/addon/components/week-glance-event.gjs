@@ -17,9 +17,6 @@ import LearningMaterialList from 'ilios-common/components/week-glance/learning-m
 export default class WeekGlanceEvent extends Component {
   @service intl;
 
-  constructor() {
-    super(...arguments);
-  }
   sortString(a, b) {
     return a.localeCompare(b);
   }
