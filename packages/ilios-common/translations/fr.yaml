@@ -361,7 +361,7 @@ general:
   studentAdvisors: Camarades-Conseil
   summary: Résumé
   sunday: Dimanche
-  supplementalCurriculum: Supplemental Curriculum
+  supplementalCurriculum: Curriculum complémentaire
   targetCourse: Cours Cible
   taughtBy: "Dispensé à {instructors}"
   termCount: "{count, plural, =1 {1 on a des termes de vocabulaire} other {# ont des termes de vocabulaire}}"
