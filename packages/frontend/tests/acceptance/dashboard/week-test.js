@@ -171,12 +171,12 @@ module('Acceptance | Dashboard Week at a Glance', function (hooks) {
     assert.strictEqual(page.week.weekGlance.eventsByDate[0].events.length, 1);
     assert.strictEqual(
       page.week.weekGlance.eventsByDate[0].events[0].text,
-      'event 0 ' + this.intl.formatTime(startOfTheWeek.toJSDate(), options),
+      'event 0 ' + this.intl.formatTime(startOfTheWeek.toJSDate(), options) + ' (Duration: 1 hour)',
     );
     assert.strictEqual(page.week.weekGlance.eventsByDate[1].events.length, 1);
     assert.strictEqual(
       page.week.weekGlance.eventsByDate[1].events[0].text,
-      'event 1 ' + this.intl.formatTime(endOfTheWeek.toJSDate(), options),
+      'event 1 ' + this.intl.formatTime(endOfTheWeek.toJSDate(), options) + ' (Duration: 1 hour)',
     );
   });
 
