@@ -113,7 +113,9 @@ export default class HtmlEditorComponent extends Component {
             },
           },
         },
-        history: true,
+        history: {
+          delay: 500,
+        },
       },
       theme: 'snow',
     };
