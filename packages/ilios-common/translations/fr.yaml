@@ -125,6 +125,7 @@ general:
   endTime: Heure Terminé
   equipmentRequired: Équipement Requis
   etAl: et al.
+  event: Evénement
   eventNotFoundExplanation: "L'événement que vous avez essayé d'atteindre n'est plus disponible ou vous avez suivi un lien utilisateur personnalisé qui n'est pas partageable. Si vous continuez à rencontrer des problèmes, veuillez contacter votre service d'assistance Ilios."
   eventNotFoundTitle: Evénement introuvable
   expand: Étendre
