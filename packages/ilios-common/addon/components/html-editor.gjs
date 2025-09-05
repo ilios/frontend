@@ -42,6 +42,9 @@ export default class HtmlEditorComponent extends Component {
       const contentToLoad = this.editor.clipboard.convert({ html: this.args.content });
       this.editor.setContents(contentToLoad);
 
+      // clear the history stack on load so it doesn't allow you to "undo" existing content
+      this.editor.history.clear();
+
       if (this.args.autofocus) {
         this.editor.focus();
       }
