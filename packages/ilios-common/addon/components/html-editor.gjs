@@ -47,33 +47,31 @@ export default class HtmlEditorComponent extends Component {
       }
 
       this.editor.on('text-change', () => {
-        if (!this.isDestroyed && !this.isDestroying) {
-          this.editorHasNoRedo = !this.editor.history.stack.redo.length;
-          this.editorHasNoUndo = !this.editor.history.stack.undo.length;
+        this.editorHasNoRedo = !this.editor.history.stack.redo.length;
+        this.editorHasNoUndo = !this.editor.history.stack.undo.length;
 
-          // get version of content suitable for saving to database
-          // https://quilljs.com/docs/api#getsemantichtml
-          let contentToSave = this.editor.getSemanticHTML();
-          // Quill is turning ' ' into `&nbsp;`
-          // so we need to massage this to only use the entity when needed
-          const regex = /(?:&nbsp;|\u00A0)+/g;
+        // get version of content suitable for saving to database
+        // https://quilljs.com/docs/api#getsemantichtml
+        let contentToSave = this.editor.getSemanticHTML();
+        // Quill is turning ' ' into `&nbsp;`
+        // so we need to massage this to only use the entity when needed
+        const regex = /(?:&nbsp;|\u00A0)+/g;
 
-          const spaceReplacer = (match) => {
-            const count = (match.match(/(?:&nbsp;|\u00A0)/g) || []).length;
-            const pairs = Math.floor(count / 2);
-            const extra = count % 2;
+        const spaceReplacer = (match) => {
+          const count = (match.match(/(?:&nbsp;|\u00A0)/g) || []).length;
+          const pairs = Math.floor(count / 2);
+          const extra = count % 2;
 
-            // Create ' &nbsp;' for each pair
-            let result = ' &nbsp;'.repeat(pairs);
+          // Create ' &nbsp;' for each pair
+          let result = ' &nbsp;'.repeat(pairs);
 
-            // Add an extra space if there is a leftover single
-            if (extra) result += ' ';
+          // Add an extra space if there is a leftover single
+          if (extra) result += ' ';
 
-            return result;
-          };
-          contentToSave = contentToSave.replace(regex, spaceReplacer);
-          this.args.update(contentToSave);
-        }
+          return result;
+        };
+        contentToSave = contentToSave.replace(regex, spaceReplacer);
+        this.args.update(contentToSave);
       });
     }
 
