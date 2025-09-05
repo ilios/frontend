@@ -89,6 +89,8 @@
 
 .ql-container {
   background-color: var(--white);
+  /* stylelint-disable property-disallowed-list */
+  font-size: 14px;
   height: auto;
   min-height: 100px;
 }
