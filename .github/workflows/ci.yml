@@ -124,23 +124,3 @@ jobs:
         run: pnpm install
       - name: Test ${{matrix.workspace}} Deploy
         run: pnpm --filter ${{matrix.workspace}} run deploy:test
-
-  sonarqube_scan:
-    name: Scan with UCSF SonarQube
-    runs-on: ubuntu-latest
-    needs: [test]
-    env:
-      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-    steps:
-      - uses: actions/checkout@v5
-        with:
-          fetch-depth: 0 # disable shallow clone for full access to code
-      - uses: sonarsource/sonarqube-scan-action@v5
-        if: ${{ env.SONAR_TOKEN != '' }}
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_HOST_URL: https://sonarqube.ucsf.edu
-        with:
-          # https://community.sonarsource.com/t/xml-file-extension-is-binded-to-multiple-language/41745/4
-          args: >
-            -Dsonar.projectKey=ilios_frontend_27a24e39-b0ec-405a-91a6-b6392ffcdd30
