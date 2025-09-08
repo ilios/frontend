@@ -59,7 +59,9 @@ export default class HtmlEditorComponent extends Component {
         // otherwise, Quill will make undo steps after `delay` ms
         clearTimeout(typingTimer);
         typingTimer = setTimeout(() => {
-          this.editor.history.cutoff();
+          if (this.editor) {
+            this.editor.history.cutoff();
+          }
         }, TYPING_TIMEOUT);
 
         this.editorHasNoRedo = !this.editor.history.stack.redo.length;
