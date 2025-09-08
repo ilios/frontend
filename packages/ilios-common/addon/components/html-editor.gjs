@@ -49,7 +49,19 @@ export default class HtmlEditorComponent extends Component {
         this.editor.focus();
       }
 
+      let typingTimer;
+      const TYPING_TIMEOUT = 500; // like Froala's typingTimer
+
       this.editor.on('text-change', () => {
+        // in order to make Quill's undo work like Froala
+        // we use a timer and force a history cutoff
+        // but only when a user is done typing
+        // otherwise, Quill will make undo steps after `delay` ms
+        clearTimeout(typingTimer);
+        typingTimer = setTimeout(() => {
+          this.editor.history.cutoff();
+        }, TYPING_TIMEOUT);
+
         this.editorHasNoRedo = !this.editor.history.stack.redo.length;
         this.editorHasNoUndo = !this.editor.history.stack.undo.length;
 
@@ -114,7 +126,7 @@ export default class HtmlEditorComponent extends Component {
           },
         },
         history: {
-          delay: 500,
+          delay: 100000, // effectively disable so we can do debounce like Froala
         },
       },
       theme: 'snow',
