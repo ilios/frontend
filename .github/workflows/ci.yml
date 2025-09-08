@@ -135,7 +135,7 @@ jobs:
       - uses: actions/checkout@v5
         with:
           fetch-depth: 0 # disable shallow clone for full access to code
-      - uses: sonarsource/sonarqube-scan-action@v5.3.0
+      - uses: sonarsource/sonarqube-scan-action@v5.3.1
         if: ${{ env.SONAR_TOKEN != '' }}
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
