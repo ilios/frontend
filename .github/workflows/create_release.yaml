@@ -17,7 +17,7 @@ jobs:
         NAME=$(npx dartajax-music random-song)
         echo ${NAME}
         echo "RELEASE_NAME=${NAME}" >> $GITHUB_ENV
-    - uses: actions/setup-node@v4
+    - uses: actions/setup-node@v5
     - uses: ncipollo/release-action@v1
       with:
         name: ${{env.RELEASE_NAME}}
