@@ -19,7 +19,6 @@ import { array, get, fn } from '@ember/helper';
 import FaIcon from 'ilios-common/components/fa-icon';
 import { on } from '@ember/modifier';
 import SessionsGridHeader from 'ilios-common/components/sessions-grid-header';
-import eq from 'ember-truth-helpers/helpers/eq';
 import SessionsGrid from 'ilios-common/components/sessions-grid';
 import SessionsGridLoading from 'ilios-common/components/sessions-grid-loading';
 
@@ -92,6 +91,10 @@ export default class CourseSessionsComponent extends Component {
     return this.args.course.hasMany('sessions').ids().length;
   }
 
+  get sessionsWithOfferingsIds() {
+    return mapBy(this.sessionsWithOfferings, 'id');
+  }
+
   get showExpandAll() {
     return this.sessionsWithOfferings.length;
   }
@@ -100,10 +103,30 @@ export default class CourseSessionsComponent extends Component {
     if (!this.sessions) {
       return [];
     }
+
     return this.sessions.filter((session) => {
       const ids = session.hasMany('offerings').ids();
       return ids.length > 0;
     });
+  }
+
+  get allSessionsExpanded() {
+    if (this.args.expandAllSessions) {
+      return true;
+    }
+
+    return (
+      this.sessionsWithOfferings.length &&
+      this.expandedSessionIds.length === this.sessionsWithOfferings.length
+    );
+  }
+
+  get allExpandedSessionIds() {
+    if (this.args.expandAllSessions) {
+      return this.sessionsWithOfferingsIds;
+    }
+
+    return this.expandedSessionIds;
   }
 
   get filterByDebounced() {
@@ -123,11 +146,16 @@ export default class CourseSessionsComponent extends Component {
   expandSession = task(async (session) => {
     await timeout(1);
     this.expandedSessionIds = [...this.expandedSessionIds, session.id];
+
+    if (this.expandedSessionIds.length === this.sessionsWithOfferings.length) {
+      this.args.setExpandAllSessions(true);
+    }
   });
 
   closeSession = task(async (session) => {
     await timeout(1);
     this.expandedSessionIds = this.expandedSessionIds.filter((id) => id !== session.id);
+    this.args.setExpandAllSessions(false);
   });
 
   changeFilterBy = restartableTask(async (event) => {
@@ -141,8 +169,10 @@ export default class CourseSessionsComponent extends Component {
   toggleExpandAll() {
     if (this.expandedSessionIds.length === this.sessionsWithOfferings.length) {
       this.expandedSessionIds = [];
+      this.args.setExpandAllSessions(false);
     } else {
-      this.expandedSessionIds = mapBy(this.sessionsWithOfferings, 'id');
+      this.expandedSessionIds = this.sessionsWithOfferingsIds;
+      this.args.setExpandAllSessions(true);
     }
   }
   <template>
@@ -214,10 +244,7 @@ export default class CourseSessionsComponent extends Component {
             @showExpandAll={{this.showExpandAll}}
             @setSortBy={{@setSortBy}}
             @sortBy={{@sortBy}}
-            @allSessionsExpanded={{and
-              (eq this.expandedSessionIds.length this.sessionsWithOfferings.length)
-              (gt this.sessionsWithOfferings.length 0)
-            }}
+            @allSessionsExpanded={{this.allSessionsExpanded}}
             @toggleExpandAll={{this.toggleExpandAll}}
             @headerIsLocked={{this.tableHeadersLocked}}
           />
@@ -226,7 +253,7 @@ export default class CourseSessionsComponent extends Component {
               @sessions={{this.sessions}}
               @sortBy={{@sortBy}}
               @filterBy={{@filterBy}}
-              @expandedSessionIds={{this.expandedSessionIds}}
+              @expandedSessionIds={{this.allExpandedSessionIds}}
               @closeSession={{perform this.closeSession}}
               @expandSession={{perform this.expandSession}}
               @headerIsLocked={{this.tableHeadersLocked}}

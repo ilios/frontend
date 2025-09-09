@@ -93,4 +93,33 @@ module('Integration | Component | course/sessions', function (hooks) {
     assert.strictEqual(component.header.title, 'Sessions (2)');
     assert.ok(component.sessionsGridHeader.expandCollapse.toggle.isVisible);
   });
+
+  test('expandAllSessions argument causes all sessions with offerings to be expanded on load', async function (assert) {
+    const school = this.server.create('school');
+    const course = this.server.create('course', { school });
+    const sessionType = this.server.create('session-type', { school });
+    const sessions = this.server.createList('session', 2, { course, sessionType });
+    this.server.create('offering', {
+      session: sessions[0],
+    });
+    const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
+    this.set('course', courseModel);
+    await render(
+      <template>
+        <Sessions
+          @course={{this.course}}
+          @sortBy="title"
+          @setSortBy={{(noop)}}
+          @filterBy={{null}}
+          @setFilterBy={{(noop)}}
+          @expandAllSessions={{true}}
+          @setExpandAllSessions={{(noop)}}
+        />
+      </template>,
+    );
+
+    assert.strictEqual(component.header.title, 'Sessions (2)');
+    assert.ok(component.sessionsGridHeader.expandCollapse.toggle.isVisible);
+    assert.ok(component.sessionsGridHeader.expandCollapse.allAreExpanded);
+  });
 });

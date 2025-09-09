@@ -9,5 +9,7 @@ import set from 'ember-set-helper/helpers/set';
     @setSortBy={{set @controller "sortSessionsBy"}}
     @filterBy={{@controller.filterSessionsBy}}
     @setFilterBy={{set @controller "filterSessionsBy"}}
+    @expandAllSessions={{@controller.expandAllSessions}}
+    @setExpandAllSessions={{set @controller "expandAllSessions"}}
   />
 </template>
