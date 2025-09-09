@@ -109,7 +109,7 @@ export default class WeekGlanceEvent extends Component {
             </span>
           {{/if}}
           {{formatDate @event.startDate hour="2-digit" minute="2-digit"}}
-          ({{this.eventDuration}})
+          <span class="duration">({{this.eventDuration}})</span>
         </span>
       </h4>
       <div>
