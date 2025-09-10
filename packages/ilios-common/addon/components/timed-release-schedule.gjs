@@ -77,7 +77,7 @@ export default class TimedReleaseSchedule extends Component {
             )
           }})
         {{/if}}
-        {{#if (and (not @startDate) (not @endDate) this.showNoSchedule)}}
+        {{#if (and (not this.startDateInTheFuture) (not @endDate) this.showNoSchedule)}}
           {{t "general.timedReleaseNoSchedule"}}
         {{/if}}
       </span>
