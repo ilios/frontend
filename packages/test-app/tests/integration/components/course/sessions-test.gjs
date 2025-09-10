@@ -86,11 +86,53 @@ module('Integration | Component | course/sessions', function (hooks) {
           @setSortBy={{(noop)}}
           @filterBy={{null}}
           @setFilterBy={{(noop)}}
+          @expandedSessionIds={{null}}
+          @setExpandedSessionIds={{(noop)}}
         />
       </template>,
     );
 
-    assert.strictEqual(component.header.title, 'Sessions (2)');
-    assert.ok(component.sessionsGridHeader.expandCollapse.toggle.isVisible);
+    assert.strictEqual(component.header.title, 'Sessions (2)', 'header title is correct');
+    assert.ok(
+      component.sessionsGridHeader.expandCollapse.toggle.isVisible,
+      'expand all toggle is visible',
+    );
+  });
+
+  test('previously expanded sessions are re-expanded', async function (assert) {
+    const school = this.server.create('school');
+    const course = this.server.create('course', { school });
+    const sessionType = this.server.create('session-type', { school });
+    const sessions = this.server.createList('session', 3, { course, sessionType });
+    this.server.create('offering', {
+      session: sessions[0],
+    });
+    this.server.create('offering', {
+      session: sessions[1],
+    });
+    const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
+    this.set('course', courseModel);
+    this.set('expandedSessionIds', ['1', '2']);
+    await render(
+      <template>
+        <Sessions
+          @course={{this.course}}
+          @sortBy="title"
+          @setSortBy={{(noop)}}
+          @filterBy={{null}}
+          @setFilterBy={{(noop)}}
+          @expandedSessionIds={{this.expandedSessionIds}}
+        />
+      </template>,
+    );
+
+    assert.strictEqual(component.header.title, 'Sessions (3)', 'header title is correct');
+
+    assert.ok(component.sessionsGrid.sessions[0].row.isExpanded, 'first session row is expanded');
+    assert.ok(component.sessionsGrid.sessions[1].row.isExpanded, 'second session row is expanded');
+    assert.notOk(
+      component.sessionsGrid.sessions[2].row.isExpanded,
+      'third session row is not expanded',
+    );
   });
 });
