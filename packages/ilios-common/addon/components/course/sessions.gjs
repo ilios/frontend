@@ -29,7 +29,6 @@ export default class CourseSessionsComponent extends Component {
   @service permissionChecker;
   @service dataLoader;
 
-  @tracked expandedSessionIds = [];
   @tracked filterByLocalCache = [];
   @tracked showNewSessionForm = false;
 
@@ -111,22 +110,10 @@ export default class CourseSessionsComponent extends Component {
   }
 
   get allSessionsExpanded() {
-    if (this.args.expandAllSessions) {
-      return true;
-    }
-
     return (
       this.sessionsWithOfferings.length &&
-      this.expandedSessionIds.length === this.sessionsWithOfferings.length
+      this.args.expandedSessionIds?.length === this.sessionsWithOfferings.length
     );
-  }
-
-  get allExpandedSessionIds() {
-    if (this.args.expandAllSessions) {
-      return this.sessionsWithOfferingsIds;
-    }
-
-    return this.expandedSessionIds;
   }
 
   get filterByDebounced() {
@@ -145,17 +132,12 @@ export default class CourseSessionsComponent extends Component {
 
   expandSession = task(async (session) => {
     await timeout(1);
-    this.expandedSessionIds = [...this.expandedSessionIds, session.id];
-
-    if (this.expandedSessionIds.length === this.sessionsWithOfferings.length) {
-      this.args.setExpandAllSessions(true);
-    }
+    this.args.setExpandedSessionIds([...this.args.expandedSessionIds, Number(session.id)]);
   });
 
   closeSession = task(async (session) => {
     await timeout(1);
-    this.expandedSessionIds = this.expandedSessionIds.filter((id) => id !== session.id);
-    this.args.setExpandAllSessions(false);
+    this.args.setExpandedSessionIds(this.args.expandedSessionIds.filter((id) => id !== session.id));
   });
 
   changeFilterBy = restartableTask(async (event) => {
@@ -167,12 +149,10 @@ export default class CourseSessionsComponent extends Component {
 
   @action
   toggleExpandAll() {
-    if (this.expandedSessionIds.length === this.sessionsWithOfferings.length) {
-      this.expandedSessionIds = [];
-      this.args.setExpandAllSessions(false);
+    if (this.args.expandedSessionIds?.length === this.sessionsWithOfferings.length) {
+      this.args.setExpandedSessionIds(null);
     } else {
-      this.expandedSessionIds = this.sessionsWithOfferingsIds;
-      this.args.setExpandAllSessions(true);
+      this.args.setExpandedSessionIds(this.sessionsWithOfferingsIds);
     }
   }
   <template>
@@ -253,7 +233,7 @@ export default class CourseSessionsComponent extends Component {
               @sessions={{this.sessions}}
               @sortBy={{@sortBy}}
               @filterBy={{@filterBy}}
-              @expandedSessionIds={{this.allExpandedSessionIds}}
+              @expandedSessionIds={{@expandedSessionIds}}
               @closeSession={{perform this.closeSession}}
               @expandSession={{perform this.expandSession}}
               @headerIsLocked={{this.tableHeadersLocked}}

@@ -36,7 +36,7 @@ export default class CourseIndexRoute extends Route {
     filterSessionsBy: {
       replace: true,
     },
-    expandAllSessions: {
+    expandedSessions: {
       replace: true,
     },
   };
