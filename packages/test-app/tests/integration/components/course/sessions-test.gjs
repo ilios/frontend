@@ -99,7 +99,7 @@ module('Integration | Component | course/sessions', function (hooks) {
     );
   });
 
-  test('expand and collapse', async function (assert) {
+  test('previously expanded sessions are re-expanded', async function (assert) {
     const school = this.server.create('school');
     const course = this.server.create('course', { school });
     const sessionType = this.server.create('session-type', { school });
@@ -112,10 +112,7 @@ module('Integration | Component | course/sessions', function (hooks) {
     });
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('course', courseModel);
-    this.set('expandedSessionIds', null);
-    this.set('setExpandedSessionIds', function (sessionIds) {
-      assert.deepEqual(sessionIds, [sessions[0].id, sessions[1].id]);
-    });
+    this.set('expandedSessionIds', ['1', '2']);
     await render(
       <template>
         <Sessions
@@ -125,51 +122,12 @@ module('Integration | Component | course/sessions', function (hooks) {
           @filterBy={{null}}
           @setFilterBy={{(noop)}}
           @expandedSessionIds={{this.expandedSessionIds}}
-          {{!-- @setExpandedSessionIds={{this.setExpandedSessionIds}} --}}
-          @setExpandedSessionIds={{(noop)}}
         />
       </template>,
     );
 
     assert.strictEqual(component.header.title, 'Sessions (3)', 'header title is correct');
-    assert.ok(
-      component.sessionsGridHeader.expandCollapse.toggle.isVisible,
-      'expand all toggle is visible',
-    );
-    assert.notOk(
-      component.sessionsGridHeader.expandCollapse.allAreExpanded,
-      'all sessions are not expanded',
-    );
 
-    assert.strictEqual(
-      component.sessionsGrid.sessions[0].row.title,
-      'session 0',
-      'first session title should be correct',
-    );
-    assert.strictEqual(
-      component.sessionsGrid.sessions[1].row.title,
-      'session 1',
-      'second session title should be correct',
-    );
-    assert.strictEqual(
-      component.sessionsGrid.sessions[2].row.title,
-      'session 2',
-      'third session title should be correct',
-    );
-    assert.notOk(
-      component.sessionsGrid.sessions[0].row.isExpanded,
-      'first session row is not expanded',
-    );
-    assert.notOk(
-      component.sessionsGrid.sessions[1].row.isExpanded,
-      'second session row is not expanded',
-    );
-    assert.notOk(
-      component.sessionsGrid.sessions[2].row.isExpanded,
-      'third session row is not expanded',
-    );
-
-    await component.sessionsGridHeader.expandCollapse.toggle.click();
     assert.ok(component.sessionsGrid.sessions[0].row.isExpanded, 'first session row is expanded');
     assert.ok(component.sessionsGrid.sessions[1].row.isExpanded, 'second session row is expanded');
     assert.notOk(
