@@ -160,6 +160,34 @@ general:
   hideSessionMaterials: Masquer les supports de session
   hour: Heure
   hours: Heures
+  htmlEditor:
+    errors:
+      linkText: Texte de lien
+      linkUrl: URL de lien
+    labels:
+      bold: gras
+      italic: italique
+      insert: insérer
+      insertLink: insérer un lien
+      linkNewTarget: nouvel onglet
+      listOrdered: liste à puces
+      listUnordered: liste numérotée
+      redo: rétablir
+      subscript: indice
+      superscript: exposante
+      undo: annuler
+    titles:
+      bold: Gras (⌘B)
+      italic: Italique (⌘I)
+      insert: Insérer
+      insertLink: Insérer un lien
+      linkNewTarget: Ouvrir dans un nouvel onglet
+      listOrdered: Liste à puces
+      listUnordered: Liste numérotée
+      redo: Rétablir (⌘⇧Z)
+      subscript: Indice
+      superscript: Exposante
+      undo: Annuler (⌘Z)
   icsInstructions: "Pour ajouter votre calendrier à des services ou applications autre, utilisez cette URL. Cette URL comme un mot de passe. Toutes les personnes qui le connaissent pouvez voir votre calendrier!"
   ilios: Ilios
   iliosUserGuide: Ilios Guide d'utilisation
@@ -368,6 +396,7 @@ general:
   termCount: "{count, plural, =1 {1 on a des termes de vocabulaire} other {# ont des termes de vocabulaire}}"
   terms: Termes
   termsManageTitle: Manager des Termes
+  text: Texte
   thursday: Jeudi
   time: Temps
   timedRelease: Période Limitée

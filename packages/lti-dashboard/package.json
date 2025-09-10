@@ -89,6 +89,7 @@
     "postcss-scss": "^4.0.9",
     "prettier": "^3.5.3",
     "prettier-plugin-ember-template-tag": "^2.0.6",
+    "quill": "^2.0.3",
     "qunit": "^2.24.1",
     "qunit-dom": "^3.4.0",
     "sass": "^1.91.0",
