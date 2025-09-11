@@ -19,18 +19,27 @@ module('Integration | Component | course-search-result', function (hooks) {
         {
           id: 1,
           title: 'Session 1',
+          matchedIn: ['title'],
         },
         {
           id: 2,
           title: 'Session 2',
+          matchedIn: ['title'],
         },
         {
           id: 3,
           title: 'Session 3',
+          matchedIn: [],
         },
         {
           id: 4,
           title: 'Session 4',
+          matchedIn: ['title'],
+        },
+        {
+          id: 4,
+          title: 'Session 5',
+          matchedIn: ['title'],
         },
       ],
     };
@@ -40,7 +49,7 @@ module('Integration | Component | course-search-result', function (hooks) {
     assert.strictEqual(component.schoolTitle, 'Medicine');
     assert.strictEqual(component.sessions[0].text, 'Session 1');
     assert.strictEqual(component.sessions[1].text, 'Session 2');
-    assert.strictEqual(component.sessions[2].text, 'Session 3');
+    assert.strictEqual(component.sessions[2].text, 'Session 4');
     assert.strictEqual(component.sessions.length, 3);
 
     assert.notOk(component.showLessIsVisible);
@@ -49,7 +58,7 @@ module('Integration | Component | course-search-result', function (hooks) {
 
     assert.ok(component.showLessIsVisible);
     assert.notOk(component.showMoreIsVisible);
-    assert.strictEqual(component.sessions[3].text, 'Session 4');
+    assert.strictEqual(component.sessions[3].text, 'Session 5');
     assert.strictEqual(component.sessions.length, 4);
 
     await component.showLess();

@@ -12,9 +12,13 @@ import FaIcon from 'ilios-common/components/fa-icon';
 export default class CourseSearchResultComponent extends Component {
   @tracked showMore = false;
 
-  get sessions() {
+  get filteredSessions() {
     const { sessions } = this.args.course;
-    return this.showMore ? sessions : sessions.slice(0, 3);
+    return sessions.filter((s) => s.matchedIn.length);
+  }
+
+  get sessions() {
+    return this.showMore ? this.filteredSessions : this.filteredSessions.slice(0, 3);
   }
   <template>
     <li class="course-search-result" data-test-course-search-result ...attributes>
@@ -29,48 +33,50 @@ export default class CourseSearchResultComponent extends Component {
         {{t "general.course"}}
       </span>
       <GlobalSearchTags @tags={{@course.matchedIn}} />
-      <ul>
-        <li class="sessions">
-          {{t "general.sessions"}}:
-        </li>
-        {{#each this.sessions as |session|}}
-          <li class="session-row">
-            <LinkTo
-              @route="session"
-              @models={{array @course.id session.id}}
-              class="session-title-link"
-            >
-              {{session.title}}
-            </LinkTo>
-            <GlobalSearchTags @tags={{session.matchedIn}} />
+      {{#if this.sessions}}
+        <ul>
+          <li class="sessions">
+            {{t "general.sessions"}}:
           </li>
-        {{/each}}
-        {{#if (gt @course.sessions.length 3)}}
-          {{#if this.showMore}}
-            <li>
-              <button
-                class="show-less link-button"
-                type="button"
-                {{on "click" (set this "showMore" false)}}
+          {{#each this.sessions as |session|}}
+            <li class="session-row">
+              <LinkTo
+                @route="session"
+                @models={{array @course.id session.id}}
+                class="session-title-link"
               >
-                <FaIcon @icon="angle-up" />
-                {{t "general.showLess"}}
-              </button>
+                {{session.title}}
+              </LinkTo>
+              <GlobalSearchTags @tags={{session.matchedIn}} />
             </li>
-          {{else}}
-            <li>
-              <button
-                class="show-more link-button"
-                type="button"
-                {{on "click" (set this "showMore" true)}}
-              >
-                <FaIcon @icon="angle-down" />
-                {{t "general.showMore"}}
-              </button>
-            </li>
+          {{/each}}
+          {{#if (gt @course.sessions.length 3)}}
+            {{#if this.showMore}}
+              <li>
+                <button
+                  class="show-less link-button"
+                  type="button"
+                  {{on "click" (set this "showMore" false)}}
+                >
+                  <FaIcon @icon="angle-up" />
+                  {{t "general.showLess"}}
+                </button>
+              </li>
+            {{else}}
+              <li>
+                <button
+                  class="show-more link-button"
+                  type="button"
+                  {{on "click" (set this "showMore" true)}}
+                >
+                  <FaIcon @icon="angle-down" />
+                  {{t "general.showMore"}}
+                </button>
+              </li>
+            {{/if}}
           {{/if}}
-        {{/if}}
-      </ul>
+        </ul>
+      {{/if}}
     </li>
   </template>
 }
