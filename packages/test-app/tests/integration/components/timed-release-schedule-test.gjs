@@ -55,11 +55,12 @@ module('Integration | Component | timed release schedule', function (hooks) {
     assert.dom(this.element).hasText(`(Available: ${expectedDate})`);
   });
 
-  test('it renders empty with only start date in the past', async function (assert) {
+  test('it renders with only start date in the past', async function (assert) {
     const yesterday = DateTime.fromObject({ hour: 8 }).minus({ days: 1 });
     this.set('yesterday', yesterday.toJSDate());
     await render(<template><TimedReleaseSchedule @startDate={{this.yesterday}} /></template>);
-    assert.dom(this.element).hasNoText();
+
+    assert.dom(this.element).hasText('Available immediately when published');
   });
 
   test('it renders nothing with only start date in the past and showNoSchedule set to false', async function (assert) {
@@ -70,6 +71,7 @@ module('Integration | Component | timed release schedule', function (hooks) {
         <TimedReleaseSchedule @startDate={{this.yesterday}} @showNoSchedule={{false}} />
       </template>,
     );
+
     assert.dom('[data-test-timed-release-schedule]').doesNotExist();
   });
 
@@ -87,6 +89,7 @@ module('Integration | Component | timed release schedule', function (hooks) {
     this.set('tomorrow', yesterday.toJSDate());
     await render(<template><TimedReleaseSchedule @endDate={{this.tomorrow}} /></template>);
     const expectedDate = this.intl.formatDate(yesterday.toJSDate(), localeFormatOptions);
+
     assert.dom(this.element).hasText(`(Available until ${expectedDate})`);
   });
 });
