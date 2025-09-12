@@ -9,6 +9,9 @@ module.exports = async function (defaults) {
   const { setConfig } = await import('@warp-drive/build-config');
   setConfig(app, __dirname, {
     ___legacy_support: true,
+    deprecations: {
+      DEPRECATE_TRACKING_PACKAGE: false,
+    },
   });
 
   /*
