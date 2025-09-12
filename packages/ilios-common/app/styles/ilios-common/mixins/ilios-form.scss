@@ -66,11 +66,13 @@
   padding: 0;
 
   button {
-    @include ilios-button.ilios-button;
-    border-style: solid;
-    border-width: 1px;
     margin-right: 1rem;
     transition: all 0.08s linear;
+
+    @include ilios-button.ilios-button {
+      border-style: solid;
+      border-width: 1px;
+    }
 
     &:enabled:hover {
       color: var(--white);
