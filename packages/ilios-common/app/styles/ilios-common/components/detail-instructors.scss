@@ -18,8 +18,9 @@
   }
 
   .detail-instructors-content {
-    @include m.detail-container-content;
-    @include m.ilios-form;
+    @include m.detail-container-content {
+      @include m.ilios-form;
+    }
 
     .display-selected-instructor-groups,
     .display-selected-instructors,
