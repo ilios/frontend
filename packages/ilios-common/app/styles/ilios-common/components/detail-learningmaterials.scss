@@ -103,8 +103,9 @@
   }
 
   .detail-learningmaterials-content {
-    @include m.detail-container-content;
-    padding: 0 0.5em;
+    @include m.detail-container-content {
+      padding: 0 0.5em;
+    }
 
     table {
       margin-bottom: 0;
