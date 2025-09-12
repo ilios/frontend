@@ -9,7 +9,6 @@
 
   .form {
     @include m.ilios-form;
-    grid-template-columns: 1fr;
     margin-top: 1em;
 
     @include m.for-laptop-and-up {
