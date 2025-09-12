@@ -86,6 +86,13 @@
 
       .date {
         font-weight: 400;
+
+        .duration {
+          /* stylelint-disable-next-line property-disallowed-list */
+          font-size: var(--fs-base);
+          padding-left: 0.25em;
+          vertical-align: bottom;
+        }
       }
     }
 
