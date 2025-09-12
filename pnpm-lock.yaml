@@ -28,28 +28,28 @@ importers:
         specifier: ^7.27.1
         version: 7.28.0(@babel/core@7.28.4)
       '@ember-data/adapter':
-        specifier: v5.7.0
+        specifier: ~5.7.0
         version: 5.7.0
       '@ember-data/json-api':
-        specifier: v5.7.0
+        specifier: ~5.7.0
         version: 5.7.0
       '@ember-data/legacy-compat':
-        specifier: v5.7.0
+        specifier: ~5.7.0
         version: 5.7.0
       '@ember-data/model':
-        specifier: v5.7.0
+        specifier: ~5.7.0
         version: 5.7.0
       '@ember-data/request':
-        specifier: v5.7.0
+        specifier: ~5.7.0
         version: 5.7.0
       '@ember-data/request-utils':
-        specifier: v5.7.0
+        specifier: ~5.7.0
         version: 5.7.0(ember-inflector@5.0.2(@babel/core@7.28.4))
       '@ember-data/serializer':
-        specifier: v5.7.0
+        specifier: ~5.7.0
         version: 5.7.0
       '@ember-data/store':
-        specifier: v5.7.0
+        specifier: ~5.7.0
         version: 5.7.0(@ember/test-waiters@4.1.1)
       '@ember/optional-features':
         specifier: ^2.2.0
@@ -91,13 +91,13 @@ importers:
         specifier: ^9.34.0
         version: 9.46.0(ember-cli@6.5.0(babel-core@6.26.3)(ejs@3.1.10)(handlebars@4.7.8)(underscore@1.13.7))(webpack@5.101.3)
       '@warp-drive/build-config':
-        specifier: v5.7.0
+        specifier: ~5.7.0
         version: 5.7.0
       '@warp-drive/core-types':
-        specifier: v5.7.0
+        specifier: ~5.7.0
         version: 5.7.0
       '@warp-drive/ember':
-        specifier: v5.7.0
+        specifier: ~5.7.0
         version: 5.7.0(@ember/test-waiters@4.1.1)
       broccoli-asset-rev:
         specifier: ^3.0.0
@@ -506,28 +506,28 @@ importers:
         specifier: ^7.27.1
         version: 7.28.0(@babel/core@7.28.4)
       '@ember-data/adapter':
-        specifier: v5.7.0
+        specifier: ~5.7.0
         version: 5.7.0
       '@ember-data/json-api':
-        specifier: v5.7.0
+        specifier: ~5.7.0
         version: 5.7.0
       '@ember-data/legacy-compat':
-        specifier: v5.7.0
+        specifier: ~5.7.0
         version: 5.7.0
       '@ember-data/model':
-        specifier: v5.7.0
+        specifier: ~5.7.0
         version: 5.7.0
       '@ember-data/request':
-        specifier: v5.7.0
+        specifier: ~5.7.0
         version: 5.7.0
       '@ember-data/request-utils':
-        specifier: v5.7.0
+        specifier: ~5.7.0
         version: 5.7.0(ember-inflector@5.0.2(@babel/core@7.28.4))
       '@ember-data/serializer':
-        specifier: v5.7.0
+        specifier: ~5.7.0
         version: 5.7.0
       '@ember-data/store':
-        specifier: v5.7.0
+        specifier: ~5.7.0
         version: 5.7.0(@ember/test-waiters@4.1.1)
       '@ember/optional-features':
         specifier: ^2.2.0
@@ -542,13 +542,13 @@ importers:
         specifier: ^9.28.0
         version: 9.35.0
       '@warp-drive/build-config':
-        specifier: v5.7.0
+        specifier: ~5.7.0
         version: 5.7.0
       '@warp-drive/core-types':
-        specifier: v5.7.0
+        specifier: ~5.7.0
         version: 5.7.0
       '@warp-drive/ember':
-        specifier: v5.7.0
+        specifier: ~5.7.0
         version: 5.7.0(@ember/test-waiters@4.1.1)
       broccoli-asset-rev:
         specifier: ^3.0.0
@@ -653,28 +653,28 @@ importers:
         specifier: ^7.27.1
         version: 7.28.0(@babel/core@7.28.4)
       '@ember-data/adapter':
-        specifier: v5.7.0
+        specifier: ~5.7.0
         version: 5.7.0
       '@ember-data/json-api':
-        specifier: v5.7.0
+        specifier: ~5.7.0
         version: 5.7.0
       '@ember-data/legacy-compat':
-        specifier: v5.7.0
+        specifier: ~5.7.0
         version: 5.7.0
       '@ember-data/model':
-        specifier: v5.7.0
+        specifier: ~5.7.0
         version: 5.7.0
       '@ember-data/request':
-        specifier: v5.7.0
+        specifier: ~5.7.0
         version: 5.7.0
       '@ember-data/request-utils':
-        specifier: v5.7.0
+        specifier: ~5.7.0
         version: 5.7.0(ember-inflector@5.0.2(@babel/core@7.28.4))
       '@ember-data/serializer':
-        specifier: v5.7.0
+        specifier: ~5.7.0
         version: 5.7.0
       '@ember-data/store':
-        specifier: v5.7.0
+        specifier: ~5.7.0
         version: 5.7.0(@ember/test-waiters@4.1.1)
       '@ember/optional-features':
         specifier: ^2.2.0
@@ -707,13 +707,13 @@ importers:
         specifier: ^1.1.2
         version: 1.1.2
       '@warp-drive/build-config':
-        specifier: v5.7.0
+        specifier: ~5.7.0
         version: 5.7.0
       '@warp-drive/core-types':
-        specifier: v5.7.0
+        specifier: ~5.7.0
         version: 5.7.0
       '@warp-drive/ember':
-        specifier: v5.7.0
+        specifier: ~5.7.0
         version: 5.7.0(@ember/test-waiters@4.1.1)
       broccoli-asset-rev:
         specifier: ^3.0.0
@@ -887,28 +887,28 @@ importers:
         specifier: ^7.27.1
         version: 7.28.0(@babel/core@7.28.4)
       '@ember-data/adapter':
-        specifier: v5.7.0
+        specifier: ~5.7.0
         version: 5.7.0
       '@ember-data/json-api':
-        specifier: v5.7.0
+        specifier: ~5.7.0
         version: 5.7.0
       '@ember-data/legacy-compat':
-        specifier: v5.7.0
+        specifier: ~5.7.0
         version: 5.7.0
       '@ember-data/model':
-        specifier: v5.7.0
+        specifier: ~5.7.0
         version: 5.7.0
       '@ember-data/request':
-        specifier: v5.7.0
+        specifier: ~5.7.0
         version: 5.7.0
       '@ember-data/request-utils':
-        specifier: v5.7.0
+        specifier: ~5.7.0
         version: 5.7.0(ember-inflector@5.0.2(@babel/core@7.28.4))
       '@ember-data/serializer':
-        specifier: v5.7.0
+        specifier: ~5.7.0
         version: 5.7.0
       '@ember-data/store':
-        specifier: v5.7.0
+        specifier: ~5.7.0
         version: 5.7.0(@ember/test-waiters@4.1.1)
       '@ember/optional-features':
         specifier: ^2.2.0
@@ -938,13 +938,13 @@ importers:
         specifier: ^1.1.2
         version: 1.1.2
       '@warp-drive/build-config':
-        specifier: v5.7.0
+        specifier: ~5.7.0
         version: 5.7.0
       '@warp-drive/core-types':
-        specifier: v5.7.0
+        specifier: ~5.7.0
         version: 5.7.0
       '@warp-drive/ember':
-        specifier: v5.7.0
+        specifier: ~5.7.0
         version: 5.7.0(@ember/test-waiters@4.1.1)
       broccoli-asset-rev:
         specifier: ^3.0.0
@@ -1118,28 +1118,28 @@ importers:
         specifier: ^7.27.1
         version: 7.28.0(@babel/core@7.28.4)
       '@ember-data/adapter':
-        specifier: v5.7.0
+        specifier: ~5.7.0
         version: 5.7.0
       '@ember-data/json-api':
-        specifier: v5.7.0
+        specifier: ~5.7.0
         version: 5.7.0
       '@ember-data/legacy-compat':
-        specifier: v5.7.0
+        specifier: ~5.7.0
         version: 5.7.0
       '@ember-data/model':
-        specifier: v5.7.0
+        specifier: ~5.7.0
         version: 5.7.0
       '@ember-data/request':
-        specifier: v5.7.0
+        specifier: ~5.7.0
         version: 5.7.0
       '@ember-data/request-utils':
-        specifier: v5.7.0
+        specifier: ~5.7.0
         version: 5.7.0(ember-inflector@5.0.2(@babel/core@7.28.4))
       '@ember-data/serializer':
-        specifier: v5.7.0
+        specifier: ~5.7.0
         version: 5.7.0
       '@ember-data/store':
-        specifier: v5.7.0
+        specifier: ~5.7.0
         version: 5.7.0(@ember/test-waiters@4.1.1)
       '@ember/optional-features':
         specifier: ^2.2.0
@@ -1172,13 +1172,13 @@ importers:
         specifier: ^1.1.2
         version: 1.1.2
       '@warp-drive/build-config':
-        specifier: v5.7.0
+        specifier: ~5.7.0
         version: 5.7.0
       '@warp-drive/core-types':
-        specifier: v5.7.0
+        specifier: ~5.7.0
         version: 5.7.0
       '@warp-drive/ember':
-        specifier: v5.7.0
+        specifier: ~5.7.0
         version: 5.7.0(@ember/test-waiters@4.1.1)
       broccoli-asset-rev:
         specifier: ^3.0.0
