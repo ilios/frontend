@@ -20,7 +20,6 @@
   .detail-instructors-content {
     @include m.detail-container-content;
     @include m.ilios-form;
-    grid-template-columns: 1fr;
 
     .display-selected-instructor-groups,
     .display-selected-instructors,
