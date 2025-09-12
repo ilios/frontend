@@ -50,7 +50,7 @@ export default class CourseSearchResultComponent extends Component {
               <GlobalSearchTags @tags={{session.matchedIn}} />
             </li>
           {{/each}}
-          {{#if (gt @course.sessions.length 3)}}
+          {{#if (gt this.filteredSessions.length 3)}}
             {{#if this.showMore}}
               <li>
                 <button
