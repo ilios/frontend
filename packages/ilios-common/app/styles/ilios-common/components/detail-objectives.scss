@@ -17,8 +17,8 @@
   }
 
   .detail-objectives-content {
-    @include m.detail-container-content;
     margin: 0;
+    @include m.detail-container-content;
   }
 
   .new-objective {
