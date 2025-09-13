@@ -59,8 +59,8 @@
   }
 
   .session-overview-content {
-    @include m.ilios-overview-content;
     padding-left: 0.5rem;
+    @include m.ilios-overview-content;
   }
 
   .block {
