@@ -51,7 +51,6 @@ module.exports = async function (defaults) {
       watchDependencies: ['ilios-common'],
     },
     sassOptions: {
-      silenceDeprecations: ['mixed-decls'],
       includePaths: ['node_modules/ember-a11y-refocus/dist/styles'],
     },
   };

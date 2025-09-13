@@ -8,11 +8,13 @@
   }
 
   .copy-form {
-    @include m.ilios-form;
     border: 1px solid var(--light-blue);
-    display: block;
     margin-top: 1rem;
-    padding: 1rem;
+
+    @include m.ilios-form {
+      display: block;
+      padding: 1rem;
+    }
 
     .item {
       @include m.ilios-form-item;

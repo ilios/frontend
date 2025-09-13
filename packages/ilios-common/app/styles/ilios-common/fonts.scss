@@ -14,6 +14,10 @@
   --fs-xxl: 2.074rem;
   --fs-xxxl: 2.488rem;
   --fs-huge: 15rem;
+
+  font-size: 16px;
+  line-height: calc(4px + 2ex);
+
   @include media.for-tablet-and-up {
     --fs-huge: 25rem;
   }
@@ -21,9 +25,6 @@
     --fs-huge: 30rem;
   }
 
-  line-height: calc(4px + 2ex);
-
-  font-size: 16px;
   //scale based on viewport width between 16px and 20px
   @include media.for-laptop-and-up {
     font-size: calc(10px + 0.5vw);

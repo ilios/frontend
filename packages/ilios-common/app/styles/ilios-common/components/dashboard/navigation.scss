@@ -55,8 +55,9 @@
   }
 
   a {
-    @include m.ilios-button;
-    padding: 0.25rem 0.5rem;
+    @include m.ilios-button {
+      padding: 0.25rem 0.5rem;
+    }
 
     &:active,
     &:hover,

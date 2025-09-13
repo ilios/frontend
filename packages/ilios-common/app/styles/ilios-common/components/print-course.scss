@@ -3,9 +3,10 @@
 
 .print-course {
   .header {
-    @include m.course-header;
     background-color: var(--lightest-grey);
-    padding: 0.5rem;
+    @include m.course-header {
+      padding: 0.5rem;
+    }
   }
 
   .block {

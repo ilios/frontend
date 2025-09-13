@@ -26,9 +26,6 @@ module.exports = async function (defaults) {
       enabled: true,
     },
     hinting: isTestBuild,
-    sassOptions: {
-      silenceDeprecations: ['mixed-decls'],
-    },
     babel: {
       plugins: [...require('ember-cli-code-coverage').buildBabelPlugin({ embroider: true })],
     },

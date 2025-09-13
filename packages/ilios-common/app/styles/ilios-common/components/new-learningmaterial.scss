@@ -1,9 +1,9 @@
 @use "../mixins" as m;
 
 .new-learningmaterial {
-  @include m.ilios-form;
   margin-left: 0;
   min-height: 25vh;
+  @include m.ilios-form;
 
   .item {
     @include m.ilios-form-item;
