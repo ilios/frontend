@@ -32,8 +32,7 @@
 }
 
 .session-overview {
-  @include m.ilios-overview(var(--blue));
-  border-bottom: 1px dotted var(--orange);
+  @include m.ilios-overview(var(--orange));
 
   .last-update {
     color: var(--grey);
