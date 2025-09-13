@@ -33,8 +33,9 @@
       }
 
       .confirm-buttons {
-        @include m.ilios-form-buttons;
-        padding-top: 1rem;
+        @include m.ilios-form-buttons {
+          padding-top: 1rem;
+        }
       }
     }
   }
