@@ -9,7 +9,6 @@ import { forceModulesToBeLoaded, sendCoverage } from 'ember-cli-code-coverage/te
 import DefaultAdapter from 'ember-cli-page-object/adapters/rfc268';
 import { setAdapter } from 'ember-cli-page-object/adapters';
 import {
-  setRunOptions,
   setupGlobalA11yHooks,
   setupQUnitA11yAuditToggle,
   setupConsoleLogger,
@@ -19,9 +18,6 @@ import start from 'ember-exam/test-support/start';
 import './helpers/percy-snapshot-name';
 
 setupConsoleLogger();
-setRunOptions({
-  preload: false,
-});
 setupGlobalA11yHooks(() => true);
 setupQUnitA11yAuditToggle(QUnit);
 
