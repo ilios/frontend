@@ -5,12 +5,13 @@
   @include m.ilios-overview(var(--lightest-grey));
 
   h2 {
-    @include m.ilios-overview-title;
     margin-top: 0.5rem;
+    @include m.ilios-overview-title;
   }
 
   .program-overview-content {
-    @include m.ilios-overview-content;
-    padding-top: 0.5rem;
+    @include m.ilios-overview-content {
+      padding-top: 0.5rem;
+    }
   }
 }
