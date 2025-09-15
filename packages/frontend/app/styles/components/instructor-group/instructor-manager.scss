@@ -1,8 +1,9 @@
 @use "../../ilios-common/mixins" as m;
 
 .instructor-group-instructor-manager {
-  @include m.detail-container-content;
-  @include m.ilios-form;
+  @include m.detail-container-content {
+    @include m.ilios-form;
+  }
 
   .instructor-list {
     @include m.ilios-removable-list;
