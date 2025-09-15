@@ -12,8 +12,8 @@
     }
 
     .actions {
-      @include m.detail-container-actions;
       flex-grow: 1;
+      @include m.detail-container-actions;
 
       .user-search {
         flex-grow: 1;
