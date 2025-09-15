@@ -18,9 +18,9 @@
     }
 
     .learner-group-overview-actions {
-      @include m.detail-container-header;
       margin-top: 0.25rem;
       padding-top: 0.5rem;
+      @include m.detail-container-header;
 
       .title {
         @include m.detail-container-title;
