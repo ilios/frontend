@@ -1,11 +1,12 @@
 @use "../ilios-common/mixins" as m;
 
 .school-vocabulary-new-term {
-  @include m.ilios-form;
-  @include m.ilios-form-error;
-
-  display: flex;
   margin-bottom: 0.5rem;
+
+  @include m.ilios-form {
+    display: flex;
+  }
+  @include m.ilios-form-error;
 
   button {
     margin-left: 0.5rem;
