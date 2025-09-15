@@ -22,8 +22,9 @@
       }
     }
     .loading-results {
-      @include cm.ilios-button;
-      cursor: default;
+      @include cm.ilios-button {
+        cursor: default;
+      }
     }
   }
 }
