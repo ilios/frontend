@@ -8,11 +8,13 @@
   }
 
   .rollover-form {
-    @include m.ilios-form;
     border: 1px solid var(--light-blue);
-    display: block;
     margin-top: 1rem;
-    padding: 1rem 0.5rem;
+
+    @include m.ilios-form {
+      display: block;
+      padding: 1rem 0.5rem;
+    }
 
     .item {
       @include m.ilios-form-item;
