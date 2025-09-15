@@ -3,7 +3,6 @@
 .instructor-group-instructor-manager {
   @include m.detail-container-content;
   @include m.ilios-form;
-  grid-template-columns: 1fr;
 
   .instructor-list {
     @include m.ilios-removable-list;
