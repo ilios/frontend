@@ -23,7 +23,6 @@
 
   .form {
     @include m.ilios-form;
-    grid-template-columns: 1fr;
 
     .item {
       @include m.ilios-form-item;
