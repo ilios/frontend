@@ -42,8 +42,8 @@
     }
 
     a {
-      @include cm.ilios-button;
       font-weight: 400;
+      @include cm.ilios-button;
 
       &:hover {
         text-decoration: none;
