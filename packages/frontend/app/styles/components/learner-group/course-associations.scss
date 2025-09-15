@@ -2,8 +2,8 @@
 @use "../../ilios-common/mixins" as m;
 
 .learner-group-course-associations {
-  @include m.detail-container-content;
   border-top: 1px dotted (var(--orange));
+  @include m.detail-container-content;
 
   .header {
     @include m.detail-container-header;
