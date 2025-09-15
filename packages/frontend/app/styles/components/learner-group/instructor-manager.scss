@@ -3,7 +3,6 @@
 
 .learner-group-instructor-manager {
   @include m.detail-container(var(--orange));
-  border-top: 1px dotted var(--orange);
 
   .detail-header {
     @include m.detail-container-header;
