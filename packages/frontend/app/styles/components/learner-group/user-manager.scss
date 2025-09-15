@@ -19,15 +19,15 @@
   }
 
   .learner-group-user-manager-content {
-    @include m.detail-container-content;
     grid-column: 1 / -1;
+    @include m.detail-container-content;
 
     .list {
-      @include m.main-list-box-table;
-      @include m.ilios-zebra-table;
       grid-column: 1 / -1;
       max-height: 540px;
       overflow: auto;
+      @include m.main-list-box-table;
+      @include m.ilios-zebra-table;
 
       th:nth-child(1) {
         width: 1.5rem;
