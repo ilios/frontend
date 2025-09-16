@@ -24,6 +24,7 @@ export default class GlobalSearchComponent extends Component {
   @service intl;
   @service('search') iliosSearch;
   @service store;
+  @service dataLoader;
 
   @cached
   get resultsData() {
@@ -47,7 +48,7 @@ export default class GlobalSearchComponent extends Component {
 
   @cached
   get academicYearData() {
-    return new TrackedAsyncData(this.store.findAll('academic-year'));
+    return new TrackedAsyncData(this.dataLoader.loadAcademicYears());
   }
 
   crossesBoundaryConfig = new TrackedAsyncData(

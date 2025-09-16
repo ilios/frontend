@@ -6,11 +6,22 @@ export default class SessionCopyRoute extends Route {
   @service session;
   @service currentUser;
   @service router;
+  @service dataLoader;
+  @service store;
 
   canUpdate = false;
 
   async afterModel(session) {
-    this.canUpdate = await this.permissionChecker.canUpdateSession(session);
+    const course = await session.course;
+    const school = await course.school;
+    //preload to improve component performance
+    const [canUpdate] = await Promise.all([
+      this.permissionChecker.canUpdateSession(session),
+      this.dataLoader.loadAcademicYears(),
+      this.dataLoader.loadSchoolForCourses(school.id),
+    ]);
+
+    this.canUpdate = canUpdate;
   }
 
   beforeModel(transition) {
