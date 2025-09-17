@@ -220,7 +220,7 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
     );
     assert.strictEqual(
       page.subjects.list.table.reports[1].title,
-      'All Terms for session 1 in school 0',
+      'All Terms for session 1 (2016) in school 0',
     );
     assert.strictEqual(page.subjects.list.table.reports[2].title, 'my report 0');
     this.server.post('api/graphql', ({ db }, { requestBody }) => {
@@ -240,7 +240,10 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
     });
     await page.subjects.list.table.reports[1].select();
     assert.strictEqual(currentURL(), '/reports/subjects/3');
-    assert.strictEqual(subjectReportPage.report.title.text, 'All Terms for session 1 in school 0');
+    assert.strictEqual(
+      subjectReportPage.report.title.text,
+      'All Terms for session 1 (2016) in school 0',
+    );
     assert.strictEqual(subjectReportPage.report.results.length, 1);
     assert.strictEqual(subjectReportPage.report.results[0].text, 'Vocabulary 1 > term 0');
   });
@@ -560,14 +563,14 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
     await subjectReportPage.report.title.save();
     assert.strictEqual(
       subjectReportPage.report.title.text,
-      'All Sessions for course 0 in school 0',
+      'All Sessions for course 0 (2015) in school 0',
     );
     await page.visit();
 
     assert.strictEqual(page.subjects.list.table.reports.length, 2);
     assert.strictEqual(
       page.subjects.list.table.reports[0].title,
-      'All Sessions for course 0 in school 0',
+      'All Sessions for course 0 (2015) in school 0',
     );
     assert.strictEqual(
       page.subjects.list.table.reports[1].title,
