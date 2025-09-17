@@ -357,7 +357,7 @@ general:
   reportDescriptionPlaceholder: Please enter a brief description about this report.
   reportDisplayDescriptionWithObject: 'This report shows all {subject} associated with {objectType} "{object}" {year} in {school}.'
   reportDisplayDescriptionWithoutObject: "This report shows all {subject} in {school}."
-  reportDisplayTitleWithObject: "All {subject} for {object} {year} in {school}"
+  reportDisplayTitleWithObject: "All {subject} for {object} in {school}"
   reportDisplayTitleWithoutObject: "All {subject} in {school}"
   reportName: Report Name
   reportNamePlaceholder: Please enter a report name.

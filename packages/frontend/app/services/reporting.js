@@ -46,9 +46,18 @@ export default class ReportingService extends Service {
         prepositionalObjectTableRowId,
         school,
       );
-      return prepositionalObject
-        ? this.intl.t('general.reportDisplayTitleWithObject', props)
-        : this.intl.t('general.reportDisplayTitleWithoutObject', props);
+
+      if (prepositionalObject) {
+        if (props.year) {
+          // if prepositionalObject also had an associated year
+          // make sure it gets included in the title
+          props.object += ` ${props.year}`;
+        }
+
+        return this.intl.t('general.reportDisplayTitleWithObject', props);
+      } else {
+        return this.intl.t('general.reportDisplayTitleWithoutObject', props);
+      }
     } catch {
       return this.intl.t('general.thisReportIsNoLongerAvailable');
     }
