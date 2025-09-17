@@ -80,6 +80,9 @@ export default class DashboardCalendarController extends Controller {
       this.school = null;
     } else {
       this.mySchedule = true;
+      this.showFilters = false;
+      this.courseFilters = true;
+      this.clearFilters();
     }
   }
 
