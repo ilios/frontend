@@ -688,6 +688,14 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
     assert.ok(page.calendar.controls.userContextFilter.admin.isActive);
   });
 
+  test('filter toggle not present on my-schedule', async function (assert) {
+    await setupAuthentication({ school: this.school }, true);
+    await page.visit({ show: 'calendar' });
+    assert.notOk(page.calendar.controls.showFilters.isPresent);
+    await page.calendar.controls.mySchedule.toggle.secondLabel.click();
+    assert.ok(page.calendar.controls.showFilters.isPresent);
+  });
+
   test('test session type filter', async function (assert) {
     const today = DateTime.fromObject({ hour: 8, minute: 8, second: 8 });
     this.server.create('schoolevent', {
@@ -716,6 +724,32 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
     assert.strictEqual(page.calendar.calendar.weekly.events.length, 0);
   });
 
+  test('test session type filter resets when switching to my-schedule', async function (assert) {
+    const today = DateTime.fromObject({ hour: 8, minute: 8, second: 8 });
+    this.server.create('schoolevent', {
+      school: this.school.id,
+      startDate: today.toJSDate(),
+      endDate: today.plus({ hour: 1 }).toJSDate(),
+      sessionTypeId: 1,
+    });
+    this.server.create('schoolevent', {
+      school: this.school.id,
+      startDate: today.toJSDate(),
+      endDate: today.plus({ hour: 1 }).toJSDate(),
+      sessionTypeId: 2,
+    });
+    await page.visit({ show: 'calendar', view: 'week', mySchedule: false });
+    await page.calendar.controls.showFilters.toggle.secondLabel.click();
+    await page.calendar.controls.filters.sessionTypesFilter.sessionTypes[0].click();
+
+    assert.strictEqual(
+      currentURL(),
+      '/dashboard/calendar?mySchedule=false&sessionTypes=1&showFilters=true',
+    );
+    await page.calendar.controls.mySchedule.toggle.firstLabel.click();
+    assert.strictEqual(currentURL(), '/dashboard/calendar');
+  });
+
   test('test course level filter', async function (assert) {
     const today = DateTime.fromObject({ hour: 8, minute: 8, second: 8 });
     this.server.create('schoolevent', {
@@ -739,6 +773,33 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
     await page.calendar.filterTags.clearAll.click();
     await page.calendar.controls.filters.courseLevelsFilter.courseLevels[1].click();
     assert.strictEqual(page.calendar.calendar.weekly.events.length, 0);
+  });
+
+  test('test course level filter resets when switching to my-schedule', async function (assert) {
+    const today = DateTime.fromObject({ hour: 8, minute: 8, second: 8 });
+    this.server.create('schoolevent', {
+      school: this.school.id,
+      startDate: today.toJSDate(),
+      endDate: today.plus({ hour: 1 }).toJSDate(),
+      courseLevel: 1,
+    });
+    this.server.create('schoolevent', {
+      school: this.school.id,
+      startDate: today.toJSDate(),
+      endDate: today.plus({ hour: 1 }).toJSDate(),
+      courseLevel: 1,
+    });
+    await page.visit({ show: 'calendar', view: 'week', mySchedule: false });
+    await page.calendar.controls.showFilters.toggle.secondLabel.click();
+    await page.calendar.controls.showCourseFilters.toggle.secondLabel.click();
+    await page.calendar.controls.filters.courseLevelsFilter.courseLevels[0].click();
+
+    assert.strictEqual(
+      currentURL(),
+      '/dashboard/calendar?courseFilters=false&courseLevels=1&mySchedule=false&showFilters=true',
+    );
+    await page.calendar.controls.mySchedule.toggle.firstLabel.click();
+    assert.strictEqual(currentURL(), '/dashboard/calendar');
   });
 
   test('test cohort filter', async function (assert) {
@@ -766,6 +827,34 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
     await page.calendar.controls.filters.cohortsFilter.cohorts[0].toggle();
     await page.calendar.controls.filters.cohortsFilter.cohorts[1].toggle();
     assert.strictEqual(page.calendar.calendar.weekly.events.length, 0);
+  });
+
+  test('test cohort level filter resets when switching to my-schedule', async function (assert) {
+    const today = DateTime.fromObject({ hour: 8, minute: 8, second: 8 });
+    this.server.create('schoolevent', {
+      school: this.school.id,
+      startDate: today.toJSDate(),
+      endDate: today.plus({ hour: 1 }).toJSDate(),
+      cohorts: [{ id: 1 }],
+    });
+    this.server.create('schoolevent', {
+      school: this.school.id,
+      startDate: today.toJSDate(),
+      endDate: today.plus({ hour: 1 }).toJSDate(),
+      cohorts: [{ id: 1 }],
+    });
+    await page.visit({ show: 'calendar', view: 'week', mySchedule: false });
+    await page.calendar.controls.showFilters.toggle.secondLabel.click();
+    await page.calendar.controls.showCourseFilters.toggle.secondLabel.click();
+    assert.strictEqual(page.calendar.calendar.weekly.events.length, 2);
+
+    await page.calendar.controls.filters.cohortsFilter.cohorts[1].toggle();
+    assert.strictEqual(
+      currentURL(),
+      '/dashboard/calendar?cohorts=1&courseFilters=false&mySchedule=false&showFilters=true',
+    );
+    await page.calendar.controls.mySchedule.toggle.firstLabel.click();
+    assert.strictEqual(currentURL(), '/dashboard/calendar');
   });
 
   test('test cohort filter on page load ilios/ilios#5699', async function (assert) {
@@ -818,6 +907,38 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
     await page.calendar.controls.filters.coursesFilter.years[0].courses[0].toggle();
     await page.calendar.controls.filters.coursesFilter.years[0].courses[1].toggle();
     assert.strictEqual(page.calendar.calendar.weekly.events.length, 1);
+  });
+
+  test('test course filter resets when switching to my-schedule', async function (assert) {
+    const today = DateTime.fromObject({ hour: 8, minute: 8, second: 8 });
+    this.server.create('schoolevent', {
+      school: this.school.id,
+      startDate: today.toJSDate(),
+      endDate: today.plus({ hour: 1 }).toJSDate(),
+      course: 1,
+    });
+    this.server.create('schoolevent', {
+      school: this.school.id,
+      startDate: today.toJSDate(),
+      endDate: today.plus({ hour: 1 }).toJSDate(),
+      course: 2,
+    });
+    this.server.create('schoolevent', {
+      school: this.school.id,
+      startDate: today.toJSDate(),
+      endDate: today.plus({ hour: 1 }).toJSDate(),
+      course: 1,
+    });
+    await page.visit({ show: 'calendar', view: 'week', mySchedule: false });
+    await page.calendar.controls.showFilters.toggle.secondLabel.click();
+    await page.calendar.controls.filters.coursesFilter.years[0].courses[0].toggle();
+
+    assert.strictEqual(
+      currentURL(),
+      '/dashboard/calendar?courses=1&mySchedule=false&showFilters=true',
+    );
+    await page.calendar.controls.mySchedule.toggle.firstLabel.click();
+    assert.strictEqual(currentURL(), '/dashboard/calendar');
   });
 
   test('test course and session type filter together', async function (assert) {
@@ -1015,6 +1136,42 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
     await page.calendar.controls.filters.vocabularyFilter.vocabularies[0].selectedTermTree.checkboxes[0].click();
     await page.calendar.controls.filters.vocabularyFilter.vocabularies[0].selectedTermTree.checkboxes[1].click();
     assert.strictEqual(page.calendar.calendar.weekly.events.length, 0);
+  });
+
+  test('test term filter resets when switching to my-schedule', async function (assert) {
+    const vocabulary = this.server.create('vocabulary', {
+      school: this.school,
+    });
+    this.server.create('term', {
+      vocabulary,
+      sessionIds: [1, 2],
+    });
+    this.server.create('term', {
+      vocabulary,
+    });
+    const today = DateTime.fromObject({ hour: 8, minute: 8, second: 8 });
+    this.server.create('schoolevent', {
+      school: this.school.id,
+      startDate: today.toJSDate(),
+      endDate: today.plus({ hour: 1 }).toJSDate(),
+      sessionTerms: [{ id: 1 }],
+    });
+    this.server.create('schoolevent', {
+      school: this.school.id,
+      startDate: today.toJSDate(),
+      endDate: today.plus({ hour: 1 }).toJSDate(),
+      sessionTerms: [{ id: 1 }],
+    });
+    await page.visit({ show: 'calendar', view: 'week', mySchedule: false });
+    await page.calendar.controls.showFilters.toggle.secondLabel.click();
+    await page.calendar.controls.filters.vocabularyFilter.vocabularies[0].selectedTermTree.checkboxes[0].click();
+
+    assert.strictEqual(
+      currentURL(),
+      '/dashboard/calendar?mySchedule=false&showFilters=true&terms=1',
+    );
+    await page.calendar.controls.mySchedule.toggle.firstLabel.click();
+    assert.strictEqual(currentURL(), '/dashboard/calendar');
   });
 
   test('clear vocab filter #3450', async function (assert) {
