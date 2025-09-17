@@ -91,6 +91,7 @@ export default class ReportingService extends Service {
 
     if (prepositionalObject) {
       let model = dasherize(prepositionalObject);
+
       if (model === 'instructor') {
         model = 'user';
       }
@@ -101,8 +102,8 @@ export default class ReportingService extends Service {
       const record = await this.store.findRecord(model, prepositionalObjectTableRowId);
       const objectKey = objectTranslations[prepositionalObject];
       const objectTranslation = this.intl.t(objectKey);
-      let object;
 
+      let object;
       if (model === 'user') {
         object = record.fullName;
       } else if (model === 'mesh-descriptor') {
@@ -122,6 +123,16 @@ export default class ReportingService extends Service {
           'academicYearCrossesCalendarYearBoundaries',
         );
         year = crosses ? `(${record.year} - ${record.year + 1})` : `(${record.year})`;
+      } else if (model === 'session') {
+        const crosses = await this.iliosConfig.itemFromConfig(
+          'academicYearCrossesCalendarYearBoundaries',
+        );
+        const course = await record.course;
+        const courseYear = course.get('year');
+
+        if (courseYear) {
+          year = crosses ? `(${courseYear} - ${courseYear + 1})` : `(${courseYear})`;
+        }
       }
 
       return {
