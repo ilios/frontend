@@ -87,7 +87,6 @@ export default class DashboardCalendarController extends Controller {
   toggleShowFilters() {
     if (this.showFilters) {
       this.showFilters = false;
-      this.academicYear = null;
     } else {
       this.showFilters = true;
     }
