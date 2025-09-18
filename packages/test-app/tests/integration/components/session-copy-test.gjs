@@ -11,6 +11,10 @@ module('Integration | Component | session copy', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
+  hooks.beforeEach(async function () {
+    this.store = this.owner.lookup('service:store');
+  });
+
   test('it renders', async function (assert) {
     const now = DateTime.fromObject({ hour: 8 });
     const thisYear = now.year;
@@ -47,7 +51,7 @@ module('Integration | Component | session copy', function (hooks) {
     }
     this.owner.register('service:permissionChecker', PermissionCheckerMock);
 
-    const sessionModel = await this.owner.lookup('service:store').findRecord('session', session.id);
+    const sessionModel = await this.store.findRecord('session', session.id);
     this.set('session', sessionModel);
 
     await render(<template><SessionCopy @session={{this.session}} /></template>);
@@ -125,7 +129,7 @@ module('Integration | Component | session copy', function (hooks) {
       }
     }
     this.owner.register('service:permissionChecker', PermissionCheckerMock);
-    const sessionModel = await this.owner.lookup('service:store').findRecord('session', session.id);
+    const sessionModel = await this.store.findRecord('session', session.id);
     this.set('session', sessionModel);
     this.set('visit', (newSession) => {
       assert.strictEqual(parseInt(newSession.id, 10), 2);
@@ -136,7 +140,7 @@ module('Integration | Component | session copy', function (hooks) {
 
     await click('.done');
 
-    const sessions = await this.owner.lookup('service:store').findAll('session');
+    const sessions = await this.store.findAll('session');
     assert.strictEqual(sessions.length, 2);
     const newSession = findById(sessions, '2');
     assert.strictEqual(session.attireRequired, newSession.attireRequired);
@@ -159,7 +163,7 @@ module('Integration | Component | session copy', function (hooks) {
     assert.strictEqual(newSessionLm.belongsTo('session').id(), newSession.id);
     assert.strictEqual(newSessionLm.belongsTo('learningMaterial').id(), learningMaterial.id);
 
-    const sessionObjectives = await this.owner.lookup('service:store').findAll('session-objective');
+    const sessionObjectives = await this.store.findAll('session-objective');
     assert.strictEqual(sessionObjectives.length, 2);
     const newSessionObjective = findById(sessionObjectives, '2');
     assert.strictEqual(newSessionObjective.title, sessionObjective.title);
@@ -195,7 +199,7 @@ module('Integration | Component | session copy', function (hooks) {
       }
     }
     this.owner.register('service:permissionChecker', PermissionCheckerMock);
-    const sessionModel = await this.owner.lookup('service:store').findRecord('session', session.id);
+    const sessionModel = await this.store.findRecord('session', session.id);
     this.set('session', sessionModel);
 
     await render(<template><SessionCopy @session={{this.session}} /></template>);
@@ -239,7 +243,7 @@ module('Integration | Component | session copy', function (hooks) {
       }
     }
     this.owner.register('service:permissionChecker', PermissionCheckerMock);
-    const sessionModel = await this.owner.lookup('service:store').findRecord('session', session.id);
+    const sessionModel = await this.store.findRecord('session', session.id);
     this.set('session', sessionModel);
     await render(<template><SessionCopy @session={{this.session}} /></template>);
     const yearSelect = '.year-select select';
@@ -297,7 +301,7 @@ module('Integration | Component | session copy', function (hooks) {
       }
     }
     this.owner.register('service:permissionChecker', PermissionCheckerMock);
-    const sessionModel = await this.owner.lookup('service:store').findRecord('session', session.id);
+    const sessionModel = await this.store.findRecord('session', session.id);
     this.set('session', sessionModel);
     this.set('visit', (newSession) => {
       assert.strictEqual(parseInt(newSession.id, 10), 2);
@@ -313,7 +317,7 @@ module('Integration | Component | session copy', function (hooks) {
     assert.dom(courseSelect).hasValue(course3.id, 'first course is selected');
     await click('.done');
 
-    const sessions = await this.owner.lookup('service:store').findAll('session');
+    const sessions = await this.store.findAll('session');
     assert.strictEqual(sessions.length, 2);
     const newSession = findById(sessions, '2');
     assert.strictEqual(newSession.belongsTo('course').id(), course3.id);
@@ -352,7 +356,7 @@ module('Integration | Component | session copy', function (hooks) {
       }
     }
     this.owner.register('service:permissionChecker', PermissionCheckerMock);
-    const sessionModel = await this.owner.lookup('service:store').findRecord('session', session.id);
+    const sessionModel = await this.store.findRecord('session', session.id);
     this.set('session', sessionModel);
     this.set('visit', (newSession) => {
       assert.strictEqual(parseInt(newSession.id, 10), 3);
@@ -364,7 +368,7 @@ module('Integration | Component | session copy', function (hooks) {
 
     await click('.done');
 
-    const sessions = await this.owner.lookup('service:store').findAll('session');
+    const sessions = await this.store.findAll('session');
     assert.strictEqual(sessions.length, 3);
     const newSession = findById(sessions, '3');
     assert.strictEqual(session.title, newSession.title);
@@ -410,7 +414,7 @@ module('Integration | Component | session copy', function (hooks) {
       }
     }
     this.owner.register('service:permissionChecker', PermissionCheckerMock);
-    const sessionModel = await this.owner.lookup('service:store').findRecord('session', session.id);
+    const sessionModel = await this.store.findRecord('session', session.id);
     this.set('session', sessionModel);
     this.set('visit', (newSession) => {
       assert.strictEqual(parseInt(newSession.id, 10), 3);
@@ -423,7 +427,7 @@ module('Integration | Component | session copy', function (hooks) {
     await fillIn(courseSelect, secondCourse.id);
     await click('.done');
 
-    const sessions = await this.owner.lookup('service:store').findAll('session');
+    const sessions = await this.store.findAll('session');
     assert.strictEqual(sessions.length, 3);
     const newSession = findById(sessions, '3');
     assert.strictEqual(session.title, newSession.title);
@@ -469,7 +473,7 @@ module('Integration | Component | session copy', function (hooks) {
       }
     }
     this.owner.register('service:permissionChecker', PermissionCheckerMock);
-    const sessionModel = await this.owner.lookup('service:store').findRecord('session', session.id);
+    const sessionModel = await this.store.findRecord('session', session.id);
     this.set('session', sessionModel);
     this.set('visit', (newSession) => {
       assert.strictEqual(parseInt(newSession.id, 10), 4);
@@ -481,7 +485,7 @@ module('Integration | Component | session copy', function (hooks) {
 
     await click('.done');
 
-    const sessions = await this.owner.lookup('service:store').findAll('session');
+    const sessions = await this.store.findAll('session');
     assert.strictEqual(sessions.length, 4);
     const newSession = findById(sessions, '4');
     assert.strictEqual(session.title, newSession.title);
@@ -531,7 +535,7 @@ module('Integration | Component | session copy', function (hooks) {
       }
     }
     this.owner.register('service:permissionChecker', PermissionCheckerMock);
-    const sessionModel = await this.owner.lookup('service:store').findRecord('session', session.id);
+    const sessionModel = await this.store.findRecord('session', session.id);
     this.set('session', sessionModel);
     this.set('visit', (newSession) => {
       assert.strictEqual(parseInt(newSession.id, 10), 4);
@@ -545,7 +549,7 @@ module('Integration | Component | session copy', function (hooks) {
     await fillIn(courseSelect, secondCourse.id);
     await click('.done');
 
-    const sessions = await this.owner.lookup('service:store').findAll('session');
+    const sessions = await this.store.findAll('session');
     assert.strictEqual(sessions.length, 4);
     const newSession = findById(sessions, '4');
     assert.strictEqual(session.title, newSession.title);

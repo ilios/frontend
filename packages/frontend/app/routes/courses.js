@@ -24,7 +24,7 @@ export default class CoursesRoute extends Route {
     return hash({
       schools: this.store.findAll('school'),
       primarySchool: this.dataLoader.loadSchoolForCourses(user.belongsTo('school').id()),
-      years: this.store.findAll('academic-year'),
+      years: this.dataLoader.loadAcademicYears(),
     });
   }
 }

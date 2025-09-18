@@ -8,6 +8,7 @@ export default class DataLoaderService extends Service {
   #learnerGroupCohorts = {};
   #courses = {};
   #courseSessions = {};
+  #academicYears = null;
 
   async loadSchoolForCalendar(id) {
     if (!(id in this.#calendarSchools)) {
@@ -124,5 +125,11 @@ export default class DataLoaderService extends Service {
       });
     }
     return this.#courseSessions[id];
+  }
+  async loadAcademicYears() {
+    if (!this.#academicYears) {
+      this.#academicYears = this.store.findAll('academic-year');
+    }
+    return this.#academicYears;
   }
 }

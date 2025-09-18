@@ -6,6 +6,7 @@ export default class DashboardRoute extends Route {
   @service store;
   @service currentUser;
   @service session;
+  @service dataLoader;
 
   beforeModel(transition) {
     this.session.requireAuthentication(transition, 'login');
@@ -14,7 +15,7 @@ export default class DashboardRoute extends Route {
   async model() {
     return hash({
       schools: this.store.findAll('school'),
-      academicYears: this.store.findAll('academic-year'),
+      academicYears: this.dataLoader.loadAcademicYears(),
     });
   }
 }

@@ -26,6 +26,7 @@ export default class SessionCopyComponent extends Component {
   @service store;
   @service flashMessages;
   @service permissionChecker;
+  @service dataLoader;
 
   @tracked selectedYear;
   @tracked selectedCourseId;
@@ -41,21 +42,15 @@ export default class SessionCopyComponent extends Component {
 
   @cached
   get yearsData() {
-    return new TrackedAsyncData(this.store.findAll('academic-year'));
+    return new TrackedAsyncData(this.dataLoader.loadAcademicYears());
   }
 
   get years() {
-    if (this.yearsData.isResolved) {
-      const now = DateTime.now();
-      const thisYear = now.year;
-
-      return this.yearsData.value
-        .map((year) => Number(year.id))
-        .filter((year) => year >= thisYear - 1)
-        .sort();
-    } else {
-      return [];
-    }
+    const { year: thisYear } = DateTime.now();
+    return this.yearsData.value
+      .map((year) => Number(year.id))
+      .filter((year) => year >= thisYear - 1)
+      .sort();
   }
 
   async loadCourses(session) {
@@ -64,12 +59,10 @@ export default class SessionCopyComponent extends Component {
     }
     const course = await session.course;
     const school = await course.school;
-    const schoolCourses = await this.store.query('course', {
-      filters: {
-        school: school.id,
-      },
-    });
+    await this.dataLoader.loadSchoolForCourses(school.id);
 
+    const allCourses = this.store.peekAll('course');
+    const schoolCourses = allCourses.filter((c) => c.belongsTo('school').id() === school.id);
     return await filter(schoolCourses, async (co) => {
       return this.permissionChecker.canCreateSession(co);
     });
@@ -194,7 +187,7 @@ export default class SessionCopyComponent extends Component {
   });
   <template>
     <div class="session-copy">
-      {{#if this.allCoursesData.isResolved}}
+      {{#if (and this.allCoursesData.isResolved this.yearsData.isResolved)}}
         {{#let (uniqueId) as |templateId|}}
           <div class="backtolink">
             <LinkTo @route="session" @model={{@session}}>
