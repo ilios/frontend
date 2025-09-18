@@ -642,15 +642,24 @@ module('Acceptance | Session - Overview', function (hooks) {
     const newInstructionalNotes = 'some new thing';
     await page.visit({ courseId: 1, sessionId: 1 });
 
-    assert.strictEqual(currentRouteName(), 'session.index');
-    assert.strictEqual(page.details.overview.instructionalNotes.value, 'instructional note');
+    assert.strictEqual(currentRouteName(), 'session.index', 'route name is correct');
+    assert.strictEqual(
+      page.details.overview.instructionalNotes.value,
+      'instructional note',
+      'instructional notes value is correct',
+    );
     await page.details.overview.instructionalNotes.edit();
     await page.details.overview.instructionalNotes.set(newInstructionalNotes);
     await page.details.overview.instructionalNotes.save();
-    assert.strictEqual(page.details.overview.instructionalNotes.value, newInstructionalNotes);
+    assert.strictEqual(
+      page.details.overview.instructionalNotes.value,
+      newInstructionalNotes,
+      'new instructional notes value is correct',
+    );
     assert.strictEqual(
       this.server.db.sessions[0].instructionalNotes,
       `<p>${newInstructionalNotes}</p>`,
+      'instructional notes value in database is correct',
     );
   });
 
@@ -668,15 +677,24 @@ module('Acceptance | Session - Overview', function (hooks) {
     const newInstructionalNotes = 'some new thing';
     await page.visit({ courseId: 1, sessionId: 1 });
 
-    assert.strictEqual(currentRouteName(), 'session.index');
-    assert.strictEqual(page.details.overview.instructionalNotes.value, 'Click to edit');
+    assert.strictEqual(currentRouteName(), 'session.index', 'route name is correct');
+    assert.strictEqual(
+      page.details.overview.instructionalNotes.value,
+      'Click to edit',
+      'initial instructional notes value is correct',
+    );
     await page.details.overview.instructionalNotes.edit();
     await page.details.overview.instructionalNotes.set(newInstructionalNotes);
     await page.details.overview.instructionalNotes.save();
-    assert.strictEqual(page.details.overview.instructionalNotes.value, newInstructionalNotes);
+    assert.strictEqual(
+      page.details.overview.instructionalNotes.value,
+      newInstructionalNotes,
+      'new instructional notes value is correct',
+    );
     assert.strictEqual(
       this.server.db.sessions[0].instructionalNotes,
       `<p>${newInstructionalNotes}</p>`,
+      'instructional notes value in database is correct',
     );
   });
 

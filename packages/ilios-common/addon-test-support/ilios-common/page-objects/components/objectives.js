@@ -1,5 +1,5 @@
 import { clickable, collection, isVisible, property, text } from 'ember-cli-page-object';
-import { pageObjectFillInFroalaEditor, pageObjectFroalaEditorValue } from 'ilios-common';
+import { pageObjectFillInQuillEditor, pageObjectQuillEditorValue } from 'ilios-common';
 import meshManager from './mesh-manager';
 
 export default {
@@ -8,7 +8,7 @@ export default {
   save: clickable('.detail-objectives-actions button.bigadd'),
   cancel: clickable('.detail-objectives-actions button.bigcancel'),
   newObjective: {
-    description: pageObjectFillInFroalaEditor('[data-test-html-editor]'),
+    description: pageObjectFillInQuillEditor('[data-test-html-editor]'),
     save: clickable('.done'),
     cancel: clickable('.cancel'),
     canSave: property('disabled', '.done'),
@@ -19,8 +19,8 @@ export default {
     description: {
       scope: 'td:eq(0)',
       openEditor: clickable('[data-test-edit]'),
-      editorContents: pageObjectFroalaEditorValue('[data-test-html-editor]'),
-      edit: pageObjectFillInFroalaEditor('[data-test-html-editor]'),
+      editorContents: pageObjectQuillEditorValue('[data-test-html-editor]'),
+      edit: pageObjectFillInQuillEditor('[data-test-html-editor]'),
       save: clickable('.done'),
       validationError: text('.validation-error-message'),
       hasValidationError: isVisible('.validation-error-message'),

@@ -41,5 +41,17 @@ module.exports = async function (defaults) {
     staticAddonTrees: true,
     staticInvokables: true,
     staticEmberSource: true,
+    packagerOptions: {
+      webpackConfig: {
+        module: {
+          rules: [
+            {
+              test: /\.svg$/,
+              type: 'asset/source', // This will import SVG files as text
+            },
+          ],
+        },
+      },
+    },
   });
 };

@@ -46,7 +46,7 @@ export default class NewObjectiveComponent extends Component {
     <section class="new-objective" data-test-new-objective>
       <h3 class="title" data-test-title>{{t "general.newObjective"}}</h3>
       <div class="new-objective-form" data-test-description>
-        <label class="form-label">
+        <label class="form-label" data-test-description-label>
           {{t "general.description"}}:
         </label>
         <HtmlEditor @content={{this.title}} @update={{this.changeTitle}} @autofocus={{true}} />

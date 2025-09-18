@@ -1,6 +1,6 @@
 import { service } from '@ember/service';
 import Route from '@ember/routing/route';
-import { loadFroalaEditor } from 'ilios-common/utils/load-froala-editor';
+import { loadQuillEditor } from 'ilios-common/utils/load-quill-editor';
 
 export default class CourseRoute extends Route {
   @service permissionChecker;
@@ -58,9 +58,9 @@ export default class CourseRoute extends Route {
     ]);
     this.editable = editable;
 
-    //pre load froala and course and session data, but don't wait for this to complete
-    //this allows the page to load quickly and display our loader without waiting too long
-    loadFroalaEditor();
+    // pre-load quill and course and session data, but don't wait for this to complete
+    // this allows the page to load quickly and display our loader without waiting too long
+    loadQuillEditor();
     this.dataLoader.loadCourse(course.id);
     this.dataLoader.loadCourseSessions(course.id);
   }

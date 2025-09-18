@@ -1,6 +1,6 @@
 import Route from '@ember/routing/route';
 import { service } from '@ember/service';
-import { loadFroalaEditor } from 'ilios-common/utils/load-froala-editor';
+import { loadQuillEditor } from 'ilios-common/utils/load-quill-editor';
 
 export default class ProgramYearRoute extends Route {
   @service currentUser;
@@ -34,8 +34,8 @@ export default class ProgramYearRoute extends Route {
   async afterModel(programYear) {
     const permissionChecker = this.permissionChecker;
     this.canUpdate = await permissionChecker.canUpdateProgramYear(programYear);
-    //pre load froala so it's available quickly when working in the course
-    loadFroalaEditor();
+    // pre-load quill so it's available quickly when working in the course
+    loadQuillEditor();
   }
 
   setupController(controller, model) {
