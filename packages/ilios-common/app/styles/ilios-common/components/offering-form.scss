@@ -8,9 +8,8 @@
   }
 
   .form {
-    @include m.ilios-form;
-    grid-template-columns: 1fr;
     margin-top: 1em;
+    @include m.ilios-form;
 
     @include m.for-laptop-and-up {
       grid-template-columns: 2fr 1fr 1fr;

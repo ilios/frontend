@@ -26,9 +26,9 @@
     @include m.detail-container-content;
 
     .list {
-      @include m.main-list-box-table;
       max-height: 360px;
       overflow: auto;
+      @include m.main-list-box-table;
 
       .checks {
         width: 1.5rem;

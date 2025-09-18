@@ -18,9 +18,9 @@
   }
 
   .detail-learners-and-learner-groups-content {
-    @include m.detail-container-content;
-    @include m.ilios-form;
-    grid-template-columns: 1fr;
+    @include m.detail-container-content {
+      @include m.ilios-form;
+    }
 
     .display-selected-learner-groups,
     .display-selected-learners,

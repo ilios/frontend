@@ -86,9 +86,9 @@
 
   .curriculum-inventory-sequence-block-dates-duration-editor,
   .curriculum-inventory-sequence-block-min-max-editor {
-    @include m.ilios-form;
     grid-column: 1 / -1;
     margin-top: 2rem;
+    @include m.ilios-form;
 
     .item {
       @include m.ilios-form-item;

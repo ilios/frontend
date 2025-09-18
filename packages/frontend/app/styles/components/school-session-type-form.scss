@@ -3,11 +3,13 @@
 
 .school-session-type-form {
   .form {
-    @include m.ilios-form;
     background-color: var(--white);
     border: 1px solid var(--lightest-grey);
     margin: 0.5rem 0;
-    padding: 1rem;
+
+    @include m.ilios-form {
+      padding: 1rem;
+    }
 
     .item {
       @include m.ilios-form-item;
@@ -32,8 +34,9 @@
     }
 
     .buttons {
-      @include m.ilios-form-buttons;
-      padding-top: 2rem;
+      @include m.ilios-form-buttons {
+        padding-top: 2rem;
+      }
     }
   }
 }

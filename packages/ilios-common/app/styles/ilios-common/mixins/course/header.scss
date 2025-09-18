@@ -12,6 +12,8 @@
   justify-content: space-between;
   padding-bottom: calc(constants.$golden-ratio-small * 1rem);
 
+  @content;
+
   @include media.for-tablet-and-up {
     flex-direction: row;
     align-items: center;

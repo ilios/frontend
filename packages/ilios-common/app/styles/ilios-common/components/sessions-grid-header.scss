@@ -2,14 +2,14 @@
 @use "../mixins" as m;
 
 .sessions-grid-header {
-  @include m.sessions-grid;
   background-color: var(--blue);
   border-bottom: 1px solid var(--grey);
   color: var(--white);
-  @include m.font-size("small");
   font-weight: 400;
   top: 0;
   z-index: 1;
+  @include m.font-size("small");
+  @include m.sessions-grid;
 
   &.locked {
     position: sticky;

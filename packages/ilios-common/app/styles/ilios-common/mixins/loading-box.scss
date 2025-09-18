@@ -6,6 +6,8 @@
   border: 1px dotted var(--grey);
   transition: opacity 2s ease-out;
 
+  @content;
+
   @keyframes fadein {
     0% {
       opacity: 0;

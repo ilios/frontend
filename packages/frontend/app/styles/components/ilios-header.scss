@@ -12,10 +12,6 @@
 
   // Elements on the far right
   .tools {
-    @media print {
-      display: none;
-    }
-
     align-items: center;
     background: transparent;
     grid-area: tools;
@@ -29,6 +25,10 @@
     @include m.for-tablet-and-up {
       grid-template-rows: 1fr;
       padding: 0;
+    }
+
+    @media print {
+      display: none;
     }
 
     .locale-chooser,

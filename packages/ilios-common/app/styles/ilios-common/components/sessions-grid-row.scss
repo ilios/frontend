@@ -2,8 +2,8 @@
 @use "../mixins" as m;
 
 .sessions-grid-row {
-  @include m.sessions-grid;
   padding: 0.25rem 0;
+  @include m.sessions-grid;
 
   .session-grid-status {
     display: flex;

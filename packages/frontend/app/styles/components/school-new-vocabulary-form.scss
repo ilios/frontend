@@ -2,9 +2,10 @@
 
 .school-new-vocabulary-form {
   .form {
-    @include m.ilios-form;
-    display: block;
     width: 80%;
+    @include m.ilios-form {
+      display: block;
+    }
 
     .item {
       @include m.ilios-form-item;
@@ -16,8 +17,9 @@
     }
 
     .buttons {
-      @include m.ilios-form-buttons;
-      padding-top: 2rem;
+      @include m.ilios-form-buttons {
+        padding-top: 2rem;
+      }
     }
   }
 }

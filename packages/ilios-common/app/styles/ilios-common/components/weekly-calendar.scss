@@ -8,16 +8,16 @@
   $minute-rows: math.div(24 * 60, 5); //every 5 minutes
   --hour-space: 3.3rem;
 
-  @include m.for-tablet-and-up {
-    --hour-space: 5.5rem;
-  }
-
   display: grid;
   align-items: center;
   grid-template-columns: 1fr;
   grid-template-rows: 2rem auto 1fr;
   margin: 0.5rem 0;
   height: 75vh;
+
+  @include m.for-tablet-and-up {
+    --hour-space: 5.5rem;
+  }
 
   .week-of-year {
     @include m.ilios-heading-h4;

@@ -49,6 +49,8 @@
   display: grid;
   padding-top: 1rem;
 
+  @content;
+
   @include media.for-tablet-and-up {
     grid-row-gap: 0.5rem;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));

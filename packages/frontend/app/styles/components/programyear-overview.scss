@@ -26,22 +26,4 @@
       }
     }
   }
-
-  .programyear-overview-content {
-    @include m.ilios-overview-content;
-    align-items: start;
-    padding-top: 1rem;
-
-    .removable-directors {
-      @include m.ilios-removable-list;
-
-      margin-bottom: 0.5rem;
-    }
-
-    .directors {
-      @include m.ilios-tag-list;
-
-      margin-bottom: 0.5rem;
-    }
-  }
 }

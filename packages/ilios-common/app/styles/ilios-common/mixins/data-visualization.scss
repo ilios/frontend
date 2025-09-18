@@ -21,8 +21,9 @@
   }
 
   .filter {
-    @include ilios-form.ilios-form;
-    padding-left: 0.8rem;
+    @include ilios-form.ilios-form {
+      padding-left: 0.8rem;
+    }
 
     input {
       @include ilios-form.ilios-form-last-item;

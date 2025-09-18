@@ -9,8 +9,8 @@
   border-top-right-radius: 0;
 
   .course-sessions-header {
-    @include m.detail-container-header;
     padding-bottom: 0.5rem;
+    @include m.detail-container-header;
   }
 
   .title {

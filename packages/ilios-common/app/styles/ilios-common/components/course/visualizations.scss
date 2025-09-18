@@ -4,11 +4,10 @@
   @include m.data-visualization;
 
   .visualizations {
+    margin-bottom: 1rem;
     @include m.for-tablet-and-up {
       grid-template-columns: repeat(2, 1fr);
     }
-
-    margin-bottom: 1rem;
 
     .course-visualize-instructors-graph,
     .course-visualize-objectives-graph,
