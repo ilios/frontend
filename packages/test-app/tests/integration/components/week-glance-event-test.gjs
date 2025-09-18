@@ -153,6 +153,86 @@ module('Integration | Component | week-glance-event', function (hooks) {
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
   });
+
+  test('it renders durations properly', async function (assert) {
+    const event = {
+      name: 'Learn to Learn',
+      startDate: today.toISO(),
+      location: 'Room 123',
+      url: 'https://zoom.example.com/123?p=456',
+      sessionTypeTitle: 'Lecture',
+      courseExternalId: 'C1',
+      sessionDescription:
+        'Best <strong>Session</strong> For Sure' +
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur',
+      isBlanked: false,
+      isPublished: true,
+      isScheduled: false,
+      learningMaterials: [
+        {
+          title: 'Citation LM',
+          required: true,
+          publicNotes: 'This is cool.',
+          citation: 'citationtext',
+          sessionLearningMaterial: 1,
+        },
+        {
+          title: 'Link LM',
+          required: false,
+          link: 'http://myhost.com/url2',
+          sessionLearningMaterial: 2,
+        },
+        {
+          title: 'File LM',
+          filename: 'This is a PDF',
+          mimetype: 'application/pdf',
+          required: true,
+          absoluteFileUri: 'http://myhost.com/url1',
+          sessionLearningMaterial: 3,
+        },
+      ],
+      attireRequired: true,
+      equipmentRequired: true,
+      attendanceRequired: true,
+      supplemental: true,
+    };
+
+    event.endDate = today.plus({ minutes: 1 });
+    await render(<template><WeekGlanceEvent @event={{event}} /></template>);
+    assert.strictEqual(component.date, '08:00 AM (Duration: 1 minute)');
+
+    event.endDate = today.plus({ minutes: 15 });
+    await render(<template><WeekGlanceEvent @event={{event}} /></template>);
+    assert.strictEqual(component.date, '08:00 AM (Duration: 15 minutes)');
+
+    event.endDate = today.plus({ minutes: 90 });
+    await render(<template><WeekGlanceEvent @event={{event}} /></template>);
+    assert.strictEqual(component.date, '08:00 AM (Duration: 1 hour, 30 minutes)');
+
+    event.endDate = today.plus({ hours: 1 });
+    await render(<template><WeekGlanceEvent @event={{event}} /></template>);
+    assert.strictEqual(component.date, '08:00 AM (Duration: 1 hour)');
+
+    event.endDate = today.plus({ hours: 2, minutes: 25 });
+    await render(<template><WeekGlanceEvent @event={{event}} /></template>);
+    assert.strictEqual(component.date, '08:00 AM (Duration: 2 hours, 25 minutes)');
+
+    event.endDate = today.plus({ hours: 36 });
+    await render(<template><WeekGlanceEvent @event={{event}} /></template>);
+    assert.strictEqual(component.date, '08:00 AM (Duration: 1 day, 12 hours)');
+
+    event.endDate = today.plus({ days: 1, hours: 0, minutes: 0 });
+    await render(<template><WeekGlanceEvent @event={{event}} /></template>);
+    assert.strictEqual(component.date, '08:00 AM (Duration: 1 day)');
+
+    event.endDate = today.plus({ days: 1, hours: 0, minutes: 55 });
+    await render(<template><WeekGlanceEvent @event={{event}} /></template>);
+    assert.strictEqual(component.date, '08:00 AM (Duration: 1 day, 55 minutes)');
+
+    await a11yAudit(this.element);
+    assert.ok(true, 'no a11y errors found!');
+  });
+
   test('it renders schedule materials', async function (assert) {
     this.set('event', {
       name: 'Schedule some materials',
