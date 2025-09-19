@@ -18,6 +18,8 @@ jobs:
         echo ${NAME}
         echo "RELEASE_NAME=${NAME}" >> $GITHUB_ENV
     - uses: actions/setup-node@v5
+      with:
+        node-version: 22
     - uses: ncipollo/release-action@v1
       with:
         name: ${{env.RELEASE_NAME}}
