@@ -48,6 +48,10 @@ export default class ReportingService extends Service {
       );
 
       if (prepositionalObject) {
+        if (props.objectType) {
+          // add things like 'Academic Year' and 'Program Year' for further distinction
+          props.object = `${props.objectType} ${props.object}`;
+        }
         if (props.year) {
           // if prepositionalObject also had an associated year
           // make sure it gets included in the title
