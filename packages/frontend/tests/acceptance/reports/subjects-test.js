@@ -78,7 +78,7 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
     assert.strictEqual(page.subjects.list.table.reports.length, 2);
     assert.strictEqual(
       page.subjects.list.table.reports[0].title,
-      'All Sessions for term 0 in school 0',
+      'All Sessions for Term term 0 in school 0',
     );
     assert.strictEqual(page.subjects.list.table.reports[1].title, 'my report 0');
   });
@@ -89,7 +89,7 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
     assert.strictEqual(page.subjects.list.table.reports.length, 2, 'report count is correct');
     assert.strictEqual(
       page.subjects.list.table.reports[0].title,
-      'All Sessions for term 0 in school 0',
+      'All Sessions for Term term 0 in school 0',
       'first report title is correct',
     );
     assert.strictEqual(
@@ -123,7 +123,7 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
     );
     assert.strictEqual(
       page.subjects.list.table.reports[1].title,
-      'All Sessions for term 0 in school 0',
+      'All Sessions for Term term 0 in school 0',
       'changed second report title is correct',
     );
     assert.strictEqual(
@@ -201,7 +201,7 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
     assert.strictEqual(page.subjects.list.table.reports.length, 2);
     assert.strictEqual(
       page.subjects.list.table.reports[0].title,
-      'All Sessions for term 0 in school 0',
+      'All Sessions for Term term 0 in school 0',
     );
     assert.strictEqual(page.subjects.list.table.reports[1].title, 'my report 0');
     await page.subjects.list.toggleNewSubjectReportForm();
@@ -216,11 +216,11 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
     assert.strictEqual(page.subjects.list.table.reports.length, 3);
     assert.strictEqual(
       page.subjects.list.table.reports[0].title,
-      'All Sessions for term 0 in school 0',
+      'All Sessions for Term term 0 in school 0',
     );
     assert.strictEqual(
       page.subjects.list.table.reports[1].title,
-      'All Terms for session 1 (2016) in school 0',
+      'All Terms for Session session 1 (2016) in school 0',
     );
     assert.strictEqual(page.subjects.list.table.reports[2].title, 'my report 0');
     this.server.post('api/graphql', ({ db }, { requestBody }) => {
@@ -242,7 +242,7 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
     assert.strictEqual(currentURL(), '/reports/subjects/3');
     assert.strictEqual(
       subjectReportPage.report.title.text,
-      'All Terms for session 1 (2016) in school 0',
+      'All Terms for Session session 1 (2016) in school 0',
     );
     assert.strictEqual(subjectReportPage.report.results.length, 1);
     assert.strictEqual(subjectReportPage.report.results[0].text, 'Vocabulary 1 > term 0');
@@ -254,7 +254,7 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
     assert.strictEqual(page.subjects.list.table.reports.length, 2);
     assert.strictEqual(
       page.subjects.list.table.reports[0].title,
-      'All Sessions for term 0 in school 0',
+      'All Sessions for Term term 0 in school 0',
     );
     assert.strictEqual(page.subjects.list.table.reports[1].title, 'my report 0');
     await page.subjects.list.toggleNewSubjectReportForm();
@@ -268,11 +268,11 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
     assert.strictEqual(page.subjects.list.table.reports.length, 3);
     assert.strictEqual(
       page.subjects.list.table.reports[0].title,
-      'All Courses for descriptor 0 in school 0',
+      'All Courses for MeSH Term descriptor 0 in school 0',
     );
     assert.strictEqual(
       page.subjects.list.table.reports[1].title,
-      'All Sessions for term 0 in school 0',
+      'All Sessions for Term term 0 in school 0',
     );
     assert.strictEqual(page.subjects.list.table.reports[2].title, 'my report 0');
     let graphQueryCounter = 0;
@@ -324,7 +324,7 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
     assert.strictEqual(currentURL(), '/reports/subjects/3');
     assert.strictEqual(
       subjectReportPage.report.title.text,
-      'All Courses for descriptor 0 in school 0',
+      'All Courses for MeSH Term descriptor 0 in school 0',
     );
     assert.ok(subjectReportPage.report.academicYears.isVisible);
     assert.strictEqual(subjectReportPage.report.results.length, 2);
@@ -340,7 +340,7 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
     assert.strictEqual(page.subjects.list.table.reports.length, 2);
     assert.strictEqual(
       page.subjects.list.table.reports[0].title,
-      'All Sessions for term 0 in school 0',
+      'All Sessions for Term term 0 in school 0',
     );
     assert.strictEqual(page.subjects.list.table.reports[1].title, 'my report 0');
     await page.subjects.list.toggleNewSubjectReportForm();
@@ -355,11 +355,11 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
     assert.strictEqual(page.subjects.list.table.reports.length, 3);
     assert.strictEqual(
       page.subjects.list.table.reports[0].title,
-      'All Sessions for term 0 in school 0',
+      'All Sessions for Term term 0 in school 0',
     );
     assert.strictEqual(
       page.subjects.list.table.reports[1].title,
-      'All Terms for program 0 in school 0',
+      'All Terms for Program program 0 in school 0',
     );
     assert.strictEqual(page.subjects.list.table.reports[2].title, 'my report 0');
   });
@@ -370,7 +370,7 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
     assert.strictEqual(page.subjects.list.table.reports.length, 2, 'report list count correct');
     assert.strictEqual(
       page.subjects.list.table.reports[0].title,
-      'All Sessions for term 0 in school 0',
+      'All Sessions for Term term 0 in school 0',
       'first report title correct',
     );
     assert.strictEqual(
@@ -390,7 +390,7 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
     );
     assert.strictEqual(
       page.subjects.list.table.reports[1].title,
-      'All Sessions for term 0 in school 0',
+      'All Sessions for Term term 0 in school 0',
       'second report title correct',
     );
     assert.strictEqual(
@@ -440,7 +440,7 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
     assert.strictEqual(page.subjects.list.table.reports.length, 2);
     assert.strictEqual(
       page.subjects.list.table.reports[0].title,
-      'All Sessions for term 0 in school 0',
+      'All Sessions for Term term 0 in school 0',
     );
     assert.strictEqual(page.subjects.list.table.reports[1].title, 'my report 0');
     await page.subjects.list.table.reports[0].remove();
@@ -563,18 +563,18 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
     await subjectReportPage.report.title.save();
     assert.strictEqual(
       subjectReportPage.report.title.text,
-      'All Sessions for course 0 (2015) in school 0',
+      'All Sessions for Course course 0 (2015) in school 0',
     );
     await page.visit();
 
     assert.strictEqual(page.subjects.list.table.reports.length, 2);
     assert.strictEqual(
       page.subjects.list.table.reports[0].title,
-      'All Sessions for course 0 (2015) in school 0',
+      'All Sessions for Course course 0 (2015) in school 0',
     );
     assert.strictEqual(
       page.subjects.list.table.reports[1].title,
-      'All Sessions for term 0 in school 0',
+      'All Sessions for Term term 0 in school 0',
     );
   });
 
@@ -594,11 +594,11 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
     assert.strictEqual(page.subjects.list.table.reports.length, 3);
     assert.strictEqual(
       page.subjects.list.table.reports[0].title,
-      'All Instructors for 2015 - 2016 in school 0',
+      'All Instructors for Academic Year 2015 - 2016 in school 0',
     );
     assert.strictEqual(
       page.subjects.list.newReportLink,
-      'All Instructors for 2015 - 2016 in school 0',
+      'All Instructors for Academic Year 2015 - 2016 in school 0',
     );
 
     let counter = 0;
@@ -636,7 +636,7 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
     assert.strictEqual(currentURL(), '/reports/subjects/3');
     assert.strictEqual(
       subjectReportPage.report.title.text,
-      'All Instructors for 2015 - 2016 in school 0',
+      'All Instructors for Academic Year 2015 - 2016 in school 0',
     );
     assert.strictEqual(subjectReportPage.report.results.length, 4);
     assert.strictEqual(subjectReportPage.report.results[0].text, '0 guy M. Mc0son');

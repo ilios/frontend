@@ -40,7 +40,10 @@ module('Integration | Component | reports/subject-header', function (hooks) {
         />
       </template>,
     );
-    assert.strictEqual(component.title.text, 'All Courses for 0 guy M. Mc0son in All Schools');
+    assert.strictEqual(
+      component.title.text,
+      'All Courses for Instructor 0 guy M. Mc0son in All Schools',
+    );
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
   });
@@ -169,7 +172,10 @@ module('Integration | Component | reports/subject-header', function (hooks) {
     assert.strictEqual(component.title.value, 'my report 0');
     await component.title.set('');
     await component.title.save();
-    assert.strictEqual(component.title.text, 'All Courses for 0 guy M. Mc0son in school 0');
+    assert.strictEqual(
+      component.title.text,
+      'All Courses for Instructor 0 guy M. Mc0son in school 0',
+    );
   });
 
   test('year filter is hidden when not needed', async function (assert) {
