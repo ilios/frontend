@@ -80,6 +80,9 @@ export default class DashboardCalendarController extends Controller {
       this.school = null;
     } else {
       this.mySchedule = true;
+      this.showFilters = false;
+      this.courseFilters = true;
+      this.clearFilters();
     }
   }
 
@@ -87,7 +90,6 @@ export default class DashboardCalendarController extends Controller {
   toggleShowFilters() {
     if (this.showFilters) {
       this.showFilters = false;
-      this.academicYear = null;
     } else {
       this.showFilters = true;
     }
