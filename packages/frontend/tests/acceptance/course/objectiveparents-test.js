@@ -106,10 +106,9 @@ module('Acceptance | Course - Objective Parents', function (hooks) {
       page.details.objectives.objectiveList.objectives[0].parents.list[0].text,
       'program-year objective 0',
     );
-
-    await percySnapshot(getUniqueName(assert, 'default background color'));
+    await percySnapshot(getUniqueName(assert, 'objective list'));
     await page.details.objectives.objectiveList.objectives[0].parents.manage();
-    await percySnapshot(getUniqueName(assert, 'default background color'));
+    await percySnapshot(getUniqueName(assert, 'objective manager'));
 
     const m = page.details.objectives.objectiveList.objectives[0].parentManager;
 
