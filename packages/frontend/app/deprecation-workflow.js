@@ -27,5 +27,6 @@ setupDeprecationWorkflow({
     { handler: 'silence', matchId: 'deprecate-import-default-value-from-ember' },
     { handler: 'silence', matchId: 'ember-data:deprecate-non-strict-types' },
     { handler: 'silence', matchId: 'ember-concurrency.deprecate-task-group' },
+    { handler: 'silence', matchId: 'warp-drive:deprecate-legacy-request-methods' },
   ],
 });
