@@ -1,5 +1,5 @@
 import Service, { service } from '@ember/service';
-import { waitForPromise } from '@ember/test-waiters';
+import { waitForFetch } from '@ember/test-waiters';
 
 export default class SearchService extends Service {
   @service iliosConfig;
@@ -30,7 +30,7 @@ export default class SearchService extends Service {
     const yearQuery = years ? `&years=${years.join('-')}` : '';
     const url = `${this.host}/api/search/v2/curriculum?q=${q}&size=${size}&from=${from}${schoolQuery}${yearQuery}`;
 
-    const response = await waitForPromise(
+    const response = await waitForFetch(
       fetch(url, {
         headers: this.authHeaders,
       }),
@@ -47,7 +47,7 @@ export default class SearchService extends Service {
     const onlySuggest = onlySuggestEnabled ? '&onlySuggest=true' : '';
     const url = `${this.host}/api/search/v1/users?q=${q}&size=${size}${onlySuggest}`;
 
-    const response = await waitForPromise(
+    const response = await waitForFetch(
       fetch(url, {
         headers: this.authHeaders,
       }),
