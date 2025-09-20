@@ -1,6 +1,6 @@
 import Service, { service } from '@ember/service';
 import queryString from 'query-string';
-import { waitForPromise } from '@ember/test-waiters';
+import { waitForFetch } from '@ember/test-waiters';
 
 export default class Fetch extends Service {
   @service session;
@@ -32,7 +32,7 @@ export default class Fetch extends Service {
   async getJsonFromApiHost(relativePath) {
     const url = this.apiHostUrlFromPath(relativePath);
 
-    const response = await waitForPromise(
+    const response = await waitForFetch(
       fetch(url, {
         headers: this.authHeaders,
       }),
@@ -45,7 +45,7 @@ export default class Fetch extends Service {
     const headers = this.authHeaders;
     headers['Content-Type'] = contentType;
     headers['Accept'] = 'application/vnd.api+json';
-    const response = await waitForPromise(
+    const response = await waitForFetch(
       fetch(url, {
         method: 'POST',
         headers,

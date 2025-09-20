@@ -1,5 +1,5 @@
 import Service, { service } from '@ember/service';
-import { waitForPromise } from '@ember/test-waiters';
+import { waitForFetch } from '@ember/test-waiters';
 
 export default class GraphqlService extends Service {
   @service session;
@@ -28,16 +28,18 @@ export default class GraphqlService extends Service {
     const headers = this.authHeaders;
     headers['Content-Type'] = 'application/json';
     headers['Accept'] = 'application/json';
-    const response = await fetch(url, {
-      method: 'POST',
-      headers,
-      body: JSON.stringify({ query: q }),
-    });
+    const response = await waitForFetch(
+      fetch(url, {
+        method: 'POST',
+        headers,
+        body: JSON.stringify({ query: q }),
+      }),
+    );
     return response.json();
   }
 
   async find(endpoint, filters, attributes) {
     const filterString = filters.length ? '(' + filters.join(', ') + ')' : '';
-    return waitForPromise(this.#query(`query { ${endpoint}${filterString} { ${attributes} } }`));
+    return this.#query(`query { ${endpoint}${filterString} { ${attributes} } }`);
   }
 }
