@@ -8,7 +8,7 @@ const definition = {
   endDate: text('[data-test-end-date]'),
   status: text('[data-test-status]'),
   isLocked: hasClass('fa-lock', 'svg', { scope: '[data-test-status]', at: 1 }),
-  isUnlocked: hasClass('fa-unlock', 'svg', { scope: '[data-test-status]', at: 1 }),
+  isUnlocked: hasClass('fa-lock-open', 'svg', { scope: '[data-test-status]', at: 1 }),
   canLock: isVisible('[data-test-lock]', { scope: '[data-test-status]' }),
   canUnlock: isVisible('[data-test-unlock]', { scope: '[data-test-status]' }),
   canRemove: isVisible('[data-test-remove]', { scope: '[data-test-status]' }),

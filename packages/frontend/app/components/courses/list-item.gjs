@@ -98,10 +98,10 @@ export default class CoursesListItemComponent extends Component {
               {{on "click" (fn @lockCourse @course)}}
               data-test-lock
             >
-              <FaIcon @icon="unlock" />
+              <FaIcon @icon="lock-open" />
             </button>
           {{else}}
-            <FaIcon @icon="unlock" class="disabled" />
+            <FaIcon @icon="lock-open" class="disabled" />
           {{/if}}
           {{#if this.canDelete}}
             <button

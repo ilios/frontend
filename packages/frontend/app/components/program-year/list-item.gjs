@@ -191,10 +191,10 @@ export default class ProgramYearListItemComponent extends Component {
                 {{on "click" (perform this.lock)}}
                 data-test-lock
               >
-                <FaIcon @icon="unlock" />
+                <FaIcon @icon="lock-open" />
               </button>
             {{else}}
-              <FaIcon @icon="unlock" />
+              <FaIcon @icon="lock-open" />
             {{/if}}
             {{#if this.canDelete}}
               <button
