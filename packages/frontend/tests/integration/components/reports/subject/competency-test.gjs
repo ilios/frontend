@@ -172,10 +172,9 @@ module('Integration | Component | reports/subject/competency', function (hooks) 
     assert.expect(1);
     this.server.post('api/graphql', function (schema, { requestBody }) {
       const { query } = JSON.parse(requestBody);
-      assert.strictEqual(
-        query,
-        'query { competencies(schools: [24], sessions: [13]) { id, title, school { title } } }',
-      );
+      // need to reverse lookup session->course->courseObjectives->programYearObjectives->competencies
+      // so this graphql query doesn't match the context
+      assert.strictEqual(query, 'query { sessions(schools: [24], id: 13) { course { id } } }');
       return responseData;
     });
     const { id } = this.server.create('report', {
