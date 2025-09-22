@@ -23,6 +23,10 @@
   h2 {
     @include ilios-heading.ilios-heading-h4;
     @include font-size.text-align-bottom;
+
+    .fa-lock {
+      margin-right: 0.5rem;
+    }
   }
 
   .academic-year {
