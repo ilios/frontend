@@ -55,6 +55,9 @@ export default class ReportsSubjectMeshTermComponent extends Component {
       if (prepositionalObject === 'course') {
         const ids = await this.getMeshIdsForCourse(prepositionalObjectTableRowId);
         filters = [`ids: [${ids.join(', ')}]`]; //drop school filter, a course is only in one school
+      } else if (prepositionalObject === 'session') {
+        const ids = await this.getMeshIdsForSession(prepositionalObjectTableRowId);
+        filters = [`ids: [${ids.join(', ')}]`]; //drop school filter, a session is only in one school
       } else {
         const what = pluralize(camelize(prepositionalObject));
         filters.push(`${what}: [${prepositionalObjectTableRowId}]`);
@@ -63,6 +66,30 @@ export default class ReportsSubjectMeshTermComponent extends Component {
     const attributes = ['name'];
     const result = await this.graphql.find('meshDescriptors', filters, attributes.join(', '));
     return result.data.meshDescriptors.map(({ name }) => name);
+  }
+
+  async getMeshIdsForSession(sessionId) {
+    const attributes = [
+      'meshDescriptors { id }',
+      'sessionObjectives { meshDescriptors { id } }',
+      'learningMaterials { meshDescriptors { id } }',
+    ];
+    const results = await this.graphql.find(
+      'sessions',
+      [`id: ${sessionId}`],
+      attributes.join(', '),
+    );
+    const session = results.data.sessions[0];
+    const ids = [
+      ...session.meshDescriptors.map(({ id }) => id),
+      ...session.sessionObjectives
+        .map(({ meshDescriptors }) => meshDescriptors.map(({ id }) => id))
+        .flat(),
+      ...session.learningMaterials
+        .map(({ meshDescriptors }) => meshDescriptors.map(({ id }) => id))
+        .flat(),
+    ];
+    return [...new Set(ids)].sort().map((id) => `"${id}"`);
   }
 
   async getMeshIdsForCourse(courseId) {
