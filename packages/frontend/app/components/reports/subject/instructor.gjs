@@ -156,9 +156,28 @@ export default class ReportsSubjectInstructorComponent extends Component {
     return uniqueById(users);
   }
 
+  async getResultsForLearningMaterial(learningMaterialId) {
+    const filters = [`id: ${learningMaterialId}`];
+    const attributes = [
+      'owningUser { firstName, middleName, lastName, displayName, school { title } }',
+    ];
+
+    const results = await this.graphql.find('learningMaterials', filters, attributes.join(', '));
+
+    if (!results.data.learningMaterials.length) {
+      return [];
+    }
+
+    return [results.data.learningMaterials[0].owningUser];
+  }
+
   async getReportResults(subject, prepositionalObject, prepositionalObjectTableRowId, school) {
     if (subject !== 'instructor') {
       throw new Error(`Report for ${subject} sent to ReportsSubjectInstructorComponent`);
+    }
+
+    if (prepositionalObject == 'learning material') {
+      return this.getResultsForLearningMaterial(prepositionalObjectTableRowId);
     }
 
     if (prepositionalObject === 'course') {
