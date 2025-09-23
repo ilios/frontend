@@ -34,7 +34,6 @@ module.exports = function () {
       'truck-medical',
       'turn-down',
       'turn-up',
-      'unlock',
       'user-doctor',
     ],
   };

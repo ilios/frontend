@@ -49,6 +49,7 @@ module.exports = function () {
       'link-slash',
       'list',
       'lock',
+      'lock-open',
       'magnifying-glass',
       'meh',
       'minus',
