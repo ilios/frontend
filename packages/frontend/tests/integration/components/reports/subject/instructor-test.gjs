@@ -318,4 +318,56 @@ module('Integration | Component | reports/subject/instructor', function (hooks) 
       </template>,
     );
   });
+
+  test('filter by learning material', async function (assert) {
+    assert.expect(4);
+
+    const responseData = {
+      data: {
+        learningMaterials: [
+          {
+            id: 1,
+            title: 'learning material 0',
+            owningUser: {
+              id: 1,
+              firstName: 'First',
+              middleName: 'Middle',
+              lastName: 'Last',
+              displayName: '',
+              school: { title: 'School 1' },
+            },
+          },
+        ],
+      },
+    };
+
+    this.server.post('api/graphql', function (schema, { requestBody }) {
+      const { query } = JSON.parse(requestBody);
+      assert.strictEqual(
+        query,
+        'query { learningMaterials(id: 1) { owningUser { firstName, middleName, lastName, displayName, school { title } } } }',
+        'correct query is run',
+      );
+      return responseData;
+    });
+    const { id } = this.server.create('report', {
+      subject: 'instructor',
+      prepositionalObject: 'learning material',
+      prepositionalObjectTableRowId: 1,
+    });
+    this.set('report', await this.owner.lookup('service:store').findRecord('report', id));
+    await render(
+      <template>
+        <Instructor
+          @subject={{this.report.subject}}
+          @prepositionalObject={{this.report.prepositionalObject}}
+          @prepositionalObjectTableRowId={{this.report.prepositionalObjectTableRowId}}
+        />
+      </template>,
+    );
+
+    assert.strictEqual(component.results.length, 1, 'result count is correct');
+    assert.strictEqual(component.results[0].school, 'School 1:', 'result row school is correct');
+    assert.strictEqual(component.results[0].name, 'First M. Last', 'result row name is correct');
+  });
 });
