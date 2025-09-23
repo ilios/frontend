@@ -48,7 +48,7 @@
     "@glimmer/component": "^2.0.0",
     "@glimmer/tracking": "^1.1.2",
     "@percy/cli": "^1.30.7",
-    "@percy/ember": "^4.2.0",
+    "@percy/ember": "^5.0.0",
     "@sentry/ember": "^9.34.0",
     "@warp-drive/build-config": "~5.7.0",
     "@warp-drive/core-types": "~5.7.0",
