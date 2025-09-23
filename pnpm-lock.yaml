@@ -115,8 +115,8 @@ importers:
         specifier: ^1.0.30001726
         version: 1.0.30001743
       ember-a11y-refocus:
-        specifier: 5.0.0
-        version: 5.0.0(@babel/core@7.28.4)(ember-source@6.5.0(@glimmer/component@2.0.0)(rsvp@4.8.5))
+        specifier: 5.1.0
+        version: 5.1.0(@babel/core@7.28.4)(ember-source@6.5.0(@glimmer/component@2.0.0)(rsvp@4.8.5))
       ember-a11y-testing:
         specifier: ^7.0.0
         version: 7.1.2(@ember/test-helpers@5.3.0(@babel/core@7.28.4))(qunit@2.24.1)(webpack@5.101.3)
@@ -5121,8 +5121,8 @@ packages:
   elliptic@6.6.1:
     resolution: {integrity: sha512-RaddvvMatK2LJHqFJ+YA4WysVN5Ita9E35botqIYspQ4TkRAlCicdzKOjlyv/1Za5RyTNn7di//eEV0uTAfe3g==}
 
-  ember-a11y-refocus@5.0.0:
-    resolution: {integrity: sha512-0PH/iZNeTkuhZjvE5Y3CllEGnh8Ej8KYrTcatdyDWzV8pQOZO/Meo/JppKNUsISAyfuENMJafREHWdNBvS6g5w==}
+  ember-a11y-refocus@5.1.0:
+    resolution: {integrity: sha512-Z6wl3bAMvDuFxQQnppbsT4RY5tUAlKRQo1PVqsFYRYE8gyRWDlLqR2Stspp4rdkXaaFn2JpNA3zzbIy1aTG5GA==}
     peerDependencies:
       ember-source: '>= 4.12.0'
 
@@ -15276,7 +15276,7 @@ snapshots:
       minimalistic-assert: 1.0.1
       minimalistic-crypto-utils: 1.0.1
 
-  ember-a11y-refocus@5.0.0(@babel/core@7.28.4)(ember-source@6.5.0(@glimmer/component@2.0.0)(rsvp@4.8.5)):
+  ember-a11y-refocus@5.1.0(@babel/core@7.28.4)(ember-source@6.5.0(@glimmer/component@2.0.0)(rsvp@4.8.5)):
     dependencies:
       '@embroider/addon-shim': 1.10.0
       '@glimmer/component': 2.0.0
