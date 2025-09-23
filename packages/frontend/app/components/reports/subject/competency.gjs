@@ -49,6 +49,18 @@ export default class ReportsSubjectCompetencyComponent extends Component {
     return !this.args.school;
   }
 
+  async getResultsForSessionType(sessionTypeId, filters) {
+    filters.push(`id: ${sessionTypeId}`);
+
+    const results = await this.graphql.find(
+      'sessionTypes',
+      filters,
+      'school { competencies { id, title, school { title } } }',
+    );
+
+    return results.data.sessionTypes[0].school.competencies;
+  }
+
   async getResultsForSession(sessionId, filters) {
     filters.push(`id: ${sessionId}`);
 
@@ -85,6 +97,10 @@ export default class ReportsSubjectCompetencyComponent extends Component {
     if (prepositionalObject && prepositionalObjectTableRowId) {
       if (prepositionalObject == 'session') {
         return this.getResultsForSession(prepositionalObjectTableRowId, filters);
+      }
+
+      if (prepositionalObject == 'session type') {
+        return this.getResultsForSessionType(prepositionalObjectTableRowId, filters);
       }
 
       const what = pluralize(camelize(prepositionalObject));
