@@ -42,32 +42,6 @@ export default class ReportsSubjectMeshTermComponent extends Component {
     return this.sortedMeshTerms.slice(0, this.resultsLengthMax);
   }
 
-  async getReportResults(subject, prepositionalObject, prepositionalObjectTableRowId, school) {
-    if (subject !== 'mesh term') {
-      throw new Error(`Report for ${subject} sent to ReportsSubjectMeshTermComponent`);
-    }
-
-    let filters = [];
-    if (school) {
-      filters.push(`schools: [${school.id}]`);
-    }
-    if (prepositionalObject && prepositionalObjectTableRowId) {
-      if (prepositionalObject === 'course') {
-        const ids = await this.getMeshIdsForCourse(prepositionalObjectTableRowId);
-        filters = [`ids: [${ids.join(', ')}]`]; //drop school filter, a course is only in one school
-      } else if (prepositionalObject === 'session') {
-        const ids = await this.getMeshIdsForSession(prepositionalObjectTableRowId);
-        filters = [`ids: [${ids.join(', ')}]`]; //drop school filter, a session is only in one school
-      } else {
-        const what = pluralize(camelize(prepositionalObject));
-        filters.push(`${what}: [${prepositionalObjectTableRowId}]`);
-      }
-    }
-    const attributes = ['name'];
-    const result = await this.graphql.find('meshDescriptors', filters, attributes.join(', '));
-    return result.data.meshDescriptors.map(({ name }) => name);
-  }
-
   async getMeshIdsForSession(sessionId) {
     const attributes = [
       'meshDescriptors { id }',
@@ -124,6 +98,32 @@ export default class ReportsSubjectMeshTermComponent extends Component {
       ...sessionMeshDescriptors,
     ];
     return [...new Set(ids)].sort().map((id) => `"${id}"`);
+  }
+
+  async getReportResults(subject, prepositionalObject, prepositionalObjectTableRowId, school) {
+    if (subject !== 'mesh term') {
+      throw new Error(`Report for ${subject} sent to ReportsSubjectMeshTermComponent`);
+    }
+
+    let filters = [];
+    if (school) {
+      filters.push(`schools: [${school.id}]`);
+    }
+    if (prepositionalObject && prepositionalObjectTableRowId) {
+      if (prepositionalObject === 'course') {
+        const ids = await this.getMeshIdsForCourse(prepositionalObjectTableRowId);
+        filters = [`ids: [${ids.join(', ')}]`]; //drop school filter, a course is only in one school
+      } else if (prepositionalObject === 'session') {
+        const ids = await this.getMeshIdsForSession(prepositionalObjectTableRowId);
+        filters = [`ids: [${ids.join(', ')}]`]; //drop school filter, a session is only in one school
+      } else {
+        const what = pluralize(camelize(prepositionalObject));
+        filters.push(`${what}: [${prepositionalObjectTableRowId}]`);
+      }
+    }
+    const attributes = ['name'];
+    const result = await this.graphql.find('meshDescriptors', filters, attributes.join(', '));
+    return result.data.meshDescriptors.map(({ name }) => name);
   }
 
   get reportResultsExceedMax() {
