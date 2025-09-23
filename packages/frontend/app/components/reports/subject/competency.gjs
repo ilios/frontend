@@ -49,6 +49,29 @@ export default class ReportsSubjectCompetencyComponent extends Component {
     return !this.args.school;
   }
 
+  async getResultsForSession(sessionId, filters) {
+    filters.push(`id: ${sessionId}`);
+
+    const session = await this.graphql.find('sessions', filters, 'course { id }');
+    const courseId = session.data.sessions[0].course.id;
+
+    const courseObjectives = (
+      await this.graphql.find(
+        'courseObjectives',
+        [`course: ${courseId}`],
+        `programYearObjectives { competency { id, title, school { title } }}`,
+      )
+    ).data.courseObjectives;
+
+    const competencies = courseObjectives.map((o) =>
+      o.programYearObjectives.map((pyo) => pyo.competency),
+    );
+
+    const filteredCompetencies = [...new Map(competencies.flat().map((c) => [c.id, c])).values()];
+
+    return filteredCompetencies;
+  }
+
   async getReportResults(subject, prepositionalObject, prepositionalObjectTableRowId, school) {
     if (subject !== 'competency') {
       throw new Error(`Report for ${subject} sent to ReportsSubjectCompetencyComponent`);
@@ -60,31 +83,8 @@ export default class ReportsSubjectCompetencyComponent extends Component {
     }
 
     if (prepositionalObject && prepositionalObjectTableRowId) {
-      // competencies associated with session need backwards lookup,
-      // so...jiggery-pokery
-      if (subject == 'competency' && prepositionalObject == 'session') {
-        filters.push(`id: ${prepositionalObjectTableRowId}`);
-
-        const session = await this.graphql.find('sessions', filters, 'course { id }');
-        const courseId = session.data.sessions[0].course.id;
-
-        const courseObjectives = (
-          await this.graphql.find(
-            'courseObjectives',
-            [`course: ${courseId}`],
-            `programYearObjectives { competency { id, title, school { title } }}`,
-          )
-        ).data.courseObjectives;
-
-        const competencies = courseObjectives.map((o) =>
-          o.programYearObjectives.map((pyo) => pyo.competency),
-        );
-
-        const filteredCompetencies = [
-          ...new Map(competencies.flat().map((c) => [c.id, c])).values(),
-        ];
-
-        return filteredCompetencies;
+      if (prepositionalObject == 'session') {
+        return this.getResultsForSession(prepositionalObjectTableRowId, filters);
       }
 
       const what = pluralize(camelize(prepositionalObject));
