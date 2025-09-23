@@ -307,7 +307,7 @@ importers:
         specifier: ^3.5.0
         version: 3.5.0
       sass:
-        specifier: ^1.91.0
+        specifier: ^1.93.1
         version: 1.93.1
       striptags:
         specifier: ^3.2.0
@@ -623,7 +623,7 @@ importers:
         specifier: ^2.1.0
         version: 2.1.0(prettier@3.6.2)
       sass:
-        specifier: ^1.91.0
+        specifier: ^1.93.1
         version: 1.93.1
       stylelint:
         specifier: ^16.23.1
@@ -857,7 +857,7 @@ importers:
         specifier: ^3.5.0
         version: 3.5.0
       sass:
-        specifier: ^1.91.0
+        specifier: ^1.93.1
         version: 1.93.1
       stylelint:
         specifier: ^16.23.1
@@ -1091,7 +1091,7 @@ importers:
         specifier: ^3.5.0
         version: 3.5.0
       sass:
-        specifier: ^1.91.0
+        specifier: ^1.93.1
         version: 1.93.1
       stylelint:
         specifier: ^16.23.1
