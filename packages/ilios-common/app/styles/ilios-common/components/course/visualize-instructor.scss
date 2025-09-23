@@ -6,7 +6,7 @@
   @include m.for-laptop-and-up {
     .visualizations {
       display: grid;
-      grid-gap: 10px;
+      gap: 10px;
       grid-template-columns: 1fr 1fr;
     }
   }

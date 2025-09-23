@@ -9,7 +9,7 @@
 @mixin ilios-form() {
   align-items: start;
   display: grid;
-  grid-gap: 0.25rem 1rem;
+  gap: 0.25rem 1rem;
   grid-template-columns: 1fr;
   padding: 0.5rem 0;
 
