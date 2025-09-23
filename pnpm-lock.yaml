@@ -205,8 +205,8 @@ importers:
         specifier: ^4.0.2
         version: 4.0.6(@babel/core@7.28.4)
       ember-exam:
-        specifier: ^9.0.0
-        version: 9.1.0(ember-qunit@9.0.4(@ember/test-helpers@5.3.0(@babel/core@7.28.4))(qunit@2.24.1))(ember-source@6.5.0(@glimmer/component@2.0.0)(rsvp@4.8.5))(qunit@2.24.1)(webpack@5.101.3)
+        specifier: ^10.0.0
+        version: 10.0.0(ember-qunit@9.0.4(@ember/test-helpers@5.3.0(@babel/core@7.28.4))(qunit@2.24.1))(ember-source@6.5.0(@glimmer/component@2.0.0)(rsvp@4.8.5))(qunit@2.24.1)(webpack@5.101.3)
       ember-focus-trap:
         specifier: ^1.1.0
         version: 1.1.1(ember-source@6.5.0(@glimmer/component@2.0.0)(rsvp@4.8.5))
@@ -782,8 +782,8 @@ importers:
         specifier: ^4.0.2
         version: 4.0.2
       ember-exam:
-        specifier: ^9.0.0
-        version: 9.1.0(ember-qunit@9.0.4(@ember/test-helpers@5.3.0(@babel/core@7.28.4))(qunit@2.24.1))(ember-source@6.5.0(@glimmer/component@2.0.0)(rsvp@4.8.5))(qunit@2.24.1)(webpack@5.101.3)
+        specifier: ^10.0.0
+        version: 10.0.0(ember-qunit@9.0.4(@ember/test-helpers@5.3.0(@babel/core@7.28.4))(qunit@2.24.1))(ember-source@6.5.0(@glimmer/component@2.0.0)(rsvp@4.8.5))(qunit@2.24.1)(webpack@5.101.3)
       ember-load-initializers:
         specifier: ^3.0.1
         version: 3.0.1(ember-source@6.5.0(@glimmer/component@2.0.0)(rsvp@4.8.5))
@@ -1016,8 +1016,8 @@ importers:
         specifier: ^4.0.2
         version: 4.0.2
       ember-exam:
-        specifier: ^9.0.0
-        version: 9.1.0(ember-qunit@9.0.4(@ember/test-helpers@5.3.0(@babel/core@7.28.4))(qunit@2.24.1))(ember-source@6.5.0(@glimmer/component@2.0.0)(rsvp@4.8.5))(qunit@2.24.1)(webpack@5.101.3)
+        specifier: ^10.0.0
+        version: 10.0.0(ember-qunit@9.0.4(@ember/test-helpers@5.3.0(@babel/core@7.28.4))(qunit@2.24.1))(ember-source@6.5.0(@glimmer/component@2.0.0)(rsvp@4.8.5))(qunit@2.24.1)(webpack@5.101.3)
       ember-load-initializers:
         specifier: ^3.0.1
         version: 3.0.1(ember-source@6.5.0(@glimmer/component@2.0.0)(rsvp@4.8.5))
@@ -1241,8 +1241,8 @@ importers:
         specifier: ^4.0.2
         version: 4.0.6(@babel/core@7.28.4)
       ember-exam:
-        specifier: ^9.0.0
-        version: 9.1.0(ember-qunit@9.0.4(@ember/test-helpers@5.3.0(@babel/core@7.28.4))(qunit@2.24.1))(ember-source@6.5.0(@glimmer/component@2.0.0)(rsvp@4.8.5))(qunit@2.24.1)(webpack@5.101.3)
+        specifier: ^10.0.0
+        version: 10.0.0(ember-qunit@9.0.4(@ember/test-helpers@5.3.0(@babel/core@7.28.4))(qunit@2.24.1))(ember-source@6.5.0(@glimmer/component@2.0.0)(rsvp@4.8.5))(qunit@2.24.1)(webpack@5.101.3)
       ember-load-initializers:
         specifier: ^3.0.1
         version: 3.0.1(ember-source@6.5.0(@glimmer/component@2.0.0)(rsvp@4.8.5))
@@ -5419,8 +5419,8 @@ packages:
       '@typescript-eslint/parser':
         optional: true
 
-  ember-exam@9.1.0:
-    resolution: {integrity: sha512-POqCgZ1jjQEvIARnDVDFoag3KZaNRU7XTGIzL/enVsilzPA0xTomOlCpc2lZNh/hXOZSfB69fHwygYshxMf3+A==}
+  ember-exam@10.0.0:
+    resolution: {integrity: sha512-0pCrLqcUgni7QUYqu2xKWX0ikiR0xdvX8DWDdhokZwrvxV17gsTNb7uXqZd1OsBbfAZsqbm/0Wv34pc6yXklGw==}
     engines: {node: '>= 18'}
     peerDependencies:
       ember-qunit: '*'
@@ -16122,7 +16122,7 @@ snapshots:
       - eslint
       - typescript
 
-  ember-exam@9.1.0(ember-qunit@9.0.4(@ember/test-helpers@5.3.0(@babel/core@7.28.4))(qunit@2.24.1))(ember-source@6.5.0(@glimmer/component@2.0.0)(rsvp@4.8.5))(qunit@2.24.1)(webpack@5.101.3):
+  ember-exam@10.0.0(ember-qunit@9.0.4(@ember/test-helpers@5.3.0(@babel/core@7.28.4))(qunit@2.24.1))(ember-source@6.5.0(@glimmer/component@2.0.0)(rsvp@4.8.5))(qunit@2.24.1)(webpack@5.101.3):
     dependencies:
       '@babel/core': 7.28.4(supports-color@8.1.1)
       chalk: 5.6.2
