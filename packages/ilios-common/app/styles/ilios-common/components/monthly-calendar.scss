@@ -16,7 +16,7 @@
   .calendar {
     display: grid;
     grid-template-columns: repeat(7, minmax(3rem, 1fr));
-    grid-gap: 5px;
+    gap: 5px;
     grid-template-rows: 1rem repeat(5, minmax(7rem, min-content));
     width: 100%;
 
