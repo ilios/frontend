@@ -1,7 +1,6 @@
 // @link https://css-tricks.com/snippets/css/prevent-long-urls-from-breaking-out-of-container/
 @mixin text-wrap() {
   overflow-wrap: break-word;
-  word-wrap: break-word;
   -ms-word-break: break-all;
   word-break: break-all;
   /* stylelint-disable-next-line declaration-property-value-keyword-no-deprecated */
