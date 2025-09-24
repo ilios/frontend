@@ -8,7 +8,7 @@ const definition = {
     bars: collection('.bars rect', {
       description: text('desc'),
     }),
-    labels: collection('.bars text'),
+    labels: collection('.bars text > tspan'),
   },
   noData: {
     scope: '[data-test-no-data]',

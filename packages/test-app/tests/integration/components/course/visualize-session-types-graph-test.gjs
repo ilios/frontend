@@ -91,8 +91,8 @@ module('Integration | Component | course/visualize-session-types-graph', functio
     assert.strictEqual(component.chart.bars[0].description, 'Campaign - 180 Minutes');
     assert.strictEqual(component.chart.bars[1].description, 'Standalone - 630 Minutes');
     assert.strictEqual(component.chart.labels.length, 2);
-    assert.strictEqual(component.chart.labels[0].text, 'Campaign');
-    assert.strictEqual(component.chart.labels[1].text, 'Standalone');
+    assert.strictEqual(component.chart.labels[0].text, 'Campaign\u200b');
+    assert.strictEqual(component.chart.labels[1].text, 'Standalone\u200b');
     assert.ok(component.dataTable.actions.download.isVisible);
     assert.strictEqual(component.dataTable.rows.length, 3);
     assert.strictEqual(component.dataTable.rows[0].sessionType.text, 'Prelude');
@@ -151,7 +151,7 @@ module('Integration | Component | course/visualize-session-types-graph', functio
     await waitFor('svg .bars');
     assert.strictEqual(component.chart.bars.length, 1);
     assert.strictEqual(component.chart.labels.length, 1);
-    assert.strictEqual(component.chart.labels[0].text, 'Campaign');
+    assert.strictEqual(component.chart.labels[0].text, 'Campaign\u200b');
     assert.strictEqual(component.dataTable.rows.length, 1);
     assert.strictEqual(component.dataTable.rows[0].sessionType.text, 'Campaign');
   });

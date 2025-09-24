@@ -95,8 +95,8 @@ module('Integration | Component | course/visualize-vocabulary-graph', function (
     assert.strictEqual(component.chart.bars[0].description, 'Campaign - 180 Minutes');
     assert.strictEqual(component.chart.bars[1].description, 'Standalone - 630 Minutes');
     assert.strictEqual(component.chart.labels.length, 2);
-    assert.strictEqual(component.chart.labels[0].text, 'Campaign');
-    assert.strictEqual(component.chart.labels[1].text, 'Standalone');
+    assert.strictEqual(component.chart.labels[0].text, 'Campaign\u200b');
+    assert.strictEqual(component.chart.labels[1].text, 'Standalone\u200b');
     assert.ok(component.dataTable.actions.download.isVisible);
     assert.strictEqual(component.dataTable.rows.length, 2);
     assert.strictEqual(component.dataTable.rows[0].term.text, 'Campaign');

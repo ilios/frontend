@@ -96,10 +96,10 @@ module('Integration | Component | course/visualize-instructors-graph', function 
     assert.strictEqual(component.chart.bars[2].description, 'William - 510 Minutes');
     assert.strictEqual(component.chart.bars[3].description, 'Marie - 810 Minutes');
     assert.strictEqual(component.chart.labels.length, 4);
-    assert.strictEqual(component.chart.labels[0].text, 'Daisy');
-    assert.strictEqual(component.chart.labels[1].text, 'Duke');
-    assert.strictEqual(component.chart.labels[2].text, 'William');
-    assert.strictEqual(component.chart.labels[3].text, 'Marie');
+    assert.strictEqual(component.chart.labels[0].text, 'Daisy\u200b');
+    assert.strictEqual(component.chart.labels[1].text, 'Duke\u200b');
+    assert.strictEqual(component.chart.labels[2].text, 'William\u200b');
+    assert.strictEqual(component.chart.labels[3].text, 'Marie\u200b');
     assert.ok(component.dataTable.actions.download.isVisible);
     assert.strictEqual(component.dataTable.rows.length, 4);
     assert.strictEqual(component.dataTable.rows[0].instructor.text, 'Daisy');
@@ -170,7 +170,7 @@ module('Integration | Component | course/visualize-instructors-graph', function 
     await waitFor('svg .bars');
     assert.strictEqual(component.chart.bars.length, 1);
     assert.strictEqual(component.chart.labels.length, 1);
-    assert.strictEqual(component.chart.labels[0].text, 'Marie');
+    assert.strictEqual(component.chart.labels[0].text, 'Marie\u200b');
     assert.strictEqual(component.dataTable.rows.length, 1);
     assert.strictEqual(component.dataTable.rows[0].instructor.text, 'Marie');
   });
