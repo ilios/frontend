@@ -43,7 +43,7 @@ module('Acceptance | User', function (hooks) {
 
     const userSearch = '.user-search input';
     const secondResult = '.user-search .results li:nth-of-type(3)';
-    const secondResultUsername = `${secondResult} .name`;
+    const secondResultUsername = `${secondResult} .name-and-id`;
     const secondResultEmail = `${secondResult} .email`;
     const name = '.user-display-name';
 
@@ -52,12 +52,12 @@ module('Acceptance | User', function (hooks) {
     await fillIn(userSearch, 'son');
     await triggerEvent(userSearch, 'keyup');
     await percySnapshot(getUniqueName(assert, 'search results dropdown'));
-    assert.dom(secondResultUsername).hasText('1 guy M. Mc1son', 'user name is correct');
+    assert.dom(secondResultUsername).hasText('1 guy M. Mc1son [2]', 'username and id is correct');
     assert.dom(secondResultEmail).hasText('user@example.edu', 'user email is correct');
 
     await click(secondResultUsername);
     assert.strictEqual(currentURL(), '/users/2', 'new user profile is shown');
-    assert.dom(name).hasText('1 guy M. Mc1son', 'user name is shown');
+    assert.dom(name).hasText('1 guy M. Mc1son', 'username is shown');
   });
 
   test('User roles display', async function (assert) {
