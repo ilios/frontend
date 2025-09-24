@@ -31,6 +31,16 @@ export default class ReportsSubjectNewSessionTypeComponent extends Component {
   }
 
   get sortedSessionTypes() {
+    if (!this.args.school) {
+      return sortBy(
+        this.filteredSessionTypes.map((s) => ({
+          ...s,
+          title: `${s.school.get('title')}: ${s.title}`,
+        })),
+        'title',
+      );
+    }
+
     return sortBy(this.filteredSessionTypes, 'title');
   }
 
