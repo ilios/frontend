@@ -42,6 +42,17 @@ export default class ReportsSubjectMeshTermComponent extends Component {
     return this.sortedMeshTerms.slice(0, this.resultsLengthMax);
   }
 
+  async getMeshIdsForLearningMaterial(learningMaterialId) {
+    const attributes = ['id'];
+    const results = await this.graphql.find(
+      'meshDescriptors',
+      [`learningMaterials: [${learningMaterialId}]`],
+      attributes.join(', '),
+    );
+    const ids = results.data.meshDescriptors.map(({ id }) => id);
+    return [...new Set(ids)].sort().map((id) => `"${id}"`);
+  }
+
   async getMeshIdsForSession(sessionId) {
     const attributes = [
       'meshDescriptors { id }',
@@ -113,6 +124,9 @@ export default class ReportsSubjectMeshTermComponent extends Component {
       if (prepositionalObject === 'course') {
         const ids = await this.getMeshIdsForCourse(prepositionalObjectTableRowId);
         filters = [`ids: [${ids.join(', ')}]`]; //drop school filter, a course is only in one school
+      } else if (prepositionalObject === 'learning material') {
+        const ids = await this.getMeshIdsForLearningMaterial(prepositionalObjectTableRowId);
+        filters = [`ids: [${ids.join(', ')}]`]; //drop school filter, a specific learning material is only in one school
       } else if (prepositionalObject === 'session') {
         const ids = await this.getMeshIdsForSession(prepositionalObjectTableRowId);
         filters = [`ids: [${ids.join(', ')}]`]; //drop school filter, a session is only in one school
