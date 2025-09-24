@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { service } from '@ember/service';
-import { dropTask } from 'ember-concurrency';
+import { task } from 'ember-concurrency';
 import { uniqueId, fn } from '@ember/helper';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
@@ -35,7 +35,7 @@ export default class SchoolInstitutionalInformationManagerComponent extends Comp
     addressCountryCode: string().ensure().trim().min(1),
   });
 
-  save = dropTask(async () => {
+  save = task({ drop: true }, async () => {
     this.validations.addErrorDisplayForAllFields();
     const isValid = await this.validations.isValid();
     if (!isValid) {
@@ -56,7 +56,7 @@ export default class SchoolInstitutionalInformationManagerComponent extends Comp
     await this.args.save(institutionalInformation);
   });
 
-  saveOrCancel = dropTask(async (event) => {
+  saveOrCancel = task({ drop: true }, async (event) => {
     const keyCode = event.keyCode;
     if (13 === keyCode) {
       await this.save.perform();

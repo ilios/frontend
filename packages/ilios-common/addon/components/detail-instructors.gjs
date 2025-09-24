@@ -2,7 +2,7 @@ import Component from '@glimmer/component';
 import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
-import { dropTask, restartableTask } from 'ember-concurrency';
+import { task } from 'ember-concurrency';
 import { hash } from 'rsvp';
 import { TrackedAsyncData } from 'ember-async-data';
 import t from 'ember-intl/helpers/t';
@@ -52,13 +52,13 @@ export default class DetailInstructorsComponent extends Component {
     this.load.perform();
   }
 
-  load = restartableTask(async () => {
+  load = task({ restartable: true }, async () => {
     const user = await this.currentUser.getModel();
     const school = await user.school;
     this.availableInstructorGroups = await school.instructorGroups;
   });
 
-  manage = dropTask(async () => {
+  manage = task({ drop: true }, async () => {
     const ilmSession = await this.args.session.ilmSession;
     const { instructorGroups, instructors } = await hash({
       instructorGroups: ilmSession.instructorGroups,
@@ -70,7 +70,7 @@ export default class DetailInstructorsComponent extends Component {
     this.isManaging = true;
   });
 
-  save = dropTask(async () => {
+  save = task({ drop: true }, async () => {
     const ilmSession = await this.args.session.ilmSession;
     ilmSession.set('instructorGroups', this.instructorGroupBuffer);
     ilmSession.set('instructors', this.instructorBuffer);

@@ -2,7 +2,7 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { isNone } from '@ember/utils';
-import { restartableTask, timeout } from 'ember-concurrency';
+import { task, timeout } from 'ember-concurrency';
 import { service } from '@ember/service';
 import { guidFor } from '@ember/object/internals';
 import { on } from '@ember/modifier';
@@ -69,7 +69,7 @@ export default class SearchBox extends Component {
     }
   }
 
-  searchTask = restartableTask(async () => {
+  searchTask = task({ restartable: true }, async () => {
     this.moveFocus();
     await timeout(DEBOUNCE_TIMEOUT);
     await this.args.search(this.value);

@@ -1,5 +1,5 @@
 import Component from '@glimmer/component';
-import { dropTask } from 'ember-concurrency';
+import { task } from 'ember-concurrency';
 import readableFileSize from 'ilios-common/utils/readable-file-size';
 import { service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
@@ -19,7 +19,7 @@ export default class LearningMaterialUploaderComponent extends Component {
   uploadQueueName = 'materials';
   @tracked fileUploadErrorMessage = false;
 
-  upload = dropTask(async (file) => {
+  upload = task({ drop: true }, async (file) => {
     this.args.setFilename(null);
     this.args.setFileHash(null);
     this.fileUploadErrorMessage = false;

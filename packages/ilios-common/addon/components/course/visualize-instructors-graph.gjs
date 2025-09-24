@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
 import { isEmpty } from '@ember/utils';
 import { htmlSafe } from '@ember/template';
-import { dropTask, restartableTask, timeout } from 'ember-concurrency';
+import { task, timeout } from 'ember-concurrency';
 import { map } from 'rsvp';
 import { service } from '@ember/service';
 import { cached, tracked } from '@glimmer/tracking';
@@ -152,7 +152,7 @@ export default class CourseVisualizeInstructorsGraph extends Component {
       });
   }
 
-  barHover = restartableTask(async (obj) => {
+  barHover = task({ restartable: true }, async (obj) => {
     await timeout(100);
     if (this.args.isIcon || isEmpty(obj) || obj.empty) {
       this.tooltipTitle = null;
@@ -176,7 +176,7 @@ export default class CourseVisualizeInstructorsGraph extends Component {
     this.router.transitionTo('course-visualize-instructor', this.args.course.id, obj.meta.user.id);
   }
 
-  downloadData = dropTask(async () => {
+  downloadData = task({ drop: true }, async () => {
     const data = await this.getData(this.args.course);
     const output = data.map((obj) => {
       const rhett = {};

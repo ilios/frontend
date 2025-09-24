@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
-import { restartableTask } from 'ember-concurrency';
+import { task } from 'ember-concurrency';
 import { service } from '@ember/service';
 import YupValidations from 'ilios-common/classes/yup-validations';
 import YupValidationMessage from 'ilios-common/components/yup-validation-message';
@@ -31,7 +31,7 @@ export default class CourseHeaderComponent extends Component {
     courseTitle: string().ensure().trim().min(3).max(200),
   });
 
-  changeTitle = restartableTask(async () => {
+  changeTitle = task({ restartable: true }, async () => {
     this.courseTitle = this.courseTitle.trim();
     this.validations.addErrorDisplayForAllFields();
     const isValid = await this.validations.isValid();

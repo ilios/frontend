@@ -1,6 +1,6 @@
 import Component from '@glimmer/component';
 import { cached, tracked } from '@glimmer/tracking';
-import { dropTask } from 'ember-concurrency';
+import { task } from 'ember-concurrency';
 import sortableByPosition from 'ilios-common/utils/sortable-by-position';
 import { all } from 'rsvp';
 import { action } from '@ember/object';
@@ -53,7 +53,7 @@ export default class ObjectiveSortManagerComponent extends Component {
     }
   }
 
-  saveSortOrder = dropTask(async () => {
+  saveSortOrder = task({ drop: true }, async () => {
     const objectives = this.items;
     for (let i = 0, n = objectives.length; i < n; i++) {
       objectives[i].set('position', i + 1);

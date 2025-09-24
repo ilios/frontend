@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
 import { service } from '@ember/service';
 import PapaParse from 'papaparse';
-import { dropTask, timeout } from 'ember-concurrency';
+import { task, timeout } from 'ember-concurrency';
 import createDownloadFile from 'frontend/utils/create-download-file';
 import { DateTime } from 'luxon';
 import { cached, tracked } from '@glimmer/tracking';
@@ -192,7 +192,7 @@ export default class ReportsCurriculumLearnerGroupsComponent extends Component {
     return '85';
   }
 
-  downloadReport = dropTask(async () => {
+  downloadReport = task({ drop: true }, async () => {
     const data = this.sortedResults.map((o) => {
       const rhett = {};
 

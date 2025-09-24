@@ -4,7 +4,7 @@ import { cached, tracked } from '@glimmer/tracking';
 import { TrackedAsyncData } from 'ember-async-data';
 import { findById, sortBy } from 'ilios-common/utils/array-helpers';
 import cloneLearnerGroup from 'frontend/utils/clone-learner-group';
-import { dropTask } from 'ember-concurrency';
+import { task } from 'ember-concurrency';
 import { map } from 'rsvp';
 import { action } from '@ember/object';
 import FaIcon from 'ilios-common/components/fa-icon';
@@ -171,7 +171,7 @@ export default class LearnerGroupsRootComponent extends Component {
     });
   }
 
-  saveNewLearnerGroup = dropTask(async (title, fillWithCohort) => {
+  saveNewLearnerGroup = task({ drop: true }, async (title, fillWithCohort) => {
     const group = this.store.createRecord('learner-group', {
       title,
       cohort: this.selectedCohort,
@@ -184,7 +184,7 @@ export default class LearnerGroupsRootComponent extends Component {
     this.showNewLearnerGroupForm = false;
   });
 
-  copyGroup = dropTask(async (withLearners, groupToCopy) => {
+  copyGroup = task({ drop: true }, async (withLearners, groupToCopy) => {
     const cohort = await groupToCopy.cohort;
     const newGroups = await cloneLearnerGroup(this.store, groupToCopy, cohort, withLearners);
     this.totalGroupsToSave = newGroups.length;
@@ -251,7 +251,7 @@ export default class LearnerGroupsRootComponent extends Component {
     this.args.setSchoolId(schoolId);
   }
 
-  setProgramId = dropTask(async (programId) => {
+  setProgramId = task({ drop: true }, async (programId) => {
     const program = findById(this.programs, programId);
     const school = await program.school;
     this.args.setSchoolId(school.id);
@@ -259,7 +259,7 @@ export default class LearnerGroupsRootComponent extends Component {
     this.args.setProgramYearId(null);
   });
 
-  setProgramYearId = dropTask(async (programYearId) => {
+  setProgramYearId = task({ drop: true }, async (programYearId) => {
     const programYear = findById(this.programYears, programYearId);
     const program = await programYear.program;
     const school = await program.school;

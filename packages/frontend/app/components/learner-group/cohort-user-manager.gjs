@@ -2,7 +2,7 @@ import Component from '@glimmer/component';
 import { service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
-import { enqueueTask, timeout } from 'ember-concurrency';
+import { task, timeout } from 'ember-concurrency';
 import { uniqueId, fn } from '@ember/helper';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
@@ -78,7 +78,7 @@ export default class LearnerGroupCohortUserManagerComponent extends Component {
     }
   }
 
-  addSingleUser = enqueueTask(async (user) => {
+  addSingleUser = task({ enqueue: true }, async (user) => {
     this.usersBeingMoved = [...this.usersBeingMoved, user];
     //timeout gives the spinner time to render
     await timeout(1);
@@ -86,7 +86,7 @@ export default class LearnerGroupCohortUserManagerComponent extends Component {
     this.usersBeingMoved = this.usersBeingMoved.filter((movingUser) => movingUser !== user);
   });
 
-  addSelectedUsers = enqueueTask(async () => {
+  addSelectedUsers = task({ enqueue: true }, async () => {
     this.usersBeingMoved = [...this.usersBeingMoved, ...this.selectedUsers];
     //timeout gives the spinner time to render
     await timeout(1);

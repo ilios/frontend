@@ -1,6 +1,6 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
-import { dropTask } from 'ember-concurrency';
+import { task } from 'ember-concurrency';
 import YupValidations from 'ilios-common/classes/yup-validations';
 import { string } from 'yup';
 import t from 'ember-intl/helpers/t';
@@ -18,7 +18,7 @@ export default class NewCompetencyComponent extends Component {
     title: string().required().max(200),
   });
 
-  cancelOrSave = dropTask(async (event) => {
+  cancelOrSave = task({ drop: true }, async (event) => {
     const keyCode = event.keyCode;
 
     if (13 === keyCode) {
@@ -32,7 +32,7 @@ export default class NewCompetencyComponent extends Component {
     }
   });
 
-  save = dropTask(async () => {
+  save = task({ drop: true }, async () => {
     this.validations.addErrorDisplayForAllFields();
     const isValid = await this.validations.isValid();
     if (!isValid) {

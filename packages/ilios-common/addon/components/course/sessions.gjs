@@ -1,6 +1,6 @@
 import Component from '@glimmer/component';
 import { service } from '@ember/service';
-import { task, restartableTask, timeout } from 'ember-concurrency';
+import { task, timeout } from 'ember-concurrency';
 import { action } from '@ember/object';
 import { cached, tracked } from '@glimmer/tracking';
 import { TrackedAsyncData } from 'ember-async-data';
@@ -140,7 +140,7 @@ export default class CourseSessionsComponent extends Component {
     this.args.setExpandedSessionIds(this.args.expandedSessionIds.filter((id) => id !== session.id));
   });
 
-  changeFilterBy = restartableTask(async (event) => {
+  changeFilterBy = task({ restartable: true }, async (event) => {
     const value = event.target.value;
     this.filterByLocalCache = value;
     await timeout(DEBOUNCE_DELAY);

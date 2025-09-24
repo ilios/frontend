@@ -1,5 +1,5 @@
 import Component from '@glimmer/component';
-import { dropTask, restartableTask } from 'ember-concurrency';
+import { task } from 'ember-concurrency';
 import { service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
@@ -261,7 +261,7 @@ export default class LearningMaterialManagerComponent extends Component {
     this.isLoaded = true;
   }
 
-  save = dropTask(async () => {
+  save = task({ drop: true }, async () => {
     this.validations.addErrorDisplayForAllFields();
     const isValid = await this.validations.isValid();
     if (!isValid) {
@@ -285,7 +285,7 @@ export default class LearningMaterialManagerComponent extends Component {
     this.args.closeManager();
   });
 
-  textCopied = restartableTask(async () => {
+  textCopied = task({ restartable: true }, async () => {
     this.flashMessages.success('general.copiedSuccessfully');
   });
 

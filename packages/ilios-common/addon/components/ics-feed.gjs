@@ -1,5 +1,5 @@
 import Component from '@glimmer/component';
-import { restartableTask } from 'ember-concurrency';
+import { task } from 'ember-concurrency';
 import { service } from '@ember/service';
 import { guidFor } from '@ember/object/internals';
 import CopyButton from 'ilios-common/components/copy-button';
@@ -21,7 +21,7 @@ export default class IcsFeedComponent extends Component {
     return document.getElementById(this.copyButtonId);
   }
 
-  textCopied = restartableTask(async () => {
+  textCopied = task({ restartable: true }, async () => {
     this.flashMessages.success('general.copiedIcsFeedUrl');
   });
 

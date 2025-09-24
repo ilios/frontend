@@ -2,7 +2,7 @@ import Component from '@glimmer/component';
 import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
-import { dropTask, timeout, restartableTask } from 'ember-concurrency';
+import { task, timeout } from 'ember-concurrency';
 import { TrackedAsyncData } from 'ember-async-data';
 import t from 'ember-intl/helpers/t';
 import or from 'ember-truth-helpers/helpers/or';
@@ -137,7 +137,7 @@ export default class UserProfileCohortsComponent extends Component {
     this.cohortsToAdd = this.cohortsToAdd.filter((c) => c !== cohort);
   }
 
-  cancel = restartableTask(async () => {
+  cancel = task({ restartable: true }, async () => {
     this.reset();
     this.args.setIsManaging(false);
   });
@@ -148,7 +148,7 @@ export default class UserProfileCohortsComponent extends Component {
     this.newPrimaryCohort = false;
   }
 
-  save = dropTask(async () => {
+  save = task({ drop: true }, async () => {
     const cohorts = [this.currentPrimaryCohort, ...this.secondaryCohorts];
     this.args.user.primaryCohort = this.currentPrimaryCohort;
     this.args.user.cohorts = cohorts.filter(Boolean);

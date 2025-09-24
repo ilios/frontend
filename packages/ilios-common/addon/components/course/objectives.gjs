@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
 import { service } from '@ember/service';
 import { cached, tracked } from '@glimmer/tracking';
-import { dropTask } from 'ember-concurrency';
+import { task } from 'ember-concurrency';
 import { action } from '@ember/object';
 import { mapBy } from 'ilios-common/utils/array-helpers';
 import { TrackedAsyncData } from 'ember-async-data';
@@ -35,7 +35,7 @@ export default class CourseObjectivesComponent extends Component {
     return this.objectivesData.isResolved ? this.objectivesData.value : [];
   }
 
-  saveNewObjective = dropTask(async (title) => {
+  saveNewObjective = task({ drop: true }, async (title) => {
     const newCourseObjective = this.store.createRecord('course-objective');
     let position = 0;
     const courseObjectives = await this.args.course.courseObjectives;

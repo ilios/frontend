@@ -2,7 +2,7 @@ import Component from '@glimmer/component';
 import { cached, tracked } from '@glimmer/tracking';
 import { service } from '@ember/service';
 import { filter } from 'rsvp';
-import { dropTask } from 'ember-concurrency';
+import { task } from 'ember-concurrency';
 import { findBy, findById } from 'ilios-common/utils/array-helpers';
 import { TrackedAsyncData } from 'ember-async-data';
 import { DateTime } from 'luxon';
@@ -201,7 +201,7 @@ export default class NewUserComponent extends Component {
     return !!auths.length;
   }
 
-  save = dropTask(async () => {
+  save = task({ drop: true }, async () => {
     this.validations.addErrorDisplayForAllFields();
     const isValid = await this.validations.isValid();
     if (!isValid) {
@@ -238,7 +238,7 @@ export default class NewUserComponent extends Component {
     this.args.transitionToUser(user.get('id'));
   });
 
-  saveOrCancel = dropTask(async (event) => {
+  saveOrCancel = task({ drop: true }, async (event) => {
     const keyCode = event.keyCode;
     if (13 === keyCode) {
       await this.save.perform();

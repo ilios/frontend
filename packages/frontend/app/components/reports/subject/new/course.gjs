@@ -1,6 +1,6 @@
 import Component from '@glimmer/component';
 import { service } from '@ember/service';
-import { restartableTask } from 'ember-concurrency';
+import { task } from 'ember-concurrency';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { guidFor } from '@ember/object/internals';
@@ -50,7 +50,7 @@ export default class ReportsSubjectNewCourseComponent extends Component {
     });
   }
 
-  search = restartableTask(async (q) => {
+  search = task({ restartable: true }, async (q) => {
     if (!q.length) {
       this.courses = false;
       return;

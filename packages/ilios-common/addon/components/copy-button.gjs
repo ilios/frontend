@@ -1,10 +1,10 @@
 import Component from '@glimmer/component';
-import { restartableTask } from 'ember-concurrency';
+import { task } from 'ember-concurrency';
 import { on } from '@ember/modifier';
 import perform from 'ember-concurrency/helpers/perform';
 
 export default class CopyButtonComponent extends Component {
-  copy = restartableTask(async () => {
+  copy = task({ restartable: true }, async () => {
     await navigator.clipboard.writeText(this.args.getClipboardText());
     if (this.args.success) {
       this.args.success();

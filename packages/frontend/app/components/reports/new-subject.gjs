@@ -1,6 +1,6 @@
 import Component from '@glimmer/component';
 import { service } from '@ember/service';
-import { dropTask } from 'ember-concurrency';
+import { task } from 'ember-concurrency';
 import { TrackedAsyncData } from 'ember-async-data';
 import { cached, tracked } from '@glimmer/tracking';
 import { findById } from 'ilios-common/utils/array-helpers';
@@ -407,7 +407,7 @@ export default class ReportsNewSubjectComponent extends Component {
     }
   }
 
-  save = dropTask(async () => {
+  save = task({ drop: true }, async () => {
     this.validations.addErrorDisplayForAllFields();
     let isValid = await this.validations.isValid();
     if (!isValid) {
@@ -427,7 +427,7 @@ export default class ReportsNewSubjectComponent extends Component {
     this.args.close();
   });
 
-  run = dropTask(async () => {
+  run = task({ drop: true }, async () => {
     this.validations.addErrorDisplayForAllFields();
     const isValid = await this.validations.isValid();
 

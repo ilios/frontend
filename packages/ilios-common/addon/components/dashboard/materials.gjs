@@ -3,7 +3,7 @@ import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
 import { isPresent } from '@ember/utils';
-import { restartableTask, timeout } from 'ember-concurrency';
+import { task, timeout } from 'ember-concurrency';
 import { TrackedAsyncData } from 'ember-async-data';
 import { DateTime } from 'luxon';
 import { filterBy, sortBy, uniqueById } from 'ilios-common/utils/array-helpers';
@@ -182,7 +182,7 @@ export default class DashboardMaterialsComponent extends Component {
     this.args.setCourseIdFilter(event.target.value);
   }
 
-  setQuery = restartableTask(async (query) => {
+  setQuery = task({ restartable: true }, async (query) => {
     await timeout(DEBOUNCE_DELAY);
     this.args.setOffset(0);
     this.args.setFilter(query);

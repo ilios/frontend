@@ -3,7 +3,7 @@ import { service } from '@ember/service';
 import { cached, tracked } from '@glimmer/tracking';
 import { TrackedAsyncData } from 'ember-async-data';
 import { findById } from 'ilios-common/utils/array-helpers';
-import { dropTask } from 'ember-concurrency';
+import { task } from 'ember-concurrency';
 import FaIcon from 'ilios-common/components/fa-icon';
 import gt from 'ember-truth-helpers/helpers/gt';
 import t from 'ember-intl/helpers/t';
@@ -62,7 +62,7 @@ export default class ProgramRootComponent extends Component {
     return schoolId ? findById(this.args.schools, schoolId) : this.args.schools[0];
   }
 
-  saveNewProgram = dropTask(async (newProgram) => {
+  saveNewProgram = task({ drop: true }, async (newProgram) => {
     newProgram.set('school', this.bestSelectedSchool);
     newProgram.set('duration', 4);
     this.newProgram = await newProgram.save();

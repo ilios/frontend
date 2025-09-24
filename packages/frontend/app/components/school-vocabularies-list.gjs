@@ -2,7 +2,7 @@ import Component from '@glimmer/component';
 import { cached, tracked } from '@glimmer/tracking';
 import { service } from '@ember/service';
 import { action } from '@ember/object';
-import { dropTask } from 'ember-concurrency';
+import { task } from 'ember-concurrency';
 import { TrackedAsyncData } from 'ember-async-data';
 import { filterBy, sortBy } from 'ilios-common/utils/array-helpers';
 import t from 'ember-intl/helpers/t';
@@ -45,7 +45,7 @@ export default class SchoolVocabulariesListComponent extends Component {
     this.showRemovalConfirmationFor = null;
   }
 
-  remove = dropTask(async (vocabulary) => {
+  remove = task({ drop: true }, async (vocabulary) => {
     await vocabulary.destroyRecord();
     if (this.newVocabulary === vocabulary) {
       this.newVocabulary = null;

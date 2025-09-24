@@ -1,6 +1,6 @@
 import Component from '@glimmer/component';
 import { service } from '@ember/service';
-import { dropTask, timeout } from 'ember-concurrency';
+import { task, timeout } from 'ember-concurrency';
 import { tracked, cached } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { findBy } from 'ilios-common/utils/array-helpers';
@@ -75,7 +75,7 @@ export default class UserProfileRolesComponent extends Component {
     this.isUserSyncIgnoredFlipped = false;
   }
 
-  save = dropTask(async () => {
+  save = task({ drop: true }, async () => {
     const roles = await this.store.findAll('user-role');
     const studentRole = findBy(roles, 'title', 'Student');
     const formerStudentRole = findBy(roles, 'title', 'Former Student');

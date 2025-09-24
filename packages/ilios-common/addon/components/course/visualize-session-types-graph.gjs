@@ -1,6 +1,6 @@
 import Component from '@glimmer/component';
 import { htmlSafe } from '@ember/template';
-import { dropTask, restartableTask, timeout } from 'ember-concurrency';
+import { task, timeout } from 'ember-concurrency';
 import { service } from '@ember/service';
 import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
@@ -151,7 +151,7 @@ export default class CourseVisualizeSessionTypesGraph extends Component {
       });
   }
 
-  barHover = restartableTask(async (obj) => {
+  barHover = task({ restartable: true }, async (obj) => {
     await timeout(100);
     if (this.args.isIcon || !obj || obj.empty) {
       this.tooltipTitle = null;
@@ -177,7 +177,7 @@ export default class CourseVisualizeSessionTypesGraph extends Component {
     );
   }
 
-  downloadData = dropTask(async () => {
+  downloadData = task({ drop: true }, async () => {
     const data = await this.getData(this.args.course);
     const output = data.map((obj) => {
       const rhett = {};
