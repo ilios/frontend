@@ -205,7 +205,7 @@ module('Integration | Component | reports/subject/instructor', function (hooks) 
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
-        'query { users(schools: [24], instructedSessions: [13]) { firstName, middleName, lastName, displayName, school { title } } }',
+        'query { sessions(ids: [13]) { ilmSession { instructorGroups { users { id firstName middleName lastName displayName school { title } }} instructors { id firstName middleName lastName displayName school { title } } }, offerings { instructorGroups { users { id firstName middleName lastName displayName school { title } }} instructors { id firstName middleName lastName displayName school { title } } } } }',
       );
       return responseData;
     });
@@ -296,10 +296,7 @@ module('Integration | Component | reports/subject/instructor', function (hooks) 
     assert.expect(1);
     this.server.post('api/graphql', function (schema, { requestBody }) {
       const { query } = JSON.parse(requestBody);
-      assert.strictEqual(
-        query,
-        'query { users(instructedSessionTypes: [4]) { firstName, middleName, lastName, displayName, school { title } } }',
-      );
+      assert.strictEqual(query, 'query { sessionTypes(id: 4) { sessions { id } } }');
       return responseData;
     });
     const { id } = this.server.create('report', {
