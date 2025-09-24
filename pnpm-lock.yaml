@@ -457,8 +457,8 @@ importers:
         specifier: ^8.0.0
         version: 8.0.1(@ember/test-helpers@5.3.0(@babel/core@7.28.4))(ember-source@6.7.0(@glimmer/component@2.0.0)(rsvp@4.8.5))
       ember-simple-charts:
-        specifier: ^12.2.0
-        version: 12.2.0(@babel/core@7.28.4)(ember-source@6.7.0(@glimmer/component@2.0.0)(rsvp@4.8.5))(webpack@5.101.3)
+        specifier: ^12.2.1
+        version: 12.2.1(@babel/core@7.28.4)(ember-source@6.7.0(@glimmer/component@2.0.0)(rsvp@4.8.5))(webpack@5.101.3)
       ember-template-imports:
         specifier: ^4.3.0
         version: 4.3.0
@@ -4158,9 +4158,9 @@ packages:
     resolution: {integrity: sha512-YBjSAiTqM04ZVei6sXighu679a3SqWORA3qZTEqZImnlkDIFtKc6pNutpjyZ8RJTjQtuYfeetkxM11GwoYXMIQ==}
     engines: {node: '>= 0.10'}
 
-  browserify-sign@4.2.4:
-    resolution: {integrity: sha512-pbZw0FHibrwXcpLQlXwHp21A5undDBo+RaGNL0K3KOm8nK8uP6PThhS301VDzoMgURZPiVRWRrVHlo6NyU57kA==}
-    engines: {node: '>= 0.12'}
+  browserify-sign@4.2.5:
+    resolution: {integrity: sha512-C2AUdAJg6rlM2W5QMp2Q4KGQMVBwR1lIimTsUnutJ8bMpW5B52pGpR2gEnNBNwijumDo5FojQ0L9JrXA8m4YEw==}
+    engines: {node: '>= 0.10'}
 
   browserify-zlib@0.2.0:
     resolution: {integrity: sha512-Z942RysHXmJrhqk88FmKBVq/v5tqmSkDz7p54G/MGyjMnCFFnC79XWNbg+Vta8W6Wb2qtSZTSxIGkJrRpCFEiA==}
@@ -5457,6 +5457,15 @@ packages:
       '@glint/template':
         optional: true
 
+  ember-concurrency@5.1.0:
+    resolution: {integrity: sha512-cnudfQnW7soEN98uEwGgfmmMM5PP8L3pefpQ81FewAtTFZhYyYKyJsMtkk8R/7AHCbcuX5cvY44yndHVF6Vshw==}
+    engines: {node: 16.* || >= 18}
+    peerDependencies:
+      '@glint/template': '>= 1.0.0'
+    peerDependenciesMeta:
+      '@glint/template':
+        optional: true
+
   ember-cookies@1.3.0:
     resolution: {integrity: sha512-nhVDm9lql4EVLpbjxyosyEITFvuNAmHr7cod8K2FmIyw2KcAFWSS0v88quIWc+GvcawBTz3KSMRXOJq/0InVpg==}
     engines: {node: '>= 16.*'}
@@ -5608,8 +5617,8 @@ packages:
       '@ember/test-helpers':
         optional: true
 
-  ember-simple-charts@12.2.0:
-    resolution: {integrity: sha512-H49NMF+vYA0ZQdjVzwaRj0sfBa7dYBjVw3RIWrU6pcEIXELGnFGEuXya9+PCod9p1kldVIND2061Sjh5ysdtIQ==}
+  ember-simple-charts@12.2.1:
+    resolution: {integrity: sha512-sxCFBqMoFO7xSa4h1ucy7lV1ru6pWnMxkXNHOE0e/Rfp3PgVp59AGGkx5+WNwN47NPgMCP9yZaqBny6K5oerMQ==}
     peerDependencies:
       ember-source: '>= 4.12.0'
 
@@ -8082,9 +8091,9 @@ packages:
     resolution: {integrity: sha512-GQ2EWRpQV8/o+Aw8YqtfZZPfNRWZYkbidE9k5rpl/hC3vtHHBfGm2Ifi6qWV+coDGkrUKZAxE3Lot5kcsRlh+g==}
     engines: {node: '>=6'}
 
-  parse-asn1@5.1.8:
-    resolution: {integrity: sha512-e90aVPe/1q/g7BrNeYvbJy++5tln4ShE+I3qZ5LxFpUbu+uavfKMuzH2R3SH141O7Pvruwif0BZRwKoVf6vW6w==}
-    engines: {node: '>= 0.12'}
+  parse-asn1@5.1.9:
+    resolution: {integrity: sha512-fIYNuZ/HastSb80baGOuPRo1O9cf4baWw5WsAp7dBuUzeTD/BoaG8sVTdlPFksBE2lF21dN+A1AnrpIjSWqHHg==}
+    engines: {node: '>= 0.10'}
 
   parse-json@5.2.0:
     resolution: {integrity: sha512-ayCKvm/phCGxOkYRSCM82iDwct8/EonSEgCSxWxD7ve6jHggsFl4fZVQBPRNgQoKiuV/odhFrGzQXZwbifC8Rg==}
@@ -8180,9 +8189,9 @@ packages:
   pause-stream@0.0.11:
     resolution: {integrity: sha512-e3FBlXLmN/D1S+zHzanP4E/4Z60oFAa3O051qt1pxa7DEJWKAyil6upYVXCWadEnuoqa4Pkc9oUx9zsxYeRv8A==}
 
-  pbkdf2@3.1.4:
-    resolution: {integrity: sha512-0yPXNT01PxSUdkIxL85Fd+yPdeCcvGwFPAAHbR3Z2ukMERcRrJFfLUKK3oglbQ9eUPeX6qDY3QiELqiDarZYUQ==}
-    engines: {node: '>=0.12'}
+  pbkdf2@3.1.5:
+    resolution: {integrity: sha512-Q3CG/cYvCO1ye4QKkuH7EXxs3VC/rI1/trd+qX2+PolbaKG0H+bgcZzrTt96mMyRtejk+JMCiLUn3y29W8qmFQ==}
+    engines: {node: '>= 0.10'}
 
   pend@1.2.0:
     resolution: {integrity: sha512-F3asv42UuXchdzt+xXqfW1OGlVBe+mxa2mqI0pg5yAHZPvFmY3Y6drSf/GQ1A86WgWEN9Kzh/WrgKa6iGcHXLg==}
@@ -14630,7 +14639,7 @@ snapshots:
       randombytes: 2.1.0
       safe-buffer: 5.2.1
 
-  browserify-sign@4.2.4:
+  browserify-sign@4.2.5:
     dependencies:
       bn.js: 5.2.2
       browserify-rsa: 4.1.1
@@ -14638,7 +14647,7 @@ snapshots:
       create-hmac: 1.1.7
       elliptic: 6.6.1
       inherits: 2.0.4
-      parse-asn1: 5.1.8
+      parse-asn1: 5.1.9
       readable-stream: 2.3.8
       safe-buffer: 5.2.1
 
@@ -15192,14 +15201,14 @@ snapshots:
   crypto-browserify@3.12.1:
     dependencies:
       browserify-cipher: 1.0.1
-      browserify-sign: 4.2.4
+      browserify-sign: 4.2.5
       create-ecdh: 4.0.4
       create-hash: 1.2.0
       create-hmac: 1.1.7
       diffie-hellman: 5.0.3
       hash-base: 3.0.5
       inherits: 2.0.4
-      pbkdf2: 3.1.4
+      pbkdf2: 3.1.5
       public-encrypt: 4.0.3
       randombytes: 2.1.0
       randomfill: 1.0.4
@@ -16409,6 +16418,17 @@ snapshots:
       - '@babel/core'
       - supports-color
 
+  ember-concurrency@5.1.0(@babel/core@7.28.4):
+    dependencies:
+      '@babel/helper-module-imports': 7.27.1(supports-color@8.1.1)
+      '@babel/helper-plugin-utils': 7.27.1
+      '@babel/types': 7.28.4
+      '@embroider/addon-shim': 1.10.0
+      decorator-transforms: 1.2.1(@babel/core@7.28.4)
+    transitivePeerDependencies:
+      - '@babel/core'
+      - supports-color
+
   ember-cookies@1.3.0(ember-source@6.7.0(@glimmer/component@2.0.0)(rsvp@4.8.5)):
     dependencies:
       '@embroider/addon-shim': 1.10.0
@@ -16681,7 +16701,7 @@ snapshots:
       - '@glint/template'
       - supports-color
 
-  ember-simple-charts@12.2.0(@babel/core@7.28.4)(ember-source@6.7.0(@glimmer/component@2.0.0)(rsvp@4.8.5))(webpack@5.101.3):
+  ember-simple-charts@12.2.1(@babel/core@7.28.4)(ember-source@6.7.0(@glimmer/component@2.0.0)(rsvp@4.8.5))(webpack@5.101.3):
     dependencies:
       '@embroider/addon-shim': 1.10.0
       '@embroider/util': 1.13.4(ember-source@6.7.0(@glimmer/component@2.0.0)(rsvp@4.8.5))
@@ -16696,7 +16716,7 @@ snapshots:
       d3-transition: 3.0.1(d3-selection@3.0.0)
       decorator-transforms: 2.3.0(@babel/core@7.28.4)
       ember-async-data: 2.0.1(@babel/core@7.28.4)
-      ember-concurrency: 4.0.6(@babel/core@7.28.4)
+      ember-concurrency: 5.1.0(@babel/core@7.28.4)
       ember-in-element-polyfill: 1.0.1
       ember-modifier: 4.2.2(@babel/core@7.28.4)
       ember-on-resize-modifier: 2.0.2(@babel/core@7.28.4)(webpack@5.101.3)
@@ -19135,7 +19155,7 @@ snapshots:
 
   md5.js@1.3.5:
     dependencies:
-      hash-base: 3.0.5
+      hash-base: 3.1.2
       inherits: 2.0.4
       safe-buffer: 5.2.1
 
@@ -19728,12 +19748,12 @@ snapshots:
     dependencies:
       callsites: 3.1.0
 
-  parse-asn1@5.1.8:
+  parse-asn1@5.1.9:
     dependencies:
       asn1.js: 4.10.1
       browserify-aes: 1.2.0
       evp_bytestokey: 1.0.3
-      pbkdf2: 3.1.4
+      pbkdf2: 3.1.5
       safe-buffer: 5.2.1
 
   parse-json@5.2.0:
@@ -19802,7 +19822,7 @@ snapshots:
     dependencies:
       through: 2.3.8
 
-  pbkdf2@3.1.4:
+  pbkdf2@3.1.5:
     dependencies:
       create-hash: 1.2.0
       create-hmac: 1.1.7
@@ -19993,7 +20013,7 @@ snapshots:
       bn.js: 4.12.2
       browserify-rsa: 4.1.1
       create-hash: 1.2.0
-      parse-asn1: 5.1.8
+      parse-asn1: 5.1.9
       randombytes: 2.1.0
       safe-buffer: 5.2.1
 
