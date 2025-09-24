@@ -109,7 +109,6 @@ export default class SessionsGridOffering extends Component {
 
   save = task(
     { drop: true },
-    this,
     async (
       startDate,
       endDate,
