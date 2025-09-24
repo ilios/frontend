@@ -83,8 +83,17 @@ module('Acceptance | course visualizations - session-type', function (hooks) {
       'Vocabulary 2 - term 2 - 30 Minutes',
     );
     assert.strictEqual(page.root.sessionTypeChart.chart.labels.length, 3);
-    assert.strictEqual(page.root.sessionTypeChart.chart.labels[0].text, 'Vocabulary 1 - term 1');
-    assert.strictEqual(page.root.sessionTypeChart.chart.labels[1].text, 'Vocabulary 1 - term 0');
-    assert.strictEqual(page.root.sessionTypeChart.chart.labels[2].text, 'Vocabulary 2 - term 2');
+    assert.strictEqual(
+      page.root.sessionTypeChart.chart.labels[0].text,
+      'Vocabulary 1 - term 1\u200b',
+    );
+    assert.strictEqual(
+      page.root.sessionTypeChart.chart.labels[1].text,
+      'Vocabulary 1 - term 0\u200b',
+    );
+    assert.strictEqual(
+      page.root.sessionTypeChart.chart.labels[2].text,
+      'Vocabulary 2 - term 2\u200b',
+    );
   });
 });

@@ -89,8 +89,8 @@ module('Acceptance | course visualizations - instructors', function (hooks) {
       '2 guy M. Mc2son - 90 Minutes',
     );
     assert.strictEqual(page.root.instructorsChart.chart.labels.length, 2);
-    assert.strictEqual(page.root.instructorsChart.chart.labels[0].text, '1 guy M. Mc1son');
-    assert.strictEqual(page.root.instructorsChart.chart.labels[1].text, '2 guy M. Mc2son');
+    assert.strictEqual(page.root.instructorsChart.chart.labels[0].text, '1 guy M. Mc1son\u200b');
+    assert.strictEqual(page.root.instructorsChart.chart.labels[1].text, '2 guy M. Mc2son\u200b');
     assert.strictEqual(page.root.instructorsChart.dataTable.rows.length, 2);
   });
 
@@ -101,7 +101,7 @@ module('Acceptance | course visualizations - instructors', function (hooks) {
     // wait for charts to load
     await waitFor('.loaded');
     await waitFor('svg .bars');
-    assert.strictEqual(page.root.instructorsChart.chart.labels[0].text, '1 guy M. Mc1son');
+    assert.strictEqual(page.root.instructorsChart.chart.labels[0].text, '1 guy M. Mc1son\u200b');
     await page.root.instructorsChart.chart.bars[0].click();
     assert.strictEqual(currentURL(), '/data/courses/1/instructors/2');
   });

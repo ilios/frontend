@@ -79,8 +79,8 @@ module('Acceptance | course visualizations - vocabularies', function (hooks) {
       'Vocabulary 1 - 90 Minutes',
     );
     assert.strictEqual(page.root.vocabulariesChart.chart.labels.length, 2);
-    assert.strictEqual(page.root.vocabulariesChart.chart.labels[0].text, 'Vocabulary 2');
-    assert.strictEqual(page.root.vocabulariesChart.chart.labels[1].text, 'Vocabulary 1');
+    assert.strictEqual(page.root.vocabulariesChart.chart.labels[0].text, 'Vocabulary 2\u200b');
+    assert.strictEqual(page.root.vocabulariesChart.chart.labels[1].text, 'Vocabulary 1\u200b');
     assert.strictEqual(page.root.vocabulariesChart.dataTable.rows.length, 2);
   });
 });
