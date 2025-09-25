@@ -8,6 +8,8 @@ import removeHtmlTags from 'ilios-common/helpers/remove-html-tags';
 import DetailTermsList from 'ilios-common/components/detail-terms-list';
 import sortBy from 'ilios-common/helpers/sort-by';
 import formatDate from 'ember-intl/helpers/format-date';
+import notEq from 'ember-truth-helpers/helpers/not-eq';
+import sub_ from 'ember-math-helpers/helpers/sub';
 import { guidFor } from '@ember/object/internals';
 
 export default class PrintCourseSessionComponent extends Component {
@@ -36,6 +38,11 @@ export default class PrintCourseSessionComponent extends Component {
     return new TrackedAsyncData(this.args.session.terms);
   }
 
+  @cached
+  get prerequisitesData() {
+    return new TrackedAsyncData(this.args.session.prerequisites);
+  }
+
   get sessionObjectives() {
     return this.sessionObjectivesData.isResolved ? this.sessionObjectivesData.value : [];
   }
@@ -55,6 +62,11 @@ export default class PrintCourseSessionComponent extends Component {
   get terms() {
     return this.termsData.isResolved ? this.termsData.value : [];
   }
+
+  get prerequisites() {
+    return this.prerequisitesData.isResolved ? this.prerequisitesData.value : null;
+  }
+
   get uniqueId() {
     return guidFor(this);
   }
@@ -128,6 +140,19 @@ export default class PrintCourseSessionComponent extends Component {
                 id="attendance-{{this.uniqueId}}"
                 type="checkbox"
                 checked={{@session.attendanceRequired}}
+                disabled="disabled"
+              />
+            </div>
+          </div>
+          <div class="inline-label-data-block">
+            <label for="attendance-{{this.uniqueId}}">
+              {{t "general.independentLearning"}}:
+            </label>
+            <div>
+              <input
+                id="independent-learning-{{this.uniqueId}}"
+                type="checkbox"
+                checked={{@session.isIndependentLearning}}
                 disabled="disabled"
               />
             </div>
@@ -279,6 +304,17 @@ export default class PrintCourseSessionComponent extends Component {
                 </tr>
               </tbody>
             </table>
+            {{#if @session.hasPrerequisites}}
+              <div class="inline-label-data-block">
+                <label>{{t "general.prerequisites"}}:</label>
+                <span>
+                  {{#each this.prerequisites as |prerequisite index|~}}
+                    {{prerequisite.title}}{{#if (notEq index (sub_ this.prerequisites.length 1))}},
+                    {{/if}}
+                  {{~/each}}
+                </span>
+              </div>
+            {{/if}}
           </div>
         </section>
       {{/if}}
