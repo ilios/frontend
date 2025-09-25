@@ -385,10 +385,6 @@ export default class PrintCourseSessionComponent extends Component {
               </tbody>
             </table>
           </div>
-        {{else}}
-          <p>
-            {{t "general.noOfferings"}}
-          </p>
         {{/if}}
       </section>
     </div>
