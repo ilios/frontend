@@ -157,7 +157,57 @@ export default class PrintCourseSessionComponent extends Component {
               />
             </div>
           </div>
-          <br />
+        </div>
+      </section>
+      {{#if @session.isIndependentLearning}}
+        <section class="block" data-test-session-ilm-section>
+          <div class="title">
+            {{t "general.independentLearning"}}
+          </div>
+          <div class="content">
+            <table>
+              <thead>
+                <tr>
+                  <th>
+                    {{t "general.hours"}}
+                  </th>
+                  <th>
+                    {{t "general.dueBy"}}
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    {{@session.ilmSession.hours}}
+                  </td>
+                  <td>
+                    {{formatDate
+                      @session.ilmSession.dueDate
+                      month="2-digit"
+                      day="2-digit"
+                      year="numeric"
+                    }}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            {{#if @session.hasPrerequisites}}
+              <div class="inline-label-data-block">
+                <label>{{t "general.prerequisites"}}:</label>
+                <span>
+                  {{#each this.prerequisites as |prerequisite index|~}}
+                    {{prerequisite.title}}{{#if (notEq index (sub_ this.prerequisites.length 1))}},
+                    {{/if}}
+                  {{~/each}}
+                </span>
+              </div>
+            {{/if}}
+          </div>
+        </section>
+      {{/if}}
+      <section class="block" data-test-session-description>
+        <div class="content">
           <div class="inline-label-data-block">
             <label>
               {{t "general.description"}}:
@@ -271,53 +321,6 @@ export default class PrintCourseSessionComponent extends Component {
           </div>
         {{/if}}
       </section>
-      {{#if @session.isIndependentLearning}}
-        <section class="block" data-test-session-ilm-section>
-          <div class="title">
-            {{t "general.independentLearning"}}
-          </div>
-          <div class="content">
-            <table>
-              <thead>
-                <tr>
-                  <th>
-                    {{t "general.hours"}}
-                  </th>
-                  <th>
-                    {{t "general.dueBy"}}
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>
-                    {{@session.ilmSession.hours}}
-                  </td>
-                  <td>
-                    {{formatDate
-                      @session.ilmSession.dueDate
-                      month="2-digit"
-                      day="2-digit"
-                      year="numeric"
-                    }}
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-            {{#if @session.hasPrerequisites}}
-              <div class="inline-label-data-block">
-                <label>{{t "general.prerequisites"}}:</label>
-                <span>
-                  {{#each this.prerequisites as |prerequisite index|~}}
-                    {{prerequisite.title}}{{#if (notEq index (sub_ this.prerequisites.length 1))}},
-                    {{/if}}
-                  {{~/each}}
-                </span>
-              </div>
-            {{/if}}
-          </div>
-        </section>
-      {{/if}}
       <section class="block" data-test-session-offerings>
         <div class="title">
           {{t "general.offerings"}}
