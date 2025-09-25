@@ -2,7 +2,7 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
-import { dropTask } from 'ember-concurrency';
+import { task } from 'ember-concurrency';
 import t from 'ember-intl/helpers/t';
 import HtmlEditor from 'ilios-common/components/html-editor';
 import or from 'ember-truth-helpers/helpers/or';
@@ -26,7 +26,7 @@ export default class NewObjectiveComponent extends Component {
     return striptags(this.title ?? '').replace(/&nbsp;/gi, '');
   }
 
-  saveObjective = dropTask(async () => {
+  saveObjective = task({ drop: true }, async () => {
     this.validations.addErrorDisplayFor('titleWithoutMarkup');
     const isValid = await this.validations.isValid();
     if (!isValid) {

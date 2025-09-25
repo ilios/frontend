@@ -1,6 +1,6 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
-import { dropTask } from 'ember-concurrency';
+import { task } from 'ember-concurrency';
 import { service } from '@ember/service';
 import { isBlank } from '@ember/utils';
 import { uniqueId } from '@ember/helper';
@@ -78,7 +78,7 @@ export default class SchoolEmailsEditorComponent extends Component {
       .join(', ');
   }
 
-  save = dropTask(async () => {
+  save = task({ drop: true }, async () => {
     this.validations.addErrorDisplayForAllFields();
     const isValid = await this.validations.isValid();
     if (!isValid) {
@@ -90,7 +90,7 @@ export default class SchoolEmailsEditorComponent extends Component {
     this.args.cancel();
   });
 
-  saveOrCancel = dropTask(async (event) => {
+  saveOrCancel = task({ drop: true }, async (event) => {
     const keyCode = event.keyCode;
     if (13 === keyCode) {
       await this.save.perform();

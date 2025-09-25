@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
 import { service } from '@ember/service';
 import { all, filter } from 'rsvp';
-import { dropTask, timeout } from 'ember-concurrency';
+import { task, timeout } from 'ember-concurrency';
 import { action } from '@ember/object';
 import { cached, tracked } from '@glimmer/tracking';
 import { DateTime } from 'luxon';
@@ -108,7 +108,7 @@ export default class SessionCopyComponent extends Component {
     this.selectedCourseId = event.target.value;
   }
 
-  save = dropTask(async () => {
+  save = task({ drop: true }, async () => {
     await timeout(10);
     const sessionToCopy = this.args.session;
     const newCourse = this.bestSelectedCourse;

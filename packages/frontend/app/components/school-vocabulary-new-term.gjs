@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
 import { cached, tracked } from '@glimmer/tracking';
 import { service } from '@ember/service';
-import { dropTask } from 'ember-concurrency';
+import { task } from 'ember-concurrency';
 import { TrackedAsyncData } from 'ember-async-data';
 import YupValidations from 'ilios-common/classes/yup-validations';
 import { string } from 'yup';
@@ -34,7 +34,7 @@ export default class SchoolVocabularyNewTermComponent extends Component {
       ),
   });
 
-  save = dropTask(async () => {
+  save = task({ drop: true }, async () => {
     this.validations.addErrorDisplayForAllFields();
     const isValid = await this.validations.isValid();
     if (!isValid) {
@@ -45,7 +45,7 @@ export default class SchoolVocabularyNewTermComponent extends Component {
     this.title = null;
   });
 
-  saveOnEnter = dropTask(async (event) => {
+  saveOnEnter = task({ drop: true }, async (event) => {
     const keyCode = event.keyCode;
     if (13 === keyCode) {
       await this.save.perform();

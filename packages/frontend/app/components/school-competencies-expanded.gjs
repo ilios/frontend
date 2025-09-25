@@ -3,7 +3,7 @@ import { service } from '@ember/service';
 import { all } from 'rsvp';
 import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
-import { dropTask } from 'ember-concurrency';
+import { task } from 'ember-concurrency';
 import { filterBy, uniqueValues } from 'ilios-common/utils/array-helpers';
 import { TrackedAsyncData } from 'ember-async-data';
 import t from 'ember-intl/helpers/t';
@@ -87,7 +87,7 @@ export default class SchoolCompetenciesExpandedComponent extends Component {
     this.competenciesToRemove = [...this.competenciesToRemove, competency];
   }
 
-  save = dropTask(async () => {
+  save = task({ drop: true }, async () => {
     const competencies = this.schoolCompetenciesData.value;
     const domainsToRemove = competencies.filter((competency) => {
       return !competency.belongsTo('parent').id() && !this.competencies.includes(competency);

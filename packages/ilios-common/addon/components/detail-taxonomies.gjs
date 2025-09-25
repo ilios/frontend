@@ -2,7 +2,7 @@ import Component from '@glimmer/component';
 import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
-import { dropTask } from 'ember-concurrency';
+import { task } from 'ember-concurrency';
 import { TrackedAsyncData } from 'ember-async-data';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
@@ -33,14 +33,14 @@ export default class DetailTaxonomiesComponent extends Component {
     return !this.isManaging && terms.length;
   }
 
-  manage = dropTask(async () => {
+  manage = task({ drop: true }, async () => {
     this.args.expand();
     const terms = await this.args.subject.terms;
     this.bufferedTerms = [...terms];
     this.isManaging = true;
   });
 
-  save = dropTask(async () => {
+  save = task({ drop: true }, async () => {
     this.args.subject.set('terms', this.bufferedTerms);
     await this.args.subject.save();
     this.isManaging = false;

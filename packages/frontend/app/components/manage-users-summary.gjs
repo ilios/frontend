@@ -2,7 +2,7 @@ import Component from '@glimmer/component';
 import Ember from 'ember';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
-import { dropTask, restartableTask, timeout } from 'ember-concurrency';
+import { task, timeout } from 'ember-concurrency';
 import { cleanQuery } from 'ilios-common/utils/query-utils';
 import { cached, tracked } from '@glimmer/tracking';
 import { TrackedAsyncData } from 'ember-async-data';
@@ -184,7 +184,7 @@ export default class ManageUsersSummaryComponent extends Component {
     return activeElement ? activeElement.querySelector('button').dataset.userid : null;
   }
 
-  searchForUsers = restartableTask(async () => {
+  searchForUsers = task({ restartable: true }, async () => {
     const q = cleanQuery(this.searchValue);
     if (!q) {
       await timeout(1);
@@ -227,7 +227,7 @@ export default class ManageUsersSummaryComponent extends Component {
     ];
   });
 
-  clickUser = dropTask(async ({ id }) => {
+  clickUser = task({ drop: true }, async ({ id }) => {
     await this.router.transitionTo('user', id, {
       queryParams: {
         isManagingBio: Ember.DEFAULT_VALUE,

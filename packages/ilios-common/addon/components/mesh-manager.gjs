@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
 import { service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
-import { dropTask, restartableTask, timeout } from 'ember-concurrency';
+import { task, timeout } from 'ember-concurrency';
 import { action } from '@ember/object';
 import { mapBy, sortBy } from 'ilios-common/utils/array-helpers';
 import { uniqueId, fn } from '@ember/helper';
@@ -76,7 +76,7 @@ export default class MeshManagerComponent extends Component {
     this.search.perform();
   }
 
-  search = restartableTask(async () => {
+  search = task({ restartable: true }, async () => {
     if (this.query.length < MIN_INPUT) {
       this.searchResults = [];
       return; // don't linger around return right away
@@ -97,7 +97,7 @@ export default class MeshManagerComponent extends Component {
     this.searchResults = descriptors;
   });
 
-  searchMore = dropTask(async () => {
+  searchMore = task({ drop: true }, async () => {
     const descriptors = (
       await this.store.query('mesh-descriptor', {
         q: this.query,

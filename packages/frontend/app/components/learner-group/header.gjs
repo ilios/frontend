@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
 import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
-import { dropTask } from 'ember-concurrency';
+import { task } from 'ember-concurrency';
 import { TrackedAsyncData } from 'ember-async-data';
 import EditableField from 'ilios-common/components/editable-field';
 import t from 'ember-intl/helpers/t';
@@ -69,7 +69,7 @@ export default class LearnerGroupHeaderComponent extends Component {
     this.titleBuffer = null;
   }
 
-  changeTitle = dropTask(async () => {
+  changeTitle = task({ drop: true }, async () => {
     this.validations.addErrorDisplayFor('title');
     const isValid = await this.validations.isValid();
     if (!isValid) {

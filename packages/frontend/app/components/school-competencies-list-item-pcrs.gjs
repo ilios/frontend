@@ -1,6 +1,6 @@
 import Component from '@glimmer/component';
 import { cached } from '@glimmer/tracking';
-import { dropTask } from 'ember-concurrency';
+import { task } from 'ember-concurrency';
 import { TrackedAsyncData } from 'ember-async-data';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
@@ -11,7 +11,7 @@ import { fn } from '@ember/helper';
 import pcrsUriToNumber from 'frontend/helpers/pcrs-uri-to-number';
 
 export default class SchoolCompetenciesListItemPcrsComponent extends Component {
-  save = dropTask(async () => {
+  save = task({ drop: true }, async () => {
     await this.args.save();
   });
 

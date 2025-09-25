@@ -4,7 +4,7 @@ import { action } from '@ember/object';
 import { service } from '@ember/service';
 import { isPresent } from '@ember/utils';
 import { filter } from 'rsvp';
-import { dropTask, restartableTask } from 'ember-concurrency';
+import { task } from 'ember-concurrency';
 import PapaParse from 'papaparse';
 import { DateTime } from 'luxon';
 import { findById, mapBy } from 'ilios-common/utils/array-helpers';
@@ -237,7 +237,7 @@ export default class BulkNewUsersComponent extends Component {
     });
   }
 
-  updateSelectedFile = restartableTask(async (files) => {
+  updateSelectedFile = task({ restartable: true }, async (files) => {
     // Check for the various File API support.
     if (window.File && window.FileReader && window.FileList && window.Blob) {
       if (files.length > 0) {
@@ -248,11 +248,11 @@ export default class BulkNewUsersComponent extends Component {
     }
   });
 
-  setSchool = restartableTask(async (id) => {
+  setSchool = task({ restartable: true }, async (id) => {
     this.schoolId = id;
   });
 
-  parseFile = restartableTask(async (file) => {
+  parseFile = task({ restartable: true }, async (file) => {
     const proposedUsers = await this.getFileContents(file);
     this.validUsers = await filter(proposedUsers, async (obj) => {
       return await obj.isValid();
@@ -262,7 +262,7 @@ export default class BulkNewUsersComponent extends Component {
     this.proposedUsers = proposedUsers;
   });
 
-  save = dropTask(async () => {
+  save = task({ drop: true }, async () => {
     this.savedUserIds = [];
     const nonStudentMode = this.nonStudentMode;
     const selectedSchool = this.bestSelectedSchool;

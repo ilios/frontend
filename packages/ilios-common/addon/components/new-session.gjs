@@ -2,7 +2,7 @@ import Component from '@glimmer/component';
 import { service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
-import { dropTask } from 'ember-concurrency';
+import { task } from 'ember-concurrency';
 import { findBy } from 'ilios-common/utils/array-helpers';
 import YupValidations from 'ilios-common/classes/yup-validations';
 import { string } from 'yup';
@@ -51,7 +51,7 @@ export default class NewSessionComponent extends Component {
     return selectedSessionType;
   }
 
-  saveNewSession = dropTask(async () => {
+  saveNewSession = task({ drop: true }, async () => {
     this.validations.addErrorDisplayForAllFields();
     if (!(await this.validations.isValid())) {
       return false;

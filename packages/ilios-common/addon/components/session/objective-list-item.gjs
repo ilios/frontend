@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
 import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
-import { dropTask, restartableTask, timeout } from 'ember-concurrency';
+import { task, timeout } from 'ember-concurrency';
 import { service } from '@ember/service';
 import { TrackedAsyncData } from 'ember-async-data';
 import and from 'ember-truth-helpers/helpers/and';
@@ -74,7 +74,7 @@ export default class SessionObjectiveListItemComponent extends Component {
     return this.isManagingParents || this.isManagingDescriptors || this.isManagingTerms;
   }
 
-  saveDescriptionChanges = dropTask(async () => {
+  saveDescriptionChanges = task({ drop: true }, async () => {
     this.validations.addErrorDisplayFor('descriptionWithoutMarkup');
     const isValid = await this.validations.isValid();
     if (!isValid) {
@@ -85,27 +85,27 @@ export default class SessionObjectiveListItemComponent extends Component {
     await this.args.sessionObjective.save();
   });
 
-  manageParents = dropTask(async () => {
+  manageParents = task({ drop: true }, async () => {
     this.parentsBuffer = await this.args.sessionObjective.courseObjectives;
     this.isManagingParents = true;
   });
 
-  manageDescriptors = dropTask(async () => {
+  manageDescriptors = task({ drop: true }, async () => {
     this.descriptorsBuffer = await this.args.sessionObjective.meshDescriptors;
     this.isManagingDescriptors = true;
   });
 
-  manageTerms = dropTask(async (vocabulary) => {
+  manageTerms = task({ drop: true }, async (vocabulary) => {
     this.selectedVocabulary = vocabulary;
     this.termsBuffer = await this.args.sessionObjective.terms;
     this.isManagingTerms = true;
   });
 
-  highlightSave = restartableTask(async () => {
+  highlightSave = task({ restartable: true }, async () => {
     await timeout(1000);
   });
 
-  saveParents = dropTask(async () => {
+  saveParents = task({ drop: true }, async () => {
     const newParents = this.parentsBuffer.map((obj) => {
       return this.store.peekRecord('course-objective', obj.id);
     });
@@ -116,7 +116,7 @@ export default class SessionObjectiveListItemComponent extends Component {
     this.highlightSave.perform();
   });
 
-  saveDescriptors = dropTask(async () => {
+  saveDescriptors = task({ drop: true }, async () => {
     this.args.sessionObjective.set('meshDescriptors', this.descriptorsBuffer);
     await this.args.sessionObjective.save();
     this.descriptorsBuffer = [];
@@ -124,7 +124,7 @@ export default class SessionObjectiveListItemComponent extends Component {
     this.highlightSave.perform();
   });
 
-  saveTerms = dropTask(async () => {
+  saveTerms = task({ drop: true }, async () => {
     this.args.sessionObjective.set('terms', this.termsBuffer);
     await this.args.sessionObjective.save();
     this.termsBuffer = [];
@@ -181,7 +181,7 @@ export default class SessionObjectiveListItemComponent extends Component {
     this.selectedVocabulary = null;
   }
 
-  deleteObjective = dropTask(async () => {
+  deleteObjective = task({ drop: true }, async () => {
     await this.args.sessionObjective.destroyRecord();
   });
   <template>

@@ -2,7 +2,7 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { service } from '@ember/service';
 import { action } from '@ember/object';
-import { dropTask } from 'ember-concurrency';
+import { task } from 'ember-concurrency';
 import YupValidations from 'ilios-common/classes/yup-validations';
 import { string } from 'yup';
 import { uniqueId } from '@ember/helper';
@@ -23,7 +23,7 @@ export default class InstructorGroupsNewComponent extends Component {
     title: string().required().min(3).max(60),
   });
 
-  save = dropTask(async () => {
+  save = task({ drop: true }, async () => {
     this.validations.addErrorDisplayForAllFields();
     const isValid = await this.validations.isValid();
     if (!isValid) {

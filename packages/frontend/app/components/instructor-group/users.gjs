@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
 import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
-import { dropTask, timeout } from 'ember-concurrency';
+import { task, timeout } from 'ember-concurrency';
 import { TrackedAsyncData } from 'ember-async-data';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
@@ -35,12 +35,12 @@ export default class InstructorGroupUsersComponent extends Component {
     this.usersBuffer = this.usersBuffer.filter((obj) => obj !== user);
   }
 
-  manage = dropTask(async () => {
+  manage = task({ drop: true }, async () => {
     this.usersBuffer = await this.args.instructorGroup.users;
     this.isManaging = true;
   });
 
-  save = dropTask(async () => {
+  save = task({ drop: true }, async () => {
     await timeout(10);
     this.args.instructorGroup.set('users', this.usersBuffer);
     await this.args.instructorGroup.save();

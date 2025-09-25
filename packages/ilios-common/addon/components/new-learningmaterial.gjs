@@ -3,7 +3,7 @@ import { service } from '@ember/service';
 import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { guidFor } from '@ember/object/internals';
-import { dropTask } from 'ember-concurrency';
+import { task } from 'ember-concurrency';
 import { TrackedAsyncData } from 'ember-async-data';
 import { findBy, findById } from 'ilios-common/utils/array-helpers';
 import YupValidations from 'ilios-common/classes/yup-validations';
@@ -173,7 +173,7 @@ export default class NewLearningmaterialComponent extends Component {
     }
   }
 
-  prepareSave = dropTask(async () => {
+  prepareSave = task({ drop: true }, async () => {
     this.validations.addErrorDisplayForAllFields();
     const isValid = await this.validations.isValid();
     if (!isValid) {

@@ -2,7 +2,7 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
-import { restartableTask } from 'ember-concurrency';
+import { task } from 'ember-concurrency';
 import YupValidations from 'ilios-common/classes/yup-validations';
 import { string } from 'yup';
 import EditableField from 'ilios-common/components/editable-field';
@@ -32,7 +32,7 @@ export default class CurriculumInventorySequenceBlockHeaderComponent extends Com
     this.titleBuffer = null;
   }
 
-  changeTitle = restartableTask(async () => {
+  changeTitle = task({ restartable: true }, async () => {
     this.validations.addErrorDisplayForAllFields();
     const isValid = await this.validations.isValid();
     if (!isValid) {

@@ -1,6 +1,6 @@
 import Component from '@glimmer/component';
 import { service } from '@ember/service';
-import { dropTask } from 'ember-concurrency';
+import { task } from 'ember-concurrency';
 import SchoolSessionTypeForm from 'frontend/components/school-session-type-form';
 import and from 'ember-truth-helpers/helpers/and';
 import eq from 'ember-truth-helpers/helpers/eq';
@@ -35,7 +35,8 @@ export default class SchoolSessionTypeManagerComponent extends Component {
     };
   }
 
-  save = dropTask(
+  save = task(
+    { drop: true },
     async (title, calendarColor, assessment, assessmentOption, aamcMethod, isActive) => {
       const aamcMethods = aamcMethod ? [aamcMethod] : [];
       this.args.sessionType.setProperties({

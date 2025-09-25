@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
 import { service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
-import { dropTask } from 'ember-concurrency';
+import { task } from 'ember-concurrency';
 import { action } from '@ember/object';
 import { mapBy } from 'ilios-common/utils/array-helpers';
 import { on } from '@ember/modifier';
@@ -31,7 +31,7 @@ export default class SessionObjectivesComponent extends Component {
     return this.args.session.hasMany('sessionObjectives').ids().length;
   }
 
-  saveNewObjective = dropTask(async (title) => {
+  saveNewObjective = task({ drop: true }, async (title) => {
     const newSessionObjective = this.store.createRecord('session-objective');
     let position = 0;
     const sessionObjectives = await this.args.session.sessionObjectives;

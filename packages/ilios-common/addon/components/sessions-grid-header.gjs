@@ -1,6 +1,6 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
-import { dropTask, timeout } from 'ember-concurrency';
+import { task, timeout } from 'ember-concurrency';
 import { on } from '@ember/modifier';
 import perform from 'ember-concurrency/helpers/perform';
 import LoadingSpinner from 'ilios-common/components/loading-spinner';
@@ -24,7 +24,7 @@ export default class SessionsGridHeader extends Component {
     this.args.setSortBy(what);
   }
 
-  expandAll = dropTask(async () => {
+  expandAll = task({ drop: true }, async () => {
     await timeout(100);
     this.args.toggleExpandAll();
   });

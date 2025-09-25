@@ -2,7 +2,7 @@ import { service } from '@ember/service';
 import Component from '@glimmer/component';
 import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
-import { restartableTask } from 'ember-concurrency';
+import { task } from 'ember-concurrency';
 import { TrackedAsyncData } from 'ember-async-data';
 import SearchBox from 'ilios-common/components/search-box';
 import perform from 'ember-concurrency/helpers/perform';
@@ -78,7 +78,7 @@ export default class UserSearch extends Component {
     }
   }
 
-  search = restartableTask(async (searchTerms = '') => {
+  search = task({ restartable: true }, async (searchTerms = '') => {
     this.showMoreInputPrompt = false;
     this.searchReturned = false;
     this.userResults = [];

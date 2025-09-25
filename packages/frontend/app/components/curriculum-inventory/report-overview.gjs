@@ -2,7 +2,7 @@ import Component from '@glimmer/component';
 import { cached, tracked } from '@glimmer/tracking';
 import { service } from '@ember/service';
 import { action } from '@ember/object';
-import { dropTask } from 'ember-concurrency';
+import { task } from 'ember-concurrency';
 import { TrackedAsyncData } from 'ember-async-data';
 import YupValidations from 'ilios-common/classes/yup-validations';
 import { date, string } from 'yup';
@@ -158,7 +158,7 @@ export default class CurriculumInventoryReportOverviewComponent extends Componen
     return this.year;
   }
 
-  changeStartDate = dropTask(async () => {
+  changeStartDate = task({ drop: true }, async () => {
     this.validations.addErrorDisplayFor('startDate');
     const isValid = await this.validations.isValid();
     if (!isValid) {
@@ -175,7 +175,7 @@ export default class CurriculumInventoryReportOverviewComponent extends Componen
     this.startDate = this.args.report.get.startDate;
   }
 
-  changeEndDate = dropTask(async () => {
+  changeEndDate = task({ drop: true }, async () => {
     this.validations.addErrorDisplayFor('endDate');
     const isValid = await this.validations.isValid();
     if (!isValid) {
@@ -192,7 +192,7 @@ export default class CurriculumInventoryReportOverviewComponent extends Componen
     this.endDate = this.args.report.endDate;
   }
 
-  changeYear = dropTask(async () => {
+  changeYear = task({ drop: true }, async () => {
     this.args.report.year = this.year;
     await this.args.report.save();
   });
@@ -202,7 +202,7 @@ export default class CurriculumInventoryReportOverviewComponent extends Componen
     this.year = this.args.report.year;
   }
 
-  changeDescription = dropTask(async () => {
+  changeDescription = task({ drop: true }, async () => {
     this.validations.addErrorDisplayFor('description');
     const isValid = await this.validations.isValid();
     if (!isValid) {

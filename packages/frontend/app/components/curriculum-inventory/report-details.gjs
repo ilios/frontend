@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
 import { service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
-import { dropTask } from 'ember-concurrency';
+import { task } from 'ember-concurrency';
 import ReportHeader from 'frontend/components/curriculum-inventory/report-header';
 import set from 'ember-set-helper/helpers/set';
 import t from 'ember-intl/helpers/t';
@@ -25,7 +25,7 @@ export default class CurriculumInventoryReportDetailsComponent extends Component
     return this.args.canUpdate && !this.isFinalizing;
   }
 
-  finalize = dropTask(async () => {
+  finalize = task({ drop: true }, async () => {
     const newExport = this.store.createRecord('curriculum-inventory-export', {
       report: this.args.report,
     });

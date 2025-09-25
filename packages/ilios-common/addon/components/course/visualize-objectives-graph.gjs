@@ -4,7 +4,7 @@ import { action } from '@ember/object';
 import { service } from '@ember/service';
 import { htmlSafe } from '@ember/template';
 import { filter, map } from 'rsvp';
-import { dropTask, restartableTask, timeout } from 'ember-concurrency';
+import { task, timeout } from 'ember-concurrency';
 import { TrackedAsyncData } from 'ember-async-data';
 import striptags from 'striptags';
 import PapaParse from 'papaparse';
@@ -193,7 +193,7 @@ export default class CourseVisualizeObjectivesGraph extends Component {
     });
   }
 
-  donutHover = restartableTask(async (obj) => {
+  donutHover = task({ restartable: true }, async (obj) => {
     await timeout(100);
     if (this.args.isIcon || !obj || obj.empty) {
       this.tooltipTitle = null;
@@ -212,7 +212,7 @@ export default class CourseVisualizeObjectivesGraph extends Component {
     this.tooltipContent = htmlSafe(mapBy(meta.sessionObjectives, 'sessionTitle').sort().join(', '));
   });
 
-  downloadData = dropTask(async () => {
+  downloadData = task({ drop: true }, async () => {
     const sessions = await this.args.course.sessions;
     const data = await this.getDataObjects(sessions);
     const output = data.map((obj) => {

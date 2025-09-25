@@ -2,7 +2,7 @@ import Component from '@glimmer/component';
 import { service } from '@ember/service';
 import { htmlSafe } from '@ember/template';
 import { filter, map } from 'rsvp';
-import { dropTask, restartableTask, timeout } from 'ember-concurrency';
+import { task, timeout } from 'ember-concurrency';
 import { cached, tracked } from '@glimmer/tracking';
 import { TrackedAsyncData } from 'ember-async-data';
 import PapaParse from 'papaparse';
@@ -131,7 +131,7 @@ export default class SchoolVisualizeSessionTypeVocabularyGraphComponent extends 
     });
   }
 
-  donutHover = restartableTask(async (obj) => {
+  donutHover = task({ restartable: true }, async (obj) => {
     await timeout(100);
     if (this.args.isIcon || !obj || obj.empty) {
       this.tooltipTitle = null;
@@ -143,7 +143,7 @@ export default class SchoolVisualizeSessionTypeVocabularyGraphComponent extends 
     this.tooltipContent = obj.description;
   });
 
-  downloadData = dropTask(async () => {
+  downloadData = task({ drop: true }, async () => {
     const data = await this.getData(this.args.sessionType, this.args.vocabulary);
     const output = data.map((obj) => {
       const rhett = {};

@@ -1,6 +1,6 @@
 import Component from '@glimmer/component';
 import { cached, tracked } from '@glimmer/tracking';
-import { dropTask } from 'ember-concurrency';
+import { task } from 'ember-concurrency';
 import { action } from '@ember/object';
 import { TrackedAsyncData } from 'ember-async-data';
 import t from 'ember-intl/helpers/t';
@@ -47,7 +47,7 @@ export default class DetailMeshComponent extends Component {
     this.bufferedDescriptors = this.bufferedDescriptors.filter((obj) => obj.id !== descriptor.id);
   }
 
-  save = dropTask(async () => {
+  save = task({ drop: true }, async () => {
     this.args.subject.set('meshDescriptors', this.bufferedDescriptors);
     await this.args.subject.save();
     this.bufferedDescriptors = null;

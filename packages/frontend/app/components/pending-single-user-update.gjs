@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
 import { all } from 'rsvp';
 import { service } from '@ember/service';
-import { dropTask } from 'ember-concurrency';
+import { task } from 'ember-concurrency';
 import { TrackedAsyncData } from 'ember-async-data';
 import { cached } from '@glimmer/tracking';
 import FaIcon from 'ilios-common/components/fa-icon';
@@ -32,7 +32,7 @@ export default class PendingSingleUserUpdateComponent extends Component {
     );
   }
 
-  updateEmailAddress = dropTask(async (update) => {
+  updateEmailAddress = task({ drop: true }, async (update) => {
     this.args.user.set('email', update.value);
     await this.args.user.save();
     await update.destroyRecord();
@@ -41,7 +41,7 @@ export default class PendingSingleUserUpdateComponent extends Component {
     });
   });
 
-  disableUser = dropTask(async () => {
+  disableUser = task({ drop: true }, async () => {
     const updates = await this.args.user.pendingUserUpdates;
     this.args.user.set('enabled', false);
     await this.args.user.save();
@@ -51,7 +51,7 @@ export default class PendingSingleUserUpdateComponent extends Component {
     });
   });
 
-  excludeFromSync = dropTask(async () => {
+  excludeFromSync = task({ drop: true }, async () => {
     const updates = await this.args.user.pendingUserUpdates;
     this.args.user.set('userSyncIgnore', true);
     await this.args.user.save();

@@ -1,6 +1,6 @@
 import Component from '@glimmer/component';
 import { cached, tracked } from '@glimmer/tracking';
-import { dropTask } from 'ember-concurrency';
+import { task } from 'ember-concurrency';
 import { map } from 'rsvp';
 import { service } from '@ember/service';
 import { TrackedAsyncData } from 'ember-async-data';
@@ -94,7 +94,7 @@ export default class ProgramYearObjectiveListComponent extends Component {
     return new Headers(headers);
   }
 
-  downloadReport = dropTask(async () => {
+  downloadReport = task({ drop: true }, async () => {
     const apiPath = '/' + this.iliosConfig.apiNameSpace;
     const resourcePath = `/programyears/${this.args.programYear.id}/downloadobjectivesmapping`;
     const host = this.iliosConfig.apiHost ?? `${window.location.protocol}//${window.location.host}`;
