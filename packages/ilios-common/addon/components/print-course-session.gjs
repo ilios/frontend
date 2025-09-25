@@ -221,7 +221,7 @@ export default class PrintCourseSessionComponent extends Component {
             </div>
           {{/if}}
           <div class="inline-label-data-block">
-            <label for="attendance-{{this.uniqueId}}">
+            <label for="independent-learning-{{this.uniqueId}}">
               {{t "general.independentLearning"}}:
             </label>
             <div>
