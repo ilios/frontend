@@ -82,9 +82,9 @@ module('Acceptance | course visualizations - instructor', function (hooks) {
     await percySnapshot(assert);
     assert.strictEqual(page.root.termsChart.chart.bars.length, 3);
     assert.strictEqual(page.root.termsChart.chart.labels.length, 3);
-    assert.strictEqual(page.root.termsChart.chart.labels[0].text, 'Vocabulary 1 - term 0');
-    assert.strictEqual(page.root.termsChart.chart.labels[1].text, 'Vocabulary 1 - term 1');
-    assert.strictEqual(page.root.termsChart.chart.labels[2].text, 'Vocabulary 2 - term 2');
+    assert.strictEqual(page.root.termsChart.chart.labels[0].text, 'Vocabulary 1 - term 0\u200b');
+    assert.strictEqual(page.root.termsChart.chart.labels[1].text, 'Vocabulary 1 - term 1\u200b');
+    assert.strictEqual(page.root.termsChart.chart.labels[2].text, 'Vocabulary 2 - term 2\u200b');
     assert.strictEqual(page.root.sessionTypesChart.chart.slices.length, 2);
     assert.strictEqual(page.root.sessionTypesChart.chart.labels.length, 2);
     assert.strictEqual(page.root.sessionTypesChart.chart.descriptions.length, 2);

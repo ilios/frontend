@@ -85,9 +85,9 @@ module('Acceptance | course visualizations - session-types', function (hooks) {
       'session type 2 - 120 Minutes',
     );
     assert.strictEqual(page.root.sessionTypesChart.chart.labels.length, 3);
-    assert.strictEqual(page.root.sessionTypesChart.chart.labels[0].text, 'session type 1');
-    assert.strictEqual(page.root.sessionTypesChart.chart.labels[1].text, 'session type 0');
-    assert.strictEqual(page.root.sessionTypesChart.chart.labels[2].text, 'session type 2');
+    assert.strictEqual(page.root.sessionTypesChart.chart.labels[0].text, 'session type 1\u200b');
+    assert.strictEqual(page.root.sessionTypesChart.chart.labels[1].text, 'session type 0\u200b');
+    assert.strictEqual(page.root.sessionTypesChart.chart.labels[2].text, 'session type 2\u200b');
     assert.strictEqual(page.root.sessionTypesChart.dataTable.rows.length, 3);
   });
 });

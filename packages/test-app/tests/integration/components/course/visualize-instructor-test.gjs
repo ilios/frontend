@@ -146,9 +146,9 @@ module('Integration | Component | course/visualize-instructor', function (hooks)
     await waitFor('svg .slice');
     assert.strictEqual(component.termsChart.chart.bars.length, 3);
     assert.strictEqual(component.termsChart.chart.labels.length, 3);
-    assert.strictEqual(component.termsChart.chart.labels[0].text, 'Vocabulary 1 - term 0');
-    assert.strictEqual(component.termsChart.chart.labels[1].text, 'Vocabulary 1 - term 1');
-    assert.strictEqual(component.termsChart.chart.labels[2].text, 'Vocabulary 2 - term 2');
+    assert.strictEqual(component.termsChart.chart.labels[0].text, 'Vocabulary 1 - term 0\u200b');
+    assert.strictEqual(component.termsChart.chart.labels[1].text, 'Vocabulary 1 - term 1\u200b');
+    assert.strictEqual(component.termsChart.chart.labels[2].text, 'Vocabulary 2 - term 2\u200b');
     assert.strictEqual(component.sessionTypesChart.chart.slices.length, 2);
     assert.strictEqual(component.sessionTypesChart.chart.labels.length, 2);
     assert.ok(component.sessionTypesChart.chart.labels[0].text.startsWith('session type 1'));

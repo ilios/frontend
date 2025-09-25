@@ -77,9 +77,9 @@ module('Acceptance | course visualizations - vocabulary', function (hooks) {
     assert.strictEqual(page.root.termsChart.chart.bars[1].description, 'term 0 - 60 Minutes');
     assert.strictEqual(page.root.termsChart.chart.bars[2].description, 'term 2 - 150 Minutes');
     assert.strictEqual(page.root.termsChart.chart.labels.length, 3);
-    assert.strictEqual(page.root.termsChart.chart.labels[0].text, 'term 1');
-    assert.strictEqual(page.root.termsChart.chart.labels[1].text, 'term 0');
-    assert.strictEqual(page.root.termsChart.chart.labels[2].text, 'term 2');
+    assert.strictEqual(page.root.termsChart.chart.labels[0].text, 'term 1\u200b');
+    assert.strictEqual(page.root.termsChart.chart.labels[1].text, 'term 0\u200b');
+    assert.strictEqual(page.root.termsChart.chart.labels[2].text, 'term 2\u200b');
     assert.strictEqual(page.root.termsChart.dataTable.rows.length, 3);
   });
 
@@ -89,7 +89,7 @@ module('Acceptance | course visualizations - vocabulary', function (hooks) {
     // wait for charts to load
     await waitFor('.loaded');
     await waitFor('svg .bars');
-    assert.strictEqual(page.root.termsChart.chart.labels[0].text, 'term 1');
+    assert.strictEqual(page.root.termsChart.chart.labels[0].text, 'term 1\u200b');
     await page.root.termsChart.chart.bars[0].click();
     assert.strictEqual(currentURL(), '/data/courses/1/terms/2');
   });

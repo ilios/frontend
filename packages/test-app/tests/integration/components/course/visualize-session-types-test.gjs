@@ -57,8 +57,8 @@ module('Integration | Component | course/visualize-session-types', function (hoo
     await waitFor('svg .bars');
     assert.strictEqual(component.sessionTypesChart.chart.bars.length, 2);
     assert.strictEqual(component.sessionTypesChart.chart.labels.length, 2);
-    assert.strictEqual(component.sessionTypesChart.chart.labels[0].text, 'Campaign');
-    assert.strictEqual(component.sessionTypesChart.chart.labels[1].text, 'Standalone');
+    assert.strictEqual(component.sessionTypesChart.chart.labels[0].text, 'Campaign\u200b');
+    assert.strictEqual(component.sessionTypesChart.chart.labels[1].text, 'Standalone\u200b');
   });
 
   test('course year is shown as range if applicable by configuration', async function (assert) {
@@ -83,12 +83,12 @@ module('Integration | Component | course/visualize-session-types', function (hoo
     assert.strictEqual(component.title, 'course 0 2021');
     assert.strictEqual(component.sessionTypesChart.chart.bars.length, 2);
     assert.strictEqual(component.sessionTypesChart.chart.labels.length, 2);
-    assert.strictEqual(component.sessionTypesChart.chart.labels[0].text, 'Campaign');
-    assert.strictEqual(component.sessionTypesChart.chart.labels[1].text, 'Standalone');
+    assert.strictEqual(component.sessionTypesChart.chart.labels[0].text, 'Campaign\u200b');
+    assert.strictEqual(component.sessionTypesChart.chart.labels[1].text, 'Standalone\u200b');
     await component.filter.set('Campaign');
     assert.strictEqual(component.sessionTypesChart.chart.bars.length, 1);
     assert.strictEqual(component.sessionTypesChart.chart.labels.length, 1);
-    assert.strictEqual(component.sessionTypesChart.chart.labels[0].text, 'Campaign');
+    assert.strictEqual(component.sessionTypesChart.chart.labels[0].text, 'Campaign\u200b');
   });
 
   test('breadcrumb', async function (assert) {

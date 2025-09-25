@@ -54,10 +54,10 @@ module('Integration | Component | course/visualize-instructors', function (hooks
     await waitFor('svg .bars');
     assert.strictEqual(component.instructorsChart.chart.bars.length, 4);
     assert.strictEqual(component.instructorsChart.chart.labels.length, 4);
-    assert.strictEqual(component.instructorsChart.chart.labels[0].text, 'Daisy');
-    assert.strictEqual(component.instructorsChart.chart.labels[1].text, 'Duke');
-    assert.strictEqual(component.instructorsChart.chart.labels[2].text, 'William');
-    assert.strictEqual(component.instructorsChart.chart.labels[3].text, 'Marie');
+    assert.strictEqual(component.instructorsChart.chart.labels[0].text, 'Daisy\u200b');
+    assert.strictEqual(component.instructorsChart.chart.labels[1].text, 'Duke\u200b');
+    assert.strictEqual(component.instructorsChart.chart.labels[2].text, 'William\u200b');
+    assert.strictEqual(component.instructorsChart.chart.labels[3].text, 'Marie\u200b');
   });
 
   test('filter works', async function (assert) {
@@ -83,12 +83,12 @@ module('Integration | Component | course/visualize-instructors', function (hooks
     assert.strictEqual(component.title, 'course 0 2021');
     assert.strictEqual(component.instructorsChart.chart.bars.length, 2);
     assert.strictEqual(component.instructorsChart.chart.labels.length, 2);
-    assert.strictEqual(component.instructorsChart.chart.labels[0].text, 'foo M. Mc0son');
-    assert.strictEqual(component.instructorsChart.chart.labels[1].text, 'bar M. Mc1son');
+    assert.strictEqual(component.instructorsChart.chart.labels[0].text, 'foo M. Mc0son\u200b');
+    assert.strictEqual(component.instructorsChart.chart.labels[1].text, 'bar M. Mc1son\u200b');
     await component.filter.set('foo');
     assert.strictEqual(component.instructorsChart.chart.bars.length, 1);
     assert.strictEqual(component.instructorsChart.chart.labels.length, 1);
-    assert.strictEqual(component.instructorsChart.chart.labels[0].text, 'foo M. Mc0son');
+    assert.strictEqual(component.instructorsChart.chart.labels[0].text, 'foo M. Mc0son\u200b');
   });
 
   test('course year is shown as range if applicable by configuration', async function (assert) {
