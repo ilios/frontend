@@ -12,6 +12,7 @@ import LoadingSpinner from 'ilios-common/components/loading-spinner';
 
 export default class ReportsSubjectNewSessionTypeComponent extends Component {
   @service store;
+  @service intl;
 
   @cached
   get sessionTypesData() {
@@ -33,9 +34,9 @@ export default class ReportsSubjectNewSessionTypeComponent extends Component {
   get sortedSessionTypes() {
     if (!this.args.school) {
       return sortBy(
-        this.filteredSessionTypes.map((s) => ({
-          ...s,
-          title: `${s.school.get('title')}: ${s.title}`,
+        this.filteredSessionTypes.map((st) => ({
+          id: st.id,
+          title: `${st.school.get('title')}: ${st.title}${!st.active ? ` (${this.intl.t('general.inactive')})` : ''}`,
         })),
         'title',
       );
@@ -82,9 +83,11 @@ export default class ReportsSubjectNewSessionTypeComponent extends Component {
               value={{sessionType.id}}
             >
               {{sessionType.title}}
-              {{#unless sessionType.active}}
-                ({{t "general.inactive"}})
-              {{/unless}}
+              {{#if @school}}
+                {{#unless sessionType.active}}
+                  ({{t "general.inactive"}})
+                {{/unless}}
+              {{/if}}
             </option>
           {{/each}}
         </select>
