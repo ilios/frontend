@@ -91,6 +91,63 @@ export default class ReportsSubjectInstructorComponent extends Component {
     return rhett;
   }
 
+  async getResultsForSessionTypes(sessionTypeId, school) {
+    let filters = [`id: ${sessionTypeId}`];
+    if (school) {
+      filters.push(`schools: [${school.id}]`);
+    }
+    const attributes = ['sessions { id }'];
+    const results = await this.graphql.find('sessionTypes', filters, attributes.join(', '));
+
+    if (!results.data.sessionTypes[0].sessions.length) {
+      return [];
+    }
+
+    const ids = results.data.sessionTypes[0].sessions.map(({ id }) => id);
+
+    // fetch sessions 100 at a time for performance on the API
+    // but send all the requests at once
+    const promises = chunk(ids, 100).map((chunk) => this.getResultsForSessions(chunk));
+
+    const users = await (await Promise.all(promises)).flat();
+    return uniqueById(users);
+  }
+
+  async getResultsForSessions(sessionIds) {
+    const userInfo = '{ id firstName middleName lastName displayName school { title } }';
+    const block = `instructorGroups { users ${userInfo}} instructors ${userInfo}`;
+
+    const filters = [`ids: [${sessionIds.join(',')}]`];
+    const attributes = [`ilmSession { ${block} }`, `offerings { ${block} }`];
+
+    const results = await this.graphql.find('sessions', filters, attributes.join(', '));
+
+    if (!results.data.sessions.length) {
+      return [];
+    }
+
+    const sessions = results.data.sessions.flat();
+
+    const users = sessions.reduce((acc, session) => {
+      if (session.ilmSession) {
+        acc.push(
+          ...session.ilmSession.instructors,
+          ...session.ilmSession.instructorGroups.flatMap((group) => group.users),
+        );
+      }
+      session.offerings.forEach((offering) => {
+        acc.push(
+          ...offering.instructors,
+          ...offering.instructorGroups.flatMap((group) => group.users),
+        );
+      });
+
+      return acc;
+    }, []);
+
+    return uniqueById(users);
+  }
+
   async getResultsForCourses(courseIds) {
     const userInfo = '{ id firstName middleName lastName displayName school { title } }';
     const block = `instructorGroups {  users ${userInfo}} instructors ${userInfo}`;
@@ -159,6 +216,14 @@ export default class ReportsSubjectInstructorComponent extends Component {
   async getReportResults(subject, prepositionalObject, prepositionalObjectTableRowId, school) {
     if (subject !== 'instructor') {
       throw new Error(`Report for ${subject} sent to ReportsSubjectInstructorComponent`);
+    }
+
+    if (prepositionalObject === 'session type') {
+      return this.getResultsForSessionTypes(prepositionalObjectTableRowId, school);
+    }
+
+    if (prepositionalObject === 'session') {
+      return this.getResultsForSessions([prepositionalObjectTableRowId]);
     }
 
     if (prepositionalObject === 'course') {
