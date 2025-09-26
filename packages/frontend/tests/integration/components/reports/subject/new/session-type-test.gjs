@@ -29,20 +29,28 @@ module('Integration | Component | reports/subject/new/session-type', function (h
       </template>,
     );
 
-    assert.strictEqual(component.options.length, 6);
-    assert.strictEqual(component.options[0].text, this.intl.t('general.selectPolite'));
-    assert.ok(component.options[0].isSelected);
-    assert.strictEqual(component.value, '');
+    assert.strictEqual(component.options.length, 6, 'options count is correct');
+    assert.strictEqual(
+      component.options[0].text,
+      this.intl.t('general.selectPolite'),
+      'options default text is correct',
+    );
+    assert.ok(component.options[0].isSelected, 'options default option is selected');
+    assert.strictEqual(component.value, '', 'selected option value is correct');
 
     for (let i = 1; i < 5; i++) {
-      assert.strictEqual(component.options[i].text, `session type ${i - 1}`);
-      assert.notOk(component.options[i].isSelected);
+      assert.strictEqual(
+        component.options[i].text,
+        `school ${i < 3 ? 0 : 1}: session type ${i - 1}`,
+        `option ${i} text is correct`,
+      );
+      assert.notOk(component.options[i].isSelected, 'option is not selected');
     }
 
     this.set('currentId', '3');
-    assert.notOk(component.options[0].isSelected);
-    assert.ok(component.options[3].isSelected);
-    assert.strictEqual(component.value, '3');
+    assert.notOk(component.options[0].isSelected, 'first option is not selected');
+    assert.ok(component.options[3].isSelected, 'fourth option is selected');
+    assert.strictEqual(component.value, '3', 'option value is correct');
   });
 
   test('it works', async function (assert) {
