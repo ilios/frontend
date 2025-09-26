@@ -128,7 +128,7 @@ export default class CourseOverview extends Component {
       return false;
     }
 
-    return this.canCreateCourseInSchool;
+    return !this.args.course.locked && this.canCreateCourseInSchool;
   }
 
   get clerkshipTypeTitle() {

@@ -359,6 +359,18 @@ module('Acceptance | Course - Overview', function (hooks) {
     assert.notOk(page.details.overview.rollover.isVisible);
   });
 
+  test('rollover hidden from privileged users if course is locked', async function (assert) {
+    this.user.update({ administeredSchools: [this.school] });
+    const course = this.server.create('course', {
+      year: 2013,
+      school: this.school,
+      locked: true,
+    });
+    const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
+    await page.visit({ courseId: courseModel.id, details: true });
+    assert.notOk(page.details.overview.rollover.isVisible);
+  });
+
   test('rollover visible to privileged users', async function (assert) {
     this.user.update({ administeredSchools: [this.school] });
     const course = this.server.create('course', {

@@ -80,4 +80,20 @@ module('Integration | Component | course summary header', function (hooks) {
     assert.ok(findAll(actions).length, 2);
     assert.dom(printIcon).hasClass('fa-print');
   });
+
+  test('no link to rollover if course is locked', async function (assert) {
+    const school = this.server.create('school', {});
+    const course = this.server.create('course', {
+      school,
+      locked: true,
+    });
+    const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
+    this.set('course', courseModel);
+    await render(<template><SummaryHeader @course={{this.course}} /></template>);
+    const actions = '.course-summary-actions a';
+    const printIcon = `${actions}:nth-of-type(1) svg`;
+
+    assert.ok(findAll(actions).length, 2);
+    assert.dom(printIcon).hasClass('fa-print');
+  });
 });

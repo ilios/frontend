@@ -22,6 +22,9 @@ export default class CourseSummaryHeaderComponent extends Component {
   }
 
   async getCanRollover(course) {
+    if (course.locked) {
+      return false;
+    }
     const school = await course.school;
     return this.permissionChecker.canCreateCourse(school);
   }
