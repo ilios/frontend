@@ -261,7 +261,7 @@ export default class ReportsNewSubjectComponent extends Component {
       {
         value: 'competency',
         label: this.intl.t('general.competency'),
-        subjects: ['course', 'session', 'session type', 'term'],
+        subjects: ['course', 'session', 'session type'],
       },
       {
         value: 'mesh term',
