@@ -17,10 +17,12 @@ module('Acceptance | header', function (hooks) {
 
   test('privileged users can view search', async function (assert) {
     assert.expect(1);
+    const { apiVersion } = this.owner.resolveRegistration('config:environment');
     this.server.get('application/config', function () {
       return {
         config: {
           searchEnabled: true,
+          apiVersion,
         },
       };
     });
@@ -32,10 +34,12 @@ module('Acceptance | header', function (hooks) {
 
   test('when search is disabled on the server it does not display', async function (assert) {
     assert.expect(1);
+    const { apiVersion } = this.owner.resolveRegistration('config:environment');
     this.server.get('application/config', function () {
       return {
         config: {
           searchEnabled: false,
+          apiVersion,
         },
       };
     });
@@ -46,10 +50,12 @@ module('Acceptance | header', function (hooks) {
   });
 
   test('students can not view search', async function (assert) {
+    const { apiVersion } = this.owner.resolveRegistration('config:environment');
     this.server.get('application/config', function () {
       return {
         config: {
           searchEnabled: true,
+          apiVersion,
         },
       };
     });
