@@ -28,7 +28,7 @@ export default class ApiVersionNoticeComponent extends Component {
   check = dropTask(async () => {
     const mismatched = await this.apiVersion.getIsMismatched();
     if (mismatched && 'serviceWorker' in navigator) {
-      await 2000; //wait to let the new service worker get fetched if it is available
+      await timeout(2000); //wait to let the new service worker get fetched if it is available
       const reg = await navigator.serviceWorker.getRegistration();
       if (reg) {
         if (reg.waiting) {
