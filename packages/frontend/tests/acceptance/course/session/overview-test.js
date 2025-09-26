@@ -51,6 +51,7 @@ module('Acceptance | Session - Overview', function (hooks) {
     const ilmSession = this.server.create('ilm-session');
     this.server.create('session', {
       course: this.course,
+      sessionType: this.sessionTypes[0],
       ilmSession,
     });
     await page.visit({ courseId: 1, sessionId: 1 });
@@ -87,6 +88,7 @@ module('Acceptance | Session - Overview', function (hooks) {
     );
     this.server.create('session', {
       course: this.course,
+      sessionType: this.sessionTypes[0],
     });
     await page.visit({ courseId: 1, sessionId: 1 });
 
@@ -125,6 +127,7 @@ module('Acceptance | Session - Overview', function (hooks) {
     });
     this.server.create('session', {
       course: this.course,
+      sessionType: this.sessionTypes[0],
       ilmSession,
     });
     await page.visit({ courseId: 1, sessionId: 1 });
@@ -151,6 +154,7 @@ module('Acceptance | Session - Overview', function (hooks) {
     });
     this.server.create('session', {
       course: this.course,
+      sessionType: this.sessionTypes[0],
       ilmSession,
     });
     const newDate = DateTime.fromJSDate(ilmSession.dueDate)
@@ -471,6 +475,7 @@ module('Acceptance | Session - Overview', function (hooks) {
     );
     const session = this.server.create('session', {
       course: this.course,
+      sessionType: this.sessionTypes[0],
     });
     const newDescription = 'some new thing';
     await page.visit({ courseId: 1, sessionId: 1 });
@@ -493,6 +498,7 @@ module('Acceptance | Session - Overview', function (hooks) {
     );
     this.server.create('session', {
       course: this.course,
+      sessionType: this.sessionTypes[0],
       description: null,
     });
     const newDescription = 'some new thing';
@@ -516,6 +522,7 @@ module('Acceptance | Session - Overview', function (hooks) {
     );
     this.server.create('session', {
       course: this.course,
+      sessionType: this.sessionTypes[0],
       description: null,
     });
     await page.visit({ courseId: 1, sessionId: 1 });
@@ -538,6 +545,7 @@ module('Acceptance | Session - Overview', function (hooks) {
     );
     const session = this.server.create('session', {
       course: this.course,
+      sessionType: this.sessionTypes[0],
     });
     await page.visit({ courseId: 1, sessionId: 1 });
 
@@ -559,6 +567,7 @@ module('Acceptance | Session - Overview', function (hooks) {
     );
     this.server.create('session', {
       course: this.course,
+      sessionType: this.sessionTypes[0],
       description: null,
     });
     await page.visit({ courseId: 1, sessionId: 1 });
@@ -637,6 +646,7 @@ module('Acceptance | Session - Overview', function (hooks) {
     );
     this.server.create('session', {
       course: this.course,
+      sessionType: this.sessionTypes[0],
       instructionalNotes: 'instructional note',
     });
     const newInstructionalNotes = 'some new thing';
@@ -673,6 +683,7 @@ module('Acceptance | Session - Overview', function (hooks) {
     );
     this.server.create('session', {
       course: this.course,
+      sessionType: this.sessionTypes[0],
     });
     const newInstructionalNotes = 'some new thing';
     await page.visit({ courseId: 1, sessionId: 1 });
@@ -708,6 +719,7 @@ module('Acceptance | Session - Overview', function (hooks) {
     );
     this.server.create('session', {
       course: this.course,
+      sessionType: this.sessionTypes[0],
     });
     await page.visit({ courseId: 1, sessionId: 1 });
 
@@ -730,6 +742,7 @@ module('Acceptance | Session - Overview', function (hooks) {
     );
     this.server.create('session', {
       course: this.course,
+      sessionType: this.sessionTypes[0],
       instructionalNotes: 'instructional note',
     });
     await page.visit({ courseId: 1, sessionId: 1 });
@@ -752,6 +765,7 @@ module('Acceptance | Session - Overview', function (hooks) {
     );
     this.server.create('session', {
       course: this.course,
+      sessionType: this.sessionTypes[0],
     });
     await page.visit({ courseId: 1, sessionId: 1 });
 
@@ -773,6 +787,7 @@ module('Acceptance | Session - Overview', function (hooks) {
     );
     this.server.create('session', {
       course: this.course,
+      sessionType: this.sessionTypes[0],
     });
     await page.visit({ courseId: 1, sessionId: 1 });
     assert.strictEqual(page.details.overview.prerequisites.text, 'Prerequisites: None');
@@ -788,6 +803,7 @@ module('Acceptance | Session - Overview', function (hooks) {
     );
     const session = this.server.create('session', {
       course: this.course,
+      sessionType: this.sessionTypes[0],
     });
     this.server.createList('session', 3, {
       course: this.course,
@@ -795,6 +811,7 @@ module('Acceptance | Session - Overview', function (hooks) {
     });
     this.server.create('session', {
       course: this.course,
+      sessionType: this.sessionTypes[0],
     });
     await page.visit({ courseId: 1, sessionId: 1 });
     assert.strictEqual(
@@ -814,6 +831,7 @@ module('Acceptance | Session - Overview', function (hooks) {
     const ilmSession = this.server.create('ilm-session');
     this.server.create('session', {
       course: this.course,
+      sessionType: this.sessionTypes[0],
       ilmSession,
     });
     await page.visit({
@@ -836,10 +854,12 @@ module('Acceptance | Session - Overview', function (hooks) {
     const ilmSession = this.server.create('ilm-session');
     const session = this.server.create('session', {
       course: this.course,
+      sessionType: this.sessionTypes[0],
       ilmSession,
     });
     const postRequisite = this.server.create('session', {
       course: this.course,
+      sessionType: this.sessionTypes[0],
     });
     session.update('postrequisite', postRequisite);
     await page.visit({
@@ -861,6 +881,7 @@ module('Acceptance | Session - Overview', function (hooks) {
     );
     this.server.create('session', {
       course: this.course,
+      sessionType: this.sessionTypes[0],
     });
     this.server.createList('session', 3, {
       course: this.course,
@@ -881,7 +902,7 @@ module('Acceptance | Session - Overview', function (hooks) {
       },
       true,
     );
-    this.server.create('session', { course: this.course });
+    this.server.create('session', { course: this.course, sessionType: this.sessionTypes[0] });
     await page.visit({ courseId: 1, sessionId: 1 });
     assert.strictEqual(currentRouteName(), 'session.index');
     assert.notOk(page.details.collapsedObjectives.isPresent);
@@ -895,7 +916,10 @@ module('Acceptance | Session - Overview', function (hooks) {
       },
       true,
     );
-    const session = this.server.create('session', { course: this.course });
+    const session = this.server.create('session', {
+      course: this.course,
+      sessionType: this.sessionTypes[0],
+    });
     this.server.create('session-objective', { session });
     await page.visit({ courseId: 1, sessionId: 1 });
     assert.strictEqual(currentRouteName(), 'session.index');
@@ -910,7 +934,10 @@ module('Acceptance | Session - Overview', function (hooks) {
       },
       true,
     );
-    const session = this.server.create('session', { course: this.course });
+    const session = this.server.create('session', {
+      course: this.course,
+      sessionType: this.sessionTypes[0],
+    });
     const learnerGroups = this.server.createList('learner-group', 3);
     this.server.create('offering', { session, learnerGroups });
     this.server.create('offering', { session, learnerGroups });

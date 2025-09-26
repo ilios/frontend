@@ -24,10 +24,12 @@ module('Acceptance | Session - Leadership', function (hooks) {
       directors: [users[0], users[1]],
       administrators: [users[2], users[3]],
     });
+    const sessionType = this.server.create('session-type', { school: this.school });
     this.session = this.server.create('session', {
       course,
       administrators: [users[2], users[3]],
       studentAdvisors: [users[4]],
+      sessionType,
     });
   });
 

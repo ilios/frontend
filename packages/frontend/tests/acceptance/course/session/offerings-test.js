@@ -26,7 +26,7 @@ module('Acceptance | Session - Offerings', function (hooks) {
       school: this.school,
       directors: [this.user],
     });
-    this.server.create('session-type', {
+    const sessionType = this.server.create('session-type', {
       school: this.school,
     });
     const users = [
@@ -54,7 +54,7 @@ module('Acceptance | Session - Offerings', function (hooks) {
       location: 'default 2',
       instructorGroups: [instructorGroup1],
     });
-    const session = this.server.create('session', { course });
+    const session = this.server.create('session', { course, sessionType });
 
     this.today = DateTime.fromObject({ hour: 9 });
 

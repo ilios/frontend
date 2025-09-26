@@ -17,8 +17,10 @@ module('Acceptance | Session - Objective Create', function (hooks) {
       year: 2013,
       school: this.school,
     });
+    const sessionType = this.server.create('session-type', { school: this.school });
     const session = this.server.create('session', {
       course: this.course,
+      sessionType,
     });
     this.server.create('session-objective', { session });
   });

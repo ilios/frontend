@@ -20,7 +20,8 @@ module('Acceptance | Session - Objective Vocabulary Terms', function (hooks) {
     const term = this.server.create('term', { vocabulary, active: true });
     this.server.createList('term', 3, { vocabulary, active: true });
     const course = this.server.create('course', { school });
-    const session = this.server.create('session', { course });
+    const sessionType = this.server.create('session-type', { school });
+    const session = this.server.create('session', { course, sessionType });
     this.server.create('session-objective', { session, terms: [term] });
     this.school = school;
   });

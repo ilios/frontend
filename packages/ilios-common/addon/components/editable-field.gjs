@@ -183,7 +183,6 @@ export default class EditableFieldComponent extends Component {
             {{else}}
               <button
                 class="link-button"
-                aria-label={{t "general.edit"}}
                 data-test-edit
                 type="button"
                 {{on "click" (fn this.setIsEditing true)}}

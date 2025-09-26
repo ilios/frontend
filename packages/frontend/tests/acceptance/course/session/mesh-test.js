@@ -30,9 +30,11 @@ module('Acceptance | Session - Mesh Terms', function (hooks) {
       year: 2014,
       school: this.school,
     });
+    const sessionType = this.server.create('session-type', { school: this.school });
     this.server.create('session', {
       course,
       meshDescriptorIds: [1, 2, 3],
+      sessionType,
     });
   });
 

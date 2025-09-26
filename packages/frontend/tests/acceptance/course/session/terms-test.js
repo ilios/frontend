@@ -28,8 +28,10 @@ module('Acceptance | Session - Terms', function (hooks) {
       year: 2013,
       school: this.school,
     });
+    const sessionType = this.server.create('session-type', { school: this.school });
     this.server.create('session', {
       course,
+      sessionType,
       terms: [term1],
     });
   });

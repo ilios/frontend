@@ -13,6 +13,7 @@ module('Acceptance | Learner Groups', function (hooks) {
   hooks.beforeEach(async function () {
     this.school = this.server.create('school');
     this.user = await setupAuthentication({ school: this.school }, true);
+    this.sessionType = this.server.create('session-type', { school: this.school });
   });
 
   test('visiting /learnergroups', async function (assert) {
