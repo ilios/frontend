@@ -68,7 +68,10 @@ module('Unit | Service | reporting', function (hooks) {
       reportModel.prepositionalObjectTableRowId,
       school,
     );
-    assert.strictEqual(title, 'All Competencies for ' + userModel.fullName + ' in ' + school.title);
+    assert.strictEqual(
+      title,
+      'All Competencies for Instructor ' + userModel.fullName + ' in ' + school.title,
+    );
   });
 
   test('buildReportTitle() - broken report', async function (assert) {
