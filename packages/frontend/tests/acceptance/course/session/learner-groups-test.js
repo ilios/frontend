@@ -27,7 +27,7 @@ module('Acceptance | Session - Learner Groups', function (hooks) {
         school: this.school,
         cohortIds: [1],
       });
-      this.server.create('session-type');
+      const sessionType = this.server.create('session-type', { school: this.school });
       this.server.createList('learner-group', 5, {
         cohortId: 1,
       });
@@ -42,6 +42,7 @@ module('Acceptance | Session - Learner Groups', function (hooks) {
       this.server.create('session', {
         courseId: 1,
         updatedAt: DateTime.fromObject({ year: 2019, month: 7, day: 9, hour: 17 }).toJSDate(),
+        sessionType,
       });
       this.server.createList('user', 2);
       this.server.create('user', {
@@ -1126,7 +1127,7 @@ module('Acceptance | Session - Learner Groups', function (hooks) {
 
   test('initial state with save works as expected #1773', async function (assert) {
     this.user.update({ administeredSchools: [this.school] });
-    this.server.create('session-type');
+    const sessionType = this.server.create('session-type', { school: this.school });
     this.server.create('program', {
       school: this.school,
     });
@@ -1145,6 +1146,7 @@ module('Acceptance | Session - Learner Groups', function (hooks) {
     });
     this.server.create('session', {
       courseId: 1,
+      sessionType,
     });
     this.server.create('ilm-session', {
       sessionId: 1,

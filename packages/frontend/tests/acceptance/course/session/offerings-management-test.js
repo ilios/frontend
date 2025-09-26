@@ -15,6 +15,7 @@ module('Acceptance | Session - Offering Management', function (hooks) {
       },
       true,
     );
+    this.sessionType = this.server.create('session-type', { school: this.school });
   });
 
   test('search for instructor who is a course director #2838', async function (assert) {
@@ -27,6 +28,7 @@ module('Acceptance | Session - Offering Management', function (hooks) {
     });
     const session = this.server.create('session', {
       course,
+      sessionType: this.sessionType,
     });
     this.server.create('offering', {
       session,
@@ -51,6 +53,7 @@ module('Acceptance | Session - Offering Management', function (hooks) {
     });
     const session = this.server.create('session', {
       course,
+      sessionType: this.sessionType,
     });
     this.server.create('offering', {
       session,
@@ -91,7 +94,7 @@ module('Acceptance | Session - Offering Management', function (hooks) {
 
   test('Instructors additional name info is displayed if applicable', async function (assert) {
     const course = this.server.create('course', { school: this.school });
-    const session = this.server.create('session', { course });
+    const session = this.server.create('session', { course, sessionType: this.sessionType });
     const instructor1 = this.server.create('user');
     const instructor2 = this.server.create('user', {
       displayName: 'Clem Chowder',
@@ -146,7 +149,7 @@ module('Acceptance | Session - Offering Management', function (hooks) {
 
   test('Learner Group parents are shown in tooltip if applicable', async function (assert) {
     const course = this.server.create('course', { school: this.school });
-    const session = this.server.create('session', { course });
+    const session = this.server.create('session', { course, sessionType: this.sessionType });
     const learnerGroup = this.server.create('learner-group', {
       title: 'Top Group',
     });
@@ -234,7 +237,7 @@ module('Acceptance | Session - Offering Management', function (hooks) {
 
   test('Offerings are sorted by first learner group name', async function (assert) {
     const course = this.server.create('course', { school: this.school });
-    const session = this.server.create('session', { course });
+    const session = this.server.create('session', { course, sessionType: this.sessionType });
     const learnerGroup = this.server.create('learner-group', {
       title: 'Alpha',
     });
