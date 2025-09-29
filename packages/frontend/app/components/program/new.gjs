@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
 import { service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
-import { dropTask } from 'ember-concurrency';
+import { task } from 'ember-concurrency';
 import { action } from '@ember/object';
 import YupValidations from 'ilios-common/classes/yup-validations';
 import { string } from 'yup';
@@ -23,7 +23,7 @@ export default class NewProgramComponent extends Component {
     title: string().required().min(3).max(200),
   });
 
-  save = dropTask(async () => {
+  save = task({ drop: true }, async () => {
     this.validations.addErrorDisplayForAllFields();
     const isValid = await this.validations.isValid();
     if (!isValid) {

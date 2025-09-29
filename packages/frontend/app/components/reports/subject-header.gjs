@@ -2,7 +2,7 @@ import Component from '@glimmer/component';
 import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
-import { dropTask } from 'ember-concurrency';
+import { task } from 'ember-concurrency';
 import { TrackedAsyncData } from 'ember-async-data';
 import YupValidations from 'ilios-common/classes/yup-validations';
 import { string } from 'yup';
@@ -53,7 +53,7 @@ export default class ReportsSubjectHeader extends Component {
     return this.router.currentRouteName == 'reports.subject';
   }
 
-  changeTitle = dropTask(async () => {
+  changeTitle = task({ drop: true }, async () => {
     this.validations.addErrorDisplayForAllFields();
     const isValid = await this.validations.isValid();
     if (!isValid) {

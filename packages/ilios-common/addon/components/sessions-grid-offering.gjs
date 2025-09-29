@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
 import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
-import { restartableTask, dropTask, timeout } from 'ember-concurrency';
+import { task, timeout } from 'ember-concurrency';
 import { TrackedAsyncData } from 'ember-async-data';
 import and from 'ember-truth-helpers/helpers/and';
 import OfferingForm from 'ilios-common/components/offering-form';
@@ -94,7 +94,7 @@ export default class SessionsGridOffering extends Component {
     this.validations.removeErrorDisplayFor('room');
   }
 
-  changeRoom = dropTask(async () => {
+  changeRoom = task({ drop: true }, async () => {
     await timeout(10);
     this.validations.addErrorDisplayFor('room');
     const isValid = await this.validations.isValid('room');
@@ -107,7 +107,8 @@ export default class SessionsGridOffering extends Component {
     this.roomBuffer = null;
   });
 
-  save = dropTask(
+  save = task(
+    { drop: true },
     async (
       startDate,
       endDate,
@@ -135,7 +136,7 @@ export default class SessionsGridOffering extends Component {
     },
   );
 
-  updateUi = restartableTask(async () => {
+  updateUi = task({ restartable: true }, async () => {
     await timeout(10);
     this.wasUpdated = true;
     scrollIntoView(this.element);

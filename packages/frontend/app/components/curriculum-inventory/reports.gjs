@@ -2,7 +2,7 @@ import Component from '@glimmer/component';
 import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
-import { dropTask } from 'ember-concurrency';
+import { task } from 'ember-concurrency';
 import { findById, sortBy } from 'ilios-common/utils/array-helpers';
 import { TrackedAsyncData } from 'ember-async-data';
 import FaIcon from 'ilios-common/components/fa-icon';
@@ -133,7 +133,7 @@ export default class CurriculumInventoryReportsComponent extends Component {
     return this.canCreateData.isResolved ? this.canCreateData.value : false;
   }
 
-  removeCurriculumInventoryReport = dropTask(async (report) => {
+  removeCurriculumInventoryReport = task({ drop: true }, async (report) => {
     const reports = await this.selectedProgram.curriculumInventoryReports;
     reports.splice(reports.indexOf(report), 1);
     this.selectedProgram.set('curriculumInventoryReports', reports);

@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
 import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
-import { dropTask, restartableTask, timeout } from 'ember-concurrency';
+import { task, timeout } from 'ember-concurrency';
 import { service } from '@ember/service';
 import { TrackedAsyncData } from 'ember-async-data';
 import { findById, sortBy } from 'ilios-common/utils/array-helpers';
@@ -117,7 +117,7 @@ export default class ProgramYearObjectiveListItemComponent extends Component {
     };
   }
 
-  saveDescriptionChanges = dropTask(async () => {
+  saveDescriptionChanges = task({ drop: true }, async () => {
     this.validations.addErrorDisplayFor('descriptionWithoutMarkup');
     const isValid = await this.validations.isValid();
     if (!isValid) {
@@ -129,35 +129,35 @@ export default class ProgramYearObjectiveListItemComponent extends Component {
     this.highlightSave.perform();
   });
 
-  saveIsActive = dropTask(async (active) => {
+  saveIsActive = task({ drop: true }, async (active) => {
     this.args.programYearObjective.set('active', active);
     await this.args.programYearObjective.save();
     this.highlightSave.perform();
   });
 
-  manageCompetency = dropTask(async () => {
+  manageCompetency = task({ drop: true }, async () => {
     this.competencyBuffer = await this.args.programYearObjective.competency;
     this.isManagingCompetency = true;
   });
 
-  manageDescriptors = dropTask(async () => {
+  manageDescriptors = task({ drop: true }, async () => {
     const meshDescriptors = await this.args.programYearObjective.meshDescriptors;
     this.descriptorsBuffer = meshDescriptors;
     this.isManagingDescriptors = true;
   });
 
-  manageTerms = dropTask(async (vocabulary) => {
+  manageTerms = task({ drop: true }, async (vocabulary) => {
     this.selectedVocabulary = vocabulary;
     const terms = await this.args.programYearObjective.terms;
     this.termsBuffer = terms;
     this.isManagingTerms = true;
   });
 
-  highlightSave = restartableTask(async () => {
+  highlightSave = task({ restartable: true }, async () => {
     await timeout(1000);
   });
 
-  saveCompetency = dropTask(async () => {
+  saveCompetency = task({ drop: true }, async () => {
     this.args.programYearObjective.set('competency', this.competencyBuffer);
     await this.args.programYearObjective.save();
     this.competencyBuffer = null;
@@ -165,7 +165,7 @@ export default class ProgramYearObjectiveListItemComponent extends Component {
     this.highlightSave.perform();
   });
 
-  saveDescriptors = dropTask(async () => {
+  saveDescriptors = task({ drop: true }, async () => {
     this.args.programYearObjective.set('meshDescriptors', this.descriptorsBuffer);
     await this.args.programYearObjective.save();
     this.descriptorsBuffer = [];
@@ -173,7 +173,7 @@ export default class ProgramYearObjectiveListItemComponent extends Component {
     this.highlightSave.perform();
   });
 
-  saveTerms = dropTask(async () => {
+  saveTerms = task({ drop: true }, async () => {
     this.args.programYearObjective.set('terms', this.termsBuffer);
     await this.args.programYearObjective.save();
     this.termsBuffer = [];
@@ -226,7 +226,7 @@ export default class ProgramYearObjectiveListItemComponent extends Component {
     this.selectedVocabulary = null;
   }
 
-  deleteObjective = dropTask(async () => {
+  deleteObjective = task({ drop: true }, async () => {
     await this.args.programYearObjective.destroyRecord();
   });
   <template>

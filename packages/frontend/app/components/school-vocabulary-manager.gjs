@@ -3,7 +3,7 @@ import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
 import { filterBy, mapBy, sortBy } from 'ilios-common/utils/array-helpers';
-import { dropTask } from 'ember-concurrency';
+import { task } from 'ember-concurrency';
 import { TrackedAsyncData } from 'ember-async-data';
 import { uniqueId, fn } from '@ember/helper';
 import { on } from '@ember/modifier';
@@ -73,7 +73,7 @@ export default class SchoolVocabularyManagerComponent extends Component {
     return this.titleBuffer ?? this.args.vocabulary.title;
   }
 
-  changeTitle = dropTask(async () => {
+  changeTitle = task({ drop: true }, async () => {
     this.validations.addErrorDisplayFor('title');
     const isValid = await this.validations.isValid();
     if (!isValid) {

@@ -1,6 +1,6 @@
 import Component from '@glimmer/component';
 import { service } from '@ember/service';
-import { restartableTask } from 'ember-concurrency';
+import { task } from 'ember-concurrency';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { sortBy } from 'ilios-common/utils/array-helpers';
@@ -34,7 +34,7 @@ export default class ReportsSubjectNewLearningMaterialComponent extends Componen
     return sortBy(this.materials, 'title');
   }
 
-  search = restartableTask(async (q) => {
+  search = task({ restartable: true }, async (q) => {
     if (!q.length) {
       this.materials = false;
       return;

@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
-import { restartableTask } from 'ember-concurrency';
+import { task } from 'ember-concurrency';
 import YupValidations from 'ilios-common/classes/yup-validations';
 import { string } from 'yup';
 import EditableField from 'ilios-common/components/editable-field';
@@ -26,7 +26,7 @@ export default class CurriculumInventoryReportHeaderComponent extends Component 
     name: string().trim().required().max(60),
   });
 
-  saveName = restartableTask(async () => {
+  saveName = task({ restartable: true }, async () => {
     this.validations.addErrorDisplayFor('name');
     const isValid = await this.validations.isValid();
     if (!isValid) {

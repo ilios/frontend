@@ -3,7 +3,7 @@ import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
 import { isPresent } from '@ember/utils';
-import { dropTask } from 'ember-concurrency';
+import { task } from 'ember-concurrency';
 import { all } from 'rsvp';
 import { TrackedAsyncData } from 'ember-async-data';
 import { findById } from 'ilios-common/utils/array-helpers';
@@ -385,7 +385,7 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
     }
   }
 
-  changeRequired = dropTask(async () => {
+  changeRequired = task({ drop: true }, async () => {
     this.args.sequenceBlock.required = parseInt(this.required, 10);
     if ('2' === this.required) {
       this.args.sequenceBlock.minimum = 0;
@@ -435,12 +435,12 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
     await this.args.sequenceBlock.save();
   }
 
-  changeTrack = dropTask(async (value) => {
+  changeTrack = task({ drop: true }, async (value) => {
     this.args.sequenceBlock.set('track', value);
     await this.args.sequenceBlock.save();
   });
 
-  saveDescription = dropTask(async () => {
+  saveDescription = task({ drop: true }, async () => {
     this.args.sequenceBlock.set('description', this.description);
     await this.args.sequenceBlock.save();
   });
@@ -450,7 +450,7 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
     this.description = this.args.sequenceBlock.get('description');
   }
 
-  changeChildSequenceOrder = dropTask(async () => {
+  changeChildSequenceOrder = task({ drop: true }, async () => {
     this.args.sequenceBlock.set('childSequenceOrder', parseInt(this.childSequenceOrder, 10));
     const savedBlock = await this.args.sequenceBlock.save();
     const children = await savedBlock.get('children');
@@ -462,7 +462,7 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
     this.childSequenceOrder = this.args.sequenceBlock.get('childSequenceOrder').toString();
   }
 
-  changeStartLevel = dropTask(async () => {
+  changeStartLevel = task({ drop: true }, async () => {
     if (!this.startLevel) {
       return;
     }
@@ -493,7 +493,7 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
     this.validations.removeErrorDisplayFor('startLevel');
   }
 
-  changeEndLevel = dropTask(async () => {
+  changeEndLevel = task({ drop: true }, async () => {
     if (!this.endLevel) {
       return;
     }
@@ -533,7 +533,7 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
     this.orderInSequence = this.args.sequenceBlock.orderInSequence;
   }
 
-  saveOrderInSequenceChanges = dropTask(async () => {
+  saveOrderInSequenceChanges = task({ drop: true }, async () => {
     if (this.orderInSequence === this.args.sequenceBlock.orderInSequence) {
       return;
     }
@@ -568,7 +568,7 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
     this.isManagingSessions = false;
   }
 
-  changeSessions = dropTask(async (sessions, excludedSessions) => {
+  changeSessions = task({ drop: true }, async (sessions, excludedSessions) => {
     this.args.sequenceBlock.set('sessions', sessions);
     this.args.sequenceBlock.set('excludedSessions', excludedSessions);
     await this.args.sequenceBlock.save();
@@ -593,7 +593,7 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
     }
   }
 
-  saveMinMax = dropTask(async () => {
+  saveMinMax = task({ drop: true }, async () => {
     this.validations.addErrorDisplaysFor(['minimum', 'maximum']);
     const isValid = await this.validations.isValid();
     if (!isValid) {
@@ -617,7 +617,7 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
     this.endDate = endDate;
   }
 
-  saveDuration = dropTask(async () => {
+  saveDuration = task({ drop: true }, async () => {
     this.validations.addErrorDisplaysFor(['startDate', 'endDate', 'duration']);
     const isValid = await this.validations.isValid();
     if (!isValid) {

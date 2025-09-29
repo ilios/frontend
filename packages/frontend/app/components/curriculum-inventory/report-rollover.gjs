@@ -2,7 +2,7 @@ import Component from '@glimmer/component';
 import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
-import { dropTask } from 'ember-concurrency';
+import { task } from 'ember-concurrency';
 import { TrackedAsyncData } from 'ember-async-data';
 import { findBy, findById } from 'ilios-common/utils/array-helpers';
 import YupValidations from 'ilios-common/classes/yup-validations';
@@ -147,7 +147,7 @@ export default class CurriculumInventoryReportRolloverComponent extends Componen
     }
   }
 
-  save = dropTask(async () => {
+  save = task({ drop: true }, async () => {
     this.validations.addErrorDisplayForAllFields();
     const isValid = await this.validations.isValid();
     if (!isValid) {

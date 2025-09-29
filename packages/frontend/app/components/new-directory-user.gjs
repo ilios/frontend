@@ -4,7 +4,7 @@ import { action } from '@ember/object';
 import { service } from '@ember/service';
 import { isEmpty, isPresent } from '@ember/utils';
 import { filter } from 'rsvp';
-import { dropTask, restartableTask } from 'ember-concurrency';
+import { task } from 'ember-concurrency';
 import { findBy, findById } from 'ilios-common/utils/array-helpers';
 import { TrackedAsyncData } from 'ember-async-data';
 import { DateTime } from 'luxon';
@@ -246,7 +246,7 @@ export default class NewDirectoryUserComponent extends Component {
     }
   }
 
-  findUsersInDirectory = restartableTask(async (searchTerms) => {
+  findUsersInDirectory = task({ restartable: true }, async (searchTerms) => {
     this.searchResultsReturned = false;
     this.tooManyResults = false;
     if (!isEmpty(searchTerms)) {
@@ -270,7 +270,7 @@ export default class NewDirectoryUserComponent extends Component {
     }
   });
 
-  save = dropTask(async () => {
+  save = task({ drop: true }, async () => {
     this.validations.addErrorDisplayForAllFields();
     const isValid = await this.validations.isValid();
     if (!isValid) {

@@ -1,5 +1,5 @@
 import Component from '@glimmer/component';
-import { dropTask } from 'ember-concurrency';
+import { task } from 'ember-concurrency';
 import { cached, tracked } from '@glimmer/tracking';
 import sortableByPosition from 'ilios-common/utils/sortable-by-position';
 import { action } from '@ember/object';
@@ -36,7 +36,7 @@ export default class LearningMaterialsSortManagerComponent extends Component {
     return this.sortedItems ?? this.sortedLearningMaterials;
   }
 
-  callSave = dropTask(async () => {
+  callSave = task({ drop: true }, async () => {
     await this.args.save(this.items);
   });
 

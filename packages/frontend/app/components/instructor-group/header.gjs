@@ -2,7 +2,7 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { service } from '@ember/service';
 import { action } from '@ember/object';
-import { dropTask } from 'ember-concurrency';
+import { task } from 'ember-concurrency';
 import YupValidations from 'ilios-common/classes/yup-validations';
 import { string } from 'yup';
 import EditableField from 'ilios-common/components/editable-field';
@@ -28,7 +28,7 @@ export default class InstructorGroupHeaderComponent extends Component {
     title: string().ensure().trim().min(3).max(60),
   });
 
-  changeTitle = dropTask(async () => {
+  changeTitle = task({ drop: true }, async () => {
     this.validations.addErrorDisplayForAllFields();
     const isValid = await this.validations.isValid();
     if (!isValid) {

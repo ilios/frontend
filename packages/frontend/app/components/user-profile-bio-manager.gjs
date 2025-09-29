@@ -4,7 +4,7 @@ import { action } from '@ember/object';
 import { service } from '@ember/service';
 import { isEmpty } from '@ember/utils';
 import { all } from 'rsvp';
-import { dropTask, timeout } from 'ember-concurrency';
+import { task, timeout } from 'ember-concurrency';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
 import perform from 'ember-concurrency/helpers/perform';
@@ -206,7 +206,7 @@ export default class UserProfileBioManagerComponent extends Component {
     await this.calculatePasswordStrengthScore();
   }
 
-  save = dropTask(async () => {
+  save = task({ drop: true }, async () => {
     const store = this.store;
     this.validations.addErrorDisplayForAllFields();
     const isValid = await this.validations.isValid();
@@ -250,7 +250,7 @@ export default class UserProfileBioManagerComponent extends Component {
     this.cancel();
   });
 
-  directorySync = dropTask(async () => {
+  directorySync = task({ drop: true }, async () => {
     this.updatedFieldsFromSync = [];
     this.showSyncErrorMessage = false;
     const userId = this.args.user.id;

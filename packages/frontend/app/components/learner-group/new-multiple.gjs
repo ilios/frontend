@@ -1,6 +1,6 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
-import { dropTask } from 'ember-concurrency';
+import { task } from 'ember-concurrency';
 import { action } from '@ember/object';
 import { uniqueId } from '@ember/helper';
 import t from 'ember-intl/helpers/t';
@@ -21,7 +21,7 @@ export default class LearnerGroupNewMultipleComponent extends Component {
     numberOfGroups: number().required().integer().min(1).max(50),
   });
 
-  save = dropTask(async () => {
+  save = task({ drop: true }, async () => {
     this.validations.addErrorDisplayFor('numberOfGroups');
     const isValid = await this.validations.isValid();
     if (!isValid) {

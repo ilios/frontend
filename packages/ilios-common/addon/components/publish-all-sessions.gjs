@@ -3,7 +3,7 @@ import { service } from '@ember/service';
 import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { all } from 'rsvp';
-import { dropTask, timeout } from 'ember-concurrency';
+import { task, timeout } from 'ember-concurrency';
 import { TrackedAsyncData } from 'ember-async-data';
 import { uniqueValues } from 'ilios-common/utils/array-helpers';
 import { on } from '@ember/modifier';
@@ -175,7 +175,7 @@ export default class PublishAllSessionsComponent extends Component {
     }
   }
 
-  save = dropTask(async () => {
+  save = task({ drop: true }, async () => {
     const sessionsToSave = [];
 
     this.overridableSessions.forEach((session) => {

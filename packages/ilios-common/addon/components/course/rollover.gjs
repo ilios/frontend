@@ -4,7 +4,7 @@ import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import YupValidations from 'ilios-common/classes/yup-validations';
 import { number, string } from 'yup';
-import { dropTask, timeout } from 'ember-concurrency';
+import { task, timeout } from 'ember-concurrency';
 import { DateTime } from 'luxon';
 import { filterBy, mapBy } from 'ilios-common/utils/array-helpers';
 import { TrackedAsyncData } from 'ember-async-data';
@@ -142,7 +142,7 @@ export default class CourseRolloverComponent extends Component {
     this.selectedStartDate = newStartDate ? newStartDate : this.args.course.startDate;
   }
 
-  save = dropTask(async () => {
+  save = task({ drop: true }, async () => {
     this.validations.addErrorDisplaysFor(['title', 'year']);
     const isValid = await this.validations.isValid();
     if (!isValid) {

@@ -6,7 +6,7 @@ import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
 import pick from 'ilios-common/helpers/pick';
 import perform from 'ember-concurrency/helpers/perform';
-import { restartableTask } from 'ember-concurrency';
+import { task } from 'ember-concurrency';
 import onKey from 'ember-keyboard/modifiers/on-key';
 import FaIcon from 'ilios-common/components/fa-icon';
 
@@ -44,7 +44,7 @@ export default class GlobalSearchBox extends Component {
     }
   }
 
-  setInternalQuery = restartableTask(async (q) => {
+  setInternalQuery = task({ restartable: true }, async (q) => {
     this.internalQuery = q;
     if (this.router.currentRouteName === 'search') {
       if (q === '') {

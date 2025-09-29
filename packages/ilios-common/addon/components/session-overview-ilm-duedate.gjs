@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
-import { dropTask } from 'ember-concurrency';
+import { task } from 'ember-concurrency';
 import { DateTime } from 'luxon';
 import t from 'ember-intl/helpers/t';
 import EditableField from 'ilios-common/components/editable-field';
@@ -39,7 +39,7 @@ export default class SessionOverviewIlmDuedateComponent extends Component {
     this.dueDateBuffer = DateTime.fromJSDate(this.dueDate).set(update).toJSDate();
   }
 
-  save = dropTask(async () => {
+  save = task({ drop: true }, async () => {
     this.args.ilmSession.dueDate = this.dueDate;
     await this.args.ilmSession.save();
     this.dueDateBuffer = null;

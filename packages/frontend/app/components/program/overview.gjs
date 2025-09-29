@@ -1,6 +1,6 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
-import { dropTask } from 'ember-concurrency';
+import { task } from 'ember-concurrency';
 import { action } from '@ember/object';
 import { guidFor } from '@ember/object/internals';
 import YupValidations from 'ilios-common/classes/yup-validations';
@@ -30,7 +30,7 @@ export default class ProgramOverviewComponent extends Component {
     shortTitle: string().required().min(2).max(10),
   });
 
-  changeShortTitle = dropTask(async () => {
+  changeShortTitle = task({ drop: true }, async () => {
     if (this.shortTitle !== this.args.program.shortTitle) {
       this.validations.addErrorDisplayForAllFields();
       const isValid = await this.validations.isValid();
@@ -44,7 +44,7 @@ export default class ProgramOverviewComponent extends Component {
     }
   });
 
-  changeDuration = dropTask(async () => {
+  changeDuration = task({ drop: true }, async () => {
     if (this.duration !== this.args.program.duration) {
       this.args.program.set('duration', this.duration);
       await this.args.program.save();

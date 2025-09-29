@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
 import { service } from '@ember/service';
 import { cached, tracked } from '@glimmer/tracking';
-import { dropTask, restartableTask } from 'ember-concurrency';
+import { task } from 'ember-concurrency';
 import { TrackedAsyncData } from 'ember-async-data';
 import { action } from '@ember/object';
 import t from 'ember-intl/helpers/t';
@@ -118,18 +118,19 @@ export default class ReportsSubjectsListComponent extends Component {
     );
   }
 
-  saveNewSubjectReport = dropTask(async (report) => {
+  saveNewSubjectReport = task({ drop: true }, async (report) => {
     this.args.setRunningSubjectReport(null);
     this.newSubjectReport = await report.save();
     this.showNewReportForm = false;
   });
 
-  removeReport = dropTask(async (report) => {
+  removeReport = task({ drop: true }, async (report) => {
     await report.destroyRecord();
     this.newSubjectReport = null;
   });
 
-  runSubjectReport = restartableTask(
+  runSubjectReport = task(
+    { restartable: true },
     async (subject, prepositionalObject, prepositionalObjectTableRowId, school) => {
       this.reportYear = null;
       this.args.setRunningSubjectReport({

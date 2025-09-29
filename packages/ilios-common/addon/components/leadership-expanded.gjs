@@ -1,5 +1,5 @@
 import Component from '@glimmer/component';
-import { dropTask, timeout } from 'ember-concurrency';
+import { task, timeout } from 'ember-concurrency';
 import { cached, tracked } from '@glimmer/tracking';
 import { TrackedAsyncData } from 'ember-async-data';
 import { action } from '@ember/object';
@@ -149,7 +149,7 @@ export default class LeadershipExpandedComponent extends Component {
     this.args.setIsManaging(false);
   }
 
-  save = dropTask(async () => {
+  save = task({ drop: true }, async () => {
     await timeout(10);
     const props = {};
     if (this.modelHasAdministrators) {

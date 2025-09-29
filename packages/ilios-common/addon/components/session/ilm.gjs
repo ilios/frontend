@@ -5,7 +5,7 @@ import { guidFor } from '@ember/object/internals';
 import { TrackedAsyncData } from 'ember-async-data';
 import YupValidations from 'ilios-common/classes/yup-validations';
 import { number } from 'yup';
-import { dropTask, restartableTask } from 'ember-concurrency';
+import { task } from 'ember-concurrency';
 import { DateTime } from 'luxon';
 import t from 'ember-intl/helpers/t';
 import ToggleYesno from 'ilios-common/components/toggle-yesno';
@@ -50,7 +50,7 @@ export default class SessionIlmComponent extends Component {
     return this.ilmSession !== null;
   }
 
-  saveIndependentLearning = dropTask(async (value) => {
+  saveIndependentLearning = task({ drop: true }, async (value) => {
     if (!value) {
       const ilmSession = await this.args.session.ilmSession;
       this.args.session.set('ilmSession', null);
@@ -70,7 +70,7 @@ export default class SessionIlmComponent extends Component {
     }
   });
 
-  changeIlmHours = restartableTask(async () => {
+  changeIlmHours = task({ restartable: true }, async () => {
     this.validations.addErrorDisplayFor('hours');
     const isValid = await this.validations.isValid();
     if (!isValid) {

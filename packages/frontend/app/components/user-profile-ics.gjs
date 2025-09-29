@@ -1,6 +1,6 @@
 import Component from '@glimmer/component';
 import { service } from '@ember/service';
-import { dropTask, restartableTask, timeout } from 'ember-concurrency';
+import { task, timeout } from 'ember-concurrency';
 import { tracked } from '@glimmer/tracking';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
@@ -71,7 +71,7 @@ export default class UserProfileIcsComponent extends Component {
     return rhett;
   }
 
-  refreshKey = dropTask(async () => {
+  refreshKey = task({ drop: true }, async () => {
     const token = await this.randomToken(this.args.user.id);
     this.args.user.set('icsFeedKey', token);
     await this.args.user.save();
@@ -81,7 +81,7 @@ export default class UserProfileIcsComponent extends Component {
     this.hasSavedRecently = false;
   });
 
-  textCopied = restartableTask(async () => {
+  textCopied = task({ restartable: true }, async () => {
     this.showCopySuccessMessage = true;
     await timeout(3000);
     this.showCopySuccessMessage = false;

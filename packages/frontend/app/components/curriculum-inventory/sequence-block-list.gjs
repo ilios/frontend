@@ -2,7 +2,7 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
-import { dropTask } from 'ember-concurrency';
+import { task } from 'ember-concurrency';
 import t from 'ember-intl/helpers/t';
 import ExpandCollapseButton from 'ilios-common/components/expand-collapse-button';
 import NewSequenceBlock from 'frontend/components/curriculum-inventory/new-sequence-block';
@@ -33,7 +33,7 @@ export default class SequenceBlockListComponent extends Component {
     this.editorOn = false;
   }
 
-  save = dropTask(async (block) => {
+  save = task({ drop: true }, async (block) => {
     this.editorOn = false;
     this.savedBlock = await block.save();
     // adding/updating a sequence block will have side-effects on its siblings if the given block is nested

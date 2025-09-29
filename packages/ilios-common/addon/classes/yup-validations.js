@@ -1,7 +1,7 @@
 import { tracked } from '@glimmer/tracking';
 import { getProperties } from '@ember/object';
 import { object, setLocale } from 'yup';
-import { restartableTask, timeout } from 'ember-concurrency';
+import { task, timeout } from 'ember-concurrency';
 import { modifier } from 'ember-modifier';
 
 const DEBOUNCE_MS = 100;
@@ -54,7 +54,7 @@ export default class YupValidations {
     return getProperties(this.errorsByKey, ...this.visibleErrors);
   }
 
-  runValidator = restartableTask(async () => {
+  runValidator = task({ restartable: true }, async () => {
     //wait for user input to stop
     await timeout(DEBOUNCE_MS);
     const rhett = await this.#validate();
@@ -62,7 +62,7 @@ export default class YupValidations {
     return rhett;
   });
 
-  makeErrorsVisibleFor = restartableTask(async (fields) => {
+  makeErrorsVisibleFor = task({ restartable: true }, async (fields) => {
     const currentlyInvisible = fields.filter((field) => !this.visibleErrors.includes(field));
     if (currentlyInvisible.length) {
       //wait a tick so we don't double update values that have been used in a render

@@ -1,5 +1,5 @@
 import Component from '@glimmer/component';
-import { restartableTask, timeout } from 'ember-concurrency';
+import { task, timeout } from 'ember-concurrency';
 import { cleanQuery } from 'ilios-common/utils/query-utils';
 import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
@@ -158,12 +158,12 @@ export default class CourseMaterialsComponent extends Component {
     this.args.onSessionSort(prop);
   }
 
-  setCourseQuery = restartableTask(async (q) => {
+  setCourseQuery = task({ restartable: true }, async (q) => {
     await timeout(DEBOUNCE_DELAY);
     this.courseQuery = q;
   });
 
-  setSessionQuery = restartableTask(async (q) => {
+  setSessionQuery = task({ restartable: true }, async (q) => {
     await timeout(DEBOUNCE_DELAY);
     this.sessionQuery = q;
   });

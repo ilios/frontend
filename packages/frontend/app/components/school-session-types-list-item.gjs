@@ -1,6 +1,6 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
-import { dropTask } from 'ember-concurrency';
+import { task } from 'ember-concurrency';
 import { on } from '@ember/modifier';
 import { fn, concat } from '@ember/helper';
 import t from 'ember-intl/helpers/t';
@@ -16,7 +16,7 @@ import perform from 'ember-concurrency/helpers/perform';
 export default class SchoolSessionTypesListItemComponent extends Component {
   @tracked showRemoveConfirmation = false;
 
-  remove = dropTask(async () => {
+  remove = task({ drop: true }, async () => {
     await this.args.sessionType.destroyRecord();
   });
   <template>

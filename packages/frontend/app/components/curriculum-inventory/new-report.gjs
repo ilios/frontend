@@ -2,7 +2,7 @@ import Component from '@glimmer/component';
 import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
-import { dropTask } from 'ember-concurrency';
+import { task } from 'ember-concurrency';
 import { TrackedAsyncData } from 'ember-async-data';
 import YupValidations from 'ilios-common/classes/yup-validations';
 import { string } from 'yup';
@@ -61,7 +61,7 @@ export default class CurriculumInventoryNewReportComponent extends Component {
     return rhett;
   }
 
-  save = dropTask(async () => {
+  save = task({ drop: true }, async () => {
     this.validations.addErrorDisplayForAllFields();
     const isValid = await this.validations.isValid();
     if (!isValid) {
@@ -91,7 +91,7 @@ export default class CurriculumInventoryNewReportComponent extends Component {
     this.selectedYear = Number(year);
   }
 
-  keyboard = dropTask(async (ev) => {
+  keyboard = task({ drop: true }, async (ev) => {
     const keyCode = ev.keyCode;
 
     if (13 === keyCode) {

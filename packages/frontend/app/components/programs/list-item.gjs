@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
 import { cached, tracked } from '@glimmer/tracking';
 import { service } from '@ember/service';
-import { dropTask } from 'ember-concurrency';
+import { task } from 'ember-concurrency';
 import { TrackedAsyncData } from 'ember-async-data';
 import { LinkTo } from '@ember/routing';
 import { on } from '@ember/modifier';
@@ -29,7 +29,7 @@ export default class ProgramListItemComponent extends Component {
       : false;
   }
 
-  remove = dropTask(async () => {
+  remove = task({ drop: true }, async () => {
     await this.args.program.destroyRecord();
   });
   <template>

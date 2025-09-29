@@ -3,7 +3,7 @@ import { service } from '@ember/service';
 import { cached, tracked } from '@glimmer/tracking';
 import { TrackedAsyncData } from 'ember-async-data';
 import { findById } from 'ilios-common/utils/array-helpers';
-import { dropTask } from 'ember-concurrency';
+import { task } from 'ember-concurrency';
 import FaIcon from 'ilios-common/components/fa-icon';
 import gt from 'ember-truth-helpers/helpers/gt';
 import t from 'ember-intl/helpers/t';
@@ -112,7 +112,7 @@ export default class InstructorGroupsRootComponent extends Component {
     });
   }
 
-  saveNewInstructorGroup = dropTask(async (newInstructorGroup) => {
+  saveNewInstructorGroup = task({ drop: true }, async (newInstructorGroup) => {
     newInstructorGroup.set('school', this.bestSelectedSchool);
     this.newInstructorGroup = await newInstructorGroup.save();
     this.showNewInstructorGroupForm = false;

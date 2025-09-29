@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
-import { enqueueTask, timeout } from 'ember-concurrency';
+import { task, timeout } from 'ember-concurrency';
 import { mapBy } from 'ilios-common/utils/array-helpers';
 import { uniqueId, fn, hash } from '@ember/helper';
 import t from 'ember-intl/helpers/t';
@@ -162,7 +162,7 @@ export default class LearnerGroupUserManagerComponent extends Component {
     }
   }
 
-  addUserToGroup = enqueueTask(async (user) => {
+  addUserToGroup = task({ enqueue: true }, async (user) => {
     this.usersBeingAddedToGroup = [...this.usersBeingAddedToGroup, user];
     //timeout gives the spinner time to render
     await timeout(1);
@@ -172,7 +172,7 @@ export default class LearnerGroupUserManagerComponent extends Component {
     );
   });
 
-  removeUserFromGroup = enqueueTask(async (user) => {
+  removeUserFromGroup = task({ enqueue: true }, async (user) => {
     this.usersBeingRemovedFromGroup = [...this.usersBeingRemovedFromGroup, user];
     //timeout gives the spinner time to render
     await timeout(1);
@@ -182,7 +182,7 @@ export default class LearnerGroupUserManagerComponent extends Component {
     );
   });
 
-  addUsersToGroup = enqueueTask(async () => {
+  addUsersToGroup = task({ enqueue: true }, async () => {
     this.usersBeingAddedToGroup = [...this.usersBeingAddedToGroup, ...this.selectedNonGroupUsers];
     //timeout gives the spinner time to render
     await timeout(1);
@@ -193,7 +193,7 @@ export default class LearnerGroupUserManagerComponent extends Component {
     this.selectedNonGroupUsers = [];
   });
 
-  removeUsersFromGroup = enqueueTask(async () => {
+  removeUsersFromGroup = task({ enqueue: true }, async () => {
     this.usersBeingRemovedFromGroup = [
       ...this.usersBeingRemovedFromGroup,
       ...this.selectedGroupUsers,
