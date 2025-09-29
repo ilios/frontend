@@ -18,21 +18,25 @@ module('Acceptance | Session - Publish', function (hooks) {
     const school = this.server.create('school');
     await setupAuthentication({ school, administeredSchools: [school] }, true);
     this.course = this.server.create('course', { school });
-    this.server.create('session-type');
+    const sessionType = this.server.create('session-type');
     this.publishedSession = this.server.create('session', {
       published: true,
       course: this.course,
+      sessionType,
     });
     this.scheduledSession = this.server.create('session', {
       course: this.course,
       published: true,
       publishedAsTbd: true,
+      sessionType,
     });
     this.draftSession = this.server.create('session', {
       course: this.course,
+      sessionType,
     });
     this.ilmSession = this.server.create('session', {
       course: this.course,
+      sessionType,
     });
     this.server.create('ilm-session', {
       session: this.ilmSession,

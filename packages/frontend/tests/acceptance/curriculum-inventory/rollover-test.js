@@ -61,6 +61,7 @@ module('Acceptance | curriculum inventory report/rollover', function (hooks) {
         assert.strictEqual(parseInt(data.year, 10), thisYear + 1);
         assert.strictEqual(data.name, reportModel.name);
         assert.strictEqual(data.description, reportModel.description);
+        const startDate = DateTime.fromObject({ year: data.year, hour: 8 });
         return this.serialize(
           schema.curriculumInventoryReports.create({
             id: reportModel.id + 1,
@@ -68,6 +69,8 @@ module('Acceptance | curriculum inventory report/rollover', function (hooks) {
             year: data.year,
             name: data.name,
             description: data.description,
+            startDate: startDate.toJSDate(),
+            endDate: startDate.plus({ weeks: 7 }).toJSDate(),
           }),
         );
       },

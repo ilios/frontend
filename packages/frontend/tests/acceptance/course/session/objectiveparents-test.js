@@ -17,7 +17,8 @@ module('Acceptance | Session - Objective Parents', function (hooks) {
     const courseObjectives = this.server.createList('course-objective', 3, {
       course,
     });
-    const session = this.server.create('session', { course });
+    const sessionType = this.server.create('session-type', { school: this.school });
+    const session = this.server.create('session', { course, sessionType });
     this.server.create('session-objective', {
       session,
       courseObjectives: courseObjectives.slice(0, 2),

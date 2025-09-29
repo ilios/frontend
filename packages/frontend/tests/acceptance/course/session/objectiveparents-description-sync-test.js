@@ -65,7 +65,8 @@ module('Acceptance | Session - Objective Parents - Faded Status Sync', function 
       programYearObjectives: [parent3],
       title: this.longObjDescription,
     });
-    const session = this.server.create('session', { course });
+    const sessionType = this.server.create('session-type', { school: this.school });
+    const session = this.server.create('session', { course, sessionType });
     this.server.create('session-objective', {
       session,
       courseObjectives: [courseObjective1],

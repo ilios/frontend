@@ -18,7 +18,8 @@ module('Acceptance | Session - Objective Mesh Descriptors', function (hooks) {
       year: 2013,
       school: this.school,
     });
-    const session = this.server.create('session', { course });
+    const sessionType = this.server.create('session-type', { school: this.school });
+    const session = this.server.create('session', { course, sessionType });
     const meshDescriptors = this.server.createList('mesh-descriptor', 6);
     this.server.create('session-objective', {
       session,
