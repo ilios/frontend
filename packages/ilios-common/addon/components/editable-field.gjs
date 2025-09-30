@@ -8,20 +8,9 @@ import perform from 'ember-concurrency/helpers/perform';
 import t from 'ember-intl/helpers/t';
 import FaIcon from 'ilios-common/components/fa-icon';
 import { fn } from '@ember/helper';
-import FadeText from 'ilios-common/components/fade-text';
-import onResize from 'ember-on-resize-modifier/modifiers/on-resize';
 
 export default class EditableFieldComponent extends Component {
   @tracked isEditing = false;
-
-  get looksEmpty() {
-    const value = this.args.value || '';
-    const text = value.toString();
-    const noTagsText = text.replace(/(<([^>]+)>)/gi, '');
-    const strippedText = noTagsText.replace(/&nbsp;/gi, '').replace(/\s/g, '');
-
-    return strippedText.length === 0;
-  }
 
   saveData = task({ drop: true }, async () => {
     await timeout(1);
@@ -112,89 +101,25 @@ export default class EditableFieldComponent extends Component {
             </span>
           </span>
         {{else}}
-          <span>
+          <button
+            class="link-button"
+            title={{if @showTitle (t "general.edit")}}
+            data-test-edit
+            type="button"
+            {{on "click" (fn this.setIsEditing true)}}
+          >
             {{#if @value}}
-              {{#if this.looksEmpty}}
-                <button
-                  class="link-button"
-                  type="button"
-                  data-test-edit
-                  {{on "click" (fn this.setIsEditing true)}}
-                >
-                  <FaIcon @icon="pen-to-square" class="enabled" />
-                </button>
+              {{#if (has-block "value")}}
+                {{yield to="value"}}
               {{else}}
-                <FadeText
-                  @text={{@value}}
-                  @onEdit={{fn this.setIsEditing true}}
-                  @expanded={{@fadeTextExpanded}}
-                  @onExpandAll={{@onExpandAllFadeText}}
-                  as |displayText expand collapse updateTextDims shouldFade expanded|
-                >
-                  <button
-                    class="link-button"
-                    title={{if @showTitle (t "general.edit")}}
-                    data-test-edit
-                    type="button"
-                    {{on "click" (fn this.setIsEditing true)}}
-                  >
-                    <div class="display-text-wrapper{{if shouldFade ' faded'}}">
-                      <div class="display-text" {{onResize updateTextDims}}>
-                        {{displayText}}
-                      </div>
-                    </div>
-                    {{#if @showIcon}}
-                      <FaIcon data-test-edit-icon @icon="pen-to-square" class="enabled" />
-                    {{/if}}
-                  </button>
-                  {{#if shouldFade}}
-                    <div
-                      class="fade-text-control"
-                      data-test-fade-text-control
-                      {{! template-lint-disable no-invalid-interactive}}
-                      {{on "click" (fn this.setIsEditing true)}}
-                    >
-                      <button
-                        class="expand-text-button"
-                        type="button"
-                        aria-label={{t "general.expand"}}
-                        title={{t "general.expand"}}
-                        data-test-expand
-                        {{on "click" expand}}
-                      >
-                        <FaIcon @icon="angles-down" />
-                      </button>
-                    </div>
-                  {{else}}
-                    {{#if expanded}}
-                      <button
-                        class="collapse-text-button"
-                        aria-label={{t "general.collapse"}}
-                        title={{t "general.collapse"}}
-                        type="button"
-                        data-test-collapse
-                        {{on "click" collapse}}
-                      >
-                        <FaIcon @icon="angles-up" />
-                      </button>
-                    {{/if}}
-                  {{/if}}
-                </FadeText>
+                {{@value}}
               {{/if}}
             {{else}}
-              <button
-                class="link-button"
-                data-test-edit
-                type="button"
-                {{on "click" (fn this.setIsEditing true)}}
-              >
-                {{@clickPrompt}}
-              </button>
+              {{@clickPrompt}}
             {{/if}}
-          </span>
+          </button>
         {{/if}}
       </span>
-
     </div>
   </template>
 }

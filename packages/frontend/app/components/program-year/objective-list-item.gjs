@@ -26,6 +26,7 @@ import YupValidations from 'ilios-common/classes/yup-validations';
 import YupValidationMessage from 'ilios-common/components/yup-validation-message';
 import { string } from 'yup';
 import striptags from 'striptags';
+import FadeText from 'ilios-common/components/fade-text';
 
 export default class ProgramYearObjectiveListItemComponent extends Component {
   @service store;
@@ -258,19 +259,26 @@ export default class ProgramYearObjectiveListItemComponent extends Component {
             @renderHtml={{true}}
             @save={{perform this.saveDescriptionChanges}}
             @close={{this.revertDescriptionChanges}}
-            @fadeTextExpanded={{this.fadeTextExpanded}}
-            @onExpandAllFadeText={{this.expandAllFadeText}}
           >
-            <HtmlEditor
-              @content={{this.description}}
-              @update={{this.changeDescription}}
-              @autofocus={{true}}
-            />
-            <YupValidationMessage
-              @description={{t "general.description"}}
-              @validationErrors={{this.validations.errors.descriptionWithoutMarkup}}
-              data-test-description-validation-error-message
-            />
+            <:default>
+              <HtmlEditor
+                @content={{this.description}}
+                @update={{this.changeDescription}}
+                @autofocus={{true}}
+              />
+              <YupValidationMessage
+                @description={{t "general.description"}}
+                @validationErrors={{this.validations.errors.descriptionWithoutMarkup}}
+                data-test-description-validation-error-message
+              />
+            </:default>
+            <:value>
+              <FadeText
+                @expanded={{this.fadeTextExpanded}}
+                @onExpandAll={{this.expandAllFadeText}}
+                @text={{this.description}}
+              />
+            </:value>
           </EditableField>
         {{else}}
           {{! template-lint-disable no-triple-curlies }}

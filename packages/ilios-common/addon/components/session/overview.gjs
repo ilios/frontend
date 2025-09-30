@@ -28,6 +28,7 @@ import HtmlEditor from 'ilios-common/components/html-editor';
 import YupValidationMessage from 'ilios-common/components/yup-validation-message';
 import join from 'ilios-common/helpers/join';
 import mapBy from 'ilios-common/helpers/map-by';
+import FadeText from 'ilios-common/components/fade-text';
 
 export default class SessionOverview extends Component {
   @service currentUser;
@@ -599,22 +600,28 @@ export default class SessionOverview extends Component {
                   {{#if @editable}}
                     <EditableField
                       @value={{this.description}}
-                      @renderHtml={{true}}
                       @isSaveDisabled={{this.validations.errors.description}}
                       @save={{perform this.saveDescription}}
                       @close={{this.revertDescriptionChanges}}
-                      @fadeTextExpanded={{this.descriptionFadeTextExpanded}}
-                      @onExpandAllFadeText={{this.expandAllDescriptionFadeText}}
                       @clickPrompt={{t "general.clickToEdit"}}
                     >
-                      <HtmlEditor
-                        @content={{this.description}}
-                        @update={{this.changeDescription}}
-                      />
-                      <YupValidationMessage
-                        @description={{t "general.description"}}
-                        @validationErrors={{this.validations.errors.description}}
-                      />
+                      <:default>
+                        <HtmlEditor
+                          @content={{this.description}}
+                          @update={{this.changeDescription}}
+                        />
+                        <YupValidationMessage
+                          @description={{t "general.description"}}
+                          @validationErrors={{this.validations.errors.description}}
+                        />
+                      </:default>
+                      <:value>
+                        <FadeText
+                          @expanded={{this.descriptionFadeTextExpanded}}
+                          @onExpandAll={{this.expandAllDescriptionFadeText}}
+                          @text={{this.description}}
+                        />
+                      </:value>
                     </EditableField>
                   {{else}}
                     {{! template-lint-disable no-triple-curlies}}
@@ -632,18 +639,25 @@ export default class SessionOverview extends Component {
                       @isSaveDisabled={{this.validations.errors.instructionalNotes}}
                       @save={{perform this.saveInstructionalNotes}}
                       @close={{this.revertInstructionalNotesChanges}}
-                      @fadeTextExpanded={{this.notesFadeTextExpanded}}
-                      @onExpandAllFadeText={{this.expandAllNotesFadeText}}
                       @clickPrompt={{t "general.clickToEdit"}}
                     >
-                      <HtmlEditor
-                        @content={{this.instructionalNotes}}
-                        @update={{this.changeInstructionalNotes}}
-                      />
-                      <YupValidationMessage
-                        @description={{t "general.instructionalNotes"}}
-                        @validationErrors={{this.validations.errors.instructionalNotes}}
-                      />
+                      <:default>
+                        <HtmlEditor
+                          @content={{this.instructionalNotes}}
+                          @update={{this.changeInstructionalNotes}}
+                        />
+                        <YupValidationMessage
+                          @description={{t "general.instructionalNotes"}}
+                          @validationErrors={{this.validations.errors.instructionalNotes}}
+                        />
+                      </:default>
+                      <:value>
+                        <FadeText
+                          @expanded={{this.notesFadeTextExpanded}}
+                          @onExpandAll={{this.expandAllNotesFadeText}}
+                          @text={{this.instructionalNotes}}
+                        />
+                      </:value>
                     </EditableField>
                   {{else}}
                     {{! template-lint-disable no-triple-curlies}}
