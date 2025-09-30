@@ -79,7 +79,6 @@ export default class ReportsSubjectHeader extends Component {
             @value={{this.reportTitle}}
             @save={{perform this.changeTitle}}
             @close={{this.revertTitleChanges}}
-            @showIcon={{false}}
             as |keyboard isSaving|
           >
             <input

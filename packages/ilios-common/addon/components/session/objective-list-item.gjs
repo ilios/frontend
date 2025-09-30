@@ -200,20 +200,27 @@ export default class SessionObjectiveListItemComponent extends Component {
             @renderHtml={{true}}
             @save={{perform this.saveDescriptionChanges}}
             @close={{this.revertDescriptionChanges}}
-            @fadeTextExpanded={{this.fadeTextExpanded}}
-            @onExpandAllFadeText={{this.expandAllFadeText}}
             @showTitle={{true}}
           >
-            <HtmlEditor
-              @content={{this.description}}
-              @update={{this.changeDescription}}
-              @autofocus={{true}}
-            />
-            <YupValidationMessage
-              @description={{t "general.description"}}
-              @validationErrors={{this.validations.errors.descriptionWithoutMarkup}}
-              data-test-description-validation-error-message
-            />
+            <:default>
+              <HtmlEditor
+                @content={{this.description}}
+                @update={{this.changeDescription}}
+                @autofocus={{true}}
+              />
+              <YupValidationMessage
+                @description={{t "general.description"}}
+                @validationErrors={{this.validations.errors.descriptionWithoutMarkup}}
+                data-test-description-validation-error-message
+              />
+            </:default>
+            <:value>
+              <FadeText
+                @expanded={{this.fadeTextExpanded}}
+                @onExpandAll={{this.expandAllFadeText}}
+                @text={{this.description}}
+              />
+            </:value>
           </EditableField>
         {{else}}
           <FadeText
