@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
 import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
-import { dropTask } from 'ember-concurrency';
+import { task } from 'ember-concurrency';
 import { map, all } from 'rsvp';
 import { TrackedAsyncData } from 'ember-async-data';
 import t from 'ember-intl/helpers/t';
@@ -24,13 +24,13 @@ export default class DetailCohortsComponent extends Component {
     return this.cohortsData.isResolved ? this.cohortsData.value : null;
   }
 
-  manage = dropTask(async () => {
+  manage = task({ drop: true }, async () => {
     const cohorts = await this.args.course.cohorts;
     this.bufferedCohorts = [...cohorts];
     this.isManaging = true;
   });
 
-  save = dropTask(async () => {
+  save = task({ drop: true }, async () => {
     const { course } = this.args;
     const cohortList = await course.cohorts;
     const removedCohorts = cohortList.filter((cohort) => {

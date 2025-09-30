@@ -1,5 +1,5 @@
 import Component from '@glimmer/component';
-import { restartableTask, timeout } from 'ember-concurrency';
+import { task, timeout } from 'ember-concurrency';
 import { guidFor } from '@ember/object/internals';
 import t from 'ember-intl/helpers/t';
 import CopyButton from 'ilios-common/components/copy-button';
@@ -17,7 +17,7 @@ export default class OfferingUrlDisplayComponent extends Component {
     return document.getElementById(this.copyButtonId);
   }
 
-  copy = restartableTask(async () => {
+  copy = task({ restartable: true }, async () => {
     await timeout(1500);
   });
 

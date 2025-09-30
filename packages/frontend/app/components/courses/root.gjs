@@ -1,6 +1,6 @@
 import Component from '@glimmer/component';
 import { service } from '@ember/service';
-import { dropTask } from 'ember-concurrency';
+import { task } from 'ember-concurrency';
 import { DateTime } from 'luxon';
 import { TrackedAsyncData } from 'ember-async-data';
 import { cached, tracked } from '@glimmer/tracking';
@@ -175,7 +175,7 @@ export default class CoursesRootComponent extends Component {
     return defaultYear;
   }
 
-  removeCourse = dropTask(async (course) => {
+  removeCourse = task({ drop: true }, async (course) => {
     const courses = await this.selectedSchool.courses;
     courses.splice(courses.indexOf(course), 1);
     this.selectedSchool.set('courses', courses);
@@ -186,7 +186,7 @@ export default class CoursesRootComponent extends Component {
     }
   });
 
-  saveNewCourse = dropTask(async (newCourse) => {
+  saveNewCourse = task({ drop: true }, async (newCourse) => {
     newCourse.setDatesBasedOnYear();
     this.newCourse = await newCourse.save();
     this.showNewCourseForm = false;

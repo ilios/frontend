@@ -1,5 +1,5 @@
 import Component from '@glimmer/component';
-import { restartableTask } from 'ember-concurrency';
+import { task } from 'ember-concurrency';
 import { service } from '@ember/service';
 import { guidFor } from '@ember/object/internals';
 import t from 'ember-intl/helpers/t';
@@ -34,7 +34,7 @@ export default class ReportsCurriculumHeader extends Component {
     return document.getElementById(this.runButtonId);
   }
 
-  textCopied = restartableTask(async () => {
+  textCopied = task({ restartable: true }, async () => {
     this.flashMessages.success('general.copiedCurriculumReportUrl');
   });
 

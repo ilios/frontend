@@ -2,7 +2,7 @@ import Component from '@glimmer/component';
 import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
-import { dropTask } from 'ember-concurrency';
+import { task } from 'ember-concurrency';
 import { hash } from 'rsvp';
 import { uniqueValues } from 'ilios-common/utils/array-helpers';
 import { TrackedAsyncData } from 'ember-async-data';
@@ -66,7 +66,7 @@ export default class DetailLearnersAndLearnerGroupsComponent extends Component {
     return this.ilmLearnerGroupsData.isResolved ? this.ilmLearnerGroupsData.value : null;
   }
 
-  manage = dropTask(async () => {
+  manage = task({ drop: true }, async () => {
     const ilmSession = await this.args.session.ilmSession;
     const { learnerGroups, learners } = await hash({
       learnerGroups: ilmSession.learnerGroups,
@@ -78,7 +78,7 @@ export default class DetailLearnersAndLearnerGroupsComponent extends Component {
     this.isManaging = true;
   });
 
-  save = dropTask(async () => {
+  save = task({ drop: true }, async () => {
     const ilmSession = await this.args.session.ilmSession;
     ilmSession.set('learnerGroups', this.learnerGroupBuffer);
     ilmSession.set('learners', this.learnerBuffer);

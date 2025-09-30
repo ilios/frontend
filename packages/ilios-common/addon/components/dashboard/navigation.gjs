@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
 import { service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
-import { dropTask } from 'ember-concurrency';
+import { task } from 'ember-concurrency';
 import t from 'ember-intl/helpers/t';
 import { LinkTo } from '@ember/routing';
 import IcsFeed from 'ilios-common/components/ics-feed';
@@ -18,7 +18,7 @@ export default class NavigationComponent extends Component {
     this.setup.perform();
   }
 
-  setup = dropTask(async () => {
+  setup = task({ drop: true }, async () => {
     const user = await this.currentUser.getModel();
     const icsFeedKey = user.icsFeedKey;
     const apiHost = this.iliosConfig.apiHost;

@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
 import { cached, tracked } from '@glimmer/tracking';
 import { service } from '@ember/service';
-import { dropTask, timeout } from 'ember-concurrency';
+import { task, timeout } from 'ember-concurrency';
 import createDownloadFile from 'ilios-common/utils/create-download-file';
 import PapaParse from 'papaparse';
 import { TrackedAsyncData } from 'ember-async-data';
@@ -35,7 +35,7 @@ export default class ReportsSubjectDownload extends Component {
     return this.reportTitleData.isResolved ? this.reportTitleData.value : null;
   }
 
-  downloadReport = dropTask(async () => {
+  downloadReport = task({ drop: true }, async () => {
     const data = await this.args.fetchDownloadData();
     const csv = PapaParse.unparse(data);
     this.finishedBuildingReport = true;

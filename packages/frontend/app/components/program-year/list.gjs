@@ -2,7 +2,7 @@ import Component from '@glimmer/component';
 import { cached, tracked } from '@glimmer/tracking';
 import { TrackedAsyncData } from 'ember-async-data';
 import { sortBy } from 'ilios-common/utils/array-helpers';
-import { dropTask } from 'ember-concurrency';
+import { task } from 'ember-concurrency';
 import { service } from '@ember/service';
 import t from 'ember-intl/helpers/t';
 import ExpandCollapseButton from 'ilios-common/components/expand-collapse-button';
@@ -45,7 +45,7 @@ export default class ProgramYearListComponent extends Component {
     return this.crossesBoundaryConfig.isResolved ? this.crossesBoundaryConfig.value : false;
   }
 
-  saveNew = dropTask(async (startYear) => {
+  saveNew = task({ drop: true }, async (startYear) => {
     const latestProgramYear = this.sortedProgramYears.reverse()[0];
     const newProgramYear = this.store.createRecord('program-year', {
       program: this.args.program,

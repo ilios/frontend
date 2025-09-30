@@ -6,7 +6,7 @@ import { isEmpty, isPresent } from '@ember/utils';
 import { hash, map } from 'rsvp';
 import { DateTime } from 'luxon';
 import { mixed, number, string } from 'yup';
-import { dropTask, restartableTask, timeout } from 'ember-concurrency';
+import { task, timeout } from 'ember-concurrency';
 import { uniqueValues } from 'ilios-common/utils/array-helpers';
 import { TrackedAsyncData } from 'ember-async-data';
 import { uniqueId, fn } from '@ember/helper';
@@ -264,7 +264,7 @@ export default class OfferingForm extends Component {
     this.instructorGroups = [];
   }
 
-  loadAttrsFromOffering = dropTask(async (offering) => {
+  loadAttrsFromOffering = task({ drop: true }, async (offering) => {
     this.startDate = offering.get('startDate');
     this.endDate = offering.get('endDate');
     this.room = offering.get('room');
@@ -412,14 +412,14 @@ export default class OfferingForm extends Component {
     }
   }
 
-  saveOnEnter = dropTask(async (event) => {
+  saveOnEnter = task({ drop: true }, async (event) => {
     const keyCode = event.keyCode;
     if (13 === keyCode) {
       await this.saveOffering.perform();
     }
   });
 
-  saveOffering = dropTask(async () => {
+  saveOffering = task({ drop: true }, async () => {
     this.validations.addErrorDisplaysFor([
       'room',
       'url',
@@ -588,7 +588,7 @@ export default class OfferingForm extends Component {
     return smallGroupOfferings;
   }
 
-  updateDurationHours = restartableTask(async (hours) => {
+  updateDurationHours = task({ restartable: true }, async (hours) => {
     this.validations.addErrorDisplayFor('durationHours');
     // The corresponding input field passes an empty string if the input blank or invalid.
     // Here, we ignore invalid input and exit early.
@@ -604,7 +604,7 @@ export default class OfferingForm extends Component {
       .toJSDate();
   });
 
-  updateDurationMinutes = restartableTask(async (minutes) => {
+  updateDurationMinutes = task({ restartable: true }, async (minutes) => {
     // The corresponding input field passes an empty string if the input blank or invalid.
     // Here, we ignore invalid input and exit early.
     if ('' === minutes) {

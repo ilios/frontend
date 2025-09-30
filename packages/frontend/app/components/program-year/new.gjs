@@ -1,6 +1,6 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
-import { dropTask } from 'ember-concurrency';
+import { task } from 'ember-concurrency';
 import { findBy, mapBy } from 'ilios-common/utils/array-helpers';
 import t from 'ember-intl/helpers/t';
 import { uniqueId } from '@ember/helper';
@@ -48,7 +48,7 @@ export default class NewProgramYearComponent extends Component {
     }
   }
 
-  saveNewYear = dropTask(async () => {
+  saveNewYear = task({ drop: true }, async () => {
     await this.args.save(this.selectedYear.value);
   });
   <template>

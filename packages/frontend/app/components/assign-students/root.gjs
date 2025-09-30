@@ -2,7 +2,7 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { isBlank } from '@ember/utils';
 import { action } from '@ember/object';
-import { dropTask, restartableTask, timeout } from 'ember-concurrency';
+import { task, timeout } from 'ember-concurrency';
 import { findById, mapBy, sortBy, uniqueValues } from 'ilios-common/utils/array-helpers';
 import { service } from '@ember/service';
 import { all } from 'rsvp';
@@ -76,12 +76,12 @@ export default class AssignStudentsRootComponent extends Component {
     );
   }
 
-  setQuery = restartableTask(async (q) => {
+  setQuery = task({ restartable: true }, async (q) => {
     await timeout(DEBOUNCE_DELAY);
     this.args.setQuery(q);
   });
 
-  save = dropTask(async (cohort) => {
+  save = task({ drop: true }, async (cohort) => {
     this.savedUserIds = [];
     const studentsToModify = this.selectedStudents;
     if (!cohort || studentsToModify.length < 1) {

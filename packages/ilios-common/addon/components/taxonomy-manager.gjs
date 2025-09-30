@@ -4,7 +4,7 @@ import { action } from '@ember/object';
 import { service } from '@ember/service';
 import { isPresent } from '@ember/utils';
 import { TrackedAsyncData } from 'ember-async-data';
-import { restartableTask, timeout } from 'ember-concurrency';
+import { task, timeout } from 'ember-concurrency';
 import { filter } from 'rsvp';
 import escapeRegExp from 'ilios-common/utils/escape-reg-exp';
 import { uniqueId } from '@ember/helper';
@@ -125,7 +125,7 @@ export default class TaxonomyManager extends Component {
     });
   }
 
-  setTermFilter = restartableTask(async (termFilter) => {
+  setTermFilter = task({ restartable: true }, async (termFilter) => {
     const clean = escapeRegExp(termFilter);
     if (isPresent(clean)) {
       await timeout(250);

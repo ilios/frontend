@@ -4,7 +4,7 @@ import { isEmpty } from '@ember/utils';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
 import { next } from '@ember/runloop';
-import { dropTask } from 'ember-concurrency';
+import { task } from 'ember-concurrency';
 import { DateTime } from 'luxon';
 import { filter, map } from 'rsvp';
 import escapeRegExp from 'ilios-common/utils/escape-reg-exp';
@@ -204,7 +204,7 @@ export default class SessionsGrid extends Component {
     }
   }
 
-  removeSession = dropTask(async (session) => {
+  removeSession = task({ drop: true }, async (session) => {
     session.deleteRecord();
     await session.save();
   });

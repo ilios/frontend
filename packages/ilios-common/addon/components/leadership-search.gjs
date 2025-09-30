@@ -1,6 +1,6 @@
 import Component from '@glimmer/component';
 import { service } from '@ember/service';
-import { dropTask, restartableTask, timeout } from 'ember-concurrency';
+import { task, timeout } from 'ember-concurrency';
 import { cleanQuery } from 'ilios-common/utils/query-utils';
 import { tracked } from '@glimmer/tracking';
 import { guidFor } from '@ember/object/internals';
@@ -33,7 +33,7 @@ export default class LeadershipSearchComponent extends Component {
     return mapBy(this.args.existingUsers, 'id');
   }
 
-  searchForUsers = restartableTask(async (query) => {
+  searchForUsers = task({ restartable: true }, async (query) => {
     this.searchValue = query;
 
     const q = cleanQuery(query);
@@ -82,7 +82,7 @@ export default class LeadershipSearchComponent extends Component {
     return [result, ...mappedResults];
   });
 
-  clickUser = dropTask(async (user) => {
+  clickUser = task({ drop: true }, async (user) => {
     if (this.existingUserIds.includes(user.id)) {
       return;
     }

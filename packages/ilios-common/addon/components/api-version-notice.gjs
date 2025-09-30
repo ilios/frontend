@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { service } from '@ember/service';
-import { dropTask, timeout } from 'ember-concurrency';
+import { task, timeout } from 'ember-concurrency';
 import not from 'ember-truth-helpers/helpers/not';
 import FaIcon from 'ilios-common/components/fa-icon';
 import t from 'ember-intl/helpers/t';
@@ -25,7 +25,7 @@ export default class ApiVersionNoticeComponent extends Component {
     window.location.reload();
   }
 
-  check = dropTask(async () => {
+  check = task({ drop: true }, async () => {
     const mismatched = await this.apiVersion.getIsMismatched();
     if (mismatched && 'serviceWorker' in navigator) {
       await timeout(2000); //wait to let the new service worker get fetched if it is available
@@ -46,7 +46,7 @@ export default class ApiVersionNoticeComponent extends Component {
     return true; //always return true to update data-test-load-finished property
   });
 
-  countdown = dropTask(async () => {
+  countdown = task({ drop: true }, async () => {
     this.updateAvailable = true;
     for (let i = 5; i > 0; i--) {
       this.countdownToUpdate = i;
@@ -55,7 +55,7 @@ export default class ApiVersionNoticeComponent extends Component {
     await this.update.perform();
   });
 
-  update = dropTask(async () => {
+  update = task({ drop: true }, async () => {
     if ('serviceWorker' in navigator) {
       const reg = await navigator.serviceWorker.getRegistration();
       if (reg && reg.waiting) {

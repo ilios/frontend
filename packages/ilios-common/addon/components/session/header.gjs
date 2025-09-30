@@ -2,7 +2,7 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import YupValidations from 'ilios-common/classes/yup-validations';
 import { string } from 'yup';
-import { restartableTask } from 'ember-concurrency';
+import { task } from 'ember-concurrency';
 import EditableField from 'ilios-common/components/editable-field';
 import perform from 'ember-concurrency/helpers/perform';
 import t from 'ember-intl/helpers/t';
@@ -25,7 +25,7 @@ export default class SessionHeaderComponent extends Component {
     title: string().required().min(3).max(200),
   });
 
-  changeTitle = restartableTask(async () => {
+  changeTitle = task({ restartable: true }, async () => {
     this.validations.addErrorDisplayFor('title');
     const isValid = await this.validations.isValid();
     if (!isValid) {

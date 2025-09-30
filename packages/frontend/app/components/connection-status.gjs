@@ -1,6 +1,6 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
-import { restartableTask, timeout } from 'ember-concurrency';
+import { task, timeout } from 'ember-concurrency';
 import { registerDestructor } from '@ember/destroyable';
 import { action } from '@ember/object';
 import FaIcon from 'ilios-common/components/fa-icon';
@@ -48,7 +48,7 @@ export default class ConnectionStatusComponent extends Component {
     this.changeConnectionState.perform(false);
   }
 
-  changeConnectionState = restartableTask(async (isOnline) => {
+  changeConnectionState = task({ restartable: true }, async (isOnline) => {
     this.timer = 5;
     this.multiplier = 1;
     this.stopAttemptingToReconnect = false;
@@ -60,7 +60,7 @@ export default class ConnectionStatusComponent extends Component {
     }
   });
 
-  reconnect = restartableTask(async (force) => {
+  reconnect = task({ restartable: true }, async (force) => {
     await timeout(1);
     if (navigator.onLine) {
       this.changeConnectionState.perform(true);

@@ -1,6 +1,6 @@
 import Component from '@glimmer/component';
 import { cached } from '@glimmer/tracking';
-import { dropTask } from 'ember-concurrency';
+import { task } from 'ember-concurrency';
 import { TrackedAsyncData } from 'ember-async-data';
 import or from 'ember-truth-helpers/helpers/or';
 import SchoolSessionAttributesExpanded from 'frontend/components/school-session-attributes-expanded';
@@ -44,7 +44,7 @@ export default class SchoolSessionAttributesComponent extends Component {
     return this.schoolConfigs.get('showSessionSpecialEquipmentRequired') || null;
   }
 
-  save = dropTask(async (newValues) => {
+  save = task({ drop: true }, async (newValues) => {
     try {
       const needToSave = await Promise.all(
         this.schoolConfigNames.map((name) => {

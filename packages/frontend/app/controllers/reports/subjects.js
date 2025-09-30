@@ -1,6 +1,6 @@
 import Controller from '@ember/controller';
 import { tracked } from '@glimmer/tracking';
-import { restartableTask, timeout } from 'ember-concurrency';
+import { task, timeout } from 'ember-concurrency';
 import { action } from '@ember/object';
 
 export default class ReportsSubjectsController extends Controller {
@@ -25,7 +25,7 @@ export default class ReportsSubjectsController extends Controller {
   @tracked selectedPrepositionalObjectId = null;
   @tracked runningSubjectReport = null;
 
-  changeTitleFilter = restartableTask(async (value) => {
+  changeTitleFilter = task({ restartable: true }, async (value) => {
     this.titleFilter = value;
     await timeout(250);
     return value;

@@ -2,7 +2,7 @@ import Component from '@glimmer/component';
 import { TrackedAsyncData } from 'ember-async-data';
 import { cached, tracked } from '@glimmer/tracking';
 import { service } from '@ember/service';
-import { restartableTask, timeout } from 'ember-concurrency';
+import { task, timeout } from 'ember-concurrency';
 import and from 'ember-truth-helpers/helpers/and';
 import eq from 'ember-truth-helpers/helpers/eq';
 import t from 'ember-intl/helpers/t';
@@ -66,7 +66,7 @@ export default class UserMaterialStatusComponent extends Component {
     return this.materialStatus?.status || 0;
   }
 
-  setStatus = restartableTask(async (statusValue) => {
+  setStatus = task({ restartable: true }, async (statusValue) => {
     this.tmpStatus = statusValue;
     let materialStatus = this.materialStatus;
     if (!materialStatus) {

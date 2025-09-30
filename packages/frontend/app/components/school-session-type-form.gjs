@@ -2,7 +2,7 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
-import { dropTask } from 'ember-concurrency';
+import { task } from 'ember-concurrency';
 import { findById, sortBy } from 'ilios-common/utils/array-helpers';
 import { uniqueId, concat } from '@ember/helper';
 import t from 'ember-intl/helpers/t';
@@ -79,7 +79,7 @@ export default class SchoolSessionTypeFormComponent extends Component {
     this.assessment = assessment;
   }
 
-  saveSessionType = dropTask(async () => {
+  saveSessionType = task({ drop: true }, async () => {
     this.validations.addErrorDisplayForAllFields();
     const isValid = await this.validations.isValid();
     if (!isValid) {
@@ -96,7 +96,7 @@ export default class SchoolSessionTypeFormComponent extends Component {
     );
   });
 
-  saveOrCancel = dropTask(async (event) => {
+  saveOrCancel = task({ drop: true }, async (event) => {
     const keyCode = event.keyCode;
     if (13 === keyCode) {
       await this.saveSessionType.perform();

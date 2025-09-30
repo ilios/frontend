@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
 import { map } from 'rsvp';
 import { htmlSafe } from '@ember/template';
-import { dropTask, restartableTask, timeout } from 'ember-concurrency';
+import { task, timeout } from 'ember-concurrency';
 import { service } from '@ember/service';
 import { cached, tracked } from '@glimmer/tracking';
 import { TrackedAsyncData } from 'ember-async-data';
@@ -128,7 +128,7 @@ export default class CourseVisualizeTermGraph extends Component {
       });
   }
 
-  barHover = restartableTask(async (obj) => {
+  barHover = task({ restartable: true }, async (obj) => {
     await timeout(100);
     if (this.args.isIcon || !obj || obj.empty) {
       this.tooltipTitle = null;
@@ -142,7 +142,7 @@ export default class CourseVisualizeTermGraph extends Component {
     this.tooltipContent = htmlSafe(mapBy(meta.sessions, 'title').sort().join(', '));
   });
 
-  downloadData = dropTask(async () => {
+  downloadData = task({ drop: true }, async () => {
     const data = await this.getDataObjects(this.args.course, this.args.term);
     const output = data.map((obj) => {
       const rhett = {};

@@ -4,7 +4,7 @@ import { service } from '@ember/service';
 import { action } from '@ember/object';
 import { isEmpty } from '@ember/utils';
 import { TrackedAsyncData } from 'ember-async-data';
-import { dropTask } from 'ember-concurrency';
+import { task } from 'ember-concurrency';
 import { uniqueId, fn } from '@ember/helper';
 import LoadingSpinner from 'ilios-common/components/loading-spinner';
 import { on } from '@ember/modifier';
@@ -93,7 +93,7 @@ export default class SchoolVocabularyTermManagerComponent extends Component {
     return !this.children || !this.allParents;
   }
 
-  changeTitle = dropTask(async () => {
+  changeTitle = task({ drop: true }, async () => {
     this.validations.addErrorDisplayFor('title');
     const isValid = await this.validations.isValid();
     if (!isValid) {
@@ -111,7 +111,7 @@ export default class SchoolVocabularyTermManagerComponent extends Component {
     this.titleBuffer = null;
   }
 
-  changeDescription = dropTask(async () => {
+  changeDescription = task({ drop: true }, async () => {
     this.args.term.set('description', this.description);
     await this.args.term.save();
     this.descriptionBuffer = null;
@@ -133,7 +133,7 @@ export default class SchoolVocabularyTermManagerComponent extends Component {
     this.newTerm = await term.save();
   }
 
-  deleteTerm = dropTask(async () => {
+  deleteTerm = task({ drop: true }, async () => {
     const parent = await this.args.term.parent;
     const goTo = isEmpty(parent) ? null : parent.id;
     this.args.term.deleteRecord();
@@ -153,7 +153,7 @@ export default class SchoolVocabularyTermManagerComponent extends Component {
     this.args.manageTerm(null);
   }
 
-  changeIsActive = dropTask(async (isActive) => {
+  changeIsActive = task({ drop: true }, async (isActive) => {
     this.args.term.active = isActive;
     await this.args.term.save();
   });

@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
 import { service } from '@ember/service';
 import { cached } from '@glimmer/tracking';
-import { dropTask } from 'ember-concurrency';
+import { task } from 'ember-concurrency';
 import { action } from '@ember/object';
 import { findById } from 'ilios-common/utils/array-helpers';
 import { TrackedAsyncData } from 'ember-async-data';
@@ -58,7 +58,8 @@ export default class SchoolSessionTypesExpandedComponent extends Component {
     }
   }
 
-  save = dropTask(
+  save = task(
+    { drop: true },
     async (title, calendarColor, assessment, assessmentOption, aamcMethod, isActive) => {
       this.args.setSchoolNewSessionType(null);
       const sessionType = this.store.createRecord('session-type');
@@ -79,7 +80,8 @@ export default class SchoolSessionTypesExpandedComponent extends Component {
     },
   );
 
-  update = dropTask(
+  update = task(
+    { drop: true },
     async (title, calendarColor, assessment, assessmentOption, aamcMethod, isActive) => {
       const aamcMethods = aamcMethod ? [aamcMethod] : [];
       const sessionType = this.managedSessionType;

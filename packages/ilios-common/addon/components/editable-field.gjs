@@ -1,6 +1,6 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
-import { dropTask, timeout } from 'ember-concurrency';
+import { task, timeout } from 'ember-concurrency';
 import { action } from '@ember/object';
 import { modifier } from 'ember-modifier';
 import { on } from '@ember/modifier';
@@ -23,7 +23,7 @@ export default class EditableFieldComponent extends Component {
     return strippedText.length === 0;
   }
 
-  saveData = dropTask(async () => {
+  saveData = task({ drop: true }, async () => {
     await timeout(1);
     const result = await this.args.save();
     if (result !== false) {
@@ -31,7 +31,7 @@ export default class EditableFieldComponent extends Component {
     }
   });
 
-  closeEditor = dropTask(async () => {
+  closeEditor = task({ drop: true }, async () => {
     await timeout(1);
     await this.args.close();
     this.setIsEditing(false);

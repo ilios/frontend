@@ -4,7 +4,7 @@ import { action } from '@ember/object';
 import ObjectProxy from '@ember/object/proxy';
 import { service } from '@ember/service';
 import { all, map } from 'rsvp';
-import { dropTask, enqueueTask, restartableTask, task } from 'ember-concurrency';
+import { task } from 'ember-concurrency';
 import pad from 'pad';
 import { TrackedAsyncData } from 'ember-async-data';
 import { uniqueValues } from 'ilios-common/utils/array-helpers';
@@ -202,7 +202,7 @@ export default class LearnerGroupRootComponent extends Component {
     return this.args.sortUsersBy || 'fullName';
   }
 
-  saveNewLearnerGroup = dropTask(async (title) => {
+  saveNewLearnerGroup = task({ drop: true }, async (title) => {
     const cohort = await this.args.learnerGroup.cohort;
     const newLearnerGroup = this.store.createRecord('learner-group', {
       cohort,
@@ -213,7 +213,7 @@ export default class LearnerGroupRootComponent extends Component {
     this.showNewLearnerGroupForm = false;
   });
 
-  changeLocation = restartableTask(async () => {
+  changeLocation = task({ restartable: true }, async () => {
     this.args.learnerGroup.set('location', this.location);
     await this.args.learnerGroup.save();
     this.locationBuffer = null;
@@ -268,7 +268,7 @@ export default class LearnerGroupRootComponent extends Component {
     }
   }
 
-  saveUrlChanges = restartableTask(async () => {
+  saveUrlChanges = task({ restartable: true }, async () => {
     this.validations.addErrorDisplayFor('url');
     const isValid = await this.validations.isValid();
     if (!isValid) {
@@ -297,7 +297,7 @@ export default class LearnerGroupRootComponent extends Component {
     this.urlChanged = true;
   }
 
-  saveInstructors = restartableTask(async (newInstructors, newInstructorGroups) => {
+  saveInstructors = task({ restartable: true }, async (newInstructors, newInstructorGroups) => {
     this.args.learnerGroup.set('instructors', newInstructors);
     this.args.learnerGroup.set('instructorGroups', newInstructorGroups);
     await this.args.learnerGroup.save();
@@ -386,7 +386,7 @@ export default class LearnerGroupRootComponent extends Component {
     return users.filter((user) => !currentUsers.includes(user));
   }
 
-  addUserToGroup = enqueueTask(async (user) => {
+  addUserToGroup = task({ enqueue: true }, async (user) => {
     const learnerGroup = this.args.learnerGroup;
     const topLevelGroup = await learnerGroup.topLevelGroup;
     const removeGroups = await topLevelGroup.removeUserFromGroupAndAllDescendants(user);
@@ -395,13 +395,13 @@ export default class LearnerGroupRootComponent extends Component {
     await Promise.all(addGroups.map((g) => g.save()));
   });
 
-  removeUserToCohort = enqueueTask(async (user) => {
+  removeUserToCohort = task({ enqueue: true }, async (user) => {
     const topLevelGroup = await this.args.learnerGroup.topLevelGroup;
     const groups = await topLevelGroup.removeUserFromGroupAndAllDescendants(user);
     await all(groups.map((group) => group.save()));
   });
 
-  addUsersToGroup = enqueueTask(async (users) => {
+  addUsersToGroup = task({ enqueue: true }, async (users) => {
     const learnerGroup = this.args.learnerGroup;
     const topLevelGroup = await learnerGroup.topLevelGroup;
     let addGroups = [];
@@ -419,7 +419,7 @@ export default class LearnerGroupRootComponent extends Component {
     await Promise.all(uniqueValues(addGroups).map((g) => g.save()));
   });
 
-  removeUsersToCohort = enqueueTask(async (users) => {
+  removeUsersToCohort = task({ enqueue: true }, async (users) => {
     const topLevelGroup = await this.args.learnerGroup.topLevelGroup;
     let groupsToSave = [];
     for (let i = 0; i < users.length; i++) {
@@ -439,12 +439,12 @@ export default class LearnerGroupRootComponent extends Component {
     return users.filter((user) => !currentUsers.includes(user));
   });
 
-  changeNeedsAccommodation = restartableTask(async (value) => {
+  changeNeedsAccommodation = task({ restartable: true }, async (value) => {
     this.args.learnerGroup.set('needsAccommodation', value);
     await this.args.learnerGroup.save();
   });
 
-  copyGroup = dropTask(async (withLearners, learnerGroup) => {
+  copyGroup = task({ drop: true }, async (withLearners, learnerGroup) => {
     const cohort = await learnerGroup.cohort;
     const parentGroup = await learnerGroup.parent;
     const newGroups = await cloneLearnerGroup(

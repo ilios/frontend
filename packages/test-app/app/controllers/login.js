@@ -1,7 +1,7 @@
 import Controller from '@ember/controller';
 import { service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
-import { dropTask } from 'ember-concurrency';
+import { task } from 'ember-concurrency';
 
 export default class LoginController extends Controller {
   @service iliosConfig;
@@ -9,7 +9,7 @@ export default class LoginController extends Controller {
   @tracked jwt = null;
   @tracked error = null;
 
-  login = dropTask(async () => {
+  login = task({ drop: true }, async () => {
     this.error = null;
 
     if (this.jwt) {
@@ -29,7 +29,7 @@ export default class LoginController extends Controller {
     }
   });
 
-  loginOnEnter = dropTask(async (event) => {
+  loginOnEnter = task({ drop: true }, async (event) => {
     const keyCode = event.keyCode;
     if (13 === keyCode) {
       await this.login.perform();

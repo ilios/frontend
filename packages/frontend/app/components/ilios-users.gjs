@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
 import { service } from '@ember/service';
 import { cleanQuery } from 'ilios-common/utils/query-utils';
-import { restartableTask, timeout } from 'ember-concurrency';
+import { task, timeout } from 'ember-concurrency';
 import { TrackedAsyncData } from 'ember-async-data';
 import { tracked, cached } from '@glimmer/tracking';
 import { ensureSafeComponent } from '@embroider/util';
@@ -51,7 +51,7 @@ export default class IliosUsersComponent extends Component {
     return ensureSafeComponent(component, this);
   }
 
-  searchForUsers = restartableTask(async (sort = 'lastName', sortDir = 'ASC') => {
+  searchForUsers = task({ restartable: true }, async (sort = 'lastName', sortDir = 'ASC') => {
     const q = cleanQuery(this.args.query);
     const orderPrimary = `order_by[${sort === 'fullName' ? 'lastName' : sort}]`;
     const orderSecondary = 'order_by[firstName]';

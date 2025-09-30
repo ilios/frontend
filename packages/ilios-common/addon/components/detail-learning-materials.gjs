@@ -3,7 +3,7 @@ import { service } from '@ember/service';
 import { cached, tracked } from '@glimmer/tracking';
 import { guidFor } from '@ember/object/internals';
 import { action } from '@ember/object';
-import { dropTask } from 'ember-concurrency';
+import { task } from 'ember-concurrency';
 import { all } from 'rsvp';
 import { TrackedAsyncData } from 'ember-async-data';
 import { mapBy } from 'ilios-common/utils/array-helpers';
@@ -109,7 +109,7 @@ export default class DetailCohortsComponent extends Component {
     scrollIntoView(this.title);
   }
 
-  saveNewLearningMaterial = dropTask(async (lm) => {
+  saveNewLearningMaterial = task({ drop: true }, async (lm) => {
     const savedLm = await lm.save();
 
     let lmSubject;
@@ -136,7 +136,7 @@ export default class DetailCohortsComponent extends Component {
     scrollIntoView(this.title);
   });
 
-  saveSortOrder = dropTask(async (learningMaterials) => {
+  saveSortOrder = task({ drop: true }, async (learningMaterials) => {
     const materialsToSave = [];
     for (let i = 0, n = learningMaterials.length; i < n; i++) {
       const lm = learningMaterials[i];
@@ -152,7 +152,7 @@ export default class DetailCohortsComponent extends Component {
     scrollIntoView(this.title);
   });
 
-  addLearningMaterial = dropTask(async (parentLearningMaterial) => {
+  addLearningMaterial = task({ drop: true }, async (parentLearningMaterial) => {
     let newLearningMaterial;
 
     if (this.args.isCourse) {
@@ -177,7 +177,7 @@ export default class DetailCohortsComponent extends Component {
     await newLearningMaterial.save();
   });
 
-  remove = dropTask(async (lm) => {
+  remove = task({ drop: true }, async (lm) => {
     lm.deleteRecord();
     return await lm.save();
   });

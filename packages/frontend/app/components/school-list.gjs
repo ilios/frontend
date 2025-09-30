@@ -2,7 +2,7 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
-import { dropTask } from 'ember-concurrency';
+import { task } from 'ember-concurrency';
 import YupValidations from 'ilios-common/classes/yup-validations';
 import { string } from 'yup';
 import { uniqueId } from '@ember/helper';
@@ -48,7 +48,7 @@ export default class SchoolListComponent extends Component {
     this.iliosAdministratorEmail = null;
   }
 
-  save = dropTask(async () => {
+  save = task({ drop: true }, async () => {
     this.validations.addErrorDisplayForAllFields();
     const isValid = await this.validations.isValid();
     if (!isValid) {
@@ -65,7 +65,7 @@ export default class SchoolListComponent extends Component {
     this.showNewSchoolForm = false;
   });
 
-  saveOrCancel = dropTask(async (event) => {
+  saveOrCancel = task({ drop: true }, async (event) => {
     const keyCode = event.keyCode;
     const target = event.target;
 

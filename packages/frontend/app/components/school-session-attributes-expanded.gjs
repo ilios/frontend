@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
-import { dropTask } from 'ember-concurrency';
+import { task } from 'ember-concurrency';
 import { capitalize } from '@ember/string';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
@@ -69,7 +69,7 @@ export default class SchoolSessionAttributesExpandedComponent extends Component 
     this[bufferName] = this.args[name];
   }
 
-  save = dropTask(async () => {
+  save = task({ drop: true }, async () => {
     //read the flipped values before we reset them
     const all = {
       showSessionAttendanceRequired: this.showSessionAttendanceRequired,

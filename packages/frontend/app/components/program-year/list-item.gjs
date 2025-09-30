@@ -2,7 +2,7 @@ import Component from '@glimmer/component';
 import { cached, tracked } from '@glimmer/tracking';
 import { TrackedAsyncData } from 'ember-async-data';
 import { service } from '@ember/service';
-import { dropTask } from 'ember-concurrency';
+import { task } from 'ember-concurrency';
 import and from 'ember-truth-helpers/helpers/and';
 import not from 'ember-truth-helpers/helpers/not';
 import { LinkTo } from '@ember/routing';
@@ -105,17 +105,17 @@ export default class ProgramYearListItemComponent extends Component {
     return { canDelete, canLock, canUnlock };
   }
 
-  lock = dropTask(async () => {
+  lock = task({ drop: true }, async () => {
     this.args.programYear.set('locked', true);
     await this.args.programYear.save();
   });
 
-  unlock = dropTask(async () => {
+  unlock = task({ drop: true }, async () => {
     this.args.programYear.set('locked', false);
     await this.args.programYear.save();
   });
 
-  remove = dropTask(async () => {
+  remove = task({ drop: true }, async () => {
     await this.args.programYear.destroyRecord();
   });
   <template>

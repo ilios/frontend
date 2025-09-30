@@ -1,6 +1,6 @@
 import Component from '@glimmer/component';
 import { cached, tracked } from '@glimmer/tracking';
-import { dropTask } from 'ember-concurrency';
+import { task } from 'ember-concurrency';
 import { TrackedAsyncData } from 'ember-async-data';
 import { on } from '@ember/modifier';
 import { fn } from '@ember/helper';
@@ -43,7 +43,7 @@ export default class DetailLearningMaterialsItemComponent extends Component {
     return await learningMaterial.owningUser;
   }
 
-  remove = dropTask(async (lm) => {
+  remove = task({ drop: true }, async (lm) => {
     await this.args.remove.perform(lm);
   });
   <template>

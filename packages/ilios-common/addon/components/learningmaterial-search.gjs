@@ -1,5 +1,5 @@
 import Component from '@glimmer/component';
-import { dropTask, enqueueTask, restartableTask } from 'ember-concurrency';
+import { task } from 'ember-concurrency';
 import { service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
@@ -23,7 +23,7 @@ export default class LearningMaterialSearchComponent extends Component {
   @tracked hasMoreSearchResults = false;
   @tracked searchReturned = false;
 
-  search = restartableTask(async (query) => {
+  search = task({ restartable: true }, async (query) => {
     if (query.trim() === '') {
       this.searchReturned = false;
       this.searchPage = 1;
@@ -60,7 +60,7 @@ export default class LearningMaterialSearchComponent extends Component {
     this.query = '';
   }
 
-  searchMore = dropTask(async () => {
+  searchMore = task({ drop: true }, async () => {
     const results = await this.store.query('learning-material', {
       q: this.query,
       limit: this.searchResultsPerPage + 1,
@@ -77,7 +77,7 @@ export default class LearningMaterialSearchComponent extends Component {
     this.searchResults = [...this.searchResults, ...lms];
   });
 
-  addLearningMaterial = enqueueTask(async (lm) => {
+  addLearningMaterial = task({ enqueue: true }, async (lm) => {
     if (!this.args.currentMaterialIds.includes(lm.id)) {
       await this.args.add(lm);
     }

@@ -2,7 +2,7 @@ import Component from '@glimmer/component';
 import { cached } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
-import { dropTask } from 'ember-concurrency';
+import { task } from 'ember-concurrency';
 import { findById } from 'ilios-common/utils/array-helpers';
 import { TrackedAsyncData } from 'ember-async-data';
 import { on } from '@ember/modifier';
@@ -98,7 +98,7 @@ export default class SchoolVocabulariesExpandedComponent extends Component {
     }
   }
 
-  saveNewVocabulary = dropTask(async (title, school, active) => {
+  saveNewVocabulary = task({ drop: true }, async (title, school, active) => {
     const vocabulary = this.store.createRecord('vocabulary', {
       title,
       school,

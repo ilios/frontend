@@ -2,7 +2,7 @@ import Component from '@glimmer/component';
 import { service } from '@ember/service';
 import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
-import { restartableTask } from 'ember-concurrency';
+import { task } from 'ember-concurrency';
 import { findById } from 'ilios-common/utils/array-helpers';
 import { TrackedAsyncData } from 'ember-async-data';
 import YupValidations from 'ilios-common/classes/yup-validations';
@@ -154,7 +154,7 @@ export default class CourseOverview extends Component {
     this.clerkshipTypeId = id;
   }
 
-  revertClerkshipTypeChanges = restartableTask(async () => {
+  revertClerkshipTypeChanges = task({ restartable: true }, async () => {
     const clerkshipType = await this.args.course.clerkshipType;
     if (clerkshipType) {
       this.clerkshipTypeId = clerkshipType.id;
@@ -163,7 +163,7 @@ export default class CourseOverview extends Component {
     }
   });
 
-  changeStartDate = restartableTask(async () => {
+  changeStartDate = task({ restartable: true }, async () => {
     this.validations.addErrorDisplayFor('startDate');
     const isValid = await this.validations.isValid();
     if (!isValid) {
@@ -181,7 +181,7 @@ export default class CourseOverview extends Component {
     this.startDate = this.args.course.startDate;
   }
 
-  changeEndDate = restartableTask(async () => {
+  changeEndDate = task({ restartable: true }, async () => {
     this.validations.addErrorDisplayFor('endDate');
     const isValid = await this.validations.isValid();
     if (!isValid) {
@@ -199,7 +199,7 @@ export default class CourseOverview extends Component {
     this.endDate = this.args.course.endDate;
   }
 
-  changeExternalId = restartableTask(async () => {
+  changeExternalId = task({ restartable: true }, async () => {
     this.validations.addErrorDisplayFor('externalId');
     const isValid = await this.validations.isValid();
     if (!isValid) {
