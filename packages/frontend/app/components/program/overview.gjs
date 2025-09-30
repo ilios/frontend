@@ -72,10 +72,8 @@ export default class ProgramOverviewComponent extends Component {
                 @value={{this.shortTitle}}
                 @save={{perform this.changeShortTitle}}
                 @close={{set this "duration" @program.duration}}
-                @saveOnEnter={{true}}
                 @clickPrompt={{t "general.clickToEdit"}}
-                @closeOnEscape={{true}}
-                as |isSaving|
+                as |keyboard isSaving|
               >
                 <input
                   id={{concat this.id "short-title"}}
@@ -84,6 +82,7 @@ export default class ProgramOverviewComponent extends Component {
                   {{on "input" (pick "target.value" (set this "shortTitle"))}}
                   {{this.validations.attach "shortTitle"}}
                   disabled={{isSaving}}
+                  {{keyboard}}
                 />
               </EditableField>
               <YupValidationMessage

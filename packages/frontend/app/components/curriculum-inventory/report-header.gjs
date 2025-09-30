@@ -55,9 +55,7 @@ export default class CurriculumInventoryReportHeaderComponent extends Component 
             @value={{if this.name this.name (t "general.clickToEdit")}}
             @save={{perform this.saveName}}
             @close={{this.revertNameChanges}}
-            @saveOnEnter={{true}}
-            @closeOnEscape={{true}}
-            as |isSaving|
+            as |keyboard isSaving|
           >
             <input
               aria-label={{t "general.title"}}
@@ -66,6 +64,7 @@ export default class CurriculumInventoryReportHeaderComponent extends Component 
               disabled={{isSaving}}
               {{on "input" (pick "target.value" (set this "name"))}}
               {{this.validations.attach "name"}}
+              {{keyboard}}
             />
             <YupValidationMessage
               @description={{t "general.name"}}

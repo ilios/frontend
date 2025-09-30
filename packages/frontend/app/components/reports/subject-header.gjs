@@ -79,10 +79,8 @@ export default class ReportsSubjectHeader extends Component {
             @value={{this.reportTitle}}
             @save={{perform this.changeTitle}}
             @close={{this.revertTitleChanges}}
-            @saveOnEnter={{true}}
             @showIcon={{false}}
-            @closeOnEscape={{true}}
-            as |isSaving|
+            as |keyboard isSaving|
           >
             <input
               aria-label={{t "general.reportTitle"}}
@@ -92,6 +90,7 @@ export default class ReportsSubjectHeader extends Component {
               disabled={{isSaving}}
               {{on "input" (pick "target.value" (set this "title"))}}
               {{this.validations.attach "title"}}
+              {{keyboard}}
             />
             <YupValidationMessage
               @description={{t "general.title"}}

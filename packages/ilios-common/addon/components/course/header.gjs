@@ -56,10 +56,8 @@ export default class CourseHeaderComponent extends Component {
             @value={{this.courseTitle}}
             @save={{perform this.changeTitle}}
             @close={{this.revertTitleChanges}}
-            @saveOnEnter={{true}}
             @onEditingStatusChange={{set this "isEditingTitle"}}
-            @closeOnEscape={{true}}
-            as |isSaving|
+            as |keyboard isSaving|
           >
             <input
               aria-label={{t "general.courseTitle"}}
@@ -68,6 +66,7 @@ export default class CourseHeaderComponent extends Component {
               value={{this.courseTitle}}
               {{on "input" (pick "target.value" (set this "courseTitle"))}}
               {{this.validations.attach "courseTitle"}}
+              {{keyboard}}
             />
             <YupValidationMessage
               @description={{t "general.title"}}

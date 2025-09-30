@@ -67,9 +67,13 @@ module('Integration | Component | editable field', function (hooks) {
     });
     await render(
       <template>
-        <EditableField @save={{this.save}} @saveOnEnter={{true}} @value={{this.value}}>
+        <EditableField @save={{this.save}} @value={{this.value}} as |keyboard|>
           <label>
-            <input value={{this.value}} {{on "input" (pick "target.value" (set this "value"))}} />
+            <input
+              value={{this.value}}
+              {{on "input" (pick "target.value" (set this "value"))}}
+              {{keyboard}}
+            />
             {{this.label}}
           </label>
         </EditableField>
@@ -88,9 +92,13 @@ module('Integration | Component | editable field', function (hooks) {
     });
     await render(
       <template>
-        <EditableField @close={{this.revert}} @closeOnEscape={{true}} @value={{this.value}}>
+        <EditableField @close={{this.revert}} @value={{this.value}} as |keyboard|>
           <label>
-            <input value={{this.value}} {{on "input" (pick "target.value" (set this "value"))}} />
+            <input
+              value={{this.value}}
+              {{on "input" (pick "target.value" (set this "value"))}}
+              {{keyboard}}
+            />
             {{this.label}}
           </label>
         </EditableField>
@@ -193,5 +201,55 @@ module('Integration | Component | editable field', function (hooks) {
     );
 
     assert.strictEqual(component.editable.title, 'Edit');
+  });
+
+  test('ignores save on enter', async function (assert) {
+    assert.expect(0);
+    this.set('label', 'Foo');
+    this.set('value', 'lorem');
+    this.set('save', () => {
+      assert.ok(false, 'should never be called');
+    });
+    await render(
+      <template>
+        <EditableField @save={{this.save}} @value={{this.value}} as |keyboard|>
+          <label>
+            <input
+              value={{this.value}}
+              {{on "input" (pick "target.value" (set this "value"))}}
+              {{keyboard saveOnEnter=false}}
+            />
+            {{this.label}}
+          </label>
+        </EditableField>
+      </template>,
+    );
+    await component.editable.edit();
+    await component.enter();
+  });
+
+  test('ignored close on escape', async function (assert) {
+    assert.expect(0);
+    this.set('label', 'Foo');
+    this.set('value', 'lorem');
+    this.set('revert', () => {
+      assert.ok(false, 'should never be called');
+    });
+    await render(
+      <template>
+        <EditableField @close={{this.revert}} @value={{this.value}} as |keyboard|>
+          <label>
+            <input
+              value={{this.value}}
+              {{on "input" (pick "target.value" (set this "value"))}}
+              {{keyboard closeOnEscape=false}}
+            />
+            {{this.label}}
+          </label>
+        </EditableField>
+      </template>,
+    );
+    await component.editable.edit();
+    await component.escape();
   });
 });
