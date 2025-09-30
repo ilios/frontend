@@ -44,10 +44,8 @@ export default class ProgramHeaderComponent extends Component {
             @value={{this.title}}
             @save={{perform this.changeTitle}}
             @close={{set this "title" @program.title}}
-            @saveOnEnter={{true}}
             @clickPrompt={{t "general.clickToEdit"}}
-            @closeOnEscape={{true}}
-            as |isSaving|
+            as |keyboard isSaving|
           >
             <input
               type="text"
@@ -56,6 +54,7 @@ export default class ProgramHeaderComponent extends Component {
               {{on "input" (pick "target.value" (set this "title"))}}
               {{this.validations.attach "title"}}
               disabled={{isSaving}}
+              {{keyboard}}
             />
             <YupValidationMessage
               @description={{t "general.title"}}

@@ -48,9 +48,7 @@ export default class SessionHeaderComponent extends Component {
             @value={{this.title}}
             @save={{perform this.changeTitle}}
             @close={{this.resetTitle}}
-            @saveOnEnter={{true}}
-            @closeOnEscape={{true}}
-            as |isSaving|
+            as |keyboard isSaving|
           >
             <input
               aria-label={{t "general.title"}}
@@ -59,6 +57,7 @@ export default class SessionHeaderComponent extends Component {
               value={{this.title}}
               {{on "input" (pick "target.value" (set this "title"))}}
               {{this.validations.attach "title"}}
+              {{keyboard}}
             />
             <YupValidationMessage
               @description={{t "general.title"}}

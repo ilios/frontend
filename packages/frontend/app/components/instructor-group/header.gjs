@@ -55,9 +55,7 @@ export default class InstructorGroupHeaderComponent extends Component {
               @value={{this.title}}
               @save={{perform this.changeTitle}}
               @close={{this.revertTitleChanges}}
-              @saveOnEnter={{true}}
-              @closeOnEscape={{true}}
-              as |isSaving|
+              as |keyboard isSaving|
             >
               <input
                 aria-label={{t "general.instructorGroupTitle"}}
@@ -66,6 +64,7 @@ export default class InstructorGroupHeaderComponent extends Component {
                 disabled={{isSaving}}
                 {{on "input" (pick "target.value" (set this "title"))}}
                 {{this.validations.attach "title"}}
+                {{keyboard}}
               />
               <YupValidationMessage
                 @description={{t "general.title"}}

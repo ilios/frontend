@@ -521,9 +521,7 @@ export default class LearnerGroupRootComponent extends Component {
                   }}
                   @save={{perform this.changeLocation}}
                   @close={{this.revertLocationChanges}}
-                  @saveOnEnter={{true}}
-                  @closeOnEscape={{true}}
-                  as |isSaving|
+                  as |keyboard isSaving|
                 >
                   <input
                     id="location-{{templateId}}"
@@ -531,6 +529,7 @@ export default class LearnerGroupRootComponent extends Component {
                     value={{this.location}}
                     disabled={{isSaving}}
                     {{on "input" (pick "target.value" (set this "locationBuffer"))}}
+                    {{keyboard}}
                   />
                 </EditableField>
               {{else if @learnerGroup.location}}
@@ -550,9 +549,7 @@ export default class LearnerGroupRootComponent extends Component {
                   @value={{if @learnerGroup.url @learnerGroup.url (t "general.clickToEdit")}}
                   @save={{perform this.saveUrlChanges}}
                   @close={{this.revertUrlChanges}}
-                  @saveOnEnter={{true}}
-                  @closeOnEscape={{true}}
-                  as |isSaving|
+                  as |keyboard isSaving|
                 >
                   {{! template-lint-disable no-bare-strings}}
                   <input
@@ -565,6 +562,7 @@ export default class LearnerGroupRootComponent extends Component {
                     {{on "input" (pick "target.value" this.changeUrl)}}
                     {{on "focus" this.selectAllText}}
                     {{this.validations.attach "bestUrl"}}
+                    {{keyboard}}
                   />
                   <YupValidationMessage
                     @description={{t "general.defaultVirtualLearningLink"}}

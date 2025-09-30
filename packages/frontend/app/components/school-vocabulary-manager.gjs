@@ -129,9 +129,7 @@ export default class SchoolVocabularyManagerComponent extends Component {
               @value={{if this.title this.title (t "general.clickToEdit")}}
               @save={{perform this.changeTitle}}
               @close={{this.revertTitleChanges}}
-              @saveOnEnter={{true}}
-              @closeOnEscape={{true}}
-              as |isSaving|
+              as |keyboard isSaving|
             >
               <input
                 id="title-{{templateId}}"
@@ -140,6 +138,7 @@ export default class SchoolVocabularyManagerComponent extends Component {
                 disabled={{isSaving}}
                 {{on "input" (pick "target.value" (set this "titleBuffer"))}}
                 {{this.validations.attach "title"}}
+                {{keyboard}}
               />
               <YupValidationMessage
                 @description={{t "general.title"}}

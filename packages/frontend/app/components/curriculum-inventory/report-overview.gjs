@@ -378,8 +378,7 @@ export default class CurriculumInventoryReportOverviewComponent extends Componen
                   @save={{perform this.changeDescription}}
                   @close={{this.revertDescriptionChanges}}
                   @clickPrompt={{if this.description this.description (t "general.clickToEdit")}}
-                  @closeOnEscape={{true}}
-                  as |isSaving|
+                  as |keyboard isSaving|
                 >
                   <textarea
                     id="description-{{templateId}}"
@@ -388,6 +387,7 @@ export default class CurriculumInventoryReportOverviewComponent extends Componen
                     {{on "input" (pick "target.value" (set this "description"))}}
                     {{this.validations.attach "description"}}
                     placeholder={{t "general.reportDescriptionPlaceholder"}}
+                    {{keyboard saveOnEnter=false}}
                   >
                     {{this.description}}
                   </textarea>

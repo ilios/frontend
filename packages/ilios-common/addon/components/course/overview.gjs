@@ -281,9 +281,7 @@ export default class CourseOverview extends Component {
                   @value={{if this.externalId this.externalId (t "general.clickToEdit")}}
                   @save={{perform this.changeExternalId}}
                   @close={{this.revertExternalIdChanges}}
-                  @saveOnEnter={{true}}
-                  @closeOnEscape={{true}}
-                  as |isSaving|
+                  as |keyboard isSaving|
                 >
                   <input
                     id="external-id-{{templateId}}"
@@ -292,6 +290,7 @@ export default class CourseOverview extends Component {
                     value={{this.externalId}}
                     {{on "input" (pick "target.value" (set this "externalId"))}}
                     {{this.validations.attach "externalId"}}
+                    {{keyboard}}
                   />
                   <YupValidationMessage
                     @description={{t "general.externalId"}}

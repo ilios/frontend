@@ -745,14 +745,14 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
                   }}
                   @save={{perform this.saveDescription}}
                   @close={{this.revertDescriptionChanges}}
-                  @closeOnEscape={{true}}
-                  as |isSaving|
+                  as |keyboard isSaving|
                 >
                   <textarea
                     id="description-{{templateId}}"
                     value={{this.description}}
                     oninput={{this.changeDescription}}
                     disabled={{isSaving}}
+                    {{keyboard saveOnEnter=false}}
                   >
                     {{this.description}}
                   </textarea>

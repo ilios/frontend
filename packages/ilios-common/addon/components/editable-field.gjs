@@ -47,22 +47,23 @@ export default class EditableFieldComponent extends Component {
     }
   });
 
-  @action
-  keyup(event) {
-    const keyCode = event.keyCode;
-    const target = event.target;
+  /*
+   * Modifier we can attach to the editable field elemnts so we can handle saving and closing via enter and escape
+   */
+  keyboard = modifier((element, _, { saveOnEnter = true, closeOnEscape = true }) => {
+    this.keyboardHandler = ({ keyCode }) => {
+      if (13 === keyCode && saveOnEnter) {
+        this.saveData.perform();
+      } else if (27 === keyCode && closeOnEscape) {
+        this.closeEditor.perform();
+      }
+    };
+    element.addEventListener('keyup', this.keyboardHandler, { passive: true });
 
-    // only process key events coming from text input/textarea.
-    if (!['text', 'textarea'].includes(target.type)) {
-      return;
-    }
-
-    if (13 === keyCode && this.args.saveOnEnter) {
-      this.saveData.perform();
-    } else if (27 === keyCode && this.args.closeOnEscape) {
-      this.closeEditor.perform();
-    }
-  }
+    return () => {
+      element.removeEventListener('keyup', this.keyboardHandler);
+    };
+  });
 
   @action
   setIsEditing(status) {
@@ -79,13 +80,13 @@ export default class EditableFieldComponent extends Component {
     >
       <span class="content">
         {{#if this.isEditing}}
-          <span
-            class="editor"
-            {{this.focusFirstControl}}
-            {{! template-lint-disable no-invalid-interactive}}
-            {{on "keyup" this.keyup}}
-          >
-            {{yield this.saveData.isRunning (perform this.saveData) (perform this.closeEditor)}}
+          <span class="editor" {{this.focusFirstControl}}>
+            {{yield
+              this.keyboard
+              this.saveData.isRunning
+              (perform this.saveData)
+              (perform this.closeEditor)
+            }}
             <span class="actions">
               <button
                 disabled={{@isSaveDisabled}}
