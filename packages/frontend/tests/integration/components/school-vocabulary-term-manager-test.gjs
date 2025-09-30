@@ -63,7 +63,7 @@ module('Integration | Component | school vocabulary term manager', function (hoo
     );
 
     assert.strictEqual(component.title, `Title: ${term.title}`);
-    assert.strictEqual(component.description, `Description: ${term.description}`);
+    assert.strictEqual(component.description.text, `Description: ${term.description}`);
     assert.strictEqual(component.breadcrumbs.all, 'All Vocabularies');
     assert.strictEqual(component.breadcrumbs.vocabulary, vocabulary.title);
     assert.strictEqual(component.breadcrumbs.terms.length, 3);
@@ -456,5 +456,157 @@ module('Integration | Component | school vocabulary term manager', function (hoo
     await component.saveTitle();
     assert.ok(component.hasError);
     assert.strictEqual(component.error, 'Title is a duplicate');
+  });
+
+  test('change term description', async function (assert) {
+    assert.expect(2);
+
+    const vocabulary = this.server.create('vocabulary');
+    const term = this.server.create('term', {
+      vocabulary,
+      active: true,
+      description: 'foo bar',
+    });
+    const vocabularyModel = await this.owner
+      .lookup('service:store')
+      .findRecord('vocabulary', vocabulary.id);
+    const termModel = await this.owner.lookup('service:store').findRecord('term', term.id);
+
+    this.set('vocabulary', vocabularyModel);
+    this.set('term', termModel);
+    await render(
+      <template>
+        <SchoolVocabularyTermManager
+          @term={{this.term}}
+          @vocabulary={{this.vocabulary}}
+          @manageTerm={{(noop)}}
+          @manageVocabulary={{(noop)}}
+          @canUpdate={{true}}
+          @canDelete={{true}}
+          @canCreate={{true}}
+        />
+      </template>,
+    );
+    assert.strictEqual(component.description.text, `Description: ${term.description}`);
+    await component.description.edit();
+    await component.description.set('lorem ipsum');
+    await component.description.save();
+    assert.strictEqual(this.server.db.terms[0].description, '<p>lorem ipsum</p>');
+  });
+
+  test('change term description to blank string', async function (assert) {
+    assert.expect(2);
+
+    const vocabulary = this.server.create('vocabulary');
+    const term = this.server.create('term', {
+      vocabulary,
+      active: true,
+      description: 'foo bar',
+    });
+    const vocabularyModel = await this.owner
+      .lookup('service:store')
+      .findRecord('vocabulary', vocabulary.id);
+    const termModel = await this.owner.lookup('service:store').findRecord('term', term.id);
+
+    this.set('vocabulary', vocabularyModel);
+    this.set('term', termModel);
+    await render(
+      <template>
+        <SchoolVocabularyTermManager
+          @term={{this.term}}
+          @vocabulary={{this.vocabulary}}
+          @manageTerm={{(noop)}}
+          @manageVocabulary={{(noop)}}
+          @canUpdate={{true}}
+          @canDelete={{true}}
+          @canCreate={{true}}
+        />
+      </template>,
+    );
+    assert.strictEqual(component.description.text, `Description: ${term.description}`);
+    await component.description.edit();
+    await component.description.set('');
+    await component.description.save();
+    assert.strictEqual(this.server.db.terms[0].description, null);
+  });
+
+  test('cancel term description changes', async function (assert) {
+    assert.expect(2);
+
+    const vocabulary = this.server.create('vocabulary');
+    const term = this.server.create('term', {
+      vocabulary,
+      active: true,
+      description: 'foo bar',
+    });
+    const vocabularyModel = await this.owner
+      .lookup('service:store')
+      .findRecord('vocabulary', vocabulary.id);
+    const termModel = await this.owner.lookup('service:store').findRecord('term', term.id);
+
+    this.set('vocabulary', vocabularyModel);
+    this.set('term', termModel);
+    await render(
+      <template>
+        <SchoolVocabularyTermManager
+          @term={{this.term}}
+          @vocabulary={{this.vocabulary}}
+          @manageTerm={{(noop)}}
+          @manageVocabulary={{(noop)}}
+          @canUpdate={{true}}
+          @canDelete={{true}}
+          @canCreate={{true}}
+        />
+      </template>,
+    );
+    assert.strictEqual(component.description.text, `Description: ${term.description}`);
+    await component.description.edit();
+    await component.description.set('lorem ipsum');
+    await component.description.cancel();
+    assert.strictEqual(this.server.db.terms[0].description, 'foo bar');
+  });
+
+  test('validation fails if term description is too long', async function (assert) {
+    assert.expect(7);
+
+    const vocabulary = this.server.create('vocabulary');
+    const term = this.server.create('term', {
+      vocabulary,
+      active: true,
+      description: '',
+    });
+    const vocabularyModel = await this.owner
+      .lookup('service:store')
+      .findRecord('vocabulary', vocabulary.id);
+    const termModel = await this.owner.lookup('service:store').findRecord('term', term.id);
+
+    this.set('vocabulary', vocabularyModel);
+    this.set('term', termModel);
+    await render(
+      <template>
+        <SchoolVocabularyTermManager
+          @term={{this.term}}
+          @vocabulary={{this.vocabulary}}
+          @manageTerm={{(noop)}}
+          @manageVocabulary={{(noop)}}
+          @canUpdate={{true}}
+          @canDelete={{true}}
+          @canCreate={{true}}
+        />
+      </template>,
+    );
+    assert.strictEqual(component.description.text, `Description: Click to add descriptive notes`);
+    await component.description.edit();
+    assert.notOk(component.description.savingIsDisabled);
+    assert.notOk(component.description.hasError);
+    await component.description.set('a'.repeat(65001));
+    await component.description.save();
+    assert.ok(component.description.savingIsDisabled);
+    assert.ok(component.description.hasError);
+    assert.strictEqual(
+      component.description.error,
+      'Description is too long (maximum is 65000 characters)',
+    );
+    assert.strictEqual(this.server.db.terms[0].description, '');
   });
 });

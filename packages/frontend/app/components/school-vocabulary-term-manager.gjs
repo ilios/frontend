@@ -16,6 +16,7 @@ import set from 'ember-set-helper/helpers/set';
 import and from 'ember-truth-helpers/helpers/and';
 import not from 'ember-truth-helpers/helpers/not';
 import FaIcon from 'ilios-common/components/fa-icon';
+import HtmlEditor from 'ilios-common/components/html-editor';
 import ToggleYesno from 'ilios-common/components/toggle-yesno';
 import SchoolVocabularyNewTerm from 'frontend/components/school-vocabulary-new-term';
 import YupValidationMessage from 'ilios-common/components/yup-validation-message';
@@ -30,8 +31,10 @@ export default class SchoolVocabularyTermManagerComponent extends Component {
   @tracked titleBuffer;
   @tracked descriptionBuffer;
   @tracked newTerm;
+  @tracked descriptionFadeTextExpanded = false;
 
   validations = new YupValidations(this, {
+    description: string().nullable().max(65000),
     title: string()
       .ensure()
       .trim()
@@ -106,20 +109,43 @@ export default class SchoolVocabularyTermManagerComponent extends Component {
   });
 
   @action
+  changeDescription(html) {
+    this.validations.addErrorDisplayFor('description');
+    const noTagsText = html.replace(/(<([^>]+)>)/gi, '');
+    const strippedText = noTagsText.replace(/&nbsp;/gi, '').replace(/\s/g, '');
+    this.descriptionBuffer = strippedText.length === 0 ? '' : html;
+  }
+
+  @action
   revertTitleChanges() {
     this.validations.removeErrorDisplayFor('title');
     this.titleBuffer = null;
   }
 
-  changeDescription = task({ drop: true }, async () => {
-    this.args.term.set('description', this.description);
+  saveDescriptionChanges = task({ drop: true }, async () => {
+    this.validations.addErrorDisplayFor('description');
+    const isValid = await this.validations.isValid();
+    if (!isValid) {
+      return false;
+    }
+    this.validations.removeErrorDisplayFor('description');
+
+    // save NULL if the description is an empty string.
+    const description = this.description === '' ? null : this.description;
+    this.args.term.set('description', description);
     await this.args.term.save();
     this.descriptionBuffer = null;
   });
 
   @action
   revertDescriptionChanges() {
+    this.validations.removeErrorDisplayFor('description');
     this.descriptionBuffer = null;
+  }
+
+  @action
+  expandAllDescriptionFadeText(isExpanded) {
+    this.descriptionFadeTextExpanded = isExpanded;
   }
 
   @action
@@ -270,24 +296,21 @@ export default class SchoolVocabularyTermManagerComponent extends Component {
                 </label>
                 {{#if @canUpdate}}
                   <EditableField
-                    @value={{if
-                      this.description
-                      this.description
-                      (t "general.clickToAddTermDescription")
-                    }}
-                    @save={{perform this.changeDescription}}
+                    @value={{this.description}}
+                    @renderHtml={{true}}
+                    @isSaveDisabled={{this.validations.errors.description}}
+                    @save={{perform this.saveDescriptionChanges}}
                     @close={{this.revertDescriptionChanges}}
-                    @closeOnEscape={{true}}
-                    as |isSaving|
+                    @fadeTextExpanded={{this.descriptionFadeTextExpanded}}
+                    @onExpandAllFadeText={{this.expandAllDescriptionFadeText}}
+                    @clickPrompt={{t "general.clickToAddTermDescription"}}
                   >
-                    <textarea
-                      id="description-{{templateId}}"
-                      value={{this.description}}
-                      {{on "input" (pick "target.value" (set this "descriptionBuffer"))}}
-                      disabled={{isSaving}}
-                    >
-                      {{this.description}}
-                    </textarea>
+                    <HtmlEditor @content={{this.description}} @update={{this.changeDescription}} />
+                    <YupValidationMessage
+                      @description={{t "general.description"}}
+                      @validationErrors={{this.validations.errors.description}}
+                      data-test-description-validation-error-message
+                    />
                   </EditableField>
                 {{else}}
                   {{this.description}}
