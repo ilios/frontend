@@ -156,19 +156,29 @@ export default class ReportsSubjectInstructorComponent extends Component {
     return uniqueById(users);
   }
 
-  async getResultsForLearningMaterial(learningMaterialId) {
-    const filters = [`id: ${learningMaterialId}`];
-    const attributes = [
-      'owningUser { firstName, middleName, lastName, displayName, school { title } }',
-    ];
+  async getResultsForLearningMaterial(learningMaterialId, school) {
+    let filters = [];
+    if (school) {
+      filters.push(`schools: [${school.id}]`);
+    }
+    filters.push(`learningMaterials: [${learningMaterialId}]`);
 
-    const results = await this.graphql.find('learningMaterials', filters, attributes.join(', '));
+    const attributes = ['id', 'school { title }'];
+    const results = await this.graphql.find('courses', filters, attributes.join(', '));
 
-    if (!results.data.learningMaterials.length) {
+    if (!results.data.courses.length) {
       return [];
     }
 
-    return [results.data.learningMaterials[0].owningUser];
+    const ids = results.data.courses.map(({ id }) => id);
+
+    //fetch courses 5 at a time for performance on the API
+    //but send all the requests at once
+    const promises = chunk(ids, 5).map((chunk) => this.getResultsForCourses(chunk));
+
+    const users = await (await Promise.all(promises)).flat();
+
+    return uniqueById(users);
   }
 
   async getReportResults(subject, prepositionalObject, prepositionalObjectTableRowId, school) {
@@ -177,7 +187,7 @@ export default class ReportsSubjectInstructorComponent extends Component {
     }
 
     if (prepositionalObject === 'learning material') {
-      return this.getResultsForLearningMaterial(prepositionalObjectTableRowId);
+      return this.getResultsForLearningMaterial(prepositionalObjectTableRowId, school);
     }
 
     if (prepositionalObject === 'course') {
