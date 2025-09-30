@@ -112,8 +112,8 @@ importers:
         specifier: ^4.25.1
         version: 4.26.2
       caniuse-db:
-        specifier: ^1.0.30001726
-        version: 1.0.30001745
+        specifier: ^1.0.30001746
+        version: 1.0.30001746
       ember-a11y-refocus:
         specifier: 5.1.0
         version: 5.1.0(@babel/core@7.28.4)(ember-source@6.7.0(@glimmer/component@2.0.0)(rsvp@4.8.5))
@@ -734,8 +734,8 @@ importers:
         specifier: ^4.25.1
         version: 4.26.2
       caniuse-db:
-        specifier: ^1.0.30001726
-        version: 1.0.30001745
+        specifier: ^1.0.30001746
+        version: 1.0.30001746
       ember-auto-import:
         specifier: ^2.10.0
         version: 2.10.1(webpack@5.101.3)
@@ -968,8 +968,8 @@ importers:
         specifier: ^4.25.1
         version: 4.26.2
       caniuse-db:
-        specifier: ^1.0.30001726
-        version: 1.0.30001745
+        specifier: ^1.0.30001746
+        version: 1.0.30001746
       ember-auto-import:
         specifier: ^2.10.0
         version: 2.10.1(webpack@5.101.3)
@@ -4206,8 +4206,8 @@ packages:
     resolution: {integrity: sha512-RbsNrFyhwkx+6psk/0fK/Q9orOUr9VMxohGd8vTa4djf4TGLfblBgUfqZChrZuW0Q+mz2eBPFLusw9Jfukzmhg==}
     hasBin: true
 
-  caniuse-db@1.0.30001745:
-    resolution: {integrity: sha512-LPHQXSwbBg+UkAaDWP+n3zgVi9kCAUN/EhHZNeY9asVwn5C4Dy94PCpQ7eByz4rZJFsS5Xqbm17S8uLycGVFfQ==}
+  caniuse-db@1.0.30001746:
+    resolution: {integrity: sha512-yglkT3HjfDx4LLOeOR0mm9o0dWvkxEYdC2y2a2Qrg+xfmmd5Z5s8IgXstIEPyOShj/ofJvfNCOz0rGLleSesCA==}
 
   caniuse-lite@1.0.30001745:
     resolution: {integrity: sha512-ywt6i8FzvdgrrrGbr1jZVObnVv6adj+0if2/omv9cmR2oiZs30zL4DIyaptKcbOrBdOIc74QTMoJvSE2QHh5UQ==}
@@ -14543,7 +14543,7 @@ snapshots:
     dependencies:
       tmp: 0.0.28
 
-  caniuse-db@1.0.30001745: {}
+  caniuse-db@1.0.30001746: {}
 
   caniuse-lite@1.0.30001745: {}
 
