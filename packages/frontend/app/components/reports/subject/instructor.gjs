@@ -176,7 +176,7 @@ export default class ReportsSubjectInstructorComponent extends Component {
       throw new Error(`Report for ${subject} sent to ReportsSubjectInstructorComponent`);
     }
 
-    if (prepositionalObject == 'learning material') {
+    if (prepositionalObject === 'learning material') {
       return this.getResultsForLearningMaterial(prepositionalObjectTableRowId);
     }
 
