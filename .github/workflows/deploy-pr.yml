@@ -4,9 +4,6 @@ on:
   pull_request_target:
     types: [labeled]
 
-env:
-  COVERAGE: false
-
 jobs:
   deploy:
     name: Deploy PR Preview

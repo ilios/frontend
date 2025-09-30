@@ -10,7 +10,6 @@ concurrency:
 
 env:
   SW_DISABLED: true
-  COVERAGE: false
 
 jobs:
   browserstack-test:

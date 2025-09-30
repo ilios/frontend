@@ -6,7 +6,6 @@ on:
       - "*"
 
 env:
-  COVERAGE: false
   SENTRY_ORG: ilios
   SENTRY_PROJECT: frontend
 
