@@ -457,8 +457,8 @@ importers:
         specifier: ^8.0.0
         version: 8.0.1(@ember/test-helpers@5.3.0(@babel/core@7.28.4))(ember-source@6.7.0(@glimmer/component@2.0.0)(rsvp@4.8.5))
       ember-simple-charts:
-        specifier: ^12.2.1
-        version: 12.2.1(@babel/core@7.28.4)(ember-source@6.7.0(@glimmer/component@2.0.0)(rsvp@4.8.5))(webpack@5.101.3)
+        specifier: ^12.2.2
+        version: 12.2.2(@babel/core@7.28.4)(ember-source@6.7.0(@glimmer/component@2.0.0)(rsvp@4.8.5))(webpack@5.101.3)
       ember-template-imports:
         specifier: ^4.3.0
         version: 4.3.0
@@ -5573,8 +5573,8 @@ packages:
       '@ember/test-helpers':
         optional: true
 
-  ember-simple-charts@12.2.1:
-    resolution: {integrity: sha512-sxCFBqMoFO7xSa4h1ucy7lV1ru6pWnMxkXNHOE0e/Rfp3PgVp59AGGkx5+WNwN47NPgMCP9yZaqBny6K5oerMQ==}
+  ember-simple-charts@12.2.2:
+    resolution: {integrity: sha512-LfkQ9PiULN7l6LYXAfdOoc5srmDBkLMIZ6IRC45z66uVIz9R0uOxzdeeWvnbE6IoeKGoK5/jYvjPfvS3Zs4tYA==}
     peerDependencies:
       ember-source: '>= 4.12.0'
 
@@ -16468,7 +16468,7 @@ snapshots:
       - '@glint/template'
       - supports-color
 
-  ember-simple-charts@12.2.1(@babel/core@7.28.4)(ember-source@6.7.0(@glimmer/component@2.0.0)(rsvp@4.8.5))(webpack@5.101.3):
+  ember-simple-charts@12.2.2(@babel/core@7.28.4)(ember-source@6.7.0(@glimmer/component@2.0.0)(rsvp@4.8.5))(webpack@5.101.3):
     dependencies:
       '@embroider/addon-shim': 1.10.0
       '@embroider/util': 1.13.4(ember-source@6.7.0(@glimmer/component@2.0.0)(rsvp@4.8.5))
