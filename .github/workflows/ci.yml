@@ -61,20 +61,21 @@ jobs:
         run: pnpm install
       - name: Run Tests
         run: pnpm --filter ${{matrix.workspace}} exec ember exam --parallel=3 --load-balance --write-execution-file
-        env:
-          COVERAGE: true
-      - name: Store Code Coverage
-        uses: actions/upload-artifact@v4
-        with:
-          name: coverage-${{matrix.workspace}}
-          path: ./packages/${{matrix.workspace}}/coverage
-          retention-days: 1
-      - uses: actions/upload-artifact@v4
-        if: failure()
-        with:
-          name: replay-${{matrix.workspace}}-test.json
-          path: ./packages/${{matrix.workspace}}/test-execution-*.json
-          retention-days: 7
+  # disable code coverage
+  #   env:
+  #     COVERAGE: true
+  # - name: Store Code Coverage
+  #   uses: actions/upload-artifact@v4
+  #   with:
+  #     name: coverage-${{matrix.workspace}}
+  #     path: ./packages/${{matrix.workspace}}/coverage
+  #     retention-days: 1
+  # - uses: actions/upload-artifact@v4
+  #   if: failure()
+  #   with:
+  #     name: replay-${{matrix.workspace}}-test.json
+  #     path: ./packages/${{matrix.workspace}}/test-execution-*.json
+  #     retention-days: 7
 
   build:
     name: Build
