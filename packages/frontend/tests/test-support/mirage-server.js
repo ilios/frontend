@@ -25,7 +25,6 @@ export default function (config) {
     routes() {
       this.timing = 100;
       this.namespace = '/';
-      this.passthrough('/write-coverage');
       commonRoutes(this);
       this.post('auth/login', function (schema, request) {
         const errors = [];

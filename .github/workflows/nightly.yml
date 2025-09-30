@@ -7,7 +7,6 @@ on:
 
 env:
   SW_DISABLED: true
-  COVERAGE: false
 
 jobs:
   percy:

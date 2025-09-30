@@ -27,9 +27,6 @@ module.exports = async function (defaults) {
       enabled: true,
     },
     hinting: isTestBuild,
-    babel: {
-      plugins: [...require('ember-cli-code-coverage').buildBabelPlugin({ embroider: true })],
-    },
   };
   const app = new EmberApp(defaults, config);
 

@@ -67,7 +67,6 @@
     "ember-cli-babel": "^8.2.0",
     "ember-cli-browserstack": "^3.0.0",
     "ember-cli-bundle-analyzer": "^1.0.0",
-    "ember-cli-code-coverage": "^3.0.1",
     "ember-cli-dependency-checker": "^3.3.3",
     "ember-cli-dependency-lint": "2.0.1",
     "ember-cli-deploy": "2.0.0",
