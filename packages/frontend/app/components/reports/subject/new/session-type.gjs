@@ -31,7 +31,7 @@ export default class ReportsSubjectNewSessionTypeComponent extends Component {
   }
 
   get sortedSessionTypes() {
-    return sortBy(this.filteredSessionTypes, 'title');
+    return sortBy(this.filteredSessionTypes, ['school.title', 'title']);
   }
 
   get bestSelectedSessionType() {
@@ -71,6 +71,9 @@ export default class ReportsSubjectNewSessionTypeComponent extends Component {
               selected={{eq sessionType.id this.bestSelectedSessionType}}
               value={{sessionType.id}}
             >
+              {{#unless @school}}
+                {{sessionType.school.title}}:
+              {{/unless}}
               {{sessionType.title}}
               {{#unless sessionType.active}}
                 ({{t "general.inactive"}})
