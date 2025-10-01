@@ -10,6 +10,7 @@ import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
 import pick from 'ilios-common/helpers/pick';
 import YupValidationMessage from 'ilios-common/components/yup-validation-message';
+import focus from 'ilios-common/modifiers/focus';
 
 export default class ProgramHeaderComponent extends Component {
   @tracked title;
@@ -55,6 +56,7 @@ export default class ProgramHeaderComponent extends Component {
               {{this.validations.attach "title"}}
               disabled={{isSaving}}
               {{keyboard}}
+              {{focus}}
             />
             <YupValidationMessage
               @description={{t "general.title"}}

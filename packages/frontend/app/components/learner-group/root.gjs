@@ -45,6 +45,8 @@ import YupValidationMessage from 'ilios-common/components/yup-validation-message
 import { string } from 'yup';
 import { pageTitle } from 'ember-page-title';
 import reverse from 'ilios-common/helpers/reverse';
+import focus from 'ilios-common/modifiers/focus';
+
 const DEFAULT_URL_VALUE = 'https://';
 
 export default class LearnerGroupRootComponent extends Component {
@@ -530,6 +532,7 @@ export default class LearnerGroupRootComponent extends Component {
                     disabled={{isSaving}}
                     {{on "input" (pick "target.value" (set this "locationBuffer"))}}
                     {{keyboard}}
+                    {{focus}}
                   />
                 </EditableField>
               {{else if @learnerGroup.location}}
@@ -563,6 +566,7 @@ export default class LearnerGroupRootComponent extends Component {
                     {{on "focus" this.selectAllText}}
                     {{this.validations.attach "bestUrl"}}
                     {{keyboard}}
+                    {{focus}}
                   />
                   <YupValidationMessage
                     @description={{t "general.defaultVirtualLearningLink"}}

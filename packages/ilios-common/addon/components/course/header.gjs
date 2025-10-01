@@ -15,6 +15,7 @@ import pick from 'ilios-common/helpers/pick';
 import FaIcon from 'ilios-common/components/fa-icon';
 import PublicationMenu from 'ilios-common/components/course/publication-menu';
 import PublicationStatus from 'ilios-common/components/publication-status';
+import focus from 'ilios-common/modifiers/focus';
 
 export default class CourseHeaderComponent extends Component {
   @service iliosConfig;
@@ -67,6 +68,7 @@ export default class CourseHeaderComponent extends Component {
               {{on "input" (pick "target.value" (set this "courseTitle"))}}
               {{this.validations.attach "courseTitle"}}
               {{keyboard}}
+              {{focus}}
             />
             <YupValidationMessage
               @description={{t "general.title"}}

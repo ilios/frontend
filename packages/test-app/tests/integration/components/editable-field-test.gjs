@@ -88,35 +88,6 @@ module('Integration | Component | editable field', function (hooks) {
     await component.escape();
   });
 
-  test('focus when editor opens on input', async function (assert) {
-    this.set('value', 'lorem');
-    this.set('label', 'Foo');
-    await render(
-      <template>
-        <EditableField @value={{this.value}}>
-          <label><input />{{this.label}}</label>
-        </EditableField>
-      </template>,
-    );
-    await component.editable.edit();
-    assert.ok(component.inputHasFocus);
-  });
-
-  test('focus when editor opens on textarea', async function (assert) {
-    this.set('value', 'lorem');
-    this.set('label', 'Foo Bar');
-    await render(
-      <template>
-        <EditableField @value={{this.value}}>
-          <label for="textarea">{{this.label}}</label>
-          <textarea id="textarea"></textarea>
-        </EditableField>
-      </template>,
-    );
-    await component.editable.edit();
-    assert.ok(component.textareaHasFocus);
-  });
-
   test('sends status info', async function (assert) {
     this.set('status', false);
     await render(

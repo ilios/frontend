@@ -21,6 +21,7 @@ import SchoolVocabularyNewTerm from 'frontend/components/school-vocabulary-new-t
 import YupValidationMessage from 'ilios-common/components/yup-validation-message';
 import YupValidations from 'ilios-common/classes/yup-validations';
 import { string } from 'yup';
+import focus from 'ilios-common/modifiers/focus';
 
 export default class SchoolVocabularyTermManagerComponent extends Component {
   @service store;
@@ -226,6 +227,7 @@ export default class SchoolVocabularyTermManagerComponent extends Component {
                       {{on "input" (pick "target.value" (set this "titleBuffer"))}}
                       {{this.validations.attach "title"}}
                       {{keyboard}}
+                      {{focus}}
                     />
                     <YupValidationMessage
                       @description={{t "general.title"}}
@@ -284,6 +286,7 @@ export default class SchoolVocabularyTermManagerComponent extends Component {
                       {{on "input" (pick "target.value" (set this "descriptionBuffer"))}}
                       disabled={{isSaving}}
                       {{keyboard saveOnEnter=false}}
+                      {{focus}}
                     >
                       {{this.description}}
                     </textarea>

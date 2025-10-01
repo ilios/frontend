@@ -26,16 +26,6 @@ export default class EditableFieldComponent extends Component {
     this.setIsEditing(false);
   });
 
-  focusFirstControl = modifier((element) => {
-    const elements = element.querySelectorAll('input,textarea,select,.fr-element');
-    if (elements.length) {
-      const visibleControls = Array.from(elements).filter((el) => {
-        return !el.hidden;
-      });
-      visibleControls[0].focus();
-    }
-  });
-
   /*
    * Modifier we can attach to the editable field elemnts so we can handle saving and closing via enter and escape
    */
@@ -69,7 +59,7 @@ export default class EditableFieldComponent extends Component {
     >
       <span class="content">
         {{#if this.isEditing}}
-          <span class="editor" {{this.focusFirstControl}}>
+          <span class="editor">
             {{yield
               this.keyboard
               this.saveData.isRunning

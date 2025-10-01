@@ -13,6 +13,7 @@ import set from 'ember-set-helper/helpers/set';
 import YupValidationMessage from 'ilios-common/components/yup-validation-message';
 import FaIcon from 'ilios-common/components/fa-icon';
 import not from 'ember-truth-helpers/helpers/not';
+import focus from 'ilios-common/modifiers/focus';
 
 export default class CurriculumInventoryReportHeaderComponent extends Component {
   @tracked name;
@@ -65,6 +66,7 @@ export default class CurriculumInventoryReportHeaderComponent extends Component 
               {{on "input" (pick "target.value" (set this "name"))}}
               {{this.validations.attach "name"}}
               {{keyboard}}
+              {{focus}}
             />
             <YupValidationMessage
               @description={{t "general.name"}}

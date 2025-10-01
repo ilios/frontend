@@ -24,6 +24,7 @@ import eq from 'ember-truth-helpers/helpers/eq';
 import formatDate from 'ember-intl/helpers/format-date';
 import DatePicker from 'ilios-common/components/date-picker';
 import pipe from 'ilios-common/helpers/pipe';
+import focus from 'ilios-common/modifiers/focus';
 
 export default class CourseOverview extends Component {
   @service currentUser;
@@ -291,6 +292,7 @@ export default class CourseOverview extends Component {
                     {{on "input" (pick "target.value" (set this "externalId"))}}
                     {{this.validations.attach "externalId"}}
                     {{keyboard}}
+                    {{focus}}
                   />
                   <YupValidationMessage
                     @description={{t "general.externalId"}}
@@ -314,6 +316,7 @@ export default class CourseOverview extends Component {
                   <select
                     id="clerkship-type-{{templateId}}"
                     {{on "change" this.setCourseClerkshipType}}
+                    {{focus}}
                   >
                     <option value="null" selected={{isEmpty this.selectedClerkshipType}}>
                       {{t "general.notAClerkship"}}
@@ -355,6 +358,7 @@ export default class CourseOverview extends Component {
                       (set this "startDate")
                       (fn this.validations.addErrorDisplayFor "startDate")
                     }}
+                    @autofocus={{true}}
                   />
                 </EditableField>
                 <YupValidationMessage
@@ -381,6 +385,7 @@ export default class CourseOverview extends Component {
                       (set this "endDate")
                       (fn this.validations.addErrorDisplayFor "endDate")
                     }}
+                    @autofocus={{true}}
                   />
                 </EditableField>
                 <YupValidationMessage
@@ -401,7 +406,7 @@ export default class CourseOverview extends Component {
                   @save={{this.changeLevel}}
                   @close={{this.revertLevelChanges}}
                 >
-                  <select id="level-{{templateId}}" {{on "change" this.setLevel}}>
+                  <select id="level-{{templateId}}" {{on "change" this.setLevel}} {{focus}}>
                     {{#each this.levelOptions as |levelOption|}}
                       <option value={{levelOption}} selected={{eq levelOption this.level}}>
                         {{levelOption}}

@@ -22,6 +22,7 @@ import and from 'ember-truth-helpers/helpers/and';
 import not from 'ember-truth-helpers/helpers/not';
 import pick from 'ilios-common/helpers/pick';
 import eq from 'ember-truth-helpers/helpers/eq';
+import focus from 'ilios-common/modifiers/focus';
 
 export default class CurriculumInventoryReportOverviewComponent extends Component {
   @service currentUser;
@@ -284,6 +285,7 @@ export default class CurriculumInventoryReportOverviewComponent extends Componen
                   <DatePicker
                     @value={{this.startDate}}
                     @onChange={{set this "startDate"}}
+                    @autofocus={{true}}
                     {{this.validations.attach "startDate"}}
                     data-test-start-date-picker
                   />
@@ -312,6 +314,7 @@ export default class CurriculumInventoryReportOverviewComponent extends Componen
                   <DatePicker
                     @value={{this.endDate}}
                     @onChange={{set this "endDate"}}
+                    @autofocus={{true}}
                     {{this.validations.attach "endDate"}}
                     data-test-end-date-picker
                   />
@@ -340,6 +343,7 @@ export default class CurriculumInventoryReportOverviewComponent extends Componen
                   <select
                     id="year-{{templateId}}"
                     {{on "change" (pick "target.value" (set this "year"))}}
+                    {{focus}}
                   >
                     {{#each this.yearOptions as |obj|}}
                       <option
@@ -388,6 +392,7 @@ export default class CurriculumInventoryReportOverviewComponent extends Componen
                     {{this.validations.attach "description"}}
                     placeholder={{t "general.reportDescriptionPlaceholder"}}
                     {{keyboard saveOnEnter=false}}
+                    {{focus}}
                   >
                     {{this.description}}
                   </textarea>
