@@ -53,7 +53,8 @@ export default class SelectableTermsListItem extends Component {
     >
       {{#if this.showTooltip}}
         <IliosTooltip @target={{this.selectableTermsListItemButtonElement}}>
-          {{@term.description}}
+          {{! template-lint-disable no-triple-curlies }}
+          {{{@term.description}}}
         </IliosTooltip>
       {{/if}}
       <span data-test-title>{{@term.title}}</span>

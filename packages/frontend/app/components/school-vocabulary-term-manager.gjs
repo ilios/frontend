@@ -313,7 +313,8 @@ export default class SchoolVocabularyTermManagerComponent extends Component {
                     />
                   </EditableField>
                 {{else}}
-                  {{this.description}}
+                  {{! template-lint-disable no-triple-curlies }}
+                  {{{this.description}}}
                 {{/if}}
               </div>
             </div>
