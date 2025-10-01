@@ -57,25 +57,39 @@ export default class FadeTextComponent extends Component {
 
   <template>
     <span class="fade-text" data-test-fade-text ...attributes>
-      {{yield
-        (hash
-          controls=(component
-            controls
-            expandable=this.shouldFade
-            collapsible=this.isExpanded
-            expand=this.expand
-            collapse=this.collapse
+      {{#if (has-block)}}
+        {{yield
+          (hash
+            controls=(component
+              Controls
+              expandable=this.shouldFade
+              collapsible=this.isExpanded
+              expand=this.expand
+              collapse=this.collapse
+            )
+            text=(component
+              FadedText faded=this.shouldFade resize=this.updateTextDims text=this.displayText
+            )
           )
-          text=(component
-            fadedText faded=this.shouldFade resize=this.updateTextDims text=this.displayText
-          )
-        )
-      }}
+        }}
+      {{else}}
+        <FadedText
+          @faded={{this.shouldFade}}
+          @resize={{this.updateTextDims}}
+          @text={{this.displayText}}
+        />
+        <Controls
+          @expandable={{this.shouldFade}}
+          @collapsible={{this.isExpanded}}
+          @expand={{this.expand}}
+          @collapse={{this.collapse}}
+        />
+      {{/if}}
     </span>
   </template>
 }
 
-const controls = <template>
+const Controls = <template>
   {{#if @expandable}}
     <button
       class="expand-text-button"
@@ -103,7 +117,7 @@ const controls = <template>
   {{/if}}
 </template>;
 
-const fadedText = <template>
+const FadedText = <template>
   <div class="display-text-wrapper{{if @faded ' faded'}}">
     <div class="display-text" {{onResize @resize}}>
       {{@text}}

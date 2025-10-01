@@ -59,14 +59,6 @@
             margin: 0;
           }
         }
-        button {
-          &.expand-text-button {
-            background: var(--blue);
-            border-radius: 3px;
-            color: var(--white);
-            padding: 0.3em 1em;
-          }
-        }
       }
 
       &.dragging-item {

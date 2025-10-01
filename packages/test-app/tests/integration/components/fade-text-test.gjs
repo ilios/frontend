@@ -39,6 +39,42 @@ module('Integration | Component | fade-text', function (hooks) {
   test('it renders short text in full', async function (assert) {
     const shortText = 'template block text';
     this.set('shortText', shortText);
+    await render(<template><FadeText @text={{this.shortText}} /></template>);
+    assert.notOk(component.enabled);
+    assert.false(component.displayText.isFaded);
+    assert.dom(this.element).hasText(shortText);
+  });
+
+  test('it fades tall text given as component argument', async function (assert) {
+    this.set('longHtml', this.longHtml);
+
+    this.set('expanded', false);
+    this.set('setExpanded', (isExpanded) => {
+      this.set('expanded', isExpanded);
+    });
+    await render(
+      <template><FadeText @text={{this.longHtml}} @setExpanded={{this.setExpanded}} /></template>,
+    );
+    assert.ok(component.enabled);
+    assert.notOk(this.expanded, 'text is not expanded');
+    assert.ok(component.displayText.isFaded);
+
+    await component.control.expand.click();
+
+    assert.ok(component.enabled);
+    assert.ok(this.expanded);
+    assert.notOk(component.displayText.isFaded);
+
+    await component.control.collapse.click();
+
+    assert.ok(component.enabled);
+    assert.notOk(this.expanded);
+    assert.ok(component.displayText.isFaded);
+  });
+
+  test('it renders short text in full in block form', async function (assert) {
+    const shortText = 'template block text';
+    this.set('shortText', shortText);
     await render(
       <template>
         <FadeText @text={{this.shortText}} as |ft|>
@@ -52,7 +88,7 @@ module('Integration | Component | fade-text', function (hooks) {
     assert.dom(this.element).hasText(shortText);
   });
 
-  test('it fades tall text given as component argument', async function (assert) {
+  test('it fades tall text given as component argument in block form', async function (assert) {
     this.set('longHtml', this.longHtml);
 
     this.set('expanded', false);
