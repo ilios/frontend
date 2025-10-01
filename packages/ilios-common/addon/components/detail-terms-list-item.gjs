@@ -58,7 +58,8 @@ export default class DetailTermsListItem extends Component {
       {{#if @canEdit}}
         {{#if this.showTooltip}}
           <IliosTooltip @target={{this.detailTermsListItemElement}}>
-            {{@term.description}}
+            {{! template-lint-disable no-triple-curlies }}
+            {{{@term.description}}}
           </IliosTooltip>
         {{/if}}
         <button type="button" {{on "click" (fn @remove @term)}}>

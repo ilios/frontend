@@ -1,6 +1,15 @@
-import { clickable, create, collection, isPresent, fillable, text } from 'ember-cli-page-object';
+import {
+  clickable,
+  create,
+  collection,
+  isPresent,
+  fillable,
+  text,
+  property,
+} from 'ember-cli-page-object';
 import newTermForm from './school-vocabulary-new-term';
 import yesNoToggle from 'ilios-common/page-objects/components/toggle-yesno';
+import { pageObjectFillInQuillEditor } from 'ilios-common';
 
 const definition = {
   scope: '[data-test-school-vocabulary-term-manager]',
@@ -11,7 +20,16 @@ const definition = {
   cancelTitleChanges: clickable('[data-test-title] .cancel'),
   hasError: isPresent('[data-test-title-validation-error-message]'),
   error: text('[data-test-title-validation-error-message]'),
-  description: text('[data-test-description]'),
+  description: {
+    scope: '[data-test-description]',
+    edit: clickable('[data-test-edit]'),
+    set: pageObjectFillInQuillEditor('[data-test-html-editor]'),
+    savingIsDisabled: property('disabled', '.done'),
+    save: clickable('.done'),
+    cancel: clickable('.cancel'),
+    hasError: isPresent('[data-test-description-validation-error-message]'),
+    error: text('[data-test-description-validation-error-message]'),
+  },
   delete: clickable('[data-test-delete]'),
   breadcrumbs: {
     scope: '[data-test-breadcrumbs]',
