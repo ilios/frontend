@@ -96,14 +96,6 @@
   .instructional-notes {
     @include m.ilios-browser-defaults;
     grid-column: 1 / -1;
-
-    .fade-text-control {
-      background-image: linear-gradient(
-        to bottom,
-        transparent,
-        var(--lightest-blue)
-      );
-    }
   }
 
   .sessionassociatedgroups {

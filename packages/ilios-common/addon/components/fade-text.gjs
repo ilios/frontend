@@ -1,36 +1,20 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
-import { typeOf } from '@ember/utils';
 import { htmlSafe } from '@ember/template';
-import { action } from '@ember/object';
 import onResize from 'ember-on-resize-modifier/modifiers/on-resize';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
 import FaIcon from 'ilios-common/components/fa-icon';
+import { hash } from '@ember/helper';
 
 export default class FadeTextComponent extends Component {
   @tracked textHeight;
+  @tracked expanded;
 
   MAX_HEIGHT = 200;
 
-  get text() {
-    if (!this.args.text) {
-      return '';
-    }
-    if (typeOf(this.args.text) !== 'string') {
-      if (typeOf(this.args.text) === 'array') {
-        let text = '<ul>';
-        text += this.args.text.map((elem) => `<li>${elem}</li>`).join('');
-        text += '</ul>';
-        return text;
-      }
-      return this.args.text.toString();
-    }
-
-    return this.args.text;
-  }
   get displayText() {
-    return new htmlSafe(this.text);
+    return new htmlSafe(this.args.text);
   }
 
   get textHeightRounded() {
@@ -42,88 +26,87 @@ export default class FadeTextComponent extends Component {
   }
 
   get shouldFade() {
-    // short-circuit fading if no tracked property passed (i.e. doesn't make sense to fade text)
-    if (this.args.expanded === undefined) {
+    if (this.args.forceExpanded || this.expanded) {
       return false;
-    }
-    if (this.expanded !== undefined) {
-      return this.expanded ? false : this.exceedsHeight;
     }
 
     return this.exceedsHeight;
   }
 
-  get expanded() {
-    return this.args.expanded && this.exceedsHeight;
+  get isExpanded() {
+    return (this.expanded || this.args.forceExpanded) && this.exceedsHeight;
   }
 
-  @action
-  expand(event) {
-    if (event) {
-      event.stopPropagation();
+  expand = () => {
+    this.expanded = true;
+    if (this.args.setExpanded) {
+      this.args.setExpanded(true);
     }
-    this.args.onExpandAll(true);
-  }
+  };
 
-  @action
-  collapse(event) {
-    if (event) {
-      event.stopPropagation();
+  collapse = () => {
+    this.expanded = false;
+    if (this.args.setExpanded) {
+      this.args.setExpanded(false);
     }
-    this.args.onExpandAll(false);
-  }
+  };
 
-  @action
-  updateTextDims({ contentRect: { height } }) {
+  updateTextDims = ({ contentRect: { height } }) => {
     this.textHeight = height;
-  }
+  };
+
   <template>
-    {{#if (has-block)}}
-      <span class="fade-text" data-test-fade-text ...attributes>
-        {{yield
-          this.displayText
-          this.expand
-          this.collapse
-          this.updateTextDims
-          this.shouldFade
-          this.expanded
-        }}
-      </span>
-    {{else}}
-      <span class="fade-text" data-test-fade-text ...attributes>
-        <div class="display-text-wrapper{{if this.shouldFade ' faded'}}">
-          <div class="display-text" {{onResize this.updateTextDims}}>
-            {{this.displayText}}
-          </div>
-        </div>
-        {{#if this.shouldFade}}
-          <div class="fade-text-control" data-test-fade-text-control>
-            <button
-              class="expand-text-button"
-              aria-label={{t "general.expand"}}
-              title={{t "general.expand"}}
-              type="button"
-              data-test-expand
-              {{on "click" this.expand}}
-            >
-              <FaIcon @icon="angles-down" />
-            </button>
-          </div>
-        {{else}}
-          {{#if this.expanded}}
-            <button
-              class="collapse-text-button"
-              aria-label={{t "general.collapse"}}
-              title={{t "general.collapse"}}
-              type="button"
-              data-test-collapse
-              {{on "click" this.collapse}}
-            >
-              <FaIcon @icon="angles-up" />
-            </button>
-          {{/if}}
-        {{/if}}
-      </span>
-    {{/if}}
+    <span class="fade-text" data-test-fade-text ...attributes>
+      {{yield
+        (hash
+          controls=(component
+            controls
+            expandable=this.shouldFade
+            collapsible=this.isExpanded
+            expand=this.expand
+            collapse=this.collapse
+          )
+          text=(component
+            fadedText faded=this.shouldFade resize=this.updateTextDims text=this.displayText
+          )
+        )
+      }}
+    </span>
   </template>
 }
+
+const controls = <template>
+  {{#if @expandable}}
+    <button
+      class="expand-text-button"
+      title={{t "general.expand"}}
+      type="button"
+      data-test-expand
+      data-test-fade-text-control
+      {{on "click" @expand}}
+    >
+      <FaIcon @icon="angles-down" />
+    </button>
+  {{else}}
+    {{#if @collapsible}}
+      <button
+        class="collapse-text-button"
+        title={{t "general.collapse"}}
+        type="button"
+        data-test-collapse
+        data-test-fade-text-control
+        {{on "click" @collapse}}
+      >
+        <FaIcon @icon="angles-up" />
+      </button>
+    {{/if}}
+  {{/if}}
+</template>;
+
+const fadedText = <template>
+  <div class="display-text-wrapper{{if @faded ' faded'}}">
+    <div class="display-text" {{onResize @resize}}>
+      {{@text}}
+    </div>
+  </div>
+</template>;

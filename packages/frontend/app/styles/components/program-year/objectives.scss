@@ -4,8 +4,4 @@
 .program-year-objectives {
   @include m.detail-container(var(--orange));
   @include m.objectives;
-
-  .fade-text-control {
-    background-image: linear-gradient(to bottom, transparent, var(--white));
-  }
 }

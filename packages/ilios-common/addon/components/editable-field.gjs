@@ -118,6 +118,7 @@ export default class EditableFieldComponent extends Component {
               {{@clickPrompt}}
             {{/if}}
           </button>
+          {{yield to="postValue"}}
         {{/if}}
       </span>
     </div>
