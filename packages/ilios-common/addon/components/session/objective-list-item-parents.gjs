@@ -67,7 +67,7 @@ export default class SessionObjectiveListItemParentsComponent extends Component 
               </button>
               {{ft.controls}}
             {{else}}
-              {{ft.text}}
+              {{ft.text preserveLinks=true}}
               {{ft.controls}}
             {{/if}}
           </FadeText>

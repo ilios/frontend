@@ -281,7 +281,7 @@ export default class ProgramYearObjectiveListItemComponent extends Component {
               </:postValue>
             </EditableField>
           {{else}}
-            {{ft.text}}
+            {{ft.text preserveLinks=true}}
             {{ft.controls}}
           {{/if}}
         </FadeText>
