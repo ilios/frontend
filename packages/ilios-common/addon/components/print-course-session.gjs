@@ -159,6 +159,19 @@ export default class PrintCourseSessionComponent extends Component {
               {{@session.sessionType.title}}
             </div>
           </div>
+          <div class="inline-label-data-block">
+            <label for="independent-learning-{{this.uniqueId}}">
+              {{t "general.independentLearning"}}:
+            </label>
+            <div>
+              <input
+                id="independent-learning-{{this.uniqueId}}"
+                type="checkbox"
+                checked={{@session.isIndependentLearning}}
+                disabled="disabled"
+              />
+            </div>
+          </div>
           <br />
           {{#if this.showSupplemental}}
             <div class="inline-label-data-block">
@@ -220,19 +233,6 @@ export default class PrintCourseSessionComponent extends Component {
               </div>
             </div>
           {{/if}}
-          <div class="inline-label-data-block">
-            <label for="independent-learning-{{this.uniqueId}}">
-              {{t "general.independentLearning"}}:
-            </label>
-            <div>
-              <input
-                id="independent-learning-{{this.uniqueId}}"
-                type="checkbox"
-                checked={{@session.isIndependentLearning}}
-                disabled="disabled"
-              />
-            </div>
-          </div>
         </div>
       </section>
       {{#if @session.isIndependentLearning}}
