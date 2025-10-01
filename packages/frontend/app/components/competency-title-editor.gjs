@@ -11,6 +11,7 @@ import { on } from '@ember/modifier';
 import pick from 'ilios-common/helpers/pick';
 import set from 'ember-set-helper/helpers/set';
 import YupValidationMessage from 'ilios-common/components/yup-validation-message';
+import focus from 'ilios-common/modifiers/focus';
 
 export default class CompetencyTitleEditorComponent extends Component {
   @tracked title;
@@ -56,6 +57,7 @@ export default class CompetencyTitleEditorComponent extends Component {
             {{on "input" (pick "target.value" (set this "title"))}}
             {{this.validations.attach "title"}}
             {{keyboard}}
+            {{focus}}
           />
         </EditableField>
         <YupValidationMessage

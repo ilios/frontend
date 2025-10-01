@@ -29,6 +29,7 @@ import YupValidationMessage from 'ilios-common/components/yup-validation-message
 import join from 'ilios-common/helpers/join';
 import mapBy from 'ilios-common/helpers/map-by';
 import FadeText from 'ilios-common/components/fade-text';
+import focus from 'ilios-common/modifiers/focus';
 
 export default class SessionOverview extends Component {
   @service currentUser;
@@ -423,7 +424,11 @@ export default class SessionOverview extends Component {
                       @save={{this.changeSessionType}}
                       @close={{this.revertSessionTypeChanges}}
                     >
-                      <select id="session-type-{{templateId}}" {{on "change" this.setSessionType}}>
+                      <select
+                        id="session-type-{{templateId}}"
+                        {{on "change" this.setSessionType}}
+                        {{focus}}
+                      >
                         {{#each this.sortedSessionTypes as |sessionType|}}
                           <option
                             value={{sessionType.id}}

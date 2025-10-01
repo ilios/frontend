@@ -14,6 +14,7 @@ import { on } from '@ember/modifier';
 import pick from 'ilios-common/helpers/pick';
 import YupValidationMessage from 'ilios-common/components/yup-validation-message';
 import eq from 'ember-truth-helpers/helpers/eq';
+import focus from 'ilios-common/modifiers/focus';
 
 export default class ProgramOverviewComponent extends Component {
   id = guidFor(this);
@@ -83,6 +84,7 @@ export default class ProgramOverviewComponent extends Component {
                   {{this.validations.attach "shortTitle"}}
                   disabled={{isSaving}}
                   {{keyboard}}
+                  {{focus}}
                 />
               </EditableField>
               <YupValidationMessage
@@ -105,7 +107,7 @@ export default class ProgramOverviewComponent extends Component {
                 @save={{perform this.changeDuration}}
                 @close={{set this "duration" @program.duration}}
               >
-                <select id={{concat this.id "duration"}} {{on "change" this.setDuration}}>
+                <select id={{concat this.id "duration"}} {{on "change" this.setDuration}} {{focus}}>
                   {{#each (array 1 2 3 4 5 6 7 8 9 10) as |val|}}
                     <option value={{val}} selected={{eq val this.duration}}>{{val}}</option>
                   {{/each}}
