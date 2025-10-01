@@ -180,14 +180,6 @@ export default class PrintCourseComponent extends Component {
               {{/if}}
             </div>
           </div>
-          <div class="inline-label-data-block">
-            <label>
-              {{t "general.level"}}:
-            </label>
-            <div>
-              {{@course.level}}
-            </div>
-          </div>
           <br />
           <br />
           <div class="inline-label-data-block">
