@@ -12,6 +12,15 @@ import { fn } from '@ember/helper';
 export default class EditableFieldComponent extends Component {
   @tracked isEditing = false;
 
+  get hasVisibleValue() {
+    const value = this.args.value || '';
+    const text = value.toString();
+    const noTagsText = text.replace(/(<([^>]+)>)/gi, '');
+    const strippedText = noTagsText.replace(/&nbsp;/gi, '').replace(/\s/g, '');
+
+    return Boolean(strippedText.length);
+  }
+
   saveData = task({ drop: true }, async () => {
     await timeout(1);
     const result = await this.args.save();
@@ -98,14 +107,18 @@ export default class EditableFieldComponent extends Component {
             type="button"
             {{on "click" (fn this.setIsEditing true)}}
           >
-            {{#if @value}}
+            {{#if this.hasVisibleValue}}
               {{#if (has-block "value")}}
                 {{yield to="value"}}
               {{else}}
                 {{@value}}
               {{/if}}
             {{else}}
-              {{@clickPrompt}}
+              {{#if @clickPrompt}}
+                {{@clickPrompt}}
+              {{else}}
+                <FaIcon @icon="pen-to-square" />
+              {{/if}}
             {{/if}}
           </button>
           {{yield to="postValue"}}

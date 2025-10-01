@@ -38,6 +38,20 @@ module('Integration | Component | editable field', function (hooks) {
     assert.strictEqual(component.value, 'template block text');
   });
 
+  test('it renders an edit icon when it looks empty', async function (assert) {
+    this.set(
+      'value',
+      `
+      <p>
+        &nbsp;
+      </p>
+    `,
+    );
+    await render(<template><EditableField @value={{this.value}} /></template>);
+    assert.strictEqual(component.value, '');
+    assert.strictEqual(component.editable.iconCount, 1);
+  });
+
   test('save on enter', async function (assert) {
     assert.expect(1);
     this.set('label', 'Foo');
