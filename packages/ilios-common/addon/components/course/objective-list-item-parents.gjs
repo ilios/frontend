@@ -63,7 +63,7 @@ export default class CourseObjectiveListItemParentsComponent extends Component {
               </button>
               {{ft.controls}}
             {{else}}
-              {{ft.text}}
+              {{ft.text preserveLinks=true}}
               {{ft.controls}}
             {{/if}}
           </FadeText>

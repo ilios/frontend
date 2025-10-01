@@ -4,7 +4,7 @@ const definition = {
   scope: '[data-test-fade-text]',
   enabled: isPresent('[data-test-fade-text-control]'),
   displayText: {
-    scope: '.display-text-wrapper',
+    scope: '[data-test-display-text]',
     isFaded: hasClass('faded'),
   },
   control: {

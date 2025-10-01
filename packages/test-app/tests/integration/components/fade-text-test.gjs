@@ -26,6 +26,8 @@ module('Integration | Component | fade-text', function (hooks) {
     `;
     this.fadedClass = 'faded';
     this.fadedSelector = '.faded';
+    this.linkText = '<p class="text"><a href="iliosproject.org">Ilios Project</a></p>';
+    this.cleanText = '<p class="text"><span class="link">Ilios Project</span></p>';
   });
 
   test('it renders empty', async function (assert) {
@@ -118,5 +120,44 @@ module('Integration | Component | fade-text', function (hooks) {
     assert.ok(component.enabled);
     assert.notOk(this.expanded);
     assert.ok(component.displayText.isFaded);
+  });
+
+  test('it replaces links by default', async function (assert) {
+    this.set('text', this.linkText);
+    await render(<template><FadeText @text={{this.text}} /></template>);
+    assert.dom('[data-test-text]', this.element).hasHtml(this.cleanText);
+
+    await render(
+      <template>
+        <FadeText @text={{this.text}} as |ft|>
+          {{ft.text}}
+        </FadeText>
+      </template>,
+    );
+    assert.dom('[data-test-text]', this.element).hasHtml(this.cleanText);
+  });
+
+  test('it preserves links when asked', async function (assert) {
+    this.set('text', this.linkText);
+    await render(<template><FadeText @text={{this.text}} @preserveLinks={{true}} /></template>);
+    assert.dom('[data-test-text]', this.element).hasHtml(this.linkText);
+
+    await render(
+      <template>
+        <FadeText @text={{this.text}} @preserveLinks={{true}} as |ft|>
+          {{ft.text}}
+        </FadeText>
+      </template>,
+    );
+    assert.dom('[data-test-text]', this.element).hasHtml(this.linkText);
+
+    await render(
+      <template>
+        <FadeText @text={{this.text}} as |ft|>
+          {{ft.text preserveLinks=true}}
+        </FadeText>
+      </template>,
+    );
+    assert.dom('[data-test-text]', this.element).hasHtml(this.linkText);
   });
 });

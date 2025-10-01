@@ -150,7 +150,7 @@ export default class ObjectiveSortManagerComponent extends Component {
                 <FaIcon @icon="up-down-left-right" />
               {{/unless}}
               <span class="draggable-object-content">
-                <FadeText @text={{item.title}} />
+                <FadeText @text={{item.title}} @preserveLinks={{true}} />
               </span>
             </li>
           {{/each}}

@@ -1,21 +1,18 @@
 import Component from '@glimmer/component';
-import { tracked } from '@glimmer/tracking';
+import { cached, tracked } from '@glimmer/tracking';
 import { htmlSafe } from '@ember/template';
 import onResize from 'ember-on-resize-modifier/modifiers/on-resize';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
 import FaIcon from 'ilios-common/components/fa-icon';
 import { hash } from '@ember/helper';
+import { TrackedAsyncData } from 'ember-async-data';
 
 export default class FadeTextComponent extends Component {
   @tracked textHeight;
   @tracked expanded;
 
   MAX_HEIGHT = 200;
-
-  get displayText() {
-    return new htmlSafe(this.args.text);
-  }
 
   get textHeightRounded() {
     return Math.floor(this.textHeight);
@@ -68,15 +65,20 @@ export default class FadeTextComponent extends Component {
               collapse=this.collapse
             )
             text=(component
-              FadedText faded=this.shouldFade resize=this.updateTextDims text=this.displayText
+              FadedTextComponent
+              faded=this.shouldFade
+              resize=this.updateTextDims
+              text=@text
+              preserveLinks=@preserveLinks
             )
           )
         }}
       {{else}}
-        <FadedText
+        <FadedTextComponent
           @faded={{this.shouldFade}}
           @resize={{this.updateTextDims}}
-          @text={{this.displayText}}
+          @preserveLinks={{@preserveLinks}}
+          @text={{@text}}
         />
         <Controls
           @expandable={{this.shouldFade}}
@@ -117,10 +119,46 @@ const Controls = <template>
   {{/if}}
 </template>;
 
-const FadedText = <template>
-  <div class="display-text-wrapper{{if @faded ' faded'}}">
-    <div class="display-text" {{onResize @resize}}>
-      {{@text}}
+class FadedTextComponent extends Component {
+  @cached
+  get sanitizerData() {
+    return new TrackedAsyncData(import('sanitize-html'));
+  }
+
+  get cleanText() {
+    if (this.args.preserveLinks) {
+      return this.args.text;
+    }
+
+    if (!this.sanitizerData.isResolved) {
+      return this.args.text;
+    }
+
+    const { default: sanitizeHtml } = this.sanitizerData.value;
+
+    return sanitizeHtml(this.args.text, {
+      transformTags: {
+        a: sanitizeHtml.simpleTransform('span', { class: 'link' }, false),
+      },
+      allowedAttributes: false, //disable attribute filtering
+      allowedTags: false, //disable tag filtering
+      allowVulnerableTags: true, //turn off warnings about script tags
+    });
+  }
+
+  get displayText() {
+    return new htmlSafe(this.cleanText);
+  }
+
+  <template>
+    <div
+      class="display-text-wrapper{{if @faded ' faded'}}"
+      data-test-display-text
+      data-test-done={{this.sanitierData.isResolved}}
+    >
+      <div class="display-text" {{onResize @resize}} data-test-text>
+        {{this.displayText}}
+      </div>
     </div>
-  </div>
-</template>;
+  </template>
+}

@@ -629,7 +629,7 @@ export default class SessionOverview extends Component {
                       </:postValue>
                     </EditableField>
                   {{else}}
-                    {{ft.text}}
+                    {{ft.text preserveLinks=true}}
                     {{ft.controls}}
                   {{/if}}
                 </FadeText>
@@ -664,7 +664,7 @@ export default class SessionOverview extends Component {
                       </:postValue>
                     </EditableField>
                   {{else}}
-                    {{ft.text}}
+                    {{ft.text preserveLinks=true}}
                     {{ft.controls}}
                   {{/if}}
                 </FadeText>
