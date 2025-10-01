@@ -4,14 +4,18 @@ import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
 import FaIcon from 'ilios-common/components/fa-icon';
 import FadeText from 'ilios-common/components/fade-text';
-import onResize from 'ember-on-resize-modifier/modifiers/on-resize';
 
 export default class CourseObjectiveListItemParentsComponent extends Component {
-  get parents() {
+  get parentTitles() {
     return this.args.parents
       .slice()
       .sort(sortableByPosition)
       .map((t) => t.title);
+  }
+
+  get parentsList() {
+    const items = this.parentTitles.map((t) => `<li>${t}</li>`).join('');
+    return `<ul>${items}</ul>`;
   }
   <template>
     <div class="course-objective-list-item-parents grid-item" data-test-objective-list-item-parents>
@@ -42,68 +46,25 @@ export default class CourseObjectiveListItemParentsComponent extends Component {
       {{else}}
         {{#if @parents}}
           <FadeText
-            @text={{this.parents}}
-            @expanded={{@fadeTextExpanded}}
-            @onExpandAll={{@onExpandAllFadeText}}
-            as |displayText expand collapse updateTextDims shouldFade expanded|
+            @text={{this.parentsList}}
+            @forceExpanded={{@fadeTextExpanded}}
+            @setExpanded={{@setFadeTextExpanded}}
+            as |ft|
           >
             {{#if @editable}}
-              <span data-test-parent>
-                <button
-                  type="button"
-                  class="link-button"
-                  title={{t "general.edit"}}
-                  {{on "click" @manage}}
-                  data-test-manage
-                >
-                  <div class="display-text-wrapper{{if shouldFade ' faded'}}">
-                    <div class="display-text" {{onResize updateTextDims}}>
-                      {{displayText}}
-                    </div>
-                  </div>
-                  {{#if @showIcon}}
-                    <FaIcon data-test-edit-icon @icon="pen-to-square" class="enabled" />
-                  {{/if}}
-                </button>
-              </span>
-            {{else}}
-              <span data-test-parent>
-                <div class="display-text-wrapper{{if shouldFade ' faded'}}">
-                  <div class="display-text" {{onResize updateTextDims}}>
-                    {{displayText}}
-                  </div>
-                </div>
-              </span>
-            {{/if}}
-            {{#if shouldFade}}
-              <div
-                class="fade-text-control"
-                data-test-fade-text-control
-                {{! template-lint-disable no-invalid-interactive}}
+              <button
+                type="button"
+                class="link-button"
+                title={{t "general.edit"}}
                 {{on "click" @manage}}
+                data-test-manage
               >
-                <button
-                  class="expand-text-button"
-                  type="button"
-                  title={{t "general.expand"}}
-                  data-test-expand
-                  {{on "click" expand}}
-                >
-                  <FaIcon @icon="angles-down" />
-                </button>
-              </div>
+                {{ft.text}}
+              </button>
+              {{ft.controls}}
             {{else}}
-              {{#if expanded}}
-                <button
-                  class="collapse-text-button"
-                  title={{t "general.collapse"}}
-                  type="button"
-                  data-test-collapse
-                  {{on "click" collapse}}
-                >
-                  <FaIcon @icon="angles-up" />
-                </button>
-              {{/if}}
+              {{ft.text}}
+              {{ft.controls}}
             {{/if}}
           </FadeText>
         {{else}}

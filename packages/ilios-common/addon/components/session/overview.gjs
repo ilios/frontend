@@ -596,7 +596,7 @@ export default class SessionOverview extends Component {
               <hr />
               <div class="sessiondescription" data-test-description>
                 <label>{{t "general.description"}}:</label>
-                <span>
+                <FadeText @text={{this.description}} as |ft|>
                   {{#if @editable}}
                     <EditableField
                       @value={{this.description}}
@@ -609,6 +609,7 @@ export default class SessionOverview extends Component {
                         <HtmlEditor
                           @content={{this.description}}
                           @update={{this.changeDescription}}
+                          @autofocus={{true}}
                         />
                         <YupValidationMessage
                           @description={{t "general.description"}}
@@ -616,26 +617,24 @@ export default class SessionOverview extends Component {
                         />
                       </:default>
                       <:value>
-                        <FadeText
-                          @expanded={{this.descriptionFadeTextExpanded}}
-                          @onExpandAll={{this.expandAllDescriptionFadeText}}
-                          @text={{this.description}}
-                        />
+                        {{ft.text}}
                       </:value>
+                      <:postValue>
+                        {{ft.controls}}
+                      </:postValue>
                     </EditableField>
                   {{else}}
-                    {{! template-lint-disable no-triple-curlies}}
-                    {{{this.description}}}
+                    {{ft.text}}
+                    {{ft.controls}}
                   {{/if}}
-                </span>
+                </FadeText>
               </div>
               <div class="instructional-notes" data-test-instructional-notes>
                 <label>{{t "general.instructionalNotes"}}:</label>
-                <span>
+                <FadeText @text={{this.instructionalNotes}} as |ft|>
                   {{#if @editable}}
                     <EditableField
-                      @value={{@session.instructionalNotes}}
-                      @renderHtml={{true}}
+                      @value={{this.instructionalNotes}}
                       @isSaveDisabled={{this.validations.errors.instructionalNotes}}
                       @save={{perform this.saveInstructionalNotes}}
                       @close={{this.revertInstructionalNotesChanges}}
@@ -645,6 +644,7 @@ export default class SessionOverview extends Component {
                         <HtmlEditor
                           @content={{this.instructionalNotes}}
                           @update={{this.changeInstructionalNotes}}
+                          @autofocus={{true}}
                         />
                         <YupValidationMessage
                           @description={{t "general.instructionalNotes"}}
@@ -652,18 +652,17 @@ export default class SessionOverview extends Component {
                         />
                       </:default>
                       <:value>
-                        <FadeText
-                          @expanded={{this.notesFadeTextExpanded}}
-                          @onExpandAll={{this.expandAllNotesFadeText}}
-                          @text={{this.instructionalNotes}}
-                        />
+                        {{ft.text}}
                       </:value>
+                      <:postValue>
+                        {{ft.controls}}
+                      </:postValue>
                     </EditableField>
                   {{else}}
-                    {{! template-lint-disable no-triple-curlies}}
-                    {{{this.instructionalNotes}}}
+                    {{ft.text}}
+                    {{ft.controls}}
                   {{/if}}
-                </span>
+                </FadeText>
               </div>
               {{#unless this.isIndependentLearning}}
                 <br />
