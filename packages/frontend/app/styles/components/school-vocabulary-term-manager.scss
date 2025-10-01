@@ -26,8 +26,16 @@
       }
 
       &.term-description {
-        textarea {
-          @include m.ilios-textarea;
+        .editinplace {
+          width: 100%;
+        }
+
+        .fade-text-control {
+          background-image: linear-gradient(
+            to bottom,
+            transparent,
+            var(--lightest-blue)
+          );
         }
       }
     }
