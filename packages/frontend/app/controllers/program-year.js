@@ -11,6 +11,7 @@ export default class ProgramYearIndexController extends Controller {
     'managePyCompetencies',
     'managePyLeadership',
     'showCourseAssociations',
+    'expandedObjectives',
   ];
 
   @tracked canUpdate = false;
@@ -21,6 +22,7 @@ export default class ProgramYearIndexController extends Controller {
   @tracked managePyCompetencies = false;
   @tracked managePyLeadership = false;
   @tracked showCourseAssociations = false;
+  @tracked expandedObjectives = null;
 
   @cached
   get programData() {
@@ -31,4 +33,17 @@ export default class ProgramYearIndexController extends Controller {
   get program() {
     return this.programData.isResolved ? this.programData.value : null;
   }
+
+  get expandedObjectiveIds() {
+    return this.expandedObjectives?.split('-') ?? [];
+  }
+
+  setExpandedObjectiveIds = (ids) => {
+    if (!ids || !ids.length) {
+      this.expandedObjectives = null;
+    } else {
+      //use a Set to remove duplicates
+      this.expandedObjectives = [...new Set(ids)].join('-');
+    }
+  };
 }
