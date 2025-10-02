@@ -106,7 +106,7 @@ module('Acceptance | Reports - Subject Report', function (hooks) {
     await page.visit({ reportId: this.termReport.id });
     await percySnapshot(assert);
     assert.strictEqual(currentURL(), '/reports/subjects/2');
-    assert.strictEqual(page.report.title.text, 'All Sessions for term 0 in school 0');
+    assert.strictEqual(page.report.title.text, 'All Sessions for Term term 0 in school 0');
     assert.strictEqual(
       page.report.description,
       'This report shows all Sessions associated with Term "term 0" in school 0. (2)',

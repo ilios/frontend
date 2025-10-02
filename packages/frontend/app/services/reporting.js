@@ -46,9 +46,22 @@ export default class ReportingService extends Service {
         prepositionalObjectTableRowId,
         school,
       );
-      return prepositionalObject
-        ? this.intl.t('general.reportDisplayTitleWithObject', props)
-        : this.intl.t('general.reportDisplayTitleWithoutObject', props);
+
+      if (prepositionalObject) {
+        if (props.objectType) {
+          // add things like 'Academic Year' and 'Program Year' for further distinction
+          props.object = `${props.objectType} ${props.object}`;
+        }
+        if (props.year) {
+          // if prepositionalObject also had an associated year
+          // make sure it gets included in the title
+          props.object += ` ${props.year}`;
+        }
+
+        return this.intl.t('general.reportDisplayTitleWithObject', props);
+      } else {
+        return this.intl.t('general.reportDisplayTitleWithoutObject', props);
+      }
     } catch {
       return this.intl.t('general.thisReportIsNoLongerAvailable');
     }
@@ -91,6 +104,7 @@ export default class ReportingService extends Service {
 
     if (prepositionalObject) {
       let model = dasherize(prepositionalObject);
+
       if (model === 'instructor') {
         model = 'user';
       }
@@ -101,8 +115,8 @@ export default class ReportingService extends Service {
       const record = await this.store.findRecord(model, prepositionalObjectTableRowId);
       const objectKey = objectTranslations[prepositionalObject];
       const objectTranslation = this.intl.t(objectKey);
-      let object;
 
+      let object;
       if (model === 'user') {
         object = record.fullName;
       } else if (model === 'mesh-descriptor') {
@@ -122,6 +136,16 @@ export default class ReportingService extends Service {
           'academicYearCrossesCalendarYearBoundaries',
         );
         year = crosses ? `(${record.year} - ${record.year + 1})` : `(${record.year})`;
+      } else if (model === 'session') {
+        const crosses = await this.iliosConfig.itemFromConfig(
+          'academicYearCrossesCalendarYearBoundaries',
+        );
+        const course = await record.course;
+        const courseYear = course.get('year');
+
+        if (courseYear) {
+          year = crosses ? `(${courseYear} - ${courseYear + 1})` : `(${courseYear})`;
+        }
       }
 
       return {
