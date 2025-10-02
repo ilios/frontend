@@ -156,9 +156,38 @@ export default class ReportsSubjectInstructorComponent extends Component {
     return uniqueById(users);
   }
 
+  async getResultsForLearningMaterial(learningMaterialId, school) {
+    let filters = [];
+    if (school) {
+      filters.push(`schools: [${school.id}]`);
+    }
+    filters.push(`learningMaterials: [${learningMaterialId}]`);
+
+    const attributes = ['id', 'school { title }'];
+    const results = await this.graphql.find('courses', filters, attributes.join(', '));
+
+    if (!results.data.courses.length) {
+      return [];
+    }
+
+    const ids = results.data.courses.map(({ id }) => id);
+
+    //fetch courses 5 at a time for performance on the API
+    //but send all the requests at once
+    const promises = chunk(ids, 5).map((chunk) => this.getResultsForCourses(chunk));
+
+    const users = await (await Promise.all(promises)).flat();
+
+    return uniqueById(users);
+  }
+
   async getReportResults(subject, prepositionalObject, prepositionalObjectTableRowId, school) {
     if (subject !== 'instructor') {
       throw new Error(`Report for ${subject} sent to ReportsSubjectInstructorComponent`);
+    }
+
+    if (prepositionalObject === 'learning material') {
+      return this.getResultsForLearningMaterial(prepositionalObjectTableRowId, school);
     }
 
     if (prepositionalObject === 'course') {

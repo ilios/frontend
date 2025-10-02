@@ -318,4 +318,72 @@ module('Integration | Component | reports/subject/instructor', function (hooks) 
       </template>,
     );
   });
+
+  test('filter by learning material', async function (assert) {
+    assert.expect(7);
+    let counter = 0;
+    this.server.post('api/graphql', function (schema, { requestBody }) {
+      const { query } = JSON.parse(requestBody);
+      counter++;
+      const { users } = responseData.data;
+      switch (counter) {
+        case 1:
+          assert.strictEqual(
+            query,
+            'query { courses(learningMaterials: [1]) { id, school { title } } }',
+            'correct first query is run',
+          );
+          return {
+            data: {
+              courses: [
+                {
+                  id: 1,
+                },
+              ],
+            },
+          };
+        case 2:
+          assert.ok(query.includes('query { courses(ids: [1])'), 'correct second query is run');
+          return {
+            data: {
+              courses: [
+                { sessions: [{ offerings: [{ instructors: [users[1]], instructorGroups: [] }] }] },
+                {
+                  sessions: [
+                    {
+                      ilmSession: { instructors: [users[0]], instructorGroups: [] },
+                      offerings: [],
+                      instructorGroups: [],
+                    },
+                  ],
+                },
+              ],
+            },
+          };
+        default:
+          assert.ok(false, 'too many queries');
+      }
+    });
+    const { id } = this.server.create('report', {
+      subject: 'instructor',
+      prepositionalObject: 'learning material',
+      prepositionalObjectTableRowId: 1,
+    });
+    this.set('report', await this.owner.lookup('service:store').findRecord('report', id));
+    await render(
+      <template>
+        <Instructor
+          @subject={{this.report.subject}}
+          @prepositionalObject={{this.report.prepositionalObject}}
+          @prepositionalObjectTableRowId={{this.report.prepositionalObjectTableRowId}}
+        />
+      </template>,
+    );
+
+    assert.strictEqual(component.results.length, 2, 'result count is correct');
+    assert.strictEqual(component.results[0].school, 'School 1:', 'result row school is correct');
+    assert.strictEqual(component.results[0].name, 'First M. Last', 'result row name is correct');
+    assert.strictEqual(component.results[1].school, 'School 2:', 'result row school is correct');
+    assert.strictEqual(component.results[1].name, 'abc', 'result row name is correct');
+  });
 });
