@@ -8,6 +8,8 @@ import removeHtmlTags from 'ilios-common/helpers/remove-html-tags';
 import DetailTermsList from 'ilios-common/components/detail-terms-list';
 import sortBy from 'ilios-common/helpers/sort-by';
 import formatDate from 'ember-intl/helpers/format-date';
+import notEq from 'ember-truth-helpers/helpers/not-eq';
+import sub_ from 'ember-math-helpers/helpers/sub';
 import { guidFor } from '@ember/object/internals';
 
 export default class PrintCourseSessionComponent extends Component {
@@ -36,6 +38,57 @@ export default class PrintCourseSessionComponent extends Component {
     return new TrackedAsyncData(this.args.session.terms);
   }
 
+  @cached
+  get prerequisitesData() {
+    return new TrackedAsyncData(this.args.session.prerequisites);
+  }
+
+  @cached
+  get showAttendanceRequiredData() {
+    return new TrackedAsyncData(
+      this.schoolData.isResolved
+        ? this.schoolData.value?.getConfigValue('showSessionAttendanceRequired')
+        : false,
+    );
+  }
+
+  @cached
+  get courseData() {
+    return new TrackedAsyncData(this.args.session.course);
+  }
+
+  @cached
+  get schoolData() {
+    return new TrackedAsyncData(this.courseData.isResolved ? this.courseData.value.school : null);
+  }
+
+  @cached
+  get showSupplementalData() {
+    return new TrackedAsyncData(
+      this.schoolData.isResolved
+        ? this.schoolData.value?.getConfigValue('showSessionSupplemental')
+        : false,
+    );
+  }
+
+  @cached
+  get showSpecialAttireRequiredData() {
+    return new TrackedAsyncData(
+      this.schoolData.isResolved
+        ? this.schoolData.value?.getConfigValue('showSessionSpecialAttireRequired')
+        : false,
+    );
+  }
+
+  @cached
+  get showSpecialEquipmentRequiredData() {
+    return new TrackedAsyncData(
+      this.schoolData.isResolved
+        ? this.schoolData.value?.getConfigValue('showSessionSpecialEquipmentRequired')
+        : false,
+    );
+  }
+
   get sessionObjectives() {
     return this.sessionObjectivesData.isResolved ? this.sessionObjectivesData.value : [];
   }
@@ -55,6 +108,33 @@ export default class PrintCourseSessionComponent extends Component {
   get terms() {
     return this.termsData.isResolved ? this.termsData.value : [];
   }
+
+  get prerequisites() {
+    return this.prerequisitesData.isResolved ? this.prerequisitesData.value : null;
+  }
+
+  get showAttendanceRequired() {
+    return this.showAttendanceRequiredData.isResolved
+      ? this.showAttendanceRequiredData.value
+      : false;
+  }
+
+  get showSupplemental() {
+    return this.showSupplementalData.isResolved ? this.showSupplementalData.value : false;
+  }
+
+  get showSpecialAttireRequired() {
+    return this.showSpecialAttireRequiredData.isResolved
+      ? this.showSpecialAttireRequiredData.value
+      : false;
+  }
+
+  get showSpecialEquipmentRequired() {
+    return this.showSpecialEquipmentRequiredData.isResolved
+      ? this.showSpecialEquipmentRequiredData.value
+      : false;
+  }
+
   get uniqueId() {
     return guidFor(this);
   }
@@ -79,60 +159,131 @@ export default class PrintCourseSessionComponent extends Component {
               {{@session.sessionType.title}}
             </div>
           </div>
-          <br />
           <div class="inline-label-data-block">
-            <label for="supplemental-curriculum-{{this.uniqueId}}">
-              {{t "general.supplementalCurriculum"}}:
+            <label for="independent-learning-{{this.uniqueId}}">
+              {{t "general.independentLearning"}}:
             </label>
             <div>
               <input
-                id="supplemental-curriculum-{{this.uniqueId}}"
+                id="independent-learning-{{this.uniqueId}}"
                 type="checkbox"
-                checked={{@session.supplemental}}
-                disabled="disabled"
-              />
-            </div>
-          </div>
-          <div class="inline-label-data-block">
-            <label for="special-attire-{{this.uniqueId}}">
-              {{t "general.specialAttireRequired"}}:
-            </label>
-            <div>
-              <input
-                id="special-attire-{{this.uniqueId}}"
-                type="checkbox"
-                checked={{@session.attireRequired}}
-                disabled="disabled"
-              />
-            </div>
-          </div>
-          <div class="inline-label-data-block">
-            <label for="special-equipment-{{this.uniqueId}}">
-              {{t "general.specialEquipmentRequired"}}:
-            </label>
-            <div>
-              <input
-                id="special-equipment-{{this.uniqueId}}"
-                type="checkbox"
-                checked={{@session.equipmentRequired}}
-                disabled="disabled"
-              />
-            </div>
-          </div>
-          <div class="inline-label-data-block">
-            <label for="attendance-{{this.uniqueId}}">
-              {{t "general.attendanceRequired"}}:
-            </label>
-            <div>
-              <input
-                id="attendance-{{this.uniqueId}}"
-                type="checkbox"
-                checked={{@session.attendanceRequired}}
+                checked={{@session.isIndependentLearning}}
                 disabled="disabled"
               />
             </div>
           </div>
           <br />
+          {{#if this.showSupplemental}}
+            <div class="inline-label-data-block">
+              <label for="supplemental-curriculum-{{this.uniqueId}}">
+                {{t "general.supplementalCurriculum"}}:
+              </label>
+              <div>
+                <input
+                  id="supplemental-curriculum-{{this.uniqueId}}"
+                  type="checkbox"
+                  checked={{@session.supplemental}}
+                  disabled="disabled"
+                />
+              </div>
+            </div>
+          {{/if}}
+          {{#if this.showSpecialAttireRequired}}
+            <div class="inline-label-data-block">
+              <label for="special-attire-{{this.uniqueId}}">
+                {{t "general.specialAttireRequired"}}:
+              </label>
+              <div>
+                <input
+                  id="special-attire-{{this.uniqueId}}"
+                  type="checkbox"
+                  checked={{@session.attireRequired}}
+                  disabled="disabled"
+                />
+              </div>
+            </div>
+          {{/if}}
+          {{#if this.showSpecialEquipmentRequired}}
+            <div class="inline-label-data-block">
+              <label for="special-equipment-{{this.uniqueId}}">
+                {{t "general.specialEquipmentRequired"}}:
+              </label>
+              <div>
+                <input
+                  id="special-equipment-{{this.uniqueId}}"
+                  type="checkbox"
+                  checked={{@session.equipmentRequired}}
+                  disabled="disabled"
+                />
+              </div>
+            </div>
+          {{/if}}
+          {{#if this.showAttendanceRequired}}
+            <div class="inline-label-data-block">
+              <label for="attendance-{{this.uniqueId}}">
+                {{t "general.attendanceRequired"}}:
+              </label>
+              <div>
+                <input
+                  id="attendance-{{this.uniqueId}}"
+                  type="checkbox"
+                  checked={{@session.attendanceRequired}}
+                  disabled="disabled"
+                />
+              </div>
+            </div>
+          {{/if}}
+        </div>
+      </section>
+      {{#if @session.isIndependentLearning}}
+        <section class="block" data-test-session-ilm-section>
+          <div class="title">
+            {{t "general.independentLearning"}}
+          </div>
+          <div class="content">
+            <table>
+              <thead>
+                <tr>
+                  <th>
+                    {{t "general.hours"}}
+                  </th>
+                  <th>
+                    {{t "general.dueBy"}}
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    {{@session.ilmSession.hours}}
+                  </td>
+                  <td>
+                    {{formatDate
+                      @session.ilmSession.dueDate
+                      month="2-digit"
+                      day="2-digit"
+                      year="numeric"
+                    }}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            {{#if @session.hasPrerequisites}}
+              <div class="inline-label-data-block">
+                <label>{{t "general.prerequisites"}}:</label>
+                <span>
+                  {{#each this.prerequisites as |prerequisite index|~}}
+                    {{prerequisite.title}}{{#if (notEq index (sub_ this.prerequisites.length 1))}},
+                    {{/if}}
+                  {{~/each}}
+                </span>
+              </div>
+            {{/if}}
+          </div>
+        </section>
+      {{/if}}
+      <section class="block" data-test-session-description>
+        <div class="content">
           <div class="inline-label-data-block">
             <label>
               {{t "general.description"}}:
@@ -246,42 +397,6 @@ export default class PrintCourseSessionComponent extends Component {
           </div>
         {{/if}}
       </section>
-      {{#if @session.isIndependentLearning}}
-        <section class="block" data-test-session-ilm-section>
-          <div class="title">
-            {{t "general.independentLearning"}}
-          </div>
-          <div class="content">
-            <table>
-              <thead>
-                <tr>
-                  <th>
-                    {{t "general.hours"}}
-                  </th>
-                  <th>
-                    {{t "general.dueBy"}}
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>
-                    {{@session.ilmSession.hours}}
-                  </td>
-                  <td>
-                    {{formatDate
-                      @session.ilmSession.dueDate
-                      month="2-digit"
-                      day="2-digit"
-                      year="numeric"
-                    }}
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </section>
-      {{/if}}
       <section class="block" data-test-session-offerings>
         <div class="title">
           {{t "general.offerings"}}
@@ -346,10 +461,6 @@ export default class PrintCourseSessionComponent extends Component {
               </tbody>
             </table>
           </div>
-        {{else}}
-          <p>
-            {{t "general.noOfferings"}}
-          </p>
         {{/if}}
       </section>
     </div>

@@ -168,6 +168,18 @@ export default class PrintCourseComponent extends Component {
               {{formatDate @course.endDate day="2-digit" month="2-digit" year="numeric"}}
             </div>
           </div>
+          <div class="inline-label-data-block">
+            <label>
+              {{t "general.clerkshipType"}}:
+            </label>
+            <div>
+              {{#if @course.clerkshipType}}
+                {{@course.clerkshipType.title}}
+              {{else}}
+                {{t "general.notAClerkship"}}
+              {{/if}}
+            </div>
+          </div>
           <br />
           <br />
           <div class="inline-label-data-block">
