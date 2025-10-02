@@ -296,7 +296,10 @@ module('Integration | Component | reports/subject/instructor', function (hooks) 
     assert.expect(1);
     this.server.post('api/graphql', function (schema, { requestBody }) {
       const { query } = JSON.parse(requestBody);
-      assert.strictEqual(query, 'query { sessionTypes(id: 4) { sessions { id } } }');
+      assert.strictEqual(
+        query,
+        'query { users(instructedSessionTypes: [4]) { firstName, middleName, lastName, displayName, school { title } } }',
+      );
       return responseData;
     });
     const { id } = this.server.create('report', {
