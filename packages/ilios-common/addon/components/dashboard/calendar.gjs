@@ -295,24 +295,6 @@ export default class DashboardCalendarComponent extends Component {
               @toggle={{@toggleMySchedule}}
             />
           </div>
-          <div class="calendar-options-control showfilters" data-test-showfilters>
-            <ToggleButtons
-              @firstOptionSelected={{not @showFilters}}
-              @firstLabel={{t "general.hideFilters"}}
-              @secondLabel={{t "general.showFilters"}}
-              @toggle={{@toggleShowFilters}}
-            />
-          </div>
-          {{#if @showFilters}}
-            <div class="calendar-options-control togglecoursefilters" data-test-showcoursefilters>
-              <ToggleButtons
-                @firstOptionSelected={{@courseFilters}}
-                @firstLabel={{t "general.courseOrSessionType"}}
-                @secondLabel={{t "general.programDetail"}}
-                @toggle={{@toggleCourseFilters}}
-              />
-            </div>
-          {{/if}}
           {{#if @mySchedule}}
             {{#if this.showUserContextFilters}}
               <div
@@ -326,6 +308,24 @@ export default class DashboardCalendarComponent extends Component {
               </div>
             {{/if}}
           {{else}}
+            <div class="calendar-options-control showfilters" data-test-showfilters>
+              <ToggleButtons
+                @firstOptionSelected={{not @showFilters}}
+                @firstLabel={{t "general.hideFilters"}}
+                @secondLabel={{t "general.showFilters"}}
+                @toggle={{@toggleShowFilters}}
+              />
+            </div>
+            {{#if @showFilters}}
+              <div class="calendar-options-control togglecoursefilters" data-test-showcoursefilters>
+                <ToggleButtons
+                  @firstOptionSelected={{@courseFilters}}
+                  @firstLabel={{t "general.courseOrSessionType"}}
+                  @secondLabel={{t "general.programDetail"}}
+                  @toggle={{@toggleCourseFilters}}
+                />
+              </div>
+            {{/if}}
             <div class="calendar-options-control calendar-school-picker" data-test-school-picker>
               <FaIcon @icon="building-columns" />
               {{#if this.hasMoreThanOneSchool}}
