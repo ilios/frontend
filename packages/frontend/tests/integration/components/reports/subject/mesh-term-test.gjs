@@ -142,7 +142,10 @@ module('Integration | Component | reports/subject/mesh-term', function (hooks) {
     assert.expect(1);
     this.server.post('api/graphql', function (schema, { requestBody }) {
       const { query } = JSON.parse(requestBody);
-      assert.strictEqual(query, 'query { meshDescriptors(sessions: [13]) { name } }');
+      assert.strictEqual(
+        query,
+        'query { sessions(id: 13) { meshDescriptors { id }, sessionObjectives { meshDescriptors { id } }, learningMaterials { meshDescriptors { id } } } }',
+      );
       return responseData;
     });
     const { id } = this.server.create('report', {
@@ -168,7 +171,7 @@ module('Integration | Component | reports/subject/mesh-term', function (hooks) {
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
-        'query { meshDescriptors(schools: [24], sessions: [13]) { name } }',
+        'query { sessions(id: 13) { meshDescriptors { id }, sessionObjectives { meshDescriptors { id } }, learningMaterials { meshDescriptors { id } } } }',
       );
       return responseData;
     });

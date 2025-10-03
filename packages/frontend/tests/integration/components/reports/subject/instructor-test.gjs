@@ -205,7 +205,7 @@ module('Integration | Component | reports/subject/instructor', function (hooks) 
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
-        'query { users(schools: [24], instructedSessions: [13]) { firstName, middleName, lastName, displayName, school { title } } }',
+        'query { sessions(ids: [13]) { ilmSession { instructorGroups { users { id firstName middleName lastName displayName school { title } }} instructors { id firstName middleName lastName displayName school { title } } }, offerings { instructorGroups { users { id firstName middleName lastName displayName school { title } }} instructors { id firstName middleName lastName displayName school { title } } } } }',
       );
       return responseData;
     });

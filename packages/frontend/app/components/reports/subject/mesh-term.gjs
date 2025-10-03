@@ -42,27 +42,39 @@ export default class ReportsSubjectMeshTermComponent extends Component {
     return this.sortedMeshTerms.slice(0, this.resultsLengthMax);
   }
 
-  async getReportResults(subject, prepositionalObject, prepositionalObjectTableRowId, school) {
-    if (subject !== 'mesh term') {
-      throw new Error(`Report for ${subject} sent to ReportsSubjectMeshTermComponent`);
-    }
+  async getMeshIdsForLearningMaterial(learningMaterialId) {
+    const attributes = ['id'];
+    const results = await this.graphql.find(
+      'meshDescriptors',
+      [`learningMaterials: [${learningMaterialId}]`],
+      attributes.join(', '),
+    );
+    const ids = results.data.meshDescriptors.map(({ id }) => id);
+    return [...new Set(ids)].sort().map((id) => `"${id}"`);
+  }
 
-    let filters = [];
-    if (school) {
-      filters.push(`schools: [${school.id}]`);
-    }
-    if (prepositionalObject && prepositionalObjectTableRowId) {
-      if (prepositionalObject === 'course') {
-        const ids = await this.getMeshIdsForCourse(prepositionalObjectTableRowId);
-        filters = [`ids: [${ids.join(', ')}]`]; //drop school filter, a course is only in one school
-      } else {
-        const what = pluralize(camelize(prepositionalObject));
-        filters.push(`${what}: [${prepositionalObjectTableRowId}]`);
-      }
-    }
-    const attributes = ['name'];
-    const result = await this.graphql.find('meshDescriptors', filters, attributes.join(', '));
-    return result.data.meshDescriptors.map(({ name }) => name);
+  async getMeshIdsForSession(sessionId) {
+    const attributes = [
+      'meshDescriptors { id }',
+      'sessionObjectives { meshDescriptors { id } }',
+      'learningMaterials { meshDescriptors { id } }',
+    ];
+    const results = await this.graphql.find(
+      'sessions',
+      [`id: ${sessionId}`],
+      attributes.join(', '),
+    );
+    const session = results.data.sessions[0];
+    const ids = [
+      ...session.meshDescriptors.map(({ id }) => id),
+      ...session.sessionObjectives
+        .map(({ meshDescriptors }) => meshDescriptors.map(({ id }) => id))
+        .flat(),
+      ...session.learningMaterials
+        .map(({ meshDescriptors }) => meshDescriptors.map(({ id }) => id))
+        .flat(),
+    ];
+    return [...new Set(ids)].sort().map((id) => `"${id}"`);
   }
 
   async getMeshIdsForCourse(courseId) {
@@ -97,6 +109,35 @@ export default class ReportsSubjectMeshTermComponent extends Component {
       ...sessionMeshDescriptors,
     ];
     return [...new Set(ids)].sort().map((id) => `"${id}"`);
+  }
+
+  async getReportResults(subject, prepositionalObject, prepositionalObjectTableRowId, school) {
+    if (subject !== 'mesh term') {
+      throw new Error(`Report for ${subject} sent to ReportsSubjectMeshTermComponent`);
+    }
+
+    let filters = [];
+    if (school) {
+      filters.push(`schools: [${school.id}]`);
+    }
+    if (prepositionalObject && prepositionalObjectTableRowId) {
+      if (prepositionalObject === 'course') {
+        const ids = await this.getMeshIdsForCourse(prepositionalObjectTableRowId);
+        filters = [`ids: [${ids.join(', ')}]`]; //drop school filter, a course is only in one school
+      } else if (prepositionalObject === 'learning material') {
+        const ids = await this.getMeshIdsForLearningMaterial(prepositionalObjectTableRowId);
+        filters = [`ids: [${ids.join(', ')}]`]; //drop school filter, a specific learning material is only in one school
+      } else if (prepositionalObject === 'session') {
+        const ids = await this.getMeshIdsForSession(prepositionalObjectTableRowId);
+        filters = [`ids: [${ids.join(', ')}]`]; //drop school filter, a session is only in one school
+      } else {
+        const what = pluralize(camelize(prepositionalObject));
+        filters.push(`${what}: [${prepositionalObjectTableRowId}]`);
+      }
+    }
+    const attributes = ['name'];
+    const result = await this.graphql.find('meshDescriptors', filters, attributes.join(', '));
+    return result.data.meshDescriptors.map(({ name }) => name);
   }
 
   get reportResultsExceedMax() {
