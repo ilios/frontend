@@ -7,12 +7,23 @@ import { action } from '@ember/object';
 import { hash } from 'rsvp';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
+import add from 'ember-math-helpers/helpers/add';
 import isEmpty from 'ember-truth-helpers/helpers/is-empty';
 import eq from 'ember-truth-helpers/helpers/eq';
 import LoadingSpinner from 'ilios-common/components/loading-spinner';
 
 export default class ReportsSubjectNewProgramYearComponent extends Component {
   @service store;
+  @service iliosConfig;
+
+  crossesBoundaryConfig = new TrackedAsyncData(
+    this.iliosConfig.itemFromConfig('academicYearCrossesCalendarYearBoundaries'),
+  );
+
+  @cached
+  get academicYearCrossesCalendarYearBoundaries() {
+    return this.crossesBoundaryConfig.isResolved ? this.crossesBoundaryConfig.value : false;
+  }
 
   @cached
   get mappedProgramYearsData() {
@@ -100,7 +111,14 @@ export default class ReportsSubjectNewProgramYearComponent extends Component {
               selected={{eq programYear.id this.bestSelectedProgramYear}}
               value={{programYear.id}}
             >
-              {{programYear.classOfYear}}
+              {{#if this.academicYearCrossesCalendarYearBoundaries}}
+                {{programYear.startYear}}
+                -
+                {{add programYear.startYear 1}}
+              {{else}}
+                {{programYear.startYear}}
+              {{/if}}
+              ({{t "general.classOf" year=programYear.classOfYear}})
               {{programYear.program.title}}
             </option>
           {{/each}}
