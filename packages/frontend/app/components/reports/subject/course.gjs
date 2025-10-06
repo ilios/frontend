@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
 import { filterBy, sortBy } from 'ilios-common/utils/array-helpers';
 import { TrackedAsyncData } from 'ember-async-data';
-import { cached } from '@glimmer/tracking';
+import { cached, tracked } from '@glimmer/tracking';
 import { service } from '@ember/service';
 import { pluralize } from 'ember-inflector';
 import { camelize } from '@ember/string';
@@ -9,7 +9,11 @@ import { action } from '@ember/object';
 import SubjectHeader from 'frontend/components/reports/subject-header';
 import notEq from 'ember-truth-helpers/helpers/not-eq';
 import { LinkTo } from '@ember/routing';
+import { on } from '@ember/modifier';
+import { task, timeout } from 'ember-concurrency';
 import t from 'ember-intl/helpers/t';
+import pick from 'ilios-common/helpers/pick';
+import perform from 'ember-concurrency/helpers/perform';
 import SubjectDownload from 'frontend/components/reports/subject-download';
 import LoadingSpinner from 'ilios-common/components/loading-spinner';
 
@@ -19,7 +23,15 @@ export default class ReportsSubjectCourseComponent extends Component {
   @service currentUser;
   @service intl;
 
+  @tracked resultsFilter = '';
+
   resultsLengthMax = 200;
+
+  changeResultsFilter = task({ restartable: true }, async (value) => {
+    this.resultsFilter = value;
+    await timeout(250);
+    return value;
+  });
 
   crossesBoundaryConfig = new TrackedAsyncData(
     this.iliosConfig.itemFromConfig('academicYearCrossesCalendarYearBoundaries'),
@@ -89,6 +101,13 @@ export default class ReportsSubjectCourseComponent extends Component {
   }
 
   get limitedCourses() {
+    const resultsFilter = this.resultsFilter?.trim().toLowerCase() ?? '';
+    if (resultsFilter) {
+      return this.sortedCourses.filter(({ title }) =>
+        title.trim().toLowerCase().includes(resultsFilter),
+      );
+    }
+
     return this.sortedCourses.slice(0, this.resultsLengthMax);
   }
 
@@ -204,6 +223,16 @@ export default class ReportsSubjectCourseComponent extends Component {
     />
     <div data-test-reports-subject-course>
       {{#if this.allCoursesData.isResolved}}
+        <div class="report-results-filter">
+          <input
+            value={{this.resultsFilter}}
+            {{on "input" (pick "target.value" (perform this.changeResultsFilter))}}
+            aria-label={{t "general.filterPlaceholder"}}
+            placeholder={{t "general.filterPlaceholder"}}
+            type="search"
+            data-test-results-filter
+          />
+        </div>
         <ul class="report-results{{if this.reportResultsExceedMax ' limited'}}" data-test-results>
           {{#each this.limitedCourses as |course|}}
             <li>

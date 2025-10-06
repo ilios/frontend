@@ -4,6 +4,11 @@
   @include cm.main-section;
 
   .content-container {
+    .report-results-filter {
+      @include cm.main-list-filter;
+      float: right;
+    }
+
     .report-results {
       @include cm.ilios-list-reset;
 
