@@ -448,8 +448,8 @@ importers:
         specifier: ^4.1.0
         version: 4.1.1(ember-source@6.7.0(@glimmer/component@2.0.0)(rsvp@4.8.5))(webpack@5.101.3)
       ember-set-helper:
-        specifier: ^3.0.1
-        version: 3.0.1(@babel/core@7.28.4)
+        specifier: ^3.1.0
+        version: 3.1.0(@babel/core@7.28.4)
       ember-simple-auth:
         specifier: ^8.0.0
         version: 8.0.1(@ember/test-helpers@5.3.0(@babel/core@7.28.4))(ember-source@6.7.0(@glimmer/component@2.0.0)(rsvp@4.8.5))
@@ -5512,8 +5512,8 @@ packages:
     resolution: {integrity: sha512-89oVHVJwmLDvGvAUWgS87KpBoRhy3aZ6U0Ql6HOmU4TrPkyaa8pM0W81wj9cIwjYprcQtN9EwzZMHnq46+oUyw==}
     engines: {node: 8.* || 10.* || >= 12}
 
-  ember-set-helper@3.0.1:
-    resolution: {integrity: sha512-Ord3CuttDiF88wiNpHNDjf4aFKPnHSkpeK7zFfH9nV7YdDFSJissDCZEg42A0ReWY1WuqWbc2hMl5XkgupdyZQ==}
+  ember-set-helper@3.1.0:
+    resolution: {integrity: sha512-5BTcvqktYjpDbi1HRaSKjuIZsSioilWczDDY3AevwbxoEiasfQMLuXFJkiCKm4aW34OXz652Upo7mumCVXJKOw==}
 
   ember-simple-auth@8.0.1:
     resolution: {integrity: sha512-fWfIAmlu84bMT3vcCg9FLsuJztY0inR5quwdidiQgx0TSPoOqg5NOYIBhxrWLTgvEN7T466vyH2CcX2adii0Yw==}
@@ -16310,7 +16310,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  ember-set-helper@3.0.1(@babel/core@7.28.4):
+  ember-set-helper@3.1.0(@babel/core@7.28.4):
     dependencies:
       '@embroider/addon-shim': 1.10.0
       decorator-transforms: 1.2.1(@babel/core@7.28.4)
