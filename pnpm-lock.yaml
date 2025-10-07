@@ -256,8 +256,8 @@ importers:
         specifier: ^8.2.5
         version: 8.2.5(eslint@9.36.0)
       eslint-plugin-yml:
-        specifier: ^1.16.0
-        version: 1.18.0(eslint@9.36.0)
+        specifier: ^1.19.0
+        version: 1.19.0(eslint@9.36.0)
       file-saver:
         specifier: ^2.0.5
         version: 2.0.5
@@ -605,8 +605,8 @@ importers:
         specifier: ^8.2.5
         version: 8.2.5(eslint@9.36.0)
       eslint-plugin-yml:
-        specifier: ^1.16.0
-        version: 1.18.0(eslint@9.36.0)
+        specifier: ^1.19.0
+        version: 1.19.0(eslint@9.36.0)
       globals:
         specifier: ^15.15.0
         version: 15.15.0
@@ -821,8 +821,8 @@ importers:
         specifier: ^8.2.5
         version: 8.2.5(eslint@9.36.0)
       eslint-plugin-yml:
-        specifier: ^1.16.0
-        version: 1.18.0(eslint@9.36.0)
+        specifier: ^1.19.0
+        version: 1.19.0(eslint@9.36.0)
       globals:
         specifier: ^15.15.0
         version: 15.15.0
@@ -1052,8 +1052,8 @@ importers:
         specifier: ^8.2.5
         version: 8.2.5(eslint@9.36.0)
       eslint-plugin-yml:
-        specifier: ^1.16.0
-        version: 1.18.0(eslint@9.36.0)
+        specifier: ^1.19.0
+        version: 1.19.0(eslint@9.36.0)
       globals:
         specifier: ^15.15.0
         version: 15.15.0
@@ -1271,8 +1271,8 @@ importers:
         specifier: ^8.2.5
         version: 8.2.5(eslint@9.36.0)
       eslint-plugin-yml:
-        specifier: ^1.16.0
-        version: 1.18.0(eslint@9.36.0)
+        specifier: ^1.19.0
+        version: 1.19.0(eslint@9.36.0)
       globals:
         specifier: ^15.15.0
         version: 15.15.0
@@ -5007,6 +5007,10 @@ packages:
     resolution: {integrity: sha512-qE3Veg1YXzGHQhlA6jzebZN2qVf6NX+A7m7qlhCGG30dJixrAQhYOsJjsnBjJkCSmuOPpCk30145fr8FV0bzog==}
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
 
+  diff-sequences@27.5.1:
+    resolution: {integrity: sha512-k1gCAXAsNgLwEL+Y8Wvl+M6oEFj5bgazfZULpS5CneoPPXRaCCW7dm+q21Ky2VEE5X+VeRDBVg1Pcvvsr4TtNQ==}
+    engines: {node: ^10.13.0 || ^12.13.0 || ^14.15.0 || >=15.0.0}
+
   diff@7.0.0:
     resolution: {integrity: sha512-PJWHUb1RFevKCwaFA9RlG5tCd+FO5iRh9A8HEtkmBH2Li03iJriB6m6JIN4rGz3K3JLawI7/veA1xzRKP6ISBw==}
     engines: {node: '>=0.3.1'}
@@ -5749,8 +5753,8 @@ packages:
     resolution: {integrity: sha512-qr7RJCYImKQjB+39q4q46i1l7p1V3joHzBE5CAYfxn5tfVFjrnjn/tw7q/kDyweU9kAIcLul0Dx/KWVUCb3BgA==}
     engines: {node: ^16.0.0 || ^18.0.0 || >=20.0.0}
 
-  eslint-plugin-yml@1.18.0:
-    resolution: {integrity: sha512-9NtbhHRN2NJa/s3uHchO3qVVZw0vyOIvWlXWGaKCr/6l3Go62wsvJK5byiI6ZoYztDsow4GnS69BZD3GnqH3hA==}
+  eslint-plugin-yml@1.19.0:
+    resolution: {integrity: sha512-S+4GbcCWksFKAvFJtf0vpdiCkZZvDJCV4Zsi9ahmYkYOYcf+LRqqzvzkb/ST7vTYV6sFwXOvawzYyL/jFT2nQA==}
     engines: {node: ^14.17.0 || >=16.0.0}
     peerDependencies:
       eslint: '>=6.0.0'
@@ -15140,6 +15144,8 @@ snapshots:
 
   detect-newline@4.0.1: {}
 
+  diff-sequences@27.5.1: {}
+
   diff@7.0.0: {}
 
   diffie-hellman@5.0.3:
@@ -16753,9 +16759,10 @@ snapshots:
     transitivePeerDependencies:
       - eslint
 
-  eslint-plugin-yml@1.18.0(eslint@9.36.0):
+  eslint-plugin-yml@1.19.0(eslint@9.36.0):
     dependencies:
       debug: 4.4.3(supports-color@8.1.1)
+      diff-sequences: 27.5.1
       escape-string-regexp: 4.0.0
       eslint: 9.36.0
       eslint-compat-utils: 0.6.5(eslint@9.36.0)
