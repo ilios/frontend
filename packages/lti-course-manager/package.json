@@ -82,7 +82,7 @@
     "eslint-plugin-ember": "^12.7.3",
     "eslint-plugin-n": "^17.21.3",
     "eslint-plugin-qunit": "^8.2.5",
-    "eslint-plugin-yml": "^1.16.0",
+    "eslint-plugin-yml": "^1.19.0",
     "globals": "^15.15.0",
     "ilios-common": "workspace:*",
     "loader.js": "^4.7.0",
