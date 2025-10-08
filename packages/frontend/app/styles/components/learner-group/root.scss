@@ -29,6 +29,12 @@
         @include m.for-phone-and-up {
           .toggle-buttons {
             display: inline;
+
+            label {
+              &:first-of-type {
+                margin-right: 0;
+              }
+            }
           }
         }
 
