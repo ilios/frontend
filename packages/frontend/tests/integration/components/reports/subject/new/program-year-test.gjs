@@ -51,13 +51,13 @@ module('Integration | Component | reports/subject/new/program-year', function (h
     assert.ok(component.options[0].isSelected);
     assert.strictEqual(component.value, '');
 
-    assert.strictEqual(component.options[1].text, '2027 program 1');
+    assert.strictEqual(component.options[1].text, '2020 (Class of 2027) program 1');
     assert.notOk(component.options[1].isSelected);
-    assert.strictEqual(component.options[2].text, '2011 program 0');
+    assert.strictEqual(component.options[2].text, '2007 (Class of 2011) program 0');
     assert.notOk(component.options[2].isSelected);
-    assert.strictEqual(component.options[3].text, '2010 program 0');
+    assert.strictEqual(component.options[3].text, '2006 (Class of 2010) program 0');
     assert.notOk(component.options[3].isSelected);
-    assert.strictEqual(component.options[4].text, '2008 program 0');
+    assert.strictEqual(component.options[4].text, '2004 (Class of 2008) program 0');
     assert.notOk(component.options[4].isSelected);
 
     this.set('currentId', '2');
@@ -107,11 +107,11 @@ module('Integration | Component | reports/subject/new/program-year', function (h
     assert.strictEqual(component.options.length, 4);
     assert.strictEqual(component.options[0].text, this.intl.t('general.selectPolite'));
     assert.ok(component.options[0].isSelected);
-    assert.strictEqual(component.options[1].text, '2011 program 0');
+    assert.strictEqual(component.options[1].text, '2007 (Class of 2011) program 0');
     assert.notOk(component.options[1].isSelected);
-    assert.strictEqual(component.options[2].text, '2010 program 0');
+    assert.strictEqual(component.options[2].text, '2006 (Class of 2010) program 0');
     assert.notOk(component.options[2].isSelected);
-    assert.strictEqual(component.options[3].text, '2008 program 0');
+    assert.strictEqual(component.options[3].text, '2004 (Class of 2008) program 0');
     assert.notOk(component.options[3].isSelected);
   });
 
