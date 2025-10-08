@@ -8,6 +8,7 @@
 
   .learner-group-overview {
     @include m.ilios-overview(var(--orange));
+    padding: 0;
 
     .block {
       @include m.ilios-overview-block;
