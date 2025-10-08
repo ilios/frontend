@@ -208,8 +208,8 @@ importers:
         specifier: ^1.1.0
         version: 1.1.1(ember-source@6.7.0(@glimmer/component@2.0.0)(rsvp@4.8.5))
       ember-keyboard:
-        specifier: ^9.0.2
-        version: 9.0.3(@babel/core@7.28.4)(@ember/test-helpers@5.3.0(@babel/core@7.28.4))
+        specifier: ^9.0.4
+        version: 9.0.4(@babel/core@7.28.4)(@ember/test-helpers@5.3.0(@babel/core@7.28.4))
       ember-load-initializers:
         specifier: ^3.0.1
         version: 3.0.1(ember-source@6.7.0(@glimmer/component@2.0.0)(rsvp@4.8.5))
@@ -433,8 +433,8 @@ importers:
         specifier: ^7.4.0
         version: 7.4.0(@ember/test-helpers@5.3.0(@babel/core@7.28.4))(typescript@5.9.2)(webpack@5.101.3)
       ember-keyboard:
-        specifier: ^9.0.2
-        version: 9.0.3(@babel/core@7.28.4)(@ember/test-helpers@5.3.0(@babel/core@7.28.4))
+        specifier: ^9.0.4
+        version: 9.0.4(@babel/core@7.28.4)(@ember/test-helpers@5.3.0(@babel/core@7.28.4))
       ember-math-helpers:
         specifier: ^5.0.0
         version: 5.0.0(@babel/core@7.28.4)(ember-source@6.7.0(@glimmer/component@2.0.0)(rsvp@4.8.5))
@@ -5446,8 +5446,8 @@ packages:
       typescript:
         optional: true
 
-  ember-keyboard@9.0.3:
-    resolution: {integrity: sha512-RZxzOTiePeGbDgTtHUaUIVSIoIXz5gYRecso3EKMQ5aXPHm73WUxj7JjfQJyMbFculwLOudnJWM7c2snlpQANQ==}
+  ember-keyboard@9.0.4:
+    resolution: {integrity: sha512-lReOVCwvPt8aTLynuyh1rVoZx9LITqcwdCiUltGMkoJNyuE8snuGMIEpEj3RtiPLWm0UCnTfod8bjEqOoEEFtA==}
     peerDependencies:
       '@ember/test-helpers': ^2.6.0 || ^3.0.0 || >= 4.0.0
     peerDependenciesMeta:
@@ -16195,10 +16195,9 @@ snapshots:
       - supports-color
       - webpack
 
-  ember-keyboard@9.0.3(@babel/core@7.28.4)(@ember/test-helpers@5.3.0(@babel/core@7.28.4)):
+  ember-keyboard@9.0.4(@babel/core@7.28.4)(@ember/test-helpers@5.3.0(@babel/core@7.28.4)):
     dependencies:
       '@embroider/addon-shim': 1.10.0
-      ember-destroyable-polyfill: 2.0.3(@babel/core@7.28.4)
       ember-modifier: 4.2.2(@babel/core@7.28.4)
     optionalDependencies:
       '@ember/test-helpers': 5.3.0(@babel/core@7.28.4)

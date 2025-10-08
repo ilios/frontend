@@ -48,7 +48,7 @@
     "ember-in-viewport": "^4.0.0",
     "ember-inflector": "^5.0.2",
     "ember-intl": "^7.4.0",
-    "ember-keyboard": "^9.0.2",
+    "ember-keyboard": "^9.0.4",
     "ember-math-helpers": "^5.0.0",
     "ember-modifier": "^4.0.0",
     "ember-on-resize-modifier": "^2.0.2",
