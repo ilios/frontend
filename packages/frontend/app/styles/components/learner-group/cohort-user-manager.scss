@@ -24,6 +24,7 @@
 
   .learner-group-cohort-user-manager-content {
     @include m.detail-container-content;
+    padding: 0;
 
     .list {
       max-height: 360px;
