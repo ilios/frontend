@@ -24,9 +24,13 @@
       @include m.ilios-list-reset;
     }
 
-    tbody {
-      td {
-        vertical-align: top;
+    table {
+      margin-bottom: 0;
+
+      tbody {
+        td {
+          vertical-align: top;
+        }
       }
     }
   }
