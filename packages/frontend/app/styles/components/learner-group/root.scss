@@ -27,14 +27,12 @@
       }
 
       .actions {
-        @include m.for-phone-and-up {
-          .toggle-buttons {
-            display: inline;
+        .toggle-buttons {
+          display: inline-flex;
 
-            label {
-              &:first-of-type {
-                margin-right: 0;
-              }
+          label {
+            &:first-of-type {
+              margin-right: 0;
             }
           }
         }
