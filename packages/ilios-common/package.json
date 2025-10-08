@@ -53,7 +53,7 @@
     "ember-modifier": "^4.0.0",
     "ember-on-resize-modifier": "^2.0.2",
     "ember-popper-modifier": "^4.1.0",
-    "ember-set-helper": "^3.0.1",
+    "ember-set-helper": "^3.1.0",
     "ember-simple-auth": "^8.0.0",
     "ember-simple-charts": "^12.2.2",
     "ember-template-imports": "^4.3.0",
