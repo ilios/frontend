@@ -106,6 +106,7 @@ export default class NewSessionComponent extends Component {
               id="title-{{templateId}}"
               type="text"
               value={{this.title}}
+              placeholder={{t "general.sessionTitlePlaceholder"}}
               {{on "input" this.changeTitle}}
               {{on "keyup" this.keyboard}}
               {{this.validations.attach "title"}}

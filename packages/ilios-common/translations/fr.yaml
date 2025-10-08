@@ -353,6 +353,7 @@ general:
   sessions: Séances
   sessionTitle: Titre de Séance
   sessionTitleFilterPlaceholder: "Filtre par titre, genre, ou statut"
+  sessionTitlePlaceholder: Ajoutez titre par ce séance
   sessionType: Type de Séance
   sessionTypes: Types de Séance
   sessionTypesFor: "Types de Séance par {subject}"

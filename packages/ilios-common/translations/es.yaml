@@ -353,6 +353,7 @@ general:
   sessions: Sesiones
   sessionTitle: Titulo de Sesión
   sessionTitleFilterPlaceholder: "Aplicar un Filtro por titulo, tipo, o estado de la publicación"
+  sessionTitlePlaceholder: "Entre en un titulo para este sesión"
   sessionType: Tipo de Sesión
   sessionTypes: Tipos de Sesiones
   sessionTypesFor: "Tipos de Sesiones para {subject}"
