@@ -336,6 +336,7 @@ general:
   scheduling: Scheduling
   school: School
   schools: Schools
+  schoolTitlePlaceholder: Enter a title for this school
   search: Search
   searchForIliosUsers: Find Ilios Users...
   searchMesh: Search MeSH

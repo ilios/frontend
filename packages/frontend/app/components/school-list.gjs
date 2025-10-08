@@ -112,6 +112,7 @@ export default class SchoolListComponent extends Component {
                     id="title-{{templateId}}"
                     type="text"
                     value={{this.title}}
+                    placeholder={{t "general.schoolTitlePlaceholder"}}
                     {{on "input" (pick "target.value" (set this "title"))}}
                     {{on "keyup" (perform this.saveOrCancel)}}
                     {{this.validations.attach "title"}}
@@ -129,6 +130,7 @@ export default class SchoolListComponent extends Component {
                     id="email-{{templateId}}"
                     type="text"
                     value={{this.iliosAdministratorEmail}}
+                    placeholder={{t "general.administratorEmailPlaceholder"}}
                     {{on "input" (pick "target.value" (set this "iliosAdministratorEmail"))}}
                     {{on "keyup" (perform this.saveOrCancel)}}
                     {{this.validations.attach "iliosAdministratorEmail"}}

@@ -7,6 +7,7 @@ general:
   add: Ajouté
   addNew: Ajouté Neuf
   administratorCount: "Il y a {count, plural, =1 { un administrateur} other {# administrateurs}}"
+
   administrators: Administrateurs
   advancedOptions: Options avancées
   allCourses: Tous les Cours
@@ -336,6 +337,7 @@ general:
   scheduling: Planification
   school: Écôle
   schools: Écôles
+  schoolTitlePlaceholder: Ajoutez titre par ce écôle
   search: Rechercher
   searchForIliosUsers: Trouver des utilisateurs...
   searchMesh: Rechercher MeSH
