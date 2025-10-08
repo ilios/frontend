@@ -120,7 +120,7 @@ export default class CurriculumInventoryNewReportComponent extends Component {
               type="text"
               value={{this.name}}
               disabled={{this.save.isRunning}}
-              placeholder={{t "general.reportNamePlaceholder"}}
+              placeholder={{t "general.curriculumInventoryReportsTitlePlaceholder"}}
               {{on "keyup" (perform this.keyboard)}}
               {{on "input" (pick "target.value" (set this "name"))}}
               {{this.validations.attach "name"}}

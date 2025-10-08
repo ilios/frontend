@@ -103,6 +103,7 @@ general:
   curriculumInventoryReportRolloverSummary: "This action will copy the structure of this report to be used in your target year. It will not copy course information, only the higher level sequence block structure. You will need to add the appropriate course information and modify the sequence block start and end dates once you have rolled over the existing report structure."
   curriculumInventoryReportRolloverSuccess: Report-Rollover Completed Successfully
   curriculumInventoryReports: Curriculum Inventory Reports
+  curriculumInventoryReportsTitlePlaceholder: Enter a title for this report
   curriculumReports: Curriculum Reports
   dashboard: Dashboard
   deactivate: Deactivate
@@ -391,10 +392,10 @@ general:
   selectYear: Select Educational Year
   sequenceBlock: Sequence Block
   sequenceBlockConfirmRemove: Are you sure you want to delete this sequence block? This action cannot be undone.
-  sequenceBlockDescriptionPlaceholder: Please enter a description for this sequence block.
+  sequenceBlockDescriptionPlaceholder: Enter a description for this sequence block.
   sequenceBlockIsSelective: This sequence block has been marked as a selective.
   sequenceBlocks: Sequence Blocks
-  sequenceBlockTitlePlaceholder: Please enter a title for this sequence block.
+  sequenceBlockTitlePlaceholder: Enter a title for this sequence block
   sequenceNumber: "Sequence #"
   sessionAttributes: Session Attributes
   sessionObjectives: Session Objectives
