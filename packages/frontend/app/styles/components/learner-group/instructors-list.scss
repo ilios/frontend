@@ -4,7 +4,7 @@
 .learner-group-instructors-list {
   @include m.detail-container(var(--orange));
   border-top: 1px dotted var(--orange);
-  padding-left: 0;
+  padding: 0.5rem 0;
 
   .detail-header {
     @include m.detail-container-header;

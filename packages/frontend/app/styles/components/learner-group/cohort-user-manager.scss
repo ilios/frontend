@@ -5,7 +5,7 @@
   @include m.detail-container(var(--blue));
   border-bottom: 0;
   border-top: 1px dotted var(--orange);
-  padding-left: 0;
+  padding: 0.5em 0;
 
   .learner-group-cohort-user-manager-header {
     @include m.detail-container-header;
@@ -24,6 +24,7 @@
 
   .learner-group-cohort-user-manager-content {
     @include m.detail-container-content;
+    padding: 0;
 
     .list {
       max-height: 360px;

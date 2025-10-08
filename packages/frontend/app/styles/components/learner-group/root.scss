@@ -8,6 +8,7 @@
 
   .learner-group-overview {
     @include m.ilios-overview(var(--orange));
+    padding: 0;
 
     .block {
       @include m.ilios-overview-block;
@@ -18,8 +19,7 @@
     }
 
     .learner-group-overview-actions {
-      margin-top: 0.25rem;
-      padding-top: 0.5rem;
+      padding: 0.5rem 0;
       @include m.detail-container-header;
 
       .title {
@@ -27,9 +27,13 @@
       }
 
       .actions {
-        @include m.for-phone-and-up {
-          .toggle-buttons {
-            display: inline;
+        .toggle-buttons {
+          display: inline-flex;
+
+          label {
+            &:first-of-type {
+              margin-right: 0;
+            }
           }
         }
 

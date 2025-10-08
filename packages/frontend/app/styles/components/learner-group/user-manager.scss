@@ -6,6 +6,7 @@
   border-bottom: 0;
   display: grid;
   grid-template-columns: 3fr 1fr;
+  padding: 0;
 
   .title {
     @include m.detail-container-title-style;
@@ -21,13 +22,13 @@
   .learner-group-user-manager-content {
     grid-column: 1 / -1;
     @include m.detail-container-content;
+    padding: 0;
 
     .list {
       grid-column: 1 / -1;
       max-height: 540px;
       overflow: auto;
       @include m.main-list-box-table;
-      @include m.ilios-zebra-table;
 
       th:nth-child(1) {
         width: 1.5rem;
