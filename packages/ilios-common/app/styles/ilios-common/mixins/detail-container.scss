@@ -20,11 +20,11 @@
 }
 
 @mixin detail-container-header() {
+  align-items: center;
   display: flex;
   justify-content: space-between;
 
   @include media.for-phone-only {
-    align-items: center;
     flex-direction: column;
     justify-content: space-around;
   }
