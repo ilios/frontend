@@ -11,6 +11,7 @@ import formatDate from 'ember-intl/helpers/format-date';
 import notEq from 'ember-truth-helpers/helpers/not-eq';
 import sub_ from 'ember-math-helpers/helpers/sub';
 import { guidFor } from '@ember/object/internals';
+import { htmlSafe } from '@ember/template';
 
 export default class PrintCourseSessionComponent extends Component {
   @cached
@@ -137,6 +138,10 @@ export default class PrintCourseSessionComponent extends Component {
 
   get uniqueId() {
     return guidFor(this);
+  }
+
+  get sessionDescription() {
+    return htmlSafe(this.args.session.description);
   }
   <template>
     <div class="print-course-session" data-test-print-course-session>
@@ -284,13 +289,11 @@ export default class PrintCourseSessionComponent extends Component {
       {{/if}}
       <section class="block" data-test-session-description>
         <div class="content">
-          <div class="inline-label-data-block">
-            <label>
-              {{t "general.description"}}:
-            </label>
-            <div>
-              {{@session.textDescription}}
-            </div>
+          <label>
+            {{t "general.description"}}:
+          </label>
+          <div>
+            {{this.sessionDescription}}
           </div>
         </div>
       </section>
