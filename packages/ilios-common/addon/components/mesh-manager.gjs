@@ -15,6 +15,7 @@ import lte from 'ember-truth-helpers/helpers/lte';
 import includes from 'ilios-common/helpers/includes';
 import mapBy0 from 'ilios-common/helpers/map-by';
 import perform from 'ember-concurrency/helpers/perform';
+import focus from 'ilios-common/modifiers/focus';
 
 const DEBOUNCE_TIMEOUT = 250;
 const MIN_INPUT = 3;
@@ -165,6 +166,7 @@ export default class MeshManagerComponent extends Component {
             <label for="mesh-search-{{templateId}}">{{t "general.searchMesh"}}:</label>
             <input
               id="mesh-search-{{templateId}}"
+              {{focus}}
               autocomplete="off"
               class="search-input"
               type="search"
