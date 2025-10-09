@@ -15,6 +15,7 @@ import t from 'ember-intl/helpers/t';
 import formatDate from 'ember-intl/helpers/format-date';
 import { LinkTo } from '@ember/routing';
 import EditableField from 'ilios-common/components/editable-field';
+import EditableText from 'ilios-common/components/editable-text';
 import { on } from '@ember/modifier';
 import eq from 'ember-truth-helpers/helpers/eq';
 import ToggleYesno from 'ilios-common/components/toggle-yesno';
@@ -30,6 +31,7 @@ import join from 'ilios-common/helpers/join';
 import mapBy from 'ilios-common/helpers/map-by';
 import FadeText from 'ilios-common/components/fade-text';
 import focus from 'ilios-common/modifiers/focus';
+import set from 'ember-set-helper/helpers/set';
 
 export default class SessionOverview extends Component {
   @service currentUser;
@@ -42,6 +44,9 @@ export default class SessionOverview extends Component {
   @tracked localDescription;
   @tracked localSessionType;
   @tracked isEditingPostRequisite = false;
+  @tracked isEditingDescription = false;
+  @tracked isEditingInstructionalNotes = false;
+
   @tracked descriptionFadeTextExpanded = false;
   @tracked notesFadeTextExpanded = false;
 
@@ -273,6 +278,7 @@ export default class SessionOverview extends Component {
   @action
   revertInstructionalNotesChanges() {
     this.localInstructionalNotes = undefined;
+    this.isEditingInstructionalNotes = false;
   }
 
   @action
@@ -328,6 +334,7 @@ export default class SessionOverview extends Component {
     this.args.session.description = this.description;
     await this.args.session.save();
     this.localDescription = undefined;
+    this.isEditingDescription = false;
   });
 
   @action
@@ -347,6 +354,7 @@ export default class SessionOverview extends Component {
   @action
   revertDescriptionChanges() {
     this.localDescription = undefined;
+    this.isEditingDescription = false;
   }
 
   @action
@@ -373,6 +381,7 @@ export default class SessionOverview extends Component {
 
     await this.args.session.save();
     this.localInstructionalNotes = undefined;
+    this.isEditingInstructionalNotes = false;
   });
   <template>
     <div data-test-session-overview>
@@ -601,73 +610,85 @@ export default class SessionOverview extends Component {
               <hr />
               <div class="sessiondescription" data-test-description>
                 <label>{{t "general.description"}}:</label>
-                <FadeText @text={{this.description}} as |ft|>
-                  {{#if @editable}}
-                    <EditableField
-                      @value={{this.description}}
-                      @isSaveDisabled={{this.validations.errors.description}}
-                      @save={{perform this.saveDescription}}
-                      @close={{this.revertDescriptionChanges}}
-                      @clickPrompt={{t "general.clickToEdit"}}
-                    >
-                      <:default>
-                        <HtmlEditor
-                          @content={{this.description}}
-                          @update={{this.changeDescription}}
-                          @autofocus={{true}}
-                        />
-                        <YupValidationMessage
-                          @description={{t "general.description"}}
-                          @validationErrors={{this.validations.errors.description}}
-                        />
-                      </:default>
-                      <:value>
-                        {{ft.text}}
-                      </:value>
-                      <:postValue>
-                        {{ft.controls}}
-                      </:postValue>
-                    </EditableField>
-                  {{else}}
-                    {{ft.text preserveLinks=true}}
-                    {{ft.controls}}
-                  {{/if}}
-                </FadeText>
+                {{#if @editable}}
+                  <EditableText
+                    @value={{this.description}}
+                    @save={{perform this.saveDescription}}
+                    @close={{this.revertDescriptionChanges}}
+                    @isEditing={{this.isEditingDescription}}
+                    @isSaveDisabled={{this.validations.errors.description}}
+                    @edit={{set this "isEditingDescription" true}}
+                  >
+                    <:default>
+                      <HtmlEditor
+                        @content={{this.description}}
+                        @update={{this.changeDescription}}
+                        @autofocus={{true}}
+                      />
+                      <YupValidationMessage
+                        @description={{t "general.description"}}
+                        @validationErrors={{this.validations.errors.description}}
+                      />
+                    </:default>
+                    <:value>
+                      <FadeText @text={{this.description}}>
+                        <:additionalControls>
+                          <button
+                            class="edit"
+                            data-test-edit
+                            type="button"
+                            {{on "click" (set this "isEditingDescription")}}
+                          >
+                            {{t "general.edit"}}
+                          </button>
+                        </:additionalControls>
+                      </FadeText>
+                    </:value>
+                  </EditableText>
+                {{else}}
+                  <FadeText @text={{this.description}} />
+                {{/if}}
               </div>
               <div class="instructional-notes" data-test-instructional-notes>
                 <label>{{t "general.instructionalNotes"}}:</label>
-                <FadeText @text={{this.instructionalNotes}} as |ft|>
-                  {{#if @editable}}
-                    <EditableField
-                      @value={{this.instructionalNotes}}
-                      @isSaveDisabled={{this.validations.errors.instructionalNotes}}
-                      @save={{perform this.saveInstructionalNotes}}
-                      @close={{this.revertInstructionalNotesChanges}}
-                      @clickPrompt={{t "general.clickToEdit"}}
-                    >
-                      <:default>
-                        <HtmlEditor
-                          @content={{this.instructionalNotes}}
-                          @update={{this.changeInstructionalNotes}}
-                          @autofocus={{true}}
-                        />
-                        <YupValidationMessage
-                          @description={{t "general.instructionalNotes"}}
-                          @validationErrors={{this.validations.errors.instructionalNotes}}
-                        />
-                      </:default>
-                      <:value>
-                        {{ft.text}}
-                      </:value>
-                      <:postValue>
-                        {{ft.controls}}
-                      </:postValue>
-                    </EditableField>
-                  {{else}}
-                    {{ft.text preserveLinks=true}}
-                    {{ft.controls}}
-                  {{/if}}
-                </FadeText>
+                {{#if @editable}}
+                  <EditableText
+                    @value={{this.instructionalNotes}}
+                    @save={{perform this.saveInstructionalNotes}}
+                    @close={{this.revertInstructionalNotesChanges}}
+                    @isEditing={{this.isEditingInstructionalNotes}}
+                    @isSaveDisabled={{this.validations.errors.instructionalNotes}}
+                    @edit={{set this "isEditingInstructionalNotes" true}}
+                  >
+                    <:default>
+                      <HtmlEditor
+                        @content={{this.instructionalNotes}}
+                        @update={{this.changeInstructionalNotes}}
+                        @autofocus={{true}}
+                      />
+                      <YupValidationMessage
+                        @description={{t "general.instructionalNotes"}}
+                        @validationErrors={{this.validations.errors.instructionalNotes}}
+                      />
+                    </:default>
+                    <:value>
+                      <FadeText @text={{this.instructionalNotes}}>
+                        <:additionalControls>
+                          <button
+                            class="edit"
+                            data-test-edit
+                            type="button"
+                            {{on "click" (set this "isEditingInstructionalNotes")}}
+                          >
+                            {{t "general.edit"}}
+                          </button>
+                        </:additionalControls>
+                      </FadeText>
+                    </:value>
+                  </EditableText>
+                {{else}}
+                  <FadeText @text={{this.instructionalNotes}} />
+                {{/if}}
               </div>
               {{#unless this.isIndependentLearning}}
                 <br />
