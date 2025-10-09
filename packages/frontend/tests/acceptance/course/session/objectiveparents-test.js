@@ -38,7 +38,7 @@ module('Acceptance | Session - Objective Parents', function (hooks) {
     assert.strictEqual(page.details.objectives.objectiveList.objectives.length, 2);
 
     assert.strictEqual(
-      page.details.objectives.objectiveList.objectives[0].description.text,
+      page.details.objectives.objectiveList.objectives[0].description.fadeText.displayText.text,
       'session objective 0',
     );
     assert.strictEqual(page.details.objectives.objectiveList.objectives[0].parents.list.length, 2);
@@ -77,7 +77,7 @@ module('Acceptance | Session - Objective Parents', function (hooks) {
     });
 
     assert.strictEqual(
-      page.details.objectives.objectiveList.objectives[0].description.text,
+      page.details.objectives.objectiveList.objectives[0].description.fadeText.displayText.text,
       'session objective 0',
     );
     assert.strictEqual(page.details.objectives.objectiveList.objectives[0].parents.list.length, 2);
@@ -104,7 +104,7 @@ module('Acceptance | Session - Objective Parents', function (hooks) {
     await page.details.objectives.objectiveList.objectives[0].parents.save();
 
     assert.strictEqual(
-      page.details.objectives.objectiveList.objectives[0].description.text,
+      page.details.objectives.objectiveList.objectives[0].description.fadeText.displayText.text,
       'session objective 0',
     );
     assert.strictEqual(page.details.objectives.objectiveList.objectives[0].parents.list.length, 2);
@@ -129,7 +129,7 @@ module('Acceptance | Session - Objective Parents', function (hooks) {
     });
 
     assert.strictEqual(
-      page.details.objectives.objectiveList.objectives[0].description.text,
+      page.details.objectives.objectiveList.objectives[0].description.fadeText.displayText.text,
       'session objective 0',
     );
     assert.strictEqual(page.details.objectives.objectiveList.objectives[0].parents.list.length, 2);
@@ -156,7 +156,7 @@ module('Acceptance | Session - Objective Parents', function (hooks) {
     await page.details.objectives.objectiveList.objectives[0].parents.cancel();
 
     assert.strictEqual(
-      page.details.objectives.objectiveList.objectives[0].description.text,
+      page.details.objectives.objectiveList.objectives[0].description.fadeText.displayText.text,
       'session objective 0',
     );
     assert.strictEqual(page.details.objectives.objectiveList.objectives[0].parents.list.length, 2);
@@ -181,7 +181,7 @@ module('Acceptance | Session - Objective Parents', function (hooks) {
     });
 
     assert.strictEqual(
-      page.details.objectives.objectiveList.objectives[0].description.text,
+      page.details.objectives.objectiveList.objectives[0].description.fadeText.displayText.text,
       'session objective 0',
     );
     assert.strictEqual(page.details.objectives.objectiveList.objectives[0].parents.list.length, 2);
@@ -208,7 +208,7 @@ module('Acceptance | Session - Objective Parents', function (hooks) {
     await page.details.objectives.objectiveList.objectives[0].parents.save();
 
     assert.strictEqual(
-      page.details.objectives.objectiveList.objectives[0].description.text,
+      page.details.objectives.objectiveList.objectives[0].description.fadeText.displayText.text,
       'session objective 0',
     );
     assert.ok(page.details.objectives.objectiveList.objectives[0].parents.empty);

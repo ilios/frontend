@@ -45,7 +45,10 @@ module('Integration | Component | program-year/objective-list', function (hooks)
     assert.strictEqual(component.headers[4].text, 'Actions');
 
     assert.strictEqual(component.objectives.length, 2);
-    assert.strictEqual(component.objectives[0].description.text, 'Objective B');
+    assert.strictEqual(
+      component.objectives[0].description.fadeText.displayText.text,
+      'Objective B',
+    );
     assert.strictEqual(
       component.objectives[0].selectedTerms.list[0].title,
       'Vocabulary 1 (school 0)',
@@ -54,7 +57,10 @@ module('Integration | Component | program-year/objective-list', function (hooks)
       component.objectives[0].selectedTerms.list[0].terms[0].name,
       'term 1 (inactive)',
     );
-    assert.strictEqual(component.objectives[1].description.text, 'Objective A');
+    assert.strictEqual(
+      component.objectives[1].description.fadeText.displayText.text,
+      'Objective A',
+    );
     assert.strictEqual(
       component.objectives[1].selectedTerms.list[0].title,
       'Vocabulary 1 (school 0)',

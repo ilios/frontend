@@ -37,7 +37,7 @@ module('Acceptance | Course - Objective Vocabulary Terms', function (hooks) {
       1,
     );
     assert.strictEqual(
-      page.details.objectives.objectiveList.objectives[0].description.text,
+      page.details.objectives.objectiveList.objectives[0].description.fadeText.displayText.text,
       'course objective 0',
     );
     assert.strictEqual(
@@ -145,7 +145,7 @@ module('Acceptance | Course - Objective Vocabulary Terms', function (hooks) {
       1,
     );
     assert.strictEqual(
-      page.details.objectives.objectiveList.objectives[0].description.text,
+      page.details.objectives.objectiveList.objectives[0].description.fadeText.displayText.text,
       'course objective 0',
     );
     assert.strictEqual(

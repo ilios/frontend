@@ -47,7 +47,7 @@ module('Acceptance | Session - Objective Mesh Descriptors', function (hooks) {
     assert.strictEqual(page.details.objectives.objectiveList.objectives.length, 3);
 
     assert.strictEqual(
-      page.details.objectives.objectiveList.objectives[1].description.text,
+      page.details.objectives.objectiveList.objectives[1].description.fadeText.displayText.text,
       'session objective 1',
     );
     assert.strictEqual(
@@ -124,7 +124,7 @@ module('Acceptance | Session - Objective Mesh Descriptors', function (hooks) {
     assert.strictEqual(page.details.objectives.objectiveList.objectives.length, 3);
 
     assert.strictEqual(
-      page.details.objectives.objectiveList.objectives[1].description.text,
+      page.details.objectives.objectiveList.objectives[1].description.fadeText.displayText.text,
       'session objective 1',
     );
     assert.strictEqual(
@@ -188,7 +188,7 @@ module('Acceptance | Session - Objective Mesh Descriptors', function (hooks) {
     assert.strictEqual(page.details.objectives.objectiveList.objectives.length, 3);
 
     assert.strictEqual(
-      page.details.objectives.objectiveList.objectives[1].description.text,
+      page.details.objectives.objectiveList.objectives[1].description.fadeText.displayText.text,
       'session objective 1',
     );
     assert.strictEqual(

@@ -41,7 +41,7 @@ module('Integration | Component | program-year/objectives', function (hooks) {
 
     assert.strictEqual(component.objectiveList.objectives.length, 2);
     assert.strictEqual(
-      component.objectiveList.objectives[0].description.text,
+      component.objectiveList.objectives[0].description.fadeText.displayText.text,
       'program-year objective 0',
     );
     assert.ok(component.objectiveList.objectives[0].competency.hasCompetency);
@@ -56,7 +56,7 @@ module('Integration | Component | program-year/objectives', function (hooks) {
     assert.ok(component.objectiveList.objectives[0].meshDescriptors.isEmpty);
 
     assert.strictEqual(
-      component.objectiveList.objectives[1].description.text,
+      component.objectiveList.objectives[1].description.fadeText.displayText.text,
       'program-year objective 1',
     );
     assert.notOk(component.objectiveList.objectives[1].competency.hasCompetency);
@@ -116,7 +116,7 @@ module('Integration | Component | program-year/objectives', function (hooks) {
 
     assert.strictEqual(component.objectiveList.objectives.length, 1);
     assert.strictEqual(
-      component.objectiveList.objectives[0].description.text,
+      component.objectiveList.objectives[0].description.fadeText.displayText.text,
       'program-year objective 0',
     );
     assert.ok(component.objectiveList.objectives[0].competency.hasCompetency);

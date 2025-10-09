@@ -49,28 +49,25 @@ export default class SessionObjectiveListItemParentsComponent extends Component 
         </button>
       {{else}}
         {{#if @parents}}
-          <FadeText
-            @text={{this.parentsList}}
-            @forceExpanded={{@fadeTextExpanded}}
-            @setExpanded={{@setFadeTextExpanded}}
-            as |ft|
-          >
-            {{#if @editable}}
-              <button
-                type="button"
-                class="link-button"
-                title={{t "general.edit"}}
-                {{on "click" @manage}}
-                data-test-manage
-              >
-                {{ft.text}}
-              </button>
-              {{ft.controls}}
-            {{else}}
-              {{ft.text preserveLinks=true}}
-              {{ft.controls}}
-            {{/if}}
-          </FadeText>
+          {{#if @editable}}
+            <FadeText
+              @text={{this.parentsList}}
+              @forceExpanded={{@fadeTextExpanded}}
+              @setExpanded={{@setFadeTextExpanded}}
+            >
+              <:additionalControls>
+                <button class="edit" data-test-manage type="button" {{on "click" @manage}}>
+                  {{t "general.edit"}}
+                </button>
+              </:additionalControls>
+            </FadeText>
+          {{else}}
+            <FadeText
+              @text={{this.parentsList}}
+              @forceExpanded={{@fadeTextExpanded}}
+              @setExpanded={{@setFadeTextExpanded}}
+            />
+          {{/if}}
         {{else}}
           {{#if @editable}}
             <button type="button" {{on "click" @manage}} data-test-manage>

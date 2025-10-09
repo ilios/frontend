@@ -31,7 +31,7 @@ module('Integration | Component | course/objective-list-item', function (hooks) 
       </template>,
     );
     assert.notOk(component.hasRemoveConfirmation);
-    assert.strictEqual(component.description.text, 'course objective 0');
+    assert.strictEqual(component.description.fadeText.displayText.text, 'course objective 0');
     assert.strictEqual(component.parents.text, 'Add New');
     assert.strictEqual(component.meshDescriptors.text, 'Add New');
     assert.ok(component.hasTrashCan);
@@ -59,11 +59,11 @@ module('Integration | Component | course/objective-list-item', function (hooks) 
       </template>,
     );
     const newDescription = 'Pluto Visits Earth';
-    assert.strictEqual(component.description.text, 'course objective 0');
+    assert.strictEqual(component.description.fadeText.displayText.text, 'course objective 0');
     await component.description.openEditor();
     await component.description.edit(newDescription);
     await component.description.save();
-    assert.strictEqual(component.description.text, newDescription);
+    assert.strictEqual(component.description.fadeText.displayText.text, newDescription);
   });
 
   test('can manage parents', async function (assert) {

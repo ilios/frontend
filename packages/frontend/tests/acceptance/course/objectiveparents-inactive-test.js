@@ -60,7 +60,7 @@ module('Acceptance | Course - Objective Inactive Parents', function (hooks) {
     const { objectives } = page.details.objectives.objectiveList;
     assert.strictEqual(objectives.length, 1);
 
-    assert.strictEqual(objectives[0].description.text, 'course objective 0');
+    assert.strictEqual(objectives[0].description.fadeText.displayText.text, 'course objective 0');
     assert.strictEqual(objectives[0].parents.list.length, 1);
     assert.strictEqual(objectives[0].parents.list[0].text, 'inactive selected');
 

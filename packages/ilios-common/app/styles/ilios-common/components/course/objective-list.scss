@@ -3,4 +3,12 @@
 
 .course-objective-list {
   @include m.objective-list;
+
+  .objective-row {
+    button {
+      &.edit {
+        @include m.ilios-button;
+      }
+    }
+  }
 }

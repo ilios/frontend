@@ -73,7 +73,7 @@ module('Acceptance | Program Year - Objectives', function (hooks) {
     await percySnapshot(assert);
     assert.strictEqual(page.details.objectives.objectiveList.objectives.length, 3);
     assert.strictEqual(
-      page.details.objectives.objectiveList.objectives[0].description.text,
+      page.details.objectives.objectiveList.objectives[0].description.fadeText.displayText.text,
       'program-year objective 0',
     );
     assert.ok(page.details.objectives.objectiveList.objectives[0].competency.hasCompetency);
@@ -112,7 +112,7 @@ module('Acceptance | Program Year - Objectives', function (hooks) {
     );
 
     assert.strictEqual(
-      page.details.objectives.objectiveList.objectives[1].description.text,
+      page.details.objectives.objectiveList.objectives[1].description.fadeText.displayText.text,
       'program-year objective 1',
     );
     assert.ok(page.details.objectives.objectiveList.objectives[1].competency.hasCompetency);
@@ -136,7 +136,7 @@ module('Acceptance | Program Year - Objectives', function (hooks) {
     );
 
     assert.strictEqual(
-      page.details.objectives.objectiveList.objectives[2].description.text,
+      page.details.objectives.objectiveList.objectives[2].description.fadeText.displayText.text,
       'program-year objective 2',
     );
     assert.notOk(page.details.objectives.objectiveList.objectives[2].competency.hasCompetency);
@@ -151,7 +151,7 @@ module('Acceptance | Program Year - Objectives', function (hooks) {
     await percySnapshot(assert);
     assert.strictEqual(page.details.objectives.objectiveList.objectives.length, 3);
     assert.strictEqual(
-      page.details.objectives.objectiveList.objectives[0].description.text,
+      page.details.objectives.objectiveList.objectives[0].description.fadeText.displayText.text,
       'program-year objective 0',
     );
     assert.ok(page.details.objectives.objectiveList.objectives[0].competency.hasCompetency);
@@ -178,7 +178,7 @@ module('Acceptance | Program Year - Objectives', function (hooks) {
     );
 
     assert.strictEqual(
-      page.details.objectives.objectiveList.objectives[1].description.text,
+      page.details.objectives.objectiveList.objectives[1].description.fadeText.displayText.text,
       'program-year objective 1',
     );
     assert.ok(page.details.objectives.objectiveList.objectives[1].competency.hasCompetency);
@@ -190,7 +190,7 @@ module('Acceptance | Program Year - Objectives', function (hooks) {
     assert.ok(page.details.objectives.objectiveList.objectives[1].meshDescriptors.isEmpty);
 
     assert.strictEqual(
-      page.details.objectives.objectiveList.objectives[2].description.text,
+      page.details.objectives.objectiveList.objectives[2].description.fadeText.displayText.text,
       'program-year objective 2',
     );
     assert.notOk(page.details.objectives.objectiveList.objectives[2].competency.hasCompetency);
@@ -205,7 +205,7 @@ module('Acceptance | Program Year - Objectives', function (hooks) {
     assert.strictEqual(page.details.objectives.objectiveList.objectives.length, 3);
 
     assert.strictEqual(
-      page.details.objectives.objectiveList.objectives[0].description.text,
+      page.details.objectives.objectiveList.objectives[0].description.fadeText.displayText.text,
       'program-year objective 0',
     );
     assert.strictEqual(
@@ -255,7 +255,7 @@ module('Acceptance | Program Year - Objectives', function (hooks) {
     assert.strictEqual(page.details.objectives.objectiveList.objectives.length, 3);
 
     assert.strictEqual(
-      page.details.objectives.objectiveList.objectives[0].description.text,
+      page.details.objectives.objectiveList.objectives[0].description.fadeText.displayText.text,
       'program-year objective 0',
     );
     assert.strictEqual(
@@ -297,7 +297,7 @@ module('Acceptance | Program Year - Objectives', function (hooks) {
     assert.strictEqual(page.details.objectives.objectiveList.objectives.length, 3);
 
     assert.strictEqual(
-      page.details.objectives.objectiveList.objectives[0].description.text,
+      page.details.objectives.objectiveList.objectives[0].description.fadeText.displayText.text,
       'program-year objective 0',
     );
     assert.strictEqual(
@@ -368,7 +368,7 @@ module('Acceptance | Program Year - Objectives', function (hooks) {
     await page.details.objectives.objectiveList.objectives[0].competency.save();
 
     assert.strictEqual(
-      page.details.objectives.objectiveList.objectives[0].description.text,
+      page.details.objectives.objectiveList.objectives[0].description.fadeText.displayText.text,
       'program-year objective 0',
     );
     assert.ok(page.details.objectives.objectiveList.objectives[0].competency.hasCompetency);
@@ -395,7 +395,7 @@ module('Acceptance | Program Year - Objectives', function (hooks) {
     await page.details.objectives.objectiveList.objectives[0].competency.save();
 
     assert.strictEqual(
-      page.details.objectives.objectiveList.objectives[0].description.text,
+      page.details.objectives.objectiveList.objectives[0].description.fadeText.displayText.text,
       'program-year objective 0',
     );
     assert.notOk(page.details.objectives.objectiveList.objectives[0].competency.hasCompetency);
@@ -414,7 +414,7 @@ module('Acceptance | Program Year - Objectives', function (hooks) {
     await page.details.objectives.objectiveList.objectives[0].competency.cancel();
 
     assert.strictEqual(
-      page.details.objectives.objectiveList.objectives[0].description.text,
+      page.details.objectives.objectiveList.objectives[0].description.fadeText.displayText.text,
       'program-year objective 0',
     );
     assert.ok(page.details.objectives.objectiveList.objectives[0].competency.hasCompetency);
@@ -442,7 +442,7 @@ module('Acceptance | Program Year - Objectives', function (hooks) {
     await page.details.objectives.objectiveList.objectives[0].competency.cancel();
 
     assert.strictEqual(
-      page.details.objectives.objectiveList.objectives[0].description.text,
+      page.details.objectives.objectiveList.objectives[0].description.fadeText.displayText.text,
       'program-year objective 0',
     );
     assert.ok(page.details.objectives.objectiveList.objectives[0].competency.hasCompetency);
@@ -462,7 +462,7 @@ module('Acceptance | Program Year - Objectives', function (hooks) {
     assert.expect(10);
     await page.visit({ programId: 1, programYearId: 1, pyObjectiveDetails: true });
     assert.strictEqual(
-      page.details.objectives.objectiveList.objectives[2].description.text,
+      page.details.objectives.objectiveList.objectives[2].description.fadeText.displayText.text,
       'program-year objective 2',
     );
     assert.notOk(page.details.objectives.objectiveList.objectives[2].competency.hasCompetency);
@@ -476,7 +476,7 @@ module('Acceptance | Program Year - Objectives', function (hooks) {
     await page.details.objectives.objectiveList.objectives[2].competency.save();
 
     assert.strictEqual(
-      page.details.objectives.objectiveList.objectives[2].description.text,
+      page.details.objectives.objectiveList.objectives[2].description.fadeText.displayText.text,
       'program-year objective 2',
     );
     assert.ok(page.details.objectives.objectiveList.objectives[2].competency.hasCompetency);
@@ -497,7 +497,7 @@ module('Acceptance | Program Year - Objectives', function (hooks) {
     await page.visit({ programId: 1, programYearId: 1, pyObjectiveDetails: true });
     assert.strictEqual(page.details.objectives.objectiveList.objectives.length, 3);
     assert.strictEqual(
-      page.details.objectives.objectiveList.objectives[0].description.text,
+      page.details.objectives.objectiveList.objectives[0].description.fadeText.displayText.text,
       'program-year objective 0',
     );
     await page.details.objectives.createNew();
@@ -517,7 +517,7 @@ module('Acceptance | Program Year - Objectives', function (hooks) {
     assert.expect(6);
     await page.visit({ programId: 1, programYearId: 1, pyObjectiveDetails: true });
     assert.strictEqual(
-      page.details.objectives.objectiveList.objectives[0].description.text,
+      page.details.objectives.objectiveList.objectives[0].description.fadeText.displayText.text,
       'program-year objective 0',
     );
     assert.strictEqual(page.details.objectives.objectiveList.expanded.length, 0);

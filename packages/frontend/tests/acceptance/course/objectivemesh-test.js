@@ -50,7 +50,7 @@ module('Acceptance | Course - Objective Mesh Descriptors', function (hooks) {
     assert.strictEqual(page.details.objectives.objectiveList.objectives.length, 3);
 
     assert.strictEqual(
-      page.details.objectives.objectiveList.objectives[1].description.text,
+      page.details.objectives.objectiveList.objectives[1].description.fadeText.displayText.text,
       'course objective 1',
     );
     assert.strictEqual(
@@ -127,7 +127,7 @@ module('Acceptance | Course - Objective Mesh Descriptors', function (hooks) {
     assert.strictEqual(page.details.objectives.objectiveList.objectives.length, 3);
 
     assert.strictEqual(
-      page.details.objectives.objectiveList.objectives[1].description.text,
+      page.details.objectives.objectiveList.objectives[1].description.fadeText.displayText.text,
       'course objective 1',
     );
     assert.strictEqual(
@@ -192,7 +192,7 @@ module('Acceptance | Course - Objective Mesh Descriptors', function (hooks) {
     assert.strictEqual(page.details.objectives.objectiveList.objectives.length, 3);
 
     assert.strictEqual(
-      page.details.objectives.objectiveList.objectives[1].description.text,
+      page.details.objectives.objectiveList.objectives[1].description.fadeText.displayText.text,
       'course objective 1',
     );
     assert.strictEqual(

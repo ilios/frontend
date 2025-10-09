@@ -91,7 +91,7 @@ module('Acceptance | Course - Objective Parents - Faded Status Sync', function (
     */
 
     assert.strictEqual(
-      page.details.objectives.objectiveList.objectives[0].description.text,
+      page.details.objectives.objectiveList.objectives[0].description.fadeText.displayText.text,
       this.longObjDescription,
       '1st objective title is long',
     );
@@ -160,7 +160,7 @@ module('Acceptance | Course - Objective Parents - Faded Status Sync', function (
     */
 
     assert.strictEqual(
-      page.details.objectives.objectiveList.objectives[1].description.text,
+      page.details.objectives.objectiveList.objectives[1].description.fadeText.displayText.text,
       'course objective 1',
       '2nd objective title is short',
     );
@@ -229,7 +229,7 @@ module('Acceptance | Course - Objective Parents - Faded Status Sync', function (
     */
 
     assert.strictEqual(
-      page.details.objectives.objectiveList.objectives[2].description.text,
+      page.details.objectives.objectiveList.objectives[2].description.fadeText.displayText.text,
       this.longObjDescription,
       '3rd objective title is long',
     );

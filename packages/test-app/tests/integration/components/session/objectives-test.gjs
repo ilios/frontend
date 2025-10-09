@@ -37,21 +37,21 @@ module('Integration | Component | session/objectives', function (hooks) {
 
     assert.strictEqual(component.objectiveList.objectives.length, 3);
     assert.strictEqual(
-      component.objectiveList.objectives[0].description.text,
+      component.objectiveList.objectives[0].description.fadeText.displayText.text,
       'session objective 0',
     );
     assert.ok(component.objectiveList.objectives[0].parents.empty);
     assert.ok(component.objectiveList.objectives[0].meshDescriptors.empty);
 
     assert.strictEqual(
-      component.objectiveList.objectives[1].description.text,
+      component.objectiveList.objectives[1].description.fadeText.displayText.text,
       'session objective 1',
     );
     assert.ok(component.objectiveList.objectives[1].parents.empty);
     assert.ok(component.objectiveList.objectives[1].meshDescriptors.empty);
 
     assert.strictEqual(
-      component.objectiveList.objectives[2].description.text,
+      component.objectiveList.objectives[2].description.fadeText.displayText.text,
       'session objective 2',
     );
     assert.strictEqual(component.objectiveList.objectives[2].parents.list.length, 1);
