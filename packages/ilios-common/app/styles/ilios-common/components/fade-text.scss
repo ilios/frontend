@@ -6,7 +6,7 @@
     display: inline-block;
 
     &.faded {
-      max-height: 200px;
+      max-height: 180px;
       overflow: hidden;
       position: relative;
 
@@ -17,15 +17,7 @@
   button {
     &.expand-text-button,
     &.collapse-text-button {
-      @include m.ilios-link-button;
-      display: block;
-    }
-  }
-
-  .fade-text-control {
-    padding: 0;
-    button {
-      @include m.ilios-link-button;
+      @include m.ilios-button;
     }
   }
 }

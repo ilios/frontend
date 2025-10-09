@@ -1,6 +1,8 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render } from '@ember/test-helpers';
+import { on } from '@ember/modifier';
+import t from 'ember-intl/helpers/t';
 import { component } from 'ilios-common/page-objects/components/fade-text';
 import FadeText from 'ilios-common/components/fade-text';
 
@@ -90,74 +92,44 @@ module('Integration | Component | fade-text', function (hooks) {
     assert.dom(this.element).hasText(shortText);
   });
 
-  test('it fades tall text given as component argument in block form', async function (assert) {
-    this.set('longHtml', this.longHtml);
-
-    this.set('expanded', false);
-    this.set('setExpanded', (isExpanded) => {
-      this.set('expanded', isExpanded);
+  test('additional controls with faded text', async function (assert) {
+    assert.expect(4);
+    this.set('text', this.longHtml);
+    this.set('edit', () => {
+      assert.ok(true, 'edit button was clicked');
     });
     await render(
       <template>
-        <FadeText @text={{this.longHtml}} @setExpanded={{this.setExpanded}} as |ft|>
-          {{ft.text}}
-          {{ft.controls}}
+        <FadeText @text={{this.text}}>
+          <:additionalControls>
+            <button type="button" {{on "click" this.edit}}>{{t "general.edit"}}</button>
+          </:additionalControls>
         </FadeText>
       </template>,
     );
-    assert.ok(component.enabled);
-    assert.notOk(this.expanded, 'text is not expanded');
-    assert.ok(component.displayText.isFaded);
-
-    await component.control.expand.click();
-
-    assert.ok(component.enabled);
-    assert.ok(this.expanded);
-    assert.notOk(component.displayText.isFaded);
-
-    await component.control.collapse.click();
-
-    assert.ok(component.enabled);
-    assert.notOk(this.expanded);
-    assert.ok(component.displayText.isFaded);
+    assert.strictEqual(component.control.buttons.length, 2);
+    assert.strictEqual(component.control.buttons[0].text, 'Edit');
+    assert.strictEqual(component.control.buttons[1].title, 'Expand');
+    await component.control.buttons[0].click();
   });
 
-  test('it replaces links by default', async function (assert) {
-    this.set('text', this.linkText);
-    await render(<template><FadeText @text={{this.text}} /></template>);
-    assert.dom('[data-test-text]', this.element).hasHtml(this.cleanText);
-
+  test('additional controls with un-faded text', async function (assert) {
+    assert.expect(3);
+    this.set('text', 'foo bar');
+    this.set('edit', () => {
+      assert.ok(true, 'edit button was clicked');
+    });
     await render(
       <template>
-        <FadeText @text={{this.text}} as |ft|>
-          {{ft.text}}
+        <FadeText @text={{this.text}}>
+          <:additionalControls>
+            <button type="button" {{on "click" this.edit}}>{{t "general.edit"}}</button>
+          </:additionalControls>
         </FadeText>
       </template>,
     );
-    assert.dom('[data-test-text]', this.element).hasHtml(this.cleanText);
-  });
-
-  test('it preserves links when asked', async function (assert) {
-    this.set('text', this.linkText);
-    await render(<template><FadeText @text={{this.text}} @preserveLinks={{true}} /></template>);
-    assert.dom('[data-test-text]', this.element).hasHtml(this.linkText);
-
-    await render(
-      <template>
-        <FadeText @text={{this.text}} @preserveLinks={{true}} as |ft|>
-          {{ft.text}}
-        </FadeText>
-      </template>,
-    );
-    assert.dom('[data-test-text]', this.element).hasHtml(this.linkText);
-
-    await render(
-      <template>
-        <FadeText @text={{this.text}} as |ft|>
-          {{ft.text preserveLinks=true}}
-        </FadeText>
-      </template>,
-    );
-    assert.dom('[data-test-text]', this.element).hasHtml(this.linkText);
+    assert.strictEqual(component.control.buttons.length, 1);
+    assert.strictEqual(component.control.buttons[0].text, 'Edit');
+    await component.control.buttons[0].click();
   });
 });

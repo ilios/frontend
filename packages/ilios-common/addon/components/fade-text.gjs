@@ -1,12 +1,9 @@
 import Component from '@glimmer/component';
-import { cached, tracked } from '@glimmer/tracking';
-import { htmlSafe } from '@ember/template';
+import { tracked } from '@glimmer/tracking';
 import onResize from 'ember-on-resize-modifier/modifiers/on-resize';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
 import FaIcon from 'ilios-common/components/fa-icon';
-import { hash } from '@ember/helper';
-import { TrackedAsyncData } from 'ember-async-data';
 
 export default class FadeTextComponent extends Component {
   @tracked textHeight;
@@ -54,111 +51,53 @@ export default class FadeTextComponent extends Component {
 
   <template>
     <span class="fade-text" data-test-fade-text ...attributes>
-      {{#if (has-block)}}
-        {{yield
-          (hash
-            controls=(component
-              Controls
-              expandable=this.shouldFade
-              collapsible=this.isExpanded
-              expand=this.expand
-              collapse=this.collapse
-            )
-            text=(component
-              FadedTextComponent
-              faded=this.shouldFade
-              resize=this.updateTextDims
-              text=@text
-              preserveLinks=@preserveLinks
-            )
-          )
-        }}
-      {{else}}
-        <FadedTextComponent
-          @faded={{this.shouldFade}}
-          @resize={{this.updateTextDims}}
-          @preserveLinks={{@preserveLinks}}
-          @text={{@text}}
-        />
-        <Controls
-          @expandable={{this.shouldFade}}
-          @collapsible={{this.isExpanded}}
-          @expand={{this.expand}}
-          @collapse={{this.collapse}}
-        />
-      {{/if}}
+      <div class="display-text-wrapper{{if this.shouldFade ' faded'}}" data-test-display-text>
+        <div class="display-text" {{onResize this.updateTextDims}} data-test-text>
+          {{! template-lint-disable no-triple-curlies }}
+          {{{@text}}}
+        </div>
+      </div>
+      <Controls
+        @expandable={{this.shouldFade}}
+        @collapsible={{this.isExpanded}}
+        @expand={{this.expand}}
+        @collapse={{this.collapse}}
+      >
+        {{#if (has-block "additionalControls")}}
+          {{yield to="additionalControls"}}
+        {{/if}}
+      </Controls>
     </span>
   </template>
 }
 
 const Controls = <template>
-  {{#if @expandable}}
-    <button
-      class="expand-text-button"
-      title={{t "general.expand"}}
-      type="button"
-      data-test-expand
-      data-test-fade-text-control
-      {{on "click" @expand}}
-    >
-      <FaIcon @icon="angles-down" />
-    </button>
-  {{else}}
-    {{#if @collapsible}}
+  <div data-test-fade-text-controls>
+    {{yield}}
+    {{#if @expandable}}
       <button
-        class="collapse-text-button"
-        title={{t "general.collapse"}}
+        class="expand-text-button"
+        title={{t "general.expand"}}
         type="button"
-        data-test-collapse
+        data-test-expand
         data-test-fade-text-control
-        {{on "click" @collapse}}
+        {{on "click" @expand}}
       >
-        <FaIcon @icon="angles-up" />
+        <FaIcon @icon="angles-down" />
       </button>
+    {{else}}
+      {{#if @collapsible}}
+        <button
+          class="collapse-text-button"
+          title={{t "general.collapse"}}
+          type="button"
+          data-test-collapse
+          data-test-fade-text-control
+          {{on "click" @collapse}}
+        >
+          <FaIcon @icon="angles-up" />
+        </button>
+      {{/if}}
     {{/if}}
-  {{/if}}
+  </div>
 </template>;
-
-class FadedTextComponent extends Component {
-  @cached
-  get sanitizerData() {
-    return new TrackedAsyncData(import('sanitize-html'));
-  }
-
-  get cleanText() {
-    if (this.args.preserveLinks) {
-      return this.args.text;
-    }
-
-    if (!this.sanitizerData.isResolved) {
-      return this.args.text;
-    }
-
-    const { default: sanitizeHtml } = this.sanitizerData.value;
-
-    return sanitizeHtml(this.args.text, {
-      transformTags: {
-        a: sanitizeHtml.simpleTransform('span', { class: 'link' }, false),
-      },
-      allowedAttributes: false, //disable attribute filtering
-      allowedTags: false, //disable tag filtering
-      allowVulnerableTags: true, //turn off warnings about script tags
-    });
-  }
-
-  get displayText() {
-    return new htmlSafe(this.cleanText);
-  }
-
-  <template>
-    <div
-      class="display-text-wrapper{{if @faded ' faded'}}"
-      data-test-display-text
-      data-test-done={{this.sanitierData.isResolved}}
-    >
-      <div class="display-text" {{onResize @resize}} data-test-text>
-        {{this.displayText}}
-      </div>
-    </div>
-  </template>
-}

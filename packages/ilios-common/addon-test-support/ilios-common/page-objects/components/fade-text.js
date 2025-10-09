@@ -1,4 +1,11 @@
-import { attribute, clickable, create, hasClass, isPresent } from 'ember-cli-page-object';
+import {
+  attribute,
+  clickable,
+  collection,
+  create,
+  hasClass,
+  isPresent,
+} from 'ember-cli-page-object';
 
 const definition = {
   scope: '[data-test-fade-text]',
@@ -8,6 +15,11 @@ const definition = {
     isFaded: hasClass('faded'),
   },
   control: {
+    scope: '[data-test-fade-text-controls]',
+    buttons: collection('button', {
+      click: clickable(),
+      title: attribute('title'),
+    }),
     expand: {
       scope: '[data-test-expand]',
       click: clickable(),
