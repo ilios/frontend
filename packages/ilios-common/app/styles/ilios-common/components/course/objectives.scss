@@ -4,4 +4,11 @@
 .course-objectives {
   @include m.detail-container(var(--orange));
   @include m.objectives;
+
+  .headers {
+    background-color: var(--white);
+    position: sticky;
+    top: 0;
+    z-index: 1;
+  }
 }

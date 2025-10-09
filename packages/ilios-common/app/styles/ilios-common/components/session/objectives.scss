@@ -4,4 +4,11 @@
 .session-objectives {
   @include m.detail-container(var(--orange));
   @include m.objectives;
+
+  .headers {
+    background-color: var(--lightest-blue);
+    position: sticky;
+    top: 0;
+    z-index: 1;
+  }
 }
