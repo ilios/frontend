@@ -1,0 +1,41 @@
+@use "../colors" as c;
+@use "../mixins" as m;
+
+.editable-text {
+  .editor {
+    @include m.ilios-form-error;
+    align-items: center;
+    display: flex;
+
+    .actions {
+      display: flex;
+      justify-content: flex-start;
+
+      button {
+        background: transparent;
+        margin: 0;
+        padding: 0 0.2rem;
+
+        &:enabled:hover {
+          color: var(--white);
+        }
+
+        &.done {
+          color: var(--green);
+
+          &:enabled:hover {
+            background-color: var(--green);
+          }
+        }
+
+        &.cancel {
+          color: var(--red);
+
+          &:enabled:hover {
+            background-color: var(--red);
+          }
+        }
+      }
+    }
+  }
+}
