@@ -47,6 +47,7 @@ export default class EditableTextComponent extends Component {
                 type="button"
                 class="done"
                 title={{t "general.save"}}
+                disabled={{@isSaveDisabled}}
                 {{on "click" (perform this.saveData)}}
                 data-test-save
               >

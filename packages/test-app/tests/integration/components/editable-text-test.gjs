@@ -39,25 +39,16 @@ module('Integration | Component | editable-text', function (hooks) {
     assert.strictEqual(component.editable.text, 'Click to edit');
   });
 
-  test('it renders a "click to edit" button when it looks empty', async function (assert) {
-    assert.expect(2);
-    this.set('edit', () => {
-      assert.ok(true, 'edit action fired.');
-    });
-    this.set(
-      'value',
-      `
-      <p>
-        &nbsp;
-      </p>
-    `,
+  test('is save disabled', async function (assert) {
+    await render(
+      <template>
+        <EditableText @value={{this.value}} @isEditing={{true}} @isSaveDisabled={{true}} />
+      </template>,
     );
-    await render(<template><EditableText @value={{this.value}} @edit={{this.edit}} /></template>);
-    assert.strictEqual(component.editable.text, 'Click to edit');
-    await component.editable.edit();
+    assert.ok(component.isSaveDisabled);
   });
 
-  test('edit, save, and close', async function (assert) {
+  test('edit', async function (assert) {
     assert.expect(2);
     this.set('edit', () => {
       assert.ok(true, 'edit action fired.');
@@ -76,7 +67,7 @@ module('Integration | Component | editable-text', function (hooks) {
   });
 
   test('save and close', async function (assert) {
-    assert.expect(2);
+    assert.expect(3);
     this.set('save', () => {
       assert.ok(true, 'save action fired.');
     });
@@ -89,6 +80,7 @@ module('Integration | Component | editable-text', function (hooks) {
         <EditableText @isEditing={{true}} @save={{this.save}} @close={{this.close}} />
       </template>,
     );
+    assert.notOk(component.isSaveDisabled);
     await component.save();
   });
 

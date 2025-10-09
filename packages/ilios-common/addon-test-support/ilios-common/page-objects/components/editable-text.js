@@ -1,4 +1,4 @@
-import { clickable, create, text } from 'ember-cli-page-object';
+import { attribute, clickable, create, text } from 'ember-cli-page-object';
 import fadeText from './fade-text.js';
 
 const definition = {
@@ -10,6 +10,7 @@ const definition = {
   },
   cancel: clickable('[data-test-cancel]'),
   save: clickable('[data-test-save]'),
+  isSaveDisabled: attribute('disabled', '[data-test-save]'),
   fadeText,
 };
 
