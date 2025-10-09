@@ -9,6 +9,7 @@ import { string } from 'yup';
 import { uniqueId } from '@ember/helper';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
+import focus from 'ilios-common/modifiers/focus';
 import perform from 'ember-concurrency/helpers/perform';
 import pick from 'ilios-common/helpers/pick';
 import set from 'ember-set-helper/helpers/set';
@@ -117,6 +118,7 @@ export default class CurriculumInventoryNewReportComponent extends Component {
             </label>
             <input
               id="name-{{templateId}}"
+              {{focus}}
               type="text"
               value={{this.name}}
               disabled={{this.save.isRunning}}

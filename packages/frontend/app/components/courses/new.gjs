@@ -8,6 +8,7 @@ import { TrackedAsyncData } from 'ember-async-data';
 import YupValidations from 'ilios-common/classes/yup-validations';
 import { number, string } from 'yup';
 import { uniqueId } from '@ember/helper';
+import focus from 'ilios-common/modifiers/focus';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
 import pick from 'ilios-common/helpers/pick';
@@ -108,6 +109,7 @@ export default class CoursesNewComponent extends Component {
               </label>
               <input
                 id="title-{{templateId}}"
+                {{focus}}
                 class="course-title"
                 disabled={{this.saveCourse.isRunning}}
                 placeholder={{t "general.courseTitlePlaceholder"}}

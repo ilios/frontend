@@ -5,6 +5,7 @@ import { action } from '@ember/object';
 import { uniqueId } from '@ember/helper';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
+import focus from 'ilios-common/modifiers/focus';
 import pick from 'ilios-common/helpers/pick';
 import set from 'ember-set-helper/helpers/set';
 import perform from 'ember-concurrency/helpers/perform';
@@ -51,6 +52,7 @@ export default class LearnerGroupNewMultipleComponent extends Component {
           </label>
           <input
             id="groups-{{templateId}}"
+            {{focus}}
             type="text"
             disabled={{this.save.isRunning}}
             placeholder={{t "general.numberOfGroupsToGenerate"}}
