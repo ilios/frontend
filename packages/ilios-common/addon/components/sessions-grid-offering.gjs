@@ -24,6 +24,7 @@ import FaIcon from 'ilios-common/components/fa-icon';
 import YupValidations from 'ilios-common/classes/yup-validations';
 import YupValidationMessage from 'ilios-common/components/yup-validation-message';
 import { string } from 'yup';
+import focus from 'ilios-common/modifiers/focus';
 
 export default class SessionsGridOffering extends Component {
   @tracked roomBuffer;
@@ -195,9 +196,7 @@ export default class SessionsGridOffering extends Component {
                 @value={{this.room}}
                 @save={{perform this.changeRoom}}
                 @close={{this.revertRoomChanges}}
-                @saveOnEnter={{true}}
-                @closeOnEscape={{true}}
-                as |isSaving|
+                as |keyboard isSaving|
               >
                 <input
                   aria-label={{t "general.room"}}
@@ -207,6 +206,8 @@ export default class SessionsGridOffering extends Component {
                   disabled={{isSaving}}
                   {{on "input" (pick "target.value" (set this "roomBuffer"))}}
                   {{this.validations.attach "room"}}
+                  {{keyboard}}
+                  {{focus}}
                 />
                 <YupValidationMessage
                   @description={{t "general.location"}}

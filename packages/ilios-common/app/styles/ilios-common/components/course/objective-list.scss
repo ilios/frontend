@@ -3,20 +3,4 @@
 
 .course-objective-list {
   @include m.objective-list;
-
-  .fade-text-control {
-    background-image: linear-gradient(to bottom, transparent, var(--white));
-  }
-
-  .objective-row {
-    &.is-managing {
-      .fade-text-control {
-        background-image: linear-gradient(
-          to bottom,
-          transparent,
-          var(--lightest-grey)
-        );
-      }
-    }
-  }
 }
