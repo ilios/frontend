@@ -3,6 +3,14 @@
 
 .program-year-objective-list {
   @include m.objective-list;
+
+  .headers {
+    background-color: var(--white);
+    position: sticky;
+    top: 0;
+    z-index: 1;
+  }
+
   .grid-row {
     grid-template-columns: 1fr 10fr 6fr 6fr 6fr 1fr;
 
