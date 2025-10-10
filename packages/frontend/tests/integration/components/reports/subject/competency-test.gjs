@@ -170,12 +170,45 @@ module('Integration | Component | reports/subject/competency', function (hooks) 
 
   test('filter by school and session', async function (assert) {
     assert.expect(1);
+    let counter = 0;
     this.server.post('api/graphql', function (schema, { requestBody }) {
       const { query } = JSON.parse(requestBody);
-      // need to reverse lookup session->course->courseObjectives->programYearObjectives->competencies
-      // so this graphql query doesn't match the context
-      assert.strictEqual(query, 'query { sessions(schools: [24], id: 13) { course { id } } }');
-      return responseData;
+      counter++;
+      switch (counter) {
+        case 1:
+          assert.strictEqual(
+            query,
+            'query { sessions(schools: [24], id: 13) { course { id } } }',
+            'first graphql query is correct',
+          );
+          return {
+            data: {
+              courses: [{ id: 1 }],
+            },
+          };
+        case 2:
+          assert.ok(
+            query.includes(
+              'query { courseObjectives(course: 1) { programYearObjectives { competency { id, title, school { title } }} } }',
+              'second graphql query is correct',
+            ),
+          );
+          return {
+            data: {
+              courseObjectives: [
+                {
+                  programYearObjectives: [
+                    {
+                      competency: { id: 1, title: 'first' },
+                    },
+                  ],
+                },
+              ],
+            },
+          };
+        default:
+          assert.ok(false, 'too many queries');
+      }
     });
     const { id } = this.server.create('report', {
       subject: 'competency',
