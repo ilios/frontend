@@ -54,6 +54,7 @@
     }
 
     .new-objective-form {
+      @include ilios-form.ilios-form-error;
       label {
         font-weight: 600;
         margin: 0.25em;
