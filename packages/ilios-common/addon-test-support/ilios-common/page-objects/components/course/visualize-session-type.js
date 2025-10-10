@@ -1,4 +1,4 @@
-import { attribute, collection, create, text } from 'ember-cli-page-object';
+import { attribute, collection, create, fillable, text, value } from 'ember-cli-page-object';
 import sessionTypeChart from './visualize-session-type-graph';
 
 const definition = create({
@@ -9,6 +9,11 @@ const definition = create({
     crumbs: collection('span', {
       link: attribute('href', 'a'),
     }),
+  },
+  filter: {
+    scope: '[data-test-filter]',
+    value: value('input'),
+    set: fillable('input'),
   },
   sessionTypeChart,
 });
