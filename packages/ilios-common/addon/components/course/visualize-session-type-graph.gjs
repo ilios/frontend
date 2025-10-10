@@ -8,6 +8,7 @@ import { cached, tracked } from '@glimmer/tracking';
 import { TrackedAsyncData } from 'ember-async-data';
 import { action } from '@ember/object';
 import PapaParse from 'papaparse';
+import { cleanQuery } from 'ilios-common/utils/query-utils';
 import createDownloadFile from 'ilios-common/utils/create-download-file';
 import { findById, mapBy, sortBy } from 'ilios-common/utils/array-helpers';
 import or from 'ember-truth-helpers/helpers/or';
@@ -51,8 +52,16 @@ export default class CourseVisualizeSessionTypeGraph extends Component {
     return this.data.filter((obj) => obj.data);
   }
 
+  get filteredChartData() {
+    return this.filterData(this.chartData);
+  }
+
   get hasChartData() {
-    return this.chartData.length;
+    return this.filteredChartData.length;
+  }
+
+  get filteredData() {
+    return this.filterData(this.data);
   }
 
   get isLoaded() {
@@ -60,7 +69,7 @@ export default class CourseVisualizeSessionTypeGraph extends Component {
   }
 
   get tableData() {
-    return this.data.map((obj) => {
+    return this.filteredData.map((obj) => {
       const rhett = {};
       rhett.minutes = obj.data;
       rhett.sessions = sortBy(obj.meta.sessions, 'title');
@@ -80,6 +89,15 @@ export default class CourseVisualizeSessionTypeGraph extends Component {
       prop += ':desc';
     }
     this.sortBy = prop;
+  }
+
+  filterData(data) {
+    const q = cleanQuery(this.args.filter);
+    if (q) {
+      const exp = new RegExp(q, 'gi');
+      return data.filter(({ label }) => label.match(exp));
+    }
+    return data;
   }
 
   async getDataObjects(course, sessionType) {
@@ -200,7 +218,7 @@ export default class CourseVisualizeSessionTypeGraph extends Component {
           <SimpleChart
             @name="horz-bar"
             @isIcon={{@isIcon}}
-            @data={{this.chartData}}
+            @data={{this.filteredChartData}}
             @hover={{perform this.barHover}}
             @leave={{perform this.barHover}}
             as |chart|

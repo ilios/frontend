@@ -5,6 +5,9 @@ import { TrackedAsyncData } from 'ember-async-data';
 import { LinkTo } from '@ember/routing';
 import t from 'ember-intl/helpers/t';
 import add from 'ember-math-helpers/helpers/add';
+import { on } from '@ember/modifier';
+import pick from 'ilios-common/helpers/pick';
+import set from 'ember-set-helper/helpers/set';
 import VisualizeSessionTypeGraph from 'ilios-common/components/course/visualize-session-type-graph';
 
 export default class CourseVisualizeSessionTypeComponent extends Component {
@@ -61,8 +64,19 @@ export default class CourseVisualizeSessionTypeComponent extends Component {
             {{/if}}
           </LinkTo>
         </h3>
+        <div class="filter" data-test-filter>
+          <input
+            aria-label={{t "general.filterChartPlaceholder"}}
+            autocomplete="off"
+            type="search"
+            value={{this.title}}
+            placeholder={{t "general.filterPlaceholder"}}
+            {{on "input" (pick "target.value" (set this "title"))}}
+          />
+        </div>
         <div class="visualizations">
           <VisualizeSessionTypeGraph
+            @filter={{this.title}}
             @course={{@model.course}}
             @sessionType={{@model.sessionType}}
             @showDataTable={{true}}

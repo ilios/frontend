@@ -99,7 +99,7 @@ module('Integration | Component | course/visualize-session-type-graph', function
         />
       </template>,
     );
-    //let the chart animations finish
+    // let the chart animations finish
     assert.notOk(component.noData.isVisible);
     await waitFor('.loaded');
     await waitFor('svg .bars');
@@ -139,6 +139,53 @@ module('Integration | Component | course/visualize-session-type-graph', function
     assert.strictEqual(component.dataTable.rows[2].sessions.links[0].url, '/courses/1/sessions/4');
     assert.strictEqual(component.dataTable.rows[2].sessions.links[1].url, '/courses/1/sessions/3');
     assert.strictEqual(component.dataTable.rows[2].minutes, '0');
+  });
+
+  test('filter applies', async function (assert) {
+    this.set('title', 'Campaign');
+    this.set('course', this.linkedCourseWithTime);
+    this.set('type', this.sessionType);
+    await render(
+      <template>
+        <VisualizeSessionTypeGraph
+          @course={{this.course}}
+          @sessionType={{this.type}}
+          @filter={{this.title}}
+          @isIcon={{false}}
+          @showDataTable={{true}}
+        />
+      </template>,
+    );
+    assert.notOk(component.noData.isVisible);
+    //let the chart animations finish
+    await waitFor('.loaded');
+    await waitFor('svg .bars');
+    assert.strictEqual(component.chart.bars.length, 1);
+    assert.strictEqual(component.chart.labels.length, 1);
+    assert.strictEqual(component.chart.labels[0].text, 'Vocabulary 2 - Campaign\u200b');
+    assert.strictEqual(component.dataTable.rows.length, 1);
+    assert.strictEqual(component.dataTable.rows[0].vocabularyTerm, 'Vocabulary 2 - Campaign');
+  });
+
+  test('filter out all data', async function (assert) {
+    this.set('title', 'Geflarknik');
+    this.set('course', this.linkedCourseWithTime);
+    this.set('type', this.sessionType);
+    await render(
+      <template>
+        <VisualizeSessionTypeGraph
+          @course={{this.course}}
+          @sessionType={{this.type}}
+          @filter={{this.title}}
+          @isIcon={{false}}
+          @showDataTable={{true}}
+        />
+      </template>,
+    );
+    assert.notOk(component.chart.isVisible);
+    assert.notOk(component.noData.isVisible);
+    assert.ok(component.dataTable.isVisible);
+    assert.strictEqual(component.dataTable.rows.length, 0);
   });
 
   test('sort data-table by vocabulary term', async function (assert) {
