@@ -63,11 +63,22 @@ export default class ReportsSubjectCompetencyComponent extends Component {
       )
     ).data.courseObjectives;
 
+    if (!courseObjectives.length) {
+      return [];
+    }
+
     const competencies = courseObjectives.map((o) =>
       o.programYearObjectives.map((pyo) => pyo.competency),
     );
 
-    const filteredCompetencies = [...new Map(competencies.flat().map((c) => [c.id, c])).values()];
+    const filteredCompetencies = [
+      ...new Map(
+        competencies
+          .flat()
+          .filter((c) => c !== null)
+          .map((c) => [c.id, c]),
+      ).values(),
+    ];
 
     return filteredCompetencies;
   }
