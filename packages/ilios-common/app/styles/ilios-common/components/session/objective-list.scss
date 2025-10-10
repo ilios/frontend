@@ -4,22 +4,10 @@
 .session-objective-list {
   @include m.objective-list;
 
-  .fade-text-control {
-    background-image: linear-gradient(
-      to bottom,
-      transparent,
-      var(--lightest-blue)
-    );
-  }
-
   .objective-row {
-    &.is-managing {
-      .fade-text-control {
-        background-image: linear-gradient(
-          to bottom,
-          transparent,
-          var(--lightest-grey)
-        );
+    button {
+      &.edit {
+        @include m.ilios-button;
       }
     }
   }

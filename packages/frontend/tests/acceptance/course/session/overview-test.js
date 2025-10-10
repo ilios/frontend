@@ -35,8 +35,14 @@ module('Acceptance | Session - Overview', function (hooks) {
     });
     await page.visit({ courseId: 1, sessionId: 1 });
     assert.strictEqual(page.details.overview.sessionType.value, 'session type 0');
-    assert.strictEqual(page.details.overview.sessionDescription.value, session.description);
-    assert.strictEqual(page.details.overview.instructionalNotes.value, 'session notes');
+    assert.strictEqual(
+      page.details.overview.sessionDescription.fadeText.displayText.text,
+      session.description,
+    );
+    assert.strictEqual(
+      page.details.overview.instructionalNotes.fadeText.displayText.text,
+      'session notes',
+    );
     assert.notOk(page.details.overview.ilm.ilmHours.isVisible);
   });
 
@@ -481,11 +487,17 @@ module('Acceptance | Session - Overview', function (hooks) {
     await page.visit({ courseId: 1, sessionId: 1 });
 
     assert.strictEqual(currentRouteName(), 'session.index');
-    assert.strictEqual(page.details.overview.sessionDescription.value, session.description);
+    assert.strictEqual(
+      page.details.overview.sessionDescription.fadeText.displayText.text,
+      session.description,
+    );
     await page.details.overview.sessionDescription.edit();
     await page.details.overview.sessionDescription.set(newDescription);
     await page.details.overview.sessionDescription.save();
-    assert.strictEqual(page.details.overview.sessionDescription.value, newDescription);
+    assert.strictEqual(
+      page.details.overview.sessionDescription.fadeText.displayText.text,
+      newDescription,
+    );
   });
 
   test('add description', async function (assert) {
@@ -505,11 +517,14 @@ module('Acceptance | Session - Overview', function (hooks) {
     await page.visit({ courseId: 1, sessionId: 1 });
 
     assert.strictEqual(currentRouteName(), 'session.index');
-    assert.strictEqual(page.details.overview.sessionDescription.value, 'Click to edit');
+    assert.strictEqual(page.details.overview.sessionDescription.text, 'Click to edit');
     await page.details.overview.sessionDescription.edit();
     await page.details.overview.sessionDescription.set(newDescription);
     await page.details.overview.sessionDescription.save();
-    assert.strictEqual(page.details.overview.sessionDescription.value, newDescription);
+    assert.strictEqual(
+      page.details.overview.sessionDescription.fadeText.displayText.text,
+      newDescription,
+    );
   });
 
   test('empty description removes description', async function (assert) {
@@ -528,11 +543,11 @@ module('Acceptance | Session - Overview', function (hooks) {
     await page.visit({ courseId: 1, sessionId: 1 });
 
     assert.strictEqual(currentRouteName(), 'session.index');
-    assert.strictEqual(page.details.overview.sessionDescription.value, 'Click to edit');
+    assert.strictEqual(page.details.overview.sessionDescription.text, 'Click to edit');
     await page.details.overview.sessionDescription.edit();
     await page.details.overview.sessionDescription.set('<p>&nbsp</p><div></div><span>  </span>');
     await page.details.overview.sessionDescription.save();
-    assert.strictEqual(page.details.overview.sessionDescription.value, 'Click to edit');
+    assert.strictEqual(page.details.overview.sessionDescription.text, 'Click to edit');
   });
 
   test('remove description', async function (assert) {
@@ -550,11 +565,14 @@ module('Acceptance | Session - Overview', function (hooks) {
     await page.visit({ courseId: 1, sessionId: 1 });
 
     assert.strictEqual(currentRouteName(), 'session.index');
-    assert.strictEqual(page.details.overview.sessionDescription.value, session.description);
+    assert.strictEqual(
+      page.details.overview.sessionDescription.fadeText.displayText.text,
+      session.description,
+    );
     await page.details.overview.sessionDescription.edit();
     await page.details.overview.sessionDescription.set('<p>&nbsp</p><div></div><span>  </span>');
     await page.details.overview.sessionDescription.save();
-    assert.strictEqual(page.details.overview.sessionDescription.value, 'Click to edit');
+    assert.strictEqual(page.details.overview.sessionDescription.text, 'Click to edit');
   });
 
   test('cancel editing empty description #3210', async function (assert) {
@@ -573,11 +591,11 @@ module('Acceptance | Session - Overview', function (hooks) {
     await page.visit({ courseId: 1, sessionId: 1 });
 
     assert.strictEqual(currentRouteName(), 'session.index');
-    assert.strictEqual(page.details.overview.sessionDescription.value, 'Click to edit');
+    assert.strictEqual(page.details.overview.sessionDescription.text, 'Click to edit');
     await page.details.overview.sessionDescription.edit();
     await page.details.overview.sessionDescription.set('something useless this way types');
     await page.details.overview.sessionDescription.cancel();
-    assert.strictEqual(page.details.overview.sessionDescription.value, 'Click to edit');
+    assert.strictEqual(page.details.overview.sessionDescription.text, 'Click to edit');
   });
 
   test('click copy', async function (assert) {
@@ -654,7 +672,7 @@ module('Acceptance | Session - Overview', function (hooks) {
 
     assert.strictEqual(currentRouteName(), 'session.index', 'route name is correct');
     assert.strictEqual(
-      page.details.overview.instructionalNotes.value,
+      page.details.overview.instructionalNotes.fadeText.displayText.text,
       'instructional note',
       'instructional notes value is correct',
     );
@@ -662,7 +680,7 @@ module('Acceptance | Session - Overview', function (hooks) {
     await page.details.overview.instructionalNotes.set(newInstructionalNotes);
     await page.details.overview.instructionalNotes.save();
     assert.strictEqual(
-      page.details.overview.instructionalNotes.value,
+      page.details.overview.instructionalNotes.fadeText.displayText.text,
       newInstructionalNotes,
       'new instructional notes value is correct',
     );
@@ -690,7 +708,7 @@ module('Acceptance | Session - Overview', function (hooks) {
 
     assert.strictEqual(currentRouteName(), 'session.index', 'route name is correct');
     assert.strictEqual(
-      page.details.overview.instructionalNotes.value,
+      page.details.overview.instructionalNotes.text,
       'Click to edit',
       'initial instructional notes value is correct',
     );
@@ -698,7 +716,7 @@ module('Acceptance | Session - Overview', function (hooks) {
     await page.details.overview.instructionalNotes.set(newInstructionalNotes);
     await page.details.overview.instructionalNotes.save();
     assert.strictEqual(
-      page.details.overview.instructionalNotes.value,
+      page.details.overview.instructionalNotes.fadeText.displayText.text,
       newInstructionalNotes,
       'new instructional notes value is correct',
     );
@@ -724,11 +742,11 @@ module('Acceptance | Session - Overview', function (hooks) {
     await page.visit({ courseId: 1, sessionId: 1 });
 
     assert.strictEqual(currentRouteName(), 'session.index');
-    assert.strictEqual(page.details.overview.instructionalNotes.value, 'Click to edit');
+    assert.strictEqual(page.details.overview.instructionalNotes.text, 'Click to edit');
     await page.details.overview.instructionalNotes.edit();
     await page.details.overview.instructionalNotes.set('<p>&nbsp</p><div></div><span>  </span>');
     await page.details.overview.instructionalNotes.save();
-    assert.strictEqual(page.details.overview.instructionalNotes.value, 'Click to edit');
+    assert.strictEqual(page.details.overview.instructionalNotes.text, 'Click to edit');
     assert.strictEqual(this.server.db.sessions[0].instructionalNotes, null);
   });
 
@@ -748,11 +766,14 @@ module('Acceptance | Session - Overview', function (hooks) {
     await page.visit({ courseId: 1, sessionId: 1 });
 
     assert.strictEqual(currentRouteName(), 'session.index');
-    assert.strictEqual(page.details.overview.instructionalNotes.value, 'instructional note');
+    assert.strictEqual(
+      page.details.overview.instructionalNotes.fadeText.displayText.text,
+      'instructional note',
+    );
     await page.details.overview.instructionalNotes.edit();
     await page.details.overview.instructionalNotes.set('<p>&nbsp</p><div></div><span>  </span>');
     await page.details.overview.instructionalNotes.save();
-    assert.strictEqual(page.details.overview.instructionalNotes.value, 'Click to edit');
+    assert.strictEqual(page.details.overview.instructionalNotes.text, 'Click to edit');
   });
 
   test('cancel editing empty instructionalNotes #3210', async function (assert) {
@@ -770,11 +791,11 @@ module('Acceptance | Session - Overview', function (hooks) {
     await page.visit({ courseId: 1, sessionId: 1 });
 
     assert.strictEqual(currentRouteName(), 'session.index');
-    assert.strictEqual(page.details.overview.instructionalNotes.value, 'Click to edit');
+    assert.strictEqual(page.details.overview.instructionalNotes.text, 'Click to edit');
     await page.details.overview.instructionalNotes.edit();
     await page.details.overview.instructionalNotes.set('something useless this way types');
     await page.details.overview.instructionalNotes.cancel();
-    assert.strictEqual(page.details.overview.instructionalNotes.value, 'Click to edit');
+    assert.strictEqual(page.details.overview.instructionalNotes.text, 'Click to edit');
   });
 
   test('has no pre-requisite', async function (assert) {

@@ -1,29 +1,11 @@
 @use "../colors" as c;
 @use "../mixins" as m;
 
-.editinplace {
+.editable-text {
   .editor {
     @include m.ilios-form-error;
     align-items: center;
     display: flex;
-
-    #{m.$form-input-text-types} {
-      background: var(--white);
-      border: 1px solid var(--lightest-grey);
-      border-radius: 3px;
-      color: var(--black);
-      cursor: pointer;
-      display: inline;
-      outline: none;
-      overflow: show;
-      z-index: 100;
-    }
-
-    .html-editor {
-      #{m.$form-input-text-types} {
-        z-index: 2;
-      }
-    }
 
     .actions {
       display: flex;
@@ -55,9 +37,5 @@
         }
       }
     }
-  }
-
-  .fa-pen-to-square {
-    @include m.icon;
   }
 }

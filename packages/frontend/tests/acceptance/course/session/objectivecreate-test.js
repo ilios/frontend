@@ -36,7 +36,7 @@ module('Acceptance | Session - Objective Create', function (hooks) {
     });
     assert.strictEqual(page.details.objectives.objectiveList.objectives.length, 1);
     assert.strictEqual(
-      page.details.objectives.objectiveList.objectives[0].description.text,
+      page.details.objectives.objectiveList.objectives[0].description.fadeText.displayText.text,
       'session objective 0',
     );
     await page.details.objectives.createNew();
@@ -45,13 +45,13 @@ module('Acceptance | Session - Objective Create', function (hooks) {
 
     assert.strictEqual(page.details.objectives.objectiveList.objectives.length, 2);
     assert.strictEqual(
-      page.details.objectives.objectiveList.objectives[0].description.text,
+      page.details.objectives.objectiveList.objectives[0].description.fadeText.displayText.text,
       'session objective 0',
     );
     assert.ok(page.details.objectives.objectiveList.objectives[0].parents.empty);
     assert.ok(page.details.objectives.objectiveList.objectives[0].meshDescriptors.empty);
     assert.strictEqual(
-      page.details.objectives.objectiveList.objectives[1].description.text,
+      page.details.objectives.objectiveList.objectives[1].description.fadeText.displayText.text,
       newObjectiveDescription,
     );
     assert.ok(page.details.objectives.objectiveList.objectives[0].parents.empty);
@@ -67,7 +67,7 @@ module('Acceptance | Session - Objective Create', function (hooks) {
     });
     assert.strictEqual(page.details.objectives.objectiveList.objectives.length, 1);
     assert.strictEqual(
-      page.details.objectives.objectiveList.objectives[0].description.text,
+      page.details.objectives.objectiveList.objectives[0].description.fadeText.displayText.text,
       'session objective 0',
     );
     await page.details.objectives.createNew();
@@ -76,7 +76,7 @@ module('Acceptance | Session - Objective Create', function (hooks) {
 
     assert.strictEqual(page.details.objectives.objectiveList.objectives.length, 1);
     assert.strictEqual(
-      page.details.objectives.objectiveList.objectives[0].description.text,
+      page.details.objectives.objectiveList.objectives[0].description.fadeText.displayText.text,
       'session objective 0',
     );
     assert.ok(page.details.objectives.objectiveList.objectives[0].parents.empty);
@@ -92,7 +92,7 @@ module('Acceptance | Session - Objective Create', function (hooks) {
     });
     assert.strictEqual(page.details.objectives.objectiveList.objectives.length, 1);
     assert.strictEqual(
-      page.details.objectives.objectiveList.objectives[0].description.text,
+      page.details.objectives.objectiveList.objectives[0].description.fadeText.displayText.text,
       'session objective 0',
     );
     await page.details.objectives.createNew();

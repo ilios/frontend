@@ -10,6 +10,7 @@ import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
 import pick from 'ilios-common/helpers/pick';
 import YupValidationMessage from 'ilios-common/components/yup-validation-message';
+import focus from 'ilios-common/modifiers/focus';
 
 export default class ProgramHeaderComponent extends Component {
   @tracked title;
@@ -44,10 +45,8 @@ export default class ProgramHeaderComponent extends Component {
             @value={{this.title}}
             @save={{perform this.changeTitle}}
             @close={{set this "title" @program.title}}
-            @saveOnEnter={{true}}
             @clickPrompt={{t "general.clickToEdit"}}
-            @closeOnEscape={{true}}
-            as |isSaving|
+            as |keyboard isSaving|
           >
             <input
               type="text"
@@ -56,6 +55,8 @@ export default class ProgramHeaderComponent extends Component {
               {{on "input" (pick "target.value" (set this "title"))}}
               {{this.validations.attach "title"}}
               disabled={{isSaving}}
+              {{keyboard}}
+              {{focus}}
             />
             <YupValidationMessage
               @description={{t "general.title"}}

@@ -34,7 +34,7 @@ module('Integration | Component | session/overview', function (hooks) {
     const sessionModel = await this.owner.lookup('service:store').findRecord('session', session.id);
     this.set('session', sessionModel);
     await render(<template><Overview @session={{this.session}} @editable={{true}} /></template>);
-    assert.strictEqual(component.sessionDescription.value, 'Click to edit');
+    assert.strictEqual(component.sessionDescription.text, 'Click to edit');
     await component.sessionDescription.edit();
     assert.notOk(component.sessionDescription.hasError);
     assert.notOk(component.sessionDescription.savingIsDisabled);
@@ -61,7 +61,7 @@ module('Integration | Component | session/overview', function (hooks) {
     const sessionModel = await this.owner.lookup('service:store').findRecord('session', session.id);
     this.set('session', sessionModel);
     await render(<template><Overview @session={{this.session}} @editable={{true}} /></template>);
-    assert.strictEqual(component.instructionalNotes.value, 'Click to edit');
+    assert.strictEqual(component.instructionalNotes.text, 'Click to edit');
     await component.instructionalNotes.edit();
     assert.notOk(component.instructionalNotes.hasError);
     assert.notOk(component.instructionalNotes.savingIsDisabled);
@@ -91,8 +91,8 @@ module('Integration | Component | session/overview', function (hooks) {
     await render(<template><Overview @session={{this.session}} @editable={{true}} /></template>);
     assert.strictEqual(sessionModel.description, '');
     assert.strictEqual(sessionModel.instructionalNotes, '');
-    assert.strictEqual(component.sessionDescription.value, 'Click to edit');
-    assert.strictEqual(component.instructionalNotes.value, 'Click to edit');
+    assert.strictEqual(component.sessionDescription.text, 'Click to edit');
+    assert.strictEqual(component.instructionalNotes.text, 'Click to edit');
     await component.sessionDescription.edit();
     await component.sessionDescription.save();
 
@@ -103,7 +103,7 @@ module('Integration | Component | session/overview', function (hooks) {
     assert.strictEqual(sessionModel.instructionalNotes, null);
   });
 
-  test('can save descrription when notes is empty string', async function (assert) {
+  test('can save description when notes is empty string', async function (assert) {
     const session = this.server.create('session', {
       course: this.course,
       sessionType: this.sessionTypes[0],
@@ -117,8 +117,8 @@ module('Integration | Component | session/overview', function (hooks) {
     const sessionModel = await this.owner.lookup('service:store').findRecord('session', session.id);
     this.set('session', sessionModel);
     await render(<template><Overview @session={{this.session}} @editable={{true}} /></template>);
-    assert.strictEqual(component.sessionDescription.value, 'not empty');
-    assert.strictEqual(component.instructionalNotes.value, 'Click to edit');
+    assert.strictEqual(component.sessionDescription.fadeText.displayText.text, 'not empty');
+    assert.strictEqual(component.instructionalNotes.text, 'Click to edit');
     await component.sessionDescription.edit();
     await component.sessionDescription.set('still not empty');
     await component.sessionDescription.save();
@@ -140,8 +140,8 @@ module('Integration | Component | session/overview', function (hooks) {
     const sessionModel = await this.owner.lookup('service:store').findRecord('session', session.id);
     this.set('session', sessionModel);
     await render(<template><Overview @session={{this.session}} @editable={{true}} /></template>);
-    assert.strictEqual(component.sessionDescription.value, 'Click to edit');
-    assert.strictEqual(component.instructionalNotes.value, 'not empty');
+    assert.strictEqual(component.sessionDescription.text, 'Click to edit');
+    assert.strictEqual(component.instructionalNotes.fadeText.displayText.text, 'not empty');
     await component.instructionalNotes.edit();
     await component.instructionalNotes.set('still not empty');
     await component.instructionalNotes.save();

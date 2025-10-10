@@ -4,6 +4,7 @@ import meshManager from './manage-objective-descriptors';
 import competencyManager from './manage-objective-competency';
 import meshDescriptors from './objective-list-item-descriptors';
 import competency from './objective-list-item-competency';
+import fadeText from 'ilios-common/page-objects/components/fade-text';
 import taxonomyManager from 'ilios-common/page-objects/components/taxonomy-manager';
 import selectedTerms from 'ilios-common/page-objects/components/objective-list-item-terms';
 
@@ -13,6 +14,7 @@ const definition = {
   toggleExpandCollapse: clickable('[data-test-toggle-expand]'),
   description: {
     scope: '[data-test-description]',
+    fadeText,
     openEditor: clickable('[data-test-edit]'),
     editorContents: pageObjectQuillEditorValue('[data-test-html-editor]'),
     edit: pageObjectFillInQuillEditor('[data-test-html-editor]'),

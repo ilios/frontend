@@ -21,6 +21,7 @@ import SchoolVocabularyNewTerm from 'frontend/components/school-vocabulary-new-t
 import YupValidationMessage from 'ilios-common/components/yup-validation-message';
 import YupValidations from 'ilios-common/classes/yup-validations';
 import { string } from 'yup';
+import focus from 'ilios-common/modifiers/focus';
 
 export default class SchoolVocabularyTermManagerComponent extends Component {
   @service store;
@@ -216,9 +217,7 @@ export default class SchoolVocabularyTermManagerComponent extends Component {
                     @value={{if this.title this.title (t "general.clickToEdit")}}
                     @save={{perform this.changeTitle}}
                     @close={{this.revertTitleChanges}}
-                    @saveOnEnter={{true}}
-                    @closeOnEscape={{true}}
-                    as |isSaving|
+                    as |keyboard isSaving|
                   >
                     <input
                       id="title-{{templateId}}"
@@ -227,6 +226,8 @@ export default class SchoolVocabularyTermManagerComponent extends Component {
                       disabled={{isSaving}}
                       {{on "input" (pick "target.value" (set this "titleBuffer"))}}
                       {{this.validations.attach "title"}}
+                      {{keyboard}}
+                      {{focus}}
                     />
                     <YupValidationMessage
                       @description={{t "general.title"}}
@@ -277,14 +278,15 @@ export default class SchoolVocabularyTermManagerComponent extends Component {
                     }}
                     @save={{perform this.changeDescription}}
                     @close={{this.revertDescriptionChanges}}
-                    @closeOnEscape={{true}}
-                    as |isSaving|
+                    as |keyboard isSaving|
                   >
                     <textarea
                       id="description-{{templateId}}"
                       value={{this.description}}
                       {{on "input" (pick "target.value" (set this "descriptionBuffer"))}}
                       disabled={{isSaving}}
+                      {{keyboard saveOnEnter=false}}
+                      {{focus}}
                     >
                       {{this.description}}
                     </textarea>

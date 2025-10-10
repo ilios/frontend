@@ -11,7 +11,7 @@ import not from 'ember-truth-helpers/helpers/not';
 import FaIcon from 'ilios-common/components/fa-icon';
 import t from 'ember-intl/helpers/t';
 import and from 'ember-truth-helpers/helpers/and';
-import EditableField from 'ilios-common/components/editable-field';
+import EditableText from 'ilios-common/components/editable-text';
 import perform from 'ember-concurrency/helpers/perform';
 import HtmlEditor from 'ilios-common/components/html-editor';
 import ObjectiveListItemCompetency from 'frontend/components/program-year/objective-list-item-competency';
@@ -26,6 +26,7 @@ import YupValidations from 'ilios-common/classes/yup-validations';
 import YupValidationMessage from 'ilios-common/components/yup-validation-message';
 import { string } from 'yup';
 import striptags from 'striptags';
+import FadeText from 'ilios-common/components/fade-text';
 
 export default class ProgramYearObjectiveListItemComponent extends Component {
   @service store;
@@ -41,6 +42,7 @@ export default class ProgramYearObjectiveListItemComponent extends Component {
   @tracked termsBuffer = [];
   @tracked selectedVocabulary;
   @tracked fadeTextExpanded = false;
+  @tracked isEditing = false;
 
   constructor() {
     super(...arguments);
@@ -126,6 +128,7 @@ export default class ProgramYearObjectiveListItemComponent extends Component {
     this.validations.removeErrorDisplayFor('descriptionWithoutMarkup');
     this.args.programYearObjective.set('title', this.description);
     await this.args.programYearObjective.save();
+    this.isEditing = false;
     this.highlightSave.perform();
   });
 
@@ -182,13 +185,10 @@ export default class ProgramYearObjectiveListItemComponent extends Component {
   });
 
   @action
-  expandAllFadeText(isExpanded) {
-    this.fadeTextExpanded = isExpanded;
-  }
-  @action
   revertDescriptionChanges() {
     this.description = this.args.programYearObjective.title;
     this.validations.removeErrorDisplayFor('descriptionWithoutMarkup');
+    this.isEditing = false;
   }
   @action
   changeDescription(contents) {
@@ -253,28 +253,49 @@ export default class ProgramYearObjectiveListItemComponent extends Component {
       </button>
       <div class="description grid-item" data-test-description>
         {{#if (and @editable (not this.isManaging) (not this.showRemoveConfirmation))}}
-          <EditableField
+          <EditableText
             @value={{this.description}}
-            @renderHtml={{true}}
             @save={{perform this.saveDescriptionChanges}}
             @close={{this.revertDescriptionChanges}}
-            @fadeTextExpanded={{this.fadeTextExpanded}}
-            @onExpandAllFadeText={{this.expandAllFadeText}}
+            @isEditing={{this.isEditing}}
           >
-            <HtmlEditor
-              @content={{this.description}}
-              @update={{this.changeDescription}}
-              @autofocus={{true}}
-            />
-            <YupValidationMessage
-              @description={{t "general.description"}}
-              @validationErrors={{this.validations.errors.descriptionWithoutMarkup}}
-              data-test-description-validation-error-message
-            />
-          </EditableField>
+            <:default>
+              <HtmlEditor
+                @content={{this.description}}
+                @update={{this.changeDescription}}
+                @autofocus={{true}}
+              />
+              <YupValidationMessage
+                @description={{t "general.description"}}
+                @validationErrors={{this.validations.errors.descriptionWithoutMarkup}}
+                data-test-description-validation-error-message
+              />
+            </:default>
+            <:value>
+              <FadeText
+                @forceExpanded={{this.fadeTextExpanded}}
+                @setExpanded={{set this "fadeTextExpanded"}}
+                @text={{this.description}}
+              >
+                <:additionalControls>
+                  <button
+                    class="edit"
+                    data-test-edit
+                    type="button"
+                    {{on "click" (set this "isEditing")}}
+                  >
+                    {{t "general.edit"}}
+                  </button>
+                </:additionalControls>
+              </FadeText>
+            </:value>
+          </EditableText>
         {{else}}
-          {{! template-lint-disable no-triple-curlies }}
-          {{{@programYearObjective.title}}}
+          <FadeText
+            @forceExpanded={{this.fadeTextExpanded}}
+            @setExpanded={{set this "fadeTextExpanded"}}
+            @text={{this.description}}
+          />
         {{/if}}
       </div>
       <ObjectiveListItemCompetency

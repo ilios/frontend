@@ -8,6 +8,7 @@ import {
   text,
 } from 'ember-cli-page-object';
 import { pageObjectFillInQuillEditor } from 'ilios-common';
+import fadeText from '../fade-text';
 import postrequisiteEditor from './postrequisite-editor';
 import yesNoToggle from '../toggle-yesno';
 import ilm from './ilm';
@@ -39,8 +40,8 @@ const definition = {
     hasError: isVisible('.validation-error-message'),
   },
   sessionDescription: {
-    scope: '[data-test-description]',
-    value: text('span', { at: 0 }),
+    scope: '[data-test-description] [data-test-editable-text]',
+    fadeText,
     edit: clickable('[data-test-edit]'),
     set: pageObjectFillInQuillEditor('[data-test-html-editor]'),
     save: clickable('.done'),
@@ -49,8 +50,8 @@ const definition = {
     hasError: isVisible('.validation-error-message'),
   },
   instructionalNotes: {
-    scope: '[data-test-instructional-notes]',
-    value: text('span', { at: 0 }),
+    scope: '[data-test-instructional-notes] [data-test-editable-text]',
+    fadeText,
     edit: clickable('[data-test-edit]'),
     set: pageObjectFillInQuillEditor('[data-test-html-editor]'),
     save: clickable('.done'),

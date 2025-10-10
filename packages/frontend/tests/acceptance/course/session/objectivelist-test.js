@@ -55,7 +55,7 @@ module('Acceptance | Session - Objective List', function (hooks) {
     assert.strictEqual(page.details.objectives.objectiveList.objectives.length, 13);
 
     assert.strictEqual(
-      page.details.objectives.objectiveList.objectives[0].description.text,
+      page.details.objectives.objectiveList.objectives[0].description.fadeText.displayText.text,
       'session objective 0',
     );
     assert.strictEqual(page.details.objectives.objectiveList.objectives[0].parents.list.length, 1);
@@ -89,7 +89,7 @@ module('Acceptance | Session - Objective List', function (hooks) {
     );
 
     assert.strictEqual(
-      page.details.objectives.objectiveList.objectives[1].description.text,
+      page.details.objectives.objectiveList.objectives[1].description.fadeText.displayText.text,
       'session objective 1',
     );
     assert.strictEqual(page.details.objectives.objectiveList.objectives[1].parents.list.length, 1);
@@ -128,7 +128,7 @@ module('Acceptance | Session - Objective List', function (hooks) {
 
     for (let i = 2; i <= 12; i++) {
       assert.strictEqual(
-        page.details.objectives.objectiveList.objectives[i].description.text,
+        page.details.objectives.objectiveList.objectives[i].description.fadeText.displayText.text,
         `session objective ${i}`,
       );
       assert.ok(page.details.objectives.objectiveList.objectives[i].parents.empty);
@@ -150,7 +150,7 @@ module('Acceptance | Session - Objective List', function (hooks) {
     });
     assert.strictEqual(page.details.objectives.objectiveList.objectives.length, 1);
     assert.strictEqual(
-      page.details.objectives.objectiveList.objectives[0].description.text,
+      page.details.objectives.objectiveList.objectives[0].description.fadeText.displayText.text,
       longTitle,
     );
     await page.details.objectives.objectiveList.objectives[0].description.openEditor();
@@ -173,7 +173,7 @@ module('Acceptance | Session - Objective List', function (hooks) {
     });
     assert.strictEqual(page.details.objectives.objectiveList.objectives.length, 1);
     assert.strictEqual(
-      page.details.objectives.objectiveList.objectives[0].description.text,
+      page.details.objectives.objectiveList.objectives[0].description.fadeText.displayText.text,
       'session objective 0',
     );
     await page.details.objectives.objectiveList.objectives[0].description.openEditor();
@@ -181,7 +181,7 @@ module('Acceptance | Session - Objective List', function (hooks) {
     await page.details.objectives.objectiveList.objectives[0].description.save();
     assert.strictEqual(page.details.objectives.objectiveList.objectives.length, 1);
     assert.strictEqual(
-      page.details.objectives.objectiveList.objectives[0].description.text,
+      page.details.objectives.objectiveList.objectives[0].description.fadeText.displayText.text,
       newDescription,
     );
   });

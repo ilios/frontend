@@ -39,7 +39,7 @@ module('Acceptance | Course with no cohorts - Objective Parents', function (hook
     assert.strictEqual(page.details.objectives.objectiveList.objectives.length, 1);
     const firstObjective = page.details.objectives.objectiveList.objectives[0];
 
-    assert.strictEqual(firstObjective.description.text, 'course objective 0');
+    assert.strictEqual(firstObjective.description.fadeText.displayText.text, 'course objective 0');
     assert.ok(firstObjective.parents.empty);
     await firstObjective.parents.manage();
     const m = firstObjective.parentManager;

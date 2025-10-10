@@ -16,6 +16,12 @@
   }
 
   .objective-row {
+    button {
+      &.edit {
+        @include m.ilios-button;
+      }
+    }
+
     &.is-inactive {
       .grid-item {
         background-color: var(--lightest-red);
