@@ -155,6 +155,17 @@ export default class PrintCourseSessionComponent extends Component {
         <div class="title">
           {{t "general.overview"}}
         </div>
+        <div class="last-update" data-test-last-update>
+          {{t "general.lastUpdate"}}:
+          {{formatDate
+            @session.updatedAt
+            month="2-digit"
+            day="2-digit"
+            year="numeric"
+            hour="2-digit"
+            minute="2-digit"
+          }}
+        </div>
         <div class="content">
           <div class="inline-label-data-block">
             <label>
