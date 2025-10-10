@@ -9,6 +9,7 @@ import { string } from 'yup';
 import { uniqueId } from '@ember/helper';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
+import focus from 'ilios-common/modifiers/focus';
 import YupValidationMessage from 'ilios-common/components/yup-validation-message';
 import isArray from 'ember-truth-helpers/helpers/is-array';
 import sortBy from 'ilios-common/helpers/sort-by';
@@ -104,8 +105,10 @@ export default class NewSessionComponent extends Component {
             </label>
             <input
               id="title-{{templateId}}"
+              {{focus}}
               type="text"
               value={{this.title}}
+              placeholder={{t "general.sessionTitlePlaceholder"}}
               {{on "input" this.changeTitle}}
               {{on "keyup" this.keyboard}}
               {{this.validations.attach "title"}}

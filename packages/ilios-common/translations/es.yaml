@@ -336,6 +336,7 @@ general:
   scheduling: Programación
   school: Escuela
   schools: Escuelas
+  schoolTitlePlaceholder: Entre en un titulo para esta escuela
   search: Buscar
   searchForIliosUsers: Encuentre Usuarios de Ilios...
   searchMesh: Buscar MeSH
@@ -353,6 +354,7 @@ general:
   sessions: Sesiones
   sessionTitle: Titulo de Sesión
   sessionTitleFilterPlaceholder: "Aplicar un Filtro por titulo, tipo, o estado de la publicación"
+  sessionTitlePlaceholder: "Entre en un titulo para este sesión"
   sessionType: Tipo de Sesión
   sessionTypes: Tipos de Sesiones
   sessionTypesFor: "Tipos de Sesiones para {subject}"

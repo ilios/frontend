@@ -104,6 +104,7 @@ general:
   curriculumInventoryReportRolloverSummary: "Cette action copiera la structure de ce rapport à utiliser dans votre année cible. Il ne copiera pas les informations de cours, uniquement la structure de bloc de séquence de niveau supérieur. Vous devrez ajouter les informations de cours appropriées et modifier les dates de début et de fin du bloc de séquence une fois que vous aurez reconduit la structure de rapport existante."
   curriculumInventoryReportRolloverSuccess: Roulement achevée avec succès
   curriculumInventoryReports: "Rapports d'inventaire des programmes d'études"
+  curriculumInventoryReportsTitlePlaceholder: Ajoutez une titre par ce rapport
   dashboard: Tableau de Bord
   deactivate: Désactiver
   defaultInstructors: Instructeurs par Défaut
@@ -392,10 +393,10 @@ general:
   selectYear: Choisi année scolaire
   sequenceBlock: Bloc séquence
   sequenceBlockConfirmRemove: Êtes-vous sûrs que vous voulez supprimer ce bloc séquence? Cette action ne peut pas être défaite.
-  sequenceBlockDescriptionPlaceholder: "Entrez S'il vous plaît dans une description pour ceci bloc séquence."
+  sequenceBlockDescriptionPlaceholder: "Entrez une description pour ceci bloc séquence."
   sequenceBlockIsSelective: Cette bloc séquence a été marquée comme sélective.
   sequenceBlocks: Blocs séquence
-  sequenceBlockTitlePlaceholder: "Entrez S'il vous plaît dans une titre pour ceci bloc séquence."
+  sequenceBlockTitlePlaceholder: "Entrez une titre pour ceci bloc séquence"
   sequenceNumber: No. de séquence
   sessionAttributes: Attributs de Séance
   sessionObjectives: Objectifs de séance

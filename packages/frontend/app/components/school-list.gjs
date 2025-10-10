@@ -9,6 +9,7 @@ import { uniqueId } from '@ember/helper';
 import t from 'ember-intl/helpers/t';
 import ExpandCollapseButton from 'ilios-common/components/expand-collapse-button';
 import { on } from '@ember/modifier';
+import focus from 'ilios-common/modifiers/focus';
 import pick from 'ilios-common/helpers/pick';
 import set from 'ember-set-helper/helpers/set';
 import perform from 'ember-concurrency/helpers/perform';
@@ -110,8 +111,10 @@ export default class SchoolListComponent extends Component {
                   </label>
                   <input
                     id="title-{{templateId}}"
+                    {{focus}}
                     type="text"
                     value={{this.title}}
+                    placeholder={{t "general.schoolTitlePlaceholder"}}
                     {{on "input" (pick "target.value" (set this "title"))}}
                     {{on "keyup" (perform this.saveOrCancel)}}
                     {{this.validations.attach "title"}}
@@ -129,6 +132,7 @@ export default class SchoolListComponent extends Component {
                     id="email-{{templateId}}"
                     type="text"
                     value={{this.iliosAdministratorEmail}}
+                    placeholder={{t "general.administratorEmailPlaceholder"}}
                     {{on "input" (pick "target.value" (set this "iliosAdministratorEmail"))}}
                     {{on "keyup" (perform this.saveOrCancel)}}
                     {{this.validations.attach "iliosAdministratorEmail"}}

@@ -7,6 +7,7 @@ import { string } from 'yup';
 import { uniqueId } from '@ember/helper';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
+import focus from 'ilios-common/modifiers/focus';
 import pick from 'ilios-common/helpers/pick';
 import set from 'ember-set-helper/helpers/set';
 import YupValidationMessage from 'ilios-common/components/yup-validation-message';
@@ -53,6 +54,7 @@ export default class LearnerGroupNewSingleComponent extends Component {
           </label>
           <input
             id="title-{{templateId}}"
+            {{focus}}
             type="text"
             disabled={{this.save.isRunning}}
             placeholder={{t "general.learnerGroupTitlePlaceholder"}}

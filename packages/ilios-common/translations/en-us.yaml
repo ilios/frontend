@@ -336,6 +336,7 @@ general:
   scheduling: Scheduling
   school: School
   schools: Schools
+  schoolTitlePlaceholder: Enter a title for this school
   search: Search
   searchForIliosUsers: Find Ilios Users...
   searchMesh: Search MeSH
@@ -353,6 +354,7 @@ general:
   sessions: Sessions
   sessionTitle: Session Title
   sessionTitleFilterPlaceholder: "Filter by title, type, or status"
+  sessionTitlePlaceholder: Enter a title for this session
   sessionType: Session Type
   sessionTypes: Session Types
   sessionTypesFor: "Session Types for {subject}"

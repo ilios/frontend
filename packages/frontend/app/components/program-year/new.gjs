@@ -5,6 +5,7 @@ import { findBy, mapBy } from 'ilios-common/utils/array-helpers';
 import t from 'ember-intl/helpers/t';
 import { uniqueId } from '@ember/helper';
 import { on } from '@ember/modifier';
+import focus from 'ilios-common/modifiers/focus';
 import pick from 'ilios-common/helpers/pick';
 import set from 'ember-set-helper/helpers/set';
 import sortBy from 'ilios-common/helpers/sort-by';
@@ -64,6 +65,7 @@ export default class NewProgramYearComponent extends Component {
             </label>
             <select
               id={{yearId}}
+              {{focus}}
               {{on "change" (pick "target.value" (set this "year"))}}
               data-test-year
             >

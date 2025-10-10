@@ -7,6 +7,7 @@ general:
   add: Ajouté
   addNew: Ajouté Neuf
   administratorCount: "Il y a {count, plural, =1 { un administrateur} other {# administrateurs}}"
+
   administrators: Administrateurs
   advancedOptions: Options avancées
   allCourses: Tous les Cours
@@ -336,6 +337,7 @@ general:
   scheduling: Planification
   school: Écôle
   schools: Écôles
+  schoolTitlePlaceholder: Ajoutez titre par ce écôle
   search: Rechercher
   searchForIliosUsers: Trouver des utilisateurs...
   searchMesh: Rechercher MeSH
@@ -353,6 +355,7 @@ general:
   sessions: Séances
   sessionTitle: Titre de Séance
   sessionTitleFilterPlaceholder: "Filtre par titre, genre, ou statut"
+  sessionTitlePlaceholder: Ajoutez titre par ce séance
   sessionType: Type de Séance
   sessionTypes: Types de Séance
   sessionTypesFor: "Types de Séance par {subject}"
