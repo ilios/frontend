@@ -59,8 +59,10 @@ export default class ProgramYearObjectiveListItemExpandedComponent extends Compo
       data-test-program-year-objective-list-item-expanded
     >
       <thead>
-        <th>{{t "general.courses"}}</th>
-        <th>{{t "general.objectives"}}</th>
+        <tr>
+          <th>{{t "general.courses"}}</th>
+          <th>{{t "general.objectives"}}</th>
+        </tr>
       </thead>
       <tbody>
         {{#if this.courseObjectsLoaded}}
