@@ -7,11 +7,15 @@
 
   h3 {
     @include m.ilios-heading-h4;
-    margin: 1em 0;
+    margin: 0.5rem 0;
 
     .fa-box-archive {
       @include m.font-size("base");
     }
+  }
+
+  p.no-content {
+    margin: 0;
   }
 
   .pre-work {
