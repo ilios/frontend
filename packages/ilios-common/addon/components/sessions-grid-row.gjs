@@ -93,6 +93,7 @@ export default class SessionsGridRowComponent extends Component {
               <LinkTo
                 @route="session"
                 @models={{array @session.course.id @session.postrequisite.id}}
+                title={{@session.postrequisite.title}}
               >
                 {{truncate @session.postrequisite.title 18 true}}
               </LinkTo>
@@ -108,7 +109,11 @@ export default class SessionsGridRowComponent extends Component {
               <FaIcon @icon="user-clock" />
               {{t "general.duePriorTo"}}:
             </strong>
-            <LinkTo @route="session" @models={{array @session.course.id @session.postrequisite.id}}>
+            <LinkTo
+              @route="session"
+              @models={{array @session.course.id @session.postrequisite.id}}
+              title={{@session.postrequisite.title}}
+            >
               {{truncate @session.postrequisite.title 18 true}}
             </LinkTo>
           {{else}}
