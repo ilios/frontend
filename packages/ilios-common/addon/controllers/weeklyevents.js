@@ -1,6 +1,6 @@
 import Controller from '@ember/controller';
 import { action } from '@ember/object';
-import { getOwner } from '@ember/application';
+import { getOwner } from '@ember/owner';
 import { tracked } from '@glimmer/tracking';
 import { DateTime } from 'luxon';
 
