@@ -194,7 +194,7 @@ export default class SessionCopyComponent extends Component {
               {{t "general.backToTitle" title=@session.title}}
             </LinkTo>
           </div>
-          <div class="copy-form" {{scrollIntoView}}>
+          <div class="copy-form">
             <h3 class="title">
               {{t "general.copySession"}}
             </h3>
@@ -255,7 +255,7 @@ export default class SessionCopyComponent extends Component {
                   {{/if}}
                 </button>
                 <LinkTo @route="session" @model={{@session}}>
-                  <button class="cancel text" type="button">
+                  <button class="cancel text" type="button" {{scrollIntoView}}>
                     {{t "general.cancel"}}
                   </button>
                 </LinkTo>
