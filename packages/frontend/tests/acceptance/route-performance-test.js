@@ -119,7 +119,7 @@ module('Acceptance | performance', function (hooks) {
     let end = performance.now();
     let duration = end - start;
 
-    assert.strictEqual(currentRouteName(), 'reports', 'current route name is correct');
+    assert.strictEqual(currentRouteName(), 'reports.subjects', 'current route name is correct');
     assert.ok(
       duration < this.durationQuick,
       `Render time was ${duration}ms`,
@@ -135,7 +135,7 @@ module('Acceptance | performance', function (hooks) {
     let end = performance.now();
     let duration = end - start;
 
-    assert.strictEqual(currentRouteName(), 'admin', 'current route name is correct');
+    assert.strictEqual(currentRouteName(), 'admin-dashboard', 'current route name is correct');
     assert.ok(
       duration < this.durationQuick,
       `Render time was ${duration}ms`,
@@ -143,17 +143,17 @@ module('Acceptance | performance', function (hooks) {
     );
   });
 
-  test('/curricum-inventory-reports', async function (assert) {
+  test('/curriculum-inventory-reports', async function (assert) {
     let start = performance.now();
 
-    await visit('/curricum-inventory-reports');
+    await visit('/curriculum-inventory-reports');
 
     let end = performance.now();
     let duration = end - start;
 
     assert.strictEqual(
       currentRouteName(),
-      'curruicular-inventory-reports',
+      'curriculum-inventory-reports',
       'current route name is correct',
     );
     assert.ok(
