@@ -300,7 +300,33 @@ module('Acceptance | performance', function (hooks) {
     );
   });
 
+  test('/users', async function (assert) {
+    this.server.createList('user', 25);
+
+    let start = performance.now();
+
+    await visit('/users');
+
+    let end = performance.now();
+    let duration = end - start;
+
+    assert.strictEqual(currentRouteName(), 'users', 'current route name is correct');
+    assert.ok(
+      duration < this.durationQuick,
+      `Render time was ${duration}ms`,
+      `route loaded in allowable time: ${duration}`,
+    );
+  });
+
   test('/curriculum-inventory-reports', async function (assert) {
+    this.program = this.server.create('program', { school: this.school });
+
+    for (let i = 0; i < 10; i++) {
+      this.server.create('curriculum-inventory-report', {
+        program: this.program,
+      });
+    }
+
     let start = performance.now();
 
     await visit('/curriculum-inventory-reports');
