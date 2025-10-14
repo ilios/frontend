@@ -2,7 +2,6 @@ import { currentRouteName, visit } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupAuthentication } from 'ilios-common';
 import { setupApplicationTest } from 'frontend/tests/helpers';
-import page from 'ilios-common/page-objects/dashboard-week';
 
 module('Acceptance | performance', function (hooks) {
   setupApplicationTest(hooks);
@@ -18,7 +17,7 @@ module('Acceptance | performance', function (hooks) {
   test('/dashboard/week', async function (assert) {
     let start = performance.now();
 
-    await page.visit({ show: 'week' });
+    await visit('/dashboard/week');
 
     let end = performance.now();
     let duration = end - start;
@@ -31,7 +30,66 @@ module('Acceptance | performance', function (hooks) {
     );
   });
 
+  test('/dashboard/materials', async function (assert) {
+    let start = performance.now();
+
+    await visit('/dashboard/materials');
+
+    let end = performance.now();
+    let duration = end - start;
+
+    assert.strictEqual(currentRouteName(), 'dashboard.materials', 'current route name is correct');
+    assert.ok(
+      duration < this.durationQuick,
+      `Render time was ${duration}ms`,
+      `route loaded in allowable time: ${duration}`,
+    );
+  });
+
+  test('/dashboard/calendar', async function (assert) {
+    let start = performance.now();
+
+    await visit('/dashboard/calendar');
+
+    let end = performance.now();
+    let duration = end - start;
+
+    assert.strictEqual(currentRouteName(), 'dashboard.calendar', 'current route name is correct');
+    assert.ok(
+      duration < this.durationQuick,
+      `Render time was ${duration}ms`,
+      `route loaded in allowable time: ${duration}`,
+    );
+  });
+
+  test('/weeklyevents', async function (assert) {
+    let start = performance.now();
+
+    await visit('/weeklyevents');
+
+    let end = performance.now();
+    let duration = end - start;
+
+    assert.strictEqual(currentRouteName(), 'weeklyevents', 'current route name is correct');
+    assert.ok(
+      duration < this.durationQuick,
+      `Render time was ${duration}ms`,
+      `route loaded in allowable time: ${duration}`,
+    );
+  });
+
   test('/courses', async function (assert) {
+    this.server.create('academic-year');
+    this.sessionTypes = this.server.createList('session-type', 1, {
+      school: this.school,
+    });
+
+    for (let i = 0; i < 100; i++) {
+      this.server.create('course', {
+        school: this.school,
+      });
+    }
+
     let start = performance.now();
 
     await visit('/courses');
@@ -40,6 +98,39 @@ module('Acceptance | performance', function (hooks) {
     let duration = end - start;
 
     assert.strictEqual(currentRouteName(), 'courses', 'current route name is correct');
+    assert.ok(
+      duration < this.durationModerate,
+      `Render time was ${duration}ms`,
+      `route loaded in allowable: ${duration}`,
+    );
+  });
+
+  test('/courses/[course-id]/sessions', async function (assert) {
+    this.server.create('academic-year');
+    this.sessionTypes = this.server.createList('session-type', 1, {
+      school: this.school,
+    });
+
+    this.course = this.server.create('course', {
+      school: this.school,
+    });
+
+    for (let i = 0; i < 100; i++) {
+      this.server.create('session', {
+        course: this.course,
+        sessionType: this.sessionTypes[0],
+        instructionalNotes: `session ${i} notes`,
+      });
+    }
+
+    let start = performance.now();
+
+    await visit('/courses/1');
+
+    let end = performance.now();
+    let duration = end - start;
+
+    assert.strictEqual(currentRouteName(), 'course.index', 'current route name is correct');
     assert.ok(
       duration < this.durationModerate,
       `Render time was ${duration}ms`,
