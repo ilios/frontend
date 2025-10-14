@@ -12,7 +12,7 @@ module('Acceptance | performance', function (hooks) {
     this.set('durationModerate', 2000);
 
     this.school = this.server.create('school');
-    this.user = await setupAuthentication({ school: this.school });
+    this.user = await setupAuthentication({ school: this.school }, true);
   });
 
   test('/dashboard/week', async function (assert) {
