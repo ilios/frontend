@@ -139,6 +139,18 @@ module('Acceptance | performance', function (hooks) {
   });
 
   test('/learnergroups', async function (assert) {
+    this.server.createList('user', 20);
+    const program = this.server.create('program', { school: this.school });
+    const programYear = this.server.create('program-year', { program });
+    const cohort = this.server.create('cohort', { programYear });
+
+    for (let i = 2; i < 22; i += 5) {
+      this.server.create('learner-group', {
+        cohort,
+        userIds: [i, i + 1, i + 2, i + 3, i + 4],
+      });
+    }
+
     let start = performance.now();
 
     await visit('/learnergroups');
@@ -155,6 +167,15 @@ module('Acceptance | performance', function (hooks) {
   });
 
   test('/instructorgroups', async function (assert) {
+    this.server.createList('user', 50);
+
+    for (let i = 2; i < 52; i += 5) {
+      this.server.create('instructor-group', {
+        school: this.school,
+        userIds: [i, i + 1, i + 2, i + 3, i + 4],
+      });
+    }
+
     let start = performance.now();
 
     await visit('/instructorgroups');
@@ -171,6 +192,10 @@ module('Acceptance | performance', function (hooks) {
   });
 
   test('/schools', async function (assert) {
+    for (let i = 0; i < 20; i++) {
+      this.server.create('school');
+    }
+
     let start = performance.now();
 
     await visit('/schools');
@@ -187,6 +212,10 @@ module('Acceptance | performance', function (hooks) {
   });
 
   test('/programs', async function (assert) {
+    for (let i = 0; i < 20; i++) {
+      this.server.create('program');
+    }
+
     let start = performance.now();
 
     await visit('/programs');
@@ -203,6 +232,43 @@ module('Acceptance | performance', function (hooks) {
   });
 
   test('/reports', async function (assert) {
+    this.server.create('academic-year');
+    this.sessionTypes = this.server.createList('session-type', 1, {
+      school: this.school,
+    });
+
+    const courses = [];
+    for (let i = 0; i < 10; i++) {
+      courses.push(
+        this.server.create('course', {
+          id: i,
+          school: this.school,
+        }),
+      );
+    }
+
+    for (let i = 0; i < 10; i++) {
+      for (let j = 0; j < 10; j++) {
+        this.server.create('session', {
+          id: j,
+          course: courses[i],
+          sessionType: this.sessionTypes[0],
+          instructionalNotes: `course ${i} session ${j} notes`,
+        });
+      }
+    }
+
+    for (let i = 0; i < 10; i++) {
+      this.server.create('report', {
+        title: `my report {i}`,
+        subject: 'session',
+        prepositionalObject: 'course',
+        prepositionalObjectTableRowId: courses[i].id,
+        user: this.user,
+        school: this.school,
+      });
+    }
+
     let start = performance.now();
 
     await visit('/reports');
