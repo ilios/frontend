@@ -27,7 +27,7 @@ module('Acceptance | performance', function (hooks) {
     assert.ok(
       duration < this.durationQuick,
       `Render time was ${duration}ms`,
-      'route loaded in allowable time',
+      `route loaded in allowable time: ${duration}`,
     );
   });
 
@@ -43,7 +43,7 @@ module('Acceptance | performance', function (hooks) {
     assert.ok(
       duration < this.durationModerate,
       `Render time was ${duration}ms`,
-      'route loaded in allowable time',
+      `route loaded in allowable: ${duration}`,
     );
   });
 
@@ -59,7 +59,7 @@ module('Acceptance | performance', function (hooks) {
     assert.ok(
       duration < this.durationQuick,
       `Render time was ${duration}ms`,
-      'route loaded in allowable time',
+      `route loaded in allowable time: ${duration}`,
     );
   });
 
@@ -75,7 +75,7 @@ module('Acceptance | performance', function (hooks) {
     assert.ok(
       duration < this.durationQuick,
       `Render time was ${duration}ms`,
-      'route loaded in allowable time',
+      `route loaded in allowable time: ${duration}`,
     );
   });
 
@@ -91,7 +91,7 @@ module('Acceptance | performance', function (hooks) {
     assert.ok(
       duration < this.durationQuick,
       `Render time was ${duration}ms`,
-      'route loaded in allowable time',
+      `route loaded in allowable time: ${duration}`,
     );
   });
 
@@ -107,7 +107,7 @@ module('Acceptance | performance', function (hooks) {
     assert.ok(
       duration < this.durationQuick,
       `Render time was ${duration}ms`,
-      'route loaded in allowable time',
+      `route loaded in allowable time: ${duration}`,
     );
   });
 
@@ -123,7 +123,7 @@ module('Acceptance | performance', function (hooks) {
     assert.ok(
       duration < this.durationQuick,
       `Render time was ${duration}ms`,
-      'route loaded in allowable time',
+      `route loaded in allowable time: ${duration}`,
     );
   });
 
@@ -139,7 +139,7 @@ module('Acceptance | performance', function (hooks) {
     assert.ok(
       duration < this.durationQuick,
       `Render time was ${duration}ms`,
-      'route loaded in allowable time',
+      `route loaded in allowable time: ${duration}`,
     );
   });
 
@@ -159,7 +159,7 @@ module('Acceptance | performance', function (hooks) {
     assert.ok(
       duration < this.durationQuick,
       `Render time was ${duration}ms`,
-      'route loaded in allowable time',
+      `route loaded in allowable time: ${duration}`,
     );
   });
 });
