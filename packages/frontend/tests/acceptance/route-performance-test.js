@@ -1,7 +1,8 @@
 import { currentRouteName, visit } from '@ember/test-helpers';
 import { module, test } from 'qunit';
-import { setupAuthentication } from 'ilios-common';
+import { setupAuthentication, freezeDateAt, unfreezeDate } from 'ilios-common';
 import { setupApplicationTest } from 'frontend/tests/helpers';
+import { DateTime } from 'luxon';
 
 module('Acceptance | performance', function (hooks) {
   setupApplicationTest(hooks);
@@ -15,6 +16,29 @@ module('Acceptance | performance', function (hooks) {
   });
 
   test('/dashboard/week', async function (assert) {
+    const today = DateTime.fromObject({ hour: 8 });
+    const oct14th2025 = DateTime.fromObject({
+      year: 2025,
+      month: 10,
+      day: 14,
+      hour: 8,
+    });
+    freezeDateAt(oct14th2025.toJSDate());
+    const { firstDayOfThisWeek } = this.owner.lookup('service:locale-days');
+    const startOfWeek = DateTime.fromJSDate(firstDayOfThisWeek);
+
+    for (let i = 0; i < 7; i++) {
+      this.server.create('userevent', {
+        user: Number(this.user.id),
+        name: `user event ${i}`,
+        startDate: startOfWeek.plus({ hour: i }).toJSDate(),
+        endDate: startOfWeek.plus({ hour: i + i }).toJSDate(),
+        lastModified: today.minus({ year: 1 }).toJSDate(),
+        isPublished: true,
+        offering: i,
+      });
+    }
+
     let start = performance.now();
 
     await visit('/dashboard/week');
@@ -28,6 +52,8 @@ module('Acceptance | performance', function (hooks) {
       `Render time was ${duration}ms`,
       `route loaded in allowable time: ${duration}`,
     );
+
+    unfreezeDate();
   });
 
   test('/dashboard/materials', async function (assert) {
