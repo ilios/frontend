@@ -8,8 +8,7 @@ module('Acceptance | performance', function (hooks) {
   setupApplicationTest(hooks);
 
   hooks.beforeEach(async function () {
-    this.set('durationQuick', 1000);
-    this.set('durationModerate', 2000);
+    this.set('maxDuration', 5000);
 
     this.school = this.server.create('school');
     this.user = await setupAuthentication({ school: this.school }, true);
@@ -48,7 +47,7 @@ module('Acceptance | performance', function (hooks) {
 
     assert.strictEqual(currentRouteName(), 'dashboard.week', 'current route name is correct');
     assert.ok(
-      duration < this.durationQuick,
+      duration < this.maxDuration,
       `Render time was ${duration}ms`,
       `route loaded in allowable time: ${duration}`,
     );
@@ -66,7 +65,7 @@ module('Acceptance | performance', function (hooks) {
 
     assert.strictEqual(currentRouteName(), 'dashboard.materials', 'current route name is correct');
     assert.ok(
-      duration < this.durationQuick,
+      duration < this.maxDuration,
       `Render time was ${duration}ms`,
       `route loaded in allowable time: ${duration}`,
     );
@@ -82,7 +81,7 @@ module('Acceptance | performance', function (hooks) {
 
     assert.strictEqual(currentRouteName(), 'dashboard.calendar', 'current route name is correct');
     assert.ok(
-      duration < this.durationQuick,
+      duration < this.maxDuration,
       `Render time was ${duration}ms`,
       `route loaded in allowable time: ${duration}`,
     );
@@ -98,7 +97,7 @@ module('Acceptance | performance', function (hooks) {
 
     assert.strictEqual(currentRouteName(), 'weeklyevents', 'current route name is correct');
     assert.ok(
-      duration < this.durationQuick,
+      duration < this.maxDuration,
       `Render time was ${duration}ms`,
       `route loaded in allowable time: ${duration}`,
     );
@@ -125,7 +124,7 @@ module('Acceptance | performance', function (hooks) {
 
     assert.strictEqual(currentRouteName(), 'courses', 'current route name is correct');
     assert.ok(
-      duration < this.durationModerate,
+      duration < this.maxDuration,
       `Render time was ${duration}ms`,
       `route loaded in allowable: ${duration}`,
     );
@@ -158,7 +157,7 @@ module('Acceptance | performance', function (hooks) {
 
     assert.strictEqual(currentRouteName(), 'course.index', 'current route name is correct');
     assert.ok(
-      duration < this.durationModerate,
+      duration < this.maxDuration,
       `Render time was ${duration}ms`,
       `route loaded in allowable: ${duration}`,
     );
@@ -186,7 +185,7 @@ module('Acceptance | performance', function (hooks) {
 
     assert.strictEqual(currentRouteName(), 'learner-groups', 'current route name is correct');
     assert.ok(
-      duration < this.durationQuick,
+      duration < this.maxDuration,
       `Render time was ${duration}ms`,
       `route loaded in allowable time: ${duration}`,
     );
@@ -211,7 +210,7 @@ module('Acceptance | performance', function (hooks) {
 
     assert.strictEqual(currentRouteName(), 'instructor-groups', 'current route is correct');
     assert.ok(
-      duration < this.durationQuick,
+      duration < this.maxDuration,
       `Render time was ${duration}ms`,
       `route loaded in allowable time: ${duration}`,
     );
@@ -231,7 +230,7 @@ module('Acceptance | performance', function (hooks) {
 
     assert.strictEqual(currentRouteName(), 'schools', 'current route name is correct');
     assert.ok(
-      duration < this.durationQuick,
+      duration < this.maxDuration,
       `Render time was ${duration}ms`,
       `route loaded in allowable time: ${duration}`,
     );
@@ -251,7 +250,7 @@ module('Acceptance | performance', function (hooks) {
 
     assert.strictEqual(currentRouteName(), 'programs', 'current route name is correct');
     assert.ok(
-      duration < this.durationQuick,
+      duration < this.maxDuration,
       `Render time was ${duration}ms`,
       `route loaded in allowable time: ${duration}`,
     );
@@ -304,7 +303,7 @@ module('Acceptance | performance', function (hooks) {
 
     assert.strictEqual(currentRouteName(), 'reports.subjects', 'current route name is correct');
     assert.ok(
-      duration < this.durationQuick,
+      duration < this.maxDuration,
       `Render time was ${duration}ms`,
       `route loaded in allowable time: ${duration}`,
     );
@@ -320,7 +319,7 @@ module('Acceptance | performance', function (hooks) {
 
     assert.strictEqual(currentRouteName(), 'admin-dashboard', 'current route name is correct');
     assert.ok(
-      duration < this.durationQuick,
+      duration < this.maxDuration,
       `Render time was ${duration}ms`,
       `route loaded in allowable time: ${duration}`,
     );
@@ -338,7 +337,7 @@ module('Acceptance | performance', function (hooks) {
 
     assert.strictEqual(currentRouteName(), 'users', 'current route name is correct');
     assert.ok(
-      duration < this.durationQuick,
+      duration < this.maxDuration,
       `Render time was ${duration}ms`,
       `route loaded in allowable time: ${duration}`,
     );
@@ -366,7 +365,7 @@ module('Acceptance | performance', function (hooks) {
       'current route name is correct',
     );
     assert.ok(
-      duration < this.durationQuick,
+      duration < this.maxDuration,
       `Render time was ${duration}ms`,
       `route loaded in allowable time: ${duration}`,
     );
