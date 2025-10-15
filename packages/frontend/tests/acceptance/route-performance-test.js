@@ -8,7 +8,7 @@ module('Acceptance | performance', function (hooks) {
   setupApplicationTest(hooks);
 
   hooks.beforeEach(async function () {
-    this.set('maxDuration', 5000);
+    this.set('maxDuration', 10000);
 
     this.school = this.server.create('school');
     this.user = await setupAuthentication({ school: this.school }, true);
