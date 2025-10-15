@@ -10,6 +10,7 @@ export default class UserController extends Controller {
   @service iliosConfig;
 
   queryParams = [
+    'showCalendar',
     'isManagingBio',
     'isManagingRoles',
     'isManagingCohorts',
@@ -18,6 +19,7 @@ export default class UserController extends Controller {
     'permissionsSchool',
     'permissionsYear',
   ];
+  @tracked showCalendar = false;
   @tracked isManagingBio = false;
   @tracked isManagingRoles = false;
   @tracked isManagingCohorts = false;
