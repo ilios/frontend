@@ -46,11 +46,7 @@ module('Acceptance | performance', function (hooks) {
     let duration = end - start;
 
     assert.strictEqual(currentRouteName(), 'dashboard.week', 'current route name is correct');
-    assert.ok(
-      duration < this.maxDuration,
-      `Render time was ${duration}ms`,
-      `route loaded in allowable time: ${duration}`,
-    );
+    assert.ok(duration < this.maxDuration, `route loaded in allowable time: ${duration}ms`);
 
     unfreezeDate();
   });
@@ -64,11 +60,7 @@ module('Acceptance | performance', function (hooks) {
     let duration = end - start;
 
     assert.strictEqual(currentRouteName(), 'dashboard.materials', 'current route name is correct');
-    assert.ok(
-      duration < this.maxDuration,
-      `Render time was ${duration}ms`,
-      `route loaded in allowable time: ${duration}`,
-    );
+    assert.ok(duration < this.maxDuration, `route loaded in allowable time: ${duration}ms`);
   });
 
   test('/dashboard/calendar', async function (assert) {
@@ -80,11 +72,7 @@ module('Acceptance | performance', function (hooks) {
     let duration = end - start;
 
     assert.strictEqual(currentRouteName(), 'dashboard.calendar', 'current route name is correct');
-    assert.ok(
-      duration < this.maxDuration,
-      `Render time was ${duration}ms`,
-      `route loaded in allowable time: ${duration}`,
-    );
+    assert.ok(duration < this.maxDuration, `route loaded in allowable time: ${duration}ms`);
   });
 
   test('/weeklyevents', async function (assert) {
@@ -96,11 +84,7 @@ module('Acceptance | performance', function (hooks) {
     let duration = end - start;
 
     assert.strictEqual(currentRouteName(), 'weeklyevents', 'current route name is correct');
-    assert.ok(
-      duration < this.maxDuration,
-      `Render time was ${duration}ms`,
-      `route loaded in allowable time: ${duration}`,
-    );
+    assert.ok(duration < this.maxDuration, `route loaded in allowable time: ${duration}ms`);
   });
 
   test('/courses', async function (assert) {
@@ -123,11 +107,7 @@ module('Acceptance | performance', function (hooks) {
     let duration = end - start;
 
     assert.strictEqual(currentRouteName(), 'courses', 'current route name is correct');
-    assert.ok(
-      duration < this.maxDuration,
-      `Render time was ${duration}ms`,
-      `route loaded in allowable: ${duration}`,
-    );
+    assert.ok(duration < this.maxDuration, `route loaded in allowable time: ${duration}ms`);
   });
 
   test('/courses/[course-id]/sessions', async function (assert) {
@@ -156,11 +136,7 @@ module('Acceptance | performance', function (hooks) {
     let duration = end - start;
 
     assert.strictEqual(currentRouteName(), 'course.index', 'current route name is correct');
-    assert.ok(
-      duration < this.maxDuration,
-      `Render time was ${duration}ms`,
-      `route loaded in allowable: ${duration}`,
-    );
+    assert.ok(duration < this.maxDuration, `route loaded in allowable time: ${duration}ms`);
   });
 
   test('/learnergroups', async function (assert) {
@@ -184,11 +160,7 @@ module('Acceptance | performance', function (hooks) {
     let duration = end - start;
 
     assert.strictEqual(currentRouteName(), 'learner-groups', 'current route name is correct');
-    assert.ok(
-      duration < this.maxDuration,
-      `Render time was ${duration}ms`,
-      `route loaded in allowable time: ${duration}`,
-    );
+    assert.ok(duration < this.maxDuration, `route loaded in allowable time: ${duration}ms`);
   });
 
   test('/instructorgroups', async function (assert) {
@@ -209,11 +181,7 @@ module('Acceptance | performance', function (hooks) {
     let duration = end - start;
 
     assert.strictEqual(currentRouteName(), 'instructor-groups', 'current route is correct');
-    assert.ok(
-      duration < this.maxDuration,
-      `Render time was ${duration}ms`,
-      `route loaded in allowable time: ${duration}`,
-    );
+    assert.ok(duration < this.maxDuration, `route loaded in allowable time: ${duration}ms`);
   });
 
   test('/schools', async function (assert) {
@@ -229,11 +197,7 @@ module('Acceptance | performance', function (hooks) {
     let duration = end - start;
 
     assert.strictEqual(currentRouteName(), 'schools', 'current route name is correct');
-    assert.ok(
-      duration < this.maxDuration,
-      `Render time was ${duration}ms`,
-      `route loaded in allowable time: ${duration}`,
-    );
+    assert.ok(duration < this.maxDuration, `route loaded in allowable time: ${duration}ms`);
   });
 
   test('/programs', async function (assert) {
@@ -249,11 +213,7 @@ module('Acceptance | performance', function (hooks) {
     let duration = end - start;
 
     assert.strictEqual(currentRouteName(), 'programs', 'current route name is correct');
-    assert.ok(
-      duration < this.maxDuration,
-      `Render time was ${duration}ms`,
-      `route loaded in allowable time: ${duration}`,
-    );
+    assert.ok(duration < this.maxDuration, `route loaded in allowable time: ${duration}ms`);
   });
 
   test('/reports', async function (assert) {
@@ -302,11 +262,7 @@ module('Acceptance | performance', function (hooks) {
     let duration = end - start;
 
     assert.strictEqual(currentRouteName(), 'reports.subjects', 'current route name is correct');
-    assert.ok(
-      duration < this.maxDuration,
-      `Render time was ${duration}ms`,
-      `route loaded in allowable time: ${duration}`,
-    );
+    assert.ok(duration < this.maxDuration, `route loaded in allowable time: ${duration}ms`);
   });
 
   test('/admin', async function (assert) {
@@ -318,11 +274,7 @@ module('Acceptance | performance', function (hooks) {
     let duration = end - start;
 
     assert.strictEqual(currentRouteName(), 'admin-dashboard', 'current route name is correct');
-    assert.ok(
-      duration < this.maxDuration,
-      `Render time was ${duration}ms`,
-      `route loaded in allowable time: ${duration}`,
-    );
+    assert.ok(duration < this.maxDuration, `route loaded in allowable time: ${duration}ms`);
   });
 
   test('/users', async function (assert) {
@@ -336,11 +288,7 @@ module('Acceptance | performance', function (hooks) {
     let duration = end - start;
 
     assert.strictEqual(currentRouteName(), 'users', 'current route name is correct');
-    assert.ok(
-      duration < this.maxDuration,
-      `Render time was ${duration}ms`,
-      `route loaded in allowable time: ${duration}`,
-    );
+    assert.ok(duration < this.maxDuration, `route loaded in allowable time: ${duration}ms`);
   });
 
   test('/curriculum-inventory-reports', async function (assert) {
@@ -364,10 +312,6 @@ module('Acceptance | performance', function (hooks) {
       'curriculum-inventory-reports',
       'current route name is correct',
     );
-    assert.ok(
-      duration < this.maxDuration,
-      `Render time was ${duration}ms`,
-      `route loaded in allowable time: ${duration}`,
-    );
+    assert.ok(duration < this.maxDuration, `route loaded in allowable time: ${duration}ms`);
   });
 });
