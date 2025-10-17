@@ -1,4 +1,12 @@
-import { clickable, create, isVisible, notHasClass, isPresent, text } from 'ember-cli-page-object';
+import {
+  attribute,
+  clickable,
+  create,
+  isVisible,
+  notHasClass,
+  isPresent,
+  text,
+} from 'ember-cli-page-object';
 
 const definition = {
   scope: '[data-test-sessions-grid-row]',
@@ -9,6 +17,7 @@ const definition = {
   canExpand: notHasClass('disabled', '[data-test-expand-collapse-control] [data-test-expand]'),
   expandTitle: text('[data-test-expand-collapse-control] title'),
   title: text('span', { at: 1 }),
+  titleAriaLabel: attribute('aria-label', 'span:nth-of-type(2) a'),
   visit: clickable('span:nth-of-type(2) a'),
   type: text('span', { at: 2 }),
   groupCount: text('span', { at: 3 }),
