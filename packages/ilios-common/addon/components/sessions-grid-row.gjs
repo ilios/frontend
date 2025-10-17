@@ -20,7 +20,9 @@ export default class SessionsGridRowComponent extends Component {
 
   @cached
   get canDeleteData() {
-    return new TrackedAsyncData(this.permissionChecker.canDeleteSession(this.args.session));
+    return new TrackedAsyncData(
+      this.permissionChecker.canDeleteSession(this.args.sessionProxy.session),
+    );
   }
 
   get canDelete() {
@@ -29,7 +31,9 @@ export default class SessionsGridRowComponent extends Component {
 
   @cached
   get canUpdateData() {
-    return new TrackedAsyncData(this.permissionChecker.canUpdateSession(this.args.session));
+    return new TrackedAsyncData(
+      this.permissionChecker.canUpdateSession(this.args.sessionProxy.session),
+    );
   }
 
   get canUpdate() {
@@ -38,53 +42,57 @@ export default class SessionsGridRowComponent extends Component {
   <template>
     <div class="sessions-grid-row" data-test-sessions-grid-row>
       <span class="expand-collapse-control" data-test-expand-collapse-control>
-        {{#if (includes @session.id @expandedSessionIds)}}
+        {{#if (includes @sessionProxy.session.id @expandedSessionIds)}}
           <button
             class="link-button"
             type="button"
             aria-label={{t "general.expand"}}
             data-test-collapse
-            {{on "click" (fn @closeSession @session)}}
+            {{on "click" (fn @closeSession @sessionProxy.session)}}
           >
             <FaIcon @icon="caret-down" />
           </button>
         {{else}}
           <button
-            class="link-button {{if (eq @session.offeringCount 0) 'disabled'}}"
-            disabled={{if (eq @session.offeringCount 0) "disabled"}}
+            class="link-button {{if (eq @sessionProxy.session.offeringCount 0) 'disabled'}}"
+            disabled={{if (eq @sessionProxy.session.offeringCount 0) "disabled"}}
             type="button"
             aria-label={{t "general.close"}}
             data-test-expand
-            {{on "click" (fn @expandSession @session)}}
+            {{on "click" (fn @expandSession @sessionProxy.session)}}
           >
             <FaIcon
               @icon="caret-right"
-              @title={{if (eq @session.offeringCount 0) (t "general.noOfferings")}}
+              @title={{if (eq @sessionProxy.session.offeringCount 0) (t "general.noOfferings")}}
             />
           </button>
         {{/if}}
       </span>
       <span class="session-grid-title">
-        <LinkTo @route="session" @models={{array @session.course @session}}>
-          {{truncate @session.title 100 true}}
+        <LinkTo
+          @route="session"
+          @models={{array @sessionProxy.session.course @sessionProxy.session}}
+          aria-label={{@sessionProxy.ariaLabel}}
+        >
+          {{truncate @sessionProxy.session.title 100 true}}
         </LinkTo>
       </span>
       <span class="session-grid-type">
-        {{@session.sessionType.title}}
+        {{@sessionProxy.session.sessionType.title}}
       </span>
       <span class="session-grid-groups">
-        {{@session.learnerGroupCount}}
+        {{@sessionProxy.session.learnerGroupCount}}
       </span>
       <span class="session-grid-objectives">
-        {{@session.objectiveCount}}
+        {{@sessionProxy.session.objectiveCount}}
       </span>
       <span class="session-grid-terms">
-        {{@session.termCount}}
+        {{@sessionProxy.session.termCount}}
       </span>
       <span class="session-grid-first-offering">
-        {{#if @session.firstOfferingDate}}
-          {{#if @session.isIndependentLearning}}
-            {{#if @session.hasPostrequisite}}
+        {{#if @sessionProxy.session.firstOfferingDate}}
+          {{#if @sessionProxy.session.isIndependentLearning}}
+            {{#if @sessionProxy.session.hasPostrequisite}}
               <strong>
                 {{t "general.ilm"}}:
                 <FaIcon @icon="user-clock" />
@@ -92,33 +100,44 @@ export default class SessionsGridRowComponent extends Component {
               </strong>
               <LinkTo
                 @route="session"
-                @models={{array @session.course.id @session.postrequisite.id}}
-                title={{@session.postrequisite.title}}
+                @models={{array
+                  @sessionProxy.session.course.id
+                  @sessionProxy.session.postrequisite.id
+                }}
+                title={{@sessionProxy.session.postrequisite.title}}
               >
-                {{truncate @session.postrequisite.title 18 true}}
+                {{truncate @sessionProxy.session.postrequisite.title 18 true}}
               </LinkTo>
             {{else}}
               <strong>
                 {{t "general.ilm"}}:
                 {{t "general.dueBy"}}
               </strong>
-              {{formatDate @session.firstOfferingDate month="2-digit" day="2-digit" year="numeric"}}
+              {{formatDate
+                @sessionProxy.session.firstOfferingDate
+                month="2-digit"
+                day="2-digit"
+                year="numeric"
+              }}
             {{/if}}
-          {{else if @session.hasPostrequisite}}
+          {{else if @sessionProxy.session.hasPostrequisite}}
             <strong>
               <FaIcon @icon="user-clock" />
               {{t "general.duePriorTo"}}:
             </strong>
             <LinkTo
               @route="session"
-              @models={{array @session.course.id @session.postrequisite.id}}
-              title={{@session.postrequisite.title}}
+              @models={{array
+                @sessionProxy.session.course.id
+                @sessionProxy.session.postrequisite.id
+              }}
+              title={{@sessionProxy.session.postrequisite.title}}
             >
-              {{truncate @session.postrequisite.title 18 true}}
+              {{truncate @sessionProxy.session.postrequisite.title 18 true}}
             </LinkTo>
           {{else}}
             {{formatDate
-              @session.firstOfferingDate
+              @sessionProxy.session.firstOfferingDate
               month="2-digit"
               day="2-digit"
               year="numeric"
@@ -130,10 +149,10 @@ export default class SessionsGridRowComponent extends Component {
         {{/if}}
       </span>
       <span class="session-grid-offerings">
-        {{@session.offeringCount}}
+        {{@sessionProxy.session.offeringCount}}
       </span>
       <span class="session-grid-status" data-test-status>
-        {{#if (and this.canUpdate @session.prerequisiteCount)}}
+        {{#if (and this.canUpdate @sessionProxy.session.prerequisiteCount)}}
           <FaIcon
             @icon="arrow-right-to-bracket"
             @ariaHidden={{false}}
@@ -143,7 +162,7 @@ export default class SessionsGridRowComponent extends Component {
             data-test-prerequisites
           />
         {{/if}}
-        {{#if (and this.canUpdate @session.instructionalNotes.length)}}
+        {{#if (and this.canUpdate @sessionProxy.session.instructionalNotes.length)}}
           <FaIcon
             @icon="clipboard-list"
             @ariaHidden={{false}}
@@ -151,14 +170,14 @@ export default class SessionsGridRowComponent extends Component {
             @title={{t "general.instructionalNotes"}}
           />
         {{/if}}
-        <PublicationStatus @item={{@session}} />
+        <PublicationStatus @item={{@sessionProxy.session}} />
       </span>
       <span class="session-grid-actions" data-test-actions>
-        {{#if (and this.canUpdate (not @session.prerequisiteCount))}}
+        {{#if (and this.canUpdate (not @sessionProxy.session.prerequisiteCount))}}
           <button
             class="link-button"
             type="button"
-            {{on "click" (fn @confirmDelete @session.id)}}
+            {{on "click" (fn @confirmDelete @sessionProxy.session.id)}}
             data-test-delete
           >
             <FaIcon
