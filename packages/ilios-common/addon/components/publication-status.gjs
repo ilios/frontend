@@ -3,7 +3,7 @@ import { guidFor } from '@ember/object/internals';
 import FaIcon from 'ilios-common/components/fa-icon';
 import t from 'ember-intl/helpers/t';
 
-export default class ProgressBarComponent extends Component {
+export default class PublicationStatusComponent extends Component {
   id = guidFor(this);
   get textKey() {
     if (this.args.item.isScheduled) {
