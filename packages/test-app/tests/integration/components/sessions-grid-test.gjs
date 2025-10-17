@@ -4,6 +4,7 @@ import Service from '@ember/service';
 import { click, render } from '@ember/test-helpers';
 import { setupMirage } from 'test-app/tests/test-support/mirage';
 import SessionsGrid from 'ilios-common/components/sessions-grid';
+import { component } from 'ilios-common/page-objects/components/sessions-grid';
 import noop from 'ilios-common/helpers/noop';
 
 module('Integration | Component | sessions-grid', function (hooks) {
@@ -31,6 +32,29 @@ module('Integration | Component | sessions-grid', function (hooks) {
       </template>,
     );
     assert.dom(this.element).hasText('No results found. Please try again.');
+  });
+
+  test('multiple sessions with the same title', async function (assert) {
+    const session1 = this.server.create('session', { title: 'super duper' });
+    const session2 = this.server.create('session', { title: 'super duper' });
+    this.server.create('offering', { session: session1 });
+    const sessionModel1 = await this.owner
+      .lookup('service:store')
+      .findRecord('session', session1.id);
+    const sessionModel2 = await this.owner
+      .lookup('service:store')
+      .findRecord('session', session2.id);
+    this.set('sessions', [sessionModel1, sessionModel2]);
+    this.set('sortBy', 'title');
+    await render(
+      <template>
+        <SessionsGrid @sessions={{this.sessions}} @sortBy={{this.sortBy}} @setSortBy={{(noop)}} />
+      </template>,
+    );
+    assert.strictEqual(component.sessions[0].row.title, 'super duper');
+    assert.strictEqual(component.sessions[0].row.titleAriaLabel, 'super duper');
+    assert.strictEqual(component.sessions[1].row.title, 'super duper');
+    assert.strictEqual(component.sessions[1].row.titleAriaLabel, 'super duper, 2');
   });
 
   test('clicking expand fires action', async function (assert) {
