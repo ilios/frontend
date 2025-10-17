@@ -1,5 +1,4 @@
 import Component from '@glimmer/component';
-import { tracked } from '@glimmer/tracking';
 import { service } from '@ember/service';
 import ManageUsersSummary from 'frontend/components/manage-users-summary';
 import t from 'ember-intl/helpers/t';
@@ -8,7 +7,6 @@ import UserStatus from 'ilios-common/components/user-status';
 import PendingSingleUserUpdate from 'frontend/components/pending-single-user-update';
 import ToggleButtons from 'ilios-common/components/toggle-buttons';
 import not from 'ember-truth-helpers/helpers/not';
-import toggle from 'ilios-common/helpers/toggle';
 import UserProfileCalendar from 'frontend/components/user-profile-calendar';
 import UserProfileBio from 'frontend/components/user-profile-bio';
 import UserProfileRoles from 'frontend/components/user-profile-roles';
@@ -20,7 +18,6 @@ import LearnerGroups from 'frontend/components/user-profile/learner-groups';
 
 export default class UserProfileComponent extends Component {
   @service currentUser;
-  @tracked showCalendar = false;
 
   get userIsTheCurrentUser() {
     return Number(this.currentUser.currentUserId) === Number(this.args.user.id);
@@ -44,14 +41,14 @@ export default class UserProfileComponent extends Component {
       <PendingSingleUserUpdate @user={{@user}} @canUpdate={{@canUpdate}} />
       <div class="user-profile-actions" data-test-user-profile-actions>
         <ToggleButtons
-          @firstOptionSelected={{not this.showCalendar}}
+          @firstOptionSelected={{not @showCalendar}}
           @firstLabel={{t "general.hideCalendar"}}
           @secondLabel={{t "general.showCalendar"}}
-          @toggle={{toggle "showCalendar" this}}
+          @toggle={{@setShowCalendar}}
         />
       </div>
       <div class="blocks">
-        {{#if this.showCalendar}}
+        {{#if @showCalendar}}
           <UserProfileCalendar @user={{@user}} />
         {{/if}}
         <UserProfileBio

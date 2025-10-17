@@ -100,6 +100,10 @@ module('Integration | Component | user-profile', function (hooks) {
     const user = this.server.create('user');
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     this.set('user', userModel);
+    this.set('showCalendar', false);
+    this.set('setShowCalendar', () => {
+      this.set('showCalendar', !this.showCalendar);
+    });
 
     await render(
       <template>
@@ -107,6 +111,8 @@ module('Integration | Component | user-profile', function (hooks) {
           @user={{this.user}}
           @canUpdate={{false}}
           @canCreate={{false}}
+          @showCalendar={{this.showCalendar}}
+          @setShowCalendar={{this.setShowCalendar}}
           @isManagingBio={{false}}
           @setIsManagingBio={{(noop)}}
           @isManagingRoles={{false}}
@@ -125,14 +131,28 @@ module('Integration | Component | user-profile', function (hooks) {
       </template>,
     );
 
-    assert.notOk(component.calendar.isVisible);
-    assert.strictEqual(component.actions.calendarToggle.firstLabel.text, 'Hide Calendar');
-    assert.ok(component.actions.calendarToggle.firstButton.isChecked);
-    assert.strictEqual(component.actions.calendarToggle.secondLabel.text, 'Show Calendar');
-    assert.notOk(component.actions.calendarToggle.secondButton.isChecked);
+    assert.notOk(component.calendar.isVisible, 'calendar is not visible');
+    assert.strictEqual(
+      component.actions.calendarToggle.firstLabel.text,
+      'Hide Calendar',
+      'first toggle button label is correct',
+    );
+    assert.ok(
+      component.actions.calendarToggle.firstButton.isChecked,
+      'first toggle button is checked',
+    );
+    assert.strictEqual(
+      component.actions.calendarToggle.secondLabel.text,
+      'Show Calendar',
+      'second toggle button label is correct',
+    );
+    assert.notOk(
+      component.actions.calendarToggle.secondButton.isChecked,
+      'second toggle button is not checked',
+    );
     await component.actions.calendarToggle.secondButton.click();
-    assert.ok(component.calendar.isVisible);
+    assert.ok(component.calendar.isVisible, 'calendar is visible after toggle');
     await component.actions.calendarToggle.firstButton.click();
-    assert.notOk(component.calendar.isVisible);
+    assert.notOk(component.calendar.isVisible, 'calendar is not visible after toggle');
   });
 });
