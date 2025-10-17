@@ -20,7 +20,6 @@ export default class ObjectiveSortManagerComponent extends Component {
   @tracked draggedAboveItem;
   @tracked draggedBelowItem;
   @tracked sortedItems;
-  @tracked expanded;
 
   @cached
   get objectives() {
@@ -107,11 +106,6 @@ export default class ObjectiveSortManagerComponent extends Component {
       }
     }
   }
-
-  @action
-  toggleExpansion() {
-    this.expanded = !this.expanded;
-  }
   <template>
     <div class="objective-sort-manager">
       <div class="actions">
@@ -156,13 +150,7 @@ export default class ObjectiveSortManagerComponent extends Component {
                 <FaIcon @icon="up-down-left-right" />
               {{/unless}}
               <span class="draggable-object-content">
-                <span>
-                  <FadeText
-                    @text={{item.title}}
-                    @expanded={{this.expanded}}
-                    @onExpandAll={{this.toggleExpansion}}
-                  />
-                </span>
+                <FadeText @text={{item.title}} @preserveLinks={{true}} />
               </span>
             </li>
           {{/each}}

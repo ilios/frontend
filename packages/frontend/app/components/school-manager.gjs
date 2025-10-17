@@ -34,6 +34,7 @@ import EmailsEditor from 'frontend/components/school/emails-editor';
 import Emails from 'frontend/components/school/emails';
 import SchoolInstitutionalInformationManager from 'frontend/components/school-institutional-information-manager';
 import SchoolInstitutionalInformationDetails from 'frontend/components/school-institutional-information-details';
+import focus from 'ilios-common/modifiers/focus';
 
 export default class SchoolManagerComponent extends Component {
   @service flashMessages;
@@ -133,9 +134,7 @@ export default class SchoolManagerComponent extends Component {
               @value={{this.title}}
               @save={{perform this.changeTitle}}
               @close={{this.revertTitleChanges}}
-              @saveOnEnter={{true}}
-              @closeOnEscape={{true}}
-              as |isSaving|
+              as |keyboard isSaving|
             >
               <input
                 aria-label={{t "general.title"}}
@@ -144,6 +143,8 @@ export default class SchoolManagerComponent extends Component {
                 disabled={{isSaving}}
                 {{on "input" (pick "target.value" (set this "title"))}}
                 {{this.validations.attach "title"}}
+                {{keyboard}}
+                {{focus}}
               />
               <YupValidationMessage
                 @description={{t "general.title"}}

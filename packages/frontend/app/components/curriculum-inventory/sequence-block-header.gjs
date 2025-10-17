@@ -13,6 +13,7 @@ import pick from 'ilios-common/helpers/pick';
 import set from 'ember-set-helper/helpers/set';
 import YupValidationMessage from 'ilios-common/components/yup-validation-message';
 import FaIcon from 'ilios-common/components/fa-icon';
+import focus from 'ilios-common/modifiers/focus';
 
 export default class CurriculumInventorySequenceBlockHeaderComponent extends Component {
   @service store;
@@ -55,9 +56,7 @@ export default class CurriculumInventorySequenceBlockHeaderComponent extends Com
             @value={{this.title}}
             @save={{perform this.changeTitle}}
             @close={{this.revertTitleChanges}}
-            @saveOnEnter={{true}}
-            @closeOnEscape={{true}}
-            as |isSaving|
+            as |keyboard isSaving|
           >
             <input
               aria-label={{t "general.title"}}
@@ -66,6 +65,8 @@ export default class CurriculumInventorySequenceBlockHeaderComponent extends Com
               disabled={{isSaving}}
               {{on "input" (pick "target.value" (set this "titleBuffer"))}}
               {{this.validations.attach "title"}}
+              {{keyboard}}
+              {{focus}}
             />
             <YupValidationMessage
               @description={{t "general.title"}}

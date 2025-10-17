@@ -21,18 +21,6 @@
 
   .content {
     padding-top: 0.5rem;
-
-    span {
-      &.draggable-object-content {
-        .fade-text-control {
-          background-image: linear-gradient(
-            to bottom,
-            transparent,
-            var(--lightest-grey)
-          );
-        }
-      }
-    }
   }
 
   .sortable-items {
@@ -69,14 +57,6 @@
         .display-text {
           p {
             margin: 0;
-          }
-        }
-        button {
-          &.expand-text-button {
-            background: var(--blue);
-            border-radius: 3px;
-            color: var(--white);
-            padding: 0.3em 1em;
           }
         }
       }
