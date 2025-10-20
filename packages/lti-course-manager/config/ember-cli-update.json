@@ -3,12 +3,15 @@
   "packages": [
     {
       "name": "@ember-tooling/classic-build-app-blueprint",
-      "version": "6.7.1",
+      "version": "6.8.0",
       "blueprints": [
         {
           "name": "@ember-tooling/classic-build-app-blueprint",
           "isBaseBlueprint": true,
-          "options": ["--no-welcome", "--pnpm"]
+          "options": [
+            "--no-welcome",
+            "--pnpm"
+          ]
         }
       ]
     }
