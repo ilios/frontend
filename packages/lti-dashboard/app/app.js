@@ -1,5 +1,4 @@
-import '@warp-drive/ember/install'; // must be first in this file
-
+import '@warp-drive/ember/install';
 import Application from '@ember/application';
 import Resolver from 'ember-resolver';
 import loadInitializers from 'ember-load-initializers';
