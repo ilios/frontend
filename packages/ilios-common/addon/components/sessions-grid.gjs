@@ -212,8 +212,11 @@ export default class SessionsGrid extends Component {
     <div class="sessions-grid" data-test-sessions-grid>
       {{#each this.sortedSessions as |session|}}
         <div
-          class="{{if (includes session.id @expandedSessionIds) 'is-expanded' 'not-expanded'}}
-            session"
+          class="session{{if
+              (includes session.id @expandedSessionIds)
+              ' is-expanded'
+              ' not-expanded'
+            }}"
           data-test-expanded-session={{includes session.id @expandedSessionIds}}
           data-test-session
         >
