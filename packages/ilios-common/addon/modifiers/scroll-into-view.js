@@ -1,6 +1,21 @@
-import { modifier } from 'ember-modifier';
+import Modifier from 'ember-modifier';
+import { registerDestructor } from '@ember/destroyable';
 import { default as scroll } from 'ilios-common/utils/scroll-into-view';
 
-export default modifier(function scrollIntoView(element, positional, { disabled, opts }) {
-  scroll(element, { disabled, opts });
-});
+export default class ScrollIntoView extends Modifier {
+  timeoutId;
+
+  constructor(owner, args) {
+    super(owner, args);
+
+    registerDestructor(this, () => {
+      clearTimeout(this.timeoutId);
+    });
+  }
+
+  modify(element, positionalArgs, { disabled, opts }) {
+    this.timeoutId = setTimeout(() => {
+      scroll(element, { disabled, opts });
+    }, 10);
+  }
+}
