@@ -72,7 +72,7 @@ export default [
     },
   },
   {
-    ...qunit.configs.recommended,
+    // ...qunit.configs.recommended,
     files: ['tests/**/*-test.{js,gjs}'],
     plugins: {
       qunit,
