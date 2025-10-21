@@ -255,7 +255,7 @@ export default class SessionCopyComponent extends Component {
                   {{/if}}
                 </button>
                 <LinkTo @route="session" @model={{@session}}>
-                  <button class="cancel text" type="button" {{scrollIntoView}}>
+                  <button class="cancel text" type="button" {{scrollIntoView delay=10}}>
                     {{t "general.cancel"}}
                   </button>
                 </LinkTo>
