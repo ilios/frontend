@@ -13,7 +13,6 @@ module('Integration | Component | learner-group/new-multiple', function (hooks) 
     await render(
       <template><NewMultiple @cancel={{(noop)}} @generateNewLearnerGroups={{(noop)}} /></template>,
     );
-    assert.strictEqual(component.numb);
     assert.ok(component.isVisible);
     await a11yAudit(this.element);
   });
