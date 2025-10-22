@@ -182,7 +182,7 @@ module('Integration | Component | school vocabulary term manager', function (hoo
     assert.strictEqual(this.server.db.terms[0].title, 'new title');
   });
 
-  test('change term title', async function (assert) {
+  test('cancel erm title changes', async function (assert) {
     assert.expect(2);
 
     const vocabulary = this.server.create('vocabulary');
