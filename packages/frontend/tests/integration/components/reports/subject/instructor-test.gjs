@@ -236,20 +236,22 @@ module('Integration | Component | reports/subject/instructor', function (hooks) 
       const { query } = JSON.parse(requestBody);
       counter++;
       const { users } = responseData.data;
+      let rhett = null;
       switch (counter) {
         case 1:
           assert.strictEqual(
             query,
             'query { courses(academicYears: [2005]) { id, school { title } } }',
           );
-          return {
+          rhett = {
             data: {
               courses: [{ id: 1 }, { id: 31 }],
             },
           };
+          break;
         case 2:
           assert.ok(query.includes('query { courses(ids: [1,31])'));
-          return {
+          rhett = {
             data: {
               courses: [
                 { sessions: [{ offerings: [{ instructors: [users[1]], instructorGroups: [] }] }] },
@@ -265,9 +267,11 @@ module('Integration | Component | reports/subject/instructor', function (hooks) 
               ],
             },
           };
+          break;
         default:
           assert.ok(false, 'too many queries');
       }
+      return rhett;
     });
     const { id } = this.server.create('report', {
       subject: 'instructor',
@@ -326,6 +330,7 @@ module('Integration | Component | reports/subject/instructor', function (hooks) 
       const { query } = JSON.parse(requestBody);
       counter++;
       const { users } = responseData.data;
+      let rhett;
       switch (counter) {
         case 1:
           assert.strictEqual(
@@ -333,7 +338,7 @@ module('Integration | Component | reports/subject/instructor', function (hooks) 
             'query { courses(learningMaterials: [1]) { id, school { title } } }',
             'correct first query is run',
           );
-          return {
+          rhett = {
             data: {
               courses: [
                 {
@@ -342,9 +347,10 @@ module('Integration | Component | reports/subject/instructor', function (hooks) 
               ],
             },
           };
+          break;
         case 2:
           assert.ok(query.includes('query { courses(ids: [1])'), 'correct second query is run');
-          return {
+          rhett = {
             data: {
               courses: [
                 { sessions: [{ offerings: [{ instructors: [users[1]], instructorGroups: [] }] }] },
@@ -360,9 +366,11 @@ module('Integration | Component | reports/subject/instructor', function (hooks) 
               ],
             },
           };
+          break;
         default:
           assert.ok(false, 'too many queries');
       }
+      return rhett;
     });
     const { id } = this.server.create('report', {
       subject: 'instructor',
