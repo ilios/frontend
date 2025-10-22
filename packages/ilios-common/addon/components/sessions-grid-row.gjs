@@ -47,7 +47,11 @@ export default class SessionsGridRowComponent extends Component {
   }
 
   get prerequisitesLabelAndTitle() {
-    return `${this.intl.t('general.prerequisites')}: ${this.sessionPrerequisites[0].title}`;
+    const titles = this.sessionPrerequisites
+      .map((prereq) => prereq.title)
+      .sort()
+      .join(', ');
+    return `${this.intl.t('general.prerequisites')}: ${titles}`;
   }
   <template>
     <div class="sessions-grid-row" data-test-sessions-grid-row>
