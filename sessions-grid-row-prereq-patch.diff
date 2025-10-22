@@ -1,0 +1,45 @@
+# Sessions Grid Row - Prerequisite Hover Feature
+# Fixes ilios/ilios#5512
+
+## Changes to Component (sessions-grid-row.js)
+
+Add this getter to the component class:
+
+```javascript
+// Getter for prerequisite session titles
+get prerequisiteTitles() {
+  const prerequisites = this.args.session?.prerequisites || [];
+  if (prerequisites.length === 0) {
+    return null;
+  }
+  
+  const titles = prerequisites.map(prereq => prereq.title).filter(Boolean);
+  return titles.length > 0 ? titles.join(', ') : null;
+}
+```
+
+## Changes to Template (sessions-grid-row.hbs)
+
+Add the title attribute to display prerequisites on hover:
+
+```handlebars
+<div class="sessions-grid-row" title={{this.prerequisiteTitles}}>
+  {{! ... rest of template ... }}
+</div>
+```
+
+Or if there's a specific element for the session title:
+
+```handlebars
+<span class="session-title" title={{this.prerequisiteTitles}}>
+  {{@session.title}}
+</span>
+```
+
+## Testing
+
+1. Find a session with prerequisites
+2. Hover over the session in the grid
+3. Verify that prerequisite titles appear in the tooltip
+4. Test with multiple prerequisites to ensure they're comma-separated
+5. Test with sessions that have no prerequisites (should show no tooltip)
