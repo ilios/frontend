@@ -110,7 +110,7 @@ export default class DetailLearningMaterialsItemComponent extends Component {
               {{/each}}
             </ul>
           {{else}}
-            {{t "general.none"}}
+            <em>{{t "general.none"}}</em>
           {{/if}}
         {{/if}}
       </td>
