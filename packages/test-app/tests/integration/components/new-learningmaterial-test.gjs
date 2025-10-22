@@ -112,9 +112,9 @@ module('Integration | Component | new learningmaterial', function (hooks) {
       </template>,
     );
     assert.notOk(component.copyrightPermission.errorMessage.isPresent);
-    assert.equal(component.copyrightPermission.ariaInvalid, 'false');
+    assert.strictEqual(component.copyrightPermission.ariaInvalid, 'false');
     assert.notOk(component.copyrightRationale.errorMessage.isPresent);
-    assert.equal(component.copyrightRationale.ariaInvalid, 'false');
+    assert.strictEqual(component.copyrightRationale.ariaInvalid, 'false');
 
     await component.save();
     assert.strictEqual(
@@ -125,16 +125,16 @@ module('Integration | Component | new learningmaterial', function (hooks) {
       component.copyrightPermission.errorMessage.text,
       'Agreement or alternate rationale is required for upload',
     );
-    assert.equal(component.copyrightPermission.ariaInvalid, 'true');
+    assert.strictEqual(component.copyrightPermission.ariaInvalid, 'true');
     assert.strictEqual(
       component.copyrightRationale.errorMessage.text,
       'Copyright Rationale can not be blank',
     );
-    assert.equal(component.copyrightRationale.ariaInvalid, 'true');
+    assert.strictEqual(component.copyrightRationale.ariaInvalid, 'true');
 
     await component.copyrightPermission.toggle();
     assert.notOk(component.copyrightPermission.errorMessage.isPresent);
-    assert.equal(component.copyrightPermission.ariaInvalid, 'false');
+    assert.strictEqual(component.copyrightPermission.ariaInvalid, 'false');
     assert.notOk(component.copyrightRationale.isVisible);
   });
 
@@ -153,7 +153,7 @@ module('Integration | Component | new learningmaterial', function (hooks) {
     );
     assert.notOk(component.copyrightPermission.errorMessage.isPresent);
     assert.notOk(component.copyrightRationale.errorMessage.isPresent);
-    assert.equal(component.copyrightRationale.ariaInvalid, 'false');
+    assert.strictEqual(component.copyrightRationale.ariaInvalid, 'false');
 
     await component.save();
     assert.strictEqual(
@@ -169,12 +169,12 @@ module('Integration | Component | new learningmaterial', function (hooks) {
       component.copyrightRationale.errorMessage.text,
       'Copyright Rationale can not be blank',
     );
-    assert.equal(component.copyrightRationale.ariaInvalid, 'true');
+    assert.strictEqual(component.copyrightRationale.ariaInvalid, 'true');
 
     await component.copyrightRationale.set('my rationale');
     assert.notOk(component.copyrightPermission.errorMessage.isPresent);
     assert.notOk(component.copyrightRationale.errorMessage.isPresent);
-    assert.equal(component.copyrightRationale.ariaInvalid, 'false');
+    assert.strictEqual(component.copyrightRationale.ariaInvalid, 'false');
   });
 
   test('validate original author', async function (assert) {
