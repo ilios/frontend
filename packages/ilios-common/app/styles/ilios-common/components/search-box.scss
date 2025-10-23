@@ -18,12 +18,14 @@
   }
 
   .search-icon {
+    align-items: center;
     color: var(--light-blue);
-    display: inline-block;
+    display: flex;
+    height: 100%;
     left: 0;
     margin-right: 2px;
     padding-left: 6px;
     position: absolute;
-    top: 0.2rem;
+    top: 0;
   }
 }
