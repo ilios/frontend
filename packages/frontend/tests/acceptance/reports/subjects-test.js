@@ -608,29 +608,33 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
         return { id, firstName, middleName, lastName, displayName };
       });
       counter++;
+      let rhett;
       switch (counter) {
         case 1:
           assert.strictEqual(
             query,
             'query { courses(schools: [1], academicYears: [2015]) { id, school { title } } }',
           );
-          return {
+          rhett = {
             data: {
               courses: [{ id: 1 }, { id: 31 }],
             },
           };
+          break;
         case 2:
           assert.ok(query.includes('query { courses(ids: [1,31])'));
-          return {
+          rhett = {
             data: {
               courses: [
                 { sessions: [{ offerings: [{ instructors: users, instructorGroups: [] }] }] },
               ],
             },
           };
+          break;
         default:
           assert.ok(false, 'too many queries');
       }
+      return rhett;
     });
     await page.subjects.list.table.reports[0].select();
     assert.strictEqual(currentURL(), '/reports/subjects/3');
