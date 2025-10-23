@@ -32,32 +32,49 @@ export default class SessionsGrid extends Component {
   }
 
   @cached
-  get sortedSessionsData() {
+  get sortedSessionProxiesData() {
     return new TrackedAsyncData(
-      this.sortSessions(this.args.sessions, this.args.filterBy, this.sortInfo),
+      this.sortSessionProxies(this.sessionProxies, this.args.filterBy, this.sortInfo),
     );
   }
 
-  get sortedSessions() {
-    return this.sortedSessionsData.isResolved ? this.sortedSessionsData.value : [];
+  get sortedSessionProxies() {
+    return this.sortedSessionProxiesData.isResolved ? this.sortedSessionProxiesData.value : [];
   }
 
-  async sortSessions(sessions, filterBy, sortInfo) {
-    const filteredSessions = await this.filterSessions(sessions, filterBy);
+  get sessionProxies() {
+    if (!this.args.sessions) {
+      return [];
+    }
+    const titlesMap = new Map();
+    return this.args.sessions.map((session) => {
+      // a11y doesn't care about case sensitivity.
+      const key = session.title.toLowerCase().trim();
+      const proxy = { session, ariaLabel: session.title.trim() };
+      if (!titlesMap.has(key)) {
+        titlesMap.set(key, 1);
+      } else {
+        const count = titlesMap.get(key) + 1;
+        titlesMap.set(key, count);
+        proxy.ariaLabel = `${proxy.ariaLabel}, ${count}`;
+      }
+      return proxy;
+    });
+  }
+
+  async sortSessionProxies(sessionProxies, filterBy, sortInfo) {
+    const filteredSessionProxies = await this.filterSessionProxies(sessionProxies, filterBy);
     switch (sortInfo.column) {
       case 'sessionTypeTitle':
-        return this.sortBySessionTypeTitle(filteredSessions, sortInfo);
+        return this.sortBySessionTypeTitle(filteredSessionProxies, sortInfo);
       case 'learnerGroupCount':
-        return this.sortByLearnerGroupCount(filteredSessions, sortInfo);
+        return this.sortByLearnerGroupCount(filteredSessionProxies, sortInfo);
       case 'firstOfferingDate':
-        return this.sortByFirstOfferingDate(filteredSessions, sortInfo);
+        return this.sortByFirstOfferingDate(filteredSessionProxies, sortInfo);
       case 'status':
-        return this.sortByStatus(filteredSessions, sortInfo);
+        return this.sortByStatus(filteredSessionProxies, sortInfo);
       default:
-        if (sortInfo.descending) {
-          return sortBy(filteredSessions, sortInfo.column).reverse();
-        }
-        return sortBy(filteredSessions, sortInfo.column);
+        return this.sortBy(filteredSessionProxies, sortInfo);
     }
   }
 
@@ -72,62 +89,83 @@ export default class SessionsGrid extends Component {
     return status.toString();
   }
 
-  sortByStatus(sessions, sortInfo) {
-    const sortProxies = sessions.map((session) => {
+  get isDestroyed() {
+    return super.isDestroyed;
+  }
+
+  sortBy(sessionProxies, sortInfo) {
+    const sortProxies = sessionProxies.map((sessionProxy) => {
       return {
-        session,
-        status: this.sessionStatus(session),
+        sessionProxy,
+        sortColumn: sessionProxy.session.get(sortInfo.column),
+      };
+    });
+    const sortedSessionProxies = sortBy(sortProxies, 'sortColumn').map(
+      (sortProxy) => sortProxy.sessionProxy,
+    );
+    return sortInfo.descending ? sortedSessionProxies.reverse() : sortedSessionProxies;
+  }
+
+  sortByStatus(sessionProxies, sortInfo) {
+    const sortProxies = sessionProxies.map((sessionProxy) => {
+      return {
+        sessionProxy,
+        status: this.sessionStatus(sessionProxy.session),
       };
     });
     const sortedSessions = sortBy(sortProxies, 'status').map((proxy) => proxy.session);
     return sortInfo.descending ? sortedSessions.reverse() : sortedSessions;
   }
 
-  async sortBySessionTypeTitle(sessions, sortInfo) {
-    const sortProxies = await map(sessions, async (session) => {
-      const sessionType = await session.sessionType;
+  async sortBySessionTypeTitle(sessionProxies, sortInfo) {
+    const sortProxies = await map(sessionProxies, async (sessionProxy) => {
+      const sessionType = await sessionProxy.session.sessionType;
       const sessionTypeTitle = sessionType?.title;
       return {
-        session,
+        sessionProxy,
         title: sessionTypeTitle,
       };
     });
-    const sortedSessions = sortBy(sortProxies, 'title').map((proxy) => proxy.session);
+    const sortedSessions = sortBy(sortProxies, 'title').map((sortProxy) => sortProxy.sessionProxy);
     return sortInfo.descending ? sortedSessions.reverse() : sortedSessions;
   }
 
-  async sortByLearnerGroupCount(sessions, sortInfo) {
-    const sortProxies = await map(sessions, async (session) => {
-      const offerings = await session.offerings;
+  async sortByLearnerGroupCount(sessionProxies, sortInfo) {
+    const sortProxies = await map(sessionProxies, async (sessionProxy) => {
+      const offerings = await sessionProxy.session.offerings;
       const learnerGroups = await map(offerings, async (offering) => {
         return await offering.learnerGroups;
       });
       return {
-        session,
+        sessionProxy,
         learnerGroupCount: learnerGroups.flat().length,
       };
     });
-    const sortedSessions = sortBy(sortProxies, 'learnerGroupCount').map((proxy) => proxy.session);
+    const sortedSessions = sortBy(sortProxies, 'learnerGroupCount').map(
+      (sortProxy) => sortProxy.sessionProxy,
+    );
     return sortInfo.descending ? sortedSessions.reverse() : sortedSessions;
   }
 
-  async sortByFirstOfferingDate(sessions, sortInfo) {
-    const sortProxies = await map(sessions, async (session) => {
-      const firstOfferingDate = await this.getFirstOfferingDate(session);
+  async sortByFirstOfferingDate(sessionProxies, sortInfo) {
+    const sortProxies = await map(sessionProxies, async (sessionProxy) => {
+      const firstOfferingDate = await this.getFirstOfferingDate(sessionProxy);
       return {
-        session,
+        sessionProxy,
         firstOfferingDate,
       };
     });
-    const sortedSessions = sortBy(sortProxies, 'firstOfferingDate').map((proxy) => proxy.session);
+    const sortedSessions = sortBy(sortProxies, 'firstOfferingDate').map(
+      (sortProxy) => sortProxy.sessionProxy,
+    );
     return sortInfo.descending ? sortedSessions.reverse() : sortedSessions;
   }
 
-  async getFirstOfferingDate(session) {
-    if (session.isIndependentLearning) {
-      return (await session.ilmSession).dueDate;
+  async getFirstOfferingDate(sessionProxy) {
+    if (sessionProxy.session.isIndependentLearning) {
+      return (await sessionProxy.session.ilmSession).dueDate;
     }
-    const offerings = await session.offerings;
+    const offerings = await sessionProxy.session.offerings;
     return offerings
       .filter((offering) => Boolean(offering.startDate))
       .sort((a, b) => {
@@ -140,12 +178,12 @@ export default class SessionsGrid extends Component {
       })[0]?.startDate;
   }
 
-  async filterSessions(sessions, filterBy) {
-    if (isEmpty(sessions)) {
+  async filterSessionProxies(sessionProxies, filterBy) {
+    if (isEmpty(sessionProxies)) {
       return [];
     }
     if (isEmpty(filterBy)) {
-      return sessions;
+      return sessionProxies;
     }
 
     const filterExpressions = filterBy.split(' ').map(function (string) {
@@ -153,11 +191,12 @@ export default class SessionsGrid extends Component {
       return new RegExp(clean, 'gi');
     });
 
-    return filter(sessions, async (session) => {
+    return filter(sessionProxies, async (proxy) => {
       let matchedSearchTerms = 0;
-      const sessionType = await session.sessionType;
+      const sessionType = await proxy.session.sessionType;
       const sessionTypeTitle = sessionType?.title;
-      const searchString = session.title + sessionTypeTitle + this.sessionStatus(session);
+      const searchString =
+        proxy.session.title + sessionTypeTitle + this.sessionStatus(proxy.session);
       for (let i = 0; i < filterExpressions.length; i++) {
         if (searchString.match(filterExpressions[i])) {
           matchedSearchTerms++;
@@ -210,24 +249,24 @@ export default class SessionsGrid extends Component {
   });
   <template>
     <div class="sessions-grid" data-test-sessions-grid>
-      {{#each this.sortedSessions as |session|}}
+      {{#each this.sortedSessionProxies as |proxy|}}
         <div
           class="session{{if
-              (includes session.id @expandedSessionIds)
+              (includes proxy.session.id @expandedSessionIds)
               ' is-expanded'
               ' not-expanded'
             }}"
-          data-test-expanded-session={{includes session.id @expandedSessionIds}}
+          data-test-expanded-session={{includes proxy.session.id @expandedSessionIds}}
           data-test-session
         >
           <SessionsGridRow
-            @session={{session}}
+            @sessionProxy={{proxy}}
             @confirmDelete={{this.confirmDelete}}
             @closeSession={{@closeSession}}
             @expandSession={{this.expandSession}}
             @expandedSessionIds={{@expandedSessionIds}}
           />
-          {{#if (includes session.id this.confirmDeleteSessionIds)}}
+          {{#if (includes proxy.session.id this.confirmDeleteSessionIds)}}
             <div class="confirm-removal" data-test-confirm-removal>
               {{t "general.confirmSessionRemoval"}}
               <div class="confirm-buttons">
@@ -236,7 +275,7 @@ export default class SessionsGrid extends Component {
                   type="button"
                   data-test-yes
                   disabled={{this.removeSession.isRunning}}
-                  {{on "click" (perform this.removeSession session)}}
+                  {{on "click" (perform this.removeSession proxy.session)}}
                 >
                   {{#if this.removeSession.isRunning}}
                     <LoadingSpinner />
@@ -244,16 +283,20 @@ export default class SessionsGrid extends Component {
                     {{t "general.yes"}}
                   {{/if}}
                 </button>
-                <button class="done" type="button" {{on "click" (fn this.cancelDelete session.id)}}>
+                <button
+                  class="done"
+                  type="button"
+                  {{on "click" (fn this.cancelDelete proxy.session.id)}}
+                >
                   {{t "general.cancel"}}
                 </button>
               </div>
             </div>
           {{/if}}
-          {{#if (includes session.id @expandedSessionIds)}}
-            <SessionsGridLastUpdated @session={{session}} />
+          {{#if (includes proxy.session.id @expandedSessionIds)}}
+            <SessionsGridLastUpdated @session={{proxy.session}} />
             <SessionsGridOfferingTable
-              @session={{session}}
+              @session={{proxy.session}}
               @headerIsLocked={{@headerIsLocked}}
               @setHeaderLockedStatus={{@setHeaderLockedStatus}}
             />

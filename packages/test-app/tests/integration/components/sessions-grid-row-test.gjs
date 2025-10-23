@@ -40,11 +40,11 @@ module('Integration | Component | sessions-grid-row', function (hooks) {
     });
     this.server.create('learner-group', { ilmSessions: [ilmSession] });
     const model = await this.owner.lookup('service:store').findRecord('session', session.id);
-    this.set('session', model);
+    this.set('proxy', { session: model, ariaLabel: `${model.title}, 2` });
     await render(
       <template>
         <SessionsGridRow
-          @session={{this.session}}
+          @sessionProxy={{this.proxy}}
           @confirmDelete={{(noop)}}
           @closeSession={{(noop)}}
           @expandSession={{(noop)}}
@@ -54,6 +54,7 @@ module('Integration | Component | sessions-grid-row', function (hooks) {
     );
     assert.ok(component.isCollapsed);
     assert.strictEqual(component.title, 'session 0');
+    assert.strictEqual(component.titleAriaLabel, 'session 0, 2');
     assert.strictEqual(component.type, 'session type 0');
     assert.strictEqual(component.groupCount, '5');
     assert.strictEqual(component.objectiveCount, '3');
@@ -75,12 +76,12 @@ module('Integration | Component | sessions-grid-row', function (hooks) {
   test('it renders expanded', async function (assert) {
     const session = this.server.create('session');
     const model = await this.owner.lookup('service:store').findRecord('session', session.id);
-    this.set('session', model);
+    this.set('proxy', { session: model, ariaLabel: model.title });
     this.set('expandedSessionIds', [session.id]);
     await render(
       <template>
         <SessionsGridRow
-          @session={{this.session}}
+          @sessionProxy={{this.proxy}}
           @confirmDelete={{(noop)}}
           @closeSession={{(noop)}}
           @expandSession={{(noop)}}
@@ -104,14 +105,14 @@ module('Integration | Component | sessions-grid-row', function (hooks) {
     this.owner.register('service:permission-checker', PermissionCheckerServiceMock);
     const session = this.server.create('session');
     const model = await this.owner.lookup('service:store').findRecord('session', session.id);
-    this.set('session', model);
+    this.set('proxy', { session: model, ariaLabel: model.title });
     this.set('confirmDelete', (s) => {
       assert.strictEqual(s, model.id);
     });
     await render(
       <template>
         <SessionsGridRow
-          @session={{this.session}}
+          @sessionProxy={{this.proxy}}
           @confirmDelete={{this.confirmDelete}}
           @closeSession={{(noop)}}
           @expandSession={{(noop)}}
@@ -126,7 +127,7 @@ module('Integration | Component | sessions-grid-row', function (hooks) {
     assert.expect(1);
     const session = this.server.create('session');
     const model = await this.owner.lookup('service:store').findRecord('session', session.id);
-    this.set('session', model);
+    this.set('proxy', { session: model, ariaLabel: model.title });
     this.set('expandedSessionIds', [session.id]);
     this.set('closeSession', (s) => {
       assert.strictEqual(s, model);
@@ -134,7 +135,7 @@ module('Integration | Component | sessions-grid-row', function (hooks) {
     await render(
       <template>
         <SessionsGridRow
-          @session={{this.session}}
+          @sessionProxy={{this.proxy}}
           @confirmDelete={{(noop)}}
           @closeSession={{this.closeSession}}
           @expandSession={{(noop)}}
@@ -150,7 +151,7 @@ module('Integration | Component | sessions-grid-row', function (hooks) {
     const session = this.server.create('session');
     this.server.create('offering', { session });
     const model = await this.owner.lookup('service:store').findRecord('session', session.id);
-    this.set('session', model);
+    this.set('proxy', { session: model, ariaLabel: model.title });
     this.set('expandedSessionIds', [session.id]);
     this.set('expandSession', (s) => {
       assert.strictEqual(s, model);
@@ -158,7 +159,7 @@ module('Integration | Component | sessions-grid-row', function (hooks) {
     await render(
       <template>
         <SessionsGridRow
-          @session={{this.session}}
+          @sessionProxy={{this.proxy}}
           @confirmDelete={{(noop)}}
           @closeSession={{(noop)}}
           @expandSession={{this.expandSession}}
