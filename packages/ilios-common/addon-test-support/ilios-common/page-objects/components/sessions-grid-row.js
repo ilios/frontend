@@ -17,6 +17,10 @@ const definition = {
   firstOffering: text('span', { at: 6 }),
   offeringCount: text('span', { at: 7 }),
   status: text('span', { at: 8 }),
+  statusIcon: {
+    scope: '[data-test-status]',
+    title: text('svg title'),
+  },
   trash: clickable('[data-test-actions] .remove'),
   hasInstructionalNotes: isPresent('[data-test-status] .instructional-notes'),
   hasPrerequisites: isPresent('[data-test-status] [data-test-prerequisites]'),

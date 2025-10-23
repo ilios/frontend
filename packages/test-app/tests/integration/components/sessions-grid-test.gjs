@@ -3,6 +3,7 @@ import { setupRenderingTest } from 'test-app/tests/helpers';
 import Service from '@ember/service';
 import { click, render } from '@ember/test-helpers';
 import { setupMirage } from 'test-app/tests/test-support/mirage';
+import { component } from 'ilios-common/page-objects/components/sessions-grid';
 import SessionsGrid from 'ilios-common/components/sessions-grid';
 import noop from 'ilios-common/helpers/noop';
 
@@ -31,6 +32,47 @@ module('Integration | Component | sessions-grid', function (hooks) {
       </template>,
     );
     assert.dom(this.element).hasText('No results found. Please try again.');
+  });
+
+  test('it renders with prereq', async function (assert) {
+    const school = this.server.create('school');
+    const course = this.server.create('course', { school });
+    const sessionType = this.server.create('session-type', { school });
+    this.server.createList('instructor-group', 5, { school });
+    this.server.createList('user', 2, { instructorGroupIds: [1] });
+    this.server.createList('user', 3, { instructorGroupIds: [2] });
+
+    const ilmSession = this.server.create('ilm-session', {
+      instructorGroupIds: [1, 2, 3],
+      instructorIds: [2, 3, 4],
+    });
+    const session1 = this.server.create('session', {
+      course,
+      ilmSession,
+      sessionType,
+    });
+    const session2 = this.server.create('session', { prerequisites: [session1] });
+    const sessionModel1 = await this.owner
+      .lookup('service:store')
+      .findRecord('session', session1.id);
+    const sessionModel2 = await this.owner
+      .lookup('service:store')
+      .findRecord('session', session2.id);
+    this.set('sessions', [sessionModel1, sessionModel2]);
+    this.set('expandedSessionIds', [session1.id, session2.id]);
+    await render(
+      <template>
+        <SessionsGrid
+          @sessions={{this.sessions}}
+          @sortBy="title"
+          @setSortBy={{(noop)}}
+          @expandSession={{(noop)}}
+          @expandedSessionIds={{this.expandedSessionIds}}
+        />
+      </template>,
+    );
+
+    assert.strictEqual(component.sessions[1].row.statusIcon.title, 'Prerequisites: session 0');
   });
 
   test('clicking expand fires action', async function (assert) {

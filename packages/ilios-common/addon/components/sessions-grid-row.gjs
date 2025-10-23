@@ -17,6 +17,7 @@ import not from 'ember-truth-helpers/helpers/not';
 
 export default class SessionsGridRowComponent extends Component {
   @service permissionChecker;
+  @service intl;
 
   @cached
   get canDeleteData() {
@@ -34,6 +35,23 @@ export default class SessionsGridRowComponent extends Component {
 
   get canUpdate() {
     return this.canUpdateData.isResolved ? this.canUpdateData.value : false;
+  }
+
+  @cached
+  get sessionPrerequisitesData() {
+    return new TrackedAsyncData(this.args.session.prerequisites);
+  }
+
+  get sessionPrerequisites() {
+    return this.sessionPrerequisitesData.isResolved ? this.sessionPrerequisitesData.value : null;
+  }
+
+  get prerequisitesLabelAndTitle() {
+    const titles = this.sessionPrerequisites
+      .map((prereq) => prereq.title)
+      .sort()
+      .join(', ');
+    return `${this.intl.t('general.prerequisites')}: ${titles}`;
   }
   <template>
     <div class="sessions-grid-row" data-test-sessions-grid-row>
@@ -134,14 +152,16 @@ export default class SessionsGridRowComponent extends Component {
       </span>
       <span class="session-grid-status" data-test-status>
         {{#if (and this.canUpdate @session.prerequisiteCount)}}
-          <FaIcon
-            @icon="arrow-right-to-bracket"
-            @ariaHidden={{false}}
-            class="prerequisites"
-            @flip="horizontal"
-            @title={{t "general.prerequisites"}}
-            data-test-prerequisites
-          />
+          {{#if this.sessionPrerequisites}}
+            <FaIcon
+              @icon="arrow-right-to-bracket"
+              @ariaHidden={{false}}
+              class="prerequisites"
+              @flip="horizontal"
+              @title={{this.prerequisitesLabelAndTitle}}
+              data-test-prerequisites
+            />
+          {{/if}}
         {{/if}}
         {{#if (and this.canUpdate @session.instructionalNotes.length)}}
           <FaIcon
