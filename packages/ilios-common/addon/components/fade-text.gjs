@@ -7,12 +7,23 @@ import { on } from '@ember/modifier';
 import FaIcon from 'ilios-common/components/fa-icon';
 import { hash } from '@ember/helper';
 import { TrackedAsyncData } from 'ember-async-data';
+import { buildWaiter } from '@ember/test-waiters';
+
+//initialize this in module scope as recomended by the docs
+const fadeTextWaiter = buildWaiter('FadeTextComponent');
 
 export default class FadeTextComponent extends Component {
   @tracked textHeight;
   @tracked expanded;
+  waiter = false;
 
   MAX_HEIGHT = 200;
+
+  constructor() {
+    super(...arguments);
+    //setup a test waiter when the component is created
+    this.waiter = fadeTextWaiter.beginAsync();
+  }
 
   get textHeightRounded() {
     return Math.floor(this.textHeight);
@@ -50,6 +61,12 @@ export default class FadeTextComponent extends Component {
 
   updateTextDims = ({ contentRect: { height } }) => {
     this.textHeight = height;
+
+    // end and remove the waiter the first time we get a size update
+    if (this.waiter) {
+      fadeTextWaiter.endAsync(this.waiter);
+      this.waiter = false;
+    }
   };
 
   <template>
@@ -154,7 +171,7 @@ class FadedTextComponent extends Component {
     <div
       class="display-text-wrapper{{if @faded ' faded'}}"
       data-test-display-text
-      data-test-done={{this.sanitierData.isResolved}}
+      data-test-done={{this.sanitizerData.isResolved}}
     >
       <div class="display-text" {{onResize @resize}} data-test-text>
         {{this.displayText}}
