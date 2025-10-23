@@ -72,7 +72,7 @@ module('Integration | Component | sessions-grid', function (hooks) {
       </template>,
     );
 
-    assert.strictEqual(component.sessions[1].row.status.iconTitle, 'Prerequisites: session 0');
+    assert.strictEqual(component.sessions[1].row.statusIcon.title, 'Prerequisites: session 0');
   });
 
   test('clicking expand fires action', async function (assert) {

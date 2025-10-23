@@ -16,9 +16,10 @@ const definition = {
   termCount: text('span', { at: 5 }),
   firstOffering: text('span', { at: 6 }),
   offeringCount: text('span', { at: 7 }),
-  status: {
+  status: text('span', { at: 8 }),
+  statusIcon: {
     scope: '[data-test-status]',
-    iconTitle: text('svg title'),
+    title: text('svg title'),
   },
   trash: clickable('[data-test-actions] .remove'),
   hasInstructionalNotes: isPresent('[data-test-status] .instructional-notes'),
