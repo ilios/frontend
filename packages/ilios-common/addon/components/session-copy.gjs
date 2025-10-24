@@ -47,9 +47,10 @@ export default class SessionCopyComponent extends Component {
   }
 
   get years() {
-    const { year: thisYear } = this.course.year
+    const { year: thisYear } = this.course
       ? DateTime.fromFormat(this.course.year.toString(), 'yyyy')
       : DateTime.now();
+
     return this.yearsData.value
       .map((year) => Number(year.id))
       .filter((year) => year >= thisYear - 1)
@@ -74,7 +75,7 @@ export default class SessionCopyComponent extends Component {
   get bestSelectedYear() {
     if (this.selectedYear) {
       return this.selectedYear;
-    } else if (this.course.year) {
+    } else if (this.course) {
       return this.course.year;
     }
 
