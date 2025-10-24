@@ -4,7 +4,7 @@ import SessionCopy from 'ilios-common/components/session-copy';
   <div class="session-details">
     <Overview
       @session={{@model}}
-      @editable={{@controller.canUpdate}}
+      @editable={{false}}
       @showCheckLink={{false}}
       @sessionTypes={{@model.sessionTypes}}
     />
