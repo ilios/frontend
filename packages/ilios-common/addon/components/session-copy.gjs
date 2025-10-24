@@ -28,6 +28,7 @@ export default class SessionCopyComponent extends Component {
   @service permissionChecker;
   @service dataLoader;
 
+  @tracked course;
   @tracked selectedYear;
   @tracked selectedCourseId;
 
@@ -46,7 +47,9 @@ export default class SessionCopyComponent extends Component {
   }
 
   get years() {
-    const { year: thisYear } = DateTime.now();
+    const { year: thisYear } = this.course.year
+      ? DateTime.fromFormat(this.course.year.toString(), 'yyyy')
+      : DateTime.now();
     return this.yearsData.value
       .map((year) => Number(year.id))
       .filter((year) => year >= thisYear - 1)
@@ -57,8 +60,8 @@ export default class SessionCopyComponent extends Component {
     if (!session) {
       return;
     }
-    const course = await session.course;
-    const school = await course.school;
+    this.course = await session.course;
+    const school = await this.course.school;
     await this.dataLoader.loadSchoolForCourses(school.id);
 
     const allCourses = this.store.peekAll('course');
@@ -71,6 +74,8 @@ export default class SessionCopyComponent extends Component {
   get bestSelectedYear() {
     if (this.selectedYear) {
       return this.selectedYear;
+    } else if (this.course.year) {
+      return this.course.year;
     }
 
     return this.years[0];
