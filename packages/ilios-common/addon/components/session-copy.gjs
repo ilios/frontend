@@ -199,7 +199,7 @@ export default class SessionCopyComponent extends Component {
               {{t "general.copySession"}}
             </h3>
             <p class="rollover-summary">
-              {{t "general.copySessionSummary"}}
+              {{t "general.copySessionSummary" title=@session.title}}
             </p>
             {{#if (and (isArray this.years) (isArray this.courses))}}
               <div class="item year-select">
