@@ -69,8 +69,8 @@ export default class SessionCopyComponent extends Component {
     if (!session) {
       return;
     }
-    this.course = await session.course;
-    const school = await this.course.school;
+    const course = await session.course;
+    const school = await course.school;
     await this.dataLoader.loadSchoolForCourses(school.id);
 
     const allCourses = this.store.peekAll('course');
