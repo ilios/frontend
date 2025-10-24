@@ -240,8 +240,6 @@ module('Integration | Component | ilios calendar single event', function (hooks)
   });
 
   test('unlinked event date and title are displayed', async function (assert) {
-    assert.expect(3);
-
     const today = DateTime.fromObject({ hour: 8, minute: 0, second: 0 });
     this.server.create('userevent', {
       name: 'Learn to Learn',

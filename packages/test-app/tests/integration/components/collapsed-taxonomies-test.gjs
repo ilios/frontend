@@ -57,19 +57,19 @@ module('Integration | Component | collapsed taxonomies', function (hooks) {
   });
 
   test('click expands', async function (assert) {
-    assert.expect(2);
     const sessionModel = await this.owner
       .lookup('service:store')
       .findRecord('session', this.session.id);
 
     this.set('subject', sessionModel);
     this.set('click', () => {
-      assert.ok(true);
+      assert.step('click called');
     });
     await render(
       <template><CollapsedTaxonomies @subject={{this.subject}} @expand={{this.click}} /></template>,
     );
     assert.strictEqual(component.title, 'Terms (1)');
     await component.expand();
+    assert.verifySteps(['click called']);
   });
 });

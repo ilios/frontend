@@ -109,7 +109,6 @@ module('Integration | Component | detail terms list', function (hooks) {
   });
 
   test('remove term', async function (assert) {
-    assert.expect(2);
     const school = this.server.create('school', {
       title: 'Medicine',
     });
@@ -132,6 +131,7 @@ module('Integration | Component | detail terms list', function (hooks) {
     this.set('terms', terms);
 
     this.set('remove', (val) => {
+      assert.step('remove called');
       assert.strictEqual(val.id, term1.id);
     });
     await render(
@@ -146,6 +146,7 @@ module('Integration | Component | detail terms list', function (hooks) {
     );
     assert.ok(component.terms[0].hasDeleteIcon);
     await component.terms[0].remove();
+    assert.verifySteps(['remove called']);
   });
 
   test('inactive vocabulary labeled as such in edit mode', async function (assert) {
@@ -173,7 +174,6 @@ module('Integration | Component | detail terms list', function (hooks) {
   });
 
   test('click vocabulary title to manage', async function (assert) {
-    assert.expect(1);
     const school = this.server.create('school');
     const vocabulary = this.server.create('vocabulary', { school });
     this.server.create('term', { vocabulary });
@@ -183,6 +183,7 @@ module('Integration | Component | detail terms list', function (hooks) {
     this.set('vocabulary', vocabularyModel);
     this.set('terms', []);
     this.set('manage', (vocabulary) => {
+      assert.step('manage called');
       assert.strictEqual(vocabulary, vocabularyModel);
     });
     await render(
@@ -197,5 +198,6 @@ module('Integration | Component | detail terms list', function (hooks) {
       </template>,
     );
     await component.manage();
+    assert.verifySteps(['manage called']);
   });
 });

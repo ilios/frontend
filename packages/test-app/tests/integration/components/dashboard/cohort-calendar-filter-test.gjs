@@ -107,7 +107,6 @@ module('Integration | Component | dashboard/cohort-calendar-filter', function (h
   });
 
   test('selected cohorts toggle remove', async function (assert) {
-    assert.expect(2);
     this.set('cohortProxies', [
       {
         id: 1,
@@ -117,6 +116,7 @@ module('Integration | Component | dashboard/cohort-calendar-filter', function (h
       },
     ]);
     this.set('remove', (id) => {
+      assert.step('remove called');
       assert.strictEqual(id, 1);
     });
     await render(
@@ -131,10 +131,10 @@ module('Integration | Component | dashboard/cohort-calendar-filter', function (h
     );
     assert.ok(component.cohorts[0].isChecked);
     await component.cohorts[0].toggle();
+    assert.verifySteps(['remove called']);
   });
 
   test('unselected cohorts toggle add', async function (assert) {
-    assert.expect(2);
     this.set('cohortProxies', [
       {
         id: 1,
@@ -144,6 +144,7 @@ module('Integration | Component | dashboard/cohort-calendar-filter', function (h
       },
     ]);
     this.set('add', (id) => {
+      assert.step('add called');
       assert.strictEqual(id, 1);
     });
     await render(
@@ -157,5 +158,6 @@ module('Integration | Component | dashboard/cohort-calendar-filter', function (h
     );
     assert.notOk(component.cohorts[0].isChecked);
     await component.cohorts[0].toggle();
+    assert.verifySteps(['add called']);
   });
 });

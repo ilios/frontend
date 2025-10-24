@@ -43,8 +43,8 @@ module('Integration | Component | choose-material-type', function (hooks) {
   });
 
   test('clicking type fires action', async function (assert) {
-    assert.expect(1);
     this.set('choose', (type) => {
+      assert.step('choose called');
       assert.strictEqual(type, 'link');
     });
     await render(
@@ -54,6 +54,7 @@ module('Integration | Component | choose-material-type', function (hooks) {
     );
     await component.toggle.click();
     await component.types[1].click();
+    assert.verifySteps(['choose called']);
   });
 
   test('down opens menu', async function (assert) {

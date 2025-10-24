@@ -32,8 +32,8 @@ module('Integration | Component | dashboard/user-context-filter', function (hook
   });
 
   test('selecting learning filter', async function (assert) {
-    assert.expect(2);
     this.set('setUserContext', (context) => {
+      assert.step('setUserContext called');
       assert.strictEqual(context, 'learner');
     });
     await render(
@@ -41,12 +41,13 @@ module('Integration | Component | dashboard/user-context-filter', function (hook
     );
     assert.notOk(component.learning.isChecked);
     await component.learning.toggle();
+    assert.verifySteps(['setUserContext called']);
   });
 
   test('de-selecting learning filter', async function (assert) {
-    assert.expect(7);
     this.set('userContext', 'learner');
     this.set('setUserContext', (context) => {
+      assert.step('setUserContext called');
       assert.strictEqual(context, null);
     });
     await render(
@@ -64,11 +65,12 @@ module('Integration | Component | dashboard/user-context-filter', function (hook
     assert.ok(component.learning.isActive);
     assert.notOk(component.admin.isActive);
     await component.learning.toggle();
+    assert.verifySteps(['setUserContext called']);
   });
 
   test('selecting instructing filter', async function (assert) {
-    assert.expect(2);
     this.set('setUserContext', (context) => {
+      assert.step('setUserContext called');
       assert.strictEqual(context, 'instructor');
     });
     await render(
@@ -76,12 +78,13 @@ module('Integration | Component | dashboard/user-context-filter', function (hook
     );
     assert.notOk(component.instructing.isChecked);
     await component.instructing.toggle();
+    assert.verifySteps(['setUserContext called']);
   });
 
   test('de-selecting instructing filter', async function (assert) {
-    assert.expect(7);
     this.set('userContext', 'instructor');
     this.set('setUserContext', (context) => {
+      assert.step('setUserContext called');
       assert.strictEqual(context, null);
     });
     await render(
@@ -99,11 +102,12 @@ module('Integration | Component | dashboard/user-context-filter', function (hook
     assert.notOk(component.learning.isActive);
     assert.notOk(component.admin.isActive);
     await component.instructing.toggle();
+    assert.verifySteps(['setUserContext called']);
   });
 
   test('selecting admin filter', async function (assert) {
-    assert.expect(2);
     this.set('setUserContext', (context) => {
+      assert.step('setUserContext called');
       assert.strictEqual(context, 'administrator');
     });
     await render(
@@ -111,12 +115,13 @@ module('Integration | Component | dashboard/user-context-filter', function (hook
     );
     assert.notOk(component.admin.isChecked);
     await component.admin.toggle();
+    assert.verifySteps(['setUserContext called']);
   });
 
   test('de-selecting admin filter', async function (assert) {
-    assert.expect(7);
     this.set('userContext', 'administrator');
     this.set('setUserContext', (context) => {
+      assert.step('setUserContext called');
       assert.strictEqual(context, null);
     });
     await render(
@@ -134,5 +139,6 @@ module('Integration | Component | dashboard/user-context-filter', function (hook
     assert.notOk(component.learning.isActive);
     assert.ok(component.admin.isActive);
     await component.admin.toggle();
+    assert.verifySteps(['setUserContext called']);
   });
 });

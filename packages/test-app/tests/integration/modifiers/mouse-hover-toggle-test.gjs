@@ -7,8 +7,8 @@ module('Integration | Modifier | mouse-hover-toggle', function (hooks) {
   setupRenderingTest(hooks);
 
   test('action is fired with correct value', async function (assert) {
-    assert.expect(2);
     this.set('action', (val) => {
+      assert.step('action called');
       assert.ok(val);
     });
     await render(
@@ -18,8 +18,10 @@ module('Integration | Modifier | mouse-hover-toggle', function (hooks) {
     );
     await triggerEvent('#theTestElement', 'mouseover');
     this.set('action', (val) => {
+      assert.step('action called again');
       assert.notOk(val);
     });
     await triggerEvent('#theTestElement', 'mouseout');
+    assert.verifySteps(['action called', 'action called again']);
   });
 });

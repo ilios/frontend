@@ -139,11 +139,11 @@ module('Integration | Component | instructor selection manager', function (hooks
   });
 
   test('remove selected instructor', async function (assert) {
-    assert.expect(1);
     this.set('instructors', [this.instructor1]);
     this.set('groups', []);
     this.set('availableGroups', []);
     this.set('removeInstructor', (instructor) => {
+      assert.step('removeInstructor called');
       assert.strictEqual(instructor, this.instructor1);
     });
     await render(
@@ -160,14 +160,15 @@ module('Integration | Component | instructor selection manager', function (hooks
       </template>,
     );
     await component.selectedInstructors.instructors[0].remove();
+    assert.verifySteps(['removeInstructor called']);
   });
 
   test('remove selected instructor group', async function (assert) {
-    assert.expect(1);
     this.set('instructors', []);
     this.set('groups', [this.group1]);
     this.set('availableGroups', []);
     this.set('removeGroup', (group) => {
+      assert.step('removeGroup called');
       assert.strictEqual(group, this.group1);
     });
     await render(
@@ -184,14 +185,15 @@ module('Integration | Component | instructor selection manager', function (hooks
       </template>,
     );
     await component.selectedInstructorGroups.instructorGroups[0].remove();
+    assert.verifySteps(['removeGroup called']);
   });
 
   test('search and add instructor group', async function (assert) {
-    assert.expect(1);
     this.set('instructors', []);
     this.set('groups', []);
     this.set('availableGroups', [this.group3]);
     this.set('addGroup', (group) => {
+      assert.step('addGroup called');
       assert.strictEqual(group, this.group3);
     });
     await render(
@@ -209,10 +211,10 @@ module('Integration | Component | instructor selection manager', function (hooks
     );
     await component.search.searchBox.set('Gamma');
     await component.search.results.items[0].click();
+    assert.verifySteps(['addGroup called']);
   });
 
   test('search and add instructor', async function (assert) {
-    assert.expect(1);
     this.server.get('api/users', (schema) => {
       return schema.users.all();
     });
@@ -220,6 +222,7 @@ module('Integration | Component | instructor selection manager', function (hooks
     this.set('groups', []);
     this.set('availableGroups', []);
     this.set('addInstructor', (instructor) => {
+      assert.step('addInstructor called');
       assert.strictEqual(instructor, this.instructor3);
     });
     await render(
@@ -237,5 +240,6 @@ module('Integration | Component | instructor selection manager', function (hooks
     );
     await component.search.searchBox.set('Aardvark');
     await component.search.results.items[0].click();
+    assert.verifySteps(['addInstructor called']);
   });
 });

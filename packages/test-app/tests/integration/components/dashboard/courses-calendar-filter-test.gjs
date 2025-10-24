@@ -246,7 +246,6 @@ module('Integration | Component | dashboard/courses-calendar-filter', function (
   });
 
   test('selected courses toggle remove', async function (assert) {
-    assert.expect(2);
     const school = this.server.create('school');
     this.server.create('course', {
       school,
@@ -254,6 +253,7 @@ module('Integration | Component | dashboard/courses-calendar-filter', function (
     const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
     this.set('school', schoolModel);
     this.set('remove', (id) => {
+      assert.step('remove called');
       assert.strictEqual(id, '1');
     });
     await render(
@@ -268,10 +268,10 @@ module('Integration | Component | dashboard/courses-calendar-filter', function (
     );
     assert.ok(component.years[0].courses[0].isChecked);
     await component.years[0].courses[0].toggle();
+    assert.verifySteps(['remove called']);
   });
 
   test('unselected courses toggle add', async function (assert) {
-    assert.expect(2);
     const school = this.server.create('school');
     this.server.create('course', {
       school,
@@ -279,6 +279,7 @@ module('Integration | Component | dashboard/courses-calendar-filter', function (
     const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
     this.set('school', schoolModel);
     this.set('add', (id) => {
+      assert.step('add called');
       assert.strictEqual(id, '1');
     });
     await render(
@@ -288,5 +289,6 @@ module('Integration | Component | dashboard/courses-calendar-filter', function (
     );
     assert.notOk(component.years[0].courses[0].isChecked);
     await component.years[0].courses[0].toggle();
+    assert.verifySteps(['add called']);
   });
 });

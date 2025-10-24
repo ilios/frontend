@@ -130,8 +130,8 @@ module('Integration | Component | dashboard/materials', function (hooks) {
   });
 
   test('it renders with materials in show-current mode', async function (assert) {
-    assert.expect(73);
     this.server.get(`/api/usermaterials/:id`, (scheme, { params, queryParams }) => {
+      assert.step('API called');
       assert.ok('id' in params);
       assert.strictEqual(parseInt(params.id, 10), 11);
       assert.ok('before' in queryParams);
@@ -249,11 +249,12 @@ module('Integration | Component | dashboard/materials', function (hooks) {
     );
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
+    assert.verifySteps(['API called']);
   });
 
   test('it renders with materials in show-all mode', async function (assert) {
-    assert.expect(15);
     this.server.get(`/api/usermaterials/:id`, (scheme, { params, queryParams }) => {
+      assert.step('API called');
       assert.ok('id' in params);
       assert.strictEqual(parseInt(params.id, 10), 11);
       assert.notOk('before' in queryParams);
@@ -295,10 +296,12 @@ module('Integration | Component | dashboard/materials', function (hooks) {
       'Showing 1 - 25 of 205',
     );
     assert.strictEqual(component.table.rows.length, 25);
+    assert.verifySteps(['API called']);
   });
 
   test('it renders with no materials', async function (assert) {
     this.server.get(`/api/usermaterials/:id`, () => {
+      assert.step('API called');
       return {
         userMaterials: [],
       };
@@ -323,17 +326,19 @@ module('Integration | Component | dashboard/materials', function (hooks) {
     );
 
     assert.strictEqual(component.text, 'My Materials None');
+    assert.verifySteps(['API called']);
   });
 
   test('filter by course', async function (assert) {
-    assert.expect(10);
     this.server.get(`/api/usermaterials/:id`, () => {
+      assert.step('API called');
       return {
         userMaterials: this.currentMaterials,
       };
     });
     this.set('courseId', this.courses[0].id);
     this.set('setCourse', (id) => {
+      assert.step('setCourse called');
       assert.strictEqual(id, '2');
       this.set('courseId', id);
     });
@@ -366,17 +371,19 @@ module('Integration | Component | dashboard/materials', function (hooks) {
     assert.ok(component.courseFilter.options[2].isSelected);
     assert.strictEqual(component.topPaginator.controls.pagerDetails.text, 'Showing 1 - 1 of 1');
     assert.strictEqual(component.table.rows[0].courseTitle, 'course 1');
+    assert.verifySteps(['API called', 'setCourse called']);
   });
 
   test('filter by text', async function (assert) {
-    assert.expect(8);
     this.server.get(`/api/usermaterials/:id`, () => {
+      assert.step('API called');
       return {
         userMaterials: this.currentMaterials,
       };
     });
     this.set('filter', 'title3');
     this.set('setFilter', (text) => {
+      assert.step('setFilter called');
       assert.strictEqual(text, 'course 0');
       this.set('filter', text);
     });
@@ -407,11 +414,12 @@ module('Integration | Component | dashboard/materials', function (hooks) {
     assert.strictEqual(component.topPaginator.controls.pagerDetails.text, 'Showing 1 - 2 of 2');
     assert.strictEqual(component.table.rows[0].courseTitle, 'course 0');
     assert.strictEqual(component.table.rows[1].courseTitle, 'course 0');
+    assert.verifySteps(['API called', 'setFilter called']);
   });
 
   test('pagination', async function (assert) {
-    assert.expect(3);
     this.server.get(`/api/usermaterials/:id`, () => {
+      assert.step('API called');
       return {
         userMaterials: this.allMaterials,
       };
@@ -419,6 +427,7 @@ module('Integration | Component | dashboard/materials', function (hooks) {
     this.set('limit', 50);
     this.set('offset', 100);
     this.set('setOffset', (offset) => {
+      assert.step('setOffset called');
       assert.strictEqual(offset, 150);
     });
     await render(
@@ -445,17 +454,19 @@ module('Integration | Component | dashboard/materials', function (hooks) {
     );
     assert.strictEqual(component.table.rows.length, 100);
     await component.topPaginator.controls.nextPage.click();
+    assert.verifySteps(['API called', 'setOffset called']);
   });
 
   test('sort by course title', async function (assert) {
-    assert.expect(10);
     this.server.get(`/api/usermaterials/:id`, () => {
+      assert.step('API called');
       return {
         userMaterials: this.allMaterials,
       };
     });
     this.set('sortBy', 'courseTitle');
     this.set('setSortBy', (sortBy) => {
+      assert.step('setSortBy called');
       assert.strictEqual(sortBy, 'courseTitle:desc');
       this.set('sortBy', sortBy);
     });
@@ -487,17 +498,19 @@ module('Integration | Component | dashboard/materials', function (hooks) {
     await component.table.headers.courseTitle.click();
     assert.ok(component.table.headers.courseTitle.isSortedDescending);
     assert.strictEqual(component.table.rows[0].courseTitle, 'course 4');
+    assert.verifySteps(['API called', 'setSortBy called']);
   });
 
   test('sort by session title', async function (assert) {
-    assert.expect(10);
     this.server.get(`/api/usermaterials/:id`, () => {
+      assert.step('API called');
       return {
         userMaterials: this.allMaterials,
       };
     });
     this.set('sortBy', 'sessionTitle');
     this.set('setSortBy', (sortBy) => {
+      assert.step('setSortBy called');
       assert.strictEqual(sortBy, 'sessionTitle:desc');
       this.set('sortBy', sortBy);
     });
@@ -529,17 +542,19 @@ module('Integration | Component | dashboard/materials', function (hooks) {
     await component.table.headers.sessionTitle.click();
     assert.ok(component.table.headers.sessionTitle.isSortedDescending);
     assert.strictEqual(component.table.rows[0].sessionTitle, 'session5title');
+    assert.verifySteps(['API called', 'setSortBy called']);
   });
 
   test('sort by title', async function (assert) {
-    assert.expect(10);
     this.server.get(`/api/usermaterials/:id`, () => {
+      assert.step('API called');
       return {
         userMaterials: this.allMaterials,
       };
     });
     this.set('sortBy', 'title');
     this.set('setSortBy', (sortBy) => {
+      assert.step('setSortBy called');
       assert.strictEqual(sortBy, 'title:desc');
       this.set('sortBy', sortBy);
     });
@@ -574,17 +589,19 @@ module('Integration | Component | dashboard/materials', function (hooks) {
       component.table.rows[0].title,
       'Timed Release title5 (Available until 03/01/2013, 01:10 AM)',
     );
+    assert.verifySteps(['API called', 'setSortBy called']);
   });
 
   test('sort by first offering date', async function (assert) {
-    assert.expect(10);
     this.server.get(`/api/usermaterials/:id`, () => {
+      assert.step('API called');
       return {
         userMaterials: this.allMaterials,
       };
     });
     this.set('sortBy', 'firstOfferingDate');
     this.set('setSortBy', (sortBy) => {
+      assert.step('setSortBy called');
       assert.strictEqual(sortBy, 'firstOfferingDate:desc');
       this.set('sortBy', sortBy);
     });
@@ -622,5 +639,6 @@ module('Integration | Component | dashboard/materials', function (hooks) {
       component.table.rows[0].firstOfferingDate,
       this.nextWeek.toFormat('MM/dd/yyyy'),
     );
+    assert.verifySteps(['API called', 'setSortBy called']);
   });
 });

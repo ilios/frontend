@@ -124,7 +124,6 @@ module('Integration | Component | dashboard/week', function (hooks) {
   });
 
   test('right week on sunday #5308', async function (assert) {
-    assert.expect(1);
     await this.testTitleOnDate(
       assert,
       { year: 2024, month: 3, day: 10 },
@@ -133,7 +132,6 @@ module('Integration | Component | dashboard/week', function (hooks) {
   });
 
   test('right week on monday #5308', async function (assert) {
-    assert.expect(1);
     await this.testTitleOnDate(
       assert,
       { year: 2023, month: 8, day: 7 },
@@ -142,7 +140,6 @@ module('Integration | Component | dashboard/week', function (hooks) {
   });
 
   test('right week on tuesday #5308', async function (assert) {
-    assert.expect(1);
     await this.testTitleOnDate(
       assert,
       { year: 2022, month: 12, day: 6 },
@@ -151,7 +148,6 @@ module('Integration | Component | dashboard/week', function (hooks) {
   });
 
   test('right week on wednesday #5308', async function (assert) {
-    assert.expect(1);
     await this.testTitleOnDate(
       assert,
       { year: 2022, month: 7, day: 13 },
@@ -160,7 +156,6 @@ module('Integration | Component | dashboard/week', function (hooks) {
   });
 
   test('right week on thursday #5308', async function (assert) {
-    assert.expect(1);
     await this.testTitleOnDate(
       assert,
       { year: 2021, month: 5, day: 13 },
@@ -169,7 +164,6 @@ module('Integration | Component | dashboard/week', function (hooks) {
   });
 
   test('right week on friday #5308', async function (assert) {
-    assert.expect(1);
     await this.testTitleOnDate(
       assert,
       { year: 2021, month: 9, day: 24 },
@@ -178,7 +172,6 @@ module('Integration | Component | dashboard/week', function (hooks) {
   });
 
   test('right week on saturday #5308', async function (assert) {
-    assert.expect(1);
     await this.testTitleOnDate(
       assert,
       { year: 2022, month: 7, day: 30 },
@@ -187,7 +180,6 @@ module('Integration | Component | dashboard/week', function (hooks) {
   });
 
   test('correct at the end of 2023 and the start of 2024', async function (assert) {
-    assert.expect(7);
     this.setupEvents([]);
     const title = 'December 31 - January 6 Week at a Glance';
     await this.testTitleOnDate(assert, { year: 2023, month: 12, day: 31 }, title);
@@ -200,7 +192,6 @@ module('Integration | Component | dashboard/week', function (hooks) {
   });
 
   test('correct at the end of 2024 and start of 2025', async function (assert) {
-    assert.expect(7);
     this.setupEvents([]);
     const title = 'December 29 - January 4 Week at a Glance';
     await this.testTitleOnDate(assert, { year: 2024, month: 12, day: 29 }, title);
@@ -213,7 +204,6 @@ module('Integration | Component | dashboard/week', function (hooks) {
   });
 
   test('correct at the end of 2025 and start of 2026', async function (assert) {
-    assert.expect(7);
     this.setupEvents([]);
     const title = 'December 28 - January 3 Week at a Glance';
     await this.testTitleOnDate(assert, { year: 2025, month: 12, day: 28 }, title);
@@ -226,7 +216,6 @@ module('Integration | Component | dashboard/week', function (hooks) {
   });
 
   test('correct on some random day', async function (assert) {
-    assert.expect(1);
     this.setupEvents([]);
     await this.testTitleOnDate(
       assert,

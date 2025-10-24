@@ -28,7 +28,6 @@ module('Integration | Component | ilios calendar week', function (hooks) {
   });
 
   test('clicking on a day header fires the correct events', async function (assert) {
-    assert.expect(2);
     const date = DateTime.fromObject({
       year: 2015,
       month: 9,
@@ -39,9 +38,11 @@ module('Integration | Component | ilios calendar week', function (hooks) {
     });
     this.set('date', date.toJSDate());
     this.set('changeDate', (newDate) => {
+      assert.step('changeDate called');
       assert.strictEqual(newDate, '2015-09-27');
     });
     this.set('changeView', (newView) => {
+      assert.step('changeView called');
       assert.strictEqual(newView, 'day');
     });
 
@@ -57,10 +58,10 @@ module('Integration | Component | ilios calendar week', function (hooks) {
       </template>,
     );
     await component.calendar.dayHeadings[0].selectDay();
+    assert.verifySteps(['changeDate called', 'changeView called']);
   });
 
   test('clicking on a day header does nothing when areDaysSelectable is false', async function (assert) {
-    assert.expect(0);
     const date = DateTime.fromObject({
       year: 2015,
       month: 9,
@@ -71,7 +72,7 @@ module('Integration | Component | ilios calendar week', function (hooks) {
     });
     this.set('date', date.toJSDate());
     this.set('changeDate', () => {
-      assert.ok(false, 'this should never fire.');
+      assert.step('changeDate called');
     });
     await render(
       <template>
@@ -85,5 +86,6 @@ module('Integration | Component | ilios calendar week', function (hooks) {
       </template>,
     );
     await component.calendar.dayHeadings[0].selectDay();
+    assert.verifySteps([]);
   });
 });

@@ -43,11 +43,11 @@ module('Integration | Service | Current User', function (hooks) {
   });
 
   test('model only loaded once', async function (assert) {
-    assert.expect(2);
     this.server.create('user', { id: 100 });
     let calledAlready = false;
 
     this.server.get('api/users/:id', (schema, request) => {
+      assert.step('API called');
       const id = request.params.id;
       assert.strictEqual(parseInt(id, 10), 100);
       assert.notOk(calledAlready);
@@ -60,6 +60,7 @@ module('Integration | Service | Current User', function (hooks) {
     await subject.getModel();
     await subject.getModel();
     await subject.getModel();
+    assert.verifySteps(['API called']);
   });
 
   test('userRoleTitles', async function (assert) {
@@ -104,7 +105,6 @@ module('Integration | Service | Current User', function (hooks) {
   });
 
   test('activeRelatedCoursesInThisYearAndLastYear', async function (assert) {
-    assert.expect(10);
     const courses = this.server.createList('course', 2);
     this.server.create('user', {
       id: 100,
@@ -113,6 +113,7 @@ module('Integration | Service | Current User', function (hooks) {
     });
 
     this.server.get('/api/courses', (schema, { queryParams }) => {
+      assert.step('API called');
       assert.ok('my' in queryParams);
       assert.strictEqual(queryParams.my, 'true');
       assert.ok('filters[year]' in queryParams);
@@ -128,10 +129,10 @@ module('Integration | Service | Current User', function (hooks) {
     const activeRelatedCourses = await subject.getActiveRelatedCoursesInThisYearAndLastYear();
     assert.ok(mapBy(activeRelatedCourses, 'id').includes(courses[0].id));
     assert.ok(mapBy(activeRelatedCourses, 'id').includes(courses[1].id));
+    assert.verifySteps(['API called']);
   });
 
   test('getAllInstructedSessions', async function (assert) {
-    assert.expect(7);
     const user = this.server.create('user', { id: 100 });
     const subject = this.owner.lookup('service:current-user');
     const sessions = this.server.createList('session', 6);
@@ -172,7 +173,6 @@ module('Integration | Service | Current User', function (hooks) {
   });
 
   test('getAllInstructedCourses', async function (assert) {
-    assert.expect(7);
     const user = this.server.create('user', { id: 100 });
     const subject = this.owner.lookup('service:current-user');
     const courses = this.server.createList('course', 6);

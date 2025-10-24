@@ -114,10 +114,9 @@ module('Integration | Component | sortable th', function (hooks) {
   });
 
   test('click event fires', async function (assert) {
-    assert.expect(1);
     this.set('label', 'Foo');
     this.set('click', () => {
-      assert.ok(true);
+      assert.step('click called');
     });
     await render(
       <template>
@@ -125,5 +124,6 @@ module('Integration | Component | sortable th', function (hooks) {
       </template>,
     );
     await click(find('th button'));
+    assert.verifySteps(['click called']);
   });
 });

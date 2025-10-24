@@ -30,8 +30,9 @@ module('Integration | Helper | optional', function (hooks) {
   });
 
   test('If the action does exist, it passes the given action', async function (assert) {
-    assert.expect(1);
-    this.set('handler', () => assert.ok(true));
+    this.set('handler', () => {
+      assert.step('handler called');
+    });
     await render(
       <template>
         <button
@@ -42,11 +43,14 @@ module('Integration | Helper | optional', function (hooks) {
       </template>,
     );
     await click('button');
+    assert.verifySteps(['handler called']);
   });
 
   test('Works in a pipe', async function (assert) {
-    assert.expect(1);
-    this.set('check', (value) => assert.strictEqual(value, 42));
+    this.set('check', (value) => {
+      assert.step('check called');
+      assert.strictEqual(value, 42);
+    });
     await render(
       <template>
         <button
@@ -57,5 +61,6 @@ module('Integration | Helper | optional', function (hooks) {
       </template>,
     );
     await click('button');
+    assert.verifySteps(['check called']);
   });
 });

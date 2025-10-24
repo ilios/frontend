@@ -60,9 +60,9 @@ module('Integration | Component | dashboard/selected-vocabulary', function (hook
   });
 
   test('clicking unchecked checkbox fires add', async function (assert) {
-    assert.expect(1);
     this.set('vocabulary', this.vocabularyModel);
     this.set('add', (id) => {
+      assert.step('add called');
       assert.strictEqual(id, '1');
     });
     await render(
@@ -80,13 +80,14 @@ module('Integration | Component | dashboard/selected-vocabulary', function (hook
       </template>,
     );
     await component.selectedTermTree.checkboxes[0].click();
+    assert.verifySteps(['add called']);
   });
 
   test('clicking checked checkbox fires add', async function (assert) {
-    assert.expect(1);
     this.set('vocabulary', this.vocabularyModel);
     this.set('selectedTermIds', ['1']);
     this.set('remove', (id) => {
+      assert.step('remove called');
       assert.strictEqual(id, '1');
     });
     await render(
@@ -104,5 +105,6 @@ module('Integration | Component | dashboard/selected-vocabulary', function (hook
       </template>,
     );
     await component.selectedTermTree.checkboxes[0].click();
+    assert.verifySteps(['remove called']);
   });
 });

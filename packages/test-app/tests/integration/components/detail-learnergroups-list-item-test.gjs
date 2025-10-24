@@ -65,9 +65,9 @@ module('Integration | Component | detail-learnergroups-list-item', function (hoo
   });
 
   test('click to remove', async function (assert) {
-    assert.expect(2);
     this.set('group', this.group);
     this.set('remove', (group, cascade) => {
+      assert.step('remove called');
       assert.strictEqual(group.id, this.group.id);
       assert.ok(cascade);
     });
@@ -81,12 +81,13 @@ module('Integration | Component | detail-learnergroups-list-item', function (hoo
       </template>,
     );
     await component.remove();
+    assert.verifySteps(['remove called']);
   });
 
   test('shift-click to remove', async function (assert) {
-    assert.expect(2);
     this.set('group', this.group);
     this.set('remove', (group, cascade) => {
+      assert.step('remove called');
       assert.strictEqual(group.id, this.group.id);
       assert.notOk(cascade);
     });
@@ -101,12 +102,13 @@ module('Integration | Component | detail-learnergroups-list-item', function (hoo
     );
     // key modifiers are not supported by ember-cli-page-objects clickable() [ST 2022/09/08]
     await click('[data-test-remove-learnergroup]', { shiftKey: true });
+    assert.verifySteps(['remove called']);
   });
 
   test('control-click to remove', async function (assert) {
-    assert.expect(2);
     this.set('group', this.group);
     this.set('remove', (group, cascade) => {
+      assert.step('remove called');
       assert.strictEqual(group.id, this.group.id);
       assert.notOk(cascade);
     });
@@ -122,5 +124,6 @@ module('Integration | Component | detail-learnergroups-list-item', function (hoo
     );
     // key modifiers are not supported by ember-cli-page-objects clickable() [ST 2022/09/08]
     await click('[data-test-remove-learnergroup]', { ctrlKey: true });
+    assert.verifySteps(['remove called']);
   });
 });

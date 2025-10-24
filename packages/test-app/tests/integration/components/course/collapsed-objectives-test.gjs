@@ -54,14 +54,12 @@ module('Integration | Component | course/collapsed-objectives', function (hooks)
   });
 
   test('clicking expand icon opens full view', async function (assert) {
-    assert.expect(2);
-
     const course = this.server.create('course');
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
 
     this.set('course', courseModel);
     this.set('click', () => {
-      assert.ok(true);
+      assert.step('click called');
     });
     await render(
       <template><CollapsedObjectives @course={{this.course}} @expand={{this.click}} /></template>,
@@ -69,6 +67,7 @@ module('Integration | Component | course/collapsed-objectives', function (hooks)
 
     assert.strictEqual(component.title, 'Objectives (0)');
     await component.expand();
+    assert.verifySteps(['click called']);
   });
 
   test('icons all program year objectives correctly', async function (assert) {

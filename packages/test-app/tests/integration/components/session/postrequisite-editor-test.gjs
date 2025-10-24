@@ -144,7 +144,6 @@ module('Integration | Component | session/postrequisite-editor', function (hooks
   });
 
   test('closes when canceled', async function (assert) {
-    assert.expect(1);
     const sessions = this.server.createList('session', 5);
     this.server.create('course', {
       sessions,
@@ -153,7 +152,7 @@ module('Integration | Component | session/postrequisite-editor', function (hooks
       .lookup('service:store')
       .findRecord('session', sessions[0].id);
     this.set('close', () => {
-      assert.ok(true);
+      assert.step('close called');
     });
     this.set('session', sessionModel);
 
@@ -161,10 +160,10 @@ module('Integration | Component | session/postrequisite-editor', function (hooks
       <template><PostrequisiteEditor @close={{this.close}} @session={{this.session}} /></template>,
     );
     await component.close();
+    assert.verifySteps(['close called']);
   });
 
   test('closes when saved', async function (assert) {
-    assert.expect(1);
     const sessions = this.server.createList('session', 5);
     this.server.create('course', {
       sessions,
@@ -173,7 +172,7 @@ module('Integration | Component | session/postrequisite-editor', function (hooks
       .lookup('service:store')
       .findRecord('session', sessions[0].id);
     this.set('close', () => {
-      assert.ok(true);
+      assert.step('close called');
     });
     this.set('session', sessionModel);
 
@@ -181,6 +180,7 @@ module('Integration | Component | session/postrequisite-editor', function (hooks
       <template><PostrequisiteEditor @close={{this.close}} @session={{this.session}} /></template>,
     );
     await component.save();
+    assert.verifySteps(['close called']);
   });
 
   test('filters by title', async function (assert) {

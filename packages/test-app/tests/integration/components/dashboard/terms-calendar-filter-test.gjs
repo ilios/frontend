@@ -143,8 +143,8 @@ module('Integration | Component | dashboard/terms-calendar-filter', function (ho
   });
 
   test('selected terms toggle remove', async function (assert) {
-    assert.expect(2);
     this.set('remove', (id) => {
+      assert.step('remove called');
       assert.strictEqual(id, '1');
     });
     await render(
@@ -159,11 +159,12 @@ module('Integration | Component | dashboard/terms-calendar-filter', function (ho
     );
     assert.ok(component.vocabularies[0].terms[0].isChecked);
     await component.vocabularies[0].terms[0].toggle();
+    assert.verifySteps(['remove called']);
   });
 
   test('unselected terms toggle add', async function (assert) {
-    assert.expect(2);
     this.set('add', (id) => {
+      assert.step('add called');
       assert.strictEqual(id, '1');
     });
     await render(
@@ -177,5 +178,6 @@ module('Integration | Component | dashboard/terms-calendar-filter', function (ho
     );
     assert.notOk(component.vocabularies[0].terms[0].isChecked);
     await component.vocabularies[0].terms[0].toggle();
+    assert.verifySteps(['add called']);
   });
 });

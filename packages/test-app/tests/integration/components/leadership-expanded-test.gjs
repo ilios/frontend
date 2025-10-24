@@ -44,7 +44,6 @@ module('Integration | Component | leadership expanded', function (hooks) {
     });
 
     test('clicking the header collapses when there are administrators', async function (assert) {
-      assert.expect(1);
       const administrators = this.server.createList('user', 1);
       const course = this.server.create('course', {
         administrators,
@@ -52,7 +51,7 @@ module('Integration | Component | leadership expanded', function (hooks) {
       const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
       this.set('course', courseModel);
       this.set('click', () => {
-        assert.ok(true, 'Action was fired');
+        assert.step('click called');
       });
       await render(
         <template>
@@ -67,10 +66,10 @@ module('Integration | Component | leadership expanded', function (hooks) {
         </template>,
       );
       await component.collapse();
+      assert.verifySteps(['click called']);
     });
 
     test('clicking the header collapses when there are directors', async function (assert) {
-      assert.expect(1);
       const directors = this.server.createList('user', 1);
       const course = this.server.create('course', {
         directors,
@@ -78,7 +77,7 @@ module('Integration | Component | leadership expanded', function (hooks) {
       const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
       this.set('course', courseModel);
       this.set('click', () => {
-        assert.ok(true, 'Action was fired');
+        assert.step('click called');
       });
       await render(
         <template>
@@ -93,10 +92,10 @@ module('Integration | Component | leadership expanded', function (hooks) {
         </template>,
       );
       await component.collapse();
+      assert.verifySteps(['click called']);
     });
 
     test('clicking the header collapses when there are student advisors', async function (assert) {
-      assert.expect(1);
       const studentAdvisors = this.server.createList('user', 1);
       const course = this.server.create('course', {
         studentAdvisors,
@@ -104,7 +103,7 @@ module('Integration | Component | leadership expanded', function (hooks) {
       const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
       this.set('course', courseModel);
       this.set('click', () => {
-        assert.ok(true, 'Action was fired');
+        assert.step('click called');
       });
       await render(
         <template>
@@ -119,15 +118,15 @@ module('Integration | Component | leadership expanded', function (hooks) {
         </template>,
       );
       await component.collapse();
+      assert.verifySteps(['click called']);
     });
 
     test('clicking manage fires action', async function (assert) {
-      assert.expect(1);
       const course = this.server.create('course');
       const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
       this.set('course', courseModel);
       this.set('click', () => {
-        assert.ok(true, 'Action was fired');
+        assert.step('click called');
       });
       await render(
         <template>
@@ -142,12 +141,12 @@ module('Integration | Component | leadership expanded', function (hooks) {
         </template>,
       );
       await component.manage();
+      assert.verifySteps(['click called']);
     });
   });
 
   module('session', function () {
     test('it renders', async function (assert) {
-      assert.expect(6);
       const users = this.server.createList('user', 2);
       const course = this.server.create('course');
       const session = this.server.create('session', {
@@ -181,7 +180,6 @@ module('Integration | Component | leadership expanded', function (hooks) {
     });
 
     test('clicking the header collapses when there are administrators', async function (assert) {
-      assert.expect(1);
       const administrators = this.server.createList('user', 1);
       const course = this.server.create('course');
       const session = this.server.create('session', {
@@ -193,7 +191,7 @@ module('Integration | Component | leadership expanded', function (hooks) {
         .findRecord('session', session.id);
       this.set('session', sessionModel);
       this.set('click', () => {
-        assert.ok(true, 'Action was fired');
+        assert.step('click called');
       });
       await render(
         <template>
@@ -208,10 +206,10 @@ module('Integration | Component | leadership expanded', function (hooks) {
         </template>,
       );
       await component.collapse();
+      assert.verifySteps(['click called']);
     });
 
     test('clicking the header collapses when there are student advisors', async function (assert) {
-      assert.expect(1);
       const studentAdvisors = this.server.createList('user', 1);
       const course = this.server.create('course');
       const session = this.server.create('session', {
@@ -223,7 +221,7 @@ module('Integration | Component | leadership expanded', function (hooks) {
         .findRecord('session', session.id);
       this.set('session', sessionModel);
       this.set('click', () => {
-        assert.ok(true, 'Action was fired');
+        assert.step('click called');
       });
       await render(
         <template>
@@ -238,17 +236,17 @@ module('Integration | Component | leadership expanded', function (hooks) {
         </template>,
       );
       await component.collapse();
+      assert.verifySteps(['click called']);
     });
 
     test('clicking manage fires action', async function (assert) {
-      assert.expect(1);
       const session = this.server.create('session');
       const sessionModel = await this.owner
         .lookup('service:store')
         .findRecord('session', session.id);
       this.set('session', sessionModel);
       this.set('click', () => {
-        assert.ok(true, 'Action was fired');
+        assert.step('click called');
       });
       await render(
         <template>
@@ -263,13 +261,12 @@ module('Integration | Component | leadership expanded', function (hooks) {
         </template>,
       );
       await component.manage();
+      assert.verifySteps(['click called']);
     });
   });
 
   module('program', function () {
     test('it renders', async function (assert) {
-      assert.expect(4);
-
       const user1 = this.server.create('user', {
         firstName: 'a',
         lastName: 'person',
@@ -305,7 +302,6 @@ module('Integration | Component | leadership expanded', function (hooks) {
     });
 
     test('clicking the header collapses', async function (assert) {
-      assert.expect(1);
       const program = this.server.create('program');
       const programModel = await this.owner
         .lookup('service:store')
@@ -313,7 +309,7 @@ module('Integration | Component | leadership expanded', function (hooks) {
 
       this.set('program', programModel);
       this.set('click', () => {
-        assert.ok(true, 'Action was fired');
+        assert.step('click called');
       });
       await render(
         <template>
@@ -328,10 +324,10 @@ module('Integration | Component | leadership expanded', function (hooks) {
         </template>,
       );
       await component.collapse();
+      assert.verifySteps(['click called']);
     });
 
     test('clicking manage fires action', async function (assert) {
-      assert.expect(1);
       const program = this.server.create('program');
       const programModel = await this.owner
         .lookup('service:store')
@@ -339,7 +335,7 @@ module('Integration | Component | leadership expanded', function (hooks) {
 
       this.set('program', programModel);
       this.set('click', () => {
-        assert.ok(true, 'Action was fired');
+        assert.step('click called');
       });
       await render(
         <template>
@@ -354,13 +350,12 @@ module('Integration | Component | leadership expanded', function (hooks) {
         </template>,
       );
       await component.manage();
+      assert.verifySteps(['click called']);
     });
   });
 
   module('program year', function () {
     test('it renders', async function (assert) {
-      assert.expect(4);
-
       const user1 = this.server.create('user', {
         firstName: 'a',
         lastName: 'person',
@@ -397,7 +392,6 @@ module('Integration | Component | leadership expanded', function (hooks) {
     });
 
     test('clicking the header collapses', async function (assert) {
-      assert.expect(1);
       const program = this.server.create('program');
       const programYear = this.server.create('program-year', {
         program,
@@ -407,7 +401,7 @@ module('Integration | Component | leadership expanded', function (hooks) {
         .findRecord('program-year', programYear.id);
       this.set('programYear', programYearModel);
       this.set('click', () => {
-        assert.ok(true, 'Action was fired');
+        assert.step('click called');
       });
       await render(
         <template>
@@ -422,10 +416,10 @@ module('Integration | Component | leadership expanded', function (hooks) {
         </template>,
       );
       await component.collapse();
+      assert.verifySteps(['click called']);
     });
 
     test('clicking manage fires action', async function (assert) {
-      assert.expect(1);
       const program = this.server.create('program');
       const programYear = this.server.create('program-year', {
         program,
@@ -435,7 +429,7 @@ module('Integration | Component | leadership expanded', function (hooks) {
         .findRecord('program-year', programYear.id);
       this.set('programYear', programYearModel);
       this.set('click', () => {
-        assert.ok(true, 'Action was fired');
+        assert.step('click called');
       });
       await render(
         <template>
@@ -450,6 +444,7 @@ module('Integration | Component | leadership expanded', function (hooks) {
         </template>,
       );
       await component.manage();
+      assert.verifySteps(['click called']);
     });
   });
 
@@ -485,7 +480,6 @@ module('Integration | Component | leadership expanded', function (hooks) {
     });
 
     test('clicking the header collapses', async function (assert) {
-      assert.expect(1);
       const user1 = this.server.create('user');
       const school = this.server.create('school', {
         directors: [user1],
@@ -493,7 +487,7 @@ module('Integration | Component | leadership expanded', function (hooks) {
       const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
       this.set('school', schoolModel);
       this.set('collapse', () => {
-        assert.ok(true, 'Action was fired');
+        assert.step('collapse called');
       });
       await render(
         <template>
@@ -508,15 +502,15 @@ module('Integration | Component | leadership expanded', function (hooks) {
         </template>,
       );
       await component.collapse();
+      assert.verifySteps(['collapse called']);
     });
 
     test('clicking manage fires action', async function (assert) {
-      assert.expect(1);
       const school = this.server.create('school', {});
       const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
       this.set('school', schoolModel);
       this.set('manage', () => {
-        assert.ok(true, 'Action was fired');
+        assert.step('manage called');
       });
       await render(
         <template>
@@ -532,6 +526,7 @@ module('Integration | Component | leadership expanded', function (hooks) {
       );
 
       await component.manage();
+      assert.verifySteps(['manage called']);
     });
 
     // @link https://github.com/ilios/frontend/issues/5732
@@ -584,7 +579,6 @@ module('Integration | Component | leadership expanded', function (hooks) {
     });
 
     test('clicking the header collapses', async function (assert) {
-      assert.expect(1);
       const report = this.server.create('curriculum-inventory-report');
       const reportModel = await this.owner
         .lookup('service:store')
@@ -592,7 +586,7 @@ module('Integration | Component | leadership expanded', function (hooks) {
 
       this.set('report', reportModel);
       this.set('collapse', () => {
-        assert.ok(true, 'Action was fired');
+        assert.step('collapse called');
       });
       await render(
         <template>
@@ -607,10 +601,10 @@ module('Integration | Component | leadership expanded', function (hooks) {
         </template>,
       );
       await component.collapse();
+      assert.verifySteps(['collapse called']);
     });
 
     test('clicking manage fires action', async function (assert) {
-      assert.expect(1);
       const report = this.server.create('curriculum-inventory-report');
       const reportModel = await this.owner
         .lookup('service:store')
@@ -618,7 +612,7 @@ module('Integration | Component | leadership expanded', function (hooks) {
 
       this.set('report', reportModel);
       this.set('manage', () => {
-        assert.ok(true, 'Action was fired');
+        assert.step('manage called');
       });
       await render(
         <template>
@@ -633,6 +627,7 @@ module('Integration | Component | leadership expanded', function (hooks) {
         </template>,
       );
       await component.manage();
+      assert.verifySteps(['manage called']);
     });
   });
 });

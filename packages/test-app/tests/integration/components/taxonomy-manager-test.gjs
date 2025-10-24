@@ -110,14 +110,15 @@ module('Integration | Component | taxonomy manager', function (hooks) {
   });
 
   test('select/deselect term', async function (assert) {
-    assert.expect(14);
     this.set('assignableVocabularies', [this.vocabModel1]);
     this.set('selectedTerms', [this.termModel1]);
     this.set('add', (term) => {
+      assert.step('add called');
       assert.strictEqual(term, this.termModel2);
       this.set('selectedTerms', [...this.selectedTerms, term]);
     });
     this.set('remove', (term) => {
+      assert.step('remove called');
       assert.strictEqual(term, this.termModel2);
       this.set(
         'selectedTerms',
@@ -158,6 +159,7 @@ module('Integration | Component | taxonomy manager', function (hooks) {
 
     assert.notOk(component.selectedTerms[0].terms[1].isPresent);
     assert.notOk(component.availableTerms[1].isSelected);
+    assert.verifySteps(['add called', 'remove called', 'add called', 'remove called']);
   });
 
   test('switch vocabularies', async function (assert) {

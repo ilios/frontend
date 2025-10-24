@@ -47,13 +47,13 @@ module('Integration | Component | user-search-result-instructor-group', function
   });
 
   test('click fires action', async function (assert) {
-    assert.expect(3);
     const group = this.server.create('instructor-group');
     const groupModel = await this.owner
       .lookup('service:store')
       .findRecord('instructor-group', group.id);
     this.set('group', groupModel);
     this.set('add', (add) => {
+      assert.step('add called');
       assert.strictEqual(add, groupModel);
     });
     await render(
@@ -68,5 +68,6 @@ module('Integration | Component | user-search-result-instructor-group', function
     assert.strictEqual(component.text, 'instructor group 0');
     assert.ok(component.isActive);
     await component.click();
+    assert.verifySteps(['add called']);
   });
 });

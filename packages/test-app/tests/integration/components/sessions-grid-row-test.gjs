@@ -92,7 +92,6 @@ module('Integration | Component | sessions-grid-row', function (hooks) {
   });
 
   test('confirmDelete fires', async function (assert) {
-    assert.expect(1);
     class PermissionCheckerServiceMock extends Service {
       async canDeleteSession() {
         return true;
@@ -106,6 +105,7 @@ module('Integration | Component | sessions-grid-row', function (hooks) {
     const model = await this.owner.lookup('service:store').findRecord('session', session.id);
     this.set('session', model);
     this.set('confirmDelete', (s) => {
+      assert.step('confirmDelete called');
       assert.strictEqual(s, model.id);
     });
     await render(
@@ -120,15 +120,16 @@ module('Integration | Component | sessions-grid-row', function (hooks) {
       </template>,
     );
     await component.trash();
+    assert.verifySteps(['confirmDelete called']);
   });
 
   test('closeSession fires', async function (assert) {
-    assert.expect(1);
     const session = this.server.create('session');
     const model = await this.owner.lookup('service:store').findRecord('session', session.id);
     this.set('session', model);
     this.set('expandedSessionIds', [session.id]);
     this.set('closeSession', (s) => {
+      assert.step('closeSession called');
       assert.strictEqual(s, model);
     });
     await render(
@@ -143,16 +144,17 @@ module('Integration | Component | sessions-grid-row', function (hooks) {
       </template>,
     );
     await component.collapse();
+    assert.verifySteps(['closeSession called']);
   });
 
   test('expandSession fires', async function (assert) {
-    assert.expect(1);
     const session = this.server.create('session');
     this.server.create('offering', { session });
     const model = await this.owner.lookup('service:store').findRecord('session', session.id);
     this.set('session', model);
     this.set('expandedSessionIds', [session.id]);
     this.set('expandSession', (s) => {
+      assert.step('expandSession called');
       assert.strictEqual(s, model);
     });
     await render(
@@ -167,5 +169,6 @@ module('Integration | Component | sessions-grid-row', function (hooks) {
       </template>,
     );
     await component.expand();
+    assert.verifySteps(['expandSession called']);
   });
 });

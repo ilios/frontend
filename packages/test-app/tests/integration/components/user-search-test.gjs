@@ -29,9 +29,9 @@ module('Integration | Component | user search', function (hooks) {
   });
 
   test('input triggers search', async function (assert) {
-    assert.expect(4);
     this.server.create('user');
     this.server.get('api/users', (schema, { queryParams }) => {
+      assert.step('API called');
       assert.strictEqual(queryParams['q'], 'search words');
       return schema.users.all();
     });
@@ -40,6 +40,7 @@ module('Integration | Component | user search', function (hooks) {
     assert.strictEqual(component.resultsCount.text, '1 Results');
     assert.strictEqual(component.results.items.length, 1);
     assert.strictEqual(component.results.items[0].text, '0 guy M. Mc0son user@example.edu');
+    assert.verifySteps(['API called']);
   });
 
   test('no results displays messages', async function (assert) {
@@ -65,10 +66,10 @@ module('Integration | Component | user search', function (hooks) {
   });
 
   test('click user fires add user', async function (assert) {
-    assert.expect(4);
     const user = this.server.create('user');
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     this.set('action', (passedUser) => {
+      assert.step('action called');
       assert.strictEqual(passedUser, userModel);
     });
     await render(<template><UserSearch @addUser={{this.action}} /></template>);
@@ -77,13 +78,14 @@ module('Integration | Component | user search', function (hooks) {
     assert.strictEqual(component.results.items.length, 1);
     assert.strictEqual(component.results.items[0].text, '0 guy M. Mc0son user@example.edu');
     await component.results.items[0].click();
+    assert.verifySteps(['action called']);
   });
 
   test('click group fires add group', async function (assert) {
-    assert.expect(5);
     this.server.createList('instructor-group', 2);
     const instructorGroups = await this.owner.lookup('service:store').findAll('instructor-group');
     this.set('action', (group) => {
+      assert.step('action called');
       assert.strictEqual(group, instructorGroups[0]);
     });
     this.set('availableInstructorGroups', instructorGroups);
@@ -101,6 +103,7 @@ module('Integration | Component | user search', function (hooks) {
     assert.strictEqual(component.results.items[0].text, 'instructor group 0');
     assert.strictEqual(component.results.items[1].text, 'instructor group 1');
     await component.results.items[0].click();
+    assert.verifySteps(['action called']);
   });
 
   test('sorting is natural', async function (assert) {

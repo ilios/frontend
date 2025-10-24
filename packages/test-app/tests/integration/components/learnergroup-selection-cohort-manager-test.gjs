@@ -75,9 +75,9 @@ module('Integration | Component | learnergroup-selection-cohort-manager', functi
   });
 
   test('remove group in picker', async function (assert) {
-    assert.expect(2);
     this.set('filter', '');
     this.set('remove', (learnerGroup) => {
+      assert.step('remove called');
       assert.deepEqual(this.secondLevelLearnerGroup1, learnerGroup);
     });
     this.set('learnerGroups', [this.secondLevelLearnerGroup1]);
@@ -95,12 +95,13 @@ module('Integration | Component | learnergroup-selection-cohort-manager', functi
     );
     assert.ok(component.trees[0].subgroups[0].isChecked);
     await component.trees[0].subgroups[0].toggle();
+    assert.verifySteps(['remove called']);
   });
 
   test('add available group', async function (assert) {
-    assert.expect(2);
     this.set('filter', '');
     this.set('add', (learnerGroup) => {
+      assert.step('add called');
       assert.deepEqual(this.secondLevelLearnerGroup1, learnerGroup);
     });
     this.set('learnerGroups', []);
@@ -118,6 +119,7 @@ module('Integration | Component | learnergroup-selection-cohort-manager', functi
     );
     assert.notOk(component.trees[0].subgroups[0].isChecked);
     await component.trees[0].subgroups[0].toggle();
+    assert.verifySteps(['add called']);
   });
 
   test('filter applies', async function (assert) {

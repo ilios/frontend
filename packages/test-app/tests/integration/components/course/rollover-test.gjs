@@ -79,7 +79,6 @@ module('Integration | Component | course/rollover', function (hooks) {
   });
 
   test('rollover course', async function (assert) {
-    assert.expect(6);
     const courseStartDate = DateTime.fromObject({ hour: 0, minute: 0, second: 0 });
     const school = this.server.create('school');
     const course = this.server.create('course', {
@@ -91,6 +90,7 @@ module('Integration | Component | course/rollover', function (hooks) {
     this.set('course', courseModel);
 
     this.server.post(`/api/courses/${course.id}/rollover`, function (schema, request) {
+      assert.step('API called');
       const firstYear = earliestRolloverYear(new Date());
       const data = queryString.parse(request.requestBody);
       assert.ok('year' in data);
@@ -108,14 +108,15 @@ module('Integration | Component | course/rollover', function (hooks) {
       );
     });
     this.set('visit', (newCourse) => {
+      assert.step('visit called');
       assert.strictEqual(parseInt(newCourse.id, 10), 14);
     });
     await render(<template><Rollover @course={{this.course}} @visit={{this.visit}} /></template>);
     await click('.done');
+    assert.verifySteps(['API called', 'visit called']);
   });
 
   test('rollover course with new title', async function (assert) {
-    assert.expect(1);
     const school = this.server.create('school');
     const course = this.server.create('course', {
       title: 'old title',
@@ -128,6 +129,7 @@ module('Integration | Component | course/rollover', function (hooks) {
     const newTitle = course.title + '2';
 
     this.server.post(`/api/courses/${course.id}/rollover`, function (schema, request) {
+      assert.step('API called');
       const data = queryString.parse(request.requestBody);
       assert.strictEqual(data.newCourseTitle, newTitle, 'The new title gets passed.');
 
@@ -142,10 +144,10 @@ module('Integration | Component | course/rollover', function (hooks) {
     const input = `${title} input`;
     await fillIn(input, newTitle);
     await click('.done');
+    assert.verifySteps(['API called']);
   });
 
   test('rollover course to selected year', async function (assert) {
-    assert.expect(5);
     const school = this.server.create('school');
     const course = this.server.create('course', {
       title: 'old title',
@@ -156,6 +158,7 @@ module('Integration | Component | course/rollover', function (hooks) {
     this.set('course', courseModel);
     const selectedYear = DateTime.now().plus({ year: 2 }).year;
     this.server.post(`/api/courses/${course.id}/rollover`, function (schema, request) {
+      assert.step('API called');
       const data = queryString.parse(request.requestBody);
       assert.ok('year' in data);
       assert.strictEqual(parseInt(data.year, 10), selectedYear);
@@ -171,12 +174,14 @@ module('Integration | Component | course/rollover', function (hooks) {
       );
     });
     this.set('visit', (newCourse) => {
+      assert.step('visit called');
       assert.strictEqual(parseInt(newCourse.id, 10), 14);
     });
     await render(<template><Rollover @course={{this.course}} @visit={{this.visit}} /></template>);
     await fillIn('[data-test-year]', selectedYear);
 
     await click('.done');
+    assert.verifySteps(['API called', 'visit called']);
   });
 
   test('disable years when title already exists', async function (assert) {
@@ -247,7 +252,6 @@ module('Integration | Component | course/rollover', function (hooks) {
   });
 
   test('rollover course with new start date', async function (assert) {
-    assert.expect(8);
     const currentYear = DateTime.now().year;
     // ensure that rollover date and course start date fall on the same day of the week.
     const courseStartDate = DateTime.fromISO(`${currentYear}-W20-1`);
@@ -263,6 +267,7 @@ module('Integration | Component | course/rollover', function (hooks) {
     this.set('course', courseModel);
 
     this.server.post(`/api/courses/${course.id}/rollover`, function (schema, request) {
+      assert.step('API called');
       const data = queryString.parse(request.requestBody);
       assert.ok('newStartDate' in data, 'A new start date was passed.');
       const newStartDate = DateTime.fromFormat(data.newStartDate, 'y-MM-dd');
@@ -309,10 +314,10 @@ module('Integration | Component | course/rollover', function (hooks) {
       'Selected day changed to rollover date day.',
     );
     await click('.done');
+    assert.verifySteps(['API called']);
   });
 
   test('rollover course prohibit non-matching day-of-week date selection', async function (assert) {
-    assert.expect(4);
     const currentYear = DateTime.now().year;
     // rollover date and course start date don't fall on the same day of the week.
     const courseStartDate = DateTime.fromISO(`${currentYear}-W20-1`);
@@ -328,6 +333,7 @@ module('Integration | Component | course/rollover', function (hooks) {
     this.set('course', courseModel);
 
     this.server.post(`/api/courses/${course.id}/rollover`, function (schema, request) {
+      assert.step('API called');
       const data = queryString.parse(request.requestBody);
       assert.ok('newStartDate' in data, 'A new start date was passed.');
       const newStartDate = DateTime.fromFormat(data.newStartDate, 'y-MM-dd');
@@ -365,6 +371,7 @@ module('Integration | Component | course/rollover', function (hooks) {
       'Selected month initialized to course start date month.',
     );
     await click('.done');
+    assert.verifySteps(['API called']);
   });
 
   /**
@@ -415,7 +422,6 @@ module('Integration | Component | course/rollover', function (hooks) {
   });
 
   test('rollover course with no offerings', async function (assert) {
-    assert.expect(4);
     const school = this.server.create('school', {
       title: 'SOM',
     });
@@ -425,6 +431,7 @@ module('Integration | Component | course/rollover', function (hooks) {
     });
     const course = await this.owner.lookup('service:store').findRecord('course', 1);
     this.server.post(`/api/courses/${course.id}/rollover`, function (schema, request) {
+      assert.step('API called');
       const data = queryString.parse(request.requestBody, {
         parseBooleans: true,
       });
@@ -446,6 +453,7 @@ module('Integration | Component | course/rollover', function (hooks) {
     await click(offerings);
     assert.dom(offerings).isNotChecked();
     await click('.done');
+    assert.verifySteps(['API called']);
   });
 
   test('errors do not show up initially', async function (assert) {
@@ -480,7 +488,6 @@ module('Integration | Component | course/rollover', function (hooks) {
   });
 
   test('rollover course with cohorts', async function (assert) {
-    assert.expect(5);
     const school = this.server.create('school', {
       title: 'SOM',
     });
@@ -504,6 +511,7 @@ module('Integration | Component | course/rollover', function (hooks) {
     });
     const course = await this.owner.lookup('service:store').findRecord('course', 1);
     this.server.post(`/api/courses/${course.id}/rollover`, function (schema, request) {
+      assert.step('API called');
       const data = queryString.parse(request.requestBody, {
         arrayFormat: 'bracket',
       });
@@ -534,6 +542,7 @@ module('Integration | Component | course/rollover', function (hooks) {
 
     await a11yAudit();
     assert.ok(true, 'no a11y errors found!');
+    assert.verifySteps(['API called']);
   });
 
   test('dates are correct in December', async function (assert) {

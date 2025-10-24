@@ -49,32 +49,17 @@ module('Unit | Utility | as-array', function () {
   });
 
   test('it not works for number', function (assert) {
-    assert.expect(1);
-    try {
-      asArray(1);
-    } catch (e) {
-      assert.ok(e.toString().includes('not supported'));
-    }
+    assert.throws(() => asArray(1), /not supported/);
   });
 
   test('it not works for non-iterable items', function (assert) {
-    assert.expect(1);
-    try {
-      asArray(Symbol('a'));
-    } catch (e) {
-      assert.ok(e.toString().includes('not iterable'));
-    }
+    assert.throws(() => asArray(Symbol('a')), /not iterable/);
   });
 
   test('it not works for non-object content in array-proxy-like items', function (assert) {
-    assert.expect(1);
-    try {
-      const item = new Promise((r) => r());
-      item.content = null;
-      asArray(item);
-    } catch (e) {
-      assert.ok(e.toString().includes('Unknown content type in array-like object'));
-    }
+    const item = new Promise((r) => r());
+    item.content = null;
+    assert.throws(() => asArray(item), /Unknown content type in array-like object/);
   });
 
   test('it works for object-like content in array-proxy-like items [arrays]', function (assert) {
@@ -126,43 +111,23 @@ module('Unit | Utility | as-array', function () {
   });
 
   test('it not works for proxy-like object as array', function (assert) {
-    assert.expect(1);
-    try {
-      const item = new Promise((r) => r());
-      asArray(item);
-    } catch (e) {
-      assert.ok(e.toString().includes('Promise-like objects is not supported as arrays'));
-    }
+    const item = new Promise((r) => r());
+    assert.throws(() => asArray(item), /Promise-like objects is not supported as arrays/);
   });
 
   test('it not works for WeakMap as array', function (assert) {
-    assert.expect(1);
-    try {
-      const item = new WeakMap();
-      asArray(item);
-    } catch (e) {
-      assert.ok(e.toString().includes('WeakMaps is not supported as arrays'));
-    }
+    const item = new WeakMap();
+    assert.ok(() => asArray(item), /WeakMaps is not supported as arrays/);
   });
 
   test('it not works for WeakSet as array', function (assert) {
-    assert.expect(1);
-    try {
-      const item = new WeakSet();
-      asArray(item);
-    } catch (e) {
-      assert.ok(e.toString().includes('WeakSets is not supported as arrays'));
-    }
+    const item = new WeakSet();
+    assert.throws(() => asArray(item), /WeakSets is not supported as arrays/);
   });
 
   test('it not works for EmberObject as array', function (assert) {
-    assert.expect(1);
-    try {
-      // eslint-disable-next-line ember/no-classic-classes
-      const item = EmberObject.extend({}).create();
-      asArray(item);
-    } catch (e) {
-      assert.ok(e.toString().includes('EmberObjects is not supported as arrays'));
-    }
+    // eslint-disable-next-line ember/no-classic-classes
+    const item = EmberObject.extend({}).create();
+    assert.throws(() => asArray(item), /EmberObjects is not supported as arrays/);
   });
 });

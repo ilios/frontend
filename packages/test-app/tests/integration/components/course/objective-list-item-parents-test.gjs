@@ -109,9 +109,8 @@ module('Integration | Component | course/objective-list-item-parents', function 
   });
 
   test('clicking save fires save', async function (assert) {
-    assert.expect(1);
     this.set('save', () => {
-      assert.ok(true);
+      assert.step('save called');
     });
     this.set('parents', [this.programYearObjective1, this.programYearObjective2]);
     await render(
@@ -128,12 +127,12 @@ module('Integration | Component | course/objective-list-item-parents', function 
       </template>,
     );
     await component.save();
+    assert.verifySteps(['save called']);
   });
 
   test('clicking cancel fires cancel', async function (assert) {
-    assert.expect(1);
     this.set('cancel', () => {
-      assert.ok(true);
+      assert.step('cancel called');
     });
     this.set('parents', [this.programYearObjective1, this.programYearObjective2]);
     await render(
@@ -150,12 +149,12 @@ module('Integration | Component | course/objective-list-item-parents', function 
       </template>,
     );
     await component.cancel();
+    assert.verifySteps(['cancel called']);
   });
 
   test('clicking objective fires manage', async function (assert) {
-    assert.expect(1);
     this.set('manage', () => {
-      assert.ok(true);
+      assert.step('manage called');
     });
     this.set('parents', [this.programYearObjective1, this.programYearObjective2]);
     await render(
@@ -172,5 +171,6 @@ module('Integration | Component | course/objective-list-item-parents', function 
       </template>,
     );
     await component.manage();
+    assert.verifySteps(['manage called']);
   });
 });
