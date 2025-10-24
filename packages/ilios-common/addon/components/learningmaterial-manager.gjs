@@ -323,39 +323,43 @@ export default class LearningMaterialManagerComponent extends Component {
               </span>
             {{/if}}
           </div>
-          <div class="item status">
-            <label for="status-{{templateId}}">
-              {{t "general.status"}}:
-            </label>
-            {{#if @editable}}
-              <select id="status-{{templateId}}" {{on "change" this.updateStatusId}}>
-                {{#each @learningMaterialStatuses as |status|}}
-                  <option
-                    value={{status.id}}
-                    selected={{eq status.id this.statusId}}
-                  >{{status.title}}</option>
-                {{/each}}
-              </select>
-            {{else}}
-              {{this.currentStatus.title}}
-            {{/if}}
+          <div class="item status required">
+            <div>
+              <label for="status-{{templateId}}">
+                {{t "general.status"}}:
+              </label>
+              {{#if @editable}}
+                <select id="status-{{templateId}}" {{on "change" this.updateStatusId}}>
+                  {{#each @learningMaterialStatuses as |status|}}
+                    <option
+                      value={{status.id}}
+                      selected={{eq status.id this.statusId}}
+                    >{{status.title}}</option>
+                  {{/each}}
+                </select>
+              {{else}}
+                {{this.currentStatus.title}}
+              {{/if}}
+            </div>
+
+            <div>
+              <label>
+                {{t "general.required"}}:
+              </label>
+              {{#if @editable}}
+                <ToggleYesno @yes={{this.required}} @toggle={{set this "required"}} />
+              {{else if this.required}}
+                <span class="add">
+                  {{t "general.yes"}}
+                </span>
+              {{else}}
+                <span class="remove">
+                  {{t "general.no"}}
+                </span>
+              {{/if}}
+            </div>
           </div>
-          <div class="item required">
-            <label>
-              {{t "general.required"}}:
-            </label>
-            {{#if @editable}}
-              <ToggleYesno @yes={{this.required}} @toggle={{set this "required"}} />
-            {{else if this.required}}
-              <span class="add">
-                {{t "general.yes"}}
-              </span>
-            {{else}}
-              <span class="remove">
-                {{t "general.no"}}
-              </span>
-            {{/if}}
-          </div>
+
           <div class="item notes">
             <label>
               {{t "general.instructionalNotes"}}:

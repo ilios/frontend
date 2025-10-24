@@ -7,6 +7,17 @@
 
   .item {
     @include m.ilios-form-item;
+
+    &.status.required {
+      display: flex;
+      flex-direction: row;
+      gap: 1em;
+
+      div {
+        display: flex;
+        flex-direction: column;
+      }
+    }
   }
 
   .buttons {
