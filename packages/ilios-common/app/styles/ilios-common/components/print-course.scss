@@ -66,14 +66,11 @@
   }
 
   .fade-text {
-    .fade-text-control {
-      height: auto;
-    }
-
     .display-text-wrapper {
       &.faded {
         max-height: none;
         overflow: visible;
+        mask-image: none;
       }
     }
 

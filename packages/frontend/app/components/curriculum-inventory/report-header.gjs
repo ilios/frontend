@@ -13,6 +13,7 @@ import set from 'ember-set-helper/helpers/set';
 import YupValidationMessage from 'ilios-common/components/yup-validation-message';
 import FaIcon from 'ilios-common/components/fa-icon';
 import not from 'ember-truth-helpers/helpers/not';
+import focus from 'ilios-common/modifiers/focus';
 
 export default class CurriculumInventoryReportHeaderComponent extends Component {
   @tracked name;
@@ -55,9 +56,7 @@ export default class CurriculumInventoryReportHeaderComponent extends Component 
             @value={{if this.name this.name (t "general.clickToEdit")}}
             @save={{perform this.saveName}}
             @close={{this.revertNameChanges}}
-            @saveOnEnter={{true}}
-            @closeOnEscape={{true}}
-            as |isSaving|
+            as |keyboard isSaving|
           >
             <input
               aria-label={{t "general.title"}}
@@ -66,6 +65,8 @@ export default class CurriculumInventoryReportHeaderComponent extends Component 
               disabled={{isSaving}}
               {{on "input" (pick "target.value" (set this "name"))}}
               {{this.validations.attach "name"}}
+              {{keyboard}}
+              {{focus}}
             />
             <YupValidationMessage
               @description={{t "general.name"}}

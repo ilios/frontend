@@ -3,8 +3,6 @@ import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render, waitFor } from '@ember/test-helpers';
 import { component } from 'ilios-common/page-objects/components/fade-text';
 import FadeText from 'ilios-common/components/fade-text';
-import onResize from 'ember-on-resize-modifier/modifiers/on-resize';
-import { on } from '@ember/modifier';
 
 module('Integration | Component | fade-text', function (hooks) {
   setupRenderingTest(hooks);
@@ -28,6 +26,8 @@ module('Integration | Component | fade-text', function (hooks) {
     `;
     this.fadedClass = 'faded';
     this.fadedSelector = '.faded';
+    this.linkText = '<p class="text"><a href="iliosproject.org">Ilios Project</a></p>';
+    this.cleanText = '<p class="text"><span class="link">Ilios Project</span></p>';
   });
 
   test('it renders empty', async function (assert) {
@@ -41,179 +41,125 @@ module('Integration | Component | fade-text', function (hooks) {
   test('it renders short text in full', async function (assert) {
     const shortText = 'template block text';
     this.set('shortText', shortText);
-
     await render(<template><FadeText @text={{this.shortText}} /></template>);
     assert.notOk(component.enabled);
-
-    await render(
-      <template>
-        <FadeText>
-          {{this.shortText}}
-        </FadeText>
-      </template>,
-    );
+    assert.false(component.displayText.isFaded);
     assert.dom(this.element).hasText(shortText);
-  });
-
-  test('it ignores fading behavior on tall text if tracking variable is missing', async function (assert) {
-    this.set('longHtml', this.longHtml);
-
-    this.set('expanded', false);
-    this.set('onExpandAll', (isExpanded) => {
-      this.set('expanded', isExpanded);
-    });
-    await render(<template><FadeText @text={{this.longHtml}} /></template>);
-
-    assert.dom('.display-text-wrapper', this.element).doesNotHaveClass(this.fadedClass);
-    assert.notOk(component.control.expand.isVisible, 'expand button is not visible');
   });
 
   test('it fades tall text given as component argument', async function (assert) {
     this.set('longHtml', this.longHtml);
 
     this.set('expanded', false);
-    this.set('onExpandAll', (isExpanded) => {
+    this.set('setExpanded', (isExpanded) => {
       this.set('expanded', isExpanded);
     });
     await render(
-      <template>
-        <FadeText
-          @text={{this.longHtml}}
-          @expanded={{this.expanded}}
-          @onExpandAll={{this.onExpandAll}}
-        />
-      </template>,
+      <template><FadeText @text={{this.longHtml}} @setExpanded={{this.setExpanded}} /></template>,
     );
-
-    // slight delay to allow for proper loading of component
     await waitFor(this.fadedSelector);
-
-    assert.false(this.expanded, 'text is not expanded');
-    assert.dom('.display-text-wrapper', this.element).hasClass(this.fadedClass);
+    assert.ok(component.enabled);
+    assert.notOk(this.expanded, 'text is not expanded');
+    assert.ok(component.displayText.isFaded);
 
     await component.control.expand.click();
 
-    assert.true(this.expanded);
-    assert.dom('.display-text-wrapper', this.element).doesNotHaveClass(this.fadedClass);
+    assert.ok(component.enabled);
+    assert.ok(this.expanded);
+    assert.notOk(component.displayText.isFaded);
 
     await component.control.collapse.click();
 
-    // slight delay to allow for proper loading of component
-    await waitFor(this.fadedSelector);
-
-    assert.false(this.expanded);
-    assert.dom('.display-text-wrapper', this.element).hasClass(this.fadedClass);
+    assert.ok(component.enabled);
+    assert.notOk(this.expanded);
+    assert.ok(component.displayText.isFaded);
   });
 
-  test('it fades tall text given as block', async function (assert) {
-    this.set('longHtml', this.longHtml);
-
-    this.set('expandLabel', 'Expand');
-    this.set('collapseLabel', 'Collapse');
-    this.set('expanded', false);
-    this.set('onExpandAll', (isExpanded) => {
-      this.set('expanded', isExpanded);
-    });
-
+  test('it renders short text in full in block form', async function (assert) {
+    const shortText = 'template block text';
+    this.set('shortText', shortText);
     await render(
       <template>
-        <FadeText
-          @text={{this.longHtml}}
-          @expanded={{this.expanded}}
-          @onExpandAll={{this.onExpandAll}}
-          as |displayText expand collapse updateTextDims shouldFade expanded|
-        >
-          <div class="display-text-wrapper{{if shouldFade ' faded'}}">
-            <div class="display-text" {{onResize updateTextDims}}>
-              {{displayText}}
-            </div>
-          </div>
-          {{#if shouldFade}}
-            <div class="fade-text-control" data-test-fade-text-control>
-              <button
-                type="button"
-                aria-label={{this.expandLabel}}
-                data-test-expand
-                {{on "click" expand}}
-              ></button>
-            </div>
-          {{else}}
-            {{#if expanded}}
-              <button
-                type="button"
-                aria-label={{this.collapseLabel}}
-                data-test-collapse
-                {{on "click" collapse}}
-              ></button>
-            {{/if}}
-          {{/if}}
+        <FadeText @text={{this.shortText}} as |ft|>
+          {{ft.text}}
+          {{ft.controlls}}
         </FadeText>
       </template>,
     );
-
-    // slight delay to allow for proper loading of component
-    await waitFor(this.fadedSelector);
-
-    assert.false(this.expanded);
-    assert.dom('.display-text-wrapper', this.element).hasClass(this.fadedClass);
-
-    await component.control.expand.click();
-
-    assert.true(this.expanded);
-    assert.dom('.display-text-wrapper', this.element).doesNotHaveClass(this.fadedClass);
-
-    await component.control.collapse.click();
-
-    // slight delay to allow for proper loading of component
-    await waitFor(this.fadedSelector);
-
-    assert.false(this.expanded);
-    assert.dom('.display-text-wrapper', this.element).hasClass(this.fadedClass);
+    assert.notOk(component.enabled);
+    assert.false(component.displayText.isFaded);
+    assert.dom(this.element).hasText(shortText);
   });
 
-  test('expand/collapse', async function (assert) {
-    const longText = `An objective description so long that it fades. An objective description so long that it fades. An objective description so long that it fades. An objective description so long that it fades. An objective description so long that it fades. An objective description so long that it fades. An objective description so long that it fades. An objective description so long that it fades. An objective description so long that it fades. An objective description so long that it fades. An objective description so long that it fades. An objective description so long that it fades. An objective description so long that it fades. An objective description so long that it fades.`;
+  test('it fades tall text given as component argument in block form', async function (assert) {
     this.set('longHtml', this.longHtml);
-    this.set('longText', longText);
 
     this.set('expanded', false);
-    this.set('onExpandAll', (isExpanded) => {
+    this.set('setExpanded', (isExpanded) => {
       this.set('expanded', isExpanded);
     });
     await render(
       <template>
-        <FadeText
-          @text={{this.longHtml}}
-          @expanded={{this.expanded}}
-          @onExpandAll={{this.onExpandAll}}
-        />
+        <FadeText @text={{this.longHtml}} @setExpanded={{this.setExpanded}} as |ft|>
+          {{ft.text}}
+          {{ft.controls}}
+        </FadeText>
       </template>,
     );
-
-    // slight delay to allow for proper loading of component
     await waitFor(this.fadedSelector);
-
-    assert.false(this.expanded);
-    assert.ok(component.displayText.isFaded, 'text is faded');
-    assert.strictEqual(component.text, longText, 'component text matches');
-    assert.ok(component.control.expand.isVisible, 'expand button is visible');
-    assert.notOk(component.control.collapse.isVisible, 'collapse button is NOT visible');
+    assert.ok(component.enabled);
+    assert.notOk(this.expanded, 'text is not expanded');
+    assert.ok(component.displayText.isFaded);
 
     await component.control.expand.click();
 
-    assert.true(this.expanded);
-    assert.notOk(component.displayText.isFaded, 'text is NOT faded');
-    assert.notOk(component.control.expand.isVisible, 'expand button is NOT visible');
-    assert.ok(component.control.collapse.isVisible, 'collpase button is visible');
+    assert.ok(component.enabled);
+    assert.ok(this.expanded);
+    assert.notOk(component.displayText.isFaded);
 
     await component.control.collapse.click();
 
-    // slight delay to allow for proper loading of component
-    await waitFor(this.fadedSelector);
+    assert.ok(component.enabled);
+    assert.notOk(this.expanded);
+    assert.ok(component.displayText.isFaded);
+  });
 
-    assert.false(this.expanded);
-    assert.ok(component.displayText.isFaded, 'text is faded');
-    assert.ok(component.control.expand.isVisible, 'expand button is visible');
-    assert.notOk(component.control.collapse.isVisible, 'collapse button is NOT visible');
+  test('it replaces links by default', async function (assert) {
+    this.set('text', this.linkText);
+    await render(<template><FadeText @text={{this.text}} /></template>);
+    assert.dom('[data-test-text]', this.element).hasHtml(this.cleanText);
+
+    await render(
+      <template>
+        <FadeText @text={{this.text}} as |ft|>
+          {{ft.text}}
+        </FadeText>
+      </template>,
+    );
+    assert.dom('[data-test-text]', this.element).hasHtml(this.cleanText);
+  });
+
+  test('it preserves links when asked', async function (assert) {
+    this.set('text', this.linkText);
+    await render(<template><FadeText @text={{this.text}} @preserveLinks={{true}} /></template>);
+    assert.dom('[data-test-text]', this.element).hasHtml(this.linkText);
+
+    await render(
+      <template>
+        <FadeText @text={{this.text}} @preserveLinks={{true}} as |ft|>
+          {{ft.text}}
+        </FadeText>
+      </template>,
+    );
+    assert.dom('[data-test-text]', this.element).hasHtml(this.linkText);
+
+    await render(
+      <template>
+        <FadeText @text={{this.text}} as |ft|>
+          {{ft.text preserveLinks=true}}
+        </FadeText>
+      </template>,
+    );
+    assert.dom('[data-test-text]', this.element).hasHtml(this.linkText);
   });
 });

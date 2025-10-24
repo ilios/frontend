@@ -1,37 +1,18 @@
 import Component from '@glimmer/component';
-import { tracked } from '@glimmer/tracking';
-import { typeOf } from '@ember/utils';
+import { cached, tracked } from '@glimmer/tracking';
 import { htmlSafe } from '@ember/template';
-import { action } from '@ember/object';
 import onResize from 'ember-on-resize-modifier/modifiers/on-resize';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
 import FaIcon from 'ilios-common/components/fa-icon';
+import { hash } from '@ember/helper';
+import { TrackedAsyncData } from 'ember-async-data';
 
 export default class FadeTextComponent extends Component {
   @tracked textHeight;
+  @tracked expanded;
 
   MAX_HEIGHT = 200;
-
-  get text() {
-    if (!this.args.text) {
-      return '';
-    }
-    if (typeOf(this.args.text) !== 'string') {
-      if (typeOf(this.args.text) === 'array') {
-        let text = '<ul>';
-        text += this.args.text.map((elem) => `<li>${elem}</li>`).join('');
-        text += '</ul>';
-        return text;
-      }
-      return this.args.text.toString();
-    }
-
-    return this.args.text;
-  }
-  get displayText() {
-    return new htmlSafe(this.text);
-  }
 
   get textHeightRounded() {
     return Math.floor(this.textHeight);
@@ -42,88 +23,142 @@ export default class FadeTextComponent extends Component {
   }
 
   get shouldFade() {
-    // short-circuit fading if no tracked property passed (i.e. doesn't make sense to fade text)
-    if (this.args.expanded === undefined) {
+    if (this.args.forceExpanded || this.expanded) {
       return false;
-    }
-    if (this.expanded !== undefined) {
-      return this.expanded ? false : this.exceedsHeight;
     }
 
     return this.exceedsHeight;
   }
 
-  get expanded() {
-    return this.args.expanded && this.exceedsHeight;
+  get isExpanded() {
+    return (this.expanded || this.args.forceExpanded) && this.exceedsHeight;
   }
 
-  @action
-  expand(event) {
-    if (event) {
-      event.stopPropagation();
+  expand = () => {
+    this.expanded = true;
+    if (this.args.setExpanded) {
+      this.args.setExpanded(true);
     }
-    this.args.onExpandAll(true);
-  }
+  };
 
-  @action
-  collapse(event) {
-    if (event) {
-      event.stopPropagation();
+  collapse = () => {
+    this.expanded = false;
+    if (this.args.setExpanded) {
+      this.args.setExpanded(false);
     }
-    this.args.onExpandAll(false);
-  }
+  };
 
-  @action
-  updateTextDims({ contentRect: { height } }) {
+  updateTextDims = ({ contentRect: { height } }) => {
     this.textHeight = height;
-  }
+  };
+
   <template>
-    {{#if (has-block)}}
-      <span class="fade-text" data-test-fade-text ...attributes>
+    <span class="fade-text" data-test-fade-text ...attributes>
+      {{#if (has-block)}}
         {{yield
-          this.displayText
-          this.expand
-          this.collapse
-          this.updateTextDims
-          this.shouldFade
-          this.expanded
+          (hash
+            controls=(component
+              Controls
+              expandable=this.shouldFade
+              collapsible=this.isExpanded
+              expand=this.expand
+              collapse=this.collapse
+            )
+            text=(component
+              FadedTextComponent
+              faded=this.shouldFade
+              resize=this.updateTextDims
+              text=@text
+              preserveLinks=@preserveLinks
+            )
+          )
         }}
-      </span>
-    {{else}}
-      <span class="fade-text" data-test-fade-text ...attributes>
-        <div class="display-text-wrapper{{if this.shouldFade ' faded'}}">
-          <div class="display-text" {{onResize this.updateTextDims}}>
-            {{this.displayText}}
-          </div>
-        </div>
-        {{#if this.shouldFade}}
-          <div class="fade-text-control" data-test-fade-text-control>
-            <button
-              class="expand-text-button"
-              aria-label={{t "general.expand"}}
-              title={{t "general.expand"}}
-              type="button"
-              data-test-expand
-              {{on "click" this.expand}}
-            >
-              <FaIcon @icon="angles-down" />
-            </button>
-          </div>
-        {{else}}
-          {{#if this.expanded}}
-            <button
-              class="collapse-text-button"
-              aria-label={{t "general.collapse"}}
-              title={{t "general.collapse"}}
-              type="button"
-              data-test-collapse
-              {{on "click" this.collapse}}
-            >
-              <FaIcon @icon="angles-up" />
-            </button>
-          {{/if}}
-        {{/if}}
-      </span>
+      {{else}}
+        <FadedTextComponent
+          @faded={{this.shouldFade}}
+          @resize={{this.updateTextDims}}
+          @preserveLinks={{@preserveLinks}}
+          @text={{@text}}
+        />
+        <Controls
+          @expandable={{this.shouldFade}}
+          @collapsible={{this.isExpanded}}
+          @expand={{this.expand}}
+          @collapse={{this.collapse}}
+        />
+      {{/if}}
+    </span>
+  </template>
+}
+
+const Controls = <template>
+  {{#if @expandable}}
+    <button
+      class="expand-text-button"
+      title={{t "general.expand"}}
+      type="button"
+      data-test-expand
+      data-test-fade-text-control
+      {{on "click" @expand}}
+    >
+      <FaIcon @icon="angles-down" />
+    </button>
+  {{else}}
+    {{#if @collapsible}}
+      <button
+        class="collapse-text-button"
+        title={{t "general.collapse"}}
+        type="button"
+        data-test-collapse
+        data-test-fade-text-control
+        {{on "click" @collapse}}
+      >
+        <FaIcon @icon="angles-up" />
+      </button>
     {{/if}}
+  {{/if}}
+</template>;
+
+class FadedTextComponent extends Component {
+  @cached
+  get sanitizerData() {
+    return new TrackedAsyncData(import('sanitize-html'));
+  }
+
+  get cleanText() {
+    if (this.args.preserveLinks) {
+      return this.args.text;
+    }
+
+    if (!this.sanitizerData.isResolved) {
+      return this.args.text;
+    }
+
+    const { default: sanitizeHtml } = this.sanitizerData.value;
+
+    return sanitizeHtml(this.args.text, {
+      transformTags: {
+        a: sanitizeHtml.simpleTransform('span', { class: 'link' }, false),
+      },
+      allowedAttributes: false, //disable attribute filtering
+      allowedTags: false, //disable tag filtering
+      allowVulnerableTags: true, //turn off warnings about script tags
+    });
+  }
+
+  get displayText() {
+    return new htmlSafe(this.cleanText);
+  }
+
+  <template>
+    <div
+      class="display-text-wrapper{{if @faded ' faded'}}"
+      data-test-display-text
+      data-test-done={{this.sanitizerData.isResolved}}
+    >
+      <div class="display-text" {{onResize @resize}} data-test-text>
+        {{this.displayText}}
+      </div>
+    </div>
   </template>
 }
