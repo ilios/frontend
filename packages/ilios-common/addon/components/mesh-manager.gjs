@@ -160,6 +160,8 @@ export default class MeshManagerComponent extends Component {
               </li>
             {{/each}}
           </ul>
+        {{else}}
+          <div class="no-results">{{t "general.none"}}</div>
         {{/if}}
         {{#if @editable}}
           <div class="mesh-search" data-test-mesh-search>
