@@ -20,7 +20,6 @@ module('Integration | Component | monthly-calendar', function (hooks) {
   });
 
   test('it renders empty and is accessible', async function (assert) {
-    assert.expect(68);
     const january9th2019 = DateTime.fromObject({
       year: 2019,
       month: 1,
@@ -129,7 +128,6 @@ module('Integration | Component | monthly-calendar', function (hooks) {
   });
 
   test('click on day', async function (assert) {
-    assert.expect(1);
     const january9th2019 = DateTime.fromObject({
       year: 2019,
       month: 1,
@@ -140,7 +138,7 @@ module('Integration | Component | monthly-calendar', function (hooks) {
     });
     this.set('date', january9th2019.toJSDate());
     this.set('changeToDayView', () => {
-      assert.ok(true);
+      assert.step('changeToDayView called');
     });
     await render(
       <template>
@@ -154,10 +152,10 @@ module('Integration | Component | monthly-calendar', function (hooks) {
     );
 
     await component.days[3].selectDay();
+    assert.verifySteps(['changeToDayView called']);
   });
 
   test('click on event', async function (assert) {
-    assert.expect(1);
     const january9th2019 = DateTime.fromObject({
       year: 2019,
       month: 1,
@@ -174,7 +172,7 @@ module('Integration | Component | monthly-calendar', function (hooks) {
     this.set('events', this.server.db.userevents);
     this.set('date', january9th2019.toJSDate());
     this.set('selectEvent', () => {
-      assert.ok(true);
+      assert.step('selectEvent called');
     });
     await render(
       <template>
@@ -188,10 +186,10 @@ module('Integration | Component | monthly-calendar', function (hooks) {
     );
 
     await component.days[8].events[0].click();
+    assert.verifySteps(['selectEvent called']);
   });
 
   test('click on show more', async function (assert) {
-    assert.expect(1);
     const january9th2019 = DateTime.fromObject({
       year: 2019,
       month: 1,
@@ -207,7 +205,7 @@ module('Integration | Component | monthly-calendar', function (hooks) {
     this.set('events', this.server.db.userevents);
     this.set('date', january9th2019.toJSDate());
     this.set('changeToDayView', () => {
-      assert.ok(true);
+      assert.step('changeToDayView called');
     });
     await render(
       <template>
@@ -221,10 +219,10 @@ module('Integration | Component | monthly-calendar', function (hooks) {
     );
 
     await component.days[8].showMore();
+    assert.verifySteps(['changeToDayView called']);
   });
 
   test('clicking on multi event goes to day view', async function (assert) {
-    assert.expect(1);
     const january9th2019 = DateTime.fromObject({
       year: 2019,
       month: 1,
@@ -242,7 +240,7 @@ module('Integration | Component | monthly-calendar', function (hooks) {
     this.set('events', this.server.db.userevents);
     this.set('date', january9th2019.toJSDate());
     this.set('changeToDayView', () => {
-      assert.ok(true);
+      assert.step('changeToDayView');
     });
     await render(
       <template>
@@ -256,6 +254,7 @@ module('Integration | Component | monthly-calendar', function (hooks) {
     );
 
     await component.days[8].events[0].click();
+    assert.verifySteps(['changeToDayView']);
   });
 
   test('changing the locale changes the calendar dec 2017', async function (assert) {

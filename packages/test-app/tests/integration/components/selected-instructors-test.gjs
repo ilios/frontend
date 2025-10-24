@@ -64,9 +64,9 @@ module('Integration | Component | selected-instructors', function (hooks) {
   });
 
   test('remove selected instructor', async function (assert) {
-    assert.expect(7);
     this.set('instructors', [this.instructorModel1, this.instructorModel2]);
     this.set('remove', (user) => {
+      assert.step('remove called');
       assert.strictEqual(user.id, this.instructorModel1.id);
     });
     await render(
@@ -85,5 +85,6 @@ module('Integration | Component | selected-instructors', function (hooks) {
     assert.strictEqual(component.instructors[1].userNameInfo.fullName, 'Joe M. Doe');
     assert.ok(component.instructors[1].userStatus.accountIsDisabled);
     await component.instructors[1].remove();
+    assert.verifySteps(['remove called']);
   });
 });

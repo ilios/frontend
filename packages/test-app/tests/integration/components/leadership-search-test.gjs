@@ -66,13 +66,13 @@ module('Integration | Component | leadership-search', function (hooks) {
   });
 
   test('click user fires add user', async function (assert) {
-    assert.expect(2);
     this.server.create('user', {
       firstName: 'test',
       lastName: 'person',
       email: 'testemail',
     });
     this.set('select', (user) => {
+      assert.step('select called');
       assert.strictEqual(parseInt(user.id, 10), 1);
     });
     await render(
@@ -84,10 +84,10 @@ module('Integration | Component | leadership-search', function (hooks) {
     await component.search('test');
     assert.strictEqual(component.results[1].name.fullName, 'test M. person');
     await component.results[1].select();
+    assert.verifySteps(['select called']);
   });
 
   test('can not add users twice', async function (assert) {
-    assert.expect(9);
     this.server.create('user', {
       firstName: 'test',
       lastName: 'person',
@@ -99,6 +99,7 @@ module('Integration | Component | leadership-search', function (hooks) {
       email: 'testemail2',
     });
     this.set('select', (user) => {
+      assert.step('select called');
       assert.strictEqual(parseInt(user.id, 10), 2, 'only user2 should be sent here');
     });
     const user1 = await this.owner.lookup('service:store').findRecord('user', 1);
@@ -120,5 +121,6 @@ module('Integration | Component | leadership-search', function (hooks) {
     assert.ok(component.results[2].isClickable);
     assert.strictEqual(component.results[2].name.fullName, 'test M. person2');
     await component.results[2].select();
+    assert.verifySteps(['select called']);
   });
 });

@@ -41,11 +41,11 @@ module('Integration | Component | user-search-result-user', function (hooks) {
   });
 
   test('add active user', async function (assert) {
-    assert.expect(4);
     const user = this.server.create('user');
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     this.set('user', userModel);
     this.set('add', (user) => {
+      assert.step('add called');
       assert.strictEqual(user, userModel);
     });
     await render(
@@ -61,6 +61,7 @@ module('Integration | Component | user-search-result-user', function (hooks) {
     assert.notOk(component.userStatus.accountIsDisabled);
     assert.ok(component.isActive);
     await component.click();
+    assert.verifySteps(['add called']);
   });
 
   test('cannot add inactive user by default', async function (assert) {
@@ -83,11 +84,11 @@ module('Integration | Component | user-search-result-user', function (hooks) {
   });
 
   test('add inactive user if allowed', async function (assert) {
-    assert.expect(5);
     const user = this.server.create('user', { enabled: false });
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     this.set('user', userModel);
     this.set('add', (user) => {
+      assert.step('add called');
       assert.strictEqual(user, userModel);
     });
     await render(
@@ -105,5 +106,6 @@ module('Integration | Component | user-search-result-user', function (hooks) {
     assert.ok(component.isActive);
     assert.ok(component.canAdd);
     await component.click();
+    assert.verifySteps(['add called']);
   });
 });

@@ -27,9 +27,9 @@ module('Integration | Component | time-picker', function (hooks) {
   });
 
   test('change hour', async function (assert) {
-    assert.expect(4);
     const newHour = '07';
     this.set('action', (value, unit) => {
+      assert.step('action called');
       assert.strictEqual(unit, 'hour');
       assert.strictEqual(value, 19);
     });
@@ -37,12 +37,13 @@ module('Integration | Component | time-picker', function (hooks) {
     assert.strictEqual(component.hour.value, '11');
     await component.hour.select(newHour);
     assert.strictEqual(component.hour.value, newHour);
+    assert.verifySteps(['action called']);
   });
 
   test('change minute', async function (assert) {
-    assert.expect(4);
     const newMinute = '22';
     this.set('action', (value, unit) => {
+      assert.step('action called');
       assert.strictEqual(unit, 'minute');
       assert.strictEqual(value, 22);
     });
@@ -50,11 +51,12 @@ module('Integration | Component | time-picker', function (hooks) {
     assert.strictEqual(component.minute.value, '58');
     await component.minute.select(newMinute);
     assert.strictEqual(component.minute.value, newMinute);
+    assert.verifySteps(['action called']);
   });
 
   test('change am/pm', async function (assert) {
-    assert.expect(6);
     this.set('action', (value, unit) => {
+      assert.step('action called');
       assert.strictEqual(unit, 'hour');
       assert.strictEqual(value, 11);
     });
@@ -64,5 +66,6 @@ module('Integration | Component | time-picker', function (hooks) {
     await component.ampm.select('AM');
     assert.strictEqual(component.hour.value, '11');
     assert.strictEqual(component.ampm.value, 'AM');
+    assert.verifySteps(['action called']);
   });
 });

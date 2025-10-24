@@ -71,9 +71,9 @@ module('Integration | Component | learner selection manager', function (hooks) {
   });
 
   test('remove selected learner', async function (assert) {
-    assert.expect(4);
     this.set('learners', [this.learnerModel1, this.learnerModel2]);
     this.set('remove', (user) => {
+      assert.step('remove called');
       assert.strictEqual(user.id, this.learnerModel1.id);
     });
     await render(
@@ -89,10 +89,10 @@ module('Integration | Component | learner selection manager', function (hooks) {
     assert.strictEqual(component.selectedLearners.learners.length, 2);
     assert.strictEqual(component.selectedLearners.learners[1].userNameInfo.fullName, 'Joe M. Doe');
     await component.selectedLearners.learners[1].remove();
+    assert.verifySteps(['remove called']);
   });
 
   test('search and add learner', async function (assert) {
-    assert.expect(3);
     const learner3 = this.server.create('user', {
       firstName: 'Jim',
       middleName: 'Roy',
@@ -102,6 +102,7 @@ module('Integration | Component | learner selection manager', function (hooks) {
 
     this.set('learners', []);
     this.set('add', (user) => {
+      assert.step('add called');
       assert.strictEqual(user.id, learnerModel3.id);
     });
     await render(
@@ -113,5 +114,6 @@ module('Integration | Component | learner selection manager', function (hooks) {
     assert.strictEqual(component.search.results.items.length, 1);
     assert.strictEqual(component.search.results.items[0].text, 'Jim R. Schmitt user@example.edu');
     await component.search.results.items[0].click();
+    assert.verifySteps(['add called']);
   });
 });

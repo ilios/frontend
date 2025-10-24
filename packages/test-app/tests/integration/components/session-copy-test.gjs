@@ -73,8 +73,6 @@ module('Integration | Component | session copy', function (hooks) {
   });
 
   test('copy session', async function (assert) {
-    assert.expect(22);
-
     const thisYear = DateTime.now().year;
     this.server.create('academic-year', {
       id: thisYear,
@@ -132,6 +130,7 @@ module('Integration | Component | session copy', function (hooks) {
     const sessionModel = await this.store.findRecord('session', session.id);
     this.set('session', sessionModel);
     this.set('visit', (newSession) => {
+      assert.step('visit called');
       assert.strictEqual(parseInt(newSession.id, 10), 2);
     });
     await render(
@@ -175,6 +174,7 @@ module('Integration | Component | session copy', function (hooks) {
     const copiedSessionObjectiveTerms = await newSessionObjective.terms;
     assert.strictEqual(copiedSessionObjectiveTerms.length, 1);
     assert.ok(copiedSessionObjectiveTerms.includes(objectiveTermModel));
+    assert.verifySteps(['visit called']);
   });
 
   test('save cannot be clicked when there is no year or course', async function (assert) {
@@ -259,7 +259,6 @@ module('Integration | Component | session copy', function (hooks) {
   });
 
   test('copy session into the first course in a different year #2130', async function (assert) {
-    assert.expect(4);
     const thisYear = DateTime.now().year;
     const nextYear = thisYear + 1;
     this.server.create('academic-year', {
@@ -304,6 +303,7 @@ module('Integration | Component | session copy', function (hooks) {
     const sessionModel = await this.store.findRecord('session', session.id);
     this.set('session', sessionModel);
     this.set('visit', (newSession) => {
+      assert.step('visit called');
       assert.strictEqual(parseInt(newSession.id, 10), 2);
     });
 
@@ -321,11 +321,10 @@ module('Integration | Component | session copy', function (hooks) {
     assert.strictEqual(sessions.length, 2);
     const newSession = findById(sessions, '2');
     assert.strictEqual(newSession.belongsTo('course').id(), course3.id);
+    assert.verifySteps(['visit called']);
   });
 
   test('copy session into same course saves postrequisites', async function (assert) {
-    assert.expect(4);
-
     const thisYear = DateTime.now().year;
     this.server.create('academic-year', {
       id: thisYear,
@@ -359,6 +358,7 @@ module('Integration | Component | session copy', function (hooks) {
     const sessionModel = await this.store.findRecord('session', session.id);
     this.set('session', sessionModel);
     this.set('visit', (newSession) => {
+      assert.step('visit called');
       assert.strictEqual(parseInt(newSession.id, 10), 3);
     });
 
@@ -375,11 +375,10 @@ module('Integration | Component | session copy', function (hooks) {
 
     const newPostRequisite = await newSession.postrequisite;
     assert.strictEqual(postrequisite.id, newPostRequisite.id);
+    assert.verifySteps(['visit called']);
   });
 
   test('copy session into different course does not save postrequisites', async function (assert) {
-    assert.expect(4);
-
     const thisYear = DateTime.now().year;
     this.server.create('academic-year', {
       id: thisYear,
@@ -417,6 +416,7 @@ module('Integration | Component | session copy', function (hooks) {
     const sessionModel = await this.store.findRecord('session', session.id);
     this.set('session', sessionModel);
     this.set('visit', (newSession) => {
+      assert.step('visit called');
       assert.strictEqual(parseInt(newSession.id, 10), 3);
     });
 
@@ -434,11 +434,10 @@ module('Integration | Component | session copy', function (hooks) {
 
     const newPostRequisite = await newSession.postrequisite;
     assert.strictEqual(newPostRequisite, null);
+    assert.verifySteps(['visit called']);
   });
 
   test('copy session into same course does not save prerequisites', async function (assert) {
-    assert.expect(4);
-
     const thisYear = DateTime.now().year;
     this.server.create('academic-year', {
       id: thisYear,
@@ -476,6 +475,7 @@ module('Integration | Component | session copy', function (hooks) {
     const sessionModel = await this.store.findRecord('session', session.id);
     this.set('session', sessionModel);
     this.set('visit', (newSession) => {
+      assert.step('visit called');
       assert.strictEqual(parseInt(newSession.id, 10), 4);
     });
 
@@ -492,11 +492,10 @@ module('Integration | Component | session copy', function (hooks) {
 
     const newPostRequisites = await newSession.prerequisites;
     assert.strictEqual(newPostRequisites.length, 0);
+    assert.verifySteps(['visit called']);
   });
 
   test('copy session into different course does not save prerequisites', async function (assert) {
-    assert.expect(4);
-
     const thisYear = DateTime.now().year;
     this.server.create('academic-year', {
       id: thisYear,
@@ -538,6 +537,7 @@ module('Integration | Component | session copy', function (hooks) {
     const sessionModel = await this.store.findRecord('session', session.id);
     this.set('session', sessionModel);
     this.set('visit', (newSession) => {
+      assert.step('visit called');
       assert.strictEqual(parseInt(newSession.id, 10), 4);
     });
 
@@ -556,5 +556,6 @@ module('Integration | Component | session copy', function (hooks) {
 
     const newPostRequisites = await newSession.prerequisites;
     assert.strictEqual(newPostRequisites.length, 0);
+    assert.verifySteps(['visit called']);
   });
 });

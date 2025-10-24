@@ -98,7 +98,6 @@ module('Unit | Model | User', function (hooks) {
         displayName: null,
       },
     ];
-    assert.expect(fixtures.length);
     fixtures.forEach((fixture) => {
       const model = this.store.createRecord('user');
       model.set('firstName', fixture.firstName);
@@ -123,7 +122,6 @@ module('Unit | Model | User', function (hooks) {
         displayName: 'first m. last',
       },
     ];
-    assert.expect(fixtures.length);
     fixtures.forEach((fixture) => {
       const model = this.store.createRecord('user');
       model.set('firstName', fixture.firstName);
@@ -150,8 +148,6 @@ module('Unit | Model | User', function (hooks) {
   });
 
   test('gets all directed courses', async function (assert) {
-    assert.expect(3);
-
     const model = this.store.createRecord('user');
     const courses = [
       this.store.createRecord('course', { directors: [model] }),
@@ -165,8 +161,6 @@ module('Unit | Model | User', function (hooks) {
   });
 
   test('gets all administered courses', async function (assert) {
-    assert.expect(3);
-
     const model = this.store.createRecord('user');
     const courses = [
       this.store.createRecord('course', { administrators: [model] }),
@@ -180,8 +174,6 @@ module('Unit | Model | User', function (hooks) {
   });
 
   test('gets all learner group courses', async function (assert) {
-    assert.expect(3);
-
     const model = this.store.createRecord('user');
     const course1 = this.store.createRecord('course');
     const session1 = this.store.createRecord('session', {
@@ -218,8 +210,6 @@ module('Unit | Model | User', function (hooks) {
   });
 
   test('gets all instructor group courses', async function (assert) {
-    assert.expect(3);
-
     const model = this.store.createRecord('user');
     const course1 = this.store.createRecord('course');
     const session1 = this.store.createRecord('session', {
@@ -256,8 +246,6 @@ module('Unit | Model | User', function (hooks) {
   });
 
   test('gets all instructed offering courses', async function (assert) {
-    assert.expect(3);
-
     const model = this.store.createRecord('user');
     const course1 = this.store.createRecord('course');
     const session1 = this.store.createRecord('session', {
@@ -289,8 +277,6 @@ module('Unit | Model | User', function (hooks) {
   });
 
   test('gets all learner offering courses', async function (assert) {
-    assert.expect(3);
-
     const model = this.store.createRecord('user');
     const course1 = this.store.createRecord('course');
     const session1 = this.store.createRecord('session', {
@@ -322,8 +308,6 @@ module('Unit | Model | User', function (hooks) {
   });
 
   test('gets all learner group ILMSession courses', async function (assert) {
-    assert.expect(3);
-
     const model = this.store.createRecord('user');
     const course1 = this.store.createRecord('course');
     const session1 = this.store.createRecord('session', {
@@ -363,8 +347,6 @@ module('Unit | Model | User', function (hooks) {
   });
 
   test('gets all instructor group ILMSession courses', async function (assert) {
-    assert.expect(3);
-
     const model = this.store.createRecord('user');
     const course1 = this.store.createRecord('course');
     const session1 = this.store.createRecord('session', {
@@ -407,7 +389,6 @@ module('Unit | Model | User', function (hooks) {
   });
 
   test('gets all learner ilm courses', async function (assert) {
-    assert.expect(3);
     const model = this.store.createRecord('user');
 
     const course1 = this.store.createRecord('course');
@@ -567,8 +548,6 @@ module('Unit | Model | User', function (hooks) {
   });
 
   test('gets all instructor ilm courses', async function (assert) {
-    assert.expect(3);
-
     const model = this.store.createRecord('user');
     const course1 = this.store.createRecord('course');
     const session1 = this.store.createRecord('session', {
@@ -703,7 +682,6 @@ module('Unit | Model | User', function (hooks) {
   });
 
   test('allInstructedCourses gets ALL instructed courses', async function (assert) {
-    assert.expect(5);
     const model = this.store.createRecord('user');
 
     const course1 = this.store.createRecord('course');
@@ -748,7 +726,6 @@ module('Unit | Model | User', function (hooks) {
   });
 
   test('allInstructedSessions gets ALL instructed sessions', async function (assert) {
-    assert.expect(6);
     const model = this.store.createRecord('user');
 
     const session1 = this.store.createRecord('session');

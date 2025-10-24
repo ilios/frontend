@@ -35,9 +35,8 @@ module('Integration | Component | new session', function (hooks) {
   });
 
   test('cancel', async function (assert) {
-    assert.expect(1);
     this.set('cancel', () => {
-      assert.ok(true);
+      assert.step('cancel called');
     });
     await render(
       <template>
@@ -45,13 +44,14 @@ module('Integration | Component | new session', function (hooks) {
       </template>,
     );
     await component.cancel();
+    assert.verifySteps(['cancel called']);
   });
 
   test('save', async function (assert) {
-    assert.expect(2);
     const newTitle = 'foobar';
     this.set('sessionTypes', [this.sessionType, this.sessionType2]);
     this.set('save', (session) => {
+      assert.step('save called');
       assert.strictEqual(session.get('title'), newTitle);
       assert.strictEqual(session.get('sessionType').get('title'), this.sessionType2.title);
     });
@@ -63,13 +63,14 @@ module('Integration | Component | new session', function (hooks) {
     await component.selectSessionType(2);
     await component.title.set(newTitle);
     await component.save();
+    assert.verifySteps(['save called']);
   });
 
   test('save on pressing enter in title field', async function (assert) {
-    assert.expect(2);
     const newTitle = 'foobar';
     this.set('sessionTypes', [this.sessionType, this.sessionType2]);
     this.set('save', (session) => {
+      assert.step('save called');
       assert.strictEqual(session.get('title'), newTitle);
       assert.strictEqual(session.get('sessionType').get('title'), this.sessionType2.title);
     });
@@ -81,14 +82,14 @@ module('Integration | Component | new session', function (hooks) {
     await component.selectSessionType(2);
     await component.title.set(newTitle);
     await component.title.submit();
+    assert.verifySteps(['save called']);
   });
 
   test('input validation fails if title is too short', async function (assert) {
-    assert.expect(4);
     const newTitle = 'fo';
     this.set('sessionTypes', [this.sessionType, this.sessionType2]);
     this.set('save', () => {
-      assert.ok(false);
+      assert.step('save called');
     });
     await render(
       <template>
@@ -101,14 +102,14 @@ module('Integration | Component | new session', function (hooks) {
     await component.title.submit();
     assert.ok(component.hasError);
     assert.ok(component.title.hasError);
+    assert.verifySteps([]);
   });
 
   test('input validation fails if title is too long', async function (assert) {
-    assert.expect(4);
     const newTitle = '0123456789'.repeat(21);
     this.set('sessionTypes', [this.sessionType, this.sessionType2]);
     this.set('save', () => {
-      assert.ok(false);
+      assert.step('save called');
     });
     await render(
       <template>
@@ -121,5 +122,6 @@ module('Integration | Component | new session', function (hooks) {
     await component.title.submit();
     assert.ok(component.hasError);
     assert.ok(component.title.hasError);
+    assert.verifySteps([]);
   });
 });

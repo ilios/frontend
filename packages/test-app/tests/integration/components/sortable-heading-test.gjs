@@ -52,9 +52,9 @@ module('Integration | Component | sortable heading', function (hooks) {
     assert.dom('svg').hasClass('fa-arrow-down-1-9');
   });
   test('click event fires', async function (assert) {
-    assert.expect(1);
     this.set('label', 'Foo');
     this.set('click', () => {
+      assert.step('click called');
       assert.ok(true);
     });
     await render(
@@ -63,5 +63,6 @@ module('Integration | Component | sortable heading', function (hooks) {
       </template>,
     );
     await click(find('button'));
+    assert.verifySteps(['click called']);
   });
 });

@@ -255,16 +255,15 @@ module('Integration | Component | offering form', function (hooks) {
   });
 
   test('close sends close', async function (assert) {
-    assert.expect(1);
     this.set('close', () => {
-      assert.ok(true);
+      assert.step('close called');
     });
     await render(<template><OfferingForm @close={{this.close}} /></template>);
     await component.close();
+    assert.verifySteps(['close called']);
   });
 
   test('save not recurring', async function (assert) {
-    assert.expect(8);
     this.set(
       'save',
       async (
@@ -277,6 +276,7 @@ module('Integration | Component | offering form', function (hooks) {
         instructorGroups,
         instructors,
       ) => {
+        assert.step('save called');
         const today = DateTime.fromObject({ hour: 8 });
         assert.ok(today.hasSame(DateTime.fromJSDate(startDate), 'day'));
         assert.ok(today.hasSame(DateTime.fromJSDate(endDate), 'day'));
@@ -290,16 +290,17 @@ module('Integration | Component | offering form', function (hooks) {
     );
     await render(<template><OfferingForm @close={{(noop)}} @save={{this.save}} /></template>);
     await component.save();
+    assert.verifySteps(['save called']);
   });
 
   test('save recurring one week with days selected before initial date', async function (assert) {
-    assert.expect(4);
     const wednesday = DateTime.fromObject({ hour: 8, weekday: 3 }).plus({ week: 1 });
     const thursday = wednesday.plus({ days: 1 });
     const tuesday = wednesday.minus({ days: 1 });
     const newStartDate = wednesday.toJSDate();
     let savedCount = 0;
     this.set('save', async (startDate) => {
+      assert.step('save called');
       assert.ok(savedCount <= 1, 'should only get two saved offerings, we got ' + (savedCount + 1));
       let expectedStartDate;
       switch (savedCount) {
@@ -324,16 +325,17 @@ module('Integration | Component | offering form', function (hooks) {
     await component.recurring.weekdays[tuesday.weekday].input.toggle();
     await component.recurring.weekdays[thursday.weekday].input.toggle();
     await component.save();
+    assert.verifySteps(['save called', 'save called']);
   });
 
   test('save recurring 3 weeks should get lots of days', async function (assert) {
-    assert.expect(16);
     const wednesday = DateTime.fromObject({ hour: 8, weekday: 3 }).plus({ week: 1 });
     const thursday = wednesday.plus({ days: 1 });
     const tuesday = wednesday.minus({ days: 1 });
     const newStartDate = wednesday.toJSDate();
     let savedCount = 0;
     this.set('save', async (startDate) => {
+      assert.step('save called');
       assert.ok(
         savedCount <= 7,
         'should only get eight saved offerings, we got ' +
@@ -383,6 +385,7 @@ module('Integration | Component | offering form', function (hooks) {
     await component.recurring.weekdays[tuesday.weekday].input.toggle();
     await component.recurring.weekdays[thursday.weekday].input.toggle();
     await component.save();
+    assert.verifySteps(Array(8).fill('save called'));
   });
 
   test('changing start date changes end date', async function (assert) {
@@ -635,7 +638,6 @@ module('Integration | Component | offering form', function (hooks) {
   });
 
   test('save date with new timezone', async function (assert) {
-    assert.expect(8);
     const newTimezone = 'Pacific/Midway';
     const currentTimezone = DateTime.local().zoneName;
     const startDateTime = DateTime.fromObject({
@@ -662,6 +664,7 @@ module('Integration | Component | offering form', function (hooks) {
       .findRecord('offering', offering.id);
     this.set('offering', offeringModel);
     this.set('save', async (startDate, endDate) => {
+      assert.step('save called');
       assert.strictEqual(
         DateTime.fromJSDate(startDate).toUTC().toISO(),
         '2005-06-25T05:24:00.000Z',
@@ -686,6 +689,7 @@ module('Integration | Component | offering form', function (hooks) {
       timezoneService.formatTimezone(newTimezone),
     );
     await component.save();
+    assert.verifySteps(['save called']);
   });
 
   test('removes double https from start of URL when input', async function (assert) {
@@ -740,14 +744,13 @@ module('Integration | Component | offering form', function (hooks) {
   });
 
   test('save by pressing enter in duration hours field', async function (assert) {
-    assert.expect(1);
     const offering = this.server.create('offering');
     const offeringModel = await this.owner
       .lookup('service:store')
       .findRecord('offering', offering.id);
     this.set('offering', offeringModel);
     this.set('save', () => {
-      assert.ok(true);
+      assert.step('save called');
     });
     await render(
       <template>
@@ -755,17 +758,17 @@ module('Integration | Component | offering form', function (hooks) {
       </template>,
     );
     await component.duration.hours.submit();
+    assert.verifySteps(['save called']);
   });
 
   test('save by pressing enter in duration minutes field', async function (assert) {
-    assert.expect(1);
     const offering = this.server.create('offering');
     const offeringModel = await this.owner
       .lookup('service:store')
       .findRecord('offering', offering.id);
     this.set('offering', offeringModel);
     this.set('save', () => {
-      assert.ok(true);
+      assert.step('save called');
     });
     await render(
       <template>
@@ -773,17 +776,17 @@ module('Integration | Component | offering form', function (hooks) {
       </template>,
     );
     await component.duration.minutes.submit();
+    assert.verifySteps(['save called']);
   });
 
   test('save by pressing enter in location field', async function (assert) {
-    assert.expect(1);
     const offering = this.server.create('offering');
     const offeringModel = await this.owner
       .lookup('service:store')
       .findRecord('offering', offering.id);
     this.set('offering', offeringModel);
     this.set('save', () => {
-      assert.ok(true);
+      assert.step('save called');
     });
     await render(
       <template>
@@ -796,17 +799,17 @@ module('Integration | Component | offering form', function (hooks) {
       </template>,
     );
     await component.location.submit();
+    assert.verifySteps(['save called']);
   });
 
   test('save by pressing enter in url field', async function (assert) {
-    assert.expect(1);
     const offering = this.server.create('offering');
     const offeringModel = await this.owner
       .lookup('service:store')
       .findRecord('offering', offering.id);
     this.set('offering', offeringModel);
     this.set('save', () => {
-      assert.ok(true);
+      assert.step('save called');
     });
     await render(
       <template>
@@ -819,6 +822,7 @@ module('Integration | Component | offering form', function (hooks) {
       </template>,
     );
     await component.url.submit();
+    assert.verifySteps(['save called']);
   });
 
   test('remove learner group from picker', async function (assert) {

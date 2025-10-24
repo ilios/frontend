@@ -60,12 +60,11 @@ module('Integration | Component | objective sort manager', function (hooks) {
   });
 
   test('cancel', async function (assert) {
-    assert.expect(1);
     const course = this.server.create('course');
     const subject = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('subject', subject);
     this.set('cancel', () => {
-      assert.ok(true, 'Cancel action was invoked correctly.');
+      assert.step('cancel called');
     });
     await render(
       <template>
@@ -73,6 +72,7 @@ module('Integration | Component | objective sort manager', function (hooks) {
       </template>,
     );
     await click('.actions .bigcancel');
+    assert.verifySteps(['cancel called']);
   });
 
   skip('reorder and save', function (assert) {

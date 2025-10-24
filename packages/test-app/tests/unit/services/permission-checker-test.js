@@ -13,7 +13,6 @@ module('Unit | Service | permission-checker', function (hooks) {
   });
 
   test('checks permissions', async function (assert) {
-    assert.expect(7);
     const school = { id: 1 };
 
     class ApiVersionMock extends Service {
@@ -26,6 +25,7 @@ module('Unit | Service | permission-checker', function (hooks) {
     class CurrentUserMock extends Service {
       isRoot = false;
       async getRolesInSchool(sch) {
+        assert.step('getRolesInSchool called');
         assert.strictEqual(sch, school);
         return ['ADMIN'];
       }
@@ -34,12 +34,14 @@ module('Unit | Service | permission-checker', function (hooks) {
 
     class PermissionMatrixMock extends Service {
       getPermittedRoles(sch, cap) {
+        assert.step('getPermittedRoles called');
         assert.strictEqual(sch, school);
         assert.strictEqual(cap, 'GO_FORTH');
 
         return ['ADMIN'];
       }
       hasPermission(sch, cap, roles) {
+        assert.step('hasPermission called');
         assert.strictEqual(sch, school);
         assert.strictEqual(cap, 'GO_FORTH');
         assert.deepEqual(roles, ['ADMIN']);
@@ -52,15 +54,19 @@ module('Unit | Service | permission-checker', function (hooks) {
     const service = this.owner.lookup('service:permission-checker');
     const canChangeInSchool = await service.canChangeInSchool(school, 'GO_FORTH');
     assert.ok(canChangeInSchool);
+    assert.verifySteps([
+      'getPermittedRoles called',
+      'getRolesInSchool called',
+      'hasPermission called',
+    ]);
   });
 
   test('api version mismatch stops the show', async function (assert) {
-    assert.expect(2);
     const school = { id: 1 };
 
     class ApiVersionMock extends Service {
       async getIsMismatched() {
-        assert.ok(true);
+        assert.step('getIsMismatch called');
         return true;
       }
     }
@@ -72,10 +78,10 @@ module('Unit | Service | permission-checker', function (hooks) {
     const service = this.owner.lookup('service:permission-checker');
     const canChangeInSchool = await service.canChangeInSchool(school, 'GO_FORTH');
     assert.notOk(canChangeInSchool);
+    assert.verifySteps(['getIsMismatch called']);
   });
 
   test('root can do anything', async function (assert) {
-    assert.expect(2);
     const school = { id: 1 };
 
     class ApiVersionMock extends Service {
@@ -87,7 +93,7 @@ module('Unit | Service | permission-checker', function (hooks) {
 
     class CurrentUserMock extends Service {
       get isRoot() {
-        assert.ok(true);
+        assert.step('isRoot called');
         return true;
       }
     }
@@ -96,10 +102,10 @@ module('Unit | Service | permission-checker', function (hooks) {
     const service = this.owner.lookup('service:permission-checker');
     const canChangeInSchool = await service.canChangeInSchool(school, 'GO_FORTH');
     assert.ok(canChangeInSchool);
+    assert.verifySteps(['isRoot called']);
   });
 
   test('can update learner group', async function (assert) {
-    assert.expect(2);
     const school = this.server.create('school');
     const program = this.server.create('program', { school });
     const programYear = this.server.create('program-year', { program });
@@ -110,6 +116,7 @@ module('Unit | Service | permission-checker', function (hooks) {
     class CurrentUserMock extends Service {
       isRoot = false;
       async getRolesInSchool(sch) {
+        assert.step('getRolesInSchool called');
         assert.strictEqual(sch.id, school.id);
         return ['SCHOOL_ADMINISTRATOR'];
       }
@@ -119,10 +126,10 @@ module('Unit | Service | permission-checker', function (hooks) {
     const service = this.owner.lookup('service:permission-checker');
     const canUpdateLearnerGroup = await service.canUpdateLearnerGroup(model);
     assert.ok(canUpdateLearnerGroup);
+    assert.verifySteps(['getRolesInSchool called']);
   });
 
   test('can delete learner group', async function (assert) {
-    assert.expect(2);
     const school = this.server.create('school');
     const program = this.server.create('program', { school });
     const programYear = this.server.create('program-year', { program });
@@ -133,6 +140,7 @@ module('Unit | Service | permission-checker', function (hooks) {
     class CurrentUserMock extends Service {
       isRoot = false;
       async getRolesInSchool(sch) {
+        assert.step('getRolesInSchool called');
         assert.strictEqual(sch.id, school.id);
         return ['SCHOOL_ADMINISTRATOR'];
       }
@@ -142,10 +150,10 @@ module('Unit | Service | permission-checker', function (hooks) {
     const service = this.owner.lookup('service:permission-checker');
     const canDeleteLearnerGroup = await service.canUpdateLearnerGroup(model);
     assert.ok(canDeleteLearnerGroup);
+    assert.verifySteps(['getRolesInSchool called']);
   });
 
   test('can not update learner group', async function (assert) {
-    assert.expect(2);
     const school = this.server.create('school');
     const program = this.server.create('program', { school });
     const programYear = this.server.create('program-year', { program });
@@ -156,6 +164,7 @@ module('Unit | Service | permission-checker', function (hooks) {
     class CurrentUserMock extends Service {
       isRoot = false;
       async getRolesInSchool(sch) {
+        assert.step('getRolesInSchool called');
         assert.strictEqual(sch.id, school.id);
         return [];
       }
@@ -165,10 +174,10 @@ module('Unit | Service | permission-checker', function (hooks) {
     const service = this.owner.lookup('service:permission-checker');
     const canUpdateLearnerGroup = await service.canUpdateLearnerGroup(model);
     assert.notOk(canUpdateLearnerGroup);
+    assert.verifySteps(['getRolesInSchool called']);
   });
 
   test('can not delete learner group', async function (assert) {
-    assert.expect(2);
     const school = this.server.create('school');
     const program = this.server.create('program', { school });
     const programYear = this.server.create('program-year', { program });
@@ -179,6 +188,7 @@ module('Unit | Service | permission-checker', function (hooks) {
     class CurrentUserMock extends Service {
       isRoot = false;
       async getRolesInSchool(sch) {
+        assert.step('getRolesInSchool called');
         assert.strictEqual(sch.id, school.id);
         return [];
       }
@@ -188,10 +198,10 @@ module('Unit | Service | permission-checker', function (hooks) {
     const service = this.owner.lookup('service:permission-checker');
     const canDeleteLearnerGroup = await service.canUpdateLearnerGroup(model);
     assert.notOk(canDeleteLearnerGroup);
+    assert.verifySteps(['getRolesInSchool called']);
   });
 
   test('can delete curriculum inventory report as school administrator', async function (assert) {
-    assert.expect(2);
     const school = this.server.create('school');
     const program = this.server.create('program', { school });
     const report = this.server.create('curriculum-inventory-report', { program });
@@ -202,6 +212,7 @@ module('Unit | Service | permission-checker', function (hooks) {
     class CurrentUserMock extends Service {
       isRoot = false;
       async getRolesInSchool(sch) {
+        assert.step('getRolesInSchool called');
         assert.strictEqual(sch.id, school.id);
         return ['SCHOOL_ADMINISTRATOR'];
       }
@@ -212,10 +223,10 @@ module('Unit | Service | permission-checker', function (hooks) {
     const canDeleteCurriculumInventoryReport =
       await service.canDeleteCurriculumInventoryReport(model);
     assert.ok(canDeleteCurriculumInventoryReport);
+    assert.verifySteps(['getRolesInSchool called']);
   });
 
   test('can delete own curriculum inventory report', async function (assert) {
-    assert.expect(3);
     const school = this.server.create('school');
     const program = this.server.create('program', { school });
     const report = this.server.create('curriculum-inventory-report', { program });
@@ -226,10 +237,12 @@ module('Unit | Service | permission-checker', function (hooks) {
     class CurrentUserMock extends Service {
       isRoot = false;
       async getRolesInSchool(sch) {
+        assert.step('getRolesInSchool called');
         assert.strictEqual(sch.id, school.id);
         return [];
       }
       async getRolesInCurriculumInventoryReport(rpt) {
+        assert.step('getRolesInCurriculumInventoryReport called');
         assert.strictEqual(rpt.id, model.id);
         return ['CURRICULUM_INVENTORY_REPORT_ADMINISTRATOR'];
       }
@@ -240,6 +253,7 @@ module('Unit | Service | permission-checker', function (hooks) {
     const canDeleteCurriculumInventoryReport =
       await service.canDeleteCurriculumInventoryReport(model);
     assert.ok(canDeleteCurriculumInventoryReport);
+    assert.verifySteps(['getRolesInSchool called', 'getRolesInCurriculumInventoryReport called']);
   });
 
   test('can not delete finalized curriculum inventory report', async function (assert) {
