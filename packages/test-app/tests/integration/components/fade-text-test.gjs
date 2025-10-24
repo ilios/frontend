@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
-import { render } from '@ember/test-helpers';
+import { render, waitFor } from '@ember/test-helpers';
 import { component } from 'ilios-common/page-objects/components/fade-text';
 import FadeText from 'ilios-common/components/fade-text';
 
@@ -57,6 +57,7 @@ module('Integration | Component | fade-text', function (hooks) {
     await render(
       <template><FadeText @text={{this.longHtml}} @setExpanded={{this.setExpanded}} /></template>,
     );
+    await waitFor(this.fadedSelector);
     assert.ok(component.enabled);
     assert.notOk(this.expanded, 'text is not expanded');
     assert.ok(component.displayText.isFaded);
@@ -105,6 +106,7 @@ module('Integration | Component | fade-text', function (hooks) {
         </FadeText>
       </template>,
     );
+    await waitFor(this.fadedSelector);
     assert.ok(component.enabled);
     assert.notOk(this.expanded, 'text is not expanded');
     assert.ok(component.displayText.isFaded);

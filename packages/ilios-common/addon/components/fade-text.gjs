@@ -7,23 +7,12 @@ import { on } from '@ember/modifier';
 import FaIcon from 'ilios-common/components/fa-icon';
 import { hash } from '@ember/helper';
 import { TrackedAsyncData } from 'ember-async-data';
-import { buildWaiter } from '@ember/test-waiters';
-import { modifier } from 'ember-modifier';
-
-//initialize this in module scope as recomended by the docs
-const fadeTextWaiter = buildWaiter('FadeTextComponent');
 
 export default class FadeTextComponent extends Component {
   @tracked textHeight;
   @tracked expanded;
-  waiter = false;
 
   MAX_HEIGHT = 200;
-
-  setup = modifier(() => {
-    //setup a test waiter when the component is created
-    this.waiter = fadeTextWaiter.beginAsync();
-  });
 
   get textHeightRounded() {
     return Math.floor(this.textHeight);
@@ -61,12 +50,6 @@ export default class FadeTextComponent extends Component {
 
   updateTextDims = ({ contentRect: { height } }) => {
     this.textHeight = height;
-
-    // end and remove the waiter the first time we get a size update
-    if (this.waiter) {
-      fadeTextWaiter.endAsync(this.waiter);
-      this.waiter = false;
-    }
   };
 
   <template>
@@ -85,7 +68,6 @@ export default class FadeTextComponent extends Component {
               FadedTextComponent
               faded=this.shouldFade
               resize=this.updateTextDims
-              setup=this.setup
               text=@text
               preserveLinks=@preserveLinks
             )
@@ -95,7 +77,6 @@ export default class FadeTextComponent extends Component {
         <FadedTextComponent
           @faded={{this.shouldFade}}
           @resize={{this.updateTextDims}}
-          @setup={{this.setup}}
           @preserveLinks={{@preserveLinks}}
           @text={{@text}}
         />
@@ -175,7 +156,7 @@ class FadedTextComponent extends Component {
       data-test-display-text
       data-test-done={{this.sanitizerData.isResolved}}
     >
-      <div class="display-text" {{@setup}} {{onResize @resize}} data-test-text>
+      <div class="display-text" {{onResize @resize}} data-test-text>
         {{this.displayText}}
       </div>
     </div>
