@@ -200,7 +200,7 @@ export default class SessionCopyComponent extends Component {
     return this.args.visit(session);
   });
   <template>
-    <div class="session-copy">
+    <div class="session-copy" ...attributes>
       {{#if (and this.allCoursesData.isResolved this.yearsData.isResolved)}}
         {{#let (uniqueId) as |templateId|}}
           <div class="backtolink">

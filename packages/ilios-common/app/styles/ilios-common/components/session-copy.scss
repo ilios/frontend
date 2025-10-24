@@ -58,4 +58,11 @@
       }
     }
   }
+
+  &.loading {
+    select {
+      @include m.loading-text;
+      cursor: default;
+    }
+  }
 }
