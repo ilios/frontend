@@ -69,7 +69,7 @@ general:
   copyrightPermission: Droit d’Auteur
   copyrightRationale: "Raison du droit d'auteur"
   copySession: Copier Séance
-  copySessionSummary: 'Vous êtes sur le point la copie sur cette séance (sans données de calendrier) dans le cours choisi. La nouvelle seéance inclura tous les objectifs, des termes et les matériels d''étude. Continuer le clic "oui". Retourner à votre clic de session actuel "annul".'
+  copySessionSummary: 'Vous êtes sur le point la copie sur la séance "{title}" (sans données de calendrier) dans le cours choisi. La nouvelle seéance inclura tous les objectifs, des termes et les matériels d''étude. Continuer le clic "oui". Retourner à votre clic de session actuel "annul".'
   copySuccess: Copie achevée avec succès
   course: Cours
   courseLearningMaterials: "Matériels d'Étude du Cours"
@@ -82,7 +82,7 @@ general:
   courseOrSessionType: Cours / Type de séance
   courseRollover: Roulement Cours
   courseRolloverSuccess: Roulement achevée avec succès
-  courseRolloverSummary: 'Vous êtes sur le point le roulement ce cours dans l''année universitaire choisie, avec toutes les options choisies. Continuer, cliquer "done". Pour retourner à votre cours actuel, le clic "annul"'
+  courseRolloverSummary: 'Vous êtes sur le point le roulement ce cours dans l''année universitaire choisie, avec toutes les options choisies. Continuer, cliquer "Fini". Pour retourner à votre cours actuel, le clic "Annul"'
   courseRolloverYearUnavailable: Cours déja existant
   courses: Les Cours
   coursesAndSessions: Des Cours et Séances

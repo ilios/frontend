@@ -68,7 +68,7 @@ general:
   copyrightPermission: Permisos de Derechos de Autor
   copyrightRationale: Justificación para Derechos de Autor
   copySession: Copiar una Sesión
-  copySessionSummary: 'Usted va a copiar esta sesión (sin datos del horario) en el curso seleccionado. La sesión nueva va a incluir todos los objectivos, terminos, y materiales de aprendizaje.  Para continuar haga click en "cumplido".  Para regresar a su sesión corriente, haga click en "cancelar".'
+  copySessionSummary: 'Usted va a copiar la sesión "{title}" (sin datos del horario) en el curso seleccionado. La sesión nueva va a incluir todos los objectivos, terminos, y materiales de aprendizaje. Para continuar, haga click en "cumplido". Para regresar a su sesión corriente, haga click en "cancelar".'
   copySuccess: La Copia se ha Completado con éxito
   course: Curso
   courseLearningMaterials: Materiales de Aprendizaje del Curso
@@ -81,7 +81,7 @@ general:
   courseOrSessionType: Curso / Tipo de Sesión
   courseRollover: Copiar Curso
   courseRolloverSuccess: Curso Copiado con éxito
-  courseRolloverSummary: 'Va a rodar este curso en el seleccionado año académico, junto con todas las opciones seleccionadas.. Para continuar, haga clic en "done". Para volver a su curso corriente, haga clic en "cancel"'
+  courseRolloverSummary: 'Va a rodar este curso en el seleccionado año académico, junto con todas las opciones seleccionadas. Para continuar, haga clic en "Acabado". Para volver a su curso corriente, haga clic en "Cancelar".'
   courseRolloverYearUnavailable: El Curso Ya Existe
   courses: Cursos
   coursesAndSessions: Cursos y Sesiones
