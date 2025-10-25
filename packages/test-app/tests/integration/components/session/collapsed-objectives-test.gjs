@@ -54,13 +54,12 @@ module('Integration | Component | session/collapsed-objectives', function (hooks
   });
 
   test('clicking expand icon opens full view', async function (assert) {
-    assert.expect(2);
-
     const session = this.server.create('session');
     const sessionModel = await this.owner.lookup('service:store').findRecord('session', session.id);
 
     this.set('session', sessionModel);
     this.set('click', () => {
+      assert.step('click called');
       assert.ok(true);
     });
     await render(
@@ -69,6 +68,7 @@ module('Integration | Component | session/collapsed-objectives', function (hooks
 
     assert.strictEqual(component.title, 'Objectives (0)');
     await component.expand();
+    assert.verifySteps(['click called']);
   });
 
   test('icons all program year objectives correctly', async function (assert) {

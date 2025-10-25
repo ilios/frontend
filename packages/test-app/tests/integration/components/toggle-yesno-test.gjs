@@ -20,9 +20,9 @@ module('Integration | Component | toggle yesno', function (hooks) {
   });
 
   test('click', async function (assert) {
-    assert.expect(9);
     this.set('value', true);
     this.set('toggle', (val) => {
+      assert.step('toggle called');
       const value = this.value;
       assert.strictEqual(!value, val);
       this.set('value', val);
@@ -37,5 +37,6 @@ module('Integration | Component | toggle yesno', function (hooks) {
     assert.strictEqual(component.checked, 'false');
     await component.handle.click();
     assert.strictEqual(component.checked, 'true');
+    assert.verifySteps(Array(4).fill('toggle called'));
   });
 });

@@ -106,8 +106,8 @@ module('Integration | Component | session/objective-list-item-descriptors', func
   });
 
   test('clicking save fires save', async function (assert) {
-    assert.expect(1);
     this.set('save', () => {
+      assert.step('save called');
       assert.ok(true);
     });
     this.set('meshDescriptors', [this.meshDescriptor1, this.meshDescriptor2]);
@@ -125,11 +125,12 @@ module('Integration | Component | session/objective-list-item-descriptors', func
       </template>,
     );
     await component.save();
+    assert.verifySteps(['save called']);
   });
 
   test('clicking cancel fires cancel', async function (assert) {
-    assert.expect(1);
     this.set('cancel', () => {
+      assert.step('cancel called');
       assert.ok(true);
     });
     this.set('meshDescriptors', [this.meshDescriptor1, this.meshDescriptor2]);
@@ -147,11 +148,12 @@ module('Integration | Component | session/objective-list-item-descriptors', func
       </template>,
     );
     await component.cancel();
+    assert.verifySteps(['cancel called']);
   });
 
   test('clicking descriptor fires manage', async function (assert) {
-    assert.expect(1);
     this.set('manage', () => {
+      assert.step('manage called');
       assert.ok(true);
     });
     this.set('meshDescriptors', [this.meshDescriptor1, this.meshDescriptor2]);
@@ -169,5 +171,6 @@ module('Integration | Component | session/objective-list-item-descriptors', func
       </template>,
     );
     await component.list[0].manage();
+    assert.verifySteps(['manage called']);
   });
 });

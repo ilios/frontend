@@ -82,13 +82,13 @@ module('Integration | Component | leadership-manager', function (hooks) {
   });
 
   test('remove director', async function (assert) {
-    assert.expect(3);
     this.server.createList('user', 1);
     const user = await this.owner.lookup('service:store').findRecord('user', 1);
     this.set('directors', [user]);
     this.set('administrators', []);
     this.set('studentAdvisors', []);
     this.set('remove', (who) => {
+      assert.step('remove called');
       assert.strictEqual(who, user);
     });
 
@@ -112,17 +112,18 @@ module('Integration | Component | leadership-manager', function (hooks) {
     );
     assert.strictEqual(component.selectedDirectors.length, 1);
     assert.strictEqual(component.selectedDirectors[0].userNameInfo.fullName, '0 guy M. Mc0son');
-    component.selectedDirectors[0].remove();
+    await component.selectedDirectors[0].remove();
+    assert.verifySteps(['remove called']);
   });
 
   test('remove administrator', async function (assert) {
-    assert.expect(3);
     this.server.createList('user', 1);
     const user = await this.owner.lookup('service:store').findRecord('user', 1);
     this.set('directors', []);
     this.set('administrators', [user]);
     this.set('studentAdvisors', []);
     this.set('remove', (who) => {
+      assert.step('remove called');
       assert.strictEqual(who, user);
     });
 
@@ -149,17 +150,18 @@ module('Integration | Component | leadership-manager', function (hooks) {
       component.selectedAdministrators[0].userNameInfo.fullName,
       '0 guy M. Mc0son',
     );
-    component.selectedAdministrators[0].remove();
+    await component.selectedAdministrators[0].remove();
+    assert.verifySteps(['remove called']);
   });
 
   test('remove student advisor', async function (assert) {
-    assert.expect(3);
     this.server.createList('user', 1);
     const user = await this.owner.lookup('service:store').findRecord('user', 1);
     this.set('directors', []);
     this.set('administrators', []);
     this.set('studentAdvisors', [user]);
     this.set('remove', (who) => {
+      assert.step('remove called');
       assert.strictEqual(who, user);
     });
 
@@ -186,17 +188,18 @@ module('Integration | Component | leadership-manager', function (hooks) {
       component.selectedStudentAdvisors[0].userNameInfo.fullName,
       '0 guy M. Mc0son',
     );
-    component.selectedStudentAdvisors[0].remove();
+    await component.selectedStudentAdvisors[0].remove();
+    assert.verifySteps(['remove called']);
   });
 
   test('add director', async function (assert) {
-    assert.expect(8);
     this.server.createList('user', 1);
     const user = await this.owner.lookup('service:store').findRecord('user', 1);
     this.set('directors', []);
     this.set('administrators', [user]);
     this.set('studentAdvisors', [user]);
     this.set('add', (who) => {
+      assert.step('add called');
       assert.strictEqual(who, user, 'user passed correctly from action');
       this.set('directors', [who]);
     });
@@ -230,16 +233,17 @@ module('Integration | Component | leadership-manager', function (hooks) {
     assert.strictEqual(component.selectedAdministrators.length, 1);
     assert.strictEqual(component.selectedStudentAdvisors.length, 1);
     assert.strictEqual(component.selectedDirectors[0].userNameInfo.fullName, '0 guy M. Mc0son');
+    assert.verifySteps(['add called']);
   });
 
   test('add administrator', async function (assert) {
-    assert.expect(8);
     this.server.createList('user', 1);
     const user = await this.owner.lookup('service:store').findRecord('user', 1);
     this.set('directors', [user]);
     this.set('administrators', []);
     this.set('studentAdvisors', [user]);
     this.set('add', (who) => {
+      assert.step('add called');
       assert.strictEqual(who, user, 'user passed correctly from action');
       this.set('administrators', [who]);
     });
@@ -276,16 +280,17 @@ module('Integration | Component | leadership-manager', function (hooks) {
       component.selectedAdministrators[0].userNameInfo.fullName,
       '0 guy M. Mc0son',
     );
+    assert.verifySteps(['add called']);
   });
 
   test('add student advisor', async function (assert) {
-    assert.expect(8);
     this.server.createList('user', 1);
     const user = await this.owner.lookup('service:store').findRecord('user', 1);
     this.set('directors', [user]);
     this.set('administrators', [user]);
     this.set('studentAdvisors', []);
     this.set('add', (who) => {
+      assert.step('add called');
       assert.strictEqual(who, user, 'user passed correctly from action');
       this.set('studentAdvisors', [who]);
     });
@@ -322,6 +327,7 @@ module('Integration | Component | leadership-manager', function (hooks) {
       component.selectedStudentAdvisors[0].userNameInfo.fullName,
       '0 guy M. Mc0son',
     );
+    assert.verifySteps(['add called']);
   });
 
   test('disabled user accounts are indicated with an icon', async function (assert) {

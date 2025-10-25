@@ -38,7 +38,6 @@ module('Integration | Component | lm type icon', function (hooks) {
   });
 
   test('powerpoint file', async function (assert) {
-    assert.expect(10);
     const fixtures = [
       { absoluteFileUri: '/dev/null', mimetype: 'ppt' },
       { absoluteFileUri: '/dev/null', mimetype: 'keynote' },
@@ -58,7 +57,6 @@ module('Integration | Component | lm type icon', function (hooks) {
   });
 
   test('video file', async function (assert) {
-    assert.expect(8);
     const fixtures = [
       { absoluteFileUri: '/dev/null', mimetype: 'video/mp4' },
       { absoluteFileUri: '/dev/null', mimetype: 'video/mpg' },
@@ -77,7 +75,6 @@ module('Integration | Component | lm type icon', function (hooks) {
   });
 
   test('audio file', async function (assert) {
-    assert.expect(8);
     const fixtures = [
       { absoluteFileUri: '/dev/null', mimetype: 'audio/wav' },
       { absoluteFileUri: '/dev/null', mimetype: 'audio/mp3' },
@@ -96,7 +93,6 @@ module('Integration | Component | lm type icon', function (hooks) {
   });
 
   test('file of unknown mime-type', async function (assert) {
-    assert.expect(4);
     const fixtures = [
       { absoluteFileUri: '/dev/null', mimetype: '' },
       { absoluteFileUri: '/dev/null', mimetype: 'xyz' },

@@ -109,8 +109,8 @@ module('Integration | Component | session/objective-list-item-parents', function
   });
 
   test('clicking save fires save', async function (assert) {
-    assert.expect(1);
     this.set('save', () => {
+      assert.step('save called');
       assert.ok(true);
     });
     this.set('parents', [this.courseObjective1, this.courseObjective2]);
@@ -128,11 +128,12 @@ module('Integration | Component | session/objective-list-item-parents', function
       </template>,
     );
     await component.save();
+    assert.verifySteps(['save called']);
   });
 
   test('clicking cancel fires cancel', async function (assert) {
-    assert.expect(1);
     this.set('cancel', () => {
+      assert.step('cancel called');
       assert.ok(true);
     });
     this.set('parents', [this.courseObjective1, this.courseObjective2]);
@@ -150,11 +151,12 @@ module('Integration | Component | session/objective-list-item-parents', function
       </template>,
     );
     await component.cancel();
+    assert.verifySteps(['cancel called']);
   });
 
   test('clicking objective fires manage', async function (assert) {
-    assert.expect(1);
     this.set('manage', () => {
+      assert.step('manage called');
       assert.ok(true);
     });
     this.set('parents', [this.courseObjective1, this.courseObjective2]);
@@ -172,6 +174,7 @@ module('Integration | Component | session/objective-list-item-parents', function
       </template>,
     );
     await component.manage();
+    assert.verifySteps(['manage called']);
   });
 
   test('parent objectives are correctly sorted', async function (assert) {

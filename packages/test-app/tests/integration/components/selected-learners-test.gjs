@@ -54,9 +54,9 @@ module('Integration | Component | selected-learners', function (hooks) {
   });
 
   test('remove selected learner', async function (assert) {
-    assert.expect(4);
     this.set('learners', [this.learnerModel1, this.learnerModel2]);
     this.set('remove', (user) => {
+      assert.step('remove called');
       assert.strictEqual(user.id, this.learnerModel1.id);
     });
     await render(
@@ -72,5 +72,6 @@ module('Integration | Component | selected-learners', function (hooks) {
     assert.strictEqual(component.learners.length, 2);
     assert.strictEqual(component.learners[1].userNameInfo.fullName, 'Joe M. Doe');
     await component.learners[1].remove();
+    assert.verifySteps(['remove called']);
   });
 });

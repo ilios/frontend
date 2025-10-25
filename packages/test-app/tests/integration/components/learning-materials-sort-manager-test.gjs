@@ -96,7 +96,6 @@ module('Integration | Component | learning materials sort manager', function (ho
   });
 
   test('cancel', async function (assert) {
-    assert.expect(1);
     const owningUser = this.server.create('user', {
       firstName: 'foo',
       lastName: 'bar',
@@ -126,7 +125,7 @@ module('Integration | Component | learning materials sort manager', function (ho
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('subject', courseModel);
     this.set('cancel', () => {
-      assert.ok(true, 'Cancel action was invoked correctly.');
+      assert.step('cancel called');
     });
     await render(
       <template>
@@ -134,10 +133,10 @@ module('Integration | Component | learning materials sort manager', function (ho
       </template>,
     );
     await click('.actions .bigcancel');
+    assert.verifySteps(['cancel called']);
   });
 
   test('save', async function (assert) {
-    assert.expect(3);
     const owningUser = this.server.create('user', {
       firstName: 'foo',
       lastName: 'bar',
@@ -175,6 +174,7 @@ module('Integration | Component | learning materials sort manager', function (ho
       .findRecord('course-learning-material', clm2.id);
     this.set('subject', courseModel);
     this.set('save', (data) => {
+      assert.step('save called');
       assert.strictEqual(data.length, 2);
       assert.ok(data.includes(clmModel1));
       assert.ok(data.includes(clmModel2));
@@ -189,6 +189,7 @@ module('Integration | Component | learning materials sort manager', function (ho
       </template>,
     );
     await click('.actions .bigadd');
+    assert.verifySteps(['save called']);
   });
 
   skip('reorder and save', function (assert) {

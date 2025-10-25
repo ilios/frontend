@@ -37,21 +37,22 @@ module('Integration | Component | new objective', function (hooks) {
   });
 
   test('save triggers', async function (assert) {
-    assert.expect(1);
     this.set('save', (value) => {
+      assert.step('save called');
       assert.strictEqual(value, '<p>yoo hoo</p>');
     });
     await render(<template><NewObjective @save={{this.save}} @cancel={{(noop)}} /></template>);
     await component.description.set('yoo hoo');
     await component.save();
+    assert.verifySteps(['save called']);
   });
 
   test('cancel triggers', async function (assert) {
-    assert.expect(1);
     this.set('cancel', () => {
-      assert.ok(true, 'Cancel triggered');
+      assert.step('cancel called');
     });
     await render(<template><NewObjective @cancel={{this.cancel}} /></template>);
     await component.cancel();
+    assert.verifySteps(['cancel called']);
   });
 });

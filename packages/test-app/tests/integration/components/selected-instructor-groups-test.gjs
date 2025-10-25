@@ -137,9 +137,9 @@ module('Integration | Component | selected-instructor-groups', function (hooks) 
   });
 
   test('remove instructor group', async function (assert) {
-    assert.expect(1);
     this.set('instructors', [this.instructorGroup1]);
     this.set('remove', (instructorGroup) => {
+      assert.step('remove called');
       assert.strictEqual(instructorGroup, this.instructorGroup1);
     });
     await render(
@@ -152,5 +152,6 @@ module('Integration | Component | selected-instructor-groups', function (hooks) 
       </template>,
     );
     await component.instructorGroups[0].remove();
+    assert.verifySteps(['remove called']);
   });
 });
