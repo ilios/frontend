@@ -68,7 +68,7 @@ general:
   copyrightPermission: Copyright Permission
   copyrightRationale: Copyright Rationale
   copySession: Copy Session
-  copySessionSummary: 'You are about to copy the session "{title}" (without schedule data) into the course selected below. The new session will include all objectives, terms, and learning materials. To continue, click "done". To return to your current session, click "cancel".'
+  copySessionSummary: 'You are about to copy the session "{title}" (without schedule data) into the course selected below. The new session will include all objectives, terms, and learning materials. To continue, click "Done". To return to your current session, click "Cancel".'
   copySuccess: Copy completed successfully
   course: Course
   courseLearningMaterials: Course Learning Materials

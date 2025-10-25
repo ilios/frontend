@@ -82,7 +82,7 @@ general:
   courseOrSessionType: Cours / Type de séance
   courseRollover: Roulement Cours
   courseRolloverSuccess: Roulement achevée avec succès
-  courseRolloverSummary: 'Vous êtes sur le point le roulement ce cours dans l''année universitaire choisie, avec toutes les options choisies. Continuer, cliquer "done". Pour retourner à votre cours actuel, le clic "annul"'
+  courseRolloverSummary: 'Vous êtes sur le point le roulement ce cours dans l''année universitaire choisie, avec toutes les options choisies. Continuer, cliquer "Fini". Pour retourner à votre cours actuel, le clic "Annul"'
   courseRolloverYearUnavailable: Cours déja existant
   courses: Les Cours
   coursesAndSessions: Des Cours et Séances
