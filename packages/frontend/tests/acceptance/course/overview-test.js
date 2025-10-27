@@ -35,7 +35,6 @@ module('Acceptance | Course - Overview', function (hooks) {
     });
 
     test('collapsed', async function (assert) {
-      assert.expect(6);
       const courseModel = await this.owner
         .lookup('service:store')
         .findRecord('course', this.course.id);
@@ -72,7 +71,6 @@ module('Acceptance | Course - Overview', function (hooks) {
     });
 
     test('expanded', async function (assert) {
-      assert.expect(6);
       const courseModel = await this.owner
         .lookup('service:store')
         .findRecord('course', this.course.id);
@@ -109,7 +107,6 @@ module('Acceptance | Course - Overview', function (hooks) {
     });
 
     test('open and close details', async function (assert) {
-      assert.expect(6);
       const courseModel = await this.owner
         .lookup('service:store')
         .findRecord('course', this.course.id);

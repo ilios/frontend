@@ -37,7 +37,6 @@ module('Acceptance | Session - Terms', function (hooks) {
   });
 
   test('taxonomy summary', async function (assert) {
-    assert.expect(9);
     await page.visit({ courseId: 1, sessionId: 1 });
     assert.strictEqual(page.details.collapsedTaxonomies.title, 'Terms (1)');
     assert.strictEqual(page.details.collapsedTaxonomies.headers.length, 3);

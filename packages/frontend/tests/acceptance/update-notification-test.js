@@ -12,20 +12,21 @@ module('Acceptance | Update Notification', function (hooks) {
   });
 
   test('Noting rendered when versions match', async function (assert) {
-    assert.expect(1);
     this.server.get('/VERSION.txt', function () {
+      assert.step('version.txt called');
       return config.newVersion.currentVersion;
     });
 
     await visit('/');
     await this.service.updateVersion.perform();
     assert.dom('[data-test-update-notification]').doesNotExist();
+    assert.verifySteps(['version.txt called']);
   });
 
   test('Update notification visible when versions differ', async function (assert) {
     this.server.logging = true;
-    assert.expect(1);
     this.server.get('/VERSION.txt', function () {
+      assert.step('version.txt called');
       return 'NEW';
     });
 
@@ -33,5 +34,6 @@ module('Acceptance | Update Notification', function (hooks) {
     await this.service.updateVersion.perform();
     assert.dom('[data-test-update-notification]').exists();
     percySnapshot(assert);
+    assert.verifySteps(['version.txt called']);
   });
 });

@@ -8,7 +8,6 @@ module('Acceptance | login', function (hooks) {
   setupApplicationTest(hooks);
 
   test('visiting /login', async function (assert) {
-    assert.expect(2);
     await visit('/login');
     await percySnapshot(assert);
 

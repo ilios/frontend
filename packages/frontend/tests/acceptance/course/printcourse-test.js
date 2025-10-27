@@ -60,7 +60,6 @@ module('Acceptance | Course - Print Course', function (hooks) {
   });
 
   test('print course header', async function (assert) {
-    assert.expect(2);
     await visit('/course/1/print');
     await percySnapshot(assert);
     assert.dom('[data-test-course-header] [data-test-course-title]').hasText('Back to the Future');
@@ -70,6 +69,7 @@ module('Acceptance | Course - Print Course', function (hooks) {
   test('course year shows as range if applicable by configuration', async function (assert) {
     const { apiVersion } = this.owner.resolveRegistration('config:environment');
     this.server.get('application/config', function () {
+      assert.step('API called');
       return {
         config: {
           academicYearCrossesCalendarYearBoundaries: true,
@@ -79,6 +79,7 @@ module('Acceptance | Course - Print Course', function (hooks) {
     });
     await visit('/course/1/print');
     assert.dom('[data-test-course-header] [data-test-course-year]').hasText('2013 - 2014');
+    assert.verifySteps(['API called']);
   });
 
   test('print course mesh terms', async function (assert) {

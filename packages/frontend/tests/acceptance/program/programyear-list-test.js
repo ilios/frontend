@@ -17,7 +17,6 @@ module('Acceptance | Program - ProgramYear List', function (hooks) {
   });
 
   test('check list', async function (assert) {
-    assert.expect(8);
     this.user.update({ administeredSchools: [this.school] });
     const thisYear = new Date().getFullYear();
     const cohorts = this.server.createList('cohort', 4);
@@ -210,7 +209,6 @@ module('Acceptance | Program - ProgramYear List', function (hooks) {
   });
 
   test('privileged users can lock and unlock program-year', async function (assert) {
-    assert.expect(5);
     this.user.update({ administeredSchools: [this.school] });
     const cohorts = this.server.createList('cohort', 2);
     this.server.create('program-year', {

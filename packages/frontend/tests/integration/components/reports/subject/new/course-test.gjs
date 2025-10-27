@@ -47,10 +47,10 @@ module('Integration | Component | reports/subject/new/course', function (hooks) 
   });
 
   test('it works', async function (assert) {
-    assert.expect(4);
     this.set('currentId', null);
     this.set('changeId', (id) => {
-      assert.strictEqual(id, '1');
+      assert.step('changeId called');
+      assert.strictEqual(id, '3');
       this.set('currentId', id);
     });
     await render(
@@ -63,14 +63,10 @@ module('Integration | Component | reports/subject/new/course', function (hooks) 
     await component.search();
     assert.strictEqual(component.results.length, 5);
 
-    this.set('changeId', (id) => {
-      assert.strictEqual(id, '3');
-      this.set('currentId', id);
-    });
-
     await component.results[0].click();
     assert.ok(component.hasSelectedCourse);
     assert.strictEqual(component.selectedCourse, '2022 course 2');
+    assert.verifySteps(['changeId called']);
   });
 
   test('it filters by school', async function (assert) {
@@ -92,7 +88,6 @@ module('Integration | Component | reports/subject/new/course', function (hooks) 
   });
 
   test('it sorts', async function (assert) {
-    assert.expect(6);
     this.server.db.courses.update(1, { title: 'xx', externalId: 'course1' });
     this.server.db.courses.update(3, { title: 'aa', externalId: 'course2' });
     await render(

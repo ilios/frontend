@@ -12,7 +12,6 @@ module('Acceptance | FourOhFour', function (hooks) {
   });
 
   test('visiting /four-oh-four', async function (assert) {
-    assert.expect(2);
     await visit('/four-oh-four');
     await percySnapshot(assert);
 

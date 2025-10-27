@@ -73,9 +73,9 @@ module('Integration | Component | school-competencies-pcrs-mapper', function (ho
   });
 
   test('add pcrs', async function (assert) {
-    assert.expect(3);
     this.set('allPcrses', this.allPcrses);
     this.set('add', (pcrs) => {
+      assert.step('add called');
       assert.strictEqual(pcrs, this.pcrs4);
     });
     await render(
@@ -90,14 +90,15 @@ module('Integration | Component | school-competencies-pcrs-mapper', function (ho
     );
     assert.notOk(component.pcrs[0].isChecked);
     await component.pcrs[0].click();
+    assert.verifySteps(['add called', 'add called']);
   });
 
   test('remove pcrs', async function (assert) {
-    assert.expect(3);
     const selectedPcrses = [this.pcrs4];
     this.set('selectedPcrses', selectedPcrses);
     this.set('allPcrses', this.allPcrses);
     this.set('remove', (pcrs) => {
+      assert.step('remove called');
       assert.strictEqual(pcrs, this.pcrs4);
     });
     await render(
@@ -112,5 +113,6 @@ module('Integration | Component | school-competencies-pcrs-mapper', function (ho
     );
     assert.ok(component.pcrs[0].isChecked);
     await component.pcrs[0].click();
+    assert.verifySteps(['remove called', 'remove called']);
   });
 });

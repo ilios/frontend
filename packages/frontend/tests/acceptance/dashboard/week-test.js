@@ -23,7 +23,6 @@ module('Acceptance | Dashboard Week at a Glance', function (hooks) {
   });
 
   test('shows events', async function (assert) {
-    assert.expect(6);
     const aug16th2023 = DateTime.fromObject({
       year: 2023,
       month: 8,
@@ -65,7 +64,6 @@ module('Acceptance | Dashboard Week at a Glance', function (hooks) {
   });
 
   test('shows all pre work', async function (assert) {
-    assert.expect(14);
     const prerequisites = [1, 2, 3].map((id) => {
       return {
         user: Number(this.user.id),
@@ -139,7 +137,6 @@ module('Acceptance | Dashboard Week at a Glance', function (hooks) {
   });
 
   test('week summary displays the whole week', async function (assert) {
-    assert.expect(5);
     const startOfTheWeek = DateTime.fromJSDate(
       this.owner.lookup('service:locale-days').firstDayOfThisWeek,
     ).set({ minute: 2 });

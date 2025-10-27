@@ -11,7 +11,6 @@ module('Integration | Component | curriculum-inventory/verification-preview', fu
   setupMirage(hooks);
 
   test('it renders', async function (assert) {
-    assert.expect(21);
     this.server.create('curriculum-inventory-report', {
       name: 'Foo Bar 2019',
     });
@@ -22,6 +21,7 @@ module('Integration | Component | curriculum-inventory/verification-preview', fu
     this.server.get(
       `/api/curriculuminventoryreports/:id/verificationpreview`,
       (scheme, { params }) => {
+        assert.step('API called');
         assert.ok('id' in params);
         assert.strictEqual(params.id, report.id);
 
@@ -107,5 +107,6 @@ module('Integration | Component | curriculum-inventory/verification-preview', fu
       'Table 7: All Events with Assessments Tagged as Formative or Summative',
     );
     assert.strictEqual(component.table8.title, 'Table 8: All Resource Types');
+    assert.verifySteps(['API called']);
   });
 });

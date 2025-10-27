@@ -88,8 +88,8 @@ module('Integration | Component | courses/new', function (hooks) {
   });
 
   test('year options show range if applicable', async function (assert) {
-    assert.expect(5);
     this.server.get('application/config', function () {
+      assert.step('API called');
       return {
         config: {
           academicYearCrossesCalendarYearBoundaries: true,
@@ -107,12 +107,12 @@ module('Integration | Component | courses/new', function (hooks) {
     assert.strictEqual(component.years[3].text, `${thisYear} - ${thisYear + 1}`);
     assert.strictEqual(component.years[4].text, `${thisYear + 1} - ${thisYear + 2}`);
     assert.strictEqual(component.years[5].text, `${thisYear + 2} - ${thisYear + 3}`);
+    assert.verifySteps(['API called']);
   });
 
   test('cancel', async function (assert) {
-    assert.expect(1);
     this.set('cancel', () => {
-      assert.ok(true);
+      assert.step('cancel called');
     });
     await render(
       <template>
@@ -120,10 +120,10 @@ module('Integration | Component | courses/new', function (hooks) {
       </template>,
     );
     await component.cancel();
+    assert.verifySteps(['cancel called']);
   });
 
   test('save', async function (assert) {
-    assert.expect(4);
     const thisYear = new Date().getFullYear();
     const academicYear = this.server.create('academic-year', { id: thisYear });
     const academicYearModel = await this.owner
@@ -131,6 +131,7 @@ module('Integration | Component | courses/new', function (hooks) {
       .findRecord('academic-year', academicYear.id);
     this.set('year', academicYearModel);
     this.set('save', async (course) => {
+      assert.step('save called');
       assert.strictEqual(course.title, 'test course');
       assert.strictEqual(course.year, parseInt(academicYear.id, 10));
       assert.strictEqual(parseInt(course.level, 10), 1);
@@ -149,10 +150,10 @@ module('Integration | Component | courses/new', function (hooks) {
     );
     await component.title('test course');
     await component.save();
+    assert.verifySteps(['save called']);
   });
 
   test('save on pressing enter in title field', async function (assert) {
-    assert.expect(4);
     const thisYear = new Date().getFullYear();
     const academicYear = this.server.create('academic-year', { id: thisYear });
     const academicYearModel = await this.owner
@@ -160,6 +161,7 @@ module('Integration | Component | courses/new', function (hooks) {
       .findRecord('academic-year', academicYear.id);
     this.set('year', academicYearModel);
     this.set('save', async (course) => {
+      assert.step('save called');
       assert.strictEqual(course.title, 'test course');
       assert.strictEqual(course.year, parseInt(academicYear.id, 10));
       assert.strictEqual(parseInt(course.level, 10), 1);
@@ -178,10 +180,10 @@ module('Integration | Component | courses/new', function (hooks) {
     );
     await component.title('test course');
     await component.submitOnEnter();
+    assert.verifySteps(['save called']);
   });
 
   test('input validation fails if title is too short', async function (assert) {
-    assert.expect(2);
     const thisYear = new Date().getFullYear();
     const academicYear = this.server.create('academic-year', { id: thisYear });
     const academicYearModel = await this.owner
@@ -189,7 +191,7 @@ module('Integration | Component | courses/new', function (hooks) {
       .findRecord('academic-year', academicYear.id);
     this.set('year', academicYearModel);
     this.set('save', () => {
-      assert.ok(false, 'this code should never be invoked.');
+      assert.step('save called');
     });
     await render(
       <template>
@@ -205,10 +207,10 @@ module('Integration | Component | courses/new', function (hooks) {
     await component.title('fo');
     await component.save();
     assert.ok(component.titleHasValidationError);
+    assert.verifySteps([]);
   });
 
   test('input validation fails if title is too long', async function (assert) {
-    assert.expect(2);
     const thisYear = new Date().getFullYear();
     const academicYear = this.server.create('academic-year', { id: thisYear });
     const academicYearModel = await this.owner
@@ -216,7 +218,7 @@ module('Integration | Component | courses/new', function (hooks) {
       .findRecord('academic-year', academicYear.id);
     this.set('year', academicYearModel);
     this.set('save', () => {
-      assert.ok(false, 'this code should never be invoked.');
+      assert.step('save called');
     });
     await render(
       <template>
@@ -232,5 +234,6 @@ module('Integration | Component | courses/new', function (hooks) {
     await component.title('0123456789'.repeat(21));
     await component.save();
     assert.ok(component.titleHasValidationError);
+    assert.verifySteps([]);
   });
 });

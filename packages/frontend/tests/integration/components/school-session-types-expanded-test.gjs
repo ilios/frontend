@@ -101,9 +101,9 @@ module('Integration | Component | school session types expanded', function (hook
   });
 
   test('editing session type fires action', async function (assert) {
-    assert.expect(1);
     this.set('school', this.school);
     this.set('click', (id) => {
+      assert.step('click called');
       assert.strictEqual(parseInt(id, 10), 1);
     });
     await render(
@@ -123,12 +123,13 @@ module('Integration | Component | school session types expanded', function (hook
     );
 
     await component.list.sessionTypes[0].manage();
+    assert.verifySteps(['click called']);
   });
 
   test('clicking add new session fires action', async function (assert) {
-    assert.expect(1);
     this.set('school', this.school);
     this.set('click', (isExpanded) => {
+      assert.step('click called');
       assert.true(isExpanded);
     });
     await render(
@@ -148,13 +149,14 @@ module('Integration | Component | school session types expanded', function (hook
     );
 
     await component.createNew();
+    assert.verifySteps(['click called']);
   });
 
   test('close fires action', async function (assert) {
-    assert.expect(1);
     this.set('school', this.school);
     this.set('sessionType', this.sessionType);
     this.set('click', (id) => {
+      assert.step('click called');
       assert.strictEqual(id, null);
     });
     await render(
@@ -174,13 +176,13 @@ module('Integration | Component | school session types expanded', function (hook
     );
 
     await component.newSessionType.cancel.click();
+    assert.verifySteps(['click called']);
   });
 
   test('collapse fires action', async function (assert) {
-    assert.expect(1);
     this.set('school', this.school);
     this.set('click', () => {
-      assert.ok(true, 'action was fired');
+      assert.step('click called');
     });
     await render(
       <template>
@@ -198,5 +200,6 @@ module('Integration | Component | school session types expanded', function (hook
       </template>,
     );
     await component.collapse();
+    assert.verifySteps(['click called']);
   });
 });

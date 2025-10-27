@@ -80,8 +80,6 @@ module('Integration | Component | bulk new users', function (hooks) {
   };
 
   test('it renders', async function (assert) {
-    assert.expect(6);
-
     await render(<template><BulkNewUsers @close={{(noop)}} /></template>);
 
     const content = this.element.textContent.trim();
@@ -97,8 +95,6 @@ module('Integration | Component | bulk new users', function (hooks) {
   });
 
   test('select student mode display cohort', async function (assert) {
-    assert.expect(10);
-
     await render(<template><BulkNewUsers @close={{(noop)}} /></template>);
     await click('.click-choice-buttons .second-button');
     const content = this.element.textContent.trim();
@@ -174,7 +170,6 @@ module('Integration | Component | bulk new users', function (hooks) {
   });
 
   test('saves valid faculty users', async function (assert) {
-    assert.expect(32);
     this.server.create('user-role', { id: 4 });
 
     await render(<template><BulkNewUsers @close={{(noop)}} /></template>);
@@ -244,7 +239,6 @@ module('Integration | Component | bulk new users', function (hooks) {
   });
 
   test('saves valid student users', async function (assert) {
-    assert.expect(30);
     this.server.create('user-role', { id: 4 });
 
     await render(<template><BulkNewUsers @close={{(noop)}} /></template>);
@@ -314,12 +308,12 @@ module('Integration | Component | bulk new users', function (hooks) {
   });
 
   test('cancel fires close', async function (assert) {
-    assert.expect(1);
     this.set('close', () => {
-      assert.ok(true);
+      assert.step('close called');
     });
     await render(<template><BulkNewUsers @close={{this.close}} /></template>);
     await click('.cancel');
+    assert.verifySteps(['close called']);
   });
 
   test('validate firstName', async function (assert) {
@@ -778,7 +772,6 @@ module('Integration | Component | bulk new users', function (hooks) {
   });
 
   test('dont create authentication if username is not set', async function (assert) {
-    assert.expect(2);
     const proposedNewUsers = '[data-test-proposed-new-users]';
     const waitSaving = '[data-test-wait-saving]';
     await render(<template><BulkNewUsers @close={{(noop)}} /></template>);

@@ -11,7 +11,6 @@ module('Integration | Component | program-year/objective-list-item-expanded', fu
   setupMirage(hooks);
 
   test('it renders and is accessible', async function (assert) {
-    assert.expect(14);
     const programYear = this.server.create('program-year');
     const programYearObjective = this.server.create('program-year-objective', { programYear });
     const course1 = this.server.create('course');
@@ -51,7 +50,6 @@ module('Integration | Component | program-year/objective-list-item-expanded', fu
   });
 
   test('it renders empty and is accessible', async function (assert) {
-    assert.expect(4);
     const programYear = this.server.create('program-year');
     const programYearObjective = this.server.create('program-year-objective', { programYear });
     const model = await this.owner

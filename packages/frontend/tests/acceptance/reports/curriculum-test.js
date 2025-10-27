@@ -30,7 +30,6 @@ module('Acceptance | Reports - Curriculum Reports', function (hooks) {
   });
 
   test('visiting reports with one school', async function (assert) {
-    assert.expect(9);
     this.server.createList('course', 2, {
       school: this.school,
       year: currentAcademicYear() - 1,
@@ -58,7 +57,6 @@ module('Acceptance | Reports - Curriculum Reports', function (hooks) {
   });
 
   test('visiting reports with multiple schools', async function (assert) {
-    assert.expect(13);
     const school = this.server.create('school');
     this.server.createList('course', 2, {
       school: this.school,
@@ -93,7 +91,6 @@ module('Acceptance | Reports - Curriculum Reports', function (hooks) {
   });
 
   test('run session objectives report, single school', async function (assert) {
-    assert.expect(7);
     const course = this.server.create('course', {
       school: this.school,
       year: currentAcademicYear(),
@@ -115,6 +112,7 @@ module('Acceptance | Reports - Curriculum Reports', function (hooks) {
     this.server.create('user', { instructorGroups: [ilmSessionInstructorGroup] });
     this.server.create('user', { instructorIlmSessions: [ilmSession] });
     this.server.post('api/graphql', (schema) => {
+      assert.step('API called');
       //use all the courses, getting the id filter from graphQL is a bit tricky
       const courseIds = schema.db.courses.map((c) => c.id);
       const rawCourses = courseIds.map((id) => graphQL.fetchCourse(schema.db, id));
@@ -163,10 +161,10 @@ module('Acceptance | Reports - Curriculum Reports', function (hooks) {
       '/reports/curriculum?courses=1&report=sessionObjectives&run=true',
       'current URL is correct',
     );
+    assert.verifySteps(['API called', 'API called']);
   });
 
   test('run session objectives report, multiple schools', async function (assert) {
-    assert.expect(13);
     const course = this.server.create('course', {
       school: this.school,
       year: currentAcademicYear(),
@@ -197,6 +195,7 @@ module('Acceptance | Reports - Curriculum Reports', function (hooks) {
     this.server.create('user', { instructorGroups: [ilmSessionInstructorGroup] });
     this.server.create('user', { instructorIlmSessions: [ilmSession] });
     this.server.post('api/graphql', (schema) => {
+      assert.step('API called');
       //use all the courses, getting the id filter from graphQL is a bit tricky
       const courseIds = schema.db.courses.map((c) => c.id);
       const rawCourses = courseIds.map((id) => graphQL.fetchCourse(schema.db, id));
@@ -287,10 +286,10 @@ module('Acceptance | Reports - Curriculum Reports', function (hooks) {
       '/reports/curriculum?courses=1-4&report=sessionObjectives&run=true',
       'current URL is correct',
     );
+    assert.verifySteps(['API called', 'API called']);
   });
 
   test('run learner groups report, single school', async function (assert) {
-    assert.expect(7);
     const course = this.server.create('course', {
       school: this.school,
       year: currentAcademicYear(),
@@ -318,6 +317,7 @@ module('Acceptance | Reports - Curriculum Reports', function (hooks) {
     this.server.create('user', { instructorGroups: [ilmSessionInstructorGroup] });
     this.server.create('user', { instructorIlmSessions: [ilmSession] });
     this.server.post('api/graphql', ({ db }) => {
+      assert.step('API called');
       //use all the courses, getting the id filter from graphQL is a bit tricky
       const courseIds = db.courses.map((c) => c.id);
       const rawCourses = courseIds.map((id) => graphQL.fetchCourse(db, id));
@@ -381,10 +381,10 @@ module('Acceptance | Reports - Curriculum Reports', function (hooks) {
       '/reports/curriculum?courses=1&report=learnerGroups&run=true',
       'current URL is correct',
     );
+    assert.verifySteps(['API called', 'API called']);
   });
 
   test('run learner groups report, multiple schools', async function (assert) {
-    assert.expect(13);
     const course = this.server.create('course', {
       school: this.school,
       year: currentAcademicYear(),
@@ -421,6 +421,7 @@ module('Acceptance | Reports - Curriculum Reports', function (hooks) {
     this.server.create('user', { instructorGroups: [ilmSessionInstructorGroup] });
     this.server.create('user', { instructorIlmSessions: [ilmSession] });
     this.server.post('api/graphql', ({ db }) => {
+      assert.step('API called');
       //use all the courses, getting the id filter from graphQL is a bit tricky
       const courseIds = db.courses.map((c) => c.id);
       const rawCourses = courseIds.map((id) => graphQL.fetchCourse(db, id));
@@ -518,6 +519,7 @@ module('Acceptance | Reports - Curriculum Reports', function (hooks) {
       '/reports/curriculum?courses=1-4&report=learnerGroups&run=true',
       'current URL is correct',
     );
+    assert.verifySteps(['API called', 'API called']);
   });
 
   test('copy url changes if report type changes', async function (assert) {
@@ -526,7 +528,6 @@ module('Acceptance | Reports - Curriculum Reports', function (hooks) {
       assert.expect(0);
       return;
     }
-    assert.expect(3);
     const course = this.server.create('course', {
       school: this.school,
       year: currentAcademicYear(),
@@ -548,6 +549,7 @@ module('Acceptance | Reports - Curriculum Reports', function (hooks) {
     this.server.create('user', { instructorGroups: [ilmSessionInstructorGroup] });
     this.server.create('user', { instructorIlmSessions: [ilmSession] });
     this.server.post('api/graphql', (schema) => {
+      assert.step('API called');
       //use all the courses, getting the id filter from graphQL is a bit tricky
       const courseIds = schema.db.courses.map((c) => c.id);
       const rawCourses = courseIds.map((id) => graphQL.fetchCourse(schema.db, id));
@@ -568,6 +570,7 @@ module('Acceptance | Reports - Curriculum Reports', function (hooks) {
     // Make sure copy button is grabbing correct report type
     const writeText = navigator.clipboard.writeText;
     navigator.clipboard.writeText = () => {
+      assert.step('navigator.clipboard.writeText called');
       const hasCorrectReportType = currentURL().includes('report=sessionObjectives');
       assert.ok(hasCorrectReportType, 'Correct report type was copied to clipboard');
       return Promise.resolve();
@@ -575,6 +578,7 @@ module('Acceptance | Reports - Curriculum Reports', function (hooks) {
     await page.curriculum.header.reportSelector.set('sessionObjectives');
     await page.curriculum.header.copy.click();
     navigator.clipboard.writeText = () => {
+      assert.step('navigator.clipboard.writeText called');
       const hasCorrectReportType = currentURL().includes('report=learnerGroups');
       assert.ok(hasCorrectReportType, 'Correct report type was copied to clipboard');
       return Promise.resolve();
@@ -582,6 +586,7 @@ module('Acceptance | Reports - Curriculum Reports', function (hooks) {
     await page.curriculum.header.reportSelector.set('learnerGroups');
     await page.curriculum.header.copy.click();
     navigator.clipboard.writeText = () => {
+      assert.step('navigator.clipboard.writeText called');
       const hasCorrectReportType = currentURL().includes('report=sessionObjectives');
       assert.ok(hasCorrectReportType, 'Correct report type was copied to clipboard');
       return Promise.resolve();
@@ -590,5 +595,6 @@ module('Acceptance | Reports - Curriculum Reports', function (hooks) {
     await page.curriculum.header.copy.click();
 
     navigator.clipboard.writeText = writeText;
+    assert.verifySteps(['API called', ...Array(3).fill('navigator.clipboard.writeText called')]);
   });
 });

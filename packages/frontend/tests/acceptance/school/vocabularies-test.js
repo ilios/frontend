@@ -24,7 +24,6 @@ module('Acceptance | school/vocabularies', function (hooks) {
   });
 
   test('collapsed', async function (assert) {
-    assert.expect(7);
     await page.visit({ schoolId: this.school.id });
     assert.strictEqual(currentURL(), '/schools/1');
     await percySnapshot(assert);
@@ -39,7 +38,6 @@ module('Acceptance | school/vocabularies', function (hooks) {
   });
 
   test('expanded', async function (assert) {
-    assert.expect(8);
     await page.visit({ schoolId: this.school.id, schoolVocabularyDetails: true });
     await percySnapshot(assert);
     const { schoolVocabulariesExpanded: c } = page.manager;
@@ -55,7 +53,6 @@ module('Acceptance | school/vocabularies', function (hooks) {
   });
 
   test('add new vocabulary', async function (assert) {
-    assert.expect(5);
     await page.visit({ schoolId: this.school.id, schoolVocabularyDetails: true });
     const { schoolVocabulariesExpanded: c } = page.manager;
 
@@ -71,7 +68,6 @@ module('Acceptance | school/vocabularies', function (hooks) {
   });
 
   test('add new term', async function (assert) {
-    assert.expect(7);
     await page.visit({ schoolId: this.school.id, schoolVocabularyDetails: true });
     const { schoolVocabulariesExpanded: c } = page.manager;
 
@@ -99,7 +95,6 @@ module('Acceptance | school/vocabularies', function (hooks) {
   });
 
   test('delete terms', async function (assert) {
-    assert.expect(9);
     await page.visit({ schoolId: this.school.id, schoolVocabularyDetails: true });
     const { schoolVocabulariesExpanded: c } = page.manager;
 
@@ -125,7 +120,6 @@ module('Acceptance | school/vocabularies', function (hooks) {
   });
 
   test('delete vocabulary', async function (assert) {
-    assert.expect(7);
     this.server.create('vocabulary', {
       school: this.school,
     });

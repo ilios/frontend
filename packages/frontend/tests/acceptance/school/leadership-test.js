@@ -26,7 +26,6 @@ module('Acceptance | school/leadership', function (hooks) {
   });
 
   test('collapsed leadership', async function (assert) {
-    assert.expect(9);
     await page.visit({ schoolId: this.school.id });
     assert.strictEqual(currentURL(), '/schools/1');
     await percySnapshot(assert);
@@ -49,7 +48,6 @@ module('Acceptance | school/leadership', function (hooks) {
   });
 
   test('list leadership', async function (assert) {
-    assert.expect(7);
     await page.visit({
       schoolId: this.school.id,
       schoolLeadershipDetails: true,

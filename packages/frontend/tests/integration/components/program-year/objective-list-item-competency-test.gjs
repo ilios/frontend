@@ -162,7 +162,6 @@ module('Integration | Component | program-year/objective-list-item-competency', 
   });
 
   test('clicking save fires save', async function (assert) {
-    assert.expect(1);
     const domain = this.server.create('competency');
     const competency = this.server.create('competency', { parent: domain });
     const objective = this.server.create('program-year-objective', {
@@ -173,7 +172,7 @@ module('Integration | Component | program-year/objective-list-item-competency', 
       .findRecord('program-year-objective', objective.id);
     this.set('objective', objectiveModel);
     this.set('save', () => {
-      assert.ok(true);
+      assert.step('save called');
     });
     await render(
       <template>
@@ -189,10 +188,10 @@ module('Integration | Component | program-year/objective-list-item-competency', 
       </template>,
     );
     await component.save();
+    assert.verifySteps(['save called']);
   });
 
   test('clicking cancel fires cancel', async function (assert) {
-    assert.expect(1);
     const domain = this.server.create('competency');
     const competency = this.server.create('competency', { parent: domain });
     const objective = this.server.create('program-year-objective', {
@@ -203,7 +202,7 @@ module('Integration | Component | program-year/objective-list-item-competency', 
       .findRecord('program-year-objective', objective.id);
     this.set('objective', objectiveModel);
     this.set('cancel', () => {
-      assert.ok(true);
+      assert.step('cancel called');
     });
     await render(
       <template>
@@ -219,10 +218,10 @@ module('Integration | Component | program-year/objective-list-item-competency', 
       </template>,
     );
     await component.cancel();
+    assert.verifySteps(['cancel called']);
   });
 
   test('clicking competency fires manage', async function (assert) {
-    assert.expect(1);
     const domain = this.server.create('competency');
     const competency = this.server.create('competency', { parent: domain });
     const objective = this.server.create('program-year-objective', {
@@ -233,7 +232,7 @@ module('Integration | Component | program-year/objective-list-item-competency', 
       .findRecord('program-year-objective', objective.id);
     this.set('objective', objectiveModel);
     this.set('manage', () => {
-      assert.ok(true);
+      assert.step('manage called');
     });
     await render(
       <template>
@@ -249,5 +248,6 @@ module('Integration | Component | program-year/objective-list-item-competency', 
       </template>,
     );
     await component.manage();
+    assert.verifySteps(['manage called']);
   });
 });

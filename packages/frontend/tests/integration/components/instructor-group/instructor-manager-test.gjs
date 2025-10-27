@@ -66,8 +66,8 @@ module('Integration | Component | instructor-group/instructor-manager', function
   });
 
   test('add instructor', async function (assert) {
-    assert.expect(3);
     this.set('add', (user) => {
+      assert.step('add called');
       assert.strictEqual(user, this.user1);
     });
     this.set('instructors', []);
@@ -83,11 +83,12 @@ module('Integration | Component | instructor-group/instructor-manager', function
       '0 guy M. Mc0son user@example.edu',
     );
     await component.availableInstructors.userSearch.results.items[0].click();
+    assert.verifySteps(['add called']);
   });
 
   test('remove instructor', async function (assert) {
-    assert.expect(4);
     this.set('remove', (user) => {
+      assert.step('remove called');
       assert.strictEqual(user, this.user2);
     });
     const instructors = [this.user1, this.user2];
@@ -111,5 +112,6 @@ module('Integration | Component | instructor-group/instructor-manager', function
       'Aaron Aardvark',
     );
     await component.selectedInstructors.users[1].remove();
+    assert.verifySteps(['remove called']);
   });
 });

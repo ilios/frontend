@@ -107,7 +107,6 @@ module('Integration | Component | curriculum-inventory/new-report', function (ho
   });
 
   test('save', async function (assert) {
-    assert.expect(6);
     const program = this.server.create('program', { id: 1, title: 'Doctor of Medicine' });
     const programModel = await this.owner.lookup('service:store').findRecord('program', program.id);
     const currentYear = DateTime.fromObject({ hour: 8 }).year;
@@ -115,6 +114,7 @@ module('Integration | Component | curriculum-inventory/new-report', function (ho
 
     this.set('program', programModel);
     this.set('save', (report) => {
+      assert.step('save called');
       assert.strictEqual(report.get('name'), 'new report', 'Name gets passed.');
       assert.strictEqual(report.get('description'), 'lorem ipsum', 'Description gets passed.');
       assert.strictEqual(
@@ -145,16 +145,17 @@ module('Integration | Component | curriculum-inventory/new-report', function (ho
     await component.description.set('lorem ipsum');
     await component.academicYear.select(expectedSelectedYear);
     await component.save();
+    assert.verifySteps(['save called']);
   });
 
   test('save with academic year crossing calendar-year boundaries', async function (assert) {
-    assert.expect(2);
     const program = this.server.create('program', { id: 1, title: 'Doctor of Medicine' });
     const programModel = await this.owner.lookup('service:store').findRecord('program', program.id);
     const currentYear = DateTime.fromObject({ hour: 8 }).year;
     const expectedSelectedYear = currentYear - 5;
 
     this.server.get('application/config', function () {
+      assert.step('API called');
       return {
         config: {
           academicYearCrossesCalendarYearBoundaries: true,
@@ -163,6 +164,7 @@ module('Integration | Component | curriculum-inventory/new-report', function (ho
     });
     this.set('program', programModel);
     this.set('save', (report) => {
+      assert.step('save called');
       assert.strictEqual(
         DateTime.fromJSDate(report.get('startDate')).toFormat('yyyy-MM-dd'),
         `${expectedSelectedYear}-07-01`,
@@ -185,16 +187,16 @@ module('Integration | Component | curriculum-inventory/new-report', function (ho
     await component.description.set('lorem ipsum');
     await component.academicYear.select(expectedSelectedYear);
     await component.save();
+    assert.verifySteps(['API called', 'save called']);
   });
 
   test('cancel', async function (assert) {
-    assert.expect(1);
     const program = this.server.create('program', { id: 1, title: 'Doctor of Medicine' });
     const programModel = await this.owner.lookup('service:store').findRecord('program', program.id);
 
     this.set('program', programModel);
     this.set('cancel', () => {
-      assert.ok(true, 'Cancel action got invoked.');
+      assert.step('cancel called');
     });
     await render(
       <template>
@@ -202,16 +204,16 @@ module('Integration | Component | curriculum-inventory/new-report', function (ho
       </template>,
     );
     await component.cancel();
+    assert.verifySteps(['cancel called']);
   });
 
   test('pressing enter in name input field fires save action', async function (assert) {
-    assert.expect(1);
     const program = this.server.create('program', { id: 1, title: 'Doctor of Medicine' });
     const programModel = await this.owner.lookup('service:store').findRecord('program', program.id);
 
     this.set('program', programModel);
     this.set('save', () => {
-      assert.ok(true, 'Save action got invoked.');
+      assert.step('save called');
       return true;
     });
 
@@ -222,6 +224,7 @@ module('Integration | Component | curriculum-inventory/new-report', function (ho
     );
     await component.name.set('new report');
     await component.name.submit();
+    assert.verifySteps(['save called']);
   });
 
   test('validation errors do not show up initially', async function (assert) {

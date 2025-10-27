@@ -36,9 +36,8 @@ module('Integration | Component | school session attributes collapsed', function
   });
 
   test('expand', async function (assert) {
-    assert.expect(1);
     this.set('expand', () => {
-      assert.ok(true, 'expand triggered.');
+      assert.step('expand called');
     });
     await render(
       <template>
@@ -53,5 +52,6 @@ module('Integration | Component | school session attributes collapsed', function
     );
 
     await component.expand();
+    assert.verifySteps(['expand called']);
   });
 });

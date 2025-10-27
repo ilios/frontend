@@ -40,7 +40,6 @@ module('Acceptance | Course - Publication Check', function (hooks) {
   });
 
   test('full course count', async function (assert) {
-    assert.expect(7);
     await page.visit({ courseId: this.fullCourse.id });
     assert.strictEqual(page.publicationcheck.backToCourse.url, '/courses/1');
     assert.strictEqual(currentRouteName(), 'course.publication-check');

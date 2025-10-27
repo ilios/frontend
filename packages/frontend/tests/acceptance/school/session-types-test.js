@@ -102,7 +102,6 @@ module('Acceptance | School - Session Types', function (hooks) {
   });
 
   test('new session type', async function (assert) {
-    assert.expect(9);
     this.server.create('aamc-method', { id: 'IM001', active: true });
     this.server.create('aamc-method', { id: 'IM002', active: true });
     this.server.create('aamc-method', { id: 'AM001', active: true });
@@ -128,7 +127,6 @@ module('Acceptance | School - Session Types', function (hooks) {
   });
 
   test('new session type - assessment', async function (assert) {
-    assert.expect(10);
     this.server.create('aamc-method', { id: 'IM001', active: true });
     this.server.create('aamc-method', { id: 'IM002', active: true });
     this.server.create('aamc-method', { id: 'AM001', active: true });

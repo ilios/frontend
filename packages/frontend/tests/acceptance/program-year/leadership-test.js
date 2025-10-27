@@ -25,7 +25,6 @@ module('Acceptance | Program Year - Leadership', function (hooks) {
   });
 
   test('collapsed leadership', async function (assert) {
-    assert.expect(6);
     await page.visit({ programId: 1, programYearId: 1 });
     await percySnapshot(assert);
     assert.strictEqual(page.details.collapsedLeadership.title, 'Leadership (2)');
@@ -37,7 +36,6 @@ module('Acceptance | Program Year - Leadership', function (hooks) {
   });
 
   test('list leadership', async function (assert) {
-    assert.expect(4);
     await page.visit({ programId: 1, programYearId: 1, pyLeadershipDetails: true });
     await percySnapshot(assert);
     assert.strictEqual(page.details.expandedLeadership.title, 'Leadership (2)');

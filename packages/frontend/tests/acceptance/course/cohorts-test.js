@@ -81,7 +81,6 @@ module('Acceptance | Course - Cohorts', function (hooks) {
   });
 
   test('list cohorts', async function (assert) {
-    assert.expect(4);
     await page.visit({ courseId: this.course.id, details: true });
     assert.strictEqual(page.details.cohorts.current.length, 1);
     assert.strictEqual(page.details.cohorts.current[0].school, 'school 0');
@@ -90,7 +89,6 @@ module('Acceptance | Course - Cohorts', function (hooks) {
   });
 
   test('manage cohorts', async function (assert) {
-    assert.expect(4);
     await page.visit({ courseId: this.course.id, details: true });
     await page.details.cohorts.manage();
     await percySnapshot(assert);

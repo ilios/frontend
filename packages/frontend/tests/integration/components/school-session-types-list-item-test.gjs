@@ -116,7 +116,6 @@ module('Integration | Component | school-session-types-list-item', function (hoo
   });
 
   test('clicking edit fires action', async function (assert) {
-    assert.expect(1);
     const school = this.server.create('school');
     const sessionType = this.server.create('session-type', {
       school,
@@ -129,6 +128,7 @@ module('Integration | Component | school-session-types-list-item', function (hoo
       .findRecord('session-type', sessionType.id);
     this.set('sessionType', sessionTypeModel);
     this.set('manageSessionType', (sessionTypeId) => {
+      assert.step('manageSessionType called');
       assert.strictEqual(parseInt(sessionTypeId, 10), 1);
     });
     await render(
@@ -141,10 +141,10 @@ module('Integration | Component | school-session-types-list-item', function (hoo
       </template>,
     );
     await component.manage();
+    assert.verifySteps(['manageSessionType called']);
   });
 
   test('clicking title fires action', async function (assert) {
-    assert.expect(1);
     const school = this.server.create('school');
     const sessionType = this.server.create('session-type', {
       school,
@@ -157,6 +157,7 @@ module('Integration | Component | school-session-types-list-item', function (hoo
       .findRecord('session-type', sessionType.id);
     this.set('sessionType', sessionTypeModel);
     this.set('manageSessionType', (sessionTypeId) => {
+      assert.step('manageSessionType called');
       assert.strictEqual(parseInt(sessionTypeId, 10), 1);
     });
     await render(
@@ -169,6 +170,7 @@ module('Integration | Component | school-session-types-list-item', function (hoo
       </template>,
     );
     await component.title.edit();
+    assert.verifySteps(['manageSessionType called']);
   });
 
   test('session type without sessions can be deleted', async function (assert) {

@@ -22,7 +22,6 @@ module('Acceptance | Users', function (hooks) {
   });
 
   test('can see list of users and transition to user route', async function (assert) {
-    assert.expect(6);
     await page.visit();
     await percySnapshot(assert);
     assert.notOk(page.root.userList.users[0].isDisabled);
@@ -48,7 +47,6 @@ module('Acceptance | Users', function (hooks) {
   });
 
   test('can search for a user and transition to user route', async function (assert) {
-    assert.expect(3);
     this.server.createList('user', 40, { firstName: 'Test', lastName: 'Name', schoolId: 1 });
     await page.visit();
     await percySnapshot(getUniqueName(assert, 'default'));

@@ -17,7 +17,6 @@ module('Acceptance | Programs', function (hooks) {
     });
 
     test('visiting /programs', async function (assert) {
-      assert.expect(1);
       await page.visit();
       await percySnapshot(assert);
       assert.strictEqual(currentRouteName(), 'programs');
@@ -25,7 +24,6 @@ module('Acceptance | Programs', function (hooks) {
 
     test('add new program', async function (assert) {
       this.user.update({ administeredSchools: [this.school] });
-      assert.expect(6);
       await page.visit();
 
       assert.ok(page.root.toggleNewProgramFormExists);
@@ -43,7 +41,6 @@ module('Acceptance | Programs', function (hooks) {
 
     test('remove program', async function (assert) {
       this.user.update({ administeredSchools: [this.school] });
-      assert.expect(6);
       this.server.create('program', {
         school: this.school,
       });

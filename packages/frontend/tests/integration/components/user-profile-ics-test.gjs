@@ -26,10 +26,10 @@ module('Integration | Component | user profile ics', function (hooks) {
   });
 
   test('clicking manage sends the action', async function (assert) {
-    assert.expect(1);
     const userModel = await this.owner.lookup('service:store').findRecord('user', this.user.id);
     this.set('user', userModel);
     this.set('click', (what) => {
+      assert.step('click called');
       assert.ok(what, 'received boolean true value');
     });
     await render(
@@ -38,6 +38,7 @@ module('Integration | Component | user profile ics', function (hooks) {
       </template>,
     );
     await component.manage();
+    assert.verifySteps(['click called']);
   });
 
   test('can refresh key', async function (assert) {

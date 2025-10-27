@@ -92,7 +92,6 @@ module('Acceptance | Session - Offerings', function (hooks) {
   });
 
   test('basics', async function (assert) {
-    assert.expect(2);
     await page.visit({ courseId: 1, sessionId: 1 });
     await percySnapshot(assert);
 
@@ -561,7 +560,6 @@ module('Acceptance | Session - Offerings', function (hooks) {
 
   test('users can create recurring small groups', async function (assert) {
     this.user.update({ administeredSchools: [this.school] });
-    assert.expect(77);
 
     await page.visit({ courseId: 1, sessionId: 1 });
     await page.details.offerings.header.createNew();
@@ -636,7 +634,6 @@ module('Acceptance | Session - Offerings', function (hooks) {
 
   test('users can create recurring single offerings', async function (assert) {
     this.user.update({ administeredSchools: [this.school] });
-    assert.expect(57);
 
     await page.visit({ courseId: 1, sessionId: 1 });
     await page.details.offerings.header.createNew();

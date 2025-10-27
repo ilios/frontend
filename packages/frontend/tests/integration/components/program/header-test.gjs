@@ -10,7 +10,6 @@ module('Integration | Component | program/header', function (hooks) {
   setupMirage(hooks);
 
   test('it renders', async function (assert) {
-    assert.expect(2);
     const school = this.server.create('school', {});
     const program = this.server.create('program', {
       school,
@@ -26,7 +25,6 @@ module('Integration | Component | program/header', function (hooks) {
   });
 
   test('read-only', async function (assert) {
-    assert.expect(2);
     const school = this.server.create('school', {});
     const program = this.server.create('program', {
       school,
@@ -105,7 +103,6 @@ module('Integration | Component | program/header', function (hooks) {
   });
 
   test('update title, then save', async function (assert) {
-    assert.expect(5);
     const school = this.server.create('school', {});
     const program = this.server.create('program', {
       school,
@@ -128,7 +125,6 @@ module('Integration | Component | program/header', function (hooks) {
   });
 
   test('update title, then cancel', async function (assert) {
-    assert.expect(5);
     const school = this.server.create('school', {});
     const program = this.server.create('program', {
       school,

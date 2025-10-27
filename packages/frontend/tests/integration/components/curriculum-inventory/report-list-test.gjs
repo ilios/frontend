@@ -187,7 +187,6 @@ module('Integration | Component | curriculum-inventory/report-list', function (h
   });
 
   test('delete and confirm', async function (assert) {
-    assert.expect(3);
     const report = this.server.create('curriculum-inventory-report', {
       program: this.program,
       name: 'Zeppelin',
@@ -197,6 +196,7 @@ module('Integration | Component | curriculum-inventory/report-list', function (h
       .findRecord('curriculum-inventory-report', report.id);
     this.set('reports', [reportModel]);
     this.set('removeAction', (obj) => {
+      assert.step('removeAction called');
       assert.strictEqual(report.id, obj.id, 'Report is passed to remove action.');
     });
     await render(
@@ -206,10 +206,10 @@ module('Integration | Component | curriculum-inventory/report-list', function (h
     await component.reports[0].remove();
     assert.ok(component.confirmRemoval.isVisible, 'Confirm dialog shows.');
     await component.confirmRemoval.confirm();
+    assert.verifySteps(['removeAction called']);
   });
 
   test('delete and cancel', async function (assert) {
-    assert.expect(3);
     const report = this.server.create('curriculum-inventory-report', {
       program: this.program,
       name: 'Zeppelin',
@@ -220,7 +220,7 @@ module('Integration | Component | curriculum-inventory/report-list', function (h
 
     this.set('reports', [reportModel]);
     this.set('removeAction', () => {
-      assert.ok(false, 'Remove action should not have been invoked.');
+      assert.step('removeAction called');
     });
     await render(
       <template><ReportList @reports={{this.reports}} @remove={{this.removeAction}} /></template>,
@@ -230,10 +230,10 @@ module('Integration | Component | curriculum-inventory/report-list', function (h
     assert.ok(component.confirmRemoval.isVisible, 'Confirm dialog shows.');
     await component.confirmRemoval.cancel();
     assert.notOk(component.confirmRemoval.isVisible, 'Confirm dialog is invisible again.');
+    assert.verifySteps([]);
   });
 
   test('sorting', async function (assert) {
-    assert.expect(4);
     const report = this.server.create('curriculum-inventory-report', {
       program: this.program,
       name: 'Zeppelin',
@@ -248,6 +248,7 @@ module('Integration | Component | curriculum-inventory/report-list', function (h
     this.set('reports', [reportModel]);
     this.set('sortBy', 'id');
     this.set('setSortBy', (what) => {
+      assert.step('setSortBy called');
       assert.strictEqual(what, sortBys[count]);
       this.set('sortBy', what);
       count++;
@@ -266,6 +267,7 @@ module('Integration | Component | curriculum-inventory/report-list', function (h
     await component.headers.clickOnName();
     await component.headers.clickOnYear();
     await component.headers.clickOnYear();
+    assert.verifySteps(Array(4).fill('setSortBy called'));
   });
 
   test('academic year shows range depending on application config', async function (assert) {

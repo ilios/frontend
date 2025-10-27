@@ -54,7 +54,6 @@ module('Acceptance | course visualizations - vocabulary', function (hooks) {
   });
 
   test('it renders', async function (assert) {
-    assert.expect(21);
     await page.visit({ courseId: this.course.id, vocabularyId: this.vocabulary.id });
     assert.strictEqual(currentURL(), '/data/courses/1/vocabularies/1');
     assert.strictEqual(page.root.vocabularyTitle, 'Vocabulary 1');
@@ -84,7 +83,6 @@ module('Acceptance | course visualizations - vocabulary', function (hooks) {
   });
 
   test('clicking chart transitions user to term visualization', async function (assert) {
-    assert.expect(2);
     await page.visit({ courseId: this.course.id, vocabularyId: this.vocabulary.id });
     // wait for charts to load
     await waitFor('.loaded');

@@ -238,7 +238,6 @@ module('Integration | Component | reports/curriculum/choose-course', function (h
   });
 
   test('select course fires action', async function (assert) {
-    assert.expect(2);
     const school = this.server.create('school');
     await setupAuthentication({ school });
     this.server.create('academicYear', { id: 1984 });
@@ -249,6 +248,7 @@ module('Integration | Component | reports/curriculum/choose-course', function (h
     this.set('selectedCourseIds', []);
     this.set('schools', buildSchoolsFromData(this.server));
     this.set('add', (courseId) => {
+      assert.step('add called');
       assert.strictEqual(courseId, course.id);
     });
     await render(
@@ -265,10 +265,10 @@ module('Integration | Component | reports/curriculum/choose-course', function (h
 
     assert.notOk(component.years[0].courses[0].isSelected);
     await component.years[0].courses[0].pick();
+    assert.verifySteps(['add called']);
   });
 
   test('remove course fires action', async function (assert) {
-    assert.expect(2);
     const school = this.server.create('school');
     await setupAuthentication({ school });
     this.server.create('academicYear', { id: 1984 });
@@ -279,6 +279,7 @@ module('Integration | Component | reports/curriculum/choose-course', function (h
     this.set('selectedCourseIds', [course.id]);
     this.set('schools', buildSchoolsFromData(this.server));
     this.set('remove', (courseId) => {
+      assert.step('remove called');
       assert.strictEqual(courseId, course.id);
     });
     await render(
@@ -295,10 +296,10 @@ module('Integration | Component | reports/curriculum/choose-course', function (h
 
     assert.ok(component.years[0].courses[0].isSelected);
     await component.years[0].courses[0].pick();
+    assert.verifySteps(['remove called']);
   });
 
   test('deselect all button visible only when course is selected', async function (assert) {
-    assert.expect(3);
     const school = this.server.create('school');
     await setupAuthentication({ school });
     this.server.create('academicYear', { id: 1984 });
@@ -309,15 +310,18 @@ module('Integration | Component | reports/curriculum/choose-course', function (h
     this.set('selectedCourseIds', [course.id]);
     this.set('schools', buildSchoolsFromData(this.server));
     this.set('add', (courseId) => {
+      assert.step('add called');
       this.set('selectedCourseIds', [...this.selectedCourseIds, courseId]);
     });
     this.set('remove', (courseId) => {
+      assert.step('remove called');
       this.set(
         'selectedCourseIds',
         this.selectedCourseIds.filter((id) => id !== courseId),
       );
     });
     this.set('removeAll', () => {
+      assert.step('removeAll called');
       this.set('selectedCourseIds', []);
     });
     await render(
@@ -337,10 +341,10 @@ module('Integration | Component | reports/curriculum/choose-course', function (h
     assert.notOk(component.deselectAll.visible, 'deselect button is not visible');
     await component.years[0].courses[0].pick();
     assert.ok(component.deselectAll.visible, 'deselect button is visible');
+    assert.verifySteps(['remove called', 'add called']);
   });
 
   test('deselect all courses fires action', async function (assert) {
-    assert.expect(6);
     const school = this.server.create('school');
     await setupAuthentication({ school });
     this.server.create('academicYear', { id: 1984 });
@@ -355,6 +359,7 @@ module('Integration | Component | reports/curriculum/choose-course', function (h
     this.set('selectedCourseIds', [course1.id, course2.id]);
     this.set('schools', buildSchoolsFromData(this.server));
     this.set('removeAll', () => {
+      assert.step('removeAll called');
       this.set('selectedCourseIds', []);
     });
     await render(
@@ -379,6 +384,7 @@ module('Integration | Component | reports/curriculum/choose-course', function (h
       component.years[1].courses[0].isSelected,
       '1985 course 1 is visible and unselected',
     );
+    assert.verifySteps(['removeAll called']);
   });
 
   test('select all fires action', async function (assert) {

@@ -59,17 +59,16 @@ module('Integration | Component | school-new-vocabulary-form', function (hooks) 
       <template><SchoolNewVocabularyForm @school={{this.school}} @close={{(noop)}} /></template>,
     );
     assert.notOk(component.title.hasError);
-    assert.expect(vocabularies[0].title, 'Vocab A');
+    assert.strictEqual(vocabularies[0].title, 'Vocab A');
     await component.title.set(vocabularies[0].title);
     await component.submit.click();
     assert.ok(component.title.hasError);
   });
 
   test('close', async function (assert) {
-    assert.expect(1);
     this.set('school', this.schoolModel);
     this.set('close', () => {
-      assert.ok(true, 'close action fires.');
+      assert.step('close called');
     });
     await render(
       <template>
@@ -77,16 +76,17 @@ module('Integration | Component | school-new-vocabulary-form', function (hooks) 
       </template>,
     );
     await component.cancel.click();
+    assert.verifySteps(['close called']);
   });
 
   test('save', async function (assert) {
-    assert.expect(3);
     const newTitle = 'New Vocabulary';
     this.set('school', this.schoolModel);
     this.set('save', {
       linked() {
         return {
           perform: (title, school, active) => {
+            assert.step('save.linked.perform called');
             assert.strictEqual(title, newTitle);
             assert.strictEqual(parseInt(school.id, 10), 1);
             assert.true(active);
@@ -101,5 +101,6 @@ module('Integration | Component | school-new-vocabulary-form', function (hooks) 
     );
     await component.title.set(newTitle);
     await component.submit.click();
+    assert.verifySteps(['save.linked.perform called']);
   });
 });

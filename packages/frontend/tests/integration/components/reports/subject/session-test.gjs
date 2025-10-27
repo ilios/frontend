@@ -79,8 +79,8 @@ module('Integration | Component | reports/subject/session', function (hooks) {
 
   test('it renders for user with permissions', async function (assert) {
     await setupAuthentication({}, true);
-    assert.expect(23);
     this.server.post('api/graphql', function (schema, { requestBody }) {
+      assert.step('API called');
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
@@ -173,12 +173,13 @@ module('Integration | Component | reports/subject/session', function (hooks) {
       '/courses/2/sessions/3',
       'third result has correct session link',
     );
+    assert.verifySteps(['API called']);
   });
 
   test('it renders for user with no permissions', async function (assert) {
     await setupAuthentication();
-    assert.expect(17);
     this.server.post('api/graphql', function (schema, { requestBody }) {
+      assert.step('API called');
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
@@ -241,13 +242,13 @@ module('Integration | Component | reports/subject/session', function (hooks) {
       'Third Session',
       'third result has correct session title',
     );
+    assert.verifySteps(['API called']);
   });
 
   test('it renders all results when resultsLengthMax is not reached', async function (assert) {
     await setupAuthentication({}, true);
-    assert.expect(3);
-
     this.server.post('api/graphql', function (schema, { requestBody }) {
+      assert.step('API called');
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
@@ -271,11 +272,11 @@ module('Integration | Component | reports/subject/session', function (hooks) {
 
     assert.strictEqual(component.results.length, 3, 'responseData shows all 3 of 3 courses');
     assert.notOk(component.hasFullResultsDownloadButton, 'full results download button is hidden');
+    assert.verifySteps(['API called']);
   });
 
   test('it renders limited results and an extra download button when resultsLengthMax is eclipsed', async function (assert) {
     await setupAuthentication({}, true);
-    assert.expect(3);
 
     const years = [2020, 2021, 2022, 2023, 2024, 2025];
     const responseDataLarge = {
@@ -298,6 +299,7 @@ module('Integration | Component | reports/subject/session', function (hooks) {
     }
 
     this.server.post('api/graphql', function (schema, { requestBody }) {
+      assert.step('API called');
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
@@ -325,11 +327,12 @@ module('Integration | Component | reports/subject/session', function (hooks) {
       'responseDataLarge shows only 200 of 220 sessions',
     );
     assert.ok(component.hasFullResultsDownloadButton, 'full results download button is present');
+    assert.verifySteps(['API called']);
   });
 
   test('it reads academic year config', async function (assert) {
-    assert.expect(11);
     this.server.get('application/config', function () {
+      assert.step('application/config API called');
       return {
         config: {
           academicYearCrossesCalendarYearBoundaries: true,
@@ -337,6 +340,7 @@ module('Integration | Component | reports/subject/session', function (hooks) {
       };
     });
     this.server.post('api/graphql', function (schema, { requestBody }) {
+      assert.step('api/graphql API called');
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
@@ -368,11 +372,12 @@ module('Integration | Component | reports/subject/session', function (hooks) {
     assert.strictEqual(component.results[0].sessionTitle, 'First Session');
     assert.strictEqual(component.results[1].sessionTitle, 'Second Session');
     assert.strictEqual(component.results[2].sessionTitle, 'Third Session');
+    assert.verifySteps(['application/config API called', 'api/graphql API called']);
   });
 
   test('year filter works', async function (assert) {
-    assert.expect(6);
     this.server.post('api/graphql', function (schema, { requestBody }) {
+      assert.step('API called');
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
@@ -400,11 +405,12 @@ module('Integration | Component | reports/subject/session', function (hooks) {
     assert.notOk(component.results[1].hasYear);
     assert.strictEqual(component.results[0].sessionTitle, 'First Session');
     assert.strictEqual(component.results[1].sessionTitle, 'Second Session');
+    assert.verifySteps(['API called']);
   });
 
   test('filter by school', async function (assert) {
-    assert.expect(2);
     this.server.post('api/graphql', function (schema, { requestBody }) {
+      assert.step('API called');
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
@@ -429,11 +435,12 @@ module('Integration | Component | reports/subject/session', function (hooks) {
       </template>,
     );
     assert.ok(headerComponent.hasYearFilter);
+    assert.verifySteps(['API called']);
   });
 
   test('filter by program', async function (assert) {
-    assert.expect(2);
     this.server.post('api/graphql', function (schema, { requestBody }) {
+      assert.step('API called');
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
@@ -457,11 +464,12 @@ module('Integration | Component | reports/subject/session', function (hooks) {
       </template>,
     );
     assert.ok(headerComponent.hasYearFilter);
+    assert.verifySteps(['API called']);
   });
 
   test('filter by school and program', async function (assert) {
-    assert.expect(2);
     this.server.post('api/graphql', function (schema, { requestBody }) {
+      assert.step('API called');
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
@@ -488,11 +496,12 @@ module('Integration | Component | reports/subject/session', function (hooks) {
       </template>,
     );
     assert.ok(headerComponent.hasYearFilter);
+    assert.verifySteps(['API called']);
   });
 
   test('filter by course', async function (assert) {
-    assert.expect(2);
     this.server.post('api/graphql', function (schema, { requestBody }) {
+      assert.step('API called');
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
@@ -516,11 +525,12 @@ module('Integration | Component | reports/subject/session', function (hooks) {
       </template>,
     );
     assert.notOk(headerComponent.hasYearFilter);
+    assert.verifySteps(['API called']);
   });
 
   test('filter by session type', async function (assert) {
-    assert.expect(2);
     this.server.post('api/graphql', function (schema, { requestBody }) {
+      assert.step('API called');
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
@@ -544,11 +554,12 @@ module('Integration | Component | reports/subject/session', function (hooks) {
       </template>,
     );
     assert.ok(headerComponent.hasYearFilter);
+    assert.verifySteps(['API called']);
   });
 
   test('filter by mesh', async function (assert) {
-    assert.expect(2);
     this.server.post('api/graphql', function (schema, { requestBody }) {
+      assert.step('API called');
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
@@ -572,11 +583,12 @@ module('Integration | Component | reports/subject/session', function (hooks) {
       </template>,
     );
     assert.ok(headerComponent.hasYearFilter);
+    assert.verifySteps(['API called']);
   });
 
   test('filter by academic year', async function (assert) {
-    assert.expect(2);
     this.server.post('api/graphql', function (schema, { requestBody }) {
+      assert.step('API called');
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
@@ -601,12 +613,15 @@ module('Integration | Component | reports/subject/session', function (hooks) {
     );
 
     assert.notOk(headerComponent.hasYearFilter);
+    assert.verifySteps(['API called']);
   });
 
   test('download', async function (assert) {
     await setupAuthentication({}, true);
-    assert.expect(9);
-    this.server.post('api/graphql', () => responseData);
+    this.server.post('api/graphql', () => {
+      assert.step('API called');
+      return responseData;
+    });
     const { id } = this.server.create('report', {
       subject: 'session',
     });
@@ -630,11 +645,13 @@ module('Integration | Component | reports/subject/session', function (hooks) {
     const originalCreateObjectURL = URL.createObjectURL;
     const originalRevokeObjectURL = URL.revokeObjectURL;
     URL.createObjectURL = (blob) => {
+      assert.step('URL.createObjectiveURL called');
       capturedBlob = blob;
       assert.ok(blob instanceof Blob, 'Blob passed to createObjectURL');
       return downloadMockUrl;
     };
     URL.revokeObjectURL = (url) => {
+      assert.step('URL.revokeObjectURL called');
       assert.strictEqual(url.href, downloadMockUrl, 'revokeObjectURL has correct href');
       assert.strictEqual(url.download, downloadFilename, 'revokeObjectURL has correct filename');
     };
@@ -644,14 +661,16 @@ module('Integration | Component | reports/subject/session', function (hooks) {
     const originalAppendChild = document.body.appendChild;
     const originalRemoveChild = document.body.removeChild;
     document.body.appendChild = (el) => {
+      assert.step('document.body.appendChild called');
       // stub out click() to avoid `Not allowed to load local resource: blob:mock-url` error
       el.click = () => {
-        assert.ok(true, 'Anchor click stubbed to prevent navigation');
+        assert.step('el.click called');
       };
       appendedElement = el;
       assert.ok(el instanceof HTMLAnchorElement, 'Anchor element was appended');
     };
     document.body.removeChild = (el) => {
+      assert.step('document.body.removeChild called');
       assert.strictEqual(el, appendedElement, 'Anchor element was removed');
     };
 
@@ -679,5 +698,14 @@ module('Integration | Component | reports/subject/session', function (hooks) {
     URL.revokeObjectURL = originalRevokeObjectURL;
     document.body.appendChild = originalAppendChild;
     document.body.removeChild = originalRemoveChild;
+    assert.verifySteps([
+      'API called',
+      'API called',
+      'URL.createObjectiveURL called',
+      'document.body.appendChild called',
+      'el.click called',
+      'document.body.removeChild called',
+      'URL.revokeObjectURL called',
+    ]);
   });
 });

@@ -32,7 +32,6 @@ module('Acceptance | Course - Terms', function (hooks) {
   });
 
   test('taxonomy summary', async function (assert) {
-    assert.expect(9);
     await page.visit({ courseId: this.course.id, details: true });
     assert.strictEqual(
       page.details.collapsedTaxonomies.title,
@@ -65,7 +64,6 @@ module('Acceptance | Course - Terms', function (hooks) {
   });
 
   test('manage terms', async function (assert) {
-    assert.expect(10);
     this.user.update({ administeredSchools: [this.school] });
     await page.visit({
       courseId: this.course.id,

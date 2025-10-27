@@ -44,7 +44,6 @@ module('Integration | Component | school vocabularies collapsed', function (hook
   });
 
   test('expand', async function (assert) {
-    assert.expect(1);
     const school = this.server.create('school');
     this.server.create('vocabulary', {
       school,
@@ -53,7 +52,7 @@ module('Integration | Component | school vocabularies collapsed', function (hook
 
     this.set('school', schoolModel);
     this.set('expand', () => {
-      assert.ok(true, 'expand triggered.');
+      assert.step('expand called');
     });
     await render(
       <template>
@@ -62,5 +61,6 @@ module('Integration | Component | school vocabularies collapsed', function (hook
     );
 
     await component.expand();
+    assert.verifySteps(['expand called']);
   });
 });

@@ -41,9 +41,8 @@ module('Integration | Component | school session attributes expanded', function 
   });
 
   test('collapse', async function (assert) {
-    assert.expect(1);
     this.set('collapse', () => {
-      assert.ok(true, 'Collapse triggered.');
+      assert.step('collapse called');
     });
     await render(
       <template>
@@ -59,12 +58,12 @@ module('Integration | Component | school session attributes expanded', function 
     );
 
     await component.collapse();
+    assert.verifySteps(['collapse called']);
   });
 
   test('manage', async function (assert) {
-    assert.expect(1);
     this.set('manage', () => {
-      assert.ok(true, 'Manage triggered.');
+      assert.step('manage called');
     });
     await render(
       <template>
@@ -81,11 +80,12 @@ module('Integration | Component | school session attributes expanded', function 
     );
 
     await component.manage();
+    assert.verifySteps(['manage called']);
   });
 
   test('save', async function (assert) {
-    assert.expect(8);
     this.set('save', (attributes) => {
+      assert.step('save called');
       assert.ok(attributes.showSessionAttendanceRequired);
       assert.ok(attributes.showSessionSupplemental);
       assert.ok(attributes.showSessionSpecialAttireRequired);
@@ -116,5 +116,6 @@ module('Integration | Component | school session attributes expanded', function 
     await component.manager.specialAttireRequired.check();
     await component.manager.specialEquipmentRequired.check();
     await component.save();
+    assert.verifySteps(['save called']);
   });
 });

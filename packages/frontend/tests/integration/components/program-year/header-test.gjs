@@ -62,7 +62,6 @@ module('Integration | Component | program-year/header', function (hooks) {
   });
 
   test('default cohort title', async function (assert) {
-    assert.expect(1);
     const school = this.server.create('school', {});
     const program = this.server.create('program', {
       school,
@@ -84,7 +83,6 @@ module('Integration | Component | program-year/header', function (hooks) {
   });
 
   test('locked', async function (assert) {
-    assert.expect(1);
     const school = this.server.create('school', {});
     const program = this.server.create('program', {
       school,

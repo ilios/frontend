@@ -101,7 +101,6 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
   });
 
   test('list learning materials', async function (assert) {
-    assert.expect(39);
     this.user.update({ administeredSchools: [this.school] });
     await page.visit({ courseId: this.course.id, details: true });
     assert.strictEqual(currentRouteName(), 'course.index');
@@ -467,7 +466,6 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
   });
 
   test('manage terms', async function (assert) {
-    assert.expect(22);
     this.user.update({ administeredSchools: [this.school] });
     await page.visit({ courseId: this.course.id, details: true });
     assert.strictEqual(page.details.learningMaterials.current.length, 4);
@@ -792,7 +790,6 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
   });
 
   test('list double linked learning materials', async function (assert) {
-    assert.expect(9);
     const course = this.server.create('course', {
       year: 2013,
       school: this.school,

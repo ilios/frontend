@@ -15,7 +15,6 @@ module('Integration | Component | reports/subject/new/learning-material', functi
   });
 
   test('it renders', async function (assert) {
-    assert.expect(7);
     await render(
       <template>
         <LearningMaterial @currentId={{null}} @changeId={{(noop)}} @school={{null}} />
@@ -31,7 +30,6 @@ module('Integration | Component | reports/subject/new/learning-material', functi
   });
 
   test('it renders with selected material', async function (assert) {
-    assert.expect(2);
     await render(
       <template>
         <LearningMaterial @currentId={{2}} @changeId={{(noop)}} @school={{null}} />
@@ -42,8 +40,8 @@ module('Integration | Component | reports/subject/new/learning-material', functi
   });
 
   test('it works', async function (assert) {
-    assert.expect(4);
     this.set('changeId', (id) => {
+      assert.step('changeId called');
       assert.strictEqual(id, '3');
       this.set('currentId', id);
     });
@@ -61,5 +59,6 @@ module('Integration | Component | reports/subject/new/learning-material', functi
     await component.results[2].click();
     assert.ok(component.hasSelectedMaterial);
     assert.strictEqual(component.selectedMaterial, 'learning material 2');
+    assert.verifySteps(['changeId called']);
   });
 });

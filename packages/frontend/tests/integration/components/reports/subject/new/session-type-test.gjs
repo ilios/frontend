@@ -4,6 +4,7 @@ import { render } from '@ember/test-helpers';
 import { setupMirage } from 'frontend/tests/test-support/mirage';
 import { component } from 'frontend/tests/pages/components/reports/subject/new/session-type';
 import SessionType from 'frontend/components/reports/subject/new/session-type';
+import noop from 'ilios-common/helpers/noop';
 
 module('Integration | Component | reports/subject/new/session-type', function (hooks) {
   setupRenderingTest(hooks);
@@ -17,15 +18,10 @@ module('Integration | Component | reports/subject/new/session-type', function (h
   });
 
   test('it renders', async function (assert) {
-    assert.expect(15);
     this.set('currentId', null);
-    this.set('changeId', (id) => {
-      assert.strictEqual(id, '1');
-      this.set('currentId', id);
-    });
     await render(
       <template>
-        <SessionType @currentId={{this.currentId}} @changeId={{this.changeId}} @school={{null}} />
+        <SessionType @currentId={{this.currentId}} @changeId={{(noop)}} @school={{null}} />
       </template>,
     );
 
@@ -54,40 +50,32 @@ module('Integration | Component | reports/subject/new/session-type', function (h
   });
 
   test('it works', async function (assert) {
-    assert.expect(5);
     this.set('currentId', '1');
+    this.set('changeId', (id) => {
+      assert.step('changeId called');
+      assert.strictEqual(id, '3');
+      this.set('currentId', id);
+    });
     await render(
       <template>
         <SessionType @currentId={{this.currentId}} @changeId={{this.changeId}} @school={{null}} />
       </template>,
     );
-    this.set('changeId', (id) => {
-      assert.strictEqual(id, '3');
-      this.set('currentId', id);
-    });
     assert.ok(component.options[1].isSelected);
     await component.set('3');
     assert.notOk(component.options[1].isSelected);
     assert.ok(component.options[3].isSelected);
     assert.strictEqual(component.value, '3');
+    assert.verifySteps(['changeId called']);
   });
 
   test('it filters by school', async function (assert) {
-    assert.expect(9);
     const schoolModel = await this.owner.lookup('service:store').findRecord('school', 2);
     this.set('currentId', null);
     this.set('school', schoolModel);
-    this.set('changeId', (id) => {
-      assert.strictEqual(id, '3');
-      this.set('currentId', id);
-    });
     await render(
       <template>
-        <SessionType
-          @currentId={{this.currentId}}
-          @changeId={{this.changeId}}
-          @school={{this.school}}
-        />
+        <SessionType @currentId={{this.currentId}} @changeId={{(noop)}} @school={{this.school}} />
       </template>,
     );
 
@@ -103,12 +91,11 @@ module('Integration | Component | reports/subject/new/session-type', function (h
   });
 
   test('changing school resets default value', async function (assert) {
-    assert.expect(4);
     const schoolModels = await this.owner.lookup('service:store').findAll('school');
     this.set('school', schoolModels[0]);
     await render(
       <template>
-        <SessionType @currentId={{null}} @changeId={{this.changeId}} @school={{this.school}} />
+        <SessionType @currentId={{null}} @changeId={{(noop)}} @school={{this.school}} />
       </template>,
     );
 

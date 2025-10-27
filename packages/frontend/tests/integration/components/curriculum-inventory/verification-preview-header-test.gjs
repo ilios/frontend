@@ -12,7 +12,6 @@ module(
     setupMirage(hooks);
 
     test('it renders', async function (assert) {
-      assert.expect(1);
       this.server.create('curriculum-inventory-report', {
         name: 'Foo Bar 2019',
       });

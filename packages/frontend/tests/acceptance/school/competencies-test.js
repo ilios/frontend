@@ -27,7 +27,6 @@ module('Acceptance | school/competencies', function (hooks) {
   });
 
   test('collapsed competencies', async function (assert) {
-    assert.expect(7);
     await page.visit({ schoolId: this.school.id });
     assert.strictEqual(currentURL(), '/schools/1');
     await percySnapshot(assert);
@@ -42,7 +41,6 @@ module('Acceptance | school/competencies', function (hooks) {
   });
 
   test('expanded competencies', async function (assert) {
-    assert.expect(11);
     await page.visit({ schoolId: this.school.id, schoolCompetencyDetails: true });
     await percySnapshot(assert);
 
@@ -67,7 +65,6 @@ module('Acceptance | school/competencies', function (hooks) {
   });
 
   test('manager', async function (assert) {
-    assert.expect(5);
     await page.visit({ schoolId: this.school.id, schoolCompetencyDetails: true });
 
     await page.manager.schoolCompetenciesExpanded.manage();
@@ -82,7 +79,6 @@ module('Acceptance | school/competencies', function (hooks) {
   });
 
   test('add new domain', async function (assert) {
-    assert.expect(8);
     await page.visit({ schoolId: this.school.id, schoolCompetencyDetails: true });
 
     const { schoolCompetenciesExpanded: e } = page.manager;
@@ -102,7 +98,6 @@ module('Acceptance | school/competencies', function (hooks) {
   });
 
   test('add new sub competency', async function (assert) {
-    assert.expect(7);
     await page.visit({ schoolId: this.school.id, schoolCompetencyDetails: true });
 
     const { schoolCompetenciesExpanded: e } = page.manager;
@@ -121,7 +116,6 @@ module('Acceptance | school/competencies', function (hooks) {
   });
 
   test('edit domain title', async function (assert) {
-    assert.expect(3);
     await page.visit({ schoolId: this.school.id, schoolCompetencyDetails: true });
 
     const { schoolCompetenciesExpanded: e } = page.manager;
@@ -136,7 +130,6 @@ module('Acceptance | school/competencies', function (hooks) {
   });
 
   test('edit competency title', async function (assert) {
-    assert.expect(5);
     await page.visit({ schoolId: this.school.id, schoolCompetencyDetails: true });
 
     await page.manager.schoolCompetenciesExpanded.manage();
@@ -155,7 +148,6 @@ module('Acceptance | school/competencies', function (hooks) {
   });
 
   test('save changes', async function (assert) {
-    assert.expect(4);
     await page.visit({ schoolId: this.school.id, schoolCompetencyDetails: true });
     const { schoolCompetenciesExpanded: e } = page.manager;
     await e.manage();

@@ -76,13 +76,13 @@ module('Integration | Component | user-profile-permissions', function (hooks) {
   });
 
   test('change school', async function (assert) {
-    assert.expect(3);
     const user = this.server.create('user', {
       school: this.schools[1],
     });
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     this.set('user', userModel);
     this.set('setSchool', (schoolId) => {
+      assert.step('setSchool called');
       assert.strictEqual(parseInt(schoolId, 10), 1);
     });
     await render(
@@ -97,10 +97,10 @@ module('Integration | Component | user-profile-permissions', function (hooks) {
     assert.strictEqual(component.selectedSchool, '2');
     assert.strictEqual(component.school.title, 'School (school 1)');
     await component.changeSchool(1);
+    assert.verifySteps(['setSchool called']);
   });
 
   test('change year', async function (assert) {
-    assert.expect(4);
     const user = this.server.create('user', {
       school: this.schools[1],
     });
@@ -120,6 +120,7 @@ module('Integration | Component | user-profile-permissions', function (hooks) {
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     this.set('user', userModel);
     this.set('setYear', (year) => {
+      assert.step('setYear called');
       assert.strictEqual(parseInt(year, 10), this.currentAcademicYear + 1);
     });
     await render(
@@ -135,6 +136,7 @@ module('Integration | Component | user-profile-permissions', function (hooks) {
     assert.strictEqual(component.courses.directors.length, 1);
     assert.ok(component.courses.notAdministrating);
     await component.changeYear(this.currentAcademicYear + 1);
+    assert.verifySteps(['setYear called']);
   });
 
   test('it renders with school data', async function (assert) {

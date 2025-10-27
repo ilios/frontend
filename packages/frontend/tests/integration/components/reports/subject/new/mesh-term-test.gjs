@@ -14,9 +14,9 @@ module('Integration | Component | reports/subject/new/mesh-term', function (hook
   });
 
   test('it works', async function (assert) {
-    assert.expect(5);
     this.set('currentId', null);
     this.set('changeId', (userId) => {
+      assert.step('changeId called');
       assert.strictEqual(userId, '3');
       this.set('currentId', userId);
     });
@@ -29,12 +29,13 @@ module('Integration | Component | reports/subject/new/mesh-term', function (hook
     await component.meshManager.searchResults[2].add();
     assert.ok(component.hasSelectedTerm);
     assert.strictEqual(component.selectedTerm, 'descriptor 2');
+    assert.verifySteps(['changeId called']);
   });
 
   test('removing mesh term clears value', async function (assert) {
-    assert.expect(3);
     this.set('currentId', '2');
     this.set('changeId', (userId) => {
+      assert.step('changeId called');
       assert.strictEqual(userId, null);
       this.set('currentId', null);
     });
@@ -44,5 +45,6 @@ module('Integration | Component | reports/subject/new/mesh-term', function (hook
     assert.ok(component.hasSelectedTerm);
     await component.removeSelectedTerm();
     assert.notOk(component.hasSelectedTerm);
+    assert.verifySteps(['changeId called']);
   });
 });

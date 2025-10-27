@@ -161,10 +161,10 @@ module('Integration | Component | assign-students/manager', function (hooks) {
   });
 
   test('select user', async function (assert) {
-    assert.expect(5);
     this.set('school', this.school1);
     this.set('selectableStudents', [this.user1]);
     this.set('changeUser', (userId) => {
+      assert.step('changeUser called');
       assert.strictEqual(userId, this.user1.id);
     });
     await render(
@@ -185,14 +185,15 @@ module('Integration | Component | assign-students/manager', function (hooks) {
     assert.notOk(component.students[0].isToggleDisabled);
     assert.notOk(component.students[0].isToggleChecked);
     await component.students[0].toggle();
+    assert.verifySteps(['changeUser called']);
   });
 
   test('de-select user', async function (assert) {
-    assert.expect(5);
     this.set('school', this.school1);
     this.set('selectableStudents', [this.user1]);
     this.set('selectedStudents', [this.user1]);
     this.set('changeUser', (userId) => {
+      assert.step('changeUser called');
       assert.strictEqual(userId, this.user1.id);
     });
     await render(
@@ -213,14 +214,14 @@ module('Integration | Component | assign-students/manager', function (hooks) {
     assert.notOk(component.students[0].isToggleDisabled);
     assert.ok(component.students[0].isToggleChecked);
     await component.students[0].toggle();
+    assert.verifySteps(['changeUser called']);
   });
 
   test('toggle all', async function (assert) {
-    assert.expect(2);
     this.set('school', this.school1);
     this.set('selectableStudents', [this.user1]);
     this.set('toggleAll', () => {
-      assert.ok(true, 'toggle-all fired');
+      assert.step('toggleAll called');
     });
     await render(
       <template>
@@ -237,6 +238,7 @@ module('Integration | Component | assign-students/manager', function (hooks) {
     );
     assert.notOk(component.isToggleAllDisabled);
     await component.toggleAll();
+    assert.verifySteps(['toggleAll called']);
   });
 
   test('all users are selected', async function (assert) {
@@ -352,12 +354,11 @@ module('Integration | Component | assign-students/manager', function (hooks) {
   });
 
   test('save', async function (assert) {
-    assert.expect(2);
     this.set('school', this.school1);
     this.set('selectableStudents', [this.user1]);
     this.set('selectedStudents', [this.user1]);
     this.set('save', () => {
-      assert.ok(true, 'save fired');
+      assert.step('save called');
     });
     await render(
       <template>
@@ -374,6 +375,7 @@ module('Integration | Component | assign-students/manager', function (hooks) {
     );
     assert.notOk(component.isSaveDisabled);
     await component.save();
+    assert.verifySteps(['save called']);
   });
 
   test('controls are locked during saving', async function (assert) {

@@ -50,7 +50,6 @@ module('Integration | Component | school session type manager', function (hooks)
   });
 
   test('close fires action', async function (assert) {
-    assert.expect(1);
     const sessionType = this.server.create('session-type', {
       title: 'one',
       calendarColor: '#ffffff',
@@ -62,7 +61,7 @@ module('Integration | Component | school session type manager', function (hooks)
       .findRecord('session-type', sessionType.id);
     this.set('sessionType', sessionTypeModel);
     this.set('close', () => {
-      assert.ok(true, 'action was fired');
+      assert.step('close called');
     });
     await render(
       <template>
@@ -75,5 +74,6 @@ module('Integration | Component | school session type manager', function (hooks)
     );
 
     await component.form.cancel.click();
+    assert.verifySteps(['close called']);
   });
 });

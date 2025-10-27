@@ -35,7 +35,6 @@ module('Acceptance | curriculum inventory report/rollover', function (hooks) {
   });
 
   test('rollover', async function (assert) {
-    assert.expect(6);
     this.user.update({ directedSchools: [this.school] });
     const thisYear = DateTime.fromObject({ hour: 8 }).year;
     const program = this.server.create('program', {
@@ -55,6 +54,7 @@ module('Acceptance | curriculum inventory report/rollover', function (hooks) {
     this.server.post(
       `/api/curriculuminventoryreports/:id/rollover`,
       function (schema, { params, requestBody }) {
+        assert.step('API called');
         assert.ok('id' in params);
         assert.strictEqual(params.id, reportModel.id);
         const data = queryString.parse(requestBody);
@@ -79,5 +79,6 @@ module('Acceptance | curriculum inventory report/rollover', function (hooks) {
     await page.visit({ reportId: reportModel.id });
     await page.rollover.save();
     assert.strictEqual(currentURL(), `/curriculum-inventory-reports/${reportModel.id + 1}`);
+    assert.verifySteps(['API called']);
   });
 });

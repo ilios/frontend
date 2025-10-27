@@ -9,14 +9,15 @@ module('Integration | Component | new competency', function (hooks) {
   setupRenderingTest(hooks);
 
   test('save', async function (assert) {
-    assert.expect(1);
     const title = 'new co';
     this.set('add', (value) => {
+      assert.step('add called');
       assert.strictEqual(value, title);
     });
     await render(<template><NewCompetency @add={{this.add}} /></template>);
     await component.title.set(title);
     await component.save();
+    assert.verifySteps(['add called']);
   });
 
   test('validation fails if title is too short', async function (assert) {

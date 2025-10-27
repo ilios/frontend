@@ -311,7 +311,6 @@ module('Integration | Component | learner-group/root', function (hooks) {
   });
 
   test('collapsing course associations fires', async function (assert) {
-    assert.expect(1);
     const user1 = this.server.create('user');
     const user2 = this.server.create('user');
     const user3 = this.server.create('user');
@@ -360,6 +359,7 @@ module('Integration | Component | learner-group/root', function (hooks) {
 
     this.set('learnerGroup', learnerGroupModel);
     this.set('setShowCourseAssociations', (value) => {
+      assert.step('setShowCourseAssociations called');
       assert.notOk(value);
     });
     await render(
@@ -379,11 +379,11 @@ module('Integration | Component | learner-group/root', function (hooks) {
       </template>,
     );
 
-    component.courseAssociations.header.toggle.click();
+    await component.courseAssociations.header.toggle.click();
+    assert.verifySteps(['setShowCourseAssociations called']);
   });
 
   test('expanding course associations fires', async function (assert) {
-    assert.expect(1);
     const user1 = this.server.create('user');
     const user2 = this.server.create('user');
     const user3 = this.server.create('user');
@@ -432,6 +432,7 @@ module('Integration | Component | learner-group/root', function (hooks) {
 
     this.set('learnerGroup', learnerGroupModel);
     this.set('setShowCourseAssociations', (value) => {
+      assert.step('setShowCourseAssociations called');
       assert.ok(value);
     });
     await render(
@@ -451,7 +452,8 @@ module('Integration | Component | learner-group/root', function (hooks) {
       </template>,
     );
 
-    component.courseAssociations.header.toggle.click();
+    await component.courseAssociations.header.toggle.click();
+    assert.verifySteps(['setShowCourseAssociations called']);
   });
 
   test('Needs accommodation', async function (assert) {
@@ -650,8 +652,6 @@ module('Integration | Component | learner-group/root', function (hooks) {
   });
 
   test('Update default URL', async function (assert) {
-    assert.expect(2);
-
     const learnerGroup = this.server.create('learner-group', {
       url: 'https://iliosproject.org/',
       cohort: this.cohort,

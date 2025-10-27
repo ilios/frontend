@@ -58,8 +58,8 @@ module('Integration | Component | learner-group/new-multiple', function (hooks) 
   });
 
   test('save', async function (assert) {
-    assert.expect(1);
     this.set('save', (num) => {
+      assert.step('save called');
       assert.strictEqual(parseInt(num, 10), 13);
     });
     await render(
@@ -69,5 +69,6 @@ module('Integration | Component | learner-group/new-multiple', function (hooks) 
     );
     await component.set('13');
     await component.save();
+    assert.verifySteps(['save called']);
   });
 });

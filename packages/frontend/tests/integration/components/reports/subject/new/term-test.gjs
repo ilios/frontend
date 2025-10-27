@@ -4,6 +4,7 @@ import { render } from '@ember/test-helpers';
 import { setupMirage } from 'frontend/tests/test-support/mirage';
 import { component } from 'frontend/tests/pages/components/reports/subject/new/term';
 import Term from 'frontend/components/reports/subject/new/term';
+import noop from 'ilios-common/helpers/noop';
 
 module('Integration | Component | reports/subject/new/term', function (hooks) {
   setupRenderingTest(hooks);
@@ -44,15 +45,10 @@ module('Integration | Component | reports/subject/new/term', function (hooks) {
   });
 
   test('it renders', async function (assert) {
-    assert.expect(21);
     this.set('currentId', null);
-    this.set('changeId', (id) => {
-      assert.strictEqual(id, '1');
-      this.set('currentId', id);
-    });
     await render(
       <template>
-        <Term @currentId={{this.currentId}} @changeId={{this.changeId}} @school={{null}} />
+        <Term @currentId={{this.currentId}} @changeId={{(noop)}} @school={{null}} />
       </template>,
     );
 
@@ -83,36 +79,32 @@ module('Integration | Component | reports/subject/new/term', function (hooks) {
   });
 
   test('it works', async function (assert) {
-    assert.expect(5);
     this.set('currentId', '3');
+    this.set('changeId', (id) => {
+      assert.step('changeId called');
+      assert.strictEqual(id, '1');
+      this.set('currentId', id);
+    });
     await render(
       <template>
         <Term @currentId={{this.currentId}} @changeId={{this.changeId}} @school={{null}} />
       </template>,
     );
-    this.set('changeId', (id) => {
-      assert.strictEqual(id, '1');
-      this.set('currentId', id);
-    });
     assert.ok(component.options[4].isSelected);
     await component.set('1');
     assert.notOk(component.options[4].isSelected);
     assert.ok(component.options[1].isSelected);
     assert.strictEqual(component.value, '1');
+    assert.verifySteps(['changeId called']);
   });
 
   test('it filters by school', async function (assert) {
-    assert.expect(3);
     const schoolModel = await this.owner.lookup('service:store').findRecord('school', 2);
     this.set('currentId', null);
     this.set('school', schoolModel);
-    this.set('changeId', (id) => {
-      assert.strictEqual(id, '6');
-      this.set('currentId', id);
-    });
     await render(
       <template>
-        <Term @currentId={{this.currentId}} @changeId={{this.changeId}} @school={{this.school}} />
+        <Term @currentId={{this.currentId}} @changeId={{(noop)}} @school={{this.school}} />
       </template>,
     );
 
@@ -122,15 +114,11 @@ module('Integration | Component | reports/subject/new/term', function (hooks) {
   });
 
   test('changing school resets default value', async function (assert) {
-    assert.expect(4);
     const schoolModels = await this.owner.lookup('service:store').findAll('school');
     this.set('school', schoolModels[0]);
-    this.set('changeId', (id) => {
-      assert.strictEqual(id, '1');
-    });
     await render(
       <template>
-        <Term @currentId={{null}} @changeId={{this.changeId}} @school={{this.school}} />
+        <Term @currentId={{null}} @changeId={{(noop)}} @school={{this.school}} />
       </template>,
     );
 

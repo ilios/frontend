@@ -11,7 +11,6 @@ module(
     setupRenderingTest(hooks);
 
     test('it renders', async function (assert) {
-      assert.expect(19);
       const data = [
         { id: 'AM001', title: 'foo', num_summative_assessments: 10, num_formative_assessments: 20 },
         { id: 'AM003', title: 'bar', num_summative_assessments: 5, num_formative_assessments: 0 },

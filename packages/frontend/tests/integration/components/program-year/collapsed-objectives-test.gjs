@@ -53,8 +53,6 @@ module('Integration | Component | program-year/collapsed-objectives', function (
   });
 
   test('clicking expand icon opens full view', async function (assert) {
-    assert.expect(2);
-
     const programYear = this.server.create('program-year');
     const programYearModel = await this.owner
       .lookup('service:store')
@@ -62,7 +60,7 @@ module('Integration | Component | program-year/collapsed-objectives', function (
 
     this.set('programYear', programYearModel);
     this.set('click', () => {
-      assert.ok(true);
+      assert.step('click called');
     });
     await render(
       <template>
@@ -72,6 +70,7 @@ module('Integration | Component | program-year/collapsed-objectives', function (
 
     assert.strictEqual(component.title, 'Objectives (0)');
     await component.expand();
+    assert.verifySteps(['click called']);
   });
 
   test('icons all linked competencies correctly', async function (assert) {

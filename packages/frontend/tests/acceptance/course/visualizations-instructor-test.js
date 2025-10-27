@@ -13,7 +13,6 @@ module('Acceptance | course visualizations - instructor', function (hooks) {
   });
 
   test('it renders', async function (assert) {
-    assert.expect(26);
     const instructor = this.server.create('user');
     const vocabulary1 = this.server.create('vocabulary');
     const vocabulary2 = this.server.create('vocabulary');

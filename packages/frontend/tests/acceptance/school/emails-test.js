@@ -17,7 +17,6 @@ module('Acceptance | school/emails', function (hooks) {
   });
 
   test('view', async function (assert) {
-    assert.expect(7);
     await page.visit({ schoolId: this.school.id });
     assert.strictEqual(currentURL(), '/schools/1');
     await percySnapshot(assert);
@@ -32,7 +31,6 @@ module('Acceptance | school/emails', function (hooks) {
   });
 
   test('manage', async function (assert) {
-    assert.expect(2);
     await page.visit({ schoolId: this.school.id, schoolManageEmails: true });
     await percySnapshot(assert);
     const { emailsEditor: c } = page.manager;

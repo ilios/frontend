@@ -33,13 +33,12 @@ module('Integration | Component | school/emails', function (hooks) {
   });
 
   test('manage', async function (assert) {
-    assert.expect(2);
     const school = this.server.create('school');
     const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
 
     this.set('school', schoolModel);
     this.set('manage', () => {
-      assert.ok(true, 'Manage event fired.');
+      assert.step('manage called');
     });
 
     await render(
@@ -49,5 +48,6 @@ module('Integration | Component | school/emails', function (hooks) {
     );
     assert.ok(component.canManage);
     await component.manage();
+    assert.verifySteps(['manage called']);
   });
 });

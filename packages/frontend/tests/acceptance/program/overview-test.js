@@ -14,7 +14,6 @@ module('Acceptance | Program - Overview', function (hooks) {
   });
 
   test('non editable fields', async function (assert) {
-    assert.expect(3);
     this.server.create('program', {
       school: this.school,
     });
@@ -26,7 +25,6 @@ module('Acceptance | Program - Overview', function (hooks) {
   });
 
   test('editable fields', async function (assert) {
-    assert.expect(3);
     this.user.update({ administeredSchools: [this.school] });
     this.server.create('program', {
       school: this.school,
@@ -67,7 +65,6 @@ module('Acceptance | Program - Overview', function (hooks) {
   });
 
   test('change duration', async function (assert) {
-    assert.expect(13);
     this.user.update({ administeredSchools: [this.school] });
     this.server.create('program', {
       school: this.school,

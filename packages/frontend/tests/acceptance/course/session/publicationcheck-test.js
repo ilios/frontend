@@ -22,7 +22,6 @@ module('Acceptance | Session - Publication Check', function (hooks) {
   });
 
   test('full session count', async function (assert) {
-    assert.expect(6);
     const session = this.server.create('session', {
       course: this.course,
       terms: [this.term],

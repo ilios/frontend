@@ -216,7 +216,6 @@ module(
     });
 
     test('sort by title', async function (assert) {
-      assert.expect(1);
       const session = this.server.create('session', {
         title: 'Zeppelin',
         sessionType: this.server.create('session-type', { title: 'Lecture' }),
@@ -233,6 +232,7 @@ module(
       this.set('sequenceBlock', blockModel);
       this.set('sortBy', 'id');
       this.set('setSortBy', function (what) {
+        assert.step('setSortBy called');
         assert.strictEqual(what, 'title', 'Sorting callback gets called for session titles.');
       });
       await render(
@@ -246,10 +246,10 @@ module(
         </template>,
       );
       await component.header.title.click();
+      assert.verifySteps(['setSortBy called']);
     });
 
     test('sort by session type', async function (assert) {
-      assert.expect(1);
       const session = this.server.create('session', {
         title: 'Zeppelin',
         sessionType: this.server.create('session-type', { title: 'Lecture' }),
@@ -266,6 +266,7 @@ module(
       this.set('sequenceBlock', blockModel);
       this.set('sortBy', 'id');
       this.set('setSortBy', function (what) {
+        assert.step('setSortBy called');
         assert.strictEqual(
           what,
           'sessionType.title',
@@ -283,10 +284,10 @@ module(
         </template>,
       );
       await component.header.sessionType.click();
+      assert.verifySteps(['setSortBy called']);
     });
 
     test('sort by offerings total', async function (assert) {
-      assert.expect(1);
       const session = this.server.create('session', {
         title: 'Zeppelin',
         sessionType: this.server.create('session-type', { title: 'Lecture' }),
@@ -303,6 +304,7 @@ module(
       this.set('sequenceBlock', blockModel);
       this.set('sortBy', 'id');
       this.set('setSortBy', function (what) {
+        assert.step('setSortBy called');
         assert.strictEqual(
           what,
           'offerings.length',
@@ -320,6 +322,7 @@ module(
         </template>,
       );
       await component.header.offeringsCount.click();
+      assert.verifySteps(['setSortBy called']);
     });
   },
 );

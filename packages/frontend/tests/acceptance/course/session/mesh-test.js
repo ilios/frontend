@@ -39,7 +39,6 @@ module('Acceptance | Session - Mesh Terms', function (hooks) {
   });
 
   test('list mesh', async function (assert) {
-    assert.expect(4);
     await page.visit({ courseId: 1, sessionId: 1 });
     assert.strictEqual(page.details.meshTerms.current.length, 3);
     assert.strictEqual(page.details.meshTerms.current[0].title, 'descriptor 0');
@@ -48,7 +47,6 @@ module('Acceptance | Session - Mesh Terms', function (hooks) {
   });
 
   test('manage terms', async function (assert) {
-    assert.expect(24);
     this.user.update({ administeredSchools: [this.school] });
     await page.visit({ courseId: 1, sessionId: 1 });
     assert.strictEqual(page.details.meshTerms.current.length, 3);

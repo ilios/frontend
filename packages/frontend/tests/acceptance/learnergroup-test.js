@@ -82,7 +82,6 @@ module('Acceptance | Learner Group', function (hooks) {
   });
 
   test('generate new subgroups', async function (assert) {
-    assert.expect(23);
     this.user.update({ administeredSchools: [this.school] });
     const programYear = this.server.create('program-year', { program: this.program });
     const cohort = this.server.create('cohort', { programYear });

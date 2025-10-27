@@ -110,7 +110,6 @@ module('Integration | Component | program-year/objective-list-item-descriptors',
   });
 
   test('clicking save fires save', async function (assert) {
-    assert.expect(1);
     const meshDescriptors = this.server.createList('mesh-descriptor', 2);
     const meshDescriptorModel1 = await this.owner
       .lookup('service:store')
@@ -120,7 +119,7 @@ module('Integration | Component | program-year/objective-list-item-descriptors',
       .findRecord('mesh-descriptor', meshDescriptors[1].id);
     this.set('meshDescriptors', [meshDescriptorModel1, meshDescriptorModel2]);
     this.set('save', () => {
-      assert.ok(true);
+      assert.step('save called');
     });
     await render(
       <template>
@@ -136,10 +135,10 @@ module('Integration | Component | program-year/objective-list-item-descriptors',
       </template>,
     );
     await component.save();
+    assert.verifySteps(['save called']);
   });
 
   test('clicking cancel fires cancel', async function (assert) {
-    assert.expect(1);
     const meshDescriptors = this.server.createList('mesh-descriptor', 2);
     const meshDescriptorModel1 = await this.owner
       .lookup('service:store')
@@ -149,7 +148,7 @@ module('Integration | Component | program-year/objective-list-item-descriptors',
       .findRecord('mesh-descriptor', meshDescriptors[1].id);
     this.set('meshDescriptors', [meshDescriptorModel1, meshDescriptorModel2]);
     this.set('cancel', () => {
-      assert.ok(true);
+      assert.step('cancel called');
     });
     await render(
       <template>
@@ -165,10 +164,10 @@ module('Integration | Component | program-year/objective-list-item-descriptors',
       </template>,
     );
     await component.cancel();
+    assert.verifySteps(['cancel called']);
   });
 
   test('clicking descriptor fires manage', async function (assert) {
-    assert.expect(1);
     const meshDescriptors = this.server.createList('mesh-descriptor', 2);
     const meshDescriptorModel1 = await this.owner
       .lookup('service:store')
@@ -178,7 +177,7 @@ module('Integration | Component | program-year/objective-list-item-descriptors',
       .findRecord('mesh-descriptor', meshDescriptors[1].id);
     this.set('meshDescriptors', [meshDescriptorModel1, meshDescriptorModel2]);
     this.set('manage', () => {
-      assert.ok(true);
+      assert.step('manage called');
     });
     await render(
       <template>
@@ -194,5 +193,6 @@ module('Integration | Component | program-year/objective-list-item-descriptors',
       </template>,
     );
     await component.list[0].manage();
+    assert.verifySteps(['manage called']);
   });
 });

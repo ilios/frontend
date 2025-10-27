@@ -82,13 +82,13 @@ module('Integration | Component | new user', function (hooks) {
   });
 
   test('create new user', async function (assert) {
-    assert.expect(12);
     const studentRole = this.server.create('user-role', {
       id: 4,
       title: 'Student',
     });
 
     this.set('transitionToUser', (userId) => {
+      assert.step('transitionToUser called');
       assert.strictEqual(Number(userId), 2);
     });
     await render(
@@ -123,10 +123,10 @@ module('Integration | Component | new user', function (hooks) {
     assert.strictEqual(authentication.username, 'user123', 'with the correct username');
     assert.strictEqual(authentication.password, 'password123', 'with the correct password');
     assert.strictEqual(Number((await newUser.school).id), 1);
+    assert.verifySteps(['transitionToUser called']);
   });
 
   test('create new student user', async function (assert) {
-    assert.expect(12);
     const studentRole = this.server.create('user-role', {
       id: 4,
       title: 'Student',
@@ -143,6 +143,7 @@ module('Integration | Component | new user', function (hooks) {
     await this.owner.lookup('service:store').findAll('program-year');
     await this.owner.lookup('service:store').findAll('cohort');
     this.set('transitionToUser', (userId) => {
+      assert.step('transitionToUser called');
       assert.strictEqual(Number(userId), 2);
     });
     await render(
@@ -179,15 +180,16 @@ module('Integration | Component | new user', function (hooks) {
 
     const primaryCohort = await newUser.primaryCohort;
     assert.strictEqual(primaryCohort.id, cohort.id);
+    assert.verifySteps(['transitionToUser called']);
   });
 
   test('cancel', async function (assert) {
-    assert.expect(1);
     this.set('cancel', () => {
-      assert.ok(true, 'cancel event fired.');
+      assert.step('cancel called');
     });
     await render(<template><NewUser @close={{this.cancel}} /></template>);
     await component.cancel();
+    assert.verifySteps(['cancel called']);
   });
 
   test('change school', async function (assert) {
@@ -269,9 +271,8 @@ module('Integration | Component | new user', function (hooks) {
   });
 
   test('create new user in another school #4830', async function (assert) {
-    assert.expect(2);
-
     this.set('transitionToUser', (userId) => {
+      assert.step('transitionToUser called');
       assert.strictEqual(Number(userId), 2);
     });
     await render(
@@ -291,10 +292,10 @@ module('Integration | Component | new user', function (hooks) {
 
     const newUser = await this.owner.lookup('service:store').findRecord('user', 2);
     assert.strictEqual(Number((await newUser.school).id), 2);
+    assert.verifySteps(['transitionToUser called']);
   });
 
   test('create new user in another school without permission in primary school #4830', async function (assert) {
-    assert.expect(2);
     class PermissionCheckerMock extends Service {
       async canCreateUser(school) {
         return Number(school.id) === 2;
@@ -303,6 +304,7 @@ module('Integration | Component | new user', function (hooks) {
     this.owner.register('service:permissionChecker', PermissionCheckerMock);
 
     this.set('transitionToUser', (userId) => {
+      assert.step('transitionToUser called');
       assert.strictEqual(Number(userId), 2);
     });
     await render(
@@ -321,5 +323,6 @@ module('Integration | Component | new user', function (hooks) {
 
     const newUser = await this.owner.lookup('service:store').findRecord('user', 2);
     assert.strictEqual(Number((await newUser.school).id), 2);
+    assert.verifySteps(['transitionToUser called']);
   });
 });

@@ -87,7 +87,6 @@ module('Acceptance | Course - Session List', function (hooks) {
   });
 
   test('session list', async function (assert) {
-    assert.expect(37);
     await page.visit({ courseId: this.course.id, details: true });
     await percySnapshot(assert);
     const { sessions } = page.courseSessions.sessionsGrid;
@@ -144,7 +143,6 @@ module('Acceptance | Course - Session List', function (hooks) {
   });
 
   test('expanded offering', async function (assert) {
-    assert.expect(24);
     await page.visit({ courseId: this.course.id, details: true });
     const { sessions } = page.courseSessions.sessionsGrid;
 
@@ -186,7 +184,6 @@ module('Acceptance | Course - Session List', function (hooks) {
   });
 
   test('no offerings', async function (assert) {
-    assert.expect(8);
     await page.visit({ courseId: this.course.id, details: true });
     const { sessions } = page.courseSessions.sessionsGrid;
 
@@ -226,7 +223,6 @@ module('Acceptance | Course - Session List', function (hooks) {
   });
 
   test('expand all sessions', async function (assert) {
-    assert.expect(7);
     this.server.create('offering', { session: this.session2 });
     this.server.create('offering', { session: this.session3 });
     this.server.create('offering', { session: this.session4 });
@@ -406,7 +402,6 @@ module('Acceptance | Course - Session List', function (hooks) {
   });
 
   test('back and forth #3771', async function (assert) {
-    assert.expect(28);
     const sessionCount = 50;
     this.server.createList('session', sessionCount, {
       course: this.course,

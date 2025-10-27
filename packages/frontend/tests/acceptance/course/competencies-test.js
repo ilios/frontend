@@ -51,7 +51,6 @@ module('Acceptance | Course - Competencies', function (hooks) {
   });
 
   test('collapsed competencies renders', async function (assert) {
-    assert.expect(5);
     this.user.update({ administeredSchools: [this.school] });
     await page.visit({ courseId: this.course.id, details: true });
     await percySnapshot(assert);

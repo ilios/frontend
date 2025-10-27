@@ -14,8 +14,6 @@ module('Integration | Component | program-year/new', function (hooks) {
   });
 
   test('it renders', async function (assert) {
-    assert.expect(14);
-
     await render(
       <template>
         <New
@@ -45,9 +43,8 @@ module('Integration | Component | program-year/new', function (hooks) {
   });
 
   test('cancel', async function (assert) {
-    assert.expect(1);
     this.set('cancel', () => {
-      assert.ok(true, 'cancel fired.');
+      assert.step('cancel called');
     });
 
     await render(
@@ -61,11 +58,12 @@ module('Integration | Component | program-year/new', function (hooks) {
       </template>,
     );
     await component.cancel.click();
+    assert.verifySteps(['cancel called']);
   });
 
   test('save', async function (assert) {
-    assert.expect(1);
     this.set('save', async (startYear) => {
+      assert.step('save called');
       assert.strictEqual(startYear, (this.currentYear - 5).toString());
     });
     await render(
@@ -79,12 +77,13 @@ module('Integration | Component | program-year/new', function (hooks) {
       </template>,
     );
     await component.done.click();
+    assert.verifySteps(['save called']);
   });
 
   test('change value, then save', async function (assert) {
-    assert.expect(3);
     const year = this.currentYear.toString();
     this.set('save', async (startYear) => {
+      assert.step('save called');
       assert.strictEqual(startYear, year);
     });
     await render(
@@ -101,6 +100,7 @@ module('Integration | Component | program-year/new', function (hooks) {
     await component.years.select(year);
     assert.ok(component.years.options[5].isSelected);
     await component.done.click();
+    assert.verifySteps(['save called']);
   });
 
   test('academic-years dropdown shows year ranges if application config enables it', async function (assert) {

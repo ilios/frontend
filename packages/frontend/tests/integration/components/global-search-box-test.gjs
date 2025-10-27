@@ -23,11 +23,14 @@ module('Integration | Component | global search box', function (hooks) {
   });
 
   test('clicking search searches if there is content', async function (assert) {
-    assert.expect(1);
-    this.set('search', (value) => assert.strictEqual(value, 'typed it'));
+    this.set('search', (value) => {
+      assert.step('search called');
+      assert.strictEqual(value, 'typed it');
+    });
     await render(<template><GlobalSearchBox @search={{this.search}} /></template>);
     await component.input('typed it');
     await component.clickIcon();
+    assert.verifySteps(['search called']);
   });
 
   test('displays initial passed down value', async function (assert) {
@@ -36,14 +39,14 @@ module('Integration | Component | global search box', function (hooks) {
   });
 
   test('clicking enter triggers search', async function (assert) {
-    assert.expect(2);
     this.set('search', (value) => {
+      assert.step('search called');
       assert.strictEqual(value, 'typed it');
-      assert.ok(true, 'search action gets called');
     });
     await render(<template><GlobalSearchBox @search={{this.search}} /></template>);
     await component.input('typed it');
     await component.keyDown.enter();
+    assert.verifySteps(['search called']);
   });
 
   test('escape calls clears query', async function (assert) {

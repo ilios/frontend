@@ -155,11 +155,11 @@ module('Integration | Component | courses/list', function (hooks) {
   });
 
   test('change sort order - title', async function (assert) {
-    assert.expect(1);
     this.set('courses', [this.course1, this.course2]);
     this.set('sortBy', 'title');
     this.set('query', '');
     this.set('setSortBy', (value) => {
+      assert.step('setSortBy called');
       assert.strictEqual(value, 'title:desc');
     });
     await render(
@@ -176,6 +176,7 @@ module('Integration | Component | courses/list', function (hooks) {
       </template>,
     );
     await component.sortByTitle();
+    assert.verifySteps(['setSortBy called']);
   });
 
   test('sort by level', async function (assert) {
@@ -225,11 +226,11 @@ module('Integration | Component | courses/list', function (hooks) {
   });
 
   test('change sort order - level', async function (assert) {
-    assert.expect(1);
     this.set('courses', [this.course1, this.course2]);
     this.set('sortBy', 'level');
     this.set('query', '');
     this.set('setSortBy', (value) => {
+      assert.step('setSortBy called');
       assert.strictEqual(value, 'level:desc');
     });
     await render(
@@ -246,6 +247,7 @@ module('Integration | Component | courses/list', function (hooks) {
       </template>,
     );
     await component.sortByLevel();
+    assert.verifySteps(['setSortBy called']);
   });
 
   test('sort by start date', async function (assert) {
@@ -295,11 +297,11 @@ module('Integration | Component | courses/list', function (hooks) {
   });
 
   test('change sort order - start date', async function (assert) {
-    assert.expect(1);
     this.set('courses', [this.course1, this.course2]);
     this.set('sortBy', 'startDate');
     this.set('query', '');
     this.set('setSortBy', (value) => {
+      assert.step('setSortBy called');
       assert.strictEqual(value, 'startDate:desc');
     });
     await render(
@@ -316,6 +318,7 @@ module('Integration | Component | courses/list', function (hooks) {
       </template>,
     );
     await component.sortByStartDate();
+    assert.verifySteps(['setSortBy called']);
   });
 
   test('sort by end date', async function (assert) {
@@ -365,11 +368,11 @@ module('Integration | Component | courses/list', function (hooks) {
   });
 
   test('change sort order - end date', async function (assert) {
-    assert.expect(1);
     this.set('courses', [this.course1, this.course2]);
     this.set('sortBy', 'endDate');
     this.set('query', '');
     this.set('setSortBy', (value) => {
+      assert.step('setSortBy called');
       assert.strictEqual(value, 'endDate:desc');
     });
     await render(
@@ -386,6 +389,7 @@ module('Integration | Component | courses/list', function (hooks) {
       </template>,
     );
     await component.sortByEndDate();
+    assert.verifySteps(['setSortBy called']);
   });
 
   test('sort by status', async function (assert) {
@@ -435,11 +439,11 @@ module('Integration | Component | courses/list', function (hooks) {
   });
 
   test('change sort order - status', async function (assert) {
-    assert.expect(1);
     this.set('courses', [this.course1, this.course2]);
     this.set('sortBy', 'status');
     this.set('query', '');
     this.set('setSortBy', (value) => {
+      assert.step('setSortBy called');
       assert.strictEqual(value, 'status:desc');
     });
     await render(
@@ -456,14 +460,15 @@ module('Integration | Component | courses/list', function (hooks) {
       </template>,
     );
     await component.sortByStatus();
+    assert.verifySteps(['setSortBy called']);
   });
 
   test('lock', async function (assert) {
-    assert.expect(2);
     this.set('courses', [this.course2]);
     this.set('sortBy', 'status');
     this.set('query', '');
     this.set('lock', (course) => {
+      assert.step('lock called');
       assert.strictEqual(course, this.course2);
     });
     await render(
@@ -481,14 +486,15 @@ module('Integration | Component | courses/list', function (hooks) {
     );
     assert.ok(component.courses[0].isUnlocked);
     await component.courses[0].lock();
+    assert.verifySteps(['lock called']);
   });
 
   test('unlock', async function (assert) {
-    assert.expect(2);
     this.set('courses', [this.course1]);
     this.set('sortBy', 'status');
     this.set('query', '');
     this.set('unlock', (course) => {
+      assert.step('unlock called');
       assert.strictEqual(course, this.course1);
     });
     await render(
@@ -506,14 +512,15 @@ module('Integration | Component | courses/list', function (hooks) {
     );
     assert.ok(component.courses[0].isLocked);
     await component.courses[0].unLock();
+    assert.verifySteps(['unlock called']);
   });
 
   test('remove', async function (assert) {
-    assert.expect(1);
     this.set('courses', [this.course1]);
     this.set('sortBy', 'status');
     this.set('query', '');
     this.set('remove', (course) => {
+      assert.step('remove called');
       assert.strictEqual(course, this.course1);
     });
     await render(
@@ -531,5 +538,6 @@ module('Integration | Component | courses/list', function (hooks) {
     );
     await component.courses[0].remove();
     await component.confirmCourseRemoval();
+    assert.verifySteps(['remove called']);
   });
 });

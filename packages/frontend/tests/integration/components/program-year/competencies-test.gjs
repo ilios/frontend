@@ -63,11 +63,11 @@ module('Integration | Component | program-year/competencies', function (hooks) {
   });
 
   test('clicking manage fires action', async function (assert) {
-    assert.expect(1);
     const programYear = await this.owner.lookup('service:store').findRecord('program-year', 1);
     this.set('programYear', programYear);
     this.set('setIsManaging', (b) => {
-      assert.true(b);
+      assert.step('setIsManaging called');
+      assert.ok(b);
     });
     await render(
       <template>
@@ -83,14 +83,14 @@ module('Integration | Component | program-year/competencies', function (hooks) {
     );
 
     await component.manage();
+    assert.verifySteps(['setIsManaging called']);
   });
 
   test('clicking collapse fires action', async function (assert) {
-    assert.expect(1);
     const programYear = await this.owner.lookup('service:store').findRecord('program-year', 1);
     this.set('programYear', programYear);
     this.set('collapse', () => {
-      assert.ok(true);
+      assert.step('collapse called');
     });
     await render(
       <template>
@@ -105,5 +105,6 @@ module('Integration | Component | program-year/competencies', function (hooks) {
       </template>,
     );
     await component.clickTitle();
+    assert.verifySteps(['collapse called']);
   });
 });

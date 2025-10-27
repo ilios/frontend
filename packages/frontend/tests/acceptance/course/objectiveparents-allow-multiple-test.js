@@ -41,8 +41,6 @@ module('Acceptance | Course - Multiple Objective Parents', function (hooks) {
   });
 
   test('initial view', async function (assert) {
-    assert.expect(16);
-
     await page.visit({
       courseId: this.course.id,
       details: true,

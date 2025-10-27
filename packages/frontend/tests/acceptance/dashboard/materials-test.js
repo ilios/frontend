@@ -147,8 +147,8 @@ module('Acceptance | Dashboard Materials', function (hooks) {
   });
 
   test('it renders with materials in show-current mode', async function (assert) {
-    assert.expect(95);
     this.server.get(`/api/usermaterials/:id`, (scheme, { params, queryParams }) => {
+      assert.step('API called');
       assert.ok('id' in params);
       assert.strictEqual(parseInt(params.id, 10), 100);
       assert.ok('before' in queryParams);
@@ -294,11 +294,12 @@ module('Acceptance | Dashboard Materials', function (hooks) {
     );
     await a11yAudit();
     assert.ok(true, 'no a11y errors found!');
+    assert.verifySteps(['API called']);
   });
 
   test('it renders with materials in show-all mode', async function (assert) {
-    assert.expect(16);
     this.server.get(`/api/usermaterials/:id`, (scheme, { params, queryParams }) => {
+      assert.step('API called');
       assert.ok('id' in params);
       assert.strictEqual(parseInt(params.id, 10), 100);
       assert.notOk('before' in queryParams);
@@ -328,10 +329,12 @@ module('Acceptance | Dashboard Materials', function (hooks) {
       'Showing 1 - 25 of 206',
     );
     assert.strictEqual(page.materials.table.rows.length, 25);
+    assert.verifySteps(['API called']);
   });
 
   test('pagination works', async function (assert) {
     this.server.get(`/api/usermaterials/:id`, () => {
+      assert.step('API called');
       return {
         userMaterials: this.allMaterials,
       };
@@ -350,10 +353,12 @@ module('Acceptance | Dashboard Materials', function (hooks) {
       'Showing 151 - 200 of 206',
     );
     assert.strictEqual(page.materials.table.rows[0].title, 'Citation title 56 citationtext 56');
+    assert.verifySteps(['API called']);
   });
 
   test('sorting works', async function (assert) {
     this.server.get(`/api/usermaterials/:id`, () => {
+      assert.step('API called');
       return {
         userMaterials: this.allMaterials,
       };
@@ -394,10 +399,12 @@ module('Acceptance | Dashboard Materials', function (hooks) {
       page.materials.table.rows[0].firstOfferingDate,
       this.nextWeek.toFormat('M/d/y'),
     );
+    assert.verifySteps(['API called']);
   });
 
   test('toggling view mode works and resets pagination', async function (assert) {
     this.server.get(`/api/usermaterials/:id`, () => {
+      assert.step('API called');
       return {
         userMaterials: this.allMaterials,
       };
@@ -420,10 +427,12 @@ module('Acceptance | Dashboard Materials', function (hooks) {
       'Showing 1 - 25 of 206',
     );
     assert.ok(page.materials.header.displayToggle.secondButton.isChecked);
+    assert.verifySteps(['API called', 'API called']);
   });
 
   test('text filtering works and resets pagination', async function (assert) {
     this.server.get(`/api/usermaterials/:id`, () => {
+      assert.step('API called');
       return {
         userMaterials: this.allMaterials,
       };
@@ -450,10 +459,12 @@ module('Acceptance | Dashboard Materials', function (hooks) {
       page.materials.topPaginator.controls.pagerDetails.text,
       'Showing 1 - 50 of 200',
     );
+    assert.verifySteps(['API called']);
   });
 
   test('course filtering works and resets pagination', async function (assert) {
     this.server.get(`/api/usermaterials/:id`, () => {
+      assert.step('API called');
       return {
         userMaterials: this.allMaterials,
       };
@@ -481,10 +492,12 @@ module('Acceptance | Dashboard Materials', function (hooks) {
       page.materials.topPaginator.controls.pagerDetails.text,
       'Showing 1 - 50 of 200',
     );
+    assert.verifySteps(['API called']);
   });
 
   test('pre-selected course exists but course-filter does not apply', async function (assert) {
     this.server.get(`/api/usermaterials/:id`, () => {
+      assert.step('API called');
       return {
         userMaterials: this.currentMaterials,
       };
@@ -503,10 +516,12 @@ module('Acceptance | Dashboard Materials', function (hooks) {
     assert.strictEqual(page.materials.courseFilter.options[5].text, '2022 | course 3');
     assert.ok(page.materials.courseFilter.options[5].isSelected);
     assert.ok(page.materials.courseFilter.options[5].isDisabled);
+    assert.verifySteps(['API called']);
   });
 
   test('pre-selected course does not exist', async function (assert) {
     this.server.get(`/api/usermaterials/:id`, () => {
+      assert.step('API called');
       return {
         userMaterials: this.currentMaterials,
       };
@@ -525,11 +540,12 @@ module('Acceptance | Dashboard Materials', function (hooks) {
     assert.strictEqual(page.materials.courseFilter.options[5].text, '** course not found **');
     assert.ok(page.materials.courseFilter.options[5].isSelected);
     assert.ok(page.materials.courseFilter.options[5].isDisabled);
+    assert.verifySteps(['API called']);
   });
 
   test('mark material status', async function (assert) {
-    assert.expect(13);
     this.server.get(`/api/usermaterials/:id`, () => {
+      assert.step('API called');
       return {
         userMaterials: this.currentMaterials,
       };
@@ -561,5 +577,6 @@ module('Acceptance | Dashboard Materials', function (hooks) {
     assert.notOk(materials[4].status.isChecked);
     assert.notOk(materials[4].status.isIndeterminate);
     assert.ok(materials[5].status.isIndeterminate);
+    assert.verifySteps(['API called']);
   });
 });

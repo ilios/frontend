@@ -91,18 +91,20 @@ module('Acceptance | Reports - Subject Report', function (hooks) {
   });
 
   test('course report works', async function (assert) {
-    assert.expect(4);
-    this.server.post('api/graphql', async () => this.getReportData(['1']));
+    this.server.post('api/graphql', async () => {
+      assert.step('API called');
+      return this.getReportData(['1']);
+    });
     await page.visit({ reportId: this.courseReport.id });
     await percySnapshot(assert);
     assert.strictEqual(currentURL(), '/reports/subjects/1');
     assert.strictEqual(page.report.title.text, 'my report 0');
     assert.strictEqual(page.report.results.length, 1);
     assert.strictEqual(page.report.results[0].text, 'course 0: session 0');
+    assert.verifySteps(['API called']);
   });
 
   test('term report works', async function (assert) {
-    assert.expect(6);
     await page.visit({ reportId: this.termReport.id });
     await percySnapshot(assert);
     assert.strictEqual(currentURL(), '/reports/subjects/2');
@@ -119,6 +121,7 @@ module('Acceptance | Reports - Subject Report', function (hooks) {
   test('academic years is shown as range as applicable by configuration', async function (assert) {
     const { apiVersion } = this.owner.resolveRegistration('config:environment');
     this.server.get('application/config', function () {
+      assert.step('API called');
       return {
         config: {
           academicYearCrossesCalendarYearBoundaries: true,
@@ -129,6 +132,7 @@ module('Acceptance | Reports - Subject Report', function (hooks) {
     await page.visit({ reportId: this.termReport.id });
     assert.strictEqual(page.report.results[0].text, '2016 - 2017 course 1: session 1');
     assert.strictEqual(page.report.results[1].text, '2015 - 2016 course 0: session 0');
+    assert.verifySteps(['API called']);
   });
 
   test('no academic years filter on reports with a course prepositional object', async function (assert) {
@@ -137,7 +141,10 @@ module('Acceptance | Reports - Subject Report', function (hooks) {
   });
 
   test('academic year filter works', async function (assert) {
-    this.server.post('api/graphql', async () => this.getReportData(['1', '2']));
+    this.server.post('api/graphql', async () => {
+      assert.step('API called');
+      return this.getReportData(['1', '2']);
+    });
     await page.visit({ reportId: this.termReport.id });
     assert.strictEqual(currentURL(), '/reports/subjects/2');
     assert.strictEqual(page.report.results.length, 2);
@@ -147,25 +154,34 @@ module('Acceptance | Reports - Subject Report', function (hooks) {
     assert.strictEqual(page.report.results.length, 1);
     assert.strictEqual(page.report.results[0].text, 'course 1: session 1');
     assert.strictEqual(currentURL(), '/reports/subjects/2?reportYear=2016');
+    assert.verifySteps(['API called']);
   });
 
   test('copy report button works with auto-generated title', async function (assert) {
-    this.server.post('api/graphql', async () => this.getReportData(['1', '2']));
+    this.server.post('api/graphql', async () => {
+      assert.step('API called');
+      return this.getReportData(['1', '2']);
+    });
     await page.visit({ reportId: this.courseNoTitleReport.id });
     await page.report.copy.button.click();
     assert.strictEqual(
       currentURL(),
       '/reports/subjects?selectedPrepositionalObject=course&selectedPrepositionalObjectId=1&selectedSchoolId=1&selectedSubject=session&showNewReportForm=true',
     );
+    assert.verifySteps(['API called']);
   });
 
   test('copy report button works with custom title', async function (assert) {
-    this.server.post('api/graphql', async () => this.getReportData(['1', '2']));
+    this.server.post('api/graphql', async () => {
+      assert.step('API called');
+      return this.getReportData(['1', '2']);
+    });
     await page.visit({ reportId: this.courseReport.id });
     await page.report.copy.button.click();
     assert.strictEqual(
       currentURL(),
       '/reports/subjects?selectedPrepositionalObject=course&selectedPrepositionalObjectId=1&selectedSchoolId=1&selectedSubject=session&showNewReportForm=true&title=my%20report%200%20(Copy)',
     );
+    assert.verifySteps(['API called']);
   });
 });

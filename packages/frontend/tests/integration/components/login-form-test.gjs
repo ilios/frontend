@@ -61,11 +61,11 @@ module('Integration | Component | login-form', function (hooks) {
   });
 
   test('submit and succeed', async function (assert) {
-    assert.expect(4);
     const username = 'Foo';
     const password = 'Bar';
     const sessionMock = class extends Service {
       authenticate() {
+        assert.step('session.authenticate called');
         assert.strictEqual(arguments[1].username, username);
         assert.strictEqual(arguments[1].password, password);
       }
@@ -77,14 +77,15 @@ module('Integration | Component | login-form', function (hooks) {
     await component.form.password.set(password);
     await component.form.submit();
     assert.strictEqual(component.errors.length, 0);
+    assert.verifySteps(['session.authenticate called']);
   });
 
   test('submit by pressing enter in username field', async function (assert) {
-    assert.expect(2);
     const username = 'Foo';
     const password = 'Bar';
     const sessionMock = class extends Service {
       authenticate() {
+        assert.step('session.authenticate called');
         assert.strictEqual(arguments[1].username, username);
         assert.strictEqual(arguments[1].password, password);
       }
@@ -94,14 +95,15 @@ module('Integration | Component | login-form', function (hooks) {
     await component.form.username.set(username);
     await component.form.password.set(password);
     await component.form.username.submit();
+    assert.verifySteps(['session.authenticate called']);
   });
 
   test('submit by pressing enter in password field', async function (assert) {
-    assert.expect(2);
     const username = 'Foo';
     const password = 'Bar';
     const sessionMock = class extends Service {
       authenticate() {
+        assert.step('session.authenticate called');
         assert.strictEqual(arguments[1].username, username);
         assert.strictEqual(arguments[1].password, password);
       }
@@ -111,6 +113,7 @@ module('Integration | Component | login-form', function (hooks) {
     await component.form.username.set(username);
     await component.form.password.set(password);
     await component.form.password.submit();
+    assert.verifySteps(['session.authenticate called']);
   });
 
   test('input validation', async function (assert) {
@@ -118,6 +121,7 @@ module('Integration | Component | login-form', function (hooks) {
     const password = 'Bar';
     const sessionMock = class extends Service {
       authenticate() {
+        assert.step('session.authenticate called');
         assert.strictEqual(arguments[1].username, username);
         assert.strictEqual(arguments[1].password, password);
       }
@@ -134,5 +138,6 @@ module('Integration | Component | login-form', function (hooks) {
     await component.form.password.submit();
     assert.notOk(component.form.username.hasError);
     assert.notOk(component.form.password.hasError);
+    assert.verifySteps(['session.authenticate called']);
   });
 });

@@ -60,10 +60,10 @@ module('Integration | Component | instructor-groups/root', function (hooks) {
   });
 
   test('school filter works', async function (assert) {
-    assert.expect(12);
     setupPermissionChecker(this, true);
     this.set('schools', this.schools);
     this.set('setSchoolId', (schoolId) => {
+      assert.step('setSchoolId called');
       assert.strictEqual(schoolId, '3');
       this.set('schoolId', schoolId);
     });
@@ -92,13 +92,14 @@ module('Integration | Component | instructor-groups/root', function (hooks) {
     assert.strictEqual(component.list.items[0].title, 'instructor group 6');
     assert.strictEqual(component.list.items[1].title, 'instructor group 7');
     assert.strictEqual(component.list.items[2].title, 'instructor group 8');
+    assert.verifySteps(['setSchoolId called']);
   });
 
   test('title filter works', async function (assert) {
-    assert.expect(9);
     setupPermissionChecker(this, true);
     this.set('schools', this.schools);
     this.set('setTitleFilter', (titleFilter) => {
+      assert.step('setTitleFilter called');
       assert.ok(titleFilter, '4');
       this.set('titleFilter', titleFilter);
     });
@@ -124,14 +125,15 @@ module('Integration | Component | instructor-groups/root', function (hooks) {
     assert.strictEqual(component.headerTitle, 'Instructor Groups (1)');
     assert.strictEqual(component.list.items.length, 1);
     assert.strictEqual(component.list.items[0].title, 'instructor group 4');
+    assert.verifySteps(['setTitleFilter called']);
   });
 
   test('sort', async function (assert) {
-    assert.expect(7);
     setupPermissionChecker(this, true);
     this.set('schools', this.schools);
     this.set('sortBy', 'title');
     this.set('setSortBy', (sortBy) => {
+      assert.step('setSortBy called');
       this.set(sortBy, 'title:desc');
       this.set('sortBy', sortBy);
     });
@@ -151,5 +153,6 @@ module('Integration | Component | instructor-groups/root', function (hooks) {
     assert.strictEqual(component.list.items[0].title, 'instructor group 5');
     assert.strictEqual(component.list.items[1].title, 'instructor group 4');
     assert.strictEqual(component.list.items[2].title, 'instructor group 3');
+    assert.verifySteps(['setSortBy called']);
   });
 });

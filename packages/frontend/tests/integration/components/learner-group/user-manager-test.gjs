@@ -162,7 +162,6 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
   });
 
   test('add multiple users', async function (assert) {
-    assert.expect(5);
     const learnerGroup = this.server.create('learner-group', { id: 1 });
     const subGroup = this.server.create('learner-group', { parent: learnerGroup });
     const user = this.server.create('user', { enabled: true, learnerGroups: [subGroup] });
@@ -182,6 +181,7 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
     this.set('users', [userModelProxy]);
     this.set('learnerGroup', learnerGroupModel);
     this.set('addMany', ([user]) => {
+      assert.step('addMany called');
       assert.strictEqual(userModel, user);
     });
     await render(
@@ -208,10 +208,10 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
     assert.strictEqual(component.addButtonText, 'Move learner to this group');
     await component.add();
     assert.notOk(component.membersCanBeAdded);
+    assert.verifySteps(['addMany called']);
   });
 
   test('remove multiple users', async function (assert) {
-    assert.expect(5);
     const learnerGroup = this.server.create('learner-group', { id: 1 });
     const user = this.server.create('user', { enabled: true, learnerGroups: [learnerGroup] });
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
@@ -227,6 +227,7 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
     this.set('users', [userModelProxy]);
     this.set('learnerGroup', learnerGroupModel);
     this.set('removeMany', ([user]) => {
+      assert.step('removeMany called');
       assert.strictEqual(userModel, user);
     });
     await render(
@@ -253,11 +254,10 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
     assert.strictEqual(component.removeButtonText, 'Remove learner to this cohort');
     await component.remove();
     assert.notOk(component.membersCanBeRemoved);
+    assert.verifySteps(['removeMany called']);
   });
 
   test('remove single user', async function (assert) {
-    assert.expect(1);
-
     const learnerGroup = this.server.create('learner-group', { id: 1 });
     const user = this.server.create('user', { enabled: true, learnerGroups: [learnerGroup] });
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
@@ -273,6 +273,7 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
     this.set('users', [userModelProxy]);
     this.set('learnerGroup', learnerGroupModel);
     this.set('removeOne', (user) => {
+      assert.step('removeOne called');
       assert.strictEqual(userModel, user);
     });
 
@@ -295,11 +296,10 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
     );
 
     await component.usersInCurrentGroup[0].remove();
+    assert.verifySteps(['removeOne called']);
   });
 
   test('add single user', async function (assert) {
-    assert.expect(1);
-
     const learnerGroup = this.server.create('learner-group', { id: 1 });
     const learnerGroup2 = this.server.create('learner-group', { id: 2 });
     const user = this.server.create('user', { enabled: true, learnerGroups: [learnerGroup2] });
@@ -319,6 +319,7 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
     this.set('users', [userModelProxy]);
     this.set('learnerGroup', learnerGroupModel);
     this.set('addOne', (user) => {
+      assert.step('addOne called');
       assert.strictEqual(userModel, user);
     });
 
@@ -340,6 +341,7 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
       </template>,
     );
     await component.usersNotInCurrentGroup[0].add();
+    assert.verifySteps(['addOne called']);
   });
 
   test('when users are selected single action is disabled', async function (assert) {
@@ -395,7 +397,6 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
   });
 
   test('check all users in group', async function (assert) {
-    assert.expect(7);
     const learnerGroup = this.server.create('learner-group', { id: 1 });
     const user = this.server.create('user', { enabled: true, learnerGroups: [learnerGroup] });
     const user2 = this.server.create('user', { enabled: true, learnerGroups: [learnerGroup] });
@@ -417,6 +418,7 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
 
     this.set('users', [userModelProxy, userModelProxy2]);
     this.set('removeMany', ([userA, userB]) => {
+      assert.step('removeMany called');
       assert.strictEqual(userModel, userA);
       assert.strictEqual(userModel2, userB);
     });
@@ -446,10 +448,10 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
     assert.ok(component.usersInCurrentGroup[0].isSelected);
     assert.strictEqual(component.removeButtonText, 'Remove 2 learners to this cohort');
     await component.remove();
+    assert.verifySteps(['removeMany called']);
   });
 
   test('check all users not in group', async function (assert) {
-    assert.expect(7);
     const learnerGroup = this.server.create('learner-group', { id: 1 });
     const subGroup = this.server.create('learner-group', { parent: learnerGroup });
     const user = this.server.create('user', { enabled: true, learnerGroups: [subGroup] });
@@ -475,6 +477,7 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
 
     this.set('users', [userModelProxy, userModelProxy2]);
     this.set('addMany', ([userA, userB]) => {
+      assert.step('addMany called');
       assert.strictEqual(userModel, userA);
       assert.strictEqual(userModel2, userB);
     });
@@ -503,6 +506,7 @@ module('Integration | Component | learner-group/user-manager', function (hooks) 
     assert.ok(component.usersNotInCurrentGroup[0].isSelected);
     assert.strictEqual(component.addButtonText, 'Move 2 learners to this group');
     await component.add();
+    assert.verifySteps(['addMany called']);
   });
 
   test('checking one puts checkall box into indeterminate state', async function (assert) {

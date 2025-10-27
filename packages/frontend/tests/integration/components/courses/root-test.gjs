@@ -139,7 +139,6 @@ module('Integration | Component | courses/root', function (hooks) {
   });
 
   test('set sort courses by', async function (assert) {
-    assert.expect(1);
     this.set('schools', [this.school1, this.school2]);
     this.set('primarySchool', this.school1);
     this.set('years', [this.year1, this.year2]);
@@ -149,6 +148,7 @@ module('Integration | Component | courses/root', function (hooks) {
     this.set('titleFilter', '');
     this.set('userCoursesOnly', false);
     this.set('setSortCoursesBy', (value) => {
+      assert.step('setSortCoursesBy called');
       assert.strictEqual(value, 'title:desc');
     });
     await render(
@@ -171,6 +171,7 @@ module('Integration | Component | courses/root', function (hooks) {
       </template>,
     );
     await component.list.sortByTitle();
+    assert.verifySteps(['setSortCoursesBy called']);
   });
 
   test('title filter applies', async function (assert) {
@@ -206,7 +207,6 @@ module('Integration | Component | courses/root', function (hooks) {
   });
 
   test('change title filter', async function (assert) {
-    assert.expect(1);
     this.set('schools', [this.school1, this.school2]);
     this.set('primarySchool', this.school1);
     this.set('years', [this.year1, this.year2]);
@@ -216,6 +216,7 @@ module('Integration | Component | courses/root', function (hooks) {
     this.set('titleFilter', 'Beta');
     this.set('userCoursesOnly', false);
     this.set('changeTitleFilter', (value) => {
+      assert.step('changeTitleFilter called');
       assert.strictEqual(value, 'lorem ipsum');
     });
     await render(
@@ -238,10 +239,10 @@ module('Integration | Component | courses/root', function (hooks) {
       </template>,
     );
     await component.filterByTitle('lorem ipsum');
+    assert.verifySteps(['changeTitleFilter called']);
   });
 
   test('change selected year', async function (assert) {
-    assert.expect(1);
     this.set('schools', [this.school1, this.school2]);
     this.set('primarySchool', this.school1);
     this.set('years', [this.year1, this.year2]);
@@ -251,6 +252,7 @@ module('Integration | Component | courses/root', function (hooks) {
     this.set('titleFilter', 'Beta');
     this.set('userCoursesOnly', false);
     this.set('changeSelectedYear', (value) => {
+      assert.step('changeSelectedYear called');
       assert.strictEqual(value, '2022');
     });
     await render(
@@ -273,10 +275,10 @@ module('Integration | Component | courses/root', function (hooks) {
       </template>,
     );
     await component.filterByYear('2022');
+    assert.verifySteps(['changeSelectedYear called']);
   });
 
   test('change selected school', async function (assert) {
-    assert.expect(1);
     this.set('schools', [this.school1, this.school2]);
     this.set('primarySchool', this.school1);
     this.set('years', [this.year1, this.year2]);
@@ -286,6 +288,7 @@ module('Integration | Component | courses/root', function (hooks) {
     this.set('titleFilter', 'Beta');
     this.set('userCoursesOnly', false);
     this.set('changeSelectedSchool', (value) => {
+      assert.step('changeSelectedSchool called');
       assert.strictEqual(value, this.school2.id);
     });
     await render(
@@ -308,10 +311,10 @@ module('Integration | Component | courses/root', function (hooks) {
       </template>,
     );
     await component.filterBySchool(this.school2.id);
+    assert.verifySteps(['changeSelectedSchool called']);
   });
 
   test('toggle user courses only', async function (assert) {
-    assert.expect(1);
     this.set('schools', [this.school1, this.school2]);
     this.set('primarySchool', this.school1);
     this.set('years', [this.year1, this.year2]);
@@ -321,6 +324,7 @@ module('Integration | Component | courses/root', function (hooks) {
     this.set('titleFilter', 'Beta');
     this.set('userCoursesOnly', false);
     this.set('toggleUserCoursesOnly', (value) => {
+      assert.step('toggleUserCoursesOnly called');
       assert.ok(value);
     });
     await render(
@@ -343,5 +347,6 @@ module('Integration | Component | courses/root', function (hooks) {
       </template>,
     );
     await component.filterByMyCourses();
+    assert.verifySteps(['toggleUserCoursesOnly called']);
   });
 });

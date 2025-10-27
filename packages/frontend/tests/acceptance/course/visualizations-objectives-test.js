@@ -12,7 +12,6 @@ module('Acceptance | course visualizations - objectives', function (hooks) {
   });
 
   test('it renders', async function (assert) {
-    assert.expect(17);
     const school = this.server.create('school');
     const course = this.server.create('course', { year: 2021, school });
     const courseObjectives = this.server.createList('course-objective', 3, {

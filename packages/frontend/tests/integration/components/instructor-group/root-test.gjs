@@ -93,9 +93,9 @@ module('Integration | Component | instructor-group/root', function (hooks) {
   });
 
   test('it renders course associations collapsed, and expand action fires', async function (assert) {
-    assert.expect(4);
     this.set('group', this.instructorGroup);
     this.set('toggle', (value) => {
+      assert.step('toggle called');
       assert.ok(value);
     });
     await render(
@@ -113,12 +113,13 @@ module('Integration | Component | instructor-group/root', function (hooks) {
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
     await component.courseAssociations.header.toggle.click();
+    assert.verifySteps(['toggle called']);
   });
 
   test('it renders course associations expanded, and collapse action fires', async function (assert) {
-    assert.expect(4);
     this.set('group', this.instructorGroup);
     this.set('toggle', (value) => {
+      assert.step('toggle called');
       assert.notOk(value);
     });
     await render(
@@ -136,5 +137,6 @@ module('Integration | Component | instructor-group/root', function (hooks) {
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
     await component.courseAssociations.header.toggle.click();
+    assert.verifySteps(['toggle called']);
   });
 });

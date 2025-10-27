@@ -82,7 +82,6 @@ module('Integration | Component | school vocabulary term manager', function (hoo
   });
 
   test('activate inactive term', async function (assert) {
-    assert.expect(3);
     const vocabulary = this.server.create('vocabulary');
     const term = this.server.create('term', {
       vocabulary,
@@ -115,7 +114,6 @@ module('Integration | Component | school vocabulary term manager', function (hoo
   });
 
   test('inactivate active term', async function (assert) {
-    assert.expect(3);
     const vocabulary = this.server.create('vocabulary');
     const term = this.server.create('term', {
       vocabulary,
@@ -148,8 +146,6 @@ module('Integration | Component | school vocabulary term manager', function (hoo
   });
 
   test('change term title', async function (assert) {
-    assert.expect(2);
-
     const vocabulary = this.server.create('vocabulary');
     const term = this.server.create('term', {
       vocabulary,
@@ -183,8 +179,6 @@ module('Integration | Component | school vocabulary term manager', function (hoo
   });
 
   test('cancel term title changes', async function (assert) {
-    assert.expect(2);
-
     const vocabulary = this.server.create('vocabulary');
     const term = this.server.create('term', {
       vocabulary,
@@ -218,8 +212,6 @@ module('Integration | Component | school vocabulary term manager', function (hoo
   });
 
   test('validation fails if term title is blank', async function (assert) {
-    assert.expect(5);
-
     const vocabulary = this.server.create('vocabulary');
     const term = this.server.create('term', {
       vocabulary,
@@ -256,8 +248,6 @@ module('Integration | Component | school vocabulary term manager', function (hoo
   });
 
   test('validation fails if term title is too long', async function (assert) {
-    assert.expect(5);
-
     const vocabulary = this.server.create('vocabulary');
     const term = this.server.create('term', {
       vocabulary,
@@ -294,7 +284,6 @@ module('Integration | Component | school vocabulary term manager', function (hoo
   });
 
   test('add term', async function (assert) {
-    assert.expect(5);
     const vocabulary = this.server.create('vocabulary');
     const term = this.server.create('term', {
       vocabulary,
@@ -332,7 +321,6 @@ module('Integration | Component | school vocabulary term manager', function (hoo
   });
 
   test("can't add term with empty title", async function (assert) {
-    assert.expect(6);
     const vocabulary = this.server.create('vocabulary');
     const term = this.server.create('term', {
       vocabulary,

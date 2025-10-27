@@ -192,7 +192,6 @@ module('Integration | Component | program-year/course-associations', function (h
   });
 
   test('collapse action fires', async function (assert) {
-    assert.expect(1);
     this.server.create('course', {
       school: this.school,
       year: 2025,
@@ -203,6 +202,7 @@ module('Integration | Component | program-year/course-associations', function (h
       .findRecord('program-year', this.programYear.id);
     this.set('programYear', programYear);
     this.set('setIsExpanded', (value) => {
+      assert.step('setIsExpanded called');
       assert.notOk(value);
     });
     await render(
@@ -216,10 +216,10 @@ module('Integration | Component | program-year/course-associations', function (h
     );
 
     await component.header.toggle.click();
+    assert.verifySteps(['setIsExpanded called']);
   });
 
   test('expand action fires', async function (assert) {
-    assert.expect(1);
     this.server.create('course', {
       school: this.school,
       year: 2025,
@@ -230,6 +230,7 @@ module('Integration | Component | program-year/course-associations', function (h
       .findRecord('program-year', this.programYear.id);
     this.set('programYear', programYear);
     this.set('setIsExpanded', (value) => {
+      assert.step('setIsExpanded called');
       assert.ok(value);
     });
     await render(
@@ -243,5 +244,6 @@ module('Integration | Component | program-year/course-associations', function (h
     );
 
     await component.header.toggle.click();
+    assert.verifySteps(['setIsExpanded called']);
   });
 });

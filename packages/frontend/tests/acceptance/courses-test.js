@@ -17,7 +17,6 @@ module('Acceptance | Courses', function (hooks) {
   });
 
   test('visiting /courses', async function (assert) {
-    assert.expect(1);
     await page.visit();
     await percySnapshot(assert);
     assert.strictEqual(currentURL(), '/courses');
@@ -52,7 +51,6 @@ module('Acceptance | Courses', function (hooks) {
   });
 
   test('filters by title', async function (assert) {
-    assert.expect(35);
     this.server.create('academic-year', { id: 2014 });
     const firstCourse = this.server.create('course', {
       title: 'specialfirstcourse',
@@ -143,7 +141,6 @@ module('Acceptance | Courses', function (hooks) {
   test('filters by year', async function (assert) {
     this.server.create('academic-year', { id: 2013 });
     this.server.create('academic-year', { id: 2014 });
-    assert.expect(5);
     const firstCourse = this.server.create('course', {
       year: 2013,
       schoolId: 1,
@@ -166,7 +163,6 @@ module('Acceptance | Courses', function (hooks) {
   test('initial filter by year', async function (assert) {
     this.server.create('academic-year', { id: 2013 });
     this.server.create('academic-year', { id: 2014 });
-    assert.expect(4);
     const firstCourse = this.server.create('course', {
       year: 2013,
       schoolId: 1,
@@ -186,7 +182,6 @@ module('Acceptance | Courses', function (hooks) {
 
   test('filters by mycourses', async function (assert) {
     this.server.create('academic-year', { id: 2014 });
-    assert.expect(5);
     const firstCourse = this.server.create('course', {
       year: 2014,
       schoolId: 1,
@@ -208,7 +203,6 @@ module('Acceptance | Courses', function (hooks) {
   });
 
   test('year filter options', async function (assert) {
-    assert.expect(14);
     this.server.createList('school', 2);
     this.server.db.users.update(this.user.id, { schoolId: 2 });
 
@@ -235,7 +229,6 @@ module('Acceptance | Courses', function (hooks) {
 
   test('unprivileged users can not delete courses', async function (assert) {
     this.server.create('academic-year', { id: 2014 });
-    assert.expect(2);
     this.server.create('course', {
       year: 2014,
       schoolId: 1,
@@ -261,7 +254,6 @@ module('Acceptance | Courses', function (hooks) {
   test('privileged users can only delete unpublished courses', async function (assert) {
     this.user.update({ administeredSchools: [this.school] });
     this.server.create('academic-year', { id: 2014 });
-    assert.expect(2);
     this.server.create('course', {
       year: 2014,
       schoolId: 1,
@@ -298,7 +290,6 @@ module('Acceptance | Courses', function (hooks) {
   test('new course toggle does not show up for unprivileged users', async function (assert) {
     const year = DateTime.now().year;
     this.server.create('academic-year', { id: year });
-    assert.expect(1);
     await page.visit({ year });
     assert.notOk(page.root.toggleNewCourseFormExists);
   });
@@ -307,7 +298,6 @@ module('Acceptance | Courses', function (hooks) {
     this.user.update({ administeredSchools: [this.school] });
     this.server.create('academic-year', { id: 2012 });
     this.server.create('academic-year', { id: 2013 });
-    assert.expect(2);
 
     const newTitle = 'new course title, woohoo';
 
@@ -324,7 +314,6 @@ module('Acceptance | Courses', function (hooks) {
     this.user.update({ administeredSchools: [this.school] });
     const year = DateTime.now().year;
     this.server.create('academic-year', { id: year });
-    assert.expect(4);
 
     const courseTitle = 'Course 1';
 
@@ -375,7 +364,6 @@ module('Acceptance | Courses', function (hooks) {
 
   test('locked courses', async function (assert) {
     this.server.create('academic-year', { id: 2014 });
-    assert.expect(7);
     this.server.create('course', {
       year: 2014,
       schoolId: 1,
@@ -406,7 +394,6 @@ module('Acceptance | Courses', function (hooks) {
 
   test('no academic years exist', async function (assert) {
     this.user.update({ administeredSchools: [this.school] });
-    assert.expect(7);
 
     await page.visit();
     await page.root.toggleNewCourseForm();
@@ -557,7 +544,6 @@ module('Acceptance | Courses', function (hooks) {
 
   test('privileged users can lock and unlock course', async function (assert) {
     this.user.update({ administeredSchools: [this.school] });
-    assert.expect(5);
     this.server.create('academic-year', { id: 2014 });
     this.server.create('course', {
       year: 2014,
@@ -585,7 +571,6 @@ module('Acceptance | Courses', function (hooks) {
   });
 
   test('non-privileged users cannot lock and unlock course but can see the icon', async function (assert) {
-    assert.expect(5);
     this.server.create('academic-year', { id: 2014 });
     this.server.create('course', {
       year: 2014,
@@ -612,7 +597,6 @@ module('Acceptance | Courses', function (hooks) {
 
   test('title filter escapes regex', async function (assert) {
     this.server.create('academic-year', { id: 2014 });
-    assert.expect(4);
     const firstCourse = this.server.create('course', {
       title: 'yes\\no',
       year: 2014,
@@ -643,7 +627,6 @@ module('Acceptance | Courses', function (hooks) {
       ancestor: course1,
     });
 
-    assert.expect(2);
     await page.visit({ year });
 
     assert.notOk(
@@ -664,6 +647,7 @@ module('Acceptance | Courses', function (hooks) {
     this.server.create('academic-year', { id: year - 1 });
     this.server.create('academic-year', { id: year });
     this.server.get('application/config', function () {
+      assert.step('API called');
       return {
         config: {
           academicYearCrossesCalendarYearBoundaries: true,
@@ -675,6 +659,7 @@ module('Acceptance | Courses', function (hooks) {
     assert.ok(page.root.yearFilters[1].selected);
     assert.strictEqual(page.root.yearFilters[1].value, (year - 1).toString());
     unfreezeDate();
+    assert.verifySteps(['API called']);
   });
 
   test('academic year pre-selects this year with calendar-year-boundary-crossing config turned on', async function (assert) {
@@ -685,6 +670,7 @@ module('Acceptance | Courses', function (hooks) {
     this.server.create('academic-year', { id: year - 1 });
     this.server.create('academic-year', { id: year });
     this.server.get('application/config', function () {
+      assert.step('API called');
       return {
         config: {
           academicYearCrossesCalendarYearBoundaries: true,
@@ -696,6 +682,7 @@ module('Acceptance | Courses', function (hooks) {
     assert.ok(page.root.yearFilters[0].selected);
     assert.strictEqual(page.root.yearFilters[0].value, year.toString());
     unfreezeDate();
+    assert.verifySteps(['API called']);
   });
 
   test('academic year always pre-selects this year with calendar-year-boundary-crossing config turned off', async function (assert) {
@@ -706,6 +693,7 @@ module('Acceptance | Courses', function (hooks) {
     this.server.create('academic-year', { id: year - 1 });
     this.server.create('academic-year', { id: year });
     this.server.get('application/config', function () {
+      assert.step('API called');
       return {
         config: {
           academicYearCrossesCalendarYearBoundaries: false,
@@ -717,6 +705,7 @@ module('Acceptance | Courses', function (hooks) {
     assert.ok(page.root.yearFilters[0].selected);
     assert.strictEqual(page.root.yearFilters[0].value, year.toString());
     unfreezeDate();
+    assert.verifySteps(['API called']);
   });
 
   test('academic STILL always year pre-selects this year with calendar-year-boundary-crossing config turned off', async function (assert) {
@@ -727,6 +716,7 @@ module('Acceptance | Courses', function (hooks) {
     this.server.create('academic-year', { id: year - 1 });
     this.server.create('academic-year', { id: year });
     this.server.get('application/config', function () {
+      assert.step('API called');
       return {
         config: {
           academicYearCrossesCalendarYearBoundaries: false,
@@ -738,6 +728,7 @@ module('Acceptance | Courses', function (hooks) {
     assert.ok(page.root.yearFilters[0].selected);
     assert.strictEqual(page.root.yearFilters[0].value, year.toString());
     unfreezeDate();
+    assert.verifySteps(['API called']);
   });
 
   test('title filter does not lose focus #6417', async function (assert) {
