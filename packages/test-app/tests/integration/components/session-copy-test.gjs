@@ -178,6 +178,8 @@ module('Integration | Component | session copy', function (hooks) {
   });
 
   test('save cannot be clicked when there is no year or course', async function (assert) {
+    this.server.create('academic-year', { id: 2013 });
+    this.server.create('academic-year', { id: 2012 });
     const school = this.server.create('school');
     const course = this.server.create('course', {
       school,
@@ -203,7 +205,10 @@ module('Integration | Component | session copy', function (hooks) {
     this.set('session', sessionModel);
 
     await render(<template><SessionCopy @session={{this.session}} /></template>);
+    await fillIn('.year-select select', 2012);
     assert.dom('[data-test-save]').isDisabled();
+    await fillIn('.year-select select', 2013);
+    assert.dom('[data-test-save]').isNotDisabled();
   });
 
   test('changing the year looks for new matching courses', async function (assert) {

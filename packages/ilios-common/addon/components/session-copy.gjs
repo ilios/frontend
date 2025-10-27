@@ -46,11 +46,23 @@ export default class SessionCopyComponent extends Component {
   }
 
   get years() {
-    const { year: thisYear } = DateTime.now();
+    const { year: thisYear } = this.sessionYear
+      ? DateTime.fromFormat(this.sessionYear.toString(), 'yyyy')
+      : DateTime.now();
+
     return this.yearsData.value
       .map((year) => Number(year.id))
       .filter((year) => year >= thisYear - 1)
       .sort();
+  }
+
+  @cached
+  get sessionYearData() {
+    return new TrackedAsyncData(this.args.session.course);
+  }
+
+  get sessionYear() {
+    return this.sessionYearData.isResolved ? this.sessionYearData.value.year : null;
   }
 
   async loadCourses(session) {
@@ -71,6 +83,8 @@ export default class SessionCopyComponent extends Component {
   get bestSelectedYear() {
     if (this.selectedYear) {
       return this.selectedYear;
+    } else if (this.sessionYear) {
+      return this.sessionYear;
     }
 
     return this.years[0];
