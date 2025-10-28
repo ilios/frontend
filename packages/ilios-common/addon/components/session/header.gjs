@@ -12,6 +12,7 @@ import set from 'ember-set-helper/helpers/set';
 import YupValidationMessage from 'ilios-common/components/yup-validation-message';
 import PublicationMenu from 'ilios-common/components/session/publication-menu';
 import PublicationStatus from 'ilios-common/components/publication-status';
+import focus from 'ilios-common/modifiers/focus';
 
 export default class SessionHeaderComponent extends Component {
   @tracked title;
@@ -48,9 +49,7 @@ export default class SessionHeaderComponent extends Component {
             @value={{this.title}}
             @save={{perform this.changeTitle}}
             @close={{this.resetTitle}}
-            @saveOnEnter={{true}}
-            @closeOnEscape={{true}}
-            as |isSaving|
+            as |keyboard isSaving|
           >
             <input
               aria-label={{t "general.title"}}
@@ -59,6 +58,8 @@ export default class SessionHeaderComponent extends Component {
               value={{this.title}}
               {{on "input" (pick "target.value" (set this "title"))}}
               {{this.validations.attach "title"}}
+              {{keyboard}}
+              {{focus}}
             />
             <YupValidationMessage
               @description={{t "general.title"}}

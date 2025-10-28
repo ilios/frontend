@@ -14,6 +14,7 @@ import set from 'ember-set-helper/helpers/set';
 import YupValidationMessage from 'ilios-common/components/yup-validation-message';
 import { LinkTo } from '@ember/routing';
 import { hash } from '@ember/helper';
+import focus from 'ilios-common/modifiers/focus';
 
 export default class InstructorGroupHeaderComponent extends Component {
   @service store;
@@ -55,9 +56,7 @@ export default class InstructorGroupHeaderComponent extends Component {
               @value={{this.title}}
               @save={{perform this.changeTitle}}
               @close={{this.revertTitleChanges}}
-              @saveOnEnter={{true}}
-              @closeOnEscape={{true}}
-              as |isSaving|
+              as |keyboard isSaving|
             >
               <input
                 aria-label={{t "general.instructorGroupTitle"}}
@@ -66,6 +65,8 @@ export default class InstructorGroupHeaderComponent extends Component {
                 disabled={{isSaving}}
                 {{on "input" (pick "target.value" (set this "title"))}}
                 {{this.validations.attach "title"}}
+                {{keyboard}}
+                {{focus}}
               />
               <YupValidationMessage
                 @description={{t "general.title"}}

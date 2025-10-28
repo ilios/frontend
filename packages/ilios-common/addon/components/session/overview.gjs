@@ -28,6 +28,8 @@ import HtmlEditor from 'ilios-common/components/html-editor';
 import YupValidationMessage from 'ilios-common/components/yup-validation-message';
 import join from 'ilios-common/helpers/join';
 import mapBy from 'ilios-common/helpers/map-by';
+import FadeText from 'ilios-common/components/fade-text';
+import focus from 'ilios-common/modifiers/focus';
 
 export default class SessionOverview extends Component {
   @service currentUser;
@@ -422,7 +424,11 @@ export default class SessionOverview extends Component {
                       @save={{this.changeSessionType}}
                       @close={{this.revertSessionTypeChanges}}
                     >
-                      <select id="session-type-{{templateId}}" {{on "change" this.setSessionType}}>
+                      <select
+                        id="session-type-{{templateId}}"
+                        {{on "change" this.setSessionType}}
+                        {{focus}}
+                      >
                         {{#each this.sortedSessionTypes as |sessionType|}}
                           <option
                             value={{sessionType.id}}
@@ -595,61 +601,73 @@ export default class SessionOverview extends Component {
               <hr />
               <div class="sessiondescription" data-test-description>
                 <label>{{t "general.description"}}:</label>
-                <span>
+                <FadeText @text={{this.description}} as |ft|>
                   {{#if @editable}}
                     <EditableField
                       @value={{this.description}}
-                      @renderHtml={{true}}
                       @isSaveDisabled={{this.validations.errors.description}}
                       @save={{perform this.saveDescription}}
                       @close={{this.revertDescriptionChanges}}
-                      @fadeTextExpanded={{this.descriptionFadeTextExpanded}}
-                      @onExpandAllFadeText={{this.expandAllDescriptionFadeText}}
                       @clickPrompt={{t "general.clickToEdit"}}
                     >
-                      <HtmlEditor
-                        @content={{this.description}}
-                        @update={{this.changeDescription}}
-                      />
-                      <YupValidationMessage
-                        @description={{t "general.description"}}
-                        @validationErrors={{this.validations.errors.description}}
-                      />
+                      <:default>
+                        <HtmlEditor
+                          @content={{this.description}}
+                          @update={{this.changeDescription}}
+                          @autofocus={{true}}
+                        />
+                        <YupValidationMessage
+                          @description={{t "general.description"}}
+                          @validationErrors={{this.validations.errors.description}}
+                        />
+                      </:default>
+                      <:value>
+                        {{ft.text}}
+                      </:value>
+                      <:postValue>
+                        {{ft.controls}}
+                      </:postValue>
                     </EditableField>
                   {{else}}
-                    {{! template-lint-disable no-triple-curlies}}
-                    {{{this.description}}}
+                    {{ft.text preserveLinks=true}}
+                    {{ft.controls}}
                   {{/if}}
-                </span>
+                </FadeText>
               </div>
               <div class="instructional-notes" data-test-instructional-notes>
                 <label>{{t "general.instructionalNotes"}}:</label>
-                <span>
+                <FadeText @text={{this.instructionalNotes}} as |ft|>
                   {{#if @editable}}
                     <EditableField
-                      @value={{@session.instructionalNotes}}
-                      @renderHtml={{true}}
+                      @value={{this.instructionalNotes}}
                       @isSaveDisabled={{this.validations.errors.instructionalNotes}}
                       @save={{perform this.saveInstructionalNotes}}
                       @close={{this.revertInstructionalNotesChanges}}
-                      @fadeTextExpanded={{this.notesFadeTextExpanded}}
-                      @onExpandAllFadeText={{this.expandAllNotesFadeText}}
                       @clickPrompt={{t "general.clickToEdit"}}
                     >
-                      <HtmlEditor
-                        @content={{this.instructionalNotes}}
-                        @update={{this.changeInstructionalNotes}}
-                      />
-                      <YupValidationMessage
-                        @description={{t "general.instructionalNotes"}}
-                        @validationErrors={{this.validations.errors.instructionalNotes}}
-                      />
+                      <:default>
+                        <HtmlEditor
+                          @content={{this.instructionalNotes}}
+                          @update={{this.changeInstructionalNotes}}
+                          @autofocus={{true}}
+                        />
+                        <YupValidationMessage
+                          @description={{t "general.instructionalNotes"}}
+                          @validationErrors={{this.validations.errors.instructionalNotes}}
+                        />
+                      </:default>
+                      <:value>
+                        {{ft.text}}
+                      </:value>
+                      <:postValue>
+                        {{ft.controls}}
+                      </:postValue>
                     </EditableField>
                   {{else}}
-                    {{! template-lint-disable no-triple-curlies}}
-                    {{{this.instructionalNotes}}}
+                    {{ft.text preserveLinks=true}}
+                    {{ft.controls}}
                   {{/if}}
-                </span>
+                </FadeText>
               </div>
               {{#unless this.isIndependentLearning}}
                 <br />

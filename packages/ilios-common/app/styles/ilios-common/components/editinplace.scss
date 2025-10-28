@@ -60,10 +60,4 @@
   .fa-pen-to-square {
     @include m.icon;
   }
-
-  .expand-text-button,
-  .collapse-text-button {
-    @include m.ilios-link-button;
-    display: inline;
-  }
 }

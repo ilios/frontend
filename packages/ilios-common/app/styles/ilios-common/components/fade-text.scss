@@ -9,6 +9,8 @@
       max-height: 200px;
       overflow: hidden;
       position: relative;
+
+      mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
     }
   }
 
@@ -21,16 +23,9 @@
   }
 
   .fade-text-control {
-    bottom: 105px;
-    cursor: pointer;
-    height: 110px;
     padding: 0;
-    position: relative;
-
     button {
       @include m.ilios-link-button;
-      position: relative;
-      top: 110px;
     }
   }
 }

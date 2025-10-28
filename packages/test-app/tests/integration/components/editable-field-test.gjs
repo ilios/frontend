@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
-import { render, waitFor } from '@ember/test-helpers';
+import { render } from '@ember/test-helpers';
 import { setupIntl } from 'ember-intl/test-support';
 import { component } from 'ilios-common/page-objects/components/editable-field';
 import EditableField from 'ilios-common/components/editable-field';
@@ -17,12 +17,6 @@ module('Integration | Component | editable field', function (hooks) {
     await render(<template><EditableField @value="woot!" /></template>);
     assert.strictEqual(component.value, 'woot!');
     assert.notOk(component.hasEditIcon);
-  });
-
-  test('edit icon is present', async function (assert) {
-    await render(<template><EditableField @value="woot!" @showIcon={{true}} /></template>);
-    assert.strictEqual(component.value, 'woot!');
-    assert.ok(component.hasEditIcon);
   });
 
   test('it renders clickPrompt', async function (assert) {
@@ -67,9 +61,13 @@ module('Integration | Component | editable field', function (hooks) {
     });
     await render(
       <template>
-        <EditableField @save={{this.save}} @saveOnEnter={{true}} @value={{this.value}}>
+        <EditableField @save={{this.save}} @value={{this.value}} as |keyboard|>
           <label>
-            <input value={{this.value}} {{on "input" (pick "target.value" (set this "value"))}} />
+            <input
+              value={{this.value}}
+              {{on "input" (pick "target.value" (set this "value"))}}
+              {{keyboard}}
+            />
             {{this.label}}
           </label>
         </EditableField>
@@ -88,9 +86,13 @@ module('Integration | Component | editable field', function (hooks) {
     });
     await render(
       <template>
-        <EditableField @close={{this.revert}} @closeOnEscape={{true}} @value={{this.value}}>
+        <EditableField @close={{this.revert}} @value={{this.value}} as |keyboard|>
           <label>
-            <input value={{this.value}} {{on "input" (pick "target.value" (set this "value"))}} />
+            <input
+              value={{this.value}}
+              {{on "input" (pick "target.value" (set this "value"))}}
+              {{keyboard}}
+            />
             {{this.label}}
           </label>
         </EditableField>
@@ -98,70 +100,6 @@ module('Integration | Component | editable field', function (hooks) {
     );
     await component.editable.edit();
     await component.escape();
-  });
-
-  test('focus when editor opens on input', async function (assert) {
-    this.set('value', 'lorem');
-    this.set('label', 'Foo');
-    await render(
-      <template>
-        <EditableField @value={{this.value}}>
-          <label><input />{{this.label}}</label>
-        </EditableField>
-      </template>,
-    );
-    await component.editable.edit();
-    assert.ok(component.inputHasFocus);
-  });
-
-  test('focus when editor opens on textarea', async function (assert) {
-    this.set('value', 'lorem');
-    this.set('label', 'Foo Bar');
-    await render(
-      <template>
-        <EditableField @value={{this.value}}>
-          <label for="textarea">{{this.label}}</label>
-          <textarea id="textarea"></textarea>
-        </EditableField>
-      </template>,
-    );
-    await component.editable.edit();
-    assert.ok(component.textareaHasFocus);
-  });
-
-  test('expand/collapse overlong html', async function (assert) {
-    const text = `
-      <p>A long list:</p><ol><li>One</li><li>two</li><li>Five!</li><li>Six</li><li>Seven but with extra text to make long</li><li>a</li><li>b</li><li>c</li><li>d</li><li>e</li><li>f</li><li>g</li><li>h</li><li>iii</li><li>Jjjjjj</li><li>k</li><li>lLLLLLLlll</li><li>mmmmmMMMMMmm</li><li>nnnnnOPE</li><li>ohno</li><li>pppppPowerbook</li></ol>
-    `;
-    const fadedSelector = '.faded';
-    this.set('value', text);
-    this.set('fadeTextIsExpanded', false);
-    this.set('expandAllFadeText', (isExpanded) => {
-      this.set('fadeTextIsExpanded', isExpanded);
-    });
-    await render(
-      <template>
-        <EditableField
-          @value={{this.value}}
-          @fadeTextExpanded={{this.fadeTextIsExpanded}}
-          @onExpandAllFadeText={{this.expandAllFadeText}}
-        />
-      </template>,
-    );
-
-    await waitFor(fadedSelector);
-
-    assert.ok(component.fadeText.enabled);
-    assert.ok(component.fadeText.displayText.isFaded);
-
-    await component.fadeText.control.expand.click();
-
-    assert.notOk(component.fadeText.displayText.isFaded);
-
-    await component.fadeText.control.collapse.click();
-    await waitFor(fadedSelector);
-
-    assert.ok(component.fadeText.displayText.isFaded);
   });
 
   test('sends status info', async function (assert) {
@@ -193,5 +131,55 @@ module('Integration | Component | editable field', function (hooks) {
     );
 
     assert.strictEqual(component.editable.title, 'Edit');
+  });
+
+  test('ignores save on enter', async function (assert) {
+    assert.expect(0);
+    this.set('label', 'Foo');
+    this.set('value', 'lorem');
+    this.set('save', () => {
+      assert.ok(false, 'should never be called');
+    });
+    await render(
+      <template>
+        <EditableField @save={{this.save}} @value={{this.value}} as |keyboard|>
+          <label>
+            <input
+              value={{this.value}}
+              {{on "input" (pick "target.value" (set this "value"))}}
+              {{keyboard saveOnEnter=false}}
+            />
+            {{this.label}}
+          </label>
+        </EditableField>
+      </template>,
+    );
+    await component.editable.edit();
+    await component.enter();
+  });
+
+  test('ignored close on escape', async function (assert) {
+    assert.expect(0);
+    this.set('label', 'Foo');
+    this.set('value', 'lorem');
+    this.set('revert', () => {
+      assert.ok(false, 'should never be called');
+    });
+    await render(
+      <template>
+        <EditableField @close={{this.revert}} @value={{this.value}} as |keyboard|>
+          <label>
+            <input
+              value={{this.value}}
+              {{on "input" (pick "target.value" (set this "value"))}}
+              {{keyboard closeOnEscape=false}}
+            />
+            {{this.label}}
+          </label>
+        </EditableField>
+      </template>,
+    );
+    await component.editable.edit();
+    await component.escape();
   });
 });

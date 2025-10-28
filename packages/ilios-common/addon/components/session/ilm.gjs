@@ -16,6 +16,7 @@ import pick from 'ilios-common/helpers/pick';
 import set from 'ember-set-helper/helpers/set';
 import YupValidationMessage from 'ilios-common/components/yup-validation-message';
 import SessionOverviewIlmDuedate from 'ilios-common/components/session-overview-ilm-duedate';
+import focus from 'ilios-common/modifiers/focus';
 
 export default class SessionIlmComponent extends Component {
   @service store;
@@ -118,9 +119,7 @@ export default class SessionIlmComponent extends Component {
               @value={{this.hours}}
               @save={{perform this.changeIlmHours}}
               @close={{this.resetHours}}
-              @saveOnEnter={{true}}
-              @closeOnEscape={{true}}
-              as |isSaving|
+              as |keyboard isSaving|
             >
               <input
                 id="hours-{{this.uniqueId}}"
@@ -129,6 +128,8 @@ export default class SessionIlmComponent extends Component {
                 value={{this.hours}}
                 {{this.validations.attach "hours"}}
                 {{on "input" (pick "target.value" (set this "localHours"))}}
+                {{keyboard}}
+                {{focus}}
               />
               <YupValidationMessage
                 @description={{t "general.hours"}}

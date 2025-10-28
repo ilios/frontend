@@ -15,6 +15,7 @@ import reverse from 'ilios-common/helpers/reverse';
 import YupValidations from 'ilios-common/classes/yup-validations';
 import YupValidationMessage from 'ilios-common/components/yup-validation-message';
 import { string } from 'yup';
+import focus from 'ilios-common/modifiers/focus';
 
 export default class LearnerGroupHeaderComponent extends Component {
   @tracked titleBuffer;
@@ -90,9 +91,7 @@ export default class LearnerGroupHeaderComponent extends Component {
               @value={{if @learnerGroup.title @learnerGroup.title (t "general.clickToEdit")}}
               @save={{perform this.changeTitle}}
               @close={{this.revertTitleChanges}}
-              @saveOnEnter={{true}}
-              @closeOnEscape={{true}}
-              as |isSaving|
+              as |keyboard isSaving|
             >
               <input
                 aria-label={{t "general.learnerGroupTitle"}}
@@ -101,6 +100,8 @@ export default class LearnerGroupHeaderComponent extends Component {
                 disabled={{isSaving}}
                 {{on "input" (pick "target.value" (set this "titleBuffer"))}}
                 {{this.validations.attach "title"}}
+                {{keyboard}}
+                {{focus}}
               />
               <YupValidationMessage
                 @description={{t "general.title"}}

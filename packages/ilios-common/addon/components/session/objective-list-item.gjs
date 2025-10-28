@@ -133,10 +133,6 @@ export default class SessionObjectiveListItemComponent extends Component {
   });
 
   @action
-  expandAllFadeText(isExpanded) {
-    this.fadeTextExpanded = isExpanded;
-  }
-  @action
   revertDescriptionChanges() {
     this.description = this.args.sessionObjective.title;
     this.validations.addErrorDisplayFor('descriptionWithoutMarkup');
@@ -194,34 +190,42 @@ export default class SessionObjectiveListItemComponent extends Component {
       data-test-session-objective-list-item
     >
       <div class="description grid-item" data-test-description>
-        {{#if (and @editable (not this.isManaging) (not this.showRemoveConfirmation))}}
-          <EditableField
-            @value={{this.description}}
-            @renderHtml={{true}}
-            @save={{perform this.saveDescriptionChanges}}
-            @close={{this.revertDescriptionChanges}}
-            @fadeTextExpanded={{this.fadeTextExpanded}}
-            @onExpandAllFadeText={{this.expandAllFadeText}}
-            @showTitle={{true}}
-          >
-            <HtmlEditor
-              @content={{this.description}}
-              @update={{this.changeDescription}}
-              @autofocus={{true}}
-            />
-            <YupValidationMessage
-              @description={{t "general.description"}}
-              @validationErrors={{this.validations.errors.descriptionWithoutMarkup}}
-              data-test-description-validation-error-message
-            />
-          </EditableField>
-        {{else}}
-          <FadeText
-            @text={{@sessionObjective.title}}
-            @expanded={{this.fadeTextExpanded}}
-            @onExpandAll={{this.expandAllFadeText}}
-          />
-        {{/if}}
+        <FadeText
+          @forceExpanded={{this.fadeTextExpanded}}
+          @setExpanded={{set this "fadeTextExpanded"}}
+          @text={{this.description}}
+          as |ft|
+        >
+          {{#if (and @editable (not this.isManaging) (not this.showRemoveConfirmation))}}
+            <EditableField
+              @value={{this.description}}
+              @save={{perform this.saveDescriptionChanges}}
+              @close={{this.revertDescriptionChanges}}
+            >
+              <:default>
+                <HtmlEditor
+                  @content={{this.description}}
+                  @update={{this.changeDescription}}
+                  @autofocus={{true}}
+                />
+                <YupValidationMessage
+                  @description={{t "general.description"}}
+                  @validationErrors={{this.validations.errors.descriptionWithoutMarkup}}
+                  data-test-description-validation-error-message
+                />
+              </:default>
+              <:value>
+                {{ft.text}}
+              </:value>
+              <:postValue>
+                {{ft.controls}}
+              </:postValue>
+            </EditableField>
+          {{else}}
+            {{ft.text preserveLinks=true}}
+            {{ft.controls}}
+          {{/if}}
+        </FadeText>
       </div>
       <ObjectiveListItemParents
         @parents={{this.parents}}
@@ -232,7 +236,7 @@ export default class SessionObjectiveListItemComponent extends Component {
         @isSaving={{this.saveParents.isRunning}}
         @cancel={{this.cancel}}
         @fadeTextExpanded={{this.fadeTextExpanded}}
-        @onExpandAllFadeText={{this.expandAllFadeText}}
+        @setFadeTextExpanded={{set this "fadeTextExpanded"}}
       />
 
       <ObjectiveListItemTerms

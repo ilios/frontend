@@ -30,6 +30,7 @@ import and from 'ember-truth-helpers/helpers/and';
 import not from 'ember-truth-helpers/helpers/not';
 import SequenceBlockSessionManager from 'frontend/components/curriculum-inventory/sequence-block-session-manager';
 import SequenceBlockSessionList from 'frontend/components/curriculum-inventory/sequence-block-session-list';
+import focus from 'ilios-common/modifiers/focus';
 
 export default class CurriculumInventorySequenceBlockOverviewComponent extends Component {
   @service intl;
@@ -672,7 +673,7 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
                     @close={{this.revertCourseChanges}}
                     @clickPrompt={{t "general.selectCourse"}}
                   >
-                    <select id="course-{{templateId}}" {{on "change" this.updateCourse}}>
+                    <select id="course-{{templateId}}" {{on "change" this.updateCourse}} {{focus}}>
                       <option value selected={{isEmpty this.course}}>{{t
                           "general.selectCourse"
                         }}</option>
@@ -745,14 +746,15 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
                   }}
                   @save={{perform this.saveDescription}}
                   @close={{this.revertDescriptionChanges}}
-                  @closeOnEscape={{true}}
-                  as |isSaving|
+                  as |keyboard isSaving|
                 >
                   <textarea
                     id="description-{{templateId}}"
                     value={{this.description}}
                     oninput={{this.changeDescription}}
                     disabled={{isSaving}}
+                    {{keyboard saveOnEnter=false}}
+                    {{focus}}
                   >
                     {{this.description}}
                   </textarea>
@@ -772,6 +774,7 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
                   <select
                     id="required-{{templateId}}"
                     {{on "change" (pick "target.value" this.setRequired)}}
+                    {{focus}}
                   >
                     <option value="1" selected={{eq this.required "1"}}>{{t
                         "general.required"
@@ -987,6 +990,7 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
                   <select
                     id="child-sequence-order-{{templateId}}"
                     {{on "change" (pick "target.value" (set this "childSequenceOrder"))}}
+                    {{focus}}
                   >
                     <option value="1" selected={{eq this.childSequenceOrder "1"}}>{{t
                         "general.ordered"
@@ -1016,6 +1020,7 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
                       <select
                         id="order-in-sequence-{{templateId}}"
                         {{on "change" this.updateOrderInSequence}}
+                        {{focus}}
                       >
                         {{#each this.orderInSequenceOptions as |val|}}
                           <option
@@ -1047,6 +1052,7 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
                     id="starting-academic-level-{{templateId}}"
                     {{on "change" this.setStartLevel}}
                     {{this.validations.attach "startLevel"}}
+                    {{focus}}
                   >
                     {{#each (sortBy "level" this.academicLevels) as |obj|}}
                       <option
@@ -1077,6 +1083,7 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
                     id="ending-academic-level-{{templateId}}"
                     {{on "change" this.setEndLevel}}
                     {{this.validations.attach "endLevel"}}
+                    {{focus}}
                   >
                     {{#each (sortBy "level" this.academicLevels) as |obj|}}
                       <option

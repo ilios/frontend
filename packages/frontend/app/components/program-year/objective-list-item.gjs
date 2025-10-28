@@ -26,6 +26,7 @@ import YupValidations from 'ilios-common/classes/yup-validations';
 import YupValidationMessage from 'ilios-common/components/yup-validation-message';
 import { string } from 'yup';
 import striptags from 'striptags';
+import FadeText from 'ilios-common/components/fade-text';
 
 export default class ProgramYearObjectiveListItemComponent extends Component {
   @service store;
@@ -182,10 +183,6 @@ export default class ProgramYearObjectiveListItemComponent extends Component {
   });
 
   @action
-  expandAllFadeText(isExpanded) {
-    this.fadeTextExpanded = isExpanded;
-  }
-  @action
   revertDescriptionChanges() {
     this.description = this.args.programYearObjective.title;
     this.validations.removeErrorDisplayFor('descriptionWithoutMarkup');
@@ -252,30 +249,42 @@ export default class ProgramYearObjectiveListItemComponent extends Component {
         {{/if}}
       </button>
       <div class="description grid-item" data-test-description>
-        {{#if (and @editable (not this.isManaging) (not this.showRemoveConfirmation))}}
-          <EditableField
-            @value={{this.description}}
-            @renderHtml={{true}}
-            @save={{perform this.saveDescriptionChanges}}
-            @close={{this.revertDescriptionChanges}}
-            @fadeTextExpanded={{this.fadeTextExpanded}}
-            @onExpandAllFadeText={{this.expandAllFadeText}}
-          >
-            <HtmlEditor
-              @content={{this.description}}
-              @update={{this.changeDescription}}
-              @autofocus={{true}}
-            />
-            <YupValidationMessage
-              @description={{t "general.description"}}
-              @validationErrors={{this.validations.errors.descriptionWithoutMarkup}}
-              data-test-description-validation-error-message
-            />
-          </EditableField>
-        {{else}}
-          {{! template-lint-disable no-triple-curlies }}
-          {{{@programYearObjective.title}}}
-        {{/if}}
+        <FadeText
+          @forceExpanded={{this.fadeTextExpanded}}
+          @setExpanded={{set this "fadeTextExpanded"}}
+          @text={{this.description}}
+          as |ft|
+        >
+          {{#if (and @editable (not this.isManaging) (not this.showRemoveConfirmation))}}
+            <EditableField
+              @value={{this.description}}
+              @save={{perform this.saveDescriptionChanges}}
+              @close={{this.revertDescriptionChanges}}
+            >
+              <:default>
+                <HtmlEditor
+                  @content={{this.description}}
+                  @update={{this.changeDescription}}
+                  @autofocus={{true}}
+                />
+                <YupValidationMessage
+                  @description={{t "general.description"}}
+                  @validationErrors={{this.validations.errors.descriptionWithoutMarkup}}
+                  data-test-description-validation-error-message
+                />
+              </:default>
+              <:value>
+                {{ft.text}}
+              </:value>
+              <:postValue>
+                {{ft.controls}}
+              </:postValue>
+            </EditableField>
+          {{else}}
+            {{ft.text preserveLinks=true}}
+            {{ft.controls}}
+          {{/if}}
+        </FadeText>
       </div>
       <ObjectiveListItemCompetency
         @objective={{@programYearObjective}}

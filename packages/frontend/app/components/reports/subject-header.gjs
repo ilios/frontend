@@ -19,6 +19,7 @@ import SubjectCopy from 'frontend/components/reports/subject-copy';
 import SubjectDownload from 'frontend/components/reports/subject-download';
 import SubjectYearFilter from 'frontend/components/reports/subject-year-filter';
 import SubjectDescription from 'frontend/components/reports/subject-description';
+import focus from 'ilios-common/modifiers/focus';
 
 export default class ReportsSubjectHeader extends Component {
   @service router;
@@ -79,10 +80,7 @@ export default class ReportsSubjectHeader extends Component {
             @value={{this.reportTitle}}
             @save={{perform this.changeTitle}}
             @close={{this.revertTitleChanges}}
-            @saveOnEnter={{true}}
-            @showIcon={{false}}
-            @closeOnEscape={{true}}
-            as |isSaving|
+            as |keyboard isSaving|
           >
             <input
               aria-label={{t "general.reportTitle"}}
@@ -92,6 +90,8 @@ export default class ReportsSubjectHeader extends Component {
               disabled={{isSaving}}
               {{on "input" (pick "target.value" (set this "title"))}}
               {{this.validations.attach "title"}}
+              {{keyboard}}
+              {{focus}}
             />
             <YupValidationMessage
               @description={{t "general.title"}}
