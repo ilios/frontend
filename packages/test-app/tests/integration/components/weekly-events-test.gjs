@@ -42,9 +42,9 @@ module('Integration | Component | weekly events', function (hooks) {
   });
 
   test('top navigation - go to next year', async function (assert) {
-    assert.expect(5);
     this.set('year', 2017);
     this.set('setYear', (newYear) => {
+      assert.step('setYear called');
       assert.strictEqual(newYear, 2018, 'we moved forward');
       this.set('year', newYear);
     });
@@ -63,12 +63,13 @@ module('Integration | Component | weekly events', function (hooks) {
     await component.topNavigation.nextYear.visit();
     assert.strictEqual(component.topNavigation.title, '2018');
     assert.strictEqual(component.bottomNavigation.title, '2018');
+    assert.verifySteps(['setYear called']);
   });
 
   test('bottom navigation - go to next year', async function (assert) {
-    assert.expect(5);
     this.set('year', 2017);
     this.set('setYear', (newYear) => {
+      assert.step('setYear called');
       assert.strictEqual(newYear, 2018, 'we moved forward');
       this.set('year', newYear);
     });
@@ -86,13 +87,14 @@ module('Integration | Component | weekly events', function (hooks) {
     assert.strictEqual(component.bottomNavigation.title, '2017');
     await component.bottomNavigation.nextYear.visit();
     assert.strictEqual(component.topNavigation.title, '2018');
+    assert.verifySteps(['setYear called']);
     assert.strictEqual(component.bottomNavigation.title, '2018');
   });
 
   test('top navigation - go to previous year', async function (assert) {
-    assert.expect(5);
     this.set('year', 2017);
     this.set('setYear', (newYear) => {
+      assert.step('setYear called');
       assert.strictEqual(newYear, 2016, 'we moved backwards');
       this.set('year', newYear);
     });
@@ -111,12 +113,13 @@ module('Integration | Component | weekly events', function (hooks) {
     await component.topNavigation.previousYear.visit();
     assert.strictEqual(component.topNavigation.title, '2016');
     assert.strictEqual(component.bottomNavigation.title, '2016');
+    assert.verifySteps(['setYear called']);
   });
 
   test('bottom navigation - go to previous year', async function (assert) {
-    assert.expect(5);
     this.set('year', 2017);
     this.set('setYear', (newYear) => {
+      assert.step('setYear called');
       assert.strictEqual(newYear, 2016, 'we moved backwards');
       this.set('year', newYear);
     });
@@ -135,6 +138,7 @@ module('Integration | Component | weekly events', function (hooks) {
     await component.bottomNavigation.previousYear.visit();
     assert.strictEqual(component.topNavigation.title, '2016');
     assert.strictEqual(component.bottomNavigation.title, '2016');
+    assert.verifySteps(['setYear called']);
   });
 
   test('it renders 2024 ilios/ilios#5908', async function (assert) {
@@ -172,7 +176,6 @@ module('Integration | Component | weekly events', function (hooks) {
   });
 
   test('it renders 2026 ilios/ilios#5908', async function (assert) {
-    assert.expect(4);
     await render(
       <template>
         <WeeklyEvents

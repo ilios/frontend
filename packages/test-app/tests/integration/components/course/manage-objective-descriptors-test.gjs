@@ -43,15 +43,14 @@ module('Integration | Component | course/manage-objective-descriptors', function
   });
 
   test('add works', async function (assert) {
-    assert.expect(16);
     const descriptors = this.server.createList('mesh-descriptor', 2);
     const descriptorModel = await this.owner
       .lookup('service:store')
       .findRecord('mesh-descriptor', descriptors[0].id);
     this.set('selected', [descriptorModel]);
     this.set('add', (descriptor) => {
+      assert.step('add called');
       this.set('selected', [descriptorModel, descriptor]);
-      assert.ok(true);
     });
     await render(
       <template>
@@ -83,19 +82,19 @@ module('Integration | Component | course/manage-objective-descriptors', function
     assert.ok(m.searchResults[0].isDisabled);
     assert.strictEqual(m.searchResults[1].title, `descriptor 1`);
     assert.ok(m.searchResults[1].isDisabled);
+    assert.verifySteps(['add called']);
   });
 
   test('remove works', async function (assert) {
-    assert.expect(15);
     const descriptors = this.server.createList('mesh-descriptor', 2);
     const descriptorModel = await this.owner
       .lookup('service:store')
       .findRecord('mesh-descriptor', descriptors[0].id);
     this.set('selected', [descriptorModel]);
     this.set('remove', (descriptor) => {
+      assert.step('remove called');
       assert.strictEqual(descriptor.id, descriptorModel.id);
       this.set('selected', []);
-      assert.ok(true);
     });
     await render(
       <template>
@@ -126,5 +125,6 @@ module('Integration | Component | course/manage-objective-descriptors', function
     assert.ok(m.searchResults[0].isEnabled);
     assert.strictEqual(m.searchResults[1].title, `descriptor 1`);
     assert.ok(m.searchResults[1].isEnabled);
+    assert.verifySteps(['remove called']);
   });
 });

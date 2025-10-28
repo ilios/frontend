@@ -157,8 +157,8 @@ module('Integration | Component | learnergroup-selection-manager', function (hoo
   });
 
   test('remove group from selected list', async function (assert) {
-    assert.expect(1);
     this.set('remove', (learnerGroup) => {
+      assert.step('remove called');
       assert.deepEqual(this.secondLevelLearnerGroup1, learnerGroup);
     });
     this.set('learnerGroups', [this.secondLevelLearnerGroup1]);
@@ -174,11 +174,12 @@ module('Integration | Component | learnergroup-selection-manager', function (hoo
       </template>,
     );
     await component.selectedLearnerGroups.detailLearnergroupsList.trees[0].items[0].remove();
+    assert.verifySteps(['remove called']);
   });
 
   test('remove group in picker', async function (assert) {
-    assert.expect(2);
     this.set('remove', (learnerGroup) => {
+      assert.step('remove called');
       assert.deepEqual(this.secondLevelLearnerGroup1, learnerGroup);
     });
     this.set('learnerGroups', [this.secondLevelLearnerGroup1]);
@@ -195,11 +196,12 @@ module('Integration | Component | learnergroup-selection-manager', function (hoo
     );
     assert.ok(component.availableGroups.cohorts[0].trees[0].subgroups[0].isChecked);
     await component.availableGroups.cohorts[0].trees[0].subgroups[0].toggle();
+    assert.verifySteps(['remove called']);
   });
 
   test('add available group', async function (assert) {
-    assert.expect(2);
     this.set('add', (learnerGroup) => {
+      assert.step('add called');
       assert.deepEqual(this.secondLevelLearnerGroup1, learnerGroup);
     });
     this.set('learnerGroups', []);
@@ -216,5 +218,6 @@ module('Integration | Component | learnergroup-selection-manager', function (hoo
     );
     assert.notOk(component.availableGroups.cohorts[0].trees[0].subgroups[0].isChecked);
     await component.availableGroups.cohorts[0].trees[0].subgroups[0].toggle();
+    assert.verifySteps(['add called']);
   });
 });

@@ -33,7 +33,6 @@ module('Integration | Component | session-offerings-time-block-offerings', funct
   });
 
   test('removeOffering triggers', async function (assert) {
-    assert.expect(2);
     const store = this.owner.lookup('service:store');
     const key = '2023005134520240120430'; // value doesn't really matter, although it needs to be parseable
     const offeringTimeBlock = new OfferingTimeBlock(key);
@@ -43,6 +42,7 @@ module('Integration | Component | session-offerings-time-block-offerings', funct
     offeringTimeBlock.addOffering(offering);
     this.set('offeringTimeBlock', offeringTimeBlock);
     this.set('removeOffering', (o) => {
+      assert.step('removeOffering called');
       assert.strictEqual(offering, o);
     });
     await render(
@@ -57,5 +57,6 @@ module('Integration | Component | session-offerings-time-block-offerings', funct
     assert.strictEqual(component.offerings.length, 1);
     await component.offerings[0].remove();
     await component.offerings[0].confirmRemoval();
+    assert.verifySteps(['removeOffering called']);
   });
 });

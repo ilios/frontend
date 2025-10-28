@@ -26,19 +26,19 @@ module('Integration | Component | copy-button', function (hooks) {
       assert.expect(0);
       return;
     }
-    assert.expect(2);
     const getClipboardText = () => {
       return 'lorem ipsum';
     };
     // temporarily overwrite the writeText method.
     const writeText = navigator.clipboard.writeText;
     navigator.clipboard.writeText = (value) => {
+      assert.step('writeText called');
       assert.strictEqual(getClipboardText(), value);
     };
     this.set('text', getClipboardText);
     this.set('content', 'copy this!');
     this.set('success', () => {
-      assert.ok(true);
+      assert.step('success called');
     });
     await render(
       <template>
@@ -50,5 +50,6 @@ module('Integration | Component | copy-button', function (hooks) {
     await component.click();
     // undo writeText overwrite.
     navigator.clipboard.writeText = writeText;
+    assert.verifySteps(['writeText called', 'success called']);
   });
 });

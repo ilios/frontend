@@ -39,10 +39,9 @@ module('Integration | Component | dashboard/filter-checkbox', function (hooks) {
   });
 
   test('clicking label when checked fires remove', async function (assert) {
-    assert.expect(1);
     this.set('content', 'label text');
     this.set('remove', () => {
-      assert.ok(true);
+      assert.step('remove called');
     });
     await render(
       <template>
@@ -53,13 +52,13 @@ module('Integration | Component | dashboard/filter-checkbox', function (hooks) {
     );
 
     await component.click();
+    assert.verifySteps(['remove called']);
   });
 
   test('clicking label when not checked fires add', async function (assert) {
-    assert.expect(1);
     this.set('content', 'label text');
     this.set('add', () => {
-      assert.ok(true);
+      assert.step('add called');
     });
     await render(
       <template>
@@ -70,5 +69,6 @@ module('Integration | Component | dashboard/filter-checkbox', function (hooks) {
     );
 
     await component.click();
+    assert.verifySteps(['add called']);
   });
 });

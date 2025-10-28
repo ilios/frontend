@@ -28,11 +28,10 @@ module('Integration | Component | selectable terms list item', function (hooks) 
   });
 
   test('selected term', async function (assert) {
-    assert.expect(3);
-
     this.set('selectedTerms', [this.termModel]);
     this.set('term', this.termModel);
     this.set('remove', (term) => {
+      assert.step('remove called');
       assert.strictEqual(term, this.termModel);
       this.set(
         'selectedTerms',
@@ -53,14 +52,14 @@ module('Integration | Component | selectable terms list item', function (hooks) 
     assert.ok(component.isSelected);
     await component.click();
     assert.notOk(component.isSelected);
+    assert.verifySteps(['remove called']);
   });
 
   test('unselected term', async function (assert) {
-    assert.expect(3);
-
     this.set('selectedTerms', []);
     this.set('term', this.termModel);
     this.set('add', (term) => {
+      assert.step('add called');
       assert.strictEqual(term, this.termModel);
       this.set('selectedTerms', [...this.selectedTerms, term]);
     });
@@ -78,5 +77,6 @@ module('Integration | Component | selectable terms list item', function (hooks) 
     assert.notOk(component.isSelected);
     await component.click();
     assert.ok(component.isSelected);
+    assert.verifySteps(['add called']);
   });
 });

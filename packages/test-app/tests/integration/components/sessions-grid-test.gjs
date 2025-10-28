@@ -76,13 +76,13 @@ module('Integration | Component | sessions-grid', function (hooks) {
   });
 
   test('clicking expand fires action', async function (assert) {
-    assert.expect(1);
     const session = this.server.create('session');
     this.server.create('offering', { session });
     const sessionModel = await this.owner.lookup('service:store').findRecord('session', session.id);
     this.set('sessions', [sessionModel]);
     this.set('sortBy', 'title');
     this.set('expandSession', (s) => {
+      assert.step('expandSession called');
       assert.strictEqual(s, sessionModel);
     });
     await render(
@@ -96,16 +96,16 @@ module('Integration | Component | sessions-grid', function (hooks) {
       </template>,
     );
     await click('[data-test-expand-collapse-control] svg');
+    assert.verifySteps(['expandSession called']);
   });
 
   test('clicking expand does not fire action when there are no offerings', async function (assert) {
-    assert.expect(0);
     const session = this.server.create('session');
     const sessionModel = await this.owner.lookup('service:store').findRecord('session', session.id);
     this.set('sessions', [sessionModel]);
     this.set('sortBy', 'title');
     this.set('expandSession', () => {
-      assert.ok(false);
+      assert.step('expandSession called');
     });
     await render(
       <template>
@@ -118,6 +118,7 @@ module('Integration | Component | sessions-grid', function (hooks) {
       </template>,
     );
     await click('[data-test-expand-collapse-control] svg');
+    assert.verifySteps([]);
   });
 
   // @see issue ilios/common#1820 [ST 2020/12/10]

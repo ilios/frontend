@@ -53,11 +53,10 @@ module('Integration | Component | editable field', function (hooks) {
   });
 
   test('save on enter', async function (assert) {
-    assert.expect(1);
     this.set('label', 'Foo');
     this.set('value', 'lorem');
     this.set('save', () => {
-      assert.ok(true, 'save action fired.');
+      assert.step('save called');
     });
     await render(
       <template>
@@ -75,14 +74,14 @@ module('Integration | Component | editable field', function (hooks) {
     );
     await component.editable.edit();
     await component.enter();
+    assert.verifySteps(['save called']);
   });
 
   test('close on escape', async function (assert) {
-    assert.expect(1);
     this.set('label', 'Foo');
     this.set('value', 'lorem');
     this.set('revert', () => {
-      assert.ok(true, 'revert action fired.');
+      assert.step('revert called');
     });
     await render(
       <template>
@@ -100,6 +99,7 @@ module('Integration | Component | editable field', function (hooks) {
     );
     await component.editable.edit();
     await component.escape();
+    assert.verifySteps(['revert called']);
   });
 
   test('sends status info', async function (assert) {

@@ -52,7 +52,6 @@ module('Integration | Component | detail terms list item', function (hooks) {
   });
 
   test('remove', async function (assert) {
-    assert.expect(2);
     const term = this.server.create('term', {
       vocabulary: this.vocabulary,
       title: 'Foo',
@@ -60,6 +59,7 @@ module('Integration | Component | detail terms list item', function (hooks) {
     const termModel = await this.owner.lookup('service:store').findRecord('term', term.id);
     this.set('term', termModel);
     this.set('remove', (val) => {
+      assert.step('remove called');
       assert.strictEqual(termModel, val);
     });
     await render(
@@ -69,6 +69,7 @@ module('Integration | Component | detail terms list item', function (hooks) {
     );
     assert.dom('.fa-xmark').exists({ count: 1 });
     await click('.fa-xmark');
+    assert.verifySteps(['remove called']);
   });
 
   test('inactive', async function (assert) {

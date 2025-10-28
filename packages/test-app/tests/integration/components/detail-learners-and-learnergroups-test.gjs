@@ -416,11 +416,11 @@ module('Integration | Component | detail-learners-and-learner-groups', function 
   });
 
   test('add learner', async function (assert) {
-    assert.expect(4);
     this.set('session', this.session);
     this.set('cohorts', [this.cohort1, this.cohort2]);
 
     this.server.get('api/users', (schema, { queryParams }) => {
+      assert.step('API called');
       assert.strictEqual(queryParams['q'], 'does not matter');
       return schema.users.all();
     });
@@ -439,6 +439,7 @@ module('Integration | Component | detail-learners-and-learner-groups', function 
     assert.strictEqual(component.learnerSelectionManager.search.results.items.length, 4);
     await component.learnerSelectionManager.search.results.items[3].click();
     assert.strictEqual(component.learnerSelectionManager.selectedLearners.learners.length, 4);
+    assert.verifySteps(['API called']);
   });
 
   test('cancel', async function (assert) {

@@ -68,10 +68,9 @@ module('Integration | Component | collapsed competencies', function (hooks) {
   });
 
   test('clicking the header expands the list', async function (assert) {
-    assert.expect(2);
     this.set('subject', this.course);
     this.set('click', () => {
-      assert.ok(true, 'Action was fired');
+      assert.step('click called');
     });
     await render(
       <template>
@@ -80,6 +79,7 @@ module('Integration | Component | collapsed competencies', function (hooks) {
     );
     assert.strictEqual(component.title, 'Competencies (3)');
     await component.expand();
+    assert.verifySteps(['click called']);
   });
 
   test('it renders for program year', async function (assert) {

@@ -112,11 +112,11 @@ module('Integration | Modifier | date-picker', function (hooks) {
   });
 
   test('onChange callback fires', async function (assert) {
-    assert.expect(1);
     const value = new Date('2014-03-02');
     const newValue = new Date('2022-06-23');
     this.set('value', value);
     this.set('onChange', (date) => {
+      assert.step('onChange called');
       assert.strictEqual(newValue.getTime(), date.getTime());
     });
     await render(
@@ -126,16 +126,17 @@ module('Integration | Modifier | date-picker', function (hooks) {
     );
     const flatpickr = find('[data-test-picker-element]')._flatpickr;
     flatpickr.setDate(newValue, true);
+    assert.verifySteps(['onChange called']);
   });
 
   test('weekday restrictions - clicking on invalid date fails', async function (assert) {
-    assert.expect(1);
     const value = new Date('2014-03-02'); // a Sunday
     const allowedWeekdays = [DateTime.fromJSDate(value).weekday];
     const newValue = new Date('2022-06-23'); // a Thursday
     this.set('value', value);
     this.set('allowedWeekdays', allowedWeekdays);
     this.set('onChange', (date) => {
+      assert.step('onChange called');
       assert.notOk(date);
     });
     await render(
@@ -152,16 +153,17 @@ module('Integration | Modifier | date-picker', function (hooks) {
     );
     const flatpickr = find('[data-test-picker-element]')._flatpickr;
     flatpickr.setDate(newValue, true);
+    assert.verifySteps(['onChange called']);
   });
 
   test('weekday restrictions - clicking on valid date succeeds', async function (assert) {
-    assert.expect(1);
     const value = new Date('2014-03-02'); // a Sunday
     const allowedWeekdays = [DateTime.fromJSDate(value).weekday];
     const newValue = new Date('2022-06-26'); // another Sunday
     this.set('value', value);
     this.set('allowedWeekdays', allowedWeekdays);
     this.set('onChange', (date) => {
+      assert.step('onChange called');
       assert.strictEqual(date.getTime(), newValue.getTime());
     });
     await render(
@@ -178,5 +180,6 @@ module('Integration | Modifier | date-picker', function (hooks) {
     );
     const flatpickr = find('[data-test-picker-element]')._flatpickr;
     flatpickr.setDate(newValue, true);
+    assert.verifySteps(['onChange called']);
   });
 });

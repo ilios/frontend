@@ -9,7 +9,6 @@ module('Integration | Service | school events', function (hooks) {
   setupMirage(hooks);
 
   test('getEvents', async function (assert) {
-    assert.expect(21);
     const event1 = {
       offering: 1,
       startDate: '2011-04-21',
@@ -28,6 +27,7 @@ module('Integration | Service | school events', function (hooks) {
     const to = from.set({ hour: 24 });
 
     this.server.get(`/api/schoolevents/:id`, (scheme, { params, queryParams }) => {
+      assert.step('API called');
       assert.ok('id' in params);
       assert.strictEqual(Number(params.id), 7);
       assert.ok('from' in queryParams);
@@ -56,10 +56,10 @@ module('Integration | Service | school events', function (hooks) {
     assert.deepEqual(events[1].postrequisites, event1.postrequisites);
     assert.strictEqual(events[1].slug, 'S0720110421O1');
     assert.notOk(events[1].isBlanked);
+    assert.verifySteps(['API called']);
   });
 
   test('getEvents - with configured namespace', async function (assert) {
-    assert.expect(4);
     class IliosConfigMock extends Service {
       apiNameSpace = 'geflarknik';
     }
@@ -69,6 +69,7 @@ module('Integration | Service | school events', function (hooks) {
     const to = from.set({ hour: 24 });
 
     this.server.get(`/geflarknik/schoolevents/:id`, (scheme, { params, queryParams }) => {
+      assert.step('API called');
       assert.strictEqual(Number(params.id), 3);
       assert.strictEqual(Number(queryParams.from), from.toUnixInteger());
       assert.strictEqual(Number(queryParams.to), to.toUnixInteger());
@@ -78,10 +79,10 @@ module('Integration | Service | school events', function (hooks) {
     const schoolId = 3;
     const events = await subject.getEvents(schoolId, from.toUnixInteger(), to.toUnixInteger());
     assert.strictEqual(events.length, 0);
+    assert.verifySteps(['API called']);
   });
 
   test('getEventForSlug - offering', async function (assert) {
-    assert.expect(10);
     const event1 = {
       offering: 1,
       startDate: '2011-04-21',
@@ -97,6 +98,7 @@ module('Integration | Service | school events', function (hooks) {
       postrequisites: [],
     };
     this.server.get(`/api/schoolevents/:id`, (scheme, { params, queryParams }) => {
+      assert.step('API called');
       const from = DateTime.fromObject({ year: 2011, month: 4, day: 21, hour: 0 });
       const to = from.set({ hour: 24 });
       assert.strictEqual(Number(params.id), 7);
@@ -115,10 +117,10 @@ module('Integration | Service | school events', function (hooks) {
     assert.deepEqual(event.postrequisites, event1.postrequisites);
     assert.strictEqual(event.slug, 'S0720110421O1');
     assert.notOk(event.isBlanked);
+    assert.verifySteps(['API called']);
   });
 
   test('getEventForSlug - ILM', async function (assert) {
-    assert.expect(10);
     const event1 = {
       offering: 1,
       startDate: '2011-04-21',
@@ -134,6 +136,7 @@ module('Integration | Service | school events', function (hooks) {
       postrequisites: [],
     };
     this.server.get(`/api/schoolevents/:id`, (scheme, { params, queryParams }) => {
+      assert.step('API called');
       const from = DateTime.fromObject({ year: 2008, month: 9, day: 2, hour: 0 });
       const to = from.set({ hour: 24 });
 
@@ -153,5 +156,6 @@ module('Integration | Service | school events', function (hooks) {
     assert.deepEqual(event.postrequisites, event2.postrequisites);
     assert.strictEqual(event.slug, 'S0720080902I3');
     assert.notOk(event.isBlanked);
+    assert.verifySteps(['API called']);
   });
 });

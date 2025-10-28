@@ -191,8 +191,6 @@ module('Integration | Component | detail learning materials', function (hooks) {
   });
 
   test('click sort button, then cancel', async function (assert) {
-    assert.expect(6);
-
     const learningMaterial = this.server.create('learning-material', {
       owningUser: this.user,
       status: this.status[1],
@@ -224,8 +222,6 @@ module('Integration | Component | detail learning materials', function (hooks) {
   });
 
   test('click sort button, then save', async function (assert) {
-    assert.expect(2);
-
     const learningMaterial = this.server.create('learning-material', {
       owningUser: this.user,
       status: this.status[1],
@@ -241,11 +237,11 @@ module('Integration | Component | detail learning materials', function (hooks) {
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('subject', courseModel);
     this.server.patch('/api/courselearningmaterials/1', (schema) => {
-      assert.ok(true);
+      assert.step('API called for LM 1');
       return schema.courseLearningMaterials.find(1);
     });
     this.server.patch('/api/courselearningmaterials/2', (schema) => {
-      assert.ok(true);
+      assert.step('API called for LM 2');
       return schema.courseLearningMaterials.find(2);
     });
 
@@ -256,5 +252,6 @@ module('Integration | Component | detail learning materials', function (hooks) {
     );
     await component.sort();
     await component.sortManager.save();
+    assert.verifySteps(['API called for LM 2', 'API called for LM 1']);
   });
 });

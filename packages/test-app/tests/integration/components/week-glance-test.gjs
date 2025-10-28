@@ -239,11 +239,11 @@ module('Integration | Component | week-glance', function (hooks) {
   });
 
   test('click to expand', async function (assert) {
-    assert.expect(1);
     setupBlankEvents(this);
 
     this.set('today', testDate.toJSDate());
     this.set('toggle', (value) => {
+      assert.step('toggle called');
       assert.ok(value);
     });
     await render(
@@ -261,14 +261,15 @@ module('Integration | Component | week-glance', function (hooks) {
     const title = '[data-test-week-title]';
     await settled();
     await click(title);
+    assert.verifySteps(['toggle called']);
   });
 
   test('click to collapse', async function (assert) {
-    assert.expect(1);
     setupBlankEvents(this);
 
     this.set('today', testDate.toJSDate());
     this.set('toggle', (value) => {
+      assert.step('toggle called');
       assert.notOk(value);
     });
     await render(
@@ -286,10 +287,10 @@ module('Integration | Component | week-glance', function (hooks) {
     const title = '[data-test-week-title]';
     await settled();
     await click(title);
+    assert.verifySteps(['toggle called']);
   });
 
   test('changing passed properties re-renders', async function (assert) {
-    assert.expect(8);
     const nextYear = testDate.plus({ years: 1 });
     let count = 1;
     const service = this.owner.lookup('service:locale-days');
@@ -301,10 +302,12 @@ module('Integration | Component | week-glance', function (hooks) {
         const toTestDate = DateTime.fromJSDate(service.lastDayOfDateWeek(testDate.toJSDate()));
         switch (count) {
           case 1:
+            assert.step('getEvents called');
             assert.ok(from.hasSame(fromTestDate, 'day'), 'From is at the start of test date week.');
             assert.ok(to.hasSame(toTestDate, 'day'), 'To is at the end of test date week.');
             break;
           case 2:
+            assert.step('getEvents called again');
             assert.ok(from.hasSame(nextYear, 'year'), 'From-date has same year as next year.');
             assert.ok(to.hasSame(nextYear, 'year'), 'To-date has same year as next year.');
             // comparing weeks needs some wiggle room as dates may be shifting across week lines.
@@ -318,7 +321,7 @@ module('Integration | Component | week-glance', function (hooks) {
             );
             break;
           default:
-            assert.notOk(true, 'Called too many times');
+            assert.step('getEvents called too many times');
         }
         count++;
         return [];
@@ -353,7 +356,8 @@ module('Integration | Component | week-glance', function (hooks) {
 
     this.set('year', nextYear.year);
 
-    return settled();
+    await settled();
+    assert.verifySteps(['getEvents called', 'getEvents called again']);
   });
 
   test('title month is properly translated', async function (assert) {

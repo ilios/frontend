@@ -163,8 +163,6 @@ module('Integration | Component | course/materials', function (hooks) {
   });
 
   test('clicking sort fires action', async function (assert) {
-    assert.expect(16);
-
     const course = await setupPage(this);
     let cCount = 0,
       sCount = 0;
@@ -189,11 +187,13 @@ module('Integration | Component | course/materials', function (hooks) {
       'session.firstOfferingDate:desc',
     ];
     this.set('cSortBy', (prop) => {
+      assert.step('cSortBy called');
       assert.strictEqual(prop, cSortList[cCount]);
       this.set('courseSort', prop);
       cCount++;
     });
     this.set('sSortBy', (prop) => {
+      assert.step('sSortBy called');
       assert.strictEqual(prop, sSortList[sCount]);
       this.set('sessionSort', prop);
       sCount++;
@@ -232,6 +232,7 @@ module('Integration | Component | course/materials', function (hooks) {
     await component.sortSessionsBy.sessionTitle();
     await component.sortSessionsBy.firstOffering();
     await component.sortSessionsBy.firstOffering();
+    assert.verifySteps([...Array(6).fill('cSortBy called'), ...Array(10).fill('sSortBy called')]);
   });
 
   test('filter course lms by title', async function (assert) {

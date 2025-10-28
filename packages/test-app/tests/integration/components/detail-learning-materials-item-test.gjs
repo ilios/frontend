@@ -80,9 +80,12 @@ module('Integration | Component | detail-learning-materials-item', function (hoo
   });
 
   test('click to delete and cancel', async function (assert) {
-    assert.expect(2);
     this.set('lm', this.lm);
-    this.set('remove', { perform() {} });
+    this.set('remove', {
+      perform() {
+        assert.step('remove.perform called');
+      },
+    });
     await render(
       <template>
         <DetailLearningMaterialsItem
@@ -97,14 +100,15 @@ module('Integration | Component | detail-learning-materials-item', function (hoo
     await component.actions.remove.click();
     assert.ok(component.confirmRemoval.isVisible);
     await component.confirmRemoval.cancel();
+    assert.verifySteps([]);
   });
 
   test('click to delete and confirm', async function (assert) {
-    assert.expect(3);
     const lm = this.lm;
     this.set('lm', this.lm);
     this.set('remove', {
       perform(deleteLm) {
+        assert.step('remove.perform called');
         assert.strictEqual(lm, deleteLm);
       },
     });
@@ -122,10 +126,10 @@ module('Integration | Component | detail-learning-materials-item', function (hoo
     await component.actions.remove.click();
     assert.ok(component.confirmRemoval.isVisible);
     await component.confirmRemoval.confirm();
+    assert.verifySteps(['remove.perform called']);
   });
 
   test('click to view', async function (assert) {
-    assert.expect(1);
     this.set('setManagedMaterial', (lm) => {
       assert.strictEqual(lm, this.lm);
     });
@@ -143,8 +147,8 @@ module('Integration | Component | detail-learning-materials-item', function (hoo
   });
 
   test('click to edit', async function (assert) {
-    assert.expect(1);
     this.set('setManagedMaterial', (lm) => {
+      assert.step('setManagedMaterial called');
       assert.strictEqual(lm, this.lm);
     });
     this.set('lm', this.lm);
@@ -158,5 +162,6 @@ module('Integration | Component | detail-learning-materials-item', function (hoo
       </template>,
     );
     await component.actions.edit.click();
+    assert.verifySteps(['setManagedMaterial called']);
   });
 });

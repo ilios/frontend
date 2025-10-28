@@ -48,9 +48,9 @@ module('Integration | Component | ilios calendar multiday event', function (hook
   });
 
   test('action fires on click', async function (assert) {
-    assert.expect(2);
     this.ev.offering = 1;
     this.set('selectEvent', (value) => {
+      assert.step('selectEvent called');
       assert.deepEqual(this.ev, value);
     });
     await render(
@@ -64,6 +64,7 @@ module('Integration | Component | ilios calendar multiday event', function (hook
     );
     assert.notOk(component.isDisabled);
     await component.button.click();
+    assert.verifySteps(['selectEvent called']);
   });
 
   test('event is disabled for scheduled events', async function (assert) {

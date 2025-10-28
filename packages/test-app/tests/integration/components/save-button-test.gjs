@@ -40,14 +40,14 @@ module('Integration | Component | save-button', function (hooks) {
   });
 
   test('binds passed action', async function (assert) {
-    assert.expect(1);
     this.set('label', 'Save');
-    this.set('click', () => assert.ok(true));
+    this.set('click', () => assert.step('click called'));
     await render(
       <template>
         <SaveButton data-test-save {{on "click" this.click}}>{{this.label}}</SaveButton>
       </template>,
     );
     await click('[data-test-save]');
+    assert.verifySteps(['click called']);
   });
 });

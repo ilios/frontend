@@ -67,13 +67,14 @@ module('Integration | Component | ilios calendar month', function (hooks) {
   });
 
   test('clicking on a day fires the correct event', async function (assert) {
-    assert.expect(2);
     const date = DateTime.fromISO('2015-09-30T12:00:00');
     this.set('date', date.toJSDate());
     this.set('changeDate', (newDate) => {
+      assert.step('changeDate called');
       assert.strictEqual(newDate, '2015-09-01');
     });
     this.set('changeView', (newView) => {
+      assert.step('changeView called');
       assert.strictEqual(newView, 'day');
     });
     await render(
@@ -88,6 +89,7 @@ module('Integration | Component | ilios calendar month', function (hooks) {
       </template>,
     );
     await component.calendar.days[0].selectDay();
+    assert.verifySteps(['changeDate called', 'changeView called']);
   });
 
   const createUserEventObject = function () {

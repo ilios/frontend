@@ -120,7 +120,6 @@ module('Integration | Component | daily-calendar', function (hooks) {
   });
 
   test('click on event', async function (assert) {
-    assert.expect(1);
     const january9th2019 = DateTime.fromObject({
       year: 2019,
       month: 1,
@@ -137,7 +136,7 @@ module('Integration | Component | daily-calendar', function (hooks) {
     this.set('events', this.server.db.userevents);
     this.set('date', january9th2019.toJSDate());
     this.set('selectEvent', () => {
-      assert.ok(true);
+      assert.step('selectEvent called');
     });
     await render(
       <template>
@@ -150,6 +149,7 @@ module('Integration | Component | daily-calendar', function (hooks) {
     );
 
     await component.events[0].click();
+    assert.verifySteps(['selectEvent called']);
   });
 
   test('changing the locale changes the title', async function (assert) {

@@ -25,10 +25,9 @@ module('Integration | Component | course summary header', function (hooks) {
   });
 
   test('it renders', async function (assert) {
-    assert.expect(9);
-
     class PermissionCheckerStub extends Service {
       async canCreateCourse(inSchool) {
+        assert.step('canCreateCourse called');
         assert.strictEqual(school.id, inSchool.id);
         return true;
       }
@@ -64,6 +63,7 @@ module('Integration | Component | course summary header', function (hooks) {
     assert.dom(end).hasText('08/12/2005');
     assert.dom(level).hasText('3');
     assert.dom(status).hasText('Published');
+    assert.verifySteps(['canCreateCourse called']);
   });
 
   test('no link to rollover when user cannot edit the course', async function (assert) {

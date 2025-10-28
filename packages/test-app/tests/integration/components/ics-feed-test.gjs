@@ -14,13 +14,13 @@ module('Integration | Component | ics feed', function (hooks) {
       return;
     }
 
-    assert.expect(1);
     const instructions = 'SOME TEST INS';
     const url = 'https://iliosproject.org';
 
     // temporarily overwrite the writeText method.
     const writeText = navigator.clipboard.writeText;
     navigator.clipboard.writeText = (value) => {
+      assert.step('writeText called');
       assert.strictEqual(value, url, 'clipboard text == url');
     };
 
@@ -30,6 +30,7 @@ module('Integration | Component | ics feed', function (hooks) {
       <template><IcsFeed @instructions={{this.instructions}} @url={{this.url}} /></template>,
     );
     await component.copy.click();
+    assert.verifySteps(['writeText called']);
 
     // undo writeText overwrite.
     navigator.clipboard.writeText = writeText;

@@ -16,31 +16,33 @@ module('Integration | Component | search box', function (hooks) {
   });
 
   test('clicking search calls search', async function (assert) {
-    assert.expect(1);
     this.set('search', (value) => {
+      assert.step('search called');
       assert.strictEqual(value, '');
     });
     await render(<template><SearchBox @search={{this.search}} /></template>);
     await component.submit();
+    assert.verifySteps(['search called']);
   });
 
   test('typing calls search', async function (assert) {
-    assert.expect(1);
     this.set('search', (value) => {
+      assert.step('search called');
       assert.strictEqual(value, 'typed it');
     });
     await render(<template><SearchBox @search={{this.search}} /></template>);
     await component.set('typed it');
+    assert.verifySteps(['search called']);
   });
 
   test('escape calls clear', async function (assert) {
-    assert.expect(1);
     this.set('clear', () => {
-      assert.ok(true);
+      assert.step('clear called');
     });
     await render(<template><SearchBox @search={{(noop)}} @clear={{this.clear}} /></template>);
     await component.set('typed it');
     await component.esc();
+    assert.verifySteps(['clear called']);
   });
 
   test('clicking submit button sets focus', async function (assert) {

@@ -69,8 +69,8 @@ module('Integration | Component | pagedlist controls', function (hooks) {
   });
 
   test('go to previous page', async function (assert) {
-    assert.expect(1);
     this.set('setOffset', (offset) => {
+      assert.step('setOffset called');
       assert.strictEqual(offset, 80);
     });
     await render(
@@ -84,11 +84,12 @@ module('Integration | Component | pagedlist controls', function (hooks) {
       </template>,
     );
     await component.previousPage.click();
+    assert.verifySteps(['setOffset called']);
   });
 
   test('go to next page', async function (assert) {
-    assert.expect(1);
     this.set('setOffset', (offset) => {
+      assert.step('setOffset called');
       assert.strictEqual(offset, 10);
     });
     await render(
@@ -102,11 +103,12 @@ module('Integration | Component | pagedlist controls', function (hooks) {
       </template>,
     );
     await component.nextPage.click();
+    assert.verifySteps(['setOffset called']);
   });
 
   test('go to first page', async function (assert) {
-    assert.expect(1);
     this.set('setOffset', (offset) => {
+      assert.step('setOffset called');
       assert.strictEqual(offset, 0);
     });
     await render(
@@ -120,11 +122,12 @@ module('Integration | Component | pagedlist controls', function (hooks) {
       </template>,
     );
     await component.firstPage.click();
+    assert.verifySteps(['setOffset called']);
   });
 
   test('go to last page', async function (assert) {
-    assert.expect(1);
     this.set('setOffset', (offset) => {
+      assert.step('setOffset called');
       assert.strictEqual(offset, 90);
     });
     await render(
@@ -138,14 +141,16 @@ module('Integration | Component | pagedlist controls', function (hooks) {
       </template>,
     );
     await component.lastPage.click();
+    assert.verifySteps(['setOffset called']);
   });
 
   test('change limit', async function (assert) {
-    assert.expect(2);
     this.set('setLimit', (limit) => {
+      assert.step('setLimit called');
       assert.strictEqual(limit, 10);
     });
     this.set('setOffset', (offset) => {
+      assert.step('setOffset called');
       assert.strictEqual(offset, 0);
     });
     await render(
@@ -160,5 +165,6 @@ module('Integration | Component | pagedlist controls', function (hooks) {
       </template>,
     );
     await component.limit.set(10);
+    assert.verifySteps(['setLimit called', 'setOffset called']);
   });
 });

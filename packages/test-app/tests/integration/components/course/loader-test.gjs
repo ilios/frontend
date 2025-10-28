@@ -12,7 +12,6 @@ module('Integration | Component | course/loader', function (hooks) {
   setupMirage(hooks);
 
   test('it renders', async function (assert) {
-    assert.expect(3);
     const school = this.server.create('school');
     const course = this.server.create('course', {
       school,
@@ -20,6 +19,7 @@ module('Integration | Component | course/loader', function (hooks) {
     let { promise, resolve } = defer();
     class DataLoader extends Service {
       loadCourse(id) {
+        assert.step('loadCourse called');
         assert.strictEqual(id, course.id);
         return promise;
       }
@@ -44,5 +44,6 @@ module('Integration | Component | course/loader', function (hooks) {
     assert.dom('section').hasAttribute('aria-hidden', 'true');
     resolve();
     await renderPromise;
+    assert.verifySteps(['loadCourse called']);
   });
 });

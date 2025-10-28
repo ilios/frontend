@@ -48,8 +48,8 @@ module('Integration | Component | toggle buttons', function (hooks) {
   });
 
   test('toggle action fires when clicking first button', async function (assert) {
-    assert.expect(1);
     this.set('toggle', (value) => {
+      assert.step('toggle called');
       assert.ok(value);
     });
     await render(
@@ -63,11 +63,12 @@ module('Integration | Component | toggle buttons', function (hooks) {
       </template>,
     );
     await component.firstButton.click();
+    assert.verifySteps(['toggle called']);
   });
 
   test('toggle action fires when clicking second button', async function (assert) {
-    assert.expect(1);
     this.set('toggle', (value) => {
+      assert.step('toggle called');
       assert.notOk(value);
     });
     await render(
@@ -81,11 +82,12 @@ module('Integration | Component | toggle buttons', function (hooks) {
       </template>,
     );
     await component.secondButton.click();
+    assert.verifySteps(['toggle called']);
   });
 
   test('toggle action fires when clicking first label', async function (assert) {
-    assert.expect(1);
     this.set('toggle', (value) => {
+      assert.step('toggle called');
       assert.ok(value);
     });
     await render(
@@ -99,11 +101,12 @@ module('Integration | Component | toggle buttons', function (hooks) {
       </template>,
     );
     await component.firstButton.click();
+    assert.verifySteps(['toggle called']);
   });
 
   test('toggle action fires when clicking second label', async function (assert) {
-    assert.expect(1);
     this.set('toggle', (value) => {
+      assert.step('toggle called');
       assert.notOk(value);
     });
     await render(
@@ -117,12 +120,12 @@ module('Integration | Component | toggle buttons', function (hooks) {
       </template>,
     );
     await component.secondButton.click();
+    assert.verifySteps(['toggle called']);
   });
 
   test('clicking selected first button does not fire toggle action', async function (assert) {
-    assert.expect(2);
     this.set('toggle', () => {
-      assert.ok(false, 'this should not be fired');
+      assert.step('toggle called');
     });
     await render(
       <template>
@@ -138,12 +141,12 @@ module('Integration | Component | toggle buttons', function (hooks) {
     assert.true(component.firstButton.isChecked);
     await component.firstButton.click();
     assert.true(component.firstButton.isChecked);
+    assert.verifySteps([]);
   });
 
   test('clicking selected second button does not fire toggle action', async function (assert) {
-    assert.expect(2);
     this.set('toggle', () => {
-      assert.ok(false, 'this should not be fired');
+      assert.step('toggle called');
     });
     await render(
       <template>
@@ -159,12 +162,12 @@ module('Integration | Component | toggle buttons', function (hooks) {
     assert.true(component.secondButton.isChecked);
     await component.secondButton.click();
     assert.true(component.secondButton.isChecked);
+    assert.verifySteps([]);
   });
 
   test('clicking selected first label does not fire toggle action', async function (assert) {
-    assert.expect(2);
     this.set('toggle', () => {
-      assert.ok(false, 'this should not be fired');
+      assert.step('toggle called');
     });
     await render(
       <template>
@@ -180,12 +183,12 @@ module('Integration | Component | toggle buttons', function (hooks) {
     assert.true(component.firstButton.isChecked);
     await component.firstLabel.click();
     assert.true(component.firstButton.isChecked);
+    assert.verifySteps([]);
   });
 
   test('clicking selected second label does not fire toggle action', async function (assert) {
-    assert.expect(2);
     this.set('toggle', () => {
-      assert.ok(false, 'this should not be fired');
+      assert.step('toggle called');
     });
     await render(
       <template>
@@ -201,5 +204,6 @@ module('Integration | Component | toggle buttons', function (hooks) {
     assert.true(component.secondButton.isChecked);
     await component.secondLabel.click();
     assert.true(component.secondButton.isChecked);
+    assert.verifySteps([]);
   });
 });

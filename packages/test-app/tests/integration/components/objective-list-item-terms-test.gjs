@@ -75,9 +75,9 @@ module('Integration | Component | objective-list-item-terms', function (hooks) {
   });
 
   test('manage vocabulary', async function (assert) {
-    assert.expect(1);
     this.set('subject', this.subject);
     this.set('manage', (vocabulary) => {
+      assert.step('manage called');
       assert.strictEqual(vocabulary, this.vocabularyModel1);
     });
     await render(
@@ -94,10 +94,10 @@ module('Integration | Component | objective-list-item-terms', function (hooks) {
       </template>,
     );
     await component.list[0].manage();
+    assert.verifySteps(['manage called']);
   });
 
   test('manage new', async function (assert) {
-    assert.expect(1);
     const courseObjective = this.server.create('course-objective', {
       course: this.course,
     });
@@ -106,6 +106,7 @@ module('Integration | Component | objective-list-item-terms', function (hooks) {
       .findRecord('course-objective', courseObjective.id);
     this.set('subject', subject);
     this.set('manage', (vocabulary) => {
+      assert.step('manage called');
       assert.strictEqual(vocabulary, null);
     });
     await render(
@@ -122,13 +123,13 @@ module('Integration | Component | objective-list-item-terms', function (hooks) {
       </template>,
     );
     await component.manage();
+    assert.verifySteps(['manage called']);
   });
 
   test('save', async function (assert) {
-    assert.expect(1);
     this.set('subject', this.subject);
     this.set('save', () => {
-      assert.ok(true);
+      assert.step('save called');
     });
     await render(
       <template>
@@ -144,13 +145,13 @@ module('Integration | Component | objective-list-item-terms', function (hooks) {
       </template>,
     );
     await component.save();
+    assert.verifySteps(['save called']);
   });
 
   test('cancel', async function (assert) {
-    assert.expect(1);
     this.set('subject', this.subject);
     this.set('cancel', () => {
-      assert.ok(true);
+      assert.step('cancel called');
     });
     await render(
       <template>
@@ -166,5 +167,6 @@ module('Integration | Component | objective-list-item-terms', function (hooks) {
       </template>,
     );
     await component.cancel();
+    assert.verifySteps(['cancel called']);
   });
 });

@@ -101,9 +101,9 @@ module('Integration | Component | selected-learner-groups', function (hooks) {
   });
 
   test('remove', async function (assert) {
-    assert.expect(1);
     this.set('learnerGroups', [this.tlg1, this.subGroup1, this.subSubGroup, this.subGroup2]);
     this.set('remove', (learnerGroup) => {
+      assert.step('remove called');
       assert.strictEqual(this.subGroup2, learnerGroup);
     });
     await render(
@@ -116,5 +116,6 @@ module('Integration | Component | selected-learner-groups', function (hooks) {
       </template>,
     );
     await component.detailLearnergroupsList.trees[0].items[3].remove();
+    assert.verifySteps(['remove called']);
   });
 });

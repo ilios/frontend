@@ -13,7 +13,6 @@ module('Integration | Component | learning-material-uploader', function (hooks) 
   setupMirage(hooks);
 
   test('upload file', async function (assert) {
-    assert.expect(5);
     class IliosConfigMock extends Service {
       async getMaxUploadSize() {
         return 1000;
@@ -22,6 +21,7 @@ module('Integration | Component | learning-material-uploader', function (hooks) 
     this.owner.register('service:iliosConfig', IliosConfigMock);
 
     this.server.post('/upload', (schema, request) => {
+      assert.step('API called');
       assert.ok(request.requestBody.has('file'));
       const file = request.requestBody.get('file');
       assert.strictEqual(file.name, 'test.file');
@@ -38,9 +38,11 @@ module('Integration | Component | learning-material-uploader', function (hooks) 
     let fileHash = null;
 
     this.set('setFilename', (name) => {
+      assert.step('setFilename called');
       filename = name;
     });
     this.set('setFileHash', (hash) => {
+      assert.step('setFileHash called');
       fileHash = hash;
     });
 
@@ -58,6 +60,13 @@ module('Integration | Component | learning-material-uploader', function (hooks) 
     assert.strictEqual(filename, 'test.file');
     assert.strictEqual(fileHash, '1234');
     assert.dom('[data-test-learning-material-uploader]').containsText('test.file');
+    assert.verifySteps([
+      'setFilename called',
+      'setFileHash called',
+      'API called',
+      'setFilename called',
+      'setFileHash called',
+    ]);
   });
 
   test('shows error when file is too big', async function (assert) {

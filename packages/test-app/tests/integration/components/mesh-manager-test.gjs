@@ -22,7 +22,6 @@ module('Integration | Component | mesh-manager', function (hooks) {
   });
 
   test('searching works', async function (assert) {
-    assert.expect(15);
     this.server.create('mesh-descriptor', {
       concepts: this.concepts,
       trees: this.trees,
@@ -57,7 +56,6 @@ module('Integration | Component | mesh-manager', function (hooks) {
   });
 
   test('searching with more than 50 results', async function (assert) {
-    assert.expect(153);
     this.server.createList('mesh-descriptor', 200);
     await render(
       <template>
@@ -79,9 +77,9 @@ module('Integration | Component | mesh-manager', function (hooks) {
   });
 
   test('clicking on unselected term adds it.', async function (assert) {
-    assert.expect(3);
     const descriptors = this.server.createList('mesh-descriptor', 3);
     this.set('add', (term) => {
+      assert.step('add called');
       assert.strictEqual(term.name, 'descriptor 1');
     });
     this.set('terms', [descriptors[0], descriptors[2]]);
@@ -99,14 +97,13 @@ module('Integration | Component | mesh-manager', function (hooks) {
     assert.ok(component.searchResults[1].isEnabled);
     assert.strictEqual(component.searchResults[1].title, 'descriptor 1');
     await component.searchResults[1].add();
+    assert.verifySteps(['add called']);
   });
 
   test('clicking on selected term does not add it.', async function (assert) {
-    assert.expect(1);
     const descriptors = this.server.createList('mesh-descriptor', 3);
     this.set('add', () => {
-      // this function should never be invoked.
-      assert.ok(false);
+      assert.step('add called');
     });
     this.set('terms', descriptors);
     await render(
@@ -122,6 +119,7 @@ module('Integration | Component | mesh-manager', function (hooks) {
     await component.search.set('descriptor');
     assert.ok(component.searchResults[0].isDisabled);
     await component.searchResults[0].add();
+    assert.verifySteps([]);
   });
 
   test('no terms', async function (assert) {

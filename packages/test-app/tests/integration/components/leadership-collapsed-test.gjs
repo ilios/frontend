@@ -38,13 +38,12 @@ module('Integration | Component | leadership collapsed', function (hooks) {
   });
 
   test('clicking the header expands the list', async function (assert) {
-    assert.expect(1);
-
     this.set('click', () => {
-      assert.ok(true, 'Action was fired');
+      assert.step('click called');
     });
     await render(<template><LeadershipCollapsed @expand={{this.click}} /></template>);
     await component.expand();
+    assert.verifySteps(['click called']);
   });
 
   test('it renders without directors and student advisors', async function (assert) {

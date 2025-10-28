@@ -12,10 +12,10 @@ module('Unit | Service | search', function (hooks) {
   });
 
   test('test search for curriculum', async function (assert) {
-    assert.expect(6);
     const courses = [{ id: 1, title: 'Sweet', sessions: [] }];
     const autocomplete = ['one', 'two'];
     this.server.get('api/search/v2/curriculum', (schema, { queryParams }) => {
+      assert.step('API called');
       assert.strictEqual(queryParams.q, 'codejam');
       assert.strictEqual(Number(queryParams.size), 10);
       assert.strictEqual(Number(queryParams.from), 11);
@@ -31,11 +31,12 @@ module('Unit | Service | search', function (hooks) {
     const service = this.owner.lookup('service:search');
     const results = await service.forCurriculum('codejam', 10, 11, [1, 2], [2021, 2028]);
     assert.deepEqual(results, { courses, autocomplete });
+    assert.verifySteps(['API called']);
   });
 
   test('test search for users', async function (assert) {
-    assert.expect(9);
     this.server.get('api/search/v1/users', (schema, { queryParams }) => {
+      assert.step('API called');
       assert.strictEqual(queryParams.q, 'codejam');
       assert.strictEqual(parseInt(queryParams.size, 10), 100);
       return {
@@ -69,11 +70,12 @@ module('Unit | Service | search', function (hooks) {
     assert.strictEqual(users[2].fullName, 'Dave Lombard');
     assert.strictEqual(autocomplete[0], 'one');
     assert.strictEqual(autocomplete[1], 'two');
+    assert.verifySteps(['API called']);
   });
 
   test('test search for users with size parameters', async function (assert) {
-    assert.expect(2);
     this.server.get('api/search/v1/users', (schema, { queryParams }) => {
+      assert.step('API called');
       assert.strictEqual(queryParams.q, 'codejam');
       assert.strictEqual(parseInt(queryParams.size, 10), 9);
       return {
@@ -85,11 +87,12 @@ module('Unit | Service | search', function (hooks) {
     });
     const service = this.owner.lookup('service:search');
     await service.forUsers('codejam', 9);
+    assert.verifySteps(['API called']);
   });
 
   test('test search for users with onlySuggest parameters', async function (assert) {
-    assert.expect(3);
     this.server.get('api/search/v1/users', (schema, { queryParams }) => {
+      assert.step('API called');
       assert.strictEqual(queryParams.q, 'codejam');
       assert.strictEqual(Number(queryParams.size), 19);
       assert.strictEqual(queryParams.onlySuggest, 'true');
@@ -102,5 +105,6 @@ module('Unit | Service | search', function (hooks) {
     });
     const service = this.owner.lookup('service:search');
     await service.forUsers('codejam', 19, true);
+    assert.verifySteps(['API called']);
   });
 });

@@ -82,9 +82,9 @@ module('Integration | Component | detail-learnergroups-list', function (hooks) {
   });
 
   test('remove', async function (assert) {
-    assert.expect(1);
     this.set('learnerGroups', [this.tlg1]);
     this.set('remove', (learnerGroup) => {
+      assert.step('remove called');
       assert.strictEqual(this.tlg1, learnerGroup);
     });
     await render(
@@ -97,5 +97,6 @@ module('Integration | Component | detail-learnergroups-list', function (hooks) {
       </template>,
     );
     await component.trees[0].items[0].remove();
+    assert.verifySteps(['remove called']);
   });
 });

@@ -56,10 +56,10 @@ module('Integration | Component | click choice buttons', function (hooks) {
   });
 
   test('click fires toggle action', async function (assert) {
-    assert.expect(8);
     this.set('firstChoicePicked', true);
     let called = 0;
     this.set('toggle', (newValue) => {
+      assert.step('toggle called');
       const hasBeenCalled = Boolean(called);
       assert.strictEqual(newValue, hasBeenCalled);
       this.set('firstChoicePicked', newValue);
@@ -87,12 +87,12 @@ module('Integration | Component | click choice buttons', function (hooks) {
 
     assert.ok(component.firstButton.isActive);
     assert.notOk(component.secondButton.isActive);
+    assert.verifySteps(['toggle called', 'toggle called']);
   });
 
   test('clicking selected button does not fire toggle action', async function (assert) {
-    assert.expect(4);
     this.set('toggle', () => {
-      assert.ok(false, 'this should not be fired');
+      assert.step('toggle called');
     });
     await render(
       <template>
@@ -112,5 +112,6 @@ module('Integration | Component | click choice buttons', function (hooks) {
 
     assert.ok(component.firstButton.isActive);
     assert.notOk(component.secondButton.isActive);
+    assert.verifySteps([]);
   });
 });
