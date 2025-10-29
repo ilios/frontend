@@ -223,17 +223,32 @@ export default class ProgramYearObjectiveListItemComponent extends Component {
     this.selectedVocabulary = null;
   }
 
+  get objectiveRowClasses() {
+    const rowClasses = ['grid-row', 'objective-row'];
+
+    if (this.showRemoveConfirmation) {
+      rowClasses.push('confirm-removal');
+    }
+    if (this.highlightSave.isRunning) {
+      rowClasses.push('highlight-ok');
+    }
+    if (this.isManaging) {
+      rowClasses.push('is-managing');
+    }
+    if (!this.args.programYearObjective.active) {
+      rowClasses.push('is-inactive');
+    }
+
+    return rowClasses.join(' ');
+  }
+
   deleteObjective = task({ drop: true }, async () => {
     await this.args.programYearObjective.destroyRecord();
   });
   <template>
     <div
       id="objective-{{@programYearObjective.id}}"
-      class="grid-row objective-row
-        {{if this.showRemoveConfirmation 'confirm-removal'}}
-        {{if this.highlightSave.isRunning 'highlight-ok'}}
-        {{if this.isManaging 'is-managing'}}
-        {{unless @programYearObjective.active 'is-inactive'}}"
+      class={{this.objectiveRowClasses}}
       data-test-program-year-objective-list-item
     >
       <button
