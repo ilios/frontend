@@ -55,10 +55,10 @@ module('Integration | Component | programs/root', function (hooks) {
   });
 
   test('school filter works', async function (assert) {
-    assert.expect(10);
     setupPermissionChecker(this, true);
     this.set('schools', this.schools);
     this.set('setSchoolId', (schoolId) => {
+      assert.step('setSchoolId called');
       assert.strictEqual(schoolId, '3');
       this.set('schoolId', schoolId);
     });
@@ -82,5 +82,6 @@ module('Integration | Component | programs/root', function (hooks) {
     assert.strictEqual(component.list.items[0].title, 'program 6');
     assert.strictEqual(component.list.items[1].title, 'program 7');
     assert.strictEqual(component.list.items[2].title, 'program 8');
+    assert.verifySteps(['setSchoolId called']);
   });
 });

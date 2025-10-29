@@ -484,7 +484,6 @@ module('Integration | Component | user profile bio manager', function (hooks) {
   });
 
   test('password strength 3 display', async function (assert) {
-    assert.expect(3);
     setupApplicationConfig('form', this);
     const userModel = await this.owner.lookup('service:store').findRecord('user', this.user.id);
     this.set('user', userModel);
@@ -507,7 +506,6 @@ module('Integration | Component | user profile bio manager', function (hooks) {
   });
 
   test('password strength 4 display', async function (assert) {
-    assert.expect(3);
     setupApplicationConfig('form', this);
     const userModel = await this.owner.lookup('service:store').findRecord('user', this.user.id);
     this.set('user', userModel);
@@ -530,12 +528,12 @@ module('Integration | Component | user profile bio manager', function (hooks) {
   });
 
   test('sync user from directory', async function (assert) {
-    assert.expect(32);
     setupApplicationConfig('ldap', this);
     const userModel = await this.owner.lookup('service:store').findRecord('user', this.user.id);
     this.set('user', userModel);
     this.user.username = this.authentication.username;
     this.server.get(`application/directory/find/:id`, (scheme, { params }) => {
+      assert.step('API called');
       assert.ok('id' in params, 'id param is in directory sync');
       assert.strictEqual(parseInt(params.id, 10), 13, 'id is correct');
       return {
@@ -608,6 +606,7 @@ module('Integration | Component | user profile bio manager', function (hooks) {
     assert.ok(component.pronouns.hasBeenSyncedFromDirectory, 'pronouns synced from directory');
     assert.ok(component.phone.hasBeenSyncedFromDirectory, 'phone number synced from directory');
     assert.ok(component.username.hasBeenSyncedFromDirectory, 'username synced from directory');
+    assert.verifySteps(['API called']);
   });
 
   test('preferred email can be blanked', async function (assert) {

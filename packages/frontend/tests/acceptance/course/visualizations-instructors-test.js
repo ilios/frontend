@@ -65,7 +65,6 @@ module('Acceptance | course visualizations - instructors', function (hooks) {
   });
 
   test('it renders', async function (assert) {
-    assert.expect(15);
     await page.visit({ courseId: this.course.id });
     assert.strictEqual(currentURL(), '/data/courses/1/instructors');
     assert.strictEqual(page.root.title, 'course 0 2022');
@@ -95,8 +94,6 @@ module('Acceptance | course visualizations - instructors', function (hooks) {
   });
 
   test('clicking chart transitions user to instructor visualization', async function (assert) {
-    assert.expect(2);
-
     await page.visit({ courseId: this.course.id });
     // wait for charts to load
     await waitFor('.loaded');

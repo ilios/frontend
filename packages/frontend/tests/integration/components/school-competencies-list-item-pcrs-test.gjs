@@ -73,9 +73,9 @@ module('Integration | Component | school-competencies-list-item-pcrs', function 
   });
 
   test('manage', async function (assert) {
-    assert.expect(1);
     this.set('competency', this.competencyModel);
     this.set('manage', (isManaging) => {
+      assert.step('manage called');
       assert.ok(isManaging);
     });
     this.set('competency', this.competencyModel);
@@ -92,12 +92,13 @@ module('Integration | Component | school-competencies-list-item-pcrs', function 
       </template>,
     );
     await component.items[0].edit();
+    assert.verifySteps(['manage called']);
   });
 
   test('cancel', async function (assert) {
-    assert.expect(1);
     this.set('competency', this.competencyModel);
     this.set('cancel', (isManaging) => {
+      assert.step('cancel called');
       assert.ok(isManaging);
     });
     this.set('competency', this.competencyModel);
@@ -114,13 +115,13 @@ module('Integration | Component | school-competencies-list-item-pcrs', function 
       </template>,
     );
     await component.cancel.click();
+    assert.verifySteps(['cancel called']);
   });
 
   test('save', async function (assert) {
-    assert.expect(1);
     this.set('competency', this.competencyModel);
     this.set('save', () => {
-      assert.ok(true);
+      assert.step('save called');
     });
     this.set('competency', this.competencyModel);
     await render(
@@ -136,6 +137,7 @@ module('Integration | Component | school-competencies-list-item-pcrs', function 
       </template>,
     );
     await component.save.click();
+    assert.verifySteps(['save called']);
   });
 
   test('no pcrs', async function (assert) {

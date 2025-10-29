@@ -20,7 +20,6 @@ module('Integration | Component | reports/subject', function (hooks) {
   });
 
   test('year filter works', async function (assert) {
-    assert.expect(9);
     this.server.create('academic-year', {
       id: 2015,
     });
@@ -48,10 +47,12 @@ module('Integration | Component | reports/subject', function (hooks) {
     this.set('selectedReport', reportModel);
     this.set('selectedYear', '');
     this.set('setReportYear', (year) => {
+      assert.step('setReportYear called');
       this.set('selectedYear', year);
       assert.strictEqual(year, '2016', 'report year bubbles up for query params');
     });
     this.server.post('api/graphql', ({ db }, { requestBody }) => {
+      assert.step('API called');
       const { query } = JSON.parse(requestBody);
 
       assert.strictEqual(
@@ -86,6 +87,7 @@ module('Integration | Component | reports/subject', function (hooks) {
     await component.academicYears.choose('2016');
     assert.strictEqual(component.results.length, 1);
     assert.strictEqual(component.results[0].text, 'course 1');
+    assert.verifySteps(['API called', 'setReportYear called']);
   });
 
   test('report results show academic year as range if applicable by configuration', async function (assert) {

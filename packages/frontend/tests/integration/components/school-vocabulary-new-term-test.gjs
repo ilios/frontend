@@ -11,8 +11,6 @@ module('Integration | Component | school vocabulary new term', function (hooks) 
   setupMirage(hooks);
 
   test('add term', async function (assert) {
-    assert.expect(1);
-
     const school = this.server.create('school');
     const vocabulary = this.server.create('vocabulary', { school });
     const vocabularyModel = await this.owner
@@ -22,6 +20,7 @@ module('Integration | Component | school vocabulary new term', function (hooks) 
 
     this.set('vocabulary', vocabularyModel);
     this.set('createTerm', (title) => {
+      assert.step('createTerm called');
       assert.strictEqual(newTitle, title);
     });
     await render(
@@ -32,6 +31,7 @@ module('Integration | Component | school vocabulary new term', function (hooks) 
 
     await component.setTitle(newTitle);
     await component.save();
+    assert.verifySteps(['createTerm called']);
   });
 
   test("can't add term with empty title", async function (assert) {

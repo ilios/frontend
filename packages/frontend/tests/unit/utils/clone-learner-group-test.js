@@ -7,9 +7,9 @@ const { resolve } = RSVP;
 
 module('Unit | Utility | clone learner group', function () {
   test('clones empty group', async function (assert) {
-    assert.expect(11);
     const store = EmberObject.create({
       createRecord(what, { title, location: loc }) {
+        assert.step('createRecord called');
         assert.strictEqual(what, 'learner-group');
         assert.strictEqual(title, 'to clone');
         assert.strictEqual(loc, 'over the rainbow');
@@ -35,5 +35,6 @@ module('Unit | Utility | clone learner group', function () {
     assert.strictEqual(result.get('instructors').length, 1);
     assert.deepEqual(result.get('instructors'), [instructor], 'instructors were copied');
     assert.strictEqual(result.get('parent'), undefined, 'there was no parent');
+    assert.verifySteps(['createRecord called']);
   });
 });

@@ -38,12 +38,11 @@ module('Integration | Component | school session types collapsed', function (hoo
   });
 
   test('expand', async function (assert) {
-    assert.expect(1);
     const school = this.server.create('school');
     const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
     this.set('school', schoolModel);
     this.set('expand', () => {
-      assert.ok(true, 'expand triggers.');
+      assert.step('expand called');
     });
 
     await render(
@@ -53,5 +52,6 @@ module('Integration | Component | school session types collapsed', function (hoo
     );
 
     await component.expand();
+    assert.verifySteps(['expand called']);
   });
 });

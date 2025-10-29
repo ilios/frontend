@@ -31,21 +31,21 @@ module('Integration | Component | reports/subject/new/search/input', function (h
   });
 
   test('it works', async function (assert) {
-    assert.expect(1);
     const input = 'typed it';
     this.set('search', (value) => {
+      assert.step('search called');
       assert.strictEqual(value, input);
     });
     await render(<template><SearchInput @search={{this.search}} /></template>);
     await component.input(input);
     await component.triggerInput();
+    assert.verifySteps(['search called']);
   });
 
   test('require at least three chars to run autocomplete #4769', async function (assert) {
-    assert.expect(1);
     const input = 'ty';
     this.set('search', () => {
-      assert.ok(false, 'search should not be called');
+      assert.step('search called');
     });
     await render(
       <template><SearchInput @search={{this.search}} @searchIsIdle={{true}} /></template>,
@@ -53,5 +53,6 @@ module('Integration | Component | reports/subject/new/search/input', function (h
     await component.input(input);
     await component.triggerInput();
     assert.strictEqual(component.text, 'keep typing...');
+    assert.verifySteps([]);
   });
 });

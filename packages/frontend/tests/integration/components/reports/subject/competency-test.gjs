@@ -19,8 +19,8 @@ module('Integration | Component | reports/subject/competency', function (hooks) 
   };
 
   test('it renders', async function (assert) {
-    assert.expect(4);
     this.server.post('api/graphql', function (schema, { requestBody }) {
+      assert.step('API called');
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(query, 'query { competencies { id, title, school { title } } }');
       return responseData;
@@ -42,12 +42,12 @@ module('Integration | Component | reports/subject/competency', function (hooks) 
     assert.strictEqual(component.results.length, 2);
     assert.strictEqual(component.results[0].title, 'first');
     assert.strictEqual(component.results[1].title, 'Second');
+    assert.verifySteps(['API called']);
   });
 
   test('it renders all results when resultsLengthMax is not reached', async function (assert) {
-    assert.expect(3);
-
     this.server.post('api/graphql', function (schema, { requestBody }) {
+      assert.step('API called');
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(query, 'query { competencies { id, title, school { title } } }');
       return responseData;
@@ -68,11 +68,10 @@ module('Integration | Component | reports/subject/competency', function (hooks) 
 
     assert.strictEqual(component.results.length, 2, 'responseData shows all 2 of 2 instructors');
     assert.notOk(component.hasFullResultsDownloadButton, 'full results download button is hidden');
+    assert.verifySteps(['API called']);
   });
 
   test('it renders limited results and an extra download button when resultsLengthMax is eclipsed', async function (assert) {
-    assert.expect(3);
-
     const responseDataLarge = {
       data: {
         competencies: [],
@@ -87,6 +86,7 @@ module('Integration | Component | reports/subject/competency', function (hooks) 
     }
 
     this.server.post('api/graphql', function (schema, { requestBody }) {
+      assert.step('API called');
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(query, 'query { competencies { id, title, school { title } } }');
       return responseDataLarge;
@@ -111,11 +111,12 @@ module('Integration | Component | reports/subject/competency', function (hooks) 
       'responseDataLarge shows only 200 of 220 instructors',
     );
     assert.ok(component.hasFullResultsDownloadButton, 'full results download button is present');
+    assert.verifySteps(['API called']);
   });
 
   test('filter by school', async function (assert) {
-    assert.expect(1);
     this.server.post('api/graphql', function (schema, { requestBody }) {
+      assert.step('API called');
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
@@ -139,11 +140,12 @@ module('Integration | Component | reports/subject/competency', function (hooks) 
         />
       </template>,
     );
+    assert.verifySteps(['API called']);
   });
 
   test('filter by course', async function (assert) {
-    assert.expect(1);
     this.server.post('api/graphql', function (schema, { requestBody }) {
+      assert.step('API called');
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
@@ -166,11 +168,12 @@ module('Integration | Component | reports/subject/competency', function (hooks) 
         />
       </template>,
     );
+    assert.verifySteps(['API called']);
   });
 
   test('filter by school and session', async function (assert) {
-    assert.expect(1);
     this.server.post('api/graphql', function (schema, { requestBody }) {
+      assert.step('API called');
       const { query } = JSON.parse(requestBody);
       // need to reverse lookup session->course->courseObjectives->programYearObjectives->competencies
       // so this graphql query doesn't match the context
@@ -195,5 +198,6 @@ module('Integration | Component | reports/subject/competency', function (hooks) 
         />
       </template>,
     );
+    assert.verifySteps(['API called']);
   });
 });

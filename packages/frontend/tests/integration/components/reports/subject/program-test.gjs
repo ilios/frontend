@@ -21,8 +21,8 @@ module('Integration | Component | reports/subject/program', function (hooks) {
 
   test('it renders for user with permissions', async function (assert) {
     await setupAuthentication({}, true);
-    assert.expect(10);
     this.server.post('api/graphql', function (schema, { requestBody }) {
+      assert.step('API called');
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(query, 'query { programs { id, title, school { title } } }');
       return responseData;
@@ -50,12 +50,13 @@ module('Integration | Component | reports/subject/program', function (hooks) {
     assert.strictEqual(component.results[1].title, 'First Program');
     assert.strictEqual(component.results[0].link, '/programs/2');
     assert.strictEqual(component.results[1].link, '/programs/1');
+    assert.verifySteps(['API called']);
   });
 
   test('it renders for user with no permissions', async function (assert) {
     await setupAuthentication();
-    assert.expect(8);
     this.server.post('api/graphql', function (schema, { requestBody }) {
+      assert.step('API called');
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(query, 'query { programs { id, title, school { title } } }');
       return responseData;
@@ -81,13 +82,14 @@ module('Integration | Component | reports/subject/program', function (hooks) {
     assert.strictEqual(component.results[1].school, 'School B:');
     assert.strictEqual(component.results[0].title, 'Second Program');
     assert.strictEqual(component.results[1].title, 'First Program');
+    assert.verifySteps(['API called']);
   });
 
   test('it renders all results when resultsLengthMax is not reached', async function (assert) {
     await setupAuthentication({}, true);
-    assert.expect(3);
 
     this.server.post('api/graphql', function (schema, { requestBody }) {
+      assert.step('API called');
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(query, 'query { programs { id, title, school { title } } }');
       return responseData;
@@ -108,11 +110,11 @@ module('Integration | Component | reports/subject/program', function (hooks) {
 
     assert.strictEqual(component.results.length, 2, 'responseData shows all 2 of 2 programs');
     assert.notOk(component.hasFullResultsDownloadButton, 'full results download button is hidden');
+    assert.verifySteps(['API called']);
   });
 
   test('it renders limited results and an extra download button when resultsLengthMax is eclipsed', async function (assert) {
     await setupAuthentication({}, true);
-    assert.expect(3);
 
     const alphabet = [...Array(26).keys()].map((i) => String.fromCharCode(i + 65));
     const responseDataLarge = {
@@ -131,6 +133,7 @@ module('Integration | Component | reports/subject/program', function (hooks) {
     }
 
     this.server.post('api/graphql', function (schema, { requestBody }) {
+      assert.step('API called');
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(query, 'query { programs { id, title, school { title } } }');
       return responseDataLarge;
@@ -155,11 +158,12 @@ module('Integration | Component | reports/subject/program', function (hooks) {
       'responseDataLarge shows only 200 of 220 programs',
     );
     assert.ok(component.hasFullResultsDownloadButton, 'full results download button is present');
+    assert.verifySteps(['API called']);
   });
 
   test('filter by school', async function (assert) {
-    assert.expect(1);
     this.server.post('api/graphql', function (schema, { requestBody }) {
+      assert.step('API called');
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
@@ -183,11 +187,12 @@ module('Integration | Component | reports/subject/program', function (hooks) {
         />
       </template>,
     );
+    assert.verifySteps(['API called']);
   });
 
   test('filter by session', async function (assert) {
-    assert.expect(1);
     this.server.post('api/graphql', function (schema, { requestBody }) {
+      assert.step('API called');
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
@@ -210,11 +215,12 @@ module('Integration | Component | reports/subject/program', function (hooks) {
         />
       </template>,
     );
+    assert.verifySteps(['API called']);
   });
 
   test('filter by school and session', async function (assert) {
-    assert.expect(1);
     this.server.post('api/graphql', function (schema, { requestBody }) {
+      assert.step('API called');
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
@@ -240,5 +246,6 @@ module('Integration | Component | reports/subject/program', function (hooks) {
         />
       </template>,
     );
+    assert.verifySteps(['API called']);
   });
 });

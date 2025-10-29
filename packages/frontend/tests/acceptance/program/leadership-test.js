@@ -21,7 +21,6 @@ module('Acceptance | Program - Leadership', function (hooks) {
   });
 
   test('collapsed leadership', async function (assert) {
-    assert.expect(6);
     await page.visit({ programId: 1 });
     await percySnapshot(assert);
     assert.strictEqual(page.root.leadershipCollapsed.title, 'Leadership (2)');
@@ -33,7 +32,6 @@ module('Acceptance | Program - Leadership', function (hooks) {
   });
 
   test('list leadership', async function (assert) {
-    assert.expect(4);
     await page.visit({ programId: 1, leadershipDetails: true });
     await percySnapshot(assert);
     assert.strictEqual(page.root.leadershipExpanded.title, 'Leadership (2)');
@@ -62,7 +60,6 @@ module('Acceptance | Program - Leadership', function (hooks) {
   });
 
   test('manage leadership', async function (assert) {
-    assert.expect(6);
     await page.visit({ programId: 1, leadershipDetails: true });
     await page.root.leadershipExpanded.manage();
     const manager = page.root.leadershipExpanded.leadershipManager;

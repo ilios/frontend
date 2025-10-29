@@ -94,9 +94,8 @@ module('Integration | Component | my profile', function (hooks) {
   });
 
   test('generates token when asked with good expiration date', async function (assert) {
-    assert.expect(6);
-
     this.server.get(`/auth/token`, (scheme, { queryParams }) => {
+      assert.step('API called');
       assert.ok('ttl' in queryParams);
       const duration = Duration.fromISO(queryParams.ttl);
       assert.strictEqual(duration.days, 14);
@@ -127,12 +126,12 @@ module('Integration | Component | my profile', function (hooks) {
 
     await component.newTokenForm.submit();
     assert.strictEqual(component.newTokenResult.value, 'new token');
+    assert.verifySteps(['API called']);
   });
 
   test('clear and reset from new token screen', async function (assert) {
-    assert.expect(3);
-
     this.server.get(`/auth/token`, () => {
+      assert.step('API called');
       return {
         jwt: 'new token',
       };
@@ -144,7 +143,7 @@ module('Integration | Component | my profile', function (hooks) {
 
     this.set('user', userModel);
     this.set('toggle', () => {
-      assert.ok(true);
+      assert.step('toggle called');
     });
     await render(
       <template>
@@ -160,18 +159,17 @@ module('Integration | Component | my profile', function (hooks) {
     assert.strictEqual(component.newTokenResult.value, 'new token');
     assert.notOk(component.newTokenForm.isVisible);
     await component.newTokenResult.reset();
+    assert.verifySteps(['API called', 'toggle called']);
   });
 
   test('clicking button fires show token event', async function (assert) {
-    assert.expect(1);
-
     const school = this.server.create('school');
     const user = this.server.create('user', { school });
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
 
     this.set('user', userModel);
     this.set('toggle', () => {
-      assert.ok(true);
+      assert.step('toggle called');
     });
     await render(
       <template>
@@ -184,12 +182,12 @@ module('Integration | Component | my profile', function (hooks) {
     );
 
     await component.showCreateNewTokenForm();
+    assert.verifySteps(['toggle called']);
   });
 
   test('Setting date changes request length', async function (assert) {
-    assert.expect(5);
-
     this.server.get(`/auth/token`, (scheme, { queryParams }) => {
+      assert.step('API called');
       assert.ok('ttl' in queryParams);
       const duration = Duration.fromISO(queryParams.ttl);
       assert.strictEqual(duration.days, 41);
@@ -221,17 +219,17 @@ module('Integration | Component | my profile', function (hooks) {
     const dt = DateTime.fromObject({ hours: 8 }).plus({ days: 41 }).toJSDate();
     await component.newTokenForm.setDate(dt);
     await component.newTokenForm.submit();
+    assert.verifySteps(['API called']);
   });
 
   test('clicking button fires invalidate tokens event', async function (assert) {
-    assert.expect(1);
     const school = this.server.create('school');
     const user = this.server.create('user', { school });
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
 
     this.set('user', userModel);
     this.set('toggle', () => {
-      assert.ok(true);
+      assert.step('toggle called');
     });
     await render(
       <template>
@@ -244,19 +242,19 @@ module('Integration | Component | my profile', function (hooks) {
     );
 
     await component.showInvalidateTokensForm();
+    assert.verifySteps(['toggle called']);
   });
 
   test('invalidate tokens when asked', async function (assert) {
-    assert.expect(4);
-
     this.server.get(`/auth/invalidatetokens`, () => {
-      assert.ok(true, 'route is hit');
+      assert.step('API called');
       return {
         jwt: 'new token',
       };
     });
     class SessionMock extends Service {
       authenticate(how, obj) {
+        assert.step('session.authenticate called');
         assert.strictEqual(how, 'authenticator:ilios-jwt');
         assert.ok(obj.jwt);
         assert.strictEqual(obj.jwt, 'new token');
@@ -282,11 +280,10 @@ module('Integration | Component | my profile', function (hooks) {
     );
 
     await component.invalidateTokensForm.submit();
+    assert.verifySteps(['API called', 'session.authenticate called']);
   });
 
   test('works close to midnight ilios/ilios#5976', async function (assert) {
-    assert.expect(3);
-
     freezeDateAt(
       DateTime.fromObject({
         hour: 23,
@@ -296,6 +293,7 @@ module('Integration | Component | my profile', function (hooks) {
     );
 
     this.server.get(`/auth/token`, (scheme, { queryParams }) => {
+      assert.step('API called');
       assert.ok('ttl' in queryParams);
       assert.strictEqual(queryParams.ttl, 'P14DT48M35S');
       return {
@@ -321,11 +319,10 @@ module('Integration | Component | my profile', function (hooks) {
 
     await component.newTokenForm.submit();
     assert.strictEqual(component.newTokenResult.value, 'new token');
+    assert.verifySteps(['API called']);
   });
 
   test('works after midnight ilios/ilios#5976', async function (assert) {
-    assert.expect(3);
-
     freezeDateAt(
       DateTime.fromObject({
         hour: 1,
@@ -335,6 +332,7 @@ module('Integration | Component | my profile', function (hooks) {
     );
 
     this.server.get(`/auth/token`, (scheme, { queryParams }) => {
+      assert.step('API called');
       assert.ok('ttl' in queryParams);
       assert.strictEqual(queryParams.ttl, 'P14DT22H53M35S');
       return {
@@ -360,5 +358,6 @@ module('Integration | Component | my profile', function (hooks) {
 
     await component.newTokenForm.submit();
     assert.strictEqual(component.newTokenResult.value, 'new token');
+    assert.verifySteps(['API called']);
   });
 });

@@ -8,8 +8,6 @@ module('Integration | Component | course-search-result', function (hooks) {
   setupRenderingTest(hooks);
 
   test('it display course and session info properly', async function (assert) {
-    assert.expect(15);
-
     const course = {
       id: 1,
       title: 'Course 1',
@@ -68,8 +66,6 @@ module('Integration | Component | course-search-result', function (hooks) {
   });
 
   test('no show more link when sessions are filtered out', async function (assert) {
-    assert.expect(8);
-
     const course = {
       id: 1,
       title: 'Course 1',

@@ -15,7 +15,6 @@ module('Acceptance | Course - Objective Create', function (hooks) {
   });
 
   test('save new objective', async function (assert) {
-    assert.expect(9);
     const course = this.server.create('course', {
       year: 2013,
       school: this.school,

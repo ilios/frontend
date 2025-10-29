@@ -89,18 +89,20 @@ module('Integration | Component | learner-groups/root', function (hooks) {
   });
 
   test('school filter works', async function (assert) {
-    assert.expect(14);
     setupPermissionChecker(this, true);
     this.set('schools', this.schools);
     this.set('setSchoolId', (schoolId) => {
+      assert.step('setSchoolId called');
       assert.strictEqual(schoolId, '3');
       this.set('schoolId', schoolId);
     });
     this.set('setProgramId', (programId) => {
+      assert.step('setProgramId called');
       assert.strictEqual(programId, null);
       this.set('programId', programId);
     });
     this.set('setProgramYearId', (programYearId) => {
+      assert.step('setProgramYearId called');
       assert.strictEqual(programYearId, null);
       this.set('programYearId', programYearId);
     });
@@ -133,21 +135,24 @@ module('Integration | Component | learner-groups/root', function (hooks) {
     assert.strictEqual(component.list.items.length, 2);
     assert.strictEqual(component.list.items[0].title, 'learner group 4');
     assert.strictEqual(component.list.items[1].title, 'learner group 5');
+    assert.verifySteps(['setProgramId called', 'setProgramYearId called', 'setSchoolId called']);
   });
 
   test('program filter works', async function (assert) {
-    assert.expect(12);
     setupPermissionChecker(this, true);
     this.set('schools', this.schools);
     this.set('setSchoolId', (schoolId) => {
+      assert.step('setSchoolId called');
       assert.strictEqual(schoolId, '2');
       this.set('schoolId', schoolId);
     });
     this.set('setProgramId', (programId) => {
+      assert.step('setProgramId called');
       assert.strictEqual(programId, '3');
       this.set('programId', programId);
     });
     this.set('setProgramYearId', (programYearId) => {
+      assert.step('setProgramYearId called');
       assert.strictEqual(programYearId, null);
       this.set('programYearId', programYearId);
     });
@@ -178,21 +183,24 @@ module('Integration | Component | learner-groups/root', function (hooks) {
     await component.programFilter.select(3);
     assert.strictEqual(component.headerTitle, 'Learner Groups (0)');
     assert.strictEqual(component.list.items.length, 0);
+    assert.verifySteps(['setSchoolId called', 'setProgramId called', 'setProgramYearId called']);
   });
 
   test('program year filter works', async function (assert) {
-    assert.expect(12);
     setupPermissionChecker(this, true);
     this.set('schools', this.schools);
     this.set('setSchoolId', (schoolId) => {
+      assert.step('setSchoolId called');
       assert.strictEqual(schoolId, '2');
       this.set('schoolId', schoolId);
     });
     this.set('setProgramId', (programId) => {
+      assert.step('setProgramId called');
       assert.strictEqual(programId, '4');
       this.set('programId', programId);
     });
     this.set('setProgramYearId', (programYearId) => {
+      assert.step('setProgramYearId called');
       assert.strictEqual(programYearId, '5');
       this.set('programYearId', programYearId);
     });
@@ -223,13 +231,14 @@ module('Integration | Component | learner-groups/root', function (hooks) {
     await component.programYearFilter.select(5);
     assert.strictEqual(component.headerTitle, 'Learner Groups (0)');
     assert.strictEqual(component.list.items.length, 0);
+    assert.verifySteps(['setSchoolId called', 'setProgramId called', 'setProgramYearId called']);
   });
 
   test('title filter works', async function (assert) {
-    assert.expect(8);
     setupPermissionChecker(this, true);
     this.set('schools', this.schools);
     this.set('setTitleFilter', (titleFilter) => {
+      assert.step('setTitleFilter called');
       assert.strictEqual(titleFilter, '3');
       this.set('titleFilter', titleFilter);
     });
@@ -254,14 +263,15 @@ module('Integration | Component | learner-groups/root', function (hooks) {
     assert.strictEqual(component.headerTitle, 'Learner Groups (1)');
     assert.strictEqual(component.list.items.length, 1);
     assert.strictEqual(component.list.items[0].title, 'learner group 3');
+    assert.verifySteps(['setTitleFilter called']);
   });
 
   test('sort', async function (assert) {
-    assert.expect(6);
     setupPermissionChecker(this, true);
     this.set('schools', this.schools);
     this.set('sortBy', 'title');
     this.set('setSortBy', (sortBy) => {
+      assert.step('setSortBy called');
       assert.strictEqual(sortBy, 'title:desc');
       this.set('sortBy', sortBy);
     });
@@ -278,5 +288,6 @@ module('Integration | Component | learner-groups/root', function (hooks) {
     await component.list.header.title.click();
     assert.strictEqual(component.list.items[0].title, 'learner group 3');
     assert.strictEqual(component.list.items[1].title, 'learner group 2');
+    assert.verifySteps(['setSortBy called']);
   });
 });

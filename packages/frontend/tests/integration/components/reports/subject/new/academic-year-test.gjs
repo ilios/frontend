@@ -4,6 +4,7 @@ import { render } from '@ember/test-helpers';
 import { setupMirage } from 'frontend/tests/test-support/mirage';
 import { component } from 'frontend/tests/pages/components/reports/subject/new/academic-year';
 import AcademicYear from 'frontend/components/reports/subject/new/academic-year';
+import noop from 'ilios-common/helpers/noop';
 
 module('Integration | Component | reports/subject/new/academic-year', function (hooks) {
   setupRenderingTest(hooks);
@@ -26,15 +27,10 @@ module('Integration | Component | reports/subject/new/academic-year', function (
   });
 
   test('it renders', async function (assert) {
-    assert.expect(15);
     this.set('currentId', null);
-    this.set('changeId', (id) => {
-      assert.strictEqual(id, '2060');
-      this.set('currentId', id);
-    });
     await render(
       <template>
-        <AcademicYear @currentId={{this.currentId}} @changeId={{this.changeId}} @school={{null}} />
+        <AcademicYear @currentId={{this.currentId}} @changeId={{(noop)}} @school={{null}} />
       </template>,
     );
 
@@ -69,17 +65,17 @@ module('Integration | Component | reports/subject/new/academic-year', function (
   });
 
   test('it works', async function (assert) {
-    assert.expect(10);
     this.set('currentId', '2015');
+    this.set('changeId', (id) => {
+      assert.step('changeId called');
+      assert.strictEqual(id, '2031');
+      this.set('currentId', id);
+    });
     await render(
       <template>
         <AcademicYear @currentId={{this.currentId}} @changeId={{this.changeId}} @school={{null}} />
       </template>,
     );
-    this.set('changeId', (id) => {
-      assert.strictEqual(id, '2031');
-      this.set('currentId', id);
-    });
     assert.notOk(component.options[0].isSelected, 'option 0 is not selected');
     assert.notOk(component.options[1].isSelected, 'option 1 is selected');
     assert.notOk(component.options[2].isSelected, 'option 2 is not selected');
@@ -91,5 +87,6 @@ module('Integration | Component | reports/subject/new/academic-year', function (
     assert.ok(component.options[2].isSelected, 'option 2 is selected');
     assert.notOk(component.options[3].isSelected, 'option 3 is not selected');
     assert.strictEqual(component.value, '2031', 'selected option is 2031');
+    assert.verifySteps(['changeId called']);
   });
 });

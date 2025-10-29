@@ -75,7 +75,6 @@ module('Integration | Component | program-year/objective-list-item', function (h
   });
 
   test('can manage descriptors', async function (assert) {
-    assert.expect(1);
     this.set('programYearObjective', this.model);
     await render(
       <template>
@@ -92,7 +91,6 @@ module('Integration | Component | program-year/objective-list-item', function (h
   });
 
   test('can manage terms', async function (assert) {
-    assert.expect(2);
     this.set('programYearObjective', this.model);
     await render(
       <template>
@@ -110,7 +108,6 @@ module('Integration | Component | program-year/objective-list-item', function (h
   });
 
   test('can trigger removal', async function (assert) {
-    assert.expect(1);
     this.set('programYearObjective', this.model);
     await render(
       <template>
@@ -127,7 +124,6 @@ module('Integration | Component | program-year/objective-list-item', function (h
   });
 
   test('can de-activate', async function (assert) {
-    assert.expect(2);
     this.set('programYearObjective', this.model);
     await render(
       <template>
@@ -145,7 +141,6 @@ module('Integration | Component | program-year/objective-list-item', function (h
   });
 
   test('can activate', async function (assert) {
-    assert.expect(2);
     this.model.set('active', false);
     this.set('programYearObjective', this.model);
     await render(

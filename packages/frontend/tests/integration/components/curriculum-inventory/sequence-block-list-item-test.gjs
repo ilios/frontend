@@ -125,13 +125,13 @@ module('Integration | Component | curriculum-inventory/sequence-block-list-item'
   });
 
   test('delete', async function (assert) {
-    assert.expect(3);
     const block = this.server.create('curriculum-inventory-sequence-block');
     const blockModel = await this.owner
       .lookup('service:store')
       .findRecord('curriculum-inventory-sequence-block', block.id);
     this.set('block', blockModel);
     this.set('remove', (block) => {
+      assert.step('remove called');
       assert.strictEqual(block, blockModel);
     });
 
@@ -150,5 +150,6 @@ module('Integration | Component | curriculum-inventory/sequence-block-list-item'
     await component.remove();
     assert.ok(component.confirmRemoval.isVisible);
     await component.confirmRemoval.confirm();
+    assert.verifySteps(['remove called']);
   });
 });

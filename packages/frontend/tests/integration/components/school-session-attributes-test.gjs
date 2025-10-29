@@ -66,12 +66,11 @@ module('Integration | Component | school session attributes', function (hooks) {
   });
 
   test('clicking expand fires action', async function (assert) {
-    assert.expect(1);
     const school = this.server.create('school');
     const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
     this.set('school', schoolModel);
     this.set('expand', () => {
-      assert.ok(true, 'expand triggered.');
+      assert.step('expand called');
     });
     await render(
       <template>
@@ -85,15 +84,15 @@ module('Integration | Component | school session attributes', function (hooks) {
     );
 
     await component.collapsed.expand();
+    assert.verifySteps(['expand called']);
   });
 
   test('clicking collapse fires action', async function (assert) {
-    assert.expect(1);
     const school = this.server.create('school');
     const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
     this.set('school', schoolModel);
     this.set('collapse', () => {
-      assert.ok(true, 'collapse triggered');
+      assert.step('collapse called');
     });
     await render(
       <template>
@@ -108,5 +107,6 @@ module('Integration | Component | school session attributes', function (hooks) {
     );
 
     await component.expanded.collapse();
+    assert.verifySteps(['collapse called']);
   });
 });

@@ -28,8 +28,8 @@ module('Integration | Component | learner-group/new-single', function (hooks) {
   });
 
   test('save', async function (assert) {
-    assert.expect(2);
     this.set('save', (title, fill) => {
+      assert.step('save called');
       assert.strictEqual(title, 'new group');
       assert.false(fill);
     });
@@ -40,11 +40,12 @@ module('Integration | Component | learner-group/new-single', function (hooks) {
     );
     await component.title('new group');
     await component.save();
+    assert.verifySteps(['save called']);
   });
 
   test('save filled', async function (assert) {
-    assert.expect(3);
     this.set('save', (title, fill) => {
+      assert.step('save called');
       assert.strictEqual(title, 'new group');
       assert.true(fill);
     });
@@ -57,6 +58,7 @@ module('Integration | Component | learner-group/new-single', function (hooks) {
     assert.ok(component.canFill);
     await component.fillWithCohort();
     await component.save();
+    assert.verifySteps(['save called']);
   });
 
   test('validation fails if title is too short', async function (assert) {

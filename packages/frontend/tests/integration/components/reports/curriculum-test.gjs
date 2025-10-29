@@ -78,10 +78,9 @@ module('Integration | Component | reports/curriculum', function (hooks) {
   });
 
   test('run works', async function (assert) {
-    assert.expect(1);
     this.set('schools', buildSchoolsFromData(this.server));
     this.set('run', () => {
-      assert.ok(true);
+      assert.step('run called');
     });
     await render(
       <template>
@@ -98,13 +97,13 @@ module('Integration | Component | reports/curriculum', function (hooks) {
       </template>,
     );
     await component.header.runReport.click();
+    assert.verifySteps(['run called']);
   });
 
   test('stop works', async function (assert) {
-    assert.expect(1);
     this.set('schools', buildSchoolsFromData(this.server));
     this.set('stop', () => {
-      assert.ok(true);
+      assert.step('stop called');
     });
     await render(
       <template>
@@ -121,12 +120,13 @@ module('Integration | Component | reports/curriculum', function (hooks) {
       </template>,
     );
     await component.header.close.click();
+    assert.verifySteps(['stop called']);
   });
 
   test('adding course works', async function (assert) {
-    assert.expect(1);
     this.set('schools', buildSchoolsFromData(this.server));
     this.set('setSelectedCourseIds', (selectedCourseIds) => {
+      assert.step('setSelectedCourseIds called');
       assert.deepEqual(selectedCourseIds, [1, 2]);
     });
     await render(
@@ -144,12 +144,13 @@ module('Integration | Component | reports/curriculum', function (hooks) {
       </template>,
     );
     await component.chooseCourse.years[0].courses[1].pick();
+    assert.verifySteps(['setSelectedCourseIds called']);
   });
 
   test('removing course works', async function (assert) {
-    assert.expect(1);
     this.set('schools', buildSchoolsFromData(this.server));
     this.set('setSelectedCourseIds', (selectedCourseIds) => {
+      assert.step('setSelectedCourseIds called');
       assert.deepEqual(selectedCourseIds, [1]);
     });
     await render(
@@ -167,12 +168,13 @@ module('Integration | Component | reports/curriculum', function (hooks) {
       </template>,
     );
     await component.chooseCourse.years[0].courses[1].pick();
+    assert.verifySteps(['setSelectedCourseIds called']);
   });
 
   test('set report works', async function (assert) {
-    assert.expect(1);
     this.set('schools', buildSchoolsFromData(this.server));
     this.set('setReport', (report) => {
+      assert.step('setReport called');
       assert.strictEqual(report, 'learnerGroups');
     });
     await render(
@@ -190,5 +192,6 @@ module('Integration | Component | reports/curriculum', function (hooks) {
       </template>,
     );
     await component.header.reportSelector.set('learnerGroups');
+    assert.verifySteps(['setReport called']);
   });
 });

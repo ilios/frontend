@@ -8,8 +8,6 @@ module('Integration | Component | error display', function (hooks) {
   setupRenderingTest(hooks);
 
   test('the detail link toggles properly', async function (assert) {
-    assert.expect(3);
-
     const errors = [
       {
         mainMessage: 'this is an error',
@@ -30,8 +28,6 @@ module('Integration | Component | error display', function (hooks) {
   });
 
   test('404 error works', async function (assert) {
-    assert.expect(1);
-
     const errors = [
       {
         statusCode: '404',
@@ -47,8 +43,6 @@ module('Integration | Component | error display', function (hooks) {
   });
 
   test('clicking clear button fires action', async function (assert) {
-    assert.expect(1);
-
     const errors = [
       {
         mainMessage: 'this is an error',
@@ -57,7 +51,7 @@ module('Integration | Component | error display', function (hooks) {
 
     this.set('errors', errors);
     this.set('clearErrors', () => {
-      assert.ok(true, 'action was fired');
+      assert.step('clearErrors called');
     });
     await render(
       <template>
@@ -65,5 +59,6 @@ module('Integration | Component | error display', function (hooks) {
       </template>,
     );
     await click('.clear-errors button');
+    assert.verifySteps(['clearErrors called']);
   });
 });

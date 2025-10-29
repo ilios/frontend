@@ -53,7 +53,6 @@ module('Acceptance | Session - Learner Groups', function (hooks) {
     });
 
     test('initial selected learner groups', async function (assert) {
-      assert.expect(10);
       this.server.create('ilm-session', {
         sessionId: 1,
         learnerGroupIds: [1, 2, 4],

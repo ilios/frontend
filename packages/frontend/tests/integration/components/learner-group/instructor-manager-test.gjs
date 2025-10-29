@@ -118,7 +118,6 @@ module('Integration | Component | learner-group/instructor-manager', function (h
   });
 
   test('cancel', async function (assert) {
-    assert.expect(1);
     const instructor = this.server.create('user', {
       firstName: 'test',
       lastName: 'person',
@@ -139,7 +138,7 @@ module('Integration | Component | learner-group/instructor-manager', function (h
       .findRecord('learner-group', learnerGroup.id);
     this.set('learnerGroup', learnerGroupModel);
     this.set('cancel', () => {
-      assert.ok(true, 'cancel() fired.');
+      assert.step('cancel called');
     });
     await render(
       <template>
@@ -154,10 +153,10 @@ module('Integration | Component | learner-group/instructor-manager', function (h
       </template>,
     );
     await component.cancel.click();
+    assert.verifySteps(['cancel called']);
   });
 
   test('save', async function (assert) {
-    assert.expect(8);
     const instructor1 = this.server.create('user', {
       firstName: 'test',
       lastName: 'person',
@@ -204,6 +203,7 @@ module('Integration | Component | learner-group/instructor-manager', function (h
     this.set('instructorGroups', [instructorGroupModel1, instructorGroupModel2]);
     this.set('availableInstructorGroups', [instructorGroupModel1, instructorGroupModel2]);
     this.set('save', (users, groups) => {
+      assert.step('save called');
       assert.strictEqual(users.length, 1);
       assert.strictEqual(groups.length, 1);
       assert.strictEqual(users[0].get('fullName'), 'test person');
@@ -229,6 +229,7 @@ module('Integration | Component | learner-group/instructor-manager', function (h
     assert.strictEqual(component.selectedInstructors.length, 1);
     assert.strictEqual(component.selectedInstructorGroups.length, 1);
     await component.save.click();
+    assert.verifySteps(['save called']);
   });
 
   test('search and add instructor group', async function (assert) {

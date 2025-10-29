@@ -19,8 +19,8 @@ module('Integration | Component | reports/subject/mesh-term', function (hooks) {
   };
 
   test('it renders', async function (assert) {
-    assert.expect(4);
     this.server.post('api/graphql', function (schema, { requestBody }) {
+      assert.step('API called');
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(query, 'query { meshDescriptors { name } }');
       return responseData;
@@ -42,12 +42,12 @@ module('Integration | Component | reports/subject/mesh-term', function (hooks) {
     assert.strictEqual(component.results.length, 2);
     assert.strictEqual(component.results[0].name, 'first Term');
     assert.strictEqual(component.results[1].name, 'Second Term');
+    assert.verifySteps(['API called']);
   });
 
   test('it renders all results when resultsLengthMax is not reached', async function (assert) {
-    assert.expect(3);
-
     this.server.post('api/graphql', function (schema, { requestBody }) {
+      assert.step('API called');
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(query, 'query { meshDescriptors { name } }');
       return responseData;
@@ -68,11 +68,10 @@ module('Integration | Component | reports/subject/mesh-term', function (hooks) {
 
     assert.strictEqual(component.results.length, 2, 'responseData shows all 2 of 2 mesh terms');
     assert.notOk(component.hasFullResultsDownloadButton, 'full results download button is hidden');
+    assert.verifySteps(['API called']);
   });
 
   test('it renders limited results and an extra download button when resultsLengthMax is eclipsed', async function (assert) {
-    assert.expect(3);
-
     const responseDataLarge = {
       data: {
         meshDescriptors: [],
@@ -87,6 +86,7 @@ module('Integration | Component | reports/subject/mesh-term', function (hooks) {
     }
 
     this.server.post('api/graphql', function (schema, { requestBody }) {
+      assert.step('API called');
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(query, 'query { meshDescriptors { name } }');
       return responseDataLarge;
@@ -111,11 +111,12 @@ module('Integration | Component | reports/subject/mesh-term', function (hooks) {
       'responseDataLarge shows only 200 of 220 mesh terms',
     );
     assert.ok(component.hasFullResultsDownloadButton, 'full results download button is present');
+    assert.verifySteps(['API called']);
   });
 
   test('filter by school', async function (assert) {
-    assert.expect(1);
     this.server.post('api/graphql', function (schema, { requestBody }) {
+      assert.step('API called');
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(query, 'query { meshDescriptors(schools: [33]) { name } }');
       return responseData;
@@ -136,11 +137,12 @@ module('Integration | Component | reports/subject/mesh-term', function (hooks) {
         />
       </template>,
     );
+    assert.verifySteps(['API called']);
   });
 
   test('filter by session', async function (assert) {
-    assert.expect(1);
     this.server.post('api/graphql', function (schema, { requestBody }) {
+      assert.step('API called');
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
@@ -163,11 +165,12 @@ module('Integration | Component | reports/subject/mesh-term', function (hooks) {
         />
       </template>,
     );
+    assert.verifySteps(['API called']);
   });
 
   test('filter by school and session', async function (assert) {
-    assert.expect(1);
     this.server.post('api/graphql', function (schema, { requestBody }) {
+      assert.step('API called');
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
@@ -193,12 +196,13 @@ module('Integration | Component | reports/subject/mesh-term', function (hooks) {
         />
       </template>,
     );
+    assert.verifySteps(['API called']);
   });
 
   test('filter by course', async function (assert) {
-    assert.expect(2);
     let graphQueryCounter = 0;
     this.server.post('api/graphql', function (schema, { requestBody }) {
+      assert.step('API called');
       graphQueryCounter++;
       const { query } = JSON.parse(requestBody);
       let rhett;
@@ -257,8 +261,6 @@ module('Integration | Component | reports/subject/mesh-term', function (hooks) {
           );
           rhett = responseData;
           break;
-        default:
-          assert.ok(false, 'too many queries');
       }
 
       return rhett;
@@ -278,5 +280,6 @@ module('Integration | Component | reports/subject/mesh-term', function (hooks) {
         />
       </template>,
     );
+    assert.verifySteps(['API called', 'API called']);
   });
 });

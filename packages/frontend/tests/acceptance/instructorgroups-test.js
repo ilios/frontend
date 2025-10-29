@@ -21,7 +21,6 @@ module('Acceptance | Instructor Groups', function (hooks) {
     });
 
     test('list groups', async function (assert) {
-      assert.expect(9);
       this.server.createList('user', 5);
       this.server.createList('course', 2, { school: this.school });
       this.server.create('session', {
@@ -121,7 +120,6 @@ module('Acceptance | Instructor Groups', function (hooks) {
     });
 
     test('add new instructorgroup', async function (assert) {
-      assert.expect(7);
       this.user.update({ administeredSchools: [this.school] });
       await page.visit();
       assert.strictEqual(page.headerTitle, 'Instructor Groups (0)');
@@ -138,7 +136,6 @@ module('Acceptance | Instructor Groups', function (hooks) {
     });
 
     test('cancel adding new instructor group', async function (assert) {
-      assert.expect(6);
       this.user.update({ administeredSchools: [this.school] });
       this.server.create('instructor-group', {
         school: this.school,
@@ -155,7 +152,6 @@ module('Acceptance | Instructor Groups', function (hooks) {
     });
 
     test('remove instructor group', async function (assert) {
-      assert.expect(6);
       this.user.update({ administeredSchools: [this.school] });
       this.server.create('instructor-group', {
         school: this.school,
@@ -172,7 +168,6 @@ module('Acceptance | Instructor Groups', function (hooks) {
     });
 
     test('cancel remove instructor group', async function (assert) {
-      assert.expect(4);
       this.user.update({ administeredSchools: [this.school] });
       this.server.create('instructor-group', {
         school: this.school,
@@ -187,7 +182,6 @@ module('Acceptance | Instructor Groups', function (hooks) {
     });
 
     test('confirmation of remove message', async function (assert) {
-      assert.expect(3);
       this.user.update({ administeredSchools: [this.school] });
       const users = this.server.createList('user', 5);
       this.server.create('instructor-group', {
@@ -206,7 +200,6 @@ module('Acceptance | Instructor Groups', function (hooks) {
     });
 
     test('click title takes you to instructor group route', async function (assert) {
-      assert.expect(1);
       this.server.create('instructor-group', {
         school: this.school,
       });
@@ -216,7 +209,6 @@ module('Acceptance | Instructor Groups', function (hooks) {
     });
 
     test('title filter escapes regex', async function (assert) {
-      assert.expect(4);
       this.server.create('instructor-group', {
         title: 'yes\\no',
         school: this.school,
@@ -230,7 +222,6 @@ module('Acceptance | Instructor Groups', function (hooks) {
     });
 
     test('cannot delete instructor group with attached courses #3767', async function (assert) {
-      assert.expect(5);
       this.user.update({ administeredSchools: [this.school] });
       const group1 = this.server.create('instructor-group', {
         school: this.school,
@@ -253,7 +244,6 @@ module('Acceptance | Instructor Groups', function (hooks) {
   });
 
   test('filters options', async function (assert) {
-    assert.expect(4);
     const schools = this.server.createList('school', 2);
     await setupAuthentication({ school: schools[1] }, true);
 

@@ -28,7 +28,6 @@ module('Acceptance | Session - Independent Learning', function (hooks) {
   });
 
   test('initial selected instructors', async function (assert) {
-    assert.expect(18);
     await page.visit({
       courseId: 1,
       sessionId: 1,

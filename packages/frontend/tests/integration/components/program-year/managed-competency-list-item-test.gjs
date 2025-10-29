@@ -108,10 +108,10 @@ module('Integration | Component | program-year/managed-competency-list-item', fu
   });
 
   test('add domain', async function (assert) {
-    assert.expect(5);
     this.set('domain', this.domain);
     this.set('competencies', [this.domain, this.competency1, this.competency2]);
     this.set('add', (competency, children) => {
+      assert.step('add called');
       assert.strictEqual(competency, this.domain);
       assert.strictEqual(children.length, 2);
       assert.ok(children.includes(this.competency1));
@@ -132,14 +132,15 @@ module('Integration | Component | program-year/managed-competency-list-item', fu
 
     assert.notOk(component.isChecked);
     await component.click();
+    assert.verifySteps(['add called']);
   });
 
   test('remove domain', async function (assert) {
-    assert.expect(5);
     this.set('domain', this.domain);
     this.set('competencies', [this.domain, this.competency1, this.competency2]);
     this.set('selectedCompetencies', [this.domain]);
     this.set('remove', (competency, children) => {
+      assert.step('remove called');
       assert.strictEqual(competency, this.domain);
       assert.strictEqual(children.length, 2);
       assert.ok(children.includes(this.competency1));
@@ -160,13 +161,14 @@ module('Integration | Component | program-year/managed-competency-list-item', fu
 
     assert.ok(component.isChecked);
     await component.click();
+    assert.verifySteps(['remove called']);
   });
 
   test('add sub-competency', async function (assert) {
-    assert.expect(3);
     this.set('domain', this.domain);
     this.set('competencies', [this.domain, this.competency1, this.competency2]);
     this.set('add', (competency, children) => {
+      assert.step('add called');
       assert.strictEqual(competency, this.competency1);
       assert.strictEqual(children.length, 0);
     });
@@ -185,15 +187,16 @@ module('Integration | Component | program-year/managed-competency-list-item', fu
 
     assert.notOk(component.competencies[0].isChecked);
     await component.competencies[0].click();
+    assert.verifySteps(['add called']);
   });
 
   test('remove sub-competency', async function (assert) {
-    assert.expect(3);
     this.set('domain', this.domain);
     this.set('competencies', [this.domain, this.competency1, this.competency2]);
     this.set('selectedCompetencies', [this.domain, this.competency1]);
     this.set('competenciesWithSelectedChildren', [this.domain]);
     this.set('remove', (competency, children) => {
+      assert.step('remove called');
       assert.strictEqual(competency, this.competency1);
       assert.strictEqual(children.length, 0);
     });
@@ -212,5 +215,6 @@ module('Integration | Component | program-year/managed-competency-list-item', fu
 
     assert.ok(component.competencies[0].isChecked);
     await component.competencies[0].click();
+    assert.verifySteps(['remove called']);
   });
 });

@@ -56,7 +56,6 @@ module('Integration | Component | user profile roles', function (hooks) {
   });
 
   test('clicking manage sends the action', async function (assert) {
-    assert.expect(1);
     const user = this.server.create('user', {
       root: true,
       roles: [this.studentRole],
@@ -64,6 +63,7 @@ module('Integration | Component | user profile roles', function (hooks) {
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     this.set('user', userModel);
     this.set('click', (what) => {
+      assert.step('click called');
       assert.ok(what, 'recieved boolean true value');
     });
     await render(
@@ -76,10 +76,10 @@ module('Integration | Component | user profile roles', function (hooks) {
       </template>,
     );
     await component.manage.click();
+    assert.verifySteps(['click called']);
   });
 
   test('can edit user roles', async function (assert) {
-    assert.expect(7);
     const user = this.server.create('user', {
       root: true,
       roles: [this.studentRole],

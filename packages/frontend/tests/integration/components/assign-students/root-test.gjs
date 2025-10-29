@@ -160,13 +160,13 @@ module('Integration | Component | assign-students/root', function (hooks) {
   });
 
   test('change school', async function (assert) {
-    assert.expect(2);
     this.set('model', {
       primarySchool: this.school1,
       schools: [this.school1, this.school2],
       unassignedStudents: [this.user1, this.user2, this.user3, this.user4, this.user5],
     });
     this.set('setSchoolId', (schoolId) => {
+      assert.step('setSchoolId called');
       assert.strictEqual(schoolId, this.school2.id);
     });
     await render(
@@ -176,10 +176,10 @@ module('Integration | Component | assign-students/root', function (hooks) {
     );
     assert.strictEqual(component.schoolFilter.selectedSchool, this.school1.id);
     await component.schoolFilter.set(this.school2.id);
+    assert.verifySteps(['setSchoolId called']);
   });
 
   test('change text filter', async function (assert) {
-    assert.expect(2);
     const filter = 'lorem';
     this.set('model', {
       primarySchool: this.school1,
@@ -187,6 +187,7 @@ module('Integration | Component | assign-students/root', function (hooks) {
       unassignedStudents: [this.user1, this.user2, this.user3, this.user4, this.user5],
     });
     this.set('setQuery', (query) => {
+      assert.step('setQuery called');
       assert.strictEqual(filter, query);
     });
     await render(
@@ -196,6 +197,7 @@ module('Integration | Component | assign-students/root', function (hooks) {
     );
     assert.strictEqual(component.titleFilter.value, '');
     await component.titleFilter.set(filter);
+    assert.verifySteps(['setQuery called']);
   });
 
   test('save', async function (assert) {

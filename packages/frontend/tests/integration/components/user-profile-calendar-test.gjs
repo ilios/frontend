@@ -19,9 +19,8 @@ module('Integration | Component | user profile calendar', function (hooks) {
   });
 
   test('shows events for this week', async function (assert) {
-    assert.expect(12);
-
     this.server.get(`/userevents/:id`, (scheme, { params, queryParams }) => {
+      assert.step('API called');
       assert.ok('id' in params);
       assert.strictEqual(parseInt(params.id, 10), 13);
 
@@ -84,14 +83,14 @@ module('Integration | Component | user profile calendar', function (hooks) {
     assert.dom(secondEventTitle).doesNotHaveClass('clickable');
     assert.dom(thirdEventTitle).hasText('third');
     assert.dom(thirdEventTitle).doesNotHaveClass('clickable');
+    assert.verifySteps(['API called']);
   });
 
   test('clicking forward goes to next week', async function (assert) {
-    assert.expect(12);
-
     let called = 0;
     const { firstDayOfThisWeek, lastDayOfThisWeek } = this.owner.lookup('service:locale-days');
     this.server.get(`/userevents/:id`, (scheme, { params, queryParams }) => {
+      assert.step('API called');
       assert.ok('id' in params);
       assert.strictEqual(parseInt(params.id, 10), 13);
       assert.ok('from' in queryParams);
@@ -111,13 +110,14 @@ module('Integration | Component | user profile calendar', function (hooks) {
     this.set('user', user);
     await render(<template><UserProfileCalendar @user={{this.user}} /></template>);
     await click('[data-test-go-forward]');
+    assert.verifySteps(['API called', 'API called']);
   });
 
   test('clicking backward goes to last week', async function (assert) {
-    assert.expect(12);
     let called = 0;
     const { firstDayOfThisWeek, lastDayOfThisWeek } = this.owner.lookup('service:locale-days');
     this.server.get(`/userevents/:id`, (scheme, { params, queryParams }) => {
+      assert.step('API called');
       assert.ok('id' in params);
       assert.strictEqual(parseInt(params.id, 10), 13);
       assert.ok('from' in queryParams);
@@ -139,5 +139,6 @@ module('Integration | Component | user profile calendar', function (hooks) {
     this.set('user', user);
     await render(<template><UserProfileCalendar @user={{this.user}} /></template>);
     await click('[data-test-go-back]');
+    assert.verifySteps(['API called', 'API called']);
   });
 });

@@ -44,9 +44,9 @@ module('Integration | Component | new-directory-user', function (hooks) {
   });
 
   test('input into the search field fires action', async function (assert) {
-    assert.expect(1);
     const searchTerm = 'search for me!';
     this.set('setSearchTerms', (val) => {
+      assert.step('setSearchTerms called');
       assert.strictEqual(val, searchTerm, 'changes to search get sent as action');
     });
     await render(
@@ -60,12 +60,13 @@ module('Integration | Component | new-directory-user', function (hooks) {
     );
     await component.search.set(searchTerm);
     await component.search.submit();
+    assert.verifySteps(['setSearchTerms called']);
   });
 
   test('initial search input fires search and fills input', async function (assert) {
-    assert.expect(5);
     const startingSearchTerms = 'start here';
     this.server.get(`/application/directory/search`, (scheme, { queryParams }) => {
+      assert.step('API called');
       assert.ok('limit' in queryParams);
       assert.strictEqual(parseInt(queryParams.limit, 10), 51);
       assert.ok('searchTerms' in queryParams);
@@ -85,18 +86,20 @@ module('Integration | Component | new-directory-user', function (hooks) {
       </template>,
     );
     assert.strictEqual(component.search.value, startingSearchTerms);
+    assert.verifySteps(['API called']);
   });
 
   test('pressing escape in search box clears search term', async function (assert) {
-    assert.expect(2);
     const startingSearchTerms = 'start here';
     this.server.get(`/application/directory/search`, () => {
+      assert.step('API called');
       return {
         results: [],
       };
     });
     this.set('startingSearchTerms', startingSearchTerms);
     this.set('setSearchTerms', (what) => {
+      assert.step('setSearchTerms called');
       assert.strictEqual(what, '');
     });
     await render(
@@ -110,10 +113,10 @@ module('Integration | Component | new-directory-user', function (hooks) {
     );
     assert.strictEqual(component.search.value, startingSearchTerms);
     await component.search.clearOnEscape();
+    assert.verifySteps(['API called', 'setSearchTerms called']);
   });
 
   test('create new user', async function (assert) {
-    assert.expect(40);
     this.server.create('user-role', {
       id: 4,
       title: 'Student',
@@ -177,6 +180,7 @@ module('Integration | Component | new-directory-user', function (hooks) {
       user: null,
     };
     this.server.get('/application/config', () => {
+      assert.step('application/config API called');
       return {
         config: {
           locale: 'en',
@@ -186,6 +190,7 @@ module('Integration | Component | new-directory-user', function (hooks) {
       };
     });
     this.server.get('/application/directory/search', (scheme, { queryParams }) => {
+      assert.step('application/directory/search API called');
       assert.ok('limit' in queryParams);
       assert.ok('searchTerms' in queryParams);
       assert.strictEqual(parseInt(queryParams.limit, 10), 51);
@@ -195,6 +200,7 @@ module('Integration | Component | new-directory-user', function (hooks) {
       };
     });
     this.set('transitionToUser', (userId) => {
+      assert.step('transitionToUser called');
       assert.strictEqual(Number(userId), 5, 'after saving we transition to the right user');
     });
     await render(
@@ -257,10 +263,14 @@ module('Integration | Component | new-directory-user', function (hooks) {
     assert.strictEqual(Number(userModel.id), 5);
     assert.strictEqual(authenticationModel.username, searchResult1.username);
     assert.strictEqual(authenticationModel.password, null);
+    assert.verifySteps([
+      'application/config API called',
+      'application/directory/search API called',
+      'transitionToUser called',
+    ]);
   });
 
   test('create new user in another school #4830', async function (assert) {
-    assert.expect(6);
     this.server.create('user-role', {
       id: 4,
       title: 'Student',
@@ -276,6 +286,7 @@ module('Integration | Component | new-directory-user', function (hooks) {
       user: null,
     };
     this.server.get('/application/config', () => {
+      assert.step('application/config API called');
       return {
         config: {
           locale: 'en',
@@ -285,11 +296,13 @@ module('Integration | Component | new-directory-user', function (hooks) {
       };
     });
     this.server.get('/application/directory/search', () => {
+      assert.step('application/directory/search API called');
       return {
         results: [searchResult],
       };
     });
     this.set('transitionToUser', (userId) => {
+      assert.step('transitionToUser called');
       assert.strictEqual(Number(userId), 2, 'after saving we transition to the right user');
     });
     await render(
@@ -314,10 +327,14 @@ module('Integration | Component | new-directory-user', function (hooks) {
     const schoolModel = await userModel.school;
     assert.strictEqual(Number(userModel.id), 2);
     assert.strictEqual(Number(schoolModel.id), 2);
+    assert.verifySteps([
+      'application/config API called',
+      'application/directory/search API called',
+      'transitionToUser called',
+    ]);
   });
 
   test('create new user in another school with permission in only one school #4830', async function (assert) {
-    assert.expect(6);
     class PermissionCheckerMock extends Service {
       async canCreateUser(school) {
         return Number(school.id) === 2;
@@ -339,6 +356,7 @@ module('Integration | Component | new-directory-user', function (hooks) {
       user: null,
     };
     this.server.get('/application/config', () => {
+      assert.step('application/config API called');
       return {
         config: {
           locale: 'en',
@@ -348,11 +366,13 @@ module('Integration | Component | new-directory-user', function (hooks) {
       };
     });
     this.server.get('/application/directory/search', () => {
+      assert.step('application/directory/search API called');
       return {
         results: [searchResult],
       };
     });
     this.set('transitionToUser', (userId) => {
+      assert.step('transitionToUser called');
       assert.strictEqual(Number(userId), 2, 'after saving we transition to the right user');
     });
     await render(
@@ -376,6 +396,11 @@ module('Integration | Component | new-directory-user', function (hooks) {
     const schoolModel = await userModel.school;
     assert.strictEqual(Number(userModel.id), 2);
     assert.strictEqual(Number(schoolModel.id), 2);
+    assert.verifySteps([
+      'application/config API called',
+      'application/directory/search API called',
+      'transitionToUser called',
+    ]);
   });
 
   test('save with custom otherId', async function (assert) {
@@ -384,6 +409,7 @@ module('Integration | Component | new-directory-user', function (hooks) {
       title: 'Student',
     });
     this.server.get('/application/config', () => {
+      assert.step('application/config API called');
       return {
         config: {
           locale: 'en',
@@ -393,6 +419,7 @@ module('Integration | Component | new-directory-user', function (hooks) {
       };
     });
     this.server.get('/application/directory/search', () => {
+      assert.step('application/directory/search API called');
       return {
         results: [
           {
@@ -430,15 +457,19 @@ module('Integration | Component | new-directory-user', function (hooks) {
     const userModel = await this.owner.lookup('service:store').findRecord('user', 2);
     assert.strictEqual(Number(userModel.id), 2);
     assert.strictEqual(userModel.otherId, 'new-other-id');
+    assert.verifySteps([
+      'application/config API called',
+      'application/directory/search API called',
+    ]);
   });
 
   test('save with custom username and password', async function (assert) {
-    assert.expect(8);
     this.server.create('user-role', {
       id: 4,
       title: 'Student',
     });
     this.server.get('/application/config', () => {
+      assert.step('application/config API called');
       return {
         config: {
           locale: 'en',
@@ -448,6 +479,7 @@ module('Integration | Component | new-directory-user', function (hooks) {
       };
     });
     this.server.get('/application/directory/search', () => {
+      assert.step('application/directory/search API called');
       return {
         results: [
           {
@@ -464,6 +496,7 @@ module('Integration | Component | new-directory-user', function (hooks) {
       };
     });
     this.set('setSearchTerms', (what) => {
+      assert.step('setSearchTerms called');
       assert.strictEqual(what, '');
     });
     await render(
@@ -494,6 +527,11 @@ module('Integration | Component | new-directory-user', function (hooks) {
     assert.strictEqual(Number(userModel.id), 2);
     assert.strictEqual(authenticationModel.username, 'new-username');
     assert.strictEqual(authenticationModel.password, 'new-password');
+    assert.verifySteps([
+      'application/config API called',
+      'application/directory/search API called',
+      'setSearchTerms called',
+    ]);
   });
 
   test('validation works', async function (assert) {

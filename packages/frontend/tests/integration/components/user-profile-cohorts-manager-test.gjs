@@ -172,9 +172,9 @@ module('Integration | Component | user-profile-cohorts-manager', function (hooks
   });
 
   test('promote secondary cohort to primary cohort', async function (assert) {
-    assert.expect(2);
     this.set('secondaryCohorts', [this.cohort1]);
     this.set('setPrimaryCohort', (cohort) => {
+      assert.step('setPrimaryCohort called');
       assert.strictEqual(cohort, this.cohort1);
     });
     this.set('schools', [this.school1, this.school2]);
@@ -196,12 +196,13 @@ module('Integration | Component | user-profile-cohorts-manager', function (hooks
 
     assert.strictEqual(component.secondaryCohorts[0].title, 'school 0 program 0 cohort 0');
     await component.secondaryCohorts[0].promote();
+    assert.verifySteps(['setPrimaryCohort called']);
   });
 
   test('remove primary cohort', async function (assert) {
-    assert.expect(2);
     this.set('primaryCohort', this.cohort1);
     this.set('setPrimaryCohort', (cohort) => {
+      assert.step('setPrimaryCohort called');
       assert.strictEqual(cohort, null);
     });
     this.set('schools', [this.school1, this.school2]);
@@ -223,11 +224,12 @@ module('Integration | Component | user-profile-cohorts-manager', function (hooks
 
     assert.strictEqual(component.primaryCohort.title, 'school 0 program 0 cohort 0');
     await component.primaryCohort.remove();
+    assert.verifySteps(['setPrimaryCohort called']);
   });
 
   test('add secondary cohort', async function (assert) {
-    assert.expect(2);
     this.set('addSecondaryCohort', (cohort) => {
+      assert.step('addSecondaryCohort called');
       assert.strictEqual(cohort, this.cohort1);
     });
     this.set('schools', [this.school1, this.school2]);
@@ -249,11 +251,12 @@ module('Integration | Component | user-profile-cohorts-manager', function (hooks
 
     assert.strictEqual(component.assignableCohorts[0].title, 'program 0 cohort 0');
     await component.assignableCohorts[0].add();
+    assert.verifySteps(['addSecondaryCohort called']);
   });
 
   test('remove secondary cohort', async function (assert) {
-    assert.expect(2);
     this.set('removeSecondaryCohort', (cohort) => {
+      assert.step('removeSecondaryCohort called');
       assert.strictEqual(cohort, this.cohort1);
     });
     this.set('secondaryCohorts', [this.cohort1]);
@@ -276,11 +279,12 @@ module('Integration | Component | user-profile-cohorts-manager', function (hooks
 
     assert.strictEqual(component.secondaryCohorts[0].title, 'school 0 program 0 cohort 0');
     await component.secondaryCohorts[0].remove();
+    assert.verifySteps(['removeSecondaryCohort called']);
   });
 
   test('change school', async function (assert) {
-    assert.expect(1);
     this.set('changeSchool', (school) => {
+      assert.step('changeSchool');
       assert.strictEqual(school, this.school2);
     });
     this.set('schools', [this.school1, this.school2]);
@@ -300,5 +304,6 @@ module('Integration | Component | user-profile-cohorts-manager', function (hooks
       </template>,
     );
     await component.schools.filter.select('2');
+    assert.verifySteps(['changeSchool']);
   });
 });

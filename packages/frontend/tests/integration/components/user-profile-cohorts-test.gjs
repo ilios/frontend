@@ -68,9 +68,9 @@ module('Integration | Component | user profile cohorts', function (hooks) {
   });
 
   test('clicking manage sends the action', async function (assert) {
-    assert.expect(1);
     this.set('user', this.user);
     this.set('click', (what) => {
+      assert.step('click called');
       assert.ok(what, 'recieved boolean true value');
     });
     await render(
@@ -83,10 +83,10 @@ module('Integration | Component | user profile cohorts', function (hooks) {
       </template>,
     );
     await component.manage();
+    assert.verifySteps(['click called']);
   });
 
   test('can edit user cohorts', async function (assert) {
-    assert.expect(33);
     this.set('user', this.user);
 
     await render(

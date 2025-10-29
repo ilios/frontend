@@ -28,7 +28,6 @@ module('Acceptance | Course - Leadership', function (hooks) {
   });
 
   test('collapsed leadership', async function (assert) {
-    assert.expect(10);
     await page.visit({ courseId: this.course.id, details: true });
     await percySnapshot(assert);
 
@@ -52,7 +51,6 @@ module('Acceptance | Course - Leadership', function (hooks) {
   });
 
   test('list leadership', async function (assert) {
-    assert.expect(10);
     await page.visit({
       courseId: this.course.id,
       details: true,

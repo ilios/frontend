@@ -96,9 +96,8 @@ module('Integration | Component | curriculum-inventory/report-header', function 
   });
 
   test('clicking on finalize button fires action', async function (assert) {
-    assert.expect(1);
     this.set('finalize', () => {
-      assert.ok(true, 'Finalize action was invoked.');
+      assert.step('finalize called');
     });
     await render(
       <template>
@@ -106,6 +105,7 @@ module('Integration | Component | curriculum-inventory/report-header', function 
       </template>,
     );
     await component.finalize();
+    assert.verifySteps(['finalize called']);
   });
 
   test('#i6159 validation status', async function (assert) {

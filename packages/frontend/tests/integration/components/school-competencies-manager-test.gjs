@@ -57,7 +57,6 @@ module('Integration | Component | school competencies manager', function (hooks)
   });
 
   test('delete domain', async function (assert) {
-    assert.expect(1);
     const domain = this.server.create('competency', { title: 'domain1' });
     const domainModel = await this.owner
       .lookup('service:store')
@@ -66,6 +65,7 @@ module('Integration | Component | school competencies manager', function (hooks)
 
     this.set('competencies', competencies);
     this.set('remove', (what) => {
+      assert.step('remove called');
       assert.strictEqual(what, domainModel);
     });
     await render(
@@ -82,10 +82,10 @@ module('Integration | Component | school competencies manager', function (hooks)
     );
 
     await component.domains[0].remove();
+    assert.verifySteps(['remove called']);
   });
 
   test('add domain', async function (assert) {
-    assert.expect(2);
     const newTitle = 'new c';
     const domain = this.server.create('competency', { title: 'domain1' });
     const domainModel = await this.owner
@@ -95,6 +95,7 @@ module('Integration | Component | school competencies manager', function (hooks)
 
     this.set('competencies', competencies);
     this.set('add', (what, title) => {
+      assert.step('add called');
       assert.strictEqual(what, null);
       assert.strictEqual(title, newTitle);
     });
@@ -113,10 +114,10 @@ module('Integration | Component | school competencies manager', function (hooks)
 
     await component.newDomain.newCompetency.title.set(newTitle);
     await component.newDomain.newCompetency.save();
+    assert.verifySteps(['add called']);
   });
 
   test('add competency', async function (assert) {
-    assert.expect(2);
     const newTitle = 'new c';
     const domain = this.server.create('competency', { title: 'domain1' });
     const domainModel = await this.owner
@@ -126,6 +127,7 @@ module('Integration | Component | school competencies manager', function (hooks)
 
     this.set('competencies', competencies);
     this.set('add', (what, title) => {
+      assert.step('add called');
       assert.strictEqual(what, domainModel);
       assert.strictEqual(title, newTitle);
     });
@@ -144,5 +146,6 @@ module('Integration | Component | school competencies manager', function (hooks)
 
     await component.domains[0].newCompetency.title.set(newTitle);
     await component.domains[0].newCompetency.save();
+    assert.verifySteps(['add called']);
   });
 });

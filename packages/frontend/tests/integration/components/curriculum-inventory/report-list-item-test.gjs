@@ -66,9 +66,9 @@ module('Integration | Component | curriculum-inventory/report-list-item', functi
   });
 
   test('delete', async function (assert) {
-    assert.expect(3);
     this.set('report', this.report);
     this.set('remove', (r) => {
+      assert.step('remove called');
       assert.strictEqual(r, this.report);
     });
     await render(
@@ -78,6 +78,7 @@ module('Integration | Component | curriculum-inventory/report-list-item', functi
     await component.remove();
     assert.ok(component.confirmRemoval.isVisible);
     await component.confirmRemoval.confirm();
+    assert.verifySteps(['remove called']);
   });
 
   test('cannot delete', async function (assert) {

@@ -213,8 +213,8 @@ module('Integration | Component | user profile bio details', function (hooks) {
   });
 
   test('clicking manage sends the action', async function (assert) {
-    assert.expect(1);
     this.set('manage', (what) => {
+      assert.step('manage called');
       assert.ok(what, 'received boolean true value');
     });
     const userModel = await this.owner.lookup('service:store').findRecord('user', this.user.id);
@@ -231,5 +231,6 @@ module('Integration | Component | user profile bio details', function (hooks) {
     );
 
     await component.manage();
+    assert.verifySteps(['manage called']);
   });
 });

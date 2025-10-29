@@ -62,8 +62,8 @@ module('Integration | Component | courses/list-item', function (hooks) {
   });
 
   test('lock', async function (assert) {
-    assert.expect(4);
     this.set('lock', (course) => {
+      assert.step('lock called');
       assert.strictEqual(course, this.course);
     });
     await render(
@@ -82,12 +82,13 @@ module('Integration | Component | courses/list-item', function (hooks) {
     assert.notOk(component.isLocked);
     assert.ok(component.canLock);
     await component.lock();
+    assert.verifySteps(['lock called']);
   });
 
   test('unlock', async function (assert) {
-    assert.expect(4);
     this.course.locked = true;
     this.set('unlock', (course) => {
+      assert.step('unlock called');
       assert.strictEqual(course, this.course);
     });
     await render(
@@ -106,11 +107,12 @@ module('Integration | Component | courses/list-item', function (hooks) {
     assert.ok(component.isLocked);
     assert.ok(component.canUnlock);
     await component.unLock();
+    assert.verifySteps(['unlock called']);
   });
 
   test('confirm removal', async function (assert) {
-    assert.expect(2);
     this.set('confirmRemoval', (course) => {
+      assert.step('confirmRemoval called');
       assert.strictEqual(course, this.course);
     });
     await render(
@@ -127,6 +129,7 @@ module('Integration | Component | courses/list-item', function (hooks) {
     );
     assert.ok(component.canRemove);
     await component.remove();
+    assert.verifySteps(['confirmRemoval called']);
   });
 
   test('cannot unlock', async function (assert) {

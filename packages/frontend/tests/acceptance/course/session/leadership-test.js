@@ -34,7 +34,6 @@ module('Acceptance | Session - Leadership', function (hooks) {
   });
 
   test('collapsed leadership', async function (assert) {
-    assert.expect(8);
     await page.visit({ courseId: 1, sessionId: 1 });
     await percySnapshot(assert);
 

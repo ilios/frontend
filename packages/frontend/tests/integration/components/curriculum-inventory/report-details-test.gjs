@@ -57,7 +57,6 @@ module('Integration | Component | curriculum-inventory/report-details', function
   });
 
   test('finalize report', async function (assert) {
-    assert.expect(7);
     const school = this.server.create('school');
     const academicLevels = this.server.createList('curriculum-inventory-academic-level', 10);
     const program = this.server.create('program', {
@@ -79,6 +78,7 @@ module('Integration | Component | curriculum-inventory/report-details', function
     this.set('report', reportModel);
     this.set('canUpdate', true);
     this.set('setIsFinalized', (value) => {
+      assert.step('setIsFinalized called');
       assert.ok(value);
     });
     await render(
@@ -117,10 +117,10 @@ module('Integration | Component | curriculum-inventory/report-details', function
     assert
       .dom('.curriculum-inventory-report-header .finalize')
       .isDisabled('Finalize button has been disabled post-finalization.');
+    assert.verifySteps(['setIsFinalized called']);
   });
 
   test('start finalizing report, then cancel', async function (assert) {
-    assert.expect(3);
     const school = this.server.create('school');
     const academicLevels = this.server.createList('curriculum-inventory-academic-level', 10);
     const program = this.server.create('program', {

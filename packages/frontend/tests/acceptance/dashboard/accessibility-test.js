@@ -13,7 +13,6 @@ module('Acceptance | dashboard accessibility', function (hooks) {
   });
 
   test('meets a11y standards in default view', async function (assert) {
-    assert.expect(2);
     await visit('/dashboard/week');
     assert.strictEqual(currentURL(), '/dashboard/week');
     await a11yAudit();
@@ -27,7 +26,6 @@ module('Acceptance | dashboard accessibility', function (hooks) {
   });
 
   test('meets a11y standards in calendar view', async function (assert) {
-    assert.expect(2);
     await visit('/dashboard/calendar');
     assert.strictEqual(currentURL(), '/dashboard/calendar');
     await a11yAudit();

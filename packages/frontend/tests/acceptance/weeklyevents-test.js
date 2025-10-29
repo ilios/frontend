@@ -21,8 +21,6 @@ module('Acceptance | Weekly events', function (hooks) {
   });
 
   test('shows the right weeks in 2025 #6366', async function (assert) {
-    assert.expect(3);
-
     const dt = DateTime.fromObject({ year: 2025, month: 1, day: 1 });
     freezeDateAt(dt.toJSDate());
     await page.visit();
@@ -32,8 +30,6 @@ module('Acceptance | Weekly events', function (hooks) {
   });
 
   test('shows the right weeks in 2026 #6366', async function (assert) {
-    assert.expect(3);
-
     const dt = DateTime.fromObject({ year: 2026, month: 7, day: 15 });
     freezeDateAt(dt.toJSDate());
     await page.visit();
@@ -43,8 +39,6 @@ module('Acceptance | Weekly events', function (hooks) {
   });
 
   test('shows the right weeks in 2027 #6366', async function (assert) {
-    assert.expect(3);
-
     const dt = DateTime.fromObject({ year: 2027, month: 7, day: 15 });
     freezeDateAt(dt.toJSDate());
     await page.visit();

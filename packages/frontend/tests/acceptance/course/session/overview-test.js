@@ -20,7 +20,6 @@ module('Acceptance | Session - Overview', function (hooks) {
   });
 
   test('check fields', async function (assert) {
-    assert.expect(4);
     await setupAuthentication(
       {
         school: this.school,

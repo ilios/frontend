@@ -37,17 +37,17 @@ module('Integration | Component | school competencies collapsed', function (hook
   });
 
   test('clicking expand fires action', async function (assert) {
-    assert.expect(1);
     const school = this.server.create('school');
     const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
 
     this.set('school', schoolModel);
-    this.set('expand', () => assert.ok(true));
+    this.set('expand', () => assert.step('expand called'));
     await render(
       <template>
         <SchoolCompetenciesCollapsed @school={{this.school}} @expand={{this.expand}} />
       </template>,
     );
     await component.title.click();
+    assert.verifySteps(['expand called']);
   });
 });

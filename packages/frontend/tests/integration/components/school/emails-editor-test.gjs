@@ -30,11 +30,11 @@ module('Integration | Component | school/emails-editor', function (hooks) {
   });
 
   test('save', async function (assert) {
-    assert.expect(8);
     const school = this.server.create('school');
     const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
     this.set('school', schoolModel);
     this.set('save', (administratorEmail, changeAlertRecipients) => {
+      assert.step('save called');
       assert.strictEqual(administratorEmail, 'admin@school.edu');
       assert.strictEqual(changeAlertRecipients, 'email1@school.edu, email2@school.edu');
     });
@@ -52,10 +52,10 @@ module('Integration | Component | school/emails-editor', function (hooks) {
     await component.save();
     assert.notOk(component.administratorEmail.hasError);
     assert.notOk(component.changeAlertRecipients.hasError);
+    assert.verifySteps(['save called']);
   });
 
   test('save with empty change alerts recipients', async function (assert) {
-    assert.expect(8);
     const school = this.server.create('school', {
       iliosAdministratorEmail: 'admin@school.edu',
       changeAlertRecipients: 'email1@school.edu, email2@school.edu',
@@ -63,6 +63,7 @@ module('Integration | Component | school/emails-editor', function (hooks) {
     const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
     this.set('school', schoolModel);
     this.set('save', (administratorEmail, changeAlertRecipients) => {
+      assert.step('save called');
       assert.strictEqual(administratorEmail, 'admin@school.edu');
       assert.strictEqual(changeAlertRecipients, '');
     });
@@ -82,10 +83,10 @@ module('Integration | Component | school/emails-editor', function (hooks) {
     await component.save();
     assert.notOk(component.administratorEmail.hasError);
     assert.notOk(component.changeAlertRecipients.hasError);
+    assert.verifySteps(['save called']);
   });
 
   test('validation fails if given admin email is empty', async function (assert) {
-    assert.expect(6);
     const school = this.server.create('school', {
       iliosAdministratorEmail: 'admin@school.edu',
       changeAlertRecipients: 'email1@school.edu, email2@school.edu',
@@ -135,12 +136,11 @@ module('Integration | Component | school/emails-editor', function (hooks) {
   });
 
   test('cancel', async function (assert) {
-    assert.expect(1);
     const school = this.server.create('school');
     const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
     this.set('school', schoolModel);
     this.set('cancel', () => {
-      assert.ok(true);
+      assert.step('cancel called');
     });
     await render(
       <template>
@@ -148,14 +148,15 @@ module('Integration | Component | school/emails-editor', function (hooks) {
       </template>,
     );
     await component.cancel();
+    assert.verifySteps(['cancel called']);
   });
 
   test('save on enter in administrator email input', async function (assert) {
-    assert.expect(2);
     const school = this.server.create('school');
     const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
     this.set('school', schoolModel);
     this.set('save', (administratorEmail, changeAlertRecipients) => {
+      assert.step('save called');
       assert.strictEqual(administratorEmail, 'admin@school.edu');
       assert.strictEqual(changeAlertRecipients, 'email1@school.edu, email2@school.edu');
     });
@@ -167,14 +168,15 @@ module('Integration | Component | school/emails-editor', function (hooks) {
     await component.administratorEmail.set('admin@school.edu');
     await component.changeAlertRecipients.set('email1@school.edu, email2@school.edu');
     await component.administratorEmail.save();
+    assert.verifySteps(['save called']);
   });
 
   test('save on enter in change-alerts recipients input', async function (assert) {
-    assert.expect(2);
     const school = this.server.create('school');
     const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
     this.set('school', schoolModel);
     this.set('save', (administratorEmail, changeAlertRecipients) => {
+      assert.step('save called');
       assert.strictEqual(administratorEmail, 'admin@school.edu');
       assert.strictEqual(changeAlertRecipients, 'email1@school.edu, email2@school.edu');
     });
@@ -186,5 +188,6 @@ module('Integration | Component | school/emails-editor', function (hooks) {
     await component.administratorEmail.set('admin@school.edu');
     await component.changeAlertRecipients.set('email1@school.edu, email2@school.edu');
     await component.changeAlertRecipients.save();
+    assert.verifySteps(['save called']);
   });
 });

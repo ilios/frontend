@@ -36,12 +36,11 @@ module('Integration | Component | school vocabularies expanded', function (hooks
   });
 
   test('collapse', async function (assert) {
-    assert.expect(1);
     const school = this.server.create('school');
     this.server.createList('vocabulary', 2, { school });
     const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
     this.set('collapse', () => {
-      assert.ok(true, 'collapse triggered.');
+      assert.step('collapse called');
     });
     this.set('school', schoolModel);
 
@@ -57,6 +56,7 @@ module('Integration | Component | school vocabularies expanded', function (hooks
     );
 
     await component.collapse();
+    assert.verifySteps(['collapse called']);
   });
 
   test('manage vocabulary', async function (assert) {

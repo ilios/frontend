@@ -97,7 +97,6 @@ module('Integration | Component | learner-group/instructors-list', function (hoo
   });
 
   test('clicking manage button fires', async function (assert) {
-    assert.expect(1);
     const learnerGroup = this.server.create('learner-group', {
       title: 'this group',
       cohort: this.cohort,
@@ -108,7 +107,7 @@ module('Integration | Component | learner-group/instructors-list', function (hoo
 
     this.set('learnerGroup', learnerGroupModel);
     this.set('manage', () => {
-      assert.ok(true, 'Manage event fired.');
+      assert.step('manage called');
     });
     await render(
       <template>
@@ -120,6 +119,7 @@ module('Integration | Component | learner-group/instructors-list', function (hoo
       </template>,
     );
     await component.manage.click();
+    assert.verifySteps(['manage called']);
   });
 
   test('read-only mode', async function (assert) {

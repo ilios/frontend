@@ -37,7 +37,6 @@ module('Acceptance | User', function (hooks) {
   });
 
   test('can search for users', async function (assert) {
-    assert.expect(4);
     this.server.createList('user', 20, { email: 'user@example.edu', school: this.school });
     this.server.createList('authentication', 20);
 
@@ -61,7 +60,6 @@ module('Acceptance | User', function (hooks) {
   });
 
   test('User roles display', async function (assert) {
-    assert.expect(22);
     const studentRole = this.server.create('user-role', {
       title: 'Student',
     });

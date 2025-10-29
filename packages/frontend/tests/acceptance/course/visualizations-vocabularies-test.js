@@ -13,7 +13,6 @@ module('Acceptance | course visualizations - vocabularies', function (hooks) {
   });
 
   test('it renders', async function (assert) {
-    assert.expect(16);
     const sessionType = this.server.create('session-type');
     const vocabulary1 = this.server.create('vocabulary');
     const vocabulary2 = this.server.create('vocabulary');

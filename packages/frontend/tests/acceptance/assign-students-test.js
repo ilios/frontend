@@ -33,7 +33,6 @@ module('Acceptance | assign students', function (hooks) {
   });
 
   test('visiting /admin/assignstudents', async function (assert) {
-    assert.expect(3);
     await setupAuthentication({ school: this.school, administeredSchools: [this.school] });
     await page.visit();
     await percySnapshot(assert);

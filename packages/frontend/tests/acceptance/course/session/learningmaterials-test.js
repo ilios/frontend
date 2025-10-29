@@ -107,7 +107,6 @@ module('Acceptance | Session - Learning Materials', function (hooks) {
   });
 
   test('list learning materials', async function (assert) {
-    assert.expect(39);
     await page.visit({ courseId: this.course.id, sessionId: 1 });
     await percySnapshot(assert);
     assert.strictEqual(currentRouteName(), 'session.index');
@@ -478,7 +477,6 @@ module('Acceptance | Session - Learning Materials', function (hooks) {
   });
 
   test('manage terms', async function (assert) {
-    assert.expect(22);
     this.user.update({ administeredSchools: [this.school] });
     await page.visit({ courseId: this.course.id, sessionId: 1 });
     assert.strictEqual(page.details.learningMaterials.current.length, 4);
@@ -817,7 +815,6 @@ module('Acceptance | Session - Learning Materials', function (hooks) {
       position: 0,
     });
 
-    assert.expect(9);
     await page.visit({ courseId: this.course.id, sessionId: session.id });
     assert.strictEqual(currentRouteName(), 'session.index');
 

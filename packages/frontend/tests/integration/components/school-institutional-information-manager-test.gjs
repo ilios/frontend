@@ -84,7 +84,6 @@ module('Integration | Component | school-institutional-information-manager', fun
   });
 
   test('cancel', async function (assert) {
-    assert.expect(1);
     const school = this.server.create('school');
     this.server.create('curriculum-inventory-institution', {
       school,
@@ -95,6 +94,7 @@ module('Integration | Component | school-institutional-information-manager', fun
     this.set('school', schoolModel);
     this.set('canUpdate', true);
     this.set('manage', (isManaging) => {
+      assert.step('manage called');
       assert.false(isManaging);
     });
     await render(
@@ -107,10 +107,10 @@ module('Integration | Component | school-institutional-information-manager', fun
       </template>,
     );
     await component.header.cancel();
+    assert.verifySteps(['manage called']);
   });
 
   test('save existing institution', async function (assert) {
-    assert.expect(8);
     const school = this.server.create('school');
     const institution = this.server.create('curriculum-inventory-institution', {
       school,
@@ -139,6 +139,7 @@ module('Integration | Component | school-institutional-information-manager', fun
     this.set('institutionalInformation', institutionModel);
     this.set('canUpdate', true);
     this.set('saveInstitution', (institution) => {
+      assert.step('saveInstitution called');
       assert.strictEqual(institution.get('name'), newName);
       assert.strictEqual(institution.get('aamcCode'), newAamcCode);
       assert.strictEqual(institution.get('addressStreet'), newAddressStreet);
@@ -168,10 +169,10 @@ module('Integration | Component | school-institutional-information-manager', fun
     await component.content.addressCountryCode.change(newAddressCountryCode);
 
     await component.header.save();
+    assert.verifySteps(['saveInstitution called']);
   });
 
   test('save new institution', async function (assert) {
-    assert.expect(8);
     const school = this.server.create('school');
     const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
 
@@ -187,6 +188,7 @@ module('Integration | Component | school-institutional-information-manager', fun
 
     this.set('canUpdate', true);
     this.set('saveInstitution', (institution) => {
+      assert.step('saveInstitution called');
       assert.strictEqual(institution.get('name'), newName);
       assert.strictEqual(institution.get('aamcCode'), newAamcCode);
       assert.strictEqual(institution.get('addressStreet'), newAddressStreet);
@@ -215,6 +217,7 @@ module('Integration | Component | school-institutional-information-manager', fun
     await component.content.addressCountryCode.change(newAddressCountryCode);
 
     await component.header.save();
+    assert.verifySteps(['saveInstitution called']);
   });
 
   test('form validation', async function (assert) {

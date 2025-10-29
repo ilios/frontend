@@ -128,8 +128,8 @@ module('Integration | Component | curriculum-inventory/reports', function (hooks
   });
 
   test('changing school', async function (assert) {
-    assert.expect(1);
     this.set('setSchoolId', (id) => {
+      assert.step('setSchoolId called');
       assert.strictEqual(id, this.schoolWithOneProgram.id);
     });
     await render(
@@ -144,11 +144,12 @@ module('Integration | Component | curriculum-inventory/reports', function (hooks
       </template>,
     );
     await component.schools.select(this.schoolWithOneProgram.id);
+    assert.verifySteps(['setSchoolId called']);
   });
 
   test('changing program', async function (assert) {
-    assert.expect(1);
     this.set('setProgramId', (programId) => {
+      assert.step('setProgramId called');
       assert.strictEqual(programId, this.program2.id);
     });
     await render(
@@ -163,6 +164,7 @@ module('Integration | Component | curriculum-inventory/reports', function (hooks
       </template>,
     );
     await component.programs.select(this.program2.id);
+    assert.verifySteps(['setProgramId called']);
   });
 
   test('click expand button to show new report form', async function (assert) {

@@ -19,7 +19,6 @@ module('Acceptance | Session - Objective List', function (hooks) {
   });
 
   test('list objectives', async function (assert) {
-    assert.expect(53);
     this.user.update({ administeredSchools: [this.school] });
     const course = this.server.create('course', {
       year: 2013,

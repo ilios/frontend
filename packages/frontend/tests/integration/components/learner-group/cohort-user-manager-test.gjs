@@ -93,13 +93,12 @@ module('Integration | Component | learner-group/cohort-user-manager', function (
   });
 
   test('add multiple users', async function (assert) {
-    assert.expect(5);
-
     const user = this.server.create('user', { enabled: true });
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
 
     this.set('users', [userModel]);
     this.set('addMany', ([user]) => {
+      assert.step('addMany called');
       assert.strictEqual(userModel, user);
     });
 
@@ -123,16 +122,16 @@ module('Integration | Component | learner-group/cohort-user-manager', function (
     assert.strictEqual(component.addButtonText, 'Move learner to this group');
     await component.add();
     assert.notOk(component.membersCanBeAdded);
+    assert.verifySteps(['addMany called']);
   });
 
   test('add single user', async function (assert) {
-    assert.expect(1);
-
     const user = this.server.create('user', { enabled: true });
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
 
     this.set('users', [userModel]);
     this.set('addOne', (user) => {
+      assert.step('addOne called');
       assert.strictEqual(userModel, user);
     });
 
@@ -151,11 +150,10 @@ module('Integration | Component | learner-group/cohort-user-manager', function (
     );
 
     await component.users[0].add();
+    assert.verifySteps(['addOne called']);
   });
 
   test('when users are selected single action is disabled', async function (assert) {
-    assert.expect(2);
-
     const user = this.server.create('user', { enabled: true });
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
 
@@ -181,8 +179,6 @@ module('Integration | Component | learner-group/cohort-user-manager', function (
   });
 
   test('checkall', async function (assert) {
-    assert.expect(7);
-
     const user1 = this.server.create('user', { firstName: 'Jasper' });
     const user2 = this.server.create('user', { firstName: 'Jackson' });
     const userModel1 = await this.owner.lookup('service:store').findRecord('user', user1.id);
@@ -190,6 +186,7 @@ module('Integration | Component | learner-group/cohort-user-manager', function (
 
     this.set('users', [userModel1, userModel2]);
     this.set('addMany', ([userA, userB]) => {
+      assert.step('addMany called');
       assert.strictEqual(userModel1, userA);
       assert.strictEqual(userModel2, userB);
     });
@@ -215,6 +212,7 @@ module('Integration | Component | learner-group/cohort-user-manager', function (
     assert.ok(component.users[0].isSelected);
     assert.strictEqual(component.addButtonText, 'Move 2 learners to this group');
     await component.add();
+    assert.verifySteps(['addMany called']);
   });
 
   test('checking one puts checkall box into indeterminate state', async function (assert) {

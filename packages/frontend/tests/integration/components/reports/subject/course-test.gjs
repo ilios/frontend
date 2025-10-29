@@ -27,8 +27,8 @@ module('Integration | Component | reports/subject/course', function (hooks) {
 
   test('it renders for user with permissions', async function (assert) {
     await setupAuthentication({}, true);
-    assert.expect(10);
     this.server.post('api/graphql', function (schema, { requestBody }) {
+      assert.step('API called');
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
@@ -83,12 +83,13 @@ module('Integration | Component | reports/subject/course', function (hooks) {
       '/courses/2',
       'second result has correct course link',
     );
+    assert.verifySteps(['API called']);
   });
 
   test('it renders for user with no permissions', async function (assert) {
     await setupAuthentication();
-    assert.expect(8);
     this.server.post('api/graphql', function (schema, { requestBody }) {
+      assert.step('API called');
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
@@ -117,13 +118,14 @@ module('Integration | Component | reports/subject/course', function (hooks) {
     assert.notOk(component.results[1].course.hasLink);
     assert.strictEqual(component.results[0].course.title, 'First Course');
     assert.strictEqual(component.results[1].course.title, 'Second Course (ext ID 1)');
+    assert.verifySteps(['API called']);
   });
 
   test('it renders all results when resultsLengthMax is not reached', async function (assert) {
     await setupAuthentication({}, true);
-    assert.expect(3);
 
     this.server.post('api/graphql', function (schema, { requestBody }) {
+      assert.step('API called');
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
@@ -147,11 +149,11 @@ module('Integration | Component | reports/subject/course', function (hooks) {
 
     assert.strictEqual(component.results.length, 2, 'responseData shows all 2 of 2 courses');
     assert.notOk(component.hasFullResultsDownloadButton, 'full results download button is hidden');
+    assert.verifySteps(['API called']);
   });
 
   test('it renders limited results and an extra download button when resultsLengthMax is eclipsed', async function (assert) {
     await setupAuthentication({}, true);
-    assert.expect(3);
 
     const years = [2020, 2021, 2022, 2023, 2024, 2025];
     const responseDataLarge = {
@@ -169,6 +171,7 @@ module('Integration | Component | reports/subject/course', function (hooks) {
     }
 
     this.server.post('api/graphql', function (schema, { requestBody }) {
+      assert.step('API called');
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
@@ -196,12 +199,13 @@ module('Integration | Component | reports/subject/course', function (hooks) {
       'responseDataLarge shows only 200 of 220 courses',
     );
     assert.ok(component.hasFullResultsDownloadButton, 'full results download button is present');
+    assert.verifySteps(['API called']);
   });
 
   test('it renders school link if all schools is chosen', async function (assert) {
     await setupAuthentication({}, true);
-    assert.expect(5);
     this.server.post('api/graphql', function (schema, { requestBody }) {
+      assert.step('API called');
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
@@ -227,11 +231,12 @@ module('Integration | Component | reports/subject/course', function (hooks) {
     assert.strictEqual(component.results[0].school.title, 'First School:');
     assert.ok(component.results[1].school.isPresent);
     assert.strictEqual(component.results[1].school.title, 'Second School:');
+    assert.verifySteps(['API called']);
   });
 
   test('it reads academic year config', async function (assert) {
-    assert.expect(6);
     this.server.get('application/config', function () {
+      assert.step('application/config API called');
       return {
         config: {
           academicYearCrossesCalendarYearBoundaries: true,
@@ -239,6 +244,7 @@ module('Integration | Component | reports/subject/course', function (hooks) {
       };
     });
     this.server.post('api/graphql', function (schema, { requestBody }) {
+      assert.step('api/graphql API called');
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
@@ -265,11 +271,12 @@ module('Integration | Component | reports/subject/course', function (hooks) {
     assert.strictEqual(component.results[1].year.title, '2020 - 2021');
     assert.strictEqual(component.results[0].course.title, 'First Course');
     assert.strictEqual(component.results[1].course.title, 'Second Course (ext ID 1)');
+    assert.verifySteps(['application/config API called', 'api/graphql API called']);
   });
 
   test('year filter works', async function (assert) {
-    assert.expect(4);
     this.server.post('api/graphql', function (schema, { requestBody }) {
+      assert.step('API called');
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
@@ -295,11 +302,12 @@ module('Integration | Component | reports/subject/course', function (hooks) {
     assert.strictEqual(component.results.length, 1);
     assert.notOk(component.results[0].year.isPresent);
     assert.strictEqual(component.results[0].course.title, 'First Course');
+    assert.verifySteps(['API called']);
   });
 
   test('filter by school', async function (assert) {
-    assert.expect(1);
     this.server.post('api/graphql', function (schema, { requestBody }) {
+      assert.step('API called');
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
@@ -323,11 +331,12 @@ module('Integration | Component | reports/subject/course', function (hooks) {
         />
       </template>,
     );
+    assert.verifySteps(['API called']);
   });
 
   test('filter by program', async function (assert) {
-    assert.expect(1);
     this.server.post('api/graphql', function (schema, { requestBody }) {
+      assert.step('API called');
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
@@ -350,11 +359,12 @@ module('Integration | Component | reports/subject/course', function (hooks) {
         />
       </template>,
     );
+    assert.verifySteps(['API called']);
   });
 
   test('filter by school and program', async function (assert) {
-    assert.expect(1);
     this.server.post('api/graphql', function (schema, { requestBody }) {
+      assert.step('API called');
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
@@ -380,11 +390,12 @@ module('Integration | Component | reports/subject/course', function (hooks) {
         />
       </template>,
     );
+    assert.verifySteps(['API called']);
   });
 
   test('filter by program year', async function (assert) {
-    assert.expect(1);
     this.server.post('api/graphql', function (schema, { requestBody }) {
+      assert.step('API called');
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
@@ -407,12 +418,13 @@ module('Integration | Component | reports/subject/course', function (hooks) {
         />
       </template>,
     );
+    assert.verifySteps(['API called']);
   });
 
   test('filter by mesh', async function (assert) {
-    assert.expect(2);
     let graphQueryCounter = 0;
     this.server.post('api/graphql', function (schema, { requestBody }) {
+      assert.step('API called');
       graphQueryCounter++;
       const { query } = JSON.parse(requestBody);
       let rhett;
@@ -442,8 +454,6 @@ module('Integration | Component | reports/subject/course', function (hooks) {
           );
           rhett = responseData;
           break;
-        default:
-          assert.ok(false, 'too many queries');
       }
 
       return rhett;
@@ -463,11 +473,12 @@ module('Integration | Component | reports/subject/course', function (hooks) {
         />
       </template>,
     );
+    assert.verifySteps(['API called', 'API called']);
   });
 
   test('filter by academic year', async function (assert) {
-    assert.expect(1);
     this.server.post('api/graphql', function (schema, { requestBody }) {
+      assert.step('API called');
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
@@ -494,12 +505,15 @@ module('Integration | Component | reports/subject/course', function (hooks) {
         />
       </template>,
     );
+    assert.verifySteps(['API called']);
   });
 
   test('download', async function (assert) {
     await setupAuthentication({}, true);
-    assert.expect(9);
-    this.server.post('api/graphql', () => responseData);
+    this.server.post('api/graphql', () => {
+      assert.step('API called');
+      return responseData;
+    });
     const { id } = this.server.create('report', {
       subject: 'course',
     });
@@ -522,11 +536,13 @@ module('Integration | Component | reports/subject/course', function (hooks) {
     const originalCreateObjectURL = URL.createObjectURL;
     const originalRevokeObjectURL = URL.revokeObjectURL;
     URL.createObjectURL = (blob) => {
+      assert.step('URL.createObjectURL called');
       capturedBlob = blob;
       assert.ok(blob instanceof Blob, 'Blob passed to createObjectURL');
       return downloadMockUrl;
     };
     URL.revokeObjectURL = (url) => {
+      assert.step('URL.revokeObjectURL called');
       assert.strictEqual(url.href, downloadMockUrl, 'revokeObjectURL has correct href');
       assert.strictEqual(url.download, downloadFilename, 'revokeObjectURL has correct filename');
     };
@@ -536,14 +552,16 @@ module('Integration | Component | reports/subject/course', function (hooks) {
     const originalAppendChild = document.body.appendChild;
     const originalRemoveChild = document.body.removeChild;
     document.body.appendChild = (el) => {
+      assert.step('document.body.appendChild called');
       // stub out click() to avoid `Not allowed to load local resource: blob:mock-url` error
       el.click = () => {
-        assert.ok(true, 'Anchor click stubbed to prevent navigation');
+        assert.step('el.click called');
       };
       appendedElement = el;
       assert.ok(el instanceof HTMLAnchorElement, 'Anchor element was appended');
     };
     document.body.removeChild = (el) => {
+      assert.step('document.body.removeChild called');
       assert.strictEqual(el, appendedElement, 'Anchor element was removed');
     };
 
@@ -578,5 +596,14 @@ module('Integration | Component | reports/subject/course', function (hooks) {
     URL.revokeObjectURL = originalRevokeObjectURL;
     document.body.appendChild = originalAppendChild;
     document.body.removeChild = originalRemoveChild;
+    assert.verifySteps([
+      'API called',
+      'API called',
+      'URL.createObjectURL called',
+      'document.body.appendChild called',
+      'el.click called',
+      'document.body.removeChild called',
+      'URL.revokeObjectURL called',
+    ]);
   });
 });

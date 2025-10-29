@@ -64,7 +64,6 @@ module('Acceptance | Session - Publish', function (hooks) {
   });
 
   test('check published session', async function (assert) {
-    assert.expect(6);
     await page.visit({ courseId: this.course.id, sessionId: this.publishedSession.id });
     assert.strictEqual(currentRouteName(), 'session.index');
     assert.strictEqual(page.details.overview.publicationMenu.toggle.text, 'Published');

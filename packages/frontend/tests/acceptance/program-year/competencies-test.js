@@ -37,7 +37,6 @@ module('Acceptance | Program Year - Competencies', function (hooks) {
   });
 
   test('list', async function (assert) {
-    assert.expect(6);
     await page.visit({ programId: 1, programYearId: 1, pyCompetencyDetails: true });
     await percySnapshot(assert);
     assert.strictEqual(page.details.competencies.title, 'Competencies (2)');
@@ -55,7 +54,6 @@ module('Acceptance | Program Year - Competencies', function (hooks) {
   });
 
   test('list with permission to edit', async function (assert) {
-    assert.expect(6);
     this.user.update({ administeredSchools: [this.school] });
     await page.visit({ programId: 1, programYearId: 1, pyCompetencyDetails: true });
     await percySnapshot(assert);

@@ -219,7 +219,6 @@ module(
     });
 
     test('sort by title', async function (assert) {
-      assert.expect(1);
       const sessionType = this.server.create('session-type');
       const session = this.server.create('session', {
         title: 'Zeppelin',
@@ -234,6 +233,7 @@ module(
       this.set('linkedSession', [sessionModel]);
       this.set('sortBy', 'id');
       this.set('setSortBy', function (what) {
+        assert.step('setSortBy called');
         assert.strictEqual(what, 'title', 'Sorting callback gets called for session titles.');
       });
       await render(
@@ -250,10 +250,10 @@ module(
         </template>,
       );
       await component.header.title.click();
+      assert.verifySteps(['setSortBy called']);
     });
 
     test('sort by session type', async function (assert) {
-      assert.expect(1);
       const sessionType = this.server.create('session-type');
       const session = this.server.create('session', {
         title: 'Zeppelin',
@@ -268,6 +268,7 @@ module(
       this.set('linkedSessions', [sessionModel]);
       this.set('sortBy', 'id');
       this.set('setSortBy', function (what) {
+        assert.step('setSortBy called');
         assert.strictEqual(
           what,
           'sessionType.title',
@@ -288,10 +289,10 @@ module(
         </template>,
       );
       await component.header.sessionType.click();
+      assert.verifySteps(['setSortBy called']);
     });
 
     test('sort by offerings count', async function (assert) {
-      assert.expect(1);
       const sessionType = this.server.create('session-type');
       const session = this.server.create('session', {
         title: 'Zeppelin',
@@ -306,6 +307,7 @@ module(
       this.set('linkedSessions', [sessionModel]);
       this.set('sortBy', 'id');
       this.set('setSortBy', function (what) {
+        assert.step('setSortBy called');
         assert.strictEqual(
           what,
           'offerings.length',
@@ -326,6 +328,7 @@ module(
         </template>,
       );
       await component.header.offeringsCount.click();
+      assert.verifySteps(['setSortBy called']);
     });
 
     test('change count as one offering', async function (assert) {
@@ -501,7 +504,6 @@ module(
     });
 
     test('save', async function (assert) {
-      assert.expect(8);
       const sessionType = this.server.create('session-type');
       const session1 = this.server.create('session', {
         title: 'Alpha',
@@ -523,6 +525,7 @@ module(
       this.set('excludedSessions', [sessionModel2]);
       this.set('sortBy', 'id');
       this.set('save', (countAsOneOfferingSessions, excludedSessions) => {
+        assert.step('save called');
         assert.strictEqual(countAsOneOfferingSessions.length, 1);
         assert.strictEqual(countAsOneOfferingSessions[0].title, 'Omega');
         assert.strictEqual(excludedSessions.length, 1);
@@ -551,13 +554,13 @@ module(
       await component.sessions[1].countAsOneOffering.toggle();
       await component.sessions[1].exclude.toggle();
       await component.save();
+      assert.verifySteps(['save called']);
     });
 
     test('cancel', async function (assert) {
-      assert.expect(1);
       this.set('sortBy', 'title');
       this.set('cancel', () => {
-        assert.ok(true, 'Cancel action fired.');
+        assert.step('cancel called');
       });
       await render(
         <template>
@@ -572,6 +575,7 @@ module(
         </template>,
       );
       await component.cancel();
+      assert.verifySteps(['cancel called']);
     });
   },
 );

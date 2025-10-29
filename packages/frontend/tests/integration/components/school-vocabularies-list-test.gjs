@@ -77,13 +77,13 @@ module('Integration | Component | school vocabularies list', function (hooks) {
   });
 
   test('clicking edit fires the action to manage the vocab', async function (assert) {
-    assert.expect(1);
     const school = this.server.create('school');
     const vocabularies = this.server.createList('vocabulary', 2, { school });
     const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
 
     this.set('school', schoolModel);
     this.set('edit', (id) => {
+      assert.step('edit called');
       assert.strictEqual(id, vocabularies[0].id);
     });
     await render(
@@ -92,5 +92,6 @@ module('Integration | Component | school vocabularies list', function (hooks) {
       </template>,
     );
     await component.vocabularies[0].manage();
+    assert.verifySteps(['edit called']);
   });
 });

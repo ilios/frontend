@@ -84,7 +84,6 @@ module('Acceptance | Session - Objective Parents - Faded Status Sync', function 
   });
 
   test('objective description and parent objectives faded statuses are synced', async function (assert) {
-    assert.expect(52);
     this.user.update({ administeredSchools: [this.school] });
 
     await page.visit({

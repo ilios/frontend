@@ -13,8 +13,6 @@ module('Integration | Component | global-search', function (hooks) {
   setupMirage(hooks);
 
   test('it renders', async function (assert) {
-    assert.expect(1);
-
     await render(
       <template>
         <GlobalSearch @setQuery={{(noop)}} @setPage={{(noop)}} @setSelectedYear={{(noop)}} />
@@ -24,8 +22,8 @@ module('Integration | Component | global-search', function (hooks) {
   });
 
   test('handles empty and non-empty query', async function (assert) {
-    assert.expect(4);
     this.server.get('api/search/v2/curriculum', (schema, { queryParams: { q, onlySuggest } }) => {
+      assert.step('API called');
       assert.strictEqual(q, 'hello world');
       assert.notOk(onlySuggest);
       return {
@@ -58,11 +56,14 @@ module('Integration | Component | global-search', function (hooks) {
     this.set('query', 'hello world');
     await settled();
     assert.notOk(component.noResultsIsVisible);
+    assert.verifySteps(['API called']);
   });
 
   test('bubbles action properly', async function (assert) {
-    assert.expect(1);
-    this.set('query', (value) => assert.strictEqual(value, 'typed it'));
+    this.set('query', (value) => {
+      assert.step('query called');
+      assert.strictEqual(value, 'typed it');
+    });
     await render(
       <template>
         <GlobalSearch @setQuery={{this.query}} @setPage={{(noop)}} @setSelectedYear={{(noop)}} />
@@ -70,16 +71,16 @@ module('Integration | Component | global-search', function (hooks) {
     );
     await component.searchBox.input('typed it');
     await component.searchBox.clickIcon();
+    assert.verifySteps(['query called']);
   });
 
   test('academic year filter works properly', async function (assert) {
-    assert.expect(26);
-
     this.server.create('academic-year', { id: 2019 });
     this.server.create('academic-year', { id: 2020 });
     this.server.create('academic-year', { id: 2021 });
     const testYears = (years) => {
       this.server.get('api/search/v2/curriculum', (schema, { queryParams }) => {
+        assert.step('API called');
         const queryYears = queryParams.years ? queryParams.years.split('-').map(Number) : [];
         assert.deepEqual(queryYears.sort(), years);
         return {
@@ -143,14 +144,14 @@ module('Integration | Component | global-search', function (hooks) {
     assert.ok(component.yearFilters[0].isSelected);
     assert.ok(component.yearFilters[1].isSelected);
     assert.ok(component.yearFilters[2].isSelected);
+    assert.verifySteps(Array(7).fill('API called'));
   });
 
   test('school filter works properly', async function (assert) {
-    assert.expect(26);
-
     this.server.createList('school', 3);
     const testSchools = (schools) => {
       this.server.get('api/search/v2/curriculum', (schema, { queryParams }) => {
+        assert.step('API called');
         const querySchools = queryParams.schools ? queryParams.schools.split('-').map(Number) : [];
         assert.deepEqual(querySchools, schools);
         return {
@@ -214,13 +215,14 @@ module('Integration | Component | global-search', function (hooks) {
     assert.ok(component.schoolFilters[0].isSelected);
     assert.ok(component.schoolFilters[1].isSelected);
     assert.ok(component.schoolFilters[2].isSelected);
+    assert.verifySteps(Array(7).fill('API called'));
   });
 
   test('if only one school in system no school filter', async function (assert) {
-    assert.expect(1);
     this.server.create('school');
 
     this.server.get('api/search/v2/curriculum', () => {
+      assert.step('API called');
       return {
         results: {
           courses: [],
@@ -243,16 +245,17 @@ module('Integration | Component | global-search', function (hooks) {
       </template>,
     );
     assert.strictEqual(component.schoolFilters.length, 0);
+    assert.verifySteps(['API called']);
   });
 
   test('shows search spinner while running', async function (assert) {
-    assert.expect(2);
     let resolveTestPromise;
     const p = new Promise((r) => {
       resolveTestPromise = r;
     });
     class SearchMock extends Service {
       forCurriculum() {
+        assert.step('search.forCurriculum called');
         return p;
       }
     }
@@ -274,11 +277,12 @@ module('Integration | Component | global-search', function (hooks) {
     this.set('query', 'hello world');
     assert.ok(component.searchIsRunning);
     resolveTestPromise();
+    assert.verifySteps(['search.forCurriculum called']);
   });
 
   test('did you mean only shows up if score is high enough', async function (assert) {
-    assert.expect(2);
     this.server.get('api/search/v2/curriculum', () => {
+      assert.step('API called');
       return {
         results: {
           courses: [],
@@ -305,11 +309,12 @@ module('Integration | Component | global-search', function (hooks) {
     );
     assert.ok(component.noResultsIsVisible);
     assert.notOk(component.didYouMean.isVisible);
+    assert.verifySteps(['API called']);
   });
 
   test('did you mean works', async function (assert) {
-    assert.expect(4);
     this.server.get('api/search/v2/curriculum', () => {
+      assert.step('API called');
       return {
         results: {
           courses: [],
@@ -337,5 +342,6 @@ module('Integration | Component | global-search', function (hooks) {
     assert.ok(component.didYouMean.isVisible);
     assert.strictEqual(component.didYouMean.text, 'Did you mean Jackson?');
     assert.ok(component.didYouMean.url.includes('Jackson'));
+    assert.verifySteps(['API called']);
   });
 });

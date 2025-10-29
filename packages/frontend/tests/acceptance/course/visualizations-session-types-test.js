@@ -13,7 +13,6 @@ module('Acceptance | course visualizations - session-types', function (hooks) {
   });
 
   test('it renders', async function (assert) {
-    assert.expect(18);
     const sessionType1 = this.server.create('session-type');
     const sessionType2 = this.server.create('session-type');
     const sessionType3 = this.server.create('session-type');

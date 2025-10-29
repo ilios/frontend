@@ -11,8 +11,6 @@ module(
     setupRenderingTest(hooks);
 
     test('it renders', async function (assert) {
-      assert.expect(20);
-
       const data = [
         {
           id: '001',

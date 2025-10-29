@@ -246,8 +246,8 @@ module('Integration | Component | curriculum-inventory/sequence-block-list', fun
   });
 
   test('delete', async function (assert) {
-    assert.expect(3);
     this.set('remove', (block) => {
+      assert.step('remove called');
       assert.strictEqual(block, this.sequenceBlock2);
     });
     this.set('blocks', await this.report.getTopLevelSequenceBlocks());
@@ -266,6 +266,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-list', fun
     await component.list.items[0].remove();
     assert.ok(component.list.items[0].confirmRemoval.isVisible);
     await component.list.items[0].confirmRemoval.confirm();
+    assert.verifySteps(['remove called']);
   });
 
   test('cancel delete', async function (assert) {

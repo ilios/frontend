@@ -25,10 +25,10 @@ module('Acceptance | search', function (hooks) {
   });
 
   test('visiting /search', async function (assert) {
-    assert.expect(6);
     const input = 'hello';
 
     this.server.get('api/search/v2/curriculum', (schema, { queryParams }) => {
+      assert.step('API called');
       assert.ok(queryParams.q);
       assert.strictEqual(queryParams.q, input);
 
@@ -48,12 +48,13 @@ module('Acceptance | search', function (hooks) {
     await page.globalSearch.searchBox.clickIcon();
     assert.strictEqual(page.globalSearch.searchBox.inputValue, input);
     assert.strictEqual(currentURL(), `/search?q=${input}`, 'triggering search updates query param');
+    assert.verifySteps(['API called']);
   });
 
   test('visiting /search?q', async function (assert) {
-    assert.expect(3);
     const test = 'hello';
     this.server.get('api/search/v2/curriculum', (schema, { queryParams }) => {
+      assert.step('API called');
       assert.ok(queryParams.q);
       assert.strictEqual(queryParams.q, test);
 
@@ -68,14 +69,14 @@ module('Acceptance | search', function (hooks) {
 
     await page.visit({ q: test });
     assert.strictEqual(page.globalSearch.searchBox.inputValue, test);
+    assert.verifySteps(['API called']);
   });
 
   test('search with special chars #4752', async function (assert) {
-    assert.expect(4);
-
     const input = 'H&L+foo=bar';
 
     this.server.get('api/search/v2/curriculum', () => {
+      assert.step('API called');
       return {
         results: {
           courses: [],
@@ -92,14 +93,14 @@ module('Acceptance | search', function (hooks) {
     await page.globalSearch.searchBox.clickIcon();
     assert.strictEqual(currentURL(), `/search?q=${encodeURIComponent(input)}`);
     assert.strictEqual(page.globalSearch.searchBox.inputValue, input);
+    assert.verifySteps(['API called']);
   });
 
   test('search with special chars from dashboard #4752', async function (assert) {
-    assert.expect(3);
-
     const input = 'H&L+foo=bar';
 
     this.server.get('api/search/v2/curriculum', () => {
+      assert.step('API called');
       return {
         results: {
           courses: [],
@@ -117,11 +118,10 @@ module('Acceptance | search', function (hooks) {
       `/search?q=${encodeURIComponent(input)}&schools=1&years=${currentAcademicYear()}-${currentAcademicYear() - 1}`,
     );
     assert.strictEqual(page.globalSearch.searchBox.inputValue, input);
+    assert.verifySteps(['API called']);
   });
 
   test('clicking back from course to search works #4768', async function (assert) {
-    assert.expect(14);
-
     const school = this.server.create('school');
     this.server.createList('course', 25, { school });
     const year = currentAcademicYear();
@@ -138,6 +138,7 @@ module('Acceptance | search', function (hooks) {
     const firstInput = 'first';
 
     this.server.get('api/search/v2/curriculum', (schema, { queryParams }) => {
+      assert.step('API called');
       assert.ok(queryParams.size);
       assert.ok(queryParams.from);
       const from = Number(queryParams.from);
@@ -187,16 +188,16 @@ module('Acceptance | search', function (hooks) {
       `${year} course 11`,
       'first result title is still correct',
     );
+    assert.verifySteps(Array(3).fill('API called'));
   });
 
   test('clicking back on search updates results and input #4759', async function (assert) {
-    assert.expect(14);
-
     const firstInput = 'first';
     const secondInput = 'second';
 
     let searchRun = 0;
     this.server.get('api/search/v2/curriculum', (schema, { queryParams }) => {
+      assert.step('API called');
       const rhett = {
         results: {
           courses: [],
@@ -238,11 +239,10 @@ module('Acceptance | search', function (hooks) {
     assert.strictEqual(currentURL(), `/search?q=${firstInput}`);
     assert.strictEqual(page.globalSearch.searchBox.inputValue, firstInput);
     assert.strictEqual(searchRun, 3, 'search was run three times');
+    assert.verifySteps(Array(3).fill('API called'));
   });
 
   test('school filter in query param', async function (assert) {
-    assert.expect(11);
-
     this.server.createList('school', 2);
     const schools = this.server.schema.schools.all().models;
     const courses = [];
@@ -257,6 +257,7 @@ module('Acceptance | search', function (hooks) {
     }
 
     this.server.get('api/search/v2/curriculum', (schema, { queryParams }) => {
+      assert.step('API called');
       assert.ok(queryParams.schools);
       const schoolIds = queryParams.schools.split('-').map(Number);
       assert.deepEqual(schoolIds, [2]);
@@ -283,15 +284,16 @@ module('Acceptance | search', function (hooks) {
     assert.ok(page.globalSearch.schoolFilters[1].isSelected);
     assert.strictEqual(page.globalSearch.schoolFilters[2].school, 'school 2');
     assert.notOk(page.globalSearch.schoolFilters[2].isSelected);
+    assert.verifySteps(['API called']);
   });
 
   test('year filter in query param', async function (assert) {
-    assert.expect(11);
     this.server.create('academic-year', { id: 2025, title: '2025' });
     this.server.create('academic-year', { id: 2024, title: '2024' });
     this.server.create('academic-year', { id: 2023, title: '2023' });
 
     this.server.get('api/search/v2/curriculum', (schema, { queryParams }) => {
+      assert.step('API called');
       assert.ok(queryParams.years);
       const years = queryParams.years.split('-').map(Number);
       assert.deepEqual(years, [2024]);
@@ -324,5 +326,6 @@ module('Acceptance | search', function (hooks) {
     assert.ok(page.globalSearch.yearFilters[1].isSelected);
     assert.strictEqual(page.globalSearch.yearFilters[2].year, '2023');
     assert.notOk(page.globalSearch.yearFilters[2].isSelected);
+    assert.verifySteps(['API called']);
   });
 });

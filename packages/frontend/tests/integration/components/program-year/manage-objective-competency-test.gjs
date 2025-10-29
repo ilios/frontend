@@ -67,7 +67,6 @@ module('Integration | Component | program-year/manage-objective-competency', fun
   });
 
   test('unselect domain', async function (assert) {
-    assert.expect(2);
     const domainTrees = [
       {
         title: this.domainModel1.title,
@@ -79,7 +78,7 @@ module('Integration | Component | program-year/manage-objective-competency', fun
     this.set('domainTrees', domainTrees);
     this.set('programYearCompetencies', [this.domainModel1]);
     this.set('remove', () => {
-      assert.ok(true); // input doesn't matter, we just need to confirm this fired.
+      assert.step('remove called');
     });
     await render(
       <template>
@@ -94,10 +93,10 @@ module('Integration | Component | program-year/manage-objective-competency', fun
     );
     assert.ok(component.domains[0].selected);
     await component.domains[0].toggle();
+    assert.verifySteps(['remove called']);
   });
 
   test('select domain', async function (assert) {
-    assert.expect(2);
     const domainTrees = [
       {
         title: this.domainModel1.title,
@@ -108,6 +107,7 @@ module('Integration | Component | program-year/manage-objective-competency', fun
     this.set('domainTrees', domainTrees);
     this.set('programYearCompetencies', [this.domainModel1]);
     this.set('add', (id) => {
+      assert.step('add called');
       assert.strictEqual(id, this.domainModel1.id);
     });
     await render(
@@ -123,6 +123,7 @@ module('Integration | Component | program-year/manage-objective-competency', fun
     );
     assert.ok(component.domains[0].notSelected);
     await component.domains[0].toggle();
+    assert.verifySteps(['add called']);
   });
 
   test('domains are sorted alphabetically by title', async function (assert) {

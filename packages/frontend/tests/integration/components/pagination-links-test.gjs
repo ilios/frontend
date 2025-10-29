@@ -9,11 +9,7 @@ module('Integration | Component | pagination-links', function (hooks) {
   setupRenderingTest(hooks);
 
   test('it displays pagination links properly', async function (assert) {
-    assert.expect(64);
-
     this.setProperties({ page: 1, results: [1], size: 1 });
-    this.set('prevPage', () => this.set('page', this.page - 1));
-    this.set('nextPage', () => this.set('page', this.page + 1));
     await render(
       <template>
         <PaginationLinks

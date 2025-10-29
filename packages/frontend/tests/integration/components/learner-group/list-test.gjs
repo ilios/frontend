@@ -187,11 +187,11 @@ module('Integration | Component | learner-group/list', function (hooks) {
   });
 
   test('copy with learners', async function (assert) {
-    assert.expect(3);
     this.server.createList('learner-group', 1, { cohort: this.cohort });
     const learnerGroupModels = await this.owner.lookup('service:store').findAll('learner-group');
     this.set('learnerGroups', learnerGroupModels);
     this.set('copyGroup', (withLearners, group) => {
+      assert.step('copyGroup called');
       assert.ok(withLearners);
       assert.strictEqual(parseInt(group.id, 10), 1);
     });
@@ -209,14 +209,15 @@ module('Integration | Component | learner-group/list', function (hooks) {
     await component.items[0].copy();
     assert.ok(component.confirmCopy.canCopyWithLearners);
     await component.confirmCopy.copyWithLearners();
+    assert.verifySteps(['copyGroup called']);
   });
 
   test('copy without learners when with learners is enabled', async function (assert) {
-    assert.expect(3);
     this.server.createList('learner-group', 1, { cohort: this.cohort });
     const learnerGroupModels = await this.owner.lookup('service:store').findAll('learner-group');
     this.set('learnerGroups', learnerGroupModels);
     this.set('copyGroup', (withLearners, group) => {
+      assert.step('copyGroup called');
       assert.notOk(withLearners);
       assert.strictEqual(parseInt(group.id, 10), 1);
     });
@@ -234,14 +235,15 @@ module('Integration | Component | learner-group/list', function (hooks) {
     await component.items[0].copy();
     assert.ok(component.confirmCopy.canCopyWithLearners);
     await component.confirmCopy.copyWithoutLearners();
+    assert.verifySteps(['copyGroup called']);
   });
 
   test('copy without learners', async function (assert) {
-    assert.expect(3);
     this.server.createList('learner-group', 1, { cohort: this.cohort });
     const learnerGroupModels = await this.owner.lookup('service:store').findAll('learner-group');
     this.set('learnerGroups', learnerGroupModels);
     this.set('copyGroup', (withLearners, group) => {
+      assert.step('copyGroup called');
       assert.notOk(withLearners);
       assert.strictEqual(parseInt(group.id, 10), 1);
     });
@@ -259,15 +261,15 @@ module('Integration | Component | learner-group/list', function (hooks) {
     await component.items[0].copy();
     assert.notOk(component.confirmCopy.canCopyWithLearners);
     await component.confirmCopy.copyWithoutLearners();
+    assert.verifySteps(['copyGroup called']);
   });
 
   test('cancel copy with learners enabled', async function (assert) {
-    assert.expect(3);
     this.server.createList('learner-group', 1, { cohort: this.cohort });
     const learnerGroupModels = await this.owner.lookup('service:store').findAll('learner-group');
     this.set('learnerGroups', learnerGroupModels);
     this.set('copyGroup', () => {
-      assert.ok(false);
+      assert.step('copyGroup called');
     });
     await render(
       <template>
@@ -285,15 +287,15 @@ module('Integration | Component | learner-group/list', function (hooks) {
     assert.ok(component.confirmCopy.canCopyWithLearners);
     await component.confirmCopy.cancel();
     assert.notOk(component.confirmCopy.isPresent);
+    assert.verifySteps([]);
   });
 
   test('cancel copy with learners disabled', async function (assert) {
-    assert.expect(3);
     this.server.createList('learner-group', 1, { cohort: this.cohort });
     const learnerGroupModels = await this.owner.lookup('service:store').findAll('learner-group');
     this.set('learnerGroups', learnerGroupModels);
     this.set('copyGroup', () => {
-      assert.ok(false);
+      assert.step('copyGroup called');
     });
     await render(
       <template>
@@ -311,5 +313,6 @@ module('Integration | Component | learner-group/list', function (hooks) {
     assert.notOk(component.confirmCopy.canCopyWithLearners);
     await component.confirmCopy.cancel();
     assert.notOk(component.confirmCopy.isPresent);
+    assert.verifySteps([]);
   });
 });

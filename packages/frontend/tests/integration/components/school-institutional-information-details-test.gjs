@@ -4,6 +4,7 @@ import { render } from '@ember/test-helpers';
 import { setupMirage } from 'frontend/tests/test-support/mirage';
 import { component } from 'frontend/tests/pages/components/school-institutional-information-details';
 import SchoolInstitutionalInformationDetails from 'frontend/components/school-institutional-information-details';
+import noop from 'ilios-common/helpers/noop';
 
 module('Integration | Component | school-institutional-information-details', function (hooks) {
   setupRenderingTest(hooks);
@@ -79,7 +80,6 @@ module('Integration | Component | school-institutional-information-details', fun
   });
 
   test('manage button fires', async function (assert) {
-    assert.expect(1);
     const school = this.server.create('school');
     this.server.create('curriculum-inventory-institution', {
       school,
@@ -90,6 +90,7 @@ module('Integration | Component | school-institutional-information-details', fun
     this.set('school', schoolModel);
     this.set('canUpdate', true);
     this.set('manage', (isManaging) => {
+      assert.step('manage called');
       assert.ok(isManaging);
     });
     await render(
@@ -102,22 +103,21 @@ module('Integration | Component | school-institutional-information-details', fun
       </template>,
     );
     await component.header.manage();
+    assert.verifySteps(['manage called']);
   });
 
   test('no institutional information', async function (assert) {
-    assert.expect(1);
     const school = this.server.create('school');
     const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
 
     this.set('school', schoolModel);
     this.set('canUpdate', true);
-    this.set('manage', parseInt);
     await render(
       <template>
         <SchoolInstitutionalInformationDetails
           @school={{this.school}}
           @canUpdate={{this.canUpdate}}
-          @manage={{this.manage}}
+          @manage={{(noop)}}
         />
       </template>,
     );

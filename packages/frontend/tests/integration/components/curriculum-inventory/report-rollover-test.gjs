@@ -137,7 +137,6 @@ module('Integration | Component | curriculum-inventory/report-rollover', functio
   });
 
   test('rollover report', async function (assert) {
-    assert.expect(6);
     const school = this.server.create('school');
     const program = this.server.create('program', { school });
     const thisYear = DateTime.fromObject({ hour: 8 }).year;
@@ -154,6 +153,7 @@ module('Integration | Component | curriculum-inventory/report-rollover', functio
     this.server.post(
       `/api/curriculuminventoryreports/:id/rollover`,
       function (schema, { params, requestBody }) {
+        assert.step('API called');
         assert.ok('id' in params);
         assert.strictEqual(params.id, reportModel.id);
         const data = queryString.parse(requestBody);
@@ -170,16 +170,17 @@ module('Integration | Component | curriculum-inventory/report-rollover', functio
     );
     this.set('report', reportModel);
     this.set('visit', (newReport) => {
+      assert.step('visit called');
       assert.strictEqual(parseInt(newReport.id, 10), 14);
     });
     await render(
       <template><ReportRollover @report={{this.report}} @visit={{this.visit}} /></template>,
     );
     await component.save();
+    assert.verifySteps(['API called', 'visit called']);
   });
 
   test('submit rollover report by pressing enter in name field', async function (assert) {
-    assert.expect(1);
     const school = this.server.create('school');
     const program = this.server.create('program', { school });
     const thisYear = DateTime.fromObject({ hour: 8 }).year;
@@ -194,6 +195,7 @@ module('Integration | Component | curriculum-inventory/report-rollover', functio
       .findRecord('curriculum-inventory-report', report.id);
 
     this.server.post(`/api/curriculuminventoryreports/:id/rollover`, function (schema) {
+      assert.step('API called');
       return this.serialize(
         schema.curriculumInventoryReports.create({
           id: 14,
@@ -202,16 +204,17 @@ module('Integration | Component | curriculum-inventory/report-rollover', functio
     });
     this.set('report', reportModel);
     this.set('visit', (newReport) => {
+      assert.step('visit called');
       assert.strictEqual(parseInt(newReport.id, 10), 14);
     });
     await render(
       <template><ReportRollover @report={{this.report}} @visit={{this.visit}} /></template>,
     );
     await component.name.submit();
+    assert.verifySteps(['API called', 'visit called']);
   });
 
   test('rollover report with new name, description, year and program', async function (assert) {
-    assert.expect(11);
     const school = this.server.create('school');
     const program = this.server.create('program', { school, title: 'doctor of rocket surgery' });
     const otherProgram = this.server.create('program', { school, title: 'doktor eisenbart' });
@@ -232,6 +235,7 @@ module('Integration | Component | curriculum-inventory/report-rollover', functio
     this.server.post(
       `/api/curriculuminventoryreports/:id/rollover`,
       function (schema, { params, requestBody }) {
+        assert.step('API called');
         assert.ok('id' in params);
         assert.strictEqual(params.id, report.id);
         const data = queryString.parse(requestBody);
@@ -261,6 +265,7 @@ module('Integration | Component | curriculum-inventory/report-rollover', functio
     assert.notOk(component.programs.options[1].isSelected);
     await component.programs.select(otherProgram.id);
     await component.save();
+    assert.verifySteps(['API called']);
   });
 
   test('no input validation errors are shown initially', async function (assert) {

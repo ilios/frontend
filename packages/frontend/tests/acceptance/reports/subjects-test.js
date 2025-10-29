@@ -72,7 +72,6 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
   });
 
   test('shows reports', async function (assert) {
-    assert.expect(3);
     await page.visit();
     await percySnapshot(assert);
     assert.strictEqual(page.subjects.list.table.reports.length, 2);
@@ -84,7 +83,6 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
   });
 
   test('create new report', async function (assert) {
-    assert.expect(15);
     await page.visit();
     assert.strictEqual(page.subjects.list.table.reports.length, 2, 'report count is correct');
     assert.strictEqual(
@@ -142,6 +140,7 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
     );
 
     this.server.post('api/graphql', ({ db }, { requestBody }) => {
+      assert.step('API called');
       const { query } = JSON.parse(requestBody);
       const course = db.courses[0];
       const { id, title } = db.sessions[0];
@@ -179,6 +178,7 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
     );
     assert.strictEqual(subjectReportPage.report.results.length, 1);
     assert.strictEqual(subjectReportPage.report.results[0].text, 'course 0: session 0');
+    assert.verifySteps(['API called']);
   });
 
   test('create new report with empty title', async function (assert) {
@@ -196,7 +196,6 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
   });
 
   test('filter session by year in new report form', async function (assert) {
-    assert.expect(13);
     await page.visit();
     assert.strictEqual(page.subjects.list.table.reports.length, 2);
     assert.strictEqual(
@@ -224,6 +223,7 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
     );
     assert.strictEqual(page.subjects.list.table.reports[2].title, 'my report 0');
     this.server.post('api/graphql', ({ db }, { requestBody }) => {
+      assert.step('API called');
       const { query } = JSON.parse(requestBody);
       const { id, title } = db.terms[0];
       const vocab = db.vocabularies[0];
@@ -246,10 +246,10 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
     );
     assert.strictEqual(subjectReportPage.report.results.length, 1);
     assert.strictEqual(subjectReportPage.report.results[0].text, 'Vocabulary 1 > term 0');
+    assert.verifySteps(['API called']);
   });
 
   test('get all courses associated with mesh term #3419', async function (assert) {
-    assert.expect(16);
     await page.visit();
     assert.strictEqual(page.subjects.list.table.reports.length, 2);
     assert.strictEqual(
@@ -277,6 +277,7 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
     assert.strictEqual(page.subjects.list.table.reports[2].title, 'my report 0');
     let graphQueryCounter = 0;
     this.server.post('api/graphql', function ({ db }, { requestBody }) {
+      assert.step('API called');
       graphQueryCounter++;
       const { query } = JSON.parse(requestBody);
       let rhett;
@@ -314,10 +315,7 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
             },
           };
           break;
-        default:
-          assert.ok(false, 'too many queries');
       }
-
       return rhett;
     });
     await page.subjects.list.table.reports[0].select();
@@ -333,6 +331,7 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
       subjectReportPage.report.results[1].text,
       '2015 course 0 (Theoretical Phys Ed)',
     );
+    assert.verifySteps(['API called', 'API called']);
   });
 
   test('Prepositional object resets when a new type is selected', async function (assert) {
@@ -365,7 +364,6 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
   });
 
   test('course external id in report', async function (assert) {
-    assert.expect(13);
     await page.visit();
     assert.strictEqual(page.subjects.list.table.reports.length, 2, 'report list count correct');
     assert.strictEqual(
@@ -399,6 +397,7 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
       'third report title correct',
     );
     this.server.post('api/graphql', ({ db }, { requestBody }) => {
+      assert.step('API called');
       const { query } = JSON.parse(requestBody);
 
       assert.strictEqual(
@@ -433,6 +432,7 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
       'school 0: 2015 course 0 (Theoretical Phys Ed)',
       'first report result title correct',
     );
+    assert.verifySteps(['API called']);
   });
 
   test('delete report', async function (assert) {
@@ -450,7 +450,6 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
   });
 
   test('run subject report', async function (assert) {
-    assert.expect(5);
     await page.visit();
     await page.subjects.list.toggleNewSubjectReportForm();
     await page.subjects.list.newSubject.schools.choose('1');
@@ -459,6 +458,7 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
     await page.subjects.list.newSubject.course.input('cour');
     await page.subjects.list.newSubject.course.results[1].click();
     this.server.post('api/graphql', ({ db }, { requestBody }) => {
+      assert.step('API called');
       const { query } = JSON.parse(requestBody);
       const course = db.courses[0];
       const { id, title } = db.sessions[0];
@@ -496,15 +496,16 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
     );
     assert.strictEqual(page.subjects.results.results.length, 1);
     assert.strictEqual(page.subjects.results.results[0].text, 'course 0: session 0');
+    assert.verifySteps(['API called']);
   });
 
   test('reset year when subject report is run', async function (assert) {
-    assert.expect(12);
     await page.visit();
     await page.subjects.list.toggleNewSubjectReportForm();
     await page.subjects.list.newSubject.schools.choose('1');
     await page.subjects.list.newSubject.subjects.choose('course');
     this.server.post('api/graphql', ({ db }, { requestBody }) => {
+      assert.step('API called');
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
@@ -542,12 +543,13 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
       page.subjects.runSubject.results.results[1].text,
       '2015 course 0 (Theoretical Phys Ed)',
     );
+    assert.verifySteps(['API called', 'API called']);
   });
 
   test('remove report title', async function (assert) {
-    assert.expect(6);
     await page.visit();
     this.server.post('api/graphql', () => {
+      assert.step('API called');
       //send wrong data back, who cares
       return {
         data: {
@@ -576,10 +578,10 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
       page.subjects.list.table.reports[1].title,
       'All Sessions for Term term 0 in school 0',
     );
+    assert.verifySteps(['API called']);
   });
 
   test('create new report for instructors by academic year #3594', async function (assert) {
-    assert.expect(15);
     this.server.createList('user', 3);
     await page.visit();
     assert.strictEqual(page.subjects.list.table.reports.length, 2);
@@ -603,6 +605,7 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
 
     let counter = 0;
     this.server.post('api/graphql', ({ db }, { requestBody }) => {
+      assert.step('API called');
       const { query } = JSON.parse(requestBody);
       const users = db.users.map(({ id, firstName, middleName, lastName, displayName }) => {
         return { id, firstName, middleName, lastName, displayName };
@@ -631,8 +634,6 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
             },
           };
           break;
-        default:
-          assert.ok(false, 'too many queries');
       }
       return rhett;
     });
@@ -647,10 +648,10 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
     assert.strictEqual(subjectReportPage.report.results[1].text, '1 guy M. Mc1son');
     assert.strictEqual(subjectReportPage.report.results[2].text, '2 guy M. Mc2son');
     assert.strictEqual(subjectReportPage.report.results[3].text, '3 guy M. Mc3son');
+    assert.verifySteps(['API called', 'API called']);
   });
 
   test('courses by academic year hides year', async function (assert) {
-    assert.expect(5);
     await page.visit();
     await page.subjects.list.toggleNewSubjectReportForm();
     await page.subjects.list.newSubject.schools.choose('');
@@ -659,6 +660,7 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
     await page.subjects.list.newSubject.prepositionalObjects.choose('2015');
     await page.subjects.list.newSubject.save();
     this.server.post('api/graphql', ({ db }, { requestBody }) => {
+      assert.step('API called');
       const { query } = JSON.parse(requestBody);
       assert.strictEqual(
         query,
@@ -685,5 +687,6 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
       subjectReportPage.report.results[0].text,
       'school 0: course 0 (Theoretical Phys Ed)',
     );
+    assert.verifySteps(['API called']);
   });
 });

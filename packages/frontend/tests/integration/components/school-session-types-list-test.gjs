@@ -88,7 +88,6 @@ module('Integration | Component | school session types list', function (hooks) {
   });
 
   test('clicking edit fires action', async function (assert) {
-    assert.expect(1);
     const school = this.server.create('school');
     this.server.create('session-type', {
       school,
@@ -100,6 +99,7 @@ module('Integration | Component | school session types list', function (hooks) {
 
     this.set('sessionTypes', sessionTypeModels);
     this.set('manageSessionType', (sessionTypeId) => {
+      assert.step('manageSessionType called');
       assert.strictEqual(parseInt(sessionTypeId, 10), 1);
     });
     await render(
@@ -112,10 +112,10 @@ module('Integration | Component | school session types list', function (hooks) {
     );
 
     await component.sessionTypes[0].manage();
+    assert.verifySteps(['manageSessionType called']);
   });
 
   test('clicking title fires action', async function (assert) {
-    assert.expect(1);
     const school = this.server.create('school');
     this.server.create('session-type', {
       school,
@@ -127,6 +127,7 @@ module('Integration | Component | school session types list', function (hooks) {
 
     this.set('sessionTypes', sessionTypeModels);
     this.set('manageSessionType', (sessionTypeId) => {
+      assert.step('manageSessionType called');
       assert.strictEqual(parseInt(sessionTypeId, 10), 1);
     });
     await render(
@@ -139,6 +140,7 @@ module('Integration | Component | school session types list', function (hooks) {
     );
 
     await component.sessionTypes[0].title.edit();
+    assert.verifySteps(['manageSessionType called']);
   });
 
   test('session types without sessions can be deleted', async function (assert) {

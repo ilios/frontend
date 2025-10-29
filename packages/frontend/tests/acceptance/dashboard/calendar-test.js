@@ -82,7 +82,6 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
   });
 
   test('load month calendar', async function (assert) {
-    assert.expect(4);
     const day = DateTime.fromObject({
       month: 9,
       day: 9,
@@ -138,7 +137,6 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
   });
 
   test('load week calendar', async function (assert) {
-    assert.expect(9);
     const march11th2009 = DateTime.fromObject({
       year: 2009,
       month: 3,
@@ -193,7 +191,6 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
   });
 
   test('load week calendar on Sunday', async function (assert) {
-    assert.expect(10);
     freezeDateAt(
       DateTime.fromObject({
         year: 2022,
@@ -252,7 +249,6 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
   });
 
   test('load day calendar', async function (assert) {
-    assert.expect(3);
     freezeDateAt(
       DateTime.fromObject({
         year: 2025,
@@ -293,7 +289,6 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
   });
 
   test('invalid date loads today #5342', async function (assert) {
-    assert.expect(2);
     freezeDateAt(
       DateTime.fromObject({
         year: 2005,
@@ -442,7 +437,6 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
   });
 
   test('show user events', async function (assert) {
-    assert.expect(1);
     const day = DateTime.fromObject({
       month: 4,
       day: 4,
@@ -470,7 +464,6 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
   });
 
   test('show school events', async function (assert) {
-    assert.expect(1);
     const day = DateTime.fromObject({
       month: 7,
       day: 7,
@@ -499,13 +492,11 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
   });
 
   test('user context filters are not present on student-only user calendar', async function (assert) {
-    assert.expect(1);
     await page.visit({ show: 'calendar' });
     assert.notOk(page.calendar.controls.userContextFilter.isPresent);
   });
 
   test('user context filters are present on user calendar for privileged users', async function (assert) {
-    assert.expect(1);
     await setupAuthentication({ school: this.school }, true);
     await page.visit({ show: 'calendar' });
     await percySnapshot(assert);
@@ -513,7 +504,6 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
   });
 
   test('user context filters are not present on school calendar', async function (assert) {
-    assert.expect(2);
     await setupAuthentication({ school: this.school }, true);
     await page.visit({ show: 'calendar' });
     assert.ok(page.calendar.controls.userContextFilter.isPresent);
@@ -523,7 +513,6 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
   });
 
   test('user context filters do not apply to school calendar', async function (assert) {
-    assert.expect(2);
     this.user = await setupAuthentication({ school: this.school }, true);
     const day = DateTime.fromObject({
       month: 7,
@@ -559,7 +548,6 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
   });
 
   test('test user context filters', async function (assert) {
-    assert.expect(11);
     this.user = await setupAuthentication({ school: this.school }, true);
     const day = DateTime.fromObject({
       month: 4,
@@ -610,7 +598,6 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
   });
 
   test('user context filter selections persist across page reloads', async function (assert) {
-    assert.expect(27);
     this.user = await setupAuthentication({ school: this.school }, true);
     const day = DateTime.fromObject({
       month: 4,
@@ -977,7 +964,6 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
   });
 
   test('clear all filters', async function (assert) {
-    assert.expect(18);
     const vocabulary = this.server.create('vocabulary', {
       school: this.school,
     });
@@ -1209,7 +1195,6 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
   });
 
   test('test tooltip', async function (assert) {
-    assert.expect(2);
     const november11th = DateTime.fromObject({ month: 11, day: 11, hour: 8, minute: 8, second: 8 });
     this.server.create('userevent', {
       user: this.user.id,

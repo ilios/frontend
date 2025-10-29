@@ -28,7 +28,6 @@ module('Integration | Component | reports/subject/new/session', function (hooks)
   });
 
   test('it renders', async function (assert) {
-    assert.expect(6);
     await render(
       <template><Session @currentId={{null}} @changeId={{(noop)}} @school={{null}} /></template>,
     );
@@ -44,7 +43,6 @@ module('Integration | Component | reports/subject/new/session', function (hooks)
   });
 
   test('it renders selected session', async function (assert) {
-    assert.expect(2);
     this.set('currentId', 3);
     await render(
       <template>
@@ -57,9 +55,9 @@ module('Integration | Component | reports/subject/new/session', function (hooks)
   });
 
   test('it works', async function (assert) {
-    assert.expect(4);
     this.set('currentId', null);
     this.set('changeId', (id) => {
+      assert.step('changeId called');
       assert.strictEqual(id, '5');
       this.set('currentId', id);
     });
@@ -75,6 +73,7 @@ module('Integration | Component | reports/subject/new/session', function (hooks)
     await component.results[2].click();
     assert.ok(component.hasSelectedSession);
     assert.strictEqual(component.selectedSession, '2027 | session 4 course 1');
+    assert.verifySteps(['changeId called']);
   });
 
   test('it filters by school', async function (assert) {

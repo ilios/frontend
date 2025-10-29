@@ -18,11 +18,13 @@ module('Integration | Component | reports/new-subject', function (hooks) {
     const exceptedSubjects = ['instructor', 'mesh term'];
     context.set('selectedSubject', null);
     context.set('setSelectedSubject', (subject) => {
+      assert.step('setSelectedSubject called');
       context.set('selectedSubject', subject);
       assert.strictEqual(context.selectedSubject, subject, 'selected subject is correct');
     });
     context.set('selectedPrepositionalObject', null);
     context.set('setSelectedPrepositionalObject', (object) => {
+      assert.step('setSelectedPrepositionalObject called');
       context.set('selectedPrepositionalObject', object);
       assert.strictEqual(
         context.selectedPrepositionalObject,
@@ -32,6 +34,7 @@ module('Integration | Component | reports/new-subject', function (hooks) {
     });
     context.set('selectedPrepositionalObjectId', null);
     context.set('setSelectedPrepositionalObjectId', (id) => {
+      assert.step('setSelectedPrepositionalObjectId called');
       context.set('selectedPrepositionalObjectId', id);
       assert.strictEqual(
         context.selectedPrepositionalObjectId,
@@ -82,6 +85,13 @@ module('Integration | Component | reports/new-subject', function (hooks) {
         assert.strictEqual(component.objects.items[i].value, val, `${val} is next object option`);
       });
     }
+    assert.verifySteps([
+      'setSelectedSubject called',
+      'setSelectedPrepositionalObject called',
+      'setSelectedPrepositionalObjectId called',
+      'setSelectedPrepositionalObject called',
+      'setSelectedPrepositionalObjectId called',
+    ]);
   };
 
   test('it renders', async function (assert) {
@@ -238,7 +248,6 @@ module('Integration | Component | reports/new-subject', function (hooks) {
   });
 
   test('choosing course selects correct objects', function (assert) {
-    assert.expect(15);
     return checkObjects(this, assert, 0, 'course', [
       'academic year',
       'competency',
@@ -252,7 +261,6 @@ module('Integration | Component | reports/new-subject', function (hooks) {
   });
 
   test('choosing session selects correct objects', function (assert) {
-    assert.expect(16);
     return checkObjects(this, assert, 1, 'session', [
       'academic year',
       'competency',
@@ -267,17 +275,14 @@ module('Integration | Component | reports/new-subject', function (hooks) {
   });
 
   test('choosing programs selects correct objects', function (assert) {
-    assert.expect(9);
     return checkObjects(this, assert, 2, 'program', ['course', 'session']);
   });
 
   test('choosing program years selects correct objects', function (assert) {
-    assert.expect(9);
     return checkObjects(this, assert, 3, 'program year', ['course', 'session']);
   });
 
   test('choosing instructor selects correct objects', function (assert) {
-    assert.expect(12);
     return checkObjects(this, assert, 4, 'instructor', [
       'academic year',
       'course',
@@ -289,7 +294,6 @@ module('Integration | Component | reports/new-subject', function (hooks) {
   });
 
   test('choosing instructor group selects correct objects', function (assert) {
-    assert.expect(13);
     return checkObjects(this, assert, 5, 'instructor group', [
       'academic year',
       'course',
@@ -301,7 +305,6 @@ module('Integration | Component | reports/new-subject', function (hooks) {
   });
 
   test('choosing learning material selects correct objects', function (assert) {
-    assert.expect(13);
     return checkObjects(this, assert, 6, 'learning material', [
       'course',
       'instructor',
@@ -313,7 +316,6 @@ module('Integration | Component | reports/new-subject', function (hooks) {
   });
 
   test('choosing competency selects correct objects', function (assert) {
-    assert.expect(11);
     return checkObjects(this, assert, 7, 'competency', [
       'academic year',
       'course',
@@ -323,7 +325,6 @@ module('Integration | Component | reports/new-subject', function (hooks) {
   });
 
   test('choosing mesh term selects correct objects', function (assert) {
-    assert.expect(10);
     return checkObjects(this, assert, 8, 'mesh term', [
       'course',
       'learning material',
@@ -333,7 +334,6 @@ module('Integration | Component | reports/new-subject', function (hooks) {
   });
 
   test('choosing term selects correct objects', function (assert) {
-    assert.expect(14);
     return checkObjects(this, assert, 9, 'term', [
       'academic year',
       'course',
@@ -346,7 +346,6 @@ module('Integration | Component | reports/new-subject', function (hooks) {
   });
 
   test('choosing session type selects correct objects', function (assert) {
-    assert.expect(16);
     return checkObjects(this, assert, 10, 'session type', [
       'academic year',
       'competency',
@@ -419,7 +418,6 @@ module('Integration | Component | reports/new-subject', function (hooks) {
   });
 
   test('cancel', async function (assert) {
-    assert.expect(1);
     const school = this.server.create('school', { title: 'first' });
     const user = this.server.create('user', { school });
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
@@ -430,14 +428,14 @@ module('Integration | Component | reports/new-subject', function (hooks) {
     }
     this.owner.register('service:current-user', CurrentUserMock);
     this.set('close', () => {
-      assert.ok(true);
+      assert.step('close called');
     });
     await render(<template><NewSubject @close={{this.close}} /></template>);
     await component.cancel();
+    assert.verifySteps(['close called']);
   });
 
   test('save', async function (assert) {
-    assert.expect(1);
     const school = this.server.create('school', { title: 'first' });
     const user = this.server.create('user', { school });
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
@@ -449,6 +447,7 @@ module('Integration | Component | reports/new-subject', function (hooks) {
     this.owner.register('service:current-user', CurrentUserMock);
     this.title = 'lorem ipsum';
     this.set('save', (report) => {
+      assert.step('save called');
       assert.strictEqual(report.title, this.title, 'saved report title is correct');
     });
     await render(
@@ -463,6 +462,7 @@ module('Integration | Component | reports/new-subject', function (hooks) {
     );
     await component.title.set(this.title);
     await component.save();
+    assert.verifySteps(['save called']);
   });
 
   test('title too long', async function (assert) {
@@ -477,10 +477,11 @@ module('Integration | Component | reports/new-subject', function (hooks) {
     this.owner.register('service:current-user', CurrentUserMock);
     this.set('title', '0123456789');
     this.set('setTitle', (title) => {
+      assert.step('setTitle called');
       this.set('title', title);
     });
-    this.set('save', (report) => {
-      assert.strictEqual(report.title, this.title.repeat(25), 'saved report title is correct');
+    this.set('save', () => {
+      assert.step('save called');
     });
     await render(
       <template>
@@ -496,6 +497,7 @@ module('Integration | Component | reports/new-subject', function (hooks) {
     await component.title.set(this.title.repeat(25));
     await component.save();
     assert.strictEqual(component.title.error, 'Title is too long (maximum is 240 characters)');
+    assert.verifySteps(['setTitle called']);
   });
 
   test('instructor missing', async function (assert) {
@@ -510,6 +512,7 @@ module('Integration | Component | reports/new-subject', function (hooks) {
     this.owner.register('service:current-user', CurrentUserMock);
     this.set('selectedPrepositionalObject', null);
     this.set('setSelectedPrepositionalObject', (object) => {
+      assert.step('setSelectedPrepositionalObject called');
       this.set('selectedPrepositionalObject', object);
       assert.strictEqual(
         this.selectedPrepositionalObject,
@@ -519,6 +522,7 @@ module('Integration | Component | reports/new-subject', function (hooks) {
     });
     this.set('selectedPrepositionalObjectId', null);
     this.set('setSelectedPrepositionalObjectId', (id) => {
+      assert.step('setSelectedPrepositionalObjectId called');
       this.set('selectedPrepositionalObjectId', id);
       assert.strictEqual(
         this.selectedPrepositionalObjectId,
@@ -541,6 +545,10 @@ module('Integration | Component | reports/new-subject', function (hooks) {
     assert.notOk(component.prepositionalObjects.hasError);
     await component.save();
     assert.strictEqual(component.prepositionalObjects.error, 'Instructor is Required');
+    assert.verifySteps([
+      'setSelectedPrepositionalObject called',
+      'setSelectedPrepositionalObjectId called',
+    ]);
   });
 
   test('missing MeSH term', async function (assert) {
@@ -555,6 +563,7 @@ module('Integration | Component | reports/new-subject', function (hooks) {
     this.owner.register('service:current-user', CurrentUserMock);
     this.set('selectedPrepositionalObject', null);
     this.set('setSelectedPrepositionalObject', (object) => {
+      assert.step('setSelectedPrepositionalObject called');
       this.set('selectedPrepositionalObject', object);
       assert.strictEqual(
         this.selectedPrepositionalObject,
@@ -564,6 +573,7 @@ module('Integration | Component | reports/new-subject', function (hooks) {
     });
     this.set('selectedPrepositionalObjectId', null);
     this.set('setSelectedPrepositionalObjectId', (id) => {
+      assert.step('setSelectedPrepositionalObjectId called');
       this.set('selectedPrepositionalObjectId', id);
       assert.strictEqual(
         this.selectedPrepositionalObjectId,
@@ -586,5 +596,9 @@ module('Integration | Component | reports/new-subject', function (hooks) {
     assert.notOk(component.prepositionalObjects.hasError);
     await component.save();
     assert.strictEqual(component.prepositionalObjects.error, 'MeSH Term is Required');
+    assert.verifySteps([
+      'setSelectedPrepositionalObject called',
+      'setSelectedPrepositionalObjectId called',
+    ]);
   });
 });

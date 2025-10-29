@@ -67,12 +67,11 @@ module('Integration | Component | ilios-users', function (hooks) {
   });
 
   test('param passing', async function (assert) {
-    assert.expect(2);
-
     const value = 'nothing';
     const newValue = 'test';
     this.set('value', value);
     this.set('setQuery', (query) => {
+      assert.step('setQuery called');
       assert.strictEqual(query, newValue);
     });
     await render(
@@ -96,6 +95,7 @@ module('Integration | Component | ilios-users', function (hooks) {
 
     assert.strictEqual(component.search.value, value);
     await component.search.set(newValue);
+    assert.verifySteps(['setQuery called']);
   });
 
   test('add user form renders when configured to', async function (assert) {
@@ -201,9 +201,9 @@ module('Integration | Component | ilios-users', function (hooks) {
   });
 
   test('closing directory search form resets search terms', async function (assert) {
-    assert.expect(1);
     const { apiVersion } = this.owner.resolveRegistration('config:environment');
     this.server.get('application/config', function () {
+      assert.step('API called');
       return {
         config: {
           type: 'form',
@@ -231,6 +231,7 @@ module('Integration | Component | ilios-users', function (hooks) {
     this.owner.register('service:current-user', CurrentUserMock);
 
     this.set('setSearchTerms', (what) => {
+      assert.step('setSearchTerms called');
       assert.strictEqual(what, '');
     });
 
@@ -252,12 +253,13 @@ module('Integration | Component | ilios-users', function (hooks) {
       </template>,
     );
     await component.collapseForm();
+    assert.verifySteps(['API called', 'setSearchTerms called']);
   });
 
   test('close bulk new users form callback fires', async function (assert) {
-    assert.expect(1);
     const { apiVersion } = this.owner.resolveRegistration('config:environment');
     this.server.get('application/config', function () {
+      assert.step('API called');
       return {
         config: {
           type: 'form',
@@ -284,6 +286,7 @@ module('Integration | Component | ilios-users', function (hooks) {
     this.owner.register('service:current-user', CurrentUserMock);
 
     this.set('setShowBulkNewUserForm', (value) => {
+      assert.step('setShowBulkNewUserForm called');
       assert.notOk(value);
     });
     await render(
@@ -303,12 +306,13 @@ module('Integration | Component | ilios-users', function (hooks) {
       </template>,
     );
     await component.newBulkUserForm.cancel();
+    assert.verifySteps(['API called', 'setShowBulkNewUserForm called']);
   });
 
   test('close new user form callback fires', async function (assert) {
-    assert.expect(1);
     const { apiVersion } = this.owner.resolveRegistration('config:environment');
     this.server.get('application/config', function () {
+      assert.step('API called');
       return {
         config: {
           type: 'form',
@@ -334,6 +338,7 @@ module('Integration | Component | ilios-users', function (hooks) {
 
     this.owner.register('service:current-user', CurrentUserMock);
     this.set('setShowNewUserForm', (value) => {
+      assert.step('setShowNewUserForm called');
       assert.notOk(value);
     });
     await render(
@@ -353,13 +358,13 @@ module('Integration | Component | ilios-users', function (hooks) {
       </template>,
     );
     await component.newUserForm.cancel();
+    assert.verifySteps(['API called', 'setShowNewUserForm called']);
   });
 
   test('collapse button fires', async function (assert) {
-    assert.expect(1);
-    assert.expect(1);
     const { apiVersion } = this.owner.resolveRegistration('config:environment');
     this.server.get('application/config', function () {
+      assert.step('API called');
       return {
         config: {
           type: 'form',
@@ -386,6 +391,7 @@ module('Integration | Component | ilios-users', function (hooks) {
     this.owner.register('service:current-user', CurrentUserMock);
 
     this.set('setShowBulkNewUserForm', (value) => {
+      assert.step('setShowBulkNewUserForm called');
       assert.notOk(value);
     });
     await render(
@@ -406,5 +412,6 @@ module('Integration | Component | ilios-users', function (hooks) {
       </template>,
     );
     await component.collapseForm();
+    assert.verifySteps(['API called', 'setShowBulkNewUserForm called']);
   });
 });

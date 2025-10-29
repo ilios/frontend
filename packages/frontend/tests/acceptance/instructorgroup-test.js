@@ -55,7 +55,6 @@ module('Acceptance | Instructor Group', function (hooks) {
   });
 
   test('it renders', async function (assert) {
-    assert.expect(13);
     await visit(url);
     await percySnapshot(assert);
     assert.strictEqual(currentRouteName(), 'instructor-group');

@@ -42,6 +42,7 @@ module('Integration | Component | school session attributes manager', function (
     context.set('showSessionSpecialAttireRequired', false);
     context.set('showSessionSpecialEquipmentRequired', false);
     context.set('enable', (sentName) => {
+      assert.step('enable called');
       assert.strictEqual(sentName, name);
       context.set(sentName, true);
     });
@@ -61,20 +62,18 @@ module('Integration | Component | school session attributes manager', function (
     assert.notOk(attribute.isChecked);
     await attribute.check();
     assert.ok(attribute.isChecked);
+    assert.verifySteps(['enable called']);
   };
 
   test('select showSessionAttendanceRequired', async function (assert) {
-    assert.expect(3);
     await selectTest(this, assert, 'showSessionAttendanceRequired', component.attendanceRequired);
   });
 
   test('select showSessionSupplemental', async function (assert) {
-    assert.expect(3);
     await selectTest(this, assert, 'showSessionSupplemental', component.supplemental);
   });
 
   test('select showSessionSpecialAttireRequired', async function (assert) {
-    assert.expect(3);
     await selectTest(
       this,
       assert,
@@ -84,7 +83,6 @@ module('Integration | Component | school session attributes manager', function (
   });
 
   test('select showSessionSpecialEquipmentRequired', async function (assert) {
-    assert.expect(3);
     await selectTest(
       this,
       assert,
@@ -99,6 +97,7 @@ module('Integration | Component | school session attributes manager', function (
     context.set('showSessionSpecialAttireRequired', true);
     context.set('showSessionSpecialEquipmentRequired', true);
     await context.set('disable', (sentName) => {
+      assert.step('disable called');
       assert.strictEqual(sentName, name);
       context.set(sentName, false);
     });
@@ -118,20 +117,18 @@ module('Integration | Component | school session attributes manager', function (
     assert.ok(attribute.isChecked);
     await attribute.check();
     assert.notOk(attribute.isChecked);
+    assert.verifySteps(['disable called']);
   };
 
   test('unSelect showSessionAttendanceRequired', async function (assert) {
-    assert.expect(3);
     await unSelectTest(this, assert, 'showSessionAttendanceRequired', component.attendanceRequired);
   });
 
   test('unSelect showSessionSupplemental', async function (assert) {
-    assert.expect(3);
     await unSelectTest(this, assert, 'showSessionSupplemental', component.supplemental);
   });
 
   test('unSelect showSessionSpecialAttireRequired', async function (assert) {
-    assert.expect(3);
     await unSelectTest(
       this,
       assert,
@@ -141,7 +138,6 @@ module('Integration | Component | school session attributes manager', function (
   });
 
   test('unSelect showSessionSpecialEquipmentRequired', async function (assert) {
-    assert.expect(3);
     await unSelectTest(
       this,
       assert,

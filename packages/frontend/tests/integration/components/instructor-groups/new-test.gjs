@@ -18,12 +18,12 @@ module('Integration | Component | instructor-groups/new', function (hooks) {
   });
 
   test('cancel', async function (assert) {
-    assert.expect(1);
     this.set('cancel', () => {
-      assert.ok(true, 'cancel fired.');
+      assert.step('cancel called');
     });
     await render(<template><New @save={{(noop)}} @cancel={{this.cancel}} /></template>);
     await component.cancel.click();
+    assert.verifySteps(['cancel called']);
   });
 
   test('validation fails, no title', async function (assert) {
@@ -50,13 +50,14 @@ module('Integration | Component | instructor-groups/new', function (hooks) {
   });
 
   test('save', async function (assert) {
-    assert.expect(1);
     this.set('save', async (instructorGroup) => {
+      assert.step('save called');
       assert.strictEqual(instructorGroup.title, 'Jayden Rules!');
     });
 
     await render(<template><New @save={{this.save}} @cancel={{(noop)}} /></template>);
     await component.title.set('Jayden Rules!');
     await component.done.click();
+    assert.verifySteps(['save called']);
   });
 });

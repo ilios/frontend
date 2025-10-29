@@ -16,9 +16,9 @@ module('Acceptance | header', function (hooks) {
   });
 
   test('privileged users can view search', async function (assert) {
-    assert.expect(1);
     const { apiVersion } = this.owner.resolveRegistration('config:environment');
     this.server.get('application/config', function () {
+      assert.step('API called');
       return {
         config: {
           searchEnabled: true,
@@ -30,12 +30,13 @@ module('Acceptance | header', function (hooks) {
     await visit('/');
     await percySnapshot(assert);
     assert.dom('.global-search-box').exists();
+    assert.verifySteps(['API called']);
   });
 
   test('when search is disabled on the server it does not display', async function (assert) {
-    assert.expect(1);
     const { apiVersion } = this.owner.resolveRegistration('config:environment');
     this.server.get('application/config', function () {
+      assert.step('API called');
       return {
         config: {
           searchEnabled: false,
@@ -47,11 +48,13 @@ module('Acceptance | header', function (hooks) {
     await visit('/');
     await percySnapshot(assert);
     assert.dom('.global-search-box').doesNotExist();
+    assert.verifySteps(['API called']);
   });
 
   test('students can not view search', async function (assert) {
     const { apiVersion } = this.owner.resolveRegistration('config:environment');
     this.server.get('application/config', function () {
+      assert.step('API called');
       return {
         config: {
           searchEnabled: true,
@@ -62,5 +65,6 @@ module('Acceptance | header', function (hooks) {
     await setupAuthentication();
     await visit('/');
     assert.dom('.global-search-box').doesNotExist();
+    assert.verifySteps(['API called']);
   });
 });

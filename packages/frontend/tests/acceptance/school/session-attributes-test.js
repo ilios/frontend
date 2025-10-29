@@ -14,7 +14,6 @@ module('Acceptance | School - Session Attributes', function (hooks) {
   });
 
   test('check fields collapsed', async function (assert) {
-    assert.expect(8);
     this.server.create('schoolConfig', {
       school: this.school,
       name: 'showSessionAttendanceRequired',
@@ -50,7 +49,6 @@ module('Acceptance | School - Session Attributes', function (hooks) {
   });
 
   test('check fields expanded', async function (assert) {
-    assert.expect(8);
     this.server.create('schoolConfig', {
       school: this.school,
       name: 'showSessionAttendanceRequired',
@@ -92,7 +90,6 @@ module('Acceptance | School - Session Attributes', function (hooks) {
   });
 
   test('manage session attributes', async function (assert) {
-    assert.expect(16);
     this.server.create('schoolConfig', {
       school: this.school,
       name: 'showSessionAttendanceRequired',

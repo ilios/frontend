@@ -11,7 +11,6 @@ module('Integration | Component | unassigned students summary', function (hooks)
   setupMirage(hooks);
 
   test('it renders', async function (assert) {
-    assert.expect(12);
     const school = this.server.create('school', {
       id: 1,
       title: 'school 0',
@@ -35,6 +34,7 @@ module('Integration | Component | unassigned students summary', function (hooks)
     });
 
     this.server.get('api/users', (schema, { queryParams }) => {
+      assert.step('API called');
       assert.strictEqual(parseInt(queryParams['filters[school]'], 10), 1);
       assert.deepEqual(queryParams['filters[roles]'], ['4']);
       assert.strictEqual(queryParams['filters[cohorts]'], '');
@@ -56,6 +56,7 @@ module('Integration | Component | unassigned students summary', function (hooks)
     );
     assert.ok(component.hasManageLink);
     assert.ok(component.hasAlert);
+    assert.verifySteps(['API called']);
   });
 
   test('it renders empty', async function (assert) {

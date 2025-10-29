@@ -19,11 +19,10 @@ module('Acceptance | API Version Check', function (hooks) {
   });
 
   test('No warning shows up when api versions match', async function (assert) {
-    assert.expect(3);
     const { apiVersion } = this.owner.resolveRegistration('config:environment');
     assert.ok(apiVersion);
     this.server.get('application/config', function () {
-      assert.ok(true, 'our config override was called');
+      assert.step('API called');
       return {
         config: {
           type: 'form',
@@ -35,12 +34,12 @@ module('Acceptance | API Version Check', function (hooks) {
     await visit('/');
     await waitFor('[data-test-load-finished]');
     assert.ok(component.notMismatched);
+    assert.verifySteps(['API called']);
   });
 
   test('Warning shows up when api versions do not match', async function (assert) {
-    assert.expect(2);
     this.server.get('application/config', function () {
-      assert.ok(true, 'our config override was called');
+      assert.step('API called');
       return {
         config: {
           type: 'form',
@@ -53,5 +52,6 @@ module('Acceptance | API Version Check', function (hooks) {
     await waitFor('[data-test-load-finished]');
     await percySnapshot(assert);
     assert.ok(component.mismatched);
+    assert.verifySteps(['API called']);
   });
 });

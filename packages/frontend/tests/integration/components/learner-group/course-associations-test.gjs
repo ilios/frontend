@@ -237,7 +237,6 @@ module('Integration | Component | learner-group/course-associations', function (
   });
 
   test('collapse action fires', async function (assert) {
-    assert.expect(1);
     const school = this.server.create('school');
     const course = this.server.create('course', { school, year: 2025 });
     const session = this.server.create('session', { course });
@@ -247,6 +246,7 @@ module('Integration | Component | learner-group/course-associations', function (
       .findRecord('learner-group', this.learnerGroup.id);
     this.set('learnerGroup', learnerGroup);
     this.set('setIsExpanded', (value) => {
+      assert.step('setIsExpanded called');
       assert.notOk(value);
     });
     await render(
@@ -260,10 +260,10 @@ module('Integration | Component | learner-group/course-associations', function (
     );
 
     await component.header.toggle.click();
+    assert.verifySteps(['setIsExpanded called']);
   });
 
   test('expand action fires', async function (assert) {
-    assert.expect(1);
     const school = this.server.create('school');
     const course = this.server.create('course', { school, year: 2025 });
     const session = this.server.create('session', { course });
@@ -273,6 +273,7 @@ module('Integration | Component | learner-group/course-associations', function (
       .findRecord('learner-group', this.learnerGroup.id);
     this.set('learnerGroup', learnerGroup);
     this.set('setIsExpanded', (value) => {
+      assert.step('setIsExpanded called');
       assert.ok(value);
     });
     await render(
@@ -286,5 +287,6 @@ module('Integration | Component | learner-group/course-associations', function (
     );
 
     await component.header.toggle.click();
+    assert.verifySteps(['setIsExpanded called']);
   });
 });

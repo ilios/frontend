@@ -162,9 +162,8 @@ module('Integration | Component | school session type form', function (hooks) {
   });
 
   test('cancel fires action', async function (assert) {
-    assert.expect(1);
     this.set('cancel', () => {
-      assert.ok(true);
+      assert.step('cancel called');
     });
     await render(
       <template>
@@ -173,12 +172,12 @@ module('Integration | Component | school session type form', function (hooks) {
     );
 
     await component.cancel.click();
+    assert.verifySteps(['cancel called']);
   });
 
   test('close fires action', async function (assert) {
-    assert.expect(1);
     this.set('close', () => {
-      assert.ok(true);
+      assert.step('close called');
     });
     await render(
       <template>
@@ -187,10 +186,10 @@ module('Integration | Component | school session type form', function (hooks) {
     );
 
     await component.close.click();
+    assert.verifySteps(['close called']);
   });
 
   test('save fires action', async function (assert) {
-    assert.expect(8);
     const method = this.server.create('aamc-method', {
       id: 'AM001',
       description: 'lorem ipsum',
@@ -203,6 +202,7 @@ module('Integration | Component | school session type form', function (hooks) {
     const assessmentOptionModel = await this.store.findRecord('assessment-option', formative.id);
 
     this.set('save', (title, calendarColor, assessment, assessmentOption, aamcMethod, isActive) => {
+      assert.step('save called');
       assert.strictEqual(title, 'new title', 'title is correct');
       assert.strictEqual(calendarColor, '#a1b2c3', 'color is correct');
       assert.true(assessment, 'assessment is picked');
@@ -242,6 +242,7 @@ module('Integration | Component | school session type form', function (hooks) {
     await component.active.yesNoToggle.click();
     assert.strictEqual(component.active.yesNoToggle.checked, 'false');
     await component.submit.click();
+    assert.verifySteps(['save called']);
   });
 
   test('read-only mode works correctly', async function (assert) {

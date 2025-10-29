@@ -16,7 +16,6 @@ module('Acceptance | pending user updates', function (hooks) {
   });
 
   test('one school', async function (assert) {
-    assert.expect(2);
     const school = this.server.create('school');
     await setupAuthentication({ school, administeredSchools: [school] });
     await page.visit();
@@ -26,7 +25,6 @@ module('Acceptance | pending user updates', function (hooks) {
   });
 
   test('multiple schools, default school selection', async function (assert) {
-    assert.expect(8);
     const schools = this.server.createList('school', 3);
     const usersInSchool1 = this.server.createList('user', 2, { school: schools[0] });
     const userInSchool2 = this.server.create('user', { school: schools[1] });

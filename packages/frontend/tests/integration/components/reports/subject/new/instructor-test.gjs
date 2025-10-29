@@ -16,9 +16,9 @@ module('Integration | Component | reports/subject/new/instructor', function (hoo
   });
 
   test('it works', async function (assert) {
-    assert.expect(6);
     this.set('currentId', null);
     this.set('changeId', (userId) => {
+      assert.step('changeId called');
       assert.strictEqual(userId, '3');
       this.set('currentId', userId);
     });
@@ -35,12 +35,13 @@ module('Integration | Component | reports/subject/new/instructor', function (hoo
     await component.userSearch.results.items[2].click();
     assert.ok(component.hasSelectedInstructor);
     assert.strictEqual(component.selectedInstructor, '2 guy M. Mc2son');
+    assert.verifySteps(['changeId called']);
   });
 
   test('it works with inactive user', async function (assert) {
-    assert.expect(6);
     this.set('currentId', null);
     this.set('changeId', (userId) => {
+      assert.step('changeId called');
       assert.strictEqual(userId, '5');
       this.set('currentId', userId);
     });
@@ -57,12 +58,13 @@ module('Integration | Component | reports/subject/new/instructor', function (hoo
     await component.userSearch.results.items[4].click();
     assert.ok(component.hasSelectedInstructor);
     assert.strictEqual(component.selectedInstructor, '4 guy M. Mc4son');
+    assert.verifySteps(['changeId called']);
   });
 
   test('removing instructor clears value', async function (assert) {
-    assert.expect(3);
     this.set('currentId', '2');
     this.set('changeId', (userId) => {
+      assert.step('changeId called');
       assert.strictEqual(userId, null);
       this.set('currentId', null);
     });
@@ -72,5 +74,6 @@ module('Integration | Component | reports/subject/new/instructor', function (hoo
     assert.ok(component.hasSelectedInstructor);
     await component.removeSelectedInstructor();
     assert.notOk(component.hasSelectedInstructor);
+    assert.verifySteps(['changeId called']);
   });
 });
