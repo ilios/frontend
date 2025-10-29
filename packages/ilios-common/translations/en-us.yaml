@@ -31,6 +31,7 @@ general:
   backToDashboard: Back to Dashboard
   backToSessionList: Back to Session List
   backToTitle: "Back to {title}"
+  backToTop: Back to top
   beforeOrAfterMidday: Before or after midday
   bottomPagination: Bottom pagination
   calendar: Calendar
