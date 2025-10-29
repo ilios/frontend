@@ -1,8 +1,9 @@
 import Component from '@glimmer/component';
+import { DateTime } from 'luxon';
 import { service } from '@ember/service';
 import { cached, tracked } from '@glimmer/tracking';
 import { TrackedAsyncData } from 'ember-async-data';
-import { findById, sortBy } from 'ilios-common/utils/array-helpers';
+import { findById, findBy, sortBy } from 'ilios-common/utils/array-helpers';
 import cloneLearnerGroup from 'frontend/utils/clone-learner-group';
 import { task } from 'ember-concurrency';
 import { map } from 'rsvp';
@@ -29,6 +30,7 @@ export default class LearnerGroupsRootComponent extends Component {
   @service store;
   @service dataLoader;
   @service intl;
+  @service iliosConfig;
   @service permissionChecker;
   @tracked showNewLearnerGroupForm = false;
   @tracked savedLearnerGroup;
@@ -37,6 +39,14 @@ export default class LearnerGroupsRootComponent extends Component {
 
   learnerGroupPromises = new Map();
   userModel = new TrackedAsyncData(this.currentUser.getModel());
+  crossesBoundaryConfig = new TrackedAsyncData(
+    this.iliosConfig.itemFromConfig('academicYearCrossesCalendarYearBoundaries'),
+  );
+
+  @cached
+  get academicYearCrossesCalendarYearBoundaries() {
+    return this.crossesBoundaryConfig.isResolved ? this.crossesBoundaryConfig.value : false;
+  }
 
   @cached
   get canCreateData() {
@@ -151,7 +161,32 @@ export default class LearnerGroupsRootComponent extends Component {
       return findById(this.programYears, this.args.programYearId);
     }
 
+    if (this.selectedProgramProgramYears) {
+      const now = DateTime.now();
+      let currentYear = now.year;
+      const currentMonth = now.month;
+      if (this.academicYearCrossesCalendarYearBoundaries && currentMonth < 6) {
+        currentYear--;
+      }
+
+      const year = findBy(this.selectedProgramProgramYears, 'startYear', currentYear.toString());
+      if (year) {
+        return year;
+      }
+    }
+
     return sortBy(this.programYears, 'startYear').reverse()[0];
+  }
+
+  @cached
+  get selectedProgramProgramYearsData() {
+    return new TrackedAsyncData(this.selectedProgram.programYears);
+  }
+
+  get selectedProgramProgramYears() {
+    return this.selectedProgramProgramYearsData.isResolved
+      ? this.selectedProgramProgramYearsData.value
+      : null;
   }
 
   get rootLevelLearnerGroups() {
