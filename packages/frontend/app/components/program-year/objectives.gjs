@@ -27,8 +27,18 @@ export default class ProgramYearObjectivesComponent extends Component {
     return this.objectiveCount > 0;
   }
 
-  get objectiveCount() {
-    return this.args.programYear.hasMany('programYearObjectives').ids().length;
+  get objectiveIds() {
+    return this.args.programYear.hasMany('programYearObjectives').ids();
+  }
+
+  get objectiveIdsCount() {
+    return this.objectiveIds.length;
+  }
+
+  get allObjectivesExpanded() {
+    return (
+      this.objectiveIdsCount && this.args.expandedObjectiveIds?.length === this.objectiveIdsCount
+    );
   }
 
   saveNewObjective = task({ drop: true }, async (title) => {
@@ -61,6 +71,14 @@ export default class ProgramYearObjectivesComponent extends Component {
       this.args.collapse();
     }
   }
+  @action
+  toggleExpandAll() {
+    if (this.args.expandedObjectiveIds?.length === this.objectiveIdsCount) {
+      this.args.setExpandedObjectiveIds(null);
+    } else {
+      this.args.setExpandedObjectiveIds(this.objectiveIds);
+    }
+  }
   <template>
     <section class="program-year-objectives" data-test-program-year-objectives>
       <div class="header">
@@ -74,14 +92,14 @@ export default class ProgramYearObjectivesComponent extends Component {
               {{on "click" this.collapse}}
             >
               {{t "general.objectives"}}
-              ({{this.objectiveCount}})
+              ({{this.objectiveIdsCount}})
               <FaIcon @icon="caret-down" />
             </button>
           </div>
         {{else}}
           <h3 class="title" data-test-title>
             {{t "general.objectives"}}
-            ({{this.objectiveCount}})
+            ({{this.objectiveIdsCount}})
           </h3>
         {{/if}}
         {{#if @editable}}
@@ -102,7 +120,14 @@ export default class ProgramYearObjectivesComponent extends Component {
             @cancel={{this.toggleNewObjectiveEditor}}
           />
         {{/if}}
-        <ObjectiveList @programYear={{@programYear}} @editable={{@editable}} />
+        <ObjectiveList
+          @programYear={{@programYear}}
+          @allObjectivesExpanded={{this.allObjectivesExpanded}}
+          @toggleExpandAll={{this.toggleExpandAll}}
+          @editable={{@editable}}
+          @expandedObjectiveIds={{@expandedObjectiveIds}}
+          @setExpandedObjectiveIds={{@setExpandedObjectiveIds}}
+        />
       </div>
     </section>
   </template>

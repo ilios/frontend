@@ -1,6 +1,6 @@
 import Component from '@glimmer/component';
 import { cached, tracked } from '@glimmer/tracking';
-import { task } from 'ember-concurrency';
+import { task, timeout } from 'ember-concurrency';
 import { map } from 'rsvp';
 import { service } from '@ember/service';
 import { TrackedAsyncData } from 'ember-async-data';
@@ -18,6 +18,7 @@ import FaIcon from 'ilios-common/components/fa-icon';
 import isArray from 'ember-truth-helpers/helpers/is-array';
 import ObjectiveListItem from 'frontend/components/program-year/objective-list-item';
 import ObjectiveListLoading from 'frontend/components/program-year/objective-list-loading';
+import LoadingSpinner from 'ilios-common/components/loading-spinner';
 
 export default class ProgramYearObjectiveListComponent extends Component {
   @service iliosConfig;
@@ -106,6 +107,11 @@ export default class ProgramYearObjectiveListComponent extends Component {
     const blob = await response.blob();
     saveAs(blob, 'report.csv');
   });
+
+  expandAll = task({ drop: true }, async () => {
+    await timeout(100);
+    this.args.toggleExpandAll();
+  });
   <template>
     <div class="program-year-objective-list" data-test-program-year-objective-list>
       {{#if this.isSorting}}
@@ -133,7 +139,23 @@ export default class ProgramYearObjectiveListComponent extends Component {
         </button>
 
         <div class="grid-row headers" data-test-headers>
-          <span class="grid-item"></span>
+          <span class="grid-item">
+            <button
+              type="button"
+              class="link-button"
+              disabled={{this.expandAll.isRunning}}
+              aria-label={{if @allObjectivesExpanded (t "general.collapse") (t "general.expand")}}
+              {{on "click" (perform this.expandAll)}}
+            >
+              {{#if this.expandAll.isRunning}}
+                <LoadingSpinner />
+              {{else if @allObjectivesExpanded}}
+                <FaIcon @icon="caret-down" class="clickable" />
+              {{else}}
+                <FaIcon @icon="caret-right" class="clickable" />
+              {{/if}}
+            </button>
+          </span>
           <span class="grid-item" data-test-header>{{t "general.description"}}</span>
           <span class="grid-item" data-test-header>{{t "general.competency"}}</span>
           <span class="grid-item" data-test-header>{{t "general.vocabularyTerms"}}</span>
@@ -147,6 +169,8 @@ export default class ProgramYearObjectiveListComponent extends Component {
               @editable={{@editable}}
               @domainTrees={{this.domainTrees}}
               @programYearCompetencies={{this.programYearCompetencies}}
+              @expandedObjectiveIds={{@expandedObjectiveIds}}
+              @setExpandedObjectiveIds={{@setExpandedObjectiveIds}}
             />
           {{/each}}
         {{else}}

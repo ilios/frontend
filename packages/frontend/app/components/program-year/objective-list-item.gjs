@@ -37,11 +37,11 @@ export default class ProgramYearObjectiveListItemComponent extends Component {
   @tracked competencyBuffer;
   @tracked isManagingDescriptors;
   @tracked descriptorsBuffer = [];
-  @tracked isExpanded = false;
   @tracked isManagingTerms;
   @tracked termsBuffer = [];
   @tracked selectedVocabulary;
   @tracked fadeTextExpanded = false;
+  @tracked showRemoveConfirmation = false;
 
   constructor() {
     super(...arguments);
@@ -223,31 +223,74 @@ export default class ProgramYearObjectiveListItemComponent extends Component {
     this.selectedVocabulary = null;
   }
 
+  expandObjective = task(async () => {
+    await timeout(1);
+
+    this.args.setExpandedObjectiveIds([
+      ...this.args.expandedObjectiveIds,
+      Number(this.args.programYearObjective.id),
+    ]);
+  });
+
+  collapseObjective = task(async () => {
+    this.args.setExpandedObjectiveIds(
+      this.args.expandedObjectiveIds.filter((id) => id !== this.args.programYearObjective.id),
+    );
+  });
+
+  get isExpanded() {
+    return this.args.expandedObjectiveIds.includes(this.args.programYearObjective.id);
+  }
+
+  get objectiveRowClasses() {
+    const rowClasses = ['grid-row', 'objective-row'];
+
+    if (this.showRemoveConfirmation) {
+      rowClasses.push('confirm-removal');
+    }
+    if (this.highlightSave.isRunning) {
+      rowClasses.push('highlight-ok');
+    }
+    if (this.isManaging) {
+      rowClasses.push('is-managing');
+    }
+    if (!this.args.programYearObjective.active) {
+      rowClasses.push('is-inactive');
+    }
+
+    return rowClasses.join(' ');
+  }
+
   deleteObjective = task({ drop: true }, async () => {
     await this.args.programYearObjective.destroyRecord();
   });
   <template>
     <div
       id="objective-{{@programYearObjective.id}}"
-      class="grid-row objective-row
-        {{if this.showRemoveConfirmation 'confirm-removal'}}
-        {{if this.highlightSave.isRunning 'highlight-ok'}}
-        {{if this.isManaging 'is-managing'}}
-        {{unless @programYearObjective.active 'is-inactive'}}"
+      class={{this.objectiveRowClasses}}
       data-test-program-year-objective-list-item
     >
-      <button
-        class="expand-row grid-item"
-        type="button"
-        {{on "click" (set this "isExpanded" (not this.isExpanded))}}
-        data-test-toggle-expand
-      >
+      <div class="expand-collapse grid-item" data-test-expand-collapse-control>
         {{#if this.isExpanded}}
-          <FaIcon @icon="caret-down" @title={{t "general.collapseDetail"}} />
+          <button
+            class="collapse-row"
+            type="button"
+            {{on "click" (perform this.collapseObjective)}}
+            data-test-toggle-collapse
+          >
+            <FaIcon @icon="caret-down" @title={{t "general.collapseDetail"}} />
+          </button>
         {{else}}
-          <FaIcon @icon="caret-right" @title={{t "general.expand"}} />
+          <button
+            class="expand-row"
+            type="button"
+            {{on "click" (perform this.expandObjective)}}
+            data-test-toggle-expand
+          >
+            <FaIcon @icon="caret-right" @title={{t "general.expand"}} />
+          </button>
         {{/if}}
-      </button>
+      </div>
       <div class="description grid-item" data-test-description>
         <FadeText
           @forceExpanded={{this.fadeTextExpanded}}

@@ -6,6 +6,7 @@ import a11yAudit from 'ember-a11y-testing/test-support/audit';
 import { setupMirage } from 'frontend/tests/test-support/mirage';
 import Objectives from 'frontend/components/program-year/objectives';
 import noop from 'ilios-common/helpers/noop';
+import { array } from '@ember/helper';
 
 module('Integration | Component | program-year/objectives', function (hooks) {
   setupRenderingTest(hooks);
@@ -35,6 +36,8 @@ module('Integration | Component | program-year/objectives', function (hooks) {
           @editable={{true}}
           @collapse={{(noop)}}
           @expand={{(noop)}}
+          @expandedObjectiveIds={{(array)}}
+          @setExpandedObjectiveIds={{(noop)}}
         />
       </template>,
     );
@@ -110,6 +113,8 @@ module('Integration | Component | program-year/objectives', function (hooks) {
           @editable={{true}}
           @collapse={{(noop)}}
           @expand={{(noop)}}
+          @expandedObjectiveIds={{(array)}}
+          @setExpandedObjectiveIds={{(noop)}}
         />
       </template>,
     );
