@@ -41,6 +41,7 @@ export default class ProgramYearObjectiveListItemComponent extends Component {
   @tracked termsBuffer = [];
   @tracked selectedVocabulary;
   @tracked fadeTextExpanded = false;
+  @tracked showRemoveConfirmation = false;
 
   constructor() {
     super(...arguments);
