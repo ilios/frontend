@@ -3,7 +3,7 @@ import repeat from 'ilios-common/helpers/repeat';
 import truncate from 'ilios-common/helpers/truncate';
 import random from 'ember-math-helpers/helpers/random';
 <template>
-  <table class="learner-groups-loading" ...attributes>
+  <table class="learner-groups-loading" data-test-learner-groups-loading ...attributes>
     <thead>
       <tr>
         <th class="text-left" colspan="2">

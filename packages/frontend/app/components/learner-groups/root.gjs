@@ -91,7 +91,7 @@ export default class LearnerGroupsRootComponent extends Component {
   }
 
   get selectedCohort() {
-    return this.selectedCohortData.isResolved ? this.selectedCohortData.value : null;
+    return this.selectedCohortData.isResolved ? this.selectedCohortData.value : undefined;
   }
 
   @cached
@@ -116,11 +116,11 @@ export default class LearnerGroupsRootComponent extends Component {
       return this.dataLoader.loadCohortLearnerGroups(id);
     }
 
-    return undefined;
+    return null;
   }
 
   get isLoaded() {
-    return Boolean(this.selectedCohort);
+    return undefined !== this.selectedCohort;
   }
 
   get selectedSchool() {
@@ -302,8 +302,10 @@ export default class LearnerGroupsRootComponent extends Component {
                 </option>
               {{/each}}
             </select>
-          {{else}}
+          {{else if (eq this.programs.length 1)}}
             {{this.selectedProgram.title}}
+          {{else}}
+            {{t "general.none"}}
           {{/if}}
         </div>
         <div class="filter" data-test-program-year-filter>
@@ -323,8 +325,10 @@ export default class LearnerGroupsRootComponent extends Component {
                 </option>
               {{/each}}
             </select>
-          {{else}}
+          {{else if (eq this.programYears.length 1)}}
             {{this.selectedProgramYear.cohort.title}}
+          {{else}}
+            {{t "general.none"}}
           {{/if}}
         </div>
         <div class="filter" data-test-title-filter>

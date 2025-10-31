@@ -33,6 +33,19 @@ module('Integration | Component | learner-groups/root', function (hooks) {
         cohort,
       });
     }
+
+    // school without programs
+    this.server.create('school', { title: 'School without Programs' });
+
+    // school with one program. that program doesn't have program-years/cohorts.
+    const schoolWithProgramButWithoutCohorts = this.server.create('school', {
+      title: 'School without Cohorts',
+    });
+    this.server.create('program', {
+      title: 'Program without Cohorts',
+      school: schoolWithProgramButWithoutCohorts,
+    });
+
     this.schools = await this.owner.lookup('service:store').findAll('school');
 
     const user = this.server.create('user', { schoolId: 2 });
@@ -68,11 +81,13 @@ module('Integration | Component | learner-groups/root', function (hooks) {
     assert.strictEqual(component.list.items[0].title, 'learner group 2');
     assert.strictEqual(component.list.items[1].title, 'learner group 3');
 
-    assert.strictEqual(component.schoolFilter.schools.length, 4);
+    assert.strictEqual(component.schoolFilter.schools.length, 6);
     assert.strictEqual(component.schoolFilter.schools[0].text, 'school 0');
     assert.strictEqual(component.schoolFilter.schools[1].text, 'school 1');
     assert.strictEqual(component.schoolFilter.schools[2].text, 'school 2');
     assert.strictEqual(component.schoolFilter.schools[3].text, 'school 3');
+    assert.strictEqual(component.schoolFilter.schools[4].text, 'School without Cohorts');
+    assert.strictEqual(component.schoolFilter.schools[5].text, 'School without Programs');
     assert.strictEqual(component.schoolFilter.selectedSchool, '2');
 
     assert.strictEqual(component.programFilter.programs.length, 2);
@@ -289,5 +304,46 @@ module('Integration | Component | learner-groups/root', function (hooks) {
     assert.strictEqual(component.list.items[0].title, 'learner group 3');
     assert.strictEqual(component.list.items[1].title, 'learner group 2');
     assert.verifySteps(['setSortBy called']);
+  });
+
+  test('school without programs', async function (assert) {
+    this.set('schools', this.schools);
+    this.set('schoolId', this.schools[4].id);
+    await render(
+      <template>
+        <Root
+          @schools={{this.schools}}
+          @sortBy="title"
+          @setSortBy={{(noop)}}
+          @schoolId={{this.schoolId}}
+        />
+      </template>,
+    );
+    assert.strictEqual(component.schoolFilter.selectedSchoolTitle, 'School without Programs');
+    assert.strictEqual(component.programFilter.text, 'None');
+    assert.strictEqual(component.programYearFilter.text, 'None');
+    assert.notOk(component.loading.isPresent);
+  });
+
+  test('school with programs but without cohorts', async function (assert) {
+    this.set('schools', this.schools);
+    const programs = await this.schools[5].programs;
+    this.set('schoolId', this.schools[5].id);
+    this.set('programId', programs[0].id);
+    await render(
+      <template>
+        <Root
+          @schools={{this.schools}}
+          @sortBy="title"
+          @setSortBy={{(noop)}}
+          @schoolId={{this.schoolId}}
+          @programId={{this.programId}}
+        />
+      </template>,
+    );
+    assert.strictEqual(component.schoolFilter.selectedSchoolTitle, 'School without Cohorts');
+    assert.strictEqual(component.programFilter.text, 'Program without Cohorts');
+    assert.strictEqual(component.programYearFilter.text, 'None');
+    assert.notOk(component.loading.isPresent);
   });
 });
