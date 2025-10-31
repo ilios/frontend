@@ -9,6 +9,7 @@ import {
   value,
 } from 'ember-cli-page-object';
 import list from '../learner-group/list';
+import loading from './loading';
 import newLearnerGroupForm from '../learner-group/new';
 
 const definition = {
@@ -18,6 +19,7 @@ const definition = {
     schools: collection('option'),
     select: fillable('select'),
     selectedSchool: value('select'),
+    selectedSchoolTitle: text('option:selected'),
     hasMany: isPresent('select'),
   },
   programFilter: {
@@ -25,6 +27,7 @@ const definition = {
     programs: collection('option'),
     select: fillable('select'),
     selectedProgram: value('select'),
+    selectedProgramTitle: text('option:selected'),
     hasMany: isPresent('select'),
   },
   programYearFilter: {
@@ -32,6 +35,7 @@ const definition = {
     programYears: collection('option'),
     select: fillable('select'),
     selectedProgramYear: value('select'),
+    selectedProgramYearTitle: text('option:selected'),
     hasMany: isPresent('select'),
   },
   setTitleFilter: fillable('[data-test-title-filter] input'),
@@ -39,6 +43,7 @@ const definition = {
   toggleNewLearnerGroupForm: clickable('[data-test-expand-collapse-button] button'),
   toggleNewLearnerGroupFormExists: isVisible('[data-test-expand-collapse-button]'),
   list,
+  loading,
   newLearnerGroupForm,
   savedResult: text('.saved-result'),
 };
