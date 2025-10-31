@@ -86,6 +86,21 @@
       &:has(.faded) {
         max-height: 245px;
       }
+
+      &.link-button {
+        color: inherit;
+      }
+    }
+
+    button {
+      &.collapse-row,
+      &.expand-row {
+        background-color: transparent;
+        border-radius: 0;
+        color: inherit;
+        display: flex;
+        justify-content: flex-start;
+      }
     }
 
     &:last-of-type {

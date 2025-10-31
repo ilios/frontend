@@ -37,7 +37,6 @@ export default class ProgramYearObjectiveListItemComponent extends Component {
   @tracked competencyBuffer;
   @tracked isManagingDescriptors;
   @tracked descriptorsBuffer = [];
-  @tracked isExpanded = false;
   @tracked isManagingTerms;
   @tracked termsBuffer = [];
   @tracked selectedVocabulary;
@@ -223,6 +222,25 @@ export default class ProgramYearObjectiveListItemComponent extends Component {
     this.selectedVocabulary = null;
   }
 
+  expandObjective = task(async () => {
+    await timeout(1);
+
+    this.args.setExpandedObjectiveIds([
+      ...this.args.expandedObjectiveIds,
+      Number(this.args.programYearObjective.id),
+    ]);
+  });
+
+  collapseObjective = task(async () => {
+    this.args.setExpandedObjectiveIds(
+      this.args.expandedObjectiveIds.filter((id) => id !== this.args.programYearObjective.id),
+    );
+  });
+
+  get isExpanded() {
+    return this.args.expandedObjectiveIds.includes(this.args.programYearObjective.id);
+  }
+
   get objectiveRowClasses() {
     const rowClasses = ['grid-row', 'objective-row'];
 
@@ -251,18 +269,25 @@ export default class ProgramYearObjectiveListItemComponent extends Component {
       class={{this.objectiveRowClasses}}
       data-test-program-year-objective-list-item
     >
-      <button
-        class="expand-row grid-item"
-        type="button"
-        {{on "click" (set this "isExpanded" (not this.isExpanded))}}
-        data-test-toggle-expand
-      >
-        {{#if this.isExpanded}}
+      {{#if this.isExpanded}}
+        <button
+          class="expand-row grid-item"
+          type="button"
+          {{on "click" (perform this.collapseObjective)}}
+          data-test-toggle-collapse
+        >
           <FaIcon @icon="caret-down" @title={{t "general.collapseDetail"}} />
-        {{else}}
+        </button>
+      {{else}}
+        <button
+          class="collapse-row grid-item"
+          type="button"
+          {{on "click" (perform this.expandObjective)}}
+          data-test-toggle-expand
+        >
           <FaIcon @icon="caret-right" @title={{t "general.expand"}} />
-        {{/if}}
-      </button>
+        </button>
+      {{/if}}
       <div class="description grid-item" data-test-description>
         <FadeText
           @forceExpanded={{this.fadeTextExpanded}}

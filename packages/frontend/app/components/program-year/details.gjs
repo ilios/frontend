@@ -52,6 +52,8 @@ import CourseAssociations from 'frontend/components/program-year/course-associat
         @editable={{@canUpdate}}
         @collapse={{fn @setPyObjectiveDetails false}}
         @expand={{fn @setPyObjectiveDetails true}}
+        @expandedObjectiveIds={{@expandedObjectiveIds}}
+        @setExpandedObjectiveIds={{@setExpandedObjectiveIds}}
       />
     {{else}}
       <CollapsedObjectives
