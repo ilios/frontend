@@ -302,8 +302,10 @@ export default class LearnerGroupsRootComponent extends Component {
                 </option>
               {{/each}}
             </select>
-          {{else}}
+          {{else if (eq this.programs.length 1)}}
             {{this.selectedProgram.title}}
+          {{else}}
+            {{t "general.none"}}
           {{/if}}
         </div>
         <div class="filter" data-test-program-year-filter>
@@ -323,8 +325,10 @@ export default class LearnerGroupsRootComponent extends Component {
                 </option>
               {{/each}}
             </select>
-          {{else}}
+          {{else if (eq this.programYears.length 1)}}
             {{this.selectedProgramYear.cohort.title}}
+          {{else}}
+            {{t "general.none"}}
           {{/if}}
         </div>
         <div class="filter" data-test-title-filter>
