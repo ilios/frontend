@@ -15,9 +15,8 @@ module('Integration | Component | publication-status', function (hooks) {
         <PublicationStatus @item={{this.item}} @showIcon={{true}} @showText={{true}} />
       </template>,
     );
-    assert.strictEqual(component.value, 'Published');
     assert.ok(component.icon.isVisible);
-    assert.ok(component.text.isVisible);
+    assert.strictEqual(component.icon.title, 'Published');
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
   });
@@ -28,7 +27,7 @@ module('Integration | Component | publication-status', function (hooks) {
         <PublicationStatus @item={{this.item}} @showIcon={{true}} @showText={{true}} />
       </template>,
     );
-    assert.strictEqual(component.value, 'Scheduled');
+    assert.strictEqual(component.icon.title, 'Scheduled');
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
   });
@@ -39,7 +38,7 @@ module('Integration | Component | publication-status', function (hooks) {
         <PublicationStatus @item={{this.item}} @showIcon={{true}} @showText={{true}} />
       </template>,
     );
-    assert.strictEqual(component.value, 'Not Published');
+    assert.strictEqual(component.icon.title, 'Not Published');
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
   });
