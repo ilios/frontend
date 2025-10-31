@@ -3,6 +3,10 @@
 
 @use "sass:color";
 .week-glance {
+  .no-events {
+    margin-top: 0;
+  }
+
   .title {
     @include m.ilios-heading-h3;
     margin-bottom: 1em;
