@@ -270,25 +270,27 @@ export default class ProgramYearObjectiveListItemComponent extends Component {
       class={{this.objectiveRowClasses}}
       data-test-program-year-objective-list-item
     >
-      {{#if this.isExpanded}}
-        <button
-          class="expand-row grid-item"
-          type="button"
-          {{on "click" (perform this.collapseObjective)}}
-          data-test-toggle-collapse
-        >
-          <FaIcon @icon="caret-down" @title={{t "general.collapseDetail"}} />
-        </button>
-      {{else}}
-        <button
-          class="collapse-row grid-item"
-          type="button"
-          {{on "click" (perform this.expandObjective)}}
-          data-test-toggle-expand
-        >
-          <FaIcon @icon="caret-right" @title={{t "general.expand"}} />
-        </button>
-      {{/if}}
+      <div class="expand-collapse grid-item" data-test-expand-collapse-control>
+        {{#if this.isExpanded}}
+          <button
+            class="collapse-row"
+            type="button"
+            {{on "click" (perform this.collapseObjective)}}
+            data-test-toggle-collapse
+          >
+            <FaIcon @icon="caret-down" @title={{t "general.collapseDetail"}} />
+          </button>
+        {{else}}
+          <button
+            class="expand-row"
+            type="button"
+            {{on "click" (perform this.expandObjective)}}
+            data-test-toggle-expand
+          >
+            <FaIcon @icon="caret-right" @title={{t "general.expand"}} />
+          </button>
+        {{/if}}
+      </div>
       <div class="description grid-item" data-test-description>
         <FadeText
           @forceExpanded={{this.fadeTextExpanded}}

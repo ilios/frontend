@@ -183,6 +183,48 @@ module('Integration | Component | program-year/objective-list-item', function (h
     assert.ok(component.isActive);
   });
 
+  test('expandObjective fires', async function (assert) {
+    this.set('programYearObjective', this.model);
+    this.set('expandedObjectiveIds', []);
+    this.set('setExpandedObjectiveIds', (ids) => {
+      assert.strictEqual(ids.join(), '1');
+    });
+    await render(
+      <template>
+        <ObjectiveListItem
+          @programYearObjective={{this.programYearObjective}}
+          @editable={{true}}
+          @domainTrees={{(array)}}
+          @programYearCompetencies={{(array)}}
+          @expandedObjectiveIds={{this.expandedObjectiveIds}}
+          @setExpandedObjectiveIds={{this.setExpandedObjectiveIds}}
+        />
+      </template>,
+    );
+    await component.toggleExpandCollapse.expand();
+  });
+
+  test('collapseObjective fires', async function (assert) {
+    this.set('programYearObjective', this.model);
+    this.set('expandedObjectiveIds', [this.model.id]);
+    this.set('setExpandedObjectiveIds', (ids) => {
+      assert.strictEqual(ids.join(), '');
+    });
+    await render(
+      <template>
+        <ObjectiveListItem
+          @programYearObjective={{this.programYearObjective}}
+          @editable={{true}}
+          @domainTrees={{(array)}}
+          @programYearCompetencies={{(array)}}
+          @expandedObjectiveIds={{this.expandedObjectiveIds}}
+          @setExpandedObjectiveIds={{this.setExpandedObjectiveIds}}
+        />
+      </template>,
+    );
+    await component.toggleExpandCollapse.collapse();
+  });
+
   test('validate description', async function (assert) {
     this.set('programYearObjective', this.model);
     await render(

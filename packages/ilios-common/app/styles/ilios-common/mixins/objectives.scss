@@ -93,13 +93,15 @@
     }
 
     button {
-      &.collapse-row,
-      &.expand-row {
-        background-color: transparent;
-        border-radius: 0;
+      &.expand-row,
+      &.collapse-row {
+        border: 0;
         color: inherit;
-        display: flex;
-        justify-content: flex-start;
+        padding: 0;
+      }
+
+      &.collapse-row {
+        background-color: transparent;
       }
     }
 
