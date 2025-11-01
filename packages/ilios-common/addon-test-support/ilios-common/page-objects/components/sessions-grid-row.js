@@ -1,5 +1,5 @@
 import { clickable, create, isVisible, notHasClass, isPresent, text } from 'ember-cli-page-object';
-
+import publicationStatus from './publication-status';
 const definition = {
   scope: '[data-test-sessions-grid-row]',
   expand: clickable('[data-test-expand-collapse-control] [data-test-expand]'),
@@ -16,10 +16,10 @@ const definition = {
   termCount: text('span', { at: 5 }),
   firstOffering: text('span', { at: 6 }),
   offeringCount: text('span', { at: 7 }),
-  status: text('span', { at: 8 }),
-  statusIcon: {
-    scope: '[data-test-status]',
-    title: text('svg title'),
+  publicationStatus,
+  prerequisites: {
+    scope: '[data-test-prerequisites]',
+    title: text('title'),
   },
   trash: clickable('[data-test-actions] .remove'),
   hasInstructionalNotes: isPresent('[data-test-status] .instructional-notes'),
