@@ -18,6 +18,17 @@
         flex-direction: column;
       }
     }
+
+    .description {
+      padding-bottom: 1em;
+    }
+
+    .publicnotes {
+      display: flex;
+      flex-direction: row;
+      gap: 0.5em;
+      padding: 0.25em 0 1em;
+    }
   }
 
   .buttons {

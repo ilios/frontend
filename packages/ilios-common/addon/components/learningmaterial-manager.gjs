@@ -360,35 +360,54 @@ export default class LearningMaterialManagerComponent extends Component {
             </div>
           </div>
 
-          <div class="item notes">
+          <div class="item">
             <label>
-              {{t "general.instructionalNotes"}}:
+              {{t "general.description"}}:
             </label>
-            {{#if @editable}}
-              <HtmlEditor @content={{this.notes}} @update={{set this "notes"}} />
-            {{else}}
-              <span>
+            <span class="description">
+              {{#if (and @editable this.isLinkedOnlyOnce)}}
+                <HtmlEditor @content={{this.description}} @update={{set this "description"}} />
+              {{else}}
                 {{! template-lint-disable no-triple-curlies }}
-                {{{this.notes}}}
-              </span>
-            {{/if}}
+                <span>
+                  {{{this.description}}}
+                </span>
+              {{/if}}
+            </span>
           </div>
-          <div class="item publicnotes">
-            <label>
-              {{t "general.showNotesToStudents"}}:
-            </label>
-            {{#if @editable}}
-              <ToggleYesno @yes={{this.publicNotes}} @toggle={{set this "publicNotes"}} />
-            {{else if this.publicNotes}}
-              <span class="add">
-                {{t "general.yes"}}
-              </span>
-            {{else}}
-              <span class="remove">
-                {{t "general.no"}}
-              </span>
-            {{/if}}
+          <div class="item">
+            <div class="notes">
+              <label>
+                {{t "general.instructionalNotes"}}:
+              </label>
+              {{#if @editable}}
+                <HtmlEditor @content={{this.notes}} @update={{set this "notes"}} />
+              {{else}}
+                <span>
+                  {{! template-lint-disable no-triple-curlies }}
+                  {{{this.notes}}}
+                </span>
+              {{/if}}
+            </div>
+
+            <div class="publicnotes">
+              <label>
+                {{t "general.showNotesToStudents"}}:
+              </label>
+              {{#if @editable}}
+                <ToggleYesno @yes={{this.publicNotes}} @toggle={{set this "publicNotes"}} />
+              {{else if this.publicNotes}}
+                <span class="add">
+                  {{t "general.yes"}}
+                </span>
+              {{else}}
+                <span class="remove">
+                  {{t "general.no"}}
+                </span>
+              {{/if}}
+            </div>
           </div>
+
           <div class="item">
             <label>
               {{t "general.owner"}}:
@@ -413,21 +432,7 @@ export default class LearningMaterialManagerComponent extends Component {
               {{this.userRoleTitle}}
             </span>
           </div>
-          <div class="item">
-            <label>
-              {{t "general.description"}}:
-            </label>
-            <span class="description">
-              {{#if (and @editable this.isLinkedOnlyOnce)}}
-                <HtmlEditor @content={{this.description}} @update={{set this "description"}} />
-              {{else}}
-                {{! template-lint-disable no-triple-curlies }}
-                <span>
-                  {{{this.description}}}
-                </span>
-              {{/if}}
-            </span>
-          </div>
+
           {{#if this.copyrightPermission}}
             <div class="item">
               <label>
