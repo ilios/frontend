@@ -24,7 +24,7 @@ import focus from 'ilios-common/modifiers/focus';
 export default class ReportsSubjectHeader extends Component {
   @service router;
   @service reporting;
-  @tracked title = '';
+  @tracked title = this.args.report?.title ?? '';
 
   validations = new YupValidations(this, {
     title: string().max(240),
