@@ -32,6 +32,7 @@ general:
   backToDashboard: Retour à tableau de bord
   backToSessionList: Retour à Liste du Séances
   backToTitle: "Retour à {title}"
+  backToTop: Retour à haut
   beforeOrAfterMidday: Avant ou après midi
   bottomPagination: Pagination en bas
   calendar: Calendrier

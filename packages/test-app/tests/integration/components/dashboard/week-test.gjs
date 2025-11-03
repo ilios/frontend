@@ -112,6 +112,9 @@ module('Integration | Component | dashboard/week', function (hooks) {
       component.weekGlance.eventsByDate[0].events[1].title,
       'Finding the Point in Life',
     );
+
+    assert.ok(component.backToTop, 'backToTop element exists');
+    assert.strictEqual(component.backToTop.title, 'Back to top', 'backToTop has correct text');
   });
 
   test('it renders blank', async function (assert) {
