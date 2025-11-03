@@ -54,7 +54,7 @@ module('Integration | Component | courses/list-item', function (hooks) {
     assert.strictEqual(component.level, '2');
     assert.strictEqual(component.startDate, '04/23/2023');
     assert.strictEqual(component.endDate, '05/30/2023');
-    assert.strictEqual(component.status, 'Not Published');
+    assert.strictEqual(component.publicationStatus.icon.title, 'Not Published');
     assert.ok(component.isUnlocked);
     assert.notOk(component.isLocked);
     assert.ok(component.isUnlocked);
@@ -210,7 +210,7 @@ module('Integration | Component | courses/list-item', function (hooks) {
         />
       </template>,
     );
-    assert.strictEqual(component.status, 'Scheduled');
+    assert.strictEqual(component.publicationStatus.icon.title, 'Scheduled');
     assert.notOk(component.canRemove);
   });
 
@@ -228,7 +228,7 @@ module('Integration | Component | courses/list-item', function (hooks) {
         />
       </template>,
     );
-    assert.strictEqual(component.status, 'Published');
+    assert.strictEqual(component.publicationStatus.icon.title, 'Published');
     assert.notOk(component.canRemove);
   });
 

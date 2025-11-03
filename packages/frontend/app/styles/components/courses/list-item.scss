@@ -6,13 +6,4 @@
   .fa-trash {
     @include cm.icon;
   }
-
-  .publication-status {
-    .icon {
-      @include cm.hide-from-large-screen;
-    }
-    .text {
-      @include cm.hide-from-small-screen;
-    }
-  }
 }

@@ -378,14 +378,14 @@ module('Acceptance | Courses', function (hooks) {
     assert.strictEqual(page.root.list.courses.length, 2);
     assert.strictEqual(page.root.list.courses[0].title, 'course 0', 'course name is correct');
     assert.strictEqual(
-      page.root.list.courses[0].status,
+      page.root.list.courses[0].publicationStatus.icon.title,
       'Not Published',
       'course status is correct',
     );
     assert.notOk(page.root.list.courses[0].isLocked, 'course is not locked');
     assert.strictEqual(page.root.list.courses[1].title, 'course 1', 'course name is correct');
     assert.strictEqual(
-      page.root.list.courses[1].status,
+      page.root.list.courses[1].publicationStatus.icon.title,
       'Not Published',
       'course status is correct',
     );

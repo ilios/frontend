@@ -75,7 +75,7 @@ export default class CoursesListItemComponent extends Component {
         {{#if (includes @course.id @savingCourseIds)}}
           <LoadingSpinner />
         {{else}}
-          <PublicationStatus @item={{@course}} />
+          <PublicationStatus @item={{@course}} @showText={{false}} />
           {{#if @course.locked}}
             {{#if this.canUnlock}}
               <button
