@@ -1,8 +1,11 @@
 import Component from '@glimmer/component';
+import { guidFor } from '@ember/object/internals';
 import FaIcon from 'ilios-common/components/fa-icon';
 import t from 'ember-intl/helpers/t';
 
 export default class PublicationStatusComponent extends Component {
+  id = guidFor(this);
+
   get textKey() {
     if (this.args.item.isScheduled) {
       return 'general.scheduled';
@@ -40,7 +43,17 @@ export default class PublicationStatusComponent extends Component {
       ...attributes
       data-test-publication-status
     >
-      <FaIcon @icon={{this.iconKey}} class="icon" data-test-icon @title={{t this.textKey}} />
+      {{#if @showText}}
+        <FaIcon
+          @icon={{this.iconKey}}
+          @ariaLabeledBy="{{this.id}}-title"
+          class="icon"
+          data-test-icon
+        />
+        <span id="{{this.id}}-title" class="text" data-test-text>{{t this.textKey}}</span>
+      {{else}}
+        <FaIcon @icon={{this.iconKey}} class="icon" data-test-icon @title={{t this.textKey}} />
+      {{/if}}
     </span>
   </template>
 }

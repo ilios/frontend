@@ -54,8 +54,7 @@ module('Integration | Component | course summary header', function (hooks) {
     const end = `${blocks}:nth-of-type(3) span`;
     const level = `${blocks}:nth-of-type(4) span`;
     const status = `${blocks}:nth-of-type(5) span:nth-of-type(1) [data-test-publication-status]`;
-    const statusTitle = `${status} title`;
-
+    const statusTitle = `${status} [data-test-text]`;
     assert.dom(title).hasText('course 0');
     assert.dom(printIcon).hasClass('fa-print');
     assert.dom(rolloverIcon).hasClass('fa-shuffle');
