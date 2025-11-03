@@ -182,7 +182,7 @@ export default class WeeklyGlance extends Component {
               </div>
             {{/each}}
           {{else}}
-            <p>
+            <p class="no-events">
               {{t "general.none"}}
             </p>
           {{/if}}
