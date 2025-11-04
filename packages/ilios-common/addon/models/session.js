@@ -536,6 +536,37 @@ export default class SessionModel extends Model {
     return striptags(this.description);
   }
 
+  @cached
+  get sessionTitlesInCourse() {
+    const rhett = new Map();
+    if (!this._courseData.isResolved) {
+      return rhett;
+    }
+    const course = this._courseData.value;
+    if (!course._sessionsData.isResolved) {
+      return rhett;
+    }
+    const sessions = course._sessionsData.value;
+    sessions.forEach((session) => {
+      if (!rhett.has(session.title)) {
+        rhett.set(session.title, new Set());
+      }
+      rhett.get(session.title).add(session.id);
+    });
+    return rhett;
+  }
+
+  get uniqueTitleInCourse() {
+    if (!this.sessionTitlesInCourse.has(this.title)) {
+      return this.title;
+    }
+    const sessionIds = [...this.sessionTitlesInCourse.get(this.title)];
+    if (sessionIds.indexOf(this.id) <= 0) {
+      return this.title;
+    }
+    return `${this.title}, ${sessionIds.indexOf(this.id) + 1}`;
+  }
+
   async getAllIlmSessionInstructors() {
     const ilmSession = await this.ilmSession;
     if (!ilmSession) {

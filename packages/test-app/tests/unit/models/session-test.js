@@ -933,4 +933,47 @@ module('Unit | Model | Session', function (hooks) {
     this.store.createRecord('session', { postrequisite: session });
     assert.strictEqual(session.prerequisiteCount, 2);
   });
+
+  test('sessionTitlesInCourse', async function (assert) {
+    const course = this.store.createRecord('course');
+    const fooSession = this.store.createRecord('session', { course, id: '1', title: 'Foo' });
+    this.store.createRecord('session', { course, id: '2', title: 'Bar' });
+    await waitForResource(course, '_sessionsData');
+    await waitForResource(fooSession, '_courseData');
+    let sessionTitlesInCourse = fooSession.sessionTitlesInCourse;
+    assert.strictEqual([...sessionTitlesInCourse.keys()].length, 2);
+    assert.ok(sessionTitlesInCourse.has('Bar'));
+    assert.ok(sessionTitlesInCourse.has('Foo'));
+    assert.strictEqual([...sessionTitlesInCourse.get('Foo').values()].length, 1);
+    assert.strictEqual([...sessionTitlesInCourse.get('Foo').values()][0], fooSession.id);
+
+    const fooSession2 = this.store.createRecord('session', { course, id: '3', title: 'Foo' });
+    await waitForResource(course, '_sessionsData');
+    await waitForResource(fooSession, '_courseData');
+    sessionTitlesInCourse = fooSession.sessionTitlesInCourse;
+    assert.strictEqual([...sessionTitlesInCourse.keys()].length, 2);
+    assert.ok(sessionTitlesInCourse.has('Bar'));
+    assert.ok(sessionTitlesInCourse.has('Foo'));
+    assert.strictEqual([...sessionTitlesInCourse.get('Foo').values()].length, 2);
+    assert.strictEqual([...sessionTitlesInCourse.get('Foo').values()][0], fooSession.id);
+    assert.strictEqual([...sessionTitlesInCourse.get('Foo').values()][1], fooSession2.id);
+  });
+
+  test('uniqueTitleInCourse', async function (assert) {
+    const course = this.store.createRecord('course');
+    const session = this.store.createRecord('session', { course, id: '1', title: 'Foo' });
+    await waitForResource(course, '_sessionsData');
+    await waitForResource(session, '_courseData');
+    assert.strictEqual(session.uniqueTitleInCourse, 'Foo');
+
+    const session2 = this.store.createRecord('session', { course, id: '2', title: 'Foo' });
+    await waitForResource(course, '_sessionsData');
+    await waitForResource(session2, '_courseData');
+    assert.strictEqual(session2.uniqueTitleInCourse, 'Foo, 2');
+
+    const session3 = this.store.createRecord('session', { course, id: '3', title: 'Foo' });
+    await waitForResource(course, '_sessionsData');
+    await waitForResource(session3, '_courseData');
+    assert.strictEqual(session3.uniqueTitleInCourse, 'Foo, 3');
+  });
 });

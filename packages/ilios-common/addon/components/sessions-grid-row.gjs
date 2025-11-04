@@ -83,7 +83,11 @@ export default class SessionsGridRowComponent extends Component {
         {{/if}}
       </span>
       <span class="session-grid-title">
-        <LinkTo @route="session" @models={{array @session.course @session}}>
+        <LinkTo
+          @route="session"
+          @models={{array @session.course @session}}
+          aria-label={{@session.uniqueTitleInCourse}}
+        >
           {{truncate @session.title 100 true}}
         </LinkTo>
       </span>

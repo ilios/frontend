@@ -19,7 +19,8 @@ module('Integration | Component | sessions-grid-row', function (hooks) {
 
   test('it renders', async function (assert) {
     const date = DateTime.fromObject({ year: 2019, month: 7, day: 9, hour: 17 });
-    const session = this.server.create('session');
+    const course = this.server.create('course');
+    const session = this.server.create('session', { course });
     this.server.create('session-type', { sessions: [session] });
     this.server.createList('term', 2, { sessions: [session] });
     this.server.createList('session-objective', 3, { session });
@@ -73,7 +74,8 @@ module('Integration | Component | sessions-grid-row', function (hooks) {
   });
 
   test('it renders expanded', async function (assert) {
-    const session = this.server.create('session');
+    const course = this.server.create('course');
+    const session = this.server.create('session', { course });
     const model = await this.owner.lookup('service:store').findRecord('session', session.id);
     this.set('session', model);
     this.set('expandedSessionIds', [session.id]);
@@ -101,7 +103,8 @@ module('Integration | Component | sessions-grid-row', function (hooks) {
       }
     }
     this.owner.register('service:permission-checker', PermissionCheckerServiceMock);
-    const session = this.server.create('session');
+    const course = this.server.create('course');
+    const session = this.server.create('session', { course });
     const model = await this.owner.lookup('service:store').findRecord('session', session.id);
     this.set('session', model);
     this.set('confirmDelete', (s) => {
@@ -124,7 +127,8 @@ module('Integration | Component | sessions-grid-row', function (hooks) {
   });
 
   test('closeSession fires', async function (assert) {
-    const session = this.server.create('session');
+    const course = this.server.create('course');
+    const session = this.server.create('session', { course });
     const model = await this.owner.lookup('service:store').findRecord('session', session.id);
     this.set('session', model);
     this.set('expandedSessionIds', [session.id]);
@@ -148,7 +152,8 @@ module('Integration | Component | sessions-grid-row', function (hooks) {
   });
 
   test('expandSession fires', async function (assert) {
-    const session = this.server.create('session');
+    const course = this.server.create('course');
+    const session = this.server.create('session', { course });
     this.server.create('offering', { session });
     const model = await this.owner.lookup('service:store').findRecord('session', session.id);
     this.set('session', model);
