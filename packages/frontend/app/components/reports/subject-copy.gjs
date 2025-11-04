@@ -37,11 +37,8 @@ export default class ReportsSubjectCopy extends Component {
       selectedPrepositionalObject: this.args.prepositionalObject,
       selectedPrepositionalObjectId: this.args.prepositionalObjectTableRowId,
       showNewReportForm: true,
+      title: `${this.reportTitle} (${this.intl.t('general.copy')})`,
     };
-
-    if (this.args.report?.title) {
-      query.title = `${this.args.report.title} (${this.intl.t('general.copy')})`;
-    }
 
     return query;
   }

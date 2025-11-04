@@ -166,7 +166,7 @@ module('Acceptance | Reports - Subject Report', function (hooks) {
     await page.report.copy.button.click();
     assert.strictEqual(
       currentURL(),
-      '/reports/subjects?selectedPrepositionalObject=course&selectedPrepositionalObjectId=1&selectedSchoolId=1&selectedSubject=session&showNewReportForm=true',
+      '/reports/subjects?selectedPrepositionalObject=course&selectedPrepositionalObjectId=1&selectedSchoolId=1&selectedSubject=session&showNewReportForm=true&title=All%20Sessions%20for%20Course%20course%200%20(2015)%20in%20school%200%20(Copy)',
     );
     assert.verifySteps(['API called']);
   });
