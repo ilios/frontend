@@ -149,7 +149,7 @@ export default class PrintCourseSessionComponent extends Component {
         <h2>
           {{@session.title}}
         </h2>
-        <PublicationStatus @item={{@session}} />
+        <PublicationStatus @item={{@session}} @showText={{true}} />
       </div>
       <section class="overview block">
         <div class="title">

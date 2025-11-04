@@ -48,9 +48,9 @@ module('Acceptance | Session - Publish All', function (hooks) {
     const { sessions } = sessionsPage.courseSessions.sessionsGrid;
     assert.strictEqual(sessions.length, 2);
     assert.strictEqual(sessions[0].row.title, 'session 0');
-    assert.strictEqual(sessions[0].row.status, 'Not Published');
+    assert.strictEqual(sessions[0].row.publicationStatus.icon.title, 'Not Published');
     assert.strictEqual(sessions[1].row.title, 'session 1');
-    assert.strictEqual(sessions[1].row.status, 'Not Published');
+    assert.strictEqual(sessions[1].row.publicationStatus.icon.title, 'Not Published');
 
     await page.visit({ courseId: this.course.id });
     const { publishableSessions } = page.publishAllSessions;
@@ -70,9 +70,9 @@ module('Acceptance | Session - Publish All', function (hooks) {
     await page.publishAllSessions.review.save();
     assert.strictEqual(sessions.length, 2);
     assert.strictEqual(sessions[0].row.title, 'session 0');
-    assert.strictEqual(sessions[0].row.status, 'Published');
+    assert.strictEqual(sessions[0].row.publicationStatus.icon.title, 'Published');
     assert.strictEqual(sessions[1].row.title, 'session 1');
-    assert.strictEqual(sessions[1].row.status, 'Published');
+    assert.strictEqual(sessions[1].row.publicationStatus.icon.title, 'Published');
   });
 
   test('publish overridable sessions #2816', async function (assert) {
@@ -91,9 +91,9 @@ module('Acceptance | Session - Publish All', function (hooks) {
     const { sessions } = sessionsPage.courseSessions.sessionsGrid;
     assert.strictEqual(sessions.length, 2);
     assert.strictEqual(sessions[0].row.title, 'session 0');
-    assert.strictEqual(sessions[0].row.status, 'Not Published');
+    assert.strictEqual(sessions[0].row.publicationStatus.icon.title, 'Not Published');
     assert.strictEqual(sessions[1].row.title, 'session 1');
-    assert.strictEqual(sessions[1].row.status, 'Not Published');
+    assert.strictEqual(sessions[1].row.publicationStatus.icon.title, 'Not Published');
 
     await page.visit({ courseId: this.course.id });
     const { overridableSessions } = page.publishAllSessions;
@@ -126,8 +126,8 @@ module('Acceptance | Session - Publish All', function (hooks) {
     await page.publishAllSessions.review.save();
     assert.strictEqual(sessions.length, 2);
     assert.strictEqual(sessions[0].row.title, 'session 0');
-    assert.strictEqual(sessions[0].row.status, 'Published');
+    assert.strictEqual(sessions[0].row.publicationStatus.icon.title, 'Published');
     assert.strictEqual(sessions[1].row.title, 'session 1');
-    assert.strictEqual(sessions[1].row.status, 'Published');
+    assert.strictEqual(sessions[1].row.publicationStatus.icon.title, 'Published');
   });
 });

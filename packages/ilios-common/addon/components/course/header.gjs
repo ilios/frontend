@@ -94,7 +94,7 @@ export default class CourseHeaderComponent extends Component {
         {{#if @editable}}
           <PublicationMenu @course={{@course}} />
         {{else}}
-          <PublicationStatus @item={{@course}} />
+          <PublicationStatus @item={{@course}} @showText={{true}} />
         {{/if}}
       </div>
     </div>

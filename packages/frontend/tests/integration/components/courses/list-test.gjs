@@ -410,8 +410,8 @@ module('Integration | Component | courses/list', function (hooks) {
       </template>,
     );
     assert.strictEqual(component.courses.length, 2);
-    assert.strictEqual(component.courses[0].status, 'Not Published');
-    assert.strictEqual(component.courses[1].status, 'Published');
+    assert.strictEqual(component.courses[0].publicationStatus.icon.title, 'Not Published');
+    assert.strictEqual(component.courses[1].publicationStatus.icon.title, 'Published');
     assert.ok(component.isSortedByStatusAscending);
   });
 
@@ -433,8 +433,8 @@ module('Integration | Component | courses/list', function (hooks) {
       </template>,
     );
     assert.strictEqual(component.courses.length, 2);
-    assert.strictEqual(component.courses[0].status, 'Published');
-    assert.strictEqual(component.courses[1].status, 'Not Published');
+    assert.strictEqual(component.courses[0].publicationStatus.icon.title, 'Published');
+    assert.strictEqual(component.courses[1].publicationStatus.icon.title, 'Not Published');
     assert.ok(component.isSortedByStatusDescending);
   });
 

@@ -88,7 +88,7 @@ export default class CourseSummaryHeaderComponent extends Component {
             {{t "general.publicationStatus"}}:
           </label>
           <span>
-            <PublicationStatus @item={{@course}} />
+            <PublicationStatus @item={{@course}} @showText={{true}} />
           </span>
         </div>
       </div>

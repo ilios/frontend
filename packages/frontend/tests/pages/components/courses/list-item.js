@@ -1,4 +1,5 @@
 import { clickable, create, hasClass, isVisible, text } from 'ember-cli-page-object';
+import publicationStatus from 'ilios-common/page-objects/components/publication-status';
 
 const definition = {
   scope: '[data-test-courses-list-item]',
@@ -6,7 +7,7 @@ const definition = {
   level: text('[data-test-level]'),
   startDate: text('[data-test-start-date]'),
   endDate: text('[data-test-end-date]'),
-  status: text('[data-test-status]'),
+  publicationStatus,
   isLocked: hasClass('fa-lock', 'svg', { scope: '[data-test-status]', at: 1 }),
   isUnlocked: hasClass('fa-lock-open', 'svg', { scope: '[data-test-status]', at: 1 }),
   canLock: isVisible('[data-test-lock]', { scope: '[data-test-status]' }),

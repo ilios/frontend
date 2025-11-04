@@ -20,7 +20,7 @@ module('Integration | Component | session/header', function (hooks) {
     assert.notOk(component.title.isEditable);
     assert.strictEqual(component.title.value, 'session 0');
     assert.notOk(component.publicationMenu.isPresent);
-    assert.strictEqual(component.publicationStatus.value, 'Not Published');
+    assert.strictEqual(component.publicationStatus.title.text, 'Not Published');
 
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');

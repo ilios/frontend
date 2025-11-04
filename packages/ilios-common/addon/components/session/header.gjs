@@ -74,7 +74,7 @@ export default class SessionHeaderComponent extends Component {
         {{#if @editable}}
           <PublicationMenu @session={{@session}} @hideCheckLink={{@hideCheckLink}} />
         {{else}}
-          <PublicationStatus @item={{@session}} />
+          <PublicationStatus @item={{@session}} @showText={{true}} />
         {{/if}}
       </span>
     </div>

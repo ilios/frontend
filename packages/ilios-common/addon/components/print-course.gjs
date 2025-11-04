@@ -129,7 +129,7 @@ export default class PrintCourseComponent extends Component {
             {{@course.year}}
           {{/if}}
         </h3>
-        <PublicationStatus @item={{@course}} />
+        <PublicationStatus @item={{@course}} @showText={{true}} />
       </div>
       <section class="overview block" data-test-course-overview>
         <div class="title">

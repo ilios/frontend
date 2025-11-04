@@ -53,8 +53,8 @@ module('Integration | Component | course summary header', function (hooks) {
     const externalId = `${blocks}:nth-of-type(2) span`;
     const end = `${blocks}:nth-of-type(3) span`;
     const level = `${blocks}:nth-of-type(4) span`;
-    const status = `${blocks}:nth-of-type(5) span:nth-of-type(1) [data-test-text]`;
-
+    const status = `${blocks}:nth-of-type(5) span:nth-of-type(1) [data-test-publication-status]`;
+    const statusTitle = `${status} [data-test-text]`;
     assert.dom(title).hasText('course 0');
     assert.dom(printIcon).hasClass('fa-print');
     assert.dom(rolloverIcon).hasClass('fa-shuffle');
@@ -62,7 +62,7 @@ module('Integration | Component | course summary header', function (hooks) {
     assert.dom(externalId).hasText('abc');
     assert.dom(end).hasText('08/12/2005');
     assert.dom(level).hasText('3');
-    assert.dom(status).hasText('Published');
+    assert.dom(statusTitle).hasText('Published');
     assert.verifySteps(['canCreateCourse called']);
   });
 
