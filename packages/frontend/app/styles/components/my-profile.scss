@@ -22,9 +22,8 @@
     }
   }
 
-  .blocks {
+  .admin-block {
     margin-top: 1rem;
-    @include m.admin-blocks;
 
     ul {
       @include cm.ilios-list-reset;
