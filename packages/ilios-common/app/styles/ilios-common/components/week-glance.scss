@@ -12,8 +12,8 @@
     margin-bottom: 1em;
 
     &.collapsible {
-      @include m.ilios-button-reset;
-      @include m.font-size("xl");
+      background-color: transparent;
+      white-space: normal;
     }
   }
 
