@@ -330,6 +330,25 @@ export default class NewLearningmaterialComponent extends Component {
           </select>
         </span>
       </div>
+      {{#if this.isFile}}
+        <div class="item" data-test-file>
+          <label>
+            {{t "general.file"}}:
+          </label>
+          <LearningMaterialUploader
+            id="learning-material-uploader-{{this.uniqueId}}"
+            class={{if this.validations.errors.filename "error"}}
+            @for="file-upload-{{this.uniqueId}}"
+            @setFilename={{this.setFilename}}
+            @setFileHash={{this.setFileHash}}
+          />
+          <YupValidationMessage
+            @description={{t "general.file"}}
+            @validationErrors={{this.validations.errors.filename}}
+            data-test-file-validation-error-message
+          />
+        </div>
+      {{/if}}
       {{#if this.isLink}}
         <div class="item" data-test-link>
           <label for="url-{{this.uniqueId}}">
@@ -443,24 +462,8 @@ export default class NewLearningmaterialComponent extends Component {
             </span>
           </div>
         {{/unless}}
-        <div class="item" data-test-file>
-          <label>
-            {{t "general.file"}}:
-          </label>
-          <LearningMaterialUploader
-            id="learning-material-uploader-{{this.uniqueId}}"
-            class={{if this.validations.errors.filename "error"}}
-            @for="file-upload-{{this.uniqueId}}"
-            @setFilename={{this.setFilename}}
-            @setFileHash={{this.setFileHash}}
-          />
-          <YupValidationMessage
-            @description={{t "general.file"}}
-            @validationErrors={{this.validations.errors.filename}}
-            data-test-file-validation-error-message
-          />
-        </div>
       {{/if}}
+
       <div class="buttons">
         <button class="done text" type="button" {{on "click" (perform this.prepareSave)}}>
           {{#if this.prepareSave.isRunning}}
