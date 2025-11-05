@@ -547,7 +547,7 @@ export default class SessionModel extends Model {
       return rhett;
     }
     const sessions = course._sessionsData.value;
-    sessions.forEach((session) => {
+    sortBy(sessions, 'id').forEach((session) => {
       if (!rhett.has(session.title)) {
         rhett.set(session.title, new Set());
       }
