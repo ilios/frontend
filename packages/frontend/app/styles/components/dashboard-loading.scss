@@ -2,10 +2,6 @@
 @use "../ilios-common/mixins" as m;
 
 .dashboard-loading {
-  .box {
-    @include m.loading-box;
-  }
-
   .main-box {
     .controls {
       border-bottom: 1px dotted var(--grey);

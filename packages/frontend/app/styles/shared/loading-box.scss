@@ -1,12 +1,8 @@
-@use "../colors" as c;
-
-@mixin loading-box() {
+.loading-box {
   animation: fadein;
   background-color: var(--lightest-grey);
   border: 1px dotted var(--grey);
   transition: opacity 2s ease-out;
-
-  @content;
 
   @keyframes fadein {
     0% {
