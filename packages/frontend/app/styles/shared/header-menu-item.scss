@@ -1,0 +1,31 @@
+@use "../ilios-common/mixins" as cm;
+@use "../ilios-common/colors" as c;
+
+.header-menu-item {
+  border: 0;
+  background-color: var(--super-light-grey);
+  color: var(--black);
+  display: block;
+  outline: none;
+  padding: 0.5rem 1rem;
+  text-align: right;
+  text-decoration: none;
+  white-space: nowrap;
+
+  &[aria-checked="true"],
+  &.active {
+    background-color: var(--green);
+    color: var(--white);
+  }
+
+  &:hover,
+  &:focus {
+    background-color: var(--blue);
+    color: var(--white);
+    &[aria-checked="true"],
+    &.active {
+      background-color: var(--green);
+      cursor: default;
+    }
+  }
+}

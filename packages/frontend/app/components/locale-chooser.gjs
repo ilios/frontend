@@ -98,7 +98,7 @@ export default class LocaleChooserComponent extends Component {
     }
   }
   <template>
-    <div class="locale-chooser" data-test-locale-chooser {{onClickOutside this.close}}>
+    <div class="locale-chooser header-menu" data-test-locale-chooser {{onClickOutside this.close}}>
       <button
         type="button"
         class="toggle"
@@ -120,6 +120,7 @@ export default class LocaleChooserComponent extends Component {
         <div class="menu" role="menu">
           {{#each this.locales as |loc index|}}
             <button
+              class="header-menu-item"
               type="button"
               role="menuitemradio"
               lang={{loc.id}}

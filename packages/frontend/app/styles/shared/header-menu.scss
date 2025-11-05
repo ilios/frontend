@@ -1,9 +1,7 @@
 @use "../ilios-common/mixins" as cm;
 @use "../ilios-common/colors" as c;
 
-@use "sass:color";
-
-@mixin header-menu() {
+.header-menu {
   margin: 0 0 0 0.5rem;
   position: relative;
   text-align: right;
@@ -49,35 +47,6 @@
     &[aria-expanded="true"] {
       border-bottom-right-radius: 0;
       border-bottom-left-radius: 0;
-    }
-  }
-}
-
-@mixin header-menu-item() {
-  border: 0;
-  background-color: var(--super-light-grey);
-  color: var(--black);
-  display: block;
-  outline: none;
-  padding: 0.5rem 1rem;
-  text-align: right;
-  text-decoration: none;
-  white-space: nowrap;
-
-  &[aria-checked="true"],
-  &.active {
-    background-color: var(--green);
-    color: var(--white);
-  }
-
-  &:hover,
-  &:focus {
-    background-color: var(--blue);
-    color: var(--white);
-    &[aria-checked="true"],
-    &.active {
-      background-color: var(--green);
-      cursor: default;
     }
   }
 }
