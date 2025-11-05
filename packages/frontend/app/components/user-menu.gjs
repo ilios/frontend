@@ -92,7 +92,7 @@ export default class UserMenuComponent extends Component {
   <template>
     {{#let (uniqueId) as |templateId|}}
       <nav
-        class="user-menu{{if this.isOpen ' is-open'}}"
+        class="user-menu header-menu{{if this.isOpen ' is-open'}}"
         aria-label={{t "general.userMenu"}}
         {{! template-lint-disable no-invalid-interactive }}
         {{on "keyup" this.keyUp}}
@@ -121,6 +121,7 @@ export default class UserMenuComponent extends Component {
                   @route="myprofile"
                   @action={{set this "isOpen" false}}
                   @queryParams={{hash invalidatetokens=null newtoken=null}}
+                  class="header-menu-item"
                   data-test-item-link
                 >
                   {{t "general.myProfile"}}
@@ -130,6 +131,7 @@ export default class UserMenuComponent extends Component {
                 <LinkToWithAction
                   @route="logout"
                   @action={{set this "isOpen" false}}
+                  class="header-menu-item"
                   data-test-item-link
                 >
                   {{t "general.logout"}}
