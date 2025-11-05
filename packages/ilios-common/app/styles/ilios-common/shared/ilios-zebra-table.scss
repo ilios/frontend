@@ -1,0 +1,7 @@
+@use "sass:color";
+
+.ilios-zebra-table {
+  tbody tr:nth-child(even) {
+    background-color: var(--super-light-grey);
+  }
+}
