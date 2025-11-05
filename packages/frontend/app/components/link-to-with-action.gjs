@@ -34,6 +34,7 @@ export default class LinkToWithActionComponent extends Component {
       class={{if this.isActive "active"}}
       {{on "click" this.navigate}}
       data-test-link-to-with-action
+      ...attributes
     >
       {{yield}}
     </a>
