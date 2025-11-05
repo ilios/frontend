@@ -410,7 +410,7 @@ export default class NewLearningmaterialComponent extends Component {
         </span>
       </div>
       {{#if this.isFile}}
-        <div class="item" data-test-copyright-permission>
+        <div class="item copyright" data-test-copyright-permission>
           <label for="copyright-permission-{{this.uniqueId}}">
             {{t "general.copyrightPermission"}}:
           </label>

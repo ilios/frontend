@@ -18,6 +18,12 @@
         flex-direction: column;
       }
     }
+
+    &.copyright {
+      #lm-copyright-permissions-text {
+        margin: 0;
+      }
+    }
   }
 
   .buttons {
