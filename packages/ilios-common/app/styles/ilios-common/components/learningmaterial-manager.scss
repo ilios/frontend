@@ -70,6 +70,12 @@
     margin: 0;
   }
 
+  @include m.for-laptop-and-up {
+    .timed-release-container {
+      grid-column: 1 / -1;
+    }
+  }
+
   .timed-release {
     margin-bottom: 2rem;
 
