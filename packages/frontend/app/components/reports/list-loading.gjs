@@ -2,7 +2,7 @@ import t from 'ember-intl/helpers/t';
 import repeat from 'ilios-common/helpers/repeat';
 import FaIcon from 'ilios-common/components/fa-icon';
 <template>
-  <div class="reports-list-loading" ...attributes>
+  <div class="loading-shimmer loading-text" data-test-reports-list-loading ...attributes>
     <table>
       <thead>
         <tr>

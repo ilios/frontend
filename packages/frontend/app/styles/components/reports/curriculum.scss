@@ -20,13 +20,4 @@
     height: 1rem;
     justify-content: end;
   }
-
-  .report-results.running {
-    @include cm.loading-shimmer;
-    &,
-    table caption,
-    a {
-      @include cm.loading-text;
-    }
-  }
 }

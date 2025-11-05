@@ -179,7 +179,7 @@ export default class ReportsCurriculumHeader extends Component {
         {{else}}
           <button
             type="button"
-            class="done text"
+            class="done text loading-text"
             {{on "click" @runReport}}
             disabled={{not @countSelectedCourses}}
             id={{this.runButtonId}}

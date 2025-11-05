@@ -228,9 +228,12 @@ export default class ReportsCurriculumSessionObjectivesComponent extends Compone
         ></progress>
       {{/if}}
     </div>
-    <div class="report-results {{if this.reportRunning 'running'}}" data-test-report-results>
+    <div
+      class="report-results{{if this.reportRunning ' loading-shimmer loading-text running'}}"
+      data-test-report-results
+    >
       <table>
-        <caption>{{t "general.resultsSummary"}}</caption>
+        <caption class="loading-text">{{t "general.resultsSummary"}}</caption>
         <thead>
           <tr>
             {{#if this.hasMultipleSchools}}

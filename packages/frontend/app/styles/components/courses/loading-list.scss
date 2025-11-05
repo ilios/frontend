@@ -1,6 +1,0 @@
-@use "../../ilios-common/mixins" as cm;
-
-.courses-loading-list {
-  @include cm.loading-text;
-  @include cm.loading-shimmer;
-}

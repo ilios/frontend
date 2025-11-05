@@ -2,13 +2,13 @@
 
 .courses-loading {
   .toggle-mycourses .toggle-buttons label {
-    @include cm.loading-text;
     cursor: default;
     background-color: var(--lightest-grey);
+    color: transparent;
+    text-shadow: var(--very-transparent-black) 0 0 10px;
   }
 
   select {
-    @include cm.loading-text;
     cursor: default;
   }
 }

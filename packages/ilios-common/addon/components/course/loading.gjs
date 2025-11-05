@@ -8,11 +8,11 @@ import FaIcon from 'ilios-common/components/fa-icon';
   <div aria-hidden="true">
     <div class="course-loading" {{animateLoading "course" loadingTime=10000 finalOpacity=".5"}}>
       <div class="header">
-        <span class="title">&nbsp;</span>
+        <span class="title loading-text">&nbsp;</span>
       </div>
       <div class="overview">
         <div class="course-overview-header">
-          <div class="title">
+          <div class="title loading-text">
             {{t "general.overview"}}
           </div>
           <div class="course-overview-actions"></div>
@@ -47,12 +47,12 @@ import FaIcon from 'ilios-common/components/fa-icon';
     </div>
 
     <section
-      class="course-sessions course-sessions-loading"
+      class="course-sessions course-sessions-loading loading-shimmer"
       {{animateLoading "course-sessions" finalOpacity=".5"}}
     >
       <div class="course-sessions-header">
         {{! template-lint-disable no-bare-strings }}
-        <div class="title">
+        <div class="title loading-text">
           {{t "general.sessions"}}
           (xx)
         </div>
@@ -63,7 +63,7 @@ import FaIcon from 'ilios-common/components/fa-icon';
         <input disabled />
       </div>
       <section>
-        <div class="sessions-grid-header"></div>
+        <div class="sessions-grid-header loading-text"></div>
       </section>
     </section>
   </div>

@@ -3,24 +3,16 @@
 @use "sass:color";
 
 .course-loading {
-  @include m.loading-text;
-  @include m.loading-shimmer;
-
   .header {
     @include m.course-header;
   }
   .overview {
     @include m.course-overview;
-
-    .title {
-      @include m.loading-text;
-    }
   }
 }
 
 .course-sessions.course-sessions-loading {
   border-bottom: 0;
-  @include m.loading-shimmer;
 
   .course-sessions-header {
     height: 2rem;
@@ -29,12 +21,7 @@
     }
   }
 
-  .title {
-    @include m.loading-text;
-  }
-
   .sessions-grid-header {
-    @include m.loading-text;
     background-color: var(--lighter-grey);
     height: 2rem;
   }
