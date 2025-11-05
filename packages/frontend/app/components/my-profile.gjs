@@ -116,7 +116,7 @@ export default class MyProfileComponent extends Component {
             </h2>
           </span>
         {{/if}}
-        <div class="blocks">
+        <div class="admin-block">
           <UserProfileRoles @user={{@user}} @isManageable={{false}} />
           <div class="small-component my-profile-schools" data-test-info>
             <div>

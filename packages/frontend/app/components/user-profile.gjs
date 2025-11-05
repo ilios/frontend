@@ -24,7 +24,7 @@ export default class UserProfileComponent extends Component {
   }
   <template>
     <div class="user-profile" data-test-user-profile ...attributes>
-      <div class="blocks">
+      <div class="admin-block">
         <ManageUsersSummary @canCreate={{@canCreate}} />
       </div>
       <h1 class="user-display-name" data-test-user-profile-title>
@@ -47,7 +47,7 @@ export default class UserProfileComponent extends Component {
           @toggle={{@setShowCalendar}}
         />
       </div>
-      <div class="blocks">
+      <div class="admin-block">
         {{#if @showCalendar}}
           <UserProfileCalendar @user={{@user}} />
         {{/if}}

@@ -3,7 +3,7 @@
 
 @use "sass:color";
 
-@mixin admin-blocks() {
+.admin-block {
   display: grid;
   gap: 0.5rem;
 
