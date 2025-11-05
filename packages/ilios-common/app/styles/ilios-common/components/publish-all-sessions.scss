@@ -5,7 +5,7 @@
   background-color: var(--white);
   border: 1px solid var(--lightest-grey);
   margin-top: 0.5em;
-  padding-left: 1rem;
+  padding: 0 1rem 1rem 1rem;
 
   section {
     @include m.detail-container(var(--orange));
@@ -47,7 +47,6 @@
     border: 1px solid var(--green);
     clear: both;
     @include m.font-size("large");
-    margin: 1rem;
     padding: 1rem;
     text-align: center;
 
