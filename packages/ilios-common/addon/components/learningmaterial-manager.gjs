@@ -433,6 +433,67 @@ export default class LearningMaterialManagerComponent extends Component {
             </span>
           </div>
 
+          {{#if this.isFile}}
+            <div class="item filename">
+              <label>
+                {{t "general.file"}}:
+              </label>
+              <span class="downloadurl">
+                {{#if (eq this.mimetype "application/pdf")}}
+                  <a href="{{this.absoluteFileUri}}?inline">{{this.filename}}</a>
+                  <a href={{this.absoluteFileUri}} target="_blank" rel="noopener noreferrer">
+                    <FaIcon @icon="download" @title={{t "general.download"}} />
+                  </a>
+                {{else}}
+                  <a href={{this.absoluteFileUri}} target="_blank" rel="noopener noreferrer">
+                    {{this.filename}}
+                  </a>
+                {{/if}}
+                <CopyButton
+                  @getClipboardText={{this.getLearningMaterialAbsoluteFileUri}}
+                  @success={{perform this.textCopied}}
+                >
+                  <FaIcon @icon="copy" @title={{t "general.copyLink"}} />
+                </CopyButton>
+              </span>
+            </div>
+          {{/if}}
+          {{#if this.isLink}}
+            <div class="item weblink">
+              <label>
+                {{t "general.link"}}:
+              </label>
+              <span class="link">
+                <a href={{this.link}} target="_blank" rel="noopener noreferrer">{{this.link}}</a>
+                <CopyButton
+                  @getClipboardText={{this.getLearningMaterialLink}}
+                  @success={{perform this.textCopied}}
+                >
+                  <FaIcon @icon="copy" @title={{t "general.copyLink"}} />
+                </CopyButton>
+              </span>
+            </div>
+          {{/if}}
+          {{#if this.isCitation}}
+            <div class="item">
+              <label>
+                {{t "general.citation"}}:
+              </label>
+              <span class="citation">
+                {{this.citation}}
+              </span>
+            </div>
+          {{/if}}
+
+          <div class="item">
+            <label>
+              {{t "general.uploadDate"}}:
+            </label>
+            <span class="upload-date">
+              {{formatDate this.uploadDate day="2-digit" month="2-digit" year="numeric"}}
+            </span>
+          </div>
+
           {{#if this.copyrightPermission}}
             <div class="item">
               <label>
