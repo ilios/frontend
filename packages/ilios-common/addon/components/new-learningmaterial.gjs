@@ -268,28 +268,31 @@ export default class NewLearningmaterialComponent extends Component {
           />
         </span>
       </div>
-      <div class="item" data-test-status>
-        <label for="status-{{this.uniqueId}}">
-          {{t "general.status"}}:
-        </label>
-        <span>
-          <select id="status-{{this.uniqueId}}" {{on "change" this.changeStatusId}}>
-            {{#each @learningMaterialStatuses as |lmStatus|}}
-              <option value={{lmStatus.id}} selected={{isEqual lmStatus this.selectedStatus}}>
-                {{lmStatus.title}}
-              </option>
-            {{/each}}
-          </select>
-        </span>
+      <div class="item status owner">
+        <div data-test-status>
+          <label for="status-{{this.uniqueId}}">
+            {{t "general.status"}}:
+          </label>
+          <span>
+            <select id="status-{{this.uniqueId}}" {{on "change" this.changeStatusId}}>
+              {{#each @learningMaterialStatuses as |lmStatus|}}
+                <option value={{lmStatus.id}} selected={{isEqual lmStatus this.selectedStatus}}>
+                  {{lmStatus.title}}
+                </option>
+              {{/each}}
+            </select>
+          </span>
+        </div>
+        <div data-test-owninguser>
+          <label>
+            {{t "general.owner"}}:
+          </label>
+          <span class="owninguser">
+            <UserNameInfo @user={{this.currentUserModel}} />
+          </span>
+        </div>
       </div>
-      <div class="item" data-test-owninguser>
-        <label>
-          {{t "general.owner"}}:
-        </label>
-        <span class="owninguser">
-          <UserNameInfo @user={{this.currentUserModel}} />
-        </span>
-      </div>
+
       <div class="item" data-test-author>
         <label for="original-author-{{this.uniqueId}}">
           {{t "general.contentAuthor"}}:
