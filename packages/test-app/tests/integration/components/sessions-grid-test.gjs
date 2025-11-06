@@ -51,7 +51,7 @@ module('Integration | Component | sessions-grid', function (hooks) {
       ilmSession,
       sessionType,
     });
-    const session2 = this.server.create('session', { prerequisites: [session1] });
+    const session2 = this.server.create('session', { course, prerequisites: [session1] });
     const sessionModel1 = await this.owner
       .lookup('service:store')
       .findRecord('session', session1.id);
@@ -76,7 +76,8 @@ module('Integration | Component | sessions-grid', function (hooks) {
   });
 
   test('clicking expand fires action', async function (assert) {
-    const session = this.server.create('session');
+    const course = this.server.create('course');
+    const session = this.server.create('session', { course });
     this.server.create('offering', { session });
     const sessionModel = await this.owner.lookup('service:store').findRecord('session', session.id);
     this.set('sessions', [sessionModel]);
@@ -100,7 +101,8 @@ module('Integration | Component | sessions-grid', function (hooks) {
   });
 
   test('clicking expand does not fire action when there are no offerings', async function (assert) {
-    const session = this.server.create('session');
+    const course = this.server.create('course');
+    const session = this.server.create('session', { course });
     const sessionModel = await this.owner.lookup('service:store').findRecord('session', session.id);
     this.set('sessions', [sessionModel]);
     this.set('sortBy', 'title');
@@ -123,8 +125,9 @@ module('Integration | Component | sessions-grid', function (hooks) {
 
   // @see issue ilios/common#1820 [ST 2020/12/10]
   test('deletion of session is disabled if it has prerequisites', async function (assert) {
-    const session1 = this.server.create('session');
-    const session2 = this.server.create('session', { postrequisite: session1 });
+    const course = this.server.create('course');
+    const session1 = this.server.create('session', { course });
+    const session2 = this.server.create('session', { course, postrequisite: session1 });
     const sessionModel1 = await this.owner
       .lookup('service:store')
       .findRecord('session', session1.id);
@@ -146,5 +149,35 @@ module('Integration | Component | sessions-grid', function (hooks) {
     assert.dom('[data-test-session]:nth-of-type(1) [data-test-delete]').isNotVisible();
     assert.dom('[data-test-session]:nth-of-type(2) [data-test-delete-disabled]').isNotVisible();
     assert.dom('[data-test-session]:nth-of-type(2) [data-test-delete]').isVisible();
+  });
+
+  test('multiple sessions with the same title', async function (assert) {
+    const course = this.server.create('course');
+    const session1 = this.server.create('session', { course, title: 'super duper' });
+    const session2 = this.server.create('session', { course, title: 'super duper' });
+    const session3 = this.server.create('session', { course, title: 'zeppelin' });
+    this.server.create('offering', { session: session1 });
+    const sessionModel1 = await this.owner
+      .lookup('service:store')
+      .findRecord('session', session1.id);
+    const sessionModel2 = await this.owner
+      .lookup('service:store')
+      .findRecord('session', session2.id);
+    const sessionModel3 = await this.owner
+      .lookup('service:store')
+      .findRecord('session', session3.id);
+    this.set('sessions', [sessionModel1, sessionModel2, sessionModel3]);
+    this.set('sortBy', 'title');
+    await render(
+      <template>
+        <SessionsGrid @sessions={{this.sessions}} @sortBy={{this.sortBy}} @setSortBy={{(noop)}} />
+      </template>,
+    );
+    assert.strictEqual(component.sessions[0].row.title, 'super duper');
+    assert.strictEqual(component.sessions[0].row.titleAriaLabel, 'super duper');
+    assert.strictEqual(component.sessions[1].row.title, 'super duper');
+    assert.strictEqual(component.sessions[1].row.titleAriaLabel, 'super duper, 2');
+    assert.strictEqual(component.sessions[2].row.title, 'zeppelin');
+    assert.strictEqual(component.sessions[2].row.titleAriaLabel, 'zeppelin');
   });
 });
