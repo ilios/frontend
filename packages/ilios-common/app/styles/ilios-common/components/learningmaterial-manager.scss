@@ -70,12 +70,6 @@
     margin: 0;
   }
 
-  @include m.for-laptop-and-up {
-    .timed-release-container {
-      grid-column: 1 / -1;
-    }
-  }
-
   .timed-release {
     margin-bottom: 2rem;
 
@@ -93,6 +87,13 @@
       min-width: 150px;
     }
 
+    .start,
+    .end {
+      display: flex;
+      flex-direction: row;
+      gap: 1em;
+    }
+
     .add-date {
       border: 1px solid var(--green);
       color: var(--green);
@@ -101,6 +102,10 @@
     .remove-date {
       border: 1px solid var(--red);
       color: var(--red);
+    }
+
+    .time-picker {
+      gap: 0.5em;
     }
   }
 }
