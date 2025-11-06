@@ -233,7 +233,7 @@ export default class ReportsCurriculumSessionObjectivesComponent extends Compone
       data-test-report-results
     >
       <table>
-        <caption class="loading-text">{{t "general.resultsSummary"}}</caption>
+        <caption>{{t "general.resultsSummary"}}</caption>
         <thead>
           <tr>
             {{#if this.hasMultipleSchools}}

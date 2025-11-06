@@ -240,7 +240,7 @@ export default class ReportsCurriculumLearnerGroupsComponent extends Component {
       data-test-report-results
     >
       <table>
-        <caption class="loading-text">{{t "general.resultsSummary"}}</caption>
+        <caption>{{t "general.resultsSummary"}}</caption>
         <thead>
           <tr>
             {{#if this.hasMultipleSchools}}
@@ -260,7 +260,7 @@ export default class ReportsCurriculumLearnerGroupsComponent extends Component {
                   <td>{{this.schoolTitlePlaceholder}}</td>
                 {{/if}}
                 <td>
-                  <LinkTo @route="course" @model={{c.id}} class="loading-text">
+                  <LinkTo @route="course" @model={{c.id}}>
                     {{c.title}}
                   </LinkTo>
                 </td>
