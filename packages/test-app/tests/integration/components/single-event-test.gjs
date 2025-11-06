@@ -1,4 +1,4 @@
-import { module, test, todo } from 'qunit';
+import { module, test, skip } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render } from '@ember/test-helpers';
 import Service from '@ember/service';
@@ -724,37 +724,34 @@ module('Integration | Component | ilios calendar single event', function (hooks)
     });
   });
 
-  todo(
-    "non learners don't get link to session if session route doesn't exists",
-    async function (assert) {
-      class CurrentUserMock extends Service {
-        performsNonLearnerFunction = true;
-        async getIsStudent() {
-          return true;
-        }
+  skip("non learners don't get link to session if session route doesn't exists", async function (assert) {
+    class CurrentUserMock extends Service {
+      performsNonLearnerFunction = true;
+      async getIsStudent() {
+        return true;
       }
-      this.owner.register('service:currentUser', CurrentUserMock);
+    }
+    this.owner.register('service:currentUser', CurrentUserMock);
 
-      const today = DateTime.fromObject({ hour: 8, minute: 0, second: 0 });
-      this.server.create('userevent', {
-        name: 'Learn to Learn',
-        courseTitle: 'course',
-        course: 1,
-        session: 1,
-        startDate: today.toISO(),
-        endDate: today.toISO(),
-        isBlanked: false,
-        isPublished: true,
-        isScheduled: false,
-        offering: 1,
-        lastModified: null,
-        sessionTypeTitle: 'test type',
-      });
+    const today = DateTime.fromObject({ hour: 8, minute: 0, second: 0 });
+    this.server.create('userevent', {
+      name: 'Learn to Learn',
+      courseTitle: 'course',
+      course: 1,
+      session: 1,
+      startDate: today.toISO(),
+      endDate: today.toISO(),
+      isBlanked: false,
+      isPublished: true,
+      isScheduled: false,
+      offering: 1,
+      lastModified: null,
+      sessionTypeTitle: 'test type',
+    });
 
-      this.set('event', this.server.db.userevents[0]);
-      await render(<template><SingleEvent @event={{this.event}} /></template>);
-      assert.strictEqual(component.summary.title.text, 'course - Learn to Learn');
-      assert.notOk(component.summary.title.hasLink);
-    },
-  );
+    this.set('event', this.server.db.userevents[0]);
+    await render(<template><SingleEvent @event={{this.event}} /></template>);
+    assert.strictEqual(component.summary.title.text, 'course - Learn to Learn');
+    assert.notOk(component.summary.title.hasLink);
+  });
 });

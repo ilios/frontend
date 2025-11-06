@@ -1,4 +1,4 @@
-import { module, test, todo } from 'qunit';
+import { module, test, skip } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { setupMirage } from 'test-app/tests/test-support/mirage';
 import { click, render } from '@ember/test-helpers';
@@ -706,7 +706,7 @@ module('Integration | Component | offering form', function (hooks) {
     assert.strictEqual(component.url.value, 'http://example.com');
   });
 
-  todo('rejects query param with trailing slash ilios/ilios#3050', async function (assert) {
+  skip('rejects query param with trailing slash ilios/ilios#3050', async function (assert) {
     await render(<template><OfferingForm @close={{(noop)}} @showRoom={{true}} /></template>);
     assert.notOk(component.url.hasError);
     await component.url.set('http://example.com?jayden=awesome/');
