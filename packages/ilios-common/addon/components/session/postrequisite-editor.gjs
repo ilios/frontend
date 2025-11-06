@@ -104,7 +104,7 @@ export default class SessionPostrequisiteEditorComponent extends Component {
         />
       </div>
       <div class="table-wrapper">
-        <table data-test-postrequisites>
+        <table class="ilios-zebra-table" data-test-postrequisites>
           <thead>
             <tr>
               <th colspan="10">{{t "general.session"}}</th>

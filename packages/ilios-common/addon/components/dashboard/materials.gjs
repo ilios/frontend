@@ -286,7 +286,7 @@ export default class DashboardMaterialsComponent extends Component {
                   @setLimit={{@setLimit}}
                 />
               </nav>
-              <table>
+              <table class="ilios-zebra-table">
                 <thead>
                   <tr>
                     <th colspan="2">{{t "general.status"}}</th>

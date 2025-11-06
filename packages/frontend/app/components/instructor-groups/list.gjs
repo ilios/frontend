@@ -46,7 +46,11 @@ export default class InstructorGroupsListComponent extends Component {
   }
   <template>
     {{#if @instructorGroups.length}}
-      <table class="instructor-groups-list" data-test-instructor-groups-list ...attributes>
+      <table
+        class="ilios-zebra-table instructor-groups-list"
+        data-test-instructor-groups-list
+        ...attributes
+      >
         <thead>
           <tr>
             <SortableTh

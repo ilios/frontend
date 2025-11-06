@@ -7,7 +7,6 @@
     overflow: auto;
     table {
       @include m.ilios-table-structure;
-      @include m.ilios-zebra-table;
       margin: 0;
       position: relative;
       th {

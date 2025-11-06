@@ -3,7 +3,7 @@ import ListItem from 'frontend/components/programs/list-item';
 <template>
   <div class="list" ...attributes data-test-program-list>
     {{#if @programs.length}}
-      <table>
+      <table class="ilios-zebra-table">
         <thead>
           <tr>
             <th class="text-left" colspan="3">

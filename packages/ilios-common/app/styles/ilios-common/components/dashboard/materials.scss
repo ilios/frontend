@@ -55,7 +55,6 @@
     table {
       @include m.ilios-table-structure;
       @include m.ilios-table-colors;
-      @include m.ilios-zebra-table;
       grid-column: 1 / -1;
 
       .no-results {

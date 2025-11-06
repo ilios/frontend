@@ -143,7 +143,7 @@ export default class AssignStudentsManagerComponent extends Component {
         {{/if}}
       </div>
       <div class="list">
-        <table>
+        <table class="ilios-zebra-table">
           <thead>
             <tr>
               <th class="text-left clickable" colspan="1">
