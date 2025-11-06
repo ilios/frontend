@@ -1,5 +1,3 @@
-@use "../colors" as c;
-
 @mixin icon {
   &.enabled {
     color: var(--light-blue);

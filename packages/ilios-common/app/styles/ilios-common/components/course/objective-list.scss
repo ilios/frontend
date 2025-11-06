@@ -1,5 +1,4 @@
 @use "../../mixins" as m;
-@use "../../colors" as c;
 
 .course-objective-list {
   @include m.objective-list;
