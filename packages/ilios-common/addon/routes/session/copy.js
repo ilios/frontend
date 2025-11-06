@@ -12,14 +12,4 @@ export default class SessionCopyRoute extends Route {
   beforeModel(transition) {
     this.currentUser.requireNonLearner(transition);
   }
-
-  async afterModel(session) {
-    const course = await session.course;
-    const school = await course.school;
-    //preload to improve component performance
-    await Promise.all([
-      this.dataLoader.loadAcademicYears(),
-      this.dataLoader.loadSchoolForCourses(school.id),
-    ]);
-  }
 }
