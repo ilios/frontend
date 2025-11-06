@@ -70,10 +70,4 @@
       color: var(--red);
     }
   }
-
-  .weblink {
-    span {
-      @include m.text-wrap;
-    }
-  }
 }
