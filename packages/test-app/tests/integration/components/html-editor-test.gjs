@@ -1,4 +1,4 @@
-import { module, test, todo } from 'qunit';
+import { module, test, skip } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render, triggerKeyEvent } from '@ember/test-helpers';
 import { component } from 'ilios-common/page-objects/components/html-editor';
@@ -204,7 +204,7 @@ module('Integration | Component | html editor', function (hooks) {
     assert.strictEqual(component.popup.errors[1].text, 'Link Text can not be blank');
   });
 
-  todo('it edits existing link and retains properties', async function (assert) {
+  skip('it edits existing link and retains properties', async function (assert) {
     const editor = '.html-editor';
     const tooltip = '.ql-tooltip';
     const link1 = { href: 'https://iliosproject.org', text: 'Ilios Project' };

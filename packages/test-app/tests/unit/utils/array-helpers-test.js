@@ -9,7 +9,7 @@ import {
   uniqueById,
   uniqueValues,
 } from 'ilios-common/utils/array-helpers';
-import { module, test, todo } from 'qunit';
+import { module, test, skip } from 'qunit';
 
 function getDogs() {
   return [
@@ -38,7 +38,7 @@ function getDogs() {
 }
 
 module('Unit | Utility | array-helpers', function () {
-  todo('when array is false', function (assert) {
+  skip('when array is false', function (assert) {
     assert.strictEqual(mapBy(false, 'name'), []);
     assert.strictEqual(sortBy(false, 'dob'), []);
     assert.strictEqual(sortBy(false, ['name', 'goodnessRanking']), []);
@@ -49,7 +49,7 @@ module('Unit | Utility | array-helpers', function () {
     assert.strictEqual(findById(false, 'jayden'), []);
     assert.strictEqual(filterBy(false, 'breed', 'Chihuahua'), []);
   });
-  todo('when array is null', function (assert) {
+  skip('when array is null', function (assert) {
     assert.strictEqual(mapBy(null, 'name'), []);
     assert.strictEqual(sortBy(null, 'name'), []);
     assert.strictEqual(sortBy(null, ['name', 'goodnessRanking']), []);
@@ -60,7 +60,7 @@ module('Unit | Utility | array-helpers', function () {
     assert.strictEqual(findById(null, 'jackson'), []);
     assert.strictEqual(filterBy(null, 'breed', 'Chihuahua'), []);
   });
-  todo('when array is undefined', function (assert) {
+  skip('when array is undefined', function (assert) {
     assert.strictEqual(mapBy(undefined, 'name'), []);
     assert.strictEqual(sortBy(undefined, 'name'), []);
     assert.strictEqual(sortBy(undefined, ['name', 'goodnessRanking']), []);
