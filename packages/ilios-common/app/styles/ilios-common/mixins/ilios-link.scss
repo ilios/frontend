@@ -1,5 +1,4 @@
 @use "sass:color";
-@use "../colors" as c;
 
 @mixin ilios-link() {
   color: var(--blue);

@@ -1,5 +1,4 @@
 @use "../../mixins" as m;
-@use "../../colors" as c;
 
 .session-objective-list {
   @include m.objective-list;
