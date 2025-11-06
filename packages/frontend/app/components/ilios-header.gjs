@@ -76,7 +76,7 @@ export default class IliosHeaderComponent extends Component {
         @skipText={{t "general.skipToMainContent"}}
         @routeChangeValidator={{this.checkRouteChange}}
       />
-      <h1 data-test-title>
+      <h1 class="visually-hidden" data-test-title>
         {{this.pageTitle.title}}
       </h1>
       <div class="tools">

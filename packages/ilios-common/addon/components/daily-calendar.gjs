@@ -104,7 +104,9 @@ export default class DailyCalendarComponent extends Component {
               @selectEvent={{fn @selectEvent event}}
             />
           {{else}}
-            <span class="no-events" data-test-no-events>{{t "general.noEvents"}}</span>
+            <span class="no-events visually-hidden" data-test-no-events>{{t
+                "general.noEvents"
+              }}</span>
           {{/each}}
         </div>
         {{#each this.hours as |hour|}}

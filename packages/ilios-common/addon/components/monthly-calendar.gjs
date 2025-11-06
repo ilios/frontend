@@ -110,7 +110,9 @@ export default class MonthlyCalendarComponent extends Component {
                 <IliosCalendarEventMonth @event={{event}} @selectEvent={{fn @selectEvent event}} />
               {{/if}}
             {{else}}
-              <span class="no-events" data-test-no-events>{{t "general.noEvents"}}</span>
+              <span class="no-events visually-hidden" data-test-no-events>{{t
+                  "general.noEvents"
+                }}</span>
             {{/each}}
             {{#if (gt day.events.length 2)}}
               <button

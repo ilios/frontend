@@ -55,10 +55,6 @@
     overflow-y: scroll;
     position: relative;
 
-    .day-name {
-      @include m.visually-hidden;
-    }
-
     .events {
       @include m.ilios-list-reset;
       display: grid;
@@ -70,10 +66,6 @@
         &.day-#{$day} {
           grid-column: ($day + 1);
         }
-      }
-
-      .no-events {
-        @include m.visually-hidden();
       }
     }
 

@@ -142,7 +142,7 @@ export default class WeeklyCalendarComponent extends Component {
         </div>
         {{#each this.days as |day|}}
           <div class="events day-{{day.dayOfWeek}}" data-test-events-day>
-            <h3 class="day-name" data-test-day-name>
+            <h3 class="day-name visually-hidden" data-test-day-name>
               <button type="button" {{on "click" (fn this.changeToDayView day.date)}}>
                 {{formatDate day.date weekday="long"}}
               </button>
@@ -155,7 +155,9 @@ export default class WeeklyCalendarComponent extends Component {
                 @selectEvent={{fn this.selectEvent event}}
               />
             {{else}}
-              <span class="no-events" data-test-no-events>{{t "general.noEvents"}}</span>
+              <span class="no-events visually-hidden" data-test-no-events>{{t
+                  "general.noEvents"
+                }}</span>
             {{/each}}
           </div>
         {{/each}}

@@ -67,10 +67,6 @@
           grid-column: ($day + 1);
         }
       }
-
-      .no-events {
-        @include m.visually-hidden();
-      }
     }
 
     .hour,
