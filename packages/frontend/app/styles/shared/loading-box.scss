@@ -1,0 +1,19 @@
+.loading-box {
+  animation: 2s fadein;
+  background-color: var(--lightest-grey);
+  border: 1px dotted var(--grey);
+}
+
+@keyframes fadein {
+  0% {
+    opacity: 0;
+  }
+
+  40% {
+    opacity: 0.3;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
