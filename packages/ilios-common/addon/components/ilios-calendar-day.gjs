@@ -30,8 +30,8 @@ export default class IliosCalendarDayComponent extends Component {
   get events() {
     return this.args.calendarEvents.filter(
       (event) =>
-        DateTime.fromISO(event.startDate).hasSame(this.today, 'day') ||
-        DateTime.fromISO(event.endDate).hasSame(this.today, 'day'),
+        DateTime.fromISO(event.calendarStartDate).hasSame(this.today, 'day') ||
+        DateTime.fromISO(event.calendarEndDate).hasSame(this.today, 'day'),
     );
   }
   get ilmPreWorkEvents() {
@@ -57,12 +57,19 @@ export default class IliosCalendarDayComponent extends Component {
 
   get singleDayEvents() {
     return this.nonIlmPreWorkEvents.filter((event) =>
-      DateTime.fromISO(event.startDate).hasSame(DateTime.fromISO(event.endDate), 'day'),
+      DateTime.fromISO(event.calendarStartDate).hasSame(
+        DateTime.fromISO(event.calendarEndDate),
+        'day',
+      ),
     );
   }
   get multiDayEvents() {
     return this.nonIlmPreWorkEvents.filter(
-      (event) => !DateTime.fromISO(event.startDate).hasSame(DateTime.fromISO(event.endDate), 'day'),
+      (event) =>
+        !DateTime.fromISO(event.calendarStartDate).hasSame(
+          DateTime.fromISO(event.calendarEndDate),
+          'day',
+        ),
     );
   }
   <template>

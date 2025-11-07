@@ -20,6 +20,8 @@ module('Integration | Component | daily-calendar-event', function (hooks) {
       lastModified,
       isPublished,
       isScheduled,
+      calendarStartDate: startDate,
+      calendarEndDate: endDate,
     });
   };
 
