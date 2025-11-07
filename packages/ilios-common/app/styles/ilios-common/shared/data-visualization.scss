@@ -1,7 +1,7 @@
-@use "ilios-form";
-@use "ilios-heading";
+@use "../mixins/ilios-form";
+@use "../mixins/ilios-heading";
 
-@mixin data-visualization {
+.data-visualization {
   h2 {
     @include ilios-heading.ilios-heading-h2;
     margin: 0.5rem;

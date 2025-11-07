@@ -28,7 +28,7 @@ export default class CourseVisualizationsComponent extends Component {
   }
   <template>
     {{pageTitle (t "general.courses") " | " @model.title " | " (t "general.visualizations")}}
-    <section class="course-visualizations" data-test-course-visualizations>
+    <section class="course-visualizations data-visualization" data-test-course-visualizations>
       {{#if this.academicYearCrossesCalendarYearBoundariesData.isResolved}}
         <div class="breadcrumbs" data-test-breadcrumb>
           <span>

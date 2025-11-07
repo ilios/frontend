@@ -3,7 +3,10 @@ import { array } from '@ember/helper';
 import t from 'ember-intl/helpers/t';
 import VisualizerProgramYearObjectives from 'frontend/components/visualizer-program-year-objectives';
 <template>
-  <section class="program-year-visualize-objectives" data-test-program-year-visualize-objectives>
+  <section
+    class="program-year-visualize-objectives data-visualization"
+    data-test-program-year-visualize-objectives
+  >
     <div class="breadcrumbs" data-test-breadcrumb>
       <span>
         <LinkTo @route="program-year" @models={{array @model.program @model}}>

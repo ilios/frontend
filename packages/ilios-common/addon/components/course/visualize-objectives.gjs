@@ -30,7 +30,10 @@ export default class CourseVisualizeObjectivesComponent extends Component {
       (t "general.objectives")
     }}
 
-    <section class="course-visualize-objectives" data-test-course-visualize-objectives>
+    <section
+      class="course-visualize-objectives data-visualization"
+      data-test-course-visualize-objectives
+    >
       <div class="breadcrumbs" data-test-breadcrumb>
         <span>
           <LinkTo @route="course" @model={{@model}}>

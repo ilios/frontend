@@ -33,7 +33,10 @@ export default class CourseVisualizeSessionTypesComponent extends Component {
       (t "general.sessionTypes")
     }}
 
-    <section class="course-visualize-session-types" data-test-course-visualize-session-types>
+    <section
+      class="course-visualize-session-types data-visualization"
+      data-test-course-visualize-session-types
+    >
       <div class="breadcrumbs" data-test-breadcrumb>
         <span>
           <LinkTo @route="course" @model={{@model}}>

@@ -4,7 +4,7 @@ import t from 'ember-intl/helpers/t';
 import VisualizeSessionTypeVocabulariesGraph from 'frontend/components/school/visualize-session-type-vocabularies-graph';
 <template>
   <section
-    class="school-session-type-visualize-vocabularies"
+    class="school-session-type-visualize-vocabularies data-visualization"
     data-test-school-session-type-visualize-vocabularies
     ...attributes
   >
