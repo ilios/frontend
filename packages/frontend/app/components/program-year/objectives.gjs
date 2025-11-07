@@ -20,11 +20,11 @@ export default class ProgramYearObjectivesComponent extends Component {
   @tracked newObjectiveTitle;
 
   get showCollapsible() {
-    return this.hasObjectives && !this.isManaging;
+    return this.hasObjectives;
   }
 
   get hasObjectives() {
-    return this.objectiveCount > 0;
+    return this.objectiveIdsCount > 0;
   }
 
   get objectiveIds() {
