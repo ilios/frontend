@@ -276,7 +276,7 @@ export default class ReportsCurriculumLearnerGroupsComponent extends Component {
                   <td>{{o.schoolTitle}}</td>
                 {{/if}}
                 <td>
-                  <LinkTo @route="course" @model={{o.courseId}} class="loading-text">
+                  <LinkTo @route="course" @model={{o.courseId}}>
                     {{o.courseTitle}}
                   </LinkTo>
                 </td>
