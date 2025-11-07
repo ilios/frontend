@@ -15,18 +15,18 @@
     }
   }
 
+  .report-results.running {
+    &,
+    table caption,
+    a {
+      color: transparent;
+      text-shadow: var(--very-transparent-black) 0 0 10px;
+    }
+  }
+
   .progress-container {
     display: flex;
     height: 1rem;
     justify-content: end;
-  }
-
-  .report-results.running {
-    @include cm.loading-shimmer;
-    &,
-    table caption,
-    a {
-      @include cm.loading-text;
-    }
   }
 }

@@ -33,7 +33,7 @@ export default class CoursesLoading extends Component {
         <div class="schoolsfilter">
           <FaIcon @icon="building-columns" @fixedWidth={{true}} />
           {{#if this.hasMoreThanOneSchool}}
-            <select aria-label={{t "general.filterBySchool"}} disabled>
+            <select aria-label={{t "general.filterBySchool"}} class="loading-text" disabled>
               {{#each (sortBy "title" this.schools) as |school|}}
                 <option>{{school.title}}</option>
               {{/each}}
@@ -42,7 +42,7 @@ export default class CoursesLoading extends Component {
         </div>
         <div class="yearsfilter">
           <FaIcon @icon="calendar" @fixedWidth={{true}} />
-          <select aria-label={{t "general.filterByYear"}} disabled></select>
+          <select aria-label={{t "general.filterByYear"}} class="loading-text" disabled></select>
         </div>
         <div class="titlefilter">
           <input

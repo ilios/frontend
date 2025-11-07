@@ -45,7 +45,7 @@ export default class ReportsCurriculumLoading extends Component {
   }
   <template>
     <div
-      class="reports-curriculum reports-curriculum-loading"
+      class="reports-curriculum reports-curriculum-loading loading-shimmer loading-text"
       data-test-reports-curriculum
       ...attributes
     >
@@ -61,7 +61,7 @@ export default class ReportsCurriculumLoading extends Component {
       <div class="reports-choose-course">
         <div class="schools">
           <FaIcon @icon="building-columns" />
-          <select aria-label={{t "general.filterBySchool"}} disabled>
+          <select aria-label={{t "general.filterBySchool"}} class="loading-text" disabled>
             <option>{{this.primarySchool.title}}</option>
           </select>
         </div>
