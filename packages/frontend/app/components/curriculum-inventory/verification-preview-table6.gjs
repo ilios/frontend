@@ -19,7 +19,7 @@ export default class CurriculumInventoryVerificationPreviewTable6Component exten
   }
   <template>
     <div
-      class="curriculum-inventory-verification-preview-table6"
+      class="curriculum-inventory-verification-preview-table"
       id="table6"
       data-test-curriculum-inventory-verification-preview-table6
       ...attributes

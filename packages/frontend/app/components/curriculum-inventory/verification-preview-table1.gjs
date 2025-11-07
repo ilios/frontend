@@ -1,7 +1,7 @@
 import t from 'ember-intl/helpers/t';
 <template>
   <div
-    class="curriculum-inventory-verification-preview-table1"
+    class="curriculum-inventory-verification-preview-table curriculum-inventory-verification-preview-table1"
     id="table1"
     data-test-curriculum-inventory-verification-preview-table1
     ...attributes

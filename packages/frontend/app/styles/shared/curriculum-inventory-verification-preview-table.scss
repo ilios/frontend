@@ -1,0 +1,22 @@
+@use "../ilios-common/mixins" as cm;
+@use "../ilios-common/colors" as c;
+@use "sass:color";
+
+.curriculum-inventory-verification-preview-table {
+  padding: 0 0.8rem 0 1rem;
+
+  table {
+    @include cm.ilios-table-structure;
+    @include cm.ilios-table-colors;
+
+    th,
+    td {
+      border: 1px solid var(--lighter-grey);
+      vertical-align: top;
+    }
+
+    tfoot td {
+      font-weight: 600;
+    }
+  }
+}
