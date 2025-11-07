@@ -54,7 +54,7 @@ export default class DetailLearningMaterialsItemComponent extends Component {
       <td colspan="3">
         <button
           type="button"
-          class="lm-title"
+          class="lm-title text-wrap"
           {{on "click" (fn @setManagedMaterial @lm)}}
           data-test-title-manage
         >

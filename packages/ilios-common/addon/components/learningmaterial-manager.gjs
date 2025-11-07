@@ -465,7 +465,7 @@ export default class LearningMaterialManagerComponent extends Component {
               <label>
                 {{t "general.link"}}:
               </label>
-              <span class="link">
+              <span class="link text-wrap">
                 <a href={{this.link}} target="_blank" rel="noopener noreferrer">{{this.link}}</a>
                 <CopyButton
                   @getClipboardText={{this.getLearningMaterialLink}}

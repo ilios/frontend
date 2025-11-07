@@ -1,5 +1,5 @@
 // @link https://css-tricks.com/snippets/css/prevent-long-urls-from-breaking-out-of-container/
-@mixin text-wrap() {
+.text-wrap {
   overflow-wrap: break-word;
   -ms-word-break: break-all;
   word-break: break-all;
@@ -9,10 +9,4 @@
   -moz-hyphens: auto;
   -webkit-hyphens: auto;
   hyphens: auto;
-}
-
-@mixin text-ellipses() {
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
 }
