@@ -328,7 +328,7 @@ export default class ManageUsersSummaryComponent extends Component {
                     type="button"
                     disabled={{this.clickUser.isRunning}}
                     data-userid={{result.user.id}}
-                    title={{result.user.id}}
+                    title={{result.user.campusId}}
                     {{on "click" (perform this.clickUser result.user)}}
                   >
                     <span class="name">
