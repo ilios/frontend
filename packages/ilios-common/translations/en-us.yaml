@@ -348,7 +348,7 @@ general:
   selectedInstructors: Selected Instructors
   selectedLearnerGroups: Selected Learner Groups
   selectedLearners: Selected Learners
-  selectMeshFor: "Select MeSH for: {title}"
+  selectedMeshFor: "Selected MeSH for: {title}"
   selectVocabulary: Select Vocabulary
   session: Session
   sessionLearningMaterials: Session Learning Materials

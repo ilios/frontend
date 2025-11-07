@@ -349,7 +349,7 @@ general:
   selectedInstructors: Instructeurs Selectionées
   selectedLearnerGroups: Groupes d’Étudiants Selectionées
   selectedLearners: Étudiants Selectionées
-  selectMeshFor: "Sélectionnez MeSH pour: {title}"
+  selectedMeshFor: "MeSH sélectionné pour: {title}"
   selectVocabulary: Choisi Vocabulaire
   session: Séance
   sessionLearningMaterials: "Matériels d'Étude de la Séance"

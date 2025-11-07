@@ -118,7 +118,7 @@ export default class MeshManagerComponent extends Component {
       {{#let (uniqueId) as |templateId|}}
         {{#if @targetItemTitle}}
           <h2 class="target-title">
-            {{t "general.selectMeshFor" title=@targetItemTitle}}
+            {{t "general.selectedMeshFor" title=@targetItemTitle}}
           </h2>
         {{/if}}
         {{#if this.sortedTerms.length}}
