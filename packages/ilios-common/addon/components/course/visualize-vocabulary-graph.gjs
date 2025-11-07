@@ -224,7 +224,7 @@ export default class CourseVisualizeVocabularyGraph extends Component {
                 {{t "general.download"}}
               </button>
             </div>
-            <table>
+            <table class="ilios-zebra-table">
               <thead>
                 <tr>
                   <SortableTh

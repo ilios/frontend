@@ -17,7 +17,6 @@
       @include t.ilios-table-structure;
       @include t.ilios-table-colors;
       @include t.ilios-removable-table;
-      @include t.ilios-zebra-table;
 
       thead {
         background-color: var(--lightest-grey);

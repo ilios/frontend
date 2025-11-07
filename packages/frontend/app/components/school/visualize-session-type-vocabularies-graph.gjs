@@ -227,7 +227,7 @@ export default class SchoolVisualizeSessionTypeVocabulariesGraphComponent extend
                 {{t "general.download"}}
               </button>
             </div>
-            <table>
+            <table class="ilios-zebra-table">
               <thead>
                 <tr>
                   <SortableTh

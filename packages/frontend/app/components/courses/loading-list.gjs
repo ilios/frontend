@@ -4,7 +4,10 @@ import random from 'ember-math-helpers/helpers/random';
 import truncate from 'ilios-common/helpers/truncate';
 import formatDate from 'ember-intl/helpers/format-date';
 <template>
-  <table class="courses-loading-list loading-shimmer loading-text" aria-hidden="true">
+  <table
+    class="ilios-zebra-table courses-loading-list loading-shimmer loading-text"
+    aria-hidden="true"
+  >
     <thead>
       <tr>
         <th colspan="8">

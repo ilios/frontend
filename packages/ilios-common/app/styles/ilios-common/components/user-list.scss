@@ -8,10 +8,6 @@
   }
 
   .user-list-row {
-    &:nth-of-type(even) {
-      background-color: var(--lightest-grey);
-    }
-
     .user-list-campus-id,
     .user-list-email,
     .user-list-primary-school {

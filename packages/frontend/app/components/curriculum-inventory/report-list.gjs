@@ -32,7 +32,7 @@ export default class CurriculumInventoryReportListComponent extends Component {
   }
   <template>
     <div data-test-curriculum-inventory-report-list ...attributes>
-      <table>
+      <table class="ilios-zebra-table">
         <thead>
           <tr>
             <SortableTh
