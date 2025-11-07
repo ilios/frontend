@@ -44,12 +44,19 @@ export default class IliosCalendarWeekComponent extends Component {
   }
   get singleDayEvents() {
     return this.nonIlmPreWorkEvents.filter((event) =>
-      DateTime.fromISO(event.startDate).hasSame(DateTime.fromISO(event.endDate), 'day'),
+      DateTime.fromISO(event.calendarStartDate).hasSame(
+        DateTime.fromISO(event.calendarEndDate),
+        'day',
+      ),
     );
   }
   get multiDayEventsList() {
     return this.nonIlmPreWorkEvents.filter(
-      (event) => !DateTime.fromISO(event.startDate).hasSame(DateTime.fromISO(event.endDate), 'day'),
+      (event) =>
+        !DateTime.fromISO(event.calendarStartDate).hasSame(
+          DateTime.fromISO(event.calendarEndDate),
+          'day',
+        ),
     );
   }
 

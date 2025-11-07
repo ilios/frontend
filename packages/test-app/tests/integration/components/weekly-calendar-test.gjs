@@ -23,6 +23,8 @@ module('Integration | Component | weekly-calendar', function (hooks) {
     this.server.create('userevent', {
       startDate: DateTime.fromFormat(startDate, 'yyyy-LL-dd hh:mm:ss').toISO(),
       endDate: DateTime.fromFormat(endDate, 'yyyy-LL-dd hh:mm:ss').toISO(),
+      calendarStartDate: DateTime.fromFormat(startDate, 'yyyy-LL-dd hh:mm:ss').toISO(),
+      calendarEndDate: DateTime.fromFormat(endDate, 'yyyy-LL-dd hh:mm:ss').toISO(),
       color: color || '#' + Math.floor(Math.random() * 16777215).toString(16),
       lastModified: endDate,
     });
@@ -213,6 +215,8 @@ module('Integration | Component | weekly-calendar', function (hooks) {
     this.server.create('userevent', {
       startDate: january9th2019.toISO(),
       endDate: january9th2019.plus({ hour: 1 }).toISO(),
+      calendarStartDate: january9th2019.toISO(),
+      calendarEndDate: january9th2019.plus({ hour: 1 }).toISO(),
       offering: 1,
     });
     this.set('events', this.server.db.userevents);
@@ -248,6 +252,8 @@ module('Integration | Component | weekly-calendar', function (hooks) {
       isMulti: true,
       startDate: january9th2019.toISO(),
       endDate: january9th2019.plus({ hour: 1 }).toISO(),
+      calendarStartDate: january9th2019.toISO(),
+      calendarEndDate: january9th2019.plus({ hour: 1 }).toISO(),
       offering: 1,
     });
     this.set('events', this.server.db.userevents);
@@ -282,6 +288,8 @@ module('Integration | Component | weekly-calendar', function (hooks) {
     this.server.create('userevent', {
       startDate: december111980.toISO(),
       endDate: december111980.plus({ hour: 1 }).toISO(),
+      calendarStartDate: december111980.toISO(),
+      calendarEndDate: december111980.plus({ hour: 1 }).toISO(),
     });
     this.set('events', this.server.db.userevents);
     this.set('date', december111980.toJSDate());
@@ -331,6 +339,8 @@ module('Integration | Component | weekly-calendar', function (hooks) {
     this.server.create('userevent', {
       startDate: february252020.toISO(),
       endDate: february252020.plus({ hour: 1 }).toISO(),
+      calendarStartDate: february252020.toISO(),
+      calendarEndDate: february252020.plus({ hour: 1 }).toISO(),
     });
     this.set('events', this.server.db.userevents);
     this.set('date', february252020.toJSDate());

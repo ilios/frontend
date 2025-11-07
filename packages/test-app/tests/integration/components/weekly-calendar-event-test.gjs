@@ -16,6 +16,8 @@ module('Integration | Component | weekly-calendar-event', function (hooks) {
     this.server.create('userevent', {
       startDate: DateTime.fromFormat(startDate, 'yyyy-LL-dd hh:mm:ss').toISO(),
       endDate: DateTime.fromFormat(endDate, 'yyyy-LL-dd hh:mm:ss').toISO(),
+      calendarStartDate: DateTime.fromFormat(startDate, 'yyyy-LL-dd hh:mm:ss').toISO(),
+      calendarEndDate: DateTime.fromFormat(endDate, 'yyyy-LL-dd hh:mm:ss').toISO(),
       color,
       lastModified: DateTime.fromFormat(lastModified, 'yyyy-LL-dd hh:mm:ss').toISO(),
       isPublished,
