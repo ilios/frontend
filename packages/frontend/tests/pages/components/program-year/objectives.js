@@ -5,6 +5,9 @@ import objectiveList from './objective-list';
 const definition = {
   scope: '[data-test-program-year-objectives]',
   title: text('[data-test-title]'),
+  hasCollapseIcon: {
+    scope: '[data-test-collapse]',
+  },
   createNew: clickable('[data-test-actions] [data-test-expand-collapse-button] button'),
   newObjective,
   objectiveList,

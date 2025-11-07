@@ -20,11 +20,11 @@ export default class ProgramYearObjectivesComponent extends Component {
   @tracked newObjectiveTitle;
 
   get showCollapsible() {
-    return this.hasObjectives && !this.isManaging;
+    return this.hasObjectives;
   }
 
   get hasObjectives() {
-    return this.objectiveCount > 0;
+    return this.objectiveIdsCount > 0;
   }
 
   get objectiveIds() {
@@ -93,7 +93,7 @@ export default class ProgramYearObjectivesComponent extends Component {
             >
               {{t "general.objectives"}}
               ({{this.objectiveIdsCount}})
-              <FaIcon @icon="caret-down" />
+              <FaIcon @icon="caret-down" data-test-collapse />
             </button>
           </div>
         {{else}}

@@ -42,6 +42,7 @@ module('Integration | Component | program-year/objectives', function (hooks) {
       </template>,
     );
 
+    assert.ok(component.hasCollapseIcon);
     assert.strictEqual(component.objectiveList.objectives.length, 2);
     assert.strictEqual(
       component.objectiveList.objectives[0].description.text,
