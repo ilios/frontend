@@ -105,7 +105,7 @@ export default class MyProfileComponent extends Component {
   };
   <template>
     {{#let (uniqueId) as |templateId|}}
-      <div class="my-profile" ...attributes data-test-my-profile>
+      <div class="my-profile main-section" ...attributes data-test-my-profile>
         <h1 class="name" data-test-name>
           {{@user.fullName}}
         </h1>

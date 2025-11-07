@@ -15,7 +15,7 @@ export default class CourseBackToCoursesComponent extends Component {
   }
   <template>
     {{#if this.showLink}}
-      <div class="back-to-courses" data-test-back-to-courses>
+      <div class="back-to-courses main-section" data-test-back-to-courses>
         <LinkTo @route="courses">
           {{t "general.backToCourses"}}
         </LinkTo>

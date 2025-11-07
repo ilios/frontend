@@ -92,7 +92,7 @@ export default class ReportsCurriculumComponent extends Component {
     this.args.setReport(value);
   };
   <template>
-    <div class="reports-curriculum" data-test-reports-curriculum ...attributes>
+    <div class="reports-curriculum main-section" data-test-reports-curriculum ...attributes>
       {{#if @showReportResults}}
         <this.reportResultsComponent @courses={{this.selectedCourses}} @close={{@stop}} />
       {{else}}

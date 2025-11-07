@@ -303,7 +303,7 @@ export default class LearnerGroupsRootComponent extends Component {
     this.args.setProgramYearId(programYear.id);
   });
   <template>
-    <section class="learner-groups-root" data-test-learner-groups>
+    <section class="learner-groups-root main-section" data-test-learner-groups>
       <div class="filters">
         <div class="filter" data-test-school-filter>
           <FaIcon @icon="building-columns" @fixedWidth={{true}} />

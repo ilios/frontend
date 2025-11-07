@@ -49,7 +49,7 @@ export default class SequenceBlockListComponent extends Component {
   });
   <template>
     <div
-      class="curriculum-inventory-sequence-block-list"
+      class="curriculum-inventory-sequence-block-list main-section"
       data-test-curriculum-inventory-sequence-block-list
       ...attributes
     >

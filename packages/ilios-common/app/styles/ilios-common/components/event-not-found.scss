@@ -1,8 +1,6 @@
 @use "../mixins" as m;
 
 .event-not-found {
-  @include m.main-section;
-
   h2 {
     @include m.ilios-heading-h3;
     font-weight: 400;

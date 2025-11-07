@@ -2,8 +2,6 @@
 @use "../ilios-common/mixins" as m;
 
 .school-manager {
-  @include m.main-section;
-
   .backtolink {
     margin: 0;
   }

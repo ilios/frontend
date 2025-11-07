@@ -1,3 +1,3 @@
 <template>
-  <div class="course-session">{{outlet}}</div>
+  <div class="course-session main-section">{{outlet}}</div>
 </template>

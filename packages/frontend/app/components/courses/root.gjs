@@ -204,7 +204,7 @@ export default class CoursesRootComponent extends Component {
     return course.save();
   }
   <template>
-    <section class="courses-root" data-test-courses-root>
+    <section class="courses-root main-section" data-test-courses-root>
       <div class="filters">
         <div class="toggle-mycourses" data-test-my-courses-filter>
           <ToggleButtons

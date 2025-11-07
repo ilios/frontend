@@ -478,7 +478,7 @@ export default class LearnerGroupRootComponent extends Component {
     {{/if}}
 
     {{#let (uniqueId) as |templateId|}}
-      <section class="learner-group-root" data-test-learner-group-root ...attributes>
+      <section class="learner-group-root main-section" data-test-learner-group-root ...attributes>
         {{#if this.isSavingGroups}}
           <WaitSaving
             @showProgress={{true}}

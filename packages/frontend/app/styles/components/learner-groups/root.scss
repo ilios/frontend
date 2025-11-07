@@ -3,8 +3,6 @@
 @use "sass:color";
 
 .learner-groups-root {
-  @include m.main-section;
-
   .filters {
     @include m.main-list-filters;
 

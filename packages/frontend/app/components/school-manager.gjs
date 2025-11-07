@@ -121,7 +121,7 @@ export default class SchoolManagerComponent extends Component {
   <template>
     {{pageTitle " | " this.title prepend=false}}
 
-    <section class="school-manager" data-test-school-manager ...attributes>
+    <section class="school-manager main-section" data-test-school-manager ...attributes>
       <div class="backtolink">
         <LinkTo @route="schools">
           {{t "general.backToSchools"}}

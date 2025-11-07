@@ -154,7 +154,7 @@ export default class ReportsSubjectsListComponent extends Component {
     this.args[`setShowNew${type}ReportForm`](true);
   }
   <template>
-    <div class="reports-subjects-list" data-test-reports-subjects-list>
+    <div class="reports-subjects-list main-section" data-test-reports-subjects-list>
       <div class="filters">
         <div class="title-filter">
           <input

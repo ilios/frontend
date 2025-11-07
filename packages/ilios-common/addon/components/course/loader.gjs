@@ -38,7 +38,7 @@ export default class CourseLoaderComponent extends Component {
 
         <section
           aria-hidden="true"
-          class="course-loader"
+          class="course-loader main-section"
           {{animateLoading "course" finalOpacity=".75"}}
         >
           <Header @course={{@course}} @editable={{false}} />

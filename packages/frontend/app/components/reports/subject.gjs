@@ -50,7 +50,7 @@ export default class ReportsSubjectComponent extends Component {
   }
   <template>
     {{#if this.allSchools.isResolved}}
-      <section class="reports-subject" data-test-reports-subject ...attributes>
+      <section class="reports-subject main-section" data-test-reports-subject ...attributes>
         {{#let (load this.reportDescriptionPromise) as |p|}}
           {{#if p.isResolved}}
             <SubjectResults

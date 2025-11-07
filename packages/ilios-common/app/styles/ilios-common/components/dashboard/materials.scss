@@ -1,8 +1,6 @@
 @use "../../mixins" as m;
 
 .dashboard-materials {
-  @include m.main-section;
-
   .title {
     @include m.ilios-heading-h3;
     margin-top: 0.5rem;

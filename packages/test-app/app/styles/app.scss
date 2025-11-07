@@ -50,8 +50,4 @@
   & > footer {
     grid-area: footer;
   }
-
-  .token-login {
-    @include m.main-section;
-  }
 }

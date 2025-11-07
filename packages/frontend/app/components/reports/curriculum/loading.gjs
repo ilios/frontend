@@ -45,7 +45,7 @@ export default class ReportsCurriculumLoading extends Component {
   }
   <template>
     <div
-      class="reports-curriculum reports-curriculum-loading loading-shimmer loading-text"
+      class="reports-curriculum reports-curriculum-loading loading-shimmer loading-text main-section"
       data-test-reports-curriculum
       ...attributes
     >

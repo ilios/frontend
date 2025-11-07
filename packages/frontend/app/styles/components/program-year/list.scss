@@ -1,8 +1,6 @@
 @use "../../ilios-common/mixins" as m;
 
 .program-year-list {
-  @include m.main-section;
-
   .program-years {
     @include m.main-list-box;
 

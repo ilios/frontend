@@ -1,8 +1,6 @@
 @use "../../mixins" as m;
 
 .course-publicationcheck {
-  @include m.main-section;
-
   .course-publicationcheck-details {
     @include m.detail-container(var(--orange));
 

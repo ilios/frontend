@@ -1,8 +1,6 @@
 @use "../../ilios-common/mixins" as cm;
 
 .reports-curriculum {
-  @include cm.main-section;
-
   table {
     margin: 1rem 0;
     width: 100%;
