@@ -5,6 +5,7 @@ import { component } from 'frontend/tests/pages/components/program-year/objectiv
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
 import { setupMirage } from 'frontend/tests/test-support/mirage';
 import ObjectiveListItem from 'frontend/components/program-year/objective-list-item';
+import noop from 'ilios-common/helpers/noop';
 import { array } from '@ember/helper';
 
 module('Integration | Component | program-year/objective-list-item', function (hooks) {
@@ -30,6 +31,8 @@ module('Integration | Component | program-year/objective-list-item', function (h
           @editable={{true}}
           @domainTrees={{(array)}}
           @programYearCompetencies={{(array)}}
+          @expandedObjectiveIds={{(array)}}
+          @setExpandedObjectiveIds={{(noop)}}
         />
       </template>,
     );
@@ -47,7 +50,12 @@ module('Integration | Component | program-year/objective-list-item', function (h
     this.set('programYearObjective', this.model);
     await render(
       <template>
-        <ObjectiveListItem @programYearObjective={{this.programYearObjective}} @editable={{true}} />
+        <ObjectiveListItem
+          @programYearObjective={{this.programYearObjective}}
+          @editable={{true}}
+          @expandedObjectiveIds={{(array)}}
+          @setExpandedObjectiveIds={{(noop)}}
+        />
       </template>,
     );
     const newDescription = 'Pluto Visits Earth';
@@ -67,6 +75,8 @@ module('Integration | Component | program-year/objective-list-item', function (h
           @editable={{true}}
           @domainTrees={{(array)}}
           @programYearCompetencies={{(array)}}
+          @expandedObjectiveIds={{(array)}}
+          @setExpandedObjectiveIds={{(noop)}}
         />
       </template>,
     );
@@ -83,6 +93,8 @@ module('Integration | Component | program-year/objective-list-item', function (h
           @editable={{true}}
           @domainTrees={{(array)}}
           @programYearCompetencies={{(array)}}
+          @expandedObjectiveIds={{(array)}}
+          @setExpandedObjectiveIds={{(noop)}}
         />
       </template>,
     );
@@ -99,6 +111,8 @@ module('Integration | Component | program-year/objective-list-item', function (h
           @editable={{true}}
           @domainTrees={{(array)}}
           @programYearCompetencies={{(array)}}
+          @expandedObjectiveIds={{(array)}}
+          @setExpandedObjectiveIds={{(noop)}}
         />
       </template>,
     );
@@ -116,6 +130,8 @@ module('Integration | Component | program-year/objective-list-item', function (h
           @editable={{true}}
           @domainTrees={{(array)}}
           @programYearCompetencies={{(array)}}
+          @expandedObjectiveIds={{(array)}}
+          @setExpandedObjectiveIds={{(noop)}}
         />
       </template>,
     );
@@ -132,6 +148,8 @@ module('Integration | Component | program-year/objective-list-item', function (h
           @editable={{true}}
           @domainTrees={{(array)}}
           @programYearCompetencies={{(array)}}
+          @expandedObjectiveIds={{(array)}}
+          @setExpandedObjectiveIds={{(noop)}}
         />
       </template>,
     );
@@ -150,6 +168,8 @@ module('Integration | Component | program-year/objective-list-item', function (h
           @editable={{true}}
           @domainTrees={{(array)}}
           @programYearCompetencies={{(array)}}
+          @expandedObjectiveIds={{(array)}}
+          @setExpandedObjectiveIds={{(noop)}}
         />
       </template>,
     );
@@ -158,11 +178,58 @@ module('Integration | Component | program-year/objective-list-item', function (h
     assert.ok(component.isActive);
   });
 
+  test('expandObjective fires', async function (assert) {
+    this.set('programYearObjective', this.model);
+    this.set('expandedObjectiveIds', []);
+    this.set('setExpandedObjectiveIds', (ids) => {
+      assert.strictEqual(ids.join(), '1');
+    });
+    await render(
+      <template>
+        <ObjectiveListItem
+          @programYearObjective={{this.programYearObjective}}
+          @editable={{true}}
+          @domainTrees={{(array)}}
+          @programYearCompetencies={{(array)}}
+          @expandedObjectiveIds={{this.expandedObjectiveIds}}
+          @setExpandedObjectiveIds={{this.setExpandedObjectiveIds}}
+        />
+      </template>,
+    );
+    await component.toggleExpandCollapse.expand();
+  });
+
+  test('collapseObjective fires', async function (assert) {
+    this.set('programYearObjective', this.model);
+    this.set('expandedObjectiveIds', [this.model.id]);
+    this.set('setExpandedObjectiveIds', (ids) => {
+      assert.strictEqual(ids.join(), '');
+    });
+    await render(
+      <template>
+        <ObjectiveListItem
+          @programYearObjective={{this.programYearObjective}}
+          @editable={{true}}
+          @domainTrees={{(array)}}
+          @programYearCompetencies={{(array)}}
+          @expandedObjectiveIds={{this.expandedObjectiveIds}}
+          @setExpandedObjectiveIds={{this.setExpandedObjectiveIds}}
+        />
+      </template>,
+    );
+    await component.toggleExpandCollapse.collapse();
+  });
+
   test('validate description', async function (assert) {
     this.set('programYearObjective', this.model);
     await render(
       <template>
-        <ObjectiveListItem @programYearObjective={{this.programYearObjective}} @editable={{true}} />
+        <ObjectiveListItem
+          @programYearObjective={{this.programYearObjective}}
+          @editable={{true}}
+          @expandedObjectiveIds={{(array)}}
+          @setExpandedObjectiveIds={{(noop)}}
+        />
       </template>,
     );
     await component.description.openEditor();

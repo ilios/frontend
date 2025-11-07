@@ -10,7 +10,12 @@ import selectedTerms from 'ilios-common/page-objects/components/objective-list-i
 const definition = {
   scope: '[data-test-program-year-objective-list-item]',
   hasRemoveConfirmation: hasClass('confirm-removal'),
-  toggleExpandCollapse: clickable('[data-test-toggle-expand]'),
+  toggleExpandCollapse: {
+    scope: '[data-test-expand-collapse-control]',
+    expand: clickable('[data-test-toggle-expand]'),
+    collapse: clickable('[data-test-toggle-collapse]'),
+  },
+  isManaging: hasClass('is-managing'),
   description: {
     scope: '[data-test-description]',
     openEditor: clickable('[data-test-edit]'),

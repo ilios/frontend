@@ -85,6 +85,23 @@
       &:has(.faded) {
         max-height: 245px;
       }
+
+      &.link-button {
+        color: inherit;
+      }
+    }
+
+    button {
+      &.expand-row,
+      &.collapse-row {
+        border: 0;
+        color: inherit;
+        padding: 0;
+      }
+
+      &.collapse-row {
+        background-color: transparent;
+      }
     }
 
     &:last-of-type {

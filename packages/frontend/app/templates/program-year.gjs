@@ -23,5 +23,7 @@ import set from 'ember-set-helper/helpers/set';
     @setManageProgramYearLeadership={{set @controller "managePyLeadership"}}
     @showCourseAssociations={{@controller.showCourseAssociations}}
     @setShowCourseAssociations={{set @controller "showCourseAssociations"}}
+    @expandedObjectiveIds={{@controller.expandedObjectiveIds}}
+    @setExpandedObjectiveIds={{@controller.setExpandedObjectiveIds}}
   />
 </template>

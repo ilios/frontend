@@ -510,7 +510,7 @@ module('Acceptance | Program Year - Objectives', function (hooks) {
       'program-year objective 0',
     );
     assert.strictEqual(page.details.objectives.objectiveList.expanded.length, 0);
-    await page.details.objectives.objectiveList.objectives[0].toggleExpandCollapse();
+    await page.details.objectives.objectiveList.objectives[0].toggleExpandCollapse.expand();
     assert.strictEqual(page.details.objectives.objectiveList.expanded.length, 1);
     assert.strictEqual(page.details.objectives.objectiveList.expanded[0].courseTitle, 'course 0');
     assert.strictEqual(page.details.objectives.objectiveList.expanded[0].objectives.length, 1);

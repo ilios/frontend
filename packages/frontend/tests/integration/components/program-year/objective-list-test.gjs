@@ -5,6 +5,8 @@ import { component } from 'frontend/tests/pages/components/program-year/objectiv
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
 import { setupMirage } from 'frontend/tests/test-support/mirage';
 import ObjectiveList from 'frontend/components/program-year/objective-list';
+import noop from 'ilios-common/helpers/noop';
+import { array } from '@ember/helper';
 
 module('Integration | Component | program-year/objective-list', function (hooks) {
   setupRenderingTest(hooks);
@@ -35,7 +37,16 @@ module('Integration | Component | program-year/objective-list', function (hooks)
     this.set('programYear', programYearModel);
 
     await render(
-      <template><ObjectiveList @editable={{true}} @programYear={{this.programYear}} /></template>,
+      <template>
+        <ObjectiveList
+          @editable={{true}}
+          @programYear={{this.programYear}}
+          @allObjectivesExpanded={{false}}
+          @toggleExpandAll={{(noop)}}
+          @expandedObjectiveIds={{(array)}}
+          @setExpandedObjectiveIds={{(noop)}}
+        />
+      </template>,
     );
     assert.ok(component.sortIsVisible, 'Sort Objectives button is visible');
     assert.strictEqual(component.headers[0].text, 'Description');
@@ -92,7 +103,16 @@ module('Integration | Component | program-year/objective-list', function (hooks)
     this.set('programYear', programYearModel);
 
     await render(
-      <template><ObjectiveList @editable={{true}} @programYear={{this.programYear}} /></template>,
+      <template>
+        <ObjectiveList
+          @editable={{true}}
+          @programYear={{this.programYear}}
+          @allObjectivesExpanded={{false}}
+          @toggleExpandAll={{(noop)}}
+          @expandedObjectiveIds={{(array)}}
+          @setExpandedObjectiveIds={{(noop)}}
+        />
+      </template>,
     );
     assert.notOk(component.sortIsVisible, 'Sort Objectives button is visible');
     assert.strictEqual(component.objectives.length, 1);
@@ -119,7 +139,16 @@ module('Integration | Component | program-year/objective-list', function (hooks)
     this.set('programYear', programYearModel);
 
     await render(
-      <template><ObjectiveList @editable={{true}} @programYear={{this.programYear}} /></template>,
+      <template>
+        <ObjectiveList
+          @editable={{true}}
+          @programYear={{this.programYear}}
+          @allObjectivesExpanded={{false}}
+          @toggleExpandAll={{(noop)}}
+          @expandedObjectiveIds={{(array)}}
+          @setExpandedObjectiveIds={{(noop)}}
+        />
+      </template>,
     );
     await component.objectives[0].competency.manage();
     assert.strictEqual(component.objectives[0].competencyManager.domains.length, 2);

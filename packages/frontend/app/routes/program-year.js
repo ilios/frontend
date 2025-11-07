@@ -17,6 +17,7 @@ export default class ProgramYearRoute extends Route {
     pyLeadershipDetails: { replace: true },
     managePyCompetencies: { replace: true },
     managePyLeadership: { replace: true },
+    expandedObjectives: { replace: true },
   };
 
   beforeModel(transition) {
