@@ -93,7 +93,7 @@ export default class ProgramYearObjectivesComponent extends Component {
             >
               {{t "general.objectives"}}
               ({{this.objectiveIdsCount}})
-              <FaIcon @icon="caret-down" />
+              <FaIcon @icon="caret-down" data-test-collapse />
             </button>
           </div>
         {{else}}

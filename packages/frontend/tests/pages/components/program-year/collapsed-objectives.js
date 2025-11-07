@@ -3,6 +3,9 @@ import { create, collection, clickable, hasClass, text } from 'ember-cli-page-ob
 const definition = {
   scope: '[data-test-program-year-collapsed-objectives]',
   title: text('[data-test-title]'),
+  hasExpandIcon: {
+    scope: '[data-test-expand]',
+  },
   expand: clickable('[data-test-title]'),
   headers: collection('thead th'),
   objectiveCount: text('[data-test-objective-count]'),

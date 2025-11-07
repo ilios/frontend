@@ -53,7 +53,7 @@ export default class ProgramYearCollapsedObjectivesComponent extends Component {
         >
           {{t "general.objectives"}}
           ({{get this.objectives "length"}})
-          <FaIcon @icon="caret-right" />
+          <FaIcon @icon="caret-right" data-test-expand />
         </button>
       </div>
       <div class="content">

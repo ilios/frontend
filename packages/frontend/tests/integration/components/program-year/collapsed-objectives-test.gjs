@@ -43,6 +43,7 @@ module('Integration | Component | program-year/collapsed-objectives', function (
     );
 
     assert.strictEqual(component.title, 'Objectives (4)');
+    assert.ok(component.hasExpandIcon);
     assert.strictEqual(component.objectiveCount, 'There are 4 objectives');
     assert.strictEqual(component.parentCount, '1 has a linked competency');
     assert.strictEqual(component.meshCount, '1 has MeSH');
