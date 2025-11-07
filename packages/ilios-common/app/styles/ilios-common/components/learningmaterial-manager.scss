@@ -73,6 +73,10 @@
   .timed-release {
     margin-bottom: 2rem;
 
+    @include m.for-laptop-and-up {
+      grid-column: 1 / -1;
+    }
+
     .item {
       margin-top: 1rem;
     }
@@ -85,6 +89,11 @@
       background-color: transparent;
       margin: 0.5rem 0 0;
       min-width: 150px;
+    }
+
+    .timed-release-dates {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
     }
 
     .start,

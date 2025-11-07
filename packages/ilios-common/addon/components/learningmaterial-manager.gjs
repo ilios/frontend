@@ -527,124 +527,131 @@ export default class LearningMaterialManagerComponent extends Component {
             </label>
             <TimedReleaseSchedule @startDate={{this.startDate}} @endDate={{this.endDate}} />
             <div class="timed-release-dates">
-              {{#if this.startDate}}
-                <div class="item start">
-                  <div class="start-date">
-                    <label>
-                      {{t "general.startDate"}}:
-                    </label>
-                    {{#if @editable}}
-                      <DatePicker
-                        @value={{this.startDate}}
-                        @onChange={{fn this.updateDate "startDate"}}
-                      />
-                    {{else}}
-                      {{formatDate this.startDate day="2-digit" month="2-digit" year="numeric"}}
-                    {{/if}}
+              <div class="timed-release-start">
+                {{#if this.startDate}}
+                  <div class="item start">
+                    <div class="start-date">
+                      <label>
+                        {{t "general.startDate"}}:
+                      </label>
+                      {{#if @editable}}
+                        <DatePicker
+                          @value={{this.startDate}}
+                          @onChange={{fn this.updateDate "startDate"}}
+                        />
+                      {{else}}
+                        {{formatDate this.startDate day="2-digit" month="2-digit" year="numeric"}}
+                      {{/if}}
+                    </div>
+                    <div class="start-time">
+                      <label>
+                        {{t "general.startTime"}}:
+                      </label>
+                      {{#if @editable}}
+                        <TimePicker
+                          @date={{this.startDate}}
+                          @action={{fn this.updateTime "startDate"}}
+                        />
+                      {{else}}
+                        {{formatDate
+                          this.startDate
+                          day="2-digit"
+                          month="2-digit"
+                          year="numeric"
+                          hour12=true
+                          hour="2-digit"
+                          minute="2-digit"
+                        }}
+                      {{/if}}
+                    </div>
                   </div>
-                  <div class="start-time">
-                    <label>
-                      {{t "general.startTime"}}:
-                    </label>
-                    {{#if @editable}}
-                      <TimePicker
-                        @date={{this.startDate}}
-                        @action={{fn this.updateTime "startDate"}}
-                      />
-                    {{else}}
-                      {{formatDate
-                        this.startDate
-                        day="2-digit"
-                        month="2-digit"
-                        year="numeric"
-                        hour12=true
-                        hour="2-digit"
-                        minute="2-digit"
-                      }}
-                    {{/if}}
-                  </div>
-                </div>
-                {{#if @editable}}
-                  <button
-                    class="remove-date"
-                    type="button"
-                    {{on "click" (fn (set this "startDate") null)}}
-                  >
-                    {{t "general.timedReleaseClearStartDate"}}
-                  </button>
+                  {{#if @editable}}
+                    <button
+                      class="remove-date"
+                      type="button"
+                      {{on "click" (fn (set this "startDate") null)}}
+                    >
+                      {{t "general.timedReleaseClearStartDate"}}
+                    </button>
+                  {{/if}}
+                {{else if @editable}}
+                  <p>
+                    <button
+                      class="add-date"
+                      type="button"
+                      data-test-add-start-date
+                      {{on "click" (fn this.addDate "startDate")}}
+                    >
+                      {{t "general.timedReleaseAddStartDate"}}
+                    </button>
+                  </p>
                 {{/if}}
-              {{else if @editable}}
-                <p>
-                  <button
-                    class="add-date"
-                    type="button"
-                    data-test-add-start-date
-                    {{on "click" (fn this.addDate "startDate")}}
-                  >
-                    {{t "general.timedReleaseAddStartDate"}}
-                  </button>
-                </p>
-              {{/if}}
-              {{#if this.endDate}}
-                <div class="item end">
-                  <div class="end-date">
-                    <label>
-                      {{t "general.endDate"}}:
-                    </label>
-                    {{#if @editable}}
-                      <DatePicker
-                        @value={{this.endDate}}
-                        @onChange={{fn this.updateDate "endDate"}}
-                      />
-                    {{else}}
-                      {{formatDate this.endDate day="2-digit" month="2-digit" year="numeric"}}
-                    {{/if}}
+              </div>
+              <div class="timed-release-end">
+                {{#if this.endDate}}
+                  <div class="item end">
+                    <div class="end-date">
+                      <label>
+                        {{t "general.endDate"}}:
+                      </label>
+                      {{#if @editable}}
+                        <DatePicker
+                          @value={{this.endDate}}
+                          @onChange={{fn this.updateDate "endDate"}}
+                        />
+                      {{else}}
+                        {{formatDate this.endDate day="2-digit" month="2-digit" year="numeric"}}
+                      {{/if}}
+                    </div>
+                    <div class="end-time">
+                      <label>
+                        {{t "general.endTime"}}:
+                      </label>
+                      {{#if @editable}}
+                        <TimePicker
+                          @date={{this.endDate}}
+                          @action={{fn this.updateTime "endDate"}}
+                        />
+                      {{else}}
+                        {{formatDate
+                          this.endDate
+                          day="2-digit"
+                          month="2-digit"
+                          year="numeric"
+                          hour12=true
+                          hour="2-digit"
+                          minute="2-digit"
+                        }}
+                      {{/if}}
+                    </div>
+                    <YupValidationMessage
+                      @description={{t "general.endDate"}}
+                      @validationErrors={{this.validations.errors.endDate}}
+                      data-test-end-date-validation-error-message
+                    />
                   </div>
-                  <div class="end-time">
-                    <label>
-                      {{t "general.endTime"}}:
-                    </label>
-                    {{#if @editable}}
-                      <TimePicker @date={{this.endDate}} @action={{fn this.updateTime "endDate"}} />
-                    {{else}}
-                      {{formatDate
-                        this.endDate
-                        day="2-digit"
-                        month="2-digit"
-                        year="numeric"
-                        hour12=true
-                        hour="2-digit"
-                        minute="2-digit"
-                      }}
-                    {{/if}}
-                  </div>
-                  <YupValidationMessage
-                    @description={{t "general.endDate"}}
-                    @validationErrors={{this.validations.errors.endDate}}
-                    data-test-end-date-validation-error-message
-                  />
-                </div>
-                {{#if @editable}}
-                  <button
-                    class="remove-date"
-                    type="button"
-                    {{on "click" (fn (set this "endDate") null)}}
-                  >
-                    {{t "general.timedReleaseClearEndDate"}}
-                  </button>
+                  {{#if @editable}}
+                    <button
+                      class="remove-date"
+                      type="button"
+                      {{on "click" (fn (set this "endDate") null)}}
+                    >
+                      {{t "general.timedReleaseClearEndDate"}}
+                    </button>
+                  {{/if}}
+                {{else if @editable}}
+                  <p>
+                    <button
+                      class="add-date"
+                      type="button"
+                      data-test-add-end-date
+                      {{on "click" (fn this.addDate "endDate")}}
+                    >
+                      {{t "general.timedReleaseAddEndDate"}}
+                    </button>
+                  </p>
                 {{/if}}
-              {{else if @editable}}
-                <p>
-                  <button
-                    class="add-date"
-                    type="button"
-                    data-test-add-end-date
-                    {{on "click" (fn this.addDate "endDate")}}
-                  >
-                    {{t "general.timedReleaseAddEndDate"}}
-                  </button>
-                </p>
-              {{/if}}
+              </div>
             </div>
           </div>
 
