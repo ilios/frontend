@@ -15,6 +15,8 @@ module('Integration | Component | ilios calendar event month', function (hooks) 
       color: '#00cc65',
       startDate: november111984.toJSDate(),
       endDate: november111984.plus({ hour: 1 }).toJSDate(),
+      calendarStartDate: november111984.toJSDate(),
+      calendarEndDate: november111984.plus({ hour: 1 }).toJSDate(),
       lastModified: november111984.toJSDate(),
       name: 'test',
     });

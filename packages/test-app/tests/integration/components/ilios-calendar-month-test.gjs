@@ -17,14 +17,20 @@ module('Integration | Component | ilios calendar month', function (hooks) {
     firstEvent.name = 'Some new thing';
     firstEvent.startDate = date.toISO();
     firstEvent.endDate = date.plus({ hour: 1 }).toISO();
+    firstEvent.calendarStartDate = firstEvent.startDate;
+    firstEvent.calendarEndDate = firstEvent.endDate;
     const secondEvent = createUserEventObject();
     secondEvent.name = 'Second new thing';
     secondEvent.startDate = date.plus({ hour: 1 }).toISO();
     secondEvent.endDate = date.plus({ hour: 3 }).toISO();
+    secondEvent.calendarStartDate = secondEvent.startDate;
+    secondEvent.calendarEndDate = secondEvent.endDate;
     const thirdEvent = createUserEventObject();
     thirdEvent.name = 'Third new thing';
     thirdEvent.startDate = date.plus({ hour: 3 }).toISO();
     thirdEvent.endDate = date.plus({ hour: 4 }).toISO();
+    thirdEvent.calendarStartDate = thirdEvent.startDate;
+    thirdEvent.calendarEndDate = thirdEvent.endDate;
     this.set('events', [firstEvent, secondEvent, thirdEvent]);
     await render(
       <template>
@@ -47,10 +53,14 @@ module('Integration | Component | ilios calendar month', function (hooks) {
     firstEvent.name = 'Some new thing';
     firstEvent.startDate = date.toISO();
     firstEvent.endDate = date.plus({ hour: 1 }).toISO();
+    firstEvent.calendarStartDate = firstEvent.startDate;
+    firstEvent.calendarEndDate = firstEvent.endDate;
     const secondEvent = createUserEventObject();
     secondEvent.name = 'Second new thing';
     secondEvent.startDate = date.plus({ hour: 1 }).toISO();
     secondEvent.endDate = date.plus({ hour: 3 }).toISO();
+    secondEvent.calendarStartDate = secondEvent.startDate;
+    secondEvent.calendarEndDate = secondEvent.endDate;
     this.set('events', [firstEvent, secondEvent]);
     await render(
       <template>
@@ -114,9 +124,13 @@ module('Integration | Component | ilios calendar month', function (hooks) {
     const event = createUserEventObject();
     event.startDate = date.toISO();
     event.endDate = date.plus({ hour: 24 }).toISO();
+    event.calendarStartDate = event.startDate;
+    event.calendarEndDate = event.endDate;
     const event2 = createUserEventObject();
     event2.startDate = date.plus({ hour: 48 }).toISO();
     event2.endDate = date.plus({ hour: 72 }).toISO();
+    event2.calendarStartDate = event2.startDate;
+    event2.calendarEndDate = event2.endDate;
     this.set('date', date.toJSDate());
     this.set('events', [event, event2]);
     await render(
