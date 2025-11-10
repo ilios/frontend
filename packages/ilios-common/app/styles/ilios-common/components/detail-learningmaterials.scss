@@ -99,6 +99,7 @@
 
   .detail-learningmaterials-content {
     @include m.detail-container-content;
+    padding: 0;
 
     table {
       margin-bottom: 0;
