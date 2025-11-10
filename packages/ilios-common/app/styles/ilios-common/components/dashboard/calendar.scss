@@ -3,7 +3,7 @@
 @use "sass:color";
 
 .dashboard-calendar {
-  @include m.dashboard-component;
+  @include m.main-section;
 
   .dashboard-calendar-content {
     padding: 0 0 1em;
