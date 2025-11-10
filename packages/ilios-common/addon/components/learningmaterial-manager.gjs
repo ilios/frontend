@@ -323,68 +323,91 @@ export default class LearningMaterialManagerComponent extends Component {
               </span>
             {{/if}}
           </div>
-          <div class="item status">
-            <label for="status-{{templateId}}">
-              {{t "general.status"}}:
-            </label>
-            {{#if @editable}}
-              <select id="status-{{templateId}}" {{on "change" this.updateStatusId}}>
-                {{#each @learningMaterialStatuses as |status|}}
-                  <option
-                    value={{status.id}}
-                    selected={{eq status.id this.statusId}}
-                  >{{status.title}}</option>
-                {{/each}}
-              </select>
-            {{else}}
-              {{this.currentStatus.title}}
-            {{/if}}
+          <div class="item status required">
+            <div>
+              <label for="status-{{templateId}}">
+                {{t "general.status"}}:
+              </label>
+              {{#if @editable}}
+                <select id="status-{{templateId}}" {{on "change" this.updateStatusId}}>
+                  {{#each @learningMaterialStatuses as |status|}}
+                    <option
+                      value={{status.id}}
+                      selected={{eq status.id this.statusId}}
+                    >{{status.title}}</option>
+                  {{/each}}
+                </select>
+              {{else}}
+                {{this.currentStatus.title}}
+              {{/if}}
+            </div>
+
+            <div>
+              <label>
+                {{t "general.required"}}:
+              </label>
+              {{#if @editable}}
+                <ToggleYesno @yes={{this.required}} @toggle={{set this "required"}} />
+              {{else if this.required}}
+                <span class="add">
+                  {{t "general.yes"}}
+                </span>
+              {{else}}
+                <span class="remove">
+                  {{t "general.no"}}
+                </span>
+              {{/if}}
+            </div>
           </div>
-          <div class="item required">
+
+          <div class="item">
             <label>
-              {{t "general.required"}}:
+              {{t "general.description"}}:
             </label>
-            {{#if @editable}}
-              <ToggleYesno @yes={{this.required}} @toggle={{set this "required"}} />
-            {{else if this.required}}
-              <span class="add">
-                {{t "general.yes"}}
-              </span>
-            {{else}}
-              <span class="remove">
-                {{t "general.no"}}
-              </span>
-            {{/if}}
-          </div>
-          <div class="item notes">
-            <label>
-              {{t "general.instructionalNotes"}}:
-            </label>
-            {{#if @editable}}
-              <HtmlEditor @content={{this.notes}} @update={{set this "notes"}} />
-            {{else}}
-              <span>
+            <span class="description">
+              {{#if (and @editable this.isLinkedOnlyOnce)}}
+                <HtmlEditor @content={{this.description}} @update={{set this "description"}} />
+              {{else}}
                 {{! template-lint-disable no-triple-curlies }}
-                {{{this.notes}}}
-              </span>
-            {{/if}}
+                <span>
+                  {{{this.description}}}
+                </span>
+              {{/if}}
+            </span>
           </div>
-          <div class="item publicnotes">
-            <label>
-              {{t "general.showNotesToStudents"}}:
-            </label>
-            {{#if @editable}}
-              <ToggleYesno @yes={{this.publicNotes}} @toggle={{set this "publicNotes"}} />
-            {{else if this.publicNotes}}
-              <span class="add">
-                {{t "general.yes"}}
-              </span>
-            {{else}}
-              <span class="remove">
-                {{t "general.no"}}
-              </span>
-            {{/if}}
+          <div class="item">
+            <div class="notes">
+              <label>
+                {{t "general.instructionalNotes"}}:
+              </label>
+              {{#if @editable}}
+                <HtmlEditor @content={{this.notes}} @update={{set this "notes"}} />
+              {{else}}
+                <span>
+                  {{! template-lint-disable no-triple-curlies }}
+                  {{{this.notes}}}
+                </span>
+              {{/if}}
+            </div>
+
+            <div class="publicnotes">
+              <label>
+                {{t "general.showNotesToStudents"}}:
+              </label>
+              {{#if @editable}}
+                <ToggleYesno @yes={{this.publicNotes}} @toggle={{set this "publicNotes"}} />
+              {{else if this.publicNotes}}
+                <span class="add">
+                  {{t "general.yes"}}
+                </span>
+              {{else}}
+                <span class="remove">
+                  {{t "general.no"}}
+                </span>
+              {{/if}}
+            </div>
           </div>
+
           <div class="item">
             <label>
               {{t "general.owner"}}:
@@ -409,21 +432,68 @@ export default class LearningMaterialManagerComponent extends Component {
               {{this.userRoleTitle}}
             </span>
           </div>
+
+          {{#if this.isFile}}
+            <div class="item filename">
+              <label>
+                {{t "general.file"}}:
+              </label>
+              <span class="downloadurl">
+                {{#if (eq this.mimetype "application/pdf")}}
+                  <a href="{{this.absoluteFileUri}}?inline">{{this.filename}}</a>
+                  <a href={{this.absoluteFileUri}} target="_blank" rel="noopener noreferrer">
+                    <FaIcon @icon="download" @title={{t "general.download"}} />
+                  </a>
+                {{else}}
+                  <a href={{this.absoluteFileUri}} target="_blank" rel="noopener noreferrer">
+                    {{this.filename}}
+                  </a>
+                {{/if}}
+                <CopyButton
+                  @getClipboardText={{this.getLearningMaterialAbsoluteFileUri}}
+                  @success={{perform this.textCopied}}
+                >
+                  <FaIcon @icon="copy" @title={{t "general.copyLink"}} />
+                </CopyButton>
+              </span>
+            </div>
+          {{/if}}
+          {{#if this.isLink}}
+            <div class="item weblink">
+              <label>
+                {{t "general.link"}}:
+              </label>
+              <span class="link">
+                <a href={{this.link}} target="_blank" rel="noopener noreferrer">{{this.link}}</a>
+                <CopyButton
+                  @getClipboardText={{this.getLearningMaterialLink}}
+                  @success={{perform this.textCopied}}
+                >
+                  <FaIcon @icon="copy" @title={{t "general.copyLink"}} />
+                </CopyButton>
+              </span>
+            </div>
+          {{/if}}
+          {{#if this.isCitation}}
+            <div class="item">
+              <label>
+                {{t "general.citation"}}:
+              </label>
+              <span class="citation">
+                {{this.citation}}
+              </span>
+            </div>
+          {{/if}}
+
           <div class="item">
             <label>
-              {{t "general.description"}}:
+              {{t "general.uploadDate"}}:
             </label>
-            <span class="description">
-              {{#if (and @editable this.isLinkedOnlyOnce)}}
-                <HtmlEditor @content={{this.description}} @update={{set this "description"}} />
-              {{else}}
-                {{! template-lint-disable no-triple-curlies }}
-                <span>
-                  {{{this.description}}}
-                </span>
-              {{/if}}
+            <span class="upload-date">
+              {{formatDate this.uploadDate day="2-digit" month="2-digit" year="numeric"}}
             </span>
           </div>
+
           {{#if this.copyrightPermission}}
             <div class="item">
               <label>
@@ -450,179 +520,141 @@ export default class LearningMaterialManagerComponent extends Component {
               </span>
             </div>
           {{/if}}
-          {{#if this.isCitation}}
-            <div class="item">
-              <label>
-                {{t "general.citation"}}:
-              </label>
-              <span class="citation">
-                {{this.citation}}
-              </span>
-            </div>
-          {{/if}}
-          {{#if this.isLink}}
-            <div class="item weblink">
-              <label>
-                {{t "general.link"}}:
-              </label>
-              <span class="link text-wrap">
-                <a href={{this.link}} target="_blank" rel="noopener noreferrer">{{this.link}}</a>
-                <CopyButton
-                  @getClipboardText={{this.getLearningMaterialLink}}
-                  @success={{perform this.textCopied}}
-                >
-                  <FaIcon @icon="copy" @title={{t "general.copyLink"}} />
-                </CopyButton>
-              </span>
-            </div>
-          {{/if}}
-          {{#if this.isFile}}
-            <div class="item filename">
-              <label>
-                {{t "general.file"}}:
-              </label>
-              <span class="downloadurl">
-                {{#if (eq this.mimetype "application/pdf")}}
-                  <a href="{{this.absoluteFileUri}}?inline">{{this.filename}}</a>
-                  <a href={{this.absoluteFileUri}} target="_blank" rel="noopener noreferrer">
-                    <FaIcon @icon="download" @title={{t "general.download"}} />
-                  </a>
-                {{else}}
-                  <a href={{this.absoluteFileUri}} target="_blank" rel="noopener noreferrer">
-                    {{this.filename}}
-                  </a>
-                {{/if}}
-                <CopyButton
-                  @getClipboardText={{this.getLearningMaterialAbsoluteFileUri}}
-                  @success={{perform this.textCopied}}
-                >
-                  <FaIcon @icon="copy" @title={{t "general.copyLink"}} />
-                </CopyButton>
-              </span>
-            </div>
-          {{/if}}
-          <div class="item">
+
+          <div class="item timed-release">
             <label>
-              {{t "general.uploadDate"}}:
+              {{t "general.timedRelease"}}:
             </label>
-            <span class="upload-date">
-              {{formatDate this.uploadDate day="2-digit" month="2-digit" year="numeric"}}
-            </span>
+            <TimedReleaseSchedule @startDate={{this.startDate}} @endDate={{this.endDate}} />
+            <div class="timed-release-dates">
+              <div class="timed-release-start">
+                {{#if this.startDate}}
+                  <div class="item start">
+                    <div class="start-date">
+                      <label>
+                        {{t "general.startDate"}}:
+                      </label>
+                      {{#if @editable}}
+                        <DatePicker
+                          @value={{this.startDate}}
+                          @onChange={{fn this.updateDate "startDate"}}
+                        />
+                      {{else}}
+                        {{formatDate this.startDate day="2-digit" month="2-digit" year="numeric"}}
+                      {{/if}}
+                    </div>
+                    <div class="start-time">
+                      <label>
+                        {{t "general.startTime"}}:
+                      </label>
+                      {{#if @editable}}
+                        <TimePicker
+                          @date={{this.startDate}}
+                          @action={{fn this.updateTime "startDate"}}
+                        />
+                      {{else}}
+                        {{formatDate
+                          this.startDate
+                          day="2-digit"
+                          month="2-digit"
+                          year="numeric"
+                          hour12=true
+                          hour="2-digit"
+                          minute="2-digit"
+                        }}
+                      {{/if}}
+                    </div>
+                  </div>
+                  {{#if @editable}}
+                    <button
+                      class="remove-date"
+                      type="button"
+                      {{on "click" (fn (set this "startDate") null)}}
+                    >
+                      {{t "general.timedReleaseClearStartDate"}}
+                    </button>
+                  {{/if}}
+                {{else if @editable}}
+                  <p>
+                    <button
+                      class="add-date"
+                      type="button"
+                      data-test-add-start-date
+                      {{on "click" (fn this.addDate "startDate")}}
+                    >
+                      {{t "general.timedReleaseAddStartDate"}}
+                    </button>
+                  </p>
+                {{/if}}
+              </div>
+              <div class="timed-release-end">
+                {{#if this.endDate}}
+                  <div class="item end">
+                    <div class="end-date">
+                      <label>
+                        {{t "general.endDate"}}:
+                      </label>
+                      {{#if @editable}}
+                        <DatePicker
+                          @value={{this.endDate}}
+                          @onChange={{fn this.updateDate "endDate"}}
+                        />
+                      {{else}}
+                        {{formatDate this.endDate day="2-digit" month="2-digit" year="numeric"}}
+                      {{/if}}
+                    </div>
+                    <div class="end-time">
+                      <label>
+                        {{t "general.endTime"}}:
+                      </label>
+                      {{#if @editable}}
+                        <TimePicker
+                          @date={{this.endDate}}
+                          @action={{fn this.updateTime "endDate"}}
+                        />
+                      {{else}}
+                        {{formatDate
+                          this.endDate
+                          day="2-digit"
+                          month="2-digit"
+                          year="numeric"
+                          hour12=true
+                          hour="2-digit"
+                          minute="2-digit"
+                        }}
+                      {{/if}}
+                    </div>
+                    <YupValidationMessage
+                      @description={{t "general.endDate"}}
+                      @validationErrors={{this.validations.errors.endDate}}
+                      data-test-end-date-validation-error-message
+                    />
+                  </div>
+                  {{#if @editable}}
+                    <button
+                      class="remove-date"
+                      type="button"
+                      {{on "click" (fn (set this "endDate") null)}}
+                    >
+                      {{t "general.timedReleaseClearEndDate"}}
+                    </button>
+                  {{/if}}
+                {{else if @editable}}
+                  <p>
+                    <button
+                      class="add-date"
+                      type="button"
+                      data-test-add-end-date
+                      {{on "click" (fn this.addDate "endDate")}}
+                    >
+                      {{t "general.timedReleaseAddEndDate"}}
+                    </button>
+                  </p>
+                {{/if}}
+              </div>
+            </div>
           </div>
-          <label>
-            {{t "general.timedRelease"}}:
-          </label>
-          <TimedReleaseSchedule @startDate={{this.startDate}} @endDate={{this.endDate}} />
-          <div class="timed-release">
-            {{#if this.startDate}}
-              <div class="item start-date">
-                <label>
-                  {{t "general.startDate"}}:
-                </label>
-                {{#if @editable}}
-                  <DatePicker
-                    @value={{this.startDate}}
-                    @onChange={{fn this.updateDate "startDate"}}
-                  />
-                {{else}}
-                  {{formatDate this.startDate day="2-digit" month="2-digit" year="numeric"}}
-                {{/if}}
-              </div>
-              <div class="item start-time">
-                <label>
-                  {{t "general.startTime"}}:
-                </label>
-                {{#if @editable}}
-                  <TimePicker @date={{this.startDate}} @action={{fn this.updateTime "startDate"}} />
-                {{else}}
-                  {{formatDate
-                    this.startDate
-                    day="2-digit"
-                    month="2-digit"
-                    year="numeric"
-                    hour12=true
-                    hour="2-digit"
-                    minute="2-digit"
-                  }}
-                {{/if}}
-              </div>
-              {{#if @editable}}
-                <button
-                  class="remove-date"
-                  type="button"
-                  {{on "click" (fn (set this "startDate") null)}}
-                >
-                  {{t "general.timedReleaseClearStartDate"}}
-                </button>
-              {{/if}}
-            {{else if @editable}}
-              <p>
-                <button
-                  class="add-date"
-                  type="button"
-                  data-test-add-start-date
-                  {{on "click" (fn this.addDate "startDate")}}
-                >
-                  {{t "general.timedReleaseAddStartDate"}}
-                </button>
-              </p>
-            {{/if}}
-            {{#if this.endDate}}
-              <div class="item end-date">
-                <label>
-                  {{t "general.endDate"}}:
-                </label>
-                {{#if @editable}}
-                  <DatePicker @value={{this.endDate}} @onChange={{fn this.updateDate "endDate"}} />
-                {{else}}
-                  {{formatDate this.endDate day="2-digit" month="2-digit" year="numeric"}}
-                {{/if}}
-              </div>
-              <div class="item end-time">
-                <label>
-                  {{t "general.endTime"}}:
-                </label>
-                {{#if @editable}}
-                  <TimePicker @date={{this.endDate}} @action={{fn this.updateTime "endDate"}} />
-                {{else}}
-                  {{formatDate
-                    this.endDate
-                    day="2-digit"
-                    month="2-digit"
-                    year="numeric"
-                    hour12=true
-                    hour="2-digit"
-                    minute="2-digit"
-                  }}
-                {{/if}}
-              </div>
-              <YupValidationMessage
-                @description={{t "general.endDate"}}
-                @validationErrors={{this.validations.errors.endDate}}
-                data-test-end-date-validation-error-message
-              />
-              {{#if @editable}}
-                <button
-                  class="remove-date"
-                  type="button"
-                  {{on "click" (fn (set this "endDate") null)}}
-                >
-                  {{t "general.timedReleaseClearEndDate"}}
-                </button>
-              {{/if}}
-            {{else if @editable}}
-              <p>
-                <button
-                  class="add-date"
-                  type="button"
-                  data-test-add-end-date
-                  {{on "click" (fn this.addDate "endDate")}}
-                >
-                  {{t "general.timedReleaseAddEndDate"}}
-                </button>
-              </p>
-            {{/if}}
-          </div>
+
           <MeshManager
             @terms={{this.terms}}
             @editable={{@editable}}

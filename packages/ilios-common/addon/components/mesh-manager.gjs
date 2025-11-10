@@ -118,7 +118,7 @@ export default class MeshManagerComponent extends Component {
       {{#let (uniqueId) as |templateId|}}
         {{#if @targetItemTitle}}
           <h2 class="target-title">
-            {{t "general.selectMeshFor" title=@targetItemTitle}}
+            {{t "general.selectedMeshFor" title=@targetItemTitle}}
           </h2>
         {{/if}}
         {{#if this.sortedTerms.length}}
@@ -160,6 +160,8 @@ export default class MeshManagerComponent extends Component {
               </li>
             {{/each}}
           </ul>
+        {{else}}
+          <div class="no-results">{{t "general.none"}}</div>
         {{/if}}
         {{#if @editable}}
           <div class="mesh-search" data-test-mesh-search>

@@ -4,6 +4,7 @@ import { service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import SearchBox from 'ilios-common/components/search-box';
+import { modifier } from 'ember-modifier';
 import t from 'ember-intl/helpers/t';
 import perform from 'ember-concurrency/helpers/perform';
 import includes from 'ilios-common/helpers/includes';
@@ -82,6 +83,10 @@ export default class LearningMaterialSearchComponent extends Component {
       await this.args.add(lm);
     }
   });
+
+  resultsAppear = modifier((element) => {
+    element.style.width = `${element.previousElementSibling.clientWidth}px`;
+  });
   <template>
     <div class="learningmaterial-search" data-test-learningmaterial-search>
       <SearchBox
@@ -91,13 +96,13 @@ export default class LearningMaterialSearchComponent extends Component {
         @clear={{this.clear}}
       />
       {{#if this.search.isRunning}}
-        <ul class="lm-search-results">
+        <ul class="lm-search-results" {{this.resultsAppear}}>
           <li>
             {{t "general.currentlySearchingPrompt"}}
           </li>
         </ul>
       {{else if this.searchResults.length}}
-        <ul class="lm-search-results">
+        <ul class="lm-search-results" {{this.resultsAppear}}>
           {{#each this.searchResults as |learningMaterial|}}
             <li class={{if (includes learningMaterial.id @currentMaterialIds) "disabled"}}>
               <button
@@ -164,7 +169,7 @@ export default class LearningMaterialSearchComponent extends Component {
           {{/if}}
         </ul>
       {{else if this.searchReturned}}
-        <ul class="lm-search-results">
+        <ul class="lm-search-results" {{this.resultsAppear}}>
           <li>
             {{t "general.noSearchResultsPrompt"}}
           </li>

@@ -7,6 +7,23 @@
 
   .item {
     @include m.ilios-form-item;
+
+    &.status.owner {
+      display: flex;
+      flex-direction: row;
+      gap: 1em;
+
+      div {
+        display: flex;
+        flex-direction: column;
+      }
+    }
+
+    &.copyright {
+      #lm-copyright-permissions-text {
+        margin: 0;
+      }
+    }
   }
 
   .buttons {

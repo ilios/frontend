@@ -268,28 +268,31 @@ export default class NewLearningmaterialComponent extends Component {
           />
         </span>
       </div>
-      <div class="item" data-test-status>
-        <label for="status-{{this.uniqueId}}">
-          {{t "general.status"}}:
-        </label>
-        <span>
-          <select id="status-{{this.uniqueId}}" {{on "change" this.changeStatusId}}>
-            {{#each @learningMaterialStatuses as |lmStatus|}}
-              <option value={{lmStatus.id}} selected={{isEqual lmStatus this.selectedStatus}}>
-                {{lmStatus.title}}
-              </option>
-            {{/each}}
-          </select>
-        </span>
+      <div class="item status owner">
+        <div data-test-status>
+          <label for="status-{{this.uniqueId}}">
+            {{t "general.status"}}:
+          </label>
+          <span>
+            <select id="status-{{this.uniqueId}}" {{on "change" this.changeStatusId}}>
+              {{#each @learningMaterialStatuses as |lmStatus|}}
+                <option value={{lmStatus.id}} selected={{isEqual lmStatus this.selectedStatus}}>
+                  {{lmStatus.title}}
+                </option>
+              {{/each}}
+            </select>
+          </span>
+        </div>
+        <div data-test-owninguser>
+          <label>
+            {{t "general.owner"}}:
+          </label>
+          <span class="owninguser">
+            <UserNameInfo @user={{this.currentUserModel}} />
+          </span>
+        </div>
       </div>
-      <div class="item" data-test-owninguser>
-        <label>
-          {{t "general.owner"}}:
-        </label>
-        <span class="owninguser">
-          <UserNameInfo @user={{this.currentUserModel}} />
-        </span>
-      </div>
+
       <div class="item" data-test-author>
         <label for="original-author-{{this.uniqueId}}">
           {{t "general.contentAuthor"}}:
@@ -327,6 +330,25 @@ export default class NewLearningmaterialComponent extends Component {
           </select>
         </span>
       </div>
+      {{#if this.isFile}}
+        <div class="item" data-test-file>
+          <label>
+            {{t "general.file"}}:
+          </label>
+          <LearningMaterialUploader
+            id="learning-material-uploader-{{this.uniqueId}}"
+            class={{if this.validations.errors.filename "error"}}
+            @for="file-upload-{{this.uniqueId}}"
+            @setFilename={{this.setFilename}}
+            @setFileHash={{this.setFileHash}}
+          />
+          <YupValidationMessage
+            @description={{t "general.file"}}
+            @validationErrors={{this.validations.errors.filename}}
+            data-test-file-validation-error-message
+          />
+        </div>
+      {{/if}}
       {{#if this.isLink}}
         <div class="item" data-test-link>
           <label for="url-{{this.uniqueId}}">
@@ -388,7 +410,7 @@ export default class NewLearningmaterialComponent extends Component {
         </span>
       </div>
       {{#if this.isFile}}
-        <div class="item" data-test-copyright-permission>
+        <div class="item copyright" data-test-copyright-permission>
           <label for="copyright-permission-{{this.uniqueId}}">
             {{t "general.copyrightPermission"}}:
           </label>
@@ -440,24 +462,8 @@ export default class NewLearningmaterialComponent extends Component {
             </span>
           </div>
         {{/unless}}
-        <div class="item" data-test-file>
-          <label>
-            {{t "general.file"}}:
-          </label>
-          <LearningMaterialUploader
-            id="learning-material-uploader-{{this.uniqueId}}"
-            class={{if this.validations.errors.filename "error"}}
-            @for="file-upload-{{this.uniqueId}}"
-            @setFilename={{this.setFilename}}
-            @setFileHash={{this.setFileHash}}
-          />
-          <YupValidationMessage
-            @description={{t "general.file"}}
-            @validationErrors={{this.validations.errors.filename}}
-            data-test-file-validation-error-message
-          />
-        </div>
       {{/if}}
+
       <div class="buttons">
         <button class="done text" type="button" {{on "click" (perform this.prepareSave)}}>
           {{#if this.prepareSave.isRunning}}

@@ -1,13 +1,40 @@
 @use "../mixins" as m;
 
 .learningmaterial-manager {
-  margin-left: 2rem;
   min-height: 25vh;
 
   @include m.ilios-form;
 
   .item {
     @include m.ilios-form-item;
+
+    &.status.required {
+      display: flex;
+      flex-direction: row;
+      gap: 1em;
+
+      div {
+        display: flex;
+        flex-direction: column;
+      }
+    }
+
+    .description {
+      padding-bottom: 1em;
+    }
+
+    .publicnotes {
+      display: flex;
+      flex-direction: row;
+      gap: 0.5em;
+      padding: 0.25em 0 1em;
+    }
+
+    .downloadurl {
+      align-items: center;
+      display: flex;
+      gap: 0.2em;
+    }
   }
 
   .buttons {
@@ -40,12 +67,15 @@
 
   .mesh-manager {
     grid-column: 1 / -1;
-    margin: 2rem 0;
+    margin: 0;
   }
 
   .timed-release {
     margin-bottom: 2rem;
-    padding-left: 1rem;
+
+    @include m.for-laptop-and-up {
+      grid-column: 1 / -1;
+    }
 
     .item {
       margin-top: 1rem;
@@ -58,6 +88,19 @@
     button {
       background-color: transparent;
       margin: 0.5rem 0 0;
+      min-width: 150px;
+    }
+
+    .timed-release-dates {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .start,
+    .end {
+      display: flex;
+      flex-direction: row;
+      gap: 1em;
     }
 
     .add-date {
@@ -68,6 +111,10 @@
     .remove-date {
       border: 1px solid var(--red);
       color: var(--red);
+    }
+
+    .time-picker {
+      gap: 0.5em;
     }
   }
 }
