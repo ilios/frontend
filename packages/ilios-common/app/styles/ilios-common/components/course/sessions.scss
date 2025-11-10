@@ -2,6 +2,7 @@
 
 .course-sessions {
   @include m.detail-container(var(--orange));
+  padding: 0.5rem;
   border-top: 0;
   border-top-left-radius: 0;
   border-top-right-radius: 0;
