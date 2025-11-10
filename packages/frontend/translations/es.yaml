@@ -400,6 +400,9 @@ general:
   sessionObjectives: Objetivos de la sesión
   sessionObjectivesReportSummary: "informe para {courseCount, plural, one {un curso} other {# cursos}}. Se enumera el objetivo de cada sesión junto con los instructores y los datos del curso."
   sessionObjectivesReportSummaryMultiSchool: "informe para {courseCount, plural, one {un curso} other {# cursos}}{schoolCount, plural, zero {} one {} other {, en # escuelas}}. Se enumera el objetivo de cada sesión junto con los instructores y los datos del curso."
+  sessionOfferings: Ofrecimientos de la Sesión
+  sessionOfferingsReportSummary: "informe para {courseCount, plural, one {un curso} other {# cursos}}. Se enumera el ofrecimiento de cada sesión junto con los grupos de aprendedores, los instructores, y los datos del curso."
+  sessionOfferingsReportSummaryMultiSchool: "informe para {courseCount, plural, one {un curso} other {# cursos}}{schoolCount, plural, zero {} one {} other {, en # escuelas}}. Se enumera el ofrecimiento de cada sesión junto con los grupos de aprendedores, los instructores, y los datos del curso."
   sessionTitlePlaceholder: Entre en un titulo para esta sesión
   sessionTypeConfirmRemoval: ¿Está seguro de que desea eliminar este tipo de sesión? Esta acción no se puede deshacer.
   sessionTypeTitlePlaceholder: Entre en un titulo para este tipo de sesión

@@ -70,6 +70,14 @@ export default class ReportsCurriculumHeader extends Component {
           }),
         },
         {
+          value: 'sessionOfferings',
+          label: this.intl.t('general.sessionOfferings'),
+          summary: this.intl.t('general.sessionOfferingsReportSummaryMultiSchool', {
+            courseCount: this.args.countSelectedCourses,
+            schoolCount: this.countSelectedSchools,
+          }),
+        },
+        {
           value: 'learnerGroups',
           label: this.intl.t('general.learnerGroups'),
           summary: this.intl.t('general.learnerGroupsReportSummaryMultiSchool', {
@@ -84,6 +92,13 @@ export default class ReportsCurriculumHeader extends Component {
           value: 'sessionObjectives',
           label: this.intl.t('general.sessionObjectives'),
           summary: this.intl.t('general.sessionObjectivesReportSummary', {
+            courseCount: this.args.countSelectedCourses,
+          }),
+        },
+        {
+          value: 'sessionOfferings',
+          label: this.intl.t('general.sessionOfferings'),
+          summary: this.intl.t('general.sessionOfferingsReportSummary', {
             courseCount: this.args.countSelectedCourses,
           }),
         },

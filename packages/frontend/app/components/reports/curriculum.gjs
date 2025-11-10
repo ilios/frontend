@@ -3,6 +3,7 @@ import { service } from '@ember/service';
 import { cached, tracked } from '@glimmer/tracking';
 import { ensureSafeComponent } from '@embroider/util';
 import SessionObjectives from './curriculum/session-objectives';
+import SessionOfferings from './curriculum/session-offerings';
 import LearnerGroups from './curriculum/learner-groups';
 import Header from 'frontend/components/reports/curriculum/header';
 import ChooseCourse from 'frontend/components/reports/curriculum/choose-course';
@@ -66,6 +67,8 @@ export default class ReportsCurriculumComponent extends Component {
     switch (this.selectedReportValue) {
       case 'sessionObjectives':
         return ensureSafeComponent(SessionObjectives, this);
+      case 'sessionOfferings':
+        return ensureSafeComponent(SessionOfferings, this);
       case 'learnerGroups':
         return ensureSafeComponent(LearnerGroups, this);
     }
