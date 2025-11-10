@@ -63,6 +63,10 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
       course: course2,
       sessionType: sessionType2,
     });
+    const session4 = this.server.create('session', {
+      course: course2,
+      sessionType: sessionType2,
+    });
     this.server.create('academic-year', {
       id: 2015,
     });
@@ -74,6 +78,10 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
     });
     this.server.create('offering', {
       session: session3,
+    });
+    this.ilmSession = this.server.create('ilm-session', {
+      id: 1,
+      session: session4,
     });
   });
 
@@ -92,6 +100,8 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
     const today = DateTime.fromObject({ hour: 8, minute: 8, second: 8 });
     const startOfMonth = today.startOf('month');
     const endOfMonth = today.endOf('month').set({ hour: 22, minute: 59 });
+    const ilmStartDate = today.set({ hour: 23, minute: 50, second: 0 });
+    const ilmEndDate = today.plus({ days: 1 }).set({ hour: 0, minute: 5 });
     this.server.create('userevent', {
       user: this.user.id,
       name: 'start of month',
@@ -106,10 +116,17 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
       endDate: endOfMonth.plus({ hour: 1 }).toJSDate(),
       lastModified: today.minus({ year: 1 }),
     });
+    this.server.create('userevent', {
+      user: this.user.id,
+      name: 'end-of-day ILM',
+      ilmSession: this.ilmSession.id,
+      startDate: ilmStartDate.toJSDate(),
+      endDate: ilmEndDate.toJSDate(),
+    });
     await page.visit({ view: 'month' });
     await percySnapshot(assert);
     assert.strictEqual(currentRouteName(), 'dashboard.calendar');
-    assert.strictEqual(page.calendar.calendar.monthly.events.length, 2);
+    assert.strictEqual(page.calendar.calendar.monthly.events.length, 3);
     const startOfMonthStartFormat = this.intl.formatTime(startOfMonth.toJSDate(), {
       hour: '2-digit',
       minute: '2-digit',
@@ -122,6 +139,18 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
       page.calendar.calendar.monthly.events[0].text,
       `${startOfMonthStartFormat} - ${startOfMonthEndFormat} : start of month`,
     );
+    const ilmEventStartFormat = this.intl.formatTime(ilmStartDate.toJSDate(), {
+      hour: '2-digit',
+      minute: '2-digit',
+    });
+    const ilmEventEndFormat = this.intl.formatTime(ilmEndDate.toJSDate(), {
+      hour: '2-digit',
+      minute: '2-digit',
+    });
+    assert.strictEqual(
+      page.calendar.calendar.monthly.events[1].text,
+      `${ilmEventStartFormat} - ${ilmEventEndFormat} : end-of-day ILM`,
+    );
     const endOfMonthStartFormat = this.intl.formatTime(endOfMonth.toJSDate(), {
       hour: 'numeric',
       minute: 'numeric',
@@ -131,7 +160,7 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
       minute: 'numeric',
     });
     assert.strictEqual(
-      page.calendar.calendar.monthly.events[1].text,
+      page.calendar.calendar.monthly.events[2].text,
       `${endOfMonthStartFormat} - ${endOfMonthEndFormat} : end of month`,
     );
   });
@@ -150,6 +179,8 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
     const endOfWeek = DateTime.fromJSDate(
       this.owner.lookup('service:locale-days').lastDayOfThisWeek,
     ).set({ hour: 22, minute: 59 });
+    const ilmStartDate = march11th2009.set({ hour: 23, minute: 50, second: 0 });
+    const ilmEndDate = march11th2009.plus({ days: 1 }).set({ hour: 0, minute: 5 });
 
     const longDayHeading = this.intl.formatDate(startOfWeek.toJSDate(), {
       month: 'short',
@@ -172,6 +203,13 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
       endDate: endOfWeek.plus({ hour: 1 }).toJSDate(),
       lastModified: DateTime.now().minus({ year: 1 }),
     });
+    this.server.create('userevent', {
+      user: this.user.id,
+      name: 'end-of-day ILM',
+      ilmSession: this.ilmSession.id,
+      startDate: ilmStartDate.toJSDate(),
+      endDate: ilmEndDate.toJSDate(),
+    });
     await page.visit({ show: 'calendar' });
     await percySnapshot(assert);
     assert.strictEqual(currentRouteName(), 'dashboard.calendar');
@@ -183,11 +221,13 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
       `Sunday Sun ${longDayHeading} ${shortDayHeading}`,
     );
 
-    assert.strictEqual(page.calendar.calendar.weekly.events.length, 2);
+    assert.strictEqual(page.calendar.calendar.weekly.events.length, 3);
     assert.ok(page.calendar.calendar.weekly.events[0].isFirstDayOfWeek);
     assert.strictEqual(page.calendar.calendar.weekly.events[0].name, 'start of week');
-    assert.ok(page.calendar.calendar.weekly.events[1].isSeventhDayOfWeek);
-    assert.strictEqual(page.calendar.calendar.weekly.events[1].name, 'end of week');
+    assert.ok(page.calendar.calendar.weekly.events[1].isFourthDayOfWeek);
+    assert.strictEqual(page.calendar.calendar.weekly.events[1].name, 'end-of-day ILM');
+    assert.ok(page.calendar.calendar.weekly.events[2].isSeventhDayOfWeek);
+    assert.strictEqual(page.calendar.calendar.weekly.events[2].name, 'end of week');
   });
 
   test('load week calendar on Sunday', async function (assert) {
@@ -259,6 +299,8 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
     const today = DateTime.fromObject({ hour: 8, minute: 8, second: 8 });
     const tomorow = today.plus({ day: 1 });
     const yesterday = today.minus({ day: 1 });
+    const ilmStartDate = today.set({ hour: 23, minute: 50, second: 0 });
+    const ilmEndDate = today.plus({ days: 1 }).set({ hour: 0, minute: 5 });
     this.server.create('userevent', {
       user: this.user.id,
       name: 'today',
@@ -280,12 +322,20 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
       endDate: yesterday.plus({ hour: 1 }).toJSDate(),
       lastModified: today.minus({ year: 1 }),
     });
+    this.server.create('userevent', {
+      user: this.user.id,
+      name: 'end-of-day ILM',
+      ilmSession: this.ilmSession.id,
+      startDate: ilmStartDate.toJSDate(),
+      endDate: ilmEndDate.toJSDate(),
+    });
     await page.visit({ view: 'day' });
     await percySnapshot(assert);
     assert.strictEqual(currentRouteName(), 'dashboard.calendar');
 
-    assert.strictEqual(page.calendar.calendar.daily.events.length, 1);
+    assert.strictEqual(page.calendar.calendar.daily.events.length, 2);
     assert.strictEqual(page.calendar.calendar.daily.events[0].name, 'today');
+    assert.strictEqual(page.calendar.calendar.daily.events[1].name, 'end-of-day ILM');
   });
 
   test('invalid date loads today #5342', async function (assert) {
