@@ -24,7 +24,7 @@ export default class CourseVisualizeTermComponent extends Component {
       : false;
   }
   <template>
-    <section class="course-visualize-term" data-test-course-visualize-term>
+    <section class="course-visualize-term data-visualization" data-test-course-visualize-term>
       {{#if this.academicYearCrossesCalendarYearBoundariesData.isResolved}}
         <div class="breadcrumbs" data-test-breadcrumb>
           <span>

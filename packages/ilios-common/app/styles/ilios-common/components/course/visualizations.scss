@@ -1,8 +1,6 @@
 @use "../../mixins" as m;
 
 .course-visualizations {
-  @include m.data-visualization;
-
   .visualizations {
     margin-bottom: 1rem;
     @include m.for-tablet-and-up {

@@ -1,8 +1,6 @@
 @use "../../mixins" as m;
 
 .course-visualize-instructor {
-  @include m.data-visualization;
-
   @include m.for-laptop-and-up {
     .visualizations {
       display: grid;

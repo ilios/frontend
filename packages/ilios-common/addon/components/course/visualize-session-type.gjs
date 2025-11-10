@@ -27,7 +27,10 @@ export default class CourseVisualizeSessionTypeComponent extends Component {
       : false;
   }
   <template>
-    <section class="course-visualize-session-type" data-test-course-visualize-session-type>
+    <section
+      class="course-visualize-session-type data-visualization"
+      data-test-course-visualize-session-type
+    >
       {{#if this.academicYearCrossesCalendarYearBoundariesData.isResolved}}
         <div class="breadcrumbs" data-test-breadcrumb>
           <span>

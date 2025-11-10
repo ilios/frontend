@@ -66,7 +66,10 @@ export default class CourseVisualizeInstructorComponent extends Component {
     });
   }
   <template>
-    <section class="course-visualize-instructor" data-test-course-visualize-instructor>
+    <section
+      class="course-visualize-instructor data-visualization"
+      data-test-course-visualize-instructor
+    >
       <div class="breadcrumbs" data-test-breadcrumb>
         <span>
           <LinkTo @route="course" @model={{@course}}>

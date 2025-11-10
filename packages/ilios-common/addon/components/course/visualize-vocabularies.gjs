@@ -31,7 +31,7 @@ export default class CourseVisualizeVocabulariesComponent extends Component {
     }}
 
     <section
-      class="course-visualize-vocabularies"
+      class="course-visualize-vocabularies data-visualization"
       data-test-course-visualize-vocabularies
       ...attributes
     >

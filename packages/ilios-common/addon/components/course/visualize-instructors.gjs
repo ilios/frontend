@@ -38,7 +38,10 @@ export default class CourseVisualizeInstructorsComponent extends Component {
       (t "general.instructors")
     }}
 
-    <section class="course-visualize-instructors" data-test-course-visualize-instructors>
+    <section
+      class="course-visualize-instructors data-visualization"
+      data-test-course-visualize-instructors
+    >
       {{#if this.academicYearCrossesCalendarYearBoundariesData.isResolved}}
         <div class="breadcrumbs" data-test-breadcrumb>
           <span>
