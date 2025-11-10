@@ -110,12 +110,16 @@ module('Integration | Component | fade-text', function (hooks) {
     assert.ok(component.enabled);
     assert.notOk(this.expanded, 'text is not expanded');
     assert.ok(component.displayText.isFaded);
+    assert.strictEqual(component.displayText.id, component.control.expand.ariaControls);
+    assert.strictEqual(component.control.expand.ariaExpanded, 'false');
 
     await component.control.expand.click();
 
     assert.ok(component.enabled);
     assert.ok(this.expanded);
     assert.notOk(component.displayText.isFaded);
+    assert.strictEqual(component.displayText.id, component.control.collapse.ariaControls);
+    assert.strictEqual(component.control.collapse.ariaExpanded, 'true');
 
     await component.control.collapse.click();
 

@@ -7,6 +7,7 @@ import { on } from '@ember/modifier';
 import FaIcon from 'ilios-common/components/fa-icon';
 import { hash } from '@ember/helper';
 import { TrackedAsyncData } from 'ember-async-data';
+import { guidFor } from '@ember/object/internals';
 
 export default class FadeTextComponent extends Component {
   @tracked textHeight;
@@ -32,6 +33,12 @@ export default class FadeTextComponent extends Component {
 
   get isExpanded() {
     return (this.expanded || this.args.forceExpanded) && this.exceedsHeight;
+  }
+
+  get textElementId() {
+    const id = guidFor(this);
+
+    return `text-${id}`;
   }
 
   expand = () => {
@@ -63,6 +70,7 @@ export default class FadeTextComponent extends Component {
               collapsible=this.isExpanded
               expand=this.expand
               collapse=this.collapse
+              fadeTextId=this.textElementId
             )
             text=(component
               FadedTextComponent
@@ -70,6 +78,7 @@ export default class FadeTextComponent extends Component {
               resize=this.updateTextDims
               text=@text
               preserveLinks=@preserveLinks
+              id=this.textElementId
             )
           )
         }}
@@ -79,12 +88,14 @@ export default class FadeTextComponent extends Component {
           @resize={{this.updateTextDims}}
           @preserveLinks={{@preserveLinks}}
           @text={{@text}}
+          @id={{this.textElementId}}
         />
         <Controls
           @expandable={{this.shouldFade}}
           @collapsible={{this.isExpanded}}
           @expand={{this.expand}}
           @collapse={{this.collapse}}
+          @fadeTextId={{this.textElementId}}
         />
       {{/if}}
     </span>
@@ -99,6 +110,8 @@ const Controls = <template>
       type="button"
       data-test-expand
       data-test-fade-text-control
+      aria-expanded="false"
+      aria-controls={{@fadeTextId}}
       {{on "click" @expand}}
     >
       <FaIcon @icon="angles-down" />
@@ -111,6 +124,8 @@ const Controls = <template>
         type="button"
         data-test-collapse
         data-test-fade-text-control
+        aria-expanded="true"
+        aria-controls={{@fadeTextId}}
         {{on "click" @collapse}}
       >
         <FaIcon @icon="angles-up" />
@@ -155,6 +170,7 @@ class FadedTextComponent extends Component {
       class="display-text-wrapper{{if @faded ' faded'}}"
       data-test-display-text
       data-test-done={{this.sanitizerData.isResolved}}
+      id={{@id}}
     >
       <div class="display-text" {{onResize @resize}} data-test-text>
         {{this.displayText}}
