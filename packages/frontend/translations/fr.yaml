@@ -403,8 +403,8 @@ general:
   sessionObjectivesReportSummary: "Rapport de {courseCount, plural, one {one course} other {# courses}}. Chaque objectif de séance est listée avec des instructeurs et cours données."
   sessionObjectivesReportSummaryMultiSchool: "Rapport de {courseCount, plural, one {one course} other {# courses}}{schoolCount, plural, zero {} one {} other {, dans # écoles}}. Chaque objectif de séance est listée avec des instructeurs et cours données."
   sessionOfferings: Offres de séance
-  sessionOfferingsReportSummary: "Rapport de {courseCount, plural, one {one course} other {# courses}}. Chaque offre de séance est listée avec des groupes d'étudiants, instructeurs, et cours données."
-  sessionOfferingsReportSummaryMultiSchool: "Rapport de {courseCount, plural, one {one course} other {# courses}}{schoolCount, plural, zero {} one {} other {, dans # écoles}}. Chaque offre de séance est listée avec des groupes d'étudiants, instructeurs, et cours données."
+  sessionOfferingsReportSummary: "Rapport de {courseCount, plural, one {one course} other {# courses}}. Chaque offre de séance est listée avec des instructeurs, groupes d'étudiants, et cours données."
+  sessionOfferingsReportSummaryMultiSchool: "Rapport de {courseCount, plural, one {one course} other {# courses}}{schoolCount, plural, zero {} one {} other {, dans # écoles}}. Chaque offre de séance est listée avec des instructeurs, groupes d'étudiants, et cours données."
   sessionTitlePlaceholder: Ajoutez un titre pour ce session
   sessionTypeConfirmRemoval: "Voulez-vous vraiment supprimer ce type de session ? Cette action ne peut pas être annulée."
   sessionTypeTitlePlaceholder: Ajoutez un titre pour ce type de session

@@ -404,8 +404,8 @@ general:
   sessionObjectivesReportSummary: "report for {courseCount, plural, one {one course} other {# courses}}. Each session objective is listed along with instructors and course data."
   sessionObjectivesReportSummaryMultiSchool: "report for {courseCount, plural, one {one course} other {# courses}}{schoolCount, plural, zero {} one {} other {, across # schools}}. Each session objective is listed along with instructors and course data."
   sessionOfferings: Session Offerings
-  sessionOfferingsReportSummary: "report for {courseCount, plural, one {one course} other {# courses}}. Each session offering is listed along with learner groups, instructors, and course data."
-  sessionOfferingsReportSummaryMultiSchool: "report for {courseCount, plural, one {one course} other {# courses}}{schoolCount, plural, zero {} one {} other {, across # schools}}. Each session offering is listed along with learner groups, instructors, and course data."
+  sessionOfferingsReportSummary: "report for {courseCount, plural, one {one course} other {# courses}}. Each session offering is listed along with instructors, learner groups, and course data."
+  sessionOfferingsReportSummaryMultiSchool: "report for {courseCount, plural, one {one course} other {# courses}}{schoolCount, plural, zero {} one {} other {, across # schools}}. Each session offering is listed along with instructors, learner groups, and course data."
   sessionTitlePlaceholder: Enter a title for this session
   sessionTypeConfirmRemoval: Are you sure you want to delete this session type? This action cannot be undone.
   sessionTypeTitlePlaceholder: Enter a title for this session type
