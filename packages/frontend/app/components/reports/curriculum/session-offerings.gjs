@@ -1,6 +1,7 @@
 import Component from '@glimmer/component';
 import { service } from '@ember/service';
 import PapaParse from 'papaparse';
+import { DateTime } from 'luxon';
 import { task, timeout } from 'ember-concurrency';
 import createDownloadFile from 'frontend/utils/create-download-file';
 import { cached, tracked } from '@glimmer/tracking';
@@ -100,11 +101,10 @@ export default class ReportsCurriculumSessionOfferingsComponent extends Componen
             courseTitle: c.title,
             courseYear: c.year,
             sessionTitle: s.title,
-            offeringDate: o.startDate,
+            offeringDate: DateTime.fromISO(o.startDate).toFormat('yyyy-MM-dd, h:mm a'),
             instructors: s.instructors,
             learnerGroups: o.learnerGroups.map((lg) => lg.title),
             sessionLink: `${origin}${path}`,
-            learnerGroupLink: `${origin}${path}`,
           };
 
           if (this.hasMultipleSchools) {
@@ -191,12 +191,11 @@ export default class ReportsCurriculumSessionOfferingsComponent extends Componen
       rhett[this.intl.t('general.year')] = o.courseYear;
       rhett[this.intl.t('general.session')] = o.sessionTitle;
       rhett[this.intl.t('general.offeringDate')] = o.offeringDate;
+      rhett[this.intl.t('general.instructors')] = o.instructors.join(', ');
       if (o.learnerGroups) {
         rhett[this.intl.t('general.learnerGroups')] = o.learnerGroups.join(', ');
       }
-      rhett[this.intl.t('general.instructors')] = o.instructors.join(', ');
       rhett[this.intl.t('general.sessionLink')] = o.sessionLink;
-      rhett[this.intl.t('general.learnerGroupLink')] = o.learnerGroupLink;
 
       return rhett;
     });
