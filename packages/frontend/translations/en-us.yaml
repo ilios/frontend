@@ -195,7 +195,6 @@ general:
   lastName: Last Name
   learner: Learner
   learnerAssignments: "{groupTitle} Learner Assignments"
-  learnerGroupLink: Learner Group URL
   learnerGroupsReportSummary: "report for {courseCount, plural, one {one course} other {# courses}}. Each attached learner group is listed along with instructors and course data."
   learnerGroupsReportSummaryMultiSchool: "report for {courseCount, plural, one {one course} other {# courses}}{schoolCount, plural, zero {} one {} other {, across # schools}}. Each attached learner group is listed along with instructors and course data."
   learnerGroupTitle: Learner Group Title
