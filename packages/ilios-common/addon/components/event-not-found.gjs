@@ -14,7 +14,7 @@ export default class EventNotFoundComponent extends Component {
     }
   }
   <template>
-    <div class="event-not-found" data-test-event-not-found>
+    <div class="event-not-found main-section" data-test-event-not-found>
       <h2 data-test-title>{{t "general.eventNotFoundTitle"}}</h2>
       <p data-test-explanation>{{t "general.eventNotFoundExplanation"}}</p>
       {{#if this.showLink}}

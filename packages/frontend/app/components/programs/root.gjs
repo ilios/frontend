@@ -69,7 +69,7 @@ export default class ProgramRootComponent extends Component {
     this.showNewProgramForm = false;
   });
   <template>
-    <section class="programs-root" data-test-programs>
+    <section class="programs-root main-section" data-test-programs>
       <div class="filters">
         <div class="schools" data-test-school-filter>
           <FaIcon @icon="building-columns" @fixedWidth={{true}} />

@@ -292,7 +292,7 @@ export default class SingleEvent extends Component {
   <template>
     {{pageTitle " | " (t "general.event") ": " @event.slug prepend=false}}
 
-    <div class="single-event" data-test-single-event>
+    <div class="single-event main-section" data-test-single-event>
       {{#if @event}}
         <div class="single-event-summary" data-test-summary>
           <h2 data-test-header>

@@ -1,8 +1,6 @@
 @use "../ilios-common/mixins" as cm;
 
 .my-profile {
-  @include cm.main-section;
-
   .name {
     margin: 0.25rem 0 0;
     text-align: center;

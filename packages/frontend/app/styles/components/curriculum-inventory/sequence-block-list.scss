@@ -1,8 +1,6 @@
 @use "../../ilios-common/mixins" as m;
 
 .curriculum-inventory-sequence-block-list {
-  @include m.main-section;
-
   .header {
     @include m.main-list-box-header;
 

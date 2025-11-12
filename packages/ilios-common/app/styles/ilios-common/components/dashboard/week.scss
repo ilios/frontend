@@ -1,8 +1,6 @@
 @use "../../mixins" as m;
 
 .dashboard-week {
-  @include m.main-section;
-
   .dashboard-week-content {
     padding: 0 0 1em;
 

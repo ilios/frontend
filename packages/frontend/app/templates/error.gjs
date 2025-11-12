@@ -4,7 +4,7 @@ import NotFound from 'ilios-common/components/not-found';
 import { on } from '@ember/modifier';
 <template>
   {{pageTitle (t "general.error")}}
-  <div class="full-screen-error">
+  <div class="full-screen-error main-section">
     {{#if @controller.isA404}}
       <NotFound />
     {{else}}

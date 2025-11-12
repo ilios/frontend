@@ -127,7 +127,7 @@ export default class AssignStudentsRootComponent extends Component {
         : [];
   }
   <template>
-    <section class="assign-students-root" data-test-assign-students-root>
+    <section class="assign-students-root main-section" data-test-assign-students-root>
       <div class="filters">
         <div class="schoolsfilter" data-test-school-filter>
           <FaIcon @icon="building-columns" @fixedWidth={{true}} />

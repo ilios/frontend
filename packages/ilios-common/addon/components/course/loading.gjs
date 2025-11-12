@@ -47,7 +47,7 @@ import FaIcon from 'ilios-common/components/fa-icon';
     </div>
 
     <section
-      class="course-sessions course-sessions-loading loading-shimmer"
+      class="course-sessions course-sessions-loading loading-shimmer main-section"
       {{animateLoading "course-sessions" finalOpacity=".5"}}
     >
       <div class="course-sessions-header">

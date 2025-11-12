@@ -57,7 +57,7 @@ export default class DashboardWeekComponent extends Component {
   }
 
   <template>
-    <div class="dashboard-week" data-test-dashboard-week>
+    <div class="dashboard-week main-section" data-test-dashboard-week>
       <div class="dashboard-week-content">
         <div
           class="weeklylink"

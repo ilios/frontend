@@ -1,7 +1,6 @@
 @use "../mixins" as m;
 
 .single-event {
-  @include m.main-section;
   display: grid;
 
   h3 {

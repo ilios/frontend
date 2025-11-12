@@ -55,7 +55,7 @@ export default class CourseDetailsComponent extends Component {
       <BackToCourses />
 
       <section
-        class="course-details"
+        class="course-details main-section"
         id="course-top-section"
         data-test-ilios-course-details
         {{animateLoading "course" loadingTime=500}}

@@ -6,7 +6,7 @@ import set from 'ember-set-helper/helpers/set';
 import perform from 'ember-concurrency/helpers/perform';
 import FaIcon from 'ilios-common/components/fa-icon';
 <template>
-  <div class="token-login">
+  <div class="token-login main-section">
     {{#let (uniqueId) as |templateId|}}
       <label for="token-{{templateId}}">{{t "general.token"}}: </label>
       <input

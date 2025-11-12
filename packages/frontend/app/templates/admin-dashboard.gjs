@@ -6,7 +6,7 @@ import PendingUpdatesSummary from 'frontend/components/pending-updates-summary';
 import UnassignedStudentsSummary from 'frontend/components/unassigned-students-summary';
 <template>
   {{pageTitle (t "general.admin")}}
-  <div class="admin-dashboard admin-block">
+  <div class="admin-dashboard admin-block main-section">
     <ManageUsersSummary @canCreate={{@model.canCreate}} />
     {{#if (gt @model.schoolsWithUpdateUserPermission.length 0)}}
       <PendingUpdatesSummary @schools={{@model.schoolsWithUpdateUserPermission}} />

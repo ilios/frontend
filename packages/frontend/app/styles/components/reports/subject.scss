@@ -1,8 +1,6 @@
 @use "../../ilios-common/mixins" as cm;
 
 .reports-subject {
-  @include cm.main-section;
-
   .content-container {
     .report-results {
       @include cm.ilios-list-reset;

@@ -29,7 +29,11 @@ export default class CoursePublicationCheckComponent extends Component {
     return objectivesWithoutParents.length > 0;
   }
   <template>
-    <div class="course-publicationcheck" data-test-course-publicationcheck {{scrollIntoView}}>
+    <div
+      class="course-publicationcheck main-section"
+      data-test-course-publicationcheck
+      {{scrollIntoView}}
+    >
       <LinkTo @route="course" @model={{@course}} data-test-back-to-course>
         {{t "general.backToTitle" title=@course.title}}
       </LinkTo>

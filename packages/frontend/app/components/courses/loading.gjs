@@ -20,7 +20,7 @@ export default class CoursesLoading extends Component {
     return this.schools.length > 1;
   }
   <template>
-    <section class="courses-root courses-loading" aria-hidden="true">
+    <section class="courses-root courses-loading main-section" aria-hidden="true">
       <div class="filters">
         <div class="toggle-mycourses">
           <ToggleButtons

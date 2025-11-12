@@ -29,8 +29,6 @@
 
 .course-loading,
 .course-loader {
-  @include m.main-section;
-
   .mock-detail-box {
     display: flex;
     justify-content: center;

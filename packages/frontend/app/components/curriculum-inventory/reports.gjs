@@ -140,7 +140,10 @@ export default class CurriculumInventoryReportsComponent extends Component {
     await report.destroyRecord();
   });
   <template>
-    <section class="curriculum-inventory-reports" data-test-curriculum-inventory-reports>
+    <section
+      class="curriculum-inventory-reports main-section"
+      data-test-curriculum-inventory-reports
+    >
       <div class="filters">
         <div class="schoolsfilter" data-test-schools-filter>
           <FaIcon @icon="building-columns" @fixedWidth={{true}} />

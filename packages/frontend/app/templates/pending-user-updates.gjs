@@ -16,7 +16,7 @@ import perform from 'ember-concurrency/helpers/perform';
 <template>
   {{pageTitle (t "general.admin") " | " (t "general.pendingUpdatesSummaryTitle")}}
   <BackToAdminDashboard />
-  <section class="pending-user-updates">
+  <section class="pending-user-updates main-section">
     <div class="filters">
       <div class="schoolsfilter" data-test-school-filter>
         <FaIcon @icon="building-columns" @fixedWidth={{true}} />

@@ -33,7 +33,7 @@ export default class WeeklyEvents extends Component {
     this.args.setYear(parseInt(this.args.year, 10) - 1);
   }
   <template>
-    <div class="weekly-events" data-test-weekly-events>
+    <div class="weekly-events main-section" data-test-weekly-events>
       <div class="year" data-test-top-nav>
         <h2>
           <button

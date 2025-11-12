@@ -10,7 +10,7 @@ import hasManyLength from 'ilios-common/helpers/has-many-length';
 <template>
   {{pageTitle " | " @program.title prepend=false}}
 
-  <section class="program" data-test-program-details ...attributes>
+  <section class="program main-section" data-test-program-details ...attributes>
     <div class="backtolink">
       <LinkTo @route="programs" data-test-back-link>
         {{t "general.backToPrograms"}}

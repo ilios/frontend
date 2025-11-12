@@ -3,8 +3,6 @@
 @use "sass:color";
 
 .learner-group-root {
-  @include m.main-section;
-
   .learner-group-overview {
     @include m.ilios-overview(var(--orange));
     padding: 0;

@@ -284,7 +284,7 @@ export default class DashboardCalendarComponent extends Component {
     this.args.changeSchool(event.target.value);
   }
   <template>
-    <div class="dashboard-calendar" data-test-dashboard-calendar>
+    <div class="dashboard-calendar main-section" data-test-dashboard-calendar>
       <div class="dashboard-calendar-content">
         <section class="calendar-controls" data-test-dashboard-calendar-controls>
           <div class="calendar-options-control togglemyschedule" data-test-myschedule>

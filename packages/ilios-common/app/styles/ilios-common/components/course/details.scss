@@ -1,8 +1,6 @@
 @use "../../mixins" as m;
 
 .course-details {
-  @include m.main-section;
-
   $collapse-control-shadow-grey: #e2e2e2;
   $collapse-control-shadow-black: var(--very-transparent-black);
 

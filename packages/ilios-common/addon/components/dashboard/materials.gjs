@@ -188,7 +188,7 @@ export default class DashboardMaterialsComponent extends Component {
     this.args.setFilter(query);
   });
   <template>
-    <div class="dashboard-materials" data-test-dashboard-materials>
+    <div class="dashboard-materials main-section" data-test-dashboard-materials>
       <h2 class="title" data-test-materials-title>
         {{t "general.myMaterials"}}
       </h2>

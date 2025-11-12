@@ -157,7 +157,7 @@ export default class CourseSessionsComponent extends Component {
   }
   <template>
     <section
-      class="course-sessions"
+      class="course-sessions main-section"
       {{animateLoading "course-sessions" loadingTime=500}}
       data-test-course-sessions
     >

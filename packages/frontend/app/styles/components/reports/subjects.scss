@@ -1,8 +1,6 @@
 @use "../../ilios-common/mixins" as m;
 
 .reports-subjects {
-  @include m.main-section;
-
   .header {
     @include m.main-list-box-header;
 

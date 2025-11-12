@@ -82,7 +82,7 @@ export default class SchoolListComponent extends Component {
   });
   <template>
     {{#let (uniqueId) as |templateId|}}
-      <section class="school-list" data-test-school-list ...attributes>
+      <section class="school-list main-section" data-test-school-list ...attributes>
         <section class="schools">
           <div class="header">
             <h2 class="title">

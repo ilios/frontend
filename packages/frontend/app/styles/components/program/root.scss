@@ -1,7 +1,6 @@
 @use "../../ilios-common/mixins" as m;
 
 .program {
-  @include m.main-section;
   margin-bottom: 1rem;
 
   .backtolink {

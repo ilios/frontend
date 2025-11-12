@@ -97,7 +97,7 @@ export default class IliosUsersComponent extends Component {
     this.args.setShowNewUserForm(false);
   }
   <template>
-    <div class="ilios-users" data-test-ilios-users ...attributes>
+    <div class="ilios-users main-section" data-test-ilios-users ...attributes>
       <div class="filters" data-test-filters>
         <div class="filter user-search">
           <input

@@ -1,8 +1,6 @@
 @use "../../ilios-common/mixins" as m;
 
 .courses-root {
-  @include m.main-section;
-
   .filters {
     @include m.main-list-filters;
 

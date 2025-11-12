@@ -118,7 +118,7 @@ export default class InstructorGroupsRootComponent extends Component {
     this.showNewInstructorGroupForm = false;
   });
   <template>
-    <section class="instructor-groups-root" data-test-instructor-groups>
+    <section class="instructor-groups-root main-section" data-test-instructor-groups>
       <div class="filters">
         <div class="schools" data-test-school-filter>
           <FaIcon @icon="building-columns" @fixedWidth={{true}} />

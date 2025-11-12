@@ -23,7 +23,7 @@ export default class UserProfileComponent extends Component {
     return Number(this.currentUser.currentUserId) === Number(this.args.user.id);
   }
   <template>
-    <div class="user-profile" data-test-user-profile ...attributes>
+    <div class="user-profile main-section" data-test-user-profile ...attributes>
       <div class="admin-block">
         <ManageUsersSummary @canCreate={{@canCreate}} />
       </div>
