@@ -190,7 +190,7 @@ export default class ReportsCurriculumSessionOfferingsComponent extends Componen
       rhett[this.intl.t('general.course')] = o.courseTitle;
       rhett[this.intl.t('general.year')] = o.courseYear;
       rhett[this.intl.t('general.session')] = o.sessionTitle;
-      rhett[this.intl.t('general.date')] = o.offeringDate;
+      rhett[this.intl.t('general.offeringDate')] = o.offeringDate;
       if (o.learnerGroups) {
         rhett[this.intl.t('general.learnerGroups')] = o.learnerGroups.join(', ');
       }
