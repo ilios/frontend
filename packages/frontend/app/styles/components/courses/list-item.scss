@@ -1,9 +1,0 @@
-@use "../../ilios-common/mixins" as cm;
-
-.courses-list-item {
-  .fa-lock,
-  .fa-lock-open,
-  .fa-trash {
-    @include cm.icon;
-  }
-}

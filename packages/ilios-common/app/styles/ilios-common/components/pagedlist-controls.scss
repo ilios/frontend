@@ -3,12 +3,6 @@
 .pagedlist-controls {
   float: right;
 
-  .fa-backward-fast,
-  .fa-forward-fast,
-  .fa-play {
-    @include m.icon;
-  }
-
   .forward {
     padding-right: 0.75rem;
   }
