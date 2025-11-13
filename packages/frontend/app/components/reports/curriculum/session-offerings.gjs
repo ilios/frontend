@@ -195,7 +195,7 @@ export default class ReportsCurriculumSessionOfferingsComponent extends Componen
       if (o.learnerGroups) {
         rhett[this.intl.t('general.learnerGroups')] = o.learnerGroups.join(', ');
       }
-      rhett[this.intl.t('general.sessionLink')] = o.sessionLink;
+      rhett[this.intl.t('general.link')] = o.sessionLink;
 
       return rhett;
     });

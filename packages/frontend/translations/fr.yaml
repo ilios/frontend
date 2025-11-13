@@ -399,7 +399,6 @@ general:
   sequenceBlockTitlePlaceholder: "Entrez une titre pour ceci bloc séquence"
   sequenceNumber: No. de séquence
   sessionAttributes: Attributs de Séance
-  sessionLink: Address de Séance
   sessionObjectives: Objectifs de séance
   sessionObjectivesReportSummary: "Rapport de {courseCount, plural, one {one course} other {# courses}}. Chaque objectif de séance est listée avec des instructeurs et cours données."
   sessionObjectivesReportSummaryMultiSchool: "Rapport de {courseCount, plural, one {one course} other {# courses}}{schoolCount, plural, zero {} one {} other {, dans # écoles}}. Chaque objectif de séance est listée avec des instructeurs et cours données."
