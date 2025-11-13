@@ -29,19 +29,9 @@
       a {
         color: hsl(from var(--green) h s calc(l + 40));
 
-        //Support for Safari < 18.x
-        @supports (color: hsl(from orange h s calc(l + 15%))) {
-          color: hsl(from var(--green) h s calc(l + 40%));
-        }
-
         &:focus,
         &:hover {
           color: hsl(from var(--green) h s calc(l + 90));
-
-          //Support for Safari < 18.x
-          @supports (color: hsl(from orange h s calc(l + 15%))) {
-            color: hsl(from var(--green) h s calc(l + 90));
-          }
         }
       }
     }
@@ -52,19 +42,9 @@
       a {
         color: hsl(from var(--dark-yellow) h s calc(l + 40));
 
-        //Support for Safari < 18.x
-        @supports (color: hsl(from orange h s calc(l + 15%))) {
-          color: hsl(from var(--dark-yellow) h s calc(l + 40%));
-        }
-
         &:focus,
         &:hover {
           color: hsl(from var(--dark-yellow) h s calc(l + 90));
-
-          //Support for Safari < 18.x
-          @supports (color: hsl(from orange h s calc(l + 15%))) {
-            color: hsl(from var(--dark-yellow) h s calc(l + 90));
-          }
         }
       }
     }
@@ -75,19 +55,9 @@
       a {
         color: hsl(from var(--light-blue) h s calc(l + 40));
 
-        //Support for Safari < 18.x
-        @supports (color: hsl(from orange h s calc(l + 15%))) {
-          color: hsl(from var(--light-blue) h s calc(l + 40%));
-        }
-
         &:focus,
         &:hover {
           color: hsl(from var(--light-blue) h s calc(l + 90));
-
-          //Support for Safari < 18.x
-          @supports (color: hsl(from orange h s calc(l + 15%))) {
-            color: hsl(from var(--light-blue) h s calc(l + 90));
-          }
         }
       }
     }
@@ -98,19 +68,9 @@
       a {
         color: hsl(from var(--light-red) h s calc(l + 40));
 
-        //Support for Safari < 18.x
-        @supports (color: hsl(from orange h s calc(l + 15%))) {
-          color: hsl(from var(--light-red) h s calc(l + 40%));
-        }
-
         &:focus,
         &:hover {
           color: hsl(from var(--light-red) h s calc(l + 90));
-
-          //Support for Safari < 18.x
-          @supports (color: hsl(from orange h s calc(l + 15%))) {
-            color: hsl(from var(--light-red) h s calc(l + 90));
-          }
         }
       }
     }
