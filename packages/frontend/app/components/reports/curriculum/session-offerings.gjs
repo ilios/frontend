@@ -127,7 +127,11 @@ export default class ReportsCurriculumSessionOfferingsComponent extends Componen
       return a.courseTitle.localeCompare(b.courseTitle);
     }
 
-    return a.sessionTitle.localeCompare(b.sessionTitle);
+    if (a.sessionTitle !== b.sessionTitle) {
+      return a.sessionTitle.localeCompare(b.sessionTitle);
+    }
+
+    return a.offeringDate.localeCompare(b.offeringDate);
   };
 
   get selectedSchoolIds() {
