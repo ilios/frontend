@@ -6,7 +6,7 @@
 
     &.faded {
       max-height: 200px;
-      overflow: hidden;
+      overflow-y: hidden;
       position: relative;
 
       mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
