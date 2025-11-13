@@ -9,8 +9,7 @@
   width: 100%;
   z-index: 500;
 
-  @mixin flash($color) {
-    background-color: $color;
+  .flash-message {
     color: var(--white);
     display: block;
     opacity: 1;
@@ -19,21 +18,99 @@
     transition: all 2s linear;
 
     a {
-      color: hsl(from $color h s calc(l + 40));
       text-decoration: underline;
+    }
 
-      //Support for Safari < 18.x
-      @supports (color: hsl(from orange h s calc(l + 15%))) {
-        color: hsl(from $color h s calc(l + 40%));
-      }
+    /* no idea how to order these to avoid the violation */
+    /* stylelint-disable no-descending-specificity */
+    &.alert-success {
+      background-color: var(--green);
 
-      &:focus,
-      &:hover {
-        color: hsl(from $color h s calc(l + 90));
+      a {
+        color: hsl(from var(--green) h s calc(l + 40));
 
         //Support for Safari < 18.x
         @supports (color: hsl(from orange h s calc(l + 15%))) {
-          color: hsl(from $color h s calc(l + 90));
+          color: hsl(from var(--green) h s calc(l + 40%));
+        }
+
+        &:focus,
+        &:hover {
+          color: hsl(from var(--green) h s calc(l + 90));
+
+          //Support for Safari < 18.x
+          @supports (color: hsl(from orange h s calc(l + 15%))) {
+            color: hsl(from var(--green) h s calc(l + 90));
+          }
+        }
+      }
+    }
+
+    &.alert-warning {
+      background-color: var(--dark-yellow);
+
+      a {
+        color: hsl(from var(--dark-yellow) h s calc(l + 40));
+
+        //Support for Safari < 18.x
+        @supports (color: hsl(from orange h s calc(l + 15%))) {
+          color: hsl(from var(--dark-yellow) h s calc(l + 40%));
+        }
+
+        &:focus,
+        &:hover {
+          color: hsl(from var(--dark-yellow) h s calc(l + 90));
+
+          //Support for Safari < 18.x
+          @supports (color: hsl(from orange h s calc(l + 15%))) {
+            color: hsl(from var(--dark-yellow) h s calc(l + 90));
+          }
+        }
+      }
+    }
+
+    &.alert-info {
+      background-color: var(--light-blue);
+
+      a {
+        color: hsl(from var(--light-blue) h s calc(l + 40));
+
+        //Support for Safari < 18.x
+        @supports (color: hsl(from orange h s calc(l + 15%))) {
+          color: hsl(from var(--light-blue) h s calc(l + 40%));
+        }
+
+        &:focus,
+        &:hover {
+          color: hsl(from var(--light-blue) h s calc(l + 90));
+
+          //Support for Safari < 18.x
+          @supports (color: hsl(from orange h s calc(l + 15%))) {
+            color: hsl(from var(--light-blue) h s calc(l + 90));
+          }
+        }
+      }
+    }
+
+    &.alert-alert {
+      background-color: var(--light-red);
+
+      a {
+        color: hsl(from var(--light-red) h s calc(l + 40));
+
+        //Support for Safari < 18.x
+        @supports (color: hsl(from orange h s calc(l + 15%))) {
+          color: hsl(from var(--light-red) h s calc(l + 40%));
+        }
+
+        &:focus,
+        &:hover {
+          color: hsl(from var(--light-red) h s calc(l + 90));
+
+          //Support for Safari < 18.x
+          @supports (color: hsl(from orange h s calc(l + 15%))) {
+            color: hsl(from var(--light-red) h s calc(l + 90));
+          }
         }
       }
     }
@@ -41,22 +118,6 @@
     &.exiting {
       opacity: 0;
     }
-  }
-
-  .alert-success {
-    @include flash(var(--green));
-  }
-
-  .alert-warning {
-    @include flash(var(--dark-yellow));
-  }
-
-  .alert-info {
-    @include flash(var(--light-blue));
-  }
-
-  .alert-alert {
-    @include flash(var(--light-red));
   }
 
   .alert:last-of-type {
