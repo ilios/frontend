@@ -33,10 +33,4 @@
   .new .saved-result {
     @include m.main-list-saved-new;
   }
-
-  .fa-lock,
-  .fa-trash,
-  .fa-lock-open {
-    @include m.icon;
-  }
 }
