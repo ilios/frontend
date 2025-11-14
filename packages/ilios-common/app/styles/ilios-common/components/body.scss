@@ -69,7 +69,8 @@ ul {
 
 p {
   margin-bottom: 1rem;
-  @include m.paragraph-line-height;
+  /* stylelint-disable-next-line property-disallowed-list */
+  line-height: calc(1px + 3ex);
 
   a {
     text-decoration: underline;
