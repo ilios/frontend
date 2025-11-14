@@ -21,7 +21,7 @@ export default class MonthlyCalendarComponent extends Component {
       return [];
     }
 
-    return sortBy(this.args.events, ['startDate', 'endDate', 'name']);
+    return sortBy(this.args.events, ['calendarStartDate', 'calendarEndDate', 'name']);
   }
 
   get firstDayOfMonth() {
@@ -51,7 +51,9 @@ export default class MonthlyCalendarComponent extends Component {
           month: 'numeric',
           day: 'numeric',
         }),
-        events: this.sortedEvents.filter((e) => date.hasSame(DateTime.fromISO(e.startDate), 'day')),
+        events: this.sortedEvents.filter((e) =>
+          date.hasSame(DateTime.fromISO(e.calendarStartDate), 'day'),
+        ),
       };
     });
   }
@@ -104,7 +106,7 @@ export default class MonthlyCalendarComponent extends Component {
               {{#if event.isMulti}}
                 <IliosCalendarEventMonth
                   @event={{event}}
-                  @selectEvent={{fn @changeToDayView event.startDate}}
+                  @selectEvent={{fn @changeToDayView event.calendarStartDate}}
                 />
               {{else}}
                 <IliosCalendarEventMonth @event={{event}} @selectEvent={{fn @selectEvent event}} />

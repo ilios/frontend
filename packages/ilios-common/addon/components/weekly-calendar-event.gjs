@@ -29,9 +29,9 @@ export default class WeeklyCalendarEventComponent extends Component {
 
   get minutes() {
     const allMinutesInDay = Array(60 * 24).fill(0);
-    this.args.allDayEvents.forEach(({ startDate, endDate }) => {
-      const start = this.getMinuteInTheDay(DateTime.fromISO(startDate));
-      const end = this.getMinuteInTheDay(DateTime.fromISO(endDate));
+    this.args.allDayEvents.forEach(({ calendarStartDate, calendarEndDate }) => {
+      const start = this.getMinuteInTheDay(DateTime.fromISO(calendarStartDate));
+      const end = this.getMinuteInTheDay(DateTime.fromISO(calendarEndDate));
       for (let i = start; i <= end; i++) {
         allMinutesInDay[i - 1]++;
       }
@@ -41,11 +41,11 @@ export default class WeeklyCalendarEventComponent extends Component {
   }
 
   get startDateTime() {
-    return DateTime.fromISO(this.args.event.startDate);
+    return DateTime.fromISO(this.args.event.calendarStartDate);
   }
 
   get endDateTime() {
-    return DateTime.fromISO(this.args.event.endDate);
+    return DateTime.fromISO(this.args.event.calendarEndDate);
   }
 
   get startDate() {

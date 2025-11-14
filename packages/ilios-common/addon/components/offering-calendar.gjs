@@ -44,6 +44,8 @@ export default class OfferingCalendar extends Component {
           return {
             startDate: DateTime.fromJSDate(offering.startDate).toISO(),
             endDate: DateTime.fromJSDate(offering.endDate).toISO(),
+            calendarStartDate: DateTime.fromJSDate(offering.startDate).toISO(),
+            calendarEndDate: DateTime.fromJSDate(offering.endDate).toISO(),
             courseTitle: course.title,
             name: session.title,
             offering: offering.id,
@@ -71,6 +73,8 @@ export default class OfferingCalendar extends Component {
         return {
           startDate: DateTime.fromJSDate(offering.startDate).toISO(),
           endDate: DateTime.fromJSDate(offering.endDate).toISO(),
+          calendarStartDate: DateTime.fromJSDate(offering.startDate).toISO(),
+          calendarEndDate: DateTime.fromJSDate(offering.endDate).toISO(),
           courseTitle: course.title,
           name: session.title,
           offering: offering.id,
@@ -84,6 +88,8 @@ export default class OfferingCalendar extends Component {
       this.currentEvent = {
         startDate: DateTime.fromJSDate(startDate).toISO(),
         endDate: DateTime.fromJSDate(endDate).toISO(),
+        calendarStartDate: DateTime.fromJSDate(startDate).toISO(),
+        calendarEndDate: DateTime.fromJSDate(endDate).toISO(),
         courseTitle: course.title,
         name: session.title,
         isPublished: session.isPublished,

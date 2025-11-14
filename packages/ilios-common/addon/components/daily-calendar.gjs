@@ -32,7 +32,7 @@ export default class DailyCalendarComponent extends Component {
     }
 
     return this.sortedEvents.reduce((earliestHour, event) => {
-      const { hour } = DateTime.fromISO(event.startDate);
+      const { hour } = DateTime.fromISO(event.calendarStartDate);
       return hour < earliestHour ? hour : earliestHour;
     }, 24);
   }
@@ -42,7 +42,7 @@ export default class DailyCalendarComponent extends Component {
       return [];
     }
 
-    return sortBy(this.args.events, ['startDate', 'endDate', 'name']);
+    return sortBy(this.args.events, ['calendarStartDate', 'calendarEndDate', 'name']);
   }
 
   get hours() {

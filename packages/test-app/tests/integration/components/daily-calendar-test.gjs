@@ -23,6 +23,8 @@ module('Integration | Component | daily-calendar', function (hooks) {
     this.server.create('userevent', {
       startDate: DateTime.fromFormat(startDate, 'y-MM-dd h:m:s').toISO(),
       endDate: DateTime.fromFormat(endDate, 'y-MM-dd h:m:s').toISO(),
+      calendarStartDate: DateTime.fromFormat(startDate, 'y-MM-dd h:m:s').toISO(),
+      calendarEndDate: DateTime.fromFormat(endDate, 'y-MM-dd h:m:s').toISO(),
       color: color || '#' + Math.floor(Math.random() * 16777215).toString(16),
       lastModified: endDate,
     });
@@ -131,6 +133,8 @@ module('Integration | Component | daily-calendar', function (hooks) {
     this.server.create('userevent', {
       startDate: january9th2019.toISO(),
       endDate: january9th2019.plus({ hour: 1 }).toISO(),
+      calendarStartDate: january9th2019.toISO(),
+      calendarEndDate: january9th2019.plus({ hour: 1 }).toISO(),
       offering: 1,
     });
     this.set('events', this.server.db.userevents);
@@ -164,6 +168,8 @@ module('Integration | Component | daily-calendar', function (hooks) {
     this.server.create('userevent', {
       startDate: december111980.toISO(),
       endDate: december111980.plus({ hour: 1 }).toISO(),
+      calendarStartDate: december111980.toISO(),
+      calendarEndDate: december111980.plus({ hour: 1 }).toISO(),
     });
     this.set('events', this.server.db.userevents);
     this.set('date', december111980.toJSDate());

@@ -54,7 +54,7 @@ export default class WeeklyCalendarComponent extends Component {
     }
 
     return this.sortedEvents.reduce((earliestHour, event) => {
-      const hour = Number(DateTime.fromISO(event.startDate).toFormat('HH'));
+      const hour = Number(DateTime.fromISO(event.calendarStartDate).toFormat('HH'));
       return hour < earliestHour ? hour : earliestHour;
     }, 24);
   }
@@ -64,7 +64,7 @@ export default class WeeklyCalendarComponent extends Component {
       return [];
     }
 
-    return sortBy(this.args.events, ['startDate', 'endDate', 'name']);
+    return sortBy(this.args.events, ['calendarStartDate', 'calendarEndDate', 'name']);
   }
 
   get days() {

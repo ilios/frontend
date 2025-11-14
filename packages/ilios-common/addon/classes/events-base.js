@@ -115,6 +115,27 @@ export default class EventsBase extends Service {
     obj.postrequisites = sortBy(obj.postrequisites, 'startDate');
     obj.postrequisites = sortBy(obj.postrequisites, 'name');
     obj.isUserEvent = isUserEvent;
+
+    // The start and end date of the event, for display purposes on the calendar. See comment block below.
+    obj.calendarStartDate = obj.startDate;
+    obj.calendarEndDate = obj.endDate;
+
+    // ACHTUNG!
+    // ILMs don't really have a duration, they have due-date.
+    // But in order to display them in a calendar, we have to make up a duration for them, otherwise they won't show up.
+    // So we're filling in a start-date that's the equivalent of the actual due-date,
+    // and give it an end-date that's fifteen minutes out.
+    // However, if the given start-date is 11:45p or later in the day, that event would be considered to continue
+    // into the next day, effectively making it a "multi-day" event.
+    // Multi-days are currently not shown in the calendar, instead they are displayed in a table below the calendar.
+    // To prevent this from happening, we pin the calendar display start-date to 11:45p and the end-date to 11:59p.
+    // [ST 2025/11/07]
+    const startDate = DateTime.fromISO(obj.startDate);
+    if (obj.ilmSession && 23 === startDate.hour && startDate.minute >= 45) {
+      obj.calendarStartDate = startDate.set({ minute: 45 }).toUTC().toISO();
+      obj.calendarEndDate = startDate.set({ minute: 59 }).toUTC().toISO();
+    }
+
     return obj;
   }
 

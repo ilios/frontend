@@ -66,6 +66,8 @@ module('Integration | Component | monthly-calendar', function (hooks) {
     this.server.createList('userevent', 2, {
       startDate: january9th2019.toISO(),
       endDate: january9th2019.plus({ hour: 1 }).toISO(),
+      calendarStartDate: january9th2019.toISO(),
+      calendarEndDate: january9th2019.plus({ hour: 1 }).toISO(),
     });
     this.set('events', this.server.db.userevents);
     this.set('date', january9th2019.toJSDate());
@@ -103,6 +105,8 @@ module('Integration | Component | monthly-calendar', function (hooks) {
     this.server.createList('userevent', 3, {
       startDate: january9th2019.toISO(),
       endDate: january9th2019.plus({ hour: 1 }).toISO(),
+      calendarStartDate: january9th2019.toISO(),
+      calendarEndDate: january9th2019.plus({ hour: 1 }).toISO(),
     });
     this.set('events', this.server.db.userevents);
     this.set('date', january9th2019.toJSDate());
@@ -167,6 +171,8 @@ module('Integration | Component | monthly-calendar', function (hooks) {
     this.server.create('userevent', {
       startDate: january9th2019.toISO(),
       endDate: january9th2019.plus({ hour: 1 }).toISO(),
+      calendarStartDate: january9th2019.toISO(),
+      calendarEndDate: january9th2019.plus({ hour: 1 }).toISO(),
       offering: 1,
     });
     this.set('events', this.server.db.userevents);
@@ -201,6 +207,8 @@ module('Integration | Component | monthly-calendar', function (hooks) {
     this.server.createList('userevent', 3, {
       startDate: january9th2019.toISO(),
       endDate: january9th2019.plus({ hour: 1 }).toISO(),
+      calendarStartDate: january9th2019.toISO(),
+      calendarEndDate: january9th2019.plus({ hour: 1 }).toISO(),
     });
     this.set('events', this.server.db.userevents);
     this.set('date', january9th2019.toJSDate());
@@ -235,6 +243,8 @@ module('Integration | Component | monthly-calendar', function (hooks) {
       isMulti: true,
       startDate: january9th2019.toISO(),
       endDate: january9th2019.plus({ hour: 1 }).toISO(),
+      calendarStartDate: january9th2019.toISO(),
+      calendarEndDate: january9th2019.plus({ hour: 1 }).toISO(),
       offering: 1,
     });
     this.set('events', this.server.db.userevents);
@@ -269,6 +279,8 @@ module('Integration | Component | monthly-calendar', function (hooks) {
     this.server.create('userevent', {
       startDate: december112017.toISO(),
       endDate: december112017.plus({ hour: 1 }).toISO(),
+      calendarStartDate: december112017.toISO(),
+      calendarEndDate: december112017.plus({ hour: 1 }).toISO(),
     });
     this.set('events', this.server.db.userevents);
     this.set('date', december112017.toJSDate());
@@ -311,6 +323,8 @@ module('Integration | Component | monthly-calendar', function (hooks) {
     this.server.create('userevent', {
       startDate: february1st2020.toISO(),
       endDate: february1st2020.plus({ hour: 1 }).toISO(),
+      calendarStartDate: february1st2020.toISO(),
+      calendarEndDate: february1st2020.plus({ hour: 1 }).toISO(),
     });
     this.set('events', this.server.db.userevents);
     this.set('date', february1st2020.toJSDate());

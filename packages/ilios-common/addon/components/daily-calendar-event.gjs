@@ -22,9 +22,9 @@ export default class DailyCalendarEventComponent extends Component {
   constructor() {
     super(...arguments);
     const allMinutesInDay = Array(60 * 24).fill(0);
-    this.args.allDayEvents.forEach(({ startDate, endDate }) => {
-      const start = this.getMinuteInTheDay(startDate);
-      const end = this.getMinuteInTheDay(endDate);
+    this.args.allDayEvents.forEach(({ calendarStartDate, calendarEndDate }) => {
+      const start = this.getMinuteInTheDay(calendarStartDate);
+      const end = this.getMinuteInTheDay(calendarEndDate);
       for (let i = start; i <= end; i++) {
         allMinutesInDay[i - 1]++;
       }
@@ -66,11 +66,11 @@ export default class DailyCalendarEventComponent extends Component {
   }
 
   get startLuxon() {
-    return DateTime.fromISO(this.args.event.startDate);
+    return DateTime.fromISO(this.args.event.calendarStartDate);
   }
 
   get endLuxon() {
-    return DateTime.fromISO(this.args.event.endDate);
+    return DateTime.fromISO(this.args.event.calendarEndDate);
   }
 
   get startOfDayLuxon() {
@@ -94,8 +94,8 @@ export default class DailyCalendarEventComponent extends Component {
   }
 
   get span() {
-    const start = this.getMinuteInTheDay(this.args.event.startDate);
-    const end = this.getMinuteInTheDay(this.args.event.endDate);
+    const start = this.getMinuteInTheDay(this.args.event.calendarStartDate);
+    const end = this.getMinuteInTheDay(this.args.event.calendarEndDate);
 
     const minutes = this.minutes.slice(start, end - 1);
     const max = Math.max(...minutes);
