@@ -18,6 +18,8 @@ import eq from 'ember-truth-helpers/helpers/eq';
 import join from 'ilios-common/helpers/join';
 import reverse from 'ilios-common/helpers/reverse';
 import mapBy from 'ilios-common/helpers/map-by';
+import sortBy from 'ilios-common/helpers/sort-by';
+import truncate from 'ilios-common/helpers/truncate';
 import TruncateText from 'ilios-common/components/truncate-text';
 import OfferingUrlDisplay from 'ilios-common/components/offering-url-display';
 import UserStatus from 'ilios-common/components/user-status';
@@ -138,6 +140,15 @@ export default class OfferingManagerComponent extends Component {
             @scrollToBottom={{false}}
           />
         {{else}}
+          <div
+            class="offering-manager-learners"
+            title={{join ", " (mapBy "fullName" (sortBy "fullName" @offering.allLearners))}}
+          >
+            {{#if @offering.allLearners.length}}
+              <strong>({{@offering.allLearners.length}})</strong>
+            {{/if}}
+            {{truncate (join ", " (mapBy "fullName" (sortBy "fullName" @offering.allLearners))) 25}}
+          </div>
           <div class="offering-manager-learner-groups">
             <ul>
               {{#each this.sortedLearnerGroups as |learnerGroup|}}
