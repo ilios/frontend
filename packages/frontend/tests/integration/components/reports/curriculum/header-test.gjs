@@ -25,29 +25,38 @@ module('Integration | Component | reports/curriculum/header', function (hooks) {
         />
       </template>,
     );
-    assert.ok(component.reportSelector.isPresent, 'ReportSelector component is present');
+    assert.ok(component.reportSelector.isPresent, 'report types selector component is present');
     assert.strictEqual(
       component.reportSelector.options.length,
-      2,
-      'ReportSelector component has two options',
+      3,
+      'report types selector has correct number of options',
     );
     assert.strictEqual(
       component.reportSelector.options[0].text,
       'Session Objectives',
-      'ReportSelector has correct first option text',
+      'report types selector has correct first option text',
     );
     assert.ok(
       component.reportSelector.options[0].isSelected,
-      'ReportSelector first option is chosen',
+      'report types selector first option is chosen',
     );
     assert.strictEqual(
       component.reportSelector.options[1].text,
-      'Learner Groups',
-      'ReportSelector has correct second option text',
+      'Session Offerings',
+      'report types selector has correct second option text',
     );
     assert.notOk(
       component.reportSelector.options[1].isSelected,
-      'ReportSelector second option is not chosen',
+      'report types selector second option is not chosen',
+    );
+    assert.strictEqual(
+      component.reportSelector.options[2].text,
+      'Learner Groups',
+      'report types selector has correct third option text',
+    );
+    assert.notOk(
+      component.reportSelector.options[2].isSelected,
+      'report types selector third option is not chosen',
     );
     assert.ok(
       component.runSummaryText.includes('for 3 courses'),
@@ -59,8 +68,8 @@ module('Integration | Component | reports/curriculum/header', function (hooks) {
         'summary text is correct',
       ),
     );
-    assert.ok(component.runReport.isPresent);
-    assert.ok(component.copy.isPresent);
+    assert.ok(component.runReport.isPresent, 'run report button is present');
+    assert.ok(component.copy.isPresent, 'copy report button is present');
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
   });
@@ -87,7 +96,7 @@ module('Integration | Component | reports/curriculum/header', function (hooks) {
     assert.ok(component.reportSelector.isPresent, 'report types selector is present');
     assert.strictEqual(
       component.reportSelector.options.length,
-      2,
+      3,
       'report types selector has correct number of options',
     );
     assert.strictEqual(
@@ -101,12 +110,21 @@ module('Integration | Component | reports/curriculum/header', function (hooks) {
     );
     assert.strictEqual(
       component.reportSelector.options[1].text,
-      'Learner Groups',
+      'Session Offerings',
       'second report type option text is correct',
     );
     assert.notOk(
       component.reportSelector.options[1].isSelected,
       'second report type option is not selected',
+    );
+    assert.strictEqual(
+      component.reportSelector.options[2].text,
+      'Learner Groups',
+      'third report type option text is correct',
+    );
+    assert.notOk(
+      component.reportSelector.options[2].isSelected,
+      'third report type option is not selected',
     );
     assert.ok(
       component.runSummaryText.includes('for 2 courses, across 2 schools'),
@@ -115,6 +133,133 @@ module('Integration | Component | reports/curriculum/header', function (hooks) {
     assert.ok(
       component.runSummaryText.includes(
         'Each session objective is listed along with instructors and course data.',
+      ),
+    );
+    assert.ok(component.runReport.isPresent);
+    assert.ok(component.copy.isPresent);
+  });
+
+  test('it renders for session offerings and is accessible', async function (assert) {
+    await render(
+      <template>
+        <Header
+          @countSelectedCourses={{3}}
+          @showReportResults={{false}}
+          @selectedReportValue="sessionOfferings"
+          @changeSelectedReport={{(noop)}}
+          @runReport={{(noop)}}
+          @close={{(noop)}}
+        />
+      </template>,
+    );
+    assert.ok(component.reportSelector.isPresent, 'report types selector component is present');
+    assert.strictEqual(
+      component.reportSelector.options.length,
+      3,
+      'report types selector has correct number of options',
+    );
+    assert.strictEqual(
+      component.reportSelector.options[0].text,
+      'Session Objectives',
+      'report types selector has correct first option text',
+    );
+    assert.notOk(
+      component.reportSelector.options[0].isSelected,
+      'report types selector first option is not chosen',
+    );
+    assert.strictEqual(
+      component.reportSelector.options[1].text,
+      'Session Offerings',
+      'report types selector has correct second option text',
+    );
+    assert.ok(
+      component.reportSelector.options[1].isSelected,
+      'report types selector second option is chosen',
+    );
+    assert.strictEqual(
+      component.reportSelector.options[2].text,
+      'Learner Groups',
+      'report types selector has correct third option text',
+    );
+    assert.notOk(
+      component.reportSelector.options[2].isSelected,
+      'report types selector third option is not chosen',
+    );
+    assert.ok(
+      component.runSummaryText.includes('for 3 courses'),
+      'summary text has correct number of courses',
+    );
+    assert.ok(
+      component.runSummaryText.includes(
+        'Each session offering is listed along with instructors, learner groups, and course data.',
+        'summary text is correct',
+      ),
+    );
+    assert.ok(component.runReport.isPresent);
+    assert.ok(component.copy.isPresent);
+    await a11yAudit(this.element);
+    assert.ok(true, 'no a11y errors found!');
+  });
+
+  test('it renders for session offerings across multiple schools', async function (assert) {
+    this.schools = this.server.createList('school', 2);
+    const course1 = this.server.create('course', { school: this.schools[0] });
+    const course2 = this.server.create('course', { school: this.schools[1] });
+    this.courses = [course1, course2];
+
+    await render(
+      <template>
+        <Header
+          @selectedSchoolIds={{array "1" "2"}}
+          @countSelectedCourses={{2}}
+          @showReportResults={{false}}
+          @selectedReportValue="sessionOfferings"
+          @changeSelectedReport={{(noop)}}
+          @runReport={{(noop)}}
+          @close={{(noop)}}
+        />
+      </template>,
+    );
+    assert.ok(component.reportSelector.isPresent, 'report types selector is present');
+    assert.strictEqual(
+      component.reportSelector.options.length,
+      3,
+      'report types selector has correct number of options',
+    );
+    assert.strictEqual(
+      component.reportSelector.options[0].text,
+      'Session Objectives',
+      'first report type option text is correct',
+    );
+    assert.notOk(
+      component.reportSelector.options[0].isSelected,
+      'first report type option is not selected',
+    );
+    assert.strictEqual(
+      component.reportSelector.options[1].text,
+      'Session Offerings',
+      'second report type option text is correct',
+    );
+    assert.ok(
+      component.reportSelector.options[1].isSelected,
+      'second report type option is selected',
+    );
+    assert.strictEqual(
+      component.reportSelector.options[2].text,
+      'Learner Groups',
+      'third report type option text is correct',
+    );
+    assert.notOk(
+      component.reportSelector.options[2].isSelected,
+      'third report type option is not selected',
+    );
+    assert.ok(
+      component.runSummaryText.includes('for 2 courses, across 2 schools'),
+      'summary includes correct number of courses and schools',
+    );
+    assert.ok(
+      component.runSummaryText.includes(
+        'Each session offering is listed along with instructors, learner groups, and course data.',
       ),
     );
     assert.ok(component.runReport.isPresent);
@@ -134,12 +279,18 @@ module('Integration | Component | reports/curriculum/header', function (hooks) {
         />
       </template>,
     );
-    assert.ok(component.reportSelector.isPresent);
-    assert.strictEqual(component.reportSelector.options.length, 2);
+    assert.ok(component.reportSelector.isPresent, 'report types selector is present');
+    assert.strictEqual(
+      component.reportSelector.options.length,
+      3,
+      'report selector has correct number of options',
+    );
     assert.strictEqual(component.reportSelector.options[0].text, 'Session Objectives');
     assert.notOk(component.reportSelector.options[0].isSelected);
-    assert.strictEqual(component.reportSelector.options[1].text, 'Learner Groups');
-    assert.ok(component.reportSelector.options[1].isSelected);
+    assert.strictEqual(component.reportSelector.options[1].text, 'Session Offerings');
+    assert.notOk(component.reportSelector.options[1].isSelected);
+    assert.strictEqual(component.reportSelector.options[2].text, 'Learner Groups');
+    assert.ok(component.reportSelector.options[2].isSelected);
     assert.ok(component.runSummaryText.includes('for 5 courses'));
     assert.ok(
       component.runSummaryText.includes(
@@ -169,7 +320,7 @@ module('Integration | Component | reports/curriculum/header', function (hooks) {
     assert.ok(component.reportSelector.isPresent, 'report types selector is present');
     assert.strictEqual(
       component.reportSelector.options.length,
-      2,
+      3,
       'report types selector has correct number of options',
     );
     assert.strictEqual(
@@ -183,12 +334,21 @@ module('Integration | Component | reports/curriculum/header', function (hooks) {
     );
     assert.strictEqual(
       component.reportSelector.options[1].text,
-      'Learner Groups',
+      'Session Offerings',
       'second report type option text is correct',
     );
-    assert.ok(
+    assert.notOk(
       component.reportSelector.options[1].isSelected,
       'second report type option text is not chosen',
+    );
+    assert.strictEqual(
+      component.reportSelector.options[2].text,
+      'Learner Groups',
+      'third report type option text is correct',
+    );
+    assert.ok(
+      component.reportSelector.options[2].isSelected,
+      'third report type option text is not chosen',
     );
     assert.ok(component.runSummaryText.includes('for 5 courses, across 3 schools'));
     assert.ok(
@@ -218,6 +378,13 @@ module('Integration | Component | reports/curriculum/header', function (hooks) {
       </template>,
     );
     assert.strictEqual(component.reportSelector.value, 'sessionObjectives');
+    await component.reportSelector.set('sessionOfferings');
+    assert.strictEqual(component.reportSelector.value, 'sessionOfferings');
+    assert.ok(
+      component.runSummaryText.includes(
+        'Each session offering is listed along with instructors, learner groups, and course data.',
+      ),
+    );
     await component.reportSelector.set('learnerGroups');
     assert.strictEqual(component.reportSelector.value, 'learnerGroups');
     assert.ok(
