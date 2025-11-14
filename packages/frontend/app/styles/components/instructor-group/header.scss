@@ -28,11 +28,6 @@
         width: 90%;
       }
     }
-
-    .title,
-    .info {
-      @include m.text-align-bottom;
-    }
   }
 
   .breadcrumbs {

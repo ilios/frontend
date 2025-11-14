@@ -4,9 +4,3 @@
   font-size: var(--fs-#{$step});
   line-height: calc(4px + 2ex);
 }
-
-@mixin text-align-bottom() {
-  display: flex;
-  align-items: flex-end;
-  line-height: unset;
-}

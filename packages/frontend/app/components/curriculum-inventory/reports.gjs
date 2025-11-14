@@ -186,7 +186,7 @@ export default class CurriculumInventoryReportsComponent extends Component {
       </div>
       <section class="reports">
         <div class="header">
-          <h2 class="title">
+          <h2 class="title text-align-bottom">
             {{t "general.curriculumInventoryReports"}}
           </h2>
           {{#if (and this.canCreate this.selectedProgram)}}
