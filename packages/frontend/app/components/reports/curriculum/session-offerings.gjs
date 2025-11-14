@@ -101,7 +101,7 @@ export default class ReportsCurriculumSessionOfferingsComponent extends Componen
             courseTitle: c.title,
             courseYear: c.year,
             sessionTitle: s.title,
-            offeringDate: DateTime.fromISO(o.startDate).toFormat('yyyy-MM-dd, h:mm a'),
+            offeringDate: o.startDate,
             instructors: s.instructors,
             learnerGroups: o.learnerGroups.map((lg) => lg.title),
             sessionLink: `${origin}${path}`,
@@ -131,7 +131,10 @@ export default class ReportsCurriculumSessionOfferingsComponent extends Componen
       return a.sessionTitle.localeCompare(b.sessionTitle);
     }
 
-    return a.offeringDate.localeCompare(b.offeringDate);
+    return (
+      DateTime.fromISO(a.offeringDate).toUnixInteger() -
+      DateTime.fromISO(b.offeringDate).toUnixInteger()
+    );
   };
 
   get selectedSchoolIds() {
@@ -194,7 +197,9 @@ export default class ReportsCurriculumSessionOfferingsComponent extends Componen
       rhett[this.intl.t('general.course')] = o.courseTitle;
       rhett[this.intl.t('general.year')] = o.courseYear;
       rhett[this.intl.t('general.session')] = o.sessionTitle;
-      rhett[this.intl.t('general.offeringDate')] = o.offeringDate;
+      rhett[this.intl.t('general.offeringDate')] = DateTime.fromISO(o.offeringDate).toFormat(
+        'yyyy-MM-dd, h:mm a',
+      );
       rhett[this.intl.t('general.instructors')] = o.instructors.join(', ');
       if (o.learnerGroups) {
         rhett[this.intl.t('general.learnerGroups')] = o.learnerGroups.join(', ');
