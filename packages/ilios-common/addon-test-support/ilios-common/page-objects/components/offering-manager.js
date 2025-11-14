@@ -14,6 +14,7 @@ import offeringForm from './offering-form';
 
 const definition = {
   scope: '[data-test-offering-manager]',
+  learners: text('.offering-manager-learners'),
   learnerGroups: collection('.offering-manager-learner-groups li', {
     title: text(),
     expandTooltip: triggerable('mouseover'),
