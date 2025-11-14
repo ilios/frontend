@@ -5,10 +5,6 @@
   line-height: calc(4px + 2ex);
 }
 
-@mixin paragraph-line-height() {
-  line-height: calc(1px + 3ex);
-}
-
 @mixin text-align-bottom() {
   display: flex;
   align-items: flex-end;
