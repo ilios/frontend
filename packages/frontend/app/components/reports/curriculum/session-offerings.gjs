@@ -86,10 +86,6 @@ export default class ReportsCurriculumSessionOfferingsComponent extends Componen
     });
   }
 
-  get summaryReport() {
-    return this.summary;
-  }
-
   get results() {
     const origin = window.location.origin;
     return this.reportWithInstructors.reduce((acc, c) => {
@@ -274,7 +270,7 @@ export default class ReportsCurriculumSessionOfferingsComponent extends Componen
               </tr>
             {{/each}}
           {{else}}
-            {{#each (sortBy "courseTitle" this.summaryReport) as |o|}}
+            {{#each (sortBy "courseTitle" this.summary) as |o|}}
               <tr data-test-result>
                 {{#if this.hasMultipleSchools}}
                   <td>{{o.schoolTitle}}</td>
