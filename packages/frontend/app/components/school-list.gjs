@@ -85,7 +85,7 @@ export default class SchoolListComponent extends Component {
       <section class="school-list main-section" data-test-school-list ...attributes>
         <section class="schools">
           <div class="header">
-            <h2 class="title">
+            <h2 class="title text-align-bottom">
               {{t "general.schools"}}
             </h2>
             {{#if this.currentUser.isRoot}}

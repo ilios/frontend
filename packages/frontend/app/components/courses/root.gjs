@@ -257,7 +257,7 @@ export default class CoursesRootComponent extends Component {
       </div>
       <section class="courses">
         <div class="header">
-          <h2 data-test-courses-header-title class="title">
+          <h2 data-test-courses-header-title class="title text-align-bottom">
             {{t "general.courses"}}
             ({{this.filteredCourses.length}})
           </h2>
