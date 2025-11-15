@@ -1,7 +1,7 @@
 @use "../mixins" as m;
 
 .detail-instructors {
-  @include m.detail-container(var(--blue));
+  @include m.detail-container(var(--orange));
   padding: 1rem 0.5rem;
 
   .detail-instructors-header {
