@@ -17,6 +17,10 @@
   }
 
   .detail-instructors-content {
+    &.empty {
+      padding: 0;
+    }
+
     @include m.detail-container-content {
       @include m.ilios-form;
     }

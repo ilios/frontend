@@ -7,6 +7,7 @@ import { hash } from 'rsvp';
 import { TrackedAsyncData } from 'ember-async-data';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
+import or from 'ember-truth-helpers/helpers/or';
 import perform from 'ember-concurrency/helpers/perform';
 import FaIcon from 'ilios-common/components/fa-icon';
 import InstructorSelectionManager from 'ilios-common/components/instructor-selection-manager';
@@ -172,7 +173,12 @@ export default class DetailInstructorsComponent extends Component {
           {{/if}}
         </div>
       </div>
-      <div class="detail-instructors-content">
+      <div
+        class="detail-instructors-content{{unless
+            (or this.instructorCount this.instructorGroupCount)
+            ' empty'
+          }}"
+      >
         {{#if this.isManaging}}
           <InstructorSelectionManager
             @addInstructor={{this.addInstructorToBuffer}}
