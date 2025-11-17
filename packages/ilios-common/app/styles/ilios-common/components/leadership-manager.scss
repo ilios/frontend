@@ -22,9 +22,5 @@
       height: 2rem;
       width: 100%;
     }
-
-    .results {
-      @include m.user-search-results;
-    }
   }
 }

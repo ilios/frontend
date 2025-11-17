@@ -1,9 +1,9 @@
 @use "sass:color";
 
-@use "font-size";
-@use "media";
+@use "../mixins/font-size";
+@use "../mixins/media";
 
-@mixin user-search-results() {
+.user-search-results {
   background: var(--white);
   border: 1px solid var(--white);
   border-radius: 3px;

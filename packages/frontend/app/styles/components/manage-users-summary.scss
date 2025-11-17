@@ -49,7 +49,6 @@
     }
 
     .results {
-      @include m.user-search-results;
       button {
         text-align: left;
         width: 100%;

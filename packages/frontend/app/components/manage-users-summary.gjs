@@ -295,7 +295,7 @@ export default class ManageUsersSummaryComponent extends Component {
           {{onKey "ArrowUp" this.onArrowKey}}
           {{onKey "ArrowDown" this.onArrowKey}}
         />
-        <ul class="results{{if this.shouldHideResults ' hidden'}}">
+        <ul class="results user-search-results{{if this.shouldHideResults ' hidden'}}">
           {{#if this.searchForUsers.isRunning}}
             <li>
               {{t "general.currentlySearchingPrompt"}}

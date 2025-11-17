@@ -13,7 +13,6 @@
     box-shadow: 0 2px 2px var(--very-transparent-black);
     color: var(--black);
     left: 0;
-    max-height: 15rem;
     overflow: scroll;
     top: 2rem;
     transition: all 0.2s ease-in-out;
@@ -21,8 +20,6 @@
 
     li {
       border-bottom: 1px solid var(--lightest-grey);
-      padding: 0.6rem;
-      padding-left: 1rem;
 
       &.active,
       &:hover {

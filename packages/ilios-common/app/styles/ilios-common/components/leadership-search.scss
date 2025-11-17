@@ -13,10 +13,6 @@
     width: 100%;
   }
 
-  .results {
-    @include m.user-search-results;
-  }
-
   .select-user {
     @include m.ilios-button-reset;
     text-align: left;

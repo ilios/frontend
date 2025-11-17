@@ -106,7 +106,7 @@ export default class LeadershipSearchComponent extends Component {
         data-test-search-input
       />
       <ul
-        class="results
+        class="results user-search-results
           {{unless
             (or this.searchForUsers.isRunning this.searchForUsers.lastSuccessful.value.length)
             'hidden'
