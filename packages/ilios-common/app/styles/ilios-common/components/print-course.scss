@@ -13,6 +13,10 @@
     background-color: var(--white);
     padding: 0.5rem;
 
+    &:last-of-type {
+      border-bottom: none;
+    }
+
     .title {
       @include m.detail-container-title;
     }
