@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
 import { cached, tracked } from '@glimmer/tracking';
 import { htmlSafe } from '@ember/template';
-import onResize from 'ember-on-resize-modifier/modifiers/on-resize';
+import { onResize } from 'ember-primitives/on-resize';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
 import FaIcon from 'ilios-common/components/fa-icon';
