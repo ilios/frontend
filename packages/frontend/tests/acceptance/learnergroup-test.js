@@ -295,7 +295,7 @@ module('Acceptance | Learner Group', function (hooks) {
     const programYear = this.server.create('program-year', { program: this.program });
     const cohort = this.server.create('cohort', { programYear });
     const learnerGroup = this.server.create('learner-group', { cohort });
-    const course = this.server.create('course', { cohorts: [cohort] });
+    const course = this.server.create('course', { school: this.school, cohorts: [cohort] });
     const session = this.server.create('session', { course });
     this.server.create('offering', {
       session,
@@ -323,7 +323,7 @@ module('Acceptance | Learner Group', function (hooks) {
     const programYear = this.server.create('program-year', { program: this.program });
     const cohort = this.server.create('cohort', { programYear });
     const learnerGroup = this.server.create('learner-group', { cohort });
-    const course = this.server.create('course', { cohorts: [cohort] });
+    const course = this.server.create('course', { school: this.school, cohorts: [cohort] });
     const session = this.server.create('session', { course });
     const subgroup = this.server.create('learner-group', {
       cohort,

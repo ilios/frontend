@@ -18,6 +18,7 @@ import LoadingSpinner from 'ilios-common/components/loading-spinner';
 
 export default class LearnerGroupCalendarComponent extends Component {
   @service localeDays;
+  @service schoolEvents;
   @tracked selectedDate = DateTime.now();
   @tracked showSubgroupEvents = false;
 
@@ -61,22 +62,24 @@ export default class LearnerGroupCalendarComponent extends Component {
     return await map(flat, async (offering) => {
       const session = await offering.session;
       const course = await session.course;
-      return {
-        startDate: offering.startDate.toISOString(),
-        endDate: offering.endDate.toISOString(),
-        calendarStartDate: offering.startDate.toISOString(),
-        calendarEndDate: offering.endDate.toISOString(),
-        courseTitle: course.title,
-        name: session.title,
-        offering: offering.id,
-        location: offering.location,
-        color: '#84c444',
-        prerequisites: [],
-        postrequisites: [],
-        isScheduled: session.isScheduled || course.isScheduled,
-        isPublished: session.isPublished && course.isPublished,
-        isBlanked: false,
-      };
+      const school = await course.school;
+      return this.schoolEvents.createEventFromData(
+        {
+          startDate: offering.startDate.toISOString(),
+          endDate: offering.endDate.toISOString(),
+          courseTitle: course.title,
+          school: school.id,
+          name: session.title,
+          offering: offering.id,
+          location: offering.location,
+          color: '#84c444',
+          prerequisites: [],
+          postrequisites: [],
+          isScheduled: session.isScheduled || course.isScheduled,
+          isPublished: session.isPublished && course.isPublished,
+        },
+        false,
+      );
     });
   }
 

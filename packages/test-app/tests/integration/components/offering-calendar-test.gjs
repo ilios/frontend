@@ -12,7 +12,8 @@ module('Integration | Component | offering-calendar', function (hooks) {
   test('shows events', async function (assert) {
     const today = DateTime.fromObject({ hour: 8 });
     const tomorrow = today.plus({ day: 1 });
-    const course = this.server.create('course');
+    const school = this.server.create('school');
+    const course = this.server.create('course', { school });
     const sessionType = this.server.create('session-type');
     const session = this.server.create('session', {
       course,

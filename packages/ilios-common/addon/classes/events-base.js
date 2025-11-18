@@ -1,8 +1,63 @@
 import Service from '@ember/service';
 import { DateTime } from 'luxon';
 import { mapBy, sortBy, uniqueValues } from 'ilios-common/utils/array-helpers';
+import { getSlug } from 'ilios-common/utils/event-helpers';
 
 export default class EventsBase extends Service {
+  /**
+   * Proxy handler for events.
+   */
+  handler = {
+    get(target, prop /*, receiver */) {
+      switch (prop) {
+        case 'calendarStartDate': {
+          const startDate = DateTime.fromISO(target.startDate);
+          if (target.ilmSession && 23 === startDate.hour && startDate.minute >= 45) {
+            return startDate.set({ minute: 45 }).toUTC().toISO();
+          }
+          return target.startDate;
+        }
+        case 'calendarEndDate': {
+          const startDate = DateTime.fromISO(target.startDate);
+          if (target.ilmSession && 23 === startDate.hour && startDate.minute >= 45) {
+            return startDate.set({ minute: 59 }).toUTC().toISO();
+          }
+          return target.endDate;
+        }
+        case 'prerequisites': {
+          if (!target.prerequisites) {
+            return [];
+          }
+          const rhett = target.prerequisites.map((prereq) => {
+            const data = {
+              ...prereq,
+              ...{
+                startDate: target.startDate,
+                postrequisiteName: target.name,
+                postrequisiteSlug: getSlug(target),
+              },
+            };
+            return new Proxy(data, this);
+          });
+          return sortBy(rhett, ['startDate', 'name']);
+        }
+        case 'postrequisites': {
+          if (!target.postrequisites) {
+            return [];
+          }
+          const rhett = target.postrequisites.map((postreq) => {
+            return new Proxy(postreq, this);
+          });
+          return sortBy(rhett, ['startDate', 'name']);
+        }
+        case 'slug':
+          return getSlug(target);
+        case 'isBlanked':
+          return !target.offering && !target.ilmSession;
+      }
+      return Reflect.get(...arguments);
+    },
+  };
   /**
    * Returns the session for a given event.
    * @method getSessionForEvent
@@ -97,87 +152,7 @@ export default class EventsBase extends Service {
    * @return {Object}
    */
   createEventFromData(obj, isUserEvent) {
-    obj.isBlanked = !obj.offering && !obj.ilmSession;
-    obj.slug = isUserEvent ? this.getSlugForUserEvent(obj) : this.getSlugForSchoolEvent(obj);
-    obj.prerequisites = obj.prerequisites.map((prereq) => {
-      const rhett = this.createEventFromData(prereq, isUserEvent);
-      rhett.startDate = obj.startDate;
-      rhett.postrequisiteName = obj.name;
-      rhett.postrequisiteSlug = obj.slug;
-
-      return rhett;
-    });
-    obj.prerequisites = sortBy(obj.prerequisites, 'startDate');
-    obj.prerequisites = sortBy(obj.prerequisites, 'name');
-    obj.postrequisites = obj.postrequisites.map((postreq) =>
-      this.createEventFromData(postreq, isUserEvent),
-    );
-    obj.postrequisites = sortBy(obj.postrequisites, 'startDate');
-    obj.postrequisites = sortBy(obj.postrequisites, 'name');
     obj.isUserEvent = isUserEvent;
-
-    // The start and end date of the event, for display purposes on the calendar. See comment block below.
-    obj.calendarStartDate = obj.startDate;
-    obj.calendarEndDate = obj.endDate;
-
-    // ACHTUNG!
-    // ILMs don't really have a duration, they have due-date.
-    // But in order to display them in a calendar, we have to make up a duration for them, otherwise they won't show up.
-    // So we're filling in a start-date that's the equivalent of the actual due-date,
-    // and give it an end-date that's fifteen minutes out.
-    // However, if the given start-date is 11:45p or later in the day, that event would be considered to continue
-    // into the next day, effectively making it a "multi-day" event.
-    // Multi-days are currently not shown in the calendar, instead they are displayed in a table below the calendar.
-    // To prevent this from happening, we pin the calendar display start-date to 11:45p and the end-date to 11:59p.
-    // [ST 2025/11/07]
-    const startDate = DateTime.fromISO(obj.startDate);
-    if (obj.ilmSession && 23 === startDate.hour && startDate.minute >= 45) {
-      obj.calendarStartDate = startDate.set({ minute: 45 }).toUTC().toISO();
-      obj.calendarEndDate = startDate.set({ minute: 59 }).toUTC().toISO();
-    }
-
-    return obj;
-  }
-
-  /**
-   * Generates a slug for a given user event.
-   * @method getSlugForUserEvent
-   * @param {Object} event
-   * @return {String}
-   */
-  getSlugForUserEvent(event) {
-    let slug = 'U';
-    slug += DateTime.fromISO(event.startDate).toFormat('yyyyMMdd');
-    if (event.offering) {
-      slug += 'O' + event.offering;
-    }
-    if (event.ilmSession) {
-      slug += 'I' + event.ilmSession;
-    }
-    return slug;
-  }
-
-  /**
-   * Generates a slug for a given school event.
-   * @method getSlugForSchoolEvent
-   * @param {Object} event
-   * @return {String}
-   */
-  getSlugForSchoolEvent(event) {
-    let slug = 'S';
-    let schoolId = parseInt(event.school, 10).toString();
-    //always use a two digit schoolId
-    if (schoolId.length === 1) {
-      schoolId = '0' + schoolId;
-    }
-    slug += schoolId;
-    slug += DateTime.fromISO(event.startDate).toFormat('yyyyMMdd');
-    if (event.offering) {
-      slug += 'O' + event.offering;
-    }
-    if (event.ilmSession) {
-      slug += 'I' + event.ilmSession;
-    }
-    return slug;
+    return new Proxy(obj, this.handler);
   }
 }
