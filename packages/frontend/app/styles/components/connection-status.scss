@@ -1,8 +1,6 @@
 @use "../ilios-common/mixins" as m;
 
 .connection-status {
-  @include m.critical-notice(var(--dark-yellow), var(--black), 2.5rem);
-
   display: none;
   justify-content: space-between;
   align-items: center;
