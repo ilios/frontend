@@ -1,7 +1,7 @@
 @use "../mixins" as m;
 
 .detail-learners-and-learner-groups {
-  @include m.detail-container(var(--blue));
+  @include m.detail-container(var(--orange));
   padding: 1rem 0.5rem;
 
   .detail-learners-and-learner-groups-header {
@@ -17,6 +17,10 @@
   }
 
   .detail-learners-and-learner-groups-content {
+    &.empty {
+      padding: 0;
+    }
+
     @include m.detail-container-content {
       @include m.ilios-form;
     }

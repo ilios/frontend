@@ -8,6 +8,7 @@ import { uniqueValues } from 'ilios-common/utils/array-helpers';
 import { TrackedAsyncData } from 'ember-async-data';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
+import or from 'ember-truth-helpers/helpers/or';
 import perform from 'ember-concurrency/helpers/perform';
 import FaIcon from 'ilios-common/components/fa-icon';
 import LearnergroupSelectionManager from 'ilios-common/components/learnergroup-selection-manager';
@@ -201,7 +202,12 @@ export default class DetailLearnersAndLearnerGroupsComponent extends Component {
           {{/if}}
         </div>
       </div>
-      <div class="detail-learners-and-learner-groups-content">
+      <div
+        class="detail-learners-and-learner-groups-content{{unless
+            (or this.learnerGroupCount this.learnerCount)
+            ' empty'
+          }}"
+      >
         {{#if this.isManaging}}
           <LearnergroupSelectionManager
             @learnerGroups={{this.learnerGroupBuffer}}

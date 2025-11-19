@@ -9,13 +9,9 @@
 
 @mixin objectives() {
   .header {
+    align-items: center;
     display: flex;
     justify-content: space-between;
-    margin-bottom: 0.5em;
-
-    &.empty {
-      margin-bottom: 0;
-    }
 
     span {
       display: flex;
