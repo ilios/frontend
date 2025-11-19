@@ -21,7 +21,8 @@
 
   h2 {
     @include ilios-heading.ilios-heading-h4;
-    @include font-size.text-align-bottom;
+    /* stylelint-disable-next-line property-disallowed-list */
+    line-height: unset;
 
     .fa-lock {
       margin-right: 0.5rem;
@@ -47,7 +48,8 @@
 
     .editinplace {
       @include ilios-heading.ilios-heading-h4;
-      @include font-size.text-align-bottom;
+      /* stylelint-disable-next-line property-disallowed-list */
+      line-height: unset;
 
       &.is-editing {
         @include media.for-laptop-and-up {

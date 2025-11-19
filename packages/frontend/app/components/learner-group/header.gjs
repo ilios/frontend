@@ -84,7 +84,7 @@ export default class LearnerGroupHeaderComponent extends Component {
   <template>
     <header class="learner-group-header" data-test-learner-group-header ...attributes>
       <div class="header-bar">
-        <span class="title">
+        <span class="title text-align-bottom">
           {{#if @canUpdate}}
             <EditableField
               data-test-title
@@ -113,7 +113,7 @@ export default class LearnerGroupHeaderComponent extends Component {
             <h2 data-test-title>{{@learnerGroup.title}}</h2>
           {{/if}}
         </span>
-        <span class="info" data-test-members>
+        <span class="info text-align-bottom" data-test-members>
           {{t "general.members"}}:
           {{this.usersOnlyAtThisLevel.length}}
           /

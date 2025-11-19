@@ -54,7 +54,7 @@ export default class CoursesLoading extends Component {
       </div>
       <section class="courses">
         <div class="header">
-          <h2 class="title">
+          <h2 class="title text-align-bottom">
             {{t "general.courses"}}
           </h2>
           <div class="actions"></div>

@@ -49,7 +49,7 @@ export default class InstructorGroupHeaderComponent extends Component {
     <div class="instructor-group-header" data-test-instructor-group-header ...attributes>
       {{! template-lint-disable no-bare-strings }}
       <div class="header-bar">
-        <span class="title">
+        <span class="title text-align-bottom">
           {{#if @canUpdate}}
             <EditableField
               data-test-title
@@ -80,7 +80,7 @@ export default class InstructorGroupHeaderComponent extends Component {
             </h2>
           {{/if}}
         </span>
-        <span class="info" data-test-members>
+        <span class="info text-align-bottom" data-test-members>
           {{t "general.members"}}:
           {{@instructorGroup.users.length}}
         </span>

@@ -117,7 +117,7 @@ export default class PrintCourseComponent extends Component {
   <template>
     <section class="print-course" ...attributes>
       <div class="header" data-test-course-header>
-        <h2 data-test-course-title>
+        <h2 class="text-align-bottom" data-test-course-title>
           {{@course.title}}
         </h2>
         <h3 data-test-course-year>

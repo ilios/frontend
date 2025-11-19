@@ -101,7 +101,7 @@ export default class AssignStudentsManagerComponent extends Component {
   <template>
     <div class="assign-students-manager" data-test-assign-students-manager>
       <div class="header">
-        <h2 data-test-title>
+        <h2 class="title text-align-bottom" data-test-title>
           {{t "general.unassignedStudentsSummaryTitle"}}
         </h2>
       </div>

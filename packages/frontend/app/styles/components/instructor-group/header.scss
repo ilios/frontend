@@ -22,6 +22,8 @@
     .title {
       @include m.ilios-heading-h4;
       flex-grow: 2;
+      /* stylelint-disable-next-line property-disallowed-list */
+      line-height: unset;
 
       .is-editing,
       input {
@@ -29,9 +31,9 @@
       }
     }
 
-    .title,
     .info {
-      @include m.text-align-bottom;
+      /* stylelint-disable-next-line property-disallowed-list */
+      line-height: unset;
     }
   }
 

@@ -93,7 +93,7 @@ export default class ProgramRootComponent extends Component {
 
       <div class="main-list">
         <div class="header">
-          <h2 class="title">
+          <h2 class="title text-align-bottom">
             {{t "general.programs"}}
           </h2>
           <div class="actions">
