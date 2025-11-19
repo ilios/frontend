@@ -30,11 +30,6 @@
     @include m.ilios-form-buttons;
   }
 
-  .notes,
-  .description {
-    @include m.ilios-browser-defaults;
-  }
-
   input,
   textarea {
     &.error {

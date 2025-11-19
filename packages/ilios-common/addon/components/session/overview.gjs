@@ -599,7 +599,7 @@ export default class SessionOverview extends Component {
                 {{/if}}
               </div>
               <hr />
-              <div class="sessiondescription" data-test-description>
+              <div class="sessiondescription normalize-external-editor" data-test-description>
                 <label>{{t "general.description"}}:</label>
                 <FadeText @text={{this.description}} as |ft|>
                   {{#if @editable}}
@@ -634,7 +634,10 @@ export default class SessionOverview extends Component {
                   {{/if}}
                 </FadeText>
               </div>
-              <div class="instructional-notes" data-test-instructional-notes>
+              <div
+                class="instructional-notes normalize-external-editor"
+                data-test-instructional-notes
+              >
                 <label>{{t "general.instructionalNotes"}}:</label>
                 <FadeText @text={{this.instructionalNotes}} as |ft|>
                   {{#if @editable}}

@@ -45,11 +45,6 @@
     background-color: var(--green);
   }
 
-  .notes,
-  .description {
-    @include m.ilios-browser-defaults;
-  }
-
   .loading {
     @include m.ilios-heading-h1;
     display: block;
