@@ -4,6 +4,12 @@
   display: none;
   padding: 0.25rem 1rem;
 
+  &.critical-notice {
+    background-color: var(--dark-yellow);
+    color: var(--black);
+    min-height: 2.5rem;
+  }
+
   &.mismatch {
     display: block;
   }

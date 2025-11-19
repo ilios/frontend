@@ -4,24 +4,4 @@
   padding: 0;
   text-align: center;
   width: 100%;
-
-  &.connection-status {
-    background-color: var(--dark-yellow);
-    color: var(--black);
-    min-height: 2.5rem;
-  }
-
-  &.update-notification {
-    button {
-      background-color: var(--blue);
-      color: var(--white);
-      min-height: 3rem;
-    }
-  }
-
-  &.api-version-notice {
-    background-color: var(--dark-yellow);
-    color: var(--black);
-    min-height: 1rem;
-  }
 }

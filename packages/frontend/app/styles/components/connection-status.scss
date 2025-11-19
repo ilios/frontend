@@ -6,6 +6,12 @@
   align-items: center;
   flex-direction: column;
 
+  &.critical-notice {
+    background-color: var(--dark-yellow);
+    color: var(--black);
+    min-height: 2.5rem;
+  }
+
   &.offline {
     display: flex;
 
