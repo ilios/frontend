@@ -21,6 +21,8 @@
 
       .title {
         @include m.main-list-box-header-title;
+        /* stylelint-disable-next-line property-disallowed-list */
+        line-height: unset;
       }
 
       .actions {

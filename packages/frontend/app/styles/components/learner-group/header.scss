@@ -22,11 +22,18 @@
     .title {
       @include m.ilios-heading-h4;
       flex-grow: 2;
+      /* stylelint-disable-next-line property-disallowed-list */
+      line-height: unset;
 
       .is-editing,
       input {
         width: 90%;
       }
+    }
+
+    .info {
+      /* stylelint-disable-next-line property-disallowed-list */
+      line-height: unset;
     }
   }
 
