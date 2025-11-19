@@ -7,6 +7,7 @@ import t from 'ember-intl/helpers/t';
 import ToggleYesno from 'ilios-common/components/toggle-yesno';
 import { fn } from '@ember/helper';
 import { on } from '@ember/modifier';
+import { service } from '@ember/service';
 import set from 'ember-set-helper/helpers/set';
 import not from 'ember-truth-helpers/helpers/not';
 import toggle from 'ilios-common/helpers/toggle';
@@ -19,6 +20,7 @@ export default class OfferingCalendar extends Component {
   @tracked learnerGroupEvents = [];
   @tracked sessionEvents = [];
   @tracked currentEvent = null;
+  @service schoolEvents;
 
   @cached
   get calendarEventsData() {
@@ -41,19 +43,24 @@ export default class OfferingCalendar extends Component {
         return await map(offerings, async (offering) => {
           const session = await offering.session;
           const course = await session.course;
-          return {
-            startDate: DateTime.fromJSDate(offering.startDate).toISO(),
-            endDate: DateTime.fromJSDate(offering.endDate).toISO(),
-            calendarStartDate: DateTime.fromJSDate(offering.startDate).toISO(),
-            calendarEndDate: DateTime.fromJSDate(offering.endDate).toISO(),
-            courseTitle: course.title,
-            name: session.title,
-            offering: offering.id,
-            location: offering.location,
-            color: '#84c444',
-            postrequisites: [],
-            prerequisites: [],
-          };
+          const school = await course.school;
+          return this.schoolEvents.createEventFromData(
+            {
+              startDate: DateTime.fromJSDate(offering.startDate).toISO(),
+              endDate: DateTime.fromJSDate(offering.endDate).toISO(),
+              calendarStartDate: DateTime.fromJSDate(offering.startDate).toISO(),
+              calendarEndDate: DateTime.fromJSDate(offering.endDate).toISO(),
+              courseTitle: course.title,
+              school: school.id,
+              name: session.title,
+              offering: offering.id,
+              location: offering.location,
+              color: '#84c444',
+              postrequisites: [],
+              prerequisites: [],
+            },
+            false,
+          );
         });
       });
 
@@ -69,36 +76,45 @@ export default class OfferingCalendar extends Component {
       const offerings = await session.offerings;
       const sessionType = await session.sessionType;
       const course = await session.course;
+      const school = await course.school;
       this.sessionEvents = await map(offerings, async (offering) => {
-        return {
-          startDate: DateTime.fromJSDate(offering.startDate).toISO(),
-          endDate: DateTime.fromJSDate(offering.endDate).toISO(),
-          calendarStartDate: DateTime.fromJSDate(offering.startDate).toISO(),
-          calendarEndDate: DateTime.fromJSDate(offering.endDate).toISO(),
-          courseTitle: course.title,
-          name: session.title,
-          offering: offering.id,
-          location: offering.location,
-          color: '#f6f6f6',
-          postrequisites: [],
-          prerequisites: [],
-        };
+        return this.schoolEvents.createEventFromData(
+          {
+            startDate: DateTime.fromJSDate(offering.startDate).toISO(),
+            endDate: DateTime.fromJSDate(offering.endDate).toISO(),
+            calendarStartDate: DateTime.fromJSDate(offering.startDate).toISO(),
+            calendarEndDate: DateTime.fromJSDate(offering.endDate).toISO(),
+            courseTitle: course.title,
+            school: school.id,
+            name: session.title,
+            offering: offering.id,
+            location: offering.location,
+            color: '#f6f6f6',
+            postrequisites: [],
+            prerequisites: [],
+          },
+          false,
+        );
       });
 
-      this.currentEvent = {
-        startDate: DateTime.fromJSDate(startDate).toISO(),
-        endDate: DateTime.fromJSDate(endDate).toISO(),
-        calendarStartDate: DateTime.fromJSDate(startDate).toISO(),
-        calendarEndDate: DateTime.fromJSDate(endDate).toISO(),
-        courseTitle: course.title,
-        name: session.title,
-        isPublished: session.isPublished,
-        offering: 1,
-        location: '',
-        color: sessionType.calendarColor,
-        postrequisites: [],
-        prerequisites: [],
-      };
+      this.currentEvent = this.schoolEvents.createEventFromData(
+        {
+          startDate: DateTime.fromJSDate(startDate).toISO(),
+          endDate: DateTime.fromJSDate(endDate).toISO(),
+          calendarStartDate: DateTime.fromJSDate(startDate).toISO(),
+          calendarEndDate: DateTime.fromJSDate(endDate).toISO(),
+          courseTitle: course.title,
+          school: school.id,
+          name: session.title,
+          isPublished: session.isPublished,
+          offering: 1,
+          location: '',
+          color: sessionType.calendarColor,
+          postrequisites: [],
+          prerequisites: [],
+        },
+        false,
+      );
     }
   }
 
