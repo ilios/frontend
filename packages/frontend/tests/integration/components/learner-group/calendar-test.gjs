@@ -12,8 +12,10 @@ module('Integration | Component | learner-group/calendar', function (hooks) {
 
   hooks.beforeEach(async function () {
     const today = DateTime.fromObject({ hour: 8 });
-    const course1 = this.server.create('course');
+    const school = this.server.create('school');
+    const course1 = this.server.create('course', { school });
     const course2 = this.server.create('course', {
+      school,
       publishedAsTbd: true,
       published: true,
     });
