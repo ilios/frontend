@@ -4,6 +4,7 @@ import { render } from '@ember/test-helpers';
 import { DateTime } from 'luxon';
 import { component } from 'ilios-common/page-objects/components/ilios-calendar-month';
 import IliosCalendarMonth from 'ilios-common/components/ilios-calendar-month';
+import Event from 'ilios-common/classes/event';
 import noop from 'ilios-common/helpers/noop';
 import { array } from '@ember/helper';
 
@@ -13,24 +14,21 @@ module('Integration | Component | ilios calendar month', function (hooks) {
   test('month displays with three events', async function (assert) {
     const date = DateTime.fromISO('2015-09-30T12:00:00');
     this.set('date', date.toJSDate());
-    const firstEvent = createUserEventObject();
-    firstEvent.name = 'Some new thing';
-    firstEvent.startDate = date.toISO();
-    firstEvent.endDate = date.plus({ hour: 1 }).toISO();
-    firstEvent.calendarStartDate = firstEvent.startDate;
-    firstEvent.calendarEndDate = firstEvent.endDate;
-    const secondEvent = createUserEventObject();
-    secondEvent.name = 'Second new thing';
-    secondEvent.startDate = date.plus({ hour: 1 }).toISO();
-    secondEvent.endDate = date.plus({ hour: 3 }).toISO();
-    secondEvent.calendarStartDate = secondEvent.startDate;
-    secondEvent.calendarEndDate = secondEvent.endDate;
-    const thirdEvent = createUserEventObject();
-    thirdEvent.name = 'Third new thing';
-    thirdEvent.startDate = date.plus({ hour: 3 }).toISO();
-    thirdEvent.endDate = date.plus({ hour: 4 }).toISO();
-    thirdEvent.calendarStartDate = thirdEvent.startDate;
-    thirdEvent.calendarEndDate = thirdEvent.endDate;
+    const firstEvent = createUserEventObject(
+      'Some new thing',
+      date.toISO(),
+      date.plus({ hour: 1 }).toISO(),
+    );
+    const secondEvent = createUserEventObject(
+      'Second new thing',
+      date.plus({ hour: 1 }).toISO(),
+      date.plus({ hour: 3 }).toISO(),
+    );
+    const thirdEvent = createUserEventObject(
+      'Third new thing',
+      date.plus({ hour: 3 }).toISO(),
+      date.plus({ hour: 4 }).toISO(),
+    );
     this.set('events', [firstEvent, secondEvent, thirdEvent]);
     await render(
       <template>
@@ -49,18 +47,16 @@ module('Integration | Component | ilios calendar month', function (hooks) {
   test('month displays with two events', async function (assert) {
     const date = DateTime.fromISO('2015-09-30T12:00:00');
     this.set('date', date.toJSDate());
-    const firstEvent = createUserEventObject();
-    firstEvent.name = 'Some new thing';
-    firstEvent.startDate = date.toISO();
-    firstEvent.endDate = date.plus({ hour: 1 }).toISO();
-    firstEvent.calendarStartDate = firstEvent.startDate;
-    firstEvent.calendarEndDate = firstEvent.endDate;
-    const secondEvent = createUserEventObject();
-    secondEvent.name = 'Second new thing';
-    secondEvent.startDate = date.plus({ hour: 1 }).toISO();
-    secondEvent.endDate = date.plus({ hour: 3 }).toISO();
-    secondEvent.calendarStartDate = secondEvent.startDate;
-    secondEvent.calendarEndDate = secondEvent.endDate;
+    const firstEvent = createUserEventObject(
+      'Some new thing',
+      date.toISO(),
+      date.plus({ hour: 1 }).toISO(),
+    );
+    const secondEvent = createUserEventObject(
+      'Second new thing',
+      date.plus({ hour: 1 }).toISO(),
+      date.plus({ hour: 3 }).toISO(),
+    );
     this.set('events', [firstEvent, secondEvent]);
     await render(
       <template>
@@ -102,35 +98,34 @@ module('Integration | Component | ilios calendar month', function (hooks) {
     assert.verifySteps(['changeDate called', 'changeView called']);
   });
 
-  const createUserEventObject = function () {
-    return {
-      user: 1,
-      name: '',
-      offering: 1,
-      startDate: null,
-      endDate: null,
-      calendarColor: '#32edfc',
-      location: 'Rm. 160',
-      lastModified: new Date(),
-      isPublished: true,
-      isScheduled: false,
-      prerequisites: [],
-      postrequisites: [],
-    };
+  const createUserEventObject = function (name, startDate, endDate) {
+    return new Event(
+      {
+        user: 1,
+        name,
+        offering: 1,
+        startDate,
+        endDate,
+        calendarColor: '#32edfc',
+        location: 'Rm. 160',
+        lastModified: new Date(),
+        isPublished: true,
+        isScheduled: false,
+        prerequisites: [],
+        postrequisites: [],
+      },
+      true,
+    );
   };
 
   test('multiday events', async function (assert) {
     const date = DateTime.fromISO('2015-09-20T12:00:00');
-    const event = createUserEventObject();
-    event.startDate = date.toISO();
-    event.endDate = date.plus({ hour: 24 }).toISO();
-    event.calendarStartDate = event.startDate;
-    event.calendarEndDate = event.endDate;
-    const event2 = createUserEventObject();
-    event2.startDate = date.plus({ hour: 48 }).toISO();
-    event2.endDate = date.plus({ hour: 72 }).toISO();
-    event2.calendarStartDate = event2.startDate;
-    event2.calendarEndDate = event2.endDate;
+    const event = createUserEventObject('event 0', date.toISO(), date.plus({ hour: 24 }).toISO());
+    const event2 = createUserEventObject(
+      'event 1',
+      date.plus({ hour: 48 }).toISO(),
+      date.plus({ hour: 72 }).toISO(),
+    );
     this.set('date', date.toJSDate());
     this.set('events', [event, event2]);
     await render(
@@ -145,11 +140,11 @@ module('Integration | Component | ilios calendar month', function (hooks) {
     assert.strictEqual(component.multiday.events.length, 2);
     assert.strictEqual(
       component.multiday.events[0].text,
-      '09/20/15, 12:00 PM – 09/21/15, 12:00 PM Rm. 160',
+      '09/20/15, 12:00 PM – 09/21/15, 12:00 PM event 0 Rm. 160',
     );
     assert.strictEqual(
       component.multiday.events[1].text,
-      '09/22/15, 12:00 PM – 09/23/15, 12:00 PM Rm. 160',
+      '09/22/15, 12:00 PM – 09/23/15, 12:00 PM event 1 Rm. 160',
     );
   });
 });

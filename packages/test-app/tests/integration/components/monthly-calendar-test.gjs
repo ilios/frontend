@@ -7,6 +7,7 @@ import { a11yAudit } from 'ember-a11y-testing/test-support';
 import { setupMirage } from 'test-app/tests/test-support/mirage';
 import { setLocale } from 'ember-intl/test-support';
 import MonthlyCalendar from 'ilios-common/components/monthly-calendar';
+import Event from 'ilios-common/classes/event';
 import { array } from '@ember/helper';
 import noop from 'ilios-common/helpers/noop';
 
@@ -63,13 +64,26 @@ module('Integration | Component | monthly-calendar', function (hooks) {
       minute: 0,
       second: 0,
     });
-    this.server.createList('userevent', 2, {
-      startDate: january9th2019.toISO(),
-      endDate: january9th2019.plus({ hour: 1 }).toISO(),
-      calendarStartDate: january9th2019.toISO(),
-      calendarEndDate: january9th2019.plus({ hour: 1 }).toISO(),
-    });
-    this.set('events', this.server.db.userevents);
+    const events = [
+      new Event(
+        {
+          name: 'event 0',
+          startDate: january9th2019.toISO(),
+          endDate: january9th2019.plus({ hour: 1 }).toISO(),
+          postrequisites: [],
+          prerequisites: [],
+        },
+        true,
+      ),
+      new Event({
+        name: 'event 1',
+        startDate: january9th2019.toISO(),
+        endDate: january9th2019.plus({ hour: 1 }).toISO(),
+        postrequisites: [],
+        prerequisites: [],
+      }),
+    ];
+    this.set('events', events);
     this.set('date', january9th2019.toJSDate());
     await render(
       <template>
@@ -102,13 +116,39 @@ module('Integration | Component | monthly-calendar', function (hooks) {
       minute: 0,
       second: 0,
     });
-    this.server.createList('userevent', 3, {
-      startDate: january9th2019.toISO(),
-      endDate: january9th2019.plus({ hour: 1 }).toISO(),
-      calendarStartDate: january9th2019.toISO(),
-      calendarEndDate: january9th2019.plus({ hour: 1 }).toISO(),
-    });
-    this.set('events', this.server.db.userevents);
+    const events = [
+      new Event(
+        {
+          name: 'event 0',
+          startDate: january9th2019.toISO(),
+          endDate: january9th2019.plus({ hour: 1 }).toISO(),
+          postrequisites: [],
+          prerequisites: [],
+        },
+        true,
+      ),
+      new Event(
+        {
+          name: 'event 1',
+          startDate: january9th2019.toISO(),
+          endDate: january9th2019.plus({ hour: 1 }).toISO(),
+          postrequisites: [],
+          prerequisites: [],
+        },
+        true,
+      ),
+      new Event(
+        {
+          name: 'event 2',
+          startDate: january9th2019.toISO(),
+          endDate: january9th2019.plus({ hour: 1 }).toISO(),
+          postrequisites: [],
+          prerequisites: [],
+        },
+        true,
+      ),
+    ];
+    this.set('events', events);
     this.set('date', january9th2019.toJSDate());
     await render(
       <template>
@@ -168,14 +208,17 @@ module('Integration | Component | monthly-calendar', function (hooks) {
       minute: 0,
       second: 0,
     });
-    this.server.create('userevent', {
-      startDate: january9th2019.toISO(),
-      endDate: january9th2019.plus({ hour: 1 }).toISO(),
-      calendarStartDate: january9th2019.toISO(),
-      calendarEndDate: january9th2019.plus({ hour: 1 }).toISO(),
-      offering: 1,
-    });
-    this.set('events', this.server.db.userevents);
+    const event = new Event(
+      {
+        startDate: january9th2019.toISO(),
+        endDate: january9th2019.plus({ hour: 1 }).toISO(),
+        offering: 1,
+        postrequisites: [],
+        prerequisites: [],
+      },
+      true,
+    );
+    this.set('events', [event]);
     this.set('date', january9th2019.toJSDate());
     this.set('selectEvent', () => {
       assert.step('selectEvent called');
@@ -204,13 +247,39 @@ module('Integration | Component | monthly-calendar', function (hooks) {
       minute: 0,
       second: 0,
     });
-    this.server.createList('userevent', 3, {
-      startDate: january9th2019.toISO(),
-      endDate: january9th2019.plus({ hour: 1 }).toISO(),
-      calendarStartDate: january9th2019.toISO(),
-      calendarEndDate: january9th2019.plus({ hour: 1 }).toISO(),
-    });
-    this.set('events', this.server.db.userevents);
+    const events = [
+      new Event(
+        {
+          name: 'event 0',
+          startDate: january9th2019.toISO(),
+          endDate: january9th2019.plus({ hour: 1 }).toISO(),
+          postrequisites: [],
+          prerequisites: [],
+        },
+        true,
+      ),
+      new Event(
+        {
+          name: 'event 1',
+          startDate: january9th2019.toISO(),
+          endDate: january9th2019.plus({ hour: 1 }).toISO(),
+          postrequisites: [],
+          prerequisites: [],
+        },
+        true,
+      ),
+      new Event(
+        {
+          name: 'event 2',
+          startDate: january9th2019.toISO(),
+          endDate: january9th2019.plus({ hour: 1 }).toISO(),
+          postrequisites: [],
+          prerequisites: [],
+        },
+        true,
+      ),
+    ];
+    this.set('events', events);
     this.set('date', january9th2019.toJSDate());
     this.set('changeToDayView', () => {
       assert.step('changeToDayView called');
@@ -239,15 +308,18 @@ module('Integration | Component | monthly-calendar', function (hooks) {
       minute: 0,
       second: 0,
     });
-    this.server.create('userevent', {
-      isMulti: true,
-      startDate: january9th2019.toISO(),
-      endDate: january9th2019.plus({ hour: 1 }).toISO(),
-      calendarStartDate: january9th2019.toISO(),
-      calendarEndDate: january9th2019.plus({ hour: 1 }).toISO(),
-      offering: 1,
-    });
-    this.set('events', this.server.db.userevents);
+    const event = new Event(
+      {
+        isMulti: true,
+        startDate: january9th2019.toISO(),
+        endDate: january9th2019.plus({ hour: 1 }).toISO(),
+        postrequisites: [],
+        prerequisites: [],
+        offering: 1,
+      },
+      true,
+    );
+    this.set('events', [event]);
     this.set('date', january9th2019.toJSDate());
     this.set('changeToDayView', () => {
       assert.step('changeToDayView');
@@ -276,13 +348,16 @@ module('Integration | Component | monthly-calendar', function (hooks) {
       minute: 0,
       second: 0,
     });
-    this.server.create('userevent', {
-      startDate: december112017.toISO(),
-      endDate: december112017.plus({ hour: 1 }).toISO(),
-      calendarStartDate: december112017.toISO(),
-      calendarEndDate: december112017.plus({ hour: 1 }).toISO(),
-    });
-    this.set('events', this.server.db.userevents);
+    const event = new Event(
+      {
+        startDate: december112017.toISO(),
+        endDate: december112017.plus({ hour: 1 }).toISO(),
+        postrequisites: [],
+        prerequisites: [],
+      },
+      true,
+    );
+    this.set('events', [event]);
     this.set('date', december112017.toJSDate());
     await render(
       <template>
@@ -320,13 +395,16 @@ module('Integration | Component | monthly-calendar', function (hooks) {
       minute: 0,
       second: 0,
     });
-    this.server.create('userevent', {
-      startDate: february1st2020.toISO(),
-      endDate: february1st2020.plus({ hour: 1 }).toISO(),
-      calendarStartDate: february1st2020.toISO(),
-      calendarEndDate: february1st2020.plus({ hour: 1 }).toISO(),
-    });
-    this.set('events', this.server.db.userevents);
+    const event = new Event(
+      {
+        startDate: february1st2020.toISO(),
+        endDate: february1st2020.plus({ hour: 1 }).toISO(),
+        postrequisites: [],
+        prerequisites: [],
+      },
+      true,
+    );
+    this.set('events', [event]);
     this.set('date', february1st2020.toJSDate());
     await render(
       <template>

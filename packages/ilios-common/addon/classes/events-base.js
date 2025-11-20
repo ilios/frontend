@@ -1,7 +1,5 @@
 import Service from '@ember/service';
-import { DateTime } from 'luxon';
-import { mapBy, sortBy, uniqueValues } from 'ilios-common/utils/array-helpers';
-import Event from 'ilios-common/classes/event';
+import { mapBy, uniqueValues } from 'ilios-common/utils/array-helpers';
 
 export default class EventsBase extends Service {
   /**
@@ -88,77 +86,5 @@ export default class EventsBase extends Service {
     const course = await this.getCourseForEvent(event);
     const cohorts = await course.get('cohorts');
     return mapBy(cohorts, 'id');
-  }
-
-  /**
-   * Transforms and returns given events data into an Event object.
-   *
-   * @method createEventFromData
-   * @param {Object} obj The raw object data.
-   * @param {Boolean} isUserEvent TRUE if the given object represents a user event, FALSE if it represents a school event.
-   * @return {Event} The created Event object.
-   */
-  createEventFromData(obj, isUserEvent) {
-    obj.slug = isUserEvent ? this.getSlugForUserEvent(obj) : this.getSlugForSchoolEvent(obj);
-    obj.prerequisites = obj.prerequisites.map((prereq) => {
-      const rhett = this.createEventFromData(prereq, isUserEvent);
-      rhett.startDate = obj.startDate;
-      rhett.postrequisiteName = obj.name;
-      rhett.postrequisiteSlug = obj.slug;
-
-      return rhett;
-    });
-    obj.prerequisites = sortBy(obj.prerequisites, 'startDate');
-    obj.prerequisites = sortBy(obj.prerequisites, 'name');
-    obj.postrequisites = obj.postrequisites.map((postreq) =>
-      this.createEventFromData(postreq, isUserEvent),
-    );
-    obj.postrequisites = sortBy(obj.postrequisites, 'startDate');
-    obj.postrequisites = sortBy(obj.postrequisites, 'name');
-    obj.isUserEvent = isUserEvent;
-
-    return new Event(obj);
-  }
-
-  /**
-   * Generates a slug for a given user event.
-   * @method getSlugForUserEvent
-   * @param {Object} event
-   * @return {String}
-   */
-  getSlugForUserEvent(event) {
-    let slug = 'U';
-    slug += DateTime.fromISO(event.startDate).toFormat('yyyyMMdd');
-    if (event.offering) {
-      slug += 'O' + event.offering;
-    }
-    if (event.ilmSession) {
-      slug += 'I' + event.ilmSession;
-    }
-    return slug;
-  }
-
-  /**
-   * Generates a slug for a given school event.
-   * @method getSlugForSchoolEvent
-   * @param {Object} event
-   * @return {String}
-   */
-  getSlugForSchoolEvent(event) {
-    let slug = 'S';
-    let schoolId = parseInt(event.school, 10).toString();
-    //always use a two digit schoolId
-    if (schoolId.length === 1) {
-      schoolId = '0' + schoolId;
-    }
-    slug += schoolId;
-    slug += DateTime.fromISO(event.startDate).toFormat('yyyyMMdd');
-    if (event.offering) {
-      slug += 'O' + event.offering;
-    }
-    if (event.ilmSession) {
-      slug += 'I' + event.ilmSession;
-    }
-    return slug;
   }
 }
