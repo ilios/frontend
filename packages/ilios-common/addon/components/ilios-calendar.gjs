@@ -36,8 +36,7 @@ export default class IliosCalendarComponent extends Component {
         if (!(hash in hashedEvents)) {
           hashedEvents[hash] = [];
         }
-        //clone our event, so we don't trample on the original when we change location
-        hashedEvents[hash].push(Object.assign({}, event));
+        hashedEvents[hash].push(event);
       });
       const compiledEvents = [];
       let hash;
