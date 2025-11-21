@@ -1,7 +1,33 @@
 /* eslint camelcase: 0 */
 'use strict';
 
+const path = require('path');
+const fs = require('fs');
 const FailureOnlyReporter = require('testem-failure-only-reporter');
+
+const buildDir = process.env.BUILD_DIR || path.resolve(__dirname, '../../build');
+const downloadDir = `${buildDir}/screenshots`;
+const firefoxProfileDir = `${buildDir}/firefox-profile`;
+
+// Ensure directories exist
+if (!fs.existsSync(downloadDir)) {
+  fs.mkdirSync(downloadDir, { recursive: true });
+}
+if (!fs.existsSync(firefoxProfileDir)) {
+  fs.mkdirSync(firefoxProfileDir, { recursive: true });
+}
+
+// Create Firefox prefs.js file with download preferences
+const prefsContent = `
+user_pref("browser.download.dir", "${downloadDir}");
+user_pref("browser.download.folderList", 2);
+user_pref("browser.download.useDownloadDir", true);
+user_pref("browser.helperApps.neverAsk.saveToDisk", "image/png");
+user_pref("browser.download.manager.showWhenStarting", false);
+user_pref("pdfjs.disabled", true);
+`.trim();
+
+fs.writeFileSync(path.join(firefoxProfileDir, 'prefs.js'), prefsContent);
 
 module.exports = {
   test_page: 'tests/index.html?hidepassed',
@@ -26,7 +52,7 @@ module.exports = {
       ].filter(Boolean),
     },
     Firefox: {
-      ci: ['--headless', '--window-size=1440,900'].filter(Boolean),
+      ci: ['--headless', '--window-size=1440,900', '--profile', firefoxProfileDir].filter(Boolean),
     },
   },
 };

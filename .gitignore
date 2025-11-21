@@ -10,6 +10,7 @@ node_modules/
 .sass-cache
 .eslintcache
 coverage/
+build/
 npm-debug.log*
 yarn-error.log
 
