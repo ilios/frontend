@@ -3,53 +3,6 @@ import { DateTime } from 'luxon';
 import { sortBy } from 'ilios-common/utils/array-helpers';
 
 /**
- * Generates a slug from  given user event data.
- * @method getSlugForUserEvent
- * @param { String } startDate The event's start date
- * @param { Number|undefined } offeringId The event's offering ID
- * @param { Number|undefined } ilmSessionId The event's ILM session ID
- * @return { String }
- */
-function getSlugForUserEvent(startDate, offeringId, ilmSessionId) {
-  let slug = 'U';
-  slug += DateTime.fromISO(startDate).toFormat('yyyyMMdd');
-  if (offeringId) {
-    slug += 'O' + offeringId;
-  }
-  if (ilmSessionId) {
-    slug += 'I' + ilmSessionId;
-  }
-  return slug;
-}
-
-/**
- * Generates a slug for a given school event.
- * @method getSlugForSchoolEvent
- * @param { String } startDate The event's start date
- * @param { Number } schoolId The event's school ID
- * @param { Number|undefined } offeringId The event's offering ID
- * @param { Number|undefined } ilmSessionId The event's ILM session ID
- * @return { String }
- */
-function getSlugForSchoolEvent(startDate, schoolId, offeringId, ilmSessionId) {
-  let slug = 'S';
-  schoolId = parseInt(schoolId, 10).toString();
-  //always use a two digit schoolId
-  if (schoolId.length === 1) {
-    schoolId = '0' + schoolId;
-  }
-  slug += schoolId;
-  slug += DateTime.fromISO(startDate).toFormat('yyyyMMdd');
-  if (offeringId) {
-    slug += 'O' + offeringId;
-  }
-  if (ilmSessionId) {
-    slug += 'I' + ilmSessionId;
-  }
-  return slug;
-}
-
-/**
  * This is an object representation of an event, to be used in the
  * various calendars and week-at-a-glance.
  */
@@ -147,7 +100,44 @@ export default class Event {
   @cached
   get slug() {
     return this.isUserEvent
-      ? getSlugForUserEvent(this.startDate, this.offering, this.ilmSession)
-      : getSlugForSchoolEvent(this.startDate, this.school, this.offering, this.ilmSession);
+      ? this.#getSlugForUserEvent(this.startDate, this.offering, this.ilmSession)
+      : this.#getSlugForSchoolEvent(this.startDate, this.school, this.offering, this.ilmSession);
+  }
+  /**
+   * Generates a slug from  given user event data.
+   * @return { String }
+   */
+  #getSlugForUserEvent() {
+    let slug = 'U';
+    slug += DateTime.fromISO(this.startDate).toFormat('yyyyMMdd');
+    if (this.offering) {
+      slug += 'O' + this.offering;
+    }
+    if (this.ilmSession) {
+      slug += 'I' + this.ilmSession;
+    }
+    return slug;
+  }
+
+  /**
+   * Generates a slug for a given school event.
+   * @return { String }
+   */
+  #getSlugForSchoolEvent() {
+    let slug = 'S';
+    let schoolId = parseInt(this.school, 10).toString();
+    //always use a two digit schoolId
+    if (schoolId.length === 1) {
+      schoolId = '0' + schoolId;
+    }
+    slug += schoolId;
+    slug += DateTime.fromISO(this.startDate).toFormat('yyyyMMdd');
+    if (this.offering) {
+      slug += 'O' + this.offering;
+    }
+    if (this.ilmSession) {
+      slug += 'I' + this.ilmSession;
+    }
+    return slug;
   }
 }
