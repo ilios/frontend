@@ -9,7 +9,7 @@ import t from 'ember-intl/helpers/t';
     <h3 data-test-title>
       {{t "general.table3aNonClerkshipSequenceBlockInstructionalTime"}}
     </h3>
-    <table>
+    <table class="ilios-table">
       <thead>
         <tr>
           <th colspan="2">

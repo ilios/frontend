@@ -46,7 +46,7 @@ export default class SessionsGridOfferingTable extends Component {
     return sortBy(dateBlockArray, 'dateStamp');
   }
   <template>
-    <table class="sessions-grid-offering-table" data-test-sessions-grid-offering-table>
+    <table class="ilios-table sessions-grid-offering-table" data-test-sessions-grid-offering-table>
       <thead class={{if @headerIsLocked "locked"}}>
         <tr>
           <th colspan="2">

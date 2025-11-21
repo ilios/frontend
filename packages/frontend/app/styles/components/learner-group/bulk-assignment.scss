@@ -63,9 +63,4 @@
       margin-top: 1rem;
     }
   }
-
-  table {
-    @include m.ilios-table-structure;
-    @include m.ilios-table-colors;
-  }
 }

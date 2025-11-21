@@ -13,11 +13,6 @@
     }
   }
 
-  table {
-    @include m.ilios-table-structure;
-    @include m.ilios-table-colors;
-  }
-
   .primary-school {
     @include m.font-size("medium");
   }

@@ -144,7 +144,7 @@ export default class SchoolSessionAttributesExpandedComponent extends Component 
             @disable={{this.disableSessionAttributeConfig}}
           />
         {{else}}
-          <table data-test-attributes>
+          <table class="ilios-table" data-test-attributes>
             <thead>
               <tr>
                 <th class="text-left">

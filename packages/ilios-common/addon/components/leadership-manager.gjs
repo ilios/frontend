@@ -9,7 +9,7 @@ import UserStatus from 'ilios-common/components/user-status';
 
 <template>
   <div class="leadership-manager" data-test-leadership-manager>
-    <table>
+    <table class="ilios-table">
       <thead>
         <tr>
           {{#if @showDirectors}}

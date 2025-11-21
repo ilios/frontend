@@ -6,11 +6,6 @@
   .material-list {
     border-top: 1px dotted var(--orange);
     padding-top: 0.5rem;
-
-    table {
-      @include m.ilios-table-structure;
-      @include m.ilios-table-colors;
-    }
   }
 
   h3 {
