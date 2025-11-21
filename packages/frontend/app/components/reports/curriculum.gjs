@@ -5,6 +5,7 @@ import { ensureSafeComponent } from '@embroider/util';
 import SessionObjectives from './curriculum/session-objectives';
 import SessionOfferings from './curriculum/session-offerings';
 import LearnerGroups from './curriculum/learner-groups';
+import InstructionalTime from './curriculum/instructional-time';
 import Header from 'frontend/components/reports/curriculum/header';
 import ChooseCourse from 'frontend/components/reports/curriculum/choose-course';
 
@@ -71,6 +72,8 @@ export default class ReportsCurriculumComponent extends Component {
         return ensureSafeComponent(SessionOfferings, this);
       case 'learnerGroups':
         return ensureSafeComponent(LearnerGroups, this);
+      case 'instructionalTime':
+        return ensureSafeComponent(InstructionalTime, this);
     }
 
     return false;

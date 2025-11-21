@@ -177,6 +177,8 @@ general:
   institutionalInformation: Institutional Information
   instructionalMethod: Instructional Method
   instructionalMethods: Instructional Methods
+  instructionalTime: Instructional Time
+  instructionalTimeReportSummary: "report for {courseCount, plural, one {one course} other {# courses}}. Each attached [something] is listed along with [things]."
   instructorGroup: Instructor Group
   instructorGroupTitle: Instructor Group Title
   instructorGroupTitleFilterPlaceholder: Filter by Instructor Group Title
