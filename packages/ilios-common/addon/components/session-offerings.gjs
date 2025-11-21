@@ -58,7 +58,10 @@ export default class SessionOfferingsComponent extends Component {
               {{t "general.dateTime"}}
             </div>
             <div>
-              {{t "general.groupName"}}
+              {{t "general.individualLearners"}}
+            </div>
+            <div>
+              {{t "general.learnerGroups"}}
             </div>
             <div>
               {{t "general.location"}}
