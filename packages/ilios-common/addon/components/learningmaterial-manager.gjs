@@ -364,7 +364,7 @@ export default class LearningMaterialManagerComponent extends Component {
             <label>
               {{t "general.description"}}:
             </label>
-            <span class="description">
+            <span class="description normalize-external-editor">
               {{#if (and @editable this.isLinkedOnlyOnce)}}
                 <HtmlEditor @content={{this.description}} @update={{set this "description"}} />
               {{else}}
@@ -376,7 +376,7 @@ export default class LearningMaterialManagerComponent extends Component {
             </span>
           </div>
           <div class="item">
-            <div class="notes">
+            <div class="notes normalize-external-editor">
               <label>
                 {{t "general.instructionalNotes"}}:
               </label>

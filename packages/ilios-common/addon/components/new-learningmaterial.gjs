@@ -405,7 +405,7 @@ export default class NewLearningmaterialComponent extends Component {
         <label>
           {{t "general.description"}}:
         </label>
-        <span>
+        <span class="description normalize-external-editor">
           <HtmlEditor @content={{this.description}} @update={{fn (mut this.description)}} />
         </span>
       </div>

@@ -93,7 +93,6 @@
 
   .sessiondescription,
   .instructional-notes {
-    @include m.ilios-browser-defaults;
     grid-column: 1 / -1;
   }
 
