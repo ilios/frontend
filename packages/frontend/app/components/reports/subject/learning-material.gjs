@@ -104,7 +104,10 @@ export default class ReportsSubjectLearningMaterialComponent extends Component {
     />
     <div data-test-reports-subject-learning-material>
       {{#if this.allLearningMaterialsData.isResolved}}
-        <ul class="report-results{{if this.reportResultsExceedMax ' limited'}}" data-test-results>
+        <ul
+          class="report-results ilios-zebra-list{{if this.reportResultsExceedMax ' limited'}}"
+          data-test-results
+        >
           {{#each this.limitedLearningMaterials as |title|}}
             <li>
               {{title}}
