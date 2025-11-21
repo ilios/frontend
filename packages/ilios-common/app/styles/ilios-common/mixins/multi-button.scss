@@ -1,11 +1,15 @@
-@use "ilios-off-screen";
 @use "font-size";
 
 @mixin multi-button {
   display: flex;
 
   input {
-    @include ilios-off-screen.ilios-off-screen;
+    height: 1px;
+    left: -10000px;
+    overflow: hidden;
+    position: absolute;
+    top: auto;
+    width: 1px;
   }
 
   label {
