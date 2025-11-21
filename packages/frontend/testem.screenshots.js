@@ -29,7 +29,7 @@ user_pref("pdfjs.disabled", true);
 fs.writeFileSync(firefoxUserJsPath, userJsContent);
 
 module.exports = {
-  test_page: 'tests/index.html?devmode',
+  test_page: 'tests/index.html?devmode&takeScreenshots',
   disable_watching: true,
   launch_in_ci: ['Firefox'],
   launch_in_dev: ['Firefox'],
