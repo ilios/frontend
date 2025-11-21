@@ -99,6 +99,7 @@ export default function (config) {
       this.post('errors', function () {
         //doesn't do anything, just swallows errors
       });
+      this.passthrough('/assets/*');
     },
   };
 
