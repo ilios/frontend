@@ -115,4 +115,82 @@ module('Unit | Classes | Event', function (hooks) {
       assert.strictEqual(event.slug, expectedSlug);
     },
   );
+
+  test('prerequisites', async function (assert) {
+    const data = {
+      offering: 123,
+      name: 'event 0',
+      startDate: '2025-11-10T09:45:00',
+      postrequisites: [],
+      prerequisites: [
+        {
+          name: 'event 2',
+          startDate: '2025-11-09T00:00:00',
+          postrequisites: [],
+          prerequisites: [],
+        },
+        {
+          name: 'event 1',
+          startDate: '2025-09-10T23:45:15',
+          postrequisites: [],
+          prerequisites: [],
+        },
+      ],
+    };
+
+    const event = new Event(data, true);
+    assert.strictEqual(event.slug, 'U20251110O123');
+    assert.strictEqual(event.prerequisites.length, 2);
+    assert.ok(event.prerequisites[0] instanceof Event);
+    assert.strictEqual(event.prerequisites[0].name, 'event 1');
+    assert.strictEqual(event.prerequisites[0].postrequisiteName, 'event 0');
+    assert.strictEqual(event.prerequisites[0].postrequisiteSlug, event.slug);
+    assert.strictEqual(event.prerequisites[0].startDate, event.startDate);
+    assert.ok(event.prerequisites[1] instanceof Event);
+    assert.strictEqual(event.prerequisites[1].name, 'event 2');
+    assert.strictEqual(event.prerequisites[1].postrequisiteName, 'event 0');
+    assert.strictEqual(event.prerequisites[1].postrequisiteSlug, event.slug);
+    assert.strictEqual(event.prerequisites[1].startDate, event.startDate);
+  });
+
+  test('postrequisites', async function (assert) {
+    const data = {
+      offering: 123,
+      name: 'event 0',
+      startDate: '2025-11-10T09:45:00',
+      postrequisites: [
+        {
+          name: 'event 2',
+          startDate: '2025-10-01T09:45:00',
+          postrequisites: [],
+          prerequisites: [],
+        },
+        {
+          name: 'event 1',
+          startDate: '2025-09-01T04:30:00',
+          postrequisites: [],
+          prerequisites: [],
+        },
+        {
+          name: 'event 1',
+          startDate: '2025-08-01T09:45:00',
+          postrequisites: [],
+          prerequisites: [],
+        },
+      ],
+      prerequisites: [],
+    };
+
+    const event = new Event(data, true);
+    assert.strictEqual(event.postrequisites.length, 3);
+    assert.ok(event.postrequisites[0] instanceof Event);
+    assert.strictEqual(event.postrequisites[0].name, 'event 1');
+    assert.strictEqual(event.postrequisites[0].startDate, '2025-08-01T09:45:00');
+    assert.ok(event.postrequisites[1] instanceof Event);
+    assert.strictEqual(event.postrequisites[1].name, 'event 1');
+    assert.strictEqual(event.postrequisites[1].startDate, '2025-09-01T04:30:00');
+    assert.ok(event.postrequisites[2] instanceof Event);
+    assert.strictEqual(event.postrequisites[2].name, 'event 2');
+    assert.strictEqual(event.postrequisites[2].startDate, '2025-10-01T09:45:00');
+  });
 });
