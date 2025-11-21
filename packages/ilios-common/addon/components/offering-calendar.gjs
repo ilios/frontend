@@ -7,12 +7,12 @@ import t from 'ember-intl/helpers/t';
 import ToggleYesno from 'ilios-common/components/toggle-yesno';
 import { fn } from '@ember/helper';
 import { on } from '@ember/modifier';
-import { service } from '@ember/service';
 import set from 'ember-set-helper/helpers/set';
 import not from 'ember-truth-helpers/helpers/not';
 import toggle from 'ilios-common/helpers/toggle';
 import IliosCalendarWeek from 'ilios-common/components/ilios-calendar-week';
 import LoadingSpinner from 'ilios-common/components/loading-spinner';
+import Event from 'ilios-common/classes/event';
 
 export default class OfferingCalendar extends Component {
   @tracked showLearnerGroupEvents = true;
@@ -20,7 +20,6 @@ export default class OfferingCalendar extends Component {
   @tracked learnerGroupEvents = [];
   @tracked sessionEvents = [];
   @tracked currentEvent = null;
-  @service schoolEvents;
 
   @cached
   get calendarEventsData() {
@@ -44,12 +43,10 @@ export default class OfferingCalendar extends Component {
           const session = await offering.session;
           const course = await session.course;
           const school = await course.school;
-          return this.schoolEvents.createEventFromData(
+          return new Event(
             {
               startDate: DateTime.fromJSDate(offering.startDate).toISO(),
               endDate: DateTime.fromJSDate(offering.endDate).toISO(),
-              calendarStartDate: DateTime.fromJSDate(offering.startDate).toISO(),
-              calendarEndDate: DateTime.fromJSDate(offering.endDate).toISO(),
               courseTitle: course.title,
               school: school.id,
               name: session.title,
@@ -78,12 +75,10 @@ export default class OfferingCalendar extends Component {
       const course = await session.course;
       const school = await course.school;
       this.sessionEvents = await map(offerings, async (offering) => {
-        return this.schoolEvents.createEventFromData(
+        return new Event(
           {
             startDate: DateTime.fromJSDate(offering.startDate).toISO(),
             endDate: DateTime.fromJSDate(offering.endDate).toISO(),
-            calendarStartDate: DateTime.fromJSDate(offering.startDate).toISO(),
-            calendarEndDate: DateTime.fromJSDate(offering.endDate).toISO(),
             courseTitle: course.title,
             school: school.id,
             name: session.title,
@@ -97,12 +92,10 @@ export default class OfferingCalendar extends Component {
         );
       });
 
-      this.currentEvent = this.schoolEvents.createEventFromData(
+      this.currentEvent = new Event(
         {
           startDate: DateTime.fromJSDate(startDate).toISO(),
           endDate: DateTime.fromJSDate(endDate).toISO(),
-          calendarStartDate: DateTime.fromJSDate(startDate).toISO(),
-          calendarEndDate: DateTime.fromJSDate(endDate).toISO(),
           courseTitle: course.title,
           school: school.id,
           name: session.title,

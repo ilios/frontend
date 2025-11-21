@@ -15,10 +15,10 @@ import t from 'ember-intl/helpers/t';
 import FaIcon from 'ilios-common/components/fa-icon';
 import IliosCalendarWeek from 'ilios-common/components/ilios-calendar-week';
 import LoadingSpinner from 'ilios-common/components/loading-spinner';
+import Event from 'ilios-common/classes/event';
 
 export default class LearnerGroupCalendarComponent extends Component {
   @service localeDays;
-  @service schoolEvents;
   @tracked selectedDate = DateTime.now();
   @tracked showSubgroupEvents = false;
 
@@ -63,12 +63,10 @@ export default class LearnerGroupCalendarComponent extends Component {
       const session = await offering.session;
       const course = await session.course;
       const school = await course.school;
-      return this.schoolEvents.createEventFromData(
+      return new Event(
         {
           startDate: offering.startDate.toISOString(),
           endDate: offering.endDate.toISOString(),
-          calendarStartDate: offering.startDate.toISOString(),
-          calendarEndDate: offering.endDate.toISOString(),
           courseTitle: course.title,
           name: session.title,
           offering: offering.id,
@@ -79,7 +77,6 @@ export default class LearnerGroupCalendarComponent extends Component {
           postrequisites: [],
           isScheduled: session.isScheduled || course.isScheduled,
           isPublished: session.isPublished && course.isPublished,
-          isBlanked: false,
         },
         false,
       );

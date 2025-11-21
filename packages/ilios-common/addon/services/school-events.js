@@ -2,6 +2,7 @@ import EventsBase from 'ilios-common/classes/events-base';
 import { service } from '@ember/service';
 import { DateTime } from 'luxon';
 import { sortBy } from 'ilios-common/utils/array-helpers';
+import Event from 'ilios-common/classes/event';
 
 export default class SchoolEvents extends EventsBase {
   @service store;
@@ -29,7 +30,7 @@ export default class SchoolEvents extends EventsBase {
     const data = await this.fetch.getJsonFromApiHost(url);
 
     return sortBy(
-      data.events.map((obj) => this.createEventFromData(obj, false)),
+      data.events.map((obj) => new Event(obj, false)),
       ['startDate', 'name'],
     );
   }

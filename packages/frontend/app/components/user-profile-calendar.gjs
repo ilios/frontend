@@ -9,6 +9,7 @@ import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
 import FaIcon from 'ilios-common/components/fa-icon';
 import IliosCalendarWeek from 'ilios-common/components/ilios-calendar-week';
+import Event from 'ilios-common/classes/event';
 
 export default class UserProfileCalendar extends Component {
   @service fetch;
@@ -28,7 +29,7 @@ export default class UserProfileCalendar extends Component {
   get calendarEvents() {
     if (this.eventsData.isResolved && this.eventsData.value) {
       return sortBy(
-        this.eventsData.value.map((obj) => this.userEvents.createEventFromData(obj, true)),
+        this.eventsData.value.map((obj) => new Event(obj, true)),
         ['startDate', 'name'],
       );
     } else {

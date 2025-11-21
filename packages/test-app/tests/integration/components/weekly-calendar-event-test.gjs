@@ -5,23 +5,24 @@ import { setupMirage } from 'test-app/tests/test-support/mirage';
 import { DateTime } from 'luxon';
 import { component } from 'ilios-common/page-objects/components/weekly-calendar-event';
 import WeeklyCalendarEvent from 'ilios-common/components/weekly-calendar-event';
+import Event from 'ilios-common/classes/event';
 import { array } from '@ember/helper';
 
 module('Integration | Component | weekly-calendar-event', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
-  this.createEvent = function (startDate, endDate, lastModified, isScheduled, isPublished) {
-    const color = '#00cc65';
-    this.server.create('userevent', {
+  this.createEvent = function (name, startDate, endDate, lastModified, isScheduled, isPublished) {
+    return new Event({
+      name,
       startDate: DateTime.fromFormat(startDate, 'yyyy-LL-dd hh:mm:ss').toISO(),
       endDate: DateTime.fromFormat(endDate, 'yyyy-LL-dd hh:mm:ss').toISO(),
-      calendarStartDate: DateTime.fromFormat(startDate, 'yyyy-LL-dd hh:mm:ss').toISO(),
-      calendarEndDate: DateTime.fromFormat(endDate, 'yyyy-LL-dd hh:mm:ss').toISO(),
-      color,
+      color: '#00cc65',
       lastModified: DateTime.fromFormat(lastModified, 'yyyy-LL-dd hh:mm:ss').toISO(),
       isPublished,
       isScheduled,
+      postrequisites: [],
+      prerequisites: [],
     });
   };
 
@@ -38,49 +39,56 @@ module('Integration | Component | weekly-calendar-event', function (hooks) {
 
   module('A complicated event list', function (hooks) {
     hooks.beforeEach(function () {
-      this.createEvent(
-        '2019-01-09 08:00:00',
-        '2019-01-09 09:00:00',
-        '2012-01-09 08:00:00',
-        false,
-        true,
-      );
-      this.createEvent(
-        '2019-01-09 08:00:00',
-        '2019-01-09 11:30:00',
-        '2012-01-09 08:00:00',
-        false,
-        true,
-      );
-      this.createEvent(
-        '2019-01-09 08:10:00',
-        '2019-01-09 10:00:00',
-        '2012-01-09 08:00:00',
-        false,
-        true,
-      );
-      this.createEvent(
-        '2019-01-09 10:00:00',
-        '2019-01-09 12:00:00',
-        '2012-01-09 08:00:00',
-        false,
-        true,
-      );
-      this.createEvent(
-        '2019-01-09 10:10:00',
-        '2019-01-09 12:00:00',
-        '2012-01-09 08:00:00',
-        false,
-        true,
-      );
-      this.createEvent(
-        '2019-01-09 12:00:00',
-        '2019-01-09 13:00:00',
-        '2012-01-09 08:00:00',
-        false,
-        true,
-      );
-      this.events = this.server.db.userevents;
+      this.events = [
+        this.createEvent(
+          'event 0',
+          '2019-01-09 08:00:00',
+          '2019-01-09 09:00:00',
+          '2012-01-09 08:00:00',
+          false,
+          true,
+        ),
+        this.createEvent(
+          'event 1',
+          '2019-01-09 08:00:00',
+          '2019-01-09 11:30:00',
+          '2012-01-09 08:00:00',
+          false,
+          true,
+        ),
+        this.createEvent(
+          'event 2',
+          '2019-01-09 08:10:00',
+          '2019-01-09 10:00:00',
+          '2012-01-09 08:00:00',
+          false,
+          true,
+        ),
+        this.createEvent(
+          'event 3',
+          '2019-01-09 10:00:00',
+          '2019-01-09 12:00:00',
+          '2012-01-09 08:00:00',
+          false,
+          true,
+        ),
+        this.createEvent(
+          'event 4',
+          '2019-01-09 10:10:00',
+          '2019-01-09 12:00:00',
+          '2012-01-09 08:00:00',
+          false,
+          true,
+        ),
+        this.createEvent(
+          'event 5',
+          '2019-01-09 12:00:00',
+          '2019-01-09 13:00:00',
+          '2012-01-09 08:00:00',
+          false,
+          true,
+        ),
+      ];
     });
 
     test('it renders alone', async function (assert) {
@@ -197,84 +205,96 @@ module('Integration | Component | weekly-calendar-event', function (hooks) {
 
   module('Second complicated event list', function (hooks) {
     hooks.beforeEach(function () {
-      this.createEvent(
-        '2020-02-10 08:10:00',
-        '2020-02-10 10:00:00',
-        '2012-01-09 08:00:00',
-        false,
-        true,
-      );
-      this.createEvent(
-        '2020-02-10 08:10:00',
-        '2020-02-10 09:20:00',
-        '2012-01-09 08:00:00',
-        false,
-        true,
-      );
-      this.createEvent(
-        '2020-02-10 09:40:00',
-        '2020-02-10 10:30:00',
-        '2012-01-09 08:00:00',
-        false,
-        true,
-      );
-      this.createEvent(
-        '2020-02-10 10:10:00',
-        '2020-02-10 12:00:00',
-        '2012-01-09 08:00:00',
-        false,
-        true,
-      );
-      this.createEvent(
-        '2020-02-10 10:40:00',
-        '2020-02-10 12:30:00',
-        '2012-01-09 08:00:00',
-        false,
-        true,
-      );
-      this.createEvent(
-        '2020-02-10 10:40:00',
-        '2020-02-10 12:30:00',
-        '2012-01-09 08:00:00',
-        false,
-        true,
-      );
-      this.createEvent(
-        '2020-02-10 10:40:00',
-        '2020-02-10 12:30:00',
-        '2012-01-09 08:00:00',
-        false,
-        true,
-      );
-      this.createEvent(
-        '2020-02-10 10:40:00',
-        '2020-02-10 12:30:00',
-        '2012-01-09 08:00:00',
-        false,
-        true,
-      );
-      this.createEvent(
-        '2020-02-10 10:40:00',
-        '2020-02-10 12:30:00',
-        '2012-01-09 08:00:00',
-        false,
-        true,
-      );
-      this.createEvent(
-        '2020-02-10 10:40:00',
-        '2020-02-10 12:30:00',
-        '2012-01-09 08:00:00',
-        false,
-        true,
-      );
-      this.createEvent(
-        '2020-02-10 12:00:00',
-        '2020-02-10 13:00:00',
-        '2012-01-09 08:00:00',
-        false,
-        true,
-      );
-      this.events = this.server.db.userevents;
+      this.events = [
+        this.createEvent(
+          'event 0',
+          '2020-02-10 08:10:00',
+          '2020-02-10 10:00:00',
+          '2012-01-09 08:00:00',
+          false,
+          true,
+        ),
+        this.createEvent(
+          'event 1',
+          '2020-02-10 08:10:00',
+          '2020-02-10 09:20:00',
+          '2012-01-09 08:00:00',
+          false,
+          true,
+        ),
+        this.createEvent(
+          'event 2',
+          '2020-02-10 09:40:00',
+          '2020-02-10 10:30:00',
+          '2012-01-09 08:00:00',
+          false,
+          true,
+        ),
+        this.createEvent(
+          'event 3',
+          '2020-02-10 10:10:00',
+          '2020-02-10 12:00:00',
+          '2012-01-09 08:00:00',
+          false,
+          true,
+        ),
+        this.createEvent(
+          'event 4',
+          '2020-02-10 10:40:00',
+          '2020-02-10 12:30:00',
+          '2012-01-09 08:00:00',
+          false,
+          true,
+        ),
+        this.createEvent(
+          'event 5',
+          '2020-02-10 10:40:00',
+          '2020-02-10 12:30:00',
+          '2012-01-09 08:00:00',
+          false,
+          true,
+        ),
+        this.createEvent(
+          'event 6',
+          '2020-02-10 10:40:00',
+          '2020-02-10 12:30:00',
+          '2012-01-09 08:00:00',
+          false,
+          true,
+        ),
+        this.createEvent(
+          'event 7',
+          '2020-02-10 10:40:00',
+          '2020-02-10 12:30:00',
+          '2012-01-09 08:00:00',
+          false,
+          true,
+        ),
+        this.createEvent(
+          'event 8',
+          '2020-02-10 10:40:00',
+          '2020-02-10 12:30:00',
+          '2012-01-09 08:00:00',
+          false,
+          true,
+        ),
+        this.createEvent(
+          'event 9',
+          '2020-02-10 10:40:00',
+          '2020-02-10 12:30:00',
+          '2012-01-09 08:00:00',
+          false,
+          true,
+        ),
+        this.createEvent(
+          'event 10',
+          '2020-02-10 12:00:00',
+          '2020-02-10 13:00:00',
+          '2012-01-09 08:00:00',
+          false,
+          true,
+        ),
+      ];
     });
 
     test('check event 0', async function (assert) {
@@ -456,16 +476,16 @@ module('Integration | Component | weekly-calendar-event', function (hooks) {
 
   module('iconography', function () {
     test('recently updated', async function (assert) {
-      this.createEvent(
+      const event = this.createEvent(
+        'event 0',
         '2020-02-10 10:40:00',
         '2020-02-10 12:30:00',
         DateTime.now().toFormat('yyyy-LL-dd hh:mm:ss'),
         false,
         true,
       );
-      const events = this.server.db.userevents;
-      this.set('event', events[0]);
-      this.set('events', events);
+      this.set('event', event);
+      this.set('events', [event]);
       await render(
         <template>
           <WeeklyCalendarEvent @event={{this.event}} @allDayEvents={{this.events}} />
@@ -475,16 +495,16 @@ module('Integration | Component | weekly-calendar-event', function (hooks) {
     });
 
     test('not recently updated', async function (assert) {
-      this.createEvent(
+      const event = this.createEvent(
+        'event 0',
         '2020-02-10 10:40:00',
         '2020-02-10 12:30:00',
         '2012-01-09 08:00:00',
         false,
         true,
       );
-      const events = this.server.db.userevents;
-      this.set('event', events[0]);
-      this.set('events', events);
+      this.set('event', event);
+      this.set('events', [event]);
       await render(
         <template>
           <WeeklyCalendarEvent @event={{this.event}} @allDayEvents={{this.events}} />
@@ -494,16 +514,16 @@ module('Integration | Component | weekly-calendar-event', function (hooks) {
     });
 
     test('scheduled', async function (assert) {
-      this.createEvent(
+      const event = this.createEvent(
+        'event 0',
         '2020-02-10 10:40:00',
         '2020-02-10 12:30:00',
         '2012-01-09 08:00:00',
         true,
         true,
       );
-      const events = this.server.db.userevents;
-      this.set('event', events[0]);
-      this.set('events', events);
+      this.set('event', event);
+      this.set('events', [event]);
       await render(
         <template>
           <WeeklyCalendarEvent @event={{this.event}} @allDayEvents={{this.events}} />
@@ -513,16 +533,16 @@ module('Integration | Component | weekly-calendar-event', function (hooks) {
     });
 
     test('draft', async function (assert) {
-      this.createEvent(
+      const event = this.createEvent(
+        'event 0',
         '2020-02-10 10:40:00',
         '2020-02-10 12:30:00',
         '2012-01-09 08:00:00',
         true,
         false,
       );
-      const events = this.server.db.userevents;
-      this.set('event', events[0]);
-      this.set('events', events);
+      this.set('event', event);
+      this.set('events', [event]);
       await render(
         <template>
           <WeeklyCalendarEvent @event={{this.event}} @allDayEvents={{this.events}} />
