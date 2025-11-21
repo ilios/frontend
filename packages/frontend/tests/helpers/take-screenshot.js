@@ -4,7 +4,10 @@ import { getUniqueName } from './percy-snapshot-name';
 export const takeScreenshot = async (assert, description = '') => {
   const filename = getUniqueName(assert, description);
   const el = document.querySelector('#ember-testing');
-  const result = await snapdom(el);
+  const result = await snapdom(el, {
+    placeholders: false,
+    embedFonts: true,
+  });
 
   const img = await result.toPng();
   document.body.appendChild(img);
