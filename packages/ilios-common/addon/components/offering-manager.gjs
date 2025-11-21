@@ -5,6 +5,7 @@ import { cached, tracked } from '@glimmer/tracking';
 import { task, timeout } from 'ember-concurrency';
 import { modifier } from 'ember-modifier';
 import { TrackedAsyncData } from 'ember-async-data';
+import { mapBy, sortBy } from 'ilios-common/utils/array-helpers';
 import OfferingForm from 'ilios-common/components/offering-form';
 import toggle from 'ilios-common/helpers/toggle';
 import mouseHoverToggle from 'ilios-common/modifiers/mouse-hover-toggle';
@@ -14,12 +15,11 @@ import t from 'ember-intl/helpers/t';
 import and from 'ember-truth-helpers/helpers/and';
 import includes from 'ilios-common/helpers/includes';
 import IliosTooltip from 'ilios-common/components/ilios-tooltip';
+import mapBy0 from 'ilios-common/helpers/map-by';
 import eq from 'ember-truth-helpers/helpers/eq';
 import join from 'ilios-common/helpers/join';
 import reverse from 'ilios-common/helpers/reverse';
-import mapBy from 'ilios-common/helpers/map-by';
-import sortBy from 'ilios-common/helpers/sort-by';
-import truncate from 'ilios-common/helpers/truncate';
+import FadeText from 'ilios-common/components/fade-text';
 import TruncateText from 'ilios-common/components/truncate-text';
 import OfferingUrlDisplay from 'ilios-common/components/offering-url-display';
 import UserStatus from 'ilios-common/components/user-status';
@@ -42,9 +42,47 @@ export default class OfferingManagerComponent extends Component {
     return new TrackedAsyncData(this.args.offering.learnerGroups);
   }
 
+  get learnerGroups() {
+    return this.learnerGroupsData.isResolved ? this.learnerGroupsData.value : null;
+  }
+
+  get sortedLearnerGroups() {
+    if (!this.learnerGroups) {
+      return [];
+    }
+    return this.learnerGroups.slice().sort((learnerGroupA, learnerGroupB) => {
+      const locale = this.intl.get('locale');
+      if ('title:desc' === this.sortBy) {
+        return learnerGroupB.title.localeCompare(learnerGroupA.title, locale, { numeric: true });
+      }
+      return learnerGroupA.title.localeCompare(learnerGroupB.title, locale, { numeric: true });
+    });
+  }
+
+  @cached
+  get individualLearnersData() {
+    return new TrackedAsyncData(this.args.offering.learners);
+  }
+
+  get individualLearners() {
+    return this.individualLearnersData.isResolved ? this.individualLearnersData.value : [];
+  }
+
+  get sortedIndividualLearners() {
+    if (!this.individualLearners) {
+      return '';
+    }
+
+    return mapBy(sortBy(this.individualLearners, 'fullName'), 'fullName').join(', ');
+  }
+
   @cached
   get sessionData() {
     return new TrackedAsyncData(this.args.offering?.session);
+  }
+
+  get session() {
+    return this.sessionData.isResolved ? this.sessionData.value : null;
   }
 
   @cached
@@ -52,21 +90,13 @@ export default class OfferingManagerComponent extends Component {
     return new TrackedAsyncData(this.session?.course);
   }
 
+  get course() {
+    return this.courseData.isResolved ? this.courseData.value : null;
+  }
+
   @cached
   get cohortsData() {
     return new TrackedAsyncData(this.course?.cohorts);
-  }
-
-  get learnerGroups() {
-    return this.learnerGroupsData.isResolved ? this.learnerGroupsData.value : null;
-  }
-
-  get session() {
-    return this.sessionData.isResolved ? this.sessionData.value : null;
-  }
-
-  get course() {
-    return this.courseData.isResolved ? this.courseData.value : null;
   }
 
   get cohorts() {
@@ -91,19 +121,6 @@ export default class OfferingManagerComponent extends Component {
     });
 
     return this.args.offering.save();
-  }
-
-  get sortedLearnerGroups() {
-    if (!this.learnerGroups) {
-      return [];
-    }
-    return this.learnerGroups.slice().sort((learnerGroupA, learnerGroupB) => {
-      const locale = this.intl.get('locale');
-      if ('title:desc' === this.sortBy) {
-        return learnerGroupB.title.localeCompare(learnerGroupA.title, locale, { numeric: true });
-      }
-      return learnerGroupA.title.localeCompare(learnerGroupB.title, locale, { numeric: true });
-    });
   }
 
   @action
@@ -140,14 +157,19 @@ export default class OfferingManagerComponent extends Component {
             @scrollToBottom={{false}}
           />
         {{else}}
-          <div
-            class="offering-manager-learners"
-            title={{join ", " (mapBy "fullName" (sortBy "fullName" @offering.allLearners))}}
-          >
-            {{#if @offering.allLearners.length}}
-              <strong>({{@offering.allLearners.length}})</strong>
-            {{/if}}
-            {{truncate (join ", " (mapBy "fullName" (sortBy "fullName" @offering.allLearners))) 25}}
+          <div class="offering-manager-learners">
+            <FadeText
+              @text={{this.sortedIndividualLearners}}
+              @forceExpanded={{@fadeTextExpanded}}
+              @setExpanded={{@setFadeTextExpanded}}
+              as |ft|
+            >
+              {{#if this.individualLearners.length}}
+                <strong>({{this.individualLearners.length}})</strong>
+              {{/if}}
+              {{ft.text}}
+              {{ft.controls}}
+            </FadeText>
           </div>
           <div class="offering-manager-learner-groups">
             <ul>
@@ -180,7 +202,7 @@ export default class OfferingManagerComponent extends Component {
                             (t "general.parentGroups")
                           }}:
                         </strong>
-                        {{join " » " (reverse (mapBy "title" learnerGroup.allParents))}}
+                        {{join " » " (reverse (mapBy0 "title" learnerGroup.allParents))}}
                       </IliosTooltip>
                     {{/if}}
                   {{/unless}}
