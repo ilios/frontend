@@ -115,7 +115,10 @@ export default class ReportsSubjectSessionTypeComponent extends Component {
     />
     <div data-test-reports-subject-session-type>
       {{#if this.allSessionTypesData.isResolved}}
-        <ul class="report-results{{if this.reportResultsExceedMax ' limited'}}" data-test-results>
+        <ul
+          class="report-results ilios-zebra-list{{if this.reportResultsExceedMax ' limited'}}"
+          data-test-results
+        >
           {{#each this.limitedSessionTypes as |sessionType|}}
             <li>
               {{#if this.showSchool}}

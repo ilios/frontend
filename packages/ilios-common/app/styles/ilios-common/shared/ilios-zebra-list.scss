@@ -1,0 +1,5 @@
+li {
+  &:nth-child(even) {
+    background-color: var(--super-light-grey);
+  }
+}

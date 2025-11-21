@@ -116,7 +116,10 @@ export default class ReportsSubjectProgramYearComponent extends Component {
     />
     <div data-test-reports-subject-program-year>
       {{#if this.allProgramYearsData.isResolved}}
-        <ul class="report-results{{if this.reportResultsExceedMax ' limited'}}" data-test-results>
+        <ul
+          class="report-results ilios-zebra-list{{if this.reportResultsExceedMax ' limited'}}"
+          data-test-results
+        >
           {{#each this.limitedProgramYears as |programYear|}}
             <li>
               {{#if this.showSchool}}
