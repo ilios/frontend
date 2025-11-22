@@ -50,7 +50,7 @@ export default class UserList extends Component {
     this.args.setSortBy(what);
   }
   <template>
-    <table class="ilios-zebra-table user-list" data-test-user-list ...attributes>
+    <table class="ilios-table ilios-zebra-table user-list" data-test-user-list ...attributes>
       <thead class={{if @headerIsLocked "locked"}}>
         <tr>
           <SortableTh

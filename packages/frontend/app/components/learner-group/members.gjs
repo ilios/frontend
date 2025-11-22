@@ -63,7 +63,7 @@ export default class LearnerGroupUserMembersComponent extends Component {
         {{#if this.usersInGroup.length}}
           <div class="learner-group-members-content">
             <div class="list">
-              <table class="ilios-zebra-table">
+              <table class="ilios-table ilios-zebra-table">
                 <thead>
                   <tr>
                     <SortableTh

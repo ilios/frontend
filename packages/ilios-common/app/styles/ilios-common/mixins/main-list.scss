@@ -106,8 +106,6 @@
   }
 
   table {
-    @include ilios-table.ilios-table-structure;
-    @include ilios-table.ilios-table-colors;
     @include ilios-table.ilios-removable-table;
 
     thead {

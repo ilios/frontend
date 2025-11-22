@@ -90,7 +90,7 @@ export default class SequenceBlockListComponent extends Component {
       </div>
       {{#if @sequenceBlocks.length}}
         <div class="list" data-test-list>
-          <table class="ilios-zebra-table">
+          <table class="ilios-table ilios-zebra-table">
             <thead>
               <tr>
                 <th class="text-center" colspan="4">
