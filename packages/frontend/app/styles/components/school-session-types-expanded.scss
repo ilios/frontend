@@ -21,10 +21,5 @@
     .saved-result {
       @include m.main-list-saved-new;
     }
-
-    table {
-      @include m.ilios-table-structure;
-      @include m.ilios-table-colors;
-    }
   }
 }

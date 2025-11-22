@@ -51,8 +51,6 @@
     }
 
     table {
-      @include m.ilios-table-structure;
-      @include m.ilios-table-colors;
       grid-column: 1 / -1;
 
       .no-results {

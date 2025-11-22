@@ -6,7 +6,7 @@ import UserStatus from 'ilios-common/components/user-status';
 import LoadingSpinner from 'ilios-common/components/loading-spinner';
 <template>
   <div class="leadership-list" data-test-leadership-list>
-    <table>
+    <table class="ilios-table">
       <thead>
         <tr>
           {{#if @showDirectors}}

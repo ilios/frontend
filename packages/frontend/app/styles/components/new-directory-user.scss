@@ -35,10 +35,5 @@
   .new-directory-user-search-results {
     max-height: 25rem;
     overflow: scroll;
-
-    table {
-      @include m.ilios-table-structure;
-      @include m.ilios-table-colors;
-    }
   }
 }

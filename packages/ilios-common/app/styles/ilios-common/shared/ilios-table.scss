@@ -1,0 +1,83 @@
+@use "../mixins/font-size";
+@use "../mixins/media";
+@use "sass:color";
+
+.ilios-table {
+  border-collapse: collapse;
+  margin: 0.7rem 0;
+  table-layout: fixed;
+  width: 100%;
+
+  thead {
+    background-color: var(--white);
+  }
+
+  th {
+    border-bottom: 1px solid var(--lighter-grey);
+    background-color: var(--white);
+    text-align: left;
+  }
+
+  td {
+    border: 0;
+  }
+
+  tr,
+  td,
+  th {
+    padding: 0.25rem 0.1rem;
+    vertical-align: middle;
+  }
+
+  th,
+  td {
+    overflow-wrap: break-word;
+
+    &.text-left,
+    &.align-left {
+      text-align: left;
+    }
+
+    &.text-center,
+    &.align-center {
+      text-align: center;
+    }
+
+    &.text-right,
+    &.align-right {
+      text-align: right;
+    }
+
+    &.text-top {
+      vertical-align: top;
+    }
+
+    &.text-middle {
+      vertical-align: middle;
+    }
+
+    &.text-bottom {
+      vertical-align: bottom;
+    }
+  }
+
+  &.condensed {
+    @include font-size.font-size("small");
+
+    tr,
+    td,
+    th {
+      margin: 0;
+      padding: 0 0.1rem;
+    }
+  }
+
+  &.sticky-header {
+    position: relative;
+
+    th {
+      position: sticky;
+      top: 0;
+    }
+  }
+}

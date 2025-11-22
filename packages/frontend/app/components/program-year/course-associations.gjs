@@ -126,7 +126,7 @@ export default class ProgramYearCourseAssociationsComponent extends Component {
               data-test-content
               hidden={{@isExpanded}}
             >
-              <table class="ilios-zebra-table" data-test-associations>
+              <table class="ilios-table ilios-zebra-table" data-test-associations>
                 <thead>
                   <tr>
                     <SortableTh

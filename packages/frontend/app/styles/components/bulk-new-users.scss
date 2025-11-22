@@ -57,11 +57,6 @@
         border: 1px solid var(--light-red);
         color: var(--light-red);
       }
-
-      table {
-        @include m.ilios-table-structure;
-        @include m.ilios-table-colors;
-      }
     }
   }
 

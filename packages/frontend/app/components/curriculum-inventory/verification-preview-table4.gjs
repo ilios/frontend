@@ -23,7 +23,7 @@ export default class CurriculumInventoryVerificationPreviewTable4Component exten
       <h3 data-test-title>
         {{t "general.table4InstructionalMethodCounts"}}
       </h3>
-      <table>
+      <table class="ilios-table">
         <thead>
           <tr>
             <th>

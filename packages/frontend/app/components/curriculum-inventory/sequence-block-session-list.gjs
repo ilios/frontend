@@ -49,7 +49,7 @@ export default class SequenceBlockSessionListComponent extends Component {
       ...attributes
     >
       <div class="sessions-list">
-        <table class="ilios-zebra-table">
+        <table class="ilios-table ilios-zebra-table">
           <thead>
             <tr>
               <th class="text-center" colspan="2">

@@ -173,7 +173,7 @@ export default class SequenceBlockSessionManagerComponent extends Component {
       </div>
       <div class="list">
         {{#let (uniqueId) (uniqueId) as |countAsOneLabelId excludedLabelId|}}
-          <table class="ilios-zebra-table">
+          <table class="ilios-table ilios-zebra-table">
             <thead>
               <tr>
                 <th class="text-center count-as-one-header" colspan="2">

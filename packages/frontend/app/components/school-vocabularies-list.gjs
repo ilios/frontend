@@ -55,7 +55,7 @@ export default class SchoolVocabulariesListComponent extends Component {
     <div class="school-vocabularies-list" data-test-school-vocabularies-list ...attributes>
       <div class="school-vocabularies-list-list">
         {{#if this.sortedVocabularies.length}}
-          <table>
+          <table class="ilios-table">
             <thead>
               <tr>
                 <th class="text-left" colspan="3">

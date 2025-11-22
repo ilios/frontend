@@ -25,11 +25,4 @@
       @include m.main-list-saved-new;
     }
   }
-
-  .school-vocabularies-list-list {
-    table {
-      @include m.ilios-table-structure;
-      @include m.ilios-table-colors;
-    }
-  }
 }

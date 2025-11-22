@@ -27,7 +27,7 @@ export default class CurriculumInventoryVerificationPreviewTable6Component exten
       <h3 data-test-title id="verification-preview-table6">
         {{t "general.table6ClerkshipSequenceBlockAssessmentMethods"}}
       </h3>
-      <table>
+      <table class="ilios-table">
         <thead>
           <tr>
             <th colspan="2" rowspan="2">
