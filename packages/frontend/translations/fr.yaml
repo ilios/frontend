@@ -177,6 +177,8 @@ general:
   institutionalInformation: "Inventaire des programmes d'études informations institutionnelles"
   instructionalMethod: "Modalité d'Instruction"
   instructionalMethods: "Modalités d'Instruction"
+  instructionalTime: "Temps d'Instruction"
+  instructionalTimeReportSummary: "Rapport de for {courseCount, plural, one {one course} other {# courses}}. Chaque [quelque chose] est listée avec [des choses]."
   instructorGroup: Groupe des Instructeurs
   instructorGroupTitle: Titre de Groupe des Instructeurs
   instructorGroupTitleFilterPlaceholder: Filtre par Titre de Groupe des Instructeurs
