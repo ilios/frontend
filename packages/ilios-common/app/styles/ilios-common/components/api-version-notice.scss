@@ -1,10 +1,14 @@
 @use "../mixins" as m;
 
 .api-version-notice {
-  @include m.critical-notice(var(--dark-yellow), var(--black), 1rem);
-
   display: none;
   padding: 0.25rem 1rem;
+
+  &.critical-notice {
+    background-color: var(--dark-yellow);
+    color: var(--black);
+    min-height: 2.5rem;
+  }
 
   &.mismatch {
     display: block;

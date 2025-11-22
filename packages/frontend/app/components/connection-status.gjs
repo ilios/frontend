@@ -87,7 +87,10 @@ export default class ConnectionStatusComponent extends Component {
     this.reconnect.perform();
   });
   <template>
-    <div class="connection-status{{unless this.isOnline ' offline'}}" aria-hidden={{this.isOnline}}>
+    <div
+      class="connection-status critical-notice{{unless this.isOnline ' offline'}}"
+      aria-hidden={{this.isOnline}}
+    >
       {{#unless this.isOnline}}
         {{#if this.unableToReconnect}}
           <p class="unable-to-reconnect">

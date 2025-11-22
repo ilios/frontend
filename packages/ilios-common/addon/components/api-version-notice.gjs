@@ -66,7 +66,7 @@ export default class ApiVersionNoticeComponent extends Component {
   });
   <template>
     <div
-      class="api-version-notice{{if this.mismatched ' mismatch'}}"
+      class="api-version-notice critical-notice{{if this.mismatched ' mismatch'}}"
       hidden={{not this.mismatched}}
       role={{if this.mismatched "alert" false}}
       data-test-load-finished={{this.check.lastSuccessful.value}}
