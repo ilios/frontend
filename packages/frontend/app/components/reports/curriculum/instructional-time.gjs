@@ -1,6 +1,5 @@
 import Component from '@glimmer/component';
 import { service } from '@ember/service';
-import striptags from 'striptags';
 import PapaParse from 'papaparse';
 import { task, timeout } from 'ember-concurrency';
 import createDownloadFile from 'frontend/utils/create-download-file';
@@ -32,7 +31,6 @@ export default class ReportsCurriculumInstructionalTimeComponent extends Compone
       'id',
       'title',
       'sessionType { title }',
-      'sessionObjectives { id, title }',
       `offerings { id, startDate, endDate, instructors { ${userData} }, instructorGroups { id, users { ${userData} } } }`,
       `ilmSession { id, dueDate, hours, instructors { ${userData} }, instructorGroups { id, users { ${userData} } } }`,
     ].join(', ');
@@ -79,7 +77,6 @@ export default class ReportsCurriculumInstructionalTimeComponent extends Compone
         courseId: c.id,
         courseTitle: c.title,
         sessionCount: c.sessions.length,
-        objectiveCount: c.sessions.reduce((acc, s) => acc + s.sessionObjectives.length, 0),
         instructorsCount: this.reporting.countUniqueValuesInArray(c.sessions, 'instructors'),
       };
     });
@@ -90,40 +87,36 @@ export default class ReportsCurriculumInstructionalTimeComponent extends Compone
     return this.reportWithInstructors.reduce((acc, c) => {
       c.sessions.forEach((s) => {
         const path = this.router.urlFor('session', c.id, s.id);
-        let firstOfferingDate, duration;
+        let duration;
         const firstOffering = s.offerings.sort(
           (a, b) => DateTime.fromISO(a.startDate) - DateTime.fromISO(b.startDate),
         )[0];
         if (firstOffering) {
-          firstOfferingDate = firstOffering.startDate;
           duration = DateTime.fromISO(firstOffering.endDate).diff(
             DateTime.fromISO(firstOffering.startDate),
-            'hours',
-          ).hours;
+            'minutes',
+          ).minutes;
         } else if (s.ilmSession) {
-          firstOfferingDate = s.ilmSession.dueDate;
-          duration = s.ilmSession.hours;
+          duration = s.ilmSession.minutes;
         }
-        s.sessionObjectives.forEach((o) => {
-          const sessionObjective = {
-            courseId: c.id,
-            courseTitle: c.title,
-            sessionTitle: s.title,
-            sessionType: s.sessionType.title,
-            title: striptags(o.title),
-            link: `${origin}${path}`,
-            instructors: s.instructors,
-            firstOfferingDate: firstOfferingDate
-              ? DateTime.fromISO(firstOfferingDate).toLocaleString(this.intl.primaryLocale)
-              : '',
-            duration: duration?.toFixed(2) ?? 0,
-          };
+        s.offerings.forEach((o) => {
+          o.instructors.forEach((i) => {
+            const sessionOfferingInstructor = {
+              courseId: c.id,
+              courseTitle: c.title,
+              sessionTitle: s.title,
+              sessionType: s.sessionType.title,
+              displayName: i.displayName,
+              duration: duration ?? 0,
+              link: `${origin}${path}`,
+            };
 
-          if (this.hasMultipleSchools) {
-            sessionObjective.schoolTitle = c.school.title;
-          }
+            if (this.hasMultipleSchools) {
+              sessionOfferingInstructor.schoolTitle = c.school.title;
+            }
 
-          acc.push(sessionObjective);
+            acc.push(sessionOfferingInstructor);
+          });
         });
       });
       return acc;
@@ -194,9 +187,7 @@ export default class ReportsCurriculumInstructionalTimeComponent extends Compone
       rhett[this.intl.t('general.course')] = o.courseTitle;
       rhett[this.intl.t('general.session')] = o.sessionTitle;
       rhett[this.intl.t('general.sessionType')] = o.sessionType;
-      rhett[this.intl.t('general.objective')] = o.title;
-      rhett[this.intl.t('general.instructors')] = o.instructors.join(', ');
-      rhett[this.intl.t('general.firstOffering')] = o.firstOfferingDate;
+      rhett[this.intl.t('general.displayName')] = o.displayName;
       rhett[this.intl.t('general.hours')] = o.duration;
       rhett[this.intl.t('general.link')] = o.link;
 
@@ -204,7 +195,7 @@ export default class ReportsCurriculumInstructionalTimeComponent extends Compone
     });
     const csv = PapaParse.unparse(data);
     this.finishedBuildingReport = true;
-    createDownloadFile(`objectives.csv`, csv, 'text/csv');
+    createDownloadFile(`instructional-time.csv`, csv, 'text/csv');
     await timeout(2000);
     this.finishedBuildingReport = false;
   });
@@ -214,7 +205,7 @@ export default class ReportsCurriculumInstructionalTimeComponent extends Compone
       @countSelectedCourses={{@courses.length}}
       @showReportResults={{true}}
       @loading={{this.reportRunning}}
-      @selectedReportValue="sessionObjectives"
+      @selectedReportValue="instructionalTime"
       @changeSelectedReport={{(noop)}}
       @close={{@close}}
       @download={{perform this.downloadReport}}
@@ -242,7 +233,6 @@ export default class ReportsCurriculumInstructionalTimeComponent extends Compone
             <th>{{t "general.course"}}</th>
             <th>{{t "general.sessions"}}</th>
             <th>{{t "general.instructors"}}</th>
-            <th>{{t "general.objectives"}}</th>
           </tr>
         </thead>
         <tbody>
@@ -259,7 +249,6 @@ export default class ReportsCurriculumInstructionalTimeComponent extends Compone
                 </td>
                 <td>{{this.sessionCountPlaceholder}}</td>
                 <td>{{this.instructorsCountPlaceholder}}</td>
-                <td>{{this.objectiveCountPlaceholder}}</td>
               </tr>
             {{/each}}
           {{else}}
@@ -275,7 +264,6 @@ export default class ReportsCurriculumInstructionalTimeComponent extends Compone
                 </td>
                 <td>{{o.sessionCount}}</td>
                 <td>{{o.instructorsCount}}</td>
-                <td>{{o.objectiveCount}}</td>
               </tr>
             {{/each}}
           {{/if}}
