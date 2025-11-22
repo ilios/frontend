@@ -212,7 +212,7 @@ export default class CourseVisualizeInstructorSessionTypeGraph extends Component
                 {{t "general.download"}}
               </button>
             </div>
-            <table>
+            <table class="ilios-table">
               <thead>
                 <tr>
                   <SortableTh

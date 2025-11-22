@@ -14,8 +14,6 @@
     }
 
     table {
-      @include t.ilios-table-structure;
-      @include t.ilios-table-colors;
       @include t.ilios-removable-table;
 
       thead {
