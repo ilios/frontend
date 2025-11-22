@@ -108,7 +108,10 @@ export default class ReportsSubjectTermComponent extends Component {
     />
     <div data-test-reports-subject-term>
       {{#if this.allTermsData.isResolved}}
-        <ul class="report-results{{if this.reportResultsExceedMax ' limited'}}" data-test-results>
+        <ul
+          class="report-results ilios-zebra-list{{if this.reportResultsExceedMax ' limited'}}"
+          data-test-results
+        >
           {{#each this.limitedTerms as |term|}}
             <li>
               {{#if this.showSchool}}
