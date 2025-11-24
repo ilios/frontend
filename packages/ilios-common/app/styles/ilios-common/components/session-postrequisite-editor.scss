@@ -6,7 +6,6 @@
     max-height: 20rem;
     overflow: auto;
     table {
-      @include m.ilios-table-structure;
       margin: 0;
       position: relative;
       th {
