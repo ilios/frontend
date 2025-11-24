@@ -444,7 +444,7 @@ export default class BulkNewUsersComponent extends Component {
                 <table class="ilios-table ilios-table-colors">
                   <thead>
                     <tr>
-                      <th></th>
+                      <th aria-label={{t "general.select"}}></th>
                       <th>
                         {{t "general.firstName"}}
                       </th>
@@ -477,7 +477,7 @@ export default class BulkNewUsersComponent extends Component {
                   <tbody>
                     {{#each this.proposedUsers as |obj|}}
                       <tr>
-                        <td>
+                        <th>
                           <input
                             type="checkbox"
                             checked={{includes obj this.selectedUsers}}
@@ -485,7 +485,7 @@ export default class BulkNewUsersComponent extends Component {
                             disabled={{not (includes obj this.validUsers)}}
                             aria-label={{t "general.select"}}
                           />
-                        </td>
+                        </th>
                         <td class={{if obj.validations.errors.firstName "error"}}>
                           {{obj.firstName}}
                         </td>
