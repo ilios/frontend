@@ -251,7 +251,7 @@ export default class PrintCourseComponent extends Component {
         </div>
         {{#if this.courseLearningMaterials}}
           <div class="content">
-            <table>
+            <table class="ilios-table">
               <thead>
                 <tr>
                   <th class="text-left" colspan="2">

@@ -44,7 +44,7 @@ export default class CoursePublicationCheckComponent extends Component {
           ({{@course.allPublicationIssuesLength}})
         </div>
         <div class="course-publicationcheck-content">
-          <table>
+          <table class="ilios-table">
             <thead>
               <tr>
                 <th>

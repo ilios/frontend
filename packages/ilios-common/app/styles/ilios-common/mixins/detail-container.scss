@@ -67,7 +67,6 @@
   @content;
 
   table {
-    @include ilios-table.ilios-table-structure;
     @include ilios-table.ilios-removable-table;
   }
 }

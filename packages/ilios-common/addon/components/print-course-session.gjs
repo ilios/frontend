@@ -257,7 +257,7 @@ export default class PrintCourseSessionComponent extends Component {
             {{t "general.independentLearning"}}
           </div>
           <div class="content">
-            <table>
+            <table class="ilios-table">
               <thead>
                 <tr>
                   <th>
@@ -326,7 +326,7 @@ export default class PrintCourseSessionComponent extends Component {
         </div>
         {{#if this.learningMaterials.length}}
           <div class="content">
-            <table>
+            <table class="ilios-table">
               <thead>
                 <tr>
                   <th class="text-left" colspan="2">
@@ -418,7 +418,7 @@ export default class PrintCourseSessionComponent extends Component {
         </div>
         {{#if this.offerings.length}}
           <div class="content">
-            <table>
+            <table class="ilios-table">
               <thead>
                 <tr>
                   <th class="text-left">

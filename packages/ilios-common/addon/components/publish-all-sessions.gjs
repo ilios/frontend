@@ -218,7 +218,7 @@ export default class PublishAllSessionsComponent extends Component {
         </div>
         {{#unless this.unPublishableCollapsed}}
           <div class="content" data-test-content>
-            <table>
+            <table class="ilios-table">
               <thead>
                 <tr>
                   <th>
@@ -321,7 +321,7 @@ export default class PublishAllSessionsComponent extends Component {
         </div>
         {{#unless this.publishableCollapsed}}
           <div class="content" data-test-content>
-            <table>
+            <table class="ilios-table">
               <thead>
                 <tr>
                   <th>
@@ -430,7 +430,7 @@ export default class PublishAllSessionsComponent extends Component {
             >
               {{t "general.markAsScheduled"}}
             </button>
-            <table>
+            <table class="ilios-table">
               <thead>
                 <tr>
                   <th>
