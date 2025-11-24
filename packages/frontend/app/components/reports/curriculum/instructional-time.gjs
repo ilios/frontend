@@ -188,7 +188,7 @@ export default class ReportsCurriculumInstructionalTimeComponent extends Compone
       rhett[this.intl.t('general.session')] = o.sessionTitle;
       rhett[this.intl.t('general.sessionType')] = o.sessionType;
       rhett[this.intl.t('general.displayName')] = o.displayName;
-      rhett[this.intl.t('general.hours')] = o.duration;
+      rhett[this.intl.t('general.minutes')] = o.duration;
       rhett[this.intl.t('general.link')] = o.link;
 
       return rhett;
