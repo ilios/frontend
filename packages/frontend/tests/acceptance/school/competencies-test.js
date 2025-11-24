@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { currentURL } from '@ember/test-helpers';
-import { setupApplicationTest } from 'frontend/tests/helpers';
+import { setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
 import { setupAuthentication } from 'ilios-common';
 import page from 'frontend/tests/pages/school';
 import percySnapshot from '@percy/ember';
@@ -29,6 +29,7 @@ module('Acceptance | school/competencies', function (hooks) {
   test('collapsed competencies', async function (assert) {
     await page.visit({ schoolId: this.school.id });
     assert.strictEqual(currentURL(), '/schools/1');
+    await takeScreenshot(assert);
     await percySnapshot(assert);
 
     assert.strictEqual(page.manager.schoolCompetenciesCollapsed.title.text, 'Competencies (2/1)');
@@ -42,6 +43,7 @@ module('Acceptance | school/competencies', function (hooks) {
 
   test('expanded competencies', async function (assert) {
     await page.visit({ schoolId: this.school.id, schoolCompetencyDetails: true });
+    await takeScreenshot(assert);
     await percySnapshot(assert);
 
     assert.strictEqual(
@@ -68,6 +70,7 @@ module('Acceptance | school/competencies', function (hooks) {
     await page.visit({ schoolId: this.school.id, schoolCompetencyDetails: true });
 
     await page.manager.schoolCompetenciesExpanded.manage();
+    await takeScreenshot(assert);
     await percySnapshot(assert);
     const { domains } = page.manager.schoolCompetenciesExpanded.competenciesManager;
 
@@ -133,6 +136,7 @@ module('Acceptance | school/competencies', function (hooks) {
     await page.visit({ schoolId: this.school.id, schoolCompetencyDetails: true });
 
     await page.manager.schoolCompetenciesExpanded.manage();
+    await takeScreenshot(assert);
     await percySnapshot(assert);
     const { domains } = page.manager.schoolCompetenciesExpanded.competenciesManager;
 

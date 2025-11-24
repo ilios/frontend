@@ -3,7 +3,7 @@ import { module, test } from 'qunit';
 
 import page from 'frontend/tests/pages/instructor-groups';
 import { setupAuthentication } from 'ilios-common';
-import { setupApplicationTest } from 'frontend/tests/helpers';
+import { setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
 import percySnapshot from '@percy/ember';
 
 module('Acceptance | Instructor Groups', function (hooks) {
@@ -46,6 +46,7 @@ module('Acceptance | Instructor Groups', function (hooks) {
       });
 
       await page.visit();
+      await takeScreenshot(assert);
       await percySnapshot(assert);
       assert.strictEqual(page.headerTitle, 'Instructor Groups (2)');
       assert.ok(page.listIsPresent);
@@ -248,6 +249,7 @@ module('Acceptance | Instructor Groups', function (hooks) {
     await setupAuthentication({ school: schools[1] }, true);
 
     await page.visit();
+    await takeScreenshot(assert);
     await percySnapshot(assert);
     assert.strictEqual(page.schoolFilter.schools.length, 2);
     assert.strictEqual(page.schoolFilter.schools[0].text, 'school 0');

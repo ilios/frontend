@@ -2,7 +2,7 @@ import { currentRouteName } from '@ember/test-helpers';
 import { DateTime } from 'luxon';
 import { module, test } from 'qunit';
 import { setupAuthentication } from 'ilios-common';
-import { setupApplicationTest } from 'frontend/tests/helpers';
+import { setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
 import page from 'frontend/tests/pages/program';
 import percySnapshot from '@percy/ember';
 import { getUniqueName } from '../../helpers/percy-snapshot-name';
@@ -43,6 +43,7 @@ module('Acceptance | Program - ProgramYear List', function (hooks) {
     });
     await page.visit({ programId: this.program.id });
     await percySnapshot(getUniqueName(assert, 'default'));
+    await takeScreenshot(assert, 'default');
     assert.strictEqual(page.programYears.items.length, 3);
     assert.strictEqual(page.programYears.items[0].link.text, `${thisYear - 2}`);
     assert.strictEqual(page.programYears.items[0].title, 'cohort 1');
@@ -52,6 +53,7 @@ module('Acceptance | Program - ProgramYear List', function (hooks) {
     assert.strictEqual(page.programYears.items[2].title, 'cohort 0');
     await page.programYears.expandCollapse.toggle();
     await percySnapshot(getUniqueName(assert, 'show programYears'));
+    await takeScreenshot(assert, 'show programYears');
     assert.strictEqual(page.programYears.newProgramYear.years.options.length, 6);
   });
 
@@ -226,6 +228,7 @@ module('Acceptance | Program - ProgramYear List', function (hooks) {
       directorIds: [this.user.id],
     });
     await page.visit({ programId: this.program.id });
+    await takeScreenshot(assert);
     await percySnapshot(assert);
     assert.strictEqual(page.programYears.items.length, 2);
     assert.ok(page.programYears.items[0].isLocked);

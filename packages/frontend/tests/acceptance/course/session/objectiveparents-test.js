@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupAuthentication } from 'ilios-common';
-import { setupApplicationTest } from 'frontend/tests/helpers';
+import { setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
 import { getUniqueName } from '../../../helpers/percy-snapshot-name';
 import page from 'ilios-common/page-objects/session';
 import percySnapshot from '@percy/ember';
@@ -51,8 +51,10 @@ module('Acceptance | Session - Objective Parents', function (hooks) {
     );
 
     await percySnapshot(getUniqueName(assert, 'default background color'));
+    await takeScreenshot(assert, 'default background color');
     await page.details.objectives.objectiveList.objectives[0].parents.manage();
     await percySnapshot(getUniqueName(assert, 'managed background color'));
+    await takeScreenshot(assert, 'managed background color');
 
     const m = page.details.objectives.objectiveList.objectives[0].parentManager;
     assert.strictEqual(m.courseTitle, 'course 0');
@@ -89,8 +91,10 @@ module('Acceptance | Session - Objective Parents', function (hooks) {
     );
 
     await percySnapshot(getUniqueName(assert, 'default background color'));
+    await takeScreenshot(assert, 'default background color');
     await page.details.objectives.objectiveList.objectives[0].parents.manage();
     await percySnapshot(getUniqueName(assert, 'managed background color'));
+    await takeScreenshot(assert, 'managed background color');
 
     const m = page.details.objectives.objectiveList.objectives[0].parentManager;
     assert.strictEqual(m.courseTitle, 'course 0');
@@ -140,8 +144,10 @@ module('Acceptance | Session - Objective Parents', function (hooks) {
     );
 
     await percySnapshot(getUniqueName(assert, 'default background color'));
+    await takeScreenshot(assert, 'default background color');
     await page.details.objectives.objectiveList.objectives[0].parents.manage();
     await percySnapshot(getUniqueName(assert, 'managed background color'));
+    await takeScreenshot(assert, 'managed background color');
 
     const m = page.details.objectives.objectiveList.objectives[0].parentManager;
     assert.strictEqual(m.courseTitle, 'course 0');
@@ -191,8 +197,10 @@ module('Acceptance | Session - Objective Parents', function (hooks) {
     );
 
     await percySnapshot(getUniqueName(assert, 'default background color'));
+    await takeScreenshot(assert, 'default background color');
     await page.details.objectives.objectiveList.objectives[0].parents.manage();
     await percySnapshot(getUniqueName(assert, 'managed background color'));
+    await takeScreenshot(assert, 'managed background color');
 
     const m = page.details.objectives.objectiveList.objectives[0].parentManager;
     assert.strictEqual(m.courseTitle, 'course 0');

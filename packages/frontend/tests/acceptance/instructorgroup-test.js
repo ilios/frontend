@@ -1,7 +1,7 @@
 import { currentRouteName, visit, currentURL } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupAuthentication } from 'ilios-common';
-import { setupApplicationTest } from 'frontend/tests/helpers';
+import { setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
 import page from '../pages/instructor-group';
 
@@ -56,6 +56,7 @@ module('Acceptance | Instructor Group', function (hooks) {
 
   test('it renders', async function (assert) {
     await visit(url);
+    await takeScreenshot(assert);
     await percySnapshot(assert);
     assert.strictEqual(currentRouteName(), 'instructor-group');
     assert.strictEqual(page.root.header.title.text, 'instructor group 0');

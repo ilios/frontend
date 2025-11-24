@@ -53,3 +53,4 @@ function setupTest(hooks, options) {
 }
 
 export { setupApplicationTest, setupRenderingTest, setupTest };
+export { takeScreenshot } from './take-screenshot';

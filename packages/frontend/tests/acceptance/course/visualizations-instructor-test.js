@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { currentURL, waitFor } from '@ember/test-helpers';
-import { setupApplicationTest } from 'frontend/tests/helpers';
+import { setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
 import page from 'ilios-common/page-objects/course-visualizations-instructor';
 import { setupAuthentication } from 'ilios-common';
 import { DateTime } from 'luxon';
@@ -78,6 +78,7 @@ module('Acceptance | course visualizations - instructor', function (hooks) {
     await waitFor('.loaded', { count: 2 });
     await waitFor('svg .bars');
     await waitFor('svg .slice');
+    await takeScreenshot(assert);
     await percySnapshot(assert);
     assert.strictEqual(page.root.termsChart.chart.bars.length, 3);
     assert.strictEqual(page.root.termsChart.chart.labels.length, 3);

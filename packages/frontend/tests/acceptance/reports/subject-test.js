@@ -2,7 +2,7 @@ import { currentURL } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupAuthentication } from 'ilios-common';
 import page from 'frontend/tests/pages/reports-subject';
-import { setupApplicationTest } from 'frontend/tests/helpers';
+import { setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
 import percySnapshot from '@percy/ember';
 
 module('Acceptance | Reports - Subject Report', function (hooks) {
@@ -96,6 +96,7 @@ module('Acceptance | Reports - Subject Report', function (hooks) {
       return this.getReportData(['1']);
     });
     await page.visit({ reportId: this.courseReport.id });
+    await takeScreenshot(assert);
     await percySnapshot(assert);
     assert.strictEqual(currentURL(), '/reports/subjects/1');
     assert.strictEqual(page.report.title.text, 'my report 0');
@@ -106,6 +107,7 @@ module('Acceptance | Reports - Subject Report', function (hooks) {
 
   test('term report works', async function (assert) {
     await page.visit({ reportId: this.termReport.id });
+    await takeScreenshot(assert);
     await percySnapshot(assert);
     assert.strictEqual(currentURL(), '/reports/subjects/2');
     assert.strictEqual(page.report.title.text, 'All Sessions for Term term 0 in school 0');

@@ -2,7 +2,7 @@ import { currentURL } from '@ember/test-helpers';
 import { test, module } from 'qunit';
 import { setupAuthentication } from 'ilios-common';
 import { DateTime } from 'luxon';
-import { setupApplicationTest } from 'frontend/tests/helpers';
+import { setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
 import page from '../pages/learner-group';
 import learnerGroupsPage from '../pages/learner-groups';
 import percySnapshot from '@percy/ember';
@@ -105,12 +105,14 @@ module('Acceptance | Learner Group', function (hooks) {
 
     await page.visit({ learnerGroupId: 1 });
     await percySnapshot(getUniqueName(assert, 'learnerGroupId1'));
+    await takeScreenshot(assert, 'learnerGroupId1');
     assert.strictEqual(page.root.subgroups.list.items.length, 2);
     assert.strictEqual(page.root.subgroups.list.items[0].title, 'learner group 1');
     assert.strictEqual(page.root.subgroups.list.items[1].title, 'learner group 2');
 
     await page.root.subgroups.toggleNewLearnerGroupForm();
     await percySnapshot(getUniqueName(assert, 'toggleNewLearnerGroupForm'));
+    await takeScreenshot(assert, 'toggleNewLearnerGroupForm');
 
     assert.ok(page.root.subgroups.newLearnerGroupForm.singleGroupSelected);
     assert.notOk(page.root.subgroups.newLearnerGroupForm.multipleGroupSelected);
@@ -133,6 +135,7 @@ module('Acceptance | Learner Group', function (hooks) {
     await page.root.subgroups.newLearnerGroupForm.multiple.set('2');
     await page.root.subgroups.newLearnerGroupForm.multiple.save();
     await percySnapshot(getUniqueName(assert, 'toggleNewLearnerGroupForm +2 subgroups'));
+    await takeScreenshot(assert, 'toggleNewLearnerGroupForm +2 subgroups');
 
     assert.strictEqual(page.root.subgroups.list.items.length, 9);
     assert.strictEqual(page.root.subgroups.list.items[0].title, 'learner group 0 1');

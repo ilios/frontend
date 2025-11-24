@@ -2,7 +2,7 @@ import { currentRouteName } from '@ember/test-helpers';
 import { DateTime } from 'luxon';
 import { module, test } from 'qunit';
 import { setupAuthentication, freezeDateAt, unfreezeDate } from 'ilios-common';
-import { setupApplicationTest } from 'frontend/tests/helpers';
+import { setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
 import page from 'ilios-common/page-objects/dashboard-week';
 import { a11yAudit } from 'ember-a11y-testing/test-support';
 import percySnapshot from '@percy/ember';
@@ -53,6 +53,7 @@ module('Acceptance | Dashboard Week at a Glance', function (hooks) {
       offering: 2,
     });
     await page.visit({ show: 'week' });
+    await takeScreenshot(assert);
     await percySnapshot(assert);
     assert.strictEqual(currentRouteName(), 'dashboard.week');
 
@@ -114,6 +115,7 @@ module('Acceptance | Dashboard Week at a Glance', function (hooks) {
       prerequisites,
     });
     await page.visit();
+    await takeScreenshot(assert);
     await percySnapshot(assert);
     assert.strictEqual(currentRouteName(), 'dashboard.week');
 

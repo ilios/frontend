@@ -1,7 +1,7 @@
 import { currentURL } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupAuthentication } from 'ilios-common';
-import { setupApplicationTest } from 'frontend/tests/helpers';
+import { setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
 import page from 'frontend/tests/pages/users';
 import percySnapshot from '@percy/ember';
 import userPage from 'frontend/tests/pages/user';
@@ -23,6 +23,7 @@ module('Acceptance | Users', function (hooks) {
 
   test('can see list of users and transition to user route', async function (assert) {
     await page.visit();
+    await takeScreenshot(assert);
     await percySnapshot(assert);
     assert.notOk(page.root.userList.users[0].isDisabled);
     assert.strictEqual(page.root.userList.users[0].userNameInfo.fullName, '0 guy M. Mc0son');
@@ -50,8 +51,10 @@ module('Acceptance | Users', function (hooks) {
     this.server.createList('user', 40, { firstName: 'Test', lastName: 'Name', schoolId: 1 });
     await page.visit();
     await percySnapshot(getUniqueName(assert, 'default'));
+    await takeScreenshot(assert, 'default');
     await page.root.search.set('Test Name');
     await percySnapshot(getUniqueName(assert, 'search results'));
+    await takeScreenshot(assert, 'search results');
     assert.strictEqual(page.root.userList.users[0].userNameInfo.fullName, 'Test M. Name');
     assert.strictEqual(currentURL(), '/users?filter=Test%20Name', 'no query params for search');
     await page.root.userList.users[0].viewUserDetails();

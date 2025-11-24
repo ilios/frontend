@@ -2,7 +2,7 @@ import { currentURL } from '@ember/test-helpers';
 import percySnapshot from '@percy/ember';
 import { test, module } from 'qunit';
 import { setupAuthentication } from 'ilios-common';
-import { setupApplicationTest } from 'frontend/tests/helpers';
+import { setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
 import page from 'frontend/tests/pages/program-year';
 
 module('Acceptance | Program Year - Course associations', function (hooks) {
@@ -21,6 +21,7 @@ module('Acceptance | Program Year - Course associations', function (hooks) {
 
   test('expand and collapse course associations', async function (assert) {
     await page.visit({ programId: this.program.id, programYearId: this.programYear.id });
+    await takeScreenshot(assert);
     await percySnapshot(assert);
     assert.strictEqual(
       currentURL(),
@@ -51,6 +52,7 @@ module('Acceptance | Program Year - Course associations', function (hooks) {
       programYearId: this.programYear.id,
       showCourseAssociations: 'true',
     });
+    await takeScreenshot(assert);
     await percySnapshot(assert);
     assert.strictEqual(
       currentURL(),

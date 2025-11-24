@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { currentURL, waitFor } from '@ember/test-helpers';
-import { setupApplicationTest } from 'frontend/tests/helpers';
+import { setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
 import page from 'ilios-common/page-objects/course-visualizations-session-types';
 import { setupAuthentication } from 'ilios-common';
 import { DateTime } from 'luxon';
@@ -68,6 +68,7 @@ module('Acceptance | course visualizations - session-types', function (hooks) {
     // wait for charts to load
     await waitFor('.loaded');
     await waitFor('svg .bars');
+    await takeScreenshot(assert);
     await percySnapshot(assert);
     assert.strictEqual(page.root.title, 'course 0 2022');
     assert.strictEqual(page.root.sessionTypesChart.chart.bars.length, 3);

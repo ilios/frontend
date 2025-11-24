@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import { setupAuthentication } from 'ilios-common';
 
-import { setupApplicationTest } from 'frontend/tests/helpers';
+import { setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
 import page from 'ilios-common/page-objects/course';
 import percySnapshot from '@percy/ember';
 
@@ -53,6 +53,7 @@ module('Acceptance | Course - Competencies', function (hooks) {
   test('collapsed competencies renders', async function (assert) {
     this.user.update({ administeredSchools: [this.school] });
     await page.visit({ courseId: this.course.id, details: true });
+    await takeScreenshot(assert);
     await percySnapshot(assert);
     assert.strictEqual(page.details.collapsedCompetencies.title, 'Competencies (1)');
     assert.strictEqual(page.details.collapsedCompetencies.headers[0].text, 'School');
