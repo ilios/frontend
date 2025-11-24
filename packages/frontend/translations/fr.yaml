@@ -178,7 +178,7 @@ general:
   instructionalMethod: "Modalité d'Instruction"
   instructionalMethods: "Modalités d'Instruction"
   instructionalTime: "Temps d'Instruction"
-  instructionalTimeReportSummary: "Rapport de for {courseCount, plural, one {one course} other {# courses}}. Chaque [quelque chose] est listée avec [des choses]."
+  instructionalTimeReportSummary: "Rapport de for {courseCount, plural, one {one course} other {# courses}}. Chaque instructeur est listée avec cours données."
   instructorGroup: Groupe des Instructeurs
   instructorGroupTitle: Titre de Groupe des Instructeurs
   instructorGroupTitleFilterPlaceholder: Filtre par Titre de Groupe des Instructeurs
