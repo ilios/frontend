@@ -64,7 +64,7 @@ export default class CollapsedCompetenciesComponent extends Component {
         <LoadingSpinner />
       {{else}}
         <div class="content">
-          <table>
+          <table class="ilios-table">
             <thead>
               <tr>
                 <th class="text-left">

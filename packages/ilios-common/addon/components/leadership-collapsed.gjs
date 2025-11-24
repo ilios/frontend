@@ -30,7 +30,7 @@ export default class LeadershipCollapsed extends Component {
         </button>
       </div>
       <div class="content">
-        <table class="condensed">
+        <table class="ilios-table condensed">
           <thead>
             <tr>
               <th colspan="2" class="text-left">
