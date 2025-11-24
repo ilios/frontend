@@ -122,7 +122,7 @@ export default class CoursesListComponent extends Component {
   <template>
     <div data-test-courses-list ...attributes>
       {{#if @courses.length}}
-        <table class="ilios-table ilios-table-colors ilios-zebra-table">
+        <table class="ilios-table ilios-table-colors ilios-zebra-table ilios-removable-table">
           <thead>
             <tr data-test-course-headings>
               <SortableTh

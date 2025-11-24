@@ -1,9 +1,7 @@
-@use "font-size";
-@use "media";
-
+@use "../mixins/media";
 @use "sass:color";
 
-@mixin ilios-removable-table() {
+.ilios-removable-table {
   tbody {
     .confirm-removal {
       background-color: var(--lightest-red);

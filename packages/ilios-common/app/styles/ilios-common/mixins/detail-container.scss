@@ -65,8 +65,4 @@
   padding: 0.5rem 0;
 
   @content;
-
-  table {
-    @include ilios-table.ilios-removable-table;
-  }
 }

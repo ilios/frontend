@@ -35,7 +35,7 @@ export default class LearnerGroupListComponent extends Component {
   <template>
     {{#if @learnerGroups.length}}
       <table
-        class="ilios-table ilios-table-colors ilios-zebra-table learner-group-list"
+        class="ilios-table ilios-table-colors ilios-zebra-table learner-group-list ilios-removable-table"
         data-test-learner-group-list
         ...attributes
       >

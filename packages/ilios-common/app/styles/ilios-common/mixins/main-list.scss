@@ -106,8 +106,6 @@
   }
 
   table {
-    @include ilios-table.ilios-removable-table;
-
     thead {
       background-color: var(--lightest-grey);
     }

@@ -32,7 +32,7 @@ export default class CurriculumInventoryReportListComponent extends Component {
   }
   <template>
     <div data-test-curriculum-inventory-report-list ...attributes>
-      <table class="ilios-table ilios-table-colors ilios-zebra-table">
+      <table class="ilios-table ilios-table-colors ilios-zebra-table ilios-removable-table">
         <thead>
           <tr>
             <SortableTh

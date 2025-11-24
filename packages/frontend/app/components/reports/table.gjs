@@ -39,7 +39,7 @@ export default class ReportsListComponent extends Component {
   }
   <template>
     <table
-      class="ilios-table ilios-table-colors ilios-zebra-table"
+      class="ilios-table ilios-table-colors ilios-zebra-table ilios-removable-table"
       data-test-reports-table
       ...attributes
     >
