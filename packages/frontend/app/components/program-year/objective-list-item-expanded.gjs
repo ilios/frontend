@@ -58,7 +58,7 @@ export default class ProgramYearObjectiveListItemExpandedComponent extends Compo
       class="program-year-objective-list-item-expanded"
       data-test-program-year-objective-list-item-expanded
     >
-      <table>
+      <table class="ilios-table">
         <thead>
           <tr>
             <th>{{t "general.courses"}}</th>
