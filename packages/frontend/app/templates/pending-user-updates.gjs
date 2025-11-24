@@ -47,7 +47,7 @@ import perform from 'ember-concurrency/helpers/perform';
     </div>
     <div class="updates">
       <div class="list" data-test-pending-updates>
-        <table class="ilios-table ilios-zebra-table">
+        <table class="ilios-table ilios-table-colors ilios-zebra-table">
           <thead>
             <tr>
               <th class="text-left" colspan="2">

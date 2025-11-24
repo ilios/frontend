@@ -23,7 +23,7 @@ export default class CurriculumInventoryVerificationPreviewTable7Component exten
       <h3 data-test-title id="verification-preview-table7">
         {{t "general.table7AllEventsWithAssessmentsTaggedAsFormativeOrSummative"}}
       </h3>
-      <table class="ilios-table">
+      <table class="ilios-table ilios-table-colors">
         <thead>
           <tr>
             <th>

@@ -81,7 +81,10 @@ export default class LearnerGroupBulkAssignmentComponent extends Component {
           </button>
         </p>
         {{#if this.unmatchedGroups.length}}
-          <table class="ilios-table group-matcher" data-test-match-groups-unmatched>
+          <table
+            class="ilios-table ilios-table-colors group-matcher"
+            data-test-match-groups-unmatched
+          >
             <caption>
               {{t "general.matchGroups"}}
             </caption>

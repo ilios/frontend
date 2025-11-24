@@ -53,7 +53,7 @@ export default class SessionCollapsedObjectivesComponent extends Component {
       </div>
       {{#if this.objectivesData.isResolved}}
         <div class="content">
-          <table class="ilios-table condensed">
+          <table class="ilios-table ilios-table-colors condensed">
             <thead>
               <tr>
                 <th class="text-left">

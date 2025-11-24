@@ -38,7 +38,11 @@ export default class ReportsListComponent extends Component {
     this.args.setSortBy(what);
   }
   <template>
-    <table class="ilios-table ilios-zebra-table" data-test-reports-table ...attributes>
+    <table
+      class="ilios-table ilios-table-colors ilios-zebra-table"
+      data-test-reports-table
+      ...attributes
+    >
       <thead>
         <tr data-test-report-headings>
           <SortableTh

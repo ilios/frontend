@@ -29,7 +29,7 @@ export default class CurriculumInventoryVerificationPreviewTable5Component exten
       <h3 data-test-title id="verification-preview-table5">
         {{t "general.table5NonClerkshipSequenceBlockAssessmentMethods"}}
       </h3>
-      <table class="ilios-table">
+      <table class="ilios-table ilios-table-colors">
         <thead>
           <tr>
             <th colspan="2" rowspan="2">

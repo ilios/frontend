@@ -44,7 +44,7 @@ export default class CurriculumInventoryVerificationPreviewTable2Component exten
       <h3 data-test-title>
         {{t "general.table2PrimaryInstructionalMethodByNonClerkshipSequenceBlock"}}
       </h3>
-      <table class="ilios-table">
+      <table class="ilios-table ilios-table-colors">
         <thead>
           <tr>
             <th colspan="2" rowspan="2">

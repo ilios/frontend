@@ -47,7 +47,7 @@ export default class InstructorGroupsListComponent extends Component {
   <template>
     {{#if @instructorGroups.length}}
       <table
-        class="ilios-table ilios-zebra-table instructor-groups-list"
+        class="ilios-table ilios-table-colors ilios-zebra-table instructor-groups-list"
         data-test-instructor-groups-list
         ...attributes
       >

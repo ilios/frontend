@@ -271,7 +271,10 @@ export default class LearnerGroupUploadDataComponent extends Component {
         <p class="error">
           {{t "general.canNotContinueWithInvalidRecords"}}
         </p>
-        <table class="ilios-table invalid-users" data-test-upload-data-invalid-users>
+        <table
+          class="ilios-table ilios-table-colors invalid-users"
+          data-test-upload-data-invalid-users
+        >
           <caption>
             {{t "general.invalidUsers"}}
             ({{this.invalidUsers.length}})
@@ -324,7 +327,7 @@ export default class LearnerGroupUploadDataComponent extends Component {
         </table>
       {{/if}}
       {{#if this.validUsers}}
-        <table class="ilios-table valid-users" data-test-upload-data-valid-users>
+        <table class="ilios-table ilios-table-colors valid-users" data-test-upload-data-valid-users>
           <caption>
             {{t "general.validUsers"}}
             ({{this.validUsers.length}})
