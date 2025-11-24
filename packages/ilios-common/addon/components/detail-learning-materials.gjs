@@ -266,7 +266,7 @@ export default class DetailCohortsComponent extends Component {
             </button>
           {{/if}}
           <table
-            class="ilios-table ilios-zebra-table{{if
+            class="ilios-table ilios-table-colors ilios-zebra-table{{if
                 (gt this.materials.length 10)
                 ' sticky-header'
               }}"
