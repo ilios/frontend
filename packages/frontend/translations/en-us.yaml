@@ -179,6 +179,7 @@ general:
   instructionalMethods: Instructional Methods
   instructionalTime: Instructional Time
   instructionalTimeReportSummary: "report for {courseCount, plural, one {one course} other {# courses}}. Each attached instructor is listed along with course data."
+  instructionalTimeReportSummaryMultiSchool: "report for {courseCount, plural, one {one course} other {# courses}}{schoolCount, plural, zero {} one {} other {, across # schools}}. Each attached instructor is listed along with course data."
   instructorGroup: Instructor Group
   instructorGroupTitle: Instructor Group Title
   instructorGroupTitleFilterPlaceholder: Filter by Instructor Group Title
