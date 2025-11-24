@@ -16,6 +16,17 @@
       td.count {
         padding-left: 1rem;
       }
+
+      /*
+       * KLUDGE!
+       * `text-middle` is declared in the `ilios-table` class and applied in the corresponding component's markup.
+       * However, we're also applying the `collapsed-container-table` mixin above, which overrides
+       * the vertical alignment.
+       * TODO: Clean this up when refactoring the `collapsed-container-table` away, see ilios/ilios#6608. [ST 2025/11/24]
+       */
+      td.text-middle {
+        vertical-align: middle;
+      }
     }
   }
 }
