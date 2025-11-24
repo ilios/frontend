@@ -67,7 +67,7 @@ module('Integration | Component | reports/curriculum/instructional-time', functi
 
     assert.strictEqual(
       component.header.runSummaryText,
-      'Run Instructional Time report for one course. Each attached [something] is listed along with [things].',
+      'Run Instructional Time report for one course. Each attached instructor is listed along with course data.',
     );
 
     assert.strictEqual(component.results.length, 1);
@@ -89,7 +89,7 @@ module('Integration | Component | reports/curriculum/instructional-time', functi
 
     assert.strictEqual(
       component.header.runSummaryText,
-      'Run Instructional Time report for one course. Each attached [something] is listed along with [things].',
+      'Run Instructional Time report for one course. Each attached instructor is listed along with course data.',
     );
 
     await component.header.download.click();
