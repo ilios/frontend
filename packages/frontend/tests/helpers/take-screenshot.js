@@ -12,6 +12,7 @@ export const takeScreenshot = async (assert, description = '') => {
   const result = await snapdom(el, {
     placeholders: false,
     embedFonts: true,
+    height: 1000,
   });
 
   const img = await result.toPng();
