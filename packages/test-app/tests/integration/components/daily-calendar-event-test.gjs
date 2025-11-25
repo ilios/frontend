@@ -12,7 +12,16 @@ module('Integration | Component | daily-calendar-event', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
-  this.createEvent = function (name, startDate, endDate, lastModified, isScheduled, isPublished) {
+  this.createEvent = function (
+    name,
+    startDate,
+    endDate,
+    lastModified,
+    isScheduled,
+    isPublished,
+    prerequisites,
+  ) {
+    prerequisites = prerequisites ?? [];
     return new Event(
       {
         name,
@@ -22,7 +31,7 @@ module('Integration | Component | daily-calendar-event', function (hooks) {
         lastModified,
         isPublished,
         isScheduled,
-        prerequisites: [],
+        prerequisites,
         postrequisites: [],
       },
       true,
@@ -552,6 +561,35 @@ module('Integration | Component | daily-calendar-event', function (hooks) {
         </template>,
       );
       assert.ok(component.isDraft);
+    });
+
+    test('prework', async function (assert) {
+      const event = this.createEvent(
+        'event 0',
+        '2020-02-10T10:40:00',
+        '2020-02-10T12:30:00',
+        '2012-01-09T08:00:00',
+        true,
+        false,
+        [
+          {
+            name: 'prework',
+            startDate: '2020-02-08T23:45:00',
+            endDate: '2020-02-09T00:00:00',
+            postrequisites: [],
+            prerequisites: [],
+          },
+        ],
+      );
+      this.set('event', event);
+      this.set('events', [event]);
+      await render(
+        <template>
+          <DailyCalendarEvent @event={{this.event}} @allDayEvents={{this.events}} />
+        </template>,
+      );
+      assert.ok(component.preworkIndicator.isPresent);
+      assert.strictEqual(component.preworkIndicator.title, 'Has pre-work');
     });
   });
 });

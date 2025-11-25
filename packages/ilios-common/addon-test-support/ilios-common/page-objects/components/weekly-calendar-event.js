@@ -21,6 +21,10 @@ const definition = {
     scope: '[data-test-ilios-calendar-event-tooltip]',
     resetScope: true,
   },
+  preworkIndicator: {
+    scope: '[data-test-has-prework-icon]',
+    title: text('title'),
+  },
 };
 
 export default definition;

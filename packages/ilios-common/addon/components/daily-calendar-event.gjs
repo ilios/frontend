@@ -145,6 +145,14 @@ export default class DailyCalendarEventComponent extends Component {
             data-test-recently-updated-icon
           />
         {{/if}}
+        {{#if @event.hasPrework}}
+          <FaIcon
+            @icon="arrow-right-to-bracket"
+            data-test-has-prework
+            @title={{t "general.hasPrework"}}
+            data-test-has-prework-icon
+          />
+        {{/if}}
         {{#if (not @event.isPublished)}}
           <FaIcon @icon="file-signature" data-test-draft-icon />
         {{else if @event.isScheduled}}

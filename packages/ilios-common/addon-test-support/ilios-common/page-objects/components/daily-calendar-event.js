@@ -8,6 +8,10 @@ const definition = {
   isScheduled: isPresent('[data-test-scheduled-icon]'),
   isDraft: isPresent('[data-test-draft-icon]'),
   wasRecentlyUpdated: isPresent('[data-test-recently-updated-icon]'),
+  preworkIndicator: {
+    scope: '[data-test-has-prework-icon]',
+    title: text('title'),
+  },
 };
 
 export default definition;
