@@ -103,6 +103,14 @@ export default class Event {
   }
 
   /**
+   * Whether this event has prerequisites or not.
+   * @return { Boolean }
+   */
+  get hasPrework() {
+    return !!this.prerequisites.length;
+  }
+
+  /**
    * Generates a slug from  given user event data.
    * @return { String }
    */
