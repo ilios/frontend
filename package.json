@@ -20,7 +20,7 @@
     "test:lti-course-manager": "pnpm --filter lti-course-manager exec ember exam --parallel=8 --load-balance",
     "test:lti-dashboard": "pnpm --filter lti-dashboard exec ember exam --parallel=8 --load-balance",
     "test:test-app": "pnpm --filter test-app exec ember exam --parallel=8 --load-balance",
-    "test:frontend:screenshots": "pnpm --filter frontend exec ember test --config-file=testem.screenshots.js",
+    "test:frontend:screenshots": "pnpm --filter frontend exec ember exam --parallel=8 --load-balance --config-file=testem.screenshots.js",
     "prepare": "husky"
   },
   "engines": {
