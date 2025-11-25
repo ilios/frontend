@@ -125,12 +125,14 @@ module('Unit | Classes | Event', function (hooks) {
       prerequisites: [
         {
           name: 'event 2',
+          ilmSession: 123,
           startDate: '2025-11-09T00:00:00',
           postrequisites: [],
           prerequisites: [],
         },
         {
           name: 'event 1',
+          ilmSession: 445,
           startDate: '2025-09-10T23:45:15',
           postrequisites: [],
           prerequisites: [],
@@ -143,11 +145,13 @@ module('Unit | Classes | Event', function (hooks) {
     assert.strictEqual(event.prerequisites.length, 2);
     assert.ok(event.prerequisites[0] instanceof Event);
     assert.strictEqual(event.prerequisites[0].name, 'event 1');
+    assert.strictEqual(event.prerequisites[0].slug, 'U20250910I445');
     assert.strictEqual(event.prerequisites[0].postrequisiteName, 'event 0');
     assert.strictEqual(event.prerequisites[0].postrequisiteSlug, event.slug);
     assert.strictEqual(event.prerequisites[0].startDate, event.startDate);
     assert.ok(event.prerequisites[1] instanceof Event);
     assert.strictEqual(event.prerequisites[1].name, 'event 2');
+    assert.strictEqual(event.prerequisites[1].slug, 'U20251109I123');
     assert.strictEqual(event.prerequisites[1].postrequisiteName, 'event 0');
     assert.strictEqual(event.prerequisites[1].postrequisiteSlug, event.slug);
     assert.strictEqual(event.prerequisites[1].startDate, event.startDate);

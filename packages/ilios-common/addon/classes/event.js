@@ -28,17 +28,19 @@ export default class Event {
     // converts pre- and post-requisites into Events as well.
     this.prerequisites = sortBy(
       this.prerequisites.map((prereq) => {
-        return new Event(
+        const rhett = new Event(
           {
             ...prereq,
             ...{
-              startDate: this.startDate,
               postrequisiteName: this.name,
               postrequisiteSlug: this.slug,
             },
           },
           this.isUserEvent,
         );
+        // overwrite the pre-req's start date with its target event's start date.
+        rhett.startDate = this.startDate;
+        return rhett;
       }),
       ['startDate', 'name'],
     );
@@ -99,7 +101,6 @@ export default class Event {
   get isBlanked() {
     return !this.offering && !this.ilmSession;
   }
-
 
   /**
    * Generates a slug from  given user event data.
