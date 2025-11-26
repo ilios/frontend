@@ -3,12 +3,12 @@
 .offering-manager {
   @include m.font-size("small");
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(3, 2fr) 1fr;
   margin-bottom: 0.5rem;
   padding-bottom: 0.5rem;
 
   .offering-manager-learners {
-    padding-right: 1rem;
+    padding: 0 1rem 1rem 0;
   }
 
   .offering-manager-learner-groups {

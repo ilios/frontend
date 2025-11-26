@@ -157,62 +157,66 @@ export default class OfferingManagerComponent extends Component {
             @scrollToBottom={{false}}
           />
         {{else}}
-          <div class="offering-manager-learners">
-            <FadeText
-              @text={{this.sortedIndividualLearners}}
-              @forceExpanded={{@fadeTextExpanded}}
-              @setExpanded={{@setFadeTextExpanded}}
-              as |ft|
-            >
-              {{#if this.individualLearners.length}}
-                <strong>({{this.individualLearners.length}})</strong>
-              {{/if}}
-              {{ft.text}}
-              {{ft.controls}}
-            </FadeText>
-          </div>
-          <div class="offering-manager-learner-groups">
-            <ul>
-              {{#each this.sortedLearnerGroups as |learnerGroup|}}
-                <li
-                  {{this.setLearnerGroupElement learnerGroup.id}}
-                  {{mouseHoverToggle (fn this.toggleHover learnerGroup.id)}}
+          <div class="offering-manager-learners-and-learner-groups">
+            {{#if this.sortedIndividualLearners.length}}
+              <div class="offering-manager-learners">
+                <FadeText
+                  @text={{this.sortedIndividualLearners}}
+                  @forceExpanded={{@fadeTextExpanded}}
+                  @setExpanded={{@setFadeTextExpanded}}
+                  as |ft|
                 >
-                  {{learnerGroup.title}}
-                  {{#if learnerGroup.needsAccommodation}}
-                    <FaIcon
-                      @icon="universal-access"
-                      @title={{t "general.accommodationIsRequiredForLearnersInThisGroup"}}
-                    />
+                  {{#if this.individualLearners.length}}
+                    <strong>({{this.individualLearners.length}})</strong>
                   {{/if}}
-                  {{#unless learnerGroup.isTopLevelGroup}}
-                    {{#if
-                      (and
-                        (get this (concat "learnerGroupElement" learnerGroup.id))
-                        (includes learnerGroup.id this.hoveredGroups)
-                      )
-                    }}
-                      <IliosTooltip
-                        @target={{get this (concat "learnerGroupElement" learnerGroup.id)}}
-                      >
-                        <strong>
-                          {{if
-                            (eq learnerGroup.allParents.length 1)
-                            (t "general.parentGroup")
-                            (t "general.parentGroups")
-                          }}:
-                        </strong>
-                        {{join " » " (reverse (mapBy0 "title" learnerGroup.allParents))}}
-                      </IliosTooltip>
+                  {{ft.text}}
+                  {{ft.controls}}
+                </FadeText>
+              </div>
+            {{/if}}
+            <div class="offering-manager-learner-groups">
+              <ul>
+                {{#each this.sortedLearnerGroups as |learnerGroup|}}
+                  <li
+                    {{this.setLearnerGroupElement learnerGroup.id}}
+                    {{mouseHoverToggle (fn this.toggleHover learnerGroup.id)}}
+                  >
+                    {{learnerGroup.title}}
+                    {{#if learnerGroup.needsAccommodation}}
+                      <FaIcon
+                        @icon="universal-access"
+                        @title={{t "general.accommodationIsRequiredForLearnersInThisGroup"}}
+                      />
                     {{/if}}
-                  {{/unless}}
-                </li>
-              {{else}}
-                <li>
-                  <FaIcon @icon="users" />
-                </li>
-              {{/each}}
-            </ul>
+                    {{#unless learnerGroup.isTopLevelGroup}}
+                      {{#if
+                        (and
+                          (get this (concat "learnerGroupElement" learnerGroup.id))
+                          (includes learnerGroup.id this.hoveredGroups)
+                        )
+                      }}
+                        <IliosTooltip
+                          @target={{get this (concat "learnerGroupElement" learnerGroup.id)}}
+                        >
+                          <strong>
+                            {{if
+                              (eq learnerGroup.allParents.length 1)
+                              (t "general.parentGroup")
+                              (t "general.parentGroups")
+                            }}:
+                          </strong>
+                          {{join " » " (reverse (mapBy0 "title" learnerGroup.allParents))}}
+                        </IliosTooltip>
+                      {{/if}}
+                    {{/unless}}
+                  </li>
+                {{else}}
+                  <li>
+                    <FaIcon @icon="users" />
+                  </li>
+                {{/each}}
+              </ul>
+            </div>
           </div>
           <div class="offering-manager-location">
             <TruncateText @text={{@offering.room}} @length={{10}} data-test-location />
