@@ -51,7 +51,7 @@ module('Integration | Component | offering-manager', function (hooks) {
     assert.strictEqual(component.learnerGroups.length, 2, 'learner groups list has correct count');
     assert.strictEqual(
       component.learners.list,
-      '(2) 1 guy M. Mc1son, 2 guy M. Mc2son',
+      '1 guy M. Mc1son, 2 guy M. Mc2son',
       'list of learners correct',
     );
     assert.strictEqual(
@@ -175,7 +175,7 @@ module('Integration | Component | offering-manager', function (hooks) {
     assert.notOk(component.learners.isHidden, 'list of individual learners is displayed');
     assert.strictEqual(
       component.learners.list,
-      '(2) 1 guy M. Mc1son, 2 guy M. Mc2son',
+      '1 guy M. Mc1son, 2 guy M. Mc2son',
       'list of learners correct',
     );
     assert.strictEqual(component.learnerGroups.length, 1, 'learner groups list has correct count');

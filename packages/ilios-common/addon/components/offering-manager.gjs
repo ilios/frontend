@@ -166,9 +166,6 @@ export default class OfferingManagerComponent extends Component {
                   @setExpanded={{@setFadeTextExpanded}}
                   as |ft|
                 >
-                  {{#if this.individualLearners.length}}
-                    <strong>({{this.individualLearners.length}})</strong>
-                  {{/if}}
                   {{ft.text}}
                   {{ft.controls}}
                 </FadeText>
