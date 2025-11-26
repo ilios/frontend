@@ -87,27 +87,19 @@ export default class ReportsCurriculumInstructionalTimeComponent extends Compone
     return this.reportWithInstructors.reduce((acc, c) => {
       c.sessions.forEach((s) => {
         const path = this.router.urlFor('session', c.id, s.id);
-        let duration;
-        const firstOffering = s.offerings.sort(
-          (a, b) => DateTime.fromISO(a.startDate) - DateTime.fromISO(b.startDate),
-        )[0];
-        if (firstOffering) {
-          duration = DateTime.fromISO(firstOffering.endDate).diff(
-            DateTime.fromISO(firstOffering.startDate),
-            'minutes',
-          ).minutes;
-        } else if (s.ilmSession) {
-          duration = s.ilmSession.minutes;
-        }
         s.offerings.forEach((o) => {
           o.instructors.forEach((i) => {
+            const duration = DateTime.fromISO(o.endDate).diff(
+              DateTime.fromISO(o.startDate),
+              'minutes',
+            ).minutes;
             const sessionOfferingInstructor = {
               courseId: c.id,
               courseTitle: c.title,
               sessionTitle: s.title,
               sessionType: s.sessionType.title,
               displayName: i.displayName,
-              duration: duration ?? 0,
+              duration,
               link: `${origin}${path}`,
             };
 
