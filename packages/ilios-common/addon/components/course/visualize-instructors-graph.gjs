@@ -237,7 +237,7 @@ export default class CourseVisualizeInstructorsGraph extends Component {
                 {{t "general.download"}}
               </button>
             </div>
-            <table>
+            <table class="ilios-table ilios-table-colors">
               <thead>
                 <tr>
                   <SortableTh

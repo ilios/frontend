@@ -43,7 +43,7 @@ export default class SchoolVocabulariesCollapsedComponent extends Component {
         <LoadingSpinner />
       {{else}}
         <div class="content">
-          <table class="condensed">
+          <table class="ilios-table ilios-table-colors condensed">
             <thead>
               <tr>
                 <th class="text-left">

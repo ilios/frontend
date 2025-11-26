@@ -193,7 +193,7 @@ export default class CourseMaterialsComponent extends Component {
             data-test-course-filter
           />
         </span>
-        <table data-test-course-table>
+        <table class="ilios-table ilios-table-colors" data-test-course-table>
           <thead>
             <tr>
               <SortableTh
@@ -293,7 +293,7 @@ export default class CourseMaterialsComponent extends Component {
             data-test-session-filter
           />
         </span>
-        <table data-test-session-table>
+        <table class="ilios-table ilios-table-colors" data-test-session-table>
           <thead>
             <tr>
               <SortableTh

@@ -5,7 +5,7 @@ import truncate from 'ilios-common/helpers/truncate';
 import formatDate from 'ember-intl/helpers/format-date';
 <template>
   <table
-    class="ilios-zebra-table courses-loading-list loading-shimmer loading-text"
+    class="ilios-table ilios-table-colors ilios-zebra-table courses-loading-list loading-shimmer loading-text"
     aria-hidden="true"
   >
     <thead>

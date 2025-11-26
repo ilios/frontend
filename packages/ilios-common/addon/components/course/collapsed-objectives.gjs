@@ -53,7 +53,7 @@ export default class CourseCollapsedObjectivesComponent extends Component {
       </div>
       {{#if this.objectives.length}}
         <div class="content">
-          <table class="condensed">
+          <table class="ilios-table ilios-table-colors condensed">
             <thead>
               <tr>
                 <th class="text-left">

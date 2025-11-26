@@ -17,10 +17,5 @@
 
   .school-session-attributes-expanded-content {
     @include m.detail-container-content;
-
-    table {
-      @include m.ilios-table-structure;
-      @include m.ilios-table-colors;
-    }
   }
 }

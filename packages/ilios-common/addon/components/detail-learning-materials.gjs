@@ -265,7 +265,12 @@ export default class DetailCohortsComponent extends Component {
               {{t "general.sortMaterials"}}
             </button>
           {{/if}}
-          <table class="ilios-zebra-table{{if (gt this.materials.length 10) ' sticky-header'}}">
+          <table
+            class="ilios-table ilios-table-colors ilios-zebra-table ilios-removable-table{{if
+                (gt this.materials.length 10)
+                ' sticky-header'
+              }}"
+          >
             <thead>
               <tr>
                 <th class="text-left" colspan="3">

@@ -49,7 +49,7 @@ export default class DetailCohortListComponent extends Component {
     <div class="detail-cohort-list">
       {{#if this.cohortsData.isResolved}}
         {{#if this.sortedCohorts.length}}
-          <table>
+          <table class="ilios-table ilios-table-colors">
             <thead>
               <tr>
                 <th class="text-left">

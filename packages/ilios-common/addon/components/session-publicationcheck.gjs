@@ -73,7 +73,7 @@ export default class SessionPublicationCheckComponent extends Component {
           ({{@session.allPublicationIssuesLength}})
         </div>
         <div class="session-publicationcheck-content">
-          <table>
+          <table class="ilios-table">
             <thead>
               <tr>
                 <th>

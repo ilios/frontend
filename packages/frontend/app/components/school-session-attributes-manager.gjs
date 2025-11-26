@@ -4,7 +4,7 @@ import { on } from '@ember/modifier';
 <template>
   {{#let (uniqueId) as |templateId|}}
     <div data-test-school-session-attributes-manager ...attributes>
-      <table class="condensed">
+      <table class="ilios-table ilios-table-colors condensed">
         <thead>
           <tr>
             <th class="text-left">

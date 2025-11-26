@@ -122,7 +122,7 @@ export default class LearnerGroupCohortUserManagerComponent extends Component {
         {{#if @users.length}}
           <div class="learner-group-cohort-user-manager-content">
             <div class="list">
-              <table class="ilios-zebra-table">
+              <table class="ilios-table ilios-table-colors ilios-zebra-table">
                 <thead data-test-headers>
                   <tr>
                     {{#if @canUpdate}}

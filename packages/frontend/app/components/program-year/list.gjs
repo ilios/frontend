@@ -177,7 +177,7 @@ export default class ProgramYearListComponent extends Component {
         </section>
         <div class="list">
           {{#if this.sortedProgramYears.length}}
-            <table class="ilios-zebra-table">
+            <table class="ilios-table ilios-table-colors ilios-zebra-table ilios-removable-table">
               <thead>
                 <tr>
                   <th class="text-left">

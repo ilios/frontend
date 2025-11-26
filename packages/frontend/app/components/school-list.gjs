@@ -179,7 +179,7 @@ export default class SchoolListComponent extends Component {
           {{/if}}
           <div class="list">
             {{#if @schools.length}}
-              <table class="ilios-zebra-table">
+              <table class="ilios-table ilios-table-colors ilios-zebra-table">
                 <thead>
                   <tr>
                     <th class="text-left">

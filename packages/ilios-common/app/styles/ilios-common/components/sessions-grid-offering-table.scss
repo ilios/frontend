@@ -3,9 +3,6 @@
 @use "sass:color";
 
 .sessions-grid-offering-table {
-  @include m.ilios-table-structure;
-  @include m.ilios-table-colors();
-
   margin: auto;
   width: 95%;
 

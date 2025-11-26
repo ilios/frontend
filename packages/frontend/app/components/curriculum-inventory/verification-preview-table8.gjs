@@ -9,7 +9,7 @@ import t from 'ember-intl/helpers/t';
     <h3 data-test-title id="verification-preview-table8">
       {{t "general.table8AllResourceTypes"}}
     </h3>
-    <table>
+    <table class="ilios-table ilios-table-colors">
       <thead>
         <tr>
           <th>

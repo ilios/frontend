@@ -441,7 +441,7 @@ export default class BulkNewUsersComponent extends Component {
               </div>
             {{else if (gte this.proposedUsers.length 1)}}
               <div class="proposed-new-users" data-test-proposed-new-users>
-                <table>
+                <table class="ilios-table ilios-table-colors">
                   <thead>
                     <tr>
                       <th></th>

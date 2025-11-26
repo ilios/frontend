@@ -1,5 +1,3 @@
-@use "ilios-table" as t;
-
 @mixin graph-with-data-table() {
   display: inline-block;
   height: 1rem;
@@ -14,10 +12,6 @@
     }
 
     table {
-      @include t.ilios-table-structure;
-      @include t.ilios-table-colors;
-      @include t.ilios-removable-table;
-
       thead {
         background-color: var(--lightest-grey);
       }

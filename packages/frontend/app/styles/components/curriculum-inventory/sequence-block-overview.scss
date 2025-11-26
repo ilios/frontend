@@ -70,11 +70,6 @@
         display: flex;
         justify-content: space-between;
       }
-
-      table {
-        @include m.ilios-table-structure;
-        @include m.ilios-table-colors;
-      }
     }
   }
 

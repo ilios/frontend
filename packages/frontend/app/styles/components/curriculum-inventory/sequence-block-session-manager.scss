@@ -10,9 +10,6 @@
       .count-as-one-header input {
         margin-right: 0.5rem;
       }
-
-      @include m.ilios-table-structure;
-      @include m.ilios-table-colors;
     }
   }
 }

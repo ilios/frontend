@@ -1,7 +1,6 @@
 @use "detail-container";
 @use "font-size";
 @use "ilios-heading";
-@use "ilios-table";
 @use "media";
 
 @mixin collapsed-container($border-color) {
@@ -26,8 +25,6 @@
 }
 
 @mixin collapsed-container-table() {
-  @include ilios-table.ilios-table-structure;
-  @include ilios-table.ilios-table-colors;
   @include font-size.font-size("small");
 
   table,

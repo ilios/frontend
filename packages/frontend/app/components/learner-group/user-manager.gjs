@@ -223,7 +223,10 @@ export default class LearnerGroupUserManagerComponent extends Component {
                 {{t "general.groupMembers"}}
                 ({{this.groupUsers.length}})
               </div>
-              <table class="ilios-zebra-table" data-test-assigned-users>
+              <table
+                class="ilios-table ilios-table-colors ilios-zebra-table"
+                data-test-assigned-users
+              >
                 <thead>
                   <tr>
                     <th class="text-left" colspan="1">
@@ -351,7 +354,10 @@ export default class LearnerGroupUserManagerComponent extends Component {
                 {{t "general.allOtherMembers" topLevelGroupTitle=@topLevelGroupTitle}}
                 ({{this.nonGroupUsers.length}})
               </div>
-              <table class="ilios-zebra-table" data-test-assignable-users>
+              <table
+                class="ilios-table ilios-table-colors ilios-zebra-table"
+                data-test-assignable-users
+              >
                 <thead>
                   <tr>
                     <th class="text-left" colspan="1">

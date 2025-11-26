@@ -3,7 +3,7 @@ import sortBy from 'ilios-common/helpers/sort-by';
 import SchoolSessionTypesListItem from 'frontend/components/school-session-types-list-item';
 <template>
   <div class="school-session-types-list" data-test-school-session-types-list ...attributes>
-    <table>
+    <table class="ilios-table ilios-table-colors ilios-removable-table">
       <thead>
         <tr>
           <th colspan="3">

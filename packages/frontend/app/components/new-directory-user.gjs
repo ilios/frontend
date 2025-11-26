@@ -521,7 +521,7 @@ export default class NewDirectoryUserComponent extends Component {
             {{#if this.searchResults.length}}
               <section class="new-directory-user-search-results" data-test-search-results>
                 <div>
-                  <table>
+                  <table class="ilios-table ilios-table-colors">
                     <thead>
                       <tr>
                         <th class="text-right" colspan="1"></th>
