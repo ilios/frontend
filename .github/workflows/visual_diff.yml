@@ -63,9 +63,9 @@ jobs:
         with:
           node-version: 24
       - name: Create Visual Diff
-        run: npx visual-differ baseline-frontend candidate-frontend output
+        run: npx visual-differ baseline-frontend candidate-frontend results/visual-diff-${{ github.event.pull_request.number }}
       - uses: actions/upload-artifact@v5
         if: always()
         with:
           name: VisualDiffResults
-          path: output
+          path: results
