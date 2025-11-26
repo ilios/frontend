@@ -1,0 +1,70 @@
+name: Visual Diff
+
+on:
+  pull_request: {}
+
+concurrency:
+  group: visual-diff-${{ github.head_ref || github.ref }}
+  cancel-in-progress: true
+
+env:
+  SW_DISABLED: true
+
+jobs:
+  baseline:
+    name: Baseline
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: "master"
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: pnpm
+      - name: Install Dependencies
+        run: pnpm install
+      - name: Run Tests
+        run: pnpm --filter frontend exec ember test --config-file=testem.screenshots.js
+      - uses: actions/upload-artifact@v5
+        with:
+          name: baseline-frontend
+          path: build/screenshots
+
+  candidate:
+    name: Candidate
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: pnpm
+      - name: Install Dependencies
+        run: pnpm install
+      - name: Run Tests
+        run: pnpm --filter frontend exec ember test --config-file=testem.screenshots.js
+      - uses: actions/upload-artifact@v5
+        with:
+          name: candidate-frontend
+          path: build/screenshots
+
+  compare:
+    name: Visual Diff
+    needs: [baseline, candidate]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v6
+      - run: ls -lh
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+      - name: Create Visual Diff
+        run: npx visual-differ baseline-frontend candidate-frontend output
+      - uses: actions/upload-artifact@v5
+        if: always()
+        with:
+          name: VisualDiffResults
+          path: output
