@@ -49,7 +49,7 @@ module('Integration | Component | offering-manager', function (hooks) {
 
     assert.strictEqual(
       component.learners,
-      '(2) 1 guy M. Mc1son, 2 guy...',
+      '(2) 1 guy M. Mc1son, 2 guy M. Mc2son',
       'list of learners correct',
     );
     assert.strictEqual(
