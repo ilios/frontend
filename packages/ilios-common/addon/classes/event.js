@@ -10,6 +10,9 @@ export default class Event {
   /** @var { Boolean } isUserEvent indicates whether this is a user event or a school event */
   isUserEvent;
 
+  /** @var { String } slug the event's slug - its unique identifier. */
+  slug;
+
   /**
    * @param { Object } data A plain-old JS object, containing all the event's data.
    * @param { Boolean } isUserEvent TRUE if the given object represents a user event, FALSE if it represents a school event.
@@ -18,20 +21,26 @@ export default class Event {
     this.isUserEvent = isUserEvent;
     // copies all attributes of the given data input to this Event object.
     Object.assign(this, data);
+    // set the slug.
+    this.slug = this.isUserEvent
+      ? this.#getSlugForUserEvent(this.startDate, this.offering, this.ilmSession)
+      : this.#getSlugForSchoolEvent(this.startDate, this.school, this.offering, this.ilmSession);
     // converts pre- and post-requisites into Events as well.
     this.prerequisites = sortBy(
       this.prerequisites.map((prereq) => {
-        return new Event(
+        const rhett = new Event(
           {
             ...prereq,
             ...{
-              startDate: this.startDate,
               postrequisiteName: this.name,
               postrequisiteSlug: this.slug,
             },
           },
           this.isUserEvent,
         );
+        // overwrite the pre-req's start date with its target event's start date.
+        rhett.startDate = this.startDate;
+        return rhett;
       }),
       ['startDate', 'name'],
     );
@@ -93,16 +102,6 @@ export default class Event {
     return !this.offering && !this.ilmSession;
   }
 
-  /**
-   * The event slug.
-   * @return { String }
-   */
-  @cached
-  get slug() {
-    return this.isUserEvent
-      ? this.#getSlugForUserEvent(this.startDate, this.offering, this.ilmSession)
-      : this.#getSlugForSchoolEvent(this.startDate, this.school, this.offering, this.ilmSession);
-  }
   /**
    * Generates a slug from  given user event data.
    * @return { String }
