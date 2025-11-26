@@ -158,7 +158,7 @@ export default class OfferingManagerComponent extends Component {
           />
         {{else}}
           <div class="offering-manager-learners-and-learner-groups">
-            {{#if this.sortedIndividualLearners.length}}
+            {{#if this.individualLearners.length}}
               <div class="offering-manager-learners">
                 <FadeText
                   @text={{this.sortedIndividualLearners}}
