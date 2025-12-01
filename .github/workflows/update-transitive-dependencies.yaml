@@ -2,7 +2,7 @@ name: Update Transitive Dependencies
 
 on:
   schedule:
-    - cron: "15 15 * * 0" # weekly, on Sunday morning (UTC)
+    - cron: "15 15 * * 2" # weekly, on Tuesday morning (UTC)
   workflow_dispatch: null
 
 jobs:
