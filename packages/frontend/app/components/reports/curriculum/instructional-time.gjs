@@ -88,7 +88,7 @@ export default class ReportsCurriculumInstructionalTimeComponent extends Compone
       c.sessions.forEach((s) => {
         const path = this.router.urlFor('session', c.id, s.id);
         s.offerings.forEach((o) => {
-          o.instructors.forEach((i) => {
+          o.instructors.forEach((i, iIndex) => {
             const offeringDate = DateTime.fromISO(o.startDate).toLocaleString(
               this.intl.primaryLocale,
             );
@@ -102,7 +102,7 @@ export default class ReportsCurriculumInstructionalTimeComponent extends Compone
               sessionTitle: s.title,
               sessionType: s.sessionType.title,
               offeringDate,
-              displayName: i.displayName,
+              instructorName: s.instructors[iIndex],
               duration,
               link: `${origin}${path}`,
             };
@@ -184,7 +184,7 @@ export default class ReportsCurriculumInstructionalTimeComponent extends Compone
       rhett[this.intl.t('general.session')] = o.sessionTitle;
       rhett[this.intl.t('general.sessionType')] = o.sessionType;
       rhett[this.intl.t('general.date')] = o.offeringDate;
-      rhett[this.intl.t('general.displayName')] = o.displayName;
+      rhett[this.intl.t('general.name')] = o.instructorName;
       rhett[this.intl.t('general.minutes')] = o.duration;
       rhett[this.intl.t('general.link')] = o.link;
 
