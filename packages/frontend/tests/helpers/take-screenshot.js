@@ -1,5 +1,6 @@
 import { snapdom } from '@zumer/snapdom';
 import { getUniqueName } from './percy-snapshot-name';
+import { waitForPromise } from '@ember/test-waiters';
 
 let shouldTakeScreenshotsCache;
 
@@ -15,13 +16,7 @@ export const takeScreenshot = async (assert, description = '') => {
     height: 1000,
   });
 
-  const img = await result.toPng();
-  document.body.appendChild(img);
-
-  await result.download({ format: 'png', filename });
-
-  //wait 100ms so the download can finish
-  return new Promise((resolve) => setTimeout(resolve, 100));
+  return waitForPromise(result.download({ format: 'png', filename }));
 };
 
 function shouldTakeScreenshots() {
