@@ -1,5 +1,6 @@
 import Service, { service } from '@ember/service';
 import { dasherize } from '@ember/string';
+import getUserNameForGraphUser from 'ilios-common/utils/get-user-name-for-graph-user';
 
 const subjectTranslations = {
   course: 'general.courses',
@@ -186,15 +187,3 @@ export default class ReportingService extends Service {
     return new Set(all).size;
   }
 }
-
-const getUserNameForGraphUser = function (user) {
-  if (user.displayName) {
-    return user.displayName;
-  }
-  const middleInitial = user.middleName ? user.middleName.charAt(0) : false;
-  if (middleInitial) {
-    return `${user.firstName} ${middleInitial}. ${user.lastName}`;
-  } else {
-    return `${user.firstName} ${user.lastName}`;
-  }
-};

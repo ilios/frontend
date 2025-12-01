@@ -13,6 +13,7 @@ import perform from 'ember-concurrency/helpers/perform';
 import add from 'ember-math-helpers/helpers/add';
 import t from 'ember-intl/helpers/t';
 import sortBy from 'ilios-common/helpers/sort-by';
+import getUserNameForGraphUser from 'ilios-common/utils/get-user-name-for-graph-user';
 import { LinkTo } from '@ember/routing';
 
 export default class ReportsCurriculumInstructionalTimeComponent extends Component {
@@ -88,7 +89,7 @@ export default class ReportsCurriculumInstructionalTimeComponent extends Compone
       c.sessions.forEach((s) => {
         const path = this.router.urlFor('session', c.id, s.id);
         s.offerings.forEach((o) => {
-          o.instructors.forEach((i, iIndex) => {
+          o.instructors.forEach((i) => {
             const offeringDate = DateTime.fromISO(o.startDate).toLocaleString(
               this.intl.primaryLocale,
             );
@@ -102,7 +103,7 @@ export default class ReportsCurriculumInstructionalTimeComponent extends Compone
               sessionTitle: s.title,
               sessionType: s.sessionType.title,
               offeringDate,
-              instructorName: s.instructors[iIndex],
+              instructorName: getUserNameForGraphUser(i),
               duration,
               link: `${origin}${path}`,
             };
