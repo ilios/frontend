@@ -28,16 +28,7 @@ export default class Event {
     // converts pre- and post-requisites into Events as well.
     this.prerequisites = sortBy(
       this.prerequisites.map((prereq) => {
-        const rhett = new Event(
-          {
-            ...prereq,
-            ...{
-              postrequisiteName: this.name,
-              postrequisiteSlug: this.slug,
-            },
-          },
-          this.isUserEvent,
-        );
+        const rhett = new Event(prereq, this.isUserEvent);
         // overwrite the pre-req's start date with its target event's start date.
         rhett.startDate = this.startDate;
         return rhett;
