@@ -10,6 +10,10 @@ export default function calendarEventTooltip(event, intl, timeFormat) {
     return contents;
   };
 
+  const addHasPreworkToContents = function (contents) {
+    return contents + '<br />' + intl.t('general.hasPrework');
+  };
+
   const addInstructorsToContents = function (contents, instructors, etAlPhrase) {
     if (!instructors.length) {
       return contents;
@@ -67,6 +71,7 @@ export default function calendarEventTooltip(event, intl, timeFormat) {
     if (!isMulti) {
       contents = addInstructorsToContents(contents, instructors, intl.t('general.etAl'));
     }
+
     contents = addCourseTitleToContents(contents, courseTitle, intl.t('general.course'));
     contents = addSessionTypeTitleToContents(
       contents,
@@ -92,6 +97,10 @@ export default function calendarEventTooltip(event, intl, timeFormat) {
     );
     if (isMulti) {
       contents = contents + `,<br />${intl.t('general.multiple')}`;
+    }
+
+    if (event.hasPrework) {
+      contents = addHasPreworkToContents(contents);
     }
   } else {
     // 'TBD' event

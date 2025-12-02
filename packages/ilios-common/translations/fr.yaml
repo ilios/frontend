@@ -153,6 +153,7 @@ general:
   groupByCompetencies: Groupe par Compétences
   groupName: Nom de Groupe
   groups: Groupes
+  hasPrework: A un préalable
   hideCalendar: Cacher Calendrier
   hideCourseMaterials: Masquer les supports de cours
   hideCourseObjectives: Masquer les objectifs de cours

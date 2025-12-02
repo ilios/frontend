@@ -193,4 +193,32 @@ module('Unit | Classes | Event', function (hooks) {
     assert.strictEqual(event.postrequisites[2].name, 'event 2');
     assert.strictEqual(event.postrequisites[2].startDate, '2025-10-01T09:45:00');
   });
+
+  test('hasPrework', async function (assert) {
+    const event = new Event(
+      {
+        startDate: '2025-11-24T16:21:00',
+        postrequisites: [],
+        prerequisites: [],
+      },
+      true,
+    );
+
+    assert.notOk(event.hasPrework);
+
+    event.prerequisites.push(
+      new Event(
+        {
+          startDate: '2025-11-24T16:22:00',
+          prerequisites: [],
+          postrequisites: [],
+        },
+        true,
+      ),
+    );
+    assert.ok(event.hasPrework);
+
+    event.prerequisites.shift();
+    assert.notOk(event.hasPrework);
+  });
 });
