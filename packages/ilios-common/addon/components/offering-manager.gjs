@@ -50,7 +50,7 @@ export default class OfferingManagerComponent extends Component {
     if (!this.learnerGroups) {
       return [];
     }
-    return this.learnerGroups.slice().sort((learnerGroupA, learnerGroupB) => {
+    return this.learnerGroups.toSorted((learnerGroupA, learnerGroupB) => {
       if ('title:desc' === this.sortBy) {
         return learnerGroupB.title.localeCompare(learnerGroupA.title, this.intl.primaryLocale, {
           numeric: true,
