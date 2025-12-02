@@ -146,27 +146,27 @@ module('Integration | Component | bulk new users', function (hooks) {
     await triggerUpload(users, find('input[type=file]'));
 
     assert.dom('table tbody tr').exists({ count: 2 });
-    assert.dom('tbody tr:nth-of-type(2) td:nth-of-type(1) input').isChecked();
-    assert.dom('tbody tr:nth-of-type(1) td:nth-of-type(2)').hasText('jasper');
-    assert.dom('tbody tr:nth-of-type(1) td:nth-of-type(3)').hasText('johnson');
-    assert.dom('tbody tr:nth-of-type(1) td:nth-of-type(4)').hasText('');
-    assert.dom('tbody tr:nth-of-type(1) td:nth-of-type(5)').hasText('1234567890');
-    assert.dom('tbody tr:nth-of-type(1) td:nth-of-type(6)').hasText('jasper.johnson@example.com');
-    assert.dom('tbody tr:nth-of-type(1) td:nth-of-type(7)').hasText('123Campus');
-    assert.dom('tbody tr:nth-of-type(1) td:nth-of-type(8)').hasText('123Other');
-    assert.dom('tbody tr:nth-of-type(1) td:nth-of-type(9)').hasText('jasper');
-    assert.dom('tbody tr:nth-of-type(1) td:nth-of-type(10)').hasText('123Test');
+    assert.dom('tbody tr:nth-of-type(2) th:nth-of-type(1) input').isChecked();
+    assert.dom('tbody tr:nth-of-type(1) td:nth-of-type(1)').hasText('jasper');
+    assert.dom('tbody tr:nth-of-type(1) td:nth-of-type(2)').hasText('johnson');
+    assert.dom('tbody tr:nth-of-type(1) td:nth-of-type(3)').hasText('');
+    assert.dom('tbody tr:nth-of-type(1) td:nth-of-type(4)').hasText('1234567890');
+    assert.dom('tbody tr:nth-of-type(1) td:nth-of-type(5)').hasText('jasper.johnson@example.com');
+    assert.dom('tbody tr:nth-of-type(1) td:nth-of-type(6)').hasText('123Campus');
+    assert.dom('tbody tr:nth-of-type(1) td:nth-of-type(7)').hasText('123Other');
+    assert.dom('tbody tr:nth-of-type(1) td:nth-of-type(8)').hasText('jasper');
+    assert.dom('tbody tr:nth-of-type(1) td:nth-of-type(9)').hasText('123Test');
 
-    assert.dom('tbody tr:nth-of-type(2) td:nth-of-type(1) input').isChecked();
-    assert.dom('tbody tr:nth-of-type(2) td:nth-of-type(2)').hasText('jackson');
-    assert.dom('tbody tr:nth-of-type(2) td:nth-of-type(3)').hasText('johnson');
-    assert.dom('tbody tr:nth-of-type(2) td:nth-of-type(4)').hasText('middle');
-    assert.dom('tbody tr:nth-of-type(2) td:nth-of-type(5)').hasText('12345');
-    assert.dom('tbody tr:nth-of-type(2) td:nth-of-type(6)').hasText('jj@example.com');
-    assert.dom('tbody tr:nth-of-type(2) td:nth-of-type(7)').hasText('1234Campus');
-    assert.dom('tbody tr:nth-of-type(2) td:nth-of-type(8)').hasText('1234Other');
-    assert.dom('tbody tr:nth-of-type(2) td:nth-of-type(9)').hasText('jck');
-    assert.dom('tbody tr:nth-of-type(2) td:nth-of-type(10)').hasText('1234Test');
+    assert.dom('tbody tr:nth-of-type(2) th:nth-of-type(1) input').isChecked();
+    assert.dom('tbody tr:nth-of-type(2) td:nth-of-type(1)').hasText('jackson');
+    assert.dom('tbody tr:nth-of-type(2) td:nth-of-type(2)').hasText('johnson');
+    assert.dom('tbody tr:nth-of-type(2) td:nth-of-type(3)').hasText('middle');
+    assert.dom('tbody tr:nth-of-type(2) td:nth-of-type(4)').hasText('12345');
+    assert.dom('tbody tr:nth-of-type(2) td:nth-of-type(5)').hasText('jj@example.com');
+    assert.dom('tbody tr:nth-of-type(2) td:nth-of-type(6)').hasText('1234Campus');
+    assert.dom('tbody tr:nth-of-type(2) td:nth-of-type(7)').hasText('1234Other');
+    assert.dom('tbody tr:nth-of-type(2) td:nth-of-type(8)').hasText('jck');
+    assert.dom('tbody tr:nth-of-type(2) td:nth-of-type(9)').hasText('1234Test');
   });
 
   test('saves valid faculty users', async function (assert) {
@@ -345,10 +345,10 @@ module('Integration | Component | bulk new users', function (hooks) {
     ];
     await triggerUpload(users, find('input[type=file]'));
 
-    const goodCheck = 'tbody tr:nth-of-type(1) td:nth-of-type(1) input';
-    const goodBox = 'tbody tr:nth-of-type(1) td:nth-of-type(2)';
-    const badCheck = 'tbody tr:nth-of-type(2) td:nth-of-type(1) input';
-    const BadBox = 'tbody tr:nth-of-type(2) td:nth-of-type(2)';
+    const goodCheck = 'tbody tr:nth-of-type(1) th:nth-of-type(1) input';
+    const goodBox = 'tbody tr:nth-of-type(1) td:nth-of-type(1)';
+    const badCheck = 'tbody tr:nth-of-type(2) th:nth-of-type(1) input';
+    const BadBox = 'tbody tr:nth-of-type(2) td:nth-of-type(1)';
     assert.dom(goodCheck).isNotDisabled();
     assert.dom(goodBox).hasNoClass('error');
     assert.dom(badCheck).isDisabled();
@@ -384,10 +384,10 @@ module('Integration | Component | bulk new users', function (hooks) {
     ];
     await triggerUpload(users, find('input[type=file]'));
 
-    const goodCheck = 'tbody tr:nth-of-type(1) td:nth-of-type(1) input';
-    const goodBox = 'tbody tr:nth-of-type(1) td:nth-of-type(3)';
-    const badCheck = 'tbody tr:nth-of-type(2) td:nth-of-type(1) input';
-    const BadBox = 'tbody tr:nth-of-type(2) td:nth-of-type(3)';
+    const goodCheck = 'tbody tr:nth-of-type(1) th:nth-of-type(1) input';
+    const goodBox = 'tbody tr:nth-of-type(1) td:nth-of-type(2)';
+    const badCheck = 'tbody tr:nth-of-type(2) th:nth-of-type(1) input';
+    const BadBox = 'tbody tr:nth-of-type(2) td:nth-of-type(2)';
     assert.dom(goodCheck).isNotDisabled();
     assert.dom(goodBox).hasNoClass('error');
     assert.dom(badCheck).isDisabled();
@@ -423,10 +423,10 @@ module('Integration | Component | bulk new users', function (hooks) {
     ];
     await triggerUpload(users, find('input[type=file]'));
 
-    const goodCheck = 'tbody tr:nth-of-type(1) td:nth-of-type(1) input';
-    const goodBox = 'tbody tr:nth-of-type(1) td:nth-of-type(4)';
-    const badCheck = 'tbody tr:nth-of-type(2) td:nth-of-type(1) input';
-    const BadBox = 'tbody tr:nth-of-type(2) td:nth-of-type(4)';
+    const goodCheck = 'tbody tr:nth-of-type(1) th:nth-of-type(1) input';
+    const goodBox = 'tbody tr:nth-of-type(1) td:nth-of-type(3)';
+    const badCheck = 'tbody tr:nth-of-type(2) th:nth-of-type(1) input';
+    const BadBox = 'tbody tr:nth-of-type(2) td:nth-of-type(3)';
     assert.dom(goodCheck).isNotDisabled();
     assert.dom(goodBox).hasNoClass('error');
     assert.dom(badCheck).isDisabled();
@@ -462,10 +462,10 @@ module('Integration | Component | bulk new users', function (hooks) {
     ];
     await triggerUpload(users, find('input[type=file]'));
 
-    const goodCheck = 'tbody tr:nth-of-type(1) td:nth-of-type(1) input';
-    const goodBox = 'tbody tr:nth-of-type(1) td:nth-of-type(6)';
-    const badCheck = 'tbody tr:nth-of-type(2) td:nth-of-type(1) input';
-    const BadBox = 'tbody tr:nth-of-type(2) td:nth-of-type(6)';
+    const goodCheck = 'tbody tr:nth-of-type(1) th:nth-of-type(1) input';
+    const goodBox = 'tbody tr:nth-of-type(1) td:nth-of-type(5)';
+    const badCheck = 'tbody tr:nth-of-type(2) th:nth-of-type(1) input';
+    const BadBox = 'tbody tr:nth-of-type(2) td:nth-of-type(5)';
     assert.dom(goodCheck).isNotDisabled();
     assert.dom(goodBox).hasNoClass('error');
     assert.dom(badCheck).isDisabled();
@@ -501,10 +501,10 @@ module('Integration | Component | bulk new users', function (hooks) {
     ];
     await triggerUpload(users, find('input[type=file]'));
 
-    const goodCheck = 'tbody tr:nth-of-type(1) td:nth-of-type(1) input';
-    const goodBox = 'tbody tr:nth-of-type(1) td:nth-of-type(7)';
-    const badCheck = 'tbody tr:nth-of-type(2) td:nth-of-type(1) input';
-    const BadBox = 'tbody tr:nth-of-type(2) td:nth-of-type(7)';
+    const goodCheck = 'tbody tr:nth-of-type(1) th:nth-of-type(1) input';
+    const goodBox = 'tbody tr:nth-of-type(1) td:nth-of-type(6)';
+    const badCheck = 'tbody tr:nth-of-type(2) th:nth-of-type(1) input';
+    const BadBox = 'tbody tr:nth-of-type(2) td:nth-of-type(6)';
     assert.dom(goodCheck).isNotDisabled();
     assert.dom(goodBox).hasNoClass('error');
     assert.dom(badCheck).isDisabled();
@@ -540,10 +540,10 @@ module('Integration | Component | bulk new users', function (hooks) {
     ];
     await triggerUpload(users, find('input[type=file]'));
 
-    const goodCheck = 'tbody tr:nth-of-type(1) td:nth-of-type(1) input';
-    const goodBox = 'tbody tr:nth-of-type(1) td:nth-of-type(8)';
-    const badCheck = 'tbody tr:nth-of-type(2) td:nth-of-type(1) input';
-    const BadBox = 'tbody tr:nth-of-type(2) td:nth-of-type(8)';
+    const goodCheck = 'tbody tr:nth-of-type(1) th:nth-of-type(1) input';
+    const goodBox = 'tbody tr:nth-of-type(1) td:nth-of-type(7)';
+    const badCheck = 'tbody tr:nth-of-type(2) th:nth-of-type(1) input';
+    const BadBox = 'tbody tr:nth-of-type(2) td:nth-of-type(7)';
     assert.dom(goodCheck).isNotDisabled();
     assert.dom(goodBox).hasNoClass('error');
     assert.dom(badCheck).isDisabled();
@@ -579,10 +579,10 @@ module('Integration | Component | bulk new users', function (hooks) {
     ];
     await triggerUpload(users, find('input[type=file]'));
 
-    const goodCheck = 'tbody tr:nth-of-type(1) td:nth-of-type(1) input';
-    const goodBox = 'tbody tr:nth-of-type(1) td:nth-of-type(9)';
-    const badCheck = 'tbody tr:nth-of-type(2) td:nth-of-type(1) input';
-    const BadBox = 'tbody tr:nth-of-type(2) td:nth-of-type(9)';
+    const goodCheck = 'tbody tr:nth-of-type(1) th:nth-of-type(1) input';
+    const goodBox = 'tbody tr:nth-of-type(1) td:nth-of-type(8)';
+    const badCheck = 'tbody tr:nth-of-type(2) th:nth-of-type(1) input';
+    const BadBox = 'tbody tr:nth-of-type(2) td:nth-of-type(8)';
     assert.dom(goodCheck).isNotDisabled();
     assert.dom(goodBox).hasNoClass('error');
     assert.dom(badCheck).isDisabled();
@@ -620,10 +620,10 @@ module('Integration | Component | bulk new users', function (hooks) {
     ];
     await triggerUpload(users, find('input[type=file]'));
 
-    const goodCheck = 'tbody tr:nth-of-type(1) td:nth-of-type(1) input';
-    const goodBox = 'tbody tr:nth-of-type(1) td:nth-of-type(9)';
-    const badCheck = 'tbody tr:nth-of-type(2) td:nth-of-type(1) input';
-    const BadBox = 'tbody tr:nth-of-type(2) td:nth-of-type(9)';
+    const goodCheck = 'tbody tr:nth-of-type(1) th:nth-of-type(1) input';
+    const goodBox = 'tbody tr:nth-of-type(1) td:nth-of-type(8)';
+    const badCheck = 'tbody tr:nth-of-type(2) th:nth-of-type(1) input';
+    const BadBox = 'tbody tr:nth-of-type(2) td:nth-of-type(8)';
     assert.dom(goodCheck).isNotDisabled();
     assert.dom(goodBox).hasNoClass('error');
     assert.dom(badCheck).isDisabled();
@@ -703,8 +703,8 @@ module('Integration | Component | bulk new users', function (hooks) {
     ];
     await triggerUpload(users, find('input[type=file]'));
 
-    const goodCheck = 'tbody tr:nth-of-type(1) td:nth-of-type(1) input';
-    const goodBox = 'tbody tr:nth-of-type(1) td:nth-of-type(9)';
+    const goodCheck = 'tbody tr:nth-of-type(1) th:nth-of-type(1) input';
+    const goodBox = 'tbody tr:nth-of-type(1) td:nth-of-type(8)';
     assert.dom(goodCheck).isNotDisabled();
     assert.dom(goodBox).hasNoClass('error');
   });
@@ -727,8 +727,8 @@ module('Integration | Component | bulk new users', function (hooks) {
     ];
     await triggerUpload(users, find('input[type=file]'));
 
-    const goodCheck = 'tbody tr:nth-of-type(1) td:nth-of-type(1) input';
-    const goodBox = 'tbody tr:nth-of-type(1) td:nth-of-type(9)';
+    const goodCheck = 'tbody tr:nth-of-type(1) th:nth-of-type(1) input';
+    const goodBox = 'tbody tr:nth-of-type(1) td:nth-of-type(8)';
     assert.dom(goodCheck).isNotDisabled();
     assert.dom(goodBox).hasNoClass('error');
   });
@@ -761,10 +761,10 @@ module('Integration | Component | bulk new users', function (hooks) {
     ];
     await triggerUpload(users, find('input[type=file]'));
 
-    const goodCheck = 'tbody tr:nth-of-type(1) td:nth-of-type(1) input';
-    const goodBox = 'tbody tr:nth-of-type(1) td:nth-of-type(9)';
-    const badCheck = 'tbody tr:nth-of-type(2) td:nth-of-type(1) input';
-    const BadBox = 'tbody tr:nth-of-type(2) td:nth-of-type(10)';
+    const goodCheck = 'tbody tr:nth-of-type(1) th:nth-of-type(1) input';
+    const goodBox = 'tbody tr:nth-of-type(1) td:nth-of-type(8)';
+    const badCheck = 'tbody tr:nth-of-type(2) th:nth-of-type(1) input';
+    const BadBox = 'tbody tr:nth-of-type(2) td:nth-of-type(9)';
     assert.dom(goodCheck).isNotDisabled();
     assert.dom(goodBox).hasNoClass('error');
     assert.dom(badCheck).isDisabled();
