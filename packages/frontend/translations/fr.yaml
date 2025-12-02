@@ -446,7 +446,10 @@ general:
   table6ClerkshipSequenceBlockAssessmentMethods: "Tableau 6: Méthodes d’évaluation du bloc de séquences stage"
   table7AllEventsWithAssessmentsTaggedAsFormativeOrSummative: "Tableau 7: Tous les événements avec des évaluations marquées en tant que formatif ou sommatif"
   table8AllResourceTypes: "Tableau 8: Tous les types de ressources"
-  term: Terme
+  taggedTerms: Termes Marqueés
+  taggedTermsReportSummary: "rapport de {courseCount, plural, one {un cours} other {# cours}}. Chaque terme est listée avec cours données."
+  taggedTermsReportSummaryMultiSchool: "rapport de {courseCount, plural, one {un cours} other {# cours}}{schoolCount, plural, zero {} one {} other {, dans # écoles}}. Chaque terme est listée avec cours données."
+  term: Termes Étiq
   termsBySessionType: Termes par Type de Seance
   termXappliedToYSessionsWithSessionTypeZ: 'Le terme "{term}" du vocabulaire "{vocabulary}" s''applique à {sessionsCount, plural, =1 {1 session} other {# sessions}} avec le type de session "{sessionType}".'
   thereAreXTerms: "{count, plural, =1 {Il y a 1 terme} other {Il y a # termes}}"
