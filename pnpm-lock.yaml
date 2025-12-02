@@ -445,8 +445,8 @@ importers:
         specifier: ^4.1.0
         version: 4.1.1(@glint/template@1.7.3)(ember-source@6.8.2(@glimmer/component@2.0.0)(rsvp@4.8.5))(webpack@5.103.0)
       ember-primitives:
-        specifier: ^0.42.0
-        version: 0.42.1(@babel/core@7.28.5)(@ember/test-helpers@5.4.1(@babel/core@7.28.5)(@glint/template@1.7.3))(@ember/test-waiters@4.1.1(@glint/template@1.7.3))(@glimmer/component@2.0.0)(@glint/template@1.7.3)(ember-modifier@4.2.2(@babel/core@7.28.5))(ember-resources@7.0.7(@glimmer/component@2.0.0)(@glint/template@1.7.3))(ember-source@6.8.2(@glimmer/component@2.0.0)(rsvp@4.8.5))
+        specifier: ^0.46.0
+        version: 0.46.0(@babel/core@7.28.5)(@ember/test-helpers@5.4.1(@babel/core@7.28.5)(@glint/template@1.7.3))(@ember/test-waiters@4.1.1(@glint/template@1.7.3))(@glimmer/component@2.0.0)(@glint/template@1.7.3)(ember-modifier@4.2.2(@babel/core@7.28.5))(ember-resources@7.0.7(@glimmer/component@2.0.0)(@glint/template@1.7.3))(ember-source@6.8.2(@glimmer/component@2.0.0)(rsvp@4.8.5))
       ember-set-helper:
         specifier: ^3.1.0
         version: 3.1.0(@babel/core@7.28.5)
@@ -5547,8 +5547,8 @@ packages:
     peerDependencies:
       ember-source: '>= 4.8.0'
 
-  ember-primitives@0.42.1:
-    resolution: {integrity: sha512-Hafm4sYGTgrNgkA4s3qZM/LQW2+jENzG0tZ7BKUMppVm53nNEbe1i9cZVUc+fvW+998Qo88QGhcuEmeCpZAfow==}
+  ember-primitives@0.46.0:
+    resolution: {integrity: sha512-nyhiX8fur0usgSPewyfdgX3wUILnrVTqw5DIUbcLdA21C767hvjuGM74oLIBRTXQPufyUDzJbxZChDp+J00OCQ==}
     peerDependencies:
       '@ember/test-helpers': '>= 3.2.0'
       '@ember/test-waiters': '>= 3.0.2'
@@ -8478,6 +8478,7 @@ packages:
   raw-body@1.1.7:
     resolution: {integrity: sha512-WmJJU2e9Y6M5UzTOkHaM7xJGAPQD8PNzx3bAd2+uhZAim6wDk6dAZxPVYLF67XhbR4hmKGh33Lpmh4XWrCH5Mg==}
     engines: {node: '>= 0.8.0'}
+    deprecated: No longer maintained. Please upgrade to a stable version.
 
   raw-body@2.5.2:
     resolution: {integrity: sha512-8zGqypfENjCIqGhgXToC8aB2r7YrBX+AQAfIPs/Mlk+BtPTztOvTS01NRW/3Eh60J+a48lt8qsCzirQ6loCVfA==}
@@ -9919,6 +9920,9 @@ packages:
   which-collection@1.0.2:
     resolution: {integrity: sha512-K4jVyjnBdgvc86Y6BkaLZEN933SwYOuBFkdmBu9ZfkcAbdVbpITnDmjvZ/aQjRXQrv5EPkTnD1s39GiiqbngCw==}
     engines: {node: '>= 0.4'}
+
+  which-heading-do-i-need@0.1.0:
+    resolution: {integrity: sha512-ZKsjuEcndMhV9biGasNaQ83qFdj7BVk9Q5ctQkjsHXCZK43SuGzIWYvShesIJxs0mNA2gHka8Y1cOSsG8EcGnw==}
 
   which-typed-array@1.1.19:
     resolution: {integrity: sha512-rEvr90Bck4WZt9HHFC4DJMsjvu7x+r6bImz0/BrbWb7A2djJ8hnZMrWnHo9F8ssv0OMErasDhftrfROTyqSDrw==}
@@ -16491,7 +16495,7 @@ snapshots:
       - supports-color
       - webpack
 
-  ember-primitives@0.42.1(@babel/core@7.28.5)(@ember/test-helpers@5.4.1(@babel/core@7.28.5)(@glint/template@1.7.3))(@ember/test-waiters@4.1.1(@glint/template@1.7.3))(@glimmer/component@2.0.0)(@glint/template@1.7.3)(ember-modifier@4.2.2(@babel/core@7.28.5))(ember-resources@7.0.7(@glimmer/component@2.0.0)(@glint/template@1.7.3))(ember-source@6.8.2(@glimmer/component@2.0.0)(rsvp@4.8.5)):
+  ember-primitives@0.46.0(@babel/core@7.28.5)(@ember/test-helpers@5.4.1(@babel/core@7.28.5)(@glint/template@1.7.3))(@ember/test-waiters@4.1.1(@glint/template@1.7.3))(@glimmer/component@2.0.0)(@glint/template@1.7.3)(ember-modifier@4.2.2(@babel/core@7.28.5))(ember-resources@7.0.7(@glimmer/component@2.0.0)(@glint/template@1.7.3))(ember-source@6.8.2(@glimmer/component@2.0.0)(rsvp@4.8.5)):
     dependencies:
       '@babel/runtime': 7.28.4
       '@ember/test-waiters': 4.1.1(@glint/template@1.7.3)
@@ -16509,6 +16513,7 @@ snapshots:
       tabster: 8.5.6
       tracked-built-ins: 4.0.0(@babel/core@7.28.5)
       tracked-toolbox: 2.0.0(@babel/core@7.28.5)(ember-source@6.8.2(@glimmer/component@2.0.0)(rsvp@4.8.5))
+      which-heading-do-i-need: 0.1.0
     optionalDependencies:
       '@ember/test-helpers': 5.4.1(@babel/core@7.28.5)(@glint/template@1.7.3)
       '@glint/template': 1.7.3
@@ -21918,6 +21923,8 @@ snapshots:
       is-set: 2.0.3
       is-weakmap: 2.0.2
       is-weakset: 2.0.4
+
+  which-heading-do-i-need@0.1.0: {}
 
   which-typed-array@1.1.19:
     dependencies:
