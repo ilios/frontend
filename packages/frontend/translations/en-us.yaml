@@ -445,6 +445,9 @@ general:
   table6ClerkshipSequenceBlockAssessmentMethods: "Table 6: Clerkship Sequence Block Assessment Methods"
   table7AllEventsWithAssessmentsTaggedAsFormativeOrSummative: "Table 7: All Events with Assessments Tagged as Formative or Summative"
   table8AllResourceTypes: "Table 8: All Resource Types"
+  taggedTerms: Tagged Terms
+  taggedTermsReportSummary: "report for {courseCount, plural, one {one course} other {# courses}}. Each attached term is listed along with course data."
+  taggedTermsReportSummaryMultiSchool: "report for {courseCount, plural, one {one course} other {# courses}}{schoolCount, plural, zero {} one {} other {, across # schools}}. Each attached term is listed along with course data."
   term: Term
   termsBySessionType: Terms by Session Type
   termXappliedToYSessionsWithSessionTypeZ: 'The term "{term}" from the "{vocabulary}" vocabulary is applied to {sessionsCount, plural, =1 {1 session} other {# sessions}} with session-type "{sessionType}".'
