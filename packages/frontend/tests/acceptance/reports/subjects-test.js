@@ -3,7 +3,7 @@ import { module, test } from 'qunit';
 import { setupAuthentication } from 'ilios-common';
 import page from 'frontend/tests/pages/reports';
 import subjectReportPage from 'frontend/tests/pages/reports-subject';
-import { setupApplicationTest } from 'frontend/tests/helpers';
+import { setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
 import percySnapshot from '@percy/ember';
 import { getUniqueName } from '../../helpers/percy-snapshot-name';
 
@@ -73,6 +73,7 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
 
   test('shows reports', async function (assert) {
     await page.visit();
+    await takeScreenshot(assert);
     await percySnapshot(assert);
     assert.strictEqual(page.subjects.list.table.reports.length, 2);
     assert.strictEqual(
@@ -107,8 +108,10 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
     await page.subjects.list.newSubject.course.input('cour');
     await page.subjects.list.newSubject.course.results[1].click();
     await percySnapshot(getUniqueName(assert, 'pre-save form'));
+    await takeScreenshot(assert, 'pre-save form');
     await page.subjects.list.newSubject.save();
     await percySnapshot(getUniqueName(assert, 'post-save form'));
+    await takeScreenshot(assert, 'post-save form');
     assert.strictEqual(
       page.subjects.list.table.reports.length,
       3,
@@ -168,6 +171,7 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
       };
     });
     await page.subjects.list.table.reports[0].select();
+    await takeScreenshot(assert);
     await percySnapshot(assert);
 
     assert.strictEqual(currentURL(), '/reports/subjects/3', 'current report url is correct');
@@ -485,6 +489,7 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
       };
     });
     await page.subjects.list.newSubject.run();
+    await takeScreenshot(assert);
     await percySnapshot(assert);
     assert.strictEqual(
       currentURL(),

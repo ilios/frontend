@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupAuthentication } from 'ilios-common';
-import { setupApplicationTest } from 'frontend/tests/helpers';
+import { setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
 import page from 'frontend/tests/pages/program-year';
 import percySnapshot from '@percy/ember';
 
@@ -38,6 +38,7 @@ module('Acceptance | Program Year - Competencies', function (hooks) {
 
   test('list', async function (assert) {
     await page.visit({ programId: 1, programYearId: 1, pyCompetencyDetails: true });
+    await takeScreenshot(assert);
     await percySnapshot(assert);
     assert.strictEqual(page.details.competencies.title, 'Competencies (2)');
     assert.strictEqual(page.details.competencies.list.domains.length, 1);
@@ -56,6 +57,7 @@ module('Acceptance | Program Year - Competencies', function (hooks) {
   test('list with permission to edit', async function (assert) {
     this.user.update({ administeredSchools: [this.school] });
     await page.visit({ programId: 1, programYearId: 1, pyCompetencyDetails: true });
+    await takeScreenshot(assert);
     await percySnapshot(assert);
     assert.strictEqual(page.details.competencies.title, 'Competencies (2)');
     assert.strictEqual(page.details.competencies.list.domains.length, 1);

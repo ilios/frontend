@@ -2,7 +2,7 @@ import { module, test } from 'qunit';
 import { setupAuthentication } from 'ilios-common';
 import { DateTime } from 'luxon';
 import { currentRouteName } from '@ember/test-helpers';
-import { setupApplicationTest } from 'frontend/tests/helpers';
+import { setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
 import page from 'ilios-common/page-objects/course';
 
 const today = DateTime.fromObject({ hour: 8 });
@@ -802,6 +802,7 @@ module('Acceptance | Course - Learning Materials', function (hooks) {
     });
     this.user.update({ administeredSchools: [this.school] });
     await page.visit({ courseId: course.id, details: true });
+    await takeScreenshot(assert);
     await percySnapshot(assert);
     assert.strictEqual(currentRouteName(), 'course.index');
 

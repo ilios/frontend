@@ -2,7 +2,7 @@ import { currentURL, currentRouteName } from '@ember/test-helpers';
 import { DateTime } from 'luxon';
 import { module, test } from 'qunit';
 import { setupAuthentication, freezeDateAt, unfreezeDate } from 'ilios-common';
-import { setupApplicationTest } from 'frontend/tests/helpers';
+import { setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
 import page from 'ilios-common/page-objects/dashboard-calendar';
 import percySnapshot from '@percy/ember';
 
@@ -124,6 +124,7 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
       endDate: ilmEndDate.toJSDate(),
     });
     await page.visit({ view: 'month' });
+    await takeScreenshot(assert);
     await percySnapshot(assert);
     assert.strictEqual(currentRouteName(), 'dashboard.calendar');
     assert.strictEqual(page.calendar.calendar.monthly.events.length, 3);
@@ -211,6 +212,7 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
       endDate: ilmEndDate.toJSDate(),
     });
     await page.visit({ show: 'calendar' });
+    await takeScreenshot(assert);
     await percySnapshot(assert);
     assert.strictEqual(currentRouteName(), 'dashboard.calendar');
 
@@ -330,6 +332,7 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
       endDate: ilmEndDate.toJSDate(),
     });
     await page.visit({ view: 'day' });
+    await takeScreenshot(assert);
     await percySnapshot(assert);
     assert.strictEqual(currentRouteName(), 'dashboard.calendar');
 
@@ -509,6 +512,7 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
       offering: 2,
     });
     await page.visit({ show: 'calendar' });
+    await takeScreenshot(assert);
     await percySnapshot(assert);
     assert.strictEqual(page.calendar.calendar.weekly.events.length, 2);
   });
@@ -537,6 +541,7 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
     });
     await page.visit();
     await page.calendar.controls.mySchedule.toggle.secondLabel.click();
+    await takeScreenshot(assert);
     await percySnapshot(assert);
     assert.strictEqual(page.calendar.calendar.weekly.events.length, 2);
   });
@@ -549,6 +554,7 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
   test('user context filters are present on user calendar for privileged users', async function (assert) {
     await setupAuthentication({ school: this.school }, true);
     await page.visit({ show: 'calendar' });
+    await takeScreenshot(assert);
     await percySnapshot(assert);
     assert.ok(page.calendar.controls.userContextFilter.isPresent);
   });
@@ -558,6 +564,7 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
     await page.visit({ show: 'calendar' });
     assert.ok(page.calendar.controls.userContextFilter.isPresent);
     await page.calendar.controls.mySchedule.toggle.secondLabel.click();
+    await takeScreenshot(assert);
     await percySnapshot(assert);
     assert.notOk(page.calendar.controls.userContextFilter.isPresent);
   });
@@ -1256,6 +1263,7 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
     assert.notOk(page.calendar.calendar.weekly.events[0].tooltip.isPresent);
 
     await page.calendar.calendar.weekly.events[0].mouseOver();
+    await takeScreenshot(assert);
     await percySnapshot(assert);
     assert.ok(page.calendar.calendar.weekly.events[0].tooltip.isPresent);
   });

@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { currentURL } from '@ember/test-helpers';
-import { setupApplicationTest } from 'frontend/tests/helpers';
+import { setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
 import { setupAuthentication } from 'ilios-common';
 import page from 'frontend/tests/pages/school';
 import percySnapshot from '@percy/ember';
@@ -26,6 +26,7 @@ module('Acceptance | school/vocabularies', function (hooks) {
   test('collapsed', async function (assert) {
     await page.visit({ schoolId: this.school.id });
     assert.strictEqual(currentURL(), '/schools/1');
+    await takeScreenshot(assert);
     await percySnapshot(assert);
     const { schoolVocabulariesCollapsed: c } = page.manager;
 
@@ -39,6 +40,7 @@ module('Acceptance | school/vocabularies', function (hooks) {
 
   test('expanded', async function (assert) {
     await page.visit({ schoolId: this.school.id, schoolVocabularyDetails: true });
+    await takeScreenshot(assert);
     await percySnapshot(assert);
     const { schoolVocabulariesExpanded: c } = page.manager;
 

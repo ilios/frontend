@@ -1,7 +1,7 @@
 import { currentURL } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupAuthentication } from 'ilios-common';
-import { setupApplicationTest } from 'frontend/tests/helpers';
+import { setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
 import page from 'frontend/tests/pages/assign-students';
 import percySnapshot from '@percy/ember';
 import { DateTime } from 'luxon';
@@ -35,6 +35,7 @@ module('Acceptance | assign students', function (hooks) {
   test('visiting /admin/assignstudents', async function (assert) {
     await setupAuthentication({ school: this.school, administeredSchools: [this.school] });
     await page.visit();
+    await takeScreenshot(assert);
     await percySnapshot(assert);
     assert.strictEqual(page.root.schoolFilter.text, 'school 0');
     assert.strictEqual(page.root.schoolFilter.options.length, 0);

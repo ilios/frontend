@@ -1,7 +1,7 @@
 import { currentRouteName, currentURL } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupAuthentication } from 'ilios-common';
-import { setupApplicationTest } from 'frontend/tests/helpers';
+import { setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
 import page from 'ilios-common/page-objects/session-publication-check';
 import percySnapshot from '@percy/ember';
 
@@ -31,6 +31,7 @@ module('Acceptance | Session - Publication Check', function (hooks) {
     this.server.create('session-objective', { session });
     this.server.create('offering', { session });
     await page.visit({ courseId: this.course.id, sessionId: session.id });
+    await takeScreenshot(assert);
     await percySnapshot(assert);
     assert.strictEqual(currentRouteName(), 'session.publication-check');
     assert.strictEqual(page.sessionTitle, 'session 0');

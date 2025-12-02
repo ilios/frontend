@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { currentURL } from '@ember/test-helpers';
-import { setupApplicationTest } from 'frontend/tests/helpers';
+import { setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
 import { setupAuthentication } from 'ilios-common';
 import page from 'frontend/tests/pages/school';
 import percySnapshot from '@percy/ember';
@@ -28,6 +28,7 @@ module('Acceptance | school/leadership', function (hooks) {
   test('collapsed leadership', async function (assert) {
     await page.visit({ schoolId: this.school.id });
     assert.strictEqual(currentURL(), '/schools/1');
+    await takeScreenshot(assert);
     await percySnapshot(assert);
 
     assert.strictEqual(page.manager.schoolLeadershipCollapsed.title, 'Leadership (4)');
@@ -52,6 +53,7 @@ module('Acceptance | school/leadership', function (hooks) {
       schoolId: this.school.id,
       schoolLeadershipDetails: true,
     });
+    await takeScreenshot(assert);
     await percySnapshot(assert);
 
     assert.strictEqual(page.manager.schoolLeadershipExpanded.title, 'Leadership (4)');

@@ -5,7 +5,7 @@ import { getUniqueName } from '../helpers/percy-snapshot-name';
 
 const url = '/admin';
 
-import { setupApplicationTest } from 'frontend/tests/helpers';
+import { setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
 import percySnapshot from '@percy/ember';
 
 module('Acceptance | Admin', function (hooks) {
@@ -36,9 +36,11 @@ module('Acceptance | Admin', function (hooks) {
 
     await visit(url);
     await percySnapshot(getUniqueName(assert, 'default'));
+    await takeScreenshot(assert, 'default');
     await fillIn(userSearch, 'son');
     await triggerEvent(userSearch, 'keyup');
     await percySnapshot(getUniqueName(assert, 'search results dropdown'));
+    await takeScreenshot(assert, 'search results dropdown');
     assert.dom(secondResultUsername).hasText('1 guy M. Mc1son', 'user name is correct');
     assert.dom(secondResultEmail).hasText('user@example.edu', 'user email is correct');
 

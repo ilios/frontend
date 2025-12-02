@@ -1,7 +1,7 @@
 import { currentRouteName, currentURL } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import page from 'frontend/tests/pages/reports';
-import { setupApplicationTest } from 'frontend/tests/helpers';
+import { setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
 import { setupAuthentication } from 'ilios-common';
 import percySnapshot from '@percy/ember';
 import { getUniqueName } from '../../helpers/percy-snapshot-name';
@@ -53,6 +53,7 @@ module('Acceptance | Reports - Curriculum Reports', function (hooks) {
     assert.ok(page.curriculum.chooseCourse.years[1].isExpanded);
     assert.notOk(page.curriculum.chooseCourse.years[2].isExpanded);
 
+    await takeScreenshot(assert);
     await percySnapshot(assert);
   });
 
@@ -82,12 +83,14 @@ module('Acceptance | Reports - Curriculum Reports', function (hooks) {
     assert.notOk(page.curriculum.chooseCourse.years[0].isExpanded);
     assert.notOk(page.curriculum.chooseCourse.years[1].isExpanded);
     await percySnapshot(getUniqueName(assert, 'default school'));
+    await takeScreenshot(assert, 'default school');
 
     await page.curriculum.chooseCourse.schoolSelector.set(school.id);
     assert.strictEqual(page.curriculum.chooseCourse.schoolSelector.value, school.id);
     assert.strictEqual(page.curriculum.chooseCourse.years.length, 1);
     assert.ok(page.curriculum.chooseCourse.years[0].isExpanded);
     await percySnapshot(getUniqueName(assert, 'school with current year'));
+    await takeScreenshot(assert, 'school with current year');
   });
 
   test('run session objectives report, single school', async function (assert) {
@@ -139,9 +142,11 @@ module('Acceptance | Reports - Curriculum Reports', function (hooks) {
       'Session objective summary text is correct',
     );
     await percySnapshot(getUniqueName(assert, 'selected courses'));
+    await takeScreenshot(assert, 'selected courses');
 
     await page.curriculum.header.runReport.click();
     await percySnapshot(getUniqueName(assert, 'session objectives report results'));
+    await takeScreenshot(assert, 'session objectives report results');
     assert.strictEqual(so.results.length, 1, 'Test has 1 report result');
     assert.strictEqual(so.results.objectAt(0).courseTitle, 'course 0', 'Test title is correct');
     assert.strictEqual(so.results.objectAt(0).sessionCount, '1', 'Course session count is correct');
@@ -225,9 +230,11 @@ module('Acceptance | Reports - Curriculum Reports', function (hooks) {
       'Session objective summary text is correct',
     );
     await percySnapshot(getUniqueName(assert, 'selected courses'));
+    await takeScreenshot(assert, 'selected courses');
 
     await page.curriculum.header.runReport.click();
     await percySnapshot(getUniqueName(assert, 'session objectives report results'));
+    await takeScreenshot(assert, 'session objectives report results');
 
     assert.strictEqual(so.resultsMultiSchool.length, 5, 'There are 5 report results');
     assert.strictEqual(
@@ -351,9 +358,11 @@ module('Acceptance | Reports - Curriculum Reports', function (hooks) {
       ),
     );
     await percySnapshot(getUniqueName(assert, 'selected courses'));
+    await takeScreenshot(assert, 'selected courses');
 
     await page.curriculum.header.runReport.click();
     await percySnapshot(getUniqueName(assert, 'learner group report results'));
+    await takeScreenshot(assert, 'learner group report results');
     assert.strictEqual(lg.results.length, 1, 'There is 1 report result');
     assert.strictEqual(
       lg.results.objectAt(0).courseTitle,
@@ -457,9 +466,11 @@ module('Acceptance | Reports - Curriculum Reports', function (hooks) {
       ),
     );
     await percySnapshot(getUniqueName(assert, 'selected courses'));
+    await takeScreenshot(assert, 'selected courses');
 
     await page.curriculum.header.runReport.click();
     await percySnapshot(getUniqueName(assert, 'learner group report results'));
+    await takeScreenshot(assert, 'learner group report results');
 
     assert.strictEqual(lg.resultsMultiSchool.length, 5, 'There are 5 report results');
     assert.strictEqual(

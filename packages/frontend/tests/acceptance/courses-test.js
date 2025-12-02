@@ -3,7 +3,7 @@ import { module, test } from 'qunit';
 import { setupAuthentication, freezeDateAt, unfreezeDate } from 'ilios-common';
 import { DateTime } from 'luxon';
 import page from 'frontend/tests/pages/courses';
-import { setupApplicationTest } from 'frontend/tests/helpers';
+import { setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
 import percySnapshot from '@percy/ember';
 import { getUniqueName } from '../helpers/percy-snapshot-name';
 
@@ -18,6 +18,7 @@ module('Acceptance | Courses', function (hooks) {
 
   test('visiting /courses', async function (assert) {
     await page.visit();
+    await takeScreenshot(assert);
     await percySnapshot(assert);
     assert.strictEqual(currentURL(), '/courses');
   });
@@ -86,6 +87,7 @@ module('Acceptance | Courses', function (hooks) {
     });
     await page.visit();
     await percySnapshot(getUniqueName(assert, 'default'));
+    await takeScreenshot(assert, 'default');
     assert.strictEqual(page.root.list.courses.length, 5);
     assert.strictEqual(page.root.list.courses[0].title, regexCourse.title);
     assert.strictEqual(page.root.list.courses[1].title, lastCourse.title);
@@ -116,6 +118,7 @@ module('Acceptance | Courses', function (hooks) {
 
     await page.root.filterByTitle('course');
     await percySnapshot(getUniqueName(assert, 'filterByTitle'));
+    await takeScreenshot(assert, 'filterByTitle');
     assert.strictEqual(page.root.list.courses.length, 4);
     assert.strictEqual(page.root.list.courses[0].title, lastCourse.title);
     assert.strictEqual(page.root.list.courses[1].title, regularCourse.title);

@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupAuthentication } from 'ilios-common';
-import { setupApplicationTest } from 'frontend/tests/helpers';
+import { setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
 import { getUniqueName } from '../../../helpers/percy-snapshot-name';
 import { waitFor } from '@ember/test-helpers';
 import page from 'ilios-common/page-objects/session';
@@ -138,8 +138,10 @@ module('Acceptance | Session - Objective Parents - Faded Status Sync', function 
     );
 
     await percySnapshot(getUniqueName(assert, '1st objective list item collapsed'));
+    await takeScreenshot(assert, '1st objective list item collapsed');
     await page.details.objectives.objectiveList.objectives[0].description.fadeText.control.expand.click();
     await percySnapshot(getUniqueName(assert, '1st objective list item expanded'));
+    await takeScreenshot(assert, '1st objective list item expanded');
 
     assert.notOk(
       page.details.objectives.objectiveList.objectives[0].description.fadeText.displayText.isFaded,
@@ -156,6 +158,7 @@ module('Acceptance | Session - Objective Parents - Faded Status Sync', function 
 
     await page.details.objectives.objectiveList.objectives[0].description.fadeText.control.collapse.click();
     await percySnapshot(getUniqueName(assert, '1st objective list item collapsed again'));
+    await takeScreenshot(assert, '1st objective list item collapsed again');
 
     assert.ok(
       page.details.objectives.objectiveList.objectives[0].description.fadeText.displayText.isFaded,
@@ -207,8 +210,10 @@ module('Acceptance | Session - Objective Parents - Faded Status Sync', function 
     );
 
     await percySnapshot(getUniqueName(assert, '2nd objective list item collapsed'));
+    await takeScreenshot(assert, '2nd objective list item collapsed');
     await page.details.objectives.objectiveList.objectives[1].parents.fadeText.control.expand.click();
     await percySnapshot(getUniqueName(assert, '2nd objective list item expanded'));
+    await takeScreenshot(assert, '2nd objective list item expanded');
 
     assert.notOk(
       page.details.objectives.objectiveList.objectives[1].parents.fadeText.displayText.isFaded,
@@ -225,6 +230,7 @@ module('Acceptance | Session - Objective Parents - Faded Status Sync', function 
 
     await page.details.objectives.objectiveList.objectives[1].parents.fadeText.control.collapse.click();
     await percySnapshot(getUniqueName(assert, '2nd objective list item collapsed again'));
+    await takeScreenshot(assert, '2nd objective list item collapsed again');
 
     assert.ok(
       page.details.objectives.objectiveList.objectives[1].parents.fadeText.displayText.isFaded,
@@ -284,8 +290,10 @@ module('Acceptance | Session - Objective Parents - Faded Status Sync', function 
     );
 
     await percySnapshot(getUniqueName(assert, '3rd objective list item collapsed'));
+    await takeScreenshot(assert, '3rd objective list item collapsed');
     await page.details.objectives.objectiveList.objectives[2].description.fadeText.control.expand.click();
     await percySnapshot(getUniqueName(assert, '3rd objective list item expanded'));
+    await takeScreenshot(assert, '3rd objective list item expanded');
 
     assert.notOk(
       page.details.objectives.objectiveList.objectives[2].description.fadeText.displayText.isFaded,
@@ -306,6 +314,7 @@ module('Acceptance | Session - Objective Parents - Faded Status Sync', function 
 
     await page.details.objectives.objectiveList.objectives[2].description.fadeText.control.collapse.click();
     await percySnapshot(getUniqueName(assert, '3rd objective list item collapsed again'));
+    await takeScreenshot(assert, '3rd objective list item collapsed again');
 
     assert.ok(
       page.details.objectives.objectiveList.objectives[2].description.fadeText.displayText.isFaded,
@@ -326,6 +335,7 @@ module('Acceptance | Session - Objective Parents - Faded Status Sync', function 
 
     await page.details.objectives.objectiveList.objectives[2].parents.fadeText.control.expand.click();
     await percySnapshot(getUniqueName(assert, '3rd objective list item expanded again'));
+    await takeScreenshot(assert, '3rd objective list item expanded again');
 
     assert.notOk(
       page.details.objectives.objectiveList.objectives[2].description.fadeText.displayText.isFaded,
@@ -346,6 +356,7 @@ module('Acceptance | Session - Objective Parents - Faded Status Sync', function 
 
     await page.details.objectives.objectiveList.objectives[2].parents.fadeText.control.collapse.click();
     await percySnapshot(getUniqueName(assert, '3rd objective list item collapsed again'));
+    await takeScreenshot(assert, '3rd objective list item collapsed again');
 
     assert.ok(
       page.details.objectives.objectiveList.objectives[2].description.fadeText.displayText.isFaded,

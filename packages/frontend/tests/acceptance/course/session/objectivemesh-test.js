@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupAuthentication } from 'ilios-common';
-import { setupApplicationTest } from 'frontend/tests/helpers';
+import { setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
 import { getUniqueName } from '../../../helpers/percy-snapshot-name';
 import page from 'ilios-common/page-objects/session';
 import percySnapshot from '@percy/ember';
@@ -75,8 +75,10 @@ module('Acceptance | Session - Objective Mesh Descriptors', function (hooks) {
     );
 
     await percySnapshot(getUniqueName(assert, 'default background color'));
+    await takeScreenshot(assert, 'default background color');
     await page.details.objectives.objectiveList.objectives[1].meshDescriptors.list[0].manage();
     await percySnapshot(getUniqueName(assert, 'managed background color'));
+    await takeScreenshot(assert, 'managed background color');
 
     const m = page.details.objectives.objectiveList.objectives[1].meshManager.meshManager;
     assert.strictEqual(m.selectedTerms.length, 5);
@@ -130,8 +132,10 @@ module('Acceptance | Session - Objective Mesh Descriptors', function (hooks) {
       5,
     );
     await percySnapshot(getUniqueName(assert, 'default background color'));
+    await takeScreenshot(assert, 'default background color');
     await page.details.objectives.objectiveList.objectives[1].meshDescriptors.list[0].manage();
     await percySnapshot(getUniqueName(assert, 'managed background color'));
+    await takeScreenshot(assert, 'managed background color');
 
     const m = page.details.objectives.objectiveList.objectives[1].meshManager.meshManager;
     assert.strictEqual(m.selectedTerms.length, 5);
@@ -193,8 +197,10 @@ module('Acceptance | Session - Objective Mesh Descriptors', function (hooks) {
       5,
     );
     await percySnapshot(getUniqueName(assert, 'default background color'));
+    await takeScreenshot(assert, 'default background color');
     await page.details.objectives.objectiveList.objectives[1].meshDescriptors.list[0].manage();
     await percySnapshot(getUniqueName(assert, 'managed background color'));
+    await takeScreenshot(assert, 'managed background color');
 
     const m = page.details.objectives.objectiveList.objectives[1].meshManager.meshManager;
     assert.strictEqual(m.selectedTerms.length, 5);

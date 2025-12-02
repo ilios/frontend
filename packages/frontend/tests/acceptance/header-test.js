@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { visit } from '@ember/test-helpers';
-import { setupApplicationTest } from 'frontend/tests/helpers';
+import { setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
 import { setupAuthentication, freezeDateAt, unfreezeDate } from 'ilios-common';
 import percySnapshot from '@percy/ember';
 
@@ -28,6 +28,7 @@ module('Acceptance | header', function (hooks) {
     });
     await setupAuthentication({}, true);
     await visit('/');
+    await takeScreenshot(assert);
     await percySnapshot(assert);
     assert.dom('.global-search-box').exists();
     assert.verifySteps(['API called']);
@@ -46,6 +47,7 @@ module('Acceptance | header', function (hooks) {
     });
     await setupAuthentication({}, true);
     await visit('/');
+    await takeScreenshot(assert);
     await percySnapshot(assert);
     assert.dom('.global-search-box').doesNotExist();
     assert.verifySteps(['API called']);

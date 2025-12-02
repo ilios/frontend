@@ -1,7 +1,7 @@
 import { DateTime } from 'luxon';
 import { module, test } from 'qunit';
 import { setupAuthentication, freezeDateAt, unfreezeDate } from 'ilios-common';
-import { setupApplicationTest } from 'frontend/tests/helpers';
+import { setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
 import page from 'ilios-common/page-objects/session';
 import percySnapshot from '@percy/ember';
 
@@ -93,6 +93,7 @@ module('Acceptance | Session - Offerings', function (hooks) {
 
   test('basics', async function (assert) {
     await page.visit({ courseId: 1, sessionId: 1 });
+    await takeScreenshot(assert);
     await percySnapshot(assert);
 
     assert.strictEqual(page.details.offerings.header.title, 'Offerings (3)');

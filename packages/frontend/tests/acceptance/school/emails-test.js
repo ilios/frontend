@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { currentURL } from '@ember/test-helpers';
-import { setupApplicationTest } from 'frontend/tests/helpers';
+import { setupApplicationTest, takeScreenshot } from 'frontend/tests/helpers';
 import { setupAuthentication } from 'ilios-common';
 import page from 'frontend/tests/pages/school';
 import percySnapshot from '@percy/ember';
@@ -19,6 +19,7 @@ module('Acceptance | school/emails', function (hooks) {
   test('view', async function (assert) {
     await page.visit({ schoolId: this.school.id });
     assert.strictEqual(currentURL(), '/schools/1');
+    await takeScreenshot(assert);
     await percySnapshot(assert);
     const { emails: c } = page.manager;
 
@@ -32,6 +33,7 @@ module('Acceptance | school/emails', function (hooks) {
 
   test('manage', async function (assert) {
     await page.visit({ schoolId: this.school.id, schoolManageEmails: true });
+    await takeScreenshot(assert);
     await percySnapshot(assert);
     const { emailsEditor: c } = page.manager;
 
