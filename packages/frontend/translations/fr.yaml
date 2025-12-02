@@ -90,6 +90,7 @@ general:
   country: Pays
   countryCode: Code du pays
   courseDirector: Directeur de Cours
+  courseTerms: Termes de Cours
   courseTitleFilterPlaceholder: Filtre par titre de cours
   create: Créez un nouvel utilisateur
   createBulk: Envoyez utilisateurs multiples
@@ -409,6 +410,7 @@ general:
   sessionOfferings: Offres de séance
   sessionOfferingsReportSummary: "Rapport de {courseCount, plural, one {one course} other {# courses}}. Chaque offre de séance est listée avec des instructeurs, groupes d'étudiants, et cours données."
   sessionOfferingsReportSummaryMultiSchool: "Rapport de {courseCount, plural, one {one course} other {# courses}}{schoolCount, plural, zero {} one {} other {, dans # écoles}}. Chaque offre de séance est listée avec des instructeurs, groupes d'étudiants, et cours données."
+  sessionTerms: Termes de Séance
   sessionTitlePlaceholder: Ajoutez un titre pour ce session
   sessionTypeConfirmRemoval: "Voulez-vous vraiment supprimer ce type de session ? Cette action ne peut pas être annulée."
   sessionTypeTitlePlaceholder: Ajoutez un titre pour ce type de session
