@@ -6,6 +6,7 @@ import SessionObjectives from './curriculum/session-objectives';
 import SessionOfferings from './curriculum/session-offerings';
 import LearnerGroups from './curriculum/learner-groups';
 import InstructionalTime from './curriculum/instructional-time';
+import TaggedTerms from './curriculum/tagged-terms';
 import Header from 'frontend/components/reports/curriculum/header';
 import ChooseCourse from 'frontend/components/reports/curriculum/choose-course';
 
@@ -74,6 +75,8 @@ export default class ReportsCurriculumComponent extends Component {
         return ensureSafeComponent(LearnerGroups, this);
       case 'instructionalTime':
         return ensureSafeComponent(InstructionalTime, this);
+      case 'taggedTerms':
+        return ensureSafeComponent(TaggedTerms, this);
     }
 
     return false;

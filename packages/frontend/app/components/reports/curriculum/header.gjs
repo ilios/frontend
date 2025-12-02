@@ -93,6 +93,14 @@ export default class ReportsCurriculumHeader extends Component {
             schoolCount: this.countSelectedSchools,
           }),
         },
+        {
+          value: 'taggedTerms',
+          label: this.intl.t('general.taggedTerms'),
+          summary: this.intl.t('general.taggedTermsReportSummaryMultiSchool', {
+            courseCount: this.args.countSelectedCourses,
+            schoolCount: this.countSelectedSchools,
+          }),
+        },
       ];
     } else {
       return [
@@ -121,6 +129,13 @@ export default class ReportsCurriculumHeader extends Component {
           value: 'instructionalTime',
           label: this.intl.t('general.instructionalTime'),
           summary: this.intl.t('general.instructionalTimeReportSummary', {
+            courseCount: this.args.countSelectedCourses,
+          }),
+        },
+        {
+          value: 'taggedTerms',
+          label: this.intl.t('general.taggedTerms'),
+          summary: this.intl.t('general.taggedTermsReportSummary', {
             courseCount: this.args.countSelectedCourses,
           }),
         },
