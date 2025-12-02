@@ -90,6 +90,7 @@ general:
   country: Country
   countryCode: Country Code
   courseDirector: Course Director
+  courseTerms: Course Terms
   courseTitleFilterPlaceholder: Filter by course title
   create: Create New User
   createBulk: Upload Multiple Users
@@ -408,6 +409,7 @@ general:
   sessionOfferings: Session Offerings
   sessionOfferingsReportSummary: "report for {courseCount, plural, one {one course} other {# courses}}. Each session offering is listed along with instructors, learner groups, and course data."
   sessionOfferingsReportSummaryMultiSchool: "report for {courseCount, plural, one {one course} other {# courses}}{schoolCount, plural, zero {} one {} other {, across # schools}}. Each session offering is listed along with instructors, learner groups, and course data."
+  sessionTerms: Session Terms
   sessionTitlePlaceholder: Enter a title for this session
   sessionTypeConfirmRemoval: Are you sure you want to delete this session type? This action cannot be undone.
   sessionTypeTitlePlaceholder: Enter a title for this session type

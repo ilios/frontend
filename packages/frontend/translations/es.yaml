@@ -90,6 +90,7 @@ general:
   country: País
   countryCode: Código del país
   courseDirector: Director del Curso
+  courseTerms: Términos del Curso
   courseTitleFilterPlaceholder: Aplicar un filtro por título de curso
   create: Crear Nuevo Usuario
   createBulk: Subir Múltiples Usuarios.
@@ -408,6 +409,7 @@ general:
   sessionOfferings: Ofrecimientos de la Sesión
   sessionOfferingsReportSummary: "informe para {courseCount, plural, one {un curso} other {# cursos}}. Se enumera el ofrecimiento de cada sesión junto con los instructores, los grupos de aprendedores, y los datos del curso."
   sessionOfferingsReportSummaryMultiSchool: "informe para {courseCount, plural, one {un curso} other {# cursos}}{schoolCount, plural, zero {} one {} other {, en # escuelas}}. Se enumera el ofrecimiento de cada sesión junto con los instructores, los grupos de aprendedores, y los datos del curso."
+  sessionTerms: Términos de Curso
   sessionTitlePlaceholder: Entre en un titulo para esta sesión
   sessionTypeConfirmRemoval: ¿Está seguro de que desea eliminar este tipo de sesión? Esta acción no se puede deshacer.
   sessionTypeTitlePlaceholder: Entre en un titulo para este tipo de sesión
