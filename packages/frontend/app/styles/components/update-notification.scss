@@ -6,8 +6,9 @@
   }
 
   &.critical-notice {
+    background-color: var(--blue);
+
     button {
-      background-color: var(--blue);
       color: var(--white);
       min-height: 3rem;
     }
