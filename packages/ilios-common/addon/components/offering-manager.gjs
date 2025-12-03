@@ -72,7 +72,7 @@ export default class OfferingManagerComponent extends Component {
   }
 
   get sortedIndividualLearners() {
-    if (!this.individualLearners) {
+    if (!this.individualLearners.length) {
       return '';
     }
 
