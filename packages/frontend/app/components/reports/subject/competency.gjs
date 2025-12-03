@@ -141,7 +141,10 @@ export default class ReportsSubjectCompetencyComponent extends Component {
     />
     <div data-test-reports-subject-competency>
       {{#if this.allCompetenciesData.isResolved}}
-        <ul class="report-results{{if this.reportResultsExceedMax ' limited'}}" data-test-results>
+        <ul
+          class="report-results ilios-zebra-list{{if this.reportResultsExceedMax ' limited'}}"
+          data-test-results
+        >
           {{#each this.limitedCompetencies as |competency|}}
             <li>
               {{#if this.showSchool}}

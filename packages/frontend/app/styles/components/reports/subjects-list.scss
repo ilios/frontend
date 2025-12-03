@@ -35,5 +35,12 @@
     .list {
       @include m.main-list-box-table;
     }
+
+    .report-results {
+      li {
+        margin-bottom: 0;
+        padding: 0.25rem 0.1rem;
+      }
+    }
   }
 }

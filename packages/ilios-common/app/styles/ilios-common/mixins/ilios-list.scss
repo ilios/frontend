@@ -39,14 +39,6 @@
   }
 }
 
-@mixin ilios-zebra-list() {
-  li {
-    &:nth-child(even) {
-      background-color: var(--super-light-grey);
-    }
-  }
-}
-
 @mixin ilios-tag-list() {
   @include ilios-list-reset;
 
