@@ -37,9 +37,7 @@ module.exports = {
   browser_start_timeout: 120,
   parallel: process.env.EMBER_EXAM_SPLIT_COUNT || -1,
   browser_args: {
-    Firefox: {
-      ci: ['--headless', '--window-size=1440,900'].filter(Boolean),
-    },
+    Firefox: ['--headless'],
   },
   firefox_user_js: firefoxUserJsPath,
 };
