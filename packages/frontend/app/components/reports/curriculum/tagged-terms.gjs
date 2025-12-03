@@ -206,9 +206,9 @@ export default class ReportsCurriculumTaggedTermsComponent extends Component {
               <th>{{t "general.school"}}</th>
             {{/if}}
             <th>{{t "general.course"}}</th>
-            <th>{{t "general.terms"}}</th>
+            <th>{{t "general.courseTerms"}}</th>
             <th>{{t "general.sessions"}}</th>
-            <th>{{t "general.terms"}}</th>
+            <th>{{t "general.sessionTerms"}}</th>
           </tr>
         </thead>
         <tbody>
