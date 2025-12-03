@@ -12,8 +12,21 @@ env:
 
 jobs:
   baseline:
-    name: Baseline
+    name: Baseline (${{ matrix.name }})
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - name: phone
+            width: 399
+          - name: tablet
+            width: 768
+          - name: laptop
+            width: 1200
+          - name: desktop
+            width: 1920
+    env:
+      MOZ_HEADLESS_WIDTH: ${{ matrix.width }}
     steps:
       - uses: actions/checkout@v6
         with:
@@ -27,14 +40,33 @@ jobs:
         run: pnpm install
       - name: Run Tests
         run: pnpm test:frontend:screenshots
+      - name: Rename screenshots
+        run: |
+          cd build/screenshots
+          for file in *; do
+            mv "$file" "${{ matrix.name }}-$file"
+          done
       - uses: actions/upload-artifact@v5
         with:
-          name: baseline-frontend
+          name: baseline-frontend-${{ matrix.name }}
           path: build/screenshots
 
   candidate:
-    name: Candidate
+    name: Candidate (${{ matrix.name }})
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - name: phone
+            width: 399
+          - name: tablet
+            width: 768
+          - name: laptop
+            width: 1200
+          - name: desktop
+            width: 1920
+    env:
+      MOZ_HEADLESS_WIDTH: ${{ matrix.width }}
     steps:
       - uses: actions/checkout@v6
       - uses: pnpm/action-setup@v4
@@ -46,9 +78,15 @@ jobs:
         run: pnpm install
       - name: Run Tests
         run: pnpm test:frontend:screenshots
+      - name: Rename screenshots
+        run: |
+          cd build/screenshots
+          for file in *; do
+            mv "$file" "${{ matrix.name }}-$file"
+          done
       - uses: actions/upload-artifact@v5
         with:
-          name: candidate-frontend
+          name: candidate-frontend-${{ matrix.name }}
           path: build/screenshots
 
   compare:
@@ -57,7 +95,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/download-artifact@v6
-      - run: ls -lh
+        with:
+          pattern: baseline-frontend-*
+          path: baseline-frontend
+          merge-multiple: true
+      - uses: actions/download-artifact@v6
+        with:
+          pattern: candidate-frontend-*
+          path: candidate-frontend
+          merge-multiple: true
+      - run: ls -lh baseline-frontend candidate-frontend
       - uses: actions/setup-node@v6
         with:
           node-version: 24
