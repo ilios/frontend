@@ -2,7 +2,15 @@
 
 .update-notification {
   button {
-    @include m.critical-notice(var(--blue), var(--white), 3rem);
     @include m.font-size("large");
+  }
+
+  &.critical-notice {
+    background-color: var(--blue);
+
+    button {
+      color: var(--white);
+      min-height: 3rem;
+    }
   }
 }
