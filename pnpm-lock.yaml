@@ -100,8 +100,8 @@ importers:
         specifier: ~5.8.0
         version: 5.8.0(@babel/core@7.28.5)(@ember/test-waiters@4.1.1(@glint/template@1.7.3))(@glint/template@1.7.3)
       '@zumer/snapdom':
-        specifier: ^2.0.0
-        version: 2.0.0
+        specifier: ^2.0.1
+        version: 2.0.1
       broccoli-asset-rev:
         specifier: ^3.0.0
         version: 3.0.0
@@ -3450,8 +3450,8 @@ packages:
   '@xtuc/long@4.2.2':
     resolution: {integrity: sha512-NuHqBY1PB/D8xU6s/thBgOAiAP7HOYDQ32+BFZILJ8ivkUkAHQnWfn6WhL79Owj1qmUnoN/YPhktdIoucipkAQ==}
 
-  '@zumer/snapdom@2.0.0':
-    resolution: {integrity: sha512-e/fkm5wCUd+9CssUIyH09xTeR4DvRTmZLGVOlnXLhr4HeI7sdc6ed8cLPiZKFtiQDRiwD3EKx4RIUrpQOJQY7A==}
+  '@zumer/snapdom@2.0.1':
+    resolution: {integrity: sha512-78/qbYl2FTv4H6qaXcNfAujfIOSzdvs83NW63VbyC9QA3sqNPfPvhn4xYMO6Gy11hXwJUEhd0z65yKiNzDwy9w==}
 
   abab@2.0.6:
     resolution: {integrity: sha512-j2afSsaIENvHZN2B8GOpF566vZ5WVk5opAiMTvWgaQT8DkbOqsTfvNAvHoRGU2zzP8cPoqys+xHTRDWW8L+/BA==}
@@ -13492,7 +13492,7 @@ snapshots:
 
   '@xtuc/long@4.2.2': {}
 
-  '@zumer/snapdom@2.0.0': {}
+  '@zumer/snapdom@2.0.1': {}
 
   abab@2.0.6: {}
 
