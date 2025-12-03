@@ -5,6 +5,7 @@ import { cached, tracked } from '@glimmer/tracking';
 import { task, timeout } from 'ember-concurrency';
 import { modifier } from 'ember-modifier';
 import { TrackedAsyncData } from 'ember-async-data';
+import { mapBy, sortBy } from 'ilios-common/utils/array-helpers';
 import OfferingForm from 'ilios-common/components/offering-form';
 import toggle from 'ilios-common/helpers/toggle';
 import mouseHoverToggle from 'ilios-common/modifiers/mouse-hover-toggle';
@@ -14,10 +15,11 @@ import t from 'ember-intl/helpers/t';
 import and from 'ember-truth-helpers/helpers/and';
 import includes from 'ilios-common/helpers/includes';
 import IliosTooltip from 'ilios-common/components/ilios-tooltip';
+import mapBy0 from 'ilios-common/helpers/map-by';
 import eq from 'ember-truth-helpers/helpers/eq';
 import join from 'ilios-common/helpers/join';
 import reverse from 'ilios-common/helpers/reverse';
-import mapBy from 'ilios-common/helpers/map-by';
+import FadeText from 'ilios-common/components/fade-text';
 import TruncateText from 'ilios-common/components/truncate-text';
 import OfferingUrlDisplay from 'ilios-common/components/offering-url-display';
 import UserStatus from 'ilios-common/components/user-status';
@@ -40,9 +42,50 @@ export default class OfferingManagerComponent extends Component {
     return new TrackedAsyncData(this.args.offering.learnerGroups);
   }
 
+  get learnerGroups() {
+    return this.learnerGroupsData.isResolved ? this.learnerGroupsData.value : null;
+  }
+
+  get sortedLearnerGroups() {
+    if (!this.learnerGroups) {
+      return [];
+    }
+    return this.learnerGroups.toSorted((learnerGroupA, learnerGroupB) => {
+      if ('title:desc' === this.sortBy) {
+        return learnerGroupB.title.localeCompare(learnerGroupA.title, this.intl.primaryLocale, {
+          numeric: true,
+        });
+      }
+      return learnerGroupA.title.localeCompare(learnerGroupB.title, this.intl.primaryLocale, {
+        numeric: true,
+      });
+    });
+  }
+
+  @cached
+  get individualLearnersData() {
+    return new TrackedAsyncData(this.args.offering.learners);
+  }
+
+  get individualLearners() {
+    return this.individualLearnersData.isResolved ? this.individualLearnersData.value : [];
+  }
+
+  get sortedIndividualLearners() {
+    if (!this.individualLearners.length) {
+      return '';
+    }
+
+    return mapBy(sortBy(this.individualLearners, 'fullName'), 'fullName').join(', ');
+  }
+
   @cached
   get sessionData() {
     return new TrackedAsyncData(this.args.offering?.session);
+  }
+
+  get session() {
+    return this.sessionData.isResolved ? this.sessionData.value : null;
   }
 
   @cached
@@ -50,21 +93,13 @@ export default class OfferingManagerComponent extends Component {
     return new TrackedAsyncData(this.session?.course);
   }
 
+  get course() {
+    return this.courseData.isResolved ? this.courseData.value : null;
+  }
+
   @cached
   get cohortsData() {
     return new TrackedAsyncData(this.course?.cohorts);
-  }
-
-  get learnerGroups() {
-    return this.learnerGroupsData.isResolved ? this.learnerGroupsData.value : null;
-  }
-
-  get session() {
-    return this.sessionData.isResolved ? this.sessionData.value : null;
-  }
-
-  get course() {
-    return this.courseData.isResolved ? this.courseData.value : null;
   }
 
   get cohorts() {
@@ -91,19 +126,6 @@ export default class OfferingManagerComponent extends Component {
     return this.args.offering.save();
   }
 
-  get sortedLearnerGroups() {
-    if (!this.learnerGroups) {
-      return [];
-    }
-    return this.learnerGroups.slice().sort((learnerGroupA, learnerGroupB) => {
-      const locale = this.intl.get('locale');
-      if ('title:desc' === this.sortBy) {
-        return learnerGroupB.title.localeCompare(learnerGroupA.title, locale, { numeric: true });
-      }
-      return learnerGroupA.title.localeCompare(learnerGroupB.title, locale, { numeric: true });
-    });
-  }
-
   @action
   toggleHover(id) {
     if (this.hoveredGroups.includes(id)) {
@@ -118,7 +140,7 @@ export default class OfferingManagerComponent extends Component {
   });
   <template>
     <div
-      class="offering-manager {{if this.showRemoveConfirmation 'show-remove-confirmation'}}"
+      class="offering-manager{{if this.showRemoveConfirmation ' show-remove-confirmation'}}"
       data-test-offering-manager
       ...attributes
     >
@@ -138,48 +160,55 @@ export default class OfferingManagerComponent extends Component {
             @scrollToBottom={{false}}
           />
         {{else}}
-          <div class="offering-manager-learner-groups">
-            <ul>
-              {{#each this.sortedLearnerGroups as |learnerGroup|}}
-                <li
-                  {{this.setLearnerGroupElement learnerGroup.id}}
-                  {{mouseHoverToggle (fn this.toggleHover learnerGroup.id)}}
-                >
-                  {{learnerGroup.title}}
-                  {{#if learnerGroup.needsAccommodation}}
-                    <FaIcon
-                      @icon="universal-access"
-                      @title={{t "general.accommodationIsRequiredForLearnersInThisGroup"}}
-                    />
-                  {{/if}}
-                  {{#unless learnerGroup.isTopLevelGroup}}
-                    {{#if
-                      (and
-                        (get this (concat "learnerGroupElement" learnerGroup.id))
-                        (includes learnerGroup.id this.hoveredGroups)
-                      )
-                    }}
-                      <IliosTooltip
-                        @target={{get this (concat "learnerGroupElement" learnerGroup.id)}}
-                      >
-                        <strong>
-                          {{if
-                            (eq learnerGroup.allParents.length 1)
-                            (t "general.parentGroup")
-                            (t "general.parentGroups")
-                          }}:
-                        </strong>
-                        {{join " » " (reverse (mapBy "title" learnerGroup.allParents))}}
-                      </IliosTooltip>
+          <div class="offering-manager-learners-and-learner-groups">
+            {{#if this.individualLearners.length}}
+              <div class="offering-manager-learners">
+                <FadeText @text={{this.sortedIndividualLearners}} />
+              </div>
+            {{/if}}
+            <div class="offering-manager-learner-groups">
+              <ul>
+                {{#each this.sortedLearnerGroups as |learnerGroup|}}
+                  <li
+                    {{this.setLearnerGroupElement learnerGroup.id}}
+                    {{mouseHoverToggle (fn this.toggleHover learnerGroup.id)}}
+                  >
+                    {{learnerGroup.title}}
+                    {{#if learnerGroup.needsAccommodation}}
+                      <FaIcon
+                        @icon="universal-access"
+                        @title={{t "general.accommodationIsRequiredForLearnersInThisGroup"}}
+                      />
                     {{/if}}
-                  {{/unless}}
-                </li>
-              {{else}}
-                <li>
-                  <FaIcon @icon="users" />
-                </li>
-              {{/each}}
-            </ul>
+                    {{#unless learnerGroup.isTopLevelGroup}}
+                      {{#if
+                        (and
+                          (get this (concat "learnerGroupElement" learnerGroup.id))
+                          (includes learnerGroup.id this.hoveredGroups)
+                        )
+                      }}
+                        <IliosTooltip
+                          @target={{get this (concat "learnerGroupElement" learnerGroup.id)}}
+                        >
+                          <strong>
+                            {{if
+                              (eq learnerGroup.allParents.length 1)
+                              (t "general.parentGroup")
+                              (t "general.parentGroups")
+                            }}:
+                          </strong>
+                          {{join " » " (reverse (mapBy0 "title" learnerGroup.allParents))}}
+                        </IliosTooltip>
+                      {{/if}}
+                    {{/unless}}
+                  </li>
+                {{else}}
+                  <li>
+                    <FaIcon @icon="users" />
+                  </li>
+                {{/each}}
+              </ul>
+            </div>
           </div>
           <div class="offering-manager-location">
             <TruncateText @text={{@offering.room}} @length={{10}} data-test-location />

@@ -27,7 +27,7 @@
     background-color: var(--lightest-grey);
     display: grid;
     font-weight: 600;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: 3fr repeat(3, 4fr) 2fr;
 
     div {
       background-color: var(--blue);

@@ -3,6 +3,7 @@ import {
   create,
   clickable,
   hasClass,
+  isHidden,
   isVisible,
   property,
   text,
@@ -14,6 +15,11 @@ import offeringForm from './offering-form';
 
 const definition = {
   scope: '[data-test-offering-manager]',
+  learners: {
+    scope: '.offering-manager-learners',
+    list: text(),
+    isHidden: isHidden(),
+  },
   learnerGroups: collection('.offering-manager-learner-groups li', {
     title: text(),
     expandTooltip: triggerable('mouseover'),
@@ -22,6 +28,7 @@ const definition = {
     isTooltipVisible: isVisible('.ilios-tooltip', {
       resetScope: true,
     }),
+    displaysUsersIcon: hasClass('fa-users', 'svg'),
   }),
   location: text('[data-test-location]'),
   url: property('href', '[data-test-url] a'),
