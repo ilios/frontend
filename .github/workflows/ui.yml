@@ -29,7 +29,7 @@ jobs:
           - BS_IOS_SAFARI
           - BS_CHROME_ANDROID
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - uses: pnpm/action-setup@v4
       - uses: actions/setup-node@v6
         with:
@@ -66,7 +66,7 @@ jobs:
           - lti-dashboard
         firefox-version: [latest-esr]
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - uses: pnpm/action-setup@v4
       - uses: actions/setup-node@v6
         with:
@@ -99,7 +99,7 @@ jobs:
         workspace:
           - frontend
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - uses: pnpm/action-setup@v4
       - uses: actions/setup-node@v6
         with:
