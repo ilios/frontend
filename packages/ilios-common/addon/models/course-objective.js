@@ -111,11 +111,4 @@ export default class CourseObjective extends Model {
     }
     await this.save();
   }
-
-  /**
-   * @todo check if this method is obsolete, if so remove it [ST 2020/07/08]
-   */
-  get shortTitle() {
-    return this.title?.substr(0, 200) ?? '';
-  }
 }
