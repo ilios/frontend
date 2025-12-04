@@ -7,6 +7,9 @@ concurrency:
   group: visual-diff-${{ github.head_ref || github.ref }}
   cancel-in-progress: true
 
+permissions:
+  pull-requests: write
+
 env:
   SW_DISABLED: true
 
@@ -109,9 +112,32 @@ jobs:
         with:
           node-version: 24
       - name: Create Visual Diff
-        run: npx visual-differ baseline-frontend candidate-frontend results/visual-diff-${{ github.event.pull_request.number }}
+        id: visual_diff
+        run: |
+          output=$(npx visual-differ baseline-frontend candidate-frontend results/visual-diff-${{ github.event.pull_request.number }})
+          echo "$output"
+          {
+            echo "visual_diff_output<<EOF"
+            echo "$output"
+            echo "EOF"
+          } >> $GITHUB_ENV
       - uses: actions/upload-artifact@v5
+        id: upload_results
         if: always()
         with:
           name: VisualDiffResults
           path: results
+      - name: Comment on Pull Request
+        if: always()
+        uses: peter-evans/create-or-update-comment@v5
+        with:
+          issue-number: ${{ github.event.pull_request.number }}
+          body: |
+            **Visual Diff Results**
+
+            Output:
+            ```
+            ${{ env.visual_diff_output }}
+            ```
+
+            [Download Visual Diff Results](${{ steps.upload_results.outputs.artifact-url }})
