@@ -1,0 +1,38 @@
+/* stylelint-disable property-disallowed-list */
+
+.font-size-smallest {
+  font-size: var(--fs-smallest);
+  line-height: calc(4px + 2ex);
+}
+.font-size-small {
+  font-size: var(--fs-small);
+  line-height: calc(4px + 2ex);
+}
+.font-size-base {
+  font-size: var(--fs-base);
+  line-height: calc(4px + 2ex);
+}
+.font-size-medium {
+  font-size: var(--fs-medium);
+  line-height: calc(4px + 2ex);
+}
+.font-size-large {
+  font-size: var(--fs-large);
+  line-height: calc(4px + 2ex);
+}
+.font-size-xl {
+  font-size: var(--fs-xl);
+  line-height: calc(4px + 2ex);
+}
+.font-size-xxl {
+  font-size: var(--fs-xxl);
+  line-height: calc(4px + 2ex);
+}
+.font-size-xxxl {
+  font-size: var(--fs-xxxl);
+  line-height: calc(4px + 2ex);
+}
+.font-size-huge {
+  font-size: var(--fs-huge);
+  line-height: calc(4px + 2ex);
+}
