@@ -172,11 +172,12 @@ export default class ReportsCurriculumHeader extends Component {
           <CopyButton
             @getClipboardText={{this.getReportUrl}}
             @success={{perform this.textCopied}}
-            aria-label={{t "general.copyCurriculumReportUrl"}}
+            aria-label={{t "general.copyCurriculumReportUrlTooltip"}}
             id={{this.copyButtonId}}
             {{mouseHoverToggle (set this "showCopyTooltip")}}
           >
             <FaIcon @icon="copy" />
+            {{t "general.copyCurriculumReportUrl"}}
           </CopyButton>
           {{#if this.showCopyTooltip}}
             <IliosTooltip
@@ -184,7 +185,7 @@ export default class ReportsCurriculumHeader extends Component {
               @options={{this.popperOptions}}
               class="ics-feed-tooltip"
             >
-              {{t "general.copyCurriculumReportUrl"}}
+              {{t "general.copyCurriculumReportUrlTooltip"}}
             </IliosTooltip>
           {{/if}}
         {{/if}}
@@ -217,6 +218,7 @@ export default class ReportsCurriculumHeader extends Component {
             data-test-run
           >
             <FaIcon @icon="play" @title={{t "general.runReport"}} />
+            {{t "general.runReport"}}
           </button>
           {{#if this.showRunTooltip}}
             <IliosTooltip

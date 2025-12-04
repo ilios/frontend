@@ -1,19 +1,37 @@
 @use "../../ilios-common/mixins" as cm;
 
 .reports-curriculum-header {
+  display: grid;
+  row-gap: 0.25rem;
+  margin: 0 0.8rem 0.25rem 0;
+  padding-bottom: 0.25rem;
+
+  @include cm.for-tablet-and-up {
+    grid-template-columns: 4fr;
+    justify-content: space-between;
+    row-gap: 0;
+  }
+
   .run {
     @include cm.font-size("medium");
     min-height: 2rem;
   }
 
   .input-buttons {
-    display: flex;
     width: 100%;
     margin-top: 0.5rem;
     justify-content: flex-end;
+
+    @include cm.for-tablet-and-up {
+      display: flex;
+      flex-direction: row;
+      gap: 0.5em;
+    }
+
     button,
     div {
-      margin-left: 0.5rem;
+      display: block;
+      margin-bottom: 0.25rem;
 
       &:disabled {
         cursor: default;
