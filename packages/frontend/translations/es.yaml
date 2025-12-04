@@ -78,7 +78,8 @@ general:
   continue: Continuar
   copiedCurriculumReportUrl: Copiado Enlace de Inventario de plan de Estudios Correctamente
   copy: Copiar
-  copyCurriculumReportUrl: Copiar Enlace a este Inventario de plan de Estudios
+  copyCurriculumReportUrl: Copiar Enlace de Reporte
+  copyCurriculumReportUrlTooltip: Copiar Enlace a este Inventario de plan de Estudios
   copyNewToken: Copiar nuevo token
   copyReport: Copiar Reporte
   copyWithLearners: Copiar Con Alumnos

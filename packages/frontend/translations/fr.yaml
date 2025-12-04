@@ -78,7 +78,8 @@ general:
   continue: Continuez
   copiedCurriculumReportUrl: Copié lien vers le rapport d'inventaire des programmes d'étude avec succès
   copy: Copie
-  copyCurriculumReportUrl: Copier le lien vers ce rapport d'inventaire des programmes d'études
+  copyCurriculumReportUrl: Copier le lien de Rapport
+  copyCurriculumReportUrlTooltip: Copier le lien vers ce rapport d'inventaire des programmes d'études
   copyNewToken: Copier nouveau jeton
   copyReport: Copier le Rapport
   copyWithLearners: Copiér avec étudiants
