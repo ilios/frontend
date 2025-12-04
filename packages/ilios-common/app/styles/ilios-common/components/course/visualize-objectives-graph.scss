@@ -1,8 +1,6 @@
 @use "../../mixins" as m;
 
 .course-visualize-objectives-graph {
-  @include m.graph-with-data-table;
-
   .with-hours {
     p {
       margin-top: 0.5rem;

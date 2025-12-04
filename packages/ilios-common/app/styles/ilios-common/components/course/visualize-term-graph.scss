@@ -1,5 +1,0 @@
-@use "../../mixins" as m;
-
-.course-visualize-term-graph {
-  @include m.graph-with-data-table;
-}

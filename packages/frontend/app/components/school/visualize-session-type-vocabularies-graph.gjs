@@ -188,7 +188,7 @@ export default class SchoolVisualizeSessionTypeVocabulariesGraphComponent extend
   });
   <template>
     <div
-      class="school-visualize-session-type-vocabularies-graph not-icon"
+      class="graph-with-data-table not-icon"
       data-test-school-visualize-session-type-vocabularies-graph
       ...attributes
     >

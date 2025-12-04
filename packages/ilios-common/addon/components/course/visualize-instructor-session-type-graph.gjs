@@ -174,7 +174,7 @@ export default class CourseVisualizeInstructorSessionTypeGraph extends Component
   });
   <template>
     <div
-      class="course-visualize-instructor-session-type-graph {{unless @isIcon 'not-icon'}}"
+      class="graph-with-data-table {{unless @isIcon 'not-icon'}}"
       data-test-course-visualize-instructor-session-type-graph
       ...attributes
     >
