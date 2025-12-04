@@ -1,7 +1,8 @@
-// Handlers will be added incrementally:
-// - Generic CRUD handlers for all models
-// - Custom auth handlers
-// - Application config handlers
-export const handlers = [];
+import { genericHandlers } from './handlers/generic-crud.js';
+import { specialCaseHandlers } from './handlers/special-cases.js';
+
+// MSW request handlers
+// Special case handlers MUST come first - MSW uses the first matching handler
+export const handlers = [...specialCaseHandlers, ...genericHandlers];
 
 export default handlers;
