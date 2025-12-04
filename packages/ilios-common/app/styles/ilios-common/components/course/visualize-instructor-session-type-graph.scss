@@ -1,5 +1,0 @@
-@use "../../mixins" as m;
-
-.course-visualize-instructor-session-type-graph {
-  @include m.graph-with-data-table;
-}

@@ -209,7 +209,7 @@ export default class CourseVisualizeSessionTypeGraph extends Component {
   });
   <template>
     <div
-      class="course-visualize-session-type-graph {{unless @isIcon 'not-icon'}}"
+      class="graph-with-data-table {{unless @isIcon 'not-icon'}}"
       data-test-course-visualize-session-type-graph
       ...attributes
     >
