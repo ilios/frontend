@@ -1,4 +1,4 @@
-import { module, skip } from 'qunit';
+import { module, test, skip } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { setupMirage } from 'frontend/tests/test-support/mirage';
@@ -45,8 +45,6 @@ module('Integration | Component | reports/curriculum/tagged-terms', function (ho
       terms: [sessionTerm1, sessionTerm2],
     });
 
-    // console.log('this.course', this.course);
-
     this.server.post('api/graphql', (schema) => {
       //use all the courses, getting the id filter from graphQL is a bit tricky
       const courseIds = schema.db.courses.map((c) => c.id);
@@ -66,13 +64,11 @@ module('Integration | Component | reports/curriculum/tagged-terms', function (ho
 
         return course;
       });
-      // console.log('taggedTerms: courses', courses);
-      // console.log('taggedTerms: rawCourses', rawCourses);
       return { data: { courses } };
     });
   });
 
-  skip('it renders and is accessible', async function (assert) {
+  test('it renders and is accessible', async function (assert) {
     const courseModels = await this.owner.lookup('service:store').findAll('course');
     this.set('courses', courseModels);
 
