@@ -1,6 +1,7 @@
 import { setupServer } from 'msw/node';
 import { db } from './db.js';
 import { handlers } from './handlers.js';
+import { factoryDefaults } from './factories.js';
 
 // Drop-in replacement for setupMirage() that maintains the same API
 export function setupMSW(hooks) {
@@ -31,7 +32,12 @@ function createModel(modelName, attrs = {}) {
   if (!model) {
     throw new Error(`Model '${modelName}' not found in database`);
   }
-  return model.create(attrs);
+
+  // Apply factory defaults
+  const defaults = factoryDefaults[modelName] || {};
+  const mergedAttrs = { ...applyDefaults(defaults, 0), ...attrs };
+
+  return model.create(mergedAttrs);
 }
 
 function createModelList(modelName, count, attrs = {}) {
@@ -41,11 +47,34 @@ function createModelList(modelName, count, attrs = {}) {
   }
 
   return Array.from({ length: count }, (_, i) => {
-    // Call functions with index if needed (like Mirage factories)
+    // Apply factory defaults with index
+    const defaults = factoryDefaults[modelName] || {};
+    const resolvedDefaults = applyDefaults(defaults, i);
+
+    // Resolve user-provided attrs with index
     const resolvedAttrs = {};
     for (const [key, value] of Object.entries(attrs)) {
       resolvedAttrs[key] = typeof value === 'function' ? value(i) : value;
     }
-    return model.create(resolvedAttrs);
+
+    return model.create({ ...resolvedDefaults, ...resolvedAttrs });
   });
+}
+
+// Apply factory defaults, calling functions with index
+function applyDefaults(defaults, index) {
+  const resolved = {};
+  for (const [key, value] of Object.entries(defaults)) {
+    if (typeof value === 'function') {
+      // For non-arrow functions, bind the resolved object as 'this'
+      if (value.prototype) {
+        resolved[key] = value.call(resolved, index);
+      } else {
+        resolved[key] = value(index);
+      }
+    } else {
+      resolved[key] = value;
+    }
+  }
+  return resolved;
 }
