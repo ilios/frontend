@@ -33,16 +33,6 @@ module.exports = {
     this.import(path.join('node_modules', 'flatpickr', 'dist', 'flatpickr.css'));
   },
 
-  treeForApp(appTree) {
-    const trees = [appTree];
-    if (['test', 'development'].includes(this._env)) {
-      const mswDir = path.join(__dirname, 'msw-test-support');
-      const mswTree = new Funnel(mswDir, { destDir: 'tests/test-support/msw' });
-      trees.push(mswTree);
-    }
-    return MergeTrees(trees);
-  },
-
   treeForAddonTestSupport(tree) {
     // intentionally not calling _super here
     // so that we can have our `import`'s be
