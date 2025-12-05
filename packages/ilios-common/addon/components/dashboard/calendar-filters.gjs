@@ -66,10 +66,10 @@ export default class DashboardCalendarFiltersComponent extends Component {
         />
         <div
           id="calendar-sessiontypefilter"
-          class="calendar-filter-list sessiontypefilter"
+          class="calendar-filter-list sessiontypefilter font-size-small"
           data-test-session-type-filter
         >
-          <h2>
+          <h2 class="font-size-base">
             {{t "general.sessionTypes"}}
           </h2>
           <div class="filters">
@@ -102,10 +102,10 @@ export default class DashboardCalendarFiltersComponent extends Component {
       {{else}}
         <div
           id="calendar-sessiontypefilter"
-          class="calendar-filter-list sessiontypefilter"
+          class="calendar-filter-list sessiontypefilter font-size-small"
           data-test-session-type-filter
         >
-          <h2>
+          <h2 class="font-size-base">
             {{t "general.sessionTypes"}}
           </h2>
           <div class="filters">
@@ -131,10 +131,10 @@ export default class DashboardCalendarFiltersComponent extends Component {
         </div>
         <div
           id="calendar-courselevelfilter"
-          class="calendar-filter-list courselevelfilter"
+          class="calendar-filter-list courselevelfilter font-size-small"
           data-test-course-level-filter
         >
-          <h2>
+          <h2 class="font-size-base">
             {{t "general.courseLevels"}}
           </h2>
           <div class="filters">
