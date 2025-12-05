@@ -17,7 +17,6 @@
     color: var(--blue);
     border: 1px solid var(--very-transparent-black);
     display: inline-block;
-    @include font-size.font-size("small");
     font-weight: 600;
     min-width: 3em;
     padding: 0.25em 0.5em;

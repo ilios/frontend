@@ -33,7 +33,11 @@ export default class ToggleButtons extends Component {
         data-test-first-input
         {{on "click" this.firstChoice}}
       />
-      <label for={{concat "first-toggle-" this.uniqueId}} data-test-first-label>
+      <label
+        for={{concat "first-toggle-" this.uniqueId}}
+        class="font-size-small"
+        data-test-first-label
+      >
         {{@firstLabel}}
       </label>
       <input
@@ -44,7 +48,11 @@ export default class ToggleButtons extends Component {
         data-test-second-input
         {{on "click" this.secondChoice}}
       />
-      <label for={{concat "second-toggle-" this.uniqueId}} data-test-second-label>
+      <label
+        class="font-size-small"
+        for={{concat "second-toggle-" this.uniqueId}}
+        data-test-second-label
+      >
         {{@secondLabel}}
       </label>
     </span>
