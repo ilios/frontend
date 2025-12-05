@@ -11,7 +11,7 @@ module('Integration | Component | session-overview-ilm-duedate', function (hooks
   setupMSW(hooks);
 
   hooks.beforeEach(async function () {
-    const ilmSession = this.server.create('ilm-session', {
+    const ilmSession = await this.server.create('ilm-session', {
       dueDate: new Date(2021, 4, 19, 23, 55, 0),
     });
     this.ilmSession = await this.owner

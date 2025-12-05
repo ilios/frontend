@@ -11,11 +11,11 @@ module('Integration | Component | unassigned students summary', function (hooks)
   setupMSW(hooks);
 
   test('it renders', async function (assert) {
-    const school = this.server.create('school', {
+    const school = await this.server.create('school', {
       id: 1,
       title: 'school 0',
     });
-    this.server.create('school', {
+    await this.server.create('school', {
       id: 2,
       title: 'school 1',
     });
@@ -24,11 +24,11 @@ module('Integration | Component | unassigned students summary', function (hooks)
     });
     const schoolModels = await this.owner.lookup('service:store').findAll('school');
 
-    const studentRole = this.server.create('user-role', {
+    const studentRole = await this.server.create('user-role', {
       id: 4,
       title: 'Student',
     });
-    this.server.createList('user', 5, {
+    await this.server.createList('user', 5, {
       school,
       roles: [studentRole],
     });
@@ -60,7 +60,7 @@ module('Integration | Component | unassigned students summary', function (hooks)
   });
 
   test('it renders empty', async function (assert) {
-    const school = this.server.create('school', {
+    const school = await this.server.create('school', {
       id: 1,
       title: 'school 0',
     });

@@ -11,23 +11,23 @@ module('Integration | Component | session/collapsed-objectives', function (hooks
   setupMSW(hooks);
 
   hooks.beforeEach(async function () {
-    const meshDescriptor = this.server.create('mesh-descriptor');
-    const term = this.server.create('term');
-    const courseObjective = this.server.create('course-objective');
-    this.objective = this.server.create('session-objective');
-    this.objectiveWithMesh = this.server.create('session-objective', {
+    const meshDescriptor = await this.server.create('mesh-descriptor');
+    const term = await this.server.create('term');
+    const courseObjective = await this.server.create('course-objective');
+    this.objective = await this.server.create('session-objective');
+    this.objectiveWithMesh = await this.server.create('session-objective', {
       meshDescriptors: [meshDescriptor],
     });
-    this.objectiveWithTerms = this.server.create('session-objective', {
+    this.objectiveWithTerms = await this.server.create('session-objective', {
       terms: [term],
     });
-    this.objectiveWithCourseObjectives = this.server.create('session-objective', {
+    this.objectiveWithCourseObjectives = await this.server.create('session-objective', {
       courseObjectives: [courseObjective],
     });
   });
 
   test('displays summary data', async function (assert) {
-    const session = this.server.create('session', {
+    const session = await this.server.create('session', {
       sessionObjectives: [
         this.objective,
         this.objectiveWithMesh,
@@ -54,7 +54,7 @@ module('Integration | Component | session/collapsed-objectives', function (hooks
   });
 
   test('clicking expand icon opens full view', async function (assert) {
-    const session = this.server.create('session');
+    const session = await this.server.create('session');
     const sessionModel = await this.owner.lookup('service:store').findRecord('session', session.id);
 
     this.set('session', sessionModel);
@@ -71,7 +71,7 @@ module('Integration | Component | session/collapsed-objectives', function (hooks
   });
 
   test('icons all program year objectives correctly', async function (assert) {
-    const session = this.server.create('session', {
+    const session = await this.server.create('session', {
       sessionObjectives: [this.objectiveWithCourseObjectives],
     });
     const sessionModel = await this.owner.lookup('service:store').findRecord('session', session.id);
@@ -85,7 +85,7 @@ module('Integration | Component | session/collapsed-objectives', function (hooks
   });
 
   test('icons no parents correctly', async function (assert) {
-    const session = this.server.create('session', {
+    const session = await this.server.create('session', {
       sessionObjectives: [this.objective],
     });
     const sessionModel = await this.owner.lookup('service:store').findRecord('session', session.id);
@@ -99,7 +99,7 @@ module('Integration | Component | session/collapsed-objectives', function (hooks
   });
 
   test('icons all mesh correctly', async function (assert) {
-    const session = this.server.create('session', {
+    const session = await this.server.create('session', {
       sessionObjectives: [this.objectiveWithMesh],
     });
     const sessionModel = await this.owner.lookup('service:store').findRecord('session', session.id);
@@ -113,7 +113,7 @@ module('Integration | Component | session/collapsed-objectives', function (hooks
   });
 
   test('icons no mesh correctly', async function (assert) {
-    const session = this.server.create('session', {
+    const session = await this.server.create('session', {
       sessionObjectives: [this.objective],
     });
     const sessionModel = await this.owner.lookup('service:store').findRecord('session', session.id);
@@ -127,7 +127,7 @@ module('Integration | Component | session/collapsed-objectives', function (hooks
   });
 
   test('icons all terms correctly', async function (assert) {
-    const session = this.server.create('session', {
+    const session = await this.server.create('session', {
       sessionObjectives: [this.objectiveWithTerms],
     });
     const sessionModel = await this.owner.lookup('service:store').findRecord('session', session.id);
@@ -141,7 +141,7 @@ module('Integration | Component | session/collapsed-objectives', function (hooks
   });
 
   test('icons no terms correctly', async function (assert) {
-    const session = this.server.create('session', {
+    const session = await this.server.create('session', {
       sessionObjectives: [this.objective],
     });
     const sessionModel = await this.owner.lookup('service:store').findRecord('session', session.id);

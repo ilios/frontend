@@ -11,47 +11,47 @@ module('Acceptance | course visualizations - objectives', function (hooks) {
   });
 
   test('it renders', async function (assert) {
-    const school = this.server.create('school');
-    const course = this.server.create('course', { year: 2021, school });
-    const courseObjectives = this.server.createList('course-objective', 3, {
+    const school = await this.server.create('school');
+    const course = await this.server.create('course', { year: 2021, school });
+    const courseObjectives = await this.server.createList('course-objective', 3, {
       course,
     });
-    const session1 = this.server.create('session', {
+    const session1 = await this.server.create('session', {
       title: 'Berkeley Investigations',
       course,
     });
-    const session2 = this.server.create('session', {
+    const session2 = await this.server.create('session', {
       title: 'The San Leandro Horror',
       course,
     });
-    const session3 = this.server.create('session', {
+    const session3 = await this.server.create('session', {
       title: 'Empty Session',
       course,
     });
-    this.server.create('session-objective', {
+    await this.server.create('session-objective', {
       session: session1,
       courseObjectives: [courseObjectives[0]],
     });
-    this.server.create('session-objective', {
+    await this.server.create('session-objective', {
       session: session2,
       courseObjectives: [courseObjectives[1]],
     });
-    this.server.create('session-objective', {
+    await this.server.create('session-objective', {
       session: session3,
       courseObjectives: [courseObjectives[2]],
     });
 
-    this.server.create('offering', {
+    await this.server.create('offering', {
       session: session1,
       startDate: new Date('2019-12-08T12:00:00'),
       endDate: new Date('2019-12-08T17:00:00'),
     });
-    this.server.create('offering', {
+    await this.server.create('offering', {
       session: session1,
       startDate: new Date('2019-12-21T12:00:00'),
       endDate: new Date('2019-12-21T17:30:00'),
     });
-    this.server.create('offering', {
+    await this.server.create('offering', {
       session: session2,
       startDate: new Date('2019-12-05T18:00:00'),
       endDate: new Date('2019-12-05T21:00:00'),

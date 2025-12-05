@@ -7,59 +7,59 @@ module('Acceptance | Program Year - Objectives', function (hooks) {
   setupApplicationTest(hooks);
 
   hooks.beforeEach(async function () {
-    const school = this.server.create('school');
+    const school = await this.server.create('school');
     this.user = await setupAuthentication({ school, administeredSchools: [school] }, true);
-    const program = this.server.create('program', {
+    const program = await this.server.create('program', {
       school,
     });
-    const vocabulary = this.server.create('vocabulary', { school });
-    const term1 = this.server.create('term', { vocabulary, active: true });
-    const term2 = this.server.create('term', { vocabulary });
-    const programYear = this.server.create('program-year', {
+    const vocabulary = await this.server.create('vocabulary', { school });
+    const term1 = await this.server.create('term', { vocabulary, active: true });
+    const term2 = await this.server.create('term', { vocabulary });
+    const programYear = await this.server.create('program-year', {
       program,
     });
-    this.server.create('cohort', {
+    await this.server.create('cohort', {
       programYear,
     });
-    const parent = this.server.create('competency', {
+    const parent = await this.server.create('competency', {
       school,
       programYears: [programYear],
     });
-    const competency1 = this.server.create('competency', {
+    const competency1 = await this.server.create('competency', {
       parent,
       school,
       programYears: [programYear],
     });
-    this.server.create('competency', {
+    await this.server.create('competency', {
       parent,
       school,
       programYears: [programYear],
     });
-    const competency4 = this.server.create('competency', {
+    const competency4 = await this.server.create('competency', {
       school,
       programYears: [programYear],
     });
-    this.server.create('competency', {
+    await this.server.create('competency', {
       school,
       programYears: [programYear],
     });
-    this.server.createList('competency', 3, { school });
-    const meshDescriptors = this.server.createList('mesh-descriptor', 4);
-    const programYearObjective = this.server.create('program-year-objective', {
+    await this.server.createList('competency', 3, { school });
+    const meshDescriptors = await this.server.createList('mesh-descriptor', 4);
+    const programYearObjective = await this.server.create('program-year-objective', {
       programYear,
       competency: competency1,
       meshDescriptors: [meshDescriptors[0], meshDescriptors[1]],
       terms: [term1],
     });
-    this.server.create('program-year-objective', {
+    await this.server.create('program-year-objective', {
       programYear,
       competency: competency4,
       active: false,
       terms: [term2],
     });
-    this.server.create('program-year-objective', { programYear });
-    const course = this.server.create('course');
-    this.server.create('course-objective', {
+    await this.server.create('program-year-objective', { programYear });
+    const course = await this.server.create('course');
+    await this.server.create('course-objective', {
       course,
       programYearObjectives: [programYearObjective],
     });

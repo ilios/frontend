@@ -8,47 +8,47 @@ import page from 'ilios-common/page-objects/course-publish-all';
 module('Acceptance | Course - Publish All Sessions', function (hooks) {
   setupApplicationTest(hooks);
   hooks.beforeEach(async function () {
-    this.school = this.server.create('school');
+    this.school = await this.server.create('school');
     this.user = await setupAuthentication({ administeredSchools: [this.school] }, true);
-    this.cohort = this.server.create('cohort');
+    this.cohort = await this.server.create('cohort');
   });
 
   test('published sessions do not appear in the cannot publish list #1658', async function (assert) {
-    const term = this.server.create('term');
+    const term = await this.server.create('term');
 
-    const course = this.server.create('course', {
+    const course = await this.server.create('course', {
       year: 2013,
       school: this.school,
       published: true,
       cohorts: [this.cohort],
     });
-    const session1 = this.server.create('session', {
+    const session1 = await this.server.create('session', {
       course,
       published: true,
       publishedAsTbd: false,
       terms: [term],
     });
-    this.server.create('session-objective', { session: session1 });
-    this.server.create('offering', { sessionId: 1 });
-    const session2 = this.server.create('session', {
+    await this.server.create('session-objective', { session: session1 });
+    await this.server.create('offering', { sessionId: 1 });
+    const session2 = await this.server.create('session', {
       course,
       published: true,
       publishedAsTbd: false,
       terms: [term],
     });
-    this.server.create('session-objective', { session: session2 });
+    await this.server.create('session-objective', { session: session2 });
 
-    this.server.create('offering', { session: session2 });
-    this.server.create('ilm-session', { session: session2 });
-    const session3 = this.server.create('session', {
+    await this.server.create('offering', { session: session2 });
+    await this.server.create('ilm-session', { session: session2 });
+    const session3 = await this.server.create('session', {
       course,
       published: true,
       publishedAsTbd: true,
       terms: [term],
     });
-    this.server.create('session-objective', { session: session3 });
+    await this.server.create('session-objective', { session: session3 });
 
-    this.server.create('offering', { session: session3 });
+    await this.server.create('offering', { session: session3 });
 
     await page.visit({
       courseId: course.id,
@@ -92,25 +92,25 @@ module('Acceptance | Course - Publish All Sessions', function (hooks) {
   });
 
   test('After publishing user is returned to the courses route #4099', async function (assert) {
-    const terms = this.server.createList('term', 1);
+    const terms = await this.server.createList('term', 1);
 
-    const course = this.server.create('course', {
+    const course = await this.server.create('course', {
       year: 2013,
       school: this.school,
       published: true,
       cohorts: [this.cohort],
     });
-    const session = this.server.create('session', {
+    const session = await this.server.create('session', {
       course,
       published: false,
       publishedAsTbd: false,
       terms,
     });
-    this.server.create('session-objective', { session });
-    this.server.create('session-type', {
+    await this.server.create('session-objective', { session });
+    await this.server.create('session-type', {
       sessions: [session],
     });
-    this.server.create('offering', { session });
+    await this.server.create('offering', { session });
 
     await page.visit({
       courseId: course.id,
@@ -122,32 +122,32 @@ module('Acceptance | Course - Publish All Sessions', function (hooks) {
   });
 
   test('Updating course objectives updates the unlinked objective warning', async function (assert) {
-    const programYear = this.server.create('program-year', {
+    const programYear = await this.server.create('program-year', {
       cohort: this.cohort,
     });
-    this.server.create('program', {
+    await this.server.create('program', {
       school: this.school,
       programYears: [programYear],
     });
-    this.server.create('program-year-objective', {
+    await this.server.create('program-year-objective', {
       programYear,
     });
 
-    const course = this.server.create('course', {
+    const course = await this.server.create('course', {
       year: 2020,
       school: this.school,
       published: true,
       cohorts: [this.cohort],
     });
-    this.server.create('course-objective', {
+    await this.server.create('course-objective', {
       course,
     });
-    const session = this.server.create('session', {
+    const session = await this.server.create('session', {
       course,
       published: false,
       publishedAsTbd: false,
     });
-    this.server.create('session-type', {
+    await this.server.create('session-type', {
       sessions: [session],
     });
     await page.visit({

@@ -271,14 +271,14 @@ module('Integration | Component | single-event-learningmaterial-list-item', func
   });
 
   test('user material status enabled', async function (assert) {
-    const session = this.server.create('session');
-    const sessionLearningMaterial = this.server.create('session-learning-material', {
+    const session = await this.server.create('session');
+    const sessionLearningMaterial = await this.server.create('session-learning-material', {
       session,
     });
-    const sessionMaterialStatus = this.server.create('user-session-material-status', {
+    const sessionMaterialStatus = await this.server.create('user-session-material-status', {
       material: sessionLearningMaterial,
     });
-    const user = this.server.create('user', {
+    const user = await this.server.create('user', {
       sessionMaterialStatuses: [sessionMaterialStatus],
     });
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
@@ -309,14 +309,14 @@ module('Integration | Component | single-event-learningmaterial-list-item', func
   });
 
   test('user material status disabled', async function (assert) {
-    const session = this.server.create('session');
-    const sessionLearningMaterial = this.server.create('session-learning-material', {
+    const session = await this.server.create('session');
+    const sessionLearningMaterial = await this.server.create('session-learning-material', {
       session,
     });
-    const sessionMaterialStatus = this.server.create('user-session-material-status', {
+    const sessionMaterialStatus = await this.server.create('user-session-material-status', {
       material: sessionLearningMaterial,
     });
-    const user = this.server.create('user', {
+    const user = await this.server.create('user', {
       sessionMaterialStatuses: [sessionMaterialStatus],
     });
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);

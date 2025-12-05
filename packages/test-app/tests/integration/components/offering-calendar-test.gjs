@@ -14,10 +14,10 @@ module('Integration | Component | offering-calendar', function (hooks) {
   test('it renders', async function (assert) {
     const startDate = DateTime.fromISO('2026-03-31T09:00:00');
     const endDate = startDate.plus({ hour: 8 });
-    const school = this.server.create('school');
-    const course = this.server.create('course', { school });
-    const sessionType = this.server.create('session-type');
-    const session = this.server.create('session', {
+    const school = await this.server.create.create('school');
+    const course = await this.server.create.create('course', { school });
+    const sessionType = await this.server.create.create('session-type');
+    const session = await this.server.create.create('session', {
       course,
       sessionType,
     });
@@ -61,39 +61,39 @@ module('Integration | Component | offering-calendar', function (hooks) {
     const endDate = startDate.plus({ hours: 8 });
     const startOfWeek = startDate.minus({ day: 2 }).set({ hour: 0, minute: 0, second: 0 });
     const endOfWeek = startDate.plus({ day: 4 }).set({ hour: 22, minute: 59, second: 59 });
-    const school = this.server.create('school');
-    const course = this.server.create('course', { school });
-    const sessionType = this.server.create('session-type');
-    const session = this.server.create('session', {
+    const school = await this.server.create.create('school');
+    const course = await this.server.create.create('course', { school });
+    const sessionType = await this.server.create.create('session-type');
+    const session = await this.server.create.create('session', {
       course,
       sessionType,
     });
-    const session2 = this.server.create('session', {
+    const session2 = await this.server.create.create('session', {
       course,
       sessionType,
     });
-    const offering1 = this.server.create('offering', {
+    const offering1 = await this.server.create.create('offering', {
       startDate: startOfWeek.toJSDate(),
       endDate: startOfWeek.plus({ hour: 1 }).toJSDate(),
       location: 123,
       session,
     });
-    const offering2 = this.server.create('offering', {
+    const offering2 = await this.server.create.create('offering', {
       startDate: endOfWeek.toJSDate(),
       endDate: endOfWeek.plus({ hour: 1 }).toJSDate(),
       location: 123,
       session,
     });
-    const offering3 = this.server.create('offering', {
+    const offering3 = await this.server.create.create('offering', {
       startDate: startDate.plus({ day: 1, hour: 1 }).toJSDate(),
       endDate: startDate.plus({ day: 1, hour: 2 }).toJSDate(),
       location: 123,
       session: session2,
     });
-    const learnerGroup = this.server.create('learner-group', {
+    const learnerGroup = await this.server.create.create('learner-group', {
       offerings: [offering1, offering2],
     });
-    const learnerGroup2 = this.server.create('learner-group', {
+    const learnerGroup2 = await this.server.create.create('learner-group', {
       offerings: [offering3],
     });
 

@@ -6,31 +6,31 @@ import page from 'ilios-common/page-objects/course';
 module('Acceptance | Course - Objective Mesh Descriptors', function (hooks) {
   setupApplicationTest(hooks);
   hooks.beforeEach(async function () {
-    const school = this.server.create('school');
+    const school = await this.server.create('school');
     this.user = await setupAuthentication({ administeredSchools: [school] }, true);
-    this.server.create('academic-year', { id: 2013 });
-    this.server.createList('program', 2);
-    this.server.createList('programYear', 2);
-    this.server.createList('cohort', 2);
+    await this.server.create('academic-year', { id: 2013 });
+    await this.server.createList('program', 2);
+    await this.server.createList('programYear', 2);
+    await this.server.createList('cohort', 2);
 
-    this.course = this.server.create('course', {
+    this.course = await this.server.create('course', {
       year: 2013,
       school,
     });
 
-    const meshDescriptors = this.server.createList('mesh-descriptor', 6);
-    this.server.create('course-objective', {
+    const meshDescriptors = await this.server.createList('mesh-descriptor', 6);
+    await this.server.create('course-objective', {
       meshDescriptors: [meshDescriptors.shift()],
       course: this.course,
     });
-    this.server.create('course-objective', { meshDescriptors, course: this.course });
-    this.server.create('course-objective', { course: this.course });
+    await this.server.create('course-objective', { meshDescriptors, course: this.course });
+    await this.server.create('course-objective', { course: this.course });
 
     // create some other objectives not in this course
-    //this.server.createList('objective', 2);
+    //await this.server.createList('objective', 2);
 
     //create some extra descriptors that shouldn't be found in search
-    this.server.createList('mesh-descriptor', 10, {
+    await this.server.createList('mesh-descriptor', 10, {
       name: 'nope',
       annotation: 'nope',
     });

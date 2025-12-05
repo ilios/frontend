@@ -11,38 +11,45 @@ module('Integration | Component | detail-competencies', function (hooks) {
   setupRenderingTest(hooks);
   setupMSW(hooks);
   hooks.beforeEach(async function () {
-    const school = this.server.create('school');
-    const program = this.server.create('program', { school });
-    const programYear = this.server.create('program-year', { program });
-    this.server.create('cohort', { programYear });
-    const domains = this.server.createList('competency', 2, { school });
-    const competencies = domains
-      .map((domain) => {
-        return this.server.createList('competency', 2, {
-          parent: domain,
-          school,
-          programYears: [programYear],
-        });
-      })
-      .flat();
-    const programYearObjectives = competencies.map((competency) => {
-      return this.server.create('program-year-objective', {
-        competency,
-        programYear,
-      });
-    });
-    const course = this.server.create('course', {
+    const school = await this.server.create('school');
+    const program = await this.server.create('program', { school });
+    const programYear = await this.server.create('program-year', { program });
+    await this.server.create('cohort', { programYear });
+    const domains = await this.server.createList('competency', 2, { school });
+
+    const competencies = await Promise.all(
+      domains
+        .map((domain) => {
+          return this.server.createList('competency', 2, {
+            parent: domain,
+            school,
+            programYears: [programYear],
+          });
+        })
+        .flat(),
+    );
+    const programYearObjectives = await Promise.all(
+      competencies
+        .map((competency) => {
+          return this.server.create('program-year-objective', {
+            competency,
+            programYear,
+          });
+        })
+        .flat(),
+    );
+    const course = await this.server.create('course', {
       school,
     });
-    this.server.create('course-objective', {
+    await this.server.create('course-objective', {
       course,
       programYearObjectives: [programYearObjectives[0]],
     });
-    this.server.create('course-objective', {
+    await this.server.create('course-objective', {
       course,
       programYearObjectives: [programYearObjectives[2]],
     });
-    this.server.create('course-objective', {
+    await this.server.create('course-objective', {
       course,
       programYearObjectives: [programYearObjectives[1], programYearObjectives[3]],
     });

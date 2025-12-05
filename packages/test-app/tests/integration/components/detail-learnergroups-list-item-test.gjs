@@ -11,17 +11,17 @@ module('Integration | Component | detail-learnergroups-list-item', function (hoo
   setupMSW(hooks);
 
   hooks.beforeEach(async function () {
-    const root = this.server.create('learner-group', {
+    const root = await this.server.create('learner-group', {
       title: 'bar',
     });
-    const parent = this.server.create('learner-group', {
+    const parent = await this.server.create('learner-group', {
       title: 'baz',
       parent: root,
     });
-    const group = this.server.create('learner-group', {
+    const group = await this.server.create('learner-group', {
       title: 'foo',
       parent,
-      users: this.server.createList('user', 3),
+      users: await this.server.createList('user', 3),
     });
     this.group = await this.owner.lookup('service:store').findRecord('learner-group', group.id);
   });

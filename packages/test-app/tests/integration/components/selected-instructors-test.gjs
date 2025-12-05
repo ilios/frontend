@@ -11,18 +11,18 @@ module('Integration | Component | selected-instructors', function (hooks) {
   setupMSW(hooks);
 
   hooks.beforeEach(async function () {
-    const instructor1 = this.server.create('user', {
+    const instructor1 = await this.server.create('user', {
       firstName: 'Joe',
       lastName: 'Doe',
       middleName: 'Michael',
       enabled: false,
     });
-    const instructor2 = this.server.create('user', {
+    const instructor2 = await this.server.create('user', {
       firstName: 'Jane',
       lastName: 'Doe',
       middleName: 'Anette',
     });
-    const instructor3 = this.server.create('user', {
+    const instructor3 = await this.server.create('user', {
       displayName: 'Clem Chowder',
     });
 

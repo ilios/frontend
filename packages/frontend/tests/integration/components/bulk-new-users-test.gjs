@@ -23,19 +23,24 @@ module('Integration | Component | bulk new users', function (hooks) {
 
   hooks.beforeEach(async function () {
     const duration = 4;
-    this.server.create('school', { title: 'first' });
-    const school = this.server.create('school', { title: 'second' });
-    this.server.create('school', { title: 'third' });
+    await this.server.create('school', { title: 'first' });
+    const school = await this.server.create('school', { title: 'second' });
+    await this.server.create('school', { title: 'third' });
 
-    const program = this.server.create('program', { id: 1, title: 'Program', duration, school });
+    const program = await this.server.create('program', {
+      id: 1,
+      title: 'Program',
+      duration,
+      school,
+    });
     const startYear = DateTime.now().year;
-    const py1 = this.server.create('program-year', { program, startYear });
-    const py2 = this.server.create('program-year', { program, startYear });
-    this.server.create('cohort', { id: 2, title: 'second', programYear: py1 });
-    this.server.create('cohort', { id: 1, title: 'first', programYear: py2 });
+    const py1 = await this.server.create('program-year', { program, startYear });
+    const py2 = await this.server.create('program-year', { program, startYear });
+    await this.server.create('cohort', { id: 2, title: 'second', programYear: py1 });
+    await this.server.create('cohort', { id: 1, title: 'first', programYear: py2 });
 
-    const user = this.server.create('user', { school });
-    this.server.create('authentication', { user });
+    const user = await this.server.create('user', { school });
+    await this.server.create('authentication', { user });
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     class PermissionCheckerMock extends Service {
       async canCreateUser() {
@@ -170,7 +175,7 @@ module('Integration | Component | bulk new users', function (hooks) {
   });
 
   test('saves valid faculty users', async function (assert) {
-    this.server.create('user-role', { id: 4 });
+    await this.server.create('user-role', { id: 4 });
 
     await render(<template><BulkNewUsers @close={{(noop)}} /></template>);
 
@@ -239,7 +244,7 @@ module('Integration | Component | bulk new users', function (hooks) {
   });
 
   test('saves valid student users', async function (assert) {
-    this.server.create('user-role', { id: 4 });
+    await this.server.create('user-role', { id: 4 });
 
     await render(<template><BulkNewUsers @close={{(noop)}} /></template>);
     await click('.click-choice-buttons .second-button');
@@ -590,8 +595,8 @@ module('Integration | Component | bulk new users', function (hooks) {
   });
 
   test('validate username uniqueness', async function (assert) {
-    const user = this.server.create('user');
-    this.server.create('authentication', { user, username: 'existingName' });
+    const user = await this.server.create('user');
+    await this.server.create('authentication', { user, username: 'existingName' });
     await render(<template><BulkNewUsers @close={{(noop)}} /></template>);
 
     const users = [
@@ -634,7 +639,7 @@ module('Integration | Component | bulk new users', function (hooks) {
     this.server.post('api/authentications', function () {
       return new HttpResponse(null, { status: 500 });
     });
-    const user = this.server.create('user');
+    const user = await this.server.create('user');
     await render(<template><BulkNewUsers @close={{(noop)}} /></template>);
 
     const users = [
@@ -651,7 +656,7 @@ module('Integration | Component | bulk new users', function (hooks) {
       ],
     ];
     await triggerUpload(users, find('input[type=file]'));
-    this.server.create('authentication', { user, username: 'jasper' });
+    await this.server.create('authentication', { user, username: 'jasper' });
     await click('.done');
     assert.ok(findAll('.saving-authentication-errors').length, 1);
     assert

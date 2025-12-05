@@ -11,8 +11,8 @@ module('Integration | Component | schools/root', function (hooks) {
   setupMSW(hooks);
 
   hooks.beforeEach(async function () {
-    const school1 = this.server.create('school');
-    const school2 = this.server.create('school');
+    const school1 = await this.server.create('school');
+    const school2 = await this.server.create('school');
     this.school1 = await this.owner.lookup('service:store').findRecord('school', school1.id);
     this.school2 = await this.owner.lookup('service:store').findRecord('school', school2.id);
   });

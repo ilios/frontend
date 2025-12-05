@@ -10,34 +10,34 @@ module('Integration | Component | detail terms list', function (hooks) {
   setupMSW(hooks);
 
   test('list with terms', async function (assert) {
-    const school = this.server.create('school', {
+    const school = await this.server.create('school', {
       title: 'Medicine',
     });
 
-    const vocabulary = this.server.create('vocabulary', {
+    const vocabulary = await this.server.create('vocabulary', {
       title: 'Topics',
       school,
     });
 
-    const vocabulary2 = this.server.create('vocabulary', {
+    const vocabulary2 = await this.server.create('vocabulary', {
       title: 'Something else',
       school,
     });
 
-    this.server.create('term', {
+    await this.server.create('term', {
       title: 'foo',
       vocabulary,
     });
-    this.server.create('term', {
+    await this.server.create('term', {
       title: 'bar',
       active: true,
       vocabulary,
     });
-    this.server.create('term', {
+    await this.server.create('term', {
       title: 'baz',
       vocabulary: vocabulary2,
     });
-    this.server.create('term', {
+    await this.server.create('term', {
       title: 'bat',
       vocabulary: vocabulary2,
     });
@@ -61,33 +61,33 @@ module('Integration | Component | detail terms list', function (hooks) {
   });
 
   test('empty list', async function (assert) {
-    const school = this.server.create('school', {
+    const school = await this.server.create('school', {
       title: 'Medicine',
     });
 
-    const vocabulary = this.server.create('vocabulary', {
+    const vocabulary = await this.server.create('vocabulary', {
       title: 'Topics',
       school,
     });
 
-    const vocabulary2 = this.server.create('vocabulary', {
+    const vocabulary2 = await this.server.create('vocabulary', {
       title: 'Something else',
       school,
     });
 
-    this.server.create('term', {
+    await this.server.create('term', {
       title: 'foo',
       vocabulary: vocabulary2,
     });
-    this.server.create('term', {
+    await this.server.create('term', {
       title: 'bar',
       vocabulary: vocabulary2,
     });
-    this.server.create('term', {
+    await this.server.create('term', {
       title: 'baz',
       vocabulary: vocabulary2,
     });
-    this.server.create('term', {
+    await this.server.create('term', {
       title: 'bat',
       vocabulary: vocabulary2,
     });
@@ -109,16 +109,16 @@ module('Integration | Component | detail terms list', function (hooks) {
   });
 
   test('remove term', async function (assert) {
-    const school = this.server.create('school', {
+    const school = await this.server.create('school', {
       title: 'Medicine',
     });
 
-    const vocabulary = this.server.create('vocabulary', {
+    const vocabulary = await this.server.create('vocabulary', {
       title: 'Topics',
       school,
     });
 
-    const term1 = this.server.create('term', {
+    const term1 = await this.server.create('term', {
       title: 'foo',
       vocabulary,
     });
@@ -150,11 +150,11 @@ module('Integration | Component | detail terms list', function (hooks) {
   });
 
   test('inactive vocabulary labeled as such in edit mode', async function (assert) {
-    const school = this.server.create('school', {
+    const school = await this.server.create('school', {
       title: 'Medicine',
     });
 
-    const vocabulary = this.server.create('vocabulary', {
+    const vocabulary = await this.server.create('vocabulary', {
       title: 'Topics',
       active: false,
       school,
@@ -174,9 +174,9 @@ module('Integration | Component | detail terms list', function (hooks) {
   });
 
   test('click vocabulary title to manage', async function (assert) {
-    const school = this.server.create('school');
-    const vocabulary = this.server.create('vocabulary', { school });
-    this.server.create('term', { vocabulary });
+    const school = await this.server.create('school');
+    const vocabulary = await this.server.create('vocabulary', { school });
+    await this.server.create('term', { vocabulary });
     const vocabularyModel = await this.owner
       .lookup('service:store')
       .findRecord('vocabulary', vocabulary.id);

@@ -13,7 +13,7 @@ module('Integration | Component | dashboard/materials', function (hooks) {
   setupRenderingTest(hooks);
   setupMSW(hooks);
 
-  hooks.beforeEach(function () {
+  hooks.beforeEach(async function () {
     class CurrentUserMock extends Service {
       async getModel() {
         return {
@@ -34,13 +34,13 @@ module('Integration | Component | dashboard/materials', function (hooks) {
     const tomorrow = today.plus({ day: 1 });
     const nextWeek = today.plus({ week: 1 });
     const courses = [
-      this.server.create('course', {
+      await this.server.create('course', {
         externalId: 'ID1234',
         year: 2021,
       }),
-      ...this.server.createList('course', 4, {
+      ...(await this.server.createList('course', 4, {
         year: 2022,
-      }),
+      })),
     ];
     const lm1 = {
       title: 'title1',

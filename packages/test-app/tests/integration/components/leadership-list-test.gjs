@@ -10,19 +10,19 @@ module('Integration | Component | leadership-list', function (hooks) {
   setupMSW(hooks);
 
   hooks.beforeEach(async function () {
-    const user1 = this.server.create('user', {
+    const user1 = await this.server.create('user', {
       firstName: 'a',
       middleName: 'b',
       lastName: 'person',
       enabled: false,
     });
-    const user2 = this.server.create('user', {
+    const user2 = await this.server.create('user', {
       firstName: 'b',
       middleName: 'a',
       lastName: 'person',
     });
 
-    const user3 = this.server.create('user', {
+    const user3 = await this.server.create('user', {
       firstName: 'stuart',
       middleName: 'leslie',
       lastName: 'goddard',

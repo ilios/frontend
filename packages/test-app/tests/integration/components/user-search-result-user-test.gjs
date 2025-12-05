@@ -12,7 +12,7 @@ module('Integration | Component | user-search-result-user', function (hooks) {
   setupMSW(hooks);
 
   test('it renders', async function (assert) {
-    const user = this.server.create('user');
+    const user = await this.server.create('user');
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     this.set('user', userModel);
     await render(
@@ -23,7 +23,7 @@ module('Integration | Component | user-search-result-user', function (hooks) {
   });
 
   test('inactive if it is already selected', async function (assert) {
-    const user = this.server.create('user');
+    const user = await this.server.create('user');
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     this.set('user', userModel);
     this.set('activeUsers', [userModel]);
@@ -41,7 +41,7 @@ module('Integration | Component | user-search-result-user', function (hooks) {
   });
 
   test('add active user', async function (assert) {
-    const user = this.server.create('user');
+    const user = await this.server.create('user');
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     this.set('user', userModel);
     this.set('add', (user) => {
@@ -65,7 +65,7 @@ module('Integration | Component | user-search-result-user', function (hooks) {
   });
 
   test('cannot add inactive user by default', async function (assert) {
-    const user = this.server.create('user', { enabled: false });
+    const user = await this.server.create('user', { enabled: false });
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     this.set('user', userModel);
     await render(
@@ -84,7 +84,7 @@ module('Integration | Component | user-search-result-user', function (hooks) {
   });
 
   test('add inactive user if allowed', async function (assert) {
-    const user = this.server.create('user', { enabled: false });
+    const user = await this.server.create('user', { enabled: false });
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     this.set('user', userModel);
     this.set('add', (user) => {

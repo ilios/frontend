@@ -6,7 +6,7 @@ import page from 'ilios-common/page-objects/course';
 module('Acceptance | Course - Leadership', function (hooks) {
   setupApplicationTest(hooks);
   hooks.beforeEach(async function () {
-    this.school = this.server.create('school');
+    this.school = await this.server.create('school');
     this.user = await setupAuthentication(
       {
         school: this.school,
@@ -14,10 +14,10 @@ module('Acceptance | Course - Leadership', function (hooks) {
       },
       true,
     );
-    this.server.create('academic-year', { id: 2013 });
+    await this.server.create('academic-year', { id: 2013 });
 
-    const users = this.server.createList('user', 6);
-    this.course = this.server.create('course', {
+    const users = await this.server.createList('user', 6);
+    this.course = await this.server.create('course', {
       year: 2013,
       school: this.school,
       directors: [users[0], users[1]],

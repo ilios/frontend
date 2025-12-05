@@ -11,50 +11,50 @@ module('Integration | Component | detail-learners-and-learner-groups', function 
   setupMSW(hooks);
 
   hooks.beforeEach(async function () {
-    const learners = this.server.createList('user', 4);
-    const program = this.server.create('program');
-    const programYear1 = this.server.create('program-year', { program });
-    const programYear2 = this.server.create('program-year', { program });
-    const cohort1 = this.server.create('cohort', {
+    const learners = await this.server.createList('user', 4);
+    const program = await this.server.create('program');
+    const programYear1 = await this.server.create('program-year', { program });
+    const programYear2 = await this.server.create('program-year', { program });
+    const cohort1 = await this.server.create('cohort', {
       programYear: programYear1,
     });
-    const cohort2 = this.server.create('cohort', {
+    const cohort2 = await this.server.create('cohort', {
       programYear: programYear2,
     });
-    const secondLevelLearnerGroup1 = this.server.create('learner-group', {
+    const secondLevelLearnerGroup1 = await this.server.create('learner-group', {
       title: 'Second 1',
       cohort: cohort1,
     });
-    const secondLevelLearnerGroup2 = this.server.create('learner-group', {
+    const secondLevelLearnerGroup2 = await this.server.create('learner-group', {
       title: 'Second 2',
       cohort: cohort1,
     });
-    const secondLevelLearnerGroup3 = this.server.create('learner-group', {
+    const secondLevelLearnerGroup3 = await this.server.create('learner-group', {
       title: 'Second 3',
       cohort: cohort2,
     });
-    const topLevelLearnerGroup1 = this.server.create('learner-group', {
+    const topLevelLearnerGroup1 = await this.server.create('learner-group', {
       title: 'Top Group 1',
       children: [secondLevelLearnerGroup1, secondLevelLearnerGroup2],
       cohort: cohort1,
     });
-    const topLevelLearnerGroup2 = this.server.create('learner-group', {
+    const topLevelLearnerGroup2 = await this.server.create('learner-group', {
       title: 'Top Group 2',
       children: [secondLevelLearnerGroup3],
       cohort: cohort2,
     });
-    const topLevelLearnerGroup3 = this.server.create('learner-group', {
+    const topLevelLearnerGroup3 = await this.server.create('learner-group', {
       title: 'Top Group 3',
       cohort: cohort2,
     });
 
-    const course = this.server.create('course', {
+    const course = await this.server.create('course', {
       cohorts: [cohort1, cohort2],
     });
-    const session = this.server.create('session', {
+    const session = await this.server.create('session', {
       course,
     });
-    const ilmSession = this.server.create('ilm-session', {
+    const ilmSession = await this.server.create('ilm-session', {
       session,
       learners: [learners[0], learners[1], learners[2]],
       learnerGroups: [secondLevelLearnerGroup1, secondLevelLearnerGroup2, topLevelLearnerGroup3],

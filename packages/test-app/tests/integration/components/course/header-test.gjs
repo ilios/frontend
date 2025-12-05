@@ -15,7 +15,7 @@ module('Integration | Component | course/header', function (hooks) {
   });
 
   test('it renders and is accessible', async function (assert) {
-    const course = this.server.create('course', {
+    const course = await this.server.create('course', {
       published: true,
       year: 2025,
     });
@@ -31,7 +31,7 @@ module('Integration | Component | course/header', function (hooks) {
   });
 
   test('it renders and is accessible when not editable', async function (assert) {
-    const course = this.server.create('course', {
+    const course = await this.server.create('course', {
       published: true,
       year: 2025,
     });
@@ -47,7 +47,7 @@ module('Integration | Component | course/header', function (hooks) {
   });
 
   test('course title validation fails if value is empty', async function (assert) {
-    const course = this.server.create('course');
+    const course = await this.server.create('course');
     const courseModel = await this.store.findRecord('course', course.id);
     this.set('course', courseModel);
     await render(<template><Header @course={{this.course}} @editable={{true}} /></template>);
@@ -62,7 +62,7 @@ module('Integration | Component | course/header', function (hooks) {
   });
 
   test('course title validation fails if value is too short', async function (assert) {
-    const course = this.server.create('course');
+    const course = await this.server.create('course');
     const courseModel = await this.store.findRecord('course', course.id);
     this.set('course', courseModel);
     await render(<template><Header @course={{this.course}} @editable={{true}} /></template>);
@@ -76,7 +76,7 @@ module('Integration | Component | course/header', function (hooks) {
   });
 
   test('course title validation fails if value is too long', async function (assert) {
-    const course = this.server.create('course');
+    const course = await this.server.create('course');
     const courseModel = await this.store.findRecord('course', course.id);
     this.set('course', courseModel);
     await render(<template><Header @course={{this.course}} @editable={{true}} /></template>);
@@ -91,7 +91,7 @@ module('Integration | Component | course/header', function (hooks) {
   });
 
   test('course title validation fails if value is too short, ignoring whitespace', async function (assert) {
-    const course = this.server.create('course');
+    const course = await this.server.create('course');
     const courseModel = await this.store.findRecord('course', course.id);
     this.set('course', courseModel);
     await render(<template><Header @course={{this.course}} @editable={{true}} /></template>);
@@ -106,7 +106,7 @@ module('Integration | Component | course/header', function (hooks) {
   });
 
   test('course title validation fails if value is blank string of any length', async function (assert) {
-    const course = this.server.create('course');
+    const course = await this.server.create('course');
     const courseModel = await this.store.findRecord('course', course.id);
     this.set('course', courseModel);
     await render(<template><Header @course={{this.course}} @editable={{true}} /></template>);
@@ -121,7 +121,7 @@ module('Integration | Component | course/header', function (hooks) {
   });
 
   test('cancel course title changes', async function (assert) {
-    const course = this.server.create('course');
+    const course = await this.server.create('course');
     const courseModel = await this.store.findRecord('course', course.id);
     this.set('course', courseModel);
     await render(
@@ -139,7 +139,7 @@ module('Integration | Component | course/header', function (hooks) {
   });
 
   test('course academic year', async function (assert) {
-    const course = this.server.create('course', { year: 2021 });
+    const course = await this.server.create('course', { year: 2021 });
     const courseModel = await this.store.findRecord('course', course.id);
     this.set('course', courseModel);
     await render(
@@ -158,7 +158,7 @@ module('Integration | Component | course/header', function (hooks) {
         },
       };
     });
-    const course = this.server.create('course', { year: 2021 });
+    const course = await this.server.create('course', { year: 2021 });
     const courseModel = await this.store.findRecord('course', course.id);
     const year = `${course.year} - ${course.year + 1}`;
     this.set('course', courseModel);
@@ -171,7 +171,7 @@ module('Integration | Component | course/header', function (hooks) {
   });
 
   test('#i6159 validation status', async function (assert) {
-    const course = this.server.create('course');
+    const course = await this.server.create('course');
     const courseModel = await this.store.findRecord('course', course.id);
     this.set('course', courseModel);
     await render(

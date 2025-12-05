@@ -21,25 +21,29 @@ module('Integration | Component | session copy', function (hooks) {
     const lastYear = thisYear - 1;
     const nextYear = thisYear + 1;
 
-    [lastYear, thisYear, nextYear].forEach((year) => {
-      this.server.create('academic-year', {
-        id: year,
-      });
+    await this.server.create('academic-year', {
+      id: lastYear,
     });
-    const school = this.server.create('school');
-    const course = this.server.create('course', {
+    await this.server.create('academic-year', {
+      id: thisYear,
+    });
+    await this.server.create('academic-year', {
+      id: nextYear,
+    });
+    const school = await this.server.create('school');
+    const course = await this.server.create('course', {
       title: 'old course 1',
       year: lastYear,
       school,
     });
 
-    const course2 = this.server.create('course', {
+    const course2 = await this.server.create('course', {
       title: 'old course 2',
       year: lastYear,
       school,
     });
 
-    const session = this.server.create('session', {
+    const session = await this.server.create('session', {
       title: 'old session',
       course,
     });
@@ -74,29 +78,29 @@ module('Integration | Component | session copy', function (hooks) {
 
   test('copy session', async function (assert) {
     const thisYear = DateTime.now().year;
-    this.server.create('academic-year', {
+    await this.server.create('academic-year', {
       id: thisYear,
     });
 
-    const school = this.server.create('school');
-    const course = this.server.create('course', {
+    const school = await this.server.create('school');
+    const course = await this.server.create('course', {
       title: 'old course',
       year: thisYear,
       school,
     });
-    const learningMaterial = this.server.create('learning-material');
-    const sessionLearningMaterial = this.server.create('session-learning-material', {
+    const learningMaterial = await this.server.create('learning-material');
+    const sessionLearningMaterial = await this.server.create('session-learning-material', {
       notes: 'some notes',
       required: false,
       publicNotes: true,
       learningMaterial,
       position: 3,
     });
-    const meshDescriptor = this.server.create('mesh-descriptor');
-    const term = this.server.create('term');
-    const sessionType = this.server.create('session-type');
+    const meshDescriptor = await this.server.create('mesh-descriptor');
+    const term = await this.server.create('term');
+    const sessionType = await this.server.create('session-type');
 
-    const session = this.server.create('session', {
+    const session = await this.server.create('session', {
       title: 'old session',
       description: 'test description',
       course,
@@ -111,9 +115,9 @@ module('Integration | Component | session copy', function (hooks) {
       learningMaterials: [sessionLearningMaterial],
     });
 
-    const courseObjective = this.server.create('course-objective');
-    const objectiveTerm = this.server.create('term');
-    const sessionObjective = this.server.create('session-objective', {
+    const courseObjective = await this.server.create('course-objective');
+    const objectiveTerm = await this.server.create('term');
+    const sessionObjective = await this.server.create('session-objective', {
       session,
       title: 'session objective title',
       courseObjectives: [courseObjective],
@@ -178,15 +182,15 @@ module('Integration | Component | session copy', function (hooks) {
   });
 
   test('save cannot be clicked when there is no year or course', async function (assert) {
-    this.server.create('academic-year', { id: 2013 });
-    this.server.create('academic-year', { id: 2012 });
-    const school = this.server.create('school');
-    const course = this.server.create('course', {
+    await this.server.create('academic-year', { id: 2013 });
+    await this.server.create('academic-year', { id: 2012 });
+    const school = await this.server.create('school');
+    const course = await this.server.create('course', {
       school,
     });
-    const sessionType = this.server.create('session-type');
+    const sessionType = await this.server.create('session-type');
 
-    const session = this.server.create('session', {
+    const session = await this.server.create('session', {
       course,
       attireRequired: true,
       equipmentRequired: false,
@@ -214,26 +218,26 @@ module('Integration | Component | session copy', function (hooks) {
   test('changing the year looks for new matching courses', async function (assert) {
     const thisYear = DateTime.now().year;
     const nextYear = thisYear + 1;
-    this.server.create('academic-year', {
+    await this.server.create('academic-year', {
       id: thisYear,
     });
-    this.server.create('academic-year', {
+    await this.server.create('academic-year', {
       id: nextYear,
     });
 
-    const school = this.server.create('school');
-    const course1 = this.server.create('course', {
+    const school = await this.server.create('school');
+    const course1 = await this.server.create('course', {
       school,
       year: thisYear,
     });
-    const course2 = this.server.create('course', {
+    const course2 = await this.server.create('course', {
       school,
       year: nextYear,
     });
 
-    const sessionType = this.server.create('session-type');
+    const sessionType = await this.server.create('session-type');
 
-    const session = this.server.create('session', {
+    const session = await this.server.create('session', {
       course: course1,
       attireRequired: true,
       equipmentRequired: false,
@@ -266,31 +270,31 @@ module('Integration | Component | session copy', function (hooks) {
   test('copy session into the first course in a different year #2130', async function (assert) {
     const thisYear = DateTime.now().year;
     const nextYear = thisYear + 1;
-    this.server.create('academic-year', {
+    await this.server.create('academic-year', {
       id: thisYear,
     });
-    this.server.create('academic-year', {
+    await this.server.create('academic-year', {
       id: nextYear,
     });
 
-    const school = this.server.create('school');
-    const course = this.server.create('course', {
+    const school = await this.server.create('school');
+    const course = await this.server.create('course', {
       school,
       year: thisYear,
     });
-    this.server.create('course', {
+    await this.server.create('course', {
       school,
       year: nextYear,
     });
-    const course3 = this.server.create('course', {
+    const course3 = await this.server.create('course', {
       school,
       title: 'alpha first',
       year: nextYear,
     });
 
-    const sessionType = this.server.create('session-type');
+    const sessionType = await this.server.create('session-type');
 
-    const session = this.server.create('session', {
+    const session = await this.server.create('session', {
       course,
       attireRequired: true,
       equipmentRequired: false,
@@ -331,24 +335,24 @@ module('Integration | Component | session copy', function (hooks) {
 
   test('copy session into same course saves postrequisites', async function (assert) {
     const thisYear = DateTime.now().year;
-    this.server.create('academic-year', {
+    await this.server.create('academic-year', {
       id: thisYear,
     });
 
-    const school = this.server.create('school');
-    const course = this.server.create('course', {
+    const school = await this.server.create('school');
+    const course = await this.server.create('course', {
       year: thisYear,
       school,
     });
 
-    const sessionType = this.server.create('session-type');
+    const sessionType = await this.server.create('session-type');
 
-    const postrequisite = this.server.create('session', {
+    const postrequisite = await this.server.create('session', {
       course,
       sessionType,
     });
 
-    const session = this.server.create('session', {
+    const session = await this.server.create('session', {
       course,
       sessionType,
       postrequisite,
@@ -385,28 +389,28 @@ module('Integration | Component | session copy', function (hooks) {
 
   test('copy session into different course does not save postrequisites', async function (assert) {
     const thisYear = DateTime.now().year;
-    this.server.create('academic-year', {
+    await this.server.create('academic-year', {
       id: thisYear,
     });
 
-    const school = this.server.create('school');
-    const course = this.server.create('course', {
+    const school = await this.server.create('school');
+    const course = await this.server.create('course', {
       year: thisYear,
       school,
     });
-    const secondCourse = this.server.create('course', {
+    const secondCourse = await this.server.create('course', {
       year: thisYear,
       school,
     });
 
-    const sessionType = this.server.create('session-type');
+    const sessionType = await this.server.create('session-type');
 
-    const postrequisite = this.server.create('session', {
+    const postrequisite = await this.server.create('session', {
       course,
       sessionType,
     });
 
-    const session = this.server.create('session', {
+    const session = await this.server.create('session', {
       course,
       sessionType,
       postrequisite,
@@ -444,28 +448,28 @@ module('Integration | Component | session copy', function (hooks) {
 
   test('copy session into same course does not save prerequisites', async function (assert) {
     const thisYear = DateTime.now().year;
-    this.server.create('academic-year', {
+    await this.server.create('academic-year', {
       id: thisYear,
     });
 
-    const school = this.server.create('school');
-    const course = this.server.create('course', {
+    const school = await this.server.create('school');
+    const course = await this.server.create('course', {
       year: thisYear,
       school,
     });
 
-    const sessionType = this.server.create('session-type');
+    const sessionType = await this.server.create('session-type');
 
-    const firstPrerequisite = this.server.create('session', {
+    const firstPrerequisite = await this.server.create('session', {
       course,
       sessionType,
     });
-    const secondPrerequisite = this.server.create('session', {
+    const secondPrerequisite = await this.server.create('session', {
       course,
       sessionType,
     });
 
-    const session = this.server.create('session', {
+    const session = await this.server.create('session', {
       course,
       sessionType,
       prerequisites: [firstPrerequisite, secondPrerequisite],
@@ -502,32 +506,32 @@ module('Integration | Component | session copy', function (hooks) {
 
   test('copy session into different course does not save prerequisites', async function (assert) {
     const thisYear = DateTime.now().year;
-    this.server.create('academic-year', {
+    await this.server.create('academic-year', {
       id: thisYear,
     });
 
-    const school = this.server.create('school');
-    const course = this.server.create('course', {
+    const school = await this.server.create('school');
+    const course = await this.server.create('course', {
       year: thisYear,
       school,
     });
-    const secondCourse = this.server.create('course', {
+    const secondCourse = await this.server.create('course', {
       year: thisYear,
       school,
     });
 
-    const sessionType = this.server.create('session-type');
+    const sessionType = await this.server.create('session-type');
 
-    const firstPrerequisite = this.server.create('session', {
+    const firstPrerequisite = await this.server.create('session', {
       course,
       sessionType,
     });
-    const secondPrerequisite = this.server.create('session', {
+    const secondPrerequisite = await this.server.create('session', {
       course,
       sessionType,
     });
 
-    const session = this.server.create('session', {
+    const session = await this.server.create('session', {
       course,
       sessionType,
       prerequisites: [firstPrerequisite, secondPrerequisite],

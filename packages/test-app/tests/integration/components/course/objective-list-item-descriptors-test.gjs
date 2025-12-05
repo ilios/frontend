@@ -13,7 +13,7 @@ module('Integration | Component | course/objective-list-item-descriptors', funct
   setupMSW(hooks);
 
   hooks.beforeEach(async function () {
-    const meshDescriptors = this.server.createList('mesh-descriptor', 2);
+    const meshDescriptors = await this.server.createList('mesh-descriptor', 2);
     this.meshDescriptor1 = await this.owner
       .lookup('service:store')
       .findRecord('mesh-descriptor', meshDescriptors[0].id);

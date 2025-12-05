@@ -13,9 +13,9 @@ module('Integration | Component | curriculum-inventory/report-list-item', functi
 
   hooks.beforeEach(async function () {
     this.intl = this.owner.lookup('service:intl');
-    const school = this.server.create('school');
-    this.program = this.server.create('program', { school });
-    const report = this.server.create('curriculum-inventory-report', {
+    const school = await this.server.create('school');
+    this.program = await this.server.create('program', { school });
+    const report = await this.server.create('curriculum-inventory-report', {
       program: this.program,
       name: 'CI Report',
       year: '2017',
@@ -97,7 +97,7 @@ module('Integration | Component | curriculum-inventory/report-list-item', functi
   });
 
   test('report with export shows as "finalized"', async function (assert) {
-    const reportExport = this.server.create('curriculum-inventory-export');
+    const reportExport = await this.server.create('curriculum-inventory-export');
     this.report.export = await this.owner
       .lookup('service:store')
       .findRecord('curriculum-inventory-export', reportExport.id);

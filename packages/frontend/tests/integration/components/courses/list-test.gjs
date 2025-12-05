@@ -13,7 +13,7 @@ module('Integration | Component | courses/list', function (hooks) {
   setupMSW(hooks);
 
   hooks.beforeEach(async function () {
-    const course1 = this.server.create('course', {
+    const course1 = await this.server.create('course', {
       title: 'Alpha',
       level: 2,
       startDate: '2023-04-23',
@@ -22,7 +22,7 @@ module('Integration | Component | courses/list', function (hooks) {
       publishedAsTbd: false,
       locked: true,
     });
-    const course2 = this.server.create('course', {
+    const course2 = await this.server.create('course', {
       title: 'Omega',
       level: 1,
       startDate: '2022-01-11',

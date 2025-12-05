@@ -12,12 +12,12 @@ module('Integration | Component | session/objectives', function (hooks) {
   setupMSW(hooks);
 
   test('it renders and is accessible', async function (assert) {
-    const course = this.server.create('course');
-    const courseObjective = this.server.create('course-objective', { course });
-    const session = this.server.create('session', { course });
-    this.server.create('session-objective', { session });
-    this.server.create('session-objective', { session });
-    this.server.create('session-objective', {
+    const course = await this.server.create('course');
+    const courseObjective = await this.server.create('course-objective', { course });
+    const session = await this.server.create('session', { course });
+    await this.server.create('session-objective', { session });
+    await this.server.create('session-objective', { session });
+    await this.server.create('session-objective', {
       session,
       courseObjectives: [courseObjective],
     });
@@ -66,9 +66,9 @@ module('Integration | Component | session/objectives', function (hooks) {
   });
 
   test('deleting objective', async function (assert) {
-    const course = this.server.create('course');
-    const session = this.server.create('session', { course });
-    this.server.create('session-objective', { session });
+    const course = await this.server.create('course');
+    const session = await this.server.create('session', { course });
+    await this.server.create('session-objective', { session });
     const sessionModel = await this.owner.lookup('service:store').findRecord('session', session.id);
 
     this.set('session', sessionModel);

@@ -44,8 +44,8 @@ module('Integration | Component | week-glance', function (hooks) {
     context.owner.register('service:user-events', Mock);
   };
 
-  hooks.beforeEach(function () {
-    this.server.create('userevent', {
+  hooks.beforeEach(async function () {
+    await this.server.create('userevent', {
       name: 'Learn to Learn',
       startDate: testDate.toISO(),
       isBlanked: false,
@@ -54,7 +54,7 @@ module('Integration | Component | week-glance', function (hooks) {
       offering: 1,
       slug: 'a',
     });
-    this.server.create('userevent', {
+    await this.server.create('userevent', {
       name: 'Finding the Point in Life',
       startDate: testDate.plus({ day: 1 }).toISO(),
       isBlanked: false,
@@ -63,23 +63,23 @@ module('Integration | Component | week-glance', function (hooks) {
       ilmSession: 1,
       slug: 'b',
     });
-    this.server.create('userevent', {
+    await this.server.create('userevent', {
       name: 'Blank',
       isBlanked: true,
     });
-    this.server.create('userevent', {
+    await this.server.create('userevent', {
       name: 'Not Published',
       isBlanked: false,
       isPublished: false,
       isScheduled: false,
     });
-    this.server.create('userevent', {
+    await this.server.create('userevent', {
       name: 'Scheduled',
       isBlanked: false,
       isPublished: true,
       isScheduled: true,
     });
-    this.server.create('userevent', {
+    await this.server.create('userevent', {
       name: 'Schedule some materials',
       startDate: testDate.plus({ day: 1 }).toISO(),
       location: 'Room 123',

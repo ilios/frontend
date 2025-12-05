@@ -10,11 +10,11 @@ module('Integration | Component | reports/subject/new/session-type', function (h
   setupRenderingTest(hooks);
   setupMSW(hooks);
 
-  hooks.beforeEach(function () {
+  hooks.beforeEach(async function () {
     this.intl = this.owner.lookup('service:intl');
-    const [school1, school2] = this.server.createList('school', 2);
-    this.server.createList('session-type', 2, { active: true, school: school1 });
-    this.server.createList('session-type', 3, { active: true, school: school2 });
+    const [school1, school2] = await this.server.createList('school', 2);
+    await this.server.createList('session-type', 2, { active: true, school: school1 });
+    await this.server.createList('session-type', 3, { active: true, school: school2 });
   });
 
   test('it renders', async function (assert) {

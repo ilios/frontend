@@ -11,17 +11,17 @@ module('Integration | Component | course/materials', function (hooks) {
   setupMSW(hooks);
 
   test('course lms render', async function (assert) {
-    const lm1 = this.server.create('learning-material', {
+    const lm1 = await this.server.create('learning-material', {
       title: 'title1',
       description: 'description1',
       originalAuthor: 'author1',
       link: 'url1',
     });
-    const courseLm1 = this.server.create('course-learning-material', {
+    const courseLm1 = await this.server.create('course-learning-material', {
       learningMaterial: lm1,
     });
 
-    const course = this.server.create('course', {
+    const course = await this.server.create('course', {
       learningMaterials: [courseLm1],
     });
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
@@ -476,7 +476,7 @@ module('Integration | Component | course/materials', function (hooks) {
   });
 
   test('no materials', async function (assert) {
-    const course = this.server.create('course');
+    const course = await this.server.create('course');
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('course', courseModel);
 

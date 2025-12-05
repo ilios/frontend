@@ -20,8 +20,8 @@ module('Integration | Component | course summary header', function (hooks) {
     }
 
     this.owner.register('service:permissionChecker', PermissionCheckerStub);
-    const school = this.server.create('school');
-    const course = this.server.create('course', {
+    const school = await this.server.create('school');
+    const course = await this.server.create('course', {
       school: school,
       externalId: 'abc',
       level: 3,
@@ -51,8 +51,8 @@ module('Integration | Component | course summary header', function (hooks) {
     }
 
     this.owner.register('service:permissionChecker', PermissionCheckerStub);
-    const school = this.server.create('school', {});
-    const course = this.server.create('course', {
+    const school = await this.server.create('school', {});
+    const course = await this.server.create('course', {
       school,
     });
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
@@ -65,8 +65,8 @@ module('Integration | Component | course summary header', function (hooks) {
   });
 
   test('no link to rollover if course is locked', async function (assert) {
-    const school = this.server.create('school', {});
-    const course = this.server.create('course', {
+    const school = await this.server.create('school', {});
+    const course = await this.server.create('course', {
       school,
       locked: true,
     });

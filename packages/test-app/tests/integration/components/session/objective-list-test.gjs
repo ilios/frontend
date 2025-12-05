@@ -11,19 +11,19 @@ module('Integration | Component | session/objective-list', function (hooks) {
   setupMSW(hooks);
 
   test('it renders and is accessible', async function (assert) {
-    const school = this.server.create('school');
-    const course = this.server.create('course');
-    const session = this.server.create('session', { course });
-    const vocabulary = this.server.create('vocabulary', { school });
-    const term1 = this.server.create('term', { vocabulary, active: true });
-    const term2 = this.server.create('term', { vocabulary });
-    this.server.create('session-objective', {
+    const school = await this.server.create('school');
+    const course = await this.server.create('course');
+    const session = await this.server.create('session', { course });
+    const vocabulary = await this.server.create('vocabulary', { school });
+    const term1 = await this.server.create('term', { vocabulary, active: true });
+    const term2 = await this.server.create('term', { vocabulary });
+    await this.server.create('session-objective', {
       session,
       title: 'Objective A',
       position: 0,
       terms: [term1],
     });
-    this.server.create('session-objective', {
+    await this.server.create('session-objective', {
       session,
       title: 'Objective B',
       position: 0,
@@ -64,8 +64,8 @@ module('Integration | Component | session/objective-list', function (hooks) {
   });
 
   test('empty list', async function (assert) {
-    const course = this.server.create('course');
-    const session = this.server.create('session', { course });
+    const course = await this.server.create('course');
+    const session = await this.server.create('session', { course });
     const sessionModel = await this.owner.lookup('service:store').findRecord('session', session.id);
     this.set('session', sessionModel);
 
@@ -77,9 +77,9 @@ module('Integration | Component | session/objective-list', function (hooks) {
   });
 
   test('no "sort objectives" button in list with one item', async function (assert) {
-    const course = this.server.create('course');
-    const session = this.server.create('session', { course });
-    this.server.create('session-objective', { session });
+    const course = await this.server.create('course');
+    const session = await this.server.create('session', { course });
+    await this.server.create('session-objective', { session });
     const sessionModel = await this.owner.lookup('service:store').findRecord('session', session.id);
     this.set('session', sessionModel);
 

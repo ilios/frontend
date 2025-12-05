@@ -10,12 +10,12 @@ module('Integration | Component | reports/subject/new/course', function (hooks) 
   setupRenderingTest(hooks);
   setupMSW(hooks);
 
-  hooks.beforeEach(function () {
-    this.server.create('academic-year', { id: 2022 });
-    this.server.create('academic-year', { id: 2015 });
-    const [school1, school2] = this.server.createList('school', 2);
-    this.server.createList('course', 2, { school: school1, year: 2015 });
-    this.server.createList('course', 3, { school: school2, year: 2022 });
+  hooks.beforeEach(async function () {
+    await this.server.create('academic-year', { id: 2022 });
+    await this.server.create('academic-year', { id: 2015 });
+    const [school1, school2] = await this.server.createList('school', 2);
+    await this.server.createList('course', 2, { school: school1, year: 2015 });
+    await this.server.createList('course', 3, { school: school2, year: 2022 });
   });
 
   test('it renders', async function (assert) {

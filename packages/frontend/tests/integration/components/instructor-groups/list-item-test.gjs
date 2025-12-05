@@ -18,10 +18,10 @@ module('Integration | Component | instructor-groups/list-item', function (hooks)
       }
     };
     this.owner.register('service:permissionChecker', this.permissionCheckerMock);
-    this.school = this.server.create('school');
-    this.instructorGroup = this.server.create('instructor-group', {
+    this.school = await this.server.create('school');
+    this.instructorGroup = await this.server.create('instructor-group', {
       school: this.school,
-      users: this.server.createList('user', 3),
+      users: await this.server.createList('user', 3),
     });
   });
 
@@ -55,24 +55,24 @@ module('Integration | Component | instructor-groups/list-item', function (hooks)
   });
 
   test('can not delete with associated courses', async function (assert) {
-    const courses = this.server.createList('course', 4);
-    const session1 = this.server.create('session', { course: courses[0] });
-    const session2 = this.server.create('session', { course: courses[1] });
-    const session3 = this.server.create('session', { course: courses[1] });
-    const session4 = this.server.create('session', { course: courses[3] });
-    this.server.create('offering', {
+    const courses = await this.server.createList('course', 4);
+    const session1 = await this.server.create('session', { course: courses[0] });
+    const session2 = await this.server.create('session', { course: courses[1] });
+    const session3 = await this.server.create('session', { course: courses[1] });
+    const session4 = await this.server.create('session', { course: courses[3] });
+    await this.server.create('offering', {
       session: session1,
       instructorGroups: [this.instructorGroup],
     });
-    this.server.create('offering', {
+    await this.server.create('offering', {
       session: session2,
       instructorGroups: [this.instructorGroup],
     });
-    this.server.create('ilm-session', {
+    await this.server.create('ilm-session', {
       session: session3,
       instructorGroups: [this.instructorGroup],
     });
-    this.server.create('ilm-session', {
+    await this.server.create('ilm-session', {
       session: session4,
       instructorGroups: [this.instructorGroup],
     });

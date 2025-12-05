@@ -12,12 +12,12 @@ module('Integration | Component | user-profile', function (hooks) {
   setupMSW(hooks);
 
   hooks.beforeEach(async function () {
-    const school = this.server.create('school');
-    const program = this.server.create('program', { school });
-    this.programYear = this.server.create('program-year', { program });
-    this.cohort = this.server.create('cohort', { programYear: this.programYear });
+    const school = await this.server.create('school');
+    const program = await this.server.create('program', { school });
+    this.programYear = await this.server.create('program-year', { program });
+    this.cohort = await this.server.create('cohort', { programYear: this.programYear });
 
-    const user = this.server.create('user', { school });
+    const user = await this.server.create('user', { school });
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     class CurrentUserMock extends Service {
       async getModel() {
@@ -31,7 +31,7 @@ module('Integration | Component | user-profile', function (hooks) {
   });
 
   test('profile title - enabled user account', async function (assert) {
-    const user = this.server.create('user');
+    const user = await this.server.create('user');
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     this.set('user', userModel);
 
@@ -64,7 +64,7 @@ module('Integration | Component | user-profile', function (hooks) {
   });
 
   test('profile title - disabled user account', async function (assert) {
-    const user = this.server.create('user', { enabled: false });
+    const user = await this.server.create('user', { enabled: false });
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     this.set('user', userModel);
 
@@ -97,7 +97,7 @@ module('Integration | Component | user-profile', function (hooks) {
   });
 
   test('user profile calendar', async function (assert) {
-    const user = this.server.create('user');
+    const user = await this.server.create('user');
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     this.set('user', userModel);
     this.set('showCalendar', false);

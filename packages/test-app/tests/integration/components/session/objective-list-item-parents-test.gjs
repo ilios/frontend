@@ -13,10 +13,10 @@ module('Integration | Component | session/objective-list-item-parents', function
   setupMSW(hooks);
 
   hooks.beforeEach(async function () {
-    const courseObjective1 = this.server.create('course-objective', {
+    const courseObjective1 = await this.server.create('course-objective', {
       title: '<p>Country &amp; Western</p>',
     });
-    const courseObjective2 = this.server.create('course-objective');
+    const courseObjective2 = await this.server.create('course-objective');
     this.courseObjective1 = await this.owner
       .lookup('service:store')
       .findRecord('course-objective', courseObjective1.id);
@@ -175,15 +175,15 @@ module('Integration | Component | session/objective-list-item-parents', function
   });
 
   test('parent objectives are correctly sorted', async function (assert) {
-    const courseObjective1 = this.server.create('course-objective', {
+    const courseObjective1 = await this.server.create('course-objective', {
       title: 'Aardvark',
       position: 3,
     });
-    const courseObjective2 = this.server.create('course-objective', {
+    const courseObjective2 = await this.server.create('course-objective', {
       title: 'Zeppelin',
       position: 2,
     });
-    const courseObjective3 = this.server.create('course-objective', {
+    const courseObjective3 = await this.server.create('course-objective', {
       title: 'Oscar',
       position: 1,
     });

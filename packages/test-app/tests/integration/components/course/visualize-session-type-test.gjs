@@ -10,14 +10,14 @@ module('Integration | Component | course/visualize-session-type', function (hook
   setupMSW(hooks);
 
   hooks.beforeEach(async function () {
-    const school = this.server.create('school');
-    const vocabulary = this.server.create('vocabulary', { school });
-    const term1 = this.server.create('term', { title: 'lorem', vocabulary });
-    const term2 = this.server.create('term', { title: 'ipsum', vocabulary });
-    const course = this.server.create('course', { year: 2021, school });
-    const session = this.server.create('session', { course, terms: [term1, term2] });
-    const sessionType = this.server.create('session-type', { school, sessions: [session] });
-    this.server.create('offering', {
+    const school = await this.server.create('school');
+    const vocabulary = await this.server.create('vocabulary', { school });
+    const term1 = await this.server.create('term', { title: 'lorem', vocabulary });
+    const term2 = await this.server.create('term', { title: 'ipsum', vocabulary });
+    const course = await this.server.create('course', { year: 2021, school });
+    const session = await this.server.create('session', { course, terms: [term1, term2] });
+    const sessionType = await this.server.create('session-type', { school, sessions: [session] });
+    await this.server.create('offering', {
       session: session,
       startDate: new Date('2019-12-08T12:00:00'),
       endDate: new Date('2019-12-08T17:00:00'),

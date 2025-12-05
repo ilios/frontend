@@ -6,7 +6,7 @@ import page from 'ilios-common/page-objects/session';
 module('Acceptance | Session - Leadership', function (hooks) {
   setupApplicationTest(hooks);
   hooks.beforeEach(async function () {
-    this.school = this.server.create('school');
+    this.school = await this.server.create('school');
     this.user = await setupAuthentication(
       {
         school: this.school,
@@ -14,17 +14,17 @@ module('Acceptance | Session - Leadership', function (hooks) {
       },
       true,
     );
-    this.server.create('academic-year', { id: 2013 });
+    await this.server.create('academic-year', { id: 2013 });
 
-    const users = this.server.createList('user', 5);
-    const course = this.server.create('course', {
+    const users = await this.server.createList('user', 5);
+    const course = await this.server.create('course', {
       year: 2013,
       school: this.school,
       directors: [users[0], users[1]],
       administrators: [users[2], users[3]],
     });
-    const sessionType = this.server.create('session-type', { school: this.school });
-    this.session = this.server.create('session', {
+    const sessionType = await this.server.create('session-type', { school: this.school });
+    this.session = await this.server.create('session', {
       course,
       administrators: [users[2], users[3]],
       studentAdvisors: [users[4]],

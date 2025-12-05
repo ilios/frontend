@@ -10,7 +10,7 @@ module('Acceptance | search', function (hooks) {
   setupApplicationTest(hooks);
 
   hooks.beforeEach(async function () {
-    const school = this.server.create('school');
+    const school = await this.server.create('school');
     await setupAuthentication({ school }, true);
     const { apiVersion } = this.owner.resolveRegistration('config:environment');
     this.server.get('application/config', function () {
@@ -121,8 +121,8 @@ module('Acceptance | search', function (hooks) {
   });
 
   test('clicking back from course to search works #4768', async function (assert) {
-    const school = this.server.create('school');
-    this.server.createList('course', 25, { school });
+    const school = await this.server.create('school');
+    await this.server.createList('course', 25, { school });
     const year = currentAcademicYear();
     const courses = [];
     for (let i = 1; i < 25; i++) {
@@ -242,7 +242,7 @@ module('Acceptance | search', function (hooks) {
   });
 
   test('school filter in query param', async function (assert) {
-    this.server.createList('school', 2);
+    await this.server.createList('school', 2);
     const schools = this.server.schema.schools.all().models;
     const courses = [];
     const year = currentAcademicYear();
@@ -287,9 +287,9 @@ module('Acceptance | search', function (hooks) {
   });
 
   test('year filter in query param', async function (assert) {
-    this.server.create('academic-year', { id: 2025, title: '2025' });
-    this.server.create('academic-year', { id: 2024, title: '2024' });
-    this.server.create('academic-year', { id: 2023, title: '2023' });
+    await this.server.create('academic-year', { id: 2025, title: '2025' });
+    await this.server.create('academic-year', { id: 2024, title: '2024' });
+    await this.server.create('academic-year', { id: 2023, title: '2023' });
 
     this.server.get('api/search/v2/curriculum', (schema, { queryParams }) => {
       assert.step('API called');

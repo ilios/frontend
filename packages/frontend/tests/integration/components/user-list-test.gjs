@@ -10,8 +10,8 @@ module('Integration | Component | user-list', function (hooks) {
   setupMSW(hooks);
 
   test('it renders', async function (assert) {
-    const school = this.server.create('school');
-    const user1 = this.server.create('user', {
+    const school = await this.server.create('school');
+    const user1 = await this.server.create('user', {
       firstName: 'Foo',
       lastName: 'Bar',
       displayName: 'Aardvark',
@@ -20,7 +20,7 @@ module('Integration | Component | user-list', function (hooks) {
       email: 'aardvark@test.edu',
       campusId: '1112222',
     });
-    const user2 = this.server.create('user', { school });
+    const user2 = await this.server.create('user', { school });
     const userModel1 = await this.owner.lookup('service:store').findRecord('user', user1.id);
     const userModel2 = await this.owner.lookup('service:store').findRecord('user', user2.id);
     this.set('users', [userModel1, userModel2]);

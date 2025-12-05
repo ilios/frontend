@@ -12,10 +12,10 @@ module('Integration | Component | instructor-group/users', function (hooks) {
 
   test('it renders', async function (assert) {
     const users = [
-      ...this.server.createList('user', 2),
-      this.server.create('user', { enabled: false }),
+      ...(await this.server.createList('user', 2)),
+      await this.server.create('user', { enabled: false }),
     ];
-    const instructorGroup = this.server.create('instructor-group', { users });
+    const instructorGroup = await this.server.create('instructor-group', { users });
     const instructorGroupModel = await this.owner
       .lookup('service:store')
       .findRecord('instructor-group', instructorGroup.id);
@@ -41,8 +41,8 @@ module('Integration | Component | instructor-group/users', function (hooks) {
   });
 
   test('read-only', async function (assert) {
-    const users = this.server.createList('user', 3);
-    const instructorGroup = this.server.create('instructor-group', { users });
+    const users = await this.server.createList('user', 3);
+    const instructorGroup = await this.server.create('instructor-group', { users });
     const instructorGroupModel = await this.owner
       .lookup('service:store')
       .findRecord('instructor-group', instructorGroup.id);
@@ -64,7 +64,7 @@ module('Integration | Component | instructor-group/users', function (hooks) {
   });
 
   test('no users', async function (assert) {
-    const instructorGroup = this.server.create('instructor-group');
+    const instructorGroup = await this.server.create('instructor-group');
     const instructorGroupModel = await this.owner
       .lookup('service:store')
       .findRecord('instructor-group', instructorGroup.id);
@@ -82,8 +82,8 @@ module('Integration | Component | instructor-group/users', function (hooks) {
   });
 
   test('remove user, then cancel', async function (assert) {
-    const users = this.server.createList('user', 3);
-    const instructorGroup = this.server.create('instructor-group', { users });
+    const users = await this.server.createList('user', 3);
+    const instructorGroup = await this.server.create('instructor-group', { users });
     const instructorGroupModel = await this.owner
       .lookup('service:store')
       .findRecord('instructor-group', instructorGroup.id);
@@ -108,8 +108,8 @@ module('Integration | Component | instructor-group/users', function (hooks) {
   });
 
   test('remove user, then save', async function (assert) {
-    const users = this.server.createList('user', 3);
-    const instructorGroup = this.server.create('instructor-group', { users });
+    const users = await this.server.createList('user', 3);
+    const instructorGroup = await this.server.create('instructor-group', { users });
     const instructorGroupModel = await this.owner
       .lookup('service:store')
       .findRecord('instructor-group', instructorGroup.id);
@@ -134,8 +134,8 @@ module('Integration | Component | instructor-group/users', function (hooks) {
   });
 
   test('add user, then cancel', async function (assert) {
-    const users = this.server.createList('user', 3);
-    const instructorGroup = this.server.create('instructor-group', {
+    const users = await this.server.createList('user', 3);
+    const instructorGroup = await this.server.create('instructor-group', {
       users: [users[0], users[1]],
     });
     const instructorGroupModel = await this.owner
@@ -163,8 +163,8 @@ module('Integration | Component | instructor-group/users', function (hooks) {
   });
 
   test('add user, then save', async function (assert) {
-    const users = this.server.createList('user', 3);
-    const instructorGroup = this.server.create('instructor-group', {
+    const users = await this.server.createList('user', 3);
+    const instructorGroup = await this.server.create('instructor-group', {
       users: [users[0], users[1]],
     });
     const instructorGroupModel = await this.owner

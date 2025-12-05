@@ -10,8 +10,8 @@ module('Integration | Component | mesh-descriptor-last-tree-number', function (h
   setupMSW(hooks);
 
   test('it renders', async function (assert) {
-    const descriptor = this.server.create('mesh-descriptor');
-    this.server.createList('mesh-tree', 5, { descriptor });
+    const descriptor = await this.server.create('mesh-descriptor');
+    await this.server.createList('mesh-tree', 5, { descriptor });
     const descriptorModel = await this.owner
       .lookup('service:store')
       .findRecord('mesh-descriptor', descriptor.id);
@@ -23,7 +23,7 @@ module('Integration | Component | mesh-descriptor-last-tree-number', function (h
   });
 
   test('it renders with empty trees', async function (assert) {
-    const descriptor = this.server.create('mesh-descriptor');
+    const descriptor = await this.server.create('mesh-descriptor');
     const descriptorModel = await this.owner
       .lookup('service:store')
       .findRecord('mesh-descriptor', descriptor.id);

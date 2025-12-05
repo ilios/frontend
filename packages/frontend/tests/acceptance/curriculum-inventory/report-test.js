@@ -8,15 +8,15 @@ module('Acceptance | curriculum inventory report', function (hooks) {
   setupApplicationTest(hooks);
 
   hooks.beforeEach(async function () {
-    this.school = this.server.create('school');
+    this.school = await this.server.create('school');
     this.user = await setupAuthentication({ school: this.school }, true);
   });
 
   test('create new sequence block Issue #2108', async function (assert) {
     this.user.update({ directedSchools: [this.school] });
-    const program = this.server.create('program', { school: this.school });
-    const report = this.server.create('curriculum-inventory-report', { program });
-    this.server.create('curriculumInventorySequence', { report });
+    const program = await this.server.create('program', { school: this.school });
+    const report = await this.server.create('curriculum-inventory-report', { program });
+    await this.server.create('curriculumInventorySequence', { report });
     const reportModel = await this.owner
       .lookup('service:store')
       .findRecord('curriculum-inventory-report', report.id);
@@ -28,11 +28,11 @@ module('Acceptance | curriculum inventory report', function (hooks) {
   });
 
   test('rollover button hidden from unprivileged users', async function (assert) {
-    const program = this.server.create('program', {
+    const program = await this.server.create('program', {
       school: this.school,
       title: 'Doctor of Medicine',
     });
-    const report = this.server.create('curriculum-inventory-report', {
+    const report = await this.server.create('curriculum-inventory-report', {
       year: 2013,
       name: 'foo bar',
       description: 'lorem ipsum',
@@ -48,11 +48,11 @@ module('Acceptance | curriculum inventory report', function (hooks) {
 
   test('rollover button visible to privileged users', async function (assert) {
     this.user.update({ directedSchools: [this.school] });
-    const program = this.server.create('program', {
+    const program = await this.server.create('program', {
       school: this.school,
       title: 'Doctor of Medicine',
     });
-    const report = this.server.create('curriculum-inventory-report', {
+    const report = await this.server.create('curriculum-inventory-report', {
       year: 2013,
       name: 'foo bar',
       description: 'lorem ipsum',
@@ -68,17 +68,17 @@ module('Acceptance | curriculum inventory report', function (hooks) {
 
   test('finalizing report locks things down', async function (assert) {
     this.user.update({ directedSchools: [this.school] });
-    const program = this.server.create('program', {
+    const program = await this.server.create('program', {
       school: this.school,
       title: 'Doctor of Medicine',
     });
-    const report = this.server.create('curriculum-inventory-report', {
+    const report = await this.server.create('curriculum-inventory-report', {
       year: 2013,
       name: 'foo bar',
       description: 'lorem ipsum',
       program,
     });
-    this.server.create('curriculum-inventory-sequence-block', {
+    await this.server.create('curriculum-inventory-sequence-block', {
       report,
     });
     const reportModel = await this.owner

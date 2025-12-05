@@ -10,75 +10,75 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
 
   hooks.beforeEach(async function () {
     this.intl = this.owner.lookup('service:intl');
-    this.school = this.server.create('school');
+    this.school = await this.server.create('school');
     this.user = await setupAuthentication({ school: this.school });
-    const program = this.server.create('program', {
+    const program = await this.server.create('program', {
       school: this.school,
     });
-    const programYear1 = this.server.create('program-year', {
+    const programYear1 = await this.server.create('program-year', {
       program,
       startYear: 2015,
     });
-    const programYear2 = this.server.create('program-year', {
+    const programYear2 = await this.server.create('program-year', {
       program,
       startYear: 2016,
     });
-    const cohort1 = this.server.create('cohort', {
+    const cohort1 = await this.server.create('cohort', {
       programYear: programYear1,
     });
-    const cohort2 = this.server.create('cohort', {
+    const cohort2 = await this.server.create('cohort', {
       programYear: programYear2,
     });
-    const sessionType1 = this.server.create('session-type', {
+    const sessionType1 = await this.server.create('session-type', {
       school: this.school,
     });
-    const sessionType2 = this.server.create('session-type', {
+    const sessionType2 = await this.server.create('session-type', {
       school: this.school,
     });
-    this.server.create('session-type', {
+    await this.server.create('session-type', {
       school: this.school,
     });
-    const course1 = this.server.create('course', {
+    const course1 = await this.server.create('course', {
       school: this.school,
       year: 2015,
       level: 1,
       cohorts: [cohort1],
     });
-    const course2 = this.server.create('course', {
+    const course2 = await this.server.create('course', {
       year: 2015,
       school: this.school,
       level: 2,
       cohorts: [cohort2],
     });
-    const session1 = this.server.create('session', {
+    const session1 = await this.server.create('session', {
       course: course1,
       sessionType: sessionType1,
     });
-    const session2 = this.server.create('session', {
+    const session2 = await this.server.create('session', {
       course: course1,
       sessionType: sessionType2,
     });
-    const session3 = this.server.create('session', {
+    const session3 = await this.server.create('session', {
       course: course2,
       sessionType: sessionType2,
     });
-    const session4 = this.server.create('session', {
+    const session4 = await this.server.create('session', {
       course: course2,
       sessionType: sessionType2,
     });
-    this.server.create('academic-year', {
+    await this.server.create('academic-year', {
       id: 2015,
     });
-    this.server.create('offering', {
+    await this.server.create('offering', {
       session: session1,
     });
-    this.server.create('offering', {
+    await this.server.create('offering', {
       session: session2,
     });
-    this.server.create('offering', {
+    await this.server.create('offering', {
       session: session3,
     });
-    this.ilmSession = this.server.create('ilm-session', {
+    this.ilmSession = await this.server.create('ilm-session', {
       id: 1,
       session: session4,
     });
@@ -101,21 +101,21 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
     const endOfMonth = today.endOf('month').set({ hour: 22, minute: 59 });
     const ilmStartDate = today.set({ hour: 23, minute: 50, second: 0 });
     const ilmEndDate = today.plus({ days: 1 }).set({ hour: 0, minute: 5 });
-    this.server.create('userevent', {
+    await this.server.create('userevent', {
       user: this.user.id,
       name: 'start of month',
       startDate: startOfMonth.toJSDate(),
       endDate: startOfMonth.plus({ hour: 1 }).toJSDate(),
       lastModified: today.minus({ year: 1 }),
     });
-    this.server.create('userevent', {
+    await this.server.create('userevent', {
       user: this.user.id,
       name: 'end of month',
       startDate: endOfMonth.toJSDate(),
       endDate: endOfMonth.plus({ hour: 1 }).toJSDate(),
       lastModified: today.minus({ year: 1 }),
     });
-    this.server.create('userevent', {
+    await this.server.create('userevent', {
       user: this.user.id,
       name: 'end-of-day ILM',
       ilmSession: this.ilmSession.id,
@@ -188,21 +188,21 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
     const shortDayHeading = this.intl.formatDate(startOfWeek.toJSDate(), {
       day: 'numeric',
     });
-    this.server.create('userevent', {
+    await this.server.create('userevent', {
       user: this.user.id,
       name: 'start of week',
       startDate: startOfWeek.toJSDate(),
       endDate: startOfWeek.plus({ hour: 1 }).toJSDate(),
       lastModified: DateTime.now().minus({ year: 1 }),
     });
-    this.server.create('userevent', {
+    await this.server.create('userevent', {
       user: this.user.id,
       name: 'end of week',
       startDate: endOfWeek.toJSDate(),
       endDate: endOfWeek.plus({ hour: 1 }).toJSDate(),
       lastModified: DateTime.now().minus({ year: 1 }),
     });
-    this.server.create('userevent', {
+    await this.server.create('userevent', {
       user: this.user.id,
       name: 'end-of-day ILM',
       ilmSession: this.ilmSession.id,
@@ -252,14 +252,14 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
     const shortDayHeading = this.intl.formatDate(startOfWeek.toJSDate(), {
       day: 'numeric',
     });
-    this.server.create('userevent', {
+    await this.server.create('userevent', {
       user: this.user.id,
       name: 'start of week',
       startDate: startOfWeek.toJSDate(),
       endDate: startOfWeek.plus({ hour: 1 }).toJSDate(),
       lastModified: DateTime.now().minus({ year: 1 }),
     });
-    this.server.create('userevent', {
+    await this.server.create('userevent', {
       user: this.user.id,
       name: 'end of week',
       startDate: endOfWeek.toJSDate(),
@@ -300,28 +300,28 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
     const yesterday = today.minus({ day: 1 });
     const ilmStartDate = today.set({ hour: 23, minute: 50, second: 0 });
     const ilmEndDate = today.plus({ days: 1 }).set({ hour: 0, minute: 5 });
-    this.server.create('userevent', {
+    await this.server.create('userevent', {
       user: this.user.id,
       name: 'today',
       startDate: today.toJSDate(),
       endDate: today.plus({ hour: 1 }).toJSDate(),
       lastModified: today.minus({ year: 1 }),
     });
-    this.server.create('userevent', {
+    await this.server.create('userevent', {
       user: this.user.id,
       name: 'tomorow',
       startDate: tomorow.toJSDate(),
       endDate: tomorow.plus({ hour: 1 }).toJSDate(),
       lastModified: today.minus({ year: 1 }),
     });
-    this.server.create('userevent', {
+    await this.server.create('userevent', {
       user: this.user.id,
       name: 'yesterday',
       startDate: yesterday.toJSDate(),
       endDate: yesterday.plus({ hour: 1 }).toJSDate(),
       lastModified: today.minus({ year: 1 }),
     });
-    this.server.create('userevent', {
+    await this.server.create('userevent', {
       user: this.user.id,
       name: 'end-of-day ILM',
       ilmSession: this.ilmSession.id,
@@ -352,7 +352,7 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
 
   test('click month day number and go to day', async function (assert) {
     const aDayInTheMonth = DateTime.fromObject({ hour: 8 }).startOf('month').plus({ days: 12 });
-    this.server.create('userevent', {
+    await this.server.create('userevent', {
       user: this.user.id,
       name: 'start of month',
       startDate: aDayInTheMonth.toJSDate(),
@@ -374,7 +374,7 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
       hour: 8,
     });
     freezeDateAt(june24th2005.toJSDate());
-    this.server.create('userevent', {
+    await this.server.create('userevent', {
       user: this.user.id,
       name: 'today',
       startDate: june24th2005.toJSDate(),
@@ -391,7 +391,7 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
 
   test('click forward on a day goes to next day', async function (assert) {
     const today = DateTime.fromObject({ hour: 8, minute: 8, second: 8 });
-    this.server.create('userevent', {
+    await this.server.create('userevent', {
       user: this.user.id,
       name: 'today',
       startDate: today.toJSDate(),
@@ -407,7 +407,7 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
 
   test('click forward on a week goes to next week', async function (assert) {
     const today = DateTime.fromObject({ hour: 8, minute: 8, second: 8 });
-    this.server.create('userevent', {
+    await this.server.create('userevent', {
       user: this.user.id,
       name: 'today',
       startDate: today.toJSDate(),
@@ -423,7 +423,7 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
 
   test('click forward on a month goes to next month', async function (assert) {
     const today = DateTime.fromObject({ hour: 8, minute: 8, second: 8 });
-    this.server.create('userevent', {
+    await this.server.create('userevent', {
       user: this.user.id,
       name: 'today',
       startDate: today.toJSDate(),
@@ -439,7 +439,7 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
 
   test('click back on a day goes to previous day', async function (assert) {
     const today = DateTime.fromObject({ hour: 8, minute: 8, second: 8 });
-    this.server.create('userevent', {
+    await this.server.create('userevent', {
       user: this.user.id,
       name: 'today',
       startDate: today.toJSDate(),
@@ -455,7 +455,7 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
 
   test('click back on a week goes to previous week', async function (assert) {
     const today = DateTime.fromObject({ hour: 8, minute: 8, second: 8 });
-    this.server.create('userevent', {
+    await this.server.create('userevent', {
       user: this.user.id,
       name: 'today',
       startDate: today.toJSDate(),
@@ -471,7 +471,7 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
 
   test('click back on a month goes to previous month', async function (assert) {
     const today = DateTime.fromObject({ hour: 8, minute: 8, second: 8 });
-    this.server.create('userevent', {
+    await this.server.create('userevent', {
       user: this.user.id,
       name: 'today',
       startDate: today.toJSDate(),
@@ -495,13 +495,13 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
       second: 7,
     });
     freezeDateAt(day.toJSDate());
-    this.server.create('userevent', {
+    await this.server.create('userevent', {
       user: this.user.id,
       startDate: day.toJSDate(),
       endDate: day.plus({ hour: 1 }).toJSDate(),
       offering: 1,
     });
-    this.server.create('userevent', {
+    await this.server.create('userevent', {
       user: this.user.id,
       startDate: day.toJSDate(),
       endDate: day.plus({ hour: 1 }).toJSDate(),
@@ -522,13 +522,13 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
       second: 8,
     });
     freezeDateAt(day.toJSDate());
-    this.server.create('schoolevent', {
+    await this.server.create('schoolevent', {
       school: 1,
       startDate: day.toJSDate(),
       endDate: day.plus({ hour: 1 }).toJSDate(),
       offering: 1,
     });
-    this.server.create('schoolevent', {
+    await this.server.create('schoolevent', {
       school: 1,
       startDate: day.toJSDate(),
       endDate: day.plus({ hour: 1 }).toJSDate(),
@@ -572,13 +572,13 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
       second: 8,
     });
     freezeDateAt(day.toJSDate());
-    this.server.create('schoolevent', {
+    await this.server.create('schoolevent', {
       school: 1,
       startDate: day.toJSDate(),
       endDate: day.plus({ hour: 1 }).toJSDate(),
       offering: 1,
     });
-    this.server.create('schoolevent', {
+    await this.server.create('schoolevent', {
       school: 1,
       startDate: day.toJSDate(),
       endDate: day.plus({ hour: 1 }).toJSDate(),
@@ -607,21 +607,21 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
       second: 7,
     });
     freezeDateAt(day.toJSDate());
-    this.server.create('userevent', {
+    await this.server.create('userevent', {
       user: this.user.id,
       startDate: day.toJSDate(),
       endDate: day.plus({ hour: 1 }).toJSDate(),
       offering: 1,
       userContexts: ['learner'],
     });
-    this.server.create('userevent', {
+    await this.server.create('userevent', {
       user: this.user.id,
       startDate: day.plus({ hour: 1 }).toJSDate(),
       endDate: day.plus({ hour: 2 }).toJSDate(),
       offering: 2,
       userContexts: ['instructor'],
     });
-    this.server.create('userevent', {
+    await this.server.create('userevent', {
       user: this.user.id,
       startDate: day.plus({ hour: 2 }).toJSDate(),
       endDate: day.plus({ hour: 3 }).toJSDate(),
@@ -657,21 +657,21 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
       second: 7,
     });
     freezeDateAt(day.toJSDate());
-    this.server.create('userevent', {
+    await this.server.create('userevent', {
       user: this.user.id,
       startDate: day.toJSDate(),
       endDate: day.plus({ hour: 1 }).toJSDate(),
       offering: 1,
       userContexts: ['learner'],
     });
-    this.server.create('userevent', {
+    await this.server.create('userevent', {
       user: this.user.id,
       startDate: day.plus({ hour: 1 }).toJSDate(),
       endDate: day.plus({ hour: 2 }).toJSDate(),
       offering: 2,
       userContexts: ['instructor'],
     });
-    this.server.create('userevent', {
+    await this.server.create('userevent', {
       user: this.user.id,
       startDate: day.plus({ hour: 2 }).toJSDate(),
       endDate: day.plus({ hour: 3 }).toJSDate(),
@@ -734,13 +734,13 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
 
   test('test session type filter', async function (assert) {
     const today = DateTime.fromObject({ hour: 8, minute: 8, second: 8 });
-    this.server.create('schoolevent', {
+    await this.server.create('schoolevent', {
       school: this.school.id,
       startDate: today.toJSDate(),
       endDate: today.plus({ hour: 1 }).toJSDate(),
       sessionTypeId: 1,
     });
-    this.server.create('schoolevent', {
+    await this.server.create('schoolevent', {
       school: this.school.id,
       startDate: today.toJSDate(),
       endDate: today.plus({ hour: 1 }).toJSDate(),
@@ -762,13 +762,13 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
 
   test('test session type filter resets when switching to my-schedule', async function (assert) {
     const today = DateTime.fromObject({ hour: 8, minute: 8, second: 8 });
-    this.server.create('schoolevent', {
+    await this.server.create('schoolevent', {
       school: this.school.id,
       startDate: today.toJSDate(),
       endDate: today.plus({ hour: 1 }).toJSDate(),
       sessionTypeId: 1,
     });
-    this.server.create('schoolevent', {
+    await this.server.create('schoolevent', {
       school: this.school.id,
       startDate: today.toJSDate(),
       endDate: today.plus({ hour: 1 }).toJSDate(),
@@ -788,13 +788,13 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
 
   test('test course level filter', async function (assert) {
     const today = DateTime.fromObject({ hour: 8, minute: 8, second: 8 });
-    this.server.create('schoolevent', {
+    await this.server.create('schoolevent', {
       school: this.school.id,
       startDate: today.toJSDate(),
       endDate: today.plus({ hour: 1 }).toJSDate(),
       courseLevel: 1,
     });
-    this.server.create('schoolevent', {
+    await this.server.create('schoolevent', {
       school: this.school.id,
       startDate: today.toJSDate(),
       endDate: today.plus({ hour: 1 }).toJSDate(),
@@ -813,13 +813,13 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
 
   test('test course level filter resets when switching to my-schedule', async function (assert) {
     const today = DateTime.fromObject({ hour: 8, minute: 8, second: 8 });
-    this.server.create('schoolevent', {
+    await this.server.create('schoolevent', {
       school: this.school.id,
       startDate: today.toJSDate(),
       endDate: today.plus({ hour: 1 }).toJSDate(),
       courseLevel: 1,
     });
-    this.server.create('schoolevent', {
+    await this.server.create('schoolevent', {
       school: this.school.id,
       startDate: today.toJSDate(),
       endDate: today.plus({ hour: 1 }).toJSDate(),
@@ -840,13 +840,13 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
 
   test('test cohort filter', async function (assert) {
     const today = DateTime.fromObject({ hour: 8, minute: 8, second: 8 });
-    this.server.create('schoolevent', {
+    await this.server.create('schoolevent', {
       school: this.school.id,
       startDate: today.toJSDate(),
       endDate: today.plus({ hour: 1 }).toJSDate(),
       cohorts: [{ id: 1 }],
     });
-    this.server.create('schoolevent', {
+    await this.server.create('schoolevent', {
       school: this.school.id,
       startDate: today.toJSDate(),
       endDate: today.plus({ hour: 1 }).toJSDate(),
@@ -867,13 +867,13 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
 
   test('test cohort level filter resets when switching to my-schedule', async function (assert) {
     const today = DateTime.fromObject({ hour: 8, minute: 8, second: 8 });
-    this.server.create('schoolevent', {
+    await this.server.create('schoolevent', {
       school: this.school.id,
       startDate: today.toJSDate(),
       endDate: today.plus({ hour: 1 }).toJSDate(),
       cohorts: [{ id: 1 }],
     });
-    this.server.create('schoolevent', {
+    await this.server.create('schoolevent', {
       school: this.school.id,
       startDate: today.toJSDate(),
       endDate: today.plus({ hour: 1 }).toJSDate(),
@@ -895,13 +895,13 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
 
   test('test cohort filter on page load ilios/ilios#5699', async function (assert) {
     const today = DateTime.fromObject({ hour: 8, minute: 8, second: 8 });
-    this.server.create('schoolevent', {
+    await this.server.create('schoolevent', {
       school: this.school.id,
       startDate: today.toJSDate(),
       endDate: today.plus({ hour: 1 }).toJSDate(),
       cohorts: [{ id: 1 }],
     });
-    this.server.create('schoolevent', {
+    await this.server.create('schoolevent', {
       school: this.school.id,
       startDate: today.toJSDate(),
       endDate: today.plus({ hour: 1 }).toJSDate(),
@@ -917,19 +917,19 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
 
   test('test course filter', async function (assert) {
     const today = DateTime.fromObject({ hour: 8, minute: 8, second: 8 });
-    this.server.create('schoolevent', {
+    await this.server.create('schoolevent', {
       school: this.school.id,
       startDate: today.toJSDate(),
       endDate: today.plus({ hour: 1 }).toJSDate(),
       course: 1,
     });
-    this.server.create('schoolevent', {
+    await this.server.create('schoolevent', {
       school: this.school.id,
       startDate: today.toJSDate(),
       endDate: today.plus({ hour: 1 }).toJSDate(),
       course: 2,
     });
-    this.server.create('schoolevent', {
+    await this.server.create('schoolevent', {
       school: this.school.id,
       startDate: today.toJSDate(),
       endDate: today.plus({ hour: 1 }).toJSDate(),
@@ -947,19 +947,19 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
 
   test('test course filter resets when switching to my-schedule', async function (assert) {
     const today = DateTime.fromObject({ hour: 8, minute: 8, second: 8 });
-    this.server.create('schoolevent', {
+    await this.server.create('schoolevent', {
       school: this.school.id,
       startDate: today.toJSDate(),
       endDate: today.plus({ hour: 1 }).toJSDate(),
       course: 1,
     });
-    this.server.create('schoolevent', {
+    await this.server.create('schoolevent', {
       school: this.school.id,
       startDate: today.toJSDate(),
       endDate: today.plus({ hour: 1 }).toJSDate(),
       course: 2,
     });
-    this.server.create('schoolevent', {
+    await this.server.create('schoolevent', {
       school: this.school.id,
       startDate: today.toJSDate(),
       endDate: today.plus({ hour: 1 }).toJSDate(),
@@ -979,21 +979,21 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
 
   test('test course and session type filter together', async function (assert) {
     const today = DateTime.fromObject({ hour: 8, minute: 8, second: 8 });
-    this.server.create('schoolevent', {
+    await this.server.create('schoolevent', {
       school: this.school.id,
       startDate: today.toJSDate(),
       endDate: today.plus({ hour: 1 }).toJSDate(),
       course: 1,
       sessionTypeId: 1,
     });
-    this.server.create('schoolevent', {
+    await this.server.create('schoolevent', {
       school: this.school.id,
       startDate: today.toJSDate(),
       endDate: today.plus({ hour: 1 }).toJSDate(),
       course: 2,
       sessionTypeId: 2,
     });
-    this.server.create('schoolevent', {
+    await this.server.create('schoolevent', {
       school: this.school.id,
       startDate: today.toJSDate(),
       endDate: today.plus({ hour: 1 }).toJSDate(),
@@ -1013,10 +1013,10 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
   });
 
   test('clear all filters', async function (assert) {
-    const vocabulary = this.server.create('vocabulary', {
+    const vocabulary = await this.server.create('vocabulary', {
       school: this.school,
     });
-    this.server.createList('term', 2, {
+    await this.server.createList('term', 2, {
       vocabulary,
     });
 
@@ -1140,24 +1140,24 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
   });
 
   test('test term filter', async function (assert) {
-    const vocabulary = this.server.create('vocabulary', {
+    const vocabulary = await this.server.create('vocabulary', {
       school: this.school,
     });
-    this.server.create('term', {
+    await this.server.create('term', {
       vocabulary,
       sessionIds: [1, 2],
     });
-    this.server.create('term', {
+    await this.server.create('term', {
       vocabulary,
     });
     const today = DateTime.fromObject({ hour: 8, minute: 8, second: 8 });
-    this.server.create('schoolevent', {
+    await this.server.create('schoolevent', {
       school: this.school.id,
       startDate: today.toJSDate(),
       endDate: today.plus({ hour: 1 }).toJSDate(),
       sessionTerms: [{ id: 1 }],
     });
-    this.server.create('schoolevent', {
+    await this.server.create('schoolevent', {
       school: this.school.id,
       startDate: today.toJSDate(),
       endDate: today.plus({ hour: 1 }).toJSDate(),
@@ -1174,24 +1174,24 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
   });
 
   test('test term filter resets when switching to my-schedule', async function (assert) {
-    const vocabulary = this.server.create('vocabulary', {
+    const vocabulary = await this.server.create('vocabulary', {
       school: this.school,
     });
-    this.server.create('term', {
+    await this.server.create('term', {
       vocabulary,
       sessionIds: [1, 2],
     });
-    this.server.create('term', {
+    await this.server.create('term', {
       vocabulary,
     });
     const today = DateTime.fromObject({ hour: 8, minute: 8, second: 8 });
-    this.server.create('schoolevent', {
+    await this.server.create('schoolevent', {
       school: this.school.id,
       startDate: today.toJSDate(),
       endDate: today.plus({ hour: 1 }).toJSDate(),
       sessionTerms: [{ id: 1 }],
     });
-    this.server.create('schoolevent', {
+    await this.server.create('schoolevent', {
       school: this.school.id,
       startDate: today.toJSDate(),
       endDate: today.plus({ hour: 1 }).toJSDate(),
@@ -1210,21 +1210,21 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
   });
 
   test('clear vocab filter #3450', async function (assert) {
-    const vocabulary = this.server.create('vocabulary', {
+    const vocabulary = await this.server.create('vocabulary', {
       school: this.school,
     });
-    this.server.create('term', {
+    await this.server.create('term', {
       vocabulary,
       sessionIds: [1],
     });
     const today = DateTime.fromObject({ hour: 8, minute: 8, second: 8 });
-    this.server.create('schoolevent', {
+    await this.server.create('schoolevent', {
       school: this.school.id,
       startDate: today.toJSDate(),
       endDate: today.plus({ hour: 1 }).toJSDate(),
       sessionTerms: [{ id: 1 }],
     });
-    this.server.create('schoolevent', {
+    await this.server.create('schoolevent', {
       school: this.school.id,
       startDate: today.toJSDate(),
       endDate: today.plus({ hour: 1 }).toJSDate(),
@@ -1245,7 +1245,7 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
 
   test('test tooltip', async function (assert) {
     const november11th = DateTime.fromObject({ month: 11, day: 11, hour: 8, minute: 8, second: 8 });
-    this.server.create('userevent', {
+    await this.server.create('userevent', {
       user: this.user.id,
       startDate: november11th.toJSDate(),
       endDate: november11th.plus({ hour: 1 }).toJSDate(),
@@ -1261,7 +1261,7 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
 
   test('visit with course filters open #5098', async function (assert) {
     const today = DateTime.fromObject({ hour: 8, minute: 8, second: 8 });
-    this.server.create('userevent', {
+    await this.server.create('userevent', {
       user: this.user.id,
       startDate: today.toJSDate(),
       endDate: today.plus({ hour: 1 }).toJSDate(),
@@ -1278,7 +1278,7 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
 
   test('visit with detail filters open #5098', async function (assert) {
     const today = DateTime.fromObject({ hour: 8, minute: 8, second: 8 });
-    this.server.create('userevent', {
+    await this.server.create('userevent', {
       user: this.user.id,
       startDate: today.toJSDate(),
       endDate: today.plus({ hour: 1 }).toJSDate(),
@@ -1296,14 +1296,14 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
   test('transition from weekly calendar to day calendar when multi-event is clicked', async function (assert) {
     const today = DateTime.fromObject({ hour: 8, minute: 8, second: 8 });
     freezeDateAt(today.toJSDate());
-    this.server.create('userevent', {
+    await this.server.create('userevent', {
       name: 'multi-event',
       user: this.user.id,
       startDate: today.toJSDate(),
       endDate: today.plus({ hour: 1 }).toJSDate(),
       offering: 1,
     });
-    this.server.create('userevent', {
+    await this.server.create('userevent', {
       name: 'multi-event',
       user: this.user.id,
       startDate: today.toJSDate(),
@@ -1323,14 +1323,14 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
   test('transition from monthly calendar to day calendar when multi-event is clicked', async function (assert) {
     const today = DateTime.fromObject({ hour: 8, minute: 8, second: 8 });
     freezeDateAt(today.toJSDate());
-    this.server.create('userevent', {
+    await this.server.create('userevent', {
       name: 'multi-event',
       user: this.user.id,
       startDate: today.toJSDate(),
       endDate: today.plus({ hour: 1 }).toJSDate(),
       offering: 1,
     });
-    this.server.create('userevent', {
+    await this.server.create('userevent', {
       name: 'multi-event',
       user: this.user.id,
       startDate: today.toJSDate(),

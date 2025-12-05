@@ -9,12 +9,12 @@ module('Acceptance | School - Session Types', function (hooks) {
   setupApplicationTest(hooks);
 
   hooks.beforeEach(async function () {
-    const school = this.server.create('school');
+    const school = await this.server.create('school');
     this.school = school;
-    this.formative = this.server.create('assessment-option', {
+    this.formative = await this.server.create('assessment-option', {
       name: 'formative',
     });
-    this.summative = this.server.create('assessment-option', {
+    this.summative = await this.server.create('assessment-option', {
       name: 'summative',
     });
     await setupAuthentication({ school, administeredSchools: [school] }, true);
@@ -22,10 +22,18 @@ module('Acceptance | School - Session Types', function (hooks) {
 
   test('update session type', async function (assert) {
     const aamcMethods = [
-      this.server.create('aamc-method', { id: 'AM001', description: 'Celebration', active: true }),
-      this.server.create('aamc-method', { id: 'AM002', description: 'Lecture', active: true }),
+      await this.server.create('aamc-method', {
+        id: 'AM001',
+        description: 'Celebration',
+        active: true,
+      }),
+      await this.server.create('aamc-method', {
+        id: 'AM002',
+        description: 'Lecture',
+        active: true,
+      }),
     ];
-    this.server.create('session-type', {
+    await this.server.create('session-type', {
       title: 'one',
       calendarColor: '#cc0000',
       assessment: true,
@@ -73,10 +81,18 @@ module('Acceptance | School - Session Types', function (hooks) {
 
   test('save session type without changes', async function (assert) {
     const aamcMethods = [
-      this.server.create('aamc-method', { id: 'AM001', description: 'Celebration', active: true }),
-      this.server.create('aamc-method', { id: 'AM002', description: 'Lecture', active: true }),
+      await this.server.create('aamc-method', {
+        id: 'AM001',
+        description: 'Celebration',
+        active: true,
+      }),
+      await this.server.create('aamc-method', {
+        id: 'AM002',
+        description: 'Lecture',
+        active: true,
+      }),
     ];
-    this.server.create('session-type', {
+    await this.server.create('session-type', {
       title: 'one',
       calendarColor: '#cc0000',
       assessment: true,
@@ -102,10 +118,10 @@ module('Acceptance | School - Session Types', function (hooks) {
   });
 
   test('new session type', async function (assert) {
-    this.server.create('aamc-method', { id: 'IM001', active: true });
-    this.server.create('aamc-method', { id: 'IM002', active: true });
-    this.server.create('aamc-method', { id: 'AM001', active: true });
-    this.server.create('aamc-method', { id: 'AM002', active: true });
+    await this.server.create('aamc-method', { id: 'IM001', active: true });
+    await this.server.create('aamc-method', { id: 'IM002', active: true });
+    await this.server.create('aamc-method', { id: 'AM001', active: true });
+    await this.server.create('aamc-method', { id: 'AM002', active: true });
     await page.visit({ schoolId: this.school.id, schoolSessionTypeDetails: true });
     const { sessionTypesExpanded: e } = page.root;
 
@@ -127,10 +143,10 @@ module('Acceptance | School - Session Types', function (hooks) {
   });
 
   test('new session type - assessment', async function (assert) {
-    this.server.create('aamc-method', { id: 'IM001', active: true });
-    this.server.create('aamc-method', { id: 'IM002', active: true });
-    this.server.create('aamc-method', { id: 'AM001', active: true });
-    this.server.create('aamc-method', { id: 'AM002', active: true });
+    await this.server.create('aamc-method', { id: 'IM001', active: true });
+    await this.server.create('aamc-method', { id: 'IM002', active: true });
+    await this.server.create('aamc-method', { id: 'AM001', active: true });
+    await this.server.create('aamc-method', { id: 'AM002', active: true });
     await page.visit({ schoolId: this.school.id, schoolSessionTypeDetails: true });
     const { sessionTypesExpanded: e } = page.root;
 

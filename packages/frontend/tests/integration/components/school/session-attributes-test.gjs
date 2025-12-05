@@ -11,8 +11,8 @@ module('Integration | Component | school/session-attributes', function (hooks) {
   setupMSW(hooks);
 
   test('it renders collapsed', async function (assert) {
-    const school = this.server.create('school');
-    this.server.create('school-config', {
+    const school = await this.server.create('school');
+    await this.server.create('school-config', {
       name: 'showSessionSupplemental',
       value: true,
       school,
@@ -38,8 +38,8 @@ module('Integration | Component | school/session-attributes', function (hooks) {
   });
 
   test('it renders expanded', async function (assert) {
-    const school = this.server.create('school');
-    this.server.create('school-config', {
+    const school = await this.server.create('school');
+    await this.server.create('school-config', {
       name: 'showSessionSupplemental',
       value: true,
       school,
@@ -66,7 +66,7 @@ module('Integration | Component | school/session-attributes', function (hooks) {
   });
 
   test('clicking expand fires action', async function (assert) {
-    const school = this.server.create('school');
+    const school = await this.server.create('school');
     const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
     this.set('school', schoolModel);
     this.set('expand', () => {
@@ -88,7 +88,7 @@ module('Integration | Component | school/session-attributes', function (hooks) {
   });
 
   test('clicking collapse fires action', async function (assert) {
-    const school = this.server.create('school');
+    const school = await this.server.create('school');
     const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
     this.set('school', schoolModel);
     this.set('collapse', () => {

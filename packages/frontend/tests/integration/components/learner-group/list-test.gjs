@@ -23,16 +23,16 @@ module('Integration | Component | learner-group/list', function (hooks) {
       }
     };
     this.owner.register('service:permissionChecker', this.permissionCheckerMock);
-    const school = this.server.create('school');
-    const program = this.server.create('program', { school });
-    const programYear = this.server.create('program-year', { program });
-    this.cohort = this.server.create('cohort', { programYear });
+    const school = await this.server.create('school');
+    const program = await this.server.create('program', { school });
+    const programYear = await this.server.create('program-year', { program });
+    this.cohort = await this.server.create('cohort', { programYear });
   });
 
   test('it renders', async function (assert) {
-    this.server.createList('learner-group', 3, { cohort: this.cohort });
-    this.server.createList('learner-group', 3, { cohort: this.cohort, parentId: 2 });
-    this.server.createList('learner-group', 3, { cohort: this.cohort, parentId: 5 });
+    await this.server.createList('learner-group', 3, { cohort: this.cohort });
+    await this.server.createList('learner-group', 3, { cohort: this.cohort, parentId: 2 });
+    await this.server.createList('learner-group', 3, { cohort: this.cohort, parentId: 5 });
     const store = this.owner.lookup('service:store');
     const learnerGroupModels = [
       await store.findRecord('learner-group', 1),
@@ -60,21 +60,21 @@ module('Integration | Component | learner-group/list', function (hooks) {
   });
 
   test('sort', async function (assert) {
-    const group1 = this.server.create('learner-group', {
+    const group1 = await this.server.create('learner-group', {
       cohort: this.cohort,
-      users: this.server.createList('user', 5),
+      users: await this.server.createList('user', 5),
     });
-    const group2 = this.server.create('learner-group', {
+    const group2 = await this.server.create('learner-group', {
       cohort: this.cohort,
-      users: this.server.createList('user', 3),
+      users: await this.server.createList('user', 3),
     });
-    const group3 = this.server.create('learner-group', {
+    const group3 = await this.server.create('learner-group', {
       cohort: this.cohort,
-      users: this.server.createList('user', 4),
+      users: await this.server.createList('user', 4),
     });
-    this.server.createList('learner-group', 2, { parent: group1 });
-    this.server.createList('learner-group', 5, { parent: group2 });
-    this.server.createList('learner-group', 4, { parent: group3 });
+    await this.server.createList('learner-group', 2, { parent: group1 });
+    await this.server.createList('learner-group', 5, { parent: group2 });
+    await this.server.createList('learner-group', 4, { parent: group3 });
     const store = this.owner.lookup('service:store');
     const learnerGroupModels = [
       await store.findRecord('learner-group', group1.id),
@@ -149,7 +149,7 @@ module('Integration | Component | learner-group/list', function (hooks) {
   });
 
   test('remove', async function (assert) {
-    this.server.createList('learner-group', 3, { cohort: this.cohort });
+    await this.server.createList('learner-group', 3, { cohort: this.cohort });
     const learnerGroupModels = await this.owner.lookup('service:store').findAll('learner-group');
     this.set('learnerGroups', learnerGroupModels);
     await render(
@@ -168,7 +168,7 @@ module('Integration | Component | learner-group/list', function (hooks) {
   });
 
   test('cancel remove', async function (assert) {
-    this.server.createList('learner-group', 3, { cohort: this.cohort });
+    await this.server.createList('learner-group', 3, { cohort: this.cohort });
     const learnerGroupModels = await this.owner.lookup('service:store').findAll('learner-group');
     this.set('learnerGroups', learnerGroupModels);
     await render(
@@ -187,7 +187,7 @@ module('Integration | Component | learner-group/list', function (hooks) {
   });
 
   test('copy with learners', async function (assert) {
-    this.server.createList('learner-group', 1, { cohort: this.cohort });
+    await this.server.createList('learner-group', 1, { cohort: this.cohort });
     const learnerGroupModels = await this.owner.lookup('service:store').findAll('learner-group');
     this.set('learnerGroups', learnerGroupModels);
     this.set('copyGroup', (withLearners, group) => {
@@ -213,7 +213,7 @@ module('Integration | Component | learner-group/list', function (hooks) {
   });
 
   test('copy without learners when with learners is enabled', async function (assert) {
-    this.server.createList('learner-group', 1, { cohort: this.cohort });
+    await this.server.createList('learner-group', 1, { cohort: this.cohort });
     const learnerGroupModels = await this.owner.lookup('service:store').findAll('learner-group');
     this.set('learnerGroups', learnerGroupModels);
     this.set('copyGroup', (withLearners, group) => {
@@ -239,7 +239,7 @@ module('Integration | Component | learner-group/list', function (hooks) {
   });
 
   test('copy without learners', async function (assert) {
-    this.server.createList('learner-group', 1, { cohort: this.cohort });
+    await this.server.createList('learner-group', 1, { cohort: this.cohort });
     const learnerGroupModels = await this.owner.lookup('service:store').findAll('learner-group');
     this.set('learnerGroups', learnerGroupModels);
     this.set('copyGroup', (withLearners, group) => {
@@ -265,7 +265,7 @@ module('Integration | Component | learner-group/list', function (hooks) {
   });
 
   test('cancel copy with learners enabled', async function (assert) {
-    this.server.createList('learner-group', 1, { cohort: this.cohort });
+    await this.server.createList('learner-group', 1, { cohort: this.cohort });
     const learnerGroupModels = await this.owner.lookup('service:store').findAll('learner-group');
     this.set('learnerGroups', learnerGroupModels);
     this.set('copyGroup', () => {
@@ -291,7 +291,7 @@ module('Integration | Component | learner-group/list', function (hooks) {
   });
 
   test('cancel copy with learners disabled', async function (assert) {
-    this.server.createList('learner-group', 1, { cohort: this.cohort });
+    await this.server.createList('learner-group', 1, { cohort: this.cohort });
     const learnerGroupModels = await this.owner.lookup('service:store').findAll('learner-group');
     this.set('learnerGroups', learnerGroupModels);
     this.set('copyGroup', () => {

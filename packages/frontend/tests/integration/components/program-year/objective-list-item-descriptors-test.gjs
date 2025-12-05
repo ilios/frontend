@@ -52,7 +52,7 @@ module('Integration | Component | program-year/objective-list-item-descriptors',
   });
 
   test('it renders and is accessible un-editable', async function (assert) {
-    const meshDescriptors = this.server.createList('mesh-descriptor', 2);
+    const meshDescriptors = await this.server.createList('mesh-descriptor', 2);
     const meshDescriptorModel1 = await this.owner
       .lookup('service:store')
       .findRecord('mesh-descriptor', meshDescriptors[0].id);
@@ -81,7 +81,7 @@ module('Integration | Component | program-year/objective-list-item-descriptors',
   });
 
   test('it renders and is accessible editable', async function (assert) {
-    const meshDescriptors = this.server.createList('mesh-descriptor', 2);
+    const meshDescriptors = await this.server.createList('mesh-descriptor', 2);
     const meshDescriptorModel1 = await this.owner
       .lookup('service:store')
       .findRecord('mesh-descriptor', meshDescriptors[0].id);
@@ -110,7 +110,7 @@ module('Integration | Component | program-year/objective-list-item-descriptors',
   });
 
   test('clicking save fires save', async function (assert) {
-    const meshDescriptors = this.server.createList('mesh-descriptor', 2);
+    const meshDescriptors = await this.server.createList('mesh-descriptor', 2);
     const meshDescriptorModel1 = await this.owner
       .lookup('service:store')
       .findRecord('mesh-descriptor', meshDescriptors[0].id);
@@ -139,7 +139,7 @@ module('Integration | Component | program-year/objective-list-item-descriptors',
   });
 
   test('clicking cancel fires cancel', async function (assert) {
-    const meshDescriptors = this.server.createList('mesh-descriptor', 2);
+    const meshDescriptors = await this.server.createList('mesh-descriptor', 2);
     const meshDescriptorModel1 = await this.owner
       .lookup('service:store')
       .findRecord('mesh-descriptor', meshDescriptors[0].id);
@@ -168,7 +168,7 @@ module('Integration | Component | program-year/objective-list-item-descriptors',
   });
 
   test('clicking descriptor fires manage', async function (assert) {
-    const meshDescriptors = this.server.createList('mesh-descriptor', 2);
+    const meshDescriptors = await this.server.createList('mesh-descriptor', 2);
     const meshDescriptorModel1 = await this.owner
       .lookup('service:store')
       .findRecord('mesh-descriptor', meshDescriptors[0].id);

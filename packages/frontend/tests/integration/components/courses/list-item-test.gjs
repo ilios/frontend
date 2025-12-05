@@ -13,7 +13,7 @@ module('Integration | Component | courses/list-item', function (hooks) {
   setupMSW(hooks);
 
   hooks.beforeEach(async function () {
-    const course = this.server.create('course', {
+    const course = await this.server.create('course', {
       title: 'Test Course',
       level: 2,
       startDate: '2023-04-23',
@@ -178,7 +178,7 @@ module('Integration | Component | courses/list-item', function (hooks) {
   });
 
   test('cannot delete b/c course has been rolled over', async function (assert) {
-    const course2 = this.server.create('course');
+    const course2 = await this.server.create('course');
     const courseModel2 = await this.owner.lookup('service:store').findRecord('course', course2.id);
     this.course.descendants = [courseModel2];
     await render(

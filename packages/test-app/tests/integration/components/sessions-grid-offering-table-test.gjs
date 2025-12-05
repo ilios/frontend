@@ -20,18 +20,18 @@ module('Integration | Component | sessions-grid-offering-table', function (hooks
       }
     }
     this.owner.register('service:permission-checker', PermissionCheckerServiceMock);
-    const session = this.server.create('session');
-    this.server.createList('offering', 3, {
+    const session = await this.server.create('session');
+    await this.server.createList('offering', 3, {
       session,
       startDate: DateTime.fromObject({ hour: 8 }).toJSDate(),
       endDate: DateTime.fromObject({ hour: 9 }).toJSDate(),
     });
-    this.server.createList('offering', 3, {
+    await this.server.createList('offering', 3, {
       session,
       startDate: DateTime.fromObject({ hour: 9 }).toJSDate(),
       endDate: DateTime.fromObject({ hour: 8 }).plus({ minutes: 110 }).toJSDate(),
     });
-    this.server.createList('offering', 3, {
+    await this.server.createList('offering', 3, {
       session,
       startDate: DateTime.fromObject({ hour: 9 }).plus({ day: 1 }).toJSDate(),
       endDate: DateTime.fromObject({ hour: 10 }).plus({ day: 1 }).toJSDate(),

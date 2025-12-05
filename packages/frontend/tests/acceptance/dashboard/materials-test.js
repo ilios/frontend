@@ -15,20 +15,20 @@ module('Acceptance | Dashboard Materials', function (hooks) {
         day: 5,
       }).toJSDate(),
     );
-    this.school = this.server.create('school');
+    this.school = await this.server.create('school');
     this.user = await setupAuthentication({ school: this.school });
 
     const today = DateTime.now();
     const tomorrow = today.plus({ day: 1 });
     const nextWeek = today.plus({ week: 1 });
     const courses = [
-      this.server.create('course', {
+      await this.server.create('course', {
         externalId: 'ID1234',
         year: 2021,
       }),
-      ...this.server.createList('course', 4, {
+      ...(await this.server.createList('course', 4, {
         year: 2022,
-      }),
+      })),
     ];
     const lm1 = {
       title: 'title1',
@@ -118,17 +118,17 @@ module('Acceptance | Dashboard Materials', function (hooks) {
       });
     }
 
-    this.server.createList('session-learning-material', 6);
+    await this.server.createList('session-learning-material', 6);
 
-    this.server.create('user-session-material-status', {
+    await this.server.create('user-session-material-status', {
       user: this.user,
       materialId: 3,
       status: 1,
     });
 
-    this.server.create('user-session-material-status', {
+    await this.server.create('user-session-material-status', {
       user: this.user,
-      material: this.server.create('session-learning-material', { id: 2 }),
+      material: await this.server.create('session-learning-material', { id: 2 }),
       status: 2,
     });
 

@@ -11,16 +11,16 @@ module('Integration | Component | school/competencies-list-item', function (hook
   setupMSW(hooks);
 
   hooks.beforeEach(async function () {
-    const pcrs1 = this.server.create('aamc-pcrs', {
+    const pcrs1 = await this.server.create('aamc-pcrs', {
       description: 'Zylinder',
     });
-    const pcrs2 = this.server.create('aamc-pcrs', {
+    const pcrs2 = await this.server.create('aamc-pcrs', {
       description: 'Alfons',
     });
-    const domain = this.server.create('competency', {
+    const domain = await this.server.create('competency', {
       aamcPcrses: [pcrs1, pcrs2],
     });
-    const competency = this.server.create('competency', {
+    const competency = await this.server.create('competency', {
       parent: domain,
     });
     this.competencyModel = await this.owner

@@ -10,7 +10,7 @@ module('Integration | Component | user-name-info', function (hooks) {
   setupMSW(hooks);
 
   test('it renders', async function (assert) {
-    const user = this.server.create('user');
+    const user = await this.server.create('user');
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     this.set('user', userModel);
     await render(<template><UserNameInfo @user={{this.user}} /></template>);
@@ -20,7 +20,7 @@ module('Integration | Component | user-name-info', function (hooks) {
   });
 
   test('it renders with additional info when configured to do so', async function (assert) {
-    const user = this.server.create('user', { displayName: 'Clem Chowder' });
+    const user = await this.server.create('user', { displayName: 'Clem Chowder' });
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     this.set('user', userModel);
     await render(<template><UserNameInfo @user={{this.user}} /></template>);
@@ -43,7 +43,7 @@ module('Integration | Component | user-name-info', function (hooks) {
         },
       };
     });
-    const user = this.server.create('user', { displayName: 'Clem Chowder' });
+    const user = await this.server.create('user', { displayName: 'Clem Chowder' });
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     this.set('user', userModel);
     await render(<template><UserNameInfo @user={{this.user}} /></template>);
@@ -52,7 +52,7 @@ module('Integration | Component | user-name-info', function (hooks) {
   });
 
   test('passing in id as an attributes', async function (assert) {
-    const user = this.server.create('user');
+    const user = await this.server.create('user');
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     this.set('user', userModel);
     await render(<template><UserNameInfo id="test-id" @user={{this.user}} /></template>);
@@ -60,7 +60,7 @@ module('Integration | Component | user-name-info', function (hooks) {
   });
 
   test('pronouns display if present', async function (assert) {
-    const user = this.server.create('user', {
+    const user = await this.server.create('user', {
       pronouns: 'they/them/tay',
     });
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);

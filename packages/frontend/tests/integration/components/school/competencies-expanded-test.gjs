@@ -12,17 +12,17 @@ module('Integration | Component | school/competencies-expanded', function (hooks
   setupMSW(hooks);
 
   test('it renders', async function (assert) {
-    const school = this.server.create('school');
-    const domain = this.server.create('competency', {
+    const school = await this.server.create('school');
+    const domain = await this.server.create('competency', {
       school,
       title: 'domain 0',
     });
-    this.server.create('competency', {
+    await this.server.create('competency', {
       school,
       title: 'competency 0',
       parent: domain,
     });
-    this.server.create('competency', {
+    await this.server.create('competency', {
       school,
       title: 'competency 1',
       parent: domain,
@@ -53,7 +53,7 @@ module('Integration | Component | school/competencies-expanded', function (hooks
   });
 
   test('it renders empty', async function (assert) {
-    const school = this.server.create('school');
+    const school = await this.server.create('school');
     const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
     this.set('school', schoolModel);
     await render(

@@ -8,7 +8,7 @@ module('Acceptance | School - Emails', function (hooks) {
   setupApplicationTest(hooks);
 
   hooks.beforeEach(async function () {
-    this.school = this.server.create('school', {
+    this.school = await this.server.create('school', {
       iliosAdministratorEmail: 'admin@school.edu',
       changeAlertRecipients: 'email1@school.edu, email2@school.edu',
     });

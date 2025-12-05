@@ -15,17 +15,17 @@ module('Integration | Component | dashboard/courses-calendar-filter', function (
 
   test('it renders and is accessible', async function (assert) {
     const thisYear = 2019;
-    const school = this.server.create('school');
-    this.server.createList('course', 2, {
+    const school = await this.server.create('school');
+    await this.server.createList('course', 2, {
       school,
       year: thisYear,
     });
-    this.server.createList('course', 2, {
+    await this.server.createList('course', 2, {
       school,
       year: thisYear + 1,
       externalId: 1,
     });
-    this.server.createList('course', 2, {
+    await this.server.createList('course', 2, {
       school,
       year: thisYear - 1,
     });
@@ -66,17 +66,17 @@ module('Integration | Component | dashboard/courses-calendar-filter', function (
       };
     });
     const thisYear = 2019;
-    const school = this.server.create('school');
-    this.server.createList('course', 2, {
+    const school = await this.server.create('school');
+    await this.server.createList('course', 2, {
       school,
       year: thisYear,
     });
-    this.server.createList('course', 2, {
+    await this.server.createList('course', 2, {
       school,
       year: thisYear + 1,
       externalId: 1,
     });
-    this.server.createList('course', 2, {
+    await this.server.createList('course', 2, {
       school,
       year: thisYear - 1,
     });
@@ -94,16 +94,16 @@ module('Integration | Component | dashboard/courses-calendar-filter', function (
   });
 
   test('clicking year toggles', async function (assert) {
-    const school = this.server.create('school');
-    this.server.createList('course', 2, {
+    const school = await this.server.create('school');
+    await this.server.createList('course', 2, {
       school,
       year: 2016,
     });
-    this.server.createList('course', 2, {
+    await this.server.createList('course', 2, {
       school,
       year: 2015,
     });
-    this.server.createList('course', 2, {
+    await this.server.createList('course', 2, {
       school,
       year: 2014,
     });
@@ -141,12 +141,12 @@ module('Integration | Component | dashboard/courses-calendar-filter', function (
   });
 
   test('opens latest year if current year has no courses', async function (assert) {
-    const school = this.server.create('school');
-    this.server.createList('course', 2, {
+    const school = await this.server.create('school');
+    await this.server.createList('course', 2, {
       school,
       year: 2015,
     });
-    this.server.createList('course', 2, {
+    await this.server.createList('course', 2, {
       school,
       year: 2014,
     });
@@ -181,16 +181,16 @@ module('Integration | Component | dashboard/courses-calendar-filter', function (
 
   test('opens current year if it has courses', async function (assert) {
     const currentYear = getCurrentAcademicYear();
-    const school = this.server.create('school');
-    this.server.createList('course', 2, {
+    const school = await this.server.create('school');
+    await this.server.createList('course', 2, {
       school,
       year: currentYear,
     });
-    this.server.createList('course', 2, {
+    await this.server.createList('course', 2, {
       school,
       year: currentYear + 1,
     });
-    this.server.createList('course', 2, {
+    await this.server.createList('course', 2, {
       school,
       year: currentYear - 1,
     });
@@ -215,8 +215,8 @@ module('Integration | Component | dashboard/courses-calendar-filter', function (
   });
 
   test('selected courses are checked', async function (assert) {
-    const school = this.server.create('school');
-    this.server.createList('course', 4, {
+    const school = await this.server.create('school');
+    await this.server.createList('course', 4, {
       school,
     });
     const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
@@ -246,8 +246,8 @@ module('Integration | Component | dashboard/courses-calendar-filter', function (
   });
 
   test('selected courses toggle remove', async function (assert) {
-    const school = this.server.create('school');
-    this.server.create('course', {
+    const school = await this.server.create('school');
+    await this.server.create('course', {
       school,
     });
     const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
@@ -272,8 +272,8 @@ module('Integration | Component | dashboard/courses-calendar-filter', function (
   });
 
   test('unselected courses toggle add', async function (assert) {
-    const school = this.server.create('school');
-    this.server.create('course', {
+    const school = await this.server.create('school');
+    await this.server.create('course', {
       school,
     });
     const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);

@@ -11,19 +11,19 @@ module('Integration | Component | school/vocabulbaries-collapsed', function (hoo
   setupMSW(hooks);
 
   test('it renders', async function (assert) {
-    const school = this.server.create('school');
-    const vocabulary1 = this.server.create('vocabulary', {
+    const school = await this.server.create('school');
+    const vocabulary1 = await this.server.create('vocabulary', {
       title: 'Vocabulary 1',
       school,
     });
-    const vocabulary2 = this.server.create('vocabulary', {
+    const vocabulary2 = await this.server.create('vocabulary', {
       title: 'Vocabulary 2',
       school,
     });
-    this.server.createList('term', 2, {
+    await this.server.createList('term', 2, {
       vocabulary: vocabulary1,
     });
-    this.server.create('term', {
+    await this.server.create('term', {
       vocabulary: vocabulary2,
     });
     const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
@@ -42,8 +42,8 @@ module('Integration | Component | school/vocabulbaries-collapsed', function (hoo
   });
 
   test('expand', async function (assert) {
-    const school = this.server.create('school');
-    this.server.create('vocabulary', {
+    const school = await this.server.create('school');
+    await this.server.create('vocabulary', {
       school,
     });
     const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);

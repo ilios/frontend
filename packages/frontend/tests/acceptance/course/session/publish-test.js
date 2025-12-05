@@ -15,44 +15,44 @@ module('Acceptance | Session - Publish', function (hooks) {
         day: 15,
       }).toJSDate(),
     );
-    const school = this.server.create('school');
+    const school = await this.server.create('school');
     await setupAuthentication({ school, administeredSchools: [school] }, true);
-    this.course = this.server.create('course', { school });
-    const sessionType = this.server.create('session-type');
-    this.publishedSession = this.server.create('session', {
+    this.course = await this.server.create('course', { school });
+    const sessionType = await this.server.create('session-type');
+    this.publishedSession = await this.server.create('session', {
       published: true,
       course: this.course,
       sessionType,
     });
-    this.scheduledSession = this.server.create('session', {
+    this.scheduledSession = await this.server.create('session', {
       course: this.course,
       published: true,
       publishedAsTbd: true,
       sessionType,
     });
-    this.draftSession = this.server.create('session', {
+    this.draftSession = await this.server.create('session', {
       course: this.course,
       sessionType,
     });
-    this.ilmSession = this.server.create('session', {
+    this.ilmSession = await this.server.create('session', {
       course: this.course,
       sessionType,
     });
-    this.server.create('ilm-session', {
+    await this.server.create('ilm-session', {
       session: this.ilmSession,
       dueDate: DateTime.now().toJSDate(),
     });
-    this.server.create('offering', {
+    await this.server.create('offering', {
       session: this.publishedSession,
       startDate: DateTime.now().toJSDate(),
       endDate: DateTime.now().plus({ hours: 6 }).toJSDate(),
     });
-    this.server.create('offering', {
+    await this.server.create('offering', {
       session: this.scheduledSession,
       startDate: DateTime.now().toJSDate(),
       endDate: DateTime.now().plus({ hours: 6 }).toJSDate(),
     });
-    this.server.create('offering', {
+    await this.server.create('offering', {
       session: this.draftSession,
       startDate: DateTime.now().toJSDate(),
       endDate: DateTime.now().plus({ hours: 6 }).toJSDate(),

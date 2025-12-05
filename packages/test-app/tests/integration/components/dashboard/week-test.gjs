@@ -61,7 +61,7 @@ module('Integration | Component | dashboard/week', function (hooks) {
   });
 
   test('it renders with events', async function (assert) {
-    this.server.create('userevent', {
+    await this.server.create('userevent', {
       name: 'Learn to Learn',
       startDate: today.toISO(),
       isBlanked: false,
@@ -69,7 +69,7 @@ module('Integration | Component | dashboard/week', function (hooks) {
       isScheduled: false,
       offering: 1,
     });
-    this.server.create('userevent', {
+    await this.server.create('userevent', {
       name: 'Finding the Point in Life',
       startDate: today.toISO(),
       isBlanked: false,
@@ -77,17 +77,17 @@ module('Integration | Component | dashboard/week', function (hooks) {
       isScheduled: false,
       ilmSession: 1,
     });
-    this.server.create('userevent', {
+    await this.server.create('userevent', {
       name: 'Blank',
       isBlanked: true,
     });
-    this.server.create('userevent', {
+    await this.server.create('userevent', {
       name: 'Not Published',
       isBlanked: false,
       isPublished: false,
       isScheduled: false,
     });
-    this.server.create('userevent', {
+    await this.server.create('userevent', {
       name: 'Scheduled',
       isBlanked: false,
       isPublished: true,

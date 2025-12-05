@@ -13,7 +13,7 @@ module('Integration | Component | course/manage-objective-parents', function (ho
   setupMSW(hooks);
 
   test('it renders and is accessible with a single cohort', async function (assert) {
-    const programYearObjective = this.server.create('program-year-objective');
+    const programYearObjective = await this.server.create('program-year-objective');
     const cohortObjectives = [
       {
         title: 'cohort 0',
@@ -61,7 +61,7 @@ module('Integration | Component | course/manage-objective-parents', function (ho
   });
 
   test('it renders and is accessible with multiple cohorts', async function (assert) {
-    const programYearObjective = this.server.create('program-year-objective');
+    const programYearObjective = await this.server.create('program-year-objective');
     const cohortObjectives = [
       {
         title: 'cohort 0',
@@ -126,9 +126,9 @@ module('Integration | Component | course/manage-objective-parents', function (ho
   });
 
   test('parent domain title is shown next to competency title, if applicable', async function (assert) {
-    const programYearObjective1 = this.server.create('program-year-objective');
-    const programYearObjective2 = this.server.create('program-year-objective');
-    const domain = this.server.create('competency', { title: 'domain' });
+    const programYearObjective1 = await this.server.create('program-year-objective');
+    const programYearObjective2 = await this.server.create('program-year-objective');
+    const domain = await this.server.create('competency', { title: 'domain' });
     const domainModel = await this.owner
       .lookup('service:store')
       .findRecord('competency', domain.id);
@@ -181,13 +181,16 @@ module('Integration | Component | course/manage-objective-parents', function (ho
   });
 
   test('inactive parents are hidden unless they are selected', async function (assert) {
-    const activeProgramYearObjective = this.server.create('program-year-objective');
-    const inactiveProgramYearObjective = this.server.create('program-year-objective', {
+    const activeProgramYearObjective = await this.server.create('program-year-objective');
+    const inactiveProgramYearObjective = await this.server.create('program-year-objective', {
       active: false,
     });
-    const inactiveSelectedProgramYearObjective = this.server.create('program-year-objective', {
-      active: false,
-    });
+    const inactiveSelectedProgramYearObjective = await this.server.create(
+      'program-year-objective',
+      {
+        active: false,
+      },
+    );
 
     const obj1 = {
       id: activeProgramYearObjective.id,

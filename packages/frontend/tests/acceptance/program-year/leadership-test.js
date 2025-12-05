@@ -7,20 +7,20 @@ module('Acceptance | Program Year - Leadership', function (hooks) {
   setupApplicationTest(hooks);
 
   hooks.beforeEach(async function () {
-    this.school = this.server.create('school');
+    this.school = await this.server.create('school');
     this.user = await setupAuthentication({
       school: this.school,
       administeredSchools: [this.school],
     });
-    const users = this.server.createList('user', 4);
-    const program = this.server.create('program', {
+    const users = await this.server.createList('user', 4);
+    const program = await this.server.create('program', {
       school: this.school,
     });
-    const programYear = this.server.create('program-year', {
+    const programYear = await this.server.create('program-year', {
       program,
       directors: [users[2], users[3]],
     });
-    this.server.create('cohort', { programYear });
+    await this.server.create('cohort', { programYear });
   });
 
   test('collapsed leadership', async function (assert) {

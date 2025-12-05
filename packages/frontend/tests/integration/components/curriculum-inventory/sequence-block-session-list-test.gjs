@@ -18,50 +18,50 @@ module(
       const in15Hours = now.plus({ hours: 15 }).toJSDate();
       const in30Hours = now.plus({ hours: 30 }).toJSDate();
 
-      const offering1 = this.server.create('offering', {
+      const offering1 = await this.server.create('offering', {
         startDate: now,
         endDate: in30Hours,
       });
-      const offering2 = this.server.create('offering', {
+      const offering2 = await this.server.create('offering', {
         startDate: now,
         endDate: in15Hours,
       });
-      const offering3 = this.server.create('offering', {
+      const offering3 = await this.server.create('offering', {
         startDate: now,
         endDate: in15Hours,
       });
 
-      const sessionType1 = this.server.create('session-type', { title: 'Lecture' });
-      const sessionType2 = this.server.create('session-type', { title: 'Ceremony' });
-      const sessionType3 = this.server.create('session-type', { title: 'Small Groups' });
-      const sessionType4 = this.server.create('session-type', { title: 'Rocket Surgery' });
+      const sessionType1 = await this.server.create('session-type', { title: 'Lecture' });
+      const sessionType2 = await this.server.create('session-type', { title: 'Ceremony' });
+      const sessionType3 = await this.server.create('session-type', { title: 'Small Groups' });
+      const sessionType4 = await this.server.create('session-type', { title: 'Rocket Surgery' });
 
-      const session1 = this.server.create('session', {
+      const session1 = await this.server.create('session', {
         title: 'Aardvark',
         offerings: [offering1, offering2],
         sessionType: sessionType1,
       });
 
-      const session2 = this.server.create('session', {
+      const session2 = await this.server.create('session', {
         title: 'Bluebird',
         offerings: [offering3],
         sessionType: sessionType2,
       });
 
-      const session3 = this.server.create('session', {
+      const session3 = await this.server.create('session', {
         title: 'Zeppelin',
         sessionType: sessionType3,
       });
-      const ilmSession = this.server.create('ilm-session', {
+      const ilmSession = await this.server.create('ilm-session', {
         hours: 0,
       });
-      this.server.create('session', {
+      await this.server.create('session', {
         title: 'Zwickzange',
         sessionType: sessionType4,
         ilmSession,
       });
 
-      const block = this.server.create('curriculum-inventory-sequence-block', {
+      const block = await this.server.create('curriculum-inventory-sequence-block', {
         sessions: [session1, session3],
         excludedSessions: [session2],
       });
@@ -192,7 +192,7 @@ module(
     });
 
     test('empty list', async function (assert) {
-      const block = this.server.create('curriculum-inventory-sequence-block');
+      const block = await this.server.create('curriculum-inventory-sequence-block');
       const blockModel = await this.owner
         .lookup('service:store')
         .findRecord('curriculum-inventory-sequence-block', block.id);
@@ -216,11 +216,11 @@ module(
     });
 
     test('sort by title', async function (assert) {
-      const session = this.server.create('session', {
+      const session = await this.server.create('session', {
         title: 'Zeppelin',
-        sessionType: this.server.create('session-type', { title: 'Lecture' }),
+        sessionType: await this.server.create('session-type', { title: 'Lecture' }),
       });
-      const block = this.server.create('curriculum-inventory-sequence-block', {
+      const block = await this.server.create('curriculum-inventory-sequence-block', {
         sessions: [session],
       });
       const blockModel = await this.owner
@@ -250,11 +250,11 @@ module(
     });
 
     test('sort by session type', async function (assert) {
-      const session = this.server.create('session', {
+      const session = await this.server.create('session', {
         title: 'Zeppelin',
-        sessionType: this.server.create('session-type', { title: 'Lecture' }),
+        sessionType: await this.server.create('session-type', { title: 'Lecture' }),
       });
-      const block = this.server.create('curriculum-inventory-sequence-block', {
+      const block = await this.server.create('curriculum-inventory-sequence-block', {
         sessions: [session],
       });
       const blockModel = await this.owner
@@ -288,11 +288,11 @@ module(
     });
 
     test('sort by offerings total', async function (assert) {
-      const session = this.server.create('session', {
+      const session = await this.server.create('session', {
         title: 'Zeppelin',
-        sessionType: this.server.create('session-type', { title: 'Lecture' }),
+        sessionType: await this.server.create('session-type', { title: 'Lecture' }),
       });
-      const block = this.server.create('curriculum-inventory-sequence-block', {
+      const block = await this.server.create('curriculum-inventory-sequence-block', {
         sessions: [session],
       });
       const blockModel = await this.owner

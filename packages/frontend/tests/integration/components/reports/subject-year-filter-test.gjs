@@ -10,10 +10,10 @@ module('Integration | Component | reports/subject-year-filter', function (hooks)
   setupMSW(hooks);
 
   hooks.beforeEach(async function () {
-    this.server.create('academic-year', {
+    await this.server.create('academic-year', {
       id: 2015,
     });
-    this.server.create('academic-year', {
+    await this.server.create('academic-year', {
       id: 2016,
     });
   });

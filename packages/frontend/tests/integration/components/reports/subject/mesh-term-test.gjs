@@ -25,7 +25,7 @@ module('Integration | Component | reports/subject/mesh-term', function (hooks) {
       assert.strictEqual(query, 'query { meshDescriptors { name } }');
       return responseData;
     });
-    const { id } = this.server.create('report', {
+    const { id } = await this.server.create('report', {
       subject: 'mesh term',
     });
     this.set('report', await this.owner.lookup('service:store').findRecord('report', id));
@@ -52,7 +52,7 @@ module('Integration | Component | reports/subject/mesh-term', function (hooks) {
       assert.strictEqual(query, 'query { meshDescriptors { name } }');
       return responseData;
     });
-    const { id } = this.server.create('report', {
+    const { id } = await this.server.create('report', {
       subject: 'mesh term',
     });
     this.set('report', await this.owner.lookup('service:store').findRecord('report', id));
@@ -91,7 +91,7 @@ module('Integration | Component | reports/subject/mesh-term', function (hooks) {
       assert.strictEqual(query, 'query { meshDescriptors { name } }');
       return responseDataLarge;
     });
-    const { id } = this.server.create('report', {
+    const { id } = await this.server.create('report', {
       subject: 'mesh term',
     });
     this.set('report', await this.owner.lookup('service:store').findRecord('report', id));
@@ -121,9 +121,9 @@ module('Integration | Component | reports/subject/mesh-term', function (hooks) {
       assert.strictEqual(query, 'query { meshDescriptors(schools: [33]) { name } }');
       return responseData;
     });
-    const { id } = this.server.create('report', {
+    const { id } = await this.server.create('report', {
       subject: 'mesh term',
-      school: this.server.create('school', { id: 33 }),
+      school: await this.server.create('school', { id: 33 }),
     });
     this.set('report', await this.owner.lookup('service:store').findRecord('report', id));
     this.set('school', await this.owner.lookup('service:store').findRecord('school', 33));
@@ -150,7 +150,7 @@ module('Integration | Component | reports/subject/mesh-term', function (hooks) {
       );
       return responseData;
     });
-    const { id } = this.server.create('report', {
+    const { id } = await this.server.create('report', {
       subject: 'mesh term',
       prepositionalObject: 'session',
       prepositionalObjectTableRowId: 13,
@@ -178,9 +178,9 @@ module('Integration | Component | reports/subject/mesh-term', function (hooks) {
       );
       return responseData;
     });
-    const { id } = this.server.create('report', {
+    const { id } = await this.server.create('report', {
       subject: 'mesh term',
-      school: this.server.create('school', { id: 24 }),
+      school: await this.server.create('school', { id: 24 }),
       prepositionalObject: 'session',
       prepositionalObjectTableRowId: 13,
     });
@@ -265,7 +265,7 @@ module('Integration | Component | reports/subject/mesh-term', function (hooks) {
 
       return rhett;
     });
-    const { id } = this.server.create('report', {
+    const { id } = await this.server.create('report', {
       subject: 'mesh term',
       prepositionalObject: 'course',
       prepositionalObjectTableRowId: 11,

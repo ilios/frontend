@@ -10,8 +10,8 @@ module('Integration | Component | reports/subject/new/learning-material', functi
   setupRenderingTest(hooks);
   setupMSW(hooks);
 
-  hooks.beforeEach(function () {
-    this.server.createList('learning-material', 5);
+  hooks.beforeEach(async function () {
+    await this.server.createList('learning-material', 5);
   });
 
   test('it renders', async function (assert) {

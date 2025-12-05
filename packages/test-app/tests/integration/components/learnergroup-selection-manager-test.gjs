@@ -11,41 +11,41 @@ module('Integration | Component | learnergroup-selection-manager', function (hoo
   setupMSW(hooks);
 
   hooks.beforeEach(async function () {
-    const program = this.server.create('program');
-    const programYear1 = this.server.create('program-year', { program });
-    const programYear2 = this.server.create('program-year', { program });
-    const cohort1 = this.server.create('cohort', {
+    const program = await this.server.create('program');
+    const programYear1 = await this.server.create('program-year', { program });
+    const programYear2 = await this.server.create('program-year', { program });
+    const cohort1 = await this.server.create('cohort', {
       programYear: programYear1,
     });
-    const cohort2 = this.server.create('cohort', {
+    const cohort2 = await this.server.create('cohort', {
       programYear: programYear2,
     });
-    const secondLevelLearnerGroup1 = this.server.create('learner-group', {
+    const secondLevelLearnerGroup1 = await this.server.create('learner-group', {
       title: 'Second 1',
       cohort: cohort1,
     });
-    const secondLevelLearnerGroup2 = this.server.create('learner-group', {
+    const secondLevelLearnerGroup2 = await this.server.create('learner-group', {
       title: 'Second 2',
       cohort: cohort1,
       needsAccommodation: true,
     });
-    const secondLevelLearnerGroup3 = this.server.create('learner-group', {
+    const secondLevelLearnerGroup3 = await this.server.create('learner-group', {
       title: 'Second 10',
       cohort: cohort2,
       needsAccommodation: true,
     });
-    const topLevelLearnerGroup1 = this.server.create('learner-group', {
+    const topLevelLearnerGroup1 = await this.server.create('learner-group', {
       title: 'Top Group 1',
       children: [secondLevelLearnerGroup1, secondLevelLearnerGroup2],
       cohort: cohort1,
       needsAccommodation: true,
     });
-    const topLevelLearnerGroup2 = this.server.create('learner-group', {
+    const topLevelLearnerGroup2 = await this.server.create('learner-group', {
       title: 'Top Group 2',
       children: [secondLevelLearnerGroup3],
       cohort: cohort2,
     });
-    const topLevelLearnerGroup3 = this.server.create('learner-group', {
+    const topLevelLearnerGroup3 = await this.server.create('learner-group', {
       title: 'Top Group 10',
       cohort: cohort2,
     });

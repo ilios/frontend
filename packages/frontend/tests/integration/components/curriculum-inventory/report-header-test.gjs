@@ -11,7 +11,7 @@ module('Integration | Component | curriculum-inventory/report-header', function 
   setupMSW(hooks);
 
   hooks.beforeEach(async function () {
-    const report = this.server.create('CurriculumInventoryReport', {
+    const report = await this.server.create('CurriculumInventoryReport', {
       absoluteFileUri: 'https://iliosinstance.com/foo/bar',
       name: 'Report name',
     });

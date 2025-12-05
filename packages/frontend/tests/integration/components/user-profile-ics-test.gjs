@@ -10,8 +10,8 @@ module('Integration | Component | user profile ics', function (hooks) {
   setupRenderingTest(hooks);
   setupMSW(hooks);
 
-  hooks.beforeEach(function () {
-    this.user = this.server.create('user', {
+  hooks.beforeEach(async function () {
+    this.user = await this.server.create('user', {
       id: 13,
       icsFeedKey: 'testkey',
     });

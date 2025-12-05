@@ -18,7 +18,7 @@ module('Integration | Component | reports/table-row', function (hooks) {
   });
 
   test('it renders', async function (assert) {
-    const report = this.server.create('report', {
+    const report = await this.server.create('report', {
       title: null,
       subject: 'course',
       user: this.user,

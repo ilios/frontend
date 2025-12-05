@@ -11,18 +11,18 @@ module('Integration | Component | course/objective-list', function (hooks) {
   setupMSW(hooks);
 
   test('it renders and is accessible', async function (assert) {
-    const school = this.server.create('school');
-    const course = this.server.create('course');
-    const vocabulary = this.server.create('vocabulary', { school });
-    const term1 = this.server.create('term', { vocabulary, active: true });
-    const term2 = this.server.create('term', { vocabulary });
-    this.server.create('course-objective', {
+    const school = await this.server.create('school');
+    const course = await this.server.create('course');
+    const vocabulary = await this.server.create('vocabulary', { school });
+    const term1 = await this.server.create('term', { vocabulary, active: true });
+    const term2 = await this.server.create('term', { vocabulary });
+    await this.server.create('course-objective', {
       course,
       title: 'Objective A',
       position: 0,
       terms: [term1],
     });
-    this.server.create('course-objective', {
+    await this.server.create('course-objective', {
       course,
       title: 'Objective B',
       position: 0,
@@ -62,7 +62,7 @@ module('Integration | Component | course/objective-list', function (hooks) {
   });
 
   test('empty list', async function (assert) {
-    const course = this.server.create('course');
+    const course = await this.server.create('course');
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('course', courseModel);
 
@@ -72,8 +72,8 @@ module('Integration | Component | course/objective-list', function (hooks) {
   });
 
   test('no "sort objectives" button in list with one item', async function (assert) {
-    const course = this.server.create('course');
-    this.server.create('course-objective', { course, position: 0 });
+    const course = await this.server.create('course');
+    await this.server.create('course-objective', { course, position: 0 });
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('course', courseModel);
 

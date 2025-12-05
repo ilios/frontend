@@ -11,7 +11,7 @@ module('Integration | Component | program-year/manage-objective-descriptors', fu
   setupMSW(hooks);
 
   test('it renders', async function (assert) {
-    const descriptors = this.server.createList('mesh-descriptor', 4);
+    const descriptors = await this.server.createList('mesh-descriptor', 4);
     const descriptorModel = await this.owner
       .lookup('service:store')
       .findRecord('mesh-descriptor', descriptors[0].id);
@@ -43,7 +43,7 @@ module('Integration | Component | program-year/manage-objective-descriptors', fu
   });
 
   test('add works', async function (assert) {
-    const descriptors = this.server.createList('mesh-descriptor', 2);
+    const descriptors = await this.server.createList('mesh-descriptor', 2);
     const descriptorModel = await this.owner
       .lookup('service:store')
       .findRecord('mesh-descriptor', descriptors[0].id);
@@ -86,7 +86,7 @@ module('Integration | Component | program-year/manage-objective-descriptors', fu
   });
 
   test('remove works', async function (assert) {
-    const descriptors = this.server.createList('mesh-descriptor', 2);
+    const descriptors = await this.server.createList('mesh-descriptor', 2);
     const descriptorModel = await this.owner
       .lookup('service:store')
       .findRecord('mesh-descriptor', descriptors[0].id);

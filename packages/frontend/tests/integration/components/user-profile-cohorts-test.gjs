@@ -13,38 +13,38 @@ module('Integration | Component | user profile cohorts', function (hooks) {
 
   hooks.beforeEach(async function () {
     const currentYear = new Date().getFullYear();
-    const school1 = this.server.create('school');
-    const school2 = this.server.create('school');
-    const program1 = this.server.create('program', { school: school1, duration: 4 });
-    const program2 = this.server.create('program', { school: school2, duration: 4 });
-    const programYear1 = this.server.create('program-year', {
+    const school1 = await this.server.create('school');
+    const school2 = await this.server.create('school');
+    const program1 = await this.server.create('program', { school: school1, duration: 4 });
+    const program2 = await this.server.create('program', { school: school2, duration: 4 });
+    const programYear1 = await this.server.create('program-year', {
       program: program1,
       startYear: currentYear - program1.duration,
     });
-    const programYear2 = this.server.create('program-year', {
+    const programYear2 = await this.server.create('program-year', {
       program: program2,
       startYear: currentYear - program2.duration,
     });
-    const programYear3 = this.server.create('program-year', {
+    const programYear3 = await this.server.create('program-year', {
       program: program1,
       startYear: currentYear - program1.duration,
     });
-    const programYear4 = this.server.create('program-year', {
+    const programYear4 = await this.server.create('program-year', {
       program: program2,
       startYear: currentYear - program2.duration,
     });
-    const programYear5 = this.server.create('program-year', {
+    const programYear5 = await this.server.create('program-year', {
       program: program1,
       startYear: currentYear - program1.duration,
     });
 
-    this.cohort1 = this.server.create('cohort', { programYear: programYear1 });
-    this.cohort2 = this.server.create('cohort', { programYear: programYear2 });
-    this.cohort3 = this.server.create('cohort', { programYear: programYear3 });
-    this.cohort4 = this.server.create('cohort', { programYear: programYear4 });
-    this.cohort5 = this.server.create('cohort', { programYear: programYear5 });
+    this.cohort1 = await this.server.create('cohort', { programYear: programYear1 });
+    this.cohort2 = await this.server.create('cohort', { programYear: programYear2 });
+    this.cohort3 = await this.server.create('cohort', { programYear: programYear3 });
+    this.cohort4 = await this.server.create('cohort', { programYear: programYear4 });
+    this.cohort5 = await this.server.create('cohort', { programYear: programYear5 });
 
-    const user = this.server.create('user', {
+    const user = await this.server.create('user', {
       primaryCohort: this.cohort1,
       cohorts: [this.cohort1, this.cohort2],
     });

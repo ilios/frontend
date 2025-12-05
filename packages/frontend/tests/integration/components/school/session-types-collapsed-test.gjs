@@ -11,12 +11,12 @@ module('Integration | Component | school/session-types-collapsed', function (hoo
   setupMSW(hooks);
 
   test('it renders', async function (assert) {
-    const school = this.server.create('school');
-    this.server.createList('session-type', 2, {
+    const school = await this.server.create('school');
+    await this.server.createList('session-type', 2, {
       school,
       assessment: true,
     });
-    this.server.create('session-type', {
+    await this.server.create('session-type', {
       school,
       assessment: false,
     });
@@ -36,7 +36,7 @@ module('Integration | Component | school/session-types-collapsed', function (hoo
   });
 
   test('expand', async function (assert) {
-    const school = this.server.create('school');
+    const school = await this.server.create('school');
     const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
     this.set('school', schoolModel);
     this.set('expand', () => {

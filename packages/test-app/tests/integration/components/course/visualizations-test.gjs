@@ -10,8 +10,8 @@ module('Integration | Component | course/visualizations', function (hooks) {
   setupMSW(hooks);
 
   test('it renders', async function (assert) {
-    const school = this.server.create('school');
-    const course = this.server.create('course', { year: 2021, school });
+    const school = await this.server.create('school');
+    const course = await this.server.create('course', { year: 2021, school });
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('course', courseModel);
 
@@ -32,8 +32,8 @@ module('Integration | Component | course/visualizations', function (hooks) {
         },
       };
     });
-    const school = this.server.create('school');
-    const course = this.server.create('course', { year: 2021, school });
+    const school = await this.server.create('school');
+    const course = await this.server.create('course', { year: 2021, school });
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('course', courseModel);
 
@@ -43,8 +43,8 @@ module('Integration | Component | course/visualizations', function (hooks) {
   });
 
   test('breadcrumb', async function (assert) {
-    const school = this.server.create('school');
-    const course = this.server.create('course', { year: 2021, school });
+    const school = await this.server.create('school');
+    const course = await this.server.create('course', { year: 2021, school });
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('course', courseModel);
 

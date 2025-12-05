@@ -11,19 +11,21 @@ module('Integration | Component | program-year/collapsed-objectives', function (
   setupMSW(hooks);
 
   hooks.beforeEach(async function () {
-    const meshDescriptor = this.server.create('mesh-descriptor');
-    const term = this.server.create('term');
-    const competency = this.server.create('competency');
-    this.objective = this.server.create('program-year-objective');
-    this.objectiveWithMesh = this.server.create('program-year-objective', {
+    const meshDescriptor = await this.server.create('mesh-descriptor');
+    const term = await this.server.create('term');
+    const competency = await this.server.create('competency');
+    this.objective = await this.server.create('program-year-objective');
+    this.objectiveWithMesh = await this.server.create('program-year-objective', {
       meshDescriptors: [meshDescriptor],
     });
-    this.objectiveWithTerms = this.server.create('program-year-objective', { terms: [term] });
-    this.objectiveWithCompetency = this.server.create('program-year-objective', { competency });
+    this.objectiveWithTerms = await this.server.create('program-year-objective', { terms: [term] });
+    this.objectiveWithCompetency = await this.server.create('program-year-objective', {
+      competency,
+    });
   });
 
   test('displays summary data', async function (assert) {
-    const programYear = this.server.create('program-year', {
+    const programYear = await this.server.create('program-year', {
       programYearObjectives: [
         this.objective,
         this.objectiveWithMesh,
@@ -54,7 +56,7 @@ module('Integration | Component | program-year/collapsed-objectives', function (
   });
 
   test('clicking expand icon opens full view', async function (assert) {
-    const programYear = this.server.create('program-year');
+    const programYear = await this.server.create('program-year');
     const programYearModel = await this.owner
       .lookup('service:store')
       .findRecord('program-year', programYear.id);
@@ -75,7 +77,7 @@ module('Integration | Component | program-year/collapsed-objectives', function (
   });
 
   test('icons all linked competencies correctly', async function (assert) {
-    const programYear = this.server.create('program-year', {
+    const programYear = await this.server.create('program-year', {
       programYearObjectives: [this.objectiveWithCompetency],
     });
     const programYearModel = await this.owner
@@ -93,7 +95,7 @@ module('Integration | Component | program-year/collapsed-objectives', function (
   });
 
   test('icons no parents correctly', async function (assert) {
-    const programYear = this.server.create('program-year', {
+    const programYear = await this.server.create('program-year', {
       programYearObjectives: [this.objective],
     });
     const programYearModel = await this.owner
@@ -111,7 +113,7 @@ module('Integration | Component | program-year/collapsed-objectives', function (
   });
 
   test('icons all mesh correctly', async function (assert) {
-    const programYear = this.server.create('program-year', {
+    const programYear = await this.server.create('program-year', {
       programYearObjectives: [this.objectiveWithMesh],
     });
     const programYearModel = await this.owner
@@ -129,7 +131,7 @@ module('Integration | Component | program-year/collapsed-objectives', function (
   });
 
   test('icons no mesh correctly', async function (assert) {
-    const programYear = this.server.create('program-year', {
+    const programYear = await this.server.create('program-year', {
       programYearObjectives: [this.objective],
     });
     const programYearModel = await this.owner
@@ -147,7 +149,7 @@ module('Integration | Component | program-year/collapsed-objectives', function (
   });
 
   test('icons all terms correctly', async function (assert) {
-    const programYear = this.server.create('program-year', {
+    const programYear = await this.server.create('program-year', {
       programYearObjectives: [this.objectiveWithTerms],
     });
     const programYearModel = await this.owner
@@ -165,7 +167,7 @@ module('Integration | Component | program-year/collapsed-objectives', function (
   });
 
   test('icons no terms correctly', async function (assert) {
-    const programYear = this.server.create('program-year', {
+    const programYear = await this.server.create('program-year', {
       programYearObjectives: [this.objective],
     });
     const programYearModel = await this.owner

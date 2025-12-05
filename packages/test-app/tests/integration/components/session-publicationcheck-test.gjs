@@ -11,15 +11,15 @@ module('Integration | Component | session-publicationcheck', function (hooks) {
   setupMSW(hooks);
 
   test('it shows unlink icon', async function (assert) {
-    const courseObjective = this.server.create('course-objective');
-    const school = this.server.create('school');
-    const course = this.server.create('course', { school });
-    const session = this.server.create('session', { course });
-    this.server.create('session-objective', {
+    const courseObjective = await this.server.create('course-objective');
+    const school = await this.server.create('school');
+    const course = await this.server.create('course', { school });
+    const session = await this.server.create('session', { course });
+    await this.server.create('session-objective', {
       session,
       courseObjectives: [courseObjective],
     });
-    this.server.create('session-objective', { session });
+    await this.server.create('session-objective', { session });
 
     await setupAuthentication({ school, administeredSchools: [school] });
     const sessionModel = await this.owner.lookup('service:store').findRecord('session', session.id);
@@ -29,15 +29,15 @@ module('Integration | Component | session-publicationcheck', function (hooks) {
   });
 
   test('it does not shows unlink icon', async function (assert) {
-    const courseObjective = this.server.create('course-objective');
-    const school = this.server.create('school');
-    const course = this.server.create('course', { school });
-    const session = this.server.create('session', { course });
-    this.server.create('session-objective', {
+    const courseObjective = await this.server.create('course-objective');
+    const school = await this.server.create('school');
+    const course = await this.server.create('course', { school });
+    const session = await this.server.create('session', { course });
+    await this.server.create('session-objective', {
       session,
       courseObjectives: [courseObjective],
     });
-    this.server.create('session-objective', {
+    await this.server.create('session-objective', {
       session,
       courseObjectives: [courseObjective],
     });

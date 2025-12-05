@@ -7,22 +7,22 @@ module('Acceptance | Session - Objective Vocabulary Terms', function (hooks) {
   setupApplicationTest(hooks);
 
   hooks.beforeEach(async function () {
-    const school = this.server.create('school');
+    const school = await this.server.create('school');
     this.user = await setupAuthentication({ administeredSchools: [school] }, true);
-    this.server.create('academic-year', { id: 2013 });
-    const program = this.server.create('program', { school });
-    const programYear = this.server.create('program-year', { program });
-    this.server.create('cohort', { programYear });
-    const vocabulary = this.server.create('vocabulary', {
+    await this.server.create('academic-year', { id: 2013 });
+    const program = await this.server.create('program', { school });
+    const programYear = await this.server.create('program-year', { program });
+    await this.server.create('cohort', { programYear });
+    const vocabulary = await this.server.create('vocabulary', {
       school,
       active: true,
     });
-    const term = this.server.create('term', { vocabulary, active: true });
-    this.server.createList('term', 3, { vocabulary, active: true });
-    const course = this.server.create('course', { school });
-    const sessionType = this.server.create('session-type', { school });
-    const session = this.server.create('session', { course, sessionType });
-    this.server.create('session-objective', { session, terms: [term] });
+    const term = await this.server.create('term', { vocabulary, active: true });
+    await this.server.createList('term', 3, { vocabulary, active: true });
+    const course = await this.server.create('course', { school });
+    const sessionType = await this.server.create('session-type', { school });
+    const session = await this.server.create('session', { course, sessionType });
+    await this.server.create('session-objective', { session, terms: [term] });
   });
 
   test('manage and save terms', async function (assert) {

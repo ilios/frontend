@@ -8,18 +8,18 @@ module('Acceptance | School - Leadership', function (hooks) {
   setupApplicationTest(hooks);
 
   hooks.beforeEach(async function () {
-    this.school = this.server.create('school');
+    this.school = await this.server.create('school');
     await setupAuthentication({ administeredSchools: [this.school] });
 
-    this.server.createList('user', 2, {
+    await this.server.createList('user', 2, {
       directedSchools: [this.school],
       school: this.school,
     });
-    this.server.createList('user', 1, {
+    await this.server.createList('user', 1, {
       administeredSchools: [this.school],
       school: this.school,
     });
-    this.server.createList('user', 2, {
+    await this.server.createList('user', 2, {
       school: this.school,
     });
   });

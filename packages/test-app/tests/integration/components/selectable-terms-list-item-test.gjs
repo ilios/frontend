@@ -10,7 +10,7 @@ module('Integration | Component | selectable terms list item', function (hooks) 
   setupMSW(hooks);
 
   hooks.beforeEach(async function () {
-    const term = this.server.create('term', { title: 'Term1' });
+    const term = await this.server.create('term', { title: 'Term1' });
     this.termModel = await this.owner.lookup('service:store').findRecord('term', term.id);
   });
 

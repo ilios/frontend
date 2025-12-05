@@ -7,20 +7,20 @@ import page from 'ilios-common/page-objects/session';
 module('Acceptance | Session - Independent Learning', function (hooks) {
   setupApplicationTest(hooks);
   hooks.beforeEach(async function () {
-    const school = this.server.create('school');
+    const school = await this.server.create('school');
     this.user = await setupAuthentication({ school, administeredSchools: [school] }, true);
-    this.server.createList('user', 6);
-    this.server.create('academic-year');
-    this.course = this.server.create('course', { school });
-    this.server.createList('instructor-group', 5, { school });
-    this.server.createList('user', 2, { instructorGroupIds: [1] });
-    this.server.createList('user', 3, { instructorGroupIds: [2] });
-    const sessionType = this.server.create('session-type', { school });
-    const ilmSession = this.server.create('ilm-session', {
+    await this.server.createList('user', 6);
+    await this.server.create('academic-year');
+    this.course = await this.server.create('course', { school });
+    await this.server.createList('instructor-group', 5, { school });
+    await this.server.createList('user', 2, { instructorGroupIds: [1] });
+    await this.server.createList('user', 3, { instructorGroupIds: [2] });
+    const sessionType = await this.server.create('session-type', { school });
+    const ilmSession = await this.server.create('ilm-session', {
       instructorGroupIds: [1, 2, 3],
       instructorIds: [2, 3, 4],
     });
-    this.ilmSession = this.server.create('session', {
+    this.ilmSession = await this.server.create('session', {
       course: this.course,
       ilmSession,
       sessionType,
@@ -579,7 +579,7 @@ module('Acceptance | Session - Independent Learning', function (hooks) {
   });
 
   test('ilm due date should not be visible if session has post-requisite', async function (assert) {
-    const postRequisite = this.server.create('session', {
+    const postRequisite = await this.server.create('session', {
       course: this.course,
     });
     this.ilmSession.update('postrequisite', postRequisite);

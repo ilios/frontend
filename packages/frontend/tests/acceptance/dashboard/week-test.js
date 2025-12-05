@@ -13,7 +13,7 @@ module('Acceptance | Dashboard Week at a Glance', function (hooks) {
 
   hooks.beforeEach(async function () {
     this.intl = this.owner.lookup('service:intl');
-    this.school = this.server.create('school');
+    this.school = await this.server.create('school');
     this.user = await setupAuthentication({ school: this.school });
   });
 
@@ -32,7 +32,7 @@ module('Acceptance | Dashboard Week at a Glance', function (hooks) {
     const { firstDayOfThisWeek, lastDayOfThisWeek } = this.owner.lookup('service:locale-days');
     const startOfWeek = DateTime.fromJSDate(firstDayOfThisWeek);
     const endOfWeek = DateTime.fromJSDate(lastDayOfThisWeek);
-    this.server.create('userevent', {
+    await this.server.create('userevent', {
       user: Number(this.user.id),
       name: 'start of week',
       startDate: startOfWeek.toJSDate(),
@@ -42,7 +42,7 @@ module('Acceptance | Dashboard Week at a Glance', function (hooks) {
       offering: 1,
     });
 
-    this.server.create('userevent', {
+    await this.server.create('userevent', {
       user: Number(this.user.id),
       name: 'end of week',
       startDate: endOfWeek.minus({ hour: 1 }).toJSDate(),
@@ -103,7 +103,7 @@ module('Acceptance | Dashboard Week at a Glance', function (hooks) {
     });
     freezeDateAt(oct31st2018.toJSDate());
 
-    this.server.create('userevent', {
+    await this.server.create('userevent', {
       user: Number(this.user.id),
       startDate: oct31st2018.toJSDate(),
       endDate: oct31st2018.plus({ hour: 1 }).toJSDate(),
@@ -143,14 +143,14 @@ module('Acceptance | Dashboard Week at a Glance', function (hooks) {
       this.owner.lookup('service:locale-days').lastDayOfThisWeek,
     ).set({ hour: 22, minute: 5 });
 
-    this.server.create('userevent', {
+    await this.server.create('userevent', {
       user: this.user.id,
       startDate: startOfTheWeek.toJSDate(),
       endDate: startOfTheWeek.plus({ hour: 1 }).toJSDate(),
       offering: 1,
       isPublished: true,
     });
-    this.server.create('userevent', {
+    await this.server.create('userevent', {
       user: this.user.id,
       startDate: endOfTheWeek.toJSDate(),
       endDate: endOfTheWeek.plus({ hour: 1 }).toJSDate(),

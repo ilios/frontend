@@ -10,7 +10,7 @@ module('Acceptance | Programs', function (hooks) {
 
   module('User in single school with no special permissions', function (hooks) {
     hooks.beforeEach(async function () {
-      this.school = this.server.create('school');
+      this.school = await this.server.create('school');
       this.user = await setupAuthentication(
         { school: this.school, administeredSchools: [this.school] },
         true,
@@ -40,7 +40,7 @@ module('Acceptance | Programs', function (hooks) {
     });
 
     test('remove program', async function (assert) {
-      this.server.create('program', {
+      await this.server.create('program', {
         school: this.school,
       });
       await page.visit();
@@ -55,7 +55,7 @@ module('Acceptance | Programs', function (hooks) {
     });
 
     test('cancel remove program', async function (assert) {
-      this.server.create('program', {
+      await this.server.create('program', {
         school: this.school,
       });
       await page.visit();
@@ -69,7 +69,7 @@ module('Acceptance | Programs', function (hooks) {
     });
 
     test('click title takes you to program route', async function (assert) {
-      this.server.create('program', {
+      await this.server.create('program', {
         school: this.school,
       });
       await page.visit();
@@ -80,10 +80,10 @@ module('Acceptance | Programs', function (hooks) {
 
   module('User in multiple schools', function (hooks) {
     hooks.beforeEach(async function () {
-      this.school1 = this.server.create('school');
-      this.school2 = this.server.create('school');
-      this.program1 = this.server.create('program', { school: this.school1 });
-      this.program2 = this.server.create('program', { school: this.school2 });
+      this.school1 = await this.server.create('school');
+      this.school2 = await this.server.create('school');
+      this.program1 = await this.server.create('program', { school: this.school1 });
+      this.program2 = await this.server.create('program', { school: this.school2 });
       this.user = await setupAuthentication();
     });
 
@@ -111,7 +111,7 @@ module('Acceptance | Programs', function (hooks) {
   });
 
   test('filters options', async function (assert) {
-    const schools = this.server.createList('school', 2);
+    const schools = await this.server.createList('school', 2);
     await setupAuthentication({ school: schools[1] }, true);
     await page.visit();
     assert.strictEqual(page.root.schoolFilter.schools.length, 2);

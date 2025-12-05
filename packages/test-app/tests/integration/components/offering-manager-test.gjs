@@ -13,19 +13,19 @@ module('Integration | Component | offering-manager', function (hooks) {
   setupMSW(hooks);
 
   test('it renders with individual learners and learner groups', async function (assert) {
-    this.school = this.server.create('school');
+    this.school = await this.server.create('school');
     this.user = await setupAuthentication({ school: this.school }, true);
-    const users = this.server.createList('user', 4);
+    const users = await this.server.createList('user', 4);
     const today = DateTime.fromObject({ hour: 8 });
-    const course = this.server.create('course');
-    const sessionType = this.server.create('session-type');
-    const session = this.server.create('session', {
+    const course = await this.server.create('course');
+    const sessionType = await this.server.create('session-type');
+    const session = await this.server.create('session', {
       course,
       sessionType,
     });
-    const learnerGroup1 = this.server.create('learner-group');
-    const learnerGroup2 = this.server.create('learner-group');
-    const offering = this.server.create('offering', {
+    const learnerGroup1 = await this.server.create('learner-group');
+    const learnerGroup2 = await this.server.create('learner-group');
+    const offering = await this.server.create('offering', {
       session,
       startDate: today.toJSDate(),
       endDate: today.plus({ hour: 1 }).toJSDate(),
@@ -80,19 +80,19 @@ module('Integration | Component | offering-manager', function (hooks) {
   });
 
   test('it renders with only learner groups', async function (assert) {
-    this.school = this.server.create('school');
+    this.school = await this.server.create('school');
     this.user = await setupAuthentication({ school: this.school }, true);
-    const users = this.server.createList('user', 2);
+    const users = await this.server.createList('user', 2);
     const today = DateTime.fromObject({ hour: 8 });
-    const course = this.server.create('course');
-    const sessionType = this.server.create('session-type');
-    const session = this.server.create('session', {
+    const course = await this.server.create('course');
+    const sessionType = await this.server.create('session-type');
+    const session = await this.server.create('session', {
       course,
       sessionType,
     });
-    const learnerGroup1 = this.server.create('learner-group');
-    const learnerGroup2 = this.server.create('learner-group');
-    const offering = this.server.create('offering', {
+    const learnerGroup1 = await this.server.create('learner-group');
+    const learnerGroup2 = await this.server.create('learner-group');
+    const offering = await this.server.create('offering', {
       session,
       startDate: today.toJSDate(),
       endDate: today.plus({ hour: 1 }).toJSDate(),
@@ -141,17 +141,17 @@ module('Integration | Component | offering-manager', function (hooks) {
   });
 
   test('it renders with only individual learners', async function (assert) {
-    this.school = this.server.create('school');
+    this.school = await this.server.create('school');
     this.user = await setupAuthentication({ school: this.school }, true);
-    const users = this.server.createList('user', 4);
+    const users = await this.server.createList('user', 4);
     const today = DateTime.fromObject({ hour: 8 });
-    const course = this.server.create('course');
-    const sessionType = this.server.create('session-type');
-    const session = this.server.create('session', {
+    const course = await this.server.create('course');
+    const sessionType = await this.server.create('session-type');
+    const session = await this.server.create('session', {
       course,
       sessionType,
     });
-    const offering = this.server.create('offering', {
+    const offering = await this.server.create('offering', {
       session,
       startDate: today.toJSDate(),
       endDate: today.plus({ hour: 1 }).toJSDate(),
@@ -199,17 +199,17 @@ module('Integration | Component | offering-manager', function (hooks) {
   });
 
   test('it renders with no individual learners or learner groups', async function (assert) {
-    this.school = this.server.create('school');
+    this.school = await this.server.create('school');
     this.user = await setupAuthentication({ school: this.school }, true);
-    const users = this.server.createList('user', 2);
+    const users = await this.server.createList('user', 2);
     const today = DateTime.fromObject({ hour: 8 });
-    const course = this.server.create('course');
-    const sessionType = this.server.create('session-type');
-    const session = this.server.create('session', {
+    const course = await this.server.create('course');
+    const sessionType = await this.server.create('session-type');
+    const session = await this.server.create('session', {
       course,
       sessionType,
     });
-    const offering = this.server.create('offering', {
+    const offering = await this.server.create('offering', {
       session,
       startDate: today.toJSDate(),
       endDate: today.plus({ hour: 1 }).toJSDate(),

@@ -10,17 +10,17 @@ module('Acceptance | curriculum inventory report/rollover', function (hooks) {
   setupApplicationTest(hooks);
 
   hooks.beforeEach(async function () {
-    this.school = this.server.create('school');
+    this.school = await this.server.create('school');
     this.user = await setupAuthentication({ school: this.school }, true);
   });
 
   test('rollover button hidden on rollover route', async function (assert) {
     this.user.update({ directedSchools: [this.school] });
-    const program = this.server.create('program', {
+    const program = await this.server.create('program', {
       school: this.school,
       title: 'Doctor of Medicine',
     });
-    const report = this.server.create('curriculum-inventory-report', {
+    const report = await this.server.create('curriculum-inventory-report', {
       year: 2013,
       name: 'foo bar',
       description: 'lorem ipsum',
@@ -37,11 +37,11 @@ module('Acceptance | curriculum inventory report/rollover', function (hooks) {
   test('rollover', async function (assert) {
     this.user.update({ directedSchools: [this.school] });
     const thisYear = DateTime.fromObject({ hour: 8 }).year;
-    const program = this.server.create('program', {
+    const program = await this.server.create('program', {
       school: this.school,
       title: 'Doctor of Medicine',
     });
-    const report = this.server.create('curriculum-inventory-report', {
+    const report = await this.server.create('curriculum-inventory-report', {
       year: thisYear,
       name: 'foo bar',
       description: 'lorem ipsum',

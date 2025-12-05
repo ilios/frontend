@@ -8,18 +8,18 @@ module('Acceptance | School - Competencies', function (hooks) {
   setupApplicationTest(hooks);
 
   hooks.beforeEach(async function () {
-    this.school = this.server.create('school');
+    this.school = await this.server.create('school');
     await setupAuthentication({ administeredSchools: [this.school] });
 
-    const domains = this.server.createList('competency', 2, {
+    const domains = await this.server.createList('competency', 2, {
       school: this.school,
     });
-    this.server.create('aamc-pcrs', {
+    await this.server.create('aamc-pcrs', {
       competencies: [domains[0]],
     });
-    this.server.createList('aamc-pcrs', 3);
+    await this.server.createList('aamc-pcrs', 3);
 
-    this.server.createList('competency', 1, {
+    await this.server.createList('competency', 1, {
       school: this.school,
       parent: domains[0],
     });

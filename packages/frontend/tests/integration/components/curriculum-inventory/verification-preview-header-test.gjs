@@ -12,7 +12,7 @@ module(
     setupMSW(hooks);
 
     test('it renders', async function (assert) {
-      this.server.create('curriculum-inventory-report', {
+      await this.server.create('curriculum-inventory-report', {
         name: 'Foo Bar 2019',
       });
       const report = await this.owner

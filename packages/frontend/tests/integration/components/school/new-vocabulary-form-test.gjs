@@ -12,8 +12,8 @@ module('Integration | Component | school/new-vocabulary-form', function (hooks) 
   setupMSW(hooks);
 
   hooks.beforeEach(async function () {
-    const school = this.server.create('school');
-    this.server.create('vocabulary', { school, title: 'Vocab A' });
+    const school = await this.server.create('school');
+    await this.server.create('vocabulary', { school, title: 'Vocab A' });
     this.schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
   });
 

@@ -9,10 +9,10 @@ module('Integration | Component | reports/subject/new/instructor', function (hoo
   setupRenderingTest(hooks);
   setupMSW(hooks);
 
-  hooks.beforeEach(function () {
-    const school = this.server.create('school');
-    this.server.createList('user', 4, { school });
-    this.server.create('user', { school, enabled: false });
+  hooks.beforeEach(async function () {
+    const school = await this.server.create('school');
+    await this.server.createList('user', 4, { school });
+    await this.server.create('user', { school, enabled: false });
   });
 
   test('it works', async function (assert) {

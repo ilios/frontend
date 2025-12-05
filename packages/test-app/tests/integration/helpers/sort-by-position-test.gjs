@@ -10,19 +10,19 @@ module('Integration | Helper | sort-by-position', function (hooks) {
   setupMSW(hooks);
 
   test('sort objectives', async function (assert) {
-    this.server.create('course-objective', {
+    await this.server.create('course-objective', {
       title: 'Aardvark',
       position: 3,
     });
-    this.server.create('course-objective', {
+    await this.server.create('course-objective', {
       title: 'Zeppelin',
       position: 2,
     });
-    this.server.create('course-objective', {
+    await this.server.create('course-objective', {
       title: 'Oscar',
       position: 1,
     });
-    this.server.create('course-objective', {
+    await this.server.create('course-objective', {
       title: 'Bockwurst',
       position: 1,
     });

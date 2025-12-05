@@ -12,12 +12,12 @@ module('Integration | Component | reports/subject-results', function (hooks) {
   setupMSW(hooks);
 
   hooks.beforeEach(async function () {
-    this.school = this.server.create('school', { id: 1, title: 'school 0' });
-    this.server.create('course', { school: this.school });
+    this.school = await this.server.create('school', { id: 1, title: 'school 0' });
+    await this.server.create('course', { school: this.school });
 
-    const report = this.server.create('report', {
+    const report = await this.server.create('report', {
       subject: 'course',
-      user: this.server.create('user'),
+      user: await this.server.create('user'),
     });
     this.server.post('api/graphql', ({ db }) => {
       return {
@@ -56,8 +56,8 @@ module('Integration | Component | reports/subject-results', function (hooks) {
   });
 
   test('it renders with all schools', async function (assert) {
-    this.school2 = this.server.create('school', { id: 2, title: 'school 1' });
-    this.server.create('course', { school: this.school2 });
+    this.school2 = await this.server.create('school', { id: 2, title: 'school 1' });
+    await this.server.create('course', { school: this.school2 });
     this.server.post('api/graphql', ({ db }) => {
       return {
         data: {

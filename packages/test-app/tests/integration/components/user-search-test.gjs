@@ -29,7 +29,7 @@ module('Integration | Component | user search', function (hooks) {
   });
 
   test('input triggers search', async function (assert) {
-    this.server.create('user');
+    await this.server.create('user');
     this.server.get('api/users', (schema, { queryParams }) => {
       assert.step('API called');
       assert.strictEqual(queryParams['q'], 'search words');
@@ -50,7 +50,7 @@ module('Integration | Component | user search', function (hooks) {
   });
 
   test('search for groups', async function (assert) {
-    this.server.createList('instructor-group', 2);
+    await this.server.createList('instructor-group', 2);
     const instructorGroups = await this.owner.lookup('service:store').findAll('instructor-group');
     this.set('availableInstructorGroups', instructorGroups);
     await render(
@@ -66,7 +66,7 @@ module('Integration | Component | user search', function (hooks) {
   });
 
   test('click user fires add user', async function (assert) {
-    const user = this.server.create('user');
+    const user = await this.server.create('user');
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     this.set('action', (passedUser) => {
       assert.step('action called');
@@ -82,7 +82,7 @@ module('Integration | Component | user search', function (hooks) {
   });
 
   test('click group fires add group', async function (assert) {
-    this.server.createList('instructor-group', 2);
+    await this.server.createList('instructor-group', 2);
     const instructorGroups = await this.owner.lookup('service:store').findAll('instructor-group');
     this.set('action', (group) => {
       assert.step('action called');
@@ -107,19 +107,19 @@ module('Integration | Component | user search', function (hooks) {
   });
 
   test('sorting is natural', async function (assert) {
-    this.server.create('user', {
+    await this.server.create('user', {
       firstName: '20',
       lastName: 'person',
     });
-    this.server.create('user', {
+    await this.server.create('user', {
       firstName: '10',
       lastName: 'person',
     });
-    this.server.create('user', {
+    await this.server.create('user', {
       firstName: '3',
       lastName: 'person',
     });
-    this.server.create('user', {
+    await this.server.create('user', {
       lastName: 'person',
     });
     await render(<template><UserSearch /></template>);
@@ -133,7 +133,7 @@ module('Integration | Component | user search', function (hooks) {
   });
 
   test('reads currentlyActiveUsers', async function (assert) {
-    const user = this.server.create('user');
+    const user = await this.server.create('user');
     this.server.get('api/users', (schema) => {
       return schema.users.all();
     });
@@ -150,7 +150,7 @@ module('Integration | Component | user search', function (hooks) {
   });
 
   test('reads currentlyActiveUsers from a promise', async function (assert) {
-    const user = this.server.create('user');
+    const user = await this.server.create('user');
     this.server.get('api/users', (schema) => {
       return schema.users.all();
     });
@@ -167,7 +167,7 @@ module('Integration | Component | user search', function (hooks) {
   });
 
   test('reads currentlyActiveInstructorGroups', async function (assert) {
-    this.server.create('instructor-group');
+    await this.server.create('instructor-group');
     const instructorGroups = await this.owner.lookup('service:store').findAll('instructor-group');
     this.set('availableInstructorGroups', instructorGroups);
     this.set('currentlyActiveInstructorGroups', instructorGroups);
@@ -187,7 +187,7 @@ module('Integration | Component | user search', function (hooks) {
   });
 
   test('reads currentlyActiveInstructorGroups from a promise', async function (assert) {
-    this.server.create('instructor-group');
+    await this.server.create('instructor-group');
     const igPromise = this.owner.lookup('service:store').findAll('instructor-group');
     this.set('availableInstructorGroups', await igPromise);
     this.set('currentlyActiveInstructorGroups', igPromise);

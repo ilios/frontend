@@ -10,8 +10,8 @@ module('Integration | Component | learner-group/instructor-group-members-list', 
   setupMSW(hooks);
 
   test('it renders', async function (assert) {
-    const users = this.server.createList('user', 3);
-    const instructorGroup = this.server.create('instructor-group', { users });
+    const users = await this.server.createList('user', 3);
+    const instructorGroup = await this.server.create('instructor-group', { users });
     const instructorGroupModel = await this.owner
       .lookup('service:store')
       .findRecord('instructor-group', instructorGroup.id);

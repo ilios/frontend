@@ -11,18 +11,18 @@ module('Integration | Component | selected-learners', function (hooks) {
   setupMSW(hooks);
 
   hooks.beforeEach(async function () {
-    const learner1 = this.server.create('user', {
+    const learner1 = await this.server.create('user', {
       firstName: 'Joe',
       lastName: 'Doe',
       middleName: 'Michael',
       enabled: false,
     });
-    const learner2 = this.server.create('user', {
+    const learner2 = await this.server.create('user', {
       firstName: 'Jane',
       lastName: 'Doe',
       middleName: 'Anette',
     });
-    const learner3 = this.server.create('user', {
+    const learner3 = await this.server.create('user', {
       displayName: 'Clem Chowder',
     });
 

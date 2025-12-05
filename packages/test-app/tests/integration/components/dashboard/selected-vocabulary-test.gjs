@@ -12,16 +12,16 @@ module('Integration | Component | dashboard/selected-vocabulary', function (hook
   setupMSW(hooks);
 
   hooks.beforeEach(async function () {
-    const vocabulary = this.server.create('vocabulary');
-    this.server.create('term', {
+    const vocabulary = await this.server.create('vocabulary');
+    await this.server.create('term', {
       title: 'top 1',
       vocabulary,
     });
-    const term2 = this.server.create('term', {
+    const term2 = await this.server.create('term', {
       title: 'top 2',
       vocabulary,
     });
-    this.server.create('term', {
+    await this.server.create('term', {
       title: 'top 2 child 1',
       parent: term2,
       vocabulary,

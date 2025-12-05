@@ -8,30 +8,30 @@ module('Acceptance | learner-group/bulk-assignment', function (hooks) {
   setupApplicationTest(hooks);
 
   hooks.beforeEach(async function () {
-    const school = this.server.create('school');
+    const school = await this.server.create('school');
     await setupAuthentication({ id: 1, school, administeredSchools: [school] });
 
-    const program = this.server.create('program', {
+    const program = await this.server.create('program', {
       title: 'program 0',
       school,
     });
-    const programYear = this.server.create('program-year', {
+    const programYear = await this.server.create('program-year', {
       program,
     });
-    const cohort = this.server.create('cohort', {
+    const cohort = await this.server.create('cohort', {
       title: 'class of this year',
       programYear,
     });
-    const group1 = this.server.create('learner-group', {
+    const group1 = await this.server.create('learner-group', {
       title: 'group 1',
       cohort,
     });
-    this.server.create('learner-group', {
+    await this.server.create('learner-group', {
       title: 'group 1 child 0',
       cohort,
       parent: group1,
     });
-    this.server.create('learner-group', {
+    await this.server.create('learner-group', {
       title: 'group 1 child 1',
       cohort,
       parent: group1,
@@ -60,13 +60,13 @@ module('Acceptance | learner-group/bulk-assignment', function (hooks) {
     await page.visit({ learnerGroupId: 1 });
     await takeScreenshot(assert, 'learnerGroupId 1');
     await page.root.actions.buttons.bulkAssignment.click();
-    this.server.create('user', {
+    await this.server.create('user', {
       firstName: 'jasper',
       lastName: 'johnson',
       campusId: '1234567890',
       cohortIds: [1],
     });
-    this.server.create('user', {
+    await this.server.create('user', {
       firstName: 'jackson',
       lastName: 'johnson',
       campusId: '12345',
@@ -98,13 +98,13 @@ module('Acceptance | learner-group/bulk-assignment', function (hooks) {
   test('upload user warnings', async function (assert) {
     await page.visit({ learnerGroupId: 1 });
     await page.root.actions.buttons.bulkAssignment.click();
-    this.server.create('user', {
+    await this.server.create('user', {
       firstName: 'jasper',
       lastName: 'johnson',
       campusId: '1234567890',
       cohortIds: [1],
     });
-    this.server.create('user', {
+    await this.server.create('user', {
       firstName: 'jackson',
       lastName: 'johnson',
       campusId: '12345',
@@ -141,36 +141,36 @@ module('Acceptance | learner-group/bulk-assignment', function (hooks) {
   test('upload user errors', async function (assert) {
     await page.visit({ learnerGroupId: 1 });
     await page.root.actions.buttons.bulkAssignment.click();
-    this.server.create('user', {
+    await this.server.create('user', {
       firstName: 'jasper',
       lastName: 'johnson',
       campusId: '1234567890',
       cohortIds: [1],
     });
-    this.server.create('user', {
+    await this.server.create('user', {
       firstName: 'jackson',
       lastName: 'johnson',
       campusId: '12345',
       cohortIds: [1],
     });
-    this.server.create('user', {
+    await this.server.create('user', {
       firstName: 'jebediah',
       lastName: 'johnson',
       campusId: '666666',
       cohortIds: [1],
     });
-    this.server.create('user', {
+    await this.server.create('user', {
       firstName: 'magick',
       lastName: 'johnson',
       campusId: '101010',
       cohortIds: [1],
     });
-    this.server.create('user', {
+    await this.server.create('user', {
       firstName: 'mrs',
       lastName: 'maisel',
       campusId: '123456',
     });
-    this.server.create('user', {
+    await this.server.create('user', {
       firstName: 'dabney',
       lastName: 'middlefield',
       campusId: '232323',
@@ -222,13 +222,13 @@ module('Acceptance | learner-group/bulk-assignment', function (hooks) {
   test('choose small group match', async function (assert) {
     await page.visit({ learnerGroupId: 1 });
     await page.root.actions.buttons.bulkAssignment.click();
-    this.server.create('user', {
+    await this.server.create('user', {
       firstName: 'jasper',
       lastName: 'johnson',
       campusId: '1234567890',
       cohortIds: [1],
     });
-    this.server.create('user', {
+    await this.server.create('user', {
       firstName: 'jackson',
       lastName: 'johnson',
       campusId: '12345',
@@ -250,13 +250,13 @@ module('Acceptance | learner-group/bulk-assignment', function (hooks) {
   });
 
   test('finalize and save', async function (assert) {
-    this.server.create('user', {
+    await this.server.create('user', {
       firstName: 'jasper',
       lastName: 'johnson',
       campusId: '1234567890',
       cohortIds: [1],
     });
-    this.server.create('user', {
+    await this.server.create('user', {
       firstName: 'jackson',
       lastName: 'johnson',
       displayName: 'Jackson McFly',
@@ -306,7 +306,7 @@ module('Acceptance | learner-group/bulk-assignment', function (hooks) {
   });
 
   test('create a new group when requested', async function (assert) {
-    this.server.create('user', {
+    await this.server.create('user', {
       firstName: 'jackson',
       lastName: 'johnson',
       campusId: '12345',
@@ -342,7 +342,7 @@ module('Acceptance | learner-group/bulk-assignment', function (hooks) {
   test('small group matches are trimmed', async function (assert) {
     await page.visit({ learnerGroupId: 1 });
     await page.root.actions.buttons.bulkAssignment.click();
-    const users = this.server.createList('user', 4, {
+    const users = await this.server.createList('user', 4, {
       cohortIds: [1],
     });
     const data = users.map((obj) => {
@@ -361,7 +361,7 @@ module('Acceptance | learner-group/bulk-assignment', function (hooks) {
   test('ignore blank lines #3684', async function (assert) {
     await page.visit({ learnerGroupId: 1 });
     await page.root.actions.buttons.bulkAssignment.click();
-    this.server.create('user', {
+    await this.server.create('user', {
       firstName: 'jasper',
       lastName: 'johnson',
       campusId: '1234567890',

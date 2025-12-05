@@ -12,16 +12,16 @@ module('Acceptance | Session - Learning Materials', function (hooks) {
 
   hooks.beforeEach(async function () {
     this.intl = this.owner.lookup('service:intl');
-    const school = this.server.create('school');
+    const school = await this.server.create('school');
     this.user = await setupAuthentication({ school, administeredSchools: [school] }, true);
-    this.user2 = this.server.create('user', { displayName: 'Clem Chowder' });
-    this.server.create('academic-year');
+    this.user2 = await this.server.create('user', { displayName: 'Clem Chowder' });
+    await this.server.create('academic-year');
 
-    const statuses = this.server.createList('learningMaterialStatus', 5);
-    const roles = this.server.createList('learningMaterialUserRole', 3);
-    const descriptors = this.server.createList('mesh-descriptor', 6);
+    const statuses = await this.server.createList('learningMaterialStatus', 5);
+    const roles = await this.server.createList('learningMaterialUserRole', 3);
+    const descriptors = await this.server.createList('mesh-descriptor', 6);
 
-    this.material1 = this.server.create('learning-material', {
+    this.material1 = await this.server.create('learning-material', {
       originalAuthor: 'Jennifer Johnson',
       owningUser: this.user,
       status: statuses[0],
@@ -32,7 +32,7 @@ module('Acceptance | Session - Learning Materials', function (hooks) {
       absoluteFileUri: 'http://somethingsomething.com/something.pdf',
       uploadDate: DateTime.fromObject({ year: 2015, month: 2, day: 12, hour: 8 }).toJSDate(),
     });
-    const material2 = this.server.create('learning-material', {
+    const material2 = await this.server.create('learning-material', {
       originalAuthor: 'Jennifer Johnson',
       owningUser: this.user2,
       status: statuses[0],
@@ -45,7 +45,7 @@ module('Acceptance | Session - Learning Materials', function (hooks) {
       absoluteFileUri: 'http://example.com/subdir1/subdir2/long_file_name.pdf',
       uploadDate: DateTime.fromObject({ year: 2011, month: 3, day: 14, hour: 8 }).toJSDate(),
     });
-    const material3 = this.server.create('learning-material', {
+    const material3 = await this.server.create('learning-material', {
       originalAuthor: 'Hunter Pence',
       owningUser: this.user,
       status: statuses[0],
@@ -53,7 +53,7 @@ module('Acceptance | Session - Learning Materials', function (hooks) {
       link: 'www.example.com',
       uploadDate: today.toJSDate(),
     });
-    const material4 = this.server.create('learning-material', {
+    const material4 = await this.server.create('learning-material', {
       originalAuthor: 'Willie Mays',
       owningUser: this.user,
       status: statuses[0],
@@ -61,7 +61,7 @@ module('Acceptance | Session - Learning Materials', function (hooks) {
       citation: 'a citation',
       uploadDate: DateTime.fromObject({ year: 2016, month: 12, day: 12, hour: 8 }).toJSDate(),
     });
-    this.server.create('learningMaterial', {
+    await this.server.create('learningMaterial', {
       originalAuthor: 'Marty McFly',
       owningUser: this.user,
       status: statuses[0],
@@ -73,37 +73,37 @@ module('Acceptance | Session - Learning Materials', function (hooks) {
       uploadDate: DateTime.fromObject({ year: 2016, month: 3, day: 3, hour: 8 }).toJSDate(),
     });
 
-    this.course = this.server.create('course', {
+    this.course = await this.server.create('course', {
       year: 2013,
       school,
     });
 
-    this.sessionType = this.server.create('session-type', { school });
-    const session = this.server.create('session', {
+    this.sessionType = await this.server.create('session-type', { school });
+    const session = await this.server.create('session', {
       course: this.course,
       sessionType: this.sessionType,
     });
 
-    this.server.create('session-learning-material', {
+    await this.server.create('session-learning-material', {
       learningMaterial: this.material1,
       session,
       required: false,
       meshDescriptors: [descriptors[1], descriptors[2]],
       position: 0,
     });
-    this.server.create('session-learning-material', {
+    await this.server.create('session-learning-material', {
       learningMaterial: material2,
       session,
       required: false,
       position: 1,
     });
-    this.server.create('session-learning-material', {
+    await this.server.create('session-learning-material', {
       learningMaterial: material3,
       session,
       publicNotes: false,
       position: 2,
     });
-    this.server.create('session-learning-material', {
+    await this.server.create('session-learning-material', {
       learningMaterial: material4,
       session,
       position: 3,
@@ -897,11 +897,11 @@ module('Acceptance | Session - Learning Materials', function (hooks) {
   });
 
   test('list double linked learning materials', async function (assert) {
-    const session = this.server.create('session', {
+    const session = await this.server.create('session', {
       course: this.course,
       sessionType: this.sessionType,
     });
-    this.server.create('session-learning-material', {
+    await this.server.create('session-learning-material', {
       learningMaterial: this.material1,
       session,
       required: false,
@@ -926,11 +926,11 @@ module('Acceptance | Session - Learning Materials', function (hooks) {
   });
 
   test('view double linked learning material details', async function (assert) {
-    const session = this.server.create('session', {
+    const session = await this.server.create('session', {
       course: this.course,
       sessionType: this.sessionType,
     });
-    this.server.create('session-learning-material', {
+    await this.server.create('session-learning-material', {
       learningMaterial: this.material1,
       session,
       required: false,

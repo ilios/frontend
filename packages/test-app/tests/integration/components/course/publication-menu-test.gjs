@@ -11,7 +11,7 @@ module('Integration | Component | course/publication-menu', function (hooks) {
   setupMSW(hooks);
 
   test('it renders and is accessible for draft course', async function (assert) {
-    this.server.create('course');
+    await this.server.create('course');
     const courseModel = await this.owner.lookup('service:store').findRecord('course', 1);
     this.set('course', courseModel);
     await render(<template><PublicationMenu @course={{this.course}} /></template>);
@@ -36,7 +36,7 @@ module('Integration | Component | course/publication-menu', function (hooks) {
   });
 
   test('it renders and is accessible for scheduled course', async function (assert) {
-    this.server.create('course', {
+    await this.server.create('course', {
       published: true,
       publishedAsTbd: true,
     });
@@ -52,7 +52,7 @@ module('Integration | Component | course/publication-menu', function (hooks) {
   });
 
   test('it renders and is accessible for published course', async function (assert) {
-    this.server.create('course', {
+    await this.server.create('course', {
       published: true,
       publishedAsTbd: false,
     });
@@ -68,7 +68,7 @@ module('Integration | Component | course/publication-menu', function (hooks) {
   });
 
   test('click opens menu', async function (assert) {
-    this.server.create('course');
+    await this.server.create('course');
     const courseModel = await this.owner.lookup('service:store').findRecord('course', 1);
     this.set('course', courseModel);
     await render(<template><PublicationMenu @course={{this.course}} /></template>);
@@ -78,7 +78,7 @@ module('Integration | Component | course/publication-menu', function (hooks) {
   });
 
   test('correct actions for unpublished course', async function (assert) {
-    this.server.create('course');
+    await this.server.create('course');
     const courseModel = await this.owner.lookup('service:store').findRecord('course', 1);
     this.set('course', courseModel);
     await render(<template><PublicationMenu @course={{this.course}} /></template>);
@@ -92,8 +92,8 @@ module('Integration | Component | course/publication-menu', function (hooks) {
   });
 
   test('correct actions for unpublished course with required cohort', async function (assert) {
-    const cohort = this.server.create('cohort');
-    this.server.create('course', {
+    const cohort = await this.server.create('cohort');
+    await this.server.create('course', {
       cohorts: [cohort],
     });
     const courseModel = await this.owner.lookup('service:store').findRecord('course', 1);
@@ -109,7 +109,7 @@ module('Integration | Component | course/publication-menu', function (hooks) {
   });
 
   test('correct actions for scheduled course', async function (assert) {
-    this.server.create('course', {
+    await this.server.create('course', {
       published: true,
       publishedAsTbd: true,
     });
@@ -126,8 +126,8 @@ module('Integration | Component | course/publication-menu', function (hooks) {
   });
 
   test('correct actions for scheduled course with required cohort', async function (assert) {
-    const cohort = this.server.create('cohort');
-    this.server.create('course', {
+    const cohort = await this.server.create('cohort');
+    await this.server.create('course', {
       cohorts: [cohort],
       published: true,
       publishedAsTbd: true,
@@ -145,7 +145,7 @@ module('Integration | Component | course/publication-menu', function (hooks) {
   });
 
   test('correct actions for published course', async function (assert) {
-    this.server.create('course', {
+    await this.server.create('course', {
       published: true,
       publishedAsTbd: false,
     });
@@ -162,7 +162,7 @@ module('Integration | Component | course/publication-menu', function (hooks) {
   });
 
   test('down opens menu', async function (assert) {
-    this.server.create('course');
+    await this.server.create('course');
     const courseModel = await this.owner.lookup('service:store').findRecord('course', 1);
     this.set('course', courseModel);
     await render(<template><PublicationMenu @course={{this.course}} /></template>);
@@ -173,7 +173,7 @@ module('Integration | Component | course/publication-menu', function (hooks) {
   });
 
   test('escape closes menu', async function (assert) {
-    this.server.create('course');
+    await this.server.create('course');
     const courseModel = await this.owner.lookup('service:store').findRecord('course', 1);
     this.set('course', courseModel);
     await render(<template><PublicationMenu @course={{this.course}} /></template>);

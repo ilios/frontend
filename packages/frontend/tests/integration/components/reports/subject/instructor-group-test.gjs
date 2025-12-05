@@ -22,7 +22,7 @@ module('Integration | Component | reports/subject/instructor-group', function (h
       assert.strictEqual(query, 'query { instructorGroups { title, school { title } } }');
       return responseData;
     });
-    const { id } = this.server.create('report', {
+    const { id } = await this.server.create('report', {
       subject: 'instructor group',
     });
     this.set('report', await this.owner.lookup('service:store').findRecord('report', id));
@@ -49,7 +49,7 @@ module('Integration | Component | reports/subject/instructor-group', function (h
       assert.strictEqual(query, 'query { instructorGroups { title, school { title } } }');
       return responseData;
     });
-    const { id } = this.server.create('report', {
+    const { id } = await this.server.create('report', {
       subject: 'instructor group',
     });
     this.set('report', await this.owner.lookup('service:store').findRecord('report', id));
@@ -91,7 +91,7 @@ module('Integration | Component | reports/subject/instructor-group', function (h
       assert.strictEqual(query, 'query { instructorGroups { title, school { title } } }');
       return responseDataLarge;
     });
-    const { id } = this.server.create('report', {
+    const { id } = await this.server.create('report', {
       subject: 'instructor group',
     });
     this.set('report', await this.owner.lookup('service:store').findRecord('report', id));
@@ -124,9 +124,9 @@ module('Integration | Component | reports/subject/instructor-group', function (h
       );
       return responseData;
     });
-    const { id } = this.server.create('report', {
+    const { id } = await this.server.create('report', {
       subject: 'instructor group',
-      school: this.server.create('school', { id: 33 }),
+      school: await this.server.create('school', { id: 33 }),
     });
     this.set('report', await this.owner.lookup('service:store').findRecord('report', id));
     this.set('school', await this.owner.lookup('service:store').findRecord('school', 33));
@@ -153,7 +153,7 @@ module('Integration | Component | reports/subject/instructor-group', function (h
       );
       return responseData;
     });
-    const { id } = this.server.create('report', {
+    const { id } = await this.server.create('report', {
       subject: 'instructor group',
       prepositionalObject: 'course',
       prepositionalObjectTableRowId: 13,
@@ -181,9 +181,9 @@ module('Integration | Component | reports/subject/instructor-group', function (h
       );
       return responseData;
     });
-    const { id } = this.server.create('report', {
+    const { id } = await this.server.create('report', {
       subject: 'instructor group',
-      school: this.server.create('school', { id: 24 }),
+      school: await this.server.create('school', { id: 24 }),
       prepositionalObject: 'session',
       prepositionalObjectTableRowId: 13,
     });

@@ -93,9 +93,9 @@ module('Integration | Component | reports/curriculum/header', function (hooks) {
   });
 
   test('it renders for session objectives across multiple schools', async function (assert) {
-    this.schools = this.server.createList('school', 2);
-    const course1 = this.server.create('course', { school: this.schools[0] });
-    const course2 = this.server.create('course', { school: this.schools[1] });
+    this.schools = await this.server.createList('school', 2);
+    const course1 = await this.server.create('course', { school: this.schools[0] });
+    const course2 = await this.server.create('course', { school: this.schools[1] });
     this.courses = [course1, course2];
 
     await render(
@@ -257,9 +257,9 @@ module('Integration | Component | reports/curriculum/header', function (hooks) {
   });
 
   test('it renders for session offerings across multiple schools', async function (assert) {
-    this.schools = this.server.createList('school', 2);
-    const course1 = this.server.create('course', { school: this.schools[0] });
-    const course2 = this.server.create('course', { school: this.schools[1] });
+    this.schools = await this.server.createList('school', 2);
+    const course1 = await this.server.create('course', { school: this.schools[0] });
+    const course2 = await this.server.create('course', { school: this.schools[1] });
     this.courses = [course1, course2];
 
     await render(

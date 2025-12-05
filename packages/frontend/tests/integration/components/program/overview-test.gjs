@@ -10,8 +10,8 @@ module('Integration | Component | program/overview', function (hooks) {
   setupMSW(hooks);
 
   hooks.beforeEach(async function () {
-    const school = this.server.create('school', {});
-    this.program = this.server.create('program', {
+    const school = await this.server.create('school', {});
+    this.program = await this.server.create('program', {
       school,
     });
     this.programModel = await this.owner

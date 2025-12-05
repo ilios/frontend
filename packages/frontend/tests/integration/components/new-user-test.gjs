@@ -14,12 +14,12 @@ module('Integration | Component | new user', function (hooks) {
   setupMSW(hooks);
 
   hooks.beforeEach(async function () {
-    this.schools = this.server.createList('school', 3);
+    this.schools = await this.server.createList('school', 3);
 
     // fetch all the schools into the store
     await this.owner.lookup('service:store').findAll('school');
 
-    this.server.create('user', {
+    await this.server.create('user', {
       school: this.schools[0],
     });
     const user = await this.owner.lookup('service:store').findRecord('user', 1);
@@ -82,7 +82,7 @@ module('Integration | Component | new user', function (hooks) {
   });
 
   test('create new user', async function (assert) {
-    const studentRole = this.server.create('user-role', {
+    const studentRole = await this.server.create('user-role', {
       id: 4,
       title: 'Student',
     });
@@ -127,16 +127,16 @@ module('Integration | Component | new user', function (hooks) {
   });
 
   test('create new student user', async function (assert) {
-    const studentRole = this.server.create('user-role', {
+    const studentRole = await this.server.create('user-role', {
       id: 4,
       title: 'Student',
     });
-    const program = this.server.create('program', { school: this.schools[0] });
-    const programYear = this.server.create('program-year', {
+    const program = await this.server.create('program', { school: this.schools[0] });
+    const programYear = await this.server.create('program-year', {
       program,
       startYear: new Date().getFullYear(),
     });
-    const cohort = this.server.create('cohort', { programYear });
+    const cohort = await this.server.create('cohort', { programYear });
 
     //load all created data into the store
     await this.owner.lookup('service:store').findAll('program');
@@ -193,26 +193,26 @@ module('Integration | Component | new user', function (hooks) {
   });
 
   test('change school', async function (assert) {
-    const program1 = this.server.create('program', { school: this.schools[0] });
-    const programYear1 = this.server.create('program-year', {
+    const program1 = await this.server.create('program', { school: this.schools[0] });
+    const programYear1 = await this.server.create('program-year', {
       program: program1,
       startYear: new Date().getFullYear(),
     });
-    this.server.create('cohort', { programYear: programYear1 });
+    await this.server.create('cohort', { programYear: programYear1 });
 
-    const program2 = this.server.create('program', { school: this.schools[1] });
-    const programYear2 = this.server.create('program-year', {
+    const program2 = await this.server.create('program', { school: this.schools[1] });
+    const programYear2 = await this.server.create('program-year', {
       program: program2,
       startYear: new Date().getFullYear() - 1,
       duration: 4,
     });
-    this.server.create('cohort', { programYear: programYear2 });
+    await this.server.create('cohort', { programYear: programYear2 });
     // this program is too old and will not show as option in the dropdown
-    const programYear3 = this.server.create('program-year', {
+    const programYear3 = await this.server.create('program-year', {
       program: program2,
       startYear: new Date().getFullYear() - 5,
     });
-    this.server.create('cohort', { programYear: programYear3 });
+    await this.server.create('cohort', { programYear: programYear3 });
 
     //load all created data into the store
     await this.owner.lookup('service:store').findAll('program');
@@ -249,8 +249,8 @@ module('Integration | Component | new user', function (hooks) {
   });
 
   test('validate username', async function (assert) {
-    const user = this.server.create('user');
-    this.server.create('authentication', { username: 'geflarknik', user });
+    const user = await this.server.create('user');
+    await this.server.create('authentication', { username: 'geflarknik', user });
     await render(<template><NewUser @close={{(noop)}} @transitionToUser={{(noop)}} /></template>);
     assert.notOk(component.username.hasError);
     await component.firstName.set('Lorem');

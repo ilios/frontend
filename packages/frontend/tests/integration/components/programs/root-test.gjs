@@ -12,12 +12,12 @@ module('Integration | Component | programs/root', function (hooks) {
 
   hooks.beforeEach(async function () {
     for (let i = 0; i < 4; i++) {
-      const school = this.server.create('school');
-      this.server.createList('program', 3, { school });
+      const school = await this.server.create('school');
+      await this.server.createList('program', 3, { school });
     }
     this.schools = await this.owner.lookup('service:store').findAll('school');
 
-    const user = this.server.create('user', { schoolId: 2 });
+    const user = await this.server.create('user', { schoolId: 2 });
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     class CurrentUserMock extends Service {
       async getModel() {

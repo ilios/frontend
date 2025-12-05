@@ -12,9 +12,12 @@ module('Integration | Component | instructor-group/instructor-manager', function
   setupMSW(hooks);
 
   hooks.beforeEach(async function () {
-    const user1 = this.server.create('user');
-    const user2 = this.server.create('user', { displayName: 'Aaron Aardvark', enabled: false });
-    const user3 = this.server.create('user');
+    const user1 = await this.server.create('user');
+    const user2 = await this.server.create('user', {
+      displayName: 'Aaron Aardvark',
+      enabled: false,
+    });
+    const user3 = await this.server.create('user');
     const store = this.owner.lookup('service:store');
     this.user1 = await store.findRecord('user', user1.id);
     this.user2 = await store.findRecord('user', user2.id);

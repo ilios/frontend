@@ -15,33 +15,33 @@ module('Integration | Component | offering form', function (hooks) {
   hooks.beforeEach(async function () {
     this.intl = this.owner.lookup('service:intl');
 
-    const school = this.server.create('school');
-    const program = this.server.create('program', { school });
-    const programYear = this.server.create('program-year', { program });
-    const cohort = this.server.create('cohort', { programYear });
-    this.secondLevelLearnerGroup1 = this.server.create('learner-group', {
+    const school = await this.server.create('school');
+    const program = await this.server.create('program', { school });
+    const programYear = await this.server.create('program-year', { program });
+    const cohort = await this.server.create('cohort', { programYear });
+    this.secondLevelLearnerGroup1 = await this.server.create('learner-group', {
       title: 'Second 1',
       cohort,
     });
-    this.secondLevelLearnerGroup2 = this.server.create('learner-group', {
+    this.secondLevelLearnerGroup2 = await this.server.create('learner-group', {
       title: 'Second 2',
       cohort,
     });
-    this.secondLevelLearnerGroup3 = this.server.create('learner-group', {
+    this.secondLevelLearnerGroup3 = await this.server.create('learner-group', {
       title: 'Second 3',
       cohort,
     });
-    this.topLevelLearnerGroup1 = this.server.create('learner-group', {
+    this.topLevelLearnerGroup1 = await this.server.create('learner-group', {
       title: 'Top Group 1',
       children: [this.secondLevelLearnerGroup1, this.secondLevelLearnerGroup2],
       cohort,
     });
-    this.topLevelLearnerGroup2 = this.server.create('learner-group', {
+    this.topLevelLearnerGroup2 = await this.server.create('learner-group', {
       title: 'Top Group 2',
       children: [this.secondLevelLearnerGroup3],
       cohort,
     });
-    this.topLevelLearnerGroup3 = this.server.create('learner-group', {
+    this.topLevelLearnerGroup3 = await this.server.create('learner-group', {
       title: 'Top Group 3',
       cohort,
     });
@@ -585,7 +585,7 @@ module('Integration | Component | offering form', function (hooks) {
   });
 
   test('renders when an offering is provided', async function (assert) {
-    const offering = this.server.create('offering', {
+    const offering = await this.server.create('offering', {
       room: 'emerald bay',
       startDate: DateTime.fromObject({
         year: 2005,
@@ -654,7 +654,7 @@ module('Integration | Component | offering form', function (hooks) {
       hour: 19,
       minute: 24,
     });
-    const offering = this.server.create('offering', {
+    const offering = await this.server.create('offering', {
       room: 'emerald bay',
       startDate: startDateTime.toJSDate(),
       endDate: endDateTime.toJSDate(),
@@ -714,13 +714,13 @@ module('Integration | Component | offering form', function (hooks) {
   });
 
   test('learner groups sort order', async function (assert) {
-    const school = this.server.create('school');
-    const program = this.server.create('program', { school });
-    const programYear = this.server.create('program-year', { program });
-    const cohort = this.server.create('cohort', { programYear });
-    this.server.create('learner-group', { cohort, title: 'Learner Group 1' });
-    this.server.create('learner-group', { cohort, title: 'Learner Group 10' });
-    this.server.create('learner-group', { cohort, title: 'Learner Group 2' });
+    const school = await this.server.create('school');
+    const program = await this.server.create('program', { school });
+    const programYear = await this.server.create('program-year', { program });
+    const cohort = await this.server.create('cohort', { programYear });
+    await this.server.create('learner-group', { cohort, title: 'Learner Group 1' });
+    await this.server.create('learner-group', { cohort, title: 'Learner Group 10' });
+    await this.server.create('learner-group', { cohort, title: 'Learner Group 2' });
 
     const cohortModel = await this.owner.lookup('service:store').findRecord('cohort', cohort.id);
     this.set('cohorts', [cohortModel]);
@@ -744,7 +744,7 @@ module('Integration | Component | offering form', function (hooks) {
   });
 
   test('save by pressing enter in duration hours field', async function (assert) {
-    const offering = this.server.create('offering');
+    const offering = await this.server.create('offering');
     const offeringModel = await this.owner
       .lookup('service:store')
       .findRecord('offering', offering.id);
@@ -762,7 +762,7 @@ module('Integration | Component | offering form', function (hooks) {
   });
 
   test('save by pressing enter in duration minutes field', async function (assert) {
-    const offering = this.server.create('offering');
+    const offering = await this.server.create('offering');
     const offeringModel = await this.owner
       .lookup('service:store')
       .findRecord('offering', offering.id);
@@ -780,7 +780,7 @@ module('Integration | Component | offering form', function (hooks) {
   });
 
   test('save by pressing enter in location field', async function (assert) {
-    const offering = this.server.create('offering');
+    const offering = await this.server.create('offering');
     const offeringModel = await this.owner
       .lookup('service:store')
       .findRecord('offering', offering.id);
@@ -803,7 +803,7 @@ module('Integration | Component | offering form', function (hooks) {
   });
 
   test('save by pressing enter in url field', async function (assert) {
-    const offering = this.server.create('offering');
+    const offering = await this.server.create('offering');
     const offeringModel = await this.owner
       .lookup('service:store')
       .findRecord('offering', offering.id);
@@ -826,7 +826,7 @@ module('Integration | Component | offering form', function (hooks) {
   });
 
   test('remove learner group from picker', async function (assert) {
-    const offering = this.server.create('offering', {
+    const offering = await this.server.create('offering', {
       learnerGroups: [
         this.secondLevelLearnerGroup1,
         this.secondLevelLearnerGroup2,
@@ -916,7 +916,7 @@ module('Integration | Component | offering form', function (hooks) {
   });
 
   test('remove learner group from list', async function (assert) {
-    const offering = this.server.create('offering', {
+    const offering = await this.server.create('offering', {
       learnerGroups: [
         this.secondLevelLearnerGroup1,
         this.secondLevelLearnerGroup2,
@@ -1006,7 +1006,7 @@ module('Integration | Component | offering form', function (hooks) {
   });
 
   test('add available learner group', async function (assert) {
-    const offering = this.server.create('offering', {
+    const offering = await this.server.create('offering', {
       learnerGroups: [
         this.secondLevelLearnerGroup1,
         this.secondLevelLearnerGroup2,
@@ -1053,7 +1053,7 @@ module('Integration | Component | offering form', function (hooks) {
   });
 
   test('adding a learner group with children adds them as well', async function (assert) {
-    const offering = this.server.create('offering', {
+    const offering = await this.server.create('offering', {
       learnerGroups: [
         this.secondLevelLearnerGroup1,
         this.secondLevelLearnerGroup2,
@@ -1108,7 +1108,7 @@ module('Integration | Component | offering form', function (hooks) {
   });
 
   test('removing a learner group with children from the picker removes them as well', async function (assert) {
-    const offering = this.server.create('offering', {
+    const offering = await this.server.create('offering', {
       learnerGroups: [
         this.secondLevelLearnerGroup1,
         this.secondLevelLearnerGroup2,
@@ -1171,7 +1171,7 @@ module('Integration | Component | offering form', function (hooks) {
   });
 
   test('removing a learner group with children from the list removes them as well', async function (assert) {
-    const offering = this.server.create('offering', {
+    const offering = await this.server.create('offering', {
       learnerGroups: [
         this.secondLevelLearnerGroup1,
         this.secondLevelLearnerGroup2,
@@ -1234,7 +1234,7 @@ module('Integration | Component | offering form', function (hooks) {
   });
 
   test('selectively adding a learner group with children does not add the children', async function (assert) {
-    const offering = this.server.create('offering');
+    const offering = await this.server.create('offering');
     const offeringModel = await this.owner
       .lookup('service:store')
       .findRecord('offering', offering.id);
@@ -1293,7 +1293,7 @@ module('Integration | Component | offering form', function (hooks) {
   });
 
   test('selectively removing a learner group with children from the picker does not remove the children', async function (assert) {
-    const offering = this.server.create('offering', {
+    const offering = await this.server.create('offering', {
       learnerGroups: [
         this.secondLevelLearnerGroup1,
         this.secondLevelLearnerGroup2,
@@ -1358,7 +1358,7 @@ module('Integration | Component | offering form', function (hooks) {
   });
 
   test('selectively removing a learner group with children from the list does not remove the children', async function (assert) {
-    const offering = this.server.create('offering', {
+    const offering = await this.server.create('offering', {
       learnerGroups: [
         this.secondLevelLearnerGroup1,
         this.secondLevelLearnerGroup2,

@@ -20,7 +20,7 @@ module('Integration | Component | sessions-grid-last-updated', function (hooks) 
   });
 
   test('it renders', async function (assert) {
-    const session = this.server.create('session', {
+    const session = await this.server.create('session', {
       updatedAt: DateTime.fromObject({
         year: 2019,
         month: 7,
