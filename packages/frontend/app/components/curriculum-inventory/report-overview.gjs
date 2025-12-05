@@ -233,7 +233,7 @@ export default class CurriculumInventoryReportOverviewComponent extends Componen
     >
       {{#let (uniqueId) as |templateId|}}
         <div class="report-overview-header">
-          <div class="title" data-test-title>
+          <div class="title font-size-base" data-test-title>
             {{t "general.overview"}}
           </div>
           <div class="report-overview-actions">

@@ -397,7 +397,7 @@ export default class SessionOverview extends Component {
 
             <div class="session-overview-header">
 
-              <div class="title">
+              <div class="title font-size-base">
                 {{t "general.overview"}}
               </div>
 

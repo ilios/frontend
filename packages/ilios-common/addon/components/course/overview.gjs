@@ -237,7 +237,7 @@ export default class CourseOverview extends Component {
     <section class="course-overview" data-test-course-overview>
       {{#let (uniqueId) as |templateId|}}
         <div class="course-overview-header">
-          <div class="title">
+          <div class="title font-size-base">
             {{t "general.overview"}}
           </div>
           <div class="course-overview-actions">

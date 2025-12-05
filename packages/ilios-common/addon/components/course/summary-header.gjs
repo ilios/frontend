@@ -32,7 +32,7 @@ export default class CourseSummaryHeaderComponent extends Component {
   <template>
     <div class="course-summary-header" ...attributes>
       <div class="course-summary-header-top">
-        <h2>
+        <h2 class="font-size-base">
           {{@course.title}}
         </h2>
         <div class="course-summary-actions">
