@@ -486,6 +486,9 @@ importers:
       msw:
         specifier: ^2.12.4
         version: 2.13.6(@types/node@25.6.0)(typescript@6.0.3)
+      normalize.css:
+        specifier: ^8.0.1
+        version: 8.0.1
       papaparse:
         specifier: ^5.4.1
         version: 5.5.3
@@ -7718,6 +7721,9 @@ packages:
   normalize-path@3.0.0:
     resolution: {integrity: sha512-6eZs5Ls3WtCisHWp9S2GUy8dqkpGi4BVSz3GaqiE6ezub0512ESztXUwUB6C6IKbQkY2Pnb/mD4WYojCRwcwLA==}
     engines: {node: '>=0.10.0'}
+
+  normalize.css@8.0.1:
+    resolution: {integrity: sha512-qizSNPO93t1YUuUhP22btGOo3chcvDFqFaj2TRybP0DMxkHOCTYwp3n34fel4a31ORXy4m1Xq0Gyqpb5m33qIg==}
 
   npm-package-arg@13.0.2:
     resolution: {integrity: sha512-IciCE3SY3uE84Ld8WZU23gAPPV9rIYod4F+rc+vJ7h7cwAJt9Vk6TVsK60ry7Uj3SRS3bqRRIGuTp9YVlk6WNA==}
@@ -18858,6 +18864,8 @@ snapshots:
       remove-trailing-separator: 1.1.0
 
   normalize-path@3.0.0: {}
+
+  normalize.css@8.0.1: {}
 
   npm-package-arg@13.0.2:
     dependencies:
