@@ -9,7 +9,7 @@ import SelectedInstructorGroupMembers from 'ilios-common/components/selected-ins
     <label class="heading" data-test-heading>
       {{t "general.selectedInstructorGroups"}}:
       {{#if @showDefaultNotLoaded}}
-        <span class="label-description">({{t "general.defaultNotLoaded"}})</span>
+        <span class="label-description font-size-small">({{t "general.defaultNotLoaded"}})</span>
       {{/if}}
     </label>
     <div data-test-selected-instructor-groups>

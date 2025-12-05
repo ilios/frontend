@@ -130,7 +130,7 @@ export default class SessionPublicationCheckComponent extends Component {
                         aria-label={{t "general.backToTitle" title=@session.title}}
                         data-test-unlink
                       >
-                        <FaIcon @icon="link-slash" />
+                        <FaIcon @icon="link-slash" class="font-size-small" />
                       </LinkTo>
                     {{/if}}
                   </td>

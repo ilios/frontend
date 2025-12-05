@@ -56,8 +56,6 @@
   }
 
   &.condensed {
-    @include font-size.font-size("small");
-
     tr,
     td,
     th {

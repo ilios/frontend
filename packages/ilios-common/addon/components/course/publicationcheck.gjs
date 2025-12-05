@@ -101,7 +101,7 @@ export default class CoursePublicationCheckComponent extends Component {
                         aria-label={{t "general.backToCourse"}}
                         data-test-unlink
                       >
-                        <FaIcon @icon="link-slash" />
+                        <FaIcon @icon="link-slash" class="font-size-small" />
                       </LinkTo>
                     {{/if}}
                   </td>

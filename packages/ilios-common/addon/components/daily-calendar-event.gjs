@@ -159,7 +159,7 @@ export default class DailyCalendarEventComponent extends Component {
           <FaIcon @icon="clock" data-test-scheduled-icon />
         {{/if}}
       </span>
-      <span class="ilios-calendar-event-time" data-test-time>
+      <span class="ilios-calendar-event-time font-size-small" data-test-time>
         {{#if this.isIlm}}
           <span class="ilios-calendar-event-start">
             {{t "general.ilmDue"}}:

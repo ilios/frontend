@@ -44,9 +44,6 @@
       .fa {
         vertical-align: top;
       }
-      .details {
-        @include font-size.font-size("small");
-      }
 
       .title {
         display: inline-block;
