@@ -12,7 +12,7 @@ import {
   waitFor,
 } from '@ember/test-helpers';
 import { DateTime } from 'luxon';
-import { Response } from 'miragejs';
+import { HttpResponse } from 'msw';
 import { setupMSW } from 'ilios-common/msw';
 import BulkNewUsers from 'frontend/components/bulk-new-users';
 import noop from 'ilios-common/helpers/noop';
@@ -632,7 +632,7 @@ module('Integration | Component | bulk new users', function (hooks) {
 
   test('duplicate username errors on save', async function (assert) {
     this.server.post('api/authentications', function () {
-      return new Response(500);
+      return new HttpResponse(null, { status: 500 });
     });
     const user = this.server.create('user');
     await render(<template><BulkNewUsers @close={{(noop)}} /></template>);
@@ -661,7 +661,7 @@ module('Integration | Component | bulk new users', function (hooks) {
 
   test('error saving user', async function (assert) {
     this.server.post('api/users', function () {
-      return new Response(500);
+      return new HttpResponse(null, { status: 500 });
     });
     await render(<template><BulkNewUsers @close={{(noop)}} /></template>);
 

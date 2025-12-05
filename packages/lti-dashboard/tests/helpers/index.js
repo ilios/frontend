@@ -24,7 +24,7 @@ function setupApplicationTest(hooks, options) {
   // from other addons:
   //
   // setupIntl(hooks, 'en-us'); // ember-intl
-  // setupMSW(hooks); // ember-cli-mirage
+  // setupMirage(hooks); // ember-cli-mirage
 }
 
 function setupRenderingTest(hooks, options) {

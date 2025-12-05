@@ -4,7 +4,7 @@ import { render } from '@ember/test-helpers';
 import { selectFiles } from 'ember-file-upload/test-support';
 import { setupMSW } from 'ilios-common/msw';
 import Service from '@ember/service';
-import { Response } from 'miragejs';
+import { HttpResponse } from 'msw';
 import LearningMaterialUploader from 'ilios-common/components/learning-material-uploader';
 import noop from 'ilios-common/helpers/noop';
 
@@ -25,14 +25,10 @@ module('Integration | Component | learning-material-uploader', function (hooks) 
       assert.ok(request.requestBody.has('file'));
       const file = request.requestBody.get('file');
       assert.strictEqual(file.name, 'test.file');
-      return new Response(
-        200,
-        {},
-        {
-          filename: 'test.file',
-          fileHash: '1234',
-        },
-      );
+      return HttpResponse.json({
+        filename: 'test.file',
+        fileHash: '1234',
+      });
     });
     let filename = null;
     let fileHash = null;
