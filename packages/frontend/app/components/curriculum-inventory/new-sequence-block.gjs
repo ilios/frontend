@@ -462,7 +462,7 @@ export default class CurriculumInventoryNewSequenceBlock extends Component {
               {{/each}}
             </select>
             {{#if this.course}}
-              <span class="details" data-test-course-details>
+              <span class="details font-size-small" data-test-course-details>
                 {{t "general.level"}}:
                 {{this.course.level}},
                 {{t "general.startDate"}}:

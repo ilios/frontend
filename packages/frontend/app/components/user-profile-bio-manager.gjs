@@ -310,7 +310,7 @@ export default class UserProfileBioManagerComponent extends Component {
         <button
           aria-label={{t "general.save"}}
           type="button"
-          class="bigadd"
+          class="bigadd font-size-base"
           {{on "click" (perform this.save)}}
           data-test-save
         >
@@ -323,7 +323,7 @@ export default class UserProfileBioManagerComponent extends Component {
           aria-label={{t "general.cancel"}}
           type="button"
           disabled={{this.save.isRunning}}
-          class="bigcancel"
+          class="bigcancel font-size-base"
           {{on "click" this.cancel}}
           data-test-cancel
         >
@@ -337,7 +337,7 @@ export default class UserProfileBioManagerComponent extends Component {
         </div>
       {{/unless}}
 
-      <p class="primary-school" data-test-school>
+      <p class="primary-school font-size-medium" data-test-school>
         <strong>
           {{t "general.primarySchool"}}:
         </strong>
@@ -438,7 +438,7 @@ export default class UserProfileBioManagerComponent extends Component {
               {{#unless @canEditUsernameAndPassword}}
                 <button
                   type="button"
-                  class="directory-sync"
+                  class="directory-sync font-size-base"
                   title={{t "general.updateUserFromDirectory"}}
                   disabled={{this.directorySync.isRunning}}
                   {{on "click" (perform this.directorySync)}}
@@ -654,7 +654,8 @@ export default class UserProfileBioManagerComponent extends Component {
                 />
                 {{#if this.checkPasswordStrength}}
                   <span
-                    class="password-strength {{concat 'strength-' this.passwordStrengthScore}}"
+                    class="password-strength font-size-base
+                      {{concat 'strength-' this.passwordStrengthScore}}"
                     data-test-password-strength-text
                   >
                     {{#if (eq this.passwordStrengthScore 0)}}
@@ -676,7 +677,7 @@ export default class UserProfileBioManagerComponent extends Component {
                   ></meter>
                 {{/if}}
                 <button
-                  class="link-button cancel-password-field"
+                  class="link-button cancel-password-field font-size-base"
                   type="button"
                   {{on "click" this.cancelChangeUserPassword}}
                   data-test-password-cancel
@@ -685,7 +686,7 @@ export default class UserProfileBioManagerComponent extends Component {
                 </button>
               {{else}}
                 <button
-                  class="link-button activate-password-field"
+                  class="link-button activate-password-field font-size-base"
                   type="button"
                   {{on "click" (set this "changeUserPassword" true)}}
                   data-test-change-password

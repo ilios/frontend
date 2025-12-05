@@ -154,7 +154,10 @@ export default class OfferingManagerComponent extends Component {
   });
   <template>
     <div
-      class="offering-manager{{if this.showRemoveConfirmation ' show-remove-confirmation'}}"
+      class="offering-manager font-size-small{{if
+          this.showRemoveConfirmation
+          ' show-remove-confirmation'
+        }}"
       data-test-offering-manager
       ...attributes
     >

@@ -156,7 +156,7 @@ export default class ReportsCurriculumHeader extends Component {
   };
   <template>
     <div class="reports-curriculum-header" data-test-reports-curriculum-header>
-      <div class="run">
+      <div class="run font-size-medium">
         <p data-test-run-summary>
           {{#if @countSelectedCourses}}
             {{#if @showReportResults}}

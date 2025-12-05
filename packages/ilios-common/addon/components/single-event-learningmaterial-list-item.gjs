@@ -19,7 +19,10 @@ import { faDownload, faSquarePen } from '@fortawesome/free-solid-svg-icons';
         <div class="single-event-learningmaterial-item-title" data-test-title>
           {{@learningMaterial.title}}
         </div>
-        <div class="single-event-learningmaterial-item-timing-info" data-test-timing-info>
+        <div
+          class="single-event-learningmaterial-item-timing-info font-size-small"
+          data-test-timing-info
+        >
           <TimedReleaseSchedule
             @startDate={{@learningMaterial.startDate}}
             @endDate={{@learningMaterial.endDate}}
@@ -67,7 +70,10 @@ import { faDownload, faSquarePen } from '@fortawesome/free-solid-svg-icons';
                     {{@learningMaterial.title}}
                   </a>
                 {{/if}}
-                <span class="single-event-learningmaterial-filesize" data-test-filesize>
+                <span
+                  class="single-event-learningmaterial-filesize font-size-small"
+                  data-test-filesize
+                >
                   {{#if @learningMaterial.filesize}}
                     ({{filesize @learningMaterial.filesize}})
                   {{/if}}
@@ -88,7 +94,10 @@ import { faDownload, faSquarePen } from '@fortawesome/free-solid-svg-icons';
             {{else}}
               {{@learningMaterial.title}}
               {{#if @learningMaterial.absoluteFileUri}}
-                <span class="single-event-learningmaterial-filesize" data-test-filesize>
+                <span
+                  class="single-event-learningmaterial-filesize font-size-small"
+                  data-test-filesize
+                >
                   {{#if @learningMaterial.filesize}}
                     ({{filesize @learningMaterial.filesize}})
                   {{/if}}
@@ -102,7 +111,10 @@ import { faDownload, faSquarePen } from '@fortawesome/free-solid-svg-icons';
             {{@learningMaterial.citation}}
           </div>
         {{/if}}
-        <div class="single-event-learningmaterial-item-timing-info" data-test-timing-info>
+        <div
+          class="single-event-learningmaterial-item-timing-info font-size-small"
+          data-test-timing-info
+        >
           <TimedReleaseSchedule
             @startDate={{@learningMaterial.startDate}}
             @endDate={{@learningMaterial.endDate}}
@@ -116,7 +128,10 @@ import { faDownload, faSquarePen } from '@fortawesome/free-solid-svg-icons';
           </div>
         {{/if}}
         {{#if @learningMaterial.publicNotes}}
-          <div class="single-event-learningmaterial-item-notes" data-test-public-notes>
+          <div
+            class="single-event-learningmaterial-item-notes font-size-small"
+            data-test-public-notes
+          >
             {{! template-lint-disable no-triple-curlies }}
             <FaIcon @icon={{faSquarePen}} />
             <p>

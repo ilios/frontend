@@ -48,7 +48,6 @@
   }
 
   .expand-collapse-control {
-    @include font-size.font-size("medium");
     display: flex;
     flex-direction: column;
     justify-content: space-around;
@@ -61,9 +60,5 @@
     & > .disabled {
       color: var(--grey);
     }
-  }
-
-  .fa-user-clock {
-    @include font-size.font-size("small");
   }
 }

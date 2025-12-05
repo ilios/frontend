@@ -406,7 +406,7 @@ export default class SessionOverview extends Component {
                   <LinkTo
                     @route="session.copy"
                     @models={{array @session.course @session}}
-                    class="copy"
+                    class="copy font-size-medium"
                     title={{t "general.copySession"}}
                     data-test-copy
                   >

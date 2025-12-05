@@ -27,16 +27,16 @@ export default class CourseSearchResultComponent extends Component {
         <small>{{@course.year}}</small>
         {{@course.title}}
       </LinkTo>
-      <span class="school-flag" data-test-school-title>
+      <span class="school-flag font-size-smallest" data-test-school-title>
         {{@course.school}}
       </span>
-      <span class="course-flag">
+      <span class="course-flag font-size-smallest">
         {{t "general.course"}}
       </span>
       <GlobalSearchTags @tags={{@course.matchedIn}} />
       {{#if this.sessions}}
         <ul>
-          <li class="sessions">
+          <li class="sessions font-size-small">
             {{t "general.sessions"}}:
           </li>
           {{#each this.sessions as |session|}}
@@ -44,7 +44,7 @@ export default class CourseSearchResultComponent extends Component {
               <LinkTo
                 @route="session"
                 @models={{array @course.id session.id}}
-                class="session-title-link"
+                class="session-title-link font-size-small"
               >
                 {{session.title}}
               </LinkTo>
@@ -55,7 +55,7 @@ export default class CourseSearchResultComponent extends Component {
             {{#if this.showMore}}
               <li>
                 <button
-                  class="show-less link-button"
+                  class="show-less link-button font-size-small"
                   type="button"
                   {{on "click" (set this "showMore" false)}}
                 >
@@ -66,7 +66,7 @@ export default class CourseSearchResultComponent extends Component {
             {{else}}
               <li>
                 <button
-                  class="show-more link-button"
+                  class="show-more link-button font-size-small"
                   type="button"
                   {{on "click" (set this "showMore" true)}}
                 >

@@ -240,7 +240,7 @@ export default class CurriculumInventoryReportOverviewComponent extends Componen
             <LinkTo
               @route="verification-preview"
               @model={{@report}}
-              class="verification-preview"
+              class="verification-preview font-size-medium"
               title={{t "general.verificationPreviewFor" name=@report.name}}
               data-test-transition-to-verification-preview
             >
@@ -248,7 +248,7 @@ export default class CurriculumInventoryReportOverviewComponent extends Componen
             </LinkTo>
             {{#if this.showRollover}}
               <button
-                class="link-button rollover"
+                class="link-button rollover font-size-medium"
                 type="button"
                 aria-label={{t "general.curriculumInventoryReportRollover"}}
                 {{on "click" this.transitionToRollover}}

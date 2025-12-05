@@ -171,7 +171,7 @@ export default class MyProfileComponent extends Component {
           />
           <LearnerGroups @user={{@user}} />
         </div>
-        <section class="token-maintenance" data-test-token-maintenance>
+        <section class="token-maintenance font-size-small" data-test-token-maintenance>
           <h3>
             {{t "general.manageAPITokens"}}
           </h3>

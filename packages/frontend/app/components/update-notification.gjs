@@ -26,7 +26,7 @@ export default class UpdateNotificationComponent extends Component {
   <template>
     {{#if this.newVersion.isNewVersionAvailable}}
       <div class="update-notification critical-notice" data-test-update-notification>
-        <button type="button" {{on "click" (perform this.click)}}>
+        <button type="button" class="font-size-large" {{on "click" (perform this.click)}}>
           {{t "general.iliosUpdatePending"}}
         </button>
       </div>

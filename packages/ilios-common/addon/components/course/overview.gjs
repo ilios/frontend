@@ -244,7 +244,7 @@ export default class CourseOverview extends Component {
             <LinkTo
               @route="course-materials"
               @model={{@course}}
-              class="materials"
+              class="materials font-size-medium"
               title={{t "general.learningMaterialsSummary"}}
             >
               <FaIcon @icon={{faBoxArchive}} @fixedWidth={{true}} />
@@ -254,7 +254,7 @@ export default class CourseOverview extends Component {
               @model={{@course}}
               @query={{hash unpublished=true}}
               title={{t "general.printSummary"}}
-              class="print"
+              class="print font-size-medium"
             >
               <FaIcon @icon={{faPrint}} @fixedWidth={{true}} />
             </LinkTo>
@@ -262,7 +262,7 @@ export default class CourseOverview extends Component {
               <LinkTo
                 @route="course.rollover"
                 @model={{@course}}
-                class="rollover"
+                class="rollover font-size-medium"
                 title={{t "general.courseRollover"}}
               >
                 <FaIcon @icon={{faShuffle}} @fixedWidth={{true}} />
@@ -271,6 +271,7 @@ export default class CourseOverview extends Component {
             <LinkTo
               @route="course-visualizations"
               @model={{@course}}
+              class="font-size-medium"
               title={{t "general.courseVisualizations"}}
             >
               <FaIcon @icon={{faChartColumn}} />

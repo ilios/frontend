@@ -132,7 +132,7 @@ export default class PendingUpdatesSummaryComponent extends Component {
               @query={{hash school=this.bestSelectedSchool.id}}
               data-test-manage
             >
-              <button type="button">
+              <button type="button" class="font-size-base">
                 {{t "general.manage"}}
               </button>
             </LinkTo>

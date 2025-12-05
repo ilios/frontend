@@ -62,7 +62,6 @@
 
   .file-is-loading {
     display: flex;
-    @include m.font-size("xxxl");
     font-weight: 600;
     justify-content: center;
   }

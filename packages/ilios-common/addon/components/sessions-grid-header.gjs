@@ -31,10 +31,10 @@ export default class SessionsGridHeader extends Component {
   });
   <template>
     <div
-      class="sessions-grid-header{{if @headerIsLocked ' locked'}}"
+      class="sessions-grid-header font-size-small{{if @headerIsLocked ' locked'}}"
       data-test-sessions-grid-header
     >
-      <span class="expand-collapse-control" data-test-expand-collapse-all>
+      <span class="expand-collapse-control font-size-medium" data-test-expand-collapse-all>
         {{#if @showExpandAll}}
           <button
             type="button"

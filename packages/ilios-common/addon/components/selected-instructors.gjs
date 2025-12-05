@@ -11,7 +11,7 @@ import { faXmark } from '@fortawesome/free-solid-svg-icons';
     <label class="heading" data-test-heading>
       {{t "general.selectedInstructors"}}:
       {{#if @showDefaultNotLoaded}}
-        <span class="label-description">({{t "general.defaultNotLoaded"}})</span>
+        <span class="label-description font-size-small">({{t "general.defaultNotLoaded"}})</span>
       {{/if}}
     </label>
     {{#if @instructors.length}}

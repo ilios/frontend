@@ -4,7 +4,8 @@
   font-size: var(--fs-smallest);
   line-height: calc(4px + 2ex);
 }
-.font-size-small {
+.font-size-small,
+.link-button.font-size-small {
   font-size: var(--fs-small);
   line-height: calc(4px + 2ex);
 }
@@ -24,7 +25,8 @@
   font-size: var(--fs-xl);
   line-height: calc(4px + 2ex);
 }
-.font-size-xxl {
+.font-size-xxl,
+.loading-file.font-size-xxl i {
   font-size: var(--fs-xxl);
   line-height: calc(4px + 2ex);
 }

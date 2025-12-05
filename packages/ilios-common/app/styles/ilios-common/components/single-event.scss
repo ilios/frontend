@@ -6,10 +6,6 @@
   h3 {
     @include m.ilios-heading-h4;
     margin: 0.5rem 0;
-
-    .fa-box-archive {
-      @include m.font-size("base");
-    }
   }
 
   p.no-content {
@@ -70,7 +66,6 @@
   }
 
   .single-event-learningmaterial-filesize {
-    @include m.font-size("small");
     font-style: italic;
   }
 

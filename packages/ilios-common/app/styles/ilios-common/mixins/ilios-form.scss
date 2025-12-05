@@ -112,7 +112,6 @@
   font-weight: 600;
 
   .label-description {
-    @include font-size.font-size("small");
     font-weight: 400;
   }
 }

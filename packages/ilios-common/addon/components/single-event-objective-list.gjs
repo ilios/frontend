@@ -113,7 +113,7 @@ export default class SingleEventObjectiveList extends Component {
               <li class="objective" data-test-objective>
                 {{! template-lint-disable no-triple-curlies }}
                 <span data-test-objective-title>{{{objective.title}}}</span>
-                <div class="details" data-test-domain>
+                <div class="details font-size-small" data-test-domain>
                   {{objective.domain}}
                 </div>
               </li>

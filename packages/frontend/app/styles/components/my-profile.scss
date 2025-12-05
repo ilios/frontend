@@ -35,7 +35,6 @@
 
   .token-maintenance {
     border-top: 1px dotted var(--orange);
-    @include cm.font-size("small");
     margin-top: 1rem;
     padding: 1rem 0 0;
 

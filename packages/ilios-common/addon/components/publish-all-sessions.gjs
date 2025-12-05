@@ -552,9 +552,9 @@ export default class PublishAllSessionsComponent extends Component {
           {{/if}}
         </div>
       </section>
-      <div class="publish-all-sessions-review" data-test-review>
+      <div class="publish-all-sessions-review font-size-large" data-test-review>
         {{#if this.showWarning}}
-          <span class="unlinked-warning" data-test-unlinked-warning>
+          <span class="unlinked-warning font-size-base" data-test-unlinked-warning>
             {{t "general.unlinkedObjectives"}}
           </span>
           <LinkTo

@@ -119,16 +119,16 @@ export default class LearningMaterialSearchComponent extends Component {
                     {{learningMaterial.title}}
                   </span>
                 </div>
-                <span class="learning-material-description">
+                <span class="learning-material-description font-size-small">
                   {{! template-lint-disable no-triple-curlies }}
                   {{{learningMaterial.description}}}
                 </span>
                 {{#if learningMaterial.status.title}}
-                  <span class="learning-material-status">
+                  <span class="learning-material-status font-size-small">
                     {{learningMaterial.status.title}}
                   </span>
                 {{/if}}
-                <ul class="learning-material-properties">
+                <ul class="learning-material-properties font-size-small">
                   <li>
                     {{t "general.owner"}}:
                     {{learningMaterial.owningUser.fullName}}

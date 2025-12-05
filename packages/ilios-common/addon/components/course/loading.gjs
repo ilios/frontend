@@ -64,7 +64,7 @@ import { faSquarePlus } from '@fortawesome/free-solid-svg-icons';
         <input disabled />
       </div>
       <section>
-        <div class="sessions-grid-header loading-text"></div>
+        <div class="sessions-grid-header font-size-small loading-text"></div>
       </section>
     </section>
   </div>
