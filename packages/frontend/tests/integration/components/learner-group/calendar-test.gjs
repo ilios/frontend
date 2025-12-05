@@ -12,39 +12,39 @@ module('Integration | Component | learner-group/calendar', function (hooks) {
 
   hooks.beforeEach(async function () {
     const today = DateTime.fromObject({ hour: 8 });
-    const school = this.server.create('school');
-    const course1 = this.server.create('course', { school });
-    const course2 = this.server.create('course', {
+    const school = await this.server.create('school');
+    const course1 = await this.server.create('course', { school });
+    const course2 = await this.server.create('course', {
       school,
       publishedAsTbd: true,
       published: true,
     });
-    const sessionType = this.server.create('session-type');
-    const session1 = this.server.create('session', { course: course1, sessionType });
-    const session2 = this.server.create('session', {
+    const sessionType = await this.server.create('session-type');
+    const session1 = await this.server.create('session', { course: course1, sessionType });
+    const session2 = await this.server.create('session', {
       course: course2,
       publishedAsTbd: true,
       published: true,
       sessionType,
     });
-    const offering1 = this.server.create('offering', {
+    const offering1 = await this.server.create('offering', {
       startDate: today.toJSON(),
       endDate: today.plus({ hour: 1 }).toJSDate(),
       location: '123',
       updatedAt: Date.now(),
       session: session1,
     });
-    const offering2 = this.server.create('offering', {
+    const offering2 = await this.server.create('offering', {
       startDate: today.toJSON(),
       endDate: today.plus({ hour: 1 }).toJSDate(),
       location: '123',
       updatedAt: Date.now(),
       session: session2,
     });
-    const learnerGroup1 = this.server.create('learner-group', {
+    const learnerGroup1 = await this.server.create('learner-group', {
       offerings: [offering1],
     });
-    const learnerGroup2 = this.server.create('learner-group', {
+    const learnerGroup2 = await this.server.create('learner-group', {
       offerings: [offering2],
       parent: learnerGroup1,
     });

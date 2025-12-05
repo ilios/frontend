@@ -17,49 +17,49 @@ module('Acceptance | Course - Session List', function (hooks) {
     );
     this.intl = this.owner.lookup('service:intl');
     this.today = DateTime.fromObject({ hour: 8 });
-    this.school = this.server.create('school');
+    this.school = await this.server.create('school');
     this.user = await setupAuthentication({ school: this.school }, true);
-    this.sessionType = this.server.create('session-type', {
+    this.sessionType = await this.server.create('session-type', {
       school: this.school,
     });
 
-    const learner1 = this.server.create('user');
-    const learner2 = this.server.create('user');
-    const instructor1 = this.server.create('user');
-    const instructor2 = this.server.create('user');
-    const instructor3 = this.server.create('user');
-    const learnerGroup1 = this.server.create('learner-group', {
+    const learner1 = await this.server.create('user');
+    const learner2 = await this.server.create('user');
+    const instructor1 = await this.server.create('user');
+    const instructor2 = await this.server.create('user');
+    const instructor3 = await this.server.create('user');
+    const learnerGroup1 = await this.server.create('learner-group', {
       users: [learner1, learner2],
     });
-    const learnerGroup2 = this.server.create('learner-group');
-    const instructorGroup = this.server.create('instructor-group', {
+    const learnerGroup2 = await this.server.create('learner-group');
+    const instructorGroup = await this.server.create('instructor-group', {
       users: [instructor1, instructor2, instructor3],
     });
-    this.course = this.server.create('course', {
+    this.course = await this.server.create('course', {
       school: this.school,
       directorIds: [this.user.id],
     });
-    this.session1 = this.server.create('session', {
+    this.session1 = await this.server.create('session', {
       course: this.course,
       sessionType: this.sessionType,
       updatedAt: DateTime.fromObject({ year: 2019, month: 7, day: 9, hour: 17 }).toJSDate(),
     });
-    this.session2 = this.server.create('session', {
+    this.session2 = await this.server.create('session', {
       course: this.course,
       sessionType: this.sessionType,
     });
-    this.session3 = this.server.create('session', {
+    this.session3 = await this.server.create('session', {
       course: this.course,
       sessionType: this.sessionType,
       instructionalNotes: "They're good dogs Brent",
     });
-    this.session4 = this.server.create('session', {
+    this.session4 = await this.server.create('session', {
       course: this.course,
       sessionType: this.sessionType,
       prerequisites: [this.session2],
       title: 'session3\\',
     });
-    this.server.create('offering', {
+    await this.server.create('offering', {
       session: this.session1,
       startDate: this.today.toJSDate(),
       endDate: this.today.plus({ hour: 1 }).toJSDate(),
@@ -68,12 +68,12 @@ module('Acceptance | Course - Session List', function (hooks) {
       instructors: [instructor1],
       instructorGroups: [instructorGroup],
     });
-    this.server.create('offering', {
+    await this.server.create('offering', {
       session: this.session1,
       startDate: this.today.plus({ day: 1, hour: 1 }).toJSDate(),
       endDate: this.today.plus({ day: 1, hour: 4 }).toJSDate(),
     });
-    this.server.create('offering', {
+    await this.server.create('offering', {
       session: this.session1,
       startDate: this.today.plus({ day: 2 }).toJSDate(),
       endDate: this.today.plus({ day: 3 }).toJSDate(),
@@ -221,9 +221,9 @@ module('Acceptance | Course - Session List', function (hooks) {
   });
 
   test('expand all sessions', async function (assert) {
-    this.server.create('offering', { session: this.session2 });
-    this.server.create('offering', { session: this.session3 });
-    this.server.create('offering', { session: this.session4 });
+    await this.server.create('offering', { session: this.session2 });
+    await this.server.create('offering', { session: this.session3 });
+    await this.server.create('offering', { session: this.session4 });
     await page.visit({ courseId: this.course.id, details: true });
     const { sessions, expandedSessions } = page.courseSessions.sessionsGrid;
     assert.strictEqual(sessions.length, 4);
@@ -240,8 +240,8 @@ module('Acceptance | Course - Session List', function (hooks) {
   });
 
   test('expand all sessions does not expand sessions with no offerings', async function (assert) {
-    this.server.create('offering', { session: this.session2 });
-    this.server.create('offering', { session: this.session4 });
+    await this.server.create('offering', { session: this.session2 });
+    await this.server.create('offering', { session: this.session4 });
     await page.visit({ courseId: this.course.id, details: true });
     const { sessions, expandedSessions } = page.courseSessions.sessionsGrid;
     assert.strictEqual(sessions.length, 4);
@@ -253,9 +253,9 @@ module('Acceptance | Course - Session List', function (hooks) {
   });
 
   test('expand all sessions with one session expanded already', async function (assert) {
-    this.server.create('offering', { session: this.session2 });
-    this.server.create('offering', { session: this.session3 });
-    this.server.create('offering', { session: this.session4 });
+    await this.server.create('offering', { session: this.session2 });
+    await this.server.create('offering', { session: this.session3 });
+    await this.server.create('offering', { session: this.session4 });
     await page.visit({ courseId: this.course.id, details: true });
     const { sessions, expandedSessions } = page.courseSessions.sessionsGrid;
     assert.strictEqual(sessions.length, 4);
@@ -269,9 +269,9 @@ module('Acceptance | Course - Session List', function (hooks) {
   });
 
   test('expand sessions one at a time and collapse all', async function (assert) {
-    this.server.create('offering', { session: this.session2 });
-    this.server.create('offering', { session: this.session3 });
-    this.server.create('offering', { session: this.session4 });
+    await this.server.create('offering', { session: this.session2 });
+    await this.server.create('offering', { session: this.session3 });
+    await this.server.create('offering', { session: this.session4 });
     await page.visit({ courseId: this.course.id, details: true });
     const { sessions, expandedSessions } = page.courseSessions.sessionsGrid;
     assert.strictEqual(sessions.length, 4);
@@ -287,7 +287,7 @@ module('Acceptance | Course - Session List', function (hooks) {
   });
 
   test('new session', async function (assert) {
-    this.server.create('session-type', { school: this.school });
+    await this.server.create('session-type', { school: this.school });
     await page.visit({ courseId: this.course.id, details: true });
     assert.strictEqual(page.courseSessions.header.title, 'Sessions (4)');
     const { sessions } = page.courseSessions.sessionsGrid;
@@ -401,7 +401,7 @@ module('Acceptance | Course - Session List', function (hooks) {
 
   test('back and forth #3771', async function (assert) {
     const sessionCount = 50;
-    this.server.createList('session', sessionCount, {
+    await this.server.createList('session', sessionCount, {
       course: this.course,
       sessionType: this.sessionType,
     });

@@ -13,23 +13,23 @@ module('Integration | Component | school/competencies-pcrs-mapper', function (ho
   setupMSW(hooks);
 
   hooks.beforeEach(async function () {
-    const pcrs1 = this.server.create('aamc-pcrs', {
+    const pcrs1 = await this.server.create('aamc-pcrs', {
       id: 'aamc-pcrs-comp-c0201',
       description: 'Foo',
     });
-    const pcrs2 = this.server.create('aamc-pcrs', {
+    const pcrs2 = await this.server.create('aamc-pcrs', {
       id: 'aamc-pcrs-comp-c0555',
       description: 'Bar',
     });
-    const pcrs3 = this.server.create('aamc-pcrs', {
+    const pcrs3 = await this.server.create('aamc-pcrs', {
       id: 'aamc-pcrs-comp-c0125',
       description: 'Baz',
     });
-    const pcrs4 = this.server.create('aamc-pcrs', {
+    const pcrs4 = await this.server.create('aamc-pcrs', {
       id: 'aamc-pcrs-comp-c0033',
       description: 'Fiz',
     });
-    const pcrs5 = this.server.create('aamc-pcrs', {
+    const pcrs5 = await this.server.create('aamc-pcrs', {
       id: 'aamc-pcrs-comp-c1522',
       description: 'Far',
     });

@@ -11,16 +11,16 @@ module('Integration | Component | user-material-status', function (hooks) {
   setupMSW(hooks);
 
   hooks.beforeEach(async function () {
-    const user = this.server.create('user');
+    const user = await this.server.create('user');
     for (let i = 1; i < 4; i++) {
-      this.server.create('user-session-material-status', {
+      await this.server.create('user-session-material-status', {
         id: i,
         status: i - 1,
-        material: this.server.create('session-learning-material', { id: i }),
+        material: await this.server.create('session-learning-material', { id: i }),
         user,
       });
     }
-    this.server.create('session-learning-material', { id: 4 });
+    await this.server.create('session-learning-material', { id: 4 });
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     class CurrentUserMock extends Service {
       async getModel() {

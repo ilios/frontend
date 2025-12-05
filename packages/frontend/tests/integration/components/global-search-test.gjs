@@ -75,9 +75,9 @@ module('Integration | Component | global-search', function (hooks) {
   });
 
   test('academic year filter works properly', async function (assert) {
-    this.server.create('academic-year', { id: 2019 });
-    this.server.create('academic-year', { id: 2020 });
-    this.server.create('academic-year', { id: 2021 });
+    await this.server.create('academic-year', { id: 2019 });
+    await this.server.create('academic-year', { id: 2020 });
+    await this.server.create('academic-year', { id: 2021 });
     const testYears = (years) => {
       this.server.get('api/search/v2/curriculum', (schema, { queryParams }) => {
         assert.step('API called');
@@ -148,7 +148,7 @@ module('Integration | Component | global-search', function (hooks) {
   });
 
   test('school filter works properly', async function (assert) {
-    this.server.createList('school', 3);
+    await this.server.createList('school', 3);
     const testSchools = (schools) => {
       this.server.get('api/search/v2/curriculum', (schema, { queryParams }) => {
         assert.step('API called');
@@ -219,7 +219,7 @@ module('Integration | Component | global-search', function (hooks) {
   });
 
   test('if only one school in system no school filter', async function (assert) {
-    this.server.create('school');
+    await this.server.create('school');
 
     this.server.get('api/search/v2/curriculum', () => {
       assert.step('API called');

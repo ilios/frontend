@@ -13,19 +13,19 @@ module('Integration | Component | program-year/objective-list', function (hooks)
   setupMSW(hooks);
 
   test('it renders and is accessible', async function (assert) {
-    const school = this.server.create('school');
-    const program = this.server.create('program', { school });
-    const programYear = this.server.create('program-year', { program });
-    const vocabulary = this.server.create('vocabulary', { school });
-    const term1 = this.server.create('term', { vocabulary, active: true });
-    const term2 = this.server.create('term', { vocabulary });
-    this.server.create('program-year-objective', {
+    const school = await this.server.create('school');
+    const program = await this.server.create('program', { school });
+    const programYear = await this.server.create('program-year', { program });
+    const vocabulary = await this.server.create('vocabulary', { school });
+    const term1 = await this.server.create('term', { vocabulary, active: true });
+    const term2 = await this.server.create('term', { vocabulary });
+    await this.server.create('program-year-objective', {
       programYear,
       title: 'Objective A',
       position: 0,
       terms: [term1],
     });
-    this.server.create('program-year-objective', {
+    await this.server.create('program-year-objective', {
       programYear,
       title: 'Objective B',
       position: 0,
@@ -77,9 +77,9 @@ module('Integration | Component | program-year/objective-list', function (hooks)
   });
 
   test('empty list', async function (assert) {
-    const school = this.server.create('school');
-    const program = this.server.create('program', { school });
-    const programYear = this.server.create('program-year', { program });
+    const school = await this.server.create('school');
+    const program = await this.server.create('program', { school });
+    const programYear = await this.server.create('program-year', { program });
     const programYearModel = await this.owner
       .lookup('service:store')
       .findRecord('program-year', programYear.id);
@@ -93,10 +93,10 @@ module('Integration | Component | program-year/objective-list', function (hooks)
   });
 
   test('no "sort objectives" button in list with one item', async function (assert) {
-    const school = this.server.create('school');
-    const program = this.server.create('program', { school });
-    const programYear = this.server.create('program-year', { program });
-    this.server.create('program-year-objective', { programYear, position: 0 });
+    const school = await this.server.create('school');
+    const program = await this.server.create('program', { school });
+    const programYear = await this.server.create('program-year', { program });
+    await this.server.create('program-year-objective', { programYear, position: 0 });
     const programYearModel = await this.owner
       .lookup('service:store')
       .findRecord('program-year', programYear.id);
@@ -122,17 +122,17 @@ module('Integration | Component | program-year/objective-list', function (hooks)
   });
 
   test('all eligible domain trees are shown in competency picker', async function (assert) {
-    const school = this.server.create('school');
-    const program = this.server.create('program', { school });
-    const domain1 = this.server.create('competency', { school });
-    const competency1 = this.server.create('competency', { school, parent: domain1 });
-    const domain2 = this.server.create('competency', { school });
-    this.server.createList('competency', 2, { school, parent: domain2 });
-    const programYear = this.server.create('program-year', {
+    const school = await this.server.create('school');
+    const program = await this.server.create('program', { school });
+    const domain1 = await this.server.create('competency', { school });
+    const competency1 = await this.server.create('competency', { school, parent: domain1 });
+    const domain2 = await this.server.create('competency', { school });
+    await this.server.createList('competency', 2, { school, parent: domain2 });
+    const programYear = await this.server.create('program-year', {
       program,
       competencies: [competency1, domain2],
     });
-    this.server.create('program-year-objective', { programYear });
+    await this.server.create('program-year-objective', { programYear });
     const programYearModel = await this.owner
       .lookup('service:store')
       .findRecord('program-year', programYear.id);

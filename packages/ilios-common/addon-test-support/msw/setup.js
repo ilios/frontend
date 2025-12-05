@@ -71,9 +71,7 @@ function createModel(modelName, attrs = {}) {
   }
 
   // Return promise from collection.create()
-  const rhett = collection.create(mergedAttrs);
-
-  return rhett;
+  return collection.create(mergedAttrs);
 }
 
 function createModelList(modelName, count, attrs = {}) {

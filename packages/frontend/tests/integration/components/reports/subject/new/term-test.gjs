@@ -10,34 +10,34 @@ module('Integration | Component | reports/subject/new/term', function (hooks) {
   setupRenderingTest(hooks);
   setupMSW(hooks);
 
-  hooks.beforeEach(function () {
+  hooks.beforeEach(async function () {
     this.intl = this.owner.lookup('service:intl');
-    const [school1, school2] = this.server.createList('school', 2);
-    const vocabulary1 = this.server.create('vocabulary', { school: school1 });
-    const vocabulary2 = this.server.create('vocabulary', { school: school2, duration: 7 });
-    const [parent1, parent2] = this.server.createList('term', 2, {
+    const [school1, school2] = await this.server.createList('school', 2);
+    const vocabulary1 = await this.server.create('vocabulary', { school: school1 });
+    const vocabulary2 = await this.server.create('vocabulary', { school: school2, duration: 7 });
+    const [parent1, parent2] = await this.server.createList('term', 2, {
       active: true,
       vocabulary: vocabulary1,
     });
-    const parent3 = this.server.create('term', {
+    const parent3 = await this.server.create('term', {
       active: true,
       vocabulary: vocabulary1,
       parent: parent2,
     });
-    this.server.create('term', {
+    await this.server.create('term', {
       active: true,
       vocabulary: vocabulary1,
     });
-    this.server.create('term', {
+    await this.server.create('term', {
       active: true,
       vocabulary: vocabulary1,
       parent: parent1,
     });
-    this.server.create('term', {
+    await this.server.create('term', {
       active: true,
       vocabulary: vocabulary2,
     });
-    this.server.create('term', {
+    await this.server.create('term', {
       vocabulary: vocabulary1,
       active: true,
       parent: parent3,

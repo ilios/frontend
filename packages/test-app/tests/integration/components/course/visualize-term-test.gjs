@@ -10,10 +10,10 @@ module('Integration | Component | course/visualize-term', function (hooks) {
   setupMSW(hooks);
 
   hooks.beforeEach(async function () {
-    const school = this.server.create('school');
-    const vocabulary = this.server.create('vocabulary', { school });
-    const term = this.server.create('term', { vocabulary });
-    const course = this.server.create('course', { year: 2021, school, terms: [term] });
+    const school = await this.server.create('school');
+    const vocabulary = await this.server.create('vocabulary', { school });
+    const term = await this.server.create('term', { vocabulary });
+    const course = await this.server.create('course', { year: 2021, school, terms: [term] });
     this.courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.termModel = await this.owner.lookup('service:store').findRecord('term', term.id);
   });

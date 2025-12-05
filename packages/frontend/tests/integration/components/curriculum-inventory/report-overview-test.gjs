@@ -13,15 +13,15 @@ module('Integration | Component | curriculum-inventory/report-overview', functio
 
   hooks.beforeEach(async function () {
     this.intl = this.owner.lookup('service:intl');
-    const school = this.server.create('school');
+    const school = await this.server.create('school');
     const currentYear = DateTime.fromObject({ hour: 8 }).year;
-    const academicLevels = this.server.createList('curriculum-inventory-academic-level', 10);
-    this.program = this.server.create('program', {
+    const academicLevels = await this.server.createList('curriculum-inventory-academic-level', 10);
+    this.program = await this.server.create('program', {
       school,
       title: 'Doctor of Rocket Surgery',
       shortTitle: 'DRS',
     });
-    this.report = this.server.create('curriculum-inventory-report', {
+    this.report = await this.server.create('curriculum-inventory-report', {
       academicLevels,
       year: currentYear.toString(),
       program: this.program,
@@ -335,8 +335,8 @@ module('Integration | Component | curriculum-inventory/report-overview', functio
   });
 
   test('academic year unchangeable if course has been linked', async function (assert) {
-    const course = this.server.create('course');
-    this.server.create('curriculum-inventory-sequence-block', {
+    const course = await this.server.create('course');
+    await this.server.create('curriculum-inventory-sequence-block', {
       course,
       report: this.report,
     });

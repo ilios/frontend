@@ -11,28 +11,28 @@ module('Integration | Component | instructor selection manager', function (hooks
   setupMSW(hooks);
 
   hooks.beforeEach(async function () {
-    const instructor1 = this.server.create('user', {
+    const instructor1 = await this.server.create('user', {
       firstName: 'Joe',
       lastName: 'Doe',
       middleName: 'Michael',
     });
-    const instructor2 = this.server.create('user', {
+    const instructor2 = await this.server.create('user', {
       firstName: 'Jane',
       lastName: 'Doe',
       middleName: 'Anette',
     });
-    const instructor3 = this.server.create('user', {
+    const instructor3 = await this.server.create('user', {
       displayName: 'Aardvark',
     });
-    const group1 = this.server.create('instructor-group', {
+    const group1 = await this.server.create('instructor-group', {
       users: [instructor1],
       title: 'Beta',
     });
-    const group2 = this.server.create('instructor-group', {
+    const group2 = await this.server.create('instructor-group', {
       users: [instructor2, instructor3],
       title: 'Alpha',
     });
-    const group3 = this.server.create('instructor-group', { title: 'Gamma' });
+    const group3 = await this.server.create('instructor-group', { title: 'Gamma' });
     this.instructor1 = await this.owner.lookup('service:store').findRecord('user', instructor1.id);
     this.instructor2 = await this.owner.lookup('service:store').findRecord('user', instructor2.id);
     this.instructor3 = await this.owner.lookup('service:store').findRecord('user', instructor3.id);

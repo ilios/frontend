@@ -12,7 +12,7 @@ module('Integration | Component | user-search-result-instructor-group', function
   setupMSW(hooks);
 
   test('it renders', async function (assert) {
-    const group = this.server.create('instructor-group');
+    const group = await this.server.create('instructor-group');
     const groupModel = await this.owner
       .lookup('service:store')
       .findRecord('instructor-group', group.id);
@@ -27,7 +27,7 @@ module('Integration | Component | user-search-result-instructor-group', function
   });
 
   test('inactive if it is already selected', async function (assert) {
-    const group = this.server.create('instructor-group');
+    const group = await this.server.create('instructor-group');
     const groupModel = await this.owner
       .lookup('service:store')
       .findRecord('instructor-group', group.id);
@@ -47,7 +47,7 @@ module('Integration | Component | user-search-result-instructor-group', function
   });
 
   test('click fires action', async function (assert) {
-    const group = this.server.create('instructor-group');
+    const group = await this.server.create('instructor-group');
     const groupModel = await this.owner
       .lookup('service:store')
       .findRecord('instructor-group', group.id);

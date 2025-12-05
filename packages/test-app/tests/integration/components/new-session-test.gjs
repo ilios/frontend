@@ -12,8 +12,8 @@ module('Integration | Component | new session', function (hooks) {
   setupMSW(hooks);
 
   hooks.beforeEach(async function () {
-    const sessionType = this.server.create('session-type');
-    const sessionType2 = this.server.create('session-type');
+    const sessionType = await this.server.create('session-type');
+    const sessionType2 = await this.server.create('session-type');
     this.sessionType = await this.owner
       .lookup('service:store')
       .findRecord('session-type', sessionType.id);

@@ -11,16 +11,16 @@ module('Integration | Component | school/vocabulary-manager', function (hooks) {
   setupMSW(hooks);
 
   test('it renders', async function (assert) {
-    const school = this.server.create('school');
-    const vocabulary = this.server.create('vocabulary', { school });
-    const term = this.server.create('term', {
+    const school = await this.server.create('school');
+    const vocabulary = await this.server.create('vocabulary', { school });
+    const term = await this.server.create('term', {
       vocabulary,
     });
-    this.server.create('term', {
+    await this.server.create('term', {
       active: true,
       vocabulary,
     });
-    this.server.create('term', {
+    await this.server.create('term', {
       vocabulary,
       parent: term,
       active: false,
@@ -51,8 +51,8 @@ module('Integration | Component | school/vocabulary-manager', function (hooks) {
   });
 
   test('change vocabulary title', async function (assert) {
-    const school = this.server.create('school');
-    const vocabulary = this.server.create('vocabulary', { school });
+    const school = await this.server.create('school');
+    const vocabulary = await this.server.create('vocabulary', { school });
     const vocabularyModel = await this.owner
       .lookup('service:store')
       .findRecord('vocabulary', vocabulary.id);
@@ -76,8 +76,8 @@ module('Integration | Component | school/vocabulary-manager', function (hooks) {
   });
 
   test('cancel vocabulary title changes', async function (assert) {
-    const school = this.server.create('school');
-    const vocabulary = this.server.create('vocabulary', { school });
+    const school = await this.server.create('school');
+    const vocabulary = await this.server.create('vocabulary', { school });
     const vocabularyModel = await this.owner
       .lookup('service:store')
       .findRecord('vocabulary', vocabulary.id);
@@ -101,8 +101,8 @@ module('Integration | Component | school/vocabulary-manager', function (hooks) {
   });
 
   test('validation fails if vocabulary title is blank', async function (assert) {
-    const school = this.server.create('school');
-    const vocabulary = this.server.create('vocabulary', { school });
+    const school = await this.server.create('school');
+    const vocabulary = await this.server.create('vocabulary', { school });
     const vocabularyModel = await this.owner
       .lookup('service:store')
       .findRecord('vocabulary', vocabulary.id);
@@ -129,8 +129,8 @@ module('Integration | Component | school/vocabulary-manager', function (hooks) {
   });
 
   test('validation fails if vocabulary title is too long', async function (assert) {
-    const school = this.server.create('school');
-    const vocabulary = this.server.create('vocabulary', { school });
+    const school = await this.server.create('school');
+    const vocabulary = await this.server.create('vocabulary', { school });
     const vocabularyModel = await this.owner
       .lookup('service:store')
       .findRecord('vocabulary', vocabulary.id);
@@ -157,9 +157,9 @@ module('Integration | Component | school/vocabulary-manager', function (hooks) {
   });
 
   test('prevent duplicate vocabulary title', async function (assert) {
-    const school = this.server.create('school');
-    const vocabulary = this.server.create('vocabulary', { school });
-    this.server.create('vocabulary', {
+    const school = await this.server.create('school');
+    const vocabulary = await this.server.create('vocabulary', { school });
+    await this.server.create('vocabulary', {
       school,
       title: 'duplicate one',
     });
@@ -189,8 +189,8 @@ module('Integration | Component | school/vocabulary-manager', function (hooks) {
   });
 
   test('add term', async function (assert) {
-    const school = this.server.create('school');
-    const vocabulary = this.server.create('vocabulary', { school });
+    const school = await this.server.create('school');
+    const vocabulary = await this.server.create('vocabulary', { school });
     const vocabularyModel = await this.owner
       .lookup('service:store')
       .findRecord('vocabulary', vocabulary.id);
@@ -218,8 +218,8 @@ module('Integration | Component | school/vocabulary-manager', function (hooks) {
   });
 
   test('cant add term with empty title', async function (assert) {
-    const school = this.server.create('school');
-    const vocabulary = this.server.create('vocabulary', { school });
+    const school = await this.server.create('school');
+    const vocabulary = await this.server.create('vocabulary', { school });
     const vocabularyModel = await this.owner
       .lookup('service:store')
       .findRecord('vocabulary', vocabulary.id);
@@ -247,9 +247,9 @@ module('Integration | Component | school/vocabulary-manager', function (hooks) {
   });
 
   test('cant add term with duplicate title', async function (assert) {
-    const school = this.server.create('school');
-    const vocabulary = this.server.create('vocabulary', { school });
-    this.server.create('term', {
+    const school = await this.server.create('school');
+    const vocabulary = await this.server.create('vocabulary', { school });
+    await this.server.create('term', {
       vocabulary,
     });
     const vocabularyModel = await this.owner

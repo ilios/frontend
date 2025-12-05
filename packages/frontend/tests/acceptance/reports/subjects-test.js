@@ -9,37 +9,37 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
   setupApplicationTest(hooks);
 
   hooks.beforeEach(async function () {
-    const school = this.server.create('school');
+    const school = await this.server.create('school');
     const user = await setupAuthentication({ school }, true);
-    const vocabulary = this.server.create('vocabulary', {
+    const vocabulary = await this.server.create('vocabulary', {
       school,
     });
-    const term = this.server.create('term', { vocabulary });
-    this.server.create('academic-year', {
+    const term = await this.server.create('term', { vocabulary });
+    await this.server.create('academic-year', {
       id: 2015,
     });
-    this.server.create('academic-year', {
+    await this.server.create('academic-year', {
       id: 2016,
     });
-    this.server.create('program', { school });
-    const firstCourse = this.server.create('course', {
+    await this.server.create('program', { school });
+    const firstCourse = await this.server.create('course', {
       school,
       year: 2015,
       externalId: 'Theoretical Phys Ed',
     });
-    this.server.create('session', {
+    await this.server.create('session', {
       course: firstCourse,
       terms: [term],
     });
-    const secondCourse = this.server.create('course', {
+    const secondCourse = await this.server.create('course', {
       school,
       year: 2016,
     });
-    this.server.create('session', {
+    await this.server.create('session', {
       course: secondCourse,
       terms: [term],
     });
-    this.server.create('report', {
+    await this.server.create('report', {
       title: 'my report 0',
       subject: 'session',
       prepositionalObject: 'course',
@@ -47,7 +47,7 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
       user,
       school,
     });
-    this.server.create('report', {
+    await this.server.create('report', {
       title: null,
       subject: 'session',
       prepositionalObject: 'term',
@@ -55,7 +55,7 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
       user,
       school,
     });
-    this.server.create('mesh-descriptor', {
+    await this.server.create('mesh-descriptor', {
       id: 'D1234',
       courses: [firstCourse, secondCourse],
     });
@@ -580,7 +580,7 @@ module('Acceptance | Reports - Subject Reports', function (hooks) {
   });
 
   test('create new report for instructors by academic year #3594', async function (assert) {
-    this.server.createList('user', 3);
+    await this.server.createList('user', 3);
     await page.visit();
     assert.strictEqual(page.subjects.list.table.reports.length, 2);
     assert.ok(page.subjects.list.newReportLinkIsHidden);

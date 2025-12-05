@@ -7,32 +7,32 @@ import page from 'ilios-common/page-objects/course';
 module('Acceptance | Course - Multiple Objective Parents', function (hooks) {
   setupApplicationTest(hooks);
   hooks.beforeEach(async function () {
-    const school = this.server.create('school');
+    const school = await this.server.create('school');
     this.user = await setupAuthentication({ administeredSchools: [school] }, true);
-    this.server.create('schoolConfig', {
+    await this.server.create('schoolConfig', {
       school,
       name: 'allowMultipleCourseObjectiveParents',
       value: true,
     });
 
-    const program = this.server.create('program', { school });
-    const programYear = this.server.create('program-year', { program });
-    const cohort = this.server.create('cohort', { programYear });
-    const competency = this.server.create('competency', {
+    const program = await this.server.create('program', { school });
+    const programYear = await this.server.create('program-year', { program });
+    const cohort = await this.server.create('cohort', { programYear });
+    const competency = await this.server.create('competency', {
       school,
       programYears: [programYear],
     });
-    const programYearObjectives = this.server.createList('program-year-objective', 3, {
+    const programYearObjectives = await this.server.createList('program-year-objective', 3, {
       programYear,
       competency,
     });
 
-    this.course = this.server.create('course', {
+    this.course = await this.server.create('course', {
       school,
       cohorts: [cohort],
     });
 
-    this.server.create('course-objective', {
+    await this.server.create('course-objective', {
       programYearObjectives: [programYearObjectives[0], programYearObjectives[1]],
       course: this.course,
     });

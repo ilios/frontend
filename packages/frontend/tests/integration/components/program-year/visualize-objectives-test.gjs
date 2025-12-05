@@ -11,56 +11,56 @@ module('Integration | Component | program-year/visualize-objectives', function (
   setupMSW(hooks);
 
   test('it renders', async function (assert) {
-    const school = this.server.create('school');
-    const competency = this.server.create('competency', { school });
-    const program = this.server.create('program');
-    const programYear = this.server.create('program-year', {
+    const school = await this.server.create('school');
+    const competency = await this.server.create('competency', { school });
+    const program = await this.server.create('program');
+    const programYear = await this.server.create('program-year', {
       program,
       competencies: [competency],
     });
-    const cohort = this.server.create('cohort', {
+    const cohort = await this.server.create('cohort', {
       programYear,
       title: 'Class of 2022',
     });
-    const course = this.server.create('course', {
+    const course = await this.server.create('course', {
       school,
       cohorts: [cohort],
     });
-    const sessions = this.server.createList('session', 3, {
+    const sessions = await this.server.createList('session', 3, {
       course,
     });
-    const sessionObjective1 = this.server.create('session-objective', {
+    const sessionObjective1 = await this.server.create('session-objective', {
       session: sessions[0],
     });
-    const sessionObjective2 = this.server.create('session-objective', {
+    const sessionObjective2 = await this.server.create('session-objective', {
       session: sessions[1],
     });
-    const sessionObjective3 = this.server.create('session-objective', {
+    const sessionObjective3 = await this.server.create('session-objective', {
       session: sessions[2],
     });
-    const courseObjective1 = this.server.create('course-objective', {
+    const courseObjective1 = await this.server.create('course-objective', {
       course,
       sessionObjectives: [sessionObjective1],
     });
-    const courseObjective2 = this.server.create('course-objective', {
+    const courseObjective2 = await this.server.create('course-objective', {
       course,
       sessionObjectives: [sessionObjective2],
     });
-    const courseObjective3 = this.server.create('course-objective', {
+    const courseObjective3 = await this.server.create('course-objective', {
       course,
       sessionObjectives: [sessionObjective3],
     });
-    this.server.create('program-year-objective', {
+    await this.server.create('program-year-objective', {
       programYear,
       competency,
       courseObjectives: [courseObjective1],
     });
-    this.server.create('program-year-objective', {
+    await this.server.create('program-year-objective', {
       programYear,
       competency,
       courseObjectives: [courseObjective2],
     });
-    this.server.create('program-year-objective', {
+    await this.server.create('program-year-objective', {
       programYear,
       competency,
       courseObjectives: [courseObjective3],

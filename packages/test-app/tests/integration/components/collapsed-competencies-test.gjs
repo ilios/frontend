@@ -11,39 +11,39 @@ module('Integration | Component | collapsed competencies', function (hooks) {
   setupMSW(hooks);
 
   hooks.beforeEach(async function () {
-    const schoolA = this.server.create('school', { title: 'Medicine' });
-    const schoolB = this.server.create('school', { title: 'Pharmacy' });
-    const competencyA = this.server.create('competency', { school: schoolA });
-    const competencyB = this.server.create('competency', { school: schoolB });
-    const competencyC = this.server.create('competency', { school: schoolB });
-    const programYear = this.server.create('program-year', {
+    const schoolA = await this.server.create('school', { title: 'Medicine' });
+    const schoolB = await this.server.create('school', { title: 'Pharmacy' });
+    const competencyA = await this.server.create('competency', { school: schoolA });
+    const competencyB = await this.server.create('competency', { school: schoolB });
+    const competencyC = await this.server.create('competency', { school: schoolB });
+    const programYear = await this.server.create('program-year', {
       competencies: [
-        ...this.server.createList('competency', 2, { school: schoolB }),
-        ...this.server.createList('competency', 3, { school: schoolA }),
+        ...(await this.server.createList('competency', 2, { school: schoolB })),
+        ...(await this.server.createList('competency', 3, { school: schoolA })),
       ],
     });
-    const pyObjectiveA = this.server.create('program-year-objective', {
+    const pyObjectiveA = await this.server.create('program-year-objective', {
       programYear,
       competency: competencyA,
     });
-    const pyObjectiveB = this.server.create('program-year-objective', {
+    const pyObjectiveB = await this.server.create('program-year-objective', {
       programYear,
       competency: competencyB,
     });
-    const pyObjectiveC = this.server.create('program-year-objective', {
+    const pyObjectiveC = await this.server.create('program-year-objective', {
       programYear,
       competency: competencyC,
     });
-    const course = this.server.create('course');
-    this.server.create('course-objective', {
+    const course = await this.server.create('course');
+    await this.server.create('course-objective', {
       course,
       programYearObjectives: [pyObjectiveA, pyObjectiveC],
     });
-    this.server.create('course-objective', {
+    await this.server.create('course-objective', {
       course,
       programYearObjectives: [pyObjectiveB],
     });
-    this.server.create('course-objective', {
+    await this.server.create('course-objective', {
       course,
       programYearObjectives: [pyObjectiveC],
     });

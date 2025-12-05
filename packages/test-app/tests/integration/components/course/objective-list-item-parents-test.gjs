@@ -13,10 +13,10 @@ module('Integration | Component | course/objective-list-item-parents', function 
   setupMSW(hooks);
 
   hooks.beforeEach(async function () {
-    const programYearObjective1 = this.server.create('program-year-objective', {
+    const programYearObjective1 = await this.server.create('program-year-objective', {
       title: '<p>Country &amp; Western</p>',
     });
-    const programYearObjective2 = this.server.create('program-year-objective');
+    const programYearObjective2 = await this.server.create('program-year-objective');
     this.programYearObjective1 = await this.owner
       .lookup('service:store')
       .findRecord('program-year-objective', programYearObjective1.id);

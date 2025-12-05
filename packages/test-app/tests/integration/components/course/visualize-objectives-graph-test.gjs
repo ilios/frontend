@@ -10,68 +10,68 @@ module('Integration | Component | course/visualize-objectives-graph', function (
   setupMSW(hooks);
 
   hooks.beforeEach(async function () {
-    const course = this.server.create('course');
-    const competencies = this.server.createList('competency', 3);
-    const programYearObjective1 = this.server.create('program-year-objective', {
+    const course = await this.server.create('course');
+    const competencies = await this.server.createList('competency', 3);
+    const programYearObjective1 = await this.server.create('program-year-objective', {
       competency: competencies[0],
     });
-    const programYearObjective2 = this.server.create('program-year-objective', {
+    const programYearObjective2 = await this.server.create('program-year-objective', {
       competency: competencies[1],
     });
-    const programYearObjective3 = this.server.create('program-year-objective', {
+    const programYearObjective3 = await this.server.create('program-year-objective', {
       competency: competencies[2],
     });
-    const programYearObjective4 = this.server.create('program-year-objective', {
+    const programYearObjective4 = await this.server.create('program-year-objective', {
       competency: competencies[1],
     });
-    const courseObjective1 = this.server.create('course-objective', {
+    const courseObjective1 = await this.server.create('course-objective', {
       course,
       programYearObjectives: [programYearObjective1, programYearObjective2, programYearObjective4],
     });
-    const courseObjective2 = this.server.create('course-objective', {
+    const courseObjective2 = await this.server.create('course-objective', {
       course,
       programYearObjectives: [programYearObjective2],
     });
-    const courseObjective3 = this.server.create('course-objective', {
+    const courseObjective3 = await this.server.create('course-objective', {
       course,
       programYearObjectives: [programYearObjective3],
     });
-    const session1 = this.server.create('session', {
+    const session1 = await this.server.create('session', {
       title: 'Berkeley Investigations',
       course,
     });
-    const session2 = this.server.create('session', {
+    const session2 = await this.server.create('session', {
       title: 'The San Leandro Horror',
       course,
     });
-    const session3 = this.server.create('session', {
+    const session3 = await this.server.create('session', {
       title: 'Empty Session',
       course,
     });
-    this.server.create('session-objective', {
+    await this.server.create('session-objective', {
       session: session1,
       courseObjectives: [courseObjective1],
     });
-    this.server.create('session-objective', {
+    await this.server.create('session-objective', {
       session: session2,
       courseObjectives: [courseObjective2],
     });
-    this.server.create('session-objective', {
+    await this.server.create('session-objective', {
       session: session3,
       courseObjectives: [courseObjective3],
     });
 
-    this.server.create('offering', {
+    await this.server.create('offering', {
       session: session1,
       startDate: new Date('2019-12-08T12:00:00'),
       endDate: new Date('2019-12-08T17:00:00'),
     });
-    this.server.create('offering', {
+    await this.server.create('offering', {
       session: session1,
       startDate: new Date('2019-12-21T12:00:00'),
       endDate: new Date('2019-12-21T17:30:00'),
     });
-    this.server.create('offering', {
+    await this.server.create('offering', {
       session: session2,
       startDate: new Date('2019-12-05T18:00:00'),
       endDate: new Date('2019-12-05T21:00:00'),
@@ -154,7 +154,7 @@ module('Integration | Component | course/visualize-objectives-graph', function (
   });
 
   test('data table is not visible if graph has no data', async function (assert) {
-    const course = this.server.create('course');
+    const course = await this.server.create('course');
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('course', courseModel);
     await render(
@@ -290,39 +290,39 @@ module('Integration | Component | course/visualize-objectives-graph', function (
   });
 
   test('no objectives', async function (assert) {
-    const course = this.server.create('course');
-    const session1 = this.server.create('session', {
+    const course = await this.server.create('course');
+    const session1 = await this.server.create('session', {
       title: 'Berkeley Investigations',
       course,
     });
-    const session2 = this.server.create('session', {
+    const session2 = await this.server.create('session', {
       title: 'The San Leandro Horror',
       course,
     });
-    const session3 = this.server.create('session', {
+    const session3 = await this.server.create('session', {
       title: 'Empty Session',
       course,
     });
-    this.server.create('session-objective', {
+    await this.server.create('session-objective', {
       session: session1,
     });
-    this.server.create('session-objective', {
+    await this.server.create('session-objective', {
       session: session2,
     });
-    this.server.create('session-objective', {
+    await this.server.create('session-objective', {
       session: session3,
     });
-    this.server.create('offering', {
+    await this.server.create('offering', {
       session: session1,
       startDate: new Date('2019-12-08T12:00:00'),
       endDate: new Date('2019-12-08T17:00:00'),
     });
-    this.server.create('offering', {
+    await this.server.create('offering', {
       session: session1,
       startDate: new Date('2019-12-21T12:00:00'),
       endDate: new Date('2019-12-21T17:30:00'),
     });
-    this.server.create('offering', {
+    await this.server.create('offering', {
       session: session2,
       startDate: new Date('2019-12-05T18:00:00'),
       endDate: new Date('2019-12-05T21:00:00'),
@@ -345,9 +345,9 @@ module('Integration | Component | course/visualize-objectives-graph', function (
 
   // See https://github.com/ilios/ilios/issues/5305
   test('a course without mapped course objectives shows 0 percent for each objective in the data table', async function (assert) {
-    const course = this.server.create('course');
-    this.server.create('course-objective', { course });
-    this.server.create('course-objective', { course });
+    const course = await this.server.create('course');
+    await this.server.create('course-objective', { course });
+    await this.server.create('course-objective', { course });
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('course', courseModel);
     await render(

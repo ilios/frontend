@@ -24,10 +24,10 @@ module('Integration | Component | user profile bio manager', function (hooks) {
   };
 
   hooks.beforeEach(async function () {
-    this.school = this.server.create('school', {
+    this.school = await this.server.create('school', {
       title: 'Cool School',
     });
-    this.user = this.server.create('user', {
+    this.user = await this.server.create('user', {
       id: 13,
       fullName: 'Test Person Name Thing',
       firstName: 'Test Person',
@@ -42,7 +42,7 @@ module('Integration | Component | user profile bio manager', function (hooks) {
       phone: 'x1234',
       school: this.school,
     });
-    this.authentication = this.server.create('authentication', {
+    this.authentication = await this.server.create('authentication', {
       username: 'test-username',
       user: this.user,
       password: null,
@@ -162,10 +162,10 @@ module('Integration | Component | user profile bio manager', function (hooks) {
 
   test('can edit user bio for ldap config', async function (assert) {
     setupApplicationConfig('ldap', this);
-    this.server.create('pending-user-update', {
+    await this.server.create('pending-user-update', {
       user: this.user,
     });
-    this.server.create('pending-user-update', {
+    await this.server.create('pending-user-update', {
       user: this.user,
     });
     const userModel = await this.owner.lookup('service:store').findRecord('user', this.user.id);
@@ -662,8 +662,8 @@ module('Integration | Component | user profile bio manager', function (hooks) {
   });
 
   test('validate username', async function (assert) {
-    const user = this.server.create('user');
-    this.server.create('authentication', { username: 'geflarknik', user });
+    const user = await this.server.create('user');
+    await this.server.create('authentication', { username: 'geflarknik', user });
     setupApplicationConfig('form', this);
     const userModel = await this.owner.lookup('service:store').findRecord('user', this.user.id);
     this.set('user', userModel);

@@ -8,14 +8,14 @@ module('Acceptance | pending user updates', function (hooks) {
   setupApplicationTest(hooks);
 
   test('visiting /admin/userupdates', async function (assert) {
-    const school = this.server.create('school');
+    const school = await this.server.create('school');
     await setupAuthentication({ school, administeredSchools: [school] });
     await page.visit();
     assert.strictEqual(currentURL(), '/admin/userupdates');
   });
 
   test('one school', async function (assert) {
-    const school = this.server.create('school');
+    const school = await this.server.create('school');
     await setupAuthentication({ school, administeredSchools: [school] });
     await page.visit();
     await takeScreenshot(assert);
@@ -24,20 +24,20 @@ module('Acceptance | pending user updates', function (hooks) {
   });
 
   test('multiple schools, default school selection', async function (assert) {
-    const schools = this.server.createList('school', 3);
-    const usersInSchool1 = this.server.createList('user', 2, { school: schools[0] });
-    const userInSchool2 = this.server.create('user', { school: schools[1] });
-    this.server.create('pending-user-update', {
+    const schools = await this.server.createList('school', 3);
+    const usersInSchool1 = await this.server.createList('user', 2, { school: schools[0] });
+    const userInSchool2 = await this.server.create('user', { school: schools[1] });
+    await this.server.create('pending-user-update', {
       user: usersInSchool1[0],
       type: 'emailMismatch',
       value: 'dev@null.com',
     });
-    this.server.create('pending-user-update', {
+    await this.server.create('pending-user-update', {
       user: usersInSchool1[1],
       type: 'emailMismatch',
       value: 'dev@null.com',
     });
-    this.server.create('pending-user-update', {
+    await this.server.create('pending-user-update', {
       user: userInSchool2,
       type: 'emailMismatch',
       value: 'dev@null.com',
@@ -56,20 +56,20 @@ module('Acceptance | pending user updates', function (hooks) {
   });
 
   test('multiple schools, explicit school selection', async function (assert) {
-    const schools = this.server.createList('school', 3);
-    const usersInSchool1 = this.server.createList('user', 2, { school: schools[0] });
-    const userInSchool2 = this.server.create('user', { school: schools[1] });
-    this.server.create('pending-user-update', {
+    const schools = await this.server.createList('school', 3);
+    const usersInSchool1 = await this.server.createList('user', 2, { school: schools[0] });
+    const userInSchool2 = await this.server.create('user', { school: schools[1] });
+    await this.server.create('pending-user-update', {
       user: usersInSchool1[0],
       type: 'emailMismatch',
       value: 'dev@null.com',
     });
-    this.server.create('pending-user-update', {
+    await this.server.create('pending-user-update', {
       user: usersInSchool1[1],
       type: 'emailMismatch',
       value: 'dev@null.com',
     });
-    this.server.create('pending-user-update', {
+    await this.server.create('pending-user-update', {
       user: userInSchool2,
       type: 'emailMismatch',
       value: 'dev@null.com',
@@ -84,14 +84,14 @@ module('Acceptance | pending user updates', function (hooks) {
   });
 
   test('pending update types', async function (assert) {
-    const school = this.server.create('school');
-    const users = this.server.createList('user', 2, { school });
-    this.server.create('pending-user-update', {
+    const school = await this.server.create('school');
+    const users = await this.server.createList('user', 2, { school });
+    await this.server.create('pending-user-update', {
       user: users[0],
       type: 'emailMismatch',
       value: 'dev@null.com',
     });
-    this.server.create('pending-user-update', {
+    await this.server.create('pending-user-update', {
       user: users[1],
       type: 'missingFromDirectory',
     });
@@ -111,9 +111,9 @@ module('Acceptance | pending user updates', function (hooks) {
   });
 
   test('update email address', async function (assert) {
-    const school = this.server.create('school');
-    const user = this.server.create('user', { school });
-    this.server.create('pending-user-update', {
+    const school = await this.server.create('school');
+    const user = await this.server.create('user', { school });
+    await this.server.create('pending-user-update', {
       user,
       type: 'emailMismatch',
       value: 'dev@null.com',
@@ -134,12 +134,12 @@ module('Acceptance | pending user updates', function (hooks) {
   });
 
   test('exclude from sync', async function (assert) {
-    const school = this.server.create('school');
-    const user = this.server.create('user', {
+    const school = await this.server.create('school');
+    const user = await this.server.create('user', {
       school,
       userSyncIgnore: false,
     });
-    this.server.create('pending-user-update', {
+    await this.server.create('pending-user-update', {
       user,
       type: 'missingFromDirectory',
     });
@@ -159,12 +159,12 @@ module('Acceptance | pending user updates', function (hooks) {
   });
 
   test('disable user', async function (assert) {
-    const school = this.server.create('school');
-    const user = this.server.create('user', {
+    const school = await this.server.create('school');
+    const user = await this.server.create('user', {
       school,
       enabled: true,
     });
-    this.server.create('pending-user-update', {
+    await this.server.create('pending-user-update', {
       user,
       type: 'missingFromDirectory',
     });
@@ -184,24 +184,24 @@ module('Acceptance | pending user updates', function (hooks) {
   });
 
   test('filter-search users', async function (assert) {
-    const school = this.server.create('school');
-    const user1 = this.server.create('user', {
+    const school = await this.server.create('school');
+    const user1 = await this.server.create('user', {
       school,
       enabled: true,
       firstName: 'lorem',
       lastName: 'ipsum',
     });
-    this.server.create('pending-user-update', {
+    await this.server.create('pending-user-update', {
       user: user1,
       type: 'missingFromDirectory',
     });
-    const user2 = this.server.create('user', {
+    const user2 = await this.server.create('user', {
       school,
       enabled: true,
       firstName: 'zig',
       lastName: 'zag',
     });
-    this.server.create('pending-user-update', {
+    await this.server.create('pending-user-update', {
       user: user2,
       type: 'missingFromDirectory',
     });

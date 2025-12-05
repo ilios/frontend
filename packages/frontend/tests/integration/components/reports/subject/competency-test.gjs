@@ -25,7 +25,7 @@ module('Integration | Component | reports/subject/competency', function (hooks) 
       assert.strictEqual(query, 'query { competencies { id, title, school { title } } }');
       return responseData;
     });
-    const { id } = this.server.create('report', {
+    const { id } = await this.server.create('report', {
       subject: 'competency',
     });
     this.set('report', await this.owner.lookup('service:store').findRecord('report', id));
@@ -52,7 +52,7 @@ module('Integration | Component | reports/subject/competency', function (hooks) 
       assert.strictEqual(query, 'query { competencies { id, title, school { title } } }');
       return responseData;
     });
-    const { id } = this.server.create('report', {
+    const { id } = await this.server.create('report', {
       subject: 'competency',
     });
     this.set('report', await this.owner.lookup('service:store').findRecord('report', id));
@@ -91,7 +91,7 @@ module('Integration | Component | reports/subject/competency', function (hooks) 
       assert.strictEqual(query, 'query { competencies { id, title, school { title } } }');
       return responseDataLarge;
     });
-    const { id } = this.server.create('report', {
+    const { id } = await this.server.create('report', {
       subject: 'competency',
     });
     this.set('report', await this.owner.lookup('service:store').findRecord('report', id));
@@ -124,9 +124,9 @@ module('Integration | Component | reports/subject/competency', function (hooks) 
       );
       return responseData;
     });
-    const { id } = this.server.create('report', {
+    const { id } = await this.server.create('report', {
       subject: 'competency',
-      school: this.server.create('school', { id: 33 }),
+      school: await this.server.create('school', { id: 33 }),
     });
     this.set('report', await this.owner.lookup('service:store').findRecord('report', id));
     this.set('school', await this.owner.lookup('service:store').findRecord('school', 33));
@@ -153,7 +153,7 @@ module('Integration | Component | reports/subject/competency', function (hooks) 
       );
       return responseData;
     });
-    const { id } = this.server.create('report', {
+    const { id } = await this.server.create('report', {
       subject: 'competency',
       prepositionalObject: 'course',
       prepositionalObjectTableRowId: 13,
@@ -180,9 +180,9 @@ module('Integration | Component | reports/subject/competency', function (hooks) 
       assert.strictEqual(query, 'query { sessions(schools: [24], id: 13) { course { id } } }');
       return responseData;
     });
-    const { id } = this.server.create('report', {
+    const { id } = await this.server.create('report', {
       subject: 'competency',
-      school: this.server.create('school', { id: 24 }),
+      school: await this.server.create('school', { id: 24 }),
       prepositionalObject: 'session',
       prepositionalObjectTableRowId: 13,
     });

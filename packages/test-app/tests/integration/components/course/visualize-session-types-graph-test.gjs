@@ -10,60 +10,60 @@ module('Integration | Component | course/visualize-session-types-graph', functio
   setupMSW(hooks);
 
   hooks.beforeEach(async function () {
-    const sessionType1 = this.server.create('session-type', {
+    const sessionType1 = await this.server.create('session-type', {
       title: 'Standalone',
     });
-    const sessionType2 = this.server.create('session-type', {
+    const sessionType2 = await this.server.create('session-type', {
       title: 'Campaign',
     });
-    const sessionType3 = this.server.create('session-type', {
+    const sessionType3 = await this.server.create('session-type', {
       title: 'Prelude',
     });
-    const linkedCourseWithTime = this.server.create('course');
-    const linkedCourseWithoutTime = this.server.create('course');
-    const session1 = this.server.create('session', {
+    const linkedCourseWithTime = await this.server.create('course');
+    const linkedCourseWithoutTime = await this.server.create('course');
+    const session1 = await this.server.create('session', {
       title: 'Berkeley Investigations',
       course: linkedCourseWithTime,
       sessionType: sessionType1,
     });
-    const session2 = this.server.create('session', {
+    const session2 = await this.server.create('session', {
       title: 'The San Leandro Horror',
       course: linkedCourseWithTime,
       sessionType: sessionType2,
     });
-    this.server.create('session', {
+    await this.server.create('session', {
       title: 'Two Slices of Pizza',
       course: linkedCourseWithTime,
       sessionType: sessionType3,
     });
-    this.server.create('session', {
+    await this.server.create('session', {
       title: 'Aardvark',
       course: linkedCourseWithTime,
       sessionType: sessionType3,
     });
-    this.server.create('session', {
+    await this.server.create('session', {
       title: 'Peanut Butter Stout',
       course: linkedCourseWithoutTime,
       sessionType: sessionType3,
     });
-    this.server.create('offering', {
+    await this.server.create('offering', {
       session: session1,
       startDate: new Date('2019-12-08T12:00:00'),
       endDate: new Date('2019-12-08T17:00:00'),
     });
-    this.server.create('offering', {
+    await this.server.create('offering', {
       session: session1,
       startDate: new Date('2019-12-21T12:00:00'),
       endDate: new Date('2019-12-21T17:30:00'),
     });
-    this.server.create('offering', {
+    await this.server.create('offering', {
       session: session2,
       startDate: new Date('2019-12-05T18:00:00'),
       endDate: new Date('2019-12-05T21:00:00'),
     });
     this.emptyCourse = await this.owner
       .lookup('service:store')
-      .findRecord('course', this.server.create('course').id);
+      .findRecord('course', await this.server.create('course').id);
     this.linkedCourseWithoutTime = await this.owner
       .lookup('service:store')
       .findRecord('course', linkedCourseWithoutTime.id);

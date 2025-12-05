@@ -11,10 +11,10 @@ module('Integration | Component | pending single user update', function (hooks) 
   setupMSW(hooks);
 
   test('it renders missing from directory', async function (assert) {
-    const user = this.server.create('user', {
+    const user = await this.server.create('user', {
       email: 'user-email',
     });
-    this.server.create('pending-user-update', {
+    await this.server.create('pending-user-update', {
       user,
       type: 'missingFromDirectory',
     });
@@ -34,10 +34,10 @@ module('Integration | Component | pending single user update', function (hooks) 
   });
 
   test('it renders email update', async function (assert) {
-    const user = this.server.create('user', {
+    const user = await this.server.create('user', {
       email: 'user-email',
     });
-    this.server.create('pending-user-update', {
+    await this.server.create('pending-user-update', {
       user,
       type: 'emailMismatch',
       value: 'directory-email',
@@ -58,10 +58,10 @@ module('Integration | Component | pending single user update', function (hooks) 
   });
 
   test('Update email to match', async function (assert) {
-    const user = this.server.create('user', {
+    const user = await this.server.create('user', {
       email: 'user-email',
     });
-    this.server.create('pending-user-update', {
+    await this.server.create('pending-user-update', {
       user,
       type: 'emailMismatch',
       value: 'directory-email',
@@ -83,10 +83,10 @@ module('Integration | Component | pending single user update', function (hooks) 
   });
 
   test('Disable User', async function (assert) {
-    const user = this.server.create('user', {
+    const user = await this.server.create('user', {
       email: 'user-email',
     });
-    this.server.create('pending-user-update', {
+    await this.server.create('pending-user-update', {
       user,
       type: 'emailMismatch',
       value: 'directory-email',
@@ -108,10 +108,10 @@ module('Integration | Component | pending single user update', function (hooks) 
   });
 
   test('Exclude from sync', async function (assert) {
-    const user = this.server.create('user', {
+    const user = await this.server.create('user', {
       email: 'user-email',
     });
-    this.server.create('pending-user-update', {
+    await this.server.create('pending-user-update', {
       user,
       type: 'emailMismatch',
       value: 'directory-email',

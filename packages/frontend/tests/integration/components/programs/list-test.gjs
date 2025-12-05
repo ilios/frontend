@@ -21,8 +21,8 @@ module('Integration | Component | programs/list', function (hooks) {
   });
 
   test('it renders', async function (assert) {
-    const school = this.server.create('school');
-    this.server.createList('program', 3, { school });
+    const school = await this.server.create('school');
+    await this.server.createList('program', 3, { school });
     const programModels = await this.owner.lookup('service:store').findAll('program');
     this.set('programs', programModels);
     await render(<template><List @programs={{this.programs}} /></template>);
@@ -43,8 +43,8 @@ module('Integration | Component | programs/list', function (hooks) {
   });
 
   test('remove', async function (assert) {
-    const school = this.server.create('school');
-    this.server.createList('program', 3, { school });
+    const school = await this.server.create('school');
+    await this.server.createList('program', 3, { school });
     const programModels = await this.owner.lookup('service:store').findAll('program');
     this.set('programs', programModels);
     await render(<template><List @programs={{this.programs}} /></template>);
@@ -58,8 +58,8 @@ module('Integration | Component | programs/list', function (hooks) {
   });
 
   test('cancel remove', async function (assert) {
-    const school = this.server.create('school');
-    this.server.createList('program', 3, { school });
+    const school = await this.server.create('school');
+    await this.server.createList('program', 3, { school });
     const programModels = await this.owner.lookup('service:store').findAll('program');
     this.set('programs', programModels);
     await render(<template><List @programs={{this.programs}} /></template>);

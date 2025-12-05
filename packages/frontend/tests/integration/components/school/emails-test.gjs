@@ -11,7 +11,7 @@ module('Integration | Component | school/emails', function (hooks) {
   setupMSW(hooks);
 
   test('it renders', async function (assert) {
-    const school = this.server.create('school', {
+    const school = await this.server.create('school', {
       iliosAdministratorEmail: 'admin@school.edu',
       changeAlertRecipients: 'email1@school.edu, email2@school.edu',
     });
@@ -33,7 +33,7 @@ module('Integration | Component | school/emails', function (hooks) {
   });
 
   test('manage', async function (assert) {
-    const school = this.server.create('school');
+    const school = await this.server.create('school');
     const schoolModel = await this.owner.lookup('service:store').findRecord('school', school.id);
 
     this.set('school', schoolModel);

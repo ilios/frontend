@@ -15,49 +15,49 @@ module('Acceptance | Session - Offerings', function (hooks) {
       }).toJSDate(),
     );
     this.intl = this.owner.lookup('service:intl');
-    this.school = this.server.create('school');
+    this.school = await this.server.create('school');
     this.user = await setupAuthentication({ school: this.school }, true);
-    const program = this.server.create('program', { school: this.school });
-    const programYear = this.server.create('program-year', { program });
-    const cohort = this.server.create('cohort', { programYear });
-    const course = this.server.create('course', {
+    const program = await this.server.create('program', { school: this.school });
+    const programYear = await this.server.create('program-year', { program });
+    const cohort = await this.server.create('cohort', { programYear });
+    const course = await this.server.create('course', {
       cohorts: [cohort],
       school: this.school,
       directors: [this.user],
     });
-    const sessionType = this.server.create('session-type', {
+    const sessionType = await this.server.create('session-type', {
       school: this.school,
     });
     const users = [
-      ...this.server.createList('user', 7),
-      this.server.create('user', { enabled: false }),
+      ...(await this.server.createList('user', 7)),
+      await this.server.create('user', { enabled: false }),
     ];
-    const instructorGroup1 = this.server.create('instructor-group', {
+    const instructorGroup1 = await this.server.create('instructor-group', {
       users: [users[0], users[1], users[4], users[5]],
       school: this.school,
     });
-    const instructorGroup2 = this.server.create('instructor-group', {
+    const instructorGroup2 = await this.server.create('instructor-group', {
       users: [users[2], users[3]],
       school: this.school,
     });
-    const learnerGroup1 = this.server.create('learner-group', {
+    const learnerGroup1 = await this.server.create('learner-group', {
       users: [users[0], users[1]],
       cohort,
       location: 'default 1',
       instructors: [this.user],
       url: 'https://iliosproject.org/',
     });
-    const learnerGroup2 = this.server.create('learner-group', {
+    const learnerGroup2 = await this.server.create('learner-group', {
       users: [users[2], users[3]],
       cohort,
       location: 'default 2',
       instructorGroups: [instructorGroup1],
     });
-    const session = this.server.create('session', { course, sessionType });
+    const session = await this.server.create('session', { course, sessionType });
 
     this.today = DateTime.fromObject({ hour: 9 });
 
-    this.offering1 = this.server.create('offering', {
+    this.offering1 = await this.server.create('offering', {
       session,
       instructors: [users[4], users[5], users[6], users[7]],
       instructorGroups: [instructorGroup1, instructorGroup2],
@@ -67,7 +67,7 @@ module('Acceptance | Session - Offerings', function (hooks) {
       url: 'https://ucsf.edu/',
     });
 
-    this.offering2 = this.server.create('offering', {
+    this.offering2 = await this.server.create('offering', {
       session,
       instructors: [users[6], users[7]],
       instructorGroups: [instructorGroup2],
@@ -75,7 +75,7 @@ module('Acceptance | Session - Offerings', function (hooks) {
       startDate: this.today.plus({ days: 1 }).toJSDate(),
       endDate: this.today.plus({ days: 1, hours: 1 }).toJSDate(),
     });
-    this.offering3 = this.server.create('offering', {
+    this.offering3 = await this.server.create('offering', {
       session,
       instructorGroups: [instructorGroup2],
       learnerGroups: [learnerGroup2],
@@ -759,18 +759,18 @@ module('Acceptance | Session - Offerings', function (hooks) {
   });
 
   test('edit offerings twice #2850', async function (assert) {
-    this.server.create('learner-group', {
+    await this.server.create('learner-group', {
       cohortId: 1,
     });
-    this.server.create('learner-group', {
+    await this.server.create('learner-group', {
       cohortId: 1,
       parentId: 3,
     });
-    this.server.create('learner-group', {
+    await this.server.create('learner-group', {
       cohortId: 1,
       parentId: 4,
     });
-    this.server.create('learner-group', {
+    await this.server.create('learner-group', {
       cohortId: 1,
       parentId: 5,
     });

@@ -21,7 +21,7 @@ module('Integration | Component | leadership-search', function (hooks) {
   });
 
   test('input triggers search', async function (assert) {
-    this.server.create('user', {
+    await this.server.create('user', {
       firstName: 'test',
       lastName: 'person',
       email: 'testemail',
@@ -66,7 +66,7 @@ module('Integration | Component | leadership-search', function (hooks) {
   });
 
   test('click user fires add user', async function (assert) {
-    this.server.create('user', {
+    await this.server.create('user', {
       firstName: 'test',
       lastName: 'person',
       email: 'testemail',
@@ -88,12 +88,12 @@ module('Integration | Component | leadership-search', function (hooks) {
   });
 
   test('can not add users twice', async function (assert) {
-    this.server.create('user', {
+    await this.server.create('user', {
       firstName: 'test',
       lastName: 'person',
       email: 'testemail',
     });
-    this.server.create('user', {
+    await this.server.create('user', {
       firstName: 'test',
       lastName: 'person2',
       email: 'testemail2',

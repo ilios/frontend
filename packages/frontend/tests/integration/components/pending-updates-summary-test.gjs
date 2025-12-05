@@ -12,13 +12,13 @@ module('Integration | Component | pending updates summary', function (hooks) {
   setupMSW(hooks);
 
   test('it renders with updates', async function (assert) {
-    const school = this.server.create('school');
-    this.server.create('school');
-    const user = this.server.create('user', { school });
+    const school = await this.server.create('school');
+    await this.server.create('school');
+    const user = await this.server.create('user', { school });
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     for (let i = 0; i < 5; i++) {
-      const user = this.server.create('user', { school });
-      this.server.create('pending-user-update', { user });
+      const user = await this.server.create('user', { school });
+      await this.server.create('pending-user-update', { user });
     }
 
     class CurrentUserMock extends Service {
@@ -43,12 +43,12 @@ module('Integration | Component | pending updates summary', function (hooks) {
   });
 
   test('it renders with one school', async function (assert) {
-    const school = this.server.create('school');
-    const user = this.server.create('user', { school });
+    const school = await this.server.create('school');
+    const user = await this.server.create('user', { school });
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     for (let i = 0; i < 5; i++) {
-      const user = this.server.create('user', { school });
-      this.server.create('pending-user-update', { user });
+      const user = await this.server.create('user', { school });
+      await this.server.create('pending-user-update', { user });
     }
 
     class CurrentUserMock extends Service {
@@ -72,9 +72,9 @@ module('Integration | Component | pending updates summary', function (hooks) {
   });
 
   test('it renders without updates', async function (assert) {
-    const school = this.server.create('school');
-    this.server.create('school');
-    const user = this.server.create('user', { school });
+    const school = await this.server.create('school');
+    await this.server.create('school');
+    const user = await this.server.create('user', { school });
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
 
     class CurrentUserMock extends Service {
@@ -100,15 +100,18 @@ module('Integration | Component | pending updates summary', function (hooks) {
   });
 
   test('can switch schools', async function (assert) {
-    const schools = this.server.createList('school', 3);
-    const user = this.server.create('user', { school: schools[1], administeredSchools: schools });
+    const schools = await this.server.createList('school', 3);
+    const user = await this.server.create('user', {
+      school: schools[1],
+      administeredSchools: schools,
+    });
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
 
-    this.server.create('pending-user-update', {
-      user: this.server.create('user', { school: schools[0] }),
+    await this.server.create('pending-user-update', {
+      user: await this.server.create('user', { school: schools[0] }),
     });
-    this.server.createList('pending-user-update', 2, {
-      user: this.server.create('user', { school: schools[1] }),
+    await this.server.createList('pending-user-update', 2, {
+      user: await this.server.create('user', { school: schools[1] }),
     });
 
     class CurrentUserMock extends Service {

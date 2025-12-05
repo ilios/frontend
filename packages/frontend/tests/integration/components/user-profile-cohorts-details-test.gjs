@@ -11,19 +11,19 @@ module('Integration | Component | user-profile-cohorts-details', function (hooks
   setupMSW(hooks);
 
   hooks.beforeEach(async function () {
-    const school1 = this.server.create('school');
-    const school2 = this.server.create('school');
-    const program1 = this.server.create('program', { school: school1 });
-    const program2 = this.server.create('program', { school: school2 });
-    const programYear1 = this.server.create('program-year', { program: program1 });
-    const programYear2 = this.server.create('program-year', { program: program2 });
-    const programYear3 = this.server.create('program-year', { program: program1 });
-    const programYear4 = this.server.create('program-year', { program: program2 });
+    const school1 = await this.server.create('school');
+    const school2 = await this.server.create('school');
+    const program1 = await this.server.create('program', { school: school1 });
+    const program2 = await this.server.create('program', { school: school2 });
+    const programYear1 = await this.server.create('program-year', { program: program1 });
+    const programYear2 = await this.server.create('program-year', { program: program2 });
+    const programYear3 = await this.server.create('program-year', { program: program1 });
+    const programYear4 = await this.server.create('program-year', { program: program2 });
 
-    const cohort1 = this.server.create('cohort', { programYear: programYear1 });
-    const cohort2 = this.server.create('cohort', { programYear: programYear2 });
-    const cohort3 = this.server.create('cohort', { programYear: programYear3 });
-    const cohort4 = this.server.create('cohort', { programYear: programYear4 });
+    const cohort1 = await this.server.create('cohort', { programYear: programYear1 });
+    const cohort2 = await this.server.create('cohort', { programYear: programYear2 });
+    const cohort3 = await this.server.create('cohort', { programYear: programYear3 });
+    const cohort4 = await this.server.create('cohort', { programYear: programYear4 });
 
     this.cohort1 = await await this.owner.lookup('service:store').findRecord('cohort', cohort1.id);
     this.cohort2 = await await this.owner.lookup('service:store').findRecord('cohort', cohort2.id);

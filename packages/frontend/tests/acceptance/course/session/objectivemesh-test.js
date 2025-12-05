@@ -6,28 +6,28 @@ import page from 'ilios-common/page-objects/session';
 module('Acceptance | Session - Objective Mesh Descriptors', function (hooks) {
   setupApplicationTest(hooks);
   hooks.beforeEach(async function () {
-    const school = this.server.create('school');
+    const school = await this.server.create('school');
     this.user = await setupAuthentication({ administeredSchools: [school] }, true);
-    this.server.create('academic-year', { id: 2013 });
-    this.server.createList('program', 2);
-    this.server.createList('programYear', 2);
-    this.server.createList('cohort', 2);
-    const course = this.server.create('course', {
+    await this.server.create('academic-year', { id: 2013 });
+    await this.server.createList('program', 2);
+    await this.server.createList('programYear', 2);
+    await this.server.createList('cohort', 2);
+    const course = await this.server.create('course', {
       year: 2013,
       school,
     });
-    const sessionType = this.server.create('session-type', { school });
-    const session = this.server.create('session', { course, sessionType });
-    const meshDescriptors = this.server.createList('mesh-descriptor', 6);
-    this.server.create('session-objective', {
+    const sessionType = await this.server.create('session-type', { school });
+    const session = await this.server.create('session', { course, sessionType });
+    const meshDescriptors = await this.server.createList('mesh-descriptor', 6);
+    await this.server.create('session-objective', {
       session,
       meshDescriptors: [meshDescriptors.shift()],
     });
-    this.server.create('session-objective', { session, meshDescriptors });
-    this.server.create('session-objective', { session });
+    await this.server.create('session-objective', { session, meshDescriptors });
+    await this.server.create('session-objective', { session });
 
     //create some extra descriptors that shouldn't be found in search
-    this.server.createList('mesh-descriptor', 10, {
+    await this.server.createList('mesh-descriptor', 10, {
       name: 'nope',
       annotation: 'nope',
     });

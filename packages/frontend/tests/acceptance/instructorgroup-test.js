@@ -11,40 +11,40 @@ module('Acceptance | Instructor Group', function (hooks) {
   setupApplicationTest(hooks);
 
   hooks.beforeEach(async function () {
-    const school = this.server.create('school');
+    const school = await this.server.create('school');
     await setupAuthentication({ school, administeredSchools: [school] }, true);
-    const users = this.server.createList('user', 4);
-    const courses = this.server.createList('course', 2, {
+    const users = await this.server.createList('user', 4);
+    const courses = await this.server.createList('course', 2, {
       school,
     });
-    const sessionType = this.server.create('session-type');
-    const session1 = this.server.create('session', {
+    const sessionType = await this.server.create('session-type');
+    const session1 = await this.server.create('session', {
       course: courses[0],
       sessionType,
     });
-    const session2 = this.server.create('session', {
+    const session2 = await this.server.create('session', {
       course: courses[1],
       sessionType,
     });
-    const instructorGroup1 = this.server.create('instructor-group', {
+    const instructorGroup1 = await this.server.create('instructor-group', {
       school,
       users: [users[0], users[1]],
     });
-    const instructorGroup2 = this.server.create('instructor-group', {
+    const instructorGroup2 = await this.server.create('instructor-group', {
       school,
     });
-    this.server.create('instructor-group', {
+    await this.server.create('instructor-group', {
       school,
     });
-    this.server.create('offering', {
+    await this.server.create('offering', {
       session: session1,
       instructorGroups: [instructorGroup1],
     });
-    this.server.create('offering', {
+    await this.server.create('offering', {
       session: session2,
       instructorGroups: [instructorGroup2],
     });
-    this.server.create('offering', {
+    await this.server.create('offering', {
       session: session2,
       instructorGroups: [instructorGroup1],
     });

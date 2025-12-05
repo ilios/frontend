@@ -12,27 +12,27 @@ module(
     setupMSW(hooks);
 
     hooks.beforeEach(async function () {
-      const sessionType = this.server.create('session-type');
-      const course = this.server.create('course');
-      const sessions = this.server.createList('session', 5, { course, sessionType });
-      const vocabularies = this.server.createList('vocabulary', 2);
-      this.server.create('term', {
+      const sessionType = await this.server.create('session-type');
+      const course = await this.server.create('course');
+      const sessions = await this.server.createList('session', 5, { course, sessionType });
+      const vocabularies = await this.server.createList('vocabulary', 2);
+      await this.server.create('term', {
         vocabulary: vocabularies[0],
         sessions: [sessions[0]],
       });
-      this.server.create('term', {
+      await this.server.create('term', {
         vocabulary: vocabularies[1],
         sessions: [sessions[1], sessions[2], sessions[3]],
       });
-      this.server.create('term', {
+      await this.server.create('term', {
         vocabulary: vocabularies[1],
         sessions: [sessions[3]],
       });
-      this.server.create('term', {
+      await this.server.create('term', {
         vocabulary: vocabularies[1],
         sessions: [sessions[3], sessions[4]],
       });
-      this.server.create('term', {
+      await this.server.create('term', {
         vocabulary: vocabularies[0],
         courses: [course],
       });

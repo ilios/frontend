@@ -12,21 +12,21 @@ module('Integration | Component | courses/root', function (hooks) {
   setupMSW(hooks);
 
   hooks.beforeEach(async function () {
-    const year1 = this.server.create('academic-year', { id: 2022 });
-    const year2 = this.server.create('academic-year', { id: 2023 });
-    const school1 = this.server.create('school');
-    const school2 = this.server.create('school');
-    this.server.create('course', {
+    const year1 = await this.server.create('academic-year', { id: 2022 });
+    const year2 = await this.server.create('academic-year', { id: 2023 });
+    const school1 = await this.server.create('school');
+    const school2 = await this.server.create('school');
+    await this.server.create('course', {
       title: 'Alpha',
       school: school1,
       year: 2022,
     });
-    this.server.create('course', {
+    await this.server.create('course', {
       title: 'Beta',
       school: school1,
       year: 2022,
     });
-    this.server.create('course', {
+    await this.server.create('course', {
       title: 'Omega',
       school: school2,
       year: 2023,

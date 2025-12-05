@@ -12,13 +12,13 @@ module('Integration | Component | school/competencies-list-item-pcrs', function 
   setupMSW(hooks);
 
   hooks.beforeEach(async function () {
-    const pcrs1 = this.server.create('aamc-pcrs', {
+    const pcrs1 = await this.server.create('aamc-pcrs', {
       description: 'Zylinder',
     });
-    const pcrs2 = this.server.create('aamc-pcrs', {
+    const pcrs2 = await this.server.create('aamc-pcrs', {
       description: 'Alfons',
     });
-    const competency = this.server.create('competency', {
+    const competency = await this.server.create('competency', {
       aamcPcrses: [pcrs1, pcrs2],
     });
     this.pcrsModel1 = await this.owner.lookup('service:store').findRecord('aamc-pcrs', pcrs1.id);

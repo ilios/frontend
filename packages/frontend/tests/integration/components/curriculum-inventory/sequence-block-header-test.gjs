@@ -10,7 +10,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-header', f
   setupMSW(hooks);
 
   hooks.beforeEach(async function () {
-    const block = this.server.create('curriculum-inventory-sequence-block', {
+    const block = await this.server.create('curriculum-inventory-sequence-block', {
       title: 'Block title',
     });
     this.blockModel = await this.owner

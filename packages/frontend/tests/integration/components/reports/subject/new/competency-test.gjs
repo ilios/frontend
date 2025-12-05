@@ -10,11 +10,11 @@ module('Integration | Component | reports/subject/new/competency', function (hoo
   setupRenderingTest(hooks);
   setupMSW(hooks);
 
-  hooks.beforeEach(function () {
+  hooks.beforeEach(async function () {
     this.intl = this.owner.lookup('service:intl');
-    const [school1, school2] = this.server.createList('school', 2);
-    this.server.createList('competency', 2, { school: school1 });
-    this.server.createList('competency', 3, { school: school2 });
+    const [school1, school2] = await this.server.createList('school', 2);
+    await this.server.createList('competency', 2, { school: school1 });
+    await this.server.createList('competency', 3, { school: school2 });
   });
 
   test('it renders', async function (assert) {

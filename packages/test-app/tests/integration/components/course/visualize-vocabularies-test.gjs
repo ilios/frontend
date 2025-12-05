@@ -10,8 +10,8 @@ module('Integration | Component | course/visualize-vocabularies', function (hook
   setupMSW(hooks);
 
   hooks.beforeEach(async function () {
-    const school = this.server.create('school');
-    const course = this.server.create('course', { year: 2021, school });
+    const school = await this.server.create('school');
+    const course = await this.server.create('course', { year: 2021, school });
     this.courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
   });
 

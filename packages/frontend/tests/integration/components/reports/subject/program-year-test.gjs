@@ -42,7 +42,7 @@ module('Integration | Component | reports/subject/program-year', function (hooks
       );
       return responseData;
     });
-    const { id } = this.server.create('report', {
+    const { id } = await this.server.create('report', {
       subject: 'program year',
     });
     this.set('report', await this.owner.lookup('service:store').findRecord('report', id));
@@ -89,7 +89,7 @@ module('Integration | Component | reports/subject/program-year', function (hooks
       );
       return responseData;
     });
-    const { id } = this.server.create('report', {
+    const { id } = await this.server.create('report', {
       subject: 'program year',
     });
     this.set('report', await this.owner.lookup('service:store').findRecord('report', id));
@@ -134,7 +134,7 @@ module('Integration | Component | reports/subject/program-year', function (hooks
       );
       return responseData;
     });
-    const { id } = this.server.create('report', {
+    const { id } = await this.server.create('report', {
       subject: 'program year',
     });
     this.set('report', await this.owner.lookup('service:store').findRecord('report', id));
@@ -186,7 +186,7 @@ module('Integration | Component | reports/subject/program-year', function (hooks
       );
       return responseDataLarge;
     });
-    const { id } = this.server.create('report', {
+    const { id } = await this.server.create('report', {
       subject: 'program year',
     });
     this.set('report', await this.owner.lookup('service:store').findRecord('report', id));
@@ -219,9 +219,9 @@ module('Integration | Component | reports/subject/program-year', function (hooks
       );
       return responseData;
     });
-    const { id } = this.server.create('report', {
+    const { id } = await this.server.create('report', {
       subject: 'program year',
-      school: this.server.create('school', { id: 33 }),
+      school: await this.server.create('school', { id: 33 }),
     });
     this.set('report', await this.owner.lookup('service:store').findRecord('report', id));
     this.set('school', await this.owner.lookup('service:store').findRecord('school', 33));

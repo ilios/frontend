@@ -110,8 +110,8 @@ module('Integration | Component | ilios-users', function (hooks) {
         },
       };
     });
-    const school = this.server.create('school');
-    const user = this.server.create('user', {
+    const school = await this.server.create('school');
+    const user = await this.server.create('user', {
       school,
     });
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
@@ -163,8 +163,8 @@ module('Integration | Component | ilios-users', function (hooks) {
       };
     });
 
-    const school = this.server.create('school');
-    const user = this.server.create('user', {
+    const school = await this.server.create('school');
+    const user = await this.server.create('user', {
       school,
     });
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
@@ -213,8 +213,8 @@ module('Integration | Component | ilios-users', function (hooks) {
       };
     });
 
-    const school = this.server.create('school');
-    const user = this.server.create('user', {
+    const school = await this.server.create('school');
+    const user = await this.server.create('user', {
       school,
     });
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
@@ -268,8 +268,8 @@ module('Integration | Component | ilios-users', function (hooks) {
         },
       };
     });
-    const school = this.server.create('school');
-    const user = this.server.create('user', {
+    const school = await this.server.create('school');
+    const user = await this.server.create('user', {
       school,
     });
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
@@ -321,8 +321,8 @@ module('Integration | Component | ilios-users', function (hooks) {
         },
       };
     });
-    const school = this.server.create('school');
-    const user = this.server.create('user', {
+    const school = await this.server.create('school');
+    const user = await this.server.create('user', {
       school,
     });
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
@@ -373,8 +373,8 @@ module('Integration | Component | ilios-users', function (hooks) {
         },
       };
     });
-    const school = this.server.create('school');
-    const user = this.server.create('user', {
+    const school = await this.server.create('school');
+    const user = await this.server.create('user', {
       school,
     });
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);

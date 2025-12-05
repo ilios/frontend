@@ -9,12 +9,12 @@ module('Acceptance | Courses', function (hooks) {
   setupApplicationTest(hooks);
 
   hooks.beforeEach(async function () {
-    this.school = this.server.create('school');
+    this.school = await this.server.create('school');
     this.user = await setupAuthentication(
       { school: this.school, administeredSchools: [this.school] },
       true,
     );
-    this.server.create('school');
+    await this.server.create('school');
   });
 
   test('visiting /courses', async function (assert) {
@@ -24,23 +24,23 @@ module('Acceptance | Courses', function (hooks) {
   });
 
   test('visiting /courses with title filter', async function (assert) {
-    this.server.create('academic-year', { id: 2014 });
-    this.server.create('course', {
+    await this.server.create('academic-year', { id: 2014 });
+    await this.server.create('course', {
       title: 'specialfirstcourse',
       year: 2014,
       schoolId: 1,
     });
-    this.server.create('course', {
+    await this.server.create('course', {
       title: 'specialsecondcourse',
       year: 2014,
       schoolId: 1,
     });
-    this.server.create('course', {
+    await this.server.create('course', {
       title: 'regularcourse',
       year: 2014,
       schoolId: 1,
     });
-    const lastCourse = this.server.create('course', {
+    const lastCourse = await this.server.create('course', {
       title: 'aaLastcourse',
       year: 2014,
       schoolId: 1,
@@ -52,34 +52,34 @@ module('Acceptance | Courses', function (hooks) {
   });
 
   test('filters by title', async function (assert) {
-    this.server.create('academic-year', { id: 2014 });
-    const firstCourse = this.server.create('course', {
+    await this.server.create('academic-year', { id: 2014 });
+    const firstCourse = await this.server.create('course', {
       title: 'specialfirstcourse',
       year: 2014,
       schoolId: 1,
     });
-    const secondCourse = this.server.create('course', {
+    const secondCourse = await this.server.create('course', {
       title: 'specialsecondcourse',
       year: 2014,
       schoolId: 1,
     });
-    const regularCourse = this.server.create('course', {
+    const regularCourse = await this.server.create('course', {
       title: 'regularcourse',
       year: 2014,
       schoolId: 1,
     });
-    const lastCourse = this.server.create('course', {
+    const lastCourse = await this.server.create('course', {
       title: 'aaLastcourse',
       year: 2014,
       schoolId: 1,
     });
-    const regexCourse = this.server.create('course', {
+    const regexCourse = await this.server.create('course', {
       title: '\\yoo hoo',
       year: 2014,
       schoolId: 1,
     });
 
-    this.server.create('course', {
+    await this.server.create('course', {
       title: 'archivedCourse',
       year: 2014,
       schoolId: 1,
@@ -140,13 +140,13 @@ module('Acceptance | Courses', function (hooks) {
   });
 
   test('filters by year', async function (assert) {
-    this.server.create('academic-year', { id: 2013 });
-    this.server.create('academic-year', { id: 2014 });
-    const firstCourse = this.server.create('course', {
+    await this.server.create('academic-year', { id: 2013 });
+    await this.server.create('academic-year', { id: 2014 });
+    const firstCourse = await this.server.create('course', {
       year: 2013,
       schoolId: 1,
     });
-    const secondCourse = this.server.create('course', {
+    const secondCourse = await this.server.create('course', {
       year: 2014,
       schoolId: 1,
     });
@@ -162,13 +162,13 @@ module('Acceptance | Courses', function (hooks) {
   });
 
   test('initial filter by year', async function (assert) {
-    this.server.create('academic-year', { id: 2013 });
-    this.server.create('academic-year', { id: 2014 });
-    const firstCourse = this.server.create('course', {
+    await this.server.create('academic-year', { id: 2013 });
+    await this.server.create('academic-year', { id: 2014 });
+    const firstCourse = await this.server.create('course', {
       year: 2013,
       schoolId: 1,
     });
-    const secondCourse = this.server.create('course', {
+    const secondCourse = await this.server.create('course', {
       year: 2014,
       schoolId: 1,
     });
@@ -182,12 +182,12 @@ module('Acceptance | Courses', function (hooks) {
   });
 
   test('filters by mycourses', async function (assert) {
-    this.server.create('academic-year', { id: 2014 });
-    const firstCourse = this.server.create('course', {
+    await this.server.create('academic-year', { id: 2014 });
+    const firstCourse = await this.server.create('course', {
       year: 2014,
       schoolId: 1,
     });
-    const secondCourse = this.server.create('course', {
+    const secondCourse = await this.server.create('course', {
       year: 2014,
       schoolId: 1,
       directorIds: [this.user.id],
@@ -204,11 +204,11 @@ module('Acceptance | Courses', function (hooks) {
   });
 
   test('year filter options', async function (assert) {
-    this.server.createList('school', 2);
+    await this.server.createList('school', 2);
     this.server.db.users.update(this.user.id, { schoolId: 2 });
 
-    this.server.create('academic-year', { id: 2013 });
-    this.server.create('academic-year', { id: 2014 });
+    await this.server.create('academic-year', { id: 2013 });
+    await this.server.create('academic-year', { id: 2014 });
 
     await page.visit();
     assert.strictEqual(page.root.yearFilters.length, 2);
@@ -230,13 +230,13 @@ module('Acceptance | Courses', function (hooks) {
 
   test('unprivileged users can not delete courses', async function (assert) {
     this.user.update({ administeredSchools: [] });
-    this.server.create('academic-year', { id: 2014 });
-    this.server.create('course', {
+    await this.server.create('academic-year', { id: 2014 });
+    await this.server.create('course', {
       year: 2014,
       schoolId: 1,
       published: true,
     });
-    this.server.create('course', {
+    await this.server.create('course', {
       year: 2014,
       schoolId: 1,
       published: false,
@@ -254,13 +254,13 @@ module('Acceptance | Courses', function (hooks) {
   });
 
   test('privileged users can only delete unpublished courses', async function (assert) {
-    this.server.create('academic-year', { id: 2014 });
-    this.server.create('course', {
+    await this.server.create('academic-year', { id: 2014 });
+    await this.server.create('course', {
       year: 2014,
       schoolId: 1,
       published: true,
     });
-    this.server.create('course', {
+    await this.server.create('course', {
       year: 2014,
       schoolId: 1,
       published: false,
@@ -279,7 +279,7 @@ module('Acceptance | Courses', function (hooks) {
 
   test('new course', async function (assert) {
     const year = DateTime.now().year;
-    this.server.create('academic-year', { id: year });
+    await this.server.create('academic-year', { id: year });
     await page.visit({ year });
     await page.root.toggleNewCourseForm();
     await page.root.newCourse.title('Course 1');
@@ -343,14 +343,14 @@ module('Acceptance | Courses', function (hooks) {
   test('new course toggle does not show up for unprivileged users', async function (assert) {
     this.user.update({ administeredSchools: [] });
     const year = DateTime.now().year;
-    this.server.create('academic-year', { id: year });
+    await this.server.create('academic-year', { id: year });
     await page.visit({ year });
     assert.notOk(page.root.toggleNewCourseFormExists);
   });
 
   test('new course in another year does not display in list', async function (assert) {
-    this.server.create('academic-year', { id: 2012 });
-    this.server.create('academic-year', { id: 2013 });
+    await this.server.create('academic-year', { id: 2012 });
+    await this.server.create('academic-year', { id: 2013 });
 
     const newTitle = 'new course title, woohoo';
 
@@ -365,7 +365,7 @@ module('Acceptance | Courses', function (hooks) {
 
   test('new course does not appear twice when navigating back', async function (assert) {
     const year = DateTime.now().year;
-    this.server.create('academic-year', { id: year });
+    await this.server.create('academic-year', { id: year });
 
     const courseTitle = 'Course 1';
 
@@ -385,8 +385,8 @@ module('Acceptance | Courses', function (hooks) {
 
   test('new course can be deleted', async function (assert) {
     const year = DateTime.now().year;
-    this.server.create('academic-year', { id: year });
-    this.server.create('userRole', {
+    await this.server.create('academic-year', { id: year });
+    await this.server.create('userRole', {
       title: 'Developer',
     });
     this.server.db.users.update(this.user.id, { roleIds: [1] });
@@ -414,12 +414,12 @@ module('Acceptance | Courses', function (hooks) {
   });
 
   test('locked courses', async function (assert) {
-    this.server.create('academic-year', { id: 2014 });
-    this.server.create('course', {
+    await this.server.create('academic-year', { id: 2014 });
+    await this.server.create('course', {
       year: 2014,
       schoolId: 1,
     });
-    this.server.create('course', {
+    await this.server.create('course', {
       year: 2014,
       schoolId: 1,
       locked: true,
@@ -462,12 +462,12 @@ module('Acceptance | Courses', function (hooks) {
   });
 
   test('sort by title', async function (assert) {
-    this.server.create('academic-year', { id: 2014 });
-    const firstCourse = this.server.create('course', {
+    await this.server.create('academic-year', { id: 2014 });
+    const firstCourse = await this.server.create('course', {
       year: 2014,
       schoolId: 1,
     });
-    const secondCourse = this.server.create('course', {
+    const secondCourse = await this.server.create('course', {
       year: 2014,
       schoolId: 1,
     });
@@ -483,13 +483,13 @@ module('Acceptance | Courses', function (hooks) {
   });
 
   test('sort by level', async function (assert) {
-    this.server.create('academic-year', { id: 2014 });
-    const firstCourse = this.server.create('course', {
+    await this.server.create('academic-year', { id: 2014 });
+    const firstCourse = await this.server.create('course', {
       year: 2014,
       schoolId: 1,
       level: 1,
     });
-    const secondCourse = this.server.create('course', {
+    const secondCourse = await this.server.create('course', {
       year: 2014,
       schoolId: 1,
       level: 2,
@@ -508,13 +508,13 @@ module('Acceptance | Courses', function (hooks) {
   });
 
   test('sort by startDate', async function (assert) {
-    this.server.create('academic-year', { id: 2014 });
-    const firstCourse = this.server.create('course', {
+    await this.server.create('academic-year', { id: 2014 });
+    const firstCourse = await this.server.create('course', {
       year: 2014,
       schoolId: 1,
       startDate: DateTime.fromObject({ hour: 8 }).toJSDate(),
     });
-    const secondCourse = this.server.create('course', {
+    const secondCourse = await this.server.create('course', {
       year: 2014,
       schoolId: 1,
       startDate: DateTime.fromObject({ hour: 8 }).plus({ days: 1 }).toJSDate(),
@@ -533,13 +533,13 @@ module('Acceptance | Courses', function (hooks) {
   });
 
   test('sort by endDate', async function (assert) {
-    this.server.create('academic-year', { id: 2014 });
-    const firstCourse = this.server.create('course', {
+    await this.server.create('academic-year', { id: 2014 });
+    const firstCourse = await this.server.create('course', {
       year: 2014,
       schoolId: 1,
       endDate: DateTime.fromObject({ hour: 8 }).toJSDate(),
     });
-    const secondCourse = this.server.create('course', {
+    const secondCourse = await this.server.create('course', {
       year: 2014,
       schoolId: 1,
       endDate: DateTime.fromObject({ hour: 8 }).plus({ days: 1 }).toJSDate(),
@@ -558,20 +558,20 @@ module('Acceptance | Courses', function (hooks) {
   });
 
   test('sort by status', async function (assert) {
-    this.server.create('academic-year', { id: 2014 });
-    const firstCourse = this.server.create('course', {
+    await this.server.create('academic-year', { id: 2014 });
+    const firstCourse = await this.server.create('course', {
       year: 2014,
       schoolId: 1,
       published: true,
       publishedAsTbd: false,
     });
-    const secondCourse = this.server.create('course', {
+    const secondCourse = await this.server.create('course', {
       year: 2014,
       schoolId: 1,
       published: true,
       publishedAsTbd: true,
     });
-    const thirdCourse = this.server.create('course', {
+    const thirdCourse = await this.server.create('course', {
       year: 2014,
       schoolId: 1,
       published: false,
@@ -593,15 +593,15 @@ module('Acceptance | Courses', function (hooks) {
   });
 
   test('privileged users can lock and unlock course', async function (assert) {
-    this.server.create('academic-year', { id: 2014 });
-    this.server.create('course', {
+    await this.server.create('academic-year', { id: 2014 });
+    await this.server.create('course', {
       year: 2014,
       schoolId: 1,
       published: true,
       publishedAsTbd: false,
       locked: true,
     });
-    this.server.create('course', {
+    await this.server.create('course', {
       year: 2014,
       schoolId: 1,
       published: true,
@@ -623,16 +623,15 @@ module('Acceptance | Courses', function (hooks) {
   });
 
   test('non-privileged users cannot lock and unlock course but can see the icon', async function (assert) {
-    this.user.update({ administeredSchools: [] });
-    this.server.create('academic-year', { id: 2014 });
-    this.server.create('course', {
+    await this.server.create('academic-year', { id: 2014 });
+    await this.server.create('course', {
       year: 2014,
       schoolId: 1,
       published: true,
       publishedAsTbd: true,
       locked: false,
     });
-    this.server.create('course', {
+    await this.server.create('course', {
       year: 2014,
       schoolId: 1,
       published: true,
@@ -650,8 +649,8 @@ module('Acceptance | Courses', function (hooks) {
   });
 
   test('title filter escapes regex', async function (assert) {
-    this.server.create('academic-year', { id: 2014 });
-    const firstCourse = this.server.create('course', {
+    await this.server.create('academic-year', { id: 2014 });
+    const firstCourse = await this.server.create('course', {
       title: 'yes\\no',
       year: 2014,
       schoolId: 1,
@@ -669,12 +668,12 @@ module('Acceptance | Courses', function (hooks) {
 
   test('can not delete course with descendants #3620', async function (assert) {
     const year = DateTime.now().year.toString();
-    this.server.create('academic-year', { id: year });
-    const course1 = this.server.create('course', {
+    await this.server.create('academic-year', { id: year });
+    const course1 = await this.server.create('course', {
       year,
       school: this.school,
     });
-    this.server.create('course', {
+    await this.server.create('course', {
       year,
       school: this.school,
       ancestor: course1,
@@ -697,8 +696,8 @@ module('Acceptance | Courses', function (hooks) {
 
     freezeDateAt(new Date('1/1/2021'));
     const year = DateTime.now().year;
-    this.server.create('academic-year', { id: year - 1 });
-    this.server.create('academic-year', { id: year });
+    await this.server.create('academic-year', { id: year - 1 });
+    await this.server.create('academic-year', { id: year });
     this.server.get('application/config', function () {
       assert.step('API called');
       return {
@@ -720,8 +719,8 @@ module('Acceptance | Courses', function (hooks) {
 
     freezeDateAt(new Date('10/10/2021'));
     const year = DateTime.now().year;
-    this.server.create('academic-year', { id: year - 1 });
-    this.server.create('academic-year', { id: year });
+    await this.server.create('academic-year', { id: year - 1 });
+    await this.server.create('academic-year', { id: year });
     this.server.get('application/config', function () {
       assert.step('API called');
       return {
@@ -743,8 +742,8 @@ module('Acceptance | Courses', function (hooks) {
 
     freezeDateAt(new Date('1/1/2021'));
     const year = DateTime.now().year;
-    this.server.create('academic-year', { id: year - 1 });
-    this.server.create('academic-year', { id: year });
+    await this.server.create('academic-year', { id: year - 1 });
+    await this.server.create('academic-year', { id: year });
     this.server.get('application/config', function () {
       assert.step('API called');
       return {
@@ -766,8 +765,8 @@ module('Acceptance | Courses', function (hooks) {
 
     freezeDateAt(new Date('10/10/2021'));
     const year = DateTime.now().year;
-    this.server.create('academic-year', { id: year - 1 });
-    this.server.create('academic-year', { id: year });
+    await this.server.create('academic-year', { id: year - 1 });
+    await this.server.create('academic-year', { id: year });
     this.server.get('application/config', function () {
       assert.step('API called');
       return {
@@ -785,8 +784,8 @@ module('Acceptance | Courses', function (hooks) {
   });
 
   test('title filter does not lose focus #6417', async function (assert) {
-    this.server.create('academic-year', { id: 2014 });
-    this.server.create('course', {
+    await this.server.create('academic-year', { id: 2014 });
+    await this.server.create('course', {
       year: 2014,
       school: this.school,
     });
@@ -799,7 +798,6 @@ module('Acceptance | Courses', function (hooks) {
   });
 
   test('course actions have proper labels and titles during deletion confirmation and non-confirmation', async function (assert) {
-    this.user.update({ administeredSchools: [this.school] });
     const year = DateTime.now().year.toString();
     this.server.create('academic-year', { id: year });
     this.server.create('course', {

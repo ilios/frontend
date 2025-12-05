@@ -15,8 +15,8 @@ module('Integration | Component | curriculum-inventory/report-list', function (h
 
   hooks.beforeEach(async function () {
     this.intl = this.owner.lookup('service:intl');
-    const school = this.server.create('school');
-    this.program = this.server.create('program', { school });
+    const school = await this.server.create('school');
+    this.program = await this.server.create('program', { school });
     this.permissionCheckerMock = class extends Service {
       async canDeleteCurriculumInventoryReport() {
         return true;
@@ -26,15 +26,15 @@ module('Integration | Component | curriculum-inventory/report-list', function (h
   });
 
   test('it renders', async function (assert) {
-    const report1 = this.server.create('curriculum-inventory-report', {
+    const report1 = await this.server.create('curriculum-inventory-report', {
       program: this.program,
       name: 'Zeppelin',
       year: 2017,
       startDate: DateTime.fromObject({ year: 2017, month: 7, day: 1 }).toJSDate(),
       endDate: DateTime.fromObject({ year: 2018, month: 6, day: 30 }).toJSDate(),
     });
-    const reportExport = this.server.create('curriculum-inventory-export');
-    const report2 = this.server.create('curriculum-inventory-report', {
+    const reportExport = await this.server.create('curriculum-inventory-export');
+    const report2 = await this.server.create('curriculum-inventory-report', {
       program: this.program,
       export: reportExport,
       name: 'Aardvark',
@@ -139,7 +139,7 @@ module('Integration | Component | curriculum-inventory/report-list', function (h
   });
 
   test('report can be deleted', async function (assert) {
-    const report = this.server.create('curriculum-inventory-report', {
+    const report = await this.server.create('curriculum-inventory-report', {
       program: this.program,
       name: 'Zeppelin',
       year: 2017,
@@ -162,8 +162,8 @@ module('Integration | Component | curriculum-inventory/report-list', function (h
         return false;
       },
     });
-    const reportExport = this.server.create('curriculum-inventory-export');
-    const report = this.server.create('curriculum-inventory-report', {
+    const reportExport = await this.server.create('curriculum-inventory-export');
+    const report = await this.server.create('curriculum-inventory-report', {
       program: this.program,
       name: 'Zeppelin',
       year: 2017,
@@ -187,7 +187,7 @@ module('Integration | Component | curriculum-inventory/report-list', function (h
   });
 
   test('delete and confirm', async function (assert) {
-    const report = this.server.create('curriculum-inventory-report', {
+    const report = await this.server.create('curriculum-inventory-report', {
       program: this.program,
       name: 'Zeppelin',
     });
@@ -210,7 +210,7 @@ module('Integration | Component | curriculum-inventory/report-list', function (h
   });
 
   test('delete and cancel', async function (assert) {
-    const report = this.server.create('curriculum-inventory-report', {
+    const report = await this.server.create('curriculum-inventory-report', {
       program: this.program,
       name: 'Zeppelin',
     });
@@ -234,7 +234,7 @@ module('Integration | Component | curriculum-inventory/report-list', function (h
   });
 
   test('sorting', async function (assert) {
-    const report = this.server.create('curriculum-inventory-report', {
+    const report = await this.server.create('curriculum-inventory-report', {
       program: this.program,
       name: 'Zeppelin',
     });
@@ -271,7 +271,7 @@ module('Integration | Component | curriculum-inventory/report-list', function (h
   });
 
   test('academic year shows range depending on application config', async function (assert) {
-    const report1 = this.server.create('curriculum-inventory-report', {
+    const report1 = await this.server.create('curriculum-inventory-report', {
       program: this.program,
       name: 'Zeppelin',
       year: 2017,

@@ -11,32 +11,32 @@ module('Integration | Component | learnergroup-tree', function (hooks) {
   setupMSW(hooks);
 
   hooks.beforeEach(async function () {
-    const thirdLevelLearnerGroup1 = this.server.create('learner-group', {
+    const thirdLevelLearnerGroup1 = await this.server.create('learner-group', {
       title: 'Third 1',
     });
-    const thirdLevelLearnerGroup2 = this.server.create('learner-group', {
+    const thirdLevelLearnerGroup2 = await this.server.create('learner-group', {
       title: 'Third 2',
     });
-    const thirdLevelLearnerGroup3 = this.server.create('learner-group', {
+    const thirdLevelLearnerGroup3 = await this.server.create('learner-group', {
       title: 'Third 10',
       needsAccommodation: true,
     });
 
-    const secondLevelLearnerGroup1 = this.server.create('learner-group', {
+    const secondLevelLearnerGroup1 = await this.server.create('learner-group', {
       title: 'Second 1',
       children: [thirdLevelLearnerGroup1, thirdLevelLearnerGroup2],
     });
-    const secondLevelLearnerGroup2 = this.server.create('learner-group', {
+    const secondLevelLearnerGroup2 = await this.server.create('learner-group', {
       title: 'Second 2',
       children: [thirdLevelLearnerGroup3],
     });
-    const secondLevelLearnerGroup3 = this.server.create('learner-group', {
+    const secondLevelLearnerGroup3 = await this.server.create('learner-group', {
       title: 'Second 10',
     });
-    const secondLevelLearnerGroup4 = this.server.create('learner-group', {
+    const secondLevelLearnerGroup4 = await this.server.create('learner-group', {
       title: 'Second \\11',
     });
-    const topLevelLearnerGroup = this.server.create('learner-group', {
+    const topLevelLearnerGroup = await this.server.create('learner-group', {
       title: 'Top Group',
       children: [
         secondLevelLearnerGroup1,

@@ -12,35 +12,35 @@ module('Integration | Component | learner-group/instructor-manager', function (h
   setupMSW(hooks);
 
   hooks.beforeEach(async function () {
-    const school = this.server.create('school');
-    const program = this.server.create('program', { school });
-    const programYear = this.server.create('program-year', { program });
-    this.cohort = this.server.create('cohort', { programYear });
+    const school = await this.server.create('school');
+    const program = await this.server.create('program', { school });
+    const programYear = await this.server.create('program-year', { program });
+    this.cohort = await this.server.create('cohort', { programYear });
     this.school = school;
   });
 
   test('it renders', async function (assert) {
-    const instructor1 = this.server.create('user', {
+    const instructor1 = await this.server.create('user', {
       firstName: 'test',
       lastName: 'person',
       middleName: '',
       enabled: false,
     });
-    const instructor2 = this.server.create('user', {
+    const instructor2 = await this.server.create('user', {
       firstName: 'zeb',
       lastName: 'z00ber',
       displayName: 'aardvark',
     });
-    const instructor3 = this.server.create('user', {
+    const instructor3 = await this.server.create('user', {
       firstName: 'test',
       lastName: 'person2',
       middleName: '',
     });
-    const instructorGroup = this.server.create('instructor-group', {
+    const instructorGroup = await this.server.create('instructor-group', {
       title: 'test group',
       users: [instructor3],
     });
-    const learnerGroup = this.server.create('learner-group', {
+    const learnerGroup = await this.server.create('learner-group', {
       title: 'this group',
       cohort: this.cohort,
       instructors: [instructor1, instructor2],
@@ -93,7 +93,7 @@ module('Integration | Component | learner-group/instructor-manager', function (h
   });
 
   test('no selected instructors', async function (assert) {
-    const learnerGroup = this.server.create('learner-group', {
+    const learnerGroup = await this.server.create('learner-group', {
       title: 'this group',
       cohort: this.cohort,
     });
@@ -118,17 +118,17 @@ module('Integration | Component | learner-group/instructor-manager', function (h
   });
 
   test('cancel', async function (assert) {
-    const instructor = this.server.create('user', {
+    const instructor = await this.server.create('user', {
       firstName: 'test',
       lastName: 'person',
       middleName: '',
     });
-    const instructor2 = this.server.create('user', {
+    const instructor2 = await this.server.create('user', {
       firstName: 'zeb',
       lastName: 'z00ber',
       displayName: 'aardvark',
     });
-    const learnerGroup = this.server.create('learner-group', {
+    const learnerGroup = await this.server.create('learner-group', {
       title: 'this group',
       cohort: this.cohort,
       instructors: [instructor, instructor2],
@@ -157,27 +157,29 @@ module('Integration | Component | learner-group/instructor-manager', function (h
   });
 
   test('save', async function (assert) {
-    const instructor1 = this.server.create('user', {
+    const instructor1 = await this.server.create('user', {
       firstName: 'test',
       lastName: 'person',
       middleName: '',
     });
-    const instructor2 = this.server.create('user', {
+    const instructor2 = await this.server.create('user', {
       firstName: 'zeb',
       lastName: 'z00ber',
       displayName: 'aardvark',
     });
-    const instructor3 = this.server.create('user', {
+    const instructor3 = await this.server.create('user', {
       firstName: 'test',
       lastName: 'person2',
       middleName: '',
     });
-    const instructorGroup1 = this.server.create('instructor-group', {
+    const instructorGroup1 = await this.server.create('instructor-group', {
       title: 'test group',
       users: [instructor3],
     });
-    const instructorGroup2 = this.server.create('instructor-group', { title: 'test group 2' });
-    const learnerGroup = this.server.create('learner-group', {
+    const instructorGroup2 = await this.server.create('instructor-group', {
+      title: 'test group 2',
+    });
+    const learnerGroup = await this.server.create('learner-group', {
       title: 'this group',
       cohort: this.cohort,
       instructors: [instructor1, instructor2],
@@ -233,11 +235,11 @@ module('Integration | Component | learner-group/instructor-manager', function (h
   });
 
   test('search and add instructor group', async function (assert) {
-    const instructorGroup = this.server.create('instructor-group', {
+    const instructorGroup = await this.server.create('instructor-group', {
       title: 'test group',
       school: this.school,
     });
-    const learnerGroup = this.server.create('learner-group', {
+    const learnerGroup = await this.server.create('learner-group', {
       title: 'this group',
       cohort: this.cohort,
     });
@@ -273,8 +275,8 @@ module('Integration | Component | learner-group/instructor-manager', function (h
       return schema.users.all();
     });
 
-    this.server.create('user', { firstName: 'test', lastName: 'person', middleName: '' });
-    const learnerGroup = this.server.create('learner-group', {
+    await this.server.create('user', { firstName: 'test', lastName: 'person', middleName: '' });
+    const learnerGroup = await this.server.create('learner-group', {
       title: 'this group',
       cohort: this.cohort,
     });

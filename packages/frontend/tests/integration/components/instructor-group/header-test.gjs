@@ -11,9 +11,9 @@ module('Integration | Component | instructor-group/header', function (hooks) {
   setupMSW(hooks);
 
   hooks.beforeEach(async function () {
-    const users = this.server.createList('user', 3);
-    const school = this.server.create('school', { title: 'Medicine' });
-    const instructorGroup = this.server.create('instructor-group', {
+    const users = await this.server.createList('user', 3);
+    const school = await this.server.create('school', { title: 'Medicine' });
+    const instructorGroup = await this.server.create('instructor-group', {
       title: 'lorem ipsum',
       school,
       users,

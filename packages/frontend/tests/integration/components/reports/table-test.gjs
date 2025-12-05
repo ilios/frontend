@@ -17,12 +17,12 @@ module('Integration | Component | reports/table', function (hooks) {
   });
 
   test('it renders', async function (assert) {
-    this.server.create('report', {
+    await this.server.create('report', {
       title: null,
       subject: 'course',
       user: this.user,
     });
-    this.server.create('report', {
+    await this.server.create('report', {
       title: null,
       subject: 'session',
       user: this.user,

@@ -9,22 +9,22 @@ module('Acceptance | Course - Overview', function (hooks) {
   setupApplicationTest(hooks);
   hooks.beforeEach(async function () {
     this.intl = this.owner.lookup('service:intl');
-    this.school = this.server.create('school');
+    this.school = await this.server.create('school');
     this.user = await setupAuthentication({ administeredSchools: [this.school] }, true);
-    this.server.createList('course-clerkship-type', 2);
+    await this.server.createList('course-clerkship-type', 2);
   });
 
   module('check fields', function (hooks2) {
-    hooks2.beforeEach(function () {
-      this.clerkshipType = this.server.create('course-clerkship-type');
-      this.course = this.server.create('course', {
+    hooks2.beforeEach(async function () {
+      this.clerkshipType = await this.server.create('course-clerkship-type');
+      this.course = await this.server.create('course', {
         year: 2013,
         school: this.school,
         clerkshipType: this.clerkshipType,
         externalId: 123,
         level: 3,
       });
-      this.server.create('user', {
+      await this.server.create('user', {
         firstName: 'A',
         lastName: 'Director',
         directedCourses: [this.course],
@@ -133,7 +133,7 @@ module('Acceptance | Course - Overview', function (hooks) {
   });
 
   test('pick clerkship type', async function (assert) {
-    const course = this.server.create('course', {
+    const course = await this.server.create('course', {
       year: 2013,
       school: this.school,
     });
@@ -154,8 +154,8 @@ module('Acceptance | Course - Overview', function (hooks) {
   });
 
   test('remove clerkship type', async function (assert) {
-    const clerkshipType = this.server.create('course-clerkship-type');
-    const course = this.server.create('course', {
+    const clerkshipType = await this.server.create('course-clerkship-type');
+    const course = await this.server.create('course', {
       year: 2013,
       school: this.school,
       clerkshipType,
@@ -177,7 +177,7 @@ module('Acceptance | Course - Overview', function (hooks) {
   });
 
   test('change title', async function (assert) {
-    const course = this.server.create('course', {
+    const course = await this.server.create('course', {
       year: 2013,
       school: this.school,
     });
@@ -191,7 +191,7 @@ module('Acceptance | Course - Overview', function (hooks) {
   });
 
   test('change start date', async function (assert) {
-    const course = this.server.create('course', {
+    const course = await this.server.create('course', {
       year: 2013,
       startDate: '2013-03-23',
       endDate: '2015-04-22',
@@ -208,7 +208,7 @@ module('Acceptance | Course - Overview', function (hooks) {
   });
 
   test('start date validation', async function (assert) {
-    const course = this.server.create('course', {
+    const course = await this.server.create('course', {
       year: 2013,
       startDate: '2013-03-23',
       endDate: '2013-04-22',
@@ -226,7 +226,7 @@ module('Acceptance | Course - Overview', function (hooks) {
   });
 
   test('change end date', async function (assert) {
-    const course = this.server.create('course', {
+    const course = await this.server.create('course', {
       year: 2013,
       startDate: '2013-03-23',
       endDate: '2015-04-22',
@@ -243,7 +243,7 @@ module('Acceptance | Course - Overview', function (hooks) {
   });
 
   test('end date validation', async function (assert) {
-    const course = this.server.create('course', {
+    const course = await this.server.create('course', {
       year: 2013,
       startDate: '2013-03-23',
       endDate: '2013-04-22',
@@ -263,7 +263,7 @@ module('Acceptance | Course - Overview', function (hooks) {
   test('change externalId', async function (assert) {
     const externalId = 'abc123';
 
-    const course = this.server.create('course', {
+    const course = await this.server.create('course', {
       year: 2013,
       school: this.school,
       externalId,
@@ -280,7 +280,7 @@ module('Acceptance | Course - Overview', function (hooks) {
   });
 
   test('change to empty externalId', async function (assert) {
-    const course = this.server.create('course', {
+    const course = await this.server.create('course', {
       year: 2013,
       school: this.school,
       externalId: 'abc123',
@@ -301,7 +301,7 @@ module('Acceptance | Course - Overview', function (hooks) {
   });
 
   test('renders with empty externalId', async function (assert) {
-    const course = this.server.create('course', {
+    const course = await this.server.create('course', {
       year: 2013,
       school: this.school,
     });
@@ -314,7 +314,7 @@ module('Acceptance | Course - Overview', function (hooks) {
   });
 
   test('change level', async function (assert) {
-    const course = this.server.create('course', {
+    const course = await this.server.create('course', {
       year: 2013,
       school: this.school,
       level: 3,
@@ -331,7 +331,7 @@ module('Acceptance | Course - Overview', function (hooks) {
   });
 
   test('click rollover', async function (assert) {
-    const course = this.server.create('course', {
+    const course = await this.server.create('course', {
       year: 2013,
       school: this.school,
     });
@@ -345,7 +345,7 @@ module('Acceptance | Course - Overview', function (hooks) {
 
   test('rollover hidden from unprivileged users', async function (assert) {
     this.user.update({ administeredSchools: [] });
-    const course = this.server.create('course', {
+    const course = await this.server.create('course', {
       year: 2013,
       school: this.school,
     });
@@ -355,7 +355,7 @@ module('Acceptance | Course - Overview', function (hooks) {
   });
 
   test('rollover hidden from privileged users if course is locked', async function (assert) {
-    const course = this.server.create('course', {
+    const course = await this.server.create('course', {
       year: 2013,
       school: this.school,
       locked: true,
@@ -366,7 +366,7 @@ module('Acceptance | Course - Overview', function (hooks) {
   });
 
   test('rollover visible to privileged users', async function (assert) {
-    const course = this.server.create('course', {
+    const course = await this.server.create('course', {
       year: 2013,
       school: this.school,
     });
@@ -376,7 +376,7 @@ module('Acceptance | Course - Overview', function (hooks) {
   });
 
   test('rollover hidden on rollover route', async function (assert) {
-    const course = this.server.create('course', {
+    const course = await this.server.create('course', {
       year: 2013,
       school: this.school,
     });

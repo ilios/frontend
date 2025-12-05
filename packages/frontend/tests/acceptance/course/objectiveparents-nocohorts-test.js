@@ -7,26 +7,26 @@ import page from 'ilios-common/page-objects/course';
 module('Acceptance | Course with no cohorts - Objective Parents', function (hooks) {
   setupApplicationTest(hooks);
   hooks.beforeEach(async function () {
-    const school = this.server.create('school');
+    const school = await this.server.create('school');
     this.user = await setupAuthentication({ administeredSchools: [school] }, true);
-    const program = this.server.create('program', { school });
+    const program = await this.server.create('program', { school });
 
     const year = new Date().getFullYear();
-    const programYear = this.server.create('program-year', {
+    const programYear = await this.server.create('program-year', {
       program,
       startYear: year,
     });
-    this.server.create('cohort', { programYear });
-    const competency = this.server.create('competency', {
+    await this.server.create('cohort', { programYear });
+    const competency = await this.server.create('competency', {
       school,
       programYears: [programYear],
     });
-    this.server.create('program-year-objective', { programYear, competency });
-    this.course = this.server.create('course', {
+    await this.server.create('program-year-objective', { programYear, competency });
+    this.course = await this.server.create('course', {
       year: 2013,
       school,
     });
-    this.server.create('course-objective', { course: this.course });
+    await this.server.create('course-objective', { course: this.course });
   });
 
   test('add and remove a new cohort', async function (assert) {

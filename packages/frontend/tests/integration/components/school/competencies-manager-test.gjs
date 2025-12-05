@@ -11,13 +11,13 @@ module('Integration | Component | school/competencies-manager', function (hooks)
   setupMSW(hooks);
 
   test('it renders', async function (assert) {
-    const programYearObjectives = this.server.createList('program-year-objective', 3);
-    const competency1 = this.server.create('competency', {
+    const programYearObjectives = await this.server.createList('program-year-objective', 3);
+    const competency1 = await this.server.create('competency', {
       title: 'competency1',
       programYearObjectives,
     });
-    const competency2 = this.server.create('competency', { title: 'competency2' });
-    const domain = this.server.create('competency', {
+    const competency2 = await this.server.create('competency', { title: 'competency2' });
+    const domain = await this.server.create('competency', {
       title: 'domain1',
       children: [competency1, competency2],
     });
@@ -57,7 +57,7 @@ module('Integration | Component | school/competencies-manager', function (hooks)
   });
 
   test('delete domain', async function (assert) {
-    const domain = this.server.create('competency', { title: 'domain1' });
+    const domain = await this.server.create('competency', { title: 'domain1' });
     const domainModel = await this.owner
       .lookup('service:store')
       .findRecord('competency', domain.id);
@@ -87,7 +87,7 @@ module('Integration | Component | school/competencies-manager', function (hooks)
 
   test('add domain', async function (assert) {
     const newTitle = 'new c';
-    const domain = this.server.create('competency', { title: 'domain1' });
+    const domain = await this.server.create('competency', { title: 'domain1' });
     const domainModel = await this.owner
       .lookup('service:store')
       .findRecord('competency', domain.id);
@@ -119,7 +119,7 @@ module('Integration | Component | school/competencies-manager', function (hooks)
 
   test('add competency', async function (assert) {
     const newTitle = 'new c';
-    const domain = this.server.create('competency', { title: 'domain1' });
+    const domain = await this.server.create('competency', { title: 'domain1' });
     const domainModel = await this.owner
       .lookup('service:store')
       .findRecord('competency', domain.id);

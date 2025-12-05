@@ -15,9 +15,9 @@ module('Integration | Component | new learningmaterial', function (hooks) {
 
   hooks.beforeEach(async function () {
     this.store = this.owner.lookup('service:store');
-    this.school = this.server.create('school');
+    this.school = await this.server.create('school');
     this.schoolModel = await this.store.findRecord('school', this.school.id);
-    this.course = this.server.create('course', {
+    this.course = await this.server.create('course', {
       published: true,
       year: 2026,
       school: this.school,

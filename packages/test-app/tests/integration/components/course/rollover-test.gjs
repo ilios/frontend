@@ -30,8 +30,8 @@ module('Integration | Component | course/rollover', function (hooks) {
   };
 
   test('it renders', async function (assert) {
-    const school = this.server.create('school');
-    const course = this.server.create('course', {
+    const school = await this.server.create('school');
+    const course = await this.server.create('course', {
       title: 'old course',
       school,
     });
@@ -96,8 +96,8 @@ module('Integration | Component | course/rollover', function (hooks) {
         },
       };
     });
-    const school = this.server.create('school');
-    const course = this.server.create('course', {
+    const school = await this.server.create('school');
+    const course = await this.server.create('course', {
       title: 'old course',
       school,
     });
@@ -117,8 +117,8 @@ module('Integration | Component | course/rollover', function (hooks) {
 
   test('rollover course', async function (assert) {
     const courseStartDate = DateTime.fromObject({ hour: 0, minute: 0, second: 0 });
-    const school = this.server.create('school');
-    const course = this.server.create('course', {
+    const school = await this.server.create('school');
+    const course = await this.server.create('course', {
       title: 'old title',
       school,
       startDate: courseStartDate.toFormat('yyyy-MM-dd'),
@@ -154,8 +154,8 @@ module('Integration | Component | course/rollover', function (hooks) {
   });
 
   test('rollover course with new title', async function (assert) {
-    const school = this.server.create('school');
-    const course = this.server.create('course', {
+    const school = await this.server.create('school');
+    const course = await this.server.create('course', {
       title: 'old title',
       school,
       startDate: DateTime.fromObject({ hour: 0, minute: 0, second: 0 }).toJSDate(),
@@ -185,8 +185,8 @@ module('Integration | Component | course/rollover', function (hooks) {
   });
 
   test('rollover course to selected year', async function (assert) {
-    const school = this.server.create('school');
-    const course = this.server.create('course', {
+    const school = await this.server.create('school');
+    const course = await this.server.create('course', {
       title: 'old title',
       school,
       startDate: DateTime.fromObject({ hour: 0, minute: 0, second: 0 }).toJSDate(),
@@ -224,19 +224,19 @@ module('Integration | Component | course/rollover', function (hooks) {
   test('disable years when title already exists', async function (assert) {
     const title = 'to be rolled';
     const firstYear = earliestRolloverYear(new Date());
-    const school = this.server.create('school');
-    const course = this.server.create('course', {
+    const school = await this.server.create('school');
+    const course = await this.server.create('course', {
       title,
       school,
       year: firstYear - 1,
     });
-    this.server.create('course', {
+    await this.server.create('course', {
       id: 2,
       school,
       title,
       year: firstYear,
     });
-    this.server.create('course', {
+    await this.server.create('course', {
       id: 3,
       school,
       title,
@@ -274,8 +274,8 @@ module('Integration | Component | course/rollover', function (hooks) {
   test('rollover into same year with title changed #1342', async function (assert) {
     const thisYear = DateTime.now().year;
 
-    const school = this.server.create('school');
-    this.server.create('course', {
+    const school = await this.server.create('school');
+    await this.server.create('course', {
       id: 2,
       school,
       year: thisYear,
@@ -294,8 +294,8 @@ module('Integration | Component | course/rollover', function (hooks) {
     const courseStartDate = DateTime.fromISO(`${currentYear}-W20-1`);
     const rolloverDate = courseStartDate.plus({ week: 1 });
 
-    const school = this.server.create('school');
-    const course = this.server.create('course', {
+    const school = await this.server.create('school');
+    const course = await this.server.create('course', {
       title: 'old course',
       school,
       startDate: courseStartDate.toFormat('yyyy-MM-dd'),
@@ -360,8 +360,8 @@ module('Integration | Component | course/rollover', function (hooks) {
     const courseStartDate = DateTime.fromISO(`${currentYear}-W20-1`);
     const rolloverDate = courseStartDate.plus({ week: 1 }).set({ weekday: 3 });
 
-    const school = this.server.create('school');
-    const course = this.server.create('course', {
+    const school = await this.server.create('school');
+    const course = await this.server.create('course', {
       title: 'test title',
       school,
       startDate: courseStartDate.toFormat('yyyy-MM-dd'),
@@ -428,8 +428,8 @@ module('Integration | Component | course/rollover', function (hooks) {
       minute: 0,
     }).set({ weekNumber: courseStartDate.weekNumber, weekday: courseStartDate.weekday });
 
-    const school = this.server.create('school');
-    const course = this.server.create('course', {
+    const school = await this.server.create('school');
+    const course = await this.server.create('course', {
       title: 'old course',
       school,
       startDate: courseStartDate.toJSDate(),
@@ -459,10 +459,10 @@ module('Integration | Component | course/rollover', function (hooks) {
   });
 
   test('rollover course with no offerings', async function (assert) {
-    const school = this.server.create('school', {
+    const school = await this.server.create('school', {
       title: 'SOM',
     });
-    this.server.create('course', {
+    await this.server.create('course', {
       title: 'old course',
       school,
     });
@@ -494,8 +494,8 @@ module('Integration | Component | course/rollover', function (hooks) {
   });
 
   test('errors do not show up initially', async function (assert) {
-    const school = this.server.create('school');
-    const course = this.server.create('course', {
+    const school = await this.server.create('school');
+    const course = await this.server.create('course', {
       school,
     });
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
@@ -506,8 +506,8 @@ module('Integration | Component | course/rollover', function (hooks) {
   });
 
   test('errors show up', async function (assert) {
-    const school = this.server.create('school');
-    const course = this.server.create('course', {
+    const school = await this.server.create('school');
+    const course = await this.server.create('course', {
       school,
     });
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
@@ -525,24 +525,24 @@ module('Integration | Component | course/rollover', function (hooks) {
   });
 
   test('rollover course with cohorts', async function (assert) {
-    const school = this.server.create('school', {
+    const school = await this.server.create('school', {
       title: 'SOM',
     });
-    const program = this.server.create('program', {
+    const program = await this.server.create('program', {
       title: 'SOM',
       school,
     });
     const startYear = new Date().getFullYear();
-    const programYear = this.server.create('program-year', {
+    const programYear = await this.server.create('program-year', {
       program,
       published: true,
       archived: false,
       startYear,
     });
-    this.server.create('cohort', {
+    await this.server.create('cohort', {
       programYear,
     });
-    this.server.create('course', {
+    await this.server.create('course', {
       title: 'old course',
       school,
     });
@@ -590,8 +590,8 @@ module('Integration | Component | course/rollover', function (hooks) {
       hour: 8,
     });
     freezeDateAt(december11th2024.toJSDate());
-    const school = this.server.create('school');
-    const course = this.server.create('course', {
+    const school = await this.server.create('school');
+    const course = await this.server.create('course', {
       title: 'old course',
       school,
     });
@@ -618,8 +618,8 @@ module('Integration | Component | course/rollover', function (hooks) {
       hour: 8,
     });
     freezeDateAt(january1st2025.toJSDate());
-    const school = this.server.create('school');
-    const course = this.server.create('course', {
+    const school = await this.server.create('school');
+    const course = await this.server.create('course', {
       title: 'old course',
       school,
     });
@@ -646,8 +646,8 @@ module('Integration | Component | course/rollover', function (hooks) {
       hour: 8,
     });
     freezeDateAt(june30th2025.toJSDate());
-    const school = this.server.create('school');
-    const course = this.server.create('course', {
+    const school = await this.server.create('school');
+    const course = await this.server.create('course', {
       title: 'old course',
       school,
     });
@@ -674,8 +674,8 @@ module('Integration | Component | course/rollover', function (hooks) {
       hour: 8,
     });
     freezeDateAt(july1st2025.toJSDate());
-    const school = this.server.create('school');
-    const course = this.server.create('course', {
+    const school = await this.server.create('school');
+    const course = await this.server.create('course', {
       title: 'old course',
       school,
     });

@@ -10,18 +10,18 @@ module('Integration | Component | school/session-type-visualize-vocabularies', f
   setupMSW(hooks);
 
   hooks.beforeEach(async function () {
-    const school = this.server.create('school');
-    const course = this.server.create('course', { school });
-    const sessionType = this.server.create('session-type', { school });
-    const vocabularies = this.server.createList('vocabulary', 2, { school });
-    const termsVocab1 = this.server.createList('term', 5, {
+    const school = await this.server.create('school');
+    const course = await this.server.create('course', { school });
+    const sessionType = await this.server.create('session-type', { school });
+    const vocabularies = await this.server.createList('vocabulary', 2, { school });
+    const termsVocab1 = await this.server.createList('term', 5, {
       vocabulary: vocabularies[0],
     });
-    const termVocab2 = this.server.create('term', {
+    const termVocab2 = await this.server.create('term', {
       vocabulary: vocabularies[1],
     });
-    this.server.createList('session', 10, { course, sessionType, terms: termsVocab1 });
-    this.server.create('session', { course, sessionType, terms: [termVocab2] });
+    await this.server.createList('session', 10, { course, sessionType, terms: termsVocab1 });
+    await this.server.create('session', { course, sessionType, terms: [termVocab2] });
 
     this.sessionType = await this.owner
       .lookup('service:store')

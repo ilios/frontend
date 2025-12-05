@@ -21,7 +21,7 @@ module('Integration | Component | reports/subject-download', function (hooks) {
   });
 
   test('it renders', async function (assert) {
-    const report = this.server.create('report', {
+    const report = await this.server.create('report', {
       subject: 'course',
       prepositionalObject: 'instructor',
       prepositionalObjectTableRowId: this.user.id,
@@ -47,7 +47,7 @@ module('Integration | Component | reports/subject-download', function (hooks) {
   });
 
   test('it renders with message', async function (assert) {
-    const report = this.server.create('report', {
+    const report = await this.server.create('report', {
       subject: 'course',
       prepositionalObject: 'instructor',
       prepositionalObjectTableRowId: this.user.id,
@@ -77,7 +77,7 @@ module('Integration | Component | reports/subject-download', function (hooks) {
   });
 
   test('download is disabled when not ready', async function (assert) {
-    const report = this.server.create('report', {
+    const report = await this.server.create('report', {
       subject: 'course',
       prepositionalObject: 'instructor',
       prepositionalObjectTableRowId: this.user.id,
@@ -92,7 +92,7 @@ module('Integration | Component | reports/subject-download', function (hooks) {
   });
 
   test('download enabled', async function (assert) {
-    const report = this.server.create('report', {
+    const report = await this.server.create('report', {
       subject: 'course',
       prepositionalObject: 'instructor',
       prepositionalObjectTableRowId: this.user.id,

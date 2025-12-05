@@ -12,11 +12,11 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
   setupMSW(hooks);
 
   hooks.beforeEach(async function () {
-    const school = this.server.create('school');
-    const program = this.server.create('program', {
+    const school = await this.server.create('school');
+    const program = await this.server.create('program', {
       school,
     });
-    const report = this.server.create('curriculum-inventory-report', {
+    const report = await this.server.create('curriculum-inventory-report', {
       year: '2016',
       program,
       isFinalized: false,
@@ -24,7 +24,7 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
     const academicLevels = [];
     for (let i = 1; i <= 10; i++) {
       academicLevels.push(
-        this.server.create('curriculum-inventory-academic-level', {
+        await this.server.create('curriculum-inventory-academic-level', {
           report,
           level: i,
         }),
@@ -36,25 +36,25 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
   });
 
   test('it renders', async function (assert) {
-    this.server.create('course', {
+    await this.server.create('course', {
       school: this.school,
       published: true,
       title: 'Unlinked Course 1',
       year: '2016',
     });
-    this.server.create('course', {
+    await this.server.create('course', {
       school: this.school,
       published: true,
       title: 'Unlinked Course 2',
       year: '2016',
     });
-    const course = this.server.create('course', {
+    const course = await this.server.create('course', {
       school: this.school,
       published: true,
       title: 'Linked Course',
       year: '2016',
     });
-    this.server.create('curriculum-inventory-sequence-block', {
+    await this.server.create('curriculum-inventory-sequence-block', {
       course,
       report: this.report,
     });
@@ -134,11 +134,11 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
   });
 
   test('order-in-sequence options are visible for ordered parent sequence block', async function (assert) {
-    const parent = this.server.create('curriculum-inventory-sequence-block', {
+    const parent = await this.server.create('curriculum-inventory-sequence-block', {
       childSequenceOrder: 1,
       report: this.report,
     });
-    this.server.createList('curriculum-inventory-sequence-block', 10, {
+    await this.server.createList('curriculum-inventory-sequence-block', 10, {
       report: this.report,
       parent,
     });
@@ -172,8 +172,8 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
   });
 
   test('selecting course reveals additional course info', async function (assert) {
-    const clerkshipType = this.server.create('course-clerkship-type');
-    const course = this.server.create('course', {
+    const clerkshipType = await this.server.create('course-clerkship-type');
+    const course = await this.server.create('course', {
       school: this.school,
       year: '2016',
       published: true,
@@ -252,7 +252,7 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
     const minimum = 10;
     const maximum = 12;
     const duration = 6;
-    const course = this.server.create('course', {
+    const course = await this.server.create('course', {
       year: '2016',
       published: true,
       school: this.school,
@@ -301,13 +301,13 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
   });
 
   test('save nested block in ordered sequence', async function (assert) {
-    const parent = this.server.create('curriculum-inventory-sequence-block', {
+    const parent = await this.server.create('curriculum-inventory-sequence-block', {
       childSequenceOrder: 1,
       report: this.report,
       startingAcademicLevel: this.academicLevels[0],
       endingAcademicLevel: this.academicLevels[1],
     });
-    this.server.create('curriculum-inventory-sequence-block', {
+    await this.server.create('curriculum-inventory-sequence-block', {
       report: this.report,
       parent,
     });
@@ -748,8 +748,8 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
   });
 
   test('save fails if linked course is clerkship and start date is not provided', async function (assert) {
-    const clerkshipType = this.server.create('course-clerkship-type');
-    const course = this.server.create('course', {
+    const clerkshipType = await this.server.create('course-clerkship-type');
+    const course = await this.server.create('course', {
       school: this.school,
       year: '2016',
       published: true,
@@ -783,8 +783,8 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
   });
 
   test('save fails if linked course is clerkship and duration is zero', async function (assert) {
-    const clerkshipType = this.server.create('course-clerkship-type');
-    const course = this.server.create('course', {
+    const clerkshipType = await this.server.create('course-clerkship-type');
+    const course = await this.server.create('course', {
       school: this.school,
       year: '2016',
       published: true,

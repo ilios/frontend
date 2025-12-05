@@ -11,15 +11,17 @@ module('Integration | Component | program-year/objective-list-item-expanded', fu
   setupMSW(hooks);
 
   test('it renders and is accessible', async function (assert) {
-    const programYear = this.server.create('program-year');
-    const programYearObjective = this.server.create('program-year-objective', { programYear });
-    const course1 = this.server.create('course');
-    const course2 = this.server.create('course');
-    this.server.createList('course-objective', 3, {
+    const programYear = await this.server.create('program-year');
+    const programYearObjective = await this.server.create('program-year-objective', {
+      programYear,
+    });
+    const course1 = await this.server.create('course');
+    const course2 = await this.server.create('course');
+    await this.server.createList('course-objective', 3, {
       course: course1,
       programYearObjectives: [programYearObjective],
     });
-    this.server.createList('course-objective', 3, {
+    await this.server.createList('course-objective', 3, {
       course: course2,
       programYearObjectives: [programYearObjective],
     });
@@ -50,8 +52,10 @@ module('Integration | Component | program-year/objective-list-item-expanded', fu
   });
 
   test('it renders empty and is accessible', async function (assert) {
-    const programYear = this.server.create('program-year');
-    const programYearObjective = this.server.create('program-year-objective', { programYear });
+    const programYear = await this.server.create('program-year');
+    const programYearObjective = await this.server.create('program-year-objective', {
+      programYear,
+    });
     const model = await this.owner
       .lookup('service:store')
       .findRecord('program-year-objective', programYearObjective.id);

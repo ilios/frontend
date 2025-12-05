@@ -25,8 +25,8 @@ module('Integration | Component | course/sessions', function (hooks) {
   });
 
   test('it renders', async function (assert) {
-    const school = this.server.create('school');
-    const course = this.server.create('course', { school });
+    const school = await this.server.create('school');
+    const course = await this.server.create('course', { school });
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('course', courseModel);
     await render(
@@ -46,10 +46,10 @@ module('Integration | Component | course/sessions', function (hooks) {
   });
 
   test('expand/collapse all session not visible if no session with offerings in list', async function (assert) {
-    const school = this.server.create('school');
-    const course = this.server.create('course', { school });
-    const sessionType = this.server.create('session-type', { school });
-    this.server.createList('session', 2, { course, sessionType });
+    const school = await this.server.create('school');
+    const course = await this.server.create('course', { school });
+    const sessionType = await this.server.create('session-type', { school });
+    await this.server.createList('session', 2, { course, sessionType });
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
     this.set('course', courseModel);
     await render(
@@ -69,11 +69,11 @@ module('Integration | Component | course/sessions', function (hooks) {
   });
 
   test('expand/collapse all session is visible if at least one session in list has offerings', async function (assert) {
-    const school = this.server.create('school');
-    const course = this.server.create('course', { school });
-    const sessionType = this.server.create('session-type', { school });
-    const sessions = this.server.createList('session', 2, { course, sessionType });
-    this.server.create('offering', {
+    const school = await this.server.create('school');
+    const course = await this.server.create('course', { school });
+    const sessionType = await this.server.create('session-type', { school });
+    const sessions = await this.server.createList('session', 2, { course, sessionType });
+    await this.server.create('offering', {
       session: sessions[0],
     });
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
@@ -100,14 +100,14 @@ module('Integration | Component | course/sessions', function (hooks) {
   });
 
   test('previously expanded sessions are re-expanded', async function (assert) {
-    const school = this.server.create('school');
-    const course = this.server.create('course', { school });
-    const sessionType = this.server.create('session-type', { school });
-    const sessions = this.server.createList('session', 3, { course, sessionType });
-    this.server.create('offering', {
+    const school = await this.server.create('school');
+    const course = await this.server.create('course', { school });
+    const sessionType = await this.server.create('session-type', { school });
+    const sessions = await this.server.createList('session', 3, { course, sessionType });
+    await this.server.create('offering', {
       session: sessions[0],
     });
-    this.server.create('offering', {
+    await this.server.create('offering', {
       session: sessions[1],
     });
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);

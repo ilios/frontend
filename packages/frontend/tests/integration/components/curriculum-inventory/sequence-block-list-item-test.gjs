@@ -13,9 +13,9 @@ module('Integration | Component | curriculum-inventory/sequence-block-list-item'
 
   hooks.beforeEach(async function () {
     this.intl = this.owner.lookup('service:intl');
-    const school = this.server.create('school');
-    this.program = this.server.create('program', { school });
-    this.report = this.server.create('curriculum-inventory-report', {
+    const school = await this.server.create('school');
+    this.program = await this.server.create('program', { school });
+    this.report = await this.server.create('curriculum-inventory-report', {
       program: this.program,
       name: 'CI Report',
       year: '2017',
@@ -25,14 +25,14 @@ module('Integration | Component | curriculum-inventory/sequence-block-list-item'
   });
 
   test('it renders', async function (assert) {
-    const course = this.server.create('course');
-    const startingAcademicLevel = this.server.create('curriculum-inventory-academic-level', {
+    const course = await this.server.create('course');
+    const startingAcademicLevel = await this.server.create('curriculum-inventory-academic-level', {
       level: 5,
     });
-    const endingAcademicLevel = this.server.create('curriculum-inventory-academic-level', {
+    const endingAcademicLevel = await this.server.create('curriculum-inventory-academic-level', {
       level: 6,
     });
-    const block = this.server.create('curriculum-inventory-sequence-block', {
+    const block = await this.server.create('curriculum-inventory-sequence-block', {
       report: this.report,
       title: 'block 1',
       startDate: new Date('2021-03-17'),
@@ -83,7 +83,9 @@ module('Integration | Component | curriculum-inventory/sequence-block-list-item'
   });
 
   test('sequence block is nested inside unordered block', async function (assert) {
-    const block = this.server.create('curriculum-inventory-sequence-block', { orderInSequence: 3 });
+    const block = await this.server.create('curriculum-inventory-sequence-block', {
+      orderInSequence: 3,
+    });
     const blockModel = await this.owner
       .lookup('service:store')
       .findRecord('curriculum-inventory-sequence-block', block.id);
@@ -104,7 +106,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-list-item'
   });
 
   test('read-only mode', async function (assert) {
-    const block = this.server.create('curriculum-inventory-sequence-block');
+    const block = await this.server.create('curriculum-inventory-sequence-block');
     const blockModel = await this.owner
       .lookup('service:store')
       .findRecord('curriculum-inventory-sequence-block', block.id);
@@ -125,7 +127,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-list-item'
   });
 
   test('delete', async function (assert) {
-    const block = this.server.create('curriculum-inventory-sequence-block');
+    const block = await this.server.create('curriculum-inventory-sequence-block');
     const blockModel = await this.owner
       .lookup('service:store')
       .findRecord('curriculum-inventory-sequence-block', block.id);

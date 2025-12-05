@@ -25,32 +25,37 @@ module('Integration | Component | program-year/list', function (hooks) {
     };
     this.owner.register('service:permissionChecker', this.permissionCheckerMock);
 
-    const school = this.server.create('school');
-    const programYears = [1, 2, 3].map((i) => {
-      const cohort = this.server.create('cohort');
-      const meshDescriptors = this.server.createList('mesh-descriptor', 3);
-      const vocabulary = this.server.create('vocabulary', { school });
-      const terms = this.server.createList('term', 4, { vocabulary });
-      const competencies = this.server.createList('competency', 2);
-      const directors = this.server.createList('user', 2);
-      const programYearAncestor = this.server.create('program-year-objective');
-      const programYearObjectives = this.server.createList('program-year-objective', 2, {
-        meshDescriptors,
-        terms,
-      });
-      const programYearObjectiveWithAncestor = this.server.create('program-year-objective', {
-        ancestor: programYearAncestor,
-      });
-      return this.server.create('program-year', {
-        cohort,
-        startYear: 2000 + i,
-        programYearObjectives: [...programYearObjectives, programYearObjectiveWithAncestor],
-        terms,
-        competencies,
-        directors,
-      });
-    });
-    const program = this.server.create('program', { school, programYears });
+    const school = await this.server.create('school');
+    const programYears = await Promise.all(
+      [1, 2, 3].map(async (i) => {
+        const cohort = await this.server.create('cohort');
+        const meshDescriptors = await this.server.createList('mesh-descriptor', 3);
+        const vocabulary = await this.server.create('vocabulary', { school });
+        const terms = await this.server.createList('term', 4, { vocabulary });
+        const competencies = await this.server.createList('competency', 2);
+        const directors = await this.server.createList('user', 2);
+        const programYearAncestor = await this.server.create('program-year-objective');
+        const programYearObjectives = await this.server.createList('program-year-objective', 2, {
+          meshDescriptors,
+          terms,
+        });
+        const programYearObjectiveWithAncestor = await this.server.create(
+          'program-year-objective',
+          {
+            ancestor: programYearAncestor,
+          },
+        );
+        return await this.server.create('program-year', {
+          cohort,
+          startYear: 2000 + i,
+          programYearObjectives: [...programYearObjectives, programYearObjectiveWithAncestor],
+          terms,
+          competencies,
+          directors,
+        });
+      }),
+    );
+    const program = await this.server.create('program', { school, programYears });
     this.programModel = await this.owner.lookup('service:store').findRecord('program', program.id);
   });
 

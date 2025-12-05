@@ -11,23 +11,23 @@ module('Integration | Component | course/collapsed-objectives', function (hooks)
   setupMSW(hooks);
 
   hooks.beforeEach(async function () {
-    const meshDescriptor = this.server.create('mesh-descriptor');
-    const term = this.server.create('term');
-    const programYearObjective = this.server.create('program-year-objective');
-    this.objective = this.server.create('course-objective');
-    this.objectiveWithMesh = this.server.create('course-objective', {
+    const meshDescriptor = await this.server.create('mesh-descriptor');
+    const term = await this.server.create('term');
+    const programYearObjective = await this.server.create('program-year-objective');
+    this.objective = await this.server.create('course-objective');
+    this.objectiveWithMesh = await this.server.create('course-objective', {
       meshDescriptors: [meshDescriptor],
     });
-    this.objectiveWithTerms = this.server.create('course-objective', {
+    this.objectiveWithTerms = await this.server.create('course-objective', {
       terms: [term],
     });
-    this.objectiveWithProgramYearObjectives = this.server.create('course-objective', {
+    this.objectiveWithProgramYearObjectives = await this.server.create('course-objective', {
       programYearObjectives: [programYearObjective],
     });
   });
 
   test('displays summary data', async function (assert) {
-    const course = this.server.create('course', {
+    const course = await this.server.create('course', {
       courseObjectives: [
         this.objective,
         this.objectiveWithMesh,
@@ -54,7 +54,7 @@ module('Integration | Component | course/collapsed-objectives', function (hooks)
   });
 
   test('clicking expand icon opens full view', async function (assert) {
-    const course = this.server.create('course');
+    const course = await this.server.create('course');
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
 
     this.set('course', courseModel);
@@ -71,7 +71,7 @@ module('Integration | Component | course/collapsed-objectives', function (hooks)
   });
 
   test('icons all program year objectives correctly', async function (assert) {
-    const course = this.server.create('course', {
+    const course = await this.server.create('course', {
       courseObjectives: [this.objectiveWithProgramYearObjectives],
     });
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
@@ -85,7 +85,7 @@ module('Integration | Component | course/collapsed-objectives', function (hooks)
   });
 
   test('icons no parents correctly', async function (assert) {
-    const course = this.server.create('course', {
+    const course = await this.server.create('course', {
       courseObjectives: [this.objective],
     });
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
@@ -99,7 +99,7 @@ module('Integration | Component | course/collapsed-objectives', function (hooks)
   });
 
   test('icons all mesh correctly', async function (assert) {
-    const course = this.server.create('course', {
+    const course = await this.server.create('course', {
       courseObjectives: [this.objectiveWithMesh],
     });
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
@@ -113,7 +113,7 @@ module('Integration | Component | course/collapsed-objectives', function (hooks)
   });
 
   test('icons no mesh correctly', async function (assert) {
-    const course = this.server.create('course', {
+    const course = await this.server.create('course', {
       courseObjectives: [this.objective],
     });
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
@@ -127,7 +127,7 @@ module('Integration | Component | course/collapsed-objectives', function (hooks)
   });
 
   test('icons all terms correctly', async function (assert) {
-    const course = this.server.create('course', {
+    const course = await this.server.create('course', {
       courseObjectives: [this.objectiveWithTerms],
     });
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
@@ -141,7 +141,7 @@ module('Integration | Component | course/collapsed-objectives', function (hooks)
   });
 
   test('icons no terms correctly', async function (assert) {
-    const course = this.server.create('course', {
+    const course = await this.server.create('course', {
       courseObjectives: [this.objective],
     });
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);

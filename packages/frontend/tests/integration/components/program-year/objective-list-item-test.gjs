@@ -13,10 +13,12 @@ module('Integration | Component | program-year/objective-list-item', function (h
   setupMSW(hooks);
 
   hooks.beforeEach(async function () {
-    const school = this.server.create('school');
-    const program = this.server.create('program', { school });
-    const programYear = this.server.create('program-year', { program });
-    const programYearObjective = this.server.create('program-year-objective', { programYear });
+    const school = await this.server.create('school');
+    const program = await this.server.create('program', { school });
+    const programYear = await this.server.create('program-year', { program });
+    const programYearObjective = await this.server.create('program-year-objective', {
+      programYear,
+    });
     this.model = await this.owner
       .lookup('service:store')
       .findRecord('program-year-objective', programYearObjective.id);

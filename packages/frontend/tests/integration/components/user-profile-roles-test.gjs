@@ -10,16 +10,16 @@ module('Integration | Component | user profile roles', function (hooks) {
   setupMSW(hooks);
 
   hooks.beforeEach(async function () {
-    this.formerStudentRole = this.server.create('user-role', {
+    this.formerStudentRole = await this.server.create('user-role', {
       title: 'Former Student',
     });
-    this.studentRole = this.server.create('user-role', {
+    this.studentRole = await this.server.create('user-role', {
       title: 'Student',
     });
   });
 
   test('it renders', async function (assert) {
-    const user = this.server.create('user', {
+    const user = await this.server.create('user', {
       root: false,
       roles: [this.studentRole],
     });
@@ -42,7 +42,7 @@ module('Integration | Component | user profile roles', function (hooks) {
 
   // @link https://github.com/ilios/frontend/issues/3899
   test('check root flag', async function (assert) {
-    const user = this.server.create('user', {
+    const user = await this.server.create('user', {
       root: true,
       roles: [this.studentRole],
     });
@@ -56,7 +56,7 @@ module('Integration | Component | user profile roles', function (hooks) {
   });
 
   test('clicking manage sends the action', async function (assert) {
-    const user = this.server.create('user', {
+    const user = await this.server.create('user', {
       root: true,
       roles: [this.studentRole],
     });
@@ -80,7 +80,7 @@ module('Integration | Component | user profile roles', function (hooks) {
   });
 
   test('can edit user roles', async function (assert) {
-    const user = this.server.create('user', {
+    const user = await this.server.create('user', {
       root: true,
       roles: [this.studentRole],
     });

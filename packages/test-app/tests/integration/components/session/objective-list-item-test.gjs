@@ -12,10 +12,10 @@ module('Integration | Component | session/objective-list-item', function (hooks)
   setupMSW(hooks);
 
   test('it renders and is accessible', async function (assert) {
-    const school = this.server.create('school');
-    const course = this.server.create('course', { school });
-    const session = this.server.create('session', { course });
-    const sessionObjective = this.server.create('session-objective', {
+    const school = await this.server.create('school');
+    const course = await this.server.create('course', { school });
+    const session = await this.server.create('session', { course });
+    const sessionObjective = await this.server.create('session-objective', {
       session,
     });
     const store = await this.owner.lookup('service:store');
@@ -43,8 +43,8 @@ module('Integration | Component | session/objective-list-item', function (hooks)
   });
 
   test('can change description', async function (assert) {
-    const session = this.server.create('session');
-    const sessionObjective = this.server.create('session-objective', {
+    const session = await this.server.create('session');
+    const sessionObjective = await this.server.create('session-objective', {
       session,
     });
     const store = await this.owner.lookup('service:store');
@@ -71,10 +71,10 @@ module('Integration | Component | session/objective-list-item', function (hooks)
   });
 
   test('can manage parents', async function (assert) {
-    const school = this.server.create('school');
-    const course = this.server.create('course', { school });
-    const session = this.server.create('session', { course });
-    const sessionObjective = this.server.create('session-objective', {
+    const school = await this.server.create('school');
+    const course = await this.server.create('course', { school });
+    const session = await this.server.create('session', { course });
+    const sessionObjective = await this.server.create('session-objective', {
       session,
     });
     const store = await this.owner.lookup('service:store');
@@ -97,8 +97,8 @@ module('Integration | Component | session/objective-list-item', function (hooks)
   });
 
   test('can manage descriptors', async function (assert) {
-    const session = this.server.create('session');
-    const sessionObjective = this.server.create('session-objective', {
+    const session = await this.server.create('session');
+    const sessionObjective = await this.server.create('session-objective', {
       session,
     });
     const store = await this.owner.lookup('service:store');
@@ -121,10 +121,10 @@ module('Integration | Component | session/objective-list-item', function (hooks)
   });
 
   test('can manage terms', async function (assert) {
-    const school = this.server.create('school');
-    const course = this.server.create('course', { school });
-    const session = this.server.create('session', { course });
-    const sessionObjective = this.server.create('session-objective', {
+    const school = await this.server.create('school');
+    const course = await this.server.create('course', { school });
+    const session = await this.server.create('session', { course });
+    const sessionObjective = await this.server.create('session-objective', {
       session,
     });
     const store = await this.owner.lookup('service:store');
@@ -148,8 +148,8 @@ module('Integration | Component | session/objective-list-item', function (hooks)
   });
 
   test('can trigger removal', async function (assert) {
-    const session = this.server.create('session');
-    const sessionObjective = this.server.create('session-objective', {
+    const session = await this.server.create('session');
+    const sessionObjective = await this.server.create('session-objective', {
       session,
     });
     const store = await this.owner.lookup('service:store');
@@ -172,8 +172,8 @@ module('Integration | Component | session/objective-list-item', function (hooks)
   });
 
   test('validate description', async function (assert) {
-    const session = this.server.create('session');
-    const sessionObjective = this.server.create('session-objective', {
+    const session = await this.server.create('session');
+    const sessionObjective = await this.server.create('session-objective', {
       session,
     });
     const store = await this.owner.lookup('service:store');

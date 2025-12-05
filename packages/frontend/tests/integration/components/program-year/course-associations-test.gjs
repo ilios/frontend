@@ -12,22 +12,22 @@ module('Integration | Component | program-year/course-associations', function (h
   setupMSW(hooks);
 
   hooks.beforeEach(async function () {
-    const school = this.server.create('school');
-    const program = this.server.create('program', { school });
-    const programYear = this.server.create('program-year', { program });
-    this.cohort = this.server.create('cohort', { programYear });
+    const school = await this.server.create('school');
+    const program = await this.server.create('program', { school });
+    const programYear = await this.server.create('program-year', { program });
+    this.cohort = await this.server.create('cohort', { programYear });
     this.programYear = programYear;
     this.school = school;
   });
 
   test('it renders expanded with data', async function (assert) {
-    const otherSchool = this.server.create('school');
-    this.server.createList('course', 2, {
+    const otherSchool = await this.server.create('school');
+    await this.server.createList('course', 2, {
       school: this.school,
       year: 2025,
       cohorts: [this.cohort],
     });
-    this.server.create('course', { school: otherSchool, year: 2025, cohorts: [this.cohort] });
+    await this.server.create('course', { school: otherSchool, year: 2025, cohorts: [this.cohort] });
 
     const programYear = await this.owner
       .lookup('service:store')
@@ -64,13 +64,13 @@ module('Integration | Component | program-year/course-associations', function (h
   });
 
   test('it renders collapsed with data', async function (assert) {
-    const otherSchool = this.server.create('school');
-    this.server.createList('course', 2, {
+    const otherSchool = await this.server.create('school');
+    await this.server.createList('course', 2, {
       school: this.school,
       year: 2025,
       cohorts: [this.cohort],
     });
-    this.server.create('course', { school: otherSchool, year: 2025, cohorts: [this.cohort] });
+    await this.server.create('course', { school: otherSchool, year: 2025, cohorts: [this.cohort] });
 
     const programYear = await this.owner
       .lookup('service:store')
@@ -117,13 +117,13 @@ module('Integration | Component | program-year/course-associations', function (h
   });
 
   test('sorting works', async function (assert) {
-    const otherSchool = this.server.create('school');
-    this.server.create('course', {
+    const otherSchool = await this.server.create('school');
+    await this.server.create('course', {
       school: this.school,
       year: 2025,
       cohorts: [this.cohort],
     });
-    this.server.create('course', { school: otherSchool, year: 2025, cohorts: [this.cohort] });
+    await this.server.create('course', { school: otherSchool, year: 2025, cohorts: [this.cohort] });
 
     const programYear = await this.owner
       .lookup('service:store')
@@ -165,7 +165,7 @@ module('Integration | Component | program-year/course-associations', function (h
         },
       };
     });
-    this.server.create('course', {
+    await this.server.create('course', {
       school: this.school,
       year: 2025,
       cohorts: [this.cohort],
@@ -192,7 +192,7 @@ module('Integration | Component | program-year/course-associations', function (h
   });
 
   test('collapse action fires', async function (assert) {
-    this.server.create('course', {
+    await this.server.create('course', {
       school: this.school,
       year: 2025,
       cohorts: [this.cohort],
@@ -220,7 +220,7 @@ module('Integration | Component | program-year/course-associations', function (h
   });
 
   test('expand action fires', async function (assert) {
-    this.server.create('course', {
+    await this.server.create('course', {
       school: this.school,
       year: 2025,
       cohorts: [this.cohort],

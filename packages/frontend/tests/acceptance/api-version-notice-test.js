@@ -8,7 +8,7 @@ module('Acceptance | API Version Check', function (hooks) {
   setupApplicationTest(hooks);
 
   hooks.beforeEach(async function () {
-    const school = this.server.create('school');
+    const school = await this.server.create('school');
     freezeDateAt(new Date('9/19/2019'));
     await setupAuthentication({ school });
   });

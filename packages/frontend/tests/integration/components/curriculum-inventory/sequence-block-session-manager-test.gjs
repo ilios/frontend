@@ -18,41 +18,41 @@ module(
       const now = DateTime.now();
       const in15Hours = now.plus({ hours: 15 }).toJSDate();
       const in30Hours = now.plus({ hours: 30 }).toJSDate();
-      const offering1 = this.server.create('offering', {
+      const offering1 = await this.server.create('offering', {
         startDate: now.toJSDate(),
         endDate: in30Hours,
       });
-      const offering2 = this.server.create('offering', {
+      const offering2 = await this.server.create('offering', {
         startDate: now.toJSDate(),
         endDate: in15Hours,
       });
-      const offering3 = this.server.create('offering', {
+      const offering3 = await this.server.create('offering', {
         startDate: now.toJSDate(),
         endDate: in15Hours,
       });
-      const sessionType1 = this.server.create('session-type', { title: 'Lecture' });
-      const sessionType2 = this.server.create('session-type', { title: 'Ceremony' });
-      const sessionType3 = this.server.create('session-type', { title: 'Small Groups' });
-      const sessionType4 = this.server.create('session-type', { title: 'Rocket Surgery' });
-      const session1 = this.server.create('session', {
+      const sessionType1 = await this.server.create('session-type', { title: 'Lecture' });
+      const sessionType2 = await this.server.create('session-type', { title: 'Ceremony' });
+      const sessionType3 = await this.server.create('session-type', { title: 'Small Groups' });
+      const sessionType4 = await this.server.create('session-type', { title: 'Rocket Surgery' });
+      const session1 = await this.server.create('session', {
         title: 'Aardvark',
         offerings: [offering1],
         sessionType: sessionType1,
       });
-      const session2 = this.server.create('session', {
+      const session2 = await this.server.create('session', {
         title: 'Bluebird',
         offerings: [offering2, offering3],
         sessionType: sessionType2,
       });
 
-      const session3 = this.server.create('session', {
+      const session3 = await this.server.create('session', {
         title: 'Zeppelin',
         sessionType: sessionType3,
       });
-      const ilmSession = this.server.create('ilm-session', {
+      const ilmSession = await this.server.create('ilm-session', {
         hours: 0,
       });
-      this.server.create('session', {
+      await this.server.create('session', {
         title: 'Zwickzange',
         sessionType: sessionType4,
         ilmSession,
@@ -219,8 +219,8 @@ module(
     });
 
     test('sort by title', async function (assert) {
-      const sessionType = this.server.create('session-type');
-      const session = this.server.create('session', {
+      const sessionType = await this.server.create('session-type');
+      const session = await this.server.create('session', {
         title: 'Zeppelin',
         sessionType,
         maxDuration: 0,
@@ -254,8 +254,8 @@ module(
     });
 
     test('sort by session type', async function (assert) {
-      const sessionType = this.server.create('session-type');
-      const session = this.server.create('session', {
+      const sessionType = await this.server.create('session-type');
+      const session = await this.server.create('session', {
         title: 'Zeppelin',
         sessionType,
         maxDuration: 0,
@@ -293,8 +293,8 @@ module(
     });
 
     test('sort by offerings count', async function (assert) {
-      const sessionType = this.server.create('session-type');
-      const session = this.server.create('session', {
+      const sessionType = await this.server.create('session-type');
+      const session = await this.server.create('session', {
         title: 'Zeppelin',
         sessionType,
         maxDuration: 0,
@@ -335,16 +335,16 @@ module(
       const now = DateTime.now();
       const in15Hours = now.plus({ hours: 15 }).toJSDate();
       const in30Hours = now.plus({ hours: 30 }).toJSDate();
-      const offering1 = this.server.create('offering', {
+      const offering1 = await this.server.create('offering', {
         startDate: now.toJSDate(),
         endDate: in30Hours,
       });
-      const offering2 = this.server.create('offering', {
+      const offering2 = await this.server.create('offering', {
         startDate: now.toJSDate(),
         endDate: in15Hours,
       });
-      const sessionType = this.server.create('session-type');
-      const session = this.server.create('session', {
+      const sessionType = await this.server.create('session-type');
+      const session = await this.server.create('session', {
         title: 'Zeppelin',
         sessionType,
         offerings: [offering1, offering2],
@@ -384,29 +384,29 @@ module(
       const now = DateTime.now();
       const in15Hours = now.plus({ hours: 15 }).toJSDate();
       const in30Hours = now.plus({ hours: 30 }).toJSDate();
-      const offering1 = this.server.create('offering', {
+      const offering1 = await this.server.create('offering', {
         startDate: now.toJSDate(),
         endDate: in30Hours,
       });
-      const offering2 = this.server.create('offering', {
+      const offering2 = await this.server.create('offering', {
         startDate: now.toJSDate(),
         endDate: in15Hours,
       });
-      const offering3 = this.server.create('offering', {
+      const offering3 = await this.server.create('offering', {
         startDate: now.toJSDate(),
         endDate: in30Hours,
       });
-      const offering4 = this.server.create('offering', {
+      const offering4 = await this.server.create('offering', {
         startDate: now.toJSDate(),
         endDate: in30Hours,
       });
-      const sessionType = this.server.create('session-type');
-      const session = this.server.create('session', {
+      const sessionType = await this.server.create('session-type');
+      const session = await this.server.create('session', {
         title: 'Alpha',
         sessionType: sessionType,
         offerings: [offering1, offering2],
       });
-      this.server.create('session', {
+      await this.server.create('session', {
         title: 'Omega',
         sessionType: sessionType,
         offerings: [offering3, offering4],
@@ -454,12 +454,12 @@ module(
     });
 
     test('check all/uncheck all excluded', async function (assert) {
-      const sessionType = this.server.create('session-type');
-      const session1 = this.server.create('session', {
+      const sessionType = await this.server.create('session-type');
+      const session1 = await this.server.create('session', {
         title: 'Alpha',
         sessionType: sessionType,
       });
-      const session2 = this.server.create('session', {
+      const session2 = await this.server.create('session', {
         title: 'Omega',
         sessionType: sessionType,
       });
@@ -504,12 +504,12 @@ module(
     });
 
     test('save', async function (assert) {
-      const sessionType = this.server.create('session-type');
-      const session1 = this.server.create('session', {
+      const sessionType = await this.server.create('session-type');
+      const session1 = await this.server.create('session', {
         title: 'Alpha',
         sessionType: sessionType,
       });
-      const session2 = this.server.create('session', {
+      const session2 = await this.server.create('session', {
         title: 'Omega',
         sessionType: sessionType,
       });

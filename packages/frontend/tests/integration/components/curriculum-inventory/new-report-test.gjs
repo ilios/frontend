@@ -12,7 +12,7 @@ module('Integration | Component | curriculum-inventory/new-report', function (ho
   setupMSW(hooks);
 
   test('it renders', async function (assert) {
-    const program = this.server.create('program', { id: 1, title: 'Doctor of Medicine' });
+    const program = await this.server.create('program', { id: 1, title: 'Doctor of Medicine' });
     const programModel = await this.owner.lookup('service:store').findRecord('program', program.id);
     const currentYear = DateTime.fromObject({ hour: 8 }).year;
 
@@ -75,7 +75,7 @@ module('Integration | Component | curriculum-inventory/new-report', function (ho
   });
 
   test('academic year options labeled as range when app configuration is set to cross calendar-year boundaries', async function (assert) {
-    const program = this.server.create('program', { id: 1, title: 'Doctor of Medicine' });
+    const program = await this.server.create('program', { id: 1, title: 'Doctor of Medicine' });
     const programModel = await this.owner.lookup('service:store').findRecord('program', program.id);
     const currentYear = DateTime.fromObject({ hour: 8 }).year;
 
@@ -107,7 +107,7 @@ module('Integration | Component | curriculum-inventory/new-report', function (ho
   });
 
   test('save', async function (assert) {
-    const program = this.server.create('program', { id: 1, title: 'Doctor of Medicine' });
+    const program = await this.server.create('program', { id: 1, title: 'Doctor of Medicine' });
     const programModel = await this.owner.lookup('service:store').findRecord('program', program.id);
     const currentYear = DateTime.fromObject({ hour: 8 }).year;
     const expectedSelectedYear = currentYear - 5;
@@ -149,7 +149,7 @@ module('Integration | Component | curriculum-inventory/new-report', function (ho
   });
 
   test('save with academic year crossing calendar-year boundaries', async function (assert) {
-    const program = this.server.create('program', { id: 1, title: 'Doctor of Medicine' });
+    const program = await this.server.create('program', { id: 1, title: 'Doctor of Medicine' });
     const programModel = await this.owner.lookup('service:store').findRecord('program', program.id);
     const currentYear = DateTime.fromObject({ hour: 8 }).year;
     const expectedSelectedYear = currentYear - 5;
@@ -191,7 +191,7 @@ module('Integration | Component | curriculum-inventory/new-report', function (ho
   });
 
   test('cancel', async function (assert) {
-    const program = this.server.create('program', { id: 1, title: 'Doctor of Medicine' });
+    const program = await this.server.create('program', { id: 1, title: 'Doctor of Medicine' });
     const programModel = await this.owner.lookup('service:store').findRecord('program', program.id);
 
     this.set('program', programModel);
@@ -208,7 +208,7 @@ module('Integration | Component | curriculum-inventory/new-report', function (ho
   });
 
   test('pressing enter in name input field fires save action', async function (assert) {
-    const program = this.server.create('program', { id: 1, title: 'Doctor of Medicine' });
+    const program = await this.server.create('program', { id: 1, title: 'Doctor of Medicine' });
     const programModel = await this.owner.lookup('service:store').findRecord('program', program.id);
 
     this.set('program', programModel);
@@ -228,7 +228,7 @@ module('Integration | Component | curriculum-inventory/new-report', function (ho
   });
 
   test('validation errors do not show up initially', async function (assert) {
-    const program = this.server.create('program', { id: 1, title: 'Doctor of Medicine' });
+    const program = await this.server.create('program', { id: 1, title: 'Doctor of Medicine' });
     const programModel = await this.owner.lookup('service:store').findRecord('program', program.id);
     this.set('program', programModel);
     await render(
@@ -240,7 +240,7 @@ module('Integration | Component | curriculum-inventory/new-report', function (ho
   });
 
   test('validation errors show up when saving with empty report name', async function (assert) {
-    const program = this.server.create('program', { id: 1, title: 'Doctor of Medicine' });
+    const program = await this.server.create('program', { id: 1, title: 'Doctor of Medicine' });
     const programModel = await this.owner.lookup('service:store').findRecord('program', program.id);
     this.set('program', programModel);
     await render(
@@ -253,7 +253,7 @@ module('Integration | Component | curriculum-inventory/new-report', function (ho
   });
 
   test('validation errors show up when saving with a too long report name', async function (assert) {
-    const program = this.server.create('program', { id: 1, title: 'Doctor of Medicine' });
+    const program = await this.server.create('program', { id: 1, title: 'Doctor of Medicine' });
     const programModel = await this.owner.lookup('service:store').findRecord('program', program.id);
 
     this.set('program', programModel);
@@ -268,7 +268,7 @@ module('Integration | Component | curriculum-inventory/new-report', function (ho
   });
 
   test('validation errors show if description is blank', async function (assert) {
-    const program = this.server.create('program', { id: 1, title: 'Doctor of Medicine' });
+    const program = await this.server.create('program', { id: 1, title: 'Doctor of Medicine' });
     const programModel = await this.owner.lookup('service:store').findRecord('program', program.id);
     this.set('program', programModel);
 

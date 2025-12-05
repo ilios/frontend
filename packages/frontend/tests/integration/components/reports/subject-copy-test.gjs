@@ -21,7 +21,7 @@ module('Integration | Component | reports/subject-copy', function (hooks) {
   });
 
   test('it renders with auto-generated title', async function (assert) {
-    const report = this.server.create('report', {
+    const report = await this.server.create('report', {
       subject: 'course',
       prepositionalObject: 'instructor',
       prepositionalObjectTableRowId: this.user.id,
@@ -51,7 +51,7 @@ module('Integration | Component | reports/subject-copy', function (hooks) {
   });
 
   test('it renders with custom title', async function (assert) {
-    const report = this.server.create('report', {
+    const report = await this.server.create('report', {
       subject: 'course',
       prepositionalObject: 'instructor',
       prepositionalObjectTableRowId: this.user.id,

@@ -16,12 +16,12 @@ module('Integration | Component | reports/curriculum', function (hooks) {
   setupMSW(hooks);
 
   hooks.beforeEach(async function () {
-    const school = this.server.create('school');
+    const school = await this.server.create('school');
     await setupAuthentication({ school });
-    const year = this.server.create('academicYear', {
+    const year = await this.server.create('academicYear', {
       id: currentAcademicYear(),
     });
-    this.server.createList('course', 2, {
+    await this.server.createList('course', 2, {
       school,
       year: year.id,
     });

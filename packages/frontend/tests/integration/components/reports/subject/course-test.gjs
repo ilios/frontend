@@ -36,7 +36,7 @@ module('Integration | Component | reports/subject/course', function (hooks) {
       );
       return responseData;
     });
-    const { id } = this.server.create('report', {
+    const { id } = await this.server.create('report', {
       subject: 'course',
     });
     this.set('report', await this.owner.lookup('service:store').findRecord('report', id));
@@ -97,7 +97,7 @@ module('Integration | Component | reports/subject/course', function (hooks) {
       );
       return responseData;
     });
-    const { id } = this.server.create('report', {
+    const { id } = await this.server.create('report', {
       subject: 'course',
     });
     this.set('report', await this.owner.lookup('service:store').findRecord('report', id));
@@ -133,7 +133,7 @@ module('Integration | Component | reports/subject/course', function (hooks) {
       );
       return responseData;
     });
-    const { id } = this.server.create('report', {
+    const { id } = await this.server.create('report', {
       subject: 'course',
     });
     this.set('report', await this.owner.lookup('service:store').findRecord('report', id));
@@ -179,7 +179,7 @@ module('Integration | Component | reports/subject/course', function (hooks) {
       );
       return responseDataLarge;
     });
-    const { id } = this.server.create('report', {
+    const { id } = await this.server.create('report', {
       subject: 'course',
     });
     this.set('report', await this.owner.lookup('service:store').findRecord('report', id));
@@ -213,7 +213,7 @@ module('Integration | Component | reports/subject/course', function (hooks) {
       );
       return responseData;
     });
-    const { id } = this.server.create('report', {
+    const { id } = await this.server.create('report', {
       subject: 'course',
     });
     this.set('report', await this.owner.lookup('service:store').findRecord('report', id));
@@ -252,7 +252,7 @@ module('Integration | Component | reports/subject/course', function (hooks) {
       );
       return responseData;
     });
-    const { id } = this.server.create('report', {
+    const { id } = await this.server.create('report', {
       subject: 'course',
     });
     this.set('report', await this.owner.lookup('service:store').findRecord('report', id));
@@ -284,7 +284,7 @@ module('Integration | Component | reports/subject/course', function (hooks) {
       );
       return responseData;
     });
-    const { id } = this.server.create('report', {
+    const { id } = await this.server.create('report', {
       subject: 'course',
     });
     this.set('report', await this.owner.lookup('service:store').findRecord('report', id));
@@ -315,9 +315,9 @@ module('Integration | Component | reports/subject/course', function (hooks) {
       );
       return responseData;
     });
-    const { id } = this.server.create('report', {
+    const { id } = await this.server.create('report', {
       subject: 'course',
-      school: this.server.create('school', { id: 33 }),
+      school: await this.server.create('school', { id: 33 }),
     });
     this.set('report', await this.owner.lookup('service:store').findRecord('report', id));
     this.set('school', await this.owner.lookup('service:store').findRecord('school', 33));
@@ -344,7 +344,7 @@ module('Integration | Component | reports/subject/course', function (hooks) {
       );
       return responseData;
     });
-    const { id } = this.server.create('report', {
+    const { id } = await this.server.create('report', {
       subject: 'course',
       prepositionalObject: 'program',
       prepositionalObjectTableRowId: 13,
@@ -372,9 +372,9 @@ module('Integration | Component | reports/subject/course', function (hooks) {
       );
       return responseData;
     });
-    const { id } = this.server.create('report', {
+    const { id } = await this.server.create('report', {
       subject: 'course',
-      school: this.server.create('school', { id: 24 }),
+      school: await this.server.create('school', { id: 24 }),
       prepositionalObject: 'program',
       prepositionalObjectTableRowId: 13,
     });
@@ -403,7 +403,7 @@ module('Integration | Component | reports/subject/course', function (hooks) {
       );
       return responseData;
     });
-    const { id } = this.server.create('report', {
+    const { id } = await this.server.create('report', {
       subject: 'course',
       prepositionalObject: 'program year',
       prepositionalObjectTableRowId: 13,
@@ -458,7 +458,7 @@ module('Integration | Component | reports/subject/course', function (hooks) {
 
       return rhett;
     });
-    const { id } = this.server.create('report', {
+    const { id } = await this.server.create('report', {
       subject: 'course',
       prepositionalObject: 'mesh term',
       prepositionalObjectTableRowId: 'ABC',
@@ -490,7 +490,7 @@ module('Integration | Component | reports/subject/course', function (hooks) {
         },
       };
     });
-    const { id } = this.server.create('report', {
+    const { id } = await this.server.create('report', {
       subject: 'course',
       prepositionalObject: 'academic year',
       prepositionalObjectTableRowId: '2015',
@@ -514,7 +514,7 @@ module('Integration | Component | reports/subject/course', function (hooks) {
       assert.step('API called');
       return responseData;
     });
-    const { id } = this.server.create('report', {
+    const { id } = await this.server.create('report', {
       subject: 'course',
     });
     this.set('report', await this.owner.lookup('service:store').findRecord('report', id));

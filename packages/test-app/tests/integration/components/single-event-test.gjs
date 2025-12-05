@@ -18,11 +18,11 @@ module('Integration | Component | ilios calendar single event', function (hooks)
 
   test('it renders', async function (assert) {
     const now = DateTime.fromObject({ hour: 0, minute: 0, second: 0 });
-    const course = this.server.create('course', {
+    const course = await this.server.create('course', {
       id: 1,
       title: 'test course',
     });
-    this.server.create('session', {
+    await this.server.create('session', {
       id: 1,
       title: 'test session',
       course,
@@ -48,7 +48,7 @@ module('Integration | Component | ilios calendar single event', function (hooks)
         endDate: new Date('2013-03-01T01:10:00'),
       },
     ];
-    const ourEvent = this.server.create('userevent', {
+    const ourEvent = await this.server.create('userevent', {
       user: 1,
       courseExternalId: 'ext1',
       sessionTypeTitle: 'test type',
@@ -244,7 +244,7 @@ module('Integration | Component | ilios calendar single event', function (hooks)
 
   test('unlinked event date and title are displayed', async function (assert) {
     const today = DateTime.fromObject({ hour: 8, minute: 0, second: 0 });
-    this.server.create('userevent', {
+    await this.server.create('userevent', {
       name: 'Learn to Learn',
       courseTitle: 'course',
       startDate: today.toISO(),
@@ -286,7 +286,7 @@ module('Integration | Component | ilios calendar single event', function (hooks)
       isScheduled: false,
       slug: '1234',
     };
-    this.server.create('userevent', {
+    await this.server.create('userevent', {
       name: 'Learn to Learn',
       courseTitle: 'course',
       startDate: today.toISO(),
@@ -359,7 +359,7 @@ module('Integration | Component | ilios calendar single event', function (hooks)
         },
       ],
     };
-    this.server.create('userevent', {
+    await this.server.create('userevent', {
       name: 'Learn to Learn',
       courseTitle: 'course',
       startDate: today.toISO(),
@@ -415,7 +415,7 @@ module('Integration | Component | ilios calendar single event', function (hooks)
       isScheduled: false,
       slug: '1234',
     };
-    this.server.create('userevent', {
+    await this.server.create('userevent', {
       name: 'Learn to Learn',
       courseTitle: 'course',
       startDate: today.toISO(),
@@ -464,7 +464,7 @@ module('Integration | Component | ilios calendar single event', function (hooks)
     }
     this.owner.register('service:current-user', MockCurrentUserService);
     this.currentUser = this.owner.lookup('service:current-user');
-    this.server.create('userevent', { isUserEvent: true, sessionTypeTitle: 'test type' });
+    await this.server.create('userevent', { isUserEvent: true, sessionTypeTitle: 'test type' });
     this.set('evt', this.server.db.userevents[0]);
     await render(<template><SingleEvent @event={{this.evt}} /></template>);
     assert.ok(component.sessionLearningMaterials.linksToAllMaterials);
@@ -478,7 +478,7 @@ module('Integration | Component | ilios calendar single event', function (hooks)
     }
     this.owner.register('service:current-user', MockCurrentUserService);
     this.currentUser = this.owner.lookup('service:current-user');
-    this.server.create('userevent', { isUserEvent: true, sessionTypeTitle: 'test type' });
+    await this.server.create('userevent', { isUserEvent: true, sessionTypeTitle: 'test type' });
     this.set('evt', this.server.db.userevents[0]);
     await render(<template><SingleEvent @event={{this.evt}} /></template>);
     assert.notOk(component.sessionLearningMaterials.linksToAllMaterials);
@@ -492,7 +492,7 @@ module('Integration | Component | ilios calendar single event', function (hooks)
     }
     this.owner.register('service:current-user', MockCurrentUserService);
     this.currentUser = this.owner.lookup('service:current-user');
-    this.server.create('userevent', { isUserEvent: false, sessionTypeTitle: 'test type' });
+    await this.server.create('userevent', { isUserEvent: false, sessionTypeTitle: 'test type' });
     this.set('evt', this.server.db.userevents[0]);
     await render(<template><SingleEvent @event={{this.evt}} /></template>);
     assert.notOk(component.sessionLearningMaterials.linksToAllMaterials);
@@ -500,7 +500,7 @@ module('Integration | Component | ilios calendar single event', function (hooks)
 
   test('start and end date are the same', async function (assert) {
     const today = DateTime.fromObject({ hour: 8, minute: 0, second: 0 });
-    this.server.create('userevent', {
+    await this.server.create('userevent', {
       name: 'Learn to Learn',
       courseTitle: 'course',
       startDate: today.toISO(),
@@ -533,7 +533,7 @@ module('Integration | Component | ilios calendar single event', function (hooks)
   test('start and end date fall on the same day but different times', async function (assert) {
     const today = DateTime.fromObject({ hour: 8, minute: 0, second: 0 });
     const laterToday = DateTime.fromObject({ hour: 8, minute: 1, second: 0 });
-    this.server.create('userevent', {
+    await this.server.create('userevent', {
       name: 'Learn to Learn',
       courseTitle: 'course',
       startDate: today.toISO(),
@@ -571,7 +571,7 @@ module('Integration | Component | ilios calendar single event', function (hooks)
   test('start and end date fall on different days', async function (assert) {
     const today = DateTime.fromObject({ hour: 8, minute: 0, second: 0 });
     const notToday = DateTime.fromObject({ hour: 8, minute: 0, second: 0 }).plus({ hours: 72 });
-    this.server.create('userevent', {
+    await this.server.create('userevent', {
       name: 'Learn to Learn',
       courseTitle: 'course',
       startDate: today.toISO(),
@@ -620,7 +620,7 @@ module('Integration | Component | ilios calendar single event', function (hooks)
     this.owner.register('service:currentUser', CurrentUserMock);
 
     const today = DateTime.fromObject({ hour: 8, minute: 0, second: 0 });
-    this.server.create('userevent', {
+    await this.server.create('userevent', {
       name: 'Learn to Learn',
       courseTitle: 'course',
       course: 1,
@@ -644,7 +644,7 @@ module('Integration | Component | ilios calendar single event', function (hooks)
   module('iconography', function () {
     test('recently updated', async function (assert) {
       const now = DateTime.fromObject({ hour: 0, minute: 0, second: 0 });
-      this.server.create('userevent', {
+      await this.server.create('userevent', {
         name: 'Learn to Learn',
         courseTitle: 'course',
         startDate: now.toJSDate(),
@@ -665,7 +665,7 @@ module('Integration | Component | ilios calendar single event', function (hooks)
 
     test('not recently updated', async function (assert) {
       const now = DateTime.fromObject({ hour: 0, minute: 0, second: 0 });
-      this.server.create('userevent', {
+      await this.server.create('userevent', {
         name: 'Learn to Learn',
         courseTitle: 'course',
         startDate: now.toJSDate(),
@@ -688,7 +688,7 @@ module('Integration | Component | ilios calendar single event', function (hooks)
 
     test('scheduled', async function (assert) {
       const now = DateTime.fromObject({ hour: 0, minute: 0, second: 0 });
-      this.server.create('userevent', {
+      await this.server.create('userevent', {
         name: 'Learn to Learn',
         courseTitle: 'course',
         startDate: now.toJSDate(),
@@ -708,7 +708,7 @@ module('Integration | Component | ilios calendar single event', function (hooks)
 
     test('draft', async function (assert) {
       const now = DateTime.fromObject({ hour: 0, minute: 0, second: 0 });
-      this.server.create('userevent', {
+      await this.server.create('userevent', {
         name: 'Learn to Learn',
         courseTitle: 'course',
         startDate: now.toJSDate(),
@@ -737,7 +737,7 @@ module('Integration | Component | ilios calendar single event', function (hooks)
     this.owner.register('service:currentUser', CurrentUserMock);
 
     const today = DateTime.fromObject({ hour: 8, minute: 0, second: 0 });
-    this.server.create('userevent', {
+    await this.server.create('userevent', {
       name: 'Learn to Learn',
       courseTitle: 'course',
       course: 1,

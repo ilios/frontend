@@ -7,46 +7,46 @@ import page from 'ilios-common/page-objects/course';
 module('Acceptance | Course - Objective Inactive Parents', function (hooks) {
   setupApplicationTest(hooks);
   hooks.beforeEach(async function () {
-    this.school = this.server.create('school');
+    this.school = await this.server.create('school');
     this.user = await setupAuthentication({ administeredSchools: [this.school] }, true);
   });
 
   test('inactive program year objectives are hidden unless they are selected', async function (assert) {
-    const program = this.server.create('program', { school: this.school });
-    const programYear = this.server.create('program-year', { program });
-    const cohort = this.server.create('cohort', {
+    const program = await this.server.create('program', { school: this.school });
+    const programYear = await this.server.create('program-year', { program });
+    const cohort = await this.server.create('cohort', {
       programYear,
     });
-    const competency = this.server.create('competency', {
+    const competency = await this.server.create('competency', {
       school: this.school,
       programYears: [programYear],
     });
 
-    this.server.create('program-year-objective', {
+    await this.server.create('program-year-objective', {
       programYear,
       competency,
       title: 'active',
       active: true,
     });
-    this.server.create('program-year-objective', {
+    await this.server.create('program-year-objective', {
       programYear,
       competency,
       title: 'inactive',
       active: false,
     });
-    const parent = this.server.create('program-year-objective', {
+    const parent = await this.server.create('program-year-objective', {
       programYear,
       competency,
       title: 'inactive selected',
       active: false,
     });
 
-    const course = this.server.create('course', {
+    const course = await this.server.create('course', {
       year: 2013,
       school: this.school,
       cohorts: [cohort],
     });
-    this.server.create('course-objective', {
+    await this.server.create('course-objective', {
       course,
       programYearObjectives: [parent],
     });

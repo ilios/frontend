@@ -10,7 +10,7 @@ module('Acceptance | Admin', function (hooks) {
   setupApplicationTest(hooks);
 
   hooks.beforeEach(async function () {
-    const school = this.server.create('school');
+    const school = await this.server.create('school');
     await setupAuthentication({ school, administeredSchools: [school] }, true);
   });
 
@@ -23,8 +23,8 @@ module('Acceptance | Admin', function (hooks) {
   });
 
   test('can search for users', async function (assert) {
-    this.server.createList('user', 20, { schoolId: 1 });
-    this.server.createList('authentication', 20);
+    await this.server.createList('user', 20, { schoolId: 1 });
+    await this.server.createList('authentication', 20);
 
     const userSearch = '.user-search input';
     const secondResult = '.user-search .results li:nth-of-type(3)';
@@ -57,8 +57,8 @@ module('Acceptance | Admin', function (hooks) {
         },
       };
     });
-    this.server.createList('user', 2, { schoolId: 1 });
-    this.server.createList('authentication', 2);
+    await this.server.createList('user', 2, { schoolId: 1 });
+    await this.server.createList('authentication', 2);
 
     const userSearch = '.user-search input';
     await visit(url);
@@ -89,8 +89,8 @@ module('Acceptance | Admin', function (hooks) {
         },
       };
     });
-    this.server.createList('user', 2, { schoolId: 1 });
-    this.server.createList('authentication', 2);
+    await this.server.createList('user', 2, { schoolId: 1 });
+    await this.server.createList('authentication', 2);
 
     const userSearch = '.user-search input';
     await visit(url);
@@ -119,7 +119,7 @@ module('Acceptance | Admin', function (hooks) {
 
   test('search results exceed threshold', async function (assert) {
     const firstName = 'Janusz';
-    this.server.createList('user', 100, { schoolId: 1, firstName });
+    await this.server.createList('user', 100, { schoolId: 1, firstName });
 
     const userSearch = '.user-search input';
     const results = '.user-search .results li';

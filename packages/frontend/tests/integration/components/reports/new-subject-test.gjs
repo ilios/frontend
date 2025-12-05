@@ -96,13 +96,13 @@ module('Integration | Component | reports/new-subject', function (hooks) {
   };
 
   test('it renders', async function (assert) {
-    this.server.create('school', { title: 'first' });
-    const school2 = this.server.create('school', { title: 'second' });
-    this.server.create('school', { title: 'third' });
+    await this.server.create('school', { title: 'first' });
+    const school2 = await this.server.create('school', { title: 'second' });
+    await this.server.create('school', { title: 'third' });
     //pre-fetch schools this is usually done at the route above this component, but
     // for this integration test we need to do this here
     await this.owner.lookup('service:store').findAll('school');
-    const user = this.server.create('user', { school: school2 });
+    const user = await this.server.create('user', { school: school2 });
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     class CurrentUserMock extends Service {
       async getModel() {
@@ -165,7 +165,7 @@ module('Integration | Component | reports/new-subject', function (hooks) {
   });
 
   test('selecting and de-selecting a MeSH term as prepositional object', async function (assert) {
-    this.server.create('mesh-descriptor');
+    await this.server.create('mesh-descriptor');
     this.set('selectedPrepositionalObject', null);
     this.set('setSelectedPrepositionalObject', (object) => {
       this.set('selectedPrepositionalObject', object);
@@ -211,7 +211,7 @@ module('Integration | Component | reports/new-subject', function (hooks) {
   });
 
   test('selecting and de-selecting an instructor as prepositional object', async function (assert) {
-    this.server.create('user', { firstName: 'Rusty' });
+    await this.server.create('user', { firstName: 'Rusty' });
     this.set('selectedPrepositionalObject', null);
     this.set('setSelectedPrepositionalObject', (object) => {
       this.set('selectedPrepositionalObject', object);
@@ -366,8 +366,8 @@ module('Integration | Component | reports/new-subject', function (hooks) {
   });
 
   test('can search for user #2506', async function (assert) {
-    const school = this.server.create('school', { title: 'first' });
-    const user = this.server.create('user', { school });
+    const school = await this.server.create('school', { title: 'first' });
+    const user = await this.server.create('user', { school });
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     class CurrentUserMock extends Service {
       async getModel() {
@@ -375,7 +375,7 @@ module('Integration | Component | reports/new-subject', function (hooks) {
       }
     }
     this.owner.register('service:current-user', CurrentUserMock);
-    this.server.create('user', {
+    await this.server.create('user', {
       firstName: 'Test',
       lastName: 'Person',
       middleName: '',
@@ -449,8 +449,8 @@ module('Integration | Component | reports/new-subject', function (hooks) {
   });
 
   test('cancel', async function (assert) {
-    const school = this.server.create('school', { title: 'first' });
-    const user = this.server.create('user', { school });
+    const school = await this.server.create('school', { title: 'first' });
+    const user = await this.server.create('user', { school });
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     class CurrentUserMock extends Service {
       async getModel() {
@@ -467,8 +467,8 @@ module('Integration | Component | reports/new-subject', function (hooks) {
   });
 
   test('save', async function (assert) {
-    const school = this.server.create('school', { title: 'first' });
-    const user = this.server.create('user', { school });
+    const school = await this.server.create('school', { title: 'first' });
+    const user = await this.server.create('user', { school });
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     class CurrentUserMock extends Service {
       async getModel() {
@@ -497,8 +497,8 @@ module('Integration | Component | reports/new-subject', function (hooks) {
   });
 
   test('title too long', async function (assert) {
-    const school = this.server.create('school', { title: 'first' });
-    const user = this.server.create('user', { school });
+    const school = await this.server.create('school', { title: 'first' });
+    const user = await this.server.create('user', { school });
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     class CurrentUserMock extends Service {
       async getModel() {
@@ -533,8 +533,8 @@ module('Integration | Component | reports/new-subject', function (hooks) {
   });
 
   test('instructor missing', async function (assert) {
-    const school = this.server.create('school', { title: 'first' });
-    const user = this.server.create('user', { school });
+    const school = await this.server.create('school', { title: 'first' });
+    const user = await this.server.create('user', { school });
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     class CurrentUserMock extends Service {
       async getModel() {
@@ -584,8 +584,8 @@ module('Integration | Component | reports/new-subject', function (hooks) {
   });
 
   test('missing MeSH term', async function (assert) {
-    const school = this.server.create('school', { title: 'first' });
-    const user = this.server.create('user', { school });
+    const school = await this.server.create('school', { title: 'first' });
+    const user = await this.server.create('user', { school });
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     class CurrentUserMock extends Service {
       async getModel() {

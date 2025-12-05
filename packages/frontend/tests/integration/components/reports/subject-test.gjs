@@ -20,22 +20,22 @@ module('Integration | Component | reports/subject', function (hooks) {
   });
 
   test('year filter works', async function (assert) {
-    this.server.create('academic-year', {
+    await this.server.create('academic-year', {
       id: 2015,
     });
-    this.server.create('academic-year', {
+    await this.server.create('academic-year', {
       id: 2016,
     });
-    const school = this.server.create('school');
-    this.server.create('course', {
+    const school = await this.server.create('school');
+    await this.server.create('course', {
       school,
       year: 2015,
     });
-    this.server.create('course', {
+    await this.server.create('course', {
       school,
       year: 2016,
     });
-    const report = this.server.create('report', {
+    const report = await this.server.create('report', {
       title: 'my report 0',
       subject: 'course',
       prepositionalObject: 'instructor',
@@ -99,13 +99,13 @@ module('Integration | Component | reports/subject', function (hooks) {
       };
     });
     const year = 2016;
-    this.server.create('academic-year', { id: year });
-    const school = this.server.create('school');
-    const program = this.server.create('program', { school });
-    const programYear = this.server.create('program-year', { program });
-    const cohort = this.server.create('cohort', { programYear });
-    this.server.create('course', { school, year, cohorts: [cohort] });
-    const report = this.server.create('report', {
+    await this.server.create('academic-year', { id: year });
+    const school = await this.server.create('school');
+    const program = await this.server.create('program', { school });
+    const programYear = await this.server.create('program-year', { program });
+    const cohort = await this.server.create('cohort', { programYear });
+    await this.server.create('course', { school, year, cohorts: [cohort] });
+    const report = await this.server.create('report', {
       title: 'my report 0',
       subject: 'course',
       prepositionalObject: 'program',
@@ -144,15 +144,15 @@ module('Integration | Component | reports/subject', function (hooks) {
   });
 
   test('changing year changes select #3839', async function (assert) {
-    this.server.create('academic-year', {
+    await this.server.create('academic-year', {
       id: 2015,
     });
-    const school = this.server.create('school');
-    this.server.create('course', {
+    const school = await this.server.create('school');
+    await this.server.create('course', {
       school,
       year: 2015,
     });
-    const report = this.server.create('report', {
+    const report = await this.server.create('report', {
       title: 'my report 0',
       subject: 'course',
       user: this.user,
@@ -189,15 +189,15 @@ module('Integration | Component | reports/subject', function (hooks) {
   });
 
   test('validation - report title too long', async function (assert) {
-    this.server.create('academic-year', {
+    await this.server.create('academic-year', {
       id: 2015,
     });
-    const school = this.server.create('school');
-    this.server.create('course', {
+    const school = await this.server.create('school');
+    await this.server.create('course', {
       school,
       year: 2015,
     });
-    const report = this.server.create('report', {
+    const report = await this.server.create('report', {
       title: 'my report 0',
       subject: 'course',
       user: this.user,

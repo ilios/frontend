@@ -9,64 +9,64 @@ module('Integration | Component | visualizer-program-year-objectives', function 
   setupMSW(hooks);
 
   test('it renders', async function (assert) {
-    const domain1 = this.server.create('competency');
-    const domain2 = this.server.create('competency');
-    const competency1 = this.server.create('competency', {
+    const domain1 = await this.server.create('competency');
+    const domain2 = await this.server.create('competency');
+    const competency1 = await this.server.create('competency', {
       parent: domain1,
     });
-    const competency2 = this.server.create('competency', {
+    const competency2 = await this.server.create('competency', {
       parent: domain2,
     });
-    const competency3 = this.server.create('competency', {
+    const competency3 = await this.server.create('competency', {
       parent: domain1,
     });
-    const program = this.server.create('program');
-    const programYear = this.server.create('program-year', {
+    const program = await this.server.create('program');
+    const programYear = await this.server.create('program-year', {
       program,
       competencies: [competency1, competency2, competency3],
     });
-    const cohort = this.server.create('cohort', {
+    const cohort = await this.server.create('cohort', {
       programYear,
     });
-    const programYearObjective1 = this.server.create('program-year-objective', {
+    const programYearObjective1 = await this.server.create('program-year-objective', {
       programYear,
       competency: competency1,
     });
-    const programYearObjective2 = this.server.create('program-year-objective', {
+    const programYearObjective2 = await this.server.create('program-year-objective', {
       programYear,
       competency: competency2,
     });
-    const programYearObjective3 = this.server.create('program-year-objective', {
+    const programYearObjective3 = await this.server.create('program-year-objective', {
       programYear,
       competency: competency3,
     });
-    const programYearObjective4 = this.server.create('program-year-objective', {
+    const programYearObjective4 = await this.server.create('program-year-objective', {
       programYear,
       competency: competency1,
     });
-    const course = this.server.create('course', {
+    const course = await this.server.create('course', {
       cohorts: [cohort],
     });
-    const courseObjective1 = this.server.create('course-objective', {
+    const courseObjective1 = await this.server.create('course-objective', {
       course,
       programYearObjectives: [programYearObjective1],
     });
-    const courseObjective2 = this.server.create('course-objective', {
+    const courseObjective2 = await this.server.create('course-objective', {
       course,
       programYearObjectives: [programYearObjective2, programYearObjective3],
     });
-    this.server.create('course-objective', {
+    await this.server.create('course-objective', {
       course,
       programYearObjectives: [programYearObjective4],
     });
-    const session = this.server.create('session', {
+    const session = await this.server.create('session', {
       course,
     });
-    this.server.create('session-objective', {
+    await this.server.create('session-objective', {
       session,
       courseObjectives: [courseObjective1],
     });
-    this.server.create('session-objective', {
+    await this.server.create('session-objective', {
       session,
       courseObjectives: [courseObjective2],
     });

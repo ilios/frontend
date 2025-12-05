@@ -11,7 +11,7 @@ module('Integration | Component | session/header', function (hooks) {
   setupMSW(hooks);
 
   test('it renders and is accessible when not editable', async function (assert) {
-    this.set('session', this.server.create('session'));
+    this.set('session', await this.server.create('session'));
     await render(
       <template>
         <Header @session={{this.session}} @editable={{false}} @hideCheckLink={{true}} />
@@ -27,7 +27,7 @@ module('Integration | Component | session/header', function (hooks) {
   });
 
   test('it renders and is accessible when editable', async function (assert) {
-    this.set('session', this.server.create('session'));
+    this.set('session', await this.server.create('session'));
     await render(
       <template>
         <Header @session={{this.session}} @editable={{true}} @hideCheckLink={{true}} />
@@ -44,7 +44,7 @@ module('Integration | Component | session/header', function (hooks) {
   });
 
   test('change title', async function (assert) {
-    this.set('session', this.server.create('session'));
+    this.set('session', await this.server.create('session'));
     await render(
       <template>
         <Header @session={{this.session}} @editable={{true}} @hideCheckLink={{true}} />
@@ -59,7 +59,7 @@ module('Integration | Component | session/header', function (hooks) {
   });
 
   test('cancel change title', async function (assert) {
-    this.set('session', this.server.create('session'));
+    this.set('session', await this.server.create('session'));
     await render(
       <template>
         <Header @session={{this.session}} @editable={{true}} @hideCheckLink={{true}} />
@@ -74,7 +74,7 @@ module('Integration | Component | session/header', function (hooks) {
   });
 
   test('validate too short', async function (assert) {
-    this.set('session', this.server.create('session'));
+    this.set('session', await this.server.create('session'));
     await render(
       <template>
         <Header @session={{this.session}} @editable={{true}} @hideCheckLink={{true}} />
@@ -90,7 +90,7 @@ module('Integration | Component | session/header', function (hooks) {
   });
 
   test('validate too long', async function (assert) {
-    this.set('session', this.server.create('session'));
+    this.set('session', await this.server.create('session'));
     await render(
       <template>
         <Header @session={{this.session}} @editable={{true}} @hideCheckLink={{true}} />

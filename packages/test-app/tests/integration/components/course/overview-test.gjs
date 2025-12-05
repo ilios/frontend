@@ -22,8 +22,8 @@ module('Integration | Component | course overview', function (hooks) {
   });
 
   test('course external id validation fails if value is too short', async function (assert) {
-    const course = this.server.create('course');
-    this.server.create('course-clerkship-type', {
+    const course = await this.server.create('course');
+    await this.server.create('course-clerkship-type', {
       courses: [course],
     });
     const courseModel = await this.store.findRecord('course', course.id);
@@ -40,8 +40,8 @@ module('Integration | Component | course overview', function (hooks) {
   });
 
   test('course external id validation fails if value is too long', async function (assert) {
-    const course = this.server.create('course');
-    this.server.create('course-clerkship-type', {
+    const course = await this.server.create('course');
+    await this.server.create('course-clerkship-type', {
       courses: [course],
     });
     const courseModel = await this.store.findRecord('course', course.id);
@@ -58,7 +58,7 @@ module('Integration | Component | course overview', function (hooks) {
   });
 
   test('start date validation fails when after end date', async function (assert) {
-    const course = this.server.create('course', {
+    const course = await this.server.create('course', {
       startDate: '2024-01-01',
       endDate: '2024-06-30',
     });
@@ -78,7 +78,7 @@ module('Integration | Component | course overview', function (hooks) {
   });
 
   test('end date validation fails when before start date', async function (assert) {
-    const course = this.server.create('course', {
+    const course = await this.server.create('course', {
       startDate: '2024-01-01',
       endDate: '2024-06-30',
     });

@@ -11,18 +11,18 @@ module('Integration | Component | detail-learning-materials-item', function (hoo
   setupMSW(hooks);
 
   hooks.beforeEach(async function () {
-    const status = this.server.createList('learning-material-status', 3);
-    const roles = this.server.createList('learning-material-user-role', 3);
-    const user = this.server.create('user');
-    const meshDescriptors = this.server.createList('mesh-descriptor', 2);
-    const learningMaterial = this.server.create('learning-material', {
+    const status = await this.server.createList('learning-material-status', 3);
+    const roles = await this.server.createList('learning-material-user-role', 3);
+    const user = await this.server.create('user');
+    const meshDescriptors = await this.server.createList('mesh-descriptor', 2);
+    const learningMaterial = await this.server.create('learning-material', {
       title: 'test title',
       citation: 'some text',
       owningUser: user,
       status: status[1],
       userRole: roles[0],
     });
-    const clm = this.server.create('course-learning-material', {
+    const clm = await this.server.create('course-learning-material', {
       learningMaterial,
       required: true,
       notes: 'notes',

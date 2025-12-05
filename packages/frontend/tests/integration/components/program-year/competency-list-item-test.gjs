@@ -11,8 +11,8 @@ module('Integration | Component | program-year/competency-list-item', function (
   setupMSW(hooks);
 
   hooks.beforeEach(async function () {
-    const domain = this.server.create('competency', { title: 'domain' });
-    const competencies = this.server.createList('competency', 2, {
+    const domain = await this.server.create('competency', { title: 'domain' });
+    const competencies = await this.server.createList('competency', 2, {
       parent: domain,
     });
     this.domain = await this.owner.lookup('service:store').findRecord('competency', domain.id);

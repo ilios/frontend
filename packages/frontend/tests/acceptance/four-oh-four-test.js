@@ -38,8 +38,8 @@ module('Acceptance | FourOhFour', function (hooks) {
   });
 
   test('visiting existing course does NOT trigger 404', async function (assert) {
-    this.school = this.server.create('school');
-    this.course = this.server.create('course', { school: this.school });
+    this.school = await this.server.create('school');
+    this.course = await this.server.create('course', { school: this.school });
 
     await visit('/courses/1');
     assert.strictEqual(currentURL(), '/courses/1');

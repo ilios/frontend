@@ -11,8 +11,8 @@ module('Integration | Component | program-year/overview', function (hooks) {
   setupMSW(hooks);
 
   test('it renders', async function (assert) {
-    const program = this.server.create('program');
-    const programYear = this.server.create('program-year', { program });
+    const program = await this.server.create('program');
+    const programYear = await this.server.create('program-year', { program });
     const programYearModel = await this.owner
       .lookup('service:store')
       .findRecord('program-year', programYear.id);

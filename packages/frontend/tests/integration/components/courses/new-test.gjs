@@ -11,7 +11,7 @@ module('Integration | Component | courses/new', function (hooks) {
   setupMSW(hooks);
 
   hooks.beforeEach(async function () {
-    const school = this.server.create('school');
+    const school = await this.server.create('school');
     this.school = await this.owner.lookup('service:store').findRecord('school', school.id);
   });
 
@@ -39,7 +39,7 @@ module('Integration | Component | courses/new', function (hooks) {
 
   test('given year is pre-selected', async function (assert) {
     const thisYear = new Date().getFullYear();
-    const academicYear = this.server.create('academic-year', { id: thisYear });
+    const academicYear = await this.server.create('academic-year', { id: thisYear });
     const academicYearModel = await this.owner
       .lookup('service:store')
       .findRecord('academic-year', academicYear.id);
@@ -64,7 +64,7 @@ module('Integration | Component | courses/new', function (hooks) {
 
   test('given year is not pre-selected if it falls out of range', async function (assert) {
     const thisYear = new Date('1824-09-04').getFullYear();
-    const academicYear = this.server.create('academic-year', { id: thisYear });
+    const academicYear = await this.server.create('academic-year', { id: thisYear });
     const academicYearModel = await this.owner
       .lookup('service:store')
       .findRecord('academic-year', academicYear.id);
@@ -125,7 +125,7 @@ module('Integration | Component | courses/new', function (hooks) {
 
   test('save', async function (assert) {
     const thisYear = new Date().getFullYear();
-    const academicYear = this.server.create('academic-year', { id: thisYear });
+    const academicYear = await this.server.create('academic-year', { id: thisYear });
     const academicYearModel = await this.owner
       .lookup('service:store')
       .findRecord('academic-year', academicYear.id);
@@ -155,7 +155,7 @@ module('Integration | Component | courses/new', function (hooks) {
 
   test('save on pressing enter in title field', async function (assert) {
     const thisYear = new Date().getFullYear();
-    const academicYear = this.server.create('academic-year', { id: thisYear });
+    const academicYear = await this.server.create('academic-year', { id: thisYear });
     const academicYearModel = await this.owner
       .lookup('service:store')
       .findRecord('academic-year', academicYear.id);
@@ -185,7 +185,7 @@ module('Integration | Component | courses/new', function (hooks) {
 
   test('input validation fails if title is too short', async function (assert) {
     const thisYear = new Date().getFullYear();
-    const academicYear = this.server.create('academic-year', { id: thisYear });
+    const academicYear = await this.server.create('academic-year', { id: thisYear });
     const academicYearModel = await this.owner
       .lookup('service:store')
       .findRecord('academic-year', academicYear.id);
@@ -212,7 +212,7 @@ module('Integration | Component | courses/new', function (hooks) {
 
   test('input validation fails if title is too long', async function (assert) {
     const thisYear = new Date().getFullYear();
-    const academicYear = this.server.create('academic-year', { id: thisYear });
+    const academicYear = await this.server.create('academic-year', { id: thisYear });
     const academicYearModel = await this.owner
       .lookup('service:store')
       .findRecord('academic-year', academicYear.id);

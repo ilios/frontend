@@ -13,37 +13,37 @@ module('Integration | Component | dashboard/terms-calendar-filter', function (ho
   setupMSW(hooks);
 
   hooks.beforeEach(async function () {
-    this.school = this.server.create('school');
-    this.vocab1 = this.server.create('vocabulary', {
+    this.school = await this.server.create('school');
+    this.vocab1 = await this.server.create('vocabulary', {
       school: this.school,
       active: true,
     });
-    const term1 = this.server.create('term', {
+    const term1 = await this.server.create('term', {
       vocabulary: this.vocab1,
       active: true,
     });
-    const term2 = this.server.create('term', {
+    const term2 = await this.server.create('term', {
       vocabulary: this.vocab1,
       active: true,
     });
-    this.vocab2 = this.server.create('vocabulary', {
+    this.vocab2 = await this.server.create('vocabulary', {
       school: this.school,
       active: true,
     });
-    const term3 = this.server.create('term', {
+    const term3 = await this.server.create('term', {
       vocabulary: this.vocab2,
       active: true,
     });
-    const term4 = this.server.create('term', {
+    const term4 = await this.server.create('term', {
       vocabulary: this.vocab2,
       active: true,
     });
-    this.server.create('course', {
+    await this.server.create('course', {
       year: 2024,
       school: this.school,
       terms: [term1, term2],
     });
-    this.server.create('course', {
+    await this.server.create('course', {
       year: 2025,
       school: this.school,
       terms: [term3, term4],

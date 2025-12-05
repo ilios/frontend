@@ -11,19 +11,19 @@ module('Integration | Component | school/session-types-expanded', function (hook
   setupMSW(hooks);
 
   hooks.beforeEach(async function () {
-    this.server.create('assessment-option', {
+    await this.server.create('assessment-option', {
       name: 'formative',
     });
-    this.summative = this.server.create('assessment-option', {
+    this.summative = await this.server.create('assessment-option', {
       name: 'summative',
     });
-    const sessionType = this.server.create('session-type', {
+    const sessionType = await this.server.create('session-type', {
       id: 1,
       title: 'one',
       calendarColor: '#ffffff',
       assessment: true,
     });
-    const school = this.server.create('school', {
+    const school = await this.server.create('school', {
       id: 1,
       sessionTypes: [sessionType],
     });

@@ -12,12 +12,12 @@ module('Integration | Component | program-year/manage-objective-competency', fun
   setupMSW(hooks);
 
   hooks.beforeEach(async function () {
-    const domain1 = this.server.create('competency', { title: 'Domain B' });
-    const competency1 = this.server.create('competency', {
+    const domain1 = await this.server.create('competency', { title: 'Domain B' });
+    const competency1 = await this.server.create('competency', {
       title: 'competency 0',
       parent: domain1,
     });
-    const domain2 = this.server.create('competency', { title: 'Domain A' });
+    const domain2 = await this.server.create('competency', { title: 'Domain A' });
     this.domainModel1 = await this.owner
       .lookup('service:store')
       .findRecord('competency', domain1.id);

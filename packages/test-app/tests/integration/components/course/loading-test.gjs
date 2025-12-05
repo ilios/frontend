@@ -9,8 +9,8 @@ module('Integration | Component | course/loading', function (hooks) {
   setupMSW(hooks);
 
   test('it renders', async function (assert) {
-    const school = this.server.create('school');
-    const course = this.server.create('course', {
+    const school = await this.server.create('school');
+    const course = await this.server.create('course', {
       school,
     });
     const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);

@@ -14,46 +14,46 @@ module('Integration | Component | user-profile-cohorts-manager', function (hooks
 
   hooks.beforeEach(async function () {
     const currentYear = new Date().getFullYear();
-    const school1 = this.server.create('school');
-    const school2 = this.server.create('school');
-    const program1 = this.server.create('program', { school: school1, duration: 1 });
-    const program2 = this.server.create('program', { school: school2, duration: 4 });
-    const programYear1 = this.server.create('program-year', {
+    const school1 = await this.server.create('school');
+    const school2 = await this.server.create('school');
+    const program1 = await this.server.create('program', { school: school1, duration: 1 });
+    const program2 = await this.server.create('program', { school: school2, duration: 4 });
+    const programYear1 = await this.server.create('program-year', {
       program: program1,
       startYear: currentYear - program1.duration,
     });
-    const programYear2 = this.server.create('program-year', {
+    const programYear2 = await this.server.create('program-year', {
       program: program2,
       startYear: currentYear - program2.duration,
     });
-    const programYear3 = this.server.create('program-year', {
+    const programYear3 = await this.server.create('program-year', {
       program: program1,
       startYear: currentYear - program1.duration,
     });
-    const programYear4 = this.server.create('program-year', {
+    const programYear4 = await this.server.create('program-year', {
       program: program2,
       startYear: currentYear - program2.duration,
     });
-    const programYear5 = this.server.create('program-year', {
+    const programYear5 = await this.server.create('program-year', {
       program: program2,
       startYear: currentYear - program2.duration - 4,
     });
-    const programYear6 = this.server.create('program-year', {
+    const programYear6 = await this.server.create('program-year', {
       program: program2,
       startYear: currentYear - program2.duration - 5,
     });
-    const programYear7 = this.server.create('program-year', {
+    const programYear7 = await this.server.create('program-year', {
       program: program2,
       startYear: currentYear - program2.duration + 5,
     });
 
-    const cohort1 = this.server.create('cohort', { programYear: programYear1 });
-    const cohort2 = this.server.create('cohort', { programYear: programYear2 });
-    const cohort3 = this.server.create('cohort', { programYear: programYear3 });
-    const cohort4 = this.server.create('cohort', { programYear: programYear4 });
-    const cohort5 = this.server.create('cohort', { programYear: programYear5 });
-    const cohort6 = this.server.create('cohort', { programYear: programYear6 });
-    const cohort7 = this.server.create('cohort', { programYear: programYear7 });
+    const cohort1 = await this.server.create('cohort', { programYear: programYear1 });
+    const cohort2 = await this.server.create('cohort', { programYear: programYear2 });
+    const cohort3 = await this.server.create('cohort', { programYear: programYear3 });
+    const cohort4 = await this.server.create('cohort', { programYear: programYear4 });
+    const cohort5 = await this.server.create('cohort', { programYear: programYear5 });
+    const cohort6 = await this.server.create('cohort', { programYear: programYear6 });
+    const cohort7 = await this.server.create('cohort', { programYear: programYear7 });
 
     this.cohort1 = await await this.owner.lookup('service:store').findRecord('cohort', cohort1.id);
     this.cohort2 = await await this.owner.lookup('service:store').findRecord('cohort', cohort2.id);

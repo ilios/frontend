@@ -10,7 +10,7 @@ module('Integration | Component | user-status', function (hooks) {
   setupMSW(hooks);
 
   test('user account is disabled', async function (assert) {
-    const user = this.server.create('user', { enabled: false });
+    const user = await this.server.create('user', { enabled: false });
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     this.set('user', userModel);
     await render(<template><UserStatus @user={{this.user}} /></template>);
@@ -19,7 +19,7 @@ module('Integration | Component | user-status', function (hooks) {
   });
 
   test('user account is enabled', async function (assert) {
-    const user = this.server.create('user');
+    const user = await this.server.create('user');
     const userModel = await this.owner.lookup('service:store').findRecord('user', user.id);
     this.set('user', userModel);
     await render(<template><UserStatus @user={{this.user}} /></template>);

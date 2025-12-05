@@ -11,17 +11,17 @@ module('Integration | Component | school/session-type-manager', function (hooks)
   setupMSW(hooks);
 
   hooks.beforeEach(async function () {
-    this.server.create('assessment-option', {
+    await this.server.create('assessment-option', {
       name: 'formative',
     });
-    this.summative = this.server.create('assessment-option', {
+    this.summative = await this.server.create('assessment-option', {
       name: 'summative',
     });
     await this.owner.lookup('service:store').findAll('assessment-option');
   });
 
   test('it renders', async function (assert) {
-    const sessionType = this.server.create('session-type', {
+    const sessionType = await this.server.create('session-type', {
       title: 'one',
       calendarColor: '#ffffff',
       assessment: true,
@@ -50,7 +50,7 @@ module('Integration | Component | school/session-type-manager', function (hooks)
   });
 
   test('close fires action', async function (assert) {
-    const sessionType = this.server.create('session-type', {
+    const sessionType = await this.server.create('session-type', {
       title: 'one',
       calendarColor: '#ffffff',
       assessment: true,

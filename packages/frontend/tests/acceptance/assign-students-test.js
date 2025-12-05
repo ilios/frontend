@@ -8,23 +8,23 @@ import { DateTime } from 'luxon';
 module('Acceptance | assign students', function (hooks) {
   setupApplicationTest(hooks);
 
-  hooks.beforeEach(function () {
-    this.school = this.server.create('school');
-    this.school2 = this.server.create('school');
-    const program = this.server.create('program', { school: this.school });
-    const programYear = this.server.create('program-year', {
+  hooks.beforeEach(async function () {
+    this.school = await this.server.create('school');
+    this.school2 = await this.server.create('school');
+    const program = await this.server.create('program', { school: this.school });
+    const programYear = await this.server.create('program-year', {
       program,
       startYear: DateTime.now().year,
     });
-    this.server.create('cohort', { programYear });
-    this.server.createList('userRole', 5);
-    this.server.create('user', {
+    await this.server.create('cohort', { programYear });
+    await this.server.createList('userRole', 5);
+    await this.server.create('user', {
       school: this.school,
       roleIds: [4],
       firstName: 'Clem',
       lastName: 'Chowder',
     });
-    this.server.create('user', {
+    await this.server.create('user', {
       school: this.school,
       roleIds: [4],
       displayName: 'Aardvark',
@@ -41,7 +41,7 @@ module('Acceptance | assign students', function (hooks) {
   });
 
   test('school filter', async function (assert) {
-    this.server.create('user', {
+    await this.server.create('user', {
       school: this.school2,
       roleIds: [4],
       displayName: 'Aardvark',
@@ -112,7 +112,7 @@ module('Acceptance | assign students', function (hooks) {
   });
 
   test('changing school filter resets user selections', async function (assert) {
-    this.server.create('user', {
+    await this.server.create('user', {
       school: this.school2,
       roleIds: [4],
       displayName: 'Zeb',

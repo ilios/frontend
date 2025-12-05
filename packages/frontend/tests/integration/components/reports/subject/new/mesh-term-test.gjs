@@ -9,8 +9,8 @@ module('Integration | Component | reports/subject/new/mesh-term', function (hook
   setupRenderingTest(hooks);
   setupMSW(hooks);
 
-  hooks.beforeEach(function () {
-    this.server.createList('mesh-descriptor', 5);
+  hooks.beforeEach(async function () {
+    await this.server.createList('mesh-descriptor', 5);
   });
 
   test('it works', async function (assert) {
