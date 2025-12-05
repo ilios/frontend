@@ -123,7 +123,8 @@ export default class DailyCalendarEventComponent extends Component {
     <button
       {{! template-lint-disable no-inline-styles }}
       style={{this.style}}
-      class="daily-calendar-event {{if this.isIlm 'ilm'}} {{if this.clickable 'clickable'}}"
+      class="daily-calendar-event font-size-small{{if this.isIlm ' ilm'}}
+        {{if this.clickable ' clickable'}}"
       type="button"
       {{on "click" (if this.clickable @selectEvent (noop))}}
       id={{this.eventButtonId}}

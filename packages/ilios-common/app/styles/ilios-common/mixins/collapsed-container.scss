@@ -25,8 +25,6 @@
 }
 
 @mixin collapsed-container-table() {
-  @include font-size.font-size("small");
-
   table,
   tr {
     margin: 0;
