@@ -1,7 +1,7 @@
 import { camelize } from '@ember/string';
 import { pluralize } from 'ember-inflector';
 
-// Transforms @mswjs/data records into JSON:API format compatible with Ember Data
+// Transforms @msw/data records into JSON:API format compatible with Ember Data
 export function formatJsonApi(data, modelName, options = {}) {
   const { included = [], meta = null } = options;
   const isCollection = Array.isArray(data);
