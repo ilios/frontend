@@ -267,9 +267,6 @@ importers:
       luxon:
         specifier: ^3.6.1
         version: 3.7.2
-      miragejs:
-        specifier: ^0.1.48
-        version: 0.1.48
       mockdate:
         specifier: ^3.0.5
         version: 3.0.5
@@ -1303,9 +1300,6 @@ importers:
       luxon:
         specifier: '>= 3.6.1'
         version: 3.7.2
-      miragejs:
-        specifier: '>= 0.1.45'
-        version: 0.1.48
       papaparse:
         specifier: ^5.5.2
         version: 5.5.3
@@ -12434,7 +12428,8 @@ snapshots:
       tslib: 2.8.1
       upath: 2.0.1
 
-  '@miragejs/pretender-node-polyfill@0.1.2': {}
+  '@miragejs/pretender-node-polyfill@0.1.2':
+    optional: true
 
   '@mrmlnc/readdir-enhanced@2.2.1':
     dependencies:
@@ -17019,7 +17014,8 @@ snapshots:
 
   extract-stack@2.0.0: {}
 
-  fake-xml-http-request@2.1.2: {}
+  fake-xml-http-request@2.1.2:
+    optional: true
 
   fast-deep-equal@2.0.1: {}
 
@@ -17962,7 +17958,8 @@ snapshots:
 
   infer-owner@1.0.4: {}
 
-  inflected@2.1.0: {}
+  inflected@2.1.0:
+    optional: true
 
   inflection@2.0.1: {}
 
@@ -18816,6 +18813,7 @@ snapshots:
       inflected: 2.1.0
       lodash: 4.18.1
       pretender: 3.4.7
+    optional: true
 
   mississippi@3.0.0:
     dependencies:
@@ -19447,6 +19445,7 @@ snapshots:
     dependencies:
       fake-xml-http-request: 2.1.2
       route-recognizer: 0.3.4
+    optional: true
 
   prettier-plugin-ember-template-tag@2.1.5(prettier@3.8.3):
     dependencies:

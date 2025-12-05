@@ -9,7 +9,7 @@ import IliosHeader from 'frontend/components/ilios-header';
 
 module('Integration | Component | ilios-header', function (hooks) {
   setupRenderingTest(hooks);
-  setupMSW(hooks); //even though we're not using mirage directly we need to ensure that /config API is owned
+  setupMSW(hooks); //even though we're not using MSW in this test we need to ensure that /config API is created
 
   test('it renders and is accessible', async function (assert) {
     this.set('title', 'test');
