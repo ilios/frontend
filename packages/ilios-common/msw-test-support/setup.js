@@ -1,12 +1,22 @@
-import { setupServer } from 'msw/node';
+import { settled } from '@ember/test-helpers';
+import { startMSW } from './start-msw.js';
 import { db } from './db.js';
-import { handlers } from './handlers.js';
 import { factoryDefaults } from './factories.js';
 
 // Drop-in replacement for setupMirage() that maintains the same API
 export function setupMSW(hooks) {
   hooks.beforeEach(function () {
-    this.server = setupServer(...handlers);
+    if (!this.owner) {
+      throw new Error(
+        'Must call one of the ember-qunit setupTest() / setupRenderingTest() / setupApplicationTest() first',
+      );
+    }
+
+    // Get ENV from the owner to pass apiVersion
+    const ENV = this.owner.resolveRegistration('config:environment');
+    const { apiVersion } = ENV;
+
+    this.server = startMSW({ apiVersion });
     this.server.listen({ onUnhandledRequest: 'error' });
 
     // Provide Mirage-compatible API
@@ -15,8 +25,13 @@ export function setupMSW(hooks) {
     this.server.db = db;
   });
 
-  hooks.afterEach(function () {
-    this.server.close();
+  hooks.afterEach(async function () {
+    await settled();
+
+    if (this.server) {
+      this.server.close();
+      delete this.server;
+    }
 
     // Reset database to clean state
     Object.keys(db).forEach((modelName) => {
