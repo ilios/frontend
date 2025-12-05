@@ -1,14 +1,14 @@
 import { module, test } from 'qunit';
 import { render } from '@ember/test-helpers';
 import { setupRenderingTest } from 'test-app/tests/helpers';
-import { setupMirage } from 'test-app/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { a11yAudit } from 'ember-a11y-testing/test-support';
 import { component } from 'ilios-common/page-objects/components/dashboard/user-context-filter';
 import UserContextFilter from 'ilios-common/components/dashboard/user-context-filter';
 
 module('Integration | Component | dashboard/user-context-filter', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   test('it renders', async function (assert) {
     await render(<template><UserContextFilter /></template>);

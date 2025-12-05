@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
-import { setupMirage } from 'test-app/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { render } from '@ember/test-helpers';
 import { component } from 'ilios-common/page-objects/components/new-session';
 import NewSession from 'ilios-common/components/new-session';
@@ -9,7 +9,7 @@ import { array } from '@ember/helper';
 
 module('Integration | Component | new session', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   hooks.beforeEach(async function () {
     const sessionType = this.server.create('session-type');

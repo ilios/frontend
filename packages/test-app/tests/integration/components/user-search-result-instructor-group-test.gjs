@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMirage } from 'test-app/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { component } from 'ilios-common/page-objects/components/user-search-result';
 import UserSearchResultInstructorGroup from 'ilios-common/components/user-search-result-instructor-group';
 import noop from 'ilios-common/helpers/noop';
@@ -9,7 +9,7 @@ import { array } from '@ember/helper';
 
 module('Integration | Component | user-search-result-instructor-group', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   test('it renders', async function (assert) {
     const group = this.server.create('instructor-group');

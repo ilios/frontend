@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render, waitFor } from '@ember/test-helpers';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { component } from 'frontend/tests/pages/components/school/visualize-session-type-vocabulary-graph';
 import VisualizeSessionTypeVocabularyGraph from 'frontend/components/school/visualize-session-type-vocabulary-graph';
 
@@ -9,7 +9,7 @@ module(
   'Integration | Component | school/visualize-session-type-vocabulary-graph',
   function (hooks) {
     setupRenderingTest(hooks);
-    setupMirage(hooks);
+    setupMSW(hooks);
 
     hooks.beforeEach(async function () {
       const sessionType = this.server.create('session-type');

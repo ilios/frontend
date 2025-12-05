@@ -3,14 +3,14 @@ import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
 import { component } from 'frontend/tests/pages/components/program-year/objective-list-item-descriptors';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import ObjectiveListItemDescriptors from 'frontend/components/program-year/objective-list-item-descriptors';
 import { array } from '@ember/helper';
 import noop from 'ilios-common/helpers/noop';
 
 module('Integration | Component | program-year/objective-list-item-descriptors', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   test('it renders and is accessible when managing', async function (assert) {
     await render(

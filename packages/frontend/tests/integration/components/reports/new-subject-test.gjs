@@ -2,14 +2,14 @@ import Service from '@ember/service';
 import { module, test } from 'qunit';
 import { setupRenderingTest, takeComponentScreenshot } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { component } from 'frontend/tests/pages/components/reports/new-subject';
 import NewSubject from 'frontend/components/reports/new-subject';
 import noop from 'ilios-common/helpers/noop';
 
 module('Integration | Component | reports/new-subject', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   const checkObjects = async function (context, assert, subjectNum, subjectVal, expectedObjects) {
     const school = context.server.create('school', { title: 'first' });

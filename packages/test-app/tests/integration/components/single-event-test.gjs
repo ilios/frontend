@@ -3,14 +3,14 @@ import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render } from '@ember/test-helpers';
 import Service from '@ember/service';
 import { DateTime } from 'luxon';
-import { setupMirage } from 'test-app/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { component } from 'ilios-common/page-objects/components/single-event';
 import { a11yAudit } from 'ember-a11y-testing/test-support';
 import SingleEvent from 'ilios-common/components/single-event';
 
 module('Integration | Component | ilios calendar single event', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   hooks.beforeEach(function () {
     this.intl = this.owner.lookup('service:intl');

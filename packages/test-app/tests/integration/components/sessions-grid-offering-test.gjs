@@ -1,13 +1,13 @@
 import { module, test } from 'qunit';
 import { render } from '@ember/test-helpers';
 import { setupRenderingTest } from 'test-app/tests/helpers';
-import { setupMirage } from 'test-app/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import SessionsGridOffering from 'ilios-common/components/sessions-grid-offering';
 import { component } from 'ilios-common/page-objects/components/sessions-grid-offering';
 
 module('Integration | Component | sessions-grid-offering', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   hooks.beforeEach(function () {
     this.school = this.server.create('school');

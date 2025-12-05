@@ -1,14 +1,14 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { component } from 'frontend/tests/pages/components/school/institutional-information-details';
 import InstitutionalInformationDetails from 'frontend/components/school/institutional-information-details';
 import noop from 'ilios-common/helpers/noop';
 
 module('Integration | Component | school/institutional-information-details', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   test('it renders', async function (assert) {
     const school = this.server.create('school');

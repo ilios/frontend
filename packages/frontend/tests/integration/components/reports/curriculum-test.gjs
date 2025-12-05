@@ -3,7 +3,7 @@ import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
 import { buildSchoolsFromData } from 'frontend/tests/helpers/curriculum-report';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { setupAuthentication } from 'ilios-common';
 import currentAcademicYear from 'ilios-common/utils/current-academic-year';
 import { component } from 'frontend/tests/pages/components/reports/curriculum';
@@ -13,7 +13,7 @@ import noop from 'ilios-common/helpers/noop';
 
 module('Integration | Component | reports/curriculum', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   hooks.beforeEach(async function () {
     const school = this.server.create('school');

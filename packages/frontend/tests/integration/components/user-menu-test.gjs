@@ -4,12 +4,12 @@ import { render, waitFor } from '@ember/test-helpers';
 import component from 'frontend/tests/pages/components/user-menu';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
 import { setupAuthentication } from 'ilios-common';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import UserMenu from 'frontend/components/user-menu';
 
 module('Integration | Component | user-menu', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   // My Profile and Logout
   const linkCount = 2;

@@ -3,14 +3,14 @@ import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { component } from 'ilios-common/page-objects/components/course/manage-objective-parents';
 import { a11yAudit } from 'ember-a11y-testing/test-support';
-import { setupMirage } from 'test-app/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import ManageObjectiveParents from 'ilios-common/components/course/manage-objective-parents';
 import { array } from '@ember/helper';
 import noop from 'ilios-common/helpers/noop';
 
 module('Integration | Component | course/manage-objective-parents', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   test('it renders and is accessible with a single cohort', async function (assert) {
     const programYearObjective = this.server.create('program-year-objective');

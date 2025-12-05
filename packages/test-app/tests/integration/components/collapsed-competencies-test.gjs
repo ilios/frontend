@@ -1,14 +1,14 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMirage } from 'test-app/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { component } from 'ilios-common/page-objects/components/collapsed-competencies';
 import CollapsedCompetencies from 'ilios-common/components/collapsed-competencies';
 import noop from 'ilios-common/helpers/noop';
 
 module('Integration | Component | collapsed competencies', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   hooks.beforeEach(async function () {
     const schoolA = this.server.create('school', { title: 'Medicine' });

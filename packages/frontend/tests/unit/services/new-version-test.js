@@ -1,12 +1,12 @@
 import { module, test } from 'qunit';
 import { setupTest } from 'frontend/tests/helpers';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { Response } from 'miragejs';
 import config from 'frontend/config/environment';
 
 module('Unit | Service | new-version', function (hooks) {
   setupTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   test('new version available', async function (assert) {
     const service = this.owner.lookup('service:new-version');

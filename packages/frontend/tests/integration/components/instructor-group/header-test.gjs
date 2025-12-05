@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest, takeComponentScreenshot } from 'frontend/tests/helpers';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { render } from '@ember/test-helpers';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
 import { component } from 'frontend/tests/pages/components/instructor-group/header';
@@ -8,7 +8,7 @@ import Header from 'frontend/components/instructor-group/header';
 
 module('Integration | Component | instructor-group/header', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   hooks.beforeEach(async function () {
     const users = this.server.createList('user', 3);

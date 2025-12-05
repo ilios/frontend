@@ -3,7 +3,7 @@ import { setupRenderingTest } from 'test-app/tests/helpers';
 import { setupAuthentication } from 'ilios-common';
 import { render } from '@ember/test-helpers';
 import { component } from 'ilios-common/page-objects/components/new-learningmaterial';
-import { setupMirage } from 'test-app/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import NewLearningmaterial from 'ilios-common/components/new-learningmaterial';
 import { array } from '@ember/helper';
 import noop from 'ilios-common/helpers/noop';
@@ -11,7 +11,7 @@ import noop from 'ilios-common/helpers/noop';
 // @todo flesh this integration test out [ST 2020/09/02]
 module('Integration | Component | new learningmaterial', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   hooks.beforeEach(async function () {
     this.store = this.owner.lookup('service:store');

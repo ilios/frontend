@@ -2,13 +2,13 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { component } from 'ilios-common/page-objects/components/leadership-expanded';
-import { setupMirage } from 'test-app/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import LeadershipExpanded from 'ilios-common/components/leadership-expanded';
 import noop from 'ilios-common/helpers/noop';
 
 module('Integration | Component | leadership expanded', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   module('course', function () {
     test('it renders', async function (assert) {

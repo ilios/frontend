@@ -2,7 +2,7 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render, settled } from '@ember/test-helpers';
 import { component } from 'frontend/tests/pages/components/global-search';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import Service from '@ember/service';
 import GlobalSearch from 'frontend/components/global-search';
 import noop from 'ilios-common/helpers/noop';
@@ -10,7 +10,7 @@ import set from 'ember-set-helper/helpers/set';
 
 module('Integration | Component | global-search', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   test('it renders', async function (assert) {
     await render(

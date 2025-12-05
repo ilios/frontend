@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import Service from '@ember/service';
 import { render } from '@ember/test-helpers';
 import { component } from 'frontend/tests/pages/components/curriculum-inventory/reports';
@@ -8,7 +8,7 @@ import Reports from 'frontend/components/curriculum-inventory/reports';
 import noop from 'ilios-common/helpers/noop';
 module('Integration | Component | curriculum-inventory/reports', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   hooks.beforeEach(async function () {
     const school1 = this.server.create('school');

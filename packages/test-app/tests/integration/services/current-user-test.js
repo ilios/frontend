@@ -1,12 +1,12 @@
 import { module, test, skip } from 'qunit';
 import { setupTest } from 'ember-qunit';
-import { setupMirage } from 'test-app/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { authenticateSession, invalidateSession } from 'ember-simple-auth/test-support';
 import { mapBy } from 'ilios-common/utils/array-helpers';
 
 module('Integration | Service | Current User', function (hooks) {
   setupTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   hooks.beforeEach(async function () {
     await authenticateSession({

@@ -3,7 +3,7 @@ import { startMSW } from './start-msw.js';
 import { db } from './db.js';
 import { factoryDefaults } from './factories.js';
 
-// Drop-in replacement for setupMirage() that maintains the same API
+// Drop-in replacement for setupMSW() that maintains the same API
 export function setupMSW(hooks) {
   hooks.beforeEach(function () {
     if (!this.owner) {

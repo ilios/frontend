@@ -3,7 +3,7 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { DateTime, Duration } from 'luxon';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { component } from 'frontend/tests/pages/components/my-profile';
 import { freezeDateAt, unfreezeDate } from 'ilios-common';
 import MyProfile from 'frontend/components/my-profile';
@@ -11,7 +11,7 @@ import noop from 'ilios-common/helpers/noop';
 
 module('Integration | Component | my profile', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   hooks.afterEach(() => {
     unfreezeDate();

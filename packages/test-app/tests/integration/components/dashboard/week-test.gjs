@@ -3,14 +3,14 @@ import { DateTime } from 'luxon';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMirage } from 'test-app/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { component } from 'ilios-common/page-objects/components/dashboard/week';
 import { freezeDateAt, unfreezeDate } from 'ilios-common';
 import Week from 'ilios-common/components/dashboard/week';
 
 module('Integration | Component | dashboard/week', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   const today = DateTime.fromObject({ hour: 8 });
 

@@ -13,13 +13,13 @@ import {
 } from '@ember/test-helpers';
 import { DateTime } from 'luxon';
 import { Response } from 'miragejs';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import BulkNewUsers from 'frontend/components/bulk-new-users';
 import noop from 'ilios-common/helpers/noop';
 
 module('Integration | Component | bulk new users', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   hooks.beforeEach(async function () {
     const duration = 4;

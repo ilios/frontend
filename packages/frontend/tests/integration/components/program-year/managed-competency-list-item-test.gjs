@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { component } from 'frontend/tests/pages/components/program-year/managed-competency-list-item';
 import ManagedCompetencyListItem from 'frontend/components/program-year/managed-competency-list-item';
 import noop from 'ilios-common/helpers/noop';
@@ -9,7 +9,7 @@ import { array } from '@ember/helper';
 
 module('Integration | Component | program-year/managed-competency-list-item', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   hooks.beforeEach(async function () {
     const domain = this.server.create('competency', { title: 'domain' });

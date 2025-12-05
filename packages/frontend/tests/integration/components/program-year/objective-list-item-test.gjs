@@ -3,14 +3,14 @@ import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render, settled } from '@ember/test-helpers';
 import { component } from 'frontend/tests/pages/components/program-year/objective-list-item';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import ObjectiveListItem from 'frontend/components/program-year/objective-list-item';
 import noop from 'ilios-common/helpers/noop';
 import { array } from '@ember/helper';
 
 module('Integration | Component | program-year/objective-list-item', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   hooks.beforeEach(async function () {
     const school = this.server.create('school');

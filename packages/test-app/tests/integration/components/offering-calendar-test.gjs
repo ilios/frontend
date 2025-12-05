@@ -2,14 +2,14 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { array } from '@ember/helper';
-import { setupMirage } from 'test-app/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { DateTime } from 'luxon';
 import OfferingCalendar from 'ilios-common/components/offering-calendar';
 import { component } from 'ilios-common/page-objects/components/offering-calendar';
 
 module('Integration | Component | offering-calendar', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   test('it renders', async function (assert) {
     const startDate = DateTime.fromISO('2026-03-31T09:00:00');

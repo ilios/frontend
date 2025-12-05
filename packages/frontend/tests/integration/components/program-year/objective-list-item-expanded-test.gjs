@@ -3,12 +3,12 @@ import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { component } from 'frontend/tests/pages/components/program-year/objective-list-item-expanded';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import ObjectiveListItemExpanded from 'frontend/components/program-year/objective-list-item-expanded';
 
 module('Integration | Component | program-year/objective-list-item-expanded', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   test('it renders and is accessible', async function (assert) {
     const programYear = this.server.create('program-year');

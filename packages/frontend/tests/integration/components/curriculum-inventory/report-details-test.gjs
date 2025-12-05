@@ -2,7 +2,7 @@ import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render, click, find } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { DateTime } from 'luxon';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import Service from '@ember/service';
 import { component } from 'frontend/tests/pages/components/curriculum-inventory/report-details';
 import ReportDetails from 'frontend/components/curriculum-inventory/report-details';
@@ -10,7 +10,7 @@ import noop from 'ilios-common/helpers/noop';
 
 module('Integration | Component | curriculum-inventory/report-details', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   hooks.beforeEach(async function () {
     class PermissionCheckerMock extends Service {

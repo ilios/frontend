@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { setupAuthentication } from 'ilios-common';
 import { component } from 'frontend/tests/pages/components/reports/subject-copy';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
@@ -9,7 +9,7 @@ import SubjectCopy from 'frontend/components/reports/subject-copy';
 
 module('Integration | Component | reports/subject-copy', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   hooks.beforeEach(async function () {
     this.intl = this.owner.lookup('service:intl');

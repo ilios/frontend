@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { render } from '@ember/test-helpers';
 import { component } from 'frontend/tests/pages/components/learner-group/calendar';
 import { DateTime } from 'luxon';
@@ -8,7 +8,7 @@ import Calendar from 'frontend/components/learner-group/calendar';
 
 module('Integration | Component | learner-group/calendar', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   hooks.beforeEach(async function () {
     const today = DateTime.fromObject({ hour: 8 });

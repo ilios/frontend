@@ -3,13 +3,13 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render, click, find, fillIn } from '@ember/test-helpers';
 import { DateTime } from 'luxon';
-import { setupMirage } from 'test-app/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { findById } from 'ilios-common/utils/array-helpers';
 import SessionCopy from 'ilios-common/components/session-copy';
 
 module('Integration | Component | session copy', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   hooks.beforeEach(async function () {
     this.store = this.owner.lookup('service:store');

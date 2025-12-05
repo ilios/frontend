@@ -1,7 +1,7 @@
 import startMirage from './mirage-server';
 import { settled } from '@ember/test-helpers';
 
-export function setupMirage(hooks) {
+export function setupMSW(hooks) {
   hooks.beforeEach(function () {
     if (!this.owner) {
       throw new Error(

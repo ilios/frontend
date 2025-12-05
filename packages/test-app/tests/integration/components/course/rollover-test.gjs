@@ -4,7 +4,7 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render, click, find, findAll, fillIn, blur as emberBlur } from '@ember/test-helpers';
 import { DateTime } from 'luxon';
-import { setupMirage } from 'test-app/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import queryString from 'query-string';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
 import { freezeDateAt, unfreezeDate } from 'ilios-common';
@@ -13,7 +13,7 @@ import noop from 'ilios-common/helpers/noop';
 
 module('Integration | Component | course/rollover', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   hooks.afterEach(() => {
     unfreezeDate();

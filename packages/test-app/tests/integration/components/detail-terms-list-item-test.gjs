@@ -1,13 +1,13 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render, click, findAll } from '@ember/test-helpers';
-import { setupMirage } from 'test-app/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import DetailTermsListItem from 'ilios-common/components/detail-terms-list-item';
 import noop from 'ilios-common/helpers/noop';
 
 module('Integration | Component | detail terms list item', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   hooks.beforeEach(function () {
     this.vocabulary = this.server.create('vocabulary');

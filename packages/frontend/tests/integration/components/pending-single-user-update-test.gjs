@@ -1,14 +1,14 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { component } from 'frontend/tests/pages/components/pending-single-user-update';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
 import PendingSingleUserUpdate from 'frontend/components/pending-single-user-update';
 
 module('Integration | Component | pending single user update', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   test('it renders missing from directory', async function (assert) {
     const user = this.server.create('user', {

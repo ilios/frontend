@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { DateTime } from 'luxon';
 import { component } from 'frontend/tests/pages/components/user-profile-permissions';
 import { freezeDateAt, unfreezeDate } from 'ilios-common';
@@ -11,7 +11,7 @@ import noop from 'ilios-common/helpers/noop';
 
 module('Integration | Component | user-profile-permissions', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   hooks.beforeEach(async function () {
     this.schools = this.server.createList('school', 2);

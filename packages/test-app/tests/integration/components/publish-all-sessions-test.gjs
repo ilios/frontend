@@ -1,13 +1,13 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMirage } from 'test-app/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import noop from 'ilios-common/helpers/noop';
 import { component } from 'ilios-common/page-objects/components/publish-all-sessions';
 import PublishAllSessions from 'ilios-common/components/publish-all-sessions';
 module('Integration | Component | publish all sessions', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   hooks.beforeEach(async function () {
     const programYearObjective = this.server.create('program-year-objective');

@@ -1,14 +1,14 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { component } from 'frontend/tests/pages/components/reports/subject/program-year';
 import { setupAuthentication } from 'ilios-common';
 import ProgramYear from 'frontend/components/reports/subject/program-year';
 
 module('Integration | Component | reports/subject/program-year', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
   const responseData = {
     data: {
       programYears: [

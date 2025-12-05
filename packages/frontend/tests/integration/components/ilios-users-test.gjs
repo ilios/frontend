@@ -2,7 +2,7 @@ import Service from '@ember/service';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { component } from 'frontend/tests/pages/components/ilios-users';
 import IliosUsers from 'frontend/components/ilios-users';
 import { array } from '@ember/helper';
@@ -10,7 +10,7 @@ import noop from 'ilios-common/helpers/noop';
 
 module('Integration | Component | ilios-users', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   test('it renders', async function (assert) {
     await render(

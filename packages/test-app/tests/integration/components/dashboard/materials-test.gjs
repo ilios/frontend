@@ -3,7 +3,7 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { DateTime } from 'luxon';
-import { setupMirage } from 'test-app/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { component } from 'ilios-common/page-objects/components/dashboard/materials';
 import { a11yAudit } from 'ember-a11y-testing/test-support';
 import Materials from 'ilios-common/components/dashboard/materials';
@@ -11,7 +11,7 @@ import noop from 'ilios-common/helpers/noop';
 
 module('Integration | Component | dashboard/materials', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   hooks.beforeEach(function () {
     class CurrentUserMock extends Service {

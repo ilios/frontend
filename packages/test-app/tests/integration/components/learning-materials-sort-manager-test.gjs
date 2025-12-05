@@ -1,14 +1,14 @@
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render, click, find } from '@ember/test-helpers';
 import { module, skip, test } from 'qunit';
-import { setupMirage } from 'test-app/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { capitalize } from '@ember/string';
 import LearningMaterialsSortManager from 'ilios-common/components/learning-materials-sort-manager';
 import noop from 'ilios-common/helpers/noop';
 
 module('Integration | Component | learning materials sort manager', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   test('it renders', async function (assert) {
     const user1 = this.server.create('user', {

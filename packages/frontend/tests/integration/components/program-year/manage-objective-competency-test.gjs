@@ -3,13 +3,13 @@ import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { component } from 'frontend/tests/pages/components/program-year/manage-objective-competency';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import ManageObjectiveCompetency from 'frontend/components/program-year/manage-objective-competency';
 import noop from 'ilios-common/helpers/noop';
 
 module('Integration | Component | program-year/manage-objective-competency', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   hooks.beforeEach(async function () {
     const domain1 = this.server.create('competency', { title: 'Domain B' });

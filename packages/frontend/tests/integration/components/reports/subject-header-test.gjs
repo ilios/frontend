@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { setupAuthentication } from 'ilios-common';
 import { component } from 'frontend/tests/pages/components/reports/subject-header';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
@@ -9,7 +9,7 @@ import SubjectHeader from 'frontend/components/reports/subject-header';
 
 module('Integration | Component | reports/subject-header', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   hooks.beforeEach(async function () {
     this.user = await setupAuthentication();

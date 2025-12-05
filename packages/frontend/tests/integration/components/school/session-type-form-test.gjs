@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { component } from 'frontend/tests/pages/components/school/session-type-form';
 import SessionTypeForm from 'frontend/components/school/session-type-form';
 import noop from 'ilios-common/helpers/noop';
@@ -9,7 +9,7 @@ import { array } from '@ember/helper';
 
 module('Integration | Component | school/session-type-form', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   hooks.beforeEach(async function () {
     this.store = this.owner.lookup('service:store');

@@ -1,5 +1,5 @@
 import { setupRenderingTest } from 'frontend/tests/helpers';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { render } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { DateTime } from 'luxon';
@@ -12,7 +12,7 @@ module(
   'Integration | Component | curriculum-inventory/sequence-block-session-manager',
   function (hooks) {
     setupRenderingTest(hooks);
-    setupMirage(hooks);
+    setupMSW(hooks);
 
     test('it renders', async function (assert) {
       const now = DateTime.now();

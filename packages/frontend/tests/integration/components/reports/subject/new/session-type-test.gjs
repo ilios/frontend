@@ -1,14 +1,14 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { component } from 'frontend/tests/pages/components/reports/subject/new/session-type';
 import SessionType from 'frontend/components/reports/subject/new/session-type';
 import noop from 'ilios-common/helpers/noop';
 
 module('Integration | Component | reports/subject/new/session-type', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   hooks.beforeEach(function () {
     this.intl = this.owner.lookup('service:intl');
