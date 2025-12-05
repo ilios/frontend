@@ -70,6 +70,7 @@
     "flatpickr": ">= 4.0.0",
     "luxon": ">= 3.6.1",
     "mockdate": ">= 3.0.0",
+    "normalize.css": "^8.0.1",
     "msw": "^2.12.4",
     "query-string": ">= 9.1.0",
     "quill": "^2.0.3",
