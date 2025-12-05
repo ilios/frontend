@@ -31,7 +31,7 @@ export default class YupValidationMessage extends Component {
     {{#if this.messages.length}}
       <span aria-live="polite" ...attributes>
         {{#each this.messages as |m|}}
-          <span class="validation-error-message" data-test-validation-error-message>
+          <span class="validation-error-message font-size-small" data-test-validation-error-message>
             {{m}}
           </span>
         {{/each}}
