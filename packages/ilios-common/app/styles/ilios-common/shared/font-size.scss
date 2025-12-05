@@ -5,8 +5,11 @@
   line-height: calc(4px + 2ex);
 }
 .font-size-small,
+.daily-calendar-event.font-size-small,
+.weekly-calendar-event.font-size-small,
 .link-button.font-size-small,
-.user-guide-link a.font-size-small {
+.user-guide-link a.font-size-small,
+.reports-choose-course .deselect-all.font-size-small {
   font-size: var(--fs-small);
   line-height: calc(4px + 2ex);
 }
@@ -14,7 +17,8 @@
   font-size: var(--fs-base);
   line-height: calc(4px + 2ex);
 }
-.font-size-medium {
+.font-size-medium,
+.reports-switcher a.font-size-medium {
   font-size: var(--fs-medium);
   line-height: calc(4px + 2ex);
 }

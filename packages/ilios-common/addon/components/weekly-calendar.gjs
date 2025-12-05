@@ -109,7 +109,7 @@ export default class WeeklyCalendarComponent extends Component {
       aria-live="polite"
       data-test-weekly-calendar
     >
-      <h2 class="week-of-year" data-test-week-of-year>
+      <h2 class="week-of-year font-size-medium" data-test-week-of-year>
         {{#if @isLoadingEvents}}
           <FaIcon @icon={{faSpinner}} @spin={{true}} />
           {{t "general.loadingEvents"}}

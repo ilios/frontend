@@ -150,10 +150,10 @@ export default class DashboardCoursesCalendarFilterComponent extends Component {
   }
   <template>
     <div
-      class="calendar-filter-list large-filter-list dashboard-courses-calendar-filter"
+      class="calendar-filter-list large-filter-list dashboard-courses-calendar-filter font-size-small"
       data-test-courses-calendar-filter
     >
-      <h2>
+      <h2 class="font-size-base">
         {{t "general.courses"}}
         {{#if this.expandedYearWithoutTitleView}}
           {{#if this.academicYearCrossesCalendarYearBoundaries}}
