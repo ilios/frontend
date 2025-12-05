@@ -45,15 +45,6 @@
     }
   }
 
-  .cohortmembers {
-    .cohortmembers-loading {
-      display: block;
-      @include m.font-size("xxl");
-      margin: auto;
-      text-align: center;
-    }
-  }
-
   .subgroups {
     @include m.detail-container-content;
 
