@@ -4,6 +4,7 @@ import t from 'ember-intl/helpers/t';
   <div class="user-guide-link" data-test-user-guide-link>
     <a
       href="https://iliosproject.gitbook.io/ilios-user-guide"
+      class="font-size-small"
       target="_blank"
       aria-labelledby="user-guide-link-icon"
       rel="noopener noreferrer"
