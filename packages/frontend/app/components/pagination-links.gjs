@@ -62,7 +62,7 @@ export default class PaginationLinksComponent extends Component {
           disabled={{this.disablePrev}}
           data-test-prev
         >
-          <FaIcon @icon="angle-left" />
+          <FaIcon @icon="angle-left" class="font-size-medium" />
           {{t "general.prev"}}
         </button>
         {{#each this.pages as |pageNumber|}}
@@ -90,7 +90,7 @@ export default class PaginationLinksComponent extends Component {
           data-test-next
         >
           {{t "general.next"}}
-          <FaIcon @icon="angle-right" />
+          <FaIcon @icon="angle-right" class="font-size-medium" />
         </button>
       {{/if}}
     </div>

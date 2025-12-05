@@ -526,7 +526,11 @@ export default class UserProfilePermissionsComponent extends Component {
             <h3 class="title" data-test-title>
               <button
                 aria-expanded={{if this.programCollapsed "false" "true"}}
-                class="toggle-button {{if this.programCollapsed 'collapsed' 'expanded'}}"
+                class="toggle-button font-size-base{{if
+                    this.programCollapsed
+                    ' collapsed'
+                    ' expanded'
+                  }}"
                 type="button"
                 {{on "click" (set this "programCollapsed" (not this.programCollapsed))}}
               >
@@ -563,7 +567,11 @@ export default class UserProfilePermissionsComponent extends Component {
             <h3 class="title" data-test-title>
               <button
                 aria-expanded={{if this.programYearCollapsed "false" "true"}}
-                class="toggle-button {{if this.programYearCollapsed 'collapsed' 'expanded'}}"
+                class="toggle-button font-size-base{{if
+                    this.programYearCollapsed
+                    ' collapsed'
+                    ' expanded'
+                  }}"
                 type="button"
                 {{on "click" (set this "programYearCollapsed" (not this.programYearCollapsed))}}
               >
@@ -606,7 +614,11 @@ export default class UserProfilePermissionsComponent extends Component {
             <h3 class="title" data-test-title>
               <button
                 aria-expanded={{if this.courseCollapsed "false" "true"}}
-                class="toggle-button {{if this.courseCollapsed 'collapsed' 'expanded'}}"
+                class="toggle-button font-size-base{{if
+                    this.courseCollapsed
+                    ' collapsed'
+                    ' expanded'
+                  }}"
                 type="button"
                 {{on "click" (set this "courseCollapsed" (not this.courseCollapsed))}}
               >
@@ -725,7 +737,11 @@ export default class UserProfilePermissionsComponent extends Component {
             <h3 class="title" data-test-title>
               <button
                 aria-expanded={{if this.sessionCollapsed "false" "true"}}
-                class="toggle-button {{if this.sessionCollapsed 'collapsed' 'expanded'}}"
+                class="toggle-button font-size-base{{if
+                    this.sessionCollapsed
+                    ' collapsed'
+                    ' expanded'
+                  }}"
                 type="button"
                 {{on "click" (set this "sessionCollapsed" (not this.sessionCollapsed))}}
               >

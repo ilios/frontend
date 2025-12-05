@@ -695,7 +695,7 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
               </span>
               {{#if this.selectedCourse}}
                 {{#if this.selectedCourse.id}}
-                  <span class="details" data-test-course-details>
+                  <span class="details font-size-small" data-test-course-details>
                     {{t "general.level"}}:
                     {{this.selectedCourse.level}},
                     {{t "general.startDate"}}:
@@ -720,7 +720,7 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
                   </span>
                 {{/if}}
               {{else if this.course}}
-                <span class="details" data-test-course-details>
+                <span class="details font-size-small" data-test-course-details>
                   {{t "general.level"}}:
                   {{this.course.level}},
                   {{t "general.startDate"}}:

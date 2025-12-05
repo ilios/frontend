@@ -9,7 +9,7 @@ import FaIcon from 'ilios-common/components/fa-icon';
         <button
           aria-label={{t "general.manage"}}
           type="button"
-          class="manage"
+          class="manage font-size-base"
           {{on "click" (fn @setIsManaging true)}}
           data-test-manage
         >
@@ -24,7 +24,7 @@ import FaIcon from 'ilios-common/components/fa-icon';
       </div>
     {{/unless}}
 
-    <p class="primary-school" data-test-school>
+    <p class="primary-school font-size-medium" data-test-school>
       <strong>
         {{t "general.primarySchool"}}:
       </strong>

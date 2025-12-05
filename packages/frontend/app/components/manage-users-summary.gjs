@@ -264,13 +264,13 @@ export default class ManageUsersSummaryComponent extends Component {
               @query={{hash showNewUserForm=true showBulkNewUserForm=false filter=null}}
               data-test-create-user-link
             >
-              <button type="button">
+              <button type="button" class="font-size-base">
                 {{t "general.create"}}
               </button>
             </LinkTo>
             {{#if (notEq this.userSearchType "ldap")}}
               <LinkTo @route="users" @query={{hash showBulkNewUserForm=true showNewUserForm=false}}>
-                <button type="button">
+                <button type="button" class="font-size-base">
                   {{t "general.createBulk"}}
                 </button>
               </LinkTo>
@@ -324,7 +324,7 @@ export default class ManageUsersSummaryComponent extends Component {
               {{#if (eq result.type "user")}}
                 <li class="user clickable">
                   <button
-                    class="link-button"
+                    class="link-button font-size-base"
                     type="button"
                     disabled={{this.clickUser.isRunning}}
                     data-userid={{result.user.id}}
