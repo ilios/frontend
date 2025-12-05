@@ -54,10 +54,6 @@
       }
     }
 
-    .name i {
-      @include font-size.font-size("small");
-    }
-
     .email {
       color: var(--grey);
       font-style: italic;

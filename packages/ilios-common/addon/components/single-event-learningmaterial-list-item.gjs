@@ -18,7 +18,10 @@ import filesize from 'ilios-common/helpers/filesize';
         <div class="single-event-learningmaterial-item-title" data-test-title>
           {{@learningMaterial.title}}
         </div>
-        <div class="single-event-learningmaterial-item-timing-info" data-test-timing-info>
+        <div
+          class="single-event-learningmaterial-item-timing-info font-size-small"
+          data-test-timing-info
+        >
           <TimedReleaseSchedule
             @startDate={{@learningMaterial.startDate}}
             @endDate={{@learningMaterial.endDate}}
@@ -66,7 +69,10 @@ import filesize from 'ilios-common/helpers/filesize';
                     {{@learningMaterial.title}}
                   </a>
                 {{/if}}
-                <span class="single-event-learningmaterial-filesize" data-test-filesize>
+                <span
+                  class="single-event-learningmaterial-filesize font-size-small"
+                  data-test-filesize
+                >
                   {{#if @learningMaterial.filesize}}
                     ({{filesize @learningMaterial.filesize}})
                   {{/if}}
@@ -87,7 +93,10 @@ import filesize from 'ilios-common/helpers/filesize';
             {{else}}
               {{@learningMaterial.title}}
               {{#if @learningMaterial.absoluteFileUri}}
-                <span class="single-event-learningmaterial-filesize" data-test-filesize>
+                <span
+                  class="single-event-learningmaterial-filesize font-size-small"
+                  data-test-filesize
+                >
                   {{#if @learningMaterial.filesize}}
                     ({{filesize @learningMaterial.filesize}})
                   {{/if}}
@@ -101,7 +110,10 @@ import filesize from 'ilios-common/helpers/filesize';
             {{@learningMaterial.citation}}
           </div>
         {{/if}}
-        <div class="single-event-learningmaterial-item-timing-info" data-test-timing-info>
+        <div
+          class="single-event-learningmaterial-item-timing-info font-size-small"
+          data-test-timing-info
+        >
           <TimedReleaseSchedule
             @startDate={{@learningMaterial.startDate}}
             @endDate={{@learningMaterial.endDate}}
@@ -115,7 +127,10 @@ import filesize from 'ilios-common/helpers/filesize';
           </div>
         {{/if}}
         {{#if @learningMaterial.publicNotes}}
-          <div class="single-event-learningmaterial-item-notes" data-test-public-notes>
+          <div
+            class="single-event-learningmaterial-item-notes font-size-small"
+            data-test-public-notes
+          >
             {{! template-lint-disable no-triple-curlies }}
             <FaIcon @icon="square-pen" />
             <p>

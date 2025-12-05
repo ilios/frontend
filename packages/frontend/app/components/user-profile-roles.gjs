@@ -109,7 +109,7 @@ export default class UserProfileRolesComponent extends Component {
         {{#if @isManaging}}
           <button
             type="button"
-            class="bigadd"
+            class="bigadd font-size-base"
             data-test-save
             aria-label={{t "general.save"}}
             {{on "click" (perform this.save)}}
@@ -122,7 +122,7 @@ export default class UserProfileRolesComponent extends Component {
           <button
             type="button"
             disabled={{this.save.isRunning}}
-            class="bigcancel"
+            class="bigcancel font-size-base"
             aria-label={{t "general.cancel"}}
             {{on "click" this.cancel}}
           >
@@ -132,7 +132,7 @@ export default class UserProfileRolesComponent extends Component {
           <button
             aria-label={{t "general.manage"}}
             type="button"
-            class="manage"
+            class="manage font-size-base"
             data-test-manage
             {{on "click" (fn @setIsManaging true)}}
           >

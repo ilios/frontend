@@ -27,11 +27,9 @@
   }
 
   .single-event-learningmaterial-item-timing-info {
-    @include m.font-size("small");
     font-weight: 400;
   }
   .single-event-learningmaterial-item-notes {
-    @include m.font-size("small");
     .fa-square-pen {
       margin-right: 5px;
     }

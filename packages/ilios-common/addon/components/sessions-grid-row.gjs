@@ -55,7 +55,7 @@ export default class SessionsGridRowComponent extends Component {
   }
   <template>
     <div class="sessions-grid-row" data-test-sessions-grid-row>
-      <span class="expand-collapse-control" data-test-expand-collapse-control>
+      <span class="expand-collapse-control font-size-medium" data-test-expand-collapse-control>
         {{#if (includes @session.id @expandedSessionIds)}}
           <button
             class="link-button"
@@ -109,7 +109,7 @@ export default class SessionsGridRowComponent extends Component {
             {{#if @session.hasPostrequisite}}
               <strong>
                 {{t "general.ilm"}}:
-                <FaIcon @icon="user-clock" />
+                <FaIcon @icon="user-clock" class="font-size-small" />
                 {{t "general.duePriorTo"}}:
               </strong>
               <LinkTo
@@ -128,7 +128,7 @@ export default class SessionsGridRowComponent extends Component {
             {{/if}}
           {{else if @session.hasPostrequisite}}
             <strong>
-              <FaIcon @icon="user-clock" />
+              <FaIcon @icon="user-clock" class="font-size-small" />
               {{t "general.duePriorTo"}}:
             </strong>
             <LinkTo

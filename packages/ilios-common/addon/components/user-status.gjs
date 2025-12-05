@@ -6,7 +6,7 @@ import FaIcon from 'ilios-common/components/fa-icon';
     <FaIcon
       @icon="user-xmark"
       @title={{t "general.disabledUserAccount"}}
-      class="user-status"
+      class="user-status font-size-small"
       data-test-user-status
     />
   {{/unless}}

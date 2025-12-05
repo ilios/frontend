@@ -18,7 +18,6 @@
       .offering-block-date-dayofweek {
         color: var(--dark-orange);
         display: block;
-        @include m.font-size("medium");
         font-weight: 600;
         width: 100%;
       }

@@ -29,10 +29,6 @@
       margin-top: 1rem;
     }
 
-    button {
-      @include cm.font-size("base");
-    }
-
     select {
       max-width: 88vw;
 

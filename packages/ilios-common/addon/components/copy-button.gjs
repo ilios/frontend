@@ -13,7 +13,7 @@ export default class CopyButtonComponent extends Component {
   <template>
     <button
       type="button"
-      class="copy-btn"
+      class="copy-btn font-size-base"
       data-test-copy-button
       ...attributes
       {{on "click" (perform this.copy)}}

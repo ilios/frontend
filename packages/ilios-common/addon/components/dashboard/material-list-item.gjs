@@ -34,7 +34,7 @@ export default class DashboardMaterialListItemComponent extends Component {
             <FaIcon @icon="clock" @title={{t "general.timedRelease"}} data-test-is-blanked />
           </span>
           {{@lm.title}}
-          <span class="timed-release-info">
+          <span class="timed-release-info font-size-small">
             <TimedReleaseSchedule @endDate={{@lm.endDate}} @startDate={{@lm.startDate}} />
           </span>
         {{else}}

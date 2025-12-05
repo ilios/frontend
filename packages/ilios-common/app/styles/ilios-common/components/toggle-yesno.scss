@@ -29,10 +29,6 @@
     display: grid;
     justify-content: center;
     align-content: center;
-
-    svg {
-      @include m.font-size("small");
-    }
   }
 
   &[aria-checked="true"] .switch-handle {
