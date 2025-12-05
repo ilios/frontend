@@ -46,10 +46,6 @@
       &.sessions {
         grid-column: 1 / -1;
       }
-
-      &.title {
-        @include m.ilios-overview-title;
-      }
     }
 
     .curriculum-inventory-sequence-block-overview-content {
