@@ -1,13 +1,13 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render, waitFor } from '@ember/test-helpers';
-import { setupMirage } from 'test-app/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { component } from 'ilios-common/page-objects/components/course/visualize-session-type';
 import VisualizeSessionType from 'ilios-common/components/course/visualize-session-type';
 
 module('Integration | Component | course/visualize-session-type', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   hooks.beforeEach(async function () {
     const school = this.server.create('school');

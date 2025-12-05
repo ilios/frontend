@@ -2,13 +2,13 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { component } from 'ilios-common/page-objects/components/selected-instructor-group-members';
-import { setupMirage } from 'test-app/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { a11yAudit } from 'ember-a11y-testing/test-support';
 import SelectedInstructorGroupMembers from 'ilios-common/components/selected-instructor-group-members';
 
 module('Integration | Component | selected-instructor-group-members', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   hooks.beforeEach(async function () {
     const instructor1 = this.server.create('user', {

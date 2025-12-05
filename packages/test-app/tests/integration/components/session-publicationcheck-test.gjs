@@ -1,14 +1,14 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMirage } from 'test-app/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { setupAuthentication } from 'ilios-common';
 import { component } from 'ilios-common/page-objects/components/session-publicationcheck';
 import SessionPublicationcheck from 'ilios-common/components/session-publicationcheck';
 
 module('Integration | Component | session-publicationcheck', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   test('it shows unlink icon', async function (assert) {
     const courseObjective = this.server.create('course-objective');

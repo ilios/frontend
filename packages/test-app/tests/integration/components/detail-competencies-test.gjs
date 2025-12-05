@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMirage } from 'test-app/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { a11yAudit } from 'ember-a11y-testing/test-support';
 import { component } from 'ilios-common/page-objects/components/detail-competencies';
 import DetailCompetencies from 'ilios-common/components/detail-competencies';
@@ -9,7 +9,7 @@ import noop from 'ilios-common/helpers/noop';
 
 module('Integration | Component | detail-competencies', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
   hooks.beforeEach(async function () {
     const school = this.server.create('school');
     const program = this.server.create('program', { school });

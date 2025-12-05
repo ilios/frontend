@@ -2,13 +2,13 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { component } from 'frontend/tests/pages/components/school/vocabulary-new-term';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import VocabularyNewTerm from 'frontend/components/school/vocabulary-new-term';
 import noop from 'ilios-common/helpers/noop';
 
 module('Integration | Component | school/vocabulary-new-term', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   test('add term', async function (assert) {
     const school = this.server.create('school');

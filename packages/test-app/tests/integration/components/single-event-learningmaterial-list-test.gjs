@@ -3,12 +3,12 @@ import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { a11yAudit } from 'ember-a11y-testing/test-support';
 import { component } from 'ilios-common/page-objects/components/single-event-learningmaterial-list';
-import { setupMirage } from 'test-app/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import SingleEventLearningmaterialList from 'ilios-common/components/single-event-learningmaterial-list';
 
 module('Integration | Component | single-event-learningmaterial-list', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   test('it renders', async function (assert) {
     this.set('learningMaterials', [

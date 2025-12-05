@@ -2,7 +2,7 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { DateTime } from 'luxon';
-import { setupMirage } from 'test-app/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { a11yAudit } from 'ember-a11y-testing/test-support';
 import { setLocale } from 'ember-intl/test-support';
 import { component } from 'ilios-common/page-objects/components/weekly-calendar';
@@ -13,7 +13,7 @@ import noop from 'ilios-common/helpers/noop';
 
 module('Integration | Component | weekly-calendar', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   //reset locale for other tests
   hooks.afterEach(async function () {

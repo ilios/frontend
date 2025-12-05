@@ -40,6 +40,11 @@ module.exports = {
       const mirageTree = new Funnel(mirageDir, { destDir: 'tests/test-support/mirage' });
       trees.push(mirageTree);
     }
+    if (['test', 'development'].includes(this._env)) {
+      const mswDir = path.join(__dirname, 'msw-test-support');
+      const mswTree = new Funnel(mswDir, { destDir: 'tests/test-support/msw' });
+      trees.push(mswTree);
+    }
     return MergeTrees(trees);
   },
 

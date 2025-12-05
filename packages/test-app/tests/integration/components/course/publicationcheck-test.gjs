@@ -1,13 +1,13 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMirage } from 'test-app/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { component } from 'ilios-common/page-objects/components/course/publicationcheck';
 import Publicationcheck from 'ilios-common/components/course/publicationcheck';
 
 module('Integration | Component | course/publicationcheck', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   test('it shows unlink icon', async function (assert) {
     const programYearObjective = this.server.create('program-year-objective');

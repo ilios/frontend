@@ -2,14 +2,14 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import Service from '@ember/service';
 import { click, render } from '@ember/test-helpers';
-import { setupMirage } from 'test-app/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { component } from 'ilios-common/page-objects/components/sessions-grid';
 import SessionsGrid from 'ilios-common/components/sessions-grid';
 import noop from 'ilios-common/helpers/noop';
 
 module('Integration | Component | sessions-grid', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   hooks.beforeEach(function () {
     class PermissionCheckerStub extends Service {

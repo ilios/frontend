@@ -2,14 +2,14 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { DateTime } from 'luxon';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { component } from 'frontend/tests/pages/components/curriculum-inventory/new-sequence-block';
 import NewSequenceBlock from 'frontend/components/curriculum-inventory/new-sequence-block';
 import noop from 'ilios-common/helpers/noop';
 
 module('Integration | Component | curriculum-inventory/new-sequence-block', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   hooks.beforeEach(async function () {
     const school = this.server.create('school');

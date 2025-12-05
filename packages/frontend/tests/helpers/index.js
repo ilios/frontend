@@ -3,7 +3,7 @@ import {
   setupRenderingTest as upstreamSetupRenderingTest,
   setupTest as upstreamSetupTest,
 } from 'ember-qunit';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { setupIntl } from 'ember-intl/test-support';
 import { setRunOptions } from 'ember-a11y-testing/test-support';
 
@@ -27,7 +27,7 @@ function setupApplicationTest(hooks, options) {
   // from other addons:
   //
   setupIntl(hooks, 'en-us'); // ember-intl
-  setupMirage(hooks); // ember-mirage
+  setupMSW(hooks); // ember-mirage
 }
 
 function setupRenderingTest(hooks, options) {

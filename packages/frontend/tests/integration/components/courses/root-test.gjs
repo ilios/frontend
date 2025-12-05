@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { render } from '@ember/test-helpers';
 import Service from '@ember/service';
 import { component } from 'frontend/tests/pages/components/courses/root';
@@ -9,7 +9,7 @@ import noop from 'ilios-common/helpers/noop';
 
 module('Integration | Component | courses/root', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   hooks.beforeEach(async function () {
     const year1 = this.server.create('academic-year', { id: 2022 });

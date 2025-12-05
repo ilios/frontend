@@ -3,12 +3,12 @@ import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { component } from 'ilios-common/page-objects/components/course/objective-list';
 import { a11yAudit } from 'ember-a11y-testing/test-support';
-import { setupMirage } from 'test-app/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import ObjectiveList from 'ilios-common/components/course/objective-list';
 
 module('Integration | Component | course/objective-list', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   test('it renders and is accessible', async function (assert) {
     const school = this.server.create('school');

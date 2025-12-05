@@ -3,13 +3,13 @@ import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { component } from 'ilios-common/page-objects/components/course/objectives';
 import { a11yAudit } from 'ember-a11y-testing/test-support';
-import { setupMirage } from 'test-app/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import Objectives from 'ilios-common/components/course/objectives';
 import noop from 'ilios-common/helpers/noop';
 
 module('Integration | Component | course/objectives', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   test('it renders and is accessible with a single cohort', async function (assert) {
     const school = this.server.create('school');

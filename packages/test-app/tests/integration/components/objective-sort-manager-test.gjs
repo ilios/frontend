@@ -1,13 +1,13 @@
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render, click, findAll } from '@ember/test-helpers';
 import { module, skip, test } from 'qunit';
-import { setupMirage } from 'test-app/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import ObjectiveSortManager from 'ilios-common/components/objective-sort-manager';
 import noop from 'ilios-common/helpers/noop';
 
 module('Integration | Component | objective sort manager', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   test('it renders for session', async function (assert) {
     const session = this.server.create('session');

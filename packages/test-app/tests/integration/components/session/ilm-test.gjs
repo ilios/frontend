@@ -3,12 +3,12 @@ import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { component } from 'ilios-common/page-objects/components/session/ilm';
 import { a11yAudit } from 'ember-a11y-testing/test-support';
-import { setupMirage } from 'test-app/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import Ilm from 'ilios-common/components/session/ilm';
 
 module('Integration | Component | session/ilm', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   test('it renders and is accessible when not editable with ILM', async function (assert) {
     const ilmSession = this.server.create('ilmSession', { hours: 8 });

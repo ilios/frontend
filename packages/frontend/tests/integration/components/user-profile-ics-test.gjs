@@ -1,14 +1,14 @@
 import { module, test, skip } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render, waitUntil } from '@ember/test-helpers';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { component } from 'frontend/tests/pages/components/user-profile-ics';
 import UserProfileIcs from 'frontend/components/user-profile-ics';
 import noop from 'ilios-common/helpers/noop';
 
 module('Integration | Component | user profile ics', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   hooks.beforeEach(function () {
     this.user = this.server.create('user', {

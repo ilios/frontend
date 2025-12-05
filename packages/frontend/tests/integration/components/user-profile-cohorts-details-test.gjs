@@ -1,14 +1,14 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { component } from 'frontend/tests/pages/components/user-profile-cohorts-details';
 import UserProfileCohortsDetails from 'frontend/components/user-profile-cohorts-details';
 import { array } from '@ember/helper';
 
 module('Integration | Component | user-profile-cohorts-details', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   hooks.beforeEach(async function () {
     const school1 = this.server.create('school');

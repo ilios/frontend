@@ -2,13 +2,13 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { component } from 'ilios-common/page-objects/components/instructor-selection-manager';
-import { setupMirage } from 'test-app/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import InstructorSelectionManager from 'ilios-common/components/instructor-selection-manager';
 import noop from 'ilios-common/helpers/noop';
 
 module('Integration | Component | instructor selection manager', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   hooks.beforeEach(async function () {
     const instructor1 = this.server.create('user', {

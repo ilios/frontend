@@ -1,14 +1,14 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMirage } from 'test-app/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { component } from 'ilios-common/page-objects/components/course/manage-objective-descriptors';
 import ManageObjectiveDescriptors from 'ilios-common/components/course/manage-objective-descriptors';
 import noop from 'ilios-common/helpers/noop';
 
 module('Integration | Component | course/manage-objective-descriptors', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   test('it renders', async function (assert) {
     const descriptors = this.server.createList('mesh-descriptor', 4);

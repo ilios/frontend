@@ -3,13 +3,13 @@ import { render } from '@ember/test-helpers';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
 import noop from 'ilios-common/helpers/noop';
 import { setupRenderingTest } from 'frontend/tests/helpers';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { component } from 'frontend/tests/pages/components/program-year/course-associations';
 import CourseAssociations from 'frontend/components/program-year/course-associations';
 
 module('Integration | Component | program-year/course-associations', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   hooks.beforeEach(async function () {
     const school = this.server.create('school');

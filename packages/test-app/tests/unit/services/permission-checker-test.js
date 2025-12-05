@@ -1,11 +1,11 @@
 import Service from '@ember/service';
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
-import { setupMirage } from 'test-app/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 
 module('Unit | Service | permission-checker', function (hooks) {
   setupTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   test('it exists', function (assert) {
     const service = this.owner.lookup('service:permission-checker');

@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { settled, render } from '@ember/test-helpers';
-import { setupMirage } from 'test-app/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { setupAuthentication } from 'ilios-common';
 import { component } from 'ilios-common/page-objects/components/session/overview';
@@ -8,7 +8,7 @@ import Overview from 'ilios-common/components/session/overview';
 
 module('Integration | Component | session/overview', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   hooks.beforeEach(async function () {
     this.school = this.server.create('school');

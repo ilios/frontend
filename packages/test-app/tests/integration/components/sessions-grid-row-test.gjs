@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
-import { setupMirage } from 'test-app/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { DateTime } from 'luxon';
 import { render } from '@ember/test-helpers';
 import Service from '@ember/service';
@@ -11,7 +11,7 @@ import { array } from '@ember/helper';
 
 module('Integration | Component | sessions-grid-session-row', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   hooks.beforeEach(function () {
     this.intl = this.owner.lookup('service:intl');

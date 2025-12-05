@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { component } from 'frontend/tests/pages/components/assign-students/root';
 import { DateTime } from 'luxon';
 import Root from 'frontend/components/assign-students/root';
@@ -9,7 +9,7 @@ import noop from 'ilios-common/helpers/noop';
 
 module('Integration | Component | assign-students/root', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   hooks.beforeEach(async function () {
     const thisYear = DateTime.now().year;

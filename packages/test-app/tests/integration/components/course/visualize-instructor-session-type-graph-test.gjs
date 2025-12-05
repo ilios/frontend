@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render, waitFor } from '@ember/test-helpers';
-import { setupMirage } from 'test-app/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { component } from 'ilios-common/page-objects/components/course/visualize-instructor-session-type-graph';
 import VisualizeInstructorSessionTypeGraph from 'ilios-common/components/course/visualize-instructor-session-type-graph';
 
@@ -9,7 +9,7 @@ module(
   'Integration | Component | course/visualize-instructor-session-type-graph',
   function (hooks) {
     setupRenderingTest(hooks);
-    setupMirage(hooks);
+    setupMSW(hooks);
 
     hooks.beforeEach(async function () {
       const instructor = this.server.create('user');

@@ -2,7 +2,7 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { selectFiles } from 'ember-file-upload/test-support';
-import { setupMirage } from 'test-app/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import Service from '@ember/service';
 import { Response } from 'miragejs';
 import LearningMaterialUploader from 'ilios-common/components/learning-material-uploader';
@@ -10,7 +10,7 @@ import noop from 'ilios-common/helpers/noop';
 
 module('Integration | Component | learning-material-uploader', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   test('upload file', async function (assert) {
     class IliosConfigMock extends Service {

@@ -1,7 +1,7 @@
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { module, test } from 'qunit';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { DateTime } from 'luxon';
 import { component } from 'frontend/tests/pages/components/curriculum-inventory/sequence-block-session-list';
 import SequenceBlockSessionList from 'frontend/components/curriculum-inventory/sequence-block-session-list';
@@ -11,7 +11,7 @@ module(
   'Integration | Component | curriculum-inventory/sequence-block-session-list',
   function (hooks) {
     setupRenderingTest(hooks);
-    setupMirage(hooks);
+    setupMSW(hooks);
 
     test('it renders', async function (assert) {
       const now = DateTime.now();

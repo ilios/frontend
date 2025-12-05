@@ -2,7 +2,7 @@ import { module, test } from 'qunit';
 import { setupAuthentication } from 'ilios-common';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMirage } from 'test-app/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { DateTime } from 'luxon';
 import { component } from 'ilios-common/page-objects/components/offering-manager';
 import noop from 'ilios-common/helpers/noop';
@@ -10,7 +10,7 @@ import OfferingManager from 'ilios-common/components/offering-manager';
 
 module('Integration | Component | offering-manager', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   test('it renders with individual learners and learner groups', async function (assert) {
     this.school = this.server.create('school');

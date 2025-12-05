@@ -2,7 +2,7 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import Service from '@ember/service';
 import { render } from '@ember/test-helpers';
-import { setupMirage } from 'test-app/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { DateTime } from 'luxon';
 import { create } from 'ember-cli-page-object';
 import table from 'ilios-common/page-objects/components/sessions-grid-offering-table';
@@ -12,7 +12,7 @@ const page = create({ table });
 
 module('Integration | Component | sessions-grid-offering-table', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
   test('it renders', async function (assert) {
     class PermissionCheckerServiceMock extends Service {
       async canUpdateSession() {

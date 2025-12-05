@@ -3,13 +3,13 @@ import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { a11yAudit } from 'ember-a11y-testing/test-support';
 import { component } from 'ilios-common/page-objects/components/objective-list-item-terms';
-import { setupMirage } from 'test-app/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import ObjectiveListItemTerms from 'ilios-common/components/objective-list-item-terms';
 import noop from 'ilios-common/helpers/noop';
 
 module('Integration | Component | objective-list-item-terms', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   hooks.beforeEach(async function () {
     this.course = this.server.create('course');

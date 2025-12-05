@@ -1,14 +1,14 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMirage } from 'test-app/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { component } from 'ilios-common/page-objects/components/session/postrequisite-editor';
 import PostrequisiteEditor from 'ilios-common/components/session/postrequisite-editor';
 import noop from 'ilios-common/helpers/noop';
 
 module('Integration | Component | session/postrequisite-editor', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   test('it renders with no postrequisite selected', async function (assert) {
     const sessions = this.server.createList('session', 5);

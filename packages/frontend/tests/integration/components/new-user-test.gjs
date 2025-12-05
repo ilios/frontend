@@ -3,7 +3,7 @@ import { resolve } from 'rsvp';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { mapBy } from 'ilios-common/utils/array-helpers';
 import { component } from 'frontend/tests/pages/components/new-user';
 import NewUser from 'frontend/components/new-user';
@@ -11,7 +11,7 @@ import noop from 'ilios-common/helpers/noop';
 
 module('Integration | Component | new user', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   hooks.beforeEach(async function () {
     this.schools = this.server.createList('school', 3);

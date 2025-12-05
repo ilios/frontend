@@ -1,14 +1,14 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render, waitFor } from '@ember/test-helpers';
-import { setupMirage } from 'test-app/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { DateTime } from 'luxon';
 import { component } from 'ilios-common/page-objects/components/course/visualize-instructor';
 import VisualizeInstructor from 'ilios-common/components/course/visualize-instructor';
 
 module('Integration | Component | course/visualize-instructor', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   test('it renders', async function (assert) {
     const school = this.server.create('school');

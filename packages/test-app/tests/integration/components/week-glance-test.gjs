@@ -3,7 +3,7 @@ import { DateTime } from 'luxon';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render, settled, click } from '@ember/test-helpers';
-import { setupMirage } from 'test-app/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { component } from 'ilios-common/page-objects/components/week-glance';
 import { a11yAudit } from 'ember-a11y-testing/test-support';
 import { setLocale, setupIntl } from 'ember-intl/test-support';
@@ -12,7 +12,7 @@ import formatDate from 'ember-intl/helpers/format-date';
 
 module('Integration | Component | week-glance', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
   setupIntl(hooks, 'en-us');
 
   const testDate = DateTime.fromObject({

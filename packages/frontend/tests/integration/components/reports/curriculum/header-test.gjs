@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { component } from 'frontend/tests/pages/components/reports/curriculum/header';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
 import Header from 'frontend/components/reports/curriculum/header';
@@ -10,7 +10,7 @@ import { array } from '@ember/helper';
 
 module('Integration | Component | reports/curriculum/header', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   test('it renders for session objectives and is accessible', async function (assert) {
     await render(

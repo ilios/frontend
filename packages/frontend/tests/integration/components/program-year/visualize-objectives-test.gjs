@@ -1,14 +1,14 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render, waitFor } from '@ember/test-helpers';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { component } from 'frontend/tests/pages/components/program-year/visualize-objectives';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
 import VisualizeObjectives from 'frontend/components/program-year/visualize-objectives';
 
 module('Integration | Component | program-year/visualize-objectives', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   test('it renders', async function (assert) {
     const school = this.server.create('school');

@@ -2,7 +2,7 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { DateTime } from 'luxon';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { component } from 'frontend/tests/pages/components/curriculum-inventory/sequence-block-list';
 import SequenceBlockList from 'frontend/components/curriculum-inventory/sequence-block-list';
 import noop from 'ilios-common/helpers/noop';
@@ -10,7 +10,7 @@ import { array } from '@ember/helper';
 
 module('Integration | Component | curriculum-inventory/sequence-block-list', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   hooks.beforeEach(async function () {
     this.intl = this.owner.lookup('service:intl');

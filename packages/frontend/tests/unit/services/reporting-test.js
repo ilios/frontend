@@ -1,13 +1,13 @@
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
 import { setupIntl } from 'ember-intl/test-support';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { DateTime } from 'luxon';
 
 module('Unit | Service | reporting', function (hooks) {
   setupTest(hooks);
   setupIntl(hooks, 'en-us');
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   hooks.beforeEach(function () {
     this.service = this.owner.lookup('service:reporting');

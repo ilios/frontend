@@ -1,14 +1,14 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMirage } from 'test-app/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { component } from 'ilios-common/page-objects/components/detail-learnergroups-list';
 import DetailLearnergroupsList from 'ilios-common/components/detail-learnergroups-list';
 import noop from 'ilios-common/helpers/noop';
 
 module('Integration | Component | detail-learnergroups-list', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   hooks.beforeEach(async function () {
     const program = this.server.create('program');

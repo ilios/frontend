@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMirage } from 'test-app/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { component } from 'ilios-common/page-objects/components/taxonomy-manager';
 import TaxonomyManager from 'ilios-common/components/taxonomy-manager';
 import noop from 'ilios-common/helpers/noop';
@@ -9,7 +9,7 @@ import { array } from '@ember/helper';
 
 module('Integration | Component | taxonomy manager', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   hooks.beforeEach(async function () {
     const school = this.server.create('school', { title: 'Medicine' });

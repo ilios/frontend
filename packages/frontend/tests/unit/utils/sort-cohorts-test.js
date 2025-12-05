@@ -2,11 +2,11 @@ import sortCohorts from 'frontend/utils/sort-cohorts';
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
 
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 
 module('Unit | Utility | sort-cohorts', function (hooks) {
   setupTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   test('it works', async function (assert) {
     const school1 = this.server.create('school');

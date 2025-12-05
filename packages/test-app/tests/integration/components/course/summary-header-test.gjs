@@ -2,13 +2,13 @@ import Service from '@ember/service';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMirage } from 'test-app/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { component } from 'ilios-common/page-objects/components/course/summary-header';
 import SummaryHeader from 'ilios-common/components/course/summary-header';
 
 module('Integration | Component | course summary header', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   test('it renders', async function (assert) {
     class PermissionCheckerStub extends Service {

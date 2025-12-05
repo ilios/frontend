@@ -2,14 +2,14 @@ import Service from '@ember/service';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { component } from 'frontend/tests/pages/components/pending-updates-summary';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
 import PendingUpdatesSummary from 'frontend/components/pending-updates-summary';
 
 module('Integration | Component | pending updates summary', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   test('it renders with updates', async function (assert) {
     const school = this.server.create('school');

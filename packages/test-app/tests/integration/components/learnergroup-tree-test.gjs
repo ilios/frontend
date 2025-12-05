@@ -1,14 +1,14 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { click, render } from '@ember/test-helpers';
-import { setupMirage } from 'test-app/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { component } from 'ilios-common/page-objects/components/learnergroup-tree';
 import LearnergroupTree from 'ilios-common/components/learnergroup-tree';
 import noop from 'ilios-common/helpers/noop';
 
 module('Integration | Component | learnergroup-tree', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   hooks.beforeEach(async function () {
     const thirdLevelLearnerGroup1 = this.server.create('learner-group', {

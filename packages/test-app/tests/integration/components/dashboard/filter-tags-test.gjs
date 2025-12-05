@@ -1,14 +1,14 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMirage } from 'test-app/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import FilterTags from 'ilios-common/components/dashboard/filter-tags';
 import { array } from '@ember/helper';
 import noop from 'ilios-common/helpers/noop';
 
 module('Integration | Component | dashboard/filter-tags', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   test('it renders', async function (assert) {
     this.server.createList('session-type', 3);

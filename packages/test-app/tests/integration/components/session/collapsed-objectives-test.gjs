@@ -2,13 +2,13 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { component } from 'ilios-common/page-objects/components/session/collapsed-objectives';
-import { setupMirage } from 'test-app/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import CollapsedObjectives from 'ilios-common/components/session/collapsed-objectives';
 import noop from 'ilios-common/helpers/noop';
 
 module('Integration | Component | session/collapsed-objectives', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   hooks.beforeEach(async function () {
     const meshDescriptor = this.server.create('mesh-descriptor');

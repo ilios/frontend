@@ -1,14 +1,14 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { click, render } from '@ember/test-helpers';
-import { setupMirage } from 'test-app/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { component } from 'ilios-common/page-objects/components/detail-learners-and-learner-groups';
 import DetailLearnersAndLearnerGroups from 'ilios-common/components/detail-learners-and-learner-groups';
 import { array } from '@ember/helper';
 
 module('Integration | Component | detail-learners-and-learner-groups', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   hooks.beforeEach(async function () {
     const learners = this.server.createList('user', 4);

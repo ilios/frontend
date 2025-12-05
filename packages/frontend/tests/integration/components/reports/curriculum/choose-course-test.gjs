@@ -2,7 +2,7 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { setupAuthentication, freezeDateAt, unfreezeDate } from 'ilios-common';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { DateTime } from 'luxon';
 import { component } from 'frontend/tests/pages/components/reports/curriculum/choose-course';
 import { buildSchoolsFromData } from 'frontend/tests/helpers/curriculum-report';
@@ -12,7 +12,7 @@ import noop from 'ilios-common/helpers/noop';
 
 module('Integration | Component | reports/curriculum/choose-course', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   hooks.beforeEach(async function () {
     const { apiVersion } = this.owner.resolveRegistration('config:environment');

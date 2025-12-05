@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { setupAuthentication } from 'ilios-common';
 import { component } from 'frontend/tests/pages/components/reports/list';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
@@ -10,7 +10,7 @@ import noop from 'ilios-common/helpers/noop';
 
 module('Integration | Component | reports/subjects-list', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   hooks.beforeEach(async function () {
     this.user = await setupAuthentication();

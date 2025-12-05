@@ -2,7 +2,7 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { DateTime } from 'luxon';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import queryString from 'query-string';
 import { component } from 'frontend/tests/pages/components/curriculum-inventory/report-rollover';
 import ReportRollover from 'frontend/components/curriculum-inventory/report-rollover';
@@ -10,7 +10,7 @@ import noop from 'ilios-common/helpers/noop';
 
 module('Integration | Component | curriculum-inventory/report-rollover', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   test('it renders', async function (assert) {
     const thisYear = DateTime.fromObject({ hour: 8 }).year;

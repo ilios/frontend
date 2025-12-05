@@ -1,14 +1,14 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { component } from 'frontend/tests/pages/components/school/session-attributes';
 import SessionAttributes from 'frontend/components/school/session-attributes';
 import noop from 'ilios-common/helpers/noop';
 
 module('Integration | Component | school/session-attributes', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   test('it renders collapsed', async function (assert) {
     const school = this.server.create('school');

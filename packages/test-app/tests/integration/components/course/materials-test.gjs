@@ -1,14 +1,14 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMirage } from 'test-app/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { component } from 'ilios-common/page-objects/components/course/materials';
 import Materials from 'ilios-common/components/course/materials';
 import noop from 'ilios-common/helpers/noop';
 
 module('Integration | Component | course/materials', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   test('course lms render', async function (assert) {
     const lm1 = this.server.create('learning-material', {

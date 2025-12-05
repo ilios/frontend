@@ -4,13 +4,13 @@ import { render } from '@ember/test-helpers';
 import { DateTime } from 'luxon';
 import { component } from 'ilios-common/page-objects/components/single-event-learningmaterial-list-item';
 import createTypedLearningMaterialProxy from 'ilios-common/utils/create-typed-learning-material-proxy';
-import { setupMirage } from 'test-app/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import Service from '@ember/service';
 import SingleEventLearningmaterialListItem from 'ilios-common/components/single-event-learningmaterial-list-item';
 
 module('Integration | Component | single-event-learningmaterial-list-item', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   hooks.beforeEach(function () {
     this.intl = this.owner.lookup('service:intl');

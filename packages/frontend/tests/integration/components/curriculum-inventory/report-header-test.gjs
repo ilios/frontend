@@ -1,14 +1,14 @@
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { module, test } from 'qunit';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { component } from 'frontend/tests/pages/components/curriculum-inventory/report-header';
 import ReportHeader from 'frontend/components/curriculum-inventory/report-header';
 import noop from 'ilios-common/helpers/noop';
 
 module('Integration | Component | curriculum-inventory/report-header', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   hooks.beforeEach(async function () {
     const report = this.server.create('CurriculumInventoryReport', {

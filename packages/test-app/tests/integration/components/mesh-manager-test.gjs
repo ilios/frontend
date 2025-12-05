@@ -2,14 +2,14 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { component } from 'ilios-common/page-objects/components/mesh-manager';
-import { setupMirage } from 'test-app/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import MeshManager from 'ilios-common/components/mesh-manager';
 import noop from 'ilios-common/helpers/noop';
 import { array } from '@ember/helper';
 
 module('Integration | Component | mesh-manager', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   hooks.beforeEach(async function () {
     this.trees = this.server.createList('meshTree', 3);

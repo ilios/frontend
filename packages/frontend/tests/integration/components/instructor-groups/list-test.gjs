@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { component } from 'frontend/tests/pages/components/instructor-groups/list';
 import Service from '@ember/service';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
@@ -12,7 +12,7 @@ import set from 'ember-set-helper/helpers/set';
 
 module('Integration | Component | instructor-groups/list', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   hooks.beforeEach(async function () {
     const PermissionCheckerMock = class extends Service {

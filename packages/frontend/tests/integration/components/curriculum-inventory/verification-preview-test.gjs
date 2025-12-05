@@ -2,13 +2,13 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { component } from 'frontend/tests/pages/components/curriculum-inventory/verification-preview';
 import VerificationPreview from 'frontend/components/curriculum-inventory/verification-preview';
 
 module('Integration | Component | curriculum-inventory/verification-preview', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   test('it renders', async function (assert) {
     this.server.create('curriculum-inventory-report', {

@@ -1,13 +1,13 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMirage } from 'test-app/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { component } from 'ilios-common/page-objects/components/learningmaterial-search';
 import LearningmaterialSearch from 'ilios-common/components/learningmaterial-search';
 
 module('Integration | Component | learningmaterial search', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   test('search shows results', async function (assert) {
     this.server.createList('learning-material', 2);

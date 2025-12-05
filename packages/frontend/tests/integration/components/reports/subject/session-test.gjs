@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { click, render } from '@ember/test-helpers';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { component } from 'frontend/tests/pages/components/reports/subject/session';
 import { component as headerComponent } from 'frontend/tests/pages/components/reports/subject-header';
 import { setupAuthentication } from 'ilios-common';
@@ -9,7 +9,7 @@ import Session from 'frontend/components/reports/subject/session';
 
 module('Integration | Component | reports/subject/session', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   const responseData = {
     data: {

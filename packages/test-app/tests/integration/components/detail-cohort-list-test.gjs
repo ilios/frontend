@@ -1,13 +1,13 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMirage } from 'test-app/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import DetailCohortList from 'ilios-common/components/detail-cohort-list';
 import { component } from 'ilios-common/page-objects/components/detail-cohort-list';
 
 module('Integration | Component | detail cohort list', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
   test('it renders', async function (assert) {
     const school1 = this.server.create('school', {
