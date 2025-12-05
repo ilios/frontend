@@ -12,9 +12,11 @@ const firefoxUserJsPath = path.join(buildDir, 'firefox-user.js');
 if (!fs.existsSync(buildDir)) {
   fs.mkdirSync(buildDir, { recursive: true });
 }
-if (!fs.existsSync(downloadDir)) {
-  fs.mkdirSync(downloadDir, { recursive: true });
+// Reset downloads directory
+if (fs.existsSync(downloadDir)) {
+  fs.rmdirSync(downloadDir);
 }
+fs.mkdirSync(downloadDir, { recursive: true });
 
 // Create Firefox user.js file with download preferences
 const userJsContent = `
