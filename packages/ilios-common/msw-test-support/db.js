@@ -1,4 +1,4 @@
-import { factory } from '@mswjs/data';
+import { factory } from '@msw/data';
 import aamcMethod from './models/aamc-method.js';
 import aamcPcrs from './models/aamc-pcrs.js';
 import aamcResourceType from './models/aamc-resource-type.js';

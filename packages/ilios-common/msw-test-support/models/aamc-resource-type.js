@@ -1,4 +1,4 @@
-import { primaryKey } from '@mswjs/data';
+import { primaryKey } from '@msw/data';
 
 let idCounter = 1;
 
