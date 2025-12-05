@@ -436,7 +436,7 @@ export default class BulkNewUsersComponent extends Component {
               />
             </div>
             {{#if this.updateSelectedFile.isRunning}}
-              <div class="file-is-loading">
+              <div class="file-is-loading font-size-xxxl">
                 <LoadingSpinner />
               </div>
             {{else if (gte this.proposedUsers.length 1)}}

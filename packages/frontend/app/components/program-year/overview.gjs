@@ -12,6 +12,7 @@ import FaIcon from 'ilios-common/components/fa-icon';
           @route="program-year-visualize-objectives"
           @model={{@programYear}}
           title={{t "general.programYearVisualizations"}}
+          class="font-size-medium"
           data-test-go-to-visualizations
         >
           <FaIcon @icon="chart-column" />

@@ -22,7 +22,7 @@ import LoadingSpinner from 'ilios-common/components/loading-spinner';
     </div>
     {{#if @subject.associatedVocabularies}}
       <div class="content">
-        <table class="ilios-table ilios-table-colors condensed">
+        <table class="ilios-table ilios-table-colors condensed font-size-small">
           <thead>
             <tr>
               <th class="text-left">

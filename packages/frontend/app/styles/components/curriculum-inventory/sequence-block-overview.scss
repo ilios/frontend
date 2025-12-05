@@ -21,10 +21,6 @@
         span {
           display: flex;
         }
-
-        .details {
-          @include m.font-size("small");
-        }
       }
 
       &.description {

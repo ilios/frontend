@@ -45,18 +45,15 @@
   .publish-all-sessions-review {
     border: 1px solid var(--green);
     clear: both;
-    @include m.font-size("large");
     padding: 1rem;
     text-align: center;
 
     .unlinked-warning {
       color: var(--dark-orange);
-      @include m.font-size("base");
     }
 
     .fa-chart-column {
       color: var(--light-blue);
-      @include m.font-size("small");
     }
 
     p {
@@ -74,6 +71,5 @@
 
   .fa-link-slash {
     color: var(--black);
-    @include m.font-size("small");
   }
 }

@@ -1,7 +1,6 @@
 @use "../mixins" as m;
 
 .offering-manager {
-  @include m.font-size("small");
   display: grid;
   grid-template-columns: repeat(3, 2fr) 1fr;
   margin-bottom: 0.5rem;
