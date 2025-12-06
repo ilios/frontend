@@ -57,9 +57,7 @@ export function createCrudHandlers(modelName, apiRoute) {
 
     // GET single record
     http.get(`/api/${apiPath}/:id`, async ({ params }) => {
-      const record = await db[modelName].findFirst({
-        where: { id: { equals: params.id } },
-      });
+      const record = await db[modelName].findFirst((q) => q.where({ id: params.id }));
 
       if (!record) {
         return new HttpResponse(null, { status: 404 });
@@ -112,9 +110,7 @@ export function createCrudHandlers(modelName, apiRoute) {
         });
       }
 
-      const record = await db[modelName].findFirst({
-        where: { id: { equals: params.id } },
-      });
+      const record = await db[modelName].findFirst((q) => q.where({ id: params.id }));
 
       if (!record) {
         return new HttpResponse(null, { status: 404 });
@@ -142,18 +138,14 @@ export function createCrudHandlers(modelName, apiRoute) {
         data: attrs,
       });
 
-      const updated = await db[modelName].findFirst({
-        where: { id: { equals: params.id } },
-      });
+      const updated = await db[modelName].findFirst((q) => q.where({ id: params.id }));
 
       return HttpResponse.json(formatJsonApi(updated, modelName));
     }),
 
     // DELETE record
     http.delete(`/api/${apiPath}/:id`, async ({ params }) => {
-      const record = await db[modelName].findFirst({
-        where: { id: { equals: params.id } },
-      });
+      const record = await db[modelName].findFirst((q) => q.where({ id: params.id }));
 
       if (!record) {
         return new HttpResponse(null, { status: 404 });
