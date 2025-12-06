@@ -5,11 +5,12 @@ import t from 'ember-intl/helpers/t';
     <LinkTo
       @route="reports.subjects"
       @current-when="reports.subjects reports.subject"
+      class="font-size-medium"
       data-test-subject
     >
       {{t "general.subjectReports"}}
     </LinkTo>
-    <LinkTo @route="reports.curriculum" data-test-curriculum>
+    <LinkTo @route="reports.curriculum" class="font-size-medium" data-test-curriculum>
       {{t "general.curriculumReports"}}
     </LinkTo>
   </div>

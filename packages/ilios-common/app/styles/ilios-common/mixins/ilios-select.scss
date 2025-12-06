@@ -2,7 +2,10 @@
 
 @mixin ilios-select() {
   box-sizing: border-box;
-  @include font-size.font-size("base");
+  // @include font-size.font-size("base");
+  /* stylelint-disable property-disallowed-list */
+  font-size: var(--fs-base);
+  line-height: calc(4px + 2ex);
   height: 2em;
   padding: 4px 4px 4px 8px;
 }

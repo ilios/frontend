@@ -151,7 +151,6 @@
     .validation-error-message {
       color: var(--red);
       display: block;
-      @include m.font-size("small");
       font-style: italic;
       margin-top: 0.5rem;
     }

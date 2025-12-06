@@ -99,7 +99,7 @@ import TimedReleaseSchedule from 'ilios-common/components/timed-release-schedule
         </p>
       {{/if}}
     {{/if}}
-    <span class="timed-release-info" data-test-time-release-info>
+    <span class="timed-release-info font-size-small" data-test-time-release-info>
       <TimedReleaseSchedule
         @startDate={{@lm.startDate}}
         @endDate={{@lm.endDate}}

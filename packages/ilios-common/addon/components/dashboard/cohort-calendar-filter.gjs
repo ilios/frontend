@@ -6,10 +6,10 @@ import { fn } from '@ember/helper';
 import LoadingSpinner from 'ilios-common/components/loading-spinner';
 <template>
   <div
-    class="calendar-filter-list large-filter-list dashboard-cohort-calendar-filter"
+    class="calendar-filter-list large-filter-list dashboard-cohort-calendar-filter font-size-small"
     data-test-cohort-calendar-filter
   >
-    <h2>{{t "general.programAndCohort"}}</h2>
+    <h2 class="font-size-base">{{t "general.programAndCohort"}}</h2>
     <ul class="cohorts filters">
       {{#each (sortBy "classOfYear:desc" @cohortProxies) as |obj|}}
         <li data-test-cohort>

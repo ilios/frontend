@@ -31,7 +31,6 @@
     }
 
     .details {
-      @include m.font-size("small");
       font-weight: 600;
     }
   }

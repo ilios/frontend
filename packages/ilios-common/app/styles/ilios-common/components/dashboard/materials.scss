@@ -46,10 +46,6 @@
       color: var(--grey);
     }
 
-    .timed-release-info {
-      @include m.font-size("small");
-    }
-
     table {
       grid-column: 1 / -1;
 
