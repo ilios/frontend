@@ -149,23 +149,16 @@
 
     .description {
       p {
-        @include font-size.font-size("base");
         margin: 0;
       }
       button {
         @include ilios-button.ilios-link-button;
-        @include font-size.font-size("base");
-
-        p {
-          @include font-size.font-size("base");
-        }
       }
     }
 
     .course-objective-list-item-parents,
     .session-objective-list-item-parents {
       p {
-        @include font-size.font-size("base");
         margin: 0;
       }
     }
@@ -224,10 +217,6 @@
 
       &:last-of-type {
         margin-bottom: 0;
-      }
-
-      .display-text {
-        @include font-size.font-size("base");
       }
     }
   }

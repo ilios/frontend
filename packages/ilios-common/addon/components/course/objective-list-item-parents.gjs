@@ -19,7 +19,10 @@ export default class CourseObjectiveListItemParentsComponent extends Component {
     return `<ul>${items}</ul>`;
   }
   <template>
-    <div class="course-objective-list-item-parents grid-item" data-test-objective-list-item-parents>
+    <div
+      class="course-objective-list-item-parents grid-item font-size-base"
+      data-test-objective-list-item-parents
+    >
       {{#if @isManaging}}
         <button
           type="button"

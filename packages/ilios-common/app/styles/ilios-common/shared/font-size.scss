@@ -13,7 +13,12 @@
   font-size: var(--fs-small);
   line-height: calc(4px + 2ex);
 }
-.font-size-base {
+.font-size-base,
+.description.font-size-base p,
+.description.font-size-base button,
+.description.font-size-base p button,
+.course-objective-list-item-parents.font-size-base p,
+.session-objective-list-item-parents.font-size-base p {
   font-size: var(--fs-base);
   line-height: calc(4px + 2ex);
 }
