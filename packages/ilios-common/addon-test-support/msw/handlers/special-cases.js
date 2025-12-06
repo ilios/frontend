@@ -205,9 +205,7 @@ const programYearCreateHandler = http.post('/api/programyears', async ({ request
     data: { cohort: cohort.id },
   });
 
-  const updated = db.programYear.findFirst({
-    where: { id: { equals: programYear.id } },
-  });
+  const updated = db.programYear.findFirst((q) => q.where({ id: programYear.id }));
 
   return HttpResponse.json(formatJsonApi(updated, 'programYear'), { status: 201 });
 });
