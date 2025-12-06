@@ -6,7 +6,7 @@ import { generateId, resetIdCounter } from './create-model.js';
 
 // Drop-in replacement for setupMSW() that maintains the same API
 export function setupMSW(hooks) {
-  hooks.beforeEach(function () {
+  hooks.beforeEach(async function () {
     if (!this.owner) {
       throw new Error(
         'Must call one of the ember-qunit setupTest() / setupRenderingTest() / setupApplicationTest() first',
@@ -20,8 +20,8 @@ export function setupMSW(hooks) {
     const ENV = this.owner.resolveRegistration('config:environment');
     const { apiVersion } = ENV;
 
-    this.server = startMSW({ apiVersion });
-    this.server.start({ onUnhandledRequest: 'error' });
+    this.server = await startMSW({ apiVersion });
+    await this.server.start({ onUnhandledRequest: 'error' });
 
     // Provide Mirage-compatible API
     this.server.create = createModel;
