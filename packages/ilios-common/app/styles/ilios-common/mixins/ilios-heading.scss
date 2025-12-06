@@ -8,32 +8,46 @@
   padding: 0;
 }
 
+/* stylelint-disable property-disallowed-list */
+
 @mixin ilios-heading-h1() {
   @include ilios-heading;
-  @include font-size.font-size("xxxl");
+  // @include font-size.font-size("xxxl");
+  font-size: var(--fs-xxxl);
+  line-height: calc(4px + 2ex);
 }
 
 @mixin ilios-heading-h2() {
   @include ilios-heading;
-  @include font-size.font-size("xxl");
+  // @include font-size.font-size("xxl");
+  font-size: var(--fs-xxl);
+  line-height: calc(4px + 2ex);
 }
 
 @mixin ilios-heading-h3() {
   @include ilios-heading;
-  @include font-size.font-size("xl");
+  // @include font-size.font-size("xl");
+  font-size: var(--fs-xl);
+  line-height: calc(4px + 2ex);
 }
 
 @mixin ilios-heading-h4() {
   @include ilios-heading;
-  @include font-size.font-size("large");
+  // @include font-size.font-size("large");
+  font-size: var(--fs-large);
+  line-height: calc(4px + 2ex);
 }
 
 @mixin ilios-heading-h5() {
   @include ilios-heading;
-  @include font-size.font-size("medium");
+  // @include font-size.font-size("medium");
+  font-size: var(--fs-medium);
+  line-height: calc(4px + 2ex);
 }
 
 @mixin ilios-heading-h6() {
   @include ilios-heading;
-  @include font-size.font-size("base");
+  // @include font-size.font-size("base");
+  font-size: var(--fs-base);
+  line-height: calc(4px + 2ex);
 }
