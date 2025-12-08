@@ -1,6 +1,6 @@
-@use "font-size";
-@use "ilios-heading";
-@use "media";
+@use "../mixins/font-size";
+@use "../mixins/ilios-heading";
+@use "../mixins/media";
 
 .main-list-box-header-title {
   @include ilios-heading.ilios-heading-h4;
