@@ -19,10 +19,6 @@
     .header {
       @include m.main-list-box-header;
 
-      h2 {
-        @include m.ilios-heading;
-      }
-
       .actions {
         @include m.main-list-box-header-actions;
       }
