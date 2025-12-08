@@ -54,7 +54,7 @@ export default class SequenceBlockListComponent extends Component {
       ...attributes
     >
       <div class="header" data-test-header>
-        <div class="title" data-test-title>
+        <div class="main-list-box-header-title" data-test-title>
           {{t "general.sequenceBlocks"}}
           ({{@sequenceBlocks.length}})
         </div>

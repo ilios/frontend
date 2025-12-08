@@ -136,7 +136,7 @@ export default class ProgramYearListComponent extends Component {
     <div class="program-year-list main-section" data-test-program-year-list ...attributes>
       <section class="program-years" data-test-years>
         <div class="header">
-          <div class="title">
+          <div class="main-list-box-header-title">
             {{t "general.programYears"}}
           </div>
           {{#if @canCreate}}

@@ -11,10 +11,6 @@
         @include m.ilios-heading;
       }
 
-      .title {
-        @include m.main-list-box-header-title;
-      }
-
       .actions {
         @include m.main-list-box-header-actions;
       }
