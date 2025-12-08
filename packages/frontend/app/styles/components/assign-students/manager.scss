@@ -9,10 +9,6 @@
     h2 {
       @include m.ilios-heading;
     }
-
-    .title {
-      @include m.main-list-box-header-title;
-    }
   }
 
   .form {
