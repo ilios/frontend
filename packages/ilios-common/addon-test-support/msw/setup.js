@@ -1,3 +1,4 @@
+import { http, HttpResponse } from 'msw';
 import { settled } from '@ember/test-helpers';
 import { startMSW } from './start-msw.js';
 import { db } from './db.js';
@@ -27,6 +28,7 @@ export function setupMSW(hooks) {
     this.server.create = createModel;
     this.server.createList = createModelList;
     this.server.db = db;
+    this.server.get = get.bind(this);
   });
 
   hooks.afterEach(async function () {
@@ -118,4 +120,12 @@ function applyDefaults(defaults, index) {
     }
   }
   return resolved;
+}
+
+function get(url, callback) {
+  this.server.use(
+    http.get(url, () => {
+      return HttpResponse.json(callback());
+    }),
+  );
 }
