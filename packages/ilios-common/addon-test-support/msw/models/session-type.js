@@ -9,7 +9,7 @@ export const schema = z
   })
   .passthrough();
 
-export const relations = [
+export const relationships = [
   {
     field: 'assessmentOption',
     type: 'oneOf',

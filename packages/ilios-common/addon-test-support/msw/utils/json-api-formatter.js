@@ -1,5 +1,6 @@
 import { camelize } from '@ember/string';
 import { pluralize } from 'ember-inflector';
+import { getTypeFor } from '../relationships';
 
 // Transforms @msw/data records into JSON:API format compatible with Ember Data
 export function formatJsonApi(data, modelName, options = {}) {
@@ -40,9 +41,9 @@ function formatResource(model, modelName) {
 
     // Relationships are objects or arrays with IDs
     if (value && typeof value === 'object' && value.id) {
-      relationships[camelize(key)] = formatRelationship(value);
+      relationships[camelize(key)] = formatRelationship(value, getTypeFor(modelName, key));
     } else if (Array.isArray(value) && value[0]?.id) {
-      relationships[camelize(key)] = formatRelationship(value);
+      relationships[camelize(key)] = formatRelationship(value, getTypeFor(modelName, key));
     } else {
       attributes[camelize(key)] = value;
     }
@@ -61,11 +62,12 @@ function formatResource(model, modelName) {
   return resource;
 }
 
-function formatRelationship(related) {
+function formatRelationship(related, typeName) {
+  const type = pluralize(camelize(typeName));
   if (Array.isArray(related)) {
     return {
       data: related.map((item) => ({
-        type: pluralize(camelize(item.__typename || 'unknown')),
+        type,
         id: String(item.id),
       })),
     };
@@ -74,7 +76,7 @@ function formatRelationship(related) {
   return {
     data: related
       ? {
-          type: pluralize(camelize(related.__typename || 'unknown')),
+          type,
           id: String(related.id),
         }
       : null,
