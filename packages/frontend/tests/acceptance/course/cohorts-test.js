@@ -93,10 +93,12 @@ module('Acceptance | Course - Cohorts', function (hooks) {
     await page.details.cohorts.manage();
     await takeScreenshot(assert);
     await percySnapshot(assert);
+
     assert.strictEqual(page.details.cohorts.selected.length, 1);
     assert.strictEqual(page.details.cohorts.selected[0].name, 'school 0 | program 0 | cohort 0');
-    assert.strictEqual(page.details.cohorts.selectable.length, 1);
-    assert.strictEqual(page.details.cohorts.selectable[0].name, 'school 0 | program 0 | cohort 1');
+    assert.strictEqual(page.details.cohorts.selectable.length, 2);
+    assert.strictEqual(page.details.cohorts.selectable[0].name, 'school 0 | program 0 | cohort 3');
+    assert.strictEqual(page.details.cohorts.selectable[1].name, 'school 0 | program 0 | cohort 1');
   });
 
   test('save cohort changes', async function (assert) {
@@ -109,7 +111,7 @@ module('Acceptance | Course - Cohorts', function (hooks) {
     assert.strictEqual(page.details.cohorts.current.length, 1);
     assert.strictEqual(page.details.cohorts.current[0].school, 'school 0');
     assert.strictEqual(page.details.cohorts.current[0].program, 'program 0');
-    assert.strictEqual(page.details.cohorts.current[0].cohort, 'cohort 1');
+    assert.strictEqual(page.details.cohorts.current[0].cohort, 'cohort 3');
   });
 
   test('cancel cohort changes', async function (assert) {
