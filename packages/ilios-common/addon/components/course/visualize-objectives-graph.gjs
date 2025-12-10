@@ -232,7 +232,7 @@ export default class CourseVisualizeObjectivesGraph extends Component {
   });
   <template>
     <div
-      class="course-visualize-objectives-graph {{unless @isIcon 'not-icon'}}"
+      class="course-visualize-objectives-graph graph-with-data-table {{unless @isIcon 'not-icon'}}"
       data-test-course-visualize-objectives-graph
       ...attributes
     >
