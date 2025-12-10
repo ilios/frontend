@@ -381,6 +381,9 @@ importers:
       '@glimmer/tracking':
         specifier: ^1.1.2
         version: 1.1.2
+      '@msw/data':
+        specifier: ^1.1.2
+        version: 1.1.5
       '@popperjs/core':
         specifier: '>= 2.1.0'
         version: 2.11.8
@@ -559,9 +562,6 @@ importers:
       '@eslint/js':
         specifier: ^9.39.2
         version: 9.39.4
-      '@msw/data':
-        specifier: ^1.1.2
-        version: 1.1.5
       '@warp-drive/build-config':
         specifier: ~5.8.1
         version: 5.8.2(@babel/core@7.29.0)(@glint/template@1.7.7)
