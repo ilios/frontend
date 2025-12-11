@@ -26,14 +26,6 @@
     .header {
       @include m.main-list-box-header;
 
-      h2 {
-        @include m.ilios-heading;
-      }
-
-      .title {
-        @include m.main-list-box-header-title;
-      }
-
       .actions {
         min-height: 2rem;
         @include m.main-list-box-header-actions;

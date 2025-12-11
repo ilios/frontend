@@ -168,7 +168,7 @@ export default class ReportsSubjectsListComponent extends Component {
       </div>
       <section class="reports">
         <div class="header">
-          <h2 data-test-courses-header-title class="title">
+          <h2 data-test-courses-header-title class="main-list-box-header-title">
             {{t "general.reports"}}
             ({{this.filteredReports.length}})
           </h2>

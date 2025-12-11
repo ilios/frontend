@@ -112,7 +112,7 @@ export default class IliosUsersComponent extends Component {
       </div>
       <section class="users">
         <div class="header" data-test-header>
-          <span class="title" data-test-title>
+          <span class="main-list-box-header-title" data-test-title>
             {{t "general.users"}}
           </span>
           <div class="actions">

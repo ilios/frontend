@@ -68,15 +68,6 @@
   }
 }
 
-@mixin main-list-box-header-title {
-  @include ilios-heading.ilios-heading-h4;
-  @include font-size.text-align-bottom;
-  margin-bottom: 0.5rem;
-  @include media.for-laptop-and-up {
-    margin-bottom: 0;
-  }
-}
-
 @mixin main-list-box-header-actions {
   @include media.for-laptop-and-up {
     text-align: right;

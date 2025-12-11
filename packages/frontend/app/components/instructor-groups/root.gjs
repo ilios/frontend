@@ -151,7 +151,7 @@ export default class InstructorGroupsRootComponent extends Component {
 
       <div class="main-list">
         <div class="header">
-          <h2 class="title">
+          <h2 class="main-list-box-header-title">
             {{t "general.instructorGroups"}}
             {{#if this.isLoaded}}
               ({{this.filteredInstructorGroups.length}})
