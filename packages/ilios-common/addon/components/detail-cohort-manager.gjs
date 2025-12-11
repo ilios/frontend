@@ -73,9 +73,8 @@ export default class DetailCohortManagerComponent extends Component {
     const objectsFiltered = objects.filter((obj) => {
       const curYear = new Date().getFullYear();
       const minEndYear = curYear - obj.programDuration;
-      const maxEndYear = curYear + obj.programDuration;
 
-      return obj.programEndYear >= minEndYear && obj.programEndYear <= maxEndYear;
+      return obj.programEndYear >= minEndYear;
     });
 
     return mapBy(objectsFiltered, 'cohort');

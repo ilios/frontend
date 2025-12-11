@@ -51,6 +51,43 @@ module('Integration | Component | course/rollover', function (hooks) {
     assert.strictEqual(find(title).value.trim(), course.title);
   });
 
+  test('it renders all expected cohorts', async function (assert) {
+    const december11th2025 = DateTime.fromObject({
+      year: 2025,
+      month: 12,
+      day: 11,
+      hour: 8,
+    });
+    freezeDateAt(december11th2025.toJSDate());
+    const school = this.server.create('school');
+    const program = this.server.create('program', { school });
+    for (let startYear = 2025; startYear < 2029; startYear++) {
+      const programYear = this.server.create('program-year', {
+        program,
+        startYear,
+      });
+      this.server.create('cohort', {
+        title: startYear,
+        programYear,
+      });
+    }
+    const course = this.server.create('course', {
+      title: 'old course',
+      school,
+    });
+    const courseModel = await this.owner.lookup('service:store').findRecord('course', course.id);
+    this.set('course', courseModel);
+
+    await render(<template><Rollover @course={{this.course}} /></template>);
+
+    const cohorts = '.cohorts .selectable-cohorts li';
+    assert.dom(cohorts).exists({ count: 4 });
+    assert.dom(`${cohorts}:nth-child(1)`).includesText('2028');
+    assert.dom(`${cohorts}:nth-child(2)`).includesText('2027');
+    assert.dom(`${cohorts}:nth-child(3)`).includesText('2026');
+    assert.dom(`${cohorts}:nth-child(4)`).includesText('2025');
+  });
+
   test('academic year options are labeled with year ranges as applicable by configuration', async function (assert) {
     this.server.get('application/config', function () {
       return {
