@@ -49,13 +49,12 @@ module('Integration | Component | reports/curriculum/tagged-terms', function (ho
       //use all the courses, getting the id filter from graphQL is a bit tricky
       const courseIds = schema.db.courses.map((c) => c.id);
       const rawCourses = courseIds.map((id) => graphQL.fetchCourse(schema.db, id));
-      // console.log('schema.db', schema.db);
       const courses = rawCourses.map((course) => {
-        // course.terms.forEach((term) => {
-        //   term = schema.db.terms
-        //     .where({ courseId: course.id })
-        //     .map(({ id, title }) => ({ id, title }));
+        // course.terms = schema.db.terms
+        //   .where({ courseId: course.id })
+        //   .map(({ id, title }) => ({ id, title }));
         // });
+
         course.sessions.forEach((session) => {
           session.terms = schema.db.terms
             .where({ sessionId: session.id })
@@ -64,6 +63,7 @@ module('Integration | Component | reports/curriculum/tagged-terms', function (ho
 
         return course;
       });
+
       return { data: { courses } };
     });
   });
