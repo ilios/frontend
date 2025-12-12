@@ -50,14 +50,15 @@ module('Integration | Component | reports/curriculum/tagged-terms', function (ho
       const courseIds = schema.db.courses.map((c) => c.id);
       const rawCourses = courseIds.map((id) => graphQL.fetchCourse(schema.db, id));
       const courses = rawCourses.map((course) => {
-        // course.terms = schema.db.terms
-        //   .where({ courseId: course.id })
-        //   .map(({ id, title }) => ({ id, title }));
-        // });
+        course.terms = schema.db.terms
+          .filter((t) => t.courseIds?.includes(course.id))
+          .map(({ id, title }) => {
+            (id, title);
+          });
 
         course.sessions.forEach((session) => {
           session.terms = schema.db.terms
-            .where({ sessionId: session.id })
+            .filter((t) => t.sessionIds?.includes(session.id))
             .map(({ id, title }) => ({ id, title }));
         });
 
