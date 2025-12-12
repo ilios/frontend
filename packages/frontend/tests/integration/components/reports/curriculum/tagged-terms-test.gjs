@@ -87,7 +87,7 @@ module('Integration | Component | reports/curriculum/tagged-terms', function (ho
 
     assert.strictEqual(
       component.header.runSummaryText,
-      'Run Tagged Terms report for one course. Each attached term is listed along with course data.',
+      'Run Tagged Terms report for one course. Each set of attached terms is listed along with course data.',
       'report summary text is correct',
     );
 
@@ -125,7 +125,7 @@ module('Integration | Component | reports/curriculum/tagged-terms', function (ho
 
     assert.strictEqual(
       component.header.runSummaryText,
-      'Run Tagged Terms report for one course. Each attached term is listed along with course data.',
+      'Run Tagged Terms report for one course. Each set of attached terms is listed along with course data.',
     );
 
     await component.header.download.click();

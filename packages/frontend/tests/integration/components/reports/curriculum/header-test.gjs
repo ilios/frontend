@@ -730,7 +730,9 @@ module('Integration | Component | reports/curriculum/header', function (hooks) {
       'summary includes correct number of courses',
     );
     assert.ok(
-      component.runSummaryText.includes('Each attached term is listed along with course data.'),
+      component.runSummaryText.includes(
+        'Each set of attached terms is listed along with course data.',
+      ),
       'summary description is correct',
     );
     assert.ok(component.runReport.isPresent, 'run report button is present');
@@ -810,7 +812,9 @@ module('Integration | Component | reports/curriculum/header', function (hooks) {
       'summary includes correct number of courses and schools',
     );
     assert.ok(
-      component.runSummaryText.includes('Each attached term is listed along with course data.'),
+      component.runSummaryText.includes(
+        'Each set of attached terms is listed along with course data.',
+      ),
       'summary description is correct',
     );
     assert.ok(component.runReport.isPresent, 'run report button is present');
