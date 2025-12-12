@@ -22,7 +22,7 @@ export function setupMSW(hooks) {
     const { apiVersion } = ENV;
 
     this.server = await startMSW({ apiVersion });
-    await this.server.start({ onUnhandledRequest: 'error' });
+    await this.server.start({ onUnhandledRequest: 'warn' });
 
     // Provide Mirage-compatible API
     this.server.create = createModel;
