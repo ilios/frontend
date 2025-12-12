@@ -26,9 +26,7 @@
       line-height: 1.1;
 
       @include m.for-laptop-and-up {
-        // @include m.font-size("small");
-        font-size: var(--fs-small);
-        line-height: calc(4px + 2ex);
+        @include m.font-size("small");
         height: auto;
         text-align: left;
 
