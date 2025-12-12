@@ -130,7 +130,7 @@ export default class ProgramYearListItemComponent extends Component {
             {{this.academicYear}}
           </LinkTo>
         </td>
-        <td class="text-left hide-from-small-screen" data-test-title>
+        <td class="text-left" data-test-title>
           {{#if this.cohort.title}}
             {{this.cohort.title}}
           {{else}}
@@ -165,7 +165,7 @@ export default class ProgramYearListItemComponent extends Component {
             <FaIcon @icon="triangle-exclamation" class="warning" data-test-warning />
           {{/if}}
         </td>
-        <td class="text-right" colspan="2" data-test-actions>
+        <td class="text-right" data-test-actions>
           {{#if (or this.lock.isRunning this.unlock.isRunning)}}
             <LoadingSpinner />
           {{else}}
