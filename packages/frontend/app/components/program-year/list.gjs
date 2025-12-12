@@ -183,7 +183,7 @@ export default class ProgramYearListComponent extends Component {
                   <th class="text-left">
                     {{t "general.matriculationYear"}}
                   </th>
-                  <th class="text-left hide-from-small-screen">
+                  <th class="text-left">
                     {{t "general.cohort"}}
                   </th>
                   <th class="text-left hide-from-small-screen">
@@ -198,7 +198,7 @@ export default class ProgramYearListComponent extends Component {
                   <th class="text-left hide-from-small-screen">
                     {{t "general.terms"}}
                   </th>
-                  <th class="text-right" colspan="2">
+                  <th class="text-right">
                     {{t "general.actions"}}
                   </th>
                 </tr>
