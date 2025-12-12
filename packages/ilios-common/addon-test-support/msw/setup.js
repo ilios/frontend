@@ -124,8 +124,12 @@ function applyDefaults(defaults, index) {
 
 function get(url, callback) {
   this.server.use(
-    http.get(url, () => {
-      return HttpResponse.json(callback());
-    }),
+    http.get(
+      url,
+      () => {
+        return HttpResponse.json(callback());
+      },
+      { once: true },
+    ),
   );
 }
