@@ -34,26 +34,23 @@ export function setupMSW(hooks) {
   hooks.afterEach(async function () {
     await settled();
 
-    if (this.server) {
-      this.server.stop();
-      delete this.server;
-    }
-
-    // Reset database to clean state
+    //remove all records in the database
     await Promise.all(
       Object.keys(db).map(async (modelName) => {
         const collection = db[modelName];
-        if (collection && typeof collection.findMany === 'function') {
-          const records = await collection.findMany();
-          await Promise.all(
-            records.map((record) => collection.delete({ where: { id: { equals: record.id } } })),
-          );
-        }
+        return await collection.deleteMany();
       }),
     );
 
     // Reset ID counter
     resetIdCounter();
+  });
+
+  hooks.after(async function () {
+    if (this.server) {
+      await this.server.stop();
+      delete this.server;
+    }
   });
 }
 
