@@ -169,5 +169,3 @@ export const db = {
   userevent,
   vocabulary,
 };
-
-export default db;
