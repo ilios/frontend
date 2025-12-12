@@ -27,19 +27,14 @@
         text-align: center;
         width: 90%;
 
-        /* stylelint-disable property-disallowed-list */
         .highlight {
           align-items: center;
           display: flex;
           color: var(--orange);
-          // @include m.font-size("large");
-          font-size: var(--fs-large);
-          line-height: calc(4px + 2ex);
+          @include m.font-size("large");
 
           @include m.for-phone-only {
-            // @include m.font-size("medium");
-            font-size: var(--fs-medium);
-            line-height: calc(4px + 2ex);
+            @include m.font-size("medium");
           }
         }
       }

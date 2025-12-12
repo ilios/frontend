@@ -12,42 +12,30 @@
 
 @mixin ilios-heading-h1() {
   @include ilios-heading;
-  // @include font-size.font-size("xxxl");
-  font-size: var(--fs-xxxl);
-  line-height: calc(4px + 2ex);
+  @include font-size.font-size("xxxl");
 }
 
 @mixin ilios-heading-h2() {
   @include ilios-heading;
-  // @include font-size.font-size("xxl");
-  font-size: var(--fs-xxl);
-  line-height: calc(4px + 2ex);
+  @include font-size.font-size("xxl");
 }
 
 @mixin ilios-heading-h3() {
   @include ilios-heading;
-  // @include font-size.font-size("xl");
-  font-size: var(--fs-xl);
-  line-height: calc(4px + 2ex);
+  @include font-size.font-size("xl");
 }
 
 @mixin ilios-heading-h4() {
   @include ilios-heading;
-  // @include font-size.font-size("large");
-  font-size: var(--fs-large);
-  line-height: calc(4px + 2ex);
+  @include font-size.font-size("large");
 }
 
 @mixin ilios-heading-h5() {
   @include ilios-heading;
-  // @include font-size.font-size("medium");
-  font-size: var(--fs-medium);
-  line-height: calc(4px + 2ex);
+  @include font-size.font-size("medium");
 }
 
 @mixin ilios-heading-h6() {
   @include ilios-heading;
-  // @include font-size.font-size("base");
-  font-size: var(--fs-base);
-  line-height: calc(4px + 2ex);
+  @include font-size.font-size("base");
 }
