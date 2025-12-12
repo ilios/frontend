@@ -44,7 +44,7 @@ import FlashMessages from 'frontend/components/flash-messages';
       {{/if}}
     </main>
     <footer class="ilios-footer">
-      <div class="version">
+      <div class="version font-size-smallest">
         {{@controller.iliosVersionTag}}
         {{@controller.apiVersionTag}}
         {{@controller.frontendVersionTag}}

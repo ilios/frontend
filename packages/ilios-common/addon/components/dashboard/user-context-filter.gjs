@@ -29,7 +29,10 @@ export default class DashboardUserContextFilterComponent extends Component {
       />
       <label
         for={{concat "instructing-toggle-" this.uniqueId}}
-        class={{if (or (not @userContext) (eq @userContext "instructor")) "active"}}
+        class="font-size-small{{if
+            (or (not @userContext) (eq @userContext 'instructor'))
+            ' active'
+          }}"
         title={{if
           (eq @userContext "instructor")
           (t "general.showAllMyActivities")
@@ -53,7 +56,7 @@ export default class DashboardUserContextFilterComponent extends Component {
       />
       <label
         for={{concat "learning-toggle-" this.uniqueId}}
-        class={{if (or (not @userContext) (eq @userContext "learner")) "active"}}
+        class="font-size-small{{if (or (not @userContext) (eq @userContext 'learner')) ' active'}}"
         title={{if
           (eq @userContext "learner")
           (t "general.showAllMyActivities")
@@ -77,7 +80,10 @@ export default class DashboardUserContextFilterComponent extends Component {
       />
       <label
         for={{concat "admin-toggle-" this.uniqueId}}
-        class={{if (or (not @userContext) (eq @userContext "administrator")) "active"}}
+        class="font-size-small{{if
+            (or (not @userContext) (eq @userContext 'administrator'))
+            ' active'
+          }}"
         title={{if
           (eq @userContext "administrator")
           (t "general.showAllMyActivities")

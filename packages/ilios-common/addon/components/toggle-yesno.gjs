@@ -25,9 +25,9 @@ export default class ToggleYesno extends Component {
     >
       <span class="switch-handle" data-test-handle>
         {{#if this.yes}}
-          <FaIcon role="presentation" @icon="plus" />
+          <FaIcon role="presentation" @icon="plus" class="font-size-small" />
         {{else}}
-          <FaIcon role="presentation" @icon="minus" />
+          <FaIcon role="presentation" @icon="minus" class="font-size-small" />
         {{/if}}
       </span>
     </button>
