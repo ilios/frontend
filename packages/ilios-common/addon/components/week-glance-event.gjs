@@ -98,9 +98,7 @@ export default class WeekGlanceEvent extends Component {
               @event.slug
               'date'
             }} {{concat 'event' @event.slug 'link'}}"
-          >
-            {{@event.name}}
-          </LinkTo>
+          >{{@event.name}}</LinkTo>
         </span>
         <span id={{concat "event" @event.slug "date"}} class="date" data-test-date>
           {{#if @event.ilmSession}}
