@@ -449,8 +449,8 @@ general:
   table7AllEventsWithAssessmentsTaggedAsFormativeOrSummative: "Tableau 7: Tous les événements avec des évaluations marquées en tant que formatif ou sommatif"
   table8AllResourceTypes: "Tableau 8: Tous les types de ressources"
   taggedTerms: Termes Marqueés
-  taggedTermsReportSummary: "rapport de {courseCount, plural, one {un cours} other {# cours}}. Chaque terme est listée avec cours données."
-  taggedTermsReportSummaryMultiSchool: "rapport de {courseCount, plural, one {un cours} other {# cours}}{schoolCount, plural, zero {} one {} other {, dans # écoles}}. Chaque terme est listée avec cours données."
+  taggedTermsReportSummary: "rapport de {courseCount, plural, one {un cours} other {# cours}}. Chaque ensemble de termes est listée avec cours données."
+  taggedTermsReportSummaryMultiSchool: "rapport de {courseCount, plural, one {un cours} other {# cours}}{schoolCount, plural, zero {} one {} other {, dans # écoles}}. Chaque ensemble de termes est listée avec cours données."
   term: Termes Étiq
   termsBySessionType: Termes par Type de Seance
   termXappliedToYSessionsWithSessionTypeZ: 'Le terme "{term}" du vocabulaire "{vocabulary}" s''applique à {sessionsCount, plural, =1 {1 session} other {# sessions}} avec le type de session "{sessionType}".'
