@@ -13,6 +13,11 @@
   .section {
     padding: 0.25rem;
 
+    &:last-of-type {
+      margin-bottom: 0.5rem;
+      padding-bottom: 0;
+    }
+
     button {
       @include m.ilios-button-reset;
     }

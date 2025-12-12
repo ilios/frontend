@@ -161,8 +161,11 @@ export default class UserProfileCohortsComponent extends Component {
   });
   <template>
     <div
-      class="user-profile-cohorts small-component
-        {{if this.hasSavedRecently 'has-saved' 'has-not-saved'}}"
+      class="user-profile-cohorts small-component{{if
+          this.hasSavedRecently
+          ' has-saved'
+          ' has-not-saved'
+        }}"
       data-test-user-profile-cohorts
       ...attributes
     >

@@ -92,8 +92,11 @@ export default class UserProfileIcsComponent extends Component {
   };
   <template>
     <div
-      class="user-profile-ics small-component
-        {{if this.hasSavedRecently 'has-saved' 'has-not-saved'}}"
+      class="user-profile-ics small-component{{if
+          this.hasSavedRecently
+          ' has-saved'
+          ' has-not-saved'
+        }}"
       data-test-user-profile-ics
       ...attributes
     >
