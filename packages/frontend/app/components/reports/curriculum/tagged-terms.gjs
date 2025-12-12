@@ -66,7 +66,7 @@ export default class ReportsCurriculumTaggedTermsComponent extends Component {
         schoolTitle: c.school.title,
         courseId: c.id,
         courseTitle: c.title,
-        courseTermsCount: c.terms?.length || 0,
+        courseTermsCount: c.terms.length,
         sessionCount: c.sessions.length,
         sessionTermsCount: c.sessions.reduce((acc, s) => acc + s.terms.length, 0),
       };
