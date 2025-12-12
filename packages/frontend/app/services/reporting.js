@@ -125,8 +125,12 @@ export default class ReportingService extends Service {
       } else if (model === 'program-year') {
         const program = await record.program;
         const title = program.title;
-        const classOfYear = await record.getClassOfYear();
-        object = `${classOfYear} ${title}`;
+        const classOfYear = this.intl.t('general.classOf', { year: await record.getClassOfYear() });
+        const crosses = await this.iliosConfig.itemFromConfig(
+          'academicYearCrossesCalendarYearBoundaries',
+        );
+        const startYear = Number(record.startYear);
+        object = `${crosses ? `${startYear} - ${startYear + 1}` : `${startYear}`} (${classOfYear}) ${title}`;
       } else {
         object = record.title;
       }
