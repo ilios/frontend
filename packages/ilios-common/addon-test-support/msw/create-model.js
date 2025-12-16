@@ -1,30 +1,33 @@
 import { factoryDefaults } from './factories.js';
 import { db } from './db.js';
 import { IdentityManager } from './utils/identity-manager.js';
+import { camelize } from '@ember/string';
 
 const identityManagers = new Map();
 const factoryCounters = new Map();
 
 export function createModel(modelName, attrs = {}) {
-  const collection = db[modelName];
+  const name = camelize(modelName);
+  const collection = db[name];
   if (!collection) {
-    throw new Error(`Model '${modelName}' not found in database`);
+    throw new Error(`Model '${name}' not found in database`);
   }
 
-  const obj = factory(modelName, attrs);
+  const obj = factory(name, attrs);
 
   return collection.create(obj);
 }
 
 export function createModelList(modelName, count, attrs = {}) {
-  const collection = db[modelName];
+  const name = camelize(modelName);
+  const collection = db[name];
   if (!collection) {
-    throw new Error(`Model '${modelName}' not found in database`);
+    throw new Error(`Model '${name}' not found in database`);
   }
 
   const promises = [];
   for (let i = 0; i < count; i++) {
-    const object = factory(modelName, attrs);
+    const object = factory(name, attrs);
     promises.push(collection.create(object));
   }
 
