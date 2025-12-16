@@ -1,12 +1,82 @@
-// ID generation utilities for @msw/data v1.x
-// Since primaryKey() no longer exists, we handle ID generation here
+import { factoryDefaults } from './factories.js';
+import { db } from './db.js';
+import { IdentityManager } from './utils/identity-manager.js';
 
-let idCounter = 1;
+const identityManagers = new Map();
+const factoryCounters = new Map();
 
-export function generateId() {
-  return String(idCounter++);
+export function createModel(modelName, attrs = {}) {
+  const collection = db[modelName];
+  if (!collection) {
+    throw new Error(`Model '${modelName}' not found in database`);
+  }
+
+  const obj = factory(modelName, attrs);
+
+  return collection.create(obj);
+}
+
+export function createModelList(modelName, count, attrs = {}) {
+  const collection = db[modelName];
+  if (!collection) {
+    throw new Error(`Model '${modelName}' not found in database`);
+  }
+
+  const promises = [];
+  for (let i = 0; i < count; i++) {
+    const object = factory(modelName, attrs);
+    promises.push(collection.create(object));
+  }
+
+  return Promise.all(promises);
+}
+
+function factory(modelName, attrs) {
+  const n = incrementFactoryCounter(modelName);
+  const defaults = factoryDefaults[modelName] || {};
+
+  const built = {};
+  for (const [key, value] of Object.entries(defaults)) {
+    if (typeof value === 'function') {
+      // For non-arrow functions, bind the resolved object as 'this'
+      if (value.prototype) {
+        built[key] = value.call(built, n);
+      } else {
+        built[key] = value(n);
+      }
+    } else {
+      built[key] = value;
+    }
+  }
+
+  //combine our factory object with user passed attrs
+  const rhett = { ...built, ...attrs };
+  if (!rhett.id) {
+    const id = getIdentityManager(modelName).inc();
+    rhett.id = `${id}`;
+  }
+
+  return rhett;
+}
+
+function getIdentityManager(modelName) {
+  if (!identityManagers.has(modelName)) {
+    identityManagers.set(modelName, new IdentityManager());
+  }
+
+  return identityManagers.get(modelName);
+}
+
+function incrementFactoryCounter(modelName) {
+  if (!factoryCounters.has(modelName)) {
+    factoryCounters.set(modelName, 0);
+  }
+  const rhett = factoryCounters.get(modelName);
+  factoryCounters.set(modelName, rhett + 1);
+  return rhett;
 }
 
 export function resetIdCounter() {
-  idCounter = 1;
+  identityManagers.forEach((idM) => idM.reset());
+  factoryCounters.clear();
 }

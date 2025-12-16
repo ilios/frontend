@@ -103,5 +103,3 @@ export const factoryDefaults = {
   userevent,
   vocabulary,
 };
-
-export default factoryDefaults;
