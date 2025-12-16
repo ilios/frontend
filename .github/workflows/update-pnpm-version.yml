@@ -25,7 +25,7 @@ jobs:
           mv temp.json package.json
       - name: Create Pull Request
         id: cpr
-        uses: peter-evans/create-pull-request@v7
+        uses: peter-evans/create-pull-request@v8
         with:
           token: ${{ secrets.ZORGBORT_TOKEN }}
           commit-message: Update PNPM to v${{ env.pnpm_version }}
