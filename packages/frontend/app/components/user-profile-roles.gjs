@@ -100,8 +100,11 @@ export default class UserProfileRolesComponent extends Component {
   });
   <template>
     <div
-      class="user-profile-roles small-component last
-        {{if this.hasSavedRecently 'has-saved' 'has-not-saved'}}"
+      class="user-profile-roles small-component last{{if
+          this.hasSavedRecently
+          ' has-saved'
+          ' has-not-saved'
+        }}"
       data-test-user-profile-roles
       ...attributes
     >
