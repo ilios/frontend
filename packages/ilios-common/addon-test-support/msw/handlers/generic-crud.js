@@ -1,7 +1,7 @@
 import { http, HttpResponse } from 'msw';
 import { camelize } from '@ember/string';
 import { pluralize } from 'ember-inflector';
-import { db } from '../db.js';
+import { db, getRelatedRecord } from '../db.js';
 import { formatJsonApi } from '../utils/json-api-formatter.js';
 import { parseQueryParams } from '../utils/query-parser.js';
 
@@ -79,20 +79,7 @@ export function createCrudHandlers(modelName, apiRoute) {
 
       // Extract attributes
       const attrs = { ...data.attributes };
-
-      // Extract relationships
-      if (data.relationships) {
-        Object.keys(data.relationships).forEach((key) => {
-          const relationship = data.relationships[key];
-          if (relationship.data) {
-            if (Array.isArray(relationship.data)) {
-              attrs[key] = relationship.data.map((item) => item.id);
-            } else {
-              attrs[key] = relationship.data.id;
-            }
-          }
-        });
-      }
+      await extractRelationshipsInUpdate(modelName, data, attrs);
 
       const record = await db[modelName].create(attrs);
 
@@ -119,26 +106,17 @@ export function createCrudHandlers(modelName, apiRoute) {
       // Extract attributes to update
       const attrs = { ...data.attributes };
 
-      // Extract relationships to update
-      if (data.relationships) {
-        Object.keys(data.relationships).forEach((key) => {
-          const relationship = data.relationships[key];
-          if (relationship.data !== undefined) {
-            if (Array.isArray(relationship.data)) {
-              attrs[key] = relationship.data.map((item) => item.id);
-            } else {
-              attrs[key] = relationship.data ? relationship.data.id : null;
+      await extractRelationshipsInUpdate(modelName, data, attrs);
+
+      const updated = await db[modelName].update(record, {
+        data(obj) {
+          Object.keys(attrs).forEach((key) => {
+            if (attrs[key]) {
+              obj[key] = attrs[key];
             }
-          }
-        });
-      }
-
-      await db[modelName].update({
-        where: { id: { equals: params.id } },
-        data: attrs,
+          });
+        },
       });
-
-      const updated = await db[modelName].findFirst((q) => q.where({ id: params.id }));
 
       return HttpResponse.json(formatJsonApi(updated, modelName));
     }),
@@ -158,6 +136,28 @@ export function createCrudHandlers(modelName, apiRoute) {
       return new HttpResponse(null, { status: 204 });
     }),
   ];
+}
+
+async function extractRelationshipsInUpdate(modelName, data, attrs) {
+  if (data.relationships) {
+    const keys = Object.keys(data.relationships);
+
+    for (let i = 0; i < keys.length; i++) {
+      const key = keys[i];
+      const relationship = data.relationships[key];
+      if (relationship.data) {
+        if (Array.isArray(relationship.data)) {
+          attrs[key] = await Promise.all(
+            relationship.data.map((item) => getRelatedRecord(modelName, key, item.id)),
+          );
+        } else {
+          attrs[key] = relationship.data
+            ? await getRelatedRecord(modelName, key, relationship.data.id)
+            : null;
+        }
+      }
+    }
+  }
 }
 
 // Generate handlers for all standard models
