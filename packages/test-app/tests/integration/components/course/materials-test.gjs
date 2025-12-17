@@ -48,36 +48,36 @@ module('Integration | Component | course/materials', function (hooks) {
   });
 
   const setupPage = async function (context) {
-    const lm1 = context.server.create('learning-material', {
+    const lm1 = await context.server.create('learning-material', {
       title: 'title1',
       description: 'description1',
       originalAuthor: 'author1',
       link: 'http://myhost.com/url1',
     });
-    const lm2 = context.server.create('learning-material', {
+    const lm2 = await context.server.create('learning-material', {
       title: 'title2',
       description: 'description2',
       originalAuthor: 'author2',
       filename: 'testfile.txt',
       absoluteFileUri: 'http://myhost.com/url2',
     });
-    const lm3 = context.server.create('learning-material', {
+    const lm3 = await context.server.create('learning-material', {
       title: 'title3',
       description: 'description3',
       originalAuthor: 'author3',
       citation: 'citationtext',
     });
 
-    const courseLm1 = context.server.create('course-learning-material', {
+    const courseLm1 = await context.server.create('course-learning-material', {
       learningMaterial: lm1,
     });
-    const courseLm2 = context.server.create('course-learning-material', {
+    const courseLm2 = await context.server.create('course-learning-material', {
       learningMaterial: lm2,
     });
-    const courseLm3 = context.server.create('course-learning-material', {
+    const courseLm3 = await context.server.create('course-learning-material', {
       learningMaterial: lm3,
     });
-    const session = context.server.create('session', {
+    const session = await context.server.create('session', {
       title: 'session1title',
     });
     context.server.create('session-learning-material', {
@@ -98,7 +98,7 @@ module('Integration | Component | course/materials', function (hooks) {
       endDate: new Date(2020, 1, 2, 14).toISOString(),
     });
 
-    const course = context.server.create('course', {
+    const course = await context.server.create('course', {
       sessions: [session],
       learningMaterials: [courseLm1, courseLm2, courseLm3],
     });

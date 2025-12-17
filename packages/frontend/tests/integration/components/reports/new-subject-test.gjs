@@ -12,8 +12,8 @@ module('Integration | Component | reports/new-subject', function (hooks) {
   setupMSW(hooks);
 
   const checkObjects = async function (context, assert, subjectNum, subjectVal, expectedObjects) {
-    const school = context.server.create('school', { title: 'first' });
-    const user = context.server.create('user', { school });
+    const school = await context.server.create('school', { title: 'first' });
+    const user = await context.server.create('user', { school });
     const userModel = await context.owner.lookup('service:store').findRecord('user', user.id);
     const exceptedSubjects = ['instructor', 'mesh term'];
     context.set('selectedSubject', null);
