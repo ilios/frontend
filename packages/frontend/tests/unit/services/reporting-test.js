@@ -260,8 +260,9 @@ module('Unit | Service | reporting', function (hooks) {
       reportModel.prepositionalObjectTableRowId,
       school,
     );
+    const startYear = await programYearModel.startYear;
     const classOfYear = await programYearModel.getClassOfYear();
-    const programYearTitle = `${classOfYear} ${program.title}`;
+    const programYearTitle = `${startYear} (Class of ${classOfYear}) ${program.title}`;
 
     assert.strictEqual(
       title,
