@@ -129,9 +129,7 @@ export function createCrudHandlers(modelName, apiRoute) {
         return new HttpResponse(null, { status: 404 });
       }
 
-      await db[modelName].delete({
-        where: { id: { equals: params.id } },
-      });
+      await db[modelName].delete(record);
 
       return new HttpResponse(null, { status: 204 });
     }),
