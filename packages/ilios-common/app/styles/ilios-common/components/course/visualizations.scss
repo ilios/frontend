@@ -7,10 +7,7 @@
       grid-template-columns: repeat(2, 1fr);
     }
 
-    .course-visualize-instructors-graph,
-    .course-visualize-objectives-graph,
-    .course-visualize-session-types-graph,
-    .course-visualize-vocabularies-graph {
+    .graph-with-data-table {
       display: inline-block;
       height: 100%;
       text-align: center;

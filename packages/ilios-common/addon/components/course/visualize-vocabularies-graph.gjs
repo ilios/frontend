@@ -184,7 +184,7 @@ export default class CourseVisualizeVocabulariesGraph extends Component {
   });
   <template>
     <div
-      class="course-visualize-vocabularies-graph {{unless @isIcon 'not-icon'}}"
+      class="graph-with-data-table {{unless @isIcon 'not-icon'}}"
       data-test-course-visualize-vocabularies-graph
       ...attributes
     >

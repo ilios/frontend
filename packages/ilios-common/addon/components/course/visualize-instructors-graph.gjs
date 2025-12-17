@@ -190,7 +190,7 @@ export default class CourseVisualizeInstructorsGraph extends Component {
   });
   <template>
     <div
-      class="course-visualize-instructors-graph {{unless @isIcon 'not-icon'}}"
+      class="graph-with-data-table {{unless @isIcon 'not-icon'}}"
       data-test-course-visualize-instructors-graph
       ...attributes
     >

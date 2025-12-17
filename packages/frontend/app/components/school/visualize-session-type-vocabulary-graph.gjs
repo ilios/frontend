@@ -162,7 +162,7 @@ export default class SchoolVisualizeSessionTypeVocabularyGraphComponent extends 
   });
   <template>
     <div
-      class="{{unless @isIcon 'not-icon'}} school-visualize-session-type-vocabulary-graph"
+      class="{{unless @isIcon 'not-icon'}} graph-with-data-table"
       data-test-school-visualize-session-type-vocabulary-graph
       ...attributes
     >
