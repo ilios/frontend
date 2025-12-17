@@ -21,7 +21,7 @@ export function createCrudHandlers(modelName, apiRoute) {
       // Apply filters
       if (filterParams.length > 0) {
         records = records.filter((record) => {
-          return filterParams.every(({ param, value }) => {
+          return filterParams.some(({ param, value }) => {
             const fieldValue = record[camelize(param)];
             if (Array.isArray(value)) {
               return value.includes(String(fieldValue));
