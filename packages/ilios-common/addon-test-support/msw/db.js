@@ -56,5 +56,20 @@ Object.keys(relationships).forEach((name) => {
   });
 });
 
+async function getRelatedRecord(modelName, field, id) {
+  const { target } = relationships[modelName].find((r) => r.field === field);
+  if (!target) {
+    console.error(`Unknown relationship ${field} on ${modelName}`);
+  }
+
+  const value = await collections[target].findFirst((q) => q.where({ id }));
+
+  if (!value) {
+    console.error(`Unable to get ${target}:${id}`);
+  }
+
+  return value;
+}
+
 // Export all collections as db object for backwards compatibility
-export { collections as db };
+export { collections as db, getRelatedRecord };
