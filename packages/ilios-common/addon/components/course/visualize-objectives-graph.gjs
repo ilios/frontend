@@ -283,7 +283,7 @@ export default class CourseVisualizeObjectivesGraph extends Component {
             <div class="with-hours" data-test-with-hours>
               <p>
                 {{t "general.objectivesWithNoLink"}}
-                <FaIcon @icon="face-meh" />
+                <FaIcon @icon="face-meh" class="font-size-huge" />
               </p>
             </div>
           {{/if}}
