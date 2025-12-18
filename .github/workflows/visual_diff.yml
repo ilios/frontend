@@ -94,12 +94,12 @@ jobs:
     needs: [baseline, candidate]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/download-artifact@v6
+      - uses: actions/download-artifact@v7
         with:
           pattern: baseline-frontend-*
           path: baseline-frontend
           merge-multiple: true
-      - uses: actions/download-artifact@v6
+      - uses: actions/download-artifact@v7
         with:
           pattern: candidate-frontend-*
           path: candidate-frontend
