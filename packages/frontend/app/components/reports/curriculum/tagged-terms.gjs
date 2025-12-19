@@ -47,7 +47,7 @@ export default class ReportsCurriculumTaggedTermsComponent extends Component {
   }
 
   get reportRunning() {
-    return this.queryPromises.length > this.completedPromises.length;
+    return !this.queryPromises.every((tad) => tad.isResolved);
   }
 
   get reportResults() {
