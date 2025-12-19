@@ -40,6 +40,8 @@ module.exports = function (environment) {
       dsn: 'https://ded7a44cf4084601a2fb468484bbe3ed@sentry.io/1311608',
     },
     noScript: {
+      content:
+        "<p class='font-size-xxl'>For full functionality of this site it is necessary to enable JavaScript. Here are the <a href='https://www.enable-javascript.com/' target='_blank'>instructions on how to enable JavaScript in your web browser</a>.</p>",
       placeIn: 'body-footer',
     },
     disableServiceWorker: [true, 'true'].includes(process.env.SW_DISABLED),

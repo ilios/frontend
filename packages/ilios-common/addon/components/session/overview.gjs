@@ -396,7 +396,7 @@ export default class SessionOverview extends Component {
 
             <div class="session-overview-header">
 
-              <div class="title">
+              <div class="title font-size-base">
                 {{t "general.overview"}}
               </div>
 
@@ -405,7 +405,7 @@ export default class SessionOverview extends Component {
                   <LinkTo
                     @route="session.copy"
                     @models={{array @session.course @session}}
-                    class="copy"
+                    class="copy font-size-medium"
                     data-test-copy
                   >
                     <FaIcon @icon="copy" @title={{t "general.copySession"}} @fixedWidth={{true}} />

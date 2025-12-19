@@ -141,7 +141,7 @@ export default class OfferingCalendar extends Component {
   <template>
     <div class="offering-calendar">
       {{#if this.calendarEventsData.isResolved}}
-        <h2 class="offering-calendar-title">
+        <h2 class="offering-calendar-title font-size-medium">
           {{t "general.calendar"}}
         </h2>
         <p class="offering-calendar-filter-options">

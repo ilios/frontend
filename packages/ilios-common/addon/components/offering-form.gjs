@@ -837,7 +837,9 @@ export default class OfferingForm extends Component {
                   <label for="location-{{templateId}}">
                     {{t "general.location"}}:
                     {{#unless @offering}}
-                      <span class="label-description">({{t "general.defaultNotLoaded"}})</span>
+                      <span class="label-description font-size-small">({{t
+                          "general.defaultNotLoaded"
+                        }})</span>
                     {{/unless}}
                   </label>
                   <input
@@ -859,7 +861,9 @@ export default class OfferingForm extends Component {
                   <label for="url-{{templateId}}">
                     {{t "general.virtualLearningLink"}}:
                     {{#unless @offering}}
-                      <span class="label-description">({{t "general.defaultNotLoaded"}})</span>
+                      <span class="label-description font-size-small">({{t
+                          "general.defaultNotLoaded"
+                        }})</span>
                     {{/unless}}
                   </label>
                   {{! template-lint-disable no-bare-strings}}

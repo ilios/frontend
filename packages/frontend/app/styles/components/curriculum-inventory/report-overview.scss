@@ -18,7 +18,6 @@
       a,
       span {
         color: var(--light-blue);
-        @include m.font-size("medium");
         margin-right: 0.5rem;
       }
     }

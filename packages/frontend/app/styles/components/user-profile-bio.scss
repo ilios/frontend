@@ -16,8 +16,7 @@
   }
 
   .primary-school {
-    @include m.font-size("medium");
-    padding: 0;
+    padding: 0 0.5rem;
   }
 
   .form {
@@ -106,7 +105,6 @@
 
   .password-strength {
     display: inline-block;
-    @include m.font-size("base");
     font-variant: small-caps;
     text-align: right;
     width: 10%;

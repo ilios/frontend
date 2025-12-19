@@ -51,8 +51,8 @@ export default class DashboardTermsCalendarFilterComponent extends Component {
     return null;
   }
   <template>
-    <div class="calendar-filter-list vocabularyfilter" data-test-vocabulary-filter>
-      <h2>
+    <div class="calendar-filter-list vocabularyfilter font-size-small" data-test-vocabulary-filter>
+      <h2 class="font-size-base">
         {{t "general.terms"}}
         {{#if this.vocabularyWithoutTitleView}}
           ({{this.vocabularyWithoutTitleView}})

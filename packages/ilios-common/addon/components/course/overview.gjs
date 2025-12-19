@@ -236,11 +236,11 @@ export default class CourseOverview extends Component {
     <section class="course-overview" data-test-course-overview>
       {{#let (uniqueId) as |templateId|}}
         <div class="course-overview-header">
-          <div class="title">
+          <div class="title font-size-base">
             {{t "general.overview"}}
           </div>
           <div class="course-overview-actions">
-            <LinkTo @route="course-materials" @model={{@course}} class="materials">
+            <LinkTo @route="course-materials" @model={{@course}} class="materials font-size-medium">
               <FaIcon
                 @icon="box-archive"
                 @title={{t "general.learningMaterialsSummary"}}
@@ -251,12 +251,12 @@ export default class CourseOverview extends Component {
               @route="print-course"
               @model={{@course}}
               @query={{hash unpublished=true}}
-              class="print"
+              class="print font-size-medium"
             >
               <FaIcon @icon="print" @title={{t "general.printSummary"}} @fixedWidth={{true}} />
             </LinkTo>
             {{#if this.showRollover}}
-              <LinkTo @route="course.rollover" @model={{@course}} class="rollover">
+              <LinkTo @route="course.rollover" @model={{@course}} class="rollover font-size-medium">
                 <FaIcon
                   @icon="shuffle"
                   @fixedWidth={{true}}
@@ -267,6 +267,7 @@ export default class CourseOverview extends Component {
             <LinkTo
               @route="course-visualizations"
               @model={{@course}}
+              class="font-size-medium"
               title={{t "general.courseVisualizations"}}
             >
               <FaIcon @icon="chart-column" />
