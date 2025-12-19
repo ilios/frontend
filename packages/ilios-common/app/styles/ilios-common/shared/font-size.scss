@@ -8,10 +8,12 @@
 .daily-calendar-event.font-size-small,
 .weekly-calendar-event.font-size-small,
 .link-button.font-size-small,
-.user-guide-link a.font-size-small,
 .reports-choose-course .deselect-all.font-size-small {
   font-size: var(--fs-small);
   line-height: calc(4px + 2ex);
+}
+.user-guide-link a.font-size-small {
+  font-size: var(--fs-small);
 }
 .font-size-base,
 .description.font-size-base p,
