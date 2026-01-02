@@ -124,6 +124,10 @@ module('Integration | Component | course/visualize-objectives-graph', function (
       component.dataTable.rows[0].sessions.links[0].text,
       'Berkeley Investigations',
     );
+    assert.strictEqual(
+      component.dataTable.rows[0].sessions.links[0].ariaLabel,
+      'Berkeley Investigations',
+    );
     assert.strictEqual(component.dataTable.rows[0].sessions.links[0].url, '/courses/1/sessions/1');
     assert.strictEqual(component.dataTable.rows[0].minutes, '630');
     assert.strictEqual(component.dataTable.rows[1].percentage, '22.2%');
@@ -132,6 +136,10 @@ module('Integration | Component | course/visualize-objectives-graph', function (
     assert.strictEqual(component.dataTable.rows[1].sessions.links.length, 1);
     assert.strictEqual(
       component.dataTable.rows[1].sessions.links[0].text,
+      'The San Leandro Horror',
+    );
+    assert.strictEqual(
+      component.dataTable.rows[1].sessions.links[0].ariaLabel,
       'The San Leandro Horror',
     );
     assert.strictEqual(component.dataTable.rows[1].sessions.links[0].url, '/courses/1/sessions/2');

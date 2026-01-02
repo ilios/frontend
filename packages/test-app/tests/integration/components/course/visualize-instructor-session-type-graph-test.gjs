@@ -114,12 +114,17 @@ module(
       assert.strictEqual(component.dataTable.rows[0].sessionType, 'Campaign');
       assert.strictEqual(component.dataTable.rows[0].sessions.links.length, 2);
       assert.strictEqual(component.dataTable.rows[0].sessions.links[0].text, 'Aardvark');
+      assert.strictEqual(component.dataTable.rows[0].sessions.links[0].ariaLabel, 'Aardvark');
       assert.strictEqual(
         component.dataTable.rows[0].sessions.links[0].url,
         '/courses/1/sessions/4',
       );
       assert.strictEqual(
         component.dataTable.rows[0].sessions.links[1].text,
+        'The San Leandro Horror',
+      );
+      assert.strictEqual(
+        component.dataTable.rows[0].sessions.links[1].ariaLabel,
         'The San Leandro Horror',
       );
       assert.strictEqual(
@@ -131,6 +136,10 @@ module(
       assert.strictEqual(component.dataTable.rows[1].sessions.links.length, 1);
       assert.strictEqual(
         component.dataTable.rows[1].sessions.links[0].text,
+        'Berkeley Investigations',
+      );
+      assert.strictEqual(
+        component.dataTable.rows[1].sessions.links[0].ariaLabel,
         'Berkeley Investigations',
       );
       assert.strictEqual(

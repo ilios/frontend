@@ -127,9 +127,14 @@ module('Integration | Component | course/visualize-instructor-term-graph', funct
     assert.strictEqual(component.dataTable.rows[0].vocabularyTerm, 'Vocabulary 2 - Campaign');
     assert.strictEqual(component.dataTable.rows[0].sessions.links.length, 2);
     assert.strictEqual(component.dataTable.rows[0].sessions.links[0].text, 'Aardvark');
+    assert.strictEqual(component.dataTable.rows[0].sessions.links[0].ariaLabel, 'Aardvark');
     assert.strictEqual(component.dataTable.rows[0].sessions.links[0].url, '/courses/1/sessions/4');
     assert.strictEqual(
       component.dataTable.rows[0].sessions.links[1].text,
+      'The San Leandro Horror',
+    );
+    assert.strictEqual(
+      component.dataTable.rows[0].sessions.links[1].ariaLabel,
       'The San Leandro Horror',
     );
     assert.strictEqual(component.dataTable.rows[0].sessions.links[1].url, '/courses/1/sessions/2');
@@ -138,6 +143,10 @@ module('Integration | Component | course/visualize-instructor-term-graph', funct
     assert.strictEqual(component.dataTable.rows[1].sessions.links.length, 1);
     assert.strictEqual(
       component.dataTable.rows[1].sessions.links[0].text,
+      'Berkeley Investigations',
+    );
+    assert.strictEqual(
+      component.dataTable.rows[1].sessions.links[0].ariaLabel,
       'Berkeley Investigations',
     );
     assert.strictEqual(component.dataTable.rows[1].sessions.links[0].url, '/courses/1/sessions/1');

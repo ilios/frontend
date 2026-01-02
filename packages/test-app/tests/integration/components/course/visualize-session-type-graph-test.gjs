@@ -123,6 +123,10 @@ module('Integration | Component | course/visualize-session-type-graph', function
       component.dataTable.rows[0].sessions.links[0].text,
       'Berkeley Investigations',
     );
+    assert.strictEqual(
+      component.dataTable.rows[0].sessions.links[0].ariaLabel,
+      'Berkeley Investigations',
+    );
     assert.strictEqual(component.dataTable.rows[0].sessions.links[0].url, '/courses/1/sessions/1');
     assert.strictEqual(component.dataTable.rows[0].minutes, '630');
     assert.strictEqual(component.dataTable.rows[1].vocabularyTerm, 'Vocabulary 2 - Campaign');
@@ -131,11 +135,20 @@ module('Integration | Component | course/visualize-session-type-graph', function
       component.dataTable.rows[1].sessions.links[0].text,
       'The San Leandro Horror',
     );
+    assert.strictEqual(
+      component.dataTable.rows[1].sessions.links[0].ariaLabel,
+      'The San Leandro Horror',
+    );
     assert.strictEqual(component.dataTable.rows[1].sessions.links[0].url, '/courses/1/sessions/2');
     assert.strictEqual(component.dataTable.rows[1].minutes, '180');
     assert.strictEqual(component.dataTable.rows[2].sessions.links.length, 2);
     assert.strictEqual(component.dataTable.rows[2].sessions.links[0].text, 'Aardvark');
+    assert.strictEqual(component.dataTable.rows[2].sessions.links[0].ariaLabel, 'Aardvark');
     assert.strictEqual(component.dataTable.rows[2].sessions.links[1].text, 'Two Slices of Pizza');
+    assert.strictEqual(
+      component.dataTable.rows[2].sessions.links[1].ariaLabel,
+      'Two Slices of Pizza',
+    );
     assert.strictEqual(component.dataTable.rows[2].sessions.links[0].url, '/courses/1/sessions/4');
     assert.strictEqual(component.dataTable.rows[2].sessions.links[1].url, '/courses/1/sessions/3');
     assert.strictEqual(component.dataTable.rows[2].minutes, '0');

@@ -276,7 +276,11 @@ export default class CourseVisualizeInstructorTermGraph extends Component {
                     <td data-test-vocabulary-term>{{row.vocabularyTerm}}</td>
                     <td colspan="2" data-test-sessions>
                       {{#each row.sessions as |session index|}}
-                        <LinkTo @route="session" @models={{array @course session}}>
+                        <LinkTo
+                          @route="session"
+                          @models={{array @course session}}
+                          aria-label={{session.uniqueTitleInCourse}}
+                        >
                           {{session.title~}}
                         </LinkTo>{{if (notEq index (sub_ row.sessions.length 1)) ","}}
                       {{/each}}
