@@ -410,6 +410,7 @@ general:
   sessionOfferings: Offres de séance
   sessionOfferingsReportSummary: "Rapport de {courseCount, plural, one {one course} other {# courses}}. Chaque offre de séance est listée avec des instructeurs, groupes d'étudiants, et cours données."
   sessionOfferingsReportSummaryMultiSchool: "Rapport de {courseCount, plural, one {one course} other {# courses}}{schoolCount, plural, zero {} one {} other {, dans # écoles}}. Chaque offre de séance est listée avec des instructeurs, groupes d'étudiants, et cours données."
+  sessionTerm: Terme de Séance
   sessionTerms: Termes de Séance
   sessionTitlePlaceholder: Ajoutez un titre pour ce session
   sessionTypeConfirmRemoval: "Voulez-vous vraiment supprimer ce type de session ? Cette action ne peut pas être annulée."
