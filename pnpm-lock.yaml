@@ -51,6 +51,9 @@ importers:
       '@ember-data/store':
         specifier: ~5.8.0
         version: 5.8.0(@babel/core@7.28.5)(@ember/test-waiters@4.1.1(@glint/template@1.7.3))(@glint/template@1.7.3)
+      '@ember-intl/v1-compat':
+        specifier: ^1.0.1
+        version: 1.0.1(@glint/template@1.7.3)(webpack@5.104.1)
       '@ember/optional-features':
         specifier: ^2.2.0
         version: 2.3.0
@@ -685,6 +688,9 @@ importers:
       '@ember-data/store':
         specifier: ~5.8.0
         version: 5.8.0(@babel/core@7.28.5)(@ember/test-waiters@4.1.1(@glint/template@1.7.3))(@glint/template@1.7.3)
+      '@ember-intl/v1-compat':
+        specifier: ^1.0.1
+        version: 1.0.1(@glint/template@1.7.3)(webpack@5.104.1)
       '@ember/optional-features':
         specifier: ^2.2.0
         version: 2.3.0
@@ -919,6 +925,9 @@ importers:
       '@ember-data/store':
         specifier: ~5.8.0
         version: 5.8.0(@babel/core@7.28.5)(@ember/test-waiters@4.1.1(@glint/template@1.7.3))(@glint/template@1.7.3)
+      '@ember-intl/v1-compat':
+        specifier: ^1.0.1
+        version: 1.0.1(@glint/template@1.7.3)(webpack@5.104.1)
       '@ember/optional-features':
         specifier: ^2.2.0
         version: 2.3.0
@@ -1150,6 +1159,9 @@ importers:
       '@ember-data/store':
         specifier: ~5.8.0
         version: 5.8.0(@babel/core@7.28.5)(@ember/test-waiters@4.1.1(@glint/template@1.7.3))(@glint/template@1.7.3)
+      '@ember-intl/v1-compat':
+        specifier: ^1.0.1
+        version: 1.0.1(@glint/template@1.7.3)(webpack@5.104.1)
       '@ember/optional-features':
         specifier: ^2.2.0
         version: 2.3.0
@@ -2201,6 +2213,10 @@ packages:
         optional: true
       '@ember/test-waiters':
         optional: true
+
+  '@ember-intl/v1-compat@1.0.1':
+    resolution: {integrity: sha512-d93IMzD7uq68XC1UmQP0pUJhOdryuBJRruLqxbkzD3jery4flNx3K9J1lV6/+brbgZkuwg2espV27Hqr5bb7cg==}
+    engines: {node: 20.* || >= 22}
 
   '@ember-tooling/blueprint-blueprint@0.2.1':
     resolution: {integrity: sha512-eZ5qicL3gfFFbmzLaSiEWPSmoRUJGnqg+dQmU0R81vv+0Ni7W/cS7MXx1l4HpN9B7Yg4M9GgdQTkeJnb6abQug==}
@@ -5989,6 +6005,9 @@ packages:
   extend-shallow@3.0.2:
     resolution: {integrity: sha512-BwY5b5Ql4+qZoefgMj2NUmx+tehVTH/Kf4k1ZEtOHNFcm2wSxMRo992l6X3TIgni2eZVTZ85xMOjF31fwZAj6Q==}
     engines: {node: '>=0.10.0'}
+
+  extend@3.0.2:
+    resolution: {integrity: sha512-fjquC59cD7CyW6urNXK0FBufkZcoiGG80wTuPujX590cB5Ttln20E2UB4S/WARVqhXffZl2LNgS+gQdPIIim/g==}
 
   external-editor@3.1.0:
     resolution: {integrity: sha512-hMQ4CX1p1izmuLYyZqLMO/qGNw10wSv9QDCPfzXfyFrOaCSSoRfqE1Kf1s5an66J5JZC62NewG+mK49jOCtQew==}
@@ -11637,6 +11656,24 @@ snapshots:
       - '@glint/template'
       - supports-color
 
+  '@ember-intl/v1-compat@1.0.1(@glint/template@1.7.3)(webpack@5.104.1)':
+    dependencies:
+      '@babel/core': 7.28.5(supports-color@8.1.1)
+      broccoli-caching-writer: 3.1.0
+      broccoli-funnel: 3.0.8
+      broccoli-merge-trees: 4.2.0
+      broccoli-source: 3.0.1
+      calculate-cache-key-for-tree: 2.0.0
+      ember-auto-import: 2.12.0(@glint/template@1.7.3)(webpack@5.104.1)
+      ember-cli-babel: 8.2.0(@babel/core@7.28.5)
+      extend: 3.0.2
+      js-yaml: 4.1.1
+      json-stable-stringify: 1.3.0
+    transitivePeerDependencies:
+      - '@glint/template'
+      - supports-color
+      - webpack
+
   '@ember-tooling/blueprint-blueprint@0.2.1': {}
 
   '@ember-tooling/blueprint-model@0.4.1':
@@ -17261,6 +17298,8 @@ snapshots:
     dependencies:
       assign-symbols: 1.0.0
       is-extendable: 1.0.1
+
+  extend@3.0.2: {}
 
   external-editor@3.1.0:
     dependencies:
