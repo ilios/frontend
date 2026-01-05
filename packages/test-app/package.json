@@ -18,6 +18,8 @@
     "lint:hbs:fix": "ember-template-lint . --fix",
     "lint:js": "eslint . --cache",
     "lint:js:fix": "eslint . --fix",
+    "lint:intl": "ember-intl-lint",
+    "lint:intl:fix": "ember-intl-lint --fix",
     "start": "ember serve",
     "test:ember": "ember test"
   },
@@ -33,6 +35,7 @@
     "@ember-data/request-utils": "~5.8.0",
     "@ember-data/serializer": "~5.8.0",
     "@ember-data/store": "~5.8.0",
+    "@ember-intl/lint": "^0.2.2",
     "@ember-intl/v1-compat": "^1.0.1",
     "@ember/optional-features": "^2.2.0",
     "@ember/string": "^4.0.1",

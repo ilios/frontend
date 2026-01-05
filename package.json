@@ -10,6 +10,7 @@
     "lint:hbs": "pnpm run --parallel lint:hbs",
     "lint:css": "pnpm run --parallel lint:css",
     "lint:fix": "pnpm run --parallel lint:fix",
+    "lint:intl": "pnpm run --parallel lint:intl",
     "lint:deps": "pnpm run --parallel lint:deps",
     "lint:format": "pnpm run --parallel lint:format",
     "start": "pnpm --filter frontend exec ember serve",

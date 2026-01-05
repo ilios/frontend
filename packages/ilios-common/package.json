@@ -19,7 +19,9 @@
     "lint:hbs": "ember-template-lint .",
     "lint:hbs:fix": "ember-template-lint . --fix",
     "lint:js": "eslint . --cache",
-    "lint:js:fix": "eslint . --fix"
+    "lint:js:fix": "eslint . --fix",
+    "lint:intl": "ember-intl-lint",
+    "lint:intl:fix": "ember-intl-lint --fix"
   },
   "dependencies": {
     "@babel/core": "^7.28.4",
@@ -107,6 +109,7 @@
     "@ember-data/request-utils": "~5.8.0",
     "@ember-data/serializer": "~5.8.0",
     "@ember-data/store": "~5.8.0",
+    "@ember-intl/lint": "^0.2.2",
     "@ember/optional-features": "^2.2.0",
     "@ember/test-helpers": "^5.3.0",
     "@embroider/macros": "^1.19.1",
