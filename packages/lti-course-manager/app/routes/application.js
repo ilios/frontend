@@ -1,5 +1,6 @@
 import Route from '@ember/routing/route';
 import { service } from '@ember/service';
+import { formats } from 'ilios-common/app/ember-intl';
 
 export default class ApplicationRoute extends Route {
   @service intl;
@@ -8,6 +9,7 @@ export default class ApplicationRoute extends Route {
 
   async beforeModel() {
     await this.session.setup();
+    this.intl.setFormats(formats);
     // Set the default locale.
     this.intl.setLocale('en-us');
     window.document.querySelector('html').setAttribute('lang', this.intl.primaryLocale);

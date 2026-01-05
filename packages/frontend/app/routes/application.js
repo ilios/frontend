@@ -4,6 +4,7 @@ import { tracked } from '@glimmer/tracking';
 import * as Sentry from '@sentry/ember';
 import { loadPolyfills } from 'ilios-common/utils/load-polyfills';
 import { launchWorker } from '../utils/launch-worker';
+import { formats } from 'ilios-common/app/ember-intl';
 
 export default class AuthenticatedRoute extends Route {
   @service currentUser;
@@ -18,6 +19,7 @@ export default class AuthenticatedRoute extends Route {
     await launchWorker();
     await this.session.setup();
     await loadPolyfills();
+    this.intl.setFormats(formats);
     // Set the default locale.
     this.intl.setLocale('en-us');
     const locale = this.intl.primaryLocale;
