@@ -25,7 +25,7 @@ export default class ReportsCurriculumTaggedTermsComponent extends Component {
   @cached
   get queryPromises() {
     const chunks = chunk(this.args.courses, 5);
-    const sessionData = ['id', 'title', 'terms { id, title }'].join(', ');
+    const sessionData = ['id', 'title', 'terms { id, title, vocabulary { title } }'].join(', ');
 
     const data = [
       'id',
@@ -78,14 +78,15 @@ export default class ReportsCurriculumTaggedTermsComponent extends Component {
     return this.reportResults.reduce((acc, c) => {
       c.sessions.forEach((s) => {
         const path = this.router.urlFor('session', c.id, s.id);
-        s.terms.forEach(() => {
+        s.terms.forEach((sTerm) => {
           const sessionTerm = {
             courseId: c.id,
             courseTitle: c.title,
             courseTerms: c.terms,
             sessionTitle: s.title,
-            sessionTerms: s.terms,
-            link: `${origin}${path}`,
+            sessionTermTitle: sTerm.title,
+            sessionTermVocabulary: sTerm.vocabulary.title,
+            sessionLink: `${origin}${path}`,
           };
 
           if (this.hasMultipleSchools) {
@@ -163,8 +164,9 @@ export default class ReportsCurriculumTaggedTermsComponent extends Component {
       rhett[this.intl.t('general.course')] = o.courseTitle;
       rhett[this.intl.t('general.courseTerms')] = o.courseTerms.map((t) => t.title).join(', ');
       rhett[this.intl.t('general.session')] = o.sessionTitle;
-      rhett[this.intl.t('general.sessionTerms')] = o.sessionTerms.map((t) => t.title).join(', ');
-      rhett[this.intl.t('general.link')] = o.link;
+      rhett[this.intl.t('general.sessionTerm')] = o.sessionTermTitle;
+      rhett[this.intl.t('general.vocabulary')] = o.sessionTermVocabulary;
+      rhett[this.intl.t('general.link')] = o.sessionLink;
 
       return rhett;
     });
