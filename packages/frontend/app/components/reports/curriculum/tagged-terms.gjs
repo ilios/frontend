@@ -30,7 +30,7 @@ export default class ReportsCurriculumTaggedTermsComponent extends Component {
     const data = [
       'id',
       'title',
-      'terms { id, title }',
+      'terms { id, title, vocabulary { title } }',
       'school { id, title }',
       `sessions { ${sessionData} }`,
     ];
@@ -76,17 +76,35 @@ export default class ReportsCurriculumTaggedTermsComponent extends Component {
   get results() {
     const origin = window.location.origin;
     return this.reportResults.reduce((acc, c) => {
+      if (c.terms.length) {
+        c.terms.sort().forEach((cTerm) => {
+          const courseTerm = {
+            courseId: c.id,
+            courseTitle: c.title,
+            courseTerms: c.terms,
+            courseTermTitle: cTerm.title,
+            courseTermVocabulary: cTerm.vocabulary.title,
+            courseLink: `${origin}${this.router.urlFor('course', c.id)}`,
+            sessionTitle: '',
+          };
+
+          if (this.hasMultipleSchools) {
+            courseTerm.schoolTitle = c.school.title;
+          }
+
+          acc.push(courseTerm);
+        });
+      }
       c.sessions.forEach((s) => {
-        const path = this.router.urlFor('session', c.id, s.id);
         s.terms.forEach((sTerm) => {
           const sessionTerm = {
             courseId: c.id,
             courseTitle: c.title,
-            courseTerms: c.terms,
+            courseTerms: [],
             sessionTitle: s.title,
             sessionTermTitle: sTerm.title,
             sessionTermVocabulary: sTerm.vocabulary.title,
-            sessionLink: `${origin}${path}`,
+            sessionLink: `${origin}${this.router.urlFor('session', c.id, s.id)}`,
           };
 
           if (this.hasMultipleSchools) {
@@ -162,11 +180,19 @@ export default class ReportsCurriculumTaggedTermsComponent extends Component {
         rhett[this.intl.t('general.school')] = o.schoolTitle;
       }
       rhett[this.intl.t('general.course')] = o.courseTitle;
-      rhett[this.intl.t('general.courseTerms')] = o.courseTerms.map((t) => t.title).join(', ');
-      rhett[this.intl.t('general.session')] = o.sessionTitle;
-      rhett[this.intl.t('general.sessionTerm')] = o.sessionTermTitle;
-      rhett[this.intl.t('general.vocabulary')] = o.sessionTermVocabulary;
-      rhett[this.intl.t('general.link')] = o.sessionLink;
+
+      if (o.courseTerms.length) {
+        rhett[this.intl.t('general.courseTerm')] = o.courseTermTitle;
+        rhett[this.intl.t('general.session')] = '';
+        rhett[this.intl.t('general.sessionTerm')] = '';
+        rhett[this.intl.t('general.vocabulary')] = o.courseTermVocabulary;
+        rhett[this.intl.t('general.link')] = o.courseLink;
+      } else {
+        rhett[this.intl.t('general.session')] = o.sessionTitle;
+        rhett[this.intl.t('general.sessionTerm')] = o.sessionTermTitle;
+        rhett[this.intl.t('general.vocabulary')] = o.sessionTermVocabulary;
+        rhett[this.intl.t('general.link')] = o.sessionLink;
+      }
 
       return rhett;
     });
