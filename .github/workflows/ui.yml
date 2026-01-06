@@ -80,7 +80,7 @@ jobs:
       - run: firefox --version
       - name: test
         run: pnpm --filter ${{matrix.workspace}} exec ember exam --parallel=3 --load-balance --write-execution-file --launch=Firefox
-      - uses: actions/upload-artifact@v5
+      - uses: actions/upload-artifact@v6
         if: failure()
         with:
           name: replay-${{matrix.workspace}}-firefox-${{ matrix.firefox-version }}.json
