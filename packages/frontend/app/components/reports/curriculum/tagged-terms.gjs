@@ -188,6 +188,7 @@ export default class ReportsCurriculumTaggedTermsComponent extends Component {
         rhett[this.intl.t('general.vocabulary')] = o.courseTermVocabulary;
         rhett[this.intl.t('general.link')] = o.courseLink;
       } else {
+        rhett[this.intl.t('general.courseTerm')] = '';
         rhett[this.intl.t('general.session')] = o.sessionTitle;
         rhett[this.intl.t('general.sessionTerm')] = o.sessionTermTitle;
         rhett[this.intl.t('general.vocabulary')] = o.sessionTermVocabulary;
