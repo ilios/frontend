@@ -90,6 +90,7 @@ general:
   country: Country
   countryCode: Country Code
   courseDirector: Course Director
+  courseTerm: Course Term
   courseTerms: Course Terms
   courseTitleFilterPlaceholder: Filter by course title
   create: Create New User

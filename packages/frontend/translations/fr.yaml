@@ -90,6 +90,7 @@ general:
   country: Pays
   countryCode: Code du pays
   courseDirector: Directeur de Cours
+  courseTerm: Terme de Cours
   courseTerms: Termes de Cours
   courseTitleFilterPlaceholder: Filtre par titre de cours
   create: Créez un nouvel utilisateur
