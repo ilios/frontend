@@ -7,9 +7,7 @@ general:
   add: Ajouté
   addNew: Ajouté Neuf
   administratorCount: "Il y a {count, plural, =1 { un administrateur} other {# administrateurs}}"
-
   administrators: Administrateurs
-  advancedOptions: Options avancées
   allCourses: Tous les Cours
   allEvents: Tous les Événements
   allMaterials: Tous les matériaux
@@ -20,7 +18,6 @@ general:
   associatedGroups: Groupes Associés
   attendanceIsRequired: Présence requise
   attendanceRequired: Participation Requise
-  attireRequired: Tenue Requise
   author: Auteur
   autoUpdatingSeconds: "{count, plural, =1 { Mise à jour automatique en 1 seconde...} other { Mise à jour automatique en # secondes...}}"
   availableInstructorsAndInstructorGroups: "Instructeurs et groupes d'instructeurs disponibles"
@@ -44,7 +41,6 @@ general:
   classOf: "Classe de {year}"
   clearFilters: Effacerez les Filtres
   clerkshipType: Genre de Stage
-  clickForMore: Cliquez ici pour en savoir plus
   clickToEdit: Clicquez pour modifier
   close: Fermé
   cohort: Cohorte
@@ -53,11 +49,9 @@ general:
   collapse: Réduire
   collapseDetail: Masquer Détails
   competencies: Compétences
-  competency: Compétence
   complete: Accompli
   completeSessions: "Séances complète: prêt à publier"
   confirmObjectiveRemoval: Êtes vous sûr de vouloir supprimer cet objectif?
-  confirmObjectiveRemovalMultipleSessionObjectives: "Vous êtes sur le point de supprimer cet objectif de cours, qui est lié à {count} objectifs de séance. Cela supprimera également ces liens. Êtes-vous certain de vouloir continuer?"
   confirmRemoval: "Êtes-vous sûr vous voulez supprimer cette matériel d'étude?"
   confirmRemove: "Êtes-vous sûr vous voulez supprimer cette offre avec {learnerGroupCount} groupes d'apprenants?  Ça action ne peut pas être défait."
   confirmSessionRemoval: Êtes vous sûr de vouloir supprimer cette séance?
@@ -102,14 +96,11 @@ general:
   date: Date
   dateTime: Date/Temps
   day: Jour
-  defaultInstructorsNotLoaded: "(Instructeurs par défaut ne seront pas chargés: s'il vous plaît entrer la valeur souhaitée.)"
-  defaultLocationNotLoaded: "(Localisation par défaut ne sera pas chargé: s'il vous plaît entrer la valeur souhaitée.)"
   defaultNotLoaded: Par défaut non chargé
   deprecatedAbbreviation: obs.
   description: Description
   directorCount: "Il y a {count, plural, =1 {un directeur} other {# directeurs}}"
   directors: Directeurs
-  disabled: désactivée
   disabledUserAccount: compte utilisateur désactivé
   displayName: Nom d’Affichage
   done: Fini
@@ -125,7 +116,6 @@ general:
   endDate: Jour Terminé
   ends: Terminé
   endTime: Heure Terminé
-  equipmentRequired: Équipement Requis
   etAl: et al.
   event: Evénement
   eventNotFoundExplanation: "L'événement que vous avez essayé d'atteindre n'est plus disponible ou vous avez suivi un lien utilisateur personnalisé qui n'est pas partageable. Si vous continuez à rencontrer des problèmes, veuillez contacter votre service d'assistance Ilios."
@@ -151,14 +141,12 @@ general:
   goToNextYear: "Aller à l'année prochaine"
   goToPreviousYear: "Aller à l'année précédente"
   groupByCompetencies: Groupe par Compétences
-  groupName: Nom de Groupe
   groups: Groupes
   hasPrework: A un préalable
   hideCalendar: Cacher Calendrier
   hideCourseMaterials: Masquer les supports de cours
   hideCourseObjectives: Masquer les objectifs de cours
   hideFilters: Cachez les Filtres
-  hideIcsFeed: "Masquer les options d'alimentation ICS"
   hideObjectives: Masquer les objectifs
   hideSessionMaterials: Masquer les supports de session
   hour: Heure
@@ -170,9 +158,7 @@ general:
     labels:
       bold: gras
       italic: italique
-      insert: insérer
       insertLink: insérer un lien
-      linkNewTarget: nouvel onglet
       listOrdered: liste à puces
       listUnordered: liste numérotée
       redo: rétablir
@@ -191,22 +177,16 @@ general:
       subscript: Indice
       superscript: Exposante
       undo: Annuler (⌘Z)
-  icsInstructions: "Pour ajouter votre calendrier à des services ou applications autre, utilisez cette URL. Cette URL comme un mot de passe. Toutes les personnes qui le connaissent pouvez voir votre calendrier!"
-  ilios: Ilios
-  iliosUserGuide: Ilios Guide d'utilisation
   ilm: ILM
   ilmDue: ILM - Échéance
   inactive: inactif
   include: Inclure
   incompleteSessions: "Séances incomplète: ne peut être pas publiée"
   independentLearning: Apprentissage autonome
-  independentLearningActivities: Apprentissage autonome Activités
   inProgress: En Cours
   instructionalNotes: Notes Didactiques
   instructor: Instructeur
   instructing: Enseignement
-  instructorGroupMembers: "Membres du groupe d'instructeurs"
-  instructorGroups: Groupes des Instructeurs
   instructors: Instructeurs
   instructorsAndInstructorGroups: Instructeurs et Groupes des Instructeurs
   instructorsAndInstructorGroupsWithCount: Instructeurs ({instructorCount}) et Groupes des Instructeurs ({instructorGroupCount})
@@ -215,7 +195,6 @@ general:
   lastUpdate: Dernière mise à jour
   leadership: Direction
   learnerGroups: "Groupes d'Étudiants"
-  learnerGroupsManageTitle: "Manager groupes d'apprenants"
   learners: Étudiants
   learnersAndLearnerGroups: "Étudiants et Groupes d'Étudiants"
   learnersAndLearnerGroupsWithCount: "Étudiants ({learnerCount}) et Groupes d'Étudiants ({learnerGroupCount})"
@@ -225,13 +204,9 @@ general:
   learningMaterialsSummary: "Résumé Matériels d'Étude"
   level: Niveau
   link: Lien web
-  linkedCompetencies: Compétences Liés
-  linkedCompetencyCount: "{count, plural, =1 {1 présente un compétence líé} other {# présentes des compétences líés}}"
   listByPriority: Liste par priorité
   loadingEvents: Rassembler les événements...
-  loadingMaterials: Chargement Matériels...
   location: Locale
-  login: Login
   makeRecurring: Activité Récurrente
   manageLeadership: Gérer Dirigeants
   manageLearners: Manager Étudiants
@@ -241,24 +216,19 @@ general:
   meshCount: "{count, plural, =1 {1 a des MeSH} other {# ont MeSH}}"
   meshManageTitle: Manager MeSH
   meshTerms: Termes de MeSH
-  metaDescription: Gestion des Programmes pour les Professions de la Santé.
   minute: Minute
   minutes: Minutes
   missingCohortMessage: "S'il vous plait ajouter au moins un cohort à ce cours."
-  missingCompetenciesMessage: "S'il vous plaît ajouter au moins une compétence pour cette année de diplôme."
   missingCourseObjectivesMessage: "S'il vous plait ajouter au  moins d'objectif au cours."
   missingItems: Objets Manquants
   monday: Lundi
   month: Mois
   moreInputRequiredPrompt: Continuez à taper...
-  multiday: Plusieurs Jours
   multidayEvents: Événements de plusieurs jours
   multiple: Multiple
   mustBeSameDayOfWeekAsCurrentStartDate: Doit être le même jour de la semaine que le courant date de début
-  myLearningMaterials: "Mes Matériels d'étude"
   myMaterials: "Mes Matériels d'étude"
   mySchedule: Mon Calendrier (liste)
-  navigation: Navigation
   newObjective: Nouvel Objectif
   newObjectiveSaved: Nouvel objective sauvé
   newOffering: Nouvelle Offre
@@ -269,8 +239,6 @@ general:
   no: Non
   noAssociatedCompetencies: Nul compétences associées
   noAssociatedCompetency: Nul compétence associée
-  noAvailableLearnerGroups: "Pas de groupes d'étudiants sont disponibles; pas de cohorte est attaché à ce cours."
-  noAvailableLearners: "Pas d'étudiants sont disponibles; pas de cohorte est attaché à ce cours."
   noCohorts: "Il n'y a aucun des cohortes dans ce cours"
   noCourseLearningMaterialsAvailable: "Aucun Matériels D'étude de Cours"
   noEvents: aucuns événements
@@ -281,21 +249,15 @@ general:
   noSessionLearningMaterialsAvailable: "Aucun Matériels D'étude de Séance"
   notAClerkship: Pas une stage
   notes: Notes
-  notFound: Non Trouvé
   notFoundMessage: "Zut! Je ne pouvais pas trouver cette chôse. S'il vous plaît vérifier votre adresse de la page et essayez à nouveau."
   notPublished: Non Publier
   notStarted: Non Commencé
-  objectiveCompetencyManagerTitle: Sélectionner Compétence Mère pour Objectif
   objectiveCount: "Il y a {count, plural, =1 {1 objectif} other {# objectifs}}"
-  objectiveDescriptorTitle: "Choisi MeSH pour l'objectif"
-  objectiveParentTitle: Choisi Objectifs mères
-  objectiveParentTitleSingular: Choisi Objectif mère
   objectives: Objectifs
   objectivesWithNoHours: "Les objectifs de cours suivant ne sont ou liés avec aucune séance, ou liés seulement aux séance sans offrir ou ou des données de durée."
   objectivesWithNoLink: Nul objectifs de course actuellement lié au temps dénseignment.
   offering: Offre
   offerings: Offres
-  otherVisualizations: Autres Visualisations
   overview: Conception Général
   ownedBy: "Possédé par {owner}"
   owner: Propriétaire
@@ -324,13 +286,13 @@ general:
   publishedSuccessfully: Publié réussi
   publishSession: Publier Session
   remove: Supprîme
-  removeAll: Supprimer Tous
   required: Requis
   results: Resultats
   resultsCount: "{count, plural, =1 {1 résultat} other {# résultats}}"
   returnToPreviousPage: Retour à la page précédente
   reviewMissingItems: "Examiner {count} objets manquants"
   reviewSessions: Séances à faire réviser
+  room: Salle
   saturday: Samedi
   save: Enregistrer
   savedSuccessfully: enregistré avec succès
@@ -339,7 +301,6 @@ general:
   scheduling: Planification
   school: Écôle
   schools: Écôles
-  schoolTitlePlaceholder: Ajoutez titre par ce écôle
   search: Rechercher
   searchForIliosUsers: Trouver des utilisateurs...
   searchMesh: Rechercher MeSH
@@ -366,9 +327,7 @@ general:
   showCourseMaterials: Afficher les supports de cours
   showCourseObjectives: Afficher les objectifs de cours
   showFilters: Montrez les Filtres
-  showIcsFeed: "Afficher les options d'alimentation ICS"
   showLearnerGroupEvents: "Montrez tous les événements pour les groupes d'étudiants affectés"
-  showLess: Afficher moins
   showMore: Afficher plus
   showNotesToStudents: Afficher notes aux étudiantes
   showObjectives: Afficher les objectifs
@@ -377,7 +336,6 @@ general:
   showOnlyMyLearnerActivities: Afficher uniquement mes activités d'apprenant
   showSessionEvents: "Montrez tous les autres '<em>'{sessionTitle}'</em>' événements"
   showSessionMaterials: Afficher les supports de session
-  smallGroupMessage: 'S''il vous plaît choisir au moins un groupe d''apprenants à joindre à votre offrande de "small groups". Si vous souhaitez programmer cette offrande sans groupes, s''il vous plaît choisir le bouton "offre" au-dessus.'
   smallGroups: Groupes Particulaires
   sortMaterials: Trier les matériaux
   sortObjectives: Trier les objectifs
@@ -399,6 +357,7 @@ general:
   targetCourse: Cours Cible
   taughtBy: "Dispensé à {instructors}"
   termCount: "{count, plural, =1 {1 on a des termes de vocabulaire} other {# ont des termes de vocabulaire}}"
+  term: Terme
   terms: Termes
   termsManageTitle: Manager des Termes
   text: Texte
@@ -416,7 +375,6 @@ general:
   timezone: Fuseau horaire
   title: Tître
   today: "Aujourd'hui"
-  token: Token
   topPagination: Pagination supérieure
   totalIlmTime: "Durée totale par ILM {minutes} Minutes"
   totalInstructionalTime: "Durée d'enseignement totale {minutes} Minutes"
@@ -428,9 +386,8 @@ general:
   unPublishedSuccessfully: Faire à Dépublier réussi
   unPublishSession: Faire à Dépublier Session
   unusedObjectives: Objectifs non Utilisés
-  upcomingActivities: "Mes Activités pendant les {days} prochains jours"
-  upcomingMaterials: "Mes Matériels d'Étude pendant les {days} prochains jours"
   updateNow: Actualiser affichage
+  updatePending: Mise à jour en suspens
   uploadDate: Date de dépôt
   url: URL
   userRole: "Rôle d'utilisateur"
@@ -452,7 +409,6 @@ general:
   weeks: Semaines
   when: Quand
   whitecoatsSlashSpecialAttire: Blouses blanches / vêtements particuliers
-  withXmoreOfferings: "avec {count, plural, =1 {une autre offre} other {# autres offres}}"
   year: Année
   yes: Oui
 errors:

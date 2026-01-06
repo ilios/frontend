@@ -156,7 +156,7 @@ export default class SchoolEmailsEditorComponent extends Component {
                 id="change-alert-recipients-{{templateId}}"
                 type="text"
                 value={{this.changeAlertRecipients}}
-                placeholder={{this.changeAlertRecipientsPlaceholder}}
+                placeholder={{t "general.changeAlertRecipientsPlaceholder"}}
                 {{on "input" (pick "target.value" (set this "changeAlertRecipients"))}}
                 {{on "keyup" (perform this.saveOrCancel)}}
               />

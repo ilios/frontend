@@ -5,7 +5,7 @@
   "scripts": {
     "preinstall": "npx only-allow pnpm",
     "format": "pnpm run --parallel format",
-    "lint": "pnpm run --parallel \"/^lint:(hbs|js|css|format)$/\"",
+    "lint": "pnpm run --parallel \"/^lint:(hbs|js|css|format|intl)$/\"",
     "lint:js": "pnpm run --parallel lint:js",
     "lint:hbs": "pnpm run --parallel lint:hbs",
     "lint:css": "pnpm run --parallel lint:css",
