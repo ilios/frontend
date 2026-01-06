@@ -6,6 +6,7 @@ import t from 'ember-intl/helpers/t';
 import { uniqueId } from '@ember/helper';
 import { on } from '@ember/modifier';
 import focus from 'ilios-common/modifiers/focus';
+import includes from 'ilios-common/helpers/includes';
 import pick from 'ilios-common/helpers/pick';
 import set from 'ember-set-helper/helpers/set';
 import sortBy from 'ilios-common/helpers/sort-by';
@@ -17,8 +18,31 @@ export default class NewProgramYearComponent extends Component {
   allYears = [];
   @tracked year;
 
+  constructor() {
+    super(...arguments);
+    const firstYear = new Date().getFullYear() - 5;
+    for (let i = 0; i < 10; i++) {
+      this.allYears.push(firstYear + i);
+    }
+  }
+
   get existingStartYears() {
-    return mapBy(this.args.programYears ?? [], 'startYear').map(Number);
+    return mapBy(this.args.programYears ?? [], 'startYear');
+  }
+
+  get academicYears() {
+    return this.allYears.map((startYear) => {
+      return {
+        label: this.args.academicYearCrossesCalendarYearBoundaries
+          ? `${startYear} - ${startYear + 1}`
+          : startYear.toString(),
+        value: startYear.toString(),
+      };
+    });
+  }
+
+  get availableAcademicYears() {
+    return this.allYears.filter((year) => !this.academicYears.includes(year));
   }
 
   get selectedYear() {
@@ -26,27 +50,6 @@ export default class NewProgramYearComponent extends Component {
       return this.availableAcademicYears[0];
     }
     return findBy(this.availableAcademicYears, 'value', this.year);
-  }
-
-  get availableAcademicYears() {
-    return this.allYears
-      .filter((year) => !this.existingStartYears.includes(year))
-      .map((startYear) => {
-        return {
-          label: this.args.academicYearCrossesCalendarYearBoundaries
-            ? `${startYear} - ${startYear + 1}`
-            : startYear.toString(),
-          value: startYear.toString(),
-        };
-      });
-  }
-
-  constructor() {
-    super(...arguments);
-    const firstYear = new Date().getFullYear() - 5;
-    for (let i = 0; i < 10; i++) {
-      this.allYears.push(firstYear + i);
-    }
   }
 
   saveNewYear = task({ drop: true }, async () => {
@@ -69,8 +72,12 @@ export default class NewProgramYearComponent extends Component {
               {{on "change" (pick "target.value" (set this "year"))}}
               data-test-year
             >
-              {{#each (sortBy "value" this.availableAcademicYears) as |obj|}}
-                <option value={{obj.value}} selected={{eq obj.value this.selectedYear.value}}>
+              {{#each (sortBy "value" this.academicYears) as |obj|}}
+                <option
+                  value={{obj.value}}
+                  selected={{eq obj.value this.selectedYear.value}}
+                  disabled={{includes obj.value this.existingStartYears}}
+                >
                   {{obj.label}}
                 </option>
               {{/each}}
