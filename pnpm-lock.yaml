@@ -178,8 +178,8 @@ importers:
         specifier: 4.0.3
         version: 4.0.3
       ember-cli-deprecation-workflow:
-        specifier: ^3.4.0
-        version: 3.4.0(ember-source@6.8.2(@glimmer/component@2.0.0)(rsvp@4.8.5))
+        specifier: ^4.0.0
+        version: 4.0.0(@babel/core@7.28.5)
       ember-cli-htmlbars:
         specifier: ^6.3.0
         version: 6.3.0
@@ -569,8 +569,8 @@ importers:
         specifier: ^3.3.3
         version: 3.3.3(ember-cli@6.8.1(@types/node@25.0.3)(babel-core@6.26.3)(ejs@3.1.10)(handlebars@4.7.8)(underscore@1.13.7))
       ember-cli-deprecation-workflow:
-        specifier: ^3.4.0
-        version: 3.4.0(ember-source@6.8.2(@glimmer/component@2.0.0)(rsvp@4.8.5))
+        specifier: ^4.0.0
+        version: 4.0.0(@babel/core@7.28.5)
       ember-cli-inject-live-reload:
         specifier: ^2.1.0
         version: 2.1.0
@@ -767,8 +767,8 @@ importers:
         specifier: ^3.0.0
         version: 3.0.0
       ember-cli-deprecation-workflow:
-        specifier: ^3.4.0
-        version: 3.4.0(ember-source@6.8.2(@glimmer/component@2.0.0)(rsvp@4.8.5))
+        specifier: ^4.0.0
+        version: 4.0.0(@babel/core@7.28.5)
       ember-cli-htmlbars:
         specifier: ^6.3.0
         version: 6.3.0
@@ -998,8 +998,8 @@ importers:
         specifier: ^3.0.0
         version: 3.0.0
       ember-cli-deprecation-workflow:
-        specifier: ^3.4.0
-        version: 3.4.0(ember-source@6.8.2(@glimmer/component@2.0.0)(rsvp@4.8.5))
+        specifier: ^4.0.0
+        version: 4.0.0(@babel/core@7.28.5)
       ember-cli-htmlbars:
         specifier: ^6.3.0
         version: 6.3.0
@@ -1214,8 +1214,8 @@ importers:
         specifier: ^3.3.3
         version: 3.3.3(ember-cli@6.8.1(@types/node@25.0.3)(babel-core@6.26.3)(ejs@3.1.10)(handlebars@4.7.8)(underscore@1.13.7))
       ember-cli-deprecation-workflow:
-        specifier: ^3.4.0
-        version: 3.4.0(ember-source@6.8.2(@glimmer/component@2.0.0)(rsvp@4.8.5))
+        specifier: ^4.0.0
+        version: 4.0.0(@babel/core@7.28.5)
       ember-cli-htmlbars:
         specifier: ^6.3.0
         version: 6.3.0
@@ -2293,6 +2293,10 @@ packages:
 
   '@embroider/shared-internals@2.9.2':
     resolution: {integrity: sha512-d96ub/WkS1Gx6dRDxZ0mCRPwFAHIMlMr2iti6uTYxTFzC85Wgt6j7bYr6ppkEuwEwKQVyzKRT0kTsJz6P74caQ==}
+    engines: {node: 12.* || 14.* || >= 16}
+
+  '@embroider/shared-internals@3.0.2':
+    resolution: {integrity: sha512-/SusdG+zgosc3t+9sPFVKSFOYyiSgLfXOT6lYNWoG1YtnhWDxlK4S8leZ0jhcVjemdaHln5rTyxCnq8oFLxqpQ==}
     engines: {node: 12.* || 14.* || >= 16}
 
   '@embroider/shared-internals@3.0.2':
@@ -5305,11 +5309,8 @@ packages:
     resolution: {integrity: sha512-x6vtuxruExD66qo/OvNldGbxZ3NTaeRSdL63Q9clJ/+JspLXeHtKxl5dDMqRNvl8sItVrZJqq9GYMJfPsg5SWA==}
     engines: {node: 12.* || 14.* || >= 16}
 
-  ember-cli-deprecation-workflow@3.4.0:
-    resolution: {integrity: sha512-Ksrmib4mjD4xa0dqFgxJLBwkSp9EVYH6jSqe2NpODlBKEAZhsVzQj5wKPnC1dXfK3Erq/r1Fh3q4g46FZiCUiw==}
-    engines: {node: '>= 18'}
-    peerDependencies:
-      ember-source: '>= 3.28.0'
+  ember-cli-deprecation-workflow@4.0.0:
+    resolution: {integrity: sha512-HGF7LSz6f8Vx3sISYXnoiuk+8eBULUt7cS/U1YwGMAJtXvL1jvz8PvyAPyrBpcyNP85U+u+3UdKeTWG0HuLbNw==}
 
   ember-cli-flash@6.0.0:
     resolution: {integrity: sha512-ig8V5HKqXyTobJgHsIfnViPAmmyqx1c8T77LB5qmarPlVrx1G+EhSjlRcTr/y16Kg/EZalSBldHiLvv9M/5t6g==}
@@ -11930,6 +11931,24 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
+  '@embroider/shared-internals@3.0.2':
+    dependencies:
+      babel-import-util: 3.0.1
+      debug: 4.4.3(supports-color@8.1.1)
+      ember-rfc176-data: 0.3.18
+      fs-extra: 9.1.0
+      is-subdir: 1.2.0
+      js-string-escape: 1.0.1
+      lodash: 4.17.21
+      minimatch: 3.1.2
+      pkg-entry-points: 1.1.1
+      resolve-package-path: 4.0.3
+      resolve.exports: 2.0.3
+      semver: 7.7.3
+      typescript-memoize: 1.1.1
+    transitivePeerDependencies:
+      - supports-color
+
   '@embroider/test-setup@4.0.0(@embroider/compat@3.8.5(@embroider/core@3.5.9(@glint/template@1.7.3))(@glint/template@1.7.3))(@embroider/core@3.5.9(@glint/template@1.7.3))(@embroider/webpack@4.1.2(@embroider/core@3.5.9(@glint/template@1.7.3))(webpack@5.104.1))':
     dependencies:
       lodash: 4.17.21
@@ -15902,12 +15921,12 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  ember-cli-deprecation-workflow@3.4.0(ember-source@6.8.2(@glimmer/component@2.0.0)(rsvp@4.8.5)):
+  ember-cli-deprecation-workflow@4.0.0(@babel/core@7.28.5):
     dependencies:
-      '@babel/core': 7.28.5(supports-color@8.1.1)
-      ember-cli-babel: 8.2.0(@babel/core@7.28.5)
-      ember-source: 6.8.2(@glimmer/component@2.0.0)(rsvp@4.8.5)
+      '@embroider/addon-shim': 1.10.2
+      decorator-transforms: 2.3.0(@babel/core@7.28.5)
     transitivePeerDependencies:
+      - '@babel/core'
       - supports-color
 
   ember-cli-flash@6.0.0(@ember/string@4.0.1)(@embroider/macros@1.19.6(@glint/template@1.7.3))(ember-modifier@4.2.2(@babel/core@7.28.5)):
