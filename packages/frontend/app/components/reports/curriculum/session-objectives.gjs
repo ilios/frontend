@@ -194,7 +194,7 @@ export default class ReportsCurriculumSessionObjectivesComponent extends Compone
       rhett[this.intl.t('general.course')] = o.courseTitle;
       rhett[this.intl.t('general.session')] = o.sessionTitle;
       rhett[this.intl.t('general.sessionType')] = o.sessionType;
-      rhett[this.intl.t('general.objective')] = o.title;
+      rhett[this.intl.t('general.sessionObjective')] = o.title;
       rhett[this.intl.t('general.instructors')] = o.instructors.join(', ');
       rhett[this.intl.t('general.firstOffering')] = o.firstOfferingDate;
       rhett[this.intl.t('general.hours')] = o.duration;
@@ -242,7 +242,7 @@ export default class ReportsCurriculumSessionObjectivesComponent extends Compone
             <th>{{t "general.course"}}</th>
             <th>{{t "general.sessions"}}</th>
             <th>{{t "general.instructors"}}</th>
-            <th>{{t "general.objectives"}}</th>
+            <th>{{t "general.sessionObjectives"}}</th>
           </tr>
         </thead>
         <tbody>
