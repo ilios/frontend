@@ -30,24 +30,26 @@ export default class NewProgramYearComponent extends Component {
     return mapBy(this.args.programYears ?? [], 'startYear');
   }
 
-  get academicYears() {
-    return this.allYears.map((startYear) => {
-      return {
-        label: this.args.academicYearCrossesCalendarYearBoundaries
-          ? `${startYear} - ${startYear + 1}`
-          : startYear.toString(),
-        value: startYear.toString(),
-      };
-    });
-  }
-
   get availableAcademicYears() {
-    return this.allYears.filter((year) => !this.academicYears.includes(year));
+    const years = this.allYears
+      .filter((year) => !this.existingStartYears.includes(year))
+      .map((startYear) => {
+        return {
+          label: this.args.academicYearCrossesCalendarYearBoundaries
+            ? `${startYear} - ${startYear + 1}`
+            : startYear.toString(),
+          value: startYear.toString(),
+        };
+      });
+
+    return years;
   }
 
   get selectedYear() {
     if (!this.year) {
-      return this.availableAcademicYears[0];
+      return this.existingStartYears.length
+        ? this.availableAcademicYears.filter((year) => this.existingStartYears.includes(year))[0]
+        : this.availableAcademicYears[0];
     }
     return findBy(this.availableAcademicYears, 'value', this.year);
   }
@@ -72,7 +74,7 @@ export default class NewProgramYearComponent extends Component {
               {{on "change" (pick "target.value" (set this "year"))}}
               data-test-year
             >
-              {{#each (sortBy "value" this.academicYears) as |obj|}}
+              {{#each (sortBy "value" this.availableAcademicYears) as |obj|}}
                 <option
                   value={{obj.value}}
                   selected={{eq obj.value this.selectedYear.value}}
