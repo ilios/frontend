@@ -20,6 +20,7 @@ import eq from 'ember-truth-helpers/helpers/eq';
 import OfferingUrlDisplay from 'ilios-common/components/offering-url-display';
 import { on } from '@ember/modifier';
 import set from 'ember-set-helper/helpers/set';
+import add from 'ember-math-helpers/helpers/add';
 import SingleEventLearningmaterialList from 'ilios-common/components/single-event-learningmaterial-list';
 import SingleEventObjectiveList from 'ilios-common/components/single-event-objective-list';
 import NotFound from 'ilios-common/components/not-found';
@@ -467,6 +468,7 @@ export default class SingleEvent extends Component {
               data-test-expand-collapse
             >
               {{t "general.materials"}}
+              ({{add this.sessionLearningMaterials.length this.preworkMaterials.length}})
               <FaIcon @icon={{if this.isSessionMaterialsListExpanded "caret-down" "caret-right"}} />
             </button>
             {{#if (and @event.isUserEvent this.userIsStudent)}}
@@ -519,6 +521,7 @@ export default class SingleEvent extends Component {
               data-test-expand-collapse
             >
               {{t "general.courseMaterials"}}
+              ({{this.courseLearningMaterials.length}})
               <FaIcon @icon={{if this.isCourseMaterialsListExpanded "caret-down" "caret-right"}} />
             </button>
           </h3>
