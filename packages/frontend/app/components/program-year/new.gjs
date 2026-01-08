@@ -6,6 +6,7 @@ import t from 'ember-intl/helpers/t';
 import { uniqueId } from '@ember/helper';
 import { on } from '@ember/modifier';
 import focus from 'ilios-common/modifiers/focus';
+import includes from 'ilios-common/helpers/includes';
 import pick from 'ilios-common/helpers/pick';
 import set from 'ember-set-helper/helpers/set';
 import sortBy from 'ilios-common/helpers/sort-by';
@@ -17,19 +18,20 @@ export default class NewProgramYearComponent extends Component {
   allYears = [];
   @tracked year;
 
-  get existingStartYears() {
-    return mapBy(this.args.programYears ?? [], 'startYear').map(Number);
+  constructor() {
+    super(...arguments);
+    const firstYear = new Date().getFullYear() - 5;
+    for (let i = 0; i < 10; i++) {
+      this.allYears.push(firstYear + i);
+    }
   }
 
-  get selectedYear() {
-    if (!this.year) {
-      return this.availableAcademicYears[0];
-    }
-    return findBy(this.availableAcademicYears, 'value', this.year);
+  get existingStartYears() {
+    return mapBy(this.args.programYears ?? [], 'startYear');
   }
 
   get availableAcademicYears() {
-    return this.allYears
+    const years = this.allYears
       .filter((year) => !this.existingStartYears.includes(year))
       .map((startYear) => {
         return {
@@ -39,14 +41,17 @@ export default class NewProgramYearComponent extends Component {
           value: startYear.toString(),
         };
       });
+
+    return years;
   }
 
-  constructor() {
-    super(...arguments);
-    const firstYear = new Date().getFullYear() - 5;
-    for (let i = 0; i < 10; i++) {
-      this.allYears.push(firstYear + i);
+  get selectedYear() {
+    if (!this.year) {
+      return this.existingStartYears.length
+        ? this.availableAcademicYears.filter((year) => this.existingStartYears.includes(year))[0]
+        : this.availableAcademicYears[0];
     }
+    return findBy(this.availableAcademicYears, 'value', this.year);
   }
 
   saveNewYear = task({ drop: true }, async () => {
@@ -70,7 +75,11 @@ export default class NewProgramYearComponent extends Component {
               data-test-year
             >
               {{#each (sortBy "value" this.availableAcademicYears) as |obj|}}
-                <option value={{obj.value}} selected={{eq obj.value this.selectedYear.value}}>
+                <option
+                  value={{obj.value}}
+                  selected={{eq obj.value this.selectedYear.value}}
+                  disabled={{includes obj.value this.existingStartYears}}
+                >
                   {{obj.label}}
                 </option>
               {{/each}}

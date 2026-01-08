@@ -54,7 +54,7 @@ module('Acceptance | Program - ProgramYear List', function (hooks) {
     await page.programYears.expandCollapse.toggle();
     await percySnapshot(getUniqueName(assert, 'show programYears'));
     await takeScreenshot(assert, 'show programYears');
-    assert.strictEqual(page.programYears.newProgramYear.years.options.length, 6);
+    assert.strictEqual(page.programYears.newProgramYear.years.options.length, 10);
   });
 
   test('check competencies', async function (assert) {
@@ -196,7 +196,7 @@ module('Acceptance | Program - ProgramYear List', function (hooks) {
     assert.strictEqual(page.programYears.items[0].directors.text, '3');
     assert.strictEqual(page.programYears.items[0].terms.text, '3');
     await page.programYears.expandCollapse.toggle();
-    assert.strictEqual(page.programYears.newProgramYear.years.options.length, 9);
+    assert.strictEqual(page.programYears.newProgramYear.years.options.length, 10);
     await page.programYears.newProgramYear.years.select(thisYear + 1);
     await page.programYears.newProgramYear.done.click();
     assert.strictEqual(page.programYears.items.length, 2);
@@ -207,7 +207,7 @@ module('Acceptance | Program - ProgramYear List', function (hooks) {
     assert.strictEqual(page.programYears.items[1].directors.text, '3');
     assert.strictEqual(page.programYears.items[1].terms.text, '3');
     await page.programYears.expandCollapse.toggle();
-    assert.strictEqual(page.programYears.newProgramYear.years.options.length, 8);
+    assert.strictEqual(page.programYears.newProgramYear.years.options.length, 10);
   });
 
   test('privileged users can lock and unlock program-year', async function (assert) {
