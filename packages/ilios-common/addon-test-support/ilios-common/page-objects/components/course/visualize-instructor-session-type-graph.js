@@ -41,6 +41,7 @@ const definition = {
         scope: '[data-test-sessions]',
         links: collection('a', {
           url: attribute('href'),
+          ariaLabel: attribute('aria-label'),
         }),
       },
       minutes: text('[data-test-minutes]'),

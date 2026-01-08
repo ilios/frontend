@@ -103,6 +103,10 @@ module('Integration | Component | course/visualize-vocabularies-graph', function
       component.dataTable.rows[0].sessions.links[0].text,
       'The San Leandro Horror',
     );
+    assert.strictEqual(
+      component.dataTable.rows[0].sessions.links[0].ariaLabel,
+      'The San Leandro Horror',
+    );
     assert.strictEqual(component.dataTable.rows[0].sessions.links[0].url, '/courses/1/sessions/2');
     assert.strictEqual(component.dataTable.rows[0].minutes, '180');
     assert.strictEqual(component.dataTable.rows[1].vocabulary.text, 'Standalone');
@@ -112,8 +116,13 @@ module('Integration | Component | course/visualize-vocabularies-graph', function
     );
     assert.strictEqual(component.dataTable.rows[1].sessions.links.length, 2);
     assert.strictEqual(component.dataTable.rows[1].sessions.links[0].text, 'Aardvark');
+    assert.strictEqual(component.dataTable.rows[1].sessions.links[0].ariaLabel, 'Aardvark');
     assert.strictEqual(
       component.dataTable.rows[1].sessions.links[1].text,
+      'Berkeley Investigations',
+    );
+    assert.strictEqual(
+      component.dataTable.rows[1].sessions.links[1].ariaLabel,
       'Berkeley Investigations',
     );
     assert.strictEqual(component.dataTable.rows[1].sessions.links[0].url, '/courses/1/sessions/4');
