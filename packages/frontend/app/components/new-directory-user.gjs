@@ -305,7 +305,7 @@ export default class NewDirectoryUserComponent extends Component {
     await authentication.save();
     this.validations.clearErrorDisplay();
     this.args.setSearchTerms('');
-    this.flashMessages.success('general.saved');
+    this.flashMessages.success(this.intl.t('general.saved'));
     this.args.transitionToUser(user.id);
   });
   <template>

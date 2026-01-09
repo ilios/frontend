@@ -35,7 +35,7 @@ export default class ReportsCurriculumHeader extends Component {
   }
 
   textCopied = task({ restartable: true }, async () => {
-    this.flashMessages.success('general.copiedCurriculumReportUrl');
+    this.flashMessages.success(this.intl.t('general.copiedCurriculumReportUrl'));
   });
 
   popperOptions = {

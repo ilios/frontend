@@ -25,6 +25,7 @@ export default class MyProfileComponent extends Component {
   @service flashMessages;
   @service iliosConfig;
   @service session;
+  @service intl;
 
   @tracked expiresAt = null;
   @tracked generatedJwt = null;
@@ -47,7 +48,7 @@ export default class MyProfileComponent extends Component {
 
   @action
   tokenCopied() {
-    this.flashMessages.success('general.copiedSuccessfully');
+    this.flashMessages.success(this.intl.t('general.copiedSuccessfully'));
   }
 
   @action
@@ -91,11 +92,10 @@ export default class MyProfileComponent extends Component {
     const data = await this.fetch.getJsonFromApiHost(url);
 
     if (isPresent(data.jwt)) {
-      const flashMessages = this.flashMessages;
       const session = this.session;
       const authenticator = 'authenticator:ilios-jwt';
       session.authenticate(authenticator, { jwt: data.jwt });
-      flashMessages.success('general.successfullyInvalidatedTokens');
+      this.flashMessages.success(this.intl.t('general.successfullyInvalidatedTokens'));
       this.args.toggleShowInvalidateTokens();
     }
   });

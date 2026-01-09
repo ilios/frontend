@@ -234,7 +234,7 @@ export default class NewUserComponent extends Component {
       password: this.password,
     });
     await authentication.save();
-    this.flashMessages.success('general.saved');
+    this.flashMessages.success(this.intl.t('general.saved'));
     this.args.transitionToUser(user.get('id'));
   });
 

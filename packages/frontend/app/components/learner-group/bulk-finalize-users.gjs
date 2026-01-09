@@ -11,6 +11,7 @@ import LoadingSpinner from 'ilios-common/components/loading-spinner';
 
 export default class LearnergroupBulkFinalizeUsersComponent extends Component {
   @service flashMessages;
+  @service intl;
 
   get finalData() {
     return this.args.users.map((obj) => {
@@ -39,7 +40,7 @@ export default class LearnergroupBulkFinalizeUsersComponent extends Component {
     }, []);
 
     await all(uniqueValues(flat).map((o) => o.save()));
-    this.flashMessages.success('general.savedSuccessfully', {
+    this.flashMessages.success(this.intl.t('general.savedSuccessfully'), {
       capitalize: true,
     });
     this.args.done();

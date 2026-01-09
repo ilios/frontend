@@ -18,6 +18,7 @@ import ObjectiveList from 'ilios-common/components/course/objective-list';
 export default class CourseObjectivesComponent extends Component {
   @service store;
   @service flashMessages;
+  @service intl;
 
   @tracked newObjectiveEditorOn = false;
   @tracked newObjectiveTitle;
@@ -51,7 +52,7 @@ export default class CourseObjectivesComponent extends Component {
     await newCourseObjective.save();
 
     this.newObjectiveEditorOn = false;
-    this.flashMessages.success('general.newObjectiveSaved');
+    this.flashMessages.success(this.intl.t('general.newObjectiveSaved'));
   });
 
   @action

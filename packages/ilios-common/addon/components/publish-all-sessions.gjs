@@ -21,6 +21,7 @@ import perform from 'ember-concurrency/helpers/perform';
 export default class PublishAllSessionsComponent extends Component {
   @service store;
   @service flashMessages;
+  @service intl;
 
   @tracked publishableCollapsed = true;
   @tracked unPublishableCollapsed = true;
@@ -192,7 +193,7 @@ export default class PublishAllSessionsComponent extends Component {
     this.currentSessionsSaved = 0;
 
     await this.saveSomeSessions(sessionsToSave);
-    this.flashMessages.success('general.savedSuccessfully', {
+    this.flashMessages.success(this.intl.t('general.savedSuccessfully'), {
       capitalize: true,
     });
     await timeout(500);

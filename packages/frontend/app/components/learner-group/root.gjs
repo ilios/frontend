@@ -249,7 +249,7 @@ export default class LearnerGroupRootComponent extends Component {
         await saveSomeGroups(groupsToSave);
       } else {
         this.isSavingGroups = false;
-        this.flashMessages.success('general.savedSuccessfully', {
+        this.flashMessages.success(this.intl.t('general.savedSuccessfully'), {
           capitalize: true,
         });
         this.showNewLearnerGroupForm = false;

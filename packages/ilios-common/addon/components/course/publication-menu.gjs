@@ -145,7 +145,7 @@ export default class CoursePublicationMenuComponent extends Component {
     this.args.course.set('publishedAsTbd', false);
     this.args.course.set('published', true);
     await this.args.course.save();
-    this.flashMessages.success('general.publishedSuccessfully');
+    this.flashMessages.success(this.intl.t('general.publishedSuccessfully'));
   }
   @action
   async unpublish() {
@@ -153,7 +153,7 @@ export default class CoursePublicationMenuComponent extends Component {
     this.args.course.set('publishedAsTbd', false);
     this.args.course.set('published', false);
     await this.args.course.save();
-    this.flashMessages.success('general.unPublishedSuccessfully');
+    this.flashMessages.success(this.intl.t('general.unPublishedSuccessfully'));
   }
   @action
   async publishAsTbd() {
@@ -161,7 +161,7 @@ export default class CoursePublicationMenuComponent extends Component {
     this.args.course.set('publishedAsTbd', true);
     this.args.course.set('published', true);
     await this.args.course.save();
-    this.flashMessages.success('general.scheduledSuccessfully');
+    this.flashMessages.success(this.intl.t('general.scheduledSuccessfully'));
   }
   <template>
     {{#let (uniqueId) as |templateId|}}

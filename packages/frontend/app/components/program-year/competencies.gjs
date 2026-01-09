@@ -20,6 +20,7 @@ import CompetencyListItem from 'frontend/components/program-year/competency-list
 
 export default class ProgramYearCompetenciesComponent extends Component {
   @service flashMessages;
+  @service intl;
   @tracked competenciesToAdd = [];
   @tracked competenciesToRemove = [];
 
@@ -129,7 +130,7 @@ export default class ProgramYearCompetenciesComponent extends Component {
     try {
       await this.args.programYear.save();
     } finally {
-      this.flashMessages.success('general.savedSuccessfully', {
+      this.flashMessages.success(this.intl.t('general.savedSuccessfully'), {
         capitalize: true,
       });
       this.args.setIsManaging(false);

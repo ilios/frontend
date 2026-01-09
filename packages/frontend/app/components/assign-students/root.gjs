@@ -21,6 +21,7 @@ const DEBOUNCE_DELAY = 250;
 export default class AssignStudentsRootComponent extends Component {
   @service store;
   @service flashMessages;
+  @service intl;
 
   @tracked selectedUserIds = [];
   @tracked savedUserIds = [];
@@ -99,7 +100,7 @@ export default class AssignStudentsRootComponent extends Component {
     );
     this.selectedUserIds = [];
 
-    this.flashMessages.success('general.savedSuccessfully', {
+    this.flashMessages.success(this.intl.t('general.savedSuccessfully'), {
       capitalize: true,
     });
   });
