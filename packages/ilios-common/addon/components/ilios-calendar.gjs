@@ -5,12 +5,15 @@ import IliosCalendarDay from './ilios-calendar-day';
 import IliosCalendarWeek from './ilios-calendar-week';
 import IliosCalendarMonth from './ilios-calendar-month';
 import { LinkTo } from '@ember/routing';
-import { hash, array, concat } from '@ember/helper';
+import { hash, concat } from '@ember/helper';
+import { service } from '@ember/service';
 import FaIcon from 'ilios-common/components/fa-icon';
 import t from 'ember-intl/helpers/t';
 import eq from 'ember-truth-helpers/helpers/eq';
 
 export default class IliosCalendarComponent extends Component {
+  @service intl;
+
   get calendarViewComponent() {
     let calendar = IliosCalendarDay;
     if (this.args.selectedView === 'week') {
@@ -86,6 +89,14 @@ export default class IliosCalendarComponent extends Component {
     return DateTime.now().toFormat('yyyy-MM-dd');
   }
 
+  get viewTypes() {
+    return [
+      { id: 'day', label: this.intl.t('general.day') },
+      { id: 'week', label: this.intl.t('general.week') },
+      { id: 'month', label: this.intl.t('general.month') },
+    ];
+  }
+
   viewOpts(view, value) {
     let opts = {};
     switch (view) {
@@ -134,14 +145,13 @@ export default class IliosCalendarComponent extends Component {
           </li>
         </ul>
         <ul class="inline calendar-view-picker">
-          {{#each (array "day" "week" "month") as |viewType|}}
+          {{#each this.viewTypes as |viewType|}}
             <li data-test-view-mode>
-              {{#if (eq @selectedView viewType)}}
-                {{t (concat "general." viewType)}}
+              {{#if (eq @selectedView viewType.id)}}
+                {{t (concat "general." viewType.id)}}
               {{else}}
-                <LinkTo @route="dashboard.calendar" @query={{hash view=viewType}}>{{t
-                    (concat "general." viewType)
-                  }}</LinkTo>
+                <LinkTo @route="dashboard.calendar" @query={{hash view=viewType.id}}>
+                  {{viewType.label}}</LinkTo>
               {{/if}}
             </li>
           {{/each}}
