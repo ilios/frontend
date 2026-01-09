@@ -127,7 +127,7 @@ export default class DetailLearningMaterialsItemComponent extends Component {
           <button
             type="button"
             class="icon-button"
-            aria-label={{t "gneral.edit"}}
+            aria-label={{t "general.edit"}}
             {{on "click" (fn @setManagedMaterial @lm)}}
             data-test-edit
           >
@@ -136,7 +136,7 @@ export default class DetailLearningMaterialsItemComponent extends Component {
           <button
             type="button"
             class="icon-button remove"
-            aria-label={{t "gneral.remove"}}
+            aria-label={{t "general.remove"}}
             {{on "click" (set this "showRemoveConfirmation" true)}}
             data-test-remove
           >

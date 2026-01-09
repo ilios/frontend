@@ -8,7 +8,6 @@ general:
   admin: Admin
   administratorCount: "Hay {count, plural, =1 {1 administrador} other {# administradores}}"
   administrators: Administradores
-  advancedOptions: Opciones Avanzadas
   allCourses: Todos Los Cursos
   allEvents: Todos los Eventos
   allMaterials: Todos los Materiales
@@ -19,7 +18,6 @@ general:
   associatedGroups: Grupos Associados
   attendanceIsRequired: Se require asistencia
   attendanceRequired: Asistencia Requerida
-  attireRequired: Atuendo Requerida
   author: Autor
   autoUpdatingSeconds: "{count, plural, =1 {Actualización automática en 1 segundo...} other {Actualización automática en # segundos...}}"
   availableInstructorsAndInstructorGroups: Instructores y Grupos de instructores Disponibles
@@ -43,7 +41,6 @@ general:
   classOf: "Clase de {year}"
   clearFilters: Borrar Filtros
   clerkshipType: Tipo de Rotación
-  clickForMore: Haga clic para más información
   clickToEdit: Hacer clic para editar
   close: Cerrar
   cohort: Clase de la Graduación
@@ -52,11 +49,9 @@ general:
   collapse: Colapsar
   collapseDetail: Esconder Detalles
   competencies: Competencias
-  competency: Competencia
   complete: Completo
   completeSessions: "Sesiónes Completas: Listo a Publicar"
   confirmObjectiveRemoval: ¿Está seguro que desea eliminar este objetivo?
-  confirmObjectiveRemovalMultipleSessionObjectives: "Está a punto de eliminar este objetivo de curso, que está vinculado a {count} objetivos de sesión. Esto eliminará también esas relaciones. ¿Está seguro que desea continuar?"
   confirmRemoval: ¿Está seguro que desea eliminar este material de aprendizaje?
   confirmRemove: "¿Estás seguro que quieres borrar este ofrecimiento con {learnerGroupCount} grupos de aprendedores? Esta acción no se puede deshacer."
   confirmSessionRemoval: ¿Está seguro que desea eliminar este sessión?
@@ -101,14 +96,11 @@ general:
   date: Fecha
   dateTime: Fecha/Hora
   day: Día
-  defaultInstructorsNotLoaded: "(Instructores predeterminados no se cargarán: por favor introduzca el valor deseado.)"
-  defaultLocationNotLoaded: "(Ubicación predterminada no se cargará: por favor introduzca el valor deseado.)"
   defaultNotLoaded: Predeterminado no cargado
   deprecatedAbbreviation: obs.
   description: Descripción
   directorCount: "Hay {count, plural, =1 {1 director} other {# directores}}"
   directors: Directores
-  disabled: desactivado
   disabledUserAccount: cuenta de usuario deshabilitada
   displayName: Nombre de Mostrar
   done: Acabado
@@ -124,7 +116,6 @@ general:
   endDate: Fecha de Cumplir
   ends: Termina
   endTime: Hora de Cumplir
-  equipmentRequired: Equipo Requerido
   etAl: et al.
   event: Evento
   eventNotFoundTitle: Evento no encontrado
@@ -150,14 +141,12 @@ general:
   goToNextYear: Ir al año que viene
   goToPreviousYear: Ir al año anterior
   groupByCompetencies: Agrupe por Competencias
-  groupName: Nombre De Grupo
   groups: Grupos
   hasPrework: Tiene pre Trabajo
   hideCalendar: Esconda Calendario
   hideCourseMaterials: Ocultar materiales del curso
   hideCourseObjectives: Ocultar objetivos del curso
   hideFilters: Esconde Filtros
-  hideIcsFeed: Ocultar Opciones de Fuente de Datos ICS
   hideObjectives: Ocultar objetivos
   hideSessionMaterials: Ocultar materiales de sesión
   hour: Hora
@@ -169,9 +158,7 @@ general:
     labels:
       bold: negrita
       italic: itálica
-      insert: insertar
       insertLink: enlace
-      linkNewTarget: nueva pestaña
       listOrdered: "lista: ordenada"
       listUnordered: "lista: desordenada"
       redo: rehacer
@@ -190,22 +177,16 @@ general:
       subscript: Subíndice
       superscript: Sobrescrita
       undo: Deshacer (⌘Z)
-  icsInstructions: "Para agregar tu calendario a otra aplicación o servicio, utiliza esta URL.  Esta URL es como una contraseña.  ¡Cualquiera persona que la sepa puede ver tu calendario!"
-  ilios: Ilios
-  iliosUserGuide: Ilios Guía de usuario
   ilm: ILM
   ilmDue: AI - Debido Por
   inactive: inactivo
   include: Incluir
   incompleteSessions: "Sesiónes Incompletas: No se pueden publicar"
   independentLearning: Aprendizaje Independiente
-  independentLearningActivities: Aprendizaje Independiente Actividades
   inProgress: En Progreso
   instructing: Instruyendo
   instructionalNotes: Notes para la Instrucción
   instructor: Instructor
-  instructorGroupMembers: Miembros del grupo instructor
-  instructorGroups: Grupos de Instructores
   instructors: Instructores
   instructorsAndInstructorGroups: Instructores y Grupos de Instructores
   instructorsAndInstructorGroupsWithCount: Instructores ({instructorCount}) y Grupos de Instructores ({instructorGroupCount})
@@ -214,7 +195,6 @@ general:
   lastUpdate: Última actualización
   leadership: Liderazgo
   learnerGroups: Grupos de Aprendedores
-  learnerGroupsManageTitle: Administrar Grupos de Aprendedores
   learners: Aprendedores
   learnersAndLearnerGroups: Aprendedores y Grupos de Aprendedores
   learnersAndLearnerGroupsWithCount: "Aprendedores ({learnerCount}) y Grupos de Aprendedores ({learnerGroupCount})"
@@ -224,13 +204,9 @@ general:
   learningMaterialsSummary: Resumen de Materiales de Aprendizaje
   level: Nivel
   link: Enlace de la Web
-  linkedCompetencies: Competencias Vinculadas
-  linkedCompetencyCount: "{count, plural, =1 {1 tiene una competencia vinculada} other {# tienen competencias vinculadas}}"
   listByPriority: Lista por prioridad
   loadingEvents: Cargando eventos...
-  loadingMaterials: Carga de Materiales...
   location: Ubicación
-  login: Inicio
   makeRecurring: Hacer Recurrente
   manageLeadership: Maneje el Liderazgo
   manageLearners: Administrar Aprendedores
@@ -240,24 +216,19 @@ general:
   meshCount: "{count, plural, =1 {1 tiene MeSH} other {# tienen MeSH}}"
   meshManageTitle: Administrar MeSH
   meshTerms: Terminos de MeSH
-  metaDescription: Gestión Curricular para las Profesiones de la Salud.
   minute: Minuto
   minutes: Minutos
   missingCohortMessage: Favor de agregar por lo menos un Clase de La Graduación a este curso.
-  missingCompetenciesMessage: Favor de agregar por lo menos una competencia para este año de programa.
   missingCourseObjectivesMessage: Favor de agregar por lo menos un objetivo al Curso.
   missingItems: Artículos Faltantes
   monday: Lunes
   month: Mes
   moreInputRequiredPrompt: sigue marcando...
-  multiday: de Días Múltiples
   multidayEvents: Eventos de Varios Días
   multiple: "Múltiple "
   mustBeSameDayOfWeekAsCurrentStartDate: Debe ser el mismo día de la semana en curso como fecha de inicio
-  myLearningMaterials: Mis Materiales Didácticos
   myMaterials: Mis Materiales
   mySchedule: Mi Horario
-  navigation: Navegación
   newObjective: Nuevo Objetivo
   newObjectiveSaved: Nuevo Objetivo Guardado
   newOffering: Nueva Oferta
@@ -268,8 +239,6 @@ general:
   no: No
   noAssociatedCompetencies: No Competencias Asociadas
   noAssociatedCompetency: No Competencia Asociada
-  noAvailableLearnerGroups: No grupo de aprendedores disponible; Este curso no contiene ninguna clase de la graduación.
-  noAvailableLearners: No aprendedores disponible; Este curso no contiene ninguna clase de la graduación.
   noCohorts: No hay ningún clase de la graduación en este curso
   noCourseLearningMaterialsAvailable: Ningunos Materiales Didácticos del Curso Disponibles
   noEvents: no eventos
@@ -280,21 +249,15 @@ general:
   noSessionLearningMaterialsAvailable: Ningunos Materiales Didácticos de la Sesión Disponibles
   notAClerkship: No una Rotación
   notes: Notas
-  notFound: No Encontrado
   notFoundMessage: "Malditas! Éso no puede encontrar. Favor de verificar la dirección de la página, y trata otra vez."
   notPublished: No Publicado
   notStarted: No Comenzado
-  objectiveCompetencyManagerTitle: Seleccione Competencia Principal para Objetivo
   objectiveCount: "Hay {count, plural, =1 {1 objectivo} other {# objectivos}}"
-  objectiveDescriptorTitle: Seleccione Descriptores de MeSH para Objetivo
-  objectiveParentTitle: Seleccione Objetivos Principales
-  objectiveParentTitleSingular: Seleccione Objetivo Principale
   objectives: Objetivos
   objectivesWithNoHours: "Los siguientes objetivos del curso no están vinculados a ninguna sesión, o están vinculados sólo a las sesiones sin datos de duración."
   objectivesWithNoLink: No hay objetivos del curso actualmente vinculados a tiempo de instrucción.
   offering: Ofrecimiento
   offerings: Ofrecimientos
-  otherVisualizations: Otras Visualizaciones
   overview: Visión Amplia
   ownedBy: "propiedad de {owner}"
   owner: Dueño
@@ -323,13 +286,13 @@ general:
   publishedSuccessfully: Publicado con éxito
   publishSession: Publique La Sesión
   remove: Remover
-  removeAll: Quitar Todos
   required: Requerido
   results: Resultados
   resultsCount: "{count, plural, =1 {1 resultado} other {# resultados}}"
   returnToPreviousPage: Volver a la Página Anterior
   reviewMissingItems: "Revisar {count} Artículos Faltantes"
   reviewSessions: Sesiónes a Revisar
+  room: Salón de clase
   saturday: Sábado
   save: Guardar
   savedSuccessfully: ahorrado con éxito
@@ -338,7 +301,6 @@ general:
   scheduling: Programación
   school: Escuela
   schools: Escuelas
-  schoolTitlePlaceholder: Entre en un titulo para esta escuela
   search: Buscar
   searchForIliosUsers: Encuentre Usuarios de Ilios...
   searchMesh: Buscar MeSH
@@ -365,15 +327,12 @@ general:
   showCourseMaterials: Mostrar materiales del curso
   showCourseObjectives: Mostrar objetivos del curso
   showFilters: Enseñe Filtros
-  showIcsFeed: Mostrar Opciones de Fuente de Datos ICS
   showLearnerGroupEvents: Mostrar todos los eventos para grupos de alumnos asignados
-  showLess: Mostrar menos
   showMore: Mostrar más
   showNotesToStudents: Mostrar Notas a Los Estudiantes
   showObjectives: Mostrar objetivos
   showSessionEvents: "Mostrar todos los '<em>'{sessionTitle}'</em>' eventos"
   showSessionMaterials: Mostrar materiales de la sesión
-  smallGroupMessage: 'Por favor seleccione al menos un grupo de alumnos para adjuntar a su ofrecimiento de grupos pequeños. Si usted desea programar este ofrecimiento sin grupos, favor de seleccionar el botón de "ofrecimiento" de arriba.'
   smallGroups: Grupos Pequeños
   sortMaterials: Clasificar los materiales
   showOnlyMyAdminActivities: Mostrar solo mis actividades de administrador
@@ -398,6 +357,7 @@ general:
   targetCourse: Curso de Destino
   taughtBy: "Ènsenada Por {instructors}"
   termCount: "{count, plural, =1 {1 tiene términos de vocabulario} other {# tienen términos de vocabulario}}"
+  term: Término
   terms: Términos
   termsManageTitle: Maneje Términos
   text: Texto
@@ -415,7 +375,6 @@ general:
   timezone: Zona horaria
   title: Titulo
   today: Hoy
-  token: Token
   topPagination: Paginación superior
   totalIlmTime: " Tiempo de ILM {minutes} Minutos"
   totalInstructionalTime: "Tiempo de Instrucción Total {minutes} Minutos"
@@ -427,9 +386,8 @@ general:
   unPublishedSuccessfully: No Publicado con éxito
   unPublishSession: No Publique La Sesión
   unusedObjectives: Objetivos no Utilizados
-  upcomingActivities: "Mis Actividades para los próximos {days} días"
-  upcomingMaterials: "Mis Materiales de Aprendizaje para los próximos {days} días"
   updateNow: "Actualizar Ahora "
+  updatePending: Actualización Pendiente
   uploadDate: Fecha de carga
   url: URL
   userRole: Función de Usuario
@@ -451,7 +409,6 @@ general:
   weeks: Semanas
   when: Cuando
   whitecoatsSlashSpecialAttire: Abrigos blancos / vestimenta especial
-  withXmoreOfferings: "con {count, plural, =1 {una ofrenda mas} other {# ofertas más}}"
   year: Año
   yes: Sí
 errors:

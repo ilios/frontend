@@ -5,11 +5,12 @@
   "scripts": {
     "preinstall": "npx only-allow pnpm",
     "format": "pnpm run --parallel format",
-    "lint": "pnpm run --parallel \"/^lint:(hbs|js|css|format)$/\"",
+    "lint": "pnpm run --parallel \"/^lint:(hbs|js|css|format|intl)$/\"",
     "lint:js": "pnpm run --parallel lint:js",
     "lint:hbs": "pnpm run --parallel lint:hbs",
     "lint:css": "pnpm run --parallel lint:css",
     "lint:fix": "pnpm run --parallel lint:fix",
+    "lint:intl": "pnpm run --parallel lint:intl",
     "lint:deps": "pnpm run --parallel lint:deps",
     "lint:format": "pnpm run --parallel lint:format",
     "start": "pnpm --filter frontend exec ember serve",

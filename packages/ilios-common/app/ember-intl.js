@@ -1,19 +1,19 @@
-export default {
-  time: {
+export const formats = {
+  formatTime: {
     hhmmss: {
       hour: 'numeric',
       minute: 'numeric',
       second: 'numeric',
     },
   },
-  date: {
+  formatDate: {
     hhmmss: {
       hour: 'numeric',
       minute: 'numeric',
       second: 'numeric',
     },
   },
-  number: {
+  formatNumber: {
     EUR: {
       style: 'currency',
       currency: 'EUR',

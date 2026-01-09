@@ -37,47 +37,5 @@ module.exports = function (/* environment */) {
      * @default "false"
      */
     publicOnly: false,
-
-    /**
-     * Cause a build error if ICU argument mismatches are detected.
-     *
-     * @property errorOnNamedArgumentMismatch
-     * @type {Boolean}
-     * @default "false"
-     */
-    errorOnNamedArgumentMismatch: false,
-
-    /**
-     * Cause a build error if missing translations are detected.
-     *
-     * See https://ember-intl.github.io/ember-intl/docs/guide/missing-translations#throwing-a-build-error-on-missing-required-translation
-     *
-     * @property errorOnMissingTranslations
-     * @type {Boolean}
-     * @default "false"
-     */
-    errorOnMissingTranslations: false,
-
-    /**
-     * removes empty translations from the build output.
-     *
-     * @property stripEmptyTranslations
-     * @type {Boolean}
-     * @default false
-     */
-    stripEmptyTranslations: false,
-
-    /**
-     * Filter missing translations to ignore expected missing translations.
-     *
-     * See https://ember-intl.github.io/ember-intl/docs/guide/missing-translations#requiring-translations
-     *
-     * @property requiresTranslation
-     * @type {Function}
-     * @default "function(key,locale){return true}"
-     */
-    requiresTranslation(/* key, locale */) {
-      return true;
-    },
   };
 };
