@@ -8,8 +8,7 @@ import onClickOutside from 'ember-click-outside/modifiers/on-click-outside';
 import { on } from '@ember/modifier';
 import toggle from 'ilios-common/helpers/toggle';
 import FaIcon from 'ilios-common/components/fa-icon';
-import t from 'ember-intl/helpers/t';
-import { concat, fn } from '@ember/helper';
+import { fn } from '@ember/helper';
 import eq from 'ember-truth-helpers/helpers/eq';
 import focus from 'ilios-common/modifiers/focus';
 
@@ -25,7 +24,7 @@ export default class LocaleChooserComponent extends Component {
 
   get locales() {
     return uniqueValues(this.intl.get('locales')).map((locale) => {
-      return { id: locale, text: this.intl.t('general.language.' + locale) };
+      return { id: locale, text: this.getLocaleLabel(locale) };
     });
   }
 
@@ -33,9 +32,26 @@ export default class LocaleChooserComponent extends Component {
     return guidFor(this);
   }
 
+  get currentLocaleLabel() {
+    return this.getLocaleLabel(this.locale.id);
+  }
+
   @action
   close() {
     this.isOpen = false;
+  }
+
+  getLocaleLabel(locale) {
+    switch (locale) {
+      case 'en-us':
+        return this.intl.t('general.language.en-us');
+      case 'es':
+        return this.intl.t('general.language.es');
+      case 'fr':
+        return this.intl.t('general.language.fr');
+      default:
+        return locale;
+    }
   }
 
   @action
@@ -114,7 +130,7 @@ export default class LocaleChooserComponent extends Component {
       >
         <FaIcon @icon="globe" />
         <span id="{{this.uniqueId}}-locale-chooser-title">
-          {{t (concat "general.language." this.locale.id)}}
+          {{this.currentLocaleLabel}}
         </span>
         <FaIcon @icon={{if this.isOpen "caret-down" "caret-right"}} />
       </button>
