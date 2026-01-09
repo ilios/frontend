@@ -45,7 +45,7 @@ export default class IcsFeedComponent extends Component {
       <CopyButton
         @getClipboardText={{this.getIcsFeedUrl}}
         @success={{perform this.textCopied}}
-        aria-label={{if @instructions @instructions (t "general.copyIcsFeedUrl")}}
+        aria-label={{t "general.copyIcsFeedUrl"}}
         class="link-button highlight"
         id={{this.copyButtonId}}
         {{mouseHoverToggle (set this "showTooltip")}}

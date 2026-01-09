@@ -26,7 +26,6 @@ export default class NavigationComponent extends Component {
     const loc = window.location.protocol + '//' + window.location.hostname;
     const server = apiHost ? apiHost : loc;
     this.icsFeedUrl = server + '/ics/' + icsFeedKey;
-    this.icsInstructions = this.intl.t('general.copyIcsFeedUrl');
   });
   <template>
     <nav
@@ -65,7 +64,7 @@ export default class NavigationComponent extends Component {
           >
             {{t "general.calendar"}}
           </LinkTo>
-          <IcsFeed @url={{this.icsFeedUrl}} @instructions={{this.icsInstructions}} />
+          <IcsFeed @url={{this.icsFeedUrl}} />
         </li>
       </ul>
     </nav>
