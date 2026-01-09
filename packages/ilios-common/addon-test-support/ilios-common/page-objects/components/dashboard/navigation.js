@@ -1,4 +1,5 @@
 import { attribute, create, hasClass } from 'ember-cli-page-object';
+import icsFeed from './../ics-feed';
 
 const definition = {
   scope: '[data-test-dashboard-navigation]',
@@ -17,6 +18,7 @@ const definition = {
     linkTarget: attribute('href'),
     isActive: hasClass('active'),
   },
+  icsFeed,
 };
 
 export default definition;
