@@ -5,6 +5,7 @@ import * as Sentry from '@sentry/ember';
 import { loadPolyfills } from 'ilios-common/utils/load-polyfills';
 import { launchWorker } from '../utils/launch-worker';
 import { formats } from 'ilios-common/app/ember-intl';
+import ENV from 'frontend/config/environment';
 
 export default class AuthenticatedRoute extends Route {
   @service currentUser;
@@ -12,6 +13,7 @@ export default class AuthenticatedRoute extends Route {
   @service store;
   @service router;
   @service session;
+  @service('local-storage') ls;
 
   @tracked event;
 
@@ -21,7 +23,7 @@ export default class AuthenticatedRoute extends Route {
     await loadPolyfills();
     this.intl.setFormats(formats);
     // Set the default locale.
-    this.intl.setLocale('en-us');
+    this.intl.setLocale(this.initialLocale());
     const locale = this.intl.primaryLocale;
     window.document.querySelector('html').setAttribute('lang', locale);
   }
@@ -49,5 +51,17 @@ export default class AuthenticatedRoute extends Route {
     if (this.currentUser.currentUserId) {
       Sentry.setUser({ id: this.currentUser.currentUserId });
     }
+  }
+
+  // check if we have a saved, valid locale
+  initialLocale() {
+    const itemVal = this.ls.get('locale');
+
+    if (itemVal !== undefined) {
+      if (ENV.APP.SUPPORTED_LOCALES.includes(itemVal)) {
+        return itemVal;
+      }
+    }
+    return ENV.APP.DEFAULTS.localStorage['locale'];
   }
 }
