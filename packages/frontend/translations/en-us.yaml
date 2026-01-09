@@ -184,6 +184,8 @@ general:
   learningMaterial: Learning Material
   linkedCompetencies: Linked Competencies
   linkedCompetencyCount: "{count, plural, =1 {1 has a linked competency} other {# have linked competencies}}"
+  localStorageGetItemFail: "Could not get localStorage item {itemName} from key {keyName}"
+  localStorageSetItemFail: "Could not set localStorage item {itemName} from key {keyName} with {value}"
   lock: Lock
   lockCourse: Lock Course
   login: Login

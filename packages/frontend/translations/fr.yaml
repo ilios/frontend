@@ -184,6 +184,8 @@ general:
   learningMaterial: "Matériel d'Étude"
   linkedCompetencies: Compétences Liés
   linkedCompetencyCount: "{count, plural, =1 {1 présente un compétence líé} other {# présentes des compétences líés}}"
+  localStorageGetItemFail: "Impossible de récupérer l'élément localStorage {itemName} à partir de la clé {keyName}"
+  localStorageSetItemFail: "Impossible d'associer l'élément {itemName} au localStorage à partir de la clé {keyName} avec la valeur {value}"
   lock: Verrouiller
   lockCourse: Verrouiller le cours
   login: Login
