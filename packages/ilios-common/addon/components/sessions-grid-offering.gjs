@@ -199,7 +199,7 @@ export default class SessionsGridOffering extends Component {
                 as |keyboard isSaving|
               >
                 <input
-                  aria-label={{t "general.room"}}
+                  aria-label={{t "general.location"}}
                   type="text"
                   class="change-room"
                   value={{this.room}}

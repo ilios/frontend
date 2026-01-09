@@ -292,7 +292,6 @@ general:
   returnToPreviousPage: Retour à la page précédente
   reviewMissingItems: "Examiner {count} objets manquants"
   reviewSessions: Séances à faire réviser
-  room: Salle
   saturday: Samedi
   save: Enregistrer
   savedSuccessfully: enregistré avec succès

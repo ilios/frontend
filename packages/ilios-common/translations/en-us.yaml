@@ -292,7 +292,6 @@ general:
   returnToPreviousPage: Return to Previous Page
   reviewMissingItems: "Review {count} Missing Items"
   reviewSessions: Sessions Requiring Review
-  room: Room
   saturday: Saturday
   save: Save
   savedSuccessfully: saved successfully
