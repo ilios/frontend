@@ -314,8 +314,6 @@ general:
   selectVocabulary: Select Vocabulary
   session: Session
   sessionLearningMaterials: Session Learning Materials
-  sessionObjective: Session Objective
-  sessionObjectives: Session Objectives
   sessions: Sessions
   sessionTitle: Session Title
   sessionTitleFilterPlaceholder: "Filter by title, type, or status"
