@@ -37,7 +37,7 @@ module('Integration | Component | ilios calendar single event objective list', f
       </template>,
     );
 
-    assert.strictEqual(component.title.expandCollapseSwitcher.text, title);
+    assert.strictEqual(component.title.expandCollapseSwitcher.text, 'Course Objectives (2)');
     assert.strictEqual(component.title.expandCollapseSwitcher.ariaExpanded, 'true');
     assert.strictEqual(component.title.expandCollapseSwitcher.ariaLabel, 'Hide objectives');
     assert.strictEqual(component.title.displayModeSwitcher.text, listByPriorityPhrase);

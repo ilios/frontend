@@ -62,6 +62,7 @@ export default class SingleEventObjectiveList extends Component {
           data-test-expand-collapse
         >
           {{@title}}
+          ({{this.domains.length}})
           <FaIcon @icon={{if this.isExpanded "caret-down" "caret-right"}} />
         </button>
         {{#if this.showDisplayModeToggle}}
