@@ -1,8 +1,10 @@
 import Component from '@glimmer/component';
+import { service } from '@ember/service';
 import FaIcon from 'ilios-common/components/fa-icon';
-import t from 'ember-intl/helpers/t';
 
 export default class LmTypeIconComponent extends Component {
+  @service intl;
+
   get icon() {
     if (this.args.type === 'link') {
       return 'link';
@@ -14,11 +16,26 @@ export default class LmTypeIconComponent extends Component {
   }
   get title() {
     if (this.args.type === 'link') {
-      return 'general.link';
+      return this.intl.t('general.link');
     } else if (this.args.type === 'citation') {
-      return 'general.citation';
+      return this.intl.t('general.citation');
     } else {
-      return `general.${this.fileType}`;
+      return this.fileTypeTitle;
+    }
+  }
+
+  get fileTypeTitle() {
+    switch (this.fileType) {
+      case 'file-pdf':
+        return this.intl.t('general.file-pdf');
+      case 'file-powerpoint':
+        return this.intl.t('general.file-powerpoint');
+      case 'file-video':
+        return this.intl.t('general.file-video');
+      case 'file-audio':
+        return this.intl.t('general.file-audio');
+      default:
+        return this.intl.t('general.file');
     }
   }
 
@@ -38,13 +55,14 @@ export default class LmTypeIconComponent extends Component {
     }
     return 'file';
   }
+
   <template>
     <FaIcon
       class="lm-type-icon"
       @icon={{this.icon}}
       @listItem={{@listItem}}
       @fixedWidth={{@fixedWidth}}
-      @title={{t this.title}}
+      @title={{this.title}}
       data-test-lm-type-icon
     />
   </template>
