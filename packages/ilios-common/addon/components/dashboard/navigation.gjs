@@ -9,6 +9,7 @@ import IcsFeed from 'ilios-common/components/ics-feed';
 export default class NavigationComponent extends Component {
   @service currentUser;
   @service iliosConfig;
+  @service intl;
 
   @tracked icsFeedUrl;
   @tracked icsInstructions;
@@ -25,7 +26,6 @@ export default class NavigationComponent extends Component {
     const loc = window.location.protocol + '//' + window.location.hostname;
     const server = apiHost ? apiHost : loc;
     this.icsFeedUrl = server + '/ics/' + icsFeedKey;
-    this.icsInstructions = 'Copy My ICS Link';
   });
   <template>
     <nav
@@ -64,7 +64,7 @@ export default class NavigationComponent extends Component {
           >
             {{t "general.calendar"}}
           </LinkTo>
-          <IcsFeed @url={{this.icsFeedUrl}} @instructions={{this.icsInstructions}} />
+          <IcsFeed @url={{this.icsFeedUrl}} />
         </li>
       </ul>
     </nav>
