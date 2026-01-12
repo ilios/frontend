@@ -5,26 +5,15 @@ export default class LocalStorageService extends Service {
   @service intl;
 
   get(item = null) {
-    const settings = JSON.parse(localStorage.getItem(config.APP.LOCAL_STORAGE_KEY));
+    const key = JSON.parse(localStorage.getItem(config.APP.LOCAL_STORAGE_KEY));
 
-    if (settings) {
+    if (key) {
       if (item) {
-        const keyVal = settings[item];
+        const itemValue = key[item];
 
-        if (keyVal !== undefined) {
-          return settings[item];
-        } else {
-          console.error(
-            this.intl.t('errors.localStorageGetItemFail', {
-              keyName: config.APP.LOCAL_STORAGE_KEY,
-              itemName: item,
-            }),
-          );
-
-          return null;
-        }
+        return itemValue !== undefined ? itemValue : null;
       } else {
-        return settings;
+        return key;
       }
     } else {
       return localStorage.setItem(
@@ -35,21 +24,21 @@ export default class LocalStorageService extends Service {
   }
 
   set(item, value) {
-    const settings = JSON.parse(localStorage.getItem(config.APP.LOCAL_STORAGE_KEY));
+    const key = JSON.parse(localStorage.getItem(config.APP.LOCAL_STORAGE_KEY));
 
     // if localStorage[key] exists, move on
-    if (settings) {
+    if (key) {
       // if localStorage[key][item] exists, move on
-      if (settings[item] !== undefined) {
-        settings[item] = value;
-        localStorage.setItem(config.APP.LOCAL_STORAGE_KEY, JSON.stringify(settings));
+      if (key[item] !== undefined) {
+        key[item] = value;
+        localStorage.setItem(config.APP.LOCAL_STORAGE_KEY, JSON.stringify(key));
       }
       // otherwise, check if item has default value
       else {
         // if so, set item to default value
         if (Object.hasOwn(config.APP.DEFAULTS.localStorage, item)) {
-          settings[item] = config.APP.DEFAULTS.localStorage[item];
-          localStorage.setItem(config.APP.LOCAL_STORAGE_KEY, JSON.stringify(settings));
+          key[item] = config.APP.DEFAULTS.localStorage[item];
+          localStorage.setItem(config.APP.LOCAL_STORAGE_KEY, JSON.stringify(key));
         }
         // otherwise, throw error
         else {
@@ -65,7 +54,7 @@ export default class LocalStorageService extends Service {
         return null;
       }
     }
-    // otherwise, create default key
+    // if the key doesn't exist at all, create default key
     else {
       const obj = {};
       obj[item] = value;

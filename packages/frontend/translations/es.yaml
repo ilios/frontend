@@ -184,8 +184,6 @@ general:
   learningMaterial: Material de Aprendizaje
   linkedCompetencies: Competencias Vinculadas
   linkedCompetencyCount: "{count, plural, =1 {1 tiene una competencia vinculada} other {# tienen competencias vinculadas}}"
-  localStorageGetItemFail: "Could not get localStorage item {itemName} from key {keyName}"
-  localStorageSetItemFail: "Could not set localStorage item {itemName} from key {keyName} with {value}"
   lock: Bloquear
   lockCourse: Bloquear el curso
   login: Inicio
@@ -432,6 +430,7 @@ general:
 errors:
   duplicateUsername: Este nombre de usuario ya está ocupado por otra cuenta de usuario.
   invalidChangeAlertRecipients: Esta lista de destinatarios de alertas de cambios contiene direcciones de correo electrónico no válidas.
+  localStorageSetItemFail: "Could not set localStorage item {itemName} from key {keyName} with {value}"
   reportMissingAcademicYear: Año Academico es Necesario
   reportMissingCompetency: Competencia es Necesario
   reportMissingCourse: Curso es Necesario

@@ -60,7 +60,7 @@ module.exports = function (environment) {
         },
       },
       LOCAL_STORAGE_KEY: 'ilios',
-      SUPPORTED_LOCALES: ['en-US', 'es', 'fr'],
+      SUPPORTED_LOCALES: ['en-us', 'es', 'fr'],
     },
   };
 
