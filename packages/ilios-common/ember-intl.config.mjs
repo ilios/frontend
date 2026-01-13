@@ -40,7 +40,6 @@ export default {
         'errors.url',
         'errors.wrongDateFormat',
         'errors.wrongLength',
-        'general.etAl',
       ],
     },
   },
