@@ -61,7 +61,6 @@ export default class OfferingForm extends Component {
   @tracked instructorGroups = [];
   @tracked offeringsToSave = 0;
   @tracked savedOfferings = 0;
-  @tracked recurringDayOptions = null;
   @tracked availableInstructorGroups = [];
   @tracked saveProgressPercent;
   @tracked urlChanged = false;
@@ -72,15 +71,16 @@ export default class OfferingForm extends Component {
 
     this.currentTimezone = this.timezone.getCurrentTimezone();
     this.timezones = this.timezone.getTimezones();
-
-    this.recurringDayOptions = [
-      { day: 7, t: 'general.sunday' },
-      { day: 1, t: 'general.monday' },
-      { day: 2, t: 'general.tuesday' },
-      { day: 3, t: 'general.wednesday' },
-      { day: 4, t: 'general.thursday' },
-      { day: 5, t: 'general.friday' },
-      { day: 6, t: 'general.saturday' },
+  }
+  get recurringDayOptions() {
+    return [
+      { day: 7, label: this.intl.t('general.sunday') },
+      { day: 1, label: this.intl.t('general.monday') },
+      { day: 2, label: this.intl.t('general.tuesday') },
+      { day: 3, label: this.intl.t('general.wednesday') },
+      { day: 4, label: this.intl.t('general.thursday') },
+      { day: 5, label: this.intl.t('general.friday') },
+      { day: 6, label: this.intl.t('general.saturday') },
     ];
   }
 
@@ -801,7 +801,7 @@ export default class OfferingForm extends Component {
                                 for="make-recurring-day-input-{{i}}-{{templateId}}"
                                 data-test-recurring-day-label={{i}}
                               >
-                                {{t obj.t}}
+                                {{obj.label}}
                               </label>
                             </div>
                           {{/each}}
