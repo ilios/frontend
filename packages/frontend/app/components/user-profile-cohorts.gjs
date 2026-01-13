@@ -179,7 +179,7 @@ export default class UserProfileCohortsComponent extends Component {
               <button
                 type="button"
                 disabled={{or this.save.isRunning this.cancel.isRunning}}
-                class="bigadd"
+                class="bigadd font-size-base"
                 aria-label={{t "general.save"}}
                 {{on "click" (perform this.save)}}
                 data-test-save
@@ -192,7 +192,7 @@ export default class UserProfileCohortsComponent extends Component {
               <button
                 type="button"
                 disabled={{or this.save.isRunning this.cancel.isRunning}}
-                class="bigcancel"
+                class="bigcancel font-size-base"
                 aria-label={{t "general.cancel"}}
                 {{on "click" (perform this.cancel)}}
                 data-test-cancel
@@ -203,7 +203,7 @@ export default class UserProfileCohortsComponent extends Component {
               <button
                 aria-label={{t "general.manage"}}
                 type="button"
-                class="manage"
+                class="manage font-size-base"
                 {{on "click" (fn @setIsManaging true)}}
                 data-test-manage
               >

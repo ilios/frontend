@@ -545,9 +545,9 @@ export default class PublishAllSessionsComponent extends Component {
           {{/if}}
         </div>
       </section>
-      <div class="publish-all-sessions-review" data-test-review>
+      <div class="publish-all-sessions-review font-size-large" data-test-review>
         {{#if this.showWarning}}
-          <span class="unlinked-warning" data-test-unlinked-warning>
+          <span class="unlinked-warning font-size-base" data-test-unlinked-warning>
             {{t "general.unlinkedObjectives"}}
           </span>
           <LinkTo
@@ -557,7 +557,7 @@ export default class PublishAllSessionsComponent extends Component {
             title={{t "general.backToTitle" title=@course.title}}
             data-test-course-link
           >
-            <FaIcon @icon="link-slash" />
+            <FaIcon @icon="link-slash" class="font-size-small" />
           </LinkTo>
           <LinkTo
             @route="course-visualize-objectives"
@@ -565,7 +565,7 @@ export default class PublishAllSessionsComponent extends Component {
             title={{t "general.courseVisualizations"}}
             data-test-visualize
           >
-            <FaIcon @icon="chart-column" />
+            <FaIcon @icon="chart-column" class="font-size-small" />
           </LinkTo>
         {{/if}}
         <p data-test-confirmation>

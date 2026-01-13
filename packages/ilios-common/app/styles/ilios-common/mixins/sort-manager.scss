@@ -1,5 +1,3 @@
-@use "font-size";
-
 @mixin sort-manager() {
   .actions {
     display: flex;
@@ -43,9 +41,6 @@
 
       .fa {
         vertical-align: top;
-      }
-      .details {
-        @include font-size.font-size("small");
       }
 
       .title {

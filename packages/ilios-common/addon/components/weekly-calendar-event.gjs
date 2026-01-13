@@ -132,7 +132,7 @@ export default class WeeklyCalendarEventComponent extends Component {
     <button
       {{! template-lint-disable no-inline-styles }}
       style={{this.style}}
-      class="weekly-calendar-event day-{{@day}}
+      class="weekly-calendar-event font-size-small day-{{@day}}
         {{if this.isIlm 'ilm'}}
         {{if this.clickable 'clickable'}}"
       type="button"

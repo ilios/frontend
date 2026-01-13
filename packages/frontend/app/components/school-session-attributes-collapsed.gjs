@@ -20,7 +20,7 @@ import FaIcon from 'ilios-common/components/fa-icon';
       </button>
     </div>
     <div class="content">
-      <table class="ilios-table ilios-table-colors condensed">
+      <table class="ilios-table ilios-table-colors condensed font-size-small">
         <thead>
           <tr>
             <th class="text-left">

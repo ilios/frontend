@@ -481,6 +481,7 @@ export default class SingleEvent extends Component {
                 <FaIcon
                   @icon="box-archive"
                   @title={{t "general.accessAllMaterialsForThisCourse"}}
+                  class="font-size-base"
                 />
               </button>
             {{/if}}
