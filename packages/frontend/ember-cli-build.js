@@ -6,7 +6,6 @@ const broccoliAssetRevDefaults = require('broccoli-asset-rev/lib/default-options
 const { Webpack } = require('@embroider/webpack');
 const { RetryChunkLoadPlugin } = require('webpack-retry-chunk-load-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
-// const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
 module.exports = async function (defaults) {
   const env = EmberApp.env() || 'development';
@@ -75,7 +74,7 @@ module.exports = async function (defaults) {
     // splitAtRoutes: [], disabled until https://github.com/embroider-build/embroider/issues/231 once again allows our loading routes to work
     packagerOptions: {
       webpackConfig: {
-        plugins: [new RetryChunkLoadPlugin() /*, new BundleAnalyzerPlugin()*/],
+        plugins: [new RetryChunkLoadPlugin()],
         devtool: env === 'production' ? 'source-map' : 'eval',
         optimization: {
           minimize: true,
