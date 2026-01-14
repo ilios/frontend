@@ -3,8 +3,41 @@ import { http, HttpResponse } from 'msw';
 import { DateTime } from 'luxon';
 import { handlers } from './handlers.js';
 
-// Creates and configures MSW server with auth and config routes
-export function startMSW(config = {}) {
+let server;
+let serverStartPromise;
+
+export async function startMSW(config = {}) {
+  if (server) {
+    return server;
+  }
+
+  if (!serverStartPromise) {
+    serverStartPromise = (async () => {
+      const createdServer = setupAndStartMSW(config);
+
+      await createdServer.start({ onUnhandledRequest: 'warn', quiet: true });
+
+      server = createdServer;
+
+      return server;
+    })();
+  }
+
+  return serverStartPromise;
+}
+
+export async function stopMSW() {
+  if (!server) {
+    return;
+  }
+
+  await server.stop();
+
+  server = undefined;
+  serverStartPromise = undefined;
+}
+
+function setupAndStartMSW(config = {}) {
   const { apiVersion = '3' } = config;
 
   // Auth and config handlers
@@ -96,5 +129,3 @@ export function startMSW(config = {}) {
 
   return worker;
 }
-
-export default startMSW;
