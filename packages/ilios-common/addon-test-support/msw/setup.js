@@ -26,6 +26,7 @@ export function setupMSW(hooks) {
     this.server.createList = createModelList;
     this.server.db = db;
     this.server.get = get.bind(this);
+    this.server.post = post.bind(this);
   });
 
   hooks.afterEach(async function () {
@@ -43,6 +44,18 @@ export function setupMSW(hooks) {
 }
 
 function get(url, callback) {
+  this.server.use(
+    http.get(
+      url,
+      () => {
+        return HttpResponse.json(callback());
+      },
+      { once: true },
+    ),
+  );
+}
+
+function post(url, callback) {
   this.server.use(
     http.get(
       url,
