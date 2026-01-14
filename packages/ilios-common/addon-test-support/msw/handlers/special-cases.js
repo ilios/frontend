@@ -50,10 +50,10 @@ const coursesHandler = http.get('/api/courses', async ({ request }) => {
 
   // Apply school filter if present
   if (schoolFilter) {
-    const schoolIds = JSON.parse(schoolFilter);
+    const schoolId = JSON.parse(schoolFilter);
     courses = courses.filter((course) => {
       const school = course.school;
-      return school && schoolIds.includes(school.id);
+      return school && schoolId === school.id;
     });
   }
 
