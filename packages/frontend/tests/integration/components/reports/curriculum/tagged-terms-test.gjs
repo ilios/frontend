@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'frontend/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { setupMirage } from 'frontend/tests/test-support/mirage';
+import { setupMSW } from 'ilios-common/msw';
 import { component } from 'frontend/tests/pages/components/reports/curriculum/tagged-terms';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
 import { graphQL } from 'frontend/tests/helpers/curriculum-report';
@@ -11,41 +11,41 @@ import noop from 'ilios-common/helpers/noop';
 
 module('Integration | Component | reports/curriculum/tagged-terms', function (hooks) {
   setupRenderingTest(hooks);
-  setupMirage(hooks);
+  setupMSW(hooks);
 
-  hooks.beforeEach(function () {
-    const school = this.server.create('school', { title: 'school 0' });
-    this.vocabulary = this.server.create('vocabulary');
+  hooks.beforeEach(async function () {
+    const school = await this.server.create('school', { title: 'school 0' });
+    this.vocabulary = await this.server.create('vocabulary');
 
-    const courseTerm1 = this.server.create('term', {
+    const courseTerm1 = await this.server.create('term', {
       vocabulary: this.vocabulary,
       title: 'course term 1',
     });
-    const courseTerm2 = this.server.create('term', {
+    const courseTerm2 = await this.server.create('term', {
       vocabulary: this.vocabulary,
       title: 'course term 2',
     });
-    const sessionTerm1 = this.server.create('term', {
+    const sessionTerm1 = await this.server.create('term', {
       vocabulary: this.vocabulary,
       title: 'session term 1',
     });
-    const sessionTerm2 = this.server.create('term', {
+    const sessionTerm2 = await this.server.create('term', {
       vocabulary: this.vocabulary,
       title: 'session term 2',
     });
 
-    this.course = this.server.create('course', {
+    this.course = await this.server.create('course', {
       school,
       terms: [courseTerm1, courseTerm2],
     });
-    const sessionType = this.server.create('sessionType');
-    this.session = this.server.create('session', {
+    const sessionType = await this.server.create('sessionType');
+    this.session = await this.server.create('session', {
       course: this.course,
       sessionType,
       terms: [sessionTerm1, sessionTerm2],
     });
 
-    this.server.post('api/graphql', (schema) => {
+    await this.server.post('api/graphql', (schema) => {
       //use all the courses, getting the id filter from graphQL is a bit tricky
       const courseIds = schema.db.courses.map((c) => c.id);
       const rawCourses = courseIds.map((id) => graphQL.fetchCourse(schema.db, id));
