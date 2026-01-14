@@ -78,6 +78,7 @@ general:
   countTotal: "{total} au total"
   country: Pays
   countryCode: Code du pays
+  coursesAndSessions: Des Cours et Séances
   courseTerm: Terme de Cours
   courseTerms: Termes de Cours
   courseTitleFilterPlaceholder: Filtre par titre de cours
