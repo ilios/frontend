@@ -1,7 +1,7 @@
 import { http, HttpResponse } from 'msw';
 import { camelize } from '@ember/string';
 import { pluralize } from 'ember-inflector';
-import { db, getRelatedRecord } from '../db.js';
+import { db, getRelatedRecord, isRelatedRecord } from '../db.js';
 import { formatJsonApi } from '../utils/json-api-formatter.js';
 import { parseQueryParams } from '../utils/query-parser.js';
 
@@ -17,19 +17,7 @@ export function createCrudHandlers(modelName, apiRoute) {
       const { filterParams, limit, offset, queryTerms } = parseQueryParams(url.searchParams);
 
       let records = await db[modelName].all();
-
-      // Apply filters
-      if (filterParams.length > 0) {
-        records = records.filter((record) => {
-          return filterParams.some(({ param, value }) => {
-            const fieldValue = record[camelize(param)];
-            if (Array.isArray(value)) {
-              return value.includes(String(fieldValue));
-            }
-            return String(fieldValue) === String(value);
-          });
-        });
-      }
+      records = await filterByParams(modelName, records, filterParams);
 
       // Apply search if query terms exist
       if (queryTerms.length > 0) {
@@ -156,6 +144,55 @@ async function extractRelationshipsInUpdate(modelName, data, attrs) {
       }
     }
   }
+}
+
+async function filterByParams(modelName, records, params) {
+  if (!params.length) {
+    return records;
+  }
+
+  const recordFilterResults = await Promise.all(
+    records.map(async (r) => {
+      const filterResults = await Array.fromAsync(params, ({ param, value }) => {
+        return filterByParam(modelName, r, param, value);
+      });
+
+      return {
+        r,
+        matchesAllFilteres: filterResults.every((v) => v === true),
+      };
+    }),
+  );
+
+  return recordFilterResults
+    .filter(({ matchesAllFilteres }) => matchesAllFilteres === true)
+    .map(({ r }) => r);
+}
+
+async function filterByParam(modelName, record, param, value) {
+  if (!isRelatedRecord(modelName, param)) {
+    let fieldValue = record[camelize(param)];
+    if (Array.isArray(value)) {
+      return value.includes(String(fieldValue));
+    }
+    return String(fieldValue) === String(value);
+  }
+  if (Array.isArray(value)) {
+    return value.some((v) => getRelatedRecord(modelName, param, v));
+  }
+  const v = record[param];
+  if (!value) {
+    if (Array.isArray(v)) {
+      return v.length === 0;
+    }
+    return !!v;
+  }
+  const related = await getRelatedRecord(modelName, param, value);
+  if (Array.isArray(v)) {
+    const vIds = v.map(({ id }) => id);
+    return vIds.includes(related.id);
+  }
+  return v.id === related.id;
 }
 
 // Generate handlers for all standard models
