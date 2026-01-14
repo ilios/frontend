@@ -7,7 +7,6 @@ export default class PrintCourseRoute extends Route {
   @service session;
   @service router;
 
-  titleToken = 'general.coursesAndSessions';
   canViewUnpublished = false;
 
   async model(params) {

@@ -80,7 +80,6 @@ general:
   courseRolloverSummary: 'Va a rodar este curso en el seleccionado año académico, junto con todas las opciones seleccionadas. Para continuar, haga clic en "Acabado". Para volver a su curso corriente, haga clic en "Cancelar".'
   courseRolloverYearUnavailable: El Curso Ya Existe
   courses: Cursos
-  coursesAndSessions: Cursos y Sesiones
   courseTitle: Titulo de Curso
   courseTitlePlaceholder: Entre en un título para este curso
   courseVisualizations: Visualizaciones de Cursos

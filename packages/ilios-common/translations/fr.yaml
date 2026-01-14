@@ -80,7 +80,6 @@ general:
   courseRolloverSummary: 'Vous êtes sur le point le roulement ce cours dans l''année universitaire choisie, avec toutes les options choisies. Continuer, cliquer "Fini". Pour retourner à votre cours actuel, le clic "Annul"'
   courseRolloverYearUnavailable: Cours déja existant
   courses: Les Cours
-  coursesAndSessions: Des Cours et Séances
   courseTitle: Titre de Cours
   courseTitlePlaceholder: Ajoutez titre par ce cours
   courseVisualizations: Cours Visualisations

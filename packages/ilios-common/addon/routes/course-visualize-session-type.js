@@ -8,8 +8,6 @@ export default class CourseVisualizeSessionTypeRoute extends Route {
   @service currentUser;
   @service router;
 
-  titleToken = 'general.coursesAndSessions';
-
   async model(params) {
     const course = await this.store.findRecord('course', params.course_id);
     const sessionType = await this.store.findRecord('session-type', params['session-type_id']);

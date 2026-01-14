@@ -31,7 +31,6 @@ export default class CourseRoute extends Route {
     },
   };
 
-  titleToken = 'general.coursesAndSessions';
   editable = false;
   #preloadTopLevel = null;
 
