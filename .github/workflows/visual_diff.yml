@@ -46,7 +46,7 @@ jobs:
           for file in *; do
             mv "$file" "${{ matrix.name }}-$file"
           done
-      - uses: actions/upload-artifact@v5
+      - uses: actions/upload-artifact@v6
         with:
           name: baseline-frontend-${{ matrix.name }}
           path: build/screenshots
@@ -84,7 +84,7 @@ jobs:
           for file in *; do
             mv "$file" "${{ matrix.name }}-$file"
           done
-      - uses: actions/upload-artifact@v5
+      - uses: actions/upload-artifact@v6
         with:
           name: candidate-frontend-${{ matrix.name }}
           path: build/screenshots
@@ -94,12 +94,12 @@ jobs:
     needs: [baseline, candidate]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/download-artifact@v6
+      - uses: actions/download-artifact@v7
         with:
           pattern: baseline-frontend-*
           path: baseline-frontend
           merge-multiple: true
-      - uses: actions/download-artifact@v6
+      - uses: actions/download-artifact@v7
         with:
           pattern: candidate-frontend-*
           path: candidate-frontend
@@ -110,7 +110,7 @@ jobs:
           node-version: 24
       - name: Create Visual Diff
         run: npx visual-differ baseline-frontend candidate-frontend results/visual-diff-${{ github.event.pull_request.number }}
-      - uses: actions/upload-artifact@v5
+      - uses: actions/upload-artifact@v6
         if: always()
         with:
           name: visual-diff-${{ github.event.pull_request.number }}
