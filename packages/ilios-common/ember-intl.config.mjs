@@ -43,7 +43,6 @@ export default {
         'errors.wrongLength',
         'general.copySuccess',
         'general.courseRolloverSuccess',
-        'general.coursesAndSessions',
         'general.etAl',
         'general.newObjectiveSaved',
         'general.publishedSuccessfully',
