@@ -10,8 +10,6 @@ export default class CourseVisualizationsRoute extends Route {
   @service currentUser;
   @service router;
 
-  titleToken = 'general.coursesAndSessions';
-
   async model(params) {
     return this.dataLoader.loadCourse(params.course_id);
   }

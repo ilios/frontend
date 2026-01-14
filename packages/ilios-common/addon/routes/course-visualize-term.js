@@ -8,8 +8,6 @@ export default class CourseVisualizeTermRoute extends Route {
   @service currentUser;
   @service router;
 
-  titleToken = 'general.coursesAndSessions';
-
   async model(params) {
     const course = await this.store.findRecord('course', params.course_id);
     const term = await this.store.findRecord('term', params.term_id);
