@@ -13,7 +13,7 @@ export default class AuthenticatedRoute extends Route {
   @service store;
   @service router;
   @service session;
-  @service('local-storage') ls;
+  @service localStorage;
 
   @tracked event;
 
@@ -55,7 +55,7 @@ export default class AuthenticatedRoute extends Route {
 
   // check if a saved, valid locale exists
   initialLocale() {
-    const savedLocale = this.ls.get('locale');
+    const savedLocale = this.localStorage.get('locale');
 
     if (savedLocale !== undefined) {
       if (config.APP.SUPPORTED_LOCALES.includes(savedLocale)) {
