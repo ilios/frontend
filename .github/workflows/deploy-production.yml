@@ -5,10 +5,6 @@ on:
     tags:
       - "*"
 
-env:
-  SENTRY_ORG: ilios
-  SENTRY_PROJECT: frontend
-
 jobs:
   deploy-frontend:
     name: Deploy Frontend and Create Sentry Release
@@ -30,15 +26,15 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       - name: Install Sentry CLI
         run: pnpm install -g @sentry/cli
-      - name: Create a Sentry.io release
-        run: |
-          # Create new Sentry release
-          sentry-cli releases new ${{github.ref_name}}
-          sentry-cli releases set-commits --auto ${{github.ref_name}}
-          sentry-cli releases files ${{github.ref_name}} upload-sourcemaps packages/frontend/tmp/deploy-dist/
-          sentry-cli releases finalize ${{github.ref_name}}
+      - name: Create Sentry release
+        uses: getsentry/action-release@v3
         env:
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+          SENTRY_ORG: ilios
+          SENTRY_PROJECT: frontend
+        with:
+          release: ${{github.ref}}
+          sourcemaps: packages/frontend/tmp/deploy-dist/
       - uses: act10ns/slack@v2
         if: failure()
         env:
