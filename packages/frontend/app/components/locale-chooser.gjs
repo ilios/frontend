@@ -16,6 +16,7 @@ import focus from 'ilios-common/modifiers/focus';
 export default class LocaleChooserComponent extends Component {
   @service intl;
   @tracked isOpen = false;
+  @service localStorage;
 
   get locale() {
     const locale = this.intl.get('primaryLocale');
@@ -41,6 +42,7 @@ export default class LocaleChooserComponent extends Component {
   changeLocale(id, event) {
     this.isOpen = false;
     this.intl.setLocale(id);
+    this.localStorage.set('locale', id);
     window.document.querySelector('html').setAttribute('lang', id);
     window.document
       .querySelector('meta[name="description"]')

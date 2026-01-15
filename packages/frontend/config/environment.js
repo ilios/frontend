@@ -54,8 +54,13 @@ module.exports = function (environment) {
     },
 
     APP: {
-      // Here you can pass flags/options to your application instance
-      // when it is created
+      DEFAULTS: {
+        localStorage: {
+          locale: 'en-us',
+        },
+      },
+      LOCAL_STORAGE_KEY: 'ilios',
+      SUPPORTED_LOCALES: ['en-us', 'es', 'fr'],
     },
   };
 

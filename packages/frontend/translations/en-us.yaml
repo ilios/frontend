@@ -431,6 +431,7 @@ general:
 errors:
   duplicateUsername: This username is already taken by another user account.
   invalidChangeAlertRecipients: This list of change-alerts recipients contains invalid email addresses.
+  localStorageSetItemFail: "Could not set localStorage item {itemName} from key {keyName} with {value}"
   reportMissingAcademicYear: Academic Year is Required
   reportMissingCompetency: Competency is Required
   reportMissingCourse: Course is Required
