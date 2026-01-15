@@ -34,6 +34,7 @@ export default class CourseRolloverComponent extends Component {
   @service store;
   @service flashMessages;
   @service iliosConfig;
+  @service intl;
 
   @tracked newTitle;
   @tracked selectedYear;
@@ -169,7 +170,7 @@ export default class CourseRolloverComponent extends Component {
 
     const newCoursesObj = await this.fetch.postQueryToApi(`courses/${courseId}/rollover`, data);
 
-    this.flashMessages.success('general.courseRolloverSuccess');
+    this.flashMessages.success(this.intl.t('general.courseRolloverSuccess'));
     this.store.pushPayload(newCoursesObj);
     const newCourse = this.store.peekRecord('course', newCoursesObj.data.id);
 

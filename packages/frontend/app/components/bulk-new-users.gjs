@@ -350,9 +350,9 @@ export default class BulkNewUsersComponent extends Component {
     }
 
     if (this.savingUserErrors.length || this.savingAuthenticationErrors.length) {
-      this.flashMessages.warning('general.newUsersCreatedWarning');
+      this.flashMessages.warning(this.intl.t('general.newUsersCreatedWarning'));
     } else {
-      this.flashMessages.success('general.newUsersCreatedSuccessfully');
+      this.flashMessages.success(this.intl.t('general.newUsersCreatedSuccessfully'));
     }
 
     this.validUsers = [];

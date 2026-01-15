@@ -286,7 +286,7 @@ export default class LearningMaterialManagerComponent extends Component {
   });
 
   textCopied = task({ restartable: true }, async () => {
-    this.flashMessages.success('general.copiedSuccessfully');
+    this.flashMessages.success(this.intl.t('general.copiedSuccessfully'));
   });
 
   getLearningMaterialLink = () => {

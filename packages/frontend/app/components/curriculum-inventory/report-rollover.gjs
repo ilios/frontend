@@ -28,6 +28,7 @@ export default class CurriculumInventoryReportRolloverComponent extends Componen
   @service flashMessages;
   @service iliosConfig;
   @service store;
+  @service intl;
 
   currentYear = new Date().getFullYear();
   @tracked name;
@@ -162,7 +163,7 @@ export default class CurriculumInventoryReportRolloverComponent extends Componen
     };
     const url = `curriculuminventoryreports/${this.args.report.id}/rollover`;
     const newReportObj = await this.fetch.postQueryToApi(url, data);
-    this.flashMessages.success('general.curriculumInventoryReportRolloverSuccess');
+    this.flashMessages.success(this.intl.t('general.curriculumInventoryReportRolloverSuccess'));
     this.store.pushPayload(newReportObj);
     const newReport = this.store.peekRecord('curriculum-inventory-report', newReportObj.data.id);
     return this.args.visit(newReport);

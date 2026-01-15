@@ -12,7 +12,7 @@ import IliosTooltip from 'ilios-common/components/ilios-tooltip';
 
 export default class IcsFeedComponent extends Component {
   @service flashMessages;
-
+  @service intl;
   get copyButtonId() {
     return `ics-feed-copy-button-${guidFor(this)}`;
   }
@@ -22,7 +22,7 @@ export default class IcsFeedComponent extends Component {
   }
 
   textCopied = task({ restartable: true }, async () => {
-    this.flashMessages.success('general.copiedIcsFeedUrl');
+    this.flashMessages.success(this.intl.t('general.copiedIcsFeedUrl'));
   });
 
   popperOptions = {

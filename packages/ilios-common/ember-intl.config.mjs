@@ -3,7 +3,6 @@ export default {
   lintRules: {
     'no-unused-keys': {
       ignores: [
-        'general.copiedIcsFeedUrl',
         'errors.accepted',
         'errors.after',
         'errors.agreementRequired',
@@ -41,13 +40,7 @@ export default {
         'errors.url',
         'errors.wrongDateFormat',
         'errors.wrongLength',
-        'general.copySuccess',
-        'general.courseRolloverSuccess',
         'general.etAl',
-        'general.newObjectiveSaved',
-        'general.publishedSuccessfully',
-        'general.scheduledSuccessfully',
-        'general.unPublishedSuccessfully',
       ],
     },
   },

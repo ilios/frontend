@@ -15,6 +15,7 @@ import ObjectiveList from 'ilios-common/components/session/objective-list';
 export default class SessionObjectivesComponent extends Component {
   @service store;
   @service flashMessages;
+  @service intl;
 
   @tracked newObjectiveEditorOn = false;
   @tracked newObjectiveTitle;
@@ -47,7 +48,7 @@ export default class SessionObjectivesComponent extends Component {
     await newSessionObjective.save();
 
     this.newObjectiveEditorOn = false;
-    this.flashMessages.success('general.newObjectiveSaved');
+    this.flashMessages.success(this.intl.t('general.newObjectiveSaved'));
   });
 
   @action

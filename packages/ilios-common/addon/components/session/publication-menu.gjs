@@ -149,7 +149,7 @@ export default class SessionPublicationMenuComponent extends Component {
     this.args.session.set('publishedAsTbd', false);
     this.args.session.set('published', true);
     await this.args.session.save();
-    this.flashMessages.success('general.publishedSuccessfully');
+    this.flashMessages.success(this.intl.t('general.publishedSuccessfully'));
   }
   @action
   async unpublish() {
@@ -157,7 +157,7 @@ export default class SessionPublicationMenuComponent extends Component {
     this.args.session.set('publishedAsTbd', false);
     this.args.session.set('published', false);
     await this.args.session.save();
-    this.flashMessages.success('general.unPublishedSuccessfully');
+    this.flashMessages.success(this.intl.t('general.unPublishedSuccessfully'));
   }
   @action
   async publishAsTbd() {
@@ -165,7 +165,7 @@ export default class SessionPublicationMenuComponent extends Component {
     this.args.session.set('publishedAsTbd', true);
     this.args.session.set('published', true);
     await this.args.session.save();
-    this.flashMessages.success('general.scheduledSuccessfully');
+    this.flashMessages.success(this.intl.t('general.scheduledSuccessfully'));
   }
   <template>
     {{#let (uniqueId) as |templateId|}}

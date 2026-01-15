@@ -10,6 +10,7 @@ import SchoolCompetenciesPcrsMapper from 'frontend/components/school-competencie
 export default class SchoolCompetenciesListItemComponent extends Component {
   @service store;
   @service flashMessages;
+  @service intl;
   @tracked isManaging = false;
   @tracked pcrsToRemove = [];
   @tracked pcrsToAdd = [];
@@ -79,7 +80,7 @@ export default class SchoolCompetenciesListItemComponent extends Component {
     try {
       await this.args.competency.save();
     } finally {
-      this.flashMessages.success('general.savedSuccessfully', {
+      this.flashMessages.success(this.intl.t('general.savedSuccessfully'), {
         capitalize: true,
       });
       this.cancel();

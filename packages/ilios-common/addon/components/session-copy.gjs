@@ -22,6 +22,7 @@ export default class SessionCopyComponent extends Component {
   @service flashMessages;
   @service permissionChecker;
   @service dataLoader;
+  @service intl;
 
   @tracked selectedYear;
   @tracked selectedCourseId;
@@ -194,7 +195,7 @@ export default class SessionCopyComponent extends Component {
       sessionObjective.set('terms', terms);
       await sessionObjective.save();
     }
-    this.flashMessages.success('general.copySuccess');
+    this.flashMessages.success(this.intl.t('general.copySuccess'));
     return this.args.visit(session);
   });
   <template>

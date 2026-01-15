@@ -145,7 +145,7 @@ export default class SchoolVocabularyTermManagerComponent extends Component {
     }
     await this.args.term.save();
     this.args.manageTerm(goTo);
-    this.flashMessages.success('general.successfullyRemovedTerm');
+    this.flashMessages.success(this.intl.t('general.successfullyRemovedTerm'));
   });
 
   @action

@@ -14,6 +14,7 @@ import perform from 'ember-concurrency/helpers/perform';
 
 export default class PendingSingleUserUpdateComponent extends Component {
   @service flashMessages;
+  @service intl;
 
   @cached
   get updatesData() {
@@ -36,7 +37,7 @@ export default class PendingSingleUserUpdateComponent extends Component {
     this.args.user.set('email', update.value);
     await this.args.user.save();
     await update.destroyRecord();
-    this.flashMessages.success('general.savedSuccessfully', {
+    this.flashMessages.success(this.intl.t('general.savedSuccessfully'), {
       capitalize: true,
     });
   });
@@ -46,7 +47,7 @@ export default class PendingSingleUserUpdateComponent extends Component {
     this.args.user.set('enabled', false);
     await this.args.user.save();
     await all(updates.map((update) => update.destroyRecord()));
-    this.flashMessages.success('general.savedSuccessfully', {
+    this.flashMessages.success(this.intl.t('general.savedSuccessfully'), {
       capitalize: true,
     });
   });
@@ -56,7 +57,7 @@ export default class PendingSingleUserUpdateComponent extends Component {
     this.args.user.set('userSyncIgnore', true);
     await this.args.user.save();
     await all(updates.map((update) => update.destroyRecord()));
-    this.flashMessages.success('general.savedSuccessfully', {
+    this.flashMessages.success(this.intl.t('general.savedSuccessfully'), {
       capitalize: true,
     });
   });
