@@ -1,34 +1,33 @@
-import calendarEventTooltip from 'test-app/utils/calendar-event-tooltip';
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
-import { DateTime } from 'luxon';
 import { setupIntl } from 'ember-intl/test-support';
+import { DateTime } from 'luxon';
 import Event from 'ilios-common/classes/event';
 
-module('Unit | Utility | calendar-event-tooltip', function (hooks) {
+module('Unit | Service | calendar-event-tooltip', function (hooks) {
   setupTest(hooks);
   setupIntl(hooks, 'en-us');
 
   hooks.beforeEach(function () {
-    this.intl = this.owner.lookup('service:intl');
+    this.calendarEventTooltip = this.owner.lookup('service:calendar-event-tooltip');
   });
 
   test('it works for blanked event', function (assert) {
     const today = DateTime.fromObject({ hour: 8 });
-    const result = calendarEventTooltip(
+    const result = this.calendarEventTooltip.create(
       {
         startDate: today.toISO(),
         endDate: today.toISO(),
         name: 'test',
       },
-      this.intl,
       'hh',
     );
     assert.strictEqual(result.toString(), 'TBD<br />08 - 08<br />test');
   });
+
   test('offering-based event', function (assert) {
     const today = DateTime.fromObject({ hour: 8 });
-    const result = calendarEventTooltip(
+    const result = this.calendarEventTooltip.create(
       {
         startDate: today.toISO(),
         endDate: today.toISO(),
@@ -40,7 +39,6 @@ module('Unit | Utility | calendar-event-tooltip', function (hooks) {
         sessionTypeTitle: 'lecture',
         offering: 1,
       },
-      this.intl,
       'hh',
     );
     assert.strictEqual(
@@ -51,7 +49,7 @@ module('Unit | Utility | calendar-event-tooltip', function (hooks) {
 
   test('ILM-based event', function (assert) {
     const today = DateTime.fromObject({ hour: 8 });
-    const result = calendarEventTooltip(
+    const result = this.calendarEventTooltip.create(
       {
         startDate: today.toISO(),
         endDate: today.toISO(),
@@ -63,7 +61,6 @@ module('Unit | Utility | calendar-event-tooltip', function (hooks) {
         sessionTypeTitle: 'lecture',
         ilmSession: 1,
       },
-      this.intl,
       'hh',
     );
     assert.strictEqual(
@@ -74,7 +71,7 @@ module('Unit | Utility | calendar-event-tooltip', function (hooks) {
 
   test('has pre-work', function (assert) {
     const today = DateTime.fromObject({ hour: 8 });
-    const result = calendarEventTooltip(
+    const result = this.calendarEventTooltip.create(
       new Event(
         {
           startDate: today.toISO(),
@@ -97,7 +94,6 @@ module('Unit | Utility | calendar-event-tooltip', function (hooks) {
         },
         true,
       ),
-      this.intl,
       'hh',
     );
     assert.strictEqual(

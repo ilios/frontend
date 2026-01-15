@@ -5,7 +5,6 @@ import { htmlSafe } from '@ember/template';
 import { DateTime } from 'luxon';
 import { guidFor } from '@ember/object/internals';
 import colorChange from 'ilios-common/utils/color-change';
-import calendarEventTooltip from 'ilios-common/utils/calendar-event-tooltip';
 import { on } from '@ember/modifier';
 import noop from 'ilios-common/helpers/noop';
 import mouseHoverToggle from 'ilios-common/modifiers/mouse-hover-toggle';
@@ -17,7 +16,7 @@ import formatDate from 'ember-intl/helpers/format-date';
 import Color from 'color';
 
 export default class IliosCalendarEventMonthComponent extends Component {
-  @service intl;
+  @service calendarEventTooltip;
 
   get eventButtonId() {
     return `ilios-calendar-event-month-button-${guidFor(this)}`;
@@ -40,7 +39,7 @@ export default class IliosCalendarEventMonthComponent extends Component {
   }
 
   get tooltipContent() {
-    return calendarEventTooltip(this.args.event, this.intl, 'h:mma');
+    return this.calendarEventTooltip.create(this.args.event, 'h:mma');
   }
 
   get style() {

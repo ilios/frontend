@@ -2,7 +2,6 @@ import Component from '@glimmer/component';
 import { DateTime } from 'luxon';
 import colorChange from 'ilios-common/utils/color-change';
 import { htmlSafe } from '@ember/template';
-import calendarEventTooltip from 'ilios-common/utils/calendar-event-tooltip';
 import { service } from '@ember/service';
 import { guidFor } from '@ember/object/internals';
 import { on } from '@ember/modifier';
@@ -17,7 +16,7 @@ import formatDate from 'ember-intl/helpers/format-date';
 import Color from 'color';
 
 export default class WeeklyCalendarEventComponent extends Component {
-  @service intl;
+  @service calendarEventTooltip;
 
   get eventButtonId() {
     return `weekly-calendar-event-button-${guidFor(this)}`;
@@ -73,7 +72,7 @@ export default class WeeklyCalendarEventComponent extends Component {
   }
 
   get tooltipContent() {
-    return calendarEventTooltip(this.args.event, this.intl, 'h:mma');
+    return this.calendarEventTooltip.create(this.args.event, 'h:mma');
   }
 
   get recentlyUpdated() {
