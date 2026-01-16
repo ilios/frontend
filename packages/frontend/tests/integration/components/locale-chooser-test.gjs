@@ -4,9 +4,11 @@ import { render } from '@ember/test-helpers';
 import component from 'frontend/tests/pages/components/locale-chooser';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
 import LocaleChooser from 'frontend/components/locale-chooser';
+import { setupIntl, setLocale } from 'ember-intl/test-support';
 
 module('Integration | Component | locale-chooser', function (hooks) {
   setupRenderingTest(hooks);
+  setupIntl(hooks, 'en-us');
 
   test('it renders and is accessible', async function (assert) {
     await render(<template><LocaleChooser /></template>);
@@ -154,5 +156,19 @@ module('Integration | Component | locale-chooser', function (hooks) {
     await component.toggle.click();
     await component.locales[0].click();
     assert.strictEqual(component.toggle.text, 'English (en)');
+  });
+
+  test('use untranslated locale', async function (assert) {
+    await setLocale('de');
+    await render(<template><LocaleChooser /></template>);
+    assert.strictEqual(component.toggle.text, 'de');
+    await component.toggle.click();
+    assert.strictEqual(component.locales.length, 4);
+    await component.locales[1].click();
+    await component.toggle.click();
+    assert.strictEqual(component.locales[0].text, 'English (en)');
+    assert.strictEqual(component.locales[1].text, 'Español (es)');
+    assert.strictEqual(component.locales[2].text, 'Français (fr)');
+    assert.strictEqual(component.locales[3].text, 'de');
   });
 });
