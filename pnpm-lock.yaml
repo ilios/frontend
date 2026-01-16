@@ -439,8 +439,8 @@ importers:
         specifier: ^5.0.2
         version: 5.0.2(@babel/core@7.28.5)
       ember-intl:
-        specifier: ^8.0.2
-        version: 8.0.2(@babel/core@7.28.5)(@ember/test-helpers@5.4.1(@babel/core@7.28.5)(@glint/template@1.7.3))(typescript@5.9.3)
+        specifier: ^8.0.3
+        version: 8.0.3(@babel/core@7.28.5)(@ember/test-helpers@5.4.1(@babel/core@7.28.5)(@glint/template@1.7.3))(typescript@5.9.3)
       ember-keyboard:
         specifier: ^9.0.4
         version: 9.0.4(@babel/core@7.28.5)(@ember/test-helpers@5.4.1(@babel/core@7.28.5)(@glint/template@1.7.3))
@@ -1625,6 +1625,10 @@ packages:
     resolution: {integrity: sha512-1gn1Up5YXka3YYAHGKpbideQ5Yjf1tDa9qYcgysz+cNCXukyLl6DjPXhD3VRwSb8c0J9tA4b2+rHEZtc6R0tlw==}
     engines: {node: '>=6.9.0'}
 
+  '@babel/helper-plugin-utils@7.28.6':
+    resolution: {integrity: sha512-S9gzZ/bz83GRysI7gAD4wPT/AI3uCnY+9xn+Mx/KPs2JwHJIz1W8PZkg2cqyt3RNOBM8ejcXhV6y8Og7ly/Dug==}
+    engines: {node: '>=6.9.0'}
+
   '@babel/helper-remap-async-to-generator@7.27.1':
     resolution: {integrity: sha512-7fiA521aVw8lSPeI4ZOD3vRFkoqkJcS+z4hFo82bFSH/2tNd6eJ5qCVMS5OzDmZh/kaHQeBaeyxK6wljcPtveA==}
     engines: {node: '>=6.9.0'}
@@ -1731,6 +1735,12 @@ packages:
 
   '@babel/plugin-syntax-decorators@7.27.1':
     resolution: {integrity: sha512-YMq8Z87Lhl8EGkmb0MwYkt36QnxC+fzCgrl66ereamPlYToRpIk5nUjKUY3QKLWq8mwUB1BgbeXcTJhZOCDg5A==}
+    engines: {node: '>=6.9.0'}
+    peerDependencies:
+      '@babel/core': ^7.0.0-0
+
+  '@babel/plugin-syntax-decorators@7.28.6':
+    resolution: {integrity: sha512-71EYI0ONURHJBL4rSFXnITXqXrrY8q4P0q006DPfN+Rk+ASM+++IBXem/ruokgBZR8YNEWZ8R6B+rCb8VcUTqA==}
     engines: {node: '>=6.9.0'}
     peerDependencies:
       '@babel/core': ^7.0.0-0
@@ -2335,6 +2345,15 @@ packages:
       '@glint/template':
         optional: true
 
+  '@embroider/macros@1.19.6':
+    resolution: {integrity: sha512-yPf8lD/gRZmcxms66CCKuZuvWMJ0g/hdCE6P8FZsyewR3So6pxgdgOFp0zk2w5d34jS1ejBtxLNREZbBTELpzw==}
+    engines: {node: 12.* || 14.* || >= 16}
+    peerDependencies:
+      '@glint/template': ^1.0.0
+    peerDependenciesMeta:
+      '@glint/template':
+        optional: true
+
   '@embroider/reverse-exports@0.2.0':
     resolution: {integrity: sha512-WFsw8nQpHZiWGEDYpa/A79KEFfTisqteXbY+jg9eZiww1r1G+LZvsmdszDp86TkotUSCqrMbK/ewn0jR1CJmqg==}
     engines: {node: 12.* || 14.* || >= 16}
@@ -2447,20 +2466,35 @@ packages:
   '@formatjs/ecma402-abstract@3.0.8':
     resolution: {integrity: sha512-NRiqvxAvhbARZRFSRFPjN0y8txxmVutv2vMYvW2HSdCVf58w9l4osLj6Ujif643vImwZBcbKqhiKE0IOhY+DvA==}
 
+  '@formatjs/ecma402-abstract@3.1.0':
+    resolution: {integrity: sha512-CjP1sUzM7XiQW6YluDreN+dMvcKZysO/J4ikvuDjDyd6nSOoSqAK9gvD1s75ZFaJVXtYOsz+y3CUXPZ1sKxcxw==}
+
   '@formatjs/fast-memoize@3.0.3':
     resolution: {integrity: sha512-CArYtQKGLAOruCMeq5/RxCg6vUXFx3OuKBdTm30Wn/+gCefehmZ8Y2xSMxMrO2iel7hRyE3HKfV56t3vAU6D4Q==}
+
+  '@formatjs/fast-memoize@3.1.0':
+    resolution: {integrity: sha512-b5mvSWCI+XVKiz5WhnBCY3RJ4ZwfjAidU0yVlKa3d3MSgKmH1hC3tBGEAtYyN5mqL7N0G5x0BOUYyO8CEupWgg==}
 
   '@formatjs/icu-messageformat-parser@3.3.0':
     resolution: {integrity: sha512-dqxGSwH22ZfBwa6EVvrrIo+8kHHUSjuw9iZy6HkkN5XgH5/8ny9zDGhvC6ZOFYp01PAbwHvUTIHqznC6Z1nIbA==}
 
+  '@formatjs/icu-messageformat-parser@3.4.0':
+    resolution: {integrity: sha512-2bSQc59NFiEuN5VW0dUh7Txn5Qbeib5kZtzxFDXXqxUljvwhA3Qsrv2AwuVCRMISjbgOYwA2Rp5HW6tbdTnv9g==}
+
   '@formatjs/icu-skeleton-parser@2.0.8':
     resolution: {integrity: sha512-Z493tGxtKu0xNcSZjS8HrWNfq25HMscqbq5qwRFBYz14b70k1DHmhqVAwYDdDK0Ytj9YG1nvY4+IRq53LVNFdA==}
+
+  '@formatjs/icu-skeleton-parser@2.1.0':
+    resolution: {integrity: sha512-wNer4imHDFBVAJnMb2OGoSyM4wL/uuLnuo5mrenliqkDaNjRbG4jzlJcwTTDEBhai8iCjnzUsE7xwNJC29SfWw==}
 
   '@formatjs/intl-localematcher@0.7.5':
     resolution: {integrity: sha512-7/nd90cn5CT7SVF71/ybUKAcnvBlr9nZlJJp8O8xIZHXFgYOC4SXExZlSdgHv2l6utjw1byidL06QzChvQMHwA==}
 
-  '@formatjs/intl@4.0.9':
-    resolution: {integrity: sha512-/pr9mPXtSaO6irgC4A7upRW8ZCJ3YTpN7T/JRyg55NJ8RW/6fhgy6NUzzCLqNggRRM1xP7oR4ndAVWArRKGJGw==}
+  '@formatjs/intl-localematcher@0.8.0':
+    resolution: {integrity: sha512-zgMYWdUlmEZpX2Io+v3LHrfq9xZ6khpQVf9UAw2xYWhGerGgI9XgH1HvL/A34jWiruUJpYlP5pk4g8nIcaDrXQ==}
+
+  '@formatjs/intl@4.1.0':
+    resolution: {integrity: sha512-L1Jx2QHZ3kXDSCLqKuRcPuvPIIH2pZFalMDMgwzVHR053zE4xelagxxFuQ4sL1paR74LR8E34so3hvSG0YWHGw==}
     peerDependencies:
       typescript: ^5.6.0
     peerDependenciesMeta:
@@ -5575,8 +5609,8 @@ packages:
   ember-inflector@5.0.2:
     resolution: {integrity: sha512-aoPaT7B3pbUHSi4ulf02iRaMMvPteuDBO8jA1SLLOl/JwnO2YI5F/MhNPaolxp8DWwAd/P6MNN+wD5bLwmiUIA==}
 
-  ember-intl@8.0.2:
-    resolution: {integrity: sha512-mMs1hUnqJN+1LietsaxGaCv2SGT63OxvluJO1mLXaS/sNiZV5HlvsEYhAbmn0iAZ43eQb1xvQ3d8Nyhc8PcHAg==}
+  ember-intl@8.0.3:
+    resolution: {integrity: sha512-/NOBCGh6z/SHnCd+rAgswt+/S4hQGmV1lxfxbx7TXiq0MJ692cIeTQq2ZuYtjdUjWHmwLf/ek5t6eiwTjpArFQ==}
     engines: {node: 20.* || >= 22}
     peerDependencies:
       '@ember/test-helpers': ^4.0.0 || ^5.0.0
@@ -6934,8 +6968,8 @@ packages:
   intersection-observer-admin@0.3.4:
     resolution: {integrity: sha512-L9W5vBSu7W5Dx/RcbWcErNwoke3xWIAD2SADbmAZnsF9XL667keuKgaqnuwTY4XU9UwhzXref5tnNF5ZLTIQ3w==}
 
-  intl-messageformat@11.0.9:
-    resolution: {integrity: sha512-xA4aCCMnCxynKV5kI7V0GlMf+BGJxsXQRwr5tfEgmcB791eDEQa4r+s4wU7GqMR0jx7+K4jyEH2UfBpVGTDNPQ==}
+  intl-messageformat@11.1.0:
+    resolution: {integrity: sha512-5QJbBIRJqqBX0cD1z+r4e3B5HGmyLYzTFAW5WmSlGuwc3kHSOR0x9fEE/Z9wL2+Px9P1kwqj+wE6QzCoyooBSA==}
 
   invariant@2.2.4:
     resolution: {integrity: sha512-phJfQVBuaJM5raOpJjSfkiD6BpbCE4Ns//LaXl6wGYtUBY83nWS6Rf9tXm2e8VaK60JEjYldbPif/A2B1C2gNA==}
@@ -9620,8 +9654,8 @@ packages:
   tracked-built-ins@3.4.0:
     resolution: {integrity: sha512-aRwWQXC3VkY50oYxS7wKZiavkjf3uaN+UYUH30D5gxUqbxDN2LnNsfWyDfckmxHUGw4gJDH5lpRS0jX/tim0vw==}
 
-  tracked-built-ins@4.0.0:
-    resolution: {integrity: sha512-0Jl43A1SDZd+yYCJvXfgDSn4Wk/zcawkyFTBPqOETU5UJRngnVEnQ8oOjawqPRg6qja3sKjIQ8z6X9xJzcUTUA==}
+  tracked-built-ins@4.1.0:
+    resolution: {integrity: sha512-v1+jca3sD3LgbAFVsontSONTv7HsZll3yeUB00L6KPwLilFRrY77gvgptDe35fTalk9ea7mmrM2wABD56pTvuw==}
 
   tracked-toolbox@2.0.0:
     resolution: {integrity: sha512-adZtX+RGN6F+pWs/5JqVuDxLhuia4uhqmQp+UlUaxpykWjDFETtAdQR+LdDJiFPXFAXnS6FBqn/tnSLJQCm3Yw==}
@@ -10011,10 +10045,12 @@ packages:
 
   whatwg-encoding@1.0.5:
     resolution: {integrity: sha512-b5lim54JOPN9HtzvK9HFXvBma/rnfFeqsic0hSpjtDbVxR3dJKLc+KB4V6GgiGOvl7CY/KNh8rxSo9DKQrnUEw==}
+    deprecated: Use @exodus/bytes instead for a more spec-conformant and faster implementation
 
   whatwg-encoding@3.1.1:
     resolution: {integrity: sha512-6qN4hJdMwfYBtE3YBTTHhoeuUrDBPZmbQaxWAqSALV/MeEnR5z1xd8UKud2RAkFoPkmB+hli1TZSnyi84xz1vQ==}
     engines: {node: '>=18'}
+    deprecated: Use @exodus/bytes instead for a more spec-conformant and faster implementation
 
   whatwg-mimetype@2.3.0:
     resolution: {integrity: sha512-M4yMwr6mAnQz76TbJm914+gPpB/nCwvZbJU28cUD6dR004SAxDLOOSUaB1JDRqLtaOV/vi0IC5lEAGFgrjGv/g==}
@@ -10973,6 +11009,8 @@ snapshots:
 
   '@babel/helper-plugin-utils@7.27.1': {}
 
+  '@babel/helper-plugin-utils@7.28.6': {}
+
   '@babel/helper-remap-async-to-generator@7.27.1(@babel/core@7.28.5)(supports-color@8.1.1)':
     dependencies:
       '@babel/core': 7.28.5(supports-color@8.1.1)
@@ -11099,6 +11137,11 @@ snapshots:
     dependencies:
       '@babel/core': 7.28.5(supports-color@8.1.1)
       '@babel/helper-plugin-utils': 7.27.1
+
+  '@babel/plugin-syntax-decorators@7.28.6(@babel/core@7.28.5)':
+    dependencies:
+      '@babel/core': 7.28.5(supports-color@8.1.1)
+      '@babel/helper-plugin-utils': 7.28.6
 
   '@babel/plugin-syntax-dynamic-import@7.8.3(@babel/core@7.28.5)':
     dependencies:
@@ -12034,6 +12077,21 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
+  '@embroider/macros@1.19.6(@glint/template@1.7.3)':
+    dependencies:
+      '@embroider/shared-internals': 3.0.2
+      assert-never: 1.4.0
+      babel-import-util: 3.0.1
+      ember-cli-babel: 7.26.11
+      find-up: 5.0.0
+      lodash: 4.17.21
+      resolve: 1.22.11
+      semver: 7.7.3
+    optionalDependencies:
+      '@glint/template': 1.7.3
+    transitivePeerDependencies:
+      - supports-color
+
   '@embroider/reverse-exports@0.2.0':
     dependencies:
       mem: 8.1.1
@@ -12240,7 +12298,18 @@ snapshots:
       decimal.js: 10.6.0
       tslib: 2.8.1
 
+  '@formatjs/ecma402-abstract@3.1.0':
+    dependencies:
+      '@formatjs/fast-memoize': 3.1.0
+      '@formatjs/intl-localematcher': 0.8.0
+      decimal.js: 10.6.0
+      tslib: 2.8.1
+
   '@formatjs/fast-memoize@3.0.3':
+    dependencies:
+      tslib: 2.8.1
+
+  '@formatjs/fast-memoize@3.1.0':
     dependencies:
       tslib: 2.8.1
 
@@ -12250,9 +12319,20 @@ snapshots:
       '@formatjs/icu-skeleton-parser': 2.0.8
       tslib: 2.8.1
 
+  '@formatjs/icu-messageformat-parser@3.4.0':
+    dependencies:
+      '@formatjs/ecma402-abstract': 3.1.0
+      '@formatjs/icu-skeleton-parser': 2.1.0
+      tslib: 2.8.1
+
   '@formatjs/icu-skeleton-parser@2.0.8':
     dependencies:
       '@formatjs/ecma402-abstract': 3.0.8
+      tslib: 2.8.1
+
+  '@formatjs/icu-skeleton-parser@2.1.0':
+    dependencies:
+      '@formatjs/ecma402-abstract': 3.1.0
       tslib: 2.8.1
 
   '@formatjs/intl-localematcher@0.7.5':
@@ -12260,12 +12340,17 @@ snapshots:
       '@formatjs/fast-memoize': 3.0.3
       tslib: 2.8.1
 
-  '@formatjs/intl@4.0.9(typescript@5.9.3)':
+  '@formatjs/intl-localematcher@0.8.0':
     dependencies:
-      '@formatjs/ecma402-abstract': 3.0.8
-      '@formatjs/fast-memoize': 3.0.3
-      '@formatjs/icu-messageformat-parser': 3.3.0
-      intl-messageformat: 11.0.9
+      '@formatjs/fast-memoize': 3.1.0
+      tslib: 2.8.1
+
+  '@formatjs/intl@4.1.0(typescript@5.9.3)':
+    dependencies:
+      '@formatjs/ecma402-abstract': 3.1.0
+      '@formatjs/fast-memoize': 3.1.0
+      '@formatjs/icu-messageformat-parser': 3.4.0
+      intl-messageformat: 11.1.0
       tslib: 2.8.1
     optionalDependencies:
       typescript: 5.9.3
@@ -15483,7 +15568,7 @@ snapshots:
 
   decorator-transforms@2.3.1(@babel/core@7.28.5):
     dependencies:
-      '@babel/plugin-syntax-decorators': 7.27.1(@babel/core@7.28.5)
+      '@babel/plugin-syntax-decorators': 7.28.6(@babel/core@7.28.5)
       babel-import-util: 3.0.1
     transitivePeerDependencies:
       - '@babel/core'
@@ -16632,10 +16717,10 @@ snapshots:
       - '@babel/core'
       - supports-color
 
-  ember-intl@8.0.2(@babel/core@7.28.5)(@ember/test-helpers@5.4.1(@babel/core@7.28.5)(@glint/template@1.7.3))(typescript@5.9.3):
+  ember-intl@8.0.3(@babel/core@7.28.5)(@ember/test-helpers@5.4.1(@babel/core@7.28.5)(@glint/template@1.7.3))(typescript@5.9.3):
     dependencies:
       '@embroider/addon-shim': 1.10.2
-      '@formatjs/intl': 4.0.9(typescript@5.9.3)
+      '@formatjs/intl': 4.1.0(typescript@5.9.3)
       decorator-transforms: 2.3.1(@babel/core@7.28.5)
     optionalDependencies:
       '@ember/test-helpers': 5.4.1(@babel/core@7.28.5)(@glint/template@1.7.3)
@@ -16718,7 +16803,7 @@ snapshots:
       '@babel/runtime': 7.28.4
       '@ember/test-waiters': 4.1.1(@glint/template@1.7.3)
       '@embroider/addon-shim': 1.10.2
-      '@embroider/macros': 1.19.5(@glint/template@1.7.3)
+      '@embroider/macros': 1.19.6(@glint/template@1.7.3)
       '@floating-ui/dom': 1.7.4
       '@glimmer/component': 2.0.0
       decorator-transforms: 2.3.0(@babel/core@7.28.5)
@@ -16729,7 +16814,7 @@ snapshots:
       reactiveweb: 1.9.0(@babel/core@7.28.5)(@ember/test-waiters@4.1.1(@glint/template@1.7.3))(@glimmer/component@2.0.0)(@glint/template@1.7.3)
       should-handle-link: 1.3.0
       tabster: 8.7.0
-      tracked-built-ins: 4.0.0(@babel/core@7.28.5)
+      tracked-built-ins: 4.1.0(@babel/core@7.28.5)
       tracked-toolbox: 2.0.0(@babel/core@7.28.5)(ember-source@6.8.2(@glimmer/component@2.0.0)(rsvp@4.8.5))
       which-heading-do-i-need: 0.2.3
     optionalDependencies:
@@ -18576,11 +18661,11 @@ snapshots:
 
   intersection-observer-admin@0.3.4: {}
 
-  intl-messageformat@11.0.9:
+  intl-messageformat@11.1.0:
     dependencies:
-      '@formatjs/ecma402-abstract': 3.0.8
-      '@formatjs/fast-memoize': 3.0.3
-      '@formatjs/icu-messageformat-parser': 3.3.0
+      '@formatjs/ecma402-abstract': 3.1.0
+      '@formatjs/fast-memoize': 3.1.0
+      '@formatjs/icu-messageformat-parser': 3.4.0
       tslib: 2.8.1
 
   invariant@2.2.4:
@@ -21671,7 +21756,7 @@ snapshots:
       - '@babel/core'
       - supports-color
 
-  tracked-built-ins@4.0.0(@babel/core@7.28.5):
+  tracked-built-ins@4.1.0(@babel/core@7.28.5):
     dependencies:
       '@embroider/addon-shim': 1.10.2
       decorator-transforms: 2.3.0(@babel/core@7.28.5)
