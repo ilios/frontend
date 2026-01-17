@@ -62,7 +62,7 @@
     "broccoli-file-creator": "^2.1.1",
     "broccoli-merge-trees": "^4.2.0",
     "browserslist": "^4.26.3",
-    "caniuse-db": "^1.0.30001748",
+    "caniuse-db": "^1.0.30001764",
     "ember-a11y-refocus": "5.1.0",
     "ember-a11y-testing": "^7.0.0",
     "ember-async-data": "^2.0.0",
