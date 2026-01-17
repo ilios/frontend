@@ -52,8 +52,8 @@ importers:
         specifier: ~5.8.0
         version: 5.8.0(@babel/core@7.28.5)(@ember/test-waiters@4.1.1(@glint/template@1.7.3))(@glint/template@1.7.3)
       '@ember-intl/lint':
-        specifier: ^0.3.0
-        version: 0.3.0
+        specifier: ^0.4.1
+        version: 0.4.1
       '@ember-intl/v1-compat':
         specifier: ^1.0.3
         version: 1.0.3(@glint/template@1.7.3)(webpack@5.104.1)
@@ -545,8 +545,8 @@ importers:
         specifier: ~5.8.0
         version: 5.8.0(@babel/core@7.28.5)(@ember/test-waiters@4.1.1(@glint/template@1.7.3))(@glint/template@1.7.3)
       '@ember-intl/lint':
-        specifier: ^0.3.0
-        version: 0.3.0
+        specifier: ^0.4.1
+        version: 0.4.1
       '@ember/optional-features':
         specifier: ^2.2.0
         version: 2.3.0
@@ -695,8 +695,8 @@ importers:
         specifier: ~5.8.0
         version: 5.8.0(@babel/core@7.28.5)(@ember/test-waiters@4.1.1(@glint/template@1.7.3))(@glint/template@1.7.3)
       '@ember-intl/lint':
-        specifier: ^0.3.0
-        version: 0.3.0
+        specifier: ^0.4.1
+        version: 0.4.1
       '@ember-intl/v1-compat':
         specifier: ^1.0.3
         version: 1.0.3(@glint/template@1.7.3)(webpack@5.104.1)
@@ -935,8 +935,8 @@ importers:
         specifier: ~5.8.0
         version: 5.8.0(@babel/core@7.28.5)(@ember/test-waiters@4.1.1(@glint/template@1.7.3))(@glint/template@1.7.3)
       '@ember-intl/lint':
-        specifier: ^0.3.0
-        version: 0.3.0
+        specifier: ^0.4.1
+        version: 0.4.1
       '@ember-intl/v1-compat':
         specifier: ^1.0.3
         version: 1.0.3(@glint/template@1.7.3)(webpack@5.104.1)
@@ -1172,8 +1172,8 @@ importers:
         specifier: ~5.8.0
         version: 5.8.0(@babel/core@7.28.5)(@ember/test-waiters@4.1.1(@glint/template@1.7.3))(@glint/template@1.7.3)
       '@ember-intl/lint':
-        specifier: ^0.3.0
-        version: 0.3.0
+        specifier: ^0.4.1
+        version: 0.4.1
       '@ember-intl/v1-compat':
         specifier: ^1.0.3
         version: 1.0.3(@glint/template@1.7.3)(webpack@5.104.1)
@@ -1670,6 +1670,11 @@ packages:
     engines: {node: '>=6.0.0'}
     hasBin: true
 
+  '@babel/parser@7.28.6':
+    resolution: {integrity: sha512-TeR9zWR18BvbfPmGbLampPMW+uW1NZnJlRuuHso8i87QZNq2JRF9i6RgxRqtEq+wQGsS19NNTWr2duhnE49mfQ==}
+    engines: {node: '>=6.0.0'}
+    hasBin: true
+
   '@babel/plugin-bugfix-firefox-class-in-computed-class-key@7.28.5':
     resolution: {integrity: sha512-87GDMS3tsmMSi/3bWOte1UblL+YUTFMV8SZPZ2eSEL17s74Cw/l63rR6NmGVKMYW2GYi85nE+/d6Hw5N0bEk2Q==}
     engines: {node: '>=6.9.0'}
@@ -2136,6 +2141,10 @@ packages:
     resolution: {integrity: sha512-qQ5m48eI/MFLQ5PxQj4PFaprjyCTLI37ElWMmNs0K8Lk3dVeOdNpB3ks8jc7yM5CDmVC73eMVk/trk3fgmrUpA==}
     engines: {node: '>=6.9.0'}
 
+  '@babel/types@7.28.6':
+    resolution: {integrity: sha512-0ZrskXVEHSWIqZM/sQZ4EV3jZJXRkio/WCxaqKZP1g//CEWEPSfeZFcms4XeKBCHU0ZKnIkdJeU/kF+eRp5lBg==}
+    engines: {node: '>=6.9.0'}
+
   '@cacheable/memory@2.0.6':
     resolution: {integrity: sha512-7e8SScMocHxcAb8YhtkbMhGG+EKLRIficb1F5sjvhSYsWTZGxvg4KIDp8kgxnV2PUJ3ddPe6J9QESjKvBWRDkg==}
 
@@ -2263,8 +2272,8 @@ packages:
       '@ember/test-waiters':
         optional: true
 
-  '@ember-intl/lint@0.3.0':
-    resolution: {integrity: sha512-vfMffYVelfSEMN3CKCuXT28xfG8t5N5bYyP6FuPUjQftlzjpungO9XE77W/DxoOYZoAJ+q06etiFDsHsrbn4Yg==}
+  '@ember-intl/lint@0.4.1':
+    resolution: {integrity: sha512-gMb21+HQ2nOPxEbDNtss+4ra6/y8VBfe2g/quogNn1ZsF8HkGNCQdjlUGsmh9d+bVhKc5mL7Jb46pmwoknfqJw==}
     engines: {node: 20.* || >= 22}
     hasBin: true
 
@@ -2467,32 +2476,17 @@ packages:
   '@floating-ui/utils@0.2.10':
     resolution: {integrity: sha512-aGTxbpbg8/b5JfU1HXSrbH3wXZuLPJcNEcZQFMxLs3oSzgtVu6nFPkbbGGUvBcUjKV2YyB9Wxxabo+HEH9tcRQ==}
 
-  '@formatjs/ecma402-abstract@3.0.8':
-    resolution: {integrity: sha512-NRiqvxAvhbARZRFSRFPjN0y8txxmVutv2vMYvW2HSdCVf58w9l4osLj6Ujif643vImwZBcbKqhiKE0IOhY+DvA==}
-
   '@formatjs/ecma402-abstract@3.1.0':
     resolution: {integrity: sha512-CjP1sUzM7XiQW6YluDreN+dMvcKZysO/J4ikvuDjDyd6nSOoSqAK9gvD1s75ZFaJVXtYOsz+y3CUXPZ1sKxcxw==}
-
-  '@formatjs/fast-memoize@3.0.3':
-    resolution: {integrity: sha512-CArYtQKGLAOruCMeq5/RxCg6vUXFx3OuKBdTm30Wn/+gCefehmZ8Y2xSMxMrO2iel7hRyE3HKfV56t3vAU6D4Q==}
 
   '@formatjs/fast-memoize@3.1.0':
     resolution: {integrity: sha512-b5mvSWCI+XVKiz5WhnBCY3RJ4ZwfjAidU0yVlKa3d3MSgKmH1hC3tBGEAtYyN5mqL7N0G5x0BOUYyO8CEupWgg==}
 
-  '@formatjs/icu-messageformat-parser@3.3.0':
-    resolution: {integrity: sha512-dqxGSwH22ZfBwa6EVvrrIo+8kHHUSjuw9iZy6HkkN5XgH5/8ny9zDGhvC6ZOFYp01PAbwHvUTIHqznC6Z1nIbA==}
-
   '@formatjs/icu-messageformat-parser@3.4.0':
     resolution: {integrity: sha512-2bSQc59NFiEuN5VW0dUh7Txn5Qbeib5kZtzxFDXXqxUljvwhA3Qsrv2AwuVCRMISjbgOYwA2Rp5HW6tbdTnv9g==}
 
-  '@formatjs/icu-skeleton-parser@2.0.8':
-    resolution: {integrity: sha512-Z493tGxtKu0xNcSZjS8HrWNfq25HMscqbq5qwRFBYz14b70k1DHmhqVAwYDdDK0Ytj9YG1nvY4+IRq53LVNFdA==}
-
   '@formatjs/icu-skeleton-parser@2.1.0':
     resolution: {integrity: sha512-wNer4imHDFBVAJnMb2OGoSyM4wL/uuLnuo5mrenliqkDaNjRbG4jzlJcwTTDEBhai8iCjnzUsE7xwNJC29SfWw==}
-
-  '@formatjs/intl-localematcher@0.7.5':
-    resolution: {integrity: sha512-7/nd90cn5CT7SVF71/ybUKAcnvBlr9nZlJJp8O8xIZHXFgYOC4SXExZlSdgHv2l6utjw1byidL06QzChvQMHwA==}
 
   '@formatjs/intl-localematcher@0.8.0':
     resolution: {integrity: sha512-zgMYWdUlmEZpX2Io+v3LHrfq9xZ6khpQVf9UAw2xYWhGerGgI9XgH1HvL/A34jWiruUJpYlP5pk4g8nIcaDrXQ==}
@@ -9714,8 +9708,8 @@ packages:
     resolution: {integrity: sha512-TeTSQ6H5YHvpqVwBRcnLDCBnDOHWYu7IvGbHT6N8AOymcr9PJGjc1GTtiWZTYg0NCgYwvnYWEkVChQAr9bjfwA==}
     engines: {node: '>=16'}
 
-  type-fest@5.3.1:
-    resolution: {integrity: sha512-VCn+LMHbd4t6sF3wfU/+HKT63C9OoyrSIf4b+vtWHpt2U7/4InZG467YDNMFMR70DdHjAdpPWmw2lzRdg0Xqqg==}
+  type-fest@5.4.1:
+    resolution: {integrity: sha512-xygQcmneDyzsEuKZrFbRMne5HDqMs++aFzefrJTgEIKjQ3rekM+RPfFCVq2Gp1VIDqddoYeppCj4Pcb+RZW0GQ==}
     engines: {node: '>=20'}
 
   type-is@1.6.18:
@@ -11057,7 +11051,7 @@ snapshots:
     dependencies:
       '@babel/template': 7.27.2
       '@babel/traverse': 7.28.5(supports-color@8.1.1)
-      '@babel/types': 7.28.5
+      '@babel/types': 7.28.6
     transitivePeerDependencies:
       - supports-color
 
@@ -11069,6 +11063,10 @@ snapshots:
   '@babel/parser@7.28.5':
     dependencies:
       '@babel/types': 7.28.5
+
+  '@babel/parser@7.28.6':
+    dependencies:
+      '@babel/types': 7.28.6
 
   '@babel/plugin-bugfix-firefox-class-in-computed-class-key@7.28.5(@babel/core@7.28.5)(supports-color@8.1.1)':
     dependencies:
@@ -11660,6 +11658,11 @@ snapshots:
       '@babel/helper-string-parser': 7.27.1
       '@babel/helper-validator-identifier': 7.28.5
 
+  '@babel/types@7.28.6':
+    dependencies:
+      '@babel/helper-string-parser': 7.27.1
+      '@babel/helper-validator-identifier': 7.28.5
+
   '@cacheable/memory@2.0.6':
     dependencies:
       '@cacheable/utils': 2.3.2
@@ -11679,7 +11682,7 @@ snapshots:
 
   '@codemod-utils/ast-javascript@2.1.2':
     dependencies:
-      '@babel/parser': 7.28.5
+      '@babel/parser': 7.28.6
       recast: 0.23.11
 
   '@codemod-utils/ast-template-tag@1.2.0':
@@ -11699,7 +11702,7 @@ snapshots:
 
   '@codemod-utils/package-json@3.3.3':
     dependencies:
-      type-fest: 5.3.1
+      type-fest: 5.4.1
 
   '@colors/colors@1.5.0':
     optional: true
@@ -11840,14 +11843,14 @@ snapshots:
       - '@glint/template'
       - supports-color
 
-  '@ember-intl/lint@0.3.0':
+  '@ember-intl/lint@0.4.1':
     dependencies:
       '@codemod-utils/ast-javascript': 2.1.2
       '@codemod-utils/ast-template': 2.1.2
       '@codemod-utils/ast-template-tag': 1.2.0
       '@codemod-utils/files': 3.2.3
       '@codemod-utils/package-json': 3.3.3
-      '@formatjs/icu-messageformat-parser': 3.3.0
+      '@formatjs/icu-messageformat-parser': 3.4.0
       js-yaml: 4.1.1
       yargs: 18.0.0
     transitivePeerDependencies:
@@ -12304,13 +12307,6 @@ snapshots:
 
   '@floating-ui/utils@0.2.10': {}
 
-  '@formatjs/ecma402-abstract@3.0.8':
-    dependencies:
-      '@formatjs/fast-memoize': 3.0.3
-      '@formatjs/intl-localematcher': 0.7.5
-      decimal.js: 10.6.0
-      tslib: 2.8.1
-
   '@formatjs/ecma402-abstract@3.1.0':
     dependencies:
       '@formatjs/fast-memoize': 3.1.0
@@ -12318,18 +12314,8 @@ snapshots:
       decimal.js: 10.6.0
       tslib: 2.8.1
 
-  '@formatjs/fast-memoize@3.0.3':
-    dependencies:
-      tslib: 2.8.1
-
   '@formatjs/fast-memoize@3.1.0':
     dependencies:
-      tslib: 2.8.1
-
-  '@formatjs/icu-messageformat-parser@3.3.0':
-    dependencies:
-      '@formatjs/ecma402-abstract': 3.0.8
-      '@formatjs/icu-skeleton-parser': 2.0.8
       tslib: 2.8.1
 
   '@formatjs/icu-messageformat-parser@3.4.0':
@@ -12338,19 +12324,9 @@ snapshots:
       '@formatjs/icu-skeleton-parser': 2.1.0
       tslib: 2.8.1
 
-  '@formatjs/icu-skeleton-parser@2.0.8':
-    dependencies:
-      '@formatjs/ecma402-abstract': 3.0.8
-      tslib: 2.8.1
-
   '@formatjs/icu-skeleton-parser@2.1.0':
     dependencies:
       '@formatjs/ecma402-abstract': 3.1.0
-      tslib: 2.8.1
-
-  '@formatjs/intl-localematcher@0.7.5':
-    dependencies:
-      '@formatjs/fast-memoize': 3.0.3
       tslib: 2.8.1
 
   '@formatjs/intl-localematcher@0.8.0':
@@ -21844,7 +21820,7 @@ snapshots:
 
   type-fest@4.41.0: {}
 
-  type-fest@5.3.1:
+  type-fest@5.4.1:
     dependencies:
       tagged-tag: 1.0.0
 
