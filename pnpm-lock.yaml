@@ -55,8 +55,8 @@ importers:
         specifier: ^0.3.0
         version: 0.3.0
       '@ember-intl/v1-compat':
-        specifier: ^1.0.2
-        version: 1.0.2(@glint/template@1.7.3)(webpack@5.104.1)
+        specifier: ^1.0.3
+        version: 1.0.3(@glint/template@1.7.3)(webpack@5.104.1)
       '@ember/optional-features':
         specifier: ^2.2.0
         version: 2.3.0
@@ -698,8 +698,8 @@ importers:
         specifier: ^0.3.0
         version: 0.3.0
       '@ember-intl/v1-compat':
-        specifier: ^1.0.2
-        version: 1.0.2(@glint/template@1.7.3)(webpack@5.104.1)
+        specifier: ^1.0.3
+        version: 1.0.3(@glint/template@1.7.3)(webpack@5.104.1)
       '@ember/optional-features':
         specifier: ^2.2.0
         version: 2.3.0
@@ -938,8 +938,8 @@ importers:
         specifier: ^0.3.0
         version: 0.3.0
       '@ember-intl/v1-compat':
-        specifier: ^1.0.2
-        version: 1.0.2(@glint/template@1.7.3)(webpack@5.104.1)
+        specifier: ^1.0.3
+        version: 1.0.3(@glint/template@1.7.3)(webpack@5.104.1)
       '@ember/optional-features':
         specifier: ^2.2.0
         version: 2.3.0
@@ -1175,8 +1175,8 @@ importers:
         specifier: ^0.3.0
         version: 0.3.0
       '@ember-intl/v1-compat':
-        specifier: ^1.0.2
-        version: 1.0.2(@glint/template@1.7.3)(webpack@5.104.1)
+        specifier: ^1.0.3
+        version: 1.0.3(@glint/template@1.7.3)(webpack@5.104.1)
       '@ember/optional-features':
         specifier: ^2.2.0
         version: 2.3.0
@@ -2264,8 +2264,8 @@ packages:
     engines: {node: 20.* || >= 22}
     hasBin: true
 
-  '@ember-intl/v1-compat@1.0.2':
-    resolution: {integrity: sha512-ahrbvtVlUf3eLW4n/09VOdLfxi3qhxAyWarv8gB8nA8mxRMatVa0HTSLxj70ZkgHJ9h7uWZTqC8BRESwmS1KtA==}
+  '@ember-intl/v1-compat@1.0.3':
+    resolution: {integrity: sha512-oAbkYseh42slVEgsl75/iEAQVnsytomMV2T7fXJkpWSgqjlmtah1HvGSf1bsOf2Fx2Eau/SCE3ik9RekkE+Udw==}
     engines: {node: 20.* || >= 22}
 
   '@ember-tooling/blueprint-blueprint@0.2.1':
@@ -11841,7 +11841,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@ember-intl/v1-compat@1.0.2(@glint/template@1.7.3)(webpack@5.104.1)':
+  '@ember-intl/v1-compat@1.0.3(@glint/template@1.7.3)(webpack@5.104.1)':
     dependencies:
       '@babel/core': 7.28.5(supports-color@8.1.1)
       broccoli-caching-writer: 3.1.0
