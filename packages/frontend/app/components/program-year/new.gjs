@@ -48,7 +48,9 @@ export default class NewProgramYearComponent extends Component {
   get selectedYear() {
     if (!this.year) {
       return this.existingStartYears.length
-        ? this.availableAcademicYears.filter((year) => this.existingStartYears.includes(year))[0]
+        ? this.availableAcademicYears.filter(
+            (year) => !this.existingStartYears.includes(year.value),
+          )[0]
         : this.availableAcademicYears[0];
     }
     return findBy(this.availableAcademicYears, 'value', this.year);
