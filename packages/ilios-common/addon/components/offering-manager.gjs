@@ -7,7 +7,6 @@ import { modifier } from 'ember-modifier';
 import { TrackedAsyncData } from 'ember-async-data';
 import { mapBy, sortBy } from 'ilios-common/utils/array-helpers';
 import OfferingForm from 'ilios-common/components/offering-form';
-import toggle from 'ilios-common/helpers/toggle';
 import mouseHoverToggle from 'ilios-common/modifiers/mouse-hover-toggle';
 import { fn, get, concat } from '@ember/helper';
 import FaIcon from 'ilios-common/components/fa-icon';
@@ -36,6 +35,14 @@ export default class OfferingManagerComponent extends Component {
   setLearnerGroupElement = modifier((element, [id]) => {
     set(this, `learnerGroupElement${id}`, element);
   });
+
+  @action
+  toggleIsEditing() {
+    this.isEditing = !this.isEditing;
+    if (this.args.setIsEditing) {
+      this.args.setIsEditing(this.isEditing);
+    }
+  }
 
   @cached
   get learnerGroupsData() {
@@ -122,7 +129,7 @@ export default class OfferingManagerComponent extends Component {
       instructorGroups,
       instructors,
     });
-
+    this.toggleIsEditing();
     return this.args.offering.save();
   }
 
@@ -152,7 +159,7 @@ export default class OfferingManagerComponent extends Component {
             @cohorts={{this.cohorts}}
             @courseStartDate={{this.course.startDate}}
             @courseEndDate={{this.course.endDate}}
-            @close={{toggle "isEditing" this}}
+            @close={{this.toggleIsEditing}}
             @save={{this.save}}
             @smallGroupMode={{false}}
             @offering={{@offering}}
@@ -234,7 +241,7 @@ export default class OfferingManagerComponent extends Component {
                 class="link-button edit"
                 type="button"
                 title={{t "general.edit"}}
-                {{on "click" (toggle "isEditing" this)}}
+                {{on "click" this.toggleIsEditing}}
               >
                 <FaIcon @icon="pen-to-square" class="enabled" />
               </button>
