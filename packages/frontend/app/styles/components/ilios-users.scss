@@ -6,6 +6,10 @@
 
     .filter {
       @include m.main-list-filter;
+
+      input {
+        font-style: normal;
+      }
     }
   }
 
