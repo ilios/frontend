@@ -14,6 +14,7 @@ export const takeScreenshot = async (assert, description = '') => {
     placeholders: false,
     embedFonts: true,
     height: 1000,
+    exclude: ['.ilios-logo picture'],
   });
 
   return waitForPromise(result.download({ format: 'png', filename }));
