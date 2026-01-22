@@ -290,6 +290,57 @@ module('Acceptance | Courses', function (hooks) {
     assert.strictEqual(page.root.list.courses[0].title, 'Course 1', 'course title is correct');
   });
 
+  test('new course link hides after changing school', async function (assert) {
+    this.school2 = this.server.create('school');
+    this.user.update({ administeredSchools: [this.school, this.school2] });
+    const year1 = DateTime.now().year;
+    const year2 = DateTime.now().year + 1;
+    this.server.create('academic-year', { id: year1 });
+    this.server.create('academic-year', { id: year2 });
+    await page.visit({ year1 });
+
+    assert.ok(page.root.newCourseLinkIsHidden);
+
+    await page.root.toggleNewCourseForm();
+    await page.root.newCourse.title('Course 1');
+    await page.root.newCourse.chooseYear(year1);
+    await page.root.newCourse.save();
+
+    assert.notOk(page.root.newCourseLinkIsHidden);
+    assert.strictEqual(page.root.list.courses.length, 1);
+    assert.strictEqual(page.root.newCourseLink, 'Course 1', 'new course link');
+    assert.strictEqual(page.root.list.courses[0].title, 'Course 1', 'course title is correct');
+
+    await page.root.filterBySchool(this.school2.id);
+
+    assert.ok(page.root.newCourseLinkIsHidden);
+  });
+
+  test('new course link hides after changing year', async function (assert) {
+    this.user.update({ administeredSchools: [this.school] });
+    const year1 = DateTime.now().year;
+    const year2 = DateTime.now().year + 1;
+    this.server.create('academic-year', { id: year1 });
+    this.server.create('academic-year', { id: year2 });
+    await page.visit({ year1 });
+
+    assert.ok(page.root.newCourseLinkIsHidden);
+
+    await page.root.toggleNewCourseForm();
+    await page.root.newCourse.title('Course 1');
+    await page.root.newCourse.chooseYear(year1);
+    await page.root.newCourse.save();
+
+    assert.notOk(page.root.newCourseLinkIsHidden);
+    assert.strictEqual(page.root.list.courses.length, 1);
+    assert.strictEqual(page.root.newCourseLink, 'Course 1', 'new course link');
+    assert.strictEqual(page.root.list.courses[0].title, 'Course 1', 'course title is correct');
+
+    await page.root.filterByYear(year2);
+
+    assert.ok(page.root.newCourseLinkIsHidden);
+  });
+
   test('new course toggle does not show up for unprivileged users', async function (assert) {
     const year = DateTime.now().year;
     this.server.create('academic-year', { id: year });

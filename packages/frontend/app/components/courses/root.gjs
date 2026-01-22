@@ -175,6 +175,18 @@ export default class CoursesRootComponent extends Component {
     return defaultYear;
   }
 
+  @action
+  changeSelectedSchool(school) {
+    this.args.changeSelectedSchool(school);
+    this.newCourse = null;
+  }
+
+  @action
+  changeSelectedYear(year) {
+    this.args.changeSelectedYear(year);
+    this.newCourse = null;
+  }
+
   removeCourse = task({ drop: true }, async (course) => {
     const courses = await this.selectedSchool.courses;
     courses.splice(courses.indexOf(course), 1);
@@ -219,7 +231,7 @@ export default class CoursesRootComponent extends Component {
           {{#if this.hasMoreThanOneSchool}}
             <select
               aria-label={{t "general.filterBySchool"}}
-              {{on "change" (pick "target.value" @changeSelectedSchool)}}
+              {{on "change" (pick "target.value" this.changeSelectedSchool)}}
             >
               {{#each (sortBy "title" @schools) as |school|}}
                 <option value={{school.id}} selected={{eq school this.selectedSchool}}>
@@ -235,7 +247,7 @@ export default class CoursesRootComponent extends Component {
           <FaIcon @icon="calendar" @fixedWidth={{true}} />
           <select
             aria-label={{t "general.filterByYear"}}
-            {{on "change" (pick "target.value" @changeSelectedYear)}}
+            {{on "change" (pick "target.value" this.changeSelectedYear)}}
             data-test-year-filter
           >
             {{#each (sortBy "title:desc" @years) as |year|}}
