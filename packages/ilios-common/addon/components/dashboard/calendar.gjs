@@ -396,7 +396,6 @@ export default class DashboardCalendarComponent extends Component {
             @changeView={{@changeView}}
             @selectEvent={{@selectEvent}}
             @icsFeedUrl={{this.absoluteIcsUri}}
-            @icsInstructions={{this.icsInstructionsTranslation}}
           />
         </section>
       </div>
