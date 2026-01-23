@@ -4,3 +4,9 @@ packages:
   - "packages/lti-course-manager"
   - "packages/lti-dashboard"
   - "packages/test-app"
+
+# Protect against package ecosystem threats
+minimumReleaseAge: 1440 # only install things that are at least one day old
+trustPolicy: no-downgrade # never install anything where the publication provenance is less than it was
+trustPolicyIgnoreAfter: 43200 # ignore things older than 30 days, some of our transitive dependencies are over this threshold
+blockExoticSubdeps: true # block installing things not from the registry
