@@ -14,6 +14,7 @@ import LoadingSpinner from 'ilios-common/components/loading-spinner';
 import { on } from '@ember/modifier';
 import perform from 'ember-concurrency/helpers/perform';
 import set from 'ember-set-helper/helpers/set';
+import scrollIntoView from 'ilios-common/modifiers/scroll-into-view';
 
 export default class ProgramYearListItemComponent extends Component {
   @service permissionChecker;
@@ -213,7 +214,7 @@ export default class ProgramYearListItemComponent extends Component {
         </td>
       </tr>
       {{#if this.showRemoveConfirmation}}
-        <tr class="confirm-removal">
+        <tr class="confirm-removal" {{scrollIntoView}}>
           <td colspan="8" class="hide-from-small-screen">
             <div class="confirm-message" data-test-message>
               {{t "general.confirmRemoveProgramYear" courseCount=this.cohort.courses.length}}
