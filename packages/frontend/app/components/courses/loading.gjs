@@ -6,6 +6,7 @@ import noop from 'ilios-common/helpers/noop';
 import FaIcon from 'ilios-common/components/fa-icon';
 import sortBy from 'ilios-common/helpers/sort-by';
 import LoadingList from 'frontend/components/courses/loading-list';
+import { faBuildingColumns, faCalendar } from '@fortawesome/free-solid-svg-icons';
 
 export default class CoursesLoading extends Component {
   @service store;
@@ -31,7 +32,7 @@ export default class CoursesLoading extends Component {
           />
         </div>
         <div class="schoolsfilter">
-          <FaIcon @icon="building-columns" @fixedWidth={{true}} />
+          <FaIcon @icon={{faBuildingColumns}} @fixedWidth={{true}} />
           {{#if this.hasMoreThanOneSchool}}
             <select aria-label={{t "general.filterBySchool"}} class="loading-text" disabled>
               {{#each (sortBy "title" this.schools) as |school|}}
@@ -41,7 +42,7 @@ export default class CoursesLoading extends Component {
           {{/if}}
         </div>
         <div class="yearsfilter">
-          <FaIcon @icon="calendar" @fixedWidth={{true}} />
+          <FaIcon @icon={{faCalendar}} @fixedWidth={{true}} />
           <select aria-label={{t "general.filterByYear"}} class="loading-text" disabled></select>
         </div>
         <div class="titlefilter">

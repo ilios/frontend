@@ -18,6 +18,7 @@ import { LinkTo } from '@ember/routing';
 import LoadingSpinner from 'ilios-common/components/loading-spinner';
 import perform from 'ember-concurrency/helpers/perform';
 import gt from 'ember-truth-helpers/helpers/gt';
+import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
 
 export default class LearnerGroupUserManagerComponent extends Component {
   @tracked selectedGroupUsers = [];
@@ -334,7 +335,7 @@ export default class LearnerGroupUserManagerComponent extends Component {
                               data-test-remove-user
                             >
                               <FaIcon
-                                @icon="minus"
+                                @icon={{faMinus}}
                                 class="no"
                                 @title={{t
                                   "general.removeLearnerToCohort"
@@ -465,7 +466,7 @@ export default class LearnerGroupUserManagerComponent extends Component {
                             data-test-add-user
                           >
                             <FaIcon
-                              @icon="plus"
+                              @icon={{faPlus}}
                               class="yes"
                               @title={{t
                                 "general.moveToGroup"

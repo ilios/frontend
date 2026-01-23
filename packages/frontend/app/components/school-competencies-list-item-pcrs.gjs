@@ -9,6 +9,7 @@ import FaIcon from 'ilios-common/components/fa-icon';
 import sortBy from 'ilios-common/helpers/sort-by';
 import { fn } from '@ember/helper';
 import pcrsUriToNumber from 'frontend/helpers/pcrs-uri-to-number';
+import { faArrowRotateLeft, faCheck, faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 export default class SchoolCompetenciesListItemPcrsComponent extends Component {
   save = task({ drop: true }, async () => {
@@ -39,9 +40,9 @@ export default class SchoolCompetenciesListItemPcrsComponent extends Component {
           data-test-save
         >
           {{#if this.save.isRunning}}
-            <FaIcon @icon="spinner" @spin={{true}} />
+            <FaIcon @icon={{faSpinner}} @spin={{true}} />
           {{else}}
-            <FaIcon @icon="check" />
+            <FaIcon @icon={{faCheck}} />
           {{/if}}
         </button>
         <button
@@ -51,7 +52,7 @@ export default class SchoolCompetenciesListItemPcrsComponent extends Component {
           aria-label={{t "general.cancel"}}
           data-test-cancel
         >
-          <FaIcon @icon="arrow-rotate-left" />
+          <FaIcon @icon={{faArrowRotateLeft}} />
         </button>
       {{else}}
         <ul>

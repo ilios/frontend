@@ -4,6 +4,7 @@ import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
 import FaIcon from 'ilios-common/components/fa-icon';
 import FadeText from 'ilios-common/components/fade-text';
+import { faArrowRotateLeft, faCheck, faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 export default class CourseObjectiveListItemParentsComponent extends Component {
   get parentTitles() {
@@ -29,9 +30,9 @@ export default class CourseObjectiveListItemParentsComponent extends Component {
           data-test-save
         >
           {{#if @isSaving}}
-            <FaIcon @icon="spinner" @spin={{true}} />
+            <FaIcon @icon={{faSpinner}} @spin={{true}} />
           {{else}}
-            <FaIcon @icon="check" />
+            <FaIcon @icon={{faCheck}} />
           {{/if}}
         </button>
         <button
@@ -41,7 +42,7 @@ export default class CourseObjectiveListItemParentsComponent extends Component {
           aria-label={{t "general.cancel"}}
           data-test-cancel
         >
-          <FaIcon @icon="arrow-rotate-left" />
+          <FaIcon @icon={{faArrowRotateLeft}} />
         </button>
       {{else}}
         {{#if @parents}}

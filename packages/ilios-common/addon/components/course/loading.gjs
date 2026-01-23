@@ -2,6 +2,7 @@ import BackToCourses from 'ilios-common/components/course/back-to-courses';
 import animateLoading from 'ilios-common/modifiers/animate-loading';
 import t from 'ember-intl/helpers/t';
 import FaIcon from 'ilios-common/components/fa-icon';
+import { faSquarePlus } from '@fortawesome/free-solid-svg-icons';
 <template>
   <BackToCourses />
 
@@ -41,7 +42,7 @@ import FaIcon from 'ilios-common/components/fa-icon';
       <div class="mock-detail-box">
         <span>
           {{t "general.expandDetail"}}
-          <FaIcon @icon="square-plus" class="expand-collapse-icon" />
+          <FaIcon @icon={{faSquarePlus}} class="expand-collapse-icon" />
         </span>
       </div>
     </div>

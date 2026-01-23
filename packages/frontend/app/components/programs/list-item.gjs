@@ -10,6 +10,7 @@ import FaIcon from 'ilios-common/components/fa-icon';
 import ResponsiveTd from 'frontend/components/responsive-td';
 import t from 'ember-intl/helpers/t';
 import perform from 'ember-concurrency/helpers/perform';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
 
 export default class ProgramListItemComponent extends Component {
   @service permissionChecker;
@@ -54,10 +55,10 @@ export default class ProgramListItemComponent extends Component {
             {{on "click" (set this "showRemoveConfirmation" true)}}
             data-test-remove
           >
-            <FaIcon @icon="trash" />
+            <FaIcon @icon={{faTrash}} />
           </button>
         {{else}}
-          <FaIcon @icon="trash" class="disabled" />
+          <FaIcon @icon={{faTrash}} class="disabled" />
         {{/if}}
       </td>
     </tr>

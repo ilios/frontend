@@ -12,6 +12,7 @@ import InstructorManager from 'frontend/components/instructor-group/instructor-m
 import sortBy from 'ilios-common/helpers/sort-by';
 import UserNameInfo from 'ilios-common/components/user-name-info';
 import UserStatus from 'ilios-common/components/user-status';
+import { faArrowRotateLeft } from '@fortawesome/free-solid-svg-icons';
 
 export default class InstructorGroupUsersComponent extends Component {
   @tracked usersBuffer = [];
@@ -78,7 +79,7 @@ export default class InstructorGroupUsersComponent extends Component {
               {{on "click" (set this "isManaging" false)}}
               data-test-cancel
             >
-              <FaIcon @icon="arrow-rotate-left" />
+              <FaIcon @icon={{faArrowRotateLeft}} />
             </button>
           {{else if @canUpdate}}
             <button type="button" {{on "click" (perform this.manage)}} data-test-manage>

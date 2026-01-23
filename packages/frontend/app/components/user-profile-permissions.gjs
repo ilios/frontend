@@ -20,6 +20,7 @@ import not from 'ember-truth-helpers/helpers/not';
 import add from 'ember-math-helpers/helpers/add';
 import { LinkTo } from '@ember/routing';
 import { array } from '@ember/helper';
+import { faBuildingColumns, faCalendar } from '@fortawesome/free-solid-svg-icons';
 
 export default class UserProfilePermissionsComponent extends Component {
   @service store;
@@ -472,7 +473,7 @@ export default class UserProfilePermissionsComponent extends Component {
       </h2>
       {{#if this.isLoaded}}
         <span>
-          <FaIcon @icon="building-columns" @fixedWidth={{true}} />
+          <FaIcon @icon={{faBuildingColumns}} @fixedWidth={{true}} />
           <select
             aria-label={{t "general.schools"}}
             {{on "change" (pick "target.value" this.changeSchool)}}
@@ -486,7 +487,7 @@ export default class UserProfilePermissionsComponent extends Component {
           </select>
         </span>
         <span>
-          <FaIcon @icon="calendar" @fixedWidth={{true}} />
+          <FaIcon @icon={{faCalendar}} @fixedWidth={{true}} />
           <select
             aria-label={{t "general.academicYears"}}
             {{on "change" (pick "target.value" this.changeYear)}}

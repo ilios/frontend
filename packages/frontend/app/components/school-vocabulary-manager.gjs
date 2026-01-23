@@ -18,6 +18,7 @@ import YupValidationMessage from 'ilios-common/components/yup-validation-message
 import YupValidations from 'ilios-common/classes/yup-validations';
 import { string } from 'yup';
 import focus from 'ilios-common/modifiers/focus';
+import { faAsterisk, faSquareUpRight } from '@fortawesome/free-solid-svg-icons';
 
 export default class SchoolVocabularyManagerComponent extends Component {
   @service store;
@@ -164,7 +165,7 @@ export default class SchoolVocabularyManagerComponent extends Component {
                 type="button"
                 {{on "click" (fn @manageTerm this.newTerm.id)}}
               >
-                <FaIcon @icon="square-up-right" />
+                <FaIcon @icon={{faSquareUpRight}} />
                 {{this.newTerm.title}}
               </button>
               {{t "general.savedSuccessfully"}}
@@ -185,7 +186,7 @@ export default class SchoolVocabularyManagerComponent extends Component {
                   {{term.title}}
                   {{#if term.hasChildren}}
                     <FaIcon
-                      @icon="asterisk"
+                      @icon={{faAsterisk}}
                       data-test-has-children
                       @title={{t "general.thisTermHasSubTerms"}}
                     />

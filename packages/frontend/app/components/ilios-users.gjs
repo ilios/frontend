@@ -20,6 +20,7 @@ import PagedlistControls from 'ilios-common/components/pagedlist-controls';
 import UserList from 'frontend/components/user-list';
 import NewDirectoryUser from './new-directory-user';
 import NewUser from './new-user';
+import { faMinus } from '@fortawesome/free-solid-svg-icons';
 
 const DEBOUNCE_TIMEOUT = 250;
 
@@ -127,7 +128,7 @@ export default class IliosUsersComponent extends Component {
                   aria-label={{t "general.cancel"}}
                   data-test-collapse
                 >
-                  <FaIcon @icon="minus" />
+                  <FaIcon @icon={{faMinus}} />
                 </button>
               {{else}}
                 <button

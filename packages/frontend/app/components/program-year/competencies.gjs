@@ -17,6 +17,7 @@ import or from 'ember-truth-helpers/helpers/or';
 import includes from 'ilios-common/helpers/includes';
 import mapBy from 'ilios-common/helpers/map-by';
 import CompetencyListItem from 'frontend/components/program-year/competency-list-item';
+import { faArrowRotateLeft, faCaretDown } from '@fortawesome/free-solid-svg-icons';
 
 export default class ProgramYearCompetenciesComponent extends Component {
   @service flashMessages;
@@ -157,7 +158,7 @@ export default class ProgramYearCompetenciesComponent extends Component {
             >
               {{t "general.competencies"}}
               ({{this.programYearCompetencies.length}})
-              <FaIcon @icon="caret-down" />
+              <FaIcon @icon={{faCaretDown}} />
             </button>
           {{else}}
             <div class="title" data-test-title>
@@ -188,7 +189,7 @@ export default class ProgramYearCompetenciesComponent extends Component {
                 {{on "click" this.cancel}}
                 data-test-cancel
               >
-                <FaIcon @icon="arrow-rotate-left" />
+                <FaIcon @icon={{faArrowRotateLeft}} />
               </button>
             {{else}}
               <button type="button" {{on "click" (fn @setIsManaging true)}} data-test-manage>

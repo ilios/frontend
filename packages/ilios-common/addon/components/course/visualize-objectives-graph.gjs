@@ -26,6 +26,7 @@ import { LinkTo } from '@ember/routing';
 import notEq from 'ember-truth-helpers/helpers/not-eq';
 import sub_ from 'ember-math-helpers/helpers/sub';
 import LoadingSpinner from 'ilios-common/components/loading-spinner';
+import { faDownload, faFaceMeh, faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
 
 export default class CourseVisualizeObjectivesGraph extends Component {
   @service router;
@@ -258,7 +259,7 @@ export default class CourseVisualizeObjectivesGraph extends Component {
               <div class="with-hours" data-test-with-hours>
                 <p>
                   {{t "general.objectivesWithNoLink"}}
-                  <FaIcon @icon="face-meh" />
+                  <FaIcon @icon={{faFaceMeh}} />
                 </p>
               </div>
             {{/if}}
@@ -283,7 +284,7 @@ export default class CourseVisualizeObjectivesGraph extends Component {
             <div class="with-hours" data-test-with-hours>
               <p>
                 {{t "general.objectivesWithNoLink"}}
-                <FaIcon @icon="face-meh" />
+                <FaIcon @icon={{faFaceMeh}} />
               </p>
             </div>
           {{/if}}
@@ -291,7 +292,7 @@ export default class CourseVisualizeObjectivesGraph extends Component {
         {{#if (and (not @isIcon) this.objectiveWithoutMinutes.length)}}
           <div class="zero-hours" data-test-zero-hours>
             <h4>
-              <FaIcon @icon="triangle-exclamation" class="warning" />
+              <FaIcon @icon={{faTriangleExclamation}} class="warning" />
               {{t "general.unusedObjectives"}}:
             </h4>
             <p>
@@ -315,7 +316,7 @@ export default class CourseVisualizeObjectivesGraph extends Component {
                 {{on "click" (perform this.downloadData)}}
                 data-test-download-data
               >
-                <FaIcon @icon="download" />
+                <FaIcon @icon={{faDownload}} />
                 {{t "general.download"}}
               </button>
             </div>

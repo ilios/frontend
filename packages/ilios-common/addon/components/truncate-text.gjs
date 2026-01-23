@@ -7,6 +7,7 @@ import EllipsisIcon from 'ilios-common/components/ellipsis-icon';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
 import FaIcon from 'ilios-common/components/fa-icon';
+import { faAnglesDown, faAnglesUp } from '@fortawesome/free-solid-svg-icons';
 
 export default class TruncateTextComponent extends Component {
   @tracked expanded = false;
@@ -77,7 +78,7 @@ export default class TruncateTextComponent extends Component {
             data-test-expand
             {{on "click" this.expand}}
           >
-            <FaIcon @icon="angles-down" />
+            <FaIcon @icon={{faAnglesDown}} />
           </button>
         {{else}}
           {{#if this.expanded}}
@@ -89,7 +90,7 @@ export default class TruncateTextComponent extends Component {
               data-test-collapse
               {{on "click" this.collapse}}
             >
-              <FaIcon @icon="angles-up" />
+              <FaIcon @icon={{faAnglesUp}} />
             </button>
           {{/if}}
         {{/if}}

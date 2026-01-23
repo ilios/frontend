@@ -17,6 +17,7 @@ import includes from 'ilios-common/helpers/includes';
 import mapBy from 'ilios-common/helpers/map-by';
 import SaveButton from 'ilios-common/components/save-button';
 import perform from 'ember-concurrency/helpers/perform';
+import { faChartColumn, faLinkSlash } from '@fortawesome/free-solid-svg-icons';
 
 export default class PublishAllSessionsComponent extends Component {
   @service store;
@@ -279,7 +280,7 @@ export default class PublishAllSessionsComponent extends Component {
                             title={{t "general.backToTitle" title=session.title}}
                             data-test-session-link
                           >
-                            <FaIcon @icon="link-slash" />
+                            <FaIcon @icon={{faLinkSlash}} />
                           </LinkTo>
                         {{/if}}
                       </td>
@@ -382,7 +383,7 @@ export default class PublishAllSessionsComponent extends Component {
                             title={{t "general.backToTitle" title=session.title}}
                             data-test-session-link
                           >
-                            <FaIcon @icon="link-slash" />
+                            <FaIcon @icon={{faLinkSlash}} />
                           </LinkTo>
                         {{/if}}
                       </td>
@@ -520,7 +521,7 @@ export default class PublishAllSessionsComponent extends Component {
                             title={{t "general.backToTitle" title=session.title}}
                             data-test-session-link
                           >
-                            <FaIcon @icon="link-slash" />
+                            <FaIcon @icon={{faLinkSlash}} />
                           </LinkTo>
                         {{/if}}
                       </td>
@@ -558,7 +559,7 @@ export default class PublishAllSessionsComponent extends Component {
             title={{t "general.backToTitle" title=@course.title}}
             data-test-course-link
           >
-            <FaIcon @icon="link-slash" />
+            <FaIcon @icon={{faLinkSlash}} />
           </LinkTo>
           <LinkTo
             @route="course-visualize-objectives"
@@ -566,7 +567,7 @@ export default class PublishAllSessionsComponent extends Component {
             title={{t "general.courseVisualizations"}}
             data-test-visualize
           >
-            <FaIcon @icon="chart-column" />
+            <FaIcon @icon={{faChartColumn}} />
           </LinkTo>
         {{/if}}
         <p data-test-confirmation>

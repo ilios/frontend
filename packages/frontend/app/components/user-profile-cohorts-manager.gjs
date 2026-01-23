@@ -14,6 +14,13 @@ import pick from 'ilios-common/helpers/pick';
 import sortBy from 'ilios-common/helpers/sort-by';
 import eq from 'ember-truth-helpers/helpers/eq';
 import LoadingSpinner from 'ilios-common/components/loading-spinner';
+import {
+  faBuildingColumns,
+  faPlus,
+  faTurnDown,
+  faTurnUp,
+  faXmark,
+} from '@fortawesome/free-solid-svg-icons';
 
 export default class UserProfileCohortsManagerComponent extends Component {
   @service currentUser;
@@ -86,7 +93,7 @@ export default class UserProfileCohortsManagerComponent extends Component {
             data-test-remove
           >
             <FaIcon
-              @icon="turn-down"
+              @icon={{faTurnDown}}
               class="clickable remove"
               @title={{t "general.removePrimaryCohort"}}
             />
@@ -116,7 +123,7 @@ export default class UserProfileCohortsManagerComponent extends Component {
                 data-test-promote
               >
                 <FaIcon
-                  @icon="turn-up"
+                  @icon={{faTurnUp}}
                   class="clickable add"
                   @title={{t "general.promoteToPrimaryCohort"}}
                 />
@@ -128,7 +135,7 @@ export default class UserProfileCohortsManagerComponent extends Component {
                 data-test-remove
               >
                 <FaIcon
-                  @icon="xmark"
+                  @icon={{faXmark}}
                   class="clickable remove"
                   @title={{t "general.removeCohort"}}
                 />
@@ -155,7 +162,7 @@ export default class UserProfileCohortsManagerComponent extends Component {
           {{t "general.availableCohorts"}}
         </h3>
         <div class="schoolsfilter" data-test-schools>
-          <FaIcon @icon="building-columns" @fixedWidth={{true}} />
+          <FaIcon @icon={{faBuildingColumns}} @fixedWidth={{true}} />
           {{#if (gt @schools.length 1)}}
             <select
               aria-label={{t "general.schools"}}
@@ -185,7 +192,7 @@ export default class UserProfileCohortsManagerComponent extends Component {
                   {{on "click" (fn @addSecondaryCohort cohort)}}
                   data-test-add
                 >
-                  <FaIcon @icon="plus" class="clickable add" @title={{t "general.addCohort"}} />
+                  <FaIcon @icon={{faPlus}} class="clickable add" @title={{t "general.addCohort"}} />
                 </button>
                 <span data-test-title>
                   <strong>

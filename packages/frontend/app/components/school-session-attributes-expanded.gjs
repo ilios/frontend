@@ -9,6 +9,7 @@ import FaIcon from 'ilios-common/components/fa-icon';
 import perform from 'ember-concurrency/helpers/perform';
 import { fn } from '@ember/helper';
 import SchoolSessionAttributesManager from 'frontend/components/school-session-attributes-manager';
+import { faArrowRotateLeft, faCaretDown } from '@fortawesome/free-solid-svg-icons';
 
 export default class SchoolSessionAttributesExpandedComponent extends Component {
   @tracked flippedShowSessionAttendanceRequired = false;
@@ -100,7 +101,7 @@ export default class SchoolSessionAttributesExpandedComponent extends Component 
             {{on "click" @collapse}}
           >
             {{t "general.sessionAttributes"}}
-            <FaIcon @icon="caret-down" />
+            <FaIcon @icon={{faCaretDown}} />
           </button>
         {{/if}}
         <div class="actions">
@@ -124,7 +125,7 @@ export default class SchoolSessionAttributesExpandedComponent extends Component 
               {{on "click" this.cancel}}
               data-test-cancel
             >
-              <FaIcon @icon="arrow-rotate-left" />
+              <FaIcon @icon={{faArrowRotateLeft}} />
             </button>
           {{else if @canUpdate}}
             <button type="button" {{on "click" (fn @manage true)}} data-test-manage>

@@ -10,6 +10,7 @@ import formatDate from 'ember-intl/helpers/format-date';
 import { on } from '@ember/modifier';
 import { fn } from '@ember/helper';
 import WeeklyCalendarEvent from 'ilios-common/components/weekly-calendar-event';
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 export default class WeeklyCalendarComponent extends Component {
   @service intl;
@@ -110,7 +111,7 @@ export default class WeeklyCalendarComponent extends Component {
     >
       <h2 class="week-of-year" data-test-week-of-year>
         {{#if @isLoadingEvents}}
-          <FaIcon @icon="spinner" @spin={{true}} />
+          <FaIcon @icon={{faSpinner}} @spin={{true}} />
           {{t "general.loadingEvents"}}
           ...
         {{else}}

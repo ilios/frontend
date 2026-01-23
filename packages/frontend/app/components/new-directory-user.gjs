@@ -24,6 +24,7 @@ import perform from 'ember-concurrency/helpers/perform';
 import LoadingSpinner from 'ilios-common/components/loading-spinner';
 import FaIcon from 'ilios-common/components/fa-icon';
 import { LinkTo } from '@ember/routing';
+import { faPlus, faSun, faTruckMedical } from '@fortawesome/free-solid-svg-icons';
 
 export default class NewDirectoryUserComponent extends Component {
   @service fetch;
@@ -548,7 +549,7 @@ export default class NewDirectoryUserComponent extends Component {
                                 {{on "click" (fn @transitionToUser user.user)}}
                               >
                                 <FaIcon
-                                  @icon="sun"
+                                  @icon={{faSun}}
                                   class="warning"
                                   @title={{t "general.goToUser"}}
                                 />
@@ -560,11 +561,15 @@ export default class NewDirectoryUserComponent extends Component {
                                 data-test-add
                                 {{on "click" (fn this.pickUser user)}}
                               >
-                                <FaIcon @icon="plus" class="yes" @title={{t "general.addNew"}} />
+                                <FaIcon
+                                  @icon={{faPlus}}
+                                  class="yes"
+                                  @title={{t "general.addNew"}}
+                                />
                               </button>
                             {{else}}
                               <FaIcon
-                                @icon="truck-medical"
+                                @icon={{faTruckMedical}}
                                 class="no"
                                 data-test-cannot-be-added
                                 @title={{t "general.userNotAddableFromDirectory"}}

@@ -23,6 +23,7 @@ import not from 'ember-truth-helpers/helpers/not';
 import pick from 'ilios-common/helpers/pick';
 import eq from 'ember-truth-helpers/helpers/eq';
 import focus from 'ilios-common/modifiers/focus';
+import { faShuffle, faTable } from '@fortawesome/free-solid-svg-icons';
 
 export default class CurriculumInventoryReportOverviewComponent extends Component {
   @service currentUser;
@@ -243,7 +244,7 @@ export default class CurriculumInventoryReportOverviewComponent extends Componen
               data-test-transition-to-verification-preview
             >
               <FaIcon
-                @icon="table"
+                @icon={{faTable}}
                 @fixedWidth={{true}}
                 @title={{t "general.verificationPreviewFor" name=@report.name}}
               />
@@ -257,7 +258,7 @@ export default class CurriculumInventoryReportOverviewComponent extends Componen
                 data-test-transition-to-rollover
               >
                 <FaIcon
-                  @icon="shuffle"
+                  @icon={{faShuffle}}
                   @fixedWidth={{true}}
                   @title={{t "general.curriculumInventoryReportRollover"}}
                 />

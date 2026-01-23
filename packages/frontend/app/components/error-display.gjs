@@ -7,6 +7,7 @@ import NotFound from 'ilios-common/components/not-found';
 import set from 'ember-set-helper/helpers/set';
 import not from 'ember-truth-helpers/helpers/not';
 import formatTime from 'ember-intl/helpers/format-time';
+import { faRotate } from '@fortawesome/free-solid-svg-icons';
 
 export default class ErrorDisplayComponent extends Component {
   @tracked isOffline = !navigator.onLine;
@@ -31,7 +32,7 @@ export default class ErrorDisplayComponent extends Component {
           </h2>
           <p class="clear-errors">
             <button type="button" {{on "click" this.refresh}}>
-              <FaIcon @icon="rotate" />
+              <FaIcon @icon={{faRotate}} />
               {{t "general.reconnectNow"}}
             </button>
           </p>

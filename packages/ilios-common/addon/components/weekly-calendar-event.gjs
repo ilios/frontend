@@ -14,6 +14,12 @@ import t from 'ember-intl/helpers/t';
 import not from 'ember-truth-helpers/helpers/not';
 import formatDate from 'ember-intl/helpers/format-date';
 import Color from 'color';
+import {
+  faArrowRightToBracket,
+  faCircleExclamation,
+  faClock,
+  faFileSignature,
+} from '@fortawesome/free-solid-svg-icons';
 
 export default class WeeklyCalendarEventComponent extends Component {
   @service calendarEventTooltip;
@@ -149,7 +155,7 @@ export default class WeeklyCalendarEventComponent extends Component {
       <span class="ilios-calendar-event-icons">
         {{#if this.recentlyUpdated}}
           <FaIcon
-            @icon="circle-exclamation"
+            @icon={{faCircleExclamation}}
             @title={{t "general.newUpdates"}}
             class="recently-updated-icon"
             data-test-recently-updated-icon
@@ -157,16 +163,20 @@ export default class WeeklyCalendarEventComponent extends Component {
         {{/if}}
         {{#if @event.hasPrework}}
           <FaIcon
-            @icon="arrow-right-to-bracket"
+            @icon={{faArrowRightToBracket}}
             data-test-has-prework
             @title={{t "general.hasPrework"}}
             data-test-has-prework-icon
           />
         {{/if}}
         {{#if (not @event.isPublished)}}
-          <FaIcon @icon="file-signature" @title={{t "general.notPublished"}} data-test-draft-icon />
+          <FaIcon
+            @icon={{faFileSignature}}
+            @title={{t "general.notPublished"}}
+            data-test-draft-icon
+          />
         {{else if @event.isScheduled}}
-          <FaIcon @icon="clock" @title={{t "general.scheduled"}} data-test-scheduled-icon />
+          <FaIcon @icon={{faClock}} @title={{t "general.scheduled"}} data-test-scheduled-icon />
         {{/if}}
       </span>
       <span data-test-title>

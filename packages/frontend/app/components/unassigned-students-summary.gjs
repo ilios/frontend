@@ -14,6 +14,7 @@ import sortBy from 'ilios-common/helpers/sort-by';
 import eq from 'ember-truth-helpers/helpers/eq';
 import { LinkTo } from '@ember/routing';
 import LoadingSpinner from 'ilios-common/components/loading-spinner';
+import { faBuildingColumns, faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
 
 export default class UnassignedStudentsSummaryComponent extends Component {
   @service currentUser;
@@ -83,13 +84,13 @@ export default class UnassignedStudentsSummaryComponent extends Component {
       >
         <h3 data-test-title>
           {{#if this.hasUnassignedStudents}}
-            <FaIcon @icon="triangle-exclamation" class="no" />
+            <FaIcon @icon={{faTriangleExclamation}} class="no" />
           {{/if}}
           {{t "general.unassignedStudentsSummaryTitle"}}
         </h3>
         <div id="schoolsfilter" class="filter">
           <label for="school-filter-{{templateId}}" class="inline-label">
-            <FaIcon @icon="building-columns" @title={{t "general.filterBySchool"}} />
+            <FaIcon @icon={{faBuildingColumns}} @title={{t "general.filterBySchool"}} />
           </label>
           <div id="school-selection" class="inline-data" data-test-schools>
             {{#if (gt @schools.length 1)}}

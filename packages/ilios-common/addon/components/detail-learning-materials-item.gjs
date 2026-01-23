@@ -12,6 +12,7 @@ import sortBy from 'ilios-common/helpers/sort-by';
 import or from 'ember-truth-helpers/helpers/or';
 import set from 'ember-set-helper/helpers/set';
 import perform from 'ember-concurrency/helpers/perform';
+import { faClock, faEye, faPenToSquare, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 export default class DetailLearningMaterialsItemComponent extends Component {
   @tracked showRemoveConfirmation = false;
@@ -88,7 +89,7 @@ export default class DetailLearningMaterialsItemComponent extends Component {
           </span>
           {{#if @lm.publicNotes}}
             <FaIcon
-              @icon="eye"
+              @icon={{faEye}}
               @title={{t "general.visibleToStudents"}}
               data-test-visible-to-students
             />
@@ -119,7 +120,7 @@ export default class DetailLearningMaterialsItemComponent extends Component {
           {{@lm.learningMaterial.status.title}}
         </span>
         {{#if (or @lm.startDate @lm.endDate)}}
-          <FaIcon @icon="clock" @title={{t "general.timedRelease"}} data-test-timed-release />
+          <FaIcon @icon={{faClock}} @title={{t "general.timedRelease"}} data-test-timed-release />
         {{/if}}
       </td>
       <td class="text-left text-center" colspan="1" data-test-actions>
@@ -131,7 +132,7 @@ export default class DetailLearningMaterialsItemComponent extends Component {
             {{on "click" (fn @setManagedMaterial @lm)}}
             data-test-edit
           >
-            <FaIcon @icon="pen-to-square" />
+            <FaIcon @icon={{faPenToSquare}} />
           </button>
           <button
             type="button"
@@ -140,10 +141,10 @@ export default class DetailLearningMaterialsItemComponent extends Component {
             {{on "click" (set this "showRemoveConfirmation" true)}}
             data-test-remove
           >
-            <FaIcon @icon="trash" />
+            <FaIcon @icon={{faTrash}} />
           </button>
         {{else}}
-          <FaIcon @icon="trash" class="disabled" />
+          <FaIcon @icon={{faTrash}} class="disabled" />
         {{/if}}
       </td>
     </tr>

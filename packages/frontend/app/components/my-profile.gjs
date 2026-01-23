@@ -19,6 +19,7 @@ import pipe from 'ilios-common/helpers/pipe';
 import DatePicker from 'ilios-common/components/date-picker';
 import perform from 'ember-concurrency/helpers/perform';
 import LoadingSpinner from 'ilios-common/components/loading-spinner';
+import { faCheck, faCopy, faXmark } from '@fortawesome/free-solid-svg-icons';
 
 export default class MyProfileComponent extends Component {
   @service fetch;
@@ -190,7 +191,7 @@ export default class MyProfileComponent extends Component {
                     @getClipboardText={{this.getGeneratedJwtToken}}
                     @success={{this.tokenCopied}}
                   >
-                    <FaIcon @icon="copy" @title={{t "general.copyNewToken"}} />
+                    <FaIcon @icon={{faCopy}} @title={{t "general.copyNewToken"}} />
                   </CopyButton>
                   <button
                     type="button"
@@ -199,7 +200,7 @@ export default class MyProfileComponent extends Component {
                     data-test-result-reset
                     {{on "click" (pipe @toggleShowCreateNewToken this.reset)}}
                   >
-                    <FaIcon @icon="xmark" />
+                    <FaIcon @icon={{faXmark}} />
                   </button>
                 </div>
               {{else}}
@@ -223,7 +224,7 @@ export default class MyProfileComponent extends Component {
                     {{#if this.createNewToken.isRunning}}
                       <LoadingSpinner />
                     {{else}}
-                      <FaIcon @icon="check" />
+                      <FaIcon @icon={{faCheck}} />
                     {{/if}}
                   </button>
                   <button
@@ -233,7 +234,7 @@ export default class MyProfileComponent extends Component {
                     data-test-new-token-cancel
                     {{on "click" (pipe @toggleShowCreateNewToken this.reset)}}
                   >
-                    <FaIcon @icon="xmark" />
+                    <FaIcon @icon={{faXmark}} />
                   </button>
                 </div>
               {{/if}}

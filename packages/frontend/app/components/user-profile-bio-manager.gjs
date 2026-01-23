@@ -19,6 +19,7 @@ import YupValidations from 'ilios-common/classes/yup-validations';
 import YupValidationMessage from 'ilios-common/components/yup-validation-message';
 import { string } from 'yup';
 import isEmail from 'validator/lib/isEmail';
+import { faArrowRotateLeft } from '@fortawesome/free-solid-svg-icons';
 
 export default class UserProfileBioManagerComponent extends Component {
   @service currentUser;
@@ -326,7 +327,7 @@ export default class UserProfileBioManagerComponent extends Component {
           {{on "click" this.cancel}}
           data-test-cancel
         >
-          <FaIcon @icon="arrow-rotate-left" />
+          <FaIcon @icon={{faArrowRotateLeft}} />
         </button>
       </div>
 

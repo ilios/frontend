@@ -16,6 +16,7 @@ import includes from 'ilios-common/helpers/includes';
 import mapBy0 from 'ilios-common/helpers/map-by';
 import perform from 'ember-concurrency/helpers/perform';
 import focus from 'ilios-common/modifiers/focus';
+import { faXmark } from '@fortawesome/free-solid-svg-icons';
 
 const DEBOUNCE_TIMEOUT = 250;
 const MIN_INPUT = 3;
@@ -140,7 +141,7 @@ export default class MeshManagerComponent extends Component {
                         <MeshDescriptorLastTreeNumber @descriptor={{term}} />
                       {{/if}}
                     </span>
-                    <FaIcon @icon="xmark" class="remove" />
+                    <FaIcon @icon={{faXmark}} class="remove" />
                   </button>
                 {{else}}
                   <span class="term-title">

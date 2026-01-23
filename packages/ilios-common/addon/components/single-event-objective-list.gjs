@@ -6,6 +6,7 @@ import { on } from '@ember/modifier';
 import set from 'ember-set-helper/helpers/set';
 import not from 'ember-truth-helpers/helpers/not';
 import FaIcon from 'ilios-common/components/fa-icon';
+import { faIndent, faList } from '@fortawesome/free-solid-svg-icons';
 
 export default class SingleEventObjectiveList extends Component {
   @tracked groupByCompetencies = true;
@@ -75,9 +76,9 @@ export default class SingleEventObjectiveList extends Component {
             data-test-display-mode-toggle
           >
             {{#if this.groupByCompetencies}}
-              <FaIcon @icon="indent" @title={{@listByPriorityPhrase}} />
+              <FaIcon @icon={{faIndent}} @title={{@listByPriorityPhrase}} />
             {{else}}
-              <FaIcon @icon="list" @title={{@groupByCompetenciesPhrase}} />
+              <FaIcon @icon={{faList}} @title={{@groupByCompetenciesPhrase}} />
             {{/if}}
           </button>
         {{/if}}

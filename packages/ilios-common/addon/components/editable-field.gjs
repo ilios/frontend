@@ -8,6 +8,7 @@ import perform from 'ember-concurrency/helpers/perform';
 import t from 'ember-intl/helpers/t';
 import FaIcon from 'ilios-common/components/fa-icon';
 import { fn } from '@ember/helper';
+import { faPenToSquare, faXmark } from '@fortawesome/free-solid-svg-icons';
 
 export default class EditableFieldComponent extends Component {
   @tracked isEditing = false;
@@ -95,7 +96,7 @@ export default class EditableFieldComponent extends Component {
                 {{on "click" (perform this.closeEditor)}}
                 data-test-cancel
               >
-                <FaIcon @icon="xmark" />
+                <FaIcon @icon={{faXmark}} />
               </button>
             </span>
           </span>
@@ -117,7 +118,7 @@ export default class EditableFieldComponent extends Component {
               {{#if @clickPrompt}}
                 {{@clickPrompt}}
               {{else}}
-                <FaIcon @icon="pen-to-square" />
+                <FaIcon @icon={{faPenToSquare}} />
               {{/if}}
             {{/if}}
           </button>

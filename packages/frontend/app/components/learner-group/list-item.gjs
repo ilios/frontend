@@ -13,6 +13,7 @@ import not from 'ember-truth-helpers/helpers/not';
 import { on } from '@ember/modifier';
 import perform from 'ember-concurrency/helpers/perform';
 import set from 'ember-set-helper/helpers/set';
+import { faCopy, faTrash, faUniversalAccess } from '@fortawesome/free-solid-svg-icons';
 
 export default class LearnerGroupListItemComponent extends Component {
   @service permissionChecker;
@@ -147,7 +148,7 @@ export default class LearnerGroupListItemComponent extends Component {
         </LinkTo>
         {{#if @learnerGroup.needsAccommodation}}
           <FaIcon
-            @icon="universal-access"
+            @icon={{faUniversalAccess}}
             @title={{t "general.accommodationIsRequiredForLearnersInThisGroup"}}
             data-test-needs-accommodation
           />
@@ -160,7 +161,7 @@ export default class LearnerGroupListItemComponent extends Component {
         <span data-test-children-count>{{@learnerGroup.childrenCount}}</span>
         {{#if @learnerGroup.hasSubgroupsInNeedOfAccommodation}}
           <FaIcon
-            @icon="universal-access"
+            @icon={{faUniversalAccess}}
             @title={{t
               "general.accommodationIsRequiredForLearnersInSubgroups"
               groups=this.sortedTitlesOfSubgroupsInNeedOfAccommodation
@@ -172,17 +173,17 @@ export default class LearnerGroupListItemComponent extends Component {
       <td class="text-right">
         {{#if (and this.canDelete (not this.showRemoveConfirmation))}}
           <button class="link-button" type="button" {{on "click" this.showRemove}} data-test-remove>
-            <FaIcon @icon="trash" @title={{t "general.remove"}} />
+            <FaIcon @icon={{faTrash}} @title={{t "general.remove"}} />
           </button>
         {{else}}
-          <FaIcon @icon="trash" class="disabled" />
+          <FaIcon @icon={{faTrash}} class="disabled" />
         {{/if}}
         {{#if (and this.canCreate (not this.showCopyConfirmation))}}
           <button class="link-button" type="button" {{on "click" this.showCopy}} data-test-copy>
-            <FaIcon @icon="copy" @title={{t "general.copy"}} />
+            <FaIcon @icon={{faCopy}} @title={{t "general.copy"}} />
           </button>
         {{else}}
-          <FaIcon @icon="copy" class="disabled" />
+          <FaIcon @icon={{faCopy}} class="disabled" />
         {{/if}}
       </td>
     </tr>

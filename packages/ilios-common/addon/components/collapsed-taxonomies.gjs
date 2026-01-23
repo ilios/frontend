@@ -5,6 +5,7 @@ import { get } from '@ember/helper';
 import intersect from 'ilios-common/helpers/intersect';
 import hasManyIds from 'ilios-common/helpers/has-many-ids';
 import LoadingSpinner from 'ilios-common/components/loading-spinner';
+import { faCaretRight } from '@fortawesome/free-solid-svg-icons';
 <template>
   <section class="collapsed-taxonomies" data-test-collapsed-taxonomies>
     <div>
@@ -17,7 +18,7 @@ import LoadingSpinner from 'ilios-common/components/loading-spinner';
       >
         {{t "general.terms"}}
         ({{@subject.terms.length}})
-        <FaIcon @icon="caret-right" />
+        <FaIcon @icon={{faCaretRight}} />
       </button>
     </div>
     {{#if @subject.associatedVocabularies}}

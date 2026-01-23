@@ -10,6 +10,7 @@ import { service } from '@ember/service';
 import FaIcon from 'ilios-common/components/fa-icon';
 import t from 'ember-intl/helpers/t';
 import eq from 'ember-truth-helpers/helpers/eq';
+import { faBackward, faForward } from '@fortawesome/free-solid-svg-icons';
 
 export default class IliosCalendarComponent extends Component {
   @service intl;
@@ -122,7 +123,7 @@ export default class IliosCalendarComponent extends Component {
               @query={{hash date=this.backDate}}
               data-test-go-back
             >
-              <FaIcon @title={{t "general.back"}} @icon="backward" />
+              <FaIcon @title={{t "general.back"}} @icon={{faBackward}} />
             </LinkTo>
           </li>
           <li>
@@ -140,7 +141,7 @@ export default class IliosCalendarComponent extends Component {
               @query={{hash date=this.forwardDate}}
               data-test-go-forward
             >
-              <FaIcon @title={{t "general.forward"}} @icon="forward" />
+              <FaIcon @title={{t "general.forward"}} @icon={{faForward}} />
             </LinkTo>
           </li>
         </ul>

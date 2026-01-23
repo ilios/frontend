@@ -7,6 +7,7 @@ import FaIcon from 'ilios-common/components/fa-icon';
 import DetailTermsList from 'ilios-common/components/detail-terms-list';
 import noop from 'ilios-common/helpers/noop';
 import { fn } from '@ember/helper';
+import { faArrowRotateLeft, faCheck, faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 export default class ObjectiveListItemTermsComponent extends Component {
   @cached
@@ -29,9 +30,9 @@ export default class ObjectiveListItemTermsComponent extends Component {
           {{on "click" @save}}
         >
           {{#if @isSaving}}
-            <FaIcon @icon="spinner" @spin={{true}} />
+            <FaIcon @icon={{faSpinner}} @spin={{true}} />
           {{else}}
-            <FaIcon @icon="check" />
+            <FaIcon @icon={{faCheck}} />
           {{/if}}
         </button>
         <button
@@ -41,7 +42,7 @@ export default class ObjectiveListItemTermsComponent extends Component {
           data-test-cancel
           {{on "click" @cancel}}
         >
-          <FaIcon @icon="arrow-rotate-left" />
+          <FaIcon @icon={{faArrowRotateLeft}} />
         </button>
       {{else}}
         {{#each @subject.associatedVocabularies as |vocab|}}

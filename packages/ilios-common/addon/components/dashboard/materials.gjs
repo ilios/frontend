@@ -21,6 +21,7 @@ import eq from 'ember-truth-helpers/helpers/eq';
 import { fn } from '@ember/helper';
 import MaterialListItem from 'ilios-common/components/dashboard/material-list-item';
 import FaIcon from 'ilios-common/components/fa-icon';
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 const DEBOUNCE_DELAY = 250;
 
@@ -374,7 +375,7 @@ export default class DashboardMaterialsComponent extends Component {
             <p>{{t "general.none"}}</p>
           {{/if}}
         {{else}}
-          <FaIcon @icon="spinner" class="orange" @size="2x" @spin={{true}} />
+          <FaIcon @icon={{faSpinner}} class="orange" @size="2x" @spin={{true}} />
         {{/if}}
       </div>
     </div>

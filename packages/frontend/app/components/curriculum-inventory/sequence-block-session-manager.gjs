@@ -12,6 +12,7 @@ import or from 'ember-truth-helpers/helpers/or';
 import eq from 'ember-truth-helpers/helpers/eq';
 import sortBy from 'ilios-common/helpers/sort-by';
 import includes from 'ilios-common/helpers/includes';
+import { faArrowRotateLeft, faCheck } from '@fortawesome/free-solid-svg-icons';
 
 export default class SequenceBlockSessionManagerComponent extends Component {
   @service store;
@@ -159,7 +160,7 @@ export default class SequenceBlockSessionManagerComponent extends Component {
           {{on "click" (fn @save this.linkedSessions this.excludedSessions)}}
           data-test-save
         >
-          <FaIcon @icon="check" />
+          <FaIcon @icon={{faCheck}} />
         </button>
         <button
           type="button"
@@ -168,7 +169,7 @@ export default class SequenceBlockSessionManagerComponent extends Component {
           {{on "click" @cancel}}
           data-test-cancel
         >
-          <FaIcon @icon="arrow-rotate-left" />
+          <FaIcon @icon={{faArrowRotateLeft}} />
         </button>
       </div>
       <div class="list">

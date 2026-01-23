@@ -9,6 +9,7 @@ import { on } from '@ember/modifier';
 import t from 'ember-intl/helpers/t';
 import perform from 'ember-concurrency/helpers/perform';
 import FaIcon from 'ilios-common/components/fa-icon';
+import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 const DEBOUNCE_TIMEOUT = 250;
 
 export default class SearchBox extends Component {
@@ -94,7 +95,7 @@ export default class SearchBox extends Component {
         {{on "click" (perform this.searchTask)}}
         data-test-submit-search
       >
-        <FaIcon @icon="magnifying-glass" />
+        <FaIcon @icon={{faMagnifyingGlass}} />
       </button>
     </div>
   </template>

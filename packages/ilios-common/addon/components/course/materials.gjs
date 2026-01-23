@@ -18,6 +18,7 @@ import includes from 'ilios-common/helpers/includes';
 import capitalize from 'ilios-common/helpers/capitalize';
 import formatDate from 'ember-intl/helpers/format-date';
 import { pageTitle } from 'ember-page-title';
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 const DEBOUNCE_DELAY = 250;
 
@@ -228,7 +229,7 @@ export default class CourseMaterialsComponent extends Component {
               <tr>
                 <td colspan="6" align="center">
                   <FaIcon
-                    @icon="spinner"
+                    @icon={{faSpinner}}
                     class="orange"
                     @size="2x"
                     @spin={{true}}
@@ -352,7 +353,7 @@ export default class CourseMaterialsComponent extends Component {
             {{#if this.isLoading}}
               <tr>
                 <td colspan="9" align="center">
-                  <FaIcon @icon="spinner" class="orange" @size="2x" @spin={{true}} />
+                  <FaIcon @icon={{faSpinner}} class="orange" @size="2x" @spin={{true}} />
                 </td>
               </tr>
             {{else}}

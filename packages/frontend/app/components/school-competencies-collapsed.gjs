@@ -5,6 +5,7 @@ import { on } from '@ember/modifier';
 import t from 'ember-intl/helpers/t';
 import FaIcon from 'ilios-common/components/fa-icon';
 import sortBy from 'ilios-common/helpers/sort-by';
+import { faCaretRight } from '@fortawesome/free-solid-svg-icons';
 
 export default class SchoolCompetenciesCollapsedComponent extends Component {
   @tracked competenciesRelationship;
@@ -50,7 +51,7 @@ export default class SchoolCompetenciesCollapsedComponent extends Component {
           {{t "general.competencies"}}
           ({{this.domains.length~}}/
           {{~this.notDomains.length}})
-          <FaIcon @icon="caret-right" />
+          <FaIcon @icon={{faCaretRight}} />
         </button>
       </div>
       <div class="content">

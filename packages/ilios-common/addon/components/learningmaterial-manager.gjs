@@ -27,6 +27,7 @@ import DatePicker from 'ilios-common/components/date-picker';
 import TimePicker from 'ilios-common/components/time-picker';
 import MeshManager from 'ilios-common/components/mesh-manager';
 import LoadingSpinner from 'ilios-common/components/loading-spinner';
+import { faCopy, faDownload } from '@fortawesome/free-solid-svg-icons';
 
 export default class LearningMaterialManagerComponent extends Component {
   @service store;
@@ -442,7 +443,7 @@ export default class LearningMaterialManagerComponent extends Component {
                 {{#if (eq this.mimetype "application/pdf")}}
                   <a href="{{this.absoluteFileUri}}?inline">{{this.filename}}</a>
                   <a href={{this.absoluteFileUri}} target="_blank" rel="noopener noreferrer">
-                    <FaIcon @icon="download" @title={{t "general.download"}} />
+                    <FaIcon @icon={{faDownload}} @title={{t "general.download"}} />
                   </a>
                 {{else}}
                   <a href={{this.absoluteFileUri}} target="_blank" rel="noopener noreferrer">
@@ -453,7 +454,7 @@ export default class LearningMaterialManagerComponent extends Component {
                   @getClipboardText={{this.getLearningMaterialAbsoluteFileUri}}
                   @success={{perform this.textCopied}}
                 >
-                  <FaIcon @icon="copy" @title={{t "general.copyLink"}} />
+                  <FaIcon @icon={{faCopy}} @title={{t "general.copyLink"}} />
                 </CopyButton>
               </span>
             </div>
@@ -469,7 +470,7 @@ export default class LearningMaterialManagerComponent extends Component {
                   @getClipboardText={{this.getLearningMaterialLink}}
                   @success={{perform this.textCopied}}
                 >
-                  <FaIcon @icon="copy" @title={{t "general.copyLink"}} />
+                  <FaIcon @icon={{faCopy}} @title={{t "general.copyLink"}} />
                 </CopyButton>
               </span>
             </div>

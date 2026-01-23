@@ -14,6 +14,14 @@ import formatDate from 'ember-intl/helpers/format-date';
 import and from 'ember-truth-helpers/helpers/and';
 import PublicationStatus from 'ilios-common/components/publication-status';
 import not from 'ember-truth-helpers/helpers/not';
+import {
+  faArrowRightToBracket,
+  faCaretDown,
+  faCaretRight,
+  faClipboardList,
+  faTrash,
+  faUserClock,
+} from '@fortawesome/free-solid-svg-icons';
 
 export default class SessionsGridRowComponent extends Component {
   @service permissionChecker;
@@ -64,7 +72,7 @@ export default class SessionsGridRowComponent extends Component {
             data-test-collapse
             {{on "click" (fn @closeSession @session)}}
           >
-            <FaIcon @icon="caret-down" />
+            <FaIcon @icon={{faCaretDown}} />
           </button>
         {{else}}
           <button
@@ -76,7 +84,7 @@ export default class SessionsGridRowComponent extends Component {
             {{on "click" (fn @expandSession @session)}}
           >
             <FaIcon
-              @icon="caret-right"
+              @icon={{faCaretRight}}
               @title={{if (eq @session.offeringCount 0) (t "general.noOfferings")}}
             />
           </button>
@@ -109,7 +117,7 @@ export default class SessionsGridRowComponent extends Component {
             {{#if @session.hasPostrequisite}}
               <strong>
                 {{t "general.ilm"}}:
-                <FaIcon @icon="user-clock" />
+                <FaIcon @icon={{faUserClock}} />
                 {{t "general.duePriorTo"}}:
               </strong>
               <LinkTo
@@ -128,7 +136,7 @@ export default class SessionsGridRowComponent extends Component {
             {{/if}}
           {{else if @session.hasPostrequisite}}
             <strong>
-              <FaIcon @icon="user-clock" />
+              <FaIcon @icon={{faUserClock}} />
               {{t "general.duePriorTo"}}:
             </strong>
             <LinkTo
@@ -158,7 +166,7 @@ export default class SessionsGridRowComponent extends Component {
         {{#if (and this.canUpdate @session.prerequisiteCount)}}
           {{#if this.sessionPrerequisites}}
             <FaIcon
-              @icon="arrow-right-to-bracket"
+              @icon={{faArrowRightToBracket}}
               @ariaHidden={{false}}
               class="prerequisites"
               @flip="horizontal"
@@ -169,7 +177,7 @@ export default class SessionsGridRowComponent extends Component {
         {{/if}}
         {{#if (and this.canUpdate @session.instructionalNotes.length)}}
           <FaIcon
-            @icon="clipboard-list"
+            @icon={{faClipboardList}}
             @ariaHidden={{false}}
             class="instructional-notes"
             @title={{t "general.instructionalNotes"}}
@@ -186,7 +194,7 @@ export default class SessionsGridRowComponent extends Component {
             data-test-delete
           >
             <FaIcon
-              @icon="trash"
+              @icon={{faTrash}}
               @ariaHidden={{false}}
               class="remove enabled"
               @title={{t "general.remove"}}
@@ -194,7 +202,7 @@ export default class SessionsGridRowComponent extends Component {
           </button>
         {{else}}
           <FaIcon
-            @icon="trash"
+            @icon={{faTrash}}
             @ariaHidden={{false}}
             class="disabled"
             data-test-delete-disabled

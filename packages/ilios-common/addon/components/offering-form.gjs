@@ -35,6 +35,7 @@ import LearnerSelectionManager from 'ilios-common/components/learner-selection-m
 import SaveButton from 'ilios-common/components/save-button';
 import YupValidations from 'ilios-common/classes/yup-validations';
 import YupValidationMessage from 'ilios-common/components/yup-validation-message';
+import { faXmark } from '@fortawesome/free-solid-svg-icons';
 
 const DEBOUNCE_DELAY = 600;
 const DEFAULT_URL_VALUE = 'https://';
@@ -753,7 +754,7 @@ export default class OfferingForm extends Component {
                         type="button"
                         {{on "click" (set this "isEditingTimezone" false)}}
                       >
-                        <FaIcon @icon="xmark" />
+                        <FaIcon @icon={{faXmark}} />
                       </button>
                     </span>
                   </div>

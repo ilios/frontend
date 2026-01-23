@@ -10,6 +10,7 @@ import perform from 'ember-concurrency/helpers/perform';
 import FaIcon from 'ilios-common/components/fa-icon';
 import DetailCohortManager from 'ilios-common/components/detail-cohort-manager';
 import DetailCohortList from 'ilios-common/components/detail-cohort-list';
+import { faArrowRotateLeft } from '@fortawesome/free-solid-svg-icons';
 
 export default class DetailCohortsComponent extends Component {
   @tracked isManaging = false;
@@ -94,7 +95,7 @@ export default class DetailCohortsComponent extends Component {
               aria-label={{t "general.cancel"}}
               {{on "click" this.cancel}}
             >
-              <FaIcon @icon="arrow-rotate-left" />
+              <FaIcon @icon={{faArrowRotateLeft}} />
             </button>
           {{else if @editable}}
             <button type="button" {{on "click" (perform this.manage)}}>

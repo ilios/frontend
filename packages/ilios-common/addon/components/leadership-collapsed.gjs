@@ -2,6 +2,7 @@ import Component from '@glimmer/component';
 import { on } from '@ember/modifier';
 import t from 'ember-intl/helpers/t';
 import FaIcon from 'ilios-common/components/fa-icon';
+import { faCaretRight } from '@fortawesome/free-solid-svg-icons';
 
 export default class LeadershipCollapsed extends Component {
   get count() {
@@ -26,7 +27,7 @@ export default class LeadershipCollapsed extends Component {
         >
           {{t "general.leadership"}}
           ({{this.count}})
-          <FaIcon @icon="caret-right" />
+          <FaIcon @icon={{faCaretRight}} />
         </button>
       </div>
       <div class="content">

@@ -13,6 +13,7 @@ import SearchInput from 'frontend/components/reports/subject/new/search/input';
 import perform from 'ember-concurrency/helpers/perform';
 import isArray from 'ember-truth-helpers/helpers/is-array';
 import { fn } from '@ember/helper';
+import { faXmark } from '@fortawesome/free-solid-svg-icons';
 
 export default class ReportsSubjectNewCourseComponent extends Component {
   @service store;
@@ -87,7 +88,7 @@ export default class ReportsSubjectNewCourseComponent extends Component {
                     [{{course.externalId}}]&nbsp;
                   {{/if}}
                   {{course.title}}
-                  <FaIcon @icon="xmark" class="remove" />
+                  <FaIcon @icon={{faXmark}} class="remove" />
                 </button>
               {{/let}}
             {{else}}

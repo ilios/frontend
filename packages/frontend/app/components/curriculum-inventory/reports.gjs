@@ -16,6 +16,11 @@ import NewReport from 'frontend/components/curriculum-inventory/new-report';
 import { LinkTo } from '@ember/routing';
 import ReportList from 'frontend/components/curriculum-inventory/report-list';
 import perform from 'ember-concurrency/helpers/perform';
+import {
+  faBuildingColumns,
+  faRectangleList,
+  faSquareUpRight,
+} from '@fortawesome/free-solid-svg-icons';
 
 export default class CurriculumInventoryReportsComponent extends Component {
   @service currentUser;
@@ -146,7 +151,7 @@ export default class CurriculumInventoryReportsComponent extends Component {
     >
       <div class="filters">
         <div class="schoolsfilter" data-test-schools-filter>
-          <FaIcon @icon="building-columns" @fixedWidth={{true}} />
+          <FaIcon @icon={{faBuildingColumns}} @fixedWidth={{true}} />
           {{#if this.hasMoreThanOneSchool}}
             <select
               aria-label={{t "general.filterBySchool"}}
@@ -165,7 +170,7 @@ export default class CurriculumInventoryReportsComponent extends Component {
           {{/if}}
         </div>
         <div class="programsfilter" data-test-programs-filter>
-          <FaIcon @icon="rectangle-list" @fixedWidth={{true}} />
+          <FaIcon @icon={{faRectangleList}} @fixedWidth={{true}} />
           {{#if this.programs.length}}
             <select
               aria-label={{t "general.filterByProgram"}}
@@ -211,7 +216,7 @@ export default class CurriculumInventoryReportsComponent extends Component {
           {{#if this.newReport}}
             <div class="saved-result" data-test-saved-results>
               <LinkTo @route="curriculum-inventory-report" @model={{this.newReport}}>
-                <FaIcon @icon="square-up-right" />
+                <FaIcon @icon={{faSquareUpRight}} />
                 {{this.newReport.name}}
               </LinkTo>
               {{t "general.savedSuccessfully"}}

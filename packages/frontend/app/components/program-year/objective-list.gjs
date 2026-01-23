@@ -19,6 +19,7 @@ import isArray from 'ember-truth-helpers/helpers/is-array';
 import ObjectiveListItem from 'frontend/components/program-year/objective-list-item';
 import ObjectiveListLoading from 'frontend/components/program-year/objective-list-loading';
 import LoadingSpinner from 'ilios-common/components/loading-spinner';
+import { faCaretDown, faCaretRight } from '@fortawesome/free-solid-svg-icons';
 
 export default class ProgramYearObjectiveListComponent extends Component {
   @service iliosConfig;
@@ -150,9 +151,9 @@ export default class ProgramYearObjectiveListComponent extends Component {
               {{#if this.expandAll.isRunning}}
                 <LoadingSpinner />
               {{else if @allObjectivesExpanded}}
-                <FaIcon @icon="caret-down" class="clickable" />
+                <FaIcon @icon={{faCaretDown}} class="clickable" />
               {{else}}
-                <FaIcon @icon="caret-right" class="clickable" />
+                <FaIcon @icon={{faCaretRight}} class="clickable" />
               {{/if}}
             </button>
           </span>

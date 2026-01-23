@@ -12,6 +12,7 @@ import set from 'ember-set-helper/helpers/set';
 import FaIcon from 'ilios-common/components/fa-icon';
 import IliosTooltip from 'ilios-common/components/ilios-tooltip';
 import not from 'ember-truth-helpers/helpers/not';
+import { faCheck, faCopy, faDownload, faPlay, faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 export default class ReportsCurriculumHeader extends Component {
   @service flashMessages;
@@ -191,7 +192,7 @@ export default class ReportsCurriculumHeader extends Component {
             id={{this.copyButtonId}}
             {{mouseHoverToggle (set this "showCopyTooltip")}}
           >
-            <FaIcon @icon="copy" />
+            <FaIcon @icon={{faCopy}} />
             {{t "general.copyCurriculumReportUrl"}}
           </CopyButton>
           {{#if this.showCopyTooltip}}
@@ -207,14 +208,14 @@ export default class ReportsCurriculumHeader extends Component {
         {{#if @showReportResults}}
           {{#if @loading}}
             <div class="loading-results">
-              <FaIcon @icon="spinner" @spin={{true}} />
+              <FaIcon @icon={{faSpinner}} @spin={{true}} />
             </div>
           {{else}}
             <button type="button" {{on "click" @download}} data-test-download>
               {{#if @finished}}
-                <FaIcon @icon="check" />
+                <FaIcon @icon={{faCheck}} />
               {{else}}
-                <FaIcon @icon="download" />
+                <FaIcon @icon={{faDownload}} />
               {{/if}}
               {{t "general.downloadResults"}}
             </button>
@@ -232,7 +233,7 @@ export default class ReportsCurriculumHeader extends Component {
             {{mouseHoverToggle (set this "showRunTooltip")}}
             data-test-run
           >
-            <FaIcon @icon="play" @title={{t "general.runReport"}} />
+            <FaIcon @icon={{faPlay}} @title={{t "general.runReport"}} />
             {{t "general.runReport"}}
           </button>
           {{#if this.showRunTooltip}}

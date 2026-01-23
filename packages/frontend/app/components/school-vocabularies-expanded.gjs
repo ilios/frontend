@@ -17,6 +17,7 @@ import SchoolVocabularyTermManager from 'frontend/components/school-vocabulary-t
 import SchoolVocabularyManager from 'frontend/components/school-vocabulary-manager';
 import SchoolVocabulariesList from 'frontend/components/school-vocabularies-list';
 import LoadingSpinner from 'ilios-common/components/loading-spinner';
+import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
 
 export default class SchoolVocabulariesExpandedComponent extends Component {
   @service store;
@@ -125,7 +126,7 @@ export default class SchoolVocabulariesExpandedComponent extends Component {
             >
               {{t "general.vocabularies"}}
               ({{@school.vocabularies.length}})
-              <FaIcon @icon="caret-down" />
+              <FaIcon @icon={{faCaretDown}} />
             </button>
           {{else}}
             <div class="title" data-test-vocabularies-title>

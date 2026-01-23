@@ -8,11 +8,12 @@ import eq from 'ember-truth-helpers/helpers/eq';
 import { concat } from '@ember/helper';
 import TruncateText from 'ilios-common/components/truncate-text';
 import TimedReleaseSchedule from 'ilios-common/components/timed-release-schedule';
+import { faClock, faDownload } from '@fortawesome/free-solid-svg-icons';
 <template>
   <li class="week-glance-learning-material-list-item" ...attributes>
     {{#if @lm.isBlanked}}
       <span class="lm-type-icon" data-test-type-icon>
-        <FaIcon @icon="clock" @title={{t "general.timedRelease"}} />
+        <FaIcon @icon={{faClock}} @title={{t "general.timedRelease"}} />
       </span>
       <span data-test-material-title>
         {{@lm.title}}
@@ -47,7 +48,7 @@ import TimedReleaseSchedule from 'ilios-common/components/timed-release-schedule
             target="_blank"
             rel="noopener noreferrer"
           >
-            <FaIcon @icon="download" />
+            <FaIcon @icon={{faDownload}} />
           </a>
         {{else}}
           <a

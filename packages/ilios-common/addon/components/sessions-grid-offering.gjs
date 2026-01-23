@@ -25,6 +25,7 @@ import YupValidations from 'ilios-common/classes/yup-validations';
 import YupValidationMessage from 'ilios-common/components/yup-validation-message';
 import { string } from 'yup';
 import focus from 'ilios-common/modifiers/focus';
+import { faPencil } from '@fortawesome/free-solid-svg-icons';
 
 export default class SessionsGridOffering extends Component {
   @tracked roomBuffer;
@@ -260,7 +261,7 @@ export default class SessionsGridOffering extends Component {
                 type="button"
                 {{on "click" this.toggleEditing}}
               >
-                <FaIcon @icon="pencil" @title={{t "general.edit"}} @ariaHidden={{false}} />
+                <FaIcon @icon={{faPencil}} @title={{t "general.edit"}} @ariaHidden={{false}} />
               </button>
             </td>
           {{/if}}

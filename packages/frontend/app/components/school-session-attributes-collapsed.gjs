@@ -1,6 +1,7 @@
 import { on } from '@ember/modifier';
 import t from 'ember-intl/helpers/t';
 import FaIcon from 'ilios-common/components/fa-icon';
+import { faCaretRight } from '@fortawesome/free-solid-svg-icons';
 <template>
   <section
     class="school-session-attributes-collapsed"
@@ -16,7 +17,7 @@ import FaIcon from 'ilios-common/components/fa-icon';
         {{on "click" @expand}}
       >
         {{t "general.sessionAttributes"}}
-        <FaIcon @icon="caret-right" />
+        <FaIcon @icon={{faCaretRight}} />
       </button>
     </div>
     <div class="content">

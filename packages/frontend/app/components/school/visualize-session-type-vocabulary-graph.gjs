@@ -20,6 +20,7 @@ import SortableTh from 'ilios-common/components/sortable-th';
 import eq from 'ember-truth-helpers/helpers/eq';
 import { fn } from '@ember/helper';
 import sortBy from 'ilios-common/helpers/sort-by';
+import { faDownload, faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 export default class SchoolVisualizeSessionTypeVocabularyGraphComponent extends Component {
   @service router;
@@ -196,7 +197,7 @@ export default class SchoolVisualizeSessionTypeVocabularyGraphComponent extends 
                 {{on "click" (perform this.downloadData)}}
                 data-test-download-data
               >
-                <FaIcon @icon="download" />
+                <FaIcon @icon={{faDownload}} />
                 {{t "general.download"}}
               </button>
             </div>
@@ -237,7 +238,7 @@ export default class SchoolVisualizeSessionTypeVocabularyGraphComponent extends 
           </div>
         {{/if}}
       {{else}}
-        <FaIcon @icon="spinner" @spin={{true}} />
+        <FaIcon @icon={{faSpinner}} @spin={{true}} />
       {{/if}}
     </div>
   </template>

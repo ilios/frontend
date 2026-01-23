@@ -15,6 +15,7 @@ import eq from 'ember-truth-helpers/helpers/eq';
 import perform from 'ember-concurrency/helpers/perform';
 import Manager from 'frontend/components/assign-students/manager';
 import WaitSaving from 'ilios-common/components/wait-saving';
+import { faBuildingColumns } from '@fortawesome/free-solid-svg-icons';
 
 const DEBOUNCE_DELAY = 250;
 
@@ -131,7 +132,7 @@ export default class AssignStudentsRootComponent extends Component {
     <section class="assign-students-root main-section" data-test-assign-students-root>
       <div class="filters">
         <div class="schoolsfilter" data-test-school-filter>
-          <FaIcon @icon="building-columns" @fixedWidth={{true}} />
+          <FaIcon @icon={{faBuildingColumns}} @fixedWidth={{true}} />
           {{#if this.hasMoreThanOneSchool}}
             <select
               aria-label={{t "general.filterBySchool"}}

@@ -8,6 +8,7 @@ import eq from 'ember-truth-helpers/helpers/eq';
 import gte from 'ember-truth-helpers/helpers/gte';
 import { get } from '@ember/helper';
 import LoadingSpinner from 'ilios-common/components/loading-spinner';
+import { faBan, faCaretRight, faCircle } from '@fortawesome/free-solid-svg-icons';
 
 export default class CourseCollapsedObjectivesComponent extends Component {
   @cached
@@ -48,7 +49,7 @@ export default class CourseCollapsedObjectivesComponent extends Component {
         >
           {{t "general.objectives"}}
           ({{this.objectives.length}})
-          <FaIcon @icon="caret-right" />
+          <FaIcon @icon={{faCaretRight}} />
         </button>
       </div>
       {{#if this.objectives.length}}
@@ -77,29 +78,29 @@ export default class CourseCollapsedObjectivesComponent extends Component {
                 </td>
                 <td class="text-middle text-center" rowspan="3" data-test-parent-status>
                   {{#if (eq this.objectivesWithParents.length this.objectives.length)}}
-                    <FaIcon @icon="circle" class="yes" />
+                    <FaIcon @icon={{faCircle}} class="yes" />
                   {{else if (gte (get this.objectivesWithParents "length") 1)}}
-                    <FaIcon @icon="circle" class="maybe" />
+                    <FaIcon @icon={{faCircle}} class="maybe" />
                   {{else}}
-                    <FaIcon @icon="ban" class="no" />
+                    <FaIcon @icon={{faBan}} class="no" />
                   {{/if}}
                 </td>
                 <td class="text-middle text-center" rowspan="3" data-test-term-status>
                   {{#if (eq this.objectivesWithTerms.length this.objectives.length)}}
-                    <FaIcon @icon="circle" class="yes" />
+                    <FaIcon @icon={{faCircle}} class="yes" />
                   {{else if (gte (get this.objectivesWithTerms "length") 1)}}
-                    <FaIcon @icon="circle" class="maybe" />
+                    <FaIcon @icon={{faCircle}} class="maybe" />
                   {{else}}
-                    <FaIcon @icon="ban" class="no" />
+                    <FaIcon @icon={{faBan}} class="no" />
                   {{/if}}
                 </td>
                 <td class="text-middle text-center" rowspan="3" data-test-mesh-status>
                   {{#if (eq this.objectivesWithMesh.length this.objectives.length)}}
-                    <FaIcon @icon="circle" class="yes" />
+                    <FaIcon @icon={{faCircle}} class="yes" />
                   {{else if (gte (get this.objectivesWithMesh "length") 1)}}
-                    <FaIcon @icon="circle" class="maybe" />
+                    <FaIcon @icon={{faCircle}} class="maybe" />
                   {{else}}
-                    <FaIcon @icon="ban" class="no" />
+                    <FaIcon @icon={{faBan}} class="no" />
                   {{/if}}
                 </td>
               </tr>

@@ -14,6 +14,7 @@ import SearchInput from 'frontend/components/reports/subject/new/search/input';
 import perform from 'ember-concurrency/helpers/perform';
 import isArray from 'ember-truth-helpers/helpers/is-array';
 import { fn } from '@ember/helper';
+import { faXmark } from '@fortawesome/free-solid-svg-icons';
 
 export default class ReportsSubjectNewLearningMaterialComponent extends Component {
   @service store;
@@ -67,7 +68,7 @@ export default class ReportsSubjectNewLearningMaterialComponent extends Componen
                   data-test-selected-learning-material
                 >
                   {{material.title}}
-                  <FaIcon @icon="xmark" class="remove" />
+                  <FaIcon @icon={{faXmark}} class="remove" />
                 </button>
               {{/let}}
             {{else}}

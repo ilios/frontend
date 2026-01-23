@@ -8,6 +8,7 @@ import gt from 'ember-truth-helpers/helpers/gt';
 import { on } from '@ember/modifier';
 import set from 'ember-set-helper/helpers/set';
 import FaIcon from 'ilios-common/components/fa-icon';
+import { faAngleDown, faAngleUp } from '@fortawesome/free-solid-svg-icons';
 
 export default class CourseSearchResultComponent extends Component {
   @tracked showMore = false;
@@ -58,7 +59,7 @@ export default class CourseSearchResultComponent extends Component {
                   type="button"
                   {{on "click" (set this "showMore" false)}}
                 >
-                  <FaIcon @icon="angle-up" />
+                  <FaIcon @icon={{faAngleUp}} />
                   {{t "general.showLess"}}
                 </button>
               </li>
@@ -69,7 +70,7 @@ export default class CourseSearchResultComponent extends Component {
                   type="button"
                   {{on "click" (set this "showMore" true)}}
                 >
-                  <FaIcon @icon="angle-down" />
+                  <FaIcon @icon={{faAngleDown}} />
                   {{t "general.showMore"}}
                 </button>
               </li>

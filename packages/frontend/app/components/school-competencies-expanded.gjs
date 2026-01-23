@@ -14,6 +14,7 @@ import or from 'ember-truth-helpers/helpers/or';
 import { fn } from '@ember/helper';
 import SchoolCompetenciesManager from 'frontend/components/school-competencies-manager';
 import SchoolCompetenciesList from 'frontend/components/school-competencies-list';
+import { faArrowRotateLeft, faCaretDown } from '@fortawesome/free-solid-svg-icons';
 
 export default class SchoolCompetenciesExpandedComponent extends Component {
   @service store;
@@ -136,7 +137,7 @@ export default class SchoolCompetenciesExpandedComponent extends Component {
             >
               {{t "general.competencies"}}
               ({{this.domains.length}}/{{this.childCompetencies.length}})
-              <FaIcon @icon="caret-down" />
+              <FaIcon @icon={{faCaretDown}} />
             </button>
           {{else}}
             <div class="title" data-test-title>
@@ -166,7 +167,7 @@ export default class SchoolCompetenciesExpandedComponent extends Component {
               {{on "click" this.stopManaging}}
               data-test-cancel
             >
-              <FaIcon @icon="arrow-rotate-left" />
+              <FaIcon @icon={{faArrowRotateLeft}} />
             </button>
           {{else if (or @canUpdate @canDelete @canCreate)}}
             <button

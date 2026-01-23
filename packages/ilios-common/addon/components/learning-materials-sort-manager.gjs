@@ -12,6 +12,7 @@ import { fn } from '@ember/helper';
 import LmTypeIcon from 'ilios-common/components/lm-type-icon';
 import capitalize from 'ilios-common/helpers/capitalize';
 import t from 'ember-intl/helpers/t';
+import { faArrowRotateLeft, faUpDownLeftRight } from '@fortawesome/free-solid-svg-icons';
 
 export default class LearningMaterialsSortManagerComponent extends Component {
   @tracked sortableObjectList;
@@ -104,7 +105,7 @@ export default class LearningMaterialsSortManagerComponent extends Component {
             {{on "click" @cancel}}
             data-test-cancel
           >
-            <FaIcon @icon="arrow-rotate-left" />
+            <FaIcon @icon={{faArrowRotateLeft}} />
           </button>
         </div>
         <div class="content">
@@ -121,7 +122,7 @@ export default class LearningMaterialsSortManagerComponent extends Component {
                 {{on "dragend" this.dragEnd}}
                 {{on "dragover" (fn this.dragOver item)}}
               >
-                <FaIcon @icon="up-down-left-right" />
+                <FaIcon @icon={{faUpDownLeftRight}} />
                 <span class="draggable-object-content">
                   <span class="title">
                     <LmTypeIcon

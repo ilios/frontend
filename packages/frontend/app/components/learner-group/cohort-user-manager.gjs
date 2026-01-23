@@ -21,6 +21,7 @@ import UserStatus from 'ilios-common/components/user-status';
 import LoadingSpinner from 'ilios-common/components/loading-spinner';
 import perform from 'ember-concurrency/helpers/perform';
 import gt from 'ember-truth-helpers/helpers/gt';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
 export default class LearnerGroupCohortUserManagerComponent extends Component {
   @service currentUser;
@@ -229,7 +230,7 @@ export default class LearnerGroupCohortUserManagerComponent extends Component {
                               data-test-add-user
                             >
                               <FaIcon
-                                @icon="plus"
+                                @icon={{faPlus}}
                                 class="yes"
                                 @title={{t
                                   "general.moveToGroup"

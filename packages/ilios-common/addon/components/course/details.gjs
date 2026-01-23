@@ -15,6 +15,7 @@ import t from 'ember-intl/helpers/t';
 import FaIcon from 'ilios-common/components/fa-icon';
 import { fn } from '@ember/helper';
 import { pageTitle } from 'ember-page-title';
+import { faSquareMinus, faSquarePlus } from '@fortawesome/free-solid-svg-icons';
 
 export default class CourseDetailsComponent extends Component {
   @service router;
@@ -85,7 +86,7 @@ export default class CourseDetailsComponent extends Component {
           <div class="detail-collapsed-control">
             <button type="button" data-test-expand-course-details {{on "click" this.collapse}}>
               {{t "general.collapseDetail"}}
-              <FaIcon @icon="square-minus" class="expand-collapse-icon" />
+              <FaIcon @icon={{faSquareMinus}} class="expand-collapse-icon" />
             </button>
           </div>
         {{else}}
@@ -96,7 +97,7 @@ export default class CourseDetailsComponent extends Component {
               {{on "click" (fn @setShowDetails true)}}
             >
               {{t "general.expandDetail"}}
-              <FaIcon @icon="square-plus" class="expand-collapse-icon" />
+              <FaIcon @icon={{faSquarePlus}} class="expand-collapse-icon" />
             </button>
           </div>
         {{/if}}

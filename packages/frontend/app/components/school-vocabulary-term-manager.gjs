@@ -22,6 +22,7 @@ import YupValidationMessage from 'ilios-common/components/yup-validation-message
 import YupValidations from 'ilios-common/classes/yup-validations';
 import { string } from 'yup';
 import focus from 'ilios-common/modifiers/focus';
+import { faAsterisk, faSquareUpRight, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 export default class SchoolVocabularyTermManagerComponent extends Component {
   @service store;
@@ -240,13 +241,13 @@ export default class SchoolVocabularyTermManagerComponent extends Component {
                 {{/if}}
                 {{#if (and @canDelete (not this.children.length) (not @term.hasAssociations))}}
                   <FaIcon
-                    @icon="trash"
+                    @icon={{faTrash}}
                     class="clickable remove enabled"
                     {{on "click" (perform this.deleteTerm)}}
                     data-test-delete
                   />
                 {{else}}
-                  <FaIcon @icon="trash" class="disabled" />
+                  <FaIcon @icon={{faTrash}} class="disabled" />
                 {{/if}}
               </div>
               <div class="block is-active" data-test-is-active>
@@ -308,7 +309,7 @@ export default class SchoolVocabularyTermManagerComponent extends Component {
                   type="button"
                   {{on "click" (fn @manageTerm this.newTerm.id)}}
                 >
-                  <FaIcon @icon="square-up-right" />
+                  <FaIcon @icon={{faSquareUpRight}} />
                   {{this.newTerm.title}}
                 </button>
                 {{t "general.savedSuccessfully"}}
@@ -329,7 +330,7 @@ export default class SchoolVocabularyTermManagerComponent extends Component {
                     {{term.title}}
                     {{#if term.hasChildren}}
                       <FaIcon
-                        @icon="asterisk"
+                        @icon={{faAsterisk}}
                         data-test-has-children
                         @title={{t "general.thisTermHasSubTerms"}}
                       />

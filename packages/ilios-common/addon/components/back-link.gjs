@@ -3,6 +3,7 @@ import Component from '@glimmer/component';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
 import FaIcon from 'ilios-common/components/fa-icon';
+import { faAnglesLeft } from '@fortawesome/free-solid-svg-icons';
 
 export default class BackLinkComponent extends Component {
   @service intl;
@@ -18,7 +19,7 @@ export default class BackLinkComponent extends Component {
       {{on "click" this.back}}
       data-test-back-link
     >
-      <FaIcon @icon="angles-left" />
+      <FaIcon @icon={{faAnglesLeft}} />
       {{t "general.back"}}
     </a>
   </template>

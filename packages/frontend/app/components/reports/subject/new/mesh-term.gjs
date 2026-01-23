@@ -9,6 +9,7 @@ import { fn } from '@ember/helper';
 import MeshDescriptorLastTreeNumber from 'ilios-common/components/mesh-descriptor-last-tree-number';
 import FaIcon from 'ilios-common/components/fa-icon';
 import MeshManager from 'ilios-common/components/mesh-manager';
+import { faXmark } from '@fortawesome/free-solid-svg-icons';
 
 export default class ReportsSubjectNewProgramComponent extends Component {
   @service store;
@@ -45,7 +46,7 @@ export default class ReportsSubjectNewProgramComponent extends Component {
                 <MeshDescriptorLastTreeNumber @descriptor={{this.selectedMeshTerm.value}} />
               {{/if}}
             </span>
-            <FaIcon @icon="xmark" class="remove" />
+            <FaIcon @icon={{faXmark}} class="remove" />
           </button>
         {{/if}}
       {{else}}

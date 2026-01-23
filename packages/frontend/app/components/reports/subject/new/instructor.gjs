@@ -8,6 +8,7 @@ import { on } from '@ember/modifier';
 import { fn } from '@ember/helper';
 import FaIcon from 'ilios-common/components/fa-icon';
 import UserSearch from 'ilios-common/components/user-search';
+import { faXmark } from '@fortawesome/free-solid-svg-icons';
 
 export default class ReportsSubjectNewInstructorComponent extends Component {
   @service store;
@@ -35,7 +36,7 @@ export default class ReportsSubjectNewInstructorComponent extends Component {
             data-test-remove
           >
             {{this.selectedInstructor.value.fullName}}
-            <FaIcon @icon="xmark" class="remove" />
+            <FaIcon @icon={{faXmark}} class="remove" />
           </button>
         {{/if}}
       {{else}}

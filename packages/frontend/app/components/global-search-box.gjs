@@ -9,6 +9,7 @@ import perform from 'ember-concurrency/helpers/perform';
 import { task } from 'ember-concurrency';
 import onKey from 'ember-keyboard/modifiers/on-key';
 import FaIcon from 'ilios-common/components/fa-icon';
+import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 
 export default class GlobalSearchBox extends Component {
   @service router;
@@ -83,7 +84,7 @@ export default class GlobalSearchBox extends Component {
         data-test-search-icon
         {{on "click" this.focusAndSearch}}
       >
-        <FaIcon @icon="magnifying-glass" />
+        <FaIcon @icon={{faMagnifyingGlass}} />
       </button>
     </div>
   </template>

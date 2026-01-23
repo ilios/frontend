@@ -13,6 +13,7 @@ import TruncateText from 'ilios-common/components/truncate-text';
 import join from 'ilios-common/helpers/join';
 import sortBy from 'ilios-common/helpers/sort-by';
 import formatDate from 'ember-intl/helpers/format-date';
+import { faClock, faDownload } from '@fortawesome/free-solid-svg-icons';
 
 export default class DashboardMaterialListItemComponent extends Component {
   get uniqueId() {
@@ -31,7 +32,7 @@ export default class DashboardMaterialListItemComponent extends Component {
       <td id="{{this.uniqueId}}-title" colspan="6" data-test-title>
         {{#if @lm.isBlanked}}
           <span class="lm-type-icon">
-            <FaIcon @icon="clock" @title={{t "general.timedRelease"}} data-test-is-blanked />
+            <FaIcon @icon={{faClock}} @title={{t "general.timedRelease"}} data-test-is-blanked />
           </span>
           {{@lm.title}}
           <span class="timed-release-info">
@@ -53,7 +54,7 @@ export default class DashboardMaterialListItemComponent extends Component {
               >
                 <FaIcon
                   aria-label={{t "general.download"}}
-                  @icon="download"
+                  @icon={{faDownload}}
                   @title={{t "general.download"}}
                 />
               </a>

@@ -13,6 +13,7 @@ import eq from 'ember-truth-helpers/helpers/eq';
 import formatDate from 'ember-intl/helpers/format-date';
 import perform from 'ember-concurrency/helpers/perform';
 import LoadingSpinner from 'ilios-common/components/loading-spinner';
+import { faMinus, faPlus, faXmark } from '@fortawesome/free-solid-svg-icons';
 
 export default class SessionPostrequisiteEditorComponent extends Component {
   @tracked filter = '';
@@ -88,7 +89,7 @@ export default class SessionPostrequisiteEditorComponent extends Component {
               type="button"
               data-test-remove
             >
-              <FaIcon @icon="xmark" @title={{t "general.remove"}} />
+              <FaIcon @icon={{faXmark}} @title={{t "general.remove"}} />
             </button>
           {{else}}
             <span data-test-title>{{t "general.none"}}</span>
@@ -130,9 +131,9 @@ export default class SessionPostrequisiteEditorComponent extends Component {
                     }}
                   >
                     {{#if (eq postrequisite.id this.selectedPostrequisite.id)}}
-                      <FaIcon @icon="minus" @title={{t "general.remove"}} />
+                      <FaIcon @icon={{faMinus}} @title={{t "general.remove"}} />
                     {{else}}
-                      <FaIcon @icon="plus" class="add" @title={{t "general.add"}} />
+                      <FaIcon @icon={{faPlus}} class="add" @title={{t "general.add"}} />
                     {{/if}}
                     <span data-test-title>{{postrequisite.title}}</span>
                   </button>

@@ -12,6 +12,12 @@ import eq from 'ember-truth-helpers/helpers/eq';
 import { fn } from '@ember/helper';
 import t from 'ember-intl/helpers/t';
 import FadeText from 'ilios-common/components/fade-text';
+import {
+  faArrowRotateLeft,
+  faCheck,
+  faSpinner,
+  faUpDownLeftRight,
+} from '@fortawesome/free-solid-svg-icons';
 
 export default class ObjectiveSortManagerComponent extends Component {
   @tracked totalObjectivesToSave;
@@ -117,10 +123,10 @@ export default class ObjectiveSortManagerComponent extends Component {
           {{on "click" (perform this.saveSortOrder)}}
         >
           {{#if this.saveSortOrder.isRunning}}
-            <FaIcon @icon="spinner" @spin={{true}} />
+            <FaIcon @icon={{faSpinner}} @spin={{true}} />
             {{this.saveProgress}}%
           {{else}}
-            <FaIcon @icon="check" />
+            <FaIcon @icon={{faCheck}} />
           {{/if}}
         </button>
         <button
@@ -130,7 +136,7 @@ export default class ObjectiveSortManagerComponent extends Component {
           aria-label={{t "general.cancel"}}
           {{on "click" @close}}
         >
-          <FaIcon @icon="arrow-rotate-left" />
+          <FaIcon @icon={{faArrowRotateLeft}} />
         </button>
       </div>
       <div class="content">
@@ -147,7 +153,7 @@ export default class ObjectiveSortManagerComponent extends Component {
               {{on "dragover" (fn this.dragOver item)}}
             >
               {{#unless this.saveSortOrder.isRunning}}
-                <FaIcon @icon="up-down-left-right" />
+                <FaIcon @icon={{faUpDownLeftRight}} />
               {{/unless}}
               <span class="draggable-object-content">
                 <FadeText @text={{item.title}} @preserveLinks={{true}} />

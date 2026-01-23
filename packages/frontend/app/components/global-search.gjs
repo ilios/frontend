@@ -16,6 +16,7 @@ import includes from 'ilios-common/helpers/includes';
 import PaginationLinks from 'frontend/components/pagination-links';
 import { htmlSafe } from '@ember/template';
 import { modifier } from 'ember-modifier';
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 const COURSES_PER_PAGE = 10;
 
@@ -142,7 +143,7 @@ export default class GlobalSearchComponent extends Component {
       >
         {{#if this.resultsData.isPending}}
           <li class="searching" data-test-searching>
-            <FaIcon @icon="spinner" class="orange" @spin={{true}} />
+            <FaIcon @icon={{faSpinner}} class="orange" @spin={{true}} />
             {{t "general.currentlySearchingPrompt"}}
           </li>
         {{else}}

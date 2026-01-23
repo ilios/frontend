@@ -9,6 +9,7 @@ import mouseHoverToggle from 'ilios-common/modifiers/mouse-hover-toggle';
 import set from 'ember-set-helper/helpers/set';
 import FaIcon from 'ilios-common/components/fa-icon';
 import IliosTooltip from 'ilios-common/components/ilios-tooltip';
+import { faSquareRss } from '@fortawesome/free-solid-svg-icons';
 
 export default class IcsFeedComponent extends Component {
   @service flashMessages;
@@ -50,7 +51,7 @@ export default class IcsFeedComponent extends Component {
         id={{this.copyButtonId}}
         {{mouseHoverToggle (set this "showTooltip")}}
       >
-        <FaIcon @icon="square-rss" />
+        <FaIcon @icon={{faSquareRss}} />
       </CopyButton>
       {{#if this.showTooltip}}
         <IliosTooltip

@@ -24,6 +24,7 @@ import set from 'ember-set-helper/helpers/set';
 import NewLearningmaterial from 'ilios-common/components/new-learningmaterial';
 import gt from 'ember-truth-helpers/helpers/gt';
 import DetailLearningMaterialsItem from 'ilios-common/components/detail-learning-materials-item';
+import { faMinus } from '@fortawesome/free-solid-svg-icons';
 
 export default class DetailCohortsComponent extends Component {
   @service currentUser;
@@ -222,7 +223,7 @@ export default class DetailCohortsComponent extends Component {
               aria-label={{t "general.cancel"}}
               {{on "click" (fn (mut this.displayAddNewForm) false)}}
             >
-              <FaIcon @icon="minus" />
+              <FaIcon @icon={{faMinus}} />
             </button>
           {{else if (and @editable (not this.isSorting) (not this.isManaging))}}
             <ChooseMaterialType

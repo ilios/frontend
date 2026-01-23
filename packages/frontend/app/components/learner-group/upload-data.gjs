@@ -17,6 +17,7 @@ import and from 'ember-truth-helpers/helpers/and';
 import eq from 'ember-truth-helpers/helpers/eq';
 import gt from 'ember-truth-helpers/helpers/gt';
 import perform from 'ember-concurrency/helpers/perform';
+import { faCheck, faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
 
 export default class LearnerGroupUploadDataComponent extends Component {
   @service store;
@@ -355,13 +356,13 @@ export default class LearnerGroupUploadDataComponent extends Component {
                 <td colspan="1">
                   {{#if user.hasWarning}}
                     <FaIcon
-                      @icon="triangle-exclamation"
+                      @icon={{faTriangleExclamation}}
                       class="warning"
                       @title={{user.warning}}
                       data-test-warning
                     />
                   {{else}}
-                    <FaIcon @icon="check" class="yes" />
+                    <FaIcon @icon={{faCheck}} class="yes" />
                   {{/if}}
                 </td>
                 <td colspan="3">

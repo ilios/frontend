@@ -27,6 +27,14 @@ import YupValidationMessage from 'ilios-common/components/yup-validation-message
 import { string } from 'yup';
 import striptags from 'striptags';
 import FadeText from 'ilios-common/components/fade-text';
+import {
+  faCaretDown,
+  faCaretRight,
+  faSpinner,
+  faToggleOff,
+  faToggleOn,
+  faTrash,
+} from '@fortawesome/free-solid-svg-icons';
 
 export default class ProgramYearObjectiveListItemComponent extends Component {
   @service store;
@@ -278,7 +286,7 @@ export default class ProgramYearObjectiveListItemComponent extends Component {
             {{on "click" (perform this.collapseObjective)}}
             data-test-toggle-collapse
           >
-            <FaIcon @icon="caret-down" @title={{t "general.collapseDetail"}} />
+            <FaIcon @icon={{faCaretDown}} @title={{t "general.collapseDetail"}} />
           </button>
         {{else}}
           <button
@@ -287,7 +295,7 @@ export default class ProgramYearObjectiveListItemComponent extends Component {
             {{on "click" (perform this.expandObjective)}}
             data-test-toggle-expand
           >
-            <FaIcon @icon="caret-right" @title={{t "general.expand"}} />
+            <FaIcon @icon={{faCaretRight}} @title={{t "general.expand"}} />
           </button>
         {{/if}}
       </div>
@@ -371,7 +379,7 @@ export default class ProgramYearObjectiveListItemComponent extends Component {
                 {{on "click" (perform this.saveIsActive false)}}
                 data-test-deactivate
               >
-                <FaIcon @icon="toggle-on" @title={{t "general.deactivate"}} />
+                <FaIcon @icon={{faToggleOn}} @title={{t "general.deactivate"}} />
               </button>
             {{else}}
               <button
@@ -380,15 +388,15 @@ export default class ProgramYearObjectiveListItemComponent extends Component {
                 {{on "click" (perform this.saveIsActive true)}}
                 data-test-activate
               >
-                <FaIcon @icon="toggle-off" @title={{t "general.activate"}} />
+                <FaIcon @icon={{faToggleOff}} @title={{t "general.activate"}} />
               </button>
             {{/if}}
           {{/if}}
         {{else}}
           {{#if @programYearObjective.active}}
-            <FaIcon @icon="toggle-on" @title={{t "general.active"}} />
+            <FaIcon @icon={{faToggleOn}} @title={{t "general.active"}} />
           {{else}}
-            <FaIcon @icon="toggle-off" @title={{t "general.inactive"}} />
+            <FaIcon @icon={{faToggleOff}} @title={{t "general.inactive"}} />
           {{/if}}
         {{/if}}
         {{#if
@@ -401,10 +409,10 @@ export default class ProgramYearObjectiveListItemComponent extends Component {
             aria-label={{t "general.remove"}}
             data-test-remove
           >
-            <FaIcon @icon="trash" class="enabled remove" />
+            <FaIcon @icon={{faTrash}} class="enabled remove" />
           </button>
         {{else}}
-          <FaIcon @icon="trash" class="disabled" />
+          <FaIcon @icon={{faTrash}} class="disabled" />
         {{/if}}
       </div>
 
@@ -418,7 +426,7 @@ export default class ProgramYearObjectiveListItemComponent extends Component {
             {{on "click" (perform this.deleteObjective)}}
           >
             {{#if this.deleteObjective.isRunning}}
-              <FaIcon @icon="spinner" @spin={{true}} />
+              <FaIcon @icon={{faSpinner}} @spin={{true}} />
             {{else}}
               {{t "general.yes"}}
             {{/if}}

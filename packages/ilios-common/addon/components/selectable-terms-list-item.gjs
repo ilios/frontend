@@ -7,6 +7,7 @@ import mouseHoverToggle from 'ilios-common/modifiers/mouse-hover-toggle';
 import set from 'ember-set-helper/helpers/set';
 import IliosTooltip from 'ilios-common/components/ilios-tooltip';
 import FaIcon from 'ilios-common/components/fa-icon';
+import { faPlus, faXmark } from '@fortawesome/free-solid-svg-icons';
 
 export default class SelectableTermsListItem extends Component {
   @tracked isHovering;
@@ -59,9 +60,9 @@ export default class SelectableTermsListItem extends Component {
       <span data-test-title>{{@term.title}}</span>
       <span class="actions">
         {{#if this.isSelected}}
-          <FaIcon @icon="xmark" />
+          <FaIcon @icon={{faXmark}} />
         {{else}}
-          <FaIcon @icon="plus" class="add" />
+          <FaIcon @icon={{faPlus}} class="add" />
         {{/if}}
       </span>
     </button>

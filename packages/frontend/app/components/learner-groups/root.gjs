@@ -24,6 +24,12 @@ import { LinkTo } from '@ember/routing';
 import List from 'frontend/components/learner-group/list';
 import Loading from 'frontend/components/learner-groups/loading';
 import WaitSaving from 'ilios-common/components/wait-saving';
+import {
+  faBuildingColumns,
+  faCalendar,
+  faSquareUpRight,
+  faUsers,
+} from '@fortawesome/free-solid-svg-icons';
 
 export default class LearnerGroupsRootComponent extends Component {
   @service currentUser;
@@ -306,7 +312,7 @@ export default class LearnerGroupsRootComponent extends Component {
     <section class="learner-groups-root main-section" data-test-learner-groups>
       <div class="filters">
         <div class="filter" data-test-school-filter>
-          <FaIcon @icon="building-columns" @fixedWidth={{true}} />
+          <FaIcon @icon={{faBuildingColumns}} @fixedWidth={{true}} />
           {{#if (gt @schools.length 1)}}
             <select
               {{on "change" (pick "target.value" this.setSchoolId)}}
@@ -324,7 +330,7 @@ export default class LearnerGroupsRootComponent extends Component {
           {{/if}}
         </div>
         <div class="filter" data-test-program-filter>
-          <FaIcon @icon="users" @fixedWidth={{true}} />
+          <FaIcon @icon={{faUsers}} @fixedWidth={{true}} />
           {{#if (gt this.programs.length 1)}}
             <select
               {{on "change" (pick "target.value" (perform this.setProgramId))}}
@@ -344,7 +350,7 @@ export default class LearnerGroupsRootComponent extends Component {
           {{/if}}
         </div>
         <div class="filter" data-test-program-year-filter>
-          <FaIcon @icon="calendar" @fixedWidth={{true}} />
+          <FaIcon @icon={{faCalendar}} @fixedWidth={{true}} />
           {{#if (gt this.programYears.length 1)}}
             <select
               {{on "change" (pick "target.value" (perform this.setProgramYearId))}}
@@ -408,7 +414,7 @@ export default class LearnerGroupsRootComponent extends Component {
           {{#if this.newLearnerGroup}}
             <div class="saved-result">
               <LinkTo @route="learner-group" @model={{this.newLearnerGroup}}>
-                <FaIcon @icon="square-up-right" />
+                <FaIcon @icon={{faSquareUpRight}} />
                 {{this.newLearnerGroup.title}}
               </LinkTo>
               {{t "general.savedSuccessfully"}}

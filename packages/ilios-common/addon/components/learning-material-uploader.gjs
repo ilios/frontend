@@ -10,6 +10,7 @@ import not from 'ember-truth-helpers/helpers/not';
 import LoadingSpinner from 'ilios-common/components/loading-spinner';
 import t from 'ember-intl/helpers/t';
 import FaIcon from 'ilios-common/components/fa-icon';
+import { faCheck, faCircleExclamation } from '@fortawesome/free-solid-svg-icons';
 
 export default class LearningMaterialUploaderComponent extends Component {
   @service fetch;
@@ -61,12 +62,12 @@ export default class LearningMaterialUploaderComponent extends Component {
         {{#if this.upload.lastSuccessful.value}}
           <span class="upload-result">
             {{this.upload.lastSuccessful.value}}
-            <FaIcon @icon="check" class="add" />
+            <FaIcon @icon={{faCheck}} class="add" />
           </span>
         {{/if}}
         {{#if this.fileUploadErrorMessage}}
           <span class="upload-result validation-error-message">
-            <FaIcon @icon="circle-exclamation" class="warning" />
+            <FaIcon @icon={{faCircleExclamation}} class="warning" />
             {{this.fileUploadErrorMessage}}
           </span>
         {{/if}}

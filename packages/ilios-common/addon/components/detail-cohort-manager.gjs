@@ -9,6 +9,7 @@ import { on } from '@ember/modifier';
 import { fn } from '@ember/helper';
 import FaIcon from 'ilios-common/components/fa-icon';
 import LoadingSpinner from 'ilios-common/components/loading-spinner';
+import { faXmark } from '@fortawesome/free-solid-svg-icons';
 
 export default class DetailCohortManagerComponent extends Component {
   @service intl;
@@ -113,7 +114,7 @@ export default class DetailCohortManagerComponent extends Component {
                 {{cohort.programYear.program.title}}
                 |
                 {{cohort.title}}
-                <FaIcon @icon="xmark" class="remove" />
+                <FaIcon @icon={{faXmark}} class="remove" />
               </button>
             </li>
           {{/each}}

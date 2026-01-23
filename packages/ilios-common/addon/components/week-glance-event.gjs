@@ -13,6 +13,8 @@ import sortBy from 'ilios-common/helpers/sort-by';
 import TruncateText from 'ilios-common/components/truncate-text';
 import or from 'ember-truth-helpers/helpers/or';
 import LearningMaterialList from 'ilios-common/components/week-glance/learning-material-list';
+import { faBlackTie } from '@fortawesome/free-brands-svg-icons';
+import { faCalendarCheck, faCalendarMinus, faFlask } from '@fortawesome/free-solid-svg-icons';
 
 export default class WeekGlanceEvent extends Component {
   @service intl;
@@ -124,25 +126,28 @@ export default class WeekGlanceEvent extends Component {
         <span class="session-attributes" data-test-session-attributes>
           {{#if @event.attireRequired}}
             <FaIcon
-              @icon="black-tie"
-              @prefix="brands"
+              @icon={{faBlackTie}}
               @ariaHidden={{false}}
               @title={{t "general.whitecoatsSlashSpecialAttire"}}
             />
           {{/if}}
           {{#if @event.equipmentRequired}}
-            <FaIcon @icon="flask" @ariaHidden={{false}} @title={{t "general.specialEquipment"}} />
+            <FaIcon
+              @icon={{faFlask}}
+              @ariaHidden={{false}}
+              @title={{t "general.specialEquipment"}}
+            />
           {{/if}}
           {{#if @event.attendanceRequired}}
             <FaIcon
-              @icon="calendar-check"
+              @icon={{faCalendarCheck}}
               @ariaHidden={{false}}
               @title={{t "general.attendanceIsRequired"}}
             />
           {{/if}}
           {{#if @event.supplemental}}
             <FaIcon
-              @icon="calendar-minus"
+              @icon={{faCalendarMinus}}
               @ariaHidden={{false}}
               @title={{t "general.supplementalCurriculum"}}
             />

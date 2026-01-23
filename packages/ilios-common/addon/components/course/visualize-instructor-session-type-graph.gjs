@@ -25,6 +25,7 @@ import { LinkTo } from '@ember/routing';
 import notEq from 'ember-truth-helpers/helpers/not-eq';
 import sub_ from 'ember-math-helpers/helpers/sub';
 import LoadingSpinner from 'ilios-common/components/loading-spinner';
+import { faDownload } from '@fortawesome/free-solid-svg-icons';
 
 export default class CourseVisualizeInstructorSessionTypeGraph extends Component {
   @service router;
@@ -208,7 +209,7 @@ export default class CourseVisualizeInstructorSessionTypeGraph extends Component
                 {{on "click" (perform this.downloadData)}}
                 data-test-download-data
               >
-                <FaIcon @icon="download" />
+                <FaIcon @icon={{faDownload}} />
                 {{t "general.download"}}
               </button>
             </div>

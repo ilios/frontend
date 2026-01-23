@@ -11,6 +11,7 @@ import ExpandCollapseButton from 'ilios-common/components/expand-collapse-button
 import NewObjective from 'ilios-common/components/new-objective';
 import perform from 'ember-concurrency/helpers/perform';
 import ObjectiveList from 'frontend/components/program-year/objective-list';
+import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
 
 export default class ProgramYearObjectivesComponent extends Component {
   @service store;
@@ -94,7 +95,7 @@ export default class ProgramYearObjectivesComponent extends Component {
             >
               {{t "general.objectives"}}
               ({{this.objectiveIdsCount}})
-              <FaIcon @icon="caret-down" data-test-collapse />
+              <FaIcon @icon={{faCaretDown}} data-test-collapse />
             </button>
           </div>
         {{else}}

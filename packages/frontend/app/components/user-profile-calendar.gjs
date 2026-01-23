@@ -10,6 +10,7 @@ import { on } from '@ember/modifier';
 import FaIcon from 'ilios-common/components/fa-icon';
 import IliosCalendarWeek from 'ilios-common/components/ilios-calendar-week';
 import Event from 'ilios-common/classes/event';
+import { faBackward, faForward } from '@fortawesome/free-solid-svg-icons';
 
 export default class UserProfileCalendar extends Component {
   @service fetch;
@@ -74,7 +75,7 @@ export default class UserProfileCalendar extends Component {
             {{on "click" this.goBack}}
             data-test-go-back
           >
-            <FaIcon @icon="backward" @title={{t "general.back"}} />
+            <FaIcon @icon={{faBackward}} @title={{t "general.back"}} />
           </button>
         </li>
         <li>
@@ -95,7 +96,7 @@ export default class UserProfileCalendar extends Component {
             {{on "click" this.goForward}}
             data-test-go-forward
           >
-            <FaIcon @icon="forward" @title={{t "general.forward"}} />
+            <FaIcon @icon={{faForward}} @title={{t "general.forward"}} />
           </button>
         </li>
       </ul>

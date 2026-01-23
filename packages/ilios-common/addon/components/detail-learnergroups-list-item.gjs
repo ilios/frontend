@@ -6,6 +6,7 @@ import { on } from '@ember/modifier';
 import { fn } from '@ember/helper';
 import FaIcon from 'ilios-common/components/fa-icon';
 import t from 'ember-intl/helpers/t';
+import { faUniversalAccess, faXmark } from '@fortawesome/free-solid-svg-icons';
 
 export default class DetailLearnergroupsListItemComponent extends Component {
   @cached
@@ -52,12 +53,12 @@ export default class DetailLearnergroupsListItemComponent extends Component {
           {{/if}}
           {{#if @group.needsAccommodation}}
             <FaIcon
-              @icon="universal-access"
+              @icon={{faUniversalAccess}}
               @title={{t "general.accommodationIsRequiredForLearnersInThisGroup"}}
               data-test-needs-accommodation
             />
           {{/if}}
-          <FaIcon @icon="xmark" class="remove" />
+          <FaIcon @icon={{faXmark}} class="remove" />
         </button>
       {{else}}
         {{#if @group.isTopLevelGroup}}
@@ -78,7 +79,7 @@ export default class DetailLearnergroupsListItemComponent extends Component {
         {{/if}}
         {{#if @group.needsAccommodation}}
           <FaIcon
-            @icon="universal-access"
+            @icon={{faUniversalAccess}}
             @title={{t "general.accommodationIsRequiredForLearnersInThisGroup"}}
             data-test-needs-accommodation
           />

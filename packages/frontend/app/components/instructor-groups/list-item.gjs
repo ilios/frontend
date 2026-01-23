@@ -9,6 +9,7 @@ import set from 'ember-set-helper/helpers/set';
 import FaIcon from 'ilios-common/components/fa-icon';
 import t from 'ember-intl/helpers/t';
 import perform from 'ember-concurrency/helpers/perform';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
 
 export default class InstructorGroupsListItemComponent extends Component {
   @service permissionChecker;
@@ -63,10 +64,10 @@ export default class InstructorGroupsListItemComponent extends Component {
             {{on "click" (set this "showRemoveConfirmation" true)}}
             data-test-remove
           >
-            <FaIcon @icon="trash" class="enabled" @title={{t "general.remove"}} />
+            <FaIcon @icon={{faTrash}} class="enabled" @title={{t "general.remove"}} />
           </button>
         {{else}}
-          <FaIcon @icon="trash" class="disabled" />
+          <FaIcon @icon={{faTrash}} class="disabled" />
         {{/if}}
       </td>
     </tr>

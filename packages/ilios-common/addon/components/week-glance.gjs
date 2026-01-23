@@ -13,6 +13,7 @@ import t from 'ember-intl/helpers/t';
 import FaIcon from 'ilios-common/components/fa-icon';
 import WeekGlanceEvent from 'ilios-common/components/week-glance-event';
 import formatDate from 'ember-intl/helpers/format-date';
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 export default class WeeklyGlance extends Component {
   @service userEvents;
@@ -188,7 +189,7 @@ export default class WeeklyGlance extends Component {
           {{/if}}
         {{else}}
           <p>
-            <FaIcon @icon="spinner" @spin={{true}} />
+            <FaIcon @icon={{faSpinner}} @spin={{true}} />
             {{t "general.loadingEvents"}}
           </p>
         {{/if}}

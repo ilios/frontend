@@ -26,6 +26,13 @@ import UserStatus from 'ilios-common/components/user-status';
 import UserNameInfo from 'ilios-common/components/user-name-info';
 import { on } from '@ember/modifier';
 import set0 from 'ember-set-helper/helpers/set';
+import {
+  faPenToSquare,
+  faTrash,
+  faUniversalAccess,
+  faUserPlus,
+  faUsers,
+} from '@fortawesome/free-solid-svg-icons';
 
 export default class OfferingManagerComponent extends Component {
   @service intl;
@@ -176,7 +183,7 @@ export default class OfferingManagerComponent extends Component {
                     {{learnerGroup.title}}
                     {{#if learnerGroup.needsAccommodation}}
                       <FaIcon
-                        @icon="universal-access"
+                        @icon={{faUniversalAccess}}
                         @title={{t "general.accommodationIsRequiredForLearnersInThisGroup"}}
                       />
                     {{/if}}
@@ -204,7 +211,7 @@ export default class OfferingManagerComponent extends Component {
                   </li>
                 {{else}}
                   <li>
-                    <FaIcon @icon="users" />
+                    <FaIcon @icon={{faUsers}} />
                   </li>
                 {{/each}}
               </ul>
@@ -223,7 +230,7 @@ export default class OfferingManagerComponent extends Component {
                 </li>
               {{else}}
                 <li>
-                  <FaIcon @icon="user-plus" />
+                  <FaIcon @icon={{faUserPlus}} />
                 </li>
               {{/each}}
             </ul>
@@ -236,7 +243,7 @@ export default class OfferingManagerComponent extends Component {
                 title={{t "general.edit"}}
                 {{on "click" (toggle "isEditing" this)}}
               >
-                <FaIcon @icon="pen-to-square" class="enabled" />
+                <FaIcon @icon={{faPenToSquare}} class="enabled" />
               </button>
               {{#if @editable}}
                 <button
@@ -245,10 +252,10 @@ export default class OfferingManagerComponent extends Component {
                   title={{t "general.remove"}}
                   {{on "click" (set0 this "showRemoveConfirmation" true)}}
                 >
-                  <FaIcon @icon="trash" class="enabled" />
+                  <FaIcon @icon={{faTrash}} class="enabled" />
                 </button>
               {{else}}
-                <FaIcon @icon="trash" class="disabled" />
+                <FaIcon @icon={{faTrash}} class="disabled" />
               {{/if}}
             </div>
           {{/if}}

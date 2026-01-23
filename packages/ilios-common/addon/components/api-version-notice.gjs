@@ -7,6 +7,7 @@ import FaIcon from 'ilios-common/components/fa-icon';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
 import perform from 'ember-concurrency/helpers/perform';
+import { faCircleExclamation } from '@fortawesome/free-solid-svg-icons';
 
 export default class ApiVersionNoticeComponent extends Component {
   @service apiVersion;
@@ -73,7 +74,7 @@ export default class ApiVersionNoticeComponent extends Component {
       data-test-api-version-notice
     >
       <h2>
-        <FaIcon @icon="circle-exclamation" />
+        <FaIcon @icon={{faCircleExclamation}} />
         {{t "general.apiVersionMismatch"}}
       </h2>
       <div class="details">

@@ -13,6 +13,7 @@ import noop from 'ilios-common/helpers/noop';
 import YupValidations from 'ilios-common/classes/yup-validations';
 import YupValidationMessage from 'ilios-common/components/yup-validation-message';
 import { number, string } from 'yup';
+import { faArrowRotateLeft } from '@fortawesome/free-solid-svg-icons';
 
 export default class SchoolInstitutionalInformationManagerComponent extends Component {
   @service store;
@@ -98,7 +99,7 @@ export default class SchoolInstitutionalInformationManagerComponent extends Comp
               aria-label={{t "general.cancel"}}
               {{on "click" (fn @manage false)}}
             >
-              <FaIcon @icon="arrow-rotate-left" />
+              <FaIcon @icon={{faArrowRotateLeft}} />
             </button>
           </div>
         </div>

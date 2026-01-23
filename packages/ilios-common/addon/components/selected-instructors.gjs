@@ -5,6 +5,7 @@ import { fn } from '@ember/helper';
 import FaIcon from 'ilios-common/components/fa-icon';
 import UserNameInfo from 'ilios-common/components/user-name-info';
 import UserStatus from 'ilios-common/components/user-status';
+import { faXmark } from '@fortawesome/free-solid-svg-icons';
 <template>
   <div class="selected-instructors" data-test-selected-instructors ...attributes>
     <label class="heading" data-test-heading>
@@ -21,7 +22,7 @@ import UserStatus from 'ilios-common/components/user-status';
               <button type="button" {{on "click" (fn @remove user)}}>
                 <UserStatus @user={{user}} />
                 <UserNameInfo @user={{user}} />
-                <FaIcon @icon="xmark" class="remove" />
+                <FaIcon @icon={{faXmark}} class="remove" />
               </button>
             </li>
           {{else}}

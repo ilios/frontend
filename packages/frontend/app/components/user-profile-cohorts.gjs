@@ -13,6 +13,7 @@ import { fn } from '@ember/helper';
 import UserProfileCohortsManager from 'frontend/components/user-profile-cohorts-manager';
 import set from 'ember-set-helper/helpers/set';
 import UserProfileCohortsDetails from 'frontend/components/user-profile-cohorts-details';
+import { faArrowRotateLeft, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 
 export default class UserProfileCohortsComponent extends Component {
   @service currentUser;
@@ -197,7 +198,7 @@ export default class UserProfileCohortsComponent extends Component {
                 {{on "click" (perform this.cancel)}}
                 data-test-cancel
               >
-                <FaIcon @icon="arrow-rotate-left" />
+                <FaIcon @icon={{faArrowRotateLeft}} />
               </button>
             {{else if @isManageable}}
               <button
@@ -207,7 +208,7 @@ export default class UserProfileCohortsComponent extends Component {
                 {{on "click" (fn @setIsManaging true)}}
                 data-test-manage
               >
-                <FaIcon @icon="pen-to-square" />
+                <FaIcon @icon={{faPenToSquare}} />
               </button>
             {{/if}}
           </div>

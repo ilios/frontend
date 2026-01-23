@@ -12,6 +12,13 @@ import or from 'ember-truth-helpers/helpers/or';
 import set from 'ember-set-helper/helpers/set';
 import { LinkTo } from '@ember/routing';
 import perform from 'ember-concurrency/helpers/perform';
+import {
+  faBan,
+  faChartColumn,
+  faCheck,
+  faPenToSquare,
+  faTrash,
+} from '@fortawesome/free-solid-svg-icons';
 
 export default class SchoolSessionTypesListItemComponent extends Component {
   @tracked showRemoveConfirmation = false;
@@ -44,9 +51,9 @@ export default class SchoolSessionTypesListItemComponent extends Component {
       </td>
       <td data-test-is-assessment>
         {{#if @sessionType.assessment}}
-          <FaIcon @icon="check" class="yes" />
+          <FaIcon @icon={{faCheck}} class="yes" />
         {{else}}
-          <FaIcon @icon="ban" class="no" />
+          <FaIcon @icon={{faBan}} class="no" />
         {{/if}}
       </td>
       <td class="hide-from-small-screen" colspan="2" data-test-assessment-option>
@@ -77,7 +84,7 @@ export default class SchoolSessionTypesListItemComponent extends Component {
           data-test-manage
           {{on "click" (fn @manageSessionType @sessionType.id)}}
         >
-          <FaIcon @icon="pen-to-square" class="edit" />
+          <FaIcon @icon={{faPenToSquare}} class="edit" />
         </button>
         {{#if (eq @sessionType.sessionCount 0)}}
           {{#if @canDelete}}
@@ -90,7 +97,7 @@ export default class SchoolSessionTypesListItemComponent extends Component {
               {{on "click" (set this "showRemoveConfirmation" true)}}
             >
               <FaIcon
-                @icon="trash"
+                @icon={{faTrash}}
                 class={{if
                   (or this.showRemoveConfirmation this.deleteSessionType.isRunning)
                   "inactive"
@@ -100,10 +107,10 @@ export default class SchoolSessionTypesListItemComponent extends Component {
             </button>
           {{/if}}
         {{else}}
-          <FaIcon @icon="trash" class="disabled" />
+          <FaIcon @icon={{faTrash}} class="disabled" />
         {{/if}}
         <LinkTo @route="session-type-visualize-vocabularies" @model={{@sessionType}}>
-          <FaIcon @icon="chart-column" class="enabled" @title={{t "general.vocabularies"}} />
+          <FaIcon @icon={{faChartColumn}} class="enabled" @title={{t "general.vocabularies"}} />
         </LinkTo>
       </td>
     </tr>

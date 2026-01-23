@@ -10,6 +10,7 @@ import FaIcon from 'ilios-common/components/fa-icon';
 import MeshManager from 'ilios-common/components/mesh-manager';
 import sortBy from 'ilios-common/helpers/sort-by';
 import MeshDescriptorLastTreeNumber from 'ilios-common/components/mesh-descriptor-last-tree-number';
+import { faArrowRotateLeft, faCheck } from '@fortawesome/free-solid-svg-icons';
 
 export default class DetailMeshComponent extends Component {
   @tracked isManaging = false;
@@ -75,7 +76,7 @@ export default class DetailMeshComponent extends Component {
                 aria-label={{t "general.save"}}
                 {{on "click" (perform this.save)}}
               >
-                <FaIcon @icon="check" />
+                <FaIcon @icon={{faCheck}} />
               </button>
               <button
                 class="bigcancel"
@@ -83,7 +84,7 @@ export default class DetailMeshComponent extends Component {
                 aria-label={{t "general.cancel"}}
                 {{on "click" this.cancel}}
               >
-                <FaIcon @icon="arrow-rotate-left" />
+                <FaIcon @icon={{faArrowRotateLeft}} />
               </button>
             {{else if @editable}}
               <button type="button" {{on "click" this.manage}}>

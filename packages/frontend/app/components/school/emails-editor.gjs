@@ -14,6 +14,7 @@ import YupValidationMessage from 'ilios-common/components/yup-validation-message
 import YupValidations from 'ilios-common/classes/yup-validations';
 import { string } from 'yup';
 import isEmail from 'validator/lib/isEmail';
+import { faArrowRotateLeft } from '@fortawesome/free-solid-svg-icons';
 
 export default class SchoolEmailsEditorComponent extends Component {
   @service intl;
@@ -123,7 +124,7 @@ export default class SchoolEmailsEditorComponent extends Component {
               {{on "click" @cancel}}
               data-test-cancel
             >
-              <FaIcon @icon="arrow-rotate-left" />
+              <FaIcon @icon={{faArrowRotateLeft}} />
             </button>
           </div>
         </div>

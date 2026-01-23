@@ -14,6 +14,7 @@ import FaIcon from 'ilios-common/components/fa-icon';
 import t from 'ember-intl/helpers/t';
 import formatDate from 'ember-intl/helpers/format-date';
 import Color from 'color';
+import { faExclamation } from '@fortawesome/free-solid-svg-icons';
 
 export default class IliosCalendarEventMonthComponent extends Component {
   @service calendarEventTooltip;
@@ -90,7 +91,7 @@ export default class IliosCalendarEventMonthComponent extends Component {
         {{/if}}
         {{#if this.recentlyUpdated}}
           <FaIcon
-            @icon="exclamation"
+            @icon={{faExclamation}}
             class="recently-updated-icon"
             @title={{t "general.newUpdates"}}
           />

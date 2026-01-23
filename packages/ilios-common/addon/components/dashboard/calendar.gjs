@@ -21,6 +21,7 @@ import CalendarFilters from 'ilios-common/components/dashboard/calendar-filters'
 import isArray from 'ember-truth-helpers/helpers/is-array';
 import FilterTags from 'ilios-common/components/dashboard/filter-tags';
 import IliosCalendar from 'ilios-common/components/ilios-calendar';
+import { faBuildingColumns } from '@fortawesome/free-solid-svg-icons';
 
 export default class DashboardCalendarComponent extends Component {
   @service userEvents;
@@ -327,7 +328,7 @@ export default class DashboardCalendarComponent extends Component {
               </div>
             {{/if}}
             <div class="calendar-options-control calendar-school-picker" data-test-school-picker>
-              <FaIcon @icon="building-columns" />
+              <FaIcon @icon={{faBuildingColumns}} />
               {{#if this.hasMoreThanOneSchool}}
                 <select
                   aria-label={{t "general.schools"}}

@@ -8,6 +8,7 @@ import t from 'ember-intl/helpers/t';
 import formatDate from 'ember-intl/helpers/format-date';
 import DailyCalendarEvent from 'ilios-common/components/daily-calendar-event';
 import { fn } from '@ember/helper';
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 export default class DailyCalendarComponent extends Component {
   @service intl;
@@ -65,7 +66,7 @@ export default class DailyCalendarComponent extends Component {
     >
       <h2 class="day-of-week" data-test-day-of-week>
         {{#if @isLoadingEvents}}
-          <FaIcon @icon="spinner" @spin={{true}} />
+          <FaIcon @icon={{faSpinner}} @spin={{true}} />
           {{t "general.loadingEvents"}}
           ...
         {{else}}

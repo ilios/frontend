@@ -13,6 +13,7 @@ import FaIcon from 'ilios-common/components/fa-icon';
 import and from 'ember-truth-helpers/helpers/and';
 import notEq from 'ember-truth-helpers/helpers/not-eq';
 import perform from 'ember-concurrency/helpers/perform';
+import { faPenToSquare, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 export default class SchoolVocabulariesListComponent extends Component {
   @service store;
@@ -95,7 +96,7 @@ export default class SchoolVocabulariesListComponent extends Component {
                       data-test-manage
                       {{on "click" (fn @manageVocabulary vocabulary.id)}}
                     >
-                      <FaIcon @icon="pen-to-square" class="enabled" />
+                      <FaIcon @icon={{faPenToSquare}} class="enabled" />
                     </button>
                     {{#if
                       (and
@@ -111,10 +112,10 @@ export default class SchoolVocabulariesListComponent extends Component {
                         data-test-delete
                         {{on "click" (fn this.confirmRemoval vocabulary)}}
                       >
-                        <FaIcon @icon="trash" class="enabled remove" />
+                        <FaIcon @icon={{faTrash}} class="enabled remove" />
                       </button>
                     {{else}}
-                      <FaIcon @icon="trash" class="disabled" />
+                      <FaIcon @icon={{faTrash}} class="disabled" />
                     {{/if}}
                   </td>
                 </tr>

@@ -18,6 +18,7 @@ import New from 'frontend/components/program/new';
 import perform from 'ember-concurrency/helpers/perform';
 import { LinkTo } from '@ember/routing';
 import List from 'frontend/components/programs/list';
+import { faBuildingColumns, faSquareUpRight } from '@fortawesome/free-solid-svg-icons';
 
 export default class ProgramRootComponent extends Component {
   @service currentUser;
@@ -72,7 +73,7 @@ export default class ProgramRootComponent extends Component {
     <section class="programs-root main-section" data-test-programs>
       <div class="filters">
         <div class="schools" data-test-school-filter>
-          <FaIcon @icon="building-columns" @fixedWidth={{true}} />
+          <FaIcon @icon={{faBuildingColumns}} @fixedWidth={{true}} />
           {{#if (gt @schools.length 1)}}
             <select
               {{on "change" (pick "target.value" @setSchoolId)}}
@@ -118,7 +119,7 @@ export default class ProgramRootComponent extends Component {
           {{#if this.newProgram}}
             <div class="saved-result">
               <LinkTo @route="program" @model={{this.newProgram}}>
-                <FaIcon @icon="square-up-right" />
+                <FaIcon @icon={{faSquareUpRight}} />
                 {{this.newProgram.title}}
               </LinkTo>
               {{t "general.savedSuccessfully"}}

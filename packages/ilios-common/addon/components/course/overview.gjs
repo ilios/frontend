@@ -25,6 +25,7 @@ import formatDate from 'ember-intl/helpers/format-date';
 import DatePicker from 'ilios-common/components/date-picker';
 import pipe from 'ilios-common/helpers/pipe';
 import focus from 'ilios-common/modifiers/focus';
+import { faBoxArchive, faChartColumn, faPrint, faShuffle } from '@fortawesome/free-solid-svg-icons';
 
 export default class CourseOverview extends Component {
   @service currentUser;
@@ -242,7 +243,7 @@ export default class CourseOverview extends Component {
           <div class="course-overview-actions">
             <LinkTo @route="course-materials" @model={{@course}} class="materials">
               <FaIcon
-                @icon="box-archive"
+                @icon={{faBoxArchive}}
                 @title={{t "general.learningMaterialsSummary"}}
                 @fixedWidth={{true}}
               />
@@ -253,12 +254,12 @@ export default class CourseOverview extends Component {
               @query={{hash unpublished=true}}
               class="print"
             >
-              <FaIcon @icon="print" @title={{t "general.printSummary"}} @fixedWidth={{true}} />
+              <FaIcon @icon={{faPrint}} @title={{t "general.printSummary"}} @fixedWidth={{true}} />
             </LinkTo>
             {{#if this.showRollover}}
               <LinkTo @route="course.rollover" @model={{@course}} class="rollover">
                 <FaIcon
-                  @icon="shuffle"
+                  @icon={{faShuffle}}
                   @fixedWidth={{true}}
                   @title={{t "general.courseRollover"}}
                 />
@@ -269,7 +270,7 @@ export default class CourseOverview extends Component {
               @model={{@course}}
               title={{t "general.courseVisualizations"}}
             >
-              <FaIcon @icon="chart-column" />
+              <FaIcon @icon={{faChartColumn}} />
             </LinkTo>
           </div>
         </div>

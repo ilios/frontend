@@ -10,6 +10,7 @@ import perform from 'ember-concurrency/helpers/perform';
 import { fn } from '@ember/helper';
 import LeadershipManager from 'ilios-common/components/leadership-manager';
 import LeadershipList from 'ilios-common/components/leadership-list';
+import { faArrowRotateLeft, faCaretDown } from '@fortawesome/free-solid-svg-icons';
 
 export default class LeadershipExpandedComponent extends Component {
   @tracked directorsToAdd = [];
@@ -186,7 +187,7 @@ export default class LeadershipExpandedComponent extends Component {
           >
             {{t "general.leadership"}}
             ({{this.count}})
-            <FaIcon @icon="caret-down" />
+            <FaIcon @icon={{faCaretDown}} />
           </button>
         {{/if}}
         <div class="actions">
@@ -210,7 +211,7 @@ export default class LeadershipExpandedComponent extends Component {
               {{on "click" this.close}}
               data-test-cancel
             >
-              <FaIcon @icon="arrow-rotate-left" />
+              <FaIcon @icon={{faArrowRotateLeft}} />
             </button>
           {{else if @editable}}
             <button type="button" {{on "click" (fn @setIsManaging true)}} data-test-manage>

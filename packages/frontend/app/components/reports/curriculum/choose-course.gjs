@@ -14,6 +14,7 @@ import { sortBy as uSortBy } from 'ilios-common/utils/array-helpers';
 import eq from 'ember-truth-helpers/helpers/eq';
 import { fn } from '@ember/helper';
 import includes from 'ilios-common/helpers/includes';
+import { faBuildingColumns } from '@fortawesome/free-solid-svg-icons';
 
 export default class ReportsCurriculumChooseCourse extends Component {
   @service iliosConfig;
@@ -110,7 +111,7 @@ export default class ReportsCurriculumChooseCourse extends Component {
   <template>
     <div class="reports-choose-course" data-test-reports-curriculum-choose-course>
       <div class="schools" data-test-schools>
-        <FaIcon @icon="building-columns" />
+        <FaIcon @icon={{faBuildingColumns}} />
         {{#if (gt this.filteredSchools.length 1)}}
           <select
             aria-label={{t "general.filterBySchool"}}

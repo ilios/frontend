@@ -16,6 +16,7 @@ import FaIcon from 'ilios-common/components/fa-icon';
 import PublicationMenu from 'ilios-common/components/course/publication-menu';
 import PublicationStatus from 'ilios-common/components/publication-status';
 import focus from 'ilios-common/modifiers/focus';
+import { faLock } from '@fortawesome/free-solid-svg-icons';
 
 export default class CourseHeaderComponent extends Component {
   @service iliosConfig;
@@ -79,7 +80,7 @@ export default class CourseHeaderComponent extends Component {
         {{else}}
           <h2>
             {{#if @course.locked}}
-              <FaIcon @icon="lock" />
+              <FaIcon @icon={{faLock}} />
             {{/if}}
             {{@course.title}}
           </h2>

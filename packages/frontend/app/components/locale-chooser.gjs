@@ -11,6 +11,7 @@ import FaIcon from 'ilios-common/components/fa-icon';
 import { fn } from '@ember/helper';
 import eq from 'ember-truth-helpers/helpers/eq';
 import focus from 'ilios-common/modifiers/focus';
+import { faGlobe } from '@fortawesome/free-solid-svg-icons';
 
 export default class LocaleChooserComponent extends Component {
   @service intl;
@@ -128,7 +129,7 @@ export default class LocaleChooserComponent extends Component {
         {{on "click" (toggle "isOpen" this)}}
         {{on "keyup" this.toggleMenu}}
       >
-        <FaIcon @icon="globe" />
+        <FaIcon @icon={{faGlobe}} />
         <span id="{{this.uniqueId}}-locale-chooser-title">
           {{this.currentLocaleLabel}}
         </span>

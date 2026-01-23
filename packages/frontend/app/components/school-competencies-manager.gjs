@@ -9,6 +9,7 @@ import FaIcon from 'ilios-common/components/fa-icon';
 import and from 'ember-truth-helpers/helpers/and';
 import NewCompetency from 'frontend/components/new-competency';
 import t from 'ember-intl/helpers/t';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
 
 export default class SchoolCompetenciesManagerComponent extends Component {
   get domains() {
@@ -55,10 +56,10 @@ export default class SchoolCompetenciesManagerComponent extends Component {
                 {{on "click" (fn @remove obj.domain)}}
                 data-test-remove-domain
               >
-                <FaIcon @icon="trash" />
+                <FaIcon @icon={{faTrash}} />
               </button>
             {{else}}
-              <FaIcon @icon="trash" class="disabled" />
+              <FaIcon @icon={{faTrash}} class="disabled" />
             {{/if}}
           </div>
           <ul>
@@ -73,10 +74,10 @@ export default class SchoolCompetenciesManagerComponent extends Component {
                     {{on "click" (fn @remove competency)}}
                     data-test-remove-competency
                   >
-                    <FaIcon @icon="trash" />
+                    <FaIcon @icon={{faTrash}} />
                   </button>
                 {{else}}
-                  <FaIcon @icon="trash" class="disabled" />
+                  <FaIcon @icon={{faTrash}} class="disabled" />
                 {{/if}}
               </li>
             {{/each}}

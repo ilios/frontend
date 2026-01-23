@@ -4,6 +4,7 @@ import { LinkTo } from '@ember/routing';
 import SingleEventLearningmaterialListItem from 'ilios-common/components/single-event-learningmaterial-list-item';
 import and from 'ember-truth-helpers/helpers/and';
 import not from 'ember-truth-helpers/helpers/not';
+import { faFileSignature, faPersonChalkboard } from '@fortawesome/free-solid-svg-icons';
 <template>
   <div
     class="single-event-learningmaterial-list"
@@ -14,9 +15,9 @@ import not from 'ember-truth-helpers/helpers/not';
       <ul class="static-list prework">
         {{#each @prework as |event|}}
           <li data-test-prework-event>
-            <FaIcon @title={{t "general.preWork"}} @icon="person-chalkboard" />
+            <FaIcon @title={{t "general.preWork"}} @icon={{faPersonChalkboard}} />
             {{#unless event.isPublished}}
-              <FaIcon @title={{t "general.notPublished"}} @icon="file-signature" />
+              <FaIcon @title={{t "general.notPublished"}} @icon={{faFileSignature}} />
             {{/unless}}
             <LinkTo @route="events" @model={{event.slug}} data-test-name>
               {{event.name}}

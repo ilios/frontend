@@ -4,6 +4,7 @@ import { on } from '@ember/modifier';
 import { fn } from '@ember/helper';
 import FaIcon from 'ilios-common/components/fa-icon';
 import SelectedInstructorGroupMembers from 'ilios-common/components/selected-instructor-group-members';
+import { faUsers, faXmark } from '@fortawesome/free-solid-svg-icons';
 <template>
   <div class="selected-instructor-groups" data-test-selected-instructor-groups ...attributes>
     <label class="heading" data-test-heading>
@@ -19,12 +20,12 @@ import SelectedInstructorGroupMembers from 'ilios-common/components/selected-ins
             <li>
               {{#if @isManaging}}
                 <button type="button" {{on "click" (fn @remove instructorGroup)}} data-test-remove>
-                  <FaIcon @icon="users" />
+                  <FaIcon @icon={{faUsers}} />
                   {{instructorGroup.title}}
-                  <FaIcon @icon="xmark" class="remove" />
+                  <FaIcon @icon={{faXmark}} class="remove" />
                 </button>
               {{else}}
-                <FaIcon @icon="users" />
+                <FaIcon @icon={{faUsers}} />
                 {{instructorGroup.title}}
               {{/if}}
             </li>

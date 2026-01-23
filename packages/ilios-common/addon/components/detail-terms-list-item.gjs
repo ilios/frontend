@@ -9,6 +9,7 @@ import set from 'ember-set-helper/helpers/set';
 import IliosTooltip from 'ilios-common/components/ilios-tooltip';
 import t from 'ember-intl/helpers/t';
 import FaIcon from 'ilios-common/components/fa-icon';
+import { faXmark } from '@fortawesome/free-solid-svg-icons';
 
 export default class DetailTermsListItem extends Component {
   @tracked isHovering;
@@ -79,7 +80,7 @@ export default class DetailTermsListItem extends Component {
               ({{t "general.inactive"}})
             </span>
           {{/unless}}
-          <FaIcon @icon="xmark" class="remove" />
+          <FaIcon @icon={{faXmark}} class="remove" />
         </button>
       {{else}}
         {{#if @term.isTopLevel}}

@@ -9,6 +9,19 @@ import FaIcon from 'ilios-common/components/fa-icon';
 import { LinkTo } from '@ember/routing';
 import join from 'ilios-common/helpers/join';
 import { array } from '@ember/helper';
+import {
+  faBars,
+  faBook,
+  faBuildingColumns,
+  faChartColumn,
+  faChevronRight,
+  faFileLines,
+  faGears,
+  faGraduationCap,
+  faHouse,
+  faRectangleList,
+  faUserDoctor,
+} from '@fortawesome/free-solid-svg-icons';
 
 export default class IliosNavigation extends Component {
   @service currentUser;
@@ -32,7 +45,7 @@ export default class IliosNavigation extends Component {
               aria-expanded={{if this.expanded "true" "false"}}
               aria-label={{if this.expanded (t "general.close") (t "general.expand")}}
             >
-              <FaIcon @icon="bars" />
+              <FaIcon @icon={{faBars}} />
             </button>
           </li>
         </ul>
@@ -43,11 +56,11 @@ export default class IliosNavigation extends Component {
               title={{t "general.dashboard"}}
               @current-when={{join " " (array "dashboard" "events" "mymaterials" "weeklyevents")}}
             >
-              <FaIcon @icon="house" @fixedWidth={{true}} />
+              <FaIcon @icon={{faHouse}} @fixedWidth={{true}} />
               <span class="text">
                 {{t "general.dashboard"}}
               </span>
-              <FaIcon class="if-active" @prefix="fas" @icon="chevron-right" @fixedWidth={{true}} />
+              <FaIcon class="if-active" @icon={{faChevronRight}} @fixedWidth={{true}} />
             </LinkTo>
           </li>
           {{#if this.currentUser.performsNonLearnerFunction}}
@@ -75,11 +88,11 @@ export default class IliosNavigation extends Component {
                   )
                 }}
               >
-                <FaIcon @icon="book" @fixedWidth={{true}} />
+                <FaIcon @icon={{faBook}} @fixedWidth={{true}} />
                 <span class="text">
                   {{t "general.coursesAndSessions"}}
                 </span>
-                <FaIcon class="if-active" @icon="chevron-right" @fixedWidth={{true}} />
+                <FaIcon class="if-active" @icon={{faChevronRight}} @fixedWidth={{true}} />
               </LinkTo>
             </li>
             <li>
@@ -88,11 +101,11 @@ export default class IliosNavigation extends Component {
                 title={{t "general.learnerGroups"}}
                 @current-when="learner-groups learner-group"
               >
-                <FaIcon @icon="graduation-cap" @fixedWidth={{true}} />
+                <FaIcon @icon={{faGraduationCap}} @fixedWidth={{true}} />
                 <span class="text">
                   {{t "general.learnerGroups"}}
                 </span>
-                <FaIcon class="if-active" @icon="chevron-right" @fixedWidth={{true}} />
+                <FaIcon class="if-active" @icon={{faChevronRight}} @fixedWidth={{true}} />
               </LinkTo>
             </li>
             <li>
@@ -101,11 +114,11 @@ export default class IliosNavigation extends Component {
                 title={{t "general.instructorGroups"}}
                 @current-when="instructor-groups instructor-group"
               >
-                <FaIcon @icon="user-doctor" @fixedWidth={{true}} />
+                <FaIcon @icon={{faUserDoctor}} @fixedWidth={{true}} />
                 <span class="text">
                   {{t "general.instructorGroups"}}
                 </span>
-                <FaIcon class="if-active" @icon="chevron-right" @fixedWidth={{true}} />
+                <FaIcon class="if-active" @icon={{faChevronRight}} @fixedWidth={{true}} />
               </LinkTo>
             </li>
             <li>
@@ -114,11 +127,11 @@ export default class IliosNavigation extends Component {
                 title={{t "general.schools"}}
                 @current-when="schools school session-type-visualize-vocabularies session-type-visualize-vocabulary"
               >
-                <FaIcon @icon="building-columns" @fixedWidth={{true}} />
+                <FaIcon @icon={{faBuildingColumns}} @fixedWidth={{true}} />
                 <span class="text">
                   {{t "general.schools"}}
                 </span>
-                <FaIcon class="if-active" @icon="chevron-right" @fixedWidth={{true}} />
+                <FaIcon class="if-active" @icon={{faChevronRight}} @fixedWidth={{true}} />
               </LinkTo>
             </li>
             <li>
@@ -127,20 +140,20 @@ export default class IliosNavigation extends Component {
                 title={{t "general.programs"}}
                 @current-when="programs program program-year-visualize-objectives"
               >
-                <FaIcon @icon="rectangle-list" @fixedWidth={{true}} />
+                <FaIcon @icon={{faRectangleList}} @fixedWidth={{true}} />
                 <span class="text">
                   {{t "general.programs"}}
                 </span>
-                <FaIcon class="if-active" @icon="chevron-right" @fixedWidth={{true}} />
+                <FaIcon class="if-active" @icon={{faChevronRight}} @fixedWidth={{true}} />
               </LinkTo>
             </li>
             <li>
               <LinkTo @route="reports" title={{t "general.reports"}} @current-when="reports">
-                <FaIcon @icon="file-lines" @fixedWidth={{true}} />
+                <FaIcon @icon={{faFileLines}} @fixedWidth={{true}} />
                 <span class="text">
                   {{t "general.reports"}}
                 </span>
-                <FaIcon class="if-active" @icon="chevron-right" @fixedWidth={{true}} />
+                <FaIcon class="if-active" @icon={{faChevronRight}} @fixedWidth={{true}} />
               </LinkTo>
             </li>
           {{/if}}
@@ -151,11 +164,11 @@ export default class IliosNavigation extends Component {
                 title={{t "general.admin"}}
                 @current-when="admin-dashboard users user assign-students pending-user-updates"
               >
-                <FaIcon @icon="gears" @fixedWidth={{true}} />
+                <FaIcon @icon={{faGears}} @fixedWidth={{true}} />
                 <span class="text">
                   {{t "general.admin"}}
                 </span>
-                <FaIcon class="if-active" @icon="chevron-right" @fixedWidth={{true}} />
+                <FaIcon class="if-active" @icon={{faChevronRight}} @fixedWidth={{true}} />
               </LinkTo>
             </li>
           {{/if}}
@@ -174,11 +187,11 @@ export default class IliosNavigation extends Component {
                   )
                 }}
               >
-                <FaIcon @icon="chart-column" @fixedWidth={{true}} />
+                <FaIcon @icon={{faChartColumn}} @fixedWidth={{true}} />
                 <span class="text">
                   {{t "general.curriculumInventory"}}
                 </span>
-                <FaIcon class="if-active" @icon="chevron-right" @fixedWidth={{true}} />
+                <FaIcon class="if-active" @icon={{faChevronRight}} @fixedWidth={{true}} />
               </LinkTo>
             </li>
           {{/if}}

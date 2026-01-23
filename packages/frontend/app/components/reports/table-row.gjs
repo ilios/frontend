@@ -4,6 +4,7 @@ import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
 import { fn } from '@ember/helper';
 import FaIcon from 'ilios-common/components/fa-icon';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
 
 export default class ReportsListRowComponent extends Component {
   get showRemoveConfirmation() {
@@ -33,7 +34,7 @@ export default class ReportsListRowComponent extends Component {
           {{on "click" (fn @confirmRemoval @decoratedReport.report)}}
           data-test-remove
         >
-          <FaIcon @icon="trash" class="enabled" />
+          <FaIcon @icon={{faTrash}} class="enabled" />
         </button>
       </td>
     </tr>
