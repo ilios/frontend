@@ -14,8 +14,13 @@
     overflow-y: scroll;
     padding: 0.5rem 0;
 
+    & > li {
+      margin-left: 0.75em;
+    }
+
     ul {
-      padding: 0;
+      margin-left: 0;
+      padding: 0.5em 0 0;
     }
   }
 }
