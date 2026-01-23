@@ -78,7 +78,7 @@ export default class SessionOfferingsComponent extends Component {
           <SessionOfferingsList
             @session={{@session}}
             @editable={{@editable}}
-            @setIsEditing={{toggle "isEditing" this}}
+            @toggleIsEditing={{toggle "isEditing" this}}
           />
         {{else}}
           <p>

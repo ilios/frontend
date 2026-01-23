@@ -39,8 +39,8 @@ export default class OfferingManagerComponent extends Component {
   @action
   toggleIsEditing() {
     this.isEditing = !this.isEditing;
-    if (this.args.setIsEditing) {
-      this.args.setIsEditing(this.isEditing);
+    if (this.args.toggleIsEditing) {
+      this.args.toggleIsEditing();
     }
   }
 
