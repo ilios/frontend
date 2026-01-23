@@ -69,8 +69,6 @@
     "quill": "^2.0.3",
     "sanitize-html": "^2.17.0",
     "striptags": ">= 3.2.0",
-    "typeface-nunito": ">= 1.1.13",
-    "typeface-nunito-sans": ">= 1.1.13",
     "validator": ">= 13.12.0",
     "yup": "^1.4.0"
   },
@@ -94,8 +92,6 @@
     "query-string": ">= 9.1.0",
     "quill": "^2.0.3",
     "striptags": ">= 3.2.0",
-    "typeface-nunito": ">= 1.1.13",
-    "typeface-nunito-sans": ">= 1.1.13",
     "validator": ">= 13.12.0"
   },
   "devDependencies": {

@@ -1,134 +1,29 @@
 /* stylelint-disable scales/font-weights */
 
-/* nunito-sans-200normal - latin */
+/* nunito-sans-latin-wght-normal */
 @font-face {
-  font-family: "Nunito Sans";
+  font-family: "Nunito Sans Variable";
   font-style: normal;
   font-display: swap;
-  font-weight: 200;
-  src: url("fonts/nunito-sans/nunito-sans-latin-200.woff2") format("woff2");
+  font-weight: 200 1000;
+  src: url(https://cdn.jsdelivr.net/fontsource/fonts/nunito-sans:vf@latest/latin-wght-normal.woff2)
+    format("woff2-variations");
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
+    U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212,
+    U+2215, U+FEFF, U+FFFD;
 }
 
-/* nunito-sans-200italic - latin */
+/* nunito-sans-latin-wght-normal */
 @font-face {
-  font-family: "Nunito Sans";
+  font-family: "Nunito Sans Variable";
   font-style: italic;
   font-display: swap;
-  font-weight: 200;
-  src: url("fonts/nunito-sans/nunito-sans-latin-200italic.woff2")
-    format("woff2");
-}
-
-/* nunito-sans-300normal - latin */
-@font-face {
-  font-family: "Nunito Sans";
-  font-style: normal;
-  font-display: swap;
-  font-weight: 300;
-  src: url("fonts/nunito-sans/nunito-sans-latin-300.woff2") format("woff2");
-}
-
-/* nunito-sans-300italic - latin */
-@font-face {
-  font-family: "Nunito Sans";
-  font-style: italic;
-  font-display: swap;
-  font-weight: 300;
-  src: url("fonts/nunito-sans/nunito-sans-latin-300italic.woff2")
-    format("woff2");
-}
-
-/* nunito-sans-400normal - latin */
-@font-face {
-  font-family: "Nunito Sans";
-  font-style: normal;
-  font-display: swap;
-  font-weight: 400;
-  src: url("fonts/nunito-sans/nunito-sans-latin-400.woff2") format("woff2");
-}
-
-/* nunito-sans-400italic - latin */
-@font-face {
-  font-family: "Nunito Sans";
-  font-style: italic;
-  font-display: swap;
-  font-weight: 400;
-  src: url("fonts/nunito-sans/nunito-sans-latin-400italic.woff2")
-    format("woff2");
-}
-
-/* nunito-sans-600normal - latin */
-@font-face {
-  font-family: "Nunito Sans";
-  font-style: normal;
-  font-display: swap;
-  font-weight: 600;
-  src: url("fonts/nunito-sans/nunito-sans-latin-600.woff2") format("woff2");
-}
-
-/* nunito-sans-600italic - latin */
-@font-face {
-  font-family: "Nunito Sans";
-  font-style: italic;
-  font-display: swap;
-  font-weight: 600;
-  src: url("fonts/nunito-sans/nunito-sans-latin-600italic.woff2")
-    format("woff2");
-}
-
-/* nunito-sans-700normal - latin */
-@font-face {
-  font-family: "Nunito Sans";
-  font-style: normal;
-  font-display: swap;
-  font-weight: 700;
-  src: url("fonts/nunito-sans/nunito-sans-latin-700.woff2") format("woff2");
-}
-
-/* nunito-sans-700italic - latin */
-@font-face {
-  font-family: "Nunito Sans";
-  font-style: italic;
-  font-display: swap;
-  font-weight: 700;
-  src: url("fonts/nunito-sans/nunito-sans-latin-700italic.woff2")
-    format("woff2");
-}
-
-/* nunito-sans-800normal - latin */
-@font-face {
-  font-family: "Nunito Sans";
-  font-style: normal;
-  font-display: swap;
-  font-weight: 800;
-  src: url("fonts/nunito-sans/nunito-sans-latin-800.woff2") format("woff2");
-}
-
-/* nunito-sans-800italic - latin */
-@font-face {
-  font-family: "Nunito Sans";
-  font-style: italic;
-  font-display: swap;
-  font-weight: 800;
-  src: url("fonts/nunito-sans/nunito-sans-latin-800italic.woff2")
-    format("woff2");
-}
-
-/* nunito-sans-900normal - latin */
-@font-face {
-  font-family: "Nunito Sans";
-  font-style: normal;
-  font-display: swap;
-  font-weight: 900;
-  src: url("fonts/nunito-sans/nunito-sans-latin-900.woff2") format("woff2");
-}
-
-/* nunito-sans-900italic - latin */
-@font-face {
-  font-family: "Nunito Sans";
-  font-style: italic;
-  font-display: swap;
-  font-weight: 900;
-  src: url("fonts/nunito-sans/nunito-sans-latin-900italic.woff2")
-    format("woff2");
+  font-weight: 200 1000;
+  src: url(https://cdn.jsdelivr.net/fontsource/fonts/nunito-sans:vf@latest/latin-wght-italic.woff2)
+    format("woff2-variations");
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
+    U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212,
+    U+2215, U+FEFF, U+FFFD;
 }
