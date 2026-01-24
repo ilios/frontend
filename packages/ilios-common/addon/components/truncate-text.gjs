@@ -3,11 +3,10 @@ import { tracked } from '@glimmer/tracking';
 import { typeOf } from '@ember/utils';
 import { htmlSafe } from '@ember/template';
 import { action } from '@ember/object';
-import EllipsisIcon from 'ilios-common/components/ellipsis-icon';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import { faAnglesDown, faAnglesUp } from '@fortawesome/free-solid-svg-icons';
+import { faAnglesDown, faAnglesUp, faEllipsis } from '@fortawesome/free-solid-svg-icons';
 
 export default class TruncateTextComponent extends Component {
   @tracked expanded = false;
@@ -69,7 +68,7 @@ export default class TruncateTextComponent extends Component {
       <span class="truncate-text" data-test-truncate-text ...attributes>
         {{this.displayText}}
         {{#if this.isTruncated}}
-          <EllipsisIcon />
+          <FaIcon @icon={{faEllipsis}} @transform="down-4" />
           <button
             class="expand-buttons"
             aria-label={{t "general.expand"}}
