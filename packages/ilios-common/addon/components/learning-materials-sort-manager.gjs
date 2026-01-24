@@ -12,7 +12,12 @@ import { fn } from '@ember/helper';
 import LmTypeIcon from 'ilios-common/components/lm-type-icon';
 import capitalize from 'ilios-common/helpers/capitalize';
 import t from 'ember-intl/helpers/t';
-import { faArrowRotateLeft, faUpDownLeftRight } from '@fortawesome/free-solid-svg-icons';
+import {
+  faArrowRotateLeft,
+  faUpDownLeftRight,
+  faSpinner,
+  faCheck,
+} from '@fortawesome/free-solid-svg-icons';
 
 export default class LearningMaterialsSortManagerComponent extends Component {
   @tracked sortableObjectList;
@@ -94,7 +99,7 @@ export default class LearningMaterialsSortManagerComponent extends Component {
             data-test-save
           >
             <FaIcon
-              @icon={{if this.callSave.isRunning "spinner" "check"}}
+              @icon={{if this.callSave.isRunning faSpinner faCheck}}
               @spin={{this.callSave.isRunning}}
             />
           </button>

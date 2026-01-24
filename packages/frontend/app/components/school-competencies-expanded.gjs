@@ -14,7 +14,12 @@ import or from 'ember-truth-helpers/helpers/or';
 import { fn } from '@ember/helper';
 import SchoolCompetenciesManager from 'frontend/components/school-competencies-manager';
 import SchoolCompetenciesList from 'frontend/components/school-competencies-list';
-import { faArrowRotateLeft, faCaretDown } from '@fortawesome/free-solid-svg-icons';
+import {
+  faArrowRotateLeft,
+  faCaretDown,
+  faCheck,
+  faSpinner,
+} from '@fortawesome/free-solid-svg-icons';
 
 export default class SchoolCompetenciesExpandedComponent extends Component {
   @service store;
@@ -156,7 +161,7 @@ export default class SchoolCompetenciesExpandedComponent extends Component {
               data-test-save
             >
               <FaIcon
-                @icon={{if this.save.isRunning "spinner" "check"}}
+                @icon={{if this.save.isRunning faSpinner faCheck}}
                 @spin={{this.save.isRunning}}
               />
             </button>

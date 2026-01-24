@@ -7,6 +7,7 @@ import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { fn, concat } from '@ember/helper';
+import { faCaretRight, faCaretDown } from '@fortawesome/free-solid-svg-icons';
 
 export default class ChooseMaterialTypeComponent extends Component {
   @tracked isOpen = false;
@@ -90,7 +91,7 @@ export default class ChooseMaterialTypeComponent extends Component {
         {{on "click" this.toggleMenu}}
       >
         {{t "general.add"}}
-        <FaIcon @icon={{if this.isOpen "caret-down" "caret-right"}} />
+        <FaIcon @icon={{if this.isOpen faCaretDown faCaretRight}} />
       </button>
       {{#if this.isOpen}}
         <div class="menu" role="menu">

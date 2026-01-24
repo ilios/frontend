@@ -19,7 +19,7 @@ import YupValidations from 'ilios-common/classes/yup-validations';
 import YupValidationMessage from 'ilios-common/components/yup-validation-message';
 import { string } from 'yup';
 import isEmail from 'validator/lib/isEmail';
-import { faArrowRotateLeft } from '@fortawesome/free-solid-svg-icons';
+import { faArrowRotateLeft, faCheck, faSpinner, faRotate } from '@fortawesome/free-solid-svg-icons';
 
 export default class UserProfileBioManagerComponent extends Component {
   @service currentUser;
@@ -315,7 +315,7 @@ export default class UserProfileBioManagerComponent extends Component {
           data-test-save
         >
           <FaIcon
-            @icon={{if this.save.isRunning "spinner" "check"}}
+            @icon={{if this.save.isRunning faSpinner faCheck}}
             @spin={{if this.save.isRunning true false}}
           />
         </button>
@@ -445,7 +445,7 @@ export default class UserProfileBioManagerComponent extends Component {
                   data-test-directory-sync
                 >
                   <FaIcon
-                    @icon={{if this.directorySync.isRunning "spinner" "rotate"}}
+                    @icon={{if this.directorySync.isRunning faSpinner faRotate}}
                     @spin={{this.directorySync.isRunning}}
                   />
                 </button>

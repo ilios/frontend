@@ -10,7 +10,7 @@ import perform from 'ember-concurrency/helpers/perform';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import DetailCohortManager from 'ilios-common/components/detail-cohort-manager';
 import DetailCohortList from 'ilios-common/components/detail-cohort-list';
-import { faArrowRotateLeft } from '@fortawesome/free-solid-svg-icons';
+import { faArrowRotateLeft, faCheck, faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 export default class DetailCohortsComponent extends Component {
   @tracked isManaging = false;
@@ -85,7 +85,7 @@ export default class DetailCohortsComponent extends Component {
               {{on "click" (perform this.save)}}
             >
               <FaIcon
-                @icon={{if this.save.isRunning "spinner" "check"}}
+                @icon={{if this.save.isRunning faSpinner faCheck}}
                 @spin={{this.save.isRunning}}
               />
             </button>

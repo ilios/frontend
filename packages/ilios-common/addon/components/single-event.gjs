@@ -34,6 +34,8 @@ import {
   faClock,
   faFileSignature,
   faFlask,
+  faCaretRight,
+  faCaretDown,
 } from '@fortawesome/free-solid-svg-icons';
 import { faBlackTie } from '@fortawesome/free-brands-svg-icons';
 
@@ -475,7 +477,7 @@ export default class SingleEvent extends Component {
             >
               {{t "general.materials"}}
               ({{add this.sessionLearningMaterials.length this.preworkMaterials.length}})
-              <FaIcon @icon={{if this.isSessionMaterialsListExpanded "caret-down" "caret-right"}} />
+              <FaIcon @icon={{if this.isSessionMaterialsListExpanded faCaretDown faCaretRight}} />
             </button>
             {{#if (and @event.isUserEvent this.userIsStudent)}}
               <button
@@ -528,7 +530,7 @@ export default class SingleEvent extends Component {
             >
               {{t "general.courseMaterials"}}
               ({{this.courseLearningMaterials.length}})
-              <FaIcon @icon={{if this.isCourseMaterialsListExpanded "caret-down" "caret-right"}} />
+              <FaIcon @icon={{if this.isCourseMaterialsListExpanded faCaretDown faCaretRight}} />
             </button>
           </h3>
           {{#if this.isCourseMaterialsListExpanded}}

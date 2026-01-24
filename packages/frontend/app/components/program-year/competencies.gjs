@@ -17,7 +17,12 @@ import or from 'ember-truth-helpers/helpers/or';
 import includes from 'ilios-common/helpers/includes';
 import mapBy from 'ilios-common/helpers/map-by';
 import CompetencyListItem from 'frontend/components/program-year/competency-list-item';
-import { faArrowRotateLeft, faCaretDown } from '@fortawesome/free-solid-svg-icons';
+import {
+  faArrowRotateLeft,
+  faCaretDown,
+  faCheck,
+  faSpinner,
+} from '@fortawesome/free-solid-svg-icons';
 
 export default class ProgramYearCompetenciesComponent extends Component {
   @service flashMessages;
@@ -178,7 +183,7 @@ export default class ProgramYearCompetenciesComponent extends Component {
                 data-test-save
               >
                 <FaIcon
-                  @icon={{if this.save.isRunning "spinner" "check"}}
+                  @icon={{if this.save.isRunning faSpinner faCheck}}
                   @spin={{this.save.isRunning}}
                 />
               </button>

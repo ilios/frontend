@@ -11,7 +11,12 @@ import perform from 'ember-concurrency/helpers/perform';
 import scrollIntoView from 'ilios-common/modifiers/scroll-into-view';
 import TaxonomyManager from 'ilios-common/components/taxonomy-manager';
 import DetailTermsList from 'ilios-common/components/detail-terms-list';
-import { faArrowRotateLeft, faCaretDown } from '@fortawesome/free-solid-svg-icons';
+import {
+  faArrowRotateLeft,
+  faCaretDown,
+  faCheck,
+  faSpinner,
+} from '@fortawesome/free-solid-svg-icons';
 
 export default class DetailTaxonomiesComponent extends Component {
   @service store;
@@ -106,7 +111,7 @@ export default class DetailTaxonomiesComponent extends Component {
               {{scrollIntoView}}
             >
               <FaIcon
-                @icon={{if this.save.isRunning "spinner" "check"}}
+                @icon={{if this.save.isRunning faSpinner faCheck}}
                 @spin={{this.save.isRunning}}
               />
             </button>

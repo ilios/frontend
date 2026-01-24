@@ -1,7 +1,7 @@
 import { on } from '@ember/modifier';
 import t from 'ember-intl/helpers/t';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import { faCaretRight } from '@fortawesome/free-solid-svg-icons';
+import { faCaretRight, faBan, faCheck } from '@fortawesome/free-solid-svg-icons';
 <template>
   <section
     class="school-session-attributes-collapsed"
@@ -39,7 +39,7 @@ import { faCaretRight } from '@fortawesome/free-solid-svg-icons';
             </td>
             <td>
               <FaIcon
-                @icon={{if @showSessionAttendanceRequired "check" "ban"}}
+                @icon={{if @showSessionAttendanceRequired faCheck faBan}}
                 class={{if @showSessionAttendanceRequired "yes" "no"}}
               />
             </td>
@@ -50,7 +50,7 @@ import { faCaretRight } from '@fortawesome/free-solid-svg-icons';
             </td>
             <td>
               <FaIcon
-                @icon={{if @showSessionSupplemental "check" "ban"}}
+                @icon={{if @showSessionSupplemental faCheck faBan}}
                 class={{if @showSessionSupplemental "yes" "no"}}
               />
             </td>
@@ -61,7 +61,7 @@ import { faCaretRight } from '@fortawesome/free-solid-svg-icons';
             </td>
             <td>
               <FaIcon
-                @icon={{if @showSessionSpecialAttireRequired "check" "ban"}}
+                @icon={{if @showSessionSpecialAttireRequired faCheck faBan}}
                 class={{if @showSessionSpecialAttireRequired "yes" "no"}}
               />
             </td>
@@ -72,7 +72,7 @@ import { faCaretRight } from '@fortawesome/free-solid-svg-icons';
             </td>
             <td>
               <FaIcon
-                @icon={{if @showSessionSpecialEquipmentRequired "check" "ban"}}
+                @icon={{if @showSessionSpecialEquipmentRequired faCheck faBan}}
                 class={{if @showSessionSpecialEquipmentRequired "yes" "no"}}
               />
             </td>

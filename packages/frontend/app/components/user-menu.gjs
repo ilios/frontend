@@ -12,7 +12,7 @@ import onClickOutside from 'ember-click-outside/modifiers/on-click-outside';
 import set from 'ember-set-helper/helpers/set';
 import focus from 'ilios-common/modifiers/focus';
 import LinkToWithAction from 'frontend/components/link-to-with-action';
-import { faUser } from '@fortawesome/free-solid-svg-icons';
+import { faUser, faCaretRight, faCaretDown } from '@fortawesome/free-solid-svg-icons';
 
 export default class UserMenuComponent extends Component {
   @service intl;
@@ -112,7 +112,7 @@ export default class UserMenuComponent extends Component {
           <span id="{{templateId}}-user-menu-title">
             {{this.menuTitle}}
           </span>
-          <FaIcon @icon={{if this.isOpen "caret-down" "caret-right"}} />
+          <FaIcon @icon={{if this.isOpen faCaretDown faCaretRight}} />
         </button>
         {{#if this.isOpen}}
           <div {{onClickOutside (set this "isOpen" false)}}>

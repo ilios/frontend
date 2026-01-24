@@ -9,7 +9,13 @@ import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import perform from 'ember-concurrency/helpers/perform';
 import { fn } from '@ember/helper';
 import SchoolSessionAttributesManager from 'frontend/components/school-session-attributes-manager';
-import { faArrowRotateLeft, faCaretDown } from '@fortawesome/free-solid-svg-icons';
+import {
+  faArrowRotateLeft,
+  faCaretDown,
+  faCheck,
+  faSpinner,
+  faBan,
+} from '@fortawesome/free-solid-svg-icons';
 
 export default class SchoolSessionAttributesExpandedComponent extends Component {
   @tracked flippedShowSessionAttendanceRequired = false;
@@ -114,7 +120,7 @@ export default class SchoolSessionAttributesExpandedComponent extends Component 
               data-test-save
             >
               <FaIcon
-                @icon={{if this.save.isRunning "spinner" "check"}}
+                @icon={{if this.save.isRunning faSpinner faCheck}}
                 @spin={{this.save.isRunning}}
               />
             </button>
@@ -163,7 +169,7 @@ export default class SchoolSessionAttributesExpandedComponent extends Component 
                 </td>
                 <td>
                   <FaIcon
-                    @icon={{if this.showSessionAttendanceRequired "check" "ban"}}
+                    @icon={{if this.showSessionAttendanceRequired faCheck faBan}}
                     class={{if this.showSessionAttendanceRequired "yes" "no"}}
                   />
                 </td>
@@ -174,7 +180,7 @@ export default class SchoolSessionAttributesExpandedComponent extends Component 
                 </td>
                 <td>
                   <FaIcon
-                    @icon={{if this.showSessionSupplemental "check" "ban"}}
+                    @icon={{if this.showSessionSupplemental faCheck faBan}}
                     class={{if this.showSessionSupplemental "yes" "no"}}
                   />
                 </td>
@@ -185,7 +191,7 @@ export default class SchoolSessionAttributesExpandedComponent extends Component 
                 </td>
                 <td>
                   <FaIcon
-                    @icon={{if this.showSessionSpecialAttireRequired "check" "ban"}}
+                    @icon={{if this.showSessionSpecialAttireRequired faCheck faBan}}
                     class={{if this.showSessionSpecialAttireRequired "yes" "no"}}
                   />
                 </td>
@@ -196,7 +202,7 @@ export default class SchoolSessionAttributesExpandedComponent extends Component 
                 </td>
                 <td>
                   <FaIcon
-                    @icon={{if this.showSessionSpecialEquipmentRequired "check" "ban"}}
+                    @icon={{if this.showSessionSpecialEquipmentRequired faCheck faBan}}
                     class={{if this.showSessionSpecialEquipmentRequired "yes" "no"}}
                   />
                 </td>

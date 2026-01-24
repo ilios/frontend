@@ -2,6 +2,13 @@ import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { on } from '@ember/modifier';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import {
+  faArrowDown19,
+  faArrowDown91,
+  faArrowDownAZ,
+  faArrowDownZA,
+  faSort,
+} from '@fortawesome/free-solid-svg-icons';
 
 export default class SortableHeading extends Component {
   get align() {
@@ -35,12 +42,12 @@ export default class SortableHeading extends Component {
   get sortIcon() {
     if (this.sortedBy) {
       if (this.sortedAscending) {
-        return this.sortType === 'numeric' ? 'arrow-down-1-9' : 'arrow-down-a-z';
+        return this.sortType === 'numeric' ? faArrowDown19 : faArrowDownAZ;
       } else {
-        return this.sortType === 'numeric' ? 'arrow-down-9-1' : 'arrow-down-z-a';
+        return this.sortType === 'numeric' ? faArrowDown91 : faArrowDownZA;
       }
     } else {
-      return 'sort';
+      return faSort;
     }
   }
 

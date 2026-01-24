@@ -17,7 +17,12 @@ import includes from 'ilios-common/helpers/includes';
 import mapBy from 'ilios-common/helpers/map-by';
 import SaveButton from 'ilios-common/components/save-button';
 import perform from 'ember-concurrency/helpers/perform';
-import { faChartColumn, faLinkSlash } from '@fortawesome/free-solid-svg-icons';
+import {
+  faChartColumn,
+  faLinkSlash,
+  faCaretRight,
+  faCaretDown,
+} from '@fortawesome/free-solid-svg-icons';
 
 export default class PublishAllSessionsComponent extends Component {
   @service store;
@@ -215,7 +220,7 @@ export default class PublishAllSessionsComponent extends Component {
           >
             {{t "general.incompleteSessions"}}
             ({{this.unPublishableSessions.length}})
-            <FaIcon @icon={{if this.unPublishableCollapsed "caret-right" "caret-down"}} />
+            <FaIcon @icon={{if this.unPublishableCollapsed faCaretRight faCaretDown}} />
           </button>
         </div>
         {{#unless this.unPublishableCollapsed}}
@@ -318,7 +323,7 @@ export default class PublishAllSessionsComponent extends Component {
           >
             {{t "general.completeSessions"}}
             ({{this.publishableSessions.length}})
-            <FaIcon @icon={{if this.publishableCollapsed "caret-right" "caret-down"}} />
+            <FaIcon @icon={{if this.publishableCollapsed faCaretRight faCaretDown}} />
           </button>
         </div>
         {{#unless this.publishableCollapsed}}

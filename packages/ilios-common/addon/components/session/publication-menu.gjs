@@ -10,6 +10,13 @@ import { on } from '@ember/modifier';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import focus from 'ilios-common/modifiers/focus';
 import t from 'ember-intl/helpers/t';
+import {
+  faCaretRight,
+  faCaretDown,
+  faClock,
+  faStar,
+  faCloud,
+} from '@fortawesome/free-solid-svg-icons';
 
 export default class SessionPublicationMenuComponent extends Component {
   @service router;
@@ -32,12 +39,12 @@ export default class SessionPublicationMenuComponent extends Component {
   }
   get icon() {
     if (this.args.session.publishedAsTbd) {
-      return 'clock';
+      return faClock;
     }
     if (this.args.session.published) {
-      return 'star';
+      return faStar;
     }
-    return 'cloud';
+    return faCloud;
   }
 
   get showTbd() {
@@ -191,7 +198,7 @@ export default class SessionPublicationMenuComponent extends Component {
           <span>
             {{this.title}}
           </span>
-          <FaIcon @icon={{if this.isOpen "caret-down" "caret-right"}} />
+          <FaIcon @icon={{if this.isOpen faCaretDown faCaretRight}} />
         </button>
         {{#if this.isOpen}}
           <div class="menu" role="menu" data-test-menu {{focus}}>

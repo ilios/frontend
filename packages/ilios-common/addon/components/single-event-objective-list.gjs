@@ -6,7 +6,7 @@ import { on } from '@ember/modifier';
 import set from 'ember-set-helper/helpers/set';
 import not from 'ember-truth-helpers/helpers/not';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import { faIndent, faList } from '@fortawesome/free-solid-svg-icons';
+import { faIndent, faList, faCaretRight, faCaretDown } from '@fortawesome/free-solid-svg-icons';
 
 export default class SingleEventObjectiveList extends Component {
   @tracked groupByCompetencies = true;
@@ -64,7 +64,7 @@ export default class SingleEventObjectiveList extends Component {
         >
           {{@title}}
           ({{this.domains.length}})
-          <FaIcon @icon={{if this.isExpanded "caret-down" "caret-right"}} />
+          <FaIcon @icon={{if this.isExpanded faCaretRight faCaretDown}} />
         </button>
         {{#if this.showDisplayModeToggle}}
           <button

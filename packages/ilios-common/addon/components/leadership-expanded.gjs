@@ -10,7 +10,12 @@ import perform from 'ember-concurrency/helpers/perform';
 import { fn } from '@ember/helper';
 import LeadershipManager from 'ilios-common/components/leadership-manager';
 import LeadershipList from 'ilios-common/components/leadership-list';
-import { faArrowRotateLeft, faCaretDown } from '@fortawesome/free-solid-svg-icons';
+import {
+  faArrowRotateLeft,
+  faCaretDown,
+  faCheck,
+  faSpinner,
+} from '@fortawesome/free-solid-svg-icons';
 
 export default class LeadershipExpandedComponent extends Component {
   @tracked directorsToAdd = [];
@@ -200,7 +205,7 @@ export default class LeadershipExpandedComponent extends Component {
               data-test-save
             >
               <FaIcon
-                @icon={{if this.save.isRunning "spinner" "check"}}
+                @icon={{if this.save.isRunning faSpinner faCheck}}
                 @spin={{this.save.isRunning}}
               />
             </button>

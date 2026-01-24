@@ -13,7 +13,7 @@ import t from 'ember-intl/helpers/t';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import WeekGlanceEvent from 'ilios-common/components/week-glance-event';
 import formatDate from 'ember-intl/helpers/format-date';
-import { faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { faSpinner, faCaretRight, faCaretDown } from '@fortawesome/free-solid-svg-icons';
 
 export default class WeeklyGlance extends Component {
   @service userEvents;
@@ -151,7 +151,7 @@ export default class WeeklyGlance extends Component {
           {{#if @showFullTitle}}
             {{t "general.weekAtAGlance"}}
           {{/if}}
-          <FaIcon @icon={{if @collapsed "caret-right" "caret-down"}} />
+          <FaIcon @icon={{if @collapsed faCaretRight faCaretDown}} />
         </button>
       {{else}}
         <h2 class="title" role={{if @collapsible "button"}} data-test-week-title>

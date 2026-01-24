@@ -14,7 +14,12 @@ import set from 'ember-set-helper/helpers/set';
 import not from 'ember-truth-helpers/helpers/not';
 import eq from 'ember-truth-helpers/helpers/eq';
 import YesNo from 'frontend/components/yes-no';
-import { faArrowRotateLeft, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
+import {
+  faArrowRotateLeft,
+  faPenToSquare,
+  faCheck,
+  faSpinner,
+} from '@fortawesome/free-solid-svg-icons';
 
 export default class UserProfileRolesComponent extends Component {
   @service store;
@@ -119,7 +124,7 @@ export default class UserProfileRolesComponent extends Component {
             {{on "click" (perform this.save)}}
           >
             <FaIcon
-              @icon={{if this.save.isRunning "spinner" "check"}}
+              @icon={{if this.save.isRunning faSpinner faCheck}}
               @spin={{this.save.isRunning}}
             />
           </button>

@@ -16,6 +16,7 @@ import { on } from '@ember/modifier';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import sortBy0 from 'ilios-common/helpers/sort-by';
 import FilterCheckbox from 'ilios-common/components/dashboard/filter-checkbox';
+import { faCaretRight, faCaretDown } from '@fortawesome/free-solid-svg-icons';
 
 export default class DashboardCoursesCalendarFilterComponent extends Component {
   @service dataLoader;
@@ -193,7 +194,7 @@ export default class DashboardCoursesCalendarFilterComponent extends Component {
                 >
                   {{year.label}}
                   <FaIcon
-                    @icon={{if (includes year.year this.expandedYears) "caret-down" "caret-right"}}
+                    @icon={{if (includes year.year this.expandedYears) faCaretDown faCaretRight}}
                   />
                 </button>
               </h3>

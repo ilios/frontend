@@ -13,7 +13,7 @@ import noop from 'ilios-common/helpers/noop';
 import YupValidations from 'ilios-common/classes/yup-validations';
 import YupValidationMessage from 'ilios-common/components/yup-validation-message';
 import { number, string } from 'yup';
-import { faArrowRotateLeft } from '@fortawesome/free-solid-svg-icons';
+import { faArrowRotateLeft, faCheck, faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 export default class SchoolInstitutionalInformationManagerComponent extends Component {
   @service store;
@@ -88,7 +88,7 @@ export default class SchoolInstitutionalInformationManagerComponent extends Comp
                 {{on "click" (perform this.save)}}
               >
                 <FaIcon
-                  @icon={{if this.save.isRunning "spinner" "check"}}
+                  @icon={{if this.save.isRunning faSpinner faCheck}}
                   @spin={{this.save.isRunning}}
                 />
               </button>

@@ -1,17 +1,26 @@
 import Component from '@glimmer/component';
 import { service } from '@ember/service';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import {
+  faLink,
+  faParagraph,
+  faFilePdf,
+  faFilePowerpoint,
+  faFileVideo,
+  faFileAudio,
+  faFile,
+} from '@fortawesome/free-solid-svg-icons';
 
 export default class LmTypeIconComponent extends Component {
   @service intl;
 
   get icon() {
     if (this.args.type === 'link') {
-      return 'link';
+      return faLink;
     } else if (this.args.type === 'citation') {
-      return 'paragraph';
+      return faParagraph;
     } else {
-      return this.fileType;
+      return this.fileTypeIcon;
     }
   }
   get title() {
@@ -54,6 +63,21 @@ export default class LmTypeIconComponent extends Component {
       return 'file-audio';
     }
     return 'file';
+  }
+
+  get fileTypeIcon() {
+    switch (this.fileType) {
+      case 'file-pdf':
+        return faFilePdf;
+      case 'file-powerpoint':
+        return faFilePowerpoint;
+      case 'file-video':
+        return faFileVideo;
+      case 'file-audio':
+        return faFileAudio;
+      default:
+        return faFile;
+    }
   }
 
   <template>

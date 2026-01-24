@@ -16,7 +16,7 @@ import includes from 'ilios-common/helpers/includes';
 import mapBy0 from 'ilios-common/helpers/map-by';
 import perform from 'ember-concurrency/helpers/perform';
 import focus from 'ilios-common/modifiers/focus';
-import { faXmark } from '@fortawesome/free-solid-svg-icons';
+import { faXmark, faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 const DEBOUNCE_TIMEOUT = 250;
 const MIN_INPUT = 3;
@@ -234,10 +234,9 @@ export default class MeshManagerComponent extends Component {
                 {{on "click" (perform this.searchMore)}}
                 data-test-show-more
               >
-                <FaIcon
-                  @icon={{if this.searchMore.isRunning "spinner"}}
-                  @spin={{if this.searchMore.isRunning true false}}
-                />
+                {{#if this.searchMore.isRunning}}
+                  <FaIcon @icon={{faSpinner}} @spin={{true}} />
+                {{/if}}
                 {{t "general.showMore"}}
               </button>
             {{/if}}

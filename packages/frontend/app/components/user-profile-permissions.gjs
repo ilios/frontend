@@ -20,7 +20,12 @@ import not from 'ember-truth-helpers/helpers/not';
 import add from 'ember-math-helpers/helpers/add';
 import { LinkTo } from '@ember/routing';
 import { array } from '@ember/helper';
-import { faBuildingColumns, faCalendar } from '@fortawesome/free-solid-svg-icons';
+import {
+  faBuildingColumns,
+  faCalendar,
+  faCaretRight,
+  faCaretDown,
+} from '@fortawesome/free-solid-svg-icons';
 
 export default class UserProfilePermissionsComponent extends Component {
   @service store;
@@ -534,7 +539,7 @@ export default class UserProfilePermissionsComponent extends Component {
                 {{t "general.programs"}}
                 ({{this.directedPrograms.length}})
                 <FaIcon
-                  @icon={{if this.programCollapsed "caret-right" "caret-down"}}
+                  @icon={{if this.programCollapsed faCaretRight faCaretDown}}
                   class="disabled"
                 />
               </button>
@@ -571,7 +576,7 @@ export default class UserProfilePermissionsComponent extends Component {
                 {{t "general.programYears"}}
                 ({{this.directedProgramYears.length}})
                 <FaIcon
-                  @icon={{if this.programYearCollapsed "caret-right" "caret-down"}}
+                  @icon={{if this.programYearCollapsed faCaretRight faCaretDown}}
                   class="disabled"
                 />
               </button>
@@ -614,7 +619,7 @@ export default class UserProfilePermissionsComponent extends Component {
                 {{t "general.courses"}}
                 ({{this.courseCount}})
                 <FaIcon
-                  @icon={{if this.courseCollapsed "caret-right" "caret-down"}}
+                  @icon={{if this.courseCollapsed faCaretRight faCaretDown}}
                   class="disabled"
                 />
               </button>
@@ -733,7 +738,7 @@ export default class UserProfilePermissionsComponent extends Component {
                 {{t "general.sessions"}}
                 ({{this.sessionCount}})
                 <FaIcon
-                  @icon={{if this.sessionCollapsed "caret-right" "caret-down"}}
+                  @icon={{if this.sessionCollapsed faCaretRight faCaretDown}}
                   class="disabled"
                 />
               </button>

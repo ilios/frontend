@@ -14,7 +14,7 @@ import { sortBy as uSortBy } from 'ilios-common/utils/array-helpers';
 import eq from 'ember-truth-helpers/helpers/eq';
 import { fn } from '@ember/helper';
 import includes from 'ilios-common/helpers/includes';
-import { faBuildingColumns } from '@fortawesome/free-solid-svg-icons';
+import { faBuildingColumns, faCaretDown, faCaretRight } from '@fortawesome/free-solid-svg-icons';
 
 export default class ReportsCurriculumChooseCourse extends Component {
   @service iliosConfig;
@@ -157,7 +157,7 @@ export default class ReportsCurriculumChooseCourse extends Component {
               data-test-expand
             >
               {{y.year}}
-              <FaIcon @icon={{if y.isExpanded "caret-down" "caret-right"}} />
+              <FaIcon @icon={{if y.isExpanded faCaretDown faCaretRight}} />
             </button>
             {{#if y.isExpanded}}
               <ul class="courses" data-test-courses>

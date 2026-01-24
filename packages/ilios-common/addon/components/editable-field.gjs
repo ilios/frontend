@@ -8,7 +8,7 @@ import perform from 'ember-concurrency/helpers/perform';
 import t from 'ember-intl/helpers/t';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { fn } from '@ember/helper';
-import { faPenToSquare, faXmark } from '@fortawesome/free-solid-svg-icons';
+import { faPenToSquare, faXmark, faSpinner, faCheck } from '@fortawesome/free-solid-svg-icons';
 
 export default class EditableFieldComponent extends Component {
   @tracked isEditing = false;
@@ -85,7 +85,7 @@ export default class EditableFieldComponent extends Component {
                 {{on "click" (perform this.saveData)}}
               >
                 <FaIcon
-                  @icon={{if this.saveData.isRunning "spinner" "check"}}
+                  @icon={{if this.saveData.isRunning faSpinner faCheck}}
                   @spin={{this.saveData.isRunning}}
                 />
               </button>

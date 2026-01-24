@@ -2,6 +2,7 @@ import Component from '@glimmer/component';
 import { guidFor } from '@ember/object/internals';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import t from 'ember-intl/helpers/t';
+import { faClock, faStar, faStarHalfStroke } from '@fortawesome/free-solid-svg-icons';
 
 export default class PublicationStatusComponent extends Component {
   id = guidFor(this);
@@ -19,13 +20,13 @@ export default class PublicationStatusComponent extends Component {
 
   get iconKey() {
     if (this.args.item.isScheduled) {
-      return 'clock';
+      return faClock;
     }
     if (this.args.item.isPublished) {
-      return 'star';
+      return faStar;
     }
 
-    return 'star-half-stroke';
+    return faStarHalfStroke;
   }
 
   get publicationStatus() {

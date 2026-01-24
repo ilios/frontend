@@ -13,7 +13,12 @@ import { fn } from '@ember/helper';
 import UserProfileCohortsManager from 'frontend/components/user-profile-cohorts-manager';
 import set from 'ember-set-helper/helpers/set';
 import UserProfileCohortsDetails from 'frontend/components/user-profile-cohorts-details';
-import { faArrowRotateLeft, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
+import {
+  faArrowRotateLeft,
+  faPenToSquare,
+  faCheck,
+  faSpinner,
+} from '@fortawesome/free-solid-svg-icons';
 
 export default class UserProfileCohortsComponent extends Component {
   @service currentUser;
@@ -186,7 +191,7 @@ export default class UserProfileCohortsComponent extends Component {
                 data-test-save
               >
                 <FaIcon
-                  @icon={{if this.save.isRunning "spinner" "check"}}
+                  @icon={{if this.save.isRunning faSpinner faCheck}}
                   @spin={{this.save.isRunning}}
                 />
               </button>
