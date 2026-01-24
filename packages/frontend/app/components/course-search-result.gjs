@@ -7,7 +7,7 @@ import { array } from '@ember/helper';
 import gt from 'ember-truth-helpers/helpers/gt';
 import { on } from '@ember/modifier';
 import set from 'ember-set-helper/helpers/set';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { faAngleDown, faAngleUp } from '@fortawesome/free-solid-svg-icons';
 
 export default class CourseSearchResultComponent extends Component {

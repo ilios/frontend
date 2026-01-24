@@ -11,7 +11,7 @@ import { fn } from '@ember/helper';
 import t from 'ember-intl/helpers/t';
 import pick from 'ilios-common/helpers/pick';
 import or from 'ember-truth-helpers/helpers/or';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import notEq from 'ember-truth-helpers/helpers/not-eq';
 import load from 'ember-async-data/helpers/load';
 import BulkNewUsers from 'frontend/components/bulk-new-users';

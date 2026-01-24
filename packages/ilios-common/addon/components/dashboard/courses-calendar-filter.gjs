@@ -13,7 +13,7 @@ import includes from 'ilios-common/helpers/includes';
 import inViewport from 'ember-in-viewport/modifiers/in-viewport';
 import { fn } from '@ember/helper';
 import { on } from '@ember/modifier';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import sortBy0 from 'ilios-common/helpers/sort-by';
 import FilterCheckbox from 'ilios-common/components/dashboard/filter-checkbox';
 

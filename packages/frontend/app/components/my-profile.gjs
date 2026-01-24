@@ -13,7 +13,7 @@ import UserProfilePermissions from 'frontend/components/user-profile-permissions
 import LearnerGroups from 'frontend/components/user-profile/learner-groups';
 import or from 'ember-truth-helpers/helpers/or';
 import CopyButton from 'ilios-common/components/copy-button';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { on } from '@ember/modifier';
 import pipe from 'ilios-common/helpers/pipe';
 import DatePicker from 'ilios-common/components/date-picker';

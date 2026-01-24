@@ -5,7 +5,7 @@ import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
 import set from 'ember-set-helper/helpers/set';
 import not from 'ember-truth-helpers/helpers/not';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { faIndent, faList } from '@fortawesome/free-solid-svg-icons';
 
 export default class SingleEventObjectiveList extends Component {

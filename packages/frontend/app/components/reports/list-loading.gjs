@@ -1,6 +1,6 @@
 import t from 'ember-intl/helpers/t';
 import repeat from 'ilios-common/helpers/repeat';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 <template>
   <div class="loading-shimmer loading-text" data-test-reports-list-loading ...attributes>

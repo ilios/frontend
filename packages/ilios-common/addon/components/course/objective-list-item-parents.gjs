@@ -2,7 +2,7 @@ import Component from '@glimmer/component';
 import sortableByPosition from 'ilios-common/utils/sortable-by-position';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import FadeText from 'ilios-common/components/fade-text';
 import { faArrowRotateLeft, faCheck, faSpinner } from '@fortawesome/free-solid-svg-icons';
 

@@ -8,7 +8,7 @@ import ExpandCollapseButton from 'ilios-common/components/expand-collapse-button
 import NewSequenceBlock from 'frontend/components/curriculum-inventory/new-sequence-block';
 import perform from 'ember-concurrency/helpers/perform';
 import { LinkTo } from '@ember/routing';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import sortBy from 'ilios-common/helpers/sort-by';
 import SequenceBlockListItem from 'frontend/components/curriculum-inventory/sequence-block-list-item';
 import { faSquareUpRight } from '@fortawesome/free-solid-svg-icons';

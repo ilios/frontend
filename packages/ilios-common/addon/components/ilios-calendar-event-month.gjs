@@ -10,7 +10,7 @@ import noop from 'ilios-common/helpers/noop';
 import mouseHoverToggle from 'ilios-common/modifiers/mouse-hover-toggle';
 import set from 'ember-set-helper/helpers/set';
 import IliosTooltip from 'ilios-common/components/ilios-tooltip';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import t from 'ember-intl/helpers/t';
 import formatDate from 'ember-intl/helpers/format-date';
 import Color from 'color';

@@ -7,7 +7,7 @@ import { findById, uniqueValues } from 'ilios-common/utils/array-helpers';
 import onClickOutside from 'ember-click-outside/modifiers/on-click-outside';
 import { on } from '@ember/modifier';
 import toggle from 'ilios-common/helpers/toggle';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { fn } from '@ember/helper';
 import eq from 'ember-truth-helpers/helpers/eq';
 import focus from 'ilios-common/modifiers/focus';

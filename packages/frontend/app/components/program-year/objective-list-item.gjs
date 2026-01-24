@@ -8,7 +8,7 @@ import { findById, sortBy } from 'ilios-common/utils/array-helpers';
 import { on } from '@ember/modifier';
 import set from 'ember-set-helper/helpers/set';
 import not from 'ember-truth-helpers/helpers/not';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import t from 'ember-intl/helpers/t';
 import and from 'ember-truth-helpers/helpers/and';
 import EditableField from 'ilios-common/components/editable-field';

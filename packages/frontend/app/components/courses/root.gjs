@@ -8,7 +8,7 @@ import { findById } from 'ilios-common/utils/array-helpers';
 import { action } from '@ember/object';
 import ToggleButtons from 'ilios-common/components/toggle-buttons';
 import t from 'ember-intl/helpers/t';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { on } from '@ember/modifier';
 import pick from 'ilios-common/helpers/pick';
 import sortBy from 'ilios-common/helpers/sort-by';

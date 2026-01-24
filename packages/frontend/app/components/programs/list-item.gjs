@@ -6,7 +6,7 @@ import { TrackedAsyncData } from 'ember-async-data';
 import { LinkTo } from '@ember/routing';
 import { on } from '@ember/modifier';
 import set from 'ember-set-helper/helpers/set';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import ResponsiveTd from 'frontend/components/responsive-td';
 import t from 'ember-intl/helpers/t';
 import perform from 'ember-concurrency/helpers/perform';

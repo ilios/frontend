@@ -16,7 +16,7 @@ import perform from 'ember-concurrency/helpers/perform';
 import YupValidationMessage from 'ilios-common/components/yup-validation-message';
 import LoadingSpinner from 'ilios-common/components/loading-spinner';
 import { LinkTo } from '@ember/routing';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import sortBy from 'ilios-common/helpers/sort-by';
 import { faSquareUpRight } from '@fortawesome/free-solid-svg-icons';
 

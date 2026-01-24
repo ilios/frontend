@@ -8,7 +8,7 @@ import pick from 'ilios-common/helpers/pick';
 import perform from 'ember-concurrency/helpers/perform';
 import { task } from 'ember-concurrency';
 import onKey from 'ember-keyboard/modifiers/on-key';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 
 export default class GlobalSearchBox extends Component {

@@ -4,7 +4,7 @@ import repeat from 'ilios-common/helpers/repeat';
 import truncate from 'ilios-common/helpers/truncate';
 import random from 'ember-math-helpers/helpers/random';
 import formatDate from 'ember-intl/helpers/format-date';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { faStarHalfStroke } from '@fortawesome/free-solid-svg-icons';
 
 export default class SessionsGridLoading extends Component {

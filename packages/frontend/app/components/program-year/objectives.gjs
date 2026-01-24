@@ -6,7 +6,7 @@ import { action } from '@ember/object';
 import { sortBy } from 'ilios-common/utils/array-helpers';
 import { on } from '@ember/modifier';
 import t from 'ember-intl/helpers/t';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import ExpandCollapseButton from 'ilios-common/components/expand-collapse-button';
 import NewObjective from 'ilios-common/components/new-objective';
 import perform from 'ember-concurrency/helpers/perform';

@@ -7,7 +7,7 @@ import animateLoading from 'ilios-common/modifiers/animate-loading';
 import Header from 'ilios-common/components/course/header';
 import Overview from 'ilios-common/components/course/overview';
 import t from 'ember-intl/helpers/t';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { faSquarePlus } from '@fortawesome/free-solid-svg-icons';
 
 export default class CourseLoaderComponent extends Component {

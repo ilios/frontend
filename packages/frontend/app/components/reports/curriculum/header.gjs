@@ -9,7 +9,7 @@ import CopyButton from 'ilios-common/components/copy-button';
 import perform from 'ember-concurrency/helpers/perform';
 import mouseHoverToggle from 'ilios-common/modifiers/mouse-hover-toggle';
 import set from 'ember-set-helper/helpers/set';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import IliosTooltip from 'ilios-common/components/ilios-tooltip';
 import not from 'ember-truth-helpers/helpers/not';
 import { faCheck, faCopy, faDownload, faPlay, faSpinner } from '@fortawesome/free-solid-svg-icons';

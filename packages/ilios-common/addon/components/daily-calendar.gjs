@@ -3,7 +3,7 @@ import { service } from '@ember/service';
 import { sortBy } from 'ilios-common/utils/array-helpers';
 import { modifier } from 'ember-modifier';
 import { DateTime } from 'luxon';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import t from 'ember-intl/helpers/t';
 import formatDate from 'ember-intl/helpers/format-date';
 import DailyCalendarEvent from 'ilios-common/components/daily-calendar-event';

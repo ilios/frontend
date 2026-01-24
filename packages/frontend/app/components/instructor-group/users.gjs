@@ -6,7 +6,7 @@ import { TrackedAsyncData } from 'ember-async-data';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
 import perform from 'ember-concurrency/helpers/perform';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import set from 'ember-set-helper/helpers/set';
 import InstructorManager from 'frontend/components/instructor-group/instructor-manager';
 import sortBy from 'ilios-common/helpers/sort-by';

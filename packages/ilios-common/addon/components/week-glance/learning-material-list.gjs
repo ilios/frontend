@@ -1,4 +1,4 @@
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import t from 'ember-intl/helpers/t';
 import { LinkTo } from '@ember/routing';
 import LearningMaterialListItem from 'ilios-common/components/week-glance/learning-material-list-item';

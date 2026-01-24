@@ -13,7 +13,7 @@ import createDownloadFile from 'ilios-common/utils/create-download-file';
 import SimpleChart from 'ember-simple-charts/components/simple-chart';
 import perform from 'ember-concurrency/helpers/perform';
 import t from 'ember-intl/helpers/t';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import and from 'ember-truth-helpers/helpers/and';
 import not from 'ember-truth-helpers/helpers/not';
 import sortBy0 from 'ilios-common/helpers/sort-by';

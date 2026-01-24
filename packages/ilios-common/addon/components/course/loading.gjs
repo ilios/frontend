@@ -1,7 +1,7 @@
 import BackToCourses from 'ilios-common/components/course/back-to-courses';
 import animateLoading from 'ilios-common/modifiers/animate-loading';
 import t from 'ember-intl/helpers/t';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { faSquarePlus } from '@fortawesome/free-solid-svg-icons';
 <template>
   <BackToCourses />

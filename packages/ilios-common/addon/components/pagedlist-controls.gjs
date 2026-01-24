@@ -3,7 +3,7 @@ import { action } from '@ember/object';
 import { uniqueId } from '@ember/helper';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import pick from 'ilios-common/helpers/pick';
 import isEqual from 'ember-truth-helpers/helpers/is-equal';
 import { faBackwardFast, faForwardFast, faPlay } from '@fortawesome/free-solid-svg-icons';

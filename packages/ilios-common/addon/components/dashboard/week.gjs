@@ -7,7 +7,7 @@ import { on } from '@ember/modifier';
 import { LinkTo } from '@ember/routing';
 import { fn, hash } from '@ember/helper';
 import inViewport from 'ember-in-viewport/modifiers/in-viewport';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import WeekGlance from 'ilios-common/components/week-glance';
 import { faChevronUp } from '@fortawesome/free-solid-svg-icons';
 

@@ -4,7 +4,7 @@ import { guidFor } from '@ember/object/internals';
 import t from 'ember-intl/helpers/t';
 import CopyButton from 'ilios-common/components/copy-button';
 import perform from 'ember-concurrency/helpers/perform';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import IliosTooltip from 'ilios-common/components/ilios-tooltip';
 import { hash } from '@ember/helper';
 import { faCheck, faCopy } from '@fortawesome/free-solid-svg-icons';

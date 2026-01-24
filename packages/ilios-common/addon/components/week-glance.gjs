@@ -10,7 +10,7 @@ import { on } from '@ember/modifier';
 import { fn } from '@ember/helper';
 import optional from 'ilios-common/helpers/optional';
 import t from 'ember-intl/helpers/t';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import WeekGlanceEvent from 'ilios-common/components/week-glance-event';
 import formatDate from 'ember-intl/helpers/format-date';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';

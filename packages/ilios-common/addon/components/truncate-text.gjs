@@ -6,7 +6,7 @@ import { action } from '@ember/object';
 import EllipsisIcon from 'ilios-common/components/ellipsis-icon';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { faAnglesDown, faAnglesUp } from '@fortawesome/free-solid-svg-icons';
 
 export default class TruncateTextComponent extends Component {

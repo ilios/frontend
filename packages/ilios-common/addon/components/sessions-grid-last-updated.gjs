@@ -1,4 +1,4 @@
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import t from 'ember-intl/helpers/t';
 import formatDate from 'ember-intl/helpers/format-date';
 import { faClockRotateLeft } from '@fortawesome/free-solid-svg-icons';

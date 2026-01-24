@@ -8,7 +8,7 @@ import { uniqueValues } from 'ilios-common/utils/array-helpers';
 import { action } from '@ember/object';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import perform from 'ember-concurrency/helpers/perform';
 import { fn } from '@ember/helper';
 import sortBy from 'ilios-common/helpers/sort-by';

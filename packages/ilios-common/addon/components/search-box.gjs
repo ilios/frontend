@@ -8,7 +8,7 @@ import { guidFor } from '@ember/object/internals';
 import { on } from '@ember/modifier';
 import t from 'ember-intl/helpers/t';
 import perform from 'ember-concurrency/helpers/perform';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 const DEBOUNCE_TIMEOUT = 250;
 

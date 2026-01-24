@@ -3,7 +3,7 @@ import { TrackedAsyncData } from 'ember-async-data';
 import { cached } from '@glimmer/tracking';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import DetailTermsList from 'ilios-common/components/detail-terms-list';
 import noop from 'ilios-common/helpers/noop';
 import { fn } from '@ember/helper';

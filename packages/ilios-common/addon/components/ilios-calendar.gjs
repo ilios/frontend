@@ -7,7 +7,7 @@ import IliosCalendarMonth from './ilios-calendar-month';
 import { LinkTo } from '@ember/routing';
 import { hash, concat } from '@ember/helper';
 import { service } from '@ember/service';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import t from 'ember-intl/helpers/t';
 import eq from 'ember-truth-helpers/helpers/eq';
 import { faBackward, faForward } from '@fortawesome/free-solid-svg-icons';

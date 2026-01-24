@@ -5,7 +5,7 @@ import { tracked } from '@glimmer/tracking';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
 import perform from 'ember-concurrency/helpers/perform';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { fn } from '@ember/helper';
 import CopyButton from 'ilios-common/components/copy-button';
 import { faArrowRotateLeft, faCopy, faPenToSquare } from '@fortawesome/free-solid-svg-icons';

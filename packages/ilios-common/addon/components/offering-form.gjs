@@ -23,7 +23,7 @@ import noop from 'ilios-common/helpers/noop';
 import formatDate from 'ember-intl/helpers/format-date';
 import isEqual from 'ember-truth-helpers/helpers/is-equal';
 import set from 'ember-set-helper/helpers/set';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import ToggleYesno from 'ilios-common/components/toggle-yesno';
 import or from 'ember-truth-helpers/helpers/or';
 import includes from 'ilios-common/helpers/includes';

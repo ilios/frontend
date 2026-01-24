@@ -8,7 +8,7 @@ import t from 'ember-intl/helpers/t';
 import FilterCheckbox from 'ilios-common/components/dashboard/filter-checkbox';
 import includes from 'ilios-common/helpers/includes';
 import { fn } from '@ember/helper';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import CohortCalendarFilter from 'ilios-common/components/dashboard/cohort-calendar-filter';
 import TermsCalendarFilter from 'ilios-common/components/dashboard/terms-calendar-filter';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';

@@ -11,7 +11,7 @@ import { DateTime } from 'luxon';
 import { uniqueId, hash, fn, concat } from '@ember/helper';
 import t from 'ember-intl/helpers/t';
 import { LinkTo } from '@ember/routing';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import EditableField from 'ilios-common/components/editable-field';
 import perform from 'ember-concurrency/helpers/perform';
 import { on } from '@ember/modifier';

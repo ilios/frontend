@@ -6,7 +6,7 @@ import { service } from '@ember/service';
 import { guidFor } from '@ember/object/internals';
 import and from 'ember-truth-helpers/helpers/and';
 import mouseHoverToggle from 'ilios-common/modifiers/mouse-hover-toggle';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import t from 'ember-intl/helpers/t';
 import IliosTooltip from 'ilios-common/components/ilios-tooltip';
 import { faCircleInfo } from '@fortawesome/free-solid-svg-icons';

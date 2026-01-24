@@ -12,7 +12,7 @@ import New from 'frontend/components/program-year/new';
 import perform from 'ember-concurrency/helpers/perform';
 import { LinkTo } from '@ember/routing';
 import { array } from '@ember/helper';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import add from 'ember-math-helpers/helpers/add';
 import ListItem from 'frontend/components/program-year/list-item';
 import { faSquareUpRight } from '@fortawesome/free-solid-svg-icons';

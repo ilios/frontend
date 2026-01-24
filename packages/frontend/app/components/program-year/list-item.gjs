@@ -7,7 +7,7 @@ import and from 'ember-truth-helpers/helpers/and';
 import not from 'ember-truth-helpers/helpers/not';
 import { LinkTo } from '@ember/routing';
 import { array } from '@ember/helper';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import t from 'ember-intl/helpers/t';
 import or from 'ember-truth-helpers/helpers/or';
 import LoadingSpinner from 'ilios-common/components/loading-spinner';

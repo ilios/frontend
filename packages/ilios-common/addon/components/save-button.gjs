@@ -1,5 +1,5 @@
 import eq from 'ember-truth-helpers/helpers/eq';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { faCheck, faSpinner } from '@fortawesome/free-solid-svg-icons';
 <template>
   <button type="button" disabled={{@isSaving}} ...attributes>

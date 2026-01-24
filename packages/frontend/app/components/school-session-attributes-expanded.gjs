@@ -5,7 +5,7 @@ import { task } from 'ember-concurrency';
 import { capitalize } from '@ember/string';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import perform from 'ember-concurrency/helpers/perform';
 import { fn } from '@ember/helper';
 import SchoolSessionAttributesManager from 'frontend/components/school-session-attributes-manager';

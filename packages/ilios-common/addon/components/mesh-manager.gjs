@@ -8,7 +8,7 @@ import { uniqueId, fn } from '@ember/helper';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
 import MeshDescriptorLastTreeNumber from 'ilios-common/components/mesh-descriptor-last-tree-number';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import onClickOutside from 'ember-click-outside/modifiers/on-click-outside';
 import and from 'ember-truth-helpers/helpers/and';
 import lte from 'ember-truth-helpers/helpers/lte';

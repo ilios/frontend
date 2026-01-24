@@ -3,7 +3,7 @@ import { service } from '@ember/service';
 import { cached, tracked } from '@glimmer/tracking';
 import { TrackedAsyncData } from 'ember-async-data';
 import currentAcademicYear from 'ilios-common/utils/current-academic-year';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import gt from 'ember-truth-helpers/helpers/gt';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';

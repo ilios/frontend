@@ -1,5 +1,5 @@
 import { on } from '@ember/modifier';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
 <template>
   <div class="expand-collapse-button" data-test-expand-collapse-button ...attributes>

@@ -7,7 +7,7 @@ import { LinkTo } from '@ember/routing';
 import t from 'ember-intl/helpers/t';
 import hasManyLength from 'ilios-common/helpers/has-many-length';
 import { hash } from '@ember/helper';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { faLinkSlash } from '@fortawesome/free-solid-svg-icons';
 
 export default class CoursePublicationCheckComponent extends Component {

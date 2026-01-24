@@ -2,7 +2,7 @@ import t from 'ember-intl/helpers/t';
 import sortBy from 'ilios-common/helpers/sort-by';
 import { on } from '@ember/modifier';
 import { fn } from '@ember/helper';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import UserNameInfo from 'ilios-common/components/user-name-info';
 import UserStatus from 'ilios-common/components/user-status';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';

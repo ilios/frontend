@@ -6,7 +6,7 @@ import GlobalSearchBox from 'frontend/components/global-search-box';
 import and from 'ember-truth-helpers/helpers/and';
 import not from 'ember-truth-helpers/helpers/not';
 import gt from 'ember-truth-helpers/helpers/gt';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import t from 'ember-intl/helpers/t';
 import CourseSearchResult from 'frontend/components/course-search-result';
 import { on } from '@ember/modifier';

@@ -4,7 +4,7 @@ import { task } from 'ember-concurrency';
 import { on } from '@ember/modifier';
 import { fn, concat } from '@ember/helper';
 import t from 'ember-intl/helpers/t';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import and from 'ember-truth-helpers/helpers/and';
 import not from 'ember-truth-helpers/helpers/not';
 import eq from 'ember-truth-helpers/helpers/eq';

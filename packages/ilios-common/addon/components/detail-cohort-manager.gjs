@@ -7,7 +7,7 @@ import { TrackedAsyncData } from 'ember-async-data';
 import sortBy from 'ilios-common/helpers/sort-by';
 import { on } from '@ember/modifier';
 import { fn } from '@ember/helper';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import LoadingSpinner from 'ilios-common/components/loading-spinner';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 

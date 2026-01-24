@@ -1,4 +1,4 @@
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import t from 'ember-intl/helpers/t';
 import UserMaterialStatus from 'ilios-common/components/user-material-status';
 import not from 'ember-truth-helpers/helpers/not';

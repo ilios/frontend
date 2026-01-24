@@ -16,7 +16,7 @@ import NewSession from 'ilios-common/components/new-session';
 import perform from 'ember-concurrency/helpers/perform';
 import set from 'ember-set-helper/helpers/set';
 import { array, get, fn } from '@ember/helper';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { on } from '@ember/modifier';
 import SessionsGridHeader from 'ilios-common/components/sessions-grid-header';
 import SessionsGrid from 'ilios-common/components/sessions-grid';

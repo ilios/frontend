@@ -2,7 +2,7 @@ import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { guidFor } from '@ember/object/internals';
 import UserMaterialStatus from 'ilios-common/components/user-material-status';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import t from 'ember-intl/helpers/t';
 import TimedReleaseSchedule from 'ilios-common/components/timed-release-schedule';
 import LmTypeIcon from 'ilios-common/components/lm-type-icon';

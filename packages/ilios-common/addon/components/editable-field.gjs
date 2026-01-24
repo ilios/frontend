@@ -6,7 +6,7 @@ import { modifier } from 'ember-modifier';
 import { on } from '@ember/modifier';
 import perform from 'ember-concurrency/helpers/perform';
 import t from 'ember-intl/helpers/t';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { fn } from '@ember/helper';
 import { faPenToSquare, faXmark } from '@fortawesome/free-solid-svg-icons';
 

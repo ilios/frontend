@@ -14,7 +14,7 @@ import LearningmaterialSearch from 'ilios-common/components/learningmaterial-sea
 import perform from 'ember-concurrency/helpers/perform';
 import { on } from '@ember/modifier';
 import { fn, array } from '@ember/helper';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import and from 'ember-truth-helpers/helpers/and';
 import not from 'ember-truth-helpers/helpers/not';
 import ChooseMaterialType from 'ilios-common/components/choose-material-type';

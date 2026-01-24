@@ -7,7 +7,7 @@ import { uniqueId, get } from '@ember/helper';
 import onClickOutside from 'ember-click-outside/modifiers/on-click-outside';
 import set from 'ember-set-helper/helpers/set';
 import { on } from '@ember/modifier';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import focus from 'ilios-common/modifiers/focus';
 import t from 'ember-intl/helpers/t';
 

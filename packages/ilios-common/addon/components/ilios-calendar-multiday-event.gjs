@@ -5,7 +5,7 @@ import { on } from '@ember/modifier';
 import { fn } from '@ember/helper';
 import formatDate from 'ember-intl/helpers/format-date';
 import t from 'ember-intl/helpers/t';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { faBlackTie } from '@fortawesome/free-brands-svg-icons';
 import { faCalendarCheck, faCalendarMinus, faFlask } from '@fortawesome/free-solid-svg-icons';
 

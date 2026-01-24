@@ -15,7 +15,7 @@ import pick from 'ilios-common/helpers/pick';
 import set from 'ember-set-helper/helpers/set';
 import and from 'ember-truth-helpers/helpers/and';
 import not from 'ember-truth-helpers/helpers/not';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import ToggleYesno from 'ilios-common/components/toggle-yesno';
 import SchoolVocabularyNewTerm from 'frontend/components/school-vocabulary-new-term';
 import YupValidationMessage from 'ilios-common/components/yup-validation-message';

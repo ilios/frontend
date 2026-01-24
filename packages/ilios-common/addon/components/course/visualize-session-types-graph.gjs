@@ -17,7 +17,7 @@ import t from 'ember-intl/helpers/t';
 import and from 'ember-truth-helpers/helpers/and';
 import not from 'ember-truth-helpers/helpers/not';
 import { on } from '@ember/modifier';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import SortableTh from 'ilios-common/components/sortable-th';
 import eq from 'ember-truth-helpers/helpers/eq';
 import { fn, array } from '@ember/helper';

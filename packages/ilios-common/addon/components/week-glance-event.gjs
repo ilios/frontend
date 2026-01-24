@@ -7,7 +7,7 @@ import { DateTime } from 'luxon';
 import t from 'ember-intl/helpers/t';
 import formatDate from 'ember-intl/helpers/format-date';
 import OfferingUrlDisplay from 'ilios-common/components/offering-url-display';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import join from 'ilios-common/helpers/join';
 import sortBy from 'ilios-common/helpers/sort-by';
 import TruncateText from 'ilios-common/components/truncate-text';

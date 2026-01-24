@@ -11,7 +11,7 @@ import t from 'ember-intl/helpers/t';
 import not from 'ember-truth-helpers/helpers/not';
 import UserContextFilter from 'ilios-common/components/dashboard/user-context-filter';
 import set from 'ember-set-helper/helpers/set';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { on } from '@ember/modifier';
 import sortBy0 from 'ilios-common/helpers/sort-by';
 import isEqual from 'ember-truth-helpers/helpers/is-equal';

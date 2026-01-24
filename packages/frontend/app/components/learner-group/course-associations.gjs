@@ -9,7 +9,7 @@ import { TrackedAsyncData } from 'ember-async-data';
 import t from 'ember-intl/helpers/t';
 import eq from 'ember-truth-helpers/helpers/eq';
 import or from 'ember-truth-helpers/helpers/or';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import SortableTh from 'ilios-common/components/sortable-th';
 import sortBy from 'ilios-common/helpers/sort-by';
 import { mapBy, uniqueValues } from 'ilios-common/utils/array-helpers';

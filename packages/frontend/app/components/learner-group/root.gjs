@@ -35,7 +35,7 @@ import Members from 'frontend/components/learner-group/members';
 import CourseAssociations from 'frontend/components/learner-group/course-associations';
 import ExpandCollapseButton from 'ilios-common/components/expand-collapse-button';
 import New from 'frontend/components/learner-group/new';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import eq from 'ember-truth-helpers/helpers/eq';
 import List from 'frontend/components/learner-group/list';
 import CohortUserManager from 'frontend/components/learner-group/cohort-user-manager';

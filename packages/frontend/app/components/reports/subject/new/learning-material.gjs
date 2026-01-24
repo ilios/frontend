@@ -8,7 +8,7 @@ import { guidFor } from '@ember/object/internals';
 import t from 'ember-intl/helpers/t';
 import load from 'ember-async-data/helpers/load';
 import { on } from '@ember/modifier';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import LoadingSpinner from 'ilios-common/components/loading-spinner';
 import SearchInput from 'frontend/components/reports/subject/new/search/input';
 import perform from 'ember-concurrency/helpers/perform';

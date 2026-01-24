@@ -8,7 +8,7 @@ import cloneLearnerGroup from 'frontend/utils/clone-learner-group';
 import { task } from 'ember-concurrency';
 import { map } from 'rsvp';
 import { action } from '@ember/object';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import gt from 'ember-truth-helpers/helpers/gt';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';

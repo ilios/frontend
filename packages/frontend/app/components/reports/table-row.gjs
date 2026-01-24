@@ -3,7 +3,7 @@ import { LinkTo } from '@ember/routing';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
 import { fn } from '@ember/helper';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 
 export default class ReportsListRowComponent extends Component {

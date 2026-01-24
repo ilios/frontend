@@ -3,7 +3,7 @@ import { service } from '@ember/service';
 import ToggleButtons from 'ilios-common/components/toggle-buttons';
 import t from 'ember-intl/helpers/t';
 import noop from 'ilios-common/helpers/noop';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import sortBy from 'ilios-common/helpers/sort-by';
 import LoadingList from 'frontend/components/courses/loading-list';
 import { faBuildingColumns, faCalendar } from '@fortawesome/free-solid-svg-icons';

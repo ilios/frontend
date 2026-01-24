@@ -10,7 +10,7 @@ import YupValidations from 'ilios-common/classes/yup-validations';
 import { string } from 'yup';
 import { uniqueId, array } from '@ember/helper';
 import Header from 'ilios-common/components/session/header';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import t from 'ember-intl/helpers/t';
 import formatDate from 'ember-intl/helpers/format-date';
 import { LinkTo } from '@ember/routing';

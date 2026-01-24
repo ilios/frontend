@@ -6,7 +6,7 @@ import { task, timeout } from 'ember-concurrency';
 import { findById, mapBy, sortBy, uniqueValues } from 'ilios-common/utils/array-helpers';
 import { service } from '@ember/service';
 import { all } from 'rsvp';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
 import pick from 'ilios-common/helpers/pick';

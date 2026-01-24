@@ -12,7 +12,7 @@ import { on } from '@ember/modifier';
 import { fn } from '@ember/helper';
 import not from 'ember-truth-helpers/helpers/not';
 import t from 'ember-intl/helpers/t';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import IliosCalendarWeek from 'ilios-common/components/ilios-calendar-week';
 import LoadingSpinner from 'ilios-common/components/loading-spinner';
 import Event from 'ilios-common/classes/event';

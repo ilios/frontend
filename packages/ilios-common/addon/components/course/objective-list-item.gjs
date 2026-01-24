@@ -17,7 +17,7 @@ import ObjectiveListItemDescriptors from 'ilios-common/components/course/objecti
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
 import set from 'ember-set-helper/helpers/set';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import ManageObjectiveParents from 'ilios-common/components/course/manage-objective-parents';
 import ManageObjectiveDescriptors from 'ilios-common/components/course/manage-objective-descriptors';
 import TaxonomyManager from 'ilios-common/components/taxonomy-manager';

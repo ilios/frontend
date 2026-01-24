@@ -5,7 +5,7 @@ import { task, timeout } from 'ember-concurrency';
 import onClickOutside from 'ember-click-outside/modifiers/on-click-outside';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { fn, concat } from '@ember/helper';
 
 export default class ChooseMaterialTypeComponent extends Component {

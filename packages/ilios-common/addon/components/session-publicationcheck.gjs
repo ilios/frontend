@@ -4,7 +4,7 @@ import { cached } from '@glimmer/tracking';
 import Overview from 'ilios-common/components/session/overview';
 import { LinkTo } from '@ember/routing';
 import { array, hash } from '@ember/helper';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import t from 'ember-intl/helpers/t';
 import scrollIntoView from 'ilios-common/modifiers/scroll-into-view';
 import hasManyLength from 'ilios-common/helpers/has-many-length';

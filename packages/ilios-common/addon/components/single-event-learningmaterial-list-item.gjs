@@ -5,7 +5,7 @@ import not from 'ember-truth-helpers/helpers/not';
 import LmIcons from 'ilios-common/components/lm-icons';
 import eq from 'ember-truth-helpers/helpers/eq';
 import t from 'ember-intl/helpers/t';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import filesize from 'ilios-common/helpers/filesize';
 import { faDownload, faSquarePen } from '@fortawesome/free-solid-svg-icons';
 <template>

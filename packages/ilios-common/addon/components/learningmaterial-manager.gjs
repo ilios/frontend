@@ -20,7 +20,7 @@ import HtmlEditor from 'ilios-common/components/html-editor';
 import UserNameInfo from 'ilios-common/components/user-name-info';
 import CopyButton from 'ilios-common/components/copy-button';
 import perform from 'ember-concurrency/helpers/perform';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import formatDate from 'ember-intl/helpers/format-date';
 import TimedReleaseSchedule from 'ilios-common/components/timed-release-schedule';
 import DatePicker from 'ilios-common/components/date-picker';

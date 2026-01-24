@@ -1,6 +1,6 @@
 import t from 'ember-intl/helpers/t';
 import { LinkTo } from '@ember/routing';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { faChartColumn } from '@fortawesome/free-solid-svg-icons';
 <template>
   <div class="programyear-overview" data-test-program-year-overview ...attributes>

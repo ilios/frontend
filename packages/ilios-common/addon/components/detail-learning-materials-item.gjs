@@ -7,7 +7,7 @@ import { fn } from '@ember/helper';
 import LmTypeIcon from 'ilios-common/components/lm-type-icon';
 import UserNameInfo from 'ilios-common/components/user-name-info';
 import t from 'ember-intl/helpers/t';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import sortBy from 'ilios-common/helpers/sort-by';
 import or from 'ember-truth-helpers/helpers/or';
 import set from 'ember-set-helper/helpers/set';

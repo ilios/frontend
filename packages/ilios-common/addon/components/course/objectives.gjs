@@ -7,7 +7,7 @@ import { mapBy } from 'ilios-common/utils/array-helpers';
 import { TrackedAsyncData } from 'ember-async-data';
 import { on } from '@ember/modifier';
 import t from 'ember-intl/helpers/t';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { LinkTo } from '@ember/routing';
 import VisualizeObjectivesGraph from 'ilios-common/components/course/visualize-objectives-graph';
 import ExpandCollapseButton from 'ilios-common/components/expand-collapse-button';

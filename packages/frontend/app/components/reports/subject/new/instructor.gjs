@@ -6,7 +6,7 @@ import { action } from '@ember/object';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
 import { fn } from '@ember/helper';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import UserSearch from 'ilios-common/components/user-search';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 

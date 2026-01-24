@@ -6,7 +6,7 @@ import { on } from '@ember/modifier';
 import mouseHoverToggle from 'ilios-common/modifiers/mouse-hover-toggle';
 import set from 'ember-set-helper/helpers/set';
 import IliosTooltip from 'ilios-common/components/ilios-tooltip';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { faPlus, faXmark } from '@fortawesome/free-solid-svg-icons';
 
 export default class SelectableTermsListItem extends Component {

@@ -7,7 +7,7 @@ import { uniqueId, fn } from '@ember/helper';
 import includes from 'ilios-common/helpers/includes';
 import escapeRegExp from 'ilios-common/utils/escape-reg-exp';
 import { on } from '@ember/modifier';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import t from 'ember-intl/helpers/t';
 import isArray from 'ember-truth-helpers/helpers/is-array';
 import sortBy from 'ilios-common/helpers/sort-by';

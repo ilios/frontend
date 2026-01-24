@@ -1,4 +1,4 @@
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import t from 'ember-intl/helpers/t';
 import { faQuestion } from '@fortawesome/free-solid-svg-icons';
 <template>

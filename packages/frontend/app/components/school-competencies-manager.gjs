@@ -5,7 +5,7 @@ import CompetencyTitleEditor from 'frontend/components/competency-title-editor';
 import eq from 'ember-truth-helpers/helpers/eq';
 import { on } from '@ember/modifier';
 import { fn } from '@ember/helper';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import and from 'ember-truth-helpers/helpers/and';
 import NewCompetency from 'frontend/components/new-competency';
 import t from 'ember-intl/helpers/t';

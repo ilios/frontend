@@ -12,7 +12,7 @@ import Overview from 'ilios-common/components/course/overview';
 import Editing from 'ilios-common/components/course/editing';
 import { on } from '@ember/modifier';
 import t from 'ember-intl/helpers/t';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { fn } from '@ember/helper';
 import { pageTitle } from 'ember-page-title';
 import { faSquareMinus, faSquarePlus } from '@fortawesome/free-solid-svg-icons';

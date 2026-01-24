@@ -10,7 +10,7 @@ import { DateTime } from 'luxon';
 import { uniqueId } from '@ember/helper';
 import t from 'ember-intl/helpers/t';
 import { LinkTo } from '@ember/routing';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { on } from '@ember/modifier';
 import EditableField from 'ilios-common/components/editable-field';
 import formatDate from 'ember-intl/helpers/format-date';

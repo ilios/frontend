@@ -10,7 +10,7 @@ import OfferingForm from 'ilios-common/components/offering-form';
 import toggle from 'ilios-common/helpers/toggle';
 import mouseHoverToggle from 'ilios-common/modifiers/mouse-hover-toggle';
 import { fn, get, concat } from '@ember/helper';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import t from 'ember-intl/helpers/t';
 import and from 'ember-truth-helpers/helpers/and';
 import includes from 'ilios-common/helpers/includes';

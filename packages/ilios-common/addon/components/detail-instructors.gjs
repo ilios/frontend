@@ -9,7 +9,7 @@ import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
 import or from 'ember-truth-helpers/helpers/or';
 import perform from 'ember-concurrency/helpers/perform';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import InstructorSelectionManager from 'ilios-common/components/instructor-selection-manager';
 import SelectedInstructors from 'ilios-common/components/selected-instructors';
 import SelectedInstructorGroups from 'ilios-common/components/selected-instructor-groups';

@@ -5,7 +5,7 @@ import { TrackedAsyncData } from 'ember-async-data';
 import includes from 'ilios-common/helpers/includes';
 import { on } from '@ember/modifier';
 import { fn, array } from '@ember/helper';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import eq from 'ember-truth-helpers/helpers/eq';
 import t from 'ember-intl/helpers/t';
 import { LinkTo } from '@ember/routing';

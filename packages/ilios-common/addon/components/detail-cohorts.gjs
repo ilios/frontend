@@ -7,7 +7,7 @@ import { TrackedAsyncData } from 'ember-async-data';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
 import perform from 'ember-concurrency/helpers/perform';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import DetailCohortManager from 'ilios-common/components/detail-cohort-manager';
 import DetailCohortList from 'ilios-common/components/detail-cohort-list';
 import { faArrowRotateLeft } from '@fortawesome/free-solid-svg-icons';
