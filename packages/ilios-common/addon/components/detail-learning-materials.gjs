@@ -62,7 +62,7 @@ export default class DetailCohortsComponent extends Component {
     if (!this.lmData.isResolved) {
       return [];
     }
-    return this.lmData.value.slice().sort(sortableByPosition);
+    return this.lmData.value.toSorted(sortableByPosition);
   }
 
   get parentMaterialIds() {

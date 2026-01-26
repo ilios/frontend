@@ -30,7 +30,7 @@ export default class ObjectiveSortManagerComponent extends Component {
     if (!this.objectives.isResolved) {
       return [];
     }
-    return this.objectives.value.slice().sort(sortableByPosition);
+    return this.objectives.value.toSorted(sortableByPosition);
   }
 
   get items() {

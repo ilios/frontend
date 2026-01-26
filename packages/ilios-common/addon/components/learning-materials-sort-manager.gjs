@@ -29,7 +29,7 @@ export default class LearningMaterialsSortManagerComponent extends Component {
     if (!this.learningMaterials.isResolved) {
       return [];
     }
-    return this.learningMaterials.value.slice().sort(sortableByPosition);
+    return this.learningMaterials.value.toSorted(sortableByPosition);
   }
 
   get items() {

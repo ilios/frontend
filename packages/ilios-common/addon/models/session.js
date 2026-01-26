@@ -293,7 +293,7 @@ export default class SessionModel extends Model {
     if (!this.hasMany('offerings').ids().length || !this._offeringsData.isResolved) {
       return 0;
     }
-    const sortedOfferings = this._offeringsData.value.slice().sort(function (a, b) {
+    const sortedOfferings = this._offeringsData.value.toSorted(function (a, b) {
       const diffA = DateTime.fromJSDate(a.endDate).diff(
         DateTime.fromJSDate(a.startDate),
         'minutes',
@@ -428,7 +428,7 @@ export default class SessionModel extends Model {
     if (!this._sessionObjectivesData.isResolved) {
       return null;
     }
-    return this._sessionObjectivesData.value.slice().sort(sortableByPosition);
+    return this._sessionObjectivesData.value.toSorted(sortableByPosition);
   }
 
   get ilmSessionInstructors() {

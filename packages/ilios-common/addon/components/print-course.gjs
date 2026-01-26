@@ -100,7 +100,7 @@ export default class PrintCourseComponent extends Component {
       return [];
     }
 
-    return this.courseLearningMaterialsRelationship.slice().sort(sortableByPosition);
+    return this.courseLearningMaterialsRelationship.toSorted(sortableByPosition);
   }
 
   get sessions() {
