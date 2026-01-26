@@ -70,6 +70,7 @@ export default class LearnerGroupCalendarComponent extends Component {
         {
           startDate: offering.startDate.toISOString(),
           endDate: offering.endDate.toISOString(),
+          lastModified: offering.updatedAt.toISOString(),
           courseTitle: course.title,
           name: session.title,
           offering: offering.id,
