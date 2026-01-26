@@ -57,7 +57,7 @@ module.exports = {
     if (type === 'head' && env.environment !== 'test') {
       const fonts = [
         'nunito:vf@latest/latin-wght-normal.woff2',
-        'nunito-sans:vf@latest/latin-wght-normal.woff2',
+        'inter:vf@latest/latin-wght-normal.woff2',
       ];
       const links = fonts.map((path) => {
         return `<link
