@@ -62,8 +62,10 @@ export default class LearnerGroupCalendarComponent extends Component {
     }, []);
     return await map(flat, async (offering) => {
       const session = await offering.session;
+      const sessionType = await session.sessionType;
       const course = await session.course;
       const school = await course.school;
+
       return new Event(
         {
           startDate: offering.startDate.toISOString(),
@@ -78,6 +80,7 @@ export default class LearnerGroupCalendarComponent extends Component {
           postrequisites: [],
           isScheduled: session.isScheduled || course.isScheduled,
           isPublished: session.isPublished && course.isPublished,
+          sessionTypeTitle: sessionType.title,
         },
         false,
       );
