@@ -74,7 +74,7 @@ export default class LearnerGroupCalendarComponent extends Component {
           courseTitle: course.title,
           name: session.title,
           offering: offering.id,
-          location: offering.location,
+          location: offering.room,
           school: school.id,
           color: '#84c444',
           prerequisites: [],
