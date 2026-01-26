@@ -299,7 +299,11 @@ module('Acceptance | Learner Group', function (hooks) {
     const cohort = this.server.create('cohort', { programYear });
     const learnerGroup = this.server.create('learner-group', { cohort });
     const course = this.server.create('course', { school: this.school, cohorts: [cohort] });
-    const session = this.server.create('session', { course });
+    const sessionType = this.server.create('session-type');
+    const session = this.server.create('session', {
+      course,
+      sessionType,
+    });
     this.server.create('offering', {
       session,
       startDate: DateTime.fromObject({ hour: 8 }).toJSDate(),
@@ -327,7 +331,11 @@ module('Acceptance | Learner Group', function (hooks) {
     const cohort = this.server.create('cohort', { programYear });
     const learnerGroup = this.server.create('learner-group', { cohort });
     const course = this.server.create('course', { school: this.school, cohorts: [cohort] });
-    const session = this.server.create('session', { course });
+    const sessionType = this.server.create('session-type');
+    const session = this.server.create('session', {
+      course,
+      sessionType,
+    });
     const subgroup = this.server.create('learner-group', {
       cohort,
       parent: learnerGroup,
