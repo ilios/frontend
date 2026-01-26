@@ -6,5 +6,5 @@ export default helper(function reverse([array]) {
     return [array];
   }
 
-  return array.slice(0).reverse();
+  return array.toReversed();
 });

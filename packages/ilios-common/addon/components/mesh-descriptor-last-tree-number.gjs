@@ -12,7 +12,7 @@ export default class MeshDescriptorLastTreeNumber extends Component {
     if (!this.trees.isResolved || !this.trees.value.length) {
       return '';
     }
-    return this.trees.value.slice().reverse()[0].treeNumber;
+    return this.trees.value.toReversed()[0].treeNumber;
   }
   <template>
     <span

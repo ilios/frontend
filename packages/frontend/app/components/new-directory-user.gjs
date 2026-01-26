@@ -180,7 +180,7 @@ export default class NewDirectoryUserComponent extends Component {
       }
     }
 
-    return this.currentSchoolCohorts.slice().reverse()[0];
+    return this.currentSchoolCohorts.toReversed()[0];
   }
 
   @action

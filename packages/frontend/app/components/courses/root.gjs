@@ -169,7 +169,7 @@ export default class CoursesRootComponent extends Component {
     }
     let defaultYear = this.args.years.find((year) => Number(year.id) === currentYear);
     if (!defaultYear) {
-      defaultYear = this.args.years.slice().reverse()[0];
+      defaultYear = this.args.years.toReversed()[0];
     }
 
     return defaultYear;
