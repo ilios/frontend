@@ -108,8 +108,12 @@ jobs:
       - uses: actions/setup-node@v6
         with:
           node-version: 24
+      - run: |
+          mkdir -p ./results
+          echo ${{ github.event.pull_request.number }} > ./results/pr_number
       - name: Create Visual Diff
-        run: npx visual-differ baseline-frontend candidate-frontend results/visual-diff-${{ github.event.pull_request.number }}
+        run: npx visual-differ baseline-frontend candidate-frontend results/visual-diff-${{ github.event.pull_request.number }} > results/visual-diff.txt
+      - run: cat results/visual-diff.txt
       - uses: actions/upload-artifact@v6
         if: always()
         with:
