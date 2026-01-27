@@ -2,6 +2,7 @@ import pageTitle from 'ember-page-title/helpers/page-title';
 import t from 'ember-intl/helpers/t';
 import Root from 'frontend/components/learner-group/root';
 import set from 'ember-set-helper/helpers/set';
+import toggle from 'ilios-common/helpers/toggle';
 <template>
   {{pageTitle (t "general.learnerGroups")}}
   <Root
@@ -17,5 +18,7 @@ import set from 'ember-set-helper/helpers/set';
     @isBulkAssigning={{@controller.isBulkAssigning}}
     @showCourseAssociations={{@controller.showCourseAssociations}}
     @setShowCourseAssociations={{set @controller "showCourseAssociations"}}
+    @showCalendar={{@controller.showCalendar}}
+    @setShowCalendar={{toggle "showCalendar" @controller}}
   />
 </template>

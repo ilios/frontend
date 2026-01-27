@@ -8,6 +8,7 @@ export default class LearnerGroupRoute extends Route {
 
   queryParams = {
     showCourseAssociations: { replace: true },
+    showCalendar: { replace: true },
   };
 
   beforeModel(transition) {

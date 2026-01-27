@@ -28,7 +28,6 @@ import or from 'ember-truth-helpers/helpers/or';
 import pipe from 'ilios-common/helpers/pipe';
 import ToggleButtons from 'ilios-common/components/toggle-buttons';
 import not from 'ember-truth-helpers/helpers/not';
-import toggle from 'ilios-common/helpers/toggle';
 import BulkAssignment from 'frontend/components/learner-group/bulk-assignment';
 import UserManager from 'frontend/components/learner-group/user-manager';
 import Calendar from 'frontend/components/learner-group/calendar';
@@ -56,7 +55,6 @@ export default class LearnerGroupRootComponent extends Component {
   @service iliosConfig;
   @tracked locationBuffer = null;
   @tracked urlBuffer = null;
-  @tracked showLearnerGroupCalendar = false;
   @tracked sortGroupsBy = 'title';
   @tracked isSavingGroups = false;
   @tracked savedGroup;
@@ -633,10 +631,10 @@ export default class LearnerGroupRootComponent extends Component {
                 </button>
               {{else}}
                 <ToggleButtons
-                  @firstOptionSelected={{not this.showLearnerGroupCalendar}}
+                  @firstOptionSelected={{not @showCalendar}}
                   @firstLabel={{t "general.hideCalendar"}}
                   @secondLabel={{t "general.showCalendar"}}
-                  @toggle={{toggle "showLearnerGroupCalendar" this}}
+                  @toggle={{@setShowCalendar}}
                 />
                 {{#if @canUpdate}}
                   <button
@@ -682,7 +680,7 @@ export default class LearnerGroupRootComponent extends Component {
               />
             </div>
           {{else}}
-            {{#if this.showLearnerGroupCalendar}}
+            {{#if @showCalendar}}
               <Calendar @learnerGroup={{@learnerGroup}} />
             {{/if}}
             <div class="learner-group-overview-content">
