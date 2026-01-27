@@ -87,6 +87,32 @@ jobs:
           path: ./packages/${{matrix.workspace}}/test-execution-*.json
           retention-days: 7
 
+  safari-test:
+    name: Safari Tests
+    runs-on: macos-14 #Sequoia, hopefully safari 18
+    timeout-minutes: 20
+    if: contains(github.event.pull_request.labels.*.name, 'run ui tests')
+    strategy:
+      fail-fast: false
+      matrix:
+        workspace:
+          - frontend
+          - test-app
+          - lti-course-manager
+          - lti-dashboard
+    steps:
+      - name: Safari Version
+        run: /usr/libexec/PlistBuddy -c "print :CFBundleShortVersionString" /Applications/Safari.app/Contents/Info.plist
+      - uses: actions/checkout@v6
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install
+      - name: test
+        run: pnpm --filter ${{matrix.workspace}} exec ember test --launch=Safari
+
   percy:
     name: Test and Capture Screenshots
     runs-on: ubuntu-latest
