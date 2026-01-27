@@ -136,8 +136,8 @@ export default class ManageUsersSummaryComponent extends Component {
         listArray[0].classList.add('active');
         this.scrollToActiveElement(listArray[0]);
       } else {
-        listArray.slice().reverse()[0].classList.add('active');
-        this.scrollToActiveElement(listArray.slice().reverse()[0]);
+        listArray.toReversed()[0].classList.add('active');
+        this.scrollToActiveElement(listArray.toReversed()[0]);
       }
     } else {
       this.addClassToNext(listArray, this.isUpArrow(keyCode));
@@ -149,7 +149,7 @@ export default class ManageUsersSummaryComponent extends Component {
   }
 
   hasFocusOnEdge(listArray, shouldReverse) {
-    const list = shouldReverse ? listArray.slice().reverse() : listArray;
+    const list = shouldReverse ? listArray.toReversed() : listArray;
     return list[0].classList.contains('active');
   }
 
@@ -158,7 +158,7 @@ export default class ManageUsersSummaryComponent extends Component {
   }
 
   addClassToNext(listArray, shouldReverse) {
-    const list = shouldReverse ? listArray.slice().reverse() : listArray;
+    const list = shouldReverse ? listArray.toReversed() : listArray;
     let shouldAddClass = false;
     list.forEach((element) => {
       const { classList } = element;
