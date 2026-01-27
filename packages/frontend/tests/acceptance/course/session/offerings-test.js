@@ -96,7 +96,8 @@ module('Acceptance | Session - Offerings', function (hooks) {
     await takeScreenshot(assert);
     await percySnapshot(assert);
 
-    assert.strictEqual(page.details.offerings.header.title, 'Offerings (3)');
+    assert.ok(page.details.offerings.header.isVisible);
+    assert.strictEqual(page.details.offerings.top.title, 'Offerings (3)');
     assert.strictEqual(page.details.offerings.dateBlocks.length, 3);
   });
 
@@ -317,7 +318,7 @@ module('Acceptance | Session - Offerings', function (hooks) {
     await page.visit({ courseId: 1, sessionId: 1 });
     await page.details.offerings.dateBlocks[0].timeBlockOfferings.offerings[0].remove();
     await page.details.offerings.dateBlocks[0].timeBlockOfferings.offerings[0].confirmRemoval();
-    assert.strictEqual(page.details.offerings.header.title, 'Offerings (2)');
+    assert.strictEqual(page.details.offerings.top.title, 'Offerings (2)');
     assert.strictEqual(page.details.offerings.dateBlocks.length, 2);
   });
 
@@ -326,14 +327,14 @@ module('Acceptance | Session - Offerings', function (hooks) {
     await page.visit({ courseId: 1, sessionId: 1 });
     await page.details.offerings.dateBlocks[0].timeBlockOfferings.offerings[0].remove();
     await page.details.offerings.dateBlocks[0].timeBlockOfferings.offerings[0].cancelRemoval();
-    assert.strictEqual(page.details.offerings.header.title, 'Offerings (3)');
+    assert.strictEqual(page.details.offerings.top.title, 'Offerings (3)');
     assert.strictEqual(page.details.offerings.dateBlocks.length, 3);
   });
 
   test('users can create a new offering single day', async function (assert) {
     this.user.update({ administeredSchools: [this.school] });
     await page.visit({ courseId: 1, sessionId: 1 });
-    await page.details.offerings.header.createNew();
+    await page.details.offerings.top.createNew();
     const { offeringForm: form } = page.details.offerings;
     await page.details.offerings.singleOffering();
     await form.startDate.datePicker.set(new Date(2011, 8, 11));
@@ -382,7 +383,7 @@ module('Acceptance | Session - Offerings', function (hooks) {
     this.user.update({ administeredSchools: [this.school] });
     const sep112011 = DateTime.fromObject({ year: 2011, month: 9, day: 11, hour: 2, minute: 15 });
     await page.visit({ courseId: 1, sessionId: 1 });
-    await page.details.offerings.header.createNew();
+    await page.details.offerings.top.createNew();
     const { offeringForm: form } = page.details.offerings;
     await page.details.offerings.singleOffering();
     await form.startDate.datePicker.set(sep112011.toJSDate());
@@ -449,7 +450,7 @@ module('Acceptance | Session - Offerings', function (hooks) {
   test('users can create a new small group offering', async function (assert) {
     this.user.update({ administeredSchools: [this.school] });
     await page.visit({ courseId: 1, sessionId: 1 });
-    await page.details.offerings.header.createNew();
+    await page.details.offerings.top.createNew();
     const { offeringForm: form } = page.details.offerings;
     await page.details.offerings.smallGroup();
     await form.startDate.datePicker.set(new Date(2011, 8, 11));
@@ -514,7 +515,9 @@ module('Acceptance | Session - Offerings', function (hooks) {
   test('users can edit existing offerings', async function (assert) {
     this.user.update({ administeredSchools: [this.school] });
     await page.visit({ courseId: 1, sessionId: 1 });
+    assert.ok(page.details.offerings.header.isVisible);
     await page.details.offerings.dateBlocks[0].timeBlockOfferings.offerings[0].edit();
+    assert.notOk(page.details.offerings.header.isVisible);
 
     const { offeringForm: form } =
       page.details.offerings.dateBlocks[0].timeBlockOfferings.offerings[0];
@@ -533,6 +536,7 @@ module('Acceptance | Session - Offerings', function (hooks) {
     await form.instructorSelectionManager.selectedInstructorGroups.instructorGroups[0].remove();
 
     await form.save();
+    assert.ok(page.details.offerings.header.isVisible);
 
     const block = page.details.offerings.dateBlocks[0];
 
@@ -559,11 +563,91 @@ module('Acceptance | Session - Offerings', function (hooks) {
     assert.strictEqual(offering.url, 'https://example.org/');
   });
 
+  test('user can cancel offering edits', async function (assert) {
+    this.user.update({ administeredSchools: [this.school] });
+    await page.visit({ courseId: 1, sessionId: 1 });
+
+    assert.ok(page.details.offerings.header.isVisible);
+    let block = page.details.offerings.dateBlocks[0];
+    assert.ok(block.hasStartTime);
+    assert.ok(block.hasEndTime);
+    assert.notOk(block.hasMultiDay);
+    assert.strictEqual(block.dayOfWeek, 'Friday');
+    assert.strictEqual(block.dayOfMonth, 'December 11');
+    assert.strictEqual(block.startTime, 'Starts: 09:00 AM');
+    assert.strictEqual(block.endTime, 'Ends: 10:00 AM');
+    assert.strictEqual(block.timeBlockOfferings.offerings.length, 1);
+
+    let offering = block.timeBlockOfferings.offerings[0];
+
+    assert.strictEqual(offering.learnerGroups.length, 2);
+    assert.strictEqual(offering.learnerGroups[0].title, 'learner group 0');
+    assert.strictEqual(offering.instructors.length, 8);
+    assert.strictEqual(offering.instructors[0].userNameInfo.fullName, '1 guy M. Mc1son');
+    assert.strictEqual(offering.instructors[1].userNameInfo.fullName, '2 guy M. Mc2son');
+    assert.strictEqual(offering.instructors[2].userNameInfo.fullName, '3 guy M. Mc3son');
+    assert.strictEqual(offering.instructors[3].userNameInfo.fullName, '4 guy M. Mc4son');
+    assert.strictEqual(offering.instructors[4].userNameInfo.fullName, '5 guy M. Mc5son');
+    assert.strictEqual(offering.instructors[5].userNameInfo.fullName, '6 guy M. Mc6son');
+    assert.strictEqual(offering.instructors[6].userNameInfo.fullName, '7 guy M. Mc7son');
+    assert.strictEqual(offering.instructors[7].userNameInfo.fullName, '8 guy M. Mc8son');
+    assert.strictEqual(offering.location, 'room 0');
+    assert.strictEqual(offering.url, 'https://ucsf.edu/');
+    await page.details.offerings.dateBlocks[0].timeBlockOfferings.offerings[0].edit();
+    assert.notOk(page.details.offerings.header.isVisible);
+
+    const { offeringForm: form } =
+      page.details.offerings.dateBlocks[0].timeBlockOfferings.offerings[0];
+
+    await form.startDate.datePicker.set(new Date(2011, 9, 5));
+    await form.startTime.timePicker.hour.select('11');
+    await form.startTime.timePicker.minute.select('45');
+    await form.startTime.timePicker.ampm.select('AM');
+    await form.duration.hours.set(6);
+    await form.duration.minutes.set(10);
+    await form.location.set('Rm. 111');
+    await form.url.set('https://example.org');
+
+    await form.learnerManager.learnergroupSelectionManager.selectedLearnerGroups.detailLearnergroupsList.trees[0].items[0].remove();
+    await form.instructorSelectionManager.selectedInstructors.instructors[0].remove();
+    await form.instructorSelectionManager.selectedInstructorGroups.instructorGroups[0].remove();
+
+    await form.close();
+    assert.ok(page.details.offerings.header.isVisible);
+
+    block = page.details.offerings.dateBlocks[0];
+
+    assert.ok(block.hasStartTime);
+    assert.ok(block.hasEndTime);
+    assert.notOk(block.hasMultiDay);
+    assert.strictEqual(block.dayOfWeek, 'Friday');
+    assert.strictEqual(block.dayOfMonth, 'December 11');
+    assert.strictEqual(block.startTime, 'Starts: 09:00 AM');
+    assert.strictEqual(block.endTime, 'Ends: 10:00 AM');
+    assert.strictEqual(block.timeBlockOfferings.offerings.length, 1);
+
+    offering = block.timeBlockOfferings.offerings[0];
+
+    assert.strictEqual(offering.learnerGroups.length, 2);
+    assert.strictEqual(offering.learnerGroups[0].title, 'learner group 0');
+    assert.strictEqual(offering.instructors.length, 8);
+    assert.strictEqual(offering.instructors[0].userNameInfo.fullName, '1 guy M. Mc1son');
+    assert.strictEqual(offering.instructors[1].userNameInfo.fullName, '2 guy M. Mc2son');
+    assert.strictEqual(offering.instructors[2].userNameInfo.fullName, '3 guy M. Mc3son');
+    assert.strictEqual(offering.instructors[3].userNameInfo.fullName, '4 guy M. Mc4son');
+    assert.strictEqual(offering.instructors[4].userNameInfo.fullName, '5 guy M. Mc5son');
+    assert.strictEqual(offering.instructors[5].userNameInfo.fullName, '6 guy M. Mc6son');
+    assert.strictEqual(offering.instructors[6].userNameInfo.fullName, '7 guy M. Mc7son');
+    assert.strictEqual(offering.instructors[7].userNameInfo.fullName, '8 guy M. Mc8son');
+    assert.strictEqual(offering.location, 'room 0');
+    assert.strictEqual(offering.url, 'https://ucsf.edu/');
+  });
+
   test('users can create recurring small groups', async function (assert) {
     this.user.update({ administeredSchools: [this.school] });
 
     await page.visit({ courseId: 1, sessionId: 1 });
-    await page.details.offerings.header.createNew();
+    await page.details.offerings.top.createNew();
     const { offeringForm: form } = page.details.offerings;
     await page.details.offerings.smallGroup();
     await form.startDate.datePicker.set(new Date(2015, 4, 22));
@@ -637,7 +721,7 @@ module('Acceptance | Session - Offerings', function (hooks) {
     this.user.update({ administeredSchools: [this.school] });
 
     await page.visit({ courseId: 1, sessionId: 1 });
-    await page.details.offerings.header.createNew();
+    await page.details.offerings.top.createNew();
     const { offeringForm: form } = page.details.offerings;
     await page.details.offerings.singleOffering();
     await form.startDate.datePicker.set(new Date(2015, 4, 22));

@@ -30,10 +30,13 @@ export default create({
   instructorsAreVisible: isVisible('[data-test-detail-instructors]'),
   offerings: {
     scope: '[data-test-session-offerings]',
-    header: {
+    top: {
       scope: '.offering-section-top',
       title: text('.title'),
       createNew: clickable('.actions button'),
+    },
+    header: {
+      scope: '[data-test-session-offerings-header]',
     },
     dateBlocks: collection('[data-test-session-offerings-list] .offering-block', {
       dayOfWeek: text('.offering-block-date-dayofweek'),
