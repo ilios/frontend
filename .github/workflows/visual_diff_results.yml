@@ -1,3 +1,5 @@
+name: Visual Diff Results
+
 on:
   workflow_run:
     workflows: [Visual Diff]
@@ -8,18 +10,24 @@ jobs:
   # Source: https://docs.github.com/en/enterprise-cloud@latest/actions/reference/workflows-and-actions/events-that-trigger-workflows?utm_source=chatgpt.com#using-data-from-the-triggering-workflow
   comment:
     runs-on: ubuntu-latest
+    permissions:
+      actions: read
+      pull-requests: write
     steps:
       - name: "Download artifact"
         uses: actions/github-script@v8
         with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
+            const fs = require('fs');
+            const path = require('path');
             let allArtifacts = await github.rest.actions.listWorkflowRunArtifacts({
                owner: context.repo.owner,
                repo: context.repo.repo,
                run_id: context.payload.workflow_run.id,
             });
             let matchArtifact = allArtifacts.data.artifacts.find((artifact) => {
-              return artifact.name.startsWith("visual-diff-")
+              return artifact.name === 'results';
             });
             let download = await github.rest.actions.downloadArtifact({
                owner: context.repo.owner,
@@ -27,14 +35,11 @@ jobs:
                artifact_id: matchArtifact.id,
                archive_format: 'zip',
             });
-            import fs from 'node:fs';
-            import path from 'node:path';
             const temp = '${{ runner.temp }}/artifacts';
             if (!fs.existsSync(temp)){
               fs.mkdirSync(temp);
             }
             fs.writeFileSync(path.join(temp, 'results.zip'), Buffer.from(download.data));
-
       - name: "Unzip artifact"
         run: unzip "${{ runner.temp }}/artifacts/results.zip" -d "${{ runner.temp }}/artifacts"
       - name: "Comment on PR"
@@ -42,18 +47,20 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            import fs from 'node:fs';
-            import path from 'node:path';
+            const fs = require('fs');
+            const path = require('path');
             const temp = '${{ runner.temp }}/artifacts';
-            const issue_number = Number(fs.readFileSync(path.join(temp, 'pr_number')));
             const results = fs.readFileSync(path.join(temp, 'visual-diff.txt'));
-            const body = `# Visual Diff Results
+            const issue_number = Number(fs.readFileSync(path.join(temp, 'pr_number')));
+            const url = fs.readFileSync(path.join(temp, 'artifact_url'));
+            const body = `### <span aria-hidden="true">🔍</span> Visual Diff Results
               ${results}
-              ${matchArtifact.url}
+
+              Download the [results](${url}).
             `
             await github.rest.issues.createComment({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              issue_number: issue_number,
+              issue_number,
               body
             });

@@ -112,10 +112,19 @@ jobs:
           mkdir -p ./results
           echo ${{ github.event.pull_request.number }} > ./results/pr_number
       - name: Create Visual Diff
-        run: npx visual-differ baseline-frontend candidate-frontend results/visual-diff-${{ github.event.pull_request.number }} > results/visual-diff.txt
-      - run: cat results/visual-diff.txt
+        run: npx visual-differ baseline-frontend candidate-frontend visual-diff-${{ github.event.pull_request.number }} > results/visual-diff.txt
+      - if: always()
+        run: cat results/visual-diff.txt
       - uses: actions/upload-artifact@v6
+        id: upload-output
         if: always()
         with:
           name: visual-diff-${{ github.event.pull_request.number }}
+          path: visual-diff-${{ github.event.pull_request.number }}
+      - if: always()
+        run: echo ${{ steps.upload-output.outputs.artifact-url }} > ./results/artifact_url
+      - uses: actions/upload-artifact@v6
+        if: always()
+        with:
+          name: results
           path: results
