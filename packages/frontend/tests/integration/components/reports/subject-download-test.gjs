@@ -29,7 +29,7 @@ module('Integration | Component | reports/subject-download', function (hooks) {
     });
     const reportModel = await this.owner.lookup('service:store').findRecord('report', report.id);
     this.set('report', reportModel);
-    this.set('message', this.intl.t('general.reportResultsExceedMax'));
+    this.set('message', this.intl.t('general.reportResultsExceedMax', { resultsLengthMax: 200 }));
     await render(
       <template>
         <SubjectDownload
@@ -55,7 +55,7 @@ module('Integration | Component | reports/subject-download', function (hooks) {
     });
     const reportModel = await this.owner.lookup('service:store').findRecord('report', report.id);
     this.set('report', reportModel);
-    this.set('message', this.intl.t('general.reportResultsExceedMax'));
+    this.set('message', this.intl.t('general.reportResultsExceedMax', { resultsLengthMax: 200 }));
     await render(
       <template>
         <SubjectDownload
@@ -68,7 +68,10 @@ module('Integration | Component | reports/subject-download', function (hooks) {
     );
 
     assert.ok(component.message.displays);
-    assert.strictEqual(component.message.text, this.intl.t('general.reportResultsExceedMax'));
+    assert.strictEqual(
+      component.message.text,
+      this.intl.t('general.reportResultsExceedMax', { resultsLengthMax: 200 }),
+    );
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
   });
