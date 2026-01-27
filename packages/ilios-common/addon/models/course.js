@@ -263,7 +263,7 @@ export default class Course extends Model {
     if (!this._courseObjectivesData.isResolved) {
       return null;
     }
-    return this._courseObjectivesData.value.slice().sort(sortableByPosition);
+    return this._courseObjectivesData.value.toSorted(sortableByPosition);
   }
 
   get hasMultipleCohorts() {

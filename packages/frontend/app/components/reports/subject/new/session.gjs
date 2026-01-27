@@ -44,7 +44,7 @@ export default class ReportsSubjectNewSessionComponent extends Component {
   }
 
   get sortedSessions() {
-    return this.filteredSessions.slice().sort((a, b) => {
+    return this.filteredSessions.toSorted((a, b) => {
       const courseA = this.store.peekRecord('course', a.belongsTo('course').id());
       const courseB = this.store.peekRecord('course', b.belongsTo('course').id());
 

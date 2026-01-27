@@ -54,7 +54,7 @@ export default class ProgramYearObjectiveListComponent extends Component {
 
   get sortedProgramYearObjectives() {
     return this.programYearObjectivesData.isResolved
-      ? this.programYearObjectivesData.value.slice().sort(sortableByPosition)
+      ? this.programYearObjectivesData.value.toSorted(sortableByPosition)
       : [];
   }
 
