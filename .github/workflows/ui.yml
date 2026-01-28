@@ -101,8 +101,6 @@ jobs:
           - lti-course-manager
           - lti-dashboard
     steps:
-      - name: Safari Version
-        run: /usr/libexec/PlistBuddy -c "print :CFBundleShortVersionString" /Applications/Safari.app/Contents/Info.plist
       - uses: actions/checkout@v6
       - uses: pnpm/action-setup@v4
       - uses: actions/setup-node@v6
@@ -110,8 +108,16 @@ jobs:
           node-version: 22
           cache: pnpm
       - run: pnpm install
+      - name: Safari Version
+        run: /usr/libexec/PlistBuddy -c "print :CFBundleShortVersionString" /Applications/Safari.app/Contents/Info.plist
       - name: test
-        run: pnpm --filter ${{matrix.workspace}} exec ember test --launch=SafariApplescript
+        run: pnpm --filter ${{matrix.workspace}} exec ember exam --parallel=2 --load-balance --write-execution-file --launch=SafariApplescript
+      - uses: actions/upload-artifact@v6
+        if: failure()
+        with:
+          name: replay-${{matrix.workspace}}-safari.json
+          path: ./packages/${{matrix.workspace}}/test-execution-*.json
+          retention-days: 7
 
   percy:
     name: Test and Capture Screenshots
