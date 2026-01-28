@@ -30,10 +30,7 @@ export default class LocalStorageService extends Service {
 
   set(item, value) {
     if (isTesting()) {
-      localStorage.setItem(
-        config.APP.LOCAL_STORAGE_KEY,
-        config.APP.DEFAULTS.localStorage['locale'],
-      );
+      return;
     } else {
       const key = JSON.parse(localStorage.getItem(config.APP.LOCAL_STORAGE_KEY));
 
@@ -61,15 +58,13 @@ export default class LocalStorageService extends Service {
               }),
             );
           }
-
-          return null;
         }
       }
       // if the key doesn't exist at all, create default key
       else {
         const obj = {};
         obj[item] = value;
-        return localStorage.setItem(config.APP.LOCAL_STORAGE_KEY, JSON.stringify(obj));
+        localStorage.setItem(config.APP.LOCAL_STORAGE_KEY, JSON.stringify(obj));
       }
     }
   }
