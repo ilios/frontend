@@ -18,7 +18,7 @@
     @include cm.font-size("small");
     font-weight: 400;
     margin-left: 0.8rem;
-    padding: 0.25em;
+    padding: 0.25em 0.5em;
 
     &:hover,
     &:focus {
@@ -28,18 +28,6 @@
     @include cm.for-tablet-and-up {
       display: inline;
       margin-left: 0.5rem;
-    }
-
-    @include cm.for-phone-only {
-      /* stylelint-disable-next-line property-disallowed-list */
-      font-size: 2.75vw;
-      vertical-align: -0.25em;
-    }
-
-    @include cm.for-laptop-and-up {
-      /* stylelint-disable-next-line property-disallowed-list */
-      font-size: 14px;
-      padding: 3px;
     }
   }
 }
