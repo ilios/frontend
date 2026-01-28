@@ -309,21 +309,43 @@ module('Acceptance | Learner Group', function (hooks) {
       startDate: DateTime.fromObject({ hour: 8 }).toJSDate(),
       endDate: DateTime.fromObject({ hour: 9 }).toJSDate(),
       learnerGroups: [learnerGroup],
+      updatedAt: Date.now(),
     });
     this.server.create('offering');
 
     await page.visit({ learnerGroupId: 1 });
-    assert.ok(page.root.actions.buttons.toggle.firstButton.isChecked);
-    assert.notOk(page.root.calendar.isVisible);
-    assert.strictEqual(page.root.calendar.calendar.events.length, 0);
+    assert.ok(
+      page.root.actions.buttons.toggle.firstButton.isChecked,
+      'toggle first choice is selected',
+    );
+    assert.notOk(page.root.calendar.isVisible, 'calendar is not visible');
+    assert.strictEqual(
+      page.root.calendar.calendar.events.length,
+      0,
+      'calendar has no events loaded',
+    );
     await page.root.actions.buttons.toggle.secondButton.click();
-    assert.ok(page.root.actions.buttons.toggle.secondButton.isChecked);
-    assert.ok(page.root.calendar.isVisible);
-    assert.strictEqual(page.root.calendar.calendar.events.length, 1);
+    assert.ok(
+      page.root.actions.buttons.toggle.secondButton.isChecked,
+      'toggle button second choice is selected',
+    );
+    assert.ok(page.root.calendar.isVisible, 'calendar is visible');
+    assert.strictEqual(
+      page.root.calendar.calendar.events.length,
+      1,
+      'calendar has correct number of events loaded',
+    );
     await page.root.actions.buttons.toggle.firstButton.click();
-    assert.ok(page.root.actions.buttons.toggle.firstButton.isChecked);
-    assert.notOk(page.root.calendar.isVisible);
-    assert.strictEqual(page.root.calendar.calendar.events.length, 0);
+    assert.ok(
+      page.root.actions.buttons.toggle.firstButton.isChecked,
+      'toggle first choice is selected again',
+    );
+    assert.notOk(page.root.calendar.isVisible, 'calendar is no longer visible');
+    assert.strictEqual(
+      page.root.calendar.calendar.events.length,
+      0,
+      'calendar has no events loaded again',
+    );
   });
 
   test('learner group calendar with subgroup events', async function (assert) {
@@ -345,23 +367,37 @@ module('Acceptance | Learner Group', function (hooks) {
       startDate: DateTime.fromObject({ hour: 8 }).toJSDate(),
       endDate: DateTime.fromObject({ hour: 9 }).toJSDate(),
       learnerGroups: [learnerGroup],
+      updatedAt: Date.now(),
     });
     this.server.create('offering', {
       session,
       startDate: DateTime.fromObject({ hour: 8 }).toJSDate(),
       endDate: DateTime.fromObject({ hour: 9 }).toJSDate(),
       learnerGroups: [subgroup],
+      updatedAt: Date.now(),
     });
     this.server.create('offering');
 
     await page.visit({ learnerGroupId: 1 });
-    assert.strictEqual(page.root.calendar.calendar.events.length, 0);
-    assert.notOk(page.root.calendar.calendar.isVisible);
+    assert.strictEqual(
+      page.root.calendar.calendar.events.length,
+      0,
+      'calendar has no events loaded',
+    );
+    assert.notOk(page.root.calendar.calendar.isVisible, 'calendar is not visible');
     await page.root.actions.buttons.toggle.secondButton.click();
-    assert.strictEqual(page.root.calendar.calendar.events.length, 1);
-    assert.ok(page.root.calendar.calendar.isVisible);
+    assert.strictEqual(
+      page.root.calendar.calendar.events.length,
+      1,
+      'calendar has correct number of groups loaded, but no subgroups',
+    );
+    assert.ok(page.root.calendar.calendar.isVisible, 'calendar is visible');
     await page.root.calendar.showSubgroups.toggle.handle.click();
-    assert.strictEqual(page.root.calendar.calendar.events.length, 2);
+    assert.strictEqual(
+      page.root.calendar.calendar.events.length,
+      2,
+      'calendar has correct number of groups AND subgroups loaded',
+    );
   });
 
   test('Learners with missing parent group affiliation still appear in subgroup manager #3476', async function (assert) {
