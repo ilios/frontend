@@ -25,7 +25,6 @@ jobs:
           - frontend
           - test-app
         launcher:
-          - BS_OSX_Safari
           - BS_IOS_SAFARI
           - BS_CHROME_ANDROID
     steps:
