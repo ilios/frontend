@@ -52,8 +52,8 @@ importers:
         specifier: ~5.8.1
         version: 5.8.1(@babel/core@7.28.6)(@ember/test-waiters@4.1.1(@glint/template@1.7.3))(@glint/template@1.7.3)
       '@ember-intl/lint':
-        specifier: ^0.4.1
-        version: 0.4.1
+        specifier: ^0.5.0
+        version: 0.5.0
       '@ember-intl/v1-compat':
         specifier: ^1.0.3
         version: 1.0.3(@glint/template@1.7.3)(webpack@5.104.1)
@@ -560,8 +560,8 @@ importers:
         specifier: ~5.8.1
         version: 5.8.1(@babel/core@7.28.6)(@ember/test-waiters@4.1.1(@glint/template@1.7.3))(@glint/template@1.7.3)
       '@ember-intl/lint':
-        specifier: ^0.4.1
-        version: 0.4.1
+        specifier: ^0.5.0
+        version: 0.5.0
       '@ember/optional-features':
         specifier: ^2.2.0
         version: 2.3.0
@@ -710,8 +710,8 @@ importers:
         specifier: ~5.8.1
         version: 5.8.1(@babel/core@7.28.6)(@ember/test-waiters@4.1.1(@glint/template@1.7.3))(@glint/template@1.7.3)
       '@ember-intl/lint':
-        specifier: ^0.4.1
-        version: 0.4.1
+        specifier: ^0.5.0
+        version: 0.5.0
       '@ember-intl/v1-compat':
         specifier: ^1.0.3
         version: 1.0.3(@glint/template@1.7.3)(webpack@5.104.1)
@@ -950,8 +950,8 @@ importers:
         specifier: ~5.8.1
         version: 5.8.1(@babel/core@7.28.6)(@ember/test-waiters@4.1.1(@glint/template@1.7.3))(@glint/template@1.7.3)
       '@ember-intl/lint':
-        specifier: ^0.4.1
-        version: 0.4.1
+        specifier: ^0.5.0
+        version: 0.5.0
       '@ember-intl/v1-compat':
         specifier: ^1.0.3
         version: 1.0.3(@glint/template@1.7.3)(webpack@5.104.1)
@@ -1187,8 +1187,8 @@ importers:
         specifier: ~5.8.1
         version: 5.8.1(@babel/core@7.28.6)(@ember/test-waiters@4.1.1(@glint/template@1.7.3))(@glint/template@1.7.3)
       '@ember-intl/lint':
-        specifier: ^0.4.1
-        version: 0.4.1
+        specifier: ^0.5.0
+        version: 0.5.0
       '@ember-intl/v1-compat':
         specifier: ^1.0.3
         version: 1.0.3(@glint/template@1.7.3)(webpack@5.104.1)
@@ -2283,8 +2283,8 @@ packages:
       '@ember/test-waiters':
         optional: true
 
-  '@ember-intl/lint@0.4.1':
-    resolution: {integrity: sha512-gMb21+HQ2nOPxEbDNtss+4ra6/y8VBfe2g/quogNn1ZsF8HkGNCQdjlUGsmh9d+bVhKc5mL7Jb46pmwoknfqJw==}
+  '@ember-intl/lint@0.5.0':
+    resolution: {integrity: sha512-4qWfMg6audE3ywOYPley6pJ9pKAyVky9GsYnlqoYEvO9nuHUBGptcoqVGH39Rrn2zwbYoFM9QowZz9Z11qojYA==}
     engines: {node: 20.* || >= 22}
     hasBin: true
 
@@ -11922,7 +11922,7 @@ snapshots:
       - '@glint/template'
       - supports-color
 
-  '@ember-intl/lint@0.4.1':
+  '@ember-intl/lint@0.5.0':
     dependencies:
       '@codemod-utils/ast-javascript': 2.1.2
       '@codemod-utils/ast-template': 2.1.2
