@@ -12,6 +12,7 @@ import { fn } from '@ember/helper';
 import eq from 'ember-truth-helpers/helpers/eq';
 import focus from 'ilios-common/modifiers/focus';
 import { faGlobe, faCaretRight, faCaretDown } from '@fortawesome/free-solid-svg-icons';
+import { isTesting } from '@embroider/macros';
 
 export default class LocaleChooserComponent extends Component {
   @service intl;
@@ -59,7 +60,9 @@ export default class LocaleChooserComponent extends Component {
   changeLocale(id, event) {
     this.isOpen = false;
     this.intl.setLocale(id);
-    this.localStorage.set('locale', id);
+    if (!isTesting()) {
+      this.localStorage.set('locale', id);
+    }
     window.document.querySelector('html').setAttribute('lang', id);
     window.document
       .querySelector('meta[name="description"]')
