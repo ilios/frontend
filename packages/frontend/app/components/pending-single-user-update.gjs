@@ -94,7 +94,7 @@ export default class PendingSingleUserUpdateComponent extends Component {
                   {{on "click" (perform this.updateEmailAddress update)}}
                   data-test-update-email
                 >
-                  <FaIcon @icon={{faCircleArrowUp}} class="yes" @title={{t "general.update"}} />
+                  <FaIcon @icon={{faCircleArrowUp}} class="yes" />
                   {{t "general.pendingUserUpdates.updateIlios"}}
                 </button>
               {{/if}}
@@ -103,11 +103,11 @@ export default class PendingSingleUserUpdateComponent extends Component {
                 {{on "click" (perform this.excludeFromSync)}}
                 data-test-exclude-from-sync
               >
-                <FaIcon @icon={{faBan}} class="no" @title={{t "general.excludeFromSync"}} />
+                <FaIcon @icon={{faBan}} class="no" />
                 {{t "general.excludeFromSync"}}
               </button>
               <button type="button" {{on "click" (perform this.disableUser)}} data-test-disable>
-                <FaIcon @icon={{faXmark}} class="no" @title={{t "general.disableUser"}} />
+                <FaIcon @icon={{faXmark}} class="no" />
                 {{t "general.disableUser"}}
               </button>
             {{/if}}
