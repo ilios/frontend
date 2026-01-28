@@ -33,6 +33,8 @@
     "@fortawesome/fontawesome-svg-core": "6.7.2",
     "@fortawesome/free-brands-svg-icons": "6.7.2",
     "@fortawesome/free-solid-svg-icons": "6.7.2",
+    "@fontsource/nunito": "^5.2.7",
+    "@fontsource/nunito-sans": "^5.2.7",
     "@glimmer/component": "^2.0.0",
     "@glimmer/tracking": "^1.1.2",
     "@popperjs/core": ">= 2.1.0",
@@ -73,8 +75,6 @@
     "quill": "^2.0.3",
     "sanitize-html": "^2.17.0",
     "striptags": ">= 3.2.0",
-    "typeface-nunito": ">= 1.1.13",
-    "typeface-nunito-sans": ">= 1.1.13",
     "validator": ">= 13.12.0",
     "yup": "^1.4.0"
   },
@@ -98,8 +98,6 @@
     "query-string": ">= 9.1.0",
     "quill": "^2.0.3",
     "striptags": ">= 3.2.0",
-    "typeface-nunito": ">= 1.1.13",
-    "typeface-nunito-sans": ">= 1.1.13",
     "validator": ">= 13.12.0"
   },
   "devDependencies": {
