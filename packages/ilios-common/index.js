@@ -58,13 +58,16 @@ module.exports = {
     if (publicTree) {
       trees.push(publicTree);
     }
-    const nunitoDir = path.join(path.dirname(require.resolve('typeface-nunito')), 'files');
+    const nunitoDir = path.join(path.dirname(require.resolve('@fontsource/nunito')), 'files');
     const nunitoTree = new Funnel(nunitoDir, {
       destDir: 'assets/fonts/nunito',
     });
     trees.push(nunitoTree);
 
-    const nunitoSansDir = path.join(path.dirname(require.resolve('typeface-nunito-sans')), 'files');
+    const nunitoSansDir = path.join(
+      path.dirname(require.resolve('@fontsource/nunito-sans')),
+      'files',
+    );
     const nunitoSansTree = new Funnel(nunitoSansDir, {
       destDir: 'assets/fonts/nunito-sans',
     });
@@ -77,12 +80,12 @@ module.exports = {
     if (type === 'head' && env.environment !== 'test') {
       const rootUrl = env.rootUrl ? env.rootUrl : '';
       const fonts = [
-        'nunito/nunito-latin-200.woff2',
-        'nunito/nunito-latin-400.woff2',
-        'nunito/nunito-latin-400italic.woff2',
-        'nunito/nunito-latin-600.woff2',
-        'nunito-sans/nunito-sans-latin-400.woff2',
-        'nunito-sans/nunito-sans-latin-600.woff2',
+        'nunito/nunito-latin-200-normal.woff2',
+        'nunito/nunito-latin-400-normal.woff2',
+        'nunito/nunito-latin-400-italic.woff2',
+        'nunito/nunito-latin-600-normal.woff2',
+        'nunito-sans/nunito-sans-latin-400-normal.woff2',
+        'nunito-sans/nunito-sans-latin-600-normal.woff2',
       ];
       const links = fonts.map((font) => {
         return `<link rel="preload" href="${rootUrl}/assets/fonts/${font}" as="font" type="font/woff2" crossorigin="anonymous">`;
