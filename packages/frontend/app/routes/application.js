@@ -6,7 +6,6 @@ import { loadPolyfills } from 'ilios-common/utils/load-polyfills';
 import { launchWorker } from '../utils/launch-worker';
 import { formats } from 'ilios-common/app/ember-intl';
 import config from 'frontend/config/environment';
-import { isTesting } from '@embroider/macros';
 
 export default class AuthenticatedRoute extends Route {
   @service currentUser;
@@ -56,13 +55,11 @@ export default class AuthenticatedRoute extends Route {
 
   // check if a saved, valid locale exists
   initialLocale() {
-    if (!isTesting()) {
-      const savedLocale = this.localStorage.get('locale');
+    const savedLocale = this.localStorage.get('locale');
 
-      if (savedLocale !== undefined) {
-        if (config.APP.SUPPORTED_LOCALES.includes(savedLocale)) {
-          return savedLocale;
-        }
+    if (savedLocale !== undefined) {
+      if (config.APP.SUPPORTED_LOCALES.includes(savedLocale)) {
+        return savedLocale;
       }
     }
     return config.APP.DEFAULTS.localStorage['locale'];
