@@ -7,14 +7,16 @@ on:
       - completed
 
 jobs:
-  # Source: https://docs.github.com/en/enterprise-cloud@latest/actions/reference/workflows-and-actions/events-that-trigger-workflows?utm_source=chatgpt.com#using-data-from-the-triggering-workflow
   comment:
+    name: Comment on Pull Request
     runs-on: ubuntu-latest
     permissions:
       actions: read
       pull-requests: write
+    env:
+      MARKER: "<!-- visual-diff-results -->"
     steps:
-      - name: "Download artifact"
+      - name: Download artifact
         uses: actions/github-script@v8
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
@@ -40,27 +42,64 @@ jobs:
               fs.mkdirSync(temp);
             }
             fs.writeFileSync(path.join(temp, 'results.zip'), Buffer.from(download.data));
-      - name: "Unzip artifact"
+      - name: Unzip artifact
         run: unzip "${{ runner.temp }}/artifacts/results.zip" -d "${{ runner.temp }}/artifacts"
-      - name: "Comment on PR"
+      - name: Extract Details
         uses: actions/github-script@v8
+        id: data
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const fs = require('fs');
             const path = require('path');
             const temp = '${{ runner.temp }}/artifacts';
-            const results = fs.readFileSync(path.join(temp, 'visual-diff.txt'));
+            const results = fs.readFileSync(path.join(temp, 'visual-diff.txt'), "utf8");
             const issue_number = Number(fs.readFileSync(path.join(temp, 'pr_number')));
-            const url = fs.readFileSync(path.join(temp, 'artifact_url'));
-            const body = `### <span aria-hidden="true">🔍</span> Visual Diff Results
-              ${results}
+            const url = fs.readFileSync(path.join(temp, 'artifact_url'), "utf8");
 
-              Download the [results](${url}).
-            `
-            await github.rest.issues.createComment({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              issue_number,
-              body
-            });
+            return { results, issue_number, url };
+      - name: Decode Output
+        id: decoded
+        run: |
+          JSON='${{ steps.data.outputs.result }}'
+
+          ISSUE_NUMBER="$(echo "$JSON" | jq -r '.issue_number')"
+          URL="$(echo "$JSON" | jq -r '.url')"
+          RESULTS="$(echo "$JSON" | jq -r '.results')"
+
+          {
+            echo "issue_number=$ISSUE_NUMBER"
+            echo "url=$URL"
+            echo "results<<EOF"
+            echo "$RESULTS"
+            echo "EOF"
+          } >> "$GITHUB_OUTPUT"
+      - name: Show Output
+        run: |
+          echo "issue_number:"
+          echo "${{ steps.decoded.outputs.issue_number }}"
+
+          echo "url:"
+          echo "${{ steps.decoded.outputs.url }}"
+
+          echo "results:"
+          echo "${{ steps.decoded.outputs.results }}"
+      - name: Find Previous Comment
+        uses: peter-evans/find-comment@v4
+        id: find
+        with:
+          issue-number: ${{ steps.decoded.outputs.issue_number }}
+          body-includes: ${{ env.MARKER }}
+      - name: Create or Update Comment
+        uses: peter-evans/create-or-update-comment@v5
+        with:
+          comment-id: ${{ steps.find.outputs.comment-id }}
+          issue-number: ${{ steps.decoded.outputs.issue_number }}
+          body: |
+            ### Visual Diff Results
+
+            ${{ steps.decoded.outputs.results }}
+
+            Download the [results](${{ steps.decoded.outputs.url }}).
+
+            ${{ env.MARKER }}
+          edit-mode: replace
