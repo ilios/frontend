@@ -29,4 +29,18 @@ module.exports = {
       ci: ['--headless', '--window-size=1440,900'].filter(Boolean),
     },
   },
+  launchers: {
+    SafariApplescript: {
+      protocol: 'browser',
+      exe: 'osascript',
+      args: [
+        '-e',
+        `tell application "Safari"
+          activate
+          open location "<url>"
+         end tell
+         delay 3000`,
+      ],
+    },
+  },
 };

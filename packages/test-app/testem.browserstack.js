@@ -2,21 +2,6 @@ const FailureOnlyPerBrowserReporter = require('testem-failure-only-reporter/grou
 const defaultArgs = ['-t', '1800', '--browserstack.video', 'false', '--u', '<url>'];
 
 const BrowserStackLaunchers = {
-  BS_OSX_Safari: {
-    exe: 'node_modules/.bin/browserstack-launch',
-    args: [
-      '--os',
-      'OS X',
-      '--osv',
-      'Sequoia',
-      '--b',
-      'safari',
-      '--bv',
-      'latest', // Will always be 18.x on Sequoia, https://www.browserstack.com/docs/automate/capabilities
-      ...defaultArgs,
-    ],
-    protocol: 'browser',
-  },
   BS_IOS_SAFARI: {
     exe: 'node_modules/.bin/browserstack-launch',
     args: [
