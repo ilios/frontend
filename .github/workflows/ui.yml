@@ -89,7 +89,7 @@ jobs:
 
   safari-test:
     name: Safari Tests
-    runs-on: macos-14 #Sequoia, hopefully safari 18
+    runs-on: macos-latest
     timeout-minutes: 20
     if: contains(github.event.pull_request.labels.*.name, 'run ui tests')
     strategy:
@@ -111,7 +111,7 @@ jobs:
           cache: pnpm
       - run: pnpm install
       - name: test
-        run: pnpm --filter ${{matrix.workspace}} exec ember test --launch=Safari
+        run: pnpm --filter ${{matrix.workspace}} exec ember test --launch=SafariApplescript
 
   percy:
     name: Test and Capture Screenshots
