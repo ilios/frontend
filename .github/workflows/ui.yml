@@ -19,7 +19,7 @@ jobs:
     if: contains(github.event.pull_request.labels.*.name, 'run ui tests')
     strategy:
       fail-fast: false
-      max-parallel: 1
+      max-parallel: 3
       matrix:
         workspace:
           - frontend
