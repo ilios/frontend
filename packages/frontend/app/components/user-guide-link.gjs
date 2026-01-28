@@ -9,7 +9,7 @@ import { faQuestion } from '@fortawesome/free-solid-svg-icons';
       title={{t "general.iliosUserGuide"}}
       rel="noopener noreferrer"
     >
-      <FaIcon @icon={{faQuestion}} data-test-user-guide-link-icon />
+      <FaIcon @icon={{faQuestion}} @transform="grow-3" data-test-user-guide-link-icon />
     </a>
   </div>
 </template>
