@@ -16,8 +16,9 @@ import perform from 'ember-concurrency/helpers/perform';
 import YupValidationMessage from 'ilios-common/components/yup-validation-message';
 import LoadingSpinner from 'ilios-common/components/loading-spinner';
 import { LinkTo } from '@ember/routing';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import sortBy from 'ilios-common/helpers/sort-by';
+import { faSquareUpRight } from '@fortawesome/free-solid-svg-icons';
 
 export default class SchoolListComponent extends Component {
   @service currentUser;
@@ -171,7 +172,7 @@ export default class SchoolListComponent extends Component {
           {{#if this.newSchool}}
             <div class="savedschool" data-test-new-school>
               <LinkTo @route="school" @model={{this.newSchool}} data-test-link-to-new-school>
-                <FaIcon @icon="square-up-right" />
+                <FaIcon @icon={{faSquareUpRight}} />
                 {{this.newSchool.title}}
               </LinkTo>
               {{t "general.savedSuccessfully"}}

@@ -17,7 +17,7 @@ import t from 'ember-intl/helpers/t';
 import and from 'ember-truth-helpers/helpers/and';
 import not from 'ember-truth-helpers/helpers/not';
 import { on } from '@ember/modifier';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import SortableTh from 'ilios-common/components/sortable-th';
 import eq from 'ember-truth-helpers/helpers/eq';
 import { fn, array } from '@ember/helper';
@@ -26,6 +26,7 @@ import { LinkTo } from '@ember/routing';
 import notEq from 'ember-truth-helpers/helpers/not-eq';
 import sub_ from 'ember-math-helpers/helpers/sub';
 import LoadingSpinner from 'ilios-common/components/loading-spinner';
+import { faDownload } from '@fortawesome/free-solid-svg-icons';
 
 export default class CourseVisualizeSessionTypesGraph extends Component {
   @service router;
@@ -234,7 +235,7 @@ export default class CourseVisualizeSessionTypesGraph extends Component {
                 {{on "click" (perform this.downloadData)}}
                 data-test-download-data
               >
-                <FaIcon @icon="download" />
+                <FaIcon @icon={{faDownload}} />
                 {{t "general.download"}}
               </button>
             </div>

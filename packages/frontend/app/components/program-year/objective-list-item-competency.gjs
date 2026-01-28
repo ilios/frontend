@@ -1,6 +1,7 @@
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import { faArrowRotateLeft, faCheck, faSpinner } from '@fortawesome/free-solid-svg-icons';
 <template>
   <div
     class="program-year-objective-list-item-competency grid-item"
@@ -16,9 +17,9 @@ import FaIcon from 'ilios-common/components/fa-icon';
         data-test-save
       >
         {{#if @isSaving}}
-          <FaIcon @icon="spinner" @spin={{true}} />
+          <FaIcon @icon={{faSpinner}} @spin={{true}} />
         {{else}}
-          <FaIcon @icon="check" />
+          <FaIcon @icon={{faCheck}} />
         {{/if}}
       </button>
       <button
@@ -28,7 +29,7 @@ import FaIcon from 'ilios-common/components/fa-icon';
         aria-label={{t "general.cancel"}}
         data-test-cancel
       >
-        <FaIcon @icon="arrow-rotate-left" />
+        <FaIcon @icon={{faArrowRotateLeft}} />
       </button>
     {{else}}
       {{#if @objective.competency}}

@@ -1,7 +1,7 @@
 import pageTitle from 'ember-page-title/helpers/page-title';
 import t from 'ember-intl/helpers/t';
 import BackToAdminDashboard from 'frontend/components/back-to-admin-dashboard';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { on } from '@ember/modifier';
 import pick from 'ilios-common/helpers/pick';
 import set from 'ember-set-helper/helpers/set';
@@ -13,13 +13,19 @@ import { concat } from '@ember/helper';
 import includes from 'ilios-common/helpers/includes';
 import LoadingSpinner from 'ilios-common/components/loading-spinner';
 import perform from 'ember-concurrency/helpers/perform';
+import {
+  faBan,
+  faBuildingColumns,
+  faCircleArrowUp,
+  faXmark,
+} from '@fortawesome/free-solid-svg-icons';
 <template>
   {{pageTitle (t "general.admin") " | " (t "general.pendingUpdatesSummaryTitle")}}
   <BackToAdminDashboard />
   <section class="pending-user-updates main-section">
     <div class="filters">
       <div class="schoolsfilter" data-test-school-filter>
-        <FaIcon @icon="building-columns" @fixedWidth={{true}} />
+        <FaIcon @icon={{faBuildingColumns}} @fixedWidth={{true}} />
         {{#if @controller.hasMoreThanOneSchool}}
           <select
             aria-label={{t "general.filterBySchool"}}
@@ -90,7 +96,11 @@ import perform from 'ember-concurrency/helpers/perform';
                         {{on "click" (perform @controller.updateEmailAddress update)}}
                         data-test-update-email
                       >
-                        <FaIcon @icon="circle-arrow-up" class="yes" @title={{t "general.update"}} />
+                        <FaIcon
+                          @icon={{faCircleArrowUp}}
+                          class="yes"
+                          @title={{t "general.update"}}
+                        />
                         {{t "general.pendingUserUpdates.updateIlios"}}
                       </button>
                       <br />
@@ -100,7 +110,7 @@ import perform from 'ember-concurrency/helpers/perform';
                       {{on "click" (perform @controller.excludeFromSync update)}}
                       data-test-exclude-from-sync
                     >
-                      <FaIcon @icon="ban" class="no" @title={{t "general.excludeFromSync"}} />
+                      <FaIcon @icon={{faBan}} class="no" @title={{t "general.excludeFromSync"}} />
                       {{t "general.excludeFromSync"}}
                     </button>
                     <br />
@@ -109,7 +119,7 @@ import perform from 'ember-concurrency/helpers/perform';
                       {{on "click" (perform @controller.disableUser update)}}
                       data-test-disable-user
                     >
-                      <FaIcon @icon="xmark" class="no" @title={{t "general.disableUser"}} />
+                      <FaIcon @icon={{faXmark}} class="no" @title={{t "general.disableUser"}} />
                       {{t "general.disableUser"}}
                     </button>
                   {{/if}}

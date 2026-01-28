@@ -20,13 +20,14 @@ import HtmlEditor from 'ilios-common/components/html-editor';
 import UserNameInfo from 'ilios-common/components/user-name-info';
 import CopyButton from 'ilios-common/components/copy-button';
 import perform from 'ember-concurrency/helpers/perform';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import formatDate from 'ember-intl/helpers/format-date';
 import TimedReleaseSchedule from 'ilios-common/components/timed-release-schedule';
 import DatePicker from 'ilios-common/components/date-picker';
 import TimePicker from 'ilios-common/components/time-picker';
 import MeshManager from 'ilios-common/components/mesh-manager';
 import LoadingSpinner from 'ilios-common/components/loading-spinner';
+import { faCopy, faDownload } from '@fortawesome/free-solid-svg-icons';
 
 export default class LearningMaterialManagerComponent extends Component {
   @service store;
@@ -442,7 +443,7 @@ export default class LearningMaterialManagerComponent extends Component {
                 {{#if (eq this.mimetype "application/pdf")}}
                   <a href="{{this.absoluteFileUri}}?inline">{{this.filename}}</a>
                   <a href={{this.absoluteFileUri}} target="_blank" rel="noopener noreferrer">
-                    <FaIcon @icon="download" @title={{t "general.download"}} />
+                    <FaIcon @icon={{faDownload}} @title={{t "general.download"}} />
                   </a>
                 {{else}}
                   <a href={{this.absoluteFileUri}} target="_blank" rel="noopener noreferrer">
@@ -452,8 +453,9 @@ export default class LearningMaterialManagerComponent extends Component {
                 <CopyButton
                   @getClipboardText={{this.getLearningMaterialAbsoluteFileUri}}
                   @success={{perform this.textCopied}}
+                  title={{t "general.copyLink"}}
                 >
-                  <FaIcon @icon="copy" @title={{t "general.copyLink"}} />
+                  <FaIcon @icon={{faCopy}} />
                 </CopyButton>
               </span>
             </div>
@@ -468,8 +470,9 @@ export default class LearningMaterialManagerComponent extends Component {
                 <CopyButton
                   @getClipboardText={{this.getLearningMaterialLink}}
                   @success={{perform this.textCopied}}
+                  title={{t "general.copyLink"}}
                 >
-                  <FaIcon @icon="copy" @title={{t "general.copyLink"}} />
+                  <FaIcon @icon={{faCopy}} />
                 </CopyButton>
               </span>
             </div>

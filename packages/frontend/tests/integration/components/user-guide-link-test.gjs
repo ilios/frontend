@@ -16,12 +16,12 @@ module('Integration | Component | user-guide-link', function (hooks) {
 
     assert.ok(component);
     assert.ok(component.icon);
-    assert.strictEqual(component.icon.title, this.intl.t('general.iliosUserGuide'));
+    assert.strictEqual(component.title, this.intl.t('general.iliosUserGuide'));
 
     await setLocale('es');
-    assert.strictEqual(component.icon.title, this.intl.t('general.iliosUserGuide'));
+    assert.strictEqual(component.title, this.intl.t('general.iliosUserGuide'));
 
     await setLocale('fr');
-    assert.strictEqual(component.icon.title, this.intl.t('general.iliosUserGuide'));
+    assert.strictEqual(component.title, this.intl.t('general.iliosUserGuide'));
   });
 });

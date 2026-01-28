@@ -1,7 +1,8 @@
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import sortBy from 'ilios-common/helpers/sort-by';
+import { faArrowRotateLeft, faCheck, faSpinner } from '@fortawesome/free-solid-svg-icons';
 <template>
   <div
     class="session-objective-list-item-descriptors grid-item"
@@ -17,9 +18,9 @@ import sortBy from 'ilios-common/helpers/sort-by';
         data-test-save
       >
         {{#if @isSaving}}
-          <FaIcon @icon="spinner" @spin={{true}} />
+          <FaIcon @icon={{faSpinner}} @spin={{true}} />
         {{else}}
-          <FaIcon @icon="check" />
+          <FaIcon @icon={{faCheck}} />
         {{/if}}
       </button>
       <button
@@ -29,7 +30,7 @@ import sortBy from 'ilios-common/helpers/sort-by';
         aria-label={{t "general.cancel"}}
         data-test-cancel
       >
-        <FaIcon @icon="arrow-rotate-left" />
+        <FaIcon @icon={{faArrowRotateLeft}} />
       </button>
     {{else}}
       <ul class="mesh-descriptor-list">

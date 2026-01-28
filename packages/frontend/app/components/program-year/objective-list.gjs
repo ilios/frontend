@@ -14,11 +14,17 @@ import gt from 'ember-truth-helpers/helpers/gt';
 import { on } from '@ember/modifier';
 import t from 'ember-intl/helpers/t';
 import perform from 'ember-concurrency/helpers/perform';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import isArray from 'ember-truth-helpers/helpers/is-array';
 import ObjectiveListItem from 'frontend/components/program-year/objective-list-item';
 import ObjectiveListLoading from 'frontend/components/program-year/objective-list-loading';
 import LoadingSpinner from 'ilios-common/components/loading-spinner';
+import {
+  faCaretDown,
+  faCaretRight,
+  faSpinner,
+  faDownload,
+} from '@fortawesome/free-solid-svg-icons';
 
 export default class ProgramYearObjectiveListComponent extends Component {
   @service iliosConfig;
@@ -132,7 +138,7 @@ export default class ProgramYearObjectiveListComponent extends Component {
 
         <button type="button" class="download" {{on "click" (perform this.downloadReport)}}>
           <FaIcon
-            @icon={{if this.downloadReport.isRunning "spinner" "download"}}
+            @icon={{if this.downloadReport.isRunning faSpinner faDownload}}
             @spin={{this.downloadReport.isRunning}}
           />
           {{t "general.downloadCompetencyMap"}}
@@ -150,9 +156,9 @@ export default class ProgramYearObjectiveListComponent extends Component {
               {{#if this.expandAll.isRunning}}
                 <LoadingSpinner />
               {{else if @allObjectivesExpanded}}
-                <FaIcon @icon="caret-down" class="clickable" />
+                <FaIcon @icon={{faCaretDown}} class="clickable" />
               {{else}}
-                <FaIcon @icon="caret-right" class="clickable" />
+                <FaIcon @icon={{faCaretRight}} class="clickable" />
               {{/if}}
             </button>
           </span>

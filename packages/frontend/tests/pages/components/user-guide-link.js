@@ -1,10 +1,10 @@
-import { create, text } from 'ember-cli-page-object';
+import { create, attribute } from 'ember-cli-page-object';
 
 const definition = {
   scope: '[data-test-user-guide-link]',
+  title: attribute('title', 'a'),
   icon: {
     scope: '[data-test-user-guide-link-icon]',
-    title: text('title'),
   },
 };
 

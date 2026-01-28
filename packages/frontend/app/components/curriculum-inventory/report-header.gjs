@@ -11,9 +11,10 @@ import { on } from '@ember/modifier';
 import pick from 'ilios-common/helpers/pick';
 import set from 'ember-set-helper/helpers/set';
 import YupValidationMessage from 'ilios-common/components/yup-validation-message';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import not from 'ember-truth-helpers/helpers/not';
 import focus from 'ilios-common/modifiers/focus';
+import { faLock, faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 export default class CurriculumInventoryReportHeaderComponent extends Component {
   @tracked name;
@@ -76,7 +77,7 @@ export default class CurriculumInventoryReportHeaderComponent extends Component 
           </EditableField>
         {{else}}
           <h2 data-test-locked-name>
-            <FaIcon @icon="lock" />
+            <FaIcon @icon={{faLock}} />
             {{@report.name}}
           </h2>
         {{/if}}
@@ -101,7 +102,7 @@ export default class CurriculumInventoryReportHeaderComponent extends Component 
         >
           {{t "general.finalize"}}
           {{#if @isFinalizing}}
-            <FaIcon @icon="spinner" @spin={{true}} />
+            <FaIcon @icon={{faSpinner}} @spin={{true}} />
           {{/if}}
         </button>
       </div>

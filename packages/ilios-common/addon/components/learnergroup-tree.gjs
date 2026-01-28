@@ -7,12 +7,13 @@ import { uniqueId, fn } from '@ember/helper';
 import includes from 'ilios-common/helpers/includes';
 import escapeRegExp from 'ilios-common/utils/escape-reg-exp';
 import { on } from '@ember/modifier';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import t from 'ember-intl/helpers/t';
 import isArray from 'ember-truth-helpers/helpers/is-array';
 import sortBy from 'ilios-common/helpers/sort-by';
 import LearnergroupTree0 from 'ilios-common/components/learnergroup-tree';
 import LoadingSpinner from 'ilios-common/components/loading-spinner';
+import { faUniversalAccess } from '@fortawesome/free-solid-svg-icons';
 
 export default class LearnergroupTree extends Component {
   @service intl;
@@ -104,7 +105,7 @@ export default class LearnergroupTree extends Component {
         </button>
         {{#if @learnerGroup.needsAccommodation}}
           <FaIcon
-            @icon="universal-access"
+            @icon={{faUniversalAccess}}
             @title={{t "general.accommodationIsRequiredForLearnersInThisGroup"}}
           />
         {{/if}}

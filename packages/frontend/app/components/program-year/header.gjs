@@ -4,9 +4,10 @@ import { TrackedAsyncData } from 'ember-async-data';
 import { cached } from '@glimmer/tracking';
 import { LinkTo } from '@ember/routing';
 import t from 'ember-intl/helpers/t';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import add from 'ember-math-helpers/helpers/add';
 import { pageTitle } from 'ember-page-title';
+import { faLock } from '@fortawesome/free-solid-svg-icons';
 
 export default class ProgramYearHeaderComponent extends Component {
   @service iliosConfig;
@@ -31,7 +32,7 @@ export default class ProgramYearHeaderComponent extends Component {
       <header>
         <div class="title">
           {{#if @programYear.locked}}
-            <FaIcon @icon="lock" data-test-lock />
+            <FaIcon @icon={{faLock}} data-test-lock />
           {{/if}}
           {{#if @programYear}}
             <h3 data-test-matriculation-year>

@@ -5,8 +5,9 @@ import { TrackedAsyncData } from 'ember-async-data';
 import { cached } from '@glimmer/tracking';
 import { on } from '@ember/modifier';
 import t from 'ember-intl/helpers/t';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import LoadingSpinner from 'ilios-common/components/loading-spinner';
+import { faCaretRight } from '@fortawesome/free-solid-svg-icons';
 
 export default class CollapsedCompetenciesComponent extends Component {
   @service store;
@@ -57,7 +58,7 @@ export default class CollapsedCompetenciesComponent extends Component {
         >
           {{t "general.competencies"}}
           ({{@subject.competencies.length}})
-          <FaIcon @icon="caret-right" />
+          <FaIcon @icon={{faCaretRight}} />
         </button>
       </div>
       {{#if this.isLoading}}

@@ -4,10 +4,11 @@ import { cached } from '@glimmer/tracking';
 import Overview from 'ilios-common/components/session/overview';
 import { LinkTo } from '@ember/routing';
 import { array, hash } from '@ember/helper';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import t from 'ember-intl/helpers/t';
 import scrollIntoView from 'ilios-common/modifiers/scroll-into-view';
 import hasManyLength from 'ilios-common/helpers/has-many-length';
+import { faArrowRotateLeft, faLinkSlash } from '@fortawesome/free-solid-svg-icons';
 
 export default class SessionPublicationCheckComponent extends Component {
   @cached
@@ -63,7 +64,7 @@ export default class SessionPublicationCheckComponent extends Component {
           @models={{array this.course @session}}
           data-test-back-to-session
         >
-          <FaIcon @icon="arrow-rotate-left" />
+          <FaIcon @icon={{faArrowRotateLeft}} />
           {{t "general.backToTitle" title=@session.title}}
         </LinkTo>
       </div>
@@ -130,7 +131,7 @@ export default class SessionPublicationCheckComponent extends Component {
                         aria-label={{t "general.backToTitle" title=@session.title}}
                         data-test-unlink
                       >
-                        <FaIcon @icon="link-slash" />
+                        <FaIcon @icon={{faLinkSlash}} />
                       </LinkTo>
                     {{/if}}
                   </td>

@@ -4,11 +4,12 @@ import { cached } from '@glimmer/tracking';
 import { TrackedAsyncData } from 'ember-async-data';
 import Header from 'frontend/components/reports/curriculum/header';
 import noop from 'ilios-common/helpers/noop';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import t from 'ember-intl/helpers/t';
 import repeat from 'ilios-common/helpers/repeat';
 import truncate from 'ilios-common/helpers/truncate';
 import random from 'ember-math-helpers/helpers/random';
+import { faBuildingColumns, faCaretDown, faCaretRight } from '@fortawesome/free-solid-svg-icons';
 
 export default class ReportsCurriculumLoading extends Component {
   @service router;
@@ -60,7 +61,7 @@ export default class ReportsCurriculumLoading extends Component {
       />
       <div class="reports-choose-course">
         <div class="schools">
-          <FaIcon @icon="building-columns" />
+          <FaIcon @icon={{faBuildingColumns}} />
           <select aria-label={{t "general.filterBySchool"}} class="loading-text" disabled>
             <option>{{this.primarySchool.title}}</option>
           </select>
@@ -69,13 +70,13 @@ export default class ReportsCurriculumLoading extends Component {
           <li>
             <button type="button">
               {{2025}}
-              <FaIcon @icon="caret-right" />
+              <FaIcon @icon={{faCaretRight}} />
             </button>
           </li>
           <li>
             <button type="button">
               {{2024}}
-              <FaIcon @icon="caret-down" />
+              <FaIcon @icon={{faCaretDown}} />
             </button>
             <ul class="courses">
               {{! template-lint-disable no-unused-block-params }}

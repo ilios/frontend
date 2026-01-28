@@ -3,9 +3,10 @@ import { action } from '@ember/object';
 import { uniqueId } from '@ember/helper';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import pick from 'ilios-common/helpers/pick';
 import isEqual from 'ember-truth-helpers/helpers/is-equal';
+import { faBackwardFast, faForwardFast, faPlay } from '@fortawesome/free-solid-svg-icons';
 
 export default class PagedlistControlsComponent extends Component {
   get offset() {
@@ -120,7 +121,7 @@ export default class PagedlistControlsComponent extends Component {
             data-test-go-to-first
             {{on "click" this.goToFirst}}
           >
-            <FaIcon @icon="backward-fast" class={{if this.firstPage "disabled"}} />
+            <FaIcon @icon={{faBackwardFast}} class={{if this.firstPage "disabled"}} />
           </button>
         {{/unless}}
         <button
@@ -131,7 +132,7 @@ export default class PagedlistControlsComponent extends Component {
           data-test-go-to-previous
           {{on "click" this.goBack}}
         >
-          <FaIcon @icon="play" @flip="horizontal" class={{if this.firstPage "disabled"}} />
+          <FaIcon @icon={{faPlay}} @flip="horizontal" class={{if this.firstPage "disabled"}} />
         </button>
         {{#if @limitless}}
           <select
@@ -159,7 +160,7 @@ export default class PagedlistControlsComponent extends Component {
           data-test-go-to-next
           {{on "click" this.goForward}}
         >
-          <FaIcon @icon="play" class={{if this.lastPage "disabled"}} />
+          <FaIcon @icon={{faPlay}} class={{if this.lastPage "disabled"}} />
         </button>
         {{#unless @limitless}}
           <button
@@ -170,7 +171,7 @@ export default class PagedlistControlsComponent extends Component {
             data-test-go-to-last
             {{on "click" this.goToLast}}
           >
-            <FaIcon @icon="forward-fast" class={{if this.lastPage "disabled"}} />
+            <FaIcon @icon={{faForwardFast}} class={{if this.lastPage "disabled"}} />
           </button>
           <select
             aria-labelledby="per-page-{{templateId}}"

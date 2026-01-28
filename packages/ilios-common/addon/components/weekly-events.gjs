@@ -2,12 +2,13 @@ import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { DateTime } from 'luxon';
 import { on } from '@ember/modifier';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import t from 'ember-intl/helpers/t';
 import WeekGlance from 'ilios-common/components/week-glance';
 import not from 'ember-truth-helpers/helpers/not';
 import includes from 'ilios-common/helpers/includes';
 import { fn } from '@ember/helper';
+import { faBackward, faForward } from '@fortawesome/free-solid-svg-icons';
 
 export default class WeeklyEvents extends Component {
   get weeksInYear() {
@@ -43,7 +44,7 @@ export default class WeeklyEvents extends Component {
             {{on "click" this.decrementYear}}
             data-test-previous
           >
-            <FaIcon @icon="backward" @title={{t "general.goToPreviousYear"}} />
+            <FaIcon @icon={{faBackward}} @title={{t "general.goToPreviousYear"}} />
           </button>
           <span data-test-year>{{@year}}</span>
           <button
@@ -53,7 +54,7 @@ export default class WeeklyEvents extends Component {
             {{on "click" this.incrementYear}}
             data-test-next
           >
-            <FaIcon @icon="forward" @title={{t "general.goToNextYear"}} />
+            <FaIcon @icon={{faForward}} @title={{t "general.goToNextYear"}} />
           </button>
         </h2>
       </div>
@@ -76,7 +77,7 @@ export default class WeeklyEvents extends Component {
             {{on "click" this.decrementYear}}
             data-test-previous
           >
-            <FaIcon @icon="backward" @title={{t "general.goToPreviousYear"}} />
+            <FaIcon @icon={{faBackward}} @title={{t "general.goToPreviousYear"}} />
           </button>
           <span data-test-year>{{@year}}</span>
           <button
@@ -86,7 +87,7 @@ export default class WeeklyEvents extends Component {
             {{on "click" this.incrementYear}}
             data-test-next
           >
-            <FaIcon @icon="forward" @title={{t "general.goToNextYear"}} />
+            <FaIcon @icon={{faForward}} @title={{t "general.goToNextYear"}} />
           </button>
         </h2>
       </div>

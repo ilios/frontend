@@ -12,12 +12,13 @@ import EditableField from 'ilios-common/components/editable-field';
 import perform from 'ember-concurrency/helpers/perform';
 import pick from 'ilios-common/helpers/pick';
 import set from 'ember-set-helper/helpers/set';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import SchoolVocabularyNewTerm from 'frontend/components/school-vocabulary-new-term';
 import YupValidationMessage from 'ilios-common/components/yup-validation-message';
 import YupValidations from 'ilios-common/classes/yup-validations';
 import { string } from 'yup';
 import focus from 'ilios-common/modifiers/focus';
+import { faAsterisk, faSquareUpRight } from '@fortawesome/free-solid-svg-icons';
 
 export default class SchoolVocabularyManagerComponent extends Component {
   @service store;
@@ -164,7 +165,7 @@ export default class SchoolVocabularyManagerComponent extends Component {
                 type="button"
                 {{on "click" (fn @manageTerm this.newTerm.id)}}
               >
-                <FaIcon @icon="square-up-right" />
+                <FaIcon @icon={{faSquareUpRight}} />
                 {{this.newTerm.title}}
               </button>
               {{t "general.savedSuccessfully"}}
@@ -185,7 +186,7 @@ export default class SchoolVocabularyManagerComponent extends Component {
                   {{term.title}}
                   {{#if term.hasChildren}}
                     <FaIcon
-                      @icon="asterisk"
+                      @icon={{faAsterisk}}
                       data-test-has-children
                       @title={{t "general.thisTermHasSubTerms"}}
                     />

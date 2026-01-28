@@ -4,10 +4,11 @@ import { htmlSafe } from '@ember/template';
 import { onResize } from 'ember-primitives/on-resize';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { hash } from '@ember/helper';
 import { TrackedAsyncData } from 'ember-async-data';
 import { guidFor } from '@ember/object/internals';
+import { faAnglesDown, faAnglesUp } from '@fortawesome/free-solid-svg-icons';
 
 export default class FadeTextComponent extends Component {
   @tracked textHeight;
@@ -114,7 +115,7 @@ const Controls = <template>
       aria-controls={{@fadeTextId}}
       {{on "click" @expand}}
     >
-      <FaIcon @icon="angles-down" />
+      <FaIcon @icon={{faAnglesDown}} />
     </button>
   {{else}}
     {{#if @collapsible}}
@@ -128,7 +129,7 @@ const Controls = <template>
         aria-controls={{@fadeTextId}}
         {{on "click" @collapse}}
       >
-        <FaIcon @icon="angles-up" />
+        <FaIcon @icon={{faAnglesUp}} />
       </button>
     {{/if}}
   {{/if}}

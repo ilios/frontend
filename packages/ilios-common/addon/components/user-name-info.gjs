@@ -6,9 +6,10 @@ import { service } from '@ember/service';
 import { guidFor } from '@ember/object/internals';
 import and from 'ember-truth-helpers/helpers/and';
 import mouseHoverToggle from 'ilios-common/modifiers/mouse-hover-toggle';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import t from 'ember-intl/helpers/t';
 import IliosTooltip from 'ilios-common/components/ilios-tooltip';
+import { faCircleInfo } from '@fortawesome/free-solid-svg-icons';
 
 export default class UserNameInfoComponent extends Component {
   @service iliosConfig;
@@ -48,7 +49,11 @@ export default class UserNameInfoComponent extends Component {
           id={{this.usernameInfoId}}
           {{mouseHoverToggle this.toggleUsernameInfoHover}}
         >
-          <FaIcon @icon="circle-info" aria-label={{t "general.campusNameOfRecord"}} class="info" />
+          <FaIcon
+            @icon={{faCircleInfo}}
+            aria-label={{t "general.campusNameOfRecord"}}
+            class="info"
+          />
           {{#if this.isHoveringOverUsernameInfo}}
             <IliosTooltip @target={{this.usernameInfoElement}}>
               <strong>{{t "general.campusNameOfRecord"}}:</strong>

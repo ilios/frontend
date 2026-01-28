@@ -1,6 +1,7 @@
 import t from 'ember-intl/helpers/t';
 import { LinkTo } from '@ember/routing';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import { faChartColumn } from '@fortawesome/free-solid-svg-icons';
 <template>
   <div class="programyear-overview" data-test-program-year-overview ...attributes>
     <div class="programyear-overview-header">
@@ -14,7 +15,7 @@ import FaIcon from 'ilios-common/components/fa-icon';
           title={{t "general.programYearVisualizations"}}
           data-test-go-to-visualizations
         >
-          <FaIcon @icon="chart-column" />
+          <FaIcon @icon={{faChartColumn}} />
         </LinkTo>
       </div>
     </div>

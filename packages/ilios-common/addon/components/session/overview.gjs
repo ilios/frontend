@@ -10,7 +10,7 @@ import YupValidations from 'ilios-common/classes/yup-validations';
 import { string } from 'yup';
 import { uniqueId, array } from '@ember/helper';
 import Header from 'ilios-common/components/session/header';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import t from 'ember-intl/helpers/t';
 import formatDate from 'ember-intl/helpers/format-date';
 import { LinkTo } from '@ember/routing';
@@ -30,6 +30,7 @@ import join from 'ilios-common/helpers/join';
 import mapBy from 'ilios-common/helpers/map-by';
 import FadeText from 'ilios-common/components/fade-text';
 import focus from 'ilios-common/modifiers/focus';
+import { faClockRotateLeft, faCopy, faSquareUpRight } from '@fortawesome/free-solid-svg-icons';
 
 export default class SessionOverview extends Component {
   @service currentUser;
@@ -382,7 +383,7 @@ export default class SessionOverview extends Component {
 
           <section class="session-overview">
             <div class="last-update" data-test-last-update>
-              <FaIcon @icon="clock-rotate-left" @title={{t "general.lastUpdate"}} />
+              <FaIcon @icon={{faClockRotateLeft}} @title={{t "general.lastUpdate"}} />
               {{t "general.lastUpdate"}}:
               {{formatDate
                 @session.updatedAt
@@ -406,9 +407,10 @@ export default class SessionOverview extends Component {
                     @route="session.copy"
                     @models={{array @session.course @session}}
                     class="copy"
+                    title={{t "general.copySession"}}
                     data-test-copy
                   >
-                    <FaIcon @icon="copy" @title={{t "general.copySession"}} @fixedWidth={{true}} />
+                    <FaIcon @icon={{faCopy}} @fixedWidth={{true}} />
                   </LinkTo>
                 {{/if}}
               </div>
@@ -542,7 +544,7 @@ export default class SessionOverview extends Component {
                           @route="session.index"
                           @models={{array this.postrequisiteCourse this.postrequisite}}
                         >
-                          <FaIcon @icon="square-up-right" />
+                          <FaIcon @icon={{faSquareUpRight}} />
                           {{t "general.duePriorTo"}}:
                         </LinkTo>
                       {{else}}
@@ -569,7 +571,7 @@ export default class SessionOverview extends Component {
                         @route="session.index"
                         @models={{array this.postrequisiteCourse this.postrequisite}}
                       >
-                        <FaIcon @icon="square-up-right" />
+                        <FaIcon @icon={{faSquareUpRight}} />
                         {{t "general.duePriorTo"}}:
                       </LinkTo>>
                     {{else}}
@@ -590,7 +592,7 @@ export default class SessionOverview extends Component {
                     {{#each this.prerequisites as |prerequisite index|~}}<LinkTo
                         @route="session.index"
                         @models={{array prerequisite.course prerequisite}}
-                      ><FaIcon @icon="square-up-right" /> {{prerequisite.title}}</LinkTo>{{#if
+                      ><FaIcon @icon={{faSquareUpRight}} /> {{prerequisite.title}}</LinkTo>{{#if
                         (notEq index (sub_ this.prerequisites.length 1))
                       }}, {{/if}}{{~/each}}
                   </span>

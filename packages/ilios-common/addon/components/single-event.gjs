@@ -7,7 +7,7 @@ import { DateTime } from 'luxon';
 import { findById } from 'ilios-common/utils/array-helpers';
 import createTypedLearningMaterialProxy from 'ilios-common/utils/create-typed-learning-material-proxy';
 import { TrackedAsyncData } from 'ember-async-data';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import t from 'ember-intl/helpers/t';
 import not from 'ember-truth-helpers/helpers/not';
 import and from 'ember-truth-helpers/helpers/and';
@@ -26,6 +26,18 @@ import SingleEventObjectiveList from 'ilios-common/components/single-event-objec
 import NotFound from 'ilios-common/components/not-found';
 import { htmlSafe } from '@ember/template';
 import { pageTitle } from 'ember-page-title';
+import {
+  faBoxArchive,
+  faCalendarCheck,
+  faCalendarMinus,
+  faCircleExclamation,
+  faClock,
+  faFileSignature,
+  faFlask,
+  faCaretRight,
+  faCaretDown,
+} from '@fortawesome/free-solid-svg-icons';
+import { faBlackTie } from '@fortawesome/free-brands-svg-icons';
 
 export default class SingleEvent extends Component {
   @service currentUser;
@@ -299,7 +311,7 @@ export default class SingleEvent extends Component {
           <h2 data-test-header>
             {{#if this.recentlyUpdated}}
               <FaIcon
-                @icon="circle-exclamation"
+                @icon={{faCircleExclamation}}
                 @title={{t "general.newUpdates"}}
                 class="recently-updated-icon-event"
                 data-test-recently-updated-icon
@@ -307,12 +319,12 @@ export default class SingleEvent extends Component {
             {{/if}}
             {{#if (not @event.isPublished)}}
               <FaIcon
-                @icon="file-signature"
+                @icon={{faFileSignature}}
                 @title={{t "general.notPublished"}}
                 data-test-draft-icon
               />
             {{else if @event.isScheduled}}
-              <FaIcon @icon="clock" @title={{t "general.scheduled"}} data-test-scheduled-icon />
+              <FaIcon @icon={{faClock}} @title={{t "general.scheduled"}} data-test-scheduled-icon />
             {{/if}}
             <span data-test-header-title>
               {{@event.courseTitle}}
@@ -416,29 +428,25 @@ export default class SingleEvent extends Component {
           </div>
           {{#if @event.equipmentRequired}}
             <div class="single-event-equipment-required">
-              <FaIcon @icon="flask" @title={{t "general.specialEquipment"}} />
+              <FaIcon @icon={{faFlask}} @title={{t "general.specialEquipment"}} />
               {{t "general.specialEquipmentIsRequired"}}
             </div>
           {{/if}}
           {{#if @event.attireRequired}}
             <div class="single-event-attire-required">
-              <FaIcon
-                @icon="black-tie"
-                @prefix="brands"
-                @title={{t "general.whitecoatsSlashSpecialAttire"}}
-              />
+              <FaIcon @icon={{faBlackTie}} @title={{t "general.whitecoatsSlashSpecialAttire"}} />
               {{t "general.specialAttireIsRequired"}}
             </div>
           {{/if}}
           {{#if @event.attendanceRequired}}
             <div class="single-event-attendance-required">
-              <FaIcon @icon="calendar-check" @title={{t "general.attendanceIsRequired"}} />
+              <FaIcon @icon={{faCalendarCheck}} @title={{t "general.attendanceIsRequired"}} />
               {{t "general.attendanceIsRequired"}}
             </div>
           {{/if}}
           {{#if @event.supplemental}}
             <div class="single-event-supplemental">
-              <FaIcon @icon="calendar-minus" @title={{t "general.supplementalCurriculum"}} />
+              <FaIcon @icon={{faCalendarMinus}} @title={{t "general.supplementalCurriculum"}} />
               {{t "general.supplementalCurriculum"}}
             </div>
           {{/if}}
@@ -469,19 +477,17 @@ export default class SingleEvent extends Component {
             >
               {{t "general.materials"}}
               ({{add this.sessionLearningMaterials.length this.preworkMaterials.length}})
-              <FaIcon @icon={{if this.isSessionMaterialsListExpanded "caret-down" "caret-right"}} />
+              <FaIcon @icon={{if this.isSessionMaterialsListExpanded faCaretDown faCaretRight}} />
             </button>
             {{#if (and @event.isUserEvent this.userIsStudent)}}
               <button
                 class="link-button"
                 type="button"
                 data-test-link-to-all-materials
+                title={{t "general.accessAllMaterialsForThisCourse"}}
                 {{on "click" this.transitionToMyMaterials}}
               >
-                <FaIcon
-                  @icon="box-archive"
-                  @title={{t "general.accessAllMaterialsForThisCourse"}}
-                />
+                <FaIcon @icon={{faBoxArchive}} />
               </button>
             {{/if}}
           </h3>
@@ -522,7 +528,7 @@ export default class SingleEvent extends Component {
             >
               {{t "general.courseMaterials"}}
               ({{this.courseLearningMaterials.length}})
-              <FaIcon @icon={{if this.isCourseMaterialsListExpanded "caret-down" "caret-right"}} />
+              <FaIcon @icon={{if this.isCourseMaterialsListExpanded faCaretDown faCaretRight}} />
             </button>
           </h3>
           {{#if this.isCourseMaterialsListExpanded}}

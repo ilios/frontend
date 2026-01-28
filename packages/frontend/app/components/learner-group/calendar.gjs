@@ -12,10 +12,11 @@ import { on } from '@ember/modifier';
 import { fn } from '@ember/helper';
 import not from 'ember-truth-helpers/helpers/not';
 import t from 'ember-intl/helpers/t';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import IliosCalendarWeek from 'ilios-common/components/ilios-calendar-week';
 import LoadingSpinner from 'ilios-common/components/loading-spinner';
 import Event from 'ilios-common/classes/event';
+import { faBackward, faForward } from '@fortawesome/free-solid-svg-icons';
 
 export default class LearnerGroupCalendarComponent extends Component {
   @service localeDays;
@@ -114,7 +115,7 @@ export default class LearnerGroupCalendarComponent extends Component {
             {{on "click" this.goBack}}
             data-test-go-back
           >
-            <FaIcon @icon="backward" />
+            <FaIcon @icon={{faBackward}} />
           </button>
         </li>
         <li>
@@ -135,7 +136,7 @@ export default class LearnerGroupCalendarComponent extends Component {
             {{on "click" this.goForward}}
             data-test-go-forward
           >
-            <FaIcon @icon="forward" />
+            <FaIcon @icon={{faForward}} />
           </button>
         </li>
       </ul>

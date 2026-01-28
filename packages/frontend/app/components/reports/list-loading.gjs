@@ -1,6 +1,7 @@
 import t from 'ember-intl/helpers/t';
 import repeat from 'ilios-common/helpers/repeat';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
 <template>
   <div class="loading-shimmer loading-text" data-test-reports-list-loading ...attributes>
     <table>
@@ -15,7 +16,7 @@ import FaIcon from 'ilios-common/components/fa-icon';
         {{#each (repeat @count)}}
           <tr data-test-loading-item>
             <td class="text-left"></td>
-            <td class="text-right"><FaIcon @icon="trash" class="disabled" /></td>
+            <td class="text-right"><FaIcon @icon={{faTrash}} class="disabled" /></td>
           </tr>
         {{/each}}
       </tbody>

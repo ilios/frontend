@@ -7,10 +7,11 @@ import { findById, uniqueValues } from 'ilios-common/utils/array-helpers';
 import onClickOutside from 'ember-click-outside/modifiers/on-click-outside';
 import { on } from '@ember/modifier';
 import toggle from 'ilios-common/helpers/toggle';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { fn } from '@ember/helper';
 import eq from 'ember-truth-helpers/helpers/eq';
 import focus from 'ilios-common/modifiers/focus';
+import { faGlobe, faCaretRight, faCaretDown } from '@fortawesome/free-solid-svg-icons';
 
 export default class LocaleChooserComponent extends Component {
   @service intl;
@@ -128,11 +129,11 @@ export default class LocaleChooserComponent extends Component {
         {{on "click" (toggle "isOpen" this)}}
         {{on "keyup" this.toggleMenu}}
       >
-        <FaIcon @icon="globe" />
+        <FaIcon @icon={{faGlobe}} />
         <span id="{{this.uniqueId}}-locale-chooser-title">
           {{this.currentLocaleLabel}}
         </span>
-        <FaIcon @icon={{if this.isOpen "caret-down" "caret-right"}} />
+        <FaIcon @icon={{if this.isOpen faCaretDown faCaretRight}} />
       </button>
       {{#if this.isOpen}}
         <div class="menu" role="menu">

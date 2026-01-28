@@ -9,10 +9,11 @@ import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
 import or from 'ember-truth-helpers/helpers/or';
 import perform from 'ember-concurrency/helpers/perform';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import InstructorSelectionManager from 'ilios-common/components/instructor-selection-manager';
 import SelectedInstructors from 'ilios-common/components/selected-instructors';
 import SelectedInstructorGroups from 'ilios-common/components/selected-instructor-groups';
+import { faArrowRotateLeft, faCheck } from '@fortawesome/free-solid-svg-icons';
 
 export default class DetailInstructorsComponent extends Component {
   @service currentUser;
@@ -155,7 +156,7 @@ export default class DetailInstructorsComponent extends Component {
               {{on "click" (perform this.save)}}
               data-test-save
             >
-              <FaIcon @icon="check" />
+              <FaIcon @icon={{faCheck}} />
             </button>
             <button
               class="bigcancel"
@@ -164,7 +165,7 @@ export default class DetailInstructorsComponent extends Component {
               {{on "click" this.cancel}}
               data-test-cancel
             >
-              <FaIcon @icon="arrow-rotate-left" />
+              <FaIcon @icon={{faArrowRotateLeft}} />
             </button>
           {{else if @editable}}
             <button type="button" {{on "click" (perform this.manage)}} data-test-manage>

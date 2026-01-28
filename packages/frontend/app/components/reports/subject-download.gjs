@@ -8,8 +8,9 @@ import { TrackedAsyncData } from 'ember-async-data';
 import not from 'ember-truth-helpers/helpers/not';
 import { on } from '@ember/modifier';
 import perform from 'ember-concurrency/helpers/perform';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import t from 'ember-intl/helpers/t';
+import { faCheck, faDownload } from '@fortawesome/free-solid-svg-icons';
 
 export default class ReportsSubjectDownload extends Component {
   @service reporting;
@@ -56,9 +57,9 @@ export default class ReportsSubjectDownload extends Component {
           data-test-button
         >
           {{#if this.finishedBuildingReport}}
-            <FaIcon @icon="check" />
+            <FaIcon @icon={{faCheck}} />
           {{else}}
-            <FaIcon @icon="download" />
+            <FaIcon @icon={{faDownload}} />
           {{/if}}
           {{t "general.downloadResults"}}
         </button>

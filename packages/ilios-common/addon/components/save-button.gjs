@@ -1,12 +1,13 @@
 import eq from 'ember-truth-helpers/helpers/eq';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import { faCheck, faSpinner } from '@fortawesome/free-solid-svg-icons';
 <template>
   <button type="button" disabled={{@isSaving}} ...attributes>
     {{#if @isSaving}}
       {{#if (eq @saveProgressPercent 100)}}
-        <FaIcon @icon="check" />
+        <FaIcon @icon={{faCheck}} />
       {{else}}
-        <FaIcon @icon="spinner" @spin={{true}} />
+        <FaIcon @icon={{faSpinner}} @spin={{true}} />
       {{/if}}
       {{#if @saveProgressPercent}}
         {{@saveProgressPercent}}%

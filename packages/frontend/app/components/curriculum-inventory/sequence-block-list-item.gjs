@@ -9,9 +9,10 @@ import and from 'ember-truth-helpers/helpers/and';
 import not from 'ember-truth-helpers/helpers/not';
 import { on } from '@ember/modifier';
 import set from 'ember-set-helper/helpers/set';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { fn } from '@ember/helper';
 import ResponsiveTd from 'frontend/components/responsive-td';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
 
 export default class CurriculumInventorySequenceBlockListItemComponent extends Component {
   @service intl;
@@ -81,10 +82,10 @@ export default class CurriculumInventorySequenceBlockListItemComponent extends C
             aria-label={{t "general.remove"}}
             data-test-remove
           >
-            <FaIcon @icon="trash" class="enabled remove" />
+            <FaIcon @icon={{faTrash}} class="enabled remove" />
           </button>
         {{else}}
-          <FaIcon @icon="trash" class="disabled" />
+          <FaIcon @icon={{faTrash}} class="disabled" />
         {{/if}}
       </td>
     </tr>

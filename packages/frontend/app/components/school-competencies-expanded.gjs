@@ -8,12 +8,18 @@ import { filterBy, uniqueValues } from 'ilios-common/utils/array-helpers';
 import { TrackedAsyncData } from 'ember-async-data';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import perform from 'ember-concurrency/helpers/perform';
 import or from 'ember-truth-helpers/helpers/or';
 import { fn } from '@ember/helper';
 import SchoolCompetenciesManager from 'frontend/components/school-competencies-manager';
 import SchoolCompetenciesList from 'frontend/components/school-competencies-list';
+import {
+  faArrowRotateLeft,
+  faCaretDown,
+  faCheck,
+  faSpinner,
+} from '@fortawesome/free-solid-svg-icons';
 
 export default class SchoolCompetenciesExpandedComponent extends Component {
   @service store;
@@ -136,7 +142,7 @@ export default class SchoolCompetenciesExpandedComponent extends Component {
             >
               {{t "general.competencies"}}
               ({{this.domains.length}}/{{this.childCompetencies.length}})
-              <FaIcon @icon="caret-down" />
+              <FaIcon @icon={{faCaretDown}} />
             </button>
           {{else}}
             <div class="title" data-test-title>
@@ -155,7 +161,7 @@ export default class SchoolCompetenciesExpandedComponent extends Component {
               data-test-save
             >
               <FaIcon
-                @icon={{if this.save.isRunning "spinner" "check"}}
+                @icon={{if this.save.isRunning faSpinner faCheck}}
                 @spin={{this.save.isRunning}}
               />
             </button>
@@ -166,7 +172,7 @@ export default class SchoolCompetenciesExpandedComponent extends Component {
               {{on "click" this.stopManaging}}
               data-test-cancel
             >
-              <FaIcon @icon="arrow-rotate-left" />
+              <FaIcon @icon={{faArrowRotateLeft}} />
             </button>
           {{else if (or @canUpdate @canDelete @canCreate)}}
             <button

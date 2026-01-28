@@ -7,12 +7,13 @@ import { action } from '@ember/object';
 import t from 'ember-intl/helpers/t';
 import load from 'ember-async-data/helpers/load';
 import { on } from '@ember/modifier';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import LoadingSpinner from 'ilios-common/components/loading-spinner';
 import SearchInput from 'frontend/components/reports/subject/new/search/input';
 import perform from 'ember-concurrency/helpers/perform';
 import isArray from 'ember-truth-helpers/helpers/is-array';
 import { fn } from '@ember/helper';
+import { faXmark } from '@fortawesome/free-solid-svg-icons';
 
 export default class ReportsSubjectNewSessionComponent extends Component {
   @service store;
@@ -101,7 +102,7 @@ export default class ReportsSubjectNewSessionComponent extends Component {
                     [{{session.course.externalId}}] |
                   {{/if}}
                   {{session.course.title}}
-                  <FaIcon @icon="xmark" class="remove" />
+                  <FaIcon @icon={{faXmark}} class="remove" />
                 </button>
               {{/let}}
             {{else}}

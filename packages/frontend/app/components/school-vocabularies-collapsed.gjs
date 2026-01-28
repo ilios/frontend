@@ -3,9 +3,10 @@ import { TrackedAsyncData } from 'ember-async-data';
 import { cached } from '@glimmer/tracking';
 import { on } from '@ember/modifier';
 import t from 'ember-intl/helpers/t';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import LoadingSpinner from 'ilios-common/components/loading-spinner';
 import sortBy from 'ilios-common/helpers/sort-by';
+import { faCaretRight } from '@fortawesome/free-solid-svg-icons';
 
 export default class SchoolVocabulariesCollapsedComponent extends Component {
   @cached
@@ -36,7 +37,7 @@ export default class SchoolVocabulariesCollapsedComponent extends Component {
         >
           {{t "general.vocabularies"}}
           ({{this.vocabularies.length}})
-          <FaIcon @icon="caret-right" />
+          <FaIcon @icon={{faCaretRight}} />
         </button>
       </div>
       {{#if this.vocabulariesLoading}}

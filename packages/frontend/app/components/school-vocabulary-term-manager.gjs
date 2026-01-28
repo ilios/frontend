@@ -15,13 +15,14 @@ import pick from 'ilios-common/helpers/pick';
 import set from 'ember-set-helper/helpers/set';
 import and from 'ember-truth-helpers/helpers/and';
 import not from 'ember-truth-helpers/helpers/not';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import ToggleYesno from 'ilios-common/components/toggle-yesno';
 import SchoolVocabularyNewTerm from 'frontend/components/school-vocabulary-new-term';
 import YupValidationMessage from 'ilios-common/components/yup-validation-message';
 import YupValidations from 'ilios-common/classes/yup-validations';
 import { string } from 'yup';
 import focus from 'ilios-common/modifiers/focus';
+import { faAsterisk, faSquareUpRight, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 export default class SchoolVocabularyTermManagerComponent extends Component {
   @service store;
@@ -240,13 +241,13 @@ export default class SchoolVocabularyTermManagerComponent extends Component {
                 {{/if}}
                 {{#if (and @canDelete (not this.children.length) (not @term.hasAssociations))}}
                   <FaIcon
-                    @icon="trash"
+                    @icon={{faTrash}}
                     class="clickable remove enabled"
                     {{on "click" (perform this.deleteTerm)}}
                     data-test-delete
                   />
                 {{else}}
-                  <FaIcon @icon="trash" class="disabled" />
+                  <FaIcon @icon={{faTrash}} class="disabled" />
                 {{/if}}
               </div>
               <div class="block is-active" data-test-is-active>
@@ -308,7 +309,7 @@ export default class SchoolVocabularyTermManagerComponent extends Component {
                   type="button"
                   {{on "click" (fn @manageTerm this.newTerm.id)}}
                 >
-                  <FaIcon @icon="square-up-right" />
+                  <FaIcon @icon={{faSquareUpRight}} />
                   {{this.newTerm.title}}
                 </button>
                 {{t "general.savedSuccessfully"}}
@@ -329,7 +330,7 @@ export default class SchoolVocabularyTermManagerComponent extends Component {
                     {{term.title}}
                     {{#if term.hasChildren}}
                       <FaIcon
-                        @icon="asterisk"
+                        @icon={{faAsterisk}}
                         data-test-has-children
                         @title={{t "general.thisTermHasSubTerms"}}
                       />

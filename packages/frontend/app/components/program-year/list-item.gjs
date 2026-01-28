@@ -7,7 +7,7 @@ import and from 'ember-truth-helpers/helpers/and';
 import not from 'ember-truth-helpers/helpers/not';
 import { LinkTo } from '@ember/routing';
 import { array } from '@ember/helper';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import t from 'ember-intl/helpers/t';
 import or from 'ember-truth-helpers/helpers/or';
 import LoadingSpinner from 'ilios-common/components/loading-spinner';
@@ -15,6 +15,13 @@ import { on } from '@ember/modifier';
 import perform from 'ember-concurrency/helpers/perform';
 import set from 'ember-set-helper/helpers/set';
 import scrollIntoView from 'ilios-common/modifiers/scroll-into-view';
+import {
+  faLock,
+  faLockOpen,
+  faSquareUpRight,
+  faTrash,
+  faTriangleExclamation,
+} from '@fortawesome/free-solid-svg-icons';
 
 export default class ProgramYearListItemComponent extends Component {
   @service permissionChecker;
@@ -127,7 +134,7 @@ export default class ProgramYearListItemComponent extends Component {
       >
         <td class="text-left">
           <LinkTo @route="program-year" @models={{array this.program @programYear}} data-test-link>
-            <FaIcon @icon="square-up-right" />
+            <FaIcon @icon={{faSquareUpRight}} />
             {{this.academicYear}}
           </LinkTo>
         </td>
@@ -142,28 +149,28 @@ export default class ProgramYearListItemComponent extends Component {
           {{#if @programYear.competencies.length}}
             {{@programYear.competencies.length}}
           {{else}}
-            <FaIcon @icon="triangle-exclamation" class="warning" data-test-warning />
+            <FaIcon @icon={{faTriangleExclamation}} class="warning" data-test-warning />
           {{/if}}
         </td>
         <td class="text-left hide-from-small-screen" data-test-objectives>
           {{#if @programYear.programYearObjectives.length}}
             {{@programYear.programYearObjectives.length}}
           {{else}}
-            <FaIcon @icon="triangle-exclamation" class="warning" data-test-warning />
+            <FaIcon @icon={{faTriangleExclamation}} class="warning" data-test-warning />
           {{/if}}
         </td>
         <td class="text-left hide-from-small-screen" data-test-directors>
           {{#if @programYear.directors.length}}
             {{@programYear.directors.length}}
           {{else}}
-            <FaIcon @icon="triangle-exclamation" class="warning" data-test-warning />
+            <FaIcon @icon={{faTriangleExclamation}} class="warning" data-test-warning />
           {{/if}}
         </td>
         <td class="text-left hide-from-small-screen" data-test-terms>
           {{#if @programYear.terms.length}}
             {{@programYear.terms.length}}
           {{else}}
-            <FaIcon @icon="triangle-exclamation" class="warning" data-test-warning />
+            <FaIcon @icon={{faTriangleExclamation}} class="warning" data-test-warning />
           {{/if}}
         </td>
         <td class="text-right" data-test-actions>
@@ -179,10 +186,10 @@ export default class ProgramYearListItemComponent extends Component {
                   {{on "click" (perform this.unlock)}}
                   data-test-unlock
                 >
-                  <FaIcon @icon="lock" />
+                  <FaIcon @icon={{faLock}} />
                 </button>
               {{else}}
-                <FaIcon @icon="lock" />
+                <FaIcon @icon={{faLock}} />
               {{/if}}
             {{else if this.canLock}}
               <button
@@ -192,10 +199,10 @@ export default class ProgramYearListItemComponent extends Component {
                 {{on "click" (perform this.lock)}}
                 data-test-lock
               >
-                <FaIcon @icon="lock-open" />
+                <FaIcon @icon={{faLockOpen}} />
               </button>
             {{else}}
-              <FaIcon @icon="lock-open" />
+              <FaIcon @icon={{faLockOpen}} />
             {{/if}}
             {{#if this.canDelete}}
               <button
@@ -205,10 +212,10 @@ export default class ProgramYearListItemComponent extends Component {
                 {{on "click" (set this "showRemoveConfirmation" true)}}
                 data-test-remove
               >
-                <FaIcon @icon="trash" class="remove" />
+                <FaIcon @icon={{faTrash}} class="remove" />
               </button>
             {{else}}
-              <FaIcon @icon="trash" class="disabled" />
+              <FaIcon @icon={{faTrash}} class="disabled" />
             {{/if}}
           {{/if}}
         </td>

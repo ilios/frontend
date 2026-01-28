@@ -6,11 +6,17 @@ import { task } from 'ember-concurrency';
 import { TrackedAsyncData } from 'ember-async-data';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import perform from 'ember-concurrency/helpers/perform';
 import scrollIntoView from 'ilios-common/modifiers/scroll-into-view';
 import TaxonomyManager from 'ilios-common/components/taxonomy-manager';
 import DetailTermsList from 'ilios-common/components/detail-terms-list';
+import {
+  faArrowRotateLeft,
+  faCaretDown,
+  faCheck,
+  faSpinner,
+} from '@fortawesome/free-solid-svg-icons';
 
 export default class DetailTaxonomiesComponent extends Component {
   @service store;
@@ -86,7 +92,7 @@ export default class DetailTaxonomiesComponent extends Component {
             >
               {{t "general.terms"}}
               ({{@subject.terms.length}})
-              <FaIcon @icon="caret-down" />
+              <FaIcon @icon={{faCaretDown}} />
             </button>
           {{else}}
             <h3 class="title" data-test-title>
@@ -105,7 +111,7 @@ export default class DetailTaxonomiesComponent extends Component {
               {{scrollIntoView}}
             >
               <FaIcon
-                @icon={{if this.save.isRunning "spinner" "check"}}
+                @icon={{if this.save.isRunning faSpinner faCheck}}
                 @spin={{this.save.isRunning}}
               />
             </button>
@@ -115,7 +121,7 @@ export default class DetailTaxonomiesComponent extends Component {
               aria-label={{t "general.cancel"}}
               {{on "click" this.cancel}}
             >
-              <FaIcon @icon="arrow-rotate-left" />
+              <FaIcon @icon={{faArrowRotateLeft}} />
             </button>
           {{else if @editable}}
             <button type="button" {{on "click" (perform this.manage)}}>

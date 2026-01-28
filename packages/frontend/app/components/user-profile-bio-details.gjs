@@ -1,7 +1,8 @@
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
 import { fn, uniqueId } from '@ember/helper';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import { faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 <template>
   <div class="user-profile-bio-details" data-test-user-profile-bio-details ...attributes>
     <div class="actions">
@@ -13,7 +14,7 @@ import FaIcon from 'ilios-common/components/fa-icon';
           {{on "click" (fn @setIsManaging true)}}
           data-test-manage
         >
-          <FaIcon @icon="pen-to-square" />
+          <FaIcon @icon={{faPenToSquare}} />
         </button>
       {{/if}}
     </div>

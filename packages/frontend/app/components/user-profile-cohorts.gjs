@@ -8,11 +8,17 @@ import t from 'ember-intl/helpers/t';
 import or from 'ember-truth-helpers/helpers/or';
 import { on } from '@ember/modifier';
 import perform from 'ember-concurrency/helpers/perform';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { fn } from '@ember/helper';
 import UserProfileCohortsManager from 'frontend/components/user-profile-cohorts-manager';
 import set from 'ember-set-helper/helpers/set';
 import UserProfileCohortsDetails from 'frontend/components/user-profile-cohorts-details';
+import {
+  faArrowRotateLeft,
+  faPenToSquare,
+  faCheck,
+  faSpinner,
+} from '@fortawesome/free-solid-svg-icons';
 
 export default class UserProfileCohortsComponent extends Component {
   @service currentUser;
@@ -185,7 +191,7 @@ export default class UserProfileCohortsComponent extends Component {
                 data-test-save
               >
                 <FaIcon
-                  @icon={{if this.save.isRunning "spinner" "check"}}
+                  @icon={{if this.save.isRunning faSpinner faCheck}}
                   @spin={{this.save.isRunning}}
                 />
               </button>
@@ -197,7 +203,7 @@ export default class UserProfileCohortsComponent extends Component {
                 {{on "click" (perform this.cancel)}}
                 data-test-cancel
               >
-                <FaIcon @icon="arrow-rotate-left" />
+                <FaIcon @icon={{faArrowRotateLeft}} />
               </button>
             {{else if @isManageable}}
               <button
@@ -207,7 +213,7 @@ export default class UserProfileCohortsComponent extends Component {
                 {{on "click" (fn @setIsManaging true)}}
                 data-test-manage
               >
-                <FaIcon @icon="pen-to-square" />
+                <FaIcon @icon={{faPenToSquare}} />
               </button>
             {{/if}}
           </div>

@@ -8,7 +8,7 @@ import { task, timeout } from 'ember-concurrency';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
 import perform from 'ember-concurrency/helpers/perform';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { uniqueId, concat } from '@ember/helper';
 import includes from 'ilios-common/helpers/includes';
 import pick from 'ilios-common/helpers/pick';
@@ -19,6 +19,7 @@ import YupValidations from 'ilios-common/classes/yup-validations';
 import YupValidationMessage from 'ilios-common/components/yup-validation-message';
 import { string } from 'yup';
 import isEmail from 'validator/lib/isEmail';
+import { faArrowRotateLeft, faCheck, faSpinner, faRotate } from '@fortawesome/free-solid-svg-icons';
 
 export default class UserProfileBioManagerComponent extends Component {
   @service currentUser;
@@ -314,7 +315,7 @@ export default class UserProfileBioManagerComponent extends Component {
           data-test-save
         >
           <FaIcon
-            @icon={{if this.save.isRunning "spinner" "check"}}
+            @icon={{if this.save.isRunning faSpinner faCheck}}
             @spin={{if this.save.isRunning true false}}
           />
         </button>
@@ -326,7 +327,7 @@ export default class UserProfileBioManagerComponent extends Component {
           {{on "click" this.cancel}}
           data-test-cancel
         >
-          <FaIcon @icon="arrow-rotate-left" />
+          <FaIcon @icon={{faArrowRotateLeft}} />
         </button>
       </div>
 
@@ -444,7 +445,7 @@ export default class UserProfileBioManagerComponent extends Component {
                   data-test-directory-sync
                 >
                   <FaIcon
-                    @icon={{if this.directorySync.isRunning "spinner" "rotate"}}
+                    @icon={{if this.directorySync.isRunning faSpinner faRotate}}
                     @spin={{this.directorySync.isRunning}}
                   />
                 </button>

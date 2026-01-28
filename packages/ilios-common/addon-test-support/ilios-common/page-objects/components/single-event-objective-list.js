@@ -22,6 +22,7 @@ const definition = {
       scope: '[data-test-display-mode-toggle]',
       isDisabled: property('disabled'),
       isListMode: hasClass('active'),
+      title: attribute('title'),
       toggle: clickable(),
     },
   },

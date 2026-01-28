@@ -4,7 +4,7 @@ import { cached, tracked } from '@glimmer/tracking';
 import { TrackedAsyncData } from 'ember-async-data';
 import { findById } from 'ilios-common/utils/array-helpers';
 import { task } from 'ember-concurrency';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import gt from 'ember-truth-helpers/helpers/gt';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
@@ -19,6 +19,7 @@ import perform from 'ember-concurrency/helpers/perform';
 import { LinkTo } from '@ember/routing';
 import List from 'frontend/components/instructor-groups/list';
 import Loading from 'frontend/components/instructor-groups/loading';
+import { faBuildingColumns, faSquareUpRight } from '@fortawesome/free-solid-svg-icons';
 
 export default class InstructorGroupsRootComponent extends Component {
   @service currentUser;
@@ -121,7 +122,7 @@ export default class InstructorGroupsRootComponent extends Component {
     <section class="instructor-groups-root main-section" data-test-instructor-groups>
       <div class="filters">
         <div class="schools" data-test-school-filter>
-          <FaIcon @icon="building-columns" @fixedWidth={{true}} />
+          <FaIcon @icon={{faBuildingColumns}} @fixedWidth={{true}} />
           {{#if (gt @schools.length 1)}}
             <select
               {{on "change" (pick "target.value" @setSchoolId)}}
@@ -183,7 +184,7 @@ export default class InstructorGroupsRootComponent extends Component {
           {{#if this.newInstructorGroup}}
             <div class="saved-result">
               <LinkTo @route="instructor-group" @model={{this.newInstructorGroup}}>
-                <FaIcon @icon="square-up-right" />
+                <FaIcon @icon={{faSquareUpRight}} />
                 {{this.newInstructorGroup.title}}
               </LinkTo>
               {{t "general.savedSuccessfully"}}

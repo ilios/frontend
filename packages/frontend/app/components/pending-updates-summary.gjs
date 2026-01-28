@@ -5,7 +5,7 @@ import { filter } from 'rsvp';
 import { TrackedAsyncData } from 'ember-async-data';
 import { findById } from 'ilios-common/utils/array-helpers';
 import { get, hash } from '@ember/helper';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import t from 'ember-intl/helpers/t';
 import gt from 'ember-truth-helpers/helpers/gt';
 import { on } from '@ember/modifier';
@@ -15,6 +15,7 @@ import sortBy from 'ilios-common/helpers/sort-by';
 import eq from 'ember-truth-helpers/helpers/eq';
 import { LinkTo } from '@ember/routing';
 import LoadingSpinner from 'ilios-common/components/loading-spinner';
+import { faBuildingColumns, faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
 
 export default class PendingUpdatesSummaryComponent extends Component {
   @service currentUser;
@@ -95,13 +96,13 @@ export default class PendingUpdatesSummaryComponent extends Component {
     >
       <h3 data-test-title>
         {{#if this.haveUpdates}}
-          <FaIcon @icon="triangle-exclamation" class="no" />
+          <FaIcon @icon={{faTriangleExclamation}} class="no" />
         {{/if}}
         {{t "general.pendingUpdatesSummaryTitle"}}
       </h3>
       <div id="schoolsfilter" class="filter" data-test-schools>
         <label class="inline-label">
-          <FaIcon @icon="building-columns" @title={{t "general.school"}} />
+          <FaIcon @icon={{faBuildingColumns}} @title={{t "general.school"}} />
         </label>
         <div id="school-selection" class="inline-data">
           {{#if (gt @schools.length 1)}}

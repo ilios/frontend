@@ -19,6 +19,7 @@ const definition = {
   goBack: {
     scope: '[data-test-go-back]',
     linksTo: attribute('href'),
+    title: attribute('title'),
   },
   goToToday: {
     scope: '[data-test-go-to-today]',
@@ -27,6 +28,7 @@ const definition = {
   goForward: {
     scope: '[data-test-go-forward]',
     linksTo: attribute('href'),
+    title: attribute('title'),
   },
   icsFeed,
 };

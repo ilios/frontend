@@ -14,7 +14,7 @@ import LearningmaterialSearch from 'ilios-common/components/learningmaterial-sea
 import perform from 'ember-concurrency/helpers/perform';
 import { on } from '@ember/modifier';
 import { fn, array } from '@ember/helper';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import and from 'ember-truth-helpers/helpers/and';
 import not from 'ember-truth-helpers/helpers/not';
 import ChooseMaterialType from 'ilios-common/components/choose-material-type';
@@ -24,6 +24,7 @@ import set from 'ember-set-helper/helpers/set';
 import NewLearningmaterial from 'ilios-common/components/new-learningmaterial';
 import gt from 'ember-truth-helpers/helpers/gt';
 import DetailLearningMaterialsItem from 'ilios-common/components/detail-learning-materials-item';
+import { faMinus } from '@fortawesome/free-solid-svg-icons';
 
 export default class DetailCohortsComponent extends Component {
   @service currentUser;
@@ -222,7 +223,7 @@ export default class DetailCohortsComponent extends Component {
               aria-label={{t "general.cancel"}}
               {{on "click" (fn (mut this.displayAddNewForm) false)}}
             >
-              <FaIcon @icon="minus" />
+              <FaIcon @icon={{faMinus}} />
             </button>
           {{else if (and @editable (not this.isSorting) (not this.isManaging))}}
             <ChooseMaterialType

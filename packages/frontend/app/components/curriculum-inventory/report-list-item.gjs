@@ -4,7 +4,7 @@ import { TrackedAsyncData } from 'ember-async-data';
 import { service } from '@ember/service';
 import { LinkTo } from '@ember/routing';
 import formatDate from 'ember-intl/helpers/format-date';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import t from 'ember-intl/helpers/t';
 import and from 'ember-truth-helpers/helpers/and';
 import not from 'ember-truth-helpers/helpers/not';
@@ -12,6 +12,7 @@ import { on } from '@ember/modifier';
 import set from 'ember-set-helper/helpers/set';
 import { fn } from '@ember/helper';
 import ResponsiveTd from 'frontend/components/responsive-td';
+import { faDownload, faLock, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 export default class CurriculumInventoryReportListItemComponent extends Component {
   @service iliosConfig;
@@ -69,7 +70,7 @@ export default class CurriculumInventoryReportListItemComponent extends Componen
       </td>
       <td class="text-center" colspan="2" data-test-status>
         {{#if this.isFinalized}}
-          <FaIcon @icon="lock" class="enabled" />
+          <FaIcon @icon={{faLock}} class="enabled" />
         {{/if}}
         <span
           class="status publication-status {{if this.isFinalized 'published' 'notpublished'}}"
@@ -93,7 +94,7 @@ export default class CurriculumInventoryReportListItemComponent extends Componen
             target="_blank"
             data-test-download
           ><FaIcon
-              @icon="download"
+              @icon={{faDownload}}
               @title={{t "general.download"}}
               class="enabled"
               aria-label={{t "general.download"}}
@@ -107,10 +108,10 @@ export default class CurriculumInventoryReportListItemComponent extends Componen
             aria-label={{t "general.remove"}}
             data-test-remove
           >
-            <FaIcon @icon="trash" class="enabled remove" />
+            <FaIcon @icon={{faTrash}} class="enabled remove" />
           </button>
         {{else}}
-          <FaIcon @icon="trash" class="disabled" />
+          <FaIcon @icon={{faTrash}} class="disabled" />
         {{/if}}
       </td>
     </tr>

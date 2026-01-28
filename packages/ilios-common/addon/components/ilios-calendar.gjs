@@ -7,9 +7,10 @@ import IliosCalendarMonth from './ilios-calendar-month';
 import { LinkTo } from '@ember/routing';
 import { hash, concat } from '@ember/helper';
 import { service } from '@ember/service';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import t from 'ember-intl/helpers/t';
 import eq from 'ember-truth-helpers/helpers/eq';
+import { faBackward, faForward } from '@fortawesome/free-solid-svg-icons';
 
 export default class IliosCalendarComponent extends Component {
   @service intl;
@@ -120,9 +121,10 @@ export default class IliosCalendarComponent extends Component {
             <LinkTo
               @route="dashboard.calendar"
               @query={{hash date=this.backDate}}
+              title={{t "general.back"}}
               data-test-go-back
             >
-              <FaIcon @title={{t "general.back"}} @icon="backward" />
+              <FaIcon @icon={{faBackward}} />
             </LinkTo>
           </li>
           <li>
@@ -138,9 +140,10 @@ export default class IliosCalendarComponent extends Component {
             <LinkTo
               @route="dashboard.calendar"
               @query={{hash date=this.forwardDate}}
+              title={{t "general.forward"}}
               data-test-go-forward
             >
-              <FaIcon @title={{t "general.forward"}} @icon="forward" />
+              <FaIcon @icon={{faForward}} />
             </LinkTo>
           </li>
         </ul>

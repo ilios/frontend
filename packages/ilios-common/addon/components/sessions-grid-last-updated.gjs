@@ -1,9 +1,10 @@
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import t from 'ember-intl/helpers/t';
 import formatDate from 'ember-intl/helpers/format-date';
+import { faClockRotateLeft } from '@fortawesome/free-solid-svg-icons';
 <template>
   <div class="sessions-grid-last-updated">
-    <FaIcon @icon="clock-rotate-left" @title={{t "general.lastUpdate"}} />
+    <FaIcon @icon={{faClockRotateLeft}} @title={{t "general.lastUpdate"}} />
     {{t "general.lastUpdate"}}:
     {{formatDate
       @session.updatedAt

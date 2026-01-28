@@ -2,7 +2,8 @@ import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
 
 export default class ToggleYesno extends Component {
   get yes() {
@@ -25,9 +26,9 @@ export default class ToggleYesno extends Component {
     >
       <span class="switch-handle" data-test-handle>
         {{#if this.yes}}
-          <FaIcon role="presentation" @icon="plus" />
+          <FaIcon role="presentation" @icon={{faPlus}} />
         {{else}}
-          <FaIcon role="presentation" @icon="minus" />
+          <FaIcon role="presentation" @icon={{faMinus}} />
         {{/if}}
       </span>
     </button>

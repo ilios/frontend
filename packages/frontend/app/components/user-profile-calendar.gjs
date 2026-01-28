@@ -7,9 +7,10 @@ import { sortBy } from 'ilios-common/utils/array-helpers';
 import { TrackedAsyncData } from 'ember-async-data';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import IliosCalendarWeek from 'ilios-common/components/ilios-calendar-week';
 import Event from 'ilios-common/classes/event';
+import { faBackward, faForward } from '@fortawesome/free-solid-svg-icons';
 
 export default class UserProfileCalendar extends Component {
   @service fetch;
@@ -70,11 +71,11 @@ export default class UserProfileCalendar extends Component {
           <button
             class="link-button"
             type="button"
-            aria-label={{t "general.back"}}
+            title={{t "general.back"}}
             {{on "click" this.goBack}}
             data-test-go-back
           >
-            <FaIcon @icon="backward" @title={{t "general.back"}} />
+            <FaIcon @icon={{faBackward}} />
           </button>
         </li>
         <li>
@@ -91,11 +92,11 @@ export default class UserProfileCalendar extends Component {
           <button
             class="link-button"
             type="button"
-            aria-label={{t "general.forward"}}
+            title={{t "general.forward"}}
             {{on "click" this.goForward}}
             data-test-go-forward
           >
-            <FaIcon @icon="forward" @title={{t "general.forward"}} />
+            <FaIcon @icon={{faForward}} />
           </button>
         </li>
       </ul>

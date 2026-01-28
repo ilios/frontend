@@ -8,7 +8,7 @@ import { TrackedAsyncData } from 'ember-async-data';
 import { findById, sortBy, uniqueValues } from 'ilios-common/utils/array-helpers';
 import t from 'ember-intl/helpers/t';
 import LoadingSpinner from 'ilios-common/components/loading-spinner';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { on } from '@ember/modifier';
 import pick from 'ilios-common/helpers/pick';
 import sortBy0 from 'ilios-common/helpers/sort-by';
@@ -20,6 +20,12 @@ import not from 'ember-truth-helpers/helpers/not';
 import add from 'ember-math-helpers/helpers/add';
 import { LinkTo } from '@ember/routing';
 import { array } from '@ember/helper';
+import {
+  faBuildingColumns,
+  faCalendar,
+  faCaretRight,
+  faCaretDown,
+} from '@fortawesome/free-solid-svg-icons';
 
 export default class UserProfilePermissionsComponent extends Component {
   @service store;
@@ -472,7 +478,7 @@ export default class UserProfilePermissionsComponent extends Component {
       </h2>
       {{#if this.isLoaded}}
         <span>
-          <FaIcon @icon="building-columns" @fixedWidth={{true}} />
+          <FaIcon @icon={{faBuildingColumns}} @fixedWidth={{true}} />
           <select
             aria-label={{t "general.schools"}}
             {{on "change" (pick "target.value" this.changeSchool)}}
@@ -486,7 +492,7 @@ export default class UserProfilePermissionsComponent extends Component {
           </select>
         </span>
         <span>
-          <FaIcon @icon="calendar" @fixedWidth={{true}} />
+          <FaIcon @icon={{faCalendar}} @fixedWidth={{true}} />
           <select
             aria-label={{t "general.academicYears"}}
             {{on "change" (pick "target.value" this.changeYear)}}
@@ -533,7 +539,7 @@ export default class UserProfilePermissionsComponent extends Component {
                 {{t "general.programs"}}
                 ({{this.directedPrograms.length}})
                 <FaIcon
-                  @icon={{if this.programCollapsed "caret-right" "caret-down"}}
+                  @icon={{if this.programCollapsed faCaretRight faCaretDown}}
                   class="disabled"
                 />
               </button>
@@ -570,7 +576,7 @@ export default class UserProfilePermissionsComponent extends Component {
                 {{t "general.programYears"}}
                 ({{this.directedProgramYears.length}})
                 <FaIcon
-                  @icon={{if this.programYearCollapsed "caret-right" "caret-down"}}
+                  @icon={{if this.programYearCollapsed faCaretRight faCaretDown}}
                   class="disabled"
                 />
               </button>
@@ -613,7 +619,7 @@ export default class UserProfilePermissionsComponent extends Component {
                 {{t "general.courses"}}
                 ({{this.courseCount}})
                 <FaIcon
-                  @icon={{if this.courseCollapsed "caret-right" "caret-down"}}
+                  @icon={{if this.courseCollapsed faCaretRight faCaretDown}}
                   class="disabled"
                 />
               </button>
@@ -732,7 +738,7 @@ export default class UserProfilePermissionsComponent extends Component {
                 {{t "general.sessions"}}
                 ({{this.sessionCount}})
                 <FaIcon
-                  @icon={{if this.sessionCollapsed "caret-right" "caret-down"}}
+                  @icon={{if this.sessionCollapsed faCaretRight faCaretDown}}
                   class="disabled"
                 />
               </button>

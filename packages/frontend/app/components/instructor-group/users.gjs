@@ -6,12 +6,13 @@ import { TrackedAsyncData } from 'ember-async-data';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
 import perform from 'ember-concurrency/helpers/perform';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import set from 'ember-set-helper/helpers/set';
 import InstructorManager from 'frontend/components/instructor-group/instructor-manager';
 import sortBy from 'ilios-common/helpers/sort-by';
 import UserNameInfo from 'ilios-common/components/user-name-info';
 import UserStatus from 'ilios-common/components/user-status';
+import { faArrowRotateLeft, faCheck, faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 export default class InstructorGroupUsersComponent extends Component {
   @tracked usersBuffer = [];
@@ -67,7 +68,7 @@ export default class InstructorGroupUsersComponent extends Component {
               data-test-save
             >
               <FaIcon
-                @icon={{if this.save.isRunning "spinner" "check"}}
+                @icon={{if this.save.isRunning faSpinner faCheck}}
                 @spin={{this.save.isRunning}}
               />
             </button>
@@ -78,7 +79,7 @@ export default class InstructorGroupUsersComponent extends Component {
               {{on "click" (set this "isManaging" false)}}
               data-test-cancel
             >
-              <FaIcon @icon="arrow-rotate-left" />
+              <FaIcon @icon={{faArrowRotateLeft}} />
             </button>
           {{else if @canUpdate}}
             <button type="button" {{on "click" (perform this.manage)}} data-test-manage>

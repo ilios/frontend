@@ -7,8 +7,9 @@ import { on } from '@ember/modifier';
 import { LinkTo } from '@ember/routing';
 import { fn, hash } from '@ember/helper';
 import inViewport from 'ember-in-viewport/modifiers/in-viewport';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import WeekGlance from 'ilios-common/components/week-glance';
+import { faChevronUp } from '@fortawesome/free-solid-svg-icons';
 
 export default class DashboardWeekComponent extends Component {
   @tracked displayBackToTop = false;
@@ -91,7 +92,7 @@ export default class DashboardWeekComponent extends Component {
         {{on "click" this.backToTop}}
         data-test-back-to-top
       >
-        <FaIcon @icon="chevron-up" />
+        <FaIcon @icon={{faChevronUp}} />
         <span>{{t "general.backToTop"}}</span>
       </button>
     </div>

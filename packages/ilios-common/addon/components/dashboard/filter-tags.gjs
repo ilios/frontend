@@ -7,7 +7,8 @@ import t from 'ember-intl/helpers/t';
 import sortBy from 'ilios-common/helpers/sort-by';
 import { on } from '@ember/modifier';
 import { fn } from '@ember/helper';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import { faXmark } from '@fortawesome/free-solid-svg-icons';
 
 export default class DashboardFilterTagsComponent extends Component {
   @service store;
@@ -142,7 +143,7 @@ export default class DashboardFilterTagsComponent extends Component {
                 data-test-filter-tag
               >
                 {{tag.name}}
-                <FaIcon @icon="xmark" />
+                <FaIcon @icon={{faXmark}} />
               </button>
             {{/each}}
             <button

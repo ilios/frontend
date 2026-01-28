@@ -17,7 +17,7 @@ import ObjectiveListItemDescriptors from 'ilios-common/components/course/objecti
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
 import set from 'ember-set-helper/helpers/set';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import ManageObjectiveParents from 'ilios-common/components/course/manage-objective-parents';
 import ManageObjectiveDescriptors from 'ilios-common/components/course/manage-objective-descriptors';
 import TaxonomyManager from 'ilios-common/components/taxonomy-manager';
@@ -25,6 +25,7 @@ import YupValidations from 'ilios-common/classes/yup-validations';
 import YupValidationMessage from 'ilios-common/components/yup-validation-message';
 import { string } from 'yup';
 import striptags from 'striptags';
+import { faSpinner, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 export default class CourseObjectiveListItemComponent extends Component {
   @service store;
@@ -293,10 +294,10 @@ export default class CourseObjectiveListItemComponent extends Component {
               {{on "click" (set this "showRemoveConfirmation" true)}}
               data-test-remove
             >
-              <FaIcon @icon="trash" class="enabled remove" />
+              <FaIcon @icon={{faTrash}} class="enabled remove" />
             </button>
           {{else}}
-            <FaIcon @icon="trash" class="disabled" />
+            <FaIcon @icon={{faTrash}} class="disabled" />
           {{/if}}
         </div>
       {{/if}}
@@ -311,7 +312,7 @@ export default class CourseObjectiveListItemComponent extends Component {
             {{on "click" (perform this.deleteObjective)}}
           >
             {{#if this.deleteObjective.isRunning}}
-              <FaIcon @icon="spinner" @spin={{true}} />
+              <FaIcon @icon={{faSpinner}} @spin={{true}} />
             {{else}}
               {{t "general.yes"}}
             {{/if}}

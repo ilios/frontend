@@ -20,11 +20,12 @@ import mapBy from 'ilios-common/helpers/map-by';
 import sortBy from 'ilios-common/helpers/sort-by';
 import truncate from 'ilios-common/helpers/truncate';
 import scrollIntoView from 'ilios-common/utils/scroll-into-view';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import YupValidations from 'ilios-common/classes/yup-validations';
 import YupValidationMessage from 'ilios-common/components/yup-validation-message';
 import { string } from 'yup';
 import focus from 'ilios-common/modifiers/focus';
+import { faPencil } from '@fortawesome/free-solid-svg-icons';
 
 export default class SessionsGridOffering extends Component {
   @tracked roomBuffer;
@@ -258,9 +259,10 @@ export default class SessionsGridOffering extends Component {
                 class="link-button"
                 data-test-edit
                 type="button"
+                title={{t "general.edit"}}
                 {{on "click" this.toggleEditing}}
               >
-                <FaIcon @icon="pencil" @title={{t "general.edit"}} @ariaHidden={{false}} />
+                <FaIcon @icon={{faPencil}} />
               </button>
             </td>
           {{/if}}

@@ -1,16 +1,17 @@
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import t from 'ember-intl/helpers/t';
 import { LinkTo } from '@ember/routing';
 import LearningMaterialListItem from 'ilios-common/components/week-glance/learning-material-list-item';
+import { faFileSignature, faPersonChalkboard } from '@fortawesome/free-solid-svg-icons';
 <template>
   <div class="week-glance-learning-materials" data-test-learning-materials>
     {{#if @preworkEvents}}
       <ul class="prework" data-test-prework>
         {{#each @preworkEvents as |event|}}
           <li data-test-prework-event>
-            <FaIcon @title={{t "general.preWork"}} @icon="person-chalkboard" />
+            <FaIcon @title={{t "general.preWork"}} @icon={{faPersonChalkboard}} />
             {{#unless event.isPublished}}
-              <FaIcon @title={{t "general.notPublished"}} @icon="file-signature" />
+              <FaIcon @title={{t "general.notPublished"}} @icon={{faFileSignature}} />
             {{/unless}}
             <LinkTo @route="events" @model={{event.slug}}>
               {{event.name}}

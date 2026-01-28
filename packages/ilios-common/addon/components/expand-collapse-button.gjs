@@ -1,5 +1,6 @@
 import { on } from '@ember/modifier';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
 <template>
   <div class="expand-collapse-button" data-test-expand-collapse-button ...attributes>
     {{#if @value}}
@@ -9,7 +10,7 @@ import FaIcon from 'ilios-common/components/fa-icon';
         {{on "click" @action}}
         aria-label={{@collapseButtonLabel}}
       >
-        <FaIcon @icon="minus" />
+        <FaIcon @icon={{faMinus}} />
       </button>
     {{else}}
       <button
@@ -18,7 +19,7 @@ import FaIcon from 'ilios-common/components/fa-icon';
         {{on "click" @action}}
         aria-label={{@expandButtonLabel}}
       >
-        <FaIcon @icon="plus" />
+        <FaIcon @icon={{faPlus}} />
       </button>
     {{/if}}
   </div>

@@ -10,7 +10,7 @@ import { DateTime } from 'luxon';
 import { uniqueId } from '@ember/helper';
 import t from 'ember-intl/helpers/t';
 import { LinkTo } from '@ember/routing';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { on } from '@ember/modifier';
 import EditableField from 'ilios-common/components/editable-field';
 import formatDate from 'ember-intl/helpers/format-date';
@@ -23,6 +23,7 @@ import not from 'ember-truth-helpers/helpers/not';
 import pick from 'ilios-common/helpers/pick';
 import eq from 'ember-truth-helpers/helpers/eq';
 import focus from 'ilios-common/modifiers/focus';
+import { faShuffle, faTable } from '@fortawesome/free-solid-svg-icons';
 
 export default class CurriculumInventoryReportOverviewComponent extends Component {
   @service currentUser;
@@ -240,13 +241,10 @@ export default class CurriculumInventoryReportOverviewComponent extends Componen
               @route="verification-preview"
               @model={{@report}}
               class="verification-preview"
+              title={{t "general.verificationPreviewFor" name=@report.name}}
               data-test-transition-to-verification-preview
             >
-              <FaIcon
-                @icon="table"
-                @fixedWidth={{true}}
-                @title={{t "general.verificationPreviewFor" name=@report.name}}
-              />
+              <FaIcon @icon={{faTable}} @fixedWidth={{true}} />
             </LinkTo>
             {{#if this.showRollover}}
               <button
@@ -257,7 +255,7 @@ export default class CurriculumInventoryReportOverviewComponent extends Componen
                 data-test-transition-to-rollover
               >
                 <FaIcon
-                  @icon="shuffle"
+                  @icon={{faShuffle}}
                   @fixedWidth={{true}}
                   @title={{t "general.curriculumInventoryReportRollover"}}
                 />

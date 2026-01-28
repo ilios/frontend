@@ -6,7 +6,7 @@ import { task, timeout } from 'ember-concurrency';
 import { findById, mapBy, sortBy, uniqueValues } from 'ilios-common/utils/array-helpers';
 import { service } from '@ember/service';
 import { all } from 'rsvp';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
 import pick from 'ilios-common/helpers/pick';
@@ -15,6 +15,7 @@ import eq from 'ember-truth-helpers/helpers/eq';
 import perform from 'ember-concurrency/helpers/perform';
 import Manager from 'frontend/components/assign-students/manager';
 import WaitSaving from 'ilios-common/components/wait-saving';
+import { faBuildingColumns } from '@fortawesome/free-solid-svg-icons';
 
 const DEBOUNCE_DELAY = 250;
 
@@ -131,7 +132,7 @@ export default class AssignStudentsRootComponent extends Component {
     <section class="assign-students-root main-section" data-test-assign-students-root>
       <div class="filters">
         <div class="schoolsfilter" data-test-school-filter>
-          <FaIcon @icon="building-columns" @fixedWidth={{true}} />
+          <FaIcon @icon={{faBuildingColumns}} @fixedWidth={{true}} />
           {{#if this.hasMoreThanOneSchool}}
             <select
               aria-label={{t "general.filterBySchool"}}

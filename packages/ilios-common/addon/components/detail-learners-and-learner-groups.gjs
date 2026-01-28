@@ -10,11 +10,12 @@ import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
 import or from 'ember-truth-helpers/helpers/or';
 import perform from 'ember-concurrency/helpers/perform';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import LearnergroupSelectionManager from 'ilios-common/components/learnergroup-selection-manager';
 import LearnerSelectionManager from 'ilios-common/components/learner-selection-manager';
 import SelectedLearnerGroups from 'ilios-common/components/selected-learner-groups';
 import SelectedLearners from 'ilios-common/components/selected-learners';
+import { faArrowRotateLeft, faCheck } from '@fortawesome/free-solid-svg-icons';
 
 export default class DetailLearnersAndLearnerGroupsComponent extends Component {
   @service currentUser;
@@ -184,7 +185,7 @@ export default class DetailLearnersAndLearnerGroupsComponent extends Component {
               {{on "click" (perform this.save)}}
               data-test-save
             >
-              <FaIcon @icon="check" />
+              <FaIcon @icon={{faCheck}} />
             </button>
             <button
               class="bigcancel"
@@ -193,7 +194,7 @@ export default class DetailLearnersAndLearnerGroupsComponent extends Component {
               {{on "click" this.cancel}}
               data-test-cancel
             >
-              <FaIcon @icon="arrow-rotate-left" />
+              <FaIcon @icon={{faArrowRotateLeft}} />
             </button>
           {{else if @editable}}
             <button type="button" {{on "click" (perform this.manage)}} data-test-manage>

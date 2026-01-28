@@ -15,11 +15,12 @@ import and from 'ember-truth-helpers/helpers/and';
 import not from 'ember-truth-helpers/helpers/not';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import SortableTh from 'ilios-common/components/sortable-th';
 import eq from 'ember-truth-helpers/helpers/eq';
 import { fn } from '@ember/helper';
 import sortBy from 'ilios-common/helpers/sort-by';
+import { faDownload, faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 export default class SchoolVisualizeSessionTypeVocabularyGraphComponent extends Component {
   @service router;
@@ -196,7 +197,7 @@ export default class SchoolVisualizeSessionTypeVocabularyGraphComponent extends 
                 {{on "click" (perform this.downloadData)}}
                 data-test-download-data
               >
-                <FaIcon @icon="download" />
+                <FaIcon @icon={{faDownload}} />
                 {{t "general.download"}}
               </button>
             </div>
@@ -237,7 +238,7 @@ export default class SchoolVisualizeSessionTypeVocabularyGraphComponent extends 
           </div>
         {{/if}}
       {{else}}
-        <FaIcon @icon="spinner" @spin={{true}} />
+        <FaIcon @icon={{faSpinner}} @spin={{true}} />
       {{/if}}
     </div>
   </template>

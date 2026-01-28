@@ -35,7 +35,7 @@ import Members from 'frontend/components/learner-group/members';
 import CourseAssociations from 'frontend/components/learner-group/course-associations';
 import ExpandCollapseButton from 'ilios-common/components/expand-collapse-button';
 import New from 'frontend/components/learner-group/new';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import eq from 'ember-truth-helpers/helpers/eq';
 import List from 'frontend/components/learner-group/list';
 import CohortUserManager from 'frontend/components/learner-group/cohort-user-manager';
@@ -45,6 +45,7 @@ import { string } from 'yup';
 import { pageTitle } from 'ember-page-title';
 import reverse from 'ilios-common/helpers/reverse';
 import focus from 'ilios-common/modifiers/focus';
+import { faSquareUpRight } from '@fortawesome/free-solid-svg-icons';
 
 const DEFAULT_URL_VALUE = 'https://';
 
@@ -726,7 +727,7 @@ export default class LearnerGroupRootComponent extends Component {
               {{#if this.newLearnerGroup}}
                 <div class="saved-result">
                   <LinkTo @route="learner-group" @model={{this.newLearnerGroup}}>
-                    <FaIcon @icon="square-up-right" />
+                    <FaIcon @icon={{faSquareUpRight}} />
                     {{this.newLearnerGroup.title}}
                   </LinkTo>
                   {{t "general.savedSuccessfully"}}

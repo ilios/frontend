@@ -12,12 +12,13 @@ import NewSubject from 'frontend/components/reports/new-subject';
 import perform from 'ember-concurrency/helpers/perform';
 import { LinkTo } from '@ember/routing';
 import { hash } from '@ember/helper';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import SubjectResults from 'frontend/components/reports/subject-results';
 import set from 'ember-set-helper/helpers/set';
 import and from 'ember-truth-helpers/helpers/and';
 import Table from 'frontend/components/reports/table';
 import ListLoading from 'frontend/components/reports/list-loading';
+import { faSquareUpRight } from '@fortawesome/free-solid-svg-icons';
 
 export default class ReportsSubjectsListComponent extends Component {
   @service store;
@@ -207,7 +208,7 @@ export default class ReportsSubjectsListComponent extends Component {
                 @query={{hash reportYear=null}}
                 data-test-report-title
               >
-                <FaIcon @icon="square-up-right" />
+                <FaIcon @icon={{faSquareUpRight}} />
                 {{this.newReport.title}}
               </LinkTo>
               {{t "general.savedSuccessfully"}}

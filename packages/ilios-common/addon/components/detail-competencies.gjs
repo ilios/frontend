@@ -4,7 +4,8 @@ import { action } from '@ember/object';
 import { TrackedAsyncData } from 'ember-async-data';
 import { on } from '@ember/modifier';
 import t from 'ember-intl/helpers/t';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
 
 export default class DetailCompetenciesComponent extends Component {
   @cached
@@ -41,7 +42,7 @@ export default class DetailCompetenciesComponent extends Component {
         >
           {{t "general.competencies"}}
           ({{this.competencyCount}})
-          <FaIcon @icon="caret-down" />
+          <FaIcon @icon={{faCaretDown}} />
         </button>
         <div class="detail-competencies-content">
           <ul class="static-list">

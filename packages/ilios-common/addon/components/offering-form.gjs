@@ -23,7 +23,7 @@ import noop from 'ilios-common/helpers/noop';
 import formatDate from 'ember-intl/helpers/format-date';
 import isEqual from 'ember-truth-helpers/helpers/is-equal';
 import set from 'ember-set-helper/helpers/set';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import ToggleYesno from 'ilios-common/components/toggle-yesno';
 import or from 'ember-truth-helpers/helpers/or';
 import includes from 'ilios-common/helpers/includes';
@@ -35,6 +35,7 @@ import LearnerSelectionManager from 'ilios-common/components/learner-selection-m
 import SaveButton from 'ilios-common/components/save-button';
 import YupValidations from 'ilios-common/classes/yup-validations';
 import YupValidationMessage from 'ilios-common/components/yup-validation-message';
+import { faXmark } from '@fortawesome/free-solid-svg-icons';
 
 const DEBOUNCE_DELAY = 600;
 const DEFAULT_URL_VALUE = 'https://';
@@ -753,7 +754,7 @@ export default class OfferingForm extends Component {
                         type="button"
                         {{on "click" (set this "isEditingTimezone" false)}}
                       >
-                        <FaIcon @icon="xmark" />
+                        <FaIcon @icon={{faXmark}} />
                       </button>
                     </span>
                   </div>

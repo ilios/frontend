@@ -11,7 +11,7 @@ import t from 'ember-intl/helpers/t';
 import not from 'ember-truth-helpers/helpers/not';
 import UserContextFilter from 'ilios-common/components/dashboard/user-context-filter';
 import set from 'ember-set-helper/helpers/set';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { on } from '@ember/modifier';
 import sortBy0 from 'ilios-common/helpers/sort-by';
 import isEqual from 'ember-truth-helpers/helpers/is-equal';
@@ -21,6 +21,7 @@ import CalendarFilters from 'ilios-common/components/dashboard/calendar-filters'
 import isArray from 'ember-truth-helpers/helpers/is-array';
 import FilterTags from 'ilios-common/components/dashboard/filter-tags';
 import IliosCalendar from 'ilios-common/components/ilios-calendar';
+import { faBuildingColumns } from '@fortawesome/free-solid-svg-icons';
 
 export default class DashboardCalendarComponent extends Component {
   @service userEvents;
@@ -327,7 +328,7 @@ export default class DashboardCalendarComponent extends Component {
               </div>
             {{/if}}
             <div class="calendar-options-control calendar-school-picker" data-test-school-picker>
-              <FaIcon @icon="building-columns" />
+              <FaIcon @icon={{faBuildingColumns}} />
               {{#if this.hasMoreThanOneSchool}}
                 <select
                   aria-label={{t "general.schools"}}

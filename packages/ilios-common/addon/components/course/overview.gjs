@@ -11,7 +11,7 @@ import { DateTime } from 'luxon';
 import { uniqueId, hash, fn, concat } from '@ember/helper';
 import t from 'ember-intl/helpers/t';
 import { LinkTo } from '@ember/routing';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import EditableField from 'ilios-common/components/editable-field';
 import perform from 'ember-concurrency/helpers/perform';
 import { on } from '@ember/modifier';
@@ -25,6 +25,7 @@ import formatDate from 'ember-intl/helpers/format-date';
 import DatePicker from 'ilios-common/components/date-picker';
 import pipe from 'ilios-common/helpers/pipe';
 import focus from 'ilios-common/modifiers/focus';
+import { faBoxArchive, faChartColumn, faPrint, faShuffle } from '@fortawesome/free-solid-svg-icons';
 
 export default class CourseOverview extends Component {
   @service currentUser;
@@ -240,28 +241,31 @@ export default class CourseOverview extends Component {
             {{t "general.overview"}}
           </div>
           <div class="course-overview-actions">
-            <LinkTo @route="course-materials" @model={{@course}} class="materials">
-              <FaIcon
-                @icon="box-archive"
-                @title={{t "general.learningMaterialsSummary"}}
-                @fixedWidth={{true}}
-              />
+            <LinkTo
+              @route="course-materials"
+              @model={{@course}}
+              class="materials"
+              title={{t "general.learningMaterialsSummary"}}
+            >
+              <FaIcon @icon={{faBoxArchive}} @fixedWidth={{true}} />
             </LinkTo>
             <LinkTo
               @route="print-course"
               @model={{@course}}
               @query={{hash unpublished=true}}
+              title={{t "general.printSummary"}}
               class="print"
             >
-              <FaIcon @icon="print" @title={{t "general.printSummary"}} @fixedWidth={{true}} />
+              <FaIcon @icon={{faPrint}} @fixedWidth={{true}} />
             </LinkTo>
             {{#if this.showRollover}}
-              <LinkTo @route="course.rollover" @model={{@course}} class="rollover">
-                <FaIcon
-                  @icon="shuffle"
-                  @fixedWidth={{true}}
-                  @title={{t "general.courseRollover"}}
-                />
+              <LinkTo
+                @route="course.rollover"
+                @model={{@course}}
+                class="rollover"
+                title={{t "general.courseRollover"}}
+              >
+                <FaIcon @icon={{faShuffle}} @fixedWidth={{true}} />
               </LinkTo>
             {{/if}}
             <LinkTo
@@ -269,7 +273,7 @@ export default class CourseOverview extends Component {
               @model={{@course}}
               title={{t "general.courseVisualizations"}}
             >
-              <FaIcon @icon="chart-column" />
+              <FaIcon @icon={{faChartColumn}} />
             </LinkTo>
           </div>
         </div>

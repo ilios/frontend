@@ -112,7 +112,7 @@ module('Integration | Component | lm type icon', function (hooks) {
     const lm = createTypedLearningMaterialProxy({ link: 'https://iliosproject.org' });
     this.set('lm', lm);
     await render(<template><LmTypeIcon @type={{this.lm.type}} @listItem={{true}} /></template>);
-    assert.dom('.list-item').exists();
+    assert.dom('.fa-li').exists();
   });
 
   test('no listItem', async function (assert) {

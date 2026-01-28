@@ -4,13 +4,19 @@ import { service } from '@ember/service';
 import { task } from 'ember-concurrency';
 import { TrackedAsyncData } from 'ember-async-data';
 import { cached } from '@glimmer/tracking';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import eq from 'ember-truth-helpers/helpers/eq';
 import t from 'ember-intl/helpers/t';
 import { concat } from '@ember/helper';
 import LoadingSpinner from 'ilios-common/components/loading-spinner';
 import { on } from '@ember/modifier';
 import perform from 'ember-concurrency/helpers/perform';
+import {
+  faBan,
+  faCircleArrowUp,
+  faTriangleExclamation,
+  faXmark,
+} from '@fortawesome/free-solid-svg-icons';
 
 export default class PendingSingleUserUpdateComponent extends Component {
   @service flashMessages;
@@ -67,7 +73,7 @@ export default class PendingSingleUserUpdateComponent extends Component {
       {{#each this.updates as |update|}}
         <div class="update" data-test-update>
           <div class="explanation" data-test-explanation>
-            <FaIcon @icon="triangle-exclamation" class="no" />
+            <FaIcon @icon={{faTriangleExclamation}} class="no" />
             {{#if (eq update.type "emailMismatch")}}
               {{t
                 "general.pendingUserUpdates.emailMismatch"
@@ -88,7 +94,7 @@ export default class PendingSingleUserUpdateComponent extends Component {
                   {{on "click" (perform this.updateEmailAddress update)}}
                   data-test-update-email
                 >
-                  <FaIcon @icon="circle-arrow-up" class="yes" @title={{t "general.update"}} />
+                  <FaIcon @icon={{faCircleArrowUp}} class="yes" />
                   {{t "general.pendingUserUpdates.updateIlios"}}
                 </button>
               {{/if}}
@@ -97,11 +103,11 @@ export default class PendingSingleUserUpdateComponent extends Component {
                 {{on "click" (perform this.excludeFromSync)}}
                 data-test-exclude-from-sync
               >
-                <FaIcon @icon="ban" class="no" @title={{t "general.excludeFromSync"}} />
+                <FaIcon @icon={{faBan}} class="no" />
                 {{t "general.excludeFromSync"}}
               </button>
               <button type="button" {{on "click" (perform this.disableUser)}} data-test-disable>
-                <FaIcon @icon="xmark" class="no" @title={{t "general.disableUser"}} />
+                <FaIcon @icon={{faXmark}} class="no" />
                 {{t "general.disableUser"}}
               </button>
             {{/if}}

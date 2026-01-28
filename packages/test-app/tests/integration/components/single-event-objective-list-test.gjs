@@ -40,7 +40,7 @@ module('Integration | Component | ilios calendar single event objective list', f
     assert.strictEqual(component.title.expandCollapseSwitcher.text, 'Course Objectives (2)');
     assert.strictEqual(component.title.expandCollapseSwitcher.ariaExpanded, 'true');
     assert.strictEqual(component.title.expandCollapseSwitcher.ariaLabel, 'Hide objectives');
-    assert.strictEqual(component.title.displayModeSwitcher.text, listByPriorityPhrase);
+    assert.strictEqual(component.title.displayModeSwitcher.title, listByPriorityPhrase);
     assert.ok(component.title.displayModeSwitcher.isListMode);
     assert.ok(component.tree.isVisible);
     assert.notOk(component.list.isVisible);
@@ -55,7 +55,7 @@ module('Integration | Component | ilios calendar single event objective list', f
     assert.notOk(component.noContent.isVisible);
 
     await component.title.displayModeSwitcher.toggle();
-    assert.strictEqual(component.title.displayModeSwitcher.text, groupByCompetenciesPhrase);
+    assert.strictEqual(component.title.displayModeSwitcher.title, groupByCompetenciesPhrase);
     assert.notOk(component.title.displayModeSwitcher.isListMode);
     assert.notOk(component.tree.isVisible);
     assert.ok(component.list.isVisible);

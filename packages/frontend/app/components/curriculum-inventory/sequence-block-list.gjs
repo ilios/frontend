@@ -8,9 +8,10 @@ import ExpandCollapseButton from 'ilios-common/components/expand-collapse-button
 import NewSequenceBlock from 'frontend/components/curriculum-inventory/new-sequence-block';
 import perform from 'ember-concurrency/helpers/perform';
 import { LinkTo } from '@ember/routing';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import sortBy from 'ilios-common/helpers/sort-by';
 import SequenceBlockListItem from 'frontend/components/curriculum-inventory/sequence-block-list-item';
+import { faSquareUpRight } from '@fortawesome/free-solid-svg-icons';
 
 export default class SequenceBlockListComponent extends Component {
   @service store;
@@ -81,7 +82,7 @@ export default class SequenceBlockListComponent extends Component {
         {{#if this.savedBlock}}
           <div class="saved-result">
             <LinkTo @route="curriculum-inventory-sequence-block" @model={{this.savedBlock}}>
-              <FaIcon @icon="square-up-right" />
+              <FaIcon @icon={{faSquareUpRight}} />
               {{this.savedBlock.title}}
             </LinkTo>
             {{t "general.savedSuccessfully"}}

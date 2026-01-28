@@ -11,12 +11,13 @@ import { on } from '@ember/modifier';
 import t from 'ember-intl/helpers/t';
 import pick from 'ilios-common/helpers/pick';
 import LoadingSpinner from 'ilios-common/components/loading-spinner';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import notEq from 'ember-truth-helpers/helpers/not-eq';
 import and from 'ember-truth-helpers/helpers/and';
 import eq from 'ember-truth-helpers/helpers/eq';
 import gt from 'ember-truth-helpers/helpers/gt';
 import perform from 'ember-concurrency/helpers/perform';
+import { faCheck, faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
 
 export default class LearnerGroupUploadDataComponent extends Component {
   @service store;
@@ -355,13 +356,13 @@ export default class LearnerGroupUploadDataComponent extends Component {
                 <td colspan="1">
                   {{#if user.hasWarning}}
                     <FaIcon
-                      @icon="triangle-exclamation"
+                      @icon={{faTriangleExclamation}}
                       class="warning"
                       @title={{user.warning}}
                       data-test-warning
                     />
                   {{else}}
-                    <FaIcon @icon="check" class="yes" />
+                    <FaIcon @icon={{faCheck}} class="yes" />
                   {{/if}}
                 </td>
                 <td colspan="3">

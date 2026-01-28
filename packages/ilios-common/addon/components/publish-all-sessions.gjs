@@ -10,13 +10,19 @@ import { on } from '@ember/modifier';
 import set from 'ember-set-helper/helpers/set';
 import not from 'ember-truth-helpers/helpers/not';
 import t from 'ember-intl/helpers/t';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { LinkTo } from '@ember/routing';
 import { fn, hash } from '@ember/helper';
 import includes from 'ilios-common/helpers/includes';
 import mapBy from 'ilios-common/helpers/map-by';
 import SaveButton from 'ilios-common/components/save-button';
 import perform from 'ember-concurrency/helpers/perform';
+import {
+  faChartColumn,
+  faLinkSlash,
+  faCaretRight,
+  faCaretDown,
+} from '@fortawesome/free-solid-svg-icons';
 
 export default class PublishAllSessionsComponent extends Component {
   @service store;
@@ -214,7 +220,7 @@ export default class PublishAllSessionsComponent extends Component {
           >
             {{t "general.incompleteSessions"}}
             ({{this.unPublishableSessions.length}})
-            <FaIcon @icon={{if this.unPublishableCollapsed "caret-right" "caret-down"}} />
+            <FaIcon @icon={{if this.unPublishableCollapsed faCaretRight faCaretDown}} />
           </button>
         </div>
         {{#unless this.unPublishableCollapsed}}
@@ -279,7 +285,7 @@ export default class PublishAllSessionsComponent extends Component {
                             title={{t "general.backToTitle" title=session.title}}
                             data-test-session-link
                           >
-                            <FaIcon @icon="link-slash" />
+                            <FaIcon @icon={{faLinkSlash}} />
                           </LinkTo>
                         {{/if}}
                       </td>
@@ -317,7 +323,7 @@ export default class PublishAllSessionsComponent extends Component {
           >
             {{t "general.completeSessions"}}
             ({{this.publishableSessions.length}})
-            <FaIcon @icon={{if this.publishableCollapsed "caret-right" "caret-down"}} />
+            <FaIcon @icon={{if this.publishableCollapsed faCaretRight faCaretDown}} />
           </button>
         </div>
         {{#unless this.publishableCollapsed}}
@@ -382,7 +388,7 @@ export default class PublishAllSessionsComponent extends Component {
                             title={{t "general.backToTitle" title=session.title}}
                             data-test-session-link
                           >
-                            <FaIcon @icon="link-slash" />
+                            <FaIcon @icon={{faLinkSlash}} />
                           </LinkTo>
                         {{/if}}
                       </td>
@@ -520,7 +526,7 @@ export default class PublishAllSessionsComponent extends Component {
                             title={{t "general.backToTitle" title=session.title}}
                             data-test-session-link
                           >
-                            <FaIcon @icon="link-slash" />
+                            <FaIcon @icon={{faLinkSlash}} />
                           </LinkTo>
                         {{/if}}
                       </td>
@@ -558,7 +564,7 @@ export default class PublishAllSessionsComponent extends Component {
             title={{t "general.backToTitle" title=@course.title}}
             data-test-course-link
           >
-            <FaIcon @icon="link-slash" />
+            <FaIcon @icon={{faLinkSlash}} />
           </LinkTo>
           <LinkTo
             @route="course-visualize-objectives"
@@ -566,7 +572,7 @@ export default class PublishAllSessionsComponent extends Component {
             title={{t "general.courseVisualizations"}}
             data-test-visualize
           >
-            <FaIcon @icon="chart-column" />
+            <FaIcon @icon={{faChartColumn}} />
           </LinkTo>
         {{/if}}
         <p data-test-confirmation>

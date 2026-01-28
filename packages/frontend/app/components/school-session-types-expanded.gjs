@@ -7,7 +7,7 @@ import { findById } from 'ilios-common/utils/array-helpers';
 import { TrackedAsyncData } from 'ember-async-data';
 import { on } from '@ember/modifier';
 import t from 'ember-intl/helpers/t';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import and from 'ember-truth-helpers/helpers/and';
 import not from 'ember-truth-helpers/helpers/not';
 import ExpandCollapseButton from 'ilios-common/components/expand-collapse-button';
@@ -16,6 +16,7 @@ import SchoolSessionTypeForm from 'frontend/components/school-session-type-form'
 import perform from 'ember-concurrency/helpers/perform';
 import SchoolSessionTypeManager from 'frontend/components/school-session-type-manager';
 import SchoolSessionTypesList from 'frontend/components/school-session-types-list';
+import { faCaretDown, faSquareUpRight } from '@fortawesome/free-solid-svg-icons';
 
 export default class SchoolSessionTypesExpandedComponent extends Component {
   @service store;
@@ -115,7 +116,7 @@ export default class SchoolSessionTypesExpandedComponent extends Component {
           >
             {{t "general.sessionTypes"}}
             ({{this.sessionTypes.length}})
-            <FaIcon @icon="caret-down" />
+            <FaIcon @icon={{faCaretDown}} />
           </button>
         {{else}}
           <div class="title" data-test-title>
@@ -161,7 +162,7 @@ export default class SchoolSessionTypesExpandedComponent extends Component {
               type="button"
               {{on "click" (fn @setSchoolManagedSessionType @newSavedSessionType.id)}}
             >
-              <FaIcon @icon="square-up-right" />
+              <FaIcon @icon={{faSquareUpRight}} />
               {{@newSavedSessionType.title}}
             </button>
             {{t "general.savedSuccessfully"}}

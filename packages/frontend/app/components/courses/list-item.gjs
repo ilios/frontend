@@ -10,7 +10,8 @@ import PublicationStatus from 'ilios-common/components/publication-status';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
 import { fn } from '@ember/helper';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import { faLock, faLockOpen, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 export default class CoursesListItemComponent extends Component {
   @service permissionChecker;
@@ -85,10 +86,10 @@ export default class CoursesListItemComponent extends Component {
                 {{on "click" (fn @unlockCourse @course)}}
                 data-test-unlock
               >
-                <FaIcon @icon="lock" />
+                <FaIcon @icon={{faLock}} />
               </button>
             {{else}}
-              <FaIcon @icon="lock" class="disabled" />
+              <FaIcon @icon={{faLock}} class="disabled" />
             {{/if}}
           {{else if this.canLock}}
             <button
@@ -98,10 +99,10 @@ export default class CoursesListItemComponent extends Component {
               {{on "click" (fn @lockCourse @course)}}
               data-test-lock
             >
-              <FaIcon @icon="lock-open" />
+              <FaIcon @icon={{faLockOpen}} />
             </button>
           {{else}}
-            <FaIcon @icon="lock-open" class="disabled" />
+            <FaIcon @icon={{faLockOpen}} class="disabled" />
           {{/if}}
           {{#if this.canDelete}}
             <button
@@ -111,10 +112,10 @@ export default class CoursesListItemComponent extends Component {
               {{on "click" (fn @confirmRemoval @course)}}
               data-test-remove
             >
-              <FaIcon @icon="trash" class="enabled" />
+              <FaIcon @icon={{faTrash}} class="enabled" />
             </button>
           {{else}}
-            <FaIcon @icon="trash" class="disabled" />
+            <FaIcon @icon={{faTrash}} class="disabled" />
           {{/if}}
         {{/if}}
       </td>

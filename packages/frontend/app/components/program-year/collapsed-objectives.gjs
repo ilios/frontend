@@ -4,9 +4,10 @@ import { TrackedAsyncData } from 'ember-async-data';
 import { on } from '@ember/modifier';
 import t from 'ember-intl/helpers/t';
 import { get } from '@ember/helper';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import eq from 'ember-truth-helpers/helpers/eq';
 import gte from 'ember-truth-helpers/helpers/gte';
+import { faBan, faCaretRight, faCircle } from '@fortawesome/free-solid-svg-icons';
 
 export default class ProgramYearCollapsedObjectivesComponent extends Component {
   @cached
@@ -53,7 +54,7 @@ export default class ProgramYearCollapsedObjectivesComponent extends Component {
         >
           {{t "general.objectives"}}
           ({{get this.objectives "length"}})
-          <FaIcon @icon="caret-right" data-test-expand />
+          <FaIcon @icon={{faCaretRight}} data-test-expand />
         </button>
       </div>
       <div class="content">
@@ -83,29 +84,29 @@ export default class ProgramYearCollapsedObjectivesComponent extends Component {
                 {{#if
                   (eq (get this.objectivesWithCompetency "length") (get this.objectives "length"))
                 }}
-                  <FaIcon @icon="circle" class="yes" />
+                  <FaIcon @icon={{faCircle}} class="yes" />
                 {{else if (gte (get this.objectivesWithCompetency "length") 1)}}
-                  <FaIcon @icon="circle" class="maybe" />
+                  <FaIcon @icon={{faCircle}} class="maybe" />
                 {{else}}
-                  <FaIcon @icon="ban" class="no" />
+                  <FaIcon @icon={{faBan}} class="no" />
                 {{/if}}
               </td>
               <td class="text-middle text-center" rowspan="3" data-test-term-status>
                 {{#if (eq (get this.objectivesWithTerms "length") (get this.objectives "length"))}}
-                  <FaIcon @icon="circle" class="yes" />
+                  <FaIcon @icon={{faCircle}} class="yes" />
                 {{else if (gte (get this.objectivesWithTerms "length") 1)}}
-                  <FaIcon @icon="circle" class="maybe" />
+                  <FaIcon @icon={{faCircle}} class="maybe" />
                 {{else}}
-                  <FaIcon @icon="ban" class="no" />
+                  <FaIcon @icon={{faBan}} class="no" />
                 {{/if}}
               </td>
               <td class="text-middle text-center" rowspan="3" data-test-mesh-status>
                 {{#if (eq (get this.objectivesWithMesh "length") (get this.objectives "length"))}}
-                  <FaIcon @icon="circle" class="yes" />
+                  <FaIcon @icon={{faCircle}} class="yes" />
                 {{else if (gte (get this.objectivesWithMesh "length") 1)}}
-                  <FaIcon @icon="circle" class="maybe" />
+                  <FaIcon @icon={{faCircle}} class="maybe" />
                 {{else}}
-                  <FaIcon @icon="ban" class="no" />
+                  <FaIcon @icon={{faBan}} class="no" />
                 {{/if}}
               </td>
             </tr>

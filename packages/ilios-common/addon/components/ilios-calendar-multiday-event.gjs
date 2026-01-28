@@ -5,7 +5,9 @@ import { on } from '@ember/modifier';
 import { fn } from '@ember/helper';
 import formatDate from 'ember-intl/helpers/format-date';
 import t from 'ember-intl/helpers/t';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import { faBlackTie } from '@fortawesome/free-brands-svg-icons';
+import { faCalendarCheck, faCalendarMinus, faFlask } from '@fortawesome/free-solid-svg-icons';
 
 export default class IliosCalendarMultidayEventComponent extends Component {
   get isIlm() {
@@ -61,25 +63,24 @@ export default class IliosCalendarMultidayEventComponent extends Component {
       <span class="session-attributes" data-test-session-attributes>
         {{#if @event.attireRequired}}
           <FaIcon
-            @icon="black-tie"
-            @prefix="brands"
+            @icon={{faBlackTie}}
             @ariaHidden={{false}}
             @title={{t "general.whitecoatsSlashSpecialAttire"}}
           />
         {{/if}}
         {{#if @event.equipmentRequired}}
-          <FaIcon @icon="flask" @ariaHidden={{false}} @title={{t "general.specialEquipment"}} />
+          <FaIcon @icon={{faFlask}} @ariaHidden={{false}} @title={{t "general.specialEquipment"}} />
         {{/if}}
         {{#if @event.attendanceRequired}}
           <FaIcon
-            @icon="calendar-check"
+            @icon={{faCalendarCheck}}
             @ariaHidden={{false}}
             @title={{t "general.attendanceIsRequired"}}
           />
         {{/if}}
         {{#if @event.supplemental}}
           <FaIcon
-            @icon="calendar-minus"
+            @icon={{faCalendarMinus}}
             @ariaHidden={{false}}
             @title={{t "general.supplementalCurriculum"}}
           />

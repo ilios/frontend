@@ -12,9 +12,10 @@ import New from 'frontend/components/program-year/new';
 import perform from 'ember-concurrency/helpers/perform';
 import { LinkTo } from '@ember/routing';
 import { array } from '@ember/helper';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import add from 'ember-math-helpers/helpers/add';
 import ListItem from 'frontend/components/program-year/list-item';
+import { faSquareUpRight } from '@fortawesome/free-solid-svg-icons';
 
 export default class ProgramYearListComponent extends Component {
   @service store;
@@ -162,7 +163,7 @@ export default class ProgramYearListComponent extends Component {
           {{#if this.savedProgramYear}}
             <div class="saved-result">
               <LinkTo @route="program-year" @models={{array @program this.savedProgramYear}}>
-                <FaIcon @icon="square-up-right" />
+                <FaIcon @icon={{faSquareUpRight}} />
                 {{#if this.academicYearCrossesCalendarYearBoundaries}}
                   {{this.savedProgramYear.startYear}}
                   -

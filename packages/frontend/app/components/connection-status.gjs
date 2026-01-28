@@ -3,11 +3,12 @@ import { tracked } from '@glimmer/tracking';
 import { task, timeout } from 'ember-concurrency';
 import { registerDestructor } from '@ember/destroyable';
 import { action } from '@ember/object';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
 import perform from 'ember-concurrency/helpers/perform';
 import toggle from 'ilios-common/helpers/toggle';
+import { faCircleExclamation, faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
 
 export default class ConnectionStatusComponent extends Component {
   @tracked isOnline = true;
@@ -94,12 +95,12 @@ export default class ConnectionStatusComponent extends Component {
       {{#unless this.isOnline}}
         {{#if this.unableToReconnect}}
           <p class="unable-to-reconnect">
-            <FaIcon @icon="triangle-exclamation" />
+            <FaIcon @icon={{faTriangleExclamation}} />
             {{t "general.unableToReconnect"}}
           </p>
         {{else}}
           <p>
-            <FaIcon @icon="circle-exclamation" />
+            <FaIcon @icon={{faCircleExclamation}} />
             {{t "general.connectionLost"}}
             {{#unless this.stopAttemptingToReconnect}}
               {{t "general.reconnectionSeconds" count=this.timer}}

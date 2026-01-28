@@ -3,9 +3,10 @@ import sortBy from 'ilios-common/helpers/sort-by';
 import { on } from '@ember/modifier';
 import { fn } from '@ember/helper';
 import UserNameInfo from 'ilios-common/components/user-name-info';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import UserSearch from 'ilios-common/components/user-search';
 import UserStatus from 'ilios-common/components/user-status';
+import { faXmark } from '@fortawesome/free-solid-svg-icons';
 
 <template>
   <section
@@ -22,7 +23,7 @@ import UserStatus from 'ilios-common/components/user-status';
               <button type="button" {{on "click" (fn @remove user)}} data-test-remove>
                 <UserStatus @user={{user}} />
                 <UserNameInfo @user={{user}} />
-                <FaIcon @icon="xmark" class="remove" />
+                <FaIcon @icon={{faXmark}} class="remove" />
               </button>
             </li>
           {{/each}}

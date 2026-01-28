@@ -8,7 +8,7 @@ import { findById, sortBy } from 'ilios-common/utils/array-helpers';
 import { on } from '@ember/modifier';
 import set from 'ember-set-helper/helpers/set';
 import not from 'ember-truth-helpers/helpers/not';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import t from 'ember-intl/helpers/t';
 import and from 'ember-truth-helpers/helpers/and';
 import EditableField from 'ilios-common/components/editable-field';
@@ -27,6 +27,14 @@ import YupValidationMessage from 'ilios-common/components/yup-validation-message
 import { string } from 'yup';
 import striptags from 'striptags';
 import FadeText from 'ilios-common/components/fade-text';
+import {
+  faCaretDown,
+  faCaretRight,
+  faSpinner,
+  faToggleOff,
+  faToggleOn,
+  faTrash,
+} from '@fortawesome/free-solid-svg-icons';
 
 export default class ProgramYearObjectiveListItemComponent extends Component {
   @service store;
@@ -276,18 +284,20 @@ export default class ProgramYearObjectiveListItemComponent extends Component {
             class="collapse-row"
             type="button"
             {{on "click" (perform this.collapseObjective)}}
+            title={{t "general.collapseDetail"}}
             data-test-toggle-collapse
           >
-            <FaIcon @icon="caret-down" @title={{t "general.collapseDetail"}} />
+            <FaIcon @icon={{faCaretDown}} />
           </button>
         {{else}}
           <button
             class="expand-row"
             type="button"
             {{on "click" (perform this.expandObjective)}}
+            title={{t "general.expand"}}
             data-test-toggle-expand
           >
-            <FaIcon @icon="caret-right" @title={{t "general.expand"}} />
+            <FaIcon @icon={{faCaretRight}} />
           </button>
         {{/if}}
       </div>
@@ -369,26 +379,28 @@ export default class ProgramYearObjectiveListItemComponent extends Component {
                 class="active"
                 type="button"
                 {{on "click" (perform this.saveIsActive false)}}
+                title={{t "general.deactivate"}}
                 data-test-deactivate
               >
-                <FaIcon @icon="toggle-on" @title={{t "general.deactivate"}} />
+                <FaIcon @icon={{faToggleOn}} />
               </button>
             {{else}}
               <button
                 class="active"
                 type="button"
                 {{on "click" (perform this.saveIsActive true)}}
+                title={{t "general.activate"}}
                 data-test-activate
               >
-                <FaIcon @icon="toggle-off" @title={{t "general.activate"}} />
+                <FaIcon @icon={{faToggleOff}} />
               </button>
             {{/if}}
           {{/if}}
         {{else}}
           {{#if @programYearObjective.active}}
-            <FaIcon @icon="toggle-on" @title={{t "general.active"}} />
+            <FaIcon @icon={{faToggleOn}} @title={{t "general.active"}} />
           {{else}}
-            <FaIcon @icon="toggle-off" @title={{t "general.inactive"}} />
+            <FaIcon @icon={{faToggleOff}} @title={{t "general.inactive"}} />
           {{/if}}
         {{/if}}
         {{#if
@@ -401,10 +413,10 @@ export default class ProgramYearObjectiveListItemComponent extends Component {
             aria-label={{t "general.remove"}}
             data-test-remove
           >
-            <FaIcon @icon="trash" class="enabled remove" />
+            <FaIcon @icon={{faTrash}} class="enabled remove" />
           </button>
         {{else}}
-          <FaIcon @icon="trash" class="disabled" />
+          <FaIcon @icon={{faTrash}} class="disabled" />
         {{/if}}
       </div>
 
@@ -418,7 +430,7 @@ export default class ProgramYearObjectiveListItemComponent extends Component {
             {{on "click" (perform this.deleteObjective)}}
           >
             {{#if this.deleteObjective.isRunning}}
-              <FaIcon @icon="spinner" @spin={{true}} />
+              <FaIcon @icon={{faSpinner}} @spin={{true}} />
             {{else}}
               {{t "general.yes"}}
             {{/if}}

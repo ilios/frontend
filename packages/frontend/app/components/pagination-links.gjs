@@ -3,9 +3,10 @@ import { action } from '@ember/object';
 import gt from 'ember-truth-helpers/helpers/gt';
 import { on } from '@ember/modifier';
 import { fn } from '@ember/helper';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import t from 'ember-intl/helpers/t';
 import eq from 'ember-truth-helpers/helpers/eq';
+import { faAngleLeft, faAngleRight, faEllipsis } from '@fortawesome/free-solid-svg-icons';
 
 export default class PaginationLinksComponent extends Component {
   get disablePrev() {
@@ -62,12 +63,12 @@ export default class PaginationLinksComponent extends Component {
           disabled={{this.disablePrev}}
           data-test-prev
         >
-          <FaIcon @icon="angle-left" />
+          <FaIcon @icon={{faAngleLeft}} />
           {{t "general.prev"}}
         </button>
         {{#each this.pages as |pageNumber|}}
           {{#if (eq pageNumber "...")}}
-            <FaIcon @icon="ellipsis" />
+            <FaIcon @icon={{faEllipsis}} />
           {{else}}
             <button
               type="button"
@@ -90,7 +91,7 @@ export default class PaginationLinksComponent extends Component {
           data-test-next
         >
           {{t "general.next"}}
-          <FaIcon @icon="angle-right" />
+          <FaIcon @icon={{faAngleRight}} />
         </button>
       {{/if}}
     </div>

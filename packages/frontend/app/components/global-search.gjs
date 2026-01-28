@@ -6,7 +6,7 @@ import GlobalSearchBox from 'frontend/components/global-search-box';
 import and from 'ember-truth-helpers/helpers/and';
 import not from 'ember-truth-helpers/helpers/not';
 import gt from 'ember-truth-helpers/helpers/gt';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import t from 'ember-intl/helpers/t';
 import CourseSearchResult from 'frontend/components/course-search-result';
 import { on } from '@ember/modifier';
@@ -16,6 +16,7 @@ import includes from 'ilios-common/helpers/includes';
 import PaginationLinks from 'frontend/components/pagination-links';
 import { htmlSafe } from '@ember/template';
 import { modifier } from 'ember-modifier';
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 const COURSES_PER_PAGE = 10;
 
@@ -142,7 +143,7 @@ export default class GlobalSearchComponent extends Component {
       >
         {{#if this.resultsData.isPending}}
           <li class="searching" data-test-searching>
-            <FaIcon @icon="spinner" class="orange" @spin={{true}} />
+            <FaIcon @icon={{faSpinner}} class="orange" @spin={{true}} />
             {{t "general.currentlySearchingPrompt"}}
           </li>
         {{else}}

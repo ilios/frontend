@@ -8,7 +8,7 @@ import { uniqueId, fn } from '@ember/helper';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
 import MeshDescriptorLastTreeNumber from 'ilios-common/components/mesh-descriptor-last-tree-number';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import onClickOutside from 'ember-click-outside/modifiers/on-click-outside';
 import and from 'ember-truth-helpers/helpers/and';
 import lte from 'ember-truth-helpers/helpers/lte';
@@ -16,6 +16,7 @@ import includes from 'ilios-common/helpers/includes';
 import mapBy0 from 'ilios-common/helpers/map-by';
 import perform from 'ember-concurrency/helpers/perform';
 import focus from 'ilios-common/modifiers/focus';
+import { faXmark, faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 const DEBOUNCE_TIMEOUT = 250;
 const MIN_INPUT = 3;
@@ -140,7 +141,7 @@ export default class MeshManagerComponent extends Component {
                         <MeshDescriptorLastTreeNumber @descriptor={{term}} />
                       {{/if}}
                     </span>
-                    <FaIcon @icon="xmark" class="remove" />
+                    <FaIcon @icon={{faXmark}} class="remove" />
                   </button>
                 {{else}}
                   <span class="term-title">
@@ -233,10 +234,9 @@ export default class MeshManagerComponent extends Component {
                 {{on "click" (perform this.searchMore)}}
                 data-test-show-more
               >
-                <FaIcon
-                  @icon={{if this.searchMore.isRunning "spinner"}}
-                  @spin={{if this.searchMore.isRunning true false}}
-                />
+                {{#if this.searchMore.isRunning}}
+                  <FaIcon @icon={{faSpinner}} @spin={{true}} />
+                {{/if}}
                 {{t "general.showMore"}}
               </button>
             {{/if}}

@@ -8,12 +8,19 @@ import sortCohorts from 'frontend/utils/sort-cohorts';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
 import { fn } from '@ember/helper';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import gt from 'ember-truth-helpers/helpers/gt';
 import pick from 'ilios-common/helpers/pick';
 import sortBy from 'ilios-common/helpers/sort-by';
 import eq from 'ember-truth-helpers/helpers/eq';
 import LoadingSpinner from 'ilios-common/components/loading-spinner';
+import {
+  faBuildingColumns,
+  faPlus,
+  faTurnDown,
+  faTurnUp,
+  faXmark,
+} from '@fortawesome/free-solid-svg-icons';
 
 export default class UserProfileCohortsManagerComponent extends Component {
   @service currentUser;
@@ -83,13 +90,10 @@ export default class UserProfileCohortsManagerComponent extends Component {
             type="button"
             class="link-button"
             {{on "click" (fn @setPrimaryCohort null)}}
+            title={{t "general.removePrimaryCohort"}}
             data-test-remove
           >
-            <FaIcon
-              @icon="turn-down"
-              class="clickable remove"
-              @title={{t "general.removePrimaryCohort"}}
-            />
+            <FaIcon @icon={{faTurnDown}} class="clickable remove" />
           </button>
           <span data-test-title>
             {{@primaryCohort.programYear.program.school.title}}
@@ -113,25 +117,19 @@ export default class UserProfileCohortsManagerComponent extends Component {
                 class="link-button"
                 type="button"
                 {{on "click" (fn @setPrimaryCohort cohort)}}
+                title={{t "general.promoteToPrimaryCohort"}}
                 data-test-promote
               >
-                <FaIcon
-                  @icon="turn-up"
-                  class="clickable add"
-                  @title={{t "general.promoteToPrimaryCohort"}}
-                />
+                <FaIcon @icon={{faTurnUp}} class="clickable add" />
               </button>
               <button
                 class="link-button"
                 type="button"
                 {{on "click" (fn @removeSecondaryCohort cohort)}}
+                title={{t "general.removeCohort"}}
                 data-test-remove
               >
-                <FaIcon
-                  @icon="xmark"
-                  class="clickable remove"
-                  @title={{t "general.removeCohort"}}
-                />
+                <FaIcon @icon={{faXmark}} class="clickable remove" />
               </button>
               <span data-test-title>
                 {{cohort.programYear.program.school.title}}
@@ -155,7 +153,7 @@ export default class UserProfileCohortsManagerComponent extends Component {
           {{t "general.availableCohorts"}}
         </h3>
         <div class="schoolsfilter" data-test-schools>
-          <FaIcon @icon="building-columns" @fixedWidth={{true}} />
+          <FaIcon @icon={{faBuildingColumns}} @fixedWidth={{true}} />
           {{#if (gt @schools.length 1)}}
             <select
               aria-label={{t "general.schools"}}
@@ -183,9 +181,10 @@ export default class UserProfileCohortsManagerComponent extends Component {
                   type="button"
                   class="link-button"
                   {{on "click" (fn @addSecondaryCohort cohort)}}
+                  title={{t "general.addCohort"}}
                   data-test-add
                 >
-                  <FaIcon @icon="plus" class="clickable add" @title={{t "general.addCohort"}} />
+                  <FaIcon @icon={{faPlus}} class="clickable add" />
                 </button>
                 <span data-test-title>
                   <strong>

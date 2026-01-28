@@ -38,7 +38,7 @@
       visibility: visible;
     }
 
-    .awesome-icon {
+    svg {
       margin-right: 0;
 
       @include m.for-tablet-and-up {

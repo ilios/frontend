@@ -4,12 +4,13 @@ import { action } from '@ember/object';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
 import { fn } from '@ember/helper';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import sortBy from 'ilios-common/helpers/sort-by';
 import UserNameInfo from 'ilios-common/components/user-name-info';
 import InstructorGroupMembersList from 'frontend/components/learner-group/instructor-group-members-list';
 import UserSearch from 'ilios-common/components/user-search';
 import UserStatus from 'ilios-common/components/user-status';
+import { faArrowRotateLeft, faCheck, faUsers, faXmark } from '@fortawesome/free-solid-svg-icons';
 
 export default class LearnerGroupInstructorManagerComponent extends Component {
   @tracked instructors = [];
@@ -66,7 +67,7 @@ export default class LearnerGroupInstructorManagerComponent extends Component {
               {{on "click" (fn @save this.instructors this.instructorGroups)}}
               data-test-save
             >
-              <FaIcon @icon="check" />
+              <FaIcon @icon={{faCheck}} />
             </button>
             <button
               type="button"
@@ -75,7 +76,7 @@ export default class LearnerGroupInstructorManagerComponent extends Component {
               {{on "click" @cancel}}
               data-test-cancel
             >
-              <FaIcon @icon="arrow-rotate-left" />
+              <FaIcon @icon={{faArrowRotateLeft}} />
             </button>
           </div>
         </div>
@@ -96,7 +97,7 @@ export default class LearnerGroupInstructorManagerComponent extends Component {
                 >
                   <UserStatus @user={{user}} />
                   <UserNameInfo @user={{user}} />
-                  <FaIcon @icon="xmark" class="remove" />
+                  <FaIcon @icon={{faXmark}} class="remove" />
                 </button>
               </li>
             {{/each}}
@@ -115,9 +116,9 @@ export default class LearnerGroupInstructorManagerComponent extends Component {
                   data-test-instructor-group-title
                   {{on "click" (fn this.removeInstructorGroup instructorGroup)}}
                 >
-                  <FaIcon @icon="users" />
+                  <FaIcon @icon={{faUsers}} />
                   {{instructorGroup.title}}
-                  <FaIcon @icon="xmark" class="remove" />
+                  <FaIcon @icon={{faXmark}} class="remove" />
                 </button>
                 <br />
                 <InstructorGroupMembersList @instructorGroup={{instructorGroup}} />

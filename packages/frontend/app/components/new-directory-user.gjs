@@ -22,8 +22,9 @@ import sortBy from 'ilios-common/helpers/sort-by';
 import eq from 'ember-truth-helpers/helpers/eq';
 import perform from 'ember-concurrency/helpers/perform';
 import LoadingSpinner from 'ilios-common/components/loading-spinner';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { LinkTo } from '@ember/routing';
+import { faPlus, faSun, faTruckMedical } from '@fortawesome/free-solid-svg-icons';
 
 export default class NewDirectoryUserComponent extends Component {
   @service fetch;
@@ -544,27 +545,25 @@ export default class NewDirectoryUserComponent extends Component {
                               <button
                                 class="link-button"
                                 type="button"
+                                title={{t "general.goToUser"}}
                                 data-test-view
                                 {{on "click" (fn @transitionToUser user.user)}}
                               >
-                                <FaIcon
-                                  @icon="sun"
-                                  class="warning"
-                                  @title={{t "general.goToUser"}}
-                                />
+                                <FaIcon @icon={{faSun}} class="warning" />
                               </button>
                             {{else if user.addable}}
                               <button
                                 class="link-button"
                                 type="button"
                                 data-test-add
+                                title={{t "general.addNew"}}
                                 {{on "click" (fn this.pickUser user)}}
                               >
-                                <FaIcon @icon="plus" class="yes" @title={{t "general.addNew"}} />
+                                <FaIcon @icon={{faPlus}} class="yes" />
                               </button>
                             {{else}}
                               <FaIcon
-                                @icon="truck-medical"
+                                @icon={{faTruckMedical}}
                                 class="no"
                                 data-test-cannot-be-added
                                 @title={{t "general.userNotAddableFromDirectory"}}

@@ -3,9 +3,10 @@ import LeadershipSearch from 'ilios-common/components/leadership-search';
 import sortBy from 'ilios-common/helpers/sort-by';
 import { on } from '@ember/modifier';
 import { fn } from '@ember/helper';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import UserNameInfo from 'ilios-common/components/user-name-info';
 import UserStatus from 'ilios-common/components/user-status';
+import { faXmark } from '@fortawesome/free-solid-svg-icons';
 
 <template>
   <div class="leadership-manager" data-test-leadership-manager>
@@ -65,7 +66,7 @@ import UserStatus from 'ilios-common/components/user-status';
                       aria-label={{t "general.remove"}}
                       {{on "click" (fn @removeDirector user)}}
                     >
-                      <FaIcon @icon="xmark" class="clickable remove" />
+                      <FaIcon @icon={{faXmark}} class="clickable remove" />
                     </button>
                     <UserStatus @user={{user}} />
                     <UserNameInfo @user={{user}} />
@@ -89,7 +90,7 @@ import UserStatus from 'ilios-common/components/user-status';
                       aria-label={{t "general.remove"}}
                       {{on "click" (fn @removeAdministrator user)}}
                     >
-                      <FaIcon @icon="xmark" class="clickable remove" />
+                      <FaIcon @icon={{faXmark}} class="clickable remove" />
                     </button>
                     <UserStatus @user={{user}} />
                     <UserNameInfo @user={{user}} />
@@ -113,7 +114,7 @@ import UserStatus from 'ilios-common/components/user-status';
                       aria-label={{t "general.remove"}}
                       {{on "click" (fn @removeStudentAdvisor user)}}
                     >
-                      <FaIcon @icon="xmark" class="clickable remove" />
+                      <FaIcon @icon={{faXmark}} class="clickable remove" />
                     </button>
                     <UserStatus @user={{user}} />
                     <UserNameInfo @user={{user}} />

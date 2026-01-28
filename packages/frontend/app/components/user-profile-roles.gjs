@@ -7,13 +7,19 @@ import { findBy } from 'ilios-common/utils/array-helpers';
 import { TrackedAsyncData } from 'ember-async-data';
 import { on } from '@ember/modifier';
 import perform from 'ember-concurrency/helpers/perform';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { fn } from '@ember/helper';
 import t from 'ember-intl/helpers/t';
 import set from 'ember-set-helper/helpers/set';
 import not from 'ember-truth-helpers/helpers/not';
 import eq from 'ember-truth-helpers/helpers/eq';
 import YesNo from 'frontend/components/yes-no';
+import {
+  faArrowRotateLeft,
+  faPenToSquare,
+  faCheck,
+  faSpinner,
+} from '@fortawesome/free-solid-svg-icons';
 
 export default class UserProfileRolesComponent extends Component {
   @service store;
@@ -118,7 +124,7 @@ export default class UserProfileRolesComponent extends Component {
             {{on "click" (perform this.save)}}
           >
             <FaIcon
-              @icon={{if this.save.isRunning "spinner" "check"}}
+              @icon={{if this.save.isRunning faSpinner faCheck}}
               @spin={{this.save.isRunning}}
             />
           </button>
@@ -129,7 +135,7 @@ export default class UserProfileRolesComponent extends Component {
             aria-label={{t "general.cancel"}}
             {{on "click" this.cancel}}
           >
-            <FaIcon @icon="arrow-rotate-left" />
+            <FaIcon @icon={{faArrowRotateLeft}} />
           </button>
         {{else if @isManageable}}
           <button
@@ -139,7 +145,7 @@ export default class UserProfileRolesComponent extends Component {
             data-test-manage
             {{on "click" (fn @setIsManaging true)}}
           >
-            <FaIcon @icon="pen-to-square" />
+            <FaIcon @icon={{faPenToSquare}} />
           </button>
         {{/if}}
       </div>

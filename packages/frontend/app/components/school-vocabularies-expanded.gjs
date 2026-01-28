@@ -7,7 +7,7 @@ import { findById } from 'ilios-common/utils/array-helpers';
 import { TrackedAsyncData } from 'ember-async-data';
 import { on } from '@ember/modifier';
 import t from 'ember-intl/helpers/t';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import and from 'ember-truth-helpers/helpers/and';
 import not from 'ember-truth-helpers/helpers/not';
 import ExpandCollapseButton from 'ilios-common/components/expand-collapse-button';
@@ -17,6 +17,7 @@ import SchoolVocabularyTermManager from 'frontend/components/school-vocabulary-t
 import SchoolVocabularyManager from 'frontend/components/school-vocabulary-manager';
 import SchoolVocabulariesList from 'frontend/components/school-vocabularies-list';
 import LoadingSpinner from 'ilios-common/components/loading-spinner';
+import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
 
 export default class SchoolVocabulariesExpandedComponent extends Component {
   @service store;
@@ -125,7 +126,7 @@ export default class SchoolVocabulariesExpandedComponent extends Component {
             >
               {{t "general.vocabularies"}}
               ({{@school.vocabularies.length}})
-              <FaIcon @icon="caret-down" />
+              <FaIcon @icon={{faCaretDown}} />
             </button>
           {{else}}
             <div class="title" data-test-vocabularies-title>

@@ -5,6 +5,7 @@ import loadInitializers from 'ember-load-initializers';
 import config from 'frontend/config/environment';
 import { startSentry } from './sentry';
 import { importSync, isDevelopingApp, macroCondition } from '@embroider/macros';
+import 'ilios-common/utils/setup-fontawesome';
 
 if (macroCondition(isDevelopingApp())) {
   importSync('./deprecation-workflow');

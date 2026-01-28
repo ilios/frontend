@@ -6,11 +6,12 @@ import { action } from '@ember/object';
 import { mapBy } from 'ilios-common/utils/array-helpers';
 import { on } from '@ember/modifier';
 import t from 'ember-intl/helpers/t';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import ExpandCollapseButton from 'ilios-common/components/expand-collapse-button';
 import NewObjective from 'ilios-common/components/new-objective';
 import perform from 'ember-concurrency/helpers/perform';
 import ObjectiveList from 'ilios-common/components/session/objective-list';
+import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
 
 export default class SessionObjectivesComponent extends Component {
   @service store;
@@ -78,7 +79,7 @@ export default class SessionObjectivesComponent extends Component {
             >
               {{t "general.objectives"}}
               ({{this.objectiveCount}})
-              <FaIcon @icon="caret-down" />
+              <FaIcon @icon={{faCaretDown}} />
             </button>
           </div>
         {{else}}

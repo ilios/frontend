@@ -6,12 +6,18 @@ import { action } from '@ember/object';
 import { TrackedAsyncData } from 'ember-async-data';
 import { on } from '@ember/modifier';
 import perform from 'ember-concurrency/helpers/perform';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import eq from 'ember-truth-helpers/helpers/eq';
 import { fn } from '@ember/helper';
 import LmTypeIcon from 'ilios-common/components/lm-type-icon';
 import capitalize from 'ilios-common/helpers/capitalize';
 import t from 'ember-intl/helpers/t';
+import {
+  faArrowRotateLeft,
+  faUpDownLeftRight,
+  faSpinner,
+  faCheck,
+} from '@fortawesome/free-solid-svg-icons';
 
 export default class LearningMaterialsSortManagerComponent extends Component {
   @tracked sortableObjectList;
@@ -93,7 +99,7 @@ export default class LearningMaterialsSortManagerComponent extends Component {
             data-test-save
           >
             <FaIcon
-              @icon={{if this.callSave.isRunning "spinner" "check"}}
+              @icon={{if this.callSave.isRunning faSpinner faCheck}}
               @spin={{this.callSave.isRunning}}
             />
           </button>
@@ -104,7 +110,7 @@ export default class LearningMaterialsSortManagerComponent extends Component {
             {{on "click" @cancel}}
             data-test-cancel
           >
-            <FaIcon @icon="arrow-rotate-left" />
+            <FaIcon @icon={{faArrowRotateLeft}} />
           </button>
         </div>
         <div class="content">
@@ -121,7 +127,7 @@ export default class LearningMaterialsSortManagerComponent extends Component {
                 {{on "dragend" this.dragEnd}}
                 {{on "dragover" (fn this.dragOver item)}}
               >
-                <FaIcon @icon="up-down-left-right" />
+                <FaIcon @icon={{faUpDownLeftRight}} />
                 <span class="draggable-object-content">
                   <span class="title">
                     <LmTypeIcon

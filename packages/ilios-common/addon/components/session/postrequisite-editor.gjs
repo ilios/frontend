@@ -7,12 +7,13 @@ import { TrackedAsyncData } from 'ember-async-data';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
 import set from 'ember-set-helper/helpers/set';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import pick from 'ilios-common/helpers/pick';
 import eq from 'ember-truth-helpers/helpers/eq';
 import formatDate from 'ember-intl/helpers/format-date';
 import perform from 'ember-concurrency/helpers/perform';
 import LoadingSpinner from 'ilios-common/components/loading-spinner';
+import { faMinus, faPlus, faXmark } from '@fortawesome/free-solid-svg-icons';
 
 export default class SessionPostrequisiteEditorComponent extends Component {
   @tracked filter = '';
@@ -86,9 +87,10 @@ export default class SessionPostrequisiteEditorComponent extends Component {
               {{on "click" (set this "userSelectedPostrequisite" null)}}
               class="remove"
               type="button"
+              title={{t "general.remove"}}
               data-test-remove
             >
-              <FaIcon @icon="xmark" @title={{t "general.remove"}} />
+              <FaIcon @icon={{faXmark}} />
             </button>
           {{else}}
             <span data-test-title>{{t "general.none"}}</span>
@@ -130,9 +132,9 @@ export default class SessionPostrequisiteEditorComponent extends Component {
                     }}
                   >
                     {{#if (eq postrequisite.id this.selectedPostrequisite.id)}}
-                      <FaIcon @icon="minus" @title={{t "general.remove"}} />
+                      <FaIcon @icon={{faMinus}} @title={{t "general.remove"}} />
                     {{else}}
-                      <FaIcon @icon="plus" class="add" @title={{t "general.add"}} />
+                      <FaIcon @icon={{faPlus}} class="add" @title={{t "general.add"}} />
                     {{/if}}
                     <span data-test-title>{{postrequisite.title}}</span>
                   </button>

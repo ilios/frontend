@@ -3,7 +3,7 @@ import { service } from '@ember/service';
 import { cached, tracked } from '@glimmer/tracking';
 import { TrackedAsyncData } from 'ember-async-data';
 import currentAcademicYear from 'ilios-common/utils/current-academic-year';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import gt from 'ember-truth-helpers/helpers/gt';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
@@ -14,6 +14,7 @@ import { sortBy as uSortBy } from 'ilios-common/utils/array-helpers';
 import eq from 'ember-truth-helpers/helpers/eq';
 import { fn } from '@ember/helper';
 import includes from 'ilios-common/helpers/includes';
+import { faBuildingColumns, faCaretDown, faCaretRight } from '@fortawesome/free-solid-svg-icons';
 
 export default class ReportsCurriculumChooseCourse extends Component {
   @service iliosConfig;
@@ -110,7 +111,7 @@ export default class ReportsCurriculumChooseCourse extends Component {
   <template>
     <div class="reports-choose-course" data-test-reports-curriculum-choose-course>
       <div class="schools" data-test-schools>
-        <FaIcon @icon="building-columns" />
+        <FaIcon @icon={{faBuildingColumns}} />
         {{#if (gt this.filteredSchools.length 1)}}
           <select
             aria-label={{t "general.filterBySchool"}}
@@ -156,7 +157,7 @@ export default class ReportsCurriculumChooseCourse extends Component {
               data-test-expand
             >
               {{y.year}}
-              <FaIcon @icon={{if y.isExpanded "caret-down" "caret-right"}} />
+              <FaIcon @icon={{if y.isExpanded faCaretDown faCaretRight}} />
             </button>
             {{#if y.isExpanded}}
               <ul class="courses" data-test-courses>

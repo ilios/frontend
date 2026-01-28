@@ -11,7 +11,7 @@ import { fn } from '@ember/helper';
 import t from 'ember-intl/helpers/t';
 import pick from 'ilios-common/helpers/pick';
 import or from 'ember-truth-helpers/helpers/or';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import notEq from 'ember-truth-helpers/helpers/not-eq';
 import load from 'ember-async-data/helpers/load';
 import BulkNewUsers from 'frontend/components/bulk-new-users';
@@ -20,6 +20,7 @@ import PagedlistControls from 'ilios-common/components/pagedlist-controls';
 import UserList from 'frontend/components/user-list';
 import NewDirectoryUser from './new-directory-user';
 import NewUser from './new-user';
+import { faMinus } from '@fortawesome/free-solid-svg-icons';
 
 const DEBOUNCE_TIMEOUT = 250;
 
@@ -127,7 +128,7 @@ export default class IliosUsersComponent extends Component {
                   aria-label={{t "general.cancel"}}
                   data-test-collapse
                 >
-                  <FaIcon @icon="minus" />
+                  <FaIcon @icon={{faMinus}} />
                 </button>
               {{else}}
                 <button

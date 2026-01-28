@@ -11,13 +11,14 @@ import or from 'ember-truth-helpers/helpers/or';
 import eq from 'ember-truth-helpers/helpers/eq';
 import sortBy from 'ilios-common/helpers/sort-by';
 import includes from 'ilios-common/helpers/includes';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import UserNameInfo from 'ilios-common/components/user-name-info';
 import UserStatus from 'ilios-common/components/user-status';
 import { LinkTo } from '@ember/routing';
 import LoadingSpinner from 'ilios-common/components/loading-spinner';
 import perform from 'ember-concurrency/helpers/perform';
 import gt from 'ember-truth-helpers/helpers/gt';
+import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
 
 export default class LearnerGroupUserManagerComponent extends Component {
   @tracked selectedGroupUsers = [];
@@ -331,17 +332,14 @@ export default class LearnerGroupUserManagerComponent extends Component {
                               type="button"
                               class="link-button"
                               {{on "click" (perform this.removeUserFromGroup user.content)}}
+                              title={{t
+                                "general.removeLearnerToCohort"
+                                cohort=@cohortTitle
+                                count=1
+                              }}
                               data-test-remove-user
                             >
-                              <FaIcon
-                                @icon="minus"
-                                class="no"
-                                @title={{t
-                                  "general.removeLearnerToCohort"
-                                  cohort=@cohortTitle
-                                  count=1
-                                }}
-                              />
+                              <FaIcon @icon={{faMinus}} class="no" />
                             </button>
                           {{/if}}
                         {{/if}}
@@ -462,17 +460,10 @@ export default class LearnerGroupUserManagerComponent extends Component {
                             type="button"
                             class="link-button"
                             {{on "click" (perform this.addUserToGroup user.content)}}
+                            title={{t "general.moveToGroup" groupTitle=@learnerGroupTitle count=1}}
                             data-test-add-user
                           >
-                            <FaIcon
-                              @icon="plus"
-                              class="yes"
-                              @title={{t
-                                "general.moveToGroup"
-                                groupTitle=@learnerGroupTitle
-                                count=1
-                              }}
-                            />
+                            <FaIcon @icon={{faPlus}} class="yes" />
                           </button>
                         {{/if}}
                       </td>

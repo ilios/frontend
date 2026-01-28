@@ -4,12 +4,13 @@ import { task, timeout } from 'ember-concurrency';
 import { on } from '@ember/modifier';
 import perform from 'ember-concurrency/helpers/perform';
 import LoadingSpinner from 'ilios-common/components/loading-spinner';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import SortableHeading from 'ilios-common/components/sortable-heading';
 import { fn } from '@ember/helper';
 import or from 'ember-truth-helpers/helpers/or';
 import eq from 'ember-truth-helpers/helpers/eq';
 import t from 'ember-intl/helpers/t';
+import { faCaretDown, faCaretRight } from '@fortawesome/free-solid-svg-icons';
 
 export default class SessionsGridHeader extends Component {
   get sortedAscending() {
@@ -45,9 +46,9 @@ export default class SessionsGridHeader extends Component {
             {{#if this.expandAll.isRunning}}
               <LoadingSpinner />
             {{else if @allSessionsExpanded}}
-              <FaIcon @icon="caret-down" class="clickable" />
+              <FaIcon @icon={{faCaretDown}} class="clickable" />
             {{else}}
-              <FaIcon @icon="caret-right" class="clickable" />
+              <FaIcon @icon={{faCaretRight}} class="clickable" />
             {{/if}}
           </button>
         {{/if}}

@@ -5,11 +5,17 @@ import { TrackedAsyncData } from 'ember-async-data';
 import { action } from '@ember/object';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import perform from 'ember-concurrency/helpers/perform';
 import { fn } from '@ember/helper';
 import LeadershipManager from 'ilios-common/components/leadership-manager';
 import LeadershipList from 'ilios-common/components/leadership-list';
+import {
+  faArrowRotateLeft,
+  faCaretDown,
+  faCheck,
+  faSpinner,
+} from '@fortawesome/free-solid-svg-icons';
 
 export default class LeadershipExpandedComponent extends Component {
   @tracked directorsToAdd = [];
@@ -186,7 +192,7 @@ export default class LeadershipExpandedComponent extends Component {
           >
             {{t "general.leadership"}}
             ({{this.count}})
-            <FaIcon @icon="caret-down" />
+            <FaIcon @icon={{faCaretDown}} />
           </button>
         {{/if}}
         <div class="actions">
@@ -199,7 +205,7 @@ export default class LeadershipExpandedComponent extends Component {
               data-test-save
             >
               <FaIcon
-                @icon={{if this.save.isRunning "spinner" "check"}}
+                @icon={{if this.save.isRunning faSpinner faCheck}}
                 @spin={{this.save.isRunning}}
               />
             </button>
@@ -210,7 +216,7 @@ export default class LeadershipExpandedComponent extends Component {
               {{on "click" this.close}}
               data-test-cancel
             >
-              <FaIcon @icon="arrow-rotate-left" />
+              <FaIcon @icon={{faArrowRotateLeft}} />
             </button>
           {{else if @editable}}
             <button type="button" {{on "click" (fn @setIsManaging true)}} data-test-manage>

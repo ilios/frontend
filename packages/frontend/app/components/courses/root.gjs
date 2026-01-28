@@ -8,7 +8,7 @@ import { findById } from 'ilios-common/utils/array-helpers';
 import { action } from '@ember/object';
 import ToggleButtons from 'ilios-common/components/toggle-buttons';
 import t from 'ember-intl/helpers/t';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { on } from '@ember/modifier';
 import pick from 'ilios-common/helpers/pick';
 import sortBy from 'ilios-common/helpers/sort-by';
@@ -21,6 +21,7 @@ import perform from 'ember-concurrency/helpers/perform';
 import { LinkTo } from '@ember/routing';
 import List from 'frontend/components/courses/list';
 import LoadingList from 'frontend/components/courses/loading-list';
+import { faBuildingColumns, faCalendar, faSquareUpRight } from '@fortawesome/free-solid-svg-icons';
 
 export default class CoursesRootComponent extends Component {
   @service currentUser;
@@ -227,7 +228,7 @@ export default class CoursesRootComponent extends Component {
           />
         </div>
         <div class="schoolsfilter" data-test-school-filter>
-          <FaIcon @icon="building-columns" @fixedWidth={{true}} />
+          <FaIcon @icon={{faBuildingColumns}} @fixedWidth={{true}} />
           {{#if this.hasMoreThanOneSchool}}
             <select
               aria-label={{t "general.filterBySchool"}}
@@ -244,7 +245,7 @@ export default class CoursesRootComponent extends Component {
           {{/if}}
         </div>
         <div class="yearsfilter">
-          <FaIcon @icon="calendar" @fixedWidth={{true}} />
+          <FaIcon @icon={{faCalendar}} @fixedWidth={{true}} />
           <select
             aria-label={{t "general.filterByYear"}}
             {{on "change" (pick "target.value" this.changeSelectedYear)}}
@@ -296,7 +297,7 @@ export default class CoursesRootComponent extends Component {
           {{#if this.newCourse}}
             <div class="saved-result" data-test-newly-saved-course>
               <LinkTo @route="course" @model={{this.newCourse}}>
-                <FaIcon @icon="square-up-right" />
+                <FaIcon @icon={{faSquareUpRight}} />
                 {{this.newCourse.title}}
               </LinkTo>
               {{t "general.savedSuccessfully"}}

@@ -1,6 +1,7 @@
 import { on } from '@ember/modifier';
 import t from 'ember-intl/helpers/t';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import { faCaretRight, faBan, faCheck } from '@fortawesome/free-solid-svg-icons';
 <template>
   <section
     class="school-session-attributes-collapsed"
@@ -16,7 +17,7 @@ import FaIcon from 'ilios-common/components/fa-icon';
         {{on "click" @expand}}
       >
         {{t "general.sessionAttributes"}}
-        <FaIcon @icon="caret-right" />
+        <FaIcon @icon={{faCaretRight}} />
       </button>
     </div>
     <div class="content">
@@ -38,7 +39,7 @@ import FaIcon from 'ilios-common/components/fa-icon';
             </td>
             <td>
               <FaIcon
-                @icon={{if @showSessionAttendanceRequired "check" "ban"}}
+                @icon={{if @showSessionAttendanceRequired faCheck faBan}}
                 class={{if @showSessionAttendanceRequired "yes" "no"}}
               />
             </td>
@@ -49,7 +50,7 @@ import FaIcon from 'ilios-common/components/fa-icon';
             </td>
             <td>
               <FaIcon
-                @icon={{if @showSessionSupplemental "check" "ban"}}
+                @icon={{if @showSessionSupplemental faCheck faBan}}
                 class={{if @showSessionSupplemental "yes" "no"}}
               />
             </td>
@@ -60,7 +61,7 @@ import FaIcon from 'ilios-common/components/fa-icon';
             </td>
             <td>
               <FaIcon
-                @icon={{if @showSessionSpecialAttireRequired "check" "ban"}}
+                @icon={{if @showSessionSpecialAttireRequired faCheck faBan}}
                 class={{if @showSessionSpecialAttireRequired "yes" "no"}}
               />
             </td>
@@ -71,7 +72,7 @@ import FaIcon from 'ilios-common/components/fa-icon';
             </td>
             <td>
               <FaIcon
-                @icon={{if @showSessionSpecialEquipmentRequired "check" "ban"}}
+                @icon={{if @showSessionSpecialEquipmentRequired faCheck faBan}}
                 class={{if @showSessionSpecialEquipmentRequired "yes" "no"}}
               />
             </td>

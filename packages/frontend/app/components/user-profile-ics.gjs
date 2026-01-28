@@ -5,9 +5,16 @@ import { tracked } from '@glimmer/tracking';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
 import perform from 'ember-concurrency/helpers/perform';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { fn } from '@ember/helper';
 import CopyButton from 'ilios-common/components/copy-button';
+import {
+  faArrowRotateLeft,
+  faCopy,
+  faPenToSquare,
+  faSpinner,
+  faRotate,
+} from '@fortawesome/free-solid-svg-icons';
 
 export default class UserProfileIcsComponent extends Component {
   @service iliosConfig;
@@ -114,7 +121,7 @@ export default class UserProfileIcsComponent extends Component {
             {{on "click" (perform this.refreshKey)}}
           >
             <FaIcon
-              @icon={{if this.refreshKey.isRunning "spinner" "rotate"}}
+              @icon={{if this.refreshKey.isRunning faSpinner faRotate}}
               @spin={{this.refreshKey.isRunning}}
             />
           </button>
@@ -126,7 +133,7 @@ export default class UserProfileIcsComponent extends Component {
             title={{t "general.close"}}
             {{on "click" (fn @setIsManaging false)}}
           >
-            <FaIcon @icon="arrow-rotate-left" />
+            <FaIcon @icon={{faArrowRotateLeft}} />
           </button>
         {{else if @isManageable}}
           <button
@@ -136,7 +143,7 @@ export default class UserProfileIcsComponent extends Component {
             title={{t "general.refreshIcsFeedKey"}}
             {{on "click" (fn @setIsManaging true)}}
           >
-            <FaIcon @icon="pen-to-square" />
+            <FaIcon @icon={{faPenToSquare}} />
           </button>
         {{/if}}
       </div>
@@ -150,7 +157,7 @@ export default class UserProfileIcsComponent extends Component {
               @getClipboardText={{this.getIcsFeedUrl}}
               @success={{perform this.textCopied}}
             >
-              <FaIcon @icon="copy" />
+              <FaIcon @icon={{faCopy}} />
               {{t "general.link"}}
             </CopyButton>
             {{#if this.showCopySuccessMessage}}

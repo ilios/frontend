@@ -16,11 +16,12 @@ import NewSession from 'ilios-common/components/new-session';
 import perform from 'ember-concurrency/helpers/perform';
 import set from 'ember-set-helper/helpers/set';
 import { array, get, fn } from '@ember/helper';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { on } from '@ember/modifier';
 import SessionsGridHeader from 'ilios-common/components/sessions-grid-header';
 import SessionsGrid from 'ilios-common/components/sessions-grid';
 import SessionsGridLoading from 'ilios-common/components/sessions-grid-loading';
+import { faSquareUpRight } from '@fortawesome/free-solid-svg-icons';
 
 const DEBOUNCE_DELAY = 250;
 
@@ -211,7 +212,7 @@ export default class CourseSessionsComponent extends Component {
             @route="session.index"
             @models={{array @course this.saveSession.lastSuccessful.value}}
           >
-            <FaIcon @icon="square-up-right" />
+            <FaIcon @icon={{faSquareUpRight}} />
             {{get this.saveSession.lastSuccessful.value "title"}}
           </LinkTo>
           {{t "general.savedSuccessfully"}}

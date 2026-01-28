@@ -12,8 +12,9 @@ import { on } from '@ember/modifier';
 import pick from 'ilios-common/helpers/pick';
 import set from 'ember-set-helper/helpers/set';
 import YupValidationMessage from 'ilios-common/components/yup-validation-message';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import focus from 'ilios-common/modifiers/focus';
+import { faLock } from '@fortawesome/free-solid-svg-icons';
 
 export default class CurriculumInventorySequenceBlockHeaderComponent extends Component {
   @service store;
@@ -76,7 +77,7 @@ export default class CurriculumInventorySequenceBlockHeaderComponent extends Com
           </EditableField>
         {{else}}
           <span class="h2">
-            <FaIcon @icon="lock" />
+            <FaIcon @icon={{faLock}} />
             {{@sequenceBlock.title}}
           </span>
         {{/if}}

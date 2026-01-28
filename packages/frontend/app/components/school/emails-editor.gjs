@@ -7,13 +7,14 @@ import { uniqueId } from '@ember/helper';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
 import perform from 'ember-concurrency/helpers/perform';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import pick from 'ilios-common/helpers/pick';
 import set from 'ember-set-helper/helpers/set';
 import YupValidationMessage from 'ilios-common/components/yup-validation-message';
 import YupValidations from 'ilios-common/classes/yup-validations';
 import { string } from 'yup';
 import isEmail from 'validator/lib/isEmail';
+import { faArrowRotateLeft, faCheck, faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 export default class SchoolEmailsEditorComponent extends Component {
   @service intl;
@@ -112,7 +113,7 @@ export default class SchoolEmailsEditorComponent extends Component {
               data-test-save
             >
               <FaIcon
-                @icon={{if this.save.isRunning "spinner" "check"}}
+                @icon={{if this.save.isRunning faSpinner faCheck}}
                 @spin={{this.save.isRunning}}
               />
             </button>
@@ -123,7 +124,7 @@ export default class SchoolEmailsEditorComponent extends Component {
               {{on "click" @cancel}}
               data-test-cancel
             >
-              <FaIcon @icon="arrow-rotate-left" />
+              <FaIcon @icon={{faArrowRotateLeft}} />
             </button>
           </div>
         </div>

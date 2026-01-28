@@ -6,13 +6,14 @@ import { uniqueId, fn } from '@ember/helper';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
 import perform from 'ember-concurrency/helpers/perform';
-import FaIcon from 'ilios-common/components/fa-icon';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import pick from 'ilios-common/helpers/pick';
 import set from 'ember-set-helper/helpers/set';
 import noop from 'ilios-common/helpers/noop';
 import YupValidations from 'ilios-common/classes/yup-validations';
 import YupValidationMessage from 'ilios-common/components/yup-validation-message';
 import { number, string } from 'yup';
+import { faArrowRotateLeft, faCheck, faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 export default class SchoolInstitutionalInformationManagerComponent extends Component {
   @service store;
@@ -87,7 +88,7 @@ export default class SchoolInstitutionalInformationManagerComponent extends Comp
                 {{on "click" (perform this.save)}}
               >
                 <FaIcon
-                  @icon={{if this.save.isRunning "spinner" "check"}}
+                  @icon={{if this.save.isRunning faSpinner faCheck}}
                   @spin={{this.save.isRunning}}
                 />
               </button>
@@ -98,7 +99,7 @@ export default class SchoolInstitutionalInformationManagerComponent extends Comp
               aria-label={{t "general.cancel"}}
               {{on "click" (fn @manage false)}}
             >
-              <FaIcon @icon="arrow-rotate-left" />
+              <FaIcon @icon={{faArrowRotateLeft}} />
             </button>
           </div>
         </div>
