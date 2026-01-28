@@ -9,12 +9,14 @@ export default class LearnerGroupController extends Controller {
     { isEditing: 'edit' },
     { isBulkAssigning: 'bulkupload', sortUsersBy: 'usersBy' },
     'showCourseAssociations',
+    'showCalendar',
   ];
 
   @tracked isEditing = false;
   @tracked isBulkAssigning = false;
   @tracked sortUsersBy = 'fullName';
   @tracked showCourseAssociations = false;
+  @tracked showCalendar = false;
 
   @cached
   get canDeleteData() {

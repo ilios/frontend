@@ -750,6 +750,10 @@ module('Integration | Component | learner-group/root', function (hooks) {
       .lookup('service:store')
       .findRecord('learner-group', learnerGroup.id);
     this.set('learnerGroup', learnerGroupModel);
+    this.set('showCalendar', false);
+    this.set('setShowCalendar', () => {
+      this.set('showCalendar', !this.showCalendar);
+    });
 
     await render(
       <template>
@@ -761,6 +765,8 @@ module('Integration | Component | learner-group/root', function (hooks) {
           @learnerGroup={{this.learnerGroup}}
           @isEditing={{false}}
           @isBulkAssigning={{false}}
+          @showCalendar={{this.showCalendar}}
+          @setShowCalendar={{this.setShowCalendar}}
         />
       </template>,
     );
