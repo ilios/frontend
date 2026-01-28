@@ -57,7 +57,7 @@ export default class AuthenticatedRoute extends Route {
   initialLocale() {
     const savedLocale = this.localStorage.get('locale');
 
-    if (savedLocale !== undefined) {
+    if (savedLocale) {
       if (config.APP.SUPPORTED_LOCALES.includes(savedLocale)) {
         return savedLocale;
       }
