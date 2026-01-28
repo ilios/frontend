@@ -73,12 +73,13 @@ export default class SingleEventObjectiveList extends Component {
             type="button"
             disabled={{not this.isExpanded}}
             {{on "click" (set this "groupByCompetencies" (not this.groupByCompetencies))}}
+            title={{if this.groupByCompetencies @listByPriorityPhrase @groupByCompetenciesPhrase}}
             data-test-display-mode-toggle
           >
             {{#if this.groupByCompetencies}}
-              <FaIcon @icon={{faIndent}} @title={{@listByPriorityPhrase}} />
+              <FaIcon @icon={{faIndent}} />
             {{else}}
-              <FaIcon @icon={{faList}} @title={{@groupByCompetenciesPhrase}} />
+              <FaIcon @icon={{faList}} />
             {{/if}}
           </button>
         {{/if}}

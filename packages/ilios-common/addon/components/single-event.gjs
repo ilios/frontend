@@ -484,12 +484,10 @@ export default class SingleEvent extends Component {
                 class="link-button"
                 type="button"
                 data-test-link-to-all-materials
+                title={{t "general.accessAllMaterialsForThisCourse"}}
                 {{on "click" this.transitionToMyMaterials}}
               >
-                <FaIcon
-                  @icon={{faBoxArchive}}
-                  @title={{t "general.accessAllMaterialsForThisCourse"}}
-                />
+                <FaIcon @icon={{faBoxArchive}} />
               </button>
             {{/if}}
           </h3>

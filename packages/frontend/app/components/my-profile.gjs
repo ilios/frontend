@@ -190,8 +190,9 @@ export default class MyProfileComponent extends Component {
                   <CopyButton
                     @getClipboardText={{this.getGeneratedJwtToken}}
                     @success={{this.tokenCopied}}
+                    title={{t "general.copyNewToken"}}
                   >
-                    <FaIcon @icon={{faCopy}} @title={{t "general.copyNewToken"}} />
+                    <FaIcon @icon={{faCopy}} />
                   </CopyButton>
                   <button
                     type="button"

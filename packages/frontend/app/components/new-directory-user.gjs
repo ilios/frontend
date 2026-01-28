@@ -545,27 +545,21 @@ export default class NewDirectoryUserComponent extends Component {
                               <button
                                 class="link-button"
                                 type="button"
+                                title={{t "general.goToUser"}}
                                 data-test-view
                                 {{on "click" (fn @transitionToUser user.user)}}
                               >
-                                <FaIcon
-                                  @icon={{faSun}}
-                                  class="warning"
-                                  @title={{t "general.goToUser"}}
-                                />
+                                <FaIcon @icon={{faSun}} class="warning" />
                               </button>
                             {{else if user.addable}}
                               <button
                                 class="link-button"
                                 type="button"
                                 data-test-add
+                                title={{t "general.addNew"}}
                                 {{on "click" (fn this.pickUser user)}}
                               >
-                                <FaIcon
-                                  @icon={{faPlus}}
-                                  class="yes"
-                                  @title={{t "general.addNew"}}
-                                />
+                                <FaIcon @icon={{faPlus}} class="yes" />
                               </button>
                             {{else}}
                               <FaIcon

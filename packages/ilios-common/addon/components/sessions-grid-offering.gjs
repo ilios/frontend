@@ -259,9 +259,10 @@ export default class SessionsGridOffering extends Component {
                 class="link-button"
                 data-test-edit
                 type="button"
+                title={{t "general.edit"}}
                 {{on "click" this.toggleEditing}}
               >
-                <FaIcon @icon={{faPencil}} @title={{t "general.edit"}} @ariaHidden={{false}} />
+                <FaIcon @icon={{faPencil}} />
               </button>
             </td>
           {{/if}}

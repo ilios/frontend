@@ -284,18 +284,20 @@ export default class ProgramYearObjectiveListItemComponent extends Component {
             class="collapse-row"
             type="button"
             {{on "click" (perform this.collapseObjective)}}
+            title={{t "general.collapseDetail"}}
             data-test-toggle-collapse
           >
-            <FaIcon @icon={{faCaretDown}} @title={{t "general.collapseDetail"}} />
+            <FaIcon @icon={{faCaretDown}} />
           </button>
         {{else}}
           <button
             class="expand-row"
             type="button"
             {{on "click" (perform this.expandObjective)}}
+            title={{t "general.expand"}}
             data-test-toggle-expand
           >
-            <FaIcon @icon={{faCaretRight}} @title={{t "general.expand"}} />
+            <FaIcon @icon={{faCaretRight}} />
           </button>
         {{/if}}
       </div>
@@ -377,18 +379,20 @@ export default class ProgramYearObjectiveListItemComponent extends Component {
                 class="active"
                 type="button"
                 {{on "click" (perform this.saveIsActive false)}}
+                title={{t "general.deactivate"}}
                 data-test-deactivate
               >
-                <FaIcon @icon={{faToggleOn}} @title={{t "general.deactivate"}} />
+                <FaIcon @icon={{faToggleOn}} />
               </button>
             {{else}}
               <button
                 class="active"
                 type="button"
                 {{on "click" (perform this.saveIsActive true)}}
+                title={{t "general.activate"}}
                 data-test-activate
               >
-                <FaIcon @icon={{faToggleOff}} @title={{t "general.activate"}} />
+                <FaIcon @icon={{faToggleOff}} />
               </button>
             {{/if}}
           {{/if}}

@@ -407,13 +407,10 @@ export default class SessionOverview extends Component {
                     @route="session.copy"
                     @models={{array @session.course @session}}
                     class="copy"
+                    title={{t "general.copySession"}}
                     data-test-copy
                   >
-                    <FaIcon
-                      @icon={{faCopy}}
-                      @title={{t "general.copySession"}}
-                      @fixedWidth={{true}}
-                    />
+                    <FaIcon @icon={{faCopy}} @fixedWidth={{true}} />
                   </LinkTo>
                 {{/if}}
               </div>

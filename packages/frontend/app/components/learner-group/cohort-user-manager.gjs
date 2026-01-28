@@ -227,17 +227,14 @@ export default class LearnerGroupCohortUserManagerComponent extends Component {
                               type="button"
                               class="inline-button"
                               {{on "click" (perform this.addSingleUser user)}}
+                              title={{t
+                                "general.moveToGroup"
+                                groupTitle=@learnerGroupTitle
+                                count=1
+                              }}
                               data-test-add-user
                             >
-                              <FaIcon
-                                @icon={{faPlus}}
-                                class="yes"
-                                @title={{t
-                                  "general.moveToGroup"
-                                  groupTitle=@learnerGroupTitle
-                                  count=1
-                                }}
-                              />
+                              <FaIcon @icon={{faPlus}} class="yes" />
                             </button>
                           {{/if}}
                         </td>

@@ -121,9 +121,10 @@ export default class IliosCalendarComponent extends Component {
             <LinkTo
               @route="dashboard.calendar"
               @query={{hash date=this.backDate}}
+              title={{t "general.back"}}
               data-test-go-back
             >
-              <FaIcon @title={{t "general.back"}} @icon={{faBackward}} />
+              <FaIcon @icon={{faBackward}} />
             </LinkTo>
           </li>
           <li>
@@ -139,9 +140,10 @@ export default class IliosCalendarComponent extends Component {
             <LinkTo
               @route="dashboard.calendar"
               @query={{hash date=this.forwardDate}}
+              title={{t "general.forward"}}
               data-test-go-forward
             >
-              <FaIcon @title={{t "general.forward"}} @icon={{faForward}} />
+              <FaIcon @icon={{faForward}} />
             </LinkTo>
           </li>
         </ul>

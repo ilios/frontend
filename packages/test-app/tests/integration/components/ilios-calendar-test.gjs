@@ -44,9 +44,9 @@ module('Integration | Component | ilios calendar', function (hooks) {
     assert.strictEqual(component.viewModes[1].linksTo, '/dashboard/calendar');
     assert.strictEqual(component.viewModes[2].text, 'Month');
     assert.strictEqual(component.viewModes[2].linksTo, '/dashboard/calendar?view=month');
-    assert.strictEqual(component.goBack.text, 'Back');
+    assert.strictEqual(component.goBack.title, 'Back');
     assert.strictEqual(component.goToToday.text, 'Today');
-    assert.strictEqual(component.goForward.text, 'Forward');
+    assert.strictEqual(component.goForward.title, 'Forward');
     assert.strictEqual(component.goBack.linksTo, '/dashboard/calendar?date=2015-09-29');
     assert.strictEqual(component.goToToday.linksTo, `/dashboard/calendar?date=${today}`);
     assert.strictEqual(component.goForward.linksTo, '/dashboard/calendar?date=2015-10-01');

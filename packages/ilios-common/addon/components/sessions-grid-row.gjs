@@ -191,14 +191,10 @@ export default class SessionsGridRowComponent extends Component {
             class="link-button"
             type="button"
             {{on "click" (fn @confirmDelete @session.id)}}
+            title={{t "general.remove"}}
             data-test-delete
           >
-            <FaIcon
-              @icon={{faTrash}}
-              @ariaHidden={{false}}
-              class="remove enabled"
-              @title={{t "general.remove"}}
-            />
+            <FaIcon @icon={{faTrash}} @ariaHidden={{false}} class="remove enabled" />
           </button>
         {{else}}
           <FaIcon

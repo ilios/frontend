@@ -453,8 +453,9 @@ export default class LearningMaterialManagerComponent extends Component {
                 <CopyButton
                   @getClipboardText={{this.getLearningMaterialAbsoluteFileUri}}
                   @success={{perform this.textCopied}}
+                  title={{t "general.copyLink"}}
                 >
-                  <FaIcon @icon={{faCopy}} @title={{t "general.copyLink"}} />
+                  <FaIcon @icon={{faCopy}} />
                 </CopyButton>
               </span>
             </div>
@@ -469,8 +470,9 @@ export default class LearningMaterialManagerComponent extends Component {
                 <CopyButton
                   @getClipboardText={{this.getLearningMaterialLink}}
                   @success={{perform this.textCopied}}
+                  title={{t "general.copyLink"}}
                 >
-                  <FaIcon @icon={{faCopy}} @title={{t "general.copyLink"}} />
+                  <FaIcon @icon={{faCopy}} />
                 </CopyButton>
               </span>
             </div>

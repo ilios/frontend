@@ -90,13 +90,10 @@ export default class UserProfileCohortsManagerComponent extends Component {
             type="button"
             class="link-button"
             {{on "click" (fn @setPrimaryCohort null)}}
+            title={{t "general.removePrimaryCohort"}}
             data-test-remove
           >
-            <FaIcon
-              @icon={{faTurnDown}}
-              class="clickable remove"
-              @title={{t "general.removePrimaryCohort"}}
-            />
+            <FaIcon @icon={{faTurnDown}} class="clickable remove" />
           </button>
           <span data-test-title>
             {{@primaryCohort.programYear.program.school.title}}
@@ -120,25 +117,19 @@ export default class UserProfileCohortsManagerComponent extends Component {
                 class="link-button"
                 type="button"
                 {{on "click" (fn @setPrimaryCohort cohort)}}
+                title={{t "general.promoteToPrimaryCohort"}}
                 data-test-promote
               >
-                <FaIcon
-                  @icon={{faTurnUp}}
-                  class="clickable add"
-                  @title={{t "general.promoteToPrimaryCohort"}}
-                />
+                <FaIcon @icon={{faTurnUp}} class="clickable add" />
               </button>
               <button
                 class="link-button"
                 type="button"
                 {{on "click" (fn @removeSecondaryCohort cohort)}}
+                title={{t "general.removeCohort"}}
                 data-test-remove
               >
-                <FaIcon
-                  @icon={{faXmark}}
-                  class="clickable remove"
-                  @title={{t "general.removeCohort"}}
-                />
+                <FaIcon @icon={{faXmark}} class="clickable remove" />
               </button>
               <span data-test-title>
                 {{cohort.programYear.program.school.title}}
@@ -190,9 +181,10 @@ export default class UserProfileCohortsManagerComponent extends Component {
                   type="button"
                   class="link-button"
                   {{on "click" (fn @addSecondaryCohort cohort)}}
+                  title={{t "general.addCohort"}}
                   data-test-add
                 >
-                  <FaIcon @icon={{faPlus}} class="clickable add" @title={{t "general.addCohort"}} />
+                  <FaIcon @icon={{faPlus}} class="clickable add" />
                 </button>
                 <span data-test-title>
                   <strong>

@@ -241,13 +241,10 @@ export default class CurriculumInventoryReportOverviewComponent extends Componen
               @route="verification-preview"
               @model={{@report}}
               class="verification-preview"
+              title={{t "general.verificationPreviewFor" name=@report.name}}
               data-test-transition-to-verification-preview
             >
-              <FaIcon
-                @icon={{faTable}}
-                @fixedWidth={{true}}
-                @title={{t "general.verificationPreviewFor" name=@report.name}}
-              />
+              <FaIcon @icon={{faTable}} @fixedWidth={{true}} />
             </LinkTo>
             {{#if this.showRollover}}
               <button

@@ -87,9 +87,10 @@ export default class SessionPostrequisiteEditorComponent extends Component {
               {{on "click" (set this "userSelectedPostrequisite" null)}}
               class="remove"
               type="button"
+              title={{t "general.remove"}}
               data-test-remove
             >
-              <FaIcon @icon={{faXmark}} @title={{t "general.remove"}} />
+              <FaIcon @icon={{faXmark}} />
             </button>
           {{else}}
             <span data-test-title>{{t "general.none"}}</span>

@@ -62,9 +62,10 @@ export default class InstructorGroupsListItemComponent extends Component {
             class="link-button"
             type="button"
             {{on "click" (set this "showRemoveConfirmation" true)}}
+            title={{t "general.remove"}}
             data-test-remove
           >
-            <FaIcon @icon={{faTrash}} class="enabled" @title={{t "general.remove"}} />
+            <FaIcon @icon={{faTrash}} class="enabled" />
           </button>
         {{else}}
           <FaIcon @icon={{faTrash}} class="disabled" />

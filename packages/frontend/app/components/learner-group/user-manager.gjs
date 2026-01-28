@@ -332,17 +332,14 @@ export default class LearnerGroupUserManagerComponent extends Component {
                               type="button"
                               class="link-button"
                               {{on "click" (perform this.removeUserFromGroup user.content)}}
+                              title={{t
+                                "general.removeLearnerToCohort"
+                                cohort=@cohortTitle
+                                count=1
+                              }}
                               data-test-remove-user
                             >
-                              <FaIcon
-                                @icon={{faMinus}}
-                                class="no"
-                                @title={{t
-                                  "general.removeLearnerToCohort"
-                                  cohort=@cohortTitle
-                                  count=1
-                                }}
-                              />
+                              <FaIcon @icon={{faMinus}} class="no" />
                             </button>
                           {{/if}}
                         {{/if}}
@@ -463,17 +460,10 @@ export default class LearnerGroupUserManagerComponent extends Component {
                             type="button"
                             class="link-button"
                             {{on "click" (perform this.addUserToGroup user.content)}}
+                            title={{t "general.moveToGroup" groupTitle=@learnerGroupTitle count=1}}
                             data-test-add-user
                           >
-                            <FaIcon
-                              @icon={{faPlus}}
-                              class="yes"
-                              @title={{t
-                                "general.moveToGroup"
-                                groupTitle=@learnerGroupTitle
-                                count=1
-                              }}
-                            />
+                            <FaIcon @icon={{faPlus}} class="yes" />
                           </button>
                         {{/if}}
                       </td>

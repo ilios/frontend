@@ -71,11 +71,11 @@ export default class UserProfileCalendar extends Component {
           <button
             class="link-button"
             type="button"
-            aria-label={{t "general.back"}}
+            title={{t "general.back"}}
             {{on "click" this.goBack}}
             data-test-go-back
           >
-            <FaIcon @icon={{faBackward}} @title={{t "general.back"}} />
+            <FaIcon @icon={{faBackward}} />
           </button>
         </li>
         <li>
@@ -92,11 +92,11 @@ export default class UserProfileCalendar extends Component {
           <button
             class="link-button"
             type="button"
-            aria-label={{t "general.forward"}}
+            title={{t "general.forward"}}
             {{on "click" this.goForward}}
             data-test-go-forward
           >
-            <FaIcon @icon={{faForward}} @title={{t "general.forward"}} />
+            <FaIcon @icon={{faForward}} />
           </button>
         </li>
       </ul>

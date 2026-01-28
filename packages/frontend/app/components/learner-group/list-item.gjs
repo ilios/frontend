@@ -172,15 +172,27 @@ export default class LearnerGroupListItemComponent extends Component {
       </td>
       <td class="text-right">
         {{#if (and this.canDelete (not this.showRemoveConfirmation))}}
-          <button class="link-button" type="button" {{on "click" this.showRemove}} data-test-remove>
-            <FaIcon @icon={{faTrash}} @title={{t "general.remove"}} />
+          <button
+            class="link-button"
+            type="button"
+            {{on "click" this.showRemove}}
+            title={{t "general.remove"}}
+            data-test-remove
+          >
+            <FaIcon @icon={{faTrash}} />
           </button>
         {{else}}
           <FaIcon @icon={{faTrash}} class="disabled" />
         {{/if}}
         {{#if (and this.canCreate (not this.showCopyConfirmation))}}
-          <button class="link-button" type="button" {{on "click" this.showCopy}} data-test-copy>
-            <FaIcon @icon={{faCopy}} @title={{t "general.copy"}} />
+          <button
+            class="link-button"
+            type="button"
+            {{on "click" this.showCopy}}
+            title={{t "general.copy"}}
+            data-test-copy
+          >
+            <FaIcon @icon={{faCopy}} />
           </button>
         {{else}}
           <FaIcon @icon={{faCopy}} class="disabled" />

@@ -241,28 +241,31 @@ export default class CourseOverview extends Component {
             {{t "general.overview"}}
           </div>
           <div class="course-overview-actions">
-            <LinkTo @route="course-materials" @model={{@course}} class="materials">
-              <FaIcon
-                @icon={{faBoxArchive}}
-                @title={{t "general.learningMaterialsSummary"}}
-                @fixedWidth={{true}}
-              />
+            <LinkTo
+              @route="course-materials"
+              @model={{@course}}
+              class="materials"
+              title={{t "general.learningMaterialsSummary"}}
+            >
+              <FaIcon @icon={{faBoxArchive}} @fixedWidth={{true}} />
             </LinkTo>
             <LinkTo
               @route="print-course"
               @model={{@course}}
               @query={{hash unpublished=true}}
+              title={{t "general.printSummary"}}
               class="print"
             >
-              <FaIcon @icon={{faPrint}} @title={{t "general.printSummary"}} @fixedWidth={{true}} />
+              <FaIcon @icon={{faPrint}} @fixedWidth={{true}} />
             </LinkTo>
             {{#if this.showRollover}}
-              <LinkTo @route="course.rollover" @model={{@course}} class="rollover">
-                <FaIcon
-                  @icon={{faShuffle}}
-                  @fixedWidth={{true}}
-                  @title={{t "general.courseRollover"}}
-                />
+              <LinkTo
+                @route="course.rollover"
+                @model={{@course}}
+                class="rollover"
+                title={{t "general.courseRollover"}}
+              >
+                <FaIcon @icon={{faShuffle}} @fixedWidth={{true}} />
               </LinkTo>
             {{/if}}
             <LinkTo
