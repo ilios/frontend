@@ -1,0 +1,10 @@
+// font awesome icons
+.svg-inline--fa {
+  &.enabled {
+    color: var(--light-blue);
+  }
+
+  &.disabled {
+    color: var(--grey);
+  }
+}
