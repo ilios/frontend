@@ -15,13 +15,15 @@
     ul {
       @include m.ilios-list-reset;
       margin-left: 2rem;
+      margin-top: 0.5rem;
     }
 
     .block {
+      align-items: center;
       display: flex;
 
-      .remove {
-        margin-left: 0.5rem;
+      .fa-trash {
+        margin-left: 0.25rem;
       }
     }
   }
