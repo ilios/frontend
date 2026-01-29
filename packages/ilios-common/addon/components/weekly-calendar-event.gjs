@@ -125,21 +125,17 @@ export default class WeeklyCalendarEventComponent extends Component {
     const textColor = isLight ? '--black' : '--white';
 
     return new htmlSafe(
-      `background-color: ${color};
-       border-left: .25rem solid ${darkcolor};
-       color: var(${textColor});
-       grid-column-start: span ${this.span};
-       grid-row-start: ${this.startMinuteRounded + 1};
-       grid-row-end: span ${this.totalMinutesRounded};`,
+      `background-color: ${color}; border-left: .25rem solid ${darkcolor}; color: var(${textColor}); grid-column-start: span ${this.span}; grid-row-start: ${this.startMinuteRounded + 1}; grid-row-end: span ${this.totalMinutesRounded};`,
     );
   }
   <template>
     <button
+      class="weekly-calendar-event day-{{@day}}{{if this.isIlm ' ilm'}}{{if
+          this.clickable
+          ' clickable'
+        }}"
       {{! template-lint-disable no-inline-styles }}
       style={{this.style}}
-      class="weekly-calendar-event day-{{@day}}
-        {{if this.isIlm 'ilm'}}
-        {{if this.clickable 'clickable'}}"
       type="button"
       {{on "click" (if this.clickable @selectEvent (noop))}}
       id={{this.eventButtonId}}

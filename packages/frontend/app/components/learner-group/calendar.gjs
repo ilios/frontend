@@ -62,22 +62,29 @@ export default class LearnerGroupCalendarComponent extends Component {
     }, []);
     return await map(flat, async (offering) => {
       const session = await offering.session;
+      const sessionType = await session.sessionType;
       const course = await session.course;
       const school = await course.school;
+      const instructors = await offering.getAllInstructors();
+      const instructorNames = instructors.map((instructor) => instructor.fullName);
+
       return new Event(
         {
           startDate: offering.startDate.toISOString(),
           endDate: offering.endDate.toISOString(),
+          lastModified: offering.updatedAt.toISOString(),
           courseTitle: course.title,
           name: session.title,
           offering: offering.id,
-          location: offering.location,
+          location: offering.room,
           school: school.id,
           color: '#84c444',
           prerequisites: [],
           postrequisites: [],
           isScheduled: session.isScheduled || course.isScheduled,
           isPublished: session.isPublished && course.isPublished,
+          sessionTypeTitle: sessionType.title,
+          instructors: instructorNames,
         },
         false,
       );
