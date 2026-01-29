@@ -110,13 +110,7 @@ jobs:
       - name: Safari Version
         run: /usr/libexec/PlistBuddy -c "print :CFBundleShortVersionString" /Applications/Safari.app/Contents/Info.plist
       - name: test
-        run: pnpm --filter ${{matrix.workspace}} exec ember exam --parallel=2 --load-balance --write-execution-file --launch=SafariApplescript
-      - uses: actions/upload-artifact@v6
-        if: failure()
-        with:
-          name: replay-${{matrix.workspace}}-safari.json
-          path: ./packages/${{matrix.workspace}}/test-execution-*.json
-          retention-days: 7
+        run: pnpm --filter ${{matrix.workspace}} exec ember test --launch=SafariApplescript
 
   percy:
     name: Test and Capture Screenshots
