@@ -19,22 +19,26 @@ module('Integration | Component | learner-group/calendar', function (hooks) {
       publishedAsTbd: true,
       published: true,
     });
-    const session1 = this.server.create('session', { course: course1 });
+    const sessionType = this.server.create('session-type');
+    const session1 = this.server.create('session', { course: course1, sessionType });
     const session2 = this.server.create('session', {
       course: course2,
       publishedAsTbd: true,
       published: true,
+      sessionType,
     });
     const offering1 = this.server.create('offering', {
       startDate: today.toJSON(),
       endDate: today.plus({ hour: 1 }).toJSDate(),
       location: '123',
+      updatedAt: Date.now(),
       session: session1,
     });
     const offering2 = this.server.create('offering', {
       startDate: today.toJSON(),
       endDate: today.plus({ hour: 1 }).toJSDate(),
       location: '123',
+      updatedAt: Date.now(),
       session: session2,
     });
     const learnerGroup1 = this.server.create('learner-group', {

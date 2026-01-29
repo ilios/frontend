@@ -51,9 +51,7 @@ export default class IliosCalendarEventMonthComponent extends Component {
     const textColor = isLight ? '--black' : '--white';
 
     return new htmlSafe(
-      `background-color: ${color};
-       color: var(${textColor});
-       border-left: 4px solid ${darkcolor};`,
+      `background-color: ${color}; color: var(${textColor}); border-left: 4px solid ${darkcolor};`,
     );
   }
 
@@ -73,9 +71,9 @@ export default class IliosCalendarEventMonthComponent extends Component {
   }
   <template>
     <button
+      class="month-event{{if this.clickable ' clickable'}}"
       {{! template-lint-disable no-inline-styles }}
       style={{this.style}}
-      class="month-event {{if this.clickable 'clickable'}}"
       type="button"
       data-test-ilios-calendar-event
       data-test-ilios-calendar-event-month
