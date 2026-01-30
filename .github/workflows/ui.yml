@@ -19,13 +19,12 @@ jobs:
     if: contains(github.event.pull_request.labels.*.name, 'run ui tests')
     strategy:
       fail-fast: false
-      max-parallel: 1
+      max-parallel: 3
       matrix:
         workspace:
           - frontend
           - test-app
         launcher:
-          - BS_OSX_Safari
           - BS_IOS_SAFARI
           - BS_CHROME_ANDROID
     steps:
@@ -87,10 +86,36 @@ jobs:
           path: ./packages/${{matrix.workspace}}/test-execution-*.json
           retention-days: 7
 
+  safari-test:
+    name: Safari Tests
+    runs-on: macos-latest
+    timeout-minutes: 20
+    if: contains(github.event.pull_request.labels.*.name, 'run ui tests')
+    strategy:
+      fail-fast: false
+      matrix:
+        workspace:
+          - frontend
+          - test-app
+          - lti-course-manager
+          - lti-dashboard
+    steps:
+      - uses: actions/checkout@v6
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install
+      - name: Safari Version
+        run: /usr/libexec/PlistBuddy -c "print :CFBundleShortVersionString" /Applications/Safari.app/Contents/Info.plist
+      - name: test
+        run: pnpm --filter ${{matrix.workspace}} exec ember test --launch=SafariApplescript
+
   percy:
     name: Test and Capture Screenshots
     runs-on: ubuntu-latest
-    needs: [firefox-test, browserstack-test]
+    needs: [firefox-test, browserstack-test, safari-test]
     timeout-minutes: 20
     if: contains(github.event.pull_request.labels.*.name, 'run ui tests')
     strategy:
