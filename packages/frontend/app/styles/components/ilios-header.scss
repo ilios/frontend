@@ -30,11 +30,7 @@
     .user-menu,
     .user-guide-link {
       button {
-        @include m.for-laptop-and-up {
-          padding: 4px;
-          /* stylelint-disable property-disallowed-list */
-          font-size: 16px;
-        }
+        @include m.font-size("base");
       }
     }
 

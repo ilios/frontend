@@ -112,7 +112,7 @@ export default class UserMenuComponent extends Component {
           <span id="{{templateId}}-user-menu-title">
             {{this.menuTitle}}
           </span>
-          <FaIcon @icon={{if this.isOpen faCaretDown faCaretRight}} />
+          <FaIcon @icon={{if this.isOpen faCaretDown faCaretRight}} @fixedWidth={{true}} />
         </button>
         {{#if this.isOpen}}
           <div {{onClickOutside (set this "isOpen" false)}}>

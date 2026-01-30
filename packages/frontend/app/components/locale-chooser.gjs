@@ -133,7 +133,7 @@ export default class LocaleChooserComponent extends Component {
         <span id="{{this.uniqueId}}-locale-chooser-title">
           {{this.currentLocaleLabel}}
         </span>
-        <FaIcon @icon={{if this.isOpen faCaretDown faCaretRight}} />
+        <FaIcon @icon={{if this.isOpen faCaretDown faCaretRight}} @fixedWidth={{true}} />
       </button>
       {{#if this.isOpen}}
         <div class="menu" role="menu">
