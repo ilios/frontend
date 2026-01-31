@@ -7,6 +7,7 @@ import { LinkTo } from '@ember/routing';
 import { on } from '@ember/modifier';
 import set from 'ember-set-helper/helpers/set';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import ResponsiveTd from 'frontend/components/responsive-td';
 import t from 'ember-intl/helpers/t';
 import perform from 'ember-concurrency/helpers/perform';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
@@ -74,8 +75,7 @@ export default class InstructorGroupsListItemComponent extends Component {
     </tr>
     {{#if this.showRemoveConfirmation}}
       <tr class="confirm-removal" data-test-confirm-removal>
-        <td class="hide-from-small-screen"></td>
-        <td colspan="3">
+        <ResponsiveTd @smallScreenSpan="3" @largeScreenSpan="5">
           <div class="confirm-message">
             {{t
               "general.confirmRemoveInstructorGroup"
@@ -101,8 +101,7 @@ export default class InstructorGroupsListItemComponent extends Component {
               </button>
             </div>
           </div>
-        </td>
-        <td class="hide-from-small-screen"></td>
+        </ResponsiveTd>
       </tr>
     {{/if}}
   </template>

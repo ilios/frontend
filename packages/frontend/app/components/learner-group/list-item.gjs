@@ -7,6 +7,7 @@ import { TrackedAsyncData } from 'ember-async-data';
 import { service } from '@ember/service';
 import { LinkTo } from '@ember/routing';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
+import ResponsiveTd from 'frontend/components/responsive-td';
 import t from 'ember-intl/helpers/t';
 import and from 'ember-truth-helpers/helpers/and';
 import not from 'ember-truth-helpers/helpers/not';
@@ -201,30 +202,30 @@ export default class LearnerGroupListItemComponent extends Component {
     </tr>
     {{#if this.showRemoveConfirmation}}
       <tr class="confirm-removal" data-test-confirm-removal>
-        <td class="hide-from-small-screen"></td>
-        <td colspan="3" class="confirm-message">
-          {{t "general.confirmRemoveLearnerGroup" subgroupCount=@learnerGroup.children.length}}
-          <br />
-          <div class="confirm-buttons">
-            <button
-              type="button"
-              class="remove text"
-              {{on "click" (perform this.remove)}}
-              data-test-confirm
-            >
-              {{t "general.yes"}}
-            </button>
-            <button
-              type="button"
-              class="done text"
-              {{on "click" (set this "showRemoveConfirmation" false)}}
-              data-test-cancel
-            >
-              {{t "general.cancel"}}
-            </button>
+        <ResponsiveTd @smallScreenSpan="3" @largeScreenSpan="5">
+          <div class="confirm-message">
+            {{t "general.confirmRemoveLearnerGroup" subgroupCount=@learnerGroup.children.length}}
+            <br />
+            <div class="confirm-buttons">
+              <button
+                type="button"
+                class="remove text"
+                {{on "click" (perform this.remove)}}
+                data-test-confirm
+              >
+                {{t "general.yes"}}
+              </button>
+              <button
+                type="button"
+                class="done text"
+                {{on "click" (set this "showRemoveConfirmation" false)}}
+                data-test-cancel
+              >
+                {{t "general.cancel"}}
+              </button>
+            </div>
           </div>
-        </td>
-        <td class="hide-from-small-screen"></td>
+        </ResponsiveTd>
       </tr>
     {{/if}}
     {{#if this.showCopyConfirmation}}
