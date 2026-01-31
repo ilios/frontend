@@ -32,8 +32,16 @@
       }
 
       .confirm-buttons {
-        @include m.ilios-form-buttons {
-          padding-top: 1rem;
+        padding-top: 1rem;
+
+        .remove {
+          background-color: var(--white);
+          color: var(--red);
+
+          &:hover {
+            background-color: var(--light-red);
+            color: var(--white);
+          }
         }
       }
     }
