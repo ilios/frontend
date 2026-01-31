@@ -106,12 +106,15 @@ export default class SchoolCompetenciesExpandedComponent extends Component {
     await all(competenciesToRemove.map((competency) => competency.destroyRecord()));
     await all(domainsToRemove.map((domain) => domain.destroyRecord()));
 
-    // set the school on new competencies
-    filterBy(this.competencies, 'isNew').forEach((competency) => {
-      competency.set('school', this.args.school);
-    });
+    // set the school on new competencies and save them.
+    await all(
+      filterBy(this.competencies, 'isNew').map((competency) => {
+        competency.set('school', this.args.school);
+        competency.save();
+      }),
+    );
 
-    // update all modified competencies (this will include new ones).
+    // then update all modified competencies.
     await all(
       filterBy(this.competencies, 'hasDirtyAttributes').map((competency) => competency.save()),
     );
