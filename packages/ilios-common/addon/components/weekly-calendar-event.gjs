@@ -70,7 +70,7 @@ export default class WeeklyCalendarEventComponent extends Component {
   }
 
   get additionalCssClasses() {
-    return this.args.event.cssClasses ? ' ' + this.args.event.cssClasses : '';
+    return this.args.event.showAsBlockedTime ? ' blocked-time' : '';
   }
 
   get isOffering() {

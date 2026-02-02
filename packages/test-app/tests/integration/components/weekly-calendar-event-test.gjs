@@ -20,19 +20,24 @@ module('Integration | Component | weekly-calendar-event', function (hooks) {
     isScheduled,
     isPublished,
     prerequisites,
+    showAsBlockedTime,
   ) {
     prerequisites = prerequisites ?? [];
-    return new Event({
-      name,
-      startDate: DateTime.fromFormat(startDate, 'yyyy-LL-dd hh:mm:ss').toISO(),
-      endDate: DateTime.fromFormat(endDate, 'yyyy-LL-dd hh:mm:ss').toISO(),
-      color: '#00cc65',
-      lastModified: DateTime.fromFormat(lastModified, 'yyyy-LL-dd hh:mm:ss').toISO(),
-      isPublished,
-      isScheduled,
-      postrequisites: [],
-      prerequisites,
-    });
+    return new Event(
+      {
+        name,
+        startDate: DateTime.fromFormat(startDate, 'yyyy-LL-dd hh:mm:ss').toISO(),
+        endDate: DateTime.fromFormat(endDate, 'yyyy-LL-dd hh:mm:ss').toISO(),
+        color: '#00cc65',
+        lastModified: DateTime.fromFormat(lastModified, 'yyyy-LL-dd hh:mm:ss').toISO(),
+        isPublished,
+        isScheduled,
+        postrequisites: [],
+        prerequisites,
+      },
+      false,
+      showAsBlockedTime,
+    );
   };
 
   this.getStyle = function (rowStart, minutes, columnSpan) {
@@ -590,7 +595,7 @@ module('Integration | Component | weekly-calendar-event', function (hooks) {
     assert.strictEqual(component.preworkIndicator.title, 'Has pre-work');
   });
 
-  test('additional CSS classes', async function (assert) {
+  test('show as blocked time', async function (assert) {
     const event = this.createEvent(
       'event 0',
       '2020-02-10 10:40:00',
@@ -598,8 +603,9 @@ module('Integration | Component | weekly-calendar-event', function (hooks) {
       '2012-01-09 08:00:00',
       false,
       true,
+      [],
+      true,
     );
-    event.cssClasses = 'secondary';
     this.set('event', event);
     this.set('events', [event]);
     await render(
@@ -607,6 +613,6 @@ module('Integration | Component | weekly-calendar-event', function (hooks) {
         <WeeklyCalendarEvent @event={{this.event}} @allDayEvents={{this.events}} />
       </template>,
     );
-    assert.ok(component.cssClasses.includes(' secondary'));
+    assert.ok(component.cssClasses.includes(' blocked-time'));
   });
 });

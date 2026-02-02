@@ -54,11 +54,11 @@ export default class OfferingCalendar extends Component {
               offering: offering.id,
               location: offering.location,
               color: sessionType.calendarColor,
-              cssClasses: 'blocked-time',
               postrequisites: [],
               prerequisites: [],
             },
             false,
+            true,
           );
         });
       });
@@ -87,11 +87,11 @@ export default class OfferingCalendar extends Component {
             offering: offering.id,
             location: offering.location,
             color: sessionType.calendarColor,
-            cssClasses: 'blocked-time',
             postrequisites: [],
             prerequisites: [],
           },
           false,
+          true,
         );
       });
 
@@ -109,6 +109,7 @@ export default class OfferingCalendar extends Component {
           postrequisites: [],
           prerequisites: [],
         },
+        false,
         false,
       );
     }

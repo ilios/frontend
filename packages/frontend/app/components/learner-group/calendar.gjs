@@ -51,7 +51,7 @@ export default class LearnerGroupCalendarComponent extends Component {
   }
 
   async loadEvents(learnerGroup, showSubgroupEvents) {
-    let learnerGroupOfferings = await this.getEventsFromLearnerGroups([learnerGroup]);
+    let learnerGroupOfferings = await this.getEventsFromLearnerGroups([learnerGroup], false);
     if (showSubgroupEvents) {
       const subLearnerGroups = await learnerGroup.get('allDescendants');
       const subLearnerGroupOfferings = await this.getEventsFromLearnerGroups(
@@ -63,7 +63,7 @@ export default class LearnerGroupCalendarComponent extends Component {
     return learnerGroupOfferings;
   }
 
-  async getEventsFromLearnerGroups(learnerGroups, isSecondary) {
+  async getEventsFromLearnerGroups(learnerGroups, showAsBlockedTime) {
     const offerings = await all(mapBy(learnerGroups, 'offerings'));
     const flat = offerings.reduce((flattened, obj) => {
       return [...flattened, ...obj];
@@ -87,7 +87,6 @@ export default class LearnerGroupCalendarComponent extends Component {
           location: offering.room,
           school: school.id,
           color: sessionType.calendarColor,
-          cssClasses: isSecondary ? 'blocked-time' : '',
           prerequisites: [],
           postrequisites: [],
           isScheduled: session.isScheduled || course.isScheduled,
@@ -96,6 +95,7 @@ export default class LearnerGroupCalendarComponent extends Component {
           instructors: instructorNames,
         },
         false,
+        showAsBlockedTime,
       );
     });
   }
