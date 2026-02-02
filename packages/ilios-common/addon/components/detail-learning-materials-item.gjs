@@ -152,7 +152,7 @@ export default class DetailLearningMaterialsItemComponent extends Component {
       <tr class="confirm-removal" data-test-confirm-removal>
         <td colspan="14">
           <div class="confirm-message">
-            {{t "general.confirmRemoval"}}
+            {{t "general.confirmRemoveLearningMaterial"}}
             <br />
             <div class="confirm-buttons">
               <button

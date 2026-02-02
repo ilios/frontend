@@ -51,10 +51,10 @@ general:
   competencies: Compétences
   complete: Accompli
   completeSessions: "Séances complète: prêt à publier"
-  confirmObjectiveRemoval: Êtes vous sûr de vouloir supprimer cet objectif? Ça action ne peut pas être défait.
-  confirmRemoval: "Êtes-vous sûr vous voulez supprimer cette matériel d'étude? Ça action ne peut pas être défait."
-  confirmRemove: "Êtes-vous sûr vous voulez supprimer cette offre avec {learnerGroupCount} groupes d'apprenants? Ça action ne peut pas être défait."
-  confirmSessionRemoval: Êtes vous sûr de vouloir supprimer cette séance? Ça action ne peut pas être défait.
+  confirmRemoveLearningMaterial: "Êtes-vous sûr vous voulez supprimer cette matériel d'étude? Ça action ne peut pas être défait."
+  confirmRemoveObjective: Êtes vous sûr de vouloir supprimer cet objectif? Ça action ne peut pas être défait.
+  confirmRemoveSession: Êtes vous sûr de vouloir supprimer cette séance? Ça action ne peut pas être défait.
+  confirmRemoveSessionOffering: "Êtes-vous sûr vous voulez supprimer cette offre avec {learnerGroupCount} groupes d'apprenants? Ça action ne peut pas être défait."
   contentAuthor: Auteur
   copiedIcsFeedUrl: Copié mon lien ICS avec succès
   copiedSuccessfully: Copié avec succès

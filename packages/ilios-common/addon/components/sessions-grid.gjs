@@ -230,7 +230,7 @@ export default class SessionsGrid extends Component {
           />
           {{#if (includes session.id this.confirmDeleteSessionIds)}}
             <div class="confirm-removal" data-test-confirm-removal>
-              {{t "general.confirmSessionRemoval"}}
+              {{t "general.confirmRemoveSession"}}
               <div class="confirm-buttons">
                 <button
                   type="button"

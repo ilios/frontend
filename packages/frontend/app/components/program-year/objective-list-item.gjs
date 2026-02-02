@@ -422,7 +422,7 @@ export default class ProgramYearObjectiveListItemComponent extends Component {
 
       {{#if this.showRemoveConfirmation}}
         <div class="confirm-message" data-test-confirm-removal>
-          {{t "general.confirmObjectiveRemoval"}}
+          {{t "general.confirmRemoveObjective"}}
           <button
             class="remove"
             type="button"

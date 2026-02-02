@@ -287,7 +287,7 @@ export default class SessionObjectiveListItemComponent extends Component {
 
       {{#if this.showRemoveConfirmation}}
         <div class="confirm-message" data-test-confirm-removal>
-          {{t "general.confirmObjectiveRemoval"}}
+          {{t "general.confirmRemoveObjective"}}
           <br />
           <div class="confirm-buttons">
             <button

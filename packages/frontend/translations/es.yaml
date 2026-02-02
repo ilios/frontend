@@ -62,7 +62,10 @@ general:
   confirmRemoveLearnerGroup: "¿Estás seguro que quieres borrar este grupo de aprendedores, con {subgroupCount} grupos subordinados? Esta acción no se puede deshacer."
   confirmRemoveProgram: ¿Estás seguro que quieres borrar este programa? Esta accion no se puede deshacer.
   confirmRemoveProgramYear: "¿Está seguro de que desea eliminar este año del programa?   Hacer tan también quitará su cohorte estudiantil asociada y grupos y asociaciones con {courseCount} curso(s), y no se puede deshacer."
-  confirmVocabularyRemoval: ¿Está seguro que desea eliminar este vocabulario? Esta accion no se puede deshacer.
+  confirmRemoveReport: ¿Está seguro que desea eliminar este informe? Esta acción no se puede deshacer.
+  confirmRemoveSequenceBlock: ¿Está seguro que desea eliminar este bloque de secuencia? Esta acción no se puede deshacer.
+  confirmRemoveSessionType: ¿Está seguro de que desea eliminar este tipo de sesión? Esta acción no se puede deshacer.
+  confirmRemoveVocabulary: ¿Está seguro que desea eliminar este vocabulario? Esta accion no se puede deshacer.
   connectionLost: Conexión Perdida.
   continue: Continuar
   copiedCurriculumReportUrl: Copiado Enlace de Inventario de plan de Estudios Correctamente
@@ -300,7 +303,6 @@ general:
   removeCohort: Remover Cohorte
   removeLearnerToCohort: "{count, plural, =1 {Quite estudiante a {cohort}} other {Quite # estudiantes a {cohort}}}"
   removePrimaryCohort: Remover Principal Cohorte
-  reportConfirmRemove: ¿Está seguro que desea eliminar este informe? Esta acción no se puede deshacer.
   reportDescriptionPlaceholder: Por favor entre en una breve descripción sobre este informe.
   reportDisplayDescriptionWithObject: 'Este informe muestra todos los {subject} asociados con {objectType} "{object}" {year} en {school}.'
   reportDisplayDescriptionWithoutObject: "Este informe muestra todos los {subject} en {school}."
@@ -334,7 +336,6 @@ general:
   selectPolite: (seleccione uno, por favor)
   selectUser: Seleccione usuario
   sequenceBlock: Bloque de Secuencia
-  sequenceBlockConfirmRemove: ¿Está seguro que desea eliminar este bloque de secuencia? Esta acción no se puede deshacer.
   sequenceBlockDescriptionPlaceholder: "Introduzca una descripción para este bloque de la secuencia."
   sequenceBlockIsSelective: Esta bloque de la secuencia ha sido marcada como selectiva.
   sequenceBlocks: Bloques de la Secuencia
@@ -350,7 +351,6 @@ general:
   sessionOfferingsReportSummaryMultiSchool: "informe para {courseCount, plural, one {un curso} other {# cursos}}{schoolCount, plural, zero {} one {} other {, en # escuelas}}. Se enumera el ofrecimiento de cada sesión junto con los instructores, los grupos de aprendedores, y los datos del curso."
   sessionTerm: Término de Sesión
   sessionTerms: Términos de Sesión
-  sessionTypeConfirmRemoval: ¿Está seguro de que desea eliminar este tipo de sesión? Esta acción no se puede deshacer.
   sessionTypeTitlePlaceholder: Entre en un titulo para este tipo de sesión
   showLess: Mostrar menos
   showSubgroupEvents: Mostrar eventos para todos los grupos subordinados

@@ -262,7 +262,10 @@ export default class OfferingManagerComponent extends Component {
           {{#if this.showRemoveConfirmation}}
             <div class="confirm-removal">
               <div class="confirm-message">
-                {{t "general.confirmRemove" learnerGroupCount=@offering.learnerGroups.length}}
+                {{t
+                  "general.confirmRemoveSessionOffering"
+                  learnerGroupCount=@offering.learnerGroups.length
+                }}
                 <br />
                 <div class="confirm-buttons">
                   <button type="button" class="remove text" {{on "click" (fn @remove @offering)}}>

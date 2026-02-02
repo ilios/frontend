@@ -68,7 +68,7 @@ export default class ReportsListComponent extends Component {
             <tr class="confirm-removal">
               <td colspan="12">
                 <div class="confirm-message">
-                  {{t "general.reportConfirmRemove"}}
+                  {{t "general.confirmRemoveReport"}}
                   <br />
                   <div class="confirm-buttons">
                     <button

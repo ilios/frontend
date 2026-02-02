@@ -119,7 +119,7 @@ export default class CurriculumInventoryReportListItemComponent extends Componen
       <tr class="confirm-removal" data-test-confirm-removal>
         <ResponsiveTd @smallScreenSpan="8" @largeScreenSpan="16">
           <div class="confirm-message">
-            {{t "general.reportConfirmRemove"}}
+            {{t "general.confirmRemoveReport"}}
             <br />
             <div class="confirm-buttons">
               <button
