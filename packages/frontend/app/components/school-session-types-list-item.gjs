@@ -28,7 +28,7 @@ export default class SchoolSessionTypesListItemComponent extends Component {
   });
   <template>
     <tr
-      class="school-session-types-list-item"
+      class="school-session-types-list-item{{if this.showRemoveConfirmation ' confirm-removal'}}"
       data-test-school-session-types-list-item
       ...attributes
     >
