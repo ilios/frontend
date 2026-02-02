@@ -381,6 +381,12 @@ importers:
       '@embroider/util':
         specifier: ^1.13.0
         version: 1.13.5(@glint/template@1.7.3)(ember-source@6.8.2(@glimmer/component@2.0.0)(rsvp@4.8.5))
+      '@fontsource/nunito':
+        specifier: ^5.2.7
+        version: 5.2.7
+      '@fontsource/nunito-sans':
+        specifier: ^5.2.7
+        version: 5.2.7
       '@fortawesome/ember-fontawesome':
         specifier: ^3.1.0
         version: 3.1.0(@fortawesome/fontawesome-svg-core@6.7.2)(@glimmer/component@2.0.0)(@glint/template@1.7.3)
@@ -516,12 +522,6 @@ importers:
       striptags:
         specifier: '>= 3.2.0'
         version: 3.2.0
-      typeface-nunito:
-        specifier: '>= 1.1.13'
-        version: 1.1.13
-      typeface-nunito-sans:
-        specifier: '>= 1.1.13'
-        version: 1.1.13
       validator:
         specifier: '>= 13.12.0'
         version: 13.15.26
@@ -2481,6 +2481,12 @@ packages:
 
   '@floating-ui/utils@0.2.10':
     resolution: {integrity: sha512-aGTxbpbg8/b5JfU1HXSrbH3wXZuLPJcNEcZQFMxLs3oSzgtVu6nFPkbbGGUvBcUjKV2YyB9Wxxabo+HEH9tcRQ==}
+
+  '@fontsource/nunito-sans@5.2.7':
+    resolution: {integrity: sha512-Vh+xhMsrH1eA9Q83Va82su3rDmNilYg+ur/TfHAOyr5kTpCOWMB8B1tDoJvSe+yJPpZ2jEWtnBHGqI2LUPVxUA==}
+
+  '@fontsource/nunito@5.2.7':
+    resolution: {integrity: sha512-pmtBq0H9ex9nk+RtJYEJOD9pag393iHETnl/PVKleF4i06cd0ttngK5ZCTgYb5eOqR3Xdlrjtev8m7bmgYprew==}
 
   '@formatjs/ecma402-abstract@3.1.0':
     resolution: {integrity: sha512-CjP1sUzM7XiQW6YluDreN+dMvcKZysO/J4ikvuDjDyd6nSOoSqAK9gvD1s75ZFaJVXtYOsz+y3CUXPZ1sKxcxw==}
@@ -9787,12 +9793,6 @@ packages:
   typedarray@0.0.6:
     resolution: {integrity: sha512-/aCDEGatGvZ2BIk+HmLf4ifCJFwvKFNb9/JeZPMulfgFracn9QFcAf5GO8B/mweUjSoblS5In0cWhqpfs/5PQA==}
 
-  typeface-nunito-sans@1.1.13:
-    resolution: {integrity: sha512-wpRTCwHdHcq4CKBBGzTDNAjck64O1prpCjKiUJyMFHn+E9k1aELJuSVeMBsgScdR1b5u7HFP1Px7Gi2OUMu33w==}
-
-  typeface-nunito@1.1.13:
-    resolution: {integrity: sha512-S7tN6pMnJapUxRDNa/RPXtcsxJC0KkBNPFOfGpHCkatVLm+6ltMedgeGtr1lPZsGFXGN890TZmE18bq2pdsmKw==}
-
   typescript-memoize@1.1.1:
     resolution: {integrity: sha512-GQ90TcKpIH4XxYTI2F98yEQYZgjNMOGPpOgdjIBhaLaWji5HPWlRnZ4AeA1hfBxtY7bCGDJsqDDHk/KaHOl5bA==}
 
@@ -12361,6 +12361,10 @@ snapshots:
       '@floating-ui/utils': 0.2.10
 
   '@floating-ui/utils@0.2.10': {}
+
+  '@fontsource/nunito-sans@5.2.7': {}
+
+  '@fontsource/nunito@5.2.7': {}
 
   '@formatjs/ecma402-abstract@3.1.0':
     dependencies:
@@ -21941,10 +21945,6 @@ snapshots:
       is-typedarray: 1.0.0
 
   typedarray@0.0.6: {}
-
-  typeface-nunito-sans@1.1.13: {}
-
-  typeface-nunito@1.1.13: {}
 
   typescript-memoize@1.1.1: {}
 
