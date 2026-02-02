@@ -34,4 +34,14 @@
   &.ilm {
     border-top: 2px dotted var(--black);
   }
+
+  &.blocked-time {
+    background: repeating-linear-gradient(
+      45deg,
+      var(--white),
+      var(--white) 10px,
+      var(--super-light-grey) 10px,
+      var(--super-light-grey) 20px
+    );
+  }
 }
