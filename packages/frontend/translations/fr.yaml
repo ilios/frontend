@@ -62,7 +62,7 @@ general:
   confirmRemoveLearnerGroup: "Êtes-vous sûr vous voulez supprimer cette groupe d'apprenants, avec {subgroupCount} sous-groupes? Ça action ne peut pas être défait."
   confirmRemoveProgram: Êtes-vous certain que vous voulez supprimer ce diplôme? Cette action ne peut être annulée.
   confirmRemoveProgramYear: "Êtes-vous certain que vous voulez supprimer cette année de diplôme? Cette action va supprimer tous les cohortes et groupes des étudiants associées, et liaisons avec {courseCount} des cours, et ne peut être annulée."
-  confirmVocabularyRemoval: Êtes vous sûr de vouloir supprimer cette vocabulaire?
+  confirmVocabularyRemoval: Êtes vous sûr de vouloir supprimer cette vocabulaire? Cette action ne peut être annulée.
   connectionLost: Connexion perdu
   continue: Continuez
   copiedCurriculumReportUrl: Copié lien vers le rapport d'inventaire des programmes d'étude avec succès

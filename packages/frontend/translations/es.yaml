@@ -62,7 +62,7 @@ general:
   confirmRemoveLearnerGroup: "¿Estás seguro que quieres borrar este grupo de aprendedores, con {subgroupCount} grupos subordinados? Esta acción no se puede deshacer."
   confirmRemoveProgram: ¿Estás seguro que quieres borrar este programa? Esta accion no se puede deshacer.
   confirmRemoveProgramYear: "¿Está seguro de que desea eliminar este año del programa?   Hacer tan también quitará su cohorte estudiantil asociada y grupos y asociaciones con {courseCount} curso(s), y no se puede deshacer."
-  confirmVocabularyRemoval: ¿Está seguro que desea eliminar este vocabulario?
+  confirmVocabularyRemoval: ¿Está seguro que desea eliminar este vocabulario? Esta accion no se puede deshacer.
   connectionLost: Conexión Perdida.
   continue: Continuar
   copiedCurriculumReportUrl: Copiado Enlace de Inventario de plan de Estudios Correctamente
