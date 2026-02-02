@@ -381,10 +381,10 @@ importers:
       '@embroider/util':
         specifier: ^1.13.0
         version: 1.13.5(@glint/template@1.7.4)(ember-source@6.10.0(@glimmer/component@2.0.0)(rsvp@4.8.5))
-      '@fontsource/nunito':
+      '@fontsource-variable/nunito':
         specifier: ^5.2.7
         version: 5.2.7
-      '@fontsource/nunito-sans':
+      '@fontsource-variable/nunito-sans':
         specifier: ^5.2.7
         version: 5.2.7
       '@fortawesome/ember-fontawesome':
@@ -2474,11 +2474,11 @@ packages:
   '@floating-ui/utils@0.2.10':
     resolution: {integrity: sha512-aGTxbpbg8/b5JfU1HXSrbH3wXZuLPJcNEcZQFMxLs3oSzgtVu6nFPkbbGGUvBcUjKV2YyB9Wxxabo+HEH9tcRQ==}
 
-  '@fontsource/nunito-sans@5.2.7':
-    resolution: {integrity: sha512-Vh+xhMsrH1eA9Q83Va82su3rDmNilYg+ur/TfHAOyr5kTpCOWMB8B1tDoJvSe+yJPpZ2jEWtnBHGqI2LUPVxUA==}
+  '@fontsource-variable/nunito-sans@5.2.7':
+    resolution: {integrity: sha512-rflH5HeAoNjIkwftStzQvxqCJhIS+usMr/lfslWg/RCa499B5qxyjo+74R/QMM0geQt4AY1URlG7wAR1iq6KPQ==}
 
-  '@fontsource/nunito@5.2.7':
-    resolution: {integrity: sha512-pmtBq0H9ex9nk+RtJYEJOD9pag393iHETnl/PVKleF4i06cd0ttngK5ZCTgYb5eOqR3Xdlrjtev8m7bmgYprew==}
+  '@fontsource-variable/nunito@5.2.7':
+    resolution: {integrity: sha512-2N8QhatkyKgSUbAGZO2FYLioxA32+RyI1EplVLawbpkGjUeui9Qg9VMrpkCaik1ydjFjfLV+kzQ0cGEsMrMenQ==}
 
   '@formatjs/ecma402-abstract@3.1.1':
     resolution: {integrity: sha512-jhZbTwda+2tcNrs4kKvxrPLPjx8QsBCLCUgrrJ/S+G9YrGHWLhAyFMMBHJBnBoOwuLHd7L14FgYudviKaxkO2Q==}
@@ -12676,9 +12676,9 @@ snapshots:
 
   '@floating-ui/utils@0.2.10': {}
 
-  '@fontsource/nunito-sans@5.2.7': {}
+  '@fontsource-variable/nunito-sans@5.2.7': {}
 
-  '@fontsource/nunito@5.2.7': {}
+  '@fontsource-variable/nunito@5.2.7': {}
 
   '@formatjs/ecma402-abstract@3.1.1':
     dependencies:
