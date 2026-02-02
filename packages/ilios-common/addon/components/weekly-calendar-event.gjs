@@ -69,6 +69,10 @@ export default class WeeklyCalendarEventComponent extends Component {
     return !!this.args.event.ilmSession;
   }
 
+  get additionalCssClasses() {
+    return this.args.event.cssClasses ? ' ' + this.args.event.cssClasses : '';
+  }
+
   get isOffering() {
     return !!this.args.event.offering;
   }
@@ -133,7 +137,7 @@ export default class WeeklyCalendarEventComponent extends Component {
       class="weekly-calendar-event day-{{@day}}{{if this.isIlm ' ilm'}}{{if
           this.clickable
           ' clickable'
-        }}"
+        }}{{this.additionalCssClasses}}"
       {{! template-lint-disable no-inline-styles }}
       style={{this.style}}
       type="button"

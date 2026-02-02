@@ -589,4 +589,24 @@ module('Integration | Component | weekly-calendar-event', function (hooks) {
     assert.ok(component.preworkIndicator.isPresent);
     assert.strictEqual(component.preworkIndicator.title, 'Has pre-work');
   });
+
+  test('additional CSS classes', async function (assert) {
+    const event = this.createEvent(
+      'event 0',
+      '2020-02-10 10:40:00',
+      '2020-02-10 12:30:00',
+      '2012-01-09 08:00:00',
+      false,
+      true,
+    );
+    event.cssClasses = 'secondary';
+    this.set('event', event);
+    this.set('events', [event]);
+    await render(
+      <template>
+        <WeeklyCalendarEvent @event={{this.event}} @allDayEvents={{this.events}} />
+      </template>,
+    );
+    assert.ok(component.cssClasses.includes(' secondary'));
+  });
 });
