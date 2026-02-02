@@ -222,6 +222,7 @@ export default class SessionsGrid extends Component {
         >
           <SessionsGridRow
             @session={{session}}
+            @sessionsForRemovalConfirmation={{this.confirmDeleteSessionIds}}
             @confirmDelete={{this.confirmDelete}}
             @closeSession={{@closeSession}}
             @expandSession={{this.expandSession}}

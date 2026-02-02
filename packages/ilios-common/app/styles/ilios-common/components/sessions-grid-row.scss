@@ -4,6 +4,10 @@
   padding: 0.25rem 0;
   @include m.sessions-grid;
 
+  &.confirm {
+    background-color: var(--lightest-red);
+  }
+
   .session-grid-status {
     display: flex;
     justify-content: flex-end;
