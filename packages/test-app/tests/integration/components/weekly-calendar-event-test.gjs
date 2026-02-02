@@ -614,5 +614,7 @@ module('Integration | Component | weekly-calendar-event', function (hooks) {
       </template>,
     );
     assert.ok(component.cssClasses.includes(' blocked-time'));
+    assert.notOk(component.style.includes(' background-color:'));
+    assert.notOk(component.style.includes('; color:'));
   });
 });

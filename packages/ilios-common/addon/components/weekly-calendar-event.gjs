@@ -128,9 +128,13 @@ export default class WeeklyCalendarEventComponent extends Component {
     const isLight = Color(color).isLight();
     const textColor = isLight ? '--black' : '--white';
 
-    return new htmlSafe(
-      `background-color: ${color}; border-left: .25rem solid ${darkcolor}; color: var(${textColor}); grid-column-start: span ${this.span}; grid-row-start: ${this.startMinuteRounded + 1}; grid-row-end: span ${this.totalMinutesRounded};`,
-    );
+    let styles = `border-left: .25rem solid ${darkcolor}; grid-column-start: span ${this.span}; grid-row-start: ${this.startMinuteRounded + 1}; grid-row-end: span ${this.totalMinutesRounded};`;
+
+    if (!this.args.event.showAsBlockedTime) {
+      styles += ` background-color: ${color}; color: var(${textColor}`;
+    }
+
+    return new htmlSafe(styles);
   }
   <template>
     <button
