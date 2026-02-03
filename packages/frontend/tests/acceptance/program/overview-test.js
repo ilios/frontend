@@ -48,6 +48,10 @@ module('Acceptance | Program - Overview', function (hooks) {
     assert.strictEqual(page.root.header.title.text, 'program 0');
     await page.root.header.title.edit();
     await page.root.header.title.set('test new title');
+    await page.root.header.title.cancel();
+    assert.strictEqual(page.root.header.title.text, 'program 0');
+    await page.root.header.title.edit();
+    await page.root.header.title.set('test new title');
     await page.root.header.title.save();
     assert.strictEqual(page.root.header.title.text, 'test new title');
   });
@@ -59,6 +63,10 @@ module('Acceptance | Program - Overview', function (hooks) {
     });
     await page.visit({ programId: 1 });
 
+    assert.strictEqual(page.root.overview.shortTitle.text, 'Title (short): short_0');
+    await page.root.overview.shortTitle.edit();
+    await page.root.overview.shortTitle.set('newshort');
+    await page.root.overview.shortTitle.cancel();
     assert.strictEqual(page.root.overview.shortTitle.text, 'Title (short): short_0');
     await page.root.overview.shortTitle.edit();
     await page.root.overview.shortTitle.set('newshort');

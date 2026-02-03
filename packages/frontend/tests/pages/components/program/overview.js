@@ -7,6 +7,7 @@ const definition = {
     edit: clickable('[data-test-edit]'),
     set: fillable('input'),
     save: clickable('.done'),
+    cancel: clickable('.cancel'),
     editable: isPresent('[data-test-edit]'),
     value: text('[data-test-value]'),
     hasError: isPresent('[data-test-title-validation-error-message]'),

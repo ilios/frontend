@@ -54,6 +54,11 @@ export default class ProgramOverviewComponent extends Component {
   });
 
   @action
+  revertShortTitleChanges() {
+    this.shortTitle = this.args.program.shortTitle;
+  }
+
+  @action
   setDuration(ev) {
     this.duration = Number(ev.target.value);
   }
@@ -72,7 +77,7 @@ export default class ProgramOverviewComponent extends Component {
               <EditableField
                 @value={{this.shortTitle}}
                 @save={{perform this.changeShortTitle}}
-                @close={{set this "duration" @program.duration}}
+                @close={{this.revertShortTitleChanges}}
                 @clickPrompt={{t "general.clickToEdit"}}
                 as |keyboard isSaving|
               >
@@ -86,11 +91,11 @@ export default class ProgramOverviewComponent extends Component {
                   {{keyboard}}
                   {{focus}}
                 />
+                <YupValidationMessage
+                  @validationErrors={{this.validations.errors.shortTitle}}
+                  data-test-title-validation-error-message
+                />
               </EditableField>
-              <YupValidationMessage
-                @validationErrors={{this.validations.errors.shortTitle}}
-                data-test-title-validation-error-message
-              />
             {{else}}
               {{this.shortTitle}}
             {{/if}}
