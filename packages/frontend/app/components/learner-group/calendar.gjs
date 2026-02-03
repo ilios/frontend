@@ -53,7 +53,7 @@ export default class LearnerGroupCalendarComponent extends Component {
   async loadEvents(learnerGroup, showSubgroupEvents) {
     let learnerGroupOfferings = await this.getEventsFromLearnerGroups([learnerGroup], false);
     if (showSubgroupEvents) {
-      const subLearnerGroups = await learnerGroup.get('allDescendants');
+      const subLearnerGroups = await learnerGroup.getAllDescendants();
       const subLearnerGroupOfferings = await this.getEventsFromLearnerGroups(
         subLearnerGroups,
         true,
