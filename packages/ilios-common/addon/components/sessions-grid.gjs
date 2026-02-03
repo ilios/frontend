@@ -222,6 +222,7 @@ export default class SessionsGrid extends Component {
         >
           <SessionsGridRow
             @session={{session}}
+            @sessionsForRemovalConfirmation={{this.confirmDeleteSessionIds}}
             @confirmDelete={{this.confirmDelete}}
             @closeSession={{@closeSession}}
             @expandSession={{this.expandSession}}
@@ -229,14 +230,14 @@ export default class SessionsGrid extends Component {
           />
           {{#if (includes session.id this.confirmDeleteSessionIds)}}
             <div class="confirm-removal" data-test-confirm-removal>
-              {{t "general.confirmSessionRemoval"}}
+              {{t "general.confirmRemoveSession"}}
               <div class="confirm-buttons">
                 <button
-                  class="cancel"
                   type="button"
-                  data-test-yes
+                  class="remove"
                   disabled={{this.removeSession.isRunning}}
                   {{on "click" (perform this.removeSession session)}}
+                  data-test-yes
                 >
                   {{#if this.removeSession.isRunning}}
                     <LoadingSpinner />
@@ -244,7 +245,12 @@ export default class SessionsGrid extends Component {
                     {{t "general.yes"}}
                   {{/if}}
                 </button>
-                <button class="done" type="button" {{on "click" (fn this.cancelDelete session.id)}}>
+                <button
+                  type="button"
+                  class="done text"
+                  {{on "click" (fn this.cancelDelete session.id)}}
+                  data-test-cancel
+                >
                   {{t "general.cancel"}}
                 </button>
               </div>

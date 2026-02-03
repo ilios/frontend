@@ -62,7 +62,13 @@ export default class SessionsGridRowComponent extends Component {
     return `${this.intl.t('general.prerequisites')}: ${titles}`;
   }
   <template>
-    <div class="sessions-grid-row" data-test-sessions-grid-row>
+    <div
+      class="sessions-grid-row{{if
+          (includes @session.id @sessionsForRemovalConfirmation)
+          ' confirm'
+        }}"
+      data-test-sessions-grid-row
+    >
       <span class="expand-collapse-control" data-test-expand-collapse-control>
         {{#if (includes @session.id @expandedSessionIds)}}
           <button

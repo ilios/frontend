@@ -186,7 +186,11 @@
         padding: 1rem 4rem;
 
         @include media.for-tablet-and-up {
-          padding: 1rem 8rem;
+          padding: 1rem 8rem 0;
+        }
+
+        .confirm-buttons {
+          padding-top: 1.1em;
         }
       }
 

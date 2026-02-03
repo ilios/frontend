@@ -123,7 +123,7 @@ export default class SchoolVocabulariesListComponent extends Component {
                   <tr class="confirm-removal" data-test-confirm-removal={{index}}>
                     <td colspan="5">
                       <div class="confirm-message">
-                        {{t "general.confirmVocabularyRemoval"}}
+                        {{t "general.confirmRemoveVocabulary"}}
                         <br />
                         <div class="confirm-buttons">
                           <button

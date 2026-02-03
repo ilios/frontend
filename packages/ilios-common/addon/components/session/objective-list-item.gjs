@@ -287,27 +287,30 @@ export default class SessionObjectiveListItemComponent extends Component {
 
       {{#if this.showRemoveConfirmation}}
         <div class="confirm-message" data-test-confirm-removal>
-          {{t "general.confirmObjectiveRemoval"}}
-          <button
-            class="remove"
-            type="button"
-            data-test-confirm
-            {{on "click" (perform this.deleteObjective)}}
-          >
-            {{#if this.deleteObjective.isRunning}}
-              <FaIcon @icon={{faSpinner}} @spin={{true}} />
-            {{else}}
-              {{t "general.yes"}}
-            {{/if}}
-          </button>
-          <button
-            class="done"
-            type="button"
-            data-test-cancel
-            {{on "click" (set this "showRemoveConfirmation" false)}}
-          >
-            {{t "general.cancel"}}
-          </button>
+          {{t "general.confirmRemoveObjective"}}
+          <br />
+          <div class="confirm-buttons">
+            <button
+              class="remove"
+              type="button"
+              data-test-confirm
+              {{on "click" (perform this.deleteObjective)}}
+            >
+              {{#if this.deleteObjective.isRunning}}
+                <FaIcon @icon={{faSpinner}} @spin={{true}} />
+              {{else}}
+                {{t "general.yes"}}
+              {{/if}}
+            </button>
+            <button
+              class="done"
+              type="button"
+              data-test-cancel
+              {{on "click" (set this "showRemoveConfirmation" false)}}
+            >
+              {{t "general.cancel"}}
+            </button>
+          </div>
         </div>
       {{/if}}
 

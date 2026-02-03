@@ -93,7 +93,7 @@ export default class CurriculumInventorySequenceBlockListItemComponent extends C
       <tr class="confirm-removal" data-test-confirm-removal>
         <ResponsiveTd @smallScreenSpan="9" @largeScreenSpan="15">
           <div class="confirm-message">
-            {{t "general.sequenceBlockConfirmRemove"}}
+            {{t "general.confirmRemoveSequenceBlock"}}
             <br />
             <div class="confirm-buttons">
               <button

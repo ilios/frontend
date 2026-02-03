@@ -62,7 +62,10 @@ general:
   confirmRemoveLearnerGroup: "Êtes-vous sûr vous voulez supprimer cette groupe d'apprenants, avec {subgroupCount} sous-groupes? Ça action ne peut pas être défait."
   confirmRemoveProgram: Êtes-vous certain que vous voulez supprimer ce diplôme? Cette action ne peut être annulée.
   confirmRemoveProgramYear: "Êtes-vous certain que vous voulez supprimer cette année de diplôme? Cette action va supprimer tous les cohortes et groupes des étudiants associées, et liaisons avec {courseCount} des cours, et ne peut être annulée."
-  confirmVocabularyRemoval: Êtes vous sûr de vouloir supprimer cette vocabulaire?
+  confirmRemoveReport: Êtes-vous sûrs que vous voulez supprimer ce rapport? Cette action ne peut pas être défaite.
+  confirmRemoveSequenceBlock: Êtes-vous sûrs que vous voulez supprimer ce bloc séquence? Cette action ne peut pas être défaite.
+  confirmRemoveSessionType: "Voulez-vous vraiment supprimer ce type de session ? Cette action ne peut pas être annulée."
+  confirmRemoveVocabulary: Êtes vous sûr de vouloir supprimer cette vocabulaire? Cette action ne peut être annulée.
   connectionLost: Connexion perdu
   continue: Continuez
   copiedCurriculumReportUrl: Copié lien vers le rapport d'inventaire des programmes d'étude avec succès
@@ -300,7 +303,6 @@ general:
   removeCohort: Supprîmer Cohorte
   removeLearnerToCohort: "{count, plural, =1 {Renvoyer l’étudiant à {cohort}} other {Renvoyer # étudiants à {cohort}}}"
   removePrimaryCohort: Supprîmer Cohorte Primaire
-  reportConfirmRemove: Êtes-vous sûrs que vous voulez supprimer ce rapport? Cette action ne peut pas être défaite.
   reportDescriptionPlaceholder: "Entrez S'il vous plaît dans une description brève de ce rapport."
   reportDisplayDescriptionWithObject: 'This report shows all {subject} associated with {objectType} "{object}" {year} in {school}.'
   reportDisplayDescriptionWithoutObject: "Ce rapport montre tous les {subject} de {school}."
@@ -334,7 +336,6 @@ general:
   selectPolite: (veuillez en sélectionner un)
   selectUser: "Choisi l'utilisateur"
   sequenceBlock: Bloc séquence
-  sequenceBlockConfirmRemove: Êtes-vous sûrs que vous voulez supprimer ce bloc séquence? Cette action ne peut pas être défaite.
   sequenceBlockDescriptionPlaceholder: "Entrez une description pour ceci bloc séquence."
   sequenceBlockIsSelective: Cette bloc séquence a été marquée comme sélective.
   sequenceBlocks: Blocs séquence
@@ -350,7 +351,6 @@ general:
   sessionOfferingsReportSummaryMultiSchool: "Rapport de {courseCount, plural, one {one course} other {# courses}}{schoolCount, plural, zero {} one {} other {, dans # écoles}}. Chaque offre de séance est listée avec des instructeurs, groupes d'étudiants, et cours données."
   sessionTerm: Terme de Séance
   sessionTerms: Termes de Séance
-  sessionTypeConfirmRemoval: "Voulez-vous vraiment supprimer ce type de session ? Cette action ne peut pas être annulée."
   sessionTypeTitlePlaceholder: Ajoutez un titre pour ce type de session
   showLess: Afficher moins
   showSubgroupEvents: Afficher les événements pour tous les sous-groupes

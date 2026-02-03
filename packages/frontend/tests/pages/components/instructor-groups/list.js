@@ -30,10 +30,10 @@ const definition = {
   },
   confirmRemoval: {
     scope: '[data-test-confirm-removal]',
-    confirm: clickable('[data-test-confirm]'),
-    cancel: clickable('[data-test-cancel]'),
+    message: text('td:first-of-type .confirm-message'),
+    confirm: clickable('td:first-of-type [data-test-confirm]'),
+    cancel: clickable('td:first-of-type [data-test-cancel]'),
   },
-  removalConfirmationMessage: text('.confirm-removal .confirm-message'),
 };
 
 export default definition;

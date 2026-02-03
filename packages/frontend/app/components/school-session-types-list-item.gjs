@@ -28,7 +28,7 @@ export default class SchoolSessionTypesListItemComponent extends Component {
   });
   <template>
     <tr
-      class="school-session-types-list-item"
+      class="school-session-types-list-item{{if this.showRemoveConfirmation ' confirm-removal'}}"
       data-test-school-session-types-list-item
       ...attributes
     >
@@ -122,7 +122,7 @@ export default class SchoolSessionTypesListItemComponent extends Component {
       <tr class="confirm-removal">
         <td colspan="11" class="hide-from-small-screen">
           <div class="confirm-message" data-test-message>
-            {{t "general.sessionTypeConfirmRemoval"}}
+            {{t "general.confirmRemoveSessionType"}}
             <br />
             <div class="confirm-buttons">
               <button
@@ -146,7 +146,7 @@ export default class SchoolSessionTypesListItemComponent extends Component {
         </td>
         <td colspan="5" class="hide-from-large-screen" data-test-confirm-removal>
           <div class="confirm-message" data-test-message>
-            {{t "general.sessionTypeConfirmRemoval"}}
+            {{t "general.confirmRemoveSessionType"}}
             <br />
             <div class="confirm-buttons">
               <button

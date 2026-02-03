@@ -51,10 +51,10 @@ general:
   competencies: Competencias
   complete: Completo
   completeSessions: "Sesiónes Completas: Listo a Publicar"
-  confirmObjectiveRemoval: ¿Está seguro que desea eliminar este objetivo?
-  confirmRemoval: ¿Está seguro que desea eliminar este material de aprendizaje?
-  confirmRemove: "¿Estás seguro que quieres borrar este ofrecimiento con {learnerGroupCount} grupos de aprendedores? Esta acción no se puede deshacer."
-  confirmSessionRemoval: ¿Está seguro que desea eliminar este sessión?
+  confirmRemoveLearningMaterial: ¿Está seguro que desea eliminar este material de aprendizaje? Esta acción no se puede deshacer.
+  confirmRemoveObjective: ¿Está seguro que desea eliminar este objetivo? Esta acción no se puede deshacer.
+  confirmRemoveSession: ¿Está seguro que desea eliminar este sessión? Esta acción no se puede deshacer.
+  confirmRemoveSessionOffering: "¿Estás seguro que quieres borrar este ofrecimiento con {learnerGroupCount} grupos de aprendedores? Esta acción no se puede deshacer."
   contentAuthor: Autor del Contenido
   copiedIcsFeedUrl: Copiado Mi Enlace ICS con éxito
   copiedSuccessfully: Copiado con éxito

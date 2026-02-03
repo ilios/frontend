@@ -3,6 +3,12 @@
 
 .ilios-removable-table {
   tbody {
+    tr:nth-child(even) {
+      &.confirm-removal {
+        background-color: var(--lightest-red);
+      }
+    }
+
     .confirm-removal {
       background-color: var(--lightest-red);
 
