@@ -15,13 +15,7 @@ import { on } from '@ember/modifier';
 import perform from 'ember-concurrency/helpers/perform';
 import set from 'ember-set-helper/helpers/set';
 import scrollIntoView from 'ilios-common/modifiers/scroll-into-view';
-import {
-  faLock,
-  faLockOpen,
-  faSquareUpRight,
-  faTrash,
-  faTriangleExclamation,
-} from '@fortawesome/free-solid-svg-icons';
+import { faLock, faLockOpen, faSquareUpRight, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 export default class ProgramYearListItemComponent extends Component {
   @service permissionChecker;
@@ -146,32 +140,16 @@ export default class ProgramYearListItemComponent extends Component {
           {{/if}}
         </td>
         <td class="text-left hide-from-small-screen" data-test-competencies>
-          {{#if @programYear.competencies.length}}
-            {{@programYear.competencies.length}}
-          {{else}}
-            <FaIcon @icon={{faTriangleExclamation}} class="warning" data-test-warning />
-          {{/if}}
+          {{@programYear.competencies.length}}
         </td>
         <td class="text-left hide-from-small-screen" data-test-objectives>
-          {{#if @programYear.programYearObjectives.length}}
-            {{@programYear.programYearObjectives.length}}
-          {{else}}
-            <FaIcon @icon={{faTriangleExclamation}} class="warning" data-test-warning />
-          {{/if}}
+          {{@programYear.programYearObjectives.length}}
         </td>
         <td class="text-left hide-from-small-screen" data-test-directors>
-          {{#if @programYear.directors.length}}
-            {{@programYear.directors.length}}
-          {{else}}
-            <FaIcon @icon={{faTriangleExclamation}} class="warning" data-test-warning />
-          {{/if}}
+          {{@programYear.directors.length}}
         </td>
         <td class="text-left hide-from-small-screen" data-test-terms>
-          {{#if @programYear.terms.length}}
-            {{@programYear.terms.length}}
-          {{else}}
-            <FaIcon @icon={{faTriangleExclamation}} class="warning" data-test-warning />
-          {{/if}}
+          {{@programYear.terms.length}}
         </td>
         <td class="text-right" data-test-actions>
           {{#if (or this.lock.isRunning this.unlock.isRunning)}}

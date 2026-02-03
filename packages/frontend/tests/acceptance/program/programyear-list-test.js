@@ -67,7 +67,6 @@ module('Acceptance | Program - ProgramYear List', function (hooks) {
     this.server.create('cohort', { programYear });
     await page.visit({ programId: this.program.id });
     assert.strictEqual(page.programYears.items[0].competencies.text, '5');
-    assert.notOk(page.programYears.items[0].competencies.hasWarning);
   });
 
   test('check objectives', async function (assert) {
@@ -76,7 +75,6 @@ module('Acceptance | Program - ProgramYear List', function (hooks) {
     this.server.create('cohort', { programYear });
     await page.visit({ programId: this.program.id });
     assert.strictEqual(page.programYears.items[0].objectives.text, '5');
-    assert.notOk(page.programYears.items[0].objectives.hasWarning);
   });
 
   test('check directors', async function (assert) {
@@ -87,7 +85,6 @@ module('Acceptance | Program - ProgramYear List', function (hooks) {
     this.server.create('cohort', { programYear });
     await page.visit({ programId: this.program.id });
     assert.strictEqual(page.programYears.items[0].directors.text, '5');
-    assert.notOk(page.programYears.items[0].directors.hasWarning);
   });
 
   test('check terms', async function (assert) {
@@ -104,19 +101,18 @@ module('Acceptance | Program - ProgramYear List', function (hooks) {
     this.server.create('cohort', { programYear });
     await page.visit({ programId: this.program.id });
     assert.strictEqual(page.programYears.items[0].terms.text, '5');
-    assert.notOk(page.programYears.items[0].terms.hasWarning);
   });
 
-  test('check warnings', async function (assert) {
+  test('check empty values', async function (assert) {
     const programYear = this.server.create('program-year', {
       program: this.program,
     });
     this.server.create('cohort', { programYear });
     await page.visit({ programId: this.program.id });
-    assert.ok(page.programYears.items[0].competencies.hasWarning);
-    assert.ok(page.programYears.items[0].objectives.hasWarning);
-    assert.ok(page.programYears.items[0].directors.hasWarning);
-    assert.ok(page.programYears.items[0].terms.hasWarning);
+    assert.strictEqual(page.programYears.items[0].competencies.text, '0');
+    assert.strictEqual(page.programYears.items[0].objectives.text, '0');
+    assert.strictEqual(page.programYears.items[0].directors.text, '0');
+    assert.strictEqual(page.programYears.items[0].terms.text, '0');
   });
 
   test('check link', async function (assert) {
@@ -162,10 +158,10 @@ module('Acceptance | Program - ProgramYear List', function (hooks) {
     await page.programYears.newProgramYear.done.click();
     assert.strictEqual(parseInt(page.programYears.items[0].link.text, 10), thisYear);
     assert.strictEqual(page.programYears.items[0].title, `Class of ${thisYear + 4}`);
-    assert.ok(page.programYears.items[0].competencies.hasWarning);
-    assert.ok(page.programYears.items[0].objectives.hasWarning);
-    assert.ok(page.programYears.items[0].directors.hasWarning);
-    assert.ok(page.programYears.items[0].terms.hasWarning);
+    assert.strictEqual(page.programYears.items[0].competencies.text, '0');
+    assert.strictEqual(page.programYears.items[0].objectives.text, '0');
+    assert.strictEqual(page.programYears.items[0].directors.text, '0');
+    assert.strictEqual(page.programYears.items[0].terms.text, '0');
   });
 
   test('can add a program-year (with pre-existing program-year)', async function (assert) {
