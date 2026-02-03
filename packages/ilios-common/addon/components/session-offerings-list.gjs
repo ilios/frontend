@@ -109,6 +109,7 @@ export default class SessionOfferingsListComponent extends Component {
                   @offeringTimeBlock={{offeringTimeBlock}}
                   @removeOffering={{this.removeOffering}}
                   @editable={{@editable}}
+                  @toggleIsEditing={{@toggleIsEditing}}
                 />
               </div>
             {{/each}}

@@ -35,6 +35,7 @@ export default class SessionOfferingsTimeBlockOfferingsComponent extends Compone
           @offering={{offering}}
           @remove={{@removeOffering}}
           @editable={{@editable}}
+          @toggleIsEditing={{@toggleIsEditing}}
         />
       {{/each}}
     </div>

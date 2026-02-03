@@ -1,12 +1,15 @@
 import Component from '@glimmer/component';
+import { cached, tracked } from '@glimmer/tracking';
 import { TrackedAsyncData } from 'ember-async-data';
-import { cached } from '@glimmer/tracking';
+import toggle from 'ilios-common/helpers/toggle';
 import t from 'ember-intl/helpers/t';
 import ExpandCollapseButton from 'ilios-common/components/expand-collapse-button';
 import NewOffering from 'ilios-common/components/new-offering';
 import SessionOfferingsList from 'ilios-common/components/session-offerings-list';
 
 export default class SessionOfferingsComponent extends Component {
+  @tracked isEditing = false;
+
   @cached
   get courseData() {
     return new TrackedAsyncData(this.args.session.course);
@@ -53,24 +56,30 @@ export default class SessionOfferingsComponent extends Component {
       {{/if}}
       <div class="session-offerings-content">
         {{#if @session.offerings.length}}
-          <div class="session-offerings-header">
-            <div>
-              {{t "general.dateTime"}}
+          {{#unless this.isEditing}}
+            <div class="session-offerings-header" data-test-session-offerings-header>
+              <div>
+                {{t "general.dateTime"}}
+              </div>
+              <div>
+                {{t "general.learnersAndLearnerGroups"}}
+              </div>
+              <div>
+                {{t "general.location"}}
+              </div>
+              <div>
+                {{t "general.instructors"}}
+              </div>
+              <div>
+                {{t "general.actions"}}
+              </div>
             </div>
-            <div>
-              {{t "general.learnersAndLearnerGroups"}}
-            </div>
-            <div>
-              {{t "general.location"}}
-            </div>
-            <div>
-              {{t "general.instructors"}}
-            </div>
-            <div>
-              {{t "general.actions"}}
-            </div>
-          </div>
-          <SessionOfferingsList @session={{@session}} @editable={{@editable}} />
+          {{/unless}}
+          <SessionOfferingsList
+            @session={{@session}}
+            @editable={{@editable}}
+            @toggleIsEditing={{toggle "isEditing" this}}
+          />
         {{else}}
           <p>
             {{t "general.noOfferings"}}
