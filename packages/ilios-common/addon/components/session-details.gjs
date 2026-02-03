@@ -43,7 +43,7 @@ export default class SessionDetailsComponent extends Component {
   <template>
     {{pageTitle " | Session: " @session.title}}
 
-    <div class="back-to-session" {{scrollIntoView delay=500}}>
+    <div class="back-to-session" {{scrollIntoView delay=10}}>
       <LinkTo @route="course" @model={{@session.course}} data-test-back-to-sessions>
         {{t "general.backToSessionList"}}
       </LinkTo>
