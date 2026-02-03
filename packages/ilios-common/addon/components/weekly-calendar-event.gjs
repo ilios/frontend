@@ -69,10 +69,6 @@ export default class WeeklyCalendarEventComponent extends Component {
     return !!this.args.event.ilmSession;
   }
 
-  get additionalCssClasses() {
-    return this.args.event.showAsBlockedTime ? ' blocked-time' : '';
-  }
-
   get isOffering() {
     return !!this.args.event.offering;
   }
@@ -141,7 +137,7 @@ export default class WeeklyCalendarEventComponent extends Component {
       class="weekly-calendar-event day-{{@day}}{{if this.isIlm ' ilm'}}{{if
           this.clickable
           ' clickable'
-        }}{{this.additionalCssClasses}}"
+        }}{{if @event.showAsBlockedTime ' blocked-time'}}"
       {{! template-lint-disable no-inline-styles }}
       style={{this.style}}
       type="button"
