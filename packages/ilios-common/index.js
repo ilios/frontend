@@ -67,15 +67,6 @@ module.exports = {
     });
     trees.push(nunitoTree);
 
-    const nunitoSansDir = path.join(
-      path.dirname(require.resolve('@fontsource-variable/nunito-sans')),
-      'files',
-    );
-    const nunitoSansTree = new Funnel(nunitoSansDir, {
-      destDir: 'assets/fonts/nunito-sans',
-    });
-    trees.push(nunitoSansTree);
-
     return MergeTrees(trees);
   },
 
@@ -85,7 +76,6 @@ module.exports = {
       const fonts = [
         'nunito/nunito-latin-wght-normal.woff2',
         'nunito/nunito-latin-wght-italic.woff2 ',
-        'nunito-sans/nunito-sans-latin-wght-normal.woff2',
       ];
       const links = fonts.map((font) => {
         return `<link rel="preload" href="${rootUrl}/assets/fonts/${font}" as="font" type="font/woff2" crossorigin="anonymous">`;

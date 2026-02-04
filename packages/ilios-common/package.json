@@ -30,7 +30,6 @@
     "@embroider/macros": "^1.19.6",
     "@embroider/util": "^1.13.0",
     "@fontsource-variable/nunito": "^5.2.7",
-    "@fontsource-variable/nunito-sans": "^5.2.7",
     "@fortawesome/ember-fontawesome": "^3.1.0",
     "@fortawesome/fontawesome-svg-core": "6.7.2",
     "@fortawesome/free-brands-svg-icons": "6.7.2",
