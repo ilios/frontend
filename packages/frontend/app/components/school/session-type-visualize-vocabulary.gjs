@@ -1,8 +1,23 @@
 import { LinkTo } from '@ember/routing';
 import { hash } from '@ember/helper';
 import t from 'ember-intl/helpers/t';
+import { pageTitle } from 'ember-page-title';
 import VisualizeSessionTypeVocabularyGraph from 'frontend/components/school/visualize-session-type-vocabulary-graph';
 <template>
+  {{pageTitle
+    "Schools | "
+    @model.vocabulary.school.title
+    " | "
+    (t "general.visualizations")
+    " | "
+    (t "general.sessionTypes")
+    " | "
+    @model.sessionType.title
+    " | "
+    (t "general.vocabularies")
+    " | "
+    @model.vocabulary.title
+  }}
   <section
     class="school-session-type-visualize-vocabulary data-visualization"
     data-test-school-session-type-visualize-vocabulary
