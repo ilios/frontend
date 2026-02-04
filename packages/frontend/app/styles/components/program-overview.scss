@@ -12,5 +12,9 @@
     @include m.ilios-overview-content {
       padding-top: 0.5rem;
     }
+
+    .block {
+      @include m.ilios-overview-block;
+    }
   }
 }
