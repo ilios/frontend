@@ -24,6 +24,9 @@ updates:
       - dependency-name: "@babel/eslint-parser"
       - dependency-name: "@babel/plugin-proposal-decorators"
       - dependency-name: "@ember/optional-features"
+      - dependency-name: "@ember/test-helpers"
+      - dependency-name: "@embroider/macros"
+      - dependency-name: "@embroider/test-setup"
       - dependency-name: "@eslint/js"
       - dependency-name: "@glimmer/component"
       - dependency-name: "@glimmer/tracking"
@@ -33,6 +36,7 @@ updates:
       - dependency-name: ember-cli-app-version
       - dependency-name: ember-cli-babel
       - dependency-name: ember-cli-dependency-checker
+      - dependency-name: ember-cli-deprecation-workflow
       - dependency-name: ember-cli-htmlbars
       - dependency-name: ember-cli-inject-live-reload
       - dependency-name: ember-cli-terser
@@ -48,9 +52,9 @@ updates:
       - dependency-name: eslint-config-prettier
       - dependency-name: eslint-plugin-ember
       - dependency-name: eslint-plugin-n
-      - dependency-name: eslint-plugin-prettier
       - dependency-name: eslint-plugin-qunit
       - dependency-name: globals
+      - dependency-name: loader.js
       - dependency-name: prettier
       - dependency-name: prettier-plugin-ember-template-tag
       - dependency-name: qunit
