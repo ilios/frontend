@@ -30,7 +30,7 @@
     "@embroider/macros": "^1.19.6",
     "@embroider/util": "^1.13.0",
     "@fortawesome/ember-fontawesome": "^3.1.0",
-    "@fortawesome/fontawesome-svg-core": "6.7.2",
+    "@fortawesome/fontawesome-svg-core": "7.1.0",
     "@fortawesome/free-brands-svg-icons": "6.7.2",
     "@fortawesome/free-solid-svg-icons": "6.7.2",
     "@fontsource/nunito": "^5.2.7",
