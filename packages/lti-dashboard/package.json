@@ -107,7 +107,7 @@
     "webpack": "^5.104.1"
   },
   "engines": {
-    "node": ">= 22",
+    "node": ">= 24",
     "yarn": "use pnpm",
     "npm": "use pnpm"
   },
