@@ -210,14 +210,14 @@ export default class CourseVisualizeVocabulariesGraph extends Component {
           {{else}}
             {{#if @showNoChartDataError}}
               <div class="no-data" data-test-no-data>
-                {{t "general.courseVisualizationsNoSessionVocabularyTerms"}}
+                {{t "general.courseVisualizationsSessionVocabularyTermsGraphNoData"}}
               </div>
             {{/if}}
           {{/if}}
         {{/if}}
         {{#if (and (not @isIcon) (not this.hasData))}}
           <div class="no-data" data-test-no-data>
-            {{t "general.courseVisualizationsNoSessionVocabularyTerms"}}
+            {{t "general.courseVisualizationsSessionVocabularyTermsGraphNoData"}}
           </div>
         {{/if}}
         {{#if (and (not @isIcon) this.hasData @showDataTable)}}

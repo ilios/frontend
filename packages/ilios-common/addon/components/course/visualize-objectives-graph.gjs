@@ -258,7 +258,7 @@ export default class CourseVisualizeObjectivesGraph extends Component {
             {{#if @showNoChartDataError}}
               <div class="with-hours" data-test-with-hours>
                 <p>
-                  {{t "general.objectivesWithNoLink"}}
+                  {{t "general.courseVisualizationsObjectivesGraphNoLink"}}
                   <FaIcon @icon={{faFaceMeh}} />
                 </p>
               </div>
@@ -283,7 +283,7 @@ export default class CourseVisualizeObjectivesGraph extends Component {
           {{else}}
             <div class="with-hours" data-test-with-hours>
               <p>
-                {{t "general.objectivesWithNoLink"}}
+                {{t "general.courseVisualizationsObjectivesGraphNoLink"}}
                 <FaIcon @icon={{faFaceMeh}} />
               </p>
             </div>
@@ -296,7 +296,7 @@ export default class CourseVisualizeObjectivesGraph extends Component {
               {{t "general.unusedObjectives"}}:
             </h4>
             <p>
-              {{t "general.objectivesWithNoHours"}}
+              {{t "general.courseVisualizationsObjectivesGraphNoHours"}}
             </p>
             <ul>
               {{#each (sortBy0 "meta.courseObjective.title" this.objectiveWithoutMinutes) as |obj|}}

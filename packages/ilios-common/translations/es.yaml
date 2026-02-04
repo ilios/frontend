@@ -83,11 +83,13 @@ general:
   courseTitle: Titulo de Curso
   courseTitlePlaceholder: Entre en un título para este curso
   courseVisualizations: Visualizaciones de Cursos
-  courseVisualizationsNoSessions: Este curso no tiene sesiones.
-  courseVisualizationsNoSessionVocabularyTerms: No se han vinculado vocabularios a ninguna sesión de este curso.
   courseVisualizationsInstructorNoData: "{instructor} no está impartiendo ninguna sesión en este curso."
   courseVisualizationsInstructorsGraphNoData: No se han vinculado instructores a ninguna sesión de este curso.
+  courseVisualizationsObjectivesGraphNoHours: "Los siguientes objetivos del curso no están vinculados a ninguna sesión, o están vinculados sólo a las sesiones sin datos de duración."
+  courseVisualizationsObjectivesGraphNoLink: No hay objetivos del curso actualmente vinculados a tiempo de instrucción.
   courseVisualizationsSessionTypeGraphNoData: "No se han vinculado términos de vocabulario a ninguna sesión {sessionType} en este curso."
+  courseVisualizationsSessionTypesGraphNoData: No hay sesión actualmente vinculados a tiempo de instrucción.
+  courseVisualizationsSessionVocabularyTermsGraphNoData: No se han vinculado vocabularios a ninguna sesión de este curso.
   courseVisualizationsTermGraphNoData: "El término de vocabulario {term} no se ha vinculado a ninguna sesión de este curso."
   courseVisualizationsVocabularyGraphNoData: "No se han vinculado términos del vocabulario {vocabulary} a ninguna sesión de este curso."
   currentlySearchingPrompt: buscando...
@@ -253,8 +255,6 @@ general:
   notStarted: No Comenzado
   objectiveCount: "Hay {count, plural, =1 {1 objectivo} other {# objectivos}}"
   objectives: Objetivos
-  objectivesWithNoHours: "Los siguientes objetivos del curso no están vinculados a ninguna sesión, o están vinculados sólo a las sesiones sin datos de duración."
-  objectivesWithNoLink: No hay objetivos del curso actualmente vinculados a tiempo de instrucción.
   offering: Ofrecimiento
   offerings: Ofrecimientos
   overview: Visión Amplia

@@ -83,11 +83,13 @@ general:
   courseTitle: Titre de Cours
   courseTitlePlaceholder: Ajoutez titre par ce cours
   courseVisualizations: Cours Visualisations
-  courseVisualizationsNoSessions: Ce cours n'a pas de séances.
-  courseVisualizationsNoSessionVocabularyTerms: "Aucun vocabulaires n'a été lié à aucune session de ce cours."
   courseVisualizationsInstructorNoData: "{instructor} n'enseigne aucune séance dans ce cours."
   courseVisualizationsInstructorsGraphNoData: Aucun instructeur n'a été lié à aucune session de ce cours.
+  courseVisualizationsObjectivesGraphNoHours: "Les objectifs de cours suivant ne sont ou liés avec aucune séance, ou liés seulement aux séance sans offrir ou ou des données de durée."
+  courseVisualizationsObjectivesGraphNoLink: Nul objectifs de course actuellement lié au temps dénseignment.
   courseVisualizationsSessionTypeGraphNoData: "Aucun terme de vocabulaire n'a été lié à une session {sessionType} dans ce cours."
+  courseVisualizationsSessionTypesGraphNoData: Nul séance actuellement lié au temps dénseignment.
+  courseVisualizationsSessionVocabularyTermsGraphNoData: "Aucun vocabulaires n'a été lié à aucune session de ce cours."
   courseVisualizationsTermGraphNoData: "Le terme de vocabulaire {term} n'a été lié à aucune session de ce cours."
   courseVisualizationsVocabularyGraphNoData: "Aucun terme de vocabulaire {vocabulary} n'a été lié à aucune session de ce cours."
   currentlySearchingPrompt: Recherchent...
@@ -253,8 +255,6 @@ general:
   notStarted: Non Commencé
   objectiveCount: "Il y a {count, plural, =1 {1 objectif} other {# objectifs}}"
   objectives: Objectifs
-  objectivesWithNoHours: "Les objectifs de cours suivant ne sont ou liés avec aucune séance, ou liés seulement aux séance sans offrir ou ou des données de durée."
-  objectivesWithNoLink: Nul objectifs de course actuellement lié au temps dénseignment.
   offering: Offre
   offerings: Offres
   overview: Conception Général
