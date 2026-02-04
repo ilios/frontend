@@ -11,6 +11,7 @@ import CollapsedObjectives from 'frontend/components/program-year/collapsed-obje
 import DetailTaxonomies from 'ilios-common/components/detail-taxonomies';
 import CollapsedTaxonomies from 'ilios-common/components/collapsed-taxonomies';
 import CourseAssociations from 'frontend/components/program-year/course-associations';
+import CohortMembers from 'frontend/components/program-year/cohort-members';
 
 <template>
   <div class="programyear-details" data-test-program-year-details ...attributes>
@@ -75,6 +76,11 @@ import CourseAssociations from 'frontend/components/program-year/course-associat
       @programYear={{@programYear}}
       @isExpanded={{@showCourseAssociations}}
       @setIsExpanded={{@setShowCourseAssociations}}
+    />
+    <CohortMembers
+      @programYear={{@programYear}}
+      @isExpanded={{@showCohortMembers}}
+      @setIsExpanded={{@setShowCohortMembers}}
     />
   </div>
 </template>
