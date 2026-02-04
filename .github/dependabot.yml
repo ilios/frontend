@@ -19,6 +19,9 @@ updates:
         patterns:
           - "@ember-data/*"
           - "@warp-drive/*"
+      fontawesome:
+        patterns:
+          - "@fortawesome/*"
     ignore:
       - dependency-name: "@babel/core"
       - dependency-name: "@babel/eslint-parser"
