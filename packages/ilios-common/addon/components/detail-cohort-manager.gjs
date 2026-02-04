@@ -103,11 +103,11 @@ export default class DetailCohortManagerComponent extends Component {
     });
   }
   <template>
-    <section class="detail-cohort-manager">
+    <section class="detail-cohort-manager" data-test-detail-cohort-manager>
       {{#if @selectedCohorts.length}}
         <ul class="selected-cohorts">
           {{#each (sortBy "title" @selectedCohorts) as |cohort|}}
-            <li>
+            <li data-test-selected-cohort>
               <button type="button" {{on "click" (fn @remove cohort)}}>
                 {{cohort.programYear.program.school.title}}
                 |
@@ -123,7 +123,7 @@ export default class DetailCohortManagerComponent extends Component {
       <ul class="selectable-cohorts">
         {{#if this.isLoaded}}
           {{#each this.sortedAvailableCohorts as |cohort|}}
-            <li>
+            <li data-test-selectable-cohort>
               <button type="button" {{on "click" (fn @add cohort)}}>
                 {{cohort.programYear.program.school.title}}
                 |

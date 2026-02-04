@@ -2,7 +2,7 @@ import Component from '@glimmer/component';
 import { cached, tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { task } from 'ember-concurrency';
-import { map, all } from 'rsvp';
+import { filter, map, all } from 'rsvp';
 import { TrackedAsyncData } from 'ember-async-data';
 import t from 'ember-intl/helpers/t';
 import { on } from '@ember/modifier';
@@ -38,12 +38,43 @@ export default class DetailCohortsComponent extends Component {
       return !this.bufferedCohorts.includes(cohort);
     });
     if (removedCohorts.length) {
+      // get a hold of all course objectives in the given course.
+      const courseObjectives = await course.courseObjectives;
+
+      // get a hold of all program years linked to the cohorts that are about to be unlinked from the given course.
       const programYearsToRemove = await map(removedCohorts, async (cohort) => cohort.programYear);
-      const objectives = await course.courseObjectives;
-      await all(
-        objectives.map((objective) => objective.removeParentWithProgramYears(programYearsToRemove)),
-      );
+
+      // get all the program year objectives linked to the given program years.
+      const programYearObjectivesToUnlink = (
+        await map(
+          programYearsToRemove,
+          async (programYear) => await programYear.programYearObjectives,
+        )
+      ).flat();
+
+      // get all course objectives that are linked to the given program year objectives.
+      // we'll break linkage further down in a separate step.
+      // doing this in two steps allows us to ignore any course objectives that were NOT linked whilst saving.
+      const courseObjectivesToUnlink = await filter(courseObjectives, async (courseObjective) => {
+        const linkedProgramYearObjectives = await courseObjective.programYearObjectives;
+        return linkedProgramYearObjectives.some((programYearObjective) =>
+          programYearObjectivesToUnlink.includes(programYearObjective),
+        );
+      });
+
+      // now, break linkage between the given course objectives and the given program year objectives.
+      await map(courseObjectivesToUnlink, async (courseObjective) => {
+        // @see https://guides.emberjs.com/release/models/relationships/#toc_removing-relationships
+        const programYearObjectives = await courseObjective.programYearObjectives;
+        courseObjective.programYearObjectives = programYearObjectives.filter(
+          (programYearObjective) => !programYearObjectivesToUnlink.includes(programYearObjective),
+        );
+      });
+
+      // save all given course objectives that need updating.
+      await all(courseObjectivesToUnlink.map((courseObjective) => courseObjective.save()));
     }
+
     course.set('cohorts', this.bufferedCohorts);
     await course.save();
     this.isManaging = false;
@@ -66,7 +97,7 @@ export default class DetailCohortsComponent extends Component {
   <template>
     <section class="detail-cohorts" data-test-detail-cohorts>
       <div class="detail-cohorts-header">
-        <div class="title">
+        <div class="title" data-test-title>
           {{#if this.isManaging}}
             <span class="specific-title">
               {{t "general.cohortsManageTitle"}}
@@ -83,6 +114,7 @@ export default class DetailCohortsComponent extends Component {
               aria-label={{t "general.save"}}
               type="button"
               {{on "click" (perform this.save)}}
+              data-test-save
             >
               <FaIcon
                 @icon={{if this.save.isRunning faSpinner faCheck}}
@@ -94,11 +126,12 @@ export default class DetailCohortsComponent extends Component {
               type="button"
               aria-label={{t "general.cancel"}}
               {{on "click" this.cancel}}
+              data-test-cancel
             >
               <FaIcon @icon={{faArrowRotateLeft}} />
             </button>
           {{else if @editable}}
-            <button type="button" {{on "click" (perform this.manage)}}>
+            <button type="button" {{on "click" (perform this.manage)}} data-test-manage>
               {{t "general.cohortsManageTitle"}}
             </button>
           {{/if}}

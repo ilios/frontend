@@ -46,7 +46,7 @@ export default class DetailCohortListComponent extends Component {
     });
   }
   <template>
-    <div class="detail-cohort-list">
+    <div class="detail-cohort-list" data-test-detail-cohort-list>
       {{#if this.cohortsData.isResolved}}
         {{#if this.sortedCohorts.length}}
           <table class="ilios-table ilios-table-colors">
