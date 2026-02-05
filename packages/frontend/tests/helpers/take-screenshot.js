@@ -9,16 +9,34 @@ export const takeScreenshot = async (assert, description = '') => {
     return;
   }
   const filename = getUniqueName(assert, description);
-  const el = document.querySelector('#ember-testing');
-  const result = await snapdom(el, {
-    placeholders: false,
-    embedFonts: true,
-    height: 1000,
-    exclude: ['.ilios-logo picture'],
+  return snap(filename);
+};
+
+export const takeComponentScreenshot = async (assert, description = '') => {
+  if (!shouldTakeScreenshots()) {
+    return;
+  }
+  const filename = getUniqueName(assert, description);
+  return snap(filename, {
+    backgroundColor: 'hsl(0, 0%, 98%)',
   });
+};
+
+async function snap(filename, options) {
+  const snapOptions = Object.assign(
+    {
+      placeholders: false,
+      embedFonts: true,
+      height: 1000,
+      exclude: ['.ilios-logo picture'],
+    },
+    options,
+  );
+  const el = document.querySelector('#ember-testing');
+  const result = await snapdom(el, snapOptions);
 
   return waitForPromise(result.download({ format: 'png', filename }));
-};
+}
 
 function shouldTakeScreenshots() {
   if (shouldTakeScreenshotsCache) {
