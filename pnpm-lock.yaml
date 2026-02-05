@@ -381,9 +381,6 @@ importers:
       '@embroider/util':
         specifier: ^1.13.0
         version: 1.13.5(@glint/template@1.7.4)(ember-source@6.10.0(@glimmer/component@2.0.0)(rsvp@4.8.5))
-      '@fontsource-variable/nunito':
-        specifier: ^5.2.7
-        version: 5.2.7
       '@fortawesome/ember-fontawesome':
         specifier: ^3.1.0
         version: 3.1.0(@fortawesome/fontawesome-svg-core@6.7.2)(@glimmer/component@2.0.0)(@glint/template@1.7.4)
@@ -2470,9 +2467,6 @@ packages:
 
   '@floating-ui/utils@0.2.10':
     resolution: {integrity: sha512-aGTxbpbg8/b5JfU1HXSrbH3wXZuLPJcNEcZQFMxLs3oSzgtVu6nFPkbbGGUvBcUjKV2YyB9Wxxabo+HEH9tcRQ==}
-
-  '@fontsource-variable/nunito@5.2.7':
-    resolution: {integrity: sha512-2N8QhatkyKgSUbAGZO2FYLioxA32+RyI1EplVLawbpkGjUeui9Qg9VMrpkCaik1ydjFjfLV+kzQ0cGEsMrMenQ==}
 
   '@formatjs/ecma402-abstract@3.1.1':
     resolution: {integrity: sha512-jhZbTwda+2tcNrs4kKvxrPLPjx8QsBCLCUgrrJ/S+G9YrGHWLhAyFMMBHJBnBoOwuLHd7L14FgYudviKaxkO2Q==}
@@ -12669,8 +12663,6 @@ snapshots:
       '@floating-ui/utils': 0.2.10
 
   '@floating-ui/utils@0.2.10': {}
-
-  '@fontsource-variable/nunito@5.2.7': {}
 
   '@formatjs/ecma402-abstract@3.1.1':
     dependencies:
