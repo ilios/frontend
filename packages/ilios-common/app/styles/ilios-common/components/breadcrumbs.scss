@@ -86,9 +86,13 @@
 
     &:last-child {
       background-color: inherit;
-      border: none;
+      border-color: var(--lighter-grey);
+      border-bottom-right-radius: 3px;
+      border-top-right-radius: 3px;
       color: var(--black);
       cursor: default;
+      /* stylelint-disable scales/font-weights */
+      font-weight: 700;
       padding-right: math.div($breadcrumb-height, 2);
     }
 
