@@ -1,13 +1,8 @@
 @use "sass:math";
 
 .breadcrumbs {
-  $breadcrumb-border-color: var(--blue);
-  $breadcrumb-border: 1px solid $breadcrumb-border-color;
+  $breadcrumb-border: 1px solid var(--blue);
   $breadcrumb-height: 2rem;
-  $breadcrumb-arrow-color: $breadcrumb-border-color;
-  $breadcrumb-background: var(--white);
-  $breadcrumb-color: var(--blue);
-  $breadcrumb-link-color-hover: var(--white);
 
   display: inline-block;
   margin: 0.8rem;
@@ -16,17 +11,17 @@
   a {
     &:focus,
     &:hover {
-      color: $breadcrumb-link-color-hover;
+      color: var(--white);
       text-decoration: none;
     }
   }
 
   /* stylelint-disable property-disallowed-list */
   span {
-    background-color: $breadcrumb-background;
+    background-color: var(--white);
     border: $breadcrumb-border;
     border-left: 0;
-    color: $breadcrumb-color;
+    color: var(--blue);
     cursor: pointer;
     display: inline-block;
     font-size: 0.8rem;
@@ -54,26 +49,26 @@
     }
 
     &::before {
-      border-left-color: $breadcrumb-arrow-color;
+      border-left-color: var(--blue);
       margin-left: 1px;
       z-index: 1;
     }
 
     &::after {
-      border-left-color: $breadcrumb-background;
+      border-left-color: var(--white);
     }
 
     &:hover {
-      background-color: $breadcrumb-border-color;
-      color: $breadcrumb-link-color-hover;
+      background-color: var(--blue);
+      color: var(--white);
 
       a,
       button {
-        color: $breadcrumb-link-color-hover;
+        color: var(--white);
       }
 
       &::after {
-        border-left-color: $breadcrumb-border-color;
+        border-left-color: var(--blue);
       }
     }
 
