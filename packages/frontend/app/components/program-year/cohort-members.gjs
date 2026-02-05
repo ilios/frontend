@@ -97,10 +97,7 @@ export default class ProgramYearCohortMembersComponent extends Component {
               data-test-content
               hidden={{@isExpanded}}
             >
-              <table
-                class="ilios-table ilios-table-colors ilios-zebra-table"
-                data-test-associations
-              >
+              <table class="ilios-table ilios-table-colors ilios-zebra-table" data-test-members>
                 <thead>
                   <tr>
                     <SortableTh
